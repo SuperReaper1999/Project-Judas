@@ -1,0 +1,666 @@
+﻿{
+    "utc":  "2026-10-18T16:42:52.3638164Z",
+    "kind":  "native-windows-sdk-and-tools",
+    "rows":  [
+                 {
+                     "label":  "sdk-verify",
+                     "executable":  "C:\\JudasValidation\\Python\\python.exe",
+                     "arguments":  [
+                                       "P:\\JudasValidation\\PreAlphaPass4\\Build\\windows-sdk\\tools\\package_sdk.py",
+                                       "verify",
+                                       "P:\\JudasValidation\\PreAlphaPass4\\Build\\windows-sdk"
+                                   ],
+                     "cwd":  "P:\\JudasValidation\\PreAlphaPass4",
+                     "exit":  0,
+                     "expected":  0,
+                     "passed":  true,
+                     "seconds":  0.89065149999999993,
+                     "stdout":  "{\"build\": {\"architecture\": \"AMD64\", \"build_id\": \"0.1.0-prealpha-Experimental-9deb47d-clean-86800e25cc69\", \"channel\": \"Experimental\", \"compiler\": \"MSVC\", \"compiler_version\": \"19.44.35229.0\", \"configuration\": \"Release\", \"maturity\": \"pre-alpha\", \"platform\": \"Windows\", \"schema\": 1, \"source_dirty\": false, \"source_fingerprint\": \"86800e25cc69bf1dd422358c9bebda07dd693a5471ffe748f439a1696db2b097\", \"source_origin\": \"archive\", \"source_revision\": \"9deb47d1667e5b6bd1abe708ed343c3fbf6fe847\", \"source_tree\": \"f8c6c8885ec1eacb425c24fba9816144cbcfc74f\", \"source_untracked_count\": 0, \"source_untracked_fingerprint\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\", \"version\": \"0.1.0-prealpha\"}, \"files\": 238, \"ok\": true, \"tools\": 18}\r\n",
+                     "stderr":  ""
+                 },
+                 {
+                     "label":  "sdk-native-pe-imports",
+                     "executable":  "C:\\JudasValidation\\Python\\python.exe",
+                     "arguments":  [
+                                       "P:\\JudasValidation\\PreAlphaPass4\\Build\\windows-sdk\\tools\\inspect_sdk.py",
+                                       "P:\\JudasValidation\\PreAlphaPass4\\Build\\windows-sdk",
+                                       "--host-check",
+                                       "--system-directory",
+                                       "C:\\Windows\\System32",
+                                       "--output",
+                                       "P:\\JudasValidation\\PreAlphaPass4\\ToolResults\\sdk-native-pe-imports.detail.json"
+                                   ],
+                     "cwd":  "P:\\JudasValidation\\PreAlphaPass4",
+                     "exit":  1,
+                     "expected":  0,
+                     "passed":  false,
+                     "seconds":  0.9531042999999999,
+                     "stdout":  "{\"passed\": false, \"errors\": [\"SDK file inventory/checksum mismatch (missing, changed or unexpected file)\"], \"output\": \"P:\\\\JudasValidation\\\\PreAlphaPass4\\\\ToolResults\\\\sdk-native-pe-imports.detail.json\"}\r\n",
+                     "stderr":  ""
+                 },
+                 {
+                     "label":  "identity-judas",
+                     "executable":  "P:\\JudasValidation\\PreAlphaPass4\\Build\\windows-sdk\\judas.exe",
+                     "arguments":  [
+                                       "--build-info-json"
+                                   ],
+                     "cwd":  "P:\\JudasValidation\\PreAlphaPass4",
+                     "exit":  0,
+                     "expected":  0,
+                     "passed":  true,
+                     "seconds":  0.1093516,
+                     "stdout":  "{\r\n  \"architecture\": \"AMD64\",\r\n  \"build_id\": \"0.1.0-prealpha-Experimental-9deb47d-clean-86800e25cc69\",\r\n  \"channel\": \"Experimental\",\r\n  \"compiler\": \"MSVC\",\r\n  \"compiler_version\": \"19.44.35229.0\",\r\n  \"configuration\": \"Release\",\r\n  \"maturity\": \"pre-alpha\",\r\n  \"platform\": \"Windows\",\r\n  \"schema\": 1,\r\n  \"source_dirty\": false,\r\n  \"source_fingerprint\": \"86800e25cc69bf1dd422358c9bebda07dd693a5471ffe748f439a1696db2b097\",\r\n  \"source_origin\": \"archive\",\r\n  \"source_revision\": \"9deb47d1667e5b6bd1abe708ed343c3fbf6fe847\",\r\n  \"source_tree\": \"f8c6c8885ec1eacb425c24fba9816144cbcfc74f\",\r\n  \"source_untracked_count\": 0,\r\n  \"source_untracked_fingerprint\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\r\n  \"version\": \"0.1.0-prealpha\"\r\n}\r\n",
+                     "stderr":  ""
+                 },
+                 {
+                     "label":  "identity-judas_editor",
+                     "executable":  "P:\\JudasValidation\\PreAlphaPass4\\Build\\windows-sdk\\judas_editor.exe",
+                     "arguments":  [
+                                       "--build-info-json"
+                                   ],
+                     "cwd":  "P:\\JudasValidation\\PreAlphaPass4",
+                     "exit":  0,
+                     "expected":  0,
+                     "passed":  true,
+                     "seconds":  0.45312589999999997,
+                     "stdout":  "{\r\n  \"architecture\": \"AMD64\",\r\n  \"build_id\": \"0.1.0-prealpha-Experimental-9deb47d-clean-86800e25cc69\",\r\n  \"channel\": \"Experimental\",\r\n  \"compiler\": \"MSVC\",\r\n  \"compiler_version\": \"19.44.35229.0\",\r\n  \"configuration\": \"Release\",\r\n  \"maturity\": \"pre-alpha\",\r\n  \"platform\": \"Windows\",\r\n  \"schema\": 1,\r\n  \"source_dirty\": false,\r\n  \"source_fingerprint\": \"86800e25cc69bf1dd422358c9bebda07dd693a5471ffe748f439a1696db2b097\",\r\n  \"source_origin\": \"archive\",\r\n  \"source_revision\": \"9deb47d1667e5b6bd1abe708ed343c3fbf6fe847\",\r\n  \"source_tree\": \"f8c6c8885ec1eacb425c24fba9816144cbcfc74f\",\r\n  \"source_untracked_count\": 0,\r\n  \"source_untracked_fingerprint\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\r\n  \"version\": \"0.1.0-prealpha\"\r\n}\r\n",
+                     "stderr":  ""
+                 },
+                 {
+                     "label":  "identity-judas_export",
+                     "executable":  "P:\\JudasValidation\\PreAlphaPass4\\Build\\windows-sdk\\judas_export.exe",
+                     "arguments":  [
+                                       "--build-info-json"
+                                   ],
+                     "cwd":  "P:\\JudasValidation\\PreAlphaPass4",
+                     "exit":  0,
+                     "expected":  0,
+                     "passed":  true,
+                     "seconds":  0.2031328,
+                     "stdout":  "{\r\n  \"architecture\": \"AMD64\",\r\n  \"build_id\": \"0.1.0-prealpha-Experimental-9deb47d-clean-86800e25cc69\",\r\n  \"channel\": \"Experimental\",\r\n  \"compiler\": \"MSVC\",\r\n  \"compiler_version\": \"19.44.35229.0\",\r\n  \"configuration\": \"Release\",\r\n  \"maturity\": \"pre-alpha\",\r\n  \"platform\": \"Windows\",\r\n  \"schema\": 1,\r\n  \"source_dirty\": false,\r\n  \"source_fingerprint\": \"86800e25cc69bf1dd422358c9bebda07dd693a5471ffe748f439a1696db2b097\",\r\n  \"source_origin\": \"archive\",\r\n  \"source_revision\": \"9deb47d1667e5b6bd1abe708ed343c3fbf6fe847\",\r\n  \"source_tree\": \"f8c6c8885ec1eacb425c24fba9816144cbcfc74f\",\r\n  \"source_untracked_count\": 0,\r\n  \"source_untracked_fingerprint\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\r\n  \"version\": \"0.1.0-prealpha\"\r\n}\r\n",
+                     "stderr":  ""
+                 },
+                 {
+                     "label":  "identity-judas_scene_author",
+                     "executable":  "P:\\JudasValidation\\PreAlphaPass4\\Build\\windows-sdk\\judas_scene_author.exe",
+                     "arguments":  [
+                                       "--build-info-json"
+                                   ],
+                     "cwd":  "P:\\JudasValidation\\PreAlphaPass4",
+                     "exit":  0,
+                     "expected":  0,
+                     "passed":  true,
+                     "seconds":  0.093749,
+                     "stdout":  "{\r\n  \"architecture\": \"AMD64\",\r\n  \"build_id\": \"0.1.0-prealpha-Experimental-9deb47d-clean-86800e25cc69\",\r\n  \"channel\": \"Experimental\",\r\n  \"compiler\": \"MSVC\",\r\n  \"compiler_version\": \"19.44.35229.0\",\r\n  \"configuration\": \"Release\",\r\n  \"maturity\": \"pre-alpha\",\r\n  \"platform\": \"Windows\",\r\n  \"schema\": 1,\r\n  \"source_dirty\": false,\r\n  \"source_fingerprint\": \"86800e25cc69bf1dd422358c9bebda07dd693a5471ffe748f439a1696db2b097\",\r\n  \"source_origin\": \"archive\",\r\n  \"source_revision\": \"9deb47d1667e5b6bd1abe708ed343c3fbf6fe847\",\r\n  \"source_tree\": \"f8c6c8885ec1eacb425c24fba9816144cbcfc74f\",\r\n  \"source_untracked_count\": 0,\r\n  \"source_untracked_fingerprint\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\r\n  \"version\": \"0.1.0-prealpha\"\r\n}\r\n",
+                     "stderr":  ""
+                 },
+                 {
+                     "label":  "identity-judas_navigation_bake",
+                     "executable":  "P:\\JudasValidation\\PreAlphaPass4\\Build\\windows-sdk\\judas_navigation_bake.exe",
+                     "arguments":  [
+                                       "--build-info-json"
+                                   ],
+                     "cwd":  "P:\\JudasValidation\\PreAlphaPass4",
+                     "exit":  0,
+                     "expected":  0,
+                     "passed":  true,
+                     "seconds":  0.093748,
+                     "stdout":  "{\r\n  \"architecture\": \"AMD64\",\r\n  \"build_id\": \"0.1.0-prealpha-Experimental-9deb47d-clean-86800e25cc69\",\r\n  \"channel\": \"Experimental\",\r\n  \"compiler\": \"MSVC\",\r\n  \"compiler_version\": \"19.44.35229.0\",\r\n  \"configuration\": \"Release\",\r\n  \"maturity\": \"pre-alpha\",\r\n  \"platform\": \"Windows\",\r\n  \"schema\": 1,\r\n  \"source_dirty\": false,\r\n  \"source_fingerprint\": \"86800e25cc69bf1dd422358c9bebda07dd693a5471ffe748f439a1696db2b097\",\r\n  \"source_origin\": \"archive\",\r\n  \"source_revision\": \"9deb47d1667e5b6bd1abe708ed343c3fbf6fe847\",\r\n  \"source_tree\": \"f8c6c8885ec1eacb425c24fba9816144cbcfc74f\",\r\n  \"source_untracked_count\": 0,\r\n  \"source_untracked_fingerprint\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\r\n  \"version\": \"0.1.0-prealpha\"\r\n}\r\n",
+                     "stderr":  ""
+                 },
+                 {
+                     "label":  "identity-judas_liquid_bake",
+                     "executable":  "P:\\JudasValidation\\PreAlphaPass4\\Build\\windows-sdk\\judas_liquid_bake.exe",
+                     "arguments":  [
+                                       "--build-info-json"
+                                   ],
+                     "cwd":  "P:\\JudasValidation\\PreAlphaPass4",
+                     "exit":  0,
+                     "expected":  0,
+                     "passed":  true,
+                     "seconds":  0.0937529,
+                     "stdout":  "{\r\n  \"architecture\": \"AMD64\",\r\n  \"build_id\": \"0.1.0-prealpha-Experimental-9deb47d-clean-86800e25cc69\",\r\n  \"channel\": \"Experimental\",\r\n  \"compiler\": \"MSVC\",\r\n  \"compiler_version\": \"19.44.35229.0\",\r\n  \"configuration\": \"Release\",\r\n  \"maturity\": \"pre-alpha\",\r\n  \"platform\": \"Windows\",\r\n  \"schema\": 1,\r\n  \"source_dirty\": false,\r\n  \"source_fingerprint\": \"86800e25cc69bf1dd422358c9bebda07dd693a5471ffe748f439a1696db2b097\",\r\n  \"source_origin\": \"archive\",\r\n  \"source_revision\": \"9deb47d1667e5b6bd1abe708ed343c3fbf6fe847\",\r\n  \"source_tree\": \"f8c6c8885ec1eacb425c24fba9816144cbcfc74f\",\r\n  \"source_untracked_count\": 0,\r\n  \"source_untracked_fingerprint\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\r\n  \"version\": \"0.1.0-prealpha\"\r\n}\r\n",
+                     "stderr":  ""
+                 },
+                 {
+                     "label":  "identity-judas_environment_bake",
+                     "executable":  "P:\\JudasValidation\\PreAlphaPass4\\Build\\windows-sdk\\judas_environment_bake.exe",
+                     "arguments":  [
+                                       "--build-info-json"
+                                   ],
+                     "cwd":  "P:\\JudasValidation\\PreAlphaPass4",
+                     "exit":  0,
+                     "expected":  0,
+                     "passed":  true,
+                     "seconds":  0.0937442,
+                     "stdout":  "{\r\n  \"architecture\": \"AMD64\",\r\n  \"build_id\": \"0.1.0-prealpha-Experimental-9deb47d-clean-86800e25cc69\",\r\n  \"channel\": \"Experimental\",\r\n  \"compiler\": \"MSVC\",\r\n  \"compiler_version\": \"19.44.35229.0\",\r\n  \"configuration\": \"Release\",\r\n  \"maturity\": \"pre-alpha\",\r\n  \"platform\": \"Windows\",\r\n  \"schema\": 1,\r\n  \"source_dirty\": false,\r\n  \"source_fingerprint\": \"86800e25cc69bf1dd422358c9bebda07dd693a5471ffe748f439a1696db2b097\",\r\n  \"source_origin\": \"archive\",\r\n  \"source_revision\": \"9deb47d1667e5b6bd1abe708ed343c3fbf6fe847\",\r\n  \"source_tree\": \"f8c6c8885ec1eacb425c24fba9816144cbcfc74f\",\r\n  \"source_untracked_count\": 0,\r\n  \"source_untracked_fingerprint\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\r\n  \"version\": \"0.1.0-prealpha\"\r\n}\r\n",
+                     "stderr":  ""
+                 },
+                 {
+                     "label":  "identity-judas_deformable_bake",
+                     "executable":  "P:\\JudasValidation\\PreAlphaPass4\\Build\\windows-sdk\\judas_deformable_bake.exe",
+                     "arguments":  [
+                                       "--build-info-json"
+                                   ],
+                     "cwd":  "P:\\JudasValidation\\PreAlphaPass4",
+                     "exit":  0,
+                     "expected":  0,
+                     "passed":  true,
+                     "seconds":  0.0937537,
+                     "stdout":  "{\r\n  \"architecture\": \"AMD64\",\r\n  \"build_id\": \"0.1.0-prealpha-Experimental-9deb47d-clean-86800e25cc69\",\r\n  \"channel\": \"Experimental\",\r\n  \"compiler\": \"MSVC\",\r\n  \"compiler_version\": \"19.44.35229.0\",\r\n  \"configuration\": \"Release\",\r\n  \"maturity\": \"pre-alpha\",\r\n  \"platform\": \"Windows\",\r\n  \"schema\": 1,\r\n  \"source_dirty\": false,\r\n  \"source_fingerprint\": \"86800e25cc69bf1dd422358c9bebda07dd693a5471ffe748f439a1696db2b097\",\r\n  \"source_origin\": \"archive\",\r\n  \"source_revision\": \"9deb47d1667e5b6bd1abe708ed343c3fbf6fe847\",\r\n  \"source_tree\": \"f8c6c8885ec1eacb425c24fba9816144cbcfc74f\",\r\n  \"source_untracked_count\": 0,\r\n  \"source_untracked_fingerprint\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\r\n  \"version\": \"0.1.0-prealpha\"\r\n}\r\n",
+                     "stderr":  ""
+                 },
+                 {
+                     "label":  "identity-judas_collision_cook",
+                     "executable":  "P:\\JudasValidation\\PreAlphaPass4\\Build\\windows-sdk\\judas_collision_cook.exe",
+                     "arguments":  [
+                                       "--build-info-json"
+                                   ],
+                     "cwd":  "P:\\JudasValidation\\PreAlphaPass4",
+                     "exit":  0,
+                     "expected":  0,
+                     "passed":  true,
+                     "seconds":  0.0781187,
+                     "stdout":  "{\r\n  \"architecture\": \"AMD64\",\r\n  \"build_id\": \"0.1.0-prealpha-Experimental-9deb47d-clean-86800e25cc69\",\r\n  \"channel\": \"Experimental\",\r\n  \"compiler\": \"MSVC\",\r\n  \"compiler_version\": \"19.44.35229.0\",\r\n  \"configuration\": \"Release\",\r\n  \"maturity\": \"pre-alpha\",\r\n  \"platform\": \"Windows\",\r\n  \"schema\": 1,\r\n  \"source_dirty\": false,\r\n  \"source_fingerprint\": \"86800e25cc69bf1dd422358c9bebda07dd693a5471ffe748f439a1696db2b097\",\r\n  \"source_origin\": \"archive\",\r\n  \"source_revision\": \"9deb47d1667e5b6bd1abe708ed343c3fbf6fe847\",\r\n  \"source_tree\": \"f8c6c8885ec1eacb425c24fba9816144cbcfc74f\",\r\n  \"source_untracked_count\": 0,\r\n  \"source_untracked_fingerprint\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\r\n  \"version\": \"0.1.0-prealpha\"\r\n}\r\n",
+                     "stderr":  ""
+                 },
+                 {
+                     "label":  "identity-judas_model_import_cli",
+                     "executable":  "P:\\JudasValidation\\PreAlphaPass4\\Build\\windows-sdk\\judas_model_import_cli.exe",
+                     "arguments":  [
+                                       "--build-info-json"
+                                   ],
+                     "cwd":  "P:\\JudasValidation\\PreAlphaPass4",
+                     "exit":  0,
+                     "expected":  0,
+                     "passed":  true,
+                     "seconds":  0.093750199999999992,
+                     "stdout":  "{\r\n  \"architecture\": \"AMD64\",\r\n  \"build_id\": \"0.1.0-prealpha-Experimental-9deb47d-clean-86800e25cc69\",\r\n  \"channel\": \"Experimental\",\r\n  \"compiler\": \"MSVC\",\r\n  \"compiler_version\": \"19.44.35229.0\",\r\n  \"configuration\": \"Release\",\r\n  \"maturity\": \"pre-alpha\",\r\n  \"platform\": \"Windows\",\r\n  \"schema\": 1,\r\n  \"source_dirty\": false,\r\n  \"source_fingerprint\": \"86800e25cc69bf1dd422358c9bebda07dd693a5471ffe748f439a1696db2b097\",\r\n  \"source_origin\": \"archive\",\r\n  \"source_revision\": \"9deb47d1667e5b6bd1abe708ed343c3fbf6fe847\",\r\n  \"source_tree\": \"f8c6c8885ec1eacb425c24fba9816144cbcfc74f\",\r\n  \"source_untracked_count\": 0,\r\n  \"source_untracked_fingerprint\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\r\n  \"version\": \"0.1.0-prealpha\"\r\n}\r\n",
+                     "stderr":  ""
+                 },
+                 {
+                     "label":  "identity-judas_terrain_author",
+                     "executable":  "P:\\JudasValidation\\PreAlphaPass4\\Build\\windows-sdk\\judas_terrain_author.exe",
+                     "arguments":  [
+                                       "--build-info-json"
+                                   ],
+                     "cwd":  "P:\\JudasValidation\\PreAlphaPass4",
+                     "exit":  0,
+                     "expected":  0,
+                     "passed":  true,
+                     "seconds":  0.093747,
+                     "stdout":  "{\r\n  \"architecture\": \"AMD64\",\r\n  \"build_id\": \"0.1.0-prealpha-Experimental-9deb47d-clean-86800e25cc69\",\r\n  \"channel\": \"Experimental\",\r\n  \"compiler\": \"MSVC\",\r\n  \"compiler_version\": \"19.44.35229.0\",\r\n  \"configuration\": \"Release\",\r\n  \"maturity\": \"pre-alpha\",\r\n  \"platform\": \"Windows\",\r\n  \"schema\": 1,\r\n  \"source_dirty\": false,\r\n  \"source_fingerprint\": \"86800e25cc69bf1dd422358c9bebda07dd693a5471ffe748f439a1696db2b097\",\r\n  \"source_origin\": \"archive\",\r\n  \"source_revision\": \"9deb47d1667e5b6bd1abe708ed343c3fbf6fe847\",\r\n  \"source_tree\": \"f8c6c8885ec1eacb425c24fba9816144cbcfc74f\",\r\n  \"source_untracked_count\": 0,\r\n  \"source_untracked_fingerprint\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\r\n  \"version\": \"0.1.0-prealpha\"\r\n}\r\n",
+                     "stderr":  ""
+                 },
+                 {
+                     "label":  "identity-judas_volume_author",
+                     "executable":  "P:\\JudasValidation\\PreAlphaPass4\\Build\\windows-sdk\\judas_volume_author.exe",
+                     "arguments":  [
+                                       "--build-info-json"
+                                   ],
+                     "cwd":  "P:\\JudasValidation\\PreAlphaPass4",
+                     "exit":  0,
+                     "expected":  0,
+                     "passed":  true,
+                     "seconds":  0.18751679999999998,
+                     "stdout":  "{\r\n  \"architecture\": \"AMD64\",\r\n  \"build_id\": \"0.1.0-prealpha-Experimental-9deb47d-clean-86800e25cc69\",\r\n  \"channel\": \"Experimental\",\r\n  \"compiler\": \"MSVC\",\r\n  \"compiler_version\": \"19.44.35229.0\",\r\n  \"configuration\": \"Release\",\r\n  \"maturity\": \"pre-alpha\",\r\n  \"platform\": \"Windows\",\r\n  \"schema\": 1,\r\n  \"source_dirty\": false,\r\n  \"source_fingerprint\": \"86800e25cc69bf1dd422358c9bebda07dd693a5471ffe748f439a1696db2b097\",\r\n  \"source_origin\": \"archive\",\r\n  \"source_revision\": \"9deb47d1667e5b6bd1abe708ed343c3fbf6fe847\",\r\n  \"source_tree\": \"f8c6c8885ec1eacb425c24fba9816144cbcfc74f\",\r\n  \"source_untracked_count\": 0,\r\n  \"source_untracked_fingerprint\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\r\n  \"version\": \"0.1.0-prealpha\"\r\n}\r\n",
+                     "stderr":  ""
+                 },
+                 {
+                     "label":  "identity-judas_mod",
+                     "executable":  "P:\\JudasValidation\\PreAlphaPass4\\Build\\windows-sdk\\judas_mod.exe",
+                     "arguments":  [
+                                       "--build-info-json"
+                                   ],
+                     "cwd":  "P:\\JudasValidation\\PreAlphaPass4",
+                     "exit":  0,
+                     "expected":  0,
+                     "passed":  true,
+                     "seconds":  0.10938579999999999,
+                     "stdout":  "{\r\n  \"architecture\": \"AMD64\",\r\n  \"build_id\": \"0.1.0-prealpha-Experimental-9deb47d-clean-86800e25cc69\",\r\n  \"channel\": \"Experimental\",\r\n  \"compiler\": \"MSVC\",\r\n  \"compiler_version\": \"19.44.35229.0\",\r\n  \"configuration\": \"Release\",\r\n  \"maturity\": \"pre-alpha\",\r\n  \"platform\": \"Windows\",\r\n  \"schema\": 1,\r\n  \"source_dirty\": false,\r\n  \"source_fingerprint\": \"86800e25cc69bf1dd422358c9bebda07dd693a5471ffe748f439a1696db2b097\",\r\n  \"source_origin\": \"archive\",\r\n  \"source_revision\": \"9deb47d1667e5b6bd1abe708ed343c3fbf6fe847\",\r\n  \"source_tree\": \"f8c6c8885ec1eacb425c24fba9816144cbcfc74f\",\r\n  \"source_untracked_count\": 0,\r\n  \"source_untracked_fingerprint\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\r\n  \"version\": \"0.1.0-prealpha\"\r\n}\r\n",
+                     "stderr":  ""
+                 },
+                 {
+                     "label":  "identity-judas_cook",
+                     "executable":  "P:\\JudasValidation\\PreAlphaPass4\\Build\\windows-sdk\\judas_cook.exe",
+                     "arguments":  [
+                                       "--build-info-json"
+                                   ],
+                     "cwd":  "P:\\JudasValidation\\PreAlphaPass4",
+                     "exit":  0,
+                     "expected":  0,
+                     "passed":  true,
+                     "seconds":  0.1093522,
+                     "stdout":  "{\r\n  \"architecture\": \"AMD64\",\r\n  \"build_id\": \"0.1.0-prealpha-Experimental-9deb47d-clean-86800e25cc69\",\r\n  \"channel\": \"Experimental\",\r\n  \"compiler\": \"MSVC\",\r\n  \"compiler_version\": \"19.44.35229.0\",\r\n  \"configuration\": \"Release\",\r\n  \"maturity\": \"pre-alpha\",\r\n  \"platform\": \"Windows\",\r\n  \"schema\": 1,\r\n  \"source_dirty\": false,\r\n  \"source_fingerprint\": \"86800e25cc69bf1dd422358c9bebda07dd693a5471ffe748f439a1696db2b097\",\r\n  \"source_origin\": \"archive\",\r\n  \"source_revision\": \"9deb47d1667e5b6bd1abe708ed343c3fbf6fe847\",\r\n  \"source_tree\": \"f8c6c8885ec1eacb425c24fba9816144cbcfc74f\",\r\n  \"source_untracked_count\": 0,\r\n  \"source_untracked_fingerprint\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\r\n  \"version\": \"0.1.0-prealpha\"\r\n}\r\n",
+                     "stderr":  ""
+                 },
+                 {
+                     "label":  "identity-judas_script_check",
+                     "executable":  "P:\\JudasValidation\\PreAlphaPass4\\Build\\windows-sdk\\judas_script_check.exe",
+                     "arguments":  [
+                                       "--build-info-json"
+                                   ],
+                     "cwd":  "P:\\JudasValidation\\PreAlphaPass4",
+                     "exit":  0,
+                     "expected":  0,
+                     "passed":  true,
+                     "seconds":  0.0937476,
+                     "stdout":  "{\r\n  \"architecture\": \"AMD64\",\r\n  \"build_id\": \"0.1.0-prealpha-Experimental-9deb47d-clean-86800e25cc69\",\r\n  \"channel\": \"Experimental\",\r\n  \"compiler\": \"MSVC\",\r\n  \"compiler_version\": \"19.44.35229.0\",\r\n  \"configuration\": \"Release\",\r\n  \"maturity\": \"pre-alpha\",\r\n  \"platform\": \"Windows\",\r\n  \"schema\": 1,\r\n  \"source_dirty\": false,\r\n  \"source_fingerprint\": \"86800e25cc69bf1dd422358c9bebda07dd693a5471ffe748f439a1696db2b097\",\r\n  \"source_origin\": \"archive\",\r\n  \"source_revision\": \"9deb47d1667e5b6bd1abe708ed343c3fbf6fe847\",\r\n  \"source_tree\": \"f8c6c8885ec1eacb425c24fba9816144cbcfc74f\",\r\n  \"source_untracked_count\": 0,\r\n  \"source_untracked_fingerprint\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\r\n  \"version\": \"0.1.0-prealpha\"\r\n}\r\n",
+                     "stderr":  ""
+                 },
+                 {
+                     "label":  "identity-judas_save",
+                     "executable":  "P:\\JudasValidation\\PreAlphaPass4\\Build\\windows-sdk\\judas_save.exe",
+                     "arguments":  [
+                                       "--build-info-json"
+                                   ],
+                     "cwd":  "P:\\JudasValidation\\PreAlphaPass4",
+                     "exit":  0,
+                     "expected":  0,
+                     "passed":  true,
+                     "seconds":  0.0937493,
+                     "stdout":  "{\r\n  \"architecture\": \"AMD64\",\r\n  \"build_id\": \"0.1.0-prealpha-Experimental-9deb47d-clean-86800e25cc69\",\r\n  \"channel\": \"Experimental\",\r\n  \"compiler\": \"MSVC\",\r\n  \"compiler_version\": \"19.44.35229.0\",\r\n  \"configuration\": \"Release\",\r\n  \"maturity\": \"pre-alpha\",\r\n  \"platform\": \"Windows\",\r\n  \"schema\": 1,\r\n  \"source_dirty\": false,\r\n  \"source_fingerprint\": \"86800e25cc69bf1dd422358c9bebda07dd693a5471ffe748f439a1696db2b097\",\r\n  \"source_origin\": \"archive\",\r\n  \"source_revision\": \"9deb47d1667e5b6bd1abe708ed343c3fbf6fe847\",\r\n  \"source_tree\": \"f8c6c8885ec1eacb425c24fba9816144cbcfc74f\",\r\n  \"source_untracked_count\": 0,\r\n  \"source_untracked_fingerprint\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\r\n  \"version\": \"0.1.0-prealpha\"\r\n}\r\n",
+                     "stderr":  ""
+                 },
+                 {
+                     "label":  "identity-judas_server",
+                     "executable":  "P:\\JudasValidation\\PreAlphaPass4\\Build\\windows-sdk\\judas_server.exe",
+                     "arguments":  [
+                                       "--build-info-json"
+                                   ],
+                     "cwd":  "P:\\JudasValidation\\PreAlphaPass4",
+                     "exit":  0,
+                     "expected":  0,
+                     "passed":  true,
+                     "seconds":  0.0937513,
+                     "stdout":  "{\r\n  \"architecture\": \"AMD64\",\r\n  \"build_id\": \"0.1.0-prealpha-Experimental-9deb47d-clean-86800e25cc69\",\r\n  \"channel\": \"Experimental\",\r\n  \"compiler\": \"MSVC\",\r\n  \"compiler_version\": \"19.44.35229.0\",\r\n  \"configuration\": \"Release\",\r\n  \"maturity\": \"pre-alpha\",\r\n  \"platform\": \"Windows\",\r\n  \"schema\": 1,\r\n  \"source_dirty\": false,\r\n  \"source_fingerprint\": \"86800e25cc69bf1dd422358c9bebda07dd693a5471ffe748f439a1696db2b097\",\r\n  \"source_origin\": \"archive\",\r\n  \"source_revision\": \"9deb47d1667e5b6bd1abe708ed343c3fbf6fe847\",\r\n  \"source_tree\": \"f8c6c8885ec1eacb425c24fba9816144cbcfc74f\",\r\n  \"source_untracked_count\": 0,\r\n  \"source_untracked_fingerprint\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\r\n  \"version\": \"0.1.0-prealpha\"\r\n}\r\n",
+                     "stderr":  ""
+                 },
+                 {
+                     "label":  "identity-judas_windows_readiness_tests",
+                     "executable":  "P:\\JudasValidation\\PreAlphaPass4\\Build\\windows-sdk\\judas_windows_readiness_tests.exe",
+                     "arguments":  [
+                                       "--build-info-json"
+                                   ],
+                     "cwd":  "P:\\JudasValidation\\PreAlphaPass4",
+                     "exit":  0,
+                     "expected":  0,
+                     "passed":  true,
+                     "seconds":  0.093749699999999991,
+                     "stdout":  "{\r\n  \"architecture\": \"AMD64\",\r\n  \"build_id\": \"0.1.0-prealpha-Experimental-9deb47d-clean-86800e25cc69\",\r\n  \"channel\": \"Experimental\",\r\n  \"compiler\": \"MSVC\",\r\n  \"compiler_version\": \"19.44.35229.0\",\r\n  \"configuration\": \"Release\",\r\n  \"maturity\": \"pre-alpha\",\r\n  \"platform\": \"Windows\",\r\n  \"schema\": 1,\r\n  \"source_dirty\": false,\r\n  \"source_fingerprint\": \"86800e25cc69bf1dd422358c9bebda07dd693a5471ffe748f439a1696db2b097\",\r\n  \"source_origin\": \"archive\",\r\n  \"source_revision\": \"9deb47d1667e5b6bd1abe708ed343c3fbf6fe847\",\r\n  \"source_tree\": \"f8c6c8885ec1eacb425c24fba9816144cbcfc74f\",\r\n  \"source_untracked_count\": 0,\r\n  \"source_untracked_fingerprint\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\r\n  \"version\": \"0.1.0-prealpha\"\r\n}\r\n",
+                     "stderr":  ""
+                 },
+                 {
+                     "label":  "script-check-consumer",
+                     "executable":  "P:\\JudasValidation\\PreAlphaPass4\\Build\\windows-sdk\\judas_script_check.exe",
+                     "arguments":  [
+                                       "P:\\JudasValidation\\PreAlphaPass4\\Projects\\projects\\physics_stress_lab\\physics_stress_lab.judasproj"
+                                   ],
+                     "cwd":  "P:\\JudasValidation\\PreAlphaPass4",
+                     "exit":  0,
+                     "expected":  0,
+                     "passed":  true,
+                     "seconds":  0.10937229999999999,
+                     "stdout":  "2 registered script modules; 0 compile/link failures (maximum 128 reported). No project code executed.\r\n",
+                     "stderr":  ""
+                 },
+                 {
+                     "label":  "scene-create",
+                     "executable":  "P:\\JudasValidation\\PreAlphaPass4\\Build\\windows-sdk\\judas_scene_author.exe",
+                     "arguments":  [
+                                       "--create",
+                                       "scene",
+                                       "P:\\JudasValidation\\PreAlphaPass4\\ToolWork\\empty.judas"
+                                   ],
+                     "cwd":  "P:\\JudasValidation\\PreAlphaPass4",
+                     "exit":  0,
+                     "expected":  0,
+                     "passed":  true,
+                     "seconds":  0.062504499999999991,
+                     "stdout":  "wrote P:\\JudasValidation\\PreAlphaPass4\\ToolWork\\empty.judas\r\n",
+                     "stderr":  ""
+                 },
+                 {
+                     "label":  "scene-validate",
+                     "executable":  "P:\\JudasValidation\\PreAlphaPass4\\Build\\windows-sdk\\judas_scene_author.exe",
+                     "arguments":  [
+                                       "--validate",
+                                       "scene",
+                                       "P:\\JudasValidation\\PreAlphaPass4\\ToolWork\\empty.judas"
+                                   ],
+                     "cwd":  "P:\\JudasValidation\\PreAlphaPass4",
+                     "exit":  0,
+                     "expected":  0,
+                     "passed":  true,
+                     "seconds":  0.062537399999999993,
+                     "stdout":  "valid scene P:\\JudasValidation\\PreAlphaPass4\\ToolWork\\empty.judas\r\n",
+                     "stderr":  ""
+                 },
+                 {
+                     "label":  "scene-invalid-negative",
+                     "executable":  "P:\\JudasValidation\\PreAlphaPass4\\Build\\windows-sdk\\judas_scene_author.exe",
+                     "arguments":  [
+                                       "--validate",
+                                       "scene",
+                                       "P:\\JudasValidation\\PreAlphaPass4\\ToolWork\\absent.judas"
+                                   ],
+                     "cwd":  "P:\\JudasValidation\\PreAlphaPass4",
+                     "exit":  1,
+                     "expected":  1,
+                     "passed":  true,
+                     "seconds":  0.0780872,
+                     "stdout":  "",
+                     "stderr":  "authoring: cannot read P:\\JudasValidation\\PreAlphaPass4\\ToolWork\\absent.judas\r\n"
+                 },
+                 {
+                     "label":  "terrain-create",
+                     "executable":  "P:\\JudasValidation\\PreAlphaPass4\\Build\\windows-sdk\\judas_terrain_author.exe",
+                     "arguments":  [
+                                       "create",
+                                       "P:\\JudasValidation\\PreAlphaPass4\\ToolWork\\terrain.judasterrain",
+                                       9,
+                                       9,
+                                       8,
+                                       8
+                                   ],
+                     "cwd":  "P:\\JudasValidation\\PreAlphaPass4",
+                     "exit":  0,
+                     "expected":  0,
+                     "passed":  true,
+                     "seconds":  0.062495499999999995,
+                     "stdout":  "",
+                     "stderr":  ""
+                 },
+                 {
+                     "label":  "terrain-validate",
+                     "executable":  "P:\\JudasValidation\\PreAlphaPass4\\Build\\windows-sdk\\judas_terrain_author.exe",
+                     "arguments":  [
+                                       "validate",
+                                       "P:\\JudasValidation\\PreAlphaPass4\\ToolWork\\terrain.judasterrain"
+                                   ],
+                     "cwd":  "P:\\JudasValidation\\PreAlphaPass4",
+                     "exit":  0,
+                     "expected":  0,
+                     "passed":  true,
+                     "seconds":  0.0625028,
+                     "stdout":  "valid terrain 9 x 9\r\n",
+                     "stderr":  ""
+                 },
+                 {
+                     "label":  "terrain-edit",
+                     "executable":  "P:\\JudasValidation\\PreAlphaPass4\\Build\\windows-sdk\\judas_terrain_author.exe",
+                     "arguments":  [
+                                       "brush",
+                                       "P:\\JudasValidation\\PreAlphaPass4\\ToolWork\\terrain.judasterrain",
+                                       "raise",
+                                       0,
+                                       0,
+                                       0,
+                                       2,
+                                       0.2
+                                   ],
+                     "cwd":  "P:\\JudasValidation\\PreAlphaPass4",
+                     "exit":  0,
+                     "expected":  0,
+                     "passed":  true,
+                     "seconds":  0.0781235,
+                     "stdout":  "",
+                     "stderr":  ""
+                 },
+                 {
+                     "label":  "volume-create",
+                     "executable":  "P:\\JudasValidation\\PreAlphaPass4\\Build\\windows-sdk\\judas_volume_author.exe",
+                     "arguments":  [
+                                       "create",
+                                       "P:\\JudasValidation\\PreAlphaPass4\\ToolWork\\volume.judasvolume",
+                                       9,
+                                       9,
+                                       9,
+                                       8,
+                                       8,
+                                       8
+                                   ],
+                     "cwd":  "P:\\JudasValidation\\PreAlphaPass4",
+                     "exit":  0,
+                     "expected":  0,
+                     "passed":  true,
+                     "seconds":  0.0625054,
+                     "stdout":  "",
+                     "stderr":  ""
+                 },
+                 {
+                     "label":  "volume-edit",
+                     "executable":  "P:\\JudasValidation\\PreAlphaPass4\\Build\\windows-sdk\\judas_volume_author.exe",
+                     "arguments":  [
+                                       "brush",
+                                       "P:\\JudasValidation\\PreAlphaPass4\\ToolWork\\volume.judasvolume",
+                                       "remove",
+                                       0,
+                                       0,
+                                       0,
+                                       2,
+                                       0.5
+                                   ],
+                     "cwd":  "P:\\JudasValidation\\PreAlphaPass4",
+                     "exit":  0,
+                     "expected":  0,
+                     "passed":  true,
+                     "seconds":  0.062495199999999994,
+                     "stdout":  "",
+                     "stderr":  ""
+                 },
+                 {
+                     "label":  "volume-validate",
+                     "executable":  "P:\\JudasValidation\\PreAlphaPass4\\Build\\windows-sdk\\judas_volume_author.exe",
+                     "arguments":  [
+                                       "validate",
+                                       "P:\\JudasValidation\\PreAlphaPass4\\ToolWork\\volume.judasvolume"
+                                   ],
+                     "cwd":  "P:\\JudasValidation\\PreAlphaPass4",
+                     "exit":  0,
+                     "expected":  0,
+                     "passed":  true,
+                     "seconds":  0.0624995,
+                     "stdout":  "valid volume 729 samples\r\n",
+                     "stderr":  ""
+                 },
+                 {
+                     "label":  "deformable-bake",
+                     "executable":  "P:\\JudasValidation\\PreAlphaPass4\\Build\\windows-sdk\\judas_deformable_bake.exe",
+                     "arguments":  [
+                                       "block",
+                                       "P:\\JudasValidation\\PreAlphaPass4\\ToolWork\\block.judasdeform",
+                                       2,
+                                       2,
+                                       2,
+                                       1,
+                                       1,
+                                       1
+                                   ],
+                     "cwd":  "P:\\JudasValidation\\PreAlphaPass4",
+                     "exit":  0,
+                     "expected":  0,
+                     "passed":  true,
+                     "seconds":  0.1875066,
+                     "stdout":  "P:\\JudasValidation\\PreAlphaPass4\\ToolWork\\block.judasdeform: 27 nodes 48 triangles 48 tetrahedra 144 render vertices\r\n",
+                     "stderr":  ""
+                 },
+                 {
+                     "label":  "cook-texture",
+                     "executable":  "P:\\JudasValidation\\PreAlphaPass4\\Build\\windows-sdk\\judas_cook.exe",
+                     "arguments":  [
+                                       "P:\\JudasValidation\\PreAlphaPass4\\Source\\assets\\branding\\judas-icon.png",
+                                       "P:\\JudasValidation\\PreAlphaPass4\\ToolWork\\icon.judastex",
+                                       128,
+                                       4,
+                                       0.02,
+                                       0,
+                                       0
+                                   ],
+                     "cwd":  "P:\\JudasValidation\\PreAlphaPass4",
+                     "exit":  0,
+                     "expected":  0,
+                     "passed":  true,
+                     "seconds":  0.3281186,
+                     "stdout":  "Cooked P:\\JudasValidation\\PreAlphaPass4\\ToolWork\\icon.judastex\r\n",
+                     "stderr":  ""
+                 },
+                 {
+                     "label":  "cook-invalid-negative",
+                     "executable":  "P:\\JudasValidation\\PreAlphaPass4\\Build\\windows-sdk\\judas_cook.exe",
+                     "arguments":  [
+                                       "P:\\JudasValidation\\PreAlphaPass4\\ToolWork\\absent.png",
+                                       "P:\\JudasValidation\\PreAlphaPass4\\ToolWork\\must-not-exist.judastex"
+                                   ],
+                     "cwd":  "P:\\JudasValidation\\PreAlphaPass4",
+                     "exit":  1,
+                     "expected":  1,
+                     "passed":  true,
+                     "seconds":  0.07812659999999999,
+                     "stdout":  "",
+                     "stderr":  "Cook failed: Cannot hash asset: P:\\JudasValidation\\PreAlphaPass4\\ToolWork\\absent.png\r\n"
+                 },
+                 {
+                     "label":  "model-import",
+                     "executable":  "P:\\JudasValidation\\PreAlphaPass4\\Build\\windows-sdk\\judas_model_import_cli.exe",
+                     "arguments":  [
+                                       "P:\\JudasValidation\\PreAlphaPass4\\Source\\assets\\models\\beacon.obj",
+                                       "P:\\JudasValidation\\PreAlphaPass4\\ToolWork\\beacon.judasmodel"
+                                   ],
+                     "cwd":  "P:\\JudasValidation\\PreAlphaPass4",
+                     "exit":  0,
+                     "expected":  0,
+                     "passed":  true,
+                     "seconds":  0.07813959999999999,
+                     "stdout":  "{\r\n  \"clips\": [],\r\n  \"diagnostics\": [],\r\n  \"hierarchyNodes\": 0,\r\n  \"paletteEntries\": 0,\r\n  \"parts\": 1,\r\n  \"sourceBones\": 0,\r\n  \"sourceUnitMeters\": 1.0,\r\n  \"vertices\": 18\r\n}\r\n",
+                     "stderr":  ""
+                 },
+                 {
+                     "label":  "collision-hull-cook",
+                     "executable":  "P:\\JudasValidation\\PreAlphaPass4\\Build\\windows-sdk\\judas_collision_cook.exe",
+                     "arguments":  [
+                                       "hull",
+                                       "P:\\JudasValidation\\PreAlphaPass4\\Source\\assets\\models\\beacon.obj",
+                                       "P:\\JudasValidation\\PreAlphaPass4\\ToolWork\\beacon.judascollision",
+                                       "00000000000000000000000000000001",
+                                       0
+                                   ],
+                     "cwd":  "P:\\JudasValidation\\PreAlphaPass4",
+                     "exit":  0,
+                     "expected":  0,
+                     "passed":  true,
+                     "seconds":  0.0624915,
+                     "stdout":  "P:\\JudasValidation\\PreAlphaPass4\\ToolWork\\beacon.judascollision: 5 vertices 6 triangles 1 BVH nodes, volume 2.66666667 m3\r\n",
+                     "stderr":  ""
+                 },
+                 {
+                     "label":  "environment-real-hdr-bake",
+                     "executable":  "P:\\JudasValidation\\PreAlphaPass4\\Build\\windows-sdk\\judas_environment_bake.exe",
+                     "arguments":  [
+                                       "P:\\JudasValidation\\PreAlphaPass4\\ToolWork\\constant.hdr",
+                                       "P:\\JudasValidation\\PreAlphaPass4\\ToolWork\\constant.judasenv",
+                                       16,
+                                       32
+                                   ],
+                     "cwd":  "P:\\JudasValidation\\PreAlphaPass4",
+                     "exit":  0,
+                     "expected":  0,
+                     "passed":  true,
+                     "seconds":  0.0781278,
+                     "stdout":  "Baked P:\\JudasValidation\\PreAlphaPass4\\ToolWork\\constant.judasenv content 0c5900b31507388931098369b52a0da91edb155d65de015f440ef7022e38fbd4, 5 levels in 0.020 s\r\n",
+                     "stderr":  ""
+                 },
+                 {
+                     "label":  "navigation-dependencies-empty-project",
+                     "executable":  "P:\\JudasValidation\\PreAlphaPass4\\Build\\windows-sdk\\judas_navigation_bake.exe",
+                     "arguments":  [
+                                       "P:\\JudasValidation\\PreAlphaPass4\\Projects\\projects\\physics_stress_lab\\physics_stress_lab.judasproj",
+                                       "--check-dependents"
+                                   ],
+                     "cwd":  "P:\\JudasValidation\\PreAlphaPass4",
+                     "exit":  0,
+                     "expected":  0,
+                     "passed":  true,
+                     "seconds":  1.0937786,
+                     "stdout":  "",
+                     "stderr":  ""
+                 },
+                 {
+                     "label":  "liquid-invalid-project-negative",
+                     "executable":  "P:\\JudasValidation\\PreAlphaPass4\\Build\\windows-sdk\\judas_liquid_bake.exe",
+                     "arguments":  [
+                                       "P:\\JudasValidation\\PreAlphaPass4\\ToolWork\\absent.judasproj",
+                                       "Scenes/absent.judas"
+                                   ],
+                     "cwd":  "P:\\JudasValidation\\PreAlphaPass4",
+                     "exit":  1,
+                     "expected":  1,
+                     "passed":  true,
+                     "seconds":  0.07808749999999999,
+                     "stdout":  "",
+                     "stderr":  "could not open project file: P:\\JudasValidation\\PreAlphaPass4\\ToolWork\\absent.judasproj\r\n"
+                 },
+                 {
+                     "label":  "mod-invalid-package-negative",
+                     "executable":  "P:\\JudasValidation\\PreAlphaPass4\\Build\\windows-sdk\\judas_mod.exe",
+                     "arguments":  [
+                                       "inspect",
+                                       "P:\\JudasValidation\\PreAlphaPass4\\ToolWork\\absent.judasmod"
+                                   ],
+                     "cwd":  "P:\\JudasValidation\\PreAlphaPass4",
+                     "exit":  1,
+                     "expected":  1,
+                     "passed":  true,
+                     "seconds":  0.0781216,
+                     "stdout":  "",
+                     "stderr":  "nonregular/linked/oversized content file\r\n"
+                 },
+                 {
+                     "label":  "server-invalid-port-negative",
+                     "executable":  "P:\\JudasValidation\\PreAlphaPass4\\Build\\windows-sdk\\judas_server.exe",
+                     "arguments":  [
+                                       "P:\\JudasValidation\\PreAlphaPass4\\Projects\\projects\\physics_stress_lab\\physics_stress_lab.judasproj",
+                                       "70000",
+                                       1
+                                   ],
+                     "cwd":  "P:\\JudasValidation\\PreAlphaPass4",
+                     "exit":  1,
+                     "expected":  1,
+                     "passed":  true,
+                     "seconds":  0.0937493,
+                     "stdout":  "",
+                     "stderr":  "Judas dedicated: port must be an integer in 1..65535\r\n"
+                 },
+                 {
+                     "label":  "save-content-identity",
+                     "executable":  "P:\\JudasValidation\\PreAlphaPass4\\Build\\windows-sdk\\judas_save.exe",
+                     "arguments":  [
+                                       "identity",
+                                       "P:\\JudasValidation\\PreAlphaPass4\\Projects\\projects\\physics_stress_lab\\physics_stress_lab.judasproj"
+                                   ],
+                     "cwd":  "P:\\JudasValidation\\PreAlphaPass4",
+                     "exit":  0,
+                     "expected":  0,
+                     "passed":  true,
+                     "seconds":  0.1093933,
+                     "stdout":  "{\r\n  \"compatibility\": \"\",\r\n  \"content\": \"26fe651be18ee1ba4b2841f7d4aaa3d0a4cc7b96dd2777d561c2bfd406826899\",\r\n  \"version\": 0\r\n}\r\n",
+                     "stderr":  ""
+                 },
+                 {
+                     "label":  "windows-readiness",
+                     "executable":  "P:\\JudasValidation\\PreAlphaPass4\\Build\\windows-sdk\\judas_windows_readiness_tests.exe",
+                     "arguments":  [
+
+                                   ],
+                     "cwd":  "P:\\JudasValidation\\PreAlphaPass4",
+                     "exit":  0,
+                     "expected":  0,
+                     "passed":  true,
+                     "seconds":  0.4375171,
+                     "stdout":  "PASS authoring numeric locale uses decimal point\r\nPASS nested authoring numeric locale remains C\r\nPASS authoring numeric locale restores caller locale\r\nPASS executable root independent of cwd\r\nPASS executable root after unrelated cwd\r\nPASS absolute user save location\r\nPASS import replacement changes race stamp\r\nPASS replace existing staged destination\r\nPASS exclusive export staging directory\r\nPASS save first generation\r\nPASS save replacement and backup\r\nPASS save metadata/payload round trip\r\nPASS previous generation recovery\r\nPASS path traversal rejected\r\nPASS failed publication not advertised\r\nPASS slot listing excludes temporary files\r\nPASS exclusive save lock rejects concurrent writer\r\nPASS delete current and previous generation\r\nPASS bounded native build-info capture\r\nPASS native process with spaced argument\r\nPASS child receives exact quoted path\r\nSUMMARY checks=21 failures=0\r\n",
+                     "stderr":  ""
+                 }
+             ],
+    "passed":  false,
+    "scope":  "Exact final source archive; all SDK tools compile/stage and emit identity, selected tools exercised with real positive/negative operations. Not every subsystem feature is certified."
+}

@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "utc": "2026-10-18T17:28:29.679478+00:00",
+  "native_code_checkpoint": "9deb47d1667e5b6bd1abe708ed343c3fbf6fe847",
+  "python_tooling_checkpoint": "df8929f73505d407697b5d35b115fc71d9100471",
+  "source_fingerprint_records_verified": 27,
+  "nested_evidence_entries_verified": 772,
+  "changed_files": 805,
+  "exact_file_inventory": "CHANGED_FILES.txt",
+  "inherited_register_fields_preserved": true,
+  "original_workstreams": 10,
+  "original_findings": 54,
+  "pass4_finding_status_counts": {
+    "resolved": 18,
+    "open": 4,
+    "improved": 13,
+    "deferred": 17,
+    "unsupported_by_evidence": 2
+  },
+  "linux_engine_archive_matches": true,
+  "portable_source_archive_matches": true,
+  "windows_final_integrity_passed": true,
+  "protected_tracked_files_outside_explicit_scope_unchanged": true,
+  "no_generated_executables_or_caches_in_inventory": true,
+  "limitations": "This is integrity/scope verification, not a new engine test or human/Alpha acceptance. Failed numerical contracts remain failed; hardware gaps remain open."
+}

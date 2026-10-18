@@ -1,0 +1,21 @@
+﻿{
+    "schema":  1,
+    "utc":  "2026-10-18T17:13:26.6678531Z",
+    "files":  [
+                  {
+                      "source":  "P:\\JudasValidation\\PreAlphaPass4\\Source\\docs\\judasjs\\examples\\multi-target-ik.js",
+                      "destination":  "P:\\JudasValidation\\PreAlphaPass4\\Projects\\docs\\judasjs\\examples\\multi-target-ik.js",
+                      "wasPreviouslyAbsent":  true,
+                      "sourceSHA256":  "bf1ca7ca20517bf10e0700aa40565163ec3c24b22723f33deeaed6114fb34669",
+                      "copiedSHA256":  "bf1ca7ca20517bf10e0700aa40565163ec3c24b22723f33deeaed6114fb34669"
+                  },
+                  {
+                      "source":  "P:\\JudasValidation\\PreAlphaPass4\\Source\\docs\\judasjs\\examples\\physical-animation.js",
+                      "destination":  "P:\\JudasValidation\\PreAlphaPass4\\Projects\\docs\\judasjs\\examples\\physical-animation.js",
+                      "wasPreviouslyAbsent":  true,
+                      "sourceSHA256":  "989ab1ed2759333fa99fbe91d99f10058db986b92fe72d32dcf0f8adc67027d0",
+                      "copiedSHA256":  "989ab1ed2759333fa99fbe91d99f10058db986b92fe72d32dcf0f8adc67027d0"
+                  }
+              ],
+    "scope":  "Only original relative-path cookbook prerequisites used by unchanged CharacterLabTests mode; no test or engine code change"
+}

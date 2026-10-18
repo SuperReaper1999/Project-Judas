@@ -1,0 +1,93 @@
+{
+  "assetBytes": 782307,
+  "auxiliary": [],
+  "deduplicatedBytes": 0,
+  "excluded": [],
+  "excludedAssetBytes": 0,
+  "included": [
+    {
+      "bytes": 9721,
+      "id": "00bc38bf068ea056fc52684a1769bfca",
+      "path": "Assets/ui/stress.judasui",
+      "reasons": [
+        "dynamic script/UI or save fingerprint compatibility",
+        "scene Scenes/room1024.judas",
+        "scene Scenes/room128.judas",
+        "scene Scenes/room512.judas",
+        "scene Scenes/rotated.judas"
+      ],
+      "sha256": "9c560ff3c5e0d8bcc79a32bc5bee055a3e7b0acc16416d7213a023a2a04a08c1",
+      "sharedPayload": false,
+      "type": "ui"
+    },
+    {
+      "bytes": 7477,
+      "id": "20b2036113278a9952d1122bae18d743",
+      "path": "Assets/scripts/lab.js",
+      "reasons": [
+        "dynamic script/UI or save fingerprint compatibility",
+        "scene Scenes/room1024.judas",
+        "scene Scenes/room128.judas",
+        "scene Scenes/room512.judas",
+        "scene Scenes/rotated.judas"
+      ],
+      "sha256": "3a7b45e5e4f7896f68c60cfec842ff43fc7dca3ef85a0928d32036afd778d9b4",
+      "sharedPayload": false,
+      "type": "script"
+    },
+    {
+      "bytes": 2204,
+      "id": "248ca2c01ae1684d44885237c41f24d2",
+      "path": "Assets/prefabs/box.judasprefab",
+      "reasons": [
+        "explicit runtime/save root"
+      ],
+      "sha256": "e3ed9fdcd1e7dd68841b4e497e5ac688089fb62da920834ead3da02d69fdca0a",
+      "sharedPayload": false,
+      "type": "prefab"
+    },
+    {
+      "bytes": 2213,
+      "id": "31cd485353e68fdea03c2473cad25025",
+      "path": "Assets/prefabs/sphere.judasprefab",
+      "reasons": [
+        "explicit runtime/save root"
+      ],
+      "sha256": "f68aa4541ced81908bfe926edda70c9f661d540a0a6561c3b870595b240e6244",
+      "sharedPayload": false,
+      "type": "prefab"
+    },
+    {
+      "bytes": 972,
+      "id": "5b616dbe929ca20aad831c1ef4b435cf",
+      "path": "Assets/scripts/math.js",
+      "reasons": [
+        "dynamic script/UI or save fingerprint compatibility"
+      ],
+      "sha256": "917b3312426e9a2649001604963af3dcef410c64bc0f7e75b7fc00ede9aca9ba",
+      "sharedPayload": false,
+      "type": "script"
+    },
+    {
+      "bytes": 759720,
+      "id": "f514d0d6829cb47386b52e7a26eaaf0c",
+      "path": "Assets/fonts/DejaVuSans.ttf",
+      "reasons": [
+        "dependency of 00bc38bf068ea056fc52684a1769bfca",
+        "dynamic script/UI or save fingerprint compatibility"
+      ],
+      "sha256": "b4c632e3cdf9acc7f28758fb5a323c8524d7fc6660d46904d9b6cbe2809c419c",
+      "sharedPayload": false,
+      "type": "font"
+    }
+  ],
+  "physicalAssetBytes": 782307,
+  "policy": "closure",
+  "scenes": [
+    "Scenes/room1024.judas",
+    "Scenes/room128.judas",
+    "Scenes/room512.judas",
+    "Scenes/rotated.judas"
+  ],
+  "version": 1
+}

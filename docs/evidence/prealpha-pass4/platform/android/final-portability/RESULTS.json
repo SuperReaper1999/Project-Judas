@@ -1,0 +1,150 @@
+{
+  "schema": 1,
+  "utc": "2026-10-18T16:59:37.835922+00:00",
+  "code_checkpoint": "9deb47d1667e5b6bd1abe708ed343c3fbf6fe847",
+  "observed_head": "9deb47d1667e5b6bd1abe708ed343c3fbf6fe847",
+  "tracked_dirty_paths": [
+    "docs/PREALPHA.md"
+  ],
+  "argv": [
+    "cmake",
+    "--build",
+    ".cache/m88/android-arm64-v8a",
+    "--target",
+    "main",
+    "-j2"
+  ],
+  "exit": 0,
+  "configuration": "Existing NDK28.2.13676358 ARM64/API26 Release cache; one changed scripting TU, build identity and shared runtime relink",
+  "source_files": [
+    {
+      "path": "CMakeLists.txt",
+      "bytes": 79138,
+      "sha256": "3988e44c8a6afb7974970aa080f8724f7cd63897064d386d3ba2a276970b3fc9"
+    },
+    {
+      "path": "cmake/PhysicsWorldSources.cmake",
+      "bytes": 584,
+      "sha256": "0ce9e7196ec112636793a2ed4be95f84527156727761b0400ee42e854dfbd47f"
+    },
+    {
+      "path": "docs/evidence/m78-followup/probes/concave_final.cpp",
+      "bytes": 5248,
+      "sha256": "f0ce020eb47613ae82bb2619cdc03e6b477782b744576be2b9a36a52f5079136"
+    },
+    {
+      "path": "src/PhysicsWorld.cpp",
+      "bytes": 44852,
+      "sha256": "0caa0c0ea5afb662b85a1be6764db04ef9da4c81c7fb82d1980eb8ec76e2d0dd"
+    },
+    {
+      "path": "src/PhysicsWorld.h",
+      "bytes": 34212,
+      "sha256": "eddadb36acc2cd46693859e844ca981d4b9f684fde68035b08ed37b757f71f03"
+    },
+    {
+      "path": "src/ScriptSystem.cpp",
+      "bytes": 253216,
+      "sha256": "e91aa35e7076cda032d00525ff237a09d7917fc5725c8e8fe3844588f891b173"
+    },
+    {
+      "path": "src/physics/.clang-format",
+      "bytes": 274,
+      "sha256": "19a3dd254b17b378c5ca82727aec3b295ca76014cb4f5a7f5b2f0ae8ce4719b7"
+    },
+    {
+      "path": "src/physics/WorldBodies.cpp",
+      "bytes": 44567,
+      "sha256": "c4b81019fea68793ecc4d09b50a2fa1dfdbfd2bcd339126bcfc9c8f55b00e771"
+    },
+    {
+      "path": "src/physics/WorldBounds.cpp",
+      "bytes": 6461,
+      "sha256": "67c30882a5251028627934f9269f6e21a723d2c51fe811c9b34eddfe1f153f62"
+    },
+    {
+      "path": "src/physics/WorldCCDSearch.cpp",
+      "bytes": 30981,
+      "sha256": "df469cbc6d6354b3c0e049659a7aab2542c8d5da8a1bcc429938122689fc0bd8"
+    },
+    {
+      "path": "src/physics/WorldContacts.cpp",
+      "bytes": 14313,
+      "sha256": "d8f842da964ed78c07adc002a33c3e862f79a19a943035c3bc46af568a88d521"
+    },
+    {
+      "path": "src/physics/WorldHotAccessors.h",
+      "bytes": 4225,
+      "sha256": "600bec28d7b5d07b5a922136699ffa69c36c759484c7b8449f045c2df6ea4b1f"
+    },
+    {
+      "path": "src/physics/WorldImpactEvents.cpp",
+      "bytes": 34985,
+      "sha256": "65dda9f4732e78d02a8461e9e92f8b6490d14bebcb51473f0d573d73d9217b38"
+    },
+    {
+      "path": "src/physics/WorldImpactQueries.h",
+      "bytes": 7210,
+      "sha256": "9ba01fb837b1a1dcfbf0e3d4b60b8ab63873d92b18321ea2186ed1254f9d25f8"
+    },
+    {
+      "path": "src/physics/WorldInternal.h",
+      "bytes": 23272,
+      "sha256": "a5beacba3b90719bfe4e37e7b53af0f9225c4329d674e0b5eacc98614450fb0f"
+    },
+    {
+      "path": "src/physics/WorldJoints.cpp",
+      "bytes": 7673,
+      "sha256": "a292a20eb4dde14484b262cd436997ce2041f6fb459aec5d8ab2dbda516813d5"
+    },
+    {
+      "path": "src/physics/WorldModules.md",
+      "bytes": 4083,
+      "sha256": "6812e4438843ec7492a6fa2d950c210ebb30ac0486eb26bdc16887a3f3c9d1b5"
+    },
+    {
+      "path": "src/physics/WorldParticles.cpp",
+      "bytes": 26305,
+      "sha256": "e8a3b5beeac67efbf18d361aa441351b5689f9f625009a7c4efb3d30bbc21555"
+    },
+    {
+      "path": "src/physics/WorldPersistence.cpp",
+      "bytes": 19010,
+      "sha256": "917e63c0d14f0d3489d1abe037a4dacaa7feb668b34baccea6b1aed712bc9fbc"
+    },
+    {
+      "path": "src/physics/WorldProfiling.h",
+      "bytes": 1315,
+      "sha256": "ed900584346e02a601ebf4718b12c1041e3089921cc915c801d8503d64e78876"
+    },
+    {
+      "path": "src/physics/WorldQueries.cpp",
+      "bytes": 26686,
+      "sha256": "65abf29fc83f26e501127c2c239349607b27db37a6ba36f814fbdd0fe3c56e14"
+    },
+    {
+      "path": "src/physics/WorldSleep.cpp",
+      "bytes": 14127,
+      "sha256": "2edda5d49060ab3d06b3d81306aa95d5b75a1f184136fa061f57d0e453754389"
+    },
+    {
+      "path": "tests/JudasJSExamplesTests.cpp",
+      "bytes": 15320,
+      "sha256": "d3d78ab6cf5c0f61ec0848dcf77c82a3cabf98bafc6d25447bd4a7040eb3199a"
+    },
+    {
+      "path": "tests/ScriptTests.cpp",
+      "bytes": 13679,
+      "sha256": "379d1811d38afb129c483321677aee91183048c9eb146b5689e5291c78be5172"
+    }
+  ],
+  "runtime": {
+    "path": ".cache/m88/android-arm64-v8a/libmain.so",
+    "bytes": 248198448,
+    "sha256": "01c19d8a14776d9bdf675ab56952be482b8bb19758df039f8f992bf70a110c26"
+  },
+  "warnings": "Four Clang warnings remain in the actual incremental log; no unrelated warning cleanup",
+  "apk_built": false,
+  "device_tested": false,
+  "scope": "Native Android ABI compile/link only. Docs-only dirtiness is explicit; selected engine/build bytes exactly match checkpoint. No performance, APK or device acceptance claim."
+}

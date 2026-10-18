@@ -1,0 +1,106 @@
+﻿{
+    "schema":  1,
+    "utc":  "2026-10-18T17:02:55.4005650Z",
+    "rows":  [
+                 {
+                     "label":  "moved-sdk-verify",
+                     "executable":  "C:\\JudasValidation\\Python\\python.exe",
+                     "arguments":  [
+                                       "P:\\JudasValidation\\PreAlphaPass4\\Relocated SDK é α\\tools\\package_sdk.py",
+                                       "verify",
+                                       "P:\\JudasValidation\\PreAlphaPass4\\Relocated SDK é α"
+                                   ],
+                     "cwd":  "P:\\JudasValidation\\PreAlphaPass4",
+                     "exit":  0,
+                     "expected":  0,
+                     "passed":  true,
+                     "seconds":  4.453088,
+                     "stdout":  "{\"build\": {\"architecture\": \"AMD64\", \"build_id\": \"0.1.0-prealpha-Experimental-9deb47d-clean-86800e25cc69\", \"channel\": \"Experimental\", \"compiler\": \"MSVC\", \"compiler_version\": \"19.44.35229.0\", \"configuration\": \"Release\", \"maturity\": \"pre-alpha\", \"platform\": \"Windows\", \"schema\": 1, \"source_dirty\": false, \"source_fingerprint\": \"86800e25cc69bf1dd422358c9bebda07dd693a5471ffe748f439a1696db2b097\", \"source_origin\": \"archive\", \"source_revision\": \"9deb47d1667e5b6bd1abe708ed343c3fbf6fe847\", \"source_tree\": \"f8c6c8885ec1eacb425c24fba9816144cbcfc74f\", \"source_untracked_count\": 0, \"source_untracked_fingerprint\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\", \"version\": \"0.1.0-prealpha\"}, \"files\": 238, \"ok\": true, \"tools\": 18}\r\n",
+                     "stderr":  ""
+                 },
+                 {
+                     "label":  "moved-editor-identity",
+                     "executable":  "P:\\JudasValidation\\PreAlphaPass4\\Relocated SDK é α\\judas_editor.exe",
+                     "arguments":  [
+                                       "--build-info-json"
+                                   ],
+                     "cwd":  "P:\\JudasValidation\\PreAlphaPass4",
+                     "exit":  0,
+                     "expected":  0,
+                     "passed":  true,
+                     "seconds":  0.5156154,
+                     "stdout":  "{\r\n  \"architecture\": \"AMD64\",\r\n  \"build_id\": \"0.1.0-prealpha-Experimental-9deb47d-clean-86800e25cc69\",\r\n  \"channel\": \"Experimental\",\r\n  \"compiler\": \"MSVC\",\r\n  \"compiler_version\": \"19.44.35229.0\",\r\n  \"configuration\": \"Release\",\r\n  \"maturity\": \"pre-alpha\",\r\n  \"platform\": \"Windows\",\r\n  \"schema\": 1,\r\n  \"source_dirty\": false,\r\n  \"source_fingerprint\": \"86800e25cc69bf1dd422358c9bebda07dd693a5471ffe748f439a1696db2b097\",\r\n  \"source_origin\": \"archive\",\r\n  \"source_revision\": \"9deb47d1667e5b6bd1abe708ed343c3fbf6fe847\",\r\n  \"source_tree\": \"f8c6c8885ec1eacb425c24fba9816144cbcfc74f\",\r\n  \"source_untracked_count\": 0,\r\n  \"source_untracked_fingerprint\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\r\n  \"version\": \"0.1.0-prealpha\"\r\n}\r\n",
+                     "stderr":  ""
+                 },
+                 {
+                     "label":  "ordinary-consumer-export",
+                     "executable":  "P:\\JudasValidation\\PreAlphaPass4\\Relocated SDK é α\\judas_export.exe",
+                     "arguments":  [
+                                       "P:\\JudasValidation\\PreAlphaPass4\\Projects\\projects\\physics_stress_lab\\physics_stress_lab.judasproj",
+                                       "P:\\JudasValidation\\PreAlphaPass4\\Export Original"
+                                   ],
+                     "cwd":  "P:\\JudasValidation\\PreAlphaPass4",
+                     "exit":  0,
+                     "expected":  0,
+                     "passed":  true,
+                     "seconds":  2.2968707999999998,
+                     "stdout":  "Exported P:\\JudasValidation\\PreAlphaPass4\\Export Original: 6 assets, 4 scenes, 58799273 bytes, 1.317 seconds\r\n",
+                     "stderr":  ""
+                 },
+                 {
+                     "label":  "moved-standalone-identity",
+                     "executable":  "P:\\JudasValidation\\PreAlphaPass4\\Moved Game é α\\judas.exe",
+                     "arguments":  [
+                                       "--build-info-json"
+                                   ],
+                     "cwd":  "P:\\JudasValidation\\PreAlphaPass4",
+                     "exit":  0,
+                     "expected":  0,
+                     "passed":  true,
+                     "seconds":  0.32812939999999996,
+                     "stdout":  "{\r\n  \"architecture\": \"AMD64\",\r\n  \"build_id\": \"0.1.0-prealpha-Experimental-9deb47d-clean-86800e25cc69\",\r\n  \"channel\": \"Experimental\",\r\n  \"compiler\": \"MSVC\",\r\n  \"compiler_version\": \"19.44.35229.0\",\r\n  \"configuration\": \"Release\",\r\n  \"maturity\": \"pre-alpha\",\r\n  \"platform\": \"Windows\",\r\n  \"schema\": 1,\r\n  \"source_dirty\": false,\r\n  \"source_fingerprint\": \"86800e25cc69bf1dd422358c9bebda07dd693a5471ffe748f439a1696db2b097\",\r\n  \"source_origin\": \"archive\",\r\n  \"source_revision\": \"9deb47d1667e5b6bd1abe708ed343c3fbf6fe847\",\r\n  \"source_tree\": \"f8c6c8885ec1eacb425c24fba9816144cbcfc74f\",\r\n  \"source_untracked_count\": 0,\r\n  \"source_untracked_fingerprint\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\r\n  \"version\": \"0.1.0-prealpha\"\r\n}\r\n",
+                     "stderr":  ""
+                 },
+                 {
+                     "label":  "missing-runtime-export-negative",
+                     "executable":  "P:\\JudasValidation\\PreAlphaPass4\\NegativeMissingRuntimeSDK\\judas_export.exe",
+                     "arguments":  [
+                                       "P:\\JudasValidation\\PreAlphaPass4\\Projects\\projects\\physics_stress_lab\\physics_stress_lab.judasproj",
+                                       "P:\\JudasValidation\\PreAlphaPass4\\MustNotPublish"
+                                   ],
+                     "cwd":  "P:\\JudasValidation\\PreAlphaPass4",
+                     "exit":  1,
+                     "expected":  1,
+                     "passed":  true,
+                     "seconds":  3.781316,
+                     "stdout":  "",
+                     "stderr":  "Export failed: Missing Windows runtime library: icudt76.dll\r\n"
+                 },
+                 {
+                     "label":  "sdk-tamper-negative",
+                     "executable":  "C:\\JudasValidation\\Python\\python.exe",
+                     "arguments":  [
+                                       "P:\\JudasValidation\\PreAlphaPass4\\TamperedSDK\\tools\\package_sdk.py",
+                                       "verify",
+                                       "P:\\JudasValidation\\PreAlphaPass4\\TamperedSDK"
+                                   ],
+                     "cwd":  "P:\\JudasValidation\\PreAlphaPass4",
+                     "exit":  1,
+                     "expected":  1,
+                     "passed":  true,
+                     "seconds":  1033.7086358,
+                     "stdout":  "",
+                     "stderr":  "SDK packaging failed: SDK file inventory/checksum mismatch (missing, changed or unexpected file)\r\n"
+                 }
+             ],
+    "passed":  true,
+    "missingDll":  {
+                       "path":  "P:\\JudasValidation\\PreAlphaPass4\\NegativeMissingRuntimeSDK\\windows-runtime\\icudt76.dll",
+                       "sha256":  "f854bc651b962e99cc9338f4afb4e9ee60b1420686f57254dfdc9d778318eb58"
+                   },
+    "failedExportNotPublished":  true,
+    "movedPackage":  "P:\\JudasValidation\\PreAlphaPass4\\Moved Game é α",
+    "packageFiles":  41,
+    "stockPackageContainsMesa":  false,
+    "scope":  "Genuine native all-tool SDK, relocated Unicode/spaces SDK and ordinary export, checksums and missing-payload negative controls. Application graphical execution separately qualified using explicit isolated software overlay."
+}

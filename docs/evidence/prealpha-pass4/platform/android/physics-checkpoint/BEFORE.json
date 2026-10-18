@@ -1,0 +1,16 @@
+{
+  "utc": "2026-10-18T16:11:23.019353+00:00",
+  "scope": "Existing Android ARM64 generated baseline artifacts; preserved fingerprints before incremental private-world module rebuild",
+  "files": [
+    {
+      "path": ".cache/m88/android-arm64-v8a/libjudas_engine.a",
+      "bytes": 420026966,
+      "sha256": "36ef938ab1e4060f264c1d900824583d779e49d69938bfc0a30e9c1d777e5b4f"
+    },
+    {
+      "path": ".cache/m88/android-arm64-v8a/libmain.so",
+      "bytes": 245664528,
+      "sha256": "de6239916357dd8d81b3fcc641643f2c22f40314eceabc8ca786bf5ed0c0203e"
+    }
+  ]
+}

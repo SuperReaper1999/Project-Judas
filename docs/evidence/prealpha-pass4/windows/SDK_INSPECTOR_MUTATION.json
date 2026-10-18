@@ -1,0 +1,17 @@
+﻿{
+    "schema":  1,
+    "utc":  "2026-10-18T16:44:15.5356976Z",
+    "cause":  "SDK inspector imported sibling Python modules before verifying immutable SDK inventory",
+    "files":  [
+                  {
+                      "path":  "P:\\JudasValidation\\PreAlphaPass4\\Build\\windows-sdk\\tools\\__pycache__\\binary_dependencies.cpython-313.pyc",
+                      "bytes":  10899,
+                      "sha256":  "aa5a5d3b549341cb160fbb5ac7fd846db292206f20d1656e91a9635fe8a7e8af"
+                  },
+                  {
+                      "path":  "P:\\JudasValidation\\PreAlphaPass4\\Build\\windows-sdk\\tools\\__pycache__\\package_sdk.cpython-313.pyc",
+                      "bytes":  21272,
+                      "sha256":  "95c23c38bb6c660dda2c8d6a63715fc52a8a803dcec33e34578e2d7eb1584d13"
+                  }
+              ]
+}

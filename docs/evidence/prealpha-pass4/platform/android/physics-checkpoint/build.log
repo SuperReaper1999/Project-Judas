@@ -1,0 +1,196 @@
+[  0%] Building CXX object CMakeFiles/judas_build_identity.dir/src/BuildIdentity.cpp.o
+[  7%] Built target freetype
+[ 21%] Built target sdl_headers_copy
+[ 24%] Built target judas_meshoptimizer
+[ 26%] Built target judas_icu_build
+[ 27%] Built target judas_quickjs
+[ 30%] Built target judas_navigation_backend
+[ 30%] Built target judas_profiler
+[ 30%] Built target judas_jobs
+[ 31%] Built target judas_audio_backend
+[ 32%] Built target harfbuzz
+[ 33%] Built target SDL2main
+[ 65%] Built target SDL2
+[ 66%] Building CXX object CMakeFiles/judas_navigation_cook.dir/src/NavigationGeometryBake.cpp.o
+[ 67%] Linking CXX static library libjudas_navigation_cook.a
+[ 68%] Built target judas_navigation_cook
+[ 68%] Built target judas_materials
+[ 68%] Built target judas_app_icon
+[ 68%] Linking CXX static library libjudas_build_identity.a
+[ 68%] Built target judas_build_identity
+[ 68%] Building CXX object CMakeFiles/judas_engine.dir/src/NetworkSession.cpp.o
+[ 69%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldWheels.cpp.o
+[ 69%] Building CXX object CMakeFiles/judas_engine.dir/src/PowertrainAuthoring.cpp.o
+[ 69%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldPowertrains.cpp.o
+[ 69%] Building CXX object CMakeFiles/judas_engine.dir/src/modding/ModContent.cpp.o
+[ 69%] Building CXX object CMakeFiles/judas_engine.dir/src/modding/ModRuntime.cpp.o
+[ 69%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldFracture.cpp.o
+[ 69%] Building CXX object CMakeFiles/judas_engine.dir/src/DeformableAsset.cpp.o
+[ 70%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldDeformables.cpp.o
+[ 70%] Building CXX object CMakeFiles/judas_engine.dir/src/Localization.cpp.o
+/home/conner/Documents/GitHub/Project-Judas/src/Localization.cpp:33:3: warning: misleading indentation; statement is not part of the previous 'for' [-Wmisleading-indentation]
+   33 |  }return true;
+      |   ^
+/home/conner/Documents/GitHub/Project-Judas/src/Localization.cpp:25:2: note: previous statement is here
+   25 |  for(int i=0;i<mp.countParts();++i)if(mp.getPartType(i)==UMSGPAT_PART_TYPE_ARG_START){
+      |  ^
+[ 70%] Building CXX object CMakeFiles/judas_engine.dir/src/Material.cpp.o
+1 warning generated.
+[ 70%] Building CXX object CMakeFiles/judas_engine.dir/src/LiquidGeometry.cpp.o
+[ 70%] Building CXX object CMakeFiles/judas_engine.dir/src/LiquidTypes.cpp.o
+[ 70%] Building CXX object CMakeFiles/judas_engine.dir/src/LiquidSystem.cpp.o
+[ 70%] Building CXX object CMakeFiles/judas_engine.dir/src/LiquidSurface.cpp.o
+/home/conner/Documents/GitHub/Project-Judas/src/LiquidSystem.cpp:148:80: warning: captured structured bindings are a C++20 extension [-Wc++20-extensions]
+  148 |   auto accumulate=[&](LiquidMoment m,glm::vec3 flow){if(m.volume>0){V c=global(s.pose,m.first/m.volume);
+      |                                                                                ^
+/home/conner/Documents/GitHub/Project-Judas/src/LiquidSystem.cpp:143:16: note: 's' declared here
+  143 |  for(auto& [id,s]:m_states)if(s.enabled&&!s.container&&s.volume>0)for(auto worldTet:geometry.cells){
+      |                ^
+/home/conner/Documents/GitHub/Project-Judas/src/LiquidSystem.cpp:154:45: warning: captured structured bindings are a C++20 extension [-Wc++20-extensions]
+  154 |    accumulate(LiquidIntersection(body,basin,s.equilibrium,level),flow);
+      |                                             ^
+/home/conner/Documents/GitHub/Project-Judas/src/LiquidSystem.cpp:143:16: note: 's' declared here
+  143 |  for(auto& [id,s]:m_states)if(s.enabled&&!s.container&&s.volume>0)for(auto worldTet:geometry.cells){
+      |                ^
+/home/conner/Documents/GitHub/Project-Judas/src/LiquidSystem.cpp:231:161: warning: captured structured bindings are a C++20 extension [-Wc++20-extensions]
+  231 |     for(unsigned corner=0;corner<8;++corner){V p=V(center)+glm::dquat(child)*V(corner&1?half.x:-half.x,corner&2?half.y:-half.y,corner&4?half.z:-half.z);p=local(s.pose,V(pose.position)+glm::dquat(pose.rotation)*p);lower=glm::min(lower,p);upper=glm::max(upper,p);}
+      |                                                                                                                                                                 ^
+/home/conner/Documents/GitHub/Project-Judas/src/LiquidSystem.cpp:224:16: note: 's' declared here
+  224 |  for(auto& [id,s]:m_states)if(s.enabled&&s.dynamicSurface){
+      |                ^
+/home/conner/Documents/GitHub/Project-Judas/src/LiquidSystem.cpp:236:6: warning: misleading indentation; statement is not part of the previous 'for' [-Wmisleading-indentation]
+  236 |     }(world.Physics().IsDynamicBody(body)?dynamicSolids:solids).push_back(std::move(planes));
+      |      ^
+/home/conner/Documents/GitHub/Project-Judas/src/LiquidSystem.cpp:234:5: note: previous statement is here
+  234 |     for(unsigned axis=0;axis<3;++axis)for(double sign:{-1.,1.}){V normal(0);normal[axis]=sign;normal=glm::inverse(glm::dquat(s.pose.rotation))*glm::dquat(pose.rotation)*glm::dquat(child)*normal;
+      |     ^
+/home/conner/Documents/GitHub/Project-Judas/src/LiquidSystem.cpp:246:62: warning: captured structured bindings are a C++20 extension [-Wc++20-extensions]
+  246 |     for(auto& plane:planes){V normal=glm::inverse(glm::dquat(s.pose.rotation))*glm::dquat(c.pose.rotation)*V(plane);
+      |                                                              ^
+/home/conner/Documents/GitHub/Project-Judas/src/LiquidSystem.cpp:224:16: note: 's' declared here
+  224 |  for(auto& [id,s]:m_states)if(s.enabled&&s.dynamicSurface){
+      |                ^
+/home/conner/Documents/GitHub/Project-Judas/src/LiquidSystem.cpp:246:91: warning: captured structured bindings are a C++20 extension [-Wc++20-extensions]
+  246 |     for(auto& plane:planes){V normal=glm::inverse(glm::dquat(s.pose.rotation))*glm::dquat(c.pose.rotation)*V(plane);
+      |                                                                                           ^
+/home/conner/Documents/GitHub/Project-Judas/src/LiquidSystem.cpp:244:22: note: 'c' declared here
+  244 |   for(auto& [otherId,c]:m_states)if(c.container&&c.enabled&&c.equilibriumValid&&c.volume>0){
+      |                      ^
+/home/conner/Documents/GitHub/Project-Judas/src/LiquidSystem.cpp:306:32: warning: captured structured bindings are a C++20 extension [-Wc++20-extensions]
+  306 |    auto& cache=m_opticalCache[{id,index}];
+      |                                ^
+/home/conner/Documents/GitHub/Project-Judas/src/LiquidSystem.cpp:304:13: note: 'id' declared here
+  304 |  for(auto& [id,s]:m_states)if(s.enabled&&s.equilibriumValid&&s.volume>0){
+      |             ^
+/home/conner/Documents/GitHub/Project-Judas/src/LiquidSystem.cpp:307:54: warning: captured structured bindings are a C++20 extension [-Wc++20-extensions]
+  307 |    if(cache.revision!=revision||cache.pose.position!=s.pose.position||cache.pose.rotation!=s.pose.rotation||!cache.equilibrium.Equivalent(s.equilibrium)){
+      |                                                      ^
+/home/conner/Documents/GitHub/Project-Judas/src/LiquidSystem.cpp:304:16: note: 's' declared here
+  304 |  for(auto& [id,s]:m_states)if(s.enabled&&s.equilibriumValid&&s.volume>0){
+      |                ^
+[ 70%] Building CXX object CMakeFiles/judas_engine.dir/src/RuntimeTerrain.cpp.o
+8 warnings generated.
+[ 70%] Building CXX object CMakeFiles/judas_engine.dir/src/NavigationSystem.cpp.o
+[ 70%] Building CXX object CMakeFiles/judas_engine.dir/src/NavigationTypes.cpp.o
+[ 70%] Building CXX object CMakeFiles/judas_engine.dir/src/NavigationAsset.cpp.o
+[ 70%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldPhysicalBalance.cpp.o
+[ 70%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldAnimation.cpp.o
+[ 71%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldRagdoll.cpp.o
+[ 71%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldCharacter.cpp.o
+[ 71%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldGravity.cpp.o
+[ 71%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldStreaming.cpp.o
+[ 71%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldRegions.cpp.o
+[ 72%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldScripts.cpp.o
+[ 72%] Building CXX object CMakeFiles/judas_engine.dir/src/RuntimeUI.cpp.o
+[ 72%] Building CXX object CMakeFiles/judas_engine.dir/src/ScriptSystem.cpp.o
+/home/conner/Documents/GitHub/Project-Judas/src/ScriptSystem.cpp:1643:19: warning: misleading indentation; statement is not part of the previous 'for' [-Wmisleading-indentation]
+ 1643 |         return o;}return JS_NULL;}
+      |                   ^
+/home/conner/Documents/GitHub/Project-Judas/src/ScriptSystem.cpp:1640:26: note: previous statement is here
+ 1640 |     if(op=="cameraInfo"){for(const auto& camera:world.PresentationCameras())if(camera.id==id){auto o=JS_NewObject(c);JS_SetPropertyStr(c,o,"enabled",JS_NewBool(c,camera.settings.enabled));JS_SetPropertyStr(c,o,"width",JS_NewInt32(c,camera.settings.width));JS_SetPropertyStr(c,o,"height",JS_NewInt32(c,camera.settings.height));JS_SetPropertyStr(c,o,"near",JS_NewFloat64(c,camera.settings.nearPlane));JS_SetPropertyStr(c,o,"far",JS_NewFloat64(c,camera.settings.farPlane));
+      |                          ^
+/home/conner/Documents/GitHub/Project-Judas/src/ScriptSystem.cpp:1660:23: warning: misleading indentation; statement is not part of the previous 'for' [-Wmisleading-indentation]
+ 1660 |             return o;}return JS_NULL;}
+      |                       ^
+/home/conner/Documents/GitHub/Project-Judas/src/ScriptSystem.cpp:1653:25: note: previous statement is here
+ 1653 |     if(op=="audioInfo"){for(const auto& emitter:world.AudioEmitters())if(emitter.id==id){auto o=JS_NewObject(c);AudioVoiceSnapshot snapshot;
+      |                         ^
+/home/conner/Documents/GitHub/Project-Judas/src/ScriptSystem.cpp:1673:10: warning: misleading indentation; statement is not part of the previous 'for' [-Wmisleading-indentation]
+ 1673 |         }return JS_FALSE;
+      |          ^
+/home/conner/Documents/GitHub/Project-Judas/src/ScriptSystem.cpp:1666:9: note: previous statement is here
+ 1666 |         for(const auto& emitter:world.AudioEmitters())if(emitter.id==id){AudioSettings settings=emitter.settings;auto options=arg(2);
+      |         ^
+/home/conner/Documents/GitHub/Project-Judas/src/ScriptSystem.cpp:1680:54: warning: misleading indentation; statement is not part of the previous 'for' [-Wmisleading-indentation]
+ 1680 |             e.pool.settings=settings;return JS_TRUE;}return JS_FALSE;}
+      |                                                      ^
+/home/conner/Documents/GitHub/Project-Judas/src/ScriptSystem.cpp:1677:25: note: previous statement is here
+ 1677 |     if(op=="particles"){for(auto& e:world.VisualEmitters())if(e.id==id){auto settings=e.pool.settings;auto enabled=JS_GetPropertyStr(c,arg(2),"enabled");if(!JS_IsUndefined(enabled))settings.enabled=JS_ToBool(c,enabled);JS_FreeValue(c,enabled);
+      |                         ^
+[ 72%] Building CXX object CMakeFiles/judas_engine.dir/src/ScriptBindingsUI.cpp.o
+[ 72%] Building CXX object CMakeFiles/judas_engine.dir/src/ScriptBindingsJoint.cpp.o
+[ 73%] Building CXX object CMakeFiles/judas_engine.dir/src/Classification.cpp.o
+[ 73%] Building CXX object CMakeFiles/judas_engine.dir/src/ProjectExporter.cpp.o
+4 warnings generated.
+[ 73%] Building CXX object CMakeFiles/judas_engine.dir/src/AssetDependencies.cpp.o
+[ 73%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldAudio.cpp.o
+[ 73%] Building CXX object CMakeFiles/judas_engine.dir/src/Window.cpp.o
+[ 73%] Building CXX object CMakeFiles/judas_engine.dir/src/LocalMultiplayer.cpp.o
+[ 73%] Building CXX object CMakeFiles/judas_engine.dir/src/CollisionAuthoring.cpp.o
+[ 74%] Building CXX object CMakeFiles/judas_engine.dir/src/ProductionFluidCoupling.cpp.o
+[ 74%] Building CXX object CMakeFiles/judas_engine.dir/src/Prefab.cpp.o
+[ 74%] Building CXX object CMakeFiles/judas_engine.dir/src/Scene.cpp.o
+[ 74%] Building CXX object CMakeFiles/judas_engine.dir/src/SceneSerialization.cpp.o
+[ 75%] Building CXX object CMakeFiles/judas_engine.dir/src/NamedAuthoring.cpp.o
+[ 75%] Building CXX object CMakeFiles/judas_engine.dir/src/SceneFingerprint.cpp.o
+[ 75%] Building CXX object CMakeFiles/judas_engine.dir/src/AssetDatabase.cpp.o
+[ 75%] Building CXX object CMakeFiles/judas_engine.dir/src/ResourceManager.cpp.o
+[ 75%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldDebugView.cpp.o
+[ 75%] Building CXX object CMakeFiles/judas_engine.dir/src/SceneSession.cpp.o
+[ 76%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldPlanets.cpp.o
+[ 76%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldWeather.cpp.o
+[ 76%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldOrigin.cpp.o
+[ 76%] Building CXX object CMakeFiles/judas_engine.dir/src/RuntimeWorld.cpp.o
+[ 77%] Building CXX object CMakeFiles/judas_engine.dir/src/GameSession.cpp.o
+[ 77%] Building CXX object CMakeFiles/judas_engine.dir/src/Simulation.cpp.o
+[ 77%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldPresentation.cpp.o
+[ 77%] Building CXX object CMakeFiles/judas_engine.dir/src/GameplayHud.cpp.o
+[ 77%] Building CXX object CMakeFiles/judas_engine.dir/src/EngineHost.cpp.o
+[ 77%] Building CXX object CMakeFiles/judas_engine.dir/src/InteractivePlay.cpp.o
+[ 77%] Building CXX object CMakeFiles/judas_engine.dir/src/FidelityPolicy.cpp.o
+[ 77%] Building CXX object CMakeFiles/judas_engine.dir/src/CoarseSimulation.cpp.o
+[ 77%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldState.cpp.o
+[ 77%] Building CXX object CMakeFiles/judas_engine.dir/src/SaveStorage.cpp.o
+[ 77%] Building CXX object CMakeFiles/judas_engine.dir/src/SaveEvolution.cpp.o
+[ 77%] Building CXX object CMakeFiles/judas_engine.dir/src/SaveService.cpp.o
+[ 77%] Building CXX object CMakeFiles/judas_engine.dir/src/LiquidPersistence.cpp.o
+[ 78%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldPersistence.cpp.o
+[ 78%] Building CXX object CMakeFiles/judas_engine.dir/src/Contacts.cpp.o
+[ 78%] Building CXX object CMakeFiles/judas_engine.dir/src/PhysicsWorld.cpp.o
+[ 78%] Building CXX object CMakeFiles/judas_engine.dir/src/physics/WorldBodies.cpp.o
+[ 78%] Building CXX object CMakeFiles/judas_engine.dir/src/physics/WorldBounds.cpp.o
+[ 79%] Building CXX object CMakeFiles/judas_engine.dir/src/physics/WorldCCDSearch.cpp.o
+[ 79%] Building CXX object CMakeFiles/judas_engine.dir/src/physics/WorldContacts.cpp.o
+[ 79%] Building CXX object CMakeFiles/judas_engine.dir/src/physics/WorldImpactEvents.cpp.o
+[ 79%] Building CXX object CMakeFiles/judas_engine.dir/src/physics/WorldJoints.cpp.o
+[ 79%] Building CXX object CMakeFiles/judas_engine.dir/src/physics/WorldParticles.cpp.o
+[ 79%] Building CXX object CMakeFiles/judas_engine.dir/src/physics/WorldPersistence.cpp.o
+[ 80%] Building CXX object CMakeFiles/judas_engine.dir/src/physics/WorldQueries.cpp.o
+[ 80%] Building CXX object CMakeFiles/judas_engine.dir/src/physics/WorldSleep.cpp.o
+[ 80%] Linking CXX static library libjudas_engine.a
+[ 98%] Built target judas_engine
+[100%] Building CXX object CMakeFiles/main.dir/src/Application.cpp.o
+[100%] Building CXX object CMakeFiles/main.dir/src/RuntimeDiagnostics.cpp.o
+In file included from /home/conner/Documents/GitHub/Project-Judas/src/Application.cpp:18:
+/home/conner/Documents/GitHub/Project-Judas/src/RuntimeOptions.h:44:1: warning: 'RuntimeOptions' defined as a struct here but previously declared as a class; this is valid, but may result in linker errors under the Microsoft C++ ABI [-Wmismatched-tags]
+   44 | struct RuntimeOptions {
+      | ^
+/home/conner/Documents/GitHub/Project-Judas/src/RuntimeDiagnostics.h:8:1: note: did you mean struct here?
+    8 | class RuntimeOptions;
+      | ^~~~~
+      | struct
+[100%] Building CXX object CMakeFiles/main.dir/src/RuntimeOptions.cpp.o
+[100%] Building CXX object CMakeFiles/main.dir/src/TestHarness.cpp.o
+1 warning generated.
+[100%] Linking CXX shared library libmain.so
+[100%] Built target main

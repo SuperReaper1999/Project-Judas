@@ -1,0 +1,2 @@
+$ErrorActionPreference='Stop';$task='P:\JudasValidation\PreAlphaPass4'
+try{Start-Transcript -Path "$task\GuiWork\desktop-runner-transcript.log" -Force|Out-Null;& "$task\gui-qualify.ps1";Stop-Transcript|Out-Null}catch{($_|Format-List * -Force|Out-String)+($_.InvocationInfo|Format-List *|Out-String)|Set-Content -Encoding UTF8 "$task\GuiWork\desktop-runner-failure.log";try{Stop-Transcript|Out-Null}catch{};exit 1}

@@ -1,0 +1,11 @@
+﻿{
+    "startUtc":  "2026-10-18T15:56:45.9997480Z",
+    "endUtc":  "2026-10-18T16:14:30.3950371Z",
+    "exit":  1,
+    "systemFreeBytes":  798056448,
+    "workFreeBytes":  50336317440,
+    "target":  "judas_windows_sdk",
+    "outerParallelism":  1,
+    "icuUpstreamParallelism":  4,
+    "windowsTimingDiagnosticOnly":  true
+}

@@ -1,0 +1,258 @@
+{
+  "schema": 1,
+  "nativeEngineRevision": "9deb47d1667e5b6bd1abe708ed343c3fbf6fe847",
+  "pythonToolingRevision": "df8929f73505d407697b5d35b115fc71d9100471",
+  "files": [
+    {
+      "path": ".gitattributes",
+      "bytes": 20,
+      "sha256": "e97602ab9cac70102245345c5ab0fc9830df8b17f1072b188265a662a3a547ae"
+    },
+    {
+      "path": "BUILD_FOCUSED.json",
+      "bytes": 558,
+      "sha256": "72700a16c27f5d7647db023068afc8c909e72e32c25cb4267223160174872d6a"
+    },
+    {
+      "path": "CLEANUP.json",
+      "bytes": 7720,
+      "sha256": "0db55a768a7486b151059284893ee73fcde0aca13ce0548a3c3fda6f11c98862"
+    },
+    {
+      "path": "COLD_FOLLOWUP_RESULTS.json",
+      "bytes": 19086,
+      "sha256": "9c3da123c29fae6d491c3fb1806f53b38bf38159ce983d54fc5c1589785db94b"
+    },
+    {
+      "path": "FINAL_GUEST_STATE.json",
+      "bytes": 1621,
+      "sha256": "cda50e6377e55870b58e28634b999a36aad3c4ebd21eeae6d5153f2514e61682"
+    },
+    {
+      "path": "FINAL_INTEGRITY.json",
+      "bytes": 895,
+      "sha256": "c2e6065c1def536b39284a89c05baeb102d72b0dc5d43c4744828ea535a72376"
+    },
+    {
+      "path": "FINAL_NATIVE_PE_QUALIFICATION.json",
+      "bytes": 25363,
+      "sha256": "bca73e70385e67fe2f655db1330e703a34d9653c5184ea2b388c56bfa3febf2a"
+    },
+    {
+      "path": "FINAL_SDK_MANIFEST.json",
+      "bytes": 39605,
+      "sha256": "a35c138ed69a6e52ca7cdccf5dcb74f601cede5692a995723acc2477a9c6b98f"
+    },
+    {
+      "path": "FINAL_SOURCE_VERIFIED.json",
+      "bytes": 1630,
+      "sha256": "2988fbf69c50687a2ad71fa7365417cb2c99c0ab123ed7df1aa37871cffbdef2"
+    },
+    {
+      "path": "GUI_RESULTS.json",
+      "bytes": 85984,
+      "sha256": "6bf5f6f389dcce214ed3cd5717fab88bf18692f879a6fe8e48ba53945a57a56e"
+    },
+    {
+      "path": "INSPECTOR_FOLLOWUP_RESULTS.json",
+      "bytes": 10539,
+      "sha256": "962b7d97d69719ac49ac34ee5e01adff61d45f8d25d5ecc9099291dd92335814"
+    },
+    {
+      "path": "M70_COMPLETE_FIXTURE_RESULTS.json",
+      "bytes": 9144,
+      "sha256": "b8f72954ed661e804fbce2a2016081404d3896857ce3cac5afe0ed3a66a84029"
+    },
+    {
+      "path": "M70_EXAMPLE_PREREQUISITES.json",
+      "bytes": 1389,
+      "sha256": "d04481ad53233a9751a63648f7ae7803ebeb641cc49178628bb1dee2348b549e"
+    },
+    {
+      "path": "NATIVE_BINARIES.json",
+      "bytes": 20909,
+      "sha256": "047f0f55b785ce4322c2806a34f2e4741c6a6471cb206d5a0465a48291819fcf"
+    },
+    {
+      "path": "PACKAGING_RESULTS.json",
+      "bytes": 8209,
+      "sha256": "f9ac2d338ea644dee5df635bbe306579e10990ad63cc2d10e38166f13639b3c5"
+    },
+    {
+      "path": "PRISTINE_PACKAGE_FILES.json",
+      "bytes": 7083,
+      "sha256": "20de081e2ab38b33e3ee5ebf94cd7481a3fd1439c5da4b14cd67624a04547b29"
+    },
+    {
+      "path": "QUALIFICATION_PROJECTS.json",
+      "bytes": 33522,
+      "sha256": "2f100e029c12bc50475b882abe0656b6d1febef1b8bd4fb7e97811fbc8d1476d"
+    },
+    {
+      "path": "REPORT.md",
+      "bytes": 8477,
+      "sha256": "abf986ead3bfc0e74ceb822ad3b87847a35a26a6639db1bcf39301f4ca3b322a"
+    },
+    {
+      "path": "RESULTS.json",
+      "bytes": 5460,
+      "sha256": "116bfd57d0666312cd9e54a5d26c27c6732649785a19f20fc43b7597355d6162"
+    },
+    {
+      "path": "SDK_DESKTOP_ACCESS.json",
+      "bytes": 1026,
+      "sha256": "9907c1feb244f838c3d07aa2894a51db2f4d837a185a748b984d73d2bd70eff3"
+    },
+    {
+      "path": "SDK_INSPECTOR_MUTATION.json",
+      "bytes": 865,
+      "sha256": "0d84357f241fff1f3831481af3fae4861824b9300f35e46e6bc9f41f6b18ecf6"
+    },
+    {
+      "path": "SDK_PYCACHE_CLEANUP.json",
+      "bytes": 261,
+      "sha256": "d483556330e12b641e53e33fde6965030920f79ed81034ad6675bde8be972406"
+    },
+    {
+      "path": "SOURCE_VERIFIER_FOLLOWUP.txt",
+      "bytes": 566,
+      "sha256": "f4fdc48933f030f1b4cebd01b0b9a0e87242411d91ab86c8a822fb824cc7f78a"
+    },
+    {
+      "path": "TOOLING_RESTAGE.json",
+      "bytes": 2183,
+      "sha256": "088693bdf5c946aa4f174dbcf198c5187a56bafd321230474b0b07f47063b5b4"
+    },
+    {
+      "path": "TOOLS_RESULTS.json",
+      "bytes": 51488,
+      "sha256": "8aee5353c8c25fe0bf1a2ebbbef09f5b3494b9fb391c93a571eee4239e51bece"
+    },
+    {
+      "path": "build-final-result.json",
+      "bytes": 339,
+      "sha256": "6b727328ffc1f1243f9faaa7aa1f49f80d58bf96d9891b5986a72a9c5874b0cd"
+    },
+    {
+      "path": "configure-provenance.json",
+      "bytes": 2674,
+      "sha256": "daf77cb66a1e70afa7ff8e6026d282416412f3c8b6658a39abf5915d100b0700"
+    },
+    {
+      "path": "final-source-receipt.json",
+      "bytes": 242,
+      "sha256": "87e198e27ffe336c31d4cae4db8639d55ea84b509907db7af83ed38b3a10e960"
+    },
+    {
+      "path": "raw/baseline-7da-sdk-build.json",
+      "bytes": 339,
+      "sha256": "c851bbbdfa514f49e0299283e62f79ae560f53ec0f4b8d4c58c7dd2a1b545644"
+    },
+    {
+      "path": "raw/baseline-7da-sdk-build.log",
+      "bytes": 44530,
+      "sha256": "83f28c8e7fa66d9187a2373ab4a5b5924b0156f3db1e65c7e119c789c7e02b9e"
+    },
+    {
+      "path": "raw/build-final.log",
+      "bytes": 33874,
+      "sha256": "4d0de7ed45327946f5e3992dd79fecd2b5c76db3305aedf492dcd20b05ca7395"
+    },
+    {
+      "path": "raw/build-focused.log",
+      "bytes": 14845,
+      "sha256": "e799bb059e5ae718682577ba9c5813f2668302438bd4d2c191e86e0e669d3861"
+    },
+    {
+      "path": "raw/desktop-runner-failure.log",
+      "bytes": 2158,
+      "sha256": "4a3470d83730a6c857810f8c99a3af32fb2e42bc50b1841af284e07286627a83"
+    },
+    {
+      "path": "reproduction/build-focused.ps1",
+      "bytes": 1124,
+      "sha256": "c8e0765f1de91da001ce125767e55b6a816cf9b259927743537510f4be9ae98e"
+    },
+    {
+      "path": "reproduction/build-native.ps1",
+      "bytes": 1161,
+      "sha256": "7dc0a01450b1a0a0f2abd8421ecc52d58a4f3869bf7eb49aef460aa6956c918e"
+    },
+    {
+      "path": "reproduction/cold-followup.ps1",
+      "bytes": 3176,
+      "sha256": "4d5df719ec4c5f28d21f81f3baa44f91eeb0f85762be98c00c9c40094e8969a4"
+    },
+    {
+      "path": "reproduction/configure-native.ps1",
+      "bytes": 2546,
+      "sha256": "5af12adc64d557253194d2d70fbc5066ab1adcd322efac0d380c95b50d9a04a7"
+    },
+    {
+      "path": "reproduction/final-integrity.py",
+      "bytes": 1476,
+      "sha256": "c37ded98997c60e45f9363c95becbef3afe2af3b5346c0c9278c6ec2ff800e51"
+    },
+    {
+      "path": "reproduction/gui-entry.ps1",
+      "bytes": 414,
+      "sha256": "d505991f73004474666db0700bb4c7d06236deab198647238a8cc5b1bcc8ce7b"
+    },
+    {
+      "path": "reproduction/gui-qualify.ps1",
+      "bytes": 9520,
+      "sha256": "2296c36ab9e879e3a134a2050abb1c7d9a57050729a7b22b630ffccbefd9cf3a"
+    },
+    {
+      "path": "reproduction/launch-gui-qualification.ps1",
+      "bytes": 1214,
+      "sha256": "e1a853ceb65081f0a4d61d5b5b805a88f7f646a29fc97102a8933f7e09bae019"
+    },
+    {
+      "path": "reproduction/m70-complete-fixture.ps1",
+      "bytes": 2197,
+      "sha256": "66b070915a25da76f4a5fac4b65c96ca19cbd2416628939c22d53bc379f34b73"
+    },
+    {
+      "path": "reproduction/qualify-inspector-followup.ps1",
+      "bytes": 3434,
+      "sha256": "bc82f250ae9f0c2a21db80bd66b597d60918eb3273bd090d78010c275807f10c"
+    },
+    {
+      "path": "reproduction/qualify-packages.ps1",
+      "bytes": 3985,
+      "sha256": "beaf46623c17524e37e9bf549da867da0f19ea6257aa9f5714015cead1cfdaa6"
+    },
+    {
+      "path": "reproduction/qualify-tools.ps1",
+      "bytes": 5888,
+      "sha256": "c5afa7d32c271b211520d943268eae5760c71bad0be4392d7d03661d7a2700bd"
+    },
+    {
+      "path": "reproduction/restage-tooling.py",
+      "bytes": 2539,
+      "sha256": "defe6343d1c154506d80c67e604da2e9dbc171e14670e1f1961de6afed69824b"
+    },
+    {
+      "path": "reproduction/update_source.py",
+      "bytes": 2543,
+      "sha256": "bdb61010b29a3171b1a40f7a7bc225cf83d4754a879890b0ce8ccbc09d607d51"
+    },
+    {
+      "path": "screenshots/editor.edit.png",
+      "bytes": 258051,
+      "sha256": "8f03c5705d6b740aab5775059d6442dc75e0586a842bf153ae2a4c25a73c2091"
+    },
+    {
+      "path": "screenshots/editor.play.png",
+      "bytes": 188552,
+      "sha256": "cacb8795ee2a2b03a921a588c62df49c55342209a17bcbbf30c200c276e538d7"
+    },
+    {
+      "path": "screenshots/runtime.png",
+      "bytes": 111443,
+      "sha256": "8b7d317616518517800b7f3340dd1b4eaaffa8a66b53ed300041dbe08d480d07"
+    }
+  ],
+  "scope": "New Pass4 Windows evidence only; original raw receipt bytes retained by local attributes"
+}

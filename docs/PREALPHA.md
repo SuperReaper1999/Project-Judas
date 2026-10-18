@@ -22,6 +22,13 @@ develops on Experimental and requires separate human acceptance. For a first
 visible project with no controller/input setup, follow
 [Your first visible Judas project](FIRST_PROJECT.md).
 
+The [Pass 4 report](evidence/prealpha-pass4/REPORT.md) records the independently
+verified physics-module extraction, exact scheduling changes, current platform
+receipts and preserved CCD/liquid failures. Its [finding register](evidence/prealpha-pass4/AUDIT_DISPOSITION.md)
+distinguishes fresh checks from carried-forward evidence. A smaller coordinator
+and passing scoped regressions do not close the curved-mesh continuation or
+extreme dense-contact latency blockers.
+
 ## Ownership and integration contracts
 
 | System | Authority | Supported composition | Explicit boundary |

@@ -1,0 +1,40 @@
+﻿{
+    "utc":  "2026-10-18T17:19:19.0722213Z",
+    "ownedTransientDesktopTaskRemoved":  true,
+    "drives":  [
+                   {
+                       "Name":  "C",
+                       "Free":  812097536,
+                       "Used":  41533841408
+                   },
+                   {
+                       "Name":  "P",
+                       "Free":  48219484160,
+                       "Used":  5467602944
+                   }
+               ],
+    "originalPartitions":  [
+                               {
+                                   "PartitionNumber":  1,
+                                   "DriveLetter":  null,
+                                   "Offset":  1048576,
+                                   "Size":  52428800
+                               },
+                               {
+                                   "PartitionNumber":  2,
+                                   "DriveLetter":  "C",
+                                   "Offset":  53477376,
+                                   "Size":  42345941504
+                               },
+                               {
+                                   "PartitionNumber":  3,
+                                   "DriveLetter":  null,
+                                   "Offset":  42400219136,
+                                   "Size":  547356672
+                               }
+                           ],
+    "activeJudas":  {
+
+                    },
+    "scope":  "Original installed toolchains/system/personal files and other scheduled tasks preserved; VM configuration untouched"
+}

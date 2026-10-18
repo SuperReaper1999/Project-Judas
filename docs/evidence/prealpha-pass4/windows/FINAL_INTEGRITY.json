@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "utc": "2026-10-18T17:19:16Z",
+  "sourceFiles": 1435,
+  "sourceErrors": [],
+  "nativeBinaryFiles": 26,
+  "nativeBinaryErrors": [],
+  "pristinePackageFiles": 41,
+  "pristinePackageErrors": [],
+  "screenshots": [
+    {
+      "path": "P:\\JudasValidation\\PreAlphaPass4\\GuiWork\\Results\\editor.edit.png",
+      "bytes": 258051,
+      "sha256": "8f03c5705d6b740aab5775059d6442dc75e0586a842bf153ae2a4c25a73c2091"
+    },
+    {
+      "path": "P:\\JudasValidation\\PreAlphaPass4\\GuiWork\\Results\\editor.play.png",
+      "bytes": 188552,
+      "sha256": "cacb8795ee2a2b03a921a588c62df49c55342209a17bcbbf30c200c276e538d7"
+    },
+    {
+      "path": "P:\\JudasValidation\\PreAlphaPass4\\GuiWork\\Results\\runtime.png",
+      "bytes": 111443,
+      "sha256": "8b7d317616518517800b7f3340dd1b4eaaffa8a66b53ed300041dbe08d480d07"
+    }
+  ],
+  "passed": true
+}

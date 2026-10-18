@@ -1,0 +1,10 @@
+{
+  "environment": {
+    "DISPLAY": ":0",
+    "WAYLAND_DISPLAY": "wayland-0",
+    "SDL_VIDEODRIVER": null,
+    "LIBGL_ALWAYS_SOFTWARE": null
+  },
+  "observed": "Actual application logs report OpenGL4.5 Mesa26.0.8 llvmpipe LLVM21.1.8 software rendering. Editor cannot enter relative mouse mode in this automation environment.",
+  "scope": "Actual SDL/GL/native application execution. Does not prove physicalGPU, interactive desktop pointer capture or human usability."
+}

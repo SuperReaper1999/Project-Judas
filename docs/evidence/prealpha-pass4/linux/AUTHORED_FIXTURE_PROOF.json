@@ -1,0 +1,18 @@
+{
+  "command": [
+    "git",
+    "diff",
+    "--exit-code",
+    "60a92176adbdfb8ccf90cc1fe3a40505416b1559",
+    "--",
+    "projects/character_lab",
+    "projects/balance_lab",
+    "projects/physics_stress_lab",
+    "projects/post_m65_consumers/Scenes/skate/park.judas",
+    "docs/evidence/m78-followup/probes/concave_final.cpp"
+  ],
+  "exit": 0,
+  "stdout": "",
+  "stderr": "",
+  "scope": "All original tracked authored fixture bytes remain unchanged against tested code checkpoint60a9217; private copies only used for editing."
+}

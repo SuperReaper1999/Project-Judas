@@ -1,0 +1,200 @@
+{
+  "schema": 1,
+  "scope": "Authorized disposable build cleanup, hash-preserved relocation and explicit90-GiB disk expansion; no Windows system/toolchain/configuration/personal/evidence deletion",
+  "disk": {
+    "schema": 1,
+    "domain": "win10",
+    "disk": "/var/lib/libvirt/images/win10.qcow2",
+    "mechanism": "libvirt managed volume resize, guest gracefully shut off",
+    "beforeBytes": 42949672960,
+    "afterBytes": 96636764160,
+    "persistentConfigBeforeSHA256": "2e2384c9412d9e6ffef2cabcea79dc6751ad728d8026a1dfbdd88e151d4bfa0e",
+    "persistentConfigAfterSHA256": "2e2384c9412d9e6ffef2cabcea79dc6751ad728d8026a1dfbdd88e151d4bfa0e",
+    "operatorAuthorization": "Expand existing Windows VM allocated storage to 90 GB",
+    "units": "90 GiB, matching libvirt display; actual original volume was40 GiB",
+    "originalPartitions": "Preserved; a new work partition will use added tail space because recovery blocks C extension",
+    "directFileAccess": "Denied; sudo interactive authentication unavailable; managed libvirt API succeeded without changing permissions"
+  },
+  "partitionProof": {
+    "utc": "2026-10-18T15:48:19.0817156Z",
+    "authorization": "Operator explicitly approved90GB VM storage",
+    "disk": {
+      "Number": 0,
+      "FriendlyName": "QEMU HARDDISK",
+      "Size": 96636764160,
+      "PartitionStyle": "MBR"
+    },
+    "originalPartitions": [
+      {
+        "DiskNumber": 0,
+        "PartitionNumber": 1,
+        "DriveLetter": null,
+        "Offset": 1048576,
+        "Size": 52428800,
+        "Type": "IFS"
+      },
+      {
+        "DiskNumber": 0,
+        "PartitionNumber": 2,
+        "DriveLetter": "C",
+        "Offset": 53477376,
+        "Size": 42345941504,
+        "Type": "IFS"
+      },
+      {
+        "DiskNumber": 0,
+        "PartitionNumber": 3,
+        "DriveLetter": null,
+        "Offset": 42400219136,
+        "Size": 547356672,
+        "Type": "Unknown"
+      }
+    ],
+    "newPartition": {
+      "DiskNumber": 0,
+      "PartitionNumber": 4,
+      "DriveLetter": "P",
+      "Offset": 42948624384,
+      "Size": 53687091200,
+      "Type": "IFS"
+    },
+    "volume": {
+      "DriveLetter": "P",
+      "FileSystemLabel": "JudasPass4",
+      "FileSystem": "NTFS",
+      "Size": 53687087104,
+      "SizeRemaining": 53588430848
+    },
+    "qualification": "Only the new empty tail formatted; originalC/system/recovery partition offsets and sizes rechecked unchanged",
+    "alignment": "MBR extended-container metadata uses previously unallocated tail alignment space; logical volume starts1MiB before former disk-end, entirely after original recovery end"
+  },
+  "cleanup": [
+    {
+      "receipt": "cleanup-generated.json",
+      "files": 4047,
+      "logicalBytes": 345382316,
+      "classifications": {
+        "Disposable generated compiler/linker intermediate": 4047
+      },
+      "allDeleted": true
+    },
+    {
+      "receipt": "cleanup-vcpkg-intermediates.json",
+      "files": 418,
+      "logicalBytes": 110863928,
+      "classifications": {
+        "Rebuildable package-build compiler/linker intermediate; installed packages and logs retained": 418
+      },
+      "allDeleted": true
+    },
+    {
+      "receipt": "verified-m78-package-cleanup.json",
+      "files": 42,
+      "logicalBytes": 335183384,
+      "classifications": {
+        "Stale disposable test/export binary; exact bytes will be copied to Linux before deletion": 42
+      },
+      "allDeleted": true
+    }
+  ],
+  "relocation": {
+    "utc": "2026-10-18T16:14:14.8013024Z",
+    "freeBefore": 65335296,
+    "freeAfter": 798007296,
+    "trees": [
+      {
+        "original": "C:\\JudasValidation\\Build\\unicode",
+        "target": "P:\\JudasValidation\\PreAlphaPass4\\PreservedLegacy\\Build-unicode",
+        "junctionTarget": [
+          "P:\\JudasValidation\\PreAlphaPass4\\PreservedLegacy\\Build-unicode"
+        ],
+        "files": 3336,
+        "bytes": 246922389,
+        "allFileHashesVerified": true,
+        "originalPathCompatibilityVerified": true,
+        "freeAfter": 319528960
+      },
+      {
+        "original": "C:\\JudasValidation\\Build\\_deps",
+        "target": "P:\\JudasValidation\\PreAlphaPass4\\PreservedLegacy\\Build-_deps",
+        "junctionTarget": [
+          "P:\\JudasValidation\\PreAlphaPass4\\PreservedLegacy\\Build-_deps"
+        ],
+        "files": 4699,
+        "bytes": 122825944,
+        "allFileHashesVerified": true,
+        "originalPathCompatibilityVerified": true,
+        "freeAfter": 452648960
+      },
+      {
+        "original": "C:\\JudasValidation\\Build\\windows-sdk",
+        "target": "P:\\JudasValidation\\PreAlphaPass4\\PreservedLegacy\\Build-windows-sdk",
+        "junctionTarget": [
+          "P:\\JudasValidation\\PreAlphaPass4\\PreservedLegacy\\Build-windows-sdk"
+        ],
+        "files": 112,
+        "bytes": 158956337,
+        "allFileHashesVerified": true,
+        "originalPathCompatibilityVerified": true,
+        "freeAfter": 611713024
+      },
+      {
+        "original": "C:\\JudasValidation\\Build\\Release",
+        "target": "P:\\JudasValidation\\PreAlphaPass4\\PreservedLegacy\\Build-Release",
+        "junctionTarget": [
+          "P:\\JudasValidation\\PreAlphaPass4\\PreservedLegacy\\Build-Release"
+        ],
+        "files": 46,
+        "bytes": 186174232,
+        "allFileHashesVerified": true,
+        "originalPathCompatibilityVerified": true,
+        "freeAfter": 798007296
+      }
+    ],
+    "linuxBackupSHA256": "1157d4c9695a573ea0aee36a1f81b930814b6c71207faaf54f98a9ceddb73f8a",
+    "scope": "Only four old generated Build subtrees moved; installed toolchains/vcpkg_installed/original source/saves/results/system partitions unchanged"
+  },
+  "offGuestArchive": {
+    "schema": 1,
+    "kind": "exact-offguest-generated-tree-backup",
+    "archiveSHA256": "1157d4c9695a573ea0aee36a1f81b930814b6c71207faaf54f98a9ceddb73f8a",
+    "archiveBytes": 716797437,
+    "files": 8193,
+    "allFilesVerified": true,
+    "linuxPath": "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass4/windows/preserved-generated-trees.zip",
+    "method": "Every ZIP entry SHA-256 and length compared against guest-original per-file manifest; complete path set verified"
+  },
+  "fullRawInventoryLocation": "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass4/windows",
+  "rawReceipts": [
+    {
+      "path": "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass4/windows/cleanup-generated.json",
+      "bytes": 2057210,
+      "sha256": "59ac774748c3b9d4bb3c2b250d8141c619aeb9fcd8898ae9faa35d23c62bc077"
+    },
+    {
+      "path": "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass4/windows/cleanup-vcpkg-intermediates.json",
+      "bytes": 224022,
+      "sha256": "dc5a5a3a54f4b2a371594d690605e86729409c7575a8f6dda8108d0793b3ec6b"
+    },
+    {
+      "path": "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass4/windows/verified-m78-package-cleanup.json",
+      "bytes": 13461,
+      "sha256": "c4d154953bf42c3efeb6b613c9fa50eb9e96df78b16105c4bdde89b86113929f"
+    },
+    {
+      "path": "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass4/windows/backup-verification.json",
+      "bytes": 11647,
+      "sha256": "998edfd68e827f4f4d00d8bb99d3dc541229919eb142cc3ecdb4d0ff37bd1974"
+    },
+    {
+      "path": "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass4/windows/preserved-generated-trees.json",
+      "bytes": 2728826,
+      "sha256": "cdf9fea22820012cc5ef3c4ebfcc90e441280d8614cfa32e182e92b806144f2b"
+    },
+    {
+      "path": "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass4/windows/RELOCATION.json",
+      "bytes": 3116,
+      "sha256": "b5e57019f9903deb28a94ef287001ba1d2085efef4eee651a21ccca0123cda17"
+    }
+  ]
+}

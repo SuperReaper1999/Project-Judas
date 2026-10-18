@@ -1,0 +1,46 @@
+{
+  "schema": 1,
+  "scope": "Android ARM64 final physics modules before byte-identical ScriptSystem literal split; no APK/device claim",
+  "files": [
+    {
+      "path": ".gitattributes",
+      "bytes": 20,
+      "sha256": "e97602ab9cac70102245345c5ab0fc9830df8b17f1072b188265a662a3a547ae"
+    },
+    {
+      "path": "BEFORE.json",
+      "bytes": 568,
+      "sha256": "3cf4f4cf6cbf617004acdee9ef5f9a2a490d4436c0631344a72101de1dad5cd0"
+    },
+    {
+      "path": "RESULTS.json",
+      "bytes": 3248,
+      "sha256": "4405d91e3145c2d44715f969f18fbb215a3b116562b6d9ae4d4c787430881eb8"
+    },
+    {
+      "path": "build.log",
+      "bytes": 15954,
+      "sha256": "1e145fefb1d9aeccd65d7bcbfb5747bb6f2a0588ddae8c416c5f0a06cf596046"
+    },
+    {
+      "path": "configure.log",
+      "bytes": 8436,
+      "sha256": "632efcbcba2de8ceb2b2a1134b8069f407e2125b12ce2a74393834e2d94e039c"
+    },
+    {
+      "path": "dynamic.log",
+      "bytes": 1726,
+      "sha256": "93ffdd5f05f1424bbb0406bac76aedd60d8b22737e05a2993ed6a1fd366f8963"
+    },
+    {
+      "path": "elf-header.log",
+      "bytes": 938,
+      "sha256": "bacbc090ccabd2130bc984b8c85a077807b6e61271c3737013b74f3e6e49ad42"
+    },
+    {
+      "path": "program-headers.log",
+      "bytes": 1714,
+      "sha256": "97611de54b57a8c94e5158a171a41b94cf873a6aeaced0b75751d6e6b7dc5f56"
+    }
+  ]
+}

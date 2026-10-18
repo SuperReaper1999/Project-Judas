@@ -1,0 +1,33 @@
+{
+  "schema": 1,
+  "branch": "Experimental",
+  "accepted_input": "7da56c2cc6ce7acda827a6e4019d610622b237e2",
+  "checkpoints": [
+    {
+      "commit": "06318379b5dfc99fe54eaedebbe5e6d964b25de8",
+      "subject": "Separate physics world implementation into cohesive modules",
+      "authored_at": "2026-10-18T16:59:19+01:00"
+    },
+    {
+      "commit": "b4305b790ee2d4a6b8cfbef31b449ae50d4e03b6",
+      "subject": "Reduce redundant impact rescheduling work",
+      "authored_at": "2026-10-18T17:27:29+01:00"
+    },
+    {
+      "commit": "60a92176adbdfb8ccf90cc1fe3a40505416b1559",
+      "subject": "Record bounded CCD and liquid query investigations",
+      "authored_at": "2026-10-18T17:28:19+01:00"
+    },
+    {
+      "commit": "9deb47d1667e5b6bd1abe708ed343c3fbf6fe847",
+      "subject": "Restore native MSVC compilation without changing JudasJS",
+      "authored_at": "2026-10-18T17:45:50+01:00"
+    },
+    {
+      "commit": "df8929f73505d407697b5d35b115fc71d9100471",
+      "subject": "Keep packaged SDK verification tools read-only",
+      "authored_at": "2026-10-18T18:10:24+01:00"
+    }
+  ],
+  "scope": "Verified checkpoints pushed normally to Experimental. Later final report-only commit is not substituted into compiled provenance. Main/human acceptance separate."
+}

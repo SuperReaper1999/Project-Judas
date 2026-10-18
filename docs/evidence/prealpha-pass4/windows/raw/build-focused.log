@@ -1,0 +1,153 @@
+﻿MSBuild version 17.14.60+43b635718 for .NET Framework
+
+  Checking File Globs
+  freetype.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\_deps\judas_freetype-build\Release\freetype.lib
+  harfbuzz.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\_deps\judas_harfbuzz-build\Release\harfbuzz.lib
+  judas_app_icon.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_app_icon.lib
+  judas_audio_backend.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_audio_backend.lib
+  judas_build_identity.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_build_identity.lib
+  judas_glad.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_glad.lib
+  judas_jobs.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_jobs.lib
+  judas_profiler.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_profiler.lib
+  judas_materials.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_materials.lib
+  judas_meshoptimizer.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_meshoptimizer.lib
+  judas_navigation_backend.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_navigation_backend.lib
+  judas_navigation_cook.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_navigation_cook.lib
+  judas_quickjs.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_quickjs.lib
+  judas_engine.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_engine.lib
+  Building Custom Rule P:/JudasValidation/PreAlphaPass4/Source/CMakeLists.txt
+  ImpactMeshCostTests.cpp
+  judas_impact_mesh_cost_tests.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_impact_mesh_cost_tests.exe
+MSBuild version 17.14.60+43b635718 for .NET Framework
+
+  Checking File Globs
+  freetype.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\_deps\judas_freetype-build\Release\freetype.lib
+  harfbuzz.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\_deps\judas_harfbuzz-build\Release\harfbuzz.lib
+  judas_app_icon.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_app_icon.lib
+  judas_audio_backend.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_audio_backend.lib
+  judas_build_identity.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_build_identity.lib
+  judas_glad.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_glad.lib
+  judas_jobs.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_jobs.lib
+  judas_profiler.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_profiler.lib
+  judas_materials.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_materials.lib
+  judas_meshoptimizer.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_meshoptimizer.lib
+  judas_navigation_backend.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_navigation_backend.lib
+  judas_navigation_cook.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_navigation_cook.lib
+  judas_quickjs.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_quickjs.lib
+  judas_engine.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_engine.lib
+  Building Custom Rule P:/JudasValidation/PreAlphaPass4/Source/CMakeLists.txt
+  ImpactRobustnessTests.cpp
+  judas_impact_robustness_tests.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_impact_robustness_tests.exe
+MSBuild version 17.14.60+43b635718 for .NET Framework
+
+  Checking File Globs
+  freetype.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\_deps\judas_freetype-build\Release\freetype.lib
+  harfbuzz.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\_deps\judas_harfbuzz-build\Release\harfbuzz.lib
+  judas_app_icon.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_app_icon.lib
+  judas_audio_backend.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_audio_backend.lib
+  judas_build_identity.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_build_identity.lib
+  judas_glad.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_glad.lib
+  judas_jobs.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_jobs.lib
+  judas_profiler.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_profiler.lib
+  judas_materials.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_materials.lib
+  judas_meshoptimizer.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_meshoptimizer.lib
+  judas_navigation_backend.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_navigation_backend.lib
+  judas_navigation_cook.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_navigation_cook.lib
+  judas_quickjs.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_quickjs.lib
+  judas_engine.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_engine.lib
+  Building Custom Rule P:/JudasValidation/PreAlphaPass4/Source/CMakeLists.txt
+  OriginAdmissionTests.cpp
+  judas_origin_admission_tests.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_origin_admission_tests.exe
+MSBuild version 17.14.60+43b635718 for .NET Framework
+
+  Checking File Globs
+  freetype.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\_deps\judas_freetype-build\Release\freetype.lib
+  harfbuzz.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\_deps\judas_harfbuzz-build\Release\harfbuzz.lib
+  judas_app_icon.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_app_icon.lib
+  judas_audio_backend.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_audio_backend.lib
+  judas_build_identity.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_build_identity.lib
+  judas_glad.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_glad.lib
+  judas_jobs.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_jobs.lib
+  judas_profiler.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_profiler.lib
+  judas_materials.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_materials.lib
+  judas_meshoptimizer.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_meshoptimizer.lib
+  judas_navigation_backend.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_navigation_backend.lib
+  judas_navigation_cook.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_navigation_cook.lib
+  judas_quickjs.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_quickjs.lib
+  judas_engine.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_engine.lib
+  Building Custom Rule P:/JudasValidation/PreAlphaPass4/Source/CMakeLists.txt
+  CharacterMotorTests.cpp
+P:\JudasValidation\PreAlphaPass4\Source\tests\CharacterMotorTests.cpp(20,121): warning C4305: 'argument': truncation from 'double' to 'float' [P:\JudasValidation\PreAlphaPass4\Build\judas_character_motor_tests.vcxproj]
+P:\JudasValidation\PreAlphaPass4\Source\tests\CharacterMotorTests.cpp(22,156): warning C4305: 'argument': truncation from 'double' to 'float' [P:\JudasValidation\PreAlphaPass4\Build\judas_character_motor_tests.vcxproj]
+P:\JudasValidation\PreAlphaPass4\Source\tests\CharacterMotorTests.cpp(23,37): warning C4305: 'argument': truncation from 'double' to 'float' [P:\JudasValidation\PreAlphaPass4\Build\judas_character_motor_tests.vcxproj]
+P:\JudasValidation\PreAlphaPass4\Source\tests\CharacterMotorTests.cpp(24,37): warning C4305: 'argument': truncation from 'double' to 'float' [P:\JudasValidation\PreAlphaPass4\Build\judas_character_motor_tests.vcxproj]
+P:\JudasValidation\PreAlphaPass4\Source\tests\CharacterMotorTests.cpp(26,80): warning C4305: 'argument': truncation from 'double' to 'float' [P:\JudasValidation\PreAlphaPass4\Build\judas_character_motor_tests.vcxproj]
+P:\JudasValidation\PreAlphaPass4\Source\tests\CharacterMotorTests.cpp(26,128): warning C4305: 'argument': truncation from 'double' to 'float' [P:\JudasValidation\PreAlphaPass4\Build\judas_character_motor_tests.vcxproj]
+P:\JudasValidation\PreAlphaPass4\Source\tests\CharacterMotorTests.cpp(29,140): warning C4305: 'argument': truncation from 'double' to 'float' [P:\JudasValidation\PreAlphaPass4\Build\judas_character_motor_tests.vcxproj]
+P:\JudasValidation\PreAlphaPass4\Source\tests\CharacterMotorTests.cpp(30,104): warning C4305: 'argument': truncation from 'double' to 'float' [P:\JudasValidation\PreAlphaPass4\Build\judas_character_motor_tests.vcxproj]
+P:\JudasValidation\PreAlphaPass4\Source\tests\CharacterMotorTests.cpp(34,100): warning C4305: 'argument': truncation from 'double' to 'float' [P:\JudasValidation\PreAlphaPass4\Build\judas_character_motor_tests.vcxproj]
+P:\JudasValidation\PreAlphaPass4\Source\tests\CharacterMotorTests.cpp(36,73): warning C4305: 'argument': truncation from 'double' to 'float' [P:\JudasValidation\PreAlphaPass4\Build\judas_character_motor_tests.vcxproj]
+P:\JudasValidation\PreAlphaPass4\Source\tests\CharacterMotorTests.cpp(37,88): warning C4305: 'argument': truncation from 'double' to 'float' [P:\JudasValidation\PreAlphaPass4\Build\judas_character_motor_tests.vcxproj]
+P:\JudasValidation\PreAlphaPass4\Source\tests\CharacterMotorTests.cpp(49,102): warning C4305: 'argument': truncation from 'double' to 'float' [P:\JudasValidation\PreAlphaPass4\Build\judas_character_motor_tests.vcxproj]
+  judas_character_motor_tests.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_character_motor_tests.exe
+MSBuild version 17.14.60+43b635718 for .NET Framework
+
+  Checking File Globs
+  freetype.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\_deps\judas_freetype-build\Release\freetype.lib
+  harfbuzz.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\_deps\judas_harfbuzz-build\Release\harfbuzz.lib
+  judas_app_icon.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_app_icon.lib
+  judas_audio_backend.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_audio_backend.lib
+  judas_build_identity.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_build_identity.lib
+  judas_glad.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_glad.lib
+  judas_jobs.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_jobs.lib
+  judas_profiler.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_profiler.lib
+  judas_materials.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_materials.lib
+  judas_meshoptimizer.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_meshoptimizer.lib
+  judas_navigation_backend.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_navigation_backend.lib
+  judas_navigation_cook.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_navigation_cook.lib
+  judas_quickjs.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_quickjs.lib
+  judas_engine.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_engine.lib
+  Building Custom Rule P:/JudasValidation/PreAlphaPass4/Source/CMakeLists.txt
+  WorldPersistenceTests.cpp
+P:\JudasValidation\PreAlphaPass4\Source\tests\WorldPersistenceTests.cpp(21,181): warning C4305: '=': truncation from 'double' to 'float' [P:\JudasValidation\PreAlphaPass4\Build\judas_world_persistence_tests.vcxproj]
+  judas_world_persistence_tests.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_world_persistence_tests.exe
+MSBuild version 17.14.60+43b635718 for .NET Framework
+
+  Checking File Globs
+  freetype.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\_deps\judas_freetype-build\Release\freetype.lib
+  harfbuzz.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\_deps\judas_harfbuzz-build\Release\harfbuzz.lib
+  judas_app_icon.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_app_icon.lib
+  judas_audio_backend.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_audio_backend.lib
+  judas_build_identity.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_build_identity.lib
+  judas_glad.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_glad.lib
+  judas_jobs.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_jobs.lib
+  judas_profiler.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_profiler.lib
+  judas_materials.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_materials.lib
+  judas_meshoptimizer.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_meshoptimizer.lib
+  judas_navigation_backend.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_navigation_backend.lib
+  judas_navigation_cook.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_navigation_cook.lib
+  judas_quickjs.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_quickjs.lib
+  judas_engine.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_engine.lib
+  Building Custom Rule P:/JudasValidation/PreAlphaPass4/Source/CMakeLists.txt
+  CharacterLabTests.cpp
+  judas_character_lab_tests.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_character_lab_tests.exe
+MSBuild version 17.14.60+43b635718 for .NET Framework
+
+  Checking File Globs
+  freetype.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\_deps\judas_freetype-build\Release\freetype.lib
+  harfbuzz.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\_deps\judas_harfbuzz-build\Release\harfbuzz.lib
+  judas_app_icon.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_app_icon.lib
+  judas_audio_backend.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_audio_backend.lib
+  judas_build_identity.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_build_identity.lib
+  judas_glad.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_glad.lib
+  judas_jobs.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_jobs.lib
+  judas_profiler.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_profiler.lib
+  judas_materials.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_materials.lib
+  judas_meshoptimizer.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_meshoptimizer.lib
+  judas_navigation_backend.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_navigation_backend.lib
+  judas_navigation_cook.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_navigation_cook.lib
+  judas_quickjs.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_quickjs.lib
+  judas_engine.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_engine.lib
+  Building Custom Rule P:/JudasValidation/PreAlphaPass4/Source/CMakeLists.txt
+  BalanceLabTests.cpp
+  judas_balance_lab_tests.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_balance_lab_tests.exe

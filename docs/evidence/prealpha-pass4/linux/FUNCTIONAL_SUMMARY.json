@@ -1,0 +1,102 @@
+[
+  {
+    "name": "origin_physics",
+    "checks": 13,
+    "failures": 0,
+    "physicalEndpoints": []
+  },
+  {
+    "name": "origin_assembly",
+    "checks": 46,
+    "failures": 0,
+    "physicalEndpoints": []
+  },
+  {
+    "name": "origin_stream",
+    "checks": 23,
+    "failures": 0,
+    "physicalEndpoints": []
+  },
+  {
+    "name": "composed_lifecycle",
+    "checks": 34,
+    "failures": 0,
+    "physicalEndpoints": []
+  },
+  {
+    "name": "world_persistence",
+    "checks": 27,
+    "failures": 0,
+    "physicalEndpoints": []
+  },
+  {
+    "name": "particle_application",
+    "checks": 11,
+    "failures": 0,
+    "physicalEndpoints": []
+  },
+  {
+    "name": "m70_actual_physics",
+    "checks": 98,
+    "failures": 0,
+    "physicalEndpoints": []
+  },
+  {
+    "name": "m70_cold_write",
+    "checks": 10,
+    "failures": 0,
+    "physicalEndpoints": []
+  },
+  {
+    "name": "m70_cold_read",
+    "checks": 14,
+    "failures": 0,
+    "physicalEndpoints": []
+  },
+  {
+    "name": "m77_step_write",
+    "checks": 24,
+    "failures": 0,
+    "physicalEndpoints": [
+      "ACTOR 12 status=2 root=3.00035,1.41782,0.00367286 height=1.4183 up=0.999923 speed=4.66276e-05 supports=4/4 landings=0 reason=measured supported physical standing"
+    ]
+  },
+  {
+    "name": "m77_step_read",
+    "checks": 13,
+    "failures": 0,
+    "physicalEndpoints": [
+      "ACTOR 12 status=2 root=3.0826,1.36035,0.340259 height=1.3616 up=0.998586 speed=0 supports=4/4 landings=1 reason=measured supported physical standing"
+    ]
+  },
+  {
+    "name": "m77_stand_write",
+    "checks": 23,
+    "failures": 0,
+    "physicalEndpoints": [
+      "ACTOR 12 status=2 root=3.00035,1.41782,0.00367286 height=1.4183 up=0.999923 speed=4.66276e-05 supports=4/4 landings=0 reason=measured supported physical standing"
+    ]
+  },
+  {
+    "name": "m77_stand_read",
+    "checks": 13,
+    "failures": 0,
+    "physicalEndpoints": [
+      "ACTOR 12 status=2 root=3.00056,1.4177,0.00473911 height=1.41828 up=0.999934 speed=1.95818e-06 supports=4/4 landings=0 reason=measured supported physical standing"
+    ]
+  },
+  {
+    "name": "m77_recovery_write",
+    "checks": 21,
+    "failures": 0,
+    "physicalEndpoints": []
+  },
+  {
+    "name": "m77_recovery_read",
+    "checks": 13,
+    "failures": 0,
+    "physicalEndpoints": [
+      "ACTOR 10 status=2 root=-2.9998,1.24854,0.363846 height=1.24952 up=0.99999 speed=0 supports=4/4 landings=0 reason=measured supported physical standing"
+    ]
+  }
+]

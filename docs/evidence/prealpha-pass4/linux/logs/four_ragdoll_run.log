@@ -1,0 +1,11 @@
+libEGL warning: Not allowed to force software rendering when API explicitly selects a hardware device.
+Shadow maps: on
+Graphics: 4.5 (Core Profile) Mesa 26.0.8-1ubuntu0.3 / llvmpipe (LLVM 21.1.8, 256 bits)
+Renderer fragment texture units: 32 (material path uses 12)
+asset 97c3acdb99c5ffefb002c03ecec7a8ed: Optional extension ignored: KHR_materials_specular
+asset 97c3acdb99c5ffefb002c03ecec7a8ed: Optional extension ignored: KHR_materials_specular
+{"case":"box-1","steps":900,"hz":60,"rigBodies":13,"meshTriangles":0,"medianMs":0.172517,"p95Ms":0.282483,"maxMs":2.147408,"first120MaxMs":2.147408,"contactRows":13801,"ccdIterations":747,"ccdLimits":0,"minimumBoneCenterY":0.0493287928,"sleeping":13}
+{"case":"box-4","steps":900,"hz":60,"rigBodies":52,"meshTriangles":0,"medianMs":0.714616,"p95Ms":1.308574,"maxMs":9.217564,"first120MaxMs":9.217564,"contactRows":55204,"ccdIterations":2988,"ccdLimits":0,"minimumBoneCenterY":0.0493287928,"sleeping":52}
+{"case":"mesh-1","steps":900,"hz":60,"rigBodies":13,"meshTriangles":8192,"medianMs":0.247539,"p95Ms":1.480369,"maxMs":10.899206,"first120MaxMs":10.899206,"contactRows":15714,"ccdIterations":3653,"ccdLimits":0,"minimumBoneCenterY":0.0489292592,"sleeping":0}
+{"case":"mesh-4","steps":900,"hz":60,"rigBodies":52,"meshTriangles":8192,"medianMs":0.652534,"p95Ms":4.814678,"maxMs":15.280967,"first120MaxMs":15.280967,"contactRows":61323,"ccdIterations":49256,"ccdLimits":2,"minimumBoneCenterY":0.0443307944,"sleeping":13}
+observer_sanity=1

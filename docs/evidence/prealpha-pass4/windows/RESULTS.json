@@ -1,0 +1,152 @@
+{
+  "schema": 1,
+  "kind": "prealpha-pass4-native-windows-qualification",
+  "nativeEngineRevision": "9deb47d1667e5b6bd1abe708ed343c3fbf6fe847",
+  "packagingPythonRevision": "df8929f73505d407697b5d35b115fc71d9100471",
+  "nativeBuildIdentity": {
+    "architecture": "AMD64",
+    "build_id": "0.1.0-prealpha-Experimental-9deb47d-clean-86800e25cc69",
+    "channel": "Experimental",
+    "compiler": "MSVC",
+    "compiler_version": "19.44.35229.0",
+    "configuration": "Release",
+    "maturity": "pre-alpha",
+    "platform": "Windows",
+    "schema": 1,
+    "source_dirty": false,
+    "source_fingerprint": "86800e25cc69bf1dd422358c9bebda07dd693a5471ffe748f439a1696db2b097",
+    "source_origin": "archive",
+    "source_revision": "9deb47d1667e5b6bd1abe708ed343c3fbf6fe847",
+    "source_tree": "f8c6c8885ec1eacb425c24fba9816144cbcfc74f",
+    "source_untracked_count": 0,
+    "source_untracked_fingerprint": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "version": "0.1.0-prealpha"
+  },
+  "sdk": {
+    "executables": 18,
+    "files": 238,
+    "manifestSHA256": "a35c138ed69a6e52ca7cdccf5dcb74f601cede5692a995723acc2477a9c6b98f",
+    "all18IdentityFieldsMatched": true,
+    "initialTools": {
+      "cases": 42,
+      "passed": 41,
+      "failed": 1,
+      "failure": "Inspector generated two unexpected pyc files before self-verification"
+    },
+    "correctedInspector": {
+      "cases": 7,
+      "passed": true,
+      "noBytecodeCreated": true,
+      "strictUnknownFileNegativePassed": true
+    },
+    "windowsReadinessChecks": 21,
+    "nativeRelocationExportCases": 6
+  },
+  "mechanismTests": {
+    "judas_impact_robustness_tests": {
+      "exit": 0,
+      "checks": 4412,
+      "failures": 0
+    },
+    "judas_origin_admission_tests": {
+      "exit": 0,
+      "checks": 23,
+      "failures": 0
+    },
+    "judas_character_motor_tests": {
+      "exit": 0,
+      "checks": 32,
+      "failures": 0
+    },
+    "judas_world_persistence_tests": {
+      "exit": 0,
+      "checks": 27,
+      "failures": 0
+    }
+  },
+  "passingMechanismChecks": 4494,
+  "m70Complete": {
+    "checks": 98,
+    "failures": 0,
+    "exit": 0
+  },
+  "coldProcesses": {
+    "invocations": 8,
+    "checks": 131,
+    "failures": 0,
+    "all8Passed": true,
+    "restoredM77Endpoint": "Actual measured physical Standing, live support contacts and root transforms; not cached status only"
+  },
+  "application": {
+    "desktopUser": "DESKTOP-935HKD1\\Conner",
+    "sessionId": 1,
+    "editorAuthoringPlayStopPassed": true,
+    "originalAuthoredSceneUnchanged": true,
+    "originalEditorPreferencesRestored": true,
+    "runtimeSaveLoadRotatedTransitionPauseReloadPassed": true,
+    "movedStandaloneSameHarnessPassed": true,
+    "incorrectSceneNegativeFails": true
+  },
+  "preservedFailures": [
+    {
+      "kind": "existing-curved-mesh-continuation",
+      "checks": 372,
+      "failures": 4,
+      "status": "OPEN; same unresolved90-step contract, not a new Windows regression claim"
+    },
+    {
+      "kind": "stock-QXL-graphics",
+      "exit": 1,
+      "diagnostic": "Failed to load the required OpenGL3.3 Core entry points",
+      "status": "VM driver limitation; native software-overlay functionality separately demonstrated"
+    },
+    {
+      "kind": "baseline-MSVC-C2026",
+      "status": "Corrected by byte-identical three-chunk embeddedJS literal; original compiler failure retained"
+    },
+    {
+      "kind": "SDK-inspector-self-mutation",
+      "status": "Corrected by separate df8929f Python-entrypoint patch; exact original pyc bytes preserved outsideGit"
+    },
+    {
+      "kind": "task-fixture-setup",
+      "status": "Original font/relative-cookbook/ACL/UTF8 helper failures retained; unchanged tests pass after exact prerequisites supplied"
+    }
+  ],
+  "finalIntegrity": {
+    "schema": 1,
+    "utc": "2026-10-18T17:19:16Z",
+    "sourceFiles": 1435,
+    "sourceErrors": [],
+    "nativeBinaryFiles": 26,
+    "nativeBinaryErrors": [],
+    "pristinePackageFiles": 41,
+    "pristinePackageErrors": [],
+    "screenshots": [
+      {
+        "path": "P:\\JudasValidation\\PreAlphaPass4\\GuiWork\\Results\\editor.edit.png",
+        "bytes": 258051,
+        "sha256": "8f03c5705d6b740aab5775059d6442dc75e0586a842bf153ae2a4c25a73c2091"
+      },
+      {
+        "path": "P:\\JudasValidation\\PreAlphaPass4\\GuiWork\\Results\\editor.play.png",
+        "bytes": 188552,
+        "sha256": "cacb8795ee2a2b03a921a588c62df49c55342209a17bcbbf30c200c276e538d7"
+      },
+      {
+        "path": "P:\\JudasValidation\\PreAlphaPass4\\GuiWork\\Results\\runtime.png",
+        "bytes": 111443,
+        "sha256": "8b7d317616518517800b7f3340dd1b4eaaffa8a66b53ed300041dbe08d480d07"
+      }
+    ],
+    "passed": true
+  },
+  "vmPersistentConfigSHA256": "2e2384c9412d9e6ffef2cabcea79dc6751ad728d8026a1dfbdd88e151d4bfa0e",
+  "scope": "Native Windows functional qualification on existing Windows10 Home22H2/KVM/QXL4vCPU6GiB VM; existing installed toolchain/dependencies; no clean Windows installation, vendor GPU/audio/controller acceptance or Windows performance gate; no full production-suite run",
+  "locations": {
+    "sdk": "P:\\JudasValidation\\PreAlphaPass4\\Build\\windows-sdk",
+    "pristineMovedGame": "P:\\JudasValidation\\PreAlphaPass4\\Moved Game \u00e9 \u03b1",
+    "softwareTestGame": "P:\\JudasValidation\\PreAlphaPass4\\GuiWork\\MovedSoftwareGame \u00e9 \u03b1",
+    "rawWorkingEvidence": "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass4/windows"
+  }
+}

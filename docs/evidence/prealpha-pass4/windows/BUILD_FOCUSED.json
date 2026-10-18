@@ -1,0 +1,15 @@
+﻿{
+    "utc":  "2026-10-18T16:44:09.2544123Z",
+    "start":  "2026-10-18T16:42:31.6919130Z",
+    "exit":  0,
+    "targets":  [
+                    "judas_impact_mesh_cost_tests",
+                    "judas_impact_robustness_tests",
+                    "judas_origin_admission_tests",
+                    "judas_character_motor_tests",
+                    "judas_world_persistence_tests",
+                    "judas_character_lab_tests",
+                    "judas_balance_lab_tests"
+                ],
+    "timingInformationalOnly":  true
+}

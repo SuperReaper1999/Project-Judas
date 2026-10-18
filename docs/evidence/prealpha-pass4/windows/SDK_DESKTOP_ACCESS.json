@@ -1,0 +1,12 @@
+﻿{
+    "utc":  "2026-10-18T17:07:25.9943498Z",
+    "sdk":  "P:\\JudasValidation\\PreAlphaPass4\\Build\\windows-sdk",
+    "account":  "DESKTOP-935HKD1\\Conner",
+    "grant":  "ReadAndExecute only; no mutation permission",
+    "sddlBefore":  "O:BAG:SYD:P(A;OICI;FA;;;OW)(A;OICI;FA;;;SY)(A;OICI;FA;;;BA)",
+    "sddlAfter":  "O:BAG:SYD:AI(A;OICI;FA;;;OW)(A;OICI;FA;;;SY)(A;OICI;FA;;;BA)(A;OICI;0x1200a9;;;S-1-5-21-3449792220-567192875-3777374600-1001)(A;ID;FA;;;BA)(A;OICIIOID;GA;;;BA)(A;ID;FA;;;SY)(A;OICIIOID;GA;;;SY)(A;ID;0x1301bf;;;AU)(A;OICIIOID;SDGXGWGR;;;AU)(A;ID;0x1200a9;;;BU)(A;OICIIOID;GXGR;;;BU)",
+    "manifestBefore":  "fc50b5a1d8ddda411310311eb12a1b18639f5f0f436182de0597ee5b17bdb376",
+    "manifestAfter":  "fc50b5a1d8ddda411310311eb12a1b18639f5f0f436182de0597ee5b17bdb376",
+    "cause":  "Private SDK staging created by SYSTEM builder; explicit cross-account validation read permission only",
+    "scope":  "No installed toolchain, Windows system, personal folder or VM configuration ACL changed"
+}

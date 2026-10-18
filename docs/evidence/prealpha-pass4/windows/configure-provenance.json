@@ -1,0 +1,55 @@
+﻿{
+    "utc":  "2026-10-18T15:50:53.4454529Z",
+    "os":  {
+               "Caption":  "Microsoft Windows 10 Home",
+               "Version":  "10.0.19045",
+               "BuildNumber":  "19045"
+           },
+    "tools":  [
+                  {
+                      "name":  "cl.exe",
+                      "path":  "C:\\JudasValidation\\VS2022\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\cl.exe",
+                      "sha256":  "fe251ef50a1545b1b0835ee17b1e785459712b38d79e45b5c1d3d28970a36619"
+                  },
+                  {
+                      "name":  "cmake.exe",
+                      "path":  "C:\\JudasValidation\\VS2022\\Common7\\IDE\\CommonExtensions\\Microsoft\\CMake\\CMake\\bin\\cmake.exe",
+                      "sha256":  "6fe2e6431b45cf32b9b2f3e50a8efae046a2366eb34d0fb36da027cf56102aec"
+                  },
+                  {
+                      "name":  "git.exe",
+                      "path":  "C:\\JudasValidation\\Git\\cmd\\git.exe",
+                      "sha256":  "54bda91c773c6bba2b970424423cfcb80552d92dc6967d766f98931fe1251a54"
+                  },
+                  {
+                      "name":  "python.exe",
+                      "path":  "C:\\JudasValidation\\Python\\python.exe",
+                      "sha256":  "31fe10b4ed82a2f960af0ef9931f46a4b84ff286f8b6ffd9dee098cf4f10f17f"
+                  }
+              ],
+    "source":  "P:\\JudasValidation\\PreAlphaPass4\\Source",
+    "build":  "P:\\JudasValidation\\PreAlphaPass4\\Build",
+    "systemFreeBytes":  415121408,
+    "workFreeBytes":  53483692032,
+    "configuration":  "Release",
+    "generator":  "Visual Studio 17 2022",
+    "platform":  "x64",
+    "vcpkgInstalled":  "C:\\JudasValidation\\Build\\vcpkg_installed",
+    "command":  [
+                    "cmake",
+                    "-S",
+                    "P:\\JudasValidation\\PreAlphaPass4\\Source",
+                    "-B",
+                    "P:\\JudasValidation\\PreAlphaPass4\\Build",
+                    "-G",
+                    "Visual Studio 17 2022",
+                    "-A",
+                    "x64",
+                    "-DCMAKE_TOOLCHAIN_FILE=C:\\JudasValidation/vcpkg/scripts/buildsystems/vcpkg.cmake",
+                    "-DVCPKG_TARGET_TRIPLET=x64-windows-static-md",
+                    "-DVCPKG_MANIFEST_DIR=P:\\JudasValidation\\PreAlphaPass4\\Source/packaging/windows",
+                    "-DVCPKG_INSTALLED_DIR=C:\\JudasValidation/Build/vcpkg_installed",
+                    "-DJUDAS_BUILD_CHANNEL=Experimental",
+                    "-DPython3_EXECUTABLE=C:\\JudasValidation/Python/python.exe"
+                ]
+}

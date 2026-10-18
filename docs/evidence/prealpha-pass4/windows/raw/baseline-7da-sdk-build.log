@@ -1,0 +1,685 @@
+﻿MSBuild version 17.14.60+43b635718 for .NET Framework
+
+  Checking File Globs
+  1>Checking Build System
+  Creating directories for 'judas_icu_build'
+  Building Custom Rule P:/JudasValidation/PreAlphaPass4/Source/CMakeLists.txt
+  Performing download step (verify and extract) for 'judas_icu_build'
+  -- verifying file...
+       file='P:/JudasValidation/PreAlphaPass4/Source/third_party/text/icu4c-76_1-src.tgz'
+  -- verifying file... done
+  -- extracting...
+       src='P:/JudasValidation/PreAlphaPass4/Source/third_party/text/icu4c-76_1-src.tgz'
+       dst='P:/JudasValidation/PreAlphaPass4/Build/unicode/windows-icu'
+  -- extracting... [tar xfz]
+  -- extracting... [analysis]
+  -- extracting... [rename]
+  -- extracting... [clean up]
+  -- extracting... done
+  No update step for 'judas_icu_build'
+  No patch step for 'judas_icu_build'
+  No configure step for 'judas_icu_build'
+  Performing build step for 'judas_icu_build'
+  -- judas_icu_build build command succeeded.  See also P:/JudasValidation/PreAlphaPass4/Build/unicode/build/src/judas_icu_build-stamp/judas_icu_build-build-*.log
+  No install step for 'judas_icu_build'
+  Completed 'judas_icu_build'
+  Building Custom Rule P:/JudasValidation/PreAlphaPass4/Source/CMakeLists.txt
+  Building Custom Rule P:/JudasValidation/PreAlphaPass4/Build/_deps/judas_freetype-src/CMakeLists.txt
+  autofit.c
+  ftbase.c
+  ftbbox.c
+  ftbdf.c
+  ftbitmap.c
+  ftcid.c
+  ftfstype.c
+  ftgasp.c
+  ftglyph.c
+  ftgxval.c
+  ftinit.c
+  ftmm.c
+  ftotval.c
+  ftpatent.c
+  ftpfr.c
+  ftstroke.c
+  ftsynth.c
+  fttype1.c
+  ftwinfnt.c
+  bdf.c
+  Generating Code...
+  Compiling...
+  ftbzip2.c
+  ftcache.c
+  cff.c
+  type1cid.c
+  ftgzip.c
+  ftlzw.c
+  pcf.c
+  pfr.c
+  psaux.c
+  pshinter.c
+  psnames.c
+  raster.c
+  sdf.c
+  sfnt.c
+  smooth.c
+  svg.c
+  truetype.c
+  type1.c
+  type42.c
+  winfnt.c
+  Generating Code...
+  Compiling...
+  ftsystem.c
+  ftdebug.c
+  Generating Code...
+P:\JudasValidation\PreAlphaPass4\Build\_deps\judas_freetype-src\builds\windows\ftsystem.c(29,9): warning C4005: 'WIN32_LEAN_AND_MEAN': macro redefinition [P:\JudasValidation\PreAlphaPass4\Build\_deps\judas_freetype-build\freetype.vcxproj]
+      P:\JudasValidation\PreAlphaPass4\Build\_deps\judas_freetype-src\builds\windows\ftsystem.c(29,9):
+      'WIN32_LEAN_AND_MEAN' previously declared on the command line
+  
+  freetype.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\_deps\judas_freetype-build\Release\freetype.lib
+  Building Custom Rule P:/JudasValidation/PreAlphaPass4/Build/_deps/judas_harfbuzz-src/CMakeLists.txt
+  harfbuzz.cc
+  harfbuzz.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\_deps\judas_harfbuzz-build\Release\harfbuzz.lib
+  Building Custom Rule P:/JudasValidation/PreAlphaPass4/Source/CMakeLists.txt
+  AppIcon.cpp
+  TextureLoader.cpp
+  CookedTexture.cpp
+  Generating Code...
+  judas_app_icon.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_app_icon.lib
+  Building Custom Rule P:/JudasValidation/PreAlphaPass4/Source/CMakeLists.txt
+  AudioBackend.c
+  ReverbBackend.c
+  Generating Code...
+  judas_audio_backend.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_audio_backend.lib
+  Building Custom Rule P:/JudasValidation/PreAlphaPass4/Source/CMakeLists.txt
+  BuildIdentity.cpp
+  BuildUpdate.cpp
+  ToolProcess.cpp
+  Generating Code...
+  judas_build_identity.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_build_identity.lib
+  Building Custom Rule P:/JudasValidation/PreAlphaPass4/Source/CMakeLists.txt
+  gl.c
+  judas_glad.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_glad.lib
+  Building Custom Rule P:/JudasValidation/PreAlphaPass4/Source/CMakeLists.txt
+  JobSystem.cpp
+  judas_jobs.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_jobs.lib
+  Building Custom Rule P:/JudasValidation/PreAlphaPass4/Source/CMakeLists.txt
+  PerformanceProfiler.cpp
+  judas_profiler.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_profiler.lib
+  Building Custom Rule P:/JudasValidation/PreAlphaPass4/Source/CMakeLists.txt
+  mikktspace.c
+  judas_materials.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_materials.lib
+  Building Custom Rule P:/JudasValidation/PreAlphaPass4/Source/CMakeLists.txt
+  allocator.cpp
+  clusterizer.cpp
+  indexanalyzer.cpp
+  indexcodec.cpp
+  indexgenerator.cpp
+  overdrawoptimizer.cpp
+  partition.cpp
+  quantization.cpp
+  rasterizer.cpp
+  simplifier.cpp
+  spatialorder.cpp
+  stripifier.cpp
+  vcacheoptimizer.cpp
+  vertexcodec.cpp
+  vertexfilter.cpp
+  vfetchoptimizer.cpp
+  Generating Code...
+  judas_meshoptimizer.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_meshoptimizer.lib
+  Building Custom Rule P:/JudasValidation/PreAlphaPass4/Source/CMakeLists.txt
+  DetourAlloc.cpp
+  DetourAssert.cpp
+  DetourCommon.cpp
+  DetourNavMesh.cpp
+  DetourNavMeshBuilder.cpp
+  DetourNavMeshQuery.cpp
+  DetourNode.cpp
+  DetourCrowd.cpp
+  DetourLocalBoundary.cpp
+  DetourObstacleAvoidance.cpp
+  DetourPathCorridor.cpp
+  DetourPathQueue.cpp
+  DetourProximityGrid.cpp
+  DetourTileCache.cpp
+  DetourTileCacheBuilder.cpp
+  Generating Code...
+  judas_navigation_backend.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_navigation_backend.lib
+  Building Custom Rule P:/JudasValidation/PreAlphaPass4/Source/CMakeLists.txt
+  NavigationGeometryBake.cpp
+  Recast.cpp
+  RecastAlloc.cpp
+  RecastArea.cpp
+  RecastAssert.cpp
+  RecastContour.cpp
+  RecastFilter.cpp
+  RecastLayers.cpp
+  RecastMesh.cpp
+  RecastMeshDetail.cpp
+  RecastRasterization.cpp
+  RecastRegion.cpp
+  Generating Code...
+  judas_navigation_cook.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_navigation_cook.lib
+  Building Custom Rule P:/JudasValidation/PreAlphaPass4/Source/CMakeLists.txt
+  quickjs.c
+P:\JudasValidation\PreAlphaPass4\Source\third_party\quickjs\quickjs.c(5013,5): warning C4098: 'JS_FreeCString': 'void' function returning a value [P:\JudasValidation\PreAlphaPass4\Build\judas_quickjs.vcxproj]
+P:\JudasValidation\PreAlphaPass4\Source\third_party\quickjs\quickjs.c(5018,5): warning C4098: 'JS_FreeCStringRT': 'void' function returning a value [P:\JudasValidation\PreAlphaPass4\Build\judas_quickjs.vcxproj]
+P:\JudasValidation\PreAlphaPass4\Source\third_party\quickjs\quickjs.c(5023,5): warning C4098: 'JS_FreeCStringUTF16': 'void' function returning a value [P:\JudasValidation\PreAlphaPass4\Build\judas_quickjs.vcxproj]
+P:\JudasValidation\PreAlphaPass4\Source\third_party\quickjs\quickjs.c(5028,5): warning C4098: 'JS_FreeCStringRT_UTF16': 'void' function returning a value [P:\JudasValidation\PreAlphaPass4\Build\judas_quickjs.vcxproj]
+  dtoa.c
+  libregexp.c
+  libunicode.c
+  Generating Code...
+  judas_quickjs.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_quickjs.lib
+  Building Custom Rule P:/JudasValidation/PreAlphaPass4/Source/CMakeLists.txt
+  NetworkSession.cpp
+P:\JudasValidation\PreAlphaPass4\Source\src\NetworkSession.cpp(73,87): warning C4458: declaration of 'p' hides class member [P:\JudasValidation\PreAlphaPass4\Build\judas_engine.vcxproj]
+      P:\JudasValidation\PreAlphaPass4\Source\src\NetworkSession.h(53,36):
+      see declaration of 'NetworkSession::p'
+  
+  NetworkTransport.cpp
+  Wheel.cpp
+  WorldWheels.cpp
+  Powertrain.cpp
+  PowertrainAuthoring.cpp
+  WorldPowertrains.cpp
+  ModContent.cpp
+P:\JudasValidation\PreAlphaPass4\Source\src\modding\ModContent.cpp(92,120): warning C4456: declaration of 'v' hides previous local declaration [P:\JudasValidation\PreAlphaPass4\Build\judas_engine.vcxproj]
+      P:\JudasValidation\PreAlphaPass4\Source\src\modding\ModContent.cpp(84,138):
+      see declaration of 'v'
+  
+P:\JudasValidation\PreAlphaPass4\Source\src\modding\ModContent.cpp(93,114): warning C4456: declaration of 'v' hides previous local declaration [P:\JudasValidation\PreAlphaPass4\Build\judas_engine.vcxproj]
+      P:\JudasValidation\PreAlphaPass4\Source\src\modding\ModContent.cpp(84,138):
+      see declaration of 'v'
+  
+  ContentStorage.cpp
+  ModStore.cpp
+  ModRuntime.cpp
+  WorldFracture.cpp
+  Fracture.cpp
+P:\JudasValidation\PreAlphaPass4\Source\src\Fracture.cpp(91,19): warning C4457: declaration of 'a' hides function parameter [P:\JudasValidation\PreAlphaPass4\Build\judas_engine.vcxproj]
+      P:\JudasValidation\PreAlphaPass4\Source\src\Fracture.cpp(23,43):
+      see declaration of 'a'
+  
+  DeformableAsset.cpp
+  Deformable.cpp
+P:\JudasValidation\PreAlphaPass4\Source\src\Deformable.cpp(194,19): warning C4458: declaration of 'lambda' hides class member [P:\JudasValidation\PreAlphaPass4\Build\judas_engine.vcxproj]
+      P:\JudasValidation\PreAlphaPass4\Source\src\Deformable.h(137,42):
+      see declaration of 'DeformableInstance::lambda'
+  
+  WorldDeformables.cpp
+  TextLayout.cpp
+  TextEditing.cpp
+  Localization.cpp
+  Material.cpp
+  Generating Code...
+  Compiling...
+  Environment.cpp
+P:\JudasValidation\PreAlphaPass4\Source\src\Environment.cpp(36,525): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data [P:\JudasValidation\PreAlphaPass4\Build\judas_engine.vcxproj]
+  Tangents.cpp
+  LiquidGeometry.cpp
+P:\JudasValidation\PreAlphaPass4\Source\src\LiquidGeometry.cpp(137,57): warning C4459: declaration of 'faces' hides global declaration [P:\JudasValidation\PreAlphaPass4\Build\judas_engine.vcxproj]
+      P:\JudasValidation\PreAlphaPass4\Source\src\LiquidGeometry.cpp(12,11):
+      see declaration of '`anonymous-namespace'::faces'
+  
+P:\JudasValidation\PreAlphaPass4\Source\src\LiquidGeometry.cpp(140,85): warning C4459: declaration of 'faces' hides global declaration [P:\JudasValidation\PreAlphaPass4\Build\judas_engine.vcxproj]
+      P:\JudasValidation\PreAlphaPass4\Source\src\LiquidGeometry.cpp(12,11):
+      see declaration of '`anonymous-namespace'::faces'
+  
+  LiquidTypes.cpp
+  LiquidSystem.cpp
+P:\JudasValidation\PreAlphaPass4\Source\src\LiquidSystem.cpp(65,606): warning C4457: declaration of 'p' hides function parameter [P:\JudasValidation\PreAlphaPass4\Build\judas_engine.vcxproj]
+      P:\JudasValidation\PreAlphaPass4\Source\src\LiquidSystem.cpp(65,117):
+      see declaration of 'p'
+  
+P:\JudasValidation\PreAlphaPass4\Source\src\LiquidSystem.cpp(65,768): warning C4457: declaration of 'p' hides function parameter [P:\JudasValidation\PreAlphaPass4\Build\judas_engine.vcxproj]
+      P:\JudasValidation\PreAlphaPass4\Source\src\LiquidSystem.cpp(65,117):
+      see declaration of 'p'
+  
+  LiquidSurface.cpp
+  VolumeTerrainGeometry.cpp
+P:\JudasValidation\PreAlphaPass4\Source\src\VolumeTerrainGeometry.cpp(47,59): warning C4267: 'initializing': conversion from 'size_t' to 'unsigned int', possible loss of data [P:\JudasValidation\PreAlphaPass4\Build\judas_engine.vcxproj]
+  RuntimeTerrain.cpp
+  NavigationSystem.cpp
+P:\JudasValidation\PreAlphaPass4\Source\src\NavigationSystem.cpp(36,515): warning C4267: 'argument': conversion from 'size_t' to 'const int', possible loss of data [P:\JudasValidation\PreAlphaPass4\Build\judas_engine.vcxproj]
+P:\JudasValidation\PreAlphaPass4\Source\src\NavigationSystem.cpp(78,792): warning C4456: declaration of 'state' hides previous local declaration [P:\JudasValidation\PreAlphaPass4\Build\judas_engine.vcxproj]
+      P:\JudasValidation\PreAlphaPass4\Source\src\NavigationSystem.cpp(72,193):
+      see declaration of 'state'
+  
+P:\JudasValidation\PreAlphaPass4\Source\src\NavigationSystem.cpp(78,1338): warning C4456: declaration of 'count' hides previous local declaration [P:\JudasValidation\PreAlphaPass4\Build\judas_engine.vcxproj]
+      P:\JudasValidation\PreAlphaPass4\Source\src\NavigationSystem.cpp(78,302):
+      see declaration of 'count'
+  
+  NavigationTypes.cpp
+  NavigationAsset.cpp
+P:\JudasValidation\PreAlphaPass4\Source\src\NavigationAsset.cpp(23,82): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data [P:\JudasValidation\PreAlphaPass4\Build\judas_engine.vcxproj]
+P:\JudasValidation\PreAlphaPass4\Source\src\NavigationAsset.cpp(55,733): warning C4267: 'argument': conversion from 'size_t' to 'unsigned int', possible loss of data [P:\JudasValidation\PreAlphaPass4\Build\judas_engine.vcxproj]
+P:\JudasValidation\PreAlphaPass4\Source\src\NavigationAsset.cpp(55,817): warning C4267: 'argument': conversion from 'size_t' to 'unsigned int', possible loss of data [P:\JudasValidation\PreAlphaPass4\Build\judas_engine.vcxproj]
+P:\JudasValidation\PreAlphaPass4\Source\src\NavigationAsset.cpp(55,870): warning C4267: 'argument': conversion from 'size_t' to 'unsigned int', possible loss of data [P:\JudasValidation\PreAlphaPass4\Build\judas_engine.vcxproj]
+  FullBodyIK.cpp
+  PhysicalAnimation.cpp
+  PhysicalBalance.cpp
+  WorldPhysicalBalance.cpp
+  WorldAnimation.cpp
+  PoseComposition.cpp
+  WorldRagdoll.cpp
+P:\JudasValidation\PreAlphaPass4\Source\src\WorldRagdoll.cpp(289,28): warning C4456: declaration of 'previous' hides previous local declaration [P:\JudasValidation\PreAlphaPass4\Build\judas_engine.vcxproj]
+      P:\JudasValidation\PreAlphaPass4\Source\src\WorldRagdoll.cpp(285,21):
+      see declaration of 'previous'
+  
+  GltfLoader.cpp
+P:\JudasValidation\PreAlphaPass4\Source\src\GltfLoader.cpp(105,974): warning C4457: declaration of 'error' hides function parameter [P:\JudasValidation\PreAlphaPass4\Build\judas_engine.vcxproj]
+      P:\JudasValidation\PreAlphaPass4\Source\src\GltfLoader.cpp(41,116):
+      see declaration of 'error'
+  
+P:\JudasValidation\PreAlphaPass4\Source\src\GltfLoader.cpp(118,86): warning C4456: declaration of 'map' hides previous local declaration [P:\JudasValidation\PreAlphaPass4\Build\judas_engine.vcxproj]
+      P:\JudasValidation\PreAlphaPass4\Source\src\GltfLoader.cpp(85,8):
+      see declaration of 'map'
+  
+  WorldCharacter.cpp
+  Generating Code...
+P:\JudasValidation\PreAlphaPass4\Source\src\VolumeTerrainGeometry.cpp(44,1): warning C4701: potentially uninitialized local variable 'n' used [P:\JudasValidation\PreAlphaPass4\Build\judas_engine.vcxproj]
+  Compiling...
+  WorldGravity.cpp
+  WorldStreaming.cpp
+P:\JudasValidation\PreAlphaPass4\Source\src\WorldStreaming.cpp(247,50): warning C4457: declaration of 'target' hides function parameter [P:\JudasValidation\PreAlphaPass4\Build\judas_engine.vcxproj]
+      P:\JudasValidation\PreAlphaPass4\Source\src\WorldStreaming.cpp(241,61):
+      see declaration of 'target'
+  
+P:\JudasValidation\PreAlphaPass4\Source\src\WorldStreaming.cpp(309,66): warning C4456: declaration of 'id' hides previous local declaration [P:\JudasValidation\PreAlphaPass4\Build\judas_engine.vcxproj]
+      P:\JudasValidation\PreAlphaPass4\Source\src\WorldStreaming.cpp(290,15):
+      see declaration of 'id'
+  
+  WorldRegions.cpp
+  WorldScripts.cpp
+  RuntimeUI.cpp
+P:\JudasValidation\PreAlphaPass4\Source\src\RuntimeUI.cpp(101,420): warning C4244: '=': conversion from 'int' to 'float', possible loss of data [P:\JudasValidation\PreAlphaPass4\Build\judas_engine.vcxproj]
+  RuntimeUIControls.cpp
+  ScriptSystem.cpp
+P:\JudasValidation\PreAlphaPass4\Source\src\ScriptSystem.cpp(313,1): error C2026: string too big, trailing characters truncated [P:\JudasValidation\PreAlphaPass4\Build\judas_engine.vcxproj]
+P:\JudasValidation\PreAlphaPass4\Source\src\ScriptSystem.cpp(1611,75): warning C4267: 'argument': conversion from 'size_t' to 'uint32_t', possible loss of data [P:\JudasValidation\PreAlphaPass4\Build\judas_engine.vcxproj]
+P:\JudasValidation\PreAlphaPass4\Source\src\ScriptSystem.cpp(1611,173): warning C4267: 'argument': conversion from 'size_t' to 'uint32_t', possible loss of data [P:\JudasValidation\PreAlphaPass4\Build\judas_engine.vcxproj]
+  ScriptBindingsUI.cpp
+  ScriptBindingsJoint.cpp
+  Classification.cpp
+  GamePackage.cpp
+  ProjectExporter.cpp
+  AssetDependencies.cpp
+  AudioStream.cpp
+  AudioEnvironment.cpp
+  AudioData.cpp
+  AudioSystem.cpp
+  WorldAudio.cpp
+P:\JudasValidation\PreAlphaPass4\Source\src\WorldAudio.cpp(93,13): warning C4267: 'initializing': conversion from 'size_t' to 'unsigned int', possible loss of data [P:\JudasValidation\PreAlphaPass4\Build\judas_engine.vcxproj]
+P:\JudasValidation\PreAlphaPass4\Source\src\WorldAudio.cpp(96,21): warning C4244: '=': conversion from 'int' to 'float', possible loss of data [P:\JudasValidation\PreAlphaPass4\Build\judas_engine.vcxproj]
+  Window.cpp
+P:\JudasValidation\PreAlphaPass4\Source\src\Window.cpp(151,119): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data [P:\JudasValidation\PreAlphaPass4\Build\judas_engine.vcxproj]
+P:\JudasValidation\PreAlphaPass4\Source\src\Window.cpp(175,78): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data [P:\JudasValidation\PreAlphaPass4\Build\judas_engine.vcxproj]
+P:\JudasValidation\PreAlphaPass4\Source\src\Window.cpp(209,230): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data [P:\JudasValidation\PreAlphaPass4\Build\judas_engine.vcxproj]
+P:\JudasValidation\PreAlphaPass4\Source\src\Window.cpp(210,300): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data [P:\JudasValidation\PreAlphaPass4\Build\judas_engine.vcxproj]
+P:\JudasValidation\PreAlphaPass4\Source\src\Window.cpp(212,148): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data [P:\JudasValidation\PreAlphaPass4\Build\judas_engine.vcxproj]
+P:\JudasValidation\PreAlphaPass4\Source\src\Window.cpp(214,354): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data [P:\JudasValidation\PreAlphaPass4\Build\judas_engine.vcxproj]
+P:\JudasValidation\PreAlphaPass4\Source\src\Window.cpp(262,123): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data [P:\JudasValidation\PreAlphaPass4\Build\judas_engine.vcxproj]
+P:\JudasValidation\PreAlphaPass4\Source\src\Window.cpp(264,144): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data [P:\JudasValidation\PreAlphaPass4\Build\judas_engine.vcxproj]
+  LocalMultiplayer.cpp
+  Generating Code...
+  Compiling...
+  InputSystem.cpp
+  Renderer.cpp
+P:\JudasValidation\PreAlphaPass4\Source\src\Renderer.cpp(1662,80): warning C4244: 'argument': conversion from 'int' to 'GLfloat', possible loss of data [P:\JudasValidation\PreAlphaPass4\Build\judas_engine.vcxproj]
+P:\JudasValidation\PreAlphaPass4\Source\src\Renderer.cpp(1662,119): warning C4244: 'argument': conversion from 'int' to 'GLfloat', possible loss of data [P:\JudasValidation\PreAlphaPass4\Build\judas_engine.vcxproj]
+  RenderLightGrid.cpp
+  SkeletalAnimation.cpp
+  CharacterMotor.cpp
+  PlayerController.cpp
+  PlayerView.cpp
+  StepClimb.cpp
+  DynamicBody.cpp
+  FlyingPrimitiveControl.cpp
+  PilotAttachment.cpp
+  PilotControl.cpp
+  ReferenceFrame.cpp
+  CollisionAuthoring.cpp
+  CollisionSource.cpp
+P:\JudasValidation\PreAlphaPass4\Source\src\CollisionSource.cpp(34,46): warning C4267: 'argument': conversion from 'size_t' to '_Ty', possible loss of data [P:\JudasValidation\PreAlphaPass4\Build\judas_engine.vcxproj]
+P:\JudasValidation\PreAlphaPass4\Source\src\CollisionSource.cpp(34,46): warning C4267:         with [P:\JudasValidation\PreAlphaPass4\Build\judas_engine.vcxproj]
+P:\JudasValidation\PreAlphaPass4\Source\src\CollisionSource.cpp(34,46): warning C4267:         [ [P:\JudasValidation\PreAlphaPass4\Build\judas_engine.vcxproj]
+P:\JudasValidation\PreAlphaPass4\Source\src\CollisionSource.cpp(34,46): warning C4267:             _Ty=uint32_t [P:\JudasValidation\PreAlphaPass4\Build\judas_engine.vcxproj]
+P:\JudasValidation\PreAlphaPass4\Source\src\CollisionSource.cpp(34,46): warning C4267:         ] [P:\JudasValidation\PreAlphaPass4\Build\judas_engine.vcxproj]
+P:\JudasValidation\PreAlphaPass4\Source\src\CollisionSource.cpp(53,339): warning C4267: 'argument': conversion from 'size_t' to '_Ty', possible loss of data [P:\JudasValidation\PreAlphaPass4\Build\judas_engine.vcxproj]
+P:\JudasValidation\PreAlphaPass4\Source\src\CollisionSource.cpp(53,339): warning C4267:         with [P:\JudasValidation\PreAlphaPass4\Build\judas_engine.vcxproj]
+P:\JudasValidation\PreAlphaPass4\Source\src\CollisionSource.cpp(53,339): warning C4267:         [ [P:\JudasValidation\PreAlphaPass4\Build\judas_engine.vcxproj]
+P:\JudasValidation\PreAlphaPass4\Source\src\CollisionSource.cpp(53,339): warning C4267:             _Ty=uint32_t [P:\JudasValidation\PreAlphaPass4\Build\judas_engine.vcxproj]
+P:\JudasValidation\PreAlphaPass4\Source\src\CollisionSource.cpp(53,339): warning C4267:         ] [P:\JudasValidation\PreAlphaPass4\Build\judas_engine.vcxproj]
+P:\JudasValidation\PreAlphaPass4\Source\src\CollisionSource.cpp(56,220): warning C4267: 'argument': conversion from 'size_t' to '_Ty', possible loss of data [P:\JudasValidation\PreAlphaPass4\Build\judas_engine.vcxproj]
+P:\JudasValidation\PreAlphaPass4\Source\src\CollisionSource.cpp(56,220): warning C4267:         with [P:\JudasValidation\PreAlphaPass4\Build\judas_engine.vcxproj]
+P:\JudasValidation\PreAlphaPass4\Source\src\CollisionSource.cpp(56,220): warning C4267:         [ [P:\JudasValidation\PreAlphaPass4\Build\judas_engine.vcxproj]
+P:\JudasValidation\PreAlphaPass4\Source\src\CollisionSource.cpp(56,220): warning C4267:             _Ty=uint32_t [P:\JudasValidation\PreAlphaPass4\Build\judas_engine.vcxproj]
+P:\JudasValidation\PreAlphaPass4\Source\src\CollisionSource.cpp(56,220): warning C4267:         ] [P:\JudasValidation\PreAlphaPass4\Build\judas_engine.vcxproj]
+  ModelLoader.cpp
+P:\JudasValidation\PreAlphaPass4\Source\third_party\tiny_obj_loader.h(12700,18): warning C4456: declaration of 'total_faces' hides previous local declaration [P:\JudasValidation\PreAlphaPass4\Build\judas_engine.vcxproj]
+  (compiling source file '../Source/src/ModelLoader.cpp')
+      P:\JudasValidation\PreAlphaPass4\Source\third_party\tiny_obj_loader.h(12349,10):
+      see declaration of 'total_faces'
+  
+P:\JudasValidation\PreAlphaPass4\Source\third_party\tiny_obj_loader.h(13697,18): warning C4456: declaration of 'total_faces' hides previous local declaration [P:\JudasValidation\PreAlphaPass4\Build\judas_engine.vcxproj]
+  (compiling source file '../Source/src/ModelLoader.cpp')
+      P:\JudasValidation\PreAlphaPass4\Source\third_party\tiny_obj_loader.h(13319,10):
+      see declaration of 'total_faces'
+  
+P:\JudasValidation\PreAlphaPass4\Source\third_party\tiny_obj_loader.h(6887,18): warning C4505: 'tinyobj::parseTagTriple': unreferenced function with internal linkage has been removed [P:\JudasValidation\PreAlphaPass4\Build\judas_engine.vcxproj]
+  (compiling source file '../Source/src/ModelLoader.cpp')
+  
+P:\JudasValidation\PreAlphaPass4\Source\third_party\tiny_obj_loader.h(6913,13): warning C4505: 'tinyobj::parseTriple': unreferenced function with internal linkage has been removed [P:\JudasValidation\PreAlphaPass4\Build\judas_engine.vcxproj]
+  (compiling source file '../Source/src/ModelLoader.cpp')
+  
+P:\JudasValidation\PreAlphaPass4\Source\third_party\tiny_obj_loader.h(6967,23): warning C4505: 'tinyobj::parseRawTriple': unreferenced function with internal linkage has been removed [P:\JudasValidation\PreAlphaPass4\Build\judas_engine.vcxproj]
+  (compiling source file '../Source/src/ModelLoader.cpp')
+  
+  ModelArchive.cpp
+  AssetCook.cpp
+P:\JudasValidation\PreAlphaPass4\Source\third_party\stb_dxt.h(177,23): warning C4244: '=': conversion from 'int' to 'unsigned char', possible loss of data [P:\JudasValidation\PreAlphaPass4\Build\judas_engine.vcxproj]
+  (compiling source file '../Source/src/AssetCook.cpp')
+  
+P:\JudasValidation\PreAlphaPass4\Source\third_party\stb_dxt.h(178,23): warning C4244: '=': conversion from 'int' to 'unsigned char', possible loss of data [P:\JudasValidation\PreAlphaPass4\Build\judas_engine.vcxproj]
+  (compiling source file '../Source/src/AssetCook.cpp')
+  
+P:\JudasValidation\PreAlphaPass4\Source\third_party\stb_dxt.h(179,23): warning C4244: '=': conversion from 'int' to 'unsigned char', possible loss of data [P:\JudasValidation\PreAlphaPass4\Build\judas_engine.vcxproj]
+  (compiling source file '../Source/src/AssetCook.cpp')
+  
+  FontLoader.cpp
+  UIWidgets.cpp
+  Generating Code...
+  Compiling...
+  PauseMenu.cpp
+  HUD.cpp
+  LightTransforms.cpp
+  LightAttenuation.cpp
+  ShadowTransforms.cpp
+  HingeTransform.cpp
+  InteractionSystem.cpp
+  ObjectManipulation.cpp
+  FluidWorld.cpp
+  ProductionFluidCoupling.cpp
+  FluidHydrostatics.cpp
+  FluidSurface.cpp
+  CombustionWorld.cpp
+  FirePresentation.cpp
+  TerrainDemo.cpp
+  TerrainLibrary.cpp
+  Door.cpp
+  LightSwitch.cpp
+  FaithfulGravity.cpp
+  RadicalGravity.cpp
+  Generating Code...
+  Compiling...
+  SphericalVolume.cpp
+  BoxVolume.cpp
+  GravityContextMap.cpp
+  CelestialGravity.cpp
+  AtmosphereField.cpp
+  AerodynamicDrag.cpp
+  VisualParticles.cpp
+  Prefab.cpp
+  Scene.cpp
+  Ragdoll.cpp
+  SceneSerialization.cpp
+  NamedAuthoring.cpp
+  SceneFingerprint.cpp
+P:\JudasValidation\PreAlphaPass4\Source\src\SceneFingerprint.cpp(469,141): warning C4456: declaration of 's' hides previous local declaration [P:\JudasValidation\PreAlphaPass4\Build\judas_engine.vcxproj]
+      P:\JudasValidation\PreAlphaPass4\Source\src\SceneFingerprint.cpp(314,17):
+      see declaration of 's'
+  
+  Project.cpp
+  AssetDatabase.cpp
+  AsyncFile.cpp
+  ResourceManager.cpp
+  EnginePaths.cpp
+  DebugDraw.cpp
+  WorldDebugView.cpp
+  Generating Code...
+P:\JudasValidation\PreAlphaPass4\Source\src\SceneSerialization.cpp(912,1): warning C4701: potentially uninitialized local variable 'seed' used [P:\JudasValidation\PreAlphaPass4\Build\judas_engine.vcxproj]
+  Compiling...
+  SceneSession.cpp
+  PlanetTerrain.cpp
+  PlanetTiles.cpp
+  WorldPlanets.cpp
+  Weather.cpp
+  WorldWeather.cpp
+  WorldOrigin.cpp
+  RuntimeWorld.cpp
+P:\JudasValidation\PreAlphaPass4\Source\src\RuntimeWorld.cpp(491,42): warning C4458: declaration of 'view' hides class member [P:\JudasValidation\PreAlphaPass4\Build\judas_engine.vcxproj]
+      P:\JudasValidation\PreAlphaPass4\Source\src\RuntimeWorld.h(417,32):
+      see declaration of 'RuntimeWorld::view'
+  
+P:\JudasValidation\PreAlphaPass4\Source\src\RuntimeWorld.cpp(1356,30): warning C4458: declaration of 'view' hides class member [P:\JudasValidation\PreAlphaPass4\Build\judas_engine.vcxproj]
+      P:\JudasValidation\PreAlphaPass4\Source\src\RuntimeWorld.h(417,32):
+      see declaration of 'RuntimeWorld::view'
+  
+  GameSession.cpp
+  Simulation.cpp
+  WorldPresentation.cpp
+P:\JudasValidation\PreAlphaPass4\Source\src\WorldPresentation.cpp(605,5): warning C4244: 'argument': conversion from 'const size_t' to 'double', possible loss of data [P:\JudasValidation\PreAlphaPass4\Build\judas_engine.vcxproj]
+P:\JudasValidation\PreAlphaPass4\Source\src\WorldPresentation.cpp(606,5): warning C4244: 'argument': conversion from 'const size_t' to 'double', possible loss of data [P:\JudasValidation\PreAlphaPass4\Build\judas_engine.vcxproj]
+  GameplayHud.cpp
+  EngineHost.cpp
+  InteractivePlay.cpp
+  ScreenshotWriter.cpp
+  FidelityPolicy.cpp
+  CoarseSimulation.cpp
+  WorldState.cpp
+  SaveStorage.cpp
+  SaveStorageWindows.cpp
+  Generating Code...
+  Compiling...
+  PlatformServices.cpp
+  SaveEvolution.cpp
+  SaveService.cpp
+  MotorPersistence.cpp
+  LiquidPersistence.cpp
+  WorldPersistence.cpp
+P:\JudasValidation\PreAlphaPass4\Source\src\WorldPersistence.cpp(284,472): warning C4457: declaration of 'error' hides function parameter [P:\JudasValidation\PreAlphaPass4\Build\judas_engine.vcxproj]
+      P:\JudasValidation\PreAlphaPass4\Source\src\WorldPersistence.cpp(269,109):
+      see declaration of 'error'
+  
+C:\JudasValidation\VS2022\VC\Tools\MSVC\14.44.35207\include\utility(274,54): warning C4244: 'initializing': conversion from 'const SceneObjectId' to '_Ty2', possible loss of data [P:\JudasValidation\PreAlphaPass4\Build\judas_engine.vcxproj]
+C:\JudasValidation\VS2022\VC\Tools\MSVC\14.44.35207\include\utility(274,54): warning C4244:         with [P:\JudasValidation\PreAlphaPass4\Build\judas_engine.vcxproj]
+C:\JudasValidation\VS2022\VC\Tools\MSVC\14.44.35207\include\utility(274,54): warning C4244:         [ [P:\JudasValidation\PreAlphaPass4\Build\judas_engine.vcxproj]
+C:\JudasValidation\VS2022\VC\Tools\MSVC\14.44.35207\include\utility(274,54): warning C4244:             _Ty2=unsigned int [P:\JudasValidation\PreAlphaPass4\Build\judas_engine.vcxproj]
+C:\JudasValidation\VS2022\VC\Tools\MSVC\14.44.35207\include\utility(274,54): warning C4244:         ] [P:\JudasValidation\PreAlphaPass4\Build\judas_engine.vcxproj]
+  (compiling source file '../Source/src/WorldPersistence.cpp')
+      C:\JudasValidation\VS2022\VC\Tools\MSVC\14.44.35207\include\utility(274,54):
+      the template instantiation context (the oldest one first) is
+          P:\JudasValidation\PreAlphaPass4\Source\src\WorldPersistence.cpp(361,592):
+          see reference to function template instantiation 'std::pair<uint64_t,unsigned int>::pair<const SceneObjectId&,const uint64_t&,0>(_Other1,_Other2) noexcept' being compiled
+          with
+          [
+              _Other1=const SceneObjectId &,
+              _Other2=const uint64_t &
+          ]
+              P:\JudasValidation\PreAlphaPass4\Source\src\WorldPersistence.cpp(361,580):
+              see the first reference to 'std::pair<uint64_t,unsigned int>::pair' in 'WorldPersistence::Restore'
+  
+C:\JudasValidation\VS2022\VC\Tools\MSVC\14.44.35207\include\utility(274,54): warning C4244: 'initializing': conversion from 'EntityId' to '_Ty2', possible loss of data [P:\JudasValidation\PreAlphaPass4\Build\judas_engine.vcxproj]
+C:\JudasValidation\VS2022\VC\Tools\MSVC\14.44.35207\include\utility(274,54): warning C4244:         with [P:\JudasValidation\PreAlphaPass4\Build\judas_engine.vcxproj]
+C:\JudasValidation\VS2022\VC\Tools\MSVC\14.44.35207\include\utility(274,54): warning C4244:         [ [P:\JudasValidation\PreAlphaPass4\Build\judas_engine.vcxproj]
+C:\JudasValidation\VS2022\VC\Tools\MSVC\14.44.35207\include\utility(274,54): warning C4244:             _Ty2=unsigned int [P:\JudasValidation\PreAlphaPass4\Build\judas_engine.vcxproj]
+C:\JudasValidation\VS2022\VC\Tools\MSVC\14.44.35207\include\utility(274,54): warning C4244:         ] [P:\JudasValidation\PreAlphaPass4\Build\judas_engine.vcxproj]
+  (compiling source file '../Source/src/WorldPersistence.cpp')
+      C:\JudasValidation\VS2022\VC\Tools\MSVC\14.44.35207\include\utility(274,54):
+      the template instantiation context (the oldest one first) is
+          P:\JudasValidation\PreAlphaPass4\Source\src\WorldPersistence.cpp(361,350):
+          see reference to function template instantiation 'std::pair<std::_Tree_const_iterator<std::_Tree_val<std::_Tree_simple_types<std::pair<uint64_t,unsigned int>>>>,bool> std::_Tree<std::_Tset_traits<_Kty,_Pr,_Alloc,false>>::emplace<SceneObjectId&,uint64_t&>(SceneObjectId &,uint64_t &)' being compiled
+          with
+          [
+              _Kty=std::pair<uint64_t,unsigned int>,
+              _Pr=std::less<std::pair<uint64_t,unsigned int>>,
+              _Alloc=std::allocator<std::pair<uint64_t,unsigned int>>
+          ]
+              P:\JudasValidation\PreAlphaPass4\Source\src\WorldPersistence.cpp(361,239):
+              see the first reference to 'std::_Tree<std::_Tset_traits<_Kty,_Pr,_Alloc,false>>::emplace' in 'WorldPersistence::Restore'
+          with
+          [
+              _Kty=std::pair<uint64_t,unsigned int>,
+              _Pr=std::less<std::pair<uint64_t,unsigned int>>,
+              _Alloc=std::allocator<std::pair<uint64_t,unsigned int>>
+          ]
+          C:\JudasValidation\VS2022\VC\Tools\MSVC\14.44.35207\include\xtree(1048,30):
+          see reference to function template instantiation 'std::pair<std::_Tree_node<std::pair<uint64_t,unsigned int>,std::_Default_allocator_traits<_Alloc>::void_pointer> *,bool> std::_Tree<std::_Tset_traits<_Kty,_Pr,_Alloc,false>>::_Emplace<EntityId&,EntityId&>(EntityId &,EntityId &)' being compiled
+          with
+          [
+              _Alloc=std::allocator<std::pair<uint64_t,unsigned int>>,
+              _Kty=std::pair<uint64_t,unsigned int>,
+              _Pr=std::less<std::pair<uint64_t,unsigned int>>
+          ]
+          C:\JudasValidation\VS2022\VC\Tools\MSVC\14.44.35207\include\xtree(1026,46):
+          see reference to function template instantiation 'std::_Tree_temp_node<std::allocator<std::_Tree_node<std::pair<uint64_t,unsigned int>,std::_Default_allocator_traits<_Alloc>::void_pointer>>>::_Tree_temp_node<EntityId&,EntityId&>(_Alnode &,std::_Tree_node<std::pair<uint64_t,unsigned int>,std::_Default_allocator_traits<_Alloc>::void_pointer> *,EntityId &,EntityId &)' being compiled
+          with
+          [
+              _Alloc=std::allocator<std::pair<uint64_t,unsigned int>>,
+              _Alnode=std::allocator<std::_Tree_node<std::pair<uint64_t,unsigned int>,std::_Default_allocator_traits<std::allocator<std::pair<uint64_t,unsigned int>>>::void_pointer>>
+          ]
+          C:\JudasValidation\VS2022\VC\Tools\MSVC\14.44.35207\include\xtree(830,25):
+          see reference to function template instantiation 'void std::_Default_allocator_traits<_Alloc>::construct<_Ty,EntityId&,EntityId&>(_Alloc &,_Objty *const ,EntityId &,EntityId &)' being compiled
+          with
+          [
+              _Alloc=std::allocator<std::_Tree_node<std::pair<uint64_t,unsigned int>,std::_Default_allocator_traits<std::allocator<std::pair<uint64_t,unsigned int>>>::void_pointer>>,
+              _Ty=std::pair<uint64_t,unsigned int>,
+              _Objty=std::pair<uint64_t,unsigned int>
+          ]
+          C:\JudasValidation\VS2022\VC\Tools\MSVC\14.44.35207\include\xmemory(732,82):
+          see reference to function template instantiation 'std::pair<uint64_t,unsigned int>::pair<EntityId&,EntityId&,0>(_Other1,_Other2) noexcept' being compiled
+          with
+          [
+              _Other1=EntityId &,
+              _Other2=EntityId &
+          ]
+  
+  CollisionAsset.cpp
+P:\JudasValidation\PreAlphaPass4\Source\src\CollisionAsset.cpp(27,34): warning C4267: 'argument': conversion from 'size_t' to 'unsigned int', possible loss of data [P:\JudasValidation\PreAlphaPass4\Build\judas_engine.vcxproj]
+P:\JudasValidation\PreAlphaPass4\Source\src\CollisionAsset.cpp(99,25): warning C4267: 'initializing': conversion from 'size_t' to 'unsigned int', possible loss of data [P:\JudasValidation\PreAlphaPass4\Build\judas_engine.vcxproj]
+P:\JudasValidation\PreAlphaPass4\Source\src\CollisionAsset.cpp(21,17): warning C4267: 'initializing': conversion from 'size_t' to 'unsigned int', possible loss of data [P:\JudasValidation\PreAlphaPass4\Build\judas_engine.vcxproj]
+      P:\JudasValidation\PreAlphaPass4\Source\src\CollisionAsset.cpp(21,17):
+      the template instantiation context (the oldest one first) is
+          P:\JudasValidation\PreAlphaPass4\Source\src\CollisionAsset.cpp(27,4):
+          see reference to function template instantiation 'unsigned int `anonymous-namespace'::build::<lambda_d62b1ac6ab1d4c8753c719dc3ebe4521>::operator ()<`anonymous-namespace'::build::<lambda_d62b1ac6ab1d4c8753c719dc3ebe4521>&>(`anonymous-namespace'::build::<lambda_d62b1ac6ab1d4c8753c719dc3ebe4521> &,unsigned int,unsigned int) const' being compiled
+  
+C:\JudasValidation\VS2022\VC\Tools\MSVC\14.44.35207\include\utility(274,54): warning C4267: 'initializing': conversion from 'size_t' to '_Ty2', possible loss of data [P:\JudasValidation\PreAlphaPass4\Build\judas_engine.vcxproj]
+C:\JudasValidation\VS2022\VC\Tools\MSVC\14.44.35207\include\utility(274,54): warning C4267:         with [P:\JudasValidation\PreAlphaPass4\Build\judas_engine.vcxproj]
+C:\JudasValidation\VS2022\VC\Tools\MSVC\14.44.35207\include\utility(274,54): warning C4267:         [ [P:\JudasValidation\PreAlphaPass4\Build\judas_engine.vcxproj]
+C:\JudasValidation\VS2022\VC\Tools\MSVC\14.44.35207\include\utility(274,54): warning C4267:             _Ty2=unsigned int [P:\JudasValidation\PreAlphaPass4\Build\judas_engine.vcxproj]
+C:\JudasValidation\VS2022\VC\Tools\MSVC\14.44.35207\include\utility(274,54): warning C4267:         ] [P:\JudasValidation\PreAlphaPass4\Build\judas_engine.vcxproj]
+  (compiling source file '../Source/src/CollisionAsset.cpp')
+      C:\JudasValidation\VS2022\VC\Tools\MSVC\14.44.35207\include\utility(274,54):
+      the template instantiation context (the oldest one first) is
+          P:\JudasValidation\PreAlphaPass4\Source\src\CollisionAsset.cpp(104,593):
+          see reference to function template instantiation 'std::pair<std::_Tree_iterator<std::_Tree_val<std::_Tree_simple_types<std::pair<const unsigned int,unsigned int>>>>,bool> std::_Tree<std::_Tmap_traits<_Kty,_Ty,_Pr,_Alloc,false>>::emplace<const _Ty&,unsigned __int64>(const _Ty &,unsigned __int64 &&)' being compiled
+          with
+          [
+              _Kty=unsigned int,
+              _Ty=unsigned int,
+              _Pr=std::less<unsigned int>,
+              _Alloc=std::allocator<std::pair<const unsigned int,unsigned int>>
+          ]
+              P:\JudasValidation\PreAlphaPass4\Source\src\CollisionAsset.cpp(104,593):
+              see the first reference to 'std::_Tree<std::_Tmap_traits<_Kty,_Ty,_Pr,_Alloc,false>>::emplace' in 'CookCollision'
+          with
+          [
+              _Kty=unsigned int,
+              _Ty=unsigned int,
+              _Pr=std::less<unsigned int>,
+              _Alloc=std::allocator<std::pair<const unsigned int,unsigned int>>
+          ]
+          C:\JudasValidation\VS2022\VC\Tools\MSVC\14.44.35207\include\xtree(1048,30):
+          see reference to function template instantiation 'std::pair<std::_Tree_node<std::pair<const unsigned int,unsigned int>,std::_Default_allocator_traits<_Alloc>::void_pointer> *,bool> std::_Tree<std::_Tmap_traits<_Kty,_Ty,_Pr,_Alloc,false>>::_Emplace<const _Ty&,unsigned __int64>(const _Ty &,unsigned __int64 &&)' being compiled
+          with
+          [
+              _Alloc=std::allocator<std::pair<const unsigned int,unsigned int>>,
+              _Kty=unsigned int,
+              _Ty=unsigned int,
+              _Pr=std::less<unsigned int>
+          ]
+          C:\JudasValidation\VS2022\VC\Tools\MSVC\14.44.35207\include\xtree(1023,49):
+          see reference to function template instantiation 'std::_Tree_temp_node<std::allocator<std::_Tree_node<std::pair<const unsigned int,unsigned int>,std::_Default_allocator_traits<_Alloc>::void_pointer>>>::_Tree_temp_node<const _Ty&,unsigned __int64>(_Alnode &,std::_Tree_node<std::pair<const unsigned int,unsigned int>,std::_Default_allocator_traits<_Alloc>::void_pointer> *,const _Ty &,unsigned __int64 &&)' being compiled
+          with
+          [
+              _Alloc=std::allocator<std::pair<const unsigned int,unsigned int>>,
+              _Ty=uint32_t,
+              _Alnode=std::allocator<std::_Tree_node<std::pair<const unsigned int,unsigned int>,std::_Default_allocator_traits<std::allocator<std::pair<const unsigned int,unsigned int>>>::void_pointer>>
+          ]
+          C:\JudasValidation\VS2022\VC\Tools\MSVC\14.44.35207\include\xtree(830,25):
+          see reference to function template instantiation 'void std::_Default_allocator_traits<_Alloc>::construct<_Ty,const unsigned int&,unsigned __int64>(_Alloc &,_Objty *const ,const unsigned int &,unsigned __int64 &&)' being compiled
+          with
+          [
+              _Alloc=std::allocator<std::_Tree_node<std::pair<const unsigned int,unsigned int>,std::_Default_allocator_traits<std::allocator<std::pair<const unsigned int,unsigned int>>>::void_pointer>>,
+              _Ty=std::pair<const unsigned int,unsigned int>,
+              _Objty=std::pair<const unsigned int,unsigned int>
+          ]
+          C:\JudasValidation\VS2022\VC\Tools\MSVC\14.44.35207\include\xmemory(732,82):
+          see reference to function template instantiation 'std::pair<const unsigned int,unsigned int>::pair<const _Ty&,unsigned __int64,0>(_Other1,_Other2 &&) noexcept' being compiled
+          with
+          [
+              _Ty=uint32_t,
+              _Other1=const uint32_t &,
+              _Other2=size_t
+          ]
+  
+  CollisionGeometry.cpp
+P:\JudasValidation\PreAlphaPass4\Source\src\CollisionGeometry.cpp(151,60): warning C4244: '=': conversion from 'double' to 'float', possible loss of data [P:\JudasValidation\PreAlphaPass4\Build\judas_engine.vcxproj]
+  QuickHull.cpp
+P:\JudasValidation\PreAlphaPass4\Source\third_party\quickhull\QuickHull.cpp(45,130): warning C4100: 'CCW': unreferenced parameter [P:\JudasValidation\PreAlphaPass4\Build\judas_engine.vcxproj]
+      P:\JudasValidation\PreAlphaPass4\Source\third_party\quickhull\QuickHull.cpp(45,130):
+      the template instantiation context (the oldest one first) is
+          P:\JudasValidation\PreAlphaPass4\Source\third_party\quickhull\QuickHull.cpp(511,33):
+          see reference to class template instantiation 'quickhull::QuickHull<float>' being compiled
+          P:\JudasValidation\PreAlphaPass4\Source\third_party\quickhull\QuickHull.cpp(45,154):
+          while compiling class template member function 'quickhull::HalfEdgeMesh<FloatType,size_t> quickhull::QuickHull<FloatType>::getConvexHullAsMesh(const FloatType *,size_t,bool,FloatType)'
+          with
+          [
+              FloatType=float
+          ]
+  
+  JointSolver.cpp
+  PhysicsCastGeometry.cpp
+  ImpactSolver.cpp
+  RigidBody.cpp
+  RigidBodyGravity.cpp
+P:\JudasValidation\PreAlphaPass4\Source\src\RigidBody.h(23,8): warning C4099: 'RigidBody': type name first seen using 'class' now seen using 'struct' [P:\JudasValidation\PreAlphaPass4\Build\judas_engine.vcxproj]
+  (compiling source file '../Source/src/RigidBodyGravity.cpp')
+      P:\JudasValidation\PreAlphaPass4\Source\src\RigidBody.h(23,8):
+      see declaration of 'RigidBody'
+  
+  Contacts.cpp
+  ContactSolver.cpp
+P:\JudasValidation\PreAlphaPass4\Source\src\ContactSolver.cpp(212,59): warning C4244: '=': conversion from 'double' to 'float', possible loss of data [P:\JudasValidation\PreAlphaPass4\Build\judas_engine.vcxproj]
+  RadialTerrain.cpp
+  Broadphase.cpp
+  Narrowphase.cpp
+  PhysicsWorld.cpp
+P:\JudasValidation\PreAlphaPass4\Source\src\PhysicsWorld.cpp(383,42): warning C4456: declaration of 'b' hides previous local declaration [P:\JudasValidation\PreAlphaPass4\Build\judas_engine.vcxproj]
+      P:\JudasValidation\PreAlphaPass4\Source\src\PhysicsWorld.cpp(374,19):
+      see declaration of 'b'
+  
+P:\JudasValidation\PreAlphaPass4\Source\src\PhysicsWorld.cpp(562,9): warning C4244: 'argument': conversion from 'unsigned __int64' to 'double', possible loss of data [P:\JudasValidation\PreAlphaPass4\Build\judas_engine.vcxproj]
+P:\JudasValidation\PreAlphaPass4\Source\src\PhysicsWorld.cpp(635,9): warning C4244: 'argument': conversion from 'size_t' to 'double', possible loss of data [P:\JudasValidation\PreAlphaPass4\Build\judas_engine.vcxproj]
+P:\JudasValidation\PreAlphaPass4\Source\src\PhysicsWorld.cpp(637,9): warning C4244: 'argument': conversion from 'unsigned __int64' to 'double', possible loss of data [P:\JudasValidation\PreAlphaPass4\Build\judas_engine.vcxproj]
+P:\JudasValidation\PreAlphaPass4\Source\src\PhysicsWorld.cpp(638,9): warning C4244: 'argument': conversion from 'unsigned __int64' to 'double', possible loss of data [P:\JudasValidation\PreAlphaPass4\Build\judas_engine.vcxproj]
+P:\JudasValidation\PreAlphaPass4\Source\src\PhysicsWorld.cpp(1139,29): warning C4456: declaration of 'bb' hides previous local declaration [P:\JudasValidation\PreAlphaPass4\Build\judas_engine.vcxproj]
+      P:\JudasValidation\PreAlphaPass4\Source\src\PhysicsWorld.cpp(1010,21):
+      see declaration of 'bb'
+  
+P:\JudasValidation\PreAlphaPass4\Source\src\PhysicsWorld.cpp(3852,304): warning C4244: '=': conversion from 'double' to 'float', possible loss of data [P:\JudasValidation\PreAlphaPass4\Build\judas_engine.vcxproj]
+  Generating Code...
+  Building Custom Rule P:/JudasValidation/PreAlphaPass4/Source/CMakeLists.txt
+  imgui.cpp
+  imgui_draw.cpp
+  imgui_tables.cpp
+  imgui_widgets.cpp
+  imgui_impl_sdl2.cpp
+  imgui_impl_opengl3.cpp
+  Generating Code...
+  judas_imgui.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_imgui.lib
+  Building Custom Rule P:/JudasValidation/PreAlphaPass4/Source/CMakeLists.txt
+  ufbx.c
+  judas_ufbx.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_ufbx.lib

@@ -1,0 +1,50 @@
+﻿
+
+PSMessageDetails      : 
+Exception             : System.UnauthorizedAccessException: Access is denied ---> 
+                        System.ComponentModel.Win32Exception: Access is denied
+                           --- End of inner exception stack trace ---
+                           at Microsoft.PowerShell.Commands.FileSystemProvider.ItemExists(String 
+                        path, ErrorRecord& error)
+TargetObject          : P:\JudasValidation\PreAlphaPass4\Build\windows-sdk\SDK_MANIFEST.json
+CategoryInfo          : PermissionDenied: (P:\JudasValidat...K_MANIFEST.json:String) [Test-Path], 
+                        UnauthorizedAccessException
+FullyQualifiedErrorId : ItemExistsUnauthorizedAccessError,Microsoft.PowerShell.Commands.TestPathCo
+                        mmand
+ErrorDetails          : 
+InvocationInfo        : System.Management.Automation.InvocationInfo
+ScriptStackTrace      : at <ScriptBlock>, P:\JudasValidation\PreAlphaPass4\gui-qualify.ps1: line 
+                        15
+                        at <ScriptBlock>, P:\JudasValidation\PreAlphaPass4\gui-entry.ps1: line 2
+PipelineIterationInfo : {}
+
+
+
+
+
+MyCommand             : Test-Path
+BoundParameters       : {}
+UnboundArguments      : {}
+ScriptLineNumber      : 15
+OffsetInLine          : 6
+HistoryId             : 1
+ScriptName            : P:\JudasValidation\PreAlphaPass4\gui-qualify.ps1
+Line                  : if(!(Test-Path "$sdk\SDK_MANIFEST.json")){throw 'Final complete SDK 
+                        required'}
+                        
+PositionMessage       : At P:\JudasValidation\PreAlphaPass4\gui-qualify.ps1:15 char:6
+                        + if(!(Test-Path "$sdk\SDK_MANIFEST.json")){throw 'Final complete SDK r 
+                        ...
+                        +      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+PSScriptRoot          : P:\JudasValidation\PreAlphaPass4
+PSCommandPath         : P:\JudasValidation\PreAlphaPass4\gui-qualify.ps1
+InvocationName        : Test-Path
+PipelineLength        : 0
+PipelinePosition      : 0
+ExpectingInput        : False
+CommandOrigin         : Internal
+DisplayScriptPosition : 
+
+
+
+

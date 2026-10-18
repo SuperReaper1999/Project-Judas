@@ -28,14 +28,60 @@ proof of closure. System32/API-set resolution is not a minimum-OS, graphics or
 application test. Write the qualification receipt outside the verified SDK.
 
 The [Pre-Alpha pass-2 check](evidence/prealpha-pass2/packaging/REPORT.md) exercised
-15 packaging controls on native Windows Python and parsed a real system PE file.
-It did **not** complete native engine compilation: the existing VM had less than
-80 MiB free during configuration. Current full-SDK/moved-game certification and
-hardware validation remain outstanding. Historical results below retain their
-original checkpoints and scope.
+15 packaging controls but could not complete native compilation with its then-full
+VM disk. That remains the historical result. Pass 4 supplies the newer scoped
+native qualification below; physical hardware validation remains outstanding.
 
 See [distribution and package verification](DISTRIBUTION.md). The historical
 Windows receipts below describe their original checkpoints, not new validation.
+
+## Pre-Alpha Pass 4 native qualification
+
+The [Pass 4 receipt](evidence/prealpha-pass4/windows/REPORT.md) qualifies native
+Windows 10 VM execution of engine checkpoint
+`9deb47d1667e5b6bd1abe708ed343c3fbf6fe847`, with the later Python-only SDK fix
+`df8929f73505d407697b5d35b115fc71d9100471` identified separately. MSVC 2022 x64
+Release compiled the engine, extracted physics modules, editor and complete
+**18-executable SDK** from a verified no-Git source archive. Existing compiler
+warnings are retained; this is not a warning-free build claim.
+
+- All 18 executable identities and actual selected author/import/cook/script
+  operations were exercised. Native SDK relocation/export and missing-DLL/tamper
+  negative controls pass.
+- The documented **packaged** SDK inspector now passes without creating cache
+  files. Its seven positive/negative follow-up cases preserve strict inventories;
+  the original self-mutation failure is retained. No `-B` or environment-variable
+  prerequisite is needed. Write receipts outside the SDK as shown above.
+- Focused physics/origin/CharacterMotor/persistence checks pass **4,494 checks**.
+  The ordinary M70 case passes **98**. Eight independent M70/M77 cold-save
+  writer/reader processes pass **131**, checking actual restored physical
+  Standing endpoints rather than accepting cached controller status.
+- Ordinary editor authoring/undo/Play/Stop restores authored scene bytes exactly.
+  Runtime save/load, rotated scene transition, pause/reload and the relocated
+  Unicode/spaces standalone pass their gameplay harness. A deliberately wrong
+  scene oracle fails as expected.
+- The known curved-mesh continuation failure remains: the native mesh-cost
+  invocation reports **372 checks / four failures**. It is not relabelled as a
+  Windows pass or hidden by the passing entry/physics controls.
+
+The original compile failed because a virtual JudasJS raw literal exceeded the
+MSVC per-literal limit. Splitting one adjacent C++ literal preserves every
+JavaScript byte. The separate inspector fix prevents Python sibling-import caches
+from mutating a verified SDK; it does not relax hash or unexpected-file checks.
+Both original failures and corrected follow-ups are preserved.
+
+The operator-authorized VM disk expansion is **40→90 GiB**, retaining the original
+system/recovery partitions and exposing the new tail as a **50 GiB P: work
+volume**. Hash-backed generated-build relocation preserved older evidence and
+toolchains. The persistent VM XML is unchanged. Native validation used existing
+installed tools, not a freshly installed clean machine.
+
+Stock QXL cannot provide OpenGL 3.3 and reports that limitation cleanly. Actual
+editor/game checks use isolated llvmpipe software-rendered copies. Task-owned
+SYSTEM-created staging permissions and missing harness fonts/example inputs were
+corrected with original failures retained; engine fixtures and thresholds were
+unchanged. **Physical GPU, audio, controller and hardware performance acceptance
+remain outstanding.** VM timing is informational and does not gate Linux fixes.
 
 ## M76 local modding candidate
 

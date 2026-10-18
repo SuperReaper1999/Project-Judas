@@ -1,0 +1,132 @@
+﻿{
+    "schema":  1,
+    "utc":  "2026-10-18T17:16:00.7128600Z",
+    "nativeSourceRevision":  "9deb47d1667e5b6bd1abe708ed343c3fbf6fe847",
+    "toolingSourceRevision":  "df8929f73505d407697b5d35b115fc71d9100471",
+    "rows":  [
+                 {
+                     "label":  "verify-before",
+                     "executable":  "C:\\JudasValidation\\Python\\python.exe",
+                     "arguments":  [
+                                       "P:\\JudasValidation\\PreAlphaPass4\\Build\\windows-sdk\\tools\\package_sdk.py",
+                                       "verify",
+                                       "P:\\JudasValidation\\PreAlphaPass4\\Build\\windows-sdk"
+                                   ],
+                     "cwd":  "P:\\JudasValidation\\PreAlphaPass4",
+                     "exit":  0,
+                     "expected":  0,
+                     "passed":  true,
+                     "seconds":  0.9375271,
+                     "stdout":  "{\"build\": {\"architecture\": \"AMD64\", \"build_id\": \"0.1.0-prealpha-Experimental-9deb47d-clean-86800e25cc69\", \"channel\": \"Experimental\", \"compiler\": \"MSVC\", \"compiler_version\": \"19.44.35229.0\", \"configuration\": \"Release\", \"maturity\": \"pre-alpha\", \"platform\": \"Windows\", \"schema\": 1, \"source_dirty\": false, \"source_fingerprint\": \"86800e25cc69bf1dd422358c9bebda07dd693a5471ffe748f439a1696db2b097\", \"source_origin\": \"archive\", \"source_revision\": \"9deb47d1667e5b6bd1abe708ed343c3fbf6fe847\", \"source_tree\": \"f8c6c8885ec1eacb425c24fba9816144cbcfc74f\", \"source_untracked_count\": 0, \"source_untracked_fingerprint\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\", \"version\": \"0.1.0-prealpha\"}, \"files\": 238, \"ok\": true, \"tools\": 18}\r\n",
+                     "stderr":  ""
+                 },
+                 {
+                     "label":  "plain-native-inspector",
+                     "executable":  "C:\\JudasValidation\\Python\\python.exe",
+                     "arguments":  [
+                                       "P:\\JudasValidation\\PreAlphaPass4\\Build\\windows-sdk\\tools\\inspect_sdk.py",
+                                       "P:\\JudasValidation\\PreAlphaPass4\\Build\\windows-sdk",
+                                       "--host-check",
+                                       "--system-directory",
+                                       "C:\\Windows\\System32",
+                                       "--output",
+                                       "P:\\JudasValidation\\PreAlphaPass4\\InspectorFollowup\\native-pe.detail.json"
+                                   ],
+                     "cwd":  "P:\\JudasValidation\\PreAlphaPass4",
+                     "exit":  0,
+                     "expected":  0,
+                     "passed":  true,
+                     "seconds":  2.3749610999999997,
+                     "stdout":  "{\"passed\": true, \"errors\": [], \"output\": \"P:\\\\JudasValidation\\\\PreAlphaPass4\\\\InspectorFollowup\\\\native-pe.detail.json\"}\r\n",
+                     "stderr":  ""
+                 },
+                 {
+                     "label":  "verify-after-inspector",
+                     "executable":  "C:\\JudasValidation\\Python\\python.exe",
+                     "arguments":  [
+                                       "P:\\JudasValidation\\PreAlphaPass4\\Build\\windows-sdk\\tools\\package_sdk.py",
+                                       "verify",
+                                       "P:\\JudasValidation\\PreAlphaPass4\\Build\\windows-sdk"
+                                   ],
+                     "cwd":  "P:\\JudasValidation\\PreAlphaPass4",
+                     "exit":  0,
+                     "expected":  0,
+                     "passed":  true,
+                     "seconds":  0.82814559999999993,
+                     "stdout":  "{\"build\": {\"architecture\": \"AMD64\", \"build_id\": \"0.1.0-prealpha-Experimental-9deb47d-clean-86800e25cc69\", \"channel\": \"Experimental\", \"compiler\": \"MSVC\", \"compiler_version\": \"19.44.35229.0\", \"configuration\": \"Release\", \"maturity\": \"pre-alpha\", \"platform\": \"Windows\", \"schema\": 1, \"source_dirty\": false, \"source_fingerprint\": \"86800e25cc69bf1dd422358c9bebda07dd693a5471ffe748f439a1696db2b097\", \"source_origin\": \"archive\", \"source_revision\": \"9deb47d1667e5b6bd1abe708ed343c3fbf6fe847\", \"source_tree\": \"f8c6c8885ec1eacb425c24fba9816144cbcfc74f\", \"source_untracked_count\": 0, \"source_untracked_fingerprint\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\", \"version\": \"0.1.0-prealpha\"}, \"files\": 238, \"ok\": true, \"tools\": 18}\r\n",
+                     "stderr":  ""
+                 },
+                 {
+                     "label":  "plain-apk-verifier-missing-negative",
+                     "executable":  "C:\\JudasValidation\\Python\\python.exe",
+                     "arguments":  [
+                                       "P:\\JudasValidation\\PreAlphaPass4\\Build\\windows-sdk\\tools\\verify_android.py",
+                                       "P:\\JudasValidation\\PreAlphaPass4\\absent.apk",
+                                       "--output",
+                                       "P:\\JudasValidation\\PreAlphaPass4\\InspectorFollowup\\absent-apk.detail.json"
+                                   ],
+                     "cwd":  "P:\\JudasValidation\\PreAlphaPass4",
+                     "exit":  1,
+                     "expected":  1,
+                     "passed":  true,
+                     "seconds":  0.23438509999999999,
+                     "stdout":  "{\"error\": \"[Errno 2] No such file or directory: \u0027P:\\\\\\\\JudasValidation\\\\\\\\PreAlphaPass4\\\\\\\\absent.apk\u0027\", \"kind\": \"judas-android-verification\", \"passed\": false, \"schema\": 1}\r\n",
+                     "stderr":  ""
+                 },
+                 {
+                     "label":  "verify-after-apk-entry",
+                     "executable":  "C:\\JudasValidation\\Python\\python.exe",
+                     "arguments":  [
+                                       "P:\\JudasValidation\\PreAlphaPass4\\Build\\windows-sdk\\tools\\package_sdk.py",
+                                       "verify",
+                                       "P:\\JudasValidation\\PreAlphaPass4\\Build\\windows-sdk"
+                                   ],
+                     "cwd":  "P:\\JudasValidation\\PreAlphaPass4",
+                     "exit":  0,
+                     "expected":  0,
+                     "passed":  true,
+                     "seconds":  0.7968478,
+                     "stdout":  "{\"build\": {\"architecture\": \"AMD64\", \"build_id\": \"0.1.0-prealpha-Experimental-9deb47d-clean-86800e25cc69\", \"channel\": \"Experimental\", \"compiler\": \"MSVC\", \"compiler_version\": \"19.44.35229.0\", \"configuration\": \"Release\", \"maturity\": \"pre-alpha\", \"platform\": \"Windows\", \"schema\": 1, \"source_dirty\": false, \"source_fingerprint\": \"86800e25cc69bf1dd422358c9bebda07dd693a5471ffe748f439a1696db2b097\", \"source_origin\": \"archive\", \"source_revision\": \"9deb47d1667e5b6bd1abe708ed343c3fbf6fe847\", \"source_tree\": \"f8c6c8885ec1eacb425c24fba9816144cbcfc74f\", \"source_untracked_count\": 0, \"source_untracked_fingerprint\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\", \"version\": \"0.1.0-prealpha\"}, \"files\": 238, \"ok\": true, \"tools\": 18}\r\n",
+                     "stderr":  ""
+                 },
+                 {
+                     "label":  "strict-unexpected-file-negative",
+                     "executable":  "C:\\JudasValidation\\Python\\python.exe",
+                     "arguments":  [
+                                       "P:\\JudasValidation\\PreAlphaPass4\\Build\\windows-sdk\\tools\\package_sdk.py",
+                                       "verify",
+                                       "P:\\JudasValidation\\PreAlphaPass4\\Build\\windows-sdk"
+                                   ],
+                     "cwd":  "P:\\JudasValidation\\PreAlphaPass4",
+                     "exit":  1,
+                     "expected":  1,
+                     "passed":  true,
+                     "seconds":  0.82814939999999992,
+                     "stdout":  "",
+                     "stderr":  "SDK packaging failed: SDK file inventory/checksum mismatch (missing, changed or unexpected file)\r\n"
+                 },
+                 {
+                     "label":  "verify-after-removing-negative",
+                     "executable":  "C:\\JudasValidation\\Python\\python.exe",
+                     "arguments":  [
+                                       "P:\\JudasValidation\\PreAlphaPass4\\Build\\windows-sdk\\tools\\package_sdk.py",
+                                       "verify",
+                                       "P:\\JudasValidation\\PreAlphaPass4\\Build\\windows-sdk"
+                                   ],
+                     "cwd":  "P:\\JudasValidation\\PreAlphaPass4",
+                     "exit":  0,
+                     "expected":  0,
+                     "passed":  true,
+                     "seconds":  0.84373389999999993,
+                     "stdout":  "{\"build\": {\"architecture\": \"AMD64\", \"build_id\": \"0.1.0-prealpha-Experimental-9deb47d-clean-86800e25cc69\", \"channel\": \"Experimental\", \"compiler\": \"MSVC\", \"compiler_version\": \"19.44.35229.0\", \"configuration\": \"Release\", \"maturity\": \"pre-alpha\", \"platform\": \"Windows\", \"schema\": 1, \"source_dirty\": false, \"source_fingerprint\": \"86800e25cc69bf1dd422358c9bebda07dd693a5471ffe748f439a1696db2b097\", \"source_origin\": \"archive\", \"source_revision\": \"9deb47d1667e5b6bd1abe708ed343c3fbf6fe847\", \"source_tree\": \"f8c6c8885ec1eacb425c24fba9816144cbcfc74f\", \"source_untracked_count\": 0, \"source_untracked_fingerprint\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\", \"version\": \"0.1.0-prealpha\"}, \"files\": 238, \"ok\": true, \"tools\": 18}\r\n",
+                     "stderr":  ""
+                 }
+             ],
+    "noBytecodeCacheCreated":  true,
+    "manifestBefore":  "a35c138ed69a6e52ca7cdccf5dcb74f601cede5692a995723acc2477a9c6b98f",
+    "manifestAfter":  "a35c138ed69a6e52ca7cdccf5dcb74f601cede5692a995723acc2477a9c6b98f",
+    "nativeManifestUnchanged":  true,
+    "noPythonEnvironmentMask":  true,
+    "noBFlag":  true,
+    "passed":  true
+}

@@ -1,0 +1,423 @@
+﻿CMake is re-running because P:/JudasValidation/PreAlphaPass4/Build/CMakeFiles/generate.stamp is out-of-date.
+  the file 'P:/JudasValidation/PreAlphaPass4/Source/CMakeLists.txt'
+  is newer than 'P:/JudasValidation/PreAlphaPass4/Build/CMakeFiles/generate.stamp.depend'
+  result='-1'
+-- Running vcpkg install
+Detecting compiler hash for triplet x64-windows...
+Compiler found: C:/JudasValidation/VS2022/VC/Tools/MSVC/14.44.35207/bin/Hostx64/x64/cl.exe
+Detecting compiler hash for triplet x64-windows-static-md...
+Compiler found: C:/JudasValidation/VS2022/VC/Tools/MSVC/14.44.35207/bin/Hostx64/x64/cl.exe
+All requested packages are currently installed.
+Total install time: 1.39 ms
+The package glm provides CMake targets:
+
+    find_package(glm CONFIG REQUIRED)
+    target_link_libraries(main PRIVATE glm::glm)
+
+    # Or use the header-only version
+    find_package(glm CONFIG REQUIRED)
+    target_link_libraries(main PRIVATE glm::glm-header-only)
+
+sdl2 provides CMake targets:
+
+    find_package(SDL2 CONFIG REQUIRED)
+    target_link_libraries(main
+        PRIVATE
+        $<TARGET_NAME_IF_EXISTS:SDL2::SDL2main>
+        $<IF:$<TARGET_EXISTS:SDL2::SDL2>,SDL2::SDL2,SDL2::SDL2-static>
+    )
+
+-- Running vcpkg install - done
+-- Selecting Windows SDK version 10.0.22621.0 to target Windows 10.0.19045.
+cmake.exe : WARNHarfBuzz has a Meson port and tries to migrate all the other build systems to it, please consider 
+using it as we might remove our cmake port soon.
+At line:10 char:1
++ & cmake --build $build --config Release --target judas_windows_sdk -- ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (WARNHarfBuzz ha...make port soon.:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+Building introspection files on Windows requires BUILD_SHARED_LIBS to be enabled.
+CMake Deprecation Warning at P:/JudasValidation/PreAlphaPass4/Build/_deps/judas_freetype-src/CMakeLists.txt:113 
+(cmake_minimum_required):
+  Compatibility with CMake < 3.10 will be removed from a future version of
+  CMake.
+
+  Update the VERSION argument <min> value.  Or, use the <min>...<max> syntax
+  to tell CMake that the project requires at least <min> but has been updated
+  to work with policies introduced by <max> or earlier.
+
+
+-- Configuring done (21.8s)
+-- Generating done (26.2s)
+-- Build files have been written to: P:/JudasValidation/PreAlphaPass4/Build
+MSBuild version 17.14.60+43b635718 for .NET Framework
+
+  Checking File Globs
+  1>Checking Build System
+  Building Custom Rule P:/JudasValidation/PreAlphaPass4/Source/CMakeLists.txt
+  Building Custom Rule P:/JudasValidation/PreAlphaPass4/Source/CMakeLists.txt
+  freetype.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\_deps\judas_freetype-build\Release\freetype.lib
+  harfbuzz.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\_deps\judas_harfbuzz-build\Release\harfbuzz.lib
+  Building Custom Rule P:/JudasValidation/PreAlphaPass4/Source/CMakeLists.txt
+  judas_app_icon.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_app_icon.lib
+  Building Custom Rule P:/JudasValidation/PreAlphaPass4/Source/CMakeLists.txt
+  judas_audio_backend.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_audio_backend.lib
+  Building Custom Rule P:/JudasValidation/PreAlphaPass4/Source/CMakeLists.txt
+  BuildIdentity.cpp
+  judas_build_identity.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_build_identity.lib
+  Building Custom Rule P:/JudasValidation/PreAlphaPass4/Source/CMakeLists.txt
+  judas_glad.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_glad.lib
+  Building Custom Rule P:/JudasValidation/PreAlphaPass4/Source/CMakeLists.txt
+  judas_jobs.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_jobs.lib
+  Building Custom Rule P:/JudasValidation/PreAlphaPass4/Source/CMakeLists.txt
+  judas_profiler.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_profiler.lib
+  Building Custom Rule P:/JudasValidation/PreAlphaPass4/Source/CMakeLists.txt
+  judas_materials.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_materials.lib
+  Building Custom Rule P:/JudasValidation/PreAlphaPass4/Source/CMakeLists.txt
+  judas_meshoptimizer.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_meshoptimizer.lib
+  Building Custom Rule P:/JudasValidation/PreAlphaPass4/Source/CMakeLists.txt
+  judas_navigation_backend.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_navigation_backend.lib
+  Building Custom Rule P:/JudasValidation/PreAlphaPass4/Source/CMakeLists.txt
+  judas_navigation_cook.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_navigation_cook.lib
+  Building Custom Rule P:/JudasValidation/PreAlphaPass4/Source/CMakeLists.txt
+  judas_quickjs.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_quickjs.lib
+  Building Custom Rule P:/JudasValidation/PreAlphaPass4/Source/CMakeLists.txt
+  ScriptSystem.cpp
+P:\JudasValidation\PreAlphaPass4\Source\src\ScriptSystem.cpp(1611,75): warning C4267: 'argument': conversion from 'size_t' to 'uint32_t', possible loss of data [P:\JudasValidation\PreAlphaPass4\Build\judas_engine.vcxproj]
+P:\JudasValidation\PreAlphaPass4\Source\src\ScriptSystem.cpp(1611,173): warning C4267: 'argument': conversion from 'size_t' to 'uint32_t', possible loss of data [P:\JudasValidation\PreAlphaPass4\Build\judas_engine.vcxproj]
+  PhysicsWorld.cpp
+  WorldBodies.cpp
+  WorldBounds.cpp
+  WorldCCDSearch.cpp
+P:\JudasValidation\PreAlphaPass4\Source\src\physics\WorldCCDSearch.cpp(503,25): warning C4456: declaration of 'bb' hides previous local declaration [P:\JudasValidation\PreAlphaPass4\Build\judas_engine.vcxproj]
+      P:\JudasValidation\PreAlphaPass4\Source\src\physics\WorldCCDSearch.cpp(377,17):
+      see declaration of 'bb'
+  
+  WorldContacts.cpp
+P:\JudasValidation\PreAlphaPass4\Source\src\physics\WorldContacts.cpp(84,5): warning C4244: 'argument': conversion from 'unsigned __int64' to 'double', possible loss of data [P:\JudasValidation\PreAlphaPass4\Build\judas_engine.vcxproj]
+P:\JudasValidation\PreAlphaPass4\Source\src\physics\WorldContacts.cpp(236,5): warning C4244: 'argument': conversion from 'size_t' to 'double', possible loss of data [P:\JudasValidation\PreAlphaPass4\Build\judas_engine.vcxproj]
+P:\JudasValidation\PreAlphaPass4\Source\src\physics\WorldContacts.cpp(240,5): warning C4244: 'argument': conversion from 'unsigned __int64' to 'double', possible loss of data [P:\JudasValidation\PreAlphaPass4\Build\judas_engine.vcxproj]
+P:\JudasValidation\PreAlphaPass4\Source\src\physics\WorldContacts.cpp(242,5): warning C4244: 'argument': conversion from 'unsigned __int64' to 'double', possible loss of data [P:\JudasValidation\PreAlphaPass4\Build\judas_engine.vcxproj]
+  WorldImpactEvents.cpp
+  WorldJoints.cpp
+  WorldParticles.cpp
+  WorldQueries.cpp
+P:\JudasValidation\PreAlphaPass4\Source\src\physics\WorldQueries.cpp(496,32): warning C4244: '=': conversion from 'double' to 'float', possible loss of data [P:\JudasValidation\PreAlphaPass4\Build\judas_engine.vcxproj]
+  WorldSleep.cpp
+P:\JudasValidation\PreAlphaPass4\Source\src\physics\WorldSleep.cpp(41,45): warning C4456: declaration of 'b' hides previous local declaration [P:\JudasValidation\PreAlphaPass4\Build\judas_engine.vcxproj]
+      P:\JudasValidation\PreAlphaPass4\Source\src\physics\WorldSleep.cpp(14,15):
+      see declaration of 'b'
+  
+  Generating Code...
+P:\JudasValidation\PreAlphaPass4\Source\src\ScriptSystem.cpp(834,1): warning C4701: potentially uninitialized local variable 'b' used [P:\JudasValidation\PreAlphaPass4\Build\judas_engine.vcxproj]
+P:\JudasValidation\PreAlphaPass4\Source\src\ScriptNetwork.inl(21,1): warning C4701: potentially uninitialized local variable 'position' used [P:\JudasValidation\PreAlphaPass4\Build\judas_engine.vcxproj]
+  WorldPersistence.cpp
+P:\JudasValidation\PreAlphaPass4\Source\src\WorldPersistence.cpp(284,472): warning C4457: declaration of 'error' hides function parameter [P:\JudasValidation\PreAlphaPass4\Build\judas_engine.vcxproj]
+      P:\JudasValidation\PreAlphaPass4\Source\src\WorldPersistence.cpp(269,109):
+      see declaration of 'error'
+  
+C:\JudasValidation\VS2022\VC\Tools\MSVC\14.44.35207\include\utility(274,54): warning C4244: 'initializing': conversion from 'const SceneObjectId' to '_Ty2', possible loss of data [P:\JudasValidation\PreAlphaPass4\Build\judas_engine.vcxproj]
+C:\JudasValidation\VS2022\VC\Tools\MSVC\14.44.35207\include\utility(274,54): warning C4244:         with [P:\JudasValidation\PreAlphaPass4\Build\judas_engine.vcxproj]
+C:\JudasValidation\VS2022\VC\Tools\MSVC\14.44.35207\include\utility(274,54): warning C4244:         [ [P:\JudasValidation\PreAlphaPass4\Build\judas_engine.vcxproj]
+C:\JudasValidation\VS2022\VC\Tools\MSVC\14.44.35207\include\utility(274,54): warning C4244:             _Ty2=unsigned int [P:\JudasValidation\PreAlphaPass4\Build\judas_engine.vcxproj]
+C:\JudasValidation\VS2022\VC\Tools\MSVC\14.44.35207\include\utility(274,54): warning C4244:         ] [P:\JudasValidation\PreAlphaPass4\Build\judas_engine.vcxproj]
+  (compiling source file '../Source/src/WorldPersistence.cpp')
+      C:\JudasValidation\VS2022\VC\Tools\MSVC\14.44.35207\include\utility(274,54):
+      the template instantiation context (the oldest one first) is
+          P:\JudasValidation\PreAlphaPass4\Source\src\WorldPersistence.cpp(361,592):
+          see reference to function template instantiation 'std::pair<uint64_t,unsigned int>::pair<const SceneObjectId&,const uint64_t&,0>(_Other1,_Other2) noexcept' being compiled
+          with
+          [
+              _Other1=const SceneObjectId &,
+              _Other2=const uint64_t &
+          ]
+              P:\JudasValidation\PreAlphaPass4\Source\src\WorldPersistence.cpp(361,580):
+              see the first reference to 'std::pair<uint64_t,unsigned int>::pair' in 'WorldPersistence::Restore'
+  
+C:\JudasValidation\VS2022\VC\Tools\MSVC\14.44.35207\include\utility(274,54): warning C4244: 'initializing': conversion from 'EntityId' to '_Ty2', possible loss of data [P:\JudasValidation\PreAlphaPass4\Build\judas_engine.vcxproj]
+C:\JudasValidation\VS2022\VC\Tools\MSVC\14.44.35207\include\utility(274,54): warning C4244:         with [P:\JudasValidation\PreAlphaPass4\Build\judas_engine.vcxproj]
+C:\JudasValidation\VS2022\VC\Tools\MSVC\14.44.35207\include\utility(274,54): warning C4244:         [ [P:\JudasValidation\PreAlphaPass4\Build\judas_engine.vcxproj]
+C:\JudasValidation\VS2022\VC\Tools\MSVC\14.44.35207\include\utility(274,54): warning C4244:             _Ty2=unsigned int [P:\JudasValidation\PreAlphaPass4\Build\judas_engine.vcxproj]
+C:\JudasValidation\VS2022\VC\Tools\MSVC\14.44.35207\include\utility(274,54): warning C4244:         ] [P:\JudasValidation\PreAlphaPass4\Build\judas_engine.vcxproj]
+  (compiling source file '../Source/src/WorldPersistence.cpp')
+      C:\JudasValidation\VS2022\VC\Tools\MSVC\14.44.35207\include\utility(274,54):
+      the template instantiation context (the oldest one first) is
+          P:\JudasValidation\PreAlphaPass4\Source\src\WorldPersistence.cpp(361,350):
+          see reference to function template instantiation 'std::pair<std::_Tree_const_iterator<std::_Tree_val<std::_Tree_simple_types<std::pair<uint64_t,unsigned int>>>>,bool> std::_Tree<std::_Tset_traits<_Kty,_Pr,_Alloc,false>>::emplace<SceneObjectId&,uint64_t&>(SceneObjectId &,uint64_t &)' being compiled
+          with
+          [
+              _Kty=std::pair<uint64_t,unsigned int>,
+              _Pr=std::less<std::pair<uint64_t,unsigned int>>,
+              _Alloc=std::allocator<std::pair<uint64_t,unsigned int>>
+          ]
+              P:\JudasValidation\PreAlphaPass4\Source\src\WorldPersistence.cpp(361,239):
+              see the first reference to 'std::_Tree<std::_Tset_traits<_Kty,_Pr,_Alloc,false>>::emplace' in 'WorldPersistence::Restore'
+          with
+          [
+              _Kty=std::pair<uint64_t,unsigned int>,
+              _Pr=std::less<std::pair<uint64_t,unsigned int>>,
+              _Alloc=std::allocator<std::pair<uint64_t,unsigned int>>
+          ]
+          C:\JudasValidation\VS2022\VC\Tools\MSVC\14.44.35207\include\xtree(1048,30):
+          see reference to function template instantiation 'std::pair<std::_Tree_node<std::pair<uint64_t,unsigned int>,std::_Default_allocator_traits<_Alloc>::void_pointer> *,bool> std::_Tree<std::_Tset_traits<_Kty,_Pr,_Alloc,false>>::_Emplace<EntityId&,EntityId&>(EntityId &,EntityId &)' being compiled
+          with
+          [
+              _Alloc=std::allocator<std::pair<uint64_t,unsigned int>>,
+              _Kty=std::pair<uint64_t,unsigned int>,
+              _Pr=std::less<std::pair<uint64_t,unsigned int>>
+          ]
+          C:\JudasValidation\VS2022\VC\Tools\MSVC\14.44.35207\include\xtree(1026,46):
+          see reference to function template instantiation 'std::_Tree_temp_node<std::allocator<std::_Tree_node<std::pair<uint64_t,unsigned int>,std::_Default_allocator_traits<_Alloc>::void_pointer>>>::_Tree_temp_node<EntityId&,EntityId&>(_Alnode &,std::_Tree_node<std::pair<uint64_t,unsigned int>,std::_Default_allocator_traits<_Alloc>::void_pointer> *,EntityId &,EntityId &)' being compiled
+          with
+          [
+              _Alloc=std::allocator<std::pair<uint64_t,unsigned int>>,
+              _Alnode=std::allocator<std::_Tree_node<std::pair<uint64_t,unsigned int>,std::_Default_allocator_traits<std::allocator<std::pair<uint64_t,unsigned int>>>::void_pointer>>
+          ]
+          C:\JudasValidation\VS2022\VC\Tools\MSVC\14.44.35207\include\xtree(830,25):
+          see reference to function template instantiation 'void std::_Default_allocator_traits<_Alloc>::construct<_Ty,EntityId&,EntityId&>(_Alloc &,_Objty *const ,EntityId &,EntityId &)' being compiled
+          with
+          [
+              _Alloc=std::allocator<std::_Tree_node<std::pair<uint64_t,unsigned int>,std::_Default_allocator_traits<std::allocator<std::pair<uint64_t,unsigned int>>>::void_pointer>>,
+              _Ty=std::pair<uint64_t,unsigned int>,
+              _Objty=std::pair<uint64_t,unsigned int>
+          ]
+          C:\JudasValidation\VS2022\VC\Tools\MSVC\14.44.35207\include\xmemory(732,82):
+          see reference to function template instantiation 'std::pair<uint64_t,unsigned int>::pair<EntityId&,EntityId&,0>(_Other1,_Other2) noexcept' being compiled
+          with
+          [
+              _Other1=EntityId &,
+              _Other2=EntityId &
+          ]
+  
+  WorldPersistence.cpp
+  judas_engine.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_engine.lib
+  Building Custom Rule P:/JudasValidation/PreAlphaPass4/Source/CMakeLists.txt
+  main.cpp
+  Application.cpp
+P:\JudasValidation\PreAlphaPass4\Source\src\RuntimeOptions.h(44,8): warning C4099: 'RuntimeOptions': type name first seen using 'class' now seen using 'struct' [P:\JudasValidation\PreAlphaPass4\Build\judas.vcxproj]
+  (compiling source file '../Source/src/Application.cpp')
+      P:\JudasValidation\PreAlphaPass4\Source\src\RuntimeOptions.h(44,8):
+      see declaration of 'RuntimeOptions'
+  
+P:\JudasValidation\PreAlphaPass4\Source\src\Application.cpp(178,23): warning C4456: declaration of 'world' hides previous local declaration [P:\JudasValidation\PreAlphaPass4\Build\judas.vcxproj]
+      P:\JudasValidation\PreAlphaPass4\Source\src\Application.cpp(113,19):
+      see declaration of 'world'
+  
+  RuntimeOptions.cpp
+  RuntimeDiagnostics.cpp
+  TestHarness.cpp
+  Generating Code...
+  judas.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas.exe
+  Building Custom Rule P:/JudasValidation/PreAlphaPass4/Source/CMakeLists.txt
+  CollisionCook.cpp
+  judas_collision_cook.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_collision_cook.exe
+  Building Custom Rule P:/JudasValidation/PreAlphaPass4/Source/CMakeLists.txt
+  AssetCookMain.cpp
+  judas_cook.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_cook.exe
+  Building Custom Rule P:/JudasValidation/PreAlphaPass4/Source/CMakeLists.txt
+  DeformableBake.cpp
+  judas_deformable_bake.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_deformable_bake.exe
+  Building Custom Rule P:/JudasValidation/PreAlphaPass4/Source/CMakeLists.txt
+  judas_imgui.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_imgui.lib
+  Building Custom Rule P:/JudasValidation/PreAlphaPass4/Source/CMakeLists.txt
+  judas_ufbx.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_ufbx.lib
+  Building Custom Rule P:/JudasValidation/PreAlphaPass4/Source/CMakeLists.txt
+  FbxImport.cpp
+P:\JudasValidation\PreAlphaPass4\Source\src\FbxImport.cpp(25,71): warning C4244: 'argument': conversion from 'ufbx_real' to 'T', possible loss of data [P:\JudasValidation\PreAlphaPass4\Build\judas_model_import.vcxproj]
+P:\JudasValidation\PreAlphaPass4\Source\src\FbxImport.cpp(25,71): warning C4244:         with [P:\JudasValidation\PreAlphaPass4\Build\judas_model_import.vcxproj]
+P:\JudasValidation\PreAlphaPass4\Source\src\FbxImport.cpp(25,71): warning C4244:         [ [P:\JudasValidation\PreAlphaPass4\Build\judas_model_import.vcxproj]
+P:\JudasValidation\PreAlphaPass4\Source\src\FbxImport.cpp(25,71): warning C4244:             T=float [P:\JudasValidation\PreAlphaPass4\Build\judas_model_import.vcxproj]
+P:\JudasValidation\PreAlphaPass4\Source\src\FbxImport.cpp(25,71): warning C4244:         ] [P:\JudasValidation\PreAlphaPass4\Build\judas_model_import.vcxproj]
+P:\JudasValidation\PreAlphaPass4\Source\src\FbxImport.cpp(25,67): warning C4244: 'argument': conversion from 'ufbx_real' to 'T', possible loss of data [P:\JudasValidation\PreAlphaPass4\Build\judas_model_import.vcxproj]
+P:\JudasValidation\PreAlphaPass4\Source\src\FbxImport.cpp(25,67): warning C4244:         with [P:\JudasValidation\PreAlphaPass4\Build\judas_model_import.vcxproj]
+P:\JudasValidation\PreAlphaPass4\Source\src\FbxImport.cpp(25,67): warning C4244:         [ [P:\JudasValidation\PreAlphaPass4\Build\judas_model_import.vcxproj]
+P:\JudasValidation\PreAlphaPass4\Source\src\FbxImport.cpp(25,67): warning C4244:             T=float [P:\JudasValidation\PreAlphaPass4\Build\judas_model_import.vcxproj]
+P:\JudasValidation\PreAlphaPass4\Source\src\FbxImport.cpp(25,67): warning C4244:         ] [P:\JudasValidation\PreAlphaPass4\Build\judas_model_import.vcxproj]
+P:\JudasValidation\PreAlphaPass4\Source\src\FbxImport.cpp(25,63): warning C4244: 'argument': conversion from 'ufbx_real' to 'T', possible loss of data [P:\JudasValidation\PreAlphaPass4\Build\judas_model_import.vcxproj]
+P:\JudasValidation\PreAlphaPass4\Source\src\FbxImport.cpp(25,63): warning C4244:         with [P:\JudasValidation\PreAlphaPass4\Build\judas_model_import.vcxproj]
+P:\JudasValidation\PreAlphaPass4\Source\src\FbxImport.cpp(25,63): warning C4244:         [ [P:\JudasValidation\PreAlphaPass4\Build\judas_model_import.vcxproj]
+P:\JudasValidation\PreAlphaPass4\Source\src\FbxImport.cpp(25,63): warning C4244:             T=float [P:\JudasValidation\PreAlphaPass4\Build\judas_model_import.vcxproj]
+P:\JudasValidation\PreAlphaPass4\Source\src\FbxImport.cpp(25,63): warning C4244:         ] [P:\JudasValidation\PreAlphaPass4\Build\judas_model_import.vcxproj]
+P:\JudasValidation\PreAlphaPass4\Source\src\FbxImport.cpp(25,59): warning C4244: 'argument': conversion from 'ufbx_real' to 'T', possible loss of data [P:\JudasValidation\PreAlphaPass4\Build\judas_model_import.vcxproj]
+P:\JudasValidation\PreAlphaPass4\Source\src\FbxImport.cpp(25,59): warning C4244:         with [P:\JudasValidation\PreAlphaPass4\Build\judas_model_import.vcxproj]
+P:\JudasValidation\PreAlphaPass4\Source\src\FbxImport.cpp(25,59): warning C4244:         [ [P:\JudasValidation\PreAlphaPass4\Build\judas_model_import.vcxproj]
+P:\JudasValidation\PreAlphaPass4\Source\src\FbxImport.cpp(25,59): warning C4244:             T=float [P:\JudasValidation\PreAlphaPass4\Build\judas_model_import.vcxproj]
+P:\JudasValidation\PreAlphaPass4\Source\src\FbxImport.cpp(25,59): warning C4244:         ] [P:\JudasValidation\PreAlphaPass4\Build\judas_model_import.vcxproj]
+P:\JudasValidation\PreAlphaPass4\Source\src\FbxImport.cpp(108,84): warning C4267: 'initializing': conversion from 'size_t' to 'unsigned int', possible loss of data [P:\JudasValidation\PreAlphaPass4\Build\judas_model_import.vcxproj]
+P:\JudasValidation\PreAlphaPass4\Source\src\FbxImport.cpp(112,557): warning C4267: 'argument': conversion from 'size_t' to 'glm::vec<4,glm::uint,glm::packed_highp>::length_type', possible loss of data [P:\JudasValidation\PreAlphaPass4\Build\judas_model_import.vcxproj]
+P:\JudasValidation\PreAlphaPass4\Source\src\FbxImport.cpp(112,614): warning C4267: 'argument': conversion from 'size_t' to 'glm::vec<4,float,glm::packed_highp>::length_type', possible loss of data [P:\JudasValidation\PreAlphaPass4\Build\judas_model_import.vcxproj]
+P:\JudasValidation\PreAlphaPass4\Source\src\FbxImport.cpp(112,657): warning C4267: 'argument': conversion from 'size_t' to 'glm::vec<4,glm::uint,glm::packed_highp>::length_type', possible loss of data [P:\JudasValidation\PreAlphaPass4\Build\judas_model_import.vcxproj]
+P:\JudasValidation\PreAlphaPass4\Source\src\FbxImport.cpp(112,717): warning C4267: 'argument': conversion from 'size_t' to 'glm::vec<4,float,glm::packed_highp>::length_type', possible loss of data [P:\JudasValidation\PreAlphaPass4\Build\judas_model_import.vcxproj]
+P:\JudasValidation\PreAlphaPass4\Source\src\FbxImport.cpp(172,23): warning C4457: declaration of 'settings' hides function parameter [P:\JudasValidation\PreAlphaPass4\Build\judas_model_import.vcxproj]
+      P:\JudasValidation\PreAlphaPass4\Source\src\FbxImport.cpp(170,134):
+      see declaration of 'settings'
+  
+  ObjImport.cpp
+  ModelCook.cpp
+  ModelCollision.cpp
+P:\JudasValidation\PreAlphaPass4\Source\src\ModelCollision.cpp(35,17): warning C4267: 'initializing': conversion from 'size_t' to 'unsigned int', possible loss of data [P:\JudasValidation\PreAlphaPass4\Build\judas_model_import.vcxproj]
+  AnimationRetarget.cpp
+  AnimationEventAuthoring.cpp
+  Generating Code...
+  judas_model_import.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_model_import.lib
+  Building Custom Rule P:/JudasValidation/PreAlphaPass4/Source/CMakeLists.txt
+  NavigationBake.cpp
+  judas_navigation_baker.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_navigation_baker.lib
+  Building Custom Rule P:/JudasValidation/PreAlphaPass4/Source/CMakeLists.txt
+  NavigationDependencies.cpp
+  ContentReferences.cpp
+  WorldBuilder.cpp
+  AuthoringDocument.cpp
+  SkeletonAuthoring.cpp
+  RecipePreview.cpp
+  TerrainAuthoring.cpp
+  VolumeTerrain.cpp
+  ModAuthoring.cpp
+  Generating Code...
+  judas_world_authoring.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_world_authoring.lib
+  Building Custom Rule P:/JudasValidation/PreAlphaPass4/Source/CMakeLists.txt
+  EditorMain.cpp
+  EditorMilestoneNotice.cpp
+  EditorApplication.cpp
+P:\JudasValidation\PreAlphaPass4\Source\src\editor\EditorApplication.cpp(896,40): warning C4456: declaration of 'error' hides previous local declaration [P:\JudasValidation\PreAlphaPass4\Build\judas_editor.vcxproj]
+      P:\JudasValidation\PreAlphaPass4\Source\src\editor\EditorApplication.cpp(883,33):
+      see declaration of 'error'
+  
+P:\JudasValidation\PreAlphaPass4\Source\src\editor\EditorApplication.cpp(1173,170): warning C4456: declaration of 'error' hides previous local declaration [P:\JudasValidation\PreAlphaPass4\Build\judas_editor.vcxproj]
+      P:\JudasValidation\PreAlphaPass4\Source\src\editor\EditorApplication.cpp(1159,14):
+      see declaration of 'error'
+  
+P:\JudasValidation\PreAlphaPass4\Source\src\editor\EditorApplication.cpp(1420,38): warning C4244: '=': conversion from 'SDL_WindowEventID' to 'Uint8', possible loss of data [P:\JudasValidation\PreAlphaPass4\Build\judas_editor.vcxproj]
+P:\JudasValidation\PreAlphaPass4\Source\src\editor\EditorApplication.cpp(1476,38): warning C4456: declaration of 'error' hides previous local declaration [P:\JudasValidation\PreAlphaPass4\Build\judas_editor.vcxproj]
+      P:\JudasValidation\PreAlphaPass4\Source\src\editor\EditorApplication.cpp(1299,17):
+      see declaration of 'error'
+  
+P:\JudasValidation\PreAlphaPass4\Source\src\editor\EditorApplication.cpp(1530,29): warning C4456: declaration of 'error' hides previous local declaration [P:\JudasValidation\PreAlphaPass4\Build\judas_editor.vcxproj]
+      P:\JudasValidation\PreAlphaPass4\Source\src\editor\EditorApplication.cpp(1299,17):
+      see declaration of 'error'
+  
+P:\JudasValidation\PreAlphaPass4\Source\src\editor\EditorApplication.cpp(1699,46): warning C4456: declaration of 'error' hides previous local declaration [P:\JudasValidation\PreAlphaPass4\Build\judas_editor.vcxproj]
+      P:\JudasValidation\PreAlphaPass4\Source\src\editor\EditorApplication.cpp(1299,17):
+      see declaration of 'error'
+  
+P:\JudasValidation\PreAlphaPass4\Source\src\editor\EditorApplication.cpp(1774,33): warning C4456: declaration of 'error' hides previous local declaration [P:\JudasValidation\PreAlphaPass4\Build\judas_editor.vcxproj]
+      P:\JudasValidation\PreAlphaPass4\Source\src\editor\EditorApplication.cpp(1299,17):
+      see declaration of 'error'
+  
+P:\JudasValidation\PreAlphaPass4\Source\src\editor\EditorApplication.cpp(1778,400): warning C4456: declaration of 'error' hides previous local declaration [P:\JudasValidation\PreAlphaPass4\Build\judas_editor.vcxproj]
+      P:\JudasValidation\PreAlphaPass4\Source\src\editor\EditorApplication.cpp(1299,17):
+      see declaration of 'error'
+  
+P:\JudasValidation\PreAlphaPass4\Source\src\editor\EditorApplication.cpp(1780,295): warning C4456: declaration of 'error' hides previous local declaration [P:\JudasValidation\PreAlphaPass4\Build\judas_editor.vcxproj]
+      P:\JudasValidation\PreAlphaPass4\Source\src\editor\EditorApplication.cpp(1299,17):
+      see declaration of 'error'
+  
+P:\JudasValidation\PreAlphaPass4\Source\src\editor\EditorApplication.cpp(1790,405): warning C4456: declaration of 'error' hides previous local declaration [P:\JudasValidation\PreAlphaPass4\Build\judas_editor.vcxproj]
+      P:\JudasValidation\PreAlphaPass4\Source\src\editor\EditorApplication.cpp(1299,17):
+      see declaration of 'error'
+  
+P:\JudasValidation\PreAlphaPass4\Source\src\editor\EditorApplication.cpp(1985,125): warning C4456: declaration of 'error' hides previous local declaration [P:\JudasValidation\PreAlphaPass4\Build\judas_editor.vcxproj]
+      P:\JudasValidation\PreAlphaPass4\Source\src\editor\EditorApplication.cpp(1299,17):
+      see declaration of 'error'
+  
+P:\JudasValidation\PreAlphaPass4\Source\src\editor\EditorApplication.cpp(2028,80): warning C4456: declaration of 'error' hides previous local declaration [P:\JudasValidation\PreAlphaPass4\Build\judas_editor.vcxproj]
+      P:\JudasValidation\PreAlphaPass4\Source\src\editor\EditorApplication.cpp(1299,17):
+      see declaration of 'error'
+  
+  ScriptTools.cpp
+  EditorCamera.cpp
+  EditorPicking.cpp
+  EditorHistory.cpp
+  EditorPanels.cpp
+P:\JudasValidation\PreAlphaPass4\Source\src\editor\EditorPanels.cpp(1213,764): warning C4456: declaration of 'name' hides previous local declaration [P:\JudasValidation\PreAlphaPass4\Build\judas_editor.vcxproj]
+      P:\JudasValidation\PreAlphaPass4\Source\src\editor\EditorPanels.cpp(1150,10):
+      see declaration of 'name'
+  
+P:\JudasValidation\PreAlphaPass4\Source\src\editor\EditorPanels.cpp(1244,112): warning C4456: declaration of 'name' hides previous local declaration [P:\JudasValidation\PreAlphaPass4\Build\judas_editor.vcxproj]
+      P:\JudasValidation\PreAlphaPass4\Source\src\editor\EditorPanels.cpp(1150,10):
+      see declaration of 'name'
+  
+P:\JudasValidation\PreAlphaPass4\Source\src\editor\EditorPanels.cpp(1246,130): warning C4456: declaration of 'name' hides previous local declaration [P:\JudasValidation\PreAlphaPass4\Build\judas_editor.vcxproj]
+      P:\JudasValidation\PreAlphaPass4\Source\src\editor\EditorPanels.cpp(1150,10):
+      see declaration of 'name'
+  
+P:\JudasValidation\PreAlphaPass4\Source\src\editor\EditorPanels.cpp(1259,62): warning C4456: declaration of 'name' hides previous local declaration [P:\JudasValidation\PreAlphaPass4\Build\judas_editor.vcxproj]
+      P:\JudasValidation\PreAlphaPass4\Source\src\editor\EditorPanels.cpp(1150,10):
+      see declaration of 'name'
+  
+  RenderPreview.cpp
+  RetargetPanel.cpp
+  AnimationTimeline.cpp
+  WorldTools.cpp
+P:\JudasValidation\PreAlphaPass4\Source\src\editor\WorldTools.cpp(102,26): warning C4456: declaration of 'id' hides previous local declaration [P:\JudasValidation\PreAlphaPass4\Build\judas_editor.vcxproj]
+      P:\JudasValidation\PreAlphaPass4\Source\src\editor\WorldTools.cpp(64,14):
+      see declaration of 'id'
+  
+  TerrainTools.cpp
+  VolumeTerrainTools.cpp
+  ModTools.cpp
+  ProfilerView.cpp
+  EditorWidgets.cpp
+  ComponentEditors.cpp
+P:\JudasValidation\PreAlphaPass4\Source\src\editor\ComponentEditors.cpp(823,23): warning C4456: declaration of 'm' hides previous local declaration [P:\JudasValidation\PreAlphaPass4\Build\judas_editor.vcxproj]
+      P:\JudasValidation\PreAlphaPass4\Source\src\editor\ComponentEditors.cpp(797,11):
+      see declaration of 'm'
+  
+P:\JudasValidation\PreAlphaPass4\Source\src\editor\ComponentEditors.cpp(1169,37): warning C4456: declaration of 'path' hides previous local declaration [P:\JudasValidation\PreAlphaPass4\Build\judas_editor.vcxproj]
+      P:\JudasValidation\PreAlphaPass4\Source\src\editor\ComponentEditors.cpp(1163,18):
+      see declaration of 'path'
+  
+P:\JudasValidation\PreAlphaPass4\Source\src\editor\ComponentEditors.cpp(1169,120): warning C4456: declaration of 'relative' hides previous local declaration [P:\JudasValidation\PreAlphaPass4\Build\judas_editor.vcxproj]
+      P:\JudasValidation\PreAlphaPass4\Source\src\editor\ComponentEditors.cpp(1163,106):
+      see declaration of 'relative'
+  
+  GizmoMath.cpp
+  Generating Code...
+  judas_editor.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_editor.exe
+  Building Custom Rule P:/JudasValidation/PreAlphaPass4/Source/CMakeLists.txt
+  EnvironmentBake.cpp
+  judas_environment_bake.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_environment_bake.exe
+  Building Custom Rule P:/JudasValidation/PreAlphaPass4/Source/CMakeLists.txt
+  ExportMain.cpp
+  judas_export.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_export.exe
+  Building Custom Rule P:/JudasValidation/PreAlphaPass4/Source/CMakeLists.txt
+  LiquidBake.cpp
+  judas_liquid_bake.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_liquid_bake.exe
+  Building Custom Rule P:/JudasValidation/PreAlphaPass4/Source/CMakeLists.txt
+  ModTool.cpp
+  judas_mod.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_mod.exe
+  Building Custom Rule P:/JudasValidation/PreAlphaPass4/Source/CMakeLists.txt
+  ModelImportCli.cpp
+  judas_model_import_cli.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_model_import_cli.exe
+  Building Custom Rule P:/JudasValidation/PreAlphaPass4/Source/CMakeLists.txt
+  NavigationBake.cpp
+  judas_navigation_bake.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_navigation_bake.exe
+  Building Custom Rule P:/JudasValidation/PreAlphaPass4/Source/CMakeLists.txt
+  SaveEvolutionMain.cpp
+  judas_save.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_save.exe
+  Building Custom Rule P:/JudasValidation/PreAlphaPass4/Source/CMakeLists.txt
+  SceneAuthor.cpp
+  StructuredAuthor.cpp
+  AuthoringCLI.cpp
+  RecipeCLI.cpp
+  ContentServicesCLI.cpp
+  Generating Code...
+  judas_scene_author.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_scene_author.exe
+  Building Custom Rule P:/JudasValidation/PreAlphaPass4/Source/CMakeLists.txt
+  ScriptCheck.cpp
+  judas_script_check.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_script_check.exe
+  Building Custom Rule P:/JudasValidation/PreAlphaPass4/Source/CMakeLists.txt
+  DedicatedMain.cpp
+  judas_server.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_server.exe
+  Building Custom Rule P:/JudasValidation/PreAlphaPass4/Source/CMakeLists.txt
+  TerrainAuthor.cpp
+  judas_terrain_author.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_terrain_author.exe
+  Building Custom Rule P:/JudasValidation/PreAlphaPass4/Source/CMakeLists.txt
+  VolumeTerrainAuthor.cpp
+  judas_volume_author.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_volume_author.exe
+  Building Custom Rule P:/JudasValidation/PreAlphaPass4/Source/CMakeLists.txt
+  WindowsReadinessTests.cpp
+  judas_windows_readiness_tests.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_windows_readiness_tests.exe
+  {"build": {"architecture": "AMD64", "build_id": "0.1.0-prealpha-Experimental-9deb47d-clean-86800e25cc69", "channel": "Experimental", "compiler": "MSVC", "compiler_version": "19.44.35229.0", "configuration": "Release", "maturity": "pre-alpha", "platform": "Windows", "schema": 1, "source_dirty": false, "source_fingerprint": "86800e25cc69bf1dd422358c9bebda07dd693a5471ffe748f439a1696db2b097", "source_origin": "archive", "source_revision": "9deb47d1667e5b6bd1abe708ed343c3fbf6fe847", "source_tree": "f8c6c8885ec1eacb425c24fba9816144cbcfc74f", "source_untracked_count": 0, "source_untracked_fingerprint": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855", "version": "0.1.0-prealpha"}, "files": 238, "ok": true, "tools": 18}
+  Building Custom Rule P:/JudasValidation/PreAlphaPass4/Source/CMakeLists.txt
