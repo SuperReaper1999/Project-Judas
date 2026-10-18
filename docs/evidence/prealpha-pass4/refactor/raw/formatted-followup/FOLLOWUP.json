@@ -1,0 +1,13 @@
+{
+  "argv": [
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass4/refactor/behavior/formatted/judas_contact_cache_tests/judas_contact_cache_tests"
+  ],
+  "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+  "exit": 0,
+  "seconds": 0.03202320600030362,
+  "binarySha256": "122e9209d5e64b431b830f191debc9f5460ba73c02c93105752aa5a354f024c9",
+  "stdoutSha256": "8049440b76af73b8b66bff6d473bc8adb6a8e8583642d2c3fe98dc7b984003b1",
+  "stdout_bytes_identical_to_original_baseline": true,
+  "log": ".cache/prealpha-pass4/refactor/behavior/formatted-followup/judas_contact_cache_tests/run.log",
+  "root_cause": "Original formatted-only harness invoked from build/ rather than repository root, so unchanged relative fixture inputs were absent. Follow-up changes only process working directory; executable bytes/fixtures/assertions unchanged."
+}

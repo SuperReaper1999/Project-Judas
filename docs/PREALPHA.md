@@ -15,8 +15,11 @@ It records the state at that checkpoint; its original pending-review language is
 historical. The [rotated-liquid follow-up](evidence/prealpha-liquid-rotation/REPORT.md)
 records subsequent corrections and remaining failures; its exact checkpoint
 `f647d7fd95f60d3a37dba70a51f4e45dc41c2922` was subsequently human accepted and
-promoted to main. [Pass 3](evidence/prealpha-pass3/REPORT.md) continues on
-Experimental and has not been human accepted. For a first visible project with no controller/input setup, follow
+promoted to main. [Pass 3](evidence/prealpha-pass3/REPORT.md) was subsequently
+human accepted at `7da56c2cc6ce7acda827a6e4019d610622b237e2` and promoted to
+main. Its report preserves the original checkpoint-time review status. Pass 4
+develops on Experimental and requires separate human acceptance. For a first
+visible project with no controller/input setup, follow
 [Your first visible Judas project](FIRST_PROJECT.md).
 
 ## Ownership and integration contracts

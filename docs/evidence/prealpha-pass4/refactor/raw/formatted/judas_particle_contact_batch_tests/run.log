@@ -1,0 +1,11 @@
+SUPPORTED dynamic_platform=0 particle_normal_max=2.38419e-07 support_y=100 body_vy=8.37277e-08 iterations=10 closing_residual=1.64467e-07 scale=1 cap=0 acceleration=0 products=0 breakdowns=0
+SUPPORTED dynamic_platform=1 particle_normal_max=0 support_y=100 body_vy=-1.49012e-07 iterations=10 closing_residual=1.80677e-07 scale=1 cap=0 acceleration=1 products=9 breakdowns=0
+GAP cached=0 gap=0.000999987 vy=-1.9802 rows=0 residual=0 iterations=10 acceleration=0 products=0 breakdowns=0 initial_energy=200 final_energy=198.02
+GAP cached=1 gap=0.000999987 vy=-0.0599976 rows=4 residual=1.54972e-06 iterations=10 acceleration=1 products=4 breakdowns=0 initial_energy=200.002 final_energy=0.181795
+OPPOSING vy=-0.999998 energy=3.99999 residual=0.999998 cap=1 acceleration=0 breakdowns=0 rejected=0 declined=6
+NEAR_OPPOSING tilt=1e-06 vx=6.4e-05 vy=-0.999998 energy=3.99999 residual=0.999998 cap=1 declined=6
+NEAR_OPPOSING tilt=1e-05 vx=0.00064 vy=-0.999998 energy=3.99999 residual=0.999998 cap=1 declined=6
+NEAR_OPPOSING tilt=0.0001 vx=0.0064 vy=-0.999998 energy=4.00015 residual=0.999998 cap=1 declined=6
+NEAR_OPPOSING tilt=0.001 vx=0.0639979 vy=-0.999937 energy=4.01588 residual=0.999937 cap=1 declined=6
+NEAR_OPPOSING tilt=0.01 vx=0.637925 vy=-0.993623 energy=5.57694 residual=0.993623 cap=1 declined=6
+FTFT9 PARTICLE BATCH checks=77 failures=0

@@ -1,0 +1,44 @@
+{
+  "utc": "2026-10-18T15:23:46.331143+00:00",
+  "base": "7da56c2cc6ce7acda827a6e4019d610622b237e2",
+  "trackedClean": true,
+  "files": {
+    "judas_impact_mesh_cost_tests": {
+      "sha256": "240873f5e9aabb689e6727f876c38b1a78fccbbe18c1f0cb184336874005d9a9",
+      "bytes": 1515064,
+      "identity": {
+        "architecture": "x86_64",
+        "build_id": "0.1.0-prealpha-Experimental-7da56c2-clean-2007f0cb2970-u84f47c24fcd0",
+        "channel": "Experimental",
+        "compiler": "GNU",
+        "compiler_version": "15.2.0",
+        "configuration": "Release",
+        "maturity": "pre-alpha",
+        "platform": "Linux",
+        "schema": 1,
+        "source_dirty": false,
+        "source_fingerprint": "2007f0cb2970bce360851cb0677858490ca7e6cf7157fb9ad1935ee54bbd167a",
+        "source_origin": "git",
+        "source_revision": "7da56c2cc6ce7acda827a6e4019d610622b237e2",
+        "source_tree": "1f3c3687085ea82b703daa1089f1d8769ba30da5",
+        "source_untracked_count": 16,
+        "source_untracked_fingerprint": "84f47c24fcd098f88732ceab246b2e0e19eca31f56acdd72f89f8bfa1621daf2",
+        "version": "0.1.0-prealpha"
+      }
+    },
+    "judas_physics_stress_live_benchmark": {
+      "sha256": "58ab817a9bf608e6f7b1353952562a5e5af692c37f931ea7bafa2cd4ab3e2fe6",
+      "bytes": 54900240,
+      "probeNote": "Command '['/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass4/baseline/bin/judas_physics_stress_live_benchmark', '--build-info-json']' returned non-zero exit status 2."
+    },
+    "judas_physics_scaling_diagnostics": {
+      "sha256": "2f62e66dcee55389b77e3d4ad160a68415f1d398ae7da9066a5a377b99008447",
+      "bytes": 1475176,
+      "probeNote": "Command '['/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass4/baseline/bin/judas_physics_scaling_diagnostics', '--build-info-json']' returned non-zero exit status 2."
+    },
+    "libjudas_engine.a": {
+      "sha256": "cc3dbcff22e6ac3369ab99ca9e2a4e48976bed2920339eadcc30c479c9aedff7",
+      "bytes": 30096084
+    }
+  }
+}

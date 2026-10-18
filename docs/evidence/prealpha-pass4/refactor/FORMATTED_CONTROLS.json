@@ -1,0 +1,30 @@
+{
+  "free1024": {
+    "baseline_pass": true,
+    "formatted_pass": true,
+    "digest_equal": true,
+    "baseline_digest": "beba012f5dfe2273",
+    "formatted_digest": "beba012f5dfe2273"
+  },
+  "pile256": {
+    "baseline_pass": true,
+    "formatted_pass": true,
+    "digest_equal": true,
+    "baseline_digest": "63b0f10cd668de91",
+    "formatted_digest": "63b0f10cd668de91"
+  },
+  "machines_active256": {
+    "baseline_pass": true,
+    "formatted_pass": true,
+    "digest_equal": true,
+    "baseline_digest": "76999a0d1f196c6b",
+    "formatted_digest": "76999a0d1f196c6b"
+  },
+  "machines_sleeping256": {
+    "baseline_pass": true,
+    "formatted_pass": true,
+    "digest_equal": true,
+    "baseline_digest": "294c73ad4249153b",
+    "formatted_digest": "294c73ad4249153b"
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "schema": "judas.prealpha.pass4.refactor.independent_tokens.v2",
+  "utc": "2026-10-18T15:48:11.363801+00:00",
+  "baseline": "7da56c2cc6ce7acda827a6e4019d610622b237e2",
+  "baseline_source_sha256": "5a08c72d8ae3f6fa1787e1aa42689e0638bc27323684f82b8699d07226988190",
+  "old_private_functions": 61,
+  "new_private_functions": 61,
+  "old_public_functions": 113,
+  "new_public_functions": 113,
+  "function_differences": [],
+  "ordered_Impl_declaration_tokens_identical": true,
+  "old_Impl_declaration_tokens": 2183,
+  "new_Impl_declaration_tokens": 2183,
+  "shared_types_identical": {
+    "PhysicsWorkSample": true,
+    "PhysicsWorkTimer": true,
+    "ContactKey": true,
+    "CachedContact": true,
+    "ClosestBodyResult": true
+  },
+  "free_helper_bodies_identical": {
+    "MillisecondsBetween": true,
+    "FiniteVector": true,
+    "UsableVelocity": true,
+    "UsableKinematicPose": true,
+    "KinematicShape": true,
+    "BoxesAt": true,
+    "CompoundInverseInertia": true
+  },
+  "all_constexpr_constants_identical": true,
+  "public_PhysicsWorld_header_byte_identical": true,
+  "public_header_sha256": "eddadb36acc2cd46693859e844ca981d4b9f684fde68035b08ed37b757f71f03",
+  "negative_controls": {
+    "changed_method_body_detected": true,
+    "missing_method_detected": true,
+    "changed_default_initializer_detected": true,
+    "changed_public_header_detected": true
+  },
+  "pass": true,
+  "note": "Independent lexical implementation. Exact string/character/raw literals preserved; only whitespace/comments ignored. Method return spelling/qualification changes ignored for body mapping only; ordered declarations/default initializers independently checked. No extraction-generator records imported. Actual native behavioral checks are separate evidence."
+}

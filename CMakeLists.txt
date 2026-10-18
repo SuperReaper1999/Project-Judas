@@ -115,6 +115,8 @@ endif()
 # Jolt-backed milestone) was replaced rather than kept as an authoritative
 # dependency.
 
+include(cmake/PhysicsWorldSources.cmake)
+
 set(JUDAS_PHYSICS_SOURCES
     src/CollisionAsset.cpp
     src/CollisionGeometry.cpp
@@ -326,7 +328,7 @@ add_library(judas_engine STATIC
     src/LiquidPersistence.cpp
     src/WorldPersistence.cpp
     ${JUDAS_PHYSICS_SOURCES}
-    src/PhysicsWorld.cpp
+    ${JUDAS_PHYSICS_WORLD_SOURCES}
 )
 target_include_directories(judas_engine PUBLIC src ${SDL2_INCLUDE_DIRS})
 find_package(Threads REQUIRED)
@@ -489,7 +491,7 @@ judas_warnings(judas_physics_tests)
 add_executable(judas_rigid_contact_tests
     tests/RigidContactTests.cpp
     ${JUDAS_PHYSICS_SOURCES}
-    src/PhysicsWorld.cpp
+    ${JUDAS_PHYSICS_WORLD_SOURCES}
 )
 target_include_directories(judas_rigid_contact_tests PRIVATE src)
 target_link_libraries(judas_rigid_contact_tests PRIVATE ${JUDAS_GLM})
@@ -500,7 +502,7 @@ judas_warnings(judas_rigid_contact_tests)
 add_executable(judas_broadphase_tests
     tests/BroadphaseTests.cpp
     ${JUDAS_PHYSICS_SOURCES}
-    src/PhysicsWorld.cpp
+    ${JUDAS_PHYSICS_WORLD_SOURCES}
 )
 target_include_directories(judas_broadphase_tests PRIVATE src)
 target_link_libraries(judas_broadphase_tests PRIVATE ${JUDAS_GLM})
@@ -519,7 +521,7 @@ judas_warnings(judas_collision_tests)
 add_executable(judas_celestial_gravity_tests
     tests/CelestialGravityTests.cpp
     ${JUDAS_PHYSICS_SOURCES}
-    src/PhysicsWorld.cpp
+    ${JUDAS_PHYSICS_WORLD_SOURCES}
     src/CelestialGravity.cpp
 )
 target_include_directories(judas_celestial_gravity_tests PRIVATE src)
@@ -549,7 +551,7 @@ add_executable(judas_step_climb_tests
     tests/StepClimbTests.cpp
     src/StepClimb.cpp
     ${JUDAS_PHYSICS_SOURCES}
-    src/PhysicsWorld.cpp
+    ${JUDAS_PHYSICS_WORLD_SOURCES}
 )
 target_include_directories(judas_step_climb_tests PRIVATE src)
 target_link_libraries(judas_step_climb_tests PRIVATE ${JUDAS_GLM})
@@ -572,7 +574,7 @@ add_executable(judas_pilot_dismount_tests
     tests/PilotDismountTests.cpp
     src/PilotAttachment.cpp
     ${JUDAS_PHYSICS_SOURCES}
-    src/PhysicsWorld.cpp
+    ${JUDAS_PHYSICS_WORLD_SOURCES}
 )
 target_include_directories(judas_pilot_dismount_tests PRIVATE src)
 target_link_libraries(judas_pilot_dismount_tests PRIVATE ${JUDAS_GLM})
@@ -588,7 +590,7 @@ add_executable(judas_spacecraft_control_tests
     src/Window.cpp
     src/InputSystem.cpp
     ${JUDAS_PHYSICS_SOURCES}
-    src/PhysicsWorld.cpp
+    ${JUDAS_PHYSICS_WORLD_SOURCES}
 )
 target_include_directories(judas_spacecraft_control_tests PRIVATE src)
 target_include_directories(judas_spacecraft_control_tests PRIVATE ${SDL2_INCLUDE_DIRS})
@@ -602,7 +604,7 @@ add_executable(judas_spacecraft_flight_tests
     src/Window.cpp
     src/InputSystem.cpp
     ${JUDAS_PHYSICS_SOURCES}
-    src/PhysicsWorld.cpp
+    ${JUDAS_PHYSICS_WORLD_SOURCES}
     src/CelestialGravity.cpp
 )
 target_include_directories(judas_spacecraft_flight_tests PRIVATE src)
@@ -616,7 +618,7 @@ add_executable(judas_reference_frame_tests
     src/ReferenceFrame.cpp
     src/PilotAttachment.cpp
     ${JUDAS_PHYSICS_SOURCES}
-    src/PhysicsWorld.cpp
+    ${JUDAS_PHYSICS_WORLD_SOURCES}
 )
 target_include_directories(judas_reference_frame_tests PRIVATE src)
 target_link_libraries(judas_reference_frame_tests PRIVATE ${JUDAS_GLM})
@@ -711,7 +713,7 @@ add_executable(judas_interactable_tests
     src/SkeletalAnimation.cpp
     src/FontLoader.cpp
     ${JUDAS_PHYSICS_SOURCES}
-    src/PhysicsWorld.cpp
+    ${JUDAS_PHYSICS_WORLD_SOURCES}
 )
 target_include_directories(judas_interactable_tests PRIVATE src)
 target_include_directories(judas_interactable_tests PRIVATE ${SDL2_INCLUDE_DIRS})
@@ -738,7 +740,7 @@ add_executable(judas_object_manipulation_tests
     src/InteractionSystem.cpp
     src/DynamicBody.cpp
     ${JUDAS_TEST_SUPPORT_SOURCES}
-    src/PhysicsWorld.cpp
+    ${JUDAS_PHYSICS_WORLD_SOURCES}
 )
 target_include_directories(judas_object_manipulation_tests PRIVATE src)
 target_link_libraries(judas_object_manipulation_tests PRIVATE ${JUDAS_GLM})
@@ -758,7 +760,7 @@ add_executable(judas_player_curved_locomotion_tests
     src/Window.cpp
     src/InputSystem.cpp
     src/StepClimb.cpp
-    src/PhysicsWorld.cpp
+    ${JUDAS_PHYSICS_WORLD_SOURCES}
     ${JUDAS_PHYSICS_SOURCES}
     src/RadicalGravity.cpp
 )
@@ -785,7 +787,7 @@ add_executable(judas_world_coordinates_tests
     src/Window.cpp
     src/InputSystem.cpp
     src/StepClimb.cpp
-    src/PhysicsWorld.cpp
+    ${JUDAS_PHYSICS_WORLD_SOURCES}
     ${JUDAS_TEST_SUPPORT_SOURCES}
 )
 target_include_directories(judas_world_coordinates_tests PRIVATE src)
@@ -798,7 +800,7 @@ judas_warnings(judas_world_coordinates_tests)
 add_executable(judas_compound_body_tests
     tests/CompoundBodyTests.cpp
     ${JUDAS_PHYSICS_SOURCES}
-    src/PhysicsWorld.cpp
+    ${JUDAS_PHYSICS_WORLD_SOURCES}
 )
 target_include_directories(judas_compound_body_tests PRIVATE src)
 target_link_libraries(judas_compound_body_tests PRIVATE ${JUDAS_GLM})
@@ -808,7 +810,7 @@ add_executable(judas_fluid_world_tests
     tests/FluidWorldTests.cpp
     src/FluidWorld.cpp
     ${JUDAS_TEST_SUPPORT_SOURCES}
-    src/PhysicsWorld.cpp
+    ${JUDAS_PHYSICS_WORLD_SOURCES}
 )
 target_include_directories(judas_fluid_world_tests PRIVATE src)
 target_link_libraries(judas_fluid_world_tests PRIVATE ${JUDAS_GLM})
@@ -820,7 +822,7 @@ add_executable(judas_fluid_rigid_coupling_tests
     src/ObjectManipulation.cpp
     src/DynamicBody.cpp
     ${JUDAS_PHYSICS_SOURCES}
-    src/PhysicsWorld.cpp
+    ${JUDAS_PHYSICS_WORLD_SOURCES}
 )
 target_include_directories(judas_fluid_rigid_coupling_tests PRIVATE src)
 target_link_libraries(judas_fluid_rigid_coupling_tests PRIVATE ${JUDAS_GLM})
@@ -848,7 +850,7 @@ add_executable(judas_terrain_physics_tests
     src/Window.cpp
     src/InputSystem.cpp
     ${JUDAS_PHYSICS_SOURCES}
-    src/PhysicsWorld.cpp
+    ${JUDAS_PHYSICS_WORLD_SOURCES}
     src/RadicalGravity.cpp
 )
 target_include_directories(judas_terrain_physics_tests PRIVATE src ${SDL2_INCLUDE_DIRS})
@@ -860,7 +862,7 @@ add_executable(judas_terrain_fluid_tests
     src/TerrainDemo.cpp
     src/FluidWorld.cpp
     ${JUDAS_TEST_SUPPORT_SOURCES}
-    src/PhysicsWorld.cpp
+    ${JUDAS_PHYSICS_WORLD_SOURCES}
 )
 target_include_directories(judas_terrain_fluid_tests PRIVATE src)
 target_link_libraries(judas_terrain_fluid_tests PRIVATE ${JUDAS_GLM})
@@ -890,7 +892,7 @@ add_executable(judas_atmospheric_flight_tests
     src/Window.cpp
     src/InputSystem.cpp
     ${JUDAS_PHYSICS_SOURCES}
-    src/PhysicsWorld.cpp
+    ${JUDAS_PHYSICS_WORLD_SOURCES}
 )
 target_include_directories(judas_atmospheric_flight_tests PRIVATE src ${SDL2_INCLUDE_DIRS})
 target_link_libraries(judas_atmospheric_flight_tests PRIVATE SDL2::SDL2 ${JUDAS_GLM})
@@ -911,7 +913,7 @@ add_executable(judas_combustion_tests
     src/Window.cpp
     src/InputSystem.cpp
     ${JUDAS_PHYSICS_SOURCES}
-    src/PhysicsWorld.cpp
+    ${JUDAS_PHYSICS_WORLD_SOURCES}
 )
 target_include_directories(judas_combustion_tests PRIVATE src ${SDL2_INCLUDE_DIRS})
 target_link_libraries(judas_combustion_tests PRIVATE SDL2::SDL2 ${JUDAS_GLM})
@@ -1562,13 +1564,27 @@ target_include_directories(judas_contact_sat_workspace_tests PRIVATE src)
 target_link_libraries(judas_contact_sat_workspace_tests PRIVATE ${JUDAS_GLM})
 judas_warnings(judas_contact_sat_workspace_tests)
 
-# Some headless fixtures compile PhysicsWorld directly instead of linking the
-# complete engine. They need the same optional borrowed-job implementation,
-# without pulling renderer/window/resource systems into those fixtures.
+# Direct headless fixtures need the complete private world implementation and
+# borrowed-job service, without renderer/window/resource ownership. Check both
+# relative and absolute source spellings so a partial world fails at configure.
 get_property(judas_current_targets DIRECTORY PROPERTY BUILDSYSTEM_TARGETS)
 foreach(judas_current_target IN LISTS judas_current_targets)
     get_target_property(judas_current_sources ${judas_current_target} SOURCES)
-    if("src/PhysicsWorld.cpp" IN_LIST judas_current_sources)
+    get_target_property(judas_current_source_dir ${judas_current_target} SOURCE_DIR)
+    set(judas_current_absolute_sources)
+    foreach(judas_current_source IN LISTS judas_current_sources)
+        get_filename_component(judas_current_absolute_source "${judas_current_source}"
+            ABSOLUTE BASE_DIR "${judas_current_source_dir}")
+        list(APPEND judas_current_absolute_sources "${judas_current_absolute_source}")
+    endforeach()
+    if("${CMAKE_CURRENT_SOURCE_DIR}/src/PhysicsWorld.cpp" IN_LIST judas_current_absolute_sources)
+        foreach(judas_world_source IN LISTS JUDAS_PHYSICS_WORLD_SOURCES)
+            if(NOT "${CMAKE_CURRENT_SOURCE_DIR}/${judas_world_source}" IN_LIST judas_current_absolute_sources)
+                message(FATAL_ERROR
+                    "${judas_current_target} compiles a partial PhysicsWorld. "
+                    "Use JUDAS_PHYSICS_WORLD_SOURCES instead of individual world files.")
+            endif()
+        endforeach()
         target_link_libraries(${judas_current_target} PRIVATE judas_jobs)
     endif()
 endforeach()

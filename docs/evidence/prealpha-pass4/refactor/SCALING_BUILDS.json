@@ -1,0 +1,74 @@
+[
+  {
+    "argv": [
+      "/usr/bin/c++",
+      "-O3",
+      "-DNDEBUG",
+      "/home/conner/Documents/GitHub/Project-Judas/build/CMakeFiles/judas_physics_scaling_diagnostics.dir/tests/PhysicsScalingBenchmarks.cpp.o",
+      "-o",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass4/refactor/behavior/scaling-baseline",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass4/baseline/bin/libjudas_engine.a",
+      "/home/conner/Documents/GitHub/Project-Judas/build/libjudas_build_identity.a",
+      "/home/conner/Documents/GitHub/Project-Judas/build/libjudas_app_icon.a",
+      "/home/conner/Documents/GitHub/Project-Judas/build/libjudas_materials.a",
+      "/usr/lib/x86_64-linux-gnu/libSDL2.so",
+      "/home/conner/Documents/GitHub/Project-Judas/build/libjudas_glad.a",
+      "/home/conner/Documents/GitHub/Project-Judas/build/libjudas_audio_backend.a",
+      "/home/conner/Documents/GitHub/Project-Judas/build/libjudas_meshoptimizer.a",
+      "/home/conner/Documents/GitHub/Project-Judas/build/libjudas_navigation_cook.a",
+      "/home/conner/Documents/GitHub/Project-Judas/build/libjudas_navigation_backend.a",
+      "/home/conner/Documents/GitHub/Project-Judas/build/libjudas_quickjs.a",
+      "-lm",
+      "/home/conner/Documents/GitHub/Project-Judas/build/libjudas_profiler.a",
+      "/home/conner/Documents/GitHub/Project-Judas/build/_deps/judas_freetype-build/libfreetype.a",
+      "/home/conner/Documents/GitHub/Project-Judas/build/_deps/judas_harfbuzz-build/libharfbuzz.a",
+      "/home/conner/Documents/GitHub/Project-Judas/build/unicode/icu/lib/libicui18n.a",
+      "/home/conner/Documents/GitHub/Project-Judas/build/unicode/icu/lib/libicuuc.a",
+      "/home/conner/Documents/GitHub/Project-Judas/build/unicode/icu/lib/libicudata.a",
+      "-ldl",
+      "/home/conner/Documents/GitHub/Project-Judas/build/libjudas_jobs.a"
+    ],
+    "seconds": 0.10598777799896197,
+    "objects": {
+      "/home/conner/Documents/GitHub/Project-Judas/build/CMakeFiles/judas_physics_scaling_diagnostics.dir/tests/PhysicsScalingBenchmarks.cpp.o": "2bab678144f40ec537601e58511f5f8660dcad9155d540710c3e7a22eea9e70c"
+    },
+    "archiveSha256": "cc3dbcff22e6ac3369ab99ca9e2a4e48976bed2920339eadcc30c479c9aedff7",
+    "binarySha256": "2f62e66dcee55389b77e3d4ad160a68415f1d398ae7da9066a5a377b99008447"
+  },
+  {
+    "argv": [
+      "/usr/bin/c++",
+      "-O3",
+      "-DNDEBUG",
+      "/home/conner/Documents/GitHub/Project-Judas/build/CMakeFiles/judas_physics_scaling_diagnostics.dir/tests/PhysicsScalingBenchmarks.cpp.o",
+      "-o",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass4/refactor/behavior/scaling-refactor",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass4/refactor/behavior/libjudas_engine.refactor.a",
+      "/home/conner/Documents/GitHub/Project-Judas/build/libjudas_build_identity.a",
+      "/home/conner/Documents/GitHub/Project-Judas/build/libjudas_app_icon.a",
+      "/home/conner/Documents/GitHub/Project-Judas/build/libjudas_materials.a",
+      "/usr/lib/x86_64-linux-gnu/libSDL2.so",
+      "/home/conner/Documents/GitHub/Project-Judas/build/libjudas_glad.a",
+      "/home/conner/Documents/GitHub/Project-Judas/build/libjudas_audio_backend.a",
+      "/home/conner/Documents/GitHub/Project-Judas/build/libjudas_meshoptimizer.a",
+      "/home/conner/Documents/GitHub/Project-Judas/build/libjudas_navigation_cook.a",
+      "/home/conner/Documents/GitHub/Project-Judas/build/libjudas_navigation_backend.a",
+      "/home/conner/Documents/GitHub/Project-Judas/build/libjudas_quickjs.a",
+      "-lm",
+      "/home/conner/Documents/GitHub/Project-Judas/build/libjudas_profiler.a",
+      "/home/conner/Documents/GitHub/Project-Judas/build/_deps/judas_freetype-build/libfreetype.a",
+      "/home/conner/Documents/GitHub/Project-Judas/build/_deps/judas_harfbuzz-build/libharfbuzz.a",
+      "/home/conner/Documents/GitHub/Project-Judas/build/unicode/icu/lib/libicui18n.a",
+      "/home/conner/Documents/GitHub/Project-Judas/build/unicode/icu/lib/libicuuc.a",
+      "/home/conner/Documents/GitHub/Project-Judas/build/unicode/icu/lib/libicudata.a",
+      "-ldl",
+      "/home/conner/Documents/GitHub/Project-Judas/build/libjudas_jobs.a"
+    ],
+    "seconds": 0.0920346540005994,
+    "objects": {
+      "/home/conner/Documents/GitHub/Project-Judas/build/CMakeFiles/judas_physics_scaling_diagnostics.dir/tests/PhysicsScalingBenchmarks.cpp.o": "2bab678144f40ec537601e58511f5f8660dcad9155d540710c3e7a22eea9e70c"
+    },
+    "archiveSha256": "b3e580f6260527c6003d9898065c6f84973a112f4593c4c6aa9f1185780b65c5",
+    "binarySha256": "99e2146fbbac2495f4f5094811be39f211f92b4f5613005eb33aba911e7b7d57"
+  }
+]

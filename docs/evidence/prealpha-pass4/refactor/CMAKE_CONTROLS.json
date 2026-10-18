@@ -1,0 +1,6 @@
+{
+  "negative_exit": 1,
+  "diagnostic": "judas_partial_world_negative compiles a partial PhysicsWorld",
+  "absolute_source_negative_detected": true,
+  "positive_exit": 0
+}

@@ -1,0 +1,25 @@
+{
+  "utc": "2026-10-18T15:37:13.162944+00:00",
+  "files": {
+    "src/PhysicsWorld.cpp": "2184f3791da249f32f833b86ef86984752d0fc0efcb8b86d88d5e78df24acb41",
+    "src/physics/WorldBodies.cpp": "37c1f0f86ba4d2f84f6560fb499ac8526dba8cb685039b87a1f7e9e5b32269a0",
+    "src/physics/WorldBounds.cpp": "3ce77534b0506be4949fafdc6a174afc1af835230d601d892375143c453f365a",
+    "src/physics/WorldCCDSearch.cpp": "92e1326ba3dc1ff6ce52c7d502ac830348b952822ad941d494541f5ff5eda33a",
+    "src/physics/WorldContacts.cpp": "68ddb0aff4f113b3e307053e6f599a2896d05acb67bfe1f5f9adfcee2f93e754",
+    "src/physics/WorldHotAccessors.h": "ed5e5070d4ebe0130603cf20b84cd19ccb545a7583c28a427cf27485a8056389",
+    "src/physics/WorldImpactEvents.cpp": "0ecea236f745316cefbf2fa28ae0482d10cf5e862c65acbed8c4ef36b00ab09a",
+    "src/physics/WorldImpactQueries.h": "5a5812b244462bb8b93294e7628140a2da58ae63519441cf6dbdf912972f85b1",
+    "src/physics/WorldInternal.h": "c998c631569eb73ac8d870604046b173f40e34cc5fc013c569bf78a36eb7e8d2",
+    "src/physics/WorldJoints.cpp": "c0a76934722f8ea0f711c5483ea2b4dc90ac52f887aaae2b3fdd54cf5acc3877",
+    "src/physics/WorldParticles.cpp": "803365f160e7f2cb098f5655e9fc415d69cee6e2b2dad9c212f76b6acaf7937f",
+    "src/physics/WorldPersistence.cpp": "a3c10212a72968bd9b6fbd955c8194294e2aeb4d1a712afaf2eb1d5aa0d2d1ff",
+    "src/physics/WorldProfiling.h": "55792d3f39aeba07297bcf73aef641fdee4268fd6afd4a180faa16f400bca5e0",
+    "src/physics/WorldQueries.cpp": "c4302ebd8dd32a07e3cbc928ca30b1717e8da970c400dd422c576d0ba8591ecc",
+    "src/physics/WorldSleep.cpp": "a0005d1cfe9ffba1e34fae48bab5782c2ebf3d1bbea20d506b2ac17d39d236ab",
+    "cmake/PhysicsWorldSources.cmake": "0ce9e7196ec112636793a2ed4be95f84527156727761b0400ee42e854dfbd47f",
+    "CMakeLists.txt": "1ef9ed8f94bb0462ea78826f0ec6e508425f4ed31960d2b8e38e8c14412d966b",
+    ".cache/prealpha-pass4/refactor/behavior/libjudas_engine.refactor.a": "b3e580f6260527c6003d9898065c6f84973a112f4593c4c6aa9f1185780b65c5",
+    ".cache/prealpha-pass4/baseline/bin/libjudas_engine.a": "cc3dbcff22e6ac3369ab99ca9e2a4e48976bed2920339eadcc30c479c9aedff7"
+  },
+  "note": "Refactor-only archive copied before formatting/functional patches. Same unchanged observer/test objects will be linked against old and new archives."
+}

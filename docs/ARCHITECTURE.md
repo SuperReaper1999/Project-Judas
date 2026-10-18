@@ -3,9 +3,10 @@
 ## Current architecture and Pre-Alpha stabilization
 
 The latest operator-accepted checkpoint is
-`f647d7fd95f60d3a37dba70a51f4e45dc41c2922` (Pre-Alpha Passes 1/2 and the
-rotated-liquid baking corrections). Later Pass 3 work is developed on Experimental;
-it is not human accepted, an Alpha release or an automatic promotion to main. Start with the
+`7da56c2cc6ce7acda827a6e4019d610622b237e2` (Pre-Alpha Pass 3, following
+Passes 1/2 and the rotated-liquid baking corrections). Pass 4 develops on
+Experimental; it is not human accepted, an Alpha release or an automatic
+promotion to main. Start with the
 [current ownership and integration matrix](PREALPHA.md),
 [build/distribution identity](BUILD_RELEASES.md) and [JudasJS index](JUDASJS.md).
 The milestone sections below retain architectural history; later explicit
@@ -32,6 +33,15 @@ caller context without exposing the VM implementation or adding public APIs.
 Editor runtime material/environment/visibility preview and undo history live in
 `editor/RenderPreview.cpp`, separately from authored-document panels. Stop still
 discards runtime changes rather than copying them back into the authored Scene.
+
+The physics world retains one private state owner and a public fixed-step
+coordinator in `PhysicsWorld.cpp`. Cohesive implementation modules under
+`src/physics/` separate impact search/events, sleeping, bounds, body lifecycle,
+queries, particle coupling, joints and save continuation. The
+[module map](../src/physics/WorldModules.md) describes ownership and ordering.
+Small shared hot-path accessors remain private headers; no new public API or
+parallel simulation authority is introduced. Direct headless fixtures and the
+engine use the same CMake world-source list.
 
 Build declarations use the existing `cmake/JudasTestTargets.cmake` helper for
 ordinary engine/application regressions. Cohesive modules under `cmake/targets/`
