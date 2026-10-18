@@ -1,0 +1,46 @@
+{
+  "schema": 1,
+  "guestEvidenceZipSHA256": "d217df44da346375d18909efa37604697be710620dadf98d532fe9d5e5c6a800",
+  "guestEvidenceZipFiles": 151,
+  "rawGuestCollectionManifest": "raw/COLLECTION_MANIFEST.json",
+  "excludedFromPublishedEvidence": [
+    "GuiWork/Results/tested-windows.ini",
+    "GuiWork/Results/tested-workspace.json",
+    "GuiWork/Results/OriginalEditorPreferences/windows.ini",
+    "GuiWork/Results/OriginalEditorPreferences/workspace.json"
+  ],
+  "exclusionReason": "Original/restored editor preference contents are unrelated user state. Their hashes/restoration receipt remain; exact bytes are preserved only in local/guest task caches.",
+  "vmInitialState": "suspended",
+  "vmFinalState": "suspended",
+  "persistentDomainXMLSHA256": "2e2384c9412d9e6ffef2cabcea79dc6751ad728d8026a1dfbdd88e151d4bfa0e",
+  "persistentConfigurationUnchanged": true,
+  "taskName": "JudasValidation-PreAlphaPass5-Gui",
+  "transientTaskRemoved": true,
+  "nativeEngineArchiveSHA256": "c685583363ee7b2cfd5506a9dc7e650cdd19a46f85023b665ba78d8a6ca8e662",
+  "initialSetupObservations": [
+    {
+      "kind": "transfer-path quoting",
+      "observed": "First upload was rejected by the helper before writing because shell quoting preserved $name literally in its destination. Forward-slash Windows paths corrected only the transport command."
+    },
+    {
+      "kind": "QGA progress timeout",
+      "observed": "One guest-exec-status request timed out after30 seconds while native compilation continued. Actual completed build receipt and logs later retrieved."
+    },
+    {
+      "kind": "live log read sharing",
+      "observed": "QGA could not open build.log while PowerShell Out-File owned its writer handle. Completed log retrieved afterward."
+    },
+    {
+      "kind": "missing original fixture",
+      "observed": "Engine-profile source archive deliberately excludes protected historical evidence. Initial ContactCacheTests read0 rows and failed2 setup assertions. Exact original fixture copied only into task-owned test cwd; complete rerun passed13,327 checks."
+    }
+  ],
+  "harnessResultScope": "Child exit/output records and final integrity are authoritative. The scheduled-task entry shell does not propagate a called script exit through its transcript cleanup: initial aggregate is false in FUNCTIONAL_RESULTS although the scheduled-task exit is0. This has not been used to claim a pass; narrow follow-up and final integrity classify the preserved prerequisite failure explicitly.",
+  "notValidated": [
+    "Physical Windows GPU",
+    "Physical Windows controller/audio",
+    "Windows performance acceptance",
+    "Complete fresh-checkout Windows SDK rebuild",
+    "Entire production suite"
+  ]
+}

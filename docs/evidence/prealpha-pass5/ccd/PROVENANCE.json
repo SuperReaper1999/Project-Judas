@@ -1,0 +1,23 @@
+{
+  "scope": "Pass5 finite-feature CCD research only; no production CCD policy changes",
+  "baseline": "4c141e9bb6c68a50c63dec263dcec398200328ad",
+  "utc": "2026-10-18T19:31:24.025617+00:00",
+  "original_fixtures": [
+    {
+      "source": "tests/ImpactMeshCostTests.cpp",
+      "sha256": "91b23a2a4ae45a3a96e01442c8bef583b31cd98a90e02196fb7c534ec5364a6a",
+      "size": 16156
+    },
+    {
+      "source": ".cache/prealpha-pass4/ccd/MinimalContinuationRepro.cpp",
+      "sha256": "806dfeca5b68dc0ef6f3ff0fce51d995915be885c5407ec45bf517c2640e8fe8",
+      "size": 2581
+    }
+  ],
+  "preserved_paths": 289,
+  "finalized_utc": "2026-10-18T19:34:44.034860+00:00",
+  "production_ccd_changes": false,
+  "final_research_variant": "union-v6",
+  "final_research_outcome": "rejected: original curved193 fails3; entry193 passes; reduced16/full104 three-step no-crossing passes; helper8checks3failures; no production-ready policy",
+  "stopping_policy": "no further representation variants or budget increases in this pass"
+}

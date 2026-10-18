@@ -1,0 +1,8 @@
+PASS child loads unchanged authored project: 
+PASS child loads unchanged authored scene: 
+PASS independent native world builds: 
+PASS ordinary script-owned session begins: 
+PASS fixture supplies authored gravity instead of assuming a universal default
+PASS independent-process client starts: 
+PASS actual child sent independent controls and received physical endpoints
+PASS implicit reconnect retains reserved identity after a real connection failure

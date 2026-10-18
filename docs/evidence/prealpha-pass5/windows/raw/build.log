@@ -1,0 +1,337 @@
+﻿MSBuild version 17.14.60+43b635718 for .NET Framework
+
+  Checking File Globs
+  1>Checking Build System
+  Building Custom Rule P:/JudasValidation/PreAlphaPass4/Source/CMakeLists.txt
+  Building Custom Rule P:/JudasValidation/PreAlphaPass4/Source/CMakeLists.txt
+  freetype.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\_deps\judas_freetype-build\Release\freetype.lib
+  harfbuzz.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\_deps\judas_harfbuzz-build\Release\harfbuzz.lib
+  Building Custom Rule P:/JudasValidation/PreAlphaPass4/Source/CMakeLists.txt
+  judas_app_icon.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_app_icon.lib
+  Building Custom Rule P:/JudasValidation/PreAlphaPass4/Source/CMakeLists.txt
+  judas_audio_backend.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_audio_backend.lib
+  Building Custom Rule P:/JudasValidation/PreAlphaPass4/Source/CMakeLists.txt
+  BuildIdentity.cpp
+  judas_build_identity.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_build_identity.lib
+  Building Custom Rule P:/JudasValidation/PreAlphaPass4/Source/CMakeLists.txt
+  judas_glad.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_glad.lib
+  Building Custom Rule P:/JudasValidation/PreAlphaPass4/Source/CMakeLists.txt
+  judas_jobs.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_jobs.lib
+  Building Custom Rule P:/JudasValidation/PreAlphaPass4/Source/CMakeLists.txt
+  judas_profiler.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_profiler.lib
+  Building Custom Rule P:/JudasValidation/PreAlphaPass4/Source/CMakeLists.txt
+  judas_materials.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_materials.lib
+  Building Custom Rule P:/JudasValidation/PreAlphaPass4/Source/CMakeLists.txt
+  judas_meshoptimizer.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_meshoptimizer.lib
+  Building Custom Rule P:/JudasValidation/PreAlphaPass4/Source/CMakeLists.txt
+  judas_navigation_backend.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_navigation_backend.lib
+  Building Custom Rule P:/JudasValidation/PreAlphaPass4/Source/CMakeLists.txt
+  judas_navigation_cook.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_navigation_cook.lib
+  Building Custom Rule P:/JudasValidation/PreAlphaPass4/Source/CMakeLists.txt
+  judas_quickjs.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_quickjs.lib
+  Building Custom Rule P:/JudasValidation/PreAlphaPass4/Source/CMakeLists.txt
+  WorldImpactEvents.cpp
+  judas_engine.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_engine.lib
+  Building Custom Rule P:/JudasValidation/PreAlphaPass4/Source/CMakeLists.txt
+  judas.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas.exe
+MSBuild version 17.14.60+43b635718 for .NET Framework
+
+  Checking File Globs
+  freetype.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\_deps\judas_freetype-build\Release\freetype.lib
+  harfbuzz.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\_deps\judas_harfbuzz-build\Release\harfbuzz.lib
+  judas_app_icon.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_app_icon.lib
+  judas_audio_backend.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_audio_backend.lib
+  judas_build_identity.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_build_identity.lib
+  judas_glad.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_glad.lib
+  judas_jobs.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_jobs.lib
+  judas_profiler.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_profiler.lib
+  judas_materials.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_materials.lib
+  judas_meshoptimizer.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_meshoptimizer.lib
+  judas_navigation_backend.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_navigation_backend.lib
+  judas_navigation_cook.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_navigation_cook.lib
+  judas_quickjs.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_quickjs.lib
+  judas_engine.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_engine.lib
+  Building Custom Rule P:/JudasValidation/PreAlphaPass4/Source/CMakeLists.txt
+  judas_imgui.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_imgui.lib
+  Building Custom Rule P:/JudasValidation/PreAlphaPass4/Source/CMakeLists.txt
+  judas_ufbx.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_ufbx.lib
+  Building Custom Rule P:/JudasValidation/PreAlphaPass4/Source/CMakeLists.txt
+  judas_model_import.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_model_import.lib
+  Building Custom Rule P:/JudasValidation/PreAlphaPass4/Source/CMakeLists.txt
+  judas_navigation_baker.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_navigation_baker.lib
+  Building Custom Rule P:/JudasValidation/PreAlphaPass4/Source/CMakeLists.txt
+  judas_world_authoring.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_world_authoring.lib
+  Building Custom Rule P:/JudasValidation/PreAlphaPass4/Source/CMakeLists.txt
+  judas_editor.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_editor.exe
+MSBuild version 17.14.60+43b635718 for .NET Framework
+
+  Checking File Globs
+  freetype.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\_deps\judas_freetype-build\Release\freetype.lib
+  harfbuzz.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\_deps\judas_harfbuzz-build\Release\harfbuzz.lib
+  judas_app_icon.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_app_icon.lib
+  judas_audio_backend.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_audio_backend.lib
+  judas_build_identity.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_build_identity.lib
+  judas_glad.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_glad.lib
+  judas_jobs.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_jobs.lib
+  judas_profiler.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_profiler.lib
+  judas_materials.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_materials.lib
+  judas_meshoptimizer.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_meshoptimizer.lib
+  judas_navigation_backend.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_navigation_backend.lib
+  judas_navigation_cook.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_navigation_cook.lib
+  judas_quickjs.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_quickjs.lib
+  judas_engine.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_engine.lib
+  Building Custom Rule P:/JudasValidation/PreAlphaPass4/Source/CMakeLists.txt
+  judas_export.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_export.exe
+MSBuild version 17.14.60+43b635718 for .NET Framework
+
+  Checking File Globs
+  freetype.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\_deps\judas_freetype-build\Release\freetype.lib
+  harfbuzz.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\_deps\judas_harfbuzz-build\Release\harfbuzz.lib
+  judas_app_icon.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_app_icon.lib
+  judas_audio_backend.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_audio_backend.lib
+  judas_build_identity.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_build_identity.lib
+  judas_glad.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_glad.lib
+  judas_jobs.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_jobs.lib
+  judas_profiler.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_profiler.lib
+  judas_materials.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_materials.lib
+  judas_meshoptimizer.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_meshoptimizer.lib
+  judas_navigation_backend.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_navigation_backend.lib
+  judas_navigation_cook.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_navigation_cook.lib
+  judas_quickjs.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_quickjs.lib
+  judas_engine.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_engine.lib
+  Building Custom Rule P:/JudasValidation/PreAlphaPass4/Source/CMakeLists.txt
+  ImpactCandidateCacheTests.cpp
+  judas_impact_candidate_cache_tests.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_impact_candidate_cache_tests.exe
+MSBuild version 17.14.60+43b635718 for .NET Framework
+
+  Checking File Globs
+  freetype.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\_deps\judas_freetype-build\Release\freetype.lib
+  harfbuzz.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\_deps\judas_harfbuzz-build\Release\harfbuzz.lib
+  judas_app_icon.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_app_icon.lib
+  judas_audio_backend.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_audio_backend.lib
+  judas_build_identity.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_build_identity.lib
+  judas_glad.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_glad.lib
+  judas_jobs.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_jobs.lib
+  judas_profiler.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_profiler.lib
+  judas_materials.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_materials.lib
+  judas_meshoptimizer.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_meshoptimizer.lib
+  judas_navigation_backend.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_navigation_backend.lib
+  judas_navigation_cook.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_navigation_cook.lib
+  judas_quickjs.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_quickjs.lib
+  judas_engine.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_engine.lib
+  Building Custom Rule P:/JudasValidation/PreAlphaPass4/Source/CMakeLists.txt
+  ImpactTimingTests.cpp
+  judas_impact_timing_tests.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_impact_timing_tests.exe
+MSBuild version 17.14.60+43b635718 for .NET Framework
+
+  Checking File Globs
+  freetype.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\_deps\judas_freetype-build\Release\freetype.lib
+  harfbuzz.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\_deps\judas_harfbuzz-build\Release\harfbuzz.lib
+  judas_app_icon.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_app_icon.lib
+  judas_audio_backend.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_audio_backend.lib
+  judas_build_identity.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_build_identity.lib
+  judas_glad.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_glad.lib
+  judas_jobs.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_jobs.lib
+  judas_profiler.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_profiler.lib
+  judas_materials.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_materials.lib
+  judas_meshoptimizer.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_meshoptimizer.lib
+  judas_navigation_backend.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_navigation_backend.lib
+  judas_navigation_cook.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_navigation_cook.lib
+  judas_quickjs.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_quickjs.lib
+  judas_engine.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_engine.lib
+  Building Custom Rule P:/JudasValidation/PreAlphaPass4/Source/CMakeLists.txt
+  ContactCacheTests.cpp
+  judas_contact_cache_tests.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_contact_cache_tests.exe
+MSBuild version 17.14.60+43b635718 for .NET Framework
+
+  Checking File Globs
+  freetype.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\_deps\judas_freetype-build\Release\freetype.lib
+  harfbuzz.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\_deps\judas_harfbuzz-build\Release\harfbuzz.lib
+  judas_app_icon.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_app_icon.lib
+  judas_audio_backend.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_audio_backend.lib
+  judas_build_identity.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_build_identity.lib
+  judas_glad.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_glad.lib
+  judas_jobs.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_jobs.lib
+  judas_profiler.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_profiler.lib
+  judas_materials.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_materials.lib
+  judas_meshoptimizer.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_meshoptimizer.lib
+  judas_navigation_backend.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_navigation_backend.lib
+  judas_navigation_cook.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_navigation_cook.lib
+  judas_quickjs.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_quickjs.lib
+  judas_engine.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_engine.lib
+  Building Custom Rule P:/JudasValidation/PreAlphaPass4/Source/CMakeLists.txt
+  PhysicsContinuationTests.cpp
+  judas_physics_continuation_tests.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_physics_continuation_tests.exe
+MSBuild version 17.14.60+43b635718 for .NET Framework
+
+  Checking File Globs
+  freetype.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\_deps\judas_freetype-build\Release\freetype.lib
+  harfbuzz.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\_deps\judas_harfbuzz-build\Release\harfbuzz.lib
+  judas_app_icon.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_app_icon.lib
+  judas_audio_backend.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_audio_backend.lib
+  judas_build_identity.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_build_identity.lib
+  judas_glad.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_glad.lib
+  judas_jobs.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_jobs.lib
+  judas_profiler.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_profiler.lib
+  judas_materials.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_materials.lib
+  judas_meshoptimizer.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_meshoptimizer.lib
+  judas_navigation_backend.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_navigation_backend.lib
+  judas_navigation_cook.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_navigation_cook.lib
+  judas_quickjs.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_quickjs.lib
+  judas_engine.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_engine.lib
+  Building Custom Rule P:/JudasValidation/PreAlphaPass4/Source/CMakeLists.txt
+  ContactLifecycleTests.cpp
+  judas_contact_lifecycle_tests.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_contact_lifecycle_tests.exe
+MSBuild version 17.14.60+43b635718 for .NET Framework
+
+  Checking File Globs
+  freetype.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\_deps\judas_freetype-build\Release\freetype.lib
+  harfbuzz.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\_deps\judas_harfbuzz-build\Release\harfbuzz.lib
+  judas_app_icon.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_app_icon.lib
+  judas_audio_backend.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_audio_backend.lib
+  judas_build_identity.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_build_identity.lib
+  judas_glad.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_glad.lib
+  judas_jobs.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_jobs.lib
+  judas_profiler.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_profiler.lib
+  judas_materials.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_materials.lib
+  judas_meshoptimizer.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_meshoptimizer.lib
+  judas_navigation_backend.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_navigation_backend.lib
+  judas_navigation_cook.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_navigation_cook.lib
+  judas_quickjs.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_quickjs.lib
+  judas_engine.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_engine.lib
+  Building Custom Rule P:/JudasValidation/PreAlphaPass4/Source/CMakeLists.txt
+  judas_character_motor_tests.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_character_motor_tests.exe
+MSBuild version 17.14.60+43b635718 for .NET Framework
+
+  Checking File Globs
+  freetype.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\_deps\judas_freetype-build\Release\freetype.lib
+  harfbuzz.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\_deps\judas_harfbuzz-build\Release\harfbuzz.lib
+  judas_app_icon.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_app_icon.lib
+  judas_audio_backend.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_audio_backend.lib
+  judas_build_identity.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_build_identity.lib
+  judas_glad.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_glad.lib
+  judas_jobs.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_jobs.lib
+  judas_profiler.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_profiler.lib
+  judas_materials.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_materials.lib
+  judas_meshoptimizer.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_meshoptimizer.lib
+  judas_navigation_backend.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_navigation_backend.lib
+  judas_navigation_cook.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_navigation_cook.lib
+  judas_quickjs.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_quickjs.lib
+  judas_engine.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_engine.lib
+  Building Custom Rule P:/JudasValidation/PreAlphaPass4/Source/CMakeLists.txt
+  RigidMotionTests.cpp
+  judas_rigid_motion_tests.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_rigid_motion_tests.exe
+MSBuild version 17.14.60+43b635718 for .NET Framework
+
+  Checking File Globs
+  freetype.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\_deps\judas_freetype-build\Release\freetype.lib
+  harfbuzz.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\_deps\judas_harfbuzz-build\Release\harfbuzz.lib
+  judas_app_icon.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_app_icon.lib
+  judas_audio_backend.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_audio_backend.lib
+  judas_build_identity.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_build_identity.lib
+  judas_glad.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_glad.lib
+  judas_jobs.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_jobs.lib
+  judas_profiler.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_profiler.lib
+  judas_materials.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_materials.lib
+  judas_meshoptimizer.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_meshoptimizer.lib
+  judas_navigation_backend.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_navigation_backend.lib
+  judas_navigation_cook.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_navigation_cook.lib
+  judas_quickjs.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_quickjs.lib
+  judas_engine.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_engine.lib
+  Building Custom Rule P:/JudasValidation/PreAlphaPass4/Source/CMakeLists.txt
+  judas_impact_robustness_tests.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_impact_robustness_tests.exe
+MSBuild version 17.14.60+43b635718 for .NET Framework
+
+  Checking File Globs
+  freetype.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\_deps\judas_freetype-build\Release\freetype.lib
+  harfbuzz.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\_deps\judas_harfbuzz-build\Release\harfbuzz.lib
+  judas_app_icon.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_app_icon.lib
+  judas_audio_backend.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_audio_backend.lib
+  judas_build_identity.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_build_identity.lib
+  judas_glad.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_glad.lib
+  judas_jobs.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_jobs.lib
+  judas_profiler.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_profiler.lib
+  judas_materials.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_materials.lib
+  judas_meshoptimizer.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_meshoptimizer.lib
+  judas_navigation_backend.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_navigation_backend.lib
+  judas_navigation_cook.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_navigation_cook.lib
+  judas_quickjs.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_quickjs.lib
+  judas_engine.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_engine.lib
+  Building Custom Rule P:/JudasValidation/PreAlphaPass4/Source/CMakeLists.txt
+  judas_world_persistence_tests.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_world_persistence_tests.exe
+MSBuild version 17.14.60+43b635718 for .NET Framework
+
+  Checking File Globs
+  freetype.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\_deps\judas_freetype-build\Release\freetype.lib
+  harfbuzz.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\_deps\judas_harfbuzz-build\Release\harfbuzz.lib
+  judas_app_icon.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_app_icon.lib
+  judas_audio_backend.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_audio_backend.lib
+  judas_build_identity.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_build_identity.lib
+  judas_glad.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_glad.lib
+  judas_jobs.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_jobs.lib
+  judas_profiler.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_profiler.lib
+  judas_materials.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_materials.lib
+  judas_meshoptimizer.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_meshoptimizer.lib
+  judas_navigation_backend.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_navigation_backend.lib
+  judas_navigation_cook.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_navigation_cook.lib
+  judas_quickjs.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_quickjs.lib
+  judas_engine.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_engine.lib
+  Building Custom Rule P:/JudasValidation/PreAlphaPass4/Source/CMakeLists.txt
+  judas_origin_admission_tests.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_origin_admission_tests.exe
+MSBuild version 17.14.60+43b635718 for .NET Framework
+
+  Checking File Globs
+  freetype.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\_deps\judas_freetype-build\Release\freetype.lib
+  harfbuzz.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\_deps\judas_harfbuzz-build\Release\harfbuzz.lib
+  judas_app_icon.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_app_icon.lib
+  judas_audio_backend.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_audio_backend.lib
+  judas_build_identity.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_build_identity.lib
+  judas_glad.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_glad.lib
+  judas_jobs.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_jobs.lib
+  judas_profiler.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_profiler.lib
+  judas_materials.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_materials.lib
+  judas_meshoptimizer.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_meshoptimizer.lib
+  judas_navigation_backend.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_navigation_backend.lib
+  judas_navigation_cook.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_navigation_cook.lib
+  judas_quickjs.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_quickjs.lib
+  judas_engine.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_engine.lib
+  Building Custom Rule P:/JudasValidation/PreAlphaPass4/Source/CMakeLists.txt
+  judas_impact_mesh_cost_tests.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_impact_mesh_cost_tests.exe
+MSBuild version 17.14.60+43b635718 for .NET Framework
+
+  Checking File Globs
+  freetype.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\_deps\judas_freetype-build\Release\freetype.lib
+  harfbuzz.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\_deps\judas_harfbuzz-build\Release\harfbuzz.lib
+  judas_app_icon.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_app_icon.lib
+  judas_audio_backend.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_audio_backend.lib
+  judas_build_identity.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_build_identity.lib
+  judas_glad.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_glad.lib
+  judas_jobs.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_jobs.lib
+  judas_profiler.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_profiler.lib
+  judas_materials.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_materials.lib
+  judas_meshoptimizer.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_meshoptimizer.lib
+  judas_navigation_backend.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_navigation_backend.lib
+  judas_navigation_cook.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_navigation_cook.lib
+  judas_quickjs.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_quickjs.lib
+  judas_engine.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_engine.lib
+  Building Custom Rule P:/JudasValidation/PreAlphaPass4/Source/CMakeLists.txt
+  judas_character_lab_tests.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_character_lab_tests.exe
+MSBuild version 17.14.60+43b635718 for .NET Framework
+
+  Checking File Globs
+  freetype.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\_deps\judas_freetype-build\Release\freetype.lib
+  harfbuzz.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\_deps\judas_harfbuzz-build\Release\harfbuzz.lib
+  judas_app_icon.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_app_icon.lib
+  judas_audio_backend.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_audio_backend.lib
+  judas_build_identity.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_build_identity.lib
+  judas_glad.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_glad.lib
+  judas_jobs.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_jobs.lib
+  judas_profiler.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_profiler.lib
+  judas_materials.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_materials.lib
+  judas_meshoptimizer.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_meshoptimizer.lib
+  judas_navigation_backend.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_navigation_backend.lib
+  judas_navigation_cook.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_navigation_cook.lib
+  judas_quickjs.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_quickjs.lib
+  judas_engine.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_engine.lib
+  Building Custom Rule P:/JudasValidation/PreAlphaPass4/Source/CMakeLists.txt
+  judas_balance_lab_tests.vcxproj -> P:\JudasValidation\PreAlphaPass4\Build\Release\judas_balance_lab_tests.exe

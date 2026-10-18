@@ -1,0 +1,17 @@
+﻿{
+    "schema":  1,
+    "utc":  "2026-10-18T18:21:45.9338951Z",
+    "label":  "contact-cache-original-fixture-followup",
+    "executable":  "P:\\JudasValidation\\PreAlphaPass5\\GuiWork\\NativeTests\\judas_contact_cache_tests.exe",
+    "cwd":  "P:\\JudasValidation\\PreAlphaPass5\\GuiWork\\Projects",
+    "exit":  0,
+    "seconds":  0.21875029999999998,
+    "stdout":  "A0: prepared and uncached contacts over unchanged independent fixture inputs\r\nCONTACT_CACHE fixture_rows=823 primitive_pairs=887\r\nA: prepared bounds retain uncached expression-order bits\r\nB: static door ResetBody, tiny/real rotation, slot reuse and vector reallocation\r\nC: integration and position correction invalidate only derived data\r\nD: multiple manifolds share prepared body data and solver frames\r\nCACHE shared bodies=9 contacts=32 orientation_hits=24 orientation_rebuilds=8 bound_hits=48 bound_rebuilds=8 shape_rebuilds=0 solver_frames=18 bytes=11413 allocations=8\r\nE: player queries retain independently useful previous/current geometry\r\n{\"checks\":13327,\"failures\":0,\"bitwise_bound_comparisons\":2894,\"world_cache_inspections\":546,\"player_sweeps\":8}\r\n",
+    "stderr":  "",
+    "passed":  true,
+    "fixtureSHA256":  "dcbcb9bf038f11662a2e6c388cc21cc4bdcbfe6807c54a282bb6dea87d7b57ce",
+    "setupCorrection":  "Only exact original FTFT fixture supplied at original relative location in task-owned cwd; no source, test, threshold or protected research edit",
+    "originalSetupFailurePreserved":  true,
+    "desktopIdentity":  "DESKTOP-935HKD1\\Conner",
+    "sessionId":  1
+}

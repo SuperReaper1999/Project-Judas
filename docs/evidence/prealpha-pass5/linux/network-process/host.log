@@ -1,0 +1,8 @@
+PASS fixture scene writes: 
+PASS fixture project loads: 
+PASS independent native world builds: 
+PASS ordinary script-owned session begins: 
+PASS fixture supplies authored gravity instead of assuming a universal default
+PASS independent-process host starts: 
+FAIL independent clients exercised actual host gameplay and physics
+FAIL independent clients exercised actual host gameplay and physics after 7 checks

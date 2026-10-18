@@ -1,0 +1,24 @@
+{
+  "status": "failed",
+  "commands": [
+    {
+      "name": "host",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_network_session_tests",
+        "--process-host",
+        "/home/conner/Documents/GitHub/Project-Judas/docs/evidence/prealpha-pass5/linux/network-process/host",
+        "9"
+      ]
+    }
+  ],
+  "assertions": [],
+  "error": "child exited before readiness: /home/conner/Documents/GitHub/Project-Judas/docs/evidence/prealpha-pass5/linux/network-process/host/ready.json",
+  "processes": [
+    {
+      "name": "host",
+      "pid": 832,
+      "exit": 1
+    }
+  ],
+  "wallSeconds": 9.02700005999941
+}

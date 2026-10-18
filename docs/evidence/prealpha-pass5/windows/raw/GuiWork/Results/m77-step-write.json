@@ -1,0 +1,18 @@
+﻿{
+    "label":  "m77-step-write",
+    "executable":  "P:\\JudasValidation\\PreAlphaPass5\\GuiWork\\NativeTests\\judas_balance_lab_tests.exe",
+    "arguments":  [
+                      "P:\\JudasValidation\\PreAlphaPass5\\GuiWork\\ColdCases\\m77-step",
+                      "cold-write"
+                  ],
+    "cwd":  "P:\\JudasValidation\\PreAlphaPass5\\GuiWork\\Projects",
+    "exit":  0,
+    "expected":  0,
+    "passed":  true,
+    "requiredOutput":  "",
+    "seconds":  3.1545368,
+    "stdout":  "PASS actual GL host: \r\nPASS normal project loads: \r\nPASS logical project controls: \r\nPASS normal authored/captured scene: \r\nPASS normal immutable assets and world publish: \r\nPASS ordinary game starts: \r\nPASS authored configuration does not activate physical authority\r\nPASS shared immutable asset and distinct second rig use ordinary resource sharing\r\nACTOR 12 status=2 root=3.00028,1.41786,0.0041007 height=1.41834 up=0.999928 speed=9.74303e-05 supports=4/4 landings=0 reason=measured supported physical standing\r\nPASS real JS request makes full dynamic authority with explicit motor handoff\r\nPASS normal resource/JS path reaches actual standing\r\nPASS capture contains an owned native task\r\nPASS capture while corrective step is actually in progress\r\nPASS atomic save retains physical and native task state: \r\nPASS active task declares its required save participant\r\nPASS detached restore candidate is ready\r\nPASS missing/newer/truncated native task participant is rejected\r\nPASS detached restore candidate is ready\r\nPASS missing/newer/truncated native task participant is rejected\r\nPASS detached restore candidate is ready\r\nPASS missing/newer/truncated native task participant is rejected\r\nPASS failed detached restores leave live physical state untouched\r\nPASS ordinary lab callback health matches deliberate fault policy\r\nPASS real final pose/skinning and diagnostic rendering path executes\r\nPASS Stop destroys the owned runtime world\r\nSUMMARY 24 checks 0 failures\r\n",
+    "stderr":  "Shadow maps: on\r\nGraphics: 4.6 (Core Profile) Mesa 26.2.4 (git-9a0169f2a7) / llvmpipe (LLVM 23.1.2, 256 bits)\r\nRenderer fragment texture units: 32 (material path uses 12)\r\n",
+    "desktopIdentity":  "DESKTOP-935HKD1\\Conner",
+    "sessionId":  1
+}

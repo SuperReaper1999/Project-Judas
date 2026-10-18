@@ -1,0 +1,17 @@
+﻿{
+    "label":  "judas_world_persistence_tests",
+    "executable":  "P:\\JudasValidation\\PreAlphaPass5\\GuiWork\\NativeTests\\judas_world_persistence_tests.exe",
+    "arguments":  [
+
+                  ],
+    "cwd":  "P:\\JudasValidation\\PreAlphaPass5\\GuiWork\\Projects",
+    "exit":  0,
+    "expected":  0,
+    "passed":  true,
+    "requiredOutput":  "",
+    "seconds":  0.54687469999999994,
+    "stdout":  "PASS baseline world construction\r\nPASS capture stable body/motor/runtime hierarchy state\r\nPASS decode scene participant\r\nPASS normal private construction from resolved snapshot\r\nPASS participant restore/fixup\r\nPASS rigid momentum exact\r\nPASS motor velocity/support reference restored\r\nPASS runtime ID and allocation counter durable\r\nPASS hierarchy stable identity retained\r\nPASS no duplicate runtime bodies\r\nPASS explicit navigation handoff resumes without new scripted action\r\nPASS support-following observation retained independently of gravity\r\nPASS pending authoritative forces survive first resumed step\r\nPASS old world native body handle cannot alias restored body\r\nPASS truncated participant rejects private world without changing live world\r\nPASS missing required participant rejects\r\nPASS newer participant rejects before publication\r\nPASS explicit simple transient accepted but required motor cannot be excluded\r\nPASS destroy authored hierarchy through normal lifecycle\r\nPASS destroyed hierarchy capture\r\nPASS destroyed authored entity does not resurrect\r\nPASS authoritative contact history restored\r\nPASS first resumed touching pair reports stay, never replays enter\r\nPASS boot save materializes lazy required participants without a fixed step\r\nPASS boot motor/navigation state reconstructs without motion or missing records\r\nPASS moving and rotating support resumes without doubled carrier motion or false landing\r\nPASS resting body and spring hinge remain stable over first three resumed steps\r\nSUMMARY 27 checks 0 failures\r\n",
+    "stderr":  "",
+    "desktopIdentity":  "DESKTOP-935HKD1\\Conner",
+    "sessionId":  1
+}

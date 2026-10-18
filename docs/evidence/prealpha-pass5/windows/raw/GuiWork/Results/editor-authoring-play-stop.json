@@ -1,0 +1,17 @@
+﻿{
+    "label":  "editor-authoring-play-stop",
+    "executable":  "P:\\JudasValidation\\PreAlphaPass5\\GuiWork\\QualifiedApps\\judas_editor.exe",
+    "arguments":  [
+                      "P:\\JudasValidation\\PreAlphaPass5\\GuiWork\\Projects\\projects\\physics_stress_lab\\physics_stress_lab.judasproj"
+                  ],
+    "cwd":  "P:\\JudasValidation\\PreAlphaPass5\\GuiWork\\UnrelatedCwd",
+    "exit":  0,
+    "expected":  0,
+    "passed":  true,
+    "requiredOutput":  "authored scene after play/stop is IDENTICAL",
+    "seconds":  16.2856453,
+    "stdout":  "",
+    "stderr":  "Shadow maps: on\r\nGraphics: 4.6 (Core Profile) Mesa 26.2.4 (git-9a0169f2a7) / llvmpipe (LLVM 23.1.2, 256 bits)\r\nRenderer fragment texture units: 32 (material path uses 12)\r\n[editor autotest] shared authoring batch + undo PASS: \r\n[editor autotest] duplicate created id 20000: scene CHANGED; undo restores: IDENTICAL\r\n[editor autotest] wrote: P:\\JudasValidation\\PreAlphaPass5\\GuiWork\\Results\\editor.edit.png\r\n[editor autotest] edit frame: 4 draw calls, 48072 triangles, 10601 debug lines\r\n[editor autotest] wrote: P:\\JudasValidation\\PreAlphaPass5\\GuiWork\\Results\\editor.play.png\r\n[editor autotest] play frame: 5 steps, step 0.979 ms, 389 bodies, 0 contacts, 4 draw calls, 61788 triangles, 1 shadow passes, 0 lights, 12624 debug lines, 0 particles\r\n[editor autotest] resources: 0 meshes, 0 textures, 0 terrain meshes, hits 356, misses 1, failed 0, uploads 0, resident 759720 bytes\r\n[editor autotest] jobs: 3 workers, 165 completed, 0 failed, 0 cancelled\r\n[editor autotest] authored scene after play/stop is IDENTICAL\r\n[editor autotest] save ok\r\n",
+    "desktopIdentity":  "DESKTOP-935HKD1\\Conner",
+    "sessionId":  1
+}

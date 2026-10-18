@@ -1,0 +1,131 @@
+{
+  "format": 1,
+  "startedUtc": "2026-10-18T19:53:08.457640+00:00",
+  "sourceRevision": "050016a179313c90584ce00f141cc5ca4c521808",
+  "trackedWorktreeStatus": "",
+  "manifestSha256": "7ac89ff43c1fc4ce2c8faf00b99fae96cc276cf377d14c3ae0237f565f75d7f8",
+  "trackedDiffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "platform": "Linux-6.17.0-1022-azure-x86_64-with-glibc2.39",
+  "machine": "x86_64",
+  "cpuCount": 4,
+  "groups": [],
+  "tests": [
+    {
+      "argv": [
+        "/home/runner/work/Project-Judas/Project-Judas/build/judas_first_project_tests",
+        "/home/runner/work/Project-Judas/Project-Judas/.cache/prealpha/validation/20261018T195308Z-3ceb279c/first-project"
+      ],
+      "cwd": "/home/runner/work/Project-Judas/Project-Judas",
+      "timeoutSeconds": 120,
+      "binarySha256": "ac78870d091c49acd236bd802364a23a106ef8a511088decb8e844d1c14e09b3",
+      "exit": 0,
+      "status": "passed",
+      "binarySha256After": "ac78870d091c49acd236bd802364a23a106ef8a511088decb8e844d1c14e09b3",
+      "seconds": 0.4409835669999893,
+      "buildIdentity": {
+        "architecture": "x86_64",
+        "build_id": "0.1.0-prealpha-Experimental-050016a-clean-bf269556e921",
+        "channel": "Experimental",
+        "compiler": "GNU",
+        "compiler_version": "13.3.0",
+        "configuration": "Release",
+        "maturity": "pre-alpha",
+        "platform": "Linux",
+        "schema": 1,
+        "source_dirty": false,
+        "source_fingerprint": "bf269556e9215a4f5a480ee6f627de39355ecf8ac77fd55e5142d5018ee7c49a",
+        "source_origin": "git",
+        "source_revision": "050016a179313c90584ce00f141cc5ca4c521808",
+        "source_tree": "34730cc0b764d16d655508546b98bdfe537c6790",
+        "source_untracked_count": 0,
+        "source_untracked_fingerprint": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "version": "0.1.0-prealpha"
+      },
+      "name": "first-project"
+    }
+  ],
+  "knownFindings": [
+    {
+      "id": "CCD-MESH-ARRIVAL",
+      "status": "resolved-first-arrival",
+      "scheduled": true,
+      "reason": "Pass2 finite swept-SAT bounds correct the validated first-arrival contract; it now runs in the ordinary collision group. This does not close later curved-sheet continuation.",
+      "evidence": "docs/evidence/prealpha-pass2/physics"
+    },
+    {
+      "id": "CCD-MESH-CONTINUATION",
+      "status": "open-correctness-failing",
+      "scheduled": false,
+      "reason": "Original 90-step glancing contact contract remains failed. Run --group known-failures; failure is not counted as a pass.",
+      "evidence": "docs/evidence/prealpha/physics"
+    },
+    {
+      "id": "FLU-001",
+      "status": "deferred-failing",
+      "scheduled": false,
+      "reason": "Legacy PBF settling contract retained unchanged; separate fluid review required.",
+      "evidence": "docs/evidence/m78-completion/FINDINGS_FINAL.json"
+    },
+    {
+      "id": "LEGACY-CONTINUATION",
+      "status": "documented-incompatible-history",
+      "scheduled": false,
+      "reason": "Original a106 snapshot lacks historical continuation data. New-format passes do not certify that snapshot.",
+      "evidence": "docs/evidence/m78-cold-boundary"
+    },
+    {
+      "id": "DENSE-CCD-TAIL",
+      "status": "open-performance-limit",
+      "scheduled": false,
+      "reason": "Focused correctness checks do not certify dense-pile latency; matched profiling is reported separately.",
+      "evidence": "docs/evidence/m91/REPORT.md"
+    },
+    {
+      "id": "LIQUID-BAKE-ROTATION",
+      "status": "resolved-baking",
+      "scheduled": true,
+      "reason": "Baker and runtime use the same normalized owner/field frames and oriented gravity volumes; both original bake-only runtime-publication cases pass unchanged equivalence tolerances. Original full integration exposes separate retained exact-total comparison failure.",
+      "evidence": "docs/evidence/prealpha-liquid-rotation/REPORT.md"
+    },
+    {
+      "id": "LIQUID-BAKE-KNOTS",
+      "status": "resolved-baking",
+      "scheduled": true,
+      "reason": "Positive tetrahedral density is integrated into one monotone cumulative curve, including shared endpoints; unchanged strict Surface1 decoder accepts both original rotated bakes. A later origin sampling limitation remains separately failed.",
+      "evidence": "docs/evidence/prealpha-liquid-rotation/REPORT.md"
+    },
+    {
+      "id": "LIQUID-ORIGIN-GRID-QUERY",
+      "status": "open-query-continuity-failing",
+      "scheduled": false,
+      "reason": "The original half-turn fixture now bakes and publishes, then fails its unchanged post-512m-origin query comparison: float translation crosses a discontinuous disturbed-surface cell boundary. Conserved quantities and wave bytes remain unchanged. This full integration failure is preserved, not counted as a baking pass.",
+      "evidence": "docs/evidence/prealpha-liquid-rotation/REPORT.md"
+    },
+    {
+      "id": "LIQUID-ORIGIN-TOTAL-IDENTITY",
+      "status": "resolved-oracle-causal-baseline",
+      "scheduled": true,
+      "reason": "Pass3 preserves the original failed test and demonstrates its causal-baseline error. Current atomicity compares the immediate pre-request total with the same exact equality and every physical participant byte; earlier legitimate paired-flow conservation tolerance and liquid runtime are unchanged.",
+      "evidence": "docs/evidence/prealpha-pass3/integration/REPORT.md"
+    }
+  ],
+  "humanAcceptance": "not-established",
+  "scope": "explicit manifest subset",
+  "expectedSourceIdentity": {
+    "source_revision": "050016a179313c90584ce00f141cc5ca4c521808",
+    "source_fingerprint": "bf269556e9215a4f5a480ee6f627de39355ecf8ac77fd55e5142d5018ee7c49a",
+    "source_dirty": false,
+    "source_untracked_fingerprint": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "passed": true,
+  "finishedUtc": "2026-10-18T19:53:09.161309+00:00",
+  "sourceRevisionAfter": "050016a179313c90584ce00f141cc5ca4c521808",
+  "trackedWorktreeStatusAfter": "",
+  "trackedDiffSha256After": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "expectedSourceIdentityAfter": {
+    "source_revision": "050016a179313c90584ce00f141cc5ca4c521808",
+    "source_fingerprint": "bf269556e9215a4f5a480ee6f627de39355ecf8ac77fd55e5142d5018ee7c49a",
+    "source_dirty": false,
+    "source_untracked_fingerprint": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  }
+}

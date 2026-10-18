@@ -1,0 +1,27 @@
+﻿{
+    "utc":  "2026-10-18T18:18:34.4628054Z",
+    "start":  "2026-10-18T18:16:16.2909634Z",
+    "configureExit":  0,
+    "buildExit":  0,
+    "targets":  [
+                    "judas",
+                    "judas_editor",
+                    "judas_export",
+                    "judas_impact_candidate_cache_tests",
+                    "judas_impact_timing_tests",
+                    "judas_contact_cache_tests",
+                    "judas_physics_continuation_tests",
+                    "judas_contact_lifecycle_tests",
+                    "judas_character_motor_tests",
+                    "judas_rigid_motion_tests",
+                    "judas_impact_robustness_tests",
+                    "judas_world_persistence_tests",
+                    "judas_origin_admission_tests",
+                    "judas_impact_mesh_cost_tests",
+                    "judas_character_lab_tests",
+                    "judas_balance_lab_tests"
+                ],
+    "systemFreeBytes":  1275650048,
+    "workFreeBytes":  47899049984,
+    "timingInformationalOnly":  true
+}

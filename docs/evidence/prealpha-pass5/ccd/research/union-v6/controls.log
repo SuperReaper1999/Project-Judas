@@ -1,0 +1,12 @@
+WELDED result=2 intervals=53 certificates=0
+CONTROL target ancestry crosses actual welded finite edge passed=0
+CONTROL old finite face retires without losing actual adjacent endpoint passed=0
+CONTROL behind-centre high-spin endpoints both genuinely overlap passed=1
+HIGHSPIN result=2 intervals=1025
+CONTROL intermediate actual finite gap expires target ancestry passed=0
+CONTROL no behind-centre ownership is invented after re-entry passed=1
+CONTROL actual finite topology keeps disconnected endpoint patch isolated passed=1
+CONTROL unrelated persistent patch cannot supply target ancestry passed=1
+DISCONNECTED old_forward=2 old_intervals=1025 target=2 target_intervals=1025
+CONTROL whole-pair persistence cannot hide transient target separation passed=1
+checks=8 failures=3

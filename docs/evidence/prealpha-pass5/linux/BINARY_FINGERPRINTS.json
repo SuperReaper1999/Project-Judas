@@ -1,0 +1,30 @@
+{
+  "archiveSha256": "0e0dc7973b7d2b24510743d5297e9ae002cdb7b4dbdc943d55a4bdc4aab78514",
+  "binaries": {
+    "judas_character_lab_tests": "40fad686200499e71b71f69bd7e34e7490cb2d8778d232a0078358f477158e11",
+    "judas_balance_lab_tests": "e0160c6ca7d0b7de37de1ff49215d440296cdcb3e0cc0bdc60fd75b6d96e4c77",
+    "judas_origin_physics_tests": "6b6c890ffa99e034136e4b44366bf0071f25cfe60f7f622dbbf97e9ada750705",
+    "judas_origin_assembly_tests": "89a2087713d0cb9cd108209e18854ce76c9006b7ec089213f6680a741fc99739",
+    "judas_origin_stream_tests": "a90926f326155b9a059f386a0369bf1b5590d107941a6b716a5dc7cafcc64cfe",
+    "judas_prealpha_lifecycle_tests": "cba6a8db2680bacafa429c57eb240b850164c68e87fab6931a56d57c85886cf9",
+    "judas_world_persistence_tests": "d9a0eb13bec3e46ec2b9f16166749651d17574b421055d79cd35da334247a379",
+    "judas_particle_application_tests": "3c73d2f4e3f2c6c89a2ba210a39bde885f1787d2695c427d9fdacc2b68975bba",
+    "judas": "0d3a34838267678b857ebec5ea869ec9012c765a7e9e74c7f533b2d7b1103ccb",
+    "judas_editor": "1ed5b0346e35cfc54bded2c1b220929837c52ccd511ae02f340cbf4dbcad6d39",
+    "judas_export": "7f1fe0da1cccc3ccb7b799e4045da7b779083d756d706f47b9606ade05d3d1f2",
+    "judas_scene_author": "67d8c09beb4454cbca9622760075512ffc4ab68b7374371db1dca5dbd104100c",
+    "judas_navigation_bake": "4099e45e3fc34cb4c885c50037b36b47bd778236e354b69cf6e3084d7ae66f52",
+    "judas_liquid_bake": "4e63b5712a1714dc3456b0bcd080166d67a77986a32b8b4af2829d33fd92dc6f",
+    "judas_environment_bake": "956b4052343aa68d5219ea46f4685fd78d06797a37bac15cdc170ab6a9b46467",
+    "judas_deformable_bake": "ac3052bffe6f952b02d0a506dc7f836a2ef407ff01ef0cc0d40819e6d8461f51",
+    "judas_collision_cook": "79fa8f6121409e6d2ba7faa6036b8ad42636f3f950409abe0a835eb641323a9c",
+    "judas_model_import_cli": "bf6ae1d6ee39a8b95559ac079825c0872e04d35a0d1041c2eae3c38a7698c628",
+    "judas_terrain_author": "b0ffd67699f79edde7eed488b96b29b1daa27af2ef1f9b9735dd34c5ca08c7ad",
+    "judas_volume_author": "372a71e188bb88439f115177345bdd05f426ffc038568ddec9a85ecb09f143d0",
+    "judas_mod": "6eac82e5b7b42fed2d38ff0df73689ea093c3ae7d31e38e35268a219a93831f3",
+    "judas_cook": "ea22292cffeee7328509831e1b3ad60e6fa980c29f821ffb364d95ea74632074",
+    "judas_script_check": "2920cd727eaeeb0f2b2d869cc8165756d16be78cb9c7b2a8920b977c12577bdb",
+    "judas_save": "3b47465c83af79442a6c9691c520a50afa1e7b1dce36d2bd71af9c8df9a48576",
+    "judas_server": "1f52eb0ff2ba95d5b0600df902fdb0169ff95fcf35471d2bd51270d7f2a3add2"
+  }
+}

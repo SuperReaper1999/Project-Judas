@@ -1,0 +1,30 @@
+﻿{
+    "utc":  "2026-10-18T18:14:26.1190687Z",
+    "domain":  "win10",
+    "source":  "P:\\JudasValidation\\PreAlphaPass4\\Source",
+    "build":  "P:\\JudasValidation\\PreAlphaPass4\\Build",
+    "drives":  [
+                   {
+                       "Name":  "C",
+                       "Free":  1276317696,
+                       "Used":  41069621248
+                   },
+                   {
+                       "Name":  "D",
+                       "Free":  null,
+                       "Used":  0
+                   },
+                   {
+                       "Name":  "P",
+                       "Free":  48219480064,
+                       "Used":  5467607040
+                   }
+               ],
+    "desktop":  "DESKTOP-935HKD1\\Conner",
+    "priorTransientTasks":  [
+
+                            ],
+    "priorJudasProcesses":  [
+
+                            ]
+}

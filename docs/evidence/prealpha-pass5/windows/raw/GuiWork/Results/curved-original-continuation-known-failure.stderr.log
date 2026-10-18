@@ -1,0 +1,4 @@
+FAIL trough 2x26 coarse fast boxes do not cross actual mesh
+FAIL rotated trough preserves first-contact/crossing contract
+FAIL trough 30x30 fast boxes do not cross actual mesh
+FAIL trough 60x60 dense fast boxes do not cross actual mesh

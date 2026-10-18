@@ -1,0 +1,4 @@
+$ErrorActionPreference='Stop';$task='P:\JudasValidation\PreAlphaPass5';$previous='P:\JudasValidation\PreAlphaPass4'
+if(Test-Path -LiteralPath $task){throw 'Task directory already exists; preserve prior attempt'}
+New-Item -ItemType Directory -Path $task|Out-Null
+[pscustomobject]@{utc=[DateTime]::UtcNow.ToString('o');domain='win10';source="$previous\Source";build="$previous\Build";drives=@(Get-PSDrive -PSProvider FileSystem|Select-Object Name,Free,Used);desktop=(Get-CimInstance Win32_ComputerSystem).UserName;priorTransientTasks=@(Get-ScheduledTask -TaskName 'JudasValidation-PreAlphaPass*' -ErrorAction SilentlyContinue|Select-Object TaskName,State);priorJudasProcesses=@(Get-CimInstance Win32_Process|Where-Object {$_.Name-like 'judas*.exe'}|Select-Object Name,ProcessId,ExecutablePath)}|ConvertTo-Json -Depth 5|Set-Content -Encoding UTF8 "$task\INITIAL_GUEST_STATE.json"

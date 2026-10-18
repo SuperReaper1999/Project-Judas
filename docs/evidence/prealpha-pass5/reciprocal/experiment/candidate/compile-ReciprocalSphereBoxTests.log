@@ -1,0 +1,7 @@
+/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass5/dense/reciprocal/ReciprocalSphereBoxTests.cpp: In function ‘std::string {anonymous}::Different(const ContactManifold&, const ContactManifold&)’:
+/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass5/dense/reciprocal/ReciprocalSphereBoxTests.cpp:22:2: warning: this ‘if’ clause does not guard... [-Wmisleading-indentation]
+   22 |  if(a.count!=b.count)return "count";if(a.uncertain!=b.uncertain)return "uncertain";
+      |  ^~
+/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass5/dense/reciprocal/ReciprocalSphereBoxTests.cpp:22:37: note: ...this statement, but the latter is misleadingly indented as if it were guarded by the ‘if’
+   22 |  if(a.count!=b.count)return "count";if(a.uncertain!=b.uncertain)return "uncertain";
+      |                                     ^~

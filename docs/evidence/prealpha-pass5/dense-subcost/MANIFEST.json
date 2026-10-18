@@ -1,0 +1,131 @@
+{
+  "schema": 1,
+  "files": [
+    {
+      "path": ".gitattributes",
+      "bytes": 8,
+      "sha256": "705fd4d6451a31d36b3df7de96f83f30ac976c9b4a6d1e51671d8e2f33e2d0da"
+    },
+    {
+      "path": "ANALYSIS.json",
+      "bytes": 4069,
+      "sha256": "80e892c5ee1d59c7f8bac8af754a20c214ab519335ecfdca1327c4baa0992ef7"
+    },
+    {
+      "path": "COMPRESSED_INPUTS.json",
+      "bytes": 619,
+      "sha256": "c4c016ea99ad6ed391215f9af1fdc0c0d4e071a34ae765127960b8ee4901787b"
+    },
+    {
+      "path": "REPORT.md",
+      "bytes": 4534,
+      "sha256": "cec96c193f78cf7d6d0c3c2971f363ffe9e217853ecf2109bdd80e0b1610bcbb"
+    },
+    {
+      "path": "probe/BUILD.json",
+      "bytes": 8677,
+      "sha256": "991b20c94ba135e863e8979ab0ed946b16277678d09a536828b7db13bc2b6353"
+    },
+    {
+      "path": "probe/Contacts.cpp",
+      "bytes": 33614,
+      "sha256": "66a60e1b78d0c1053201ad0e0b5e71864eab888aa8a8e7fc3a7a26dbf78906f5"
+    },
+    {
+      "path": "probe/DenseContactCost.h",
+      "bytes": 1418,
+      "sha256": "1beaa20164e69de636e9eb7c2d01590c6457b2fa0389cc916cabba7bd37b4775"
+    },
+    {
+      "path": "probe/SOURCES.json",
+      "bytes": 830,
+      "sha256": "911a1fdb5e19c3f332945a4652e89de684b19b07977fc621ce980e8a18e93cca"
+    },
+    {
+      "path": "probe/WorldImpactEvents.cpp",
+      "bytes": 40029,
+      "sha256": "f044451abf9013b9a4d8667f927abb01bb3615ddc6c8f72b3f69f6c58c4d04cd"
+    },
+    {
+      "path": "probe/archive.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "probe/compile-Contacts.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "probe/compile-WorldImpactEvents.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "probe/link.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "raw/contact-subcost.jsonl.gz",
+      "bytes": 21545,
+      "sha256": "c1becb327797199b03da9f245af0d45f9eefe5b5e5df11866019a174c39fe7b3"
+    },
+    {
+      "path": "reproduction/build_cost_probe.py",
+      "bytes": 2369,
+      "sha256": "a15dbb0f24d12ea2336e4c7126bbed02379ee5d98f693150dfa1427cc5af21a3"
+    },
+    {
+      "path": "reproduction/prepare_cost_probe.py",
+      "bytes": 8204,
+      "sha256": "893ce934dbca59a45ea64eb10f8b3b341cc425216103ebea2629f5527bd7ed63"
+    },
+    {
+      "path": "run/RESULTS.json",
+      "bytes": 3217,
+      "sha256": "8ed77f9dbb12e5c5b2e4066afc7b469abda1687ef73c7ddd822b28aa28a57563"
+    },
+    {
+      "path": "run/dense270/begins.csv",
+      "bytes": 7362,
+      "sha256": "290cb51a0a9364bfc6d4330779bbd7593cdef686224aad1785dfefbf50103218"
+    },
+    {
+      "path": "run/dense270/frames.csv",
+      "bytes": 42592,
+      "sha256": "7b80b84a7e3a2f0e25dde2d3718b0798a8606d464e82128303d987206ce51226"
+    },
+    {
+      "path": "run/dense270/profile-final.json.gz",
+      "bytes": 324162,
+      "sha256": "3cd8c673df7cca4cfc9d96be5b3c8ca55e207baa1aeb8b4f0adefe96a18c18fd"
+    },
+    {
+      "path": "run/dense270/profile-shutdown.json.gz",
+      "bytes": 326192,
+      "sha256": "06c73bef67d8a1259e060ad1fc4d7480e98d5f76669d08c7502d3663b4027d18"
+    },
+    {
+      "path": "run/dense270/quality.json",
+      "bytes": 366,
+      "sha256": "7289744b35a8a710472d50fefb8e3cd1488d04b0247b6bce003f2a28fb2c2648"
+    },
+    {
+      "path": "run/dense270/steps.csv",
+      "bytes": 41364,
+      "sha256": "38f8870853625121d10ec0fe591efa73cc23e6bde83dd58f07c69d6f2730d239"
+    },
+    {
+      "path": "run/dense270.log",
+      "bytes": 613,
+      "sha256": "79262feb902d446999d207676426992ef4f44a25fbbe627c86a2aad7789acf23"
+    },
+    {
+      "path": "run/dense270.rusage.log",
+      "bytes": 1074,
+      "sha256": "0b5fd39c7cc2bb84bbb25f798b5e0f09041249a9f6ee24d181c11f8c45c56191"
+    }
+  ],
+  "totalBytes": 872858
+}

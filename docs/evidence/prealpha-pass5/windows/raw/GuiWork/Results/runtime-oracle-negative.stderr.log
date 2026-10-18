@@ -1,0 +1,8 @@
+Shadow maps: on
+Graphics: 4.6 (Core Profile) Mesa 26.2.4 (git-9a0169f2a7) / llvmpipe (LLVM 23.1.2, 256 bits)
+Renderer fragment texture units: 32 (material path uses 12)
+World state: P:/JudasValidation/PreAlphaPass5/GuiWork/Projects/projects/physics_stress_lab/Saves/room128.judasstate (none saved)
+Project: Judas Physics Stress Lab (P:/JudasValidation/PreAlphaPass5/GuiWork/Projects/projects/physics_stress_lab/physics_stress_lab.judasproj)
+Scene: Physics Stress Lab / 128 loose bodies (P:/JudasValidation/PreAlphaPass5/GuiWork/Projects/projects/physics_stress_lab/Scenes/room128.judas)
+World origin (m): 0.000, 0.000, 0.000
+[TestHarness] scene expectation failed deliberately-absent-scene

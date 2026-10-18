@@ -1,0 +1,46 @@
+{
+  "head": "4c141e9bb6c68a50c63dec263dcec398200328ad",
+  "utc": "2026-10-18T18:14:18.322136+00:00",
+  "files": [
+    {
+      "source": "build/judas",
+      "sha256": "fdd9f2e311aff5f348aa6828c06c1b7cc6c44aa9e81d918f02642e1722fed4ce",
+      "copy": ".cache/prealpha-pass5/baseline/judas"
+    },
+    {
+      "source": "build/judas_impact_mesh_cost_tests",
+      "sha256": "4fe9c536c1740e01c5b93e32434535a3fb39cc3ead7cd52b79df333370630cc4",
+      "copy": ".cache/prealpha-pass5/baseline/judas_impact_mesh_cost_tests"
+    },
+    {
+      "source": "build/judas_origin_environment_tests",
+      "sha256": "ab2a81030058b24d0ad2acc44cf01c0e935856537ce6aba3a3b1eede90f7ac22",
+      "copy": ".cache/prealpha-pass5/baseline/judas_origin_environment_tests"
+    },
+    {
+      "source": "build/libjudas_engine.a",
+      "sha256": "6e77a9f799ade7f6ce3ad741687689b8cae6d5efa6fd82e472923749ee21b441",
+      "copy": ".cache/prealpha-pass5/baseline/libjudas_engine.a"
+    },
+    {
+      "source": "build/libjudas_build_identity.a",
+      "sha256": "d04777c05054cf6861f6d97c83f77d96ea975a8ed9b9857829f9334a10d631ff",
+      "copy": ".cache/prealpha-pass5/baseline/libjudas_build_identity.a"
+    },
+    {
+      "source": "build/judas-build-info-Release.json",
+      "sha256": "448a694a14c5e16eb815a4047dbf08e49dc70d1c6528c7bfd72dab3df2dbf6c3",
+      "copy": ".cache/prealpha-pass5/baseline/judas-build-info-Release.json"
+    },
+    {
+      "source": "build/judas_physics_stress_live_benchmark",
+      "sha256": "2d6b5a4dcdb54a1ac40eb4fdb026f9875bfd33d95ce8d9946000c0eda902a433",
+      "copy": ".cache/prealpha-pass5/baseline/judas_physics_stress_live_benchmark"
+    },
+    {
+      "source": "build/judas_physics_scaling_diagnostics",
+      "sha256": "1374f054b4fa1ab65bd7aa4ff66509a0c9ed03fa293b91f0bd4ded8d6aced1c7",
+      "copy": ".cache/prealpha-pass5/baseline/judas_physics_scaling_diagnostics"
+    }
+  ]
+}

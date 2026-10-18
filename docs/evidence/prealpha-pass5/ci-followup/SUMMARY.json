@@ -1,0 +1,388 @@
+{
+  "schema": 1,
+  "run": 39159743311,
+  "run_url": "https://github.com/SuperReaper1999/Project-Judas/actions/runs/39159743311",
+  "head": "050016a179313c90584ce00f141cc5ca4c521808",
+  "hosted_run_conclusion": "success",
+  "completed_steps": 13,
+  "ctest": {
+    "passed": 38,
+    "failed": 0,
+    "total_seconds": 34.54,
+    "native_structured_results": 36,
+    "additional_controls": [
+      "prealpha.gate-negative-controls",
+      "prealpha.build-organization"
+    ]
+  },
+  "build": {
+    "schema": 1,
+    "version": "0.1.0-prealpha",
+    "maturity": "pre-alpha",
+    "channel": "Experimental",
+    "build_id": "0.1.0-prealpha-Experimental-050016a-clean-bf269556e921",
+    "source_revision": "050016a179313c90584ce00f141cc5ca4c521808",
+    "source_tree": "34730cc0b764d16d655508546b98bdfe537c6790",
+    "source_dirty": false,
+    "source_fingerprint": "bf269556e9215a4f5a480ee6f627de39355ecf8ac77fd55e5142d5018ee7c49a",
+    "source_untracked_count": 0,
+    "source_untracked_fingerprint": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "source_origin": "git",
+    "platform": "Linux",
+    "architecture": "x86_64",
+    "configuration": "Release",
+    "compiler": "GNU",
+    "compiler_version": "13.3.0"
+  },
+  "sdk": {
+    "tool_count": 17,
+    "host": {
+      "machine": "x86_64",
+      "os_release": {
+        "BUG_REPORT_URL": "https://bugs.launchpad.net/ubuntu/",
+        "HOME_URL": "https://www.ubuntu.com/",
+        "ID": "ubuntu",
+        "ID_LIKE": "debian",
+        "LOGO": "ubuntu-logo",
+        "NAME": "Ubuntu",
+        "PRETTY_NAME": "Ubuntu 24.04.5 LTS",
+        "PRIVACY_POLICY_URL": "https://www.ubuntu.com/legal/terms-and-policies/privacy-policy",
+        "SUPPORT_URL": "https://help.ubuntu.com/",
+        "UBUNTU_CODENAME": "noble",
+        "VERSION": "24.04.5 LTS (Noble Numbat)",
+        "VERSION_CODENAME": "noble",
+        "VERSION_ID": "24.04"
+      },
+      "system": "Linux"
+    },
+    "policy": {
+      "host_check": true,
+      "max_glibc": "2.39",
+      "require_os": "ubuntu:24.04",
+      "windows_system_directory": null
+    },
+    "highest_required_abi": {
+      "CXXABI": "1.3.13",
+      "GLIBC": "2.38",
+      "GLIBCXX": "3.4.32"
+    },
+    "errors": [],
+    "sdk_manifest_sha256": "effdd8ff1ba9e337c3f21075c436ed8fd6081c47f21e41ec53137613f72ff445",
+    "dependency_count": 50,
+    "strict_after_inspection": {
+      "build": {
+        "architecture": "x86_64",
+        "build_id": "0.1.0-prealpha-Experimental-050016a-clean-bf269556e921",
+        "channel": "Experimental",
+        "compiler": "GNU",
+        "compiler_version": "13.3.0",
+        "configuration": "Release",
+        "maturity": "pre-alpha",
+        "platform": "Linux",
+        "schema": 1,
+        "source_dirty": false,
+        "source_fingerprint": "bf269556e9215a4f5a480ee6f627de39355ecf8ac77fd55e5142d5018ee7c49a",
+        "source_origin": "git",
+        "source_revision": "050016a179313c90584ce00f141cc5ca4c521808",
+        "source_tree": "34730cc0b764d16d655508546b98bdfe537c6790",
+        "source_untracked_count": 0,
+        "source_untracked_fingerprint": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "version": "0.1.0-prealpha"
+      },
+      "files": 212,
+      "ok": true,
+      "tools": 17
+    }
+  },
+  "tests": [
+    {
+      "name": "build-identity",
+      "passed": true,
+      "exit": 0,
+      "seconds": 0.21478438799999822,
+      "binary_sha256": "3a3673f930894f8ba7dfde307317db044e36560befaf96028b4b87d9b9f51457",
+      "result": "artifact/validation/20261018T195237Z-6b41ce93/RESULTS.json"
+    },
+    {
+      "name": "collision-geometry",
+      "passed": true,
+      "exit": 0,
+      "seconds": 0.4914253199999621,
+      "binary_sha256": "ac106ee7f76f9329fc62aa5bb0ba1d7a3a9245a58d60fd9a21361ccb8001ce13",
+      "result": "artifact/validation/20261018T195239Z-2715b7ce/RESULTS.json"
+    },
+    {
+      "name": "collision-witness",
+      "passed": true,
+      "exit": 0,
+      "seconds": 0.21533419200000026,
+      "binary_sha256": "fc90af32c94c873c1e55beb1f119a02b707612f4fe1446396049524d92324082",
+      "result": "artifact/validation/20261018T195240Z-0709402e/RESULTS.json"
+    },
+    {
+      "name": "rigid-contact",
+      "passed": true,
+      "exit": 0,
+      "seconds": 1.020074085000033,
+      "binary_sha256": "4386c4bfd858b8fb1f671118ed8cdd82041975374a98a90843f69f3f6abf83d3",
+      "result": "artifact/validation/20261018T195241Z-79cbca3a/RESULTS.json"
+    },
+    {
+      "name": "impact-solver",
+      "passed": true,
+      "exit": 0,
+      "seconds": 0.004233408999994026,
+      "binary_sha256": "1368b3b9028d51963365ee0ce603fc3b49ab6ac534072fa9f7a65b3183b31767",
+      "result": "artifact/validation/20261018T195243Z-603b5659/RESULTS.json"
+    },
+    {
+      "name": "impact-candidates",
+      "passed": true,
+      "exit": 0,
+      "seconds": 0.0019185549999747309,
+      "binary_sha256": "747f70ca5a49c9f9b46053f521d5bd5c61c84c624d57e75a9a4dacb0219bb3e6",
+      "result": "artifact/validation/20261018T195243Z-c2b8435e/RESULTS.json"
+    },
+    {
+      "name": "impact-timing",
+      "passed": true,
+      "exit": 0,
+      "seconds": 0.019391485000028297,
+      "binary_sha256": "31f639718d729be6b24f71cb7b59fb105a8e766f7698eea9dc21d9179c5c28f4",
+      "result": "artifact/validation/20261018T195243Z-e8d04b72/RESULTS.json"
+    },
+    {
+      "name": "impact-mesh-arrival",
+      "passed": true,
+      "exit": 0,
+      "seconds": 3.5757007439999597,
+      "binary_sha256": "d51cdc106b30d4f806e501b9c5fe40902e793a4c71bbcb61069e64577c56b0eb",
+      "result": "artifact/validation/20261018T195244Z-49062dea/RESULTS.json"
+    },
+    {
+      "name": "liquid-rotation",
+      "passed": true,
+      "exit": 0,
+      "seconds": 0.26542692700002135,
+      "binary_sha256": "9ab2df66db7c721a1a21adc406ae8aeedb4b09e3813e8be0caf3d733090d6bf4",
+      "result": "artifact/validation/20261018T195248Z-8dfda87a/RESULTS.json"
+    },
+    {
+      "name": "liquid-bake-frames",
+      "passed": true,
+      "exit": 0,
+      "seconds": 0.09257196800001566,
+      "binary_sha256": "81e699443c2a2e23f9e3d14ae34f5eddff07697679120f31000d233695b91150",
+      "result": "artifact/validation/20261018T195249Z-8c5e86c1/RESULTS.json"
+    },
+    {
+      "name": "liquid-bake-normalization-only",
+      "passed": true,
+      "exit": 0,
+      "seconds": 0.10848133400008919,
+      "binary_sha256": "b7fce35a9fce410fe576ecfc835165caff5b6113644049c1a445243bf12e34cf",
+      "result": "artifact/validation/20261018T195249Z-9aa5f2d3/RESULTS.json"
+    },
+    {
+      "name": "liquid-bake-knots-only",
+      "passed": true,
+      "exit": 0,
+      "seconds": 0.10859160500001508,
+      "binary_sha256": "b7fce35a9fce410fe576ecfc835165caff5b6113644049c1a445243bf12e34cf",
+      "result": "artifact/validation/20261018T195250Z-13b0f65a/RESULTS.json"
+    },
+    {
+      "name": "liquid-reservoir",
+      "passed": true,
+      "exit": 0,
+      "seconds": 0.6416356049999195,
+      "binary_sha256": "f6df41f5842f0e95b24ba631f5517547b997a70b74646e42dda48281b0dc2ae0",
+      "result": "artifact/validation/20261018T195250Z-9d2d243f/RESULTS.json"
+    },
+    {
+      "name": "liquid-surface",
+      "passed": true,
+      "exit": 0,
+      "seconds": 1.292872258999978,
+      "binary_sha256": "de1aa35682552c36896698f77ea16ecbcba79dbc1ac67a09d99d197b3f653ba6",
+      "result": "artifact/validation/20261018T195251Z-0919513a/RESULTS.json"
+    },
+    {
+      "name": "liquid-origin-total-identity",
+      "passed": true,
+      "exit": 0,
+      "seconds": 0.10843950900004984,
+      "binary_sha256": "b7fce35a9fce410fe576ecfc835165caff5b6113644049c1a445243bf12e34cf",
+      "result": "artifact/validation/20261018T195253Z-621dfd6a/RESULTS.json"
+    },
+    {
+      "name": "collision-continuity",
+      "passed": true,
+      "exit": 0,
+      "seconds": 0.019247417999963545,
+      "binary_sha256": "a31c765458e54b10de213942029282061e3477c19c5731db5509332aeaa51d57",
+      "result": "artifact/validation/20261018T195254Z-04eea033/RESULTS.json"
+    },
+    {
+      "name": "character-motor",
+      "passed": true,
+      "exit": 0,
+      "seconds": 0.49126617400008854,
+      "binary_sha256": "0b303c63b235f2aa0ae273c65afa1c71c42066316359705d352c2f4737455f9c",
+      "result": "artifact/validation/20261018T195254Z-8cbe26fc/RESULTS.json"
+    },
+    {
+      "name": "physics-continuation",
+      "passed": true,
+      "exit": 0,
+      "seconds": 0.09254675499994391,
+      "binary_sha256": "11b542b15de62b7b2c77557cd32662795f3b775388746e6127703c719c30069d",
+      "result": "artifact/validation/20261018T195255Z-6adc344b/RESULTS.json"
+    },
+    {
+      "name": "composed-lifecycle",
+      "passed": true,
+      "exit": 0,
+      "seconds": 0.3413476639999544,
+      "binary_sha256": "697e28e0c97ef5c42abfe1946d826d84f4e98767603d353485e6a98178fe6735",
+      "result": "artifact/validation/20261018T195256Z-917d8d9f/RESULTS.json"
+    },
+    {
+      "name": "contacts",
+      "passed": true,
+      "exit": 0,
+      "seconds": 0.10823205400004099,
+      "binary_sha256": "368e131a061cf51f42ba8940fcbc4dec78c759b3768db82c6ee46f5f5c48b3f5",
+      "result": "artifact/validation/20261018T195256Z-9f4c12c3/RESULTS.json"
+    },
+    {
+      "name": "origin-physics",
+      "passed": true,
+      "exit": 0,
+      "seconds": 0.011219537999977547,
+      "binary_sha256": "435718c42ceabbb69dab053cd6f9bc0a2dc883961bb6308cd704b4279e0f3b3a",
+      "result": "artifact/validation/20261018T195257Z-f58fe509/RESULTS.json"
+    },
+    {
+      "name": "origin-assembly",
+      "passed": true,
+      "exit": 0,
+      "seconds": 0.1906632620000437,
+      "binary_sha256": "ff8d01059a3d43773e69d3bad06707afc1bf852e7466b9c477f6127321a8fe03",
+      "result": "artifact/validation/20261018T195258Z-23bcb5e9/RESULTS.json"
+    },
+    {
+      "name": "origin-participants",
+      "passed": true,
+      "exit": 0,
+      "seconds": 0.5416718469999751,
+      "binary_sha256": "7df60ef120153caa207e1c18595b97f6e32e1bd459419c48039e851a1d5dfb78",
+      "result": "artifact/validation/20261018T195258Z-cdf57261/RESULTS.json"
+    },
+    {
+      "name": "origin-stream",
+      "passed": true,
+      "exit": 0,
+      "seconds": 0.10835223999993104,
+      "binary_sha256": "dfeee7898b11ca878b4290c9f1a89dbb7051793460af771ace7e75fe3b8da9d7",
+      "result": "artifact/validation/20261018T195259Z-c987116d/RESULTS.json"
+    },
+    {
+      "name": "terrain-lifecycle",
+      "passed": true,
+      "exit": 0,
+      "seconds": 0.4910439039999801,
+      "binary_sha256": "8ccb03eea55419060df678493aaa56c637dcb1217d6e630d91a9a430c4733f77",
+      "result": "artifact/validation/20261018T195300Z-609124a2/RESULTS.json"
+    },
+    {
+      "name": "terrain-streaming",
+      "passed": true,
+      "exit": 0,
+      "seconds": 0.24051373600002535,
+      "binary_sha256": "765b24ae71da36f55f50eee9d41502b99bac28db179976d0f8f4899137cfcc25",
+      "result": "artifact/validation/20261018T195301Z-42940cdf/RESULTS.json"
+    },
+    {
+      "name": "network-transport",
+      "passed": true,
+      "exit": 0,
+      "seconds": 0.3651427249999415,
+      "binary_sha256": "045d08edab333368c616a9e86a41537a64286de50abb93f289d0d6bce6ef7a22",
+      "result": "artifact/validation/20261018T195302Z-6251629c/RESULTS.json"
+    },
+    {
+      "name": "save-evolution",
+      "passed": true,
+      "exit": 0,
+      "seconds": 0.24148724400004085,
+      "binary_sha256": "0d4769b8f200e3cc5f994bd85b6d008ad66c98ff96e88589270e1032a8b0a714",
+      "result": "artifact/validation/20261018T195302Z-9ad1c01a/RESULTS.json"
+    },
+    {
+      "name": "network-session",
+      "passed": true,
+      "exit": 0,
+      "seconds": 0.7916400770000109,
+      "binary_sha256": "ed93678de2b00fbc1f6907a20e00b409228e23ceda7694ffb93f628924f35b1b",
+      "result": "artifact/validation/20261018T195303Z-6fd16a53/RESULTS.json"
+    },
+    {
+      "name": "network-boundaries",
+      "passed": true,
+      "exit": 0,
+      "seconds": 0.4914470660000916,
+      "binary_sha256": "04596bff007144c5503650ea54dcd4b47536eb1a9692830a6cdbe9ee817a5954",
+      "result": "artifact/validation/20261018T195304Z-03e35469/RESULTS.json"
+    },
+    {
+      "name": "network-js",
+      "passed": true,
+      "exit": 0,
+      "seconds": 0.3906877389999863,
+      "binary_sha256": "a83f12b4db25280c7cde8a8710b7f20f429469f0a18ad722c129b1d4ea937171",
+      "result": "artifact/validation/20261018T195305Z-f7bd2f6e/RESULTS.json"
+    },
+    {
+      "name": "resource-handoff",
+      "passed": true,
+      "exit": 0,
+      "seconds": 1.3931448220000675,
+      "binary_sha256": "70b46f98838f3e9b965a22b3535763d0a7709b0c260ec8ca7f780a7a20bbc84d",
+      "result": "artifact/validation/20261018T195306Z-7f40d531/RESULTS.json"
+    },
+    {
+      "name": "first-project",
+      "passed": true,
+      "exit": 0,
+      "seconds": 0.4409835669999893,
+      "binary_sha256": "ac78870d091c49acd236bd802364a23a106ef8a511088decb8e844d1c14e09b3",
+      "result": "artifact/validation/20261018T195308Z-3ceb279c/RESULTS.json"
+    },
+    {
+      "name": "origin-environment",
+      "passed": true,
+      "exit": 0,
+      "seconds": 0.49116866400004255,
+      "binary_sha256": "b7fce35a9fce410fe576ecfc835165caff5b6113644049c1a445243bf12e34cf",
+      "result": "artifact/validation/20261018T195309Z-fd02f7f9/RESULTS.json"
+    },
+    {
+      "name": "origin-admission",
+      "passed": true,
+      "exit": 0,
+      "seconds": 0.09234194299995124,
+      "binary_sha256": "8c8c6b7e4140dd7d17e1c536fdc38202a1f15aa278022fa793f47f8e260f7fb3",
+      "result": "artifact/validation/20261018T195310Z-5f6b02e9/RESULTS.json"
+    },
+    {
+      "name": "liquid-origin-query-controls",
+      "passed": true,
+      "exit": 0,
+      "seconds": 0.10853063299998666,
+      "binary_sha256": "b7fce35a9fce410fe576ecfc835165caff5b6113644049c1a445243bf12e34cf",
+      "result": "artifact/validation/20261018T195310Z-6864e0a0/RESULTS.json"
+    }
+  ],
+  "scope": "Hosted clean Ubuntu24.04 Release/loader and explicit focused gates only; no GPU hardware or human acceptance; known failing contracts remain excluded and classified in original gate results."
+}

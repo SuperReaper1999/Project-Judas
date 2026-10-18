@@ -1,0 +1,69 @@
+{
+  "scope": "cache-only actual finite welded ancestry and disconnected-patch controls",
+  "utc": "2026-10-18T19:33:48.816770+00:00",
+  "source_sha256": "629b282826fa76e2d4fd377fc0ab7bb6bb440d2120c96799b6cd1f5b128af123",
+  "commands": [
+    {
+      "name": "compile-controls",
+      "argv": [
+        "c++",
+        "-O3",
+        "-DNDEBUG",
+        "-std=c++17",
+        "-I/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass5/ccd/union-v6/sources",
+        "-I/home/conner/Documents/GitHub/Project-Judas/src",
+        "-c",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass5/ccd/union-v6/ReacquisitionControls.cpp",
+        "-o",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass5/ccd/union-v6/controls.o"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+      "seconds": 3.671871048001776,
+      "exit": 0
+    },
+    {
+      "name": "link-controls",
+      "argv": [
+        "/usr/bin/c++",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass5/ccd/union-v6/controls.o",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass5/ccd/union-v6/CollisionGeometry.cpp.o",
+        "-O3",
+        "-DNDEBUG",
+        "-o",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass5/ccd/union-v6/controls",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass5/baseline/libjudas_engine.a",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass5/baseline/libjudas_build_identity.a",
+        "libjudas_app_icon.a",
+        "libjudas_materials.a",
+        "/usr/lib/x86_64-linux-gnu/libSDL2.so",
+        "libjudas_glad.a",
+        "libjudas_audio_backend.a",
+        "libjudas_meshoptimizer.a",
+        "libjudas_navigation_cook.a",
+        "libjudas_navigation_backend.a",
+        "libjudas_quickjs.a",
+        "-lm",
+        "libjudas_profiler.a",
+        "_deps/judas_freetype-build/libfreetype.a",
+        "_deps/judas_harfbuzz-build/libharfbuzz.a",
+        "unicode/icu/lib/libicui18n.a",
+        "unicode/icu/lib/libicuuc.a",
+        "unicode/icu/lib/libicudata.a",
+        "-ldl",
+        "libjudas_jobs.a"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas/build",
+      "seconds": 0.11433072599902516,
+      "exit": 0
+    },
+    {
+      "name": "controls",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass5/ccd/union-v6/controls"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+      "seconds": 0.1143547169995145,
+      "exit": 1
+    }
+  ]
+}

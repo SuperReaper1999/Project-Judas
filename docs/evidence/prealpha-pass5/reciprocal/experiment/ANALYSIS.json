@@ -1,0 +1,480 @@
+{
+  "schema": 1,
+  "cases": [
+    {
+      "name": "dense270",
+      "steps": 270,
+      "exactFields": [
+        "step",
+        "frame",
+        "bodies",
+        "awake",
+        "sleeping",
+        "candidates",
+        "contacts",
+        "impact_events",
+        "impact_queries",
+        "impact_iterations",
+        "impact_peak",
+        "trajectory_digest",
+        "max_linear_speed",
+        "max_angular_speed",
+        "nonfinite_fields"
+      ],
+      "physicalDifferences": [],
+      "endpointDifferences": {
+        "observation_ms": [
+          30.938582,
+          31.69958
+        ]
+      }
+    },
+    {
+      "name": "free1024",
+      "steps": 120,
+      "exactFields": [
+        "step",
+        "measured",
+        "bodies",
+        "dynamic",
+        "awake",
+        "sleeping",
+        "islands",
+        "candidates",
+        "pairs",
+        "points",
+        "impact_events",
+        "impact_queries",
+        "impact_iterations",
+        "sampling_tests",
+        "geometry_allocations",
+        "geometry_allocated_bytes",
+        "geometry_cache_bytes",
+        "solver_frame_builds",
+        "motion_bytes"
+      ],
+      "physicalDifferences": [],
+      "allEndpointsIdentical": true,
+      "summaryDifferences": {
+        "rss_maximum_observed_bytes": [
+          25772032,
+          25788416
+        ],
+        "rss_after_setup_bytes": [
+          6520832,
+          6553600
+        ],
+        "setup_ms": [
+          2.59411,
+          3.068619
+        ],
+        "process_peak_rss_bytes": [
+          28250112,
+          28266496
+        ],
+        "narrowphase_ms": [
+          {
+            "maximum": 0.008879,
+            "median": 0.000464,
+            "p95": 0.000994
+          },
+          {
+            "maximum": 0.006935,
+            "median": 0.00041,
+            "p95": 0.000703
+          }
+        ],
+        "input_and_step_ms": [
+          {
+            "maximum": 1.528405,
+            "median": 0.728293,
+            "p95": 1.055964
+          },
+          {
+            "maximum": 1.197645,
+            "median": 0.720111,
+            "p95": 0.910623
+          }
+        ],
+        "internal_step_ms": [
+          {
+            "maximum": 1.511891,
+            "median": 0.717461,
+            "p95": 1.037543
+          },
+          {
+            "maximum": 1.186237,
+            "median": 0.707528,
+            "p95": 0.899408
+          }
+        ],
+        "broadphase_ms": [
+          {
+            "maximum": 0.470539,
+            "median": 0.288288,
+            "p95": 0.437581
+          },
+          {
+            "maximum": 0.472146,
+            "median": 0.281033,
+            "p95": 0.344384
+          }
+        ],
+        "solver_ms": [
+          {
+            "maximum": 0.243854,
+            "median": 0.125161,
+            "p95": 0.218892
+          },
+          {
+            "maximum": 0.327881,
+            "median": 0.124013,
+            "p95": 0.179183
+          }
+        ]
+      },
+      "trajectoryDigest": "beba012f5dfe2273"
+    },
+    {
+      "name": "pile256",
+      "steps": 180,
+      "exactFields": [
+        "step",
+        "measured",
+        "bodies",
+        "dynamic",
+        "awake",
+        "sleeping",
+        "islands",
+        "candidates",
+        "pairs",
+        "points",
+        "impact_events",
+        "impact_queries",
+        "impact_iterations",
+        "sampling_tests",
+        "geometry_allocations",
+        "geometry_allocated_bytes",
+        "geometry_cache_bytes",
+        "solver_frame_builds",
+        "motion_bytes"
+      ],
+      "physicalDifferences": [],
+      "allEndpointsIdentical": true,
+      "summaryDifferences": {
+        "rss_maximum_observed_bytes": [
+          28434432,
+          28389376
+        ],
+        "rss_after_setup_bytes": [
+          5492736,
+          5480448
+        ],
+        "setup_ms": [
+          1.082892,
+          1.003038
+        ],
+        "process_peak_rss_bytes": [
+          31641600,
+          31723520
+        ],
+        "narrowphase_ms": [
+          {
+            "maximum": 2.01392,
+            "median": 0.031868,
+            "p95": 1.916533
+          },
+          {
+            "maximum": 1.97276,
+            "median": 0.032057,
+            "p95": 1.898745
+          }
+        ],
+        "input_and_step_ms": [
+          {
+            "maximum": 3.875368,
+            "median": 0.377135,
+            "p95": 3.698763
+          },
+          {
+            "maximum": 3.816722,
+            "median": 0.37427,
+            "p95": 3.684323
+          }
+        ],
+        "internal_step_ms": [
+          {
+            "maximum": 3.869758,
+            "median": 0.372908,
+            "p95": 3.694554
+          },
+          {
+            "maximum": 3.81181,
+            "median": 0.370082,
+            "p95": 3.680123
+          }
+        ],
+        "broadphase_ms": [
+          {
+            "maximum": 0.218881,
+            "median": 0.123978,
+            "p95": 0.19441
+          },
+          {
+            "maximum": 0.23143,
+            "median": 0.124757,
+            "p95": 0.193962
+          }
+        ],
+        "solver_ms": [
+          {
+            "maximum": 1.559704,
+            "median": 0.111091,
+            "p95": 1.450676
+          },
+          {
+            "maximum": 1.528345,
+            "median": 0.110659,
+            "p95": 1.446692
+          }
+        ]
+      },
+      "trajectoryDigest": "63b0f10cd668de91"
+    },
+    {
+      "name": "machines_active256",
+      "steps": 150,
+      "exactFields": [
+        "step",
+        "measured",
+        "bodies",
+        "dynamic",
+        "awake",
+        "sleeping",
+        "islands",
+        "candidates",
+        "pairs",
+        "points",
+        "impact_events",
+        "impact_queries",
+        "impact_iterations",
+        "sampling_tests",
+        "geometry_allocations",
+        "geometry_allocated_bytes",
+        "geometry_cache_bytes",
+        "solver_frame_builds",
+        "motion_bytes"
+      ],
+      "physicalDifferences": [],
+      "allEndpointsIdentical": true,
+      "summaryDifferences": {
+        "rss_maximum_observed_bytes": [
+          25538560,
+          25546752
+        ],
+        "rss_after_setup_bytes": [
+          5390336,
+          5476352
+        ],
+        "setup_ms": [
+          0.999357,
+          0.757413
+        ],
+        "process_peak_rss_bytes": [
+          28000256,
+          27983872
+        ],
+        "narrowphase_ms": [
+          {
+            "maximum": 0.235113,
+            "median": 0.069778,
+            "p95": 0.204442
+          },
+          {
+            "maximum": 0.229415,
+            "median": 0.069641,
+            "p95": 0.202474
+          }
+        ],
+        "input_and_step_ms": [
+          {
+            "maximum": 1.037186,
+            "median": 0.59577,
+            "p95": 0.868921
+          },
+          {
+            "maximum": 0.91091,
+            "median": 0.59305,
+            "p95": 0.846146
+          }
+        ],
+        "internal_step_ms": [
+          {
+            "maximum": 1.032911,
+            "median": 0.591483,
+            "p95": 0.864839
+          },
+          {
+            "maximum": 0.906677,
+            "median": 0.588743,
+            "p95": 0.842017
+          }
+        ],
+        "broadphase_ms": [
+          {
+            "maximum": 0.15167,
+            "median": 0.104456,
+            "p95": 0.12863999999999998
+          },
+          {
+            "maximum": 0.152587,
+            "median": 0.104405,
+            "p95": 0.127938
+          }
+        ],
+        "solver_ms": [
+          {
+            "maximum": 0.565495,
+            "median": 0.341089,
+            "p95": 0.453362
+          },
+          {
+            "maximum": 0.48681,
+            "median": 0.339305,
+            "p95": 0.431529
+          }
+        ]
+      },
+      "trajectoryDigest": "76999a0d1f196c6b"
+    },
+    {
+      "name": "machines_sleeping256",
+      "steps": 360,
+      "exactFields": [
+        "step",
+        "measured",
+        "bodies",
+        "dynamic",
+        "awake",
+        "sleeping",
+        "islands",
+        "candidates",
+        "pairs",
+        "points",
+        "impact_events",
+        "impact_queries",
+        "impact_iterations",
+        "sampling_tests",
+        "geometry_allocations",
+        "geometry_allocated_bytes",
+        "geometry_cache_bytes",
+        "solver_frame_builds",
+        "motion_bytes"
+      ],
+      "physicalDifferences": [],
+      "allEndpointsIdentical": true,
+      "summaryDifferences": {
+        "rss_maximum_observed_bytes": [
+          26255360,
+          26185728
+        ],
+        "rss_after_setup_bytes": [
+          5451776,
+          5496832
+        ],
+        "setup_ms": [
+          1.056252,
+          1.116367
+        ],
+        "process_peak_rss_bytes": [
+          27799552,
+          27684864
+        ],
+        "narrowphase_ms": [
+          {
+            "maximum": 0.154953,
+            "median": 0.022511,
+            "p95": 0.033158
+          },
+          {
+            "maximum": 0.050186,
+            "median": 0.022705,
+            "p95": 0.026343
+          }
+        ],
+        "input_and_step_ms": [
+          {
+            "maximum": 0.334459,
+            "median": 0.197263,
+            "p95": 0.236769
+          },
+          {
+            "maximum": 0.376586,
+            "median": 0.197071,
+            "p95": 0.228955
+          }
+        ],
+        "internal_step_ms": [
+          {
+            "maximum": 0.329783,
+            "median": 0.19304,
+            "p95": 0.232568
+          },
+          {
+            "maximum": 0.372327,
+            "median": 0.193108,
+            "p95": 0.224968
+          }
+        ],
+        "broadphase_ms": [
+          {
+            "maximum": 0.09478500000000001,
+            "median": 0.066345,
+            "p95": 0.080429
+          },
+          {
+            "maximum": 0.096945,
+            "median": 0.06639,
+            "p95": 0.076597
+          }
+        ],
+        "solver_ms": [
+          {
+            "maximum": 0.087796,
+            "median": 0.050358,
+            "p95": 0.061653
+          },
+          {
+            "maximum": 0.147018,
+            "median": 0.050538,
+            "p95": 0.061216
+          }
+        ]
+      },
+      "trajectoryDigest": "294c73ad4249153b"
+    }
+  ],
+  "timing": {
+    "cacheA": {
+      "fixedMs": {
+        "median": 26.079052500000003,
+        "p95_floor": 341.527838,
+        "maximum": 1740.532138
+      },
+      "wallSeconds": 50.58863097499852,
+      "maxRssKiB": 410532,
+      "finalDigest": "192f0f4bed728953"
+    },
+    "reuseB": {
+      "fixedMs": {
+        "median": 28.068239499999997,
+        "p95_floor": 328.0032,
+        "maximum": 1658.407345
+      },
+      "wallSeconds": 50.546421491999354,
+      "maxRssKiB": 415588,
+      "finalDigest": "192f0f4bed728953"
+    }
+  },
+  "scope": "Single predeclared valid strict cacheA/reuseB pair; every initial failed/unpaired attempt retained separately and excluded from matched speedup claims. New helper removes only duplicate native mixed sphere/box response queries; derived geometry counters may legitimately drop."
+}

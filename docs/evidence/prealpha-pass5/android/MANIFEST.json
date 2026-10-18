@@ -1,0 +1,36 @@
+{
+  "schema": 1,
+  "scope": "android qualification; exact payloads excluding this manifest",
+  "files": [
+    {
+      "path": "ELF_DYNAMIC.txt",
+      "bytes": 1898,
+      "sha256": "a9a0a108ba89dd7f4f0353b40ab2fe7b4dd721bb97b78943c7e4ca8d0f653a74"
+    },
+    {
+      "path": "ELF_HEADER.txt",
+      "bytes": 939,
+      "sha256": "5415b8eac1e04a12276b6624366dd2a39cb08c6a12c6f9e08112cd5a9c725783"
+    },
+    {
+      "path": "ELF_SEGMENTS.txt",
+      "bytes": 2087,
+      "sha256": "c9d10daa1cde5cf8f5eb0db3c87d316c154cc70ef4f3eb3c0bcdaa58e6cb11e7"
+    },
+    {
+      "path": "RESULTS.json",
+      "bytes": 3435,
+      "sha256": "c64bf45e7e34ec7f366b936c929cc16459130872c4cda81e9eddd12e54b6f621"
+    },
+    {
+      "path": "build.log",
+      "bytes": 9795,
+      "sha256": "9c41b6316a9964efef3cbc60332d7a21563633c4f25eb0722b5a894fb74402e9"
+    },
+    {
+      "path": "run.py",
+      "bytes": 1719,
+      "sha256": "b3ac6f68224b870b848d424df8c11905e92e893d2d87979d9f947ac06ef7e4f1"
+    }
+  ]
+}

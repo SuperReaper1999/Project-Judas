@@ -1,0 +1,20 @@
+{
+  "schema": 1,
+  "files": [
+    {
+      "path": "run/dense270/profile-final.json.gz",
+      "uncompressedBytes": 3381083,
+      "uncompressedSha256": "ce1b3dab8df26392e6bc50b4f4d73aa50c7c8b1cd52ae455a3c99fec004f350f"
+    },
+    {
+      "path": "run/dense270/profile-shutdown.json.gz",
+      "uncompressedBytes": 3404182,
+      "uncompressedSha256": "016f6733d79ab57a6e1900bacaf0769c776d217f2aa35fdf47bcc1f8bfea2147"
+    },
+    {
+      "path": "raw/contact-subcost.jsonl.gz",
+      "uncompressedBytes": 225371,
+      "uncompressedSha256": "a9fc604d63ab62006e604cf52db0fe17158cbdae0dce294392565a3b8d10e6a7"
+    }
+  ]
+}

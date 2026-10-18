@@ -1,0 +1,5 @@
+/usr/bin/x86_64-linux-gnu-ld.bfd: CMakeFiles/judas_impact_mesh_cost_tests.dir/tests/ValidationMain.cpp.o: in function `main':
+ValidationMain.cpp:(.text.startup+0x0): multiple definition of `main'; /home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass5/ccd/union-v3/diagnostic.o:DiagnosticImpactMeshCostTests.cpp:(.text.startup+0x0): first defined here
+/usr/bin/x86_64-linux-gnu-ld.bfd: CMakeFiles/judas_impact_mesh_cost_tests.dir/tests/ValidationMain.cpp.o: in function `main':
+ValidationMain.cpp:(.text.startup+0x2e): undefined reference to `JudasValidationMain(int, char**)'
+collect2: error: ld returned 1 exit status

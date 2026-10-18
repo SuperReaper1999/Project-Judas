@@ -1,0 +1,34 @@
+{
+  "/home/conner/Documents/GitHub/Project-Judas/build/linux-sdk/SDK_MANIFEST.json": {
+    "bytes": 35266,
+    "sha256": "782fe0788bd1e2292ad6524e61dc59e72cd1391ceabdd01cc9edb986c60e857a"
+  },
+  "/home/conner/Documents/GitHub/Project-Judas/build/linux-sdk/BUILD_INFO.json": {
+    "bytes": 728,
+    "sha256": "fedcb35a260be348bdd042c872ec8259b9b07ab4b5e44ce5bcdfbba5e333249a"
+  },
+  "/home/conner/Documents/GitHub/Project-Judas/build/linux-sdk/SHA256SUMS": {
+    "bytes": 19548,
+    "sha256": "b276e7e1c5f5b997d93b2549d959969f9b8ed9427473ad449e5d52e62b550bd3"
+  },
+  "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass5/linux/stress-export/BUILD_PROVENANCE.json": {
+    "bytes": 1663,
+    "sha256": "7cf7dcda65790dbb09e368f4c178472179ad39a6a1b7f437ee7f63649790364b"
+  },
+  "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass5/linux/stress-export/DEPENDENCIES.json": {
+    "bytes": 2767,
+    "sha256": "c636d6f4ccf32bcb0bca3ff77fe0f644f9c246765bd86ab28cedca449f863e28"
+  },
+  "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass5/linux/stress-export/game.judasproj": {
+    "bytes": 1501,
+    "sha256": "c470705d180d6cdf4a032f3e279628d0c000e13f2ab68b4c49e601e7cd887be3"
+  },
+  "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass5/linux/editor.saved.judas": {
+    "bytes": 302071,
+    "sha256": "eba40e1fd07c4fa27b7e1100c909aeac9c3e6707e4c7a345e11c3c0cc87527e8"
+  },
+  "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass5/linux/relocated.png": {
+    "bytes": 96202,
+    "sha256": "a92758dcdd7c4a8d7154a4c24ff76e55012fd4594194a5670f1128c4e701c2bc"
+  }
+}

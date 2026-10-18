@@ -1,0 +1,20 @@
+FAIL independent overlap normal
+FAIL near tangent normal
+FAIL near tangent reverse identity normal
+FAIL near tangent normal
+FAIL near tangent reverse identity normal
+FAIL random mixed 0 normal
+FAIL random reverse 0 normal
+FAIL random mixed 3 normal
+FAIL random reverse 3 normal
+FAIL random mixed 5 normal
+FAIL random reverse 5 normal
+FAIL random mixed 8 normal
+FAIL random reverse 8 normal
+FAIL random mixed 13 normal
+FAIL random reverse 13 normal
+FAIL random mixed 14 normal
+FAIL random reverse 14 normal
+FAIL random mixed 17 normal
+FAIL random reverse 17 normal
+SUMMARY 2648 cases 771 failures; 771 hits 1851 misses 22 uncertain

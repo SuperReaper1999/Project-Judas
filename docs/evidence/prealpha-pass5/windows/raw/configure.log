@@ -1,0 +1,55 @@
+﻿-- Running vcpkg install
+Detecting compiler hash for triplet x64-windows...
+Compiler found: C:/JudasValidation/VS2022/VC/Tools/MSVC/14.44.35207/bin/Hostx64/x64/cl.exe
+Detecting compiler hash for triplet x64-windows-static-md...
+Compiler found: C:/JudasValidation/VS2022/VC/Tools/MSVC/14.44.35207/bin/Hostx64/x64/cl.exe
+All requested packages are currently installed.
+Total install time: 1.14 ms
+The package glm provides CMake targets:
+
+    find_package(glm CONFIG REQUIRED)
+    target_link_libraries(main PRIVATE glm::glm)
+
+    # Or use the header-only version
+    find_package(glm CONFIG REQUIRED)
+    target_link_libraries(main PRIVATE glm::glm-header-only)
+
+sdl2 provides CMake targets:
+
+    find_package(SDL2 CONFIG REQUIRED)
+    target_link_libraries(main
+        PRIVATE
+        $<TARGET_NAME_IF_EXISTS:SDL2::SDL2main>
+        $<IF:$<TARGET_EXISTS:SDL2::SDL2>,SDL2::SDL2,SDL2::SDL2-static>
+    )
+
+-- Running vcpkg install - done
+-- Selecting Windows SDK version 10.0.22621.0 to target Windows 10.0.19045.
+cmake.exe : WARNHarfBuzz has a Meson port and tries to migrate all the other build systems to it, please consider 
+using it as we might remove our cmake port soon.
+At line:17 char:1
++ & cmake -S $source -B $build -G 'Visual Studio 17 2022' -A x64 "-DCMA ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (WARNHarfBuzz ha...make port soon.:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+Building introspection files on Windows requires BUILD_SHARED_LIBS to be enabled.
+CMake Deprecation Warning at P:/JudasValidation/PreAlphaPass4/Build/_deps/judas_freetype-src/CMakeLists.txt:113 
+(cmake_minimum_required):
+  Compatibility with CMake < 3.10 will be removed from a future version of
+  CMake.
+
+  Update the VERSION argument <min> value.  Or, use the <min>...<max> syntax
+  to tell CMake that the project requires at least <min> but has been updated
+  to work with policies introduced by <max> or earlier.
+
+
+-- Configuring done (19.4s)
+-- Generating done (27.6s)
+CMake Warning:
+  Manually-specified variables were not used by the project:
+
+    CMAKE_TOOLCHAIN_FILE
+
+
+-- Build files have been written to: P:/JudasValidation/PreAlphaPass4/Build

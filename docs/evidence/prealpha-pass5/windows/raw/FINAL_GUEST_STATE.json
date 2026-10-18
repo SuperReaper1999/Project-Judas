@@ -1,0 +1,20 @@
+﻿{
+    "utc":  "2026-10-18T18:22:37.2152133Z",
+    "ownedTransientDesktopTaskRemoved":  true,
+    "drives":  [
+                   {
+                       "Name":  "C",
+                       "Free":  1274859520,
+                       "Used":  41071079424
+                   },
+                   {
+                       "Name":  "P",
+                       "Free":  47304605696,
+                       "Used":  6382481408
+                   }
+               ],
+    "remainingTask":  [
+
+                      ],
+    "preservedScope":  "No VM configuration, installed toolchain, Windows system/personal data or unrelated scheduled task changes"
+}

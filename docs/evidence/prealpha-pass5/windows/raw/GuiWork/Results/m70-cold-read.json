@@ -1,0 +1,18 @@
+﻿{
+    "label":  "m70-cold-read",
+    "executable":  "P:\\JudasValidation\\PreAlphaPass5\\GuiWork\\NativeTests\\judas_character_lab_tests.exe",
+    "arguments":  [
+                      "P:\\JudasValidation\\PreAlphaPass5\\GuiWork\\ColdCases\\m70-cold",
+                      "cold-read"
+                  ],
+    "cwd":  "P:\\JudasValidation\\PreAlphaPass5\\GuiWork\\Projects",
+    "exit":  0,
+    "expected":  0,
+    "passed":  true,
+    "requiredOutput":  "",
+    "seconds":  0.8287143,
+    "stdout":  "PASS actual GL host: \r\nPASS ordinary registered project: \r\nPASS approved fixture is a full 65-joint six-part two-skin source\r\nPASS variation has different names and proportions\r\nPASS new process reads committed M61 slot: \r\nPASS fresh process gets ordinary captured scene: \r\nPASS new process constructs ordinary participants: loading\r\nPASS new process restores complete native records: \r\nPASS fresh process restores multi-target mapping, crossfade and masked layers\r\nPASS fresh process restores actual partial authority without previous drive observations\r\nCOLD deferred_script_state={}\r\nCOLD synchronized_script_state={\"boards\":{},\"carry\":true,\"clip\":true,\"effort\":1,\"elapsed\":0.9333333820104599,\"hidden\":true,\"impossible\":false,\"initialized\":[\"10\",\"11\"],\"pitch\":-0.06,\"refusal\":\"\",\"spawned\":[],\"variant\":false,\"yaw\":0}\r\nPASS loaded JS instance materializes durable state before its first callback\r\nPASS fresh restore advances without replaying default initialization or hidden/layer toggles\r\nPASS first resumed steps preserve physical authority and finite final pose\r\nPASS fresh process restore callbacks safe\r\nSUMMARY 14 checks 0 failures\r\n",
+    "stderr":  "Shadow maps: on\r\nGraphics: 4.6 (Core Profile) Mesa 26.2.4 (git-9a0169f2a7) / llvmpipe (LLVM 23.1.2, 256 bits)\r\nRenderer fragment texture units: 32 (material path uses 12)\r\n",
+    "desktopIdentity":  "DESKTOP-935HKD1\\Conner",
+    "sessionId":  1
+}

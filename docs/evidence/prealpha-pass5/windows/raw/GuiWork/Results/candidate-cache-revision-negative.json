@@ -1,0 +1,17 @@
+﻿{
+    "label":  "candidate-cache-revision-negative",
+    "executable":  "P:\\JudasValidation\\PreAlphaPass5\\GuiWork\\NativeTests\\judas_impact_candidate_cache_tests.exe",
+    "arguments":  [
+                      "--omit-revision"
+                  ],
+    "cwd":  "P:\\JudasValidation\\PreAlphaPass5\\GuiWork\\Projects",
+    "exit":  1,
+    "expected":  1,
+    "passed":  true,
+    "requiredOutput":  "",
+    "seconds":  1.3437599999999998,
+    "stdout":  "PASS contained query equals independently sorted tree output including tangency\r\nPASS unchanged global proxy revision reuses both tight and fat queries\r\nPASS exact ascending candidate identity order is preserved\r\nPASS strict fat-only candidate is excluded by the actual subset query\r\nPASS oversized fat superset falls back to the exact requested subset\r\nPASS saturated budget avoids repeating the larger preliminary fat query\r\nFAIL another proxy enters a cached query while querying body\u0027s own bound is unchanged\r\nSUMMARY 7 checks 1 failures (intentional missing-revision control)\r\n",
+    "stderr":  "",
+    "desktopIdentity":  "DESKTOP-935HKD1\\Conner",
+    "sessionId":  1
+}

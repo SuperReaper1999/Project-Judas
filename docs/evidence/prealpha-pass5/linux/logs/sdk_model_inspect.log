@@ -1,0 +1,212 @@
+{
+  "clips": [
+    {
+      "duration": 2.0,
+      "name": "Idle",
+      "rootMotion": false
+    },
+    {
+      "duration": 2.0,
+      "name": "Carry",
+      "rootMotion": false
+    },
+    {
+      "duration": 2.0,
+      "name": "Wave",
+      "rootMotion": false
+    },
+    {
+      "duration": 2.0,
+      "name": "HeadHidden",
+      "rootMotion": false
+    }
+  ],
+  "joints": [
+    "OriginHelper",
+    "OriginHelper/Pivot",
+    "OriginHelper/Pivot/Vertebra0",
+    "OriginHelper/Pivot/Vertebra0/Vertebra1",
+    "OriginHelper/Pivot/Vertebra0/Vertebra1/NeckConnector",
+    "OriginHelper/Pivot/Vertebra0/Vertebra1/NeckConnector/Cranial",
+    "OriginHelper/Pivot/Vertebra0/Vertebra1/CollarA",
+    "OriginHelper/Pivot/Vertebra0/Vertebra1/CollarA/ShoulderA",
+    "OriginHelper/Pivot/Vertebra0/Vertebra1/CollarA/ShoulderA/ElbowA",
+    "OriginHelper/Pivot/Vertebra0/Vertebra1/CollarA/ShoulderA/ElbowA/PalmA",
+    "OriginHelper/Pivot/Vertebra0/Vertebra1/CollarA/ShoulderA/ElbowA/PalmA/DigitA00",
+    "OriginHelper/Pivot/Vertebra0/Vertebra1/CollarA/ShoulderA/ElbowA/PalmA/DigitA00/DigitA01",
+    "OriginHelper/Pivot/Vertebra0/Vertebra1/CollarA/ShoulderA/ElbowA/PalmA/DigitA00/DigitA01/DigitA02",
+    "OriginHelper/Pivot/Vertebra0/Vertebra1/CollarA/ShoulderA/ElbowA/PalmA/DigitA10",
+    "OriginHelper/Pivot/Vertebra0/Vertebra1/CollarA/ShoulderA/ElbowA/PalmA/DigitA10/DigitA11",
+    "OriginHelper/Pivot/Vertebra0/Vertebra1/CollarA/ShoulderA/ElbowA/PalmA/DigitA10/DigitA11/DigitA12",
+    "OriginHelper/Pivot/Vertebra0/Vertebra1/CollarA/ShoulderA/ElbowA/PalmA/DigitA20",
+    "OriginHelper/Pivot/Vertebra0/Vertebra1/CollarA/ShoulderA/ElbowA/PalmA/DigitA20/DigitA21",
+    "OriginHelper/Pivot/Vertebra0/Vertebra1/CollarA/ShoulderA/ElbowA/PalmA/DigitA20/DigitA21/DigitA22",
+    "OriginHelper/Pivot/Vertebra0/Vertebra1/CollarA/ShoulderA/ElbowA/PalmA/DigitA30",
+    "OriginHelper/Pivot/Vertebra0/Vertebra1/CollarA/ShoulderA/ElbowA/PalmA/DigitA30/DigitA31",
+    "OriginHelper/Pivot/Vertebra0/Vertebra1/CollarA/ShoulderA/ElbowA/PalmA/DigitA30/DigitA31/DigitA32",
+    "OriginHelper/Pivot/Vertebra0/Vertebra1/CollarA/ShoulderA/ElbowA/PalmA/DigitA40",
+    "OriginHelper/Pivot/Vertebra0/Vertebra1/CollarA/ShoulderA/ElbowA/PalmA/DigitA40/DigitA41",
+    "OriginHelper/Pivot/Vertebra0/Vertebra1/CollarA/ShoulderA/ElbowA/PalmA/DigitA40/DigitA41/DigitA42",
+    "OriginHelper/Pivot/ThighA",
+    "OriginHelper/Pivot/ThighA/ShinA",
+    "OriginHelper/Pivot/ThighA/ShinA/SoleA",
+    "OriginHelper/Pivot/ThighA/ShinA/SoleA/ToeHelperA",
+    "OriginHelper/Pivot/Vertebra0/Vertebra1/CollarB",
+    "OriginHelper/Pivot/Vertebra0/Vertebra1/CollarB/ShoulderB",
+    "OriginHelper/Pivot/Vertebra0/Vertebra1/CollarB/ShoulderB/ElbowB",
+    "OriginHelper/Pivot/Vertebra0/Vertebra1/CollarB/ShoulderB/ElbowB/PalmB",
+    "OriginHelper/Pivot/Vertebra0/Vertebra1/CollarB/ShoulderB/ElbowB/PalmB/DigitB00",
+    "OriginHelper/Pivot/Vertebra0/Vertebra1/CollarB/ShoulderB/ElbowB/PalmB/DigitB00/DigitB01",
+    "OriginHelper/Pivot/Vertebra0/Vertebra1/CollarB/ShoulderB/ElbowB/PalmB/DigitB00/DigitB01/DigitB02",
+    "OriginHelper/Pivot/Vertebra0/Vertebra1/CollarB/ShoulderB/ElbowB/PalmB/DigitB10",
+    "OriginHelper/Pivot/Vertebra0/Vertebra1/CollarB/ShoulderB/ElbowB/PalmB/DigitB10/DigitB11",
+    "OriginHelper/Pivot/Vertebra0/Vertebra1/CollarB/ShoulderB/ElbowB/PalmB/DigitB10/DigitB11/DigitB12",
+    "OriginHelper/Pivot/Vertebra0/Vertebra1/CollarB/ShoulderB/ElbowB/PalmB/DigitB20",
+    "OriginHelper/Pivot/Vertebra0/Vertebra1/CollarB/ShoulderB/ElbowB/PalmB/DigitB20/DigitB21",
+    "OriginHelper/Pivot/Vertebra0/Vertebra1/CollarB/ShoulderB/ElbowB/PalmB/DigitB20/DigitB21/DigitB22",
+    "OriginHelper/Pivot/Vertebra0/Vertebra1/CollarB/ShoulderB/ElbowB/PalmB/DigitB30",
+    "OriginHelper/Pivot/Vertebra0/Vertebra1/CollarB/ShoulderB/ElbowB/PalmB/DigitB30/DigitB31",
+    "OriginHelper/Pivot/Vertebra0/Vertebra1/CollarB/ShoulderB/ElbowB/PalmB/DigitB30/DigitB31/DigitB32",
+    "OriginHelper/Pivot/Vertebra0/Vertebra1/CollarB/ShoulderB/ElbowB/PalmB/DigitB40",
+    "OriginHelper/Pivot/Vertebra0/Vertebra1/CollarB/ShoulderB/ElbowB/PalmB/DigitB40/DigitB41",
+    "OriginHelper/Pivot/Vertebra0/Vertebra1/CollarB/ShoulderB/ElbowB/PalmB/DigitB40/DigitB41/DigitB42",
+    "OriginHelper/Pivot/ThighB",
+    "OriginHelper/Pivot/ThighB/ShinB",
+    "OriginHelper/Pivot/ThighB/ShinB/SoleB",
+    "OriginHelper/Pivot/ThighB/ShinB/SoleB/ToeHelperB",
+    "OriginHelper/Pivot/Vertebra0/Vertebra1/Auxiliary52",
+    "OriginHelper/Pivot/Vertebra0/Vertebra1/NeckConnector/Auxiliary53",
+    "OriginHelper/Pivot/Vertebra0/Vertebra1/NeckConnector/Cranial/Auxiliary54",
+    "OriginHelper/Pivot/Auxiliary55",
+    "OriginHelper/Pivot/Vertebra0/Auxiliary56",
+    "OriginHelper/Pivot/Vertebra0/Vertebra1/Auxiliary57",
+    "OriginHelper/Pivot/Vertebra0/Vertebra1/NeckConnector/Auxiliary58",
+    "OriginHelper/Pivot/Vertebra0/Vertebra1/NeckConnector/Cranial/Auxiliary59",
+    "OriginHelper/Pivot/Auxiliary60",
+    "OriginHelper/Pivot/Vertebra0/Auxiliary61",
+    "OriginHelper/Pivot/Vertebra0/Vertebra1/Auxiliary62",
+    "OriginHelper/Pivot/Vertebra0/Vertebra1/NeckConnector/Auxiliary63",
+    "OriginHelper/Pivot/Vertebra0/Vertebra1/NeckConnector/Cranial/Auxiliary64",
+    "VisualPart0",
+    "VisualPart1",
+    "VisualPart2",
+    "VisualPart3",
+    "VisualPart4",
+    "VisualPart5"
+  ],
+  "materialDefaults": [
+    {
+      "alpha": 0,
+      "factor": [
+        0.1899999976158142,
+        0.46000000834465027,
+        0.6899999976158142,
+        1.0
+      ],
+      "imageAlphaMax": 0,
+      "imageAlphaMin": 255
+    },
+    {
+      "alpha": 0,
+      "factor": [
+        0.8500000238418579,
+        0.6499999761581421,
+        0.3499999940395355,
+        1.0
+      ],
+      "imageAlphaMax": 0,
+      "imageAlphaMin": 255
+    },
+    {
+      "alpha": 0,
+      "factor": [
+        0.7599999904632568,
+        0.2800000011920929,
+        0.20999999344348907,
+        1.0
+      ],
+      "imageAlphaMax": 0,
+      "imageAlphaMin": 255
+    },
+    {
+      "alpha": 0,
+      "factor": [
+        0.7599999904632568,
+        0.2800000011920929,
+        0.20999999344348907,
+        1.0
+      ],
+      "imageAlphaMax": 0,
+      "imageAlphaMin": 255
+    },
+    {
+      "alpha": 0,
+      "factor": [
+        0.23999999463558197,
+        0.6399999856948853,
+        0.38999998569488525,
+        1.0
+      ],
+      "imageAlphaMax": 0,
+      "imageAlphaMin": 255
+    },
+    {
+      "alpha": 0,
+      "factor": [
+        0.23999999463558197,
+        0.6399999856948853,
+        0.38999998569488525,
+        1.0
+      ],
+      "imageAlphaMax": 0,
+      "imageAlphaMin": 255
+    }
+  ],
+  "materials": [
+    "Original part 0",
+    "Original part 1",
+    "Original part 2",
+    "Original part 3",
+    "Original part 4",
+    "Original part 5"
+  ],
+  "parts": [
+    {
+      "identity": "VisualPart0/material/Original part 0",
+      "material": 0,
+      "ordinal": 0,
+      "triangles": 36
+    },
+    {
+      "identity": "VisualPart1/material/Original part 1",
+      "material": 1,
+      "ordinal": 1,
+      "triangles": 24
+    },
+    {
+      "identity": "VisualPart2/material/Original part 2",
+      "material": 2,
+      "ordinal": 2,
+      "triangles": 36
+    },
+    {
+      "identity": "VisualPart3/material/Original part 3",
+      "material": 3,
+      "ordinal": 3,
+      "triangles": 36
+    },
+    {
+      "identity": "VisualPart4/material/Original part 4",
+      "material": 4,
+      "ordinal": 4,
+      "triangles": 36
+    },
+    {
+      "identity": "VisualPart5/material/Original part 5",
+      "material": 5,
+      "ordinal": 5,
+      "triangles": 36
+    }
+  ],
+  "skeletonSignature": "8d36eb77b88ad2ded3372ccaef70eb1511101fa760dda5b74f81cf05ed4a3e71"
+}

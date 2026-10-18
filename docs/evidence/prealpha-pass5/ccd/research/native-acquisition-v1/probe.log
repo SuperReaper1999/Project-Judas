@@ -1,0 +1,11 @@
+OLD_ANCHOR result=2 intervals=1025 certificates=511
+CONTROL preserved original causal interval remains uncertified passed=1
+SIDES start=0.00070536570677120147 end=-0.00035343429942181342
+CONTROL actual targetface crosses ordinary front reference passed=1
+NATIVE_ACQUISITION time=0.012135176570080453 side=1.5098949469188883e-09 features=76,81,
+CONTROL later ordinary finite front witness really exists passed=1
+NEW_ANCHOR result=0 intervals=509 certificates=255 endfeatures=81,
+CONTROL later independent acquisition has certified finite continuation passed=1
+CONTROL every endpoint history-sensitive feature is covered passed=1
+CONTROL genuine behind-center response retained using new acquisition passed=1
+checks=6 failures=0

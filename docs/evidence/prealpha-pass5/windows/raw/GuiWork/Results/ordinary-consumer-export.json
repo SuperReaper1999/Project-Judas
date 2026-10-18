@@ -1,0 +1,18 @@
+﻿{
+    "label":  "ordinary-consumer-export",
+    "executable":  "P:\\JudasValidation\\PreAlphaPass5\\GuiWork\\QualifiedApps\\judas_export.exe",
+    "arguments":  [
+                      "P:\\JudasValidation\\PreAlphaPass5\\GuiWork\\Projects\\projects\\physics_stress_lab\\physics_stress_lab.judasproj",
+                      "P:\\JudasValidation\\PreAlphaPass5\\GuiWork\\Export Original"
+                  ],
+    "cwd":  "P:\\JudasValidation\\PreAlphaPass5\\GuiWork\\UnrelatedCwd",
+    "exit":  0,
+    "expected":  0,
+    "passed":  true,
+    "requiredOutput":  "",
+    "seconds":  1.7030893999999999,
+    "stdout":  "Exported P:\\JudasValidation\\PreAlphaPass5\\GuiWork\\Export Original: 6 assets, 4 scenes, 58803881 bytes, 1.548 seconds\r\n",
+    "stderr":  "",
+    "desktopIdentity":  "DESKTOP-935HKD1\\Conner",
+    "sessionId":  1
+}

@@ -1,0 +1,20 @@
+FAIL independent overlap localWitnessA
+FAIL near tangent localWitnessA
+FAIL near tangent reverse identity localWitnessA
+FAIL near tangent localWitnessA
+FAIL near tangent reverse identity localWitnessA
+FAIL random mixed 0 localAnchorA
+FAIL random reverse 0 localAnchorA
+FAIL random mixed 3 localAnchorA
+FAIL random reverse 3 localAnchorA
+FAIL random mixed 5 localAnchorA
+FAIL random reverse 5 localAnchorA
+FAIL random mixed 8 localAnchorA
+FAIL random reverse 8 localAnchorA
+FAIL random mixed 13 localAnchorA
+FAIL random reverse 13 localAnchorA
+FAIL random mixed 14 localAnchorA
+FAIL random reverse 14 localAnchorA
+FAIL random mixed 17 localAnchorA
+FAIL random reverse 17 localAnchorA
+SUMMARY 2653 cases 774 failures; 774 hits 1851 misses 22 uncertain

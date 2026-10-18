@@ -1,0 +1,70 @@
+{
+  "source_sha256": "6d10eab74dee3c4703030f6dbbdb80d71cca81ec1a8ec013c59cb598482e01da",
+  "commands": [
+    {
+      "name": "compile",
+      "argv": [
+        "c++",
+        "-O3",
+        "-DNDEBUG",
+        "-std=c++17",
+        "-I/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass5/ccd/union-v4/sources",
+        "-I/home/conner/Documents/GitHub/Project-Judas/src",
+        "-I/home/conner/Documents/GitHub/Project-Judas/tests",
+        "-c",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass5/ccd/union-v4/capture-first/Capture.cpp",
+        "-o",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass5/ccd/union-v4/capture-first/capture.o"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+      "seconds": 2.7697736750014883,
+      "exit": 0
+    },
+    {
+      "name": "link",
+      "argv": [
+        "/usr/bin/c++",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass5/ccd/union-v4/capture-first/capture.o",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass5/ccd/union-v4/UnifiedWorld.cpp.o",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass5/ccd/union-v4/CollisionGeometry.cpp.o",
+        "-O3",
+        "-DNDEBUG",
+        "-o",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass5/ccd/union-v4/capture-first/capture",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass5/ccd/union-v4/engine-without-world.a",
+        "libjudas_profiler.a",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass5/baseline/libjudas_build_identity.a",
+        "libjudas_app_icon.a",
+        "libjudas_materials.a",
+        "libjudas_profiler.a",
+        "/usr/lib/x86_64-linux-gnu/libSDL2.so",
+        "libjudas_glad.a",
+        "libjudas_audio_backend.a",
+        "libjudas_meshoptimizer.a",
+        "libjudas_navigation_cook.a",
+        "libjudas_navigation_backend.a",
+        "libjudas_quickjs.a",
+        "-lm",
+        "_deps/judas_freetype-build/libfreetype.a",
+        "_deps/judas_harfbuzz-build/libharfbuzz.a",
+        "unicode/icu/lib/libicui18n.a",
+        "unicode/icu/lib/libicuuc.a",
+        "unicode/icu/lib/libicudata.a",
+        "-ldl",
+        "libjudas_jobs.a"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas/build",
+      "seconds": 0.11462296999889077,
+      "exit": 0
+    },
+    {
+      "name": "capture",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass5/ccd/union-v4/capture-first/capture"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+      "seconds": 0.0641840759999468,
+      "exit": 1
+    }
+  ]
+}

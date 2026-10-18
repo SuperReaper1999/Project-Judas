@@ -1,0 +1,178 @@
+{
+  "schema": 1,
+  "physicalComparedFields": [
+    "step",
+    "frame",
+    "bodies",
+    "awake",
+    "sleeping",
+    "candidates",
+    "contacts",
+    "impact_events",
+    "impact_queries",
+    "impact_iterations",
+    "impact_peak",
+    "trajectory_digest",
+    "max_linear_speed",
+    "max_angular_speed",
+    "nonfinite_fields"
+  ],
+  "steps": 270,
+  "physicalDifferences": [],
+  "endpointDifferences": {
+    "observation_ms": [
+      31.502486,
+      30.283795
+    ]
+  },
+  "timeStageOrder": [
+    "FullPair",
+    "Context",
+    "Sat",
+    "Witness"
+  ],
+  "worstPhysicalStep": {
+    "events": 51,
+    "categories": [
+      {
+        "mode": "discovery",
+        "queries": 467747,
+        "aabbRejected": 342322,
+        "hits": 77799,
+        "misses": 389948,
+        "uncertain": 0,
+        "axesAttempted": 579529,
+        "axesEvaluated": 579529,
+        "matrixRows": 146738,
+        "faceWitness": 33275,
+        "edgeWitness": 776,
+        "clipCalls": 133100,
+        "fallbackCorners": 0,
+        "predicates": 1252710,
+        "exactFallbacks": 0,
+        "numericFallbacks": 0,
+        "canonicalHits": 25379,
+        "reversedHits": 52420,
+        "equalPose": 1779,
+        "equalPoseOtherMode": 1,
+        "timesNs": [
+          485131416,
+          35835430,
+          252805338,
+          19111471
+        ],
+        "timerCalls": [
+          467747,
+          125425,
+          56725,
+          34051
+        ]
+      },
+      {
+        "mode": "response",
+        "queries": 52420,
+        "aabbRejected": 0,
+        "hits": 52420,
+        "misses": 0,
+        "uncertain": 0,
+        "axesAttempted": 373440,
+        "axesEvaluated": 373440,
+        "matrixRows": 74688,
+        "faceWitness": 24543,
+        "edgeWitness": 353,
+        "clipCalls": 98172,
+        "fallbackCorners": 0,
+        "predicates": 774404,
+        "exactFallbacks": 0,
+        "numericFallbacks": 0,
+        "canonicalHits": 52420,
+        "reversedHits": 0,
+        "equalPose": 858,
+        "equalPoseOtherMode": 0,
+        "timesNs": [
+          209985951,
+          16954260,
+          148991610,
+          13086908
+        ],
+        "timerCalls": [
+          52420,
+          52420,
+          24896,
+          24896
+        ]
+      }
+    ]
+  },
+  "totals": [
+    {
+      "queries": 5136462,
+      "aabbRejected": 3910024,
+      "hits": 797731,
+      "misses": 4338731,
+      "uncertain": 0,
+      "axesAttempted": 5924321,
+      "axesEvaluated": 5923553,
+      "matrixRows": 1446924,
+      "faceWitness": 346387,
+      "edgeWitness": 8294,
+      "clipCalls": 1385548,
+      "fallbackCorners": 0,
+      "predicates": 12779152,
+      "exactFallbacks": 43,
+      "numericFallbacks": 0,
+      "canonicalHits": 262189,
+      "reversedHits": 535542,
+      "equalPose": 14920,
+      "equalPoseOtherMode": 220,
+      "timesNs": [
+        5161202245,
+        357965783,
+        2595101755,
+        205138061
+      ],
+      "timerCalls": [
+        5136462,
+        1226438,
+        539274,
+        354681
+      ],
+      "mode": "discovery"
+    },
+    {
+      "queries": 535542,
+      "aabbRejected": 0,
+      "hits": 535542,
+      "misses": 0,
+      "uncertain": 0,
+      "axesAttempted": 3829140,
+      "axesEvaluated": 3828630,
+      "matrixRows": 765828,
+      "faceWitness": 251299,
+      "edgeWitness": 3977,
+      "clipCalls": 1005196,
+      "fallbackCorners": 0,
+      "predicates": 7938036,
+      "exactFallbacks": 43,
+      "numericFallbacks": 0,
+      "canonicalHits": 535542,
+      "reversedHits": 0,
+      "equalPose": 4477,
+      "equalPoseOtherMode": 225,
+      "timesNs": [
+        2144241952,
+        168359720,
+        1532247860,
+        137126898
+      ],
+      "timerCalls": [
+        535542,
+        535542,
+        255276,
+        255276
+      ],
+      "mode": "response"
+    }
+  ],
+  "scope": "Observer-only nested timing/counters for rich PairAt discovery/response. All original calls/arithmetic retained. Boolean/CCD callers outside these wrappers are not independently timed; these subcost timings are not accepted performance measurements."
+}

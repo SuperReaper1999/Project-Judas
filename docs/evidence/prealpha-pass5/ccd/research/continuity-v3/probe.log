@@ -1,0 +1,12 @@
+stationary straddler result=0 intervals=1 witness_certificates=0 constant_certificates=1 separated_at=-1
+finite slide result=0 intervals=1 witness_certificates=1 constant_certificates=0 separated_at=-1
+low spin finite slide result=0 intervals=1 witness_certificates=1 constant_certificates=0 separated_at=-1
+actual finite departure result=1 intervals=0 witness_certificates=0 constant_certificates=0 separated_at=0.0166667
+transient control endpoints=1,1
+high spin hidden finite exit and reentry result=1 intervals=2 witness_certificates=0 constant_certificates=0 separated_at=0.00416667
+uncertified bounded interval is explicit result=2 intervals=1 witness_certificates=0 constant_certificates=0 separated_at=-1
+exact grazing translation result=0 intervals=1 witness_certificates=1 constant_certificates=0 separated_at=-1
+nonzero compound offset and child rotation result=0 intervals=1 witness_certificates=1 constant_certificates=0 separated_at=-1
+arbitrary rotated translated chart result=0 intervals=1 witness_certificates=1 constant_certificates=0 separated_at=-1
+nonaxis halfturn chart result=0 intervals=1 witness_certificates=1 constant_certificates=0 separated_at=-1
+checks=11 failures=0

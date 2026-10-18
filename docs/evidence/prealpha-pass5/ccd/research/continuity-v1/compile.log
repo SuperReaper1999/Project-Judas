@@ -1,0 +1,13 @@
+/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass5/ccd/ContinuityProbe.cpp: In function ‘int main()’:
+/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass5/ccd/ContinuityProbe.cpp:9:58: error: no matching function for call to ‘Shape::Cooked(std::shared_ptr<CollisionAsset>&)’
+    9 |     PrimitivePose mesh, query; mesh.shape = Shape::Cooked(asset);
+      |                                             ~~~~~~~~~~~~~^~~~~~~
+/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass5/ccd/ContinuityProbe.cpp:9:58: note: there is 1 candidate
+In file included from /home/conner/Documents/GitHub/Project-Judas/src/Narrowphase.h:7,
+                 from /home/conner/Documents/GitHub/Project-Judas/src/CollisionGeometry.h:2,
+                 from /home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass5/ccd/MeshContinuityProbe.h:4,
+                 from /home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass5/ccd/ContinuityProbe.cpp:1:
+/home/conner/Documents/GitHub/Project-Judas/src/CollisionShapes.h:50:18: note: candidate 1: ‘static Shape Shape::Cooked(std::shared_ptr<const CollisionAsset>, std::string)’
+   50 |     static Shape Cooked(std::shared_ptr<const CollisionAsset> asset, std::string id);
+      |                  ^~~~~~
+/home/conner/Documents/GitHub/Project-Judas/src/CollisionShapes.h:50:18: note: candidate expects 2 arguments, 1 provided

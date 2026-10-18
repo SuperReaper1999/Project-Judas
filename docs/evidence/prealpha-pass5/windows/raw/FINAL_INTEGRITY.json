@@ -1,0 +1,200 @@
+{
+  "schema": 1,
+  "utc": "2026-10-18T18:22:35Z",
+  "sourceFilesVerified": 1438,
+  "sourceExtraFiles": [],
+  "sourceIdentity": {
+    "architecture": "AMD64",
+    "build_id": "0.1.0-prealpha-Experimental-139d0de-clean-b271ec3d7937",
+    "channel": "Experimental",
+    "compiler": "MSVC",
+    "compiler_version": "19.44.35229.0",
+    "configuration": "Release",
+    "maturity": "pre-alpha",
+    "platform": "Windows",
+    "schema": 1,
+    "source_dirty": false,
+    "source_fingerprint": "b271ec3d79377a74284bae8f0ae666f6576395488e5680d74c391754f9a17315",
+    "source_origin": "archive",
+    "source_revision": "139d0de20e2e443bd186a6ed8f786eaa223cbba6",
+    "source_tree": "e114eacd8195cc7362ff3542040ab85a9dcde9ed",
+    "source_untracked_count": 0,
+    "source_untracked_fingerprint": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "version": "0.1.0-prealpha"
+  },
+  "sourceErrors": [],
+  "unexpectedFunctionalResults": [],
+  "knownOriginalCurvedContinuationFailurePreserved": true,
+  "initialMissingFixtureSetupFailurePreserved": true,
+  "correctedFixtureFollowup": true,
+  "acceptedNativeBackupsVerified": 26,
+  "acceptedPristinePackageVerified": 41,
+  "acceptedOriginalSourceArchiveVerified": true,
+  "binaryFiles": [
+    {
+      "path": "P:\\JudasValidation\\PreAlphaPass5\\GuiWork\\QualifiedApps\\judas.exe",
+      "bytes": 12043776,
+      "sha256": "cf3c4008b068312cf608d4b40cd7958d8e6568db4ab6d104a17091da2ef4c88e"
+    },
+    {
+      "path": "P:\\JudasValidation\\PreAlphaPass5\\GuiWork\\QualifiedApps\\judas_editor.exe",
+      "bytes": 15011328,
+      "sha256": "5dab169962d38c0428fa9ba2de832756418464c1594ca030393b1eebbe1d97a0"
+    },
+    {
+      "path": "P:\\JudasValidation\\PreAlphaPass5\\GuiWork\\QualifiedApps\\judas_export.exe",
+      "bytes": 9260032,
+      "sha256": "3910b6a93cae04dd50fe375061dc8729f7a390b1832b66eae08d5d0e55254894"
+    },
+    {
+      "path": "P:\\JudasValidation\\PreAlphaPass5\\GuiWork\\NativeTests\\judas_balance_lab_tests.exe",
+      "bytes": 10967040,
+      "sha256": "5d7ac90db333cfd6b5c4e5a3ddeccae32feca3ccc61066dc73ae2eb4e9d82519"
+    },
+    {
+      "path": "P:\\JudasValidation\\PreAlphaPass5\\GuiWork\\NativeTests\\judas_character_lab_tests.exe",
+      "bytes": 10571776,
+      "sha256": "a5b7155337c9df39678730540a27543481c1529d8b83f160bc545d3b7c84b59c"
+    },
+    {
+      "path": "P:\\JudasValidation\\PreAlphaPass5\\GuiWork\\NativeTests\\judas_character_motor_tests.exe",
+      "bytes": 8882176,
+      "sha256": "8fee2872f06ccde20da072d625c4daef38ae69d93d4518e6695f1baa318d58d2"
+    },
+    {
+      "path": "P:\\JudasValidation\\PreAlphaPass5\\GuiWork\\NativeTests\\judas_contact_cache_tests.exe",
+      "bytes": 634880,
+      "sha256": "bda963017e1f76b1aa4bfea717abb5522e01d16c0cef740545cdb17c4ac662f9"
+    },
+    {
+      "path": "P:\\JudasValidation\\PreAlphaPass5\\GuiWork\\NativeTests\\judas_contact_lifecycle_tests.exe",
+      "bytes": 9472512,
+      "sha256": "ef9233dc5e6e5156435172b105a65f28a371323395c711942bd79d2874b9da48"
+    },
+    {
+      "path": "P:\\JudasValidation\\PreAlphaPass5\\GuiWork\\NativeTests\\judas_impact_candidate_cache_tests.exe",
+      "bytes": 52736,
+      "sha256": "afb8edfc997a0300a3a0cfbaef729dc53f5df19922fa5a79b5322f3201f1e370"
+    },
+    {
+      "path": "P:\\JudasValidation\\PreAlphaPass5\\GuiWork\\NativeTests\\judas_impact_mesh_cost_tests.exe",
+      "bytes": 680960,
+      "sha256": "48171c2f91daf73d343941888259ac844c067467c1b8bce1b48175c606501c5b"
+    },
+    {
+      "path": "P:\\JudasValidation\\PreAlphaPass5\\GuiWork\\NativeTests\\judas_impact_robustness_tests.exe",
+      "bytes": 680960,
+      "sha256": "0e01cbe04f298e82ea3c5a117a3dcd0dea72460f25631e7462af5d30b402ee6a"
+    },
+    {
+      "path": "P:\\JudasValidation\\PreAlphaPass5\\GuiWork\\NativeTests\\judas_impact_timing_tests.exe",
+      "bytes": 618496,
+      "sha256": "87f60b8a609d7a176a442ab51c3c1a92f524cf1b1cf6beae4656d80f1e866ed5"
+    },
+    {
+      "path": "P:\\JudasValidation\\PreAlphaPass5\\GuiWork\\NativeTests\\judas_origin_admission_tests.exe",
+      "bytes": 8735744,
+      "sha256": "2010966de0bc6901cc0a258ac19c7352a321a0c516c8c94b94a2ddea940740d2"
+    },
+    {
+      "path": "P:\\JudasValidation\\PreAlphaPass5\\GuiWork\\NativeTests\\judas_physics_continuation_tests.exe",
+      "bytes": 9124352,
+      "sha256": "eff1ce595eea6702064d95bf390cc9cc8b37aafe535ebe7ddc849b102328f6fb"
+    },
+    {
+      "path": "P:\\JudasValidation\\PreAlphaPass5\\GuiWork\\NativeTests\\judas_rigid_motion_tests.exe",
+      "bytes": 590848,
+      "sha256": "5d42589c734dba12c4285ecfddf1ee9a2f425dc8f54d2515499c77f8056f8eb4"
+    },
+    {
+      "path": "P:\\JudasValidation\\PreAlphaPass5\\GuiWork\\NativeTests\\judas_world_persistence_tests.exe",
+      "bytes": 9078784,
+      "sha256": "ce93fe030e5dcc6650dfd821965ffa7b241873a58cf7443d74e25d1327a8d306"
+    }
+  ],
+  "nativeToolIdentities": [
+    {
+      "tool": "judas",
+      "identity": {
+        "architecture": "AMD64",
+        "build_id": "0.1.0-prealpha-Experimental-139d0de-clean-b271ec3d7937",
+        "channel": "Experimental",
+        "compiler": "MSVC",
+        "compiler_version": "19.44.35229.0",
+        "configuration": "Release",
+        "maturity": "pre-alpha",
+        "platform": "Windows",
+        "schema": 1,
+        "source_dirty": false,
+        "source_fingerprint": "b271ec3d79377a74284bae8f0ae666f6576395488e5680d74c391754f9a17315",
+        "source_origin": "archive",
+        "source_revision": "139d0de20e2e443bd186a6ed8f786eaa223cbba6",
+        "source_tree": "e114eacd8195cc7362ff3542040ab85a9dcde9ed",
+        "source_untracked_count": 0,
+        "source_untracked_fingerprint": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "version": "0.1.0-prealpha"
+      }
+    },
+    {
+      "tool": "judas_editor",
+      "identity": {
+        "architecture": "AMD64",
+        "build_id": "0.1.0-prealpha-Experimental-139d0de-clean-b271ec3d7937",
+        "channel": "Experimental",
+        "compiler": "MSVC",
+        "compiler_version": "19.44.35229.0",
+        "configuration": "Release",
+        "maturity": "pre-alpha",
+        "platform": "Windows",
+        "schema": 1,
+        "source_dirty": false,
+        "source_fingerprint": "b271ec3d79377a74284bae8f0ae666f6576395488e5680d74c391754f9a17315",
+        "source_origin": "archive",
+        "source_revision": "139d0de20e2e443bd186a6ed8f786eaa223cbba6",
+        "source_tree": "e114eacd8195cc7362ff3542040ab85a9dcde9ed",
+        "source_untracked_count": 0,
+        "source_untracked_fingerprint": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "version": "0.1.0-prealpha"
+      }
+    },
+    {
+      "tool": "judas_export",
+      "identity": {
+        "architecture": "AMD64",
+        "build_id": "0.1.0-prealpha-Experimental-139d0de-clean-b271ec3d7937",
+        "channel": "Experimental",
+        "compiler": "MSVC",
+        "compiler_version": "19.44.35229.0",
+        "configuration": "Release",
+        "maturity": "pre-alpha",
+        "platform": "Windows",
+        "schema": 1,
+        "source_dirty": false,
+        "source_fingerprint": "b271ec3d79377a74284bae8f0ae666f6576395488e5680d74c391754f9a17315",
+        "source_origin": "archive",
+        "source_revision": "139d0de20e2e443bd186a6ed8f786eaa223cbba6",
+        "source_tree": "e114eacd8195cc7362ff3542040ab85a9dcde9ed",
+        "source_untracked_count": 0,
+        "source_untracked_fingerprint": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "version": "0.1.0-prealpha"
+      }
+    }
+  ],
+  "engineArchive": {
+    "path": "P:\\JudasValidation\\PreAlphaPass4\\Build\\Release\\judas_engine.lib",
+    "bytes": 93329738,
+    "sha256": "c685583363ee7b2cfd5506a9dc7e650cdd19a46f85023b665ba78d8a6ca8e662"
+  },
+  "isolatedSoftwareOverlay": [
+    {
+      "path": "P:\\JudasValidation\\PreAlphaPass5\\GuiWork\\QualifiedApps\\opengl32.dll",
+      "sha256": "75b295fc80df0eaa8f1264c28663f6932c8b72d36513eb092556608858b7f5e0"
+    },
+    {
+      "path": "P:\\JudasValidation\\PreAlphaPass5\\GuiWork\\QualifiedApps\\libgallium_wgl.dll",
+      "sha256": "53e49adf87590d5b0cab8553b1e98084812040cc1fca8c487695b17b7af3702e"
+    }
+  ],
+  "passed": true,
+  "scope": "Native Windows functional qualification with explicit preserved curved failure and corrected test-data prerequisite. No Windows performance or physical GPU claim."
+}

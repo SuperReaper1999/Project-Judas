@@ -1,0 +1,18 @@
+{
+  "boards": {},
+  "carry": true,
+  "clip": true,
+  "effort": 1,
+  "elapsed": 0.9833333846181631,
+  "hidden": true,
+  "impossible": false,
+  "initialized": [
+    "10",
+    "11"
+  ],
+  "pitch": -0.06,
+  "refusal": "",
+  "spawned": [],
+  "variant": false,
+  "yaw": 0
+}

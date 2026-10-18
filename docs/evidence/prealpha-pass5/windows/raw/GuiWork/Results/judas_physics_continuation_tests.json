@@ -1,0 +1,17 @@
+﻿{
+    "label":  "judas_physics_continuation_tests",
+    "executable":  "P:\\JudasValidation\\PreAlphaPass5\\GuiWork\\NativeTests\\judas_physics_continuation_tests.exe",
+    "arguments":  [
+
+                  ],
+    "cwd":  "P:\\JudasValidation\\PreAlphaPass5\\GuiWork\\Projects",
+    "exit":  0,
+    "expected":  0,
+    "passed":  true,
+    "requiredOutput":  "",
+    "seconds":  1.171889,
+    "stdout":  "SUMMARY 112 checks 0 failures\r\n",
+    "stderr":  "",
+    "desktopIdentity":  "DESKTOP-935HKD1\\Conner",
+    "sessionId":  1
+}

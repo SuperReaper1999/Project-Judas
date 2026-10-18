@@ -1,0 +1,35 @@
+Shadow maps: on
+Graphics: 4.5 (Core Profile) Mesa 25.2.8-0ubuntu0.24.04.4 / llvmpipe (LLVM 20.1.2, 256 bits)
+Renderer fragment texture units: 32 (material path uses 12)
+PASS native hidden GL/resource host starts
+PASS original ordinary skeletal fixture loads
+PASS skeletal world builds with script-owned execution
+PASS real mapped passive articulation activates
+PASS ordinary fixed-step path starts
+PASS active ragdoll and socket accept native chart translation
+PASS articulation body identity/count remains unchanged
+PASS physical bone endpoint translates with no velocity injection
+PASS resolved socket position remains continuous
+PASS interpolated skin remains model-local across chart publication
+PASS articulation continues real constraints/contact after shift
+PASS active shifted articulation captures full continuation
+PASS saved articulation reconstructs shifted scene
+PASS fresh world restores shifted articulation
+PASS cold continuation checks actual restored bone endpoint
+PASS return after rebasing retires old physical generation
+PASS pose return completes without a stale producer
+PASS shared IK accepts explicit world and model targets
+PASS resolved shared IK participates in return chart translation
+PASS only world target positions translate; model targets and frames remain unchanged
+PASS fixed sampled target and authored runtime target share the new chart
+PASS IK relinquishes its own pose contribution normally
+PASS optional physical animation setup remains ordinary
+PASS physical pose authority transition requests normally
+PASS physical animation authority and reference histories translate
+PASS physical mode and actual articulation survive without authority handoff or reset
+PASS world particles translate exactly once while retaining velocity and age
+PASS local particles retain emitter-local coordinates and time
+PASS deformable actual nodes and previous state translate
+PASS deformed cloth continuation matches unshifted solver without a reset
+MEASURE skin_error=0 cloth_position_error_m=9.36741095e-11 cloth_velocity_error_mps=6.45178329e-10
+SUMMARY 30 checks 0 failures

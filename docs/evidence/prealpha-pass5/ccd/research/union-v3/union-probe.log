@@ -1,0 +1,8 @@
+HANDOFF result=0 intervals=15 witnesses=8 finalfeatures=1
+CONTROL chronological finite welded-edge handoff certified passed=1
+CONTROL departed finite face retires while actual adjacent feature owns front passed=1
+CONTROL hidden-exit control endpoints both overlap passed=1
+CONTROL actual intermediate finite gap expires inherited side passed=1
+CONTROL return after finite gap receives no inherited front passed=1
+CONTROL zero certificate budget explicitly uncertified passed=1
+checks=6 failures=0

@@ -1,0 +1,8 @@
+PASS contained query equals independently sorted tree output including tangency
+PASS unchanged global proxy revision reuses both tight and fat queries
+PASS exact ascending candidate identity order is preserved
+PASS strict fat-only candidate is excluded by the actual subset query
+PASS oversized fat superset falls back to the exact requested subset
+PASS saturated budget avoids repeating the larger preliminary fat query
+FAIL another proxy enters a cached query while querying body's own bound is unchanged
+SUMMARY 7 checks 1 failures (intentional missing-revision control)

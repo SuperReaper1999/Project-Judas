@@ -1,0 +1,18 @@
+{
+  "effort": true,
+  "elapsed": 9.100000474601984,
+  "impulseBody": "4611686018427387904",
+  "impulseVelocity": {
+    "x": -1.8695956214287435e-06,
+    "y": 8.801445801509544e-06,
+    "z": 2.900120258331299
+  },
+  "pitch": -0.12,
+  "pushAngle": 0,
+  "pushes": 1,
+  "refusal": "",
+  "selected": 2,
+  "spawned": [],
+  "stepping": true,
+  "yaw": 0
+}

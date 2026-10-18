@@ -1,0 +1,35 @@
+NORMAL_CONE angle=0 expected_gap=-0.09 actual_gap=-0.09 normal=0,0,-1
+NORMAL_CONE angle=-0.002 expected_gap=-0.09002 actual_gap=-0.09002 normal=0.002,0,-0.999998
+NORMAL_CONE angle=-0.2 expected_gap=-0.092186 actual_gap=-0.092186 normal=0.198669,-0,-0.980067
+NORMAL_CONE angle=-0.6 expected_gap=-0.0973931 actual_gap=-0.0973931 normal=0.564642,0,-0.825336
+NORMAL_CONE angle=-0.775398 expected_gap=-0.0998586 actual_gap=-0.0998586 normal=0.7,0,-0.714142
+NORMAL_CONE angle=-0.795398 expected_gap=-0.222414 actual_gap=-0.222414 normal=-1,0,0
+NORMAL_CONE angle=-1.1 expected_gap=-0.183448 actual_gap=-0.183448 normal=-1,0,0
+SEAM shape=1 minimum_speed=4 max_impulse=0.16372 penetration=1.19662e-05
+SEAM shape=0 minimum_speed=4 max_impulse=0.1635 penetration=0
+SEAM shape=5 minimum_speed=4 max_impulse=0.163547 penetration=1.88959e-06
+CURVE unassisted resolution=16 kind=0 max_progress=1.60564 max_impulse=4.40372 penetration=0.0726774 initial_energy=33.4813 final_energy=4.15328
+CURVE unassisted resolution=16 kind=1 max_progress=5.11103 max_impulse=0.399223 penetration=0.0164877 initial_energy=33.9718 final_energy=29.9586
+CURVE unassisted resolution=16 kind=2 max_progress=1.57665 max_impulse=3.2654 penetration=0.0446709 initial_energy=41.8198 final_energy=12.424
+CURVE unassisted resolution=32 kind=0 max_progress=1.59857 max_impulse=4.40372 penetration=0.0697027 initial_energy=33.4813 final_energy=3.58852
+CURVE unassisted resolution=32 kind=1 max_progress=5.16141 max_impulse=0.498108 penetration=0.0111335 initial_energy=33.9718 final_energy=31.809
+CURVE unassisted resolution=32 kind=2 max_progress=1.65825 max_impulse=3.2654 penetration=0.0446709 initial_energy=41.8198 final_energy=13.6242
+CURVE unassisted resolution=64 kind=0 max_progress=1.77215 max_impulse=4.40372 penetration=0.0691654 initial_energy=33.4813 final_energy=4.72215
+CURVE unassisted resolution=64 kind=1 max_progress=5.19183 max_impulse=0.359606 penetration=0.00902423 initial_energy=33.9718 final_energy=32.8028
+CURVE unassisted resolution=64 kind=2 max_progress=3.40565 max_impulse=3.26043 penetration=0.0566471 initial_energy=41.8198 final_energy=24.7097
+COOK triangles=12800 nodes=4095 ms=18.5095 cold_load_ms=19.8031 bytes=856301
+QUERY mesh=0 kind=0 count=200 us=69.169 nodes=0 triangles=0
+QUERY mesh=0 kind=1 count=200 us=72.665 nodes=0 triangles=0
+QUERY mesh=0 kind=2 count=200 us=78.456 nodes=0 triangles=0
+QUERY mesh=0 kind=3 count=200 us=1549.98 nodes=0 triangles=0
+QUERY mesh=0 kind=4 count=200 us=39.053 nodes=0 triangles=0
+QUERY mesh=1 kind=0 count=200 us=248.753 nodes=6110 triangles=4000
+QUERY mesh=1 kind=1 count=200 us=942.366 nodes=5910 triangles=6420
+QUERY mesh=1 kind=2 count=200 us=1719.79 nodes=5910 triangles=6420
+QUERY mesh=1 kind=3 count=200 us=10622.9 nodes=5910 triangles=8000
+QUERY mesh=1 kind=4 count=200 us=2580.27 nodes=24290 triangles=50400
+CONTACT_PERF variant=0 bodies=12 median_us=6.161 p95_us=109.624 max_us=119.513
+CONTACT_PERF variant=1 bodies=12 median_us=6.201 p95_us=180.046 max_us=195.824
+CONTACT_PERF variant=2 bodies=12 median_us=1306.92 p95_us=1719.31 max_us=9224.59
+PERF 1000 rays us=498.86 BVH_nodes=2000 triangles=2000
+1303 collision geometry checks passed

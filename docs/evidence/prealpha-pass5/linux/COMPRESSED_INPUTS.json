@@ -1,0 +1,22 @@
+{
+  "four-ragdoll/box-1-profile.json.gz": {
+    "originalPath": "four-ragdoll/box-1-profile.json",
+    "originalBytes": 1682700,
+    "originalSha256": "84ebc2975a4e7ddaa80e2931a33ee6cf67f97b507ebcd57b4ac7cf49f0f562e3"
+  },
+  "four-ragdoll/box-4-profile.json.gz": {
+    "originalPath": "four-ragdoll/box-4-profile.json",
+    "originalBytes": 2398875,
+    "originalSha256": "e3b8f93ffffd03ece05335cf32f4b63d3cd0b9b4eef51d5aa23ba513f1d43c10"
+  },
+  "four-ragdoll/mesh-1-profile.json.gz": {
+    "originalPath": "four-ragdoll/mesh-1-profile.json",
+    "originalBytes": 1689697,
+    "originalSha256": "c0fbf56c037609c6aa9544f98cf848b33c645ba3601e5da513717bc85c5b463c"
+  },
+  "four-ragdoll/mesh-4-profile.json.gz": {
+    "originalPath": "four-ragdoll/mesh-4-profile.json",
+    "originalBytes": 2400569,
+    "originalSha256": "64e65ff8ceb98d41a3d6d8c5e7c078b122b1bb2846dd3e3127b9c706a052cb9f"
+  }
+}

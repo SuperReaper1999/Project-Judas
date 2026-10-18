@@ -1,0 +1,52 @@
+[
+  {
+    "name": "matched-A",
+    "argv": [
+      "python3",
+      "/home/conner/Documents/GitHub/Project-Judas/docs/evidence/prealpha-pass4/dense/reproduction/run_workloads.py",
+      "--root",
+      "/home/conner/Documents/GitHub/Project-Judas",
+      "--live",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass5/dense/reciprocal/baseline/judas_physics_stress_live_benchmark",
+      "--scaling",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass5/dense/reciprocal/baseline/judas_physics_scaling_diagnostics",
+      "--output",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass5/dense/reciprocal/matched-A"
+    ],
+    "exit": 0,
+    "seconds": 51.6710152730011,
+    "allFiveChildCommandsPassed": true,
+    "childExits": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "name": "matched-B",
+    "argv": [
+      "python3",
+      "/home/conner/Documents/GitHub/Project-Judas/docs/evidence/prealpha-pass4/dense/reproduction/run_workloads.py",
+      "--root",
+      "/home/conner/Documents/GitHub/Project-Judas",
+      "--live",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass5/dense/reciprocal/candidate/judas_physics_stress_live_benchmark",
+      "--scaling",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass5/dense/reciprocal/candidate/judas_physics_scaling_diagnostics",
+      "--output",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass5/dense/reciprocal/matched-B"
+    ],
+    "exit": 0,
+    "seconds": 51.63398387200141,
+    "allFiveChildCommandsPassed": true,
+    "childExits": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ]
+  }
+]

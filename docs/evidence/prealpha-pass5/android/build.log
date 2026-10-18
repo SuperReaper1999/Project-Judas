@@ -1,0 +1,211 @@
+-- GLOB mismatch!
+The following files were added:
+  +/home/conner/Documents/GitHub/Project-Judas/scripts/prealpha_sdk_readonly_checks.py
+-- GLOB mismatch!
+The following files were added:
+  +/home/conner/Documents/GitHub/Project-Judas/src/physics/ImpactCandidateCache.h
+-- GLOB mismatch!
+The following files were added:
+  +/home/conner/Documents/GitHub/Project-Judas/tests/ImpactCandidateCacheTests.cpp
+CMake Deprecation Warning at .cache/m88/android-arm64-v8a/_deps/judas_sdl-src/CMakeLists.txt:3300 (cmake_minimum_required):
+  Compatibility with CMake < 3.10 will be removed from a future version of
+  CMake.
+
+  Update the VERSION argument <min> value.  Or, use the <min>...<max> syntax
+  to tell CMake that the project requires at least <min> but has been updated
+  to work with policies introduced by <max> or earlier.
+
+
+-- 
+-- SDL2 was configured with the following options:
+-- 
+-- Platform: Android-1
+-- 64-bit:   TRUE
+-- Compiler: /home/conner/Android/Sdk/ndk/28.2.13676358/toolchains/llvm/prebuilt/linux-x86_64/bin/clang
+-- Revision: SDL-release-2.32.10-0-g5d2495703
+-- 
+-- Subsystems:
+--   Atomic:	ON
+--   Audio:	ON
+--   Video:	ON
+--   Render:	ON
+--   Events:	ON
+--   Joystick:	ON
+--   Haptic:	ON
+--   Hidapi:	ON
+--   Power:	ON
+--   Threads:	ON
+--   Timers:	ON
+--   File:	ON
+--   Loadso:	ON
+--   CPUinfo:	ON
+--   Filesystem:	ON
+--   Sensor:	ON
+--   Locale:	ON
+--   Misc:	ON
+-- 
+-- Options:
+--   SDL2_DISABLE_INSTALL        (Wanted: ON): OFF
+--   SDL2_DISABLE_SDL2MAIN       (Wanted: OFF): OFF
+--   SDL2_DISABLE_UNINSTALL      (Wanted: OFF): OFF
+--   SDL_3DNOW                   (Wanted: OFF): OFF
+--   SDL_ALSA                    (Wanted: OFF): OFF
+--   SDL_ALSA_SHARED             (Wanted: OFF): OFF
+--   SDL_ALTIVEC                 (Wanted: ON): OFF
+--   SDL_ARMNEON                 (Wanted: OFF): OFF
+--   SDL_ARMSIMD                 (Wanted: OFF): OFF
+--   SDL_ARTS                    (Wanted: OFF): OFF
+--   SDL_ARTS_SHARED             (Wanted: OFF): OFF
+--   SDL_ASAN                    (Wanted: OFF): OFF
+--   SDL_ASSEMBLY                (Wanted: ON): ON
+--   SDL_ASSERTIONS              (Wanted: auto): auto
+--   SDL_BACKGROUNDING_SIGNAL    (Wanted: OFF): OFF
+--   SDL_CCACHE                  (Wanted: ON): OFF
+--   SDL_CLOCK_GETTIME           (Wanted: ON): ON
+--   SDL_COCOA                   (Wanted: OFF): OFF
+--   SDL_DBUS                    (Wanted: OFF): OFF
+--   SDL_DIRECTFB                (Wanted: OFF): OFF
+--   SDL_DIRECTFB_SHARED         (Wanted: OFF): OFF
+--   SDL_DIRECTX                 (Wanted: OFF): OFF
+--   SDL_DISKAUDIO               (Wanted: ON): ON
+--   SDL_DUMMYAUDIO              (Wanted: ON): ON
+--   SDL_DUMMYVIDEO              (Wanted: ON): ON
+--   SDL_ESD                     (Wanted: OFF): OFF
+--   SDL_ESD_SHARED              (Wanted: OFF): OFF
+--   SDL_FOREGROUNDING_SIGNAL    (Wanted: OFF): OFF
+--   SDL_FUSIONSOUND             (Wanted: OFF): OFF
+--   SDL_FUSIONSOUND_SHARED      (Wanted: OFF): OFF
+--   SDL_GCC_ATOMICS             (Wanted: ON): ON
+--   SDL_HIDAPI                  (Wanted: ON): ON
+--   SDL_HIDAPI_JOYSTICK         (Wanted: ON): ON
+--   SDL_HIDAPI_LIBUSB           (Wanted: OFF): OFF
+--   SDL_IBUS                    (Wanted: OFF): OFF
+--   SDL_INSTALL_TESTS           (Wanted: OFF): OFF
+--   SDL_JACK                    (Wanted: OFF): OFF
+--   SDL_JACK_SHARED             (Wanted: OFF): OFF
+--   SDL_KMSDRM                  (Wanted: OFF): OFF
+--   SDL_KMSDRM_SHARED           (Wanted: OFF): OFF
+--   SDL_LASX                    (Wanted: OFF): OFF
+--   SDL_LIBC                    (Wanted: ON): ON
+--   SDL_LIBICONV                (Wanted: OFF): OFF
+--   SDL_LIBSAMPLERATE           (Wanted: OFF): OFF
+--   SDL_LIBSAMPLERATE_SHARED    (Wanted: OFF): OFF
+--   SDL_LIBUDEV                 (Wanted: ON): OFF
+--   SDL_LSX                     (Wanted: OFF): OFF
+--   SDL_METAL                   (Wanted: OFF): OFF
+--   SDL_MMX                     (Wanted: OFF): OFF
+--   SDL_NAS                     (Wanted: OFF): OFF
+--   SDL_NAS_SHARED              (Wanted: OFF): OFF
+--   SDL_OFFSCREEN               (Wanted: ON): ON
+--   SDL_OPENGL                  (Wanted: ON): OFF
+--   SDL_OPENGLES                (Wanted: ON): ON
+--   SDL_OSS                     (Wanted: OFF): OFF
+--   SDL_PIPEWIRE                (Wanted: OFF): OFF
+--   SDL_PIPEWIRE_SHARED         (Wanted: OFF): OFF
+--   SDL_PTHREADS                (Wanted: ON): ON
+--   SDL_PTHREADS_SEM            (Wanted: ON): ON
+--   SDL_PULSEAUDIO              (Wanted: OFF): OFF
+--   SDL_PULSEAUDIO_SHARED       (Wanted: OFF): OFF
+--   SDL_RENDER_D3D              (Wanted: OFF): OFF
+--   SDL_RENDER_METAL            (Wanted: OFF): OFF
+--   SDL_RPATH                   (Wanted: OFF): OFF
+--   SDL_RPI                     (Wanted: OFF): OFF
+--   SDL_SNDIO                   (Wanted: OFF): OFF
+--   SDL_SNDIO_SHARED            (Wanted: OFF): OFF
+--   SDL_SSE                     (Wanted: OFF): OFF
+--   SDL_SSE2                    (Wanted: OFF): OFF
+--   SDL_SSE3                    (Wanted: OFF): OFF
+--   SDL_SSEMATH                 (Wanted: OFF): OFF
+--   SDL_STATIC_PIC              (Wanted: OFF): OFF
+--   SDL_SYSTEM_ICONV            (Wanted: ON): OFF
+--   SDL_TESTS                   (Wanted: OFF): OFF
+--   SDL_VENDOR_INFO             (Wanted: ): OFF
+--   SDL_VIRTUAL_JOYSTICK        (Wanted: ON): ON
+--   SDL_VIVANTE                 (Wanted: OFF): OFF
+--   SDL_VULKAN                  (Wanted: ON): ON
+--   SDL_WASAPI                  (Wanted: OFF): OFF
+--   SDL_WAYLAND                 (Wanted: OFF): OFF
+--   SDL_WAYLAND_LIBDECOR        (Wanted: OFF): OFF
+--   SDL_WAYLAND_LIBDECOR_SHARED (Wanted: OFF): OFF
+--   SDL_WAYLAND_QT_TOUCH        (Wanted: OFF): OFF
+--   SDL_WAYLAND_SHARED          (Wanted: OFF): OFF
+--   SDL_X11                     (Wanted: OFF): OFF
+--   SDL_X11_SHARED              (Wanted: OFF): OFF
+--   SDL_X11_XCURSOR             (Wanted: OFF): OFF
+--   SDL_X11_XDBE                (Wanted: OFF): OFF
+--   SDL_X11_XFIXES              (Wanted: OFF): OFF
+--   SDL_X11_XINPUT              (Wanted: OFF): OFF
+--   SDL_X11_XRANDR              (Wanted: OFF): OFF
+--   SDL_X11_XSCRNSAVER          (Wanted: OFF): OFF
+--   SDL_X11_XSHAPE              (Wanted: OFF): OFF
+--   SDL_XINPUT                  (Wanted: OFF): OFF
+-- 
+--  CFLAGS:        -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -Wformat -Werror=format-security  -idirafter "/home/conner/Documents/GitHub/Project-Judas/.cache/m88/android-arm64-v8a/_deps/judas_sdl-src/src/video/khronos"
+--  EXTRA_CFLAGS:   -Wall -Wundef -fno-strict-aliasing -Wdocumentation -Wdocumentation-unknown-command -fcomment-block-commands=threadsafety -fcomment-block-commands=deprecated -Wdeclaration-after-statement -fvisibility=hidden -Wshadow -Wno-unused-local-typedefs
+--  EXTRA_LDFLAGS:  -Wl,--no-undefined
+--  EXTRA_LIBS:    m;OpenSLES;dl;log;android;GLESv1_CM;GLESv2
+-- 
+--  Build Shared Library: ON
+--  Build Static Library: OFF
+-- 
+-- If something was not detected, although the libraries
+-- were installed, then make sure you have set the
+-- CFLAGS and LDFLAGS environment variables correctly.
+-- 
+CMake Deprecation Warning at .cache/m88/android-arm64-v8a/_deps/judas_glm-src/CMakeLists.txt:1 (cmake_minimum_required):
+  Compatibility with CMake < 3.10 will be removed from a future version of
+  CMake.
+
+  Update the VERSION argument <min> value.  Or, use the <min>...<max> syntax
+  to tell CMake that the project requires at least <min> but has been updated
+  to work with policies introduced by <max> or earlier.
+
+
+CMake Deprecation Warning at .cache/m88/android-arm64-v8a/_deps/judas_glm-src/CMakeLists.txt:2 (cmake_policy):
+  Compatibility with CMake < 3.10 will be removed from a future version of
+  CMake.
+
+  Update the VERSION argument <min> value.  Or, use the <min>...<max> syntax
+  to tell CMake that the project requires at least <min> but has been updated
+  to work with policies introduced by <max> or earlier.
+
+
+-- GLM: Version 1.0.1
+-- GLM: Disable -Wc++98-compat warnings
+-- GLM: Build with C++ features auto detection
+WARNHarfBuzz has a Meson port and tries to migrate all the other build systems to it, please consider using it as we might remove our cmake port soon.
+CMake Deprecation Warning at .cache/m88/android-arm64-v8a/_deps/judas_freetype-src/CMakeLists.txt:113 (cmake_minimum_required):
+  Compatibility with CMake < 3.10 will be removed from a future version of
+  CMake.
+
+  Update the VERSION argument <min> value.  Or, use the <min>...<max> syntax
+  to tell CMake that the project requires at least <min> but has been updated
+  to work with policies introduced by <max> or earlier.
+
+
+-- Configuring done (1.6s)
+-- Generating done (0.2s)
+-- Build files have been written to: /home/conner/Documents/GitHub/Project-Judas/.cache/m88/android-arm64-v8a
+[  0%] Building CXX object CMakeFiles/judas_build_identity.dir/src/BuildIdentity.cpp.o
+[  7%] Built target freetype
+[ 21%] Built target sdl_headers_copy
+[ 24%] Built target judas_meshoptimizer
+[ 26%] Built target judas_icu_build
+[ 27%] Built target judas_quickjs
+[ 30%] Built target judas_navigation_backend
+[ 30%] Built target judas_profiler
+[ 30%] Built target judas_jobs
+[ 31%] Built target judas_audio_backend
+[ 32%] Built target harfbuzz
+[ 33%] Built target SDL2main
+[ 65%] Built target SDL2
+[ 68%] Built target judas_navigation_cook
+[ 68%] Built target judas_materials
+[ 68%] Built target judas_app_icon
+[ 68%] Linking CXX static library libjudas_build_identity.a
+[ 68%] Built target judas_build_identity
+[ 68%] Building CXX object CMakeFiles/judas_engine.dir/src/physics/WorldImpactEvents.cpp.o
+[ 68%] Linking CXX static library libjudas_engine.a
+[ 98%] Built target judas_engine
+[ 98%] Linking CXX shared library libmain.so
+[100%] Built target main

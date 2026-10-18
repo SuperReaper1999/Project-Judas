@@ -1,0 +1,17 @@
+﻿{
+    "label":  "judas_origin_admission_tests",
+    "executable":  "P:\\JudasValidation\\PreAlphaPass5\\GuiWork\\NativeTests\\judas_origin_admission_tests.exe",
+    "arguments":  [
+
+                  ],
+    "cwd":  "P:\\JudasValidation\\PreAlphaPass5\\GuiWork\\Projects",
+    "exit":  0,
+    "expected":  0,
+    "passed":  true,
+    "requiredOutput":  "",
+    "seconds":  0.1562502,
+    "stdout":  "PASS ordinary empty world constructs at accepted origin\r\nPASS capture actual pre-request participant state\r\nPASS unsupported delta is rejected during admission with actionable diagnosis\r\nPASS rejected request leaves actual chart and pending state untouched\r\nPASS commit after rejection is a safe no-op rather than a native exception\r\nPASS post-rejection snapshot captures the same participant set\r\nPASS rejected transaction preserves every serialized participant byte\r\nPASS ordinary empty world constructs at accepted origin\r\nPASS capture actual pre-request participant state\r\nPASS unsupported delta is rejected during admission with actionable diagnosis\r\nPASS rejected request leaves actual chart and pending state untouched\r\nPASS commit after rejection is a safe no-op rather than a native exception\r\nPASS post-rejection snapshot captures the same participant set\r\nPASS rejected transaction preserves every serialized participant byte\r\nPASS ordinary empty world constructs at accepted origin\r\nPASS exact native translation limit remains admitted\r\nPASS invalid replacement cannot consume a previously admitted pending origin\r\nPASS the original pending transaction still publishes exactly once\r\nPASS ordinary non-Y chart translation remains supported\r\nPASS nonfinite and out-of-domain absolute destinations still reject\r\nPASS invalid absolute requests cannot change the existing chart\r\nPASS sub-anchor requests retain the existing documented 512 m quantization\r\nPASS direct native invalid translation retains its original exception and physical endpoint\r\nSUMMARY 23 checks 0 failures\r\n",
+    "stderr":  "",
+    "desktopIdentity":  "DESKTOP-935HKD1\\Conner",
+    "sessionId":  1
+}

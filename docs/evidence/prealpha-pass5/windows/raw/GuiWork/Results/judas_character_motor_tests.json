@@ -1,0 +1,17 @@
+﻿{
+    "label":  "judas_character_motor_tests",
+    "executable":  "P:\\JudasValidation\\PreAlphaPass5\\GuiWork\\NativeTests\\judas_character_motor_tests.exe",
+    "arguments":  [
+
+                  ],
+    "cwd":  "P:\\JudasValidation\\PreAlphaPass5\\GuiWork\\Projects",
+    "exit":  0,
+    "expected":  0,
+    "passed":  true,
+    "requiredOutput":  "",
+    "seconds":  0.9218778,
+    "stdout":  "PASS flat support / true geometry normal\r\nPASS arbitrarily rotated equivalent support\r\nPASS wall sweep and slide resolves inward velocity\r\nPASS corner remains outside both walls\r\nPASS signed-depth penetration recovery\r\nSTEP 1.499543 1.317275 0.000000 support=1\r\nPASS step up reuses proven up-forward-down sweeps\r\nDOWN x=2.74954 y=0.917275 supported=1\r\nPASS step down/support following\r\nPASS steep contact is not accepted as support\r\nPASS translating/rotating actual support carry\r\nPASS support point velocity includes angular motion\r\nPASS departing retains support world momentum\r\nPASS destroyed support generation never aliases reused slot\r\nPASS zero-gravity airborne motion retains explicit orientation\r\nRADIAL -1.988827 10.734749 0.000000 support=1 r=10.917429\r\nPASS radial gravity tangent movement follows real sphere\r\nPASS dynamic push is finite bounded impulse, not velocity seeding\r\nPASS M39 bilateral mask excludes body\r\nPASS generation-aware ignored body\r\nPASS project tag exclusion uses same authoritative body tags\r\nPASS motor component serialization round-trip\r\nPASS motor authored settings change strict baseline fingerprint\r\nPASS headless motor world needs no PlayerController/input/camera\r\nPASS ordinary runtime entity publishes resolved motion\r\nPASS disable retains pose and clears support\r\nPASS authored reset discards stale motor state\r\nPASS world destruction invalidates character access\r\nPASS registered script asset\r\nPASS scriptable world build\r\nPASS JS fixedUpdate reads logical input and drives motor\r\nPASS prefab runtime spawn contains normal motor\r\nPASS independent motor/script instances\r\nPASS destroy hierarchy safely retires motor entity\r\nPASS reload starts fresh runtime state\r\nPERF 1 motors whole_motor_batch_us 51.198 samples=120\r\nPERF 10 motors whole_motor_batch_us 516.436 samples=120\r\nPERF 100 motors whole_motor_batch_us 4974.878 samples=120\r\nSUMMARY 32 checks 0 failures\r\n",
+    "stderr":  "",
+    "desktopIdentity":  "DESKTOP-935HKD1\\Conner",
+    "sessionId":  1
+}

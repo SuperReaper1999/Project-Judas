@@ -1,0 +1,71 @@
+{
+  "utc": "2026-10-18T18:25:23.782672+00:00",
+  "scope": "cache-only orientation/compound-offset continuation controls",
+  "source_sha256": {
+    "ContinuityProbe.cpp": "e7ab9be914166310fc42ab9d1fe95bd336a9ae7c16483dcb160c677a510095cc",
+    "MeshContinuityProbe.h": "5cc698236ddd83272b807baaebe39b302d0f969a3528407c01803dd0f713f688"
+  },
+  "commands": [
+    {
+      "name": "compile",
+      "argv": [
+        "/usr/bin/c++",
+        "-std=c++17",
+        "-O3",
+        "-DNDEBUG",
+        "-I/home/conner/Documents/GitHub/Project-Judas/src",
+        "-I/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass5/ccd",
+        "-c",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass5/ccd/ContinuityProbe.cpp",
+        "-o",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass5/ccd/continuity-v3/probe.o"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+      "exit": 0,
+      "seconds": 1.9791848710010527
+    },
+    {
+      "name": "link",
+      "argv": [
+        "/usr/bin/c++",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass5/ccd/continuity-v3/probe.o",
+        "-O3",
+        "-DNDEBUG",
+        "-o",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass5/ccd/continuity-v3/probe",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass5/baseline/libjudas_engine.a",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass5/baseline/libjudas_build_identity.a",
+        "libjudas_app_icon.a",
+        "libjudas_materials.a",
+        "/usr/lib/x86_64-linux-gnu/libSDL2.so",
+        "libjudas_glad.a",
+        "libjudas_audio_backend.a",
+        "libjudas_meshoptimizer.a",
+        "libjudas_navigation_cook.a",
+        "libjudas_navigation_backend.a",
+        "libjudas_quickjs.a",
+        "-lm",
+        "libjudas_profiler.a",
+        "_deps/judas_freetype-build/libfreetype.a",
+        "_deps/judas_harfbuzz-build/libharfbuzz.a",
+        "unicode/icu/lib/libicui18n.a",
+        "unicode/icu/lib/libicuuc.a",
+        "unicode/icu/lib/libicudata.a",
+        "-ldl",
+        "libjudas_jobs.a"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas/build",
+      "exit": 0,
+      "seconds": 0.0942540120013291
+    },
+    {
+      "name": "probe",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass5/ccd/continuity-v3/probe"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+      "exit": 0,
+      "seconds": 0.0020412310004758183
+    }
+  ]
+}

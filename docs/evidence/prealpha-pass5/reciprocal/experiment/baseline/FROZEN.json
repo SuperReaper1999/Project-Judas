@@ -1,0 +1,52 @@
+{
+  "utc": "2026-10-18T19:05:22.937432+00:00",
+  "scope": "Qualified be621 numerical implementation, with exact archive and executable hashes. Existing embedded build identity is preserved as actually built; not a clean-be621 build claim.",
+  "files": [
+    {
+      "path": "build/libjudas_engine.a",
+      "copy": ".cache/prealpha-pass5/dense/reciprocal/baseline/libjudas_engine.a",
+      "sha256": "0e0dc7973b7d2b24510743d5297e9ae002cdb7b4dbdc943d55a4bdc4aab78514"
+    },
+    {
+      "path": "build/libjudas_build_identity.a",
+      "copy": ".cache/prealpha-pass5/dense/reciprocal/baseline/libjudas_build_identity.a",
+      "sha256": "ac7cede37e34156d843ef23009546d5df877f24a6bd471f5feee765ffff46f1c"
+    },
+    {
+      "path": "build/judas-build-info-Release.json",
+      "copy": ".cache/prealpha-pass5/dense/reciprocal/baseline/judas-build-info-Release.json",
+      "sha256": "590f434ee450b905961550136ce75820649b3ab2e1bcbb39afe73a85132a90a1"
+    },
+    {
+      "path": "build/judas_physics_stress_live_benchmark",
+      "copy": ".cache/prealpha-pass5/dense/reciprocal/baseline/judas_physics_stress_live_benchmark",
+      "sha256": "a5d804836dc13f7728efe7564742c911b5c1bda979338ca4189d1efd6d25e1de"
+    },
+    {
+      "path": "build/judas_physics_scaling_diagnostics",
+      "copy": ".cache/prealpha-pass5/dense/reciprocal/baseline/judas_physics_scaling_diagnostics",
+      "sha256": "e1fc873d9b5b040eab1a69269af37e12d851acc84227b7a5d5c8d77568dba1df"
+    }
+  ],
+  "qualifiedNumericalCheckpoint": "be621491a6a1a578ac87e8c82e3b297ed8b18614",
+  "gitHeadReadAfterFreeze": "139d0de20e2e443bd186a6ed8f786eaa223cbba6",
+  "embeddedBuildIdentity": {
+    "schema": 1,
+    "version": "0.1.0-prealpha",
+    "maturity": "pre-alpha",
+    "channel": "Experimental",
+    "build_id": "0.1.0-prealpha-Experimental-4c141e9-dirty-05a5d5a79190-u02d8d18a4f30",
+    "source_revision": "4c141e9bb6c68a50c63dec263dcec398200328ad",
+    "source_tree": "a2174fd48d5259f2a238df1a0493c69bbdcd44b7",
+    "source_dirty": true,
+    "source_fingerprint": "05a5d5a791909fe0d97c0808d1aa05c330b68d890130856129658d119717bb89",
+    "source_untracked_count": 18,
+    "source_untracked_fingerprint": "02d8d18a4f30f473758b3fe1c45ce89d83cca228407a16cb06482beab241088d",
+    "source_origin": "git",
+    "platform": "Linux",
+    "architecture": "x86_64",
+    "configuration": "Release",
+    "compiler": "GNU",
+    "compiler_version": "15.2.0"
+  }
+}

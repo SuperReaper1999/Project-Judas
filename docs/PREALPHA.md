@@ -31,6 +31,19 @@ distinguishes fresh checks from carried-forward evidence. A smaller coordinator
 and passing scoped regressions do not close the curved-mesh continuation or
 extreme dense-contact latency blockers.
 
+
+The [Pass 5 report](evidence/prealpha-pass5/REPORT.md) records exact fat-proxy
+candidate reuse, three matched dense-room comparisons, further unshipped CCD
+experiments and final-source integration checks. Broadphase tree queries fall
+85.4% in the observed workload and matched p95 falls 8.3–10.6%, while the worst
+step remains mixed and can approach two seconds. Neither the four curved-mesh
+continuation failures nor the half-turn liquid point-identity limitation is
+claimed fixed. The [new sampling evidence](evidence/prealpha-pass5/liquid/REPORT.md)
+separates irreversible binary32 query aliasing from unchanged conserved physical
+state. See the [current finding register](evidence/prealpha-pass5/AUDIT_DISPOSITION.md)
+for fresh versus carried-forward coverage. Pass 5 requires its own human review;
+main remains at the accepted Pass 4 checkpoint.
+
 ## Ownership and integration contracts
 
 | System | Authority | Supported composition | Explicit boundary |

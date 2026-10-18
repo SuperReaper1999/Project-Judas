@@ -1,0 +1,18 @@
+﻿{
+    "label":  "m77-stand-read",
+    "executable":  "P:\\JudasValidation\\PreAlphaPass5\\GuiWork\\NativeTests\\judas_balance_lab_tests.exe",
+    "arguments":  [
+                      "P:\\JudasValidation\\PreAlphaPass5\\GuiWork\\ColdCases\\m77-stand",
+                      "cold-stand-read"
+                  ],
+    "cwd":  "P:\\JudasValidation\\PreAlphaPass5\\GuiWork\\Projects",
+    "exit":  0,
+    "expected":  0,
+    "passed":  true,
+    "requiredOutput":  "restored native task reaches measured physical standing",
+    "seconds":  2.4960128,
+    "stdout":  "PASS actual GL host: \r\nPASS normal project loads: \r\nPASS logical project controls: \r\nPASS normal authored/captured scene: \r\nPASS normal immutable assets and world publish: \r\nPASS fresh-process participants restore: \r\nPASS fresh process preserves step/recovery clocks without replay\r\nPASS fresh controller does not fabricate saved contact observations\r\nPASS restored game starts: \r\nACTOR 12 status=2 root=3.00046,1.41767,0.00425094 height=1.41825 up=0.999929 speed=3.10053e-06 supports=4/4 landings=0 reason=measured supported physical standing\r\nPASS restored native task reaches measured physical standing\r\nPASS ordinary lab callback health matches deliberate fault policy\r\nPASS real final pose/skinning and diagnostic rendering path executes\r\nPASS Stop destroys the owned runtime world\r\nSUMMARY 13 checks 0 failures\r\n",
+    "stderr":  "Shadow maps: on\r\nGraphics: 4.6 (Core Profile) Mesa 26.2.4 (git-9a0169f2a7) / llvmpipe (LLVM 23.1.2, 256 bits)\r\nRenderer fragment texture units: 32 (material path uses 12)\r\n",
+    "desktopIdentity":  "DESKTOP-935HKD1\\Conner",
+    "sessionId":  1
+}

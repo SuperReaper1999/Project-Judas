@@ -1,0 +1,131 @@
+{
+  "schema": 1,
+  "records": [
+    {
+      "name": "compile",
+      "argv": [
+        "/usr/bin/c++",
+        "-DDT_VIRTUAL_QUERYFILTER",
+        "-DMA_NO_ENCODING",
+        "-DMA_NO_GENERATION",
+        "-DMA_NO_RESOURCE_MANAGER",
+        "-I/home/conner/Documents/GitHub/Project-Judas/src",
+        "-I/home/conner/Documents/GitHub/Project-Judas/third_party/glad/include",
+        "-I/home/conner/Documents/GitHub/Project-Judas/third_party/miniaudio",
+        "-I/home/conner/Documents/GitHub/Project-Judas/third_party/verblib",
+        "-I/home/conner/Documents/GitHub/Project-Judas/third_party/meshoptimizer/src",
+        "-I/home/conner/Documents/GitHub/Project-Judas/build/_deps/judas_freetype-build/include",
+        "-I/home/conner/Documents/GitHub/Project-Judas/build/_deps/judas_freetype-src/include",
+        "-I/home/conner/Documents/GitHub/Project-Judas/build/_deps/judas_harfbuzz-src/src",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/third_party/quickhull",
+        "-isystem",
+        "/usr/include/SDL2",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/third_party/cgltf",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/third_party/recastnavigation/Detour/Include",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/third_party/recastnavigation/DetourTileCache/Include",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/third_party/recastnavigation/DetourCrowd/Include",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/third_party/quickjs",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/build/unicode/icu/include",
+        "-O3",
+        "-DNDEBUG",
+        "-std=gnu++17",
+        "-Wall",
+        "-Wextra",
+        "-c",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass5/dense/reciprocal/ReciprocalSphereBoxTests.cpp",
+        "-o",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass5/dense/reciprocal/ReciprocalSphereBoxTests.cpp.o"
+      ],
+      "exit": 0,
+      "expectedExit": 0,
+      "seconds": 1.297462122001889
+    },
+    {
+      "name": "link",
+      "argv": [
+        "/usr/bin/c++",
+        "-O3",
+        "-DNDEBUG",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass5/dense/reciprocal/ReciprocalSphereBoxTests.cpp.o",
+        "-o",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass5/dense/reciprocal/test",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass5/baseline/libjudas_engine.a",
+        "/home/conner/Documents/GitHub/Project-Judas/build/libjudas_profiler.a",
+        "/home/conner/Documents/GitHub/Project-Judas/build/libjudas_build_identity.a",
+        "/home/conner/Documents/GitHub/Project-Judas/build/libjudas_app_icon.a",
+        "/home/conner/Documents/GitHub/Project-Judas/build/libjudas_materials.a",
+        "/home/conner/Documents/GitHub/Project-Judas/build/libjudas_profiler.a",
+        "/usr/lib/x86_64-linux-gnu/libSDL2.so",
+        "/home/conner/Documents/GitHub/Project-Judas/build/libjudas_glad.a",
+        "/home/conner/Documents/GitHub/Project-Judas/build/libjudas_audio_backend.a",
+        "/home/conner/Documents/GitHub/Project-Judas/build/libjudas_meshoptimizer.a",
+        "/home/conner/Documents/GitHub/Project-Judas/build/libjudas_navigation_cook.a",
+        "/home/conner/Documents/GitHub/Project-Judas/build/libjudas_navigation_backend.a",
+        "/home/conner/Documents/GitHub/Project-Judas/build/libjudas_quickjs.a",
+        "-lm",
+        "/home/conner/Documents/GitHub/Project-Judas/build/_deps/judas_freetype-build/libfreetype.a",
+        "/home/conner/Documents/GitHub/Project-Judas/build/_deps/judas_harfbuzz-build/libharfbuzz.a",
+        "/home/conner/Documents/GitHub/Project-Judas/build/unicode/icu/lib/libicui18n.a",
+        "/home/conner/Documents/GitHub/Project-Judas/build/unicode/icu/lib/libicuuc.a",
+        "/home/conner/Documents/GitHub/Project-Judas/build/unicode/icu/lib/libicudata.a",
+        "-ldl",
+        "/home/conner/Documents/GitHub/Project-Judas/build/libjudas_jobs.a"
+      ],
+      "exit": 0,
+      "expectedExit": 0,
+      "seconds": 0.07979882799918414
+    },
+    {
+      "name": "positive",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass5/dense/reciprocal/test"
+      ],
+      "exit": 0,
+      "expectedExit": 0,
+      "seconds": 0.011762041998736095
+    },
+    {
+      "name": "missing-normal-negative",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass5/dense/reciprocal/test",
+        "--omit-normal"
+      ],
+      "exit": 1,
+      "expectedExit": 1,
+      "seconds": 0.011704110002028756
+    },
+    {
+      "name": "missing-anchors-negative",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass5/dense/reciprocal/test",
+        "--omit-anchors"
+      ],
+      "exit": 1,
+      "expectedExit": 1,
+      "seconds": 0.01287418599895318
+    },
+    {
+      "name": "unsupported-extension-negative",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass5/dense/reciprocal/test",
+        "--all-primitives"
+      ],
+      "exit": 1,
+      "expectedExit": 1,
+      "seconds": 0.013699486000405159
+    }
+  ],
+  "source": {
+    ".cache/prealpha-pass5/dense/reciprocal/ReciprocalSphereBoxTests.cpp": "3d35a5b7dc68da753a0404ef30b3d634d6b1d82ada1ce2dbba27950e752a8534",
+    ".cache/prealpha-pass5/dense/reciprocal/CanonicalSphereBox.h": "4144b59271411605ae6a9534d537a930d427d1f01cf0a22f9ed271b39d5a7a1e"
+  },
+  "binarySha256": "828e2ef84137840cd86249b842a3a28907e5468e1626f1c2753c11f1864e7c38",
+  "frozenAcceptedEngineSha256": "6e77a9f799ade7f6ce3ad741687689b8cae6d5efa6fd82e472923749ee21b441"
+}

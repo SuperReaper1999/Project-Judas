@@ -1,0 +1,14 @@
+{
+  "status": "failed",
+  "output": "/home/conner/Documents/GitHub/Project-Judas/docs/evidence/prealpha-pass5/linux/network-process",
+  "error": "child exited before readiness: /home/conner/Documents/GitHub/Project-Judas/docs/evidence/prealpha-pass5/linux/network-process/host/ready.json"
+}
+Traceback (most recent call last):
+  File "/home/conner/Documents/GitHub/Project-Judas/scripts/m99_network_process.py", line 211, in <module>
+    main()
+    ~~~~^^
+  File "/home/conner/Documents/GitHub/Project-Judas/scripts/m99_network_process.py", line 125, in main
+    ready = await_json(out / 'host/ready.json', host)
+  File "/home/conner/Documents/GitHub/Project-Judas/scripts/m99_network_process.py", line 117, in await_json
+    raise RuntimeError('child exited before readiness: ' + str(path))
+RuntimeError: child exited before readiness: /home/conner/Documents/GitHub/Project-Judas/docs/evidence/prealpha-pass5/linux/network-process/host/ready.json

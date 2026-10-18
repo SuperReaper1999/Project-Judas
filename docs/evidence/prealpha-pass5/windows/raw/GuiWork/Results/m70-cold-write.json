@@ -1,0 +1,18 @@
+﻿{
+    "label":  "m70-cold-write",
+    "executable":  "P:\\JudasValidation\\PreAlphaPass5\\GuiWork\\NativeTests\\judas_character_lab_tests.exe",
+    "arguments":  [
+                      "P:\\JudasValidation\\PreAlphaPass5\\GuiWork\\ColdCases\\m70-cold",
+                      "cold-write"
+                  ],
+    "cwd":  "P:\\JudasValidation\\PreAlphaPass5\\GuiWork\\Projects",
+    "exit":  0,
+    "expected":  0,
+    "passed":  true,
+    "requiredOutput":  "",
+    "seconds":  1.0468237,
+    "stdout":  "PASS actual GL host: \r\nPASS ordinary registered project: \r\nPASS approved fixture is a full 65-joint six-part two-skin source\r\nPASS variation has different names and proportions\r\nPASS fresh process gets ordinary captured scene: \r\nPASS new process constructs ordinary participants: loading\r\nPASS normal imported fixture accepts four durable contacts beside partial physics: \r\nPASS canonical authored fingerprint for cold slot\r\nPASS M61 atomic storage commits multi-target/partial/layer/script participants: \r\nPASS writer actual project callbacks safe\r\nSUMMARY 10 checks 0 failures\r\n",
+    "stderr":  "Shadow maps: on\r\nGraphics: 4.6 (Core Profile) Mesa 26.2.4 (git-9a0169f2a7) / llvmpipe (LLVM 23.1.2, 256 bits)\r\nRenderer fragment texture units: 32 (material path uses 12)\r\n",
+    "desktopIdentity":  "DESKTOP-935HKD1\\Conner",
+    "sessionId":  1
+}

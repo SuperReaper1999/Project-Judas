@@ -1,0 +1,17 @@
+﻿{
+    "label":  "judas_rigid_motion_tests",
+    "executable":  "P:\\JudasValidation\\PreAlphaPass5\\GuiWork\\NativeTests\\judas_rigid_motion_tests.exe",
+    "arguments":  [
+
+                  ],
+    "cwd":  "P:\\JudasValidation\\PreAlphaPass5\\GuiWork\\Projects",
+    "exit":  0,
+    "expected":  0,
+    "passed":  true,
+    "requiredOutput":  "",
+    "seconds":  0.7187429,
+    "stdout":  "FREE hz=60 energy_relative=7.4623e-07 orientation_error_rad=0.00313058\r\nFREE hz=120 energy_relative=9.15372e-07 orientation_error_rad=0.00078325\r\nFREE hz=240 energy_relative=1.41384e-06 orientation_error_rad=0.000193171\r\nFREE hz=480 energy_relative=1.81562e-06 orientation_error_rad=4.60076e-05\r\nRigid motion checks 10239 PASS\r\n",
+    "stderr":  "",
+    "desktopIdentity":  "DESKTOP-935HKD1\\Conner",
+    "sessionId":  1
+}

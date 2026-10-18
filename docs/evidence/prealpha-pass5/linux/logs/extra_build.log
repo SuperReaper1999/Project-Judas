@@ -1,0 +1,108 @@
+[  6%] Built target judas_navigation_backend
+[ 18%] Built target freetype
+[ 18%] Built target judas_glad
+[ 25%] Built target judas_profiler
+[ 25%] Built target judas_build_identity
+[ 25%] Built target judas_app_icon
+[ 31%] Built target judas_meshoptimizer
+[ 37%] Built target judas_icu_build
+[ 37%] Built target judas_quickjs
+[ 37%] Built target judas_jobs
+[ 37%] Built target judas_audio_backend
+[ 37%] Built target harfbuzz
+[ 43%] Built target judas_navigation_cook
+[ 43%] Built target judas_materials
+[100%] Built target judas_engine
+[100%] Linking CXX executable judas_impact_candidate_cache_tests
+[100%] Built target judas_impact_candidate_cache_tests
+[  6%] Built target judas_navigation_backend
+[ 18%] Built target freetype
+[ 18%] Built target judas_glad
+[ 25%] Built target judas_profiler
+[ 25%] Built target judas_build_identity
+[ 25%] Built target judas_app_icon
+[ 31%] Built target judas_meshoptimizer
+[ 37%] Built target judas_icu_build
+[ 37%] Built target judas_quickjs
+[ 37%] Built target judas_jobs
+[ 37%] Built target judas_audio_backend
+[ 37%] Built target harfbuzz
+[ 43%] Built target judas_navigation_cook
+[ 43%] Built target judas_materials
+[100%] Built target judas_engine
+[100%] Linking CXX executable judas_physics_continuation_tests
+[100%] Built target judas_physics_continuation_tests
+[  5%] Built target judas_navigation_backend
+[ 17%] Built target freetype
+[ 17%] Built target judas_glad
+[ 23%] Built target judas_profiler
+[ 23%] Built target judas_build_identity
+[ 23%] Built target judas_app_icon
+[ 29%] Built target judas_meshoptimizer
+[ 35%] Built target judas_icu_build
+[ 35%] Built target judas_quickjs
+[ 35%] Built target judas_jobs
+[ 35%] Built target judas_audio_backend
+[ 35%] Built target harfbuzz
+[ 41%] Built target judas_navigation_cook
+[ 41%] Built target judas_materials
+[ 94%] Built target judas_engine
+[ 94%] Linking CXX executable judas_contact_lifecycle_tests
+[100%] Built target judas_contact_lifecycle_tests
+[  6%] Built target judas_navigation_backend
+[ 18%] Built target freetype
+[ 18%] Built target judas_glad
+[ 25%] Built target judas_profiler
+[ 25%] Built target judas_build_identity
+[ 25%] Built target judas_app_icon
+[ 31%] Built target judas_meshoptimizer
+[ 37%] Built target judas_icu_build
+[ 37%] Built target judas_quickjs
+[ 37%] Built target judas_jobs
+[ 37%] Built target judas_audio_backend
+[ 37%] Built target harfbuzz
+[ 43%] Built target judas_navigation_cook
+[ 43%] Built target judas_materials
+[100%] Built target judas_engine
+[100%] Linking CXX executable judas_network_session_tests
+[100%] Built target judas_network_session_tests
+[  6%] Built target judas_navigation_backend
+[ 18%] Built target freetype
+[ 18%] Built target judas_glad
+[ 25%] Built target judas_profiler
+[ 25%] Built target judas_build_identity
+[ 25%] Built target judas_app_icon
+[ 31%] Built target judas_meshoptimizer
+[ 37%] Built target judas_icu_build
+[ 37%] Built target judas_quickjs
+[ 37%] Built target judas_jobs
+[ 37%] Built target judas_audio_backend
+[ 37%] Built target harfbuzz
+[ 43%] Built target judas_navigation_cook
+[ 43%] Built target judas_materials
+[100%] Built target judas_engine
+[100%] Building CXX object CMakeFiles/judas_shooter_game_tests.dir/tests/ShooterGameTests.cpp.o
+[100%] Linking CXX executable judas_shooter_game_tests
+[100%] Built target judas_shooter_game_tests
+[  6%] Built target judas_navigation_backend
+[ 18%] Built target freetype
+[ 18%] Built target judas_glad
+[ 25%] Built target judas_profiler
+[ 25%] Built target judas_build_identity
+[ 25%] Built target judas_app_icon
+[ 31%] Built target judas_meshoptimizer
+[ 37%] Built target judas_icu_build
+[ 37%] Built target judas_quickjs
+[ 37%] Built target judas_jobs
+[ 37%] Built target judas_audio_backend
+[ 37%] Built target harfbuzz
+[ 43%] Built target judas_navigation_cook
+[ 43%] Built target judas_materials
+[100%] Built target judas_engine
+[100%] Building CXX object CMakeFiles/judas_shooter_application_tests.dir/src/RuntimeDiagnostics.cpp.o
+[100%] Building CXX object CMakeFiles/judas_shooter_application_tests.dir/src/Application.cpp.o
+[100%] Building CXX object CMakeFiles/judas_shooter_application_tests.dir/src/RuntimeOptions.cpp.o
+[100%] Building CXX object CMakeFiles/judas_shooter_application_tests.dir/src/TestHarness.cpp.o
+[100%] Building CXX object CMakeFiles/judas_shooter_application_tests.dir/tests/ShooterApplicationTests.cpp.o
+[100%] Linking CXX executable judas_shooter_application_tests
+[100%] Built target judas_shooter_application_tests

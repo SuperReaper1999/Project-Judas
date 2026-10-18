@@ -1,0 +1,104 @@
+{
+  "purpose": "unchanged inputs/assertions with catch-message output only",
+  "original_sha256": "91b23a2a4ae45a3a96e01442c8bef583b31cd98a90e02196fb7c534ec5364a6a",
+  "commands": [
+    {
+      "name": "compile-diagnostic",
+      "argv": [
+        "c++",
+        "-std=c++17",
+        "-O3",
+        "-DNDEBUG",
+        "-I/home/conner/Documents/GitHub/Project-Judas/src",
+        "-c",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass5/ccd/union-v3/DiagnosticImpactMeshCostTests.cpp",
+        "-o",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass5/ccd/union-v3/diagnostic.o"
+      ],
+      "exit": 0,
+      "seconds": 2.5739889520009456
+    },
+    {
+      "name": "link-diagnostic",
+      "argv": [
+        "/usr/bin/c++",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass5/ccd/union-v3/diagnostic.o",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass5/ccd/union-v3/UnifiedWorld.cpp.o",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass5/ccd/union-v3/CollisionGeometry.cpp.o",
+        "-O3",
+        "-DNDEBUG",
+        "CMakeFiles/judas_impact_mesh_cost_tests.dir/tests/ValidationMain.cpp.o",
+        "-o",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass5/ccd/union-v3/diagnostic",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass5/ccd/union-v3/engine-without-world.a",
+        "libjudas_profiler.a",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass5/baseline/libjudas_build_identity.a",
+        "libjudas_app_icon.a",
+        "libjudas_materials.a",
+        "libjudas_profiler.a",
+        "/usr/lib/x86_64-linux-gnu/libSDL2.so",
+        "libjudas_glad.a",
+        "libjudas_audio_backend.a",
+        "libjudas_meshoptimizer.a",
+        "libjudas_navigation_cook.a",
+        "libjudas_navigation_backend.a",
+        "libjudas_quickjs.a",
+        "-lm",
+        "_deps/judas_freetype-build/libfreetype.a",
+        "_deps/judas_harfbuzz-build/libharfbuzz.a",
+        "unicode/icu/lib/libicui18n.a",
+        "unicode/icu/lib/libicuuc.a",
+        "unicode/icu/lib/libicudata.a",
+        "-ldl",
+        "libjudas_jobs.a"
+      ],
+      "exit": 1,
+      "seconds": 0.16443200600042474
+    },
+    {
+      "name": "diagnostic",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass5/ccd/union-v3/diagnostic",
+        "1",
+        "2x26"
+      ],
+      "exit": 1,
+      "seconds": 5.629813318999368
+    },
+    {
+      "name": "link-corrected-standalone-main",
+      "argv": [
+        "/usr/bin/c++",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass5/ccd/union-v3/diagnostic.o",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass5/ccd/union-v3/UnifiedWorld.cpp.o",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass5/ccd/union-v3/CollisionGeometry.cpp.o",
+        "-O3",
+        "-DNDEBUG",
+        "-o",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass5/ccd/union-v3/diagnostic",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass5/ccd/union-v3/engine-without-world.a",
+        "libjudas_profiler.a",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass5/baseline/libjudas_build_identity.a",
+        "libjudas_app_icon.a",
+        "libjudas_materials.a",
+        "libjudas_profiler.a",
+        "/usr/lib/x86_64-linux-gnu/libSDL2.so",
+        "libjudas_glad.a",
+        "libjudas_audio_backend.a",
+        "libjudas_meshoptimizer.a",
+        "libjudas_navigation_cook.a",
+        "libjudas_navigation_backend.a",
+        "libjudas_quickjs.a",
+        "-lm",
+        "_deps/judas_freetype-build/libfreetype.a",
+        "_deps/judas_harfbuzz-build/libharfbuzz.a",
+        "unicode/icu/lib/libicui18n.a",
+        "unicode/icu/lib/libicuuc.a",
+        "unicode/icu/lib/libicudata.a",
+        "-ldl",
+        "libjudas_jobs.a"
+      ],
+      "exit": 1
+    }
+  ]
+}

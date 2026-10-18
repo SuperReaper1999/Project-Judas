@@ -1,0 +1,7 @@
+/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass5/ccd/union-v4/sources/CollisionGeometry.cpp: In function ‘MeshFeatureBudget BuildMeshFeatureBudget(const PrimitivePose&, const PrimitivePose&, double, {anonymous}::V, {anonymous}::V, double, double, const MeshContactEpisode*)’:
+/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass5/ccd/union-v4/sources/CollisionGeometry.cpp:375:3: warning: this ‘for’ clause does not guard... [-Wmisleading-indentation]
+  375 |   for(V p:pa.points)bottom=std::min(bottom,glm::dot(n,p));const double depth=plane-bottom,half=glm::dot(n,center)-bottom;
+      |   ^~~
+/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass5/ccd/union-v4/sources/CollisionGeometry.cpp:375:59: note: ...this statement, but the latter is misleadingly indented as if it were guarded by the ‘for’
+  375 |   for(V p:pa.points)bottom=std::min(bottom,glm::dot(n,p));const double depth=plane-bottom,half=glm::dot(n,center)-bottom;
+      |                                                           ^~~~~

@@ -1,0 +1,20 @@
+FAIL intentional unsupported box reversal point
+FAIL intentional unsupported box reversal localAnchorA
+FAIL intentional unsupported box reversal localAnchorA
+FAIL intentional unsupported box reversal localAnchorA
+FAIL intentional unsupported box reversal localAnchorB
+FAIL intentional unsupported box reversal localAnchorA
+FAIL intentional unsupported box reversal point
+FAIL intentional unsupported box reversal point
+FAIL intentional unsupported box reversal localAnchorB
+FAIL intentional unsupported box reversal localAnchorB
+FAIL intentional unsupported box reversal localAnchorB
+FAIL intentional unsupported box reversal localAnchorB
+FAIL intentional unsupported box reversal localAnchorA
+FAIL intentional unsupported box reversal point
+FAIL intentional unsupported box reversal point
+FAIL intentional unsupported box reversal localAnchorB
+FAIL intentional unsupported box reversal localAnchorB
+FAIL intentional unsupported box reversal localAnchorB
+FAIL intentional unsupported box reversal localAnchorA
+SUMMARY 2698 cases 50 failures; 821 hits 1851 misses 22 uncertain

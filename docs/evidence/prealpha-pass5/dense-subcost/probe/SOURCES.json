@@ -1,0 +1,14 @@
+{
+  "utc": "2026-10-18T18:50:32.335527+00:00",
+  "purpose": "Cache-only detailed attribution; every original collision call/arithmetic retained. Observer timings never used as accepted performance.",
+  "inputs": {
+    "src/Contacts.cpp": "f62f6f1efad1faba4763554e0f106f3f67a5a5287b9b2d587320fe8e5e3844f1",
+    "src/physics/WorldImpactEvents.cpp": "03c5516c390b2770dc65d788e50246acb8145e87226d4df5cc79d0c05af68d2b",
+    "src/physics/ImpactCandidateCache.h": "17a6efa64a9a5dfd5663cd14790f19cfd96c874a589283f9b62d97b179df112d"
+  },
+  "generated": {
+    "Contacts.cpp": "66a60e1b78d0c1053201ad0e0b5e71864eab888aa8a8e7fc3a7a26dbf78906f5",
+    "DenseContactCost.h": "1beaa20164e69de636e9eb7c2d01590c6457b2fa0389cc916cabba7bd37b4775",
+    "WorldImpactEvents.cpp": "f044451abf9013b9a4d8667f927abb01bb3615ddc6c8f72b3f69f6c58c4d04cd"
+  }
+}

@@ -1,0 +1,14 @@
+UNION_WORK queries=39 intervals=19632 certificates=9833 reacquisition_searches=1248 reacquisition_witnesses=39 uncertain=1
+UNION_WORK queries=703 intervals=134662 certificates=67680 reacquisition_searches=11552 reacquisition_witnesses=361 uncertain=1
+UNION_WORK queries=173 intervals=51677 certificates=25924 reacquisition_searches=2464 reacquisition_witnesses=77 uncertain=1
+UNION_WORK queries=77 intervals=30702 certificates=15387 reacquisition_searches=1952 reacquisition_witnesses=61 uncertain=1
+FAIL trough 2x26 coarse fast impacts do not throw
+UNION_WORK queries=45 intervals=28762 certificates=14401 reacquisition_searches=1440 reacquisition_witnesses=45 uncertain=1
+UNION_WORK queries=8 intervals=5563 certificates=2783 reacquisition_searches=256 reacquisition_witnesses=8 uncertain=1
+FAIL rotated trough preserves first-contact/crossing contract
+SCENARIO "trough 2x26 coarse" triangles 104 steps 1 totalMs 5.85 worstStepMs 5.85 maxPenetrationMm 0.00 atStep 0 meanDeepestMm 0.00 impactQueries 0 searchIterations 0 searchLimits 0 searchStalls 0 samplingFallbacks 0 samplingTests 0 impactEvents 0 convexTests 48 meshTriangles 48 bvhNodes 319 fastBoxSteps 90 fastBoxesThrough 0 legacyOracleThrough 0 fastBoxesThrew 4 digest fe142d2fcd4a2716
+UNION_WORK queries=13 intervals=8572 certificates=4290 reacquisition_searches=416 reacquisition_witnesses=13 uncertain=1
+FAIL trough 30x30 fast impacts do not throw
+SCENARIO "trough 30x30" triangles 1800 steps 1 totalMs 0.07 worstStepMs 0.07 maxPenetrationMm 0.00 atStep 0 meanDeepestMm 0.00 impactQueries 0 searchIterations 0 searchLimits 0 searchStalls 0 samplingFallbacks 0 samplingTests 0 impactEvents 0 convexTests 0 meshTriangles 0 bvhNodes 291 fastBoxSteps 90 fastBoxesThrough 0 legacyOracleThrough 0 fastBoxesThrew 1 digest fe142d2fcd4a2716
+SCENARIO "trough 60x60 dense" triangles 7200 steps 1 totalMs 0.08 worstStepMs 0.08 maxPenetrationMm 0.00 atStep 0 meanDeepestMm 0.00 impactQueries 0 searchIterations 0 searchLimits 0 searchStalls 0 samplingFallbacks 0 samplingTests 0 impactEvents 0 convexTests 7 meshTriangles 7 bvhNodes 291 fastBoxSteps 90 fastBoxesThrough 0 legacyOracleThrough 0 fastBoxesThrew 0 digest fe142d2fcd4a2716
+checks 193 failures 3

@@ -1,0 +1,18 @@
+In file included from /home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass5/ccd/union-v5/sources/MeshUnionContinuity.h:3,
+                 from /home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass5/ccd/union-v5/sources/physics/WorldInternal.h:48,
+                 from /home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass5/ccd/union-v5/sources/PhysicsWorld.cpp:2,
+                 from /home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass5/ccd/union-v5/sources/UnifiedWorld.cpp:1:
+/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass5/ccd/union-v5/sources/NativeSATContinuity.h: In function ‘std::optional<std::array<contact_geometry::Iv, 3> > episode_probe::Unit(IV)’:
+/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass5/ccd/union-v5/sources/NativeSATContinuity.h:16:2: warning: this ‘for’ clause does not guard... [-Wmisleading-indentation]
+   16 |  for(auto&x:v)x=x/length;return v;
+      |  ^~~
+/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass5/ccd/union-v5/sources/NativeSATContinuity.h:16:26: note: ...this statement, but the latter is misleadingly indented as if it were guarded by the ‘for’
+   16 |  for(auto&x:v)x=x/length;return v;
+      |                          ^~~~~~
+/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass5/ccd/union-v5/sources/NativeSATContinuity.h: In function ‘bool episode_probe::NativeOverlapThroughout(const PrimitivePose&, const PrimitivePose&, unsigned int, const RigidMotionSegment&, double, double)’:
+/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass5/ccd/union-v5/sources/NativeSATContinuity.h:30:4: warning: this ‘for’ clause does not guard... [-Wmisleading-indentation]
+   30 |    for(unsigned j=0;j<3;++j)for(unsigned k=0;k<3;++k)exact[j][k]=Iv(r[j][k]);parent=exact;
+      |    ^~~
+/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass5/ccd/union-v5/sources/NativeSATContinuity.h:30:78: note: ...this statement, but the latter is misleadingly indented as if it were guarded by the ‘for’
+   30 |    for(unsigned j=0;j<3;++j)for(unsigned k=0;k<3;++k)exact[j][k]=Iv(r[j][k]);parent=exact;
+      |                                                                              ^~~~~~

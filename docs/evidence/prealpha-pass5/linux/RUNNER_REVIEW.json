@@ -1,0 +1,16 @@
+{
+  "scope": "Post-run assertion of original actual output; no engine rerun or original log edits.",
+  "sourceDiagnostic": "src/ScriptSystem.cpp:584",
+  "noScriptAssetFault": true,
+  "sceneReady": true,
+  "actualScreenshot": {
+    "sha256": "0fda044dea8afe40aefa898ec702919ee7f76c7cbb99eb9ea639fc883d246563",
+    "bytes": 186810
+  },
+  "logSha256": "9455afff71a2c6ea956080bdb9d88205d67fee9b8d1c7649fa5d1a913c922dc3",
+  "errorPrefixNegativeControls": {
+    "script asset=bad.js update: Error: bad": true,
+    "script asset=bad.js update: RangeError: bad": true,
+    "script asset=bad.js update: arbitrary thrown text": true
+  }
+}

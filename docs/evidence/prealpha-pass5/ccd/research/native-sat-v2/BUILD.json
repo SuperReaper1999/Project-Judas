@@ -1,0 +1,74 @@
+{
+  "utc": "2026-10-18T18:54:13.630131+00:00",
+  "scope": "diagnostic on exact captured originalbox5 segment, not a new acceptance test",
+  "sources": {
+    "NativeSATProbe.cpp": "0a5ced577db9f1a1a3bcce8d8ed3c2d8f069dfbc7b37bad08e47ea03f136a96f",
+    "MeshContinuityProbe.h": "5cc698236ddd83272b807baaebe39b302d0f969a3528407c01803dd0f713f688",
+    "NativeSATContinuity.h": "127d7c9a66bf6f0a643f8d6d88431802ef28afeafc54fea0190b53327ade5b65"
+  },
+  "commands": [
+    {
+      "name": "compile",
+      "argv": [
+        "c++",
+        "-std=c++17",
+        "-O3",
+        "-DNDEBUG",
+        "-I/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass5/ccd/native-sat-v2",
+        "-I/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass5/ccd/union-v3/sources",
+        "-I/home/conner/Documents/GitHub/Project-Judas/src",
+        "-c",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass5/ccd/native-sat-v2/NativeSATProbe.cpp",
+        "-o",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass5/ccd/native-sat-v2/probe.o"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+      "exit": 0,
+      "seconds": 4.072669920999033
+    },
+    {
+      "name": "link",
+      "argv": [
+        "/usr/bin/c++",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass5/ccd/native-sat-v2/probe.o",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass5/ccd/union-v3/CollisionGeometry.cpp.o",
+        "-O3",
+        "-DNDEBUG",
+        "-o",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass5/ccd/native-sat-v2/probe",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass5/baseline/libjudas_engine.a",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass5/baseline/libjudas_build_identity.a",
+        "libjudas_app_icon.a",
+        "libjudas_materials.a",
+        "/usr/lib/x86_64-linux-gnu/libSDL2.so",
+        "libjudas_glad.a",
+        "libjudas_audio_backend.a",
+        "libjudas_meshoptimizer.a",
+        "libjudas_navigation_cook.a",
+        "libjudas_navigation_backend.a",
+        "libjudas_quickjs.a",
+        "-lm",
+        "libjudas_profiler.a",
+        "_deps/judas_freetype-build/libfreetype.a",
+        "_deps/judas_harfbuzz-build/libharfbuzz.a",
+        "unicode/icu/lib/libicui18n.a",
+        "unicode/icu/lib/libicuuc.a",
+        "unicode/icu/lib/libicudata.a",
+        "-ldl",
+        "libjudas_jobs.a"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas/build",
+      "exit": 0,
+      "seconds": 0.11448349099737243
+    },
+    {
+      "name": "probe",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass5/ccd/native-sat-v2/probe"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+      "exit": 0,
+      "seconds": 0.0642762909992598
+    }
+  ]
+}

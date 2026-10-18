@@ -1,0 +1,17 @@
+﻿{
+    "label":  "stock-qxl-startup",
+    "executable":  "P:\\JudasValidation\\PreAlphaPass5\\GuiWork\\QualifiedApps\\judas.exe",
+    "arguments":  [
+                      "P:\\JudasValidation\\PreAlphaPass5\\GuiWork\\Projects\\projects\\physics_stress_lab\\physics_stress_lab.judasproj"
+                  ],
+    "cwd":  "P:\\JudasValidation\\PreAlphaPass5\\GuiWork\\UnrelatedCwd",
+    "exit":  1,
+    "expected":  1,
+    "passed":  true,
+    "requiredOutput":  "OpenGL 3.3",
+    "seconds":  1.4935810999999999,
+    "stdout":  "",
+    "stderr":  "Failed to load the required OpenGL 3.3 Core entry points.\r\n",
+    "desktopIdentity":  "DESKTOP-935HKD1\\Conner",
+    "sessionId":  1
+}

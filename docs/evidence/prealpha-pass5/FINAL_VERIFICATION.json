@@ -1,0 +1,30 @@
+{
+  "utc": "2026-10-18T19:59:50.981945+00:00",
+  "checks": {
+    "manifestPayloadsMatched": 2574,
+    "gzipStreamsReadable": 70,
+    "sourceAndManifestFingerprintsMatched": 54,
+    "originalAuditFieldParity": true,
+    "noNativeBuildPayloads": true,
+    "retainedLocalBinaryHashesMatched": 27,
+    "protectedTrackedHistoryAndProjectsUnchanged": true,
+    "coordinatorLines": 859
+  },
+  "knownFailures": [
+    "Original curved continuation:372 checks/4 failed assertions",
+    "Half-turn knots check21",
+    "FLU001 deferred unchanged/not rerun",
+    "Historical a106 save missing continuation information"
+  ],
+  "scope": "Payload/source/Git inventory verification, not another physics/platform/human test run. Local binaries are separately identified in FINAL_FINGERPRINTS and original platform receipts.",
+  "passed": true,
+  "parentCommit": "050016a179313c90584ce00f141cc5ca4c521808",
+  "main": "4c141e9bb6c68a50c63dec263dcec398200328ad",
+  "manifestSha256": "e926ba76eb4c7486823ff563112b7d25baafd30df15ef5ca7b841397a4e9ea65",
+  "intendedChangedFileCount": 1300,
+  "sourceFileCount": 12,
+  "evidencePayloadFiles": 1286,
+  "evidencePayloadBytes": 28530129,
+  "humanAcceptance": false,
+  "mainPromotion": false
+}

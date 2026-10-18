@@ -1,0 +1,24 @@
+{
+  "utc": "2026-10-18T19:13:28.882752+00:00",
+  "cause": "shutil.copyfile copied binary bytes without executable mode; original workload runner recorded exit126 but did not propagate child exit to its own status. First candidate continued, so its timings remain unpaired/excluded.",
+  "evidenceMoves": {
+    "run-baseline-A": "first-permission-failed-A",
+    "run-candidate-B": "first-unpaired-B",
+    "PAIRED_COMMANDS.json": "FIRST_ATTEMPT_COMMANDS.json"
+  },
+  "correction": "Restore source executable mode only; new wrapper requires every child command exit0 and full270 completion. No source/fixture/threshold or expected hash change.",
+  "files": [
+    {
+      "name": "judas_physics_stress_live_benchmark",
+      "sha256": "a5d804836dc13f7728efe7564742c911b5c1bda979338ca4189d1efd6d25e1de",
+      "oldMode": "0o664",
+      "newMode": "0o775"
+    },
+    {
+      "name": "judas_physics_scaling_diagnostics",
+      "sha256": "e1fc873d9b5b040eab1a69269af37e12d851acc84227b7a5d5c8d77568dba1df",
+      "oldMode": "0o664",
+      "newMode": "0o775"
+    }
+  ]
+}

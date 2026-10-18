@@ -1,0 +1,30 @@
+[
+  {
+    "command": [
+      "gh",
+      "api",
+      "repos/SuperReaper1999/Project-Judas/actions/runs/39159743311/artifacts"
+    ],
+    "started_utc": "2026-10-18T19:53:27.542601+00:00",
+    "finished_utc": "2026-10-18T19:53:27.862713+00:00",
+    "returncode": 0,
+    "stdout_file": "artifacts.json",
+    "stdout_sha256": "39131e80a4326a2047e1314af2aaea0ac61196b1244a86804605646c50540575"
+  },
+  {
+    "command": [
+      "gh",
+      "run",
+      "view",
+      "39159743311",
+      "--job",
+      "117770346462",
+      "--log"
+    ],
+    "started_utc": "2026-10-18T19:53:27.862758+00:00",
+    "finished_utc": "2026-10-18T19:53:29.633919+00:00",
+    "returncode": 0,
+    "stdout_file": "job-117770346462.log",
+    "stdout_sha256": "9ec2cc8f79f4d589089340c11d0e6b9f32fa4c3f6013da9af6316b6a6a9693f2"
+  }
+]

@@ -1,0 +1,17 @@
+﻿{
+    "label":  "judas_contact_cache_tests",
+    "executable":  "P:\\JudasValidation\\PreAlphaPass5\\GuiWork\\NativeTests\\judas_contact_cache_tests.exe",
+    "arguments":  [
+
+                  ],
+    "cwd":  "P:\\JudasValidation\\PreAlphaPass5\\GuiWork\\Projects",
+    "exit":  1,
+    "expected":  0,
+    "passed":  false,
+    "requiredOutput":  "",
+    "seconds":  0.18749649999999998,
+    "stdout":  "A0: prepared and uncached contacts over unchanged independent fixture inputs\r\nFAIL existing independent fixtures accessible\r\nFAIL all unchanged 823 fixture rows / 887 primitive pairs compared\r\nCONTACT_CACHE fixture_rows=0 primitive_pairs=0\r\nA: prepared bounds retain uncached expression-order bits\r\nB: static door ResetBody, tiny/real rotation, slot reuse and vector reallocation\r\nC: integration and position correction invalidate only derived data\r\nD: multiple manifolds share prepared body data and solver frames\r\nCACHE shared bodies=9 contacts=32 orientation_hits=24 orientation_rebuilds=8 bound_hits=48 bound_rebuilds=8 shape_rebuilds=0 solver_frames=18 bytes=11413 allocations=8\r\nE: player queries retain independently useful previous/current geometry\r\n{\"checks\":7882,\"failures\":2,\"bitwise_bound_comparisons\":2894,\"world_cache_inspections\":546,\"player_sweeps\":8}\r\n",
+    "stderr":  "",
+    "desktopIdentity":  "DESKTOP-935HKD1\\Conner",
+    "sessionId":  1
+}

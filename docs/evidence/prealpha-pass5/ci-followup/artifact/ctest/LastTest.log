@@ -1,0 +1,692 @@
+Start testing: Oct 18 19:52 UTC
+----------------------------------------------------------
+1/38 Testing: prealpha.build-identity
+1/38 Test: prealpha.build-identity
+Command: "/usr/bin/python3.12" "/home/runner/work/Project-Judas/Project-Judas/scripts/prealpha_validate.py" "--build-dir" "/home/runner/work/Project-Judas/Project-Judas/build" "--test" "build-identity"
+Directory: /home/runner/work/Project-Judas/Project-Judas/build
+"prealpha.build-identity" start time: Oct 18 19:52 UTC
+Output:
+----------------------------------------------------------
+build-identity passed
+/home/runner/work/Project-Judas/Project-Judas/.cache/prealpha/validation/20261018T195237Z-6b41ce93/RESULTS.json
+<end of output>
+Test time =   2.40 sec
+----------------------------------------------------------
+Test Passed.
+"prealpha.build-identity" end time: Oct 18 19:52 UTC
+"prealpha.build-identity" time elapsed: 00:00:02
+----------------------------------------------------------
+
+2/38 Testing: prealpha.collision-geometry
+2/38 Test: prealpha.collision-geometry
+Command: "/usr/bin/python3.12" "/home/runner/work/Project-Judas/Project-Judas/scripts/prealpha_validate.py" "--build-dir" "/home/runner/work/Project-Judas/Project-Judas/build" "--test" "collision-geometry"
+Directory: /home/runner/work/Project-Judas/Project-Judas/build
+"prealpha.collision-geometry" start time: Oct 18 19:52 UTC
+Output:
+----------------------------------------------------------
+collision-geometry passed
+/home/runner/work/Project-Judas/Project-Judas/.cache/prealpha/validation/20261018T195239Z-2715b7ce/RESULTS.json
+<end of output>
+Test time =   0.97 sec
+----------------------------------------------------------
+Test Passed.
+"prealpha.collision-geometry" end time: Oct 18 19:52 UTC
+"prealpha.collision-geometry" time elapsed: 00:00:00
+----------------------------------------------------------
+
+3/38 Testing: prealpha.collision-witness
+3/38 Test: prealpha.collision-witness
+Command: "/usr/bin/python3.12" "/home/runner/work/Project-Judas/Project-Judas/scripts/prealpha_validate.py" "--build-dir" "/home/runner/work/Project-Judas/Project-Judas/build" "--test" "collision-witness"
+Directory: /home/runner/work/Project-Judas/Project-Judas/build
+"prealpha.collision-witness" start time: Oct 18 19:52 UTC
+Output:
+----------------------------------------------------------
+collision-witness passed
+/home/runner/work/Project-Judas/Project-Judas/.cache/prealpha/validation/20261018T195240Z-0709402e/RESULTS.json
+<end of output>
+Test time =   0.87 sec
+----------------------------------------------------------
+Test Passed.
+"prealpha.collision-witness" end time: Oct 18 19:52 UTC
+"prealpha.collision-witness" time elapsed: 00:00:00
+----------------------------------------------------------
+
+4/38 Testing: prealpha.rigid-contact
+4/38 Test: prealpha.rigid-contact
+Command: "/usr/bin/python3.12" "/home/runner/work/Project-Judas/Project-Judas/scripts/prealpha_validate.py" "--build-dir" "/home/runner/work/Project-Judas/Project-Judas/build" "--test" "rigid-contact"
+Directory: /home/runner/work/Project-Judas/Project-Judas/build
+"prealpha.rigid-contact" start time: Oct 18 19:52 UTC
+Output:
+----------------------------------------------------------
+rigid-contact passed
+/home/runner/work/Project-Judas/Project-Judas/.cache/prealpha/validation/20261018T195241Z-79cbca3a/RESULTS.json
+<end of output>
+Test time =   1.46 sec
+----------------------------------------------------------
+Test Passed.
+"prealpha.rigid-contact" end time: Oct 18 19:52 UTC
+"prealpha.rigid-contact" time elapsed: 00:00:01
+----------------------------------------------------------
+
+5/38 Testing: prealpha.impact-solver
+5/38 Test: prealpha.impact-solver
+Command: "/usr/bin/python3.12" "/home/runner/work/Project-Judas/Project-Judas/scripts/prealpha_validate.py" "--build-dir" "/home/runner/work/Project-Judas/Project-Judas/build" "--test" "impact-solver"
+Directory: /home/runner/work/Project-Judas/Project-Judas/build
+"prealpha.impact-solver" start time: Oct 18 19:52 UTC
+Output:
+----------------------------------------------------------
+impact-solver passed
+/home/runner/work/Project-Judas/Project-Judas/.cache/prealpha/validation/20261018T195243Z-603b5659/RESULTS.json
+<end of output>
+Test time =   0.40 sec
+----------------------------------------------------------
+Test Passed.
+"prealpha.impact-solver" end time: Oct 18 19:52 UTC
+"prealpha.impact-solver" time elapsed: 00:00:00
+----------------------------------------------------------
+
+6/38 Testing: prealpha.impact-timing
+6/38 Test: prealpha.impact-timing
+Command: "/usr/bin/python3.12" "/home/runner/work/Project-Judas/Project-Judas/scripts/prealpha_validate.py" "--build-dir" "/home/runner/work/Project-Judas/Project-Judas/build" "--test" "impact-timing"
+Directory: /home/runner/work/Project-Judas/Project-Judas/build
+"prealpha.impact-timing" start time: Oct 18 19:52 UTC
+Output:
+----------------------------------------------------------
+impact-timing passed
+/home/runner/work/Project-Judas/Project-Judas/.cache/prealpha/validation/20261018T195243Z-e8d04b72/RESULTS.json
+<end of output>
+Test time =   0.42 sec
+----------------------------------------------------------
+Test Passed.
+"prealpha.impact-timing" end time: Oct 18 19:52 UTC
+"prealpha.impact-timing" time elapsed: 00:00:00
+----------------------------------------------------------
+
+7/38 Testing: prealpha.impact-candidates
+7/38 Test: prealpha.impact-candidates
+Command: "/usr/bin/python3.12" "/home/runner/work/Project-Judas/Project-Judas/scripts/prealpha_validate.py" "--build-dir" "/home/runner/work/Project-Judas/Project-Judas/build" "--test" "impact-candidates"
+Directory: /home/runner/work/Project-Judas/Project-Judas/build
+"prealpha.impact-candidates" start time: Oct 18 19:52 UTC
+Output:
+----------------------------------------------------------
+impact-candidates passed
+/home/runner/work/Project-Judas/Project-Judas/.cache/prealpha/validation/20261018T195243Z-c2b8435e/RESULTS.json
+<end of output>
+Test time =   0.40 sec
+----------------------------------------------------------
+Test Passed.
+"prealpha.impact-candidates" end time: Oct 18 19:52 UTC
+"prealpha.impact-candidates" time elapsed: 00:00:00
+----------------------------------------------------------
+
+8/38 Testing: prealpha.impact-mesh-arrival
+8/38 Test: prealpha.impact-mesh-arrival
+Command: "/usr/bin/python3.12" "/home/runner/work/Project-Judas/Project-Judas/scripts/prealpha_validate.py" "--build-dir" "/home/runner/work/Project-Judas/Project-Judas/build" "--test" "impact-mesh-arrival"
+Directory: /home/runner/work/Project-Judas/Project-Judas/build
+"prealpha.impact-mesh-arrival" start time: Oct 18 19:52 UTC
+Output:
+----------------------------------------------------------
+impact-mesh-arrival passed
+/home/runner/work/Project-Judas/Project-Judas/.cache/prealpha/validation/20261018T195244Z-49062dea/RESULTS.json
+<end of output>
+Test time =   3.97 sec
+----------------------------------------------------------
+Test Passed.
+"prealpha.impact-mesh-arrival" end time: Oct 18 19:52 UTC
+"prealpha.impact-mesh-arrival" time elapsed: 00:00:03
+----------------------------------------------------------
+
+9/38 Testing: prealpha.liquid-rotation
+9/38 Test: prealpha.liquid-rotation
+Command: "/usr/bin/python3.12" "/home/runner/work/Project-Judas/Project-Judas/scripts/prealpha_validate.py" "--build-dir" "/home/runner/work/Project-Judas/Project-Judas/build" "--test" "liquid-rotation"
+Directory: /home/runner/work/Project-Judas/Project-Judas/build
+"prealpha.liquid-rotation" start time: Oct 18 19:52 UTC
+Output:
+----------------------------------------------------------
+liquid-rotation passed
+/home/runner/work/Project-Judas/Project-Judas/.cache/prealpha/validation/20261018T195248Z-8dfda87a/RESULTS.json
+<end of output>
+Test time =   0.67 sec
+----------------------------------------------------------
+Test Passed.
+"prealpha.liquid-rotation" end time: Oct 18 19:52 UTC
+"prealpha.liquid-rotation" time elapsed: 00:00:00
+----------------------------------------------------------
+
+10/38 Testing: prealpha.liquid-bake-frames
+10/38 Test: prealpha.liquid-bake-frames
+Command: "/usr/bin/python3.12" "/home/runner/work/Project-Judas/Project-Judas/scripts/prealpha_validate.py" "--build-dir" "/home/runner/work/Project-Judas/Project-Judas/build" "--test" "liquid-bake-frames"
+Directory: /home/runner/work/Project-Judas/Project-Judas/build
+"prealpha.liquid-bake-frames" start time: Oct 18 19:52 UTC
+Output:
+----------------------------------------------------------
+liquid-bake-frames passed
+/home/runner/work/Project-Judas/Project-Judas/.cache/prealpha/validation/20261018T195249Z-8c5e86c1/RESULTS.json
+<end of output>
+Test time =   0.57 sec
+----------------------------------------------------------
+Test Passed.
+"prealpha.liquid-bake-frames" end time: Oct 18 19:52 UTC
+"prealpha.liquid-bake-frames" time elapsed: 00:00:00
+----------------------------------------------------------
+
+11/38 Testing: prealpha.liquid-bake-normalization-only
+11/38 Test: prealpha.liquid-bake-normalization-only
+Command: "/usr/bin/python3.12" "/home/runner/work/Project-Judas/Project-Judas/scripts/prealpha_validate.py" "--build-dir" "/home/runner/work/Project-Judas/Project-Judas/build" "--test" "liquid-bake-normalization-only"
+Directory: /home/runner/work/Project-Judas/Project-Judas/build
+"prealpha.liquid-bake-normalization-only" start time: Oct 18 19:52 UTC
+Output:
+----------------------------------------------------------
+liquid-bake-normalization-only passed
+/home/runner/work/Project-Judas/Project-Judas/.cache/prealpha/validation/20261018T195249Z-9aa5f2d3/RESULTS.json
+<end of output>
+Test time =   0.59 sec
+----------------------------------------------------------
+Test Passed.
+"prealpha.liquid-bake-normalization-only" end time: Oct 18 19:52 UTC
+"prealpha.liquid-bake-normalization-only" time elapsed: 00:00:00
+----------------------------------------------------------
+
+12/38 Testing: prealpha.liquid-bake-knots-only
+12/38 Test: prealpha.liquid-bake-knots-only
+Command: "/usr/bin/python3.12" "/home/runner/work/Project-Judas/Project-Judas/scripts/prealpha_validate.py" "--build-dir" "/home/runner/work/Project-Judas/Project-Judas/build" "--test" "liquid-bake-knots-only"
+Directory: /home/runner/work/Project-Judas/Project-Judas/build
+"prealpha.liquid-bake-knots-only" start time: Oct 18 19:52 UTC
+Output:
+----------------------------------------------------------
+liquid-bake-knots-only passed
+/home/runner/work/Project-Judas/Project-Judas/.cache/prealpha/validation/20261018T195250Z-13b0f65a/RESULTS.json
+<end of output>
+Test time =   0.59 sec
+----------------------------------------------------------
+Test Passed.
+"prealpha.liquid-bake-knots-only" end time: Oct 18 19:52 UTC
+"prealpha.liquid-bake-knots-only" time elapsed: 00:00:00
+----------------------------------------------------------
+
+13/38 Testing: prealpha.liquid-reservoir
+13/38 Test: prealpha.liquid-reservoir
+Command: "/usr/bin/python3.12" "/home/runner/work/Project-Judas/Project-Judas/scripts/prealpha_validate.py" "--build-dir" "/home/runner/work/Project-Judas/Project-Judas/build" "--test" "liquid-reservoir"
+Directory: /home/runner/work/Project-Judas/Project-Judas/build
+"prealpha.liquid-reservoir" start time: Oct 18 19:52 UTC
+Output:
+----------------------------------------------------------
+liquid-reservoir passed
+/home/runner/work/Project-Judas/Project-Judas/.cache/prealpha/validation/20261018T195250Z-9d2d243f/RESULTS.json
+<end of output>
+Test time =   1.12 sec
+----------------------------------------------------------
+Test Passed.
+"prealpha.liquid-reservoir" end time: Oct 18 19:52 UTC
+"prealpha.liquid-reservoir" time elapsed: 00:00:01
+----------------------------------------------------------
+
+14/38 Testing: prealpha.liquid-surface
+14/38 Test: prealpha.liquid-surface
+Command: "/usr/bin/python3.12" "/home/runner/work/Project-Judas/Project-Judas/scripts/prealpha_validate.py" "--build-dir" "/home/runner/work/Project-Judas/Project-Judas/build" "--test" "liquid-surface"
+Directory: /home/runner/work/Project-Judas/Project-Judas/build
+"prealpha.liquid-surface" start time: Oct 18 19:52 UTC
+Output:
+----------------------------------------------------------
+liquid-surface passed
+/home/runner/work/Project-Judas/Project-Judas/.cache/prealpha/validation/20261018T195251Z-0919513a/RESULTS.json
+<end of output>
+Test time =   1.77 sec
+----------------------------------------------------------
+Test Passed.
+"prealpha.liquid-surface" end time: Oct 18 19:52 UTC
+"prealpha.liquid-surface" time elapsed: 00:00:01
+----------------------------------------------------------
+
+15/38 Testing: prealpha.liquid-origin-total-identity
+15/38 Test: prealpha.liquid-origin-total-identity
+Command: "/usr/bin/python3.12" "/home/runner/work/Project-Judas/Project-Judas/scripts/prealpha_validate.py" "--build-dir" "/home/runner/work/Project-Judas/Project-Judas/build" "--test" "liquid-origin-total-identity"
+Directory: /home/runner/work/Project-Judas/Project-Judas/build
+"prealpha.liquid-origin-total-identity" start time: Oct 18 19:52 UTC
+Output:
+----------------------------------------------------------
+liquid-origin-total-identity passed
+/home/runner/work/Project-Judas/Project-Judas/.cache/prealpha/validation/20261018T195253Z-621dfd6a/RESULTS.json
+<end of output>
+Test time =   0.59 sec
+----------------------------------------------------------
+Test Passed.
+"prealpha.liquid-origin-total-identity" end time: Oct 18 19:52 UTC
+"prealpha.liquid-origin-total-identity" time elapsed: 00:00:00
+----------------------------------------------------------
+
+16/38 Testing: prealpha.collision-continuity
+16/38 Test: prealpha.collision-continuity
+Command: "/usr/bin/python3.12" "/home/runner/work/Project-Judas/Project-Judas/scripts/prealpha_validate.py" "--build-dir" "/home/runner/work/Project-Judas/Project-Judas/build" "--test" "collision-continuity"
+Directory: /home/runner/work/Project-Judas/Project-Judas/build
+"prealpha.collision-continuity" start time: Oct 18 19:52 UTC
+Output:
+----------------------------------------------------------
+collision-continuity passed
+/home/runner/work/Project-Judas/Project-Judas/.cache/prealpha/validation/20261018T195254Z-04eea033/RESULTS.json
+<end of output>
+Test time =   0.42 sec
+----------------------------------------------------------
+Test Passed.
+"prealpha.collision-continuity" end time: Oct 18 19:52 UTC
+"prealpha.collision-continuity" time elapsed: 00:00:00
+----------------------------------------------------------
+
+17/38 Testing: prealpha.character-motor
+17/38 Test: prealpha.character-motor
+Command: "/usr/bin/python3.12" "/home/runner/work/Project-Judas/Project-Judas/scripts/prealpha_validate.py" "--build-dir" "/home/runner/work/Project-Judas/Project-Judas/build" "--test" "character-motor"
+Directory: /home/runner/work/Project-Judas/Project-Judas/build
+"prealpha.character-motor" start time: Oct 18 19:52 UTC
+Output:
+----------------------------------------------------------
+character-motor passed
+/home/runner/work/Project-Judas/Project-Judas/.cache/prealpha/validation/20261018T195254Z-8cbe26fc/RESULTS.json
+<end of output>
+Test time =   0.97 sec
+----------------------------------------------------------
+Test Passed.
+"prealpha.character-motor" end time: Oct 18 19:52 UTC
+"prealpha.character-motor" time elapsed: 00:00:00
+----------------------------------------------------------
+
+18/38 Testing: prealpha.physics-continuation
+18/38 Test: prealpha.physics-continuation
+Command: "/usr/bin/python3.12" "/home/runner/work/Project-Judas/Project-Judas/scripts/prealpha_validate.py" "--build-dir" "/home/runner/work/Project-Judas/Project-Judas/build" "--test" "physics-continuation"
+Directory: /home/runner/work/Project-Judas/Project-Judas/build
+"prealpha.physics-continuation" start time: Oct 18 19:52 UTC
+Output:
+----------------------------------------------------------
+physics-continuation passed
+/home/runner/work/Project-Judas/Project-Judas/.cache/prealpha/validation/20261018T195255Z-6adc344b/RESULTS.json
+<end of output>
+Test time =   0.57 sec
+----------------------------------------------------------
+Test Passed.
+"prealpha.physics-continuation" end time: Oct 18 19:52 UTC
+"prealpha.physics-continuation" time elapsed: 00:00:00
+----------------------------------------------------------
+
+19/38 Testing: prealpha.contacts
+19/38 Test: prealpha.contacts
+Command: "/usr/bin/python3.12" "/home/runner/work/Project-Judas/Project-Judas/scripts/prealpha_validate.py" "--build-dir" "/home/runner/work/Project-Judas/Project-Judas/build" "--test" "contacts"
+Directory: /home/runner/work/Project-Judas/Project-Judas/build
+"prealpha.contacts" start time: Oct 18 19:52 UTC
+Output:
+----------------------------------------------------------
+contacts passed
+/home/runner/work/Project-Judas/Project-Judas/.cache/prealpha/validation/20261018T195256Z-9f4c12c3/RESULTS.json
+<end of output>
+Test time =   0.58 sec
+----------------------------------------------------------
+Test Passed.
+"prealpha.contacts" end time: Oct 18 19:52 UTC
+"prealpha.contacts" time elapsed: 00:00:00
+----------------------------------------------------------
+
+20/38 Testing: prealpha.composed-lifecycle
+20/38 Test: prealpha.composed-lifecycle
+Command: "/usr/bin/python3.12" "/home/runner/work/Project-Judas/Project-Judas/scripts/prealpha_validate.py" "--build-dir" "/home/runner/work/Project-Judas/Project-Judas/build" "--test" "composed-lifecycle"
+Directory: /home/runner/work/Project-Judas/Project-Judas/build
+"prealpha.composed-lifecycle" start time: Oct 18 19:52 UTC
+Output:
+----------------------------------------------------------
+composed-lifecycle passed
+/home/runner/work/Project-Judas/Project-Judas/.cache/prealpha/validation/20261018T195256Z-917d8d9f/RESULTS.json
+<end of output>
+Test time =   0.81 sec
+----------------------------------------------------------
+Test Passed.
+"prealpha.composed-lifecycle" end time: Oct 18 19:52 UTC
+"prealpha.composed-lifecycle" time elapsed: 00:00:00
+----------------------------------------------------------
+
+21/38 Testing: prealpha.origin-physics
+21/38 Test: prealpha.origin-physics
+Command: "/usr/bin/python3.12" "/home/runner/work/Project-Judas/Project-Judas/scripts/prealpha_validate.py" "--build-dir" "/home/runner/work/Project-Judas/Project-Judas/build" "--test" "origin-physics"
+Directory: /home/runner/work/Project-Judas/Project-Judas/build
+"prealpha.origin-physics" start time: Oct 18 19:52 UTC
+Output:
+----------------------------------------------------------
+origin-physics passed
+/home/runner/work/Project-Judas/Project-Judas/.cache/prealpha/validation/20261018T195257Z-f58fe509/RESULTS.json
+<end of output>
+Test time =   0.41 sec
+----------------------------------------------------------
+Test Passed.
+"prealpha.origin-physics" end time: Oct 18 19:52 UTC
+"prealpha.origin-physics" time elapsed: 00:00:00
+----------------------------------------------------------
+
+22/38 Testing: prealpha.origin-assembly
+22/38 Test: prealpha.origin-assembly
+Command: "/usr/bin/python3.12" "/home/runner/work/Project-Judas/Project-Judas/scripts/prealpha_validate.py" "--build-dir" "/home/runner/work/Project-Judas/Project-Judas/build" "--test" "origin-assembly"
+Directory: /home/runner/work/Project-Judas/Project-Judas/build
+"prealpha.origin-assembly" start time: Oct 18 19:52 UTC
+Output:
+----------------------------------------------------------
+origin-assembly passed
+/home/runner/work/Project-Judas/Project-Judas/.cache/prealpha/validation/20261018T195258Z-23bcb5e9/RESULTS.json
+<end of output>
+Test time =   0.67 sec
+----------------------------------------------------------
+Test Passed.
+"prealpha.origin-assembly" end time: Oct 18 19:52 UTC
+"prealpha.origin-assembly" time elapsed: 00:00:00
+----------------------------------------------------------
+
+23/38 Testing: prealpha.origin-participants
+23/38 Test: prealpha.origin-participants
+Command: "/usr/bin/python3.12" "/home/runner/work/Project-Judas/Project-Judas/scripts/prealpha_validate.py" "--build-dir" "/home/runner/work/Project-Judas/Project-Judas/build" "--test" "origin-participants"
+Directory: /home/runner/work/Project-Judas/Project-Judas/build
+"prealpha.origin-participants" start time: Oct 18 19:52 UTC
+Output:
+----------------------------------------------------------
+origin-participants passed
+/home/runner/work/Project-Judas/Project-Judas/.cache/prealpha/validation/20261018T195258Z-cdf57261/RESULTS.json
+<end of output>
+Test time =   1.04 sec
+----------------------------------------------------------
+Test Passed.
+"prealpha.origin-participants" end time: Oct 18 19:52 UTC
+"prealpha.origin-participants" time elapsed: 00:00:01
+----------------------------------------------------------
+
+24/38 Testing: prealpha.origin-stream
+24/38 Test: prealpha.origin-stream
+Command: "/usr/bin/python3.12" "/home/runner/work/Project-Judas/Project-Judas/scripts/prealpha_validate.py" "--build-dir" "/home/runner/work/Project-Judas/Project-Judas/build" "--test" "origin-stream"
+Directory: /home/runner/work/Project-Judas/Project-Judas/build
+"prealpha.origin-stream" start time: Oct 18 19:52 UTC
+Output:
+----------------------------------------------------------
+origin-stream passed
+/home/runner/work/Project-Judas/Project-Judas/.cache/prealpha/validation/20261018T195259Z-c987116d/RESULTS.json
+<end of output>
+Test time =   0.59 sec
+----------------------------------------------------------
+Test Passed.
+"prealpha.origin-stream" end time: Oct 18 19:53 UTC
+"prealpha.origin-stream" time elapsed: 00:00:00
+----------------------------------------------------------
+
+25/38 Testing: prealpha.terrain-lifecycle
+25/38 Test: prealpha.terrain-lifecycle
+Command: "/usr/bin/python3.12" "/home/runner/work/Project-Judas/Project-Judas/scripts/prealpha_validate.py" "--build-dir" "/home/runner/work/Project-Judas/Project-Judas/build" "--test" "terrain-lifecycle"
+Directory: /home/runner/work/Project-Judas/Project-Judas/build
+"prealpha.terrain-lifecycle" start time: Oct 18 19:53 UTC
+Output:
+----------------------------------------------------------
+terrain-lifecycle passed
+/home/runner/work/Project-Judas/Project-Judas/.cache/prealpha/validation/20261018T195300Z-609124a2/RESULTS.json
+<end of output>
+Test time =   0.97 sec
+----------------------------------------------------------
+Test Passed.
+"prealpha.terrain-lifecycle" end time: Oct 18 19:53 UTC
+"prealpha.terrain-lifecycle" time elapsed: 00:00:00
+----------------------------------------------------------
+
+26/38 Testing: prealpha.terrain-streaming
+26/38 Test: prealpha.terrain-streaming
+Command: "/usr/bin/python3.12" "/home/runner/work/Project-Judas/Project-Judas/scripts/prealpha_validate.py" "--build-dir" "/home/runner/work/Project-Judas/Project-Judas/build" "--test" "terrain-streaming"
+Directory: /home/runner/work/Project-Judas/Project-Judas/build
+"prealpha.terrain-streaming" start time: Oct 18 19:53 UTC
+Output:
+----------------------------------------------------------
+terrain-streaming passed
+/home/runner/work/Project-Judas/Project-Judas/.cache/prealpha/validation/20261018T195301Z-42940cdf/RESULTS.json
+<end of output>
+Test time =   0.71 sec
+----------------------------------------------------------
+Test Passed.
+"prealpha.terrain-streaming" end time: Oct 18 19:53 UTC
+"prealpha.terrain-streaming" time elapsed: 00:00:00
+----------------------------------------------------------
+
+27/38 Testing: prealpha.save-evolution
+27/38 Test: prealpha.save-evolution
+Command: "/usr/bin/python3.12" "/home/runner/work/Project-Judas/Project-Judas/scripts/prealpha_validate.py" "--build-dir" "/home/runner/work/Project-Judas/Project-Judas/build" "--test" "save-evolution"
+Directory: /home/runner/work/Project-Judas/Project-Judas/build
+"prealpha.save-evolution" start time: Oct 18 19:53 UTC
+Output:
+----------------------------------------------------------
+save-evolution passed
+/home/runner/work/Project-Judas/Project-Judas/.cache/prealpha/validation/20261018T195302Z-9ad1c01a/RESULTS.json
+<end of output>
+Test time =   0.72 sec
+----------------------------------------------------------
+Test Passed.
+"prealpha.save-evolution" end time: Oct 18 19:53 UTC
+"prealpha.save-evolution" time elapsed: 00:00:00
+----------------------------------------------------------
+
+28/38 Testing: prealpha.network-transport
+28/38 Test: prealpha.network-transport
+Command: "/usr/bin/python3.12" "/home/runner/work/Project-Judas/Project-Judas/scripts/prealpha_validate.py" "--build-dir" "/home/runner/work/Project-Judas/Project-Judas/build" "--test" "network-transport"
+Directory: /home/runner/work/Project-Judas/Project-Judas/build
+"prealpha.network-transport" start time: Oct 18 19:53 UTC
+Output:
+----------------------------------------------------------
+network-transport passed
+/home/runner/work/Project-Judas/Project-Judas/.cache/prealpha/validation/20261018T195302Z-6251629c/RESULTS.json
+<end of output>
+Test time =   0.76 sec
+----------------------------------------------------------
+Test Passed.
+"prealpha.network-transport" end time: Oct 18 19:53 UTC
+"prealpha.network-transport" time elapsed: 00:00:00
+----------------------------------------------------------
+
+29/38 Testing: prealpha.network-session
+29/38 Test: prealpha.network-session
+Command: "/usr/bin/python3.12" "/home/runner/work/Project-Judas/Project-Judas/scripts/prealpha_validate.py" "--build-dir" "/home/runner/work/Project-Judas/Project-Judas/build" "--test" "network-session"
+Directory: /home/runner/work/Project-Judas/Project-Judas/build
+"prealpha.network-session" start time: Oct 18 19:53 UTC
+Output:
+----------------------------------------------------------
+network-session passed
+/home/runner/work/Project-Judas/Project-Judas/.cache/prealpha/validation/20261018T195303Z-6fd16a53/RESULTS.json
+<end of output>
+Test time =   1.27 sec
+----------------------------------------------------------
+Test Passed.
+"prealpha.network-session" end time: Oct 18 19:53 UTC
+"prealpha.network-session" time elapsed: 00:00:01
+----------------------------------------------------------
+
+30/38 Testing: prealpha.network-boundaries
+30/38 Test: prealpha.network-boundaries
+Command: "/usr/bin/python3.12" "/home/runner/work/Project-Judas/Project-Judas/scripts/prealpha_validate.py" "--build-dir" "/home/runner/work/Project-Judas/Project-Judas/build" "--test" "network-boundaries"
+Directory: /home/runner/work/Project-Judas/Project-Judas/build
+"prealpha.network-boundaries" start time: Oct 18 19:53 UTC
+Output:
+----------------------------------------------------------
+network-boundaries passed
+/home/runner/work/Project-Judas/Project-Judas/.cache/prealpha/validation/20261018T195304Z-03e35469/RESULTS.json
+<end of output>
+Test time =   0.97 sec
+----------------------------------------------------------
+Test Passed.
+"prealpha.network-boundaries" end time: Oct 18 19:53 UTC
+"prealpha.network-boundaries" time elapsed: 00:00:00
+----------------------------------------------------------
+
+31/38 Testing: prealpha.network-js
+31/38 Test: prealpha.network-js
+Command: "/usr/bin/python3.12" "/home/runner/work/Project-Judas/Project-Judas/scripts/prealpha_validate.py" "--build-dir" "/home/runner/work/Project-Judas/Project-Judas/build" "--test" "network-js"
+Directory: /home/runner/work/Project-Judas/Project-Judas/build
+"prealpha.network-js" start time: Oct 18 19:53 UTC
+Output:
+----------------------------------------------------------
+network-js passed
+/home/runner/work/Project-Judas/Project-Judas/.cache/prealpha/validation/20261018T195305Z-f7bd2f6e/RESULTS.json
+<end of output>
+Test time =   0.86 sec
+----------------------------------------------------------
+Test Passed.
+"prealpha.network-js" end time: Oct 18 19:53 UTC
+"prealpha.network-js" time elapsed: 00:00:00
+----------------------------------------------------------
+
+32/38 Testing: prealpha.resource-handoff
+32/38 Test: prealpha.resource-handoff
+Command: "/usr/bin/python3.12" "/home/runner/work/Project-Judas/Project-Judas/scripts/prealpha_validate.py" "--build-dir" "/home/runner/work/Project-Judas/Project-Judas/build" "--test" "resource-handoff"
+Directory: /home/runner/work/Project-Judas/Project-Judas/build
+"prealpha.resource-handoff" start time: Oct 18 19:53 UTC
+Output:
+----------------------------------------------------------
+resource-handoff passed
+/home/runner/work/Project-Judas/Project-Judas/.cache/prealpha/validation/20261018T195306Z-7f40d531/RESULTS.json
+<end of output>
+Test time =   1.87 sec
+----------------------------------------------------------
+Test Passed.
+"prealpha.resource-handoff" end time: Oct 18 19:53 UTC
+"prealpha.resource-handoff" time elapsed: 00:00:01
+----------------------------------------------------------
+
+33/38 Testing: prealpha.first-project
+33/38 Test: prealpha.first-project
+Command: "/usr/bin/python3.12" "/home/runner/work/Project-Judas/Project-Judas/scripts/prealpha_validate.py" "--build-dir" "/home/runner/work/Project-Judas/Project-Judas/build" "--test" "first-project"
+Directory: /home/runner/work/Project-Judas/Project-Judas/build
+"prealpha.first-project" start time: Oct 18 19:53 UTC
+Output:
+----------------------------------------------------------
+first-project passed
+/home/runner/work/Project-Judas/Project-Judas/.cache/prealpha/validation/20261018T195308Z-3ceb279c/RESULTS.json
+<end of output>
+Test time =   0.94 sec
+----------------------------------------------------------
+Test Passed.
+"prealpha.first-project" end time: Oct 18 19:53 UTC
+"prealpha.first-project" time elapsed: 00:00:00
+----------------------------------------------------------
+
+34/38 Testing: prealpha.origin-environment
+34/38 Test: prealpha.origin-environment
+Command: "/usr/bin/python3.12" "/home/runner/work/Project-Judas/Project-Judas/scripts/prealpha_validate.py" "--build-dir" "/home/runner/work/Project-Judas/Project-Judas/build" "--test" "origin-environment"
+Directory: /home/runner/work/Project-Judas/Project-Judas/build
+"prealpha.origin-environment" start time: Oct 18 19:53 UTC
+Output:
+----------------------------------------------------------
+origin-environment passed
+/home/runner/work/Project-Judas/Project-Judas/.cache/prealpha/validation/20261018T195309Z-fd02f7f9/RESULTS.json
+<end of output>
+Test time =   0.97 sec
+----------------------------------------------------------
+Test Passed.
+"prealpha.origin-environment" end time: Oct 18 19:53 UTC
+"prealpha.origin-environment" time elapsed: 00:00:00
+----------------------------------------------------------
+
+35/38 Testing: prealpha.origin-admission
+35/38 Test: prealpha.origin-admission
+Command: "/usr/bin/python3.12" "/home/runner/work/Project-Judas/Project-Judas/scripts/prealpha_validate.py" "--build-dir" "/home/runner/work/Project-Judas/Project-Judas/build" "--test" "origin-admission"
+Directory: /home/runner/work/Project-Judas/Project-Judas/build
+"prealpha.origin-admission" start time: Oct 18 19:53 UTC
+Output:
+----------------------------------------------------------
+origin-admission passed
+/home/runner/work/Project-Judas/Project-Judas/.cache/prealpha/validation/20261018T195310Z-5f6b02e9/RESULTS.json
+<end of output>
+Test time =   0.56 sec
+----------------------------------------------------------
+Test Passed.
+"prealpha.origin-admission" end time: Oct 18 19:53 UTC
+"prealpha.origin-admission" time elapsed: 00:00:00
+----------------------------------------------------------
+
+36/38 Testing: prealpha.liquid-origin-query-controls
+36/38 Test: prealpha.liquid-origin-query-controls
+Command: "/usr/bin/python3.12" "/home/runner/work/Project-Judas/Project-Judas/scripts/prealpha_validate.py" "--build-dir" "/home/runner/work/Project-Judas/Project-Judas/build" "--test" "liquid-origin-query-controls"
+Directory: /home/runner/work/Project-Judas/Project-Judas/build
+"prealpha.liquid-origin-query-controls" start time: Oct 18 19:53 UTC
+Output:
+----------------------------------------------------------
+liquid-origin-query-controls passed
+/home/runner/work/Project-Judas/Project-Judas/.cache/prealpha/validation/20261018T195310Z-6864e0a0/RESULTS.json
+<end of output>
+Test time =   0.58 sec
+----------------------------------------------------------
+Test Passed.
+"prealpha.liquid-origin-query-controls" end time: Oct 18 19:53 UTC
+"prealpha.liquid-origin-query-controls" time elapsed: 00:00:00
+----------------------------------------------------------
+
+37/38 Testing: prealpha.gate-negative-controls
+37/38 Test: prealpha.gate-negative-controls
+Command: "/usr/bin/python3.12" "-m" "unittest" "discover" "-s" "/home/runner/work/Project-Judas/Project-Judas/tests" "-p" "test_prealpha_validation.py" "-v"
+Directory: /home/runner/work/Project-Judas/Project-Judas/build
+"prealpha.gate-negative-controls" start time: Oct 18 19:53 UTC
+Output:
+----------------------------------------------------------
+test_archive_added_input_cannot_certify_an_old_binary (test_prealpha_validation.GateTests.test_archive_added_input_cannot_certify_an_old_binary) ... ok
+test_deferred_findings_are_not_tests (test_prealpha_validation.GateTests.test_deferred_findings_are_not_tests) ... ok
+test_exit_and_timeout_controls (test_prealpha_validation.GateTests.test_exit_and_timeout_controls) ... ok
+test_identity_probe_is_bound_to_test_bytes (test_prealpha_validation.GateTests.test_identity_probe_is_bound_to_test_bytes) ... ok
+test_manifest_rejects_duplicates_and_bad_targets (test_prealpha_validation.GateTests.test_manifest_rejects_duplicates_and_bad_targets) ... ok
+test_stale_or_absent_embedded_identity_cannot_pass (test_prealpha_validation.GateTests.test_stale_or_absent_embedded_identity_cannot_pass) ... ok
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.211s
+
+OK
+<end of output>
+Test time =   0.30 sec
+----------------------------------------------------------
+Test Passed.
+"prealpha.gate-negative-controls" end time: Oct 18 19:53 UTC
+"prealpha.gate-negative-controls" time elapsed: 00:00:00
+----------------------------------------------------------
+
+38/38 Testing: prealpha.build-organization
+38/38 Test: prealpha.build-organization
+Command: "/usr/bin/python3.12" "-m" "unittest" "discover" "-s" "/home/runner/work/Project-Judas/Project-Judas/tests" "-p" "test_cmake_test_targets.py" "-v"
+Directory: /home/runner/work/Project-Judas/Project-Judas/build
+"prealpha.build-organization" start time: Oct 18 19:53 UTC
+Output:
+----------------------------------------------------------
+test_changed_link_owner_detected (test_cmake_test_targets.CMakeTestTargets.test_changed_link_owner_detected) ... ok
+test_changed_warning_detected (test_cmake_test_targets.CMakeTestTargets.test_changed_warning_detected) ... ok
+test_exact_sources_links_warnings_and_order (test_cmake_test_targets.CMakeTestTargets.test_exact_sources_links_warnings_and_order) ... ok
+test_missing_application_sources_detected (test_cmake_test_targets.CMakeTestTargets.test_missing_application_sources_detected) ... ok
+test_missing_target_detected (test_cmake_test_targets.CMakeTestTargets.test_missing_target_detected) ... ok
+test_unknown_options_and_missing_source_fail (test_cmake_test_targets.CMakeTestTargets.test_unknown_options_and_missing_source_fail) ... ok
+test_changed_engine_link_is_detected (test_cmake_test_targets.SubsystemTargetContracts.test_changed_engine_link_is_detected) ... ok
+test_lost_application_sources_are_detected (test_cmake_test_targets.SubsystemTargetContracts.test_lost_application_sources_are_detected) ... ok
+test_lost_rendering_definition_is_detected (test_cmake_test_targets.SubsystemTargetContracts.test_lost_rendering_definition_is_detected) ... ok
+test_lost_windows_socket_link_is_detected (test_cmake_test_targets.SubsystemTargetContracts.test_lost_windows_socket_link_is_detected) ... ok
+test_subsystem_sources_links_options_properties_and_order (test_cmake_test_targets.SubsystemTargetContracts.test_subsystem_sources_links_options_properties_and_order) ... ok
+test_wrong_platform_guard_is_detected (test_cmake_test_targets.SubsystemTargetContracts.test_wrong_platform_guard_is_detected) ... ok
+
+----------------------------------------------------------------------
+Ran 12 tests in 0.087s
+
+OK
+<end of output>
+Test time =   0.14 sec
+----------------------------------------------------------
+Test Passed.
+"prealpha.build-organization" end time: Oct 18 19:53 UTC
+"prealpha.build-organization" time elapsed: 00:00:00
+----------------------------------------------------------
+
+End testing: Oct 18 19:53 UTC
+
+application =   1.87 sec*proc
+
+collision =   8.92 sec*proc
+
+core =   9.81 sec*proc
+
+lifecycle =  10.16 sec*proc
+
+liquid =   6.47 sec*proc
+
+network =   3.86 sec*proc
+
+onboarding =   0.94 sec*proc
+
+prealpha =  34.48 sec*proc
+
+tooling =   0.44 sec*proc
+

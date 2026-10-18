@@ -1,0 +1,38 @@
+
+Elf file type is DYN (Shared object file)
+Entry point 0x0
+There are 9 program headers, starting at offset 64
+
+Program Headers:
+  Type           Offset             VirtAddr           PhysAddr
+                 FileSiz            MemSiz              Flags  Align
+  PHDR           0x0000000000000040 0x0000000000000040 0x0000000000000040
+                 0x00000000000001f8 0x00000000000001f8  R      0x8
+  LOAD           0x0000000000000000 0x0000000000000000 0x0000000000000000
+                 0x0000000002e8da80 0x0000000002e8da80  R E    0x4000
+  LOAD           0x0000000002e8da80 0x0000000002e91a80 0x0000000002e91a80
+                 0x000000000003e7e8 0x000000000003f580  RW     0x4000
+  LOAD           0x0000000002ecc268 0x0000000002ed4268 0x0000000002ed4268
+                 0x0000000000001050 0x00000000000080d8  RW     0x4000
+  DYNAMIC        0x0000000002eb7c28 0x0000000002ebbc28 0x0000000002ebbc28
+                 0x0000000000000200 0x0000000000000200  RW     0x8
+  GNU_RELRO      0x0000000002e8da80 0x0000000002e91a80 0x0000000002e91a80
+                 0x000000000003e7e8 0x000000000003f580  R      0x1
+  GNU_EH_FRAME   0x00000000022aa6e4 0x00000000022aa6e4 0x00000000022aa6e4
+                 0x000000000002bf74 0x000000000002bf74  R      0x4
+  GNU_STACK      0x0000000000000000 0x0000000000000000 0x0000000000000000
+                 0x0000000000000000 0x0000000000000000  RW     0x0
+  NOTE           0x0000000000000238 0x0000000000000238 0x0000000000000238
+                 0x00000000000000bc 0x00000000000000bc  R      0x4
+
+ Section to Segment mapping:
+  Segment Sections...
+   00     
+   01     .note.android.ident .note.gnu.build-id .dynsym .gnu.version .gnu.version_r .gnu.hash .dynstr .rela.dyn .rela.plt .gcc_except_table .rodata .eh_frame_hdr .eh_frame .text .plt 
+   02     .data.rel.ro .fini_array .init_array .dynamic .got .got.plt .relro_padding 
+   03     .data .bss 
+   04     .dynamic 
+   05     .data.rel.ro .fini_array .init_array .dynamic .got .got.plt .relro_padding 
+   06     .eh_frame_hdr 
+   07     
+   08     .note.android.ident .note.gnu.build-id 

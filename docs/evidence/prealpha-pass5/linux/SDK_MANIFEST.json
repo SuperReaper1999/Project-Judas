@@ -1,0 +1,1105 @@
+{
+  "build": {
+    "architecture": "x86_64",
+    "build_id": "0.1.0-prealpha-Experimental-139d0de-clean-b271ec3d7937-u84f47c24fcd0",
+    "channel": "Experimental",
+    "compiler": "GNU",
+    "compiler_version": "15.2.0",
+    "configuration": "Release",
+    "maturity": "pre-alpha",
+    "platform": "Linux",
+    "schema": 1,
+    "source_dirty": false,
+    "source_fingerprint": "b271ec3d79377a74284bae8f0ae666f6576395488e5680d74c391754f9a17315",
+    "source_origin": "git",
+    "source_revision": "139d0de20e2e443bd186a6ed8f786eaa223cbba6",
+    "source_tree": "e114eacd8195cc7362ff3542040ab85a9dcde9ed",
+    "source_untracked_count": 16,
+    "source_untracked_fingerprint": "84f47c24fcd098f88732ceab246b2e0e19eca31f56acdd72f89f8bfa1621daf2",
+    "version": "0.1.0-prealpha"
+  },
+  "files": [
+    {
+      "bytes": 728,
+      "path": "BUILD_INFO.json",
+      "sha256": "fedcb35a260be348bdd042c872ec8259b9b07ab4b5e44ce5bcdfbba5e333249a"
+    },
+    {
+      "bytes": 1079,
+      "path": "LICENSE",
+      "sha256": "0b57ff108ca9cefafc253e848d02e7e6b9ae7c84951961d9712dff6e3aa6533d"
+    },
+    {
+      "bytes": 8772,
+      "path": "README.md",
+      "sha256": "2250213806dbb1e85a6a3a29667ce8fb72373a3bd9272eaa60f776db688bf932"
+    },
+    {
+      "bytes": 3859,
+      "path": "assets/fonts/DejaVuSans-LICENSE.txt",
+      "sha256": "63d3ba759d12804c5b31a9d5940d855c1820d1f5999e6b0872eb1c7ff045fbc9"
+    },
+    {
+      "bytes": 759720,
+      "path": "assets/fonts/DejaVuSans.ttf",
+      "sha256": "b4c632e3cdf9acc7f28758fb5a323c8524d7fc6660d46904d9b6cbe2809c419c"
+    },
+    {
+      "bytes": 102,
+      "path": "assets/fonts/DejaVuSans.ttf.judasmeta",
+      "sha256": "24aba0ff91a2d3078cd42c8dda64ee8b026d7d3dec3de177bba073dcd76b681f"
+    },
+    {
+      "bytes": 16662,
+      "path": "docs/ANDROID.md",
+      "sha256": "b787ac2cefba8726325fbc7c06d2078ed46f48f37aa555c526a3a493b683a88f"
+    },
+    {
+      "bytes": 8178,
+      "path": "docs/ANIMATION.md",
+      "sha256": "042b66ade17bf38489f1c0480e26d05a3ff96e5e791e98de008993a35ec7ed6d"
+    },
+    {
+      "bytes": 630011,
+      "path": "docs/ARCHITECTURE.md",
+      "sha256": "251545016e8cb397b06c37e634a282a474e929a271851fdacff3cd46d7017b5f"
+    },
+    {
+      "bytes": 10204,
+      "path": "docs/BUILD_RELEASES.md",
+      "sha256": "a7f1b6756d60f4244cddd45278fa69b013dbc38e8074d13c3335f8abbba50ddb"
+    },
+    {
+      "bytes": 4858,
+      "path": "docs/COLLISION_EVENTS.md",
+      "sha256": "8e89367a54166d75efd43de502f3b66c70040de5194e5b852a20d7dff24e402f"
+    },
+    {
+      "bytes": 5164,
+      "path": "docs/CONTENT_AUTHORING.md",
+      "sha256": "f4a936cf30f068cfd775845783d429ba01a7452da0a510f0ce79270a93b1686c"
+    },
+    {
+      "bytes": 8921,
+      "path": "docs/DISTRIBUTION.md",
+      "sha256": "c9f7033754ba0f637d32a169aa3a3f51038a6269aa702f9d038f45b355f92498"
+    },
+    {
+      "bytes": 1511,
+      "path": "docs/DOCUMENTATION_MAINTENANCE.md",
+      "sha256": "2cffaac24a17f2eaa37aaf19154c992c55d5eb4398bdf1d95a2f9584e4622474"
+    },
+    {
+      "bytes": 13464,
+      "path": "docs/EDITOR_GUIDE.md",
+      "sha256": "1615bb6bfe0f172e46478fc685eaa4810d4320218e5cccf4e26a7eeb7a9192d0"
+    },
+    {
+      "bytes": 6681,
+      "path": "docs/FIRST_PROJECT.md",
+      "sha256": "9ace60305f2c77a3225f0c3ed31cadeb4e5e7e648c3d3002abe61cdf7e00ab5b"
+    },
+    {
+      "bytes": 4711,
+      "path": "docs/FLUID_DEMO.md",
+      "sha256": "99817f7700bba769fa80b28686a15c39b9764cd158b011619d07907ac6bf01b2"
+    },
+    {
+      "bytes": 5863,
+      "path": "docs/GRAVITY_SELECTION.md",
+      "sha256": "0e320cdc767b243bcf070c7d3c2512465329c7b7a5832ce1bb44d258704837bc"
+    },
+    {
+      "bytes": 6926,
+      "path": "docs/JOINTS.md",
+      "sha256": "4ba6fa40929ed3029f80874fae6e62257d66118dac7bd62af8d40c3af493cc0b"
+    },
+    {
+      "bytes": 16694,
+      "path": "docs/JUDASJS.md",
+      "sha256": "b8968313348a5726851000bceb19489fd302f5367d1a6233a79131e39fd3d0bb"
+    },
+    {
+      "bytes": 11326,
+      "path": "docs/LIQUID_RESERVOIRS.md",
+      "sha256": "ccd9c2f6dfc382f30ab936c45b8af259112d6d66e77da7625f0e38e8f7a8d9dc"
+    },
+    {
+      "bytes": 18280,
+      "path": "docs/LIQUID_SURFACES.md",
+      "sha256": "03a103cbe7290d3f11b96a309af40b9c6c74c8d49960182fe92bb6e002875c4b"
+    },
+    {
+      "bytes": 5843,
+      "path": "docs/M33.md",
+      "sha256": "59d52ae22c573e7dff8c862e999524348cc0f7ccbdc3d0fa8149f72735fa6cba"
+    },
+    {
+      "bytes": 7322,
+      "path": "docs/M34.md",
+      "sha256": "d713d18f86ba56f7aff55a29cea326cb353f5820cb2c7c1497de8331cdd9baad"
+    },
+    {
+      "bytes": 5811,
+      "path": "docs/M35.md",
+      "sha256": "5b395fbe01c51deef98788be8168c62b8d017b353e71deb56041870aca1d464e"
+    },
+    {
+      "bytes": 5595,
+      "path": "docs/M36.md",
+      "sha256": "31aa33d6e4b90f4c7b8383be57b963e11c4f1bc3f4db962dd76308c5a34537d5"
+    },
+    {
+      "bytes": 5106,
+      "path": "docs/M37.md",
+      "sha256": "846520a4cdeba1cd7cc0c6fa3b8469cbd4e7941c9d3057f1bccb13498d0e5b28"
+    },
+    {
+      "bytes": 6570,
+      "path": "docs/M38.md",
+      "sha256": "f6f3bb149ffb895101b704abcebaace04c83fd575bf43f63248a27a06abb18f5"
+    },
+    {
+      "bytes": 5126,
+      "path": "docs/M39.md",
+      "sha256": "e2ec85e65a8ac5c54b50fe27ef2d5a5ef2cd14673c6976fb9fdf704bb4992793"
+    },
+    {
+      "bytes": 9654,
+      "path": "docs/M49_CHARACTER_MOTOR.md",
+      "sha256": "abea0c48bfae301f528650c955171f828abdff334cfd04e760b7defa904a543b"
+    },
+    {
+      "bytes": 9512,
+      "path": "docs/M51_ENGINE_BOUNDARY.md",
+      "sha256": "fb53ea457a8b6310c7d5507145c82b7da0c84821274ab1139a12fd4fac2df314"
+    },
+    {
+      "bytes": 8696,
+      "path": "docs/M52_SHOOTER_GAME.md",
+      "sha256": "2e08a497b2ed15499b3e6ebeefc0df0ab1a93958d90348a5ceb3d4eb928bf9e2"
+    },
+    {
+      "bytes": 3487,
+      "path": "docs/M57.md",
+      "sha256": "bbbe0d6612405bab4ecc52e62c35de1d9b8c19dae5318854e276f61ff378bdc3"
+    },
+    {
+      "bytes": 11783,
+      "path": "docs/M58.md",
+      "sha256": "e1906b1c1425f715763efa2b7af19d286004c1419ae21b02f2a57478ece17102"
+    },
+    {
+      "bytes": 14332,
+      "path": "docs/M59_WORLD_STREAMING.md",
+      "sha256": "63a67d37823e122edd54266f5e4617935fdd2bbe745a67f0bd8014275db62c70"
+    },
+    {
+      "bytes": 9926,
+      "path": "docs/M60_AUDIO.md",
+      "sha256": "16a047dfca22f85a5b874a4c88d9d3dd5b7656263f4bc60383294f10f0850c77"
+    },
+    {
+      "bytes": 12614,
+      "path": "docs/M61_SAVES.md",
+      "sha256": "fc2bec15f5493dd135066201bd87c5f2b10eb3a41e322a03e73a260b6d0722b3"
+    },
+    {
+      "bytes": 10514,
+      "path": "docs/M62_DEFORMABLES.md",
+      "sha256": "808b26b90243b5db1e9523cbba868e7ff81cc3a33ae8481b0847f471784ac955"
+    },
+    {
+      "bytes": 11877,
+      "path": "docs/M63_FRACTURE.md",
+      "sha256": "5ab88ccf52352e7980593322f959cfe4c8d5d0c792f1a2cd721cc1d255dc9665"
+    },
+    {
+      "bytes": 11798,
+      "path": "docs/M64_COLLISION.md",
+      "sha256": "3ac0dcfd37d14dbd8a0306978b76f8e7a11253cc507826f805ae25bb5baffdd9"
+    },
+    {
+      "bytes": 8140,
+      "path": "docs/M65_INTEGRATION.md",
+      "sha256": "a50396a37767d15f26944e3d6513c661a9496b99b9449afaa43a7f22c93f574a"
+    },
+    {
+      "bytes": 11965,
+      "path": "docs/M67_WORLD_BUILDING.md",
+      "sha256": "04b339e8dc9f74d46ebf1bb0a3b359abae426a922601e9658871195a7ca83628"
+    },
+    {
+      "bytes": 4277,
+      "path": "docs/M69.md",
+      "sha256": "e363ba19a1f07d6ca8904a95e3f163b3ce0e6f91ff66290c02a3e09a3328a0f3"
+    },
+    {
+      "bytes": 14847,
+      "path": "docs/M70.md",
+      "sha256": "d8745a66a57195cbb26902a643767dadd0a449d2e207c458cb7d26a2fbe6dbd4"
+    },
+    {
+      "bytes": 14254,
+      "path": "docs/M71.md",
+      "sha256": "3c43ebb43a6143f415db422028f5c4fd7b36fe9ffaaf7921bc44e8eea4288f84"
+    },
+    {
+      "bytes": 26413,
+      "path": "docs/M72.md",
+      "sha256": "1d0e5b06a762e6c6e48f1bfa3df2a7a3054bc039945ac4d26158702763ab2f99"
+    },
+    {
+      "bytes": 4882,
+      "path": "docs/M73.md",
+      "sha256": "cdd7648a697457fb317aaf65101c9474e0f984a8d232827e2d48c0bb2f4174cf"
+    },
+    {
+      "bytes": 14963,
+      "path": "docs/M74.md",
+      "sha256": "05c0add0b8247038d0df3b247e3ccd877c82e63048b073494836d487def2a754"
+    },
+    {
+      "bytes": 14562,
+      "path": "docs/M75.md",
+      "sha256": "597354b96ad7ae531cda76d0f87216efee13648f8cf875c6095cbcd30742285d"
+    },
+    {
+      "bytes": 9160,
+      "path": "docs/M76.md",
+      "sha256": "6e395b9842618c81419088caf1dbfecac8fa86fb6f683b6bcc48819c06997842"
+    },
+    {
+      "bytes": 17449,
+      "path": "docs/M77.md",
+      "sha256": "2d301a9797f7969179a949aeb8bc815adab58afb8c860a7a1b0b06fccb7eee57"
+    },
+    {
+      "bytes": 2374,
+      "path": "docs/M78.md",
+      "sha256": "bff0876824c051de95e6c3b896b8f81a179ea07bbbc9fec30027202c5e0d05bd"
+    },
+    {
+      "bytes": 4945,
+      "path": "docs/M78_AUDIT_CONTINUATION.md",
+      "sha256": "545aaad55ae5afc6ef755e23351236343d863c2397a6ad3b9278e764af025304"
+    },
+    {
+      "bytes": 17823,
+      "path": "docs/M78_COLD_CONTINUATION.md",
+      "sha256": "5de5d869ca7a86b80303c80fc2606af72e1be4bc46db68386f1ea3424a94e620"
+    },
+    {
+      "bytes": 8474,
+      "path": "docs/M78_COMPLETION.md",
+      "sha256": "c7640479f9ef1676a6f72ad346ac1422908fb75c72a661a8686e8dd9cac473e6"
+    },
+    {
+      "bytes": 12242,
+      "path": "docs/M78_CONTINUATION.md",
+      "sha256": "1b68bc3687be868d3b72e738d21101503892c6d6266ba8ef2d7a4f5e39158057"
+    },
+    {
+      "bytes": 26232,
+      "path": "docs/M78_FINAL.md",
+      "sha256": "c4e764bc8cd81723f2115adcf284b1cec6b6fd0765e68b952899569548ada3cf"
+    },
+    {
+      "bytes": 6235,
+      "path": "docs/M78_FOLLOWUP.md",
+      "sha256": "11019bfc41c34b61bf93fd01c50e5100f8df6ddc0b32cee9ee5213a94c381ffd"
+    },
+    {
+      "bytes": 16301,
+      "path": "docs/M78_LIFECYCLE_CLOSURE.md",
+      "sha256": "97026a77af33bbed71467b1c8f71e9726a89cfe6640e2a515deaf1c9386b74e7"
+    },
+    {
+      "bytes": 8251,
+      "path": "docs/M79_STRUCTURES.md",
+      "sha256": "8d263e3ae6e8f3004ae9a2a73babec3364b4dde7a19c9f83b77654df8e0c856a"
+    },
+    {
+      "bytes": 10859,
+      "path": "docs/M80_BENDING.md",
+      "sha256": "e74f3c559ab3bc6ca61ff5ed7fb3a8528b9e4306a3262fb7891f62256fff16b7"
+    },
+    {
+      "bytes": 10119,
+      "path": "docs/M81_WHEELS.md",
+      "sha256": "52094d34f57f55b4e56c8a6759933dd9bad087a4322fad961c27e9456a2090ca"
+    },
+    {
+      "bytes": 11167,
+      "path": "docs/M82_POWERTRAINS.md",
+      "sha256": "469fc2befbc4fad9b64232f72ed6ab88e99afb1541abfff6048d2c26aa5b01ee"
+    },
+    {
+      "bytes": 8772,
+      "path": "docs/M83_COARSE_CRASH.md",
+      "sha256": "1d451f3b0f0cb0abda0d19fb4a64465c0ee8d7ae49ae22088bd24d0fda352029"
+    },
+    {
+      "bytes": 11382,
+      "path": "docs/M83_MECHANICAL_DAMAGE.md",
+      "sha256": "c2a515df66d7f727fab0bdce80f1a3f1d4f5461fbf8c0188e536af84d4d70ce7"
+    },
+    {
+      "bytes": 17228,
+      "path": "docs/M83_STRUCTURAL_CRASH.md",
+      "sha256": "71820d753b3a34b0a9a642aa2a62b3492bc6cebe1ca89f4714e4cc60ba1540a6"
+    },
+    {
+      "bytes": 9840,
+      "path": "docs/M84_VOLUMETRIC_TERRAIN.md",
+      "sha256": "a8529ae5c30be11ad8888b3871a8ec960fbb85a6e8f1280c62c5cf13b4138136"
+    },
+    {
+      "bytes": 12276,
+      "path": "docs/M85_PLANETARY_TERRAIN.md",
+      "sha256": "31fdb0991d049d8cc257b5c289b98bb7d943ebf206abbe7e07072dd3d99c7133"
+    },
+    {
+      "bytes": 18713,
+      "path": "docs/M86_WEATHER.md",
+      "sha256": "7686e5d767ee0992c1eff47148b29657db2108a8206862327bcf25d40f1072f1"
+    },
+    {
+      "bytes": 22854,
+      "path": "docs/M87_PHYSICS_SCALING.md",
+      "sha256": "7d7b5c834491821e95f0881be2c6c38c8a6d52d260dda37eba5bd50d22f1c9d8"
+    },
+    {
+      "bytes": 5242,
+      "path": "docs/M89_LOCAL_MULTIPLAYER.md",
+      "sha256": "492e17afacbd619cab50a3cb12b2a0c31d9d6f7a1520f8eb9a0ad578322fa72b"
+    },
+    {
+      "bytes": 7920,
+      "path": "docs/M90_ASSEMBLY_TRAVEL.md",
+      "sha256": "1e30cbc76ed014fc7e54c4bc154e89c856e59f9e4f5a6c28b90c96b6a2ba984c"
+    },
+    {
+      "bytes": 9035,
+      "path": "docs/M91_COLLISION_CONTINUITY.md",
+      "sha256": "132829e2a7efca9a799e74a0c370e020bcc78a53912794798cc874e2ee027285"
+    },
+    {
+      "bytes": 7800,
+      "path": "docs/M93_ASSET_PIPELINE.md",
+      "sha256": "b5eb6d8b3c99278c838854e5f8e5c01bef12a37972d539039c5d22aca336def2"
+    },
+    {
+      "bytes": 9580,
+      "path": "docs/M94_DEVELOPER_TOOLS.md",
+      "sha256": "0271b93b0de9f28c7d4550817b1b83cb33cd9ad087515415f828de301ea79fb4"
+    },
+    {
+      "bytes": 10027,
+      "path": "docs/M95_ANIMATION_WORKFLOW.md",
+      "sha256": "7be46c9ae9f9e05741f77fc089047b6af40de666fcdc5aa3fc27c988dd14c932"
+    },
+    {
+      "bytes": 6961,
+      "path": "docs/M96_UI_TOOLKIT.md",
+      "sha256": "e94eef2c022fbffa5fe239b3268b3eecfcecb617b9d1a792cbeda600f8e29d55"
+    },
+    {
+      "bytes": 7652,
+      "path": "docs/M97_LIVING_WORLD.md",
+      "sha256": "7215dcd38de1e886f7f34383c3875748245a67ce99fb815d33455e351e8eb9e7"
+    },
+    {
+      "bytes": 12502,
+      "path": "docs/M98_SAVE_EVOLUTION.md",
+      "sha256": "245682536a6c5d4344fc3568e236c6bc405520d0f370ad195f5c798ce0bc058a"
+    },
+    {
+      "bytes": 7969,
+      "path": "docs/M99_NETWORK.md",
+      "sha256": "03e7188fe0e8e27df6cc41853df1db9e0add6f588b51764dc30773df688d8f9f"
+    },
+    {
+      "bytes": 11325,
+      "path": "docs/MATERIALS.md",
+      "sha256": "59e5605078755a7b11bb32ed4216b3e3cb7ffea51784442df58ae39624384b8b"
+    },
+    {
+      "bytes": 11073,
+      "path": "docs/MODDING.md",
+      "sha256": "a0c0af72d6456f1418834a620285c2f730ef443c8087b2cd258d20a564a20844"
+    },
+    {
+      "bytes": 15960,
+      "path": "docs/MODEL_IMPORT.md",
+      "sha256": "eb40f9331c5d10d3e44fd69917c5a6b05c37faf0a29d582d50d9a94d7dfc33d3"
+    },
+    {
+      "bytes": 12003,
+      "path": "docs/NAMED_AUTHORING.md",
+      "sha256": "6281c023bc803bcd93e9f1badacc334316610b44c4a9c35d61f4f2a1dd042593"
+    },
+    {
+      "bytes": 10872,
+      "path": "docs/NAVIGATION.md",
+      "sha256": "814400a334b344180fbb6de942464c78dbdb9a229ec3d9e4b0a4e47749a560ac"
+    },
+    {
+      "bytes": 7333,
+      "path": "docs/PHYSICS_QUERIES.md",
+      "sha256": "1882741a08c5605baa7edf47cbe09a240cc8a96defb05491dde8a2b82b822a9d"
+    },
+    {
+      "bytes": 4234,
+      "path": "docs/POSE_COMPOSITION.md",
+      "sha256": "d9487a66bb1096fce85b5b8829fdb0867c453c5fa145f2424f020ea40aee8534"
+    },
+    {
+      "bytes": 14322,
+      "path": "docs/POST_M65_CONSUMER_REPAIRS.md",
+      "sha256": "73a4b8d1fb0e62dad074882c67091e5b3091a4a37adc85ef0ad688b1ed7265e8"
+    },
+    {
+      "bytes": 35581,
+      "path": "docs/POST_M65_CONSUMER_REVIEW.md",
+      "sha256": "6ff54aca23ca9cb6b5ed2dbea3f739d851beb492264ecf67da114639802c0c2b"
+    },
+    {
+      "bytes": 15600,
+      "path": "docs/PREALPHA.md",
+      "sha256": "708873f46e37eeedc6ea82c15f9d14f134dce052b75dcdca6a31ea4113c5651c"
+    },
+    {
+      "bytes": 12840,
+      "path": "docs/PROFILER.md",
+      "sha256": "18850759bd81ff739bb93c5d07b47b40eba82844d21c4b38dcfea3d1645ca040"
+    },
+    {
+      "bytes": 6523,
+      "path": "docs/RAGDOLLS.md",
+      "sha256": "0c555e0ea861f07dd71f7cb17401027b4035c3d087cb47e6982b7f8a7dce108d"
+    },
+    {
+      "bytes": 7991,
+      "path": "docs/RUNTIME_UI.md",
+      "sha256": "891813f7c32a553148c9b2dd5068eaa86ca502a4b710a62c7bd7d788684732d2"
+    },
+    {
+      "bytes": 8649,
+      "path": "docs/SCALABILITY.md",
+      "sha256": "d80b653f86696e52b4147ab944efb7da9ce10cb2858dc7ec7a531a418ecbd627"
+    },
+    {
+      "bytes": 4608,
+      "path": "docs/SCENE_TRANSITIONS.md",
+      "sha256": "8f71ce38c6915ad2afde3de509e0bd095f1758970904f464615523effe5a9187"
+    },
+    {
+      "bytes": 8416,
+      "path": "docs/SCRIPTING.md",
+      "sha256": "cff7db8e31cfaea1227acca1fbccbd02af87acfd56aebab04efc5bed751b8f22"
+    },
+    {
+      "bytes": 7066,
+      "path": "docs/STABILIZATION_STATUS.md",
+      "sha256": "c0767a922775c6ccc6651f5d1bb69fe17589fecf090cabead12dc771b67577a1"
+    },
+    {
+      "bytes": 3998,
+      "path": "docs/TEST_HARNESS.md",
+      "sha256": "ee81c97a666ab9ea3a3611ef34314e11ad4619134bc8f4eb86456b2869b29cc3"
+    },
+    {
+      "bytes": 19165,
+      "path": "docs/WINDOWS.md",
+      "sha256": "fef2fb8fa9ac1aa9aab19bf1bab3a5e2a970a4889bf9257509ee0031688d9275"
+    },
+    {
+      "bytes": 62071,
+      "path": "docs/judas.d.ts",
+      "sha256": "2568429fbd3c9f190316d7c2e9c20f37cfb15a5a11cd9d3cae9d9bc61b929c0f"
+    },
+    {
+      "bytes": 49230,
+      "path": "docs/judasjs/API_INVENTORY.md",
+      "sha256": "9f8320d5e1347ea43c924a2482dadf9390f355a0e0fff3a2d65c2409748f6af6"
+    },
+    {
+      "bytes": 32000,
+      "path": "docs/judasjs/animation-ragdolls.md",
+      "sha256": "60073152fb78f56514faab2e96d60ca25f6709681c52e2e4fdb487bf518ddaa5"
+    },
+    {
+      "bytes": 128040,
+      "path": "docs/judasjs/api-inventory.json",
+      "sha256": "59bc39d273aa55c3456c17ad61f85e3f9f941a2b0c9ca8b4563c0750f29846c1"
+    },
+    {
+      "bytes": 10712,
+      "path": "docs/judasjs/audio.md",
+      "sha256": "779f1277f18e4f63bdd3cabf3107f5140fea030f2198a60e0e4f35137ecfa080"
+    },
+    {
+      "bytes": 8293,
+      "path": "docs/judasjs/character.md",
+      "sha256": "3fd008fdf2c97f3784ffc5fc781d91e1e33f36a39d1ae0bd098e30290a7b3f4b"
+    },
+    {
+      "bytes": 15106,
+      "path": "docs/judasjs/cookbook.md",
+      "sha256": "205cb906e5e77484f2c17c12043e74fda93d36c24fafbe87f27dccfe5d53538b"
+    },
+    {
+      "bytes": 8907,
+      "path": "docs/judasjs/deformables.md",
+      "sha256": "58c2b7fdd9b649992cd28172e27475e206766dea3e61b670d41450d82aadab33"
+    },
+    {
+      "bytes": 7329,
+      "path": "docs/judasjs/effects-camera.md",
+      "sha256": "e2bd0d753a7a23f4f72979e46880bd4db71f4bcad9ddebb39c61c9a7018829e6"
+    },
+    {
+      "bytes": 24305,
+      "path": "docs/judasjs/entities.md",
+      "sha256": "1b9fd1e0333b8eac8dd3501e1f98bd5f24323ca774941014911d62132c7d637d"
+    },
+    {
+      "bytes": 1421,
+      "path": "docs/judasjs/examples/animation-motion.js",
+      "sha256": "85c0a378c2bd0b8c4a2869823862c1272dc5084ca9ad15d8823b13256fc5f093"
+    },
+    {
+      "bytes": 665,
+      "path": "docs/judasjs/examples/animation.js",
+      "sha256": "842ff8e38f9b91fcc5da48398e8b37d4bfaa1c1e88444149dc788bcba4fc04ae"
+    },
+    {
+      "bytes": 978,
+      "path": "docs/judasjs/examples/audio.js",
+      "sha256": "177229445fd446b71fabc1a00f505adb73ed5354b8e69507e6321030b846f1ab"
+    },
+    {
+      "bytes": 2554,
+      "path": "docs/judasjs/examples/authoring-runtime.js",
+      "sha256": "f4fae6b5a563343295d253737c6e8f9c9c694a79f6e97108b7f8dac80859ffec"
+    },
+    {
+      "bytes": 1534,
+      "path": "docs/judasjs/examples/character.js",
+      "sha256": "a3b9ef259b93fa17ba76b1a72f29f10af3730c623e7b447df3cb4e12693e8ae9"
+    },
+    {
+      "bytes": 630,
+      "path": "docs/judasjs/examples/contacts.js",
+      "sha256": "b0c7ad4c250c875b8a89e69c8930e9d2e15164b3bba004eb80f1dd36707b3434"
+    },
+    {
+      "bytes": 645,
+      "path": "docs/judasjs/examples/deformable.js",
+      "sha256": "5de995a15d3651b00f93cc1f0b36db08539dc41ec468315865ecffb93e1ab94a"
+    },
+    {
+      "bytes": 1654,
+      "path": "docs/judasjs/examples/developer-integration.js",
+      "sha256": "e9c0cda76144d3d822c568fb98ccc5e61138edefbf5b629e3d952e448d689e5b"
+    },
+    {
+      "bytes": 1154,
+      "path": "docs/judasjs/examples/first-project.js",
+      "sha256": "1beeedfd336e0378baf435d65cfa5c8e4d413f03dd85504908341144a4420c88"
+    },
+    {
+      "bytes": 1364,
+      "path": "docs/judasjs/examples/fracture.js",
+      "sha256": "b41c9e09d86fc80be0844040556ce52087a198e3d222855ffe9a6a4d1a878144"
+    },
+    {
+      "bytes": 903,
+      "path": "docs/judasjs/examples/gravity-selection.js",
+      "sha256": "91c449745fb115861c54d26f15621981764d1428d06ef11a6303ea4f5713f368"
+    },
+    {
+      "bytes": 954,
+      "path": "docs/judasjs/examples/imported-model.js",
+      "sha256": "d17881e90864e829f87e1d08108ac91e16aa7e2717d25ebca99a8186c0babf12"
+    },
+    {
+      "bytes": 778,
+      "path": "docs/judasjs/examples/impulse-point.js",
+      "sha256": "b267518e1e2726782d73d8324d1865091f08a311a58a6a15504d30b36076a993"
+    },
+    {
+      "bytes": 581,
+      "path": "docs/judasjs/examples/input-motion.js",
+      "sha256": "8ad6e9db63f0969226df95015daa88e993e0c8b2060e9252505f2350432493d4"
+    },
+    {
+      "bytes": 524,
+      "path": "docs/judasjs/examples/joint.js",
+      "sha256": "f2c3e99115376ed83c499d3eadd86f5f08bef01a6bd09b0785e7794fbf08bbbd"
+    },
+    {
+      "bytes": 2312,
+      "path": "docs/judasjs/examples/kinematic.js",
+      "sha256": "447a8f6d9a40182e4c20406fa9b42dd82654e23bc5f5ded607e417a41f22ef74"
+    },
+    {
+      "bytes": 294,
+      "path": "docs/judasjs/examples/lights.js",
+      "sha256": "51ec8352355f91c9a6793f372f6e81e89f44f5ff95f882cc13e8e03be154eed6"
+    },
+    {
+      "bytes": 1090,
+      "path": "docs/judasjs/examples/liquid-surface.js",
+      "sha256": "b865b1c3a999655393204ab0e5b21c2590ff048fd807a38ec0dc97d90d88c5d6"
+    },
+    {
+      "bytes": 628,
+      "path": "docs/judasjs/examples/liquid.js",
+      "sha256": "0b2e357938d1d497bb931c029eb5f01d9ac35d65a557a357154fd888d9c2cc68"
+    },
+    {
+      "bytes": 777,
+      "path": "docs/judasjs/examples/local-multiplayer.js",
+      "sha256": "f16533f69e8446afcc579ddcee6fa0183638bf001f268142e2a2b52d74eb0454"
+    },
+    {
+      "bytes": 1106,
+      "path": "docs/judasjs/examples/localization.js",
+      "sha256": "d8ebb5e89ffd181aa7be696e235664c99daeaa1c44856b900db5ac7b45c8d077"
+    },
+    {
+      "bytes": 2894,
+      "path": "docs/judasjs/examples/materials.js",
+      "sha256": "8f1d452b81d9df9fad8dcb0553be1598f8ff317bf9f6195f48a48da43f9af138"
+    },
+    {
+      "bytes": 1120,
+      "path": "docs/judasjs/examples/mechanical-damage.js",
+      "sha256": "4b88103a4154b2e0ad93119047305dede09e42d581efa6a6c13f6ad435709b99"
+    },
+    {
+      "bytes": 529,
+      "path": "docs/judasjs/examples/minimal.js",
+      "sha256": "28ce94e56a153e55b7a91ca6735a72eb543ed40b16a5b4bb0736f31fe73de1a9"
+    },
+    {
+      "bytes": 2364,
+      "path": "docs/judasjs/examples/multi-target-ik.js",
+      "sha256": "bf1ca7ca20517bf10e0700aa40565163ec3c24b22723f33deeaed6114fb34669"
+    },
+    {
+      "bytes": 1360,
+      "path": "docs/judasjs/examples/navigation.js",
+      "sha256": "1516f8c32deacf647a33877017dfce11b9cc9d1c7eac18f52c18ac81429843b2"
+    },
+    {
+      "bytes": 1544,
+      "path": "docs/judasjs/examples/paired-stick.js",
+      "sha256": "b4a08922fefbe9d71cf30ad7e9449eeda3fbe10e39ad6c2543547c8d8f34e27f"
+    },
+    {
+      "bytes": 291,
+      "path": "docs/judasjs/examples/particles.js",
+      "sha256": "0a668d156c337e5a8beb9b433334f020481c7ba92818dcaa4b98eba0d3bfda1f"
+    },
+    {
+      "bytes": 1728,
+      "path": "docs/judasjs/examples/physical-animation.js",
+      "sha256": "989ab1ed2759333fa99fbe91d99f10058db986b92fe72d32dcf0f8adc67027d0"
+    },
+    {
+      "bytes": 1349,
+      "path": "docs/judasjs/examples/physical-balance.js",
+      "sha256": "68fbe01a4d0ceb5d1401acf5520a77067c88a719ad61a5f3d707f0f7ea0d9f3f"
+    },
+    {
+      "bytes": 887,
+      "path": "docs/judasjs/examples/physical-control.js",
+      "sha256": "94b724d84212a9b3fedd05dd94d9e2e2bdb35336bbce194410d329098d4fb56d"
+    },
+    {
+      "bytes": 708,
+      "path": "docs/judasjs/examples/portal-camera.js",
+      "sha256": "ee079b7d71e9415df43c9583040a380dbb093c65bdfd5fcf7aefc436cf07af14"
+    },
+    {
+      "bytes": 515,
+      "path": "docs/judasjs/examples/powertrain.js",
+      "sha256": "0c7be2d1174e7fc8d2f1d301d53494d95a5b5f8cbe0144d554e5d466e3de5ec4"
+    },
+    {
+      "bytes": 764,
+      "path": "docs/judasjs/examples/presentation.js",
+      "sha256": "553b43fda8274e8ec26d7a2b89b9a5c213951b259ff55b635bd4f9980b0b76b1"
+    },
+    {
+      "bytes": 776,
+      "path": "docs/judasjs/examples/profiling.js",
+      "sha256": "d7b8c13c7c3de265b5ed6aa71944fd9bb789165bc894f5727d4eb417317c7dc9"
+    },
+    {
+      "bytes": 913,
+      "path": "docs/judasjs/examples/queries.js",
+      "sha256": "4c905a1c994ecc9900c7e5fa3b12868a6763034fd685a3302c0a1e03d1c2f7a9"
+    },
+    {
+      "bytes": 502,
+      "path": "docs/judasjs/examples/ragdoll.js",
+      "sha256": "630acb523409965f78c5e3b29cb5a2def2d75f76d0dd49d1f7955bfd8ab2f445"
+    },
+    {
+      "bytes": 3247,
+      "path": "docs/judasjs/examples/ray-fan.js",
+      "sha256": "ec0699e4cdce11f65e3c4614e2ea4a1ebe2d6e793e33a4e2fad9390b7e94e0dd"
+    },
+    {
+      "bytes": 889,
+      "path": "docs/judasjs/examples/save-evolution.js",
+      "sha256": "ebc77c048ec42757f75e21587736a0583c88139d7ffb352bfcf3541faab339c3"
+    },
+    {
+      "bytes": 1445,
+      "path": "docs/judasjs/examples/saves.js",
+      "sha256": "39dd8e6dade63a947c62adecac8fa0c40e55cdf9cf1a8e9fe779ac6d26cb5741"
+    },
+    {
+      "bytes": 355,
+      "path": "docs/judasjs/examples/scene-session.js",
+      "sha256": "f815541ae10fdcc869e5ab81af11f5b6e2967fae641c710a8abc611e23f5760c"
+    },
+    {
+      "bytes": 1198,
+      "path": "docs/judasjs/examples/signals.js",
+      "sha256": "76eef56106331942e0238f8c574b8ba9406e789ae438e800809ccfb52cad305e"
+    },
+    {
+      "bytes": 612,
+      "path": "docs/judasjs/examples/spawn.js",
+      "sha256": "97a719502e768d2031e17aecf700389067852528d7718c3e23995047454cdbeb"
+    },
+    {
+      "bytes": 850,
+      "path": "docs/judasjs/examples/stale-handle.js",
+      "sha256": "e3feebd9f464fc7a391d977ee0749de538d40d266a45305e23a96eff452868ac"
+    },
+    {
+      "bytes": 562,
+      "path": "docs/judasjs/examples/streaming.js",
+      "sha256": "08c3be43a63fb4f0776f93b3ee765fbe886110f0eb253555b4be8da273aae18a"
+    },
+    {
+      "bytes": 789,
+      "path": "docs/judasjs/examples/surface.js",
+      "sha256": "4f6cafa78009e325a649675f7295c23009870c614091c23732244af47be61a67"
+    },
+    {
+      "bytes": 772,
+      "path": "docs/judasjs/examples/terrain.js",
+      "sha256": "f4357865e3e4c01dfbfcd8a9169408e586670470d3977a05ff3976c325f88ed0"
+    },
+    {
+      "bytes": 2171,
+      "path": "docs/judasjs/examples/ui-controls.js",
+      "sha256": "4cad742bb24d03c34ae18b1afd2c55fae07893f5d240c6027dd9e43d4524fcde"
+    },
+    {
+      "bytes": 873,
+      "path": "docs/judasjs/examples/ui.js",
+      "sha256": "d6c67adc40d0240f5c33d6d4c96ca5c6c4b73a237be003dc64c868c32830c8e7"
+    },
+    {
+      "bytes": 758,
+      "path": "docs/judasjs/examples/weather.js",
+      "sha256": "852d00714dea0b091d5933721809e0e09cec5636cd956df63a410be07b2e1300"
+    },
+    {
+      "bytes": 741,
+      "path": "docs/judasjs/examples/wheel.js",
+      "sha256": "e883291d4185d2e11dbb34f27734da4338f168956bf0f3087723a62affcbfef7"
+    },
+    {
+      "bytes": 7468,
+      "path": "docs/judasjs/fracture.md",
+      "sha256": "596d6416e70ee93fddfd5188aeb2a44cb655015333530b768014e988d04a5b2f"
+    },
+    {
+      "bytes": 10185,
+      "path": "docs/judasjs/getting-started.md",
+      "sha256": "de85dbc927fcd0871c2b73dbfdb6248baa83a4e45fd96fcaa9198b5c7ba29247"
+    },
+    {
+      "bytes": 10066,
+      "path": "docs/judasjs/input.md",
+      "sha256": "4eabae64ae7daf0b65b83c8763a6972839bd7546ca7bbcd46984cf4bc74b41a6"
+    },
+    {
+      "bytes": 11261,
+      "path": "docs/judasjs/lifecycle.md",
+      "sha256": "1434c474fe49bf55c459613a92756888ee49024bf3f46ed41d84e2ac0b099f60"
+    },
+    {
+      "bytes": 7445,
+      "path": "docs/judasjs/liquid.md",
+      "sha256": "7ce20fc15b61f31711dfc25467ddd4ede27b14a71e9037e380052853acde11ce"
+    },
+    {
+      "bytes": 9876,
+      "path": "docs/judasjs/local-multiplayer.md",
+      "sha256": "4c20c1f1cb6280aa682eabe4748a209a428a16964bca654b9fdc446dbd3401ff"
+    },
+    {
+      "bytes": 7482,
+      "path": "docs/judasjs/localization.md",
+      "sha256": "bd9f288ec426c7915e847d95593fdedf6561c56412052a1b1905c5f78f7547c3"
+    },
+    {
+      "bytes": 9374,
+      "path": "docs/judasjs/materials.md",
+      "sha256": "d14e6e581ad3cdb028bd3a2c94b65aae54674727d41e147c9314780bd2a1e9c0"
+    },
+    {
+      "bytes": 1962,
+      "path": "docs/judasjs/mods.md",
+      "sha256": "9ded18767b943b6bcfbe5756501223a501ddcd95c4b39872843e9c7f9f138771"
+    },
+    {
+      "bytes": 9224,
+      "path": "docs/judasjs/navigation.md",
+      "sha256": "46047770a8b16e0ed9e2bedcb3f577822fc30eba71ae770633525b5cc51460f1"
+    },
+    {
+      "bytes": 14135,
+      "path": "docs/judasjs/network.md",
+      "sha256": "ae8dcbad4f5619e1eb68c055a8620a21bdba59085280951fc847726d02fcf4d9"
+    },
+    {
+      "bytes": 18075,
+      "path": "docs/judasjs/physics.md",
+      "sha256": "860441869c9b206c0b905eba4b9f061df608d5cbfc8c846efb93e898d9b46102"
+    },
+    {
+      "bytes": 8754,
+      "path": "docs/judasjs/planetary-terrain.md",
+      "sha256": "4cb14270cbed69176ed5561cc2105eaa05b2819a0e0646ceb5eb4ab883fa79c8"
+    },
+    {
+      "bytes": 9718,
+      "path": "docs/judasjs/powertrains.md",
+      "sha256": "ecdce45a1898e68171ae19409a66d0fbfc45e449a87a719b4135993077a4362c"
+    },
+    {
+      "bytes": 3236,
+      "path": "docs/judasjs/practices.md",
+      "sha256": "5387797e0cad7a4ba1f1f8be59c4b86e42c8a78aeff2fe0b8b49d20304527a36"
+    },
+    {
+      "bytes": 2390,
+      "path": "docs/judasjs/profiling.md",
+      "sha256": "42e8255e2537c23934f4eaa9f1b5e394db2ea0af2d8bde85853aaf427c81b7b4"
+    },
+    {
+      "bytes": 5537,
+      "path": "docs/judasjs/rendering.md",
+      "sha256": "286ff104c533953717c34f0b56940566076b53ba68d28cff8f28c380bd826b3d"
+    },
+    {
+      "bytes": 15592,
+      "path": "docs/judasjs/saves.md",
+      "sha256": "d665c3c1433ff2f0066213e95bf28efeac7da267ced8d82021593d10451d1460"
+    },
+    {
+      "bytes": 7562,
+      "path": "docs/judasjs/scenes-state.md",
+      "sha256": "4c1afd44f1e4cf865bfb727792ea8d7cab5320784bf9fd2e63af254eadc74428"
+    },
+    {
+      "bytes": 6646,
+      "path": "docs/judasjs/signals.md",
+      "sha256": "7689cfc2ac7f1268799b2fcac56f5e65c95a31daa9ddaf287b1a5741efc4d72e"
+    },
+    {
+      "bytes": 9893,
+      "path": "docs/judasjs/streaming.md",
+      "sha256": "4873a82c1f70bb2e143072acb94d5e7a226a5bfd7bf8ece64d6e7477a320fbe4"
+    },
+    {
+      "bytes": 3560,
+      "path": "docs/judasjs/terrain.md",
+      "sha256": "f3fa6bfb6f8ee82b6722f814ab4bd76d0b84970036a4a6e1ba3fa54e971f4ed1"
+    },
+    {
+      "bytes": 6881,
+      "path": "docs/judasjs/ui.md",
+      "sha256": "8ecef99fc1115ffb02431cdca26f87669c608bf2b2473d9fb43e8acf963c86d4"
+    },
+    {
+      "bytes": 10914,
+      "path": "docs/judasjs/weather.md",
+      "sha256": "e1583e8bf7e6ef6c1cf31b2529464562b7360851a5789c4405f571477cc190a9"
+    },
+    {
+      "bytes": 7222,
+      "path": "docs/judasjs/wheels.md",
+      "sha256": "ab72dc6499fb0da7f76fa5be499fd6f727ffc956f2b11ad81b2be8f6a33de5a5"
+    },
+    {
+      "bytes": 3226,
+      "path": "docs/judasmod.example.json",
+      "sha256": "c718a23df07ef0a72134f3826b3b3338fdc75386982c8648c81a60411ca02c9c"
+    },
+    {
+      "bytes": 54956128,
+      "path": "judas",
+      "sha256": "0d3a34838267678b857ebec5ea869ec9012c765a7e9e74c7f533b2d7b1103ccb"
+    },
+    {
+      "bytes": 54069952,
+      "path": "judas_collision_cook",
+      "sha256": "79fa8f6121409e6d2ba7faa6036b8ad42636f3f950409abe0a835eb641323a9c"
+    },
+    {
+      "bytes": 54065944,
+      "path": "judas_cook",
+      "sha256": "ea22292cffeee7328509831e1b3ad60e6fa980c29f821ffb364d95ea74632074"
+    },
+    {
+      "bytes": 54083016,
+      "path": "judas_deformable_bake",
+      "sha256": "ac3052bffe6f952b02d0a506dc7f836a2ef407ff01ef0cc0d40819e6d8461f51"
+    },
+    {
+      "bytes": 60039888,
+      "path": "judas_editor",
+      "sha256": "1ed5b0346e35cfc54bded2c1b220929837c52ccd511ae02f340cbf4dbcad6d39"
+    },
+    {
+      "bytes": 54078328,
+      "path": "judas_environment_bake",
+      "sha256": "956b4052343aa68d5219ea46f4685fd78d06797a37bac15cdc170ab6a9b46467"
+    },
+    {
+      "bytes": 54844440,
+      "path": "judas_export",
+      "sha256": "7f1fe0da1cccc3ccb7b799e4045da7b779083d756d706f47b9606ade05d3d1f2"
+    },
+    {
+      "bytes": 54099624,
+      "path": "judas_liquid_bake",
+      "sha256": "4e63b5712a1714dc3456b0bcd080166d67a77986a32b8b4af2829d33fd92dc6f"
+    },
+    {
+      "bytes": 55322328,
+      "path": "judas_mod",
+      "sha256": "6eac82e5b7b42fed2d38ff0df73689ea093c3ae7d31e38e35268a219a93831f3"
+    },
+    {
+      "bytes": 56218176,
+      "path": "judas_model_import_cli",
+      "sha256": "bf6ae1d6ee39a8b95559ac079825c0872e04d35a0d1041c2eae3c38a7698c628"
+    },
+    {
+      "bytes": 55371512,
+      "path": "judas_navigation_bake",
+      "sha256": "4099e45e3fc34cb4c885c50037b36b47bd778236e354b69cf6e3084d7ae66f52"
+    },
+    {
+      "bytes": 54128440,
+      "path": "judas_save",
+      "sha256": "3b47465c83af79442a6c9691c520a50afa1e7b1dce36d2bd71af9c8df9a48576"
+    },
+    {
+      "bytes": 56877016,
+      "path": "judas_scene_author",
+      "sha256": "67d8c09beb4454cbca9622760075512ffc4ab68b7374371db1dca5dbd104100c"
+    },
+    {
+      "bytes": 54147888,
+      "path": "judas_script_check",
+      "sha256": "2920cd727eaeeb0f2b2d869cc8165756d16be78cb9c7b2a8920b977c12577bdb"
+    },
+    {
+      "bytes": 54112088,
+      "path": "judas_server",
+      "sha256": "1f52eb0ff2ba95d5b0600df902fdb0169ff95fcf35471d2bd51270d7f2a3add2"
+    },
+    {
+      "bytes": 55465904,
+      "path": "judas_terrain_author",
+      "sha256": "b0ffd67699f79edde7eed488b96b29b1daa27af2ef1f9b9735dd34c5ca08c7ad"
+    },
+    {
+      "bytes": 55379760,
+      "path": "judas_volume_author",
+      "sha256": "372a71e188bb88439f115177345bdd05f426ffc038568ddec9a85ecb09f143d0"
+    },
+    {
+      "bytes": 930,
+      "path": "packaging/sdk-inventory.json",
+      "sha256": "e09d8c24371a543127e017bc71a4c73db14daee9a5da007c69a5dfa9fbf0c909"
+    },
+    {
+      "bytes": 60656,
+      "path": "third_party/RUNTIME_NOTICES.txt",
+      "sha256": "10a8a093b8c4fc51ab006466b0013275b524efd66d81f86ff48307b49d2614fc"
+    },
+    {
+      "bytes": 2865,
+      "path": "third_party/android/GLM-COPYING.txt",
+      "sha256": "62d2d642c7d054d4fb4c9b42faad617d6c88fcd91e317f8035aa9f277cc159c3"
+    },
+    {
+      "bytes": 884,
+      "path": "third_party/android/SDL-LICENSE.txt",
+      "sha256": "97f35b302b361680ec1e891e95d2d52097bb95abff361434916d99dc1305f127"
+    },
+    {
+      "bytes": 1083,
+      "path": "third_party/imgui/LICENSE.txt",
+      "sha256": "c80c5789748d955c4a650562baa0d750494e2c7128c2ca66aaebe2e3c4e198bf"
+    },
+    {
+      "bytes": 7301,
+      "path": "tools/binary_dependencies.py",
+      "sha256": "96b54e5cb592082901ef0eb3b1c84dd98bd14da2dbbd3a06140368df74210733"
+    },
+    {
+      "bytes": 8096,
+      "path": "tools/inspect_sdk.py",
+      "sha256": "e4017421e901809aaee1b46f12f89dc248151f0100136effad0646c996b3da4b"
+    },
+    {
+      "bytes": 13541,
+      "path": "tools/package_sdk.py",
+      "sha256": "fa61ba82c396a3f968541f0c4ebdd837b821e8273dfc4c1d1328576586d5a736"
+    },
+    {
+      "bytes": 8571,
+      "path": "tools/verify_android.py",
+      "sha256": "2d147363d310cdaa5394af29377f0a4981585b2c2f0caf05cbf5357430c4a9d2"
+    }
+  ],
+  "kind": "judas-native-sdk",
+  "preset": "development",
+  "schema": 1,
+  "tools": [
+    "judas",
+    "judas_editor",
+    "judas_export",
+    "judas_scene_author",
+    "judas_navigation_bake",
+    "judas_liquid_bake",
+    "judas_environment_bake",
+    "judas_deformable_bake",
+    "judas_collision_cook",
+    "judas_model_import_cli",
+    "judas_terrain_author",
+    "judas_volume_author",
+    "judas_mod",
+    "judas_cook",
+    "judas_script_check",
+    "judas_save",
+    "judas_server"
+  ]
+}

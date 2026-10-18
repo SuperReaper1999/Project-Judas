@@ -1,0 +1,1472 @@
+{
+  "scope": "Pass5 CCD research source/logs only; excludes cache binaries/objects/archives and itself",
+  "files": [
+    {
+      "path": "BASELINE_FROZEN.json",
+      "bytes": 1891,
+      "sha256": "feb35d270ce7ebac0e19b0f2e136e49913542170126ea6981ffc2160a8df7a97"
+    },
+    {
+      "path": "BASELINE_ORIGINAL_FULL.log",
+      "bytes": 2781,
+      "sha256": "d21a315870b9e4a9df59cf834a15e9854cf441135fc5527d4982c88e6f8a54e1"
+    },
+    {
+      "path": "PROVENANCE.json",
+      "bytes": 1011,
+      "sha256": "3781e3ca10efddf54f53c3ed297c3fc731c7e5027e7e3731dab0cb2db4ad07ef"
+    },
+    {
+      "path": "REPORT.md",
+      "bytes": 13689,
+      "sha256": "1325aef55f441cb402843284e66f6edf0938628c69042b559f1dc80f7a7078d0"
+    },
+    {
+      "path": "research/ContinuityProbe.cpp",
+      "bytes": 3827,
+      "sha256": "e7ab9be914166310fc42ab9d1fe95bd336a9ae7c16483dcb160c677a510095cc"
+    },
+    {
+      "path": "research/MeshContinuityProbe.h",
+      "bytes": 9960,
+      "sha256": "5cc698236ddd83272b807baaebe39b302d0f969a3528407c01803dd0f713f688"
+    },
+    {
+      "path": "research/NativeAcquisitionProbe.cpp",
+      "bytes": 4690,
+      "sha256": "5650d19e53af810c150103edc241ed1b947ac878fe3700cc92721c1353424f99"
+    },
+    {
+      "path": "research/NativeSATContinuity.h",
+      "bytes": 4403,
+      "sha256": "127d7c9a66bf6f0a643f8d6d88431802ef28afeafc54fea0190b53327ade5b65"
+    },
+    {
+      "path": "research/NativeSATProbe.cpp",
+      "bytes": 5532,
+      "sha256": "0a5ced577db9f1a1a3bcce8d8ed3c2d8f069dfbc7b37bad08e47ea03f136a96f"
+    },
+    {
+      "path": "research/RoundedInterval.h",
+      "bytes": 3537,
+      "sha256": "236d1ffd4b98d102a751395faf0391828b3edbf8c3d252c461c55d179291464e"
+    },
+    {
+      "path": "research/RoundedSATContinuity.h",
+      "bytes": 4414,
+      "sha256": "390f6fed5ece31bda93915ba1c0278e6809bdcca67b05f0243a8b2388322fae9"
+    },
+    {
+      "path": "research/build_union.py",
+      "bytes": 3619,
+      "sha256": "c7fce050e2f3f71ad419fd8ddce25ba4c4b64293681b78edc946850e4e190c90"
+    },
+    {
+      "path": "research/continuity-v1/BUILD.json",
+      "bytes": 1047,
+      "sha256": "8d170d92cf5f79ca99b23851feff22e8226ebb73d60117b83e6697b6fb29a64b"
+    },
+    {
+      "path": "research/continuity-v1/ContinuityProbe.cpp",
+      "bytes": 2428,
+      "sha256": "e413b3f14a2d48fa46fef85ec2f13808afdb045fb31c1457c1805c3c05a54ec9"
+    },
+    {
+      "path": "research/continuity-v1/MeshContinuityProbe.h",
+      "bytes": 9960,
+      "sha256": "5cc698236ddd83272b807baaebe39b302d0f969a3528407c01803dd0f713f688"
+    },
+    {
+      "path": "research/continuity-v1/compile.log",
+      "bytes": 1417,
+      "sha256": "c2daf03ccc6c03d45a9d2103a2439a71a5eb75b0b7fce4160f96aff6072acfe1"
+    },
+    {
+      "path": "research/continuity-v2/BUILD.json",
+      "bytes": 2584,
+      "sha256": "36911f85ac7a8931800da9a343a962be94612ab053002d004d938bbf5cbd653e"
+    },
+    {
+      "path": "research/continuity-v2/ContinuityProbe.cpp",
+      "bytes": 2448,
+      "sha256": "67e94f114cafd774172d1ae26a23745351f9ef28a67cb7b481954ff22e2cf5e5"
+    },
+    {
+      "path": "research/continuity-v2/MeshContinuityProbe.h",
+      "bytes": 9960,
+      "sha256": "5cc698236ddd83272b807baaebe39b302d0f969a3528407c01803dd0f713f688"
+    },
+    {
+      "path": "research/continuity-v2/compile.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "research/continuity-v2/link.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "research/continuity-v2/probe.log",
+      "bytes": 733,
+      "sha256": "6c42562434a9d9603e0cf3adb98e6f72ff9c38e7f17505c3096616b9c2ddc875"
+    },
+    {
+      "path": "research/continuity-v3/BUILD.json",
+      "bytes": 2570,
+      "sha256": "14fdf2314895b6fc8e3b040d4dc88d2b36b3d4714191ec29442d839ae9f2c6b6"
+    },
+    {
+      "path": "research/continuity-v3/ContinuityProbe.cpp",
+      "bytes": 3827,
+      "sha256": "e7ab9be914166310fc42ab9d1fe95bd336a9ae7c16483dcb160c677a510095cc"
+    },
+    {
+      "path": "research/continuity-v3/MeshContinuityProbe.h",
+      "bytes": 9960,
+      "sha256": "5cc698236ddd83272b807baaebe39b302d0f969a3528407c01803dd0f713f688"
+    },
+    {
+      "path": "research/continuity-v3/compile.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "research/continuity-v3/link.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "research/continuity-v3/probe.log",
+      "bytes": 1197,
+      "sha256": "d94053d5f0eb3c67e96d3c8a0f4b30d02db995086542d0c22beafc845906b500"
+    },
+    {
+      "path": "research/native-acquisition-v1/BUILD.json",
+      "bytes": 2572,
+      "sha256": "c2dffee3753e7d63fddae52fc2eeddba4385650b1d4d4a445a904baf63d27e4e"
+    },
+    {
+      "path": "research/native-acquisition-v1/Probe.cpp",
+      "bytes": 4690,
+      "sha256": "5650d19e53af810c150103edc241ed1b947ac878fe3700cc92721c1353424f99"
+    },
+    {
+      "path": "research/native-acquisition-v1/compile.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "research/native-acquisition-v1/link.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "research/native-acquisition-v1/probe.log",
+      "bytes": 727,
+      "sha256": "6c7637dee895431334bfa264715d0626225caca5ac0438cae7127d2839b10f44"
+    },
+    {
+      "path": "research/native-sat-v1/BUILD.json",
+      "bytes": 2904,
+      "sha256": "4449123d90c2fa7db2342f583b9c338b44c0c5d82ed02a8cdb524d52c9780395"
+    },
+    {
+      "path": "research/native-sat-v1/MeshContinuityProbe.h",
+      "bytes": 9960,
+      "sha256": "5cc698236ddd83272b807baaebe39b302d0f969a3528407c01803dd0f713f688"
+    },
+    {
+      "path": "research/native-sat-v1/NativeSATContinuity.h",
+      "bytes": 4403,
+      "sha256": "127d7c9a66bf6f0a643f8d6d88431802ef28afeafc54fea0190b53327ade5b65"
+    },
+    {
+      "path": "research/native-sat-v1/NativeSATProbe.cpp",
+      "bytes": 4532,
+      "sha256": "9e8cba27c7eb3dbae5d017205ddaf9292a518f08e8ac8eac90ed6d46adf92b2f"
+    },
+    {
+      "path": "research/native-sat-v1/compile.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "research/native-sat-v1/link.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "research/native-sat-v1/probe.log",
+      "bytes": 6930,
+      "sha256": "e23cff1110f3c0b285fa08682a9c5c21cdc8ff8baf5e35de6f876b9764c7c62c"
+    },
+    {
+      "path": "research/native-sat-v2/BUILD.json",
+      "bytes": 2904,
+      "sha256": "9f1a5631accc12dcee278c1ea0c1064b57ef5112da8d290f269193413f0446cf"
+    },
+    {
+      "path": "research/native-sat-v2/MeshContinuityProbe.h",
+      "bytes": 9960,
+      "sha256": "5cc698236ddd83272b807baaebe39b302d0f969a3528407c01803dd0f713f688"
+    },
+    {
+      "path": "research/native-sat-v2/NativeSATContinuity.h",
+      "bytes": 4403,
+      "sha256": "127d7c9a66bf6f0a643f8d6d88431802ef28afeafc54fea0190b53327ade5b65"
+    },
+    {
+      "path": "research/native-sat-v2/NativeSATProbe.cpp",
+      "bytes": 5532,
+      "sha256": "0a5ced577db9f1a1a3bcce8d8ed3c2d8f069dfbc7b37bad08e47ea03f136a96f"
+    },
+    {
+      "path": "research/native-sat-v2/compile.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "research/native-sat-v2/link.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "research/native-sat-v2/probe.log",
+      "bytes": 8161,
+      "sha256": "f97ce0ba04d325b250bbdee2027d0fedbcc45dbec6ffa6f2cf77543fa95f8e08"
+    },
+    {
+      "path": "research/prepare_reacquisition_v6.py",
+      "bytes": 7184,
+      "sha256": "2110750aacab835cd5d29149935bf21cbd6e9208339dd85ce74406c4b28d76a3"
+    },
+    {
+      "path": "research/prepare_union.py",
+      "bytes": 11217,
+      "sha256": "0fb8324bcafde4f5300e92cc090467b5d8623e12a9e65122f3f5c953d5d16e3f"
+    },
+    {
+      "path": "research/run_native_probe.py",
+      "bytes": 1851,
+      "sha256": "7a63274ef29cadc01a11d6e2c62c321e072a5cff9fb8f62d4e22b716cfb12b5e"
+    },
+    {
+      "path": "research/run_reacquisition_controls.py",
+      "bytes": 1722,
+      "sha256": "bb8d6948b93d8cf3005a8f2c6cc0c3e0fc660071e3885cc118320fb372aece79"
+    },
+    {
+      "path": "research/run_union_probe.py",
+      "bytes": 1477,
+      "sha256": "7b0bd97417d4c10f2a24c5e916b418cfa8d0603b64e8a44f74db1f14b6426518"
+    },
+    {
+      "path": "research/trace_uncertain.py",
+      "bytes": 1657,
+      "sha256": "67e2eb7207680dbf5bf80936922e1ec1172cee5dc4a4216cd5766a5e7de84ccc"
+    },
+    {
+      "path": "research/union-v1/BUILD.json",
+      "bytes": 4690,
+      "sha256": "56b4197a1af53fd95573d8dd177b89d1f582780111ced0499ccfd5836c98e42a"
+    },
+    {
+      "path": "research/union-v1/compile-UnifiedWorld.cpp.log",
+      "bytes": 1130,
+      "sha256": "46cf5b9d61a6157dc0a6b086efef173a3e40d66d792fad9add63a4fea956792d"
+    },
+    {
+      "path": "research/union-v1/sources/CollisionGeometry.cpp",
+      "bytes": 35945,
+      "sha256": "b168d85d9be04ace53c473d045ec0914e80d56f480e62e7fac1e9f386d1af71d"
+    },
+    {
+      "path": "research/union-v1/sources/CollisionGeometry.h",
+      "bytes": 3484,
+      "sha256": "acd7a39989b8d4779c6207af17bfa815709235c78ccd665962d83c6afde613e3"
+    },
+    {
+      "path": "research/union-v1/sources/MeshContinuityProbe.h",
+      "bytes": 9960,
+      "sha256": "5cc698236ddd83272b807baaebe39b302d0f969a3528407c01803dd0f713f688"
+    },
+    {
+      "path": "research/union-v1/sources/MeshUnionContinuity.h",
+      "bytes": 3892,
+      "sha256": "9e3f6cdfebfa8c3497cab3117c9ba10d86428f81045a59be468ef0f913d4955b"
+    },
+    {
+      "path": "research/union-v1/sources/PhysicsWorld.cpp",
+      "bytes": 44965,
+      "sha256": "58883e6743010c35c6aae251f42e90f9ae9e74b368be1102810b896753185e7d"
+    },
+    {
+      "path": "research/union-v1/sources/UnifiedWorld.cpp",
+      "bytes": 397,
+      "sha256": "e69cd0199a78d844b923a69968647c39c96c4691d17406eb7c15a20abf7eb646"
+    },
+    {
+      "path": "research/union-v1/sources/physics/WorldBodies.cpp",
+      "bytes": 44567,
+      "sha256": "c4b81019fea68793ecc4d09b50a2fa1dfdbfd2bcd339126bcfc9c8f55b00e771"
+    },
+    {
+      "path": "research/union-v1/sources/physics/WorldBounds.cpp",
+      "bytes": 6461,
+      "sha256": "67c30882a5251028627934f9269f6e21a723d2c51fe811c9b34eddfe1f153f62"
+    },
+    {
+      "path": "research/union-v1/sources/physics/WorldCCDSearch.cpp",
+      "bytes": 31064,
+      "sha256": "f055e558ee6c9d29f6de3e30180bc4121f58bf96f2927d1933f4e22000e70600"
+    },
+    {
+      "path": "research/union-v1/sources/physics/WorldContacts.cpp",
+      "bytes": 14313,
+      "sha256": "d8f842da964ed78c07adc002a33c3e862f79a19a943035c3bc46af568a88d521"
+    },
+    {
+      "path": "research/union-v1/sources/physics/WorldHotAccessors.h",
+      "bytes": 4225,
+      "sha256": "600bec28d7b5d07b5a922136699ffa69c36c759484c7b8449f045c2df6ea4b1f"
+    },
+    {
+      "path": "research/union-v1/sources/physics/WorldImpactEvents.cpp",
+      "bytes": 35581,
+      "sha256": "de7097c91a2b54e6f91e862d8e9438742b119e909754772d24af8623a50aaea0"
+    },
+    {
+      "path": "research/union-v1/sources/physics/WorldImpactQueries.h",
+      "bytes": 7587,
+      "sha256": "c5898cd86b5687ea4a9450a049ff354fbcf91fb98f2111409412fd698f4e2038"
+    },
+    {
+      "path": "research/union-v1/sources/physics/WorldInternal.h",
+      "bytes": 33989,
+      "sha256": "2815ac251653e4e9d4dd5c70feb16a28a18c84eef8b6daa127230e6c4188c790"
+    },
+    {
+      "path": "research/union-v1/sources/physics/WorldJoints.cpp",
+      "bytes": 7673,
+      "sha256": "a292a20eb4dde14484b262cd436997ce2041f6fb459aec5d8ab2dbda516813d5"
+    },
+    {
+      "path": "research/union-v1/sources/physics/WorldModules.md",
+      "bytes": 4083,
+      "sha256": "6812e4438843ec7492a6fa2d950c210ebb30ac0486eb26bdc16887a3f3c9d1b5"
+    },
+    {
+      "path": "research/union-v1/sources/physics/WorldParticles.cpp",
+      "bytes": 26305,
+      "sha256": "e8a3b5beeac67efbf18d361aa441351b5689f9f625009a7c4efb3d30bbc21555"
+    },
+    {
+      "path": "research/union-v1/sources/physics/WorldPersistence.cpp",
+      "bytes": 19010,
+      "sha256": "917e63c0d14f0d3489d1abe037a4dacaa7feb668b34baccea6b1aed712bc9fbc"
+    },
+    {
+      "path": "research/union-v1/sources/physics/WorldProfiling.h",
+      "bytes": 1315,
+      "sha256": "ed900584346e02a601ebf4718b12c1041e3089921cc915c801d8503d64e78876"
+    },
+    {
+      "path": "research/union-v1/sources/physics/WorldQueries.cpp",
+      "bytes": 26686,
+      "sha256": "65abf29fc83f26e501127c2c239349607b27db37a6ba36f814fbdd0fe3c56e14"
+    },
+    {
+      "path": "research/union-v1/sources/physics/WorldSleep.cpp",
+      "bytes": 14127,
+      "sha256": "2edda5d49060ab3d06b3d81306aa95d5b75a1f184136fa061f57d0e453754389"
+    },
+    {
+      "path": "research/union-v2/BUILD-compile.json",
+      "bytes": 7084,
+      "sha256": "7b2d1583e73bf170f81cc1016e2e68f860c2efaa5076696059c2580e346c717b"
+    },
+    {
+      "path": "research/union-v2/BUILD.json",
+      "bytes": 8087,
+      "sha256": "cbaf76f342881e4ea3ad0e4827dbe261a1988abd5301b5d83b3ba733acfc9395"
+    },
+    {
+      "path": "research/union-v2/archive-private-persistence.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "research/union-v2/archive.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "research/union-v2/compile-CollisionGeometry.cpp.log",
+      "bytes": 1056,
+      "sha256": "058ab23d21263533f24e7af5e5986af694ebda4b8cc1fcbb460b5ac6302f6391"
+    },
+    {
+      "path": "research/union-v2/compile-UnifiedWorld.cpp.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "research/union-v2/compile-minimal.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "research/union-v2/continuation.log",
+      "bytes": 86,
+      "sha256": "613f4ec4f0ebdfc14c44e9e1710520e6b2c51bb8e93fc30800c71c4f2f55e421"
+    },
+    {
+      "path": "research/union-v2/entry.log",
+      "bytes": 86,
+      "sha256": "613f4ec4f0ebdfc14c44e9e1710520e6b2c51bb8e93fc30800c71c4f2f55e421"
+    },
+    {
+      "path": "research/union-v2/link-mesh.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "research/union-v2/link-minimal.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "research/union-v2/minimal.log",
+      "bytes": 86,
+      "sha256": "613f4ec4f0ebdfc14c44e9e1710520e6b2c51bb8e93fc30800c71c4f2f55e421"
+    },
+    {
+      "path": "research/union-v2/sources/CollisionGeometry.cpp",
+      "bytes": 35945,
+      "sha256": "b168d85d9be04ace53c473d045ec0914e80d56f480e62e7fac1e9f386d1af71d"
+    },
+    {
+      "path": "research/union-v2/sources/CollisionGeometry.h",
+      "bytes": 3484,
+      "sha256": "acd7a39989b8d4779c6207af17bfa815709235c78ccd665962d83c6afde613e3"
+    },
+    {
+      "path": "research/union-v2/sources/MeshContinuityProbe.h",
+      "bytes": 9960,
+      "sha256": "5cc698236ddd83272b807baaebe39b302d0f969a3528407c01803dd0f713f688"
+    },
+    {
+      "path": "research/union-v2/sources/MeshUnionContinuity.h",
+      "bytes": 3892,
+      "sha256": "9e3f6cdfebfa8c3497cab3117c9ba10d86428f81045a59be468ef0f913d4955b"
+    },
+    {
+      "path": "research/union-v2/sources/PhysicsWorld.cpp",
+      "bytes": 44965,
+      "sha256": "58883e6743010c35c6aae251f42e90f9ae9e74b368be1102810b896753185e7d"
+    },
+    {
+      "path": "research/union-v2/sources/UnifiedWorld.cpp",
+      "bytes": 397,
+      "sha256": "e69cd0199a78d844b923a69968647c39c96c4691d17406eb7c15a20abf7eb646"
+    },
+    {
+      "path": "research/union-v2/sources/physics/WorldBodies.cpp",
+      "bytes": 44567,
+      "sha256": "c4b81019fea68793ecc4d09b50a2fa1dfdbfd2bcd339126bcfc9c8f55b00e771"
+    },
+    {
+      "path": "research/union-v2/sources/physics/WorldBounds.cpp",
+      "bytes": 6461,
+      "sha256": "67c30882a5251028627934f9269f6e21a723d2c51fe811c9b34eddfe1f153f62"
+    },
+    {
+      "path": "research/union-v2/sources/physics/WorldCCDSearch.cpp",
+      "bytes": 31064,
+      "sha256": "f055e558ee6c9d29f6de3e30180bc4121f58bf96f2927d1933f4e22000e70600"
+    },
+    {
+      "path": "research/union-v2/sources/physics/WorldContacts.cpp",
+      "bytes": 14313,
+      "sha256": "d8f842da964ed78c07adc002a33c3e862f79a19a943035c3bc46af568a88d521"
+    },
+    {
+      "path": "research/union-v2/sources/physics/WorldHotAccessors.h",
+      "bytes": 4225,
+      "sha256": "600bec28d7b5d07b5a922136699ffa69c36c759484c7b8449f045c2df6ea4b1f"
+    },
+    {
+      "path": "research/union-v2/sources/physics/WorldImpactEvents.cpp",
+      "bytes": 35431,
+      "sha256": "146831f92eebec517b58f9254f06daeac5cf5b38967b9c4e778bd0d71e03df0f"
+    },
+    {
+      "path": "research/union-v2/sources/physics/WorldImpactQueries.h",
+      "bytes": 7587,
+      "sha256": "c5898cd86b5687ea4a9450a049ff354fbcf91fb98f2111409412fd698f4e2038"
+    },
+    {
+      "path": "research/union-v2/sources/physics/WorldInternal.h",
+      "bytes": 33989,
+      "sha256": "2815ac251653e4e9d4dd5c70feb16a28a18c84eef8b6daa127230e6c4188c790"
+    },
+    {
+      "path": "research/union-v2/sources/physics/WorldJoints.cpp",
+      "bytes": 7673,
+      "sha256": "a292a20eb4dde14484b262cd436997ce2041f6fb459aec5d8ab2dbda516813d5"
+    },
+    {
+      "path": "research/union-v2/sources/physics/WorldModules.md",
+      "bytes": 4083,
+      "sha256": "6812e4438843ec7492a6fa2d950c210ebb30ac0486eb26bdc16887a3f3c9d1b5"
+    },
+    {
+      "path": "research/union-v2/sources/physics/WorldParticles.cpp",
+      "bytes": 26305,
+      "sha256": "e8a3b5beeac67efbf18d361aa441351b5689f9f625009a7c4efb3d30bbc21555"
+    },
+    {
+      "path": "research/union-v2/sources/physics/WorldPersistence.cpp",
+      "bytes": 19010,
+      "sha256": "917e63c0d14f0d3489d1abe037a4dacaa7feb668b34baccea6b1aed712bc9fbc"
+    },
+    {
+      "path": "research/union-v2/sources/physics/WorldProfiling.h",
+      "bytes": 1315,
+      "sha256": "ed900584346e02a601ebf4718b12c1041e3089921cc915c801d8503d64e78876"
+    },
+    {
+      "path": "research/union-v2/sources/physics/WorldQueries.cpp",
+      "bytes": 26686,
+      "sha256": "65abf29fc83f26e501127c2c239349607b27db37a6ba36f814fbdd0fe3c56e14"
+    },
+    {
+      "path": "research/union-v2/sources/physics/WorldSleep.cpp",
+      "bytes": 14127,
+      "sha256": "2edda5d49060ab3d06b3d81306aa95d5b75a1f184136fa061f57d0e453754389"
+    },
+    {
+      "path": "research/union-v3/BUILD.json",
+      "bytes": 12856,
+      "sha256": "b791c13b1357833ce29f1934359591802c74ff89e4b4ca07962eabdf924ab7d9"
+    },
+    {
+      "path": "research/union-v3/CAPTURE.json",
+      "bytes": 2667,
+      "sha256": "b5dc7b3f5819fb76f3abe17bea121fbe38891c7849664e5abc9cb0e46ad3859a"
+    },
+    {
+      "path": "research/union-v3/CaptureUncertain.cpp",
+      "bytes": 1702,
+      "sha256": "7f67d94a2e987058b021db273ec81e27c9b0d75d48123b6f1c6775af0c702f37"
+    },
+    {
+      "path": "research/union-v3/DIAGNOSTIC.json",
+      "bytes": 4026,
+      "sha256": "59cc1884f8421b87cc617ec1f0d4931b4ee4a25ccad31f3a19f52da6abd0c909"
+    },
+    {
+      "path": "research/union-v3/DiagnosticImpactMeshCostTests.cpp",
+      "bytes": 16267,
+      "sha256": "0dce1ef4caad0f4dab742adfc0882861abbe3ed1d871b5270838ea787087b789"
+    },
+    {
+      "path": "research/union-v3/UNION_PROBE.json",
+      "bytes": 2438,
+      "sha256": "e5f897e3451ab7a1e9f705a00cd6818e7c792b960d6ff35137f61142cbcc0afb"
+    },
+    {
+      "path": "research/union-v3/UnionProbe.cpp",
+      "bytes": 2587,
+      "sha256": "688eef20d7e56a9ca48e73ee7510d4f57583f3fc1b150959bd9cebdaeab32738"
+    },
+    {
+      "path": "research/union-v3/archive-private-persistence.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "research/union-v3/archive.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "research/union-v3/capture.log",
+      "bytes": 738,
+      "sha256": "7a388cab75d0328ea5b7d82512a28ba79c29fc306e43c54274df2288ea8b9566"
+    },
+    {
+      "path": "research/union-v3/compile-CollisionGeometry.cpp.log",
+      "bytes": 1056,
+      "sha256": "0e8c8823ac05e99a8bf9d4e67f832b156ac4a80dd0c600caa4c7816b4f053588"
+    },
+    {
+      "path": "research/union-v3/compile-UnifiedWorld.cpp.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "research/union-v3/compile-capture.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "research/union-v3/compile-diagnostic.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "research/union-v3/compile-minimal.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "research/union-v3/compile-union-probe.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "research/union-v3/continuation.log",
+      "bytes": 7912,
+      "sha256": "a07a4118bd919ef6b04451dec1e6024649c493477924f7f72746e917b2184cf9"
+    },
+    {
+      "path": "research/union-v3/diagnostic.log",
+      "bytes": 5573,
+      "sha256": "9ab9ab7571c5dfa6a429de0d764e8453ff5b6a76e9adb02a05f04f0f9406d082"
+    },
+    {
+      "path": "research/union-v3/entry.log",
+      "bytes": 7829,
+      "sha256": "91f2b6679955fc2d659d32b10b8ba880de159e28a14d110788ad2bf86fef7694"
+    },
+    {
+      "path": "research/union-v3/link-capture.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "research/union-v3/link-diagnostic-first-failed.log",
+      "bytes": 631,
+      "sha256": "cea1e7806266982762eb0fb100b584a32113b7a56eabe5b3cfea2858f21dfe07"
+    },
+    {
+      "path": "research/union-v3/link-diagnostic.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "research/union-v3/link-mesh.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "research/union-v3/link-minimal.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "research/union-v3/link-union-probe.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "research/union-v3/minimal.log",
+      "bytes": 1493,
+      "sha256": "d5acabfc36acda3a37b7efc7587e11dba5b2255547c8f9fb8fe343ae8c5a4a01"
+    },
+    {
+      "path": "research/union-v3/sources/CollisionGeometry.cpp",
+      "bytes": 35945,
+      "sha256": "b168d85d9be04ace53c473d045ec0914e80d56f480e62e7fac1e9f386d1af71d"
+    },
+    {
+      "path": "research/union-v3/sources/CollisionGeometry.h",
+      "bytes": 3484,
+      "sha256": "acd7a39989b8d4779c6207af17bfa815709235c78ccd665962d83c6afde613e3"
+    },
+    {
+      "path": "research/union-v3/sources/MeshContinuityProbe.h",
+      "bytes": 9960,
+      "sha256": "5cc698236ddd83272b807baaebe39b302d0f969a3528407c01803dd0f713f688"
+    },
+    {
+      "path": "research/union-v3/sources/MeshUnionContinuity.h",
+      "bytes": 3892,
+      "sha256": "9e3f6cdfebfa8c3497cab3117c9ba10d86428f81045a59be468ef0f913d4955b"
+    },
+    {
+      "path": "research/union-v3/sources/PhysicsWorld.cpp",
+      "bytes": 45206,
+      "sha256": "c5854c5d7f22606db39d04e4aa3292ffed4dafe2281ec717afc1073dcf32cfde"
+    },
+    {
+      "path": "research/union-v3/sources/UnifiedWorld.cpp",
+      "bytes": 397,
+      "sha256": "e69cd0199a78d844b923a69968647c39c96c4691d17406eb7c15a20abf7eb646"
+    },
+    {
+      "path": "research/union-v3/sources/physics/WorldBodies.cpp",
+      "bytes": 44567,
+      "sha256": "c4b81019fea68793ecc4d09b50a2fa1dfdbfd2bcd339126bcfc9c8f55b00e771"
+    },
+    {
+      "path": "research/union-v3/sources/physics/WorldBounds.cpp",
+      "bytes": 6461,
+      "sha256": "67c30882a5251028627934f9269f6e21a723d2c51fe811c9b34eddfe1f153f62"
+    },
+    {
+      "path": "research/union-v3/sources/physics/WorldCCDSearch.cpp",
+      "bytes": 31064,
+      "sha256": "f055e558ee6c9d29f6de3e30180bc4121f58bf96f2927d1933f4e22000e70600"
+    },
+    {
+      "path": "research/union-v3/sources/physics/WorldContacts.cpp",
+      "bytes": 14313,
+      "sha256": "d8f842da964ed78c07adc002a33c3e862f79a19a943035c3bc46af568a88d521"
+    },
+    {
+      "path": "research/union-v3/sources/physics/WorldHotAccessors.h",
+      "bytes": 4225,
+      "sha256": "600bec28d7b5d07b5a922136699ffa69c36c759484c7b8449f045c2df6ea4b1f"
+    },
+    {
+      "path": "research/union-v3/sources/physics/WorldImpactEvents.cpp",
+      "bytes": 35431,
+      "sha256": "146831f92eebec517b58f9254f06daeac5cf5b38967b9c4e778bd0d71e03df0f"
+    },
+    {
+      "path": "research/union-v3/sources/physics/WorldImpactQueries.h",
+      "bytes": 7587,
+      "sha256": "c5898cd86b5687ea4a9450a049ff354fbcf91fb98f2111409412fd698f4e2038"
+    },
+    {
+      "path": "research/union-v3/sources/physics/WorldInternal.h",
+      "bytes": 34889,
+      "sha256": "82c1bafa17acb5163f227c308f1f5857662bb732918eee4b2e220aa4c9d28e24"
+    },
+    {
+      "path": "research/union-v3/sources/physics/WorldJoints.cpp",
+      "bytes": 7673,
+      "sha256": "a292a20eb4dde14484b262cd436997ce2041f6fb459aec5d8ab2dbda516813d5"
+    },
+    {
+      "path": "research/union-v3/sources/physics/WorldModules.md",
+      "bytes": 4083,
+      "sha256": "6812e4438843ec7492a6fa2d950c210ebb30ac0486eb26bdc16887a3f3c9d1b5"
+    },
+    {
+      "path": "research/union-v3/sources/physics/WorldParticles.cpp",
+      "bytes": 26305,
+      "sha256": "e8a3b5beeac67efbf18d361aa441351b5689f9f625009a7c4efb3d30bbc21555"
+    },
+    {
+      "path": "research/union-v3/sources/physics/WorldPersistence.cpp",
+      "bytes": 19010,
+      "sha256": "917e63c0d14f0d3489d1abe037a4dacaa7feb668b34baccea6b1aed712bc9fbc"
+    },
+    {
+      "path": "research/union-v3/sources/physics/WorldProfiling.h",
+      "bytes": 1315,
+      "sha256": "ed900584346e02a601ebf4718b12c1041e3089921cc915c801d8503d64e78876"
+    },
+    {
+      "path": "research/union-v3/sources/physics/WorldQueries.cpp",
+      "bytes": 26686,
+      "sha256": "65abf29fc83f26e501127c2c239349607b27db37a6ba36f814fbdd0fe3c56e14"
+    },
+    {
+      "path": "research/union-v3/sources/physics/WorldSleep.cpp",
+      "bytes": 14127,
+      "sha256": "2edda5d49060ab3d06b3d81306aa95d5b75a1f184136fa061f57d0e453754389"
+    },
+    {
+      "path": "research/union-v3/union-probe.log",
+      "bytes": 497,
+      "sha256": "abcddbc8c33b3ab3f3767e5deb7600f5b7cccc5deb1e5cfe7e7991978e84ee7c"
+    },
+    {
+      "path": "research/union-v4/BUILD.json",
+      "bytes": 12951,
+      "sha256": "5766468ce2b8e178399f4e9594e20e9f4ec2a8cb161b77d1315b299740ff53b6"
+    },
+    {
+      "path": "research/union-v4/archive-private-persistence.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "research/union-v4/archive.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "research/union-v4/capture-first/BUILD.json",
+      "bytes": 2712,
+      "sha256": "6c3ffe8ddaa26aa670bd106290e6936f75a3f10f0b78e11b941126636d9f7b21"
+    },
+    {
+      "path": "research/union-v4/capture-first/Capture.cpp",
+      "bytes": 2755,
+      "sha256": "6d10eab74dee3c4703030f6dbbdb80d71cca81ec1a8ec013c59cb598482e01da"
+    },
+    {
+      "path": "research/union-v4/capture-first/capture.log",
+      "bytes": 1358,
+      "sha256": "2ef149614107d3e05d4fa2dafbeb5b8503ca392ae940b80a2d394a443ccbf58e"
+    },
+    {
+      "path": "research/union-v4/capture-first/compile.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "research/union-v4/capture-first/link.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "research/union-v4/compile-CollisionGeometry.cpp.log",
+      "bytes": 1056,
+      "sha256": "29e91cc54aeecde8eaa436a176a9f8af798a6346be58f4d9e65dcca45eead246"
+    },
+    {
+      "path": "research/union-v4/compile-UnifiedWorld.cpp.log",
+      "bytes": 2274,
+      "sha256": "0490c5db3d6f7b2a03e8b0ac46e73a18a437632319ed6e507521e73fbf613313"
+    },
+    {
+      "path": "research/union-v4/compile-minimal.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "research/union-v4/continuation.log",
+      "bytes": 7719,
+      "sha256": "1f7977c3553af8f8da7dcc07687cdc465d063bcd6aa4c372801be345bf7f3f68"
+    },
+    {
+      "path": "research/union-v4/entry.log",
+      "bytes": 7621,
+      "sha256": "6dd4e7097e4b7e494dd74a863fd560be2795979543e4d44a886d3164d997e82a"
+    },
+    {
+      "path": "research/union-v4/link-mesh.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "research/union-v4/link-minimal.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "research/union-v4/minimal.log",
+      "bytes": 250,
+      "sha256": "5047d4cd5871337fae7c3221b472a94b0abac653954942e4293ceb5e83728ed5"
+    },
+    {
+      "path": "research/union-v4/sources/CollisionGeometry.cpp",
+      "bytes": 36533,
+      "sha256": "4c6a8303f006fab71670308b541629f00730d8f366e4dee309038d7ec3cfea99"
+    },
+    {
+      "path": "research/union-v4/sources/CollisionGeometry.h",
+      "bytes": 3635,
+      "sha256": "381a7f1d9c1ecbc59bebeab9e90154338474dbf184673b8fc5ec546d32301435"
+    },
+    {
+      "path": "research/union-v4/sources/MeshContinuityProbe.h",
+      "bytes": 9960,
+      "sha256": "5cc698236ddd83272b807baaebe39b302d0f969a3528407c01803dd0f713f688"
+    },
+    {
+      "path": "research/union-v4/sources/MeshUnionContinuity.h",
+      "bytes": 3055,
+      "sha256": "ddaf1022173de06f87da4405c856847610f72bd2fa2f35e2a811c85cb8fbb22f"
+    },
+    {
+      "path": "research/union-v4/sources/NativeSATContinuity.h",
+      "bytes": 4403,
+      "sha256": "127d7c9a66bf6f0a643f8d6d88431802ef28afeafc54fea0190b53327ade5b65"
+    },
+    {
+      "path": "research/union-v4/sources/PhysicsWorld.cpp",
+      "bytes": 45206,
+      "sha256": "c5854c5d7f22606db39d04e4aa3292ffed4dafe2281ec717afc1073dcf32cfde"
+    },
+    {
+      "path": "research/union-v4/sources/UnifiedWorld.cpp",
+      "bytes": 397,
+      "sha256": "e69cd0199a78d844b923a69968647c39c96c4691d17406eb7c15a20abf7eb646"
+    },
+    {
+      "path": "research/union-v4/sources/physics/WorldBodies.cpp",
+      "bytes": 44567,
+      "sha256": "c4b81019fea68793ecc4d09b50a2fa1dfdbfd2bcd339126bcfc9c8f55b00e771"
+    },
+    {
+      "path": "research/union-v4/sources/physics/WorldBounds.cpp",
+      "bytes": 6461,
+      "sha256": "67c30882a5251028627934f9269f6e21a723d2c51fe811c9b34eddfe1f153f62"
+    },
+    {
+      "path": "research/union-v4/sources/physics/WorldCCDSearch.cpp",
+      "bytes": 31064,
+      "sha256": "f055e558ee6c9d29f6de3e30180bc4121f58bf96f2927d1933f4e22000e70600"
+    },
+    {
+      "path": "research/union-v4/sources/physics/WorldContacts.cpp",
+      "bytes": 14313,
+      "sha256": "d8f842da964ed78c07adc002a33c3e862f79a19a943035c3bc46af568a88d521"
+    },
+    {
+      "path": "research/union-v4/sources/physics/WorldHotAccessors.h",
+      "bytes": 4225,
+      "sha256": "600bec28d7b5d07b5a922136699ffa69c36c759484c7b8449f045c2df6ea4b1f"
+    },
+    {
+      "path": "research/union-v4/sources/physics/WorldImpactEvents.cpp",
+      "bytes": 35431,
+      "sha256": "146831f92eebec517b58f9254f06daeac5cf5b38967b9c4e778bd0d71e03df0f"
+    },
+    {
+      "path": "research/union-v4/sources/physics/WorldImpactQueries.h",
+      "bytes": 7587,
+      "sha256": "c5898cd86b5687ea4a9450a049ff354fbcf91fb98f2111409412fd698f4e2038"
+    },
+    {
+      "path": "research/union-v4/sources/physics/WorldInternal.h",
+      "bytes": 34889,
+      "sha256": "82c1bafa17acb5163f227c308f1f5857662bb732918eee4b2e220aa4c9d28e24"
+    },
+    {
+      "path": "research/union-v4/sources/physics/WorldJoints.cpp",
+      "bytes": 7673,
+      "sha256": "a292a20eb4dde14484b262cd436997ce2041f6fb459aec5d8ab2dbda516813d5"
+    },
+    {
+      "path": "research/union-v4/sources/physics/WorldModules.md",
+      "bytes": 4083,
+      "sha256": "6812e4438843ec7492a6fa2d950c210ebb30ac0486eb26bdc16887a3f3c9d1b5"
+    },
+    {
+      "path": "research/union-v4/sources/physics/WorldParticles.cpp",
+      "bytes": 26305,
+      "sha256": "e8a3b5beeac67efbf18d361aa441351b5689f9f625009a7c4efb3d30bbc21555"
+    },
+    {
+      "path": "research/union-v4/sources/physics/WorldPersistence.cpp",
+      "bytes": 19010,
+      "sha256": "917e63c0d14f0d3489d1abe037a4dacaa7feb668b34baccea6b1aed712bc9fbc"
+    },
+    {
+      "path": "research/union-v4/sources/physics/WorldProfiling.h",
+      "bytes": 1315,
+      "sha256": "ed900584346e02a601ebf4718b12c1041e3089921cc915c801d8503d64e78876"
+    },
+    {
+      "path": "research/union-v4/sources/physics/WorldQueries.cpp",
+      "bytes": 26686,
+      "sha256": "65abf29fc83f26e501127c2c239349607b27db37a6ba36f814fbdd0fe3c56e14"
+    },
+    {
+      "path": "research/union-v4/sources/physics/WorldSleep.cpp",
+      "bytes": 14127,
+      "sha256": "2edda5d49060ab3d06b3d81306aa95d5b75a1f184136fa061f57d0e453754389"
+    },
+    {
+      "path": "research/union-v5/BUILD.json",
+      "bytes": 12952,
+      "sha256": "0e8fbd38bddd168dc7b8df8252c6296a4bcc3ba3c5821780516f58b595d730ef"
+    },
+    {
+      "path": "research/union-v5/archive-private-persistence.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "research/union-v5/archive.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "research/union-v5/compile-CollisionGeometry.cpp.log",
+      "bytes": 1056,
+      "sha256": "5c4b0cfcaba4c583f8a5f135d071e125e9721ca0a5be7540ac36eb4b538b8184"
+    },
+    {
+      "path": "research/union-v5/compile-UnifiedWorld.cpp.log",
+      "bytes": 2274,
+      "sha256": "cde930845e24effca877c121f9a23e279bafddbd6cd3ebe7fdbf87c8352364c7"
+    },
+    {
+      "path": "research/union-v5/compile-minimal.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "research/union-v5/continuation.log",
+      "bytes": 1810,
+      "sha256": "9a887d1a9927d46a352dc943ab363b110b526a806a5a0f728e0e1992ca16261f"
+    },
+    {
+      "path": "research/union-v5/entry.log",
+      "bytes": 1184,
+      "sha256": "b7276fcd84340cb21a98015252452034a48def288845624481b6f1fca5712a39"
+    },
+    {
+      "path": "research/union-v5/first-influence/BUILD.json",
+      "bytes": 2838,
+      "sha256": "f6531d93d9eddcc887b496aead0fcf688ec9c3c8cfd27273bc77d25cd13688fc"
+    },
+    {
+      "path": "research/union-v5/first-influence/Capture.cpp",
+      "bytes": 4304,
+      "sha256": "edda079aa9495c7d251d3cf0f170fab9b4651c54639c51d94b653c20c43ebae0"
+    },
+    {
+      "path": "research/union-v5/first-influence/capture.log",
+      "bytes": 2201,
+      "sha256": "292203ebd3e52534be49a79703210976f41853213e8f4301de94e2de8aee3ad1"
+    },
+    {
+      "path": "research/union-v5/first-influence/compile.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "research/union-v5/first-influence/link.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "research/union-v5/link-mesh.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "research/union-v5/link-minimal.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "research/union-v5/minimal.log",
+      "bytes": 1357,
+      "sha256": "c5aa8c542cda4b759ce63291f5cabde8cd1665cbcc2373e6f40a76e0777209de"
+    },
+    {
+      "path": "research/union-v5/sources/CollisionGeometry.cpp",
+      "bytes": 37309,
+      "sha256": "189f30e0a74cc170a47808fac0c40e8ea09c239e016d7c5f5477608cfdd588ab"
+    },
+    {
+      "path": "research/union-v5/sources/CollisionGeometry.h",
+      "bytes": 3795,
+      "sha256": "126f7c43093cc4cfd8d6df01ebfd00319627a6436ab8dff6cd1eddba8b39c41c"
+    },
+    {
+      "path": "research/union-v5/sources/MeshContinuityProbe.h",
+      "bytes": 9960,
+      "sha256": "5cc698236ddd83272b807baaebe39b302d0f969a3528407c01803dd0f713f688"
+    },
+    {
+      "path": "research/union-v5/sources/MeshUnionContinuity.h",
+      "bytes": 3055,
+      "sha256": "ddaf1022173de06f87da4405c856847610f72bd2fa2f35e2a811c85cb8fbb22f"
+    },
+    {
+      "path": "research/union-v5/sources/NativeSATContinuity.h",
+      "bytes": 4403,
+      "sha256": "127d7c9a66bf6f0a643f8d6d88431802ef28afeafc54fea0190b53327ade5b65"
+    },
+    {
+      "path": "research/union-v5/sources/PhysicsWorld.cpp",
+      "bytes": 45206,
+      "sha256": "c5854c5d7f22606db39d04e4aa3292ffed4dafe2281ec717afc1073dcf32cfde"
+    },
+    {
+      "path": "research/union-v5/sources/UnifiedWorld.cpp",
+      "bytes": 397,
+      "sha256": "e69cd0199a78d844b923a69968647c39c96c4691d17406eb7c15a20abf7eb646"
+    },
+    {
+      "path": "research/union-v5/sources/physics/WorldBodies.cpp",
+      "bytes": 44567,
+      "sha256": "c4b81019fea68793ecc4d09b50a2fa1dfdbfd2bcd339126bcfc9c8f55b00e771"
+    },
+    {
+      "path": "research/union-v5/sources/physics/WorldBounds.cpp",
+      "bytes": 6461,
+      "sha256": "67c30882a5251028627934f9269f6e21a723d2c51fe811c9b34eddfe1f153f62"
+    },
+    {
+      "path": "research/union-v5/sources/physics/WorldCCDSearch.cpp",
+      "bytes": 31064,
+      "sha256": "f055e558ee6c9d29f6de3e30180bc4121f58bf96f2927d1933f4e22000e70600"
+    },
+    {
+      "path": "research/union-v5/sources/physics/WorldContacts.cpp",
+      "bytes": 14313,
+      "sha256": "d8f842da964ed78c07adc002a33c3e862f79a19a943035c3bc46af568a88d521"
+    },
+    {
+      "path": "research/union-v5/sources/physics/WorldHotAccessors.h",
+      "bytes": 4225,
+      "sha256": "600bec28d7b5d07b5a922136699ffa69c36c759484c7b8449f045c2df6ea4b1f"
+    },
+    {
+      "path": "research/union-v5/sources/physics/WorldImpactEvents.cpp",
+      "bytes": 35431,
+      "sha256": "146831f92eebec517b58f9254f06daeac5cf5b38967b9c4e778bd0d71e03df0f"
+    },
+    {
+      "path": "research/union-v5/sources/physics/WorldImpactQueries.h",
+      "bytes": 7587,
+      "sha256": "c5898cd86b5687ea4a9450a049ff354fbcf91fb98f2111409412fd698f4e2038"
+    },
+    {
+      "path": "research/union-v5/sources/physics/WorldInternal.h",
+      "bytes": 35657,
+      "sha256": "d51ed3c6227f3e567ae945df0c16976adb6beca5bfe4f96ca8162d023c53ac8e"
+    },
+    {
+      "path": "research/union-v5/sources/physics/WorldJoints.cpp",
+      "bytes": 7673,
+      "sha256": "a292a20eb4dde14484b262cd436997ce2041f6fb459aec5d8ab2dbda516813d5"
+    },
+    {
+      "path": "research/union-v5/sources/physics/WorldModules.md",
+      "bytes": 4083,
+      "sha256": "6812e4438843ec7492a6fa2d950c210ebb30ac0486eb26bdc16887a3f3c9d1b5"
+    },
+    {
+      "path": "research/union-v5/sources/physics/WorldParticles.cpp",
+      "bytes": 26305,
+      "sha256": "e8a3b5beeac67efbf18d361aa441351b5689f9f625009a7c4efb3d30bbc21555"
+    },
+    {
+      "path": "research/union-v5/sources/physics/WorldPersistence.cpp",
+      "bytes": 19010,
+      "sha256": "917e63c0d14f0d3489d1abe037a4dacaa7feb668b34baccea6b1aed712bc9fbc"
+    },
+    {
+      "path": "research/union-v5/sources/physics/WorldProfiling.h",
+      "bytes": 1315,
+      "sha256": "ed900584346e02a601ebf4718b12c1041e3089921cc915c801d8503d64e78876"
+    },
+    {
+      "path": "research/union-v5/sources/physics/WorldQueries.cpp",
+      "bytes": 26686,
+      "sha256": "65abf29fc83f26e501127c2c239349607b27db37a6ba36f814fbdd0fe3c56e14"
+    },
+    {
+      "path": "research/union-v5/sources/physics/WorldSleep.cpp",
+      "bytes": 14127,
+      "sha256": "2edda5d49060ab3d06b3d81306aa95d5b75a1f184136fa061f57d0e453754389"
+    },
+    {
+      "path": "research/union-v6/BUILD.json",
+      "bytes": 12949,
+      "sha256": "42f0cf0aa692c4f946d7b54226d9922d7788f269e6edbc10d340fce4047cd318"
+    },
+    {
+      "path": "research/union-v6/REACQUISITION_CONTROLS.json",
+      "bytes": 2599,
+      "sha256": "1dac179fcead8b3d04eedcd4a034b4c4565b644fe836c3c0c4c78502e9714280"
+    },
+    {
+      "path": "research/union-v6/ReacquisitionControls.cpp",
+      "bytes": 3949,
+      "sha256": "629b282826fa76e2d4fd377fc0ab7bb6bb440d2120c96799b6cd1f5b128af123"
+    },
+    {
+      "path": "research/union-v6/archive-private-persistence.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "research/union-v6/archive.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "research/union-v6/compile-CollisionGeometry.cpp.log",
+      "bytes": 1056,
+      "sha256": "5ccb2b7ce183b00928ffd539612c0e7647b786fe67b0896d37517d429513ab67"
+    },
+    {
+      "path": "research/union-v6/compile-UnifiedWorld.cpp.log",
+      "bytes": 2274,
+      "sha256": "27f20c2e63c810042bc8f45cf42ee13ae87e4cd04c090d82f6d3568d45239760"
+    },
+    {
+      "path": "research/union-v6/compile-controls.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "research/union-v6/compile-minimal.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "research/union-v6/continuation.log",
+      "bytes": 2207,
+      "sha256": "b6a6b522d344cc39b8908f66fdf099ad99a6882d7a0a68825ab26f18e7d03310"
+    },
+    {
+      "path": "research/union-v6/controls.log",
+      "bytes": 776,
+      "sha256": "b53b96c3205de47508d41bc3aa7cec2a6ac473227fa817c49d3c22c3d1b10ff2"
+    },
+    {
+      "path": "research/union-v6/entry.log",
+      "bytes": 1184,
+      "sha256": "13895362e31b71720fb1b19676b0752bf3b5772e01cf4d59c5d59ece6172a6e9"
+    },
+    {
+      "path": "research/union-v6/link-controls.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "research/union-v6/link-mesh.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "research/union-v6/link-minimal.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "research/union-v6/minimal.log",
+      "bytes": 1357,
+      "sha256": "c5aa8c542cda4b759ce63291f5cabde8cd1665cbcc2373e6f40a76e0777209de"
+    },
+    {
+      "path": "research/union-v6/sources/CollisionGeometry.cpp",
+      "bytes": 39354,
+      "sha256": "63a329f6df6ed397cfb36481c35a706f890f6b3d0b41c223e590fe0bdbf57778"
+    },
+    {
+      "path": "research/union-v6/sources/CollisionGeometry.h",
+      "bytes": 3935,
+      "sha256": "313da5b119fbf431876108c2efb1cedb87a3df253af0b0134ee955c12bcdb323"
+    },
+    {
+      "path": "research/union-v6/sources/MeshContinuityProbe.h",
+      "bytes": 9960,
+      "sha256": "5cc698236ddd83272b807baaebe39b302d0f969a3528407c01803dd0f713f688"
+    },
+    {
+      "path": "research/union-v6/sources/MeshUnionContinuity.h",
+      "bytes": 10491,
+      "sha256": "e159f8c2f86471fcf4da5151e24d4bb1ee886a3087edb643e31e078fce81b103"
+    },
+    {
+      "path": "research/union-v6/sources/NativeSATContinuity.h",
+      "bytes": 4403,
+      "sha256": "127d7c9a66bf6f0a643f8d6d88431802ef28afeafc54fea0190b53327ade5b65"
+    },
+    {
+      "path": "research/union-v6/sources/PhysicsWorld.cpp",
+      "bytes": 45336,
+      "sha256": "8e242a1d51634c7fc9db61efa791527e8cd74624cae2492a642cdbff10b4d2d9"
+    },
+    {
+      "path": "research/union-v6/sources/UnifiedWorld.cpp",
+      "bytes": 397,
+      "sha256": "e69cd0199a78d844b923a69968647c39c96c4691d17406eb7c15a20abf7eb646"
+    },
+    {
+      "path": "research/union-v6/sources/physics/WorldBodies.cpp",
+      "bytes": 44567,
+      "sha256": "c4b81019fea68793ecc4d09b50a2fa1dfdbfd2bcd339126bcfc9c8f55b00e771"
+    },
+    {
+      "path": "research/union-v6/sources/physics/WorldBounds.cpp",
+      "bytes": 6461,
+      "sha256": "67c30882a5251028627934f9269f6e21a723d2c51fe811c9b34eddfe1f153f62"
+    },
+    {
+      "path": "research/union-v6/sources/physics/WorldCCDSearch.cpp",
+      "bytes": 31064,
+      "sha256": "f055e558ee6c9d29f6de3e30180bc4121f58bf96f2927d1933f4e22000e70600"
+    },
+    {
+      "path": "research/union-v6/sources/physics/WorldContacts.cpp",
+      "bytes": 14313,
+      "sha256": "d8f842da964ed78c07adc002a33c3e862f79a19a943035c3bc46af568a88d521"
+    },
+    {
+      "path": "research/union-v6/sources/physics/WorldHotAccessors.h",
+      "bytes": 4225,
+      "sha256": "600bec28d7b5d07b5a922136699ffa69c36c759484c7b8449f045c2df6ea4b1f"
+    },
+    {
+      "path": "research/union-v6/sources/physics/WorldImpactEvents.cpp",
+      "bytes": 35431,
+      "sha256": "146831f92eebec517b58f9254f06daeac5cf5b38967b9c4e778bd0d71e03df0f"
+    },
+    {
+      "path": "research/union-v6/sources/physics/WorldImpactQueries.h",
+      "bytes": 7587,
+      "sha256": "c5898cd86b5687ea4a9450a049ff354fbcf91fb98f2111409412fd698f4e2038"
+    },
+    {
+      "path": "research/union-v6/sources/physics/WorldInternal.h",
+      "bytes": 35817,
+      "sha256": "308785847e5c6a7e357383e0c65a7821bbcd69510fe792c947fbb753952df500"
+    },
+    {
+      "path": "research/union-v6/sources/physics/WorldJoints.cpp",
+      "bytes": 7673,
+      "sha256": "a292a20eb4dde14484b262cd436997ce2041f6fb459aec5d8ab2dbda516813d5"
+    },
+    {
+      "path": "research/union-v6/sources/physics/WorldModules.md",
+      "bytes": 4083,
+      "sha256": "6812e4438843ec7492a6fa2d950c210ebb30ac0486eb26bdc16887a3f3c9d1b5"
+    },
+    {
+      "path": "research/union-v6/sources/physics/WorldParticles.cpp",
+      "bytes": 26305,
+      "sha256": "e8a3b5beeac67efbf18d361aa441351b5689f9f625009a7c4efb3d30bbc21555"
+    },
+    {
+      "path": "research/union-v6/sources/physics/WorldPersistence.cpp",
+      "bytes": 19010,
+      "sha256": "917e63c0d14f0d3489d1abe037a4dacaa7feb668b34baccea6b1aed712bc9fbc"
+    },
+    {
+      "path": "research/union-v6/sources/physics/WorldProfiling.h",
+      "bytes": 1315,
+      "sha256": "ed900584346e02a601ebf4718b12c1041e3089921cc915c801d8503d64e78876"
+    },
+    {
+      "path": "research/union-v6/sources/physics/WorldQueries.cpp",
+      "bytes": 26686,
+      "sha256": "65abf29fc83f26e501127c2c239349607b27db37a6ba36f814fbdd0fe3c56e14"
+    },
+    {
+      "path": "research/union-v6/sources/physics/WorldSleep.cpp",
+      "bytes": 14127,
+      "sha256": "2edda5d49060ab3d06b3d81306aa95d5b75a1f184136fa061f57d0e453754389"
+    },
+    {
+      "path": "research/union-v6-pre-component-review/sources/CollisionGeometry.cpp",
+      "bytes": 37309,
+      "sha256": "189f30e0a74cc170a47808fac0c40e8ea09c239e016d7c5f5477608cfdd588ab"
+    },
+    {
+      "path": "research/union-v6-pre-component-review/sources/CollisionGeometry.h",
+      "bytes": 3795,
+      "sha256": "126f7c43093cc4cfd8d6df01ebfd00319627a6436ab8dff6cd1eddba8b39c41c"
+    },
+    {
+      "path": "research/union-v6-pre-component-review/sources/MeshContinuityProbe.h",
+      "bytes": 9960,
+      "sha256": "5cc698236ddd83272b807baaebe39b302d0f969a3528407c01803dd0f713f688"
+    },
+    {
+      "path": "research/union-v6-pre-component-review/sources/MeshUnionContinuity.h",
+      "bytes": 8493,
+      "sha256": "7d6e86d6d7dfb1c483338c44426baba7cbfd1f2ad487227e725e8160e0229dc9"
+    },
+    {
+      "path": "research/union-v6-pre-component-review/sources/NativeSATContinuity.h",
+      "bytes": 4403,
+      "sha256": "127d7c9a66bf6f0a643f8d6d88431802ef28afeafc54fea0190b53327ade5b65"
+    },
+    {
+      "path": "research/union-v6-pre-component-review/sources/PhysicsWorld.cpp",
+      "bytes": 45336,
+      "sha256": "8e242a1d51634c7fc9db61efa791527e8cd74624cae2492a642cdbff10b4d2d9"
+    },
+    {
+      "path": "research/union-v6-pre-component-review/sources/UnifiedWorld.cpp",
+      "bytes": 397,
+      "sha256": "e69cd0199a78d844b923a69968647c39c96c4691d17406eb7c15a20abf7eb646"
+    },
+    {
+      "path": "research/union-v6-pre-component-review/sources/physics/WorldBodies.cpp",
+      "bytes": 44567,
+      "sha256": "c4b81019fea68793ecc4d09b50a2fa1dfdbfd2bcd339126bcfc9c8f55b00e771"
+    },
+    {
+      "path": "research/union-v6-pre-component-review/sources/physics/WorldBounds.cpp",
+      "bytes": 6461,
+      "sha256": "67c30882a5251028627934f9269f6e21a723d2c51fe811c9b34eddfe1f153f62"
+    },
+    {
+      "path": "research/union-v6-pre-component-review/sources/physics/WorldCCDSearch.cpp",
+      "bytes": 31064,
+      "sha256": "f055e558ee6c9d29f6de3e30180bc4121f58bf96f2927d1933f4e22000e70600"
+    },
+    {
+      "path": "research/union-v6-pre-component-review/sources/physics/WorldContacts.cpp",
+      "bytes": 14313,
+      "sha256": "d8f842da964ed78c07adc002a33c3e862f79a19a943035c3bc46af568a88d521"
+    },
+    {
+      "path": "research/union-v6-pre-component-review/sources/physics/WorldHotAccessors.h",
+      "bytes": 4225,
+      "sha256": "600bec28d7b5d07b5a922136699ffa69c36c759484c7b8449f045c2df6ea4b1f"
+    },
+    {
+      "path": "research/union-v6-pre-component-review/sources/physics/WorldImpactEvents.cpp",
+      "bytes": 35431,
+      "sha256": "146831f92eebec517b58f9254f06daeac5cf5b38967b9c4e778bd0d71e03df0f"
+    },
+    {
+      "path": "research/union-v6-pre-component-review/sources/physics/WorldImpactQueries.h",
+      "bytes": 7587,
+      "sha256": "c5898cd86b5687ea4a9450a049ff354fbcf91fb98f2111409412fd698f4e2038"
+    },
+    {
+      "path": "research/union-v6-pre-component-review/sources/physics/WorldInternal.h",
+      "bytes": 35817,
+      "sha256": "308785847e5c6a7e357383e0c65a7821bbcd69510fe792c947fbb753952df500"
+    },
+    {
+      "path": "research/union-v6-pre-component-review/sources/physics/WorldJoints.cpp",
+      "bytes": 7673,
+      "sha256": "a292a20eb4dde14484b262cd436997ce2041f6fb459aec5d8ab2dbda516813d5"
+    },
+    {
+      "path": "research/union-v6-pre-component-review/sources/physics/WorldModules.md",
+      "bytes": 4083,
+      "sha256": "6812e4438843ec7492a6fa2d950c210ebb30ac0486eb26bdc16887a3f3c9d1b5"
+    },
+    {
+      "path": "research/union-v6-pre-component-review/sources/physics/WorldParticles.cpp",
+      "bytes": 26305,
+      "sha256": "e8a3b5beeac67efbf18d361aa441351b5689f9f625009a7c4efb3d30bbc21555"
+    },
+    {
+      "path": "research/union-v6-pre-component-review/sources/physics/WorldPersistence.cpp",
+      "bytes": 19010,
+      "sha256": "917e63c0d14f0d3489d1abe037a4dacaa7feb668b34baccea6b1aed712bc9fbc"
+    },
+    {
+      "path": "research/union-v6-pre-component-review/sources/physics/WorldProfiling.h",
+      "bytes": 1315,
+      "sha256": "ed900584346e02a601ebf4718b12c1041e3089921cc915c801d8503d64e78876"
+    },
+    {
+      "path": "research/union-v6-pre-component-review/sources/physics/WorldQueries.cpp",
+      "bytes": 26686,
+      "sha256": "65abf29fc83f26e501127c2c239349607b27db37a6ba36f814fbdd0fe3c56e14"
+    },
+    {
+      "path": "research/union-v6-pre-component-review/sources/physics/WorldSleep.cpp",
+      "bytes": 14127,
+      "sha256": "2edda5d49060ab3d06b3d81306aa95d5b75a1f184136fa061f57d0e453754389"
+    }
+  ],
+  "count": 293,
+  "bytes": 3060050
+}

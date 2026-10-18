@@ -1,0 +1,28 @@
+{
+  "utc": "2026-10-18T18:20:11.752684+00:00",
+  "scope": "cache-only one-TU helper against frozen4c; no production policy",
+  "source_sha256": {
+    ".cache/prealpha-pass5/ccd/ContinuityProbe.cpp": "e413b3f14a2d48fa46fef85ec2f13808afdb045fb31c1457c1805c3c05a54ec9",
+    ".cache/prealpha-pass5/ccd/MeshContinuityProbe.h": "5cc698236ddd83272b807baaebe39b302d0f969a3528407c01803dd0f713f688"
+  },
+  "commands": [
+    {
+      "name": "compile",
+      "argv": [
+        "/usr/bin/c++",
+        "-std=c++17",
+        "-O3",
+        "-DNDEBUG",
+        "-I/home/conner/Documents/GitHub/Project-Judas/src",
+        "-I/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass5/ccd",
+        "-c",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass5/ccd/ContinuityProbe.cpp",
+        "-o",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass5/ccd/continuity-v1/probe.o"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+      "exit": 1,
+      "seconds": 0.8111669710015121
+    }
+  ]
+}

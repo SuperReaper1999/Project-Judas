@@ -1,0 +1,68 @@
+{
+  "scope": "exact originalbox5step6 represented snapshot native-acquisition diagnostic",
+  "source_sha256": "5650d19e53af810c150103edc241ed1b947ac878fe3700cc92721c1353424f99",
+  "commands": [
+    {
+      "name": "compile",
+      "argv": [
+        "c++",
+        "-O3",
+        "-DNDEBUG",
+        "-std=c++17",
+        "-I/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass5/ccd/union-v5/sources",
+        "-I/home/conner/Documents/GitHub/Project-Judas/src",
+        "-c",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass5/ccd/native-acquisition-v1/Probe.cpp",
+        "-o",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass5/ccd/native-acquisition-v1/probe.o"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+      "seconds": 3.7774775690013485,
+      "exit": 0
+    },
+    {
+      "name": "link",
+      "argv": [
+        "/usr/bin/c++",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass5/ccd/native-acquisition-v1/probe.o",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass5/ccd/union-v5/CollisionGeometry.cpp.o",
+        "-O3",
+        "-DNDEBUG",
+        "-o",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass5/ccd/native-acquisition-v1/probe",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass5/baseline/libjudas_engine.a",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass5/baseline/libjudas_build_identity.a",
+        "libjudas_app_icon.a",
+        "libjudas_materials.a",
+        "/usr/lib/x86_64-linux-gnu/libSDL2.so",
+        "libjudas_glad.a",
+        "libjudas_audio_backend.a",
+        "libjudas_meshoptimizer.a",
+        "libjudas_navigation_cook.a",
+        "libjudas_navigation_backend.a",
+        "libjudas_quickjs.a",
+        "-lm",
+        "libjudas_profiler.a",
+        "_deps/judas_freetype-build/libfreetype.a",
+        "_deps/judas_harfbuzz-build/libharfbuzz.a",
+        "unicode/icu/lib/libicui18n.a",
+        "unicode/icu/lib/libicuuc.a",
+        "unicode/icu/lib/libicudata.a",
+        "-ldl",
+        "libjudas_jobs.a"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas/build",
+      "seconds": 0.1157849699993676,
+      "exit": 0
+    },
+    {
+      "name": "probe",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass5/ccd/native-acquisition-v1/probe"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+      "seconds": 0.06440848700003698,
+      "exit": 0
+    }
+  ]
+}
