@@ -1,0 +1,34 @@
+{
+  "sourceHead": "9deb47d1667e5b6bd1abe708ed343c3fbf6fe847",
+  "changedToolSha256": {
+    "inspect_sdk.py": "e4017421e901809aaee1b46f12f89dc248151f0100136effad0646c996b3da4b",
+    "verify_android.py": "2d147363d310cdaa5394af29377f0a4981585b2c2f0caf05cbf5357430c4a9d2"
+  },
+  "nativeBuild": {
+    "architecture": "x86_64",
+    "build_id": "0.1.0-prealpha-Experimental-60a9217-dirty-f08fa44808d9-u84f47c24fcd0",
+    "channel": "Experimental",
+    "compiler": "GNU",
+    "compiler_version": "15.2.0",
+    "configuration": "Release",
+    "maturity": "pre-alpha",
+    "platform": "Linux",
+    "schema": 1,
+    "source_dirty": true,
+    "source_fingerprint": "f08fa44808d978837a68897f4d5b17f957ee4abbe782dfa1f9f6412eb2c8f9ca",
+    "source_origin": "git",
+    "source_revision": "60a92176adbdfb8ccf90cc1fe3a40505416b1559",
+    "source_tree": "b286b77ac4b5b4941a495559fce9c9ce203e9c36",
+    "source_untracked_count": 16,
+    "source_untracked_fingerprint": "84f47c24fcd098f88732ceab246b2e0e19eca31f56acdd72f89f8bfa1621daf2",
+    "version": "0.1.0-prealpha"
+  },
+  "correctedSdkManifestSha256": "cc45ef61edac13bc476f8d2256d9732f0a95413bf55dcb5a13343fa68434c2a5",
+  "toolCount": 17,
+  "originalSdkUnchanged": true,
+  "correctedSdkUnchanged": true,
+  "noCacheDirectories": true,
+  "unexpectedPycRejected": true,
+  "compiledBinariesUnchanged": true,
+  "scope": "Real pre-existing17Linux Release binaries, corrected packaged Python entries. No C++ build, no rewritten provenance, no -B or bytecode-suppression environment."
+}

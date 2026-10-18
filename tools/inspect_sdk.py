@@ -15,6 +15,9 @@ import re
 import subprocess
 import sys
 
+# Packaged tools must not add Python caches to the checksum-verified SDK.
+sys.dont_write_bytecode = True
+
 import binary_dependencies
 import package_sdk
 

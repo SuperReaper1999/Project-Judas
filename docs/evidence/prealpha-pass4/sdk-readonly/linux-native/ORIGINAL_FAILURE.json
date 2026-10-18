@@ -1,0 +1,23 @@
+{
+  "originalSdkManifestSha256": "f6444fe7865a7005d67257dff7e9ecf05bc7bc659907b4d441b844665b8b1a12",
+  "originalFiles": 214,
+  "generatedFiles": {
+    "tools/__pycache__/binary_dependencies.cpython-314.pyc": {
+      "bytes": 11540,
+      "sha256": "cadea9733f14a95e6e7d1314653e99802dec87505f8e4cdc4ce01609126e226e"
+    },
+    "tools/__pycache__/package_sdk.cpython-314.pyc": {
+      "bytes": 22740,
+      "sha256": "30df70753507d591d0e40391f030a6f7cb17b3da0da60c360f6ccea17faadb1c"
+    }
+  },
+  "originalSdkUnchanged": true,
+  "qualification": {
+    "errors": [
+      "SDK file inventory/checksum mismatch (missing, changed or unexpected file)"
+    ],
+    "kind": "judas-sdk-qualification",
+    "passed": false,
+    "schema": 1
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "errors": [
+    "SDK file inventory/checksum mismatch (missing, changed or unexpected file)"
+  ],
+  "kind": "judas-sdk-qualification",
+  "passed": false,
+  "schema": 1
+}

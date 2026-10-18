@@ -1,0 +1,193 @@
+[
+  {
+    "name": "old_verify_before",
+    "argv": [
+      "/usr/bin/python3",
+      "/home/conner/Documents/GitHub/Project-Judas/tools/package_sdk.py",
+      "verify",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass4/sdk-readonly/linux-native/old-sdk"
+    ],
+    "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+    "utc": "2026-10-18T17:07:00.948025+00:00",
+    "environmentRemoved": [
+      "PYTHONDONTWRITEBYTECODE",
+      "PYTHONPYCACHEPREFIX"
+    ],
+    "exit": 0,
+    "expectedExit": 0,
+    "passed": true,
+    "seconds": 2.1183842359987466,
+    "logSha256": "f27fb7830857618192b2ad7596e1d18ddc84e2ba18e62dca72da65d4807c012f"
+  },
+  {
+    "name": "old_packaged_inspector",
+    "argv": [
+      "/usr/bin/python3",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass4/sdk-readonly/linux-native/old-sdk/tools/inspect_sdk.py",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass4/sdk-readonly/linux-native/old-sdk",
+      "--host-check",
+      "--output",
+      "/home/conner/Documents/GitHub/Project-Judas/docs/evidence/prealpha-pass4/sdk-readonly/linux-native/old-qualification.json"
+    ],
+    "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+    "utc": "2026-10-18T17:07:03.168221+00:00",
+    "environmentRemoved": [
+      "PYTHONDONTWRITEBYTECODE",
+      "PYTHONPYCACHEPREFIX"
+    ],
+    "exit": 1,
+    "expectedExit": 1,
+    "passed": true,
+    "seconds": 2.219791808000082,
+    "logSha256": "f3ebdb754b1504514f6ebb7e118247ba120ada61eab2a61d73916bd905a734b9"
+  },
+  {
+    "name": "old_verify_after",
+    "argv": [
+      "/usr/bin/python3",
+      "/home/conner/Documents/GitHub/Project-Judas/tools/package_sdk.py",
+      "verify",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass4/sdk-readonly/linux-native/old-sdk"
+    ],
+    "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+    "utc": "2026-10-18T17:07:07.716021+00:00",
+    "environmentRemoved": [
+      "PYTHONDONTWRITEBYTECODE",
+      "PYTHONPYCACHEPREFIX"
+    ],
+    "exit": 1,
+    "expectedExit": 1,
+    "passed": true,
+    "seconds": 2.1686937009999383,
+    "logSha256": "72f15945ca82b8e3af34186ba06e8075bd4cf52d9fa2208d3835db00e7f6bf60"
+  },
+  {
+    "name": "stage_corrected_sdk",
+    "argv": [
+      "/usr/bin/python3",
+      "/home/conner/Documents/GitHub/Project-Judas/tools/package_sdk.py",
+      "stage",
+      "--source",
+      "/home/conner/Documents/GitHub/Project-Judas",
+      "--bin-dir",
+      "/home/conner/Documents/GitHub/Project-Judas/build",
+      "--build-info",
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas-build-info-Release.json",
+      "--output",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass4/sdk-readonly/linux-native/corrected-sdk",
+      "--probe-tools"
+    ],
+    "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+    "utc": "2026-10-18T17:07:20.019220+00:00",
+    "environmentRemoved": [
+      "PYTHONDONTWRITEBYTECODE",
+      "PYTHONPYCACHEPREFIX"
+    ],
+    "exit": 0,
+    "expectedExit": 0,
+    "passed": true,
+    "seconds": 9.884105884000746,
+    "logSha256": "f27fb7830857618192b2ad7596e1d18ddc84e2ba18e62dca72da65d4807c012f"
+  },
+  {
+    "name": "corrected_verify_before",
+    "argv": [
+      "/usr/bin/python3",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass4/sdk-readonly/linux-native/corrected-sdk/tools/package_sdk.py",
+      "verify",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass4/sdk-readonly/linux-native/corrected-sdk"
+    ],
+    "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+    "utc": "2026-10-18T17:07:26.338876+00:00",
+    "environmentRemoved": [
+      "PYTHONDONTWRITEBYTECODE",
+      "PYTHONPYCACHEPREFIX"
+    ],
+    "exit": 0,
+    "expectedExit": 0,
+    "passed": true,
+    "seconds": 2.6196409219992347,
+    "logSha256": "f27fb7830857618192b2ad7596e1d18ddc84e2ba18e62dca72da65d4807c012f"
+  },
+  {
+    "name": "corrected_packaged_inspector",
+    "argv": [
+      "/usr/bin/python3",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass4/sdk-readonly/linux-native/corrected-sdk/tools/inspect_sdk.py",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass4/sdk-readonly/linux-native/corrected-sdk",
+      "--host-check",
+      "--output",
+      "/home/conner/Documents/GitHub/Project-Judas/docs/evidence/prealpha-pass4/sdk-readonly/linux-native/corrected-qualification.json"
+    ],
+    "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+    "utc": "2026-10-18T17:07:29.409795+00:00",
+    "environmentRemoved": [
+      "PYTHONDONTWRITEBYTECODE",
+      "PYTHONPYCACHEPREFIX"
+    ],
+    "exit": 0,
+    "expectedExit": 0,
+    "passed": true,
+    "seconds": 3.0702256449985725,
+    "logSha256": "2726073d5a6d5846567011a6f381c8589cb3be1365ed93404419fcb41eebb83a"
+  },
+  {
+    "name": "corrected_packaged_android_help",
+    "argv": [
+      "/usr/bin/python3",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass4/sdk-readonly/linux-native/corrected-sdk/tools/verify_android.py",
+      "--help"
+    ],
+    "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+    "utc": "2026-10-18T17:07:29.524655+00:00",
+    "environmentRemoved": [
+      "PYTHONDONTWRITEBYTECODE",
+      "PYTHONPYCACHEPREFIX"
+    ],
+    "exit": 0,
+    "expectedExit": 0,
+    "passed": true,
+    "seconds": 0.11441593100062164,
+    "logSha256": "1522b8b4e2a9738b53e858d8f7d3df05a4fc22c5df0ecf30b52f7cffaf3eda66"
+  },
+  {
+    "name": "corrected_verify_after",
+    "argv": [
+      "/usr/bin/python3",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass4/sdk-readonly/linux-native/corrected-sdk/tools/package_sdk.py",
+      "verify",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass4/sdk-readonly/linux-native/corrected-sdk"
+    ],
+    "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+    "utc": "2026-10-18T17:07:32.247769+00:00",
+    "environmentRemoved": [
+      "PYTHONDONTWRITEBYTECODE",
+      "PYTHONPYCACHEPREFIX"
+    ],
+    "exit": 0,
+    "expectedExit": 0,
+    "passed": true,
+    "seconds": 2.7225352939985896,
+    "logSha256": "f27fb7830857618192b2ad7596e1d18ddc84e2ba18e62dca72da65d4807c012f"
+  },
+  {
+    "name": "unexpected_pyc_negative",
+    "argv": [
+      "/usr/bin/python3",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass4/sdk-readonly/linux-native/tampered-sdk/tools/package_sdk.py",
+      "verify",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass4/sdk-readonly/linux-native/tampered-sdk"
+    ],
+    "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+    "utc": "2026-10-18T17:07:37.483871+00:00",
+    "environmentRemoved": [
+      "PYTHONDONTWRITEBYTECODE",
+      "PYTHONPYCACHEPREFIX"
+    ],
+    "exit": 1,
+    "expectedExit": 1,
+    "passed": true,
+    "seconds": 2.5210508159998426,
+    "logSha256": "72f15945ca82b8e3af34186ba06e8075bd4cf52d9fa2208d3835db00e7f6bf60"
+  }
+]

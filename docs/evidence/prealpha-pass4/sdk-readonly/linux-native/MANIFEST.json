@@ -1,0 +1,110 @@
+{
+  "schema": 1,
+  "files": [
+    {
+      "path": ".gitattributes",
+      "bytes": 8,
+      "sha256": "705fd4d6451a31d36b3df7de96f83f30ac976c9b4a6d1e51671d8e2f33e2d0da"
+    },
+    {
+      "path": "CORRECTED_SDK_MANIFEST.json",
+      "bytes": 35265,
+      "sha256": "cc45ef61edac13bc476f8d2256d9732f0a95413bf55dcb5a13343fa68434c2a5"
+    },
+    {
+      "path": "NATIVE_BINARY_IDENTITY.json",
+      "bytes": 3153,
+      "sha256": "d1649c38ee12859214dd63066bc492d81a3b46ecead489ba90d83423e1c056c9"
+    },
+    {
+      "path": "ORIGINAL_FAILURE.json",
+      "bytes": 734,
+      "sha256": "d644090044189485eda69650dc75cad5762e918b264b206ad99851ef2eb4c58b"
+    },
+    {
+      "path": "ORIGINAL_SDK_MANIFEST.json",
+      "bytes": 35265,
+      "sha256": "f6444fe7865a7005d67257dff7e9ecf05bc7bc659907b4d441b844665b8b1a12"
+    },
+    {
+      "path": "QUALIFICATION.json",
+      "bytes": 1514,
+      "sha256": "b07c5f6b0d9bd46b89acd0f2be5998b87f8becf38140efcd97ed66baeeaa7581"
+    },
+    {
+      "path": "REPORT.md",
+      "bytes": 4226,
+      "sha256": "5d742220f427551a726b102716c5b6ad075e1b1845cc34e4c640cd4b1eee50d6"
+    },
+    {
+      "path": "RESULTS.json",
+      "bytes": 6939,
+      "sha256": "a1fccaf21f9661b1f80cea3f13a92a4063eee2a415b2892d1177c9f4e06e8741"
+    },
+    {
+      "path": "corrected-qualification.json",
+      "bytes": 98406,
+      "sha256": "53f0bf5bd4b1c4b89419d6fe5e3e3a751b1ae829b0d3b74a57112f9fd04c8352"
+    },
+    {
+      "path": "corrected_packaged_android_help.log",
+      "bytes": 444,
+      "sha256": "1522b8b4e2a9738b53e858d8f7d3df05a4fc22c5df0ecf30b52f7cffaf3eda66"
+    },
+    {
+      "path": "corrected_packaged_inspector.log",
+      "bytes": 172,
+      "sha256": "2726073d5a6d5846567011a6f381c8589cb3be1365ed93404419fcb41eebb83a"
+    },
+    {
+      "path": "corrected_verify_after.log",
+      "bytes": 741,
+      "sha256": "f27fb7830857618192b2ad7596e1d18ddc84e2ba18e62dca72da65d4807c012f"
+    },
+    {
+      "path": "corrected_verify_before.log",
+      "bytes": 741,
+      "sha256": "f27fb7830857618192b2ad7596e1d18ddc84e2ba18e62dca72da65d4807c012f"
+    },
+    {
+      "path": "old-qualification.json",
+      "bytes": 174,
+      "sha256": "ea0b72a50d6f6556a029dcb4299fbf5d9787a2ab4ae467b78eaef0c0e995ee1e"
+    },
+    {
+      "path": "old_packaged_inspector.log",
+      "bytes": 243,
+      "sha256": "f3ebdb754b1504514f6ebb7e118247ba120ada61eab2a61d73916bd905a734b9"
+    },
+    {
+      "path": "old_verify_after.log",
+      "bytes": 97,
+      "sha256": "72f15945ca82b8e3af34186ba06e8075bd4cf52d9fa2208d3835db00e7f6bf60"
+    },
+    {
+      "path": "old_verify_before.log",
+      "bytes": 741,
+      "sha256": "f27fb7830857618192b2ad7596e1d18ddc84e2ba18e62dca72da65d4807c012f"
+    },
+    {
+      "path": "reproduction/linux_native_as_executed.py",
+      "bytes": 5269,
+      "sha256": "a095fe85f15d9427117357925118778fd210080233ea2899adc02f4059175ece"
+    },
+    {
+      "path": "reproduction/original_packaged_inspect_sdk.py",
+      "bytes": 7990,
+      "sha256": "c472a38fce359f565c04652311c36dd13c987cddef54fde474d8b27abeb9437d"
+    },
+    {
+      "path": "stage_corrected_sdk.log",
+      "bytes": 741,
+      "sha256": "f27fb7830857618192b2ad7596e1d18ddc84e2ba18e62dca72da65d4807c012f"
+    },
+    {
+      "path": "unexpected_pyc_negative.log",
+      "bytes": 97,
+      "sha256": "72f15945ca82b8e3af34186ba06e8075bd4cf52d9fa2208d3835db00e7f6bf60"
+    }
+  ]
+}

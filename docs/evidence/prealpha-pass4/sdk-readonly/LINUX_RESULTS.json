@@ -1,0 +1,620 @@
+{
+  "cases": [
+    {
+      "after": {
+        "BUILD_INFO.json": {
+          "bytes": 581,
+          "sha256": "f6a2ed74e32f8615dd0a809a035f379e080c00921d6213e5b5bf3c15baa7f495"
+        },
+        "SDK_MANIFEST.json": {
+          "bytes": 1833,
+          "sha256": "93b00e2caf442943a4b264f36208e10dcb11e1f94bce3b6b369e3e088164465c"
+        },
+        "SHA256SUMS": {
+          "bytes": 692,
+          "sha256": "251f0c01360c5f45c5d3277f60b46ed5f8bfdf854f5130b3e05c7785a147b4d7"
+        },
+        "judas": {
+          "bytes": 256,
+          "sha256": "f3eaa42fd1f176246d53e361de5f9df95ceeae4a1b313f647b030630785fe455"
+        },
+        "packaging/sdk-inventory.json": {
+          "bytes": 289,
+          "sha256": "31df89cb73a5ee730f638c4143f7e12d65a2a4fcb5038c1690aabf29fe5d1950"
+        },
+        "tools/__pycache__/binary_dependencies.cpython-314.pyc": {
+          "bytes": 11550,
+          "sha256": "3c14030fd1e1d3a918b449184c9f5cdcb5da3677cd1f2148ebc2313b81c646bb"
+        },
+        "tools/__pycache__/package_sdk.cpython-314.pyc": {
+          "bytes": 22750,
+          "sha256": "6fb8bf0b34205f482fbd16df2f1279c6a5d435399125ae860cef31820a009bf7"
+        },
+        "tools/binary_dependencies.py": {
+          "bytes": 7301,
+          "sha256": "96b54e5cb592082901ef0eb3b1c84dd98bd14da2dbbd3a06140368df74210733"
+        },
+        "tools/inspect_sdk.py": {
+          "bytes": 7990,
+          "sha256": "c472a38fce359f565c04652311c36dd13c987cddef54fde474d8b27abeb9437d"
+        },
+        "tools/package_sdk.py": {
+          "bytes": 13541,
+          "sha256": "fa61ba82c396a3f968541f0c4ebdd837b821e8273dfc4c1d1328576586d5a736"
+        },
+        "tools/verify_android.py": {
+          "bytes": 8465,
+          "sha256": "9e7d51abf6d416b6e5412a2bc92c34f104fbce366c91c770d8b397feb64694bc"
+        }
+      },
+      "before": {
+        "BUILD_INFO.json": {
+          "bytes": 581,
+          "sha256": "f6a2ed74e32f8615dd0a809a035f379e080c00921d6213e5b5bf3c15baa7f495"
+        },
+        "SDK_MANIFEST.json": {
+          "bytes": 1833,
+          "sha256": "93b00e2caf442943a4b264f36208e10dcb11e1f94bce3b6b369e3e088164465c"
+        },
+        "SHA256SUMS": {
+          "bytes": 692,
+          "sha256": "251f0c01360c5f45c5d3277f60b46ed5f8bfdf854f5130b3e05c7785a147b4d7"
+        },
+        "judas": {
+          "bytes": 256,
+          "sha256": "f3eaa42fd1f176246d53e361de5f9df95ceeae4a1b313f647b030630785fe455"
+        },
+        "packaging/sdk-inventory.json": {
+          "bytes": 289,
+          "sha256": "31df89cb73a5ee730f638c4143f7e12d65a2a4fcb5038c1690aabf29fe5d1950"
+        },
+        "tools/binary_dependencies.py": {
+          "bytes": 7301,
+          "sha256": "96b54e5cb592082901ef0eb3b1c84dd98bd14da2dbbd3a06140368df74210733"
+        },
+        "tools/inspect_sdk.py": {
+          "bytes": 7990,
+          "sha256": "c472a38fce359f565c04652311c36dd13c987cddef54fde474d8b27abeb9437d"
+        },
+        "tools/package_sdk.py": {
+          "bytes": 13541,
+          "sha256": "fa61ba82c396a3f968541f0c4ebdd837b821e8273dfc4c1d1328576586d5a736"
+        },
+        "tools/verify_android.py": {
+          "bytes": 8465,
+          "sha256": "9e7d51abf6d416b6e5412a2bc92c34f104fbce366c91c770d8b397feb64694bc"
+        }
+      },
+      "changed_files": [
+        "tools/__pycache__/binary_dependencies.cpython-314.pyc",
+        "tools/__pycache__/package_sdk.cpython-314.pyc"
+      ],
+      "expected_mutation": true,
+      "name": "original-inspect_sdk",
+      "source_sha256": {
+        "binary_dependencies.py": "96b54e5cb592082901ef0eb3b1c84dd98bd14da2dbbd3a06140368df74210733",
+        "inspect_sdk.py": "c472a38fce359f565c04652311c36dd13c987cddef54fde474d8b27abeb9437d",
+        "package_sdk.py": "fa61ba82c396a3f968541f0c4ebdd837b821e8273dfc4c1d1328576586d5a736",
+        "verify_android.py": "9e7d51abf6d416b6e5412a2bc92c34f104fbce366c91c770d8b397feb64694bc"
+      }
+    },
+    {
+      "after": {
+        "BUILD_INFO.json": {
+          "bytes": 581,
+          "sha256": "f6a2ed74e32f8615dd0a809a035f379e080c00921d6213e5b5bf3c15baa7f495"
+        },
+        "SDK_MANIFEST.json": {
+          "bytes": 1833,
+          "sha256": "93b00e2caf442943a4b264f36208e10dcb11e1f94bce3b6b369e3e088164465c"
+        },
+        "SHA256SUMS": {
+          "bytes": 692,
+          "sha256": "251f0c01360c5f45c5d3277f60b46ed5f8bfdf854f5130b3e05c7785a147b4d7"
+        },
+        "judas": {
+          "bytes": 256,
+          "sha256": "f3eaa42fd1f176246d53e361de5f9df95ceeae4a1b313f647b030630785fe455"
+        },
+        "packaging/sdk-inventory.json": {
+          "bytes": 289,
+          "sha256": "31df89cb73a5ee730f638c4143f7e12d65a2a4fcb5038c1690aabf29fe5d1950"
+        },
+        "tools/__pycache__/binary_dependencies.cpython-314.pyc": {
+          "bytes": 11553,
+          "sha256": "1be4384d09f6556bb3fc251337e99c760454e615e0a42122429f504fb6297d4a"
+        },
+        "tools/__pycache__/package_sdk.cpython-314.pyc": {
+          "bytes": 22753,
+          "sha256": "8b7e3b6df442dcbb9fb018002d7395cee402fe3bb91952692e375ebcf04ab9ad"
+        },
+        "tools/binary_dependencies.py": {
+          "bytes": 7301,
+          "sha256": "96b54e5cb592082901ef0eb3b1c84dd98bd14da2dbbd3a06140368df74210733"
+        },
+        "tools/inspect_sdk.py": {
+          "bytes": 7990,
+          "sha256": "c472a38fce359f565c04652311c36dd13c987cddef54fde474d8b27abeb9437d"
+        },
+        "tools/package_sdk.py": {
+          "bytes": 13541,
+          "sha256": "fa61ba82c396a3f968541f0c4ebdd837b821e8273dfc4c1d1328576586d5a736"
+        },
+        "tools/verify_android.py": {
+          "bytes": 8465,
+          "sha256": "9e7d51abf6d416b6e5412a2bc92c34f104fbce366c91c770d8b397feb64694bc"
+        }
+      },
+      "before": {
+        "BUILD_INFO.json": {
+          "bytes": 581,
+          "sha256": "f6a2ed74e32f8615dd0a809a035f379e080c00921d6213e5b5bf3c15baa7f495"
+        },
+        "SDK_MANIFEST.json": {
+          "bytes": 1833,
+          "sha256": "93b00e2caf442943a4b264f36208e10dcb11e1f94bce3b6b369e3e088164465c"
+        },
+        "SHA256SUMS": {
+          "bytes": 692,
+          "sha256": "251f0c01360c5f45c5d3277f60b46ed5f8bfdf854f5130b3e05c7785a147b4d7"
+        },
+        "judas": {
+          "bytes": 256,
+          "sha256": "f3eaa42fd1f176246d53e361de5f9df95ceeae4a1b313f647b030630785fe455"
+        },
+        "packaging/sdk-inventory.json": {
+          "bytes": 289,
+          "sha256": "31df89cb73a5ee730f638c4143f7e12d65a2a4fcb5038c1690aabf29fe5d1950"
+        },
+        "tools/binary_dependencies.py": {
+          "bytes": 7301,
+          "sha256": "96b54e5cb592082901ef0eb3b1c84dd98bd14da2dbbd3a06140368df74210733"
+        },
+        "tools/inspect_sdk.py": {
+          "bytes": 7990,
+          "sha256": "c472a38fce359f565c04652311c36dd13c987cddef54fde474d8b27abeb9437d"
+        },
+        "tools/package_sdk.py": {
+          "bytes": 13541,
+          "sha256": "fa61ba82c396a3f968541f0c4ebdd837b821e8273dfc4c1d1328576586d5a736"
+        },
+        "tools/verify_android.py": {
+          "bytes": 8465,
+          "sha256": "9e7d51abf6d416b6e5412a2bc92c34f104fbce366c91c770d8b397feb64694bc"
+        }
+      },
+      "changed_files": [
+        "tools/__pycache__/binary_dependencies.cpython-314.pyc",
+        "tools/__pycache__/package_sdk.cpython-314.pyc"
+      ],
+      "expected_mutation": true,
+      "name": "original-verify_android",
+      "source_sha256": {
+        "binary_dependencies.py": "96b54e5cb592082901ef0eb3b1c84dd98bd14da2dbbd3a06140368df74210733",
+        "inspect_sdk.py": "c472a38fce359f565c04652311c36dd13c987cddef54fde474d8b27abeb9437d",
+        "package_sdk.py": "fa61ba82c396a3f968541f0c4ebdd837b821e8273dfc4c1d1328576586d5a736",
+        "verify_android.py": "9e7d51abf6d416b6e5412a2bc92c34f104fbce366c91c770d8b397feb64694bc"
+      }
+    },
+    {
+      "after": {
+        "BUILD_INFO.json": {
+          "bytes": 581,
+          "sha256": "f6a2ed74e32f8615dd0a809a035f379e080c00921d6213e5b5bf3c15baa7f495"
+        },
+        "SDK_MANIFEST.json": {
+          "bytes": 1833,
+          "sha256": "499f671d87e77e849081c16116957d973393d6d0f809b90b2eac88f3b7a0e131"
+        },
+        "SHA256SUMS": {
+          "bytes": 692,
+          "sha256": "962c603701b9be980eed4c90ac738c0df1adb81c182509fcfc6aa8307be50762"
+        },
+        "judas": {
+          "bytes": 256,
+          "sha256": "f3eaa42fd1f176246d53e361de5f9df95ceeae4a1b313f647b030630785fe455"
+        },
+        "packaging/sdk-inventory.json": {
+          "bytes": 289,
+          "sha256": "31df89cb73a5ee730f638c4143f7e12d65a2a4fcb5038c1690aabf29fe5d1950"
+        },
+        "tools/binary_dependencies.py": {
+          "bytes": 7301,
+          "sha256": "96b54e5cb592082901ef0eb3b1c84dd98bd14da2dbbd3a06140368df74210733"
+        },
+        "tools/inspect_sdk.py": {
+          "bytes": 8096,
+          "sha256": "e4017421e901809aaee1b46f12f89dc248151f0100136effad0646c996b3da4b"
+        },
+        "tools/package_sdk.py": {
+          "bytes": 13541,
+          "sha256": "fa61ba82c396a3f968541f0c4ebdd837b821e8273dfc4c1d1328576586d5a736"
+        },
+        "tools/verify_android.py": {
+          "bytes": 8571,
+          "sha256": "2d147363d310cdaa5394af29377f0a4981585b2c2f0caf05cbf5357430c4a9d2"
+        }
+      },
+      "before": {
+        "BUILD_INFO.json": {
+          "bytes": 581,
+          "sha256": "f6a2ed74e32f8615dd0a809a035f379e080c00921d6213e5b5bf3c15baa7f495"
+        },
+        "SDK_MANIFEST.json": {
+          "bytes": 1833,
+          "sha256": "499f671d87e77e849081c16116957d973393d6d0f809b90b2eac88f3b7a0e131"
+        },
+        "SHA256SUMS": {
+          "bytes": 692,
+          "sha256": "962c603701b9be980eed4c90ac738c0df1adb81c182509fcfc6aa8307be50762"
+        },
+        "judas": {
+          "bytes": 256,
+          "sha256": "f3eaa42fd1f176246d53e361de5f9df95ceeae4a1b313f647b030630785fe455"
+        },
+        "packaging/sdk-inventory.json": {
+          "bytes": 289,
+          "sha256": "31df89cb73a5ee730f638c4143f7e12d65a2a4fcb5038c1690aabf29fe5d1950"
+        },
+        "tools/binary_dependencies.py": {
+          "bytes": 7301,
+          "sha256": "96b54e5cb592082901ef0eb3b1c84dd98bd14da2dbbd3a06140368df74210733"
+        },
+        "tools/inspect_sdk.py": {
+          "bytes": 8096,
+          "sha256": "e4017421e901809aaee1b46f12f89dc248151f0100136effad0646c996b3da4b"
+        },
+        "tools/package_sdk.py": {
+          "bytes": 13541,
+          "sha256": "fa61ba82c396a3f968541f0c4ebdd837b821e8273dfc4c1d1328576586d5a736"
+        },
+        "tools/verify_android.py": {
+          "bytes": 8571,
+          "sha256": "2d147363d310cdaa5394af29377f0a4981585b2c2f0caf05cbf5357430c4a9d2"
+        }
+      },
+      "changed_files": [],
+      "expected_mutation": false,
+      "name": "corrected-inspect_sdk",
+      "source_sha256": {
+        "binary_dependencies.py": "96b54e5cb592082901ef0eb3b1c84dd98bd14da2dbbd3a06140368df74210733",
+        "inspect_sdk.py": "e4017421e901809aaee1b46f12f89dc248151f0100136effad0646c996b3da4b",
+        "package_sdk.py": "fa61ba82c396a3f968541f0c4ebdd837b821e8273dfc4c1d1328576586d5a736",
+        "verify_android.py": "2d147363d310cdaa5394af29377f0a4981585b2c2f0caf05cbf5357430c4a9d2"
+      }
+    },
+    {
+      "after": {
+        "BUILD_INFO.json": {
+          "bytes": 581,
+          "sha256": "f6a2ed74e32f8615dd0a809a035f379e080c00921d6213e5b5bf3c15baa7f495"
+        },
+        "SDK_MANIFEST.json": {
+          "bytes": 1833,
+          "sha256": "499f671d87e77e849081c16116957d973393d6d0f809b90b2eac88f3b7a0e131"
+        },
+        "SHA256SUMS": {
+          "bytes": 692,
+          "sha256": "962c603701b9be980eed4c90ac738c0df1adb81c182509fcfc6aa8307be50762"
+        },
+        "judas": {
+          "bytes": 256,
+          "sha256": "f3eaa42fd1f176246d53e361de5f9df95ceeae4a1b313f647b030630785fe455"
+        },
+        "packaging/sdk-inventory.json": {
+          "bytes": 289,
+          "sha256": "31df89cb73a5ee730f638c4143f7e12d65a2a4fcb5038c1690aabf29fe5d1950"
+        },
+        "tools/binary_dependencies.py": {
+          "bytes": 7301,
+          "sha256": "96b54e5cb592082901ef0eb3b1c84dd98bd14da2dbbd3a06140368df74210733"
+        },
+        "tools/inspect_sdk.py": {
+          "bytes": 8096,
+          "sha256": "e4017421e901809aaee1b46f12f89dc248151f0100136effad0646c996b3da4b"
+        },
+        "tools/package_sdk.py": {
+          "bytes": 13541,
+          "sha256": "fa61ba82c396a3f968541f0c4ebdd837b821e8273dfc4c1d1328576586d5a736"
+        },
+        "tools/verify_android.py": {
+          "bytes": 8571,
+          "sha256": "2d147363d310cdaa5394af29377f0a4981585b2c2f0caf05cbf5357430c4a9d2"
+        }
+      },
+      "before": {
+        "BUILD_INFO.json": {
+          "bytes": 581,
+          "sha256": "f6a2ed74e32f8615dd0a809a035f379e080c00921d6213e5b5bf3c15baa7f495"
+        },
+        "SDK_MANIFEST.json": {
+          "bytes": 1833,
+          "sha256": "499f671d87e77e849081c16116957d973393d6d0f809b90b2eac88f3b7a0e131"
+        },
+        "SHA256SUMS": {
+          "bytes": 692,
+          "sha256": "962c603701b9be980eed4c90ac738c0df1adb81c182509fcfc6aa8307be50762"
+        },
+        "judas": {
+          "bytes": 256,
+          "sha256": "f3eaa42fd1f176246d53e361de5f9df95ceeae4a1b313f647b030630785fe455"
+        },
+        "packaging/sdk-inventory.json": {
+          "bytes": 289,
+          "sha256": "31df89cb73a5ee730f638c4143f7e12d65a2a4fcb5038c1690aabf29fe5d1950"
+        },
+        "tools/binary_dependencies.py": {
+          "bytes": 7301,
+          "sha256": "96b54e5cb592082901ef0eb3b1c84dd98bd14da2dbbd3a06140368df74210733"
+        },
+        "tools/inspect_sdk.py": {
+          "bytes": 8096,
+          "sha256": "e4017421e901809aaee1b46f12f89dc248151f0100136effad0646c996b3da4b"
+        },
+        "tools/package_sdk.py": {
+          "bytes": 13541,
+          "sha256": "fa61ba82c396a3f968541f0c4ebdd837b821e8273dfc4c1d1328576586d5a736"
+        },
+        "tools/verify_android.py": {
+          "bytes": 8571,
+          "sha256": "2d147363d310cdaa5394af29377f0a4981585b2c2f0caf05cbf5357430c4a9d2"
+        }
+      },
+      "changed_files": [],
+      "expected_mutation": false,
+      "name": "corrected-verify_android",
+      "source_sha256": {
+        "binary_dependencies.py": "96b54e5cb592082901ef0eb3b1c84dd98bd14da2dbbd3a06140368df74210733",
+        "inspect_sdk.py": "e4017421e901809aaee1b46f12f89dc248151f0100136effad0646c996b3da4b",
+        "package_sdk.py": "fa61ba82c396a3f968541f0c4ebdd837b821e8273dfc4c1d1328576586d5a736",
+        "verify_android.py": "2d147363d310cdaa5394af29377f0a4981585b2c2f0caf05cbf5357430c4a9d2"
+      }
+    }
+  ],
+  "commands": [
+    {
+      "argv": [
+        "/usr/bin/python3",
+        "-E",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass4/sdk-readonly/linux-run/original-inspect_sdk/tools/package_sdk.py",
+        "verify",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass4/sdk-readonly/linux-run/original-inspect_sdk"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass4/sdk-readonly/linux-run",
+      "exit": 0,
+      "expected_exit": 0,
+      "name": "original-inspect_sdk-before",
+      "stderr": "",
+      "stdout": "{\"build\": {\"architecture\": \"x86_64\", \"build_id\": \"sdk-readonly-fixture\", \"channel\": \"Local\", \"compiler\": \"synthetic-metadata\", \"compiler_version\": \"not-a-native-build\", \"configuration\": \"fixture\", \"maturity\": \"test-fixture\", \"platform\": \"Linux\", \"schema\": 1, \"source_dirty\": true, \"source_fingerprint\": \"unknown\", \"source_origin\": \"unknown\", \"source_revision\": \"unknown\", \"source_tree\": \"unknown\", \"source_untracked_count\": 0, \"source_untracked_fingerprint\": \"0000000000000000000000000000000000000000000000000000000000000000\", \"version\": \"0.0.0-fixture\"}, \"files\": 7, \"ok\": true, \"tools\": 1}\n"
+    },
+    {
+      "argv": [
+        "/usr/bin/python3",
+        "-E",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass4/sdk-readonly/linux-run/original-inspect_sdk/tools/inspect_sdk.py",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass4/sdk-readonly/linux-run/original-inspect_sdk",
+        "--output",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass4/sdk-readonly/linux-run/original-inspect_sdk.json"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass4/sdk-readonly/linux-run",
+      "exit": 1,
+      "expected_exit": 1,
+      "name": "original-inspect_sdk-tool",
+      "stderr": "",
+      "stdout": "{\"passed\": false, \"errors\": [\"SDK file inventory/checksum mismatch (missing, changed or unexpected file)\"], \"output\": \"/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass4/sdk-readonly/linux-run/original-inspect_sdk.json\"}\n"
+    },
+    {
+      "argv": [
+        "/usr/bin/python3",
+        "-E",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass4/sdk-readonly/linux-run/original-inspect_sdk/tools/package_sdk.py",
+        "verify",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass4/sdk-readonly/linux-run/original-inspect_sdk"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass4/sdk-readonly/linux-run",
+      "exit": 1,
+      "expected_exit": 1,
+      "name": "original-inspect_sdk-after",
+      "stderr": "SDK packaging failed: SDK file inventory/checksum mismatch (missing, changed or unexpected file)\n",
+      "stdout": ""
+    },
+    {
+      "argv": [
+        "/usr/bin/python3",
+        "-E",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass4/sdk-readonly/linux-run/original-verify_android/tools/package_sdk.py",
+        "verify",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass4/sdk-readonly/linux-run/original-verify_android"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass4/sdk-readonly/linux-run",
+      "exit": 0,
+      "expected_exit": 0,
+      "name": "original-verify_android-before",
+      "stderr": "",
+      "stdout": "{\"build\": {\"architecture\": \"x86_64\", \"build_id\": \"sdk-readonly-fixture\", \"channel\": \"Local\", \"compiler\": \"synthetic-metadata\", \"compiler_version\": \"not-a-native-build\", \"configuration\": \"fixture\", \"maturity\": \"test-fixture\", \"platform\": \"Linux\", \"schema\": 1, \"source_dirty\": true, \"source_fingerprint\": \"unknown\", \"source_origin\": \"unknown\", \"source_revision\": \"unknown\", \"source_tree\": \"unknown\", \"source_untracked_count\": 0, \"source_untracked_fingerprint\": \"0000000000000000000000000000000000000000000000000000000000000000\", \"version\": \"0.0.0-fixture\"}, \"files\": 7, \"ok\": true, \"tools\": 1}\n"
+    },
+    {
+      "argv": [
+        "/usr/bin/python3",
+        "-E",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass4/sdk-readonly/linux-run/original-verify_android/tools/verify_android.py",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass4/sdk-readonly/linux-run/fixture.apk"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass4/sdk-readonly/linux-run",
+      "exit": 0,
+      "expected_exit": 0,
+      "name": "original-verify_android-tool",
+      "stderr": "",
+      "stdout": "{\"bytes\": 2905, \"contentBytes\": 46, \"contentFiles\": 1, \"engine\": {\"arm64-v8a\": {\"architecture\": \"arm64-v8a\", \"build_id\": \"sdk-readonly-fixture\", \"channel\": \"Local\", \"compiler\": \"synthetic-metadata\", \"compiler_version\": \"not-a-native-build\", \"configuration\": \"fixture\", \"maturity\": \"test-fixture\", \"platform\": \"Android\", \"schema\": 1, \"source_dirty\": true, \"source_fingerprint\": \"unknown\", \"source_origin\": \"unknown\", \"source_revision\": \"unknown\", \"source_tree\": \"unknown\", \"source_untracked_count\": 0, \"source_untracked_fingerprint\": \"0000000000000000000000000000000000000000000000000000000000000000\", \"version\": \"0.0.0-fixture\"}}, \"kind\": \"judas-android-verification\", \"native\": {\"lib/arm64-v8a/libSDL2.so\": {\"format\": \"ELF64\", \"interpreter\": null, \"load_alignments\": [16384], \"machine\": 183, \"needed\": [], \"search_paths\": [], \"version_requirements\": {}}, \"lib/arm64-v8a/libc++_shared.so\": {\"format\": \"ELF64\", \"interpreter\": null, \"load_alignments\": [16384], \"machine\": 183, \"needed\": [], \"search_paths\": [], \"version_requirements\": {}}, \"lib/arm64-v8a/libmain.so\": {\"format\": \"ELF64\", \"interpreter\": null, \"load_alignments\": [16384], \"machine\": 183, \"needed\": [], \"search_paths\": [], \"version_requirements\": {}}}, \"passed\": true, \"schema\": 1, \"scope\": \"ZIP/content/native-byte/ELF verification only; signatures, ZIP alignment and device execution are separate\", \"sha256\": \"01a86fd5b2f66aa44cabb18298abe898256695bd2df4d00931d3a0ffd25871a5\", \"shippedNative\": [{\"bytes\": 256, \"path\": \"lib/arm64-v8a/libSDL2.so\", \"sha256\": \"1e9054faec7c7c59b38606e60955000a33014b6537596fdcada39b59171d3bb2\"}, {\"bytes\": 256, \"path\": \"lib/arm64-v8a/libc++_shared.so\", \"sha256\": \"1e9054faec7c7c59b38606e60955000a33014b6537596fdcada39b59171d3bb2\"}, {\"bytes\": 256, \"path\": \"lib/arm64-v8a/libmain.so\", \"sha256\": \"1e9054faec7c7c59b38606e60955000a33014b6537596fdcada39b59171d3bb2\"}]}\n"
+    },
+    {
+      "argv": [
+        "/usr/bin/python3",
+        "-E",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass4/sdk-readonly/linux-run/original-verify_android/tools/package_sdk.py",
+        "verify",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass4/sdk-readonly/linux-run/original-verify_android"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass4/sdk-readonly/linux-run",
+      "exit": 1,
+      "expected_exit": 1,
+      "name": "original-verify_android-after",
+      "stderr": "SDK packaging failed: SDK file inventory/checksum mismatch (missing, changed or unexpected file)\n",
+      "stdout": ""
+    },
+    {
+      "argv": [
+        "/usr/bin/python3",
+        "-E",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass4/sdk-readonly/linux-run/corrected-inspect_sdk/tools/package_sdk.py",
+        "verify",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass4/sdk-readonly/linux-run/corrected-inspect_sdk"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass4/sdk-readonly/linux-run",
+      "exit": 0,
+      "expected_exit": 0,
+      "name": "corrected-inspect_sdk-before",
+      "stderr": "",
+      "stdout": "{\"build\": {\"architecture\": \"x86_64\", \"build_id\": \"sdk-readonly-fixture\", \"channel\": \"Local\", \"compiler\": \"synthetic-metadata\", \"compiler_version\": \"not-a-native-build\", \"configuration\": \"fixture\", \"maturity\": \"test-fixture\", \"platform\": \"Linux\", \"schema\": 1, \"source_dirty\": true, \"source_fingerprint\": \"unknown\", \"source_origin\": \"unknown\", \"source_revision\": \"unknown\", \"source_tree\": \"unknown\", \"source_untracked_count\": 0, \"source_untracked_fingerprint\": \"0000000000000000000000000000000000000000000000000000000000000000\", \"version\": \"0.0.0-fixture\"}, \"files\": 7, \"ok\": true, \"tools\": 1}\n"
+    },
+    {
+      "argv": [
+        "/usr/bin/python3",
+        "-E",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass4/sdk-readonly/linux-run/corrected-inspect_sdk/tools/inspect_sdk.py",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass4/sdk-readonly/linux-run/corrected-inspect_sdk",
+        "--output",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass4/sdk-readonly/linux-run/corrected-inspect_sdk.json"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass4/sdk-readonly/linux-run",
+      "exit": 0,
+      "expected_exit": 0,
+      "name": "corrected-inspect_sdk-tool",
+      "stderr": "",
+      "stdout": "{\"passed\": true, \"errors\": [], \"output\": \"/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass4/sdk-readonly/linux-run/corrected-inspect_sdk.json\"}\n"
+    },
+    {
+      "argv": [
+        "/usr/bin/python3",
+        "-E",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass4/sdk-readonly/linux-run/corrected-inspect_sdk/tools/package_sdk.py",
+        "verify",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass4/sdk-readonly/linux-run/corrected-inspect_sdk"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass4/sdk-readonly/linux-run",
+      "exit": 0,
+      "expected_exit": 0,
+      "name": "corrected-inspect_sdk-after",
+      "stderr": "",
+      "stdout": "{\"build\": {\"architecture\": \"x86_64\", \"build_id\": \"sdk-readonly-fixture\", \"channel\": \"Local\", \"compiler\": \"synthetic-metadata\", \"compiler_version\": \"not-a-native-build\", \"configuration\": \"fixture\", \"maturity\": \"test-fixture\", \"platform\": \"Linux\", \"schema\": 1, \"source_dirty\": true, \"source_fingerprint\": \"unknown\", \"source_origin\": \"unknown\", \"source_revision\": \"unknown\", \"source_tree\": \"unknown\", \"source_untracked_count\": 0, \"source_untracked_fingerprint\": \"0000000000000000000000000000000000000000000000000000000000000000\", \"version\": \"0.0.0-fixture\"}, \"files\": 7, \"ok\": true, \"tools\": 1}\n"
+    },
+    {
+      "argv": [
+        "/usr/bin/python3",
+        "-E",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass4/sdk-readonly/linux-run/corrected-inspect_sdk/tools/package_sdk.py",
+        "verify",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass4/sdk-readonly/linux-run/corrected-inspect_sdk"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass4/sdk-readonly/linux-run",
+      "exit": 1,
+      "expected_exit": 1,
+      "name": "corrected-inspect_sdk-unexpected-cache",
+      "stderr": "SDK packaging failed: SDK file inventory/checksum mismatch (missing, changed or unexpected file)\n",
+      "stdout": ""
+    },
+    {
+      "argv": [
+        "/usr/bin/python3",
+        "-E",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass4/sdk-readonly/linux-run/corrected-inspect_sdk/tools/package_sdk.py",
+        "verify",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass4/sdk-readonly/linux-run/corrected-inspect_sdk"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass4/sdk-readonly/linux-run",
+      "exit": 1,
+      "expected_exit": 1,
+      "name": "corrected-inspect_sdk-changed-payload",
+      "stderr": "SDK packaging failed: SDK file inventory/checksum mismatch (missing, changed or unexpected file)\n",
+      "stdout": ""
+    },
+    {
+      "argv": [
+        "/usr/bin/python3",
+        "-E",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass4/sdk-readonly/linux-run/corrected-verify_android/tools/package_sdk.py",
+        "verify",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass4/sdk-readonly/linux-run/corrected-verify_android"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass4/sdk-readonly/linux-run",
+      "exit": 0,
+      "expected_exit": 0,
+      "name": "corrected-verify_android-before",
+      "stderr": "",
+      "stdout": "{\"build\": {\"architecture\": \"x86_64\", \"build_id\": \"sdk-readonly-fixture\", \"channel\": \"Local\", \"compiler\": \"synthetic-metadata\", \"compiler_version\": \"not-a-native-build\", \"configuration\": \"fixture\", \"maturity\": \"test-fixture\", \"platform\": \"Linux\", \"schema\": 1, \"source_dirty\": true, \"source_fingerprint\": \"unknown\", \"source_origin\": \"unknown\", \"source_revision\": \"unknown\", \"source_tree\": \"unknown\", \"source_untracked_count\": 0, \"source_untracked_fingerprint\": \"0000000000000000000000000000000000000000000000000000000000000000\", \"version\": \"0.0.0-fixture\"}, \"files\": 7, \"ok\": true, \"tools\": 1}\n"
+    },
+    {
+      "argv": [
+        "/usr/bin/python3",
+        "-E",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass4/sdk-readonly/linux-run/corrected-verify_android/tools/verify_android.py",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass4/sdk-readonly/linux-run/fixture.apk"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass4/sdk-readonly/linux-run",
+      "exit": 0,
+      "expected_exit": 0,
+      "name": "corrected-verify_android-tool",
+      "stderr": "",
+      "stdout": "{\"bytes\": 2905, \"contentBytes\": 46, \"contentFiles\": 1, \"engine\": {\"arm64-v8a\": {\"architecture\": \"arm64-v8a\", \"build_id\": \"sdk-readonly-fixture\", \"channel\": \"Local\", \"compiler\": \"synthetic-metadata\", \"compiler_version\": \"not-a-native-build\", \"configuration\": \"fixture\", \"maturity\": \"test-fixture\", \"platform\": \"Android\", \"schema\": 1, \"source_dirty\": true, \"source_fingerprint\": \"unknown\", \"source_origin\": \"unknown\", \"source_revision\": \"unknown\", \"source_tree\": \"unknown\", \"source_untracked_count\": 0, \"source_untracked_fingerprint\": \"0000000000000000000000000000000000000000000000000000000000000000\", \"version\": \"0.0.0-fixture\"}}, \"kind\": \"judas-android-verification\", \"native\": {\"lib/arm64-v8a/libSDL2.so\": {\"format\": \"ELF64\", \"interpreter\": null, \"load_alignments\": [16384], \"machine\": 183, \"needed\": [], \"search_paths\": [], \"version_requirements\": {}}, \"lib/arm64-v8a/libc++_shared.so\": {\"format\": \"ELF64\", \"interpreter\": null, \"load_alignments\": [16384], \"machine\": 183, \"needed\": [], \"search_paths\": [], \"version_requirements\": {}}, \"lib/arm64-v8a/libmain.so\": {\"format\": \"ELF64\", \"interpreter\": null, \"load_alignments\": [16384], \"machine\": 183, \"needed\": [], \"search_paths\": [], \"version_requirements\": {}}}, \"passed\": true, \"schema\": 1, \"scope\": \"ZIP/content/native-byte/ELF verification only; signatures, ZIP alignment and device execution are separate\", \"sha256\": \"01a86fd5b2f66aa44cabb18298abe898256695bd2df4d00931d3a0ffd25871a5\", \"shippedNative\": [{\"bytes\": 256, \"path\": \"lib/arm64-v8a/libSDL2.so\", \"sha256\": \"1e9054faec7c7c59b38606e60955000a33014b6537596fdcada39b59171d3bb2\"}, {\"bytes\": 256, \"path\": \"lib/arm64-v8a/libc++_shared.so\", \"sha256\": \"1e9054faec7c7c59b38606e60955000a33014b6537596fdcada39b59171d3bb2\"}, {\"bytes\": 256, \"path\": \"lib/arm64-v8a/libmain.so\", \"sha256\": \"1e9054faec7c7c59b38606e60955000a33014b6537596fdcada39b59171d3bb2\"}]}\n"
+    },
+    {
+      "argv": [
+        "/usr/bin/python3",
+        "-E",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass4/sdk-readonly/linux-run/corrected-verify_android/tools/package_sdk.py",
+        "verify",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass4/sdk-readonly/linux-run/corrected-verify_android"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass4/sdk-readonly/linux-run",
+      "exit": 0,
+      "expected_exit": 0,
+      "name": "corrected-verify_android-after",
+      "stderr": "",
+      "stdout": "{\"build\": {\"architecture\": \"x86_64\", \"build_id\": \"sdk-readonly-fixture\", \"channel\": \"Local\", \"compiler\": \"synthetic-metadata\", \"compiler_version\": \"not-a-native-build\", \"configuration\": \"fixture\", \"maturity\": \"test-fixture\", \"platform\": \"Linux\", \"schema\": 1, \"source_dirty\": true, \"source_fingerprint\": \"unknown\", \"source_origin\": \"unknown\", \"source_revision\": \"unknown\", \"source_tree\": \"unknown\", \"source_untracked_count\": 0, \"source_untracked_fingerprint\": \"0000000000000000000000000000000000000000000000000000000000000000\", \"version\": \"0.0.0-fixture\"}, \"files\": 7, \"ok\": true, \"tools\": 1}\n"
+    },
+    {
+      "argv": [
+        "/usr/bin/python3",
+        "-E",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass4/sdk-readonly/linux-run/corrected-verify_android/tools/package_sdk.py",
+        "verify",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass4/sdk-readonly/linux-run/corrected-verify_android"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass4/sdk-readonly/linux-run",
+      "exit": 1,
+      "expected_exit": 1,
+      "name": "corrected-verify_android-unexpected-cache",
+      "stderr": "SDK packaging failed: SDK file inventory/checksum mismatch (missing, changed or unexpected file)\n",
+      "stdout": ""
+    },
+    {
+      "argv": [
+        "/usr/bin/python3",
+        "-E",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass4/sdk-readonly/linux-run/corrected-verify_android/tools/package_sdk.py",
+        "verify",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass4/sdk-readonly/linux-run/corrected-verify_android"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass4/sdk-readonly/linux-run",
+      "exit": 1,
+      "expected_exit": 1,
+      "name": "corrected-verify_android-changed-payload",
+      "stderr": "SDK packaging failed: SDK file inventory/checksum mismatch (missing, changed or unexpected file)\n",
+      "stdout": ""
+    }
+  ],
+  "passed": true,
+  "schema": 1,
+  "scope": "isolated packaged Python invocation; synthetic metadata only, no engine/platform qualification",
+  "utc": "2026-10-18T17:05:18.969811+00:00"
+}

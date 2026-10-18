@@ -1,0 +1,14 @@
+usage: verify_android.py [-h] [--receipt RECEIPT] [--output OUTPUT] apk
+
+Independently check Judas APK content/native provenance without installing it.
+This verifies internal inventories, not publisher authenticity or Android
+runtime behaviour. Signature and APK page alignment need apksigner/zipalign
+separately.
+
+positional arguments:
+  apk
+
+options:
+  -h, --help         show this help message and exit
+  --receipt RECEIPT
+  --output OUTPUT

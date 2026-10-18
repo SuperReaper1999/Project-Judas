@@ -12,6 +12,9 @@ from pathlib import Path, PurePosixPath
 import sys
 import zipfile
 
+# Packaged tools must not add Python caches to the checksum-verified SDK.
+sys.dont_write_bytecode = True
+
 import binary_dependencies
 from package_sdk import digest, validate_identity
 

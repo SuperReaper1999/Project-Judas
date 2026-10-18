@@ -1,0 +1,18 @@
+{
+  "scope": "Original negative tool copies are byte-identical to production before the correction; current tools contain only the early bytecode barrier. No fixture executable or APK is a game/platform artifact.",
+  "original_source_sha256": {
+    "verify_android.py": "9e7d51abf6d416b6e5412a2bc92c34f104fbce366c91c770d8b397feb64694bc",
+    "inspect_sdk.py": "c472a38fce359f565c04652311c36dd13c987cddef54fde474d8b27abeb9437d"
+  },
+  "corrected_source_sha256": {
+    "verify_android.py": "2d147363d310cdaa5394af29377f0a4981585b2c2f0caf05cbf5357430c4a9d2",
+    "inspect_sdk.py": "e4017421e901809aaee1b46f12f89dc248151f0100136effad0646c996b3da4b"
+  },
+  "regression_source_sha256": "44ba049b5d41ed15c6bf2d77b25b17db988ae22dffe0a061d969540e7c0d5e1e",
+  "packaged_entrypoints_executed": true,
+  "no_python_B_flag": true,
+  "python_E_ignores_environment_cache_settings": true,
+  "original_sdk_mutates": true,
+  "corrected_sdk_unchanged": true,
+  "strict_unexpected_cache_and_corrupt_payload_rejection_retained": true
+}
