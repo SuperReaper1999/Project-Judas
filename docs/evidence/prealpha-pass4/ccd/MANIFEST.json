@@ -1,0 +1,537 @@
+{
+  "schema": 1,
+  "kind": "unshipped CCD research, no engine policy change",
+  "accepted_baseline": "7da56c2cc6ce7acda827a6e4019d610622b237e2",
+  "files": [
+    {
+      "path": ".gitattributes",
+      "sha256": "e918a5307bcceb10c074804a5a2e68f1bbfcf9c2ca9137c324f5ae8a9b22b739",
+      "bytes": 102
+    },
+    {
+      "path": "BASELINE_FROZEN.json",
+      "sha256": "32ba302079aa5ce5f6d40970f74abe31b5e77c5b130af7afa3fc349ae0823f15",
+      "bytes": 2017
+    },
+    {
+      "path": "REPORT.md",
+      "sha256": "6916d1d63d03c9e26bcbec3c0fe9bf40df8c31238f1baa5eafba5e65eb161614",
+      "bytes": 10999
+    },
+    {
+      "path": "baseline-source/CollisionGeometry.cpp",
+      "sha256": "bdac4d47978d218e489f437f424901d0293165904e74acd6041239046b5f627e",
+      "bytes": 30390
+    },
+    {
+      "path": "baseline-source/CollisionGeometry.h",
+      "sha256": "2a02f1cf208fd80dff7fe856a9215427c35c3619d4aabd0c308a2ace9d785ec0",
+      "bytes": 2384
+    },
+    {
+      "path": "baseline-source/CollisionShapes.h",
+      "sha256": "0f7d625998b5cd037412b2b64ef3aa452bfd9eee86086b570f2350e87ac24cf2",
+      "bytes": 2983
+    },
+    {
+      "path": "baseline-source/ContactPreparedGeometry.h",
+      "sha256": "d8b19b2079fafe05a39325a9d093a0d1de5f956ac4c10df1c9810531a36441d9",
+      "bytes": 1061
+    },
+    {
+      "path": "baseline-source/Contacts.h",
+      "sha256": "e13c354c71e02141b3c82c5abfdb8fd1cb24b376bb7116245c67ba73ee21ce5b",
+      "bytes": 7866
+    },
+    {
+      "path": "baseline-source/ImpactMeshCostTests.cpp",
+      "sha256": "91b23a2a4ae45a3a96e01442c8bef583b31cd98a90e02196fb7c534ec5364a6a",
+      "bytes": 16156
+    },
+    {
+      "path": "baseline-source/Narrowphase.h",
+      "sha256": "8e1b9b548209ef5d523a4547cc8a2c7d18c7017a602fab18608563781fd7f9ac",
+      "bytes": 3309
+    },
+    {
+      "path": "baseline-source/PhysicsWorld.cpp",
+      "sha256": "5a08c72d8ae3f6fa1787e1aa42689e0638bc27323684f82b8699d07226988190",
+      "bytes": 266648
+    },
+    {
+      "path": "baseline-source/PhysicsWorld.h",
+      "sha256": "eddadb36acc2cd46693859e844ca981d4b9f684fde68035b08ed37b757f71f03",
+      "bytes": 34212
+    },
+    {
+      "path": "experiments/episode-v1/FINGERPRINTS.json",
+      "sha256": "e5ef77e0f0de13b8bde4601e5e1df960b7450879fdd1f181365f0a239bf121f9",
+      "bytes": 986
+    },
+    {
+      "path": "experiments/episode-v1/RESULTS.json",
+      "sha256": "607032476cdb3b98a98941550d41fa78b8be8ed18ce68f650843dfa158a92c52",
+      "bytes": 2888
+    },
+    {
+      "path": "experiments/episode-v1/continuation.log",
+      "sha256": "be13e0e7992380ba04e06a55209db9bf1fbb8758956e71b0f75daa9ef1c3b04f",
+      "bytes": 1363
+    },
+    {
+      "path": "experiments/episode-v1/entry.log",
+      "sha256": "7078fa61c8563dedf662038559ee4e3810a78f09b1f5271d5a5054b90ed05d49",
+      "bytes": 1184
+    },
+    {
+      "path": "experiments/episode-v1/prepare.py",
+      "sha256": "ba44ba36e26e765fac9505e0ae164f639e8981f40211c1a1458c0a5d4a4ba7d6",
+      "bytes": 12706
+    },
+    {
+      "path": "experiments/episode-v1/sources/CollisionGeometry.cpp",
+      "sha256": "d145eb8fa19085fb8d90cef1d2ceee13acad76793213f59756003bc554f47d25",
+      "bytes": 32224
+    },
+    {
+      "path": "experiments/episode-v1/sources/CollisionGeometry.h",
+      "sha256": "dd3be755ed01b9f61223bd2ee4dbbbe41f408b849fc0fae72348c5e5e13d03a7",
+      "bytes": 3125
+    },
+    {
+      "path": "experiments/episode-v1/sources/PhysicsWorld.cpp",
+      "sha256": "4b41eef5b21af2c95a741b04654a620d1cb704f10bf05150cd38771cf585e526",
+      "bytes": 271950
+    },
+    {
+      "path": "experiments/episode-v1/uncanonical-failed/RESULTS.json",
+      "sha256": "dd1036ff5e18489745331e857c297481261006d50cd183a04e88fa17d5066d6b",
+      "bytes": 2888
+    },
+    {
+      "path": "experiments/episode-v1/uncanonical-failed/continuation.log",
+      "sha256": "12d41ea18bfeec36860a252eb6ccbb7b49153c742c52279bd0cfd2b3e44b5491",
+      "bytes": 1413
+    },
+    {
+      "path": "experiments/episode-v1/uncanonical-failed/entry.log",
+      "sha256": "61b7ccf0e43620b9ac0132c54fc106f47d85d374e5143517e2d8be9de254e914",
+      "bytes": 1184
+    },
+    {
+      "path": "experiments/episode-v2/FINGERPRINTS.json",
+      "sha256": "716348f4cd286d8aebb40d8e00a93bdd94370675f27ee8c44efc124c95d5706f",
+      "bytes": 986
+    },
+    {
+      "path": "experiments/episode-v2/RESULTS.json",
+      "sha256": "05641acd7d7d8fd8b8601f5931c13aab679e036e48c2175c5dbda959a53308b6",
+      "bytes": 2889
+    },
+    {
+      "path": "experiments/episode-v2/continuation.log",
+      "sha256": "f0864d5723a6a5e43ff3d339405fe4d8e1ea17640b173b93a894f55d462e7b01",
+      "bytes": 1187
+    },
+    {
+      "path": "experiments/episode-v2/entry.log",
+      "sha256": "49e9a229f86df1836361806dab137177d160bd41e55f8c45c55f4819d1d569fc",
+      "bytes": 1184
+    },
+    {
+      "path": "experiments/episode-v2/prepare.py",
+      "sha256": "d4214fcd2ff27d3aaab5b19a6915006e00cc8a595149ce86ad6c9084f82c2d9a",
+      "bytes": 1912
+    },
+    {
+      "path": "experiments/episode-v2/sources/CollisionGeometry.cpp",
+      "sha256": "7bb289cecf0f9d92533478c55e35f9bbd59acab1f8f3748087dc966d8db6ad74",
+      "bytes": 33597
+    },
+    {
+      "path": "experiments/episode-v2/sources/CollisionGeometry.h",
+      "sha256": "dd3be755ed01b9f61223bd2ee4dbbbe41f408b849fc0fae72348c5e5e13d03a7",
+      "bytes": 3125
+    },
+    {
+      "path": "experiments/episode-v2/sources/PhysicsWorld.cpp",
+      "sha256": "4b41eef5b21af2c95a741b04654a620d1cb704f10bf05150cd38771cf585e526",
+      "bytes": 271950
+    },
+    {
+      "path": "experiments/episode-v3/FINGERPRINTS.json",
+      "sha256": "6ddbca9a444f6bc939dd70e16187d8a50873ce6c3c43279fe29f0dc3222d540b",
+      "bytes": 1122
+    },
+    {
+      "path": "experiments/episode-v3/RESULTS.json",
+      "sha256": "3173a2e6ae2929de5ccb1d0ab69c76c1ea14e282f2241ad396175e1da5518364",
+      "bytes": 2888
+    },
+    {
+      "path": "experiments/episode-v3/continuation.log",
+      "sha256": "92f37ca81df99c4db0ceabe5ed81b70d601d70bfe9e7811165069ae634682943",
+      "bytes": 1187
+    },
+    {
+      "path": "experiments/episode-v3/entry.log",
+      "sha256": "10308cd8c4dcad084097bae1f521098edf37bbb8381e06c988ea989354d1a0a9",
+      "bytes": 1184
+    },
+    {
+      "path": "experiments/episode-v3/ragdoll60.log",
+      "sha256": "0a2599ff2a49c1ecdb388a8290759f92769ebe96da27c6f89a65755a918311cc",
+      "bytes": 1312
+    },
+    {
+      "path": "experiments/episode-v3/sources/CollisionGeometry.cpp",
+      "sha256": "7bb289cecf0f9d92533478c55e35f9bbd59acab1f8f3748087dc966d8db6ad74",
+      "bytes": 33597
+    },
+    {
+      "path": "experiments/episode-v3/sources/CollisionGeometry.h",
+      "sha256": "dd3be755ed01b9f61223bd2ee4dbbbe41f408b849fc0fae72348c5e5e13d03a7",
+      "bytes": 3125
+    },
+    {
+      "path": "experiments/episode-v3/sources/PhysicsWorld.cpp",
+      "sha256": "e4ec0211443a49e16c2b3fb57a973983c21f328ab300901b581014fd7004a9da",
+      "bytes": 272023
+    },
+    {
+      "path": "experiments/episode-v4/FINGERPRINTS.json",
+      "sha256": "61b2fb8880c074076838b4b6e812431d875e541cedb0144f7d89a63bca37ba2b",
+      "bytes": 986
+    },
+    {
+      "path": "experiments/episode-v4/RESULTS.json",
+      "sha256": "df407ff7a1a34f50c9c21e40db5e41cdff5559bdf6c11408eba6e314c89e4b63",
+      "bytes": 2888
+    },
+    {
+      "path": "experiments/episode-v4/continuation.log",
+      "sha256": "d9b95922c68e16270b9be38b699da44ac0966f8f382e07af6bac22a5149db595",
+      "bytes": 1427
+    },
+    {
+      "path": "experiments/episode-v4/entry.log",
+      "sha256": "4bdfda661abdfb047f15878e5067f1aaa82fb2f542d10490ef2f55d0be91214b",
+      "bytes": 1184
+    },
+    {
+      "path": "experiments/episode-v4/sources/CollisionGeometry.cpp",
+      "sha256": "7bb289cecf0f9d92533478c55e35f9bbd59acab1f8f3748087dc966d8db6ad74",
+      "bytes": 33597
+    },
+    {
+      "path": "experiments/episode-v4/sources/CollisionGeometry.h",
+      "sha256": "dd3be755ed01b9f61223bd2ee4dbbbe41f408b849fc0fae72348c5e5e13d03a7",
+      "bytes": 3125
+    },
+    {
+      "path": "experiments/episode-v4/sources/PhysicsWorld.cpp",
+      "sha256": "028728142ba8fae91abb5295b414dd013fee9aad87ed75581512e2cbaac4aa63",
+      "bytes": 271133
+    },
+    {
+      "path": "experiments/episode-v5/CollisionGeometry.cpp.build.log",
+      "sha256": "af2a9d8211c2063e343146c70d7b2df33d3ceb5e3781eb33384cb8a8ad784d29",
+      "bytes": 1062
+    },
+    {
+      "path": "experiments/episode-v5/FINGERPRINTS.json",
+      "sha256": "3743b27007f298a478a81e66b17d0852777646602f84d8adefdaf70b4f372b56",
+      "bytes": 1129
+    },
+    {
+      "path": "experiments/episode-v5/RAGDOLL_RESULT.json",
+      "sha256": "19360eb331d16b7287e346eb75c8a86720d09882074ac6646049ae42167dc670",
+      "bytes": 140
+    },
+    {
+      "path": "experiments/episode-v5/RESULTS.json",
+      "sha256": "5c375464bb2d71ca266f476fd907f86bb0a63a8ff8eaf7e1853872e171fe1e7d",
+      "bytes": 2887
+    },
+    {
+      "path": "experiments/episode-v5/continuation.log",
+      "sha256": "1d5580bb05cc088da09909192b17256dd5eb7de5c86aaa436c9f1a8dbe289ac5",
+      "bytes": 1187
+    },
+    {
+      "path": "experiments/episode-v5/entry.log",
+      "sha256": "e6d9f6018f8e2fdcfdaf038750989f3a65767c5ed346a6e8c5e0daae642ba910",
+      "bytes": 1184
+    },
+    {
+      "path": "experiments/episode-v5/prepare.py",
+      "sha256": "cfa9325eb0a0dbc8e206890fef8bade76d102985b0d468ca9f4936e6a11c87b4",
+      "bytes": 4570
+    },
+    {
+      "path": "experiments/episode-v5/ragdoll60.log",
+      "sha256": "5b3710976c9d673860f4ff27d67da08a64d8cd5c794358b8efb474d316056836",
+      "bytes": 1305
+    },
+    {
+      "path": "experiments/episode-v5/sources/CollisionGeometry.cpp",
+      "sha256": "7a533b861f95cb8e911fa7643eb0f7e85b235b85a88a0db0ee501de8ccc54d0b",
+      "bytes": 35675
+    },
+    {
+      "path": "experiments/episode-v5/sources/CollisionGeometry.h",
+      "sha256": "acd7a39989b8d4779c6207af17bfa815709235c78ccd665962d83c6afde613e3",
+      "bytes": 3484
+    },
+    {
+      "path": "experiments/episode-v5/sources/PhysicsWorld.cpp",
+      "sha256": "78561e42744e0ae9073517eb9dbd9658d4ae30b9f9e26311f24539a48b2094b8",
+      "bytes": 272059
+    },
+    {
+      "path": "experiments/episode-v6/FINGERPRINTS.json",
+      "sha256": "e0702b18494c2b0bcb81624f5b8c5ac34cf5c513bd0b6b7ed71ae99b42a37797",
+      "bytes": 1133
+    },
+    {
+      "path": "experiments/episode-v6/RAGDOLL_RESULT.json",
+      "sha256": "c2c25167a0914daf282dc145aae1c799672fd13ebe39604ba17304aa87b50cc8",
+      "bytes": 140
+    },
+    {
+      "path": "experiments/episode-v6/RESULTS.json",
+      "sha256": "bd3f0c703e800d6fd9e9a83253e7d933c52058b642c21dc049de78ad8b6a5ab9",
+      "bytes": 2889
+    },
+    {
+      "path": "experiments/episode-v6/continuation.log",
+      "sha256": "e51fac05f4667f6747f193d9449a495ce3ebf3af7ce89aed6ae0bae2a8c34d7f",
+      "bytes": 1187
+    },
+    {
+      "path": "experiments/episode-v6/entry.log",
+      "sha256": "cd342374b0ba0c227d08a051482519e0a64a1e855c7afd710c08d7bb609765b1",
+      "bytes": 1184
+    },
+    {
+      "path": "experiments/episode-v6/geometry-equivalence.log",
+      "sha256": "577641edbf6c52ac3c38b560310fb37e75eb1b1ac346bc3eafe3c67bcad7999c",
+      "bytes": 82
+    },
+    {
+      "path": "experiments/episode-v6/prepare.py",
+      "sha256": "f2bb15a188f9a2b98b073a94366d2340601b9e20b7293f8e85381a3a4c22767f",
+      "bytes": 4101
+    },
+    {
+      "path": "experiments/episode-v6/ragdoll60.log",
+      "sha256": "ce2deca781bf21fdac68196ee2f90de25d34b17ecae6d099e90d6119c95df1a6",
+      "bytes": 1293
+    },
+    {
+      "path": "experiments/episode-v6/sources/CollisionGeometry.cpp",
+      "sha256": "7a533b861f95cb8e911fa7643eb0f7e85b235b85a88a0db0ee501de8ccc54d0b",
+      "bytes": 35675
+    },
+    {
+      "path": "experiments/episode-v6/sources/CollisionGeometry.h",
+      "sha256": "acd7a39989b8d4779c6207af17bfa815709235c78ccd665962d83c6afde613e3",
+      "bytes": 3484
+    },
+    {
+      "path": "experiments/episode-v6/sources/PhysicsWorld.cpp",
+      "sha256": "3c419d998fd1044338cc4e4f2428af323e94a0db6a49bbd2e6ee46f59e166758",
+      "bytes": 274664
+    },
+    {
+      "path": "experiments/episode-v6-front-fast/CollisionGeometry.cpp.build.log",
+      "sha256": "005502fdd092432b3d79be9d0802e683790f3c1f14924771bf49e3db6ca363e4",
+      "bytes": 1095
+    },
+    {
+      "path": "experiments/episode-v6-front-fast/EpisodeWorldLifecycle.build.log",
+      "sha256": "d7173663e6044d0f85a928dc15330242e99dd22bf286c3b4e24e6e0dc37a4517",
+      "bytes": 621
+    },
+    {
+      "path": "experiments/episode-v6-front-fast/FINGERPRINTS.json",
+      "sha256": "3a22d9845aca9ddfa3881196a954da8d908f93cc4507e4b206942df6432d3715",
+      "bytes": 1421
+    },
+    {
+      "path": "experiments/episode-v6-front-fast/RESULTS.json",
+      "sha256": "5b0c37d8e6ddcb186f14d685033844e1d1483666b5dc3c8ff14b379b25ba51d2",
+      "bytes": 2944
+    },
+    {
+      "path": "experiments/episode-v6-front-fast/continuation.log",
+      "sha256": "f3535785b60afc00a97c69b91261199bd2e6e61211ea776f0d692a74b5642974",
+      "bytes": 1187
+    },
+    {
+      "path": "experiments/episode-v6-front-fast/entry.log",
+      "sha256": "cd757faba4f20a41eb0860dca042369307aa6ab51f26251576038aa97aab5769",
+      "bytes": 1184
+    },
+    {
+      "path": "experiments/episode-v6-front-fast/geometry-equivalence.log",
+      "sha256": "577641edbf6c52ac3c38b560310fb37e75eb1b1ac346bc3eafe3c67bcad7999c",
+      "bytes": 82
+    },
+    {
+      "path": "experiments/episode-v6-front-fast/lifecycle.log",
+      "sha256": "8e4c57e8cfab93f9d6af5caee3b74234fdb21649a96c41ef8be1e3e2b76b81de",
+      "bytes": 21
+    },
+    {
+      "path": "experiments/episode-v6-front-fast/minimal16.log",
+      "sha256": "c5aa8c542cda4b759ce63291f5cabde8cd1665cbcc2373e6f40a76e0777209de",
+      "bytes": 1357
+    },
+    {
+      "path": "experiments/episode-v6-front-fast/sources/CollisionGeometry.cpp",
+      "sha256": "b168d85d9be04ace53c473d045ec0914e80d56f480e62e7fac1e9f386d1af71d",
+      "bytes": 35945
+    },
+    {
+      "path": "experiments/episode-v6-front-fast/sources/CollisionGeometry.h",
+      "sha256": "acd7a39989b8d4779c6207af17bfa815709235c78ccd665962d83c6afde613e3",
+      "bytes": 3484
+    },
+    {
+      "path": "experiments/episode-v6-front-fast/sources/PhysicsWorld.cpp",
+      "sha256": "3c419d998fd1044338cc4e4f2428af323e94a0db6a49bbd2e6ee46f59e166758",
+      "bytes": 274664
+    },
+    {
+      "path": "experiments/episode-v6-no-history/EpisodeWorldLifecycle.build.log",
+      "sha256": "d7173663e6044d0f85a928dc15330242e99dd22bf286c3b4e24e6e0dc37a4517",
+      "bytes": 621
+    },
+    {
+      "path": "experiments/episode-v6-no-history/FINGERPRINTS.json",
+      "sha256": "09ebec3ace76660c44e507eebf2440058175bb8453ab171b40ab3562944d9280",
+      "bytes": 1156
+    },
+    {
+      "path": "experiments/episode-v6-no-history/RESULTS.json",
+      "sha256": "ebde88e42ec5560d119b2256595f1e1a95db8976fcf87c97605a1c7760b095b2",
+      "bytes": 2943
+    },
+    {
+      "path": "experiments/episode-v6-no-history/continuation.log",
+      "sha256": "fb9b3c3d4a48f74fb872cbea49f2691a17ab03e67fdc11a565a229b8e310347c",
+      "bytes": 1309
+    },
+    {
+      "path": "experiments/episode-v6-no-history/entry.log",
+      "sha256": "74e2ed63d9fc92406ac5a8822a874ea65b17a27b3236493d9d04b03af879da0d",
+      "bytes": 1184
+    },
+    {
+      "path": "experiments/episode-v6-no-history/lifecycle.log",
+      "sha256": "8e4c57e8cfab93f9d6af5caee3b74234fdb21649a96c41ef8be1e3e2b76b81de",
+      "bytes": 21
+    },
+    {
+      "path": "experiments/episode-v6-no-history/sources/CollisionGeometry.cpp",
+      "sha256": "b168d85d9be04ace53c473d045ec0914e80d56f480e62e7fac1e9f386d1af71d",
+      "bytes": 35945
+    },
+    {
+      "path": "experiments/episode-v6-no-history/sources/CollisionGeometry.h",
+      "sha256": "acd7a39989b8d4779c6207af17bfa815709235c78ccd665962d83c6afde613e3",
+      "bytes": 3484
+    },
+    {
+      "path": "experiments/episode-v6-no-history/sources/PhysicsWorld.cpp",
+      "sha256": "a5bd6391bf615ce75c1ad01e5bfeb4e3c6ed6852a5c66802251f9707eee73edc",
+      "bytes": 272174
+    },
+    {
+      "path": "probes/EpisodeGeometryProbe.cpp",
+      "sha256": "fd19cf1f923674eeabb53883895b91803035e6f45f2350a0939f280c900e88f5",
+      "bytes": 2971
+    },
+    {
+      "path": "probes/EpisodePolicyEquivalence.cpp",
+      "sha256": "470ea93101b3ca78ee5740f653861e7e63dd0e65c5e3b861803f30889c49c4e0",
+      "bytes": 1958
+    },
+    {
+      "path": "probes/EpisodeTrace.cpp",
+      "sha256": "057493ef7d329cee1b66629eda9161e04cb1903becfd1b8a10992ba39e657ec1",
+      "bytes": 1104
+    },
+    {
+      "path": "probes/EpisodeWorldLifecycle.cpp",
+      "sha256": "4ef0411527193c01a8f55fd5f7f543201f78b5dfaa0b5b6313e9e09f863d41a8",
+      "bytes": 2312
+    },
+    {
+      "path": "probes/MinimalContinuationRepro.cpp",
+      "sha256": "806dfeca5b68dc0ef6f3ff0fce51d995915be885c5407ec45bf517c2640e8fe8",
+      "bytes": 2581
+    },
+    {
+      "path": "probes/build_probe.py",
+      "sha256": "5950ff7f66a86096b3d4780101f1fced0c9c05c08b16a20e18288b28687b60b4",
+      "bytes": 1265
+    },
+    {
+      "path": "probes/build_variant.py",
+      "sha256": "72aa143e20923eca0a9ab6b05d8b63e981dcc4c8698d9185f56f1c6a8dfa882a",
+      "bytes": 2258
+    },
+    {
+      "path": "probes/compare_strict.py",
+      "sha256": "5616827765a14026d81fec760b82ae4c9d4768e5061508bc5e01c2a714277079",
+      "bytes": 1329
+    },
+    {
+      "path": "probes/compile_geometry_variant.py",
+      "sha256": "609ae1e357ac032ae0e6a91fdd469251dee0d1ae518104f7a58b98e767371cf7",
+      "bytes": 613
+    },
+    {
+      "path": "probes/package_evidence.py",
+      "sha256": "4724926514ace8e1564580c9377743f0dfb3312cbd0adfd8e4df23a2687b6113",
+      "bytes": 2450
+    },
+    {
+      "path": "review/ABI_HEADERS.json",
+      "sha256": "b551d7db8ad8829c7dccd1eb0cc93340328b7df47d7ac63ecb50708bc95588ff",
+      "bytes": 1192
+    },
+    {
+      "path": "review/BASELINE_MESH_ADVANCE_SYMBOLS.txt",
+      "sha256": "c465aaeb18f9b2dbf7e0b2218508275af505a9f18d7f87cde55e32c72957212b",
+      "bytes": 756
+    },
+    {
+      "path": "review/CANDIDATE_MESH_ADVANCE_SYMBOLS.txt",
+      "sha256": "2cffa127e1a6dbb63a0190ba75c3f06ef2ab28db176c11b2ca718275be90daed",
+      "bytes": 560
+    },
+    {
+      "path": "strict-v6-front-fast/COMPARISON.json",
+      "sha256": "54406b5d0840c6c63913f10f89b0fae8c6da9897c64b4f117d28aa3dd2cbe7f3",
+      "bytes": 6185
+    },
+    {
+      "path": "strict-v6-front-fast/RESULTS.json",
+      "sha256": "263ba4d8d57739d68a4ea342fd1a8508baad66fdbbb1496ec620b9133334fe5b",
+      "bytes": 874
+    },
+    {
+      "path": "strict-v6-front-fast/baseline.log",
+      "sha256": "c0e9e9af1f72fc4efae4ff0d9121fae71332968c480f22ad3f5a4a7dbf903424",
+      "bytes": 1535
+    },
+    {
+      "path": "strict-v6-front-fast/candidate.log",
+      "sha256": "3bb2ead2629af2b430df1f1a44f66ac31397875edee64eb95d547db2785372ec",
+      "bytes": 1293
+    }
+  ]
+}

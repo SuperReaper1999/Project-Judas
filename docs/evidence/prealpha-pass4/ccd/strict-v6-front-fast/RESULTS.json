@@ -1,0 +1,28 @@
+{
+  "utc": "2026-10-18T15:57:30.451912+00:00",
+  "vm": "paused by pass4_windows agent, all owned compiles and other measurements held",
+  "runs": [
+    {
+      "label": "baseline",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass4/baseline/bin/judas_impact_mesh_cost_tests",
+        "60",
+        "trough"
+      ],
+      "exit": 1,
+      "wall_seconds": 3.321934728000997,
+      "binary_sha256": "240873f5e9aabb689e6727f876c38b1a78fccbbe18c1f0cb184336874005d9a9"
+    },
+    {
+      "label": "candidate",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass4/ccd/episode-v6-front-fast/mesh",
+        "60",
+        "trough"
+      ],
+      "exit": 0,
+      "wall_seconds": 5.37427771700095,
+      "binary_sha256": "64e7930fb5196b801ffe578347c20cb39be8cec2c8e95d35d5750cb3d2d14822"
+    }
+  ]
+}

@@ -1,0 +1,118 @@
+{
+  "utc": "2026-10-18T16:11:11.998612+00:00",
+  "head": "06318379b5dfc99fe54eaedebbe5e6d964b25de8",
+  "kind": "unchanged existing liquid tests against current combined native Linux engine; no fluid or test edits",
+  "binary_sha256": "cdccb839d1cd2d2cebf790f3b0ca5312bfb0654cf9671881b78c8072321b21b5",
+  "sources": {
+    "tests/OriginEnvironmentTests.cpp": {
+      "sha256": "34250b90ce4988c123aebe5b527ed84d7df1b9910d6c1f17b83376cb5bc7caef",
+      "unchanged_since_accepted_7da": true
+    },
+    "src/LiquidSystem.cpp": {
+      "sha256": "a4359108224511f4becf393c3cbb2f481f20b433a5cc1b5d1257c5cad0204f9b",
+      "unchanged_since_accepted_7da": true
+    },
+    "src/LiquidSystem.h": {
+      "sha256": "1476c94beaaedb1e1b1ad6d9bc60b783c209f71c8eda2fc79a882f17fd1aa98e",
+      "unchanged_since_accepted_7da": true
+    },
+    "src/LiquidSurface.cpp": {
+      "sha256": "8d46203484875a90f1583e35bde5603cf1f47b15a73d629205451c007f61b625",
+      "unchanged_since_accepted_7da": true
+    },
+    "src/LiquidSurface.h": {
+      "sha256": "393582e6349650556376b7e52ebd8443c59518280cedbaf56c2174821cdeba76",
+      "unchanged_since_accepted_7da": true
+    },
+    "src/LiquidGeometry.cpp": {
+      "sha256": "fe397f65fd80b167da479be350f8bbae48f8d0d6037a996571606d6bd7e2f7b6",
+      "unchanged_since_accepted_7da": true
+    },
+    "src/LiquidGeometry.h": {
+      "sha256": "9f889a91e79adf93d35b7946024e1159675593adf5519dbf9ff5cb5094d8cee5",
+      "unchanged_since_accepted_7da": true
+    },
+    "src/WorldOrigin.cpp": {
+      "sha256": "28e853c52027cb02d631987df0ea3480061ffba9c784d2720f2f213917f6fd32",
+      "unchanged_since_accepted_7da": true
+    },
+    "src/ScriptSystem.cpp": {
+      "sha256": "6f37cc76f1a1f46f6cdf36e465c8ed5d45ef8ff386ee00594f2d7a090f298c76",
+      "unchanged_since_accepted_7da": true
+    }
+  },
+  "runs": [
+    {
+      "label": "knots-original",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_origin_environment_tests",
+        "--bake-regression",
+        "knots",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass4/liquid-query/knots-original-runtime"
+      ],
+      "exit": 1,
+      "wall_seconds": 0.03179555899987463
+    },
+    {
+      "label": "knots-query-controls",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_origin_environment_tests",
+        "--query-controls",
+        "knots",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass4/liquid-query/knots-query-controls-runtime"
+      ],
+      "exit": 0,
+      "wall_seconds": 0.03197402500154567
+    },
+    {
+      "label": "normalization",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_origin_environment_tests",
+        "--bake-regression",
+        "normalization",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass4/liquid-query/normalization-runtime"
+      ],
+      "exit": 0,
+      "wall_seconds": 0.06413714600057574
+    }
+  ],
+  "build_identity_exit": 0,
+  "build_identity": {
+    "architecture": "x86_64",
+    "build_id": "0.1.0-prealpha-Experimental-0631837-dirty-edcaec2f8785-u84f47c24fcd0",
+    "channel": "Experimental",
+    "compiler": "GNU",
+    "compiler_version": "15.2.0",
+    "configuration": "Release",
+    "maturity": "pre-alpha",
+    "platform": "Linux",
+    "schema": 1,
+    "source_dirty": true,
+    "source_fingerprint": "edcaec2f878516841e95e9b01b97de6579983d32c52e4a1bfc75c0d36bc3449f",
+    "source_origin": "git",
+    "source_revision": "06318379b5dfc99fe54eaedebbe5e6d964b25de8",
+    "source_tree": "3df3e526e6d36bb1d8da38b4c3ed1e2dffde94f1",
+    "source_untracked_count": 16,
+    "source_untracked_fingerprint": "84f47c24fcd098f88732ceab246b2e0e19eca31f56acdd72f89f8bfa1621daf2",
+    "version": "0.1.0-prealpha"
+  },
+  "engine_archive_sha256": "6e77a9f799ade7f6ce3ad741687689b8cae6d5efa6fd82e472923749ee21b441",
+  "physics_modules": {
+    "src/physics/.clang-format": "19a3dd254b17b378c5ca82727aec3b295ca76014cb4f5a7f5b2f0ae8ce4719b7",
+    "src/physics/WorldBodies.cpp": "c4b81019fea68793ecc4d09b50a2fa1dfdbfd2bcd339126bcfc9c8f55b00e771",
+    "src/physics/WorldBounds.cpp": "67c30882a5251028627934f9269f6e21a723d2c51fe811c9b34eddfe1f153f62",
+    "src/physics/WorldCCDSearch.cpp": "df469cbc6d6354b3c0e049659a7aab2542c8d5da8a1bcc429938122689fc0bd8",
+    "src/physics/WorldContacts.cpp": "d8f842da964ed78c07adc002a33c3e862f79a19a943035c3bc46af568a88d521",
+    "src/physics/WorldHotAccessors.h": "600bec28d7b5d07b5a922136699ffa69c36c759484c7b8449f045c2df6ea4b1f",
+    "src/physics/WorldImpactEvents.cpp": "65dda9f4732e78d02a8461e9e92f8b6490d14bebcb51473f0d573d73d9217b38",
+    "src/physics/WorldImpactQueries.h": "9ba01fb837b1a1dcfbf0e3d4b60b8ab63873d92b18321ea2186ed1254f9d25f8",
+    "src/physics/WorldInternal.h": "a5beacba3b90719bfe4e37e7b53af0f9225c4329d674e0b5eacc98614450fb0f",
+    "src/physics/WorldJoints.cpp": "a292a20eb4dde14484b262cd436997ce2041f6fb459aec5d8ab2dbda516813d5",
+    "src/physics/WorldModules.md": "6812e4438843ec7492a6fa2d950c210ebb30ac0486eb26bdc16887a3f3c9d1b5",
+    "src/physics/WorldParticles.cpp": "e8a3b5beeac67efbf18d361aa441351b5689f9f625009a7c4efb3d30bbc21555",
+    "src/physics/WorldPersistence.cpp": "917e63c0d14f0d3489d1abe037a4dacaa7feb668b34baccea6b1aed712bc9fbc",
+    "src/physics/WorldProfiling.h": "ed900584346e02a601ebf4718b12c1041e3089921cc915c801d8503d64e78876",
+    "src/physics/WorldQueries.cpp": "65abf29fc83f26e501127c2c239349607b27db37a6ba36f814fbdd0fe3c56e14",
+    "src/physics/WorldSleep.cpp": "2edda5d49060ab3d06b3d81306aa95d5b75a1f184136fa061f57d0e453754389"
+  }
+}

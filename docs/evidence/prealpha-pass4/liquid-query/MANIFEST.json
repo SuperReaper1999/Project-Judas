@@ -1,0 +1,41 @@
+{
+  "schema": 1,
+  "kind": "unchanged failed contract and independent positive controls, no fluid correction",
+  "files": [
+    {
+      "path": ".gitattributes",
+      "sha256": "155348a89d5e749f50d336f8f164a39bf8415179177b36e8b51766f3ab9a16d3",
+      "bytes": 26
+    },
+    {
+      "path": "REPORT.md",
+      "sha256": "65deb199415f697a182074ed1d47aff6d5af5103ba4bdd99271af68551aa606e",
+      "bytes": 7072
+    },
+    {
+      "path": "RESULTS.json",
+      "sha256": "60117a90e70145f74e6f0dbf794bd3be2d80cbaa12a0bf90927784d74a76ccdd",
+      "bytes": 5600
+    },
+    {
+      "path": "knots-original.log",
+      "sha256": "8dbade024d9a735dfbc22bb7e8441b839cf8999d3159aa6f8864bb566a6b1c88",
+      "bytes": 1380
+    },
+    {
+      "path": "knots-query-controls.log",
+      "sha256": "332ee5d5c184aacd1871671fb72f597a2f0080302c1600bc1824641a5dea1855",
+      "bytes": 1725
+    },
+    {
+      "path": "normalization.log",
+      "sha256": "6f0dfc639c59f7d2000c849298a5414a7a957fbfd26545c94db5bdc9fc5d5127",
+      "bytes": 2705
+    },
+    {
+      "path": "origin-target-build.log",
+      "sha256": "d2b180b6f89226bf86eaefb65521ff45d420879652d4d852b72177490523d34e",
+      "bytes": 649
+    }
+  ]
+}

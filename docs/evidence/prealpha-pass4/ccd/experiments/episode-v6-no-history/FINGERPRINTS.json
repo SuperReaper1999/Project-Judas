@@ -1,0 +1,33 @@
+{
+  "kind": "post-run inventory of unchanged compiled source and outputs; objects/libraries/binaries are excluded from tracked evidence",
+  "files": {
+    "sources/CollisionGeometry.cpp": {
+      "sha256": "b168d85d9be04ace53c473d045ec0914e80d56f480e62e7fac1e9f386d1af71d",
+      "size": 35945
+    },
+    "sources/CollisionGeometry.h": {
+      "sha256": "acd7a39989b8d4779c6207af17bfa815709235c78ccd665962d83c6afde613e3",
+      "size": 3484
+    },
+    "sources/PhysicsWorld.cpp": {
+      "sha256": "a5bd6391bf615ce75c1ad01e5bfeb4e3c6ed6852a5c66802251f9707eee73edc",
+      "size": 272174
+    },
+    "CollisionGeometry.cpp.o": {
+      "sha256": "9b859d4343b9f5f4821f71c4a21c29b3b2e66bb8ae4fbf6336a7d8eb6da06f11",
+      "size": 241680
+    },
+    "EpisodeWorldLifecycle.o": {
+      "sha256": "fa2ccec258ab8b5efeb48aee4dea827b3465f461ff98707bb8fc99d793b78d23",
+      "size": 109144
+    },
+    "PhysicsWorld.cpp.o": {
+      "sha256": "65471bf5dfb4246f3d01f357f73915f1e32e2a8d2596c1a2f2d186da6550cd50",
+      "size": 819704
+    },
+    "mesh": {
+      "sha256": "8a593f9b8f83533988c5009037af3bab07cb937d81f8fddc20709c80f388923d",
+      "size": 1595208
+    }
+  }
+}

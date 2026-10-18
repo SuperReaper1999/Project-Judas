@@ -1,0 +1,33 @@
+{
+  "kind": "post-run source/object/binary inventory; original build commands are retained in scripts and logs",
+  "files": {
+    "sources/CollisionGeometry.cpp": {
+      "sha256": "7bb289cecf0f9d92533478c55e35f9bbd59acab1f8f3748087dc966d8db6ad74",
+      "size": 33597
+    },
+    "sources/CollisionGeometry.h": {
+      "sha256": "dd3be755ed01b9f61223bd2ee4dbbbe41f408b849fc0fae72348c5e5e13d03a7",
+      "size": 3125
+    },
+    "sources/PhysicsWorld.cpp": {
+      "sha256": "e4ec0211443a49e16c2b3fb57a973983c21f328ab300901b581014fd7004a9da",
+      "size": 272023
+    },
+    "CollisionGeometry.cpp.o": {
+      "sha256": "1929c2bf268c87cb5a95d0d1dc8875c3579f9355fe836451269efae70da81d58",
+      "size": 208648
+    },
+    "EpisodeTrace.o": {
+      "sha256": "ba6c421fb5beeb64bb1fb9a7739ef593ce16440d4aa42f4470943d7ffd736655",
+      "size": 108440
+    },
+    "PhysicsWorld.cpp.o": {
+      "sha256": "1dff588d21061d8768bb87735ae564482e7ab3ddf9a899b61bb0a1876389db5a",
+      "size": 826992
+    },
+    "mesh": {
+      "sha256": "45269c3ca1451b91934e52ec7769547f6f9e7e4e71df6e79864486b6b7c1ce3e",
+      "size": 1569760
+    }
+  }
+}

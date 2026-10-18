@@ -1,0 +1,4 @@
+/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass4/ccd/EpisodeWorldLifecycle.cpp: In function ‘int main()’:
+/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass4/ccd/EpisodeWorldLifecycle.cpp:4:76: warning: variable ‘floor’ set but not used [-Wunused-but-set-variable]
+    4 | int main(){const auto ground=Sheet(2,2,false);PhysicsWorld w;w.Init();auto floor=w.CreateShape(Shape::Cooked(ground,"episode lifecycle"),{},false,1,.6f,0);auto body=w.CreateDynamicBox({0,.01,0},{.02,.01,.03},.2f,.4f,0);
+      |                                                                            ^~~~~

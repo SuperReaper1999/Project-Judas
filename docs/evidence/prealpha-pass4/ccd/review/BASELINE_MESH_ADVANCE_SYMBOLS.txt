@@ -1,0 +1,3 @@
+.cache/prealpha-pass4/ccd/accepted-engine.a:CollisionGeometry.cpp.o:000000000000b7c0 T MeshSeparationAdvance(PrimitivePose const&, PrimitivePose const&, glm::vec<3, double, (glm::qualifier)0>, glm::vec<3, double, (glm::qualifier)0>, double, double)
+.cache/prealpha-pass4/ccd/accepted-engine.a:CollisionGeometry.cpp.o:0000000000000381 t MeshSeparationAdvance(PrimitivePose const&, PrimitivePose const&, glm::vec<3, double, (glm::qualifier)0>, glm::vec<3, double, (glm::qualifier)0>, double, double) [clone .cold]
+.cache/prealpha-pass4/ccd/accepted-engine.a:PhysicsWorld.cpp.o:                 U MeshSeparationAdvance(PrimitivePose const&, PrimitivePose const&, glm::vec<3, double, (glm::qualifier)0>, glm::vec<3, double, (glm::qualifier)0>, double, double)

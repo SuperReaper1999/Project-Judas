@@ -1,0 +1,83 @@
+#pragma once
+
+#include <vector>
+#include <utility>
+#include <memory>
+
+#include <glm/glm.hpp>
+#include <glm/gtc/quaternion.hpp>
+#include <string>
+
+// Immutable asset geometry is shared; instance pose and motion belong to PhysicsWorld.
+class RadialTerrain;
+struct CollisionAsset;
+
+enum class ShapeType { Sphere, Box, Capsule, CompoundBoxes, Terrain, ConvexHull, TriangleMesh };
+
+// A box fixed in a rigid body's own frame. Several of these can make one
+// non-convex solid (for example, an open container) while retaining one
+// ordinary mass, velocity, and orientation. The caller places the boxes
+// relative to the body's centre of mass.
+struct CompoundBox {
+    CompoundBox()=default;
+    CompoundBox(glm::vec3 center,glm::vec3 half):localCenter(center),halfExtents(half){}
+    glm::vec3 localCenter{0.0f};
+    glm::vec3 halfExtents{0.0f};
+    glm::quat rotation{1,0,0,0};
+    ShapeType type=ShapeType::Box;
+    float radius=0;
+    std::shared_ptr<const CollisionAsset> asset;
+    std::string assetId;
+    uint32_t key=0;
+};
+
+struct Shape {
+    ShapeType type = ShapeType::Sphere;
+    float radius = 0.0f;          // Sphere, Capsule (radius of the rounded part)
+    float halfHeight = 0.0f;      // Capsule only: half-height of the cylindrical
+                                   // segment along LOCAL +Y (total capsule height
+                                   // is 2*(halfHeight+radius)) -- matches the
+                                   // existing player-capsule convention.
+    glm::vec3 halfExtents{0.0f};  // Box only
+    std::vector<CompoundBox> boxes;  // CompoundBoxes only
+    // Static radial terrain is geometry in the body's own frame. Shared
+    // immutable ownership lets the same surface serve rendering, rigid
+    // contacts, player queries, and fluid contacts without copied state.
+    std::shared_ptr<const RadialTerrain> terrain;
+    std::shared_ptr<const CollisionAsset> asset;
+    std::string assetId;
+    glm::vec3 pivotOffset{0}; // authored pivot -> COM, only new generic dynamic shapes
+    static Shape Cooked(std::shared_ptr<const CollisionAsset> asset, std::string id);
+
+    static Shape Sphere(float r) {
+        Shape s;
+        s.type = ShapeType::Sphere;
+        s.radius = r;
+        return s;
+    }
+    static Shape Box(const glm::vec3& halfExtents) {
+        Shape s;
+        s.type = ShapeType::Box;
+        s.halfExtents = halfExtents;
+        return s;
+    }
+    static Shape Capsule(float radius, float halfHeight) {
+        Shape s;
+        s.type = ShapeType::Capsule;
+        s.radius = radius;
+        s.halfHeight = halfHeight;
+        return s;
+    }
+    static Shape Compound(std::vector<CompoundBox> children) {
+        Shape s;
+        s.type = ShapeType::CompoundBoxes;
+        s.boxes = std::move(children);
+        return s;
+    }
+    static Shape Terrain(std::shared_ptr<const RadialTerrain> surface) {
+        Shape s;
+        s.type = ShapeType::Terrain;
+        s.terrain = std::move(surface);
+        return s;
+    }
+};

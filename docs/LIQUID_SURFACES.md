@@ -167,10 +167,23 @@ origin shift: world/owner conversion rounding moves a boundary query from cell 9
 to cell 10 while authoritative state remains identical. The original bake defects
 are corrected, but the full `--bake-regression knots` command still fails this
 later sampling check. Do not treat successful baking as complete origin-query
-equivalence. The other original rotation also retains a later bit-exact summed-total
-assertion failure after real flow (`2.5199999999999996` versus `2.52` m³, M54 ledger
-error zero). Both original full commands remain failed; the successful bake-only
-checks do not certify them. Exact evidence is in the [follow-up report](evidence/prealpha-liquid-rotation/REPORT.md).
+equivalence. Pass 3 established that the other rotation's later summed-total
+assertion compared a rounded sum against an unrelated literal. Its corrected
+oracle compares the exact pre-request total and every participant's bytes; the
+full normalization command now passes. The original failed test and output
+remain preserved. See the [Pass 3 investigation](evidence/prealpha-pass3/integration/REPORT.md)
+and [Pass 4 sampling analysis](evidence/prealpha-pass4/liquid-query/REPORT.md):
+the original knots command still fails at check 21, while separate query controls
+pass 23 checks and normalization passes 36. No fluid equation, threshold or
+conserved state was changed for those follow-ups.
+
+World-space sampling accepts binary32 positions. An origin translation can round
+a query across a finite-volume cell boundary even when the stored liquid is
+unchanged. Promoting an already-rounded point to binary64 cannot recover its
+original owner-local position. Smoothing only the returned query would disagree
+with the occupied geometry used by mesh caps, loading and transfers; no such
+query-only repair is applied. Exact boundary-point origin invariance remains an
+unresolved sampling contract, separately from the corrected rotated baking.
 
 Presentation samples and mesh use the same previous/current levels and alpha as
 presentation-facing cameras. Finite-volume caps are piecewise constant, with

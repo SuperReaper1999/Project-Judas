@@ -1,0 +1,62 @@
+{
+  "utc": "2026-10-18T15:45:03.116078+00:00",
+  "sources": {},
+  "commands": [
+    [
+      "c++",
+      "-O3",
+      "-DNDEBUG",
+      "/home/conner/Documents/GitHub/Project-Judas/build/CMakeFiles/judas_impact_mesh_cost_tests.dir/tests/ImpactMeshCostTests.cpp.o",
+      "/home/conner/Documents/GitHub/Project-Judas/build/CMakeFiles/judas_impact_mesh_cost_tests.dir/tests/ValidationMain.cpp.o",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass4/ccd/episode-v5/PhysicsWorld.cpp.o",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass4/ccd/episode-v5/CollisionGeometry.cpp.o",
+      "-o",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass4/ccd/episode-v5/mesh",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass4/ccd/accepted-engine.a",
+      "/home/conner/Documents/GitHub/Project-Judas/build/libjudas_profiler.a",
+      "/home/conner/Documents/GitHub/Project-Judas/build/libjudas_build_identity.a",
+      "/home/conner/Documents/GitHub/Project-Judas/build/libjudas_app_icon.a",
+      "/home/conner/Documents/GitHub/Project-Judas/build/libjudas_materials.a",
+      "/home/conner/Documents/GitHub/Project-Judas/build/libjudas_profiler.a",
+      "/usr/lib/x86_64-linux-gnu/libSDL2.so",
+      "/home/conner/Documents/GitHub/Project-Judas/build/libjudas_glad.a",
+      "/home/conner/Documents/GitHub/Project-Judas/build/libjudas_audio_backend.a",
+      "/home/conner/Documents/GitHub/Project-Judas/build/libjudas_meshoptimizer.a",
+      "/home/conner/Documents/GitHub/Project-Judas/build/libjudas_navigation_cook.a",
+      "/home/conner/Documents/GitHub/Project-Judas/build/libjudas_navigation_backend.a",
+      "/home/conner/Documents/GitHub/Project-Judas/build/libjudas_quickjs.a",
+      "-lm",
+      "/home/conner/Documents/GitHub/Project-Judas/build/_deps/judas_freetype-build/libfreetype.a",
+      "/home/conner/Documents/GitHub/Project-Judas/build/_deps/judas_harfbuzz-build/libharfbuzz.a",
+      "/home/conner/Documents/GitHub/Project-Judas/build/unicode/icu/lib/libicui18n.a",
+      "/home/conner/Documents/GitHub/Project-Judas/build/unicode/icu/lib/libicuuc.a",
+      "/home/conner/Documents/GitHub/Project-Judas/build/unicode/icu/lib/libicudata.a",
+      "-ldl",
+      "/home/conner/Documents/GitHub/Project-Judas/build/libjudas_jobs.a"
+    ]
+  ],
+  "results": [
+    {
+      "label": "continuation",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass4/ccd/episode-v5/mesh",
+        "1",
+        "trough"
+      ],
+      "code": 0,
+      "seconds": 3.3223844969998026
+    },
+    {
+      "label": "entry",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass4/ccd/episode-v5/mesh",
+        "1",
+        "trough",
+        "1.2",
+        "entry"
+      ],
+      "code": 0,
+      "seconds": 0.46485215499888
+    }
+  ]
+}
