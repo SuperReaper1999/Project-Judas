@@ -1,0 +1,4 @@
+FRAMES 90
+LOG_EVERY 0
+ACTION watch 1 1 2
+SCREENSHOT 60 /home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass3/final-linux/physics-lab.png

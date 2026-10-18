@@ -1,0 +1,5 @@
+{
+  "checks": 20,
+  "failures": 0,
+  "scope": "headless project/serialization/actual VM/failed and successful reload; no visual/editor/export acceptance"
+}

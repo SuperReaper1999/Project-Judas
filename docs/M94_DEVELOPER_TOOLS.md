@@ -62,6 +62,16 @@ Whole-session Stop/shutdown disables debug stops before destroy callbacks.
 Already-issued game side effects are not rolled back. Existing audio voices may
 continue playing; pausing a debugger is not a game-authored audio-pause policy.
 
+An online session also stops polling transport while its owning script stack is
+suspended. The stopped editor shows a warning: remote peers can hit the normal
+receive-idle timeout. Continue, then use ordinary reconnect if needed. A brief
+source stop can retain the connection, but there is no distributed breakpoint
+pause or heartbeat thread. Ordinary gameplay pause is different: the application
+can keep polling networking without advancing physics or callbacks. The
+[Pass 3 checks](evidence/prealpha-pass3/integration/REPORT.md) exercise actual
+QuickJS stops, real loopback endpoints, timeout and reconnect with an injected
+monotonic clock; this is not a claim of transparent online debugging.
+
 ## Deliberate edit and reload
 
 The source pane can **Edit source**, explicitly **Save source**, discard edits,

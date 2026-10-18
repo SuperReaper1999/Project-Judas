@@ -13,8 +13,10 @@ The [Pass2 finding register](evidence/prealpha-pass2/AUDIT_DISPOSITION.md) recon
 every original priority and finding against its exact preserved assessment text.
 It records the state at that checkpoint; its original pending-review language is
 historical. The [rotated-liquid follow-up](evidence/prealpha-liquid-rotation/REPORT.md)
-records subsequent corrections and remaining failures; that candidate is not yet
-human accepted. For a first visible project with no controller/input setup, follow
+records subsequent corrections and remaining failures; its exact checkpoint
+`f647d7fd95f60d3a37dba70a51f4e45dc41c2922` was subsequently human accepted and
+promoted to main. [Pass 3](evidence/prealpha-pass3/REPORT.md) continues on
+Experimental and has not been human accepted. For a first visible project with no controller/input setup, follow
 [Your first visible Judas project](FIRST_PROJECT.md).
 
 ## Ownership and integration contracts
@@ -91,15 +93,22 @@ distinguishes corrected baking and clipping defects from later integration limit
 - The half-turn case now gets past baking but still exposes a distinct sampling
   failure after a 512 m origin shift. Authoritative liquid state remains identical;
   rounding a world-space query back into owner space moves the sample across a
-  grid boundary from cell 9 to cell 10. This is an unresolved query-frame precision
-  issue. The full `--bake-regression knots` reproduction still returns failure and
+  grid boundary from cell 9 to cell 10. Pass 3 independently reproduces the same
+  discontinuity in unchanged pre-shift state at the two differently quantized
+  points, and confirms an interior-cell control. This remains a query precision /
+  discontinuous finite-volume representation boundary; it has not been smoothed,
+  snapped or hidden. The full `--bake-regression knots` reproduction still returns failure and
   is not certified by the successful bake.
 - The other original rotation proceeds through shifting, cold restoration and
   further physical flow, then fails its original bit-exact summed-total check
   (`2.5199999999999996` versus `2.52` m³). The invalid-origin request is rejected
   atomically with the correct owner diagnostic; the M54 ledger error is zero.
-  The full `--bake-regression normalization` command remains failed pending a
-  separate contract review. No assertion or tolerance has been weakened.
+  Pass 3 preserved that original failed test and established that it compared
+  the total from before a legitimate paired-flow step against the state after a
+  later rejected request. The current atomicity check compares the immediate
+  pre-request total using the same exact equality and additionally compares every
+  serialized physical participant byte. That command now passes without changing
+  liquid code, conservation tolerance or physical state.
 
 Solbert's EXP-007/008/013 research informs geometric validation and numerical
 reasoning. Its experimental solvers were not integrated; the research directory

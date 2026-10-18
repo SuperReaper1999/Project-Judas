@@ -17,11 +17,10 @@
 #include "RuntimeUI.h"
 #include "WorldDebugView.h"
 
-// Milestone 28/30: the editor's Dear ImGui panels. Every panel operates on
-// the EditorDocument's authored Scene through BeginEdit/CommitEdit; none
-// of them touch a RuntimeWorld, PhysicsWorld or Renderer. They know
-// generic engine components (through the ComponentEditors registry) and
-// the project/asset layer, and nothing about any particular game.
+// Dear ImGui authoring panels edit the document through BeginEdit/CommitEdit.
+// Play-mode render previews use the narrow RuntimeWorld setters in RenderPreview
+// and never modify the authored scene. Panels expose generic engine components
+// and project/assets; gameplay policy remains in project scripts.
 
 struct AssetCookPanelTask;
 enum class EditorMode { Edit, Play };

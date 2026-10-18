@@ -15,7 +15,7 @@
     {"name":"liquid-bake-knots-only","target":"judas_origin_environment_tests","groups":["liquid"],"finding":"LIQUID-BAKE-KNOTS","args":["--bake-only","knots","{output}/bake-knots"]},
     {"name":"liquid-reservoir","target":"judas_liquid_tests","groups":["liquid"]},
     {"name":"liquid-surface","target":"judas_liquid_surface_tests","groups":["liquid"]},
-    {"name":"liquid-origin-total-identity","target":"judas_origin_environment_tests","groups":["known-failures"],"finding":"LIQUID-ORIGIN-TOTAL-IDENTITY","args":["--bake-regression","normalization","{output}/bake-orientation"],"manual":true},
+    {"name":"liquid-origin-total-identity","target":"judas_origin_environment_tests","groups":["liquid","lifecycle"],"args":["--bake-regression","normalization","{output}/bake-orientation"],"finding":"LIQUID-ORIGIN-TOTAL-IDENTITY"},
     {"name":"liquid-origin-grid-query","target":"judas_origin_environment_tests","groups":["known-failures"],"manual":true,"finding":"LIQUID-ORIGIN-GRID-QUERY","args":["--bake-regression","knots","{output}/bake-knots"]},
     {"name":"collision-continuity","target":"judas_collision_continuity_tests","groups":["collision"]},
     {"name":"character-motor","target":"judas_character_motor_tests","groups":["core","lifecycle"]},
@@ -35,7 +35,9 @@
     {"name":"network-js","target":"judas_network_script_tests","groups":["network"],"args":["{output}/network-js"]},
     {"name":"resource-handoff","target":"judas_resource_handoff_tests","groups":["application"],"args":["{output}/resource-handoff"]},
     {"name":"first-project","target":"judas_first_project_tests","groups":["onboarding"],"args":["{output}/first-project"]},
-    {"name":"origin-environment","target":"judas_origin_environment_tests","groups":["lifecycle"],"args":["{output}/origin-environment"]}
+    {"name":"origin-environment","target":"judas_origin_environment_tests","groups":["lifecycle"],"args":["{output}/origin-environment"]},
+    {"name":"origin-admission","target":"judas_origin_admission_tests","groups":["core","lifecycle"],"args":[]},
+    {"name":"liquid-origin-query-controls","target":"judas_origin_environment_tests","groups":["liquid"],"args":["--query-controls","knots","{output}/query-controls"]}
   ],
   "known_findings": [
     {"id":"CCD-MESH-ARRIVAL","status":"resolved-first-arrival","scheduled":true,"reason":"Pass2 finite swept-SAT bounds correct the validated first-arrival contract; it now runs in the ordinary collision group. This does not close later curved-sheet continuation.","evidence":"docs/evidence/prealpha-pass2/physics"},
@@ -46,6 +48,6 @@
     {"id":"LIQUID-BAKE-ROTATION","status":"resolved-baking","scheduled":true,"reason":"Baker and runtime use the same normalized owner/field frames and oriented gravity volumes; both original bake-only runtime-publication cases pass unchanged equivalence tolerances. Original full integration exposes separate retained exact-total comparison failure.","evidence":"docs/evidence/prealpha-liquid-rotation/REPORT.md"},
     {"id":"LIQUID-BAKE-KNOTS","status":"resolved-baking","scheduled":true,"reason":"Positive tetrahedral density is integrated into one monotone cumulative curve, including shared endpoints; unchanged strict Surface1 decoder accepts both original rotated bakes. A later origin sampling limitation remains separately failed.","evidence":"docs/evidence/prealpha-liquid-rotation/REPORT.md"},
     {"id":"LIQUID-ORIGIN-GRID-QUERY","status":"open-query-continuity-failing","scheduled":false,"reason":"The original half-turn fixture now bakes and publishes, then fails its unchanged post-512m-origin query comparison: float translation crosses a discontinuous disturbed-surface cell boundary. Conserved quantities and wave bytes remain unchanged. This full integration failure is preserved, not counted as a baking pass.","evidence":"docs/evidence/prealpha-liquid-rotation/REPORT.md"},
-    {"id":"LIQUID-ORIGIN-TOTAL-IDENTITY","status":"open-exact-total-assertion-failing","scheduled":false,"reason":"Original arbitrary-rotation integration now bakes, shifts, cold-restores and continues physical flow. Later out-of-chart request is correctly rejected atomically with owner diagnostic, but the original assertion also requires the summed owner total to be bit-identical across prior physical flow: 2.5199999999999996 versus2.52m3. M54 ledger error remains zero. Fixture is unchanged and failed pending separate contract review.","evidence":"docs/evidence/prealpha-liquid-rotation/REPORT.md"}
+    {"id":"LIQUID-ORIGIN-TOTAL-IDENTITY","status":"resolved-oracle-causal-baseline","scheduled":true,"reason":"Pass3 preserves the original failed test and demonstrates its causal-baseline error. Current atomicity compares the immediate pre-request total with the same exact equality and every physical participant byte; earlier legitimate paired-flow conservation tolerance and liquid runtime are unchanged.","evidence":"docs/evidence/prealpha-pass3/integration/REPORT.md"}
   ]
 }

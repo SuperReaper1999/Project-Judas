@@ -1,0 +1,13 @@
+{
+  "file": "src/WorldOrigin.cpp",
+  "before_sha256": "05c892942cde576143d718b512b6109f5c2291d54e6f04e4a40151b7d10edfbb",
+  "after_sha256": "28e853c52027cb02d631987df0ea3480061ffba9c784d2720f2f213917f6fd32",
+  "tokens_identical": true,
+  "tokens": 2001,
+  "token_sha256": "1c20f46255d1a6889f7429eb6978f2d599262aaaca21dbfde2ae69e8f7e1c8c6",
+  "before_lines": 111,
+  "after_lines": 288,
+  "before_lines_over_140": 16,
+  "after_lines_over_140": 0,
+  "functional_change_owner": "root; OriginLimits admission is already in the preserved before source. This patch is formatting only."
+}

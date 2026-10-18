@@ -1,0 +1,4 @@
+PASS ordinary empty world constructs at accepted origin
+PASS capture actual pre-request participant state
+FAIL unsupported delta is rejected during admission with actionable diagnosis
+FAIL origin admission after 3 checks: unsupported delta is rejected during admission with actionable diagnosis

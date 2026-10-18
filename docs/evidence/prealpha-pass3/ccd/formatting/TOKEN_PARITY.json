@@ -1,0 +1,40 @@
+{
+  "utc": "2026-10-18T14:21:07.307869+00:00",
+  "command": [
+    "/tmp/judas-pass3-format-tool/clang_format/data/bin/clang-format",
+    "--style={BasedOnStyle: LLVM, IndentWidth: 4, ColumnLimit: 100, SortIncludes: Never, BreakBeforeBraces: Attach, BreakStringLiterals: false, AllowShortFunctionsOnASingleLine: Empty, AllowShortIfStatementsOnASingleLine: Never, AllowShortLoopsOnASingleLine: false, ReflowComments: false}",
+    "--lines=993:1157",
+    "--lines=1223:1586",
+    "/home/conner/Documents/GitHub/Project-Judas/src/PhysicsWorld.cpp"
+  ],
+  "ranges": [
+    [
+      993,
+      1157
+    ],
+    [
+      1223,
+      1586
+    ]
+  ],
+  "before_sha256": "680ce5f5c0c53f7427d48927c5ed8bd8b2a324eaef7128839e3f6a4f537503b9",
+  "after_sha256": "5a08c72d8ae3f6fa1787e1aa42689e0638bc27323684f82b8699d07226988190",
+  "entire_file_tokens": 53686,
+  "entire_file_token_sha256": "f5181342a36261de67484e6e13bc3912f727435276ed357196a05117463d4225",
+  "negative_controls": {
+    "changed CCD iteration budget": "detected",
+    "changed response failure path": "detected"
+  },
+  "readability_measurements": {
+    "PhysicsWorld.before-format.cpp": {
+      "lines": 529,
+      "lines_over_120_columns": 24,
+      "maximum_columns": 202
+    },
+    "PhysicsWorld.formatted.cpp": {
+      "lines": 785,
+      "lines_over_120_columns": 0,
+      "maximum_columns": 100
+    }
+  }
+}

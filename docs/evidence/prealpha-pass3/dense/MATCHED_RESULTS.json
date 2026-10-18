@@ -1,0 +1,48 @@
+{
+  "same_step_count": true,
+  "identical_physical_fields_all_steps": true,
+  "different_fields": [],
+  "baseline_dense": {
+    "median": 27.051792499999998,
+    "p95_floor": 379.672448,
+    "maximum": 1938.679356
+  },
+  "candidate_dense": {
+    "median": 25.8190855,
+    "p95_floor": 372.143396,
+    "maximum": 1925.992117
+  },
+  "physical_digest": "192f0f4bed728953",
+  "baseline_quality": {
+    "candidate_pairs": 9327,
+    "contact_points": 2475,
+    "deepest_endpoint_penetration_m": 0.007217108528522143,
+    "observation_ms": 30.685719,
+    "outside_fixed_step_timing": true,
+    "population": 1024,
+    "scope": "endpoint primitive geometry for the authored loose_piece population",
+    "tag_available": true,
+    "uncertain_pairs": 0,
+    "unsupported_candidates": 0
+  },
+  "candidate_quality": {
+    "candidate_pairs": 9327,
+    "contact_points": 2475,
+    "deepest_endpoint_penetration_m": 0.007217108528522143,
+    "observation_ms": 30.071424,
+    "outside_fixed_step_timing": true,
+    "population": 1024,
+    "scope": "endpoint primitive geometry for the authored loose_piece population",
+    "tag_available": true,
+    "uncertain_pairs": 0,
+    "unsupported_candidates": 0
+  },
+  "control_digest_equal": {
+    "free1024": true,
+    "pile256": true,
+    "machines_active256": true,
+    "machines_sleeping256": true
+  },
+  "controls_pass": true,
+  "note": "Singlematchedruns; smalltimingdifferencesdonotestablishgeneralspeedup. Profilercategoriesinclusive."
+}

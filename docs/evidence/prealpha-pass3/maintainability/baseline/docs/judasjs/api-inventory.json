@@ -1,0 +1,5738 @@
+{
+  "checkpoint": "84121564230242a404785af4d60a1475cdb83f4c + M99 optional networking",
+  "authority": "src/ScriptSystem.cpp::library + Impl::Native + ScriptLocalMultiplayer.inl + ScriptNetwork.inl",
+  "resultShapes": [
+    {
+      "binding": "network.stats",
+      "declaration": "NetworkStats",
+      "fields": [
+        "bytesSent",
+        "bytesReceived",
+        "framesSent",
+        "framesReceived",
+        "backpressure",
+        "coalesced",
+        "rejected",
+        "snapshots",
+        "snapshotAge",
+        "entities",
+        "peers"
+      ],
+      "nativeFile": "src/ScriptNetwork.inl",
+      "needles": [
+        "{\"bytesSent\",t.bytesSent}",
+        "{\"bytesReceived\",t.bytesReceived}",
+        "{\"framesSent\",t.framesSent}",
+        "{\"framesReceived\",t.framesReceived}",
+        "{\"backpressure\",t.backpressure}",
+        "{\"coalesced\",t.dropped}",
+        "{\"rejected\",stats.rejected+t.rejected}",
+        "{\"snapshots\",stats.snapshots}",
+        "{\"snapshotAge\",stats.snapshotAge}",
+        "{\"entities\",stats.entities}",
+        "{\"peers\",stats.peers}"
+      ],
+      "reference": "docs/judasjs/network.md"
+    },
+    {
+      "binding": "network.launch",
+      "declaration": "NetworkLaunch",
+      "fields": [
+        "mode",
+        "address",
+        "port",
+        "dedicated"
+      ],
+      "nativeFile": "src/ScriptNetwork.inl",
+      "needles": [
+        "{\"mode\",launch.mode}",
+        "{\"address\",launch.address}",
+        "{\"port\",launch.port}",
+        "{\"dedicated\",launch.dedicated}"
+      ],
+      "reference": "docs/judasjs/network.md"
+    },
+    {
+      "binding": "network.peers",
+      "declaration": "NetworkPeer",
+      "fields": [
+        "id",
+        "name",
+        "connected",
+        "player"
+      ],
+      "nativeFile": "src/ScriptNetwork.inl",
+      "needles": [
+        "{\"id\",p.id}",
+        "{\"name\",p.name}",
+        "{\"connected\",p.connected}",
+        "{\"player\",p.player?std::to_string(p.player):std::string()}"
+      ],
+      "reference": "docs/judasjs/network.md"
+    },
+    {
+      "binding": "saves.status",
+      "declaration": "SaveRequest",
+      "fields": [
+        "id",
+        "operation",
+        "slot",
+        "state",
+        "error",
+        "recovered",
+        "captureMs",
+        "workerMs",
+        "restoreMs",
+        "bytes",
+        "migrated",
+        "migrationMs",
+        "migrationReport"
+      ],
+      "nativeFile": "src/ScriptSystem.cpp",
+      "needles": [
+        "JS_SetPropertyStr(c,o,\"migrated\",JS_NewBool(c,status->migrated))",
+        "{\"migrationMs\",status->migrationMs}",
+        "{\"migrationReport\",&status->migrationReport}"
+      ],
+      "reference": "docs/judasjs/saves.md"
+    },
+    {
+      "binding": "saves.list",
+      "declaration": "SaveSlot",
+      "fields": [
+        "id",
+        "name",
+        "scene",
+        "timestamp",
+        "metadata",
+        "status",
+        "error",
+        "recovered",
+        "modContext",
+        "content",
+        "compatibility",
+        "contentVersion"
+      ],
+      "nativeFile": "src/ScriptSystem.cpp",
+      "needles": [
+        "{\"content\",&slot.content}",
+        "{\"compatibility\",&slot.compatibility}",
+        "JS_SetPropertyStr(c,o,\"contentVersion\",JS_NewUint32(c,slot.contentVersion))"
+      ],
+      "reference": "docs/judasjs/saves.md"
+    },
+    {
+      "binding": "Terrain.state",
+      "declaration": "TerrainStatus",
+      "fields": [
+        "ready",
+        "busy",
+        "navigation",
+        "revision",
+        "samples",
+        "triangles",
+        "bytes",
+        "prepareMs",
+        "publishMs",
+        "error"
+      ],
+      "nativeFile": "src/ScriptSystem.cpp",
+      "needles": [
+        "{\"ready\",state->ready}",
+        "{\"revision\",double(state->revision)}",
+        "JS_SetPropertyStr(c,result,\"error\",JS_NewString(c,state->error.c_str()))"
+      ],
+      "reference": "docs/judasjs/terrain.md"
+    },
+    {
+      "binding": "Animation.advance",
+      "declaration": "AnimationSample",
+      "fields": [
+        "motion",
+        "events",
+        "overflow"
+      ],
+      "nativeFile": "src/ScriptSystem.cpp",
+      "needles": [
+        "JS_SetPropertyStr(c,result,\"motion\",motion)",
+        "JS_SetPropertyStr(c,result,\"events\",events)",
+        "JS_SetPropertyStr(c,result,\"overflow\",JS_NewBool(c,step.overflow))"
+      ],
+      "reference": "docs/judasjs/animation-ragdolls.md"
+    },
+    {
+      "binding": "Animation.clips",
+      "declaration": "ClipInfo",
+      "fields": [
+        "name",
+        "duration",
+        "events"
+      ],
+      "nativeFile": "src/ScriptSystem.cpp",
+      "needles": [
+        "JS_SetPropertyStr(c,value,\"events\",markers)",
+        "JS_SetPropertyStr(c,value,\"duration\",JS_NewFloat64(c,clip.duration))"
+      ],
+      "reference": "docs/judasjs/animation-ragdolls.md"
+    },
+    {
+      "binding": "Entity.light",
+      "declaration": "LightSettings",
+      "fields": [
+        "kind",
+        "color",
+        "enabled",
+        "castsShadow",
+        "intensity",
+        "range",
+        "innerConeDegrees",
+        "outerConeDegrees",
+        "shadowPriority"
+      ],
+      "nativeFile": "src/ScriptSystem.cpp",
+      "needles": [
+        "JS_SetPropertyStr(c,out,\"kind\"",
+        "JS_SetPropertyStr(c,out,\"color\"",
+        "JS_SetPropertyStr(c,out,\"enabled\"",
+        "JS_SetPropertyStr(c,out,\"castsShadow\"",
+        "{\"intensity\",l.intensity}",
+        "{\"range\",l.range}",
+        "{\"innerConeDegrees\",l.innerConeDegrees}",
+        "{\"outerConeDegrees\",l.outerConeDegrees}",
+        "{\"shadowPriority\",l.shadowPriority}"
+      ],
+      "reference": "docs/judasjs/entities.md"
+    },
+    {
+      "binding": "Weather.state",
+      "declaration": "WeatherState",
+      "fields": [
+        "current",
+        "target",
+        "time",
+        "transitionElapsed",
+        "transitionDuration",
+        "tornadoPosition",
+        "lightningSequence",
+        "lightningPosition",
+        "lightningFlash"
+      ],
+      "nativeFile": "src/ScriptSystem.cpp",
+      "needles": [
+        "JS_SetPropertyStr(c,result,\"current\",weatherProfileValue(field->Current()))",
+        "JS_SetPropertyStr(c,result,\"target\",weatherProfileValue(state.to))",
+        "JS_SetPropertyStr(c,result,\"time\",JS_NewFloat64(c,state.time))",
+        "JS_SetPropertyStr(c,result,\"transitionElapsed\",JS_NewFloat64(c,state.transitionElapsed))",
+        "JS_SetPropertyStr(c,result,\"transitionDuration\",JS_NewFloat64(c,state.transitionDuration))",
+        "JS_SetPropertyStr(c,result,\"lightningSequence\",JS_NewString(c,std::to_string(state.lightning.sequence).c_str()))",
+        "JS_SetPropertyStr(c,result,\"lightningPosition\",preciseVector(state.lightning.position-world.Settings().worldOrigin))",
+        "JS_SetPropertyStr(c,result,\"tornadoPosition\",preciseVector(sample.tornadoPosition-world.Settings().worldOrigin))",
+        "JS_SetPropertyStr(c,result,\"lightningFlash\",JS_NewFloat64(c,sample.lightningFlash))"
+      ],
+      "reference": "docs/judasjs/weather.md"
+    },
+    {
+      "binding": "weather.sample",
+      "declaration": "WeatherQuery",
+      "fields": [
+        "wind",
+        "up",
+        "altitude",
+        "airDensity",
+        "rain",
+        "snow",
+        "fog",
+        "cloudCoverage",
+        "tornadoPosition",
+        "lightningFlash"
+      ],
+      "nativeFile": "src/ScriptSystem.cpp",
+      "needles": [
+        "JS_SetPropertyStr(c,result,\"wind\",preciseVector(sample.wind))",
+        "JS_SetPropertyStr(c,result,\"up\",preciseVector(sample.up))",
+        "JS_SetPropertyStr(c,result,\"tornadoPosition\",preciseVector(sample.tornadoPosition-world.Settings().worldOrigin))",
+        "{\"altitude\",sample.altitude}",
+        "{\"airDensity\",sample.airDensity}",
+        "{\"rain\",sample.profile.rain}",
+        "{\"snow\",sample.profile.snow}",
+        "{\"fog\",sample.profile.fog}",
+        "{\"cloudCoverage\",sample.profile.cloudCoverage}",
+        "{\"lightningFlash\",sample.lightningFlash}"
+      ],
+      "reference": "docs/judasjs/weather.md"
+    },
+    {
+      "binding": "Entity.camera",
+      "declaration": "CameraInfo",
+      "fields": [
+        "near",
+        "far",
+        "enabled",
+        "width",
+        "height",
+        "frustum",
+        "clipPlane"
+      ],
+      "nativeFile": "src/ScriptSystem.cpp",
+      "needles": [
+        "JS_SetPropertyStr(c,o,\"frustum\"",
+        "JS_SetPropertyStr(c,o,\"clipPlane\""
+      ],
+      "reference": "docs/judasjs/effects-camera.md"
+    },
+    {
+      "binding": "Entity.planetSample",
+      "declaration": "PlanetSample",
+      "fields": [
+        "position",
+        "normal",
+        "height",
+        "distance"
+      ],
+      "nativeFile": "src/ScriptSystem.cpp",
+      "needles": [
+        "JS_SetPropertyStr(c,o,\"position\",preciseVector(sample.point))",
+        "JS_SetPropertyStr(c,o,\"normal\",preciseVector(sample.normal))",
+        "JS_SetPropertyStr(c,o,\"height\",JS_NewFloat64(c,sample.height))",
+        "JS_SetPropertyStr(c,o,\"distance\",JS_NewFloat64(c,sample.distance))"
+      ],
+      "reference": "docs/judasjs/planetary-terrain.md"
+    },
+    {
+      "binding": "Fracture.state.interfaces",
+      "declaration": "FractureInterfaceState",
+      "fields": [
+        "material",
+        "plasticTranslation",
+        "plasticRotation",
+        "plasticWork"
+      ],
+      "nativeFile": "src/ScriptSystem.cpp",
+      "needles": [
+        "JS_SetPropertyStr(c,v,\"material\"",
+        "JS_SetPropertyStr(c,v,\"plasticTranslation\"",
+        "JS_SetPropertyStr(c,v,\"plasticRotation\"",
+        "JS_SetPropertyStr(c,v,\"plasticWork\""
+      ],
+      "reference": "docs/judasjs/fracture.md"
+    },
+    {
+      "binding": "Wheel.settings",
+      "declaration": "WheelSettings",
+      "fields": [
+        "part"
+      ],
+      "nativeFile": "src/ScriptSystem.cpp",
+      "needles": [
+        "JS_SetPropertyStr(c,result,\"part\""
+      ],
+      "reference": "docs/judasjs/wheels.md"
+    },
+    {
+      "binding": "Powertrain.settings.links[].connection",
+      "declaration": "PowertrainConnection",
+      "fields": [
+        "groups"
+      ],
+      "nativeFile": "src/PowertrainAuthoring.cpp",
+      "needles": [
+        "connection[\"groups\"]"
+      ],
+      "reference": "docs/judasjs/powertrains.md"
+    }
+  ],
+  "symbols": [
+    {
+      "symbol": "Animation",
+      "kinds": [
+        "class"
+      ],
+      "native": [],
+      "type": "docs/judas.d.ts:Animation",
+      "reference": "docs/judasjs/animation-ragdolls.md"
+    },
+    {
+      "symbol": "Animation.advance",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "animationAdvance"
+      ],
+      "type": "docs/judas.d.ts:Animation.advance",
+      "reference": "docs/judasjs/animation-ragdolls.md"
+    },
+    {
+      "symbol": "Animation.clips",
+      "kinds": [
+        "get"
+      ],
+      "native": [],
+      "type": "docs/judas.d.ts:Animation.clips",
+      "reference": "docs/judasjs/animation-ragdolls.md"
+    },
+    {
+      "symbol": "Animation.configureIK",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "animationIKConfigure"
+      ],
+      "type": "docs/judas.d.ts:Animation.configureIK",
+      "reference": "docs/judasjs/animation-ragdolls.md"
+    },
+    {
+      "symbol": "Animation.constructor",
+      "kinds": [
+        "call"
+      ],
+      "native": [],
+      "type": "docs/judas.d.ts:Animation.constructor",
+      "reference": "docs/judasjs/animation-ragdolls.md"
+    },
+    {
+      "symbol": "Animation.crossFade",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "animationFade"
+      ],
+      "type": "docs/judas.d.ts:Animation.crossFade",
+      "reference": "docs/judasjs/animation-ragdolls.md"
+    },
+    {
+      "symbol": "Animation.entityId",
+      "kinds": [
+        "field"
+      ],
+      "native": [],
+      "type": "docs/judas.d.ts:Animation.entityId",
+      "reference": "docs/judasjs/animation-ragdolls.md"
+    },
+    {
+      "symbol": "Animation.ikStatus",
+      "kinds": [
+        "get"
+      ],
+      "native": [
+        "animationIKStatus"
+      ],
+      "type": "docs/judas.d.ts:Animation.ikStatus",
+      "reference": "docs/judasjs/animation-ragdolls.md"
+    },
+    {
+      "symbol": "Animation.ikTargets",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "animationIKTargets"
+      ],
+      "type": "docs/judas.d.ts:Animation.ikTargets",
+      "reference": "docs/judasjs/animation-ragdolls.md"
+    },
+    {
+      "symbol": "Animation.info",
+      "kinds": [
+        "get"
+      ],
+      "native": [
+        "animationInfo"
+      ],
+      "type": "docs/judas.d.ts:Animation.info",
+      "reference": "docs/judasjs/animation-ragdolls.md"
+    },
+    {
+      "symbol": "Animation.jointTransform",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "animationJointPose"
+      ],
+      "type": "docs/judas.d.ts:Animation.jointTransform",
+      "reference": "docs/judasjs/animation-ragdolls.md"
+    },
+    {
+      "symbol": "Animation.layer",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "animationLayer"
+      ],
+      "type": "docs/judas.d.ts:Animation.layer",
+      "reference": "docs/judasjs/animation-ragdolls.md"
+    },
+    {
+      "symbol": "Animation.layers",
+      "kinds": [
+        "get"
+      ],
+      "native": [],
+      "type": "docs/judas.d.ts:Animation.layers",
+      "reference": "docs/judasjs/animation-ragdolls.md"
+    },
+    {
+      "symbol": "Animation.limb",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "animationLimb"
+      ],
+      "type": "docs/judas.d.ts:Animation.limb",
+      "reference": "docs/judasjs/animation-ragdolls.md"
+    },
+    {
+      "symbol": "Animation.loop",
+      "kinds": [
+        "get",
+        "set"
+      ],
+      "native": [
+        "animationSet"
+      ],
+      "type": "docs/judas.d.ts:Animation.loop",
+      "reference": "docs/judasjs/animation-ragdolls.md"
+    },
+    {
+      "symbol": "Animation.pause",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "animationPause"
+      ],
+      "type": "docs/judas.d.ts:Animation.pause",
+      "reference": "docs/judasjs/animation-ragdolls.md"
+    },
+    {
+      "symbol": "Animation.play",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "animationPlay"
+      ],
+      "type": "docs/judas.d.ts:Animation.play",
+      "reference": "docs/judasjs/animation-ragdolls.md"
+    },
+    {
+      "symbol": "Animation.playing",
+      "kinds": [
+        "get"
+      ],
+      "native": [],
+      "type": "docs/judas.d.ts:Animation.playing",
+      "reference": "docs/judasjs/animation-ragdolls.md"
+    },
+    {
+      "symbol": "Animation.removeLayer",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "animationRemoveLayer"
+      ],
+      "type": "docs/judas.d.ts:Animation.removeLayer",
+      "reference": "docs/judasjs/animation-ragdolls.md"
+    },
+    {
+      "symbol": "Animation.removeLimb",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "animationRemoveLimb"
+      ],
+      "type": "docs/judas.d.ts:Animation.removeLimb",
+      "reference": "docs/judasjs/animation-ragdolls.md"
+    },
+    {
+      "symbol": "Animation.resume",
+      "kinds": [
+        "call"
+      ],
+      "native": [],
+      "type": "docs/judas.d.ts:Animation.resume",
+      "reference": "docs/judasjs/animation-ragdolls.md"
+    },
+    {
+      "symbol": "Animation.rootMotion",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "animationRootMotion"
+      ],
+      "type": "docs/judas.d.ts:Animation.rootMotion",
+      "reference": "docs/judasjs/animation-ragdolls.md"
+    },
+    {
+      "symbol": "Animation.sample",
+      "kinds": [
+        "get"
+      ],
+      "native": [
+        "animationSample"
+      ],
+      "type": "docs/judas.d.ts:Animation.sample",
+      "reference": "docs/judasjs/animation-ragdolls.md"
+    },
+    {
+      "symbol": "Animation.seek",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "animationSeek"
+      ],
+      "type": "docs/judas.d.ts:Animation.seek",
+      "reference": "docs/judasjs/animation-ragdolls.md"
+    },
+    {
+      "symbol": "Animation.speed",
+      "kinds": [
+        "get",
+        "set"
+      ],
+      "native": [
+        "animationSet"
+      ],
+      "type": "docs/judas.d.ts:Animation.speed",
+      "reference": "docs/judasjs/animation-ragdolls.md"
+    },
+    {
+      "symbol": "Animation.stop",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "animationStop"
+      ],
+      "type": "docs/judas.d.ts:Animation.stop",
+      "reference": "docs/judasjs/animation-ragdolls.md"
+    },
+    {
+      "symbol": "Animation.time",
+      "kinds": [
+        "get"
+      ],
+      "native": [],
+      "type": "docs/judas.d.ts:Animation.time",
+      "reference": "docs/judasjs/animation-ragdolls.md"
+    },
+    {
+      "symbol": "Character",
+      "kinds": [
+        "class"
+      ],
+      "native": [],
+      "type": "docs/judas.d.ts:Character",
+      "reference": "docs/judasjs/character.md"
+    },
+    {
+      "symbol": "Character.accelerate",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "characterAcceleration"
+      ],
+      "type": "docs/judas.d.ts:Character.accelerate",
+      "reference": "docs/judasjs/character.md"
+    },
+    {
+      "symbol": "Character.actualDisplacement",
+      "kinds": [
+        "get"
+      ],
+      "native": [],
+      "type": "docs/judas.d.ts:Character.actualDisplacement",
+      "reference": "docs/judasjs/character.md"
+    },
+    {
+      "symbol": "Character.configure",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "characterConfigure"
+      ],
+      "type": "docs/judas.d.ts:Character.configure",
+      "reference": "docs/judasjs/character.md"
+    },
+    {
+      "symbol": "Character.constructor",
+      "kinds": [
+        "call"
+      ],
+      "native": [],
+      "type": "docs/judas.d.ts:Character.constructor",
+      "reference": "docs/judasjs/character.md"
+    },
+    {
+      "symbol": "Character.displace",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "characterDisplacement"
+      ],
+      "type": "docs/judas.d.ts:Character.displace",
+      "reference": "docs/judasjs/character.md"
+    },
+    {
+      "symbol": "Character.enabled",
+      "kinds": [
+        "set"
+      ],
+      "native": [
+        "characterEnabled"
+      ],
+      "type": "docs/judas.d.ts:Character.enabled",
+      "reference": "docs/judasjs/character.md"
+    },
+    {
+      "symbol": "Character.gravity",
+      "kinds": [
+        "get"
+      ],
+      "native": [],
+      "type": "docs/judas.d.ts:Character.gravity",
+      "reference": "docs/judasjs/character.md"
+    },
+    {
+      "symbol": "Character.id",
+      "kinds": [
+        "field"
+      ],
+      "native": [],
+      "type": "docs/judas.d.ts:Character.id",
+      "reference": "docs/judasjs/character.md"
+    },
+    {
+      "symbol": "Character.ignore",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "characterIgnore"
+      ],
+      "type": "docs/judas.d.ts:Character.ignore",
+      "reference": "docs/judasjs/character.md"
+    },
+    {
+      "symbol": "Character.orient",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "characterOrientation"
+      ],
+      "type": "docs/judas.d.ts:Character.orient",
+      "reference": "docs/judasjs/character.md"
+    },
+    {
+      "symbol": "Character.state",
+      "kinds": [
+        "get"
+      ],
+      "native": [
+        "characterState"
+      ],
+      "type": "docs/judas.d.ts:Character.state",
+      "reference": "docs/judasjs/character.md"
+    },
+    {
+      "symbol": "Character.supportNormal",
+      "kinds": [
+        "get"
+      ],
+      "native": [],
+      "type": "docs/judas.d.ts:Character.supportNormal",
+      "reference": "docs/judasjs/character.md"
+    },
+    {
+      "symbol": "Character.supportVelocity",
+      "kinds": [
+        "get"
+      ],
+      "native": [],
+      "type": "docs/judas.d.ts:Character.supportVelocity",
+      "reference": "docs/judasjs/character.md"
+    },
+    {
+      "symbol": "Character.supported",
+      "kinds": [
+        "get"
+      ],
+      "native": [],
+      "type": "docs/judas.d.ts:Character.supported",
+      "reference": "docs/judasjs/character.md"
+    },
+    {
+      "symbol": "Character.up",
+      "kinds": [
+        "get"
+      ],
+      "native": [],
+      "type": "docs/judas.d.ts:Character.up",
+      "reference": "docs/judasjs/character.md"
+    },
+    {
+      "symbol": "Character.velocity",
+      "kinds": [
+        "get",
+        "set"
+      ],
+      "native": [
+        "characterVelocity"
+      ],
+      "type": "docs/judas.d.ts:Character.velocity",
+      "reference": "docs/judasjs/character.md"
+    },
+    {
+      "symbol": "Deformable",
+      "kinds": [
+        "class"
+      ],
+      "native": [],
+      "type": "docs/judas.d.ts:Deformable",
+      "reference": "docs/judasjs/deformables.md"
+    },
+    {
+      "symbol": "Deformable.attach",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "deformableAttach"
+      ],
+      "type": "docs/judas.d.ts:Deformable.attach",
+      "reference": "docs/judasjs/deformables.md"
+    },
+    {
+      "symbol": "Deformable.constructor",
+      "kinds": [
+        "call"
+      ],
+      "native": [],
+      "type": "docs/judas.d.ts:Deformable.constructor",
+      "reference": "docs/judasjs/deformables.md"
+    },
+    {
+      "symbol": "Deformable.enabled",
+      "kinds": [
+        "get",
+        "set"
+      ],
+      "native": [
+        "deformableEnabled"
+      ],
+      "type": "docs/judas.d.ts:Deformable.enabled",
+      "reference": "docs/judasjs/deformables.md"
+    },
+    {
+      "symbol": "Deformable.epoch",
+      "kinds": [
+        "field"
+      ],
+      "native": [],
+      "type": "docs/judas.d.ts:Deformable.epoch",
+      "reference": "docs/judasjs/deformables.md"
+    },
+    {
+      "symbol": "Deformable.force",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "deformableForce"
+      ],
+      "type": "docs/judas.d.ts:Deformable.force",
+      "reference": "docs/judasjs/deformables.md"
+    },
+    {
+      "symbol": "Deformable.id",
+      "kinds": [
+        "field"
+      ],
+      "native": [],
+      "type": "docs/judas.d.ts:Deformable.id",
+      "reference": "docs/judasjs/deformables.md"
+    },
+    {
+      "symbol": "Deformable.impulse",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "deformableImpulse"
+      ],
+      "type": "docs/judas.d.ts:Deformable.impulse",
+      "reference": "docs/judasjs/deformables.md"
+    },
+    {
+      "symbol": "Deformable.impulseAt",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "deformableHitImpulse"
+      ],
+      "type": "docs/judas.d.ts:Deformable.impulseAt",
+      "reference": "docs/judasjs/deformables.md"
+    },
+    {
+      "symbol": "Deformable.raycast",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "deformableRaycast"
+      ],
+      "type": "docs/judas.d.ts:Deformable.raycast",
+      "reference": "docs/judasjs/deformables.md"
+    },
+    {
+      "symbol": "Deformable.release",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "deformableRelease"
+      ],
+      "type": "docs/judas.d.ts:Deformable.release",
+      "reference": "docs/judasjs/deformables.md"
+    },
+    {
+      "symbol": "Deformable.reset",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "deformableReset"
+      ],
+      "type": "docs/judas.d.ts:Deformable.reset",
+      "reference": "docs/judasjs/deformables.md"
+    },
+    {
+      "symbol": "Deformable.setMaterial",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "deformableMaterial"
+      ],
+      "type": "docs/judas.d.ts:Deformable.setMaterial",
+      "reference": "docs/judasjs/deformables.md"
+    },
+    {
+      "symbol": "Deformable.state",
+      "kinds": [
+        "get"
+      ],
+      "native": [
+        "deformableState"
+      ],
+      "type": "docs/judas.d.ts:Deformable.state",
+      "reference": "docs/judasjs/deformables.md"
+    },
+    {
+      "symbol": "Deformable.valid",
+      "kinds": [
+        "get"
+      ],
+      "native": [
+        "deformableValid"
+      ],
+      "type": "docs/judas.d.ts:Deformable.valid",
+      "reference": "docs/judasjs/deformables.md"
+    },
+    {
+      "symbol": "Entity",
+      "kinds": [
+        "class"
+      ],
+      "native": [],
+      "type": "docs/judas.d.ts:Entity",
+      "reference": "docs/judasjs/entities.md"
+    },
+    {
+      "symbol": "Entity.addTag",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "addTag"
+      ],
+      "type": "docs/judas.d.ts:Entity.addTag",
+      "reference": "docs/judasjs/entities.md"
+    },
+    {
+      "symbol": "Entity.angularVelocity",
+      "kinds": [
+        "get",
+        "set"
+      ],
+      "native": [
+        "angularVelocity",
+        "setAngularVelocity"
+      ],
+      "type": "docs/judas.d.ts:Entity.angularVelocity",
+      "reference": "docs/judasjs/entities.md"
+    },
+    {
+      "symbol": "Entity.animation",
+      "kinds": [
+        "get"
+      ],
+      "native": [
+        "animationExists"
+      ],
+      "type": "docs/judas.d.ts:Entity.animation",
+      "reference": "docs/judasjs/entities.md"
+    },
+    {
+      "symbol": "Entity.applyForce",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "force"
+      ],
+      "type": "docs/judas.d.ts:Entity.applyForce",
+      "reference": "docs/judasjs/entities.md"
+    },
+    {
+      "symbol": "Entity.applyImpulse",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "impulse"
+      ],
+      "type": "docs/judas.d.ts:Entity.applyImpulse",
+      "reference": "docs/judasjs/entities.md"
+    },
+    {
+      "symbol": "Entity.applyImpulseAtPoint",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "impulseAtPoint"
+      ],
+      "type": "docs/judas.d.ts:Entity.applyImpulseAtPoint",
+      "reference": "docs/judasjs/entities.md"
+    },
+    {
+      "symbol": "Entity.applyTorque",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "torque"
+      ],
+      "type": "docs/judas.d.ts:Entity.applyTorque",
+      "reference": "docs/judasjs/entities.md"
+    },
+    {
+      "symbol": "Entity.audio",
+      "kinds": [
+        "get"
+      ],
+      "native": [
+        "audioInfo"
+      ],
+      "type": "docs/judas.d.ts:Entity.audio",
+      "reference": "docs/judasjs/audio.md"
+    },
+    {
+      "symbol": "Entity.burst",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "burst"
+      ],
+      "type": "docs/judas.d.ts:Entity.burst",
+      "reference": "docs/judasjs/entities.md"
+    },
+    {
+      "symbol": "Entity.camera",
+      "kinds": [
+        "get"
+      ],
+      "native": [
+        "cameraInfo"
+      ],
+      "type": "docs/judas.d.ts:Entity.camera",
+      "reference": "docs/judasjs/entities.md"
+    },
+    {
+      "symbol": "Entity.character",
+      "kinds": [
+        "get"
+      ],
+      "native": [
+        "characterExists"
+      ],
+      "type": "docs/judas.d.ts:Entity.character",
+      "reference": "docs/judasjs/entities.md"
+    },
+    {
+      "symbol": "Entity.children",
+      "kinds": [
+        "get"
+      ],
+      "native": [
+        "children"
+      ],
+      "type": "docs/judas.d.ts:Entity.children",
+      "reference": "docs/judasjs/entities.md"
+    },
+    {
+      "symbol": "Entity.classification",
+      "kinds": [
+        "get"
+      ],
+      "native": [
+        "classification"
+      ],
+      "type": "docs/judas.d.ts:Entity.classification",
+      "reference": "docs/judasjs/entities.md"
+    },
+    {
+      "symbol": "Entity.clearPlanetCollision",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "planetClear"
+      ],
+      "type": "docs/judas.d.ts:Entity.clearPlanetCollision",
+      "reference": "docs/judasjs/entities.md"
+    },
+    {
+      "symbol": "Entity.clearSocket",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "socketClear"
+      ],
+      "type": "docs/judas.d.ts:Entity.clearSocket",
+      "reference": "docs/judasjs/entities.md"
+    },
+    {
+      "symbol": "Entity.collider",
+      "kinds": [
+        "get"
+      ],
+      "native": [
+        "colliderInfo"
+      ],
+      "type": "docs/judas.d.ts:Entity.collider",
+      "reference": "docs/judasjs/entities.md"
+    },
+    {
+      "symbol": "Entity.constructor",
+      "kinds": [
+        "call"
+      ],
+      "native": [],
+      "type": "docs/judas.d.ts:Entity.constructor",
+      "reference": "docs/judasjs/entities.md"
+    },
+    {
+      "symbol": "Entity.deformable",
+      "kinds": [
+        "get"
+      ],
+      "native": [
+        "deformableExists"
+      ],
+      "type": "docs/judas.d.ts:Entity.deformable",
+      "reference": "docs/judasjs/entities.md"
+    },
+    {
+      "symbol": "Entity.destroy",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "destroy"
+      ],
+      "type": "docs/judas.d.ts:Entity.destroy",
+      "reference": "docs/judasjs/entities.md"
+    },
+    {
+      "symbol": "Entity.fracture",
+      "kinds": [
+        "get"
+      ],
+      "native": [
+        "fractureExists"
+      ],
+      "type": "docs/judas.d.ts:Entity.fracture",
+      "reference": "docs/judasjs/entities.md"
+    },
+    {
+      "symbol": "Entity.gravity",
+      "kinds": [
+        "get"
+      ],
+      "native": [],
+      "type": "docs/judas.d.ts:Entity.gravity",
+      "reference": "docs/judasjs/entities.md"
+    },
+    {
+      "symbol": "Entity.hasTag",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "hasTag"
+      ],
+      "type": "docs/judas.d.ts:Entity.hasTag",
+      "reference": "docs/judasjs/entities.md"
+    },
+    {
+      "symbol": "Entity.id",
+      "kinds": [
+        "field"
+      ],
+      "native": [],
+      "type": "docs/judas.d.ts:Entity.id",
+      "reference": "docs/judasjs/entities.md"
+    },
+    {
+      "symbol": "Entity.inertiaWorld",
+      "kinds": [
+        "get"
+      ],
+      "native": [
+        "inertiaWorld"
+      ],
+      "type": "docs/judas.d.ts:Entity.inertiaWorld",
+      "reference": "docs/judasjs/entities.md"
+    },
+    {
+      "symbol": "Entity.kinematicMotion",
+      "kinds": [
+        "get"
+      ],
+      "native": [
+        "kinematicMotion"
+      ],
+      "type": "docs/judas.d.ts:Entity.kinematicMotion",
+      "reference": "docs/judasjs/entities.md"
+    },
+    {
+      "symbol": "Entity.light",
+      "kinds": [
+        "get"
+      ],
+      "native": [
+        "lightInfo"
+      ],
+      "type": "docs/judas.d.ts:Entity.light",
+      "reference": "docs/judasjs/entities.md"
+    },
+    {
+      "symbol": "Entity.liquid",
+      "kinds": [
+        "get"
+      ],
+      "native": [
+        "liquidOwner"
+      ],
+      "type": "docs/judas.d.ts:Entity.liquid",
+      "reference": "docs/judasjs/entities.md"
+    },
+    {
+      "symbol": "Entity.mass",
+      "kinds": [
+        "get"
+      ],
+      "native": [
+        "mass"
+      ],
+      "type": "docs/judas.d.ts:Entity.mass",
+      "reference": "docs/judasjs/entities.md"
+    },
+    {
+      "symbol": "Entity.material",
+      "kinds": [
+        "call"
+      ],
+      "native": [],
+      "type": "docs/judas.d.ts:Entity.material",
+      "reference": "docs/judasjs/materials.md"
+    },
+    {
+      "symbol": "Entity.modelParts",
+      "kinds": [
+        "get"
+      ],
+      "native": [
+        "modelParts"
+      ],
+      "type": "docs/judas.d.ts:Entity.modelParts",
+      "reference": "docs/judasjs/entities.md"
+    },
+    {
+      "symbol": "Entity.motionType",
+      "kinds": [
+        "get"
+      ],
+      "native": [
+        "motionType"
+      ],
+      "type": "docs/judas.d.ts:Entity.motionType",
+      "reference": "docs/judasjs/entities.md"
+    },
+    {
+      "symbol": "Entity.moveKinematic",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "kinematicTarget"
+      ],
+      "type": "docs/judas.d.ts:Entity.moveKinematic",
+      "reference": "docs/judasjs/entities.md"
+    },
+    {
+      "symbol": "Entity.navigation",
+      "kinds": [
+        "get"
+      ],
+      "native": [
+        "navAgentExists"
+      ],
+      "type": "docs/judas.d.ts:Entity.navigation",
+      "reference": "docs/judasjs/entities.md"
+    },
+    {
+      "symbol": "Entity.navigationLink",
+      "kinds": [
+        "get"
+      ],
+      "native": [
+        "navLinkInfo"
+      ],
+      "type": "docs/judas.d.ts:Entity.navigationLink",
+      "reference": "docs/judasjs/entities.md"
+    },
+    {
+      "symbol": "Entity.navigationObstacle",
+      "kinds": [
+        "get"
+      ],
+      "native": [
+        "navObstacleInfo"
+      ],
+      "type": "docs/judas.d.ts:Entity.navigationObstacle",
+      "reference": "docs/judasjs/entities.md"
+    },
+    {
+      "symbol": "Entity.parent",
+      "kinds": [
+        "get"
+      ],
+      "native": [
+        "parent"
+      ],
+      "type": "docs/judas.d.ts:Entity.parent",
+      "reference": "docs/judasjs/entities.md"
+    },
+    {
+      "symbol": "Entity.pauseAudio",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "pauseAudio"
+      ],
+      "type": "docs/judas.d.ts:Entity.pauseAudio",
+      "reference": "docs/judasjs/audio.md"
+    },
+    {
+      "symbol": "Entity.physicalMaterial",
+      "kinds": [
+        "get"
+      ],
+      "native": [
+        "physicalMaterialInfo"
+      ],
+      "type": "docs/judas.d.ts:Entity.physicalMaterial",
+      "reference": "docs/judasjs/entities.md"
+    },
+    {
+      "symbol": "Entity.planetSample",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "planetSample"
+      ],
+      "type": "docs/judas.d.ts:Entity.planetSample",
+      "reference": "docs/judasjs/entities.md"
+    },
+    {
+      "symbol": "Entity.planetState",
+      "kinds": [
+        "get"
+      ],
+      "native": [
+        "planetInfo"
+      ],
+      "type": "docs/judas.d.ts:Entity.planetState",
+      "reference": "docs/judasjs/entities.md"
+    },
+    {
+      "symbol": "Entity.playAudio",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "playAudio"
+      ],
+      "type": "docs/judas.d.ts:Entity.playAudio",
+      "reference": "docs/judasjs/audio.md"
+    },
+    {
+      "symbol": "Entity.playAudioOneShot",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "audioOneShot"
+      ],
+      "type": "docs/judas.d.ts:Entity.playAudioOneShot",
+      "reference": "docs/judasjs/audio.md"
+    },
+    {
+      "symbol": "Entity.pointVelocity",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "pointVelocity"
+      ],
+      "type": "docs/judas.d.ts:Entity.pointVelocity",
+      "reference": "docs/judasjs/entities.md"
+    },
+    {
+      "symbol": "Entity.powertrain",
+      "kinds": [
+        "get"
+      ],
+      "native": [
+        "powertrainExists"
+      ],
+      "type": "docs/judas.d.ts:Entity.powertrain",
+      "reference": "docs/judasjs/entities.md"
+    },
+    {
+      "symbol": "Entity.preparePlanetCollision",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "planetCollision"
+      ],
+      "type": "docs/judas.d.ts:Entity.preparePlanetCollision",
+      "reference": "docs/judasjs/entities.md"
+    },
+    {
+      "symbol": "Entity.presentedTransform",
+      "kinds": [
+        "get"
+      ],
+      "native": [
+        "presentedTransform"
+      ],
+      "type": "docs/judas.d.ts:Entity.presentedTransform",
+      "reference": "docs/judasjs/entities.md"
+    },
+    {
+      "symbol": "Entity.ragdoll",
+      "kinds": [
+        "get"
+      ],
+      "native": [
+        "ragdollExists"
+      ],
+      "type": "docs/judas.d.ts:Entity.ragdoll",
+      "reference": "docs/judasjs/entities.md"
+    },
+    {
+      "symbol": "Entity.removeTag",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "removeTag"
+      ],
+      "type": "docs/judas.d.ts:Entity.removeTag",
+      "reference": "docs/judasjs/entities.md"
+    },
+    {
+      "symbol": "Entity.renderVisible",
+      "kinds": [
+        "get",
+        "set"
+      ],
+      "native": [
+        "renderVisible"
+      ],
+      "type": "docs/judas.d.ts:Entity.renderVisible",
+      "reference": "docs/judasjs/entities.md"
+    },
+    {
+      "symbol": "Entity.rendererVisible",
+      "kinds": [
+        "get",
+        "set"
+      ],
+      "native": [
+        "rendererVisible"
+      ],
+      "type": "docs/judas.d.ts:Entity.rendererVisible",
+      "reference": "docs/judasjs/entities.md"
+    },
+    {
+      "symbol": "Entity.resumeAudio",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "resumeAudio"
+      ],
+      "type": "docs/judas.d.ts:Entity.resumeAudio",
+      "reference": "docs/judasjs/audio.md"
+    },
+    {
+      "symbol": "Entity.scriptState",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "scriptState"
+      ],
+      "type": "docs/judas.d.ts:Entity.scriptState",
+      "reference": "docs/judasjs/entities.md"
+    },
+    {
+      "symbol": "Entity.seekAudio",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "audioSeek"
+      ],
+      "type": "docs/judas.d.ts:Entity.seekAudio",
+      "reference": "docs/judasjs/audio.md"
+    },
+    {
+      "symbol": "Entity.setAudio",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "audioSettings"
+      ],
+      "type": "docs/judas.d.ts:Entity.setAudio",
+      "reference": "docs/judasjs/audio.md"
+    },
+    {
+      "symbol": "Entity.setAudioEnabled",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "audioEnabled"
+      ],
+      "type": "docs/judas.d.ts:Entity.setAudioEnabled",
+      "reference": "docs/judasjs/audio.md"
+    },
+    {
+      "symbol": "Entity.setAudioVelocity",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "audioVelocity"
+      ],
+      "type": "docs/judas.d.ts:Entity.setAudioVelocity",
+      "reference": "docs/judasjs/audio.md"
+    },
+    {
+      "symbol": "Entity.setCameraEnabled",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "camera"
+      ],
+      "type": "docs/judas.d.ts:Entity.setCameraEnabled",
+      "reference": "docs/judasjs/entities.md"
+    },
+    {
+      "symbol": "Entity.setCameraProjection",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "cameraProjection"
+      ],
+      "type": "docs/judas.d.ts:Entity.setCameraProjection",
+      "reference": "docs/judasjs/effects-camera.md"
+    },
+    {
+      "symbol": "Entity.setColliderEnabled",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "colliderEnabled"
+      ],
+      "type": "docs/judas.d.ts:Entity.setColliderEnabled",
+      "reference": "docs/judasjs/entities.md"
+    },
+    {
+      "symbol": "Entity.setKinematicVelocity",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "kinematicVelocity"
+      ],
+      "type": "docs/judas.d.ts:Entity.setKinematicVelocity",
+      "reference": "docs/judasjs/entities.md"
+    },
+    {
+      "symbol": "Entity.setLight",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "lightSettings"
+      ],
+      "type": "docs/judas.d.ts:Entity.setLight",
+      "reference": "docs/judasjs/entities.md"
+    },
+    {
+      "symbol": "Entity.setMotionType",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "motionTypeSet"
+      ],
+      "type": "docs/judas.d.ts:Entity.setMotionType",
+      "reference": "docs/judasjs/entities.md"
+    },
+    {
+      "symbol": "Entity.setNavigationEnabled",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "navEnabled"
+      ],
+      "type": "docs/judas.d.ts:Entity.setNavigationEnabled",
+      "reference": "docs/judasjs/entities.md"
+    },
+    {
+      "symbol": "Entity.setPartVisible",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "modelPartVisible"
+      ],
+      "type": "docs/judas.d.ts:Entity.setPartVisible",
+      "reference": "docs/judasjs/entities.md"
+    },
+    {
+      "symbol": "Entity.setParticles",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "particles"
+      ],
+      "type": "docs/judas.d.ts:Entity.setParticles",
+      "reference": "docs/judasjs/entities.md"
+    },
+    {
+      "symbol": "Entity.setPhysicalMaterial",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "physicalMaterialSet"
+      ],
+      "type": "docs/judas.d.ts:Entity.setPhysicalMaterial",
+      "reference": "docs/judasjs/entities.md"
+    },
+    {
+      "symbol": "Entity.setSocket",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "socketClear",
+        "socketSet"
+      ],
+      "type": "docs/judas.d.ts:Entity.setSocket",
+      "reference": "docs/judasjs/entities.md"
+    },
+    {
+      "symbol": "Entity.sleeping",
+      "kinds": [
+        "get"
+      ],
+      "native": [
+        "sleeping"
+      ],
+      "type": "docs/judas.d.ts:Entity.sleeping",
+      "reference": "docs/judasjs/entities.md"
+    },
+    {
+      "symbol": "Entity.stopAudio",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "stopAudio"
+      ],
+      "type": "docs/judas.d.ts:Entity.stopAudio",
+      "reference": "docs/judasjs/audio.md"
+    },
+    {
+      "symbol": "Entity.stopKinematic",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "kinematicStop"
+      ],
+      "type": "docs/judas.d.ts:Entity.stopKinematic",
+      "reference": "docs/judasjs/entities.md"
+    },
+    {
+      "symbol": "Entity.terrain",
+      "kinds": [
+        "get"
+      ],
+      "native": [],
+      "type": "docs/judas.d.ts:Entity.terrain",
+      "reference": "docs/judasjs/entities.md"
+    },
+    {
+      "symbol": "Entity.transform",
+      "kinds": [
+        "get",
+        "set"
+      ],
+      "native": [
+        "setTransform",
+        "transform"
+      ],
+      "type": "docs/judas.d.ts:Entity.transform",
+      "reference": "docs/judasjs/entities.md"
+    },
+    {
+      "symbol": "Entity.valid",
+      "kinds": [
+        "get"
+      ],
+      "native": [
+        "valid"
+      ],
+      "type": "docs/judas.d.ts:Entity.valid",
+      "reference": "docs/judasjs/entities.md"
+    },
+    {
+      "symbol": "Entity.velocity",
+      "kinds": [
+        "get",
+        "set"
+      ],
+      "native": [
+        "setVelocity",
+        "velocity"
+      ],
+      "type": "docs/judas.d.ts:Entity.velocity",
+      "reference": "docs/judasjs/entities.md"
+    },
+    {
+      "symbol": "Entity.weather",
+      "kinds": [
+        "get"
+      ],
+      "native": [
+        "weatherExists"
+      ],
+      "type": "docs/judas.d.ts:Entity.weather",
+      "reference": "docs/judasjs/weather.md"
+    },
+    {
+      "symbol": "Entity.wheel",
+      "kinds": [
+        "get"
+      ],
+      "native": [
+        "wheelExists"
+      ],
+      "type": "docs/judas.d.ts:Entity.wheel",
+      "reference": "docs/judasjs/entities.md"
+    },
+    {
+      "symbol": "EntityGravity",
+      "kinds": [
+        "class"
+      ],
+      "native": [],
+      "type": "docs/judas.d.ts:EntityGravity",
+      "reference": "docs/judasjs/physics.md"
+    },
+    {
+      "symbol": "EntityGravity.acceleration",
+      "kinds": [
+        "get"
+      ],
+      "native": [],
+      "type": "docs/judas.d.ts:EntityGravity.acceleration",
+      "reference": "docs/judasjs/physics.md"
+    },
+    {
+      "symbol": "EntityGravity.clear",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "entityGravityClear"
+      ],
+      "type": "docs/judas.d.ts:EntityGravity.clear",
+      "reference": "docs/judasjs/physics.md"
+    },
+    {
+      "symbol": "EntityGravity.constructor",
+      "kinds": [
+        "call"
+      ],
+      "native": [],
+      "type": "docs/judas.d.ts:EntityGravity.constructor",
+      "reference": "docs/judasjs/physics.md"
+    },
+    {
+      "symbol": "EntityGravity.id",
+      "kinds": [
+        "field"
+      ],
+      "native": [],
+      "type": "docs/judas.d.ts:EntityGravity.id",
+      "reference": "docs/judasjs/physics.md"
+    },
+    {
+      "symbol": "EntityGravity.select",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "entityGravitySelect"
+      ],
+      "type": "docs/judas.d.ts:EntityGravity.select",
+      "reference": "docs/judasjs/physics.md"
+    },
+    {
+      "symbol": "EntityGravity.setUniform",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "entityGravityUniform"
+      ],
+      "type": "docs/judas.d.ts:EntityGravity.setUniform",
+      "reference": "docs/judasjs/physics.md"
+    },
+    {
+      "symbol": "EntityGravity.state",
+      "kinds": [
+        "get"
+      ],
+      "native": [
+        "entityGravityState"
+      ],
+      "type": "docs/judas.d.ts:EntityGravity.state",
+      "reference": "docs/judasjs/physics.md"
+    },
+    {
+      "symbol": "Fracture",
+      "kinds": [
+        "class"
+      ],
+      "native": [],
+      "type": "docs/judas.d.ts:Fracture",
+      "reference": "docs/judasjs/fracture.md"
+    },
+    {
+      "symbol": "Fracture.constructor",
+      "kinds": [
+        "call"
+      ],
+      "native": [],
+      "type": "docs/judas.d.ts:Fracture.constructor",
+      "reference": "docs/judasjs/fracture.md"
+    },
+    {
+      "symbol": "Fracture.epoch",
+      "kinds": [
+        "field"
+      ],
+      "native": [],
+      "type": "docs/judas.d.ts:Fracture.epoch",
+      "reference": "docs/judasjs/fracture.md"
+    },
+    {
+      "symbol": "Fracture.force",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "fractureForce"
+      ],
+      "type": "docs/judas.d.ts:Fracture.force",
+      "reference": "docs/judasjs/fracture.md"
+    },
+    {
+      "symbol": "Fracture.id",
+      "kinds": [
+        "field"
+      ],
+      "native": [],
+      "type": "docs/judas.d.ts:Fracture.id",
+      "reference": "docs/judasjs/fracture.md"
+    },
+    {
+      "symbol": "Fracture.impulse",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "fractureImpulse"
+      ],
+      "type": "docs/judas.d.ts:Fracture.impulse",
+      "reference": "docs/judasjs/fracture.md"
+    },
+    {
+      "symbol": "Fracture.release",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "fractureRelease"
+      ],
+      "type": "docs/judas.d.ts:Fracture.release",
+      "reference": "docs/judasjs/fracture.md"
+    },
+    {
+      "symbol": "Fracture.remove",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "fractureRemove"
+      ],
+      "type": "docs/judas.d.ts:Fracture.remove",
+      "reference": "docs/judasjs/fracture.md"
+    },
+    {
+      "symbol": "Fracture.state",
+      "kinds": [
+        "get"
+      ],
+      "native": [
+        "fractureState"
+      ],
+      "type": "docs/judas.d.ts:Fracture.state",
+      "reference": "docs/judasjs/fracture.md"
+    },
+    {
+      "symbol": "Fracture.valid",
+      "kinds": [
+        "get"
+      ],
+      "native": [
+        "fractureValid"
+      ],
+      "type": "docs/judas.d.ts:Fracture.valid",
+      "reference": "docs/judasjs/fracture.md"
+    },
+    {
+      "symbol": "Joint",
+      "kinds": [
+        "class"
+      ],
+      "native": [],
+      "type": "docs/judas.d.ts:Joint",
+      "reference": "docs/judasjs/physics.md"
+    },
+    {
+      "symbol": "Joint.configure",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "jointConfigure"
+      ],
+      "type": "docs/judas.d.ts:Joint.configure",
+      "reference": "docs/judasjs/physics.md"
+    },
+    {
+      "symbol": "Joint.constructor",
+      "kinds": [
+        "call"
+      ],
+      "native": [],
+      "type": "docs/judas.d.ts:Joint.constructor",
+      "reference": "docs/judasjs/physics.md"
+    },
+    {
+      "symbol": "Joint.destroy",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "jointDestroy"
+      ],
+      "type": "docs/judas.d.ts:Joint.destroy",
+      "reference": "docs/judasjs/physics.md"
+    },
+    {
+      "symbol": "Joint.id",
+      "kinds": [
+        "field"
+      ],
+      "native": [],
+      "type": "docs/judas.d.ts:Joint.id",
+      "reference": "docs/judasjs/physics.md"
+    },
+    {
+      "symbol": "Joint.setEnabled",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "jointSet"
+      ],
+      "type": "docs/judas.d.ts:Joint.setEnabled",
+      "reference": "docs/judasjs/physics.md"
+    },
+    {
+      "symbol": "Joint.setLimits",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "jointSet"
+      ],
+      "type": "docs/judas.d.ts:Joint.setLimits",
+      "reference": "docs/judasjs/physics.md"
+    },
+    {
+      "symbol": "Joint.setMotor",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "jointSet"
+      ],
+      "type": "docs/judas.d.ts:Joint.setMotor",
+      "reference": "docs/judasjs/physics.md"
+    },
+    {
+      "symbol": "Joint.setSpring",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "jointSet"
+      ],
+      "type": "docs/judas.d.ts:Joint.setSpring",
+      "reference": "docs/judasjs/physics.md"
+    },
+    {
+      "symbol": "Joint.state",
+      "kinds": [
+        "get"
+      ],
+      "native": [
+        "jointState"
+      ],
+      "type": "docs/judas.d.ts:Joint.state",
+      "reference": "docs/judasjs/physics.md"
+    },
+    {
+      "symbol": "Joint.valid",
+      "kinds": [
+        "get"
+      ],
+      "native": [
+        "jointValid"
+      ],
+      "type": "docs/judas.d.ts:Joint.valid",
+      "reference": "docs/judasjs/physics.md"
+    },
+    {
+      "symbol": "LiquidVolume",
+      "kinds": [
+        "class"
+      ],
+      "native": [],
+      "type": "docs/judas.d.ts:LiquidVolume",
+      "reference": "docs/judasjs/liquid.md"
+    },
+    {
+      "symbol": "LiquidVolume.applyImpulse",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "liquidImpulse"
+      ],
+      "type": "docs/judas.d.ts:LiquidVolume.applyImpulse",
+      "reference": "docs/judasjs/liquid.md"
+    },
+    {
+      "symbol": "LiquidVolume.constructor",
+      "kinds": [
+        "call"
+      ],
+      "native": [],
+      "type": "docs/judas.d.ts:LiquidVolume.constructor",
+      "reference": "docs/judasjs/liquid.md"
+    },
+    {
+      "symbol": "LiquidVolume.enabled",
+      "kinds": [
+        "set"
+      ],
+      "native": [
+        "liquidEnabled"
+      ],
+      "type": "docs/judas.d.ts:LiquidVolume.enabled",
+      "reference": "docs/judasjs/liquid.md"
+    },
+    {
+      "symbol": "LiquidVolume.handle",
+      "kinds": [
+        "field"
+      ],
+      "native": [],
+      "type": "docs/judas.d.ts:LiquidVolume.handle",
+      "reference": "docs/judasjs/liquid.md"
+    },
+    {
+      "symbol": "LiquidVolume.state",
+      "kinds": [
+        "get"
+      ],
+      "native": [
+        "liquidState"
+      ],
+      "type": "docs/judas.d.ts:LiquidVolume.state",
+      "reference": "docs/judasjs/liquid.md"
+    },
+    {
+      "symbol": "LiquidVolume.surfaceEnabled",
+      "kinds": [
+        "set"
+      ],
+      "native": [
+        "liquidSurfaceEnabled"
+      ],
+      "type": "docs/judas.d.ts:LiquidVolume.surfaceEnabled",
+      "reference": "docs/judasjs/liquid.md"
+    },
+    {
+      "symbol": "LiquidVolume.transferTo",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "liquidTransfer"
+      ],
+      "type": "docs/judas.d.ts:LiquidVolume.transferTo",
+      "reference": "docs/judasjs/liquid.md"
+    },
+    {
+      "symbol": "LiquidVolume.valid",
+      "kinds": [
+        "get"
+      ],
+      "native": [
+        "liquidValid"
+      ],
+      "type": "docs/judas.d.ts:LiquidVolume.valid",
+      "reference": "docs/judasjs/liquid.md"
+    },
+    {
+      "symbol": "LocalPlayer",
+      "kinds": [
+        "class"
+      ],
+      "native": [],
+      "type": "docs/judas.d.ts:LocalPlayer",
+      "reference": "docs/judasjs/local-multiplayer.md"
+    },
+    {
+      "symbol": "LocalPlayer.assign",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "playerAssign"
+      ],
+      "type": "docs/judas.d.ts:LocalPlayer.assign",
+      "reference": "docs/judasjs/local-multiplayer.md"
+    },
+    {
+      "symbol": "LocalPlayer.clearView",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "playerView"
+      ],
+      "type": "docs/judas.d.ts:LocalPlayer.clearView",
+      "reference": "docs/judasjs/local-multiplayer.md"
+    },
+    {
+      "symbol": "LocalPlayer.constructor",
+      "kinds": [
+        "call"
+      ],
+      "native": [],
+      "type": "docs/judas.d.ts:LocalPlayer.constructor",
+      "reference": "docs/judasjs/local-multiplayer.md"
+    },
+    {
+      "symbol": "LocalPlayer.devices",
+      "kinds": [
+        "get"
+      ],
+      "native": [
+        "playerInfo"
+      ],
+      "type": "docs/judas.d.ts:LocalPlayer.devices",
+      "reference": "docs/judasjs/local-multiplayer.md"
+    },
+    {
+      "symbol": "LocalPlayer.entity",
+      "kinds": [
+        "get",
+        "set"
+      ],
+      "native": [
+        "playerEntity"
+      ],
+      "type": "docs/judas.d.ts:LocalPlayer.entity",
+      "reference": "docs/judasjs/local-multiplayer.md"
+    },
+    {
+      "symbol": "LocalPlayer.id",
+      "kinds": [
+        "field"
+      ],
+      "native": [],
+      "type": "docs/judas.d.ts:LocalPlayer.id",
+      "reference": "docs/judasjs/local-multiplayer.md"
+    },
+    {
+      "symbol": "LocalPlayer.input",
+      "kinds": [
+        "get"
+      ],
+      "native": [],
+      "type": "docs/judas.d.ts:LocalPlayer.input",
+      "reference": "docs/judasjs/local-multiplayer.md"
+    },
+    {
+      "symbol": "LocalPlayer.leave",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "playerRemove"
+      ],
+      "type": "docs/judas.d.ts:LocalPlayer.leave",
+      "reference": "docs/judasjs/local-multiplayer.md"
+    },
+    {
+      "symbol": "LocalPlayer.name",
+      "kinds": [
+        "get"
+      ],
+      "native": [
+        "playerInfo"
+      ],
+      "type": "docs/judas.d.ts:LocalPlayer.name",
+      "reference": "docs/judasjs/local-multiplayer.md"
+    },
+    {
+      "symbol": "LocalPlayer.project",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "playerProject"
+      ],
+      "type": "docs/judas.d.ts:LocalPlayer.project",
+      "reference": "docs/judasjs/local-multiplayer.md"
+    },
+    {
+      "symbol": "LocalPlayer.ray",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "playerRay"
+      ],
+      "type": "docs/judas.d.ts:LocalPlayer.ray",
+      "reference": "docs/judasjs/local-multiplayer.md"
+    },
+    {
+      "symbol": "LocalPlayer.setInputMap",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "playerMap"
+      ],
+      "type": "docs/judas.d.ts:LocalPlayer.setInputMap",
+      "reference": "docs/judasjs/local-multiplayer.md"
+    },
+    {
+      "symbol": "LocalPlayer.setView",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "playerView"
+      ],
+      "type": "docs/judas.d.ts:LocalPlayer.setView",
+      "reference": "docs/judasjs/local-multiplayer.md"
+    },
+    {
+      "symbol": "LocalPlayer.unassign",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "playerUnassign"
+      ],
+      "type": "docs/judas.d.ts:LocalPlayer.unassign",
+      "reference": "docs/judasjs/local-multiplayer.md"
+    },
+    {
+      "symbol": "LocalPlayer.valid",
+      "kinds": [
+        "get"
+      ],
+      "native": [
+        "playerExists"
+      ],
+      "type": "docs/judas.d.ts:LocalPlayer.valid",
+      "reference": "docs/judasjs/local-multiplayer.md"
+    },
+    {
+      "symbol": "LocalPlayer.viewError",
+      "kinds": [
+        "get"
+      ],
+      "native": [
+        "playerInfo"
+      ],
+      "type": "docs/judas.d.ts:LocalPlayer.viewError",
+      "reference": "docs/judasjs/local-multiplayer.md"
+    },
+    {
+      "symbol": "LocalPlayer.viewport",
+      "kinds": [
+        "get",
+        "set"
+      ],
+      "native": [
+        "playerViewport"
+      ],
+      "type": "docs/judas.d.ts:LocalPlayer.viewport",
+      "reference": "docs/judasjs/local-multiplayer.md"
+    },
+    {
+      "symbol": "Material",
+      "kinds": [
+        "class"
+      ],
+      "native": [],
+      "type": "docs/judas.d.ts:Material",
+      "reference": "docs/judasjs/materials.md"
+    },
+    {
+      "symbol": "Material.assign",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "materialAssign"
+      ],
+      "type": "docs/judas.d.ts:Material.assign",
+      "reference": "docs/judasjs/materials.md"
+    },
+    {
+      "symbol": "Material.clearOverrides",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "materialClear"
+      ],
+      "type": "docs/judas.d.ts:Material.clearOverrides",
+      "reference": "docs/judasjs/materials.md"
+    },
+    {
+      "symbol": "Material.constructor",
+      "kinds": [
+        "call"
+      ],
+      "native": [],
+      "type": "docs/judas.d.ts:Material.constructor",
+      "reference": "docs/judasjs/materials.md"
+    },
+    {
+      "symbol": "Material.entityId",
+      "kinds": [
+        "field"
+      ],
+      "native": [],
+      "type": "docs/judas.d.ts:Material.entityId",
+      "reference": "docs/judasjs/materials.md"
+    },
+    {
+      "symbol": "Material.set",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "materialOverride"
+      ],
+      "type": "docs/judas.d.ts:Material.set",
+      "reference": "docs/judasjs/materials.md"
+    },
+    {
+      "symbol": "Material.slot",
+      "kinds": [
+        "field"
+      ],
+      "native": [],
+      "type": "docs/judas.d.ts:Material.slot",
+      "reference": "docs/judasjs/materials.md"
+    },
+    {
+      "symbol": "Material.state",
+      "kinds": [
+        "get"
+      ],
+      "native": [
+        "materialInfo"
+      ],
+      "type": "docs/judas.d.ts:Material.state",
+      "reference": "docs/judasjs/materials.md"
+    },
+    {
+      "symbol": "NavigationAgent",
+      "kinds": [
+        "class"
+      ],
+      "native": [],
+      "type": "docs/judas.d.ts:NavigationAgent",
+      "reference": "docs/judasjs/navigation.md"
+    },
+    {
+      "symbol": "NavigationAgent.clear",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "navClear"
+      ],
+      "type": "docs/judas.d.ts:NavigationAgent.clear",
+      "reference": "docs/judasjs/navigation.md"
+    },
+    {
+      "symbol": "NavigationAgent.completeLink",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "navCompleteLink"
+      ],
+      "type": "docs/judas.d.ts:NavigationAgent.completeLink",
+      "reference": "docs/judasjs/navigation.md"
+    },
+    {
+      "symbol": "NavigationAgent.configure",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "navConfigure"
+      ],
+      "type": "docs/judas.d.ts:NavigationAgent.configure",
+      "reference": "docs/judasjs/navigation.md"
+    },
+    {
+      "symbol": "NavigationAgent.constructor",
+      "kinds": [
+        "call"
+      ],
+      "native": [],
+      "type": "docs/judas.d.ts:NavigationAgent.constructor",
+      "reference": "docs/judasjs/navigation.md"
+    },
+    {
+      "symbol": "NavigationAgent.enabled",
+      "kinds": [
+        "set"
+      ],
+      "native": [
+        "navEnabled"
+      ],
+      "type": "docs/judas.d.ts:NavigationAgent.enabled",
+      "reference": "docs/judasjs/navigation.md"
+    },
+    {
+      "symbol": "NavigationAgent.id",
+      "kinds": [
+        "field"
+      ],
+      "native": [],
+      "type": "docs/judas.d.ts:NavigationAgent.id",
+      "reference": "docs/judasjs/navigation.md"
+    },
+    {
+      "symbol": "NavigationAgent.remainingDistance",
+      "kinds": [
+        "get"
+      ],
+      "native": [],
+      "type": "docs/judas.d.ts:NavigationAgent.remainingDistance",
+      "reference": "docs/judasjs/navigation.md"
+    },
+    {
+      "symbol": "NavigationAgent.setDestination",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "navDestination"
+      ],
+      "type": "docs/judas.d.ts:NavigationAgent.setDestination",
+      "reference": "docs/judasjs/navigation.md"
+    },
+    {
+      "symbol": "NavigationAgent.state",
+      "kinds": [
+        "get"
+      ],
+      "native": [
+        "navAgentState"
+      ],
+      "type": "docs/judas.d.ts:NavigationAgent.state",
+      "reference": "docs/judasjs/navigation.md"
+    },
+    {
+      "symbol": "NavigationAgent.steering",
+      "kinds": [
+        "get"
+      ],
+      "native": [],
+      "type": "docs/judas.d.ts:NavigationAgent.steering",
+      "reference": "docs/judasjs/navigation.md"
+    },
+    {
+      "symbol": "NavigationAgent.stopped",
+      "kinds": [
+        "get",
+        "set"
+      ],
+      "native": [
+        "navStopped"
+      ],
+      "type": "docs/judas.d.ts:NavigationAgent.stopped",
+      "reference": "docs/judasjs/navigation.md"
+    },
+    {
+      "symbol": "NetworkEntity",
+      "kinds": [
+        "class"
+      ],
+      "native": [],
+      "type": "docs/judas.d.ts:NetworkEntity",
+      "reference": "docs/judasjs/network.md"
+    },
+    {
+      "symbol": "NetworkEntity.constructor",
+      "kinds": [
+        "call"
+      ],
+      "native": [],
+      "type": "docs/judas.d.ts:NetworkEntity.constructor",
+      "reference": "docs/judasjs/network.md"
+    },
+    {
+      "symbol": "NetworkEntity.entity",
+      "kinds": [
+        "get"
+      ],
+      "native": [
+        "networkEntry"
+      ],
+      "type": "docs/judas.d.ts:NetworkEntity.entity",
+      "reference": "docs/judasjs/network.md"
+    },
+    {
+      "symbol": "NetworkEntity.forget",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "networkForget"
+      ],
+      "type": "docs/judas.d.ts:NetworkEntity.forget",
+      "reference": "docs/judasjs/network.md"
+    },
+    {
+      "symbol": "NetworkEntity.generation",
+      "kinds": [
+        "field"
+      ],
+      "native": [],
+      "type": "docs/judas.d.ts:NetworkEntity.generation",
+      "reference": "docs/judasjs/network.md"
+    },
+    {
+      "symbol": "NetworkEntity.id",
+      "kinds": [
+        "field"
+      ],
+      "native": [],
+      "type": "docs/judas.d.ts:NetworkEntity.id",
+      "reference": "docs/judasjs/network.md"
+    },
+    {
+      "symbol": "NetworkEntity.owner",
+      "kinds": [
+        "get",
+        "set"
+      ],
+      "native": [
+        "networkEntry",
+        "networkOwner"
+      ],
+      "type": "docs/judas.d.ts:NetworkEntity.owner",
+      "reference": "docs/judasjs/network.md"
+    },
+    {
+      "symbol": "NetworkEntity.state",
+      "kinds": [
+        "get",
+        "set"
+      ],
+      "native": [
+        "networkEntry",
+        "networkState"
+      ],
+      "type": "docs/judas.d.ts:NetworkEntity.state",
+      "reference": "docs/judasjs/network.md"
+    },
+    {
+      "symbol": "NetworkEntity.valid",
+      "kinds": [
+        "get"
+      ],
+      "native": [
+        "networkValid"
+      ],
+      "type": "docs/judas.d.ts:NetworkEntity.valid",
+      "reference": "docs/judasjs/network.md"
+    },
+    {
+      "symbol": "PlayerInput",
+      "kinds": [
+        "class"
+      ],
+      "native": [],
+      "type": "docs/judas.d.ts:PlayerInput",
+      "reference": "docs/judasjs/local-multiplayer.md"
+    },
+    {
+      "symbol": "PlayerInput.axis",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "playerInput"
+      ],
+      "type": "docs/judas.d.ts:PlayerInput.axis",
+      "reference": "docs/judasjs/local-multiplayer.md"
+    },
+    {
+      "symbol": "PlayerInput.constructor",
+      "kinds": [
+        "call"
+      ],
+      "native": [],
+      "type": "docs/judas.d.ts:PlayerInput.constructor",
+      "reference": "docs/judasjs/local-multiplayer.md"
+    },
+    {
+      "symbol": "PlayerInput.held",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "playerInput"
+      ],
+      "type": "docs/judas.d.ts:PlayerInput.held",
+      "reference": "docs/judasjs/local-multiplayer.md"
+    },
+    {
+      "symbol": "PlayerInput.id",
+      "kinds": [
+        "field"
+      ],
+      "native": [],
+      "type": "docs/judas.d.ts:PlayerInput.id",
+      "reference": "docs/judasjs/local-multiplayer.md"
+    },
+    {
+      "symbol": "PlayerInput.pointer",
+      "kinds": [
+        "get"
+      ],
+      "native": [
+        "playerInput"
+      ],
+      "type": "docs/judas.d.ts:PlayerInput.pointer",
+      "reference": "docs/judasjs/local-multiplayer.md"
+    },
+    {
+      "symbol": "PlayerInput.pressed",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "playerInput"
+      ],
+      "type": "docs/judas.d.ts:PlayerInput.pressed",
+      "reference": "docs/judasjs/local-multiplayer.md"
+    },
+    {
+      "symbol": "PlayerInput.released",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "playerInput"
+      ],
+      "type": "docs/judas.d.ts:PlayerInput.released",
+      "reference": "docs/judasjs/local-multiplayer.md"
+    },
+    {
+      "symbol": "PlayerInput.stick",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "playerInput"
+      ],
+      "type": "docs/judas.d.ts:PlayerInput.stick",
+      "reference": "docs/judasjs/local-multiplayer.md"
+    },
+    {
+      "symbol": "PlayerInput.touches",
+      "kinds": [
+        "get"
+      ],
+      "native": [
+        "playerInput"
+      ],
+      "type": "docs/judas.d.ts:PlayerInput.touches",
+      "reference": "docs/judasjs/local-multiplayer.md"
+    },
+    {
+      "symbol": "PlayerInput.vector",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "playerInput"
+      ],
+      "type": "docs/judas.d.ts:PlayerInput.vector",
+      "reference": "docs/judasjs/local-multiplayer.md"
+    },
+    {
+      "symbol": "Powertrain",
+      "kinds": [
+        "class"
+      ],
+      "native": [],
+      "type": "docs/judas.d.ts:Powertrain",
+      "reference": "docs/judasjs/powertrains.md"
+    },
+    {
+      "symbol": "Powertrain.constructor",
+      "kinds": [
+        "call"
+      ],
+      "native": [],
+      "type": "docs/judas.d.ts:Powertrain.constructor",
+      "reference": "docs/judasjs/powertrains.md"
+    },
+    {
+      "symbol": "Powertrain.enabled",
+      "kinds": [
+        "get",
+        "set"
+      ],
+      "native": [
+        "powertrainEnabled"
+      ],
+      "type": "docs/judas.d.ts:Powertrain.enabled",
+      "reference": "docs/judasjs/powertrains.md"
+    },
+    {
+      "symbol": "Powertrain.id",
+      "kinds": [
+        "field"
+      ],
+      "native": [],
+      "type": "docs/judas.d.ts:Powertrain.id",
+      "reference": "docs/judasjs/powertrains.md"
+    },
+    {
+      "symbol": "Powertrain.set",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "powertrainSet"
+      ],
+      "type": "docs/judas.d.ts:Powertrain.set",
+      "reference": "docs/judasjs/powertrains.md"
+    },
+    {
+      "symbol": "Powertrain.settings",
+      "kinds": [
+        "get"
+      ],
+      "native": [
+        "powertrainSettings"
+      ],
+      "type": "docs/judas.d.ts:Powertrain.settings",
+      "reference": "docs/judasjs/powertrains.md"
+    },
+    {
+      "symbol": "Powertrain.state",
+      "kinds": [
+        "get"
+      ],
+      "native": [
+        "powertrainState"
+      ],
+      "type": "docs/judas.d.ts:Powertrain.state",
+      "reference": "docs/judasjs/powertrains.md"
+    },
+    {
+      "symbol": "Powertrain.valid",
+      "kinds": [
+        "get"
+      ],
+      "native": [
+        "powertrainValid"
+      ],
+      "type": "docs/judas.d.ts:Powertrain.valid",
+      "reference": "docs/judasjs/powertrains.md"
+    },
+    {
+      "symbol": "Ragdoll",
+      "kinds": [
+        "class"
+      ],
+      "native": [],
+      "type": "docs/judas.d.ts:Ragdoll",
+      "reference": "docs/judasjs/animation-ragdolls.md"
+    },
+    {
+      "symbol": "Ragdoll.active",
+      "kinds": [
+        "get"
+      ],
+      "native": [
+        "ragdollActive"
+      ],
+      "type": "docs/judas.d.ts:Ragdoll.active",
+      "reference": "docs/judasjs/animation-ragdolls.md"
+    },
+    {
+      "symbol": "Ragdoll.balanceDiagnostics",
+      "kinds": [
+        "get",
+        "set"
+      ],
+      "native": [
+        "ragdollBalanceDiagnostics"
+      ],
+      "type": "docs/judas.d.ts:Ragdoll.balanceDiagnostics",
+      "reference": "docs/judasjs/animation-ragdolls.md"
+    },
+    {
+      "symbol": "Ragdoll.balanceState",
+      "kinds": [
+        "get"
+      ],
+      "native": [
+        "ragdollBalanceState"
+      ],
+      "type": "docs/judas.d.ts:Ragdoll.balanceState",
+      "reference": "docs/judasjs/animation-ragdolls.md"
+    },
+    {
+      "symbol": "Ragdoll.body",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "ragdollBody"
+      ],
+      "type": "docs/judas.d.ts:Ragdoll.body",
+      "reference": "docs/judasjs/animation-ragdolls.md"
+    },
+    {
+      "symbol": "Ragdoll.cancelBalance",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "ragdollBalanceCancel"
+      ],
+      "type": "docs/judas.d.ts:Ragdoll.cancelBalance",
+      "reference": "docs/judasjs/animation-ragdolls.md"
+    },
+    {
+      "symbol": "Ragdoll.configureBalance",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "ragdollBalanceConfigure"
+      ],
+      "type": "docs/judas.d.ts:Ragdoll.configureBalance",
+      "reference": "docs/judasjs/animation-ragdolls.md"
+    },
+    {
+      "symbol": "Ragdoll.configurePhysical",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "ragdollPhysicalConfigure"
+      ],
+      "type": "docs/judas.d.ts:Ragdoll.configurePhysical",
+      "reference": "docs/judasjs/animation-ragdolls.md"
+    },
+    {
+      "symbol": "Ragdoll.constructor",
+      "kinds": [
+        "call"
+      ],
+      "native": [],
+      "type": "docs/judas.d.ts:Ragdoll.constructor",
+      "reference": "docs/judasjs/animation-ragdolls.md"
+    },
+    {
+      "symbol": "Ragdoll.enabled",
+      "kinds": [
+        "set"
+      ],
+      "native": [
+        "ragdollEnabled"
+      ],
+      "type": "docs/judas.d.ts:Ragdoll.enabled",
+      "reference": "docs/judasjs/animation-ragdolls.md"
+    },
+    {
+      "symbol": "Ragdoll.enter",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "ragdollEnter"
+      ],
+      "type": "docs/judas.d.ts:Ragdoll.enter",
+      "reference": "docs/judasjs/animation-ragdolls.md"
+    },
+    {
+      "symbol": "Ragdoll.id",
+      "kinds": [
+        "field"
+      ],
+      "native": [],
+      "type": "docs/judas.d.ts:Ragdoll.id",
+      "reference": "docs/judasjs/animation-ragdolls.md"
+    },
+    {
+      "symbol": "Ragdoll.leave",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "ragdollLeave"
+      ],
+      "type": "docs/judas.d.ts:Ragdoll.leave",
+      "reference": "docs/judasjs/animation-ragdolls.md"
+    },
+    {
+      "symbol": "Ragdoll.physicalState",
+      "kinds": [
+        "get"
+      ],
+      "native": [
+        "ragdollPhysicalState"
+      ],
+      "type": "docs/judas.d.ts:Ragdoll.physicalState",
+      "reference": "docs/judasjs/animation-ragdolls.md"
+    },
+    {
+      "symbol": "Ragdoll.receiveContactEvents",
+      "kinds": [
+        "get",
+        "set"
+      ],
+      "native": [
+        "ragdollContactEvents"
+      ],
+      "type": "docs/judas.d.ts:Ragdoll.receiveContactEvents",
+      "reference": "docs/judasjs/animation-ragdolls.md"
+    },
+    {
+      "symbol": "Ragdoll.requestBalance",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "ragdollBalanceRequest"
+      ],
+      "type": "docs/judas.d.ts:Ragdoll.requestBalance",
+      "reference": "docs/judasjs/animation-ragdolls.md"
+    },
+    {
+      "symbol": "Ragdoll.setMode",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "ragdollMode"
+      ],
+      "type": "docs/judas.d.ts:Ragdoll.setMode",
+      "reference": "docs/judasjs/animation-ragdolls.md"
+    },
+    {
+      "symbol": "Terrain",
+      "kinds": [
+        "class"
+      ],
+      "native": [],
+      "type": "docs/judas.d.ts:Terrain",
+      "reference": "docs/judasjs/terrain.md"
+    },
+    {
+      "symbol": "Terrain.brush",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "terrainBrush"
+      ],
+      "type": "docs/judas.d.ts:Terrain.brush",
+      "reference": "docs/judasjs/terrain.md"
+    },
+    {
+      "symbol": "Terrain.constructor",
+      "kinds": [
+        "call"
+      ],
+      "native": [],
+      "type": "docs/judas.d.ts:Terrain.constructor",
+      "reference": "docs/judasjs/terrain.md"
+    },
+    {
+      "symbol": "Terrain.create",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "terrainCreate"
+      ],
+      "type": "docs/judas.d.ts:Terrain.create",
+      "reference": "docs/judasjs/terrain.md"
+    },
+    {
+      "symbol": "Terrain.id",
+      "kinds": [
+        "field"
+      ],
+      "native": [],
+      "type": "docs/judas.d.ts:Terrain.id",
+      "reference": "docs/judasjs/terrain.md"
+    },
+    {
+      "symbol": "Terrain.state",
+      "kinds": [
+        "get"
+      ],
+      "native": [
+        "terrainState"
+      ],
+      "type": "docs/judas.d.ts:Terrain.state",
+      "reference": "docs/judasjs/terrain.md"
+    },
+    {
+      "symbol": "UIDocument",
+      "kinds": [
+        "class"
+      ],
+      "native": [],
+      "type": "docs/judas.d.ts:UIDocument",
+      "reference": "docs/judasjs/ui.md"
+    },
+    {
+      "symbol": "UIDocument.accessibility",
+      "kinds": [
+        "get"
+      ],
+      "native": [
+        "uiControl"
+      ],
+      "type": "docs/judas.d.ts:UIDocument.accessibility",
+      "reference": "docs/judasjs/ui.md"
+    },
+    {
+      "symbol": "UIDocument.captureState",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "uiControl"
+      ],
+      "type": "docs/judas.d.ts:UIDocument.captureState",
+      "reference": "docs/judasjs/ui.md"
+    },
+    {
+      "symbol": "UIDocument.constructor",
+      "kinds": [
+        "call"
+      ],
+      "native": [],
+      "type": "docs/judas.d.ts:UIDocument.constructor",
+      "reference": "docs/judasjs/ui.md"
+    },
+    {
+      "symbol": "UIDocument.enabled",
+      "kinds": [
+        "get",
+        "set"
+      ],
+      "native": [
+        "uiGet",
+        "uiSet"
+      ],
+      "type": "docs/judas.d.ts:UIDocument.enabled",
+      "reference": "docs/judasjs/ui.md"
+    },
+    {
+      "symbol": "UIDocument.focus",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "uiControl"
+      ],
+      "type": "docs/judas.d.ts:UIDocument.focus",
+      "reference": "docs/judasjs/ui.md"
+    },
+    {
+      "symbol": "UIDocument.focused",
+      "kinds": [
+        "get"
+      ],
+      "native": [
+        "uiControl"
+      ],
+      "type": "docs/judas.d.ts:UIDocument.focused",
+      "reference": "docs/judasjs/ui.md"
+    },
+    {
+      "symbol": "UIDocument.get",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "uiGet"
+      ],
+      "type": "docs/judas.d.ts:UIDocument.get",
+      "reference": "docs/judasjs/ui.md"
+    },
+    {
+      "symbol": "UIDocument.handle",
+      "kinds": [
+        "field"
+      ],
+      "native": [],
+      "type": "docs/judas.d.ts:UIDocument.handle",
+      "reference": "docs/judasjs/ui.md"
+    },
+    {
+      "symbol": "UIDocument.hide",
+      "kinds": [
+        "call"
+      ],
+      "native": [],
+      "type": "docs/judas.d.ts:UIDocument.hide",
+      "reference": "docs/judasjs/ui.md"
+    },
+    {
+      "symbol": "UIDocument.modal",
+      "kinds": [
+        "get",
+        "set"
+      ],
+      "native": [
+        "uiGet",
+        "uiSet"
+      ],
+      "type": "docs/judas.d.ts:UIDocument.modal",
+      "reference": "docs/judasjs/ui.md"
+    },
+    {
+      "symbol": "UIDocument.player",
+      "kinds": [
+        "get",
+        "set"
+      ],
+      "native": [
+        "uiPlayer"
+      ],
+      "type": "docs/judas.d.ts:UIDocument.player",
+      "reference": "docs/judasjs/ui.md"
+    },
+    {
+      "symbol": "UIDocument.referenceSize",
+      "kinds": [
+        "get",
+        "set"
+      ],
+      "native": [
+        "uiControl"
+      ],
+      "type": "docs/judas.d.ts:UIDocument.referenceSize",
+      "reference": "docs/judasjs/ui.md"
+    },
+    {
+      "symbol": "UIDocument.restoreState",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "uiControl"
+      ],
+      "type": "docs/judas.d.ts:UIDocument.restoreState",
+      "reference": "docs/judasjs/ui.md"
+    },
+    {
+      "symbol": "UIDocument.scale",
+      "kinds": [
+        "get",
+        "set"
+      ],
+      "native": [
+        "uiControl"
+      ],
+      "type": "docs/judas.d.ts:UIDocument.scale",
+      "reference": "docs/judasjs/ui.md"
+    },
+    {
+      "symbol": "UIDocument.show",
+      "kinds": [
+        "call"
+      ],
+      "native": [],
+      "type": "docs/judas.d.ts:UIDocument.show",
+      "reference": "docs/judasjs/ui.md"
+    },
+    {
+      "symbol": "UIDocument.unload",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "uiUnload"
+      ],
+      "type": "docs/judas.d.ts:UIDocument.unload",
+      "reference": "docs/judasjs/ui.md"
+    },
+    {
+      "symbol": "UIDocument.visible",
+      "kinds": [
+        "get",
+        "set"
+      ],
+      "native": [
+        "uiGet",
+        "uiSet"
+      ],
+      "type": "docs/judas.d.ts:UIDocument.visible",
+      "reference": "docs/judasjs/ui.md"
+    },
+    {
+      "symbol": "UIElement",
+      "kinds": [
+        "class"
+      ],
+      "native": [],
+      "type": "docs/judas.d.ts:UIElement",
+      "reference": "docs/judasjs/ui.md"
+    },
+    {
+      "symbol": "UIElement.configure",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "uiControl"
+      ],
+      "type": "docs/judas.d.ts:UIElement.configure",
+      "reference": "docs/judasjs/ui.md"
+    },
+    {
+      "symbol": "UIElement.constructor",
+      "kinds": [
+        "call"
+      ],
+      "native": [],
+      "type": "docs/judas.d.ts:UIElement.constructor",
+      "reference": "docs/judasjs/ui.md"
+    },
+    {
+      "symbol": "UIElement.direction",
+      "kinds": [
+        "get",
+        "set"
+      ],
+      "native": [
+        "uiGet",
+        "uiSet"
+      ],
+      "type": "docs/judas.d.ts:UIElement.direction",
+      "reference": "docs/judasjs/ui.md"
+    },
+    {
+      "symbol": "UIElement.enabled",
+      "kinds": [
+        "get",
+        "set"
+      ],
+      "native": [
+        "uiGet",
+        "uiSet"
+      ],
+      "type": "docs/judas.d.ts:UIElement.enabled",
+      "reference": "docs/judasjs/ui.md"
+    },
+    {
+      "symbol": "UIElement.font",
+      "kinds": [
+        "get",
+        "set"
+      ],
+      "native": [
+        "uiGet",
+        "uiSet"
+      ],
+      "type": "docs/judas.d.ts:UIElement.font",
+      "reference": "docs/judasjs/ui.md"
+    },
+    {
+      "symbol": "UIElement.handle",
+      "kinds": [
+        "field"
+      ],
+      "native": [],
+      "type": "docs/judas.d.ts:UIElement.handle",
+      "reference": "docs/judasjs/ui.md"
+    },
+    {
+      "symbol": "UIElement.id",
+      "kinds": [
+        "field"
+      ],
+      "native": [],
+      "type": "docs/judas.d.ts:UIElement.id",
+      "reference": "docs/judasjs/ui.md"
+    },
+    {
+      "symbol": "UIElement.layout",
+      "kinds": [
+        "get"
+      ],
+      "native": [
+        "uiLayout"
+      ],
+      "type": "docs/judas.d.ts:UIElement.layout",
+      "reference": "docs/judasjs/ui.md"
+    },
+    {
+      "symbol": "UIElement.scroll",
+      "kinds": [
+        "get",
+        "set"
+      ],
+      "native": [
+        "uiControl"
+      ],
+      "type": "docs/judas.d.ts:UIElement.scroll",
+      "reference": "docs/judasjs/ui.md"
+    },
+    {
+      "symbol": "UIElement.selectedIndex",
+      "kinds": [
+        "get",
+        "set"
+      ],
+      "native": [
+        "uiControl"
+      ],
+      "type": "docs/judas.d.ts:UIElement.selectedIndex",
+      "reference": "docs/judasjs/ui.md"
+    },
+    {
+      "symbol": "UIElement.selection",
+      "kinds": [
+        "get",
+        "set"
+      ],
+      "native": [
+        "uiControl"
+      ],
+      "type": "docs/judas.d.ts:UIElement.selection",
+      "reference": "docs/judasjs/ui.md"
+    },
+    {
+      "symbol": "UIElement.setItems",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "uiControl"
+      ],
+      "type": "docs/judas.d.ts:UIElement.setItems",
+      "reference": "docs/judasjs/ui.md"
+    },
+    {
+      "symbol": "UIElement.setLayout",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "uiLayout"
+      ],
+      "type": "docs/judas.d.ts:UIElement.setLayout",
+      "reference": "docs/judasjs/ui.md"
+    },
+    {
+      "symbol": "UIElement.text",
+      "kinds": [
+        "get",
+        "set"
+      ],
+      "native": [
+        "uiGet",
+        "uiSet"
+      ],
+      "type": "docs/judas.d.ts:UIElement.text",
+      "reference": "docs/judasjs/ui.md"
+    },
+    {
+      "symbol": "UIElement.textAlignment",
+      "kinds": [
+        "get",
+        "set"
+      ],
+      "native": [
+        "uiGet",
+        "uiSet"
+      ],
+      "type": "docs/judas.d.ts:UIElement.textAlignment",
+      "reference": "docs/judasjs/ui.md"
+    },
+    {
+      "symbol": "UIElement.textKey",
+      "kinds": [
+        "get",
+        "set"
+      ],
+      "native": [
+        "uiGet",
+        "uiSet"
+      ],
+      "type": "docs/judas.d.ts:UIElement.textKey",
+      "reference": "docs/judasjs/ui.md"
+    },
+    {
+      "symbol": "UIElement.texture",
+      "kinds": [
+        "get",
+        "set"
+      ],
+      "native": [
+        "uiGet",
+        "uiSet"
+      ],
+      "type": "docs/judas.d.ts:UIElement.texture",
+      "reference": "docs/judasjs/ui.md"
+    },
+    {
+      "symbol": "UIElement.value",
+      "kinds": [
+        "get",
+        "set"
+      ],
+      "native": [
+        "uiGet",
+        "uiSet"
+      ],
+      "type": "docs/judas.d.ts:UIElement.value",
+      "reference": "docs/judasjs/ui.md"
+    },
+    {
+      "symbol": "UIElement.visible",
+      "kinds": [
+        "get",
+        "set"
+      ],
+      "native": [
+        "uiGet",
+        "uiSet"
+      ],
+      "type": "docs/judas.d.ts:UIElement.visible",
+      "reference": "docs/judasjs/ui.md"
+    },
+    {
+      "symbol": "Weather",
+      "kinds": [
+        "class"
+      ],
+      "native": [],
+      "type": "docs/judas.d.ts:Weather",
+      "reference": "docs/judasjs/weather.md"
+    },
+    {
+      "symbol": "Weather.constructor",
+      "kinds": [
+        "call"
+      ],
+      "native": [],
+      "type": "docs/judas.d.ts:Weather.constructor",
+      "reference": "docs/judasjs/weather.md"
+    },
+    {
+      "symbol": "Weather.enabled",
+      "kinds": [
+        "get",
+        "set"
+      ],
+      "native": [
+        "weatherEnabled"
+      ],
+      "type": "docs/judas.d.ts:Weather.enabled",
+      "reference": "docs/judasjs/weather.md"
+    },
+    {
+      "symbol": "Weather.id",
+      "kinds": [
+        "field"
+      ],
+      "native": [],
+      "type": "docs/judas.d.ts:Weather.id",
+      "reference": "docs/judasjs/weather.md"
+    },
+    {
+      "symbol": "Weather.state",
+      "kinds": [
+        "get"
+      ],
+      "native": [
+        "weatherState"
+      ],
+      "type": "docs/judas.d.ts:Weather.state",
+      "reference": "docs/judasjs/weather.md"
+    },
+    {
+      "symbol": "Weather.strike",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "weatherStrike"
+      ],
+      "type": "docs/judas.d.ts:Weather.strike",
+      "reference": "docs/judasjs/weather.md"
+    },
+    {
+      "symbol": "Weather.transition",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "weatherTransition"
+      ],
+      "type": "docs/judas.d.ts:Weather.transition",
+      "reference": "docs/judasjs/weather.md"
+    },
+    {
+      "symbol": "Weather.valid",
+      "kinds": [
+        "get"
+      ],
+      "native": [
+        "weatherExists"
+      ],
+      "type": "docs/judas.d.ts:Weather.valid",
+      "reference": "docs/judasjs/weather.md"
+    },
+    {
+      "symbol": "Wheel",
+      "kinds": [
+        "class"
+      ],
+      "native": [],
+      "type": "docs/judas.d.ts:Wheel",
+      "reference": "docs/judasjs/wheels.md"
+    },
+    {
+      "symbol": "Wheel.configure",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "wheelConfigure"
+      ],
+      "type": "docs/judas.d.ts:Wheel.configure",
+      "reference": "docs/judasjs/wheels.md"
+    },
+    {
+      "symbol": "Wheel.constructor",
+      "kinds": [
+        "call"
+      ],
+      "native": [],
+      "type": "docs/judas.d.ts:Wheel.constructor",
+      "reference": "docs/judasjs/wheels.md"
+    },
+    {
+      "symbol": "Wheel.enabled",
+      "kinds": [
+        "get",
+        "set"
+      ],
+      "native": [
+        "wheelEnabled"
+      ],
+      "type": "docs/judas.d.ts:Wheel.enabled",
+      "reference": "docs/judasjs/wheels.md"
+    },
+    {
+      "symbol": "Wheel.id",
+      "kinds": [
+        "field"
+      ],
+      "native": [],
+      "type": "docs/judas.d.ts:Wheel.id",
+      "reference": "docs/judasjs/wheels.md"
+    },
+    {
+      "symbol": "Wheel.set",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "wheelSet"
+      ],
+      "type": "docs/judas.d.ts:Wheel.set",
+      "reference": "docs/judasjs/wheels.md"
+    },
+    {
+      "symbol": "Wheel.settings",
+      "kinds": [
+        "get"
+      ],
+      "native": [
+        "wheelSettings"
+      ],
+      "type": "docs/judas.d.ts:Wheel.settings",
+      "reference": "docs/judasjs/wheels.md"
+    },
+    {
+      "symbol": "Wheel.state",
+      "kinds": [
+        "get"
+      ],
+      "native": [
+        "wheelState"
+      ],
+      "type": "docs/judas.d.ts:Wheel.state",
+      "reference": "docs/judasjs/wheels.md"
+    },
+    {
+      "symbol": "Wheel.valid",
+      "kinds": [
+        "get"
+      ],
+      "native": [
+        "wheelValid"
+      ],
+      "type": "docs/judas.d.ts:Wheel.valid",
+      "reference": "docs/judasjs/wheels.md"
+    },
+    {
+      "symbol": "audio",
+      "kinds": [
+        "namespace"
+      ],
+      "native": [],
+      "type": "docs/judas.d.ts:audio",
+      "reference": "docs/judasjs/audio.md"
+    },
+    {
+      "symbol": "audio.diagnostics",
+      "kinds": [
+        "get"
+      ],
+      "native": [
+        "audioDiagnostics"
+      ],
+      "type": "docs/judas.d.ts:audio.diagnostics",
+      "reference": "docs/judasjs/audio.md"
+    },
+    {
+      "symbol": "audio.group",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "audioGroup"
+      ],
+      "type": "docs/judas.d.ts:audio.group",
+      "reference": "docs/judasjs/audio.md"
+    },
+    {
+      "symbol": "audio.setGroup",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "audioGroupSet"
+      ],
+      "type": "docs/judas.d.ts:audio.setGroup",
+      "reference": "docs/judasjs/audio.md"
+    },
+    {
+      "symbol": "console",
+      "kinds": [
+        "namespace"
+      ],
+      "native": [],
+      "type": "docs/judas.d.ts:console",
+      "reference": "docs/judasjs/input.md"
+    },
+    {
+      "symbol": "console.log",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "log"
+      ],
+      "type": "docs/judas.d.ts:console.log",
+      "reference": "docs/judasjs/input.md"
+    },
+    {
+      "symbol": "entity",
+      "kinds": [
+        "function"
+      ],
+      "native": [],
+      "type": "docs/judas.d.ts:entity",
+      "reference": "docs/judasjs/entities.md"
+    },
+    {
+      "symbol": "input",
+      "kinds": [
+        "namespace"
+      ],
+      "native": [],
+      "type": "docs/judas.d.ts:input",
+      "reference": "docs/judasjs/input.md"
+    },
+    {
+      "symbol": "input.axis",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "axis"
+      ],
+      "type": "docs/judas.d.ts:input.axis",
+      "reference": "docs/judasjs/input.md"
+    },
+    {
+      "symbol": "input.held",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "held"
+      ],
+      "type": "docs/judas.d.ts:input.held",
+      "reference": "docs/judasjs/input.md"
+    },
+    {
+      "symbol": "input.pointer",
+      "kinds": [
+        "get"
+      ],
+      "native": [
+        "pointer"
+      ],
+      "type": "docs/judas.d.ts:input.pointer",
+      "reference": "docs/judasjs/input.md"
+    },
+    {
+      "symbol": "input.pointerCapture",
+      "kinds": [
+        "get",
+        "set"
+      ],
+      "native": [
+        "pointerCapture",
+        "setPointerCapture"
+      ],
+      "type": "docs/judas.d.ts:input.pointerCapture",
+      "reference": "docs/judasjs/input.md"
+    },
+    {
+      "symbol": "input.pressed",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "pressed"
+      ],
+      "type": "docs/judas.d.ts:input.pressed",
+      "reference": "docs/judasjs/input.md"
+    },
+    {
+      "symbol": "input.released",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "released"
+      ],
+      "type": "docs/judas.d.ts:input.released",
+      "reference": "docs/judasjs/input.md"
+    },
+    {
+      "symbol": "input.stick",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "stick"
+      ],
+      "type": "docs/judas.d.ts:input.stick",
+      "reference": "docs/judasjs/input.md"
+    },
+    {
+      "symbol": "input.stickDelta",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "stickDelta"
+      ],
+      "type": "docs/judas.d.ts:input.stickDelta",
+      "reference": "docs/judasjs/input.md"
+    },
+    {
+      "symbol": "input.stickSamples",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "stickSamples"
+      ],
+      "type": "docs/judas.d.ts:input.stickSamples",
+      "reference": "docs/judasjs/input.md"
+    },
+    {
+      "symbol": "input.touches",
+      "kinds": [
+        "get"
+      ],
+      "native": [
+        "touches"
+      ],
+      "type": "docs/judas.d.ts:input.touches",
+      "reference": "docs/judasjs/input.md"
+    },
+    {
+      "symbol": "input.vector",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "vector"
+      ],
+      "type": "docs/judas.d.ts:input.vector",
+      "reference": "docs/judasjs/input.md"
+    },
+    {
+      "symbol": "liquid",
+      "kinds": [
+        "namespace"
+      ],
+      "native": [],
+      "type": "docs/judas.d.ts:liquid",
+      "reference": "docs/judasjs/liquid.md"
+    },
+    {
+      "symbol": "liquid.accounting",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "liquidAccounting"
+      ],
+      "type": "docs/judas.d.ts:liquid.accounting",
+      "reference": "docs/judasjs/liquid.md"
+    },
+    {
+      "symbol": "liquid.connections",
+      "kinds": [
+        "get"
+      ],
+      "native": [
+        "liquidConnections"
+      ],
+      "type": "docs/judas.d.ts:liquid.connections",
+      "reference": "docs/judasjs/liquid.md"
+    },
+    {
+      "symbol": "liquid.errors",
+      "kinds": [
+        "get"
+      ],
+      "native": [
+        "liquidErrors"
+      ],
+      "type": "docs/judas.d.ts:liquid.errors",
+      "reference": "docs/judasjs/liquid.md"
+    },
+    {
+      "symbol": "liquid.sample",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "liquidSample"
+      ],
+      "type": "docs/judas.d.ts:liquid.sample",
+      "reference": "docs/judasjs/liquid.md"
+    },
+    {
+      "symbol": "liquid.samplePresented",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "liquidPresentedSample"
+      ],
+      "type": "docs/judas.d.ts:liquid.samplePresented",
+      "reference": "docs/judasjs/liquid.md"
+    },
+    {
+      "symbol": "liquid.submerged",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "liquidSubmerged"
+      ],
+      "type": "docs/judas.d.ts:liquid.submerged",
+      "reference": "docs/judasjs/liquid.md"
+    },
+    {
+      "symbol": "localization",
+      "kinds": [
+        "namespace"
+      ],
+      "native": [],
+      "type": "docs/judas.d.ts:localization",
+      "reference": "docs/judasjs/localization.md"
+    },
+    {
+      "symbol": "localization.available",
+      "kinds": [
+        "get"
+      ],
+      "native": [
+        "localeInfo"
+      ],
+      "type": "docs/judas.d.ts:localization.available",
+      "reference": "docs/judasjs/localization.md"
+    },
+    {
+      "symbol": "localization.direction",
+      "kinds": [
+        "get"
+      ],
+      "native": [
+        "localeInfo"
+      ],
+      "type": "docs/judas.d.ts:localization.direction",
+      "reference": "docs/judasjs/localization.md"
+    },
+    {
+      "symbol": "localization.format",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "localeFormat"
+      ],
+      "type": "docs/judas.d.ts:localization.format",
+      "reference": "docs/judasjs/localization.md"
+    },
+    {
+      "symbol": "localization.locale",
+      "kinds": [
+        "get"
+      ],
+      "native": [
+        "localeInfo"
+      ],
+      "type": "docs/judas.d.ts:localization.locale",
+      "reference": "docs/judasjs/localization.md"
+    },
+    {
+      "symbol": "localization.number",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "localeNumber"
+      ],
+      "type": "docs/judas.d.ts:localization.number",
+      "reference": "docs/judasjs/localization.md"
+    },
+    {
+      "symbol": "localization.reload",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "localeReload"
+      ],
+      "type": "docs/judas.d.ts:localization.reload",
+      "reference": "docs/judasjs/localization.md"
+    },
+    {
+      "symbol": "localization.revision",
+      "kinds": [
+        "get"
+      ],
+      "native": [
+        "localeInfo"
+      ],
+      "type": "docs/judas.d.ts:localization.revision",
+      "reference": "docs/judasjs/localization.md"
+    },
+    {
+      "symbol": "localization.setLocale",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "localeChoose"
+      ],
+      "type": "docs/judas.d.ts:localization.setLocale",
+      "reference": "docs/judasjs/localization.md"
+    },
+    {
+      "symbol": "mods",
+      "kinds": [
+        "namespace"
+      ],
+      "native": [],
+      "type": "docs/judas.d.ts:mods",
+      "reference": "docs/judasjs/mods.md"
+    },
+    {
+      "symbol": "mods.active",
+      "kinds": [
+        "get"
+      ],
+      "native": [
+        "modCatalog"
+      ],
+      "type": "docs/judas.d.ts:mods.active",
+      "reference": "docs/judasjs/mods.md"
+    },
+    {
+      "symbol": "mods.contributions",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "modCatalog"
+      ],
+      "type": "docs/judas.d.ts:mods.contributions",
+      "reference": "docs/judasjs/mods.md"
+    },
+    {
+      "symbol": "mods.resolve",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "modCatalog"
+      ],
+      "type": "docs/judas.d.ts:mods.resolve",
+      "reference": "docs/judasjs/mods.md"
+    },
+    {
+      "symbol": "navigation",
+      "kinds": [
+        "namespace"
+      ],
+      "native": [],
+      "type": "docs/judas.d.ts:navigation",
+      "reference": "docs/judasjs/navigation.md"
+    },
+    {
+      "symbol": "navigation.areas",
+      "kinds": [
+        "get"
+      ],
+      "native": [
+        "navAreas"
+      ],
+      "type": "docs/judas.d.ts:navigation.areas",
+      "reference": "docs/judasjs/navigation.md"
+    },
+    {
+      "symbol": "navigation.errors",
+      "kinds": [
+        "get"
+      ],
+      "native": [
+        "navErrors"
+      ],
+      "type": "docs/judas.d.ts:navigation.errors",
+      "reference": "docs/judasjs/navigation.md"
+    },
+    {
+      "symbol": "navigation.path",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "navPath"
+      ],
+      "type": "docs/judas.d.ts:navigation.path",
+      "reference": "docs/judasjs/navigation.md"
+    },
+    {
+      "symbol": "navigation.profiles",
+      "kinds": [
+        "get"
+      ],
+      "native": [
+        "navProfiles"
+      ],
+      "type": "docs/judas.d.ts:navigation.profiles",
+      "reference": "docs/judasjs/navigation.md"
+    },
+    {
+      "symbol": "navigation.raycast",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "navRaycast"
+      ],
+      "type": "docs/judas.d.ts:navigation.raycast",
+      "reference": "docs/judasjs/navigation.md"
+    },
+    {
+      "symbol": "navigation.sample",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "navSample"
+      ],
+      "type": "docs/judas.d.ts:navigation.sample",
+      "reference": "docs/judasjs/navigation.md"
+    },
+    {
+      "symbol": "network",
+      "kinds": [
+        "namespace"
+      ],
+      "native": [],
+      "type": "docs/judas.d.ts:network",
+      "reference": "docs/judasjs/network.md"
+    },
+    {
+      "symbol": "network.close",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "networkClose"
+      ],
+      "type": "docs/judas.d.ts:network.close",
+      "reference": "docs/judasjs/network.md"
+    },
+    {
+      "symbol": "network.entities",
+      "kinds": [
+        "get"
+      ],
+      "native": [
+        "networkEntities",
+        "networkInfo"
+      ],
+      "type": "docs/judas.d.ts:network.entities",
+      "reference": "docs/judasjs/network.md"
+    },
+    {
+      "symbol": "network.error",
+      "kinds": [
+        "get"
+      ],
+      "native": [
+        "networkInfo"
+      ],
+      "type": "docs/judas.d.ts:network.error",
+      "reference": "docs/judasjs/network.md"
+    },
+    {
+      "symbol": "network.host",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "networkHost"
+      ],
+      "type": "docs/judas.d.ts:network.host",
+      "reference": "docs/judasjs/network.md"
+    },
+    {
+      "symbol": "network.input",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "networkInput"
+      ],
+      "type": "docs/judas.d.ts:network.input",
+      "reference": "docs/judasjs/network.md"
+    },
+    {
+      "symbol": "network.join",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "networkJoin"
+      ],
+      "type": "docs/judas.d.ts:network.join",
+      "reference": "docs/judasjs/network.md"
+    },
+    {
+      "symbol": "network.launch",
+      "kinds": [
+        "get"
+      ],
+      "native": [
+        "networkInfo"
+      ],
+      "type": "docs/judas.d.ts:network.launch",
+      "reference": "docs/judasjs/network.md"
+    },
+    {
+      "symbol": "network.mode",
+      "kinds": [
+        "get"
+      ],
+      "native": [
+        "networkInfo"
+      ],
+      "type": "docs/judas.d.ts:network.mode",
+      "reference": "docs/judasjs/network.md"
+    },
+    {
+      "symbol": "network.peerId",
+      "kinds": [
+        "get"
+      ],
+      "native": [
+        "networkInfo"
+      ],
+      "type": "docs/judas.d.ts:network.peerId",
+      "reference": "docs/judasjs/network.md"
+    },
+    {
+      "symbol": "network.peers",
+      "kinds": [
+        "get"
+      ],
+      "native": [
+        "networkPeers"
+      ],
+      "type": "docs/judas.d.ts:network.peers",
+      "reference": "docs/judasjs/network.md"
+    },
+    {
+      "symbol": "network.port",
+      "kinds": [
+        "get"
+      ],
+      "native": [
+        "networkInfo"
+      ],
+      "type": "docs/judas.d.ts:network.port",
+      "reference": "docs/judasjs/network.md"
+    },
+    {
+      "symbol": "network.replicate",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "networkInfo",
+        "networkReplicate"
+      ],
+      "type": "docs/judas.d.ts:network.replicate",
+      "reference": "docs/judasjs/network.md"
+    },
+    {
+      "symbol": "network.sendInput",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "networkSendInput"
+      ],
+      "type": "docs/judas.d.ts:network.sendInput",
+      "reference": "docs/judasjs/network.md"
+    },
+    {
+      "symbol": "network.setInterest",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "networkInterest"
+      ],
+      "type": "docs/judas.d.ts:network.setInterest",
+      "reference": "docs/judasjs/network.md"
+    },
+    {
+      "symbol": "network.stats",
+      "kinds": [
+        "get"
+      ],
+      "native": [
+        "networkInfo"
+      ],
+      "type": "docs/judas.d.ts:network.stats",
+      "reference": "docs/judasjs/network.md"
+    },
+    {
+      "symbol": "network.status",
+      "kinds": [
+        "get"
+      ],
+      "native": [
+        "networkInfo"
+      ],
+      "type": "docs/judas.d.ts:network.status",
+      "reference": "docs/judasjs/network.md"
+    },
+    {
+      "symbol": "physics",
+      "kinds": [
+        "namespace"
+      ],
+      "native": [],
+      "type": "docs/judas.d.ts:physics",
+      "reference": "docs/judasjs/physics.md"
+    },
+    {
+      "symbol": "physics.boxCast",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "cast"
+      ],
+      "type": "docs/judas.d.ts:physics.boxCast",
+      "reference": "docs/judasjs/physics.md"
+    },
+    {
+      "symbol": "physics.capsuleCast",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "cast"
+      ],
+      "type": "docs/judas.d.ts:physics.capsuleCast",
+      "reference": "docs/judasjs/physics.md"
+    },
+    {
+      "symbol": "physics.capsuleCastMany",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "castMany"
+      ],
+      "type": "docs/judas.d.ts:physics.capsuleCastMany",
+      "reference": "docs/judasjs/physics.md"
+    },
+    {
+      "symbol": "physics.closestPoint",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "closestPoint"
+      ],
+      "type": "docs/judas.d.ts:physics.closestPoint",
+      "reference": "docs/judasjs/physics.md"
+    },
+    {
+      "symbol": "physics.createJoint",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "jointCreate"
+      ],
+      "type": "docs/judas.d.ts:physics.createJoint",
+      "reference": "docs/judasjs/physics.md"
+    },
+    {
+      "symbol": "physics.gravity",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "gravitySample"
+      ],
+      "type": "docs/judas.d.ts:physics.gravity",
+      "reference": "docs/judasjs/physics.md"
+    },
+    {
+      "symbol": "physics.joint",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "joint"
+      ],
+      "type": "docs/judas.d.ts:physics.joint",
+      "reference": "docs/judasjs/physics.md"
+    },
+    {
+      "symbol": "physics.raycast",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "cast"
+      ],
+      "type": "docs/judas.d.ts:physics.raycast",
+      "reference": "docs/judasjs/physics.md"
+    },
+    {
+      "symbol": "physics.raycastMany",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "castMany"
+      ],
+      "type": "docs/judas.d.ts:physics.raycastMany",
+      "reference": "docs/judasjs/physics.md"
+    },
+    {
+      "symbol": "physics.sphereCast",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "cast"
+      ],
+      "type": "docs/judas.d.ts:physics.sphereCast",
+      "reference": "docs/judasjs/physics.md"
+    },
+    {
+      "symbol": "physics.sphereCastMany",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "castMany"
+      ],
+      "type": "docs/judas.d.ts:physics.sphereCastMany",
+      "reference": "docs/judasjs/physics.md"
+    },
+    {
+      "symbol": "players",
+      "kinds": [
+        "namespace"
+      ],
+      "native": [],
+      "type": "docs/judas.d.ts:players",
+      "reference": "docs/judasjs/local-multiplayer.md"
+    },
+    {
+      "symbol": "players.create",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "playerCreate"
+      ],
+      "type": "docs/judas.d.ts:players.create",
+      "reference": "docs/judasjs/local-multiplayer.md"
+    },
+    {
+      "symbol": "players.devices",
+      "kinds": [
+        "get"
+      ],
+      "native": [
+        "playerDevices"
+      ],
+      "type": "docs/judas.d.ts:players.devices",
+      "reference": "docs/judasjs/local-multiplayer.md"
+    },
+    {
+      "symbol": "players.get",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "playerExists"
+      ],
+      "type": "docs/judas.d.ts:players.get",
+      "reference": "docs/judasjs/local-multiplayer.md"
+    },
+    {
+      "symbol": "players.list",
+      "kinds": [
+        "get"
+      ],
+      "native": [
+        "playerList"
+      ],
+      "type": "docs/judas.d.ts:players.list",
+      "reference": "docs/judasjs/local-multiplayer.md"
+    },
+    {
+      "symbol": "profiler",
+      "kinds": [
+        "namespace"
+      ],
+      "native": [],
+      "type": "docs/judas.d.ts:profiler",
+      "reference": "docs/judasjs/profiling.md"
+    },
+    {
+      "symbol": "profiler.counter",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "profileCounter"
+      ],
+      "type": "docs/judas.d.ts:profiler.counter",
+      "reference": "docs/judasjs/profiling.md"
+    },
+    {
+      "symbol": "profiler.scope",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "profileScope"
+      ],
+      "type": "docs/judas.d.ts:profiler.scope",
+      "reference": "docs/judasjs/profiling.md"
+    },
+    {
+      "symbol": "saves",
+      "kinds": [
+        "namespace"
+      ],
+      "native": [],
+      "type": "docs/judas.d.ts:saves",
+      "reference": "docs/judasjs/saves.md"
+    },
+    {
+      "symbol": "saves.cancel",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "saveCancel"
+      ],
+      "type": "docs/judas.d.ts:saves.cancel",
+      "reference": "docs/judasjs/saves.md"
+    },
+    {
+      "symbol": "saves.delete",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "saveRequest"
+      ],
+      "type": "docs/judas.d.ts:saves.delete",
+      "reference": "docs/judasjs/saves.md"
+    },
+    {
+      "symbol": "saves.exclude",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "saveExclude"
+      ],
+      "type": "docs/judas.d.ts:saves.exclude",
+      "reference": "docs/judasjs/saves.md"
+    },
+    {
+      "symbol": "saves.exists",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "saveList"
+      ],
+      "type": "docs/judas.d.ts:saves.exists",
+      "reference": "docs/judasjs/saves.md"
+    },
+    {
+      "symbol": "saves.list",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "saveList"
+      ],
+      "type": "docs/judas.d.ts:saves.list",
+      "reference": "docs/judasjs/saves.md"
+    },
+    {
+      "symbol": "saves.load",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "saveRequest"
+      ],
+      "type": "docs/judas.d.ts:saves.load",
+      "reference": "docs/judasjs/saves.md"
+    },
+    {
+      "symbol": "saves.reference",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "saveReference"
+      ],
+      "type": "docs/judas.d.ts:saves.reference",
+      "reference": "docs/judasjs/saves.md"
+    },
+    {
+      "symbol": "saves.refresh",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "saveRequest"
+      ],
+      "type": "docs/judas.d.ts:saves.refresh",
+      "reference": "docs/judasjs/saves.md"
+    },
+    {
+      "symbol": "saves.resolve",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "saveResolve"
+      ],
+      "type": "docs/judas.d.ts:saves.resolve",
+      "reference": "docs/judasjs/saves.md"
+    },
+    {
+      "symbol": "saves.save",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "saveRequest"
+      ],
+      "type": "docs/judas.d.ts:saves.save",
+      "reference": "docs/judasjs/saves.md"
+    },
+    {
+      "symbol": "saves.status",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "saveStatus"
+      ],
+      "type": "docs/judas.d.ts:saves.status",
+      "reference": "docs/judasjs/saves.md"
+    },
+    {
+      "symbol": "scenes",
+      "kinds": [
+        "namespace"
+      ],
+      "native": [],
+      "type": "docs/judas.d.ts:scenes",
+      "reference": "docs/judasjs/scenes-state.md"
+    },
+    {
+      "symbol": "scenes.activateRegion",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "regionActivate"
+      ],
+      "type": "docs/judas.d.ts:scenes.activateRegion",
+      "reference": "docs/judasjs/streaming.md"
+    },
+    {
+      "symbol": "scenes.adopt",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "regionAdopt"
+      ],
+      "type": "docs/judas.d.ts:scenes.adopt",
+      "reference": "docs/judasjs/streaming.md"
+    },
+    {
+      "symbol": "scenes.current",
+      "kinds": [
+        "get"
+      ],
+      "native": [
+        "sceneCurrent"
+      ],
+      "type": "docs/judas.d.ts:scenes.current",
+      "reference": "docs/judasjs/scenes-state.md"
+    },
+    {
+      "symbol": "scenes.load",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "sceneLoad"
+      ],
+      "type": "docs/judas.d.ts:scenes.load",
+      "reference": "docs/judasjs/scenes-state.md"
+    },
+    {
+      "symbol": "scenes.owner",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "regionOwner"
+      ],
+      "type": "docs/judas.d.ts:scenes.owner",
+      "reference": "docs/judasjs/streaming.md"
+    },
+    {
+      "symbol": "scenes.pinRegion",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "regionPin"
+      ],
+      "type": "docs/judas.d.ts:scenes.pinRegion",
+      "reference": "docs/judasjs/streaming.md"
+    },
+    {
+      "symbol": "scenes.regionStatus",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "regionStatus"
+      ],
+      "type": "docs/judas.d.ts:scenes.regionStatus",
+      "reference": "docs/judasjs/streaming.md"
+    },
+    {
+      "symbol": "scenes.regions",
+      "kinds": [
+        "get"
+      ],
+      "native": [
+        "regionList"
+      ],
+      "type": "docs/judas.d.ts:scenes.regions",
+      "reference": "docs/judasjs/streaming.md"
+    },
+    {
+      "symbol": "scenes.registered",
+      "kinds": [
+        "get"
+      ],
+      "native": [
+        "sceneList"
+      ],
+      "type": "docs/judas.d.ts:scenes.registered",
+      "reference": "docs/judasjs/scenes-state.md"
+    },
+    {
+      "symbol": "scenes.releaseRegion",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "regionRelease"
+      ],
+      "type": "docs/judas.d.ts:scenes.releaseRegion",
+      "reference": "docs/judasjs/streaming.md"
+    },
+    {
+      "symbol": "scenes.reload",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "sceneReload"
+      ],
+      "type": "docs/judas.d.ts:scenes.reload",
+      "reference": "docs/judasjs/scenes-state.md"
+    },
+    {
+      "symbol": "scenes.removeInterest",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "regionRemoveInterest"
+      ],
+      "type": "docs/judas.d.ts:scenes.removeInterest",
+      "reference": "docs/judasjs/streaming.md"
+    },
+    {
+      "symbol": "scenes.requestRegion",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "regionRequest"
+      ],
+      "type": "docs/judas.d.ts:scenes.requestRegion",
+      "reference": "docs/judasjs/streaming.md"
+    },
+    {
+      "symbol": "scenes.resolveRegionEntity",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "regionResolve"
+      ],
+      "type": "docs/judas.d.ts:scenes.resolveRegionEntity",
+      "reference": "docs/judasjs/streaming.md"
+    },
+    {
+      "symbol": "scenes.setInterest",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "regionInterest"
+      ],
+      "type": "docs/judas.d.ts:scenes.setInterest",
+      "reference": "docs/judasjs/streaming.md"
+    },
+    {
+      "symbol": "scenes.streamingStats",
+      "kinds": [
+        "get"
+      ],
+      "native": [
+        "regionStats"
+      ],
+      "type": "docs/judas.d.ts:scenes.streamingStats",
+      "reference": "docs/judasjs/streaming.md"
+    },
+    {
+      "symbol": "scenes.unloadRegion",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "regionUnload"
+      ],
+      "type": "docs/judas.d.ts:scenes.unloadRegion",
+      "reference": "docs/judasjs/streaming.md"
+    },
+    {
+      "symbol": "session",
+      "kinds": [
+        "namespace"
+      ],
+      "native": [],
+      "type": "docs/judas.d.ts:session",
+      "reference": "docs/judasjs/scenes-state.md"
+    },
+    {
+      "symbol": "session.delete",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "sessionDelete"
+      ],
+      "type": "docs/judas.d.ts:session.delete",
+      "reference": "docs/judasjs/scenes-state.md"
+    },
+    {
+      "symbol": "session.get",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "sessionGet"
+      ],
+      "type": "docs/judas.d.ts:session.get",
+      "reference": "docs/judasjs/scenes-state.md"
+    },
+    {
+      "symbol": "session.set",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "sessionSet"
+      ],
+      "type": "docs/judas.d.ts:session.set",
+      "reference": "docs/judasjs/scenes-state.md"
+    },
+    {
+      "symbol": "signals",
+      "kinds": [
+        "namespace"
+      ],
+      "native": [],
+      "type": "docs/judas.d.ts:signals",
+      "reference": "docs/judasjs/signals.md"
+    },
+    {
+      "symbol": "signals.emit",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "signalEmit"
+      ],
+      "type": "docs/judas.d.ts:signals.emit",
+      "reference": "docs/judasjs/signals.md"
+    },
+    {
+      "symbol": "signals.send",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "signalSend"
+      ],
+      "type": "docs/judas.d.ts:signals.send",
+      "reference": "docs/judasjs/signals.md"
+    },
+    {
+      "symbol": "signals.stats",
+      "kinds": [
+        "get"
+      ],
+      "native": [
+        "signalStats"
+      ],
+      "type": "docs/judas.d.ts:signals.stats",
+      "reference": "docs/judasjs/signals.md"
+    },
+    {
+      "symbol": "signals.subscribe",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "signalSubscribe"
+      ],
+      "type": "docs/judas.d.ts:signals.subscribe",
+      "reference": "docs/judasjs/signals.md"
+    },
+    {
+      "symbol": "signals.unsubscribe",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "signalUnsubscribe"
+      ],
+      "type": "docs/judas.d.ts:signals.unsubscribe",
+      "reference": "docs/judasjs/signals.md"
+    },
+    {
+      "symbol": "time",
+      "kinds": [
+        "namespace"
+      ],
+      "native": [],
+      "type": "docs/judas.d.ts:time",
+      "reference": "docs/judasjs/input.md"
+    },
+    {
+      "symbol": "time.delta",
+      "kinds": [
+        "get"
+      ],
+      "native": [
+        "delta"
+      ],
+      "type": "docs/judas.d.ts:time.delta",
+      "reference": "docs/judasjs/input.md"
+    },
+    {
+      "symbol": "time.elapsed",
+      "kinds": [
+        "get"
+      ],
+      "native": [
+        "elapsed"
+      ],
+      "type": "docs/judas.d.ts:time.elapsed",
+      "reference": "docs/judasjs/input.md"
+    },
+    {
+      "symbol": "time.fixed",
+      "kinds": [
+        "get"
+      ],
+      "native": [
+        "fixed"
+      ],
+      "type": "docs/judas.d.ts:time.fixed",
+      "reference": "docs/judasjs/input.md"
+    },
+    {
+      "symbol": "ui",
+      "kinds": [
+        "namespace"
+      ],
+      "native": [],
+      "type": "docs/judas.d.ts:ui",
+      "reference": "docs/judasjs/ui.md"
+    },
+    {
+      "symbol": "ui.debugOverlayVisible",
+      "kinds": [
+        "get",
+        "set"
+      ],
+      "native": [
+        "uiDiagnostics"
+      ],
+      "type": "docs/judas.d.ts:ui.debugOverlayVisible",
+      "reference": "docs/judasjs/ui.md"
+    },
+    {
+      "symbol": "ui.get",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "uiFind"
+      ],
+      "type": "docs/judas.d.ts:ui.get",
+      "reference": "docs/judasjs/ui.md"
+    },
+    {
+      "symbol": "ui.load",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "uiLoad"
+      ],
+      "type": "docs/judas.d.ts:ui.load",
+      "reference": "docs/judasjs/ui.md"
+    },
+    {
+      "symbol": "ui.quit",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "uiQuit"
+      ],
+      "type": "docs/judas.d.ts:ui.quit",
+      "reference": "docs/judasjs/ui.md"
+    },
+    {
+      "symbol": "weather",
+      "kinds": [
+        "namespace"
+      ],
+      "native": [],
+      "type": "docs/judas.d.ts:weather",
+      "reference": "docs/judasjs/weather.md"
+    },
+    {
+      "symbol": "weather.quality",
+      "kinds": [
+        "get",
+        "set"
+      ],
+      "native": [
+        "weatherQuality"
+      ],
+      "type": "docs/judas.d.ts:weather.quality",
+      "reference": "docs/judasjs/weather.md"
+    },
+    {
+      "symbol": "weather.sample",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "weatherSample"
+      ],
+      "type": "docs/judas.d.ts:weather.sample",
+      "reference": "docs/judasjs/weather.md"
+    },
+    {
+      "symbol": "world",
+      "kinds": [
+        "namespace"
+      ],
+      "native": [],
+      "type": "docs/judas.d.ts:world",
+      "reference": "docs/judasjs/entities.md"
+    },
+    {
+      "symbol": "world.appearance",
+      "kinds": [
+        "get"
+      ],
+      "native": [
+        "appearanceInfo"
+      ],
+      "type": "docs/judas.d.ts:world.appearance",
+      "reference": "docs/judasjs/materials.md"
+    },
+    {
+      "symbol": "world.clearView",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "clearView"
+      ],
+      "type": "docs/judas.d.ts:world.clearView",
+      "reference": "docs/judasjs/effects-camera.md"
+    },
+    {
+      "symbol": "world.entity",
+      "kinds": [
+        "call"
+      ],
+      "native": [],
+      "type": "docs/judas.d.ts:world.entity",
+      "reference": "docs/judasjs/entities.md"
+    },
+    {
+      "symbol": "world.fluidSample",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "fluidSample"
+      ],
+      "type": "docs/judas.d.ts:world.fluidSample",
+      "reference": "docs/judasjs/effects-camera.md"
+    },
+    {
+      "symbol": "world.origin",
+      "kinds": [
+        "get"
+      ],
+      "native": [
+        "worldOrigin"
+      ],
+      "type": "docs/judas.d.ts:world.origin",
+      "reference": "docs/judasjs/entities.md"
+    },
+    {
+      "symbol": "world.originState",
+      "kinds": [
+        "get"
+      ],
+      "native": [
+        "worldOriginState"
+      ],
+      "type": "docs/judas.d.ts:world.originState",
+      "reference": "docs/judasjs/entities.md"
+    },
+    {
+      "symbol": "world.overlap",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "overlap"
+      ],
+      "type": "docs/judas.d.ts:world.overlap",
+      "reference": "docs/judasjs/entities.md"
+    },
+    {
+      "symbol": "world.project",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "projectViewport"
+      ],
+      "type": "docs/judas.d.ts:world.project",
+      "reference": "docs/judasjs/effects-camera.md"
+    },
+    {
+      "symbol": "world.queryTags",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "queryTags"
+      ],
+      "type": "docs/judas.d.ts:world.queryTags",
+      "reference": "docs/judasjs/entities.md"
+    },
+    {
+      "symbol": "world.requestOrigin",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "worldOriginRequest"
+      ],
+      "type": "docs/judas.d.ts:world.requestOrigin",
+      "reference": "docs/judasjs/entities.md"
+    },
+    {
+      "symbol": "world.resetAppearance",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "appearanceReset"
+      ],
+      "type": "docs/judas.d.ts:world.resetAppearance",
+      "reference": "docs/judasjs/materials.md"
+    },
+    {
+      "symbol": "world.setAppearance",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "appearanceSet"
+      ],
+      "type": "docs/judas.d.ts:world.setAppearance",
+      "reference": "docs/judasjs/materials.md"
+    },
+    {
+      "symbol": "world.setView",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "setView"
+      ],
+      "type": "docs/judas.d.ts:world.setView",
+      "reference": "docs/judasjs/effects-camera.md"
+    },
+    {
+      "symbol": "world.spawnPrefab",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "spawn"
+      ],
+      "type": "docs/judas.d.ts:world.spawnPrefab",
+      "reference": "docs/judasjs/entities.md"
+    },
+    {
+      "symbol": "world.sweepCapsule",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "sweep"
+      ],
+      "type": "docs/judas.d.ts:world.sweepCapsule",
+      "reference": "docs/judasjs/entities.md"
+    },
+    {
+      "symbol": "world.toAbsolute",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "worldAbsolute"
+      ],
+      "type": "docs/judas.d.ts:world.toAbsolute",
+      "reference": "docs/judasjs/entities.md"
+    },
+    {
+      "symbol": "world.toLocal",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "worldLocal"
+      ],
+      "type": "docs/judas.d.ts:world.toLocal",
+      "reference": "docs/judasjs/entities.md"
+    },
+    {
+      "symbol": "world.viewRay",
+      "kinds": [
+        "get"
+      ],
+      "native": [
+        "viewRay"
+      ],
+      "type": "docs/judas.d.ts:world.viewRay",
+      "reference": "docs/judasjs/effects-camera.md"
+    },
+    {
+      "symbol": "world.viewport",
+      "kinds": [
+        "get"
+      ],
+      "native": [
+        "viewportSize"
+      ],
+      "type": "docs/judas.d.ts:world.viewport",
+      "reference": "docs/judasjs/effects-camera.md"
+    }
+  ],
+  "nativeOperations": [
+    "addTag",
+    "angularVelocity",
+    "animationAdvance",
+    "animationExists",
+    "animationFade",
+    "animationIKConfigure",
+    "animationIKStatus",
+    "animationIKTargets",
+    "animationInfo",
+    "animationJointPose",
+    "animationLayer",
+    "animationLimb",
+    "animationPause",
+    "animationPlay",
+    "animationRemoveLayer",
+    "animationRemoveLimb",
+    "animationRootMotion",
+    "animationSample",
+    "animationSeek",
+    "animationSet",
+    "animationStop",
+    "appearanceInfo",
+    "appearanceReset",
+    "appearanceSet",
+    "audioDiagnostics",
+    "audioEnabled",
+    "audioGroup",
+    "audioGroupSet",
+    "audioInfo",
+    "audioOneShot",
+    "audioSeek",
+    "audioSettings",
+    "audioVelocity",
+    "axis",
+    "burst",
+    "camera",
+    "cameraInfo",
+    "cameraProjection",
+    "cast",
+    "castMany",
+    "characterAcceleration",
+    "characterConfigure",
+    "characterDisplacement",
+    "characterEnabled",
+    "characterExists",
+    "characterIgnore",
+    "characterOrientation",
+    "characterState",
+    "characterVelocity",
+    "children",
+    "classification",
+    "clearView",
+    "closestPoint",
+    "colliderEnabled",
+    "colliderInfo",
+    "deformableAttach",
+    "deformableEnabled",
+    "deformableExists",
+    "deformableForce",
+    "deformableHitImpulse",
+    "deformableImpulse",
+    "deformableMaterial",
+    "deformableRaycast",
+    "deformableRelease",
+    "deformableReset",
+    "deformableState",
+    "deformableValid",
+    "delta",
+    "destroy",
+    "elapsed",
+    "entityGravityClear",
+    "entityGravitySelect",
+    "entityGravityState",
+    "entityGravityUniform",
+    "fixed",
+    "fluidSample",
+    "force",
+    "fractureExists",
+    "fractureForce",
+    "fractureImpulse",
+    "fractureRelease",
+    "fractureRemove",
+    "fractureState",
+    "fractureValid",
+    "gravitySample",
+    "hasTag",
+    "held",
+    "impulse",
+    "impulseAtPoint",
+    "inertiaWorld",
+    "joint",
+    "jointConfigure",
+    "jointCreate",
+    "jointDestroy",
+    "jointSet",
+    "jointState",
+    "jointValid",
+    "kinematicMotion",
+    "kinematicStop",
+    "kinematicTarget",
+    "kinematicVelocity",
+    "lightInfo",
+    "lightSettings",
+    "liquidAccounting",
+    "liquidConnections",
+    "liquidEnabled",
+    "liquidErrors",
+    "liquidImpulse",
+    "liquidOwner",
+    "liquidPresentedSample",
+    "liquidSample",
+    "liquidState",
+    "liquidSubmerged",
+    "liquidSurfaceEnabled",
+    "liquidTransfer",
+    "liquidValid",
+    "localeChoose",
+    "localeFormat",
+    "localeInfo",
+    "localeNumber",
+    "localeReload",
+    "log",
+    "mass",
+    "materialAssign",
+    "materialClear",
+    "materialInfo",
+    "materialOverride",
+    "modCatalog",
+    "modelPartVisible",
+    "modelParts",
+    "motionType",
+    "motionTypeSet",
+    "navAgentExists",
+    "navAgentState",
+    "navAreas",
+    "navClear",
+    "navCompleteLink",
+    "navConfigure",
+    "navDestination",
+    "navEnabled",
+    "navErrors",
+    "navLinkInfo",
+    "navObstacleInfo",
+    "navPath",
+    "navProfiles",
+    "navRaycast",
+    "navSample",
+    "navStopped",
+    "networkClose",
+    "networkEntities",
+    "networkEntry",
+    "networkForget",
+    "networkHost",
+    "networkInfo",
+    "networkInput",
+    "networkInterest",
+    "networkJoin",
+    "networkOwner",
+    "networkPeers",
+    "networkReplicate",
+    "networkSendInput",
+    "networkState",
+    "networkValid",
+    "overlap",
+    "parent",
+    "particles",
+    "pauseAudio",
+    "physicalMaterialInfo",
+    "physicalMaterialSet",
+    "planetClear",
+    "planetCollision",
+    "planetInfo",
+    "planetSample",
+    "playAudio",
+    "playerAssign",
+    "playerCreate",
+    "playerDevices",
+    "playerEntity",
+    "playerExists",
+    "playerInfo",
+    "playerInput",
+    "playerList",
+    "playerMap",
+    "playerProject",
+    "playerRay",
+    "playerRemove",
+    "playerUnassign",
+    "playerView",
+    "playerViewport",
+    "pointVelocity",
+    "pointer",
+    "pointerCapture",
+    "powertrainEnabled",
+    "powertrainExists",
+    "powertrainSet",
+    "powertrainSettings",
+    "powertrainState",
+    "powertrainValid",
+    "presentedTransform",
+    "pressed",
+    "profileCounter",
+    "profileScope",
+    "projectViewport",
+    "queryTags",
+    "ragdollActive",
+    "ragdollBalanceCancel",
+    "ragdollBalanceConfigure",
+    "ragdollBalanceDiagnostics",
+    "ragdollBalanceRequest",
+    "ragdollBalanceState",
+    "ragdollBody",
+    "ragdollContactEvents",
+    "ragdollEnabled",
+    "ragdollEnter",
+    "ragdollExists",
+    "ragdollLeave",
+    "ragdollMode",
+    "ragdollPhysicalConfigure",
+    "ragdollPhysicalState",
+    "regionActivate",
+    "regionAdopt",
+    "regionInterest",
+    "regionList",
+    "regionOwner",
+    "regionPin",
+    "regionRelease",
+    "regionRemoveInterest",
+    "regionRequest",
+    "regionResolve",
+    "regionStats",
+    "regionStatus",
+    "regionUnload",
+    "released",
+    "removeTag",
+    "renderVisible",
+    "rendererVisible",
+    "resumeAudio",
+    "saveCancel",
+    "saveExclude",
+    "saveList",
+    "saveReference",
+    "saveRequest",
+    "saveResolve",
+    "saveStatus",
+    "sceneCurrent",
+    "sceneList",
+    "sceneLoad",
+    "sceneReload",
+    "scriptState",
+    "sessionDelete",
+    "sessionGet",
+    "sessionSet",
+    "setAngularVelocity",
+    "setPointerCapture",
+    "setTransform",
+    "setVelocity",
+    "setView",
+    "signalEmit",
+    "signalSend",
+    "signalStats",
+    "signalSubscribe",
+    "signalUnsubscribe",
+    "sleeping",
+    "socketClear",
+    "socketSet",
+    "spawn",
+    "stick",
+    "stickDelta",
+    "stickSamples",
+    "stopAudio",
+    "sweep",
+    "terrainBrush",
+    "terrainCreate",
+    "terrainState",
+    "torque",
+    "touches",
+    "transform",
+    "uiControl",
+    "uiDiagnostics",
+    "uiFind",
+    "uiGet",
+    "uiLayout",
+    "uiLoad",
+    "uiPlayer",
+    "uiQuit",
+    "uiSet",
+    "uiUnload",
+    "valid",
+    "vector",
+    "velocity",
+    "viewRay",
+    "viewportSize",
+    "weatherEnabled",
+    "weatherExists",
+    "weatherQuality",
+    "weatherSample",
+    "weatherState",
+    "weatherStrike",
+    "weatherTransition",
+    "wheelConfigure",
+    "wheelEnabled",
+    "wheelExists",
+    "wheelSet",
+    "wheelSettings",
+    "wheelState",
+    "wheelValid",
+    "worldAbsolute",
+    "worldLocal",
+    "worldOrigin",
+    "worldOriginRequest",
+    "worldOriginState"
+  ],
+  "callbacks": [
+    "onOriginShift",
+    "onSignal",
+    "onFracture",
+    "start",
+    "restore",
+    "update",
+    "fixedUpdate",
+    "uiUpdate",
+    "presentationUpdate",
+    "destroy",
+    "onUI",
+    "onCollisionEnter",
+    "onCollisionStay",
+    "onCollisionExit",
+    "onTriggerEnter",
+    "onTriggerStay",
+    "onTriggerExit"
+  ],
+  "exceptions": {
+    "globalThis.__judas": "Internal native dispatcher; unsupported, not a public API declaration.",
+    "globalThis.console": "Alias of exported console; no extra API.",
+    "result objects / config / property schema": "Native structured fields (including JointConfiguration.rotationalResistance, M83 DeformableAttachmentOptions/observations and PowertrainConnection/connected) and value validation reviewed manually; representative runtime/type examples cover shapes, not every invalid value.",
+    "types-only exports": "Interfaces/type aliases are tooling only; runtime export comparison excludes them.",
+    "setter-only accessors": "TypeScript cannot prohibit reads; docs state these return undefined.",
+    "callback ordering / phases": "Implementation traced manually; no AST checker proves temporal semantics."
+  }
+}

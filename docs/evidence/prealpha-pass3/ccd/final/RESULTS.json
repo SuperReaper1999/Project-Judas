@@ -1,0 +1,230 @@
+{
+  "utc": "2026-10-18T14:42:53.959460+00:00",
+  "commands": [
+    {
+      "label": "frozen",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass3/baseline/bin/judas_impact_mesh_cost_tests",
+        "60",
+        "trough"
+      ],
+      "returncode": 1,
+      "wall_seconds": 3.270431410999663,
+      "binary_sha256": "69516263c11bd0e617719133b4be64ba79d53d62fa97bd64b43dbf5092f7f36c"
+    },
+    {
+      "label": "final",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_impact_mesh_cost_tests",
+        "60",
+        "trough"
+      ],
+      "returncode": 1,
+      "wall_seconds": 3.2704619010000897,
+      "binary_sha256": "097c1e367d0edfed9fb35fe26f93b1d05431fa5d990976504b5cf66fcaae0497"
+    }
+  ],
+  "source": {
+    "src/PhysicsWorld.cpp": "5a08c72d8ae3f6fa1787e1aa42689e0638bc27323684f82b8699d07226988190",
+    "src/Contacts.cpp": "f62f6f1efad1faba4763554e0f106f3f67a5a5287b9b2d587320fe8e5e3844f1",
+    "src/CollisionGeometry.cpp": "bdac4d47978d218e489f437f424901d0293165904e74acd6041239046b5f627e",
+    "src/CollisionGeometry.h": "2a02f1cf208fd80dff7fe856a9215427c35c3619d4aabd0c308a2ace9d785ec0",
+    "tests/ImpactMeshCostTests.cpp": "91b23a2a4ae45a3a96e01442c8bef583b31cd98a90e02196fb7c534ec5364a6a"
+  },
+  "frozen": {
+    "scenarios": {
+      "trough 2x26 coarse": {
+        "triangles": "104",
+        "steps": "60",
+        "totalMs": "219.27",
+        "worstStepMs": "12.77",
+        "maxPenetrationMm": "9.92",
+        "atStep": "17",
+        "meanDeepestMm": "2.61",
+        "impactQueries": "1614",
+        "searchIterations": "8161",
+        "searchLimits": "0",
+        "searchStalls": "522",
+        "samplingFallbacks": "528",
+        "samplingTests": "5470",
+        "impactEvents": "172",
+        "convexTests": "940196",
+        "meshTriangles": "1049430",
+        "bvhNodes": "732650",
+        "fastBoxSteps": "90",
+        "fastBoxesThrough": "11",
+        "legacyOracleThrough": "11",
+        "fastBoxesThrew": "0",
+        "digest": "3fdde56f1ea9312b"
+      },
+      "trough 30x30": {
+        "triangles": "1800",
+        "steps": "60",
+        "totalMs": "297.98",
+        "worstStepMs": "21.69",
+        "maxPenetrationMm": "10.80",
+        "atStep": "17",
+        "meanDeepestMm": "1.79",
+        "impactQueries": "1744",
+        "searchIterations": "9088",
+        "searchLimits": "1",
+        "searchStalls": "633",
+        "samplingFallbacks": "643",
+        "samplingTests": "5536",
+        "impactEvents": "193",
+        "convexTests": "1459256",
+        "meshTriangles": "1614851",
+        "bvhNodes": "1747606",
+        "fastBoxSteps": "90",
+        "fastBoxesThrough": "20",
+        "legacyOracleThrough": "20",
+        "fastBoxesThrew": "0",
+        "digest": "ebd86a04dabbad71"
+      },
+      "trough 60x60 dense": {
+        "triangles": "7200",
+        "steps": "60",
+        "totalMs": "609.09",
+        "worstStepMs": "29.98",
+        "maxPenetrationMm": "21.48",
+        "atStep": "30",
+        "meanDeepestMm": "3.75",
+        "impactQueries": "1738",
+        "searchIterations": "8986",
+        "searchLimits": "0",
+        "searchStalls": "660",
+        "samplingFallbacks": "666",
+        "samplingTests": "6362",
+        "impactEvents": "189",
+        "convexTests": "3307950",
+        "meshTriangles": "3618035",
+        "bvhNodes": "2913096",
+        "fastBoxSteps": "90",
+        "fastBoxesThrough": "15",
+        "legacyOracleThrough": "15",
+        "fastBoxesThrew": "0",
+        "digest": "eece82a1f1f3aee5"
+      }
+    },
+    "failures": [
+      "FAIL trough 2x26 coarse fast boxes do not cross actual mesh",
+      "FAIL rotated trough preserves first-contact/crossing contract",
+      "FAIL trough 30x30 fast boxes do not cross actual mesh",
+      "FAIL trough 60x60 dense fast boxes do not cross actual mesh"
+    ],
+    "summary": "checks 193 failures 4"
+  },
+  "final": {
+    "scenarios": {
+      "trough 2x26 coarse": {
+        "triangles": "104",
+        "steps": "60",
+        "totalMs": "220.58",
+        "worstStepMs": "12.11",
+        "maxPenetrationMm": "9.92",
+        "atStep": "17",
+        "meanDeepestMm": "2.61",
+        "impactQueries": "1614",
+        "searchIterations": "8161",
+        "searchLimits": "0",
+        "searchStalls": "522",
+        "samplingFallbacks": "528",
+        "samplingTests": "5470",
+        "impactEvents": "172",
+        "convexTests": "940196",
+        "meshTriangles": "1049430",
+        "bvhNodes": "732650",
+        "fastBoxSteps": "90",
+        "fastBoxesThrough": "11",
+        "legacyOracleThrough": "11",
+        "fastBoxesThrew": "0",
+        "digest": "3fdde56f1ea9312b"
+      },
+      "trough 30x30": {
+        "triangles": "1800",
+        "steps": "60",
+        "totalMs": "302.50",
+        "worstStepMs": "20.60",
+        "maxPenetrationMm": "10.80",
+        "atStep": "17",
+        "meanDeepestMm": "1.79",
+        "impactQueries": "1744",
+        "searchIterations": "9088",
+        "searchLimits": "1",
+        "searchStalls": "633",
+        "samplingFallbacks": "643",
+        "samplingTests": "5536",
+        "impactEvents": "193",
+        "convexTests": "1459256",
+        "meshTriangles": "1614851",
+        "bvhNodes": "1747606",
+        "fastBoxSteps": "90",
+        "fastBoxesThrough": "20",
+        "legacyOracleThrough": "20",
+        "fastBoxesThrew": "0",
+        "digest": "ebd86a04dabbad71"
+      },
+      "trough 60x60 dense": {
+        "triangles": "7200",
+        "steps": "60",
+        "totalMs": "605.82",
+        "worstStepMs": "29.78",
+        "maxPenetrationMm": "21.48",
+        "atStep": "30",
+        "meanDeepestMm": "3.75",
+        "impactQueries": "1738",
+        "searchIterations": "8986",
+        "searchLimits": "0",
+        "searchStalls": "660",
+        "samplingFallbacks": "666",
+        "samplingTests": "6362",
+        "impactEvents": "189",
+        "convexTests": "3307950",
+        "meshTriangles": "3618035",
+        "bvhNodes": "2913096",
+        "fastBoxSteps": "90",
+        "fastBoxesThrough": "15",
+        "legacyOracleThrough": "15",
+        "fastBoxesThrew": "0",
+        "digest": "eece82a1f1f3aee5"
+      }
+    },
+    "failures": [
+      "FAIL trough 2x26 coarse fast boxes do not cross actual mesh",
+      "FAIL rotated trough preserves first-contact/crossing contract",
+      "FAIL trough 30x30 fast boxes do not cross actual mesh",
+      "FAIL trough 60x60 dense fast boxes do not cross actual mesh"
+    ],
+    "summary": "checks 193 failures 4"
+  },
+  "comparison": {
+    "trough 2x26 coarse": {
+      "identical_non_timing_fields": true,
+      "digest": "3fdde56f1ea9312b",
+      "physical_field_count": 20,
+      "baseline_total_ms": 219.27,
+      "candidate_total_ms": 220.58,
+      "baseline_worst_ms": 12.77,
+      "candidate_worst_ms": 12.11
+    },
+    "trough 30x30": {
+      "identical_non_timing_fields": true,
+      "digest": "ebd86a04dabbad71",
+      "physical_field_count": 20,
+      "baseline_total_ms": 297.98,
+      "candidate_total_ms": 302.5,
+      "baseline_worst_ms": 21.69,
+      "candidate_worst_ms": 20.6
+    },
+    "trough 60x60 dense": {
+      "identical_non_timing_fields": true,
+      "digest": "eece82a1f1f3aee5",
+      "physical_field_count": 20,
+      "baseline_total_ms": 609.09,
+      "candidate_total_ms": 605.82,
+      "baseline_worst_ms": 29.98,
+      "candidate_worst_ms": 29.78
+    }
+  },
+  "passed": true
+}

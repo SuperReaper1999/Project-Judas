@@ -224,7 +224,8 @@ namespace {
         SatResult result;
         double bestFace=-std::numeric_limits<double>::infinity(),bestEdge=bestFace;
         int face=-1,edge=-1;
-        glm::dvec3 faceNormal(0),edgeNormal(0);
+        glm::dvec3 faceAxis(0),edgeAxis(0);
+        double faceLength=0,edgeLength=0;
         const SatWorkspace<Iv> workspace(c.interval);
         for (int axis=0;axis<15;++axis){
             const auto ai=Axis(c.interval,axis);
@@ -251,8 +252,6 @@ namespace {
             glm::dvec3 normal(ax[0],ax[1],ax[2]);
             double length=glm::length(normal);
             if (!(length>0)||!std::isfinite(length))throw ArithmeticFailure();
-            normal/=length;
-            if (glm::dot(normal,c.a-c.b)<0)normal=-normal;
             double gap;
             if (sign==0)gap=0;
             else if (exactGap)gap=static_cast<double>(Sat(c.E(),ha,hb,axis).Value()/(c.E().denominator.Value()*static_cast<long double>(length)));
@@ -267,13 +266,15 @@ namespace {
             if (axis<6 && gap>bestFace){
                 bestFace=gap;
                 face=axis;
-                faceNormal=normal;
+                faceAxis=normal;
+                faceLength=length;
             }
 
             if (axis>=6 && gap>bestEdge){
                 bestEdge=gap;
                 edge=axis;
-                edgeNormal=normal;
+                edgeAxis=normal;
+                edgeLength=length;
             }
         }
 
@@ -284,7 +285,10 @@ namespace {
         const bool useEdge=edge>=0 && (bestEdge>=0?bestEdge>bestFace:bestEdge>0.95*bestFace+0.001);
         result.axis=useEdge?edge:face;
         result.gap=useEdge?bestEdge:bestFace;
-        result.normal=useEdge?edgeNormal:faceNormal;
+        // All signs and represented gaps above retain their original arithmetic.
+        // Only the chosen response axis needs a normalized, oriented normal.
+        result.normal=(useEdge?edgeAxis:faceAxis)/(useEdge?edgeLength:faceLength);
+        if (glm::dot(result.normal,c.a-c.b)<0)result.normal=-result.normal;
         return result;
     }
 
@@ -513,10 +517,7 @@ ContactManifold PrimitiveContacts(const Shape& a,const ContactPose& pa,const Sha
         };
         const auto& orientationA=resolve(pa.orientation,preparedA,localA);
         const auto& orientationB=resolve(pb.orientation,preparedB,localB);
-        Context c(pa,pb,orientationA,orientationB);
-        if (a.type==ShapeType::Sphere&&b.type==ShapeType::Sphere)result.Add(SpherePair(c,a.radius,b.radius,margin));
-        else if (a.type==ShapeType::Sphere&&b.type==ShapeType::Box)result.Add(SphereBoxPair(c,a.radius,b.halfExtents,margin));
-        else if (a.type==ShapeType::Box&&b.type==ShapeType::Sphere){
+        if (a.type==ShapeType::Box&&b.type==ShapeType::Sphere){
             Context reverse(pb,pa,orientationB,orientationA);
             Contact contact=SphereBoxPair(reverse,b.radius,a.halfExtents,margin);
             contact.normal=-contact.normal;
@@ -525,7 +526,12 @@ ContactManifold PrimitiveContacts(const Shape& a,const ContactPose& pa,const Sha
             std::swap(contact.localWitnessA,contact.localWitnessB);
             result.Add(contact);
         }
-        else if (a.type==ShapeType::Box&&b.type==ShapeType::Box)result=BoxPair(c,a.halfExtents,b.halfExtents,margin);
+        else {
+            Context c(pa,pb,orientationA,orientationB);
+            if (a.type==ShapeType::Sphere&&b.type==ShapeType::Sphere)result.Add(SpherePair(c,a.radius,b.radius,margin));
+            else if (a.type==ShapeType::Sphere&&b.type==ShapeType::Box)result.Add(SphereBoxPair(c,a.radius,b.halfExtents,margin));
+            else if (a.type==ShapeType::Box&&b.type==ShapeType::Box)result=BoxPair(c,a.halfExtents,b.halfExtents,margin);
+        }
     }
     catch(const ArithmeticFailure&){
         ++diagnostics.unresolved;
@@ -559,15 +565,15 @@ bool PrimitiveHasContacts(const Shape& a,const ContactPose& pa,const Shape& b,co
         };
         const auto& orientationA=resolve(pa.orientation,preparedA,localA);
         const auto& orientationB=resolve(pb.orientation,preparedB,localB);
+        if(a.type==ShapeType::Box&&b.type==ShapeType::Sphere){
+            Context reverse(pb,pa,orientationB,orientationA);
+            return SphereBoxPair<true>(reverse,b.radius,a.halfExtents,margin);
+        }
         Context c(pa,pb,orientationA,orientationB);
         if(a.type==ShapeType::Sphere&&b.type==ShapeType::Sphere)
             return SpherePair<true>(c,a.radius,b.radius,margin);
         if(a.type==ShapeType::Sphere&&b.type==ShapeType::Box)
             return SphereBoxPair<true>(c,a.radius,b.halfExtents,margin);
-        if(a.type==ShapeType::Box&&b.type==ShapeType::Sphere){
-            Context reverse(pb,pa,orientationB,orientationA);
-            return SphereBoxPair<true>(reverse,b.radius,a.halfExtents,margin);
-        }
         // Reuse every exact-sign/numeric-gap validation of the response path.
         // With zero margin its accepted SAT gap cannot be positive. BoxPair's
         // only subsequent ArithmeticFailure guard requires a positive SAT gap;

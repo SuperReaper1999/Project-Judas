@@ -1,0 +1,5 @@
+ORIGIN from=-1000000000000 to=1000000000000 admitted=1 committed=0 threw=1 pending=0 revision=0 after=-1000000000000 error= exception=invalid origin translation alive=0
+ORIGIN from=-1000000000000 to=0 admitted=1 committed=1 threw=0 pending=0 revision=1 after=0 error= exception= alive=0
+ORIGIN from=0 to=512 admitted=1 committed=1 threw=0 pending=0 revision=1 after=512 error= exception= alive=0
+ORIGIN from=1000000000000 to=1000000000000 admitted=1 committed=1 threw=0 pending=0 revision=0 after=1000000000000 error= exception= alive=0
+ORIGIN from=1000000000000 to=-1000000000000 admitted=1 committed=0 threw=1 pending=0 revision=0 after=1000000000000 error= exception=invalid origin translation alive=0

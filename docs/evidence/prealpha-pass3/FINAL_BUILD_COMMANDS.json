@@ -1,0 +1,61 @@
+[
+  {
+    "argv": [
+      "cmake",
+      "-S",
+      ".",
+      "-B",
+      "build",
+      "-DCMAKE_BUILD_TYPE=Release",
+      "-DJUDAS_ENABLE_VALIDATION=ON"
+    ],
+    "exit": 0,
+    "utc": "2026-10-18T14:40:59.116383+00:00"
+  },
+  {
+    "argv": [
+      "cmake",
+      "--build",
+      "build",
+      "--target",
+      "judas_collision_geometry_tests",
+      "judas_rigid_contact_tests",
+      "judas_impact_solver_tests",
+      "judas_impact_mesh_cost_tests",
+      "judas_origin_environment_tests",
+      "judas_collision_continuity_tests",
+      "judas_character_motor_tests",
+      "judas_physics_continuation_tests",
+      "judas_contact_lifecycle_tests",
+      "judas_prealpha_lifecycle_tests",
+      "judas_origin_physics_tests",
+      "judas_origin_assembly_tests",
+      "judas_origin_participant_tests",
+      "judas_origin_stream_tests",
+      "judas_save_evolution_tests",
+      "judas_network_session_tests",
+      "judas_network_boundary_tests",
+      "judas_first_project_tests",
+      "judas_origin_admission_tests",
+      "judas",
+      "judas_editor",
+      "judas_export",
+      "judas_script_check",
+      "judas_script_tools_editor_tests",
+      "judas_script_tests",
+      "judas_script_developer_tools_tests",
+      "judas_impact_robustness_tests",
+      "judas_world_persistence_tests",
+      "judas_ragdoll_tests",
+      "judas_runtime_ui_tests",
+      "judas_script_developer_consumer_tests",
+      "judasjs_examples_tests",
+      "judas_balance_lab_tests",
+      "judas_character_lab_tests",
+      "judas_physics_stress_live_benchmark",
+      "-j2"
+    ],
+    "exit": 0,
+    "utc": "2026-10-18T14:41:49.402713+00:00"
+  }
+]

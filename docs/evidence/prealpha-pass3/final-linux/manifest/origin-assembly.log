@@ -1,0 +1,49 @@
+PASS independent matched mechanical worlds build
+PASS complete vehicle, motor, particles and constraints accept origin request
+PASS native origin transaction commits
+PASS body and query-capsule generations survive without recreation
+PASS absolute chassis endpoint is invariant
+PASS mechanical command and rotor continuation bytes are unchanged
+PASS wheel contact point translates while contact identity remains
+PASS wheel presentation history translates
+PASS continued real wheel/hinge/motor simulation agrees with unshifted control
+PASS positive control actually drives rather than remaining inert
+PASS CharacterMotor retains actual floor support
+PASS shifted assembly full save captures
+PASS saved chart reconstructs
+PASS fresh world restores shifted vehicle and constraints
+PASS fresh save retains exact powertrain spin/commands
+PASS restoration checks physical endpoint, not cached status
+PASS restored wheels continue on actual geometry
+PASS unsafe distant chart rejected atomically
+PASS nonfinite chart rejected
+MEASURE position_error_m=0.000274363527 velocity_error_mps=0.00170395616 median_ms=0.057230 p95_ms=0.062093 worst_ms=0.128301 bodies=4
+PASS independent matched mechanical worlds build
+PASS complete vehicle, motor, particles and constraints accept origin request
+PASS native origin transaction commits
+PASS body and query-capsule generations survive without recreation
+PASS absolute chassis endpoint is invariant
+PASS mechanical command and rotor continuation bytes are unchanged
+PASS wheel contact point translates while contact identity remains
+PASS wheel presentation history translates
+PASS continued real wheel/hinge/motor simulation agrees with unshifted control
+PASS positive control actually drives rather than remaining inert
+PASS CharacterMotor retains actual floor support
+PASS shifted assembly full save captures
+PASS saved chart reconstructs
+PASS fresh world restores shifted vehicle and constraints
+PASS fresh save retains exact powertrain spin/commands
+PASS restoration checks physical endpoint, not cached status
+PASS restored wheels continue on actual geometry
+PASS unsafe distant chart rejected atomically
+PASS nonfinite chart rejected
+MEASURE position_error_m=0.00182705129 velocity_error_mps=0.00106243277 median_ms=0.074067 p95_ms=0.090092 worst_ms=0.126049 bodies=4
+PASS real navigation asset bakes
+PASS navigation fixture publishes a real asset
+PASS navigation world builds
+PASS surface-local Detour data installs
+PASS active navigation surface and corridor accept shift
+PASS translated Detour path matches real translated floor
+PASS navigation intent and revision survive without repath/reset
+PASS negative query at old chart position no longer hits surface
+SUMMARY 46 checks 0 failures

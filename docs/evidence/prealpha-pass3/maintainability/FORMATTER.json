@@ -1,0 +1,18 @@
+{
+  "version": "clang-format version 18.1.8",
+  "path": "/tmp/judas-pass3-format-tool/clang_format/data/bin/clang-format",
+  "sha256": "7f15e3247bae5b3c1b30b1ab17f4d0ca2649380f09b96ef2d1b2e3495bd647e9",
+  "installation": "Pinned temporary /tmp tool only; no runtime/build dependency introduced.",
+  "style": {
+    "BasedOnStyle": "LLVM",
+    "IndentWidth": 4,
+    "ColumnLimit": 100,
+    "SortIncludes": "Never",
+    "BreakBeforeBraces": "Attach",
+    "BreakStringLiterals": false,
+    "AllowShortFunctionsOnASingleLine": "Empty",
+    "AllowShortIfStatementsOnASingleLine": "Never",
+    "AllowShortLoopsOnASingleLine": false,
+    "ReflowComments": false
+  }
+}

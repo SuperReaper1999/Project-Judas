@@ -1,0 +1,1 @@
+{"exitcode": 0, "out-data": "{\r\n    \"utc\":  \"2026-10-18T14:32:11.4773600Z\",\r\n    \"freeBytes\":  0,\r\n    \"partialUploadBytes\":  0,\r\n    \"scope\":  \"Pass3 current engine build and native tests not executed; source upload failed with disk-full error\",\r\n    \"processes\":  [\r\n\r\n                  ]\r\n}\r\n", "out-truncated": false, "exited": true}

@@ -1,0 +1,68 @@
+{
+  "src/ScriptSystem.cpp": {
+    "before": {
+      "lines": 2107,
+      "bytes": 260279,
+      "lines_over_140": 502,
+      "maximum_line": 2315
+    },
+    "after": {
+      "lines": 2634,
+      "bytes": 253206,
+      "lines_over_140": 416,
+      "maximum_line": 2315
+    }
+  },
+  "src/editor/EditorPanels.cpp": {
+    "before": {
+      "lines": 1606,
+      "bytes": 142914,
+      "lines_over_140": 218,
+      "maximum_line": 2033
+    },
+    "after": {
+      "lines": 1496,
+      "bytes": 131361,
+      "lines_over_140": 185,
+      "maximum_line": 2033
+    }
+  },
+  "CMakeLists.txt": {
+    "before": {
+      "lines": 2032,
+      "bytes": 106759,
+      "lines_over_140": 65,
+      "maximum_line": 351
+    },
+    "after": {
+      "lines": 1597,
+      "bytes": 77892,
+      "lines_over_140": 20,
+      "maximum_line": 351
+    }
+  },
+  "src/ScriptBindingsUI.cpp": {
+    "after": {
+      "lines": 355,
+      "bytes": 17214,
+      "lines_over_140": 0,
+      "maximum_line": 99
+    }
+  },
+  "src/ScriptBindingsJoint.cpp": {
+    "after": {
+      "lines": 202,
+      "bytes": 10064,
+      "lines_over_140": 0,
+      "maximum_line": 100
+    }
+  },
+  "src/editor/RenderPreview.cpp": {
+    "after": {
+      "lines": 324,
+      "bytes": 15026,
+      "lines_over_140": 0,
+      "maximum_line": 113
+    }
+  }
+}

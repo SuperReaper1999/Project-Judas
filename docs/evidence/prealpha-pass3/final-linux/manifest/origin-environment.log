@@ -1,0 +1,114 @@
+PASS fresh output directory required
+PASS plane equality ignores its physically unused centre
+PASS different actual plane directions remain distinct
+PASS radial equality ignores its unused preferred axis
+PASS different radial centres remain distinct
+PASS nonfinite equilibrium comparison remains false
+PASS normal cavity file and stable asset metadata
+PASS normal cavity file and stable asset metadata
+PASS ordinary authored capacity and dynamic-surface bake: 
+PASS baked data uses normal resource sidecars
+PASS ordinary authored capacity and dynamic-surface bake: 
+PASS baked data uses normal resource sidecars
+PASS authored world validates original baked fingerprint: 
+PASS unpublished liquid-only actors cannot bypass full-volume chart preflight
+PASS unpublished geometry does not prevent an actual no-op origin request
+PASS ordinary authoritative session
+PASS ordinary unshifted liquid fixture is healthy before testing chart changes
+PASS real basin surface and independent cup resolve
+PASS wave receives an ordinary physical impulse
+PASS detached parcel retains a paired ownership debit
+PASS positive pre-shift physical submersion sample
+PASS positive real displaced-volume and buoyancy integral
+PASS positive optical query primes real world-space caches
+PASS conserved owners and parcels accept live translation: loading
+PASS body-independent handle, complete wave history and energy remain byte-identical
+PASS actual depth/normal/flow sample follows the new chart
+PASS negative old-chart query cannot hit translated water
+PASS actual solid-volume loading preserves displacement, force and centre
+PASS derived optical planes rebuild in the translated chart
+METRIC radial=0 shift_ms=0.0088830000000000003 optical_path_error=7.7893942943774164e-05 displaced_volume_error=4.5623227418190027e-16 buoyancy_error=0
+PASS parcels translate once; velocity, quantity and total ledger are unchanged
+PASS shifted disturbed liquid captures through normal participants: 
+PASS fresh world reconstructs shifted physical liquid state: 
+PASS restored endpoint checks real wave allocation, spatial query and owner ledger
+PASS paired flow resumes under translated selected gravity without a false field mismatch
+PASS continuation remains conservative
+PASS return shift restores the same usable local surface
+PASS capture immediate participant baseline before rejected transaction
+PASS capture actual participants immediately after rejected transaction
+PASS rejected chart request preserves every physical participant byte
+PASS out-of-chart liquid is rejected atomically with an owner diagnostic
+PASS nonfinite liquid translations fail preflight
+PASS normal cavity file and stable asset metadata
+PASS normal cavity file and stable asset metadata
+PASS ordinary authored capacity and dynamic-surface bake: 
+PASS baked data uses normal resource sidecars
+PASS ordinary authored capacity and dynamic-surface bake: 
+PASS baked data uses normal resource sidecars
+PASS authored world validates original baked fingerprint: 
+PASS unpublished liquid-only actors cannot bypass full-volume chart preflight
+PASS unpublished geometry does not prevent an actual no-op origin request
+PASS ordinary authoritative session
+PASS ordinary unshifted liquid fixture is healthy before testing chart changes
+PASS real basin surface and independent cup resolve
+PASS wave receives an ordinary physical impulse
+PASS detached parcel retains a paired ownership debit
+PASS positive pre-shift physical submersion sample
+PASS positive real displaced-volume and buoyancy integral
+PASS positive optical query primes real world-space caches
+PASS conserved owners and parcels accept live translation: loading
+PASS body-independent handle, complete wave history and energy remain byte-identical
+PASS actual depth/normal/flow sample follows the new chart
+PASS negative old-chart query cannot hit translated water
+PASS actual solid-volume loading preserves displacement, force and centre
+PASS derived optical planes rebuild in the translated chart
+METRIC radial=1 shift_ms=0.0076940000000000003 optical_path_error=8.1265417975373566e-05 displaced_volume_error=2.3852447794681098e-15 buoyancy_error=0
+PASS parcels translate once; velocity, quantity and total ledger are unchanged
+PASS shifted disturbed liquid captures through normal participants: 
+PASS fresh world reconstructs shifted physical liquid state: 
+PASS restored endpoint checks real wave allocation, spatial query and owner ledger
+PASS paired flow resumes under translated selected gravity without a false field mismatch
+PASS continuation remains conservative
+PASS return shift restores the same usable local surface
+PASS capture immediate participant baseline before rejected transaction
+PASS capture actual participants immediately after rejected transaction
+PASS rejected chart request preserves every physical participant byte
+PASS out-of-chart liquid is rejected atomically with an owner diagnostic
+PASS nonfinite liquid translations fail preflight
+PASS fresh process decodes checked snapshot envelope
+PASS fresh process builds shifted authored owners without rebaking
+PASS fresh process prepares normal metadata and physical participants
+PASS fresh process restores actual liquid participants: 
+PASS cold endpoint verifies physical surface, exact wave history and conserved ownership
+PASS cold endpoint begins ordinary continuation
+PASS fresh-process continuation uses translated gravity and actual connected owners
+PASS independent damaged-envelope control fails checksum
+SUMMARY 8 checks 0 failures
+PASS independent process verifies uniform origin save: 
+PASS fresh process decodes checked snapshot envelope
+PASS fresh process builds shifted authored owners without rebaking
+PASS fresh process prepares normal metadata and physical participants
+PASS fresh process restores actual liquid participants: 
+PASS cold endpoint verifies physical surface, exact wave history and conserved ownership
+PASS cold endpoint begins ordinary continuation
+PASS fresh-process continuation uses translated gravity and actual connected owners
+PASS independent damaged-envelope control fails checksum
+SUMMARY 8 checks 0 failures
+PASS independent process verifies radial origin save: 
+PASS ordinary gas and combustible world builds: 
+PASS atmosphere and thermal carriers accept chart changes: 
+PASS analytic gas density, pressure, temperature and airflow are frame invariant
+PASS actual carrier and thermal state keep their original physical ownership
+PASS translated heater/gas/carrier continue real thermal exchange
+PASS unsupported thermal save fails early while preserving the caller's previous snapshot
+PASS ordinary dynamic thermal carrier is independently eligible for the transient flag
+PASS transient flags cannot bypass unsupported global thermal ownership
+PASS independent otherwise identical nonthermal control is eligible
+PASS ordinary exclusion still succeeds and does not resurrect the omitted body
+PASS normal motor world builds for late-participant failure control
+PASS late serializer failure preserves every byte/version of the caller's prior snapshot
+PASS positive repaired participant replaces the complete snapshot only after success
+PASS ordinary legacy particle owner builds without altering its solver: 
+PASS legacy PBF remains an explicit atomic origin rejection
+SUMMARY 93 checks 0 failures

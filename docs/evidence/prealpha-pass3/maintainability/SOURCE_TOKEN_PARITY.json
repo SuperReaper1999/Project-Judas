@@ -1,0 +1,60 @@
+{
+  "native": {
+    "tokens": 51156,
+    "sha256": "f2b4254a87646596b99a2c9c3eb4909cec00a6059f2796d263b678fe2cea24d8"
+  },
+  "helpers": {
+    "String": {
+      "tokens": 51,
+      "sha256": "52a9e53cc3095b1701593dc42a2d1877e05145e425d65a1b2e3d8d96aefa90cb"
+    },
+    "Number": {
+      "tokens": 70,
+      "sha256": "86840981532b590917bb84dd0b7ae03315b190302ade0e1467a840f9cd3650ba"
+    },
+    "ReadVec": {
+      "tokens": 42,
+      "sha256": "49675c5c5d6d7725125713f75130d1242d698943d9645c294a3890bbd67aed0d"
+    }
+  },
+  "editor": {
+    "RenderHistory": {
+      "tokens": 74,
+      "sha256": "12d78de7b6c67e3e4112df8f7c89e3c59ec6ab0a957cc1cb35feac42b29bd185"
+    },
+    "PublishRenderPreview": {
+      "tokens": 200,
+      "sha256": "7336aab21b2761395ac953afdd1917fa428fbbc31f0d2562f9407f86fe94b5eb"
+    },
+    "RenderPreviewUndo": {
+      "tokens": 187,
+      "sha256": "c2374fa3d170ada4aa665376f791b7ba675851cdfff04b4180d1805d30d144b1"
+    },
+    "AppearanceAction": {
+      "tokens": 51,
+      "sha256": "af12f762482fb9c4eed8d50de39bc4a2be8af3062a03ffcaae450dd7f8b459d3"
+    },
+    "AppearancePreviewState": {
+      "tokens": 112,
+      "sha256": "db6822780c4e4cdc508cbef70713258d743f80cb90e96d6b826f08a07bcca013"
+    },
+    "DrawRuntimeAppearance": {
+      "tokens": 577,
+      "sha256": "83a41adacf0798f43820c2fdc1a003d2abb6851d7232eb6d9beb32b7be834ff2"
+    },
+    "DrawRuntimeRenderPreview": {
+      "tokens": 1358,
+      "sha256": "10b79f739b0cecf133a8a2eb6163ccae8069be6383a801601b0cc6f7ea978757"
+    }
+  },
+  "negative_controls": {
+    "changed UI bounds validation": "detected",
+    "changed slot ownership": "detected",
+    "changed joint participant guard": "detected",
+    "missing joint lifetime rejection": "detected"
+  },
+  "entire_script_system": {
+    "tokens": 63499,
+    "sha256": "082e768082b8b024b5115775e92cc40ae7cfbf999a1143f246d9eb32699c6b74"
+  }
+}

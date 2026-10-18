@@ -1,0 +1,9 @@
+{
+  "tokens": 53686,
+  "token_sha256": "f5181342a36261de67484e6e13bc3912f727435276ed357196a05117463d4225",
+  "negative_controls": {
+    "CCD iteration budget": "detected",
+    "response failure guard": "detected"
+  },
+  "current_source_verified": true
+}

@@ -1,0 +1,7 @@
+{
+  "probe": ".cache/prealpha-pass3/dense/PrimitiveWitnessProbe.cpp",
+  "sha256": "dc5a24d10d056b74f1761760ece04718af0addc3ac67c92241e68b143903ac2e",
+  "workload": "16000 deterministic represented-input primitivepairs x2orders x2preparationpaths xfull/Boolean; explicitfields+diagnosticbytes",
+  "coverage": "actual signed gap,normal,localanchors,worlddebugpoints,state,counts,uncertainty,exactfallbackandinvaliddiagnostics; exactboundary/ULP/slender/rotation/offset/largeorigin controls",
+  "note": "Derived fixture,not real-game speedup measure; rawbytesoracle comparedwith frozen baseline unchanged source."
+}

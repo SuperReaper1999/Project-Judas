@@ -1,0 +1,5 @@
+Transcribed from the recorded tool output; the initial cache log was later overwritten. This is not a new execution.
+
+AssertionError: negative control was not detected: changed slot ownership
+
+Cause: the first mutation used an exact old whitespace string after formatting. It made no source change. The failing control exposed that tooling error. The corrected control uses a whitespace-tolerant replacement, and detects the changed owner/slot forwarding. Runtime assertions and API behavior were not changed.

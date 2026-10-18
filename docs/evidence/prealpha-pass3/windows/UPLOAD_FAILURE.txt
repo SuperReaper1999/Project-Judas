@@ -1,0 +1,3 @@
+Observed QGA guest-file-write failure while copying the 429391-byte current-source archive:
+libvirt.libvirtError: guest agent command failed: unable to execute QEMU agent command 'guest-file-write': failed to write to file: There is not enough space on the disk.
+No current Windows compile or executable test was reached. The partial task-owned upload was removed; previous builds, evidence and saves were not removed.

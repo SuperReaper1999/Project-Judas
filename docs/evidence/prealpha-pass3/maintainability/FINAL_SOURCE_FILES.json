@@ -1,0 +1,132 @@
+{
+  "baseline": "f647d7fd95f60d3a37dba70a51f4e45dc41c2922",
+  "files": [
+    {
+      "path": "CMakeLists.txt",
+      "bytes": 77975,
+      "sha256": "45879fbdbe64a007f41802a17c77bad96c2e84887dce57c0e70f021ad892f718",
+      "scope": "bounded extraction/tooling/current documentation; shared CMake also includes parent OriginAdmission target"
+    },
+    {
+      "path": "cmake/targets/DeveloperWorkflow.cmake",
+      "bytes": 1773,
+      "sha256": "f7b87b374c79a7a8f807e0c5f75bc9bc52788a5c30dbb35a973e0e667467a267",
+      "scope": "bounded extraction/tooling/current documentation; shared CMake also includes parent OriginAdmission target"
+    },
+    {
+      "path": "cmake/targets/LocalViews.cmake",
+      "bytes": 1256,
+      "sha256": "d2a7ee0a37af00996723a7c928936c19b36aa7950b9d4788bc70e008d83470f1",
+      "scope": "bounded extraction/tooling/current documentation; shared CMake also includes parent OriginAdmission target"
+    },
+    {
+      "path": "cmake/targets/RenderingAssets.cmake",
+      "bytes": 1429,
+      "sha256": "6e75ad497890af40ad23f018bdc8133dc1b7b14390ead719b2b9b8efa51d3ae4",
+      "scope": "bounded extraction/tooling/current documentation; shared CMake also includes parent OriginAdmission target"
+    },
+    {
+      "path": "cmake/targets/WorldLifecycle.cmake",
+      "bytes": 1805,
+      "sha256": "b41ce6d680795fefe3ec241d501f86b9cc0b219ab94b386098e974bae810d213",
+      "scope": "bounded extraction/tooling/current documentation; shared CMake also includes parent OriginAdmission target"
+    },
+    {
+      "path": "docs/ARCHITECTURE.md",
+      "bytes": 629439,
+      "sha256": "c498fbdf59b8a54cad20afb4bfb79b7791d3f9bd3381d82586b48e65ffcd146d",
+      "scope": "bounded extraction/tooling/current documentation; shared CMake also includes parent OriginAdmission target"
+    },
+    {
+      "path": "docs/JUDASJS.md",
+      "bytes": 16694,
+      "sha256": "b8968313348a5726851000bceb19489fd302f5367d1a6233a79131e39fd3d0bb",
+      "scope": "bounded extraction/tooling/current documentation; shared CMake also includes parent OriginAdmission target"
+    },
+    {
+      "path": "docs/judasjs/api-inventory.json",
+      "bytes": 128040,
+      "sha256": "59bc39d273aa55c3456c17ad61f85e3f9f941a2b0c9ca8b4563c0750f29846c1",
+      "scope": "bounded extraction/tooling/current documentation; shared CMake also includes parent OriginAdmission target"
+    },
+    {
+      "path": "scripts/check_judasjs_api.mjs",
+      "bytes": 20603,
+      "sha256": "ab74886957a0ebdb1a93be798c09261e8fe1eb6df68f93401cb3447ac30f4fc7",
+      "scope": "bounded extraction/tooling/current documentation; shared CMake also includes parent OriginAdmission target"
+    },
+    {
+      "path": "src/ScriptBindingValues.h",
+      "bytes": 937,
+      "sha256": "bf5a7bec064c5613d50adceabacb3202924139760fdf9945480455cb78ac229c",
+      "scope": "bounded extraction/tooling/current documentation; shared CMake also includes parent OriginAdmission target"
+    },
+    {
+      "path": "src/ScriptBindings.h",
+      "bytes": 651,
+      "sha256": "d38759d9f7f7e6e8a70841610da4d923fcc1b2c6a6a13543c1487c7797a760a7",
+      "scope": "bounded extraction/tooling/current documentation; shared CMake also includes parent OriginAdmission target"
+    },
+    {
+      "path": "src/ScriptBindingsJoint.cpp",
+      "bytes": 10133,
+      "sha256": "b8c8e0906e95cb72851085a16a5a6c41c8b8ef3c744e7de83b7f9bbf9d5cfd7d",
+      "scope": "bounded extraction/tooling/current documentation; shared CMake also includes parent OriginAdmission target"
+    },
+    {
+      "path": "src/ScriptBindingsUI.cpp",
+      "bytes": 17297,
+      "sha256": "8218cc4ec30f38fc3135c24133e4dde4ba887ccc6b6478cf996e535ffdeba4b6",
+      "scope": "bounded extraction/tooling/current documentation; shared CMake also includes parent OriginAdmission target"
+    },
+    {
+      "path": "src/ScriptSystem.cpp",
+      "bytes": 253206,
+      "sha256": "6f37cc76f1a1f46f6cdf36e465c8ed5d45ef8ff386ee00594f2d7a090f298c76",
+      "scope": "bounded extraction/tooling/current documentation; shared CMake also includes parent OriginAdmission target"
+    },
+    {
+      "path": "src/WorldOrigin.cpp",
+      "bytes": 11477,
+      "sha256": "28e853c52027cb02d631987df0ea3480061ffba9c784d2720f2f213917f6fd32",
+      "scope": "formatting only; parent owns OriginLimits functional change"
+    },
+    {
+      "path": "src/editor/EditorPanels.cpp",
+      "bytes": 131361,
+      "sha256": "192eddceb284290dbeb4234ffdf09f243a994bf1aa7e37b63a02be47ec202e89",
+      "scope": "bounded extraction/tooling/current documentation; shared CMake also includes parent OriginAdmission target"
+    },
+    {
+      "path": "src/editor/EditorPanels.h",
+      "bytes": 10498,
+      "sha256": "5420ce23192cface9da78d41691d9f33b4457a2c66fdfd9a127e35587a5509c4",
+      "scope": "bounded extraction/tooling/current documentation; shared CMake also includes parent OriginAdmission target"
+    },
+    {
+      "path": "src/editor/RenderPreview.cpp",
+      "bytes": 15026,
+      "sha256": "9c62c15f45eb2e57165745d43586d2ca6522dcb5dac39cdad74736a0dfddc1ac",
+      "scope": "bounded extraction/tooling/current documentation; shared CMake also includes parent OriginAdmission target"
+    },
+    {
+      "path": "src/editor/RenderPreview.h",
+      "bytes": 327,
+      "sha256": "03c295151c89c7a7224f8ab9bed7df03a53f4bc22e33cb2167ade3d29b29dc5b",
+      "scope": "bounded extraction/tooling/current documentation; shared CMake also includes parent OriginAdmission target"
+    },
+    {
+      "path": "tests/fixtures/cmake/PreAlphaSubsystemTargets.json",
+      "bytes": 58716,
+      "sha256": "68c7727fdc5c45289cadc84bc8be2672769b5ae95a99e83bc05942546a8965a1",
+      "scope": "bounded extraction/tooling/current documentation; shared CMake also includes parent OriginAdmission target"
+    },
+    {
+      "path": "tests/test_cmake_test_targets.py",
+      "bytes": 11299,
+      "sha256": "7b79d15baf7fb07840a71e1dd0b15e668aed89faf2259b96caf18d1c82d3d26e",
+      "scope": "bounded extraction/tooling/current documentation; shared CMake also includes parent OriginAdmission target"
+    }
+  ],
+  "note": "These are source-byte fingerprints of the combined candidate. Original final-source regression and build/binary receipts are owned by the parent. Matched observers are explicitly pre-WorldOrigin-format and followed by complete token preservation."
+}

@@ -1,0 +1,73 @@
+[
+  {
+    "name": "original-continuation",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass3/baseline/bin/judas_impact_mesh_cost_tests",
+      "1",
+      "trough"
+    ],
+    "returncode": 1,
+    "seconds": 1.0161565500002325
+  },
+  {
+    "name": "original-entry",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass3/baseline/bin/judas_impact_mesh_cost_tests",
+      "1",
+      "trough",
+      "1.2",
+      "entry"
+    ],
+    "returncode": 0,
+    "seconds": 0.3152555830001802
+  },
+  {
+    "name": "observer-build",
+    "command": [
+      "c++",
+      "-O3",
+      "-DNDEBUG",
+      "-std=c++17",
+      "-DDT_VIRTUAL_QUERYFILTER",
+      "-I/home/conner/Documents/GitHub/Project-Judas/src",
+      "-I/home/conner/Documents/GitHub/Project-Judas/third_party/glad/include",
+      "-isystem",
+      "/usr/include/SDL2",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass3/ccd/ContinuationObserver.cpp",
+      "-o",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass3/ccd/baseline-observer",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass3/baseline/bin/libjudas_engine.a",
+      "/home/conner/Documents/GitHub/Project-Judas/build/libjudas_profiler.a",
+      "/home/conner/Documents/GitHub/Project-Judas/build/libjudas_build_identity.a",
+      "/home/conner/Documents/GitHub/Project-Judas/build/libjudas_app_icon.a",
+      "/home/conner/Documents/GitHub/Project-Judas/build/libjudas_materials.a",
+      "/home/conner/Documents/GitHub/Project-Judas/build/libjudas_profiler.a",
+      "/usr/lib/x86_64-linux-gnu/libSDL2.so",
+      "/home/conner/Documents/GitHub/Project-Judas/build/libjudas_glad.a",
+      "/home/conner/Documents/GitHub/Project-Judas/build/libjudas_audio_backend.a",
+      "/home/conner/Documents/GitHub/Project-Judas/build/libjudas_meshoptimizer.a",
+      "/home/conner/Documents/GitHub/Project-Judas/build/libjudas_navigation_cook.a",
+      "/home/conner/Documents/GitHub/Project-Judas/build/libjudas_navigation_backend.a",
+      "/home/conner/Documents/GitHub/Project-Judas/build/libjudas_quickjs.a",
+      "-lm",
+      "/home/conner/Documents/GitHub/Project-Judas/build/_deps/judas_freetype-build/libfreetype.a",
+      "/home/conner/Documents/GitHub/Project-Judas/build/_deps/judas_harfbuzz-build/libharfbuzz.a",
+      "/home/conner/Documents/GitHub/Project-Judas/build/unicode/icu/lib/libicui18n.a",
+      "/home/conner/Documents/GitHub/Project-Judas/build/unicode/icu/lib/libicuuc.a",
+      "/home/conner/Documents/GitHub/Project-Judas/build/unicode/icu/lib/libicudata.a",
+      "-ldl",
+      "/home/conner/Documents/GitHub/Project-Judas/build/libjudas_jobs.a"
+    ],
+    "returncode": 0
+  },
+  {
+    "name": "observer-run",
+    "returncode": 0
+  },
+  {
+    "name": "observer-provenance",
+    "source": "BaselineObserver.cpp",
+    "source_sha256": "0f51bf42af0c53aab62bcc46edd3c5c035fae22b00f6f1e99a8ab940aadd7daf",
+    "binary_sha256": "9117d6f6ba1995882a1c58a20f301abc72f11d2000b537e0e00d41e40e192f92"
+  }
+]

@@ -1,0 +1,3 @@
+FRAMES 45
+LOG_EVERY 0
+SCREENSHOT 30 /home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass3/final-linux/standalone.png

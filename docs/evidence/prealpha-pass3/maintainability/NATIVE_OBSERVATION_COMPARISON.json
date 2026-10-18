@@ -1,0 +1,59 @@
+{
+  "status": "pass",
+  "stage": "Final functional archive before token-identical WorldOrigin formatting; final original regressions validate the post-format build separately.",
+  "no_performance_claim": "Source/observer runtime timings include shared build load and are diagnostic only.",
+  "tests": [
+    {
+      "name": "script",
+      "summary": [
+        "SUMMARY 35 checks 0 failures"
+      ],
+      "state_observations": 3,
+      "exact_observation_match": true,
+      "observation_sha256": "bdc82eb9cae7878aa6e21e64dc8dddb16ec6da036ef070c964d5c991385f9dd3",
+      "before_seconds": 0.5417718440003227,
+      "after_seconds": 0.5306886449998274,
+      "before_binary_sha256": "610562dabc2f1b8438c9ee8a86a0e52ad35cccb890733a3edd6d10ae5da98512",
+      "after_binary_sha256": "e808ee10743ec3dc73c440c7a1ea389386dc90609aa0a6fc4c605481d2de2feb"
+    },
+    {
+      "name": "debug",
+      "summary": [
+        "M94 49 checks 0 failures"
+      ],
+      "state_observations": 2,
+      "exact_observation_match": true,
+      "observation_sha256": "0c25afed304534093da1489294aafd3659c8cfc4d1fa7a50be0e7c37fe80b55a",
+      "before_seconds": 0.2694190290003462,
+      "after_seconds": 0.27948432299945125,
+      "before_binary_sha256": "abc1e69633a0ba335d70a19f233ebb2aadaed341efd5821b371a340ced900e49",
+      "after_binary_sha256": "6a93d7743c9ab982308078e89acf96af7de7b9b039c284656fabe2e2f6f890aa"
+    },
+    {
+      "name": "ui",
+      "summary": [
+        "SUMMARY 22 checks 0 failures"
+      ],
+      "state_observations": 2,
+      "exact_observation_match": true,
+      "observation_sha256": "e2dd47036f01f72e91447a3715e99b40ec7c7872a91a1bb7d0f6f833c39bf614",
+      "before_seconds": 0.45257631899949047,
+      "after_seconds": 0.9343353980002576,
+      "before_binary_sha256": "ec1bc39c4660c98f854704396fa96fef57b60dec3f55a1b0e911bb7bb5316eb9",
+      "after_binary_sha256": "8de9c6c21adb1fdb532ba5e0f32139c70512bfc52736b6470871c1058a88b776"
+    },
+    {
+      "name": "joint",
+      "summary": [
+        "SUMMARY 8 checks 0 failures"
+      ],
+      "state_observations": 2,
+      "exact_observation_match": true,
+      "observation_sha256": "37d356c958c81df2dc04fbc5c3ec7496b06e41f0f80fb87778803334ea0643b3",
+      "before_seconds": 1.187831739000103,
+      "after_seconds": 1.1414644409996981,
+      "before_binary_sha256": "c7cdd7871ebfbe2a4ab444c74cffb15a644c12ddb15fe36d3e08c239e74dfcdb",
+      "after_binary_sha256": "6a23baec1e08d8dde3ad38d1f2479a20e44fdee3a17c336034ebc527b0ce94a7"
+    }
+  ]
+}

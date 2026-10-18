@@ -1,0 +1,112 @@
+{
+  "observedUtc": "2026-10-18T14:29:19.094825+00:00",
+  "argv": [
+    "gh",
+    "run",
+    "view",
+    "39133017442",
+    "--json",
+    "databaseId,headSha,status,conclusion,createdAt,updatedAt,url,jobs"
+  ],
+  "exit": 0,
+  "receipt": {
+    "conclusion": "success",
+    "createdAt": "2026-10-18T13:46:28Z",
+    "databaseId": 39133017442,
+    "headSha": "f647d7fd95f60d3a37dba70a51f4e45dc41c2922",
+    "jobs": [
+      {
+        "completedAt": "2026-10-18T14:01:10Z",
+        "conclusion": "success",
+        "databaseId": 117691857767,
+        "name": "linux",
+        "startedAt": "2026-10-18T13:46:31Z",
+        "status": "completed",
+        "steps": [
+          {
+            "conclusion": "success",
+            "name": "Set up job",
+            "number": 1,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run actions/checkout@v7",
+            "number": 2,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run actions/setup-node@v7",
+            "number": 3,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Native and optional verification prerequisites",
+            "number": 4,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Tooling positive and negative controls",
+            "number": 5,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Configure an explicitly identified build",
+            "number": 6,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Build focused dependencies and public SDK",
+            "number": 7,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Focused native gates",
+            "number": 8,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Qualify SDK on its declared Linux baseline",
+            "number": 9,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Preserve diagnostics even on failure",
+            "number": 10,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Post Run actions/setup-node@v7",
+            "number": 19,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Post Run actions/checkout@v7",
+            "number": 20,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Complete job",
+            "number": 21,
+            "status": "completed"
+          }
+        ],
+        "url": "https://github.com/SuperReaper1999/Project-Judas/actions/runs/39133017442/job/117691857767"
+      }
+    ],
+    "status": "completed",
+    "updatedAt": "2026-10-18T14:01:10Z",
+    "url": "https://github.com/SuperReaper1999/Project-Judas/actions/runs/39133017442"
+  }
+}

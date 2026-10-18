@@ -1,0 +1,35 @@
+{
+  "head": "f647d7fd95f60d3a37dba70a51f4e45dc41c2922",
+  "files": [
+    {
+      "path": "src/ScriptSystem.cpp",
+      "bytes": 260279,
+      "sha256": "443abc32d5d36d180c18b35449e8569c04cd01e7d2597994e73af1a0be600493"
+    },
+    {
+      "path": "src/editor/EditorPanels.cpp",
+      "bytes": 142914,
+      "sha256": "cf73040e3bb91c9eef225ed8ca20b11bcafcbd8a203fbfd5d2f3430b50d7b43d"
+    },
+    {
+      "path": "src/editor/EditorPanels.h",
+      "bytes": 10549,
+      "sha256": "48c244023ad5a5731b4b43111e174def6e6675e861a0dc52217cbb6d0bf8fa6c"
+    },
+    {
+      "path": "CMakeLists.txt",
+      "bytes": 106759,
+      "sha256": "8c01beb50b7f77a149d9a166b7d7240f1e2b54deb66f1b5b95a841e4ea1c06bf"
+    },
+    {
+      "path": "scripts/check_judasjs_api.mjs",
+      "bytes": 20513,
+      "sha256": "0419f890183e327a817572069edfc8f6a12f9e6fdead3e081455bec9f9b1af0c"
+    },
+    {
+      "path": "tests/test_cmake_test_targets.py",
+      "bytes": 6534,
+      "sha256": "546fbc0bf71be6ce825d1d7fd5041b40d6a3411b6cc31589b7beb3928af58e2c"
+    }
+  ]
+}

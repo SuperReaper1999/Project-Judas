@@ -43,7 +43,8 @@ class GateTests(unittest.TestCase):
         # Resolved contracts may graduate into the ordinary gate. Unresolved
         # findings must not silently become acceptance passes through scheduling.
         scheduled = {key for key, row in findings.items() if row['scheduled']}
-        self.assertEqual(scheduled, {'CCD-MESH-ARRIVAL', 'LIQUID-BAKE-ROTATION', 'LIQUID-BAKE-KNOTS'})
+        self.assertEqual(scheduled, {'CCD-MESH-ARRIVAL', 'LIQUID-BAKE-ROTATION', 'LIQUID-BAKE-KNOTS',
+                                     'LIQUID-ORIGIN-TOTAL-IDENTITY'})
         self.assertEqual(findings['LIQUID-ORIGIN-GRID-QUERY']['status'], 'open-query-continuity-failing')
         knots = next(row for row in manifest['tests'] if row['name'] == 'liquid-bake-knots-only')
         self.assertEqual(knots['args'][:2], ['--bake-only', 'knots'])
@@ -51,6 +52,13 @@ class GateTests(unittest.TestCase):
         full = next(row for row in manifest['tests'] if row['name'] == 'liquid-origin-grid-query')
         self.assertEqual(full['args'][:2], ['--bake-regression', 'knots'])
         self.assertTrue(full['manual'])
+        self.assertEqual(findings['LIQUID-ORIGIN-TOTAL-IDENTITY']['status'], 'resolved-oracle-causal-baseline')
+        atomic = next(row for row in manifest['tests'] if row['name'] == 'liquid-origin-total-identity')
+        self.assertEqual(atomic['args'][:2], ['--bake-regression', 'normalization'])
+        self.assertFalse(atomic.get('manual', False))
+        controls = next(row for row in manifest['tests'] if row['name'] == 'liquid-origin-query-controls')
+        self.assertEqual(controls['args'][:2], ['--query-controls', 'knots'])
+        self.assertNotIn('LIQUID-ORIGIN-GRID-QUERY', controls.get('finding', ''))
         self.assertEqual(findings['CCD-MESH-ARRIVAL']['status'], 'resolved-first-arrival')
         arrival = next(row for row in manifest['tests'] if row['name'] == 'impact-mesh-arrival')
         self.assertEqual(arrival['groups'], ['collision'])

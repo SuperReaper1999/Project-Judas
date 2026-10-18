@@ -1,0 +1,22 @@
+{
+  "all_270_physical_fields_identical": true,
+  "differences": [],
+  "worst_frame_id": 271,
+  "counters": {
+    "Physics impact events": 51,
+    "Physics impact queries": 501599,
+    "Physics CCD search inclusive ms": 311.376888,
+    "Physics CCD geometry inclusive ms": 886.3922749999999,
+    "Physics CCD geometry calls": 626049,
+    "Physics impact island discovery ms": 619.834533,
+    "Observer support retirement ms": 57.920437,
+    "Observer event reschedule ms": 576.826106,
+    "Observer discovery candidates ms": 107.72962,
+    "Observer event membership queries": 71980,
+    "Observer event membership comparisons": 57496461,
+    "Observer event membership hits": 68013,
+    "Physics impact solve ms": 161.071696,
+    "Physics geometry predicates": 2798292
+  },
+  "timing_note": "Observer costs include a few extra aggregate timers and per-query counters; not used as matched performance speedup evidence. Categories overlap."
+}

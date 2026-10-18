@@ -1,0 +1,10 @@
+{
+  "BaselineObserver.cpp": {
+    "sha256": "0f51bf42af0c53aab62bcc46edd3c5c035fae22b00f6f1e99a8ab940aadd7daf",
+    "compile_scope": "frozen baseline archive; source-only passive observation"
+  },
+  "ContinuationObserver.cpp": {
+    "sha256": "41cff9a952f6080561b23aff97d9ff7a227b9698fea1838450782b58500c4b55",
+    "compile_scope": "frozen baseline archive; source-only passive observation"
+  }
+}

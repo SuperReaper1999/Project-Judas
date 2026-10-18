@@ -1,0 +1,18 @@
+TRACE_JOINT_SCRIPT {"motor":true,"spawns":1,"checked":true}
+TRACE_JOINT_PHYSICAL -1.23111715e-06 -0.166666672
+PASS actual JS joint callbacks have no faults
+PASS JS controls limits/motors/springs and rejects stale/invalid handles
+PASS joint state drives authored HUD
+PASS project spawn binding loaded
+PASS physical P activates demo prefab spawn
+PASS physical Escape displays authored pause panel
+PASS physical Escape resumes demo
+PASS normal Application startup, rendering and shutdown
+SUMMARY 8 checks 0 failures
+Shadow maps: on
+Graphics: 4.5 (Core Profile) Mesa 26.0.8-1ubuntu0.3 / llvmpipe (LLVM 21.1.8, 256 bits)
+Renderer fragment texture units: 32 (material path uses 12)
+World state: /home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass3/maintainability/native/before-joint-output/project/Saves/main.judasstate (none saved)
+Project: Rigid-body joints (/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass3/maintainability/native/before-joint-output/project/joint_demo.judasproj)
+Scene: M45 rigid-body joints — G motor / P assembly (/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass3/maintainability/native/before-joint-output/project/Scenes/main.judas)
+World origin (m): 0.000, 0.000, 0.000

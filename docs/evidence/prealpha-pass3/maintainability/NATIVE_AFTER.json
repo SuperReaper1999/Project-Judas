@@ -1,0 +1,75 @@
+[
+  {
+    "name": "script",
+    "args": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass3/maintainability/native/script-after"
+    ],
+    "exit": 0,
+    "seconds": 0.5306886449998274,
+    "binary_sha256": "e808ee10743ec3dc73c440c7a1ea389386dc90609aa0a6fc4c605481d2de2feb",
+    "log": ".cache/prealpha-pass3/maintainability/native/script-after.log",
+    "observations": [
+      "STATE 1/4 {\"frames\":2,\"steps\":2,\"start\":1,\"speed\":7}",
+      "STATE 2/2 {\"frames\":2,\"steps\":2,\"start\":1,\"speed\":3}",
+      "NATIVE {\"parent\":null,\"classification\":{\"renderLayer\":0,\"collisionLayer\":0,\"collisionMask\":\"18446744073709551615\"},\"velocity\":{\"x\":1,\"y\":0,\"z\":0},\"angular\":{\"x\":0,\"y\":0,\"z\":2},\"tag\":true,\"query\":1,\"overlap\":1,\"sweep\":true,\"position\":{\"x\":0,\"y\":2,\"z\":0},\"input\":true}"
+    ],
+    "summaries": [
+      "SUMMARY 35 checks 0 failures"
+    ]
+  },
+  {
+    "name": "debug",
+    "args": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass3/maintainability/native/debug-after"
+    ],
+    "exit": 0,
+    "seconds": 0.27948432299945125,
+    "binary_sha256": "6a93d7743c9ab982308078e89acf96af7de7b9b039c284656fabe2e2f6f890aa",
+    "log": ".cache/prealpha-pass3/maintainability/native/debug-after.log",
+    "observations": [
+      "TRACE_DEBUG_INITIAL {\"count\":25,\"dt\":0.01600000075995922,\"subscriptions\":1,\"pending\":0}",
+      "TRACE_DEBUG_RELOAD {\"count\":85,\"dt\":0.019999999552965164,\"subscriptions\":1,\"pending\":0,\"received\":1}"
+    ],
+    "summaries": [
+      "M94 49 checks 0 failures"
+    ]
+  },
+  {
+    "name": "ui",
+    "args": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass3/maintainability/native/ui-after",
+      "--output",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass3/maintainability/native/after-ui-output"
+    ],
+    "exit": 0,
+    "seconds": 0.9343353980002576,
+    "binary_sha256": "8de9c6c21adb1fdb532ba5e0f32139c70512bfc52736b6470871c1058a88b776",
+    "log": ".cache/prealpha-pass3/maintainability/native/ui-after.log",
+    "observations": [
+      "TRACE_UI {\"elements\":[{\"enabled\":true,\"id\":\"canvas\",\"kind\":0,\"scroll\":[0.0,0.0],\"selectedKey\":\"\",\"selection\":[0,0],\"text\":\"\",\"value\":0.0,\"visible\":true},{\"enabled\":true,\"id\":\"main\",\"kind\":1,\"scroll\":[0.0,0.0],\"selectedKey\":\"\",\"selection\":[0,0],\"text\":\"\",\"value\":0.0,\"visible\":false},{\"enabled\":true,\"id\":\"main_title\",\"kind\":2,\"text\":\"JUDAS RUNTIME UI\",\"value\":0.0,\"visible\":true},{\"enabled\":true,\"id\":\"main_hint\",\"kind\":2,\"text\":\"Mouse or arrows / controller D-pad + confirm\",\"value\":0.0,\"visible\":true},{\"enabled\":true,\"id\":\"start\",\"kind\":4,\"text\":\"Enter game\",\"value\":0.0,\"visible\":true},{\"enabled\":true,\"id\":\"main_options\",\"kind\":4,\"text\":\"Options\",\"value\":0.0,\"visible\":true},{\"enabled\":true,\"id\":\"quit\",\"kind\":4,\"text\":\"Quit\",\"value\":0.0,\"visible\":true},{\"enabled\":true,\"id\":\"pause\",\"kind\":1,\"scroll\":[0.0,0.0],\"selectedKey\":\"\",\"selection\":[0,0],\"text\":\"\",\"value\":0.0,\"visible\":false},{\"enabled\":true,\"id\":\"pause_title\",\"kind\":2,\"text\":\"PAUSED\",\"value\":0.0,\"visible\":true},{\"enabled\":true,\"id\":\"pause_hint\",\"kind\":2,\"text\":\"Mouse or arrows / controller D-pad + confirm\",\"value\":0.0,\"visible\":true},{\"enabled\":true,\"id\":\"resume\",\"kind\":4,\"text\":\"Resume\",\"value\":0.0,\"visible\":true},{\"enabled\":true,\"id\":\"pause_options\",\"kind\":4,\"text\":\"Options\",\"value\":0.0,\"visible\":true},{\"enabled\":true,\"id\":\"pause_quit\",\"kind\":4,\"text\":\"Quit\",\"value\":0.0,\"visible\":true},{\"enabled\":true,\"id\":\"options\",\"kind\":1,\"scroll\":[0.0,0.0],\"selectedKey\":\"\",\"selection\":[0,0],\"text\":\"\",\"value\":0.0,\"visible\":false},{\"enabled\":true,\"id\":\"options_title\",\"kind\":2,\"text\":\"OPTIONS\",\"value\":0.0,\"visible\":true},{\"enabled\":true,\"id\":\"options_hint\",\"kind\":2,\"text\":\"Mouse or arrows / controller D-pad + confirm\",\"value\":0.0,\"visible\":true},{\"enabled\":true,\"id\":\"level\",\"kind\":2,\"text\":\"Demo effect strength\",\"value\":0.0,\"visible\":true},{\"enabled\":true,\"id\":\"strength\",\"kind\":5,\"text\":\"\",\"value\":0.6000000238418579,\"visible\":true},{\"enabled\":true,\"id\":\"toggle\",\"kind\":6,\"text\":\"       Show project HUD\",\"value\":1.0,\"visible\":true},{\"enabled\":true,\"id\":\"back\",\"kind\":4,\"text\":\"Back\",\"value\":0.0,\"visible\":true},{\"enabled\":true,\"id\":\"hud\",\"kind\":1,\"scroll\":[0.0,0.0],\"selectedKey\":\"\",\"selection\":[0,0],\"text\":\"\",\"value\":0.0,\"visible\":true},{\"enabled\":true,\"id\":\"hud_title\",\"kind\":2,\"text\":\"PROJECT-OWNED HUD\",\"value\":0.0,\"visible\":true},{\"enabled\":true,\"id\":\"counter\",\"kind\":2,\"text\":\"Spawned props: 0\",\"value\":0.0,\"visible\":true},{\"enabled\":true,\"id\":\"hud_help\",\"kind\":2,\"text\":\"K key / G door / P spawn / J pulse\\nEscape: authored pause menu\",\"value\":0.0,\"visible\":true},{\"enabled\":true,\"id\":\"image\",\"kind\":3,\"text\":\"\",\"value\":0.0,\"visible\":true}],\"focus\":\"\",\"scale\":1.0,\"version\":1}",
+      "TRACE_UI {\"elements\":[{\"enabled\":true,\"id\":\"canvas\",\"kind\":0,\"scroll\":[0.0,0.0],\"selectedKey\":\"\",\"selection\":[0,0],\"text\":\"\",\"value\":0.0,\"visible\":true},{\"enabled\":true,\"id\":\"main\",\"kind\":1,\"scroll\":[0.0,0.0],\"selectedKey\":\"\",\"selection\":[0,0],\"text\":\"\",\"value\":0.0,\"visible\":false},{\"enabled\":true,\"id\":\"main_title\",\"kind\":2,\"text\":\"JUDAS RUNTIME UI\",\"value\":0.0,\"visible\":true},{\"enabled\":true,\"id\":\"main_hint\",\"kind\":2,\"text\":\"Mouse or arrows / controller D-pad + confirm\",\"value\":0.0,\"visible\":true},{\"enabled\":true,\"id\":\"start\",\"kind\":4,\"text\":\"Enter game\",\"value\":0.0,\"visible\":true},{\"enabled\":true,\"id\":\"main_options\",\"kind\":4,\"text\":\"Options\",\"value\":0.0,\"visible\":true},{\"enabled\":true,\"id\":\"quit\",\"kind\":4,\"text\":\"Quit\",\"value\":0.0,\"visible\":true},{\"enabled\":true,\"id\":\"pause\",\"kind\":1,\"scroll\":[0.0,0.0],\"selectedKey\":\"\",\"selection\":[0,0],\"text\":\"\",\"value\":0.0,\"visible\":true},{\"enabled\":true,\"id\":\"pause_title\",\"kind\":2,\"text\":\"PAUSED\",\"value\":0.0,\"visible\":true},{\"enabled\":true,\"id\":\"pause_hint\",\"kind\":2,\"text\":\"Mouse or arrows / controller D-pad + confirm\",\"value\":0.0,\"visible\":true},{\"enabled\":true,\"id\":\"resume\",\"kind\":4,\"text\":\"Resume\",\"value\":0.0,\"visible\":true},{\"enabled\":true,\"id\":\"pause_options\",\"kind\":4,\"text\":\"Options\",\"value\":0.0,\"visible\":true},{\"enabled\":true,\"id\":\"pause_quit\",\"kind\":4,\"text\":\"Quit\",\"value\":0.0,\"visible\":true},{\"enabled\":true,\"id\":\"options\",\"kind\":1,\"scroll\":[0.0,0.0],\"selectedKey\":\"\",\"selection\":[0,0],\"text\":\"\",\"value\":0.0,\"visible\":false},{\"enabled\":true,\"id\":\"options_title\",\"kind\":2,\"text\":\"OPTIONS\",\"value\":0.0,\"visible\":true},{\"enabled\":true,\"id\":\"options_hint\",\"kind\":2,\"text\":\"Mouse or arrows / controller D-pad + confirm\",\"value\":0.0,\"visible\":true},{\"enabled\":true,\"id\":\"level\",\"kind\":2,\"text\":\"Demo effect strength\",\"value\":0.0,\"visible\":true},{\"enabled\":true,\"id\":\"strength\",\"kind\":5,\"text\":\"\",\"value\":0.6000000238418579,\"visible\":true},{\"enabled\":true,\"id\":\"toggle\",\"kind\":6,\"text\":\"       Show project HUD\",\"value\":1.0,\"visible\":true},{\"enabled\":true,\"id\":\"back\",\"kind\":4,\"text\":\"Back\",\"value\":0.0,\"visible\":true},{\"enabled\":true,\"id\":\"hud\",\"kind\":1,\"scroll\":[0.0,0.0],\"selectedKey\":\"\",\"selection\":[0,0],\"text\":\"\",\"value\":0.0,\"visible\":true},{\"enabled\":true,\"id\":\"hud_title\",\"kind\":2,\"text\":\"PROJECT-OWNED HUD\",\"value\":0.0,\"visible\":true},{\"enabled\":true,\"id\":\"counter\",\"kind\":2,\"text\":\"Spawned props: 0\",\"value\":0.0,\"visible\":true},{\"enabled\":true,\"id\":\"hud_help\",\"kind\":2,\"text\":\"K key / G door / P spawn / J pulse\\nEscape: authored pause menu\",\"value\":0.0,\"visible\":true},{\"enabled\":true,\"id\":\"image\",\"kind\":3,\"text\":\"\",\"value\":0.0,\"visible\":true}],\"focus\":\"resume\",\"scale\":1.0,\"version\":1}"
+    ],
+    "summaries": [
+      "SUMMARY 22 checks 0 failures"
+    ]
+  },
+  {
+    "name": "joint",
+    "args": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass3/maintainability/native/joint-after",
+      "--output",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass3/maintainability/native/after-joint-output"
+    ],
+    "exit": 0,
+    "seconds": 1.1414644409996981,
+    "binary_sha256": "6a23baec1e08d8dde3ad38d1f2479a20e44fdee3a17c336034ebc527b0ce94a7",
+    "log": ".cache/prealpha-pass3/maintainability/native/joint-after.log",
+    "observations": [
+      "TRACE_JOINT_SCRIPT {\"motor\":true,\"spawns\":1,\"checked\":true}",
+      "TRACE_JOINT_PHYSICAL -1.23111715e-06 -0.166666672"
+    ],
+    "summaries": [
+      "SUMMARY 8 checks 0 failures"
+    ]
+  }
+]

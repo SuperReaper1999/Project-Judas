@@ -1,0 +1,13 @@
+{
+  "base": "5bddaf349180cfba96f031ace41c02c78860bd38f18e304f9433d21d609f424a",
+  "candidate": "f7edb52fc353d208cac8b0728cce22260ea790a87857b284f5e3c1701e69ba94",
+  "contacts": "f62f6f1efad1faba4763554e0f106f3f67a5a5287b9b2d587320fe8e5e3844f1",
+  "invariants": [
+    "OriginaleventPairsandroworderunchanged",
+    "Exactpairmembershipincludingduplicatesandmisses",
+    "Noquery/contact/solver/CCDpolicychanged",
+    "ScratchownedonlywithinoneStepandcapacityreusedacrossevents",
+    "Sortingnewcopydoesnotalterphysicalsources"
+  ],
+  "scope": "Productionchangesawaitisolatedtest+matchedbenchmark,notyetclaimedvalidated."
+}

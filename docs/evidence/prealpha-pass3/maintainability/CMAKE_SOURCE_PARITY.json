@@ -1,0 +1,14 @@
+{
+  "parity": {
+    "tokens": 6646,
+    "sha256": "41f9ba8e7ba3936e54a15b6e914161cbac4eabd576d473ddfe8ab3b2a9467fc6"
+  },
+  "separately_authorized_pass3_additions": [
+    "judas_add_engine_test(judas_origin_admission_tests tests/OriginAdmissionTests.cpp)"
+  ],
+  "negative_controls": {
+    "missing application flag": "detected",
+    "changed warning": "detected",
+    "missing target": "detected"
+  }
+}

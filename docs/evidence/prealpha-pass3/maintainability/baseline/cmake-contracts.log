@@ -1,0 +1,11 @@
+test_changed_link_owner_detected (test_cmake_test_targets.CMakeTestTargets.test_changed_link_owner_detected) ... ok
+test_changed_warning_detected (test_cmake_test_targets.CMakeTestTargets.test_changed_warning_detected) ... ok
+test_exact_sources_links_warnings_and_order (test_cmake_test_targets.CMakeTestTargets.test_exact_sources_links_warnings_and_order) ... ok
+test_missing_application_sources_detected (test_cmake_test_targets.CMakeTestTargets.test_missing_application_sources_detected) ... ok
+test_missing_target_detected (test_cmake_test_targets.CMakeTestTargets.test_missing_target_detected) ... ok
+test_unknown_options_and_missing_source_fail (test_cmake_test_targets.CMakeTestTargets.test_unknown_options_and_missing_source_fail) ... ok
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.076s
+
+OK

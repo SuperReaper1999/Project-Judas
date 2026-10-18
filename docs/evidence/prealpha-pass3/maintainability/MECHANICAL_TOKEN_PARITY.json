@@ -1,0 +1,37 @@
+[
+  {
+    "path": "src/ScriptSystem.cpp",
+    "tokens": 58464,
+    "token_sha256": "e9661370f95433d3ce773ebf53fb96a110949823acf874d67e041bb09bb9dd57"
+  },
+  {
+    "path": "src/ScriptBindingValues.h",
+    "tokens": 242,
+    "token_sha256": "199bde517603b05234366a0a74b5ec1ddadd8d6adc802ce92b03071b55976b3f"
+  },
+  {
+    "path": "src/ScriptBindings.h",
+    "tokens": 97,
+    "token_sha256": "36d69d2efa428c125144bfe5b2c795d4b5b4b2a5fda07eb82b33fbaf18125ebc"
+  },
+  {
+    "path": "src/ScriptBindingsUI.cpp",
+    "tokens": 3403,
+    "token_sha256": "9cdd996c4837e4c4d0750dd2f9af8573e0db28cfd783c15ce031a7fb2e31ac81"
+  },
+  {
+    "path": "src/ScriptBindingsJoint.cpp",
+    "tokens": 1772,
+    "token_sha256": "930b3eec4b9916e6198136d4b28b35c8109e012c08f8ffc3e1c69930e195f3b0"
+  },
+  {
+    "path": "src/editor/RenderPreview.h",
+    "tokens": 39,
+    "token_sha256": "5eb6105ae8ed52b504e4a2f695920b3067bdfb0706733994c556065568fe238e"
+  },
+  {
+    "path": "src/editor/RenderPreview.cpp",
+    "tokens": 2763,
+    "token_sha256": "532e3b09e9a1fc5c795aca5945f059b1ffdc1f5209f8c7739097570a568a92b0"
+  }
+]

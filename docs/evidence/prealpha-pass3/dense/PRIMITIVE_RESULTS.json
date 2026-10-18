@@ -1,0 +1,86 @@
+{
+  "utc": "2026-10-18T14:10:40.552068+00:00",
+  "records": [
+    {
+      "rep": 0,
+      "variant": "baseline",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass3/dense/build-baseline/primitive",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass3/dense/build-baseline/witness.bin"
+      ],
+      "result": "cases=16000 queries=128000 positive=17708 negative=46292 bytes=11718912 digest=7debc98c624233a5 elapsed_ms=316.506"
+    },
+    {
+      "rep": 0,
+      "variant": "single-context",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass3/dense/build-single-context/primitive",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass3/dense/build-single-context/witness.bin"
+      ],
+      "result": "cases=16000 queries=128000 positive=17708 negative=46292 bytes=11718912 digest=7debc98c624233a5 elapsed_ms=302.985"
+    },
+    {
+      "rep": 0,
+      "variant": "selected-normal",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass3/dense/build-selected-normal/primitive",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass3/dense/build-selected-normal/witness.bin"
+      ],
+      "result": "cases=16000 queries=128000 positive=17708 negative=46292 bytes=11718912 digest=7debc98c624233a5 elapsed_ms=300.043"
+    },
+    {
+      "rep": 1,
+      "variant": "selected-normal",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass3/dense/build-selected-normal/primitive"
+      ],
+      "result": "cases=16000 queries=128000 positive=17708 negative=46292 bytes=11718912 digest=7debc98c624233a5 elapsed_ms=306.287"
+    },
+    {
+      "rep": 1,
+      "variant": "single-context",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass3/dense/build-single-context/primitive"
+      ],
+      "result": "cases=16000 queries=128000 positive=17708 negative=46292 bytes=11718912 digest=7debc98c624233a5 elapsed_ms=309.299"
+    },
+    {
+      "rep": 1,
+      "variant": "baseline",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass3/dense/build-baseline/primitive"
+      ],
+      "result": "cases=16000 queries=128000 positive=17708 negative=46292 bytes=11718912 digest=7debc98c624233a5 elapsed_ms=307.377"
+    },
+    {
+      "rep": 2,
+      "variant": "baseline",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass3/dense/build-baseline/primitive"
+      ],
+      "result": "cases=16000 queries=128000 positive=17708 negative=46292 bytes=11718912 digest=7debc98c624233a5 elapsed_ms=305.463"
+    },
+    {
+      "rep": 2,
+      "variant": "single-context",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass3/dense/build-single-context/primitive"
+      ],
+      "result": "cases=16000 queries=128000 positive=17708 negative=46292 bytes=11718912 digest=7debc98c624233a5 elapsed_ms=301.012"
+    },
+    {
+      "rep": 2,
+      "variant": "selected-normal",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass3/dense/build-selected-normal/primitive"
+      ],
+      "result": "cases=16000 queries=128000 positive=17708 negative=46292 bytes=11718912 digest=7debc98c624233a5 elapsed_ms=300.068"
+    }
+  ],
+  "same_exact_field_bytes": {
+    "single-context": true,
+    "selected-normal": true
+  },
+  "baseline_bytes": 11718912,
+  "baseline_sha256": "f017f2af3470e5382f33f469b24c60c46cf9dd8b342263121fb2ce079ed84de1"
+}

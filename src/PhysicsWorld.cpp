@@ -6,6 +6,7 @@
 #include "CollisionGeometry.h"
 #include "SaveArchive.h"
 #include "PhysicsCastGeometry.h"
+#include "OriginLimits.h"
 
 #include <algorithm>
 #include <array>
@@ -989,170 +990,261 @@ struct PhysicsWorld::Impl {
     // its depth at `start` by target (a pair already touching, e.g. pivoting
     // on one corner), rather than the first touch. Measuring from the start
     // depth lets the search continue after an event that ended at the target.
-    double ImpactTime(unsigned a,unsigned b,int pa,int pb,double start,double finish,double target=0) {
-        PhysicsWorkTimer timer(work.toi,work.active);
+    double ImpactTime(unsigned a, unsigned b, int pa, int pb, double start, double finish,
+                      double target = 0) {
+        PhysicsWorkTimer timer(work.toi, work.active);
         // A target can finish inside the step. Never certify a plane across
         // its velocity discontinuity; search the two real ledger intervals.
-        for(auto slot:{a,b})if(bodies[slot].isKinematic)for(const auto& s:bodies[slot].motion.Segments())
-            if(s.end>start&&s.end<finish){auto first=ImpactTime(a,b,pa,pb,start,s.end,target);
-                return first<=s.end?first:ImpactTime(a,b,pa,pb,s.end,finish,target);}
+        for (auto slot : {a, b})
+            if (bodies[slot].isKinematic)
+                for (const auto &s : bodies[slot].motion.Segments())
+                    if (s.end > start && s.end < finish) {
+                        auto first = ImpactTime(a, b, pa, pb, start, s.end, target);
+                        return first <= s.end ? first
+                                              : ImpactTime(a, b, pa, pb, s.end, finish, target);
+                    }
         ++stats.impactQueries;
-        if(target>0)target+=PairPenetration(a,b,pa,pb,start);
-        const auto& ba=bodies[a]; const auto& bb=bodies[b];
-        const auto simpleRadius=[](const Body& body){
-            return (body.shape.type==ShapeType::Box||body.shape.type==ShapeType::Sphere)&&body.shape.pivotOffset==glm::vec3(0)&&std::isfinite(body.boundingRadius)&&body.boundingRadius>0;
+        if (target > 0)
+            target += PairPenetration(a, b, pa, pb, start);
+        const auto &ba = bodies[a];
+        const auto &bb = bodies[b];
+        const auto simpleRadius = [](const Body &body) {
+            return (body.shape.type == ShapeType::Box || body.shape.type == ShapeType::Sphere) &&
+                   body.shape.pivotOffset == glm::vec3(0) && std::isfinite(body.boundingRadius) &&
+                   body.boundingRadius > 0;
         };
         // Restrict this rejection to the existing outward-proven primitive
         // radius/bounds. Compound, cooked and terrain shapes retain the full
         // old query until their radius enclosure is independently established.
-        if(simpleRadius(ba)&&simpleRadius(bb)){
-            const auto& boundA=RemainingImpactBound(a,start,finish);const auto& boundB=RemainingImpactBound(b,start,finish);
-            const auto finite=[](const Aabb& bound){for(int k=0;k<3;++k)if(!std::isfinite(bound.min[k])||!std::isfinite(bound.max[k]))return false;return true;};
+        if (simpleRadius(ba) && simpleRadius(bb)) {
+            const auto &boundA = RemainingImpactBound(a, start, finish);
+            const auto &boundB = RemainingImpactBound(b, start, finish);
+            const auto finite = [](const Aabb &bound) {
+                for (int k = 0; k < 3; ++k)
+                    if (!std::isfinite(bound.min[k]) || !std::isfinite(bound.max[k]))
+                        return false;
+                return true;
+            };
             // An arithmetic-range failure is not a geometric rejection. Keep
             // the established query path whenever the enclosure is uncertain.
-            if(finite(boundA)&&finite(boundB)&&!boundA.Overlaps(boundB)){++impactBoundsRejected;return finish+1;}
+            if (finite(boundA) && finite(boundB) && !boundA.Overlaps(boundB)) {
+                ++impactBoundsRejected;
+                return finish + 1;
+            }
         }
-        const auto posa=ImpactPoseAt(a,start).pose,posb=ImpactPoseAt(b,start).pose;
-        const auto firstPrimitive=PrimitiveAt(ba.shape,posa,pa),secondPrimitive=PrimitiveAt(bb.shape,posb,pb);
-        const bool firstMesh=firstPrimitive.shape.type==ShapeType::TriangleMesh&&!ba.HasMotion();
-        const bool secondMesh=secondPrimitive.shape.type==ShapeType::TriangleMesh&&!bb.HasMotion();
-        const auto convexPoly=[](ShapeType type){return type==ShapeType::Box||type==ShapeType::ConvexHull;};
-        const bool meshAdvance=(firstMesh&&convexPoly(secondPrimitive.shape.type))||
-                               (secondMesh&&convexPoly(firstPrimitive.shape.type));
-        const glm::dvec3 relative=glm::dvec3(ba.HasMotion()?posa.linearVelocity:glm::vec3(0))-glm::dvec3(bb.HasMotion()?posb.linearVelocity:glm::vec3(0));
-        const double angular=(ba.HasMotion()?glm::length(glm::dvec3(DriftGenerator(a,start)))*ba.boundingRadius:0)+
-                             (bb.HasMotion()?glm::length(glm::dvec3(DriftGenerator(b,start)))*bb.boundingRadius:0);
-        const double speed=glm::length(relative)+angular;
-        if (!(speed>0)) return finish+1;
+        const auto posa = ImpactPoseAt(a, start).pose, posb = ImpactPoseAt(b, start).pose;
+        const auto firstPrimitive = PrimitiveAt(ba.shape, posa, pa),
+                   secondPrimitive = PrimitiveAt(bb.shape, posb, pb);
+        const bool firstMesh =
+            firstPrimitive.shape.type == ShapeType::TriangleMesh && !ba.HasMotion();
+        const bool secondMesh =
+            secondPrimitive.shape.type == ShapeType::TriangleMesh && !bb.HasMotion();
+        const auto convexPoly = [](ShapeType type) {
+            return type == ShapeType::Box || type == ShapeType::ConvexHull;
+        };
+        const bool meshAdvance = (firstMesh && convexPoly(secondPrimitive.shape.type)) ||
+                                 (secondMesh && convexPoly(firstPrimitive.shape.type));
+        const glm::dvec3 relative =
+            glm::dvec3(ba.HasMotion() ? posa.linearVelocity : glm::vec3(0)) -
+            glm::dvec3(bb.HasMotion() ? posb.linearVelocity : glm::vec3(0));
+        const double angular =
+            (ba.HasMotion() ? glm::length(glm::dvec3(DriftGenerator(a, start))) * ba.boundingRadius
+                            : 0) +
+            (bb.HasMotion() ? glm::length(glm::dvec3(DriftGenerator(b, start))) * bb.boundingRadius
+                            : 0);
+        const double speed = glm::length(relative) + angular;
+        if (!(speed > 0))
+            return finish + 1;
         // Bisection still performs all 32 represented-time bracket updates.
         // Binary32 pose integration can map several of those times to exactly
         // the same pair of poses. Contact truth for that identical geometry is
         // reusable; no margin contact, tolerance or earlier stopping is used.
-        struct ActualTruth {std::array<float,14> pose{};bool valid=false,touching=false;};
-        std::array<ActualTruth,3> actualTruth{};std::size_t nextTruth=0;
-        auto touchingAt=[&](double at){
-            ++impactTruthRequests;
-            const auto& aa=ImpactPoseAt(a,at).pose;const auto& bb=ImpactPoseAt(b,at).pose;
-            const std::array<float,14> represented={aa.position.x,aa.position.y,aa.position.z,aa.orientation.w,aa.orientation.x,aa.orientation.y,aa.orientation.z,
-                bb.position.x,bb.position.y,bb.position.z,bb.orientation.w,bb.orientation.x,bb.orientation.y,bb.orientation.z};
-            for(const auto& old:actualTruth)if(old.valid&&std::memcmp(old.pose.data(),represented.data(),sizeof(represented))==0){++impactTruthReuses;return old.touching;}
-            const bool touching=target>0?PairPenetrationExceeds(a,b,pa,pb,at,target):PairTouches(a,b,pa,pb,at);
-            actualTruth[nextTruth]={represented,true,touching};nextTruth=(nextTruth+1)%actualTruth.size();return touching;
+        struct ActualTruth {
+            std::array<float, 14> pose{};
+            bool valid = false, touching = false;
         };
-        double time=start, previous=start;
-        bool uncertifiedAdvance=false,stalled=false;
+        std::array<ActualTruth, 3> actualTruth{};
+        std::size_t nextTruth = 0;
+        auto touchingAt = [&](double at) {
+            ++impactTruthRequests;
+            const auto &aa = ImpactPoseAt(a, at).pose;
+            const auto &bb = ImpactPoseAt(b, at).pose;
+            const std::array<float, 14> represented = {
+                aa.position.x,    aa.position.y,    aa.position.z,    aa.orientation.w,
+                aa.orientation.x, aa.orientation.y, aa.orientation.z, bb.position.x,
+                bb.position.y,    bb.position.z,    bb.orientation.w, bb.orientation.x,
+                bb.orientation.y, bb.orientation.z};
+            for (const auto &old : actualTruth)
+                if (old.valid &&
+                    std::memcmp(old.pose.data(), represented.data(), sizeof(represented)) == 0) {
+                    ++impactTruthReuses;
+                    return old.touching;
+                }
+            const bool touching = target > 0 ? PairPenetrationExceeds(a, b, pa, pb, at, target)
+                                             : PairTouches(a, b, pa, pb, at);
+            actualTruth[nextTruth] = {represented, true, touching};
+            nextTruth = (nextTruth + 1) % actualTruth.size();
+            return touching;
+        };
+        double time = start, previous = start;
+        bool uncertifiedAdvance = false, stalled = false;
         // A grazing feature on a concave surface (a limb sliding in a curved
         // mesh ramp) keeps the gap tiny while the surface keeps closing ahead,
         // so each advance covers a sliver of the interval. After several such
         // consecutive advances, stop paying full proximity queries and finish
         // with the bounded sampling below, as the 64-iteration limit already does.
-        int stalledAdvances=0;
+        int stalledAdvances = 0;
         // Conservative advancement needs a separating plane. A pair searched
         // to a penetration target is already in contact, where no single
         // contact normal bounds the approach of every feature; go straight to
         // the bounded sampling below.
-        const int advanceIterations=target>0?0:64;
-        for (int iteration=0;iteration<advanceIterations;++iteration) {
-            ++stats.impactSearchIterations;stats.impactPeakIterations=std::max(stats.impactPeakIterations,std::size_t(iteration+1));
-            const float reach=std::nextafter(static_cast<float>(speed*(finish-time)),
-                                             std::numeric_limits<float>::infinity());
+        const int advanceIterations = target > 0 ? 0 : 64;
+        for (int iteration = 0; iteration < advanceIterations; ++iteration) {
+            ++stats.impactSearchIterations;
+            stats.impactPeakIterations =
+                std::max(stats.impactPeakIterations, std::size_t(iteration + 1));
+            const float reach = std::nextafter(static_cast<float>(speed * (finish - time)),
+                                               std::numeric_limits<float>::infinity());
             // Margin manifolds contain proximity features, not necessarily the
             // zero-margin contact set. Contact truth must use the latter.
-            if(touchingAt(time)) {
+            if (touchingAt(time)) {
                 // A pair touching at the start is left to the contact solver,
                 // unless its spin can turn another feature through the support
                 // before the interval ends: then search to a penetration target.
-                if(time==start) return target==0&&SpinsThroughSupport({a,b,unsigned(pa),unsigned(pb)},finish-start,start) ?
-                    ImpactTime(a,b,pa,pb,start,finish,SpinPenetrationTarget({a,b,unsigned(pa),unsigned(pb)})) : finish+1;
-                double lo=previous,hi=time;
-                for(int k=0;k<32;++k) {
-                    const double mid=(lo+hi)*.5;
-                    if(touchingAt(mid)) hi=mid;else lo=mid;
+                if (time == start)
+                    return target == 0 && SpinsThroughSupport({a, b, unsigned(pa), unsigned(pb)},
+                                                              finish - start, start)
+                               ? ImpactTime(
+                                     a, b, pa, pb, start, finish,
+                                     SpinPenetrationTarget({a, b, unsigned(pa), unsigned(pb)}))
+                               : finish + 1;
+                double lo = previous, hi = time;
+                for (int k = 0; k < 32; ++k) {
+                    const double mid = (lo + hi) * .5;
+                    if (touchingAt(mid))
+                        hi = mid;
+                    else
+                        lo = mid;
                 }
                 return hi;
             }
             // The exact endpoint has already been checked. There is no future
             // interval left from which a proximity reach could reveal a hit.
-            if(time==finish)return finish+1;
+            if (time == finish)
+                return finish + 1;
             double increment;
-            if(meshAdvance){
-                PhysicsWorkTimer geometryTimer(work.geometry,work.active);
-                const auto& aa=ImpactPoseAt(a,time);const auto& bb=ImpactPoseAt(b,time);
-                const auto query=firstMesh?PrimitiveAt(bodies[b].shape,bb.pose,pb,&*bb.orientation):
-                                           PrimitiveAt(bodies[a].shape,aa.pose,pa,&*aa.orientation);
-                const auto mesh=firstMesh?PrimitiveAt(bodies[a].shape,aa.pose,pa,&*aa.orientation):
-                                          PrimitiveAt(bodies[b].shape,bb.pose,pb,&*bb.orientation);
-                const unsigned moving=firstMesh?b:a;
-                increment=MeshSeparationAdvance(query,mesh,
-                    glm::dvec3(firstMesh?bb.pose.linearVelocity:aa.pose.linearVelocity),
-                    glm::dvec3(DriftGenerator(moving,time)),bodies[moving].boundingRadius,finish-time);
-                if(!std::isfinite(increment))return finish+1;
-                if(!(increment>0)){
-                    ++stats.impactUncertifiedAdvances;uncertifiedAdvance=true;break;
+            if (meshAdvance) {
+                PhysicsWorkTimer geometryTimer(work.geometry, work.active);
+                const auto &aa = ImpactPoseAt(a, time);
+                const auto &bb = ImpactPoseAt(b, time);
+                const auto query =
+                    firstMesh ? PrimitiveAt(bodies[b].shape, bb.pose, pb, &*bb.orientation)
+                              : PrimitiveAt(bodies[a].shape, aa.pose, pa, &*aa.orientation);
+                const auto mesh = firstMesh
+                                      ? PrimitiveAt(bodies[a].shape, aa.pose, pa, &*aa.orientation)
+                                      : PrimitiveAt(bodies[b].shape, bb.pose, pb, &*bb.orientation);
+                const unsigned moving = firstMesh ? b : a;
+                increment = MeshSeparationAdvance(
+                    query, mesh,
+                    glm::dvec3(firstMesh ? bb.pose.linearVelocity : aa.pose.linearVelocity),
+                    glm::dvec3(DriftGenerator(moving, time)), bodies[moving].boundingRadius,
+                    finish - time);
+                if (!std::isfinite(increment))
+                    return finish + 1;
+                if (!(increment > 0)) {
+                    ++stats.impactUncertifiedAdvances;
+                    uncertifiedAdvance = true;
+                    break;
                 }
-            }else{
-                const auto manifold=PairAt(a,b,pa,pb,time,reach);
-                if (!manifold.count) return finish+1;
-                const Contact* nearest=&manifold.points[0];
-                for (int k=1;k<manifold.count;++k)
-                    if (manifold.points[k].signedSeparation<nearest->signedSeparation) nearest=&manifold.points[k];
-                const double gap=nearest->hasLocalAnchors ? nearest->signedSeparation : -double(nearest->penetration);
-                if(gap<=0) {
-                    ++stats.impactUncertifiedAdvances;uncertifiedAdvance=true;break;
+            } else {
+                const auto manifold = PairAt(a, b, pa, pb, time, reach);
+                if (!manifold.count)
+                    return finish + 1;
+                const Contact *nearest = &manifold.points[0];
+                for (int k = 1; k < manifold.count; ++k)
+                    if (manifold.points[k].signedSeparation < nearest->signedSeparation)
+                        nearest = &manifold.points[k];
+                const double gap = nearest->hasLocalAnchors ? nearest->signedSeparation
+                                                            : -double(nearest->penetration);
+                if (gap <= 0) {
+                    ++stats.impactUncertifiedAdvances;
+                    uncertifiedAdvance = true;
+                    break;
                 }
-                const auto normal=nearest->hasLocalAnchors ? nearest->preciseNormal : glm::dvec3(nearest->normal);
-                const double closing=-glm::dot(relative,normal)+angular;
-                if (!(closing>0)) return finish+1;
-                increment=gap/closing;
-                if(angular>0) increment=std::max(increment,PlaneDrift(a,b,pa,pb,time,normal));
+                const auto normal =
+                    nearest->hasLocalAnchors ? nearest->preciseNormal : glm::dvec3(nearest->normal);
+                const double closing = -glm::dot(relative, normal) + angular;
+                if (!(closing > 0))
+                    return finish + 1;
+                increment = gap / closing;
+                if (angular > 0)
+                    increment = std::max(increment, PlaneDrift(a, b, pa, pb, time, normal));
             }
             // Progress in represented time only. A large coordinate orthogonal
             // to motion must not enlarge the step and skip a thin obstacle.
-            increment=std::max(increment,std::nextafter(time,finish)-time);
-            previous=time;
-            time=std::min(finish,time+increment);
-            if (time<=previous) return finish+1;
-            stalledAdvances=time-previous<kImpactStallFraction*(finish-previous)?stalledAdvances+1:0;
-            if(stalledAdvances>=kImpactStallAdvances){stalled=true;break;}
+            increment = std::max(increment, std::nextafter(time, finish) - time);
+            previous = time;
+            time = std::min(finish, time + increment);
+            if (time <= previous)
+                return finish + 1;
+            stalledAdvances = time - previous < kImpactStallFraction * (finish - previous)
+                                  ? stalledAdvances + 1
+                                  : 0;
+            if (stalledAdvances >= kImpactStallAdvances) {
+                stalled = true;
+                break;
+            }
         }
-        if(stalled) ++stats.impactSearchStalls;
-        else if(!uncertifiedAdvance&&target==0) ++stats.impactSearchLimit;
+        if (stalled)
+            ++stats.impactSearchStalls;
+        else if (!uncertifiedAdvance && target == 0)
+            ++stats.impactSearchLimit;
         ++stats.impactSamplingFallbacks;
         // Rotating grazing features can keep a fixed separating-plane bound
         // arbitrarily short. Finish this PAIR query with a bounded temporal
         // sampling approximation, never by applying an impulse across a gap.
         // Intersections shorter than the reported sampling interval can be
         // missed; this is deliberately not a complete continuous-CCD proof.
-        auto firstContact=[&](double lo,double hi) {
-            for(int k=0;k<32;++k) {
-                const double mid=(lo+hi)*.5;
-                if(touchingAt(mid)) hi=mid;else lo=mid;
+        auto firstContact = [&](double lo, double hi) {
+            for (int k = 0; k < 32; ++k) {
+                const double mid = (lo + hi) * .5;
+                if (touchingAt(mid))
+                    hi = mid;
+                else
+                    lo = mid;
             }
             return hi;
         };
         ++stats.impactSamplingTests;
-        if(touchingAt(time)) return firstContact(previous,time);
-        const double remaining=finish-time;
-        if(!(remaining>0)) return finish+1;
-        const double feature=std::min(PrimitiveFeature(a,pa),PrimitiveFeature(b,pb));
-        if(!(feature>0)) throw std::runtime_error("invalid primitive feature in impact sampling");
-        const double angularSpeed=(ba.HasMotion()?glm::length(glm::dvec3(DriftGenerator(a,start))):0)+
-                                  (bb.HasMotion()?glm::length(glm::dvec3(DriftGenerator(b,start))):0);
-        const double requested=std::max({16.0,std::ceil(16.0*speed*remaining/feature),
-                                              std::ceil(256.0*angularSpeed*remaining)});
-        constexpr unsigned kMaxSamples=65536;
-        if(requested>double(kMaxSamples)) ++stats.impactSamplingResolutionCaps;
-        const unsigned samples=static_cast<unsigned>(std::min(double(kMaxSamples),requested));
-        const double interval=remaining/double(samples);
-        stats.impactSamplingMaxInterval=std::max(stats.impactSamplingMaxInterval,interval);
-        double lo=time;
-        for(unsigned sample=1;sample<=samples;++sample) {
-            const double hi=sample==samples ? finish : time+remaining*(double(sample)/double(samples));
+        if (touchingAt(time))
+            return firstContact(previous, time);
+        const double remaining = finish - time;
+        if (!(remaining > 0))
+            return finish + 1;
+        const double feature = std::min(PrimitiveFeature(a, pa), PrimitiveFeature(b, pb));
+        if (!(feature > 0))
+            throw std::runtime_error("invalid primitive feature in impact sampling");
+        const double angularSpeed =
+            (ba.HasMotion() ? glm::length(glm::dvec3(DriftGenerator(a, start))) : 0) +
+            (bb.HasMotion() ? glm::length(glm::dvec3(DriftGenerator(b, start))) : 0);
+        const double requested = std::max({16.0, std::ceil(16.0 * speed * remaining / feature),
+                                           std::ceil(256.0 * angularSpeed * remaining)});
+        constexpr unsigned kMaxSamples = 65536;
+        if (requested > double(kMaxSamples))
+            ++stats.impactSamplingResolutionCaps;
+        const unsigned samples = static_cast<unsigned>(std::min(double(kMaxSamples), requested));
+        const double interval = remaining / double(samples);
+        stats.impactSamplingMaxInterval = std::max(stats.impactSamplingMaxInterval, interval);
+        double lo = time;
+        for (unsigned sample = 1; sample <= samples; ++sample) {
+            const double hi =
+                sample == samples ? finish : time + remaining * (double(sample) / double(samples));
             ++stats.impactSamplingTests;
-            if(touchingAt(hi)) return firstContact(lo,hi);
-            lo=hi;
+            if (touchingAt(hi))
+                return firstContact(lo, hi);
+            lo = hi;
         }
-        return finish+1;
+        return finish + 1;
     }
 
     void ResolveInitialImpacts(float dt) {
@@ -1219,347 +1311,505 @@ struct PhysicsWorld::Impl {
         }
     }
 
-    void AdvanceImpacts(float dt,bool coupledVelocityChanged=false) {
+    void AdvanceImpacts(float dt, bool coupledVelocityChanged = false) {
         // Keep published contact storage ordered even if a later physical
         // query throws. Successful steps sort once; failure observers retain
         // the same lower_bound invariant as the former per-event publication.
         struct ObservationPublication {
-            std::vector<CachedContact>& rows;
-            PhysicsWorkSample& work;
-            bool active,dirty=false;
-            void Publish(){
-                if(!dirty)return;
-                PhysicsWorkTimer timer(work,active);
-                std::stable_sort(rows.begin(),rows.end(),
-                    [](const CachedContact& a,const CachedContact& b){return a.key<b.key;});
-                dirty=false;
+            std::vector<CachedContact> &rows;
+            PhysicsWorkSample &work;
+            bool active, dirty = false;
+            void Publish() {
+                if (!dirty)
+                    return;
+                PhysicsWorkTimer timer(work, active);
+                std::stable_sort(
+                    rows.begin(), rows.end(),
+                    [](const CachedContact &a, const CachedContact &b) { return a.key < b.key; });
+                dirty = false;
             }
-            ~ObservationPublication(){Publish();}
-        } observationPublication{completedContactObservations,work.impactObservations,work.active};
+            ~ObservationPublication() {
+                Publish();
+            }
+        } observationPublication{completedContactObservations, work.impactObservations,
+                                 work.active};
         // The incoming cache is already ordered. Only newly appended TOI
         // identities require publication; erasure and impulse changes preserve
         // order. Keep that invariant on failure as well as successful return.
-        ObservationPublication cachePublication{contactCache,work.continuationCache,work.active};
-        stepDuration=dt;impactQueryAnchorTime=0;
-        impactPoseEvaluations=impactPoseReuses=impactOrientationBuilds=impactTruthRequests=impactTruthReuses=impactBoundsRejected=0;
-        impactActualBoundsRejected=0;
-        for(auto slot:aliveSlots){InvalidateImpactPose(slot);if(slot<impactPoseSamples.size())impactPoseSamples[slot].tightValid=false;}
-        impactCounts.assign(bodies.size(),0); impactCapped.assign(bodies.size(),0);
+        ObservationPublication cachePublication{contactCache, work.continuationCache, work.active};
+        stepDuration = dt;
+        impactQueryAnchorTime = 0;
+        impactPoseEvaluations = impactPoseReuses = impactOrientationBuilds = impactTruthRequests =
+            impactTruthReuses = impactBoundsRejected = 0;
+        impactActualBoundsRejected = 0;
+        for (auto slot : aliveSlots) {
+            InvalidateImpactPose(slot);
+            if (slot < impactPoseSamples.size())
+                impactPoseSamples[slot].tightValid = false;
+        }
+        impactCounts.assign(bodies.size(), 0);
+        impactCapped.assign(bodies.size(), 0);
         // A sleeping body still needs its stationary pre-impact trajectory.
         // An actual TOI may wake it and append a new segment during this step.
-        for (const auto slot:aliveSlots) if (bodies[slot].isDynamic){
-            bodies[slot].motion.Begin(MakeHandle(slot).id,bodies[slot].rigidBody,dt);InvalidateImpactPose(slot);
-        }
+        for (const auto slot : aliveSlots)
+            if (bodies[slot].isDynamic) {
+                bodies[slot].motion.Begin(MakeHandle(slot).id, bodies[slot].rigidBody, dt);
+                InvalidateImpactPose(slot);
+            }
         // Initial touching impacts can launch a previously stationary body.
         // Refresh those trajectories before searching for a separated event.
-        if(stats.impactEvents||coupledVelocityChanged) {
-            for(auto slot:aliveSlots) if(bodies[slot].isDynamic) CoverStepReach(bodies[slot],dt);
-            GenerateCandidatePairs(); separatedPairs.clear();
-            for(const auto& pair:candidatePairs)
-                for(int pa=0;pa<PrimitiveCount(bodies[pair.first].shape);++pa)
-                    for(int pb=0;pb<PrimitiveCount(bodies[pair.second].shape);++pb)
-                        separatedPairs.push_back({pair.first,pair.second,unsigned(pa),unsigned(pb)});
+        if (stats.impactEvents || coupledVelocityChanged) {
+            for (auto slot : aliveSlots)
+                if (bodies[slot].isDynamic)
+                    CoverStepReach(bodies[slot], dt);
+            GenerateCandidatePairs();
+            separatedPairs.clear();
+            for (const auto &pair : candidatePairs)
+                for (int pa = 0; pa < PrimitiveCount(bodies[pair.first].shape); ++pa)
+                    for (int pb = 0; pb < PrimitiveCount(bodies[pair.second].shape); ++pb)
+                        separatedPairs.push_back(
+                            {pair.first, pair.second, unsigned(pa), unsigned(pb)});
         }
         // Support pairs whose rotation over the step could carry a feature
         // through the support remain under continuous search.
         spinningPairs.clear();
-        for(const auto& key:supportPairs)if(SpinsThroughSupport(key,dt))spinningPairs.push_back(key);
-        if(!spinningPairs.empty())supportPairs.erase(std::remove_if(supportPairs.begin(),supportPairs.end(),
-            [&](const auto& key){return std::binary_search(spinningPairs.begin(),spinningPairs.end(),key);}),supportPairs.end());
+        for (const auto &key : supportPairs)
+            if (SpinsThroughSupport(key, dt))
+                spinningPairs.push_back(key);
+        if (!spinningPairs.empty())
+            supportPairs.erase(std::remove_if(supportPairs.begin(), supportPairs.end(),
+                                              [&](const auto &key) {
+                                                  return std::binary_search(spinningPairs.begin(),
+                                                                            spinningPairs.end(),
+                                                                            key);
+                                              }),
+                               supportPairs.end());
         // Preserve joint encounter order, but visit only incident joints while
         // growing an impact island. Scanning every unrelated joint for every
         // reached body makes independent machinery multiply dense-pile cost.
         // Allocate/build only once an actual event needs island discovery.
         // Free flight and fully quiet worlds must not pay this scratch cost.
         std::vector<std::vector<unsigned>> impactJointNeighbours;
-        bool jointNeighboursReady=false;
-        double now=0;
+        bool jointNeighboursReady = false;
+        double now = 0;
         scheduledImpacts.clear();
-        std::map<std::array<unsigned,4>,std::size_t> scheduledIndex;
-        auto schedule=[&](const std::array<unsigned,4>& key) {
-            if(!CanRespond(key[0],key[1]))return;
-            const double time=std::binary_search(supportPairs.begin(),supportPairs.end(),key) ? double(dt)+1 :
-                std::binary_search(spinningPairs.begin(),spinningPairs.end(),key) ?
-                ImpactTime(key[0],key[1],int(key[2]),int(key[3]),now,dt,SpinPenetrationTarget(key)) :
-                ImpactTime(key[0],key[1],int(key[2]),int(key[3]),now,dt);
-            const auto found=scheduledIndex.find(key);
-            if(found!=scheduledIndex.end()) scheduledImpacts[found->second].time=time;
-            else {scheduledIndex.emplace(key,scheduledImpacts.size());scheduledImpacts.push_back({key,time});}
+        std::map<std::array<unsigned, 4>, std::size_t> scheduledIndex;
+        auto schedule = [&](const std::array<unsigned, 4> &key) {
+            if (!CanRespond(key[0], key[1]))
+                return;
+            const double time =
+                std::binary_search(supportPairs.begin(), supportPairs.end(), key) ? double(dt) + 1
+                : std::binary_search(spinningPairs.begin(), spinningPairs.end(), key)
+                    ? ImpactTime(key[0], key[1], int(key[2]), int(key[3]), now, dt,
+                                 SpinPenetrationTarget(key))
+                    : ImpactTime(key[0], key[1], int(key[2]), int(key[3]), now, dt);
+            const auto found = scheduledIndex.find(key);
+            if (found != scheduledIndex.end())
+                scheduledImpacts[found->second].time = time;
+            else {
+                scheduledIndex.emplace(key, scheduledImpacts.size());
+                scheduledImpacts.push_back({key, time});
+            }
         };
-        for(const auto& key:separatedPairs) schedule(key);
-        for(const auto& key:spinningPairs) schedule(key);
+        for (const auto &key : separatedPairs)
+            schedule(key);
+        for (const auto &key : spinningPairs)
+            schedule(key);
         // Capacities live through this event pass; values and membership are
         // rebuilt for each event. No cross-time contact truth is cached.
         ImpactPairVisitSet visitedPairs;
         struct DiscoveredManifold {
-            std::size_t touchingIndex; int partA,partB; ContactManifold geometry;
+            std::size_t touchingIndex;
+            int partA, partB;
+            ContactManifold geometry;
         };
         std::vector<unsigned> island;
         std::vector<unsigned char> included;
-        std::vector<std::pair<unsigned,unsigned>> touching;
+        std::vector<std::pair<unsigned, unsigned>> touching;
         std::vector<DiscoveredManifold> discoveredManifolds;
-        std::vector<std::pair<glm::vec3,glm::vec3>> oldVelocities;
+        std::vector<std::pair<glm::vec3, glm::vec3>> oldVelocities;
         std::vector<ImpactContact> rows;
         std::vector<ContactKey> observationKeys;
-        std::vector<std::array<unsigned,4>> eventPairs;
+        std::vector<std::array<unsigned, 4>> eventPairs;
+        std::vector<std::array<unsigned, 4>> eventPairMembership;
         for (;;) {
-            double earliest=double(dt)+1; unsigned seedA=0,seedB=0;
-            std::array<unsigned,4> selected{};
-            for (const auto& event:scheduledImpacts) {
-                if(event.time<earliest || (event.time==earliest && event.key<selected)) {
-                    earliest=event.time;selected=event.key;seedA=event.key[0];seedB=event.key[1];
+            double earliest = double(dt) + 1;
+            unsigned seedA = 0, seedB = 0;
+            std::array<unsigned, 4> selected{};
+            for (const auto &event : scheduledImpacts) {
+                if (event.time < earliest || (event.time == earliest && event.key < selected)) {
+                    earliest = event.time;
+                    selected = event.key;
+                    seedA = event.key[0];
+                    seedB = event.key[1];
                 }
             }
-            if (earliest>dt) break;
-            if(!jointNeighboursReady){
+            if (earliest > dt)
+                break;
+            if (!jointNeighboursReady) {
                 impactJointNeighbours.resize(bodies.size());
-                for(const auto& joint:joints)if(JointActive(joint)&&joint.state.settings.bodyB.IsValid()){
-                    const auto a=joint.state.settings.bodyA.id&kSlotMask,b=joint.state.settings.bodyB.id&kSlotMask;
-                    impactJointNeighbours[a].push_back(b);
-                    if(a!=b)impactJointNeighbours[b].push_back(a);
-                }
-                jointNeighboursReady=true;
+                for (const auto &joint : joints)
+                    if (JointActive(joint) && joint.state.settings.bodyB.IsValid()) {
+                        const auto a = joint.state.settings.bodyA.id & kSlotMask,
+                                   b = joint.state.settings.bodyB.id & kSlotMask;
+                        impactJointNeighbours[a].push_back(b);
+                        if (a != b)
+                            impactJointNeighbours[b].push_back(a);
+                    }
+                jointNeighboursReady = true;
             }
-            now=earliest;impactQueryAnchorTime=now;
+            now = earliest;
+            impactQueryAnchorTime = now;
             // Infinite-mass boundaries do not join the velocity-changing
             // island, but solver lever arms and observed point velocities
             // must use their actual event-time COM/orientation.
-            for(auto slot:aliveSlots)if(bodies[slot].isKinematic){auto& b=bodies[slot];auto p=PoseAt(slot,now);
-                b.rigidBody.position=p.position;b.rigidBody.orientation=p.orientation;
-                b.rigidBody.linearVelocity=p.linearVelocity;b.rigidBody.angularVelocity=p.angularVelocity;}
-            island.clear();included.assign(bodies.size(),0);
-            auto include=[&](unsigned slot){if(!included[slot] && !bodies[slot].rigidBody.IsStatic()) {
-                if(bodies[slot].sleeping)Wake(slot);
-                included[slot]=1;island.push_back(slot);}};
-            include(seedA);include(seedB);
-            touching.clear();discoveredManifolds.clear();visitedPairs.Begin(bodies.size());
+            for (auto slot : aliveSlots)
+                if (bodies[slot].isKinematic) {
+                    auto &b = bodies[slot];
+                    auto p = PoseAt(slot, now);
+                    b.rigidBody.position = p.position;
+                    b.rigidBody.orientation = p.orientation;
+                    b.rigidBody.linearVelocity = p.linearVelocity;
+                    b.rigidBody.angularVelocity = p.angularVelocity;
+                }
+            island.clear();
+            included.assign(bodies.size(), 0);
+            auto include = [&](unsigned slot) {
+                if (!included[slot] && !bodies[slot].rigidBody.IsStatic()) {
+                    if (bodies[slot].sleeping)
+                        Wake(slot);
+                    included[slot] = 1;
+                    island.push_back(slot);
+                }
+            };
+            include(seedA);
+            include(seedB);
+            touching.clear();
+            discoveredManifolds.clear();
+            visitedPairs.Begin(bodies.size());
             // Membership removes only previously resolved identical queries;
             // encounter order and uncertainty handling remain unchanged.
-            const auto simplePart=[&](unsigned slot,int part){
-                const auto& shape=bodies[slot].shape;
-                const auto type=shape.type==ShapeType::CompoundBoxes?shape.boxes[std::size_t(part)].type:shape.type;
-                return type==ShapeType::Box||type==ShapeType::Sphere;
+            const auto simplePart = [&](unsigned slot, int part) {
+                const auto &shape = bodies[slot].shape;
+                const auto type = shape.type == ShapeType::CompoundBoxes
+                                      ? shape.boxes[std::size_t(part)].type
+                                      : shape.type;
+                return type == ShapeType::Box || type == ShapeType::Sphere;
             };
             {
-            PhysicsWorkTimer timer(work.impactIslands,work.active);
-            for (std::size_t next=0;next<island.size();++next) {
-                const unsigned a=island[next];
-                for(unsigned neighbour:impactJointNeighbours[a])include(neighbour);
-                const auto candidates=QuerySlots(ActualImpactBound(a,ImpactPoseAt(a,now)));
-                for (unsigned b:candidates) {
-                    if (a==b || !CanRespond(a,b)) continue;
-                    const auto pair=std::minmax(a,b);
-                    const uint64_t pairKey=(uint64_t(pair.first)<<32)|pair.second;
-                    if(visitedPairs.Contains(pairKey))continue;
-                    bool hit=false,reliableMiss=true;
-                    std::optional<DiscoveredManifold> discovered;
-                    for(int pa=0;pa<PrimitiveCount(bodies[a].shape);++pa)
-                        for(int pb=0;pb<PrimitiveCount(bodies[b].shape);++pb){
-                            if(hit)continue; // Preserve the existing first-hit short circuit.
-                            if(simplePart(a,pa)&&simplePart(b,pb)){
-                                auto geometry=PairAt(a,b,pa,pb,now,0);
-                                hit=geometry.count>0;
-                                reliableMiss&=!geometry.uncertain;
-                                // Response is always in ascending body order.
-                                // A reversed discovery must retain the original
-                                // canonical response query, not flip its rows.
-                                if(hit&&a==pair.first)
-                                    discovered=DiscoveredManifold{touching.size(),pa,pb,std::move(geometry)};
-                            }else{
-                                hit=PairTouches(a,b,pa,pb,now);
-                                // Specialized Boolean paths stay unchanged;
-                                // a miss carries no public uncertainty proof.
-                                reliableMiss=false;
+                PhysicsWorkTimer timer(work.impactIslands, work.active);
+                for (std::size_t next = 0; next < island.size(); ++next) {
+                    const unsigned a = island[next];
+                    for (unsigned neighbour : impactJointNeighbours[a])
+                        include(neighbour);
+                    const auto candidates = QuerySlots(ActualImpactBound(a, ImpactPoseAt(a, now)));
+                    for (unsigned b : candidates) {
+                        if (a == b || !CanRespond(a, b))
+                            continue;
+                        const auto pair = std::minmax(a, b);
+                        const uint64_t pairKey = (uint64_t(pair.first) << 32) | pair.second;
+                        if (visitedPairs.Contains(pairKey))
+                            continue;
+                        bool hit = false, reliableMiss = true;
+                        std::optional<DiscoveredManifold> discovered;
+                        for (int pa = 0; pa < PrimitiveCount(bodies[a].shape); ++pa)
+                            for (int pb = 0; pb < PrimitiveCount(bodies[b].shape); ++pb) {
+                                if (hit)
+                                    continue; // Preserve the existing first-hit short circuit.
+                                if (simplePart(a, pa) && simplePart(b, pb)) {
+                                    auto geometry = PairAt(a, b, pa, pb, now, 0);
+                                    hit = geometry.count > 0;
+                                    reliableMiss &= !geometry.uncertain;
+                                    // Response is always in ascending body order.
+                                    // A reversed discovery must retain the original
+                                    // canonical response query, not flip its rows.
+                                    if (hit && a == pair.first)
+                                        discovered = DiscoveredManifold{touching.size(), pa, pb,
+                                                                        std::move(geometry)};
+                                } else {
+                                    hit = PairTouches(a, b, pa, pb, now);
+                                    // Specialized Boolean paths stay unchanged;
+                                    // a miss carries no public uncertainty proof.
+                                    reliableMiss = false;
+                                }
                             }
+                        if (hit) {
+                            visitedPairs.Insert(pairKey);
+                            if (discovered)
+                                discoveredManifolds.push_back(std::move(*discovered));
+                            touching.emplace_back(pair);
+                            include(b);
+                        } else if (reliableMiss) {
+                            // Only a resolved primitive separation may suppress
+                            // the reverse traversal's identical existence query.
+                            visitedPairs.Insert(pairKey);
                         }
-                    if(hit){
-                        visitedPairs.Insert(pairKey);
-                        if(discovered)discoveredManifolds.push_back(std::move(*discovered));
-                        touching.emplace_back(pair);include(b);
-                    }else if(reliableMiss){
-                        // Only a resolved primitive separation may suppress
-                        // the reverse traversal's identical existence query.
-                        visitedPairs.Insert(pairKey);
                     }
                 }
-            }
             }
             // A supported body's incoming impact is mechanically coupled even
             // when a cached support point currently has a small positive gap.
             // This only chooses restitution zero: separated support geometry
             // is never inserted into the actual-contact impulse rows below.
             // Spinning support pairs are still supports.
-            const auto supports=[&](const auto& pair){return included[pair[0]] || included[pair[1]];};
-            const bool supportedIsland=std::any_of(supportPairs.begin(),supportPairs.end(),supports) ||
-                std::any_of(spinningPairs.begin(),spinningPairs.end(),supports);
-            bool capture=supportedIsland;
+            const auto supports = [&](const auto &pair) {
+                return included[pair[0]] || included[pair[1]];
+            };
+            const bool supportedIsland =
+                std::any_of(supportPairs.begin(), supportPairs.end(), supports) ||
+                std::any_of(spinningPairs.begin(), spinningPairs.end(), supports);
+            bool capture = supportedIsland;
             oldVelocities.clear();
             oldVelocities.reserve(island.size());
-            for(unsigned slot:island) {
-                auto& body=bodies[slot];const auto pose=PoseAt(slot,now);
-                body.rigidBody.angularVelocity=pose.angularVelocity;
-                oldVelocities.emplace_back(body.rigidBody.linearVelocity,body.rigidBody.angularVelocity);
-                body.rigidBody.position=pose.position;body.rigidBody.orientation=pose.orientation;
+            for (unsigned slot : island) {
+                auto &body = bodies[slot];
+                const auto pose = PoseAt(slot, now);
+                body.rigidBody.angularVelocity = pose.angularVelocity;
+                oldVelocities.emplace_back(body.rigidBody.linearVelocity,
+                                           body.rigidBody.angularVelocity);
+                body.rigidBody.position = pose.position;
+                body.rigidBody.orientation = pose.orientation;
                 // Gravity was deferred while stationary. Integrate only the
                 // remaining interval; never drift the frozen pre-impact pose.
-                if(body.deferredAcceleration){
-                    body.rigidBody.linearVelocity+=body.lastAcceleration*static_cast<float>(dt-now);
-                    body.deferredAcceleration=false;
+                if (body.deferredAcceleration) {
+                    body.rigidBody.linearVelocity +=
+                        body.lastAcceleration * static_cast<float>(dt - now);
+                    body.deferredAcceleration = false;
                 }
-                if (++impactCounts[slot]>16) {
-                    if(!impactCapped[slot]) {impactCapped[slot]=1;++stats.impactEventCapFallback;}
-                    capture=true;
+                if (++impactCounts[slot] > 16) {
+                    if (!impactCapped[slot]) {
+                        impactCapped[slot] = 1;
+                        ++stats.impactEventCapFallback;
+                    }
+                    capture = true;
                 }
             }
-            rows.clear();observationKeys.clear();eventPairs.clear();
-            std::size_t discoveredIndex=0;
-            for(std::size_t touchingIndex=0;touchingIndex<touching.size();++touchingIndex){
-                const auto& pair=touching[touchingIndex];
-                const DiscoveredManifold* discovered=discoveredIndex<discoveredManifolds.size()&&
-                    discoveredManifolds[discoveredIndex].touchingIndex==touchingIndex?
-                    &discoveredManifolds[discoveredIndex++]:nullptr;
-                auto& a=bodies[pair.first];auto& b=bodies[pair.second];
-                for(int pa=0;pa<PrimitiveCount(a.shape);++pa)
-                    for(int pb=0;pb<PrimitiveCount(b.shape);++pb) {
-                        const auto m=discovered&&discovered->partA==pa&&discovered->partB==pb?
-                            discovered->geometry:PairAt(pair.first,pair.second,pa,pb,now,0);
-                        if(m.count) eventPairs.push_back({pair.first,pair.second,unsigned(pa),unsigned(pb)});
-                        for(int k=0;k<m.count;++k) {
-                            Observe(pair.first,pair.second,m.points[k]);
-                            observationKeys.push_back({pair.first,pair.second,a.generation,b.generation,pa,pb});
-                            rows.push_back({&a.rigidBody,&b.rigidBody,m.points[k],
-                                std::sqrt(std::max(0.f,a.friction)*std::max(0.f,b.friction)),
-                                std::max(a.restitution,b.restitution),false});
-                            lastStepContacts.push_back({m.points[k].point,m.points[k].normal,m.points[k].penetration});
+            rows.clear();
+            observationKeys.clear();
+            eventPairs.clear();
+            std::size_t discoveredIndex = 0;
+            for (std::size_t touchingIndex = 0; touchingIndex < touching.size(); ++touchingIndex) {
+                const auto &pair = touching[touchingIndex];
+                const DiscoveredManifold *discovered =
+                    discoveredIndex < discoveredManifolds.size() &&
+                            discoveredManifolds[discoveredIndex].touchingIndex == touchingIndex
+                        ? &discoveredManifolds[discoveredIndex++]
+                        : nullptr;
+                auto &a = bodies[pair.first];
+                auto &b = bodies[pair.second];
+                for (int pa = 0; pa < PrimitiveCount(a.shape); ++pa)
+                    for (int pb = 0; pb < PrimitiveCount(b.shape); ++pb) {
+                        const auto m =
+                            discovered && discovered->partA == pa && discovered->partB == pb
+                                ? discovered->geometry
+                                : PairAt(pair.first, pair.second, pa, pb, now, 0);
+                        if (m.count)
+                            eventPairs.push_back(
+                                {pair.first, pair.second, unsigned(pa), unsigned(pb)});
+                        for (int k = 0; k < m.count; ++k) {
+                            Observe(pair.first, pair.second, m.points[k]);
+                            observationKeys.push_back(
+                                {pair.first, pair.second, a.generation, b.generation, pa, pb});
+                            rows.push_back(
+                                {&a.rigidBody, &b.rigidBody, m.points[k],
+                                 std::sqrt(std::max(0.f, a.friction) * std::max(0.f, b.friction)),
+                                 std::max(a.restitution, b.restitution), false});
+                            lastStepContacts.push_back(
+                                {m.points[k].point, m.points[k].normal, m.points[k].penetration});
                         }
                     }
             }
-            if(rows.empty()) throw std::runtime_error("impact bracket lost contact geometry");
-            if(work.active){work.peakImpactBodies=std::max(work.peakImpactBodies,island.size());work.peakImpactRows=std::max(work.peakImpactRows,rows.size());}
-            PrepareJoints(eventJointSolver,JointInputs(&included),dt,false,true);
-            const auto result=[&]{PhysicsWorkTimer timer(work.impactSolve,work.active);
-                return impactSolver.Solve(rows,dt,capture,eventJointSolver.Empty()?nullptr:&eventJointSolver);}();
-            if(!result.energyBudgetSatisfied) throw std::runtime_error("inelastic impact energy guard failed");
+            if (rows.empty())
+                throw std::runtime_error("impact bracket lost contact geometry");
+            if (work.active) {
+                work.peakImpactBodies = std::max(work.peakImpactBodies, island.size());
+                work.peakImpactRows = std::max(work.peakImpactRows, rows.size());
+            }
+            PrepareJoints(eventJointSolver, JointInputs(&included), dt, false, true);
+            const auto result = [&] {
+                PhysicsWorkTimer timer(work.impactSolve, work.active);
+                return impactSolver.Solve(rows, dt, capture,
+                                          eventJointSolver.Empty() ? nullptr : &eventJointSolver);
+            }();
+            if (!result.energyBudgetSatisfied)
+                throw std::runtime_error("inelastic impact energy guard failed");
             // Replace only primitive groups for which actual TOI geometry
             // was solved. Never replay warm impulses or duplicate repeated
             // TOI loads. Unaffected stance groups retain their completed rows.
             {
-            PhysicsWorkTimer timer(work.impactObservations,work.active);
-            auto replacedGroups=observationKeys;
-            const auto groupLess=[](const ContactKey& a,const ContactKey& b){
-                return std::tie(a.slotA,a.slotB,a.partA,a.partB,a.generationA,a.generationB)<
-                       std::tie(b.slotA,b.slotB,b.partA,b.partB,b.generationA,b.generationB);
-            };
-            std::sort(replacedGroups.begin(),replacedGroups.end(),groupLess);
-            replacedGroups.erase(std::unique(replacedGroups.begin(),replacedGroups.end(),
-                [](const ContactKey& a,const ContactKey& b){return a.SameBodies(b);}),replacedGroups.end());
-            observationPublication.dirty=true;
-            completedContactObservations.erase(std::remove_if(completedContactObservations.begin(),completedContactObservations.end(),
-                [&](const CachedContact& cached){return std::binary_search(replacedGroups.begin(),replacedGroups.end(),cached.key,groupLess);}),completedContactObservations.end());
-            const auto& observed=impactSolver.Constraints();
-            if(observed.size()!=observationKeys.size())throw std::runtime_error("impact observation mapping mismatch");
-            for(std::size_t i=0;i<observed.size();++i){
-                const auto& row=observed[i];const auto& key=observationKeys[i];
-                if(row.normalImpulse<=0)continue;
-                completedContactObservations.push_back({key,row.localAnchorA,row.normal,row.normalImpulse,row.tangentImpulse,
-                    float(row.signedSeparation),bodies[key.slotA].contactObservationRevision,bodies[key.slotB].contactObservationRevision});
+                PhysicsWorkTimer timer(work.impactObservations, work.active);
+                auto replacedGroups = observationKeys;
+                const auto groupLess = [](const ContactKey &a, const ContactKey &b) {
+                    return std::tie(a.slotA, a.slotB, a.partA, a.partB, a.generationA,
+                                    a.generationB) < std::tie(b.slotA, b.slotB, b.partA, b.partB,
+                                                              b.generationA, b.generationB);
+                };
+                std::sort(replacedGroups.begin(), replacedGroups.end(), groupLess);
+                replacedGroups.erase(std::unique(replacedGroups.begin(), replacedGroups.end(),
+                                                 [](const ContactKey &a, const ContactKey &b) {
+                                                     return a.SameBodies(b);
+                                                 }),
+                                     replacedGroups.end());
+                observationPublication.dirty = true;
+                completedContactObservations.erase(
+                    std::remove_if(
+                        completedContactObservations.begin(), completedContactObservations.end(),
+                        [&](const CachedContact &cached) {
+                            return std::binary_search(replacedGroups.begin(), replacedGroups.end(),
+                                                      cached.key, groupLess);
+                        }),
+                    completedContactObservations.end());
+                const auto &observed = impactSolver.Constraints();
+                if (observed.size() != observationKeys.size())
+                    throw std::runtime_error("impact observation mapping mismatch");
+                for (std::size_t i = 0; i < observed.size(); ++i) {
+                    const auto &row = observed[i];
+                    const auto &key = observationKeys[i];
+                    if (row.normalImpulse <= 0)
+                        continue;
+                    completedContactObservations.push_back(
+                        {key, row.localAnchorA, row.normal, row.normalImpulse, row.tangentImpulse,
+                         float(row.signedSeparation), bodies[key.slotA].contactObservationRevision,
+                         bodies[key.slotB].contactObservationRevision});
+                }
             }
-            }
-            if(result.effectiveRestitution==0) {
+            if (result.effectiveRestitution == 0) {
                 // An inelastic event leaves the pair touching. It becomes a
                 // support pair unless its new spin can still turn a feature
                 // through the support before the step ends.
-                for(const auto& key:eventPairs){
-                    const bool spinning=SpinsThroughSupport(key,double(dt)-now,now,true);
-                    auto& into=spinning?spinningPairs:supportPairs;auto& from=spinning?supportPairs:spinningPairs;
-                    from.erase(std::remove(from.begin(),from.end(),key),from.end());
-                    into.insert(std::upper_bound(into.begin(),into.end(),key),key);
-                    into.erase(std::unique(into.begin(),into.end()),into.end());
+                for (const auto &key : eventPairs) {
+                    const bool spinning = SpinsThroughSupport(key, double(dt) - now, now, true);
+                    auto &into = spinning ? spinningPairs : supportPairs;
+                    auto &from = spinning ? supportPairs : spinningPairs;
+                    from.erase(std::remove(from.begin(), from.end(), key), from.end());
+                    into.insert(std::upper_bound(into.begin(), into.end(), key), key);
+                    into.erase(std::unique(into.begin(), into.end()), into.end());
                 }
             }
-            ++stats.impactEvents;stats.impactSafetyFallback+=result.safetyFallback;
+            ++stats.impactEvents;
+            stats.impactSafetyFallback += result.safetyFallback;
             // A geometric overlap enclosure alone does not certify the reaction
             // history of a coupled mechanical system. Keep the original event
             // and cache policy for hard joints, external couplers and elastic
             // flights. The fast continuation is for free inelastic primitives.
-            const bool continuationEligible=result.effectiveRestitution==0&&
-                eventJointSolver.Empty()&&!coupledVelocityChanged&&
-                std::all_of(eventPairs.begin(),eventPairs.end(),[&](const auto& pair){
-                    return ContinuationPrimitive(bodies[pair[0]])&&ContinuationPrimitive(bodies[pair[1]]);
+            const bool continuationEligible =
+                result.effectiveRestitution == 0 && eventJointSolver.Empty() &&
+                !coupledVelocityChanged &&
+                std::all_of(eventPairs.begin(), eventPairs.end(), [&](const auto &pair) {
+                    return ContinuationPrimitive(bodies[pair[0]]) &&
+                           ContinuationPrimitive(bodies[pair[1]]);
                 });
-            if(work.active){
-                if(!eventJointSolver.Empty()||coupledVelocityChanged)++work.coupledFallbackEvents;
-                else if(result.effectiveRestitution!=0)++work.elasticFallbackEvents;
-                else if(!continuationEligible)++work.geometryFallbackEvents;
+            if (work.active) {
+                if (!eventJointSolver.Empty() || coupledVelocityChanged)
+                    ++work.coupledFallbackEvents;
+                else if (result.effectiveRestitution != 0)
+                    ++work.elasticFallbackEvents;
+                else if (!continuationEligible)
+                    ++work.geometryFallbackEvents;
             }
             {
-            PhysicsWorkTimer timer(work.continuationCache,work.active);
-            if(continuationEligible){
-            cachePublication.dirty=true;
-            // A velocity-changing island invalidates its old load guesses,
-            // not contact identity. New actual TOI features also need zero-load
-            // identity for next step's ordinary geometric support matching.
-            // Neither old warm impulses nor impact impulses are replayed here.
-            for(auto& cached:contactCache)if(included[cached.key.slotA]||included[cached.key.slotB]){
-                cached.normalImpulse=0;cached.tangentImpulse=glm::vec3(0);
-            }
-            auto replaced=observationKeys;
-            std::sort(replaced.begin(),replaced.end());
-            replaced.erase(std::unique(replaced.begin(),replaced.end(),[](const ContactKey& a,const ContactKey& b){return a.SameBodies(b);}),replaced.end());
-            contactCache.erase(std::remove_if(contactCache.begin(),contactCache.end(),[&](const CachedContact& c){return std::binary_search(replaced.begin(),replaced.end(),c.key);}),contactCache.end());
-            // An elastic departure is a new flight, not support. In particular,
-            // a short ballistic return must still receive its own restitution.
-            if(result.effectiveRestitution==0){
-                const auto& contactRows=impactSolver.Constraints();
-                for(std::size_t i=0;i<contactRows.size();++i){
-                    const auto& row=contactRows[i];const auto& key=observationKeys[i];
-                    contactCache.push_back({key,row.localAnchorA,row.normal,0,glm::vec3(0),float(row.signedSeparation),
-                        bodies[key.slotA].contactObservationRevision,bodies[key.slotB].contactObservationRevision});
+                PhysicsWorkTimer timer(work.continuationCache, work.active);
+                if (continuationEligible) {
+                    cachePublication.dirty = true;
+                    // A velocity-changing island invalidates its old load guesses,
+                    // not contact identity. New actual TOI features also need zero-load
+                    // identity for next step's ordinary geometric support matching.
+                    // Neither old warm impulses nor impact impulses are replayed here.
+                    for (auto &cached : contactCache)
+                        if (included[cached.key.slotA] || included[cached.key.slotB]) {
+                            cached.normalImpulse = 0;
+                            cached.tangentImpulse = glm::vec3(0);
+                        }
+                    auto replaced = observationKeys;
+                    std::sort(replaced.begin(), replaced.end());
+                    replaced.erase(std::unique(replaced.begin(), replaced.end(),
+                                               [](const ContactKey &a, const ContactKey &b) {
+                                                   return a.SameBodies(b);
+                                               }),
+                                   replaced.end());
+                    contactCache.erase(std::remove_if(contactCache.begin(), contactCache.end(),
+                                                      [&](const CachedContact &c) {
+                                                          return std::binary_search(
+                                                              replaced.begin(), replaced.end(),
+                                                              c.key);
+                                                      }),
+                                       contactCache.end());
+                    // An elastic departure is a new flight, not support. In particular,
+                    // a short ballistic return must still receive its own restitution.
+                    if (result.effectiveRestitution == 0) {
+                        const auto &contactRows = impactSolver.Constraints();
+                        for (std::size_t i = 0; i < contactRows.size(); ++i) {
+                            const auto &row = contactRows[i];
+                            const auto &key = observationKeys[i];
+                            contactCache.push_back({key, row.localAnchorA, row.normal, 0,
+                                                    glm::vec3(0), float(row.signedSeparation),
+                                                    bodies[key.slotA].contactObservationRevision,
+                                                    bodies[key.slotB].contactObservationRevision});
+                        }
+                    }
+                } else {
+                    contactCache.erase(std::remove_if(contactCache.begin(), contactCache.end(),
+                                                      [&](const CachedContact &c) {
+                                                          return included[c.key.slotA] ||
+                                                                 included[c.key.slotB];
+                                                      }),
+                                       contactCache.end());
                 }
             }
-            }else{
-                contactCache.erase(std::remove_if(contactCache.begin(),contactCache.end(),
-                    [&](const CachedContact& c){return included[c.key.slotA]||included[c.key.slotB];}),contactCache.end());
-            }
-            }
             std::vector<unsigned> changed;
-            for(std::size_t i=0;i<island.size();++i) {
-                const auto slot=island[i];auto& b=bodies[slot];
-                if(SamePosition(oldVelocities[i].first,b.rigidBody.linearVelocity) &&
-                   SamePosition(oldVelocities[i].second,b.rigidBody.angularVelocity)) continue;
+            for (std::size_t i = 0; i < island.size(); ++i) {
+                const auto slot = island[i];
+                auto &b = bodies[slot];
+                if (SamePosition(oldVelocities[i].first, b.rigidBody.linearVelocity) &&
+                    SamePosition(oldVelocities[i].second, b.rigidBody.angularVelocity))
+                    continue;
                 changed.push_back(slot);
                 // Membership remains nonzero; value two also marks the
                 // changed subset without scanning it for every scheduled pair.
-                included[slot]=2;
-                b.motion.ChangeVelocity(b.rigidBody,now);
+                included[slot] = 2;
+                b.motion.ChangeVelocity(b.rigidBody, now);
                 InvalidateImpactPose(slot);
-                CoverStepReach(b,static_cast<float>(dt-now));
-
+                CoverStepReach(b, static_cast<float>(dt - now));
             }
-            supportPairs.erase(std::remove_if(supportPairs.begin(),supportPairs.end(),[&](const auto& pair){
-                return (included[pair[0]]==2||included[pair[1]]==2)&&
-                    std::find(eventPairs.begin(),eventPairs.end(),pair)==eventPairs.end()&&
-                    (!continuationEligible||!SupportContinuationSafe(pair,now,dt));
-            }),supportPairs.end());
+            // Solver rows and event pairs retain discovery order. Membership
+            // needs no such order: avoid rescanning every actual event pair
+            // for every incident support in a large connected assembly.
+            eventPairMembership.assign(eventPairs.begin(), eventPairs.end());
+            std::sort(eventPairMembership.begin(), eventPairMembership.end());
+            supportPairs.erase(
+                std::remove_if(supportPairs.begin(), supportPairs.end(),
+                               [&](const auto &pair) {
+                                   return (included[pair[0]] == 2 || included[pair[1]] == 2) &&
+                                          !std::binary_search(eventPairMembership.begin(),
+                                                              eventPairMembership.end(), pair) &&
+                                          (!continuationEligible ||
+                                           !SupportContinuationSafe(pair, now, dt));
+                               }),
+                supportPairs.end());
             // Cached event times depend only on the two anchored trajectories.
             // Recompute incident queries after an actual velocity change; retain
             // every unaffected event (including disjoint simultaneous events).
-            std::vector<std::array<unsigned,4>> dirty;
+            std::vector<std::array<unsigned, 4>> dirty;
             dirty.push_back(selected); // retire the event even if its impulse is zero
-            for(const auto& event:scheduledImpacts)
-                if(included[event.key[0]]==2||included[event.key[1]]==2)dirty.push_back(event.key);
-            for(unsigned slot:changed) {
-                const auto candidates=QuerySlots(tree.FatAabb(bodies[slot].proxy));
-                for(unsigned other:candidates) if(other!=slot && CanRespond(slot,other)) {
-                    const auto a=std::min(slot,other),b=std::max(slot,other);
-                    for(int pa=0;pa<PrimitiveCount(bodies[a].shape);++pa)
-                        for(int pb=0;pb<PrimitiveCount(bodies[b].shape);++pb)
-                            dirty.push_back({a,b,unsigned(pa),unsigned(pb)});
-                }
+            for (const auto &event : scheduledImpacts)
+                if (included[event.key[0]] == 2 || included[event.key[1]] == 2)
+                    dirty.push_back(event.key);
+            for (unsigned slot : changed) {
+                const auto candidates = QuerySlots(tree.FatAabb(bodies[slot].proxy));
+                for (unsigned other : candidates)
+                    if (other != slot && CanRespond(slot, other)) {
+                        const auto a = std::min(slot, other), b = std::max(slot, other);
+                        for (int pa = 0; pa < PrimitiveCount(bodies[a].shape); ++pa)
+                            for (int pb = 0; pb < PrimitiveCount(bodies[b].shape); ++pb)
+                                dirty.push_back({a, b, unsigned(pa), unsigned(pb)});
+                    }
             }
-            std::sort(dirty.begin(),dirty.end());dirty.erase(std::unique(dirty.begin(),dirty.end()),dirty.end());
-            for(const auto& key:dirty) schedule(key);
-            if(now>=dt) break;
+            std::sort(dirty.begin(), dirty.end());
+            dirty.erase(std::unique(dirty.begin(), dirty.end()), dirty.end());
+            for (const auto &key : dirty)
+                schedule(key);
+            if (now >= dt)
+                break;
         }
         // No solver reads completed observations during this event pass. Each
         // event still replaces exactly its actual primitive groups and keeps
@@ -1567,15 +1817,28 @@ struct PhysicsWorld::Impl {
         // key/row order as sorting the entire history after every impact.
         observationPublication.Publish();
         cachePublication.Publish();
-        for(const auto slot:aliveSlots) if(bodies[slot].HasMotion()&&!bodies[slot].sleeping) {
-            auto& body=bodies[slot];const auto pose=body.motion.EvaluateAfterEvents(dt);
-            stats.motionSegments+=body.motion.Segments().size();stats.motionStorageBytes+=body.motion.StorageBytes();
-            body.rigidBody.position=pose.position;body.rigidBody.orientation=pose.orientation;
-            if(body.isDynamic)body.rigidBody.angularVelocity=pose.angularVelocity;
-            if(body.isKinematic){body.rigidBody.linearVelocity=pose.linearVelocity;body.rigidBody.angularVelocity=pose.angularVelocity;
-                if(body.kinematic.control==KinematicControl::Target){body.kinematic.remainingSeconds=std::max(0.f,body.kinematic.remainingSeconds-float(body.kinematicActiveDuration));
-                    if(body.kinematic.remainingSeconds==0)body.kinematic.control=KinematicControl::Stopped;}}
-        }
+        for (const auto slot : aliveSlots)
+            if (bodies[slot].HasMotion() && !bodies[slot].sleeping) {
+                auto &body = bodies[slot];
+                const auto pose = body.motion.EvaluateAfterEvents(dt);
+                stats.motionSegments += body.motion.Segments().size();
+                stats.motionStorageBytes += body.motion.StorageBytes();
+                body.rigidBody.position = pose.position;
+                body.rigidBody.orientation = pose.orientation;
+                if (body.isDynamic)
+                    body.rigidBody.angularVelocity = pose.angularVelocity;
+                if (body.isKinematic) {
+                    body.rigidBody.linearVelocity = pose.linearVelocity;
+                    body.rigidBody.angularVelocity = pose.angularVelocity;
+                    if (body.kinematic.control == KinematicControl::Target) {
+                        body.kinematic.remainingSeconds =
+                            std::max(0.f, body.kinematic.remainingSeconds -
+                                              float(body.kinematicActiveDuration));
+                        if (body.kinematic.remainingSeconds == 0)
+                            body.kinematic.control = KinematicControl::Stopped;
+                    }
+                }
+            }
     }
 
     static void KinematicVelocity(const Body& body,float dt,glm::vec3& linear,glm::vec3& angular,double& duration) {
@@ -3805,7 +4068,7 @@ bool PhysicsWorld::GetPhysicalMaterial(BodyHandle h,std::string& id,float& frict
 bool PhysicsWorld::SetPhysicalMaterial(BodyHandle h,const std::string& id,float friction,float restitution){auto* b=m_impl?m_impl->Get(h):nullptr;if(!b||!std::isfinite(friction)||friction<0||!std::isfinite(restitution)||restitution<0||restitution>1)return false;if(b->physicalMaterial==id&&b->friction==friction&&b->restitution==restitution)return true;m_impl->InvalidateRestoredContinuation(h.id&Impl::kSlotMask);Wake(h);b->physicalMaterial=id;b->friction=friction;b->restitution=restitution;const auto slot=h.id&Impl::kSlotMask;auto remove=[&](auto& cache){cache.erase(std::remove_if(cache.begin(),cache.end(),[&](const auto& c){return c.key.slotA==slot||c.key.slotB==slot;}),cache.end());};remove(m_impl->contactCache);remove(m_impl->pendingCache);remove(m_impl->completedContactObservations);return true;}
 
 void PhysicsWorld::ShiftOrigin(glm::dvec3 delta) {
- if(!std::isfinite(delta.x)||!std::isfinite(delta.y)||!std::isfinite(delta.z)||glm::any(glm::greaterThan(glm::abs(delta),glm::dvec3(1e12))))throw std::invalid_argument("invalid origin translation");
+ if(!OriginLimits::ValidTranslation(delta))throw std::invalid_argument("invalid origin translation");
  auto& w=*m_impl;if(w.stepping||w.coupledStep)throw std::logic_error("origin translation requires completed fixed boundary");
  const auto shift=[&](glm::vec3& p){p=glm::vec3(glm::dvec3(p)-delta);};
  for(auto slot:w.aliveSlots){auto& b=w.bodies[slot];shift(b.rigidBody.position);shift(b.previousPosition);shift(b.kinematic.target.position);b.motion.ShiftOrigin(delta);b.currentBound.valid=b.previousBound.valid=false;w.InvalidateImpactPose(slot);}

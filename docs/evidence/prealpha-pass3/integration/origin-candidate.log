@@ -1,0 +1,24 @@
+PASS ordinary empty world constructs at accepted origin
+PASS capture actual pre-request participant state
+PASS unsupported delta is rejected during admission with actionable diagnosis
+PASS rejected request leaves actual chart and pending state untouched
+PASS commit after rejection is a safe no-op rather than a native exception
+PASS post-rejection snapshot captures the same participant set
+PASS rejected transaction preserves every serialized participant byte
+PASS ordinary empty world constructs at accepted origin
+PASS capture actual pre-request participant state
+PASS unsupported delta is rejected during admission with actionable diagnosis
+PASS rejected request leaves actual chart and pending state untouched
+PASS commit after rejection is a safe no-op rather than a native exception
+PASS post-rejection snapshot captures the same participant set
+PASS rejected transaction preserves every serialized participant byte
+PASS ordinary empty world constructs at accepted origin
+PASS exact native translation limit remains admitted
+PASS invalid replacement cannot consume a previously admitted pending origin
+PASS the original pending transaction still publishes exactly once
+PASS ordinary non-Y chart translation remains supported
+PASS nonfinite and out-of-domain absolute destinations still reject
+PASS invalid absolute requests cannot change the existing chart
+PASS sub-anchor requests retain the existing documented 512 m quantization
+PASS direct native invalid translation retains its original exception and physical endpoint
+SUMMARY 23 checks 0 failures

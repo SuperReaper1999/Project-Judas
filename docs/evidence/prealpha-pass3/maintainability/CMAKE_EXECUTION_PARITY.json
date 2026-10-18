@@ -1,0 +1,17 @@
+{
+  "linux": {
+    "calls": 131,
+    "targets": 43,
+    "exact_parity": true
+  },
+  "windows": {
+    "calls": 126,
+    "targets": 41,
+    "exact_parity": true
+  },
+  "android": {
+    "calls": 125,
+    "targets": 41,
+    "exact_parity": true
+  }
+}

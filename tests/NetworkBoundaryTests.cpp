@@ -177,6 +177,52 @@ int main(int argc, char** argv) {
               State(client.world).at("calls").get<unsigned>() == pausedCalls &&
               host.world.Network().Stats().snapshots == pausedSnapshots,
               "paused transport does not invent simulation, snapshots or script callbacks");
+        // Unlike ordinary gameplay pause, a source breakpoint suspends the
+        // owning call stack and cannot safely pump that world's transport.
+        // The second world is an independent endpoint on a real loopback TCP
+        // socket. Its monotonic clock is injected, not an eleven-second sleep.
+        const auto peerBeforeBreak = client.world.Network().PeerId();
+        for (const bool longStop : {false, true}) {
+            unsigned stops = 0;
+            const auto callsBeforeBreak = State(host.world).at("calls").get<unsigned>();
+            auto& scripts = host.world.PrepareScriptTools();
+            scripts.SetDebugger([&](const ScriptDebugStop& stop) {
+                ++stops;
+                Check(!stop.frames.empty() && stop.frames.front().file == "Assets/probe.js",
+                      "actual project instruction stops inside the owning QuickJS callback");
+                const auto physical = host.world.Physics().GetTransform(host.world.RuntimeBody(2));
+                const auto velocity = host.world.Physics().GetLinearVelocity(host.world.RuntimeBody(2));
+                const auto clock = host.world.SimulationTimeSeconds();
+                client.world.PumpNetwork(now += longStop ? 11 : .05);
+                Check(host.world.Physics().GetTransform(host.world.RuntimeBody(2)).position == physical.position &&
+                      host.world.Physics().GetLinearVelocity(host.world.RuntimeBody(2)) == velocity &&
+                      host.world.SimulationTimeSeconds() == clock,
+                      "stopped owner's physical endpoint and clock remain exact while remote endpoint polls");
+                Check(longStop ? client.world.Network().Status() == "disconnected" &&
+                                     client.world.Network().Error().find("idle") != std::string::npos :
+                                 client.world.Network().Status() == "connected",
+                      longStop ? "unserviced source breakpoint exceeding normal idle deadline disconnects peer explicitly" :
+                                 "brief actual source breakpoint retains an established online connection");
+                return ScriptDebugAction::Continue;
+            });
+            scripts.BreakOnNextInstruction();
+            host.Fixed();
+            scripts.SetDebugger({});
+            Check(stops == 1 && scripts.Diagnostics().empty() &&
+                  State(host.world).at("calls").get<unsigned>() == callsBeforeBreak + 1,
+                  "resuming the actual stopped callback completes once without recursive VM execution");
+        }
+        host.world.PumpNetwork(now);
+        NetworkSession::Options reconnect;
+        reconnect.address = "127.0.0.1";reconnect.port = host.world.Network().Port();
+        Check(client.world.Network().Join(reconnect, error), "normal implicit reconnect after source breakpoint timeout");
+        for (unsigned i = 0; i < 600 && client.world.Network().Status() != "connected"; ++i) {
+            resources.Pump();host.world.PumpNetwork(now += .005);client.world.PumpNetwork(now);
+            std::this_thread::sleep_for(std::chrono::milliseconds(1));
+        }
+        Check(client.world.Network().Status() == "connected" &&
+              client.world.Network().PeerId() == peerBeforeBreak,
+              "source-stop timeout can reconnect through the existing reserved identity contract");
         const auto beforeCloseCalls = State(client.world).at("calls").get<unsigned>();
         const auto beforeCloseClock = client.world.SimulationTimeSeconds();
         Check(client.control->Set("close", "true", error), "ordinary project flag requests close from next fixed callback");

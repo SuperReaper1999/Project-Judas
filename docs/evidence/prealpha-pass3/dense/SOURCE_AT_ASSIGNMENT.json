@@ -1,0 +1,30 @@
+{
+  "utc": "2026-10-18T13:59:50.193184+00:00",
+  "gitHead": "f647d7fd95f60d3a37dba70a51f4e45dc41c2922",
+  "gitBranch": "Experimental",
+  "sources": {
+    "src/PhysicsWorld.cpp": "5bddaf349180cfba96f031ace41c02c78860bd38f18e304f9433d21d609f424a",
+    "src/PhysicsWorld.h": "eddadb36acc2cd46693859e844ca981d4b9f684fde68035b08ed37b757f71f03",
+    "src/Contacts.cpp": "cee83f78126cd72618be4d113dcd901abce2d29b46f73cbdfebe1505642104fa",
+    "src/Contacts.h": "e13c354c71e02141b3c82c5abfdb8fd1cb24b376bb7116245c67ba73ee21ce5b",
+    "src/ContactGeometryInternal.h": "f8717a473924708e43e27d274e2268486646a7e2d103f3ac0e3268bf31f4dd7b",
+    "src/ContactPreparedGeometry.h": "d8b19b2079fafe05a39325a9d093a0d1de5f956ac4c10df1c9810531a36441d9",
+    "src/Broadphase.cpp": "3da0fe038b48e9502b54c33b8e24fee79a80b670c8a23f0d17afbace241d0785",
+    "src/Broadphase.h": "703dec5ad810156a25b2822ef885828fc7eba3a1b86f6fc90120aef3f26abfaf",
+    "src/ImpactSolver.cpp": "9c7a88edefcccdb8fe63ceeaeea0f8f11c92681320625574111be030c68d8d6f",
+    "src/ImpactSolver.h": "704d0773d919b3476d30928e60ed1c4d02d10f686a10868b08efa02fa1b4f9e0",
+    "src/ImpactPairVisitSet.h": "4d0fae30596d51f34745ff1b481c9e98118f4fb4d74931aa847dac11c1caf8a5",
+    "src/PerformanceProfiler.cpp": "0bf7b4993c9a3ea607999db5bf9677bb6d7ac4bd73a24ec5b2137c5fdaea60ee",
+    "src/PerformanceProfiler.h": "82b7991f3214196bd4c1f8ad1fc5dd8d7b224caa2207e27fad18cf7f626c57a5",
+    "tests/PhysicsStressLiveBenchmark.cpp": "8ee71f998bacc20c692b6e3d3445fd7801e1834296020319409f0b64a722103e",
+    "tests/PhysicsScalingBenchmarks.cpp": "ae4cca7f5da3b1fb971e77fc89251512defecdf522de2aad2e4ac0bd87571bcd",
+    "projects/physics_stress_lab/Scenes/room1024.judas": "a2caf62a295243d301149202c8a0a5eedafff256d68de0e3cda988846b2e05bf"
+  },
+  "environment": {
+    "DISPLAY": ":0",
+    "WAYLAND_DISPLAY": "wayland-0",
+    "SDL_VIDEODRIVER": null,
+    "XDG_SESSION_TYPE": "wayland"
+  },
+  "perfParanoid": "4"
+}

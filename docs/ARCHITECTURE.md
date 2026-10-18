@@ -2,9 +2,10 @@
 
 ## Current architecture and Pre-Alpha stabilization
 
-The accepted baseline is M99 (`9cf491a13dbb1cd82ab9ab9b916e255af2d579d2`).
-The unnumbered Pre-Alpha engineering phase is developed on Experimental; it is
-not an Alpha release or automatic promotion to main. Start with the
+The latest operator-accepted checkpoint is
+`f647d7fd95f60d3a37dba70a51f4e45dc41c2922` (Pre-Alpha Passes 1/2 and the
+rotated-liquid baking corrections). Later Pass 3 work is developed on Experimental;
+it is not human accepted, an Alpha release or an automatic promotion to main. Start with the
 [current ownership and integration matrix](PREALPHA.md),
 [build/distribution identity](BUILD_RELEASES.md) and [JudasJS index](JUDASJS.md).
 The milestone sections below retain architectural history; later explicit
@@ -22,6 +23,22 @@ Simulation orders fixed-step publication. Workers prepare private products and
 the world/resource owner publishes them. Input, cameras and game rules remain
 project-owned. Save, streaming, origin and replication support are independent
 contracts: a renderable component is not automatically suspendable or replicated.
+
+Pre-Alpha source organization keeps the authoritative VM, callback phases and
+instance ownership in `ScriptSystem.cpp`. `ScriptBindingsUI.cpp` and
+`ScriptBindingsJoint.cpp` contain typed internal bridges; they borrow runtime and
+caller context without exposing the VM implementation or adding public APIs.
+`ScriptBindingValues.h` shares the existing bounded QuickJS value conversions.
+Editor runtime material/environment/visibility preview and undo history live in
+`editor/RenderPreview.cpp`, separately from authored-document panels. Stop still
+discards runtime changes rather than copying them back into the authored Scene.
+
+Build declarations use the existing `cmake/JudasTestTargets.cmake` helper for
+ordinary engine/application regressions. Cohesive modules under `cmake/targets/`
+retain explicit sources, links, platform guards and tool declarations. SDK
+finalization and opt-in validation remain after all subsystem declarations; no
+new generator or runtime registration framework is introduced. See the
+[scoped preservation evidence](evidence/prealpha-pass3/maintainability/REPORT.md).
 
 ## M96 UI toolkit
 

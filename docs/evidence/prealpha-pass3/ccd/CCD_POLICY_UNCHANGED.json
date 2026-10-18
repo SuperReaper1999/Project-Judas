@@ -1,0 +1,45 @@
+{
+  "ccd_policy_functions": {
+    "ImpactTime": {
+      "tokens": 2175,
+      "sha256": "65e52a623d7e8b080985a69407f260c15570b1074a8ae55f03bab4ace46151ee"
+    },
+    "SpinsThroughSupport": {
+      "tokens": 668,
+      "sha256": "6af9fcff63251c9cd4dfa4484b207d5f57562902b5b5c2b309fde66d673f8126"
+    },
+    "SupportContinuationSafe": {
+      "tokens": 844,
+      "sha256": "6141a2c2213381f38178ba11f90341feed31ce540228bfed6ffcc165de9a67eb"
+    },
+    "SpinPenetrationTarget": {
+      "tokens": 42,
+      "sha256": "17d4de6302f53dbe197bf834002ef02124c63993eb271f8c10fe9a4885cffa7d"
+    },
+    "PairAt": {
+      "tokens": 121,
+      "sha256": "0b69bea5e7a7e0296e49ea0f4f91c2f23c405e9c609f14e96c586feceec59df1"
+    },
+    "PairTouches": {
+      "tokens": 246,
+      "sha256": "fe665a7d0a9b21c2f852eb70fe698304a3f4fab48d1d847802d8111157c93523"
+    },
+    "PairPenetration": {
+      "tokens": 84,
+      "sha256": "47985c69c0f1172619a7adc92dc9bbf862f2991c8cbab04de6f3adb9313623cc"
+    },
+    "PairPenetrationExceeds": {
+      "tokens": 130,
+      "sha256": "161d64bec5c943d5399d619c149baff00bf80c74dec972de2baeb6b15f6550ba"
+    },
+    "PlaneDrift": {
+      "tokens": 1022,
+      "sha256": "2332f49bb75e147e1df03a8db6e865f3c1f4fee9959e20ed4798b4fc738fb55d"
+    }
+  },
+  "geometry_source": {
+    "CollisionGeometry.cpp": "bdac4d47978d218e489f437f424901d0293165904e74acd6041239046b5f627e",
+    "CollisionGeometry.h": "2a02f1cf208fd80dff7fe856a9215427c35c3619d4aabd0c308a2ace9d785ec0"
+  },
+  "result": "No rejected algorithm present in production CCD policy or collision geometry"
+}

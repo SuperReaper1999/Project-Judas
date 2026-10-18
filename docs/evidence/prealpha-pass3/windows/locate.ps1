@@ -1,0 +1,3 @@
+$ProgressPreference='SilentlyContinue'
+$ErrorActionPreference='Stop'
+[pscustomobject]@{tools=@(Get-ChildItem 'C:\JudasValidation' -Directory|Select-Object -ExpandProperty FullName);vs=@(Get-ChildItem 'C:\Program Files (x86)\Microsoft Visual Studio\2022' -Directory -ErrorAction SilentlyContinue|Select-Object -ExpandProperty FullName);python=@(Get-ChildItem 'C:\Program Files\Python*','C:\Users\*\AppData\Local\Programs\Python\*' -Directory -ErrorAction SilentlyContinue|Select-Object -ExpandProperty FullName);libs=@(Get-ChildItem 'C:\JudasValidation\vcpkg\installed\x64-windows\include\glm' -Directory -ErrorAction SilentlyContinue|Select-Object -ExpandProperty Name);freeBytes=(Get-CimInstance Win32_LogicalDisk -Filter "DeviceID='C:'").FreeSpace}|ConvertTo-Json -Depth 4

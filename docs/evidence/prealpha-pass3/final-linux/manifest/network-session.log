@@ -1,0 +1,108 @@
+PASS fresh evidence directory preserves previous failures
+PASS fixture scene writes: 
+PASS fixture project loads: 
+PASS independent handshake-deadline TCP service listens: 
+PASS independent native world builds: 
+PASS ordinary script-owned session begins: 
+PASS fixture supplies authored gravity instead of assuming a universal default
+PASS deadline client begins a genuine connection: 
+PASS actual hello reaches independent service while client waits for welcome
+PASS repeated valid pings demonstrably arrive before the unchanged five-second handshake deadline
+PASS valid ping traffic cannot hold connecting open beyond the independent handshake deadline
+PASS expired handshake publishes no peer identity or partial authoritative state
+PASS independent handshake-deadline TCP service listens: 
+PASS independent native world builds: 
+PASS ordinary script-owned session begins: 
+PASS fixture supplies authored gravity instead of assuming a universal default
+PASS deadline client begins a genuine connection: 
+PASS actual hello reaches independent service while client waits for welcome
+PASS repeated valid pings demonstrably arrive before the unchanged five-second handshake deadline
+PASS independent service queues a genuine delayed but timely welcome
+PASS valid welcome before deadline completes the ordinary session contract
+PASS timely delayed handshake enables validated ordinary gameplay input: 
+PASS completed handshake survives its old deadline and delivers actual controls
+PASS independent native world builds: 
+PASS ordinary script-owned session begins: 
+PASS fixture supplies authored gravity instead of assuming a universal default
+PASS independent native world builds: 
+PASS ordinary script-owned session begins: 
+PASS fixture supplies authored gravity instead of assuming a universal default
+PASS independent native world builds: 
+PASS ordinary script-owned session begins: 
+PASS fixture supplies authored gravity instead of assuming a universal default
+PASS offline legacy-delta capture remains supported where previously valid
+PASS optional networking starts inactive with no scene gate
+PASS host begins asynchronous content validation: 
+PASS actual listening socket appears after content validation: 
+PASS host publishes actual bound port and authoritative role
+PASS capture real offline endpoint before joining
+PASS two separate client worlds begin real TCP joins: 
+PASS replica fixed callbacks advance local script time without duplicating physical integration
+PASS content-matched clients complete protocol handshake
+PASS peer identities are distinct from host and each other
+PASS host opts ordinary body into replication: 
+PASS host explicitly assigns motor ownership to one connection: 
+PASS client cannot publish authoritative registration, ownership or replicated game state
+PASS unsupported hierarchy replication is rejected explicitly
+PASS both independent clients receive server registrations
+PHYSICAL_ENDPOINT before=0,0.850124955,0 after=0.959299743,0.499999315,1.20709828e-05
+PASS real host rigid-body impulse/contact advances physical endpoint without client simulation
+PASS client buffered presentation converges to actual resolved host physical endpoint
+PASS client receives independently authored game state unchanged
+PASS client submits whitelisted bounded intent: Cannot replicate entity 4: parented entities require an authored root for replication
+PASS server attributes validated intent to actual sender identity
+PASS actual project input map and custom axis reach distinct authoritative player routing
+PASS other peer cannot inherit a different player's held input
+PASS unknown, out-of-range and nonfinite local input rejected before wire submission
+PASS invalid input cannot partially replace held authoritative state
+PASS short press and release queue before any transport pump
+PASS real wire delivery preserves both action edges within one authoritative observation
+PASS short remote action is not replayed next fixed observation
+PASS ordinary CharacterMotor resolves actual server motion from delivered control intent
+PASS online scene replacement rejected before queue mutation
+PASS online cold save/load rejected without a partial service transaction
+PASS editor/native legacy world-state save and apply cannot bypass active session persistence boundary
+PASS host can deliberately transfer control ownership
+PASS authority change reaches peers without replacing the physical entity
+PASS unrecognized authority identity cannot be assigned
+PASS network client can request an ordinary local precision-chart transition
+PASS buffered presentation preserves absolute placement through origin publication
+PASS closing after rebase restores original offline absolute pose rather than stale chart coordinates
+PASS server observes actual client disconnect
+PASS disconnect neutralizes held remote controls
+PASS same client process can reconnect deliberately
+PASS reconnect completes a fresh handshake
+PASS reconnect receives a new safe peer identity and no stale input
+PASS reconnected client receives fresh baseline
+PASS client sets explicit bounded absolute interest
+PASS out-of-interest replicas leave client relevance set
+PASS client returns interest to physical scene
+PASS relevance return reconstructs authoritative baseline
+PASS host retires a network identity explicitly
+PASS retired network identity is removed from client state
+PASS retired identity cannot mutate a later registration
+PASS independent adversarial client computes honest content identity
+PASS raw socket adversary connects without the public session wrapper
+PASS raw endpoint receives its own actual connection identity
+PASS wire-level claimed-peer spoof is transmitted
+PASS wire input cannot impersonate claimed peer; actual socket owns attribution
+PASS forged authoritative publication and valid-looking input queue in one hostile wire burst
+PASS host rejects forged state publication without corrupting actual physical endpoint
+PASS rejected socket cannot publish later same-batch input or retain held controls
+PASS fixture scene writes: 
+PASS fixture project loads: 
+PASS independent native world builds: 
+PASS ordinary script-owned session begins: 
+PASS fixture supplies authored gravity instead of assuming a universal default
+PASS changed-content client may request a diagnostic handshake
+PASS real content mismatch is refused before client can enter authoritative world
+PASS mismatch refusal retains useful diagnostic and publishes no partial replica state
+PASS measured session counters cover genuine socket traffic
+METRIC snapshots=116 sent=164071 received=12252 peers=4 entities=1
+PASS close releases native lifecycle gate and sockets
+PASS network close restores previously valid legacy-delta capture path
+PASS offline save request remains valid and cancellable after network closure
+PASS offline scene request remains available after close
+PASS pending scene transaction prevents opening a competing network session
+PASS headless fixed-step API rejects legacy execution before changing physical time
+SUMMARY 105 checks 0 failures

@@ -1,0 +1,253 @@
+{
+  "schema": 1,
+  "utc": "2026-10-18T14:50:02.486068+00:00",
+  "scope": "Pre-Alpha Pass3 CCD investigation, rejected experiments, bounded formatting, final-source preservation evidence",
+  "files": {
+    ".gitattributes": {
+      "bytes": 8,
+      "sha256": "705fd4d6451a31d36b3df7de96f83f30ac976c9b4a6d1e51671d8e2f33e2d0da"
+    },
+    "BASELINE_FROZEN.json": {
+      "bytes": 1971,
+      "sha256": "f52c618d3e11aed609bf6b6143f6a5e12f2aca869169a19c882d43f79a0a00e4"
+    },
+    "BASELINE_RESULTS.json": {
+      "bytes": 3067,
+      "sha256": "8d970091cbd577a8eaeaccfebb4d4eb11aca39f545f947dc1bfd142371c6105d"
+    },
+    "CCD_POLICY_UNCHANGED.json": {
+      "bytes": 1572,
+      "sha256": "42106c5a33c83800561da806927540779ba0ddefa04cdc58a546afb5720b835b"
+    },
+    "EXPERIMENT_COMPARISON.json": {
+      "bytes": 1844,
+      "sha256": "76f411dc4f52b1a01b6166fbde7195a5df4336f87f5e8f361c72d293a831154d"
+    },
+    "INVESTIGATION_PLAN.md": {
+      "bytes": 1341,
+      "sha256": "bdd5b2a2ea38a799ec6731b420d3327f5e66001b6ee31be3a726a0f52ed022e7"
+    },
+    "PROBE_SOURCE_IDENTITIES.json": {
+      "bytes": 397,
+      "sha256": "d8c9172aecb5d99c0b4ad0365f57b5a5a47bdcfa0790b8ed71529f0686a220ef"
+    },
+    "REPORT.md": {
+      "bytes": 14151,
+      "sha256": "1aa03cd703052aa56ef5a72877a427df640922a3932f3b363ecdf79460ec052d"
+    },
+    "REPRODUCTION.md": {
+      "bytes": 4161,
+      "sha256": "395bddee3da0629bae38e4b8b3c08e433497bb91300fcf83a58229bb4ac7f859"
+    },
+    "baseline-source/CollisionGeometry.cpp": {
+      "bytes": 30390,
+      "sha256": "bdac4d47978d218e489f437f424901d0293165904e74acd6041239046b5f627e"
+    },
+    "baseline-source/CollisionGeometry.h": {
+      "bytes": 2384,
+      "sha256": "2a02f1cf208fd80dff7fe856a9215427c35c3619d4aabd0c308a2ace9d785ec0"
+    },
+    "baseline-source/PhysicsWorld.cpp": {
+      "bytes": 257884,
+      "sha256": "5bddaf349180cfba96f031ace41c02c78860bd38f18e304f9433d21d609f424a"
+    },
+    "experiments/concave-target-v1/ADDITIONAL_PROVENANCE.json": {
+      "bytes": 213,
+      "sha256": "d6a3973790a1ac1940bcfaa6f63620f6ada90bfedd1c3c66c6b9bf9aa9e04717"
+    },
+    "experiments/concave-target-v1/PhysicsWorld.cpp": {
+      "bytes": 258126,
+      "sha256": "14e8df77fbc6875931af4c01215d7dbaa05323d4e9c49ab5dd144773ab8d96e4"
+    },
+    "experiments/concave-target-v1/RESULTS.json": {
+      "bytes": 5373,
+      "sha256": "bd6ca8b0b8d57ce16cbf994aeccecd7dd96446eb56864d09d8366887623be517"
+    },
+    "experiments/concave-target-v1/build.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "experiments/concave-target-v1/continuation.log": {
+      "bytes": 1427,
+      "sha256": "af0d8c278232ffccc3257b4b28c0a7fc1b5b079cb1f0128a657f82f8c1ebc20c"
+    },
+    "experiments/concave-target-v1/entry.log": {
+      "bytes": 1184,
+      "sha256": "60a375f868791d3b43d9fc4a8928e3567f563f9ad30aa55afeb54d692e5bd504"
+    },
+    "experiments/concave-target-v1/link.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "experiments/concave-target-v1/observer.build.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "experiments/concave-target-v1/observer.log": {
+      "bytes": 98940,
+      "sha256": "bb69e11d2b34389015addc622f00f72721243bcd39803cfbc5e49c9f61255dee"
+    },
+    "experiments/concave-target-v1/ragdoll60.log": {
+      "bytes": 1541,
+      "sha256": "6cc1a29173cd146bc77912ff8370b16fce56ddf0ef6ef67c709d19344a0f1c14"
+    },
+    "experiments/finite-current-v2/ADDITIONAL_PROVENANCE.json": {
+      "bytes": 429,
+      "sha256": "50e55c2aa7bab2a675b03f89534be2207fcc4ecc20a6868f7da403f75a1b7b11"
+    },
+    "experiments/finite-current-v2/CollisionGeometry.cpp.build.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "experiments/finite-current-v2/PhysicsWorld.cpp.build.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "experiments/finite-current-v2/RESULTS.json": {
+      "bytes": 7342,
+      "sha256": "ab02a6f7ad77b62382b91e305f4eeaa62586ab93cdc6ff40101b02861478ad7d"
+    },
+    "experiments/finite-current-v2/continuation.log": {
+      "bytes": 1363,
+      "sha256": "64a2b3a6b30009a4599838ed2b1fe3b0ad50c45f709ec23caf40c6d1dd09b1f3"
+    },
+    "experiments/finite-current-v2/entry.log": {
+      "bytes": 1184,
+      "sha256": "3195f9b6910b0a03c047b10c2407e1a40ed217c96a514a03a4daa117f2debc66"
+    },
+    "experiments/finite-current-v2/link.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "experiments/finite-current-v2/ragdoll60.log": {
+      "bytes": 1487,
+      "sha256": "e98173353c5346ee04436bfc45772aacac08358aa42c94dddb541291365db301"
+    },
+    "experiments/finite-current-v2/sources/CollisionGeometry.cpp": {
+      "bytes": 31392,
+      "sha256": "413226d759a34baeaf6800152573c836d96c28bc55923072230689ff4db86c33"
+    },
+    "experiments/finite-current-v2/sources/CollisionGeometry.h": {
+      "bytes": 2619,
+      "sha256": "c3d16f77c9c00df899b8107c0c47c8e01f9badea3ab9691cd5b3ed79f73f5903"
+    },
+    "experiments/finite-current-v2/sources/PhysicsWorld.cpp": {
+      "bytes": 259550,
+      "sha256": "8d0acaff47c3ced6caa1d7bf6876364be9ae071d30cca93924ac9bac5b50421e"
+    },
+    "final/ARCHIVE_IDENTITY.json": {
+      "bytes": 141,
+      "sha256": "52f7499531f27aa6875d482ed791fa76f6acfa03aded53a61d65972edf66be99"
+    },
+    "final/BUILD_IDENTITY.json": {
+      "bytes": 727,
+      "sha256": "43fa1ec8ea1595a53d25d1ad25f8cd221b55776d1038677a9145edc37e4a6cdc"
+    },
+    "final/FORMAT_VERIFICATION.json": {
+      "bytes": 254,
+      "sha256": "ac2da44242b96fa89256feb1b2bd17ed1c1f4f76eafb03462dbf4ea8f866ea23"
+    },
+    "final/RESULTS.json": {
+      "bytes": 7390,
+      "sha256": "1dc6eeabb6b1abd107cb6af48a0892c3c58223b03b554bbe8432332d0c0fc4dc"
+    },
+    "final/final-60-trough.log": {
+      "bytes": 1535,
+      "sha256": "1ea54f1bb35241224d24d7b42c183f6f2cc212fde2000c89303ae97517071c7a"
+    },
+    "final/frozen-60-trough.log": {
+      "bytes": 1535,
+      "sha256": "f15a43ec149e0404904451ae3ac89afea18e2073bbb37b813ddb01549edba78b"
+    },
+    "fixtures/ImpactMeshCostTests.cpp": {
+      "bytes": 16156,
+      "sha256": "91b23a2a4ae45a3a96e01442c8bef583b31cd98a90e02196fb7c534ec5364a6a"
+    },
+    "formatting/PhysicsWorld.after.cpp": {
+      "bytes": 266648,
+      "sha256": "5a08c72d8ae3f6fa1787e1aa42689e0638bc27323684f82b8699d07226988190"
+    },
+    "formatting/PhysicsWorld.before.cpp": {
+      "bytes": 258271,
+      "sha256": "680ce5f5c0c53f7427d48927c5ed8bd8b2a324eaef7128839e3f6a4f537503b9"
+    },
+    "formatting/TOKEN_PARITY.json": {
+      "bytes": 1362,
+      "sha256": "aa6a49505288f3e6fb463f13bd2dfc3576edf6c76c315b5d0c6d3624f25b6c64"
+    },
+    "formatting/format-only.patch": {
+      "bytes": 74370,
+      "sha256": "7125d538f99c8698eb2b4bc8faf9088decd54600911362a83b04f75f8756819c"
+    },
+    "minimal/RESULTS.json": {
+      "bytes": 2480,
+      "sha256": "4aa57a91916292df9bcfdbc79015727fdbf9da953e816b9168d8005b202fe59f"
+    },
+    "minimal/build.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "minimal/run.log": {
+      "bytes": 1352,
+      "sha256": "eb168744ce2439487a68d545988a1bde65eb34a75270d6f73dba49f939495ca2"
+    },
+    "probes/BaselineObserver.cpp": {
+      "bytes": 15057,
+      "sha256": "0f51bf42af0c53aab62bcc46edd3c5c035fae22b00f6f1e99a8ab940aadd7daf"
+    },
+    "probes/ContinuationObserver.cpp": {
+      "bytes": 15721,
+      "sha256": "41cff9a952f6080561b23aff97d9ff7a227b9698fea1838450782b58500c4b55"
+    },
+    "probes/MinimalContinuationRepro.cpp": {
+      "bytes": 2581,
+      "sha256": "806dfeca5b68dc0ef6f3ff0fce51d995915be885c5407ec45bf517c2640e8fe8"
+    },
+    "probes/prepare_finite_current.py": {
+      "bytes": 5582,
+      "sha256": "6e56e62c58706c14b92c873f624d38af94960585cfaab4f7a58cc69c83c1bb0e"
+    },
+    "probes/run_finite_current.py": {
+      "bytes": 2422,
+      "sha256": "d5fa3cdb5989df3033ff82f9538efd349bd9b4e21ae658a05bbef5a3c5a9be95"
+    },
+    "probes/run_variant.py": {
+      "bytes": 2572,
+      "sha256": "4ce7809981daf04494e91ccbd6a826134fd6937fc2472b984f89e1e40b1d5883"
+    },
+    "probes/verify_final.py": {
+      "bytes": 2404,
+      "sha256": "0b4288955fbcc072a9d3c0ba04d282e7a75407cba8454795b59ad65bc44b5552"
+    },
+    "raw/baseline-boundary-observer.build.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "raw/baseline-boundary-observer.log": {
+      "bytes": 72245,
+      "sha256": "51713d06d5e227b18e8e0f3150ee0b46b1b44e0940c55e205409bfe9bcb07f76"
+    },
+    "raw/baseline-observer.build.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "raw/baseline-observer.log": {
+      "bytes": 68377,
+      "sha256": "8658657219ab1daa4cbf6b7c796506b19e373dc6a018e777a1b86c362ca864c3"
+    },
+    "raw/original-continuation.log": {
+      "bytes": 1429,
+      "sha256": "36a7b96410af160e6965c475ddfb34acf6d8656d4221061df08d6ddcf58ccdec"
+    },
+    "raw/original-entry.log": {
+      "bytes": 1184,
+      "sha256": "a2faa7f9cbffc1c40fd66dc2c39f88650d7272ba20930542913936a2673e155f"
+    },
+    "tools/verify_format.py": {
+      "bytes": 2412,
+      "sha256": "8b3f5bd8981288649313516a35bd071f2cc6794e0eae4c463d25101ce044ed8e"
+    }
+  },
+  "bytes": 1815547,
+  "files_count": 61
+}

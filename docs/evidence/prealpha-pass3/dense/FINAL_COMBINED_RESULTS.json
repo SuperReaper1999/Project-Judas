@@ -1,0 +1,251 @@
+{
+  "utc": "2026-10-18T14:46:03.340012+00:00",
+  "all_270_physical_fields_identical_to_frozen_baseline": true,
+  "differences": [],
+  "result": {
+    "name": "dense270",
+    "argv": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_physics_stress_live_benchmark",
+      "/home/conner/Documents/GitHub/Project-Judas/projects/physics_stress_lab/Scenes/room1024.judas",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass3/dense/final-combined/dense270",
+      "105",
+      "270",
+      "0",
+      "0",
+      "1",
+      "0.016666667",
+      "1",
+      "0",
+      "1"
+    ],
+    "utc": "2026-10-18T14:44:20.591683+00:00",
+    "timeout_seconds": 150,
+    "exit": 0,
+    "wall_seconds": 53.46559305000028,
+    "completed_steps": 270,
+    "fixed_ms": {
+      "median": 27.3338865,
+      "p95_floor": 376.826108,
+      "maximum": 1887.046761
+    },
+    "final_digest": "192f0f4bed728953",
+    "worst_step": {
+      "step": "270",
+      "frame": "269",
+      "wall_ms": "52794.319347",
+      "fixed_ms": "1887.046761",
+      "bodies": "1285",
+      "awake": "1024",
+      "sleeping": "128",
+      "candidates": "12628",
+      "contacts": "3122",
+      "impact_events": "51",
+      "impact_queries": "501599",
+      "impact_iterations": "46950",
+      "impact_peak": "20",
+      "total_physics_ms": "1885.406585",
+      "broadphase_ms": "4.35289",
+      "narrowphase_ms": "10.714245",
+      "solver_ms": "1866.721999",
+      "trajectory_digest": "192f0f4bed728953",
+      "max_linear_speed": "2.61625123024",
+      "max_angular_speed": "6.46908569336",
+      "nonfinite_fields": "0"
+    },
+    "endpoint_quality": {
+      "candidate_pairs": 9327,
+      "contact_points": 2475,
+      "deepest_endpoint_penetration_m": 0.007217108528522143,
+      "observation_ms": 31.738428,
+      "outside_fixed_step_timing": true,
+      "population": 1024,
+      "scope": "endpoint primitive geometry for the authored loose_piece population",
+      "tag_available": true,
+      "uncertain_pairs": 0,
+      "unsupported_candidates": 0
+    }
+  },
+  "worst_frame_counters": {
+    "Physics initial geometry worker lanes": 4,
+    "Physics parallel initial manifolds": 12212,
+    "Physics initial worker completed manifolds": 10164,
+    "Physics initial geometry scratch bytes": 9236160,
+    "Physics bodies last step": 1285,
+    "Physics candidate pairs last step": 12628,
+    "Physics contacts last step": 3122,
+    "Physics joints": 96,
+    "Physics impact events": 51,
+    "Physics impact queries": 501599,
+    "Physics impact search iterations": 46950,
+    "Physics impact sampling fallbacks": 377,
+    "Physics impact sampling tests": 2583,
+    "Physics impact search limits": 0,
+    "Physics impact search stalls": 377,
+    "Physics impact sampling resolution caps": 0,
+    "Physics impact pose evaluations": 130189,
+    "Physics impact pose reuses": 1414693,
+    "Physics impact orientation preparations": 78508,
+    "Physics impact actual-contact requests": 64669,
+    "Physics impact actual-contact reuses": 8299,
+    "Physics impact remaining-bound rejections": 459940,
+    "Physics impact actual-bound rejections": 344326,
+    "Physics broadphase passes": 2,
+    "Physics broadphase root queries": 2304,
+    "Physics broadphase overlapping leaves": 51764,
+    "Physics sleep graph edges": 1845,
+    "Physics sleep islands": 69,
+    "Physics sleep scratch bytes": 44172,
+    "Physics persistent contact rows": 3122,
+    "Physics joint rows": 0,
+    "Physics continuation coupled fallback events": 0,
+    "Physics continuation elastic fallback events": 0,
+    "Physics continuation geometry fallback events": 0,
+    "Physics peak impact island bodies": 973,
+    "Physics peak impact contact rows": 2517,
+    "Physics impact continuation cache ms": 19.080635,
+    "Physics support continuation attempts": 3967,
+    "Physics support continuation accepted": 3902,
+    "Physics support continuation partitions": 645,
+    "Physics support continuation over-budget fallback": 0,
+    "Physics support continuation proof ms": 24.869373,
+    "Physics CCD search inclusive ms": 308.289192,
+    "Physics CCD geometry inclusive ms": 850.3465,
+    "Physics CCD geometry calls": 626049,
+    "Physics impact island discovery ms": 608.847275,
+    "Physics impact solve ms": 161.644791,
+    "Physics impact observation publication ms": 13.054203999999999,
+    "Physics joint preparation ms": 0.019533,
+    "Physics joint preparation calls": 52,
+    "Physics cooked BVH nodes": 0,
+    "Physics cooked triangles": 0,
+    "Physics cooked convex tests": 0,
+    "Physics geometry predicates": 2798292,
+    "Physics geometry exact fallbacks": 5,
+    "Physics geometry unresolved": 0,
+    "Physics geometry numeric gap fallbacks": 0
+  },
+  "worst_frame_memory": {
+    "profiler_reserved_estimate_bytes": 70809112,
+    "linux_resident_bytes": 374509568,
+    "linux_virtual_bytes": 2402189312
+  },
+  "native_build_identity": {
+    "schema": 1,
+    "version": "0.1.0-prealpha",
+    "maturity": "pre-alpha",
+    "channel": "Experimental",
+    "build_id": "0.1.0-prealpha-Experimental-f647d7f-dirty-b9b20612a3d5-u31d28f4ad3f6",
+    "source_revision": "f647d7fd95f60d3a37dba70a51f4e45dc41c2922",
+    "source_tree": "492dde358bd4762fd4b6fe08cc97cdb27e41be00",
+    "source_dirty": true,
+    "source_fingerprint": "b9b20612a3d53ea43a4ac20084f39938312ac23629d8934620f052195634d9c7",
+    "source_untracked_count": 29,
+    "source_untracked_fingerprint": "31d28f4ad3f6511bc9a7c00576e51fc27a7c7fa2443e7e6b52470e7a1e14ce31",
+    "source_origin": "git",
+    "platform": "Linux",
+    "architecture": "x86_64",
+    "configuration": "Release",
+    "compiler": "GNU",
+    "compiler_version": "15.2.0"
+  },
+  "final_source_inputs": {
+    "src/Contacts.cpp": "f62f6f1efad1faba4763554e0f106f3f67a5a5287b9b2d587320fe8e5e3844f1",
+    "src/PhysicsWorld.cpp": "5a08c72d8ae3f6fa1787e1aa42689e0638bc27323684f82b8699d07226988190",
+    "src/CollisionGeometry.cpp": "bdac4d47978d218e489f437f424901d0293165904e74acd6041239046b5f627e",
+    "src/Narrowphase.cpp": "f8df5c5b97cbf20989bd42298b2451699631461cffa333a657112c921afa5890",
+    "src/RigidMotion.h": "a0de3be5c3634358879d0b63528c98d32f462bb6abc97e49dabaaa912b57a8e0"
+  },
+  "valid_final_controls": true,
+  "notes": [
+    "Root ran ~1second of metadata-only native build-info queries and hashing at measurement start, no other physical simulation/build. No robust small-speedup claim.",
+    "The four following scaling invocations used the stale accepted-baseline binary, detected before any final-control claim. Their raw results remain, explicitly informational duplicates; final-source scaling controls will run after relink.",
+    "Final shared source build includes mechanical extraction/formatting and combined corrective work. Earlier isolated experiments retain separate source/binary provenance."
+  ],
+  "final_controls": {
+    "free1024": {
+      "pass": true,
+      "same_physical_fields": true,
+      "differences": {},
+      "digest": "beba012f5dfe2273",
+      "baseline_input_and_step_ms": {
+        "maximum": 1.005166,
+        "median": 0.690319,
+        "p95": 0.895135
+      },
+      "final_input_and_step_ms": {
+        "maximum": 1.010984,
+        "median": 0.702963,
+        "p95": 0.946013
+      },
+      "baseline_rss_after_setup": 6750208,
+      "final_rss_after_setup": 6660096,
+      "baseline_maximum_observed_rss": 25874432,
+      "final_maximum_observed_rss": 25800704
+    },
+    "pile256": {
+      "pass": true,
+      "same_physical_fields": true,
+      "differences": {},
+      "digest": "63b0f10cd668de91",
+      "baseline_input_and_step_ms": {
+        "maximum": 4.386139,
+        "median": 0.372985,
+        "p95": 3.781666
+      },
+      "final_input_and_step_ms": {
+        "maximum": 4.329944,
+        "median": 0.370412,
+        "p95": 3.662752
+      },
+      "baseline_rss_after_setup": 5554176,
+      "final_rss_after_setup": 5636096,
+      "baseline_maximum_observed_rss": 28450816,
+      "final_maximum_observed_rss": 28504064
+    },
+    "machines_active256": {
+      "pass": true,
+      "same_physical_fields": true,
+      "differences": {},
+      "digest": "76999a0d1f196c6b",
+      "baseline_input_and_step_ms": {
+        "maximum": 1.215823,
+        "median": 0.616387,
+        "p95": 0.96008
+      },
+      "final_input_and_step_ms": {
+        "maximum": 1.247309,
+        "median": 0.593717,
+        "p95": 0.852756
+      },
+      "baseline_rss_after_setup": 5578752,
+      "final_rss_after_setup": 5652480,
+      "baseline_maximum_observed_rss": 25653248,
+      "final_maximum_observed_rss": 25653248
+    },
+    "machines_sleeping256": {
+      "pass": true,
+      "same_physical_fields": true,
+      "differences": {},
+      "digest": "294c73ad4249153b",
+      "baseline_input_and_step_ms": {
+        "maximum": 0.30551,
+        "median": 0.204176,
+        "p95": 0.269123
+      },
+      "final_input_and_step_ms": {
+        "maximum": 0.29009,
+        "median": 0.196528,
+        "p95": 0.227486
+      },
+      "baseline_rss_after_setup": 5640192,
+      "final_rss_after_setup": 5685248,
+      "baseline_maximum_observed_rss": 26402816,
+      "final_maximum_observed_rss": 26390528
+    }
+  },
+  "final_control_binary_hashes": {
+    "/home/conner/Documents/GitHub/Project-Judas/build/judas_physics_stress_live_benchmark": "fc0321fb08fdcdcff05c8ebf160deddf96b51775000d0f302c15ac5a48090569",
+    "/home/conner/Documents/GitHub/Project-Judas/build/judas_physics_scaling_diagnostics": "2f62e66dcee55389b77e3d4ad160a68415f1d398ae7da9066a5a377b99008447"
+  },
+  "control_relink_log": ".cache/prealpha-pass3/scaling-final-relink.log"
+}

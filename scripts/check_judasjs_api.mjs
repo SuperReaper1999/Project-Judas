@@ -13,7 +13,7 @@ if(args.includes('--help')){
 const ts=loadTypeScript(option('--typescript'));
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
 const source=fs.readFileSync(path.join(root,'src/ScriptSystem.cpp'),'utf8');
-const nativeSource=source+'\n'+fs.readFileSync(path.join(root,'src/ScriptLocalMultiplayer.inl'),'utf8')+'\n'+fs.readFileSync(path.join(root,'src/ScriptNetwork.inl'),'utf8');
+const nativeSource=source+'\n'+['src/ScriptLocalMultiplayer.inl','src/ScriptNetwork.inl','src/ScriptBindingsUI.cpp','src/ScriptBindingsJoint.cpp'].map(file=>fs.readFileSync(path.join(root,file),'utf8')).join('\n');
 const library=source.match(/const char\* library=R"JS\(([\s\S]*?)\)JS";/)?.[1];
 if(!library)throw Error('Cannot locate registered public module: review extractor');
 const parse=(name,text,kind)=>ts.createSourceFile(name,text,ts.ScriptTarget.ES2020,true,kind);
@@ -80,7 +80,7 @@ const resultShapes=[
 function checkResultShapes(shapes){for(const row of shapes){let members=null;const visit=n=>{if(ts.isInterfaceDeclaration(n)&&name(n.name)===row.declaration)members=new Set(n.members.map(m=>name(m.name)));ts.forEachChild(n,visit);};visit(decl);if(!members||row.fields.some(k=>!members.has(k)))throw Error('Structured declaration drift: '+row.binding);const native=fs.readFileSync(path.join(root,row.nativeFile),'utf8');if(row.needles.some(k=>!native.includes(k)))throw Error('Structured native field drift: '+row.binding);}}
 checkResultShapes(resultShapes);
 let rejectedShape=false;try{checkResultShapes([{...resultShapes[0],fields:['inventedMaterialField']}]);}catch{rejectedShape=true;}if(!rejectedShape)throw Error('Structured field negative control accepted');
-const schema={checkpoint:'84121564230242a404785af4d60a1475cdb83f4c + M99 optional networking',authority:'src/ScriptSystem.cpp::library + Impl::Native + ScriptLocalMultiplayer.inl + ScriptNetwork.inl',resultShapes,symbols:symbols.map(k=>{
+const schema={checkpoint:'84121564230242a404785af4d60a1475cdb83f4c + M99 optional networking',authority:'src/ScriptSystem.cpp::library + Impl::Native + ScriptBindingsUI.cpp + ScriptBindingsJoint.cpp + ScriptLocalMultiplayer.inl + ScriptNetwork.inl',resultShapes,symbols:symbols.map(k=>{
  const v=runtime.get(k);let native=v.native;
  if(['physics.raycastMany','physics.sphereCastMany','physics.capsuleCastMany'].includes(k))native=['castMany'];
  else if(k.startsWith('physics.')&&!['physics.joint','physics.closestPoint','physics.gravity','physics.createJoint'].includes(k))native=['cast'];

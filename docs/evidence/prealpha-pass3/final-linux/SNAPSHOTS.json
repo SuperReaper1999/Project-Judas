@@ -1,0 +1,42 @@
+[
+  {
+    "path": "final-linux/snapshots/m70/cold-write-state.json",
+    "sha256": "53ce063f036a0a62080aa972341c748a98691c5bcd2124808a0786cd9e18d32f",
+    "bytes": 268
+  },
+  {
+    "path": "final-linux/snapshots/m70/cold-read-state.json",
+    "sha256": "8b6fc2bb92461b6cd3c8ca03a9af297ff3b524d32f3f6578ab10217f595d5ab8",
+    "bytes": 268
+  },
+  {
+    "path": "final-linux/snapshots/m77-step/cold-write-state.json",
+    "sha256": "e26f1040dfcebbcf94cdc833e36414278da5de98c63b59067327873afc504a8b",
+    "bytes": 348
+  },
+  {
+    "path": "final-linux/snapshots/m77-step/cold-read-state.json",
+    "sha256": "3efbd1000160205a6b5b791cb123fc24b4e482a405f623e097165f36d117253e",
+    "bytes": 349
+  },
+  {
+    "path": "final-linux/snapshots/m77-stand/cold-stand-read-state.json",
+    "sha256": "3125cf79d4ac24e92fbb404e179b115de745822f8291129466b12e7997fee44d",
+    "bytes": 172
+  },
+  {
+    "path": "final-linux/snapshots/m77-stand/cold-stand-write-state.json",
+    "sha256": "a6771bf407e603f3ffb60d674fac84a721090ed8e66410837d7cff32a46bc6d5",
+    "bytes": 171
+  },
+  {
+    "path": "final-linux/snapshots/m77-recovery/cold-recovery-write-state.json",
+    "sha256": "9b941a7ad0152f527ce0c952e0cd5a35a5d12a73b12f267c1420fb3effacb8b5",
+    "bytes": 172
+  },
+  {
+    "path": "final-linux/snapshots/m77-recovery/cold-recovery-read-state.json",
+    "sha256": "270cab7669d938b2131da2d2a4a554dabfd66d21948285e0ac5c55fa85ed6bff",
+    "bytes": 172
+  }
+]

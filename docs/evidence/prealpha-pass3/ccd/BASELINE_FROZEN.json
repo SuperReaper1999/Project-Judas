@@ -1,0 +1,50 @@
+{
+  "utc": "2026-10-18T14:06:04.161902+00:00",
+  "revision": "f647d7fd95f60d3a37dba70a51f4e45dc41c2922",
+  "trackedStatus": "",
+  "files": [
+    {
+      "original": "build/judas_impact_mesh_cost_tests",
+      "frozen": ".cache/prealpha-pass3/baseline/bin/judas_impact_mesh_cost_tests",
+      "bytes": 1510984,
+      "sha256": "69516263c11bd0e617719133b4be64ba79d53d62fa97bd64b43dbf5092f7f36c"
+    },
+    {
+      "original": "build/judas_physics_stress_live_benchmark",
+      "frozen": ".cache/prealpha-pass3/baseline/bin/judas_physics_stress_live_benchmark",
+      "bytes": 54866176,
+      "sha256": "ddcd6e72e300228b577790054ee2028918c3361179bd29760839c8e6e8e37b0a"
+    },
+    {
+      "original": "build/judas_physics_scaling_diagnostics",
+      "frozen": ".cache/prealpha-pass3/baseline/bin/judas_physics_scaling_diagnostics",
+      "bytes": 1471096,
+      "sha256": "26c6a944053102c36ad7b9b5dde1886486161b669f08389c059e24504f57dd92"
+    },
+    {
+      "original": "build/libjudas_engine.a",
+      "frozen": ".cache/prealpha-pass3/baseline/bin/libjudas_engine.a",
+      "bytes": 29887384,
+      "sha256": "72abdc886dddded90ee8d5379ec81d2c0bbb7fc1d0df594c60259b7cbe1bfe69"
+    }
+  ],
+  "nativeIdentity": {
+    "architecture": "x86_64",
+    "build_id": "0.1.0-prealpha-Experimental-f647d7f-clean-900ed3669681-u84f47c24fcd0",
+    "channel": "Experimental",
+    "compiler": "GNU",
+    "compiler_version": "15.2.0",
+    "configuration": "Release",
+    "maturity": "pre-alpha",
+    "platform": "Linux",
+    "schema": 1,
+    "source_dirty": false,
+    "source_fingerprint": "900ed36696819dd3991df77043c18472c73650d277bd7e48e6cd740277a15dd9",
+    "source_origin": "git",
+    "source_revision": "f647d7fd95f60d3a37dba70a51f4e45dc41c2922",
+    "source_tree": "492dde358bd4762fd4b6fe08cc97cdb27e41be00",
+    "source_untracked_count": 16,
+    "source_untracked_fingerprint": "84f47c24fcd098f88732ceab246b2e0e19eca31f56acdd72f89f8bfa1621daf2",
+    "version": "0.1.0-prealpha"
+  }
+}

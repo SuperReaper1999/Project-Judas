@@ -1,0 +1,2151 @@
+[
+  {
+    "target": "judas_scene_fingerprint_tests",
+    "sources": [
+      "tests/SceneFingerprintTests.cpp"
+    ],
+    "links": [
+      "PRIVATE",
+      "judas_engine"
+    ],
+    "warnings": []
+  },
+  {
+    "target": "judas_world_state_tests",
+    "sources": [
+      "tests/WorldStateTests.cpp"
+    ],
+    "links": [
+      "PRIVATE",
+      "judas_engine"
+    ],
+    "warnings": []
+  },
+  {
+    "target": "judas_gravity_selection_tests",
+    "sources": [
+      "tests/GravitySelectionTests.cpp",
+      "src/editor/EditorHistory.cpp"
+    ],
+    "links": [
+      "PRIVATE",
+      "judas_engine"
+    ],
+    "warnings": []
+  },
+  {
+    "target": "judas_contact_geometry_tests",
+    "sources": [
+      "tests/ContactGeometryProbe.cpp"
+    ],
+    "links": [
+      "PRIVATE",
+      "judas_engine"
+    ],
+    "warnings": []
+  },
+  {
+    "target": "judas_contact_lifecycle_tests",
+    "sources": [
+      "tests/ContactLifecycleTests.cpp"
+    ],
+    "links": [
+      "PRIVATE",
+      "judas_engine"
+    ],
+    "warnings": []
+  },
+  {
+    "target": "judas_contact_cache_tests",
+    "sources": [
+      "tests/ContactCacheTests.cpp"
+    ],
+    "links": [
+      "PRIVATE",
+      "judas_engine"
+    ],
+    "warnings": []
+  },
+  {
+    "target": "judas_timing_defect_probe",
+    "sources": [
+      "tests/TimingDefectProbe.cpp"
+    ],
+    "links": [
+      "PRIVATE",
+      "judas_engine"
+    ],
+    "warnings": []
+  },
+  {
+    "target": "judas_impact_mesh_cost_tests",
+    "sources": [
+      "tests/ImpactMeshCostTests.cpp"
+    ],
+    "links": [
+      "PRIVATE",
+      "judas_engine"
+    ],
+    "warnings": []
+  },
+  {
+    "target": "judas_impact_robustness_tests",
+    "sources": [
+      "tests/ImpactRobustnessTests.cpp"
+    ],
+    "links": [
+      "PRIVATE",
+      "judas_engine"
+    ],
+    "warnings": []
+  },
+  {
+    "target": "judas_lifecycle_integration_tests",
+    "sources": [
+      "tests/LifecycleIntegrationTests.cpp"
+    ],
+    "links": [
+      "PRIVATE",
+      "judas_engine"
+    ],
+    "warnings": []
+  },
+  {
+    "target": "judas_asset_integrity_tests",
+    "sources": [
+      "tests/AssetIntegrityTests.cpp"
+    ],
+    "links": [
+      "PRIVATE",
+      "judas_engine"
+    ],
+    "warnings": []
+  },
+  {
+    "target": "judas_coarse_celestial_tests",
+    "sources": [
+      "tests/CoarseCelestialTests.cpp"
+    ],
+    "links": [
+      "PRIVATE",
+      "judas_engine"
+    ],
+    "warnings": []
+  },
+  {
+    "target": "judas_orbital_integrity_tests",
+    "sources": [
+      "tests/OrbitalIntegrityTests.cpp"
+    ],
+    "links": [
+      "PRIVATE",
+      "judas_engine"
+    ],
+    "warnings": []
+  },
+  {
+    "target": "judas_spacecraft_frame_integration_tests",
+    "sources": [
+      "tests/SpacecraftFrameIntegrationTests.cpp"
+    ],
+    "links": [
+      "PRIVATE",
+      "judas_engine"
+    ],
+    "warnings": []
+  },
+  {
+    "target": "judas_thermal_accounting_tests",
+    "sources": [
+      "tests/ThermalAccountingTests.cpp"
+    ],
+    "links": [
+      "PRIVATE",
+      "judas_engine"
+    ],
+    "warnings": []
+  },
+  {
+    "target": "judas_combustion_integration_tests",
+    "sources": [
+      "tests/CombustionIntegrationTests.cpp"
+    ],
+    "links": [
+      "PRIVATE",
+      "judas_engine"
+    ],
+    "warnings": []
+  },
+  {
+    "target": "judas_player_swimming_tests",
+    "sources": [
+      "tests/PlayerSwimmingTests.cpp"
+    ],
+    "links": [
+      "PRIVATE",
+      "judas_engine"
+    ],
+    "warnings": []
+  },
+  {
+    "target": "judas_fluid_metadata_tests",
+    "sources": [
+      "tests/FluidMetadataTests.cpp"
+    ],
+    "links": [
+      "PRIVATE",
+      "judas_engine"
+    ],
+    "warnings": []
+  },
+  {
+    "target": "judas_fluid_hydrostatics_tests",
+    "sources": [
+      "tests/FluidHydrostaticsTests.cpp"
+    ],
+    "links": [
+      "PRIVATE",
+      "judas_engine"
+    ],
+    "warnings": []
+  },
+  {
+    "target": "judas_production_fluid_tests",
+    "sources": [
+      "tests/ProductionFluidTests.cpp"
+    ],
+    "links": [
+      "PRIVATE",
+      "judas_engine"
+    ],
+    "warnings": []
+  },
+  {
+    "target": "judas_fluid_container_integration_tests",
+    "sources": [
+      "tests/FluidContainerIntegrationTests.cpp"
+    ],
+    "links": [
+      "PRIVATE",
+      "judas_engine"
+    ],
+    "warnings": []
+  },
+  {
+    "target": "judas_player_fluid_integration_tests",
+    "sources": [
+      "tests/PlayerFluidIntegrationTests.cpp"
+    ],
+    "links": [
+      "PRIVATE",
+      "judas_engine"
+    ],
+    "warnings": []
+  },
+  {
+    "target": "judas_fluid_cavity_impact_tests",
+    "sources": [
+      "tests/FluidCavityImpactTests.cpp"
+    ],
+    "links": [
+      "PRIVATE",
+      "judas_engine"
+    ],
+    "warnings": []
+  },
+  {
+    "target": "judas_fluid_smoothing_budget_tests",
+    "sources": [
+      "tests/FluidSmoothingBudgetTests.cpp"
+    ],
+    "links": [
+      "PRIVATE",
+      "judas_engine"
+    ],
+    "warnings": []
+  },
+  {
+    "target": "judas_fluid_boundary_contact_tests",
+    "sources": [
+      "tests/FluidBoundaryContactTests.cpp"
+    ],
+    "links": [
+      "PRIVATE",
+      "judas_engine"
+    ],
+    "warnings": []
+  },
+  {
+    "target": "judas_particle_contact_batch_tests",
+    "sources": [
+      "tests/ParticleContactBatchTests.cpp"
+    ],
+    "links": [
+      "PRIVATE",
+      "judas_engine"
+    ],
+    "warnings": []
+  },
+  {
+    "target": "judas_production_fluid_performance",
+    "sources": [
+      "tests/ProductionFluidPerformance.cpp"
+    ],
+    "links": [
+      "PRIVATE",
+      "judas_engine"
+    ],
+    "warnings": []
+  },
+  {
+    "target": "judas_render_camera_tests",
+    "sources": [
+      "tests/RenderCameraTests.cpp",
+      "src/editor/EditorHistory.cpp"
+    ],
+    "links": [
+      "PRIVATE",
+      "judas_engine"
+    ],
+    "warnings": []
+  },
+  {
+    "target": "judas_portal_camera_tests",
+    "sources": [
+      "tests/PortalCameraTests.cpp"
+    ],
+    "links": [
+      "PRIVATE",
+      "judas_engine"
+    ],
+    "warnings": []
+  },
+  {
+    "target": "judas_audio_tests",
+    "sources": [
+      "tests/AudioTests.cpp",
+      "src/editor/EditorHistory.cpp"
+    ],
+    "links": [
+      "PRIVATE",
+      "judas_engine"
+    ],
+    "warnings": []
+  },
+  {
+    "target": "judas_input_tests",
+    "sources": [
+      "tests/InputTests.cpp"
+    ],
+    "links": [
+      "PRIVATE",
+      "judas_engine"
+    ],
+    "warnings": []
+  },
+  {
+    "target": "judas_prefab_tests",
+    "sources": [
+      "tests/PrefabTests.cpp",
+      "src/editor/EditorHistory.cpp"
+    ],
+    "links": [
+      "PRIVATE",
+      "judas_engine"
+    ],
+    "warnings": []
+  },
+  {
+    "target": "judas_prefab_application_tests",
+    "sources": [
+      "tests/PrefabApplicationTests.cpp",
+      "src/Application.cpp",
+      "src/RuntimeOptions.cpp",
+      "src/RuntimeDiagnostics.cpp",
+      "src/TestHarness.cpp"
+    ],
+    "links": [
+      "PRIVATE",
+      "judas_engine"
+    ],
+    "warnings": []
+  },
+  {
+    "target": "judas_visual_particle_tests",
+    "sources": [
+      "tests/VisualParticleTests.cpp",
+      "src/editor/EditorHistory.cpp"
+    ],
+    "links": [
+      "PRIVATE",
+      "judas_engine"
+    ],
+    "warnings": []
+  },
+  {
+    "target": "judas_particle_application_tests",
+    "sources": [
+      "tests/ParticleApplicationTests.cpp",
+      "src/Application.cpp",
+      "src/RuntimeOptions.cpp",
+      "src/RuntimeDiagnostics.cpp",
+      "src/TestHarness.cpp"
+    ],
+    "links": [
+      "PRIVATE",
+      "judas_engine"
+    ],
+    "warnings": []
+  },
+  {
+    "target": "judas_export_tests",
+    "sources": [
+      "tests/ExportTests.cpp"
+    ],
+    "links": [
+      "PRIVATE",
+      "judas_engine"
+    ],
+    "warnings": []
+  },
+  {
+    "target": "judas_package_application_tests",
+    "sources": [
+      "tests/PackageApplicationTests.cpp",
+      "src/Application.cpp",
+      "src/RuntimeOptions.cpp",
+      "src/RuntimeDiagnostics.cpp",
+      "src/TestHarness.cpp"
+    ],
+    "links": [
+      "PRIVATE",
+      "judas_engine"
+    ],
+    "warnings": []
+  },
+  {
+    "target": "judas_classification_tests",
+    "sources": [
+      "tests/ClassificationTests.cpp",
+      "src/editor/EditorHistory.cpp"
+    ],
+    "links": [
+      "PRIVATE",
+      "judas_engine"
+    ],
+    "warnings": []
+  },
+  {
+    "target": "judas_script_tests",
+    "sources": [
+      "tests/ScriptTests.cpp"
+    ],
+    "links": [
+      "PRIVATE",
+      "judas_engine"
+    ],
+    "warnings": []
+  },
+  {
+    "target": "judas_script_application_tests",
+    "sources": [
+      "tests/ScriptApplicationTests.cpp",
+      "src/Application.cpp",
+      "src/RuntimeOptions.cpp",
+      "src/RuntimeDiagnostics.cpp",
+      "src/TestHarness.cpp"
+    ],
+    "links": [
+      "PRIVATE",
+      "judas_engine"
+    ],
+    "warnings": []
+  },
+  {
+    "target": "judas_runtime_ui_tests",
+    "sources": [
+      "tests/RuntimeUITests.cpp"
+    ],
+    "links": [
+      "PRIVATE",
+      "judas_engine"
+    ],
+    "warnings": []
+  },
+  {
+    "target": "judas_runtime_ui_application_tests",
+    "sources": [
+      "tests/RuntimeUIApplicationTests.cpp",
+      "src/Application.cpp",
+      "src/RuntimeOptions.cpp",
+      "src/RuntimeDiagnostics.cpp",
+      "src/TestHarness.cpp"
+    ],
+    "links": [
+      "PRIVATE",
+      "judas_engine"
+    ],
+    "warnings": []
+  },
+  {
+    "target": "judas_touch_event_tests",
+    "sources": [
+      "tests/TouchEventTests.cpp"
+    ],
+    "links": [
+      "PRIVATE",
+      "judas_engine"
+    ],
+    "warnings": []
+  },
+  {
+    "target": "judas_touch_application_tests",
+    "sources": [
+      "tests/TouchApplicationTests.cpp",
+      "src/Application.cpp",
+      "src/RuntimeOptions.cpp",
+      "src/RuntimeDiagnostics.cpp",
+      "src/TestHarness.cpp"
+    ],
+    "links": [
+      "PRIVATE",
+      "judas_engine"
+    ],
+    "warnings": []
+  },
+  {
+    "target": "judas_scene_transition_tests",
+    "sources": [
+      "tests/SceneTransitionTests.cpp",
+      "src/Application.cpp",
+      "src/RuntimeOptions.cpp",
+      "src/RuntimeDiagnostics.cpp",
+      "src/TestHarness.cpp"
+    ],
+    "links": [
+      "PRIVATE",
+      "judas_engine"
+    ],
+    "warnings": []
+  },
+  {
+    "target": "judas_physics_cast_tests",
+    "sources": [
+      "tests/PhysicsCastTests.cpp"
+    ],
+    "links": [
+      "PRIVATE",
+      "judas_engine"
+    ],
+    "warnings": []
+  },
+  {
+    "target": "judas_physics_cast_application_tests",
+    "sources": [
+      "tests/PhysicsCastApplicationTests.cpp",
+      "src/Application.cpp",
+      "src/RuntimeOptions.cpp",
+      "src/RuntimeDiagnostics.cpp",
+      "src/TestHarness.cpp"
+    ],
+    "links": [
+      "PRIVATE",
+      "judas_engine"
+    ],
+    "warnings": []
+  },
+  {
+    "target": "judas_joint_tests",
+    "sources": [
+      "tests/JointTests.cpp"
+    ],
+    "links": [
+      "PRIVATE",
+      "judas_engine"
+    ],
+    "warnings": []
+  },
+  {
+    "target": "judas_joint_authoring_tests",
+    "sources": [
+      "tests/JointAuthoringTests.cpp"
+    ],
+    "links": [
+      "PRIVATE",
+      "judas_engine"
+    ],
+    "warnings": []
+  },
+  {
+    "target": "judas_joint_application_tests",
+    "sources": [
+      "tests/JointApplicationTests.cpp",
+      "src/Application.cpp",
+      "src/RuntimeOptions.cpp",
+      "src/RuntimeDiagnostics.cpp",
+      "src/TestHarness.cpp"
+    ],
+    "links": [
+      "PRIVATE",
+      "judas_engine"
+    ],
+    "warnings": []
+  },
+  {
+    "target": "judas_skeletal_animation_tests",
+    "sources": [
+      "tests/SkeletalAnimationTests.cpp"
+    ],
+    "links": [
+      "PRIVATE",
+      "judas_engine"
+    ],
+    "warnings": []
+  },
+  {
+    "target": "judas_animation_application_tests",
+    "sources": [
+      "tests/AnimationApplicationTests.cpp",
+      "src/Application.cpp",
+      "src/RuntimeOptions.cpp",
+      "src/RuntimeDiagnostics.cpp",
+      "src/TestHarness.cpp"
+    ],
+    "links": [
+      "PRIVATE",
+      "judas_engine"
+    ],
+    "warnings": []
+  },
+  {
+    "target": "judas_pose_composition_tests",
+    "sources": [
+      "tests/PoseCompositionTests.cpp"
+    ],
+    "links": [
+      "PRIVATE",
+      "judas_engine"
+    ],
+    "warnings": []
+  },
+  {
+    "target": "judas_fluid_demo_integration_tests",
+    "sources": [
+      "tests/FluidDemoIntegrationTests.cpp"
+    ],
+    "links": [
+      "PRIVATE",
+      "judas_engine"
+    ],
+    "warnings": []
+  },
+  {
+    "target": "judas_character_motor_tests",
+    "sources": [
+      "tests/CharacterMotorTests.cpp"
+    ],
+    "links": [
+      "PRIVATE",
+      "judas_engine"
+    ],
+    "warnings": []
+  },
+  {
+    "target": "judas_character_motor_application_tests",
+    "sources": [
+      "tests/CharacterMotorApplicationTests.cpp"
+    ],
+    "links": [
+      "PRIVATE",
+      "judas_engine"
+    ],
+    "warnings": []
+  },
+  {
+    "target": "judasjs_examples_tests",
+    "sources": [
+      "tests/JudasJSExamplesTests.cpp"
+    ],
+    "links": [
+      "PRIVATE",
+      "judas_engine"
+    ],
+    "warnings": []
+  },
+  {
+    "target": "judas_boundary_migration_tests",
+    "sources": [
+      "tests/BoundaryMigrationTests.cpp"
+    ],
+    "links": [
+      "PRIVATE",
+      "judas_engine"
+    ],
+    "warnings": []
+  },
+  {
+    "target": "judas_shooter_game_tests",
+    "sources": [
+      "tests/ShooterGameTests.cpp"
+    ],
+    "links": [
+      "PRIVATE",
+      "judas_engine"
+    ],
+    "warnings": []
+  },
+  {
+    "target": "judas_shooter_application_tests",
+    "sources": [
+      "tests/ShooterApplicationTests.cpp",
+      "src/Application.cpp",
+      "src/RuntimeOptions.cpp",
+      "src/RuntimeDiagnostics.cpp",
+      "src/TestHarness.cpp"
+    ],
+    "links": [
+      "PRIVATE",
+      "judas_engine"
+    ],
+    "warnings": []
+  },
+  {
+    "target": "judas_script_presentation_tests",
+    "sources": [
+      "tests/ScriptPresentationTests.cpp"
+    ],
+    "links": [
+      "PRIVATE",
+      "judas_engine"
+    ],
+    "warnings": []
+  },
+  {
+    "target": "judas_text_localization_tests",
+    "sources": [
+      "tests/TextLocalizationTests.cpp"
+    ],
+    "links": [
+      "PRIVATE",
+      "judas_engine"
+    ],
+    "warnings": []
+  },
+  {
+    "target": "judas_text_render_tests",
+    "sources": [
+      "tests/TextRenderTests.cpp"
+    ],
+    "links": [
+      "PRIVATE",
+      "judas_engine"
+    ],
+    "warnings": []
+  },
+  {
+    "target": "judas_streaming_tests",
+    "sources": [
+      "tests/WorldStreamingTests.cpp"
+    ],
+    "links": [
+      "PRIVATE",
+      "judas_engine"
+    ],
+    "warnings": []
+  },
+  {
+    "target": "judas_streaming_application_tests",
+    "sources": [
+      "tests/StreamingApplicationTests.cpp",
+      "src/Application.cpp",
+      "src/RuntimeOptions.cpp",
+      "src/RuntimeDiagnostics.cpp",
+      "src/TestHarness.cpp"
+    ],
+    "links": [
+      "PRIVATE",
+      "judas_engine"
+    ],
+    "warnings": []
+  },
+  {
+    "target": "judas_streaming_revisit_tests",
+    "sources": [
+      "tests/StreamingRevisitTests.cpp",
+      "src/Application.cpp",
+      "src/RuntimeOptions.cpp",
+      "src/RuntimeDiagnostics.cpp",
+      "src/TestHarness.cpp"
+    ],
+    "links": [
+      "PRIVATE",
+      "judas_engine"
+    ],
+    "warnings": []
+  },
+  {
+    "target": "judas_audio_acoustics_tests",
+    "sources": [
+      "tests/AudioAcousticsTests.cpp"
+    ],
+    "links": [
+      "PRIVATE",
+      "judas_engine"
+    ],
+    "warnings": []
+  },
+  {
+    "target": "judas_audio_world_tests",
+    "sources": [
+      "tests/AudioWorldTests.cpp"
+    ],
+    "links": [
+      "PRIVATE",
+      "judas_engine"
+    ],
+    "warnings": []
+  },
+  {
+    "target": "judas_audio_application_tests",
+    "sources": [
+      "tests/AudioApplicationTests.cpp",
+      "src/Application.cpp",
+      "src/RuntimeOptions.cpp",
+      "src/RuntimeDiagnostics.cpp",
+      "src/TestHarness.cpp"
+    ],
+    "links": [
+      "PRIVATE",
+      "judas_engine"
+    ],
+    "warnings": [
+      "-Wpedantic"
+    ]
+  },
+  {
+    "target": "judas_save_storage_tests",
+    "sources": [
+      "tests/SaveStorageTests.cpp"
+    ],
+    "links": [
+      "PRIVATE",
+      "judas_engine"
+    ],
+    "warnings": [
+      "-Wpedantic"
+    ]
+  },
+  {
+    "target": "judas_physics_continuation_tests",
+    "sources": [
+      "tests/PhysicsContinuationTests.cpp"
+    ],
+    "links": [
+      "PRIVATE",
+      "judas_engine"
+    ],
+    "warnings": []
+  },
+  {
+    "target": "judas_save_application_tests",
+    "sources": [
+      "tests/SaveApplicationTests.cpp",
+      "src/Application.cpp",
+      "src/RuntimeOptions.cpp",
+      "src/RuntimeDiagnostics.cpp",
+      "src/TestHarness.cpp"
+    ],
+    "links": [
+      "PRIVATE",
+      "judas_engine"
+    ],
+    "warnings": [
+      "-Wpedantic"
+    ]
+  },
+  {
+    "target": "judas_character_publication_tests",
+    "sources": [
+      "tests/CharacterPublicationTests.cpp"
+    ],
+    "links": [
+      "PRIVATE",
+      "judas_engine"
+    ],
+    "warnings": [
+      "-Wpedantic"
+    ]
+  },
+  {
+    "target": "judas_save_exclusion_tests",
+    "sources": [
+      "tests/SaveExclusionTests.cpp"
+    ],
+    "links": [
+      "PRIVATE",
+      "judas_engine"
+    ],
+    "warnings": [
+      "-Wpedantic"
+    ]
+  },
+  {
+    "target": "judas_consumer_lifecycle_audit_tests",
+    "sources": [
+      "tests/ConsumerLifecycleAuditTests.cpp",
+      "src/Application.cpp",
+      "src/RuntimeOptions.cpp",
+      "src/RuntimeDiagnostics.cpp",
+      "src/TestHarness.cpp"
+    ],
+    "links": [
+      "PRIVATE",
+      "judas_engine"
+    ],
+    "warnings": [
+      "-Wpedantic"
+    ]
+  },
+  {
+    "target": "judas_save_streaming_tests",
+    "sources": [
+      "tests/SaveStreamingTests.cpp",
+      "src/Application.cpp",
+      "src/RuntimeOptions.cpp",
+      "src/RuntimeDiagnostics.cpp",
+      "src/TestHarness.cpp"
+    ],
+    "links": [
+      "PRIVATE",
+      "judas_engine"
+    ],
+    "warnings": [
+      "-Wpedantic"
+    ]
+  },
+  {
+    "target": "judas_save_performance_tests",
+    "sources": [
+      "tests/SavePerformanceTests.cpp",
+      "src/Application.cpp",
+      "src/RuntimeOptions.cpp",
+      "src/RuntimeDiagnostics.cpp",
+      "src/TestHarness.cpp"
+    ],
+    "links": [
+      "PRIVATE",
+      "judas_engine"
+    ],
+    "warnings": [
+      "-Wpedantic"
+    ]
+  },
+  {
+    "target": "judas_developer_integration_tests",
+    "sources": [
+      "tests/DeveloperIntegrationTests.cpp"
+    ],
+    "links": [
+      "PRIVATE",
+      "judas_engine"
+    ],
+    "warnings": [
+      "-Wpedantic"
+    ]
+  },
+  {
+    "target": "judas_developer_application_tests",
+    "sources": [
+      "tests/DeveloperApplicationTests.cpp",
+      "src/Application.cpp",
+      "src/RuntimeOptions.cpp",
+      "src/RuntimeDiagnostics.cpp",
+      "src/TestHarness.cpp"
+    ],
+    "links": [
+      "PRIVATE",
+      "judas_engine"
+    ],
+    "warnings": [
+      "-Wpedantic"
+    ]
+  },
+  {
+    "target": "judas_consumer_authoring_tests",
+    "sources": [
+      "tests/ConsumerAuthoringTests.cpp",
+      "src/editor/EditorHistory.cpp"
+    ],
+    "links": [
+      "PRIVATE",
+      "judas_engine"
+    ],
+    "warnings": [
+      "-Wpedantic"
+    ]
+  },
+  {
+    "target": "judas_post_consumer_query_tests",
+    "sources": [
+      "tests/PostConsumerQueryTests.cpp"
+    ],
+    "links": [
+      "PRIVATE",
+      "judas_engine"
+    ],
+    "warnings": [
+      "-Wpedantic"
+    ]
+  },
+  {
+    "target": "judas_model_application_tests",
+    "sources": [
+      "tests/ModelApplicationTests.cpp",
+      "src/Application.cpp",
+      "src/RuntimeOptions.cpp",
+      "src/RuntimeDiagnostics.cpp",
+      "src/TestHarness.cpp"
+    ],
+    "links": [
+      "PRIVATE",
+      "judas_engine"
+    ],
+    "warnings": []
+  },
+  {
+    "target": "judas_world_building_tests",
+    "sources": [
+      "tests/WorldBuildingTests.cpp",
+      "src/editor/EditorHistory.cpp"
+    ],
+    "links": [
+      "PRIVATE",
+      "judas_engine"
+    ],
+    "warnings": []
+  },
+  {
+    "target": "judas_world_authoring_runtime_tests",
+    "sources": [
+      "tests/WorldAuthoringRuntimeTests.cpp"
+    ],
+    "links": [
+      "PRIVATE",
+      "judas_engine"
+    ],
+    "warnings": []
+  },
+  {
+    "target": "judas_world_authoring_application_tests",
+    "sources": [
+      "tests/WorldAuthoringApplicationTests.cpp",
+      "src/Application.cpp",
+      "src/RuntimeOptions.cpp",
+      "src/RuntimeDiagnostics.cpp",
+      "src/TestHarness.cpp"
+    ],
+    "links": [
+      "PRIVATE",
+      "judas_engine"
+    ],
+    "warnings": []
+  },
+  {
+    "target": "judas_scalability_tests",
+    "sources": [
+      "tests/ScalabilityTests.cpp"
+    ],
+    "links": [
+      "PRIVATE",
+      "judas_engine"
+    ],
+    "warnings": []
+  },
+  {
+    "target": "judas_resource_handoff_tests",
+    "sources": [
+      "tests/ResourceHandoffTests.cpp"
+    ],
+    "links": [
+      "PRIVATE",
+      "judas_engine"
+    ],
+    "warnings": []
+  },
+  {
+    "target": "judas_paired_input_script_tests",
+    "sources": [
+      "tests/PairedInputScriptTests.cpp"
+    ],
+    "links": [
+      "PRIVATE",
+      "judas_engine"
+    ],
+    "warnings": []
+  },
+  {
+    "target": "judas_physics_batch_script_tests",
+    "sources": [
+      "tests/PhysicsBatchScriptTests.cpp"
+    ],
+    "links": [
+      "PRIVATE",
+      "judas_engine"
+    ],
+    "warnings": [
+      "-Wpedantic"
+    ]
+  },
+  {
+    "target": "judas_windows_readiness_tests",
+    "sources": [
+      "tests/WindowsReadinessTests.cpp"
+    ],
+    "links": [
+      "PRIVATE",
+      "judas_engine"
+    ],
+    "warnings": []
+  },
+  {
+    "target": "judas_terrain_application_tests",
+    "sources": [
+      "tests/TerrainApplicationTests.cpp",
+      "src/Application.cpp",
+      "src/RuntimeOptions.cpp",
+      "src/RuntimeDiagnostics.cpp",
+      "src/TestHarness.cpp"
+    ],
+    "links": [
+      "PRIVATE",
+      "judas_engine"
+    ],
+    "warnings": []
+  },
+  {
+    "target": "judas_multi_target_ik_tests",
+    "sources": [
+      "tests/MultiTargetIKTests.cpp"
+    ],
+    "links": [
+      "PRIVATE",
+      "judas_engine"
+    ],
+    "warnings": []
+  },
+  {
+    "target": "judas_physical_animation_tests",
+    "sources": [
+      "tests/PhysicalAnimationTests.cpp"
+    ],
+    "links": [
+      "PRIVATE",
+      "judas_engine"
+    ],
+    "warnings": []
+  },
+  {
+    "target": "judas_physical_balance_foundation_tests",
+    "sources": [
+      "tests/PhysicalBalanceFoundationTests.cpp"
+    ],
+    "links": [
+      "PRIVATE",
+      "judas_engine"
+    ],
+    "warnings": []
+  },
+  {
+    "target": "judas_physical_balance_controller_tests",
+    "sources": [
+      "tests/PhysicalBalanceControllerTests.cpp"
+    ],
+    "links": [
+      "PRIVATE",
+      "judas_engine"
+    ],
+    "warnings": []
+  },
+  {
+    "target": "judas_balance_lab_tests",
+    "sources": [
+      "tests/BalanceLabTests.cpp"
+    ],
+    "links": [
+      "PRIVATE",
+      "judas_engine"
+    ],
+    "warnings": []
+  },
+  {
+    "target": "judas_character_lab_tests",
+    "sources": [
+      "tests/CharacterLabTests.cpp"
+    ],
+    "links": [
+      "PRIVATE",
+      "judas_engine"
+    ],
+    "warnings": []
+  },
+  {
+    "target": "judas_character_lab_performance",
+    "sources": [
+      "tests/CharacterLabPerformance.cpp"
+    ],
+    "links": [
+      "PRIVATE",
+      "judas_engine"
+    ],
+    "warnings": []
+  },
+  {
+    "target": "judas_kinematic_tests",
+    "sources": [
+      "tests/KinematicTests.cpp"
+    ],
+    "links": [
+      "PRIVATE",
+      "judas_engine"
+    ],
+    "warnings": []
+  },
+  {
+    "target": "judas_kinematic_lab_tests",
+    "sources": [
+      "tests/KinematicLabTests.cpp"
+    ],
+    "links": [
+      "PRIVATE",
+      "judas_engine"
+    ],
+    "warnings": []
+  },
+  {
+    "target": "judas_kinematic_performance",
+    "sources": [
+      "tests/KinematicPerformance.cpp"
+    ],
+    "links": [
+      "PRIVATE",
+      "judas_engine"
+    ],
+    "warnings": []
+  },
+  {
+    "target": "judas_editor_navigation_tests",
+    "sources": [
+      "tests/EditorNavigationTests.cpp",
+      "src/editor/EditorCamera.cpp"
+    ],
+    "links": [
+      "PRIVATE",
+      "judas_engine"
+    ],
+    "warnings": []
+  },
+  {
+    "target": "judas_editor_picking_tests",
+    "sources": [
+      "tests/EditorPickingTests.cpp",
+      "src/editor/EditorPicking.cpp"
+    ],
+    "links": [
+      "PRIVATE",
+      "judas_engine"
+    ],
+    "warnings": []
+  },
+  {
+    "target": "judas_editor_workspace_tests",
+    "sources": [
+      "tests/EditorWorkspaceLayoutTests.cpp"
+    ],
+    "links": [
+      "PRIVATE",
+      "judas_engine"
+    ],
+    "warnings": []
+  },
+  {
+    "target": "judas_runtime_render_tests",
+    "sources": [
+      "tests/RuntimeRenderTests.cpp"
+    ],
+    "links": [
+      "PRIVATE",
+      "judas_engine"
+    ],
+    "warnings": []
+  },
+  {
+    "target": "judas_runtime_render_authoring_tests",
+    "sources": [
+      "tests/RuntimeRenderAuthoringTests.cpp",
+      "src/editor/EditorHistory.cpp"
+    ],
+    "links": [
+      "PRIVATE",
+      "judas_engine"
+    ],
+    "warnings": []
+  },
+  {
+    "target": "judas_runtime_render_retained_region_tests",
+    "sources": [
+      "tests/RuntimeRenderRetainedRegionTests.cpp"
+    ],
+    "links": [
+      "PRIVATE",
+      "judas_engine"
+    ],
+    "warnings": []
+  },
+  {
+    "target": "judas_signal_tests",
+    "sources": [
+      "tests/SignalTests.cpp"
+    ],
+    "links": [
+      "PRIVATE",
+      "judas_engine"
+    ],
+    "warnings": []
+  },
+  {
+    "target": "judas_signal_application_tests",
+    "sources": [
+      "tests/SignalApplicationTests.cpp",
+      "src/Application.cpp",
+      "src/RuntimeOptions.cpp",
+      "src/RuntimeDiagnostics.cpp",
+      "src/TestHarness.cpp"
+    ],
+    "links": [
+      "PRIVATE",
+      "judas_engine"
+    ],
+    "warnings": []
+  },
+  {
+    "target": "judas_retarget_application_tests",
+    "sources": [
+      "tests/RetargetApplicationTests.cpp",
+      "src/Application.cpp",
+      "src/RuntimeOptions.cpp",
+      "src/RuntimeDiagnostics.cpp",
+      "src/TestHarness.cpp"
+    ],
+    "links": [
+      "PRIVATE",
+      "judas_engine"
+    ],
+    "warnings": []
+  },
+  {
+    "target": "judas_mod_content_tests",
+    "sources": [
+      "tests/ModContentTests.cpp"
+    ],
+    "links": [
+      "PRIVATE",
+      "judas_engine"
+    ],
+    "warnings": []
+  },
+  {
+    "target": "judas_mod_application_tests",
+    "sources": [
+      "tests/ModApplicationTests.cpp",
+      "src/Application.cpp",
+      "src/RuntimeOptions.cpp",
+      "src/RuntimeDiagnostics.cpp",
+      "src/TestHarness.cpp"
+    ],
+    "links": [
+      "PRIVATE",
+      "judas_engine"
+    ],
+    "warnings": []
+  },
+  {
+    "target": "judas_motor_runtime_tags_tests",
+    "sources": [
+      "tests/MotorRuntimeTagsTests.cpp"
+    ],
+    "links": [
+      "PRIVATE",
+      "judas_engine"
+    ],
+    "warnings": [
+      "-Wpedantic"
+    ]
+  },
+  {
+    "target": "judas_volume_application_tests",
+    "sources": [
+      "tests/VolumeTerrainApplicationTests.cpp",
+      "src/Application.cpp",
+      "src/RuntimeOptions.cpp",
+      "src/RuntimeDiagnostics.cpp",
+      "src/TestHarness.cpp"
+    ],
+    "links": [
+      "PRIVATE",
+      "judas_engine"
+    ],
+    "warnings": []
+  },
+  {
+    "target": "judas_planetfall_application_tests",
+    "sources": [
+      "tests/PlanetfallApplicationTests.cpp",
+      "src/Application.cpp",
+      "src/RuntimeOptions.cpp",
+      "src/RuntimeDiagnostics.cpp",
+      "src/TestHarness.cpp"
+    ],
+    "links": [
+      "PRIVATE",
+      "judas_engine"
+    ],
+    "warnings": []
+  },
+  {
+    "target": "judas_ball_pusher_application_tests",
+    "sources": [
+      "tests/BallPusherApplicationTests.cpp",
+      "src/Application.cpp",
+      "src/RuntimeOptions.cpp",
+      "src/RuntimeDiagnostics.cpp",
+      "src/TestHarness.cpp"
+    ],
+    "links": [
+      "PRIVATE",
+      "judas_engine"
+    ],
+    "warnings": []
+  },
+  {
+    "target": "judas_contact_interval_tests",
+    "sources": [
+      "tests/ContactIntervalTests.cpp"
+    ],
+    "links": [
+      "PRIVATE",
+      "judas_engine"
+    ],
+    "warnings": []
+  },
+  {
+    "target": "judas_collision_continuity_tests",
+    "sources": [
+      "tests/CollisionContinuityTests.cpp"
+    ],
+    "links": [
+      "PRIVATE",
+      "judas_engine"
+    ],
+    "warnings": []
+  },
+  {
+    "target": "judas_sphere_impact_bounds_tests",
+    "sources": [
+      "tests/SphereImpactBoundsTests.cpp"
+    ],
+    "links": [
+      "PRIVATE",
+      "judas_engine"
+    ],
+    "warnings": []
+  },
+  {
+    "target": "judas_cooked_penetration_tests",
+    "sources": [
+      "tests/CookedPenetrationTests.cpp"
+    ],
+    "links": [
+      "PRIVATE",
+      "judas_engine"
+    ],
+    "warnings": []
+  },
+  {
+    "target": "judas_planet_terrain_tests",
+    "sources": [
+      "tests/PlanetTerrainTests.cpp"
+    ],
+    "links": [
+      "PRIVATE",
+      "judas_engine"
+    ],
+    "warnings": []
+  },
+  {
+    "target": "judas_planet_world_tests",
+    "sources": [
+      "tests/PlanetWorldTests.cpp"
+    ],
+    "links": [
+      "PRIVATE",
+      "judas_engine"
+    ],
+    "warnings": []
+  },
+  {
+    "target": "judas_planet_application_tests",
+    "sources": [
+      "tests/PlanetApplicationTests.cpp",
+      "src/Application.cpp",
+      "src/RuntimeOptions.cpp",
+      "src/RuntimeDiagnostics.cpp",
+      "src/TestHarness.cpp"
+    ],
+    "links": [
+      "PRIVATE",
+      "judas_engine"
+    ],
+    "warnings": []
+  },
+  {
+    "target": "judas_planet_streaming_tests",
+    "sources": [
+      "tests/PlanetStreamingTests.cpp"
+    ],
+    "links": [
+      "PRIVATE",
+      "judas_engine"
+    ],
+    "warnings": []
+  },
+  {
+    "target": "judas_origin_physics_tests",
+    "sources": [
+      "tests/OriginPhysicsTests.cpp"
+    ],
+    "links": [
+      "PRIVATE",
+      "judas_engine"
+    ],
+    "warnings": []
+  },
+  {
+    "target": "judas_origin_participant_tests",
+    "sources": [
+      "tests/OriginParticipantTests.cpp"
+    ],
+    "links": [
+      "PRIVATE",
+      "judas_engine"
+    ],
+    "warnings": []
+  },
+  {
+    "target": "judas_origin_travel_application_tests",
+    "sources": [
+      "tests/OriginTravelApplicationTests.cpp",
+      "src/Application.cpp",
+      "src/RuntimeOptions.cpp",
+      "src/RuntimeDiagnostics.cpp",
+      "src/TestHarness.cpp"
+    ],
+    "links": [
+      "PRIVATE",
+      "judas_engine"
+    ],
+    "warnings": []
+  },
+  {
+    "target": "judas_origin_stream_tests",
+    "sources": [
+      "tests/OriginStreamTests.cpp"
+    ],
+    "links": [
+      "PRIVATE",
+      "judas_engine"
+    ],
+    "warnings": []
+  },
+  {
+    "target": "judas_weather_authoring_tests",
+    "sources": [
+      "tests/WeatherAuthoringTests.cpp",
+      "src/editor/EditorHistory.cpp"
+    ],
+    "links": [
+      "PRIVATE",
+      "judas_engine"
+    ],
+    "warnings": []
+  },
+  {
+    "target": "judas_weather_render_tests",
+    "sources": [
+      "tests/WeatherRenderTests.cpp"
+    ],
+    "links": [
+      "PRIVATE",
+      "judas_engine"
+    ],
+    "warnings": []
+  },
+  {
+    "target": "judas_weather_world_tests",
+    "sources": [
+      "tests/WeatherWorldTests.cpp"
+    ],
+    "links": [
+      "PRIVATE",
+      "judas_engine"
+    ],
+    "warnings": []
+  },
+  {
+    "target": "judas_weather_streaming_tests",
+    "sources": [
+      "tests/WeatherStreamingTests.cpp"
+    ],
+    "links": [
+      "PRIVATE",
+      "judas_engine"
+    ],
+    "warnings": []
+  },
+  {
+    "target": "judas_weather_script_tests",
+    "sources": [
+      "tests/WeatherScriptTests.cpp"
+    ],
+    "links": [
+      "PRIVATE",
+      "judas_engine"
+    ],
+    "warnings": []
+  },
+  {
+    "target": "judas_weather_application_tests",
+    "sources": [
+      "tests/WeatherApplicationTests.cpp",
+      "src/Application.cpp",
+      "src/RuntimeOptions.cpp",
+      "src/RuntimeDiagnostics.cpp",
+      "src/TestHarness.cpp"
+    ],
+    "links": [
+      "PRIVATE",
+      "judas_engine"
+    ],
+    "warnings": []
+  },
+  {
+    "target": "judas_weather_performance_tests",
+    "sources": [
+      "tests/WeatherPerformanceTests.cpp"
+    ],
+    "links": [
+      "PRIVATE",
+      "judas_engine"
+    ],
+    "warnings": []
+  },
+  {
+    "target": "judas_physics_scaling_benchmarks",
+    "sources": [
+      "tests/PhysicsScalingBenchmarks.cpp"
+    ],
+    "links": [
+      "PRIVATE",
+      "judas_engine"
+    ],
+    "warnings": []
+  },
+  {
+    "target": "judas_physics_scaling_tests",
+    "sources": [
+      "tests/PhysicsScalingTests.cpp"
+    ],
+    "links": [
+      "PRIVATE",
+      "judas_engine"
+    ],
+    "warnings": []
+  },
+  {
+    "target": "judas_joint_scaling_tests",
+    "sources": [
+      "tests/JointScalingTests.cpp"
+    ],
+    "links": [
+      "PRIVATE",
+      "judas_engine"
+    ],
+    "warnings": []
+  },
+  {
+    "target": "judas_parallel_narrowphase_tests",
+    "sources": [
+      "tests/ParallelNarrowphaseTests.cpp"
+    ],
+    "links": [
+      "PRIVATE",
+      "judas_engine"
+    ],
+    "warnings": []
+  },
+  {
+    "target": "judas_rigid_motion_geometry_tests",
+    "sources": [
+      "tests/RigidMotionGeometryTests.cpp"
+    ],
+    "links": [
+      "PRIVATE",
+      "judas_engine"
+    ],
+    "warnings": []
+  },
+  {
+    "target": "judas_physics_stress_live_benchmark",
+    "sources": [
+      "tests/PhysicsStressLiveBenchmark.cpp",
+      "src/Application.cpp",
+      "src/RuntimeOptions.cpp",
+      "src/RuntimeDiagnostics.cpp",
+      "src/TestHarness.cpp"
+    ],
+    "links": [
+      "PRIVATE",
+      "judas_engine"
+    ],
+    "warnings": []
+  },
+  {
+    "target": "judas_physics_scaling_application_tests",
+    "sources": [
+      "tests/PhysicsScalingApplicationTests.cpp",
+      "src/Application.cpp",
+      "src/RuntimeOptions.cpp",
+      "src/RuntimeDiagnostics.cpp",
+      "src/TestHarness.cpp"
+    ],
+    "links": [
+      "PRIVATE",
+      "judas_engine"
+    ],
+    "warnings": []
+  },
+  {
+    "target": "judas_breakwater_application_tests",
+    "sources": [
+      "tests/BreakwaterApplicationTests.cpp",
+      "src/Application.cpp",
+      "src/RuntimeOptions.cpp",
+      "src/RuntimeDiagnostics.cpp",
+      "src/TestHarness.cpp"
+    ],
+    "links": [
+      "PRIVATE",
+      "judas_engine"
+    ],
+    "warnings": []
+  },
+  {
+    "target": "judas_breakwater_performance",
+    "sources": [
+      "tests/BreakwaterPerformance.cpp",
+      "src/Application.cpp",
+      "src/RuntimeOptions.cpp",
+      "src/RuntimeDiagnostics.cpp",
+      "src/TestHarness.cpp"
+    ],
+    "links": [
+      "PRIVATE",
+      "judas_engine"
+    ],
+    "warnings": []
+  },
+  {
+    "target": "judas_local_multiplayer_tests",
+    "sources": [
+      "tests/LocalMultiplayerTests.cpp"
+    ],
+    "links": [
+      "PRIVATE",
+      "judas_engine"
+    ],
+    "warnings": []
+  },
+  {
+    "target": "judas_local_multiplayer_application_tests",
+    "sources": [
+      "tests/LocalMultiplayerApplicationTests.cpp",
+      "src/Application.cpp",
+      "src/RuntimeOptions.cpp",
+      "src/RuntimeDiagnostics.cpp",
+      "src/TestHarness.cpp"
+    ],
+    "links": [
+      "PRIVATE",
+      "judas_engine"
+    ],
+    "warnings": []
+  },
+  {
+    "target": "judas_local_multiplayer_render_tests",
+    "sources": [
+      "tests/LocalMultiplayerRenderTests.cpp"
+    ],
+    "links": [
+      "PRIVATE",
+      "judas_engine"
+    ],
+    "warnings": []
+  },
+  {
+    "target": "judas_local_device_adapter_tests",
+    "sources": [
+      "tests/LocalDeviceAdapterTests.cpp"
+    ],
+    "links": [
+      "PRIVATE",
+      "judas_engine"
+    ],
+    "warnings": []
+  },
+  {
+    "target": "judas_local_multiplayer_script_tests",
+    "sources": [
+      "tests/LocalMultiplayerScriptTests.cpp"
+    ],
+    "links": [
+      "PRIVATE",
+      "judas_engine"
+    ],
+    "warnings": []
+  },
+  {
+    "target": "judas_local_multiplayer_performance",
+    "sources": [
+      "tests/LocalMultiplayerPerformance.cpp",
+      "src/Application.cpp",
+      "src/RuntimeOptions.cpp",
+      "src/RuntimeDiagnostics.cpp",
+      "src/TestHarness.cpp"
+    ],
+    "links": [
+      "PRIVATE",
+      "judas_engine"
+    ],
+    "warnings": []
+  },
+  {
+    "target": "judas_rendering_scale_tests",
+    "sources": [
+      "tests/RenderingScaleTests.cpp"
+    ],
+    "links": [
+      "PRIVATE",
+      "judas_engine"
+    ],
+    "warnings": []
+  },
+  {
+    "target": "judas_rendering_architecture_tests",
+    "sources": [
+      "tests/RenderingArchitectureTests.cpp"
+    ],
+    "links": [
+      "PRIVATE",
+      "judas_engine"
+    ],
+    "warnings": []
+  },
+  {
+    "target": "judas_rendering_lab_tests",
+    "sources": [
+      "tests/RenderingLabTests.cpp",
+      "src/Application.cpp",
+      "src/RuntimeOptions.cpp",
+      "src/RuntimeDiagnostics.cpp",
+      "src/TestHarness.cpp"
+    ],
+    "links": [
+      "PRIVATE",
+      "judas_engine"
+    ],
+    "warnings": []
+  },
+  {
+    "target": "judas_rendering_lab_performance",
+    "sources": [
+      "tests/RenderingLabPerformance.cpp",
+      "src/Application.cpp",
+      "src/RuntimeOptions.cpp",
+      "src/RuntimeDiagnostics.cpp",
+      "src/TestHarness.cpp"
+    ],
+    "links": [
+      "PRIVATE",
+      "judas_engine"
+    ],
+    "warnings": []
+  },
+  {
+    "target": "judas_asset_pipeline_benchmark",
+    "sources": [
+      "tests/AssetPipelineBenchmark.cpp"
+    ],
+    "links": [
+      "PRIVATE",
+      "judas_engine"
+    ],
+    "warnings": []
+  },
+  {
+    "target": "judas_asset_pipeline_tests",
+    "sources": [
+      "tests/AssetPipelineTests.cpp"
+    ],
+    "links": [
+      "PRIVATE",
+      "judas_engine"
+    ],
+    "warnings": []
+  },
+  {
+    "target": "judas_asset_residency_tests",
+    "sources": [
+      "tests/AssetResidencyTests.cpp"
+    ],
+    "links": [
+      "PRIVATE",
+      "judas_engine"
+    ],
+    "warnings": []
+  },
+  {
+    "target": "judas_asset_lab_tests",
+    "sources": [
+      "tests/AssetLabTests.cpp",
+      "src/Application.cpp",
+      "src/RuntimeOptions.cpp",
+      "src/RuntimeDiagnostics.cpp",
+      "src/TestHarness.cpp"
+    ],
+    "links": [
+      "PRIVATE",
+      "judas_engine"
+    ],
+    "warnings": []
+  },
+  {
+    "target": "judas_script_developer_tools_tests",
+    "sources": [
+      "tests/ScriptDeveloperToolsTests.cpp"
+    ],
+    "links": [
+      "PRIVATE",
+      "judas_engine"
+    ],
+    "warnings": []
+  },
+  {
+    "target": "judas_script_developer_consumer_tests",
+    "sources": [
+      "tests/ScriptDeveloperConsumerTests.cpp",
+      "src/Application.cpp",
+      "src/RuntimeOptions.cpp",
+      "src/RuntimeDiagnostics.cpp",
+      "src/TestHarness.cpp"
+    ],
+    "links": [
+      "PRIVATE",
+      "judas_engine"
+    ],
+    "warnings": []
+  },
+  {
+    "target": "judas_animation_workflow_application_tests",
+    "sources": [
+      "tests/AnimationWorkflowApplicationTests.cpp",
+      "src/Application.cpp",
+      "src/RuntimeOptions.cpp",
+      "src/RuntimeDiagnostics.cpp",
+      "src/TestHarness.cpp"
+    ],
+    "links": [
+      "PRIVATE",
+      "judas_engine"
+    ],
+    "warnings": []
+  },
+  {
+    "target": "judas_animation_cold_save_tests",
+    "sources": [
+      "tests/AnimationColdSaveTests.cpp"
+    ],
+    "links": [
+      "PRIVATE",
+      "judas_engine"
+    ],
+    "warnings": []
+  },
+  {
+    "target": "judas_ui_showcase_application_tests",
+    "sources": [
+      "tests/UIShowcaseApplicationTests.cpp",
+      "src/Application.cpp",
+      "src/RuntimeOptions.cpp",
+      "src/RuntimeDiagnostics.cpp",
+      "src/TestHarness.cpp"
+    ],
+    "links": [
+      "PRIVATE",
+      "judas_engine"
+    ],
+    "warnings": []
+  },
+  {
+    "target": "judas_living_world_tests",
+    "sources": [
+      "tests/LivingWorldTests.cpp"
+    ],
+    "links": [
+      "PRIVATE",
+      "judas_engine"
+    ],
+    "warnings": []
+  },
+  {
+    "target": "judas_living_world_streaming_tests",
+    "sources": [
+      "tests/LivingWorldStreamingTests.cpp"
+    ],
+    "links": [
+      "PRIVATE",
+      "judas_engine"
+    ],
+    "warnings": []
+  },
+  {
+    "target": "judas_living_world_application_tests",
+    "sources": [
+      "tests/LivingWorldApplicationTests.cpp",
+      "src/Application.cpp",
+      "src/RuntimeOptions.cpp",
+      "src/RuntimeDiagnostics.cpp",
+      "src/TestHarness.cpp"
+    ],
+    "links": [
+      "PRIVATE",
+      "judas_engine"
+    ],
+    "warnings": []
+  },
+  {
+    "target": "judas_save_evolution_tests",
+    "sources": [
+      "tests/SaveEvolutionTests.cpp"
+    ],
+    "links": [
+      "PRIVATE",
+      "judas_engine"
+    ],
+    "warnings": []
+  },
+  {
+    "target": "judas_save_evolution_application_tests",
+    "sources": [
+      "tests/SaveEvolutionApplicationTests.cpp",
+      "src/Application.cpp",
+      "src/RuntimeOptions.cpp",
+      "src/RuntimeDiagnostics.cpp",
+      "src/TestHarness.cpp"
+    ],
+    "links": [
+      "PRIVATE",
+      "judas_engine"
+    ],
+    "warnings": []
+  },
+  {
+    "target": "judas_network_session_tests",
+    "sources": [
+      "tests/NetworkSessionTests.cpp"
+    ],
+    "links": [
+      "PRIVATE",
+      "judas_engine"
+    ],
+    "warnings": []
+  },
+  {
+    "target": "judas_logical_input_tests",
+    "sources": [
+      "tests/LogicalInputTests.cpp"
+    ],
+    "links": [
+      "PRIVATE",
+      "judas_engine"
+    ],
+    "warnings": []
+  },
+  {
+    "target": "judas_network_script_tests",
+    "sources": [
+      "tests/NetworkScriptTests.cpp"
+    ],
+    "links": [
+      "PRIVATE",
+      "judas_engine"
+    ],
+    "warnings": []
+  },
+  {
+    "target": "judas_network_application_tests",
+    "sources": [
+      "tests/NetworkApplicationTests.cpp",
+      "src/Application.cpp",
+      "src/RuntimeOptions.cpp",
+      "src/RuntimeDiagnostics.cpp",
+      "src/TestHarness.cpp"
+    ],
+    "links": [
+      "PRIVATE",
+      "judas_engine"
+    ],
+    "warnings": []
+  },
+  {
+    "target": "judas_network_render_tests",
+    "sources": [
+      "tests/NetworkRenderTests.cpp"
+    ],
+    "links": [
+      "PRIVATE",
+      "judas_engine"
+    ],
+    "warnings": []
+  },
+  {
+    "target": "judas_network_boundary_tests",
+    "sources": [
+      "tests/NetworkBoundaryTests.cpp"
+    ],
+    "links": [
+      "PRIVATE",
+      "judas_engine"
+    ],
+    "warnings": []
+  },
+  {
+    "target": "judas_prealpha_lifecycle_tests",
+    "sources": [
+      "tests/PreAlphaLifecycleTests.cpp"
+    ],
+    "links": [
+      "PRIVATE",
+      "judas_engine"
+    ],
+    "warnings": []
+  }
+]

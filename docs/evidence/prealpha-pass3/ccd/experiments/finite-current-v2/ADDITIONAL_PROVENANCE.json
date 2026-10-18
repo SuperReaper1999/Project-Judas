@@ -1,0 +1,8 @@
+{
+  "frozen_engine_sha256": "72abdc886dddded90ee8d5379ec81d2c0bbb7fc1d0df594c60259b7cbe1bfe69",
+  "source_files": {
+    "sources/CollisionGeometry.h": "c3d16f77c9c00df899b8107c0c47c8e01f9badea3ab9691cd5b3ed79f73f5903",
+    "sources/CollisionGeometry.cpp": "413226d759a34baeaf6800152573c836d96c28bc55923072230689ff4db86c33",
+    "sources/PhysicsWorld.cpp": "8d0acaff47c3ced6caa1d7bf6876364be9ae071d30cca93924ac9bac5b50421e"
+  }
+}

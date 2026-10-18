@@ -2,6 +2,7 @@
 #include "AssetDatabase.h"
 #include "EngineHost.h"
 #include "RuntimeWorld.h"
+#include "NetworkSession.h"
 #include "PlatformServices.h"
 #include <filesystem>
 #include "imgui.h"
@@ -51,7 +52,12 @@ void ScriptTools::OpenDiagnostic(const ScriptDiagnostic& diagnostic,const AssetD
 void ScriptTools::Attach(RuntimeWorld& world,EngineHost& host){
     if(!enabled){if(world.Scripts())world.Scripts()->SetDebugger({});return;}
     auto& scripts=world.PrepareScriptTools();
-    scripts.SetDebugger([this,&host,&scripts](const ScriptDebugStop& stop){auto action=Pause(stop,host);scripts.SetBreakpoints(points);return action;});
+    scripts.SetDebugger([this, &host, &scripts, &world](const ScriptDebugStop& stop) {
+        const auto* network = world.NetworkIfLoaded();
+        const auto action = Pause(stop, host, network && network->Active());
+        scripts.SetBreakpoints(points);
+        return action;
+    });
     scripts.SetBreakpoints(points);
     if(pendingBreak){scripts.BreakOnNextInstruction();pendingBreak=false;}
 }
@@ -144,7 +150,7 @@ void ScriptTools::Panel(RuntimeWorld* world,const AssetDatabase& assets){
     ImGui::TextWrapped("%s",status.c_str());
     ImGui::End();
 }
-ScriptDebugAction ScriptTools::Pause(const ScriptDebugStop& stop,EngineHost& host){
+ScriptDebugAction ScriptTools::Pause(const ScriptDebugStop& stop,EngineHost& host,bool online){
     auto& window=host.GetWindow();const bool captured=window.IsMouseCaptured();window.SetMouseCaptured(false);window.ClearPendingRequests();
     // No world update, save/load, streaming publication or recursive JS execution
     // while its C/JS call stacks are suspended. Only the tool's UI is pumped.
@@ -157,6 +163,7 @@ ScriptDebugAction ScriptTools::Pause(const ScriptDebugStop& stop,EngineHost& hos
         ImGui::SetNextWindowPos(ImVec2(0,0));ImGui::SetNextWindowSize(ImGui::GetIO().DisplaySize);
         ImGui::Begin("JudasJS stopped",nullptr,ImGuiWindowFlags_NoMove|ImGuiWindowFlags_NoResize|ImGuiWindowFlags_NoCollapse);
         ImGui::Text("World suspended | entity %llu / slot %llu",(unsigned long long)stop.entity,(unsigned long long)stop.slot);
+        if(online)ImGui::TextWrapped("Online session paused at a script instruction. Transport is suspended with this world; remote peers may time out. Continue, then reconnect if needed. Ordinary gameplay pause keeps networking active.");
         auto button=[&](const char* label,ScriptDebugAction a){if(ImGui::Button(label)){action=a;done=true;}ImGui::SameLine();};
         button("Continue (F5)",ScriptDebugAction::Continue);button("Step into (F11)",ScriptDebugAction::Into);button("Step over (F10)",ScriptDebugAction::Over);button("Step out",ScriptDebugAction::Out);button("Stop Play",ScriptDebugAction::Cancel);ImGui::NewLine();
         if(!ImGui::GetIO().WantTextInput){if(ImGui::IsKeyPressed(ImGuiKey_F5)){action=ScriptDebugAction::Continue;done=true;}if(ImGui::IsKeyPressed(ImGuiKey_F10)){action=ScriptDebugAction::Over;done=true;}if(ImGui::IsKeyPressed(ImGuiKey_F11)){action=ScriptDebugAction::Into;done=true;}}

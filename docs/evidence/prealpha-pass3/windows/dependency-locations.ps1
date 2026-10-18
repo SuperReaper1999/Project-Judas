@@ -1,0 +1,2 @@
+$ProgressPreference='SilentlyContinue';$ErrorActionPreference='Stop'
+@('C:\JudasValidation\Build\_deps\judas_glm-src\glm\glm.hpp','C:\JudasValidation\Build\vcpkg_installed\x64-windows\include\glm\glm.hpp','C:\JudasValidation\Build\vcpkg_installed\x64-windows-static\include\glm\glm.hpp','C:\JudasValidation\PreAlphaPass2\Build\_deps\judas_glm-src\glm\glm.hpp')|ForEach-Object { [pscustomobject]@{path=$_;exists=(Test-Path $_)} }|ConvertTo-Json

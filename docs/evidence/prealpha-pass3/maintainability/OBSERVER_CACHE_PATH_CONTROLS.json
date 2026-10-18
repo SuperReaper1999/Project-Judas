@@ -1,0 +1,24 @@
+{
+  "mechanism": "mkdir(parents=True) creates a fresh nested output path; baseline branch deliberately lacks parent creation.",
+  "source_sha256": "ecf7334f54d8510931a53539e4973c4a9b12a0388f33c18847685e302a2e3e2f",
+  "controls": [
+    {
+      "name": "old-missing-parent",
+      "exit": 1,
+      "cache_parent_created": false,
+      "native_directory_created": false,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"<string>\", line 1, in <module>\n    import runpy,sys; runpy.run_path(sys.argv[1],run_name=\"path_control\")\n                      ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<frozen runpy>\", line 287, in run_path\n  File \"<frozen runpy>\", line 98, in _run_module_code\n  File \"<frozen runpy>\", line 88, in _run_code\n  File \"/tmp/judas-observer-clean-path-ulh2atls/docs/evidence/maintainability/native_comparison.py\", line 5, in <module>\n    NATIVE=OUT/'native';NATIVE.mkdir(exist_ok=True)\n                        ~~~~~~~~~~~~^^^^^^^^^^^^^^^\n  File \"/usr/lib/python3.14/pathlib/__init__.py\", line 1012, in mkdir\n    os.mkdir(self, mode)\n    ~~~~~~~~^^^^^^^^^^^^\nFileNotFoundError: [Errno 2] No such file or directory: '/tmp/judas-observer-clean-path-ulh2atls/.cache/prealpha-pass3/maintainability/native'\n",
+      "no_build_or_native_test_executed": true
+    },
+    {
+      "name": "corrected-new-cache",
+      "exit": 0,
+      "cache_parent_created": true,
+      "native_directory_created": true,
+      "stdout": "",
+      "stderr": "",
+      "no_build_or_native_test_executed": true
+    }
+  ]
+}

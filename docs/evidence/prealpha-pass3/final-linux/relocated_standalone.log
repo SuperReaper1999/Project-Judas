@@ -1,0 +1,9 @@
+Shadow maps: on
+Graphics: 3.3.0 NVIDIA 580.178.04 / NVIDIA GeForce GTX 970/PCIe/SSE2
+Renderer fragment texture units: 32 (material path uses 12)
+Project: My First Game (/tmp/Judas-PreAlphaPass3-FirstProject/game.judasproj)
+Scene:  (/tmp/Judas-PreAlphaPass3-FirstProject/Scenes/main.judas)
+World origin (m): 0.000, 0.000, 0.000
+step,time,posX,posY,posZ,upX,upY,upZ,grounded,velX,velY,velZ,gravX,gravY,gravZ,controlled,frame,steps,paused
+JS: My first Judas project is running.
+[TestHarness] Wrote screenshot: /home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass3/final-linux/standalone.png

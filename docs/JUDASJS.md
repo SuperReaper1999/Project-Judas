@@ -63,8 +63,11 @@ JUDAS PROVIDES ENGINE PRIMITIVES. JAVASCRIPT PROVIDES GAME BEHAVIOUR.
 This reference includes M72, human validated on Linux on 2026-10-09, and the
 operator-approved gravity-selection follow-up. Native Windows M72 VM verification is recorded in [Windows](WINDOWS.md); hardware
 acceptance remains outstanding. M73 adds optional [owned signals](judasjs/signals.md),
-accepted at `18650ba23c23eaaab0542d6e0055e33cc14d1049`. It is not an eternal compatibility/semantic-version promise. Source authority is `src/ScriptSystem.cpp`
-and the runtime systems it calls; demos do not define API.
+accepted at `18650ba23c23eaaab0542d6e0055e33cc14d1049`. It is not an eternal compatibility/semantic-version promise. Source authority is the public module and VM/lifecycle code in
+[src/ScriptSystem.cpp](../src/ScriptSystem.cpp), the extracted
+[UI](../src/ScriptBindingsUI.cpp) and [joint](../src/ScriptBindingsJoint.cpp)
+native bridges, and the runtime systems they call; demos do not define API.
+The Pre-Alpha extraction keeps the same public bindings and callback ownership.
 [M74 retargeting](M74.md) is an authoring-only candidate: it bakes ordinary named
 clips, adds no runtime JS exports and leaves this API surface unchanged.
 The follow-up adds optional [per-entity gravity selection](GRAVITY_SELECTION.md),

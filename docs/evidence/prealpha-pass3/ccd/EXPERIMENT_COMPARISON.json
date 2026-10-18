@@ -1,0 +1,78 @@
+{
+  "baseline_source": "f647d7fd95f60d3a37dba70a51f4e45dc41c2922",
+  "acceptance": {
+    "fast_boxes_per_resolution": 24,
+    "fixed_dt": "1.f/60.f",
+    "continuation_steps": 90,
+    "crossing_gate_metres": 0.05,
+    "first_arrival_steps": 2
+  },
+  "variants": {
+    "baseline": {
+      "checks": 193,
+      "failed_assertions": 4,
+      "scenarios": [
+        {
+          "scenario": "trough 2x26 coarse",
+          "crossings": 11,
+          "exceptions": 0
+        },
+        {
+          "scenario": "trough 30x30",
+          "crossings": 20,
+          "exceptions": 0
+        },
+        {
+          "scenario": "trough 60x60 dense",
+          "crossings": 15,
+          "exceptions": 0
+        }
+      ],
+      "production_disposition": "unchanged accepted baseline"
+    },
+    "concave-target-v1": {
+      "checks": 193,
+      "failed_assertions": 4,
+      "scenarios": [
+        {
+          "scenario": "trough 2x26 coarse",
+          "crossings": 4,
+          "exceptions": 0
+        },
+        {
+          "scenario": "trough 30x30",
+          "crossings": 20,
+          "exceptions": 0
+        },
+        {
+          "scenario": "trough 60x60 dense",
+          "crossings": 14,
+          "exceptions": 0
+        }
+      ],
+      "production_disposition": "rejected; not applied to production"
+    },
+    "finite-current-v2": {
+      "checks": 193,
+      "failed_assertions": 3,
+      "scenarios": [
+        {
+          "scenario": "trough 2x26 coarse",
+          "crossings": 5,
+          "exceptions": 0
+        },
+        {
+          "scenario": "trough 30x30",
+          "crossings": 5,
+          "exceptions": 0
+        },
+        {
+          "scenario": "trough 60x60 dense",
+          "crossings": 0,
+          "exceptions": 0
+        }
+      ],
+      "production_disposition": "rejected; not applied to production"
+    }
+  }
+}

@@ -1,0 +1,25 @@
+# Subsystem build declarations. Test registration remains in JudasValidation.cmake.
+# M92 native rendering measurement and behavioural checks.
+judas_add_engine_test(judas_rendering_scale_tests tests/RenderingScaleTests.cpp)
+target_compile_definitions(judas_rendering_scale_tests PRIVATE JUDAS_M92)
+
+judas_add_engine_test(judas_rendering_architecture_tests tests/RenderingArchitectureTests.cpp)
+
+judas_add_engine_test(judas_rendering_lab_tests tests/RenderingLabTests.cpp APPLICATION)
+add_executable(judas_rendering_shadow_scale_tests tests/RenderingShadowScaleTests.cpp)
+target_link_libraries(judas_rendering_shadow_scale_tests PRIVATE judas_engine)
+target_compile_definitions(judas_rendering_shadow_scale_tests PRIVATE JUDAS_M92)
+judas_warnings(judas_rendering_shadow_scale_tests)
+judas_add_engine_test(judas_rendering_lab_performance tests/RenderingLabPerformance.cpp APPLICATION)
+
+# M93 cook/LOD codecs are optional asset paths; no external runtime tool required.
+add_executable(judas_cook src/AssetCookMain.cpp)
+target_link_libraries(judas_cook PRIVATE judas_engine)
+judas_warnings(judas_cook)
+judas_add_engine_test(judas_asset_pipeline_benchmark tests/AssetPipelineBenchmark.cpp)
+judas_add_engine_test(judas_asset_pipeline_tests tests/AssetPipelineTests.cpp)
+
+judas_add_engine_test(judas_asset_residency_tests tests/AssetResidencyTests.cpp)
+
+judas_add_engine_test(judas_asset_lab_tests tests/AssetLabTests.cpp APPLICATION)
+

@@ -1,0 +1,20 @@
+# Subsystem build declarations. Test registration remains in JudasValidation.cmake.
+# M88 device-independent touch snapshot contract.
+add_executable(judas_touch_input_tests tests/TouchInputTests.cpp src/InputSystem.cpp)
+target_include_directories(judas_touch_input_tests PRIVATE src)
+judas_warnings(judas_touch_input_tests)
+judas_add_engine_test(judas_breakwater_application_tests tests/BreakwaterApplicationTests.cpp APPLICATION)
+if(UNIX AND NOT ANDROID)
+judas_add_engine_test(judas_breakwater_performance tests/BreakwaterPerformance.cpp APPLICATION)
+endif()
+
+# M89 optional local player/device and UI routing contracts.
+judas_add_engine_test(judas_local_multiplayer_tests tests/LocalMultiplayerTests.cpp)
+judas_add_engine_test(judas_local_multiplayer_application_tests tests/LocalMultiplayerApplicationTests.cpp APPLICATION)
+judas_add_engine_test(judas_local_multiplayer_render_tests tests/LocalMultiplayerRenderTests.cpp)
+judas_add_engine_test(judas_local_device_adapter_tests tests/LocalDeviceAdapterTests.cpp)
+judas_add_engine_test(judas_local_multiplayer_script_tests tests/LocalMultiplayerScriptTests.cpp)
+if(UNIX AND NOT ANDROID)
+judas_add_engine_test(judas_local_multiplayer_performance tests/LocalMultiplayerPerformance.cpp APPLICATION)
+endif()
+

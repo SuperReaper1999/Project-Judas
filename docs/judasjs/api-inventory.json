@@ -1,6 +1,6 @@
 {
   "checkpoint": "84121564230242a404785af4d60a1475cdb83f4c + M99 optional networking",
-  "authority": "src/ScriptSystem.cpp::library + Impl::Native + ScriptLocalMultiplayer.inl + ScriptNetwork.inl",
+  "authority": "src/ScriptSystem.cpp::library + Impl::Native + ScriptBindingsUI.cpp + ScriptBindingsJoint.cpp + ScriptLocalMultiplayer.inl + ScriptNetwork.inl",
   "resultShapes": [
     {
       "binding": "network.stats",
