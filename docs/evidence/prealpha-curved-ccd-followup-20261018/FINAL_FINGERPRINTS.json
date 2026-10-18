@@ -1,0 +1,60 @@
+{
+  "utc": "2026-10-18T21:18:22.938682+00:00",
+  "head": "146a0727eab63d9555c732bf73e6093be5bc489d",
+  "branch": "Experimental",
+  "refs": {
+    "Experimental": "146a0727eab63d9555c732bf73e6093be5bc489d",
+    "main": "4c141e9bb6c68a50c63dec263dcec398200328ad",
+    "origin/Experimental": "146a0727eab63d9555c732bf73e6093be5bc489d",
+    "origin/main": "4c141e9bb6c68a50c63dec263dcec398200328ad"
+  },
+  "unchanged_production_archive": {
+    "path": "build/libjudas_engine.a",
+    "sha256": "0e0dc7973b7d2b24510743d5297e9ae002cdb7b4dbdc943d55a4bdc4aab78514"
+  },
+  "all_build_receipt_sources_match": true,
+  "compiled_source_files_checked": 23,
+  "original_mesh_source": {
+    "path": "tests/ImpactMeshCostTests.cpp",
+    "sha256": "91b23a2a4ae45a3a96e01442c8bef583b31cd98a90e02196fb7c534ec5364a6a"
+  },
+  "prototype_sources_sha256": {
+    "rotation-world/sources/CollisionGeometry.cpp": "63a329f6df6ed397cfb36481c35a706f890f6b3d0b41c223e590fe0bdbf57778",
+    "rotation-world/sources/CollisionGeometry.h": "313da5b119fbf431876108c2efb1cedb87a3df253af0b0134ee955c12bcdb323",
+    "rotation-world/sources/MeshContinuityProbe.h": "5cc698236ddd83272b807baaebe39b302d0f969a3528407c01803dd0f713f688",
+    "rotation-world/sources/MeshUnionContinuity.h": "e2ad17e55452283ef4c8fbee32dec283a273cfc0425046178b795f984cf5740b",
+    "rotation-world/sources/NativeSATContinuity.h": "713ea9af907188bd115242988060eabea9a80258f09cd656251b55516714465a",
+    "rotation-world/sources/PhysicsWorld.cpp": "8e242a1d51634c7fc9db61efa791527e8cd74624cae2492a642cdbff10b4d2d9",
+    "rotation-world/sources/UnifiedWorld.cpp": "e69cd0199a78d844b923a69968647c39c96c4691d17406eb7c15a20abf7eb646",
+    "rotation-world/sources/physics/ImpactCandidateCache.h": "17a6efa64a9a5dfd5663cd14790f19cfd96c874a589283f9b62d97b179df112d",
+    "rotation-world/sources/physics/WorldBodies.cpp": "c4b81019fea68793ecc4d09b50a2fa1dfdbfd2bcd339126bcfc9c8f55b00e771",
+    "rotation-world/sources/physics/WorldBounds.cpp": "67c30882a5251028627934f9269f6e21a723d2c51fe811c9b34eddfe1f153f62",
+    "rotation-world/sources/physics/WorldCCDSearch.cpp": "f055e558ee6c9d29f6de3e30180bc4121f58bf96f2927d1933f4e22000e70600",
+    "rotation-world/sources/physics/WorldContacts.cpp": "d8f842da964ed78c07adc002a33c3e862f79a19a943035c3bc46af568a88d521",
+    "rotation-world/sources/physics/WorldHotAccessors.h": "600bec28d7b5d07b5a922136699ffa69c36c759484c7b8449f045c2df6ea4b1f",
+    "rotation-world/sources/physics/WorldImpactEvents.cpp": "7d1712052f25bc93ad38167ea820b638a5b10bf2801131ae6056773431ee880e",
+    "rotation-world/sources/physics/WorldImpactQueries.h": "c5898cd86b5687ea4a9450a049ff354fbcf91fb98f2111409412fd698f4e2038",
+    "rotation-world/sources/physics/WorldInternal.h": "46c34e8b0f40bc0cee8d32586ecca184694fee1c54b1fec9058166f8ab626bad",
+    "rotation-world/sources/physics/WorldJoints.cpp": "a292a20eb4dde14484b262cd436997ce2041f6fb459aec5d8ab2dbda516813d5",
+    "rotation-world/sources/physics/WorldModules.md": "6812e4438843ec7492a6fa2d950c210ebb30ac0486eb26bdc16887a3f3c9d1b5",
+    "rotation-world/sources/physics/WorldParticles.cpp": "e8a3b5beeac67efbf18d361aa441351b5689f9f625009a7c4efb3d30bbc21555",
+    "rotation-world/sources/physics/WorldPersistence.cpp": "917e63c0d14f0d3489d1abe037a4dacaa7feb668b34baccea6b1aed712bc9fbc",
+    "rotation-world/sources/physics/WorldProfiling.h": "ed900584346e02a601ebf4718b12c1041e3089921cc915c801d8503d64e78876",
+    "rotation-world/sources/physics/WorldQueries.cpp": "65abf29fc83f26e501127c2c239349607b27db37a6ba36f814fbdd0fe3c56e14",
+    "rotation-world/sources/physics/WorldSleep.cpp": "2edda5d49060ab3d06b3d81306aa95d5b75a1f184136fa061f57d0e453754389"
+  },
+  "local_binary_sha256": {
+    "rotation-world/UnifiedWorld.cpp.o": "791287c66c65d68fe3b784e056e4dbb141f3d620b78183f607c159dec6f0dd2b",
+    "rotation-world/CollisionGeometry.cpp.o": "a011958fbd630e89d1c7582b342a62f83924d06c374c122e957390654869c9d6",
+    "rotation-world/engine.a": "c5fef2af53b95aaa027ddd9814973f8186a6809dcdb65b8dfc125acec6cff734",
+    "rotation-world/mesh": "8222c619d009c33c81c9fe7d5cf793aa54d218d9efee5a7012f38ea852df8670",
+    "rotation-world/helper": "3dcb8b459015a97cd5bd9e0a5c270ef456de0b8e11113c1a501ee225217cf1c2",
+    "rotation-world/minimal": "2d5c5309c53e303d48dbdd9b4cb7a2a80449a36fb48a9c88fbd58dd1e04c92d2",
+    "matched-observer/baseline": "4714ee495700727a29267b86b3047d088a3e4b6e7c1654bc782b1eac76d11b21",
+    "matched-observer/candidate": "b259bf2d7754aef476d5b9a8249745109463cf6cfea39a2dc52f7723fd31ae05",
+    "lifetime-controls/baseline": "b6dfdfe311297d7a7cf593382eaae5164ecb65ef513c5360d22d89bf076bf84a",
+    "lifetime-controls/candidate": "0747e5479cb750f0569136228bf3d70bb1172917ede159a295e21ebaf5512ac8"
+  },
+  "binary_policy": "Identified local artifacts, excluded from portable source/evidence archive",
+  "production_diff_empty": true
+}

@@ -1,0 +1,138 @@
+{
+  "format": 1,
+  "scope": "Final changed ordinary source/build/test/current-doc files; excludes this manifest itself and evidence output. Embedded binaries retain their actual recorded dirty-parent identity.",
+  "files": [
+    {
+      "path": "CMakeLists.txt",
+      "bytes": 79489,
+      "sha256": "a4183861b1f87ca2eec4ceb5be587bd43e564bc2ab9b595c3320afdba750bd95"
+    },
+    {
+      "path": "docs/ARCHITECTURE.md",
+      "bytes": 630290,
+      "sha256": "b3f44c1aa88f09ba89a08c2087b2ae3928cbbbf58fbf26505924a08d219ce109"
+    },
+    {
+      "path": "docs/PREALPHA.md",
+      "bytes": 17139,
+      "sha256": "89d095065f41edbad5dbb0cc97180c7d9adb6d3385234e82cdbc02aac229db80"
+    },
+    {
+      "path": "projects/physics_stress_lab/README.md",
+      "bytes": 5826,
+      "sha256": "d52c0ecbb560dd43b570128b138149728ed127407f69b37543d0c43cbd88287d"
+    },
+    {
+      "path": "src/ClipPolygon.h",
+      "bytes": 907,
+      "sha256": "6302fd50e88493cf92e0a8084bdd7371f7854d03fdcd55e151c8ee0448b033f0"
+    },
+    {
+      "path": "src/CollisionGeometry.cpp",
+      "bytes": 34874,
+      "sha256": "ece2c2ec97adb4574458650511a2129c174df13605b5f36558ac2a56862e3263"
+    },
+    {
+      "path": "src/CollisionGeometry.h",
+      "bytes": 3119,
+      "sha256": "545df226685b6c92671ba50b58374864d8443263cbf59e23c2fe403e65187998"
+    },
+    {
+      "path": "src/WorldStreaming.cpp",
+      "bytes": 69980,
+      "sha256": "252f1041765d7497a7b8a107672b23857fd7e6ddc2eea88e7253862a7fcd49d8"
+    },
+    {
+      "path": "src/physics/WorldCCDSearch.cpp",
+      "bytes": 42442,
+      "sha256": "cdd69bf0c740b0466996bd97d701867d493ec173f27b83a46e64d0f6f7279c52"
+    },
+    {
+      "path": "src/physics/WorldImpactEvents.cpp",
+      "bytes": 36611,
+      "sha256": "bfc69590b9068ecc0c243686e134e8365da9745f6c784488cdca0251b60c005b"
+    },
+    {
+      "path": "src/physics/WorldInternal.h",
+      "bytes": 23530,
+      "sha256": "639e10e3b7ab6a35331e379f08f6108797d9c856b004f534f3a7860dd2f61795"
+    },
+    {
+      "path": "tests/ClipPolygonTests.cpp",
+      "bytes": 3234,
+      "sha256": "b2fe7251152e3bdd9430a99546714502e744766f60776a70a385a0d2aabd5546"
+    },
+    {
+      "path": "tests/NativeMeshGrowthTests.cpp",
+      "bytes": 11025,
+      "sha256": "7c803954a7aa6ce5e57b75f0c491e4f455b22f06afeb5056970521016b44bf21"
+    },
+    {
+      "path": "tests/StreamOriginPrecisionTests.cpp",
+      "bytes": 15177,
+      "sha256": "17d7fe36ec78bbd9e2b0bef6866dde313a20262a26e066e4e4157511cf7123a8"
+    },
+    {
+      "path": "tests/test_prealpha_validation.py",
+      "bytes": 7842,
+      "sha256": "70a1669f89542d0f08c8a035772f1f44f429c137625c285f75d3f2fc62a2b7e8"
+    },
+    {
+      "path": "tools/validation/suites.json",
+      "bytes": 8289,
+      "sha256": "f6a117313db2aa71547e15e14c9c9b8a4da4a7827d5d036f877b3eca0d9dc042"
+    }
+  ],
+  "required_unchanged": [
+    {
+      "path": "src/PhysicsWorld.cpp",
+      "sha256": "0caa0c0ea5afb662b85a1be6764db04ef9da4c81c7fb82d1980eb8ec76e2d0dd"
+    },
+    {
+      "path": "tests/ImpactMeshCostTests.cpp",
+      "sha256": "91b23a2a4ae45a3a96e01442c8bef583b31cd98a90e02196fb7c534ec5364a6a"
+    },
+    {
+      "path": "src/ContactSolver.cpp",
+      "sha256": "f7643cc828af1436551827898c674c0c728879d49187f313e22af950430f10e1"
+    },
+    {
+      "path": "src/RigidMotion.h",
+      "sha256": "a0de3be5c3634358879d0b63528c98d32f462bb6abc97e49dabaaa912b57a8e0"
+    },
+    {
+      "path": "src/ScriptSystem.cpp",
+      "sha256": "e91aa35e7076cda032d00525ff237a09d7917fc5725c8e8fe3844588f891b173"
+    }
+  ],
+  "binaries": [
+    {
+      "path": "build/judas",
+      "sha256": "69cb06e9a3bec9d158158c37777df5b1287df193fb6d8d18f57e9596aa769554"
+    },
+    {
+      "path": "build/judas_editor",
+      "sha256": "dce28e8ed805d455a0a3fc672597f79705e99f12948942cad51e7f1fae0e748d"
+    },
+    {
+      "path": "build/judas_impact_mesh_cost_tests",
+      "sha256": "4948bc8c4f9408b8989967736e382159ff46b1bbdc6006c3789d26204cdc8289"
+    },
+    {
+      "path": "build/judas_native_mesh_growth_tests",
+      "sha256": "aa3143f7122e05f1add4d08a68cde247db75175b7cf674897ca28e9e09b677e9"
+    },
+    {
+      "path": "build/judas_clip_polygon_tests",
+      "sha256": "4c4d58141337d3f291c61cdde825a3648feb190522c1481b5050af08fdfbc69e"
+    },
+    {
+      "path": "build/judas_stream_origin_precision_tests",
+      "sha256": "7af3aa91cc0ab65638240b17b9995d73e6aca3c541ca173816d35ef351f77443"
+    },
+    {
+      "path": "build/judas_save_streaming_tests",
+      "sha256": "b6d0fa292c829360a221c8ec9eaa8214a62f7fe86acb65171b7f1c1155a6b2bf"
+    }
+  ]
+}

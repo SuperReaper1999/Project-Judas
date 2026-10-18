@@ -1,0 +1,105 @@
+REPRODUCING THE CURVED-CCD RESEARCH
+=================================
+
+Do not apply ISOLATED_PROTOTYPE.patch to the working engine. It contains a
+demonstrated physical lifecycle regression and is not a release candidate.
+
+Original executed commands and compiler/link arguments are authoritative:
+- baseline/receipt.json
+- rotation-world/BUILD.json
+- rotation-world/SUITES-1.json and SUITES.json
+- lifetime-controls/RUNS.json
+- matched-observer/RUNS.json
+- helper/probe RUNS.json files in each experiment directory
+The JSON timestamps and exact binary hashes describe actual runs. Instructions
+below are a replay guide, not a claim they were executed from a new checkout.
+
+Environment used
+----------------
+Native Linux x86-64, Intel i7-4790, Ubuntu GCC15.2.0, Release -O3 -DNDEBUG,
+C++17, original1/60 timestep. Actual full flags are in BUILD.json. No fast-math
+or changed solver budgets. Arithmetic certificates are conditional on the
+stated IEEE round-to-nearest operation contract; this is not a formal
+cross-platform floating-point qualification.
+
+Preparation in a separate disposable checkout
+-------------------------------------------
+Use exact Experimental commit146a0727eab63d9555c732bf73e6093be5bc489d and
+its repository-provided third-party dependencies. Follow that checkout's Linux
+build prerequisites; configure Release with JUDAS_ENABLE_VALIDATION=ON.
+Build judas_impact_mesh_cost_tests (this also builds the required engine and
+support archives). Use the original Makefile generator because these research
+scripts read CMake flags.make/link.txt; Ninja needs an equivalent command
+extractor and was not tested here.
+
+Example replay build commands (not a new clean-checkout validation claim):
+  cmake -S . -B build -G 'Unix Makefiles' -DCMAKE_BUILD_TYPE=Release -DJUDAS_ENABLE_VALIDATION=ON
+  cmake --build build --target judas_impact_mesh_cost_tests -j2
+
+The preserved local baseline archive is identified by SHA256
+0e0dc7973b7d2b24510743d5297e9ae002cdb7b4dbdc943d55a4bdc4aab78514.
+It is intentionally not packaged. A fresh rebuild may differ in embedded build
+metadata or compiler output; record its real hashes and do not substitute them
+into the original receipts. Exact archived commands refer to the original host
+path and must be rooted at your disposable checkout for replay.
+
+Extract this source-only archive into the disposable checkout's .cache so that
+.cache/prealpha-ccd-rethink exists. Keep the original archive unchanged:
+replaying scripts overwrites their output receipts in that disposable copy.
+Verify the extracted text manifest first:
+  python3 .cache/prealpha-ccd-rethink/verify_evidence.py
+
+Original unchanged baseline (expected four failures):
+  build/judas_impact_mesh_cost_tests 60 '' 1.2
+
+Build the exact minimal fixture object and record the baseline minimal run:
+  python3 .cache/prealpha-ccd-rethink/trial.py baseline --minimal-only
+
+Compile the coherent isolated world and run original full/curved/entry/minimal
+and helper tests (expected0 failures for this isolated prototype):
+  python3 .cache/prealpha-ccd-rethink/full_trial.py rotation-world --full
+
+The unity translation unit is deliberate ABI isolation. Its copied private
+WorldInternal.h changes Impl layout, so replacing only a few world objects
+would be invalid. The archive has duplicate WorldPersistence.cpp.o names; the
+script removes ONLY the second private member and keeps the public orchestrator.
+
+Additional physical lifecycle adversary (expected candidate failure):
+  python3 .cache/prealpha-ccd-rethink/lifetime-controls/run.py
+
+This compiles a standalone probe, links both actual worlds and exercises noop,
+unrelated filter disable and true primary filter disable. It should reproduce
+three candidate physical differences in168 trials. Targeted commands are listed
+in lifetime-controls/LIFETIME_FAILURE_SUMMARY.txt but were not separately run;
+the same inputs were executed within the full matrix.
+
+Neighboring tests
+-----------------
+Build each original CMake target whose link.txt the relinker consumes.
+relink_suite.py supports both engine-linked and direct-source tests, replacing
+all private-layout objects. Its earlier failed direct-source harness attempt is
+preserved; final SUITES.json contains the successful corrected runs. Inspect
+the script and recorded argument list before replaying. Existing suite names
+do not prove new mesh ownership persistence or streaming integration.
+
+Performance
+-----------
+MatchedObserver.cpp includes the original tests/ImpactMeshCostTests.cpp; Run.diff
+and SOURCE_IDENTITY.json demonstrate only a function rename and an untimed
+per-step log. Exact original compile/link/run arrays are in
+matched-observer/RUNS.json. Link against the baseline or the same coherent
+rotation-world objects+stripped engine archive as the lifetime probe, then run
+coarse and medium three times with alternating before/after order.
+MEASUREMENTS.json records the actual logs and nearest-rank statistics.
+Do not compare full command duration as a speedup: rescued fast-box trajectories
+perform different physical work. The matched original ragdoll histories are the
+controlled timing comparison and are slower in this prototype.
+
+Preserved scope
+---------------
+All source snapshots, original inputs, mathematical derivations, unsuccessful
+variants, raw logs and receipts are retained. Objects, engine archives, ELF/PE
+binaries, toolchains, unrelated assets and secrets are excluded from the portable
+bundle. FINAL_FINGERPRINTS.json identifies existing local build artifacts without
+shipping them. Production sources, original protected evidence and independent
+fluid research are untouched. No Windows/Android run or full-suite rerun claimed.

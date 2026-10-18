@@ -1,0 +1,66 @@
+CCD RETHINK EXPERIMENT DISPOSITIONS
+Production reference: 146a0727eab63d9555c732bf73e6093be5bc489d.
+No prototype is adopted in production. Original production CCD defect remains open.
+This index was made from existing receipts/logs; creating it ran no new build or test.
+
+Scope: full372 = original unfiltered six scenarios; curved193 = selected three curved
+scenarios; entry193 = selected arrival gate. Helper8, witness276 and reduced104/16
+are separate controls. Throws truncate motion: zero crossings after throws is not a pass.
+
+Stage                    full372   curved193  entry193  reduced104/16    disposition
+baseline                 4 fail    4 fail     pass      cross/cross      reference defect
+mesh-repeat              4 fail    4 fail     pass      pass/pass        incomplete; trajectory changed
+facet-cap                not run   timeout    not run   timeout          reject nonprogress
+facet-observe            not run   not run    not run   abort            same-time event1000 stop
+forward-prototype        3 fail    3 fail     pass      pass/pass        bounded uncertainty; helper8/1fail
+forward-memo             not run   3 fail     pass      pass/pass        faster reuse; helper8/1fail
+chronological-world      3 fail    3 fail     pass      pass/pass        helper8/0; uncertainty remains
+projection-world         1 fail    1 fail     pass      pass/pass        rotated uncertainty remains
+rotation-world           pass      pass       pass      pass/pass        REJECT production: lifetime
+witness-only             4 fail    4 fail     pass      cross/cross      witness fix insufficient
+witness-alignment        4 fail    4 fail     pass      cross/cross      witness fix insufficient
+
+Baseline coarse/medium/dense primary crossings: 11/20/15. Mesh-repeat: 4/20/14.
+Witness variants: 13/20/16. Rotation-world completes the original 90-step continuation
+with zero crossings/throws for the three densities and the rotated coarse gate.
+
+Facet-cap minimal timed out after40s; curved trial timed out after90s. Instrumented
+facet-observe confirms repeated events at t=0.012658530875358237 without velocity/time
+progress; its diagnostic abort is a rejected attempt, not a completed trajectory.
+
+Independent helpers: correlated-edge captured suffix5/0 changes509 to127 visited
+nodes; chronological captured suffix5/0 uses33 nodes/14 certificates. Original eight
+chronological welded/finite-exit/disconnected-patch controls all pass.
+
+Witness geometry276 checks: baseline120 failures, candidate0. World tip torque168:
+baseline96 failures, witness-only4, alignment0. Both witness variants still fail
+two of4412 existing impact-robustness checks (high-spin mesh loss); do not adopt.
+
+Rotation-world neighboring suites: all ten return success, actual counts below.
+  judas_collision_geometry_tests: 1303 checks, 0 failures
+  judas_impact_robustness_tests: 4412 checks, 0 failures
+  judas_impact_timing_tests: 3197 checks, 0 failures
+  judas_impact_solver_tests: 267 checks, 0 failures
+  judas_kinematic_tests: 96 checks, 0 failures
+  judas_rigid_contact_tests: 32 checks, 0 failures (counted printed Check calls)
+  judas_ragdoll_tests: 36 checks, 0 failures
+  judas_post_consumer_ragdoll_tests: 93 checks, 0 failures
+  judas_physics_continuation_tests: 112 checks, 0 failures
+  judas_contact_lifecycle_tests: 1076 checks, 0 failures
+  Total observed checks: 10624.
+
+Lifetime rejection: far_disable candidate changes3/168 primary physical trajectories
+and fails3/1681 checks; baseline0/168 changes,0/1681 failures. Candidate no-op0/168
+changes and0/1681 failures. Actual sheet disable positive control changes156/168
+candidate trajectories and102/168 baseline trajectories, both0/1514 check failures.
+Observation revisions may change independently and are not counted as physical failures.
+
+Matched original ragdoll:13 bodies,12 joints,60 steps,1/60dt,throwSpeed1.2,three
+paired repeats per coarse/medium. All360 paired per-step actual-state digests equal.
+Pooled180 steps per implementation per workload; nearest-rank p95; max process RSS:
+  coarse: median 3.362987->5.015490 ms (+49.1%); p95 8.828661->11.323580; worst 12.629474->15.013824; RSS 20488->20616 KiB.
+  medium: median 3.733531->5.243481 ms (+40.4%); p95 16.163858->20.305492; worst 20.923775->26.795056; RSS 20996->21220 KiB.
+These are scoped Linux CPU measurements and show a slowdown, not performance closure.
+
+Machine-readable detail, exact paths and evidence SHA256: EXPERIMENT_DISPOSITIONS.json.
+Raw receipts and prior source metadata are preserved unchanged.

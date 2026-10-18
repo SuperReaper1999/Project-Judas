@@ -1,0 +1,22 @@
+{
+  "production_source_changes": [],
+  "tracked_file_edits": [],
+  "new_unstaged_evidence": [
+    "docs/evidence/prealpha-curved-ccd-followup-20261018/EXPERIMENTS.txt",
+    "docs/evidence/prealpha-curved-ccd-followup-20261018/EXPERIMENT_DISPOSITIONS.json",
+    "docs/evidence/prealpha-curved-ccd-followup-20261018/FINAL_FINGERPRINTS.json",
+    "docs/evidence/prealpha-curved-ccd-followup-20261018/ISOLATED_PROTOTYPE.patch",
+    "docs/evidence/prealpha-curved-ccd-followup-20261018/LIFETIME_FAILURE_SUMMARY.txt",
+    "docs/evidence/prealpha-curved-ccd-followup-20261018/MATCHED_PERFORMANCE.json",
+    "docs/evidence/prealpha-curved-ccd-followup-20261018/PRODUCTION_READINESS.txt",
+    "docs/evidence/prealpha-curved-ccd-followup-20261018/PROTOTYPE_DIFF_INVENTORY.json",
+    "docs/evidence/prealpha-curved-ccd-followup-20261018/REPORT.txt",
+    "docs/evidence/prealpha-curved-ccd-followup-20261018/REPRODUCE.txt",
+    "docs/evidence/prealpha-curved-ccd-followup-20261018/RESEARCH_ARCHIVE.json",
+    "docs/evidence/prealpha-curved-ccd-followup-20261018/RESULTS.json",
+    "docs/evidence/prealpha-curved-ccd-followup-20261018/CHANGED_FILES.json"
+  ],
+  "ignored_source_evidence_cache": "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-ccd-rethink",
+  "ignored_source_evidence_archive": "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-curved-ccd-20261018-source-evidence.tar.gz",
+  "commit_push_tag_performed": false
+}

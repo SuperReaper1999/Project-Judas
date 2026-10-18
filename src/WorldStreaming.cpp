@@ -317,7 +317,7 @@ void WorldStreaming::Advance(bool paused){
             unit([&]{JUDAS_PROFILE_SCOPE("Streaming relocation begin");r.local=std::move(r.product->data.source);
                 for(const auto& [local,snapshot]:r.saved)if(!snapshot.destroyed&&!r.local.Find(local)){
                     auto object=snapshot.definition;object.id=local;object.parent=0;
-                    object.transform.position=glm::inverse(def.rotation)*glm::vec3(glm::dvec3(snapshot.state.position)+snapshot.origin-def.origin);
+                    object.transform.position=glm::inverse(def.rotation)*glm::vec3(glm::dvec3(snapshot.state.position)-(def.origin-snapshot.origin));
                     object.transform.rotation=glm::inverse(def.rotation)*snapshot.state.rotation;
                     r.local.Objects().push_back(std::move(object));
                 }
@@ -368,7 +368,7 @@ void WorldStreaming::Advance(bool paused){
                     auto o=r.flat.Objects()[r.next];auto local=r.local.Objects()[r.localIndices.at(o.id)];auto original=r.originals.at(o.id);
                     if(auto snap=r.saved.find(original);snap!=r.saved.end()&&snap->second.destroyed)return;
                     if(auto snap=r.saved.find(original);snap!=r.saved.end()){
-                        auto saved=snap->second.definition;remap(saved,r.savedReplacements);saved.id=o.id;saved.transform.position=glm::vec3(glm::dvec3(snap->second.state.position)+snap->second.origin-m->world.Settings().worldOrigin);saved.transform.rotation=snap->second.state.rotation;TranslateOriginIntent(saved,m->world.Settings().worldOrigin-snap->second.origin);o=std::move(saved);
+                        auto saved=snap->second.definition;remap(saved,r.savedReplacements);saved.id=o.id;saved.transform.position=glm::vec3(glm::dvec3(snap->second.state.position)-(m->world.Settings().worldOrigin-snap->second.origin));saved.transform.rotation=snap->second.state.rotation;TranslateOriginIntent(saved,m->world.Settings().worldOrigin-snap->second.origin);o=std::move(saved);
                     }
                     for(auto& ref:m->manifest.references)if(ref.region==id&&ref.local==original)reference(o,ref.field,Resolve(ref.target,ref.targetLocal));
                     ok=m->world.StageRegionObject(o,local,error,id+":"+std::to_string(original));r.members.push_back(o.id);m->owners[o.id]=id;
@@ -398,7 +398,7 @@ void WorldStreaming::Advance(bool paused){
                         for(auto& attachment:deform->settings.attachments)if(auto it=r.savedReplacements.find(attachment.target);it!=r.savedReplacements.end())attachment.target=it->second;
                         for(auto& ref:m->manifest.references)if(ref.region==id&&ref.local==source&&ref.field.rfind("deformable:",0)==0)for(auto& attachment:deform->settings.attachments)if(attachment.group==ref.field.substr(11))attachment.target=Resolve(ref.target,ref.targetLocal);
                     }
-                    auto restored=snap.state;restored.position=glm::vec3(glm::dvec3(restored.position)+snap.origin-m->world.Settings().worldOrigin);auto t=snap.definition.transform;t.position=restored.position;t.rotation=snap.state.rotation;
+                    auto restored=snap.state;restored.position=glm::vec3(glm::dvec3(restored.position)-(m->world.Settings().worldOrigin-snap.origin));auto t=snap.definition.transform;t.position=restored.position;t.rotation=snap.state.rotation;
                     auto records=snap.scripts;for(auto& js:records)js.entity=runtime;
                     ok=m->world.RestoreRegionObject(runtime,t,restored,records,error,m->restoredRecords);
                     if(ok&&!snap.kinematic.empty())ok=WorldPersistence::RestoreKinematic(m->world,runtime,snap.kinematic,error,m->world.Settings().worldOrigin-snap.origin);

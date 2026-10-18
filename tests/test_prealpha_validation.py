@@ -43,7 +43,7 @@ class GateTests(unittest.TestCase):
         # Resolved contracts may graduate into the ordinary gate. Unresolved
         # findings must not silently become acceptance passes through scheduling.
         scheduled = {key for key, row in findings.items() if row['scheduled']}
-        self.assertEqual(scheduled, {'CCD-MESH-ARRIVAL', 'LIQUID-BAKE-ROTATION', 'LIQUID-BAKE-KNOTS',
+        self.assertEqual(scheduled, {'CCD-MESH-ARRIVAL', 'CCD-MESH-CONTINUATION', 'LIQUID-BAKE-ROTATION', 'LIQUID-BAKE-KNOTS',
                                      'LIQUID-ORIGIN-TOTAL-IDENTITY'})
         self.assertEqual(findings['LIQUID-ORIGIN-GRID-QUERY']['status'], 'open-query-continuity-failing')
         knots = next(row for row in manifest['tests'] if row['name'] == 'liquid-bake-knots-only')
@@ -63,6 +63,12 @@ class GateTests(unittest.TestCase):
         arrival = next(row for row in manifest['tests'] if row['name'] == 'impact-mesh-arrival')
         self.assertEqual(arrival['groups'], ['collision'])
         self.assertFalse(arrival.get('manual', False))
+        continuation = next(row for row in manifest['tests'] if row['name'] == 'impact-mesh-continuation')
+        self.assertEqual(continuation['args'], ['60', '', '1.2'])
+        self.assertEqual(continuation['groups'], ['collision'])
+        self.assertFalse(continuation.get('manual', False))
+        self.assertEqual(findings['CCD-MESH-CONTINUATION']['status'],
+                         'resolved-original-fixtures-bounded-ccd')
         for row in manifest['tests']:
             if row.get('finding') in findings and not findings[row['finding']]['scheduled']:
                 self.assertTrue(row.get('manual', False), row['name'])

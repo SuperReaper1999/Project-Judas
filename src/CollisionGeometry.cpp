@@ -1,4 +1,5 @@
 #include "CollisionGeometry.h"
+#include "ClipPolygon.h"
 #include "CollisionAsset.h"
 #include "RadialTerrain.h"
 #include "ReentrantQueryScratch.h"
@@ -10,7 +11,7 @@
 namespace {
 using V=glm::dvec3;using M=glm::dmat3;
 thread_local CollisionGeometryStats stats;
-constexpr double eps=1e-10;
+constexpr double eps=JudasCollisionDetail::kClipEpsilon;
 V unit(V v,V fallback=V(1,0,0)){double l=glm::length(v);return l>eps?v/l:fallback;}
 struct Poly {std::vector<V> points;std::vector<std::vector<unsigned>> faces;std::vector<V> normals;std::vector<std::pair<unsigned,unsigned>> edges;std::vector<unsigned> satEdges;bool triangle=false;std::array<bool,3> active{{true,true,true}};};
 V nearestTriangle(V p,V a,V b,V c) {
@@ -106,14 +107,6 @@ Separation sat(const Poly& a,const Poly& b,bool edgeAware=true) {
  return best;
 }
 
-void clipInto(const std::vector<V>& points,V normal,double plane,std::vector<V>& out) {
- out.clear();if(points.empty())return;V previous=points.back();double before=glm::dot(normal,previous)-plane;
- for(V current:points){const double now=glm::dot(normal,current)-plane;
-  if((before<=eps)!=(now<=eps))out.push_back(previous+(current-previous)*(before/(before-now)));
-  if(now<=eps)out.push_back(current);
-  previous=current;before=now;
- }
-}
 template<class Consumer>
 bool visitWitnesses(const Poly& a,const Poly& b,const Separation& s,PolyScratchFrame& scratch,Consumer consume) {
  unsigned reference=0,incident=0;double alignment=-INFINITY,opposite=INFINITY;
@@ -123,14 +116,14 @@ bool visitWitnesses(const Poly& a,const Poly& b,const Separation& s,PolyScratchF
  polygon.clear();
  if(alignment>1-1e-6&&!s.edge){
   const auto& face=b.faces[reference];const V n=b.normals[reference];for(auto v:a.faces[incident])polygon.push_back(a.points[v]);
-  for(unsigned i=0;i<face.size();++i){const V x=b.points[face[i]],y=b.points[face[(i+1)%face.size()]];const V side=unit(glm::cross(y-x,n));clipInto(polygon,side,glm::dot(side,x),clipped);polygon.swap(clipped);}
+  for(unsigned i=0;i<face.size();++i){const V x=b.points[face[i]],y=b.points[face[(i+1)%face.size()]];const V side=unit(glm::cross(y-x,n));JudasCollisionDetail::ClipPolygonInto(polygon,side,glm::dot(side,x),clipped);polygon.swap(clipped);}
   const double plane=glm::dot(n,b.points[face[0]]);
   if(!polygon.empty()){for(V p:polygon)if(consume(p,p-n*(glm::dot(n,p)-plane),true))return true;return false;}
  }
  if(!s.edge&&!a.triangle&&!b.triangle&&opposite< -1+1e-6){
   const auto& face=a.faces[incident];const V n=a.normals[incident];
   for(auto v:b.faces[reference])polygon.push_back(b.points[v]);
-  for(unsigned i=0;i<face.size();++i){const V x=a.points[face[i]],y=a.points[face[(i+1)%face.size()]];const V side=unit(glm::cross(y-x,n));clipInto(polygon,side,glm::dot(side,x),clipped);polygon.swap(clipped);}
+  for(unsigned i=0;i<face.size();++i){const V x=a.points[face[i]],y=a.points[face[(i+1)%face.size()]];const V side=unit(glm::cross(y-x,n));JudasCollisionDetail::ClipPolygonInto(polygon,side,glm::dot(side,x),clipped);polygon.swap(clipped);}
   const double plane=glm::dot(n,a.points[face[0]]);
   if(!polygon.empty()){for(V p:polygon)if(consume(p-n*(glm::dot(n,p)-plane),p,true))return true;return false;}
  }
@@ -156,13 +149,56 @@ void reduce(std::vector<Contact>& contacts,ContactManifold& out) {
  // Deepest first, then maximize coverage. Deduplicate shared-face witnesses.
  std::vector<unsigned> chosen;chosen.push_back(0);while(chosen.size()<4){double best=1e-12;unsigned selected=UINT32_MAX;for(unsigned i=0;i<contacts.size();++i){double score=INFINITY;for(auto j:chosen)score=std::min(score,glm::dot(contacts[i].localAnchorB-contacts[j].localAnchorB,contacts[i].localAnchorB-contacts[j].localAnchorB));if(score>best){best=score;selected=i;}}if(selected==UINT32_MAX)break;chosen.push_back(selected);}for(auto i:chosen)out.Add(contacts[i]);
 }
+// A sufficient bound on the ACTUAL native response depth. This is used only
+// by budget-predicate queries, never by a response manifold or ordinary contact
+// existence. The selected native triangle front (already reversed if needed)
+// is an allowed SAT axis. A clipped face witness is a convex combination of
+// query vertices followed by projection onto one of the triangle's front planes.
+// Therefore every accepted depth is bounded by the deepest front projection,
+// with both normal-length factors and represented arithmetic enclosed below.
+bool triangleDepthWithinBudget(const Poly& query, const Poly& triangle,
+                               double queryMagnitude, double limit) {
+    if (!std::isfinite(limit) || !(limit >= 0))
+        return false;
+    const V normal = triangle.normals[0];
+    const double length = glm::length(normal);
+    if (!(length >= .5) || !(length <= 2))
+        return false;
+    double lowest = INFINITY, highestPlane = -INFINITY, magnitude = queryMagnitude;
+    for (V point : query.points)
+        lowest = std::min(lowest, glm::dot(normal, point));
+    for (V point : triangle.points) {
+        highestPlane = std::max(highestPlane, glm::dot(normal, point));
+        for (unsigned k = 0; k < 3; ++k)
+            magnitude = std::max(magnitude, std::abs(point[k]));
+    }
+    constexpr double e = std::numeric_limits<double>::epsilon();
+    constexpr double gamma128 = 128 * e / (1 - 128 * e);
+    const double factor = std::nextafter(std::max(length, 1 / length) * (1 + 32 * e), INFINITY);
+    // Three bounded convex clipping levels, the dot/projection operations and
+    // axis normalization fit within this deliberately conservative error bound.
+    // It tightens this optimization's rejection; no contact tolerance changes.
+    const double guard = 8 * gamma128 * magnitude;
+    const double depth = std::nextafter(std::max(0., highestPlane - lowest) * factor + guard,
+                                       INFINITY);
+    return std::isfinite(depth) && depth < limit;
+}
+
 // Shared accepted-witness traversal. A full manifold consumer visits every
 // witness in the original deterministic order. An existence-only consumer may
 // stop after the first accepted witness; it never changes SAT, clipping, margins,
 // sidedness, crease handling or the contacts used by a physical solver.
 template<class Consumer>
-bool visitCookedPolyContacts(const PrimitivePose& a,const PrimitivePose& b,double margin,Consumer consume,double penetrationThreshold=INFINITY) {
- PolyScratchLease lease;auto& scratch=lease.frame;V origin=PrimitiveCenter(b);auto& pa=scratch.first;polyInto(pa,a,origin);auto test=[&](const Poly& pb){
+bool visitCookedPolyContacts(const PrimitivePose& a,const PrimitivePose& b,double margin,Consumer consume,double penetrationThreshold=INFINITY,uint32_t* acceptedFeature=nullptr,const MeshFeatureBudget* depthBudget=nullptr) {
+ PolyScratchLease lease;auto& scratch=lease.frame;V origin=PrimitiveCenter(b);auto& pa=scratch.first;polyInto(pa,a,origin);uint32_t triangleFeature=UINT32_MAX;
+ const bool budgetQuery=depthBudget!=nullptr;
+ double triangleLimit=budgetQuery?depthBudget->newFeatureLimit:INFINITY;
+ if(budgetQuery&&b.shape.type!=ShapeType::TriangleMesh){
+  const auto found=std::lower_bound(depthBudget->limits.begin(),depthBudget->limits.end(),UINT32_MAX,
+                                   [](const auto& entry,uint32_t id){return entry.first<id;});
+  if(found!=depthBudget->limits.end()&&found->first==UINT32_MAX)triangleLimit=found->second;
+ }
+ auto test=[&](const Poly& pb){
   // A face axis is already a valid SAT axis. Reject shallow convex pairs
   // before enumerating edge axes/clipping; preserve the original full path
   // near the threshold and for every concave triangle response.
@@ -193,22 +229,32 @@ bool visitCookedPolyContacts(const PrimitivePose& a,const PrimitivePose& b,doubl
   }
   return visitWitnesses(pa,pb,s,scratch,[&](V x,V y,bool faceWitness){
    const double gap=faceWitness?glm::dot(s.normal,x-y):s.gap;
-   if(gap<=margin){
+   if(gap<=margin&&(!budgetQuery||-gap>triangleLimit)){
+    if(acceptedFeature)*acceptedFeature=triangleFeature;
     return consume(x+origin,y+origin,s.normal,gap);
    }
    return false;
   });
  };
  if(b.shape.type==ShapeType::ConvexHull||b.shape.type==ShapeType::Box){polyInto(scratch.second,b,origin);return test(scratch.second);}
- if(b.shape.type==ShapeType::TriangleMesh){V lo(INFINITY),hi(-INFINITY),center(0);for(V p:pa.points){lo=glm::min(lo,p+origin);hi=glm::max(hi,p+origin);center+=p;}center/=double(pa.points.size());
+ if(b.shape.type==ShapeType::TriangleMesh){V lo(INFINITY),hi(-INFINITY),center(0);double queryMagnitude=1;for(V p:pa.points){lo=glm::min(lo,p+origin);hi=glm::max(hi,p+origin);center+=p;
+   if(budgetQuery)for(unsigned k=0;k<3;++k)queryMagnitude=std::max(queryMagnitude,std::abs(p[k]));
+  }center/=double(pa.points.size());
   // Most candidates of a dense mesh are rejected by a face axis; skip their edge axes
   // (counted as the same convex test) and reuse one triangle's storage throughout.
   const auto& asset=*b.shape.asset;const M rotation=PrimitiveRotation(b);const V placed=PrimitiveCenter(b)-origin;auto& pb=scratch.triangle;
   for(auto i:candidates(b,lo,hi,margin)){
+   triangleFeature=i;
    ++stats.triangles;triangleInto(pb,asset,i,rotation,placed);
    const double side=glm::dot(pb.normals[0],center-pb.points[0]);
    if(!asset.twoSided&&side<-eps)continue;
    if(side<0)reverseTriangleSide(pb,asset,i);
+   if(budgetQuery){
+    const auto found=std::lower_bound(depthBudget->limits.begin(),depthBudget->limits.end(),i,
+                                     [](const auto& entry,uint32_t id){return entry.first<id;});
+    triangleLimit=found!=depthBudget->limits.end()&&found->first==i?found->second:depthBudget->newFeatureLimit;
+    if(triangleDepthWithinBudget(pa,pb,queryMagnitude,triangleLimit))continue;
+   }
    if(faceAxesSeparate(pa,pb,margin)){++stats.convexTests;continue;}
    if(test(pb))return true;}return false;}
  throw std::invalid_argument("unsupported cooked contact target");
@@ -369,6 +415,39 @@ bool CookedHasPenetrationBeyond(const PrimitivePose& a,const PrimitivePose& b,do
  // accepted witnesses is therefore exactly the full manifold's maximum test.
  return visitCookedPolyContacts(a,b,0,[&](V,V,V,double gap){return -gap>threshold;},threshold);
 }
+MeshFeatureBudget BuildMeshFeatureBudget(const PrimitivePose& query, const PrimitivePose& mesh,
+                                       double amount) {
+    if (mesh.shape.type != ShapeType::TriangleMesh || !mesh.shape.asset ||
+        (query.shape.type != ShapeType::Box && query.shape.type != ShapeType::ConvexHull) ||
+        !std::isfinite(amount) || amount < 0)
+        throw std::invalid_argument("invalid native mesh depth-growth query");
+    MeshFeatureBudget result;
+    result.newFeatureLimit = amount;
+    std::vector<std::pair<uint32_t, double>> actual;
+    uint32_t feature = UINT32_MAX;
+    visitCookedPolyContacts(query, mesh, 0, [&](V, V, V, double gap) {
+        actual.push_back({feature, -gap + amount});
+        return false;
+    }, INFINITY, &feature);
+    std::sort(actual.begin(), actual.end(), [](const auto& first, const auto& second) {
+        return first.first < second.first;
+    });
+    for (const auto& value : actual) {
+        if (!result.limits.empty() && result.limits.back().first == value.first)
+            result.limits.back().second = std::max(result.limits.back().second, value.second);
+        else
+            result.limits.push_back(value);
+    }
+    return result;
+}
+
+bool MeshFeatureBudgetExceeded(const PrimitivePose& query, const PrimitivePose& mesh,
+                               const MeshFeatureBudget& budget) {
+    return visitCookedPolyContacts(query, mesh, 0,
+                                   [](V, V, V, double) { return true; },
+                                   INFINITY, nullptr, &budget);
+}
+
 CollisionMassProperties ShapeMassProperties(const Shape& shape) {
  CollisionMassProperties out;
  if(shape.type==ShapeType::ConvexHull){if(!shape.asset||!shape.asset->convex)throw std::invalid_argument("invalid convex mass geometry");return {shape.asset->volume,shape.asset->centerOfMass,shape.asset->unitInertia};}

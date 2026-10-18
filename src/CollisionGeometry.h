@@ -1,6 +1,8 @@
 #pragma once
 #include "Narrowphase.h"
 #include <limits>
+#include <utility>
+#include <vector>
 
 // Shared double-precision geometric evaluator. Distances are nearest-surface
 // for points; convex containment is explicit. Meshes have no invented inside.
@@ -34,3 +36,16 @@ double MeshSeparationAdvance(const PrimitivePose& query,const PrimitivePose& mes
                              double rotationRadius,double duration);
 struct CollisionMassProperties {double volume=0;glm::dvec3 center{0};glm::dmat3 inertia{0};};
 CollisionMassProperties ShapeMassProperties(const Shape&);
+
+// One CCD query owns these native accepted-witness depth-growth limits.
+// Existing faces get their actual maximum depth plus amount; any newly
+// encountered native face uses amount. No physical side/history is retained.
+struct MeshFeatureBudget {
+    double newFeatureLimit = 0;
+    std::vector<std::pair<uint32_t, double>> limits;
+    bool HasContacts() const { return !limits.empty(); }
+};
+MeshFeatureBudget BuildMeshFeatureBudget(const PrimitivePose& query, const PrimitivePose& mesh,
+                                       double amount);
+bool MeshFeatureBudgetExceeded(const PrimitivePose& query, const PrimitivePose& mesh,
+                               const MeshFeatureBudget& budget);

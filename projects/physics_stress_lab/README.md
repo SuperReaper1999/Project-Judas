@@ -64,6 +64,13 @@ curved-mesh first-arrival repair passes its asserting contract, while later
 one-sided-sheet continuation remains a documented failure. The lab never changes
 physics quality to hide these limits.
 
+The later [curved-mesh continuation follow-up](../../docs/evidence/prealpha-ccd-continuation-20261019/REPORT.md)
+passes the original four numerical fast-box failures with native per-triangle
+depth-growth queries. It also reports increased articulated-mesh costs honestly.
+This room exercises ordinary machinery; it is **not** a visual reproduction of
+the separate curved-trough fixture and does not certify that fixture or 60 Hz
+performance. The 1,024-piece limit above is unchanged.
+
 ## Project organization
 
 - `Scenes/room128.judas`, `room512.judas`, `room1024.judas`: identical machinery,

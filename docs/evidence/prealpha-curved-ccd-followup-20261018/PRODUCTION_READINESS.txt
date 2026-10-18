@@ -1,0 +1,178 @@
+CURVED MESH CCD: SOURCE AND PRESERVED-EVIDENCE READINESS REVIEW
+2026-10-18. Independent review; no builds/tests or production edits by this reviewer.
+Repository root: /home/conner/Documents/GitHub/Project-Judas
+Paths below are relative to that root. R = .cache/prealpha-ccd-rethink/rotation-world
+L = .cache/prealpha-ccd-rethink/lifetime-controls
+M = .cache/prealpha-ccd-rethink/matched-observer
+
+DISPOSITION
+Research handoff only; not production ready. The unchanged original fixture passes,
+but an unrelated-filter adversary demonstrates a physical regression and matched
+articulated workloads are slower. Do not replace these results with the earlier
+372-check pass or claim an overall speedup.
+R/BUILD.json:2-4 records head 146a0727eab63d9555c732bf73e6093be5bc489d and archive
+provenance; :5-28 records the complete coherent research source fingerprints.
+The live tracked production diff was empty during this review.
+
+OBSERVED RESULTS, WITHOUT GENERALIZATION
+R/full.log:15: original six-scenario 60-step prefix plus original 90-step fast-box
+contract: 372 checks, 0 failures. R/curved.log:11: 193/0. R/helper.log:12: 8/0.
+Ten neighboring automated suites also report success in R/run-*.log: collision
+geometry (:35), contact lifecycle (:1264), impact robustness (:65), impact solver
+(:2), impact timing (:197), kinematic (:110), physics continuation (:1), post
+consumer ragdoll (:52), ragdoll (:42), rigid contact (:56). These are scoped native
+automated results, not human validation or complete continuous-CCD proof.
+
+MATCHED ARTICULATED COST REGRESSION
+M/MEASUREMENTS.json:2 records the unchanged original 13-body/12-joint, 60-step,
+throwSpeed=1.2 workload and three paired repeats with alternating order; per-step
+logging is outside the timed Step. All six pairs match every cumulative 60-step
+digest (:375-405). Pooled 180-step timing, baseline -> candidate (milliseconds):
+  coarse: median 3.362987 -> 5.015490; p95 8.828661 -> 11.323580;
+          worst 12.629474 -> 15.013824 (:95-99,185-189).
+  medium: median 3.733531 -> 5.243482; p95 16.163858 -> 20.305492;
+          worst 20.923775 -> 26.795056 (:277-281,367-371).
+The median regressions are approximately 49% and 40%. This is a short local CPU
+comparison, not a platform-wide performance estimate. It establishes additional
+cost for physically matching trajectories here; the isolated curved-fixture pass
+does not establish an overall performance improvement.
+
+DEMONSTRATED LIFETIME REGRESSION
+L/candidate-far_disable.log:1070: 168 trials, 3 physical changes, 1 changed endpoint
+through the original 5 cm sheet oracle, 0 control endpoints through, 0 throws,
+1681 checks, 3 failures. L/baseline-far_disable.log:1009: 0 physical changes.
+Candidate failures: box17/prefix6 (:717), box5/prefix7 (:798), box17/prefix7 (:881).
+For box17/prefix6, both worlds have identical physical fields before/after the
+mutation (:705-707), but the changed world loses actual response immediately
+(:708-709); its depth reaches 76.328 mm at suffix3 (:713), and 133.019 mm at
+suffix4 (:715), versus -21.407 mm for the control (:714).
+This is not an observation-only or quaternion-sign discrepancy. The probe disables
+sleeping identically, places the unrelated box at (1000,1000,1000), and suppresses
+only that pair: L/UnrelatedFilterContinuationTests.cpp:21,28,107. Physical comparison
+and crossing accounting are at :159-184. No-op passes for both engines:
+L/candidate-noop.log:1049 and L/baseline-noop.log:1009. Relevant mesh suppression is
+a positive physical control: L/candidate-primary_disable.log:1972 (156 changes),
+L/baseline-primary_disable.log:1621 (102 changes).
+
+SOURCE-CONFIRMED CAUSAL COUPLING
+R/sources/physics/WorldJoints.cpp:153-168 increments both bodies'
+contactObservationRevision when changing just one pair's collision permission.
+R/sources/physics/WorldInternal.h:526 requires those body-wide revisions to match
+for ANY ownership episode involving either body. BeginMeshEpisodes then queries
+without the lost episode and erases empty native ownership (:614-621).
+Thus suppressing actor/inert-box invalidates actor/sheet history. This matches the
+observed disappearance of behind-centre response. Fix ownership lifetime separately
+from observation invalidation; do not remove the legitimate observation revision
+updates or store historical ownership in warm impulses.
+
+SOURCE-CONFIRMED INTEGRATION GAPS (NOT CLAIMED REPRODUCED FAILURES HERE)
+1. Final position: R/sources/PhysicsWorld.cpp:441 publishes mesh episodes before
+   SolvePositions (:442) and coupling finish (:443-444). EpisodeForTime still uses
+   the drift ledger (WorldInternal.h:594-608). Merely moving the call below repair
+   would still not certify the actual correction path.
+2. Persistence: physical episodes exist only in WorldInternal.h:486-487. The
+   snapshotted physics/WorldPersistence.cpp contains no episode serialization.
+   Live src/WorldPersistence.cpp:289-291 serializes touches and completed load
+   observations, not mesh ownership. Its existing collider exclusion at :288 can
+   omit a required support unless the new state defines durable collider identity
+   or explicitly rejects that capture. Asset contexts currently record only
+   source/settings fingerprints (R/sources/physics/WorldPersistence.cpp:55-60),
+   which may be empty for programmatic cooks; ordered actual topology needs a
+   validated identity before durable triangle IDs can be restored.
+3. Streaming: src/WorldStreaming.cpp:122-130 retains no generic mesh ownership;
+   :209-215 captures per-entity state, :394-409 restores it. Existing durable
+   keys at :440-449 are reusable. Generic ownership dependency pins, a retained
+   pair record, byte accounting and restore after both endpoints activate are
+   missing. Existing archive version handling is :452-465.
+4. Lifecycle: R/sources/physics/WorldBodies.cpp:879-899 changes body filtering and
+   clears ordinary contact caches without retiring mesh episodes or changing the
+   revision used by Episode. Replacement (:185-209) lacks centralized ownership
+   invalidation; pointer equality is not a durable resource identity. Ownership
+   must have explicit semantics for reset, authority, resource/filter/enable
+   transitions, destroy/reuse and regional staging. Sleep alone must preserve it.
+5. Origin: R/sources/PhysicsWorld.cpp:836-850 shifts poses/ledgers and invalidates
+   pose samples; physics/WorldHotAccessors.h:10-15 does not clear episode proof
+   caches. Face/side ownership is mesh-local, but actual represented endpoint
+   geometry and derived certificates need deliberate reconciliation on a shift.
+6. Bounds/failure: WorldInternal.h:487,543-544 stores ownership and proof maps
+   without an explicit retention cap. Bounded proof uncertainty still throws
+   mid-step (:603); the step is not an atomic rollback transaction. No production
+   fallback, failed-boundary publication contract or cache-pressure policy is
+   established by these passing fixtures. Required physical ownership may never
+   be silently evicted. Derived proof eviction may safely recompute, but fixed
+   proof budgets can then change success into Uncertain.
+
+CERTIFICATE/README CLAIMS REVIEW
+The projection and correlated-edge cancellation identities are valid real-algebra
+identities under the stated common-operand conditions. The final header retains
+original native dot-roundoff envelopes (R/sources/NativeSATContinuity.h:34-50),
+explicit edge roundoff (:53-78), a single common projection origin (:130-150),
+and uncertainty for axes spanning the degeneracy cutoff (:143-146). No concrete
+rounding-unsoundness or false ownership grant was demonstrated by this review.
+However, this is not a machine-checked proof of native execution on every supported
+compiler/platform. 'PROOF' in correlated-projection/README.txt:9-28 and 'EDGE PROOF'
+in rotation-correlated-edges/README.txt:8-34 must be read as conditional local
+arguments. chronological-helper/README.txt:24-39 similarly assumes native candidate
+and mean enclosures under IEEE round-to-nearest/no-fast-math. The binary64 static
+assertions (final header:23-26) establish representation, not ambient rounding or
+denormal mode. build/CMakeFiles/judas_engine.dir/flags.make:9 records the local
+optimization flags; it is not a cross-platform code-generation/rounding guarantee.
+Avoid unconditional 'formally proved/native safe on all targets' language until
+the operation, contraction and floating-environment assumptions are established.
+The remaining general CCD limitation is explicit, not hypothetical: the candidate
+still uses bounded temporal sampling and says shorter intersections can be missed
+(R/sources/physics/WorldCCDSearch.cpp:577-581,606). Fixture closure is not full CCD
+completeness. Connected helper results describe computed endpoint ownership,
+which may include independent reacquisition, not uninterrupted contact history.
+
+SOURCE-ONLY COST ASSESSMENT (NO OPTIMIZATION OR ATTRIBUTION MEASURED)
+There is no source basis for declaring finite-contact ownership intrinsically too
+costly. The implementation repeats work that can be reused exactly, while a broad
+actual contact patch and difficult interval proofs can still be expensive:
+* R/sources/MeshUnionContinuity.h:42-50 scans/allocates for the entire immutable
+  mesh topology on every ForwardEpisode call (:144), even for a tiny contact patch.
+  Cache these exclusion labels by validated immutable topology identity. They
+  exclude impossible transfer; reusing them must not grant actual finite contact.
+* The same helper reconstructs finite components and native selection at the
+  initial/endpoint (:147-149) and repeatedly at each recursive endpoint
+  (:160,166,168,174). CollisionGeometry.cpp:398-409 rebuilds the query polytope,
+  candidates, SAT and connected traversal on every call. A query-local prepared
+  endpoint could retain the exact native finite set and shared-edge graph, then
+  answer seed/component operations without repeated geometry evaluation. Preserve
+  represented pose, SAT/sidedness predicates, feature order and topology identity.
+* NativeFrontFeatures recomputes the represented vertex mean for every returned
+  facet (MeshUnionContinuity.h:12-22); its operands are shared at a fixed endpoint.
+  CollisionGeometry.cpp:407 uses a linear visited lookup inside adjacency walks;
+  exact membership storage can avoid quadratic connected-patch work.
+* EpisodeForTime runs MeshEndpointUsesNativeSelection before consulting an exact
+  derived checkpoint (physics/WorldInternal.h:563-571); repeated same-time queries
+  can therefore repeat the full endpoint native-completeness query. Any reorder
+  needs explicit cache validity and return semantics, especially native-complete
+  checkpoints that intentionally return no sideband episode.
+These are candidates for later measurement, not demonstrated causes or promised
+savings. Per-contact-patch work and subdivision can remain after removal of the
+avoidable whole-mesh scan. Do not enlarge budgets, loosen contact policy or ship
+the regression to obtain a performance claim. Preserve this handoff now.
+
+SMALLEST COHERENT NEXT INTEGRATION SEQUENCE (PLAN ONLY)
+A. Preserve this candidate and failed adversary. Introduce explicit ownership
+   lifetime/identity with body-discontinuity and pair-specific operations; remove
+   ownership's dependence on unrelated observation revisions. Retain the current
+   finite-feature policy and numerical budgets while resolving the demonstrated
+   far-pair regression first.
+B. Add completed-boundary ownership publication against actual final geometry,
+   including positional correction/coupling transitions and a defined failed-step
+   contract. Treat physical endpoint ownership separately from disposable query
+   checkpoints; continuous impulses preserve side state and invalidate proofs.
+C. Add bounded, versioned native ownership serialization with durable owner/part
+   keys, actual topology validation, temporary restore validation then publication,
+   and explicit old-save limits. Reuse SaveArchive and staged-world activation
+   (src/SaveService.cpp:154-179), not warm/contact-load records.
+D. Integrate retained-region ownership/dependency pins and origin reconciliation
+   using existing durable keys. Restore after both bodies' final activation so
+   SetBodyEnabled cannot immediately invalidate newly restored state.
+E. Bound derived caches with safe recomputation and pointer lifetime rules; admit
+   physical-state capacity before mutation rather than dropping live ownership.
+   Then establish the corresponding lifecycle/cold-save/stream/origin behavior and
+   matched articulated cost for the exact integrated candidate. No production
+   acceptance or promotion follows automatically from the isolated fixture pass.

@@ -203,7 +203,9 @@ auto PhysicsWorld::Impl::AdvanceImpacts(float dt, bool coupledVelocityChanged) -
     auto schedule = [&](const std::array<unsigned, 4> &key) {
         if (!CanRespond(key[0], key[1]))
             return;
-        const double time = std::binary_search(supportPairs.begin(), supportPairs.end(), key)
+        const double time = StaticMeshPolyPair(key[0], key[1], int(key[2]), int(key[3]))
+                                ? ImpactTime(key[0], key[1], int(key[2]), int(key[3]), now, dt)
+                            : std::binary_search(supportPairs.begin(), supportPairs.end(), key)
                                 ? double(dt) + 1
                             : std::binary_search(spinningPairs.begin(), spinningPairs.end(), key)
                                 ? ImpactTime(key[0], key[1], int(key[2]), int(key[3]), now, dt,
@@ -217,10 +219,21 @@ auto PhysicsWorld::Impl::AdvanceImpacts(float dt, bool coupledVelocityChanged) -
             scheduledImpacts.push_back({key, time});
         }
     };
+    // These three initial lists may overlap after time-zero impulses.
+    // They share the same anchored trajectories and query interval; reuse
+    // an already scheduled key. Actual event-induced dirty keys below are
+    // still rescheduled unconditionally after their trajectories change.
+    const auto scheduleInitial = [&](const std::array<unsigned, 4>& key) {
+        if (scheduledIndex.find(key) == scheduledIndex.end())
+            schedule(key);
+    };
     for (const auto &key : separatedPairs)
-        schedule(key);
+        scheduleInitial(key);
     for (const auto &key : spinningPairs)
-        schedule(key);
+        scheduleInitial(key);
+    for (const auto &key : supportPairs)
+        if (StaticMeshPolyPair(key[0], key[1], int(key[2]), int(key[3])))
+            scheduleInitial(key);
     // Capacities live through this event pass; values and membership are
     // rebuilt for each event. No cross-time contact truth is cached.
     // All proxy changes in this event pass go through CoverStepReach, which

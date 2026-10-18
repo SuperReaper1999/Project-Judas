@@ -363,6 +363,9 @@ struct PhysicsWorld::Impl {
     // Anchored quaternion interpolation turns no faster than |omega|.
     // Half the thinnest dimension of a primitive (sphere radius); infinite for
     // terrain and meshes, which use the other primitive's size.
+    bool StaticMeshPolyPair(unsigned a, unsigned b, int pa, int pb) const;
+    bool MeshDepthGrowthSafe(unsigned moving, unsigned mesh, int movingPart, int meshPart,
+                             double start, double finish, const MeshFeatureBudget &budget);
     double PrimitiveFeature(unsigned slot, int part) const;
     // A touching pair is normally left to the contact solver (support pair).
     // That holds while rotation cannot carry other features of a non-round

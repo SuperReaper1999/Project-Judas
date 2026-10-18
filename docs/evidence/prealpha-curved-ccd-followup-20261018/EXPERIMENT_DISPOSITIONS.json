@@ -1,0 +1,3288 @@
+{
+  "schema_version": 1,
+  "recorded_utc": "2026-10-18T21:16:47.503686+00:00",
+  "scope": "Cache-only CCD rethink experiment dispositions; synthesized by reading existing receipts, source snapshots and raw logs. No new builds, simulations or tests were run to create this index.",
+  "production_head": "146a0727eab63d9555c732bf73e6093be5bc489d",
+  "overall_disposition": "No production CCD adoption. Final finite-state prototype passes the original fixture but fails an independent unrelated-filter lifetime adversary and increases matched ordinary ragdoll cost. Original production CCD finding remains open.",
+  "interpretation_rules": [
+    "full372 means the actual unfiltered six-scenario mesh 60 empty-filter 1.2 command, including original 90-step primary fast-box continuation.",
+    "selected193 means the three curved scenarios only, generally mesh 1 trough, with original 90-step primary fast-box continuation; it is not the full372 suite.",
+    "entry193 uses the selected curved scenarios and the explicit entry flag: primary fast boxes run two arrival steps; independent controls retain their original code.",
+    "The reduced104/16 fixture is a separate three-step reproduction, not 193 or372 assertions.",
+    "A policy exception truncates that physical trajectory. fastBoxesThrough=0 with fastBoxesThrew>0 is not a no-crossing proof. Rotated coarse checks combine crossing and throwing in one assertion.",
+    "Diagnostic command durations are not controlled performance measurements. Only the matched-observer section records paired per-step median/p95/worst and RSS.",
+    "Prepared-only source metadata is historical; actual execution claims are tied to the later run receipts and logs listed here.",
+    "No human validation, persistence closure, platform closure or performance acceptance follows from these automated scoped results."
+  ],
+  "experiments": [
+    {
+      "id": "baseline",
+      "change": "Accepted production HEAD 146a0727; original geometry, scheduling and fixtures.",
+      "disposition": "Reference reproduction: four original full-suite assertions fail; no exceptions.",
+      "production_adopted": false,
+      "receipt": {
+        "path": "baseline/receipt.json",
+        "sha256": "a483c179da523e425870c07bc1e1bf0e75b6c6bf9661f4b88c5c6fdd78f94fc4"
+      },
+      "runs": [
+        {
+          "name": "minimal",
+          "exit": 1,
+          "seconds": 0.016059934998338576,
+          "argv": [
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-ccd-rethink/baseline/minimal"
+          ]
+        },
+        {
+          "name": "curved",
+          "exit": 1,
+          "seconds": 1.016059667999798,
+          "argv": [
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-ccd-rethink/baseline/mesh",
+            "1",
+            "trough"
+          ]
+        },
+        {
+          "name": "entry",
+          "exit": 0,
+          "seconds": 0.2645392080012243,
+          "argv": [
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-ccd-rethink/baseline/mesh",
+            "1",
+            "trough",
+            "1.2",
+            "entry"
+          ]
+        },
+        {
+          "name": "full",
+          "exit": 1,
+          "seconds": 4.923417146001157,
+          "argv": [
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-ccd-rethink/baseline/mesh",
+            "60",
+            "",
+            "1.2"
+          ]
+        }
+      ],
+      "observations": {
+        "minimal": {
+          "evidence": {
+            "path": "baseline/minimal.log",
+            "sha256": "eb168744ce2439487a68d545988a1bde65eb34a75270d6f73dba49f939495ca2"
+          },
+          "failure_lines": [],
+          "reported_policy_uncertainty_worlds": 0,
+          "minimal_results": [
+            {
+              "faces": 104,
+              "crossed": true
+            },
+            {
+              "faces": 16,
+              "crossed": true
+            }
+          ]
+        },
+        "curved": {
+          "evidence": {
+            "path": "baseline/curved.log",
+            "sha256": "d527b3ab013bd992d4969902c651f490fc9b9a1a949e0f72ea2f1af0c258f95b"
+          },
+          "checks": 193,
+          "failures": 4,
+          "failure_lines": [
+            "FAIL trough 2x26 coarse fast boxes do not cross actual mesh",
+            "FAIL rotated trough preserves first-contact/crossing contract",
+            "FAIL trough 30x30 fast boxes do not cross actual mesh",
+            "FAIL trough 60x60 dense fast boxes do not cross actual mesh"
+          ],
+          "reported_policy_uncertainty_worlds": 0,
+          "scenarios": [
+            {
+              "name": "trough 2x26 coarse",
+              "triangles": 104,
+              "steps": 1,
+              "fastBoxSteps": 90,
+              "fastBoxesThrough": 11,
+              "fastBoxesThrew": 0,
+              "digest": "fe142d2fcd4a2716",
+              "completed_primary_launches": 24,
+              "all_primary_launches_completed": true,
+              "primary_no_crossing_pass": false
+            },
+            {
+              "name": "trough 30x30",
+              "triangles": 1800,
+              "steps": 1,
+              "fastBoxSteps": 90,
+              "fastBoxesThrough": 20,
+              "fastBoxesThrew": 0,
+              "digest": "fe142d2fcd4a2716",
+              "completed_primary_launches": 24,
+              "all_primary_launches_completed": true,
+              "primary_no_crossing_pass": false
+            },
+            {
+              "name": "trough 60x60 dense",
+              "triangles": 7200,
+              "steps": 1,
+              "fastBoxSteps": 90,
+              "fastBoxesThrough": 15,
+              "fastBoxesThrew": 0,
+              "digest": "fe142d2fcd4a2716",
+              "completed_primary_launches": 24,
+              "all_primary_launches_completed": true,
+              "primary_no_crossing_pass": false
+            }
+          ]
+        },
+        "entry": {
+          "evidence": {
+            "path": "baseline/entry.log",
+            "sha256": "730f1dbd43c19b313134c1b14c2d78bb1f8b6440fde0e908f02b8f427ad389f8"
+          },
+          "checks": 193,
+          "failures": 0,
+          "failure_lines": [],
+          "reported_policy_uncertainty_worlds": 0,
+          "scenarios": [
+            {
+              "name": "trough 2x26 coarse",
+              "triangles": 104,
+              "steps": 1,
+              "fastBoxSteps": 2,
+              "fastBoxesThrough": 0,
+              "fastBoxesThrew": 0,
+              "digest": "fe142d2fcd4a2716",
+              "completed_primary_launches": 24,
+              "all_primary_launches_completed": true,
+              "primary_no_crossing_pass": true
+            },
+            {
+              "name": "trough 30x30",
+              "triangles": 1800,
+              "steps": 1,
+              "fastBoxSteps": 2,
+              "fastBoxesThrough": 0,
+              "fastBoxesThrew": 0,
+              "digest": "fe142d2fcd4a2716",
+              "completed_primary_launches": 24,
+              "all_primary_launches_completed": true,
+              "primary_no_crossing_pass": true
+            },
+            {
+              "name": "trough 60x60 dense",
+              "triangles": 7200,
+              "steps": 1,
+              "fastBoxSteps": 2,
+              "fastBoxesThrough": 0,
+              "fastBoxesThrew": 0,
+              "digest": "fe142d2fcd4a2716",
+              "completed_primary_launches": 24,
+              "all_primary_launches_completed": true,
+              "primary_no_crossing_pass": true
+            }
+          ]
+        },
+        "full": {
+          "evidence": {
+            "path": "baseline/full.log",
+            "sha256": "2de84f926da558161c017c76bda9d4630fffce5639c843c3e432af9633889a0a"
+          },
+          "checks": 372,
+          "failures": 4,
+          "failure_lines": [
+            "FAIL trough 2x26 coarse fast boxes do not cross actual mesh",
+            "FAIL rotated trough preserves first-contact/crossing contract",
+            "FAIL trough 30x30 fast boxes do not cross actual mesh",
+            "FAIL trough 60x60 dense fast boxes do not cross actual mesh"
+          ],
+          "reported_policy_uncertainty_worlds": 0,
+          "scenarios": [
+            {
+              "name": "box primitive floor",
+              "triangles": 0,
+              "steps": 60,
+              "fastBoxSteps": 90,
+              "fastBoxesThrough": 0,
+              "fastBoxesThrew": 0,
+              "digest": "5243a5308b4e148f",
+              "completed_primary_launches": null,
+              "all_primary_launches_completed": true,
+              "primary_no_crossing_pass": true
+            },
+            {
+              "name": "flat sheet 6x6",
+              "triangles": 72,
+              "steps": 60,
+              "fastBoxSteps": 90,
+              "fastBoxesThrough": 0,
+              "fastBoxesThrew": 0,
+              "digest": "381a4ec48e94a3b8",
+              "completed_primary_launches": 24,
+              "all_primary_launches_completed": true,
+              "primary_no_crossing_pass": true
+            },
+            {
+              "name": "flat sheet 60x60",
+              "triangles": 7200,
+              "steps": 60,
+              "fastBoxSteps": 90,
+              "fastBoxesThrough": 0,
+              "fastBoxesThrew": 0,
+              "digest": "5a813991e9536520",
+              "completed_primary_launches": 24,
+              "all_primary_launches_completed": true,
+              "primary_no_crossing_pass": true
+            },
+            {
+              "name": "trough 2x26 coarse",
+              "triangles": 104,
+              "steps": 60,
+              "fastBoxSteps": 90,
+              "fastBoxesThrough": 11,
+              "fastBoxesThrew": 0,
+              "digest": "3fdde56f1ea9312b",
+              "completed_primary_launches": 24,
+              "all_primary_launches_completed": true,
+              "primary_no_crossing_pass": false
+            },
+            {
+              "name": "trough 30x30",
+              "triangles": 1800,
+              "steps": 60,
+              "fastBoxSteps": 90,
+              "fastBoxesThrough": 20,
+              "fastBoxesThrew": 0,
+              "digest": "ebd86a04dabbad71",
+              "completed_primary_launches": 24,
+              "all_primary_launches_completed": true,
+              "primary_no_crossing_pass": false
+            },
+            {
+              "name": "trough 60x60 dense",
+              "triangles": 7200,
+              "steps": 60,
+              "fastBoxSteps": 90,
+              "fastBoxesThrough": 15,
+              "fastBoxesThrew": 0,
+              "digest": "eece82a1f1f3aee5",
+              "completed_primary_launches": 24,
+              "all_primary_launches_completed": true,
+              "primary_no_crossing_pass": false
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "mesh-repeat",
+      "change": "Keep every static-mesh support scheduled instead of the existing angular-only guard.",
+      "disposition": "Rejected as an incomplete fix: reduced fixture passes but original full suite still fails four assertions and actual ragdoll trajectories change.",
+      "production_adopted": false,
+      "receipt": {
+        "path": "mesh-repeat/receipt.json",
+        "sha256": "7b9659431c01487edaa37ed088f9cb5f4b8e0404f85bbd50c609efff8ad9ec52"
+      },
+      "runs": [
+        {
+          "name": "minimal",
+          "exit": 0,
+          "seconds": 0.03217406700059655,
+          "argv": [
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-ccd-rethink/mesh-repeat/minimal"
+          ]
+        },
+        {
+          "name": "curved",
+          "exit": 1,
+          "seconds": 1.8678469289989152,
+          "argv": [
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-ccd-rethink/mesh-repeat/mesh",
+            "1",
+            "trough"
+          ]
+        },
+        {
+          "name": "entry",
+          "exit": 0,
+          "seconds": 0.4148808749996533,
+          "argv": [
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-ccd-rethink/mesh-repeat/mesh",
+            "1",
+            "trough",
+            "1.2",
+            "entry"
+          ]
+        },
+        {
+          "name": "full",
+          "exit": 1,
+          "seconds": 7.478416829002526,
+          "argv": [
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-ccd-rethink/mesh-repeat/mesh",
+            "60",
+            "",
+            "1.2"
+          ]
+        }
+      ],
+      "observations": {
+        "minimal": {
+          "evidence": {
+            "path": "mesh-repeat/minimal.log",
+            "sha256": "5e0c12b7304f0d2e77aecf9c748e595dcce4cdbc5995ddef6c70fa01749be71f"
+          },
+          "failure_lines": [],
+          "reported_policy_uncertainty_worlds": 0,
+          "minimal_results": [
+            {
+              "faces": 104,
+              "crossed": false
+            },
+            {
+              "faces": 16,
+              "crossed": false
+            }
+          ]
+        },
+        "curved": {
+          "evidence": {
+            "path": "mesh-repeat/curved.log",
+            "sha256": "d97ec6840c9c469b2832a61a2953456870123ea0eea27694b7da94a47573d812"
+          },
+          "checks": 193,
+          "failures": 4,
+          "failure_lines": [
+            "FAIL trough 2x26 coarse fast boxes do not cross actual mesh",
+            "FAIL rotated trough preserves first-contact/crossing contract",
+            "FAIL trough 30x30 fast boxes do not cross actual mesh",
+            "FAIL trough 60x60 dense fast boxes do not cross actual mesh"
+          ],
+          "reported_policy_uncertainty_worlds": 0,
+          "scenarios": [
+            {
+              "name": "trough 2x26 coarse",
+              "triangles": 104,
+              "steps": 1,
+              "fastBoxSteps": 90,
+              "fastBoxesThrough": 4,
+              "fastBoxesThrew": 0,
+              "digest": "fe142d2fcd4a2716",
+              "completed_primary_launches": 24,
+              "all_primary_launches_completed": true,
+              "primary_no_crossing_pass": false
+            },
+            {
+              "name": "trough 30x30",
+              "triangles": 1800,
+              "steps": 1,
+              "fastBoxSteps": 90,
+              "fastBoxesThrough": 20,
+              "fastBoxesThrew": 0,
+              "digest": "fe142d2fcd4a2716",
+              "completed_primary_launches": 24,
+              "all_primary_launches_completed": true,
+              "primary_no_crossing_pass": false
+            },
+            {
+              "name": "trough 60x60 dense",
+              "triangles": 7200,
+              "steps": 1,
+              "fastBoxSteps": 90,
+              "fastBoxesThrough": 14,
+              "fastBoxesThrew": 0,
+              "digest": "fe142d2fcd4a2716",
+              "completed_primary_launches": 24,
+              "all_primary_launches_completed": true,
+              "primary_no_crossing_pass": false
+            }
+          ]
+        },
+        "entry": {
+          "evidence": {
+            "path": "mesh-repeat/entry.log",
+            "sha256": "ca73e809730d1ea27806fa2f8158952a06eb3f4fdaf3dbd11796bb3cdc307989"
+          },
+          "checks": 193,
+          "failures": 0,
+          "failure_lines": [],
+          "reported_policy_uncertainty_worlds": 0,
+          "scenarios": [
+            {
+              "name": "trough 2x26 coarse",
+              "triangles": 104,
+              "steps": 1,
+              "fastBoxSteps": 2,
+              "fastBoxesThrough": 0,
+              "fastBoxesThrew": 0,
+              "digest": "fe142d2fcd4a2716",
+              "completed_primary_launches": 24,
+              "all_primary_launches_completed": true,
+              "primary_no_crossing_pass": true
+            },
+            {
+              "name": "trough 30x30",
+              "triangles": 1800,
+              "steps": 1,
+              "fastBoxSteps": 2,
+              "fastBoxesThrough": 0,
+              "fastBoxesThrew": 0,
+              "digest": "fe142d2fcd4a2716",
+              "completed_primary_launches": 24,
+              "all_primary_launches_completed": true,
+              "primary_no_crossing_pass": true
+            },
+            {
+              "name": "trough 60x60 dense",
+              "triangles": 7200,
+              "steps": 1,
+              "fastBoxSteps": 2,
+              "fastBoxesThrough": 0,
+              "fastBoxesThrew": 0,
+              "digest": "fe142d2fcd4a2716",
+              "completed_primary_launches": 24,
+              "all_primary_launches_completed": true,
+              "primary_no_crossing_pass": true
+            }
+          ]
+        },
+        "full": {
+          "evidence": {
+            "path": "mesh-repeat/full.log",
+            "sha256": "76c67a759b94c56a0e1740f0af6937cc47c0ce8a1a7efe2eeac53fbfd27cc8a1"
+          },
+          "checks": 372,
+          "failures": 4,
+          "failure_lines": [
+            "FAIL trough 2x26 coarse fast boxes do not cross actual mesh",
+            "FAIL rotated trough preserves first-contact/crossing contract",
+            "FAIL trough 30x30 fast boxes do not cross actual mesh",
+            "FAIL trough 60x60 dense fast boxes do not cross actual mesh"
+          ],
+          "reported_policy_uncertainty_worlds": 0,
+          "scenarios": [
+            {
+              "name": "box primitive floor",
+              "triangles": 0,
+              "steps": 60,
+              "fastBoxSteps": 90,
+              "fastBoxesThrough": 0,
+              "fastBoxesThrew": 0,
+              "digest": "5243a5308b4e148f",
+              "completed_primary_launches": null,
+              "all_primary_launches_completed": true,
+              "primary_no_crossing_pass": true
+            },
+            {
+              "name": "flat sheet 6x6",
+              "triangles": 72,
+              "steps": 60,
+              "fastBoxSteps": 90,
+              "fastBoxesThrough": 0,
+              "fastBoxesThrew": 0,
+              "digest": "43a88d384b6f3eda",
+              "completed_primary_launches": 24,
+              "all_primary_launches_completed": true,
+              "primary_no_crossing_pass": true
+            },
+            {
+              "name": "flat sheet 60x60",
+              "triangles": 7200,
+              "steps": 60,
+              "fastBoxSteps": 90,
+              "fastBoxesThrough": 0,
+              "fastBoxesThrew": 0,
+              "digest": "ca6335ff7f9a07a6",
+              "completed_primary_launches": 24,
+              "all_primary_launches_completed": true,
+              "primary_no_crossing_pass": true
+            },
+            {
+              "name": "trough 2x26 coarse",
+              "triangles": 104,
+              "steps": 60,
+              "fastBoxSteps": 90,
+              "fastBoxesThrough": 4,
+              "fastBoxesThrew": 0,
+              "digest": "4d20ca9dce093863",
+              "completed_primary_launches": 24,
+              "all_primary_launches_completed": true,
+              "primary_no_crossing_pass": false
+            },
+            {
+              "name": "trough 30x30",
+              "triangles": 1800,
+              "steps": 60,
+              "fastBoxSteps": 90,
+              "fastBoxesThrough": 20,
+              "fastBoxesThrew": 0,
+              "digest": "2cab5f8f5698287d",
+              "completed_primary_launches": 24,
+              "all_primary_launches_completed": true,
+              "primary_no_crossing_pass": false
+            },
+            {
+              "name": "trough 60x60 dense",
+              "triangles": 7200,
+              "steps": 60,
+              "fastBoxSteps": 90,
+              "fastBoxesThrough": 14,
+              "fastBoxesThrew": 0,
+              "digest": "cf4ba49218eb8aec",
+              "completed_primary_launches": 24,
+              "all_primary_launches_completed": true,
+              "primary_no_crossing_pass": false
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "facet-cap",
+      "change": "Native per-facet growth limits cap both current and new facets at half the represented front support radius; no causal ownership.",
+      "disposition": "Rejected: repeated events make no progress in physical time; no completed crossing result.",
+      "production_adopted": false,
+      "receipt": {
+        "path": "facet-cap/receipt.json",
+        "sha256": "f371f343375e2caf61e2943f2cd566c648bf43977fa5b5e7416747436c493564"
+      },
+      "runs": [
+        {
+          "name": "minimal",
+          "exit": "timeout",
+          "seconds": 40.00403481399917,
+          "argv": [
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-ccd-rethink/facet-cap/minimal"
+          ]
+        },
+        {
+          "name": "curved",
+          "exit": "timeout",
+          "seconds": 90.004941934003,
+          "argv": [
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-ccd-rethink/facet-cap/mesh",
+            "1",
+            "trough"
+          ]
+        }
+      ],
+      "observations": {
+        "minimal": {
+          "evidence": {
+            "path": "facet-cap/minimal.log",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "failure_lines": [],
+          "reported_policy_uncertainty_worlds": 0
+        },
+        "curved": {
+          "evidence": {
+            "path": "facet-cap/curved.log",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "failure_lines": [],
+          "reported_policy_uncertainty_worlds": 0
+        }
+      },
+      "interruption": {
+        "path": "facet-cap/INTERRUPTION.json",
+        "sha256": "68b4f60e4eb2a4f3bdf9d5dabf35bb632e41a619e6feaeeedeb7380b6ec003d7"
+      }
+    },
+    {
+      "id": "facet-observe",
+      "change": "Same facet-cap policy with a diagnostic event log and explicit repeated-event stop.",
+      "disposition": "Diagnostic rejection: native minimal run aborts after repeated events at the same time.",
+      "production_adopted": false,
+      "receipt": {
+        "path": "facet-observe/receipt.json",
+        "sha256": "fe2354ada7cb6be10eb0b9f8255c9e6c145d6abefce733ea153c3382ac5920e3"
+      },
+      "runs": [
+        {
+          "name": "minimal",
+          "exit": -6,
+          "seconds": 0.2646551210018515,
+          "argv": [
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-ccd-rethink/facet-observe/minimal"
+          ]
+        }
+      ],
+      "observations": {
+        "minimal": {
+          "evidence": {
+            "path": "facet-observe/minimal.log",
+            "sha256": "01a928588def37a9bd1e4b05f77f4c8db084ebae4ed814d088c121d72f5837b6"
+          },
+          "failure_lines": [],
+          "reported_policy_uncertainty_worlds": 0
+        }
+      },
+      "exact_repeat_time": 0.012658530875358237,
+      "observed_event_count": 1000,
+      "diagnostic_exception": "diagnostic-only repeated-event stop; candidate rejected"
+    },
+    {
+      "id": "forward-prototype",
+      "change": "Pass5 finite-episode prototype with current native-front finite-component refresh and correlated center-cancelled native edge bounds; coherent private world.",
+      "disposition": "Research only: selected193 and full372 fail three assertions through bounded uncertainty; high-spin helper positive control still fails.",
+      "production_adopted": false,
+      "receipt": {
+        "path": "forward-prototype/BUILD.json",
+        "sha256": "1a42aeaeadccc6aeb190a5a7858dba8419fce65ed88d920fe9374e0932412a52"
+      },
+      "runs": [
+        {
+          "name": "curved",
+          "exit": 1,
+          "seconds": 10.935352762000548,
+          "argv": [
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-ccd-rethink/forward-prototype/mesh",
+            "1",
+            "trough"
+          ]
+        },
+        {
+          "name": "entry",
+          "exit": 0,
+          "seconds": 0.4650227450001694,
+          "argv": [
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-ccd-rethink/forward-prototype/mesh",
+            "1",
+            "trough",
+            "1.2",
+            "entry"
+          ]
+        },
+        {
+          "name": "minimal",
+          "exit": 0,
+          "seconds": 0.03206875400064746,
+          "argv": [
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-ccd-rethink/forward-prototype/minimal"
+          ]
+        },
+        {
+          "name": "helper",
+          "exit": 1,
+          "seconds": 0.11427352699683979,
+          "argv": [
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-ccd-rethink/forward-prototype/helper"
+          ]
+        },
+        {
+          "name": "full",
+          "exit": 1,
+          "seconds": 15.996028142999421,
+          "argv": [
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-ccd-rethink/forward-prototype/mesh",
+            "60",
+            "",
+            "1.2"
+          ]
+        }
+      ],
+      "observations": {
+        "minimal": {
+          "evidence": {
+            "path": "forward-prototype/minimal.log",
+            "sha256": "c5aa8c542cda4b759ce63291f5cabde8cd1665cbcc2373e6f40a76e0777209de"
+          },
+          "failure_lines": [],
+          "reported_policy_uncertainty_worlds": 0,
+          "minimal_results": [
+            {
+              "faces": 104,
+              "crossed": false
+            },
+            {
+              "faces": 16,
+              "crossed": false
+            }
+          ]
+        },
+        "curved": {
+          "evidence": {
+            "path": "forward-prototype/curved.log",
+            "sha256": "665e75535e2f555f5cf2efe8093d737fbc30d040c3642104adb7b5c44a901d7a"
+          },
+          "checks": 193,
+          "failures": 3,
+          "failure_lines": [
+            "FAIL trough 2x26 coarse fast impacts do not throw",
+            "FAIL rotated trough preserves first-contact/crossing contract",
+            "FAIL trough 30x30 fast impacts do not throw"
+          ],
+          "reported_policy_uncertainty_worlds": 5,
+          "scenarios": [
+            {
+              "name": "trough 2x26 coarse",
+              "triangles": 104,
+              "steps": 1,
+              "fastBoxSteps": 90,
+              "fastBoxesThrough": 0,
+              "fastBoxesThrew": 2,
+              "digest": "fe142d2fcd4a2716",
+              "completed_primary_launches": 22,
+              "all_primary_launches_completed": false,
+              "primary_no_crossing_pass": false
+            },
+            {
+              "name": "trough 30x30",
+              "triangles": 1800,
+              "steps": 1,
+              "fastBoxSteps": 90,
+              "fastBoxesThrough": 0,
+              "fastBoxesThrew": 1,
+              "digest": "fe142d2fcd4a2716",
+              "completed_primary_launches": 23,
+              "all_primary_launches_completed": false,
+              "primary_no_crossing_pass": false
+            },
+            {
+              "name": "trough 60x60 dense",
+              "triangles": 7200,
+              "steps": 1,
+              "fastBoxSteps": 90,
+              "fastBoxesThrough": 0,
+              "fastBoxesThrew": 0,
+              "digest": "fe142d2fcd4a2716",
+              "completed_primary_launches": 24,
+              "all_primary_launches_completed": true,
+              "primary_no_crossing_pass": true
+            }
+          ]
+        },
+        "entry": {
+          "evidence": {
+            "path": "forward-prototype/entry.log",
+            "sha256": "f44b2484328e35c01f2331526a50f06bc4629bd8f6c0685577bbff03f19deee2"
+          },
+          "checks": 193,
+          "failures": 0,
+          "failure_lines": [],
+          "reported_policy_uncertainty_worlds": 0,
+          "scenarios": [
+            {
+              "name": "trough 2x26 coarse",
+              "triangles": 104,
+              "steps": 1,
+              "fastBoxSteps": 2,
+              "fastBoxesThrough": 0,
+              "fastBoxesThrew": 0,
+              "digest": "fe142d2fcd4a2716",
+              "completed_primary_launches": 24,
+              "all_primary_launches_completed": true,
+              "primary_no_crossing_pass": true
+            },
+            {
+              "name": "trough 30x30",
+              "triangles": 1800,
+              "steps": 1,
+              "fastBoxSteps": 2,
+              "fastBoxesThrough": 0,
+              "fastBoxesThrew": 0,
+              "digest": "fe142d2fcd4a2716",
+              "completed_primary_launches": 24,
+              "all_primary_launches_completed": true,
+              "primary_no_crossing_pass": true
+            },
+            {
+              "name": "trough 60x60 dense",
+              "triangles": 7200,
+              "steps": 1,
+              "fastBoxSteps": 2,
+              "fastBoxesThrough": 0,
+              "fastBoxesThrew": 0,
+              "digest": "fe142d2fcd4a2716",
+              "completed_primary_launches": 24,
+              "all_primary_launches_completed": true,
+              "primary_no_crossing_pass": true
+            }
+          ]
+        },
+        "full": {
+          "evidence": {
+            "path": "forward-prototype/full.log",
+            "sha256": "cd3e60ce6d21bd8fc1ded1c8048c80d65de72c70bf1070268e156e6da8789e88"
+          },
+          "checks": 372,
+          "failures": 3,
+          "failure_lines": [
+            "FAIL trough 2x26 coarse fast impacts do not throw",
+            "FAIL rotated trough preserves first-contact/crossing contract",
+            "FAIL trough 30x30 fast impacts do not throw"
+          ],
+          "reported_policy_uncertainty_worlds": 5,
+          "scenarios": [
+            {
+              "name": "box primitive floor",
+              "triangles": 0,
+              "steps": 60,
+              "fastBoxSteps": 90,
+              "fastBoxesThrough": 0,
+              "fastBoxesThrew": 0,
+              "digest": "5243a5308b4e148f",
+              "completed_primary_launches": null,
+              "all_primary_launches_completed": true,
+              "primary_no_crossing_pass": true
+            },
+            {
+              "name": "flat sheet 6x6",
+              "triangles": 72,
+              "steps": 60,
+              "fastBoxSteps": 90,
+              "fastBoxesThrough": 0,
+              "fastBoxesThrew": 0,
+              "digest": "381a4ec48e94a3b8",
+              "completed_primary_launches": 24,
+              "all_primary_launches_completed": true,
+              "primary_no_crossing_pass": true
+            },
+            {
+              "name": "flat sheet 60x60",
+              "triangles": 7200,
+              "steps": 60,
+              "fastBoxSteps": 90,
+              "fastBoxesThrough": 0,
+              "fastBoxesThrew": 0,
+              "digest": "5a813991e9536520",
+              "completed_primary_launches": 24,
+              "all_primary_launches_completed": true,
+              "primary_no_crossing_pass": true
+            },
+            {
+              "name": "trough 2x26 coarse",
+              "triangles": 104,
+              "steps": 60,
+              "fastBoxSteps": 90,
+              "fastBoxesThrough": 0,
+              "fastBoxesThrew": 2,
+              "digest": "3fdde56f1ea9312b",
+              "completed_primary_launches": 22,
+              "all_primary_launches_completed": false,
+              "primary_no_crossing_pass": false
+            },
+            {
+              "name": "trough 30x30",
+              "triangles": 1800,
+              "steps": 60,
+              "fastBoxSteps": 90,
+              "fastBoxesThrough": 0,
+              "fastBoxesThrew": 1,
+              "digest": "ebd86a04dabbad71",
+              "completed_primary_launches": 23,
+              "all_primary_launches_completed": false,
+              "primary_no_crossing_pass": false
+            },
+            {
+              "name": "trough 60x60 dense",
+              "triangles": 7200,
+              "steps": 60,
+              "fastBoxSteps": 90,
+              "fastBoxesThrough": 0,
+              "fastBoxesThrew": 0,
+              "digest": "eece82a1f1f3aee5",
+              "completed_primary_launches": 24,
+              "all_primary_launches_completed": true,
+              "primary_no_crossing_pass": true
+            }
+          ]
+        },
+        "helper": {
+          "evidence": {
+            "path": "forward-prototype/helper.log",
+            "sha256": "26eedba3f684c4efd2a6af1976f7e2e2a9f976bf886e60745bd6090d3550b9e7"
+          },
+          "checks": 8,
+          "failures": 1,
+          "failure_lines": [],
+          "reported_policy_uncertainty_worlds": 0
+        }
+      }
+    },
+    {
+      "id": "forward-memo",
+      "change": "Reuse the nearest earlier derived represented-time episode checkpoint on the same immutable anchored motion; current front acquisitions refresh it.",
+      "disposition": "Research only: fewer repeated certification visits, but selected193 still fails three assertions and high-spin helper remains uncertain. No full372 run recorded for this stage.",
+      "production_adopted": false,
+      "receipt": {
+        "path": "forward-memo/BUILD.json",
+        "sha256": "e7a2bb8b5c4847e6aea22843d3929009dba20b89d3ff2b5735e4da22d60981b4"
+      },
+      "runs": [
+        {
+          "name": "curved",
+          "exit": 1,
+          "seconds": 4.4727492359998,
+          "argv": [
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-ccd-rethink/forward-memo/mesh",
+            "1",
+            "trough"
+          ]
+        },
+        {
+          "name": "entry",
+          "exit": 0,
+          "seconds": 0.6153723749994242,
+          "argv": [
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-ccd-rethink/forward-memo/mesh",
+            "1",
+            "trough",
+            "1.2",
+            "entry"
+          ]
+        },
+        {
+          "name": "minimal",
+          "exit": 0,
+          "seconds": 0.032084516002214514,
+          "argv": [
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-ccd-rethink/forward-memo/minimal"
+          ]
+        },
+        {
+          "name": "helper",
+          "exit": 1,
+          "seconds": 0.11425197499920614,
+          "argv": [
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-ccd-rethink/forward-memo/helper"
+          ]
+        }
+      ],
+      "observations": {
+        "minimal": {
+          "evidence": {
+            "path": "forward-memo/minimal.log",
+            "sha256": "c5aa8c542cda4b759ce63291f5cabde8cd1665cbcc2373e6f40a76e0777209de"
+          },
+          "failure_lines": [],
+          "reported_policy_uncertainty_worlds": 0,
+          "minimal_results": [
+            {
+              "faces": 104,
+              "crossed": false
+            },
+            {
+              "faces": 16,
+              "crossed": false
+            }
+          ]
+        },
+        "curved": {
+          "evidence": {
+            "path": "forward-memo/curved.log",
+            "sha256": "9de1775a74ead0c6a8b3b79dc546496c4d3e4c4f843e2255f40bb04d44b7bfd0"
+          },
+          "checks": 193,
+          "failures": 3,
+          "failure_lines": [
+            "FAIL trough 2x26 coarse fast impacts do not throw",
+            "FAIL rotated trough preserves first-contact/crossing contract",
+            "FAIL trough 30x30 fast impacts do not throw"
+          ],
+          "reported_policy_uncertainty_worlds": 4,
+          "scenarios": [
+            {
+              "name": "trough 2x26 coarse",
+              "triangles": 104,
+              "steps": 1,
+              "fastBoxSteps": 90,
+              "fastBoxesThrough": 0,
+              "fastBoxesThrew": 1,
+              "digest": "fe142d2fcd4a2716",
+              "completed_primary_launches": 23,
+              "all_primary_launches_completed": false,
+              "primary_no_crossing_pass": false
+            },
+            {
+              "name": "trough 30x30",
+              "triangles": 1800,
+              "steps": 1,
+              "fastBoxSteps": 90,
+              "fastBoxesThrough": 0,
+              "fastBoxesThrew": 1,
+              "digest": "fe142d2fcd4a2716",
+              "completed_primary_launches": 23,
+              "all_primary_launches_completed": false,
+              "primary_no_crossing_pass": false
+            },
+            {
+              "name": "trough 60x60 dense",
+              "triangles": 7200,
+              "steps": 1,
+              "fastBoxSteps": 90,
+              "fastBoxesThrough": 0,
+              "fastBoxesThrew": 0,
+              "digest": "fe142d2fcd4a2716",
+              "completed_primary_launches": 24,
+              "all_primary_launches_completed": true,
+              "primary_no_crossing_pass": true
+            }
+          ]
+        },
+        "entry": {
+          "evidence": {
+            "path": "forward-memo/entry.log",
+            "sha256": "3c5b2066804f50c69047d578966a1107818039c1f4f053649764384e222a3643"
+          },
+          "checks": 193,
+          "failures": 0,
+          "failure_lines": [],
+          "reported_policy_uncertainty_worlds": 0,
+          "scenarios": [
+            {
+              "name": "trough 2x26 coarse",
+              "triangles": 104,
+              "steps": 1,
+              "fastBoxSteps": 2,
+              "fastBoxesThrough": 0,
+              "fastBoxesThrew": 0,
+              "digest": "fe142d2fcd4a2716",
+              "completed_primary_launches": 24,
+              "all_primary_launches_completed": true,
+              "primary_no_crossing_pass": true
+            },
+            {
+              "name": "trough 30x30",
+              "triangles": 1800,
+              "steps": 1,
+              "fastBoxSteps": 2,
+              "fastBoxesThrough": 0,
+              "fastBoxesThrew": 0,
+              "digest": "fe142d2fcd4a2716",
+              "completed_primary_launches": 24,
+              "all_primary_launches_completed": true,
+              "primary_no_crossing_pass": true
+            },
+            {
+              "name": "trough 60x60 dense",
+              "triangles": 7200,
+              "steps": 1,
+              "fastBoxSteps": 2,
+              "fastBoxesThrough": 0,
+              "fastBoxesThrew": 0,
+              "digest": "fe142d2fcd4a2716",
+              "completed_primary_launches": 24,
+              "all_primary_launches_completed": true,
+              "primary_no_crossing_pass": true
+            }
+          ]
+        },
+        "helper": {
+          "evidence": {
+            "path": "forward-memo/helper.log",
+            "sha256": "26eedba3f684c4efd2a6af1976f7e2e2a9f976bf886e60745bd6090d3550b9e7"
+          },
+          "checks": 8,
+          "failures": 1,
+          "failure_lines": [],
+          "reported_policy_uncertainty_worlds": 0
+        }
+      }
+    },
+    {
+      "id": "chronological-world",
+      "change": "Forward per-component state, actual finite expiry, left-first certified state carry and a native-mean no-front suffix certificate.",
+      "disposition": "Research only: helper eight controls pass; original selected193/full372 still fail three assertions through bounded uncertainty.",
+      "production_adopted": false,
+      "receipt": {
+        "path": "chronological-world/BUILD.json",
+        "sha256": "2f78526cafbca20d0503c597852bd74b504611b686073d2e9c46e7d0323c6b25"
+      },
+      "runs": [
+        {
+          "name": "curved",
+          "exit": 1,
+          "seconds": 4.723089824001363,
+          "argv": [
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-ccd-rethink/chronological-world/mesh",
+            "1",
+            "trough"
+          ]
+        },
+        {
+          "name": "entry",
+          "exit": 0,
+          "seconds": 0.6155183340015355,
+          "argv": [
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-ccd-rethink/chronological-world/mesh",
+            "1",
+            "trough",
+            "1.2",
+            "entry"
+          ]
+        },
+        {
+          "name": "minimal",
+          "exit": 0,
+          "seconds": 0.03287266900224495,
+          "argv": [
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-ccd-rethink/chronological-world/minimal"
+          ]
+        },
+        {
+          "name": "helper",
+          "exit": 0,
+          "seconds": 0.0038521349997608922,
+          "argv": [
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-ccd-rethink/chronological-world/helper"
+          ]
+        },
+        {
+          "name": "full",
+          "exit": 1,
+          "seconds": 9.983949163000943,
+          "argv": [
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-ccd-rethink/chronological-world/mesh",
+            "60",
+            "",
+            "1.2"
+          ]
+        }
+      ],
+      "observations": {
+        "minimal": {
+          "evidence": {
+            "path": "chronological-world/minimal.log",
+            "sha256": "c5aa8c542cda4b759ce63291f5cabde8cd1665cbcc2373e6f40a76e0777209de"
+          },
+          "failure_lines": [],
+          "reported_policy_uncertainty_worlds": 0,
+          "minimal_results": [
+            {
+              "faces": 104,
+              "crossed": false
+            },
+            {
+              "faces": 16,
+              "crossed": false
+            }
+          ]
+        },
+        "curved": {
+          "evidence": {
+            "path": "chronological-world/curved.log",
+            "sha256": "6e3390837a116ba3d0d5c6605fb66aa4077b30f4b8483645786b98d6a14366d9"
+          },
+          "checks": 193,
+          "failures": 3,
+          "failure_lines": [
+            "FAIL trough 2x26 coarse fast impacts do not throw",
+            "FAIL rotated trough preserves first-contact/crossing contract",
+            "FAIL trough 30x30 fast impacts do not throw"
+          ],
+          "reported_policy_uncertainty_worlds": 4,
+          "scenarios": [
+            {
+              "name": "trough 2x26 coarse",
+              "triangles": 104,
+              "steps": 1,
+              "fastBoxSteps": 90,
+              "fastBoxesThrough": 0,
+              "fastBoxesThrew": 1,
+              "digest": "fe142d2fcd4a2716",
+              "completed_primary_launches": 23,
+              "all_primary_launches_completed": false,
+              "primary_no_crossing_pass": false
+            },
+            {
+              "name": "trough 30x30",
+              "triangles": 1800,
+              "steps": 1,
+              "fastBoxSteps": 90,
+              "fastBoxesThrough": 0,
+              "fastBoxesThrew": 1,
+              "digest": "fe142d2fcd4a2716",
+              "completed_primary_launches": 23,
+              "all_primary_launches_completed": false,
+              "primary_no_crossing_pass": false
+            },
+            {
+              "name": "trough 60x60 dense",
+              "triangles": 7200,
+              "steps": 1,
+              "fastBoxSteps": 90,
+              "fastBoxesThrough": 0,
+              "fastBoxesThrew": 0,
+              "digest": "fe142d2fcd4a2716",
+              "completed_primary_launches": 24,
+              "all_primary_launches_completed": true,
+              "primary_no_crossing_pass": true
+            }
+          ]
+        },
+        "entry": {
+          "evidence": {
+            "path": "chronological-world/entry.log",
+            "sha256": "0c467b76ad229860c60bae0769103d503c7c6acd71eabf832c549a5d79ae76d3"
+          },
+          "checks": 193,
+          "failures": 0,
+          "failure_lines": [],
+          "reported_policy_uncertainty_worlds": 0,
+          "scenarios": [
+            {
+              "name": "trough 2x26 coarse",
+              "triangles": 104,
+              "steps": 1,
+              "fastBoxSteps": 2,
+              "fastBoxesThrough": 0,
+              "fastBoxesThrew": 0,
+              "digest": "fe142d2fcd4a2716",
+              "completed_primary_launches": 24,
+              "all_primary_launches_completed": true,
+              "primary_no_crossing_pass": true
+            },
+            {
+              "name": "trough 30x30",
+              "triangles": 1800,
+              "steps": 1,
+              "fastBoxSteps": 2,
+              "fastBoxesThrough": 0,
+              "fastBoxesThrew": 0,
+              "digest": "fe142d2fcd4a2716",
+              "completed_primary_launches": 24,
+              "all_primary_launches_completed": true,
+              "primary_no_crossing_pass": true
+            },
+            {
+              "name": "trough 60x60 dense",
+              "triangles": 7200,
+              "steps": 1,
+              "fastBoxSteps": 2,
+              "fastBoxesThrough": 0,
+              "fastBoxesThrew": 0,
+              "digest": "fe142d2fcd4a2716",
+              "completed_primary_launches": 24,
+              "all_primary_launches_completed": true,
+              "primary_no_crossing_pass": true
+            }
+          ]
+        },
+        "full": {
+          "evidence": {
+            "path": "chronological-world/full.log",
+            "sha256": "19c90e27f1c0f193ba0c21b5cc266ebf622610afa56d8a4171f8b2c2172b47b8"
+          },
+          "checks": 372,
+          "failures": 3,
+          "failure_lines": [
+            "FAIL trough 2x26 coarse fast impacts do not throw",
+            "FAIL rotated trough preserves first-contact/crossing contract",
+            "FAIL trough 30x30 fast impacts do not throw"
+          ],
+          "reported_policy_uncertainty_worlds": 4,
+          "scenarios": [
+            {
+              "name": "box primitive floor",
+              "triangles": 0,
+              "steps": 60,
+              "fastBoxSteps": 90,
+              "fastBoxesThrough": 0,
+              "fastBoxesThrew": 0,
+              "digest": "5243a5308b4e148f",
+              "completed_primary_launches": null,
+              "all_primary_launches_completed": true,
+              "primary_no_crossing_pass": true
+            },
+            {
+              "name": "flat sheet 6x6",
+              "triangles": 72,
+              "steps": 60,
+              "fastBoxSteps": 90,
+              "fastBoxesThrough": 0,
+              "fastBoxesThrew": 0,
+              "digest": "381a4ec48e94a3b8",
+              "completed_primary_launches": 24,
+              "all_primary_launches_completed": true,
+              "primary_no_crossing_pass": true
+            },
+            {
+              "name": "flat sheet 60x60",
+              "triangles": 7200,
+              "steps": 60,
+              "fastBoxSteps": 90,
+              "fastBoxesThrough": 0,
+              "fastBoxesThrew": 0,
+              "digest": "5a813991e9536520",
+              "completed_primary_launches": 24,
+              "all_primary_launches_completed": true,
+              "primary_no_crossing_pass": true
+            },
+            {
+              "name": "trough 2x26 coarse",
+              "triangles": 104,
+              "steps": 60,
+              "fastBoxSteps": 90,
+              "fastBoxesThrough": 0,
+              "fastBoxesThrew": 1,
+              "digest": "3fdde56f1ea9312b",
+              "completed_primary_launches": 23,
+              "all_primary_launches_completed": false,
+              "primary_no_crossing_pass": false
+            },
+            {
+              "name": "trough 30x30",
+              "triangles": 1800,
+              "steps": 60,
+              "fastBoxSteps": 90,
+              "fastBoxesThrough": 0,
+              "fastBoxesThrew": 1,
+              "digest": "ebd86a04dabbad71",
+              "completed_primary_launches": 23,
+              "all_primary_launches_completed": false,
+              "primary_no_crossing_pass": false
+            },
+            {
+              "name": "trough 60x60 dense",
+              "triangles": 7200,
+              "steps": 60,
+              "fastBoxSteps": 90,
+              "fastBoxesThrough": 0,
+              "fastBoxesThrew": 0,
+              "digest": "eece82a1f1f3aee5",
+              "completed_primary_launches": 24,
+              "all_primary_launches_completed": true,
+              "primary_no_crossing_pass": true
+            }
+          ]
+        },
+        "helper": {
+          "evidence": {
+            "path": "chronological-world/helper.log",
+            "sha256": "3ac15d9e3db5365aa36eefb37cfdf0d417d2ca821a60b690b23823a87e7a360f"
+          },
+          "checks": 8,
+          "failures": 0,
+          "failure_lines": [],
+          "reported_policy_uncertainty_worlds": 0
+        }
+      }
+    },
+    {
+      "id": "projection-world",
+      "change": "Recenter all interval support projections at one fixed nearby triangle vertex, retaining the original unshifted native dot rounding envelopes.",
+      "disposition": "Research only: original selected193/full372 reduced to one rotated assertion failure through bounded uncertainty.",
+      "production_adopted": false,
+      "receipt": {
+        "path": "projection-world/BUILD.json",
+        "sha256": "720c39005fb04ada36607a7a8f7afdb83f9a0bb3a7a3c54d139905f6225aa978"
+      },
+      "runs": [
+        {
+          "name": "curved",
+          "exit": 1,
+          "seconds": 3.973385483997845,
+          "argv": [
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-ccd-rethink/projection-world/mesh",
+            "1",
+            "trough"
+          ]
+        },
+        {
+          "name": "entry",
+          "exit": 0,
+          "seconds": 0.6663031140014937,
+          "argv": [
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-ccd-rethink/projection-world/mesh",
+            "1",
+            "trough",
+            "1.2",
+            "entry"
+          ]
+        },
+        {
+          "name": "minimal",
+          "exit": 0,
+          "seconds": 0.03202777399928891,
+          "argv": [
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-ccd-rethink/projection-world/minimal"
+          ]
+        },
+        {
+          "name": "helper",
+          "exit": 0,
+          "seconds": 0.007975227999850176,
+          "argv": [
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-ccd-rethink/projection-world/helper"
+          ]
+        },
+        {
+          "name": "full",
+          "exit": 1,
+          "seconds": 8.831086058002256,
+          "argv": [
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-ccd-rethink/projection-world/mesh",
+            "60",
+            "",
+            "1.2"
+          ]
+        }
+      ],
+      "observations": {
+        "minimal": {
+          "evidence": {
+            "path": "projection-world/minimal.log",
+            "sha256": "c5aa8c542cda4b759ce63291f5cabde8cd1665cbcc2373e6f40a76e0777209de"
+          },
+          "failure_lines": [],
+          "reported_policy_uncertainty_worlds": 0,
+          "minimal_results": [
+            {
+              "faces": 104,
+              "crossed": false
+            },
+            {
+              "faces": 16,
+              "crossed": false
+            }
+          ]
+        },
+        "curved": {
+          "evidence": {
+            "path": "projection-world/curved.log",
+            "sha256": "480d7e370935811ecd2b2901546ef4fac4435f3930bd92be6d3bb1db24af80de"
+          },
+          "checks": 193,
+          "failures": 1,
+          "failure_lines": [
+            "FAIL rotated trough preserves first-contact/crossing contract"
+          ],
+          "reported_policy_uncertainty_worlds": 1,
+          "scenarios": [
+            {
+              "name": "trough 2x26 coarse",
+              "triangles": 104,
+              "steps": 1,
+              "fastBoxSteps": 90,
+              "fastBoxesThrough": 0,
+              "fastBoxesThrew": 0,
+              "digest": "fe142d2fcd4a2716",
+              "completed_primary_launches": 24,
+              "all_primary_launches_completed": true,
+              "primary_no_crossing_pass": true
+            },
+            {
+              "name": "trough 30x30",
+              "triangles": 1800,
+              "steps": 1,
+              "fastBoxSteps": 90,
+              "fastBoxesThrough": 0,
+              "fastBoxesThrew": 0,
+              "digest": "fe142d2fcd4a2716",
+              "completed_primary_launches": 24,
+              "all_primary_launches_completed": true,
+              "primary_no_crossing_pass": true
+            },
+            {
+              "name": "trough 60x60 dense",
+              "triangles": 7200,
+              "steps": 1,
+              "fastBoxSteps": 90,
+              "fastBoxesThrough": 0,
+              "fastBoxesThrew": 0,
+              "digest": "fe142d2fcd4a2716",
+              "completed_primary_launches": 24,
+              "all_primary_launches_completed": true,
+              "primary_no_crossing_pass": true
+            }
+          ]
+        },
+        "entry": {
+          "evidence": {
+            "path": "projection-world/entry.log",
+            "sha256": "0573987e42f5296e95d5a9f114c5b0c77d68112e998f546b62bfc15d324ca605"
+          },
+          "checks": 193,
+          "failures": 0,
+          "failure_lines": [],
+          "reported_policy_uncertainty_worlds": 0,
+          "scenarios": [
+            {
+              "name": "trough 2x26 coarse",
+              "triangles": 104,
+              "steps": 1,
+              "fastBoxSteps": 2,
+              "fastBoxesThrough": 0,
+              "fastBoxesThrew": 0,
+              "digest": "fe142d2fcd4a2716",
+              "completed_primary_launches": 24,
+              "all_primary_launches_completed": true,
+              "primary_no_crossing_pass": true
+            },
+            {
+              "name": "trough 30x30",
+              "triangles": 1800,
+              "steps": 1,
+              "fastBoxSteps": 2,
+              "fastBoxesThrough": 0,
+              "fastBoxesThrew": 0,
+              "digest": "fe142d2fcd4a2716",
+              "completed_primary_launches": 24,
+              "all_primary_launches_completed": true,
+              "primary_no_crossing_pass": true
+            },
+            {
+              "name": "trough 60x60 dense",
+              "triangles": 7200,
+              "steps": 1,
+              "fastBoxSteps": 2,
+              "fastBoxesThrough": 0,
+              "fastBoxesThrew": 0,
+              "digest": "fe142d2fcd4a2716",
+              "completed_primary_launches": 24,
+              "all_primary_launches_completed": true,
+              "primary_no_crossing_pass": true
+            }
+          ]
+        },
+        "full": {
+          "evidence": {
+            "path": "projection-world/full.log",
+            "sha256": "055d1ffc89de7a05a5b1cf878345be7679ce6d2f00960bf8cdf0b455086749e7"
+          },
+          "checks": 372,
+          "failures": 1,
+          "failure_lines": [
+            "FAIL rotated trough preserves first-contact/crossing contract"
+          ],
+          "reported_policy_uncertainty_worlds": 1,
+          "scenarios": [
+            {
+              "name": "box primitive floor",
+              "triangles": 0,
+              "steps": 60,
+              "fastBoxSteps": 90,
+              "fastBoxesThrough": 0,
+              "fastBoxesThrew": 0,
+              "digest": "5243a5308b4e148f",
+              "completed_primary_launches": null,
+              "all_primary_launches_completed": true,
+              "primary_no_crossing_pass": true
+            },
+            {
+              "name": "flat sheet 6x6",
+              "triangles": 72,
+              "steps": 60,
+              "fastBoxSteps": 90,
+              "fastBoxesThrough": 0,
+              "fastBoxesThrew": 0,
+              "digest": "381a4ec48e94a3b8",
+              "completed_primary_launches": 24,
+              "all_primary_launches_completed": true,
+              "primary_no_crossing_pass": true
+            },
+            {
+              "name": "flat sheet 60x60",
+              "triangles": 7200,
+              "steps": 60,
+              "fastBoxSteps": 90,
+              "fastBoxesThrough": 0,
+              "fastBoxesThrew": 0,
+              "digest": "5a813991e9536520",
+              "completed_primary_launches": 24,
+              "all_primary_launches_completed": true,
+              "primary_no_crossing_pass": true
+            },
+            {
+              "name": "trough 2x26 coarse",
+              "triangles": 104,
+              "steps": 60,
+              "fastBoxSteps": 90,
+              "fastBoxesThrough": 0,
+              "fastBoxesThrew": 0,
+              "digest": "3fdde56f1ea9312b",
+              "completed_primary_launches": 24,
+              "all_primary_launches_completed": true,
+              "primary_no_crossing_pass": true
+            },
+            {
+              "name": "trough 30x30",
+              "triangles": 1800,
+              "steps": 60,
+              "fastBoxSteps": 90,
+              "fastBoxesThrough": 0,
+              "fastBoxesThrew": 0,
+              "digest": "ebd86a04dabbad71",
+              "completed_primary_launches": 24,
+              "all_primary_launches_completed": true,
+              "primary_no_crossing_pass": true
+            },
+            {
+              "name": "trough 60x60 dense",
+              "triangles": 7200,
+              "steps": 60,
+              "fastBoxSteps": 90,
+              "fastBoxesThrough": 0,
+              "fastBoxesThrew": 0,
+              "digest": "eece82a1f1f3aee5",
+              "completed_primary_launches": 24,
+              "all_primary_launches_completed": true,
+              "primary_no_crossing_pass": true
+            }
+          ]
+        },
+        "helper": {
+          "evidence": {
+            "path": "projection-world/helper.log",
+            "sha256": "3ac15d9e3db5365aa36eefb37cfdf0d417d2ca821a60b690b23823a87e7a360f"
+          },
+          "checks": 8,
+          "failures": 0,
+          "failure_lines": [],
+          "reported_policy_uncertainty_worlds": 0
+        }
+      }
+    },
+    {
+      "id": "rotation-world",
+      "change": "Further cancel shared rotation columns in native vertex differences, retaining both native offset dot errors, center additions and edge subtraction errors.",
+      "disposition": "Rejected for production adoption despite original372/0 and ten neighboring suite passes: unrelated-pair filter edit changes three primary trajectories in the lifetime adversary; measured ordinary ragdoll cost also rises.",
+      "production_adopted": false,
+      "receipt": {
+        "path": "rotation-world/BUILD.json",
+        "sha256": "407efe834d68eb17dc138214533a4e9dbfc125d300a980ba5404f95c836c08bc"
+      },
+      "runs": [
+        {
+          "name": "curved",
+          "exit": 0,
+          "seconds": 3.771302593002474,
+          "argv": [
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-ccd-rethink/rotation-world/mesh",
+            "1",
+            "trough"
+          ]
+        },
+        {
+          "name": "entry",
+          "exit": 0,
+          "seconds": 0.6154387220012723,
+          "argv": [
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-ccd-rethink/rotation-world/mesh",
+            "1",
+            "trough",
+            "1.2",
+            "entry"
+          ]
+        },
+        {
+          "name": "minimal",
+          "exit": 0,
+          "seconds": 0.032101468998007476,
+          "argv": [
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-ccd-rethink/rotation-world/minimal"
+          ]
+        },
+        {
+          "name": "helper",
+          "exit": 0,
+          "seconds": 0.007890671000495786,
+          "argv": [
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-ccd-rethink/rotation-world/helper"
+          ]
+        },
+        {
+          "name": "full",
+          "exit": 0,
+          "seconds": 8.931399246001092,
+          "argv": [
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-ccd-rethink/rotation-world/mesh",
+            "60",
+            "",
+            "1.2"
+          ]
+        }
+      ],
+      "observations": {
+        "minimal": {
+          "evidence": {
+            "path": "rotation-world/minimal.log",
+            "sha256": "c5aa8c542cda4b759ce63291f5cabde8cd1665cbcc2373e6f40a76e0777209de"
+          },
+          "failure_lines": [],
+          "reported_policy_uncertainty_worlds": 0,
+          "minimal_results": [
+            {
+              "faces": 104,
+              "crossed": false
+            },
+            {
+              "faces": 16,
+              "crossed": false
+            }
+          ]
+        },
+        "curved": {
+          "evidence": {
+            "path": "rotation-world/curved.log",
+            "sha256": "f13757f8f9f8263583617525f07616f1acebaff31695f514719ec3944d85aa26"
+          },
+          "checks": 193,
+          "failures": 0,
+          "failure_lines": [],
+          "reported_policy_uncertainty_worlds": 0,
+          "scenarios": [
+            {
+              "name": "trough 2x26 coarse",
+              "triangles": 104,
+              "steps": 1,
+              "fastBoxSteps": 90,
+              "fastBoxesThrough": 0,
+              "fastBoxesThrew": 0,
+              "digest": "fe142d2fcd4a2716",
+              "completed_primary_launches": 24,
+              "all_primary_launches_completed": true,
+              "primary_no_crossing_pass": true
+            },
+            {
+              "name": "trough 30x30",
+              "triangles": 1800,
+              "steps": 1,
+              "fastBoxSteps": 90,
+              "fastBoxesThrough": 0,
+              "fastBoxesThrew": 0,
+              "digest": "fe142d2fcd4a2716",
+              "completed_primary_launches": 24,
+              "all_primary_launches_completed": true,
+              "primary_no_crossing_pass": true
+            },
+            {
+              "name": "trough 60x60 dense",
+              "triangles": 7200,
+              "steps": 1,
+              "fastBoxSteps": 90,
+              "fastBoxesThrough": 0,
+              "fastBoxesThrew": 0,
+              "digest": "fe142d2fcd4a2716",
+              "completed_primary_launches": 24,
+              "all_primary_launches_completed": true,
+              "primary_no_crossing_pass": true
+            }
+          ]
+        },
+        "entry": {
+          "evidence": {
+            "path": "rotation-world/entry.log",
+            "sha256": "f81df24dcb56310aeeb8e80bd2424429313bcda103fbd78fe936beeceaebfd02"
+          },
+          "checks": 193,
+          "failures": 0,
+          "failure_lines": [],
+          "reported_policy_uncertainty_worlds": 0,
+          "scenarios": [
+            {
+              "name": "trough 2x26 coarse",
+              "triangles": 104,
+              "steps": 1,
+              "fastBoxSteps": 2,
+              "fastBoxesThrough": 0,
+              "fastBoxesThrew": 0,
+              "digest": "fe142d2fcd4a2716",
+              "completed_primary_launches": 24,
+              "all_primary_launches_completed": true,
+              "primary_no_crossing_pass": true
+            },
+            {
+              "name": "trough 30x30",
+              "triangles": 1800,
+              "steps": 1,
+              "fastBoxSteps": 2,
+              "fastBoxesThrough": 0,
+              "fastBoxesThrew": 0,
+              "digest": "fe142d2fcd4a2716",
+              "completed_primary_launches": 24,
+              "all_primary_launches_completed": true,
+              "primary_no_crossing_pass": true
+            },
+            {
+              "name": "trough 60x60 dense",
+              "triangles": 7200,
+              "steps": 1,
+              "fastBoxSteps": 2,
+              "fastBoxesThrough": 0,
+              "fastBoxesThrew": 0,
+              "digest": "fe142d2fcd4a2716",
+              "completed_primary_launches": 24,
+              "all_primary_launches_completed": true,
+              "primary_no_crossing_pass": true
+            }
+          ]
+        },
+        "full": {
+          "evidence": {
+            "path": "rotation-world/full.log",
+            "sha256": "88780feca449432702bd2a937bd628085555d4f5f0611c9ead9ba7e9b8e4a6fb"
+          },
+          "checks": 372,
+          "failures": 0,
+          "failure_lines": [],
+          "reported_policy_uncertainty_worlds": 0,
+          "scenarios": [
+            {
+              "name": "box primitive floor",
+              "triangles": 0,
+              "steps": 60,
+              "fastBoxSteps": 90,
+              "fastBoxesThrough": 0,
+              "fastBoxesThrew": 0,
+              "digest": "5243a5308b4e148f",
+              "completed_primary_launches": null,
+              "all_primary_launches_completed": true,
+              "primary_no_crossing_pass": true
+            },
+            {
+              "name": "flat sheet 6x6",
+              "triangles": 72,
+              "steps": 60,
+              "fastBoxSteps": 90,
+              "fastBoxesThrough": 0,
+              "fastBoxesThrew": 0,
+              "digest": "381a4ec48e94a3b8",
+              "completed_primary_launches": 24,
+              "all_primary_launches_completed": true,
+              "primary_no_crossing_pass": true
+            },
+            {
+              "name": "flat sheet 60x60",
+              "triangles": 7200,
+              "steps": 60,
+              "fastBoxSteps": 90,
+              "fastBoxesThrough": 0,
+              "fastBoxesThrew": 0,
+              "digest": "5a813991e9536520",
+              "completed_primary_launches": 24,
+              "all_primary_launches_completed": true,
+              "primary_no_crossing_pass": true
+            },
+            {
+              "name": "trough 2x26 coarse",
+              "triangles": 104,
+              "steps": 60,
+              "fastBoxSteps": 90,
+              "fastBoxesThrough": 0,
+              "fastBoxesThrew": 0,
+              "digest": "3fdde56f1ea9312b",
+              "completed_primary_launches": 24,
+              "all_primary_launches_completed": true,
+              "primary_no_crossing_pass": true
+            },
+            {
+              "name": "trough 30x30",
+              "triangles": 1800,
+              "steps": 60,
+              "fastBoxSteps": 90,
+              "fastBoxesThrough": 0,
+              "fastBoxesThrew": 0,
+              "digest": "ebd86a04dabbad71",
+              "completed_primary_launches": 24,
+              "all_primary_launches_completed": true,
+              "primary_no_crossing_pass": true
+            },
+            {
+              "name": "trough 60x60 dense",
+              "triangles": 7200,
+              "steps": 60,
+              "fastBoxSteps": 90,
+              "fastBoxesThrough": 0,
+              "fastBoxesThrew": 0,
+              "digest": "eece82a1f1f3aee5",
+              "completed_primary_launches": 24,
+              "all_primary_launches_completed": true,
+              "primary_no_crossing_pass": true
+            }
+          ]
+        },
+        "helper": {
+          "evidence": {
+            "path": "rotation-world/helper.log",
+            "sha256": "3ac15d9e3db5365aa36eefb37cfdf0d417d2ca821a60b690b23823a87e7a360f"
+          },
+          "checks": 8,
+          "failures": 0,
+          "failure_lines": [],
+          "reported_policy_uncertainty_worlds": 0
+        }
+      }
+    },
+    {
+      "id": "witness-only",
+      "change": "Allow existing convex-face reverse-reference clipping against triangle targets; preserve native SAT, sidedness, response normals and tolerances.",
+      "disposition": "Rejected as a CCD fix: independent witness geometry improves but original crossing failures remain and existing high-spin robustness regresses.",
+      "production_adopted": false,
+      "receipt": {
+        "path": "witness-only/receipt.json",
+        "sha256": "988f323dd35e10aecb6b39725adebb2480cf228ff5392a60eb85e8180d3cc66e"
+      },
+      "runs": [
+        {
+          "name": "minimal",
+          "exit": 1,
+          "seconds": 0.016009564002160914,
+          "argv": [
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-ccd-rethink/witness-only/minimal"
+          ]
+        },
+        {
+          "name": "curved",
+          "exit": 1,
+          "seconds": 1.016115466998599,
+          "argv": [
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-ccd-rethink/witness-only/mesh",
+            "1",
+            "trough"
+          ]
+        },
+        {
+          "name": "entry",
+          "exit": 0,
+          "seconds": 0.31497674099955475,
+          "argv": [
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-ccd-rethink/witness-only/mesh",
+            "1",
+            "trough",
+            "1.2",
+            "entry"
+          ]
+        },
+        {
+          "name": "full",
+          "exit": 1,
+          "seconds": 4.774345301997528,
+          "argv": [
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-ccd-rethink/witness-only/mesh",
+            "60",
+            "",
+            "1.2"
+          ]
+        }
+      ],
+      "observations": {
+        "minimal": {
+          "evidence": {
+            "path": "witness-only/minimal.log",
+            "sha256": "eb168744ce2439487a68d545988a1bde65eb34a75270d6f73dba49f939495ca2"
+          },
+          "failure_lines": [],
+          "reported_policy_uncertainty_worlds": 0,
+          "minimal_results": [
+            {
+              "faces": 104,
+              "crossed": true
+            },
+            {
+              "faces": 16,
+              "crossed": true
+            }
+          ]
+        },
+        "curved": {
+          "evidence": {
+            "path": "witness-only/curved.log",
+            "sha256": "4e5316e7bcffc336e4c182e5bf9173b68e4fa1ab82ac8c7b996fdefeaf67f0aa"
+          },
+          "checks": 193,
+          "failures": 4,
+          "failure_lines": [
+            "FAIL trough 2x26 coarse fast boxes do not cross actual mesh",
+            "FAIL rotated trough preserves first-contact/crossing contract",
+            "FAIL trough 30x30 fast boxes do not cross actual mesh",
+            "FAIL trough 60x60 dense fast boxes do not cross actual mesh"
+          ],
+          "reported_policy_uncertainty_worlds": 0,
+          "scenarios": [
+            {
+              "name": "trough 2x26 coarse",
+              "triangles": 104,
+              "steps": 1,
+              "fastBoxSteps": 90,
+              "fastBoxesThrough": 13,
+              "fastBoxesThrew": 0,
+              "digest": "fe142d2fcd4a2716",
+              "completed_primary_launches": 24,
+              "all_primary_launches_completed": true,
+              "primary_no_crossing_pass": false
+            },
+            {
+              "name": "trough 30x30",
+              "triangles": 1800,
+              "steps": 1,
+              "fastBoxSteps": 90,
+              "fastBoxesThrough": 20,
+              "fastBoxesThrew": 0,
+              "digest": "fe142d2fcd4a2716",
+              "completed_primary_launches": 24,
+              "all_primary_launches_completed": true,
+              "primary_no_crossing_pass": false
+            },
+            {
+              "name": "trough 60x60 dense",
+              "triangles": 7200,
+              "steps": 1,
+              "fastBoxSteps": 90,
+              "fastBoxesThrough": 16,
+              "fastBoxesThrew": 0,
+              "digest": "fe142d2fcd4a2716",
+              "completed_primary_launches": 24,
+              "all_primary_launches_completed": true,
+              "primary_no_crossing_pass": false
+            }
+          ]
+        },
+        "entry": {
+          "evidence": {
+            "path": "witness-only/entry.log",
+            "sha256": "92c027150fb4aadb345b9747acd9de718b3f28019c493c63552085cdbba8365f"
+          },
+          "checks": 193,
+          "failures": 0,
+          "failure_lines": [],
+          "reported_policy_uncertainty_worlds": 0,
+          "scenarios": [
+            {
+              "name": "trough 2x26 coarse",
+              "triangles": 104,
+              "steps": 1,
+              "fastBoxSteps": 2,
+              "fastBoxesThrough": 0,
+              "fastBoxesThrew": 0,
+              "digest": "fe142d2fcd4a2716",
+              "completed_primary_launches": 24,
+              "all_primary_launches_completed": true,
+              "primary_no_crossing_pass": true
+            },
+            {
+              "name": "trough 30x30",
+              "triangles": 1800,
+              "steps": 1,
+              "fastBoxSteps": 2,
+              "fastBoxesThrough": 0,
+              "fastBoxesThrew": 0,
+              "digest": "fe142d2fcd4a2716",
+              "completed_primary_launches": 24,
+              "all_primary_launches_completed": true,
+              "primary_no_crossing_pass": true
+            },
+            {
+              "name": "trough 60x60 dense",
+              "triangles": 7200,
+              "steps": 1,
+              "fastBoxSteps": 2,
+              "fastBoxesThrough": 0,
+              "fastBoxesThrew": 0,
+              "digest": "fe142d2fcd4a2716",
+              "completed_primary_launches": 24,
+              "all_primary_launches_completed": true,
+              "primary_no_crossing_pass": true
+            }
+          ]
+        },
+        "full": {
+          "evidence": {
+            "path": "witness-only/full.log",
+            "sha256": "1cd47b2b6671011add1d011f7f332278a83a6437fc5a39df4402c4c8e73b7bb4"
+          },
+          "checks": 372,
+          "failures": 4,
+          "failure_lines": [
+            "FAIL trough 2x26 coarse fast boxes do not cross actual mesh",
+            "FAIL rotated trough preserves first-contact/crossing contract",
+            "FAIL trough 30x30 fast boxes do not cross actual mesh",
+            "FAIL trough 60x60 dense fast boxes do not cross actual mesh"
+          ],
+          "reported_policy_uncertainty_worlds": 0,
+          "scenarios": [
+            {
+              "name": "box primitive floor",
+              "triangles": 0,
+              "steps": 60,
+              "fastBoxSteps": 90,
+              "fastBoxesThrough": 0,
+              "fastBoxesThrew": 0,
+              "digest": "5243a5308b4e148f",
+              "completed_primary_launches": null,
+              "all_primary_launches_completed": true,
+              "primary_no_crossing_pass": true
+            },
+            {
+              "name": "flat sheet 6x6",
+              "triangles": 72,
+              "steps": 60,
+              "fastBoxSteps": 90,
+              "fastBoxesThrough": 0,
+              "fastBoxesThrew": 0,
+              "digest": "bf77d184969c7111",
+              "completed_primary_launches": 24,
+              "all_primary_launches_completed": true,
+              "primary_no_crossing_pass": true
+            },
+            {
+              "name": "flat sheet 60x60",
+              "triangles": 7200,
+              "steps": 60,
+              "fastBoxSteps": 90,
+              "fastBoxesThrough": 0,
+              "fastBoxesThrew": 0,
+              "digest": "a020b75d80b6f9f",
+              "completed_primary_launches": 24,
+              "all_primary_launches_completed": true,
+              "primary_no_crossing_pass": true
+            },
+            {
+              "name": "trough 2x26 coarse",
+              "triangles": 104,
+              "steps": 60,
+              "fastBoxSteps": 90,
+              "fastBoxesThrough": 13,
+              "fastBoxesThrew": 0,
+              "digest": "94fe3d9d7fb67b54",
+              "completed_primary_launches": 24,
+              "all_primary_launches_completed": true,
+              "primary_no_crossing_pass": false
+            },
+            {
+              "name": "trough 30x30",
+              "triangles": 1800,
+              "steps": 60,
+              "fastBoxSteps": 90,
+              "fastBoxesThrough": 20,
+              "fastBoxesThrew": 0,
+              "digest": "bb52c6f3ddecdabe",
+              "completed_primary_launches": 24,
+              "all_primary_launches_completed": true,
+              "primary_no_crossing_pass": false
+            },
+            {
+              "name": "trough 60x60 dense",
+              "triangles": 7200,
+              "steps": 60,
+              "fastBoxSteps": 90,
+              "fastBoxesThrough": 16,
+              "fastBoxesThrew": 0,
+              "digest": "2b0ce86e8ccdcc1c",
+              "completed_primary_launches": 24,
+              "all_primary_launches_completed": true,
+              "primary_no_crossing_pass": false
+            }
+          ]
+        }
+      },
+      "additional_receipts": [
+        {
+          "path": "witness/RUNS.json",
+          "sha256": "f8844366acd0e435fd1a9459626ad6aada01f780904a4fd4ad69e21bb62563bc"
+        },
+        {
+          "path": "witness/EXTRA_RUNS.json",
+          "sha256": "68396cf5a9400d33b48354e22c0a061bf85532ddd3a30f6ab3ec3a27ac3a83f5"
+        },
+        {
+          "path": "witness-only/SUITES.json",
+          "sha256": "d6a084199f465a961ad96700891436e3bb181f74000197f7f72ef31dea326a66"
+        }
+      ],
+      "witness_geometry": {
+        "baseline": {
+          "evidence": {
+            "path": "witness/test-baseline.log",
+            "sha256": "764e79c8eec882fee66a4515059800f1b5c047e3c318dfc4427121ce1db7dfb1"
+          },
+          "checks": 276,
+          "failures": 120,
+          "failure_lines": [
+            "FAIL box identity height=0.500000 signed gap equals actual witness projection",
+            "FAIL box identity height=0.500000 mesh witness is authored tip",
+            "FAIL box identity height=0.500000 convex witness is tip projection inside actual lower face",
+            "FAIL box identity height=0.500000 solver anchors use physical witness midpoint",
+            "FAIL box identity height=0.500000 unit normal impulse has correct moment arm",
+            "FAIL box identity height=0.500000 signed gap equals actual witness projection",
+            "FAIL box identity height=0.500000 mesh witness is authored tip",
+            "FAIL box identity height=0.500000 convex witness is tip projection inside actual lower face",
+            "FAIL box identity height=0.500000 solver anchors use physical witness midpoint",
+            "FAIL box identity height=0.500000 unit normal impulse has correct moment arm",
+            "FAIL box identity height=0.490000 signed gap equals actual witness projection",
+            "FAIL box identity height=0.490000 mesh witness is authored tip",
+            "FAIL box identity height=0.490000 convex witness is tip projection inside actual lower face",
+            "FAIL box identity height=0.490000 solver anchors use physical witness midpoint",
+            "FAIL box identity height=0.490000 unit normal impulse has correct moment arm",
+            "FAIL box identity height=0.490000 signed gap equals actual witness projection",
+            "FAIL box identity height=0.490000 mesh witness is authored tip",
+            "FAIL box identity height=0.490000 convex witness is tip projection inside actual lower face",
+            "FAIL box identity height=0.490000 solver anchors use physical witness midpoint",
+            "FAIL box identity height=0.490000 unit normal impulse has correct moment arm",
+            "FAIL box identity height=0.510000 signed gap equals actual witness projection",
+            "FAIL box identity height=0.510000 mesh witness is authored tip",
+            "FAIL box identity height=0.510000 convex witness is tip projection inside actual lower face",
+            "FAIL box identity height=0.510000 solver anchors use physical witness midpoint",
+            "FAIL box identity height=0.510000 unit normal impulse has correct moment arm",
+            "FAIL box identity height=0.510000 signed gap equals actual witness projection",
+            "FAIL box identity height=0.510000 mesh witness is authored tip",
+            "FAIL box identity height=0.510000 convex witness is tip projection inside actual lower face",
+            "FAIL box identity height=0.510000 solver anchors use physical witness midpoint",
+            "FAIL box identity height=0.510000 unit normal impulse has correct moment arm",
+            "FAIL box rotated height=0.500000 signed gap equals actual witness projection",
+            "FAIL box rotated height=0.500000 mesh witness is authored tip",
+            "FAIL box rotated height=0.500000 convex witness is tip projection inside actual lower face",
+            "FAIL box rotated height=0.500000 solver anchors use physical witness midpoint",
+            "FAIL box rotated height=0.500000 unit normal impulse has correct moment arm",
+            "FAIL box rotated height=0.500000 signed gap equals actual witness projection",
+            "FAIL box rotated height=0.500000 mesh witness is authored tip",
+            "FAIL box rotated height=0.500000 convex witness is tip projection inside actual lower face",
+            "FAIL box rotated height=0.500000 solver anchors use physical witness midpoint",
+            "FAIL box rotated height=0.500000 unit normal impulse has correct moment arm",
+            "FAIL box rotated height=0.490000 signed gap equals actual witness projection",
+            "FAIL box rotated height=0.490000 mesh witness is authored tip",
+            "FAIL box rotated height=0.490000 convex witness is tip projection inside actual lower face",
+            "FAIL box rotated height=0.490000 solver anchors use physical witness midpoint",
+            "FAIL box rotated height=0.490000 unit normal impulse has correct moment arm",
+            "FAIL box rotated height=0.490000 signed gap equals actual witness projection",
+            "FAIL box rotated height=0.490000 mesh witness is authored tip",
+            "FAIL box rotated height=0.490000 convex witness is tip projection inside actual lower face",
+            "FAIL box rotated height=0.490000 solver anchors use physical witness midpoint",
+            "FAIL box rotated height=0.490000 unit normal impulse has correct moment arm",
+            "FAIL box rotated height=0.510000 signed gap equals actual witness projection",
+            "FAIL box rotated height=0.510000 mesh witness is authored tip",
+            "FAIL box rotated height=0.510000 convex witness is tip projection inside actual lower face",
+            "FAIL box rotated height=0.510000 solver anchors use physical witness midpoint",
+            "FAIL box rotated height=0.510000 unit normal impulse has correct moment arm",
+            "FAIL box rotated height=0.510000 signed gap equals actual witness projection",
+            "FAIL box rotated height=0.510000 mesh witness is authored tip",
+            "FAIL box rotated height=0.510000 convex witness is tip projection inside actual lower face",
+            "FAIL box rotated height=0.510000 solver anchors use physical witness midpoint",
+            "FAIL box rotated height=0.510000 unit normal impulse has correct moment arm",
+            "FAIL hull identity height=0.500000 signed gap equals actual witness projection",
+            "FAIL hull identity height=0.500000 mesh witness is authored tip",
+            "FAIL hull identity height=0.500000 convex witness is tip projection inside actual lower face",
+            "FAIL hull identity height=0.500000 solver anchors use physical witness midpoint",
+            "FAIL hull identity height=0.500000 unit normal impulse has correct moment arm",
+            "FAIL hull identity height=0.500000 signed gap equals actual witness projection",
+            "FAIL hull identity height=0.500000 mesh witness is authored tip",
+            "FAIL hull identity height=0.500000 convex witness is tip projection inside actual lower face",
+            "FAIL hull identity height=0.500000 solver anchors use physical witness midpoint",
+            "FAIL hull identity height=0.500000 unit normal impulse has correct moment arm",
+            "FAIL hull identity height=0.490000 signed gap equals actual witness projection",
+            "FAIL hull identity height=0.490000 mesh witness is authored tip",
+            "FAIL hull identity height=0.490000 convex witness is tip projection inside actual lower face",
+            "FAIL hull identity height=0.490000 solver anchors use physical witness midpoint",
+            "FAIL hull identity height=0.490000 unit normal impulse has correct moment arm",
+            "FAIL hull identity height=0.490000 signed gap equals actual witness projection",
+            "FAIL hull identity height=0.490000 mesh witness is authored tip",
+            "FAIL hull identity height=0.490000 convex witness is tip projection inside actual lower face",
+            "FAIL hull identity height=0.490000 solver anchors use physical witness midpoint",
+            "FAIL hull identity height=0.490000 unit normal impulse has correct moment arm",
+            "FAIL hull identity height=0.510000 signed gap equals actual witness projection",
+            "FAIL hull identity height=0.510000 mesh witness is authored tip",
+            "FAIL hull identity height=0.510000 convex witness is tip projection inside actual lower face",
+            "FAIL hull identity height=0.510000 solver anchors use physical witness midpoint",
+            "FAIL hull identity height=0.510000 unit normal impulse has correct moment arm",
+            "FAIL hull identity height=0.510000 signed gap equals actual witness projection",
+            "FAIL hull identity height=0.510000 mesh witness is authored tip",
+            "FAIL hull identity height=0.510000 convex witness is tip projection inside actual lower face",
+            "FAIL hull identity height=0.510000 solver anchors use physical witness midpoint",
+            "FAIL hull identity height=0.510000 unit normal impulse has correct moment arm",
+            "FAIL hull rotated height=0.500000 signed gap equals actual witness projection",
+            "FAIL hull rotated height=0.500000 mesh witness is authored tip",
+            "FAIL hull rotated height=0.500000 convex witness is tip projection inside actual lower face",
+            "FAIL hull rotated height=0.500000 solver anchors use physical witness midpoint",
+            "FAIL hull rotated height=0.500000 unit normal impulse has correct moment arm",
+            "FAIL hull rotated height=0.500000 signed gap equals actual witness projection",
+            "FAIL hull rotated height=0.500000 mesh witness is authored tip",
+            "FAIL hull rotated height=0.500000 convex witness is tip projection inside actual lower face",
+            "FAIL hull rotated height=0.500000 solver anchors use physical witness midpoint",
+            "FAIL hull rotated height=0.500000 unit normal impulse has correct moment arm",
+            "FAIL hull rotated height=0.490000 signed gap equals actual witness projection",
+            "FAIL hull rotated height=0.490000 mesh witness is authored tip",
+            "FAIL hull rotated height=0.490000 convex witness is tip projection inside actual lower face",
+            "FAIL hull rotated height=0.490000 solver anchors use physical witness midpoint",
+            "FAIL hull rotated height=0.490000 unit normal impulse has correct moment arm",
+            "FAIL hull rotated height=0.490000 signed gap equals actual witness projection",
+            "FAIL hull rotated height=0.490000 mesh witness is authored tip",
+            "FAIL hull rotated height=0.490000 convex witness is tip projection inside actual lower face",
+            "FAIL hull rotated height=0.490000 solver anchors use physical witness midpoint",
+            "FAIL hull rotated height=0.490000 unit normal impulse has correct moment arm",
+            "FAIL hull rotated height=0.510000 signed gap equals actual witness projection",
+            "FAIL hull rotated height=0.510000 mesh witness is authored tip",
+            "FAIL hull rotated height=0.510000 convex witness is tip projection inside actual lower face",
+            "FAIL hull rotated height=0.510000 solver anchors use physical witness midpoint",
+            "FAIL hull rotated height=0.510000 unit normal impulse has correct moment arm",
+            "FAIL hull rotated height=0.510000 signed gap equals actual witness projection",
+            "FAIL hull rotated height=0.510000 mesh witness is authored tip",
+            "FAIL hull rotated height=0.510000 convex witness is tip projection inside actual lower face",
+            "FAIL hull rotated height=0.510000 solver anchors use physical witness midpoint",
+            "FAIL hull rotated height=0.510000 unit normal impulse has correct moment arm"
+          ],
+          "reported_policy_uncertainty_worlds": 0
+        },
+        "candidate": {
+          "evidence": {
+            "path": "witness/test-candidate.log",
+            "sha256": "bdbd8afe04b76e216cac47484e68278d3775c789aeb73769106092dd655fcb8a"
+          },
+          "checks": 276,
+          "failures": 0,
+          "failure_lines": [],
+          "reported_policy_uncertainty_worlds": 0
+        }
+      },
+      "physical_tip_torque": {
+        "baseline": {
+          "evidence": {
+            "path": "witness/run-WorldTipTorqueTests-baseline.log",
+            "sha256": "729387c855df031cbc1363d3c6f281883c0e359f94bd89ca2a651bf6cbd09cb3"
+          },
+          "checks": 168,
+          "failures": 96,
+          "failure_lines": [
+            "FAIL box identity centered descent linear velocity follows point impulse law",
+            "FAIL box identity centered descent angular velocity follows physical moment arm",
+            "FAIL box identity centered descent centered zero-spin descent acquires no false spin",
+            "FAIL box identity tangential descent linear velocity follows point impulse law",
+            "FAIL box identity tangential descent angular velocity follows physical moment arm",
+            "FAIL box identity tangential descent centered zero-spin descent acquires no false spin",
+            "FAIL box identity yaw descent linear velocity follows point impulse law",
+            "FAIL box identity yaw descent angular velocity follows physical moment arm",
+            "FAIL box identity positive offset linear velocity follows point impulse law",
+            "FAIL box identity positive offset angular velocity follows physical moment arm",
+            "FAIL box identity negative offset linear velocity follows point impulse law",
+            "FAIL box identity negative offset angular velocity follows physical moment arm",
+            "FAIL box identity centered descent linear velocity follows point impulse law",
+            "FAIL box identity centered descent angular velocity follows physical moment arm",
+            "FAIL box identity centered descent centered zero-spin descent acquires no false spin",
+            "FAIL box identity tangential descent linear velocity follows point impulse law",
+            "FAIL box identity tangential descent angular velocity follows physical moment arm",
+            "FAIL box identity tangential descent centered zero-spin descent acquires no false spin",
+            "FAIL box identity yaw descent linear velocity follows point impulse law",
+            "FAIL box identity yaw descent angular velocity follows physical moment arm",
+            "FAIL box identity positive offset linear velocity follows point impulse law",
+            "FAIL box identity positive offset angular velocity follows physical moment arm",
+            "FAIL box identity negative offset linear velocity follows point impulse law",
+            "FAIL box identity negative offset angular velocity follows physical moment arm",
+            "FAIL box rotated centered descent linear velocity follows point impulse law",
+            "FAIL box rotated centered descent angular velocity follows physical moment arm",
+            "FAIL box rotated centered descent centered zero-spin descent acquires no false spin",
+            "FAIL box rotated tangential descent linear velocity follows point impulse law",
+            "FAIL box rotated tangential descent angular velocity follows physical moment arm",
+            "FAIL box rotated tangential descent centered zero-spin descent acquires no false spin",
+            "FAIL box rotated yaw descent linear velocity follows point impulse law",
+            "FAIL box rotated yaw descent angular velocity follows physical moment arm",
+            "FAIL box rotated positive offset linear velocity follows point impulse law",
+            "FAIL box rotated positive offset angular velocity follows physical moment arm",
+            "FAIL box rotated negative offset linear velocity follows point impulse law",
+            "FAIL box rotated negative offset angular velocity follows physical moment arm",
+            "FAIL box rotated centered descent linear velocity follows point impulse law",
+            "FAIL box rotated centered descent angular velocity follows physical moment arm",
+            "FAIL box rotated centered descent centered zero-spin descent acquires no false spin",
+            "FAIL box rotated tangential descent linear velocity follows point impulse law",
+            "FAIL box rotated tangential descent angular velocity follows physical moment arm",
+            "FAIL box rotated tangential descent centered zero-spin descent acquires no false spin",
+            "FAIL box rotated yaw descent linear velocity follows point impulse law",
+            "FAIL box rotated yaw descent angular velocity follows physical moment arm",
+            "FAIL box rotated positive offset linear velocity follows point impulse law",
+            "FAIL box rotated positive offset angular velocity follows physical moment arm",
+            "FAIL box rotated negative offset linear velocity follows point impulse law",
+            "FAIL box rotated negative offset angular velocity follows physical moment arm",
+            "FAIL hull identity centered descent linear velocity follows point impulse law",
+            "FAIL hull identity centered descent angular velocity follows physical moment arm",
+            "FAIL hull identity centered descent centered zero-spin descent acquires no false spin",
+            "FAIL hull identity tangential descent linear velocity follows point impulse law",
+            "FAIL hull identity tangential descent angular velocity follows physical moment arm",
+            "FAIL hull identity tangential descent centered zero-spin descent acquires no false spin",
+            "FAIL hull identity yaw descent linear velocity follows point impulse law",
+            "FAIL hull identity yaw descent angular velocity follows physical moment arm",
+            "FAIL hull identity positive offset linear velocity follows point impulse law",
+            "FAIL hull identity positive offset angular velocity follows physical moment arm",
+            "FAIL hull identity negative offset linear velocity follows point impulse law",
+            "FAIL hull identity negative offset angular velocity follows physical moment arm",
+            "FAIL hull identity centered descent linear velocity follows point impulse law",
+            "FAIL hull identity centered descent angular velocity follows physical moment arm",
+            "FAIL hull identity centered descent centered zero-spin descent acquires no false spin",
+            "FAIL hull identity tangential descent linear velocity follows point impulse law",
+            "FAIL hull identity tangential descent angular velocity follows physical moment arm",
+            "FAIL hull identity tangential descent centered zero-spin descent acquires no false spin",
+            "FAIL hull identity yaw descent linear velocity follows point impulse law",
+            "FAIL hull identity yaw descent angular velocity follows physical moment arm",
+            "FAIL hull identity positive offset linear velocity follows point impulse law",
+            "FAIL hull identity positive offset angular velocity follows physical moment arm",
+            "FAIL hull identity negative offset linear velocity follows point impulse law",
+            "FAIL hull identity negative offset angular velocity follows physical moment arm",
+            "FAIL hull rotated centered descent linear velocity follows point impulse law",
+            "FAIL hull rotated centered descent angular velocity follows physical moment arm",
+            "FAIL hull rotated centered descent centered zero-spin descent acquires no false spin",
+            "FAIL hull rotated tangential descent linear velocity follows point impulse law",
+            "FAIL hull rotated tangential descent angular velocity follows physical moment arm",
+            "FAIL hull rotated tangential descent centered zero-spin descent acquires no false spin",
+            "FAIL hull rotated yaw descent linear velocity follows point impulse law",
+            "FAIL hull rotated yaw descent angular velocity follows physical moment arm",
+            "FAIL hull rotated positive offset linear velocity follows point impulse law",
+            "FAIL hull rotated positive offset angular velocity follows physical moment arm",
+            "FAIL hull rotated negative offset linear velocity follows point impulse law",
+            "FAIL hull rotated negative offset angular velocity follows physical moment arm",
+            "FAIL hull rotated centered descent linear velocity follows point impulse law",
+            "FAIL hull rotated centered descent angular velocity follows physical moment arm",
+            "FAIL hull rotated centered descent centered zero-spin descent acquires no false spin",
+            "FAIL hull rotated tangential descent linear velocity follows point impulse law",
+            "FAIL hull rotated tangential descent angular velocity follows physical moment arm",
+            "FAIL hull rotated tangential descent centered zero-spin descent acquires no false spin",
+            "FAIL hull rotated yaw descent linear velocity follows point impulse law",
+            "FAIL hull rotated yaw descent angular velocity follows physical moment arm",
+            "FAIL hull rotated positive offset linear velocity follows point impulse law",
+            "FAIL hull rotated positive offset angular velocity follows physical moment arm",
+            "FAIL hull rotated negative offset linear velocity follows point impulse law",
+            "FAIL hull rotated negative offset angular velocity follows physical moment arm"
+          ],
+          "reported_policy_uncertainty_worlds": 0
+        },
+        "candidate": {
+          "evidence": {
+            "path": "witness/run-WorldTipTorqueTests-candidate.log",
+            "sha256": "fa139a37e41cdbac750dbf19814b040aee673328d53e96c092a3e3cbe59cf237"
+          },
+          "checks": 168,
+          "failures": 4,
+          "failure_lines": [
+            "FAIL box rotated negative offset linear velocity follows point impulse law",
+            "FAIL box rotated negative offset angular velocity follows physical moment arm",
+            "FAIL box rotated negative offset linear velocity follows point impulse law",
+            "FAIL box rotated negative offset angular velocity follows physical moment arm"
+          ],
+          "reported_policy_uncertainty_worlds": 0
+        }
+      },
+      "regressions": {
+        "geometry": {
+          "checks": 1411,
+          "failures": 0,
+          "log": {
+            "path": "witness-only/run-judas_collision_geometry_tests.log",
+            "sha256": "22170aefa4a0e4549001eb5c27fea1b7d7393df0099429678c946133ab33b075"
+          }
+        },
+        "impact_robustness": {
+          "evidence": {
+            "path": "witness-only/run-judas_impact_robustness_tests.log",
+            "sha256": "2788c935cabfe040fa462ccd8b707c05ebdbe6415e055517e5dfcad0a5e344e0"
+          },
+          "checks": 4412,
+          "failures": 2,
+          "failure_lines": [
+            "FAIL mesh down 20 side 0 spin 45: box does not pass through the support",
+            "FAIL mesh down 20 side 0 spin 45: no corner sinks a box depth into the support"
+          ],
+          "reported_policy_uncertainty_worlds": 0
+        }
+      }
+    },
+    {
+      "id": "witness-alignment",
+      "change": "Select clipping using existing face-normal alignment tolerances independent of SAT edge provenance, including reverse triangle reference clipping.",
+      "disposition": "Rejected as a CCD fix: tip-torque observer passes168/0, but original crossings and the two high-spin robustness regressions remain.",
+      "production_adopted": false,
+      "receipt": {
+        "path": "witness-alignment/receipt.json",
+        "sha256": "2ce285af4ec07249b56a636d786f31b068c6e479e931d49c176f8c36619d4873"
+      },
+      "runs": [
+        {
+          "name": "minimal",
+          "exit": 1,
+          "seconds": 0.016057821001595585,
+          "argv": [
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-ccd-rethink/witness-alignment/minimal"
+          ]
+        },
+        {
+          "name": "curved",
+          "exit": 1,
+          "seconds": 1.0160757369994826,
+          "argv": [
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-ccd-rethink/witness-alignment/mesh",
+            "1",
+            "trough"
+          ]
+        },
+        {
+          "name": "entry",
+          "exit": 0,
+          "seconds": 0.3149002249992918,
+          "argv": [
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-ccd-rethink/witness-alignment/mesh",
+            "1",
+            "trough",
+            "1.2",
+            "entry"
+          ]
+        },
+        {
+          "name": "full",
+          "exit": 1,
+          "seconds": 4.673571520001133,
+          "argv": [
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-ccd-rethink/witness-alignment/mesh",
+            "60",
+            "",
+            "1.2"
+          ]
+        }
+      ],
+      "observations": {
+        "minimal": {
+          "evidence": {
+            "path": "witness-alignment/minimal.log",
+            "sha256": "eb168744ce2439487a68d545988a1bde65eb34a75270d6f73dba49f939495ca2"
+          },
+          "failure_lines": [],
+          "reported_policy_uncertainty_worlds": 0,
+          "minimal_results": [
+            {
+              "faces": 104,
+              "crossed": true
+            },
+            {
+              "faces": 16,
+              "crossed": true
+            }
+          ]
+        },
+        "curved": {
+          "evidence": {
+            "path": "witness-alignment/curved.log",
+            "sha256": "70702e7b28b1a0f58e3d4813c5b993d066f242b54a631bc96cd386fcd5ba6141"
+          },
+          "checks": 193,
+          "failures": 4,
+          "failure_lines": [
+            "FAIL trough 2x26 coarse fast boxes do not cross actual mesh",
+            "FAIL rotated trough preserves first-contact/crossing contract",
+            "FAIL trough 30x30 fast boxes do not cross actual mesh",
+            "FAIL trough 60x60 dense fast boxes do not cross actual mesh"
+          ],
+          "reported_policy_uncertainty_worlds": 0,
+          "scenarios": [
+            {
+              "name": "trough 2x26 coarse",
+              "triangles": 104,
+              "steps": 1,
+              "fastBoxSteps": 90,
+              "fastBoxesThrough": 13,
+              "fastBoxesThrew": 0,
+              "digest": "fe142d2fcd4a2716",
+              "completed_primary_launches": 24,
+              "all_primary_launches_completed": true,
+              "primary_no_crossing_pass": false
+            },
+            {
+              "name": "trough 30x30",
+              "triangles": 1800,
+              "steps": 1,
+              "fastBoxSteps": 90,
+              "fastBoxesThrough": 20,
+              "fastBoxesThrew": 0,
+              "digest": "fe142d2fcd4a2716",
+              "completed_primary_launches": 24,
+              "all_primary_launches_completed": true,
+              "primary_no_crossing_pass": false
+            },
+            {
+              "name": "trough 60x60 dense",
+              "triangles": 7200,
+              "steps": 1,
+              "fastBoxSteps": 90,
+              "fastBoxesThrough": 16,
+              "fastBoxesThrew": 0,
+              "digest": "fe142d2fcd4a2716",
+              "completed_primary_launches": 24,
+              "all_primary_launches_completed": true,
+              "primary_no_crossing_pass": false
+            }
+          ]
+        },
+        "entry": {
+          "evidence": {
+            "path": "witness-alignment/entry.log",
+            "sha256": "ca73e809730d1ea27806fa2f8158952a06eb3f4fdaf3dbd11796bb3cdc307989"
+          },
+          "checks": 193,
+          "failures": 0,
+          "failure_lines": [],
+          "reported_policy_uncertainty_worlds": 0,
+          "scenarios": [
+            {
+              "name": "trough 2x26 coarse",
+              "triangles": 104,
+              "steps": 1,
+              "fastBoxSteps": 2,
+              "fastBoxesThrough": 0,
+              "fastBoxesThrew": 0,
+              "digest": "fe142d2fcd4a2716",
+              "completed_primary_launches": 24,
+              "all_primary_launches_completed": true,
+              "primary_no_crossing_pass": true
+            },
+            {
+              "name": "trough 30x30",
+              "triangles": 1800,
+              "steps": 1,
+              "fastBoxSteps": 2,
+              "fastBoxesThrough": 0,
+              "fastBoxesThrew": 0,
+              "digest": "fe142d2fcd4a2716",
+              "completed_primary_launches": 24,
+              "all_primary_launches_completed": true,
+              "primary_no_crossing_pass": true
+            },
+            {
+              "name": "trough 60x60 dense",
+              "triangles": 7200,
+              "steps": 1,
+              "fastBoxSteps": 2,
+              "fastBoxesThrough": 0,
+              "fastBoxesThrew": 0,
+              "digest": "fe142d2fcd4a2716",
+              "completed_primary_launches": 24,
+              "all_primary_launches_completed": true,
+              "primary_no_crossing_pass": true
+            }
+          ]
+        },
+        "full": {
+          "evidence": {
+            "path": "witness-alignment/full.log",
+            "sha256": "3cec16dc15507a16904e79e2298ea26ae402e0ed76c1fea39fca0b4f365ac11e"
+          },
+          "checks": 372,
+          "failures": 4,
+          "failure_lines": [
+            "FAIL trough 2x26 coarse fast boxes do not cross actual mesh",
+            "FAIL rotated trough preserves first-contact/crossing contract",
+            "FAIL trough 30x30 fast boxes do not cross actual mesh",
+            "FAIL trough 60x60 dense fast boxes do not cross actual mesh"
+          ],
+          "reported_policy_uncertainty_worlds": 0,
+          "scenarios": [
+            {
+              "name": "box primitive floor",
+              "triangles": 0,
+              "steps": 60,
+              "fastBoxSteps": 90,
+              "fastBoxesThrough": 0,
+              "fastBoxesThrew": 0,
+              "digest": "5243a5308b4e148f",
+              "completed_primary_launches": null,
+              "all_primary_launches_completed": true,
+              "primary_no_crossing_pass": true
+            },
+            {
+              "name": "flat sheet 6x6",
+              "triangles": 72,
+              "steps": 60,
+              "fastBoxSteps": 90,
+              "fastBoxesThrough": 0,
+              "fastBoxesThrew": 0,
+              "digest": "bf77d184969c7111",
+              "completed_primary_launches": 24,
+              "all_primary_launches_completed": true,
+              "primary_no_crossing_pass": true
+            },
+            {
+              "name": "flat sheet 60x60",
+              "triangles": 7200,
+              "steps": 60,
+              "fastBoxSteps": 90,
+              "fastBoxesThrough": 0,
+              "fastBoxesThrew": 0,
+              "digest": "a020b75d80b6f9f",
+              "completed_primary_launches": 24,
+              "all_primary_launches_completed": true,
+              "primary_no_crossing_pass": true
+            },
+            {
+              "name": "trough 2x26 coarse",
+              "triangles": 104,
+              "steps": 60,
+              "fastBoxSteps": 90,
+              "fastBoxesThrough": 13,
+              "fastBoxesThrew": 0,
+              "digest": "94fe3d9d7fb67b54",
+              "completed_primary_launches": 24,
+              "all_primary_launches_completed": true,
+              "primary_no_crossing_pass": false
+            },
+            {
+              "name": "trough 30x30",
+              "triangles": 1800,
+              "steps": 60,
+              "fastBoxSteps": 90,
+              "fastBoxesThrough": 20,
+              "fastBoxesThrew": 0,
+              "digest": "bb52c6f3ddecdabe",
+              "completed_primary_launches": 24,
+              "all_primary_launches_completed": true,
+              "primary_no_crossing_pass": false
+            },
+            {
+              "name": "trough 60x60 dense",
+              "triangles": 7200,
+              "steps": 60,
+              "fastBoxSteps": 90,
+              "fastBoxesThrough": 16,
+              "fastBoxesThrew": 0,
+              "digest": "2b0ce86e8ccdcc1c",
+              "completed_primary_launches": 24,
+              "all_primary_launches_completed": true,
+              "primary_no_crossing_pass": false
+            }
+          ]
+        }
+      },
+      "additional_receipts": [
+        {
+          "path": "witness/ALIGNMENT_RUNS.json",
+          "sha256": "bee47160a2a51982e3e3c9b01dc3bad687e41909b59b2054403d1a02aab379b0"
+        },
+        {
+          "path": "witness-alignment/SUITES.json",
+          "sha256": "624b289aba2861d45935c257044a771c30d54326e41b05619df7089ebc2b7dd8"
+        }
+      ],
+      "physical_tip_torque": {
+        "evidence": {
+          "path": "witness/run-WorldTipTorqueTests-alignment.log",
+          "sha256": "52ca02e8c805e4a64f16f8463508a741fc4cbbfd04fb87055e2490dcc017da0c"
+        },
+        "checks": 168,
+        "failures": 0,
+        "failure_lines": [],
+        "reported_policy_uncertainty_worlds": 0
+      },
+      "regressions": {
+        "geometry": {
+          "checks": 1483,
+          "failures": 0,
+          "log": {
+            "path": "witness-alignment/run-judas_collision_geometry_tests.log",
+            "sha256": "098bb2ed2c54778dafea50e91b72f58eee8f48b1c2a322a780b353fd8528024f"
+          }
+        },
+        "impact_robustness": {
+          "evidence": {
+            "path": "witness-alignment/run-judas_impact_robustness_tests.log",
+            "sha256": "2788c935cabfe040fa462ccd8b707c05ebdbe6415e055517e5dfcad0a5e344e0"
+          },
+          "checks": 4412,
+          "failures": 2,
+          "failure_lines": [
+            "FAIL mesh down 20 side 0 spin 45: box does not pass through the support",
+            "FAIL mesh down 20 side 0 spin 45: no corner sinks a box depth into the support"
+          ],
+          "reported_policy_uncertainty_worlds": 0
+        }
+      },
+      "highspin_observer": {
+        "baseline": {
+          "log": {
+            "path": "witness/run-HighSpinContinuationObserver-baseline.log",
+            "sha256": "53fda1bbc629441281b41306de7b0efd992876a97bbbe28d937f3703a683f8d5"
+          },
+          "deepest_center_m": 0,
+          "deepest_corner_m": 0.011621268466114998,
+          "threw": 0
+        },
+        "candidate_and_alignment": {
+          "logs": [
+            {
+              "path": "witness/run-HighSpinContinuationObserver-candidate.log",
+              "sha256": "2e86753709eeedcf55a7df723771c10cb78f1fdcab6a04fffd08829568019931"
+            },
+            {
+              "path": "witness/run-HighSpinContinuationObserver-alignment.log",
+              "sha256": "2e86753709eeedcf55a7df723771c10cb78f1fdcab6a04fffd08829568019931"
+            }
+          ],
+          "deepest_center_m": 0.33312878012657166,
+          "deepest_corner_m": 0.36882519721984863,
+          "threw": 0
+        }
+      }
+    }
+  ],
+  "independent_helper_experiments": {
+    "correlated_edge_suffix": {
+      "baseline": {
+        "evidence": {
+          "path": "correlated-cert/baseline-probe.log",
+          "sha256": "2dcce8058b0cb066c21c265a2cd3d1b50ab5027991222db7c9daf5ba3b49b73d"
+        },
+        "checks": 5,
+        "failures": 0,
+        "failure_lines": [],
+        "reported_policy_uncertainty_worlds": 0
+      },
+      "candidate": {
+        "evidence": {
+          "path": "correlated-cert/candidate-probe.log",
+          "sha256": "708f1dcc5ed974dfbb16dccf5f245c8cd9eb1c0f1ae17b98b7182d649fe8b593"
+        },
+        "checks": 5,
+        "failures": 0,
+        "failure_lines": [],
+        "reported_policy_uncertainty_worlds": 0
+      },
+      "baseline_nodes": 509,
+      "candidate_nodes": 127,
+      "receipt": {
+        "path": "correlated-cert/RUNS.json",
+        "sha256": "f019c763a582d3c20fe6b8574ae0da6ab2555cf2dcc98a52ffbfb22ebb39edec"
+      }
+    },
+    "chronological": {
+      "eight_original_controls": {
+        "evidence": {
+          "path": "chronological-helper/run-ReacquisitionControls.log",
+          "sha256": "3ac15d9e3db5365aa36eefb37cfdf0d417d2ca821a60b690b23823a87e7a360f"
+        },
+        "checks": 8,
+        "failures": 0,
+        "failure_lines": [],
+        "reported_policy_uncertainty_worlds": 0
+      },
+      "captured_suffix": {
+        "evidence": {
+          "path": "chronological-helper/run-CapturedSuffixProbe.log",
+          "sha256": "aca8a561695e06346cfd96c26bfe2dbd33f1631f85e2404ee93bee0e327aa9f0"
+        },
+        "checks": 5,
+        "failures": 0,
+        "failure_lines": [],
+        "reported_policy_uncertainty_worlds": 0
+      },
+      "suffix_nodes": 33,
+      "suffix_certificates": 14,
+      "receipt": {
+        "path": "chronological-helper/RUNS.json",
+        "sha256": "775b502196655bee8d73edc74e519bb992f9e65cbd57cec3659d8d4725248091"
+      }
+    }
+  },
+  "neighboring_rotation_world_suites": {
+    "suite_count": 10,
+    "observed_checks": 10624,
+    "failures": 0,
+    "suites": [
+      {
+        "suite": "judas_collision_geometry_tests",
+        "checks": 1303,
+        "failures": 0,
+        "count_basis": "Explicit final summary in the actual run log.",
+        "evidence": {
+          "path": "rotation-world/run-judas_collision_geometry_tests.log",
+          "sha256": "f8d752606ef28a76f0bb3500477fa6a7ae62bea225d0e8c9b157968e50097b51"
+        },
+        "receipt": {
+          "path": "rotation-world/SUITES-1.json",
+          "sha256": "3390688c61b461a464102f998a72d42a2aa84b730179b3b40859cf591063ec1e"
+        },
+        "exit": 0
+      },
+      {
+        "suite": "judas_impact_robustness_tests",
+        "checks": 4412,
+        "failures": 0,
+        "count_basis": "Explicit final summary in the actual run log.",
+        "evidence": {
+          "path": "rotation-world/run-judas_impact_robustness_tests.log",
+          "sha256": "5bdb9a4bd008c7ef2263c3d12c431d9750ac2dcb63446157c8d1cfd4ec8f8106"
+        },
+        "receipt": {
+          "path": "rotation-world/SUITES-1.json",
+          "sha256": "3390688c61b461a464102f998a72d42a2aa84b730179b3b40859cf591063ec1e"
+        },
+        "exit": 0
+      },
+      {
+        "suite": "judas_impact_timing_tests",
+        "checks": 3197,
+        "failures": 0,
+        "count_basis": "Explicit final summary in the actual run log.",
+        "evidence": {
+          "path": "rotation-world/run-judas_impact_timing_tests.log",
+          "sha256": "52d83a1b765180db902ea1ebd0332af4618925f9cb8da9a0356ea0644f206a9f"
+        },
+        "receipt": {
+          "path": "rotation-world/SUITES-1.json",
+          "sha256": "3390688c61b461a464102f998a72d42a2aa84b730179b3b40859cf591063ec1e"
+        },
+        "exit": 0
+      },
+      {
+        "suite": "judas_impact_solver_tests",
+        "checks": 267,
+        "failures": 0,
+        "count_basis": "Explicit final summary in the actual run log.",
+        "evidence": {
+          "path": "rotation-world/run-judas_impact_solver_tests.log",
+          "sha256": "0abea3f165316cea297eedef5c12301181c37a8974a331115420a50bb859840a"
+        },
+        "receipt": {
+          "path": "rotation-world/SUITES-1.json",
+          "sha256": "3390688c61b461a464102f998a72d42a2aa84b730179b3b40859cf591063ec1e"
+        },
+        "exit": 0
+      },
+      {
+        "suite": "judas_kinematic_tests",
+        "checks": 96,
+        "failures": 0,
+        "count_basis": "Explicit final summary in the actual run log.",
+        "evidence": {
+          "path": "rotation-world/run-judas_kinematic_tests.log",
+          "sha256": "87fc32d0fa04c9fde088e7feeb50610f7a2eed7ca2e27f4964aae2b6b3b8e98d"
+        },
+        "receipt": {
+          "path": "rotation-world/SUITES-1.json",
+          "sha256": "3390688c61b461a464102f998a72d42a2aa84b730179b3b40859cf591063ec1e"
+        },
+        "exit": 0
+      },
+      {
+        "suite": "judas_rigid_contact_tests",
+        "checks": 32,
+        "failures": 0,
+        "count_basis": "32 printed successful Check() calls; executable summary itself prints failure total only. Source Check in tests/RigidContactTests.cpp:29.",
+        "evidence": {
+          "path": "rotation-world/run-judas_rigid_contact_tests.log",
+          "sha256": "bcc643201b76b47dde44c8f28023bebab08f80d1b90d06743d96b809c9c48dd0"
+        },
+        "receipt": {
+          "path": "rotation-world/SUITES.json",
+          "sha256": "6c010299ab8ec7ff26603e4a18627ae07d0634e6401164faaef896d51c688afc"
+        },
+        "exit": 0
+      },
+      {
+        "suite": "judas_ragdoll_tests",
+        "checks": 36,
+        "failures": 0,
+        "count_basis": "Explicit final summary in the actual run log.",
+        "evidence": {
+          "path": "rotation-world/run-judas_ragdoll_tests.log",
+          "sha256": "f5052edd3c53d1dc140a65cb3e722054a98b013c91abf21e91216c6c598fa22b"
+        },
+        "receipt": {
+          "path": "rotation-world/SUITES.json",
+          "sha256": "6c010299ab8ec7ff26603e4a18627ae07d0634e6401164faaef896d51c688afc"
+        },
+        "exit": 0
+      },
+      {
+        "suite": "judas_post_consumer_ragdoll_tests",
+        "checks": 93,
+        "failures": 0,
+        "count_basis": "Explicit final summary in the actual run log.",
+        "evidence": {
+          "path": "rotation-world/run-judas_post_consumer_ragdoll_tests.log",
+          "sha256": "eba9159431da076656935c4d51bdc75b37e699fddbb8be05ee74ba51ebb22259"
+        },
+        "receipt": {
+          "path": "rotation-world/SUITES.json",
+          "sha256": "6c010299ab8ec7ff26603e4a18627ae07d0634e6401164faaef896d51c688afc"
+        },
+        "exit": 0
+      },
+      {
+        "suite": "judas_physics_continuation_tests",
+        "checks": 112,
+        "failures": 0,
+        "count_basis": "Explicit final summary in the actual run log.",
+        "evidence": {
+          "path": "rotation-world/run-judas_physics_continuation_tests.log",
+          "sha256": "4cc6f3c0c5aac74ddb2d2faae5934a29ee782a046fcffdd72f60f41a33866534"
+        },
+        "receipt": {
+          "path": "rotation-world/SUITES.json",
+          "sha256": "6c010299ab8ec7ff26603e4a18627ae07d0634e6401164faaef896d51c688afc"
+        },
+        "exit": 0
+      },
+      {
+        "suite": "judas_contact_lifecycle_tests",
+        "checks": 1076,
+        "failures": 0,
+        "count_basis": "Explicit final summary in the actual run log.",
+        "evidence": {
+          "path": "rotation-world/run-judas_contact_lifecycle_tests.log",
+          "sha256": "d521b1edc0c31bc21133f2c2994d7c93e60b2beb5d8ebe01272b53b0d7e7bbe7"
+        },
+        "receipt": {
+          "path": "rotation-world/SUITES.json",
+          "sha256": "6c010299ab8ec7ff26603e4a18627ae07d0634e6401164faaef896d51c688afc"
+        },
+        "exit": 0
+      }
+    ]
+  },
+  "lifetime_adversary": {
+    "disposition": "Production rejection: unrelated inert-pair filter suppression must preserve the primary physical trajectory; candidate changes3/168 trials while baseline changes0/168. Observation invalidation alone is reported separately and is not a physical failure.",
+    "matrix": "24 original actors times7 prefixes(2..8), four suffix steps, 168 trials per mode and implementation. Sleeping disabled in both worlds.",
+    "receipt": {
+      "path": "lifetime-controls/RUNS.json",
+      "sha256": "717303f239920a4c48d1b8c250b09d273762a7db2681e71372ab810e52a221d9"
+    },
+    "source_identity": {
+      "path": "lifetime-controls/SOURCE_IDENTITY.json",
+      "sha256": "31e24e44e9ba70c0c93610e358715775f1e3aae72b0664c79bc36a0d887f1f0c"
+    },
+    "results": {
+      "baseline": {
+        "noop": {
+          "mode": "noop",
+          "trials": 168,
+          "physical_changes": 0,
+          "represented_only": 0,
+          "observation_changes": 0,
+          "primary_active_before": 109,
+          "control_endpoints_through": 69,
+          "changed_endpoints_through": 69,
+          "throws": 0,
+          "checks": 1681,
+          "failures": 0,
+          "evidence": {
+            "path": "lifetime-controls/baseline-noop.log",
+            "sha256": "81e636630bb3c255876c5cb50435e57e759051d6f537e1bd90bce3caff2baa59"
+          }
+        },
+        "far_disable": {
+          "mode": "far_disable",
+          "trials": 168,
+          "physical_changes": 0,
+          "represented_only": 0,
+          "observation_changes": 109,
+          "primary_active_before": 109,
+          "control_endpoints_through": 69,
+          "changed_endpoints_through": 69,
+          "throws": 0,
+          "checks": 1681,
+          "failures": 0,
+          "evidence": {
+            "path": "lifetime-controls/baseline-far_disable.log",
+            "sha256": "0c88637689aec4f6d9792d5386a1506623a8e52f4f80a6d62c8c956e780db173"
+          }
+        },
+        "primary_disable": {
+          "mode": "primary_disable",
+          "trials": 168,
+          "physical_changes": 102,
+          "represented_only": 0,
+          "observation_changes": 109,
+          "primary_active_before": 109,
+          "control_endpoints_through": 69,
+          "changed_endpoints_through": 87,
+          "throws": 0,
+          "checks": 1514,
+          "failures": 0,
+          "evidence": {
+            "path": "lifetime-controls/baseline-primary_disable.log",
+            "sha256": "6e2ea7a5f128676f743f142568d9309eb887eac76e21b169eb07ee21b11b53d4"
+          }
+        }
+      },
+      "candidate": {
+        "noop": {
+          "mode": "noop",
+          "trials": 168,
+          "physical_changes": 0,
+          "represented_only": 0,
+          "observation_changes": 0,
+          "primary_active_before": 157,
+          "control_endpoints_through": 0,
+          "changed_endpoints_through": 0,
+          "throws": 0,
+          "checks": 1681,
+          "failures": 0,
+          "evidence": {
+            "path": "lifetime-controls/candidate-noop.log",
+            "sha256": "eea68789dd96dae42f25c6bd9cac285e16b1871a6553ae217bbf27108b3e50ea"
+          }
+        },
+        "far_disable": {
+          "mode": "far_disable",
+          "trials": 168,
+          "physical_changes": 3,
+          "represented_only": 0,
+          "observation_changes": 156,
+          "primary_active_before": 157,
+          "control_endpoints_through": 0,
+          "changed_endpoints_through": 1,
+          "throws": 0,
+          "checks": 1681,
+          "failures": 3,
+          "evidence": {
+            "path": "lifetime-controls/candidate-far_disable.log",
+            "sha256": "44e19d31c815078143e9803ce42ee7a2c72634ed5a5fe669c910205a69e0a34c"
+          }
+        },
+        "primary_disable": {
+          "mode": "primary_disable",
+          "trials": 168,
+          "physical_changes": 156,
+          "represented_only": 0,
+          "observation_changes": 156,
+          "primary_active_before": 157,
+          "control_endpoints_through": 0,
+          "changed_endpoints_through": 42,
+          "throws": 0,
+          "checks": 1514,
+          "failures": 0,
+          "evidence": {
+            "path": "lifetime-controls/candidate-primary_disable.log",
+            "sha256": "f89c1271d1559183f553907ecf8fbe7acb8b4c90269b96be9319ce5efd22dee2"
+          }
+        }
+      }
+    }
+  },
+  "matched_ragdoll_measurement": {
+    "method": "Original 13 bodies/12 joints; original 60 physical steps at 1/60 and throwSpeed1.2. Original Run byte-preserved except function rename and untimed per-step logging. Three paired repeats with alternate before/after order. Nearest-rank p95. No cache warmups or thresholds changed. Short CPU benchmark only; no performance acceptance claim.",
+    "measurement_evidence": {
+      "path": "matched-observer/MEASUREMENTS.json",
+      "sha256": "b2a692a1a7e1e528ac6a468b849801cc9e70f831025b8f691d93a6d8d03c4e33"
+    },
+    "receipt": {
+      "path": "matched-observer/RUNS.json",
+      "sha256": "62815ac9673ccde82201645b8bb3ff3b242ae6f9742a9f75478980919e5ac826"
+    },
+    "source_identity": {
+      "path": "matched-observer/SOURCE_IDENTITY.json",
+      "sha256": "5abe81fec5283c1bb062dfe02c64fc54f630dee83b31697fdd5e035f39fb6ff3"
+    },
+    "paired_step_digest_comparisons_verified_from_raw_logs": 360,
+    "all_equal": true,
+    "workloads": {
+      "coarse": {
+        "triangles": 104,
+        "paired_repeats": 3,
+        "steps_per_repeat": 60,
+        "paired_step_digest_comparisons": 180,
+        "all_paired_step_digests_equal": true,
+        "baseline": {
+          "pooled_steps": 180,
+          "pooled_median_ms": 3.362987,
+          "pooled_p95_ms": 8.828661,
+          "pooled_worst_ms": 12.629474,
+          "max_rss_kib": 20488
+        },
+        "candidate": {
+          "pooled_steps": 180,
+          "pooled_median_ms": 5.01549,
+          "pooled_p95_ms": 11.32358,
+          "pooled_worst_ms": 15.013824,
+          "max_rss_kib": 20616
+        },
+        "median_increase_percent": 49.13795384876598,
+        "p95_increase_percent": 28.259313615054428,
+        "worst_increase_percent": 18.879250236391478,
+        "raw_logs": [
+          {
+            "path": "matched-observer/coarse-0-baseline.log",
+            "sha256": "09d1ab9805a0816d368cdd55fdf8709941695f3d7e5a0e577edc93394f2dcd82"
+          },
+          {
+            "path": "matched-observer/coarse-0-candidate.log",
+            "sha256": "1a23bba701945af49da735f866d8b3f635216c010c63acfa46afce3639d29488"
+          },
+          {
+            "path": "matched-observer/coarse-1-baseline.log",
+            "sha256": "7f001f803b3cfb2ebcca93430c515c150ced1d17fd8fd1674be5c578162533ba"
+          },
+          {
+            "path": "matched-observer/coarse-1-candidate.log",
+            "sha256": "ac350b53332255fdb4aeb139a099bae2e7980946d49c9f681ed80094142cf222"
+          },
+          {
+            "path": "matched-observer/coarse-2-baseline.log",
+            "sha256": "b553aa5bd788a668b969684793eda7de57a74956da268290ad989caef10f6e0a"
+          },
+          {
+            "path": "matched-observer/coarse-2-candidate.log",
+            "sha256": "05c2cc4900a04648fd55b929fd815f9931c6d5349a631b67e63c3e5a062f96ba"
+          }
+        ]
+      },
+      "medium": {
+        "triangles": 1800,
+        "paired_repeats": 3,
+        "steps_per_repeat": 60,
+        "paired_step_digest_comparisons": 180,
+        "all_paired_step_digests_equal": true,
+        "baseline": {
+          "pooled_steps": 180,
+          "pooled_median_ms": 3.733531,
+          "pooled_p95_ms": 16.163858,
+          "pooled_worst_ms": 20.923775,
+          "max_rss_kib": 20996
+        },
+        "candidate": {
+          "pooled_steps": 180,
+          "pooled_median_ms": 5.2434815,
+          "pooled_p95_ms": 20.305492,
+          "pooled_worst_ms": 26.795056,
+          "max_rss_kib": 21220
+        },
+        "median_increase_percent": 40.44296136820611,
+        "p95_increase_percent": 25.622806139474875,
+        "worst_increase_percent": 28.06033328115982,
+        "raw_logs": [
+          {
+            "path": "matched-observer/medium-0-baseline.log",
+            "sha256": "d7c9922a19ff97535195c7571d68dfd2687e4ad532e4dacb2d718fbb049412fc"
+          },
+          {
+            "path": "matched-observer/medium-0-candidate.log",
+            "sha256": "74e42838d8110ade216042c83922b3e3024ce20ca493520a17845f27de0e848a"
+          },
+          {
+            "path": "matched-observer/medium-1-baseline.log",
+            "sha256": "96bc660cdd32ba33d0f5390df45c628eed4eed4c1395ef95fb296a8b1a95fa79"
+          },
+          {
+            "path": "matched-observer/medium-1-candidate.log",
+            "sha256": "601d7a3106d3e2634d01a26b20d868d8f5fd10561abdb916513766cd2b271d2a"
+          },
+          {
+            "path": "matched-observer/medium-2-baseline.log",
+            "sha256": "f452b5bd1c7b6698bc0a2c5776c6c4f4634d1aee239c7548098c1881e70787ea"
+          },
+          {
+            "path": "matched-observer/medium-2-candidate.log",
+            "sha256": "0d0f595dcca6aed2f91b02d8d01fce00fc7f5055182461bc3b03c8b60d5880f0"
+          }
+        ]
+      }
+    }
+  },
+  "unadopted_diagnostics": {
+    "finite_uncertainty_trace_receipts": [
+      {
+        "path": "chronological-trace/BUILD.json",
+        "sha256": "9acbd1f69cb652c3032eeb1afaf266beff0291d3e11148215a2035acc2de1d6f"
+      },
+      {
+        "path": "budget-trace/BUILD.json",
+        "sha256": "8c83a456269bd0287b53083c6e8cddc20742971c32e817335bbad7d96cc32cf5"
+      },
+      {
+        "path": "projection-trace/BUILD.json",
+        "sha256": "75dc39425836e557842ddaa3cd72cea9d5cc8032c110e50d54f9a199348bbe03"
+      },
+      {
+        "path": "origin-probes/RUNS.json",
+        "sha256": "e36d30d8f2f4cb4e1edc56656c72e40f5bc0b3a6b780d8c63408da63bcc9ecaa"
+      }
+    ],
+    "purpose": "Located interval dependency and budget exhaustion without changing physical fixtures or increasing budgets."
+  }
+}

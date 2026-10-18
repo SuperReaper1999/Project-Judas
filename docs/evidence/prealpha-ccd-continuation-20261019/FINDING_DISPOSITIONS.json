@@ -1,0 +1,39 @@
+{
+  "parent_register": "docs/evidence/prealpha-pass5/AUDIT_DISPOSITION.md",
+  "scope": "Deltas only; every unrelated disposition retained, not whole-engine certification",
+  "findings": [
+    {
+      "id": "CCD-MESH-CONTINUATION",
+      "status": "Corrected original four contracts; ordinary focused gate",
+      "limits": "Bounded sampling, native rear selection, deep initial overlap; corrected mesh costs more than parent"
+    },
+    {
+      "id": "CLIP-CONVEXITY",
+      "status": "Corrected",
+      "before": "15/6",
+      "after": "15/0"
+    },
+    {
+      "id": "STREAM-ORIGIN-PRECISION",
+      "status": "Corrected",
+      "before": "Same portable test 67/7",
+      "after": "67/0; real cold native endpoints"
+    },
+    {
+      "id": "DENSE-CCD-TAIL",
+      "status": "Open, not rebenchmarked here"
+    },
+    {
+      "id": "FLU-001",
+      "status": "Deferred unchanged"
+    },
+    {
+      "id": "LEGACY-CONTINUATION",
+      "status": "Missing original historical state unchanged"
+    },
+    {
+      "id": "LIQUID-ORIGIN-GRID-QUERY",
+      "status": "Unchanged, not investigated here"
+    }
+  ]
+}

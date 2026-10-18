@@ -245,3 +245,14 @@ drift and package checks, and keep historical reports immutable. Human acceptanc
 status belongs in explicit acceptance records; regenerated inventories must not
 reintroduce stale milestone status. Prefer a short current guide plus linked
 contracts over copying another milestone chronology into every document.
+
+### Curved-mesh continuation follow-up
+
+The [follow-up report](evidence/prealpha-ccd-continuation-20261019/REPORT.md)
+records a smaller native per-triangle depth-growth correction. The original four
+90-step failures now pass and graduate into the ordinary focused gate. This does
+not establish universal CCD: rear-selection/deep-overlap and bounded-sampling
+limits remain. Corrected articulated-mesh motion costs more than the prior missed-
+collision path; the matched table reports that regression explicitly. A separate
+three-expression regional reconstruction repair preserves local position precision
+at large origins. Neither change is human accepted or promoted automatically.

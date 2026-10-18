@@ -1,0 +1,201 @@
+Curved CCD prototype: unrelated filter change destroys physical continuation
+=========================================================================
+
+Disposition
+-----------
+The rotation-world research prototype fails a physical lifecycle invariant.
+Disabling collision between an awake actor and an inert static body more than
+1 km away changes its motion against its unchanged primary sheet in 3/168
+paired trials. One trial newly crosses the original 5 cm actual-sheet gate.
+The production baseline has zero physical differences under the same action.
+No original test, engine source, fixture, threshold or expected value was
+changed for this review. All runs below were executed by the parent agent;
+this summary was prepared by reading their raw logs and source only.
+
+Fixture and scope
+-----------------
+Source: UnrelatedFilterContinuationTests.cpp, including the unchanged original
+tests/ImpactMeshCostTests.cpp with main renamed. The original source SHA256 is
+91b23a2a4ae45a3a96e01442c8bef583b31cd98a90e02196fb7c534ec5364a6a.
+Probe SHA256 recorded before execution is
+1cd9c19663abf2a3aad37423c9aea4992da66d6c19f6f87765e7f58241ff174c.
+
+Both worlds have the same original Sheet(2,26,true), same original individual
+launch, and same inert static box at (1000,1000,1000), half extents (1,1,1).
+Both disable sleeping to exclude the API's wake effect. Each trial compares
+an identical prefix of 2..8 fixed steps followed by four fixed suffix steps.
+The 24 original launches retain start=(-1.2+.1*index,1.2,-1), velocity
+(0,-40,(index%6)*6), half extents (.02,.01,.03), mass .2, material .4/0,
+ground material .6/0, gravity (0,-9.81,0), and timestep 1.f/60.f.
+
+There are 168 launch/prefix trials, not 168 distinct launch geometries. Depth
+counts below are final diagnostic endpoints over that repeated-prefix matrix,
+not the original full 90-step acceptance counts. The unchanged original
+90-step contract remains a separate gate.
+
+Exact recorded execution commands and results
+--------------------------------------------
+Working directory for these commands:
+/home/conner/Documents/GitHub/Project-Judas
+
+The exact compile and link argument arrays, working directories and exit codes
+are preserved in RUNS.json. The candidate links rotation-world/UnifiedWorld.cpp.o
+and rotation-world/CollisionGeometry.cpp.o before rotation-world/engine.a; the
+baseline links build/libjudas_engine.a. Compile/link each returned exit 0.
+
+/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-ccd-rethink/lifetime-controls/baseline noop -1 2 8 4
+  exit 0; 1681 checks / 0 failures; physical changes 0; observation changes 0;
+  represented-only differences 0; final endpoints through gate 69 control/69 changed.
+
+/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-ccd-rethink/lifetime-controls/baseline far_disable -1 2 8 4
+  exit 0; 1681 checks / 0 failures; physical changes 0; observation changes 109;
+  represented-only differences 0; final endpoints through gate 69 control/69 changed.
+
+/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-ccd-rethink/lifetime-controls/baseline primary_disable -1 2 8 4
+  exit 0; 1514 checks / 0 failures; expected physical changes 102;
+  observation changes 109; final endpoints through gate 69 control/87 changed.
+
+/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-ccd-rethink/lifetime-controls/candidate noop -1 2 8 4
+  exit 0; 1681 checks / 0 failures; physical changes 0; observation changes 0;
+  represented-only differences 0; final endpoints through gate 0 control/0 changed.
+
+/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-ccd-rethink/lifetime-controls/candidate far_disable -1 2 8 4
+  exit 1; 1681 checks / 3 failures; physical changes 3; observation changes 156;
+  represented-only differences 0; final endpoints through gate 0 control/1 changed.
+
+/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-ccd-rethink/lifetime-controls/candidate primary_disable -1 2 8 4
+  exit 0; 1514 checks / 0 failures; expected physical changes 156;
+  observation changes 156; final endpoints through gate 0 control/42 changed.
+
+All six matrices have 168 trials and zero throws. The primary_disable mode is
+an intentional positive control, so actual primary physics changes are expected
+and required for at least one trial. The noop and baseline far_disable controls
+show that neither deterministic replay nor ordinary observation invalidation
+necessarily changes primary physics. far_roundtrip is implemented but was NOT
+executed in these recorded runs; no result is claimed for it.
+
+Exact failing combinations
+--------------------------
+All three failures have prefix_same=1, awake=1 in both worlds, no immediate pose
+or velocity change from the API call, physical divergence on suffix step 1,
+and zero exceptions. In all three, the pre-action stateless native manifold
+is empty while completed physical support samples are present.
+
+Case A: box index 17, prefix 6, four suffix steps
+  Original launch x=-1.2f+.1f*17 (approximately +.5), grazing speed 30 m/s.
+  Raw candidate-far_disable.log lines 705..717.
+  Pre-action position:
+    (0.48047435283660889,0.16801771521568298,0.71755111217498779)
+  Pre-action original depth: 0.0025836864521772127 m.
+  Pre-action completed primary samples: 2; native contacts: 0.
+  Immediately after unrelated edit: same physical fields; primary samples 0.
+  Maximum physical deltas across the four suffix boundaries:
+    position norm 0.29631915859517716 m
+    rotation matrix component 1.2386891900411796
+    linear velocity norm 8.0320054632474953 m/s
+    angular velocity norm 57.78905744798471 rad/s
+  Changed depth by suffix: 0.010426930446305736,
+    0.03742310819931173, 0.076328065667048195, 0.13301944833967932 m.
+  The original 0.05 m gate is crossed at suffix 3, while the endpoint remains
+  inside the authored finite sheet footprint (x=.46842408,z=1.16811287).
+  Final changed position:
+    (0.46440732479095459,0.45995622873306274,1.3183001279830933)
+  Final control position:
+    (0.41205868124961853,0.40480518341064453,1.0319035053253174)
+  Final control depth: -0.021406565170736237 m.
+  Control suffix1 solves 16 rows/3 events; changed suffix1 solves 0 rows/0 events.
+
+Case B: box index 5, prefix 7, four suffix steps
+  Original launch x=-1.2f+.1f*5 (approximately -.7), grazing speed 30 m/s.
+  Raw candidate-far_disable.log lines 786..798.
+  Pre-action position:
+    (-0.72368103265762329,0.25275692343711853,0.86238962411880493)
+  Pre-action original depth: 0.0010849234251889108 m.
+  Pre-action completed primary samples: 4; native contacts: 0.
+  Immediately after unrelated edit: same physical fields; primary samples 0.
+  Maximum physical deltas:
+    position norm 0.14035133737747993 m
+    rotation matrix component 0.78641950273416217
+    linear velocity norm 8.1565419764796783 m/s
+    angular velocity norm 16.318929744494834 rad/s
+  No original 5 cm crossing in the four suffix boundaries. Changed suffix1
+  depth is 0.003708745499606406 m; final changed/control depths are
+  -0.0059278472446176664 / -0.0056197570767514389 m.
+  This remains a physical lifecycle failure despite staying within that gate.
+
+Case C: box index 17, prefix 7, four suffix steps
+  Same original launch as Case A.
+  Raw candidate-far_disable.log lines 869..881.
+  Pre-action position:
+    (0.47653895616531372,0.25229889154434204,0.85969603061676025)
+  Pre-action original depth: 0.000011819571239823398 m.
+  Pre-action completed primary samples: 2; native contacts: 0.
+  Immediately after unrelated edit: same physical fields; primary samples 0.
+  Maximum physical deltas:
+    position norm 0.061203668522790806 m
+    rotation matrix component 0.8711185344752842
+    linear velocity norm 1.3077781371330301 m/s
+    angular velocity norm 29.920138713897799 rad/s
+  No original 5 cm crossing in the four suffix boundaries. Final changed/control
+  depths are -0.0079968461073389192 / -0.023015235548850876 m.
+  Control suffix1 has 4 events; changed suffix1 has 8 events. This is changed
+  real response history, not merely dropped observation publication.
+
+Targeted reproduction commands (not separately executed in these receipts):
+/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-ccd-rethink/lifetime-controls/candidate far_disable 17 6 6 4
+/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-ccd-rethink/lifetime-controls/candidate far_disable 5 7 7 4
+/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-ccd-rethink/lifetime-controls/candidate far_disable 17 7 7 4
+The exact same trial inputs were executed within the full recorded matrix.
+
+Source-level cause and lifecycle interpretation
+-----------------------------------------------
+Source paths here refer to the frozen rotation-world/sources research copy,
+not an adopted production change.
+
+physics/WorldJoints.cpp:153..169, SetPairCollisionEnabled:
+  An actual change to actor/inert suppression increments both bodies'
+  contactObservationRevision (lines 163..164). It does not distinguish another
+  existing physical pair owned by that actor. A no-op returns before the revision
+  increments (lines 157..158), consistent with the zero-change noop matrices.
+
+physics/WorldInternal.h:486..487 and 520..526:
+  Mesh episode records store revisionA/revisionB. Episode() requires them to
+  equal the corresponding bodies' contactObservationRevision, alongside actual
+  body generations, primitive identity and mesh asset identity. Changing an
+  unrelated pair therefore makes the actor/sheet episode inaccessible.
+
+physics/WorldInternal.h:553..558 and 611..621:
+  EpisodeForTime returns no historical selection if Episode() is invalid.
+  BeginMeshEpisodes then calls MeshContactFeatures with that null history.
+  At the three failed boundaries the ordinary native manifold is already empty;
+  the source's front-side rules cannot reconstruct the previous physical
+  ownership from that same pose. Empty feature results erase the episode.
+  The next real integration therefore uses a different accepted-contact set.
+
+The raw logs demonstrate the required distinction: 156 candidate observation
+changes occur, but only three become physical failures. Baseline has 109
+observation changes with zero physical failures. Observation invalidation by
+itself is permitted by this test; subsequent pose/velocity/response divergence
+against the unchanged sheet establishes the defect.
+
+The source mistake is using a body-wide observation publication revision as
+the lifetime of pair-specific causal physical state. A future correction needs
+an explicit ownership lifetime for the actual physical pair/resource/trajectory.
+Simply ignoring all revisions would also be unjustified: reset/teleport, real
+primary filter changes, body reuse, and geometry replacement still need valid
+invalidation. These lifecycle cases and cold persistence remain distinct
+requirements; this test does not claim they were implemented or validated.
+
+Independent lifecycle review limits
+-----------------------------------
+The research record also checks generations and a raw CollisionAsset pointer,
+and publishes accepted feature sets after actual boundaries. Those checks do
+not repair the unrelated observation-revision dependency. This adversary proves
+one ordinary same-process lifecycle defect; it does not establish a complete
+replacement invalidation design, cold-process restoration, atomic failed-step
+publication, all filter/reentry semantics, or resource replacement safety.
+
+The production baseline's 69 through-gate diagnostic endpoints remain known
+original CCD failures. Its passing unrelated-filter invariant is not a claim
+that baseline curved CCD is correct. Conversely, the prototype's original
+372/193/193 passes do not override this new three-case physical failure.

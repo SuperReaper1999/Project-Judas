@@ -996,6 +996,8 @@ target_link_libraries(judas_impact_solver_tests PRIVATE judas_engine)
 add_executable(judas_impact_timing_tests tests/ImpactTimingTests.cpp)
 target_link_libraries(judas_impact_timing_tests PRIVATE judas_engine)
 judas_add_engine_test(judas_impact_candidate_cache_tests tests/ImpactCandidateCacheTests.cpp)
+judas_add_engine_test(judas_native_mesh_growth_tests tests/NativeMeshGrowthTests.cpp)
+judas_add_engine_test(judas_clip_polygon_tests tests/ClipPolygonTests.cpp)
 # Continuous-impact cost of a jointed ragdoll resting in static triangle meshes (timings reported, not asserted).
 judas_add_engine_test(judas_impact_mesh_cost_tests tests/ImpactMeshCostTests.cpp)
 # Fast small bodies: impact spin-up must not throw; thin boxes must not cross tilted supports.
@@ -1523,6 +1525,7 @@ add_executable(judas_origin_script_tests tests/OriginScriptTests.cpp)
 target_link_libraries(judas_origin_script_tests PRIVATE judas_engine)
 
 judas_add_engine_test(judas_origin_stream_tests tests/OriginStreamTests.cpp)
+judas_add_engine_test(judas_stream_origin_precision_tests tests/StreamOriginPrecisionTests.cpp)
 
 # M86 optional prescribed weather; no renderer dependency in its numerical core.
 add_executable(judas_weather_tests tests/WeatherTests.cpp src/Weather.cpp)

@@ -1,0 +1,1612 @@
+--- a/src/CollisionGeometry.cpp
++++ b/src/CollisionGeometry.cpp
+@@ -161,8 +161,8 @@
+ // stop after the first accepted witness; it never changes SAT, clipping, margins,
+ // sidedness, crease handling or the contacts used by a physical solver.
+ template<class Consumer>
+-bool visitCookedPolyContacts(const PrimitivePose& a,const PrimitivePose& b,double margin,Consumer consume,double penetrationThreshold=INFINITY) {
+- PolyScratchLease lease;auto& scratch=lease.frame;V origin=PrimitiveCenter(b);auto& pa=scratch.first;polyInto(pa,a,origin);auto test=[&](const Poly& pb){
++bool visitCookedPolyContacts(const PrimitivePose& a,const PrimitivePose& b,double margin,Consumer consume,double penetrationThreshold=INFINITY,const MeshContactEpisode* episode=nullptr,const std::vector<uint32_t>* excluded=nullptr,std::vector<uint32_t>* features=nullptr) {
++ PolyScratchLease lease;auto& scratch=lease.frame;V origin=PrimitiveCenter(b);auto& pa=scratch.first;polyInto(pa,a,origin);uint32_t triangleFeature=UINT32_MAX;auto test=[&](const Poly& pb){
+   // A face axis is already a valid SAT axis. Reject shallow convex pairs
+   // before enumerating edge axes/clipping; preserve the original full path
+   // near the threshold and for every concave triangle response.
+@@ -194,7 +194,8 @@
+   return visitWitnesses(pa,pb,s,scratch,[&](V x,V y,bool faceWitness){
+    const double gap=faceWitness?glm::dot(s.normal,x-y):s.gap;
+    if(gap<=margin){
+-    return consume(x+origin,y+origin,s.normal,gap);
++    if(features)features->push_back(triangleFeature);
++    return consume(x+origin,y+origin,s.normal,gap,triangleFeature);
+    }
+    return false;
+   });
+@@ -204,11 +205,27 @@
+   // Most candidates of a dense mesh are rejected by a face axis; skip their edge axes
+   // (counted as the same convex test) and reuse one triangle's storage throughout.
+   const auto& asset=*b.shape.asset;const M rotation=PrimitiveRotation(b);const V placed=PrimitiveCenter(b)-origin;auto& pb=scratch.triangle;
+-  for(auto i:candidates(b,lo,hi,margin)){
++  const auto selected=candidates(b,lo,hi,margin);
++  std::vector<uint32_t> connected;
++  bool needsOwnership=false;
++  if(episode&&!episode->fronts.empty())for(auto feature:selected){const auto& face=asset.faces[feature];const V normal=rotation*face.normal,point=placed+rotation*asset.vertices[face.vertices[0]];if(glm::dot(normal,center-point)<0){needsOwnership=true;break;}}
++  if(needsOwnership){
++   auto overlaps=[&](uint32_t feature){triangleInto(pb,asset,feature,rotation,placed);return !faceAxesSeparate(pa,pb,0)&&sat(pa,pb).gap<=0;};
++   for(auto feature:episode->fronts)if(std::binary_search(selected.begin(),selected.end(),feature)&&overlaps(feature))connected.push_back(feature);
++   auto edgeInside=[&](V x,V y){double enter=0,leave=1;for(unsigned face=0;face<pa.faces.size();++face){const V n=pa.normals[face];const auto& indices=pa.faces[face];const double from=glm::dot(n,x-pa.points[indices[0]]),rate=glm::dot(n,y-x);if(rate==0){if(from>eps)return false;}else{const double at=-from/rate;if(rate<0)enter=std::max(enter,at);else leave=std::min(leave,at);if(enter>leave)return false;}}return true;};
++   for(std::size_t at=0;at<connected.size();++at){const auto& face=asset.faces[connected[at]];for(unsigned edge=0;edge<3;++edge){const auto neighbor=face.adjacent[edge];if(neighbor<0||std::find(connected.begin(),connected.end(),uint32_t(neighbor))!=connected.end()||!std::binary_search(selected.begin(),selected.end(),uint32_t(neighbor)))continue;
++    const V x=placed+rotation*asset.vertices[face.vertices[edge]],y=placed+rotation*asset.vertices[face.vertices[(edge+1)%3]];
++    if(edgeInside(x,y)&&overlaps(uint32_t(neighbor)))connected.push_back(uint32_t(neighbor));}}
++   std::sort(connected.begin(),connected.end());
++  }
++  for(auto i:selected){
++   if(excluded&&std::binary_search(excluded->begin(),excluded->end(),i))continue;
++   triangleFeature=i;
+    ++stats.triangles;triangleInto(pb,asset,i,rotation,placed);
+    const double side=glm::dot(pb.normals[0],center-pb.points[0]);
+-   if(!asset.twoSided&&side<-eps)continue;
+-   if(side<0)reverseTriangleSide(pb,asset,i);
++   const bool owned=std::binary_search(connected.begin(),connected.end(),i);
++   if(!asset.twoSided&&side<-eps&&!owned)continue;
++   if(side<0&&(asset.twoSided||!owned))reverseTriangleSide(pb,asset,i);
+    if(faceAxesSeparate(pa,pb,margin)){++stats.convexTests;continue;}
+    if(test(pb))return true;}return false;}
+  throw std::invalid_argument("unsupported cooked contact target");
+@@ -275,7 +292,7 @@
+  return out;
+ }
+ double MeshSeparationAdvance(const PrimitivePose& query,const PrimitivePose& mesh,
+-                             V velocity,V angularGenerator,double rotationRadius,double duration) {
++                             V velocity,V angularGenerator,double rotationRadius,double duration,const std::vector<uint32_t>* excluded,const MeshContactEpisode* episode) {
+  if(mesh.shape.type!=ShapeType::TriangleMesh||!mesh.shape.asset||
+     (query.shape.type!=ShapeType::Box&&query.shape.type!=ShapeType::ConvexHull))
+   throw std::invalid_argument("mesh advancement requires a convex polyhedron and triangle mesh");
+@@ -290,10 +307,11 @@
+  const auto& asset=*mesh.shape.asset;const M rotation=PrimitiveRotation(mesh);
+  auto& triangleStorage=lease.frame.triangle;double earliest=INFINITY;
+  for(unsigned feature:selected){
++  if(excluded&&std::binary_search(excluded->begin(),excluded->end(),feature))continue;
+   ++stats.triangles;++stats.convexTests;
+   triangleInto(triangleStorage,asset,feature,rotation,V(0));
+   const auto& b=triangleStorage;
+-  if(!asset.twoSided&&glm::dot(b.normals[0],center-b.points[0])<-eps)continue;
++  if(!asset.twoSided&&glm::dot(b.normals[0],center-b.points[0])<-eps&&!(episode&&!episode->fronts.empty()))continue;
+   double enter=0,leave=duration;
+   auto axis=[&](V n){
+    const double length=glm::length(n);if(length<eps)return true;n/=length;
+@@ -333,20 +351,80 @@
+  }
+  return earliest;
+ }
+-ContactManifold CookedContacts(const PrimitivePose& a,const PrimitivePose& b,double margin) {
++ContactManifold EpisodeCookedContacts(const PrimitivePose& a,const PrimitivePose& b,double margin,const MeshContactEpisode* episode) {
+  const bool newA=a.shape.asset!=nullptr,newB=b.shape.asset!=nullptr;
+  if(!newA&&!newB)throw std::invalid_argument("CookedContacts called without cooked geometry");
+- if(a.shape.type==ShapeType::TriangleMesh){auto out=CookedContacts(b,a,margin);for(int i=0;i<out.count;++i){auto& c=out.points[i];c.normal=-c.normal;c.preciseNormal=-c.preciseNormal;std::swap(c.localAnchorA,c.localAnchorB);std::swap(c.localWitnessA,c.localWitnessB);}return out;}
++ if(a.shape.type==ShapeType::TriangleMesh){auto out=EpisodeCookedContacts(b,a,margin,episode);for(int i=0;i<out.count;++i){auto& c=out.points[i];c.normal=-c.normal;c.preciseNormal=-c.preciseNormal;std::swap(c.localAnchorA,c.localAnchorB);std::swap(c.localWitnessA,c.localWitnessB);}return out;}
+  ContactManifold out;std::vector<Contact> contacts;
+  if(a.shape.type==ShapeType::Sphere||a.shape.type==ShapeType::Capsule){M r=PrimitiveRotation(a);V center=PrimitiveCenter(a);double half=a.shape.type==ShapeType::Capsule?a.shape.halfHeight:0;auto d=SegmentGeometry(center-r[1]*half,center+r[1]*half,a.shape.radius,b,margin);if(d.valid&&d.gap<=margin)out.Add(make(a,b,d.queryPoint-d.normal*double(a.shape.radius),d.point,d.normal,d.gap));return out;}
+- if(b.shape.type==ShapeType::Sphere||b.shape.type==ShapeType::Capsule){auto result=CookedContacts(b,a,margin);for(int i=0;i<result.count;++i){auto& c=result.points[i];c.normal=-c.normal;c.preciseNormal=-c.preciseNormal;std::swap(c.localAnchorA,c.localAnchorB);std::swap(c.localWitnessA,c.localWitnessB);}return result;}
++ if(b.shape.type==ShapeType::Sphere||b.shape.type==ShapeType::Capsule){auto result=EpisodeCookedContacts(b,a,margin,episode);for(int i=0;i<result.count;++i){auto& c=result.points[i];c.normal=-c.normal;c.preciseNormal=-c.preciseNormal;std::swap(c.localAnchorA,c.localAnchorB);std::swap(c.localWitnessA,c.localWitnessB);}return result;}
+  if(a.shape.type!=ShapeType::Box&&a.shape.type!=ShapeType::ConvexHull)throw std::invalid_argument("unsupported cooked contact pair");
+- visitCookedPolyContacts(a,b,margin,[&](V x,V y,V normal,double gap){
++ visitCookedPolyContacts(a,b,margin,[&](V x,V y,V normal,double gap,uint32_t){
+   contacts.push_back(make(a,b,x,y,normal,gap));return false;
+- });
++ },INFINITY,episode);
+  reduce(contacts,out);return out;
+ }
+ // Boolean truth for CCD observations, not a replacement response manifold.
++MeshFeatureBudget BuildMeshFeatureBudget(const PrimitivePose& query,const PrimitivePose& mesh,double amount,V velocity,V angular,double radius,double duration,const MeshContactEpisode* episode) {
++ MeshFeatureBudget result;std::vector<std::pair<uint32_t,double>> actual;
++ visitCookedPolyContacts(query,mesh,0,[&](V,V,V,double gap,uint32_t feature){actual.push_back({feature,-gap});return false;},INFINITY,episode);
++ PolyScratchLease lease;auto& pa=lease.frame.first;const V origin=PrimitiveCenter(mesh);polyInto(pa,query,origin);V lo(INFINITY),hi(-INFINITY),center(0);
++ for(V p:pa.points){lo=glm::min(lo,p+origin);hi=glm::max(hi,p+origin);center+=p;}center/=double(pa.points.size());const V delta=velocity*duration;lo=glm::min(lo,lo+delta);hi=glm::max(hi,hi+delta);
++ const auto selected=candidates(mesh,lo,hi,glm::length(angular)*radius*duration);const auto& asset=*mesh.shape.asset;const M rotation=PrimitiveRotation(mesh);
++ for(auto feature:selected){const auto& face=asset.faces[feature];const V n=rotation*face.normal;const double plane=glm::dot(n,rotation*asset.vertices[face.vertices[0]]);double bottom=INFINITY;
++  for(V p:pa.points)bottom=std::min(bottom,glm::dot(n,p));const double depth=plane-bottom,half=glm::dot(n,center)-bottom;
++  double limit=std::min(std::max(0.,depth)+amount,.5*half);bool found=false;
++  for(const auto& old:actual)if(old.first==feature){if(!found){limit=old.second+amount;found=true;}else limit=std::max(limit,old.second+amount);}
++  result.limits.push_back({feature,limit});
++ }
++ return result;
++}
++bool MeshFeatureBudgetExceeded(const PrimitivePose& query,const PrimitivePose& mesh,const MeshFeatureBudget& budget,const MeshContactEpisode* episode) {
++ return visitCookedPolyContacts(query,mesh,0,[&](V,V,V,double gap,uint32_t feature){const auto found=std::lower_bound(budget.limits.begin(),budget.limits.end(),feature,[](const auto& entry,uint32_t id){return entry.first<id;});return found!=budget.limits.end()&&found->first==feature&&-gap>found->second;},INFINITY,episode);
++}
++bool MeshEndpointUsesNativeSelection(const PrimitivePose& query,const PrimitivePose& mesh){
++ if(mesh.shape.asset->twoSided)return false;
++ PolyScratchLease lease;auto& scratch=lease.frame;const V origin=PrimitiveCenter(mesh);auto& a=scratch.first;polyInto(a,query,origin);
++ V lo(INFINITY),hi(-INFINITY),center(0);for(V p:a.points){lo=glm::min(lo,p+origin);hi=glm::max(hi,p+origin);center+=p;}center/=double(a.points.size());
++ const auto& asset=*mesh.shape.asset;const M rotation=PrimitiveRotation(mesh);auto& b=scratch.triangle;
++ for(auto i:candidates(mesh,lo,hi,0)){
++  ++stats.triangles;triangleInto(b,asset,i,rotation,V(0));
++  if(glm::dot(b.normals[0],center-b.points[0])>=0)continue;
++  if(!faceAxesSeparate(a,b,0)&&sat(a,b).gap<=0)return false;
++ }
++ return true;
++}
++// Cache-only finite contact topology observer. No native query/response change.
++std::vector<uint32_t> MeshFiniteComponent(const PrimitivePose&query,const PrimitivePose&mesh,const std::vector<uint32_t>&seeds,bool allCandidates){
++ PolyScratchLease lease;auto&scratch=lease.frame;const V origin=PrimitiveCenter(mesh);auto&pa=scratch.first;polyInto(pa,query,origin);
++ V lo(INFINITY),hi(-INFINITY);for(V p:pa.points){lo=glm::min(lo,p+origin);hi=glm::max(hi,p+origin);}
++ const auto selected=candidates(mesh,lo,hi,0);const auto&asset=*mesh.shape.asset;const M rotation=PrimitiveRotation(mesh);auto&pb=scratch.triangle;
++ auto overlaps=[&](uint32_t feature){triangleInto(pb,asset,feature,rotation,V(0));return !faceAxesSeparate(pa,pb,0)&&sat(pa,pb).gap<=0;};
++ auto edgeInside=[&](V x,V y){double enter=0,leave=1;for(unsigned f=0;f<pa.faces.size();++f){const V n=pa.normals[f];const auto&ids=pa.faces[f];const double from=glm::dot(n,x-pa.points[ids[0]]),rate=glm::dot(n,y-x);if(rate==0){if(from>eps)return false;}else{const double at=-from/rate;if(rate<0)enter=std::max(enter,at);else leave=std::min(leave,at);if(enter>leave)return false;}}return true;};
++ std::vector<uint32_t> connected;
++ if(allCandidates){for(auto f:selected)if(overlaps(f))connected.push_back(f);}
++ else for(auto f:seeds)if(std::binary_search(selected.begin(),selected.end(),f)&&overlaps(f))connected.push_back(f);
++ for(std::size_t at=0;at<connected.size();++at){const auto&face=asset.faces[connected[at]];for(unsigned edge=0;edge<3;++edge){const auto next=face.adjacent[edge];if(next<0||std::find(connected.begin(),connected.end(),uint32_t(next))!=connected.end()||!std::binary_search(selected.begin(),selected.end(),uint32_t(next)))continue;
++  const V x=rotation*asset.vertices[face.vertices[edge]],y=rotation*asset.vertices[face.vertices[(edge+1)%3]];if(edgeInside(x,y)&&overlaps(uint32_t(next)))connected.push_back(uint32_t(next));}}
++ std::sort(connected.begin(),connected.end());connected.erase(std::unique(connected.begin(),connected.end()),connected.end());return connected;
++}
++bool MeshFiniteHasOverlap(const PrimitivePose& query,const PrimitivePose& mesh){
++ PolyScratchLease lease;auto& scratch=lease.frame;const V origin=PrimitiveCenter(mesh);auto& a=scratch.first;polyInto(a,query,origin);
++ V lo(INFINITY),hi(-INFINITY);for(V p:a.points){lo=glm::min(lo,p+origin);hi=glm::max(hi,p+origin);}
++ const auto& asset=*mesh.shape.asset;const M rotation=PrimitiveRotation(mesh);auto& b=scratch.triangle;
++ for(auto i:candidates(mesh,lo,hi,0)){++stats.triangles;triangleInto(b,asset,i,rotation,V(0));if(!faceAxesSeparate(a,b,0)&&sat(a,b).gap<=0)return true;}return false;
++}
++ContactManifold CookedContacts(const PrimitivePose& a,const PrimitivePose& b,double margin) { return EpisodeCookedContacts(a,b,margin,nullptr); }
++std::vector<uint32_t> MeshContactFeatures(const PrimitivePose& query,const PrimitivePose& mesh,const MeshContactEpisode* episode) {
++ std::vector<uint32_t> result;visitCookedPolyContacts(query,mesh,0,[](V,V,V,double,uint32_t){return false;},INFINITY,episode,nullptr,&result);
++ std::sort(result.begin(),result.end());result.erase(std::unique(result.begin(),result.end()),result.end());return result;
++}
++bool MeshEpisodeHasContacts(const PrimitivePose& query,const PrimitivePose& mesh,const MeshContactEpisode* episode,const std::vector<uint32_t>* excluded) {
++ return visitCookedPolyContacts(query,mesh,0,[](V,V,V,double,uint32_t){return true;},INFINITY,episode,excluded);
++}
++bool MeshEpisodeHasPenetrationBeyond(const PrimitivePose& query,const PrimitivePose& mesh,double threshold,const MeshContactEpisode* episode) {
++ return visitCookedPolyContacts(query,mesh,0,[&](V,V,V,double gap,uint32_t){return -gap>threshold;},threshold,episode);
++}
+ bool CookedHasContacts(const PrimitivePose& a,const PrimitivePose& b,double margin) {
+  if(a.shape.type==ShapeType::TriangleMesh)return CookedHasContacts(b,a,margin);
+  // Keep unoptimized sphere/capsule and unsupported cases on the same dispatcher.
+@@ -355,7 +433,7 @@
+   return CookedContacts(a,b,margin).count>0;
+  if(!a.shape.asset&&!b.shape.asset)throw std::invalid_argument("CookedContacts called without cooked geometry");
+  if(a.shape.type!=ShapeType::Box&&a.shape.type!=ShapeType::ConvexHull)throw std::invalid_argument("unsupported cooked contact pair");
+- return visitCookedPolyContacts(a,b,margin,[](V,V,V,double){return true;});
++ return visitCookedPolyContacts(a,b,margin,[](V,V,V,double,uint32_t){return true;});
+ }
+ bool CookedHasPenetrationBeyond(const PrimitivePose& a,const PrimitivePose& b,double threshold) {
+  if(!std::isfinite(threshold)||threshold<0)throw std::invalid_argument("invalid penetration threshold");
+@@ -367,7 +445,7 @@
+  }
+  // reduce() retains the deepest witness first. Existence over the same
+  // accepted witnesses is therefore exactly the full manifold's maximum test.
+- return visitCookedPolyContacts(a,b,0,[&](V,V,V,double gap){return -gap>threshold;},threshold);
++ return visitCookedPolyContacts(a,b,0,[&](V,V,V,double gap,uint32_t){return -gap>threshold;},threshold);
+ }
+ CollisionMassProperties ShapeMassProperties(const Shape& shape) {
+  CollisionMassProperties out;
+--- a/src/CollisionGeometry.h
++++ b/src/CollisionGeometry.h
+@@ -25,12 +25,31 @@
+ // Exact deep-contact existence for continuous penetration searches.
+ bool CookedHasPenetrationBeyond(const PrimitivePose&,const PrimitivePose&,double threshold);
+ GeometryDistance PolyGeometry(const PrimitivePose& query,const PrimitivePose& target,double range=std::numeric_limits<double>::infinity(),uint32_t feature=UINT32_MAX);
++struct MeshContactEpisode;
+ // Earliest possible overlap of a moving convex polyhedron and a stationary
+ // triangle union. Each finite patch retains its own SAT bounds; no selected
+ // local response plane is treated as a plane separating the entire mesh.
+ // The angular generator's magnitude bounds the anchored rotation rate.
+ double MeshSeparationAdvance(const PrimitivePose& query,const PrimitivePose& mesh,
+                              glm::dvec3 velocity,glm::dvec3 angularGenerator,
+-                             double rotationRadius,double duration);
++                             double rotationRadius,double duration,const std::vector<uint32_t>* excluded=nullptr,const MeshContactEpisode* episode=nullptr);
+ struct CollisionMassProperties {double volume=0;glm::dvec3 center{0};glm::dmat3 inertia{0};};
+ CollisionMassProperties ShapeMassProperties(const Shape&);
++
++// Internal physical front-contact episode: stateless queries pass no episode.
++struct MeshContactEpisode { std::vector<uint32_t> fronts; };
++ContactManifold EpisodeCookedContacts(const PrimitivePose&,const PrimitivePose&,double,const MeshContactEpisode*);
++std::vector<uint32_t> MeshContactFeatures(const PrimitivePose&,const PrimitivePose&,const MeshContactEpisode*);
++bool MeshEpisodeHasContacts(const PrimitivePose&,const PrimitivePose&,const MeshContactEpisode*,const std::vector<uint32_t>* excluded=nullptr);
++bool MeshEpisodeHasPenetrationBeyond(const PrimitivePose&,const PrimitivePose&,double,const MeshContactEpisode*);
++
++struct MeshFeatureBudget { std::vector<std::pair<uint32_t,double>> limits; };
++MeshFeatureBudget BuildMeshFeatureBudget(const PrimitivePose&,const PrimitivePose&,double,glm::dvec3,glm::dvec3,double,double,const MeshContactEpisode*);
++bool MeshFeatureBudgetExceeded(const PrimitivePose&,const PrimitivePose&,const MeshFeatureBudget&,const MeshContactEpisode*);
++
++// Side-independent finite geometric overlap, for physical episode expiry only.
++std::vector<uint32_t> MeshFiniteComponent(const PrimitivePose&,const PrimitivePose&,const std::vector<uint32_t>&,bool allCandidates=false);
++bool MeshFiniteHasOverlap(const PrimitivePose&,const PrimitivePose&);
++
++// One-sided physical history cannot affect front-only finite endpoint truth.
++bool MeshEndpointUsesNativeSelection(const PrimitivePose&,const PrimitivePose&);
+--- /dev/null
++++ b/src/MeshContinuityProbe.h
+@@ -0,0 +1,200 @@
++#pragma once
++
++#include "CollisionAsset.h"
++#include "CollisionGeometry.h"
++#include "RigidMotionBounds.h"
++#include <array>
++#include <vector>
++
++namespace episode_probe {
++using V = glm::dvec3;
++using M = glm::dmat3;
++using Iv = contact_geometry::Iv;
++
++enum class Result { Connected, Separated, Uncertain };
++struct Measurement {
++    Result result = Result::Uncertain;
++    unsigned intervals = 0, pointCertificates = 0, constantCertificates = 0;
++    double separationTime = -1;
++};
++struct Plane { V normal; double offset; };
++
++inline std::vector<Plane> Planes(const Shape &shape) {
++    std::vector<Plane> planes;
++    if (shape.type == ShapeType::Box) {
++        for (unsigned axis = 0; axis < 3; ++axis)
++            for (double sign : {-1., 1.}) {
++                V normal(0); normal[axis] = sign;
++                planes.push_back({normal, shape.halfExtents[axis]});
++            }
++    } else if (shape.type == ShapeType::ConvexHull && shape.asset) {
++        for (const auto &face : shape.asset->polygons)
++            planes.push_back({face.normal,
++                              glm::dot(face.normal, shape.asset->vertices[face.vertices[0]])});
++    }
++    return planes;
++}
++
++inline PrimitivePose At(const PrimitivePose &reference, const RigidMotionSegment &segment,
++                        double time) {
++    PrimitivePose result = reference;
++    const auto pose = segment.EvaluateGeometry(time);
++    result.parentPosition = pose.position;
++    result.parentOrientation = pose.orientation;
++    return result;
++}
++
++// The exact finite triangle/convex intersection in the moving primitive frame.
++// No infinite plane, old witness, contact skin or expanded mesh is substituted.
++inline std::vector<V> Intersection(const PrimitivePose &query, const PrimitivePose &mesh,
++                                   unsigned feature, const std::vector<Plane> &planes) {
++    const V origin = PrimitiveCenter(mesh), center = PrimitiveCenter(query) - origin;
++    const M rotation = PrimitiveRotation(query), inverse = glm::transpose(rotation);
++    const M fixed = PrimitiveRotation(mesh);
++    std::vector<V> polygon;
++    for (auto vertex : mesh.shape.asset->faces[feature].vertices)
++        polygon.push_back(inverse * (fixed * mesh.shape.asset->vertices[vertex] - center));
++    for (const auto &plane : planes) {
++        std::vector<V> clipped;
++        if (polygon.empty()) break;
++        V previous = polygon.back();
++        double before = glm::dot(plane.normal, previous) - plane.offset;
++        for (V point : polygon) {
++            const double after = glm::dot(plane.normal, point) - plane.offset;
++            if ((before <= 0) != (after <= 0))
++                clipped.push_back(previous + (point - previous) * (before / (before - after)));
++            if (after <= 0) clipped.push_back(point);
++            previous = point; before = after;
++        }
++        polygon.swap(clipped);
++    }
++    for (auto &point : polygon) point = center + rotation * point;
++    return polygon;
++}
++
++inline bool Constant(const RigidMotionSegment &segment, double start, double finish) {
++    const auto from = segment.EvaluateGeometry(start), to = segment.EvaluateGeometry(finish);
++    if (from.position != to.position) return false;
++    if (segment.prescribed) return segment.driftAngularVelocity == glm::vec3(0);
++    const glm::quat omega(0, segment.driftAngularVelocity.x,
++                         segment.driftAngularVelocity.y, segment.driftAngularVelocity.z);
++    const auto raw = [&](double time) {
++        return segment.orientation + (omega * segment.orientation) * (.5f * float(time - segment.begin));
++    };
++    // All raw components and centre components are monotone represented float
++    // expressions. Equal endpoints prove every interior represented pose equal.
++    return rigid_motion_bounds::SameQuat(raw(start), raw(finish));
++}
++
++inline std::optional<std::array<Iv, 3>> TriangleWitness(
++    V approximate, const PrimitivePose &mesh, unsigned feature) {
++    const auto &face = mesh.shape.asset->faces[feature];
++    const auto rotation = PrimitiveRotation(mesh);
++    const V first = rotation * mesh.shape.asset->vertices[face.vertices[0]],
++            ab = rotation * mesh.shape.asset->vertices[face.vertices[1]] - first,
++            ac = rotation * mesh.shape.asset->vertices[face.vertices[2]] - first,
++            offset = approximate - first;
++    const double aa = glm::dot(ab, ab), bb = glm::dot(ab, ac), cc = glm::dot(ac, ac),
++                 ax = glm::dot(ab, offset), cx = glm::dot(ac, offset), denominator = aa*cc-bb*bb;
++    if (!(denominator > 0)) return std::nullopt;
++    const double u = (cc*ax-bb*cx)/denominator, v = (aa*cx-bb*ax)/denominator;
++    if (!std::isfinite(u) || !std::isfinite(v)) return std::nullopt;
++    // Exact dyadic barycentric coefficients keep the witness on the finite
++    // triangle; transforming clipped vertices back alone could leave its plane
++    // by a rounding error. Their sum is exact with this 40-bit denominator.
++    constexpr uint64_t scale = uint64_t(1) << 40;
++    const auto numeratorU = uint64_t(std::floor(std::clamp(u,0.,1.)*double(scale)));
++    const auto numeratorV = std::min(scale-numeratorU,
++        uint64_t(std::floor(std::clamp(v,0.,1.)*double(scale))));
++    const double weightU = double(numeratorU)/double(scale), weightV = double(numeratorV)/double(scale);
++    const V second = rotation * mesh.shape.asset->vertices[face.vertices[1]],
++            third = rotation * mesh.shape.asset->vertices[face.vertices[2]];
++    std::array<Iv,3> point;
++    for(unsigned k=0;k<3;++k)
++        point[k] = Iv(first[k]) + Iv(weightU)*(Iv(second[k])-Iv(first[k])) +
++                   Iv(weightV)*(Iv(third[k])-Iv(first[k]));
++    return point;
++}
++
++inline bool ContainsThroughout(const std::array<Iv, 3> &point, const PrimitivePose &reference,
++                               const PrimitivePose &mesh, const RigidMotionSegment &segment,
++                               const std::vector<Plane> &planes, double start, double finish) {
++    const auto from = segment.EvaluateGeometry(start), to = segment.EvaluateGeometry(finish);
++    std::optional<contact_geometry::M<Iv>> rotation;
++    if (segment.driftAngularVelocity == glm::vec3(0) &&
++        rigid_motion_bounds::SameQuat(from.orientation, to.orientation)) {
++        const auto fixed = ContactRotation(from.orientation);
++        contact_geometry::M<Iv> value;
++        for (unsigned i = 0; i < 3; ++i)
++            for (unsigned j = 0; j < 3; ++j) value[i][j] = Iv(fixed[i][j]);
++        rotation = value;
++    } else rotation = rigid_motion_bounds::TryDynamicRotationInterval(segment, start, finish);
++    if (!rotation) return false;
++    try {
++        const V origin = PrimitiveCenter(mesh);
++        std::array<Iv, 3> relative, parentLocal, childLocal;
++        for (unsigned k = 0; k < 3; ++k) {
++            const auto first = double(from.position[k]) - origin[k];
++            const auto last = double(to.position[k]) - origin[k];
++            relative[k] = point[k] - Iv(std::min(first, last), std::max(first, last));
++        }
++        for (unsigned j = 0; j < 3; ++j) {
++            parentLocal[j] = Iv(-double(reference.parentLocalCenter[j]));
++            for (unsigned k = 0; k < 3; ++k)
++                parentLocal[j] = parentLocal[j] + (*rotation)[j][k] * relative[k];
++        }
++        const auto child = ContactRotation(reference.childRotation);
++        for (unsigned j = 0; j < 3; ++j) {
++            childLocal[j] = Iv(0);
++            for (unsigned k = 0; k < 3; ++k)
++                childLocal[j] = childLocal[j] + Iv(child[j][k]) * parentLocal[k];
++        }
++        for (const auto &plane : planes) {
++            Iv distance(-plane.offset);
++            for (unsigned k = 0; k < 3; ++k)
++                distance = distance + Iv(plane.normal[k]) * childLocal[k];
++            if (distance.hi > 0) return false;
++        }
++        return true;
++    } catch (const contact_geometry::ArithmeticFailure &) { return false; }
++}
++
++inline Measurement Connected(const PrimitivePose &query, const PrimitivePose &mesh,
++                              unsigned feature, const RigidMotionSegment &segment,
++                              double start, double finish, unsigned maximumIntervals = 1024) {
++    Measurement result;
++    const auto planes = Planes(query.shape);
++    if (planes.empty() || mesh.shape.type != ShapeType::TriangleMesh ||
++        !mesh.shape.asset || feature >= mesh.shape.asset->faces.size() || start > finish)
++        return result;
++    for (double time : {start, finish})
++        if (Intersection(At(query, segment, time), mesh, feature, planes).empty()) {
++            result.result = Result::Separated; result.separationTime = time; return result;
++        }
++    struct Range { double first, last; unsigned depth; };
++    std::vector<Range> ranges{{start, finish, 0}};
++    while (!ranges.empty()) {
++        const auto range = ranges.back(); ranges.pop_back();
++        if (++result.intervals > maximumIntervals) return result;
++        if (Constant(segment, range.first, range.last)) {
++            ++result.constantCertificates; continue;
++        }
++        const double middle = (range.first + range.last) * .5;
++        auto polygon = Intersection(At(query, segment, middle), mesh, feature, planes);
++        if (polygon.empty()) {
++            result.result = Result::Separated; result.separationTime = middle; return result;
++        }
++        V witness(0); for (V point : polygon) witness += point;
++        witness /= double(polygon.size());
++        const auto point = TriangleWitness(witness, mesh, feature);
++        if (point && ContainsThroughout(*point, query, mesh, segment, planes, range.first, range.last)) {
++            ++result.pointCertificates; continue;
++        }
++        if (range.depth >= 40 || middle <= range.first || middle >= range.last) return result;
++        ranges.push_back({middle, range.last, range.depth + 1});
++        ranges.push_back({range.first, middle, range.depth + 1});
++    }
++    result.result = Result::Connected;
++    return result;
++}
++} // namespace episode_probe
+--- /dev/null
++++ b/src/MeshUnionContinuity.h
+@@ -0,0 +1,219 @@
++#pragma once
++#include "MeshContinuityProbe.h"
++#include "NativeSATContinuity.h"
++
++namespace episode_probe {
++struct UnionMeasurement {
++    Measurement measure;
++    MeshContactEpisode selected;
++    unsigned reacquisitionSearches=0,reacquisitionWitnesses=0;
++};
++
++inline double NativeMeshSide(const PrimitivePose&query,const PrimitivePose&mesh,unsigned feature){
++    V center(0);const auto r=PrimitiveRotation(query);const auto c=PrimitiveCenter(query)-PrimitiveCenter(mesh);
++    if(query.shape.type==ShapeType::Box){const V h(query.shape.halfExtents);for(int z:{-1,1})for(int y:{-1,1})for(int x:{-1,1})center+=c+r*V(x*h.x,y*h.y,z*h.z);center/=8.;}
++    else{for(V point:query.shape.asset->vertices)center+=c+r*point;center/=double(query.shape.asset->vertices.size());}
++    const auto fixed=PrimitiveRotation(mesh);const auto&face=mesh.shape.asset->faces[feature];
++    return glm::dot(fixed*face.normal,center-fixed*mesh.shape.asset->vertices[face.vertices[0]]);
++}
++inline std::vector<uint32_t> NativeFrontFeatures(const PrimitivePose&query,const PrimitivePose&mesh){
++    auto result=MeshContactFeatures(query,mesh,nullptr);
++    result.erase(std::remove_if(result.begin(),result.end(),[&](auto f){return NativeMeshSide(query,mesh,f)<0;}),result.end());
++    return result;
++}
++
++// This is an independent forward-only helper. Each invocation owns its derived
++// checkpoints; it does not mutate the physical world or a durable episode.
++struct ForwardCheckpoint { double time=0;unsigned topology=0;MeshContactEpisode selected; };
++struct ForwardMeasurement {
++    UnionMeasurement value;
++    std::vector<ForwardCheckpoint> checkpoints;
++};
++
++inline void ForwardMerge(std::vector<uint32_t>&to,const std::vector<uint32_t>&from){
++    to.insert(to.end(),from.begin(),from.end());std::sort(to.begin(),to.end());
++    to.erase(std::unique(to.begin(),to.end()),to.end());
++}
++
++// Static welded components limit possible ownership transfer. Two disconnected
++// components can be advanced independently, including when one is persistently
++// touching and another has a genuine finite departure. This is an exclusion
++// partition only; membership never grants ownership inside a component.
++inline std::vector<unsigned> ForwardTopology(const CollisionAsset&asset){
++    std::vector<unsigned> labels(asset.faces.size(),UINT32_MAX);unsigned label=0;
++    for(unsigned seed=0;seed<labels.size();++seed)if(labels[seed]==UINT32_MAX){
++        std::vector<unsigned> pending{seed};labels[seed]=label;
++        for(std::size_t at=0;at<pending.size();++at)for(auto next:asset.faces[pending[at]].adjacent)
++            if(next>=0&&labels[unsigned(next)]==UINT32_MAX){labels[unsigned(next)]=label;pending.push_back(unsigned(next));}
++        ++label;
++    }
++    return labels;
++}
++
++// Encloses the actual native represented vertex mean and all native candidate
++// bounds on one dynamic Cayley segment. The box mean uses exact opposite-offset
++// symmetry, not an assumption that floating vertex accumulation equals the COM.
++struct ForwardMeanBound { IV mean;std::vector<uint32_t> candidates; };
++inline std::optional<ForwardMeanBound> ForwardNativeMeanBound(const PrimitivePose&query,
++    const PrimitivePose&mesh,const RigidMotionSegment&segment,double first,double last){
++    if(segment.prescribed||(query.shape.type!=ShapeType::Box&&query.shape.type!=ShapeType::ConvexHull))return std::nullopt;
++    try{
++        const auto from=segment.EvaluateGeometry(first),to=segment.EvaluateGeometry(last);
++        auto parent=rigid_motion_bounds::TryDynamicRotationInterval(segment,first,last);
++        if(segment.driftAngularVelocity==glm::vec3(0)&&rigid_motion_bounds::SameQuat(from.orientation,to.orientation)){
++            contact_geometry::M<Iv> exact;const auto r=ContactRotation(from.orientation);
++            for(unsigned j=0;j<3;++j)for(unsigned k=0;k<3;++k)exact[j][k]=Iv(r[j][k]);parent=exact;
++        }
++        if(!parent)return std::nullopt;
++        const auto child=ContactRotation(query.childRotation);contact_geometry::M<Iv> rotation;
++        for(unsigned j=0;j<3;++j)for(unsigned k=0;k<3;++k){rotation[j][k]=Iv(0);for(unsigned l=0;l<3;++l)rotation[j][k]=rotation[j][k]+(*parent)[l][k]*Iv(child[j][l]);}
++        const V origin=PrimitiveCenter(mesh);IV center=Times(*parent,V(query.parentLocalCenter));
++        for(unsigned k=0;k<3;++k)center[k]=(Iv(double(std::min(from.position[k],to.position[k])),double(std::max(from.position[k],to.position[k])))+center[k])-Iv(origin[k]);
++        std::vector<IV> offsets,points;
++        if(query.shape.type==ShapeType::Box){
++            const V h(query.shape.halfExtents);
++            for(int z:{-1,1})for(int y:{-1,1})for(int x:{-1,1})offsets.push_back(Times(rotation,V(x*h.x,y*h.y,z*h.z)));
++        }else for(V p:query.shape.asset->vertices)offsets.push_back(Times(rotation,p));
++        if(offsets.empty())return std::nullopt;
++        for(const auto&offset:offsets)points.push_back(Add(center,offset));
++        ForwardMeanBound result;
++        if(query.shape.type==ShapeType::Box){
++            // GLM's same matrix/vector expression is odd under v -> -v in
++            // IEEE round-to-nearest arithmetic. Its eight opposite offsets
++            // therefore sum to zero over the reals, including signed zeros.
++            for(unsigned k=0;k<3;++k){
++                Iv additions(0),sumErrors(0),accumulatorMagnitude(0);
++                for(unsigned i=0;i<points.size();++i){
++                    const auto add=NativeDoubleRoundingBound(contact_geometry::Abs(center[k])+contact_geometry::Abs(offsets[i][k]));
++                    const Iv nextMagnitude=accumulatorMagnitude+contact_geometry::Abs(points[i][k]);
++                    const auto sum=NativeDoubleRoundingBound(nextMagnitude);
++                    if(!add||!sum)return std::nullopt;
++                    additions=additions+Iv(*add);sumErrors=sumErrors+Iv(*sum);
++                    accumulatorMagnitude=nextMagnitude+Iv(*sum);
++                }
++                const auto divide=NativeDoubleRoundingBound(accumulatorMagnitude/Iv(8));
++                if(!divide)return std::nullopt;
++                const Iv error=(additions+sumErrors)/Iv(8)+Iv(*divide);
++                result.mean[k]=center[k]+Iv(-error.hi,error.hi);
++            }
++        }else{
++            // A hull's vertex mean can rotate away from its origin. Keep the
++            // full native accumulation enclosure rather than invent symmetry.
++            result.mean={Iv(0),Iv(0),Iv(0)};
++            for(const auto&p:points)result.mean=Add(result.mean,p);
++            for(auto&x:result.mean)x=x/Iv(double(points.size()));
++        }
++        // Match the native candidates() bound construction: vertices acquire
++        // the mesh origin before the world AABB, then the common origin is
++        // subtracted before the static transpose rotation. Retaining both
++        // operations encloses the actual native roundoff at large origins.
++        IV world{Iv(INFINITY,-INFINITY),Iv(INFINITY,-INFINITY),Iv(INFINITY,-INFINITY)};
++        for(const auto&p:points)for(unsigned k=0;k<3;++k){const auto placed=p[k]+Iv(origin[k]);world[k].lo=std::min(world[k].lo,placed.lo);world[k].hi=std::max(world[k].hi,placed.hi);}
++        const M inverse=glm::transpose(PrimitiveRotation(mesh));IV local{Iv(0),Iv(0),Iv(0)};
++        for(unsigned k=0;k<3;++k)for(unsigned j=0;j<3;++j)local[k]=local[k]+Iv(inverse[j][k])*(world[j]-Iv(origin[j]));
++        V lo,hi;for(unsigned k=0;k<3;++k){lo[k]=local[k].lo;hi[k]=local[k].hi;if(!std::isfinite(lo[k])||!std::isfinite(hi[k]))return std::nullopt;}
++        mesh.shape.asset->Candidates(lo,hi,result.candidates);
++        return result;
++    }catch(const contact_geometry::ArithmeticFailure&){return std::nullopt;}
++}
++
++// Strictly outside even the native negative epsilon band. This proves absence
++// of any ordinary-front reacquisition anywhere the native finite query could
++// visit during this interval. It supplies no positive contact or ownership.
++inline bool ForwardNoFrontThroughout(const PrimitivePose&query,const PrimitivePose&mesh,
++    const RigidMotionSegment&segment,double first,double last,
++    const std::vector<unsigned>&labels,unsigned label){
++    const auto bound=ForwardNativeMeanBound(query,mesh,segment,first,last);if(!bound)return false;
++    const M fixed=PrimitiveRotation(mesh);
++    for(auto f:bound->candidates)if(labels[f]==label){
++        const auto&face=mesh.shape.asset->faces[f];const V n=fixed*face.normal,p=fixed*mesh.shape.asset->vertices[face.vertices[0]];
++        const Iv side=Dot(Point(n),Sub(bound->mean,Point(p)));
++        if(!(side.hi< -1e-10))return false;
++    }
++    return true;
++}
++
++inline ForwardMeasurement ForwardEpisode(const PrimitivePose&query,const PrimitivePose&mesh,
++    const MeshContactEpisode&old,const RigidMotionSegment&segment,double start,double finish,
++    unsigned maximumIntervals=1024,std::optional<unsigned> onlyFeature=std::nullopt){
++    ForwardMeasurement result;
++    if(mesh.shape.type!=ShapeType::TriangleMesh||!mesh.shape.asset||mesh.shape.asset->twoSided||
++       (query.shape.type!=ShapeType::Box&&query.shape.type!=ShapeType::ConvexHull)||
++       segment.prescribed||!std::isfinite(start)||!std::isfinite(finish)||start>finish||
++       start<segment.begin||finish>segment.end)return result;
++    const auto labels=ForwardTopology(*mesh.shape.asset);
++    if(onlyFeature&&*onlyFeature>=labels.size())return result;
++    const auto beginning=At(query,segment,start),ending=At(query,segment,finish);
++    auto initialSeeds=old.fronts;ForwardMerge(initialSeeds,NativeFrontFeatures(beginning,mesh));
++    const auto initial=MeshFiniteComponent(beginning,mesh,initialSeeds);
++    const auto endpoint=MeshFiniteComponent(ending,mesh,{},true);
++    std::vector<unsigned> relevant;
++    if(onlyFeature)relevant.push_back(labels[*onlyFeature]);
++    else{for(auto f:initial)relevant.push_back(labels[f]);for(auto f:endpoint)relevant.push_back(labels[f]);std::sort(relevant.begin(),relevant.end());relevant.erase(std::unique(relevant.begin(),relevant.end()),relevant.end());}
++    const auto filtered=[&](const std::vector<uint32_t>&faces,unsigned label){std::vector<uint32_t> out;for(auto f:faces)if(labels[f]==label)out.push_back(f);return out;};
++    const auto checkpoint=[&](double time,unsigned label,const std::vector<uint32_t>&selected){result.checkpoints.push_back({time,label,MeshContactEpisode{selected}});};
++    for(auto label:relevant){
++        auto selected=filtered(initial,label);checkpoint(start,label,selected);
++        const auto walk=[&](const auto&self,double first,double last,unsigned depth)->bool{
++            if(++result.value.measure.intervals>maximumIntervals)return false;
++            const auto to=At(query,segment,last);
++            const auto actual=filtered(MeshFiniteComponent(to,mesh,{},true),label);
++            if(actual.empty()){
++                // The state at a real finite absence is empty regardless of
++                // all earlier history. No other static component can bridge it.
++                selected.clear();result.value.measure.separationTime=last;checkpoint(last,label,selected);return true;
++            }
++            const auto native=filtered(MeshFiniteComponent(to,mesh,NativeFrontFeatures(to,mesh)),label);
++            if(Constant(segment,first,last)){
++                auto seeds=selected;ForwardMerge(seeds,native);selected=filtered(MeshFiniteComponent(to,mesh,seeds),label);
++                ++result.value.measure.constantCertificates;checkpoint(last,label,selected);return true;
++            }
++            auto next=native;std::vector<uint32_t> visited;bool unresolved=false;
++            for(auto feature:actual){
++                if(std::binary_search(visited.begin(),visited.end(),feature))continue;
++                const auto component=filtered(MeshFiniteComponent(to,mesh,{feature}),label);ForwardMerge(visited,component);
++                if(std::binary_search(next.begin(),next.end(),feature))continue;
++                bool bridged=false;
++                for(auto owned:selected)if(std::binary_search(component.begin(),component.end(),owned)&&
++                    NativeOverlapThroughout(query,mesh,owned,segment,first,last)){
++                    ++result.value.measure.pointCertificates;ForwardMerge(next,component);bridged=true;break;
++                }
++                if(!bridged)unresolved=true;
++            }
++            if(!unresolved){selected=std::move(next);checkpoint(last,label,selected);return true;}
++            if(selected.empty()&&ForwardNoFrontThroughout(query,mesh,segment,first,last,labels,label)){
++                selected.clear();checkpoint(last,label,selected);return true;
++            }
++            const double middle=(first+last)*.5;
++            if(depth>=40||middle<=first||middle>=last)return false;
++            // selected is the state at first. A successful left child advances
++            // that same state to middle; the right child consumes it directly.
++            if(!self(self,first,middle,depth+1))return false;
++            return self(self,middle,last,depth+1);
++        };
++        if(!walk(walk,start,finish,0)){result.value.selected.fronts.clear();return result;}
++        ForwardMerge(result.value.selected.fronts,selected);
++    }
++    result.value.measure.result=Result::Connected;return result;
++}
++
++inline UnionMeasurement ReacquireUnion(const PrimitivePose&q,const PrimitivePose&m,
++    const MeshContactEpisode&old,const RigidMotionSegment&s,double first,double last,unsigned maximumIntervals=1024){
++    return ForwardEpisode(q,m,old,s,first,last,maximumIntervals).value;
++}
++inline UnionMeasurement ConnectedUnion(const PrimitivePose&q,const PrimitivePose&m,
++    const MeshContactEpisode&old,const RigidMotionSegment&s,double first,double last,unsigned maximumIntervals=1024){
++    auto result=ForwardEpisode(q,m,old,s,first,last,maximumIntervals).value;
++    if(result.measure.result==Result::Connected&&result.selected.fronts.empty())result.measure.result=Result::Separated;
++    return result;
++}
++inline UnionMeasurement TraceEndpoint(const PrimitivePose&q,const PrimitivePose&m,unsigned feature,
++    const MeshContactEpisode&old,const RigidMotionSegment&s,double first,double last,unsigned maximumIntervals=1024){
++    auto result=ForwardEpisode(q,m,old,s,first,last,maximumIntervals,feature).value;
++    if(result.measure.result!=Result::Connected)return result;
++    if(!std::binary_search(result.selected.fronts.begin(),result.selected.fronts.end(),feature)){
++        result.measure.result=Result::Separated;result.selected.fronts.clear();return result;
++    }
++    result.selected.fronts=MeshFiniteComponent(At(q,s,last),m,{feature});return result;
++}
++} // namespace episode_probe
+--- /dev/null
++++ b/src/NativeSATContinuity.h
+@@ -0,0 +1,163 @@
++#pragma once
++#include "MeshContinuityProbe.h"
++
++namespace episode_probe {
++using IV = std::array<Iv,3>;
++inline IV Add(const IV&a,const IV&b){return {a[0]+b[0],a[1]+b[1],a[2]+b[2]};}
++inline IV Sub(const IV&a,const IV&b){return {a[0]-b[0],a[1]-b[1],a[2]-b[2]};}
++inline IV Cross(const IV&a,const IV&b){return {a[1]*b[2]-a[2]*b[1],a[2]*b[0]-a[0]*b[2],a[0]*b[1]-a[1]*b[0]};}
++inline Iv Dot(const IV&a,const IV&b){return a[0]*b[0]+a[1]*b[1]+a[2]*b[2];}
++inline IV Point(V p){return {Iv(p[0]),Iv(p[1]),Iv(p[2])};}
++inline IV Times(const contact_geometry::M<Iv>&r,V p){
++ IV out{Iv(0),Iv(0),Iv(0)};for(unsigned k=0;k<3;++k)for(unsigned j=0;j<3;++j)out[k]=out[k]+r[j][k]*Iv(p[j]);return out;
++}
++inline std::optional<IV> Unit(IV v){
++ const auto length=contact_geometry::Sqrt(Dot(v,v));if(!(length.lo>1e-10))return std::nullopt;
++ for(auto&x:v)x=x/length;return v;
++}
++
++// A full binary64 ULP strictly above an outward bound on the exact result's
++// magnitude encloses a round-to-nearest operation's absolute rounding error.
++// This includes subnormals. Overflow is an uncertified interval, not a result.
++inline std::optional<double> NativeDoubleRoundingBound(Iv magnitude){
++ static_assert(std::numeric_limits<double>::is_iec559&&
++               std::numeric_limits<double>::radix==2&&
++               std::numeric_limits<double>::digits==53,
++               "native edge certificate requires IEEE binary64");
++ if(!(magnitude.hi>=0)||!std::isfinite(magnitude.hi))return std::nullopt;
++ const double above=std::nextafter(magnitude.hi,INFINITY);
++ const double successor=std::nextafter(above,INFINITY);
++ if(!std::isfinite(above)||!std::isfinite(successor))return std::nullopt;
++ return (Iv(successor)-Iv(above)).hi;
++}
++
++// Absolute error of the original native 3-product, 2-addition double dot.
++// Its intervals enclose the original rounded product and partial-sum inputs.
++inline std::optional<double> NativeDotRoundingBound(const IV&p,const IV&axis){
++ std::array<Iv,3> products;Iv error(0);
++ for(unsigned k=0;k<3;++k){
++  products[k]=p[k]*axis[k];
++  const auto rounding=NativeDoubleRoundingBound(contact_geometry::Abs(p[k])*contact_geometry::Abs(axis[k]));
++  if(!rounding)return std::nullopt;error=error+Iv(*rounding);
++ }
++ const auto firstSum=NativeDoubleRoundingBound(contact_geometry::Abs(products[0])+contact_geometry::Abs(products[1]));
++ if(!firstSum)return std::nullopt;
++ const Iv partial=products[0]+products[1];
++ const auto lastSum=NativeDoubleRoundingBound(contact_geometry::Abs(partial)+contact_geometry::Abs(products[2]));
++ if(!lastSum)return std::nullopt;
++ error=error+Iv(*firstSum)+Iv(*lastSum);
++ if(!std::isfinite(error.hi))return std::nullopt;
++ return error.hi;
++}
++
++// Native vertices are p_i=fl(c+fl_dot3(R,local_i)). Real linearity cancels
++// the shared center AND any identical local-coordinate rotation terms:
++//   fl(p_to-p_from) = R*(local_to-local_from)
++//       + error_offset_to-error_offset_from
++//       + error_add_to-error_add_from + error_sub.
++// Every native dot, center addition and final subtraction keeps its own
++// full-ULP envelope. The local-coordinate difference is an exact REAL
++// interval subtraction; it is never first rounded to one double vector.
++inline std::optional<IV> NativeVertexDifference(const contact_geometry::M<Iv>&rotation,
++ const std::vector<V>&local,const IV&center,const std::vector<IV>&offsets,
++ const std::vector<IV>&points,unsigned to,unsigned from){
++ const IV delta=Sub(Point(local[to]),Point(local[from]));IV edge{Iv(0),Iv(0),Iv(0)};
++ for(unsigned k=0;k<3;++k){
++  for(unsigned j=0;j<3;++j)edge[k]=edge[k]+rotation[j][k]*delta[j];
++  const IV row{rotation[0][k],rotation[1][k],rotation[2][k]};
++  const auto offsetFrom=NativeDotRoundingBound(row,Point(local[from]));
++  const auto offsetTo=NativeDotRoundingBound(row,Point(local[to]));
++  const auto addFrom=NativeDoubleRoundingBound(contact_geometry::Abs(center[k])+contact_geometry::Abs(offsets[from][k]));
++  const auto addTo=NativeDoubleRoundingBound(contact_geometry::Abs(center[k])+contact_geometry::Abs(offsets[to][k]));
++  const auto subtract=NativeDoubleRoundingBound(contact_geometry::Abs(points[to][k])+contact_geometry::Abs(points[from][k]));
++  if(!offsetFrom||!offsetTo||!addFrom||!addTo||!subtract)return std::nullopt;
++  const Iv error=Iv(*offsetFrom)+Iv(*offsetTo)+Iv(*addFrom)+Iv(*addTo)+Iv(*subtract);
++  if(!std::isfinite(error.hi))return std::nullopt;
++  edge[k]=edge[k]+Iv(-error.hi,error.hi);
++ }
++ return edge;
++}
++
++// Subtract the SAME exact dot(base,axis) from the original native projection.
++// Only the expression of the error helper is factored; its envelope is unchanged.
++inline std::optional<Iv> NativeShiftedProjection(const IV&p,const IV&axis,V base){
++ const auto error=NativeDotRoundingBound(p,axis);if(!error)return std::nullopt;
++ return Dot(Sub(p,Point(base)),axis)+Iv(-*error,*error);
++}
++
++// All axes and vertices mirror visitCookedPolyContacts' actual represented
++// Poly construction. No inverse-R approximation or fixed contact witness.
++// This is sufficient-only overlap certification: uncertainty remains explicit.
++inline bool NativeOverlapThroughout(const PrimitivePose&query,const PrimitivePose&mesh,
++ unsigned feature,const RigidMotionSegment&segment,double first,double last){
++ if(query.shape.type!=ShapeType::Box&&query.shape.type!=ShapeType::ConvexHull)return false;
++ try{
++  const auto from=segment.EvaluateGeometry(first),to=segment.EvaluateGeometry(last);
++  auto parent=rigid_motion_bounds::TryDynamicRotationInterval(segment,first,last);
++  if(segment.driftAngularVelocity==glm::vec3(0)&&rigid_motion_bounds::SameQuat(from.orientation,to.orientation)){
++   contact_geometry::M<Iv> exact;const auto r=ContactRotation(from.orientation);
++   for(unsigned j=0;j<3;++j)for(unsigned k=0;k<3;++k)exact[j][k]=Iv(r[j][k]);parent=exact;
++  }
++  if(!parent)return false;
++  const auto child=ContactRotation(query.childRotation);
++  contact_geometry::M<Iv> rotation;
++  for(unsigned j=0;j<3;++j)for(unsigned k=0;k<3;++k){rotation[j][k]=Iv(0);for(unsigned l=0;l<3;++l)rotation[j][k]=rotation[j][k]+(*parent)[l][k]*Iv(child[j][l]);}
++  IV center=Times(*parent,V(query.parentLocalCenter));const V origin=PrimitiveCenter(mesh);
++  for(unsigned k=0;k<3;++k)center[k]=(Iv(double(std::min(from.position[k],to.position[k])),double(std::max(from.position[k],to.position[k])))+center[k])-Iv(origin[k]);
++  std::vector<IV> a,b,offsets;std::vector<V> local;std::vector<IV> normals;std::vector<std::array<unsigned,2>> edges;
++  if(query.shape.type==ShapeType::Box){
++   const V h(query.shape.halfExtents);for(int z:{-1,1})for(int y:{-1,1})for(int x:{-1,1}){
++    local.push_back(V(x*h.x,y*h.y,z*h.z));
++    offsets.push_back(Times(rotation,local.back()));
++    a.push_back(Add(center,offsets.back()));
++   }
++   static constexpr unsigned faces[6][4]={{0,4,6,2},{1,3,7,5},{0,1,5,4},{2,6,7,3},{0,2,3,1},{4,5,7,6}};
++   for(const auto&face:faces){
++    const auto first=NativeVertexDifference(rotation,local,center,offsets,a,face[1],face[0]);
++    const auto second=NativeVertexDifference(rotation,local,center,offsets,a,face[2],face[0]);
++    if(!first||!second)return false;
++    auto n=Unit(Cross(*first,*second));if(!n)return false;normals.push_back(*n);
++   }
++   edges={{{0,1}},{{0,2}},{{0,4}}};
++  }else{
++   for(V p:query.shape.asset->vertices){
++    local.push_back(p);offsets.push_back(Times(rotation,p));a.push_back(Add(center,offsets.back()));
++   }
++   for(const auto&face:query.shape.asset->polygons)normals.push_back(Times(rotation,face.normal));
++   for(auto e:query.shape.asset->satEdges)edges.push_back(query.shape.asset->edges[e]);
++   if(edges.empty())edges=query.shape.asset->edges;
++  }
++  const auto fixed=PrimitiveRotation(mesh);const auto&face=mesh.shape.asset->faces[feature];
++  for(auto index:face.vertices)b.push_back(Point(fixed*mesh.shape.asset->vertices[index]));
++  // One static native triangle vertex is shared by every support projection.
++  // Choosing the nearest one is only a width heuristic, never a contact test.
++  const auto middle=At(query,segment,(first+last)*.5);
++  const V middleCenter=PrimitiveCenter(middle)-origin;
++  V projectionOrigin=fixed*mesh.shape.asset->vertices[face.vertices[0]];
++  double nearest=glm::dot(projectionOrigin-middleCenter,projectionOrigin-middleCenter);
++  for(auto index:face.vertices){const V candidate=fixed*mesh.shape.asset->vertices[index];
++   const double distance=glm::dot(candidate-middleCenter,candidate-middleCenter);
++   if(distance<nearest){nearest=distance;projectionOrigin=candidate;}
++  }
++  normals.push_back(Point(fixed*face.normal));
++  const auto overlaps=[&](IV axis){
++   const auto length=contact_geometry::Sqrt(Dot(axis,axis));
++   if(length.hi<1e-10)return true;
++   if(!(length.lo>=1e-10))return false;
++   for(auto&x:axis)x=x/length;
++   double minA=INFINITY,maxA=-INFINITY,minB=INFINITY,maxB=-INFINITY;
++   for(const auto&p:a){const auto value=NativeShiftedProjection(p,axis,projectionOrigin);if(!value)return false;minA=std::min(minA,value->hi);maxA=std::max(maxA,value->lo);}
++   for(const auto&p:b){const auto value=NativeShiftedProjection(p,axis,projectionOrigin);if(!value)return false;minB=std::min(minB,value->hi);maxB=std::max(maxB,value->lo);}
++   return minA<=maxB&&minB<=maxA;
++  };
++  for(const auto&normal:normals)if(!overlaps(normal))return false;
++  static constexpr std::array<std::array<unsigned,2>,3> triangleEdges={{{{0,1}},{{1,2}},{{0,2}}}};
++  for(auto e:edges){
++   const auto direction=NativeVertexDifference(rotation,local,center,offsets,a,e[1],e[0]);
++   if(!direction)return false;
++   for(auto t:triangleEdges)if(!overlaps(Cross(*direction,Sub(b[t[1]],b[t[0]]))))return false;
++  }
++  return true;
++ }catch(const contact_geometry::ArithmeticFailure&){return false;}
++}
++} // namespace episode_probe
+--- a/src/PhysicsWorld.cpp
++++ b/src/PhysicsWorld.cpp
+@@ -1,3 +1,4 @@
++#include <iostream>
+ #include "physics/WorldInternal.h"
+ 
+ using namespace JudasPhysicsDetail;
+@@ -13,6 +14,7 @@
+ }
+ 
+ void PhysicsWorld::Shutdown() {
++    if(m_impl&&m_impl->unionQueries)std::cerr<<"UNION_WORK queries="<<m_impl->unionQueries<<" intervals="<<m_impl->unionIntervals<<" certificates="<<m_impl->unionCertificates<<" reacquisition_searches="<<m_impl->unionReacquisitionSearches<<" reacquisition_witnesses="<<m_impl->unionReacquisitionWitnesses<<" uncertain="<<m_impl->unionUncertain<<"\n";
+     delete m_impl;
+     m_impl = nullptr;
+ }
+@@ -158,6 +160,7 @@
+     w.startContacts.clear();
+     w.separatedPairs.clear();
+     w.cacheUsed.assign(w.contactCache.size(), 0);
++    w.BeginMeshEpisodes();
+     w.PrepareInitialContactGeometry(fixedDeltaTime);
+     std::size_t initialGeometryIndex = 0;
+     for (const auto &[slotA, slotB] : w.candidatePairs) {
+@@ -210,7 +213,7 @@
+                 const ContactManifold manifold =
+                     prepared
+                         ? prepared->manifold
+-                        : ComputeContacts(childA, childB, margin, &orientationA, &orientationB);
++                        : w.EpisodeContacts(slotA,slotB,partA,partB,childA,childB,margin,&orientationA,&orientationB);
+                 const ContactKey key{slotA, slotB, a.generation, b.generation, partA, partB};
+                 const auto range = std::equal_range(
+                     w.contactCache.begin(), w.contactCache.end(),
+@@ -226,7 +229,7 @@
+                     }
+                     if (!touchingManifold && manifold.count)
+                         touchingManifold =
+-                            ComputeContacts(childA, childB, 0, &orientationA, &orientationB).count >
++                            w.EpisodeContacts(slotA,slotB,partA,partB,childA,childB,0,&orientationA,&orientationB).count >
+                             0;
+                 }
+                 for (int p = 0; p < manifold.count; ++p) {
+@@ -435,6 +438,7 @@
+         if (body.HasMotion())
+             w.solver.UpdatePreparedRotation(body.rigidBody, w.Orientation(body).rotation);
+     }
++    w.FinishMeshEpisodes(fixedDeltaTime);
+     w.solver.SolvePositions();
+     if (coupling && coupling->finish)
+         coupling->finish(fixedDeltaTime);
+--- a/src/physics/WorldCCDSearch.cpp
++++ b/src/physics/WorldCCDSearch.cpp
+@@ -360,215 +360,139 @@
+ 
+ auto PhysicsWorld::Impl::ImpactTime(unsigned a, unsigned b, int pa, int pb, double start,
+                                     double finish, double target) -> double {
+-    PhysicsWorkTimer timer(work.toi, work.active);
+-    // A target can finish inside the step. Never certify a plane across
+-    // its velocity discontinuity; search the two real ledger intervals.
+-    for (auto slot : {a, b})
+-        if (bodies[slot].isKinematic)
+-            for (const auto &s : bodies[slot].motion.Segments())
+-                if (s.end > start && s.end < finish) {
+-                    auto first = ImpactTime(a, b, pa, pb, start, s.end, target);
+-                    return first <= s.end ? first : ImpactTime(a, b, pa, pb, s.end, finish, target);
+-                }
+-    ++stats.impactQueries;
+-    if (target > 0)
+-        target += PairPenetration(a, b, pa, pb, start);
+-    const auto &ba = bodies[a];
+-    const auto &bb = bodies[b];
+-    const auto simpleRadius = [](const Body &body) {
+-        return (body.shape.type == ShapeType::Box || body.shape.type == ShapeType::Sphere) &&
+-               body.shape.pivotOffset == glm::vec3(0) && std::isfinite(body.boundingRadius) &&
+-               body.boundingRadius > 0;
++
++PhysicsWorkTimer timer(work.toi, work.active);
++// A target can finish inside the step. Never certify a plane across
++// its velocity discontinuity; search the two real ledger intervals.
++for (auto slot : {a, b})
++    if (bodies[slot].isKinematic)
++        for (const auto &s : bodies[slot].motion.Segments())
++            if (s.end > start && s.end < finish) {
++                auto first = ImpactTime(a, b, pa, pb, start, s.end, target);
++                return first <= s.end ? first
++                                      : ImpactTime(a, b, pa, pb, s.end, finish, target);
++            }
++++stats.impactQueries;
++double fallbackTime=finish+1;
++if (target > 0)
++    target += PairPenetration(a, b, pa, pb, start);
++const auto &ba = bodies[a];
++const auto &bb = bodies[b];
++const auto simpleRadius = [](const Body &body) {
++    return (body.shape.type == ShapeType::Box || body.shape.type == ShapeType::Sphere) &&
++           body.shape.pivotOffset == glm::vec3(0) && std::isfinite(body.boundingRadius) &&
++           body.boundingRadius > 0;
++};
++// Restrict this rejection to the existing outward-proven primitive
++// radius/bounds. Compound, cooked and terrain shapes retain the full
++// old query until their radius enclosure is independently established.
++if (simpleRadius(ba) && simpleRadius(bb)) {
++    const auto &boundA = RemainingImpactBound(a, start, finish);
++    const auto &boundB = RemainingImpactBound(b, start, finish);
++    const auto finite = [](const Aabb &bound) {
++        for (int k = 0; k < 3; ++k)
++            if (!std::isfinite(bound.min[k]) || !std::isfinite(bound.max[k]))
++                return false;
++        return true;
+     };
+-    // Restrict this rejection to the existing outward-proven primitive
+-    // radius/bounds. Compound, cooked and terrain shapes retain the full
+-    // old query until their radius enclosure is independently established.
+-    if (simpleRadius(ba) && simpleRadius(bb)) {
+-        const auto &boundA = RemainingImpactBound(a, start, finish);
+-        const auto &boundB = RemainingImpactBound(b, start, finish);
+-        const auto finite = [](const Aabb &bound) {
+-            for (int k = 0; k < 3; ++k)
+-                if (!std::isfinite(bound.min[k]) || !std::isfinite(bound.max[k]))
+-                    return false;
+-            return true;
+-        };
+-        // An arithmetic-range failure is not a geometric rejection. Keep
+-        // the established query path whenever the enclosure is uncertain.
+-        if (finite(boundA) && finite(boundB) && !boundA.Overlaps(boundB)) {
+-            ++impactBoundsRejected;
+-            return finish + 1;
+-        }
+-    }
+-    const auto posa = ImpactPoseAt(a, start).pose, posb = ImpactPoseAt(b, start).pose;
+-    const auto firstPrimitive = PrimitiveAt(ba.shape, posa, pa),
+-               secondPrimitive = PrimitiveAt(bb.shape, posb, pb);
+-    const bool firstMesh = firstPrimitive.shape.type == ShapeType::TriangleMesh && !ba.HasMotion();
+-    const bool secondMesh =
+-        secondPrimitive.shape.type == ShapeType::TriangleMesh && !bb.HasMotion();
+-    const auto convexPoly = [](ShapeType type) {
+-        return type == ShapeType::Box || type == ShapeType::ConvexHull;
+-    };
+-    const bool meshAdvance = (firstMesh && convexPoly(secondPrimitive.shape.type)) ||
+-                             (secondMesh && convexPoly(firstPrimitive.shape.type));
+-    const glm::dvec3 relative = glm::dvec3(ba.HasMotion() ? posa.linearVelocity : glm::vec3(0)) -
+-                                glm::dvec3(bb.HasMotion() ? posb.linearVelocity : glm::vec3(0));
+-    const double angular =
+-        (ba.HasMotion() ? glm::length(glm::dvec3(DriftGenerator(a, start))) * ba.boundingRadius
+-                        : 0) +
+-        (bb.HasMotion() ? glm::length(glm::dvec3(DriftGenerator(b, start))) * bb.boundingRadius
+-                        : 0);
+-    const double speed = glm::length(relative) + angular;
+-    if (!(speed > 0))
+-        return finish + 1;
+-    // Bisection still performs all 32 represented-time bracket updates.
+-    // Binary32 pose integration can map several of those times to exactly
+-    // the same pair of poses. Contact truth for that identical geometry is
+-    // reusable; no margin contact, tolerance or earlier stopping is used.
+-    struct ActualTruth {
+-        std::array<float, 14> pose{};
+-        bool valid = false, touching = false;
+-    };
+-    std::array<ActualTruth, 3> actualTruth{};
+-    std::size_t nextTruth = 0;
+-    auto touchingAt = [&](double at) {
+-        ++impactTruthRequests;
+-        const auto &aa = ImpactPoseAt(a, at).pose;
+-        const auto &bb = ImpactPoseAt(b, at).pose;
+-        const std::array<float, 14> represented = {
+-            aa.position.x,    aa.position.y,    aa.position.z,    aa.orientation.w,
+-            aa.orientation.x, aa.orientation.y, aa.orientation.z, bb.position.x,
+-            bb.position.y,    bb.position.z,    bb.orientation.w, bb.orientation.x,
+-            bb.orientation.y, bb.orientation.z};
+-        for (const auto &old : actualTruth)
+-            if (old.valid &&
+-                std::memcmp(old.pose.data(), represented.data(), sizeof(represented)) == 0) {
+-                ++impactTruthReuses;
+-                return old.touching;
+-            }
+-        const bool touching = target > 0 ? PairPenetrationExceeds(a, b, pa, pb, at, target)
+-                                         : PairTouches(a, b, pa, pb, at);
+-        actualTruth[nextTruth] = {represented, true, touching};
+-        nextTruth = (nextTruth + 1) % actualTruth.size();
+-        return touching;
+-    };
+-    double time = start, previous = start;
+-    bool uncertifiedAdvance = false, stalled = false;
+-    // A grazing feature on a concave surface (a limb sliding in a curved
+-    // mesh ramp) keeps the gap tiny while the surface keeps closing ahead,
+-    // so each advance covers a sliver of the interval. After several such
+-    // consecutive advances, stop paying full proximity queries and finish
+-    // with the bounded sampling below, as the 64-iteration limit already does.
+-    int stalledAdvances = 0;
+-    // Conservative advancement needs a separating plane. A pair searched
+-    // to a penetration target is already in contact, where no single
+-    // contact normal bounds the approach of every feature; go straight to
+-    // the bounded sampling below.
+-    const int advanceIterations = target > 0 ? 0 : 64;
+-    for (int iteration = 0; iteration < advanceIterations; ++iteration) {
+-        ++stats.impactSearchIterations;
+-        stats.impactPeakIterations =
+-            std::max(stats.impactPeakIterations, std::size_t(iteration + 1));
+-        const float reach = std::nextafter(static_cast<float>(speed * (finish - time)),
+-                                           std::numeric_limits<float>::infinity());
+-        // Margin manifolds contain proximity features, not necessarily the
+-        // zero-margin contact set. Contact truth must use the latter.
+-        if (touchingAt(time)) {
+-            // A pair touching at the start is left to the contact solver,
+-            // unless its spin can turn another feature through the support
+-            // before the interval ends: then search to a penetration target.
+-            if (time == start)
+-                return target == 0 && SpinsThroughSupport({a, b, unsigned(pa), unsigned(pb)},
+-                                                          finish - start, start)
+-                           ? ImpactTime(a, b, pa, pb, start, finish,
+-                                        SpinPenetrationTarget({a, b, unsigned(pa), unsigned(pb)}))
+-                           : finish + 1;
+-            double lo = previous, hi = time;
+-            for (int k = 0; k < 32; ++k) {
+-                const double mid = (lo + hi) * .5;
+-                if (touchingAt(mid))
+-                    hi = mid;
+-                else
+-                    lo = mid;
+-            }
+-            return hi;
+-        }
+-        // The exact endpoint has already been checked. There is no future
+-        // interval left from which a proximity reach could reveal a hit.
+-        if (time == finish)
+-            return finish + 1;
+-        double increment;
+-        if (meshAdvance) {
+-            PhysicsWorkTimer geometryTimer(work.geometry, work.active);
+-            const auto &aa = ImpactPoseAt(a, time);
+-            const auto &bb = ImpactPoseAt(b, time);
+-            const auto query = firstMesh
+-                                   ? PrimitiveAt(bodies[b].shape, bb.pose, pb, &*bb.orientation)
+-                                   : PrimitiveAt(bodies[a].shape, aa.pose, pa, &*aa.orientation);
+-            const auto mesh = firstMesh
+-                                  ? PrimitiveAt(bodies[a].shape, aa.pose, pa, &*aa.orientation)
+-                                  : PrimitiveAt(bodies[b].shape, bb.pose, pb, &*bb.orientation);
+-            const unsigned moving = firstMesh ? b : a;
+-            increment = MeshSeparationAdvance(
+-                query, mesh,
+-                glm::dvec3(firstMesh ? bb.pose.linearVelocity : aa.pose.linearVelocity),
+-                glm::dvec3(DriftGenerator(moving, time)), bodies[moving].boundingRadius,
+-                finish - time);
+-            if (!std::isfinite(increment))
+-                return finish + 1;
+-            if (!(increment > 0)) {
+-                ++stats.impactUncertifiedAdvances;
+-                uncertifiedAdvance = true;
+-                break;
+-            }
+-        } else {
+-            const auto manifold = PairAt(a, b, pa, pb, time, reach);
+-            if (!manifold.count)
+-                return finish + 1;
+-            const Contact *nearest = &manifold.points[0];
+-            for (int k = 1; k < manifold.count; ++k)
+-                if (manifold.points[k].signedSeparation < nearest->signedSeparation)
+-                    nearest = &manifold.points[k];
+-            const double gap = nearest->hasLocalAnchors ? nearest->signedSeparation
+-                                                        : -double(nearest->penetration);
+-            if (gap <= 0) {
+-                ++stats.impactUncertifiedAdvances;
+-                uncertifiedAdvance = true;
+-                break;
+-            }
+-            const auto normal =
+-                nearest->hasLocalAnchors ? nearest->preciseNormal : glm::dvec3(nearest->normal);
+-            const double closing = -glm::dot(relative, normal) + angular;
+-            if (!(closing > 0))
+-                return finish + 1;
+-            increment = gap / closing;
+-            if (angular > 0)
+-                increment = std::max(increment, PlaneDrift(a, b, pa, pb, time, normal));
+-        }
+-        // Progress in represented time only. A large coordinate orthogonal
+-        // to motion must not enlarge the step and skip a thin obstacle.
+-        increment = std::max(increment, std::nextafter(time, finish) - time);
+-        previous = time;
+-        time = std::min(finish, time + increment);
+-        if (time <= previous)
+-            return finish + 1;
+-        stalledAdvances =
+-            time - previous < kImpactStallFraction * (finish - previous) ? stalledAdvances + 1 : 0;
+-        if (stalledAdvances >= kImpactStallAdvances) {
+-            stalled = true;
+-            break;
+-        }
+-    }
+-    if (stalled)
+-        ++stats.impactSearchStalls;
+-    else if (!uncertifiedAdvance && target == 0)
+-        ++stats.impactSearchLimit;
+-    ++stats.impactSamplingFallbacks;
+-    // Rotating grazing features can keep a fixed separating-plane bound
+-    // arbitrarily short. Finish this PAIR query with a bounded temporal
+-    // sampling approximation, never by applying an impulse across a gap.
+-    // Intersections shorter than the reported sampling interval can be
+-    // missed; this is deliberately not a complete continuous-CCD proof.
+-    auto firstContact = [&](double lo, double hi) {
++    // An arithmetic-range failure is not a geometric rejection. Keep
++    // the established query path whenever the enclosure is uncertain.
++    if (finite(boundA) && finite(boundB) && !boundA.Overlaps(boundB)) {
++        ++impactBoundsRejected;
++        return fallbackTime;
++    }
++}
++const auto posa = ImpactPoseAt(a, start).pose, posb = ImpactPoseAt(b, start).pose;
++const auto firstPrimitive = PrimitiveAt(ba.shape, posa, pa),
++           secondPrimitive = PrimitiveAt(bb.shape, posb, pb);
++const bool firstMesh =
++    firstPrimitive.shape.type == ShapeType::TriangleMesh && !ba.HasMotion();
++const bool secondMesh =
++    secondPrimitive.shape.type == ShapeType::TriangleMesh && !bb.HasMotion();
++const auto convexPoly = [](ShapeType type) {
++    return type == ShapeType::Box || type == ShapeType::ConvexHull;
++};
++const bool meshAdvance = (firstMesh && convexPoly(secondPrimitive.shape.type)) ||
++                         (secondMesh && convexPoly(firstPrimitive.shape.type));
++const bool meshContinuation=meshAdvance&&!MeshFrontSafe(a,b,pa,pb,start,finish)&&!MeshContactFeatures(firstMesh?secondPrimitive:firstPrimitive,firstMesh?firstPrimitive:secondPrimitive,EpisodeForTime(a,b,pa,pb,start)).empty();
++MeshFeatureBudget meshBudget;
++if(meshContinuation){const unsigned moving=firstMesh?b:a;meshBudget=BuildMeshFeatureBudget(firstMesh?secondPrimitive:firstPrimitive,firstMesh?firstPrimitive:secondPrimitive,SpinPenetrationTarget({a,b,unsigned(pa),unsigned(pb)}),glm::dvec3(firstMesh?posb.linearVelocity:posa.linearVelocity),glm::dvec3(DriftGenerator(moving,start)),bodies[moving].boundingRadius,finish-start,EpisodeForTime(a,b,pa,pb,start));}
++const glm::dvec3 relative =
++    glm::dvec3(ba.HasMotion() ? posa.linearVelocity : glm::vec3(0)) -
++    glm::dvec3(bb.HasMotion() ? posb.linearVelocity : glm::vec3(0));
++const double angular =
++    (ba.HasMotion() ? glm::length(glm::dvec3(DriftGenerator(a, start))) * ba.boundingRadius
++                    : 0) +
++    (bb.HasMotion() ? glm::length(glm::dvec3(DriftGenerator(b, start))) * bb.boundingRadius
++                    : 0);
++const double speed = glm::length(relative) + angular;
++if (!(speed > 0))
++    return fallbackTime;
++// Bisection still performs all 32 represented-time bracket updates.
++// Binary32 pose integration can map several of those times to exactly
++// the same pair of poses. Contact truth for that identical geometry is
++// reusable; no margin contact, tolerance or earlier stopping is used.
++struct ActualTruth {
++    std::array<float, 14> pose{};
++    bool valid = false, touching = false;
++};
++std::array<ActualTruth, 3> actualTruth{};
++std::size_t nextTruth = 0;
++auto touchingAt = [&](double at) {
++    ++impactTruthRequests;
++    const auto &aa = ImpactPoseAt(a, at).pose;
++    const auto &bb = ImpactPoseAt(b, at).pose;
++    const std::array<float, 14> represented = {
++        aa.position.x,    aa.position.y,    aa.position.z,    aa.orientation.w,
++        aa.orientation.x, aa.orientation.y, aa.orientation.z, bb.position.x,
++        bb.position.y,    bb.position.z,    bb.orientation.w, bb.orientation.x,
++        bb.orientation.y, bb.orientation.z};
++    for (const auto &old : actualTruth)
++        if (old.valid &&
++            std::memcmp(old.pose.data(), represented.data(), sizeof(represented)) == 0) {
++            ++impactTruthReuses;
++            return old.touching;
++        }
++    bool touching;
++    if(meshContinuation){const auto first=PrimitiveAt(bodies[a].shape,aa,pa),second=PrimitiveAt(bodies[b].shape,bb,pb);touching=MeshFeatureBudgetExceeded(firstMesh?second:first,firstMesh?first:second,meshBudget,EpisodeForTime(a,b,pa,pb,at));}
++    else touching=target>0?PairPenetrationExceeds(a,b,pa,pb,at,target):PairTouches(a,b,pa,pb,at);
++    actualTruth[nextTruth] = {represented, true, touching};
++    nextTruth = (nextTruth + 1) % actualTruth.size();
++    return touching;
++};
++double time = start, previous = start;
++bool uncertifiedAdvance = false, stalled = false;
++// A grazing feature on a concave surface (a limb sliding in a curved
++// mesh ramp) keeps the gap tiny while the surface keeps closing ahead,
++// so each advance covers a sliver of the interval. After several such
++// consecutive advances, stop paying full proximity queries and finish
++// with the bounded sampling below, as the 64-iteration limit already does.
++int stalledAdvances = 0;
++// Conservative advancement needs a separating plane. A pair searched
++// to a penetration target is already in contact, where no single
++// contact normal bounds the approach of every feature; go straight to
++// the bounded sampling below.
++const int advanceIterations = target > 0 || meshContinuation ? 0 : 64;
++for (int iteration = 0; iteration < advanceIterations; ++iteration) {
++    ++stats.impactSearchIterations;
++    stats.impactPeakIterations =
++        std::max(stats.impactPeakIterations, std::size_t(iteration + 1));
++    const float reach = std::nextafter(static_cast<float>(speed * (finish - time)),
++                                       std::numeric_limits<float>::infinity());
++    // Margin manifolds contain proximity features, not necessarily the
++    // zero-margin contact set. Contact truth must use the latter.
++    if (touchingAt(time)) {
++        // A pair touching at the start is left to the contact solver,
++        // unless its spin can turn another feature through the support
++        // before the interval ends: then search to a penetration target.
++        if (time == start)
++            return target == 0 && (meshAdvance || SpinsThroughSupport({a, b, unsigned(pa), unsigned(pb)},
++                                                      finish - start, start))
++                       ? ImpactTime(
++                             a, b, pa, pb, start, finish,
++                             SpinPenetrationTarget({a, b, unsigned(pa), unsigned(pb)}))
++                       : finish + 1;
++        double lo = previous, hi = time;
+         for (int k = 0; k < 32; ++k) {
+             const double mid = (lo + hi) * .5;
+             if (touchingAt(mid))
+@@ -577,35 +501,123 @@
+                 lo = mid;
+         }
+         return hi;
+-    };
++    }
++    // The exact endpoint has already been checked. There is no future
++    // interval left from which a proximity reach could reveal a hit.
++    if (time == finish)
++        return fallbackTime;
++    double increment;
++    if (meshAdvance) {
++        PhysicsWorkTimer geometryTimer(work.geometry, work.active);
++        const auto &aa = ImpactPoseAt(a, time);
++        const auto &bb = ImpactPoseAt(b, time);
++        const auto query =
++            firstMesh ? PrimitiveAt(bodies[b].shape, bb.pose, pb, &*bb.orientation)
++                      : PrimitiveAt(bodies[a].shape, aa.pose, pa, &*aa.orientation);
++        const auto mesh = firstMesh
++                              ? PrimitiveAt(bodies[a].shape, aa.pose, pa, &*aa.orientation)
++                              : PrimitiveAt(bodies[b].shape, bb.pose, pb, &*bb.orientation);
++        const unsigned moving = firstMesh ? b : a;
++        increment = MeshSeparationAdvance(
++            query, mesh,
++            glm::dvec3(firstMesh ? bb.pose.linearVelocity : aa.pose.linearVelocity),
++            glm::dvec3(DriftGenerator(moving, time)), bodies[moving].boundingRadius,
++            finish - time,nullptr,EpisodeForTime(a,b,pa,pb,time));
++        if (!std::isfinite(increment))
++            return fallbackTime;
++        if (!(increment > 0)) {
++            ++stats.impactUncertifiedAdvances;
++            uncertifiedAdvance = true;
++            break;
++        }
++    } else {
++        const auto manifold = PairAt(a, b, pa, pb, time, reach);
++        if (!manifold.count)
++            return fallbackTime;
++        const Contact *nearest = &manifold.points[0];
++        for (int k = 1; k < manifold.count; ++k)
++            if (manifold.points[k].signedSeparation < nearest->signedSeparation)
++                nearest = &manifold.points[k];
++        const double gap = nearest->hasLocalAnchors ? nearest->signedSeparation
++                                                    : -double(nearest->penetration);
++        if (gap <= 0) {
++            ++stats.impactUncertifiedAdvances;
++            uncertifiedAdvance = true;
++            break;
++        }
++        const auto normal =
++            nearest->hasLocalAnchors ? nearest->preciseNormal : glm::dvec3(nearest->normal);
++        const double closing = -glm::dot(relative, normal) + angular;
++        if (!(closing > 0))
++            return fallbackTime;
++        increment = gap / closing;
++        if (angular > 0)
++            increment = std::max(increment, PlaneDrift(a, b, pa, pb, time, normal));
++    }
++    // Progress in represented time only. A large coordinate orthogonal
++    // to motion must not enlarge the step and skip a thin obstacle.
++    increment = std::max(increment, std::nextafter(time, finish) - time);
++    previous = time;
++    time = std::min(finish, time + increment);
++    if (time <= previous)
++        return fallbackTime;
++    stalledAdvances = time - previous < kImpactStallFraction * (finish - previous)
++                          ? stalledAdvances + 1
++                          : 0;
++    if (stalledAdvances >= kImpactStallAdvances) {
++        stalled = true;
++        break;
++    }
++}
++if (stalled)
++    ++stats.impactSearchStalls;
++else if (!uncertifiedAdvance && target == 0 && !meshContinuation)
++    ++stats.impactSearchLimit;
++++stats.impactSamplingFallbacks;
++// Rotating grazing features can keep a fixed separating-plane bound
++// arbitrarily short. Finish this PAIR query with a bounded temporal
++// sampling approximation, never by applying an impulse across a gap.
++// Intersections shorter than the reported sampling interval can be
++// missed; this is deliberately not a complete continuous-CCD proof.
++auto firstContact = [&](double lo, double hi) {
++    for (int k = 0; k < 32; ++k) {
++        const double mid = (lo + hi) * .5;
++        if (touchingAt(mid))
++            hi = mid;
++        else
++            lo = mid;
++    }
++    return hi;
++};
++++stats.impactSamplingTests;
++if (touchingAt(time))
++    return firstContact(previous, time);
++const double remaining = finish - time;
++if (!(remaining > 0))
++    return fallbackTime;
++const double feature = std::min(PrimitiveFeature(a, pa), PrimitiveFeature(b, pb));
++if (!(feature > 0))
++    throw std::runtime_error("invalid primitive feature in impact sampling");
++const double angularSpeed =
++    (ba.HasMotion() ? glm::length(glm::dvec3(DriftGenerator(a, start))) : 0) +
++    (bb.HasMotion() ? glm::length(glm::dvec3(DriftGenerator(b, start))) : 0);
++const double requested = std::max({16.0, std::ceil(16.0 * speed * remaining / feature),
++                                   std::ceil(256.0 * angularSpeed * remaining)});
++constexpr unsigned kMaxSamples = 65536;
++if (requested > double(kMaxSamples))
++    ++stats.impactSamplingResolutionCaps;
++const unsigned samples = static_cast<unsigned>(std::min(double(kMaxSamples), requested));
++const double interval = remaining / double(samples);
++stats.impactSamplingMaxInterval = std::max(stats.impactSamplingMaxInterval, interval);
++double lo = time;
++for (unsigned sample = 1; sample <= samples; ++sample) {
++    const double hi =
++        sample == samples ? finish : time + remaining * (double(sample) / double(samples));
+     ++stats.impactSamplingTests;
+-    if (touchingAt(time))
+-        return firstContact(previous, time);
+-    const double remaining = finish - time;
+-    if (!(remaining > 0))
+-        return finish + 1;
+-    const double feature = std::min(PrimitiveFeature(a, pa), PrimitiveFeature(b, pb));
+-    if (!(feature > 0))
+-        throw std::runtime_error("invalid primitive feature in impact sampling");
+-    const double angularSpeed =
+-        (ba.HasMotion() ? glm::length(glm::dvec3(DriftGenerator(a, start))) : 0) +
+-        (bb.HasMotion() ? glm::length(glm::dvec3(DriftGenerator(b, start))) : 0);
+-    const double requested = std::max({16.0, std::ceil(16.0 * speed * remaining / feature),
+-                                       std::ceil(256.0 * angularSpeed * remaining)});
+-    constexpr unsigned kMaxSamples = 65536;
+-    if (requested > double(kMaxSamples))
+-        ++stats.impactSamplingResolutionCaps;
+-    const unsigned samples = static_cast<unsigned>(std::min(double(kMaxSamples), requested));
+-    const double interval = remaining / double(samples);
+-    stats.impactSamplingMaxInterval = std::max(stats.impactSamplingMaxInterval, interval);
+-    double lo = time;
+-    for (unsigned sample = 1; sample <= samples; ++sample) {
+-        const double hi =
+-            sample == samples ? finish : time + remaining * (double(sample) / double(samples));
+-        ++stats.impactSamplingTests;
+-        if (touchingAt(hi))
+-            return firstContact(lo, hi);
+-        lo = hi;
+-    }
+-    return finish + 1;
+-}
++    if (touchingAt(hi))
++        return firstContact(lo, hi);
++    lo = hi;
++}
++return fallbackTime;
++
++}
+--- a/src/physics/WorldImpactEvents.cpp
++++ b/src/physics/WorldImpactEvents.cpp
+@@ -203,7 +203,7 @@
+     auto schedule = [&](const std::array<unsigned, 4> &key) {
+         if (!CanRespond(key[0], key[1]))
+             return;
+-        const double time = std::binary_search(supportPairs.begin(), supportPairs.end(), key)
++        const double time = MeshPair(key[0],key[1],key[2],key[3])&&!MeshFrontSafe(key[0],key[1],key[2],key[3],now,dt)?ImpactTime(key[0],key[1],key[2],key[3],now,dt):std::binary_search(supportPairs.begin(), supportPairs.end(), key)
+                                 ? double(dt) + 1
+                             : std::binary_search(spinningPairs.begin(), spinningPairs.end(), key)
+                                 ? ImpactTime(key[0], key[1], int(key[2]), int(key[3]), now, dt,
+@@ -221,6 +221,7 @@
+         schedule(key);
+     for (const auto &key : spinningPairs)
+         schedule(key);
++    for(const auto& key:supportPairs)if(MeshPair(key[0],key[1],key[2],key[3]))schedule(key);
+     // Capacities live through this event pass; values and membership are
+     // rebuilt for each event. No cross-time contact truth is cached.
+     // All proxy changes in this event pass go through CoverStepReach, which
+@@ -506,6 +507,8 @@
+                 into.erase(std::unique(into.begin(), into.end()), into.end());
+             }
+         }
++        episodeDerived.clear();meshFrontCertificates.clear();
++        for(const auto& key:eventPairs)PublishEpisode(key[0],key[1],key[2],key[3],now);
+         ++stats.impactEvents;
+         stats.impactSafetyFallback += result.safetyFallback;
+         // A geometric overlap enclosure alone does not certify the reaction
+@@ -587,6 +590,7 @@
+             // changed subset without scanning it for every scheduled pair.
+             included[slot] = 2;
+             b.motion.ChangeVelocity(b.rigidBody, now);
++            episodeDerived.clear();meshFrontCertificates.clear();
+             InvalidateImpactPose(slot);
+             CoverStepReach(b, static_cast<float>(dt - now));
+         }
+--- a/src/physics/WorldImpactQueries.h
++++ b/src/physics/WorldImpactQueries.h
+@@ -91,9 +91,9 @@
+     const auto &bb = ImpactPoseAt(b, time);
+     if (margin == 0 && SimpleImpactBoundsSeparated(a, b, aa, bb))
+         return {};
+-    return ComputeContacts(PrimitiveAt(bodies[a].shape, aa.pose, pa, &*aa.orientation),
++    return EpisodeContacts(a,b,pa,pb,PrimitiveAt(bodies[a].shape, aa.pose, pa, &*aa.orientation),
+                            PrimitiveAt(bodies[b].shape, bb.pose, pb, &*bb.orientation), margin,
+-                           &*aa.orientation, &*bb.orientation);
++                           &*aa.orientation, &*bb.orientation,time);
+ }
+ 
+ inline auto PhysicsWorld::Impl::PairPenetration(unsigned a, unsigned b, int pa, int pb, double time)
+@@ -115,6 +115,7 @@
+     const auto &bb = ImpactPoseAt(b, time);
+     const auto posa = PrimitiveAt(bodies[a].shape, aa.pose, pa, &*aa.orientation);
+     const auto posb = PrimitiveAt(bodies[b].shape, bb.pose, pb, &*bb.orientation);
++    if(MeshPair(a,b,pa,pb)){const bool fm=posa.shape.type==ShapeType::TriangleMesh;return MeshEpisodeHasPenetrationBeyond(fm?posb:posa,fm?posa:posb,target,EpisodeForTime(a,b,pa,pb,time));}
+     if (posa.shape.asset || posb.shape.asset)
+         return CookedHasPenetrationBeyond(posa, posb, target);
+     return PairPenetration(a, b, pa, pb, time) > target;
+@@ -129,6 +130,7 @@
+         return false;
+     const auto posa = PrimitiveAt(bodies[a].shape, aa.pose, pa, &*aa.orientation);
+     const auto posb = PrimitiveAt(bodies[b].shape, bb.pose, pb, &*bb.orientation);
++    if(MeshPair(a,b,pa,pb)){const bool fm=posa.shape.type==ShapeType::TriangleMesh;return MeshEpisodeHasContacts(fm?posb:posa,fm?posa:posb,EpisodeForTime(a,b,pa,pb,time));}
+     if (posa.shape.asset || posb.shape.asset)
+         return CookedHasContacts(posa, posb, 0);
+     if (posa.childRotation == glm::quat(1, 0, 0, 0) && posb.childRotation == glm::quat(1, 0, 0, 0))
+--- a/src/physics/WorldInternal.h
++++ b/src/physics/WorldInternal.h
+@@ -42,8 +42,10 @@
+ #include "ImpactPairVisitSet.h"
+ #include "JointSolver.h"
+ #include <atomic>
++#include <cstdlib>
+ 
+ #include "WorldProfiling.h"
++#include "MeshUnionContinuity.h"
+ 
+ namespace JudasPhysicsDetail {
+ 
+@@ -481,6 +483,156 @@
+                        bool isDynamic, float mass, float friction, float restitution);
+ 
+     void Remove(BodyHandle handle);
++    struct EpisodeRecord { ContactKey key; uint64_t revisionA=0,revisionB=0; const CollisionAsset* asset=nullptr;MeshContactEpisode episode; double anchorTime=0; };
++    std::map<std::array<unsigned,4>,EpisodeRecord> meshEpisodes;
++    bool MeshPair(unsigned a,unsigned b,int pa,int pb) const {
++        const auto type=[](const Shape& shape,int part){return shape.type==ShapeType::CompoundBoxes?shape.boxes[std::size_t(part)].type:shape.type;};
++        const auto first=type(bodies[a].shape,pa),second=type(bodies[b].shape,pb);const auto poly=[](ShapeType t){return t==ShapeType::Box||t==ShapeType::ConvexHull;};
++        const auto asset=[](const Shape&shape,int part){return shape.type==ShapeType::CompoundBoxes?shape.boxes[std::size_t(part)].asset.get():shape.asset.get();};
++        return (first==ShapeType::TriangleMesh&&!bodies[a].HasMotion()&&!asset(bodies[a].shape,pa)->twoSided&&poly(second))||(second==ShapeType::TriangleMesh&&!bodies[b].HasMotion()&&!asset(bodies[b].shape,pb)->twoSided&&poly(first));
++    }
++    bool RawMeshFrontSafe(unsigned a,unsigned b,int pa,int pb,double start,double finish) {
++        if(!MeshPair(a,b,pa,pb))return false;
++        const auto& aa=ImpactPoseAt(a,start);const auto& bb=ImpactPoseAt(b,start);
++        const auto first=PrimitiveAt(bodies[a].shape,aa.pose,pa,&*aa.orientation),second=PrimitiveAt(bodies[b].shape,bb.pose,pb,&*bb.orientation);
++        const bool firstMesh=first.shape.type==ShapeType::TriangleMesh;const auto& mesh=firstMesh?first:second;
++        const auto moving=firstMesh?b:a,stationary=firstMesh?a:b;const auto& body=bodies[moving];
++        if(body.shape.type!=ShapeType::Box||body.shape.pivotOffset!=glm::vec3(0)||mesh.shape.asset->twoSided)return false;
++        const auto& from=ImpactPoseAt(moving,start).pose;const auto& fixed=ImpactPoseAt(stationary,start).pose;
++        const RigidMotionSegment* segment=nullptr;
++        for(const auto& entry:body.motion.Segments())if(entry.begin<=start&&entry.end>=finish)segment=&entry;
++        if(body.HasMotion()&&!segment)return false;
++        const auto& bound=RemainingImpactBound(moving,start,finish);const auto rotation=PrimitiveRotation(mesh),inverse=glm::transpose(rotation);const auto origin=PrimitiveCenter(mesh);
++        glm::dvec3 lo(INFINITY),hi(-INFINITY);
++        for(unsigned corner=0;corner<8;++corner){const glm::dvec3 world(corner&1?bound.max.x:bound.min.x,corner&2?bound.max.y:bound.min.y,corner&4?bound.max.z:bound.min.z);const auto local=inverse*(world-origin);lo=glm::min(lo,local);hi=glm::max(hi,local);}
++        for(unsigned k=0;k<3;++k){lo[k]=std::nextafter(lo[k],-INFINITY);hi[k]=std::nextafter(hi[k],INFINITY);}
++        std::vector<uint32_t> candidates;mesh.shape.asset->Candidates(lo,hi,candidates);
++        const auto offset=origin-glm::dvec3(fixed.position);
++        using contact_geometry::Iv;
++        for(const auto feature:candidates){const auto& face=mesh.shape.asset->faces[feature];const auto normal=rotation*face.normal;
++            const auto center=rigid_motion_bounds::TryRelativeCentreProjection(segment,nullptr,from,fixed,start,finish,normal);if(!center)return false;
++            const auto vertex=offset+rotation*mesh.shape.asset->vertices[face.vertices[0]];Iv plane(0);for(unsigned k=0;k<3;++k)plane=plane+Iv(vertex[k])*Iv(normal[k]);
++            const double guard=1e-10*(1+glm::length(vertex)+glm::length(glm::dvec3(from.position)-glm::dvec3(fixed.position)));
++            if(center->lo-plane.hi<=guard)return false;
++        }
++        return true;
++    }
++    const MeshContactEpisode* Episode(unsigned a,unsigned b,int pa,int pb) const {
++        if(std::getenv("JUDAS_RESEARCH_NO_EPISODE"))return nullptr;
++        if(a>b){std::swap(a,b);std::swap(pa,pb);}
++        const auto it=meshEpisodes.find({a,b,unsigned(pa),unsigned(pb)});if(it==meshEpisodes.end())return nullptr;
++        const auto& e=it->second;const auto first=PrimitiveAt(bodies[a].shape,bodies[a].rigidBody,pa),second=PrimitiveAt(bodies[b].shape,bodies[b].rigidBody,pb);
++        const auto asset=first.shape.type==ShapeType::TriangleMesh?first.shape.asset.get():second.shape.asset.get();
++        return e.key.SameBodies(ContactKey{a,b,bodies[a].generation,bodies[b].generation,pa,pb})&&e.revisionA==bodies[a].contactObservationRevision&&e.revisionB==bodies[b].contactObservationRevision&&e.asset==asset?&e.episode:nullptr;
++    }
++    void PublishEpisode(unsigned a,unsigned b,int pa,int pb,double time) {
++        if(a>b){std::swap(a,b);std::swap(pa,pb);}
++        if(!MeshPair(a,b,pa,pb))return;
++        const auto& aa=ImpactPoseAt(a,time);const auto& bb=ImpactPoseAt(b,time);
++        const auto first=PrimitiveAt(bodies[a].shape,aa.pose,pa,&*aa.orientation),second=PrimitiveAt(bodies[b].shape,bb.pose,pb,&*bb.orientation);
++        const auto& mesh=first.shape.type==ShapeType::TriangleMesh?first:second;const auto& query=first.shape.type==ShapeType::TriangleMesh?second:first;
++        const auto old=EpisodeForTime(a,b,pa,pb,time);auto features=MeshContactFeatures(query,mesh,old);
++        const std::array<unsigned,4> key{a,b,unsigned(pa),unsigned(pb)};
++        if(features.empty())meshEpisodes.erase(key);else meshEpisodes[key]={ContactKey{a,b,bodies[a].generation,bodies[b].generation,pa,pb},bodies[a].contactObservationRevision,bodies[b].contactObservationRevision,mesh.shape.asset.get(),MeshContactEpisode{std::move(features)},time};
++        episodeDerived.clear();
++    }
++    ContactManifold EpisodeContacts(unsigned a,unsigned b,int pa,int pb,const PrimitivePose& first,const PrimitivePose& second,float margin,const ContactPreparedOrientation* aa,const ContactPreparedOrientation* bb,double time=-1) {
++        return MeshPair(a,b,pa,pb)?EpisodeCookedContacts(first,second,margin,time<0?Episode(a,b,pa,pb):EpisodeForTime(a,b,pa,pb,time)):ComputeContacts(first,second,margin,aa,bb);
++    }
++
++    std::map<std::array<unsigned,4>,std::pair<std::pair<double,double>,bool>> meshFrontCertificates;
++    std::map<std::tuple<unsigned,unsigned,int,int,double>,MeshContactEpisode> episodeDerived;
++    unsigned long long unionQueries=0,unionIntervals=0,unionCertificates=0,unionUncertain=0,unionReacquisitionSearches=0,unionReacquisitionWitnesses=0;
++    bool MeshFrontSafe(unsigned a,unsigned b,int pa,int pb,double start,double finish) {
++        const std::array<unsigned,4> key{a,b,unsigned(pa),unsigned(pb)};
++        const auto found=meshFrontCertificates.find(key);
++        if(found!=meshFrontCertificates.end()&&found->second.first==std::make_pair(start,finish))return found->second.second;
++        const bool safe=RawMeshFrontSafe(a,b,pa,pb,start,finish);
++        meshFrontCertificates[key]={{start,finish},safe};return safe;
++    }
++    const MeshContactEpisode* EpisodeForTime(unsigned a,unsigned b,int pa,int pb,double time) {
++        if(a>b){std::swap(a,b);std::swap(pa,pb);}
++        const auto front=meshFrontCertificates.find({a,b,unsigned(pa),unsigned(pb)});
++        if(front!=meshFrontCertificates.end()&&front->second.second&&front->second.first.first<=time&&front->second.first.second>=time)return nullptr;
++        const auto* previous=Episode(a,b,pa,pb);
++        if(!previous||previous->fronts.empty())return nullptr;
++        const auto& endpointA=ImpactPoseAt(a,time);const auto& endpointB=ImpactPoseAt(b,time);
++        const auto endpointFirst=PrimitiveAt(bodies[a].shape,endpointA.pose,pa,&*endpointA.orientation),endpointSecond=PrimitiveAt(bodies[b].shape,endpointB.pose,pb,&*endpointB.orientation);
++        const bool endpointFirstMesh=endpointFirst.shape.type==ShapeType::TriangleMesh;
++        const auto identity=std::make_tuple(a,b,pa,pb,time);
++        if(MeshEndpointUsesNativeSelection(endpointFirstMesh?endpointSecond:endpointFirst,endpointFirstMesh?endpointFirst:endpointSecond)){
++            // This actual endpoint needs no historical side: all its finite
++            // contacts use the ordinary front rule. It is an independent
++            // complete checkpoint for later queries of this anchored path.
++            episodeDerived.emplace(identity,MeshContactEpisode{MeshContactFeatures(endpointFirstMesh?endpointSecond:endpointFirst,endpointFirstMesh?endpointFirst:endpointSecond,nullptr)});
++            return nullptr;
++        }
++        const auto cached=episodeDerived.find(identity);
++        if(cached!=episodeDerived.end())return cached->second.fronts.empty()?nullptr:&cached->second;
++        const auto foundRecord=meshEpisodes.find({a,b,unsigned(pa),unsigned(pb)});
++        if(foundRecord==meshEpisodes.end())throw std::runtime_error("prototype canonical episode record absent");
++        const auto& record=foundRecord->second;
++        MeshContactEpisode selected=*previous;
++        const auto first=PrimitiveAt(bodies[a].shape,bodies[a].rigidBody,pa),second=PrimitiveAt(bodies[b].shape,bodies[b].rigidBody,pb);
++        const bool fm=first.shape.type==ShapeType::TriangleMesh;
++        const unsigned moving=fm?b:a;
++        const auto& query=fm?second:first;const auto& mesh=fm?first:second;
++        double covered=record.anchorTime;
++        // Read only an earlier checkpoint of this same pair and the current
++        // still-valid trajectories. Existing publication/invalidation clears
++        // the whole derived map whenever an accepted impulse changes a path.
++        auto checkpoint=episodeDerived.upper_bound(identity);
++        if(checkpoint!=episodeDerived.begin()){
++            --checkpoint;
++            if(std::get<0>(checkpoint->first)==a&&std::get<1>(checkpoint->first)==b&&
++               std::get<2>(checkpoint->first)==pa&&std::get<3>(checkpoint->first)==pb&&
++               std::get<4>(checkpoint->first)>=covered&&std::get<4>(checkpoint->first)<=time){
++                selected=checkpoint->second;covered=std::get<4>(checkpoint->first);
++            }
++        }
++        if(time<covered)throw std::runtime_error("finite-mesh episode query precedes causal anchor");
++        for(const auto& segment:bodies[moving].motion.Segments()) {
++            if(segment.end<=covered||segment.begin>time)continue;
++            if(segment.begin>covered)throw std::runtime_error("finite-mesh episode trajectory gap");
++            const double finish=std::min(time,segment.end);
++            if(finish<=covered)continue;
++            auto result=episode_probe::ReacquireUnion(query,mesh,selected,segment,covered,finish);
++            ++unionQueries;unionIntervals+=result.measure.intervals;
++            unionReacquisitionSearches+=result.reacquisitionSearches;unionReacquisitionWitnesses+=result.reacquisitionWitnesses;
++            unionCertificates+=result.measure.pointCertificates+result.measure.constantCertificates;
++            if(result.measure.result==episode_probe::Result::Uncertain){++unionUncertain;std::ostringstream message;message<<"finite-mesh episode continuity uncertified within bounded policy: pair="<<a<<","<<b<<" anchor="<<record.anchorTime<<" start="<<covered<<" finish="<<finish<<" intervals="<<result.measure.intervals<<" certificates="<<(result.measure.pointCertificates+result.measure.constantCertificates)<<" features="<<selected.fronts.size();throw std::runtime_error(message.str());}
++            if(result.measure.result==episode_probe::Result::Separated){selected.fronts.clear();covered=time;break;}
++            selected=std::move(result.selected);covered=finish;if(covered==time)break;
++        }
++        if(covered<time&&bodies[moving].HasMotion())throw std::runtime_error("finite-mesh episode trajectory incomplete");
++        auto entry=episodeDerived.emplace(identity,std::move(selected)).first;
++        return entry->second.fronts.empty()?nullptr:&entry->second;
++    }
++    void BeginMeshEpisodes() {
++        episodeDerived.clear();meshFrontCertificates.clear();
++        for(const auto& pair:candidatePairs)for(int pa=0;pa<PrimitiveCount(bodies[pair.first].shape);++pa)for(int pb=0;pb<PrimitiveCount(bodies[pair.second].shape);++pb)
++            if(CanRespond(pair.first,pair.second)&&MeshPair(pair.first,pair.second,pa,pb)) {
++                const auto& a=bodies[pair.first];const auto& b=bodies[pair.second];
++                auto first=PrimitiveAt(a.shape,a.rigidBody,pa),second=PrimitiveAt(b.shape,b.rigidBody,pb);
++                const bool fm=first.shape.type==ShapeType::TriangleMesh;
++                auto features=MeshContactFeatures(fm?second:first,fm?first:second,Episode(pair.first,pair.second,pa,pb));
++                const std::array<unsigned,4> key{pair.first,pair.second,unsigned(pa),unsigned(pb)};
++                if(features.empty())meshEpisodes.erase(key);
++                else meshEpisodes[key]={ContactKey{pair.first,pair.second,a.generation,b.generation,pa,pb},a.contactObservationRevision,b.contactObservationRevision,(fm?first:second).shape.asset.get(),MeshContactEpisode{std::move(features)},0};
++            }
++    }
++    void FinishMeshEpisodes(double dt) {
++        std::vector<std::array<unsigned,4>> keys;for(const auto& e:meshEpisodes)keys.push_back(e.first);
++        for(const auto& key:keys){
++            if(key[0]>=bodies.size()||key[1]>=bodies.size()||!bodies[key[0]].alive||!bodies[key[1]].alive||!MeshPair(key[0],key[1],key[2],key[3])){meshEpisodes.erase(key);continue;}
++            auto episode=EpisodeForTime(key[0],key[1],key[2],key[3],dt);
++            const auto first=PrimitiveAt(bodies[key[0]].shape,bodies[key[0]].rigidBody,key[2]),second=PrimitiveAt(bodies[key[1]].shape,bodies[key[1]].rigidBody,key[3]);const bool fm=first.shape.type==ShapeType::TriangleMesh;
++            auto features=MeshContactFeatures(fm?second:first,fm?first:second,episode);
++            if(features.empty())meshEpisodes.erase(key);else {auto& e=meshEpisodes.at(key);e.episode.fronts=std::move(features);e.anchorTime=0;}
++        }
++        episodeDerived.clear();meshFrontCertificates.clear();
++    }
++
+ };
+ 
+ #include "WorldHotAccessors.h"
+--- a/src/physics/WorldModules.md
++++ b/src/physics/WorldModules.md
+@@ -30,13 +30,6 @@
+ checks available to the compiler. `WorldImpactQueries.h` does the same for the
+ shared represented-pose/contact query path. Neither header owns independent
+ state or supplies an alternative collision policy.
+-
+-`ImpactCandidateCache.h` retains sorted broadphase candidate lists only during
+-one impact-event pass. Any fat-proxy reinsertion invalidates those lists,
+-including movement of the other endpoint. A contained query filters the retained
+-superset against current proxy bounds; queries outside that enclosure or the
+-cache budget use the ordinary tree query. Collision filters, actual geometry,
+-contact response and impact times are still evaluated normally.
+ 
+ ## Ordering and interfaces
+ 

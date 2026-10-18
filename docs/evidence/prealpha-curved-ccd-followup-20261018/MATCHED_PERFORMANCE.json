@@ -1,0 +1,411 @@
+{
+  "method": "Original 13 bodies/12 joints; original 60 physical steps at 1/60 and throwSpeed1.2. Original Run byte-preserved except function rename and untimed per-step logging. Three paired repeats with alternate before/after order. Nearest-rank p95. No cache warmups or thresholds changed. Short CPU benchmark only; no performance acceptance claim.",
+  "recorded_utc": "2026-10-18T21:13:06.885537+00:00",
+  "environment": {
+    "platform": "Linux-7.0.0-38-generic-x86_64-with-glibc2.43",
+    "compiler": "c++ (Ubuntu 15.2.0-16ubuntu1) 15.2.0",
+    "cpu_model": "Intel(R) Core(TM) i7-4790 CPU @ 3.60GHz"
+  },
+  "workloads": {
+    "coarse": {
+      "baseline": {
+        "runs": [
+          {
+            "rep": 0,
+            "log": "coarse-0-baseline.log",
+            "median_ms": 3.377979,
+            "p95_ms": 9.211518,
+            "worst_ms": 12.445524,
+            "total_ms": 219.433665,
+            "peak_rss_kib": 20472,
+            "digest": "3fdde56f1ea9312b",
+            "max_penetration_m": 0.009919340426873147,
+            "result": {
+              "scenario": "coarse",
+              "triangles": "104",
+              "steps": "60",
+              "throwSpeed": "1.2",
+              "totalMs": "219.43366499999993",
+              "worstStepMs": "12.445524000000001",
+              "maxPenetration": "0.0099193404268731467",
+              "meanPenetration": "0.0026130118195731118",
+              "queries": "1614",
+              "events": "172",
+              "samples": "5470",
+              "digest": "3fdde56f1ea9312b",
+              "checks": "26",
+              "failures": "0"
+            }
+          },
+          {
+            "rep": 1,
+            "log": "coarse-1-baseline.log",
+            "median_ms": 3.4007905000000003,
+            "p95_ms": 8.661179,
+            "worst_ms": 12.629474,
+            "total_ms": 216.317843,
+            "peak_rss_kib": 20420,
+            "digest": "3fdde56f1ea9312b",
+            "max_penetration_m": 0.009919340426873147,
+            "result": {
+              "scenario": "coarse",
+              "triangles": "104",
+              "steps": "60",
+              "throwSpeed": "1.2",
+              "totalMs": "216.31784300000004",
+              "worstStepMs": "12.629474",
+              "maxPenetration": "0.0099193404268731467",
+              "meanPenetration": "0.0026130118195731118",
+              "queries": "1614",
+              "events": "172",
+              "samples": "5470",
+              "digest": "3fdde56f1ea9312b",
+              "checks": "26",
+              "failures": "0"
+            }
+          },
+          {
+            "rep": 2,
+            "log": "coarse-2-baseline.log",
+            "median_ms": 3.2564405,
+            "p95_ms": 8.778695,
+            "worst_ms": 11.8758,
+            "total_ms": 212.795409,
+            "peak_rss_kib": 20488,
+            "digest": "3fdde56f1ea9312b",
+            "max_penetration_m": 0.009919340426873147,
+            "result": {
+              "scenario": "coarse",
+              "triangles": "104",
+              "steps": "60",
+              "throwSpeed": "1.2",
+              "totalMs": "212.79540900000001",
+              "worstStepMs": "11.8758",
+              "maxPenetration": "0.0099193404268731467",
+              "meanPenetration": "0.0026130118195731118",
+              "queries": "1614",
+              "events": "172",
+              "samples": "5470",
+              "digest": "3fdde56f1ea9312b",
+              "checks": "26",
+              "failures": "0"
+            }
+          }
+        ],
+        "pooled_steps": 180,
+        "pooled_median_ms": 3.362987,
+        "pooled_p95_ms": 8.828661,
+        "pooled_worst_ms": 12.629474,
+        "max_rss_kib": 20488
+      },
+      "candidate": {
+        "runs": [
+          {
+            "rep": 0,
+            "log": "coarse-0-candidate.log",
+            "median_ms": 4.9611035,
+            "p95_ms": 11.01429,
+            "worst_ms": 14.598231,
+            "total_ms": 283.259914,
+            "peak_rss_kib": 20616,
+            "digest": "3fdde56f1ea9312b",
+            "max_penetration_m": 0.009919340426873147,
+            "result": {
+              "scenario": "coarse",
+              "triangles": "104",
+              "steps": "60",
+              "throwSpeed": "1.2",
+              "totalMs": "283.25991399999998",
+              "worstStepMs": "14.598231",
+              "maxPenetration": "0.0099193404268731467",
+              "meanPenetration": "0.0026130118195731118",
+              "queries": "1614",
+              "events": "172",
+              "samples": "5470",
+              "digest": "3fdde56f1ea9312b",
+              "checks": "26",
+              "failures": "0"
+            }
+          },
+          {
+            "rep": 1,
+            "log": "coarse-1-candidate.log",
+            "median_ms": 5.1514475,
+            "p95_ms": 10.889916,
+            "worst_ms": 15.013824,
+            "total_ms": 287.27786299999997,
+            "peak_rss_kib": 20552,
+            "digest": "3fdde56f1ea9312b",
+            "max_penetration_m": 0.009919340426873147,
+            "result": {
+              "scenario": "coarse",
+              "triangles": "104",
+              "steps": "60",
+              "throwSpeed": "1.2",
+              "totalMs": "287.27786299999997",
+              "worstStepMs": "15.013824",
+              "maxPenetration": "0.0099193404268731467",
+              "meanPenetration": "0.0026130118195731118",
+              "queries": "1614",
+              "events": "172",
+              "samples": "5470",
+              "digest": "3fdde56f1ea9312b",
+              "checks": "26",
+              "failures": "0"
+            }
+          },
+          {
+            "rep": 2,
+            "log": "coarse-2-candidate.log",
+            "median_ms": 5.014115,
+            "p95_ms": 11.842219,
+            "worst_ms": 14.257229,
+            "total_ms": 287.267992,
+            "peak_rss_kib": 20552,
+            "digest": "3fdde56f1ea9312b",
+            "max_penetration_m": 0.009919340426873147,
+            "result": {
+              "scenario": "coarse",
+              "triangles": "104",
+              "steps": "60",
+              "throwSpeed": "1.2",
+              "totalMs": "287.26799199999999",
+              "worstStepMs": "14.257229000000001",
+              "maxPenetration": "0.0099193404268731467",
+              "meanPenetration": "0.0026130118195731118",
+              "queries": "1614",
+              "events": "172",
+              "samples": "5470",
+              "digest": "3fdde56f1ea9312b",
+              "checks": "26",
+              "failures": "0"
+            }
+          }
+        ],
+        "pooled_steps": 180,
+        "pooled_median_ms": 5.01549,
+        "pooled_p95_ms": 11.32358,
+        "pooled_worst_ms": 15.013824,
+        "max_rss_kib": 20616
+      }
+    },
+    "medium": {
+      "baseline": {
+        "runs": [
+          {
+            "rep": 0,
+            "log": "medium-0-baseline.log",
+            "median_ms": 3.5720075,
+            "p95_ms": 15.847584,
+            "worst_ms": 20.098218,
+            "total_ms": 300.326006,
+            "peak_rss_kib": 20996,
+            "digest": "ebd86a04dabbad71",
+            "max_penetration_m": 0.010796951167128865,
+            "result": {
+              "scenario": "medium",
+              "triangles": "1800",
+              "steps": "60",
+              "throwSpeed": "1.2",
+              "totalMs": "300.32600599999989",
+              "worstStepMs": "20.098217999999999",
+              "maxPenetration": "0.010796951167128865",
+              "meanPenetration": "0.001794404516183146",
+              "queries": "1744",
+              "events": "193",
+              "samples": "5536",
+              "digest": "ebd86a04dabbad71",
+              "checks": "26",
+              "failures": "0"
+            }
+          },
+          {
+            "rep": 1,
+            "log": "medium-1-baseline.log",
+            "median_ms": 3.6619335,
+            "p95_ms": 16.163858,
+            "worst_ms": 19.948949,
+            "total_ms": 303.626583,
+            "peak_rss_kib": 20984,
+            "digest": "ebd86a04dabbad71",
+            "max_penetration_m": 0.010796951167128865,
+            "result": {
+              "scenario": "medium",
+              "triangles": "1800",
+              "steps": "60",
+              "throwSpeed": "1.2",
+              "totalMs": "303.62658300000004",
+              "worstStepMs": "19.948948999999999",
+              "maxPenetration": "0.010796951167128865",
+              "meanPenetration": "0.001794404516183146",
+              "queries": "1744",
+              "events": "193",
+              "samples": "5536",
+              "digest": "ebd86a04dabbad71",
+              "checks": "26",
+              "failures": "0"
+            }
+          },
+          {
+            "rep": 2,
+            "log": "medium-2-baseline.log",
+            "median_ms": 3.840936,
+            "p95_ms": 16.856324,
+            "worst_ms": 20.923775,
+            "total_ms": 315.393462,
+            "peak_rss_kib": 20984,
+            "digest": "ebd86a04dabbad71",
+            "max_penetration_m": 0.010796951167128865,
+            "result": {
+              "scenario": "medium",
+              "triangles": "1800",
+              "steps": "60",
+              "throwSpeed": "1.2",
+              "totalMs": "315.393462",
+              "worstStepMs": "20.923774999999999",
+              "maxPenetration": "0.010796951167128865",
+              "meanPenetration": "0.001794404516183146",
+              "queries": "1744",
+              "events": "193",
+              "samples": "5536",
+              "digest": "ebd86a04dabbad71",
+              "checks": "26",
+              "failures": "0"
+            }
+          }
+        ],
+        "pooled_steps": 180,
+        "pooled_median_ms": 3.733531,
+        "pooled_p95_ms": 16.163858,
+        "pooled_worst_ms": 20.923775,
+        "max_rss_kib": 20996
+      },
+      "candidate": {
+        "runs": [
+          {
+            "rep": 0,
+            "log": "medium-0-candidate.log",
+            "median_ms": 5.114958,
+            "p95_ms": 20.210265,
+            "worst_ms": 26.351149,
+            "total_ms": 403.667173,
+            "peak_rss_kib": 21220,
+            "digest": "ebd86a04dabbad71",
+            "max_penetration_m": 0.010796951167128865,
+            "result": {
+              "scenario": "medium",
+              "triangles": "1800",
+              "steps": "60",
+              "throwSpeed": "1.2",
+              "totalMs": "403.66717300000005",
+              "worstStepMs": "26.351148999999999",
+              "maxPenetration": "0.010796951167128865",
+              "meanPenetration": "0.001794404516183146",
+              "queries": "1744",
+              "events": "193",
+              "samples": "5536",
+              "digest": "ebd86a04dabbad71",
+              "checks": "26",
+              "failures": "0"
+            }
+          },
+          {
+            "rep": 1,
+            "log": "medium-1-candidate.log",
+            "median_ms": 5.2434815,
+            "p95_ms": 20.264801,
+            "worst_ms": 26.795056,
+            "total_ms": 402.269736,
+            "peak_rss_kib": 21216,
+            "digest": "ebd86a04dabbad71",
+            "max_penetration_m": 0.010796951167128865,
+            "result": {
+              "scenario": "medium",
+              "triangles": "1800",
+              "steps": "60",
+              "throwSpeed": "1.2",
+              "totalMs": "402.26973600000002",
+              "worstStepMs": "26.795055999999999",
+              "maxPenetration": "0.010796951167128865",
+              "meanPenetration": "0.001794404516183146",
+              "queries": "1744",
+              "events": "193",
+              "samples": "5536",
+              "digest": "ebd86a04dabbad71",
+              "checks": "26",
+              "failures": "0"
+            }
+          },
+          {
+            "rep": 2,
+            "log": "medium-2-candidate.log",
+            "median_ms": 5.5541599999999995,
+            "p95_ms": 20.305492,
+            "worst_ms": 25.934045,
+            "total_ms": 409.138195,
+            "peak_rss_kib": 21212,
+            "digest": "ebd86a04dabbad71",
+            "max_penetration_m": 0.010796951167128865,
+            "result": {
+              "scenario": "medium",
+              "triangles": "1800",
+              "steps": "60",
+              "throwSpeed": "1.2",
+              "totalMs": "409.138195",
+              "worstStepMs": "25.934045000000001",
+              "maxPenetration": "0.010796951167128865",
+              "meanPenetration": "0.001794404516183146",
+              "queries": "1744",
+              "events": "193",
+              "samples": "5536",
+              "digest": "ebd86a04dabbad71",
+              "checks": "26",
+              "failures": "0"
+            }
+          }
+        ],
+        "pooled_steps": 180,
+        "pooled_median_ms": 5.2434815,
+        "pooled_p95_ms": 20.305492,
+        "pooled_worst_ms": 26.795056,
+        "max_rss_kib": 21220
+      }
+    }
+  },
+  "trajectory_checks": [
+    {
+      "scenario": "coarse",
+      "rep": 0,
+      "all_60_cumulative_step_digests_equal": true
+    },
+    {
+      "scenario": "coarse",
+      "rep": 1,
+      "all_60_cumulative_step_digests_equal": true
+    },
+    {
+      "scenario": "coarse",
+      "rep": 2,
+      "all_60_cumulative_step_digests_equal": true
+    },
+    {
+      "scenario": "medium",
+      "rep": 0,
+      "all_60_cumulative_step_digests_equal": true
+    },
+    {
+      "scenario": "medium",
+      "rep": 1,
+      "all_60_cumulative_step_digests_equal": true
+    },
+    {
+      "scenario": "medium",
+      "rep": 2,
+      "all_60_cumulative_step_digests_equal": true
+    }
+  ],
+  "binaries": {
+    "baseline": "4714ee495700727a29267b86b3047d088a3e4b6e7c1654bc782b1eac76d11b21",
+    "candidate": "b259bf2d7754aef476d5b9a8249745109463cf6cfea39a2dc52f7723fd31ae05"
+  }
+}

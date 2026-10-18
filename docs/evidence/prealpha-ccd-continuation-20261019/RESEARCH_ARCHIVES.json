@@ -1,0 +1,20 @@
+{
+  "archives": [
+    {
+      "path": "prior-prototype-source.tar.gz",
+      "sha256": "6897b1f77ea220eaeba61cbf05e4e5a9c9c4138198ae7881ac71fa34944b10d8",
+      "bytes": 1900757,
+      "scope": "Exact original unshipped prototype archive"
+    },
+    {
+      "path": "continuation-research.tar.gz",
+      "sha256": "5d2367800fc3bb79e75792d2b4bb8cc5783b15885244ad1c310437d44cbd66ab",
+      "bytes": 7167362,
+      "payload_files": 1525,
+      "inherited_baseline_files": 5156,
+      "payload_bytes": 31763427,
+      "all_payload_hashes_verified": true,
+      "manifest_sha256": "6e7adc86f16f73afd9820a92ae1f911bfca4305dad40f68acf6f0e1f1eaafd95"
+    }
+  ]
+}

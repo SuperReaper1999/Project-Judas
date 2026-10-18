@@ -1,0 +1,11 @@
+{
+  "archive": "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-curved-ccd-20261018-source-evidence.tar.gz",
+  "sha256": "6897b1f77ea220eaeba61cbf05e4e5a9c9c4138198ae7881ac71fa34944b10d8",
+  "archive_bytes": 1900757,
+  "manifest_sha256": "e5c8f6a3481b66ef38000689d83844886bde3ecb7ff839ebabc55ce7da37419d",
+  "payload_files": 568,
+  "payload_bytes": 9275204,
+  "archive_members_verified": 569,
+  "exact_source_and_binary_receipts_match": true,
+  "status": "Research-only unsafe prototype, NOT applied to production"
+}

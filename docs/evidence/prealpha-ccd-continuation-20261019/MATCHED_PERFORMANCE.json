@@ -1,0 +1,179 @@
+{
+  "method": "Original13body/12joint60step coarsesheet104triangle andmedium1800triangles. Threepaired alternatingruns; postlinkcoarsesmoke loggedseparately. TimedSteponly. Originalphysicsfixture unchanged; cumulativephysicaldigestcheckedateveryboundary. Nearest-rankp95.",
+  "environment": {
+    "platform": "Linux-7.0.0-38-generic-x86_64-with-glibc2.43",
+    "compiler": "c++ (Ubuntu 15.2.0-16ubuntu1) 15.2.0",
+    "cpu": "Intel(R) Core(TM) i7-4790 CPU @ 3.60GHz"
+  },
+  "workloads": {
+    "coarse": {
+      "baseline": {
+        "runs": [
+          {
+            "rep": 0,
+            "median_ms": 3.7189605,
+            "p95_ms": 8.707115,
+            "worst_ms": 14.139104,
+            "peak_rss_kib": 20520,
+            "result": "OBSERVE_RESULT scenario=coarse triangles=104 steps=60 throwSpeed=1.2 totalMs=237.62375700000007 worstStepMs=14.139104 maxPenetration=0.0099193404268731467 meanPenetration=0.0026130118195731118 queries=1614 events=172 samples=5470 digest=3fdde56f1ea9312b checks=26 failures=0"
+          },
+          {
+            "rep": 1,
+            "median_ms": 3.479477,
+            "p95_ms": 8.851386,
+            "worst_ms": 11.999738,
+            "peak_rss_kib": 20544,
+            "result": "OBSERVE_RESULT scenario=coarse triangles=104 steps=60 throwSpeed=1.2 totalMs=216.252781 worstStepMs=11.999738000000001 maxPenetration=0.0099193404268731467 meanPenetration=0.0026130118195731118 queries=1614 events=172 samples=5470 digest=3fdde56f1ea9312b checks=26 failures=0"
+          },
+          {
+            "rep": 2,
+            "median_ms": 3.2427015,
+            "p95_ms": 8.771727,
+            "worst_ms": 12.465599,
+            "peak_rss_kib": 20516,
+            "result": "OBSERVE_RESULT scenario=coarse triangles=104 steps=60 throwSpeed=1.2 totalMs=213.78258900000006 worstStepMs=12.465598999999999 maxPenetration=0.0099193404268731467 meanPenetration=0.0026130118195731118 queries=1614 events=172 samples=5470 digest=3fdde56f1ea9312b checks=26 failures=0"
+          }
+        ],
+        "pooled_steps": 180,
+        "median_ms": 3.492468,
+        "p95_ms": 8.804498,
+        "worst_ms": 14.139104,
+        "peak_rss_kib": 20544
+      },
+      "candidate": {
+        "runs": [
+          {
+            "rep": 0,
+            "median_ms": 4.447620000000001,
+            "p95_ms": 16.406815,
+            "worst_ms": 28.874182,
+            "peak_rss_kib": 20588,
+            "result": "OBSERVE_RESULT scenario=coarse triangles=104 steps=60 throwSpeed=1.2 totalMs=327.20962099999997 worstStepMs=28.874182000000001 maxPenetration=0.0089986101863086532 meanPenetration=0.0018607150582351404 queries=3085 events=211 samples=14199 digest=d6258665dd920e62 checks=26 failures=0"
+          },
+          {
+            "rep": 1,
+            "median_ms": 4.598157,
+            "p95_ms": 17.262142,
+            "worst_ms": 29.098518,
+            "peak_rss_kib": 20484,
+            "result": "OBSERVE_RESULT scenario=coarse triangles=104 steps=60 throwSpeed=1.2 totalMs=347.71632299999987 worstStepMs=29.098517999999999 maxPenetration=0.0089986101863086532 meanPenetration=0.0018607150582351404 queries=3085 events=211 samples=14199 digest=d6258665dd920e62 checks=26 failures=0"
+          },
+          {
+            "rep": 2,
+            "median_ms": 4.367844,
+            "p95_ms": 17.06932,
+            "worst_ms": 29.291265,
+            "peak_rss_kib": 20584,
+            "result": "OBSERVE_RESULT scenario=coarse triangles=104 steps=60 throwSpeed=1.2 totalMs=323.08370599999995 worstStepMs=29.291264999999999 maxPenetration=0.0089986101863086532 meanPenetration=0.0018607150582351404 queries=3085 events=211 samples=14199 digest=d6258665dd920e62 checks=26 failures=0"
+          }
+        ],
+        "pooled_steps": 180,
+        "median_ms": 4.447620000000001,
+        "p95_ms": 17.262142,
+        "worst_ms": 29.291265,
+        "peak_rss_kib": 20588
+      }
+    },
+    "medium": {
+      "baseline": {
+        "runs": [
+          {
+            "rep": 0,
+            "median_ms": 3.9208274999999997,
+            "p95_ms": 17.906271,
+            "worst_ms": 21.028032,
+            "peak_rss_kib": 21060,
+            "result": "OBSERVE_RESULT scenario=medium triangles=1800 steps=60 throwSpeed=1.2 totalMs=336.808787 worstStepMs=21.028032 maxPenetration=0.010796951167128865 meanPenetration=0.001794404516183146 queries=1744 events=193 samples=5536 digest=ebd86a04dabbad71 checks=26 failures=0"
+          },
+          {
+            "rep": 1,
+            "median_ms": 3.646641,
+            "p95_ms": 15.804367,
+            "worst_ms": 19.980549,
+            "peak_rss_kib": 21040,
+            "result": "OBSERVE_RESULT scenario=medium triangles=1800 steps=60 throwSpeed=1.2 totalMs=302.43683100000004 worstStepMs=19.980549 maxPenetration=0.010796951167128865 meanPenetration=0.001794404516183146 queries=1744 events=193 samples=5536 digest=ebd86a04dabbad71 checks=26 failures=0"
+          },
+          {
+            "rep": 2,
+            "median_ms": 3.881753,
+            "p95_ms": 16.009668,
+            "worst_ms": 20.297007,
+            "peak_rss_kib": 21000,
+            "result": "OBSERVE_RESULT scenario=medium triangles=1800 steps=60 throwSpeed=1.2 totalMs=311.13868499999995 worstStepMs=20.297007000000001 maxPenetration=0.010796951167128865 meanPenetration=0.001794404516183146 queries=1744 events=193 samples=5536 digest=ebd86a04dabbad71 checks=26 failures=0"
+          }
+        ],
+        "pooled_steps": 180,
+        "median_ms": 3.8707485,
+        "p95_ms": 16.505526,
+        "worst_ms": 21.028032,
+        "peak_rss_kib": 21060
+      },
+      "candidate": {
+        "runs": [
+          {
+            "rep": 0,
+            "median_ms": 6.5083755,
+            "p95_ms": 19.996939,
+            "worst_ms": 33.905008,
+            "peak_rss_kib": 21080,
+            "result": "OBSERVE_RESULT scenario=medium triangles=1800 steps=60 throwSpeed=1.2 totalMs=467.47554000000008 worstStepMs=33.905008000000002 maxPenetration=0.008631594203038162 meanPenetration=0.0017659670624484741 queries=3497 events=248 samples=16713 digest=fa8a81e23008d857 checks=26 failures=0"
+          },
+          {
+            "rep": 1,
+            "median_ms": 6.304085499999999,
+            "p95_ms": 19.888084,
+            "worst_ms": 35.21778,
+            "peak_rss_kib": 21084,
+            "result": "OBSERVE_RESULT scenario=medium triangles=1800 steps=60 throwSpeed=1.2 totalMs=473.20601599999998 worstStepMs=35.217779999999998 maxPenetration=0.008631594203038162 meanPenetration=0.0017659670624484741 queries=3497 events=248 samples=16713 digest=fa8a81e23008d857 checks=26 failures=0"
+          },
+          {
+            "rep": 2,
+            "median_ms": 6.4269495,
+            "p95_ms": 19.350998,
+            "worst_ms": 33.965608,
+            "peak_rss_kib": 21028,
+            "result": "OBSERVE_RESULT scenario=medium triangles=1800 steps=60 throwSpeed=1.2 totalMs=469.11261100000002 worstStepMs=33.965608000000003 maxPenetration=0.008631594203038162 meanPenetration=0.0017659670624484741 queries=3497 events=248 samples=16713 digest=fa8a81e23008d857 checks=26 failures=0"
+          }
+        ],
+        "pooled_steps": 180,
+        "median_ms": 6.387491000000001,
+        "p95_ms": 19.996939,
+        "worst_ms": 35.21778,
+        "peak_rss_kib": 21084
+      }
+    }
+  },
+  "trajectory_comparisons": [
+    {
+      "scenario": "coarse",
+      "rep": 0,
+      "all60_step_digests_equal": false
+    },
+    {
+      "scenario": "coarse",
+      "rep": 1,
+      "all60_step_digests_equal": false
+    },
+    {
+      "scenario": "coarse",
+      "rep": 2,
+      "all60_step_digests_equal": false
+    },
+    {
+      "scenario": "medium",
+      "rep": 0,
+      "all60_step_digests_equal": false
+    },
+    {
+      "scenario": "medium",
+      "rep": 1,
+      "all60_step_digests_equal": false
+    },
+    {
+      "scenario": "medium",
+      "rep": 2,
+      "all60_step_digests_equal": false
+    }
+  ],
+  "all_physical_digests_equal": false
+}

@@ -1,0 +1,97 @@
+{
+  "schema": 1,
+  "status": "research-only; original four assertions pass in isolated prototype; NOT production eligible",
+  "source_commit": "146a0727eab63d9555c732bf73e6093be5bc489d",
+  "release_branch_commit": "4c141e9bb6c68a50c63dec263dcec398200328ad",
+  "production_engine_modified": false,
+  "committed_or_pushed": false,
+  "human_validated": false,
+  "platform": "native Linux; no Windows/Android validation this investigation",
+  "baseline": {
+    "full_checks": 372,
+    "full_failures": 4,
+    "curved_checks": 193,
+    "curved_failures": 4,
+    "crossing_counts": [
+      11,
+      20,
+      15
+    ],
+    "rotated_contract_failed": true,
+    "entry_checks": 193,
+    "entry_failures": 0
+  },
+  "isolated_prototype": {
+    "name": "rotation-world",
+    "full_checks": 372,
+    "full_failures": 0,
+    "curved_checks": 193,
+    "curved_failures": 0,
+    "crossing_counts": [
+      0,
+      0,
+      0
+    ],
+    "curved_throws": 0,
+    "rotated_contract_passed": true,
+    "entry_checks": 193,
+    "entry_failures": 0,
+    "original_fixture_timestep_inputs_thresholds_unchanged": true,
+    "original_helper_checks": 8,
+    "original_helper_failures": 0,
+    "reduced16_and_full104_no_crossing": true,
+    "neighboring_suites_passed": 10,
+    "all_six_original_ragdoll_aggregate_trajectory_digests_equal": true,
+    "observed_compile_warnings": 4,
+    "warning_kind": "misleading indentation in research headers; no zero-warning claim"
+  },
+  "demonstrated_adoption_blocker": {
+    "test": "unrelated far-body pair filter invariance",
+    "paired_trials": 168,
+    "candidate_checks": 1681,
+    "candidate_failures": 3,
+    "candidate_physical_changes": 3,
+    "candidate_new_5cm_crossings": 1,
+    "baseline_physical_changes": 0,
+    "candidate_noop_physical_changes": 0,
+    "cases": [
+      {
+        "box": 17,
+        "prefix": 6,
+        "max_position_delta_m": 0.29631915859517716,
+        "final_depth_m": 0.13301944833967932
+      },
+      {
+        "box": 5,
+        "prefix": 7,
+        "max_position_delta_m": 0.14035133737747993
+      },
+      {
+        "box": 17,
+        "prefix": 7,
+        "max_position_delta_m": 0.061203668522790806
+      }
+    ],
+    "throws": 0,
+    "source_cause": "body-wide contactObservationRevision used as pair-specific causal physical ownership lifetime"
+  },
+  "other_unqualified_contracts": [
+    "final positional-correction/coupling endpoint ownership reconciliation",
+    "cold-save ownership participant and missing legacy history",
+    "streamed cross-region ownership and dependencies",
+    "geometry replacement and origin/lifecycle reconciliation",
+    "bounded proof-cache eviction and safe uncertainty handling",
+    "generic kinematic/shape/platform coverage"
+  ],
+  "matched_performance": "matched-observer/MEASUREMENTS.json",
+  "root_causes": [
+    "whole concave mesh treated as support after one local triangle impact",
+    "stateless vertex-mean side rejection drops still-finite continuous front contacts",
+    "interval dependency loses shared centers/projection origins/rotation columns and causes repeated ancestry work"
+  ],
+  "decisions": [
+    "No solver budget increases, collision fidelity reductions, damping changes or oracle weakening",
+    "No production implementation of unsafe research prototype",
+    "No independent fluid research or fluid implementation touched"
+  ]
+}

@@ -1,0 +1,673 @@
+{
+  "schema": 1,
+  "utc": "2026-10-18T23:34:30.370053+00:00",
+  "parent": "146a0727eab63d9555c732bf73e6093be5bc489d",
+  "platform": "Native Linux; package graphics smoke uses llvmpipe, not hardware GPU qualification",
+  "build": [
+    {
+      "name": "final-configure",
+      "argv": [
+        "cmake",
+        "-S",
+        "/home/conner/Documents/GitHub/Project-Judas",
+        "-B",
+        "/home/conner/Documents/GitHub/Project-Judas/build"
+      ],
+      "exit": 0,
+      "seconds": 2.3701057650032453
+    },
+    {
+      "name": "final-build",
+      "argv": [
+        "cmake",
+        "--build",
+        "/home/conner/Documents/GitHub/Project-Judas/build",
+        "--parallel",
+        "2",
+        "--target",
+        "judas",
+        "judas_editor",
+        "judas_native_mesh_growth_tests",
+        "judas_clip_polygon_tests",
+        "judas_stream_origin_precision_tests",
+        "judas_impact_mesh_cost_tests",
+        "judas_collision_geometry_tests",
+        "judas_impact_robustness_tests",
+        "judas_physics_continuation_tests",
+        "judas_contact_lifecycle_tests",
+        "judas_character_motor_tests",
+        "judas_origin_stream_tests",
+        "judas_living_world_streaming_tests",
+        "judas_save_streaming_tests",
+        "judas_impact_timing_tests",
+        "judas_impact_solver_tests",
+        "judas_kinematic_tests",
+        "judas_rigid_contact_tests",
+        "judas_ragdoll_tests",
+        "judas_post_consumer_ragdoll_tests",
+        "judas_impact_candidate_cache_tests"
+      ],
+      "exit": 0,
+      "seconds": 53.3332452839968
+    }
+  ],
+  "compiler_warning_count": 0,
+  "focused_gate": {
+    "format": 1,
+    "startedUtc": "2026-10-18T23:26:00.047523+00:00",
+    "sourceRevision": "146a0727eab63d9555c732bf73e6093be5bc489d",
+    "trackedWorktreeStatus": "M CMakeLists.txt\n M docs/ARCHITECTURE.md\n M docs/PREALPHA.md\n M projects/physics_stress_lab/README.md\n M src/CollisionGeometry.cpp\n M src/CollisionGeometry.h\n M src/WorldStreaming.cpp\n M src/physics/WorldCCDSearch.cpp\n M src/physics/WorldImpactEvents.cpp\n M src/physics/WorldInternal.h\n M tests/test_prealpha_validation.py\n M tools/validation/suites.json",
+    "manifestSha256": "f6a117313db2aa71547e15e14c9c9b8a4da4a7827d5d036f877b3eca0d9dc042",
+    "trackedDiffSha256": "6630d8578ada40788c6fad96f5e2d37eb96b6ede5c0796abe2224e1b1f9292aa",
+    "platform": "Linux-7.0.0-38-generic-x86_64-with-glibc2.43",
+    "machine": "x86_64",
+    "cpuCount": 8,
+    "groups": [],
+    "tests": [
+      {
+        "argv": [
+          "/home/conner/Documents/GitHub/Project-Judas/build/judas_collision_geometry_tests"
+        ],
+        "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+        "timeoutSeconds": 120,
+        "binarySha256": "b69335abd0ba9824818ba8e278bf0561a020935ec1a4b06c0153f935e148fac4",
+        "exit": 0,
+        "status": "passed",
+        "binarySha256After": "b69335abd0ba9824818ba8e278bf0561a020935ec1a4b06c0153f935e148fac4",
+        "seconds": 0.8996945530016092,
+        "buildIdentity": {
+          "architecture": "x86_64",
+          "build_id": "0.1.0-prealpha-Experimental-146a072-dirty-8f91687ac06c-u1fd93364826f",
+          "channel": "Experimental",
+          "compiler": "GNU",
+          "compiler_version": "15.2.0",
+          "configuration": "Release",
+          "maturity": "pre-alpha",
+          "platform": "Linux",
+          "schema": 1,
+          "source_dirty": true,
+          "source_fingerprint": "8f91687ac06c3d4a0c5a4a169e72e8615f0f77b25429853697670b80dbf0884d",
+          "source_origin": "git",
+          "source_revision": "146a0727eab63d9555c732bf73e6093be5bc489d",
+          "source_tree": "af2b7e1d59c96c94987a588fe1dd600d2031f491",
+          "source_untracked_count": 20,
+          "source_untracked_fingerprint": "1fd93364826f2c842bce35d1a62bb699693cc9f76f84e723f3a3b823eb484733",
+          "version": "0.1.0-prealpha"
+        },
+        "name": "collision-geometry"
+      },
+      {
+        "argv": [
+          "/home/conner/Documents/GitHub/Project-Judas/build/judas_impact_candidate_cache_tests"
+        ],
+        "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+        "timeoutSeconds": 120,
+        "binarySha256": "830a4b6fcfba2863a63b5fcd2faa9172be0b680c89b637f2015f7e2a52423f54",
+        "exit": 0,
+        "status": "passed",
+        "binarySha256After": "830a4b6fcfba2863a63b5fcd2faa9172be0b680c89b637f2015f7e2a52423f54",
+        "seconds": 0.004965880005329382,
+        "buildIdentity": {
+          "architecture": "x86_64",
+          "build_id": "0.1.0-prealpha-Experimental-146a072-dirty-8f91687ac06c-u1fd93364826f",
+          "channel": "Experimental",
+          "compiler": "GNU",
+          "compiler_version": "15.2.0",
+          "configuration": "Release",
+          "maturity": "pre-alpha",
+          "platform": "Linux",
+          "schema": 1,
+          "source_dirty": true,
+          "source_fingerprint": "8f91687ac06c3d4a0c5a4a169e72e8615f0f77b25429853697670b80dbf0884d",
+          "source_origin": "git",
+          "source_revision": "146a0727eab63d9555c732bf73e6093be5bc489d",
+          "source_tree": "af2b7e1d59c96c94987a588fe1dd600d2031f491",
+          "source_untracked_count": 20,
+          "source_untracked_fingerprint": "1fd93364826f2c842bce35d1a62bb699693cc9f76f84e723f3a3b823eb484733",
+          "version": "0.1.0-prealpha"
+        },
+        "name": "impact-candidates"
+      },
+      {
+        "argv": [
+          "/home/conner/Documents/GitHub/Project-Judas/build/judas_native_mesh_growth_tests"
+        ],
+        "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+        "timeoutSeconds": 120,
+        "binarySha256": "aa3143f7122e05f1add4d08a68cde247db75175b7cf674897ca28e9e09b677e9",
+        "exit": 0,
+        "status": "passed",
+        "binarySha256After": "aa3143f7122e05f1add4d08a68cde247db75175b7cf674897ca28e9e09b677e9",
+        "seconds": 0.008040637003432494,
+        "buildIdentity": {
+          "architecture": "x86_64",
+          "build_id": "0.1.0-prealpha-Experimental-146a072-dirty-8f91687ac06c-u1fd93364826f",
+          "channel": "Experimental",
+          "compiler": "GNU",
+          "compiler_version": "15.2.0",
+          "configuration": "Release",
+          "maturity": "pre-alpha",
+          "platform": "Linux",
+          "schema": 1,
+          "source_dirty": true,
+          "source_fingerprint": "8f91687ac06c3d4a0c5a4a169e72e8615f0f77b25429853697670b80dbf0884d",
+          "source_origin": "git",
+          "source_revision": "146a0727eab63d9555c732bf73e6093be5bc489d",
+          "source_tree": "af2b7e1d59c96c94987a588fe1dd600d2031f491",
+          "source_untracked_count": 20,
+          "source_untracked_fingerprint": "1fd93364826f2c842bce35d1a62bb699693cc9f76f84e723f3a3b823eb484733",
+          "version": "0.1.0-prealpha"
+        },
+        "name": "native-mesh-growth"
+      },
+      {
+        "argv": [
+          "/home/conner/Documents/GitHub/Project-Judas/build/judas_clip_polygon_tests"
+        ],
+        "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+        "timeoutSeconds": 120,
+        "binarySha256": "4c4d58141337d3f291c61cdde825a3648feb190522c1481b5050af08fdfbc69e",
+        "exit": 0,
+        "status": "passed",
+        "binarySha256After": "4c4d58141337d3f291c61cdde825a3648feb190522c1481b5050af08fdfbc69e",
+        "seconds": 0.006326051996438764,
+        "buildIdentity": {
+          "architecture": "x86_64",
+          "build_id": "0.1.0-prealpha-Experimental-146a072-dirty-8f91687ac06c-u1fd93364826f",
+          "channel": "Experimental",
+          "compiler": "GNU",
+          "compiler_version": "15.2.0",
+          "configuration": "Release",
+          "maturity": "pre-alpha",
+          "platform": "Linux",
+          "schema": 1,
+          "source_dirty": true,
+          "source_fingerprint": "8f91687ac06c3d4a0c5a4a169e72e8615f0f77b25429853697670b80dbf0884d",
+          "source_origin": "git",
+          "source_revision": "146a0727eab63d9555c732bf73e6093be5bc489d",
+          "source_tree": "af2b7e1d59c96c94987a588fe1dd600d2031f491",
+          "source_untracked_count": 20,
+          "source_untracked_fingerprint": "1fd93364826f2c842bce35d1a62bb699693cc9f76f84e723f3a3b823eb484733",
+          "version": "0.1.0-prealpha"
+        },
+        "name": "clip-polygon"
+      },
+      {
+        "argv": [
+          "/home/conner/Documents/GitHub/Project-Judas/build/judas_impact_mesh_cost_tests",
+          "60",
+          "",
+          "1.2",
+          "entry"
+        ],
+        "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+        "timeoutSeconds": 120,
+        "binarySha256": "4948bc8c4f9408b8989967736e382159ff46b1bbdc6006c3789d26204cdc8289",
+        "exit": 0,
+        "status": "passed",
+        "binarySha256After": "4948bc8c4f9408b8989967736e382159ff46b1bbdc6006c3789d26204cdc8289",
+        "seconds": 4.633256387001893,
+        "buildIdentity": {
+          "architecture": "x86_64",
+          "build_id": "0.1.0-prealpha-Experimental-146a072-dirty-8f91687ac06c-u1fd93364826f",
+          "channel": "Experimental",
+          "compiler": "GNU",
+          "compiler_version": "15.2.0",
+          "configuration": "Release",
+          "maturity": "pre-alpha",
+          "platform": "Linux",
+          "schema": 1,
+          "source_dirty": true,
+          "source_fingerprint": "8f91687ac06c3d4a0c5a4a169e72e8615f0f77b25429853697670b80dbf0884d",
+          "source_origin": "git",
+          "source_revision": "146a0727eab63d9555c732bf73e6093be5bc489d",
+          "source_tree": "af2b7e1d59c96c94987a588fe1dd600d2031f491",
+          "source_untracked_count": 20,
+          "source_untracked_fingerprint": "1fd93364826f2c842bce35d1a62bb699693cc9f76f84e723f3a3b823eb484733",
+          "version": "0.1.0-prealpha"
+        },
+        "name": "impact-mesh-arrival"
+      },
+      {
+        "argv": [
+          "/home/conner/Documents/GitHub/Project-Judas/build/judas_impact_mesh_cost_tests",
+          "60",
+          "",
+          "1.2"
+        ],
+        "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+        "timeoutSeconds": 120,
+        "binarySha256": "4948bc8c4f9408b8989967736e382159ff46b1bbdc6006c3789d26204cdc8289",
+        "exit": 0,
+        "status": "passed",
+        "binarySha256After": "4948bc8c4f9408b8989967736e382159ff46b1bbdc6006c3789d26204cdc8289",
+        "seconds": 5.783150096998725,
+        "buildIdentity": {
+          "architecture": "x86_64",
+          "build_id": "0.1.0-prealpha-Experimental-146a072-dirty-8f91687ac06c-u1fd93364826f",
+          "channel": "Experimental",
+          "compiler": "GNU",
+          "compiler_version": "15.2.0",
+          "configuration": "Release",
+          "maturity": "pre-alpha",
+          "platform": "Linux",
+          "schema": 1,
+          "source_dirty": true,
+          "source_fingerprint": "8f91687ac06c3d4a0c5a4a169e72e8615f0f77b25429853697670b80dbf0884d",
+          "source_origin": "git",
+          "source_revision": "146a0727eab63d9555c732bf73e6093be5bc489d",
+          "source_tree": "af2b7e1d59c96c94987a588fe1dd600d2031f491",
+          "source_untracked_count": 20,
+          "source_untracked_fingerprint": "1fd93364826f2c842bce35d1a62bb699693cc9f76f84e723f3a3b823eb484733",
+          "version": "0.1.0-prealpha"
+        },
+        "name": "impact-mesh-continuation",
+        "finding": "CCD-MESH-CONTINUATION",
+        "classification": "open contract; observed result remains authoritative"
+      },
+      {
+        "argv": [
+          "/home/conner/Documents/GitHub/Project-Judas/build/judas_origin_stream_tests"
+        ],
+        "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+        "timeoutSeconds": 120,
+        "binarySha256": "b44612d5e7b9724c0eedf5dac2ebbcac595dcaa156030dcf7fafb483f5c72366",
+        "exit": 0,
+        "status": "passed",
+        "binarySha256After": "b44612d5e7b9724c0eedf5dac2ebbcac595dcaa156030dcf7fafb483f5c72366",
+        "seconds": 0.30004686000029324,
+        "buildIdentity": {
+          "architecture": "x86_64",
+          "build_id": "0.1.0-prealpha-Experimental-146a072-dirty-8f91687ac06c-u1fd93364826f",
+          "channel": "Experimental",
+          "compiler": "GNU",
+          "compiler_version": "15.2.0",
+          "configuration": "Release",
+          "maturity": "pre-alpha",
+          "platform": "Linux",
+          "schema": 1,
+          "source_dirty": true,
+          "source_fingerprint": "8f91687ac06c3d4a0c5a4a169e72e8615f0f77b25429853697670b80dbf0884d",
+          "source_origin": "git",
+          "source_revision": "146a0727eab63d9555c732bf73e6093be5bc489d",
+          "source_tree": "af2b7e1d59c96c94987a588fe1dd600d2031f491",
+          "source_untracked_count": 20,
+          "source_untracked_fingerprint": "1fd93364826f2c842bce35d1a62bb699693cc9f76f84e723f3a3b823eb484733",
+          "version": "0.1.0-prealpha"
+        },
+        "name": "origin-stream"
+      },
+      {
+        "argv": [
+          "/home/conner/Documents/GitHub/Project-Judas/build/judas_stream_origin_precision_tests"
+        ],
+        "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+        "timeoutSeconds": 120,
+        "binarySha256": "7af3aa91cc0ab65638240b17b9995d73e6aca3c541ca173816d35ef351f77443",
+        "exit": 0,
+        "status": "passed",
+        "binarySha256After": "7af3aa91cc0ab65638240b17b9995d73e6aca3c541ca173816d35ef351f77443",
+        "seconds": 0.2641401090004365,
+        "buildIdentity": {
+          "architecture": "x86_64",
+          "build_id": "0.1.0-prealpha-Experimental-146a072-dirty-8f91687ac06c-u1fd93364826f",
+          "channel": "Experimental",
+          "compiler": "GNU",
+          "compiler_version": "15.2.0",
+          "configuration": "Release",
+          "maturity": "pre-alpha",
+          "platform": "Linux",
+          "schema": 1,
+          "source_dirty": true,
+          "source_fingerprint": "8f91687ac06c3d4a0c5a4a169e72e8615f0f77b25429853697670b80dbf0884d",
+          "source_origin": "git",
+          "source_revision": "146a0727eab63d9555c732bf73e6093be5bc489d",
+          "source_tree": "af2b7e1d59c96c94987a588fe1dd600d2031f491",
+          "source_untracked_count": 20,
+          "source_untracked_fingerprint": "1fd93364826f2c842bce35d1a62bb699693cc9f76f84e723f3a3b823eb484733",
+          "version": "0.1.0-prealpha"
+        },
+        "name": "stream-origin-precision"
+      },
+      {
+        "argv": [
+          "/home/conner/Documents/GitHub/Project-Judas/build/judas_living_world_streaming_tests",
+          "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-ccd-continuation/production-qualification/gate/terrain-streaming"
+        ],
+        "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+        "timeoutSeconds": 120,
+        "binarySha256": "9034431a6cb8efe94f38d2e15445797bcf57ddcf63a93dfc48a18ee14fe3e044",
+        "exit": 0,
+        "status": "passed",
+        "binarySha256After": "9034431a6cb8efe94f38d2e15445797bcf57ddcf63a93dfc48a18ee14fe3e044",
+        "seconds": 0.41405285299697425,
+        "buildIdentity": {
+          "architecture": "x86_64",
+          "build_id": "0.1.0-prealpha-Experimental-146a072-dirty-8f91687ac06c-u1fd93364826f",
+          "channel": "Experimental",
+          "compiler": "GNU",
+          "compiler_version": "15.2.0",
+          "configuration": "Release",
+          "maturity": "pre-alpha",
+          "platform": "Linux",
+          "schema": 1,
+          "source_dirty": true,
+          "source_fingerprint": "8f91687ac06c3d4a0c5a4a169e72e8615f0f77b25429853697670b80dbf0884d",
+          "source_origin": "git",
+          "source_revision": "146a0727eab63d9555c732bf73e6093be5bc489d",
+          "source_tree": "af2b7e1d59c96c94987a588fe1dd600d2031f491",
+          "source_untracked_count": 20,
+          "source_untracked_fingerprint": "1fd93364826f2c842bce35d1a62bb699693cc9f76f84e723f3a3b823eb484733",
+          "version": "0.1.0-prealpha"
+        },
+        "name": "terrain-streaming"
+      }
+    ],
+    "knownFindings": [
+      {
+        "id": "CCD-MESH-ARRIVAL",
+        "status": "resolved-first-arrival",
+        "scheduled": true,
+        "reason": "Pass2 finite swept-SAT bounds correct the validated first-arrival contract; it now runs in the ordinary collision group. This does not close later curved-sheet continuation.",
+        "evidence": "docs/evidence/prealpha-pass2/physics"
+      },
+      {
+        "id": "CCD-MESH-CONTINUATION",
+        "status": "resolved-original-fixtures-bounded-ccd",
+        "scheduled": true,
+        "reason": "Original unchanged 90-step glancing cases and rotated control pass with native per-feature growth scheduling. This is not universal CCD: bounded sampling, native rear selection and deep initial-overlap limitations remain. Corrected mesh support costs more than the old missed-collision path.",
+        "evidence": "docs/evidence/prealpha-ccd-continuation-20261019"
+      },
+      {
+        "id": "FLU-001",
+        "status": "deferred-failing",
+        "scheduled": false,
+        "reason": "Legacy PBF settling contract retained unchanged; separate fluid review required.",
+        "evidence": "docs/evidence/m78-completion/FINDINGS_FINAL.json"
+      },
+      {
+        "id": "LEGACY-CONTINUATION",
+        "status": "documented-incompatible-history",
+        "scheduled": false,
+        "reason": "Original a106 snapshot lacks historical continuation data. New-format passes do not certify that snapshot.",
+        "evidence": "docs/evidence/m78-cold-boundary"
+      },
+      {
+        "id": "DENSE-CCD-TAIL",
+        "status": "open-performance-limit",
+        "scheduled": false,
+        "reason": "Focused correctness checks do not certify dense-pile latency; matched profiling is reported separately.",
+        "evidence": "docs/evidence/m91/REPORT.md"
+      },
+      {
+        "id": "LIQUID-BAKE-ROTATION",
+        "status": "resolved-baking",
+        "scheduled": true,
+        "reason": "Baker and runtime use the same normalized owner/field frames and oriented gravity volumes; both original bake-only runtime-publication cases pass unchanged equivalence tolerances. Original full integration exposes separate retained exact-total comparison failure.",
+        "evidence": "docs/evidence/prealpha-liquid-rotation/REPORT.md"
+      },
+      {
+        "id": "LIQUID-BAKE-KNOTS",
+        "status": "resolved-baking",
+        "scheduled": true,
+        "reason": "Positive tetrahedral density is integrated into one monotone cumulative curve, including shared endpoints; unchanged strict Surface1 decoder accepts both original rotated bakes. A later origin sampling limitation remains separately failed.",
+        "evidence": "docs/evidence/prealpha-liquid-rotation/REPORT.md"
+      },
+      {
+        "id": "LIQUID-ORIGIN-GRID-QUERY",
+        "status": "open-query-continuity-failing",
+        "scheduled": false,
+        "reason": "The original half-turn fixture now bakes and publishes, then fails its unchanged post-512m-origin query comparison: float translation crosses a discontinuous disturbed-surface cell boundary. Conserved quantities and wave bytes remain unchanged. This full integration failure is preserved, not counted as a baking pass.",
+        "evidence": "docs/evidence/prealpha-liquid-rotation/REPORT.md"
+      },
+      {
+        "id": "LIQUID-ORIGIN-TOTAL-IDENTITY",
+        "status": "resolved-oracle-causal-baseline",
+        "scheduled": true,
+        "reason": "Pass3 preserves the original failed test and demonstrates its causal-baseline error. Current atomicity compares the immediate pre-request total with the same exact equality and every physical participant byte; earlier legitimate paired-flow conservation tolerance and liquid runtime are unchanged.",
+        "evidence": "docs/evidence/prealpha-pass3/integration/REPORT.md"
+      }
+    ],
+    "humanAcceptance": "not-established",
+    "scope": "explicit manifest subset",
+    "expectedSourceIdentity": {
+      "source_revision": "146a0727eab63d9555c732bf73e6093be5bc489d",
+      "source_fingerprint": "8f91687ac06c3d4a0c5a4a169e72e8615f0f77b25429853697670b80dbf0884d",
+      "source_dirty": true,
+      "source_untracked_fingerprint": "1fd93364826f2c842bce35d1a62bb699693cc9f76f84e723f3a3b823eb484733"
+    },
+    "passed": true,
+    "finishedUtc": "2026-10-18T23:26:13.650476+00:00",
+    "sourceRevisionAfter": "146a0727eab63d9555c732bf73e6093be5bc489d",
+    "trackedWorktreeStatusAfter": "M CMakeLists.txt\n M docs/ARCHITECTURE.md\n M docs/PREALPHA.md\n M projects/physics_stress_lab/README.md\n M src/CollisionGeometry.cpp\n M src/CollisionGeometry.h\n M src/WorldStreaming.cpp\n M src/physics/WorldCCDSearch.cpp\n M src/physics/WorldImpactEvents.cpp\n M src/physics/WorldInternal.h\n M tests/test_prealpha_validation.py\n M tools/validation/suites.json",
+    "trackedDiffSha256After": "6630d8578ada40788c6fad96f5e2d37eb96b6ede5c0796abe2224e1b1f9292aa",
+    "expectedSourceIdentityAfter": {
+      "source_revision": "146a0727eab63d9555c732bf73e6093be5bc489d",
+      "source_fingerprint": "8f91687ac06c3d4a0c5a4a169e72e8615f0f77b25429853697670b80dbf0884d",
+      "source_dirty": true,
+      "source_untracked_fingerprint": "1fd93364826f2c842bce35d1a62bb699693cc9f76f84e723f3a3b823eb484733"
+    }
+  },
+  "normal_native_and_cold_runs": [
+    {
+      "name": "judas_impact_robustness_tests",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_impact_robustness_tests"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+      "exit": 0,
+      "seconds": 0.7155513489997247
+    },
+    {
+      "name": "judas_impact_timing_tests",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_impact_timing_tests"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+      "exit": 0,
+      "seconds": 0.016066048003267497
+    },
+    {
+      "name": "judas_impact_solver_tests",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_impact_solver_tests"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+      "exit": 0,
+      "seconds": 0.0038523770053870976
+    },
+    {
+      "name": "judas_kinematic_tests",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_kinematic_tests"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+      "exit": 0,
+      "seconds": 0.03211461300088558
+    },
+    {
+      "name": "judas_rigid_contact_tests",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_rigid_contact_tests"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+      "exit": 0,
+      "seconds": 1.0162474829994608
+    },
+    {
+      "name": "judas_ragdoll_tests",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_ragdoll_tests"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+      "exit": 0,
+      "seconds": 0.26466437799535925
+    },
+    {
+      "name": "judas_post_consumer_ragdoll_tests",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_post_consumer_ragdoll_tests"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+      "exit": 0,
+      "seconds": 21.108481278002728
+    },
+    {
+      "name": "judas_physics_continuation_tests",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_physics_continuation_tests"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+      "exit": 0,
+      "seconds": 0.03222545699827606
+    },
+    {
+      "name": "judas_contact_lifecycle_tests",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_contact_lifecycle_tests"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+      "exit": 0,
+      "seconds": 0.03203632400254719
+    },
+    {
+      "name": "judas_character_motor_tests",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_character_motor_tests"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+      "exit": 0,
+      "seconds": 0.5150242379968404
+    },
+    {
+      "name": "cold-stream-write",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_save_streaming_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/projects/streamed_range/streamed_range.judasproj",
+        "write",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-ccd-continuation/production-qualification/cold-save-results"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+      "exit": 0,
+      "seconds": 4.840116692997981
+    },
+    {
+      "name": "cold-stream-read",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_save_streaming_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/projects/streamed_range/streamed_range.judasproj",
+        "read",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-ccd-continuation/production-qualification/cold-save-results"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+      "exit": 0,
+      "seconds": 4.6367141349983285
+    },
+    {
+      "name": "runtime-identity",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas",
+        "--judas-build-info"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+      "exit": 1,
+      "seconds": 0.04046528400067473
+    },
+    {
+      "name": "editor-identity",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_editor",
+        "--judas-build-info"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+      "exit": "timeout",
+      "seconds": 120.01429889000428
+    }
+  ],
+  "qualified_native_and_cold_count": 12,
+  "platform_smoke": [
+    {
+      "name": "runtime-build-info-json",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas",
+        "--build-info-json"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+      "exit": 0,
+      "seconds": 0.012602837996382732
+    },
+    {
+      "name": "editor-build-info-json",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_editor",
+        "--build-info-json"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+      "exit": 0,
+      "seconds": 0.017619441001443192
+    },
+    {
+      "name": "build-exporter",
+      "argv": [
+        "cmake",
+        "--build",
+        "/home/conner/Documents/GitHub/Project-Judas/build",
+        "--parallel",
+        "2",
+        "--target",
+        "judas_export"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+      "exit": 0,
+      "seconds": 2.1769445039972197
+    },
+    {
+      "name": "export-lab",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_export",
+        "/home/conner/Documents/GitHub/Project-Judas/projects/physics_stress_lab/physics_stress_lab.judasproj",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-ccd-continuation/production-qualification/lab-package",
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+      "exit": 0,
+      "seconds": 1.2252916020006523
+    }
+  ],
+  "relocated_run": {
+    "argv": [
+      "/tmp/judas-ccd-qualified-1792366160758375727/judas"
+    ],
+    "cwd": "/tmp",
+    "env": {
+      "JUDAS_TEST_SCRIPT": "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-ccd-continuation/production-qualification/smoke.script",
+      "SDL_AUDIODRIVER": "dummy",
+      "XDG_DATA_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-ccd-continuation/production-qualification/package-user-data"
+    },
+    "exit": 0,
+    "seconds": 0.617261971005064
+  },
+  "six_final_normal_scenario_digests_equal_isolated": true,
+  "native_point_parity": {
+    "cases": 8192,
+    "all_rows_equal": true,
+    "fingerprint": "0166274568e9538b"
+  },
+  "windows_android": "Not rerun; nonblocking",
+  "human_accepted": false,
+  "full_production_suite": "Not rerun",
+  "setup_failures_preserved": [
+    "New target unavailable until explicit configure; build then passed.",
+    "Old application missing arguments gave usage exit2.",
+    "Unisolated application save storage was busy; owned XDG_DATA_HOME write/read passed.",
+    "Unsupported --judas-build-info: runtime usage exit1, editor timeout; corrected --build-info-json probes both exit0.",
+    "Initial package rename crossed filesystems (EXDEV); copy/hash verification/original-path removal followed by relocated launch passed."
+  ],
+  "staging_preflight": {
+    "exact_path_inventory": 40,
+    "index_bytes_match_worktree": true,
+    "final_source_and_binary_fingerprints_match": true,
+    "current_source_whitespace_check": "passed",
+    "archival_exception": "Unchanged October18 ISOLATED_PROTOTYPE.patch has unified-diff context spaces and final blank lines flagged by generic whitespace check; original archival bytes intentionally retained."
+  }
+}

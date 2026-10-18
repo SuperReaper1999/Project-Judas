@@ -174,6 +174,187 @@ auto PhysicsWorld::Impl::PlaneDrift(unsigned a, unsigned b, int pa, int pb, doub
     return advance;
 }
 
+auto PhysicsWorld::Impl::StaticMeshPolyPair(unsigned a, unsigned b, int pa, int pb) const -> bool {
+    const auto type = [](const Shape& shape, int part) {
+        return shape.type == ShapeType::CompoundBoxes ? shape.boxes[std::size_t(part)].type
+                                                     : shape.type;
+    };
+    const auto poly = [](ShapeType value) {
+        return value == ShapeType::Box || value == ShapeType::ConvexHull;
+    };
+    const auto first = type(bodies[a].shape, pa), second = type(bodies[b].shape, pb);
+    return (first == ShapeType::TriangleMesh && !bodies[a].HasMotion() && poly(second)) ||
+           (second == ShapeType::TriangleMesh && !bodies[b].HasMotion() && poly(first));
+}
+
+auto PhysicsWorld::Impl::MeshDepthGrowthSafe(unsigned moving, unsigned meshSlot, int movingPart,
+                                             int meshPart, double start, double finish,
+                                             const MeshFeatureBudget &budget) -> bool {
+    // This is only a sufficient depth-growth rejection. It does not replace
+    // contact geometry, create contacts, change limits or sample the interval.
+    // Unsupported shapes and uncertain arithmetic retain the original search.
+    const auto &body = bodies[moving];
+    if (body.shape.type != ShapeType::Box || movingPart != 0 ||
+        body.shape.pivotOffset != glm::vec3(0) ||
+        !rigid_motion_bounds::Finite3(body.shape.halfExtents) ||
+        glm::any(glm::lessThanEqual(body.shape.halfExtents, glm::vec3(0))))
+        return false;
+    const auto first = ImpactPoseAt(moving, start);
+    const auto last = ImpactPoseAt(moving, finish);
+    const auto mesh = PrimitiveAt(bodies[meshSlot].shape, ImpactPoseAt(meshSlot, start).pose,
+                                  meshPart);
+    if (mesh.shape.type != ShapeType::TriangleMesh || !mesh.shape.asset ||
+        bodies[meshSlot].HasMotion())
+        return false;
+    const RigidMotionSegment *segment = nullptr;
+    if (body.HasMotion()) {
+        const auto &segments = body.motion.Segments();
+        auto found = std::upper_bound(segments.begin(), segments.end(), start,
+                                      [](double time, const auto &value) {
+                                          return time < value.begin;
+                                      });
+        if (found == segments.begin())
+            return false;
+        segment = &*--found;
+        if (finish > segment->end)
+            return false;
+    }
+    using contact_geometry::Iv;
+    try {
+        auto rotation = first.orientation->normalizedInterval;
+        if (segment) {
+            if (segment->prescribed) {
+                if (segment->driftAngularVelocity != glm::vec3(0) ||
+                    !rigid_motion_bounds::SameQuat(first.pose.orientation, last.pose.orientation))
+                    return false;
+            } else {
+                const auto swept = rigid_motion_bounds::TryDynamicRotationInterval(*segment,
+                                                                                   start, finish);
+                if (!swept)
+                    return false;
+                rotation = *swept;
+            }
+        }
+        const auto meshCenter = PrimitiveCenter(mesh);
+        const auto meshRotation = PrimitiveRotation(mesh);
+        const auto inverse = glm::transpose(meshRotation);
+        const auto &sweep = RemainingImpactBound(moving, start, finish);
+        if (!rigid_motion_bounds::FiniteBound(sweep))
+            return false;
+        std::array<Iv, 3> center;
+        double queryMagnitude = 1;
+        for (unsigned k = 0; k < 3; ++k) {
+            center[k] = Iv(double(std::min(first.pose.position[k], last.pose.position[k])),
+                           double(std::max(first.pose.position[k], last.pose.position[k]))) -
+                        Iv(meshCenter[k]);
+            queryMagnitude = std::max({queryMagnitude,
+                                       std::abs(double(sweep.min[k]) - meshCenter[k]),
+                                       std::abs(double(sweep.max[k]) - meshCenter[k])});
+        }
+        // The existing outward body enclosure bounds every represented point.
+        // Transform its corners outward into the same asset-local query frame
+        // used by the native BVH. One extra float ULP also encloses the native
+        // visitor's subtract-origin/add-origin round trip at a bound face.
+        glm::dvec3 localMin(INFINITY), localMax(-INFINITY);
+        for (unsigned corner = 0; corner < 8; ++corner) {
+            std::array<Iv, 3> world;
+            for (unsigned k = 0; k < 3; ++k) {
+                const double value = corner & (1u << k) ? sweep.max[k] : sweep.min[k];
+                const double padding = rigid_motion_bounds::FloatRoundingBound(std::abs(value));
+                if (!std::isfinite(padding))
+                    return false;
+                world[k] = Iv(value) + Iv(-padding, padding) - Iv(meshCenter[k]);
+            }
+            for (unsigned j = 0; j < 3; ++j) {
+                Iv projected(0);
+                for (unsigned k = 0; k < 3; ++k)
+                    projected = projected + Iv(inverse[k][j]) * world[k];
+                localMin[j] = std::min(localMin[j], projected.lo);
+                localMax[j] = std::max(localMax[j], projected.hi);
+            }
+        }
+        const auto &asset = *mesh.shape.asset;
+        std::vector<uint32_t> candidates;
+        uint64_t nodes = 0;
+        asset.Candidates(localMin, localMax, candidates, &nodes);
+        CountCollisionQuery(nodes, candidates.size());
+        for (const auto feature : candidates) {
+            const auto &face = asset.faces[feature];
+            const auto normal = meshRotation * face.normal;
+            Iv norm2(0), projectedCenter(0), extent(0);
+            for (unsigned k = 0; k < 3; ++k) {
+                norm2 = norm2 + Iv(normal[k]) * Iv(normal[k]);
+                projectedCenter = projectedCenter + center[k] * Iv(normal[k]);
+            }
+            const auto norm = contact_geometry::Sqrt(norm2);
+            if (!(norm.lo >= .5) || !(norm.hi <= 2))
+                return false;
+            for (unsigned j = 0; j < 3; ++j) {
+                Iv projection(0);
+                for (unsigned k = 0; k < 3; ++k)
+                    projection = projection + rotation[j][k] * Iv(normal[k]);
+                extent = extent + contact_geometry::Abs(projection) *
+                                      Iv(double(body.shape.halfExtents[j]));
+            }
+            // Bound ALL represented triangle planes. Native SAT takes the
+            // furthest support point; clipped witnesses use a winding-selected
+            // vertex. Taking their hull also avoids assuming exact coplanarity
+            // after a represented rotation or for externally supplied assets.
+            Iv plane(INFINITY, -INFINITY);
+            double magnitude = queryMagnitude;
+            for (const auto vertex : face.vertices) {
+                const auto point = meshRotation * asset.vertices[vertex];
+                Iv projection(0);
+                for (unsigned k = 0; k < 3; ++k) {
+                    projection = projection + Iv(normal[k]) * Iv(point[k]);
+                    magnitude = std::max(magnitude, std::abs(point[k]));
+                }
+                plane.lo = std::min(plane.lo, projection.lo);
+                plane.hi = std::max(plane.hi, projection.hi);
+            }
+            const auto relative = projectedCenter - plane;
+            const auto minimum = relative - extent, maximum = relative + extent;
+            const auto found = std::lower_bound(budget.limits.begin(), budget.limits.end(), feature,
+                                                [](const auto &entry, uint32_t id) {
+                                                    return entry.first < id;
+                                                });
+            const double limit = found != budget.limits.end() && found->first == feature
+                                     ? found->second
+                                     : budget.newFeatureLimit;
+            if (!std::isfinite(limit) || !(limit >= 0))
+                return false;
+            // SAT includes the normalized triangle plane. Clipped witnesses
+            // multiply the unnormalized plane distance by dot(response,n).
+            // Enclose both normal-length factors rather than assuming exact
+            // unit normals. The epsilon factor covers axis normalization.
+            constexpr double e = std::numeric_limits<double>::epsilon();
+            const auto factor = Iv(std::max(contact_geometry::Up(1 / norm.lo), norm.hi)) *
+                                Iv(1 + 32 * e);
+            // At most three triangle clipping stages, each consisting of
+            // bounded convex interpolation, precede two dot products and
+            // projection/subtraction. 8*gamma(128)*M overbounds their accumulated
+            // binary64 error for normal lengths in [1/2,2]. This padding tightens
+            // a rejection only; it is never a contact tolerance or depth repair.
+            constexpr double gamma128 = 128 * e / (1 - 128 * e);
+            const auto padding = Iv(8 * gamma128) * Iv(magnitude);
+            auto fits = [&](double rawDepth) {
+                const auto worst = Iv(std::max(0., rawDepth)) * factor + padding;
+                return std::isfinite(worst.hi) && worst.hi < limit;
+            };
+            if (!fits(-minimum.lo))
+                return false;
+            // Native two-sided selection (and its tiny one-sided eps strip)
+            // can reverse the front. Prove BOTH actual orientations whenever
+            // the interval cannot establish a strictly front-side mean.
+            if ((asset.twoSided || relative.lo <= padding.hi) && !fits(maximum.hi))
+                return false;
+        }
+        return true;
+    } catch (const contact_geometry::ArithmeticFailure &) {
+        return false;
+    }
+}
+
 auto PhysicsWorld::Impl::PrimitiveFeature(unsigned slot, int part) const -> double {
     const Shape &shape = bodies[slot].shape;
     auto primitive = PrimitiveAt(shape, bodies[slot].rigidBody, part);
@@ -371,8 +552,6 @@ auto PhysicsWorld::Impl::ImpactTime(unsigned a, unsigned b, int pa, int pb, doub
                     return first <= s.end ? first : ImpactTime(a, b, pa, pb, s.end, finish, target);
                 }
     ++stats.impactQueries;
-    if (target > 0)
-        target += PairPenetration(a, b, pa, pb, start);
     const auto &ba = bodies[a];
     const auto &bb = bodies[b];
     const auto simpleRadius = [](const Body &body) {
@@ -420,6 +599,21 @@ auto PhysicsWorld::Impl::ImpactTime(unsigned a, unsigned b, int pa, int pb, doub
     const double speed = glm::length(relative) + angular;
     if (!(speed > 0))
         return finish + 1;
+    MeshFeatureBudget meshBudget;
+    if (meshAdvance) {
+        meshBudget = BuildMeshFeatureBudget(firstMesh ? secondPrimitive : firstPrimitive,
+                                           firstMesh ? firstPrimitive : secondPrimitive,
+                                           SpinPenetrationTarget({a, b, unsigned(pa), unsigned(pb)}));
+    }
+    const bool meshContinuation = meshAdvance && meshBudget.HasContacts();
+    if (meshContinuation &&
+        MeshDepthGrowthSafe(firstMesh ? b : a, firstMesh ? a : b, firstMesh ? pb : pa,
+                            firstMesh ? pa : pb, start, finish, meshBudget))
+        return finish + 1;
+    // Native mesh start depths were already collected in the one traversal
+    // above. With no accepted start contact their global penetration is zero.
+    if (target > 0 && !meshAdvance)
+        target += PairPenetration(a, b, pa, pb, start);
     // Bisection still performs all 32 represented-time bracket updates.
     // Binary32 pose integration can map several of those times to exactly
     // the same pair of poses. Contact truth for that identical geometry is
@@ -445,8 +639,20 @@ auto PhysicsWorld::Impl::ImpactTime(unsigned a, unsigned b, int pa, int pb, doub
                 ++impactTruthReuses;
                 return old.touching;
             }
-        const bool touching = target > 0 ? PairPenetrationExceeds(a, b, pa, pb, at, target)
-                                         : PairTouches(a, b, pa, pb, at);
+        bool touching;
+        if (meshAdvance && at == start) {
+            // A budget cannot be exceeded at its own actual-depth anchor;
+            // absent native start contacts also give a proven false query.
+            touching = false;
+        } else if (meshContinuation) {
+            const auto first = PrimitiveAt(bodies[a].shape, aa, pa),
+                       second = PrimitiveAt(bodies[b].shape, bb, pb);
+            touching = MeshFeatureBudgetExceeded(firstMesh ? second : first,
+                                                 firstMesh ? first : second, meshBudget);
+        } else {
+            touching = target > 0 ? PairPenetrationExceeds(a, b, pa, pb, at, target)
+                                 : PairTouches(a, b, pa, pb, at);
+        }
         actualTruth[nextTruth] = {represented, true, touching};
         nextTruth = (nextTruth + 1) % actualTruth.size();
         return touching;
@@ -463,7 +669,7 @@ auto PhysicsWorld::Impl::ImpactTime(unsigned a, unsigned b, int pa, int pb, doub
     // to a penetration target is already in contact, where no single
     // contact normal bounds the approach of every feature; go straight to
     // the bounded sampling below.
-    const int advanceIterations = target > 0 ? 0 : 64;
+    const int advanceIterations = target > 0 || meshContinuation ? 0 : 64;
     for (int iteration = 0; iteration < advanceIterations; ++iteration) {
         ++stats.impactSearchIterations;
         stats.impactPeakIterations =
@@ -477,8 +683,9 @@ auto PhysicsWorld::Impl::ImpactTime(unsigned a, unsigned b, int pa, int pb, doub
             // unless its spin can turn another feature through the support
             // before the interval ends: then search to a penetration target.
             if (time == start)
-                return target == 0 && SpinsThroughSupport({a, b, unsigned(pa), unsigned(pb)},
-                                                          finish - start, start)
+                return target == 0 &&
+                               (meshAdvance || SpinsThroughSupport({a, b, unsigned(pa), unsigned(pb)},
+                                                                  finish - start, start))
                            ? ImpactTime(a, b, pa, pb, start, finish,
                                         SpinPenetrationTarget({a, b, unsigned(pa), unsigned(pb)}))
                            : finish + 1;
@@ -560,7 +767,7 @@ auto PhysicsWorld::Impl::ImpactTime(unsigned a, unsigned b, int pa, int pb, doub
     }
     if (stalled)
         ++stats.impactSearchStalls;
-    else if (!uncertifiedAdvance && target == 0)
+    else if (!uncertifiedAdvance && target == 0 && !meshContinuation)
         ++stats.impactSearchLimit;
     ++stats.impactSamplingFallbacks;
     // Rotating grazing features can keep a fixed separating-plane bound

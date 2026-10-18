@@ -1,0 +1,188 @@
+CURVED-MESH CCD: INVESTIGATION AND ISOLATED REPAIR
+=================================================
+Status: research only, 2026-10-18. Not a production fix or human acceptance.
+
+SUMMARY
+-------
+The original four curved-mesh assertions pass for the first time in this
+investigation: the isolated rotation-world prototype completes the unchanged
+full mesh suite with 372 checks / 0 failures, including the three 90-step
+fast-box matrices and the rotated contract. Production remains unchanged at
+Experimental146a0727eab63d9555c732bf73e6093be5bc489d. Its original four
+failures remain open. main stays4c141e9bb6c68a50c63dec263dcec398200328ad.
+
+Adoption is BLOCKED. An additional independent lifecycle matrix establishes
+three new physical trajectory changes when disabling collision with an inert
+box over1km away. One newly crosses the original5cm sheet gate. The candidate
+also costs more than baseline on matched original ragdoll trajectories. Do not
+merge this prototype or present its original-fixture pass as a shipped repair.
+
+WHAT IS ACTUALLY WRONG
+---------------------
+1. A local triangle impact can retire CCD for its whole concave mesh. The rest
+   of that mesh is not the same support plane: the body can reach another
+   finite face. The reduced16-triangle original fixture still fails; sheer
+   triangle count is not the correctness cause.
+2. Native one-sided selection uses the mean represented body vertices. That
+   mean can pass behind a triangle while the body still has real finite front
+   contact. A stateless subsequent query then loses that continuing contact.
+   Always-front, two-sided or infinite-plane rules would invent invalid rear
+   and finite-edge contacts.
+3. Repeating checks more frequently is not sufficient. The mesh-repeat trial
+   still fails all four original assertions. A tighter facet depth limit
+   repeatedly schedules the exact same time after velocity response stops
+   changing. It stalls rather than producing valid time progress.
+4. There is avoidable numerical work. Independent interval evaluation loses
+   correlations between shared body centres, projection origins and rotation
+   columns. The represented geometry is fine; its conservative enclosure is
+   much too wide and repeatedly subdivides the same physical episode. Earlier
+   valid checkpoints on the SAME trajectory can also avoid replaying ancestry.
+
+WHAT THE ISOLATED REPAIR DOES
+----------------------------
+It carries selected front ownership for actual finite contact components,
+advances that state chronologically, expires ownership at real finite gaps,
+and permits ordinary independent native-front re-acquisition. Static topology
+only excludes impossible transfers; belonging to the same mesh never grants
+ownership. Same-path checkpoints are derived acceleration state, not physical
+truth.
+
+The interval certificate preserves common-centre, common-projection-origin
+and common-rotation-column correlations while retaining explicit rounding
+error envelopes for original native operations. These are sufficient-only
+certificates: uncertain arithmetic is not collision truth. The original
+1024-interval/depth40 policies, geometric cutoffs, physics timestep, tests,
+materials and solver budgets are unchanged. Research headers still have four
+misleading-indentation warnings; this is not a release-quality integration.
+
+A captured suffix that required509 interval nodes/255 certificates now needs
+127/64 after the first algebraic correction and33/14 with chronological proof.
+The final rotated capture changes from uncertainty at1025 visited nodes to a
+completed proof at927 nodes/460 certificates. Vertex/centre/nearest-origin
+heuristics alone do not fix that rotated capture. These are proof-work counts,
+not whole-engine speedup measurements.
+
+OBSERVED CORRECTNESS
+--------------------
+Original full mesh suite: baseline372/4 failures -> prototype372/0.
+Original curved-only suite: baseline193/4 -> prototype193/0.
+Original90-step fast-box crossing counts:11/20/15 ->0/0/0, no exceptions.
+Original initial-arrival control:193/0.
+Reduced16/full104 original fixture: both remain on the correct side. Their
+third-step poses are not bit-identical to each other, so no representation-
+independent trajectory claim is made.
+Eight helper controls pass, including actual welded handoff, high-spin finite
+departure, disconnected patches, no invented behind-centre re-entry and no
+ancestry from an unrelated persistent patch.
+
+Ten neighboring suites pass against the coherent prototype:
+- collision geometry:1303 checks
+- impact robustness:4412 checks
+- impact timing:89 cases/3197 checks
+- impact solver:46 cases/267 checks
+- kinematic:96 checks
+- rigid contact:PASS,0 failures
+- ragdoll:36 checks
+- imported/post-consumer ragdoll:93 checks
+- physics continuation:112 checks
+- contact lifecycle:30 fixtures/90 steps/1076 checks
+These are scoped existing regressions. Their names do not establish persistence
+or lifecycle correctness for the new contact-history mechanism.
+
+INDEPENDENT NEGATIVE TEST: NEW PROTOTYPE REGRESSION
+-------------------------------------------------
+The paired worlds have identical original launches, same distant inert box
+and awake prefixes. Only actor-versus-inert collision suppression changes.
+Baseline:1681 checks/0 failures; no physical changes despite observation
+invalidation. Candidate no-op:1681/0; no physical changes. Candidate unrelated
+filter edit:1681/3; three physical changes, one crossing. Disabling the actual
+sheet pair changes physics as expected in both binaries, proving the observer
+can detect a genuinely removed mechanism.
+
+Failed launch/prefix pairs are17/6,5/7,17/7. The17/6 case reaches13.3019cm
+behind the actual sheet after four suffix steps; the unchanged control stays
+on the other side. There are no exceptions. See
+lifetime-controls/LIFETIME_FAILURE_SUMMARY.txt and raw logs.
+
+Cause: the prototype borrows contactObservationRevision as physical ownership
+lifetime. SetPairCollisionEnabled increments this body-wide revision even for
+an unrelated pair. The still-valid sheet episode becomes inaccessible, and
+native sidedness cannot reconstruct it from the now-behind-centre pose.
+Simply ignoring all revisions would introduce other reset/filter/reuse bugs.
+Physical ownership needs its own explicit lifecycle.
+
+MATCHED PERFORMANCE: NO SPEEDUP CLAIM
+------------------------------------
+Original13-body/12-joint coarse and medium ragdoll workloads,60 steps at1/60,
+throwSpeed1.2. Three paired runs, alternating before/after order. Untimed
+per-step observer added after the existing physical digest calculation; original
+physics expressions preserved. Every paired per-step cumulative physical digest
+matches,360 paired boundaries total. All six original full-suite ragdoll
+aggregate trajectory digests also match.
+
+Pooled180 steps per workload/binary; nearest-rank p95, milliseconds:
+                    median       p95         worst
+coarse baseline      3.362987     8.828661    12.629474
+coarse prototype     5.015490    11.323580    15.013824
+medium baseline      3.733531    16.163858    20.923775
+medium prototype     5.243481    20.305492    26.795056
+
+Median cost rises49.14%/40.44%. Peak observed process RSS KiB is20488->20616
+and20996->21220. This small short CPU experiment is not a dense1024-body or
+GPU measurement and is not release acceptance. Expensive necessary history
+queries and research-level orchestration remain. Reducing certificate nodes
+does not imply faster overall physics. Raw per-step logs, binary hashes and
+environment are in matched-observer/MEASUREMENTS.json and RUNS.json.
+
+FAILED AND SEPARATE EXPERIMENTS
+------------------------------
+The facet cap's1000 repeated-event diagnostic is an intentional research stop,
+not a production policy. Uncertainty throws truncate physical trajectories;
+zero crossings after a throw do not pass the crossing contract.
+
+A separate contact-witness investigation finds real spurious moment arms at
+triangle-tip contacts. Candidate clipping corrections improve focused witnesses
+but introduce2 failures in4412 robustness checks. They are rejected and are
+NOT included in the final rotation-world prototype. Do not bundle that tempting
+independent change into a future continuation fix without its own repair.
+
+NEXT COHERENT PRODUCTION WORK
+-----------------------------
+- Separate durable pair/feature physical ownership from disposable search
+  proofs, warm impulses and completed observation publication.
+- Define body/shape/generation/filter/resource discontinuities explicitly;
+  unrelated pair edits must preserve unaffected physical episodes.
+- Reconcile actual final position-solver/coupling endpoints, rather than
+  publishing the pre-position-correction motion ledger as final truth.
+- Integrate a bounded versioned save participant and region snapshot ownership,
+  restore after endpoints exist, and preserve cross-region dependencies. Old
+  saves without required causal history cannot be silently invented.
+- Establish safe bounded uncertainty and cache-eviction semantics before
+  production use; throwing halfway through nontransactional Step is not safe.
+- Remove repeated topology/geometry preparation where evidence supports reuse,
+  then repeat matched timing and adversarial trajectories.
+
+PROVENANCE, REPRODUCTION AND BOUNDARIES
+--------------------------------------
+The live baseline archive SHA256 is
+0e0dc7973b7d2b24510743d5297e9ae002cdb7b4dbdc943d55a4bdc4aab78514.
+Numeric source matches Experimental146a0727. Its embedded build identity is
+older139d with disclosed source metadata; the actual archive/source/command
+fingerprints, not that embedded label, identify this investigation.
+
+All private PhysicsWorld units are compiled coherently in a research unity TU,
+then replace only their original archive members. The archive has two objects
+named WorldPersistence.cpp.o: only the second/private one is removed. The
+public world-save orchestrator remains. Receipt hashes identify the exact
+compiled source, objects, binaries, commands, working directories and exits.
+
+See REPRODUCE.txt. ISOLATED_PROTOTYPE.patch is unapplied and deliberately unsafe
+to adopt; PROTOTYPE_DIFF_INVENTORY.json maps it to baseline hashes.
+
+No production source, original fixture, protected evidence, fluid implementation,
+Solbert research, save format, game, public API or main branch was modified.
+No full production suite, Windows run, Android run, human validation, commit,
+push, tag, M100 or Alpha release was performed for this investigation. Existing
+pre-existing untracked work is preserved. Current production still has the four
+curved CCD failures; this is a reproducible numerical breakthrough with explicit
+adoption blockers, not a claim that the engine is fixed.
