@@ -1,0 +1,6 @@
+{
+  "original_source": "tests/OriginEnvironmentTests.cpp",
+  "original_sha256": "34250b90ce4988c123aebe5b527ed84d7df1b9910d6c1f17b83376cb5bc7caef",
+  "generated_probe_sha256": "5f0ef2944b1bd4f42deb973a7eee7e2293e0b47ff69717cc93064a3be607aa42",
+  "transformation": "Unchanged original fixture and test copied outside production; helper and opt-in environment branch added before original failing query. Original source file untouched."
+}

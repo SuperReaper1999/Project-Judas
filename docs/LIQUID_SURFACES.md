@@ -185,6 +185,14 @@ with the occupied geometry used by mesh caps, loading and transfers; no such
 query-only repair is applied. Exact boundary-point origin invariance remains an
 unresolved sampling contract, separately from the corrected rotated baking.
 
+The [Pass 5 identity and geometry proof](evidence/prealpha-pass5/liquid/REPORT.md)
+finds two distinct original points whose different occupied caps become one
+identical binary32 query after translation. Actual mesh intersections independently
+confirm the cap difference. Separate shifted loading, wave-state, ledger and
+ordinary reconstruction checks pass; the original boundary-query check remains
+failed. A precise query identity or a consistent conservative reconstruction needs
+an explicit contract change, rather than smoothing only the reported sample.
+
 Presentation samples and mesh use the same previous/current levels and alpha as
 presentation-facing cameras. Finite-volume caps are piecewise constant, with
 actual exposed shared-face bands closing height steps. They are not a decorative

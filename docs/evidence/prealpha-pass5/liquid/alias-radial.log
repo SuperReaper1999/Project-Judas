@@ -1,0 +1,44 @@
+PASS fresh separate radial output
+PASS normal cavity file and stable asset metadata
+PASS normal cavity file and stable asset metadata
+PASS ordinary authored capacity and dynamic-surface bake: 
+PASS baked data uses normal resource sidecars
+PASS ordinary authored capacity and dynamic-surface bake: 
+PASS baked data uses normal resource sidecars
+PASS authored world validates original baked fingerprint: 
+PASS unpublished liquid-only actors cannot bypass full-volume chart preflight
+PASS unpublished geometry does not prevent an actual no-op origin request
+PASS ordinary authoritative session
+PASS ordinary unshifted liquid fixture is healthy before testing chart changes
+PASS real basin surface and independent cup resolve
+PASS wave receives an ordinary physical impulse
+PASS detached parcel retains a paired ownership debit
+PASS positive pre-shift physical submersion sample
+PASS separate radial case finds two opposite physical sides with identical translated float identity
+PASS both original-coordinate queries hit the same real owner
+PASS different pre-shift query identities collapse to exactly the same post-shift binary32 input
+PASS aliased query identities occupy opposite represented finite-volume cells
+PASS actual triangle geometry supplies both independently intersected caps
+PASS both reported sample caps agree with separately intersected rendered physical geometry
+PASS triangle inequality prevents any single post-shift result from satisfying both unchanged tolerances
+PASS negative removed occupancy cannot produce the former sample
+PASS read-only oracle and enable control do not alter wave history or owner quantity
+ALIAS point_a=1.52587890625e-05,80.099998474121094,0 point_b=-1.52587890625e-05,80.099998474121094,0 common_shifted=-512,592.0999755859375,-512 local_error=3.0517578125e-05 cell_a=10 cell_b=9 cap_difference=0.039512646175890537 velocity_difference=0.014554032570863677 mesh_a_error=1.5142137431701728e-06 mesh_b_error=1.8122511905583683e-06
+PASS independent finite body crosses actual unequal caps and is partially submerged
+PASS both query identities pass through the real authoritative world-origin transaction
+PASS actual translated world still supplies one physical sample for the common represented point
+PASS actual translated physical output cannot retain both distinct pre-shift caps under the unchanged tolerance
+SHIFT alias_surface_error_a=1.712202588166505e-05 alias_surface_error_b=0.039505007859484811
+PASS actual partial-volume solid loading remains physically equivalent across the same half-turn chart shift
+LOADING volume_before=0.0017699793726902514 volume_after=0.0017699793726893491 absolute_error=9.0227304794243679e-16
+PASS real disturbed half-turn world captures through the ordinary persistence participants
+PASS independent runtime reconstructs the exact shifted geometry and owned wave state
+PASS restored physical query endpoint matches the actual represented shifted state, without claiming the lost pre-shift identity
+PASS return transaction preserves exact wave history and owner total
+PASS authored centre points robustly select the actual adjacent cells
+PASS legitimate paired transfer fills selected cell without special-case state edits
+PASS legitimate paired transfer empties adjacent selected cell
+PASS open-face neighbouring cells can legitimately be full and dry before the next physical step
+PASS full/dry construction preserves the authoritative M54 ledger
+FULL_DRY full_cell=0 dry_cell=1 full_volume=0.24672015816393772 dry_volume=0 full_q=81.045116063466793 dry_q=80.040028038606749 ledger_error=0
+SUMMARY 39 checks 0 failures

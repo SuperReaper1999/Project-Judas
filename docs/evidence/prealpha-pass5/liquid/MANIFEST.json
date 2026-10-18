@@ -1,0 +1,98 @@
+{
+  "schema": 1,
+  "kind": "Pass 5 independent liquid query/geometry investigation; no production changes",
+  "files": {
+    ".gitattributes": {
+      "bytes": 90,
+      "sha256": "c18150052a351817cfa45569cee3599cb5401a83a955e3a3c6140d07044467fe"
+    },
+    "BUILD.json": {
+      "bytes": 3223,
+      "sha256": "b5b59cadcedc01e1d0fa99b397668ba7f7932d82660ba1ec4ebcb03ca887e40e"
+    },
+    "FROZEN_SOURCES.json": {
+      "bytes": 1030,
+      "sha256": "b2d8ae9bc7082537277aecc4d0df36e42d262605b743aa17e3c4ebf84e1b7fb5"
+    },
+    "REPORT.md": {
+      "bytes": 9272,
+      "sha256": "1b050db1407c0b72087812c510d5e75e2921fc16bb74e1b5b6c5e36fe4cb4614"
+    },
+    "RESULTS.json": {
+      "bytes": 4937,
+      "sha256": "3798fcb7d61aa6d42cf0bc898913452502c300b363cf8a88b3a0bb31492b0006"
+    },
+    "SOURCE.json": {
+      "bytes": 437,
+      "sha256": "512eb751c2d1a5351e5078a228ed5bbdc29cf61dbf46f0716a9fbcc0720bc686"
+    },
+    "absent-cap-negative.log": {
+      "bytes": 1216,
+      "sha256": "ce311a2a164b3d05e2787dea373c568ee90d7fb8d39fc5c9638a544dbbac4583"
+    },
+    "alias-half-turn.log": {
+      "bytes": 3545,
+      "sha256": "d0d02ce7bfb3e5fc7be9f6b84e5d0c70c701ce45671a7f8bdd8611bc170d77ae"
+    },
+    "alias-radial.log": {
+      "bytes": 3604,
+      "sha256": "e8cc53f5235a3045aa0e7dacc3e0cf4e37248031e248d660e9e84fcd5e2a9791"
+    },
+    "attempt-1/AliasProbe.cpp": {
+      "bytes": 42109,
+      "sha256": "5f0ef2944b1bd4f42deb973a7eee7e2293e0b47ff69717cc93064a3be607aa42"
+    },
+    "attempt-1/BUILD.json": {
+      "bytes": 3221,
+      "sha256": "314a7952e4036e895457f245fad0cec526926083e986d9a95663e6f103ed681c"
+    },
+    "attempt-1/RESULTS.json": {
+      "bytes": 4545,
+      "sha256": "5aff42ddf0e24df647e8303cd6a65a5605272fc7e4db5e786d00344dbb559fbc"
+    },
+    "attempt-1/SOURCE.json": {
+      "bytes": 437,
+      "sha256": "c53f89689b35a11e8e7480669a666ee79c02fecbb5ed836fdea89d19298539fa"
+    },
+    "attempt-1/alias-radial.log": {
+      "bytes": 1128,
+      "sha256": "4c5fd498352e9f0fcbf3bc8cd98d5fa3aa52212bd5e91cea23bb0d3d20eef3a5"
+    },
+    "attempt-1/prepare_alias_probe.py": {
+      "bytes": 12068,
+      "sha256": "bfd36379fd2635d62805aafa6945f6151dcf66615a5baf6eb7ffa5d169b509f4"
+    },
+    "build-0.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "build-1.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "build-identity.log": {
+      "bytes": 115,
+      "sha256": "62dc25693a4719c4096e552af2ac9181773defa2c04b5c5786a8f81c06b35520"
+    },
+    "original-half-turn.log": {
+      "bytes": 1380,
+      "sha256": "8dbade024d9a735dfbc22bb7e8441b839cf8999d3159aa6f8864bb566a6b1c88"
+    },
+    "original-normalization.log": {
+      "bytes": 2692,
+      "sha256": "6415d1a79f7d014fd0716bf9a3f6e22459b497df1631536fb53af5c8d94fd511"
+    },
+    "original-separate-controls.log": {
+      "bytes": 1725,
+      "sha256": "332ee5d5c184aacd1871671fb72f597a2f0080302c1600bc1824641a5dea1855"
+    },
+    "reproduction/AliasProbe.cpp": {
+      "bytes": 42217,
+      "sha256": "8924e589637afab023998853a1350666a1fe483c5f84c88164287d9969a81fec"
+    },
+    "reproduction/reproduce.py": {
+      "bytes": 4283,
+      "sha256": "71af3dab5224b90b2298cbe3084d94bf27eccaf5048a6096f11ac5fb7a93d577"
+    }
+  }
+}

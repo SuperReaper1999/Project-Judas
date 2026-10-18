@@ -1,0 +1,133 @@
+{
+  "utc": "2026-10-18T18:19:15.735883+00:00",
+  "head": "4c141e9bb6c68a50c63dec263dcec398200328ad",
+  "scope": "Unchanged original fixture failure and separate precision/occupancy/cold-reconstruction oracles. No production changes. Radial aliases are explicitly additional inputs.",
+  "runs": [
+    {
+      "label": "original-half-turn",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_origin_environment_tests",
+        "--bake-regression",
+        "knots",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass5/liquid/followup-original-half-turn-runtime"
+      ],
+      "environment": {},
+      "exit": 1,
+      "expected_exit": 1,
+      "expected_outcome_matched": true,
+      "wall_seconds": 0.0283951290002733
+    },
+    {
+      "label": "original-separate-controls",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_origin_environment_tests",
+        "--query-controls",
+        "knots",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass5/liquid/followup-original-separate-controls-runtime"
+      ],
+      "environment": {},
+      "exit": 0,
+      "expected_exit": 0,
+      "expected_outcome_matched": true,
+      "wall_seconds": 0.02779115799785359
+    },
+    {
+      "label": "original-normalization",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_origin_environment_tests",
+        "--bake-regression",
+        "normalization",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass5/liquid/followup-original-normalization-runtime"
+      ],
+      "environment": {},
+      "exit": 0,
+      "expected_exit": 0,
+      "expected_outcome_matched": true,
+      "wall_seconds": 0.034536488998128334
+    },
+    {
+      "label": "alias-half-turn",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass5/liquid/liquid_alias_probe",
+        "--bake-regression",
+        "knots",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass5/liquid/followup-alias-half-turn-runtime"
+      ],
+      "environment": {
+        "JUDAS_LIQUID_ALIAS_PROBE": "1"
+      },
+      "exit": 0,
+      "expected_exit": 0,
+      "expected_outcome_matched": true,
+      "wall_seconds": 0.032210868997935904
+    },
+    {
+      "label": "alias-radial",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass5/liquid/liquid_alias_probe",
+        "--alias-radial",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass5/liquid/followup-alias-radial-runtime"
+      ],
+      "environment": {
+        "JUDAS_LIQUID_ALIAS_PROBE": "1"
+      },
+      "exit": 0,
+      "expected_exit": 0,
+      "expected_outcome_matched": true,
+      "wall_seconds": 0.3869082490018627
+    },
+    {
+      "label": "absent-cap-negative",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass5/liquid/liquid_alias_probe",
+        "--bake-regression",
+        "knots",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-pass5/liquid/followup-absent-cap-negative-runtime"
+      ],
+      "environment": {
+        "JUDAS_LIQUID_ALIAS_PROBE": "1",
+        "JUDAS_LIQUID_NEGATIVE_EMPTY_MESH": "1"
+      },
+      "exit": 1,
+      "expected_exit": 1,
+      "expected_outcome_matched": true,
+      "wall_seconds": 0.02815796700087958
+    }
+  ],
+  "artifacts": {
+    "build/judas_origin_environment_tests": {
+      "bytes": 54218232,
+      "sha256": "ab2a81030058b24d0ad2acc44cf01c0e935856537ce6aba3a3b1eede90f7ac22"
+    },
+    ".cache/prealpha-pass5/liquid/liquid_alias_probe": {
+      "bytes": 54243400,
+      "sha256": "017425c1872e4d763234285f2cb45636d69028598bd8ee7b1f249652ba6dfe62"
+    },
+    "build/libjudas_engine.a": {
+      "bytes": 30305200,
+      "sha256": "6e77a9f799ade7f6ce3ad741687689b8cae6d5efa6fd82e472923749ee21b441"
+    },
+    ".cache/prealpha-pass5/liquid/AliasProbe.cpp": {
+      "bytes": 42217,
+      "sha256": "8924e589637afab023998853a1350666a1fe483c5f84c88164287d9969a81fec"
+    },
+    ".cache/prealpha-pass5/liquid/prepare_alias_probe.py": {
+      "bytes": 12176,
+      "sha256": "9777b9cab90387aea39c0d64977c8ec72c4708670935188de18c2b979173d5d3"
+    },
+    ".cache/prealpha-pass5/liquid/build_probe.py": {
+      "bytes": 1428,
+      "sha256": "fa318612e1ee99ceb035dd45ec05a9e99c5c2b8ef225c337becdf97c3092f7c6"
+    },
+    ".cache/prealpha-pass5/liquid/run_probes.py": {
+      "bytes": 2378,
+      "sha256": "cf53c6916070ba1c24b2e41a67fec1d840f470a416fa5bc20e529e4464996551"
+    }
+  },
+  "build_identity": "Judas validation 0.1.0-prealpha [Experimental] 4c141e9bb6c68a50c63dec263dcec398200328ad clean Linux/x86_64 Release",
+  "fixture_identity": {
+    "original_sha256": "34250b90ce4988c123aebe5b527ed84d7df1b9910d6c1f17b83376cb5bc7caef",
+    "authored_fixture_body_exact": true,
+    "normal_preparation_body_exact": true
+  }
+}

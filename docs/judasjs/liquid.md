@@ -63,7 +63,7 @@ impulse, not an exact 3D fluid/body momentum solver.
 
 ## `liquid.sample(point): LiquidSample | null`
 
-Authoritative occupied-water sample around Judas's fixed double absolute origin.
+Authoritative occupied-water sample at a point in the current world chart.
 Null when dry/disabled/outside available geometry (including excluded solid space).
 Fields: `entityId`, `entity`, `material`, `density`, `depth`, `coordinate`,
 `surfacePoint`, `normal`, `up`, `velocity`. `up` is local anti-gravity;
@@ -71,6 +71,13 @@ Fields: `entityId`, `entity`, `material`, `density`, `depth`, `coordinate`,
 `velocity` is modeled tangential surface flow; static M54 bulk flow is zero.
 Finite-volume levels are piecewise constant; radial tetrahedra approximate curved
 coordinates within the declared bake bound. There is no universal world-Y.
+
+The binding converts the input to binary32 coordinates. At a cell boundary,
+rounding during an origin shift can select a different occupied cap even though
+the liquid state is unchanged. Distinct pre-shift points can become the same
+post-shift input; this API cannot recover their original identities. Do not assume
+exact boundary-point sampling invariance through an origin change. See the
+[measured query-identity limitation](../evidence/prealpha-pass5/liquid/REPORT.md).
 
 ## `liquid.samplePresented(point): LiquidSample | null`
 
