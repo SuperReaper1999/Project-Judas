@@ -1,0 +1,47 @@
+﻿[
+    {
+        "seconds":  0.133344,
+        "name":  "runtime-identity",
+        "exit":  0
+    },
+    {
+        "seconds":  1.3250853999999999,
+        "name":  "identity",
+        "exit":  0
+    },
+    {
+        "seconds":  0.4003968,
+        "name":  "readiness",
+        "exit":  0
+    },
+    {
+        "seconds":  0.6937781,
+        "name":  "motor",
+        "exit":  0
+    },
+    {
+        "seconds":  0.686677,
+        "name":  "audio",
+        "exit":  0
+    },
+    {
+        "seconds":  0.26678799999999997,
+        "name":  "unicode",
+        "exit":  0
+    },
+    {
+        "seconds":  139.2954067,
+        "name":  "game-write",
+        "exit":  0
+    },
+    {
+        "seconds":  6.3310891,
+        "name":  "game-cold-read",
+        "exit":  0
+    },
+    {
+        "seconds":  15.036505,
+        "name":  "game-controls",
+        "exit":  0
+    }
+]

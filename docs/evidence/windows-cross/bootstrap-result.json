@@ -1,0 +1,13 @@
+{
+  "command": [
+    "cmake",
+    "--build",
+    ".cache/windows-cross/bootstrap",
+    "--target",
+    "judas_icu_host",
+    "-j4"
+  ],
+  "exit": 0,
+  "seconds": 109.40310025700092,
+  "scope": "fresh automatic native ICU generator tools, not a second full target engine build"
+}

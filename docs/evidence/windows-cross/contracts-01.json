@@ -1,0 +1,183 @@
+{
+  "schema": 1,
+  "scope": "metadata, native-target closure and cross-export negative contracts; no Windows execution",
+  "runtime": {
+    "schema": 1,
+    "version": "0.1.0-prealpha",
+    "maturity": "pre-alpha",
+    "channel": "Experimental",
+    "build_id": "0.1.0-prealpha-Experimental-f6892ca-dirty-ae7fb5249f65-u29afbb0b8160",
+    "source_revision": "f6892caac5f912241ad600cec9ebeba99043e14d",
+    "source_tree": "6c5a1befca1a07f2ac6cd340996d39d8b4560083",
+    "source_dirty": true,
+    "source_fingerprint": "ae7fb5249f6544e0b83906acca7f0d8170001655165671bd9486b49be74760b5",
+    "source_untracked_count": 23,
+    "source_untracked_fingerprint": "29afbb0b8160ae6034b43219f085280316afe48193d0b5dc8aec45977b689371",
+    "source_origin": "git",
+    "platform": "Windows",
+    "architecture": "x86_64",
+    "configuration": "Release",
+    "compiler": "GNU",
+    "compiler_version": "13.0.0"
+  },
+  "checks": 26,
+  "failures": 1,
+  "results": [
+    {
+      "name": "real PE embedded identity matches CMake target identity",
+      "passed": false,
+      "expectedRejection": false,
+      "detail": "Values differ"
+    },
+    {
+      "name": "truncated PE is rejected",
+      "passed": true,
+      "expectedRejection": true,
+      "detail": "Truncated or out-of-range binary metadata"
+    },
+    {
+      "name": "wrong binary format rejected",
+      "passed": true,
+      "expectedRejection": true,
+      "detail": "Not a PE executable"
+    },
+    {
+      "name": "empty embedded metadata rejected",
+      "passed": true,
+      "expectedRejection": true,
+      "detail": "Truncated or out-of-range binary metadata"
+    },
+    {
+      "name": "sidecar JSON is not treated as binary provenance",
+      "passed": true,
+      "expectedRejection": true,
+      "detail": "Not a PE executable"
+    },
+    {
+      "name": "real runtime bundle verifies",
+      "passed": true,
+      "expectedRejection": false,
+      "detail": "accepted"
+    },
+    {
+      "name": "bundle rejects replacing an existing directory",
+      "passed": true,
+      "expectedRejection": true,
+      "detail": "Choose a new runtime bundle directory; existing content is never overwritten"
+    },
+    {
+      "name": "changed executable bytes rejected",
+      "passed": true,
+      "expectedRejection": true,
+      "detail": "Runtime bundle inventory/checksum mismatch"
+    },
+    {
+      "name": "forged sidecar identity rejected against embedded resource",
+      "passed": true,
+      "expectedRejection": true,
+      "detail": "Manifest does not match actual embedded runtime identity"
+    },
+    {
+      "name": "missing runtime DLL rejected",
+      "passed": true,
+      "expectedRejection": true,
+      "detail": "Runtime bundle inventory/checksum mismatch"
+    },
+    {
+      "name": "unexpected runtime DLL rejected",
+      "passed": true,
+      "expectedRejection": true,
+      "detail": "Runtime bundle inventory/checksum mismatch"
+    },
+    {
+      "name": "positive bundle remains valid after negative controls",
+      "passed": true,
+      "expectedRejection": false,
+      "detail": "accepted"
+    },
+    {
+      "name": "same-source cross-platform pair accepted",
+      "passed": true,
+      "expectedRejection": false,
+      "detail": "accepted"
+    },
+    {
+      "name": "mismatched source_fingerprint rejected",
+      "passed": true,
+      "expectedRejection": true,
+      "detail": "Host exporter / Windows runtime differ in source_fingerprint; rebuild both from the same source"
+    },
+    {
+      "name": "mismatched source_revision rejected",
+      "passed": true,
+      "expectedRejection": true,
+      "detail": "Host exporter / Windows runtime differ in source_revision; rebuild both from the same source"
+    },
+    {
+      "name": "mismatched channel rejected",
+      "passed": true,
+      "expectedRejection": true,
+      "detail": "Host exporter / Windows runtime differ in channel; rebuild both from the same source"
+    },
+    {
+      "name": "mismatched source_untracked_count rejected",
+      "passed": true,
+      "expectedRejection": true,
+      "detail": "Host exporter / Windows runtime differ in source_untracked_count; rebuild both from the same source"
+    },
+    {
+      "name": "existing native exporter reserved names remain valid",
+      "passed": true,
+      "expectedRejection": false,
+      "detail": "accepted"
+    },
+    {
+      "name": "Windows path rejects 'CON.txt'",
+      "passed": true,
+      "expectedRejection": true,
+      "detail": "Invalid Windows package path: CON.txt"
+    },
+    {
+      "name": "Windows path rejects 'trailing.'",
+      "passed": true,
+      "expectedRejection": true,
+      "detail": "Invalid Windows package path: trailing."
+    },
+    {
+      "name": "Windows path rejects 'trailing '",
+      "passed": true,
+      "expectedRejection": true,
+      "detail": "Invalid Windows package path: trailing "
+    },
+    {
+      "name": "Windows path rejects 'bad:name'",
+      "passed": true,
+      "expectedRejection": true,
+      "detail": "Invalid Windows package path: bad:name"
+    },
+    {
+      "name": "Windows path rejects 'judas.exe'",
+      "passed": true,
+      "expectedRejection": true,
+      "detail": "Project content collides with reserved Windows path: judas.exe"
+    },
+    {
+      "name": "Windows path rejects 'kernel32.dll'",
+      "passed": true,
+      "expectedRejection": true,
+      "detail": "Project content collides with Windows runtime DLL namespace: kernel32.dll"
+    },
+    {
+      "name": "Windows path rejects 'ENGINE'",
+      "passed": true,
+      "expectedRejection": true,
+      "detail": "Project content collides with reserved Windows path: ENGINE"
+    },
+    {
+      "name": "case-insensitive alias rejected",
+      "passed": true,
+      "expectedRejection": true,
+      "detail": "Case-insensitive Windows path collision: Twin"
+    }
+  ]
+}

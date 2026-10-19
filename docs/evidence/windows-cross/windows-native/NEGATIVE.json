@@ -1,0 +1,15 @@
+﻿{
+    "pass":  true,
+    "stockQXL":  {
+                     "exit":  1,
+                     "name":  "stock-QXL-graphics"
+                 },
+    "negative":  {
+                     "exit":  -1073741515,
+                     "name":  "missing-runtime-DLL"
+                 },
+    "positive":  {
+                     "exit":  0,
+                     "name":  "pristine-native-identity"
+                 }
+}

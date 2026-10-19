@@ -1,0 +1,26 @@
+PASS real PE embedded identity matches CMake target identity
+PASS truncated PE is rejected
+PASS wrong binary format rejected
+PASS empty embedded metadata rejected
+PASS sidecar JSON is not treated as binary provenance
+PASS real runtime bundle verifies
+PASS bundle rejects replacing an existing directory
+PASS changed executable bytes rejected
+PASS forged sidecar identity rejected against embedded resource
+PASS missing runtime DLL rejected
+PASS unexpected runtime DLL rejected
+PASS positive bundle remains valid after negative controls
+PASS same-source cross-platform pair accepted
+PASS mismatched source_fingerprint rejected
+PASS mismatched source_revision rejected
+PASS mismatched channel rejected
+PASS mismatched source_untracked_count rejected
+PASS existing native exporter reserved names remain valid
+PASS Windows path rejects 'CON.txt'
+PASS Windows path rejects 'trailing.'
+PASS Windows path rejects 'trailing '
+PASS Windows path rejects 'bad:name'
+PASS Windows path rejects 'judas.exe'
+PASS Windows path rejects 'kernel32.dll'
+PASS Windows path rejects 'ENGINE'
+PASS case-insensitive alias rejected

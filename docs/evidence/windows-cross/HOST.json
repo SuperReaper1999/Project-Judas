@@ -1,0 +1,16 @@
+{
+  "host": "Linux-7.0.0-38-generic-x86_64-with-glibc2.43",
+  "python": "3.14.4",
+  "cpu": "Intel(R) Core(TM) i7-4790 CPU @ 3.60GHz",
+  "logicalCpus": 8,
+  "memoryKiB": "MemTotal:       16314724 kB",
+  "gnuDebPackages": [
+    "mingw-w64-x86-64-dev_13.0.0-2ubuntu1_all.deb",
+    "gcc-mingw-w64-x86-64-posix-runtime_13.2.0-6ubuntu1+26.1_amd64.deb",
+    "g++-mingw-w64-x86-64-posix_13.2.0-6ubuntu1+26.1_amd64.deb",
+    "gcc-mingw-w64-x86-64-posix_13.2.0-6ubuntu1+26.1_amd64.deb",
+    "gcc-mingw-w64-base_13.2.0-6ubuntu1+26.1_amd64.deb",
+    "binutils-mingw-w64-x86-64_2.45.90.20260125-1ubuntu1+13.3_amd64.deb",
+    "mingw-w64-common_13.0.0-2ubuntu1_all.deb"
+  ]
+}

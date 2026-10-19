@@ -1,0 +1,8 @@
+Exception calling "Start" with "0" argument(s): "The system cannot find the file specified"
+At P:\JudasValidation\WindowsCross\desktop-run.ps1:16 char:55
++ ... $p=New-Object Diagnostics.Process;$p.StartInfo=$info;[void]$p.Start()
++                                                          ~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:) [], MethodInvocationException
+    + FullyQualifiedErrorId : Win32Exception
+ 
+

@@ -1,0 +1,11 @@
+PASS native output device initialized without noDevice mode
+PASS ordinary buffered voice is created: 
+PASS ordinary voice starts on the native device
+PASS actual output callback consumes media frames (no manual mixer advancement)
+PASS native voice pauses
+PASS paused native voice retains its media cursor
+PASS native voice resumes
+PASS resumed native callback advances the real cursor
+PASS native voice stops cleanly
+CURSOR_FRAMES 10080 10080 15840
+SUMMARY 9 checks 0 failures

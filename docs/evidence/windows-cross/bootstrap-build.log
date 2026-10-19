@@ -1,0 +1,22 @@
+[  0%] Creating directories for 'judas_icu_host'
+[  0%] Performing download step (verify and extract) for 'judas_icu_host'
+-- verifying file...
+     file='/home/conner/Documents/GitHub/Project-Judas/third_party/text/icu4c-76_1-src.tgz'
+-- verifying file... done
+-- extracting...
+     src='/home/conner/Documents/GitHub/Project-Judas/third_party/text/icu4c-76_1-src.tgz'
+     dst='/home/conner/Documents/GitHub/Project-Judas/.cache/windows-cross/bootstrap/unicode/host/src/judas_icu_host'
+-- extracting... [tar xf]
+-- extracting... [analysis]
+-- extracting... [rename]
+-- extracting... [clean up]
+-- extracting... done
+[100%] No update step for 'judas_icu_host'
+[100%] No patch step for 'judas_icu_host'
+[100%] Performing configure step for 'judas_icu_host'
+-- judas_icu_host configure command succeeded.  See also /home/conner/Documents/GitHub/Project-Judas/.cache/windows-cross/bootstrap/unicode/host/src/judas_icu_host-stamp/judas_icu_host-configure-*.log
+[100%] Performing build step for 'judas_icu_host'
+-- judas_icu_host build command succeeded.  See also /home/conner/Documents/GitHub/Project-Judas/.cache/windows-cross/bootstrap/unicode/host/src/judas_icu_host-stamp/judas_icu_host-build-*.log
+[100%] No install step for 'judas_icu_host'
+[100%] Completed 'judas_icu_host'
+[100%] Built target judas_icu_host

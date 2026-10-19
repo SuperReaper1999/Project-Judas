@@ -1,0 +1,23 @@
+JS: Hearthworld: WASD move, mouse look, Space jump, Shift sprint; E collect; 1 gravity / 2 axe / 3 pickaxe / 4 shovel / 5 build; LMB use, RMB grab/drop or dismantle, Q recipe, R rotate; Tab pack, Esc pause; F5 save / F9 load.
+PASS welcome menu owns input before ordinary play starts
+PASS ordinary project starts with CharacterMotor and script-owned camera
+PASS ordinary Escape navigation closes the welcome menu and captures gameplay input
+PASS no legacy/native gameplay controller is used
+PASS capture real rendered game frame
+PASS controls workflow makes genuine collectable progress
+PASS pause menu suspends the world and releases pointer capture
+PASS paused movement, use and grab inputs cannot leak into gameplay
+PASS capture real rendered game frame
+PASS F5 invokes the shipped JudasJS handler and commits the real home slot while paused
+PASS resume restores gameplay focus without using the paused fire input
+PASS ordinary gameplay changes inventory after the saved checkpoint
+PASS F9 publishes its validated world at the ordinary outer boundary
+JS: Hearthworld: WASD move, mouse look, Space jump, Shift sprint; E collect; 1 gravity / 2 axe / 3 pickaxe / 4 shovel / 5 build; LMB use, RMB grab/drop or dismantle, Q recipe, R rotate; Tab pack, Esc pause; F5 save / F9 load.
+PASS F9 restores both actual inventory and collected/uncollected world-tool entities
+PASS game restore resumes with clean script ownership and correct focus
+PASS the actual inventory screen owns focus and pauses physical gameplay
+PASS capture real rendered game frame
+PASS actual save-and-quit click exits only after a new durable save completes
+PASS ordinary application shuts down cleanly
+PASS observer completed its requested workflow
+SUMMARY 20 checks 0 failures

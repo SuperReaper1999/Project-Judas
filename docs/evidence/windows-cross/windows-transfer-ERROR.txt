@@ -1,0 +1,11 @@
+Start-Process : Cannot validate argument on parameter 'ArgumentList'. The argument is null or 
+empty. Provide an argument that is not null or empty, and then try the command again.
+At P:\JudasValidation\WindowsCross\desktop-run.ps1:13 char:48
++  $p=Start-Process -FilePath $exe -ArgumentList $arguments -WorkingDir ...
++                                                ~~~~~~~~~~
+    + CategoryInfo          : InvalidData: (:) [Start-Process], ParameterBindingValidationExcepti 
+   on
+    + FullyQualifiedErrorId : ParameterArgumentValidationError,Microsoft.PowerShell.Commands.Star 
+   tProcessCommand
+ 
+

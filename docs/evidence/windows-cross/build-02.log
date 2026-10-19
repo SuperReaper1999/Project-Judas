@@ -1,0 +1,88 @@
+[ 17%] Built target sdl_headers_copy
+[ 21%] Built target judas_meshoptimizer
+[ 21%] Building CXX object CMakeFiles/judas_build_identity.dir/src/BuildIdentity.cpp.obj
+[ 21%] Performing configure step for 'judas_icu_build'
+[ 21%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/autofit/autofit.c.obj
+[ 26%] Built target judas_quickjs
+[ 26%] Built target judas_navigation_backend
+[ 26%] Built target judas_glad
+[ 26%] Built target judas_profiler
+[ 26%] Building CXX object CMakeFiles/judas_jobs.dir/src/JobSystem.cpp.obj
+[ 26%] Linking CXX static library libjudas_jobs.a
+[ 26%] Built target judas_jobs
+[ 26%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/base/ftbase.c.obj
+[ 26%] Building C object CMakeFiles/judas_audio_backend.dir/src/AudioBackend.c.obj
+[ 26%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/base/ftbbox.c.obj
+[ 26%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/base/ftbdf.c.obj
+[ 26%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/base/ftbitmap.c.obj
+[ 26%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/base/ftcid.c.obj
+[ 30%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/base/ftfstype.c.obj
+[ 30%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/base/ftgasp.c.obj
+[ 30%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/base/ftglyph.c.obj
+-- judas_icu_build configure command succeeded.  See also /home/conner/Documents/GitHub/Project-Judas/.cache/windows-cross/build/unicode/build/src/judas_icu_build-stamp/judas_icu_build-configure-*.log
+[ 30%] Performing build step for 'judas_icu_build'
+[ 30%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/base/ftgxval.c.obj
+[ 30%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/base/ftinit.c.obj
+[ 30%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/base/ftmm.c.obj
+[ 30%] Linking CXX static library libjudas_build_identity.a
+[ 34%] Built target judas_build_identity
+[ 34%] Building CXX object _deps/judas_harfbuzz-build/CMakeFiles/harfbuzz.dir/src/harfbuzz.cc.obj
+[ 34%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/base/ftotval.c.obj
+[ 34%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/base/ftpatent.c.obj
+[ 34%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/base/ftpfr.c.obj
+[ 34%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/base/ftstroke.c.obj
+[ 34%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/base/ftsynth.c.obj
+[ 34%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/base/fttype1.c.obj
+[ 34%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/base/ftwinfnt.c.obj
+[ 34%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/bdf/bdf.c.obj
+[ 34%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/bzip2/ftbzip2.c.obj
+[ 34%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/cache/ftcache.c.obj
+[ 34%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/cff/cff.c.obj
+[ 34%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/cid/type1cid.c.obj
+[ 34%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/gzip/ftgzip.c.obj
+-- judas_icu_build build command succeeded.  See also /home/conner/Documents/GitHub/Project-Judas/.cache/windows-cross/build/unicode/build/src/judas_icu_build-stamp/judas_icu_build-build-*.log
+[ 34%] Performing install step for 'judas_icu_build'
+[ 34%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/lzw/ftlzw.c.obj
+[ 34%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/pcf/pcf.c.obj
+[ 34%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/pfr/pfr.c.obj
+[ 34%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/psaux/psaux.c.obj
+CMake Error at /home/conner/Documents/GitHub/Project-Judas/.cache/windows-cross/build/unicode/build/src/judas_icu_build-stamp/judas_icu_build-install-Release.cmake:49 (message):
+  Command failed: 2
+
+   'make' 'install'
+
+  See also
+
+    /home/conner/Documents/GitHub/Project-Judas/.cache/windows-cross/build/unicode/build/src/judas_icu_build-stamp/judas_icu_build-install-*.log
+
+
+gmake[3]: *** [CMakeFiles/judas_icu_build.dir/build.make:104: unicode/build/src/judas_icu_build-stamp/judas_icu_build-install] Error 1
+gmake[2]: *** [CMakeFiles/Makefile2:790: CMakeFiles/judas_icu_build.dir/all] Error 2
+gmake[2]: *** Waiting for unfinished jobs....
+[ 34%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/pshinter/pshinter.c.obj
+[ 34%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/psnames/psnames.c.obj
+[ 39%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/raster/raster.c.obj
+[ 39%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/sdf/sdf.c.obj
+[ 39%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/sfnt/sfnt.c.obj
+[ 39%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/smooth/smooth.c.obj
+[ 39%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/svg/svg.c.obj
+[ 39%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/truetype/truetype.c.obj
+[ 39%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/type1/type1.c.obj
+[ 39%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/type42/type42.c.obj
+[ 39%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/winfonts/winfnt.c.obj
+[ 39%] Building C object CMakeFiles/judas_audio_backend.dir/src/ReverbBackend.c.obj
+[ 39%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/builds/windows/ftsystem.c.obj
+/home/conner/Documents/GitHub/Project-Judas/.cache/windows-cross/build/_deps/judas_freetype-src/builds/windows/ftsystem.c:29: warning: "WIN32_LEAN_AND_MEAN" redefined
+   29 | #define WIN32_LEAN_AND_MEAN
+      | 
+<command-line>: note: this is the location of the previous definition
+[ 39%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/builds/windows/ftdebug.c.obj
+[ 39%] Building RC object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/base/ftver.rc.res
+[ 39%] Linking C static library libfreetype.a
+[ 39%] Built target freetype
+[ 39%] Linking C static library libjudas_audio_backend.a
+[ 39%] Built target judas_audio_backend
+[ 39%] Linking C static library libharfbuzz.a
+[ 39%] Built target harfbuzz
+gmake[1]: *** [CMakeFiles/Makefile2:1194: CMakeFiles/judas.dir/rule] Error 2
+gmake: *** [Makefile:385: judas] Error 2

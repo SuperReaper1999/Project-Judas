@@ -1,0 +1,65 @@
+{
+  "schema": 1,
+  "linux": {
+    "identity": 55,
+    "readiness": 14,
+    "failures": 0,
+    "relocatedGameFrames": 110,
+    "renderer": "GTX 970 OpenGL 3.3",
+    "fullProductionSuiteRun": false
+  },
+  "windows": {
+    "os": "Windows 10 Home 22H2 build19045",
+    "nativeChecks": 293,
+    "failures": 0,
+    "runtimeIdentityEqualsEmbedded": true,
+    "scriptModules": 11,
+    "scriptFailures": 0,
+    "coldProcesses": [
+      "write",
+      "read",
+      "controls"
+    ],
+    "graphics": "Mesa llvmpipe in disposable copies only",
+    "audio": "native virtual output device, callback consumed 10080 then 15840 frames",
+    "relocatedStandaloneExit": 0,
+    "physicalHardwareAcceptance": false
+  },
+  "android": {
+    "arm64Api26ConfigureExit": 0,
+    "freshApkOrDeviceRun": false
+  },
+  "msvc": {
+    "workflowPreserved": true,
+    "freshBuildRun": false
+  },
+  "packaging": {
+    "checks": 26,
+    "failures": 0,
+    "nativeMissingDllExit": -1073741515,
+    "pristineNativeLoadExit": 0,
+    "stockQXLExit": 1
+  },
+  "source": {
+    "frozenInputsVerified": [
+      "CMakeLists.txt",
+      "cmake/JudasTextDependencies.cmake",
+      "cmake/JudasWindowsCrossDependencies.cmake",
+      "cmake/JudasWindowsCrossICU.cmake",
+      "cmake/JudasWindowsCrossRuntime.cmake",
+      "cmake/toolchains/WindowsMinGW64.cmake",
+      "docs/DISTRIBUTION.md",
+      "docs/WINDOWS.md",
+      "docs/WINDOWS_CROSS_BUILD.md",
+      "scripts/check_windows_cross.py",
+      "src/ProjectExporter.cpp",
+      "tests/WindowsCrossAudioTests.cpp",
+      "tools/build_windows_cross.py",
+      "tools/export_windows.py",
+      "tools/windows_runtime.py"
+    ],
+    "canonicalPatchMatchesEmbeddedFingerprint": true,
+    "laterChanges": "scoped evidence attributes and qualification report/receipts only"
+  },
+  "scope": "Optional cross-build/export and new focused validation; no engine/gameplay/API behaviour changed"
+}

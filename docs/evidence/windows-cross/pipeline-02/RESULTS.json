@@ -1,0 +1,96 @@
+{
+  "schema": 1,
+  "utc": "20261019T175136874078Z",
+  "host": "Linux-7.0.0-38-generic-x86_64-with-glibc2.43",
+  "channel": "Experimental",
+  "crossCompiler": "/home/conner/Documents/GitHub/Project-Judas/.cache/windows-cross/toolchain/root/usr/bin/x86_64-w64-mingw32-g++-posix",
+  "runs": [
+    {
+      "name": "cross-configure",
+      "argv": [
+        "cmake",
+        "-S",
+        "/home/conner/Documents/GitHub/Project-Judas",
+        "-B",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/windows-cross/build",
+        "-DCMAKE_TOOLCHAIN_FILE=/home/conner/Documents/GitHub/Project-Judas/cmake/toolchains/WindowsMinGW64.cmake",
+        "-DCMAKE_BUILD_TYPE=Release",
+        "-DJUDAS_BUILD_CHANNEL=Experimental",
+        "-DJUDAS_CROSS_DEPENDENCY_JOBS=4",
+        "-DJUDAS_MINGW_ROOT=/home/conner/Documents/GitHub/Project-Judas/.cache/windows-cross/toolchain/root/usr",
+        "-DJUDAS_ICU_HOST_TOOLS=/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-doc-cleanup-20261019/build-make/unicode/build/src/judas_icu_build-build"
+      ],
+      "exit": 0,
+      "seconds": 3.008268648998637
+    },
+    {
+      "name": "cross-build",
+      "argv": [
+        "cmake",
+        "--build",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/windows-cross/build",
+        "--target",
+        "judas",
+        "judas_export",
+        "judas_script_check",
+        "-j",
+        "4"
+      ],
+      "exit": 0,
+      "seconds": 10.31022273599956
+    },
+    {
+      "name": "host-configure",
+      "argv": [
+        "cmake",
+        "-S",
+        "/home/conner/Documents/GitHub/Project-Judas",
+        "-B",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-doc-cleanup-20261019/build-make",
+        "-DCMAKE_BUILD_TYPE=Release",
+        "-DJUDAS_BUILD_CHANNEL=Experimental"
+      ],
+      "exit": 0,
+      "seconds": 2.9109076999993704
+    },
+    {
+      "name": "host-build",
+      "argv": [
+        "cmake",
+        "--build",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-doc-cleanup-20261019/build-make",
+        "--target",
+        "judas",
+        "judas_export",
+        "-j",
+        "4"
+      ],
+      "exit": 0,
+      "seconds": 9.15626856200106
+    }
+  ],
+  "windowsExecution": "not performed by this build tool",
+  "runtimeBundle": "/home/conner/Documents/GitHub/Project-Judas/.cache/windows-cross/runtime-02",
+  "runtimeIdentity": {
+    "schema": 1,
+    "version": "0.1.0-prealpha",
+    "maturity": "pre-alpha",
+    "channel": "Experimental",
+    "build_id": "0.1.0-prealpha-Experimental-f6892ca-dirty-ce88da00f2d5-u84f47c24fcd0",
+    "source_revision": "f6892caac5f912241ad600cec9ebeba99043e14d",
+    "source_tree": "6c5a1befca1a07f2ac6cd340996d39d8b4560083",
+    "source_dirty": true,
+    "source_fingerprint": "ce88da00f2d5def2dc4244f4e50ed369f62781cfb56cf7f272d35e605a79d9b1",
+    "source_untracked_count": 16,
+    "source_untracked_fingerprint": "84f47c24fcd098f88732ceab246b2e0e19eca31f56acdd72f89f8bfa1621daf2",
+    "source_origin": "git",
+    "platform": "Windows",
+    "architecture": "x86_64",
+    "configuration": "Release",
+    "compiler": "GNU",
+    "compiler_version": "13.0.0"
+  },
+  "package": "/home/conner/Documents/GitHub/Project-Judas/.cache/windows-cross/Hearthworld-Windows-02",
+  "packageFiles": 124,
+  "metadataVerified": true
+}

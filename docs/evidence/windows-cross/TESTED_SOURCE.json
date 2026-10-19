@@ -1,0 +1,67 @@
+{
+  "schema": 1,
+  "base": "f6892caac5f912241ad600cec9ebeba99043e14d",
+  "scope": "Frozen implementation and documentation inputs used by matching native/cross builds; later qualification evidence is separate",
+  "files": [
+    {
+      "path": "CMakeLists.txt",
+      "sha256": "e0305c4506cfdf28b62a57a476b76b123819b65dcc33ef9c82a2cc440f52ad93"
+    },
+    {
+      "path": "cmake/JudasTextDependencies.cmake",
+      "sha256": "cb6da756f44d318d8d50a821912406bdc40049f5b3a662ba0c0d30671b409ac9"
+    },
+    {
+      "path": "cmake/JudasWindowsCrossDependencies.cmake",
+      "sha256": "566e7900c586d508770097fe51c69d0aac8279b41c3d51b86a2eea1b72fce1b8"
+    },
+    {
+      "path": "cmake/JudasWindowsCrossICU.cmake",
+      "sha256": "39c6800fd4a6727e94ab19976e8c67d5d2a7f708d747533e3381b49c40002b2b"
+    },
+    {
+      "path": "cmake/JudasWindowsCrossRuntime.cmake",
+      "sha256": "f8405109abf971340d66efd0e5df741e58afa5185560738ea8eaf820f648e5be"
+    },
+    {
+      "path": "cmake/toolchains/WindowsMinGW64.cmake",
+      "sha256": "9041507dbf32a281f3d2d18480cb9bf998cf5e40c041a2ad24b417368f600699"
+    },
+    {
+      "path": "docs/DISTRIBUTION.md",
+      "sha256": "95b0e10aa7550a0858297ee625c4f1694527dc7c367d81cdbec5fad8919f6d0c"
+    },
+    {
+      "path": "docs/WINDOWS.md",
+      "sha256": "986d694e1c6866e90611c5d7f9ad4c089087e83e813c7f44e8b1079c31cd2eab"
+    },
+    {
+      "path": "docs/WINDOWS_CROSS_BUILD.md",
+      "sha256": "b83fc18b4564d70bc481268b23f7dbcd9facb6b84dfc9c5be73b11e0fb7bede9"
+    },
+    {
+      "path": "scripts/check_windows_cross.py",
+      "sha256": "4c0779d0b16bdf6c416cbd7ee8b65f7fb7a12a3e567c521360181336a6370974"
+    },
+    {
+      "path": "src/ProjectExporter.cpp",
+      "sha256": "13be973c4f351ac0c368ff8770398f2e52d121b3c60c4e27b2e98bf1cf17de3d"
+    },
+    {
+      "path": "tests/WindowsCrossAudioTests.cpp",
+      "sha256": "ec3dd256fa427c403ce0dc115b92d3a57f204181f1db4c3cfd0cf8d9ad6f3aed"
+    },
+    {
+      "path": "tools/build_windows_cross.py",
+      "sha256": "6f39edbea8f79b9a52a163a51e9540ad798d5e34f59ca570a0688858b210dacc"
+    },
+    {
+      "path": "tools/export_windows.py",
+      "sha256": "29cd8703df84b77cd65683d6b7e41b50c482f78d3b5ab11b729a60c677269dbb"
+    },
+    {
+      "path": "tools/windows_runtime.py",
+      "sha256": "bd14addcc1ed1800da61450c85a63404e933f8323c334b029ca500113b905afc"
+    }
+  ]
+}

@@ -1,0 +1,5 @@
+clang++: warning: argument unused during compilation: '--gcc-install-dir=/home/conner/Documents/GitHub/Project-Judas/.cache/windows-cross/toolchain/root/usr/lib/gcc/x86_64-w64-mingw32/13-posix' [-Wunused-command-line-argument]
+.cache/windows-cross/probes/hello.cpp:1:10: fatal error: 'thread' file not found
+    1 | #include <thread>
+      |          ^~~~~~~~
+1 error generated.

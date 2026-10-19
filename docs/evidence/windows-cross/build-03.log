@@ -1,0 +1,689 @@
+[ 17%] Built target sdl_headers_copy
+[ 21%] Built target judas_meshoptimizer
+[ 21%] Building CXX object CMakeFiles/judas_build_identity.dir/src/BuildIdentity.cpp.obj
+[ 21%] Performing install step for 'judas_icu_build'
+[ 30%] Built target freetype
+[ 34%] Built target judas_quickjs
+[ 34%] Built target judas_glad
+[ 34%] Built target judas_navigation_backend
+[ 34%] Built target judas_jobs
+[ 34%] Built target judas_profiler
+[ 34%] Built target judas_audio_backend
+[ 34%] Built target harfbuzz
+[ 34%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/SDL.c.obj
+[ 34%] Built target judas_windows_runtime
+[ 34%] Building CXX object CMakeFiles/judas_navigation_cook.dir/src/NavigationGeometryBake.cpp.obj
+[ 34%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/SDL_assert.c.obj
+-- judas_icu_build install command succeeded.  See also /home/conner/Documents/GitHub/Project-Judas/.cache/windows-cross/build/unicode/build/src/judas_icu_build-stamp/judas_icu_build-install-*.log
+[ 34%] Completed 'judas_icu_build'
+[ 34%] Built target judas_icu_build
+[ 34%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/SDL_dataqueue.c.obj
+[ 34%] Building C object CMakeFiles/judas_materials.dir/third_party/mikktspace/mikktspace.c.obj
+[ 34%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/SDL_error.c.obj
+[ 34%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/SDL_guid.c.obj
+[ 34%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/SDL_hints.c.obj
+[ 34%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/SDL_list.c.obj
+[ 34%] Building CXX object CMakeFiles/judas_navigation_cook.dir/third_party/recastnavigation/Recast/Source/Recast.cpp.obj
+[ 34%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/SDL_log.c.obj
+[ 34%] Linking CXX static library libjudas_materials.a
+[ 34%] Built target judas_materials
+[ 34%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/SDL_utils.c.obj
+[ 34%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/atomic/SDL_atomic.c.obj
+[ 34%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/atomic/SDL_spinlock.c.obj
+[ 34%] Building CXX object CMakeFiles/judas_navigation_cook.dir/third_party/recastnavigation/Recast/Source/RecastAlloc.cpp.obj
+[ 34%] Building CXX object CMakeFiles/judas_navigation_cook.dir/third_party/recastnavigation/Recast/Source/RecastArea.cpp.obj
+[ 34%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/audio/SDL_audio.c.obj
+[ 34%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/audio/SDL_audiocvt.c.obj
+[ 34%] Building CXX object CMakeFiles/judas_navigation_cook.dir/third_party/recastnavigation/Recast/Source/RecastAssert.cpp.obj
+[ 34%] Building CXX object CMakeFiles/judas_navigation_cook.dir/third_party/recastnavigation/Recast/Source/RecastContour.cpp.obj
+[ 34%] Building CXX object CMakeFiles/judas_navigation_cook.dir/third_party/recastnavigation/Recast/Source/RecastFilter.cpp.obj
+[ 34%] Building CXX object CMakeFiles/judas_navigation_cook.dir/third_party/recastnavigation/Recast/Source/RecastLayers.cpp.obj
+[ 34%] Building CXX object CMakeFiles/judas_navigation_cook.dir/third_party/recastnavigation/Recast/Source/RecastMesh.cpp.obj
+[ 34%] Building CXX object CMakeFiles/judas_navigation_cook.dir/third_party/recastnavigation/Recast/Source/RecastMeshDetail.cpp.obj
+[ 34%] Linking CXX static library libjudas_build_identity.a
+[ 39%] Built target judas_build_identity
+[ 39%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/audio/SDL_audiotypecvt.c.obj
+[ 39%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/audio/SDL_audiodev.c.obj
+[ 39%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/audio/SDL_mixer.c.obj
+[ 39%] Building CXX object CMakeFiles/judas_navigation_cook.dir/third_party/recastnavigation/Recast/Source/RecastRasterization.cpp.obj
+[ 39%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/audio/SDL_wave.c.obj
+[ 39%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/cpuinfo/SDL_cpuinfo.c.obj
+[ 39%] Building CXX object CMakeFiles/judas_navigation_cook.dir/third_party/recastnavigation/Recast/Source/RecastRegion.cpp.obj
+[ 39%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/dynapi/SDL_dynapi.c.obj
+[ 39%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/events/SDL_clipboardevents.c.obj
+[ 39%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/events/SDL_displayevents.c.obj
+[ 39%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/events/SDL_dropevents.c.obj
+[ 39%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/events/SDL_events.c.obj
+[ 39%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/events/SDL_gesture.c.obj
+[ 39%] Linking CXX static library libjudas_navigation_cook.a
+[ 39%] Built target judas_navigation_cook
+[ 39%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/events/SDL_keyboard.c.obj
+[ 43%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/events/SDL_keysym_to_scancode.c.obj
+[ 43%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/events/SDL_mouse.c.obj
+[ 43%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/events/SDL_quit.c.obj
+[ 43%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/events/SDL_scancode_tables.c.obj
+[ 43%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/events/SDL_touch.c.obj
+[ 43%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/events/SDL_windowevents.c.obj
+[ 43%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/events/imKStoUCS.c.obj
+[ 43%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/file/SDL_rwops.c.obj
+[ 43%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/haptic/SDL_haptic.c.obj
+[ 43%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/hidapi/SDL_hidapi.c.obj
+[ 43%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/joystick/SDL_gamecontroller.c.obj
+[ 43%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/joystick/SDL_joystick.c.obj
+[ 43%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/joystick/SDL_steam_virtual_gamepad.c.obj
+[ 43%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/joystick/controller_type.c.obj
+[ 43%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/libm/e_atan2.c.obj
+[ 43%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/libm/e_exp.c.obj
+[ 43%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/libm/e_fmod.c.obj
+[ 43%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/libm/e_log.c.obj
+[ 43%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/libm/e_log10.c.obj
+[ 43%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/libm/e_pow.c.obj
+[ 43%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/libm/e_rem_pio2.c.obj
+[ 43%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/libm/e_sqrt.c.obj
+[ 43%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/libm/k_cos.c.obj
+[ 43%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/libm/k_rem_pio2.c.obj
+[ 43%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/libm/k_sin.c.obj
+[ 43%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/libm/k_tan.c.obj
+[ 47%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/libm/s_atan.c.obj
+[ 47%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/libm/s_copysign.c.obj
+[ 47%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/libm/s_cos.c.obj
+[ 47%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/libm/s_fabs.c.obj
+[ 47%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/libm/s_floor.c.obj
+[ 47%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/libm/s_scalbn.c.obj
+[ 47%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/libm/s_sin.c.obj
+[ 47%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/libm/s_tan.c.obj
+[ 47%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/locale/SDL_locale.c.obj
+[ 47%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/misc/SDL_url.c.obj
+[ 47%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/power/SDL_power.c.obj
+[ 47%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/render/SDL_d3dmath.c.obj
+[ 47%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/render/SDL_render.c.obj
+[ 47%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/render/SDL_yuv_sw.c.obj
+[ 47%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/render/direct3d/SDL_render_d3d.c.obj
+[ 47%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/render/direct3d/SDL_shaders_d3d.c.obj
+[ 47%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/render/direct3d11/SDL_render_d3d11.c.obj
+[ 47%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/render/direct3d11/SDL_shaders_d3d11.c.obj
+[ 47%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/render/direct3d12/SDL_render_d3d12.c.obj
+[ 47%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/render/direct3d12/SDL_shaders_d3d12.c.obj
+[ 47%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/render/opengl/SDL_render_gl.c.obj
+[ 47%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/render/opengl/SDL_shaders_gl.c.obj
+[ 47%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/render/opengles/SDL_render_gles.c.obj
+[ 47%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/render/opengles2/SDL_render_gles2.c.obj
+[ 47%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/render/opengles2/SDL_shaders_gles2.c.obj
+[ 52%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/render/ps2/SDL_render_ps2.c.obj
+[ 52%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/render/psp/SDL_render_psp.c.obj
+[ 52%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/render/software/SDL_blendfillrect.c.obj
+[ 52%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/render/software/SDL_blendline.c.obj
+[ 52%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/render/software/SDL_blendpoint.c.obj
+[ 52%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/render/software/SDL_drawline.c.obj
+[ 52%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/render/software/SDL_drawpoint.c.obj
+[ 52%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/render/software/SDL_render_sw.c.obj
+[ 52%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/render/software/SDL_rotate.c.obj
+[ 52%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/render/software/SDL_triangle.c.obj
+[ 52%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/render/vitagxm/SDL_render_vita_gxm_memory.c.obj
+[ 52%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/render/vitagxm/SDL_render_vita_gxm.c.obj
+[ 52%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/render/vitagxm/SDL_render_vita_gxm_tools.c.obj
+[ 52%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/sensor/SDL_sensor.c.obj
+[ 52%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/stdlib/SDL_crc16.c.obj
+[ 52%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/stdlib/SDL_crc32.c.obj
+[ 52%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/stdlib/SDL_getenv.c.obj
+[ 52%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/stdlib/SDL_iconv.c.obj
+[ 52%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/stdlib/SDL_malloc.c.obj
+[ 52%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/stdlib/SDL_mslibc.c.obj
+[ 52%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/stdlib/SDL_qsort.c.obj
+[ 52%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/stdlib/SDL_stdlib.c.obj
+[ 52%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/stdlib/SDL_string.c.obj
+[ 52%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/stdlib/SDL_strtokr.c.obj
+[ 52%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/thread/SDL_thread.c.obj
+[ 52%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/timer/SDL_timer.c.obj
+[ 56%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/video/SDL_RLEaccel.c.obj
+[ 56%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/video/SDL_blit.c.obj
+[ 56%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/video/SDL_blit_0.c.obj
+[ 56%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/video/SDL_blit_1.c.obj
+[ 56%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/video/SDL_blit_A.c.obj
+[ 56%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/video/SDL_blit_N.c.obj
+[ 56%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/video/SDL_blit_auto.c.obj
+[ 56%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/video/SDL_blit_copy.c.obj
+[ 56%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/video/SDL_blit_slow.c.obj
+[ 56%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/video/SDL_bmp.c.obj
+[ 56%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/video/SDL_clipboard.c.obj
+[ 56%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/video/SDL_egl.c.obj
+[ 56%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/video/SDL_fillrect.c.obj
+[ 56%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/video/SDL_pixels.c.obj
+[ 56%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/video/SDL_rect.c.obj
+[ 56%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/video/SDL_shape.c.obj
+[ 56%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/video/SDL_stretch.c.obj
+[ 56%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/video/SDL_surface.c.obj
+[ 56%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/video/SDL_video.c.obj
+[ 56%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/video/SDL_vulkan_utils.c.obj
+[ 56%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/video/SDL_yuv.c.obj
+[ 56%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/video/yuv2rgb/yuv_rgb_lsx.c.obj
+[ 56%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/video/yuv2rgb/yuv_rgb_sse.c.obj
+[ 56%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/video/yuv2rgb/yuv_rgb_std.c.obj
+[ 56%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/audio/dummy/SDL_dummyaudio.c.obj
+[ 56%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/audio/disk/SDL_diskaudio.c.obj
+[ 60%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/joystick/virtual/SDL_virtualjoystick.c.obj
+[ 60%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/video/dummy/SDL_nullevents.c.obj
+[ 60%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/video/dummy/SDL_nullframebuffer.c.obj
+[ 60%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/video/dummy/SDL_nullvideo.c.obj
+[ 60%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/video/offscreen/SDL_offscreenevents.c.obj
+[ 60%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/video/offscreen/SDL_offscreenframebuffer.c.obj
+[ 60%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/video/offscreen/SDL_offscreenopengles.c.obj
+[ 60%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/video/offscreen/SDL_offscreenvideo.c.obj
+[ 60%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/video/offscreen/SDL_offscreenwindow.c.obj
+[ 60%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/core/windows/SDL_hid.c.obj
+[ 60%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/core/windows/SDL_immdevice.c.obj
+[ 60%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/core/windows/SDL_windows.c.obj
+[ 60%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/core/windows/SDL_xinput.c.obj
+[ 60%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/misc/windows/SDL_sysurl.c.obj
+[ 60%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/audio/winmm/SDL_winmm.c.obj
+[ 60%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/audio/directsound/SDL_directsound.c.obj
+[ 60%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/audio/wasapi/SDL_wasapi.c.obj
+[ 60%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/audio/wasapi/SDL_wasapi_win32.c.obj
+[ 60%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/video/windows/SDL_windowsclipboard.c.obj
+[ 60%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/video/windows/SDL_windowsevents.c.obj
+[ 60%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/video/windows/SDL_windowsframebuffer.c.obj
+[ 60%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/video/windows/SDL_windowskeyboard.c.obj
+[ 60%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/video/windows/SDL_windowsmessagebox.c.obj
+[ 60%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/video/windows/SDL_windowsmodes.c.obj
+[ 60%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/video/windows/SDL_windowsmouse.c.obj
+[ 65%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/video/windows/SDL_windowsopengl.c.obj
+[ 65%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/video/windows/SDL_windowsopengles.c.obj
+[ 65%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/video/windows/SDL_windowsshape.c.obj
+[ 65%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/video/windows/SDL_windowsvideo.c.obj
+[ 65%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/video/windows/SDL_windowsvulkan.c.obj
+[ 65%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/video/windows/SDL_windowswindow.c.obj
+[ 65%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/thread/generic/SDL_syscond.c.obj
+[ 65%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/thread/windows/SDL_syscond_cv.c.obj
+[ 65%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/thread/windows/SDL_sysmutex.c.obj
+[ 65%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/thread/windows/SDL_syssem.c.obj
+[ 65%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/thread/windows/SDL_systhread.c.obj
+[ 65%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/thread/windows/SDL_systls.c.obj
+[ 65%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/sensor/windows/SDL_windowssensor.c.obj
+[ 65%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/power/windows/SDL_syspower.c.obj
+[ 65%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/locale/windows/SDL_syslocale.c.obj
+[ 65%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/filesystem/windows/SDL_sysfilesystem.c.obj
+[ 65%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/timer/windows/SDL_systimer.c.obj
+[ 65%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/loadso/windows/SDL_sysloadso.c.obj
+[ 65%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/joystick/hidapi/SDL_hidapi_combined.c.obj
+[ 65%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/joystick/hidapi/SDL_hidapi_gamecube.c.obj
+[ 65%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/joystick/hidapi/SDL_hidapi_luna.c.obj
+[ 65%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/joystick/hidapi/SDL_hidapi_ps3.c.obj
+[ 65%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/joystick/hidapi/SDL_hidapi_ps4.c.obj
+[ 65%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/joystick/hidapi/SDL_hidapi_ps5.c.obj
+[ 65%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/joystick/hidapi/SDL_hidapi_rumble.c.obj
+[ 65%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/joystick/hidapi/SDL_hidapi_shield.c.obj
+[ 69%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/joystick/hidapi/SDL_hidapi_stadia.c.obj
+[ 69%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/joystick/hidapi/SDL_hidapi_steam.c.obj
+[ 69%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/joystick/hidapi/SDL_hidapi_steamdeck.c.obj
+[ 69%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/joystick/hidapi/SDL_hidapi_switch.c.obj
+[ 69%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/joystick/hidapi/SDL_hidapi_wii.c.obj
+[ 69%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/joystick/hidapi/SDL_hidapi_xbox360.c.obj
+[ 69%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/joystick/hidapi/SDL_hidapi_xbox360w.c.obj
+[ 69%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/joystick/hidapi/SDL_hidapi_xboxone.c.obj
+[ 69%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/joystick/windows/SDL_dinputjoystick.c.obj
+[ 69%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/joystick/hidapi/SDL_hidapijoystick.c.obj
+[ 69%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/joystick/windows/SDL_rawinputjoystick.c.obj
+[ 69%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/joystick/windows/SDL_windows_gaming_input.c.obj
+[ 69%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/joystick/windows/SDL_windowsjoystick.c.obj
+[ 69%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/joystick/windows/SDL_xinputjoystick.c.obj
+[ 69%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/haptic/windows/SDL_dinputhaptic.c.obj
+[ 69%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/haptic/windows/SDL_windowshaptic.c.obj
+[ 69%] Building C object _deps/judas_sdl-build/CMakeFiles/SDL2-static.dir/src/haptic/windows/SDL_xinputhaptic.c.obj
+[ 69%] Linking C static library libSDL2.a
+[ 69%] Built target SDL2-static
+[ 69%] Building CXX object CMakeFiles/judas_app_icon.dir/src/CookedTexture.cpp.obj
+[ 69%] Building CXX object CMakeFiles/judas_app_icon.dir/src/AppIcon.cpp.obj
+[ 69%] Building CXX object CMakeFiles/judas_app_icon.dir/src/TextureLoader.cpp.obj
+[ 69%] Linking CXX static library libjudas_app_icon.a
+[ 69%] Built target judas_app_icon
+[ 69%] Building CXX object CMakeFiles/judas_engine.dir/src/NetworkSession.cpp.obj
+[ 69%] Building CXX object CMakeFiles/judas_engine.dir/src/Wheel.cpp.obj
+[ 69%] Building CXX object CMakeFiles/judas_engine.dir/src/NetworkTransport.cpp.obj
+[ 69%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldWheels.cpp.obj
+[ 69%] Building CXX object CMakeFiles/judas_engine.dir/src/Powertrain.cpp.obj
+[ 69%] Building CXX object CMakeFiles/judas_engine.dir/src/PowertrainAuthoring.cpp.obj
+[ 69%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldPowertrains.cpp.obj
+[ 73%] Building CXX object CMakeFiles/judas_engine.dir/src/modding/ModContent.cpp.obj
+[ 73%] Building CXX object CMakeFiles/judas_engine.dir/src/modding/ContentStorage.cpp.obj
+[ 73%] Building CXX object CMakeFiles/judas_engine.dir/src/modding/ModStore.cpp.obj
+[ 73%] Building CXX object CMakeFiles/judas_engine.dir/src/modding/ModRuntime.cpp.obj
+[ 73%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldFracture.cpp.obj
+[ 73%] Building CXX object CMakeFiles/judas_engine.dir/src/Fracture.cpp.obj
+[ 73%] Building CXX object CMakeFiles/judas_engine.dir/src/DeformableAsset.cpp.obj
+[ 73%] Building CXX object CMakeFiles/judas_engine.dir/src/Deformable.cpp.obj
+[ 73%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldDeformables.cpp.obj
+[ 73%] Building CXX object CMakeFiles/judas_engine.dir/src/TextLayout.cpp.obj
+[ 73%] Building CXX object CMakeFiles/judas_engine.dir/src/TextEditing.cpp.obj
+[ 73%] Building CXX object CMakeFiles/judas_engine.dir/src/Localization.cpp.obj
+[ 73%] Building CXX object CMakeFiles/judas_engine.dir/src/Material.cpp.obj
+[ 73%] Building CXX object CMakeFiles/judas_engine.dir/src/Environment.cpp.obj
+[ 73%] Building CXX object CMakeFiles/judas_engine.dir/src/Tangents.cpp.obj
+[ 73%] Building CXX object CMakeFiles/judas_engine.dir/src/LiquidGeometry.cpp.obj
+[ 73%] Building CXX object CMakeFiles/judas_engine.dir/src/LiquidTypes.cpp.obj
+[ 73%] Building CXX object CMakeFiles/judas_engine.dir/src/LiquidSystem.cpp.obj
+[ 73%] Building CXX object CMakeFiles/judas_engine.dir/src/LiquidSurface.cpp.obj
+[ 73%] Building CXX object CMakeFiles/judas_engine.dir/src/VolumeTerrainGeometry.cpp.obj
+[ 73%] Building CXX object CMakeFiles/judas_engine.dir/src/RuntimeTerrain.cpp.obj
+[ 73%] Building CXX object CMakeFiles/judas_engine.dir/src/NavigationSystem.cpp.obj
+[ 73%] Building CXX object CMakeFiles/judas_engine.dir/src/NavigationTypes.cpp.obj
+[ 73%] Building CXX object CMakeFiles/judas_engine.dir/src/NavigationAsset.cpp.obj
+[ 73%] Building CXX object CMakeFiles/judas_engine.dir/src/FullBodyIK.cpp.obj
+[ 73%] Building CXX object CMakeFiles/judas_engine.dir/src/PhysicalAnimation.cpp.obj
+[ 78%] Building CXX object CMakeFiles/judas_engine.dir/src/PhysicalBalance.cpp.obj
+[ 78%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldPhysicalBalance.cpp.obj
+[ 78%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldAnimation.cpp.obj
+[ 78%] Building CXX object CMakeFiles/judas_engine.dir/src/PoseComposition.cpp.obj
+[ 78%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldRagdoll.cpp.obj
+[ 78%] Building CXX object CMakeFiles/judas_engine.dir/src/GltfLoader.cpp.obj
+[ 78%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldCharacter.cpp.obj
+[ 78%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldGravity.cpp.obj
+[ 78%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldStreaming.cpp.obj
+[ 78%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldRegions.cpp.obj
+[ 78%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldScripts.cpp.obj
+[ 78%] Building CXX object CMakeFiles/judas_engine.dir/src/RuntimeUI.cpp.obj
+[ 78%] Building CXX object CMakeFiles/judas_engine.dir/src/RuntimeUIControls.cpp.obj
+[ 78%] Building CXX object CMakeFiles/judas_engine.dir/src/ScriptSystem.cpp.obj
+[ 78%] Building CXX object CMakeFiles/judas_engine.dir/src/ScriptBindingsUI.cpp.obj
+[ 78%] Building CXX object CMakeFiles/judas_engine.dir/src/ScriptBindingsJoint.cpp.obj
+[ 78%] Building CXX object CMakeFiles/judas_engine.dir/src/Classification.cpp.obj
+[ 78%] Building CXX object CMakeFiles/judas_engine.dir/src/GamePackage.cpp.obj
+[ 78%] Building CXX object CMakeFiles/judas_engine.dir/src/ProjectExporter.cpp.obj
+[ 78%] Building CXX object CMakeFiles/judas_engine.dir/src/AssetDependencies.cpp.obj
+[ 78%] Building CXX object CMakeFiles/judas_engine.dir/src/AudioStream.cpp.obj
+[ 78%] Building CXX object CMakeFiles/judas_engine.dir/src/AudioEnvironment.cpp.obj
+[ 78%] Building CXX object CMakeFiles/judas_engine.dir/src/AudioData.cpp.obj
+[ 78%] Building CXX object CMakeFiles/judas_engine.dir/src/AudioSystem.cpp.obj
+[ 78%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldAudio.cpp.obj
+[ 82%] Building CXX object CMakeFiles/judas_engine.dir/src/Window.cpp.obj
+[ 82%] Building CXX object CMakeFiles/judas_engine.dir/src/LocalMultiplayer.cpp.obj
+[ 82%] Building CXX object CMakeFiles/judas_engine.dir/src/InputSystem.cpp.obj
+[ 82%] Building CXX object CMakeFiles/judas_engine.dir/src/Renderer.cpp.obj
+[ 82%] Building CXX object CMakeFiles/judas_engine.dir/src/RenderLightGrid.cpp.obj
+[ 82%] Building CXX object CMakeFiles/judas_engine.dir/src/SkeletalAnimation.cpp.obj
+[ 82%] Building CXX object CMakeFiles/judas_engine.dir/src/CharacterMotor.cpp.obj
+[ 82%] Building CXX object CMakeFiles/judas_engine.dir/src/PlayerController.cpp.obj
+[ 82%] Building CXX object CMakeFiles/judas_engine.dir/src/PlayerView.cpp.obj
+[ 82%] Building CXX object CMakeFiles/judas_engine.dir/src/StepClimb.cpp.obj
+[ 82%] Building CXX object CMakeFiles/judas_engine.dir/src/DynamicBody.cpp.obj
+[ 82%] Building CXX object CMakeFiles/judas_engine.dir/src/FlyingPrimitiveControl.cpp.obj
+[ 82%] Building CXX object CMakeFiles/judas_engine.dir/src/PilotAttachment.cpp.obj
+[ 82%] Building CXX object CMakeFiles/judas_engine.dir/src/PilotControl.cpp.obj
+[ 82%] Building CXX object CMakeFiles/judas_engine.dir/src/ReferenceFrame.cpp.obj
+[ 82%] Building CXX object CMakeFiles/judas_engine.dir/src/CollisionAuthoring.cpp.obj
+[ 82%] Building CXX object CMakeFiles/judas_engine.dir/src/CollisionSource.cpp.obj
+[ 82%] Building CXX object CMakeFiles/judas_engine.dir/src/ModelLoader.cpp.obj
+[ 82%] Building CXX object CMakeFiles/judas_engine.dir/src/ModelArchive.cpp.obj
+[ 82%] Building CXX object CMakeFiles/judas_engine.dir/src/AssetCook.cpp.obj
+[ 82%] Building CXX object CMakeFiles/judas_engine.dir/src/FontLoader.cpp.obj
+[ 82%] Building CXX object CMakeFiles/judas_engine.dir/src/UIWidgets.cpp.obj
+[ 82%] Building CXX object CMakeFiles/judas_engine.dir/src/PauseMenu.cpp.obj
+[ 82%] Building CXX object CMakeFiles/judas_engine.dir/src/HUD.cpp.obj
+[ 82%] Building CXX object CMakeFiles/judas_engine.dir/src/LightTransforms.cpp.obj
+[ 82%] Building CXX object CMakeFiles/judas_engine.dir/src/LightAttenuation.cpp.obj
+[ 86%] Building CXX object CMakeFiles/judas_engine.dir/src/ShadowTransforms.cpp.obj
+[ 86%] Building CXX object CMakeFiles/judas_engine.dir/src/HingeTransform.cpp.obj
+[ 86%] Building CXX object CMakeFiles/judas_engine.dir/src/InteractionSystem.cpp.obj
+[ 86%] Building CXX object CMakeFiles/judas_engine.dir/src/ObjectManipulation.cpp.obj
+[ 86%] Building CXX object CMakeFiles/judas_engine.dir/src/FluidWorld.cpp.obj
+[ 86%] Building CXX object CMakeFiles/judas_engine.dir/src/ProductionFluidCoupling.cpp.obj
+[ 86%] Building CXX object CMakeFiles/judas_engine.dir/src/FluidHydrostatics.cpp.obj
+[ 86%] Building CXX object CMakeFiles/judas_engine.dir/src/FluidSurface.cpp.obj
+[ 86%] Building CXX object CMakeFiles/judas_engine.dir/src/CombustionWorld.cpp.obj
+[ 86%] Building CXX object CMakeFiles/judas_engine.dir/src/FirePresentation.cpp.obj
+[ 86%] Building CXX object CMakeFiles/judas_engine.dir/src/TerrainDemo.cpp.obj
+[ 86%] Building CXX object CMakeFiles/judas_engine.dir/src/TerrainLibrary.cpp.obj
+[ 86%] Building CXX object CMakeFiles/judas_engine.dir/src/Door.cpp.obj
+[ 86%] Building CXX object CMakeFiles/judas_engine.dir/src/LightSwitch.cpp.obj
+[ 86%] Building CXX object CMakeFiles/judas_engine.dir/src/FaithfulGravity.cpp.obj
+[ 86%] Building CXX object CMakeFiles/judas_engine.dir/src/RadicalGravity.cpp.obj
+[ 86%] Building CXX object CMakeFiles/judas_engine.dir/src/SphericalVolume.cpp.obj
+[ 86%] Building CXX object CMakeFiles/judas_engine.dir/src/BoxVolume.cpp.obj
+[ 86%] Building CXX object CMakeFiles/judas_engine.dir/src/GravityContextMap.cpp.obj
+[ 86%] Building CXX object CMakeFiles/judas_engine.dir/src/CelestialGravity.cpp.obj
+[ 86%] Building CXX object CMakeFiles/judas_engine.dir/src/AtmosphereField.cpp.obj
+[ 86%] Building CXX object CMakeFiles/judas_engine.dir/src/AerodynamicDrag.cpp.obj
+[ 86%] Building CXX object CMakeFiles/judas_engine.dir/src/VisualParticles.cpp.obj
+[ 86%] Building CXX object CMakeFiles/judas_engine.dir/src/Prefab.cpp.obj
+[ 86%] Building CXX object CMakeFiles/judas_engine.dir/src/Scene.cpp.obj
+[ 86%] Building CXX object CMakeFiles/judas_engine.dir/src/Ragdoll.cpp.obj
+[ 91%] Building CXX object CMakeFiles/judas_engine.dir/src/SceneSerialization.cpp.obj
+[ 91%] Building CXX object CMakeFiles/judas_engine.dir/src/NamedAuthoring.cpp.obj
+[ 91%] Building CXX object CMakeFiles/judas_engine.dir/src/SceneFingerprint.cpp.obj
+[ 91%] Building CXX object CMakeFiles/judas_engine.dir/src/Project.cpp.obj
+[ 91%] Building CXX object CMakeFiles/judas_engine.dir/src/AssetDatabase.cpp.obj
+[ 91%] Building CXX object CMakeFiles/judas_engine.dir/src/AsyncFile.cpp.obj
+[ 91%] Building CXX object CMakeFiles/judas_engine.dir/src/ResourceManager.cpp.obj
+[ 91%] Building CXX object CMakeFiles/judas_engine.dir/src/EnginePaths.cpp.obj
+[ 91%] Building CXX object CMakeFiles/judas_engine.dir/src/DebugDraw.cpp.obj
+[ 91%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldDebugView.cpp.obj
+[ 91%] Building CXX object CMakeFiles/judas_engine.dir/src/SceneSession.cpp.obj
+[ 91%] Building CXX object CMakeFiles/judas_engine.dir/src/PlanetTerrain.cpp.obj
+[ 91%] Building CXX object CMakeFiles/judas_engine.dir/src/PlanetTiles.cpp.obj
+[ 91%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldPlanets.cpp.obj
+[ 91%] Building CXX object CMakeFiles/judas_engine.dir/src/Weather.cpp.obj
+[ 91%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldWeather.cpp.obj
+[ 91%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldOrigin.cpp.obj
+[ 91%] Building CXX object CMakeFiles/judas_engine.dir/src/RuntimeWorld.cpp.obj
+[ 91%] Building CXX object CMakeFiles/judas_engine.dir/src/GameSession.cpp.obj
+[ 91%] Building CXX object CMakeFiles/judas_engine.dir/src/Simulation.cpp.obj
+[ 91%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldPresentation.cpp.obj
+[ 91%] Building CXX object CMakeFiles/judas_engine.dir/src/GameplayHud.cpp.obj
+[ 91%] Building CXX object CMakeFiles/judas_engine.dir/src/EngineHost.cpp.obj
+[ 91%] Building CXX object CMakeFiles/judas_engine.dir/src/InteractivePlay.cpp.obj
+[ 91%] Building CXX object CMakeFiles/judas_engine.dir/src/ScreenshotWriter.cpp.obj
+[ 95%] Building CXX object CMakeFiles/judas_engine.dir/src/FidelityPolicy.cpp.obj
+[ 95%] Building CXX object CMakeFiles/judas_engine.dir/src/CoarseSimulation.cpp.obj
+[ 95%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldState.cpp.obj
+[ 95%] Building CXX object CMakeFiles/judas_engine.dir/src/SaveStorage.cpp.obj
+[ 95%] Building CXX object CMakeFiles/judas_engine.dir/src/SaveStorageWindows.cpp.obj
+[ 95%] Building CXX object CMakeFiles/judas_engine.dir/src/PlatformServices.cpp.obj
+/home/conner/Documents/GitHub/Project-Judas/src/SaveStorageWindows.cpp: In member function ‘bool SaveStorage::Publish(const std::string&, const std::string&, std::string&)’:
+/home/conner/Documents/GitHub/Project-Judas/src/SaveStorageWindows.cpp:93:3: warning: this ‘if’ clause does not guard... [-Wmisleading-indentation]
+   93 |   if(boundary)boundary("temporary");size_t at=0;
+      |   ^~
+/home/conner/Documents/GitHub/Project-Judas/src/SaveStorageWindows.cpp:93:37: note: ...this statement, but the latter is misleadingly indented as if it were guarded by the ‘if’
+   93 |   if(boundary)boundary("temporary");size_t at=0;
+      |                                     ^~~~~~
+/home/conner/Documents/GitHub/Project-Judas/src/SaveStorageWindows.cpp:95:3: warning: this ‘if’ clause does not guard... [-Wmisleading-indentation]
+   95 |   if(!FlushFileBuffers(handle.value))Fail("sync save");if(boundary)boundary("file-synced");
+      |   ^~
+/home/conner/Documents/GitHub/Project-Judas/src/SaveStorageWindows.cpp:95:56: note: ...this statement, but the latter is misleadingly indented as if it were guarded by the ‘if’
+   95 |   if(!FlushFileBuffers(handle.value))Fail("sync save");if(boundary)boundary("file-synced");
+      |                                                        ^~
+/home/conner/Documents/GitHub/Project-Judas/src/SaveStorageWindows.cpp:101:3: warning: this ‘if’ clause does not guard... [-Wmisleading-indentation]
+  101 |   if(boundary)boundary("directory-synced");return true;
+      |   ^~
+/home/conner/Documents/GitHub/Project-Judas/src/SaveStorageWindows.cpp:101:44: note: ...this statement, but the latter is misleadingly indented as if it were guarded by the ‘if’
+  101 |   if(boundary)boundary("directory-synced");return true;
+      |                                            ^~~~~~
+/home/conner/Documents/GitHub/Project-Judas/src/SaveStorageWindows.cpp: In member function ‘bool SaveStorage::Write(const std::string&, const GameSnapshot&, std::string&, bool)’:
+/home/conner/Documents/GitHub/Project-Judas/src/SaveStorageWindows.cpp:114:3: warning: this ‘if’ clause does not guard... [-Wmisleading-indentation]
+  114 |   if(boundary)boundary("previous-committed");return Publish(id+".save",bytes,error);
+      |   ^~
+/home/conner/Documents/GitHub/Project-Judas/src/SaveStorageWindows.cpp:114:46: note: ...this statement, but the latter is misleadingly indented as if it were guarded by the ‘if’
+  114 |   if(boundary)boundary("previous-committed");return Publish(id+".save",bytes,error);
+      |                                              ^~~~~~
+/home/conner/Documents/GitHub/Project-Judas/src/SaveStorageWindows.cpp: In member function ‘bool SaveStorage::Delete(const std::string&, std::string&)’:
+/home/conner/Documents/GitHub/Project-Judas/src/SaveStorageWindows.cpp:127:3: warning: this ‘for’ clause does not guard... [-Wmisleading-indentation]
+  127 |   for(auto ext:{".save",".previous"})if(!DeleteFileW((root/(id+ext)).c_str())&&GetLastError()!=ERROR_FILE_NOT_FOUND)Fail("delete slot");return true;
+      |   ^~~
+/home/conner/Documents/GitHub/Project-Judas/src/SaveStorageWindows.cpp:127:137: note: ...this statement, but the latter is misleadingly indented as if it were guarded by the ‘for’
+  127 |   for(auto ext:{".save",".previous"})if(!DeleteFileW((root/(id+ext)).c_str())&&GetLastError()!=ERROR_FILE_NOT_FOUND)Fail("delete slot");return true;
+      |                                                                                                                                         ^~~~~~
+[ 95%] Building CXX object CMakeFiles/judas_engine.dir/src/SaveEvolution.cpp.obj
+[ 95%] Building CXX object CMakeFiles/judas_engine.dir/src/SaveService.cpp.obj
+[ 95%] Building CXX object CMakeFiles/judas_engine.dir/src/MotorPersistence.cpp.obj
+[ 95%] Building CXX object CMakeFiles/judas_engine.dir/src/LiquidPersistence.cpp.obj
+[ 95%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldPersistence.cpp.obj
+[ 95%] Building CXX object CMakeFiles/judas_engine.dir/src/CollisionAsset.cpp.obj
+[ 95%] Building CXX object CMakeFiles/judas_engine.dir/src/CollisionGeometry.cpp.obj
+[ 95%] Building CXX object CMakeFiles/judas_engine.dir/third_party/quickhull/QuickHull.cpp.obj
+[ 95%] Building CXX object CMakeFiles/judas_engine.dir/src/JointSolver.cpp.obj
+[ 95%] Building CXX object CMakeFiles/judas_engine.dir/src/PhysicsCastGeometry.cpp.obj
+[ 95%] Building CXX object CMakeFiles/judas_engine.dir/src/ImpactSolver.cpp.obj
+[ 95%] Building CXX object CMakeFiles/judas_engine.dir/src/RigidBody.cpp.obj
+[ 95%] Building CXX object CMakeFiles/judas_engine.dir/src/RigidBodyGravity.cpp.obj
+[ 95%] Building CXX object CMakeFiles/judas_engine.dir/src/Contacts.cpp.obj
+[ 95%] Building CXX object CMakeFiles/judas_engine.dir/src/ContactSolver.cpp.obj
+[ 95%] Building CXX object CMakeFiles/judas_engine.dir/src/RadialTerrain.cpp.obj
+[ 95%] Building CXX object CMakeFiles/judas_engine.dir/src/Broadphase.cpp.obj
+[ 95%] Building CXX object CMakeFiles/judas_engine.dir/src/Narrowphase.cpp.obj
+[ 95%] Building CXX object CMakeFiles/judas_engine.dir/src/PhysicsWorld.cpp.obj
+[ 95%] Building CXX object CMakeFiles/judas_engine.dir/src/physics/WorldBodies.cpp.obj
+[100%] Building CXX object CMakeFiles/judas_engine.dir/src/physics/WorldBounds.cpp.obj
+[100%] Building CXX object CMakeFiles/judas_engine.dir/src/physics/WorldCCDSearch.cpp.obj
+[100%] Building CXX object CMakeFiles/judas_engine.dir/src/physics/WorldContacts.cpp.obj
+[100%] Building CXX object CMakeFiles/judas_engine.dir/src/physics/WorldImpactEvents.cpp.obj
+[100%] Building CXX object CMakeFiles/judas_engine.dir/src/physics/WorldJoints.cpp.obj
+[100%] Building CXX object CMakeFiles/judas_engine.dir/src/physics/WorldParticles.cpp.obj
+[100%] Building CXX object CMakeFiles/judas_engine.dir/src/physics/WorldPersistence.cpp.obj
+[100%] Building CXX object CMakeFiles/judas_engine.dir/src/physics/WorldQueries.cpp.obj
+[100%] Building CXX object CMakeFiles/judas_engine.dir/src/physics/WorldSleep.cpp.obj
+[100%] Linking CXX static library libjudas_engine.a
+[100%] Built target judas_engine
+[100%] Building CXX object CMakeFiles/judas.dir/src/Application.cpp.obj
+[100%] Building CXX object CMakeFiles/judas.dir/src/main.cpp.obj
+[100%] Building CXX object CMakeFiles/judas.dir/src/RuntimeOptions.cpp.obj
+[100%] Building CXX object CMakeFiles/judas.dir/src/RuntimeDiagnostics.cpp.obj
+[100%] Building CXX object CMakeFiles/judas.dir/src/TestHarness.cpp.obj
+[100%] Building RC object CMakeFiles/judas.dir/generated/judas-cross-Release.rc.res
+[100%] Linking CXX executable judas.exe
+[100%] Built target judas
+-- GLOB mismatch!
+The following files were added:
+  +/home/conner/Documents/GitHub/Project-Judas/scripts/__pycache__/check_windows_cross.cpython-314.pyc
+  +/home/conner/Documents/GitHub/Project-Judas/scripts/check_windows_cross.py
+-- GLOB mismatch!
+The following files were added:
+  +/home/conner/Documents/GitHub/Project-Judas/tests/WindowsCrossAudioTests.cpp
+CMake Deprecation Warning at .cache/windows-cross/build/_deps/judas_sdl-src/CMakeLists.txt:3300 (cmake_minimum_required):
+  Compatibility with CMake < 3.10 will be removed from a future version of
+  CMake.
+
+  Update the VERSION argument <min> value.  Or, use the <min>...<max> syntax
+  to tell CMake that the project requires at least <min> but has been updated
+  to work with policies introduced by <max> or earlier.
+
+
+-- 
+-- SDL2 was configured with the following options:
+-- 
+-- Platform: Windows
+-- 64-bit:   TRUE
+-- Compiler: /home/conner/Documents/GitHub/Project-Judas/.cache/windows-cross/toolchain/root/usr/bin/x86_64-w64-mingw32-gcc-posix
+-- Revision: SDL-release-2.32.10-0-g5d2495703
+-- 
+-- Subsystems:
+--   Atomic:	ON
+--   Audio:	ON
+--   Video:	ON
+--   Render:	ON
+--   Events:	ON
+--   Joystick:	ON
+--   Haptic:	ON
+--   Hidapi:	ON
+--   Power:	ON
+--   Threads:	ON
+--   Timers:	ON
+--   File:	ON
+--   Loadso:	ON
+--   CPUinfo:	ON
+--   Filesystem:	ON
+--   Sensor:	ON
+--   Locale:	ON
+--   Misc:	ON
+-- 
+-- Options:
+--   SDL2_DISABLE_INSTALL        (Wanted: ON): OFF
+--   SDL2_DISABLE_SDL2MAIN       (Wanted: OFF): OFF
+--   SDL2_DISABLE_UNINSTALL      (Wanted: OFF): OFF
+--   SDL_3DNOW                   (Wanted: OFF): OFF
+--   SDL_ALSA                    (Wanted: OFF): OFF
+--   SDL_ALSA_SHARED             (Wanted: OFF): OFF
+--   SDL_ALTIVEC                 (Wanted: ON): OFF
+--   SDL_ARMNEON                 (Wanted: OFF): OFF
+--   SDL_ARMSIMD                 (Wanted: OFF): OFF
+--   SDL_ARTS                    (Wanted: OFF): OFF
+--   SDL_ARTS_SHARED             (Wanted: OFF): OFF
+--   SDL_ASAN                    (Wanted: OFF): OFF
+--   SDL_ASSEMBLY                (Wanted: ON): ON
+--   SDL_ASSERTIONS              (Wanted: auto): auto
+--   SDL_BACKGROUNDING_SIGNAL    (Wanted: OFF): OFF
+--   SDL_CCACHE                  (Wanted: ON): OFF
+--   SDL_CLOCK_GETTIME           (Wanted: OFF): OFF
+--   SDL_COCOA                   (Wanted: OFF): OFF
+--   SDL_DBUS                    (Wanted: OFF): OFF
+--   SDL_DIRECTFB                (Wanted: OFF): OFF
+--   SDL_DIRECTFB_SHARED         (Wanted: OFF): OFF
+--   SDL_DIRECTX                 (Wanted: ON): ON
+--   SDL_DISKAUDIO               (Wanted: ON): ON
+--   SDL_DUMMYAUDIO              (Wanted: ON): ON
+--   SDL_DUMMYVIDEO              (Wanted: ON): ON
+--   SDL_ESD                     (Wanted: OFF): OFF
+--   SDL_ESD_SHARED              (Wanted: OFF): OFF
+--   SDL_FOREGROUNDING_SIGNAL    (Wanted: OFF): OFF
+--   SDL_FUSIONSOUND             (Wanted: OFF): OFF
+--   SDL_FUSIONSOUND_SHARED      (Wanted: OFF): OFF
+--   SDL_GCC_ATOMICS             (Wanted: ON): ON
+--   SDL_HIDAPI                  (Wanted: ON): ON
+--   SDL_HIDAPI_JOYSTICK         (Wanted: ON): ON
+--   SDL_HIDAPI_LIBUSB           (Wanted: OFF): OFF
+--   SDL_IBUS                    (Wanted: OFF): OFF
+--   SDL_INSTALL_TESTS           (Wanted: OFF): OFF
+--   SDL_JACK                    (Wanted: OFF): OFF
+--   SDL_JACK_SHARED             (Wanted: OFF): OFF
+--   SDL_KMSDRM                  (Wanted: OFF): OFF
+--   SDL_KMSDRM_SHARED           (Wanted: OFF): OFF
+--   SDL_LASX                    (Wanted: OFF): OFF
+--   SDL_LIBC                    (Wanted: ON): ON
+--   SDL_LIBICONV                (Wanted: OFF): OFF
+--   SDL_LIBSAMPLERATE           (Wanted: OFF): OFF
+--   SDL_LIBSAMPLERATE_SHARED    (Wanted: OFF): OFF
+--   SDL_LIBUDEV                 (Wanted: ON): OFF
+--   SDL_LSX                     (Wanted: OFF): OFF
+--   SDL_METAL                   (Wanted: OFF): OFF
+--   SDL_MMX                     (Wanted: ON): ON
+--   SDL_NAS                     (Wanted: OFF): OFF
+--   SDL_NAS_SHARED              (Wanted: OFF): OFF
+--   SDL_OFFSCREEN               (Wanted: ON): ON
+--   SDL_OPENGL                  (Wanted: ON): ON
+--   SDL_OPENGLES                (Wanted: ON): ON
+--   SDL_OSS                     (Wanted: OFF): OFF
+--   SDL_PIPEWIRE                (Wanted: OFF): OFF
+--   SDL_PIPEWIRE_SHARED         (Wanted: OFF): OFF
+--   SDL_PTHREADS                (Wanted: OFF): OFF
+--   SDL_PTHREADS_SEM            (Wanted: OFF): OFF
+--   SDL_PULSEAUDIO              (Wanted: OFF): OFF
+--   SDL_PULSEAUDIO_SHARED       (Wanted: OFF): OFF
+--   SDL_RENDER_D3D              (Wanted: ON): ON
+--   SDL_RENDER_METAL            (Wanted: OFF): OFF
+--   SDL_RPATH                   (Wanted: OFF): OFF
+--   SDL_RPI                     (Wanted: OFF): OFF
+--   SDL_SNDIO                   (Wanted: OFF): OFF
+--   SDL_SNDIO_SHARED            (Wanted: OFF): OFF
+--   SDL_SSE                     (Wanted: ON): ON
+--   SDL_SSE2                    (Wanted: ON): ON
+--   SDL_SSE3                    (Wanted: ON): ON
+--   SDL_SSEMATH                 (Wanted: ON): ON
+--   SDL_STATIC_PIC              (Wanted: OFF): OFF
+--   SDL_SYSTEM_ICONV            (Wanted: OFF): OFF
+--   SDL_TESTS                   (Wanted: OFF): OFF
+--   SDL_VENDOR_INFO             (Wanted: ): OFF
+--   SDL_VIRTUAL_JOYSTICK        (Wanted: ON): ON
+--   SDL_VIVANTE                 (Wanted: OFF): OFF
+--   SDL_VULKAN                  (Wanted: ON): ON
+--   SDL_WASAPI                  (Wanted: ON): ON
+--   SDL_WAYLAND                 (Wanted: OFF): OFF
+--   SDL_WAYLAND_LIBDECOR        (Wanted: OFF): OFF
+--   SDL_WAYLAND_LIBDECOR_SHARED (Wanted: OFF): OFF
+--   SDL_WAYLAND_QT_TOUCH        (Wanted: OFF): OFF
+--   SDL_WAYLAND_SHARED          (Wanted: OFF): OFF
+--   SDL_X11                     (Wanted: OFF): OFF
+--   SDL_X11_SHARED              (Wanted: OFF): OFF
+--   SDL_X11_XCURSOR             (Wanted: OFF): OFF
+--   SDL_X11_XDBE                (Wanted: OFF): OFF
+--   SDL_X11_XFIXES              (Wanted: OFF): OFF
+--   SDL_X11_XINPUT              (Wanted: OFF): OFF
+--   SDL_X11_XRANDR              (Wanted: OFF): OFF
+--   SDL_X11_XSCRNSAVER          (Wanted: OFF): OFF
+--   SDL_X11_XSHAPE              (Wanted: OFF): OFF
+--   SDL_XINPUT                  (Wanted: ON): ON
+-- 
+--  CFLAGS:         -idirafter "/home/conner/Documents/GitHub/Project-Judas/.cache/windows-cross/build/_deps/judas_sdl-src/src/video/khronos"
+--  EXTRA_CFLAGS:   -Wall -Wundef -fno-strict-aliasing -Wdeclaration-after-statement -fvisibility=hidden -Wshadow -Wno-unused-local-typedefs -mmmx -msse -msse2 -msse3
+--  EXTRA_LDFLAGS:  -Wl,--no-undefined
+--  EXTRA_LIBS:    m;kernel32;user32;gdi32;winmm;imm32;ole32;oleaut32;version;uuid;advapi32;setupapi;shell32;dinput8
+-- 
+--  Build Shared Library: OFF
+--  Build Static Library: ON
+--  Build Static Library with Position Independent Code: OFF
+-- 
+CMake Deprecation Warning at .cache/windows-cross/build/_deps/judas_glm-src/CMakeLists.txt:1 (cmake_minimum_required):
+  Compatibility with CMake < 3.10 will be removed from a future version of
+  CMake.
+
+  Update the VERSION argument <min> value.  Or, use the <min>...<max> syntax
+  to tell CMake that the project requires at least <min> but has been updated
+  to work with policies introduced by <max> or earlier.
+
+
+CMake Deprecation Warning at .cache/windows-cross/build/_deps/judas_glm-src/CMakeLists.txt:2 (cmake_policy):
+  Compatibility with CMake < 3.10 will be removed from a future version of
+  CMake.
+
+  Update the VERSION argument <min> value.  Or, use the <min>...<max> syntax
+  to tell CMake that the project requires at least <min> but has been updated
+  to work with policies introduced by <max> or earlier.
+
+
+-- GLM: Version 1.0.1
+-- GLM: Build with C++ features auto detection
+WARNHarfBuzz has a Meson port and tries to migrate all the other build systems to it, please consider using it as we might remove our cmake port soon.
+Building introspection files on Windows requires BUILD_SHARED_LIBS to be enabled.
+CMake Deprecation Warning at .cache/windows-cross/build/_deps/judas_freetype-src/CMakeLists.txt:113 (cmake_minimum_required):
+  Compatibility with CMake < 3.10 will be removed from a future version of
+  CMake.
+
+  Update the VERSION argument <min> value.  Or, use the <min>...<max> syntax
+  to tell CMake that the project requires at least <min> but has been updated
+  to work with policies introduced by <max> or earlier.
+
+
+-- Configuring done (2.5s)
+-- Generating done (2.3s)
+-- Build files have been written to: /home/conner/Documents/GitHub/Project-Judas/.cache/windows-cross/build
+[  0%] Built target judas_glad
+[  0%] Built target judas_profiler
+[  0%] Built target judas_navigation_backend
+[  0%] Built target judas_jobs
+[  0%] Built target judas_audio_backend
+[  0%] Building CXX object CMakeFiles/judas_build_identity.dir/src/BuildIdentity.cpp.obj
+[  8%] Built target freetype
+[ 21%] Built target sdl_headers_copy
+[ 26%] Built target judas_meshoptimizer
+[ 26%] Built target judas_icu_build
+[ 26%] Built target judas_quickjs
+[ 26%] Built target harfbuzz
+[ 26%] Built target judas_materials
+[ 30%] Built target judas_navigation_cook
+[ 30%] Built target judas_windows_runtime
+[ 60%] Built target SDL2-static
+[ 60%] Built target judas_app_icon
+[ 65%] Linking CXX static library libjudas_build_identity.a
+[ 65%] Built target judas_build_identity
+[ 65%] Building CXX object CMakeFiles/judas_engine.dir/src/ProjectExporter.cpp.obj
+[ 65%] Linking CXX static library libjudas_engine.a
+[ 95%] Built target judas_engine
+[ 95%] Building RC object CMakeFiles/judas_export.dir/generated/judas-cross-Release.rc.res
+[ 95%] Building CXX object CMakeFiles/judas_export.dir/src/ExportMain.cpp.obj
+[ 95%] Linking CXX executable judas_export.exe
+[ 95%] Built target judas_export
+[  0%] Built target judas_glad
+[  0%] Built target judas_navigation_backend
+[  0%] Built target judas_profiler
+[  9%] Built target freetype
+[  9%] Built target judas_jobs
+[  9%] Built target judas_audio_backend
+[ 22%] Built target sdl_headers_copy
+[ 27%] Built target judas_build_identity
+[ 27%] Built target judas_icu_build
+[ 31%] Built target judas_meshoptimizer
+[ 31%] Built target judas_quickjs
+[ 31%] Built target harfbuzz
+[ 36%] Built target judas_navigation_cook
+[ 36%] Built target judas_materials
+[ 36%] Built target judas_windows_runtime
+[ 68%] Built target SDL2-static
+[ 68%] Built target judas_app_icon
+[100%] Built target judas_engine
+[100%] Building CXX object CMakeFiles/judas_script_check.dir/tools/ScriptCheck.cpp.obj
+[100%] Building RC object CMakeFiles/judas_script_check.dir/generated/judas-cross-Release.rc.res
+[100%] Linking CXX executable judas_script_check.exe
+[100%] Built target judas_script_check
+[  0%] Built target judas_profiler
+[100%] Built target judas_build_identity
+[100%] Built target judas_windows_runtime
+[100%] Building RC object CMakeFiles/judas_build_identity_tests.dir/generated/judas-cross-Release.rc.res
+[100%] Building CXX object CMakeFiles/judas_build_identity_tests.dir/tests/BuildIdentityTests.cpp.obj
+[100%] Linking CXX executable judas_build_identity_tests.exe
+[100%] Built target judas_build_identity_tests

@@ -1,0 +1,593 @@
+﻿{
+    "mesaAddedOnlyToCopies":  true,
+    "systemImports":  [
+                          {
+                              "name":  "advapi32.dll",
+                              "path":  "C:\\Windows\\System32\\advapi32.dll"
+                          },
+                          {
+                              "name":  "gdi32.dll",
+                              "path":  "C:\\Windows\\System32\\gdi32.dll"
+                          },
+                          {
+                              "name":  "imm32.dll",
+                              "path":  "C:\\Windows\\System32\\imm32.dll"
+                          },
+                          {
+                              "name":  "kernel32.dll",
+                              "path":  "C:\\Windows\\System32\\kernel32.dll"
+                          },
+                          {
+                              "name":  "msvcrt.dll",
+                              "path":  "C:\\Windows\\System32\\msvcrt.dll"
+                          },
+                          {
+                              "name":  "ole32.dll",
+                              "path":  "C:\\Windows\\System32\\ole32.dll"
+                          },
+                          {
+                              "name":  "oleaut32.dll",
+                              "path":  "C:\\Windows\\System32\\oleaut32.dll"
+                          },
+                          {
+                              "name":  "setupapi.dll",
+                              "path":  "C:\\Windows\\System32\\setupapi.dll"
+                          },
+                          {
+                              "name":  "shell32.dll",
+                              "path":  "C:\\Windows\\System32\\shell32.dll"
+                          },
+                          {
+                              "name":  "user32.dll",
+                              "path":  "C:\\Windows\\System32\\user32.dll"
+                          },
+                          {
+                              "name":  "version.dll",
+                              "path":  "C:\\Windows\\System32\\version.dll"
+                          },
+                          {
+                              "name":  "winmm.dll",
+                              "path":  "C:\\Windows\\System32\\winmm.dll"
+                          },
+                          {
+                              "name":  "ws2_32.dll",
+                              "path":  "C:\\Windows\\System32\\ws2_32.dll"
+                          }
+                      ],
+    "transferred":  [
+                        {
+                            "sha256":  "e88059a8062f05c5fedfbaa289e0db6c126c57630d3da6ced3b53eb7ff580c62",
+                            "file":  "judas.exe"
+                        },
+                        {
+                            "sha256":  "7bd9c09e6401ee119a3f8e287f995dbc04465c18f4185d3b073b6a352305cf7b",
+                            "file":  "judas_build_identity_tests.exe"
+                        },
+                        {
+                            "sha256":  "b9e54ffb863ff37c231ddaff9e9b7c10d3adf20f6e806b1839355cb5ba97d7e5",
+                            "file":  "judas_windows_readiness_tests.exe"
+                        },
+                        {
+                            "sha256":  "9472d020af4c5443b11c4ba7c3c03d8b0272903b8f683f7dda1b0b26a0c85507",
+                            "file":  "judas_windows_cross_audio_tests.exe"
+                        },
+                        {
+                            "sha256":  "88233092ae6dd61858450b6ec46f81b268895a8464ba9d87ef695a510841a7ae",
+                            "file":  "judas_character_motor_tests.exe"
+                        },
+                        {
+                            "sha256":  "70ae647166fd65906bcd3a5a35d58b78c7843c3dde195050db059bdd37b35bb1",
+                            "file":  "judas_text_localization_tests.exe"
+                        },
+                        {
+                            "sha256":  "8b97152feb5264973ea513fafec81168ede278fa42bec7bc4fc0b79e09f90d46",
+                            "file":  "judas_hearthworld_application_tests.exe"
+                        },
+                        {
+                            "sha256":  "b3f0cd8481b0cace10ca5258872d08871586943900528f9c2d07fcef3088d9dd",
+                            "file":  "judas_script_check.exe"
+                        },
+                        {
+                            "sha256":  "b4baf831fbe5ec5506754f55a87165313cb565906d97adb302fecb9f2ca25d97",
+                            "file":  "qualification.zip"
+                        }
+                    ],
+    "package":  [
+                    {
+                        "sha256":  "6bc40a8fe23983beb89659f0bed999426d2ec3c38c95efa47e09ae4043d38404",
+                        "file":  "Assets/Volumes/backyard/volume.judascollision"
+                    },
+                    {
+                        "sha256":  "4996ff28c29461b9986dcc3168ff6d9be80e4028f5b4727199e490b272c8a064",
+                        "file":  "Assets/Volumes/backyard/volume.judascollision.judasmeta"
+                    },
+                    {
+                        "sha256":  "1db7cacf673ba65eccfbc63969bfc3f6b502b148276cbb13c35b2adbc4a7891a",
+                        "file":  "Assets/Volumes/backyard/volume.judasmodel"
+                    },
+                    {
+                        "sha256":  "19bc137da201153c796da1946d9ff8f47d318ee3bad31704a7a23dc2ad0254b1",
+                        "file":  "Assets/Volumes/backyard/volume.judasmodel.judasmeta"
+                    },
+                    {
+                        "sha256":  "d62feee12e0c823cea325e66b87f1480ac189fd346224645b1cb378a9244d2ab",
+                        "file":  "Assets/audio/build.wav"
+                    },
+                    {
+                        "sha256":  "b0008febe78b37d310e42cb53b2c5d2070f4b0ed810fb0fff34db02633b18d73",
+                        "file":  "Assets/audio/build.wav.judasmeta"
+                    },
+                    {
+                        "sha256":  "987aaa991145a702e5d61590f1053ee010634f76b74b8d8e60016956ff81ae89",
+                        "file":  "Assets/audio/chop.wav"
+                    },
+                    {
+                        "sha256":  "c42aef0bfcb8070501bb6c3a989f06f0640126a5aac0418c45517bcd37320a45",
+                        "file":  "Assets/audio/chop.wav.judasmeta"
+                    },
+                    {
+                        "sha256":  "9c7ccebb704e3a4c043dd1357c3e56eac690ff2860bb22769b63aa3520e3d997",
+                        "file":  "Assets/audio/dig.wav"
+                    },
+                    {
+                        "sha256":  "3fad0d3ae7d3dfd583179b47d2faa6db898772bab6725ade63221a5d8b175b4f",
+                        "file":  "Assets/audio/dig.wav.judasmeta"
+                    },
+                    {
+                        "sha256":  "47f13d24d27da315b64598bfd9644b4e74144c45e3553139c72fbd2c6cbd6951",
+                        "file":  "Assets/audio/grab.wav"
+                    },
+                    {
+                        "sha256":  "4101f00ea9f7999fe399332604851ca3b7d708e24d59e89dcdcca94a6814852e",
+                        "file":  "Assets/audio/grab.wav.judasmeta"
+                    },
+                    {
+                        "sha256":  "4c123a813666e6f0c8463ec063b7a894c10c0e3e3eb1115dad757ee450c1c814",
+                        "file":  "Assets/audio/launch.wav"
+                    },
+                    {
+                        "sha256":  "350bbca3f6caf970aa832bfd0f4b2343d8ff940ba5870bb80725430da42aa2da",
+                        "file":  "Assets/audio/launch.wav.judasmeta"
+                    },
+                    {
+                        "sha256":  "e2fcc37f0da63950365003e9299783b61dc0a8c7c337cd30b3d40c2b74ed19fe",
+                        "file":  "Assets/audio/pickup.wav"
+                    },
+                    {
+                        "sha256":  "a888981cfdfd6627804ae80789c63c85b51172052ae6ea5ebe6b7e0a81d46c9e",
+                        "file":  "Assets/audio/pickup.wav.judasmeta"
+                    },
+                    {
+                        "sha256":  "a3a97aee7cca2fd2e21df6a61d3bfdbe5ec87c965b5bfa00030a8a38bd3c0a20",
+                        "file":  "Assets/audio/stone.wav"
+                    },
+                    {
+                        "sha256":  "a6d88d05605ac87aceff255f9a21f8c99e44f9faeef94b7197fffa40ccae937c",
+                        "file":  "Assets/audio/stone.wav.judasmeta"
+                    },
+                    {
+                        "sha256":  "1751c87d1437cb2ae5c0f85f2fb19193cab2ce033805f12f3119343b56151126",
+                        "file":  "Assets/collision/planet.judascollision"
+                    },
+                    {
+                        "sha256":  "5ab6d1fe1028b0f4e09a01f896130ca06606d1b4f0c8feb711080fdc9f8141b4",
+                        "file":  "Assets/collision/planet.judascollision.judasmeta"
+                    },
+                    {
+                        "sha256":  "b4c632e3cdf9acc7f28758fb5a323c8524d7fc6660d46904d9b6cbe2809c419c",
+                        "file":  "Assets/fonts/DejaVuSans.ttf"
+                    },
+                    {
+                        "sha256":  "d0acf29b3728270743e84d953edf66666e7874f05721cdc4be9540450758d191",
+                        "file":  "Assets/fonts/DejaVuSans.ttf.judasmeta"
+                    },
+                    {
+                        "sha256":  "63d3ba759d12804c5b31a9d5940d855c1820d1f5999e6b0872eb1c7ff045fbc9",
+                        "file":  "Assets/fonts/LICENSE.txt"
+                    },
+                    {
+                        "sha256":  "1964dba73c3da7d0c9a0e024960a88dc38a2818001af212144b730f0e361b222",
+                        "file":  "Assets/models/axe.glb"
+                    },
+                    {
+                        "sha256":  "3a0c6d1ca848409d8489fcc8831aa16e6ab4465a108388dbea59075447d9cea3",
+                        "file":  "Assets/models/axe.glb.judasmeta"
+                    },
+                    {
+                        "sha256":  "0760725b49ef15b8dfaa6af4ec1a10602e178f725f26cd86f0918a5af816d5c8",
+                        "file":  "Assets/models/barrel.glb"
+                    },
+                    {
+                        "sha256":  "e12ff0fa54768aaa5dd98bf27d603af152798598efb3dca42ed244a783a794b0",
+                        "file":  "Assets/models/barrel.glb.judasmeta"
+                    },
+                    {
+                        "sha256":  "2f475c54c697a28e3f2542e1677bb4523cfdb86eec8ccf671a10c26efc6050ef",
+                        "file":  "Assets/models/bed.glb"
+                    },
+                    {
+                        "sha256":  "2dc05a90ae9118bbe81f0ba6ffb33ab2eca34d1f6fd2f11232f01b3723440251",
+                        "file":  "Assets/models/bed.glb.judasmeta"
+                    },
+                    {
+                        "sha256":  "5b8892253e9cbc57c6a2b430d9070fbb76aaa2c2b522fd3f6b8e04528455a962",
+                        "file":  "Assets/models/bench.glb"
+                    },
+                    {
+                        "sha256":  "14d3a676ccba065a11e1b995d15a7ea8df5e71d57970bebf29e11395bb4992b0",
+                        "file":  "Assets/models/bench.glb.judasmeta"
+                    },
+                    {
+                        "sha256":  "efdc1ed2f7986cc183b974d9c05574dd67993f6751584a6e3f90ee74cdedaef3",
+                        "file":  "Assets/models/character_adventurer.glb"
+                    },
+                    {
+                        "sha256":  "90ddc6bf6fe3061003472e63ef71447857a8a1f512f9745f6a9f4699258d38e7",
+                        "file":  "Assets/models/character_adventurer.glb.judasmeta"
+                    },
+                    {
+                        "sha256":  "bf98bb8ec3e6e8969d7866f5b946bb90def8287a8277f703c58063c799f9f265",
+                        "file":  "Assets/models/fence.glb"
+                    },
+                    {
+                        "sha256":  "4c32ad181ba2995795946539bc4ce5fb27e8a9a59991ea1352d2dc7cf3997074",
+                        "file":  "Assets/models/fence.glb.judasmeta"
+                    },
+                    {
+                        "sha256":  "7aa52b817f21bf42f5538761f8195bd4668e9c5de583672801062a2640403cdd",
+                        "file":  "Assets/models/floor.glb"
+                    },
+                    {
+                        "sha256":  "ebc32e362aa11008d9b46b250ffca82c2576c306f39d251531ec3a1ca5b0f8ef",
+                        "file":  "Assets/models/floor.glb.judasmeta"
+                    },
+                    {
+                        "sha256":  "b752379d40e979d9de8242b44c86556601cc33dd23c8175932edc6cfc9c95d7f",
+                        "file":  "Assets/models/gravity_gun.glb"
+                    },
+                    {
+                        "sha256":  "3c016a2099dc5311c30deedeb5c5b586c4d3ac0f2697d1f8497b1ff67f94a18e",
+                        "file":  "Assets/models/gravity_gun.glb.judasmeta"
+                    },
+                    {
+                        "sha256":  "8fbfc344ff0cb33aafc9604ba8340f54e6055497500f8f509ba271edd6073aee",
+                        "file":  "Assets/models/hammer.glb"
+                    },
+                    {
+                        "sha256":  "cb1f55dadac01b23563d7b4eb8b1b38369d2bbf6c464d5a5da0fab6d79ce4362",
+                        "file":  "Assets/models/hammer.glb.judasmeta"
+                    },
+                    {
+                        "sha256":  "acfc015025fc4d434e92e318a0eb086d515dbddae319cbb90d3349781fbab6ce",
+                        "file":  "Assets/models/home.glb"
+                    },
+                    {
+                        "sha256":  "1e6b1ef1dee79b616367dc6c7863ad702181b5a1f5b6e3d48f3af8b482ae74e9",
+                        "file":  "Assets/models/home.glb.judasmeta"
+                    },
+                    {
+                        "sha256":  "e403553ebd1854b3c5377ad9af8dcb7c27884b1294f929fb2af8d9f171b3e2a9",
+                        "file":  "Assets/models/log.glb"
+                    },
+                    {
+                        "sha256":  "a58b6dc97707b1243d867e802892084467d4cb45783cda279faba67757bb6598",
+                        "file":  "Assets/models/log.glb.judasmeta"
+                    },
+                    {
+                        "sha256":  "f71e23fe426b674e07d1c44ef83c7b3fb3ea5e2908fee3f159d889d711f65c18",
+                        "file":  "Assets/models/pickaxe.glb"
+                    },
+                    {
+                        "sha256":  "3fe13a65d1ed2fb2f8c6d0fe2ff3fa3816eeef8bcf8854d5b30cc01b02f35418",
+                        "file":  "Assets/models/pickaxe.glb.judasmeta"
+                    },
+                    {
+                        "sha256":  "36eb748a1bb3e8be4cc84a7c9ffc691345e5e9505a31466e638e050102cb49d8",
+                        "file":  "Assets/models/pillar.glb"
+                    },
+                    {
+                        "sha256":  "e83afc7f0eca7dd93316212fc600eceb8737cf0a6efd5abf3cb181e3b42a6494",
+                        "file":  "Assets/models/pillar.glb.judasmeta"
+                    },
+                    {
+                        "sha256":  "0b54684455837626f03a03eafdbce7f36980df98bf31b07e95b24607e615557b",
+                        "file":  "Assets/models/planet.glb"
+                    },
+                    {
+                        "sha256":  "13d1217cb58237d3667c03ee80ef259aa04832f78def11adc7c886093a222797",
+                        "file":  "Assets/models/planet.glb.judasmeta"
+                    },
+                    {
+                        "sha256":  "d2eb7bc6d69621f7f9b624b5738422cd57b565c0cb5f9f5ed24e652edfb0f54c",
+                        "file":  "Assets/models/rock_cluster.glb"
+                    },
+                    {
+                        "sha256":  "c36d3d87e0d2b6db0219bcea627e54aa25aa0c881e86c1db1fe87c13456f712d",
+                        "file":  "Assets/models/rock_cluster.glb.judasmeta"
+                    },
+                    {
+                        "sha256":  "7a6622e0e247e20654b07ecb71a4a03cf435989ce07d39e0ce3aee1b5846e3e8",
+                        "file":  "Assets/models/shovel.glb"
+                    },
+                    {
+                        "sha256":  "705b415c600299b266a44f84d6bce24ae5b2b96da2c149554f16b433e6114711",
+                        "file":  "Assets/models/shovel.glb.judasmeta"
+                    },
+                    {
+                        "sha256":  "348312e0fdb47947967fdaad7d81084a1b15bd7ad8bf2cc470bbacd13c8b0e07",
+                        "file":  "Assets/models/stonebase.glb"
+                    },
+                    {
+                        "sha256":  "f6db9a4532489351bb0c097897b3d466523a126dc6b68c92f51e7d80dd5fce7d",
+                        "file":  "Assets/models/stonebase.glb.judasmeta"
+                    },
+                    {
+                        "sha256":  "bce0710bd7bdda2a12e41e6a65c7da7c9a45a61ffa84ec5da95dbd9209e51405",
+                        "file":  "Assets/models/tool_rack.glb"
+                    },
+                    {
+                        "sha256":  "a2dde7aea199c0f87c60373364f8f31e47550962d711ed37d86ea0d9ac04fd96",
+                        "file":  "Assets/models/tool_rack.glb.judasmeta"
+                    },
+                    {
+                        "sha256":  "3b45f7603b0bc7fcb419c1b6df11251b88389bc54dc020db20e1c5c27c390855",
+                        "file":  "Assets/models/tree_birch.glb"
+                    },
+                    {
+                        "sha256":  "59d6e592ef502f133bb2f87e7a876d8f5017370d4539804ae4607d49b3550a31",
+                        "file":  "Assets/models/tree_birch.glb.judasmeta"
+                    },
+                    {
+                        "sha256":  "b5bb340f0f84b94658ad0119d6c28fc5711f9461021a842ebb26e81f29ac3327",
+                        "file":  "Assets/models/tree_pine.glb"
+                    },
+                    {
+                        "sha256":  "25e3551a0428ec9c49b7832a7bb2eeb6fe5b94a8f387cd1b03b1582579b4cfd2",
+                        "file":  "Assets/models/tree_pine.glb.judasmeta"
+                    },
+                    {
+                        "sha256":  "a4df68aefa5f3248d2089ec94a66f21e5cf296ee3dd7c4dd0550a840ee1fc756",
+                        "file":  "Assets/models/wall.glb"
+                    },
+                    {
+                        "sha256":  "9489f3c7b82ec57f7c32f3b002bf39a835be5ff04fd124567b9dc8cb88db6cdb",
+                        "file":  "Assets/models/wall.glb.judasmeta"
+                    },
+                    {
+                        "sha256":  "b3b06e04b04d694e71c3c9f2274dd1500bb701d6f7c144dda61885efac059539",
+                        "file":  "Assets/models/wood_crate.glb"
+                    },
+                    {
+                        "sha256":  "7ba94301b1912a7573dadedd026859e35beb56cd75fce5ab2cfa718334b684ac",
+                        "file":  "Assets/models/wood_crate.glb.judasmeta"
+                    },
+                    {
+                        "sha256":  "55135eed3eec98e7479373f6f7ded9b78b14a2a836ae225b397d857c094482e4",
+                        "file":  "Assets/models/woodsign.glb"
+                    },
+                    {
+                        "sha256":  "f020dcf286c847d8c1bf937c53b024d022d034da3649b7418b59d2d2b4538d63",
+                        "file":  "Assets/models/woodsign.glb.judasmeta"
+                    },
+                    {
+                        "sha256":  "0a9ea3bda411319f22224dfae9531c7a3739b739f88d56e253d2c03dd98787a8",
+                        "file":  "Assets/prefabs/fence.judasprefab"
+                    },
+                    {
+                        "sha256":  "cabb631984adeea77f579e0ad2d37cb19e7e5d5fba6a222d2c35015907d9d5ff",
+                        "file":  "Assets/prefabs/fence.judasprefab.judasmeta"
+                    },
+                    {
+                        "sha256":  "7b2c71884ed51657ebde3426115da8b0f7b3f5282b264e8ce422a2dd703bc5ee",
+                        "file":  "Assets/prefabs/floor.judasprefab"
+                    },
+                    {
+                        "sha256":  "b19cf3a74ec5bd13d31b604a2d25412ab60eca8d55442973537c3bc9f014cd97",
+                        "file":  "Assets/prefabs/floor.judasprefab.judasmeta"
+                    },
+                    {
+                        "sha256":  "00847a3b67a88a02dc190f0facd41bc8532f70c46628e270019e092bcdf936a3",
+                        "file":  "Assets/prefabs/log.judasprefab"
+                    },
+                    {
+                        "sha256":  "9c4fa04454c148f396c1026a8b6ec210296d342fd75aa21b0b2dcfd05f925bdc",
+                        "file":  "Assets/prefabs/log.judasprefab.judasmeta"
+                    },
+                    {
+                        "sha256":  "6c1e269c572b7bd3792e1d5432d7a0c43fee2d828cf1888a2b23de556b36dc0f",
+                        "file":  "Assets/prefabs/pillar.judasprefab"
+                    },
+                    {
+                        "sha256":  "b895ee48da9fc2cd86c228c699f069df491c55187b9e0856ad0a77c193675b4c",
+                        "file":  "Assets/prefabs/pillar.judasprefab.judasmeta"
+                    },
+                    {
+                        "sha256":  "b4748fef86a3a685fd2bb0008aa01c349df76f660ff5cfd759061a183d04ea20",
+                        "file":  "Assets/prefabs/stonebase.judasprefab"
+                    },
+                    {
+                        "sha256":  "f39f8750cb6d640ed08e1cbd03eba9e464ee9b2ed005378011bb57b7bcd12b82",
+                        "file":  "Assets/prefabs/stonebase.judasprefab.judasmeta"
+                    },
+                    {
+                        "sha256":  "4bdc5b8698b37e5824debc85f3f4ff4e504feaca8cba7b41f7a2c30de42daece",
+                        "file":  "Assets/prefabs/wall.judasprefab"
+                    },
+                    {
+                        "sha256":  "1da347c77b84d6010c2e781f4628e96fb6e8f740b2fa0e594b2f5cd9188a9dbe",
+                        "file":  "Assets/prefabs/wall.judasprefab.judasmeta"
+                    },
+                    {
+                        "sha256":  "e0a694cbdc8683eb383d48cd9923d688684d558c5084acb17afd37acee91181f",
+                        "file":  "Assets/scripts/build.js"
+                    },
+                    {
+                        "sha256":  "4244ec15a0c75430037aa824be8f418f5e112b778f94e83ea69e473838e2819c",
+                        "file":  "Assets/scripts/build.js.judasmeta"
+                    },
+                    {
+                        "sha256":  "57fb1d8dc0447a990ac130d85d7ed26100a7cf767802a80f1e4c73fd9b5b36ec",
+                        "file":  "Assets/scripts/camera.js"
+                    },
+                    {
+                        "sha256":  "470fb4afef2bcd6e349932d96a0da000f2b8c6e81740c51bee3888ed9556f34f",
+                        "file":  "Assets/scripts/camera.js.judasmeta"
+                    },
+                    {
+                        "sha256":  "7c7bc9c1a5ece170c703853393016af837c313f555c377b44048ae3f13426b74",
+                        "file":  "Assets/scripts/gravity-gun.js"
+                    },
+                    {
+                        "sha256":  "9d0d4b6791671eec906ebbb5c599e3795434d45be55c540b22846488e390af2d",
+                        "file":  "Assets/scripts/gravity-gun.js.judasmeta"
+                    },
+                    {
+                        "sha256":  "3a1e752e780cb4e12577e5eaf6b47483c111429e67998a4a9f92bcad63a22c30",
+                        "file":  "Assets/scripts/harvest.js"
+                    },
+                    {
+                        "sha256":  "254f7ea9847490d8f431094a6fffc72a07230bd24a76f68fe26925b043b7bb17",
+                        "file":  "Assets/scripts/harvest.js.judasmeta"
+                    },
+                    {
+                        "sha256":  "05a3c01dde1068646a028370f184cd207e80d170954c6eca6f387e73e53efb4d",
+                        "file":  "Assets/scripts/hud.js"
+                    },
+                    {
+                        "sha256":  "b14f9ef2f6e8d7b19476a046b84d054f5dd6b25603c6b7501bf59b091b54c835",
+                        "file":  "Assets/scripts/hud.js.judasmeta"
+                    },
+                    {
+                        "sha256":  "1c74de122fc99732cf67bb89b9addaa4ff14c339aef7e8ebe8a84f6a6cb967df",
+                        "file":  "Assets/scripts/inventory.js"
+                    },
+                    {
+                        "sha256":  "b4128ca2b3f3448561b9297fc14b62ac2c3f6edad18f50998b0db26df067576e",
+                        "file":  "Assets/scripts/inventory.js.judasmeta"
+                    },
+                    {
+                        "sha256":  "9881637181273e2c1ad071a4af22ad49024d775f370ffad10fbe2332ca4780f2",
+                        "file":  "Assets/scripts/math.js"
+                    },
+                    {
+                        "sha256":  "fac70178a98b09e24840db853bf66fb984b35d245c7e80b5152bc2fd634a0550",
+                        "file":  "Assets/scripts/math.js.judasmeta"
+                    },
+                    {
+                        "sha256":  "28b275c1ffb2390d4d4ea3b2110c59d282c0302548654b6acc974db01b84cd86",
+                        "file":  "Assets/scripts/movement.js"
+                    },
+                    {
+                        "sha256":  "a4bab0c8b0327d4b832099710ffcf71902cce102117aba19ab569c13b8fd31bf",
+                        "file":  "Assets/scripts/movement.js.judasmeta"
+                    },
+                    {
+                        "sha256":  "66e02bf15cedbd8adae34ebd7d31a5c403c047db535de20212270b6d2e397a4c",
+                        "file":  "Assets/scripts/player.js"
+                    },
+                    {
+                        "sha256":  "2f2e4fb69e7c8754dd510e063edf9c422f2cfd1e57e93d702e5ccb8c2d1e0827",
+                        "file":  "Assets/scripts/player.js.judasmeta"
+                    },
+                    {
+                        "sha256":  "ea821092f6ab97437025da36c401a7bce3d8832b64b2f38314e1a47949afb037",
+                        "file":  "Assets/scripts/soil-source.js"
+                    },
+                    {
+                        "sha256":  "b7fb14dcc0f7fcb84a387be99e73a41fd7fd3ec4d67a4f70050974319914ac6a",
+                        "file":  "Assets/scripts/soil-source.js.judasmeta"
+                    },
+                    {
+                        "sha256":  "fb42ece7c56bea336ad8926caf6aad44e4106abc5cd4bf1978a769206d99b326",
+                        "file":  "Assets/scripts/world-data.js"
+                    },
+                    {
+                        "sha256":  "f60ed16ce90dadccf91822c01bd507c218bad312ae0cfd4dc7394f789bf1071a",
+                        "file":  "Assets/scripts/world-data.js.judasmeta"
+                    },
+                    {
+                        "sha256":  "d8db9c35b7e168446958002d32b7ec9f9cdb3d9626ca3722ad1f0346222757c9",
+                        "file":  "Assets/ui/hud.judasui"
+                    },
+                    {
+                        "sha256":  "0348bf557ce40f8ed0cbd6c8a1fe3f3257c96cc411e79fd21c99a2f1039d539c",
+                        "file":  "Assets/ui/hud.judasui.judasmeta"
+                    },
+                    {
+                        "sha256":  "61bebb111933b105c7d74deb634c1b8d50f11d12040a3852dd79f667940d6452",
+                        "file":  "BUILD_PROVENANCE.json"
+                    },
+                    {
+                        "sha256":  "ec175b875fd03bcc92a24c9889c1ff58d6b97dd1e03f3e1e326bd3b48011422f",
+                        "file":  "DEPENDENCIES.json"
+                    },
+                    {
+                        "sha256":  "bcfbf6a8ab5ccc786f48e4e31675099a8fafffd83f0362da37ef71de2adbb75b",
+                        "file":  "RUNTIME_REQUIREMENTS.txt"
+                    },
+                    {
+                        "sha256":  "46dcb5cbafdac25de31add15db3cf60fe78f9c374a63c512db788d04d75de7ed",
+                        "file":  "Scenes/home.judas"
+                    },
+                    {
+                        "sha256":  "b4c632e3cdf9acc7f28758fb5a323c8524d7fc6660d46904d9b6cbe2809c419c",
+                        "file":  "engine/assets/fonts/DejaVuSans.ttf"
+                    },
+                    {
+                        "sha256":  "63d3ba759d12804c5b31a9d5940d855c1820d1f5999e6b0872eb1c7ff045fbc9",
+                        "file":  "engine/licenses/DejaVuSans.txt"
+                    },
+                    {
+                        "sha256":  "62d2d642c7d054d4fb4c9b42faad617d6c88fcd91e317f8035aa9f277cc159c3",
+                        "file":  "engine/licenses/GLM.txt"
+                    },
+                    {
+                        "sha256":  "a481f772f7a53335f13b32c6c54eb1c8577ce97704edd3757ab7ed4287a8e96a",
+                        "file":  "engine/licenses/GNU-runtime.txt"
+                    },
+                    {
+                        "sha256":  "0b57ff108ca9cefafc253e848d02e7e6b9ae7c84951961d9712dff6e3aa6533d",
+                        "file":  "engine/licenses/Judas.txt"
+                    },
+                    {
+                        "sha256":  "43270e85280a76674fc840781d9863289b1565463d41696dabf61131a87ce710",
+                        "file":  "engine/licenses/MinGW-w64.txt"
+                    },
+                    {
+                        "sha256":  "97f35b302b361680ec1e891e95d2d52097bb95abff361434916d99dc1305f127",
+                        "file":  "engine/licenses/SDL2.txt"
+                    },
+                    {
+                        "sha256":  "10a8a093b8c4fc51ab006466b0013275b524efd66d81f86ff48307b49d2614fc",
+                        "file":  "engine/third_party/RUNTIME_NOTICES.txt"
+                    },
+                    {
+                        "sha256":  "0b34f9003de857542f6263d2add8eda0f0143cc02cc8843d285764795cf40e14",
+                        "file":  "game-icon.png"
+                    },
+                    {
+                        "sha256":  "96e6529e856d7b4345ad01f6a267d1331bbd6311a6b8a1a26d6580bf85b39664",
+                        "file":  "game.judasproj"
+                    },
+                    {
+                        "sha256":  "fa2961957628c77c04dc133385f982e8e2a8f6323ba42e48e2536bc0942dba9c",
+                        "file":  "judas-package.txt"
+                    },
+                    {
+                        "sha256":  "e88059a8062f05c5fedfbaa289e0db6c126c57630d3da6ced3b53eb7ff580c62",
+                        "file":  "judas.exe"
+                    },
+                    {
+                        "sha256":  "306983c483d96a6d08a2df044e360f0962e21dac021baf8311d3c0cb3b2c9def",
+                        "file":  "libgcc_s_seh-1.dll"
+                    },
+                    {
+                        "sha256":  "dc04a17d6e9fe93bcb0639e93aca2811ad53c81c523e1909a2c24daf827fd2cd",
+                        "file":  "libstdc++-6.dll"
+                    },
+                    {
+                        "sha256":  "db1a0fc43ab2f0f8d9c87712567f79601b5f868b9bed514d3335f9016de692ec",
+                        "file":  "libwinpthread-1.dll"
+                    }
+                ]
+}

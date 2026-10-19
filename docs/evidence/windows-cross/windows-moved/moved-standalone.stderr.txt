@@ -1,0 +1,7 @@
+Shadow maps: on
+Graphics: 4.6 (Core Profile) Mesa 26.2.4 (git-9a0169f2a7) / llvmpipe (LLVM 23.1.2, 256 bits)
+Renderer fragment texture units: 32 (material path uses 12)
+World state: C:/Users/Conner/AppData/Local/judas/games/30026fff6abc9ef36c4e0b59452b48164eeb42a268c8ddfcafe7f27fbbc53db4/Saves/home.judasstate (none saved)
+Project: Hearthworld (P:/JudasValidation/WindowsCross/Moved Package r├⌐sum├⌐/game.judasproj)
+Scene: Hearthworld / a little world worth keeping (P:/JudasValidation/WindowsCross/Moved Package r├⌐sum├⌐/Scenes/home.judas)
+World origin (m): 0.000, 0.000, 0.000

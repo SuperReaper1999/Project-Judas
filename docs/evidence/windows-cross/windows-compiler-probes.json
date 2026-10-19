@@ -1,0 +1,14 @@
+﻿[
+    {
+        "exe":  "hello.exe",
+        "exit":  0,
+        "scope":  "C++ filesystem plus real worker thread in native Windows, no Wine",
+        "sha256":  "f4d6188b2b82d50b2fc72d9b84a7c99bf7b0d47c898497fa8fef1e8c83fd584a"
+    },
+    {
+        "exe":  "hello-clang.exe",
+        "exit":  0,
+        "scope":  "C++ filesystem plus real worker thread in native Windows, no Wine",
+        "sha256":  "6adb72e8af2ddab49d47bc7f7385c3456b9668da8dd0e5d0268dd6c2d6f0519c"
+    }
+]

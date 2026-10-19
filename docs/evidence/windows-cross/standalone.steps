@@ -1,0 +1,25 @@
+FRAMES 390
+FRAME_SECONDS 0.016666667
+ENTITY 100
+LOG_EVERY 0
+ACTION pause 1 10 11
+EXPECT_PAUSED 0 15
+AXIS move_y -1 20 100
+LOOK 60 -30 110
+SCREENSHOT 140 P:/JudasValidation/WindowsCross/Results/standalone-home.png
+ACTION camera_toggle 1 160 161
+SCREENSHOT 180 P:/JudasValidation/WindowsCross/Results/standalone-third.png
+ACTION inventory 1 200 201
+EXPECT_PAUSED 1 205
+ACTION inventory 1 230 231
+EXPECT_PAUSED 0 235
+ACTION pause 1 250 251
+EXPECT_PAUSED 1 255
+ACTION save 1 270 271
+WAIT_SERVICES save 10000 280
+ACTION pause 1 300 301
+EXPECT_PAUSED 0 305
+ACTION load 1 320 321
+WAIT_SERVICES save 10000 330
+EXPECT_SCENE Scenes/home.judas 340
+SCREENSHOT 365 P:/JudasValidation/WindowsCross/Results/standalone-restored.png

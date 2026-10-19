@@ -1,0 +1,2 @@
+step,time,posX,posY,posZ,upX,upY,upZ,grounded,velX,velY,velZ,gravX,gravY,gravZ,controlled,frame,steps,paused,obj0PosX,obj0PosY,obj0PosZ,obj0VelX,obj0VelY,obj0VelZ,obj1PosX,obj1PosY,obj1PosZ,obj1VelX,obj1VelY,obj1VelZ,obj2PosX,obj2PosY,obj2PosZ,obj2VelX,obj2VelY,obj2VelZ
+JS: Hearthworld: WASD move, mouse look, Space jump, Shift sprint; E collect; 1 gravity / 2 axe / 3 pickaxe / 4 shovel / 5 build; LMB use, RMB grab/drop or dismantle, Q recipe, R rotate; Tab pack, Esc pause; F5 save / F9 load.

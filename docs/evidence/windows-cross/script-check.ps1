@@ -1,0 +1,4 @@
+$ErrorActionPreference='Stop';$root='P:\JudasValidation\WindowsCross';$env:PATH='C:\Windows\System32;C:\Windows';Set-Location "$root\UnrelatedCwd"
+$i=New-Object Diagnostics.ProcessStartInfo;$i.FileName="$root\Qualification\judas_script_check.exe";$i.Arguments="`"$root\Source\projects\hearthworld\hearthworld.judasproj`"";$i.UseShellExecute=$false;$i.CreateNoWindow=$true;$i.RedirectStandardOutput=$true;$i.RedirectStandardError=$true;$i.StandardOutputEncoding=[Text.Encoding]::UTF8;$i.StandardErrorEncoding=[Text.Encoding]::UTF8
+$p=New-Object Diagnostics.Process;$p.StartInfo=$i;[void]$p.Start();$o=$p.StandardOutput.ReadToEndAsync();$e=$p.StandardError.ReadToEndAsync();if(!$p.WaitForExit(30000)){$p.Kill();$p.WaitForExit();$code=-1000}else{$code=$p.ExitCode}
+@{exit=$code;stdout=$o.Result;stderr=$e.Result}|ConvertTo-Json|Set-Content -Encoding UTF8 "$root\Results\SCRIPT_CHECK.json"

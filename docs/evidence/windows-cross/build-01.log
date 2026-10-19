@@ -1,0 +1,217 @@
+[  0%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/autofit/autofit.c.obj
+[  0%] Building CXX object CMakeFiles/judas_meshoptimizer.dir/third_party/meshoptimizer/src/allocator.cpp.obj
+[  0%] Building CXX object CMakeFiles/judas_build_identity.dir/src/BuildIdentity.cpp.obj
+[  4%] Generating include/SDL2/SDL.h
+[  4%] Generating include/SDL2/SDL_assert.h
+[  4%] Generating include/SDL2/SDL_atomic.h
+[  4%] Generating include/SDL2/SDL_audio.h
+[  4%] Building CXX object CMakeFiles/judas_meshoptimizer.dir/third_party/meshoptimizer/src/clusterizer.cpp.obj
+[  4%] Generating include/SDL2/SDL_bits.h
+[  4%] Generating include/SDL2/SDL_blendmode.h
+[  4%] Generating include/SDL2/SDL_clipboard.h
+[  4%] Generating include/SDL2/SDL_copying.h
+[  4%] Generating include/SDL2/SDL_cpuinfo.h
+[  4%] Generating include/SDL2/SDL_egl.h
+[  4%] Generating include/SDL2/SDL_endian.h
+[  4%] Generating include/SDL2/SDL_error.h
+[  4%] Generating include/SDL2/SDL_events.h
+[  4%] Generating include/SDL2/SDL_filesystem.h
+[  4%] Generating include/SDL2/SDL_gamecontroller.h
+[  4%] Generating include/SDL2/SDL_gesture.h
+[  4%] Generating include/SDL2/SDL_guid.h
+[  4%] Generating include/SDL2/SDL_haptic.h
+[  4%] Generating include/SDL2/SDL_hidapi.h
+[  4%] Generating include/SDL2/SDL_hints.h
+[  4%] Generating include/SDL2/SDL_joystick.h
+[  4%] Generating include/SDL2/SDL_keyboard.h
+[  4%] Generating include/SDL2/SDL_keycode.h
+[  4%] Generating include/SDL2/SDL_loadso.h
+[  4%] Generating include/SDL2/SDL_locale.h
+[  8%] Generating include/SDL2/SDL_log.h
+[  8%] Generating include/SDL2/SDL_main.h
+[  8%] Generating include/SDL2/SDL_messagebox.h
+[  8%] Generating include/SDL2/SDL_metal.h
+[  8%] Generating include/SDL2/SDL_misc.h
+[  8%] Generating include/SDL2/SDL_mouse.h
+[  8%] Generating include/SDL2/SDL_mutex.h
+[  8%] Generating include/SDL2/SDL_name.h
+[  8%] Generating include/SDL2/SDL_opengl.h
+[  8%] Generating include/SDL2/SDL_opengl_glext.h
+[  8%] Generating include/SDL2/SDL_opengles.h
+[  8%] Generating include/SDL2/SDL_opengles2.h
+[  8%] Generating include/SDL2/SDL_opengles2_gl2.h
+[  8%] Generating include/SDL2/SDL_opengles2_gl2ext.h
+[  8%] Generating include/SDL2/SDL_opengles2_gl2platform.h
+[  8%] Generating include/SDL2/SDL_opengles2_khrplatform.h
+[  8%] Generating include/SDL2/SDL_pixels.h
+[  8%] Generating include/SDL2/SDL_platform.h
+[  8%] Generating include/SDL2/SDL_power.h
+[  8%] Generating include/SDL2/SDL_quit.h
+[  8%] Generating include/SDL2/SDL_rect.h
+[  8%] Generating include/SDL2/SDL_render.h
+[  8%] Generating include/SDL2/SDL_rwops.h
+[  8%] Generating include/SDL2/SDL_scancode.h
+[  8%] Generating include/SDL2/SDL_sensor.h
+[  8%] Generating include/SDL2/SDL_shape.h
+[ 13%] Generating include/SDL2/SDL_stdinc.h
+[ 13%] Generating include/SDL2/SDL_surface.h
+[ 13%] Generating include/SDL2/SDL_system.h
+[ 13%] Generating include/SDL2/SDL_syswm.h
+[ 13%] Generating include/SDL2/SDL_test.h
+[ 13%] Generating include/SDL2/SDL_test_assert.h
+[ 13%] Generating include/SDL2/SDL_test_common.h
+[ 13%] Generating include/SDL2/SDL_test_compare.h
+[ 13%] Generating include/SDL2/SDL_test_crc32.h
+[ 13%] Generating include/SDL2/SDL_test_font.h
+[ 13%] Generating include/SDL2/SDL_test_fuzzer.h
+[ 13%] Generating include/SDL2/SDL_test_harness.h
+[ 13%] Generating include/SDL2/SDL_test_images.h
+[ 13%] Generating include/SDL2/SDL_test_log.h
+[ 13%] Generating include/SDL2/SDL_test_md5.h
+[ 13%] Generating include/SDL2/SDL_test_memory.h
+[ 13%] Generating include/SDL2/SDL_test_random.h
+[ 13%] Generating include/SDL2/SDL_thread.h
+[ 13%] Generating include/SDL2/SDL_timer.h
+[ 13%] Generating include/SDL2/SDL_touch.h
+[ 13%] Generating include/SDL2/SDL_types.h
+[ 13%] Generating include/SDL2/SDL_version.h
+[ 13%] Generating include/SDL2/SDL_video.h
+[ 13%] Generating include/SDL2/SDL_vulkan.h
+[ 13%] Generating include/SDL2/begin_code.h
+[ 17%] Generating include/SDL2/close_code.h
+[ 17%] Built target sdl_headers_copy
+[ 17%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/base/ftbase.c.obj
+[ 17%] Building CXX object CMakeFiles/judas_meshoptimizer.dir/third_party/meshoptimizer/src/indexanalyzer.cpp.obj
+[ 17%] Building CXX object CMakeFiles/judas_meshoptimizer.dir/third_party/meshoptimizer/src/indexcodec.cpp.obj
+[ 17%] Creating directories for 'judas_icu_build'
+[ 17%] Performing download step (verify and extract) for 'judas_icu_build'
+-- verifying file...
+     file='/home/conner/Documents/GitHub/Project-Judas/third_party/text/icu4c-76_1-src.tgz'
+[ 17%] Building CXX object CMakeFiles/judas_meshoptimizer.dir/third_party/meshoptimizer/src/indexgenerator.cpp.obj
+-- verifying file... done
+-- extracting...
+     src='/home/conner/Documents/GitHub/Project-Judas/third_party/text/icu4c-76_1-src.tgz'
+     dst='/home/conner/Documents/GitHub/Project-Judas/.cache/windows-cross/build/unicode/build/src/judas_icu_build'
+-- extracting... [tar xf]
+[ 17%] Building CXX object CMakeFiles/judas_meshoptimizer.dir/third_party/meshoptimizer/src/overdrawoptimizer.cpp.obj
+-- extracting... [analysis]
+-- extracting... [rename]
+-- extracting... [clean up]
+-- extracting... done
+[ 17%] No update step for 'judas_icu_build'
+[ 17%] No patch step for 'judas_icu_build'
+[ 17%] Performing configure step for 'judas_icu_build'
+[ 17%] Building CXX object CMakeFiles/judas_meshoptimizer.dir/third_party/meshoptimizer/src/partition.cpp.obj
+[ 17%] Building CXX object CMakeFiles/judas_meshoptimizer.dir/third_party/meshoptimizer/src/quantization.cpp.obj
+[ 17%] Building CXX object CMakeFiles/judas_meshoptimizer.dir/third_party/meshoptimizer/src/rasterizer.cpp.obj
+[ 17%] Building CXX object CMakeFiles/judas_meshoptimizer.dir/third_party/meshoptimizer/src/simplifier.cpp.obj
+[ 17%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/base/ftbbox.c.obj
+[ 17%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/base/ftbdf.c.obj
+[ 17%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/base/ftbitmap.c.obj
+[ 17%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/base/ftcid.c.obj
+[ 21%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/base/ftfstype.c.obj
+[ 21%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/base/ftgasp.c.obj
+[ 21%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/base/ftglyph.c.obj
+[ 21%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/base/ftgxval.c.obj
+[ 21%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/base/ftinit.c.obj
+[ 21%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/base/ftmm.c.obj
+[ 21%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/base/ftotval.c.obj
+[ 21%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/base/ftpatent.c.obj
+[ 21%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/base/ftpfr.c.obj
+[ 21%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/base/ftstroke.c.obj
+[ 21%] Building CXX object CMakeFiles/judas_meshoptimizer.dir/third_party/meshoptimizer/src/spatialorder.cpp.obj
+[ 21%] Building CXX object CMakeFiles/judas_build_identity.dir/src/BuildUpdate.cpp.obj
+[ 26%] Building CXX object CMakeFiles/judas_meshoptimizer.dir/third_party/meshoptimizer/src/stripifier.cpp.obj
+[ 26%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/base/ftsynth.c.obj
+[ 26%] Building CXX object CMakeFiles/judas_meshoptimizer.dir/third_party/meshoptimizer/src/vcacheoptimizer.cpp.obj
+[ 26%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/base/fttype1.c.obj
+[ 26%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/base/ftwinfnt.c.obj
+[ 26%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/bdf/bdf.c.obj
+[ 26%] Building CXX object CMakeFiles/judas_meshoptimizer.dir/third_party/meshoptimizer/src/vertexcodec.cpp.obj
+[ 26%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/bzip2/ftbzip2.c.obj
+[ 26%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/cache/ftcache.c.obj
+[ 26%] Building CXX object CMakeFiles/judas_meshoptimizer.dir/third_party/meshoptimizer/src/vertexfilter.cpp.obj
+[ 26%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/cff/cff.c.obj
+-- judas_icu_build configure command succeeded.  See also /home/conner/Documents/GitHub/Project-Judas/.cache/windows-cross/build/unicode/build/src/judas_icu_build-stamp/judas_icu_build-configure-*.log
+[ 26%] Building CXX object CMakeFiles/judas_meshoptimizer.dir/third_party/meshoptimizer/src/vfetchoptimizer.cpp.obj
+[ 26%] Performing build step for 'judas_icu_build'
+[ 26%] Linking CXX static library libjudas_meshoptimizer.a
+[ 26%] Built target judas_meshoptimizer
+[ 26%] Building C object CMakeFiles/judas_quickjs.dir/third_party/quickjs/quickjs.c.obj
+[ 26%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/cid/type1cid.c.obj
+[ 26%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/gzip/ftgzip.c.obj
+[ 30%] Building CXX object CMakeFiles/judas_build_identity.dir/src/ToolProcess.cpp.obj
+[ 30%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/lzw/ftlzw.c.obj
+[ 30%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/pcf/pcf.c.obj
+[ 30%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/pfr/pfr.c.obj
+[ 30%] Linking CXX static library libjudas_build_identity.a
+[ 30%] Built target judas_build_identity
+[ 30%] Building CXX object CMakeFiles/judas_navigation_backend.dir/third_party/recastnavigation/Detour/Source/DetourAlloc.cpp.obj
+[ 30%] Building CXX object CMakeFiles/judas_navigation_backend.dir/third_party/recastnavigation/Detour/Source/DetourAssert.cpp.obj
+[ 30%] Building CXX object CMakeFiles/judas_navigation_backend.dir/third_party/recastnavigation/Detour/Source/DetourCommon.cpp.obj
+[ 30%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/psaux/psaux.c.obj
+[ 30%] Building CXX object CMakeFiles/judas_navigation_backend.dir/third_party/recastnavigation/Detour/Source/DetourNavMesh.cpp.obj
+[ 30%] Building CXX object CMakeFiles/judas_navigation_backend.dir/third_party/recastnavigation/Detour/Source/DetourNavMeshBuilder.cpp.obj
+[ 30%] Building CXX object CMakeFiles/judas_navigation_backend.dir/third_party/recastnavigation/Detour/Source/DetourNavMeshQuery.cpp.obj
+[ 30%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/pshinter/pshinter.c.obj
+[ 30%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/psnames/psnames.c.obj
+[ 30%] Building CXX object CMakeFiles/judas_navigation_backend.dir/third_party/recastnavigation/Detour/Source/DetourNode.cpp.obj
+[ 34%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/raster/raster.c.obj
+[ 34%] Building CXX object CMakeFiles/judas_navigation_backend.dir/third_party/recastnavigation/DetourCrowd/Source/DetourCrowd.cpp.obj
+[ 34%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/sdf/sdf.c.obj
+[ 34%] Building CXX object CMakeFiles/judas_navigation_backend.dir/third_party/recastnavigation/DetourCrowd/Source/DetourLocalBoundary.cpp.obj
+[ 34%] Building CXX object CMakeFiles/judas_navigation_backend.dir/third_party/recastnavigation/DetourCrowd/Source/DetourObstacleAvoidance.cpp.obj
+[ 34%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/sfnt/sfnt.c.obj
+[ 34%] Building CXX object CMakeFiles/judas_navigation_backend.dir/third_party/recastnavigation/DetourCrowd/Source/DetourPathCorridor.cpp.obj
+[ 34%] Building CXX object CMakeFiles/judas_navigation_backend.dir/third_party/recastnavigation/DetourCrowd/Source/DetourPathQueue.cpp.obj
+[ 34%] Building CXX object CMakeFiles/judas_navigation_backend.dir/third_party/recastnavigation/DetourCrowd/Source/DetourProximityGrid.cpp.obj
+[ 34%] Building CXX object CMakeFiles/judas_navigation_backend.dir/third_party/recastnavigation/DetourTileCache/Source/DetourTileCache.cpp.obj
+[ 34%] Building CXX object CMakeFiles/judas_navigation_backend.dir/third_party/recastnavigation/DetourTileCache/Source/DetourTileCacheBuilder.cpp.obj
+[ 34%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/smooth/smooth.c.obj
+[ 34%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/svg/svg.c.obj
+[ 34%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/truetype/truetype.c.obj
+[ 34%] Linking CXX static library libjudas_navigation_backend.a
+[ 34%] Built target judas_navigation_backend
+[ 34%] Building C object CMakeFiles/judas_glad.dir/third_party/glad/src/gl.c.obj
+[ 34%] Linking C static library libjudas_glad.a
+[ 34%] Built target judas_glad
+[ 34%] Building CXX object CMakeFiles/judas_profiler.dir/src/PerformanceProfiler.cpp.obj
+[ 34%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/type1/type1.c.obj
+[ 34%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/type42/type42.c.obj
+[ 34%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/winfonts/winfnt.c.obj
+[ 34%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/builds/windows/ftsystem.c.obj
+/home/conner/Documents/GitHub/Project-Judas/.cache/windows-cross/build/_deps/judas_freetype-src/builds/windows/ftsystem.c:29: warning: "WIN32_LEAN_AND_MEAN" redefined
+   29 | #define WIN32_LEAN_AND_MEAN
+      | 
+<command-line>: note: this is the location of the previous definition
+[ 34%] Linking CXX static library libjudas_profiler.a
+[ 34%] Built target judas_profiler
+[ 34%] Building C object CMakeFiles/judas_quickjs.dir/third_party/quickjs/dtoa.c.obj
+[ 34%] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/builds/windows/ftdebug.c.obj
+[ 34%] Building RC object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/base/ftver.rc.res
+/home/conner/Documents/GitHub/Project-Judas/.cache/windows-cross/build/_deps/judas_freetype-src/src/base/ftver.rc:19:9: fatal error: windows.h: No such file or directory
+   19 | #include<windows.h>
+      |         ^~~~~~~~~~~
+compilation terminated.
+/home/conner/Documents/GitHub/Project-Judas/.cache/windows-cross/toolchain/root/usr/bin/x86_64-w64-mingw32-windres: preprocessing failed.
+gmake[3]: *** [_deps/judas_freetype-build/CMakeFiles/freetype.dir/build.make:708: _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/base/ftver.rc.res] Error 1
+gmake[2]: *** [CMakeFiles/Makefile2:17403: _deps/judas_freetype-build/CMakeFiles/freetype.dir/all] Error 2
+gmake[2]: *** Waiting for unfinished jobs....
+[ 34%] Building C object CMakeFiles/judas_quickjs.dir/third_party/quickjs/libregexp.c.obj
+[ 39%] Building C object CMakeFiles/judas_quickjs.dir/third_party/quickjs/libunicode.c.obj
+[ 39%] Linking C static library libjudas_quickjs.a
+[ 39%] Built target judas_quickjs
+CMake Error at /home/conner/Documents/GitHub/Project-Judas/.cache/windows-cross/build/unicode/build/src/judas_icu_build-stamp/judas_icu_build-build-Release.cmake:49 (message):
+  Command failed: 2
+
+   'make' '-j4'
+
+  See also
+
+    /home/conner/Documents/GitHub/Project-Judas/.cache/windows-cross/build/unicode/build/src/judas_icu_build-stamp/judas_icu_build-build-*.log
+
+
+gmake[3]: *** [CMakeFiles/judas_icu_build.dir/build.make:86: unicode/build/src/judas_icu_build-stamp/judas_icu_build-build] Error 1
+gmake[2]: *** [CMakeFiles/Makefile2:790: CMakeFiles/judas_icu_build.dir/all] Error 2
+gmake[1]: *** [CMakeFiles/Makefile2:1194: CMakeFiles/judas.dir/rule] Error 2
+gmake: *** [Makefile:385: judas] Error 2

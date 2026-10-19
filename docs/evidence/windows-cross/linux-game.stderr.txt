@@ -1,0 +1,7 @@
+Shadow maps: on
+Graphics: 3.3.0 NVIDIA 580.178.04 / NVIDIA GeForce GTX 970/PCIe/SSE2
+Renderer fragment texture units: 32 (material path uses 12)
+World state: /home/conner/Documents/GitHub/Project-Judas/.cache/windows-cross/linux-save/judas/games/30026fff6abc9ef36c4e0b59452b48164eeb42a268c8ddfcafe7f27fbbc53db4/Saves/home.judasstate (none saved)
+Project: Hearthworld (/home/conner/Documents/GitHub/Project-Judas/.cache/windows-cross/Linux Moved Package/game.judasproj)
+Scene: Hearthworld / a little world worth keeping (/home/conner/Documents/GitHub/Project-Judas/.cache/windows-cross/Linux Moved Package/Scenes/home.judas)
+World origin (m): 0.000, 0.000, 0.000

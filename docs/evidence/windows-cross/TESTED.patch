@@ -1,0 +1,1126 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 0d8f933a04d07adf0ec9ad2e097675edfa879503..6a589d36e564c2c6deaadffa1a4aaba3098c435d 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -5,15 +5,20 @@ string(REGEX REPLACE "-.*$" "" judas_project_version "${judas_project_version}")
+ project(ProjectJudas VERSION "${judas_project_version}" LANGUAGES C CXX)
+ 
+ if(WIN32)
+-    if(NOT MSVC OR NOT CMAKE_SIZEOF_VOID_P EQUAL 8)
+-        message(FATAL_ERROR "Windows candidate: use Visual Studio 2022 x64; other Windows toolchains are not prepared")
++    if((NOT MSVC AND NOT MINGW) OR NOT CMAKE_SIZEOF_VOID_P EQUAL 8)
++        message(FATAL_ERROR "Windows requires MSVC x64 or the optional MinGW-w64 x64 toolchain")
+     endif()
+-    if(NOT VCPKG_TARGET_TRIPLET STREQUAL "x64-windows-static-md")
++    if(MSVC AND NOT VCPKG_TARGET_TRIPLET STREQUAL "x64-windows-static-md")
+         message(FATAL_ERROR "Windows SDK requires -DVCPKG_TARGET_TRIPLET=x64-windows-static-md")
+     endif()
+     set(BUILD_SHARED_LIBS OFF CACHE BOOL "" FORCE)
+     add_compile_definitions(NOMINMAX WIN32_LEAN_AND_MEAN SDL_MAIN_HANDLED _CRT_SECURE_NO_WARNINGS)
+-    add_compile_options(/utf-8 /bigobj)
++    if(MSVC)
++        add_compile_options(/utf-8 /bigobj)
++    else()
++        add_compile_options(-Wa,-mbig-obj)
++        add_link_options(-Wl,--no-insert-timestamp)
++    endif()
+ endif()
+ 
+ function(judas_warnings target)
+@@ -47,7 +52,7 @@ target_link_libraries(judas_build_identity_tests PRIVATE judas_build_identity)
+ judas_warnings(judas_build_identity_tests)
+ option(JUDAS_BUILD_IDENTITY_ONLY "Configure only dependency-light build provenance checks" OFF)
+ if(JUDAS_BUILD_IDENTITY_ONLY)
+-    if(WIN32)
++    if(MSVC)
+         target_link_options(judas_build_identity_tests PRIVATE "/MANIFEST:EMBED"
+             "/MANIFESTINPUT:${CMAKE_CURRENT_SOURCE_DIR}/packaging/windows/judas.manifest")
+     endif()
+@@ -61,6 +66,8 @@ endif()
+ if(ANDROID)
+     set(CMAKE_POSITION_INDEPENDENT_CODE ON)
+     include(cmake/JudasAndroidDependencies.cmake)
++elseif(MINGW)
++    include(cmake/JudasWindowsCrossDependencies.cmake)
+ else()
+     find_package(SDL2 REQUIRED)
+ endif()
+@@ -86,7 +93,7 @@ add_library(judas_meshoptimizer STATIC ${JUDAS_MESHOPT_SOURCES})
+ target_include_directories(judas_meshoptimizer PUBLIC third_party/meshoptimizer/src)
+ include_directories(SYSTEM third_party/quickhull)
+ set_source_files_properties(third_party/quickhull/QuickHull.cpp PROPERTIES COMPILE_OPTIONS "$<$<NOT:$<CXX_COMPILER_ID:MSVC>>:-Wno-unused-parameter>")
+-if(NOT ANDROID)
++if(NOT ANDROID AND NOT MINGW)
+     find_package(glm REQUIRED)
+ endif()
+ include(cmake/JudasTextDependencies.cmake)
+@@ -1622,8 +1629,12 @@ judas_add_engine_test(judas_liquid_bake_frame_tests tests/LiquidBakeFrameTests.c
+ judas_add_engine_test(judas_collision_witness_tests tests/CollisionWitnessTests.cpp)
+ judas_add_engine_test(judas_origin_admission_tests tests/OriginAdmissionTests.cpp)
+ 
++judas_add_engine_test(judas_windows_cross_audio_tests tests/WindowsCrossAudioTests.cpp)
++
+ # Finalize native packaging only after every subsystem has declared its tools.
+-if(WIN32)
++if(MINGW)
++    include(cmake/JudasWindowsCrossRuntime.cmake)
++elseif(WIN32)
+     include(cmake/JudasWindowsSdk.cmake)
+ endif()
+ include(cmake/JudasSdk.cmake)
+diff --git a/cmake/JudasTextDependencies.cmake b/cmake/JudasTextDependencies.cmake
+index 06286d50e24ac3463484fe8806959280433ba568..f40fcb816aa91841cd9c24a470e4db88f1d07795 100644
+--- a/cmake/JudasTextDependencies.cmake
++++ b/cmake/JudasTextDependencies.cmake
+@@ -21,6 +21,10 @@ if(ANDROID)
+  include("${CMAKE_SOURCE_DIR}/cmake/JudasAndroidICU.cmake")
+  return()
+ endif()
++if(MINGW)
++ include("${CMAKE_SOURCE_DIR}/cmake/JudasWindowsCrossICU.cmake")
++ return()
++endif()
+ if(WIN32)
+  include("${CMAKE_SOURCE_DIR}/cmake/JudasWindowsICU.cmake")
+  return()
+diff --git a/cmake/JudasWindowsCrossDependencies.cmake b/cmake/JudasWindowsCrossDependencies.cmake
+new file mode 100644
+index 0000000000000000000000000000000000000000..05eee4d12139cf747530430d163deaa45c049dc8
+--- /dev/null
++++ b/cmake/JudasWindowsCrossDependencies.cmake
+@@ -0,0 +1,17 @@
++# Reuse the immutable SDL/GLM sources already shipped for Android. Static
++# dependencies keep the portable Windows runtime closure small and explicit.
++include(FetchContent)
++if(POLICY CMP0135)
++ cmake_policy(SET CMP0135 NEW)
++endif()
++set(SDL_SHARED OFF CACHE BOOL "" FORCE)
++set(SDL_STATIC ON CACHE BOOL "" FORCE)
++set(SDL_TEST OFF CACHE BOOL "" FORCE)
++FetchContent_Declare(judas_sdl URL "${CMAKE_SOURCE_DIR}/third_party/android/SDL2-2.32.10.tar.gz"
++ URL_HASH SHA256=5f5993c530f084535c65a6879e9b26ad441169b3e25d789d83287040a9ca5165)
++set(GLM_BUILD_TESTS OFF CACHE BOOL "" FORCE)
++set(GLM_BUILD_LIBRARY OFF CACHE BOOL "" FORCE)
++FetchContent_Declare(judas_glm URL "${CMAKE_SOURCE_DIR}/third_party/android/glm-1.0.1.tar.gz"
++ URL_HASH SHA256=9f3174561fd26904b23f0db5e560971cbf9b3cbda0b280f04d5c379d03bf234c)
++FetchContent_MakeAvailable(judas_sdl judas_glm)
++set(JUDAS_GLM glm::glm-header-only)
+diff --git a/cmake/JudasWindowsCrossICU.cmake b/cmake/JudasWindowsCrossICU.cmake
+new file mode 100644
+index 0000000000000000000000000000000000000000..40cbdb435f9224abb2460ba7cd68cd089e6d589c
+--- /dev/null
++++ b/cmake/JudasWindowsCrossICU.cmake
+@@ -0,0 +1,54 @@
++# Same ICU implementation/data as other Judas platforms. ICU's generators run
++# on Linux; their output and libraries are built for MinGW, never executed here.
++set(JUDAS_CROSS_DEPENDENCY_JOBS "4" CACHE STRING "Maximum parallel compiler jobs in ICU cross/native dependency builds")
++if(NOT JUDAS_CROSS_DEPENDENCY_JOBS MATCHES "^[1-9][0-9]*$" OR JUDAS_CROSS_DEPENDENCY_JOBS GREATER 64)
++ message(FATAL_ERROR "JUDAS_CROSS_DEPENDENCY_JOBS must be 1-64")
++endif()
++set(JUDAS_ICU_HOST_TOOLS "" CACHE PATH "Existing ICU 76.1 native build directory (config/icucross.mk)")
++set(_icu_archive "${CMAKE_SOURCE_DIR}/third_party/text/icu4c-76_1-src.tgz")
++set(_icu_hash dfacb46bfe4747410472ce3e1144bf28a102feeaa4e3875bac9b4c6cf30f4f3e)
++if(JUDAS_ICU_HOST_TOOLS)
++ if(NOT EXISTS "${JUDAS_ICU_HOST_TOOLS}/config/icucross.mk")
++  message(FATAL_ERROR "JUDAS_ICU_HOST_TOOLS must name a built ICU 76.1 native build directory")
++ endif()
++ set(_icu_host_dependency "")
++else()
++ ExternalProject_Add(judas_icu_host
++  URL "${_icu_archive}" URL_HASH SHA256=${_icu_hash}
++  PREFIX "${CMAKE_BINARY_DIR}/unicode/host"
++  CONFIGURE_COMMAND <SOURCE_DIR>/source/runConfigureICU Linux --disable-shared --enable-static --disable-tests --disable-samples --disable-extras --disable-icuio
++  BUILD_COMMAND make -j${JUDAS_CROSS_DEPENDENCY_JOBS} INSTALL_COMMAND ""
++  LOG_CONFIGURE ON LOG_BUILD ON)
++ set(JUDAS_ICU_HOST_TOOLS "${CMAKE_BINARY_DIR}/unicode/host/src/judas_icu_host-build")
++ set(_icu_host_dependency judas_icu_host)
++endif()
++set(JUDAS_ICU_PREFIX "${CMAKE_BINARY_DIR}/unicode/icu")
++file(MAKE_DIRECTORY "${JUDAS_ICU_PREFIX}/include" "${JUDAS_ICU_PREFIX}/bin")
++set(_icu_cc "${CMAKE_C_COMPILER}")
++set(_icu_cxx "${CMAKE_CXX_COMPILER}")
++if(CMAKE_C_COMPILER_ID MATCHES "Clang")
++ string(APPEND _icu_cc " --target=${CMAKE_C_COMPILER_TARGET}")
++ string(APPEND _icu_cxx " --target=${CMAKE_CXX_COMPILER_TARGET}")
++endif()
++ExternalProject_Add(judas_icu_build
++ URL "${_icu_archive}" URL_HASH SHA256=${_icu_hash}
++ PREFIX "${CMAKE_BINARY_DIR}/unicode/build" DEPENDS ${_icu_host_dependency}
++ CONFIGURE_COMMAND ${CMAKE_COMMAND} -E env "CC=${_icu_cc}" "CXX=${_icu_cxx}"
++  "AR=${CMAKE_AR}" "RANLIB=${CMAKE_RANLIB}" "CFLAGS=-O2" "CXXFLAGS=-O2"
++  <SOURCE_DIR>/source/configure --host=x86_64-w64-mingw32 --with-cross-build=${JUDAS_ICU_HOST_TOOLS}
++  --prefix=${JUDAS_ICU_PREFIX} --disable-shared --enable-static --with-data-packaging=static
++  --disable-tests --disable-samples --disable-extras --disable-icuio --disable-tools
++ BUILD_COMMAND make -j${JUDAS_CROSS_DEPENDENCY_JOBS}
++ # Native pkgdata correctly emits a COFF archive named sicudt.a for MinGW.
++ # Upstream installs it under bin while the stub is named lib/libsicudt.a.
++ # Publish the actual generated data archive at the explicit static link path.
++ INSTALL_COMMAND make install
++ COMMAND ${CMAKE_COMMAND} -E copy_if_different <BINARY_DIR>/lib/sicudt.a "${JUDAS_ICU_PREFIX}/lib/libsicudt.a"
++ BUILD_BYPRODUCTS "${JUDAS_ICU_PREFIX}/lib/libsicuin.a" "${JUDAS_ICU_PREFIX}/lib/libsicuuc.a" "${JUDAS_ICU_PREFIX}/lib/libsicudt.a"
++ LOG_CONFIGURE ON LOG_BUILD ON LOG_INSTALL ON)
++add_library(judas_unicode INTERFACE)
++add_dependencies(judas_unicode judas_icu_build)
++target_compile_definitions(judas_unicode INTERFACE U_STATIC_IMPLEMENTATION)
++target_include_directories(judas_unicode SYSTEM INTERFACE "${JUDAS_ICU_PREFIX}/include")
++target_link_libraries(judas_unicode INTERFACE freetype harfbuzz
++ "${JUDAS_ICU_PREFIX}/lib/libsicuin.a" "${JUDAS_ICU_PREFIX}/lib/libsicuuc.a" "${JUDAS_ICU_PREFIX}/lib/libsicudt.a")
+diff --git a/cmake/JudasWindowsCrossRuntime.cmake b/cmake/JudasWindowsCrossRuntime.cmake
+new file mode 100644
+index 0000000000000000000000000000000000000000..078cb28b7484262cdd7e1daa322eaaa833c97758
+--- /dev/null
++++ b/cmake/JudasWindowsCrossRuntime.cmake
+@@ -0,0 +1,66 @@
++# MinGW-only staging; the MSVC SDK and its redistribution contract stay separate.
++enable_language(RC)
++file(GENERATE OUTPUT "${CMAKE_BINARY_DIR}/generated/judas-cross-$<CONFIG>.rc" CONTENT
++ "1 24 \"${CMAKE_SOURCE_DIR}/packaging/windows/judas.manifest\"\n101 10 \"${CMAKE_BINARY_DIR}/judas-build-info-$<CONFIG>.json\"\n")
++# Resource compilers do not consistently discover JSON includes. Rebuild the
++# resource when configured identity changes, not only when its pathname changes.
++set(_cross_configs ${CMAKE_CONFIGURATION_TYPES} ${CMAKE_BUILD_TYPE})
++foreach(config IN LISTS _cross_configs)
++ set_source_files_properties("${CMAKE_BINARY_DIR}/generated/judas-cross-${config}.rc"
++  PROPERTIES OBJECT_DEPENDS "${CMAKE_BINARY_DIR}/generated/judas-build-info.json.in;${CMAKE_SOURCE_DIR}/packaging/windows/judas.manifest")
++endforeach()
++get_filename_component(_cross_bin "${CMAKE_CXX_COMPILER}" DIRECTORY)
++set(JUDAS_WINDOWS_EXTRA_DLLS "" CACHE STRING "Additional explicit MinGW runtime DLL paths")
++set(_cross_dlls ${JUDAS_WINDOWS_EXTRA_DLLS})
++foreach(name libstdc++-6.dll libgcc_s_seh-1.dll libwinpthread-1.dll libc++.dll libunwind.dll)
++ execute_process(COMMAND "${CMAKE_CXX_COMPILER}" "-print-file-name=${name}" OUTPUT_VARIABLE path OUTPUT_STRIP_TRAILING_WHITESPACE ERROR_QUIET)
++ if(EXISTS "${path}")
++  list(APPEND _cross_dlls "${path}")
++ elseif(EXISTS "${_cross_bin}/${name}")
++  list(APPEND _cross_dlls "${_cross_bin}/${name}")
++ elseif(EXISTS "${_cross_bin}/../x86_64-w64-mingw32/lib/${name}")
++  list(APPEND _cross_dlls "${_cross_bin}/../x86_64-w64-mingw32/lib/${name}")
++ endif()
++endforeach()
++list(REMOVE_DUPLICATES _cross_dlls)
++set(_dll_names "")
++set(_cross_copy COMMAND ${CMAKE_COMMAND} -E true)
++if(_cross_dlls)
++ set(_cross_copy COMMAND ${CMAKE_COMMAND} -E copy_if_different ${_cross_dlls} "$<TARGET_FILE_DIR:judas>"
++                 COMMAND ${CMAKE_COMMAND} -E copy_if_different ${_cross_dlls} "$<TARGET_FILE_DIR:judas>/windows-runtime")
++ foreach(dll IN LISTS _cross_dlls)
++  get_filename_component(name "${dll}" NAME)
++  string(APPEND _dll_names "${name}\n")
++ endforeach()
++endif()
++file(WRITE "${CMAKE_BINARY_DIR}/required-dlls.txt" "${_dll_names}")
++file(MAKE_DIRECTORY "${CMAKE_BINARY_DIR}/cross-licenses")
++configure_file("${judas_sdl_SOURCE_DIR}/LICENSE.txt" "${CMAKE_BINARY_DIR}/cross-licenses/SDL2.txt" COPYONLY)
++configure_file("${judas_glm_SOURCE_DIR}/copying.txt" "${CMAKE_BINARY_DIR}/cross-licenses/GLM.txt" COPYONLY)
++# Preserve the selected toolchain's own redistribution notices. The Python
++# bundle check rejects missing notices; it does not invent license statements.
++foreach(pair "gcc-mingw-w64-base|GNU-runtime.txt" "mingw-w64-common|MinGW-w64.txt")
++ string(REPLACE "|" ";" fields "${pair}")
++ list(GET fields 0 package)
++ list(GET fields 1 output)
++ if(EXISTS "${_cross_bin}/../share/doc/${package}/copyright")
++  configure_file("${_cross_bin}/../share/doc/${package}/copyright" "${CMAKE_BINARY_DIR}/cross-licenses/${output}" COPYONLY)
++ endif()
++endforeach()
++add_custom_target(judas_windows_runtime
++ COMMAND ${CMAKE_COMMAND} -E make_directory "$<TARGET_FILE_DIR:judas>/windows-runtime" "$<TARGET_FILE_DIR:judas>/windows-licenses"
++ ${_cross_copy}
++ COMMAND ${CMAKE_COMMAND} -E copy_if_different "${CMAKE_BINARY_DIR}/required-dlls.txt" "$<TARGET_FILE_DIR:judas>/windows-runtime/required-dlls.txt"
++ COMMAND ${CMAKE_COMMAND} -E copy_directory "${CMAKE_BINARY_DIR}/cross-licenses" "$<TARGET_FILE_DIR:judas>/windows-licenses"
++ VERBATIM)
++get_property(_cross_targets DIRECTORY PROPERTY BUILDSYSTEM_TARGETS)
++foreach(target IN LISTS _cross_targets)
++ get_target_property(kind ${target} TYPE)
++ if(kind STREQUAL "EXECUTABLE")
++  target_sources(${target} PRIVATE "${CMAKE_BINARY_DIR}/generated/judas-cross-$<CONFIG>.rc")
++  add_dependencies(${target} judas_windows_runtime)
++ endif()
++ if(target MATCHES "_tests$|_performance$|_stress$")
++  set_target_properties(${target} PROPERTIES EXCLUDE_FROM_ALL TRUE)
++ endif()
++endforeach()
+diff --git a/cmake/toolchains/WindowsMinGW64.cmake b/cmake/toolchains/WindowsMinGW64.cmake
+new file mode 100644
+index 0000000000000000000000000000000000000000..5f1bbf693f9e62d36a54e3039d12b2f01be01085
+--- /dev/null
++++ b/cmake/toolchains/WindowsMinGW64.cmake
+@@ -0,0 +1,19 @@
++# Optional Linux -> native Windows x64. No vcpkg/MSVC/VM or Wine dependency.
++set(CMAKE_SYSTEM_NAME Windows)
++set(CMAKE_SYSTEM_PROCESSOR x86_64)
++set(JUDAS_MINGW_ROOT "" CACHE PATH "MinGW prefix containing bin/ and x86_64-w64-mingw32/")
++set(_judas_hints "${JUDAS_MINGW_ROOT}/bin")
++find_program(CMAKE_C_COMPILER NAMES x86_64-w64-mingw32-gcc-posix x86_64-w64-mingw32-gcc HINTS ${_judas_hints} REQUIRED)
++find_program(CMAKE_CXX_COMPILER NAMES x86_64-w64-mingw32-g++-posix x86_64-w64-mingw32-g++ HINTS ${_judas_hints} REQUIRED)
++find_program(CMAKE_RC_COMPILER NAMES x86_64-w64-mingw32-windres llvm-windres HINTS ${_judas_hints} REQUIRED)
++# windres otherwise searches an unqualified gcc on PATH, which may be the
++# Linux compiler when using a relocated or POSIX-suffixed MinGW distribution.
++set(CMAKE_RC_FLAGS_INIT "--preprocessor=${CMAKE_C_COMPILER} --preprocessor-arg=-E --preprocessor-arg=-xc --preprocessor-arg=-DRC_INVOKED")
++if(JUDAS_MINGW_ROOT)
++ set(CMAKE_FIND_ROOT_PATH "${JUDAS_MINGW_ROOT}/x86_64-w64-mingw32")
++endif()
++set(CMAKE_FIND_ROOT_PATH_MODE_PROGRAM NEVER)
++set(CMAKE_FIND_ROOT_PATH_MODE_LIBRARY ONLY)
++set(CMAKE_FIND_ROOT_PATH_MODE_INCLUDE ONLY)
++set(CMAKE_FIND_ROOT_PATH_MODE_PACKAGE ONLY)
++list(APPEND CMAKE_TRY_COMPILE_PLATFORM_VARIABLES JUDAS_MINGW_ROOT)
+diff --git a/docs/DISTRIBUTION.md b/docs/DISTRIBUTION.md
+index 7d5c43dd009099745dd7e5cca782f4dc30246b75..facbec3c664ff08a898786440497410ead55970f 100644
+--- a/docs/DISTRIBUTION.md
++++ b/docs/DISTRIBUTION.md
+@@ -15,6 +15,9 @@ cmake --build build/prealpha-Experimental --target judas_linux_sdk -j4
+ python3 build/prealpha-Experimental/linux-sdk/tools/package_sdk.py verify build/prealpha-Experimental/linux-sdk
+ ```
+ 
++For native Windows games exported **from Linux**, use the optional
++[MinGW-w64 cross-build workflow](WINDOWS_CROSS_BUILD.md).
++
+ On Windows use [Build-Windows.ps1](../packaging/windows/Build-Windows.ps1) and the
+ `judas_windows_sdk` target; see [Windows prerequisites](WINDOWS.md). Staging and
+ verification use only Python 3.11+ standard library. Packaged games do not require
+diff --git a/docs/WINDOWS.md b/docs/WINDOWS.md
+index 6f49b97da38067ae84d6bb2ef68e881df1f95495..3ffa50c233a0081c0bfecfbede8095ab23c5a563 100644
+--- a/docs/WINDOWS.md
++++ b/docs/WINDOWS.md
+@@ -1,5 +1,11 @@
+ # Windows editor and exported games
+ 
++## Building Windows games from Linux
++
++An optional [MinGW-w64 cross-build/export workflow](WINDOWS_CROSS_BUILD.md) now
++builds native Windows x64 games on Linux. Native MSVC remains the editor/SDK
++workflow below. These are separate toolchains, not interchangeable C++ libraries.
++
+ ## Current Pre-Alpha SDK packaging
+ 
+ Native Windows remains a best-effort functional-validation platform. New packaging
+diff --git a/docs/WINDOWS_CROSS_BUILD.md b/docs/WINDOWS_CROSS_BUILD.md
+new file mode 100644
+index 0000000000000000000000000000000000000000..3e7f9a822e5a38adbad27046ed46a1ff5ed57d60
+--- /dev/null
++++ b/docs/WINDOWS_CROSS_BUILD.md
+@@ -0,0 +1,103 @@
++# Build Windows games on Linux
++
++Current Pre-Alpha support: **optional Windows x64 Release games built with
++MinGW-w64 GCC on Linux**. The native MSVC editor/SDK workflow remains available.
++This is a command-line game export workflow; the editor's Export command still
++builds for its native platform. It does not produce an Android package or a
++complete cross-built Windows SDK.
++
++## Requirements
++
++Use the ordinary [Linux build prerequisites](../README.md), CMake, GNU make,
++Python 3.11+ and a POSIX-thread MinGW-w64 x64 compiler, resource compiler and
++Windows development headers. On Debian/Ubuntu:
++
++```sh
++sudo apt install g++-mingw-w64-x86-64-posix binutils-mingw-w64-x86-64
++```
++
++SDL2, GLM, FreeType, HarfBuzz and ICU use the repository's pinned local archives.
++ICU needs **native Linux generator tools as well as target libraries**. The
++build creates both automatically; `--icu-host-build` can reuse an existing
++**ICU 76.1** native build containing `config/icucross.mk`. No Wine, Windows VM,
++Visual Studio, Windows SDK or GitHub login is needed to build/export.
++
++## Build and export
++
++From the source root, use separate native and target build directories:
++
++```sh
++python3 tools/build_windows_cross.py \
++  --build build/windows-cross-Experimental \
++  --host-build build/linux-cross-host-Experimental \
++  --jobs 4 \
++  --bundle build/windows-runtime-001 \
++  --project projects/hearthworld/hearthworld.judasproj \
++  --output build/Hearthworld-Windows-001
++```
++
++Choose **new** bundle/package destinations. Existing content is never replaced.
++Omit `--project` and `--output` to build only the checked target runtime bundle.
++Use `--channel main|Experimental|Local` for provenance, not branch promotion.
++A relocated toolchain prefix can be supplied with `--mingw-root PREFIX`; it
++must contain `bin/` and `x86_64-w64-mingw32/`, including redistribution notices.
++The helper records commands, elapsed times and outcomes in its evidence directory.
++First builds compile the engine and its dependencies for two platforms; allow
++substantial time and disk space. Subsequent builds are incremental.
++
++To reuse a bundle explicitly:
++
++```sh
++python3 tools/export_windows.py \
++  --project projects/hearthworld/hearthworld.judasproj \
++  --output build/Hearthworld-Windows-002 \
++  --runtime-bundle build/windows-runtime-001 \
++  --host-exporter build/linux-cross-host-Experimental/judas_export \
++  --host-runtime build/linux-cross-host-Experimental/judas \
++  --engine-data .
++python3 tools/export_windows.py --verify build/Hearthworld-Windows-002
++python3 tools/windows_runtime.py verify build/windows-runtime-001
++```
++
++The Linux exporter validates and cooks the ordinary game and assets. The second
++phase substitutes the checked Windows runtime and recursive non-system DLL
++closure. **Host exporter and target runtime must have identical source/channel
++identities.** Changing source, tracked documentation or observed untracked build
++inputs requires rebuilding both; do not edit identity JSON to bypass this check.
++Windows-invalid filenames, case aliases, symlinks and runtime payload collisions
++are rejected before publication. An interrupted export leaves the destination
++unpublished. Checksums detect substitution/corruption, not malicious signing.
++
++## Package and provenance
++
++Distribute the **whole output directory**, not just `judas.exe`. It contains the
++game project/assets, engine fonts/notices, selected compiler-runtime DLLs,
++`BUILD_PROVENANCE.json` and the exhaustive `WINDOWS_PACKAGE.json` checksums.
++SDL2 and ICU (including Unicode data) are static. GCC runtime DLLs remain app-local;
++players do not need Visual Studio or a compiler. Windows system APIs and working
++OpenGL 3.3/audio drivers remain OS/device requirements. No software graphics
++replacement is shipped. User saves use the ordinary LocalAppData game identity,
++independently of the installation directory.
++
++Target provenance is read from a bounded **PE RCDATA resource**, not inferred from
++a renamed executable or a sidecar JSON. Native `--build-info-json` can be compared
++with that resource on Windows. Existing source-archive provenance also works;
++use the established [distribution instructions](DISTRIBUTION.md) to preserve the
++archive identity rather than stripping it.
++
++## Qualification and boundaries
++
++See the [cross-build evidence](evidence/windows-cross/REPORT.md) for exact tested
++versions, commands, failures and native Windows results. Compilation and import
++closure alone are not gameplay acceptance. VM software rendering is functional
++validation, not physical GPU or performance qualification. Test your own project
++on its target Windows hardware before distribution.
++
++Qualified scope is MinGW-w64 GCC, x64, Release, Linux host, Windows 10 VM.
++Windows 11/hardware/gamepads and other compiler versions require further testing.
++Clang's Windows GNU target was investigated with an actual executable probe, but
++**the full Clang engine build is not qualified**. A target flag alone does not
++supply Windows headers, C++ libraries, runtime DLLs or ICU native tools. MSVC ABI
++and MinGW C++ ABI are different: do not mix their prebuilt libraries.
++Signing, installers, ARM/32-bit Windows, native Windows editor cross-SDK delivery
++and automatic editor integration are outside this first support boundary.
+diff --git a/scripts/check_windows_cross.py b/scripts/check_windows_cross.py
+new file mode 100644
+index 0000000000000000000000000000000000000000..e629af11bf84114ed974a447ecd66864a0416bf6
+--- /dev/null
++++ b/scripts/check_windows_cross.py
+@@ -0,0 +1,111 @@
++#!/usr/bin/env python3
++"""Focused non-executing cross-export contracts against a real generated PE.
++
++Requires an actual MinGW build (no synthetic PE substitutes). No Windows/Wine is
++launched. Native Windows functional acceptance is a separate required receipt.
++"""
++import argparse
++import copy
++import json
++from pathlib import Path
++import shutil
++import sys
++import tempfile
++
++sys.dont_write_bytecode = True
++ROOT = Path(__file__).resolve().parents[1]
++sys.path.insert(0, str(ROOT / 'tools'))
++import windows_runtime as runtime
++import export_windows as exporter
++
++
++def main():
++    parser = argparse.ArgumentParser(description=__doc__)
++    parser.add_argument('--build', type=Path, required=True)
++    parser.add_argument('--output', type=Path, required=True)
++    args = parser.parse_args()
++    build, out = args.build.resolve(), args.output.resolve()
++    out.mkdir(parents=True, exist_ok=False)
++    rows = []
++
++    def check(name, function, rejects=False):
++        try:
++            function()
++            passed, detail = not rejects, 'accepted'
++        except (ValueError, OSError, KeyError, UnicodeError) as error:
++            passed, detail = rejects, str(error)
++        rows.append({'name': name, 'passed': passed, 'expectedRejection': rejects, 'detail': detail})
++        print(('PASS ' if passed else 'FAIL ') + name)
++
++    raw = (build / 'judas.exe').read_bytes()
++    actual = runtime.embedded_identity(raw)
++    check('real PE embedded identity matches CMake target identity',
++          lambda: assert_equal(actual, json.loads((build / 'judas-build-info-Release.json').read_text())))
++    check('truncated PE is rejected', lambda: runtime.embedded_identity(raw[:64]), True)
++    corrupt = bytearray(raw)
++    corrupt[0:2] = b'NO'
++    check('wrong binary format rejected', lambda: runtime.embedded_identity(bytes(corrupt)), True)
++    check('empty embedded metadata rejected', lambda: runtime.embedded_identity(b''), True)
++    text = json.dumps(actual).encode()
++    check('sidecar JSON is not treated as binary provenance', lambda: runtime.embedded_identity(text), True)
++    with tempfile.TemporaryDirectory(prefix='judas-cross-contracts-') as temporary:
++        root = Path(temporary)
++        bundle = root / 'bundle'
++        manifest = runtime.prepare(build, bundle)
++        check('real runtime bundle verifies', lambda: runtime.verify(bundle))
++        check('bundle rejects replacing an existing directory', lambda: runtime.prepare(build, bundle), True)
++        path = bundle / 'judas.exe'
++        original = path.read_bytes()
++        path.write_bytes(original[:-1] + bytes([original[-1] ^ 1]))
++        check('changed executable bytes rejected', lambda: runtime.verify(bundle), True)
++        path.write_bytes(original)
++        metadata = bundle / runtime.MANIFEST
++        changed = copy.deepcopy(manifest)
++        changed['build']['compiler_version'] = 'invented'
++        metadata.write_text(json.dumps(changed))
++        check('forged sidecar identity rejected against embedded resource', lambda: runtime.verify(bundle), True)
++        metadata.write_text(json.dumps(manifest))
++        dll = next(bundle.glob('*.dll'))
++        held = dll.read_bytes()
++        dll.unlink()
++        check('missing runtime DLL rejected', lambda: runtime.verify(bundle), True)
++        dll.write_bytes(held)
++        extra = bundle / 'unexpected.dll'
++        extra.write_bytes(held)
++        check('unexpected runtime DLL rejected', lambda: runtime.verify(bundle), True)
++        extra.unlink()
++        check('positive bundle remains valid after negative controls', lambda: runtime.verify(bundle))
++        host = dict(actual, platform='Linux')
++        check('same-source cross-platform pair accepted', lambda: exporter.compatible(host, actual))
++        for field, value in [('source_fingerprint', '0' * 64), ('source_revision', '1' * 40),
++                             ('channel', 'main' if host['channel'] != 'main' else 'Experimental'),
++                             ('source_untracked_count', host['source_untracked_count'] + 1)]:
++            other = dict(host)
++            other[field] = value
++            check('mismatched ' + field + ' rejected', lambda other=other: exporter.compatible(other, actual), True)
++        paths = root / 'paths'
++        paths.mkdir()
++        for name in ['RUNTIME_REQUIREMENTS.txt', 'BUILD_PROVENANCE.json', 'DEPENDENCIES.json', 'judas-package.txt']:
++            (paths / name).write_text('native generated content')
++        check('existing native exporter reserved names remain valid', lambda: exporter.windows_paths(paths))
++        for name in ['CON.txt', 'trailing.', 'trailing ', 'bad:name', 'judas.exe', 'kernel32.dll', 'ENGINE']:
++            p = paths / name
++            p.write_text('negative')
++            check('Windows path rejects ' + repr(name), lambda: exporter.windows_paths(paths), True)
++            p.unlink()
++        (paths / 'Twin').write_text('a')
++        (paths / 'twin').write_text('b')
++        check('case-insensitive alias rejected', lambda: exporter.windows_paths(paths), True)
++    result = {'schema': 1, 'scope': 'metadata, native-target closure and cross-export negative contracts; no Windows execution',
++              'runtime': actual, 'checks': len(rows), 'failures': sum(not x['passed'] for x in rows), 'results': rows}
++    (out / 'RESULTS.json').write_text(json.dumps(result, indent=2) + '\n')
++    return 1 if result['failures'] else 0
++
++
++def assert_equal(a, b):
++    if a != b:
++        raise ValueError('Values differ')
++
++
++if __name__ == '__main__':
++    raise SystemExit(main())
+diff --git a/src/ProjectExporter.cpp b/src/ProjectExporter.cpp
+index 4509c03241ecb41d8008f384b91a9bc08c8cadca..33be1df88246e3479c7224570dd9a6f2aca514ad 100644
+--- a/src/ProjectExporter.cpp
++++ b/src/ProjectExporter.cpp
+@@ -343,7 +343,7 @@ bool ExportProject(const Project& project, const ProjectExportOptions& options,
+         Copy(engineRoot / "third_party/RUNTIME_NOTICES.txt", staging / "engine/third_party/RUNTIME_NOTICES.txt");
+         Copy(engineRoot / "LICENSE", staging / "engine/licenses/Judas.txt");
+ #ifdef _WIN32
+-        write("RUNTIME_REQUIREMENTS.txt", "Judas Windows x64 Release package — UNVALIDATED candidate. Run judas.exe.\nRequires Windows 10/11 x64 and an OpenGL 3.3 graphics driver.\nICU 76.1 data/common/internationalization DLLs and Visual C++ runtime files are bundled. SDL2 and other engine dependencies are statically linked.\nNo editor, source tree or build directory is required. Saves use LocalAppData/judas/games/<save-id>/Saves.\nAsset policy/inclusion: DEPENDENCIES.json. Licenses: engine/licenses and engine/third_party/RUNTIME_NOTICES.txt.\n");
++        write("RUNTIME_REQUIREMENTS.txt", "Judas Windows x64 Release package — UNVALIDATED candidate. Run judas.exe.\nRequires Windows 10/11 x64 and an OpenGL 3.3 graphics driver.\nRequired non-system runtime DLLs are bundled according to this build's windows-runtime manifest. ICU and compiler-runtime linkage depend on the selected Windows toolchain; consult BUILD_PROVENANCE.json and engine/licenses. SDL2 is statically linked.\nNo editor, source tree or build directory is required. Saves use LocalAppData/judas/games/<save-id>/Saves.\nAsset policy/inclusion: DEPENDENCIES.json. Licenses: engine/licenses and engine/third_party/RUNTIME_NOTICES.txt.\n");
+ #else
+         write("RUNTIME_REQUIREMENTS.txt", "Judas Linux desktop Release package. Run ./judas (no arguments).\nRequires compatible glibc/libstdc++, SDL2 and its system dependencies, OpenGL 3.3 drivers.\nNo editor or development tree is required. Platform libraries are system provided; not bundled.\nUnicode text libraries and ICU locale/boundary data are statically linked.\nProject fonts/catalogs are packaged assets; no desktop font or ICU_DATA lookup.\nAsset policy and inclusion reasons: DEPENDENCIES.json. All is conservative; closure requires explicit dynamic/runtime roots. Scenes follow project inclusion/exclusion policy.\nSaves: $XDG_DATA_HOME/judas/games/<save-id>/Saves, otherwise $HOME/.local/share/...\nThird-party notices: engine/third_party/RUNTIME_NOTICES.txt and engine/licenses.\n");
+ #endif
+diff --git a/tests/WindowsCrossAudioTests.cpp b/tests/WindowsCrossAudioTests.cpp
+new file mode 100644
+index 0000000000000000000000000000000000000000..6033ccee6b87096668ab158a6e184defae74bd2d
+--- /dev/null
++++ b/tests/WindowsCrossAudioTests.cpp
+@@ -0,0 +1,59 @@
++// Genuine output-device callback proof. No device-free mixer or manual clock.
++// Run on an interactive desktop with an available audio device; failure is
++// reported honestly rather than falling back to a synthetic mixer.
++#include "AudioSystem.h"
++#include <chrono>
++#include <cmath>
++#include <iostream>
++#include <thread>
++
++int main() {
++    unsigned checks = 0, failures = 0;
++    const auto check = [&](bool ok, const std::string& name) {
++        ++checks;
++        failures += !ok;
++        std::cout << (ok ? "PASS " : "FAIL ") << name << std::endl;
++    };
++    AudioSystem audio;
++    std::string error;
++    if (!audio.Init(error, false)) {
++        check(false, "native output device opens: " + error);
++        return 1;
++    }
++    check(audio.IsInitialized(), "native output device initialized without noDevice mode");
++    AudioData data;
++    data.sampleRate = 48000;
++    data.channels = 1;
++    data.samples.resize(48000 * 3);
++    for (size_t i = 0; i < data.samples.size(); ++i)
++        data.samples[i] = float(std::sin(double(i) * 6.283185307179586 * 330 / 48000)) * .1f;
++    const auto clip = audio.CreateClip(std::move(data));
++    AudioSettings settings;
++    settings.spatial = false;
++    settings.volume = .1f;
++    const auto voice = audio.CreateVoice(clip, settings, error);
++    check(clip.IsValid() && voice.IsValid(), "ordinary buffered voice is created: " + error);
++    check(audio.Play(voice), "ordinary voice starts on the native device");
++    std::this_thread::sleep_for(std::chrono::milliseconds(180));
++    AudioVoiceSnapshot first, paused, resumed;
++    check(audio.Snapshot(voice, first) && first.cursorAvailable && first.cursorFrames > 0,
++          "actual output callback consumes media frames (no manual mixer advancement)");
++    check(audio.Pause(voice), "native voice pauses");
++    audio.Snapshot(voice, paused);
++    std::this_thread::sleep_for(std::chrono::milliseconds(100));
++    AudioVoiceSnapshot held;
++    check(audio.Snapshot(voice, held) && held.cursorFrames == paused.cursorFrames,
++          "paused native voice retains its media cursor");
++    check(audio.Resume(voice), "native voice resumes");
++    std::this_thread::sleep_for(std::chrono::milliseconds(120));
++    check(audio.Snapshot(voice, resumed) && resumed.cursorFrames > held.cursorFrames,
++          "resumed native callback advances the real cursor");
++    check(audio.Stop(voice), "native voice stops cleanly");
++    std::cout << "CURSOR_FRAMES " << first.cursorFrames << ' ' << paused.cursorFrames << ' '
++              << resumed.cursorFrames << '\n';
++    audio.DestroyVoice(voice);
++    audio.DestroyClip(clip);
++    audio.Shutdown();
++    std::cout << "SUMMARY " << checks << " checks " << failures << " failures\n";
++    return failures ? 1 : 0;
++}
+diff --git a/tools/build_windows_cross.py b/tools/build_windows_cross.py
+new file mode 100644
+index 0000000000000000000000000000000000000000..eacb03da7aa92eaef4bedef63a1072b36195b316
+--- /dev/null
++++ b/tools/build_windows_cross.py
+@@ -0,0 +1,102 @@
++#!/usr/bin/env python3
++"""Optional native Windows x64 cross-build/export from Linux; never starts a VM.
++
++Requires CMake, GNU make, Python 3.11+, native build prerequisites and MinGW-w64.
++All engine dependencies use the repository's pinned local source archives.
++"""
++import argparse
++import datetime
++import json
++import os
++from pathlib import Path
++import platform
++import shutil
++import subprocess
++import sys
++import time
++
++sys.dont_write_bytecode = True
++ROOT = Path(__file__).resolve().parents[1]
++from windows_runtime import prepare, verify
++from export_windows import export
++
++
++def main():
++    parser = argparse.ArgumentParser(description=__doc__)
++    parser.add_argument('--build', type=Path, default=ROOT / 'build/windows-cross-Experimental')
++    parser.add_argument('--host-build', type=Path, default=ROOT / 'build/linux-cross-host-Experimental')
++    parser.add_argument('--mingw-root', type=Path, help='Optional relocated prefix with bin/ and x86_64-w64-mingw32/')
++    parser.add_argument('--icu-host-build', type=Path, help='Reuse an existing ICU 76.1 native build/config/icucross.mk')
++    parser.add_argument('--channel', choices=['main', 'Experimental', 'Local'], default='Experimental')
++    parser.add_argument('--jobs', type=int, default=4)
++    parser.add_argument('--project', type=Path)
++    parser.add_argument('--output', type=Path)
++    parser.add_argument('--bundle', type=Path, help='New verified runtime-bundle destination')
++    parser.add_argument('--log-dir', type=Path, help='New evidence directory (default inside cross build)')
++    args = parser.parse_args()
++    if platform.system() != 'Linux':
++        parser.error('This optional entry point is for a Linux host; use Build-Windows.ps1 for native MSVC')
++    if args.jobs < 1 or args.jobs > 64:
++        parser.error('--jobs must be 1–64')
++    if bool(args.project) != bool(args.output):
++        parser.error('--project and --output must be supplied together')
++    prefix = args.mingw_root.resolve() if args.mingw_root else None
++    compiler = prefix / 'bin/x86_64-w64-mingw32-g++-posix' if prefix else None
++    if not compiler or not compiler.is_file():
++        compiler = shutil.which('x86_64-w64-mingw32-g++-posix') or shutil.which('x86_64-w64-mingw32-g++')
++    if not compiler:
++        parser.error('MinGW-w64 x64 C++ compiler not found. Install g++-mingw-w64-x86-64-posix, or pass --mingw-root PREFIX')
++    build, host = args.build.resolve(), args.host_build.resolve()
++    if build == host:
++        parser.error('Native and cross build directories must be separate')
++    stamp = datetime.datetime.now(datetime.timezone.utc).strftime('%Y%m%dT%H%M%S%fZ')
++    logs = args.log_dir.resolve() if args.log_dir else build / ('cross-evidence-' + stamp)
++    logs.mkdir(parents=True, exist_ok=False)
++    result = {'schema': 1, 'utc': stamp, 'host': platform.platform(), 'channel': args.channel,
++              'crossCompiler': str(compiler), 'runs': [], 'windowsExecution': 'not performed by this build tool'}
++
++    def run(name, command):
++        started = time.monotonic()
++        with (logs / (name + '.log')).open('w') as stream:
++            done = subprocess.run(list(map(str, command)), cwd=ROOT, stdout=stream, stderr=subprocess.STDOUT)
++        result['runs'].append({'name': name, 'argv': list(map(str, command)), 'exit': done.returncode,
++                               'seconds': time.monotonic() - started})
++        (logs / 'RESULTS.json').write_text(json.dumps(result, indent=2) + '\n')
++        print(name, done.returncode, flush=True)
++        if done.returncode:
++            raise RuntimeError(name + ' failed; see ' + str(logs / (name + '.log')))
++
++    try:
++        configure = ['cmake', '-S', ROOT, '-B', build,
++                     '-DCMAKE_TOOLCHAIN_FILE=' + str(ROOT / 'cmake/toolchains/WindowsMinGW64.cmake'),
++                     '-DCMAKE_BUILD_TYPE=Release', '-DJUDAS_BUILD_CHANNEL=' + args.channel,
++                     '-DJUDAS_CROSS_DEPENDENCY_JOBS=' + str(args.jobs)]
++        if prefix:
++            configure.append('-DJUDAS_MINGW_ROOT=' + str(prefix))
++        if args.icu_host_build:
++            configure.append('-DJUDAS_ICU_HOST_TOOLS=' + str(args.icu_host_build.resolve()))
++        run('cross-configure', configure)
++        run('cross-build', ['cmake', '--build', build, '--target', 'judas', 'judas_export',
++                            'judas_script_check', '-j', args.jobs])
++        destination = args.bundle.resolve() if args.bundle else build / ('runtime-' + stamp)
++        manifest = prepare(build, destination)
++        result['runtimeBundle'] = str(destination)
++        result['runtimeIdentity'] = manifest['build']
++        if args.project:
++            run('host-configure', ['cmake', '-S', ROOT, '-B', host, '-DCMAKE_BUILD_TYPE=Release',
++                                   '-DJUDAS_BUILD_CHANNEL=' + args.channel])
++            run('host-build', ['cmake', '--build', host, '--target', 'judas', 'judas_export', '-j', args.jobs])
++            package = export(args.project, args.output, destination, host / 'judas_export', host / 'judas', ROOT)
++            result['package'] = str(args.output.resolve())
++            result['packageFiles'] = len(package['files'])
++        result['metadataVerified'] = bool(verify(destination))
++        (logs / 'RESULTS.json').write_text(json.dumps(result, indent=2) + '\n')
++        print(json.dumps(result, indent=2))
++    except (OSError, ValueError, RuntimeError, subprocess.SubprocessError) as error:
++        result['error'] = str(error)
++        (logs / 'RESULTS.json').write_text(json.dumps(result, indent=2) + '\n')
++        parser.exit(1, str(error) + '\n')
++
++
++if __name__ == '__main__':
++    main()
+diff --git a/tools/export_windows.py b/tools/export_windows.py
+new file mode 100644
+index 0000000000000000000000000000000000000000..71232e546049359852bda9737ebf96787d234125
+--- /dev/null
++++ b/tools/export_windows.py
+@@ -0,0 +1,177 @@
++#!/usr/bin/env python3
++"""Export a native Windows game on Linux using a checked cross-runtime bundle.
++
++The existing native exporter performs asset/cook/script/dependency validation in
++an owned temporary package. This second target-assembly phase replaces only the
++native runtime payload, adds the verified Windows closure and publishes once.
++No Windows executable is run on Linux; Wine and a Windows SDK are not required.
++"""
++import argparse
++import json
++import os
++from pathlib import Path
++import re
++import shutil
++import subprocess
++import sys
++import tempfile
++
++sys.dont_write_bytecode = True
++from package_sdk import probe_identity
++from windows_runtime import MANIFEST as RUNTIME_MANIFEST, digest, embedded_identity, file_record, closure, verify as verify_runtime
++
++RESERVED = {'judas', 'judas.exe', 'engine', 'game.judasproj', 'judas-package.txt',
++            'runtime_requirements.txt', 'game-icon.png', 'dependencies.json',
++            'build_provenance.json', 'windows_package.json', 'sha256sums'}
++DEVICES = re.compile(r'^(con|prn|aux|nul|com[1-9]|lpt[1-9])(?:\..*)?$', re.I)
++NATIVE_RESERVED = {'judas', 'engine', 'game.judasproj', 'judas-package.txt',
++                   'RUNTIME_REQUIREMENTS.txt', 'game-icon.png', 'DEPENDENCIES.json', 'BUILD_PROVENANCE.json'}
++
++def records(root):
++    return [file_record(root, path) for path in sorted(root.rglob('*'))
++            if path.is_file() and path.relative_to(root).as_posix() != 'WINDOWS_PACKAGE.json']
++
++SOURCE_FIELDS = ('version', 'maturity', 'channel', 'source_revision', 'source_tree',
++                 'source_fingerprint', 'source_dirty', 'source_origin',
++                 'source_untracked_count', 'source_untracked_fingerprint')
++
++
++def compatible(host, target):
++    for field in SOURCE_FIELDS:
++        if host.get(field) != target.get(field):
++            raise ValueError('Host exporter / Windows runtime differ in ' + field + '; rebuild both from the same source')
++    if host.get('platform') != 'Linux' or host.get('configuration') != 'Release':
++        raise ValueError('Cross export requires a native Linux Release exporter')
++
++
++def windows_paths(root):
++    seen = set()
++    for path in root.rglob('*'):
++        if path.is_symlink():
++            raise ValueError('Symlink is not a portable Windows package entry: ' + str(path))
++        rel = path.relative_to(root)
++        key = rel.as_posix().casefold()
++        if key in seen:
++            raise ValueError('Case-insensitive Windows path collision: ' + str(rel))
++        seen.add(key)
++        # Windows normalizes trailing dots/spaces and device names independently
++        # of extension; checking on Linux is essential before packaging.
++        for part in rel.parts:
++            if part.endswith((' ', '.')) or any(c in part for c in '<>:"\\|?*') or any(ord(c) < 32 for c in part) or DEVICES.fullmatch(part):
++                raise ValueError('Invalid Windows package path: ' + str(rel))
++        if rel.parts[0].casefold().endswith('.dll'):
++            raise ValueError('Project content collides with Windows runtime DLL namespace: ' + str(rel))
++        if rel.parts[0].casefold() in RESERVED and rel.parts[0] not in NATIVE_RESERVED:
++            raise ValueError('Project content collides with reserved Windows path: ' + str(rel))
++
++
++def export(project, output, bundle, exporter, native_runtime, engine_data=None):
++    project, output, bundle = Path(project).resolve(), Path(output).absolute(), Path(bundle).resolve()
++    exporter, native_runtime = Path(exporter).resolve(), Path(native_runtime).resolve()
++    if output.exists() or output.is_symlink():
++        raise ValueError('Choose a new package destination; existing content is never overwritten')
++    if output == project.parent or output.is_relative_to(project.parent) or project.parent.is_relative_to(output):
++        raise ValueError('Package must be outside, and must not contain, the source project')
++    target = verify_runtime(bundle)
++    host = probe_identity(exporter)
++    compatible(host, target['build'])
++    output.parent.mkdir(parents=True, exist_ok=True)
++    workspace = Path(tempfile.mkdtemp(prefix='.judas-cross-export-', dir=output.parent))
++    package = workspace / 'content'
++    try:
++        env = os.environ.copy()
++        if engine_data:
++            env['JUDAS_ENGINE_ROOT'] = str(Path(engine_data).resolve())
++        result = subprocess.run([str(exporter), str(project), str(package), str(native_runtime)],
++                                env=env, text=True, capture_output=True, timeout=300)
++        if result.returncode:
++            raise ValueError('Native asset export failed: ' + result.stdout + result.stderr)
++        windows_paths(package)
++        provenance = json.loads((package / 'BUILD_PROVENANCE.json').read_text())
++        if provenance['exporter'] != host:
++            raise ValueError('Asset-export provenance differs from checked host exporter')
++        (package / 'judas').unlink()
++        for row in target['files']:
++            source = bundle / row['path']
++            if row['path'].startswith('licenses/'):
++                destination = package / 'engine' / row['path']
++            else:
++                destination = package / row['path']
++            if destination.exists():
++                raise ValueError('Windows payload would overwrite content: ' + row['path'])
++            destination.parent.mkdir(parents=True, exist_ok=True)
++            shutil.copy2(source, destination)
++        # Verify after copy as well: the bundle must not have changed between
++        # metadata inspection and publication. Every target byte is checked.
++        for row in target['files']:
++            destination = package / ('engine/' + row['path'] if row['path'].startswith('licenses/') else row['path'])
++            if digest(destination) != row['sha256']:
++                raise ValueError('Runtime payload changed during export: ' + row['path'])
++        if embedded_identity((package / 'judas.exe').read_bytes()) != target['build']:
++            raise ValueError('Packaged PE identity differs from verified bundle')
++        provenance.update(runtime=target['build'], runtime_sha256=digest(package / 'judas.exe'),
++                          target='Windows-x64', runtime_bundle_sha256=digest(bundle / RUNTIME_MANIFEST))
++        (package / 'BUILD_PROVENANCE.json').write_text(json.dumps(provenance, indent=2) + '\n')
++        (package / 'RUNTIME_REQUIREMENTS.txt').write_text(
++            'Native Windows x64 Judas game. Run judas.exe on Windows 10/11 with an OpenGL 3.3 driver.\n'
++            'Cross-built on Linux with MinGW-w64. No Visual Studio, compiler, Wine, Linux host or VM is needed to play.\n'
++            'SDL2, ICU Unicode data/text dependencies and engine libraries are statically linked.\n'
++            'Required non-system compiler runtime DLLs are bundled beside judas.exe. Do not remove them.\n'
++            'Windows system APIs and a functioning graphics/audio device remain operating-system requirements.\n'
++            'Saves use LocalAppData/judas/games/<save-id>/Saves, not the installation directory.\n'
++            'Notices: engine/licenses and engine/third_party/RUNTIME_NOTICES.txt.\n'
++            'Checksums: WINDOWS_PACKAGE.json. Metadata verification is not hardware/gameplay acceptance.\n')
++        files = records(package)
++        report = {'schema': 1, 'kind': 'judas-windows-game', 'runtime': target['build'],
++                  'hostExporter': host, 'systemImports': target['systemImports'], 'files': files,
++                  'qualification': 'Linux export complete; native Windows/device acceptance is separately recorded'}
++        (package / 'WINDOWS_PACKAGE.json').write_text(json.dumps(report, indent=2) + '\n')
++        verify_package(package)
++        package.rename(output)
++        return report
++    finally:
++        shutil.rmtree(workspace)
++
++
++def verify_package(root):
++    root = Path(root).resolve()
++    value = json.loads((root / 'WINDOWS_PACKAGE.json').read_text())
++    if value.get('schema') != 1 or value.get('kind') != 'judas-windows-game':
++        raise ValueError('Invalid Windows package manifest')
++    if any(path.is_symlink() for path in root.rglob('*')):
++        raise ValueError('Package symlinks are not supported')
++    actual = records(root)
++    if actual != value['files']:
++        raise ValueError('Windows package inventory/checksum mismatch')
++    if embedded_identity((root / 'judas.exe').read_bytes()) != value['runtime']:
++        raise ValueError('Actual Windows runtime identity mismatch')
++    if closure(root) != value['systemImports']:
++        raise ValueError('Windows package import closure mismatch')
++    return value
++
++
++def main():
++    parser = argparse.ArgumentParser(description=__doc__)
++    parser.add_argument('--project', type=Path)
++    parser.add_argument('--output', type=Path)
++    parser.add_argument('--runtime-bundle', type=Path)
++    parser.add_argument('--host-exporter', type=Path)
++    parser.add_argument('--host-runtime', type=Path)
++    parser.add_argument('--engine-data', type=Path)
++    parser.add_argument('--verify', type=Path, help='Verify an existing package; do not execute it')
++    args = parser.parse_args()
++    try:
++        if args.verify:
++            value = verify_package(args.verify)
++        else:
++            if not all((args.project, args.output, args.runtime_bundle, args.host_exporter, args.host_runtime)):
++                parser.error('Export requires --project, --output, --runtime-bundle, --host-exporter and --host-runtime')
++            value = export(args.project, args.output, args.runtime_bundle, args.host_exporter,
++                           args.host_runtime, args.engine_data)
++        print(json.dumps({'files': len(value['files']), 'runtime': value['runtime']}, indent=2))
++    except (OSError, ValueError, KeyError, subprocess.SubprocessError) as error:
++        parser.exit(1, 'Windows export failed: ' + str(error) + '\n')
++
++
++if __name__ == '__main__':
++    main()
+diff --git a/tools/windows_runtime.py b/tools/windows_runtime.py
+new file mode 100644
+index 0000000000000000000000000000000000000000..c75f26bc42f2b79b2338fdc21bdaed754b861430
+--- /dev/null
++++ b/tools/windows_runtime.py
+@@ -0,0 +1,230 @@
++#!/usr/bin/env python3
++"""Prepare/verify a native Windows runtime bundle without executing a PE file.
++
++Reads embedded RCDATA build identity, checks PE machine/import closure and hashes.
++Manifests detect accidental substitution/corruption, not malicious replacement.
++Windows API compatibility and gameplay must still be tested on genuine Windows.
++"""
++import argparse
++import hashlib
++import json
++from pathlib import Path
++import re
++import shutil
++import struct
++import sys
++import tempfile
++
++sys.dont_write_bytecode = True
++from binary_dependencies import Reader, pe
++from package_sdk import validate_identity
++
++MANIFEST = 'WINDOWS_RUNTIME.json'
++# These are OS contracts, never copied from the build host. The Windows
++# qualification additionally resolves actual System32 files/imports.
++SYSTEM_DLLS = set(('advapi32 avrt bcrypt cfgmgr32 comctl32 comdlg32 crypt32 d3d9 '
++                  'd3d11 dinput8 dwmapi dxgi dxguid gdi32 hid imm32 iphlpapi kernel32 '
++                  'ksuser mf mfplat mfreadwrite mfuuid msacm32 msvcrt ntdll ole32 '
++                  'oleaut32 opengl32 powrprof propsys psapi rpcrt4 secur32 setupapi '
++                  'shell32 shlwapi user32 userenv uuid uxtheme version winmm winspool '
++                  'wintrust ws2_32 wtsapi32 xinput1_4 xinput9_1_0 ucrtbase').split())
++SYSTEM_DLLS = {name + '.dll' for name in SYSTEM_DLLS}
++
++
++def digest(path):
++    with Path(path).open('rb') as stream:
++        return hashlib.file_digest(stream, 'sha256').hexdigest()
++
++
++def system_dll(name):
++    return name.lower() in SYSTEM_DLLS or bool(re.fullmatch(r'(api|ext)-ms-[a-z0-9-]+\.dll', name.lower()))
++
++
++def embedded_identity(data):
++    """Read our unique numeric RCDATA 101 resource through bounded PE tables."""
++    metadata = pe(data)
++    if metadata['machine'] != 0x8664 or metadata['format'] != 'PE32+':
++        raise ValueError('Windows runtime must be a native x64 PE32+ binary')
++    r = Reader(data)
++    base = r.unpack('<I', 0x3c)[0]
++    count, optional_size = r.unpack('<H', base + 6)[0], r.unpack('<H', base + 20)[0]
++    optional = base + 24
++    if optional_size < 136 or r.unpack('<I', optional + 108)[0] < 3:
++        raise ValueError('PE has no declared resource directory')
++    resource, resource_size = r.unpack('<II', optional + 112 + 2 * 8)
++    if not resource or not 16 <= resource_size <= 32 * 1024 * 1024:
++        raise ValueError('Runtime has no bounded embedded Judas build resource')
++    sections = [r.unpack('<8sIIIIIIHHI', optional + optional_size + i * 40)
++                for i in range(count)]
++
++    def position(address, length):
++        for section in sections:
++            _, _, virtual, size, raw, *_ = section
++            if virtual <= address and address + length <= virtual + size:
++                r.block(raw + address - virtual, length)
++                return raw + address - virtual
++        raise ValueError('Resource RVA is not backed by a file section')
++
++    def entries(offset):
++        if offset > resource_size - 16:
++            raise ValueError('Resource directory outside declared extent')
++        at = position(resource + offset, 16)
++        named, ids = r.unpack('<HH', at + 12)
++        total = named + ids
++        if total > 4096 or offset + 16 + total * 8 > resource_size:
++            raise ValueError('Invalid resource directory size')
++        return [r.unpack('<II', position(resource + offset + 16 + i * 8, 8))
++                for i in range(total)]
++
++    offset = 0
++    for expected in (10, 101):
++        matching = [child for identifier, child in entries(offset) if identifier == expected]
++        if len(matching) != 1 or not matching[0] & 0x80000000:
++            raise ValueError('Missing/duplicate Judas build resource directory')
++        offset = matching[0] & 0x7fffffff
++    languages = entries(offset)
++    if len(languages) != 1 or languages[0][1] & 0x80000000:
++        raise ValueError('Ambiguous/cyclic Judas build resource language')
++    leaf = languages[0][1]
++    if leaf + 16 > resource_size:
++        raise ValueError('Build resource leaf outside directory')
++    address, length, _, _ = r.unpack('<IIII', position(resource + leaf, 16))
++    if not 1 <= length <= 16384:
++        raise ValueError('Embedded build identity size is invalid')
++    value = json.loads(r.block(position(address, length), length).decode('utf-8'))
++    validate_identity(value)
++    if value['platform'] != 'Windows' or value['configuration'] != 'Release':
++        raise ValueError('Bundle requires a Windows Release runtime')
++    if value['source_origin'] not in ('git', 'archive'):
++        raise ValueError('Runtime lacks source provenance')
++    for field, size in [('source_revision', 40), ('source_tree', 40), ('source_fingerprint', 64)]:
++        if not re.fullmatch('[0-9a-f]{' + str(size) + '}', value[field]):
++            raise ValueError('Invalid embedded source identity: ' + field)
++    return value
++
++
++def file_record(root, path):
++    return {'path': path.relative_to(root).as_posix(), 'bytes': path.stat().st_size,
++            'sha256': digest(path)}
++
++
++def records(root):
++    return [file_record(root, path) for path in sorted(root.rglob('*'))
++            if path.is_file() and path.relative_to(root).as_posix() != MANIFEST]
++
++
++def closure(root):
++    files = {}
++    for path in root.iterdir():
++        if path.is_file() and path.suffix.lower() in ('.exe', '.dll'):
++            name = path.name.lower()
++            if name in files:
++                raise ValueError('Windows case-insensitive file collision: ' + name)
++            files[name] = path
++    if 'judas.exe' not in files:
++        raise ValueError('Bundle has no judas.exe')
++    external = set()
++    visited = set()
++    pending = ['judas.exe']
++    while pending:
++        name = pending.pop()
++        if name in visited:
++            continue
++        visited.add(name)
++        info = pe(files[name].read_bytes())
++        if info['machine'] != 0x8664 or info['format'] != 'PE32+':
++            raise ValueError('Non-x64 runtime dependency: ' + name)
++        for dependency in info['needed']:
++            if system_dll(dependency):
++                if dependency in files:
++                    raise ValueError('Refusing bundled Windows system DLL: ' + dependency)
++                external.add(dependency)
++            elif dependency not in files:
++                raise ValueError(name + ': missing runtime DLL ' + dependency)
++            else:
++                pending.append(dependency)
++    if set(files) != visited:
++        raise ValueError('Unexpected/unreferenced runtime PE files: ' + ', '.join(sorted(set(files) - visited)))
++    return sorted(external)
++
++
++def verify(root):
++    root = Path(root).resolve()
++    manifest = json.loads((root / MANIFEST).read_text())
++    if manifest.get('schema') != 1 or manifest.get('kind') != 'judas-windows-runtime':
++        raise ValueError('Invalid Windows runtime bundle schema')
++    if any(path.is_symlink() for path in root.rglob('*')):
++        raise ValueError('Runtime bundle symlinks are not allowed')
++    if records(root) != manifest['files']:
++        raise ValueError('Runtime bundle inventory/checksum mismatch')
++    actual = embedded_identity((root / 'judas.exe').read_bytes())
++    if actual != manifest['build']:
++        raise ValueError('Manifest does not match actual embedded runtime identity')
++    if closure(root) != manifest['systemImports']:
++        raise ValueError('Runtime dependency closure differs from manifest')
++    required = ['SDL2.txt', 'GLM.txt', 'MinGW-w64.txt']
++    if any('libstdc++' in row['path'] or 'libgcc_' in row['path'] for row in manifest['files']):
++        required.append('GNU-runtime.txt')
++    for name in required:
++        if not (root / 'licenses' / name).is_file():
++            raise ValueError('Required dependency notice missing: ' + name)
++    return manifest
++
++
++def prepare(build, output):
++    build, output = Path(build).resolve(), Path(output).absolute()
++    identity = embedded_identity((build / 'judas.exe').read_bytes())
++    if output.exists() or output.is_symlink():
++        raise ValueError('Choose a new runtime bundle directory; existing content is never overwritten')
++    output.parent.mkdir(parents=True, exist_ok=True)
++    stage = Path(tempfile.mkdtemp(prefix='.judas-windows-runtime-', dir=output.parent))
++    try:
++        shutil.copy2(build / 'judas.exe', stage / 'judas.exe')
++        sources = {}
++        for directory in (build / 'windows-runtime', build):
++            for path in directory.glob('*.dll'):
++                name = path.name.lower()
++                if name in sources and digest(sources[name]) != digest(path):
++                    raise ValueError('Conflicting dependency candidates: ' + name)
++                sources[name] = path
++        pending, copied = ['judas.exe'], set()
++        while pending:
++            for name in pe((stage / pending.pop()).read_bytes())['needed']:
++                if system_dll(name) or name in copied:
++                    continue
++                if name not in sources:
++                    raise ValueError('Cross build did not stage required DLL: ' + name)
++                shutil.copy2(sources[name], stage / name)
++                copied.add(name)
++                pending.append(name)
++        shutil.copytree(build / 'windows-licenses', stage / 'licenses')
++        manifest = {'schema': 1, 'kind': 'judas-windows-runtime', 'build': identity,
++                    'systemImports': closure(stage), 'files': records(stage),
++                    'qualification': 'PE metadata and closure only; genuine Windows execution required'}
++        (stage / MANIFEST).write_text(json.dumps(manifest, indent=2) + '\n')
++        verify(stage)
++        stage.rename(output)
++        return manifest
++    finally:
++        if stage.exists():
++            shutil.rmtree(stage)
++
++
++def main():
++    parser = argparse.ArgumentParser(description=__doc__)
++    commands = parser.add_subparsers(dest='command', required=True)
++    make = commands.add_parser('prepare')
++    make.add_argument('build', type=Path)
++    make.add_argument('output', type=Path)
++    check = commands.add_parser('verify')
++    check.add_argument('output', type=Path)
++    args = parser.parse_args()
++    try:
++        result = prepare(args.build, args.output) if args.command == 'prepare' else verify(args.output)
++        print(json.dumps(result, indent=2))
++    except (OSError, ValueError, KeyError, struct.error) as error:
++        parser.exit(1, 'Windows runtime bundle failed: ' + str(error) + '\n')
++
++
++if __name__ == '__main__':
++    main()

@@ -7,3 +7,6 @@ docs/evidence/m78*/** -text
 
 # M87 follow-up manifests identify exact captured bytes, including raw CSV.
 docs/evidence/m87/live-slowdown-followup/** -text
+
+# Linux-to-Windows qualification keeps raw native receipts and numerical samples.
+docs/evidence/windows-cross/** -text

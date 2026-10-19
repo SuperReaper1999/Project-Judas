@@ -15,6 +15,9 @@ cmake --build build/prealpha-Experimental --target judas_linux_sdk -j4
 python3 build/prealpha-Experimental/linux-sdk/tools/package_sdk.py verify build/prealpha-Experimental/linux-sdk
 ```
 
+For native Windows games exported **from Linux**, use the optional
+[MinGW-w64 cross-build workflow](WINDOWS_CROSS_BUILD.md).
+
 On Windows use [Build-Windows.ps1](../packaging/windows/Build-Windows.ps1) and the
 `judas_windows_sdk` target; see [Windows prerequisites](WINDOWS.md). Staging and
 verification use only Python 3.11+ standard library. Packaged games do not require

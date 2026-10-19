@@ -1,0 +1,19 @@
+{
+  "architecture": "x86_64",
+  "build_id": "0.1.0-prealpha-Experimental-f6892ca-dirty-ce88da00f2d5-u84f47c24fcd0",
+  "channel": "Experimental",
+  "compiler": "GNU",
+  "compiler_version": "13.0.0",
+  "configuration": "Release",
+  "maturity": "pre-alpha",
+  "platform": "Windows",
+  "schema": 1,
+  "source_dirty": true,
+  "source_fingerprint": "ce88da00f2d5def2dc4244f4e50ed369f62781cfb56cf7f272d35e605a79d9b1",
+  "source_origin": "git",
+  "source_revision": "f6892caac5f912241ad600cec9ebeba99043e14d",
+  "source_tree": "6c5a1befca1a07f2ac6cd340996d39d8b4560083",
+  "source_untracked_count": 16,
+  "source_untracked_fingerprint": "84f47c24fcd098f88732ceab246b2e0e19eca31f56acdd72f89f8bfa1621daf2",
+  "version": "0.1.0-prealpha"
+}

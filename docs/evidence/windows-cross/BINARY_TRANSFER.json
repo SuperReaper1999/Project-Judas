@@ -1,0 +1,11 @@
+{
+  "judas.exe": "e88059a8062f05c5fedfbaa289e0db6c126c57630d3da6ced3b53eb7ff580c62",
+  "judas_build_identity_tests.exe": "7bd9c09e6401ee119a3f8e287f995dbc04465c18f4185d3b073b6a352305cf7b",
+  "judas_windows_readiness_tests.exe": "b9e54ffb863ff37c231ddaff9e9b7c10d3adf20f6e806b1839355cb5ba97d7e5",
+  "judas_windows_cross_audio_tests.exe": "9472d020af4c5443b11c4ba7c3c03d8b0272903b8f683f7dda1b0b26a0c85507",
+  "judas_character_motor_tests.exe": "88233092ae6dd61858450b6ec46f81b268895a8464ba9d87ef695a510841a7ae",
+  "judas_text_localization_tests.exe": "70ae647166fd65906bcd3a5a35d58b78c7843c3dde195050db059bdd37b35bb1",
+  "judas_hearthworld_application_tests.exe": "8b97152feb5264973ea513fafec81168ede278fa42bec7bc4fc0b79e09f90d46",
+  "judas_script_check.exe": "b3f0cd8481b0cace10ca5258872d08871586943900528f9c2d07fcef3088d9dd",
+  "qualification.zip": "b4baf831fbe5ec5506754f55a87165313cb565906d97adb302fecb9f2ca25d97"
+}

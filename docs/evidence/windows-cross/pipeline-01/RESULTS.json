@@ -1,0 +1,94 @@
+{
+  "schema": 1,
+  "utc": "20261019T175041155747Z",
+  "host": "Linux-7.0.0-38-generic-x86_64-with-glibc2.43",
+  "channel": "Experimental",
+  "crossCompiler": "/home/conner/Documents/GitHub/Project-Judas/.cache/windows-cross/toolchain/root/usr/bin/x86_64-w64-mingw32-g++-posix",
+  "runs": [
+    {
+      "name": "cross-configure",
+      "argv": [
+        "cmake",
+        "-S",
+        "/home/conner/Documents/GitHub/Project-Judas",
+        "-B",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/windows-cross/build",
+        "-DCMAKE_TOOLCHAIN_FILE=/home/conner/Documents/GitHub/Project-Judas/cmake/toolchains/WindowsMinGW64.cmake",
+        "-DCMAKE_BUILD_TYPE=Release",
+        "-DJUDAS_BUILD_CHANNEL=Experimental",
+        "-DJUDAS_CROSS_DEPENDENCY_JOBS=4",
+        "-DJUDAS_MINGW_ROOT=/home/conner/Documents/GitHub/Project-Judas/.cache/windows-cross/toolchain/root/usr",
+        "-DJUDAS_ICU_HOST_TOOLS=/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-doc-cleanup-20261019/build-make/unicode/build/src/judas_icu_build-build"
+      ],
+      "exit": 0,
+      "seconds": 3.147781911000493
+    },
+    {
+      "name": "cross-build",
+      "argv": [
+        "cmake",
+        "--build",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/windows-cross/build",
+        "--target",
+        "judas",
+        "judas_export",
+        "judas_script_check",
+        "-j",
+        "4"
+      ],
+      "exit": 0,
+      "seconds": 9.92395734299862
+    },
+    {
+      "name": "host-configure",
+      "argv": [
+        "cmake",
+        "-S",
+        "/home/conner/Documents/GitHub/Project-Judas",
+        "-B",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-doc-cleanup-20261019/build-make",
+        "-DCMAKE_BUILD_TYPE=Release",
+        "-DJUDAS_BUILD_CHANNEL=Experimental"
+      ],
+      "exit": 0,
+      "seconds": 3.9975701029979973
+    },
+    {
+      "name": "host-build",
+      "argv": [
+        "cmake",
+        "--build",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-doc-cleanup-20261019/build-make",
+        "--target",
+        "judas",
+        "judas_export",
+        "-j",
+        "4"
+      ],
+      "exit": 0,
+      "seconds": 24.633497118000378
+    }
+  ],
+  "windowsExecution": "not performed by this build tool",
+  "runtimeBundle": "/home/conner/Documents/GitHub/Project-Judas/.cache/windows-cross/runtime-01",
+  "runtimeIdentity": {
+    "schema": 1,
+    "version": "0.1.0-prealpha",
+    "maturity": "pre-alpha",
+    "channel": "Experimental",
+    "build_id": "0.1.0-prealpha-Experimental-f6892ca-dirty-ae7fb5249f65-u29afbb0b8160",
+    "source_revision": "f6892caac5f912241ad600cec9ebeba99043e14d",
+    "source_tree": "6c5a1befca1a07f2ac6cd340996d39d8b4560083",
+    "source_dirty": true,
+    "source_fingerprint": "ae7fb5249f6544e0b83906acca7f0d8170001655165671bd9486b49be74760b5",
+    "source_untracked_count": 23,
+    "source_untracked_fingerprint": "29afbb0b8160ae6034b43219f085280316afe48193d0b5dc8aec45977b689371",
+    "source_origin": "git",
+    "platform": "Windows",
+    "architecture": "x86_64",
+    "configuration": "Release",
+    "compiler": "GNU",
+    "compiler_version": "13.0.0"
+  },
+  "error": "Host exporter / Windows runtime differ in source_fingerprint; rebuild both from the same source"
+}

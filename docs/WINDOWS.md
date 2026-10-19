@@ -1,5 +1,11 @@
 # Windows editor and exported games
 
+## Building Windows games from Linux
+
+An optional [MinGW-w64 cross-build/export workflow](WINDOWS_CROSS_BUILD.md) now
+builds native Windows x64 games on Linux. Native MSVC remains the editor/SDK
+workflow below. These are separate toolchains, not interchangeable C++ libraries.
+
 ## Current Pre-Alpha SDK packaging
 
 Native Windows remains a best-effort functional-validation platform. New packaging
