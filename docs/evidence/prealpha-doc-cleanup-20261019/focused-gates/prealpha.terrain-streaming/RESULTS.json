@@ -1,0 +1,131 @@
+{
+  "format": 1,
+  "startedUtc": "2026-10-19T13:48:11.584210+00:00",
+  "sourceRevision": "be1b7d634c674dca34f3a36299da510492ca2aea",
+  "trackedWorktreeStatus": "M .github/workflows/prealpha.yml\n M CMakeLists.txt\n M README.md\n M cmake/JudasValidation.cmake\n M docs/ANDROID.md\n M docs/ANIMATION.md\n M docs/ARCHITECTURE.md\n M docs/DOCUMENTATION_MAINTENANCE.md\n M docs/EDITOR_GUIDE.md\n M docs/FIRST_PROJECT.md\n M docs/JUDASJS.md\n M docs/MODEL_IMPORT.md\n M docs/PREALPHA.md\n M docs/SCRIPTING.md\n M docs/TEST_HARNESS.md\n M docs/WINDOWS.md\n M docs/judas.d.ts\n M docs/judasjs/API_INVENTORY.md\n M docs/judasjs/animation-ragdolls.md\n M docs/judasjs/api-inventory.json\n M docs/judasjs/character.md\n M docs/judasjs/cookbook.md\n M docs/judasjs/effects-camera.md\n M docs/judasjs/entities.md\n M docs/judasjs/lifecycle.md\n M docs/judasjs/materials.md\n M docs/judasjs/saves.md\n M docs/judasjs/signals.md\n M packaging/sdk-inventory.json\n M projects/physics_stress_lab/README.md\n M scripts/check_judasjs_api.mjs\n M scripts/prealpha_packaging_checks.py\n M scripts/prealpha_validate.py\n M src/RuntimeWorld.cpp\n M tests/test_prealpha_validation.py\n M tools/package_source.py",
+  "manifestSha256": "30933cadb31667a2904f27c6bd89c267ba7f5425e100ac099bc035d416a47523",
+  "trackedDiffSha256": "bb21505e56c6158a99937b8e3ec6058804bad1ea919f022d6ef7bd9102bd48d0",
+  "platform": "Linux-7.0.0-38-generic-x86_64-with-glibc2.43",
+  "machine": "x86_64",
+  "cpuCount": 8,
+  "groups": [],
+  "tests": [
+    {
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-doc-cleanup-20261019/build-make/judas_living_world_streaming_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha/validation/20261019T134811Z-bd899b17/terrain-streaming"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+      "timeoutSeconds": 120,
+      "binarySha256": "85625cb1f9049897f30066a08a183465eb68b162372d2475eb3da7c4b4834b6f",
+      "exit": 0,
+      "status": "passed",
+      "binarySha256After": "85625cb1f9049897f30066a08a183465eb68b162372d2475eb3da7c4b4834b6f",
+      "seconds": 0.39786906100016495,
+      "buildIdentity": {
+        "architecture": "x86_64",
+        "build_id": "0.1.0-prealpha-Experimental-be1b7d6-dirty-10194f78dfb8-ubb2d5da9db02",
+        "channel": "Experimental",
+        "compiler": "GNU",
+        "compiler_version": "15.2.0",
+        "configuration": "Release",
+        "maturity": "pre-alpha",
+        "platform": "Linux",
+        "schema": 1,
+        "source_dirty": true,
+        "source_fingerprint": "10194f78dfb82647baf717009f9b703d8e251120c101ed6b31b74ad74a0fafee",
+        "source_origin": "git",
+        "source_revision": "be1b7d634c674dca34f3a36299da510492ca2aea",
+        "source_tree": "8721c06c656d8c2ddf4261b617e3ca5bcff55f27",
+        "source_untracked_count": 20,
+        "source_untracked_fingerprint": "bb2d5da9db028ca5de7296046e24548243fbaeeb570a017d454f0fadb27491c8",
+        "version": "0.1.0-prealpha"
+      },
+      "name": "terrain-streaming"
+    }
+  ],
+  "knownFindings": [
+    {
+      "id": "CCD-MESH-ARRIVAL",
+      "status": "resolved-first-arrival",
+      "scheduled": true,
+      "reason": "Pass2 finite swept-SAT bounds correct the validated first-arrival contract; it now runs in the ordinary collision group. This does not close later curved-sheet continuation.",
+      "evidence": "docs/evidence/prealpha-pass2/physics"
+    },
+    {
+      "id": "CCD-MESH-CONTINUATION",
+      "status": "resolved-original-fixtures-bounded-ccd",
+      "scheduled": true,
+      "reason": "Original unchanged 90-step glancing cases and rotated control pass with native per-feature growth scheduling. This is not universal CCD: bounded sampling, native rear selection and deep initial-overlap limitations remain. Corrected mesh support costs more than the old missed-collision path.",
+      "evidence": "docs/evidence/prealpha-ccd-continuation-20261019"
+    },
+    {
+      "id": "FLU-001",
+      "status": "deferred-failing",
+      "scheduled": false,
+      "reason": "Legacy PBF settling contract retained unchanged; separate fluid review required.",
+      "evidence": "docs/evidence/m78-completion/FINDINGS_FINAL.json"
+    },
+    {
+      "id": "LEGACY-CONTINUATION",
+      "status": "documented-incompatible-history",
+      "scheduled": false,
+      "reason": "Original a106 snapshot lacks historical continuation data. New-format passes do not certify that snapshot.",
+      "evidence": "docs/evidence/m78-cold-boundary"
+    },
+    {
+      "id": "DENSE-CCD-TAIL",
+      "status": "open-performance-limit",
+      "scheduled": false,
+      "reason": "Focused correctness checks do not certify dense-pile latency; matched profiling is reported separately.",
+      "evidence": "docs/evidence/m91/REPORT.md"
+    },
+    {
+      "id": "LIQUID-BAKE-ROTATION",
+      "status": "resolved-baking",
+      "scheduled": true,
+      "reason": "Baker and runtime use the same normalized owner/field frames and oriented gravity volumes; both original bake-only runtime-publication cases pass unchanged equivalence tolerances. Original full integration exposes separate retained exact-total comparison failure.",
+      "evidence": "docs/evidence/prealpha-liquid-rotation/REPORT.md"
+    },
+    {
+      "id": "LIQUID-BAKE-KNOTS",
+      "status": "resolved-baking",
+      "scheduled": true,
+      "reason": "Positive tetrahedral density is integrated into one monotone cumulative curve, including shared endpoints; unchanged strict Surface1 decoder accepts both original rotated bakes. A later origin sampling limitation remains separately failed.",
+      "evidence": "docs/evidence/prealpha-liquid-rotation/REPORT.md"
+    },
+    {
+      "id": "LIQUID-ORIGIN-GRID-QUERY",
+      "status": "open-query-continuity-failing",
+      "scheduled": false,
+      "reason": "The original half-turn fixture now bakes and publishes, then fails its unchanged post-512m-origin query comparison: float translation crosses a discontinuous disturbed-surface cell boundary. Conserved quantities and wave bytes remain unchanged. This full integration failure is preserved, not counted as a baking pass.",
+      "evidence": "docs/evidence/prealpha-liquid-rotation/REPORT.md"
+    },
+    {
+      "id": "LIQUID-ORIGIN-TOTAL-IDENTITY",
+      "status": "resolved-oracle-causal-baseline",
+      "scheduled": true,
+      "reason": "Pass3 preserves the original failed test and demonstrates its causal-baseline error. Current atomicity compares the immediate pre-request total with the same exact equality and every physical participant byte; earlier legitimate paired-flow conservation tolerance and liquid runtime are unchanged.",
+      "evidence": "docs/evidence/prealpha-pass3/integration/REPORT.md"
+    }
+  ],
+  "humanAcceptance": "not-established",
+  "scope": "explicit manifest subset",
+  "expectedSourceIdentity": {
+    "source_revision": "be1b7d634c674dca34f3a36299da510492ca2aea",
+    "source_fingerprint": "10194f78dfb82647baf717009f9b703d8e251120c101ed6b31b74ad74a0fafee",
+    "source_dirty": true,
+    "source_untracked_fingerprint": "bb2d5da9db028ca5de7296046e24548243fbaeeb570a017d454f0fadb27491c8"
+  },
+  "passed": true,
+  "finishedUtc": "2026-10-19T13:48:12.497787+00:00",
+  "sourceRevisionAfter": "be1b7d634c674dca34f3a36299da510492ca2aea",
+  "trackedWorktreeStatusAfter": "M .github/workflows/prealpha.yml\n M CMakeLists.txt\n M README.md\n M cmake/JudasValidation.cmake\n M docs/ANDROID.md\n M docs/ANIMATION.md\n M docs/ARCHITECTURE.md\n M docs/DOCUMENTATION_MAINTENANCE.md\n M docs/EDITOR_GUIDE.md\n M docs/FIRST_PROJECT.md\n M docs/JUDASJS.md\n M docs/MODEL_IMPORT.md\n M docs/PREALPHA.md\n M docs/SCRIPTING.md\n M docs/TEST_HARNESS.md\n M docs/WINDOWS.md\n M docs/judas.d.ts\n M docs/judasjs/API_INVENTORY.md\n M docs/judasjs/animation-ragdolls.md\n M docs/judasjs/api-inventory.json\n M docs/judasjs/character.md\n M docs/judasjs/cookbook.md\n M docs/judasjs/effects-camera.md\n M docs/judasjs/entities.md\n M docs/judasjs/lifecycle.md\n M docs/judasjs/materials.md\n M docs/judasjs/saves.md\n M docs/judasjs/signals.md\n M packaging/sdk-inventory.json\n M projects/physics_stress_lab/README.md\n M scripts/check_judasjs_api.mjs\n M scripts/prealpha_packaging_checks.py\n M scripts/prealpha_validate.py\n M src/RuntimeWorld.cpp\n M tests/test_prealpha_validation.py\n M tools/package_source.py",
+  "trackedDiffSha256After": "bb21505e56c6158a99937b8e3ec6058804bad1ea919f022d6ef7bd9102bd48d0",
+  "expectedSourceIdentityAfter": {
+    "source_revision": "be1b7d634c674dca34f3a36299da510492ca2aea",
+    "source_fingerprint": "10194f78dfb82647baf717009f9b703d8e251120c101ed6b31b74ad74a0fafee",
+    "source_dirty": true,
+    "source_untracked_fingerprint": "bb2d5da9db028ca5de7296046e24548243fbaeeb570a017d454f0fadb27491c8"
+  }
+}

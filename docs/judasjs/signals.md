@@ -1,4 +1,4 @@
-# signals — owned transient messages (M73 candidate)
+# signals — owned transient messages
 
 [Index](../JUDASJS.md) · [Lifecycle](lifecycle.md) · [Save/restore](saves.md) ·
 [Streaming](streaming.md) · [UI](ui.md)

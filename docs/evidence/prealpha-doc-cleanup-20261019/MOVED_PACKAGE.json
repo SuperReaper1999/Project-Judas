@@ -1,0 +1,11 @@
+{
+  "exit_code": 0,
+  "seconds": 4.5886705739994795,
+  "package": "/tmp/Judas_M60_prealpha_docs_cleanup_20261019",
+  "cwd": "/tmp",
+  "installation_read_only": true,
+  "closed_own_window": "0x1c0000a",
+  "package_bytes": 57234949,
+  "checks": "normal standalone project startup, no script/asset fault, clean own-window close",
+  "human_listening": "NOT CLAIMED"
+}

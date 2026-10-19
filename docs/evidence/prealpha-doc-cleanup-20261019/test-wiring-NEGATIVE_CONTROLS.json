@@ -1,0 +1,141 @@
+{
+  "format": 1,
+  "sourceRevision": "be1b7d634c674dca34f3a36299da510492ca2aea",
+  "baselineFunctionSha256": "33705f535f4a714a4ecff7ac795d6861b8a80f3693e450d615690a3f2f29c5ea",
+  "cases": [
+    {
+      "name": "string_arguments",
+      "input": {
+        "format": 1,
+        "tests": [
+          {
+            "name": "probe",
+            "target": "judas_probe_tests",
+            "groups": [
+              "core"
+            ],
+            "args": "--bad"
+          }
+        ]
+      },
+      "baseline": {
+        "accepted": true
+      },
+      "candidate": {
+        "accepted": false,
+        "diagnostic": "test arguments must be a list of strings"
+      }
+    },
+    {
+      "name": "string_groups",
+      "input": {
+        "format": 1,
+        "tests": [
+          {
+            "name": "probe",
+            "target": "judas_probe_tests",
+            "groups": "core"
+          }
+        ]
+      },
+      "baseline": {
+        "accepted": true
+      },
+      "candidate": {
+        "accepted": false,
+        "diagnostic": "test groups must be a nonempty list of unique names"
+      }
+    },
+    {
+      "name": "string_manual",
+      "input": {
+        "format": 1,
+        "tests": [
+          {
+            "name": "probe",
+            "target": "judas_probe_tests",
+            "groups": [
+              "core"
+            ],
+            "manual": "false"
+          }
+        ]
+      },
+      "baseline": {
+        "accepted": true
+      },
+      "candidate": {
+        "accepted": false,
+        "diagnostic": "manual must be a Boolean"
+      }
+    },
+    {
+      "name": "duplicate_invocation",
+      "input": {
+        "format": 1,
+        "tests": [
+          {
+            "name": "probe",
+            "target": "judas_probe_tests",
+            "groups": [
+              "core"
+            ]
+          },
+          {
+            "name": "renamed-same-command",
+            "target": "judas_probe_tests",
+            "groups": [
+              "core"
+            ]
+          }
+        ]
+      },
+      "baseline": {
+        "accepted": true
+      },
+      "candidate": {
+        "accepted": false,
+        "diagnostic": "duplicate native invocation: renamed-same-command"
+      }
+    },
+    {
+      "name": "unknown_placeholder",
+      "input": {
+        "format": 1,
+        "tests": [
+          {
+            "name": "probe",
+            "target": "judas_probe_tests",
+            "groups": [
+              "core"
+            ],
+            "args": [
+              "{missing}"
+            ]
+          }
+        ]
+      },
+      "baseline": {
+        "accepted": true
+      },
+      "candidate": {
+        "accepted": false,
+        "diagnostic": "test argument placeholders must be {root} or {output}"
+      }
+    },
+    {
+      "name": "empty_suite",
+      "input": {
+        "format": 1,
+        "tests": []
+      },
+      "baseline": {
+        "accepted": true
+      },
+      "candidate": {
+        "accepted": false,
+        "diagnostic": "unsupported validation manifest"
+      }
+    }
+  ]
+}

@@ -1,4 +1,4 @@
-# Materials and scene appearance (M72 candidate)
+# Materials and scene appearance
 
 [Index](../JUDASJS.md) · [Rendering contracts](../MATERIALS.md) · [M72 ownership and review](../M72.md) · [Render visibility](entities.md#render-visibility-m72)
 

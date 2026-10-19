@@ -1,0 +1,5 @@
+PASS fresh evidence directory preserves previous failures
+PASS fixture scene writes: 
+PASS fixture project loads: 
+FAIL independent handshake-deadline TCP service listens: 
+FAIL independent handshake-deadline TCP service listens:  after 4 checks

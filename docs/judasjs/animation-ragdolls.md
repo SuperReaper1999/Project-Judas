@@ -412,13 +412,17 @@ scene/prefab/save paths; disposable solve caches and GPU matrices are not serial
 [Save ownership](saves.md) · [CharacterMotor](character.md) · [Physics](physics.md).
 
 
-## Ragdoll.configureBalance, requestBalance, cancelBalance, balanceState (M77 candidate)
+<a id="ragdollconfigurebalance-requestbalance-cancelbalance-balancestate-m77-candidate"></a>
+
+## Ragdoll.configureBalance, requestBalance, cancelBalance, balanceState (M77)
 
 Judas plans bounded physical corrections; game scripts decide whether to attempt
 standing/recovery and whether to permit corrective steps. Configuration is explicit,
-optional and inactive until requested. These APIs belong to the uncommitted M77 review candidate. The bounded mechanical
-rig envelope and platform results are in [M77](../M77.md); human acceptance is
-pending. They do not provide a general humanoid gait or recovery guarantee.
+optional and inactive until requested. The original bounded mechanical rig envelope
+and platform results are in [M77](../M77.md). Subsequent [cold-save corrections](saves.md#joint-continuation-and-legacy-compatibility)
+preserve physical continuation in new captures; old snapshots without that history
+have a separate compatibility limit. These APIs do not provide a general humanoid
+gait or recovery guarantee.
 
 - `configureBalance(configuration | null)` replaces inactive configuration. Requires
   a ready animated ragdoll; active ownership must be cancelled first. Six unique

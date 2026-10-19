@@ -1,0 +1,12 @@
+{
+  "file": "src/RuntimeWorld.cpp",
+  "before_sha256": "65aa810629784c85ca0e0c888e29ab7292467ec18d854553299f6cd140223332",
+  "after_sha256": "d3c0fd1a7cce61239696881078ec3a5a05347761ea521c899f28758dd10de0ab",
+  "whitespace_stripped_sha256": "2598a2c23ac2946e5508cd5c81dce6cb926a881a100f552a31ab1cbfec84578b",
+  "only_whitespace_changed": true,
+  "reason": "Clean GNU15 Release build exposed two misleading-indentation warnings in existing material setters; separate unconditional publication from guarded resize/return.",
+  "before_object_sha256": "b06d3ae7478d9b56ef352e5833a7bdd8f90a3af95fdb80abdc6e45948731d063",
+  "after_object_sha256": "b06d3ae7478d9b56ef352e5833a7bdd8f90a3af95fdb80abdc6e45948731d063",
+  "object_recompiled_after_source_edit": true,
+  "object_bytes_identical": true
+}

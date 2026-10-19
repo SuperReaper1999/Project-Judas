@@ -1,0 +1,26 @@
+{
+  "current": [],
+  "original": [
+    {
+      "code": 2345,
+      "line": 14,
+      "message": "Argument of type '{}' is not assignable to parameter of type 'CameraRange'.   Type '{}' is missing the following properties from type 'CameraRange': near, far"
+    },
+    {
+      "code": 2345,
+      "line": 15,
+      "message": "Argument of type '{ far: number; }' is not assignable to parameter of type 'CameraRange'.   Property 'near' is missing in type '{ far: number; }' but required in type 'CameraRange'."
+    },
+    {
+      "code": 2345,
+      "line": 16,
+      "message": "Argument of type '{ near: number; }' is not assignable to parameter of type 'CameraRange'.   Property 'far' is missing in type '{ near: number; }' but required in type 'CameraRange'."
+    },
+    {
+      "code": 2578,
+      "line": 46,
+      "message": "Unused '@ts-expect-error' directive."
+    }
+  ],
+  "pass": true
+}

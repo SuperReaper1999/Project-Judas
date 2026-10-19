@@ -55,7 +55,8 @@ not JS source. Asset references may be string properties. There is no exported
 
 Inspector metadata evaluation runs top-level module code in a no-world VM. Keep
 top-level code declarative; importing `judas` is fine, calling its world API there
-fails (logging is allowed). Restart Play after code edits; no hot reload.
+fails (logging is allowed). Stop/Play starts fresh; M94 also provides deliberate
+editor script-session reload. Source edits never trigger automatic hot reload.
 
 ## Callbacks and order
 
@@ -146,7 +147,9 @@ native dispatch function; `globalThis.console` aliases the public logging object
 The constructor context includes `restored`; restored construction has
 `initialState:null`. Loaded script state is installed before `restore(dt)`, which replaces `start(dt)` for modern slots. Reacquire handles and UI in restore; do not replay new-game side effects. [Save contract](saves.md). Legacy delta restoration retains its historical lifecycle.
 
-## Owned signals (M73 candidate)
+<a id="owned-signals-m73-candidate"></a>
+
+## Owned signals (M73)
 
 [Signals](signals.md) are transient slot-generation-owned subscriptions and queues.
 Register in both start and restore through a shared helper, preserving restored facts.

@@ -1,0 +1,90 @@
+{
+  "schema": 1,
+  "input_commit": "be1b7d634c674dca34f3a36299da510492ca2aea",
+  "main_unchanged": "e30d5f9bb72a1a341d3eff7485b8d6b3eb6f8ea9",
+  "utc": "2026-10-19T13:53:48.964825+00:00",
+  "scope": "Documentation/types/build/test tooling; runtime native token sequence unchanged. Linux scoped automation; not human or Alpha certification.",
+  "build": {
+    "fresh_directory": true,
+    "generator": "Unix Makefiles",
+    "configuration": "Release",
+    "compiler": "GNU15.2",
+    "initial_warnings": 2,
+    "final_rebuild_warnings": 0,
+    "native_runtime_followup_warnings": 0,
+    "setup_failures_preserved": [
+      "Ninja not installed; use default Makefiles",
+      "Export initially lacked explicitly built judas runtime target; corrected by building it"
+    ]
+  },
+  "focused_gates": {
+    "registered": 47,
+    "restricted_passed": 43,
+    "restricted_failed_network": [
+      "prealpha.network-transport",
+      "prealpha.network-session",
+      "prealpha.network-boundaries",
+      "prealpha.network-js"
+    ],
+    "restriction_probe": "socket(AF_INET) denied with EPERM",
+    "same_binaries_native_network_passed": 4,
+    "all_47_contracts_qualified": true,
+    "not_a_single_green_ctest_run": true
+  },
+  "api": {
+    "exports": 40,
+    "symbols": 473,
+    "native_operations": 311,
+    "callable_bounds": 244,
+    "structured_shapes": 17,
+    "typechecked_js_examples": 51,
+    "runtime_example_cases": 38,
+    "runtime_cookbook_checks": 312,
+    "drift_negative_controls": 7,
+    "actual_live_surface_matches": true
+  },
+  "additional_checks": {
+    "script_core": 35,
+    "debug_reload": 49,
+    "editor_debugger": 20,
+    "real_consumer_workflow": 37,
+    "materials": 40,
+    "current_docs_unit_cases": 10,
+    "validation_tooling_unit_cases": 26,
+    "typescript_loader_cases": 4,
+    "packaging_cases": 28,
+    "distribution_cases": 16,
+    "editor": "offscreen and native X11 batch/undo/PlayStop/save; real desktop has no capture failure; no human UX claim",
+    "moved_package": "read-only /tmp installation, unrelated cwd /tmp, normal own-window close, exit0"
+  },
+  "preserved_failure": {
+    "id": "LIQUID-ORIGIN-GRID-QUERY",
+    "actual_exit": 1,
+    "assertion": "actual depth/normal/flow sample follows the new chart after21checks",
+    "before_cell": 9,
+    "after_cell": 10,
+    "status": "still failed, not a passed engine contract"
+  },
+  "other_limits": "FLU-001 deferred unchanged; a106 missing historical continuation; dense-contact tails; unsupported compositions; native Windows/Android not rerun",
+  "source_freeze_files": 1358,
+  "source_freeze_verified": true,
+  "binaries_fingerprinted": 49,
+  "runtime_object_bytes_preserved": true,
+  "native_test_declarations_retained": 313,
+  "entry_points_retained": 312,
+  "focused_manifest_unchanged_sha256": "30933cadb31667a2904f27c6bd89c267ba7f5425e100ac099bc035d416a47523",
+  "all_original_audit_findings": 54,
+  "workstreams": 10,
+  "platforms": {
+    "Linux": "native focused functional qualification; offscreen software GL plus actual desktop editor/moved export",
+    "Windows": "existing scoped evidence reviewed; not freshly executed",
+    "Android": "existing scoped evidence and packaging defaults reviewed; no new APK/device validation"
+  },
+  "protected_history": "No tracked protected historical evidence, independent fluid research or accepted game source changed. Previous architecture payload is preserved exactly.",
+  "current_docs": {
+    "documents": 89,
+    "local_links": 1972,
+    "unit_controls": 10,
+    "require_tracked_final": "passed; see CURRENT_DOCS_TRACKED.json"
+  }
+}

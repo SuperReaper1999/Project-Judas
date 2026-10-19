@@ -24,7 +24,7 @@ already-extracted source root-motion tracks fail explicitly; this does not remov
 ordinary STEP playback or ordinary output root-motion queries. Source-preserved
 locomotion can be transferred and then preserved, extracted or made in-place
 through the existing import policy. See [model import](MODEL_IMPORT.md) and the
-[editor workflow](EDITOR_GUIDE.md#animation-retargeting-m74-candidate).
+[editor workflow](EDITOR_GUIDE.md#animation-retargeting).
 
 ## Ownership and pipeline
 

@@ -1,13 +1,10 @@
 # Using the Judas editor
 
-## Local terrain authoring
-
-**View → Terrain sculpt / paint** opens shared-source editing. Select a terrain and open its source, or create/cook a new source and instance. Raise/lower/flatten/smooth/paint use the current draft triangles; Save source and Cook are separate. Draft graphics are not published collision. See [M75 workflow, units and lifetime](M75.md#editor-workflow). No terrain editing during Play.
-
-
-Accepted M71 editor foundation and [M72 render controls](M72.md), with Linux human
-review and native Windows VM checks recorded. Physical Windows GPU/input acceptance
-remains separate. [M74 retargeting](M74.md) is provisionally checkpointed, with human validation pending.
+This is the current editor workflow, building on the accepted M71 foundation,
+[M72 render controls](M72.md) and later authoring/developer tools. Historical
+milestone reports retain their original review status. Physical Windows GPU/input
+acceptance remains separate; see [platform qualification](WINDOWS.md).
+[M74 retargeting](M74.md) retains its recorded pending human-validation status.
 [JudasJS reference](JUDASJS.md) · [Make a game by hand](judasjs/getting-started.md) · [Named authoring](NAMED_AUTHORING.md)
 
 ## Workspace
@@ -78,13 +75,21 @@ The asset browser has three tabs:
 
 Place `.js` files under the project's assets directory, rescan and track them,
 then attach their stable asset IDs through an entity's Scripts component. Edit
-game rules in those files; Stop and Play again to reload scripts. There is no
-embedded code editor or script hot reload. Local file/document opening uses the
+game rules externally or use **View → JudasJS developer tools → Edit source**.
+The built-in source editor saves explicitly and refuses to overwrite a file
+changed externally. **Check project scripts** checks registered modules in Edit
+mode. During Play, **Check sources** compiles/links and **Reload scripts** applies
+a deliberate safe-boundary session replacement. **Keep JSON state** retains only
+supported instance state; constructors and `start` run again. Stop/Play provides
+a fresh authored world. Disk changes never hot-reload automatically.
+Use Stop/Play before cold saves or online sessions after a reload, as described
+in [debugging, stepping and reload boundaries](M94_DEVELOPER_TOOLS.md).
+Local file/document opening uses the
 OS default handler, which must be configured to open Markdown/scripts usefully.
 Use **View → JudasJS reference** or **Making your first project** for the offline
 reference and [hand-authoring guide](judasjs/getting-started.md).
 
-## Animation retargeting (M74 candidate)
+## Animation retargeting
 
 Open **View → Animation retargeting**, or the retargeting button in **Asset
 Browser → Import & tools**. This is an authoring workspace: it creates no game
@@ -121,6 +126,23 @@ The game uses the resulting **ordinary named target clip** with the existing
 animation API. It needs no runtime profile, source rig or retargeting service.
 See [M74's transfer convention, bounds and limitations](M74.md) and
 [model import](MODEL_IMPORT.md) for the matching CLI and recipe format.
+
+For ordinary clip preview, scrubbing and event-track authoring, use
+**View → Animation timeline**; see the [animation workflow](M95_ANIMATION_WORKFLOW.md).
+Retargeting and the runtime animation timeline are separate tools.
+
+## Terrain authoring and live edits
+
+**View → Terrain sculpt / paint** opens shared-source height/radial terrain editing.
+Select a terrain and open its source, or create/cook a new source and instance.
+Raise/lower/flatten/smooth/paint use the current draft triangles; Save source and
+Cook are separate. Draft graphics are not published collision. This authoring
+panel is unavailable during Play. See [M75 workflow, units and lifetime](M75.md#editor-workflow).
+
+[Volumetric terrain](M84_VOLUMETRIC_TERRAIN.md) uses its own source/cook workflow.
+Project JavaScript can separately request bounded live volume edits through
+[runtime terrain APIs](judasjs/terrain.md); that does not enable the authoring
+brush during Play or automatically save runtime changes into the authored source.
 
 ## Lighting, visibility and materials (M72)
 
@@ -180,7 +202,7 @@ Those receipts describe accepted M71 work. [M72 review](M72.md#human-review)
 adds lighting, hiding and material checks; current results are reported there.
 Offscreen checks do not establish physical desktop capture or human usability.
 
-## Local mods and game kits (M76 candidate)
+## Local mods and game kits
 
 Open **View / Local mods / game kits**. Export only a game's explicitly published
 kit. Create a separate kit-bound project and open it normally. Published Kit/base
@@ -192,23 +214,18 @@ requires explicit exact-payload script trust, selects versions and launches an
 installed game with or without mods. Selection changes apply next session/launch.
 See [full contracts, limits and CLI commands](MODDING.md).
 
-## Milestone notifications
+## Build-channel update notifications
 
-The editor checks once at startup for a newer numbered milestone on GitHub main,
-and shows a small dismissible **New milestone available** notice. Use
-**View / Check for new milestones** to check again. **View milestone** opens
-the checkpoint in your browser. This never downloads, installs, fetches or merges
-anything, and ordinary fix/documentation commits do not trigger a notice.
+The optional background check compares this build's exact revision with its
+`main` or `Experimental` GitHub channel. **New Judas build available** reports
+newer commits, including unnumbered fixes. Use **View → Check this channel for
+updates** to retry, and **View changes** to open the comparison in your browser.
+An older or diverged remote history is not reported as an update.
 
-The optional check uses the installed GitHub CLI (`gh`), with its existing sign-in
-for private repository access. It never prompts for credentials. Missing CLI,
-offline access or unavailable authentication leaves startup quiet; a manual
-check reports that it could not check. Requests run in the background with an
-eight-second timeout. The comparison uses milestone checkpoint titles among
-the latest 100 main commits, against the milestone embedded when the editor
-was built. Source archives without Git metadata use the maintained build fallback
-(currently M76); this is a milestone notification, not a release compatibility promise.
-
-Windows VM checks confirmed missing/unsigned-in CLI leaves startup and manual
-checks responsive, without a crash or credential prompt; both editor runs exited
-cleanly. See [native verification](evidence/editor-milestone-notice/RESULTS.md).
+The check uses a bounded read-only HTTPS request through optional system `curl`;
+GitHub CLI and sign-in are not required. Missing utility, offline access, service
+limits or unknown/Local provenance leave the editor usable and report an
+unavailable manual check. No update is installed and no repository is written.
+See [build identity and channels](BUILD_RELEASES.md#update-notification).
+The [original milestone-notice receipt](evidence/editor-milestone-notice/RESULTS.md)
+describes its older `gh` implementation, not this current path.

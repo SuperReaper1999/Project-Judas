@@ -51,7 +51,7 @@ improved in the measured failure region, but isolated stalls remain. It is not a
 60 Hz certification. The default room is the practical watch-tour demonstration;
 press **3** deliberately to inspect the worst case. No body is frozen or removed
 to improve the result. M91 was human accepted at the checkpoint recorded in the
-[current architecture](../../docs/ARCHITECTURE.md#m91-collision-continuity-retained).
+[current architecture](../../docs/ARCHITECTURE.md#physics-ownership-and-modules).
 Pre-Alpha changes remain pending separate human acceptance.
 
 ## Pre-Alpha Pass2

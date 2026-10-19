@@ -8,6 +8,19 @@ changes do not imply fresh Windows execution or physical GPU acceptance. The sha
 checking, save recovery/migration, the dedicated server and all public authoring
 tools. Runtime DLL staging covers executables declared after M76 as well.
 
+### Qualification scope
+
+| Recorded work | Actual scope | What it does not establish |
+|---|---|---|
+| [Pass 4](evidence/prealpha-pass4/windows/REPORT.md) | Complete 18-executable SDK, native physics/persistence, editor and relocated export in Windows 10 VM | Physical GPU/audio/controller acceptance or every later revision |
+| [Pass 5](evidence/prealpha-pass5/windows/REPORT.md) | 16 selected native build targets; engine, editor, runtime/export and M70/M77 cold restoration | A rebuilt all-tool SDK, hardware performance or a clean-machine install |
+| [Later CCD/dense follow-ups](PREALPHA.md) | See each current report's Linux results | No fresh Windows qualification is inferred from shared source or older VM passes |
+
+The Pass 4/5 reports preserve their four then-failing curved-mesh assertions.
+Later Linux corrections do not rewrite those historical Windows results. Linux
+is the current acceptance/performance platform; Windows VM timing is diagnostic
+and nonblocking. Use [Pre-Alpha status](PREALPHA.md) for current finding dispositions.
+
 `Build-Windows.ps1` defaults to `build\windows-Experimental`; use `-Channel main`,
 `Experimental` or `Local` and an optional `-BuildDirectory` to keep independent
 outputs. Channel selection does not grant human acceptance or promote a branch.
@@ -178,7 +191,7 @@ remain alongside the corrected results.
 Use Windows 10 (1903 or newer) / Windows 11, **x64**, with an OpenGL 3.3-capable
 vendor graphics driver. Install Git for Windows and Visual Studio 2022 with
 **Desktop development with C++**, the v143 toolset, Windows SDK, CMake (3.21+),
-and Visual C++ redistributable components. Install **Python 3 with the Windows
+and Visual C++ redistributable components. Install **Python 3.11+ with the Windows
 `py` launcher**, available as `py -3` in the build environment. ICU's upstream
 Windows data-generation tools require it; Python 3.13.16 was used in the VM
 verification. Python is a build prerequisite, not a packaged-game requirement.
@@ -306,7 +319,8 @@ power-loss storage durability. Operator Windows visual/editor acceptance also
 remains outstanding. Retain the unvalidated candidate label until the appropriate
 remaining checks are accepted; VM screenshots and synthetic input do not supply
 that acceptance.
-Historical Linux-only harnesses are not all ported; build the SDK target rather
+The unvalidated build-script label describes a newly produced artifact; earlier
+VM passes do not automatically validate that artifact. Historical Linux-only harnesses are not all ported; build the SDK target rather
 than every historical test target. No installers, signing, MSIX or automatic
 updates are supplied. Explorer executable-resource icons are not added in this
 candidate; the existing Judas SDL window/fallback game icon remains embedded.

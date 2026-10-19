@@ -43,7 +43,7 @@ original files use `mixamo.com`. An invalid choice reports available takes. Reci
 clip entries select, rename, trim, loop and choose root policy. Keep all clips by
 omitting `clips`. No Blender/NLA merge is required.
 
-**Different compatible skeletons:** M74's [retargeting workspace](EDITOR_GUIDE.md#animation-retargeting-m74-candidate)
+**Different compatible skeletons:** M74's [retargeting workspace](EDITOR_GUIDE.md#animation-retargeting)
 uses one reusable `Imports/*.judasretarget` correspondence/reference profile.
 The target recipe adds a `motions[]` entry with `retargetProfile`, source take
 and ordinary output clip name. This extends motion assembly, rather than adding

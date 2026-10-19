@@ -1,0 +1,413 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="(empty)"
+	tests="47"
+	failures="4"
+	disabled="0"
+	skipped="0"
+	hostname=""
+	time="63"
+	timestamp="2026-10-19T14:47:26"
+	>
+	<testcase name="prealpha.build-identity" classname="prealpha.build-identity" time="0.856147" status="run">
+		<properties>
+			<property name="cmake_labels" value="core;prealpha"/>
+		</properties>
+		<system-out>build-identity passed
+/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha/validation/20261019T134726Z-b3377804/RESULTS.json
+</system-out>
+	</testcase>
+	<testcase name="prealpha.collision-geometry" classname="prealpha.collision-geometry" time="1.77073" status="run">
+		<properties>
+			<property name="cmake_labels" value="collision;core;prealpha"/>
+		</properties>
+		<system-out>collision-geometry passed
+/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha/validation/20261019T134726Z-18763c8d/RESULTS.json
+</system-out>
+	</testcase>
+	<testcase name="prealpha.collision-witness" classname="prealpha.collision-witness" time="0.844085" status="run">
+		<properties>
+			<property name="cmake_labels" value="collision;prealpha"/>
+		</properties>
+		<system-out>collision-witness passed
+/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha/validation/20261019T134728Z-e9c840ba/RESULTS.json
+</system-out>
+	</testcase>
+	<testcase name="prealpha.rigid-contact" classname="prealpha.rigid-contact" time="1.29528" status="run">
+		<properties>
+			<property name="cmake_labels" value="collision;core;prealpha"/>
+		</properties>
+		<system-out>rigid-contact passed
+/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha/validation/20261019T134729Z-db1dabca/RESULTS.json
+</system-out>
+	</testcase>
+	<testcase name="prealpha.impact-solver" classname="prealpha.impact-solver" time="0.644417" status="run">
+		<properties>
+			<property name="cmake_labels" value="collision;prealpha"/>
+		</properties>
+		<system-out>impact-solver passed
+/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha/validation/20261019T134730Z-a564e514/RESULTS.json
+</system-out>
+	</testcase>
+	<testcase name="prealpha.impact-timing" classname="prealpha.impact-timing" time="0.650244" status="run">
+		<properties>
+			<property name="cmake_labels" value="collision;prealpha"/>
+		</properties>
+		<system-out>impact-timing passed
+/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha/validation/20261019T134731Z-bcc7a3cc/RESULTS.json
+</system-out>
+	</testcase>
+	<testcase name="prealpha.impact-candidates" classname="prealpha.impact-candidates" time="0.611459" status="run">
+		<properties>
+			<property name="cmake_labels" value="collision;prealpha"/>
+		</properties>
+		<system-out>impact-candidates passed
+/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha/validation/20261019T134732Z-57f26e78/RESULTS.json
+</system-out>
+	</testcase>
+	<testcase name="prealpha.contact-sat-filter" classname="prealpha.contact-sat-filter" time="1.34557" status="run">
+		<properties>
+			<property name="cmake_labels" value="collision;prealpha"/>
+		</properties>
+		<system-out>contact-sat-filter passed
+/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha/validation/20261019T134732Z-0b34b6db/RESULTS.json
+</system-out>
+	</testcase>
+	<testcase name="prealpha.contact-sphere-filter" classname="prealpha.contact-sphere-filter" time="0.9828" status="run">
+		<properties>
+			<property name="cmake_labels" value="collision;prealpha"/>
+		</properties>
+		<system-out>contact-sphere-filter passed
+/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha/validation/20261019T134734Z-cdd3a3a9/RESULTS.json
+</system-out>
+	</testcase>
+	<testcase name="prealpha.impact-support-sets" classname="prealpha.impact-support-sets" time="0.850508" status="run">
+		<properties>
+			<property name="cmake_labels" value="collision;prealpha"/>
+		</properties>
+		<system-out>impact-support-sets passed
+/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha/validation/20261019T134735Z-6d39ef73/RESULTS.json
+</system-out>
+	</testcase>
+	<testcase name="prealpha.support-continuation" classname="prealpha.support-continuation" time="0.657249" status="run">
+		<properties>
+			<property name="cmake_labels" value="collision;prealpha"/>
+		</properties>
+		<system-out>support-continuation passed
+/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha/validation/20261019T134735Z-24ddd518/RESULTS.json
+</system-out>
+	</testcase>
+	<testcase name="prealpha.native-mesh-growth" classname="prealpha.native-mesh-growth" time="0.614247" status="run">
+		<properties>
+			<property name="cmake_labels" value="collision;prealpha"/>
+		</properties>
+		<system-out>native-mesh-growth passed
+/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha/validation/20261019T134736Z-16ce4b81/RESULTS.json
+</system-out>
+	</testcase>
+	<testcase name="prealpha.clip-polygon" classname="prealpha.clip-polygon" time="0.612616" status="run">
+		<properties>
+			<property name="cmake_labels" value="collision;prealpha"/>
+		</properties>
+		<system-out>clip-polygon passed
+/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha/validation/20261019T134737Z-47647f7e/RESULTS.json
+</system-out>
+	</testcase>
+	<testcase name="prealpha.impact-mesh-arrival" classname="prealpha.impact-mesh-arrival" time="5.2957" status="run">
+		<properties>
+			<property name="cmake_labels" value="collision;prealpha"/>
+		</properties>
+		<system-out>impact-mesh-arrival passed
+/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha/validation/20261019T134737Z-a0cd9071/RESULTS.json
+</system-out>
+	</testcase>
+	<testcase name="prealpha.impact-mesh-continuation" classname="prealpha.impact-mesh-continuation" time="6.52055" status="run">
+		<properties>
+			<property name="cmake_labels" value="collision;prealpha"/>
+		</properties>
+		<system-out>impact-mesh-continuation passed
+/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha/validation/20261019T134743Z-8231ccb6/RESULTS.json
+</system-out>
+	</testcase>
+	<testcase name="prealpha.liquid-rotation" classname="prealpha.liquid-rotation" time="0.886348" status="run">
+		<properties>
+			<property name="cmake_labels" value="liquid;prealpha"/>
+		</properties>
+		<system-out>liquid-rotation passed
+/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha/validation/20261019T134749Z-4ee5ef7f/RESULTS.json
+</system-out>
+	</testcase>
+	<testcase name="prealpha.liquid-bake-frames" classname="prealpha.liquid-bake-frames" time="1.11013" status="run">
+		<properties>
+			<property name="cmake_labels" value="liquid;prealpha"/>
+		</properties>
+		<system-out>liquid-bake-frames passed
+/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha/validation/20261019T134750Z-623ab07d/RESULTS.json
+</system-out>
+	</testcase>
+	<testcase name="prealpha.liquid-bake-normalization-only" classname="prealpha.liquid-bake-normalization-only" time="1.11004" status="run">
+		<properties>
+			<property name="cmake_labels" value="liquid;prealpha"/>
+		</properties>
+		<system-out>liquid-bake-normalization-only passed
+/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha/validation/20261019T134751Z-4022c4c3/RESULTS.json
+</system-out>
+	</testcase>
+	<testcase name="prealpha.liquid-bake-knots-only" classname="prealpha.liquid-bake-knots-only" time="1.10943" status="run">
+		<properties>
+			<property name="cmake_labels" value="liquid;prealpha"/>
+		</properties>
+		<system-out>liquid-bake-knots-only passed
+/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha/validation/20261019T134752Z-2e57d7de/RESULTS.json
+</system-out>
+	</testcase>
+	<testcase name="prealpha.liquid-reservoir" classname="prealpha.liquid-reservoir" time="1.60987" status="run">
+		<properties>
+			<property name="cmake_labels" value="liquid;prealpha"/>
+		</properties>
+		<system-out>liquid-reservoir passed
+/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha/validation/20261019T134753Z-f3dcfb47/RESULTS.json
+</system-out>
+	</testcase>
+	<testcase name="prealpha.liquid-surface" classname="prealpha.liquid-surface" time="2.06528" status="run">
+		<properties>
+			<property name="cmake_labels" value="liquid;prealpha"/>
+		</properties>
+		<system-out>liquid-surface passed
+/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha/validation/20261019T134755Z-6fc8e775/RESULTS.json
+</system-out>
+	</testcase>
+	<testcase name="prealpha.liquid-origin-total-identity" classname="prealpha.liquid-origin-total-identity" time="1.1146" status="run">
+		<properties>
+			<property name="cmake_labels" value="lifecycle;liquid;prealpha"/>
+		</properties>
+		<system-out>liquid-origin-total-identity passed
+/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha/validation/20261019T134757Z-d6874591/RESULTS.json
+</system-out>
+	</testcase>
+	<testcase name="prealpha.collision-continuity" classname="prealpha.collision-continuity" time="0.670596" status="run">
+		<properties>
+			<property name="cmake_labels" value="collision;prealpha"/>
+		</properties>
+		<system-out>collision-continuity passed
+/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha/validation/20261019T134758Z-a424a032/RESULTS.json
+</system-out>
+	</testcase>
+	<testcase name="prealpha.character-motor" classname="prealpha.character-motor" time="1.56432" status="run">
+		<properties>
+			<property name="cmake_labels" value="core;lifecycle;prealpha"/>
+		</properties>
+		<system-out>character-motor passed
+/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha/validation/20261019T134759Z-fcfd44a1/RESULTS.json
+</system-out>
+	</testcase>
+	<testcase name="prealpha.physics-continuation" classname="prealpha.physics-continuation" time="1.09156" status="run">
+		<properties>
+			<property name="cmake_labels" value="core;lifecycle;prealpha"/>
+		</properties>
+		<system-out>physics-continuation passed
+/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha/validation/20261019T134800Z-9ebc9d10/RESULTS.json
+</system-out>
+	</testcase>
+	<testcase name="prealpha.contacts" classname="prealpha.contacts" time="1.12718" status="run">
+		<properties>
+			<property name="cmake_labels" value="core;lifecycle;prealpha"/>
+		</properties>
+		<system-out>contacts passed
+/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha/validation/20261019T134801Z-f7df972c/RESULTS.json
+</system-out>
+	</testcase>
+	<testcase name="prealpha.composed-lifecycle" classname="prealpha.composed-lifecycle" time="1.4099" status="run">
+		<properties>
+			<property name="cmake_labels" value="core;lifecycle;prealpha"/>
+		</properties>
+		<system-out>composed-lifecycle passed
+/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha/validation/20261019T134803Z-fba78096/RESULTS.json
+</system-out>
+	</testcase>
+	<testcase name="prealpha.origin-physics" classname="prealpha.origin-physics" time="0.647189" status="run">
+		<properties>
+			<property name="cmake_labels" value="lifecycle;prealpha"/>
+		</properties>
+		<system-out>origin-physics passed
+/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha/validation/20261019T134804Z-3d08f0f5/RESULTS.json
+</system-out>
+	</testcase>
+	<testcase name="prealpha.origin-assembly" classname="prealpha.origin-assembly" time="1.19241" status="run">
+		<properties>
+			<property name="cmake_labels" value="lifecycle;prealpha"/>
+		</properties>
+		<system-out>origin-assembly passed
+/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha/validation/20261019T134805Z-ee16bf1f/RESULTS.json
+</system-out>
+	</testcase>
+	<testcase name="prealpha.origin-participants" classname="prealpha.origin-participants" time="1.3551" status="run">
+		<properties>
+			<property name="cmake_labels" value="lifecycle;prealpha"/>
+		</properties>
+		<system-out>origin-participants passed
+/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha/validation/20261019T134806Z-464f1b8f/RESULTS.json
+</system-out>
+	</testcase>
+	<testcase name="prealpha.origin-stream" classname="prealpha.origin-stream" time="1.15012" status="run">
+		<properties>
+			<property name="cmake_labels" value="lifecycle;prealpha"/>
+		</properties>
+		<system-out>origin-stream passed
+/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha/validation/20261019T134807Z-f4d1bebb/RESULTS.json
+</system-out>
+	</testcase>
+	<testcase name="prealpha.stream-origin-precision" classname="prealpha.stream-origin-precision" time="1.11975" status="run">
+		<properties>
+			<property name="cmake_labels" value="core;lifecycle;prealpha"/>
+		</properties>
+		<system-out>stream-origin-precision passed
+/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha/validation/20261019T134808Z-84bc249b/RESULTS.json
+</system-out>
+	</testcase>
+	<testcase name="prealpha.terrain-lifecycle" classname="prealpha.terrain-lifecycle" time="1.61754" status="run">
+		<properties>
+			<property name="cmake_labels" value="lifecycle;prealpha"/>
+		</properties>
+		<system-out>terrain-lifecycle passed
+/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha/validation/20261019T134809Z-1d91a0b0/RESULTS.json
+</system-out>
+	</testcase>
+	<testcase name="prealpha.terrain-streaming" classname="prealpha.terrain-streaming" time="1.24528" status="run">
+		<properties>
+			<property name="cmake_labels" value="lifecycle;prealpha"/>
+		</properties>
+		<system-out>terrain-streaming passed
+/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha/validation/20261019T134811Z-bd899b17/RESULTS.json
+</system-out>
+	</testcase>
+	<testcase name="prealpha.save-evolution" classname="prealpha.save-evolution" time="1.25056" status="run">
+		<properties>
+			<property name="cmake_labels" value="core;lifecycle;prealpha"/>
+		</properties>
+		<system-out>save-evolution passed
+/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha/validation/20261019T134812Z-727bf1f6/RESULTS.json
+</system-out>
+	</testcase>
+	<testcase name="prealpha.network-transport" classname="prealpha.network-transport" time="1.68225" status="fail">
+		<failure message="Failed"/>
+		<properties>
+			<property name="cmake_labels" value="core;network;prealpha"/>
+		</properties>
+		<system-out>network-transport failed
+/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha/validation/20261019T134814Z-049c9764/RESULTS.json
+</system-out>
+	</testcase>
+	<testcase name="prealpha.network-session" classname="prealpha.network-session" time="1.12626" status="fail">
+		<failure message="Failed"/>
+		<properties>
+			<property name="cmake_labels" value="network;prealpha"/>
+		</properties>
+		<system-out>network-session failed
+/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha/validation/20261019T134815Z-4692b310/RESULTS.json
+</system-out>
+	</testcase>
+	<testcase name="prealpha.network-boundaries" classname="prealpha.network-boundaries" time="1.99695" status="fail">
+		<failure message="Failed"/>
+		<properties>
+			<property name="cmake_labels" value="network;prealpha"/>
+		</properties>
+		<system-out>network-boundaries failed
+/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha/validation/20261019T134816Z-4227303f/RESULTS.json
+</system-out>
+	</testcase>
+	<testcase name="prealpha.network-js" classname="prealpha.network-js" time="1.82068" status="fail">
+		<failure message="Failed"/>
+		<properties>
+			<property name="cmake_labels" value="network;prealpha"/>
+		</properties>
+		<system-out>network-js failed
+/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha/validation/20261019T134818Z-3594fc60/RESULTS.json
+</system-out>
+	</testcase>
+	<testcase name="prealpha.resource-handoff" classname="prealpha.resource-handoff" time="2.57603" status="run">
+		<properties>
+			<property name="cmake_labels" value="application;prealpha"/>
+		</properties>
+		<system-out>resource-handoff passed
+/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha/validation/20261019T134820Z-3138157c/RESULTS.json
+</system-out>
+	</testcase>
+	<testcase name="prealpha.first-project" classname="prealpha.first-project" time="1.15504" status="run">
+		<properties>
+			<property name="cmake_labels" value="onboarding;prealpha"/>
+		</properties>
+		<system-out>first-project passed
+/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha/validation/20261019T134823Z-ddac0446/RESULTS.json
+</system-out>
+	</testcase>
+	<testcase name="prealpha.origin-environment" classname="prealpha.origin-environment" time="1.56503" status="run">
+		<properties>
+			<property name="cmake_labels" value="lifecycle;prealpha"/>
+		</properties>
+		<system-out>origin-environment passed
+/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha/validation/20261019T134824Z-90586da1/RESULTS.json
+</system-out>
+	</testcase>
+	<testcase name="prealpha.origin-admission" classname="prealpha.origin-admission" time="1.10337" status="run">
+		<properties>
+			<property name="cmake_labels" value="core;lifecycle;prealpha"/>
+		</properties>
+		<system-out>origin-admission passed
+/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha/validation/20261019T134826Z-58071ea0/RESULTS.json
+</system-out>
+	</testcase>
+	<testcase name="prealpha.liquid-origin-query-controls" classname="prealpha.liquid-origin-query-controls" time="1.15561" status="run">
+		<properties>
+			<property name="cmake_labels" value="liquid;prealpha"/>
+		</properties>
+		<system-out>liquid-origin-query-controls passed
+/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha/validation/20261019T134827Z-4c81af8d/RESULTS.json
+</system-out>
+	</testcase>
+	<testcase name="prealpha.gate-negative-controls" classname="prealpha.gate-negative-controls" time="0.409604" status="run">
+		<properties>
+			<property name="cmake_labels" value="prealpha;tooling"/>
+		</properties>
+		<system-out>test_archive_added_input_cannot_certify_an_old_binary (test_prealpha_validation.GateTests.test_archive_added_input_cannot_certify_an_old_binary) ... ok
+test_deferred_findings_are_not_tests (test_prealpha_validation.GateTests.test_deferred_findings_are_not_tests) ... ok
+test_exit_and_timeout_controls (test_prealpha_validation.GateTests.test_exit_and_timeout_controls) ... ok
+test_finding_status_annotation_preserves_observed_results (test_prealpha_validation.GateTests.test_finding_status_annotation_preserves_observed_results) ... ok
+test_identity_probe_is_bound_to_test_bytes (test_prealpha_validation.GateTests.test_identity_probe_is_bound_to_test_bytes) ... ok
+test_manifest_only_cli_never_needs_a_native_build (test_prealpha_validation.GateTests.test_manifest_only_cli_never_needs_a_native_build) ... ok
+test_manifest_rejects_duplicates_and_bad_targets (test_prealpha_validation.GateTests.test_manifest_rejects_duplicates_and_bad_targets) ... ok
+test_manifest_rejects_malformed_or_duplicate_invocations (test_prealpha_...
+[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]
+</system-out>
+	</testcase>
+	<testcase name="prealpha.build-organization" classname="prealpha.build-organization" time="0.236947" status="run">
+		<properties>
+			<property name="cmake_labels" value="prealpha;tooling"/>
+		</properties>
+		<system-out>test_changed_link_owner_detected (test_cmake_test_targets.CMakeTestTargets.test_changed_link_owner_detected) ... ok
+test_changed_warning_detected (test_cmake_test_targets.CMakeTestTargets.test_changed_warning_detected) ... ok
+test_exact_sources_links_warnings_and_order (test_cmake_test_targets.CMakeTestTargets.test_exact_sources_links_warnings_and_order) ... ok
+test_missing_application_sources_detected (test_cmake_test_targets.CMakeTestTargets.test_missing_application_sources_detected) ... ok
+test_missing_target_detected (test_cmake_test_targets.CMakeTestTargets.test_missing_target_detected) ... ok
+test_unknown_options_and_missing_source_fail (test_cmake_test_targets.CMakeTestTargets.test_unknown_options_and_missing_source_fail) ... ok
+test_changed_engine_link_is_detected (test_cmake_test_targets.SubsystemTargetContracts.test_changed_engine_link_is_detected) ... ok
+test_lost_application_sources_are_detected (test_cmake_test_targets.SubsystemTargetContracts.test_lost_application_sources_are_detected) ... ok
+te...
+[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]
+</system-out>
+	</testcase>
+	<testcase name="prealpha.gate-registration" classname="prealpha.gate-registration" time="1.14248" status="run">
+		<properties>
+			<property name="cmake_labels" value="prealpha;tooling"/>
+		</properties>
+		<system-out>test_absent_manifest_target_fails_configuration (test_validation_registration.ValidationRegistrationTests.test_absent_manifest_target_fails_configuration) ... ok
+test_explicit_failure_registration_preserves_original_case (test_validation_registration.ValidationRegistrationTests.test_explicit_failure_registration_preserves_original_case) ... ok
+test_ordinary_registration_omits_only_explicit_manual_failures (test_validation_registration.ValidationRegistrationTests.test_ordinary_registration_omits_only_explicit_manual_failures) ... ok
+test_removed_manual_guard_is_detected (test_validation_registration.ValidationRegistrationTests.test_removed_manual_guard_is_detected) ... ok
+
+----------------------------------------------------------------------
+Ran 4 tests in 1.081s
+
+OK
+</system-out>
+	</testcase>
+</testsuite>

@@ -1,6 +1,10 @@
-# M40 JavaScript gameplay
+# JavaScript gameplay and the M40 foundation
 
-Current public JavaScript signatures, examples and lifetime rules: [JudasJS reference](JUDASJS.md). This document retains milestone architecture and evidence context.
+For complete current signatures, examples and lifetime rules use the
+[JudasJS reference](JUDASJS.md), [first project](FIRST_PROJECT.md) and
+[lifecycle guide](judasjs/lifecycle.md). This page explains the shared scripting
+foundation and labels the older M40 save path separately; it is not a second
+complete API inventory.
 
 Judas embeds **QuickJS-NG v0.17.0** (MIT). Core sources and the complete
 license are under `third_party/quickjs`; runtime exports include its credits
@@ -10,10 +14,11 @@ exporter. No Node, browser, CLI or QuickJS libc/OS modules are shipped.
 ## Authoring
 
 Import/track `.js` in the project's Asset Browser. Add **Scripts** to an entity,
-select an asset, then edit the declared boolean/number/string fields. Add more
+select an asset, then edit the declared boolean/number/string/entity fields. Add more
 behaviours for ordered slots; persistent slot IDs are separate from slot order.
 Prefab source/instance edits use normal component serialization and overrides.
-Properties may store asset IDs as strings. Editing a property does not rewrite JS.
+Properties may store asset IDs as strings; entity properties use the documented
+[inspector entity-reference schema](judasjs/lifecycle.md). Editing a property does not rewrite JS.
 Restart Play for a clean world, or use [M94 deliberate script reload](M94_DEVELOPER_TOOLS.md). It can retain bounded JSON instance state; no arbitrary live object/closure migration is provided.
 
 ```js
@@ -25,16 +30,19 @@ export default class Behaviour {
     this.properties = properties;
     this.state = {count: 0};
   }
-  start() {}                      // after saved state is restored
+  start() {}                      // new session / legacy delta initialization
+  restore() {}                    // modern loaded slot, instead of start
   update(dt) {}                   // once per active outer gameplay frame
   fixedUpdate(dt) {               // before ordinary fixed-step forces/physics
     if (input.pressed('interact')) this.state.count++;
   }
+  presentationUpdate(dt) {}       // presentation poses / camera, not physical intent
   destroy() {}
 }
 ```
 
-`start/update/fixedUpdate/destroy` are optional, synchronous callbacks. A default
+Lifecycle callbacks are optional and synchronous; UI, collision/trigger and
+animation-event callbacks are documented in the current reference. A default
 exported class gets one independent instance per slot. Constructors initialize
 instances; put gameplay in callbacks. Relative imports must resolve to registered
 project `.js` assets. Bare imports other than `judas` and native/absolute imports
@@ -59,8 +67,10 @@ Imported metadata helper edits require reselect/reopen/restart (no live reload).
 
 ## Public API
 
-`docs/judas.d.ts` describes the small `judas` module. Vectors/quaternions are plain
-objects; entity IDs are **decimal strings** (runtime IDs exceed JS safe integers).
+[`docs/judas.d.ts`](judas.d.ts) describes the public `judas` module. Common
+vectors/quaternions are plain objects; some native configuration objects also
+accept arrays as documented in their subsystem reference. Entity IDs are
+**decimal strings** (runtime IDs exceed JS safe integers).
 Wrappers resolve ID against their own live world on every call. They retain no
 body pointer or native lifetime; physics calls reacquire generation-checked handles.
 
@@ -74,7 +84,15 @@ body pointer or native lifetime; physics calls reacquire generation-checked hand
   existing render-target camera inspection/enable. M49 additionally exposes world.setView/clearView for independent script-owned main-view intent;
   see the current camera reference.
 - Query include/exclude layer names, required/excluded tags and ignored entities.
-  Overlaps are **conservative broadphase candidates**, not exact intersections.
+  `world.overlap` returns **conservative broadphase candidates**, not exact
+  intersections. M44's explicit casts and closest-point queries have their own
+  shapes and result semantics; see [physics](judasjs/physics.md).
+
+The list above is the original scripting foundation, not the current complete
+surface. Animation/IK, ragdolls, CharacterMotor, navigation, terrain, liquids,
+weather, wheels, powertrains, networking, saves and other current exports are
+indexed in [JUDASJS.md](JUDASJS.md). The
+[binding inventory](judasjs/API_INVENTORY.md) records verification coverage.
 
 Transform writes use ordinary authoritative bodies/runtime components; body pose
 writes are **teleports**, not continuous kinematic trajectories. Scale is visual,
@@ -88,7 +106,22 @@ arrays and objects. Maximum depth 16, 4096 visited values and 64 KiB serialized 
 slot (4096 saved slots per world); no cycles/accessors/functions/custom prototypes. Invalid state rejects saving
 rather than dropping it or serializing the VM. Authored properties are separate.
 
-M29 version 2 gains an **optional `script-state-schema 1` extension**, with records
+### Modern slots
+
+Use the public [`saves` service](judasjs/saves.md) for cold-process persistence.
+It captures the current supported native participants, script JSON state and
+session state through the existing owner-thread/worker publication boundary.
+The default is exact-content compatibility. M98 adds explicit developer-owned
+[save migration policy and recovery](M98_SAVE_EVOLUTION.md); changing registered
+code does not automatically authorize loading an old save. Reloaded scripts
+require Stop/Play before compatible saves; see [developer tools](M94_DEVELOPER_TOOLS.md).
+Unsupported participants and incomplete historical continuation data remain
+explicit errors/limitations, not silently reconstructed state.
+
+### Legacy M29/M40 scene deltas
+
+The older `.judasstate` path is distinct from modern slots. M29 version 2 gains
+an **optional `script-state-schema 1` extension**, with records
 keyed by stable entity/slot. Script-free saves/scene fingerprints are unchanged;
 old readers reject the unknown extension. Complete state/reference validation
 precedes mutation. Runtime-created prefab definitions restore through ordinary
@@ -101,7 +134,8 @@ Authored schema-5 fingerprints gain tagged `Judas.ScriptComponents.1` data.
 Scripted worlds additionally hash **all registered project JS IDs and source
 contents** (`Judas.ScriptSources.1`): deliberately strict compatibility also covers
 runtime-only prefab behaviours. Paths/timestamps/pointers never enter that digest.
-Any registered code change/addition/removal rejects existing scripted-world saves.
+Any registered code change/addition/removal rejects these legacy exact-baseline
+scripted-world deltas. Modern slots apply the independent policy above.
 Missing/broken scripts fault their own instances; export rejects broken required
 module/import closures. Script-free worlds retain their old compatibility.
 

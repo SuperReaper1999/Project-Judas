@@ -19,7 +19,7 @@ physics or VM. Example names/IDs are content, not engine-owned semantics.
 | [paired-stick.js](examples/paired-stick.js) | `flick_stick` paired right-stick binding; frame raw/circular/delta display and fixed-step ordered observations without stealing another reader's samples. |
 | [ray-fan.js](examples/ray-fan.js) | Owner facing a wall/ledge (local -Z), `compare_rays` action; 100 ordered batch hit/miss results and an optional same-world scalar comparison. |
 | [kinematic.js](examples/kinematic.js) | Ordinary box, sphere, convex or compound rigid body; velocity, complete target, stop and point velocity through public Entity commands. Executed by the focused `judas_kinematic_lab_tests` target. |
-| [materials.js](examples/materials.js) | Existing Render component and registered fixture prefab; numeric/whole material patches, alpha/texture removal, independent visibility, sun/ambient writes and reset. Stable-part targeting runs when a ready imported model supplies parts. M72 candidate execution status is in [the handoff](../M72.md#validation-status). |
+| [materials.js](examples/materials.js) | Existing Render component and registered fixture prefab; numeric/whole material patches, alpha/texture removal, independent visibility, sun/ambient writes and reset. Stable-part targeting runs when a ready imported model supplies parts. The original execution record is in [the M72 handoff](../M72.md#validation-status); current API checks are described below. |
 | [contacts.js](examples/contacts.js) | Dynamic collider resting on floor; enter/stay/exit reactions. Use same script on authored sensor for triggers. |
 | [audio.js](examples/audio.js) | Authored AudioEmitter; play/pause/resume/stop requests. |
 | [particles.js](examples/particles.js) | Authored visual ParticleEmitter. |
@@ -39,6 +39,10 @@ physics or VM. Example names/IDs are content, not engine-owned semantics.
 Focused documentation/type check:
 `node scripts/check_judasjs_api.mjs --typescript /path/to/typescript/lib/typescript.js`.
 It checks the current declarations and all cookbook files without running the engine.
+The developer-only [type-contract fixture](type-contracts.ts) also checks accepted
+partial main-view camera ranges and deliberate errors (missing cast distance,
+raw-ID query ignores, unknown API names and incomplete vectors). It is compiled
+only and must not be imported into a runtime project.
 Add `--runtime /path/to/current/surface.json` when comparing a fresh actual-VM
 enumeration. This verifies surface/types, not visual behaviour or every runtime branch.
 
@@ -100,7 +104,9 @@ Fixture is the original rig in [current integration project](../../projects/m65_
 - [Imported parts and extracted clip interval](examples/imported-model.js) (needs the local-only original character used by `import_lab`; fails on a clean checkout, see [model import](../MODEL_IMPORT.md#import-inspect-place))
   ([model workflow](../MODEL_IMPORT.md)): attach to the original import-lab model.
 
-## Authoring-to-runtime seams (M67 candidate)
+<a id="authoring-to-runtime-seams-m67-candidate"></a>
+
+## Authoring-to-runtime seams (M67)
 
 [authoring-runtime.js](examples/authoring-runtime.js) is an executed public-API
 example for configured projection/behind points, layout snapshots/atomic mutation,
@@ -164,7 +170,9 @@ asset registration and RuntimeWorld/QuickJS callbacks. The ordinary
 [kinematic lab](../../projects/kinematic_lab/) composes similar public APIs for
 interactive content. See [command semantics and lifecycle](entities.md#kinematic-motion-m71).
 
-## Owned signals (M73 candidate)
+<a id="owned-signals-m73-candidate"></a>
+
+## Owned signals (M73)
 
 [Copyable broadcast/target/UI script](examples/signals.js) is executed by
 `judas_signal_tests` through the ordinary VM. Its shared registration helper supports

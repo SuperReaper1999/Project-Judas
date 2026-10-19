@@ -126,7 +126,9 @@ See [queries](physics.md#physicsclosestpoint) and [collision assets](../M64_COLL
 removes it; `setSocket(null)` or `setSocket(undefined)` also removes it. See
 [resolved pose/socket semantics](animation-ragdolls.md#resolved-joint-reads-visual-sockets-and-limb-ik-m65).
 `physicalMaterial`, `setPhysicalMaterial` and read-only `sleeping` use
-[normal physical state](physics.md#gravity-physical-materials-and-runtime-joint-configuration-m65).
+[normal physical state](physics.md#gravity-physical-materials-and-runtime-joint-configuration-m65). The material
+getter returns null when this live entity has no available rigid body; check it
+before reading friction/restitution.
 
 Inspector schemas now accept `{type:"entity",default:null}`. Authored properties
 store null or `{entity:"decimal-stable-id"}`; scripts receive null or normal safe

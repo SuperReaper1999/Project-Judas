@@ -1,4 +1,11 @@
-# Current application harness (M65)
+# Current application harness
+
+This is the bounded `JUDAS_TEST_SCRIPT` application driver implemented in
+[`src/TestHarness.cpp`](../src/TestHarness.cpp), originating in M65 and retaining
+legacy compatibility commands. It is not the entire regression suite. Use the
+[current validation manifest](../tools/validation/suites.json) and
+[Pre-Alpha gates](PREALPHA.md#focused-validation-from-a-clean-checkout) for the
+authoritative selected regression configuration.
 
 `JUDAS_TEST_SCRIPT=SCRIPT build/judas PROJECT.judasproj`.
 Outputs/captures should use fresh caller-owned paths. Errors exit nonzero.
@@ -25,8 +32,9 @@ supplies pointer position. `EXPECT_AXIS name value frame`, `EXPECT_HELD name 0|1
 `EXPECT_PAUSED 0|1 frame` examine post-frame state (consumed UI actions may read zero).
 
 `FRAMES` and legacy `STEPS` count application frames. Frame seconds defaults to 1/60;
-0–0.25 supports paused UI clocks / several fixed steps. `REALTIME n` uses wall time
-and the normal render/swap path; simulation never receives profiler measurements.
+0–0.25 supports paused UI clocks / several fixed steps. `REALTIME n` runs **n
+application frames**, using wall time for each frame and the normal render/swap
+path; n is not seconds. Simulation never receives profiler measurements.
 `LOG_EVERY n` (0 disables), `ENTITY stable-id` select position/velocity/support telemetry.
 CSV preserves legacy step/time/pose/up/velocity/gravity/control and objN body columns,
 adding frame/fixed-step-count/paused. The first 19 fields are stable; runtime body
@@ -46,6 +54,26 @@ active view, interpolation, world and authored UI. Multiple captures and capture
 while paused work. Fast deterministic frames skip only drawing when no capture is
 requested. Simulation and all frame/UI/presentation callbacks continue normally.
 The harness proves input/temporal routing, not human responsiveness or visual acceptance.
+
+## Reproducibility and parsing limits
+
+Launch with an explicit project or registered scene path. The no-argument legacy
+test launch selects the old classic/terrain demonstration rather than an arbitrary
+project's startup scene. Commands and file paths are whitespace-delimited; quoted
+paths containing spaces are not parsed. Choose caller-owned paths without spaces
+for harness scripts/captures, or use a different application's structured driver.
+`#` starts a comment. Input intervals are `[begin,end)`; frame indices start at 0.
+Frame count is 1–1,000,000 and frame seconds are finite 0–0.25.
+
+Deterministic input injection deliberately does not poll desktop devices. It
+cannot validate physical pointer confinement, IME, controller hardware, touch or
+multi-player device assignment. A successful exit also does not prove every
+physical endpoint: add an explicit oracle for the behaviour under investigation.
+Any script diagnostic fails the normal harness run; output alone is not a pass.
+
+Synthetic frames without drawing are not interactive FPS measurements. For dense
+physics comparisons use the [measurement tool and recorded workload](PREALPHA_DENSE_SUPPORT_FOLLOWUP.md)
+and distinguish per-step cost, simulated time, real-time catch-up and rendered FPS.
 
 ## Shared application services (post-M65 correction)
 

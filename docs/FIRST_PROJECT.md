@@ -58,16 +58,23 @@ to hide it. Build your own interface through [runtime UI](judasjs/ui.md).
 ## 3. Edit, debug and deliberately reload
 
 Open **View → JudasJS developer tools** and select your script. Enable **Attach
-debugger** before Play, then put a breakpoint on `this.state.frames++;`. Play,
+debugger (Play)** before Play, then put a breakpoint on `this.state.frames++;`. Play,
 inspect `this.state`, step once and continue. A line must contain an executable
 statement to stop there.
 
-Change the inspector's `rotationSpeed`, or edit the script's default from `1.0`
+Change the inspector's `rotationSpeed`, or use **Edit source → Save source**
+(or your external editor) to change the script's default from `1.0`
 to `2.0`. Explicit inspector values override defaults. Save the source; changes
 on disk do not execute automatically. **Check sources** compiles/links, and
 **Reload scripts** deliberately replaces the script session at a safe boundary.
 **Keep JSON state** retains the elapsed counter; it does not retain closures,
 objects or arbitrary VM state.
+
+Reload changes the running content identity. Use Stop/Play before cold saves or
+online sessions after reloading; it is not a migration of an existing saved game.
+Modern cold loads call `restore()` instead of `start()`; see the
+[load-aware lifecycle](judasjs/saves.md#load-aware-lifecycle) before adding saves
+to a project that spawns content in `start()`.
 
 Try a syntax error and check/reload again. The diagnostic should identify the
 script; rejected compile/link preflight keeps the running session. Correct the

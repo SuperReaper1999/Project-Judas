@@ -1,6 +1,6 @@
 # Current public JudasJS inventory
 
-Current M99 public module based on checkpoint `84121564230242a404785af4d60a1475cdb83f4c + M99 optional networking`. M99 adds optional network sessions and NetworkEntity handles; see [networking](network.md). M98 remains provisionally promoted pending combined M98/M99 human validation. Human/platform acceptance remains separate from API coverage.
+Current public surface identity: `Pre-Alpha current source; public module through M99`. Includes optional network sessions and NetworkEntity handles; see [networking](network.md). Human/platform acceptance is recorded separately in [the current documentation](../JUDASJS.md), not inferred from API coverage.
 Each row is a runtime export/member (constructors and plain handle fields included).
 Native dispatcher operations are implementation details, not additional JS APIs.
 
@@ -68,51 +68,51 @@ Native dispatcher operations are implementation details, not additional JS APIs.
 | `Entity` | JS wrapper/data | [declaration](../judas.d.ts) | [reference](entities.md) |
 | `Entity.addTag` | `addTag` | [declaration](../judas.d.ts) | [reference](entities.md) |
 | `Entity.angularVelocity` | `angularVelocity`, `setAngularVelocity` | [declaration](../judas.d.ts) | [reference](entities.md) |
-| `Entity.animation` | `animationExists` | [declaration](../judas.d.ts) | [reference](entities.md) |
+| `Entity.animation` | `animationExists` | [declaration](../judas.d.ts) | [reference](animation-ragdolls.md) |
 | `Entity.applyForce` | `force` | [declaration](../judas.d.ts) | [reference](entities.md) |
 | `Entity.applyImpulse` | `impulse` | [declaration](../judas.d.ts) | [reference](entities.md) |
 | `Entity.applyImpulseAtPoint` | `impulseAtPoint` | [declaration](../judas.d.ts) | [reference](entities.md) |
 | `Entity.applyTorque` | `torque` | [declaration](../judas.d.ts) | [reference](entities.md) |
 | `Entity.audio` | `audioInfo` | [declaration](../judas.d.ts) | [reference](audio.md) |
 | `Entity.burst` | `burst` | [declaration](../judas.d.ts) | [reference](entities.md) |
-| `Entity.camera` | `cameraInfo` | [declaration](../judas.d.ts) | [reference](entities.md) |
-| `Entity.character` | `characterExists` | [declaration](../judas.d.ts) | [reference](entities.md) |
+| `Entity.camera` | `cameraInfo` | [declaration](../judas.d.ts) | [reference](effects-camera.md) |
+| `Entity.character` | `characterExists` | [declaration](../judas.d.ts) | [reference](character.md) |
 | `Entity.children` | `children` | [declaration](../judas.d.ts) | [reference](entities.md) |
 | `Entity.classification` | `classification` | [declaration](../judas.d.ts) | [reference](entities.md) |
-| `Entity.clearPlanetCollision` | `planetClear` | [declaration](../judas.d.ts) | [reference](entities.md) |
+| `Entity.clearPlanetCollision` | `planetClear` | [declaration](../judas.d.ts) | [reference](planetary-terrain.md) |
 | `Entity.clearSocket` | `socketClear` | [declaration](../judas.d.ts) | [reference](entities.md) |
 | `Entity.collider` | `colliderInfo` | [declaration](../judas.d.ts) | [reference](entities.md) |
 | `Entity.constructor` | JS wrapper/data | [declaration](../judas.d.ts) | [reference](entities.md) |
-| `Entity.deformable` | `deformableExists` | [declaration](../judas.d.ts) | [reference](entities.md) |
+| `Entity.deformable` | `deformableExists` | [declaration](../judas.d.ts) | [reference](deformables.md) |
 | `Entity.destroy` | `destroy` | [declaration](../judas.d.ts) | [reference](entities.md) |
-| `Entity.fracture` | `fractureExists` | [declaration](../judas.d.ts) | [reference](entities.md) |
-| `Entity.gravity` | JS wrapper/data | [declaration](../judas.d.ts) | [reference](entities.md) |
+| `Entity.fracture` | `fractureExists` | [declaration](../judas.d.ts) | [reference](fracture.md) |
+| `Entity.gravity` | JS wrapper/data | [declaration](../judas.d.ts) | [reference](physics.md) |
 | `Entity.hasTag` | `hasTag` | [declaration](../judas.d.ts) | [reference](entities.md) |
 | `Entity.id` | JS wrapper/data | [declaration](../judas.d.ts) | [reference](entities.md) |
 | `Entity.inertiaWorld` | `inertiaWorld` | [declaration](../judas.d.ts) | [reference](entities.md) |
 | `Entity.kinematicMotion` | `kinematicMotion` | [declaration](../judas.d.ts) | [reference](entities.md) |
 | `Entity.light` | `lightInfo` | [declaration](../judas.d.ts) | [reference](entities.md) |
-| `Entity.liquid` | `liquidOwner` | [declaration](../judas.d.ts) | [reference](entities.md) |
+| `Entity.liquid` | `liquidOwner` | [declaration](../judas.d.ts) | [reference](liquid.md) |
 | `Entity.mass` | `mass` | [declaration](../judas.d.ts) | [reference](entities.md) |
 | `Entity.material` | JS wrapper/data | [declaration](../judas.d.ts) | [reference](materials.md) |
 | `Entity.modelParts` | `modelParts` | [declaration](../judas.d.ts) | [reference](entities.md) |
 | `Entity.motionType` | `motionType` | [declaration](../judas.d.ts) | [reference](entities.md) |
 | `Entity.moveKinematic` | `kinematicTarget` | [declaration](../judas.d.ts) | [reference](entities.md) |
-| `Entity.navigation` | `navAgentExists` | [declaration](../judas.d.ts) | [reference](entities.md) |
-| `Entity.navigationLink` | `navLinkInfo` | [declaration](../judas.d.ts) | [reference](entities.md) |
-| `Entity.navigationObstacle` | `navObstacleInfo` | [declaration](../judas.d.ts) | [reference](entities.md) |
+| `Entity.navigation` | `navAgentExists` | [declaration](../judas.d.ts) | [reference](navigation.md) |
+| `Entity.navigationLink` | `navLinkInfo` | [declaration](../judas.d.ts) | [reference](navigation.md) |
+| `Entity.navigationObstacle` | `navObstacleInfo` | [declaration](../judas.d.ts) | [reference](navigation.md) |
 | `Entity.parent` | `parent` | [declaration](../judas.d.ts) | [reference](entities.md) |
 | `Entity.pauseAudio` | `pauseAudio` | [declaration](../judas.d.ts) | [reference](audio.md) |
 | `Entity.physicalMaterial` | `physicalMaterialInfo` | [declaration](../judas.d.ts) | [reference](entities.md) |
-| `Entity.planetSample` | `planetSample` | [declaration](../judas.d.ts) | [reference](entities.md) |
-| `Entity.planetState` | `planetInfo` | [declaration](../judas.d.ts) | [reference](entities.md) |
+| `Entity.planetSample` | `planetSample` | [declaration](../judas.d.ts) | [reference](planetary-terrain.md) |
+| `Entity.planetState` | `planetInfo` | [declaration](../judas.d.ts) | [reference](planetary-terrain.md) |
 | `Entity.playAudio` | `playAudio` | [declaration](../judas.d.ts) | [reference](audio.md) |
 | `Entity.playAudioOneShot` | `audioOneShot` | [declaration](../judas.d.ts) | [reference](audio.md) |
 | `Entity.pointVelocity` | `pointVelocity` | [declaration](../judas.d.ts) | [reference](entities.md) |
-| `Entity.powertrain` | `powertrainExists` | [declaration](../judas.d.ts) | [reference](entities.md) |
-| `Entity.preparePlanetCollision` | `planetCollision` | [declaration](../judas.d.ts) | [reference](entities.md) |
+| `Entity.powertrain` | `powertrainExists` | [declaration](../judas.d.ts) | [reference](powertrains.md) |
+| `Entity.preparePlanetCollision` | `planetCollision` | [declaration](../judas.d.ts) | [reference](planetary-terrain.md) |
 | `Entity.presentedTransform` | `presentedTransform` | [declaration](../judas.d.ts) | [reference](entities.md) |
-| `Entity.ragdoll` | `ragdollExists` | [declaration](../judas.d.ts) | [reference](entities.md) |
+| `Entity.ragdoll` | `ragdollExists` | [declaration](../judas.d.ts) | [reference](animation-ragdolls.md) |
 | `Entity.removeTag` | `removeTag` | [declaration](../judas.d.ts) | [reference](entities.md) |
 | `Entity.renderVisible` | `renderVisible` | [declaration](../judas.d.ts) | [reference](entities.md) |
 | `Entity.rendererVisible` | `rendererVisible` | [declaration](../judas.d.ts) | [reference](entities.md) |
@@ -128,7 +128,7 @@ Native dispatcher operations are implementation details, not additional JS APIs.
 | `Entity.setKinematicVelocity` | `kinematicVelocity` | [declaration](../judas.d.ts) | [reference](entities.md) |
 | `Entity.setLight` | `lightSettings` | [declaration](../judas.d.ts) | [reference](entities.md) |
 | `Entity.setMotionType` | `motionTypeSet` | [declaration](../judas.d.ts) | [reference](entities.md) |
-| `Entity.setNavigationEnabled` | `navEnabled` | [declaration](../judas.d.ts) | [reference](entities.md) |
+| `Entity.setNavigationEnabled` | `navEnabled` | [declaration](../judas.d.ts) | [reference](navigation.md) |
 | `Entity.setPartVisible` | `modelPartVisible` | [declaration](../judas.d.ts) | [reference](entities.md) |
 | `Entity.setParticles` | `particles` | [declaration](../judas.d.ts) | [reference](entities.md) |
 | `Entity.setPhysicalMaterial` | `physicalMaterialSet` | [declaration](../judas.d.ts) | [reference](entities.md) |
@@ -136,12 +136,12 @@ Native dispatcher operations are implementation details, not additional JS APIs.
 | `Entity.sleeping` | `sleeping` | [declaration](../judas.d.ts) | [reference](entities.md) |
 | `Entity.stopAudio` | `stopAudio` | [declaration](../judas.d.ts) | [reference](audio.md) |
 | `Entity.stopKinematic` | `kinematicStop` | [declaration](../judas.d.ts) | [reference](entities.md) |
-| `Entity.terrain` | JS wrapper/data | [declaration](../judas.d.ts) | [reference](entities.md) |
+| `Entity.terrain` | JS wrapper/data | [declaration](../judas.d.ts) | [reference](terrain.md) |
 | `Entity.transform` | `setTransform`, `transform` | [declaration](../judas.d.ts) | [reference](entities.md) |
 | `Entity.valid` | `valid` | [declaration](../judas.d.ts) | [reference](entities.md) |
 | `Entity.velocity` | `setVelocity`, `velocity` | [declaration](../judas.d.ts) | [reference](entities.md) |
 | `Entity.weather` | `weatherExists` | [declaration](../judas.d.ts) | [reference](weather.md) |
-| `Entity.wheel` | `wheelExists` | [declaration](../judas.d.ts) | [reference](entities.md) |
+| `Entity.wheel` | `wheelExists` | [declaration](../judas.d.ts) | [reference](wheels.md) |
 | `EntityGravity` | JS wrapper/data | [declaration](../judas.d.ts) | [reference](physics.md) |
 | `EntityGravity.acceleration` | JS wrapper/data | [declaration](../judas.d.ts) | [reference](physics.md) |
 | `EntityGravity.clear` | `entityGravityClear` | [declaration](../judas.d.ts) | [reference](physics.md) |
@@ -464,19 +464,19 @@ Native dispatcher operations are implementation details, not additional JS APIs.
 | `world.clearView` | `clearView` | [declaration](../judas.d.ts) | [reference](effects-camera.md) |
 | `world.entity` | JS wrapper/data | [declaration](../judas.d.ts) | [reference](entities.md) |
 | `world.fluidSample` | `fluidSample` | [declaration](../judas.d.ts) | [reference](effects-camera.md) |
-| `world.origin` | `worldOrigin` | [declaration](../judas.d.ts) | [reference](entities.md) |
-| `world.originState` | `worldOriginState` | [declaration](../judas.d.ts) | [reference](entities.md) |
+| `world.origin` | `worldOrigin` | [declaration](../judas.d.ts) | [reference](planetary-terrain.md) |
+| `world.originState` | `worldOriginState` | [declaration](../judas.d.ts) | [reference](planetary-terrain.md) |
 | `world.overlap` | `overlap` | [declaration](../judas.d.ts) | [reference](entities.md) |
 | `world.project` | `projectViewport` | [declaration](../judas.d.ts) | [reference](effects-camera.md) |
 | `world.queryTags` | `queryTags` | [declaration](../judas.d.ts) | [reference](entities.md) |
-| `world.requestOrigin` | `worldOriginRequest` | [declaration](../judas.d.ts) | [reference](entities.md) |
+| `world.requestOrigin` | `worldOriginRequest` | [declaration](../judas.d.ts) | [reference](planetary-terrain.md) |
 | `world.resetAppearance` | `appearanceReset` | [declaration](../judas.d.ts) | [reference](materials.md) |
 | `world.setAppearance` | `appearanceSet` | [declaration](../judas.d.ts) | [reference](materials.md) |
 | `world.setView` | `setView` | [declaration](../judas.d.ts) | [reference](effects-camera.md) |
 | `world.spawnPrefab` | `spawn` | [declaration](../judas.d.ts) | [reference](entities.md) |
 | `world.sweepCapsule` | `sweep` | [declaration](../judas.d.ts) | [reference](entities.md) |
-| `world.toAbsolute` | `worldAbsolute` | [declaration](../judas.d.ts) | [reference](entities.md) |
-| `world.toLocal` | `worldLocal` | [declaration](../judas.d.ts) | [reference](entities.md) |
+| `world.toAbsolute` | `worldAbsolute` | [declaration](../judas.d.ts) | [reference](planetary-terrain.md) |
+| `world.toLocal` | `worldLocal` | [declaration](../judas.d.ts) | [reference](planetary-terrain.md) |
 | `world.viewRay` | `viewRay` | [declaration](../judas.d.ts) | [reference](effects-camera.md) |
 | `world.viewport` | `viewportSize` | [declaration](../judas.d.ts) | [reference](effects-camera.md) |
 
@@ -490,6 +490,7 @@ Native dispatcher operations are implementation details, not additional JS APIs.
 - **types-only exports**: Interfaces/type aliases are tooling only; runtime export comparison excludes them.
 - **setter-only accessors**: TypeScript cannot prohibit reads; docs state these return undefined.
 - **callback ordering / phases**: Implementation traced manually; no AST checker proves temporal semantics.
+- **callable argument counts**: Wrapper/declaration minimum and maximum counts (including aliases, rest arguments and overload bounds) are checked. Entity.setSocket has a null-target branch and Weather.strike explicitly accepts native undefined. Parameter types, overload gaps and native validation still require source/behavioural review.
 
-The machine check fails missing/phantom exports/members, getter/setter drift and inventory drift.
-Structured return/configuration types and behavioural semantics require source review; it is not full semantic certification.
+The machine check fails missing/phantom exports/members, getter/setter drift, callable argument-count drift and inventory drift.
+The manifest also records callable bounds and explicit argument-count exceptions. Structured return/configuration types and behavioural semantics require source review; it is not full semantic certification.

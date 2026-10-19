@@ -1,4 +1,15 @@
-# Native Android games (M88)
+# Native Android games
+
+This guide describes the current optional APK workflow. Platform acceptance is
+build- and device-specific: M88 Breakwater and M99 phone-to-Linux networking
+have recorded phone reviews. M89 local multiplayer was accepted on desktop;
+Android multiplayer hardware testing was not inferred. These reviews do not
+certify all later engine changes or every desktop feature on Android. M99 used USB
+forwarding, not a demonstrated Wi-Fi/Internet deployment. See
+[M99 platform scope](M99_NETWORK.md), [current Pre-Alpha qualification](PREALPHA.md)
+and the original [M88](evidence/m88/HUMAN_VALIDATION.md),
+[M89](evidence/m89/HUMAN_VALIDATION.md) and
+[M99](evidence/m99/HUMAN_VALIDATION.md) acceptance records.
 
 **M96 update:** the UI toolkit adds native editable fields, SDL IME/clipboard,
 scrolling and per-player focus through the shared runtime. The common M93 mesh
@@ -33,9 +44,10 @@ Studio/Gradle/npm are not required. Set `ANDROID_HOME` to your SDK and
 ```sh
 "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" \
   'platforms;android-36' 'build-tools;36.0.0' 'ndk;28.2.13676358'
-cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
+cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DJUDAS_BUILD_CHANNEL=Experimental
 cmake --build build --target judas judas_export -j4
 python3 tools/build_android.py projects/breakwater/breakwater.judasproj \
+  --id org.projectjudas.breakwater --name Breakwater \
   --output .cache/android/Breakwater.apk
 ```
 
@@ -221,7 +233,7 @@ Build caches are locked per export transaction. Concurrent exports must wait or
 use separate caches. The game/APK is a generated deliverable; source, instructions
 and evidence are committed, SDK/build caches/signing keys are not.
 
-## M89 local multiplayer (Experimental)
+## Local multiplayer
 
 [Core Scramble](../projects/core_scramble/README.md) uses the same public
 [local-player APIs](judasjs/local-multiplayer.md) and gameplay on desktop/Android.
@@ -229,8 +241,10 @@ Touches are captured to non-overlapping normalized regions at contact down;
 primary-touch mouse emulation stays out of another player's physical-mouse route.
 Standard Android InputDevice gamepads route independently through SDL instances.
 Physical multi-keyboard/multi-mouse separation is not available through this SDL2
-adapter. Four touch players are best suited to a tablet. Hardware acceptance is
-pending; emulator/virtual input is described separately in [M89 evidence](evidence/m89/REPORT.md).
+adapter. Four touch players are best suited to a tablet. Broader touch-device and
+physical-controller qualification remains outstanding; retain the narrower
+[M89 acceptance](evidence/m89/HUMAN_VALIDATION.md) and separate emulator/virtual
+input scope in [M89 evidence](evidence/m89/REPORT.md).
 
 For repeated builds `--icu-host-tools /absolute/path/to/matching/icu-host-build`
 may reuse ICU 76.1's existing native data tools. The default still builds its own;

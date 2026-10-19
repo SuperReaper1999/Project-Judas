@@ -1,0 +1,45 @@
+name: Current documentation
+
+on:
+  push:
+    branches: [Experimental, main]
+    paths:
+      - 'README.md'
+      - 'docs/**/*.md'
+      - 'docs/*.json'
+      - '!docs/evidence/**'
+      - 'src/physics/WorldModules.md'
+      - 'tools/verification/current-docs.json'
+      - 'scripts/check_current_docs.py'
+      - 'tests/test_current_docs.py'
+      - '.github/workflows/current-docs.yml'
+  pull_request:
+    branches: [Experimental, main]
+    paths:
+      - 'README.md'
+      - 'docs/**/*.md'
+      - 'docs/*.json'
+      - '!docs/evidence/**'
+      - 'src/physics/WorldModules.md'
+      - 'tools/verification/current-docs.json'
+      - 'scripts/check_current_docs.py'
+      - 'tests/test_current_docs.py'
+      - '.github/workflows/current-docs.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  documentation:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+          fetch-depth: 1
+      - name: Documentation checker positive and negative controls
+        run: python3 -m unittest discover -s tests -p test_current_docs.py -v
+      - name: Verify tracked current documentation links
+        run: python3 scripts/check_current_docs.py --require-tracked

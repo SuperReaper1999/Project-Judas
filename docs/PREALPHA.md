@@ -1,149 +1,96 @@
 # Pre-Alpha stabilization
 
-Pass 1 and Pass 2 were human accepted at the exact checkpoint
-`52800cedcdf47cab743ade96049eb5de1ab8aeb0`, promoted from Experimental to main.
-Their accepted starting point was `9cf491a13dbb1cd82ab9ab9b916e255af2d579d2`
-(M98/M99). Subsequent corrections develop on Experimental and require their own
-acceptance before promotion. M100 and an Alpha release have not begun.
+Judas is in unnumbered Pre-Alpha stabilization. **M100 and an Alpha release have
+not begun.** Main is the human-tested release lineage; Experimental holds verified
+development checkpoints pending their own human acceptance.
 
-See the [first engineering report](evidence/prealpha/REPORT.md) for exact changes,
-measured failures, focused results and the consolidated human checklist.
+At the start of this documentation cleanup:
 
-The [Pass2 finding register](evidence/prealpha-pass2/AUDIT_DISPOSITION.md) reconciles
-every original priority and finding against its exact preserved assessment text.
-It records the state at that checkpoint; its original pending-review language is
-historical. The [rotated-liquid follow-up](evidence/prealpha-liquid-rotation/REPORT.md)
-records subsequent corrections and remaining failures; its exact checkpoint
-`f647d7fd95f60d3a37dba70a51f4e45dc41c2922` was subsequently human accepted and
-promoted to main. [Pass 3](evidence/prealpha-pass3/REPORT.md) was subsequently
-human accepted at `7da56c2cc6ce7acda827a6e4019d610622b237e2` and promoted to
-main. Its report preserves the original checkpoint-time review status. Pass 4
-was human accepted at `4c141e9bb6c68a50c63dec263dcec398200328ad` and promoted
-to main. Its reports retain their original checkpoint-time review status.
-Pass 5 develops on Experimental and requires separate human acceptance. For a first
-visible project with no controller/input setup, follow
-[Your first visible Judas project](FIRST_PROJECT.md).
+| Line | Exact checkpoint | Scope |
+|---|---|---|
+| Human-accepted main | `e30d5f9bb72a1a341d3eff7485b8d6b3eb6f8ea9` | Curved-mesh continuation and retained-origin precision follow-up |
+| Experimental input | `be1b7d634c674dca34f3a36299da510492ca2aea` | Certified primitive fast paths and bounded support-continuation correction; no subsequent human acceptance claimed |
 
-The [Pass 4 report](evidence/prealpha-pass4/REPORT.md) records the independently
-verified physics-module extraction, exact scheduling changes, current platform
-receipts and preserved CCD/liquid failures. Its [finding register](evidence/prealpha-pass4/AUDIT_DISPOSITION.md)
-distinguishes fresh checks from carried-forward evidence. A smaller coordinator
-and passing scoped regressions do not close the curved-mesh continuation or
-extreme dense-contact latency blockers.
+This page supersedes stale current-status summaries, not original reports. Start
+with [documentation](README.md), [your first project](FIRST_PROJECT.md),
+[architecture](ARCHITECTURE.md) or [JudasJS](JUDASJS.md).
+The [current audit disposition](PREALPHA_FINDINGS.md) reconciles all original
+findings and distinguishes carried-forward evidence from fresh checks.
 
+## Evidence and acceptance history
 
-The [Pass 5 report](evidence/prealpha-pass5/REPORT.md) records exact fat-proxy
-candidate reuse, three matched dense-room comparisons, further unshipped CCD
-experiments and final-source integration checks. Broadphase tree queries fall
-85.4% in the observed workload and matched p95 falls 8.3–10.6%, while the worst
-step remains mixed and can approach two seconds. Neither the four curved-mesh
-continuation failures nor the half-turn liquid point-identity limitation is
-claimed fixed. The [new sampling evidence](evidence/prealpha-pass5/liquid/REPORT.md)
-separates irreversible binary32 query aliasing from unchanged conserved physical
-state. See the [current finding register](evidence/prealpha-pass5/AUDIT_DISPOSITION.md)
-for fresh versus carried-forward coverage. Pass 5 requires its own human review;
-main remains at the accepted Pass 4 checkpoint.
+- [Original assessment](evidence/prealpha-pass2/ORIGINAL_ASSESSMENT.md), frozen
+  against the accepted M98/M99 baseline `9cf491a13dbb1cd82ab9ab9b916e255af2d579d2`.
+- [Pass 1](evidence/prealpha/REPORT.md) and [Pass 2](evidence/prealpha-pass2/REPORT.md):
+  human accepted at `52800cedcdf47cab743ade96049eb5de1ab8aeb0`.
+- [Liquid baking correction](evidence/prealpha-liquid-rotation/REPORT.md):
+  accepted at `f647d7fd95f60d3a37dba70a51f4e45dc41c2922`.
+- [Pass 3](evidence/prealpha-pass3/REPORT.md): accepted at
+  `7da56c2cc6ce7acda827a6e4019d610622b237e2`.
+- [Pass 4](evidence/prealpha-pass4/REPORT.md): accepted at
+  `4c141e9bb6c68a50c63dec263dcec398200328ad`.
+- [Pass 5](evidence/prealpha-pass5/REPORT.md) preserves its original failed CCD
+  experiments and checkpoint-time review status. The subsequent
+  [curved-mesh/origin follow-up](evidence/prealpha-ccd-continuation-20261019/REPORT.md)
+  corrects the four original continuation contracts and retained-origin rounding;
+  the operator accepted `e30d5f9b` for main.
+- [Dense fast paths](PREALPHA_DENSE_SCALABILITY.md) and
+  [support continuation](PREALPHA_DENSE_SUPPORT_FOLLOWUP.md) develop afterward on
+  Experimental. Their physics measurements, rejected alternatives, mixed
+  penetration observations and remaining real-time limits remain explicit.
+
+Historical pending-review language remains in exact evidence. Acceptance of one
+checkpoint does not establish unexecuted platform, performance or all-feature
+coverage for later work.
 
 ## Ownership and integration contracts
 
 | System | Authority | Supported composition | Explicit boundary |
 |---|---|---|---|
-| Authored scenes / prefabs | Scene and existing stable IDs | Editor, normal runtime construction, export | Runtime state does not mutate authored content during Play |
-| Physical motion | Existing fixed-step PhysicsWorld / CharacterMotor | Bodies, joints, wheels, powertrains, characters | Scripts supply intent; presentation poses do not own physics |
-| Resources | ResourceManager and its publishing owner | Private worker preparation, staged upload/replacement | Incomplete or failed products must retain last-good resources |
-| Origin changes | RuntimeWorld transaction | M90 assemblies, conserved liquid owners/parcels, analytic atmosphere and thermal carriers within the local chart | Legacy PBF/emitted fluid and pending stream transactions still reject; no silent state deletion |
-| Terrain edits | RuntimeTerrain | Local field, collision/navigation replacement, origin translation, cold restore | Bounded static unit-scale local volumes; not universal planetary excavation |
-| Regional suspension | WorldStreaming | Retained supported entities, constructed prefabs and terrain | Pending work and unsupported external dependencies pin regions with reasons |
-| Cold saves | SaveService / WorldPersistence | Private candidate preparation before publication, explicit M98 migration | Unknown state is not discarded; native topology and opaque inactive records are not generally migratable |
-| Online replication | NetworkSession host | Authored roots with the documented transform/body/motor subset | No replication of wheels, powertrains, articulation, liquids, terrain or arbitrary runtime-spawned identities |
-| Script debugging | ScriptSystem owner | Deliberate safe-boundary inspection/reload | Reloaded content requires Stop/Play before compatible cold saves or online sessions |
+| Authored scenes/prefabs | Scene and stable IDs | Editor, runtime construction, export | Play does not mutate authored content |
+| Physical motion | Fixed-step PhysicsWorld/CharacterMotor | Bodies, constraints, wheels, powertrains, characters | Scripts supply intent; presentation does not own physics |
+| Resources | ResourceManager and publishing owner | Private preparation, staged upload/replacement | Failure/cancellation retains last-good resources |
+| Origin changes | RuntimeWorld transaction | M90 assemblies, conserved liquids, analytic atmosphere/thermal carriers within one chart | Legacy PBF/emitted fluid and unsupported pending transactions reject |
+| Terrain edits | RuntimeTerrain | Local field, collision/navigation replacement, origin translation, cold restore | Bounded static unit-scale volumes; no universal planetary excavation |
+| Regional suspension | WorldStreaming | Supported retained entities, constructed prefabs, terrain | Unsupported groups/external dependencies pin with reasons |
+| Cold saves | SaveService/WorldPersistence | Private candidate restoration, explicit M98 migrations | Unknown/native topology and opaque inactive records are not generally migratable |
+| Online replication | NetworkSession host | Documented authored-root transform/body/motor subset | No universal mechanics, liquids, terrain or arbitrary spawned-identity replication |
+| Script debugging/reload | ScriptSystem owner | Safe-boundary inspection and deliberate reload | Stop/Play required before compatible cold saves/online use after reload |
 
-These are separate contracts. One subsystem passing its tests does not certify
-every possible combination. Current implementation references:
-[origin](../src/WorldOrigin.cpp), [terrain](../src/RuntimeTerrain.cpp),
-[streaming](../src/WorldStreaming.cpp), [saves](M98_SAVE_EVOLUTION.md),
-[networking](M99_NETWORK.md).
+These contracts are independent. One passing subsystem does not certify every
+combination. Implementation: [origin](../src/WorldOrigin.cpp),
+[terrain](../src/RuntimeTerrain.cpp), [streaming](../src/WorldStreaming.cpp),
+[saves](M98_SAVE_EVOLUTION.md), [networking](M99_NETWORK.md).
 
-### Selected Pass2 combinations
+### Important supported combinations and limits
 
-Live-origin support, regional suspension, cold saves and online replication are
-separate admission contracts. In particular:
-
-- Conserved liquids retain owner-local capacity geometry, wave allocation,
-  previous surface samples and discharge history. Only owner/parcel positions
-  translate; derived world-space optical caches rebuild. Owners and detached
-  parcels must remain inside the 8 km chart. Shifted uniform/radial basins can
-  continue ordinary paired transfers and restore from modern cold saves.
-- Analytic atmosphere translates its frame origin. Combustion retains thermal
-  scalars and the same generation-safe carrier handles. This does **not** add
-  modern-slot persistence for atmosphere/combustion: unsupported participants
-  still fail with their entity/component named. Failed snapshot capture retains
-  the caller's previous complete chunk map.
-- Conserved liquid groups and active articulation remain residency pins. Removing
-  those pins requires a lossless group suspension/publication contract; translating
-  their live coordinates does not establish one.
-- Runtime terrain remains bounded local volumetric editing with private collision
-  and navigation preparation. The composed terrain/origin/save failure checks do
-  not imply planetary heightfield excavation or arbitrary concurrent publication.
-- Save migration retains unknown native records for their real loaders to accept
-  or reject. It does not merge newly authored content automatically into inactive
-  regions or rewrite opaque retained topology.
-- Pausing authoritative gameplay can continue pumping transport heartbeats without
-  advancing physics, scripts or snapshots. A blocking callback, stopped process or
-  unpumped debugger owner is a separate timeout risk. Replication remains the
-  documented M99 subset; authority does not transfer unsupported mechanical state.
-
-The [Pass2 report](evidence/prealpha-pass2/REPORT.md) records exact exercised cases,
-retained failures and remaining coverage. No independent fluid numerical algorithm,
-legacy settling threshold or protected research was changed.
-
-### Rotated-liquid baking follow-up
-
-The subsequent [liquid correction report](evidence/prealpha-liquid-rotation/REPORT.md)
-distinguishes corrected baking and clipping defects from later integration limits:
-
-- Bake-time gravity construction and owner-local conversion must use the same
-  physical field and orientation as runtime publication. The original rotated
-  equilibrium mismatch is corrected without relaxing gravity-equivalence tolerances.
-- Dynamic-cell capacity is assembled by integrating nonnegative Bernstein density
-  into one cumulative cubic storage representation. Forward capacity, physical
-  area, inversion and energy use that representation; newly baked resources no
-  longer contain the original decreasing capacity knots. `JudasBasin`/`Surface1`
-  formats, pressure iteration budgets and acceptance thresholds are unchanged.
-- Convex volume cuts and wet-face subtraction use the actual physical zero
-  plane consistently. The former tolerance/intersection disagreement could
-  extrapolate outside an edge, inflate storage or enlarge an aperture. Wet-face
-  crossing distances use extended intermediate precision to avoid cancellation
-  at nearly parallel walls; platform precision limits are recorded in the report.
-- The half-turn case now gets past baking but still exposes a distinct sampling
-  failure after a 512 m origin shift. Authoritative liquid state remains identical;
-  rounding a world-space query back into owner space moves the sample across a
-  grid boundary from cell 9 to cell 10. Pass 3 independently reproduces the same
-  discontinuity in unchanged pre-shift state at the two differently quantized
-  points, and confirms an interior-cell control. This remains a query precision /
-  discontinuous finite-volume representation boundary; it has not been smoothed,
-  snapped or hidden. The full `--bake-regression knots` reproduction still returns failure and
-  is not certified by the successful bake.
-- The other original rotation proceeds through shifting, cold restoration and
-  further physical flow, then fails its original bit-exact summed-total check
-  (`2.5199999999999996` versus `2.52` m³). The invalid-origin request is rejected
-  atomically with the correct owner diagnostic; the M54 ledger error is zero.
-  Pass 3 preserved that original failed test and established that it compared
-  the total from before a legitimate paired-flow step against the state after a
-  later rejected request. The current atomicity check compares the immediate
-  pre-request total using the same exact equality and additionally compares every
-  serialized physical participant byte. That command now passes without changing
-  liquid code, conservation tolerance or physical state.
-
-Solbert's EXP-007/008/013 research informs geometric validation and numerical
-reasoning. Its experimental solvers were not integrated; the research directory
-and original failure evidence remain unchanged. See
-[Dynamic liquid surfaces](LIQUID_SURFACES.md) for the current storage contract.
+- Conserved liquids keep capacity geometry, wave allocation, surface samples and
+  discharge history owner-local. Owner/parcel positions translate, optical caches
+  rebuild, and participants remain inside the 8 km chart. Supported uniform/radial
+  basins continue transfers and modern cold saves after shifts. Unpublished
+  geometry rejects nonzero origin changes until normal publication.
+- Analytic atmosphere translates its frame; combustion retains scalar state and
+  existing carrier handles. Origin support does not add modern-slot persistence
+  for unsupported atmosphere/combustion participants. Capture failure preserves
+  the caller's previous complete snapshot.
+- Conserved liquid groups and active articulations retain residency pins where
+  lossless group suspension is not established. Live coordinate translation is
+  not proof of suspension support.
+- Runtime terrain privately prepares collision/navigation replacements. Failed
+  publication retains the solid; supported origin/cold-save composition does not
+  imply arbitrary concurrent planet-wide excavation.
+- Saves preserve unknown records for real loaders to accept/reject. They do not
+  invent missing history, automatically merge new authored world content or
+  rewrite opaque retained topology.
+- A paused owner can pump network heartbeats without advancing scripts/physics.
+  Blocking callbacks, a stopped process or an unpumped debugger remain distinct
+  timeout conditions. Replication/authority changes retain the explicit subset.
 
 ## Focused validation from a clean checkout
 
-Native development does not require Node/npm. Build the desired native targets
-with the documented platform prerequisites. To register a bounded CTest subset:
+Native/game development does not require Node/npm. Follow the
+[platform prerequisites](../README.md#build-on-linux), then configure an opt-in
+focused subset:
 
 ```sh
 cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DJUDAS_ENABLE_VALIDATION=ON
@@ -151,108 +98,81 @@ cmake --build build --target judas_prealpha_tests -j2
 ctest --test-dir build -L prealpha --output-on-failure
 ```
 
-`application` tests need a functioning desktop OpenGL environment. CTest registers
-each manifest entry once with group labels and runs native tests serially. Use
-the named groups to avoid unrelated workloads:
+Manifest entries are registered once, with group labels; native tests run serially.
+Application cases need a working OpenGL desktop, or a functional Xvfb/software-GL
+setup. Multi-config builds should select their configuration executable directory.
+To run selected groups:
 
 ```sh
 python3 scripts/prealpha_validate.py --list --group lifecycle
 python3 scripts/prealpha_validate.py --build-dir build --group core --group network
 ```
 
-The `resource-handoff` gate creates its own deterministic multipart, skinned
-`.judasmodel` and embedded images inside its fresh output directory. It needs a
-real OpenGL context, but no private import-lab source files or ignored cooked
-models. The case checks actual partial GPU allocations, cancellation, complete
-publication and retirement. Its `fixture.json` records generated content hashes
-and dimensions. One bounded 5 ms observation pause after an actual map allocation
-forces a private upload boundary on fast GPUs too; reported pump times include
-that pause and are functional diagnostics, not normal loading benchmarks.
-To additionally exercise the original full-quality consumer
-asset, restore the local import-lab assets and run
-`build/judas_resource_handoff_tests /absolute/new-owned-output --original`.
-Missing original assets fail explicitly; they do not silently substitute the
-generated fixture or count as consumer validation.
+Each invocation records commands, actual executable hashes/embedded identity,
+source revision/status, platform, elapsed time and exact failures in a fresh
+`RESULTS.json`. Missing binaries, timeouts and wrong exits fail. Wrapped binaries
+must match the current source fingerprint: finish edits, configure/rebuild, then
+run the final gate. Changing tracked documentation also changes provenance.
+A neighboring executable or timestamp is not proof of a matching test binary.
 
-Every invocation creates a fresh evidence directory, records commands, executable
-SHA-256 hashes, embedded identities, platform, elapsed time, source revision/worktree status and exact
-failure logs in `RESULTS.json`. Missing binaries, timeouts and nonzero exits fail.
-The opt-in CMake wrapper gives each selected test its own provenance query while
-calling its original entrypoint. The gate rejects stale binaries by comparing
-their embedded source fingerprint to the current checkout, not a neighboring
-runtime or file timestamp. Reconfigure/rebuild after editing source.
-Deferred findings are listed separately and are never counted as passes. The
-manifest is an explicit focused subset, not a replacement for all production
-regressions or human acceptance. Multi-configuration builds should pass the
-configuration executable directory as `--build-dir`.
+The manifest is a focused subset, not all production suites. Asserted curved-mesh
+arrival/continuation checks are ordinary collision gates after the correction.
+`known-failures` preserves unresolved asserting reproductions separately; it is
+excluded by default, never counted as passing. Opt into CTest with
+`-DJUDAS_INCLUDE_KNOWN_FAILURES=ON`. Historical failed logs remain unchanged.
 
-Pass2 corrects the curved-mesh **first-arrival** contract with finite swept-SAT
-bounds and retains the unchanged asserting test in the ordinary collision group.
-The longer glancing/continuation contract remains failed: contact ownership across
-fixed boundaries needs further work. Rejected expensive patch experiments remain
-preserved. Run `--group known-failures` for the preserved asserting reproductions;
-the liquid follow-up report identifies which original bake failures were corrected
-and which later assertion still fails. A passing earlier stage does not make a
-failing complete command a pass. These cases are explicitly excluded from the default focused subset, not marked
-expected-pass. To include them in CTest use
-`-DJUDAS_INCLUDE_KNOWN_FAILURES=ON`. A green focused run does not close this release
-blocker or establish complete CCD correctness.
+The `resource-handoff` gate generates its own deterministic multipart/skinned
+model and embedded images in a fresh output directory. It needs OpenGL but no
+private import-lab files. It observes real private upload/cancellation/publication
+and records fixture hashes. Its bounded 5 ms observation pause forces a partial
+upload boundary; those timings are functional diagnostics. `--original` explicitly
+requires the original local consumer assets and fails if they are absent.
 
-JudasJS API/type checking has one optional pinned developer dependency:
+For API/types/examples, the only optional pinned dependency is developer tooling:
 
 ```sh
-npm ci --prefix tools/verification
+npm ci --ignore-scripts --prefix tools/verification
 node scripts/check_judasjs_api.mjs
+python3 scripts/check_current_docs.py
 ```
 
-An existing compiler can instead be selected by `--typescript /absolute/module`
-or `JUDAS_TYPESCRIPT`. No milestone cache path, automatic download or npm runtime
-is assumed. Live VM enumeration remains a separate check using `--runtime`.
-The checker includes negative controls for missing/phantom members and accessors.
+An existing TypeScript compiler can be selected through `--typescript` or
+`JUDAS_TYPESCRIPT`. No old milestone cache or automatic download is assumed.
+Live VM enumeration remains a separate `--runtime` check. Structural drift checks
+and local-link validation do not prove every result shape, callback ordering or
+prose claim. See [documentation maintenance](DOCUMENTATION_MAINTENANCE.md).
 
-## Findings that remain separate
+## Remaining readiness concerns
 
-- **FLU-001:** original legacy-PBF settling issue remains deferred and failed.
-  The rotated-liquid correction does not change legacy-PBF code, its settling
-  threshold or independent research.
-- **Historical continuation:** the original a106 snapshot lacks necessary state;
-  new-format cold-save passes do not retroactively repair it.
-- **Dense physics latency:** the M91 1,024-body pile includes severe tails.
-  Correctness gates do not certify real-time performance. Matched measurements
-  and any bounded changes belong in the current evidence, not rewritten M91 logs.
-- **CCD glancing continuation:** accepted Pass 2 corrected first arrival using
-  generic finite swept-SAT bounds; production physics is no longer byte-identical
-  to the M99 baseline. The longer curved-mesh continuation contract still fails
-  across fixed-step contact boundaries. Expensive unsuccessful alternatives remain
-  preserved. This remaining contract is a release blocker, not complete CCD
-  certification.
-- **Liquid origin sampling:** the corrected half-turn bake exposes the separate
-  cell-boundary query-rounding failure described above. Identical stored liquid
-  state does not certify identical sampling at a rounded cell boundary.
-- **Platform scope:** Linux is the acceptance platform. Windows/Android checks
-  are recorded individually; missing physical hardware is not a synthetic pass.
-- **Network security/scope:** no public-Internet security certification, universal
-  replication or live online save/scene migration is claimed.
+- **Dense contact latency:** the unchanged 1,024-piece/270-step workload improved
+  from mean 92.742 / p95 338.077 / worst 1,658.782 ms to
+  46.827 / 158.741 / 387.280 ms. These synthetic fixed-step measurements are not
+  interactive FPS. A later real-time run still reached a 948.381 ms step and
+  about 1.58 rendered FPS during catch-up. No 24–30 FPS or 60 Hz claim is made.
+  [Exact scope and physical observations](PREALPHA_DENSE_SUPPORT_FOLLOWUP.md).
+- **CCD scope:** the original four curved-mesh assertions now pass; bounded search,
+  native rear selection and deep-overlap limits remain. This is correction of
+  demonstrated contracts, not universal continuous-collision certification.
+- **FLU-001:** the original legacy-PBF settling test remains deferred and failed.
+  Its threshold, fluid implementation and independent research remain unchanged.
+- **Half-turn liquid sampling:** stored quantity/geometry remain equivalent, but
+  binary32 world-point aliasing can select adjacent finite-volume cells after an
+  origin change. The original full query-identity reproduction still fails.
+  [Sampling analysis](evidence/prealpha-pass5/liquid/REPORT.md).
+- **Legacy cold snapshot:** the original a106 snapshot lacks required historical
+  continuation data. Modern cold-save passes do not retroactively supply it.
+- **Composition boundaries:** liquid/articulation residency pins, opaque native
+  migration, authored-content merge and one-chart limits remain explicit.
+- **Network security/scope:** no public-Internet security certification or general
+  physical-assembly replication. M99 supports its documented subset.
+- **Platform qualification:** Linux is the acceptance reference. Windows VM native
+  functional receipts are not physical Windows GPU/performance acceptance. Android
+  feature/hardware coverage is recorded per checkpoint; compile/link evidence is
+  not current full-device qualification. Host-built glibc 2.43 binaries do not
+  inherit the separately tested Ubuntu 24.04/glibc 2.39 SDK baseline.
+- **Coverage:** selected regression gates do not certify every native/public API
+  member, subsystem combination, controller or developer workflow. Remaining
+  original-audit dispositions are [explicit](PREALPHA_FINDINGS.md).
 
-Original evidence remains under `docs/evidence/m*`. New findings, raw results,
-commands, source/binary fingerprints and the engineering handoff are under
-`docs/evidence/prealpha/`. Preserve genuine failures and classify their follow-ups.
-
-## Maintaining current documentation
-
-Update the current reference with each public capability change, run API/type
-drift and package checks, and keep historical reports immutable. Human acceptance
-status belongs in explicit acceptance records; regenerated inventories must not
-reintroduce stale milestone status. Prefer a short current guide plus linked
-contracts over copying another milestone chronology into every document.
-
-### Curved-mesh continuation follow-up
-
-The [follow-up report](evidence/prealpha-ccd-continuation-20261019/REPORT.md)
-records a smaller native per-triangle depth-growth correction. The original four
-90-step failures now pass and graduate into the ordinary focused gate. This does
-not establish universal CCD: rear-selection/deep-overlap and bounded-sampling
-limits remain. Corrected articulated-mesh motion costs more than the prior missed-
-collision path; the matched table reports that regression explicitly. A separate
-three-expression regional reconstruction repair preserves local position precision
-at large origins. Neither change is human accepted or promoted automatically.
+Protected historical evidence and independent research stay unchanged. New
+cleanup results are in [the documentation/API/test cleanup report](PREALPHA_CLEANUP.md).

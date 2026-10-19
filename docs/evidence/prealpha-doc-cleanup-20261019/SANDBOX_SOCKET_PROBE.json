@@ -1,0 +1,5 @@
+{
+  "allowed": false,
+  "errno": 1,
+  "diagnostic": "[Errno 1] Operation not permitted"
+}

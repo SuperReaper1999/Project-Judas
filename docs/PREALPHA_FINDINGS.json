@@ -1,0 +1,633 @@
+{
+  "schema": 1,
+  "scope": "Current disposition through documentation/API/test cleanup; no whole-engine or human certification. New execution is separately reported.",
+  "input_commit": "be1b7d634c674dca34f3a36299da510492ca2aea",
+  "assessment": "docs/evidence/prealpha-pass2/ORIGINAL_ASSESSMENT.md",
+  "assessment_sha256": "7d306dc2756e771f931aa7be1cf82bf31aad942f49240f89ac0d71069a7ac6a5",
+  "parent_register": "docs/evidence/prealpha-pass5/FINDINGS.json",
+  "parent_sha256": "3d2dd610505f2a6b787929415d2a416967e5e90fc488477edc71cad4b168c316",
+  "workstreams": [
+    {
+      "id": "P0-01",
+      "priority": "P0",
+      "name": "Explicit build identity and two release channels",
+      "status": "resolved",
+      "finding_ids": [
+        "C-01",
+        "C-02",
+        "C-03",
+        "C-04",
+        "C-05",
+        "C-06",
+        "C-07"
+      ]
+    },
+    {
+      "id": "P0-02",
+      "priority": "P0",
+      "name": "Reliable regression and release gates",
+      "status": "resolved",
+      "finding_ids": [
+        "R-04",
+        "DX-05",
+        "PL-01"
+      ]
+    },
+    {
+      "id": "P0-03",
+      "priority": "P0",
+      "name": "Curved-mesh collision correctness",
+      "status": "resolved",
+      "finding_ids": [
+        "A-01",
+        "A-02"
+      ]
+    },
+    {
+      "id": "P1-01",
+      "priority": "P1",
+      "name": "Dense-contact predictability",
+      "status": "improved",
+      "finding_ids": [
+        "B-01",
+        "R-03"
+      ]
+    },
+    {
+      "id": "P1-02",
+      "priority": "P1",
+      "name": "Packaging and clean-machine usability",
+      "status": "improved",
+      "finding_ids": [
+        "D-01",
+        "D-02",
+        "PL-04",
+        "PL-05",
+        "PL-06",
+        "PL-08",
+        "L-07",
+        "D-03"
+      ]
+    },
+    {
+      "id": "P1-03",
+      "priority": "P1",
+      "name": "Composed lifecycle contracts",
+      "status": "improved",
+      "finding_ids": [
+        "E-01",
+        "E-02",
+        "E-03",
+        "E-04",
+        "E-05",
+        "E-06",
+        "R-01",
+        "R-02",
+        "DX-07",
+        "L-01",
+        "L-02",
+        "L-03",
+        "L-04",
+        "L-05",
+        "L-06"
+      ]
+    },
+    {
+      "id": "P1-04",
+      "priority": "P1",
+      "name": "Incremental architecture cleanup",
+      "status": "improved",
+      "finding_ids": [
+        "M-01",
+        "M-02",
+        "L-08"
+      ]
+    },
+    {
+      "id": "P2-01",
+      "priority": "P2",
+      "name": "Editor onboarding and actionable diagnostics",
+      "status": "improved",
+      "finding_ids": [
+        "R-05",
+        "DX-01",
+        "DX-06"
+      ]
+    },
+    {
+      "id": "P2-02",
+      "priority": "P2",
+      "name": "Current documentation and support matrix",
+      "status": "improved",
+      "finding_ids": [
+        "DX-02",
+        "DX-03",
+        "DX-04",
+        "DX-08",
+        "CAP-02"
+      ]
+    },
+    {
+      "id": "P2-03",
+      "priority": "P2",
+      "name": "Platform and release qualification",
+      "status": "improved",
+      "finding_ids": [
+        "PL-02",
+        "PL-03",
+        "PL-07",
+        "L-09",
+        "L-10",
+        "CAP-01"
+      ]
+    }
+  ],
+  "findings": [
+    {
+      "id": "A-01",
+      "workstream": "P0-03",
+      "original_quote": "The crossing measurement is explicitly **reported rather than asserted**.",
+      "status": "resolved",
+      "scope": "fresh_focused_gate",
+      "disposition": "Actual-sheet arrival and continuation asserting fixtures pass in the final source gate. Earlier oracle/removed-collider controls and causal history remain preserved; no changed physics in this cleanup.",
+      "evidence": "docs/evidence/prealpha-pass5/AUDIT_DISPOSITION.md"
+    },
+    {
+      "id": "A-02",
+      "workstream": "P0-03",
+      "original_quote": "All three curved-trough resolutions: **24 fast-box crossings each**.",
+      "status": "resolved",
+      "scope": "fresh_focused_gate_plus_carried_causal_evidence",
+      "disposition": "The four original asserting curved-mesh continuation failures remain corrected in fresh focused validation. Per-triangle mechanism research is carried forward; bounded temporal search/rear/deep-overlap limits remain.",
+      "evidence": "docs/evidence/prealpha-ccd-continuation-20261019/REPORT.md"
+    },
+    {
+      "id": "B-01",
+      "workstream": "P1-01",
+      "original_quote": "Dense-contact physics still has severe latency tails",
+      "status": "improved",
+      "scope": "carried_forward_measured_be1b7d63",
+      "disposition": "Matched 270-step mean/p95/worst improves 92.742/338.077/1658.782 to46.827/158.741/387.280ms. Longer real-time work still stalls (948.381ms worst); practical frame target unmet. No rebenchmark in documentation cleanup.",
+      "evidence": "docs/PREALPHA_DENSE_SUPPORT_FOLLOWUP.md"
+    },
+    {
+      "id": "C-01",
+      "workstream": "P0-01",
+      "original_quote": "The editor\u2019s current identity is inferred from milestone numbers in recent Git commit subjects, with an **M76 fallback** when suitable history is unavailable.",
+      "status": "resolved",
+      "scope": "carried_forward_not_reexecuted",
+      "disposition": "Retain the exact prior bounded conclusion/evidence. This specific member was not independently reexecuted in Pass5.",
+      "evidence": "docs/evidence/prealpha-pass5/AUDIT_DISPOSITION.md"
+    },
+    {
+      "id": "C-02",
+      "workstream": "P0-01",
+      "original_quote": "Unnumbered Pre-Alpha corrections cannot be identified reliably.",
+      "status": "resolved",
+      "scope": "carried_forward_not_reexecuted",
+      "disposition": "Retain the exact prior bounded conclusion/evidence. This specific member was not independently reexecuted in Pass5.",
+      "evidence": "docs/evidence/prealpha-pass5/AUDIT_DISPOSITION.md"
+    },
+    {
+      "id": "C-03",
+      "workstream": "P0-01",
+      "original_quote": "Source archives can acquire the fallback identity.",
+      "status": "resolved",
+      "scope": "carried_forward_not_reexecuted",
+      "disposition": "Retain the exact prior bounded conclusion/evidence. This specific member was not independently reexecuted in Pass5.",
+      "evidence": "docs/evidence/prealpha-pass5/AUDIT_DISPOSITION.md"
+    },
+    {
+      "id": "C-04",
+      "workstream": "P0-01",
+      "original_quote": "Reconfiguration watches `main` references but does not explicitly watch the Experimental branch reference.",
+      "status": "resolved",
+      "scope": "carried_forward_not_reexecuted",
+      "disposition": "Retain the exact prior bounded conclusion/evidence. This specific member was not independently reexecuted in Pass5.",
+      "evidence": "docs/evidence/prealpha-pass5/AUDIT_DISPOSITION.md"
+    },
+    {
+      "id": "C-05",
+      "workstream": "P0-01",
+      "original_quote": "Runtime `--build-info` identifies platform/configuration, not the exact engine build.",
+      "status": "resolved",
+      "scope": "carried_forward_not_reexecuted",
+      "disposition": "Current Linux17-tool SDK and native Windows runtime/editor/export report their actual139d build identities. Linux declares16 pre-existing untracked source observations; Windows uses a verified clean tracked source archive. Final report/evidence commits are not retroactively embedded in these binaries.",
+      "evidence": "docs/evidence/prealpha-pass5/AUDIT_DISPOSITION.md"
+    },
+    {
+      "id": "C-06",
+      "workstream": "P0-01",
+      "original_quote": "Export runtime probing cannot establish precise engine/tool compatibility.",
+      "status": "resolved",
+      "scope": "carried_forward_not_reexecuted",
+      "disposition": "Actual current Linux SDK exporter and native Windows exporter produce relocated ordinary consumer packages. Exact runtime/tool/manifest identities and tamper/negative controls retain scoped provenance; not a universal engine-version compatibility promise.",
+      "evidence": "docs/evidence/prealpha-pass5/AUDIT_DISPOSITION.md"
+    },
+    {
+      "id": "C-07",
+      "workstream": "P0-01",
+      "original_quote": "Update notification compares milestone numbers from `main`, so newer unnumbered stabilization builds can remain invisible.",
+      "status": "resolved",
+      "scope": "carried_forward_not_reexecuted",
+      "disposition": "Retain the exact prior bounded conclusion/evidence. This specific member was not independently reexecuted in Pass5.",
+      "evidence": "docs/evidence/prealpha-pass5/AUDIT_DISPOSITION.md"
+    },
+    {
+      "id": "D-01",
+      "workstream": "P1-02",
+      "original_quote": "The Windows SDK uses an explicit staging list that omits newer tools, including:",
+      "status": "resolved",
+      "scope": "carried_forward_not_reexecuted",
+      "disposition": "Retain the exact prior bounded conclusion/evidence. This specific member was not independently reexecuted in Pass5.",
+      "evidence": "docs/evidence/prealpha-pass5/AUDIT_DISPOSITION.md"
+    },
+    {
+      "id": "D-02",
+      "workstream": "P1-02",
+      "original_quote": "The SDK configuration is included before later targets are declared, so its one-time target scan also misses later additions.",
+      "status": "resolved",
+      "scope": "carried_forward_not_reexecuted",
+      "disposition": "Retain the exact prior bounded conclusion/evidence. This specific member was not independently reexecuted in Pass5.",
+      "evidence": "docs/evidence/prealpha-pass5/AUDIT_DISPOSITION.md"
+    },
+    {
+      "id": "E-01",
+      "workstream": "P1-03",
+      "original_quote": "Live origin changes reject active liquids, legacy fluid, atmosphere and combustion.",
+      "status": "improved",
+      "scope": "carried_forward_not_reexecuted",
+      "disposition": "Linux origin physics13, assemblies46 and streaming23 checks pass; Windows origin admission and actual M70/M77 restoration pass. Independent half-turn/radial observations preserve wave bytes, ledger and real physical submersion while point-query identity remains open. Unsupported combinations remain explicit.",
+      "evidence": "docs/evidence/prealpha-pass5/AUDIT_DISPOSITION.md"
+    },
+    {
+      "id": "E-02",
+      "workstream": "P1-03",
+      "original_quote": "Regional suspension pins unsupported liquid groups and certain active navigation/articulation states.",
+      "status": "deferred",
+      "scope": "carried_forward_not_reexecuted",
+      "disposition": "Retain the exact prior bounded conclusion/evidence. This specific member was not independently reexecuted in Pass5.",
+      "evidence": "docs/evidence/prealpha-pass5/AUDIT_DISPOSITION.md"
+    },
+    {
+      "id": "E-03",
+      "workstream": "P1-03",
+      "original_quote": "Runtime excavation supports bounded local volumes, not arbitrary editing of every planetary terrain representation.",
+      "status": "deferred",
+      "scope": "carried_forward_not_reexecuted",
+      "disposition": "Current composed-lifecycle34 checks cover bounded terrain collision/navigation publication and last-good/error ownership. No arbitrary planetary excavation or universal terrain representation support is added.",
+      "evidence": "docs/evidence/prealpha-pass5/AUDIT_DISPOSITION.md"
+    },
+    {
+      "id": "E-04",
+      "workstream": "P1-03",
+      "original_quote": "Online replication excludes vehicles, powertrains, articulation, deformables, terrain and several other systems.",
+      "status": "improved",
+      "scope": "carried_forward_not_reexecuted",
+      "disposition": "Actual host, direct client and impaired/reconnecting client execute independently.14 checks include physical body impulses/motor movement, stable identity and reconnect. TCP latency/jitter/application snapshot omission are not IP packet-loss or universal vehicle/terrain replication support.",
+      "evidence": "docs/evidence/prealpha-pass5/AUDIT_DISPOSITION.md"
+    },
+    {
+      "id": "E-05",
+      "workstream": "P1-03",
+      "original_quote": "Saves do not automatically merge newly authored world content into an old complete-world snapshot.",
+      "status": "deferred",
+      "scope": "carried_forward_not_reexecuted",
+      "disposition": "Retain the exact prior bounded conclusion/evidence. This specific member was not independently reexecuted in Pass5.",
+      "evidence": "docs/evidence/prealpha-pass5/AUDIT_DISPOSITION.md"
+    },
+    {
+      "id": "E-06",
+      "workstream": "P1-03",
+      "original_quote": "Migrations cannot generally rewrite opaque retained native-region state.",
+      "status": "deferred",
+      "scope": "carried_forward_not_reexecuted",
+      "disposition": "Retain the exact prior bounded conclusion/evidence. This specific member was not independently reexecuted in Pass5.",
+      "evidence": "docs/evidence/prealpha-pass5/AUDIT_DISPOSITION.md"
+    },
+    {
+      "id": "M-01",
+      "workstream": "P1-04",
+      "original_quote": "Important behaviour is concentrated in large, densely written files:",
+      "status": "improved",
+      "scope": "source_and_object_preservation",
+      "disposition": "Physics coordinator remains859lines; current Architecture replaces10,248line chronology with194line source map and verbatim archive. RuntimeWorld two existing material warnings are whitespace-only; full rebuilt object bytes match. Larger module debt remains.",
+      "evidence": "src/physics/WorldModules.md"
+    },
+    {
+      "id": "M-02",
+      "workstream": "P1-04",
+      "original_quote": "Adding a component can require coordinated changes across serialization, prefabs, runtime construction, persistence, streaming, origin changes, editor controls, bindings and export.",
+      "status": "improved",
+      "scope": "carried_forward_not_reexecuted",
+      "disposition": "Candidate cache is local derived state for one impact pass, with global proxy revision invalidation and bounded fallback. No new component/save/stream/origin registry path or physical-history serialization is introduced. Broad manual component integration debt remains.",
+      "evidence": "docs/evidence/prealpha-pass5/AUDIT_DISPOSITION.md"
+    },
+    {
+      "id": "R-01",
+      "workstream": "P1-03",
+      "original_quote": "Missed lifecycle updates when new components bypass one manual integration path.",
+      "status": "improved",
+      "scope": "carried_forward_not_reexecuted",
+      "disposition": "Actual final engine archive passes lifecycle, origin, stream, persistence, particles, contact lifecycle and physical M70/M77 fresh-process endpoints. Primitive-floor cold saves do not exercise unshipped causal mesh-history state or certify all component combinations.",
+      "evidence": "docs/evidence/prealpha-pass5/AUDIT_DISPOSITION.md"
+    },
+    {
+      "id": "R-02",
+      "workstream": "P1-03",
+      "original_quote": "Debugger pauses interacting poorly with networking timeouts.",
+      "status": "resolved",
+      "scope": "carried_forward_not_reexecuted",
+      "disposition": "Retain the exact prior bounded conclusion/evidence. This specific member was not independently reexecuted in Pass5.",
+      "evidence": "docs/evidence/prealpha-pass5/AUDIT_DISPOSITION.md"
+    },
+    {
+      "id": "R-03",
+      "workstream": "P1-01",
+      "original_quote": "Resource eviction becoming expensive with large residency sets.",
+      "status": "unsupported_by_evidence",
+      "scope": "carried_forward_not_reexecuted",
+      "disposition": "Retain the exact prior bounded conclusion/evidence. This specific member was not independently reexecuted in Pass5.",
+      "evidence": "docs/evidence/prealpha-pass5/AUDIT_DISPOSITION.md"
+    },
+    {
+      "id": "R-04",
+      "workstream": "P0-02",
+      "original_quote": "Blocking export-runtime probing hanging on an unresponsive executable.",
+      "status": "resolved",
+      "scope": "carried_forward_not_reexecuted",
+      "disposition": "Retain the exact prior bounded conclusion/evidence. This specific member was not independently reexecuted in Pass5.",
+      "evidence": "docs/evidence/prealpha-pass5/AUDIT_DISPOSITION.md"
+    },
+    {
+      "id": "R-05",
+      "workstream": "P2-01",
+      "original_quote": "Unsupported subsystem combinations producing late failures instead of early authoring diagnostics.",
+      "status": "improved",
+      "scope": "carried_forward_not_reexecuted",
+      "disposition": "Selected lifecycle rejection/last-good controls, real SDK bad-script refusal, runtime negative harness and packaged tamper controls retain meaningful failure paths. No universal authoring/preflight registry or unsupported-composition extension is claimed.",
+      "evidence": "docs/evidence/prealpha-pass5/AUDIT_DISPOSITION.md"
+    },
+    {
+      "id": "DX-01",
+      "workstream": "P2-01",
+      "original_quote": "New-project onboarding still requires substantial manual assembly of modern character, camera and input behaviour.",
+      "status": "improved",
+      "scope": "fresh_editor_and_first_project",
+      "disposition": "First-project gate plus actual native desktop authoring batch/undo/PlayStop/save and four real consumer debugger/reload workflows pass. No new human UX acceptance is claimed.",
+      "evidence": "docs/evidence/prealpha-pass5/AUDIT_DISPOSITION.md"
+    },
+    {
+      "id": "DX-02",
+      "workstream": "P2-02",
+      "original_quote": "The current M96 guide still says human review is pending despite acceptance.",
+      "status": "resolved",
+      "scope": "current_documentation_review",
+      "disposition": "Current navigation and checkpoint table distinguish accepted main from subsequent Experimental changes. Historic pending review remains in preserved reports.",
+      "evidence": "docs/PREALPHA.md"
+    },
+    {
+      "id": "DX-03",
+      "workstream": "P2-02",
+      "original_quote": "Some current documentation describes an older API surface.",
+      "status": "improved",
+      "scope": "fresh_api_type_live_controls",
+      "disposition": "Source-verified camera partial ranges and physical-material nullability corrected;473symbol live enumeration,51typechecked examples,38runtime cases/312checks and compile-negative contracts pass. This is not every native value/type/order semantic.",
+      "evidence": "docs/JUDASJS.md"
+    },
+    {
+      "id": "DX-04",
+      "workstream": "P2-02",
+      "original_quote": "Architecture documentation mixes current guidance with extensive historical chronology.",
+      "status": "improved",
+      "scope": "archive_payload_verified",
+      "disposition": "Current concise Architecture separates ownership and boundaries from a verbatim archived milestone chronology; original archive payload SHA is retained.",
+      "evidence": "docs/ARCHITECTURE.md"
+    },
+    {
+      "id": "DX-05",
+      "workstream": "P0-02",
+      "original_quote": "At least one final-check runner depends on TypeScript installed beneath an older milestone cache directory, making fresh-machine reproduction fragile.",
+      "status": "resolved",
+      "scope": "carried_forward_not_reexecuted",
+      "disposition": "Retain the exact prior bounded conclusion/evidence. This specific member was not independently reexecuted in Pass5.",
+      "evidence": "docs/evidence/prealpha-pass5/AUDIT_DISPOSITION.md"
+    },
+    {
+      "id": "DX-06",
+      "workstream": "P2-01",
+      "original_quote": "Networking exposes low-level connection errors where users need clear host/listener/endpoint guidance.",
+      "status": "resolved",
+      "scope": "carried_forward_not_reexecuted",
+      "disposition": "Retain the exact prior bounded conclusion/evidence. This specific member was not independently reexecuted in Pass5.",
+      "evidence": "docs/evidence/prealpha-pass5/AUDIT_DISPOSITION.md"
+    },
+    {
+      "id": "DX-07",
+      "workstream": "P1-03",
+      "original_quote": "The M99 phone evidence also records an unexplained listener closure before successful USB-forwarded testing.",
+      "status": "unsupported_by_evidence",
+      "scope": "carried_forward_not_reexecuted",
+      "disposition": "Retain the exact prior bounded conclusion/evidence. This specific member was not independently reexecuted in Pass5.",
+      "evidence": "docs/evidence/prealpha-pass5/AUDIT_DISPOSITION.md"
+    },
+    {
+      "id": "DX-08",
+      "workstream": "P2-02",
+      "original_quote": "automated checks for API coverage, links, packaged documentation and current status.",
+      "status": "improved",
+      "scope": "fresh_tooling_and_registration_negatives",
+      "disposition": "Callable bounds, drift/type negatives,89current references/1972local links, manifest validation and actual CTest positive/negative registration pass. Coverage and parser boundaries are explicit.",
+      "evidence": "docs/PREALPHA_CLEANUP.md"
+    },
+    {
+      "id": "PL-01",
+      "workstream": "P0-02",
+      "original_quote": "historical suite passes should be supplemented by a small, reproducible current release gate.",
+      "status": "resolved",
+      "scope": "fresh_split_environment_gates",
+      "disposition": "43focused cases pass in restricted environment; socketEPERM independently reproduced; same4networkbinaries pass native. One identical CI invocation retired, unique native tests retained. New hosted workflows are not claimed executed.",
+      "evidence": "docs/PREALPHA_CLEANUP.md"
+    },
+    {
+      "id": "PL-02",
+      "workstream": "P2-03",
+      "original_quote": "SDK completeness and latest-feature coverage need attention.",
+      "status": "improved",
+      "scope": "carried_forward_not_reexecuted",
+      "disposition": "Actual17-tool Linux SDK verification/operations and native Windows selected targets/editor/runtime/export pass. A curated Windows source archive omits historical contact-test data: original setup failure and exact task-local fixture follow-up are preserved; it is not a self-contained whole-test archive claim.",
+      "evidence": "docs/evidence/prealpha-pass5/AUDIT_DISPOSITION.md"
+    },
+    {
+      "id": "PL-03",
+      "workstream": "P2-03",
+      "original_quote": "VM timings must remain diagnostic, not native-host performance claims.",
+      "status": "deferred",
+      "scope": "carried_forward_not_reexecuted",
+      "disposition": "Native MSVC compilation and Windows VM functional/editor/save/export checks are measured. Software-rendered VM timings are diagnostic only; Linux remains the physics performance reference. No hardware GPU or Windows-host performance claim.",
+      "evidence": "docs/evidence/prealpha-pass5/AUDIT_DISPOSITION.md"
+    },
+    {
+      "id": "PL-04",
+      "workstream": "P1-02",
+      "original_quote": "The packaging workflow is Linux-hosted.",
+      "status": "deferred",
+      "scope": "carried_forward_not_reexecuted",
+      "disposition": "Retain the exact prior bounded conclusion/evidence. This specific member was not independently reexecuted in Pass5.",
+      "evidence": "docs/evidence/prealpha-pass5/AUDIT_DISPOSITION.md"
+    },
+    {
+      "id": "PL-05",
+      "workstream": "P1-02",
+      "original_quote": "Default packaging identity still originates from the original Android demonstration unless overridden.",
+      "status": "resolved",
+      "scope": "carried_forward_not_reexecuted",
+      "disposition": "Retain the exact prior bounded conclusion/evidence. This specific member was not independently reexecuted in Pass5.",
+      "evidence": "docs/evidence/prealpha-pass5/AUDIT_DISPOSITION.md"
+    },
+    {
+      "id": "PL-06",
+      "workstream": "P1-02",
+      "original_quote": "Custom signing is already supported; it should become an explicit release preset.",
+      "status": "resolved",
+      "scope": "carried_forward_not_reexecuted",
+      "disposition": "Retain the exact prior bounded conclusion/evidence. This specific member was not independently reexecuted in Pass5.",
+      "evidence": "docs/evidence/prealpha-pass5/AUDIT_DISPOSITION.md"
+    },
+    {
+      "id": "PL-07",
+      "workstream": "P2-03",
+      "original_quote": "Latest multiplayer phone acceptance used **USB forwarding**, not direct Wi-Fi or Internet connectivity.",
+      "status": "deferred",
+      "scope": "carried_forward_not_reexecuted",
+      "disposition": "Retain the exact prior bounded conclusion/evidence. This specific member was not independently reexecuted in Pass5.",
+      "evidence": "docs/evidence/prealpha-pass5/AUDIT_DISPOSITION.md"
+    },
+    {
+      "id": "PL-08",
+      "workstream": "P1-02",
+      "original_quote": "Tracked evidence alone contains approximately **44,700 files and 2.24 GiB of file contents**.",
+      "status": "improved",
+      "scope": "carried_forward_not_reexecuted",
+      "disposition": "Retain the exact prior bounded conclusion/evidence. This specific member was not independently reexecuted in Pass5.",
+      "evidence": "docs/evidence/prealpha-pass5/AUDIT_DISPOSITION.md"
+    },
+    {
+      "id": "L-01",
+      "workstream": "P1-03",
+      "original_quote": "**FLU-001:** deferred legacy-PBF settling issue; unchanged.",
+      "status": "deferred",
+      "scope": "carried_forward_not_reexecuted",
+      "disposition": "Retain the exact prior bounded conclusion/evidence. This specific member was not independently reexecuted in Pass5.",
+      "evidence": "docs/evidence/prealpha-pass5/AUDIT_DISPOSITION.md"
+    },
+    {
+      "id": "L-02",
+      "workstream": "P1-03",
+      "original_quote": "Historical cold saves lacking continuation data: no invented reconstruction.",
+      "status": "deferred",
+      "scope": "carried_forward_not_reexecuted",
+      "disposition": "Retain the exact prior bounded conclusion/evidence. This specific member was not independently reexecuted in Pass5.",
+      "evidence": "docs/evidence/prealpha-pass5/AUDIT_DISPOSITION.md"
+    },
+    {
+      "id": "L-03",
+      "workstream": "P1-03",
+      "original_quote": "General replication of every Judas physical system.",
+      "status": "deferred",
+      "scope": "carried_forward_not_reexecuted",
+      "disposition": "Retain the exact prior bounded conclusion/evidence. This specific member was not independently reexecuted in Pass5.",
+      "evidence": "docs/evidence/prealpha-pass5/AUDIT_DISPOSITION.md"
+    },
+    {
+      "id": "L-04",
+      "workstream": "P1-03",
+      "original_quote": "Arbitrary native-topology save migration.",
+      "status": "deferred",
+      "scope": "carried_forward_not_reexecuted",
+      "disposition": "Retain the exact prior bounded conclusion/evidence. This specific member was not independently reexecuted in Pass5.",
+      "evidence": "docs/evidence/prealpha-pass5/AUDIT_DISPOSITION.md"
+    },
+    {
+      "id": "L-05",
+      "workstream": "P1-03",
+      "original_quote": "Unrestricted suspension of every assembly.",
+      "status": "deferred",
+      "scope": "carried_forward_not_reexecuted",
+      "disposition": "Retain the exact prior bounded conclusion/evidence. This specific member was not independently reexecuted in Pass5.",
+      "evidence": "docs/evidence/prealpha-pass5/AUDIT_DISPOSITION.md"
+    },
+    {
+      "id": "L-06",
+      "workstream": "P1-03",
+      "original_quote": "Multiple distant simultaneous physics charts.",
+      "status": "deferred",
+      "scope": "carried_forward_not_reexecuted",
+      "disposition": "Retain the exact prior bounded conclusion/evidence. This specific member was not independently reexecuted in Pass5.",
+      "evidence": "docs/evidence/prealpha-pass5/AUDIT_DISPOSITION.md"
+    },
+    {
+      "id": "L-07",
+      "workstream": "P1-02",
+      "original_quote": "Full per-mip texture streaming.",
+      "status": "deferred",
+      "scope": "carried_forward_not_reexecuted",
+      "disposition": "Retain the exact prior bounded conclusion/evidence. This specific member was not independently reexecuted in Pass5.",
+      "evidence": "docs/evidence/prealpha-pass5/AUDIT_DISPOSITION.md"
+    },
+    {
+      "id": "L-08",
+      "workstream": "P1-04",
+      "original_quote": "Every renderer feature being instanced or shadowed.",
+      "status": "deferred",
+      "scope": "carried_forward_not_reexecuted",
+      "disposition": "Retain the exact prior bounded conclusion/evidence. This specific member was not independently reexecuted in Pass5.",
+      "evidence": "docs/evidence/prealpha-pass5/AUDIT_DISPOSITION.md"
+    },
+    {
+      "id": "L-09",
+      "workstream": "P2-03",
+      "original_quote": "Security certification for untrusted scripts or public Internet servers.",
+      "status": "deferred",
+      "scope": "carried_forward_not_reexecuted",
+      "disposition": "Retain the exact prior bounded conclusion/evidence. This specific member was not independently reexecuted in Pass5.",
+      "evidence": "docs/evidence/prealpha-pass5/AUDIT_DISPOSITION.md"
+    },
+    {
+      "id": "L-10",
+      "workstream": "P2-03",
+      "original_quote": "Unperformed hardware/platform validation.",
+      "status": "open",
+      "scope": "carried_forward_not_reexecuted",
+      "disposition": "Linux host correctness/performance and native Windows VM functional checks are current. A separate clean050016 Ubuntu24.04 hosted SDK passes its declared max-glibc2.39 baseline; host-built2.43 artifacts do not inherit that compatibility. Android ARM64/API26 is compile/link only. Physical phone/Windows GPU/controller and broader distribution coverage remain unperformed.",
+      "evidence": "docs/evidence/prealpha-pass5/AUDIT_DISPOSITION.md"
+    },
+    {
+      "id": "CAP-01",
+      "workstream": "P2-03",
+      "original_quote": "Historical compatibility controllers still exist and need their own regression coverage.",
+      "status": "open",
+      "scope": "carried_forward_not_reexecuted",
+      "disposition": "Retain the exact prior bounded conclusion/evidence. This specific member was not independently reexecuted in Pass5.",
+      "evidence": "docs/evidence/prealpha-pass5/AUDIT_DISPOSITION.md"
+    },
+    {
+      "id": "CAP-02",
+      "workstream": "P2-02",
+      "original_quote": "Several advanced workflows remain bounded rather than universal.",
+      "status": "deferred",
+      "scope": "carried_forward_not_reexecuted",
+      "disposition": "Retain the exact prior bounded conclusion/evidence. This specific member was not independently reexecuted in Pass5.",
+      "evidence": "docs/evidence/prealpha-pass5/AUDIT_DISPOSITION.md"
+    },
+    {
+      "id": "D-03",
+      "workstream": "P1-02",
+      "original_quote": "clean-machine checks for every shipped executable.",
+      "status": "improved",
+      "scope": "carried_forward_not_reexecuted",
+      "disposition": "Linux identities/checksums/dependencies cover17 native tools; actual packaged inspector/read-only follow-up and selected operations run. Native Windows current runtime/editor/export are qualified with distinct software-GL scope, not an all-hardware clean-machine certification. Fresh hosted Ubuntu24.04 build,17-tool SDK qualifier and strict package verification pass at050016.",
+      "evidence": "docs/evidence/prealpha-pass5/AUDIT_DISPOSITION.md"
+    }
+  ]
+}

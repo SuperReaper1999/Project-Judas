@@ -1,4 +1,5 @@
-/** Current JudasJS through M99. M98/M99 operator acceptance recorded 2026-10-17.
+/** Current Pre-Alpha JudasJS (public module through M99). See JUDASJS.md.
+ * M98/M99 operator acceptance recorded 2026-10-17; later checks do not imply human acceptance.
  * M99 physical-phone testing used Android-to-Linux USB forwarding; Wi-Fi remains unvalidated.
  * Windows VM checks are bounded evidence; hardware acceptance remains outstanding.
  * Tooling only, no TS runtime. See JUDASJS.md.
@@ -194,6 +195,8 @@ declare module "judas" {
     /** Presentation quality only; never modifies sampled wind or physical forces. */
     quality:0|1|2;
   };
+  /** Effective rigid-body coefficients; asset is null for inline values. */
+  export interface PhysicalMaterialInfo {asset:AssetId|null;friction:number;restitution:number}
   /** Copied local-chart light settings. Colour is linear and multiplied by intensity. */
   export interface LightSettings {
     kind:'point'|'spot'; enabled:boolean; color:Vec3; intensity:number; range:number;
@@ -218,7 +221,8 @@ declare module "judas" {
     setPartVisible(identity: string, visible: boolean): boolean;
     readonly collider:ColliderInfo|null;
     readonly sleeping:boolean;
-    readonly physicalMaterial:{asset:AssetId|null;friction:number;restitution:number};
+    /** Null when the live entity has no available rigid body. */
+    readonly physicalMaterial:PhysicalMaterialInfo|null;
     setPhysicalMaterial(asset?:AssetId|null,parameters?:{friction?:number;restitution?:number}):boolean;
     setSocket(target:Entity,joint:string,offset?:TransformPatch):boolean;
     setSocket(target:null|undefined):boolean;
@@ -305,7 +309,8 @@ declare module "judas" {
     readonly appearance:Appearance;
     setAppearance(settings:Partial<AppearanceSettings>):boolean;
     resetAppearance():boolean;
-    setView(pose: TransformPatch, fov?: number, range?: CameraRange): boolean;
+    /** Omitted near/far members use 0.1/500 on each call, not the previous view. */
+    setView(pose: TransformPatch, fov?: number, range?: Partial<CameraRange>): boolean;
     project(point:Vec3):ViewportPoint|null;
     readonly viewport:{width:number;height:number};
     clearView(): boolean;
@@ -815,7 +820,7 @@ declare module "judas" {
     ray(point?:InputVector):{origin:Vec3;direction:Vec3}|null;
     assign(device:string,options?:DeviceAssignment):boolean;
     unassign(device:string):boolean;setInputMap(map:PlayerInputEntry[]):boolean;
-    setView(pose:TransformPatch,fov?:number,range?:{near?:number;far?:number}):boolean;
+    setView(pose:TransformPatch,fov?:number,range?:Partial<CameraRange>):boolean;
     clearView():boolean;leave():boolean;
   }
   export const players: {

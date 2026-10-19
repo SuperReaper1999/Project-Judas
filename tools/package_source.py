@@ -40,8 +40,9 @@ def selected(name, profile):
         return True
     path = PurePosixPath(name)
     return (name in ENGINE_FILES or path.parts[0] in ENGINE_ROOTS or
-            name.startswith("docs/judasjs/") or name in ("docs/judas.d.ts", "docs/judasmod.example.json") or
-            len(path.parts) == 2 and path.parts[0] == "docs" and path.suffix == ".md" and name not in EXCLUDED_GUIDES)
+            name.startswith("docs/judasjs/") or name == "docs/judas.d.ts" or
+            len(path.parts) == 2 and path.parts[0] == "docs" and
+            path.suffix in (".md", ".json") and name not in EXCLUDED_GUIDES)
 
 
 def safe_path(name):

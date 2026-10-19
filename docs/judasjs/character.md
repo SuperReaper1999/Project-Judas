@@ -53,11 +53,12 @@ Capsule resize, local offset changes and explicit teleports update query geometr
 region retirement destroys its owned capsule and invalidates the old body handle.
 Frame and UI-only script startup register published motor geometry before callbacks.
 
-Known current audit finding: runtime entity tag additions/removals on a motor can
-disagree with capsule tags used by casts. Ordinary rigid-body tag updates pass;
-motor mutation is separately reproduced and remains unresolved. Do not infer
-runtime tag-mutation correctness from authored-filter support. See
-[LIF-003](../evidence/m78-lifecycle/motor-runtime-tags/SOURCE_PROOF.md).
+Runtime `Entity.addTag` / `removeTag` also update the live query capsule, so
+`requiredTags` / `excludedTags` cast filters observe the same classification as
+entity lookup. This is separate from the motor's own movement-filter settings.
+The original [LIF-003 failure](../evidence/m78-lifecycle/motor-runtime-tags/SOURCE_PROOF.md)
+is preserved; the [lifecycle closure](../M78_LIFECYCLE_CLOSURE.md#final-lif-003-and-combined-closure)
+records the generic correction and authored/streamed/tag-mutation checks.
 
 Current limits: query-only motors don't physically block each other; endpoint sensors and coalesced
 sweep/support contacts now produce normal M42 events without fabricated mass/impulse;

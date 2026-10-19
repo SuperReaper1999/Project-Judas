@@ -1,0 +1,15 @@
+test_duplicate_inventory_rejected (test_current_docs.CurrentDocumentationTests.test_duplicate_inventory_rejected) ... ok
+test_escape_and_absolute_path_rejected (test_current_docs.CurrentDocumentationTests.test_escape_and_absolute_path_rejected) ... ok
+test_explicit_html_anchor (test_current_docs.CurrentDocumentationTests.test_explicit_html_anchor) ... ok
+test_fenced_examples_comments_and_remote_links_are_ignored (test_current_docs.CurrentDocumentationTests.test_fenced_examples_comments_and_remote_links_are_ignored) ... ok
+test_local_path_and_heading (test_current_docs.CurrentDocumentationTests.test_local_path_and_heading) ... ok
+test_missing_file_is_rejected (test_current_docs.CurrentDocumentationTests.test_missing_file_is_rejected) ... ok
+test_missing_heading_is_rejected (test_current_docs.CurrentDocumentationTests.test_missing_heading_is_rejected) ... ok
+test_reference_definition_and_encoded_space (test_current_docs.CurrentDocumentationTests.test_reference_definition_and_encoded_space) ... ok
+test_second_heading_and_inline_punctuation (test_current_docs.CurrentDocumentationTests.test_second_heading_and_inline_punctuation) ... ok
+test_untracked_destination_rejected (test_current_docs.CurrentDocumentationTests.test_untracked_destination_rejected) ... ok
+
+----------------------------------------------------------------------
+Ran 10 tests in 0.006s
+
+OK

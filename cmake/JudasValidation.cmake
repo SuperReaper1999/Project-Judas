@@ -3,6 +3,15 @@ option(JUDAS_ENABLE_VALIDATION "Register bounded Pre-Alpha CTest gates" OFF)
 option(JUDAS_INCLUDE_KNOWN_FAILURES "Also register explicitly open, failing contracts in CTest" OFF)
 if(JUDAS_ENABLE_VALIDATION)
     find_package(Python3 3.11 REQUIRED COMPONENTS Interpreter)
+    # The CLI and CTest must accept the same declarations. In particular, a
+    # malformed manual flag must not accidentally schedule a known failure.
+    execute_process(COMMAND "${Python3_EXECUTABLE}"
+        "${CMAKE_SOURCE_DIR}/scripts/prealpha_validate.py" --check-manifest
+        RESULT_VARIABLE judas_manifest_status OUTPUT_QUIET TIMEOUT 20
+        ERROR_VARIABLE judas_manifest_error)
+    if(NOT judas_manifest_status STREQUAL "0")
+        message(FATAL_ERROR "Invalid focused validation manifest: ${judas_manifest_error}")
+    endif()
     enable_testing()
     file(READ "${CMAKE_SOURCE_DIR}/tools/validation/suites.json" judas_suites)
     string(JSON judas_suite_count LENGTH "${judas_suites}" tests)
@@ -59,4 +68,8 @@ if(JUDAS_ENABLE_VALIDATION)
         COMMAND ${Python3_EXECUTABLE} -m unittest discover -s "${CMAKE_SOURCE_DIR}/tests"
             -p test_cmake_test_targets.py -v)
     set_tests_properties(prealpha.build-organization PROPERTIES LABELS "prealpha;tooling")
+    add_test(NAME prealpha.gate-registration
+        COMMAND ${Python3_EXECUTABLE} -m unittest discover -s "${CMAKE_SOURCE_DIR}/tests"
+            -p test_validation_registration.py -v)
+    set_tests_properties(prealpha.gate-registration PROPERTIES LABELS "prealpha;tooling")
 endif()

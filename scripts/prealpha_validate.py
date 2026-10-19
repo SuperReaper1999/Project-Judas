@@ -14,6 +14,7 @@ from pathlib import Path
 import platform
 import re
 import signal
+import string
 import subprocess
 import sys
 import time
@@ -100,20 +101,62 @@ def validate_provenance(actual, expected):
 
 def load_manifest(path):
     data = json.loads(path.read_text())
-    if data.get('format') != 1 or not isinstance(data.get('tests'), list):
+    if (not isinstance(data, dict) or data.get('format') != 1 or
+            not isinstance(data.get('tests'), list) or not data['tests']):
         raise ValueError('unsupported validation manifest')
     names = set()
+    invocations = set()
     for entry in data['tests']:
+        if not isinstance(entry, dict):
+            raise ValueError('test entries must be objects')
         name = entry.get('name', '')
-        if not re.fullmatch(r'[a-z0-9-]+', name) or name in names:
+        if not isinstance(name, str) or not re.fullmatch(r'[a-z0-9-]+', name) or name in names:
             raise ValueError('invalid or duplicate test name')
         names.add(name)
-        if not re.fullmatch(r'judas_[a-z0-9_]+', entry.get('target', '')):
+        target = entry.get('target', '')
+        if not isinstance(target, str) or not re.fullmatch(r'judas_[a-z0-9_]+', target):
             raise ValueError('invalid native target')
-        if not entry.get('groups') or not all(isinstance(g, str) for g in entry['groups']):
-            raise ValueError('test groups required')
-        if not all(isinstance(a, str) for a in entry.get('args', [])):
-            raise ValueError('test arguments must be strings')
+        groups = entry.get('groups')
+        if (not isinstance(groups, list) or not groups or
+                not all(isinstance(g, str) and re.fullmatch(r'[a-z0-9-]+', g) for g in groups) or
+                len(groups) != len(set(groups))):
+            raise ValueError('test groups must be a nonempty list of unique names')
+        arguments = entry.get('args', [])
+        if not isinstance(arguments, list) or not all(isinstance(a, str) for a in arguments):
+            raise ValueError('test arguments must be a list of strings')
+        for argument in arguments:
+            for _, field, spec, conversion in string.Formatter().parse(argument):
+                if field is not None and (field not in {'root', 'output'} or spec or conversion):
+                    raise ValueError('test argument placeholders must be {root} or {output}')
+        invocation = (target, tuple(arguments))
+        if invocation in invocations:
+            raise ValueError('duplicate native invocation: ' + name)
+        invocations.add(invocation)
+        if not isinstance(entry.get('manual', False), bool):
+            raise ValueError('manual must be a Boolean')
+        if 'known-failures' in groups and not entry.get('manual', False):
+            raise ValueError('known failures must be explicitly manual')
+    findings = {}
+    if not isinstance(data.get('known_findings', []), list):
+        raise ValueError('known_findings must be a list')
+    for finding in data.get('known_findings', []):
+        if not isinstance(finding, dict):
+            raise ValueError('known findings must be objects')
+        identity = finding.get('id')
+        if (not isinstance(identity, str) or not re.fullmatch(r'[A-Z0-9-]+', identity) or
+                identity in findings or not isinstance(finding.get('scheduled'), bool) or
+                not all(isinstance(finding.get(key), str) and finding[key]
+                        for key in ('status', 'reason', 'evidence'))):
+            raise ValueError('invalid or duplicate known finding')
+        findings[identity] = finding
+    for entry in data['tests']:
+        if 'finding' not in entry:
+            continue
+        finding = entry['finding']
+        if not isinstance(finding, str) or finding not in findings:
+            raise ValueError('test references an unknown finding: ' + entry['name'])
+        if not findings[finding]['scheduled'] and not entry.get('manual', False):
+            raise ValueError('unscheduled finding cannot enter an automatic gate: ' + entry['name'])
     return data
 
 
@@ -167,6 +210,17 @@ def run_verified_case(command, log_path, cwd, environment, timeout, expected_sou
     return result
 
 
+def annotate_finding(result, entry, manifest):
+    if 'finding' not in entry:
+        return
+    identity = entry['finding']
+    finding = next(row for row in manifest.get('known_findings', []) if row['id'] == identity)
+    result['finding'] = identity
+    result['findingStatus'] = finding['status']
+    result['classification'] = (finding['status'] +
+                                '; observed result remains authoritative')
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--build-dir', type=Path, default=ROOT / 'build')
@@ -176,10 +230,21 @@ def main():
     parser.add_argument('--output', type=Path)
     parser.add_argument('--timeout', type=float, default=120)
     parser.add_argument('--list', action='store_true')
+    parser.add_argument('--check-manifest', action='store_true',
+                        help='Validate gate declarations without configuring or executing native tests')
     args = parser.parse_args()
     if not math.isfinite(args.timeout) or args.timeout <= 0:
         parser.error('timeout must be finite and positive')
-    manifest = load_manifest(args.manifest)
+    try:
+        manifest = load_manifest(args.manifest)
+    except (OSError, ValueError) as error:
+        parser.error(str(error))
+    if args.check_manifest:
+        print(json.dumps({'format': 1, 'tests': len(manifest['tests']),
+                          'nativeTargets': len({entry['target'] for entry in manifest['tests']}),
+                          'manual': sum(entry.get('manual', False) for entry in manifest['tests']),
+                          'knownFindings': len(manifest.get('known_findings', []))}))
+        return 0
     groups = set(args.group or ([] if args.test else ['core']))
     known_names = {item['name'] for item in manifest['tests']}
     if set(args.test) - known_names:
@@ -234,9 +299,7 @@ def main():
             result = dict(status='unavailable', exit=None, argv=command, error=str(error))
             (output / (entry['name'] + '.log')).write_text(str(error) + '\n')
         result['name'] = entry['name']
-        if entry.get('finding'):
-            result['finding'] = entry['finding']
-            result['classification'] = 'open contract; observed result remains authoritative'
+        annotate_finding(result, entry, manifest)
         report['tests'].append(result)
         publish()
         print(entry['name'], result['status'], flush=True)

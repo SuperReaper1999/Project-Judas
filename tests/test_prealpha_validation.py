@@ -36,6 +36,80 @@ class GateTests(unittest.TestCase):
                 with self.assertRaises(ValueError):
                     gate.load_manifest(path)
 
+    def test_manifest_rejects_malformed_or_duplicate_invocations(self):
+        entry = dict(name='probe', target='judas_probe_tests', groups=['core'])
+        finding = dict(id='KNOWN-FAILURE', status='deferred-failing', scheduled=False,
+                       reason='A preserved contract.', evidence='docs/evidence/original')
+        cases = [
+            dict(tests=[]),
+            dict(tests=['not an object']),
+            dict(tests=[dict(entry, args='--a-string-is-not-an-argument-list')]),
+            dict(tests=[dict(entry, groups='core')]),
+            dict(tests=[dict(entry, groups=['core', 'core'])]),
+            dict(tests=[dict(entry, manual='false')]),
+            dict(tests=[entry, dict(entry, name='same-invocation-new-name')]),
+            dict(tests=[dict(entry, args=['{unknown}'])]),
+            dict(tests=[dict(entry, args=['{output.__class__}'])]),
+            dict(tests=[dict(entry, args=['{root!r}'])]),
+            dict(tests=[dict(entry, args=['{output:>10}'])]),
+            dict(tests=[dict(entry, args=['{unclosed'])]),
+            dict(tests=[dict(entry, groups=['known-failures'])]),
+            dict(tests=[dict(entry, finding='UNKNOWN')]),
+            dict(tests=[dict(entry, finding='KNOWN-FAILURE')], known_findings=[finding]),
+            dict(tests=[entry], known_findings=[finding, finding]),
+            dict(tests=[entry], known_findings=[dict(finding, scheduled='false')]),
+        ]
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / 'manifest.json'
+            for case in cases:
+                with self.subTest(case=case):
+                    path.write_text(json.dumps(dict(format=1, **case)))
+                    with self.assertRaises(ValueError):
+                        gate.load_manifest(path)
+
+    def test_same_binary_different_modes_and_explicit_manual_case_remain_valid(self):
+        entry = dict(name='probe', target='judas_probe_tests', groups=['core'])
+        finding = dict(id='KNOWN-FAILURE', status='deferred-failing', scheduled=False,
+                       reason='A preserved contract.', evidence='docs/evidence/original')
+        data = dict(format=1, tests=[entry, dict(entry, name='different-mode',
+                    args=['--mode', '{output}/fixture', '{root}', '{{literal}}']),
+                    dict(entry, name='preserved-failure', args=['--original-failure'],
+                         groups=['known-failures'], manual=True, finding='KNOWN-FAILURE')],
+                    known_findings=[finding])
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / 'manifest.json'
+            path.write_text(json.dumps(data))
+            self.assertEqual(gate.load_manifest(path), data)
+
+    def test_manifest_only_cli_never_needs_a_native_build(self):
+        import subprocess
+        result = subprocess.run([sys.executable, str(ROOT / 'scripts/prealpha_validate.py'),
+                                 '--check-manifest', '--build-dir', '/absent/native/build'],
+                                text=True, capture_output=True, timeout=15)
+        self.assertEqual(result.returncode, 0, result.stderr)
+        summary = json.loads(result.stdout)
+        manifest = gate.load_manifest(gate.MANIFEST)
+        self.assertEqual(summary['tests'], len(manifest['tests']))
+        self.assertEqual(summary['manual'], 1)
+
+    def test_finding_status_annotation_preserves_observed_results(self):
+        manifest = gate.load_manifest(gate.MANIFEST)
+        entries = {row['name']: row for row in manifest['tests']}
+        for name, expected in [('impact-mesh-continuation', 'resolved-original-fixtures-bounded-ccd'),
+                               ('liquid-origin-grid-query', 'open-query-continuity-failing')]:
+            for observed, exit_code in [('passed', 0), ('failed', 1)]:
+                with self.subTest(name=name, observed=observed):
+                    result = dict(status=observed, exit=exit_code)
+                    gate.annotate_finding(result, entries[name], manifest)
+                    self.assertEqual(result['status'], observed)
+                    self.assertEqual(result['exit'], exit_code)
+                    self.assertEqual(result['findingStatus'], expected)
+                    self.assertEqual(result['classification'],
+                                     expected + '; observed result remains authoritative')
+        result = dict(status='failed', exit=7)
+        gate.annotate_finding(result, entries['character-motor'], manifest)
+        self.assertEqual(result, dict(status='failed', exit=7))
+
     def test_deferred_findings_are_not_tests(self):
         manifest = gate.load_manifest(gate.MANIFEST)
         self.assertTrue(manifest['tests'])

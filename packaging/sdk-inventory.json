@@ -10,6 +10,7 @@
   "windows_tools": ["judas_windows_readiness_tests"],
   "files": [
     "LICENSE", "README.md", "docs/judas.d.ts", "docs/judasmod.example.json",
+    "docs/PREALPHA_FINDINGS.json",
     "third_party/RUNTIME_NOTICES.txt", "third_party/imgui/LICENSE.txt",
     "third_party/android/SDL-LICENSE.txt", "third_party/android/GLM-COPYING.txt",
     "tools/inspect_sdk.py", "tools/binary_dependencies.py", "tools/verify_android.py"

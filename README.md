@@ -17,14 +17,15 @@ or performance result as a guarantee.
 ## Current status
 
 The current human-accepted `main` checkpoint is
-**`4c141e9bb6c68a50c63dec263dcec398200328ad`**. It includes M98 save evolution,
-M99 optional online multiplayer, Pre-Alpha Passes 1–4 and the accepted rotated-liquid
-corrections. Earlier milestone acceptance retains its original
+**`e30d5f9bb72a1a341d3eff7485b8d6b3eb6f8ea9`**. It includes M98 save evolution,
+M99 optional online multiplayer, Pre-Alpha Passes 1–5, the accepted rotated-liquid
+corrections and the curved-mesh CCD follow-up. Earlier milestone acceptance retains its original
 [platform scope](docs/evidence/m99/HUMAN_VALIDATION.md); it does not certify every
 subsequent platform or system combination.
 
 The unnumbered **Pre-Alpha stabilization/rework phase** continues on
-`Experimental`, currently with Pass 5 engineering; `main` requires separate human
+`Experimental`; its newer dense-contact optimizations and this documentation/API
+cleanup require separate human review. `main` requires explicit human
 acceptance of each candidate. It is not an Alpha
 release. See [current work, validation and support boundaries](docs/PREALPHA.md)
 and [build identity, channels and distribution](docs/BUILD_RELEASES.md).
@@ -33,8 +34,10 @@ Included M92 rendering adds opaque mesh instancing,
 per-view tiled dynamic lighting, selected spotlight shadows, scripted individual
 lights and shared multi-view planetary LOD. See the
 [Rendering Lab](projects/rendering_lab/README.md) and [M92 evidence](docs/evidence/m92/REPORT.md).
-M91 collision continuity remains included; extreme dense piles still have the
-[documented costs](docs/evidence/m91/REPORT.md).
+M91 collision continuity remains included. The later [curved-mesh correction](docs/PREALPHA.md)
+and [dense-contact follow-up](docs/PREALPHA_DENSE_SUPPORT_FOLLOWUP.md) document
+current behaviour and remaining expensive cases. The latter does **not** meet a
+24–30 FPS target for the 1,024-piece stress room on the measured i7-4790 host.
 
 M90 brings vehicles, wheels, powertrains, characters, navigation, articulated
 poses, attachments, deformables, audio and particles through checked local-origin
@@ -46,9 +49,11 @@ liquid suspension or thermal cold-save support. Start with the
 and [original validation evidence](docs/evidence/m90/REPORT.md).
 
 Native Linux, Windows and Android runtimes and optional local multiplayer remain
-available. Android targets Android 16 with OpenGL ES 3, ARM64 phones/tablets and
+available. Linux is the current acceptance platform; Windows VM checks are native
+functional evidence, and Android acceptance is specific to the recorded builds
+and devices. Android targets Android 16 with OpenGL ES 3, ARM64 phones/tablets and
 x86_64 emulators. Broader hardware and physical-controller coverage remains
-outstanding; M90 Windows/Android checks were not performed. See
+outstanding. See [Windows](docs/WINDOWS.md), [Android](docs/ANDROID.md),
 [local multiplayer](docs/M89_LOCAL_MULTIPLAYER.md) and its
 [validation report](docs/evidence/m89/REPORT.md) for that earlier acceptance scope.
 
@@ -65,6 +70,14 @@ Try [The Repair Bench](projects/developer_lab/README.md). Windows/Android M94 va
 M95 adds [animation event tracks, a timeline and collision-aware
 root-motion integration](docs/M95_ANIMATION_WORKFLOW.md). Try [Motion Studio](projects/animation_studio/README.md). M95 is human accepted; its Windows/Android validation remains outstanding.
 M96 adds [editable text, scrolling and virtual lists](docs/M96_UI_TOOLKIT.md). Try [Field Notes](projects/ui_showcase/README.md); human accepted.
+M97 adds [live local terrain and retained construction](docs/M97_LIVING_WORLD.md).
+Try [Living World Lab](projects/living_world_lab/README.md); human accepted.
+Human-accepted M98 adds [explicit save migrations and recovery](docs/M98_SAVE_EVOLUTION.md).
+Try [Save Evolution Lab](projects/save_evolution_lab/README.md).
+Human-accepted M99 adds [optional server-authoritative networking](docs/M99_NETWORK.md).
+Try [Connected Workshop](projects/connected_workshop/README.md) in two processes or Android + Linux.
+M99 phone-to-Linux testing used USB forwarding; Wi-Fi, Internet deployment and
+Windows M99 validation remain outstanding.
 
 ## Highlights
 
@@ -78,8 +91,8 @@ M96 adds [editable text, scrolling and virtual lists](docs/M96_UI_TOOLKIT.md). T
   ragdolls, cameras, UI and profiling.
 - Project JavaScript through JudasJS for gameplay, input, cameras, UI,
   persistence and other game-owned policy.
-- An editor, project/scene authoring format, standalone Linux export and
-  native Android project export.
+- An editor, project/scene authoring format, native Linux/Windows standalone
+  export and optional native Android APK export.
 
 The demonstrations in `projects/` are editable capability examples, not a
 single bundled game. Useful starting points include [Breakwater](projects/breakwater/README.md),
@@ -90,7 +103,8 @@ Lab](projects/planetary_terrain_lab/planetary_terrain_lab.judasproj).
 ## Build on Linux
 
 Linux is the primary development and validation platform. Install CMake 3.20+,
-a C++17 compiler, SDL2 and GLM development packages, Python 3, and a working
+a C++17 compiler, SDL2 and GLM development packages, Python 3.11+ for SDK/validation
+tooling, and a working
 OpenGL 3.3 environment. On Ubuntu/Debian:
 
 ```sh
@@ -125,10 +139,10 @@ JDK 17+, NDK 28.2.13676358, Android 16 / API 36, CMake and Python 3.11+.
 The supported export host is Linux:
 
 ```sh
-cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
+cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DJUDAS_BUILD_CHANNEL=Experimental
 cmake --build build --target judas judas_export -j4
 python3 tools/build_android.py projects/breakwater/breakwater.judasproj \
-  --sdk "$ANDROID_SDK_ROOT" --abis arm64-v8a
+  --sdk "$ANDROID_SDK_ROOT" --abis arm64-v8a --output /tmp/Breakwater.apk
 ```
 
 See [Native Android games](docs/ANDROID.md) for the complete setup, export
@@ -136,6 +150,7 @@ options, lifecycle behavior and current limitations.
 
 ## Documentation
 
+- [Documentation index](docs/README.md) — current references, platform scope and historical records
 - [Your first visible project](docs/FIRST_PROJECT.md) — create, debug, reload and export a small project
 - [Architecture](docs/ARCHITECTURE.md) — engine boundaries and major systems
 - [JudasJS](docs/JUDASJS.md) and [getting started](docs/judasjs/getting-started.md)
@@ -156,12 +171,3 @@ features should remain clearly scoped.
 
 Project Judas is licensed under the [MIT License](LICENSE). Vendored
 dependencies retain their own notices and licence terms.
-
-M97 adds [live local terrain and retained construction](docs/M97_LIVING_WORLD.md). Try [Living World Lab](projects/living_world_lab/README.md); human accepted.
-
-Human-accepted M98 adds [explicit save migrations and recovery](docs/M98_SAVE_EVOLUTION.md). Try [Save Evolution Lab](projects/save_evolution_lab/README.md).
-
-Human-accepted M99 adds [optional server-authoritative networking](docs/M99_NETWORK.md).
-Try [Connected Workshop](projects/connected_workshop/README.md) in two processes or Android + Linux.
-M99 phone-to-Linux testing used USB forwarding; Wi-Fi, Internet deployment and
-Windows M99 validation remain outstanding.

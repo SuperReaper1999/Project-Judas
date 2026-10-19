@@ -1,0 +1,11 @@
+{
+  "documents": 88,
+  "local_links": 1901,
+  "tracked_destinations_required": false,
+  "errors": [
+    "docs/ARCHITECTURE.md:101: missing heading PREALPHA.md#remaining-readiness-concerns",
+    "docs/MODEL_IMPORT.md:46: missing heading EDITOR_GUIDE.md#animation-retargeting-m74-candidate",
+    "docs/ANIMATION.md:27: missing heading EDITOR_GUIDE.md#animation-retargeting-m74-candidate"
+  ],
+  "pass": false
+}

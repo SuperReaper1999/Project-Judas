@@ -1,0 +1,129 @@
+Test project /home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-doc-cleanup-20261019/build-make
+      Start  1: prealpha.build-identity
+ 1/47 Test  #1: prealpha.build-identity ...................   Passed    0.86 sec
+      Start  2: prealpha.collision-geometry
+ 2/47 Test  #2: prealpha.collision-geometry ...............   Passed    1.77 sec
+      Start  3: prealpha.collision-witness
+ 3/47 Test  #3: prealpha.collision-witness ................   Passed    0.84 sec
+      Start  4: prealpha.rigid-contact
+ 4/47 Test  #4: prealpha.rigid-contact ....................   Passed    1.30 sec
+      Start  5: prealpha.impact-solver
+ 5/47 Test  #5: prealpha.impact-solver ....................   Passed    0.64 sec
+      Start  6: prealpha.impact-timing
+ 6/47 Test  #6: prealpha.impact-timing ....................   Passed    0.65 sec
+      Start  7: prealpha.impact-candidates
+ 7/47 Test  #7: prealpha.impact-candidates ................   Passed    0.61 sec
+      Start  8: prealpha.contact-sat-filter
+ 8/47 Test  #8: prealpha.contact-sat-filter ...............   Passed    1.35 sec
+      Start  9: prealpha.contact-sphere-filter
+ 9/47 Test  #9: prealpha.contact-sphere-filter ............   Passed    0.98 sec
+      Start 10: prealpha.impact-support-sets
+10/47 Test #10: prealpha.impact-support-sets ..............   Passed    0.85 sec
+      Start 11: prealpha.support-continuation
+11/47 Test #11: prealpha.support-continuation .............   Passed    0.66 sec
+      Start 12: prealpha.native-mesh-growth
+12/47 Test #12: prealpha.native-mesh-growth ...............   Passed    0.61 sec
+      Start 13: prealpha.clip-polygon
+13/47 Test #13: prealpha.clip-polygon .....................   Passed    0.61 sec
+      Start 14: prealpha.impact-mesh-arrival
+14/47 Test #14: prealpha.impact-mesh-arrival ..............   Passed    5.30 sec
+      Start 15: prealpha.impact-mesh-continuation
+15/47 Test #15: prealpha.impact-mesh-continuation .........   Passed    6.52 sec
+      Start 16: prealpha.liquid-rotation
+16/47 Test #16: prealpha.liquid-rotation ..................   Passed    0.89 sec
+      Start 17: prealpha.liquid-bake-frames
+17/47 Test #17: prealpha.liquid-bake-frames ...............   Passed    1.11 sec
+      Start 18: prealpha.liquid-bake-normalization-only
+18/47 Test #18: prealpha.liquid-bake-normalization-only ...   Passed    1.11 sec
+      Start 19: prealpha.liquid-bake-knots-only
+19/47 Test #19: prealpha.liquid-bake-knots-only ...........   Passed    1.11 sec
+      Start 20: prealpha.liquid-reservoir
+20/47 Test #20: prealpha.liquid-reservoir .................   Passed    1.61 sec
+      Start 21: prealpha.liquid-surface
+21/47 Test #21: prealpha.liquid-surface ...................   Passed    2.07 sec
+      Start 22: prealpha.liquid-origin-total-identity
+22/47 Test #22: prealpha.liquid-origin-total-identity .....   Passed    1.11 sec
+      Start 23: prealpha.collision-continuity
+23/47 Test #23: prealpha.collision-continuity .............   Passed    0.67 sec
+      Start 24: prealpha.character-motor
+24/47 Test #24: prealpha.character-motor ..................   Passed    1.56 sec
+      Start 25: prealpha.physics-continuation
+25/47 Test #25: prealpha.physics-continuation .............   Passed    1.09 sec
+      Start 26: prealpha.contacts
+26/47 Test #26: prealpha.contacts .........................   Passed    1.13 sec
+      Start 27: prealpha.composed-lifecycle
+27/47 Test #27: prealpha.composed-lifecycle ...............   Passed    1.41 sec
+      Start 28: prealpha.origin-physics
+28/47 Test #28: prealpha.origin-physics ...................   Passed    0.65 sec
+      Start 29: prealpha.origin-assembly
+29/47 Test #29: prealpha.origin-assembly ..................   Passed    1.19 sec
+      Start 30: prealpha.origin-participants
+30/47 Test #30: prealpha.origin-participants ..............   Passed    1.36 sec
+      Start 31: prealpha.origin-stream
+31/47 Test #31: prealpha.origin-stream ....................   Passed    1.15 sec
+      Start 32: prealpha.stream-origin-precision
+32/47 Test #32: prealpha.stream-origin-precision ..........   Passed    1.12 sec
+      Start 33: prealpha.terrain-lifecycle
+33/47 Test #33: prealpha.terrain-lifecycle ................   Passed    1.62 sec
+      Start 34: prealpha.terrain-streaming
+34/47 Test #34: prealpha.terrain-streaming ................   Passed    1.25 sec
+      Start 35: prealpha.save-evolution
+35/47 Test #35: prealpha.save-evolution ...................   Passed    1.25 sec
+      Start 36: prealpha.network-transport
+36/47 Test #36: prealpha.network-transport ................***Failed    1.68 sec
+network-transport failed
+/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha/validation/20261019T134814Z-049c9764/RESULTS.json
+
+      Start 37: prealpha.network-session
+37/47 Test #37: prealpha.network-session ..................***Failed    1.13 sec
+network-session failed
+/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha/validation/20261019T134815Z-4692b310/RESULTS.json
+
+      Start 38: prealpha.network-boundaries
+38/47 Test #38: prealpha.network-boundaries ...............***Failed    2.00 sec
+network-boundaries failed
+/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha/validation/20261019T134816Z-4227303f/RESULTS.json
+
+      Start 39: prealpha.network-js
+39/47 Test #39: prealpha.network-js .......................***Failed    1.82 sec
+network-js failed
+/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha/validation/20261019T134818Z-3594fc60/RESULTS.json
+
+      Start 40: prealpha.resource-handoff
+40/47 Test #40: prealpha.resource-handoff .................   Passed    2.58 sec
+      Start 41: prealpha.first-project
+41/47 Test #41: prealpha.first-project ....................   Passed    1.16 sec
+      Start 42: prealpha.origin-environment
+42/47 Test #42: prealpha.origin-environment ...............   Passed    1.57 sec
+      Start 43: prealpha.origin-admission
+43/47 Test #43: prealpha.origin-admission .................   Passed    1.10 sec
+      Start 44: prealpha.liquid-origin-query-controls
+44/47 Test #44: prealpha.liquid-origin-query-controls .....   Passed    1.16 sec
+      Start 45: prealpha.gate-negative-controls
+45/47 Test #45: prealpha.gate-negative-controls ...........   Passed    0.41 sec
+      Start 46: prealpha.build-organization
+46/47 Test #46: prealpha.build-organization ...............   Passed    0.24 sec
+      Start 47: prealpha.gate-registration
+47/47 Test #47: prealpha.gate-registration ................   Passed    1.14 sec
+
+91% tests passed, 4 tests failed out of 47
+
+Label Time Summary:
+application    =   2.58 sec*proc (1 test)
+collision      =  23.37 sec*proc (15 tests)
+core           =  14.27 sec*proc (11 tests)
+lifecycle      =  18.55 sec*proc (15 tests)
+liquid         =  10.16 sec*proc (8 tests)
+network        =   6.63 sec*proc (4 tests)
+onboarding     =   1.16 sec*proc (1 test)
+prealpha       =  63.97 sec*proc (47 tests)
+tooling        =   1.79 sec*proc (3 tests)
+
+Total Test time (real) =  63.99 sec
+
+The following tests FAILED:
+	 36 - prealpha.network-transport (Failed)               core network prealpha
+	 37 - prealpha.network-session (Failed)                 network prealpha
+	 38 - prealpha.network-boundaries (Failed)              network prealpha
+	 39 - prealpha.network-js (Failed)                      network prealpha
+Errors while running CTest

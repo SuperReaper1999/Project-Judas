@@ -1,0 +1,4 @@
+Assets/scripts/platform.js: SyntaxError: unexpected token in expression: ';'
+    at Assets/scripts/platform.js:3:29
+
+2 registered script modules; 1 compile/link failures (maximum 128 reported). No project code executed.

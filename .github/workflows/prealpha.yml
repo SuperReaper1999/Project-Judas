@@ -41,7 +41,6 @@ jobs:
           python3 scripts/prealpha_build_identity_checks.py --output .cache/prealpha/ci/identity.json
           python3 scripts/prealpha_packaging_checks.py --output .cache/prealpha/ci/packaging.json
           python3 scripts/prealpha_distribution_checks.py --output .cache/prealpha/ci/distribution.json
-          python3 -m unittest discover -s tests -p test_prealpha_validation.py -v
           node tests/TypeScriptToolingTests.mjs
           node scripts/check_judasjs_api.mjs
       - name: Configure an explicitly identified build

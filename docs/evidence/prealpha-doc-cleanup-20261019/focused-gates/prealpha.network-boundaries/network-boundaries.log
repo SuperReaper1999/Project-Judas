@@ -1,0 +1,13 @@
+PASS fresh fixture preserves previous role-boundary evidence
+PASS normal script asset registration
+PASS normal project loads: 
+PASS authored source shared by independent worlds
+PASS ordinary session state selects fixture role
+PASS ordinary public script world builds: 
+PASS session begins: 
+PASS ordinary session state selects fixture role
+PASS ordinary public script world builds: 
+PASS session begins: 
+PASS actual host begins content validation
+FAIL actual host publishes bound socket
+FAIL actual host publishes bound socket after 12 checks

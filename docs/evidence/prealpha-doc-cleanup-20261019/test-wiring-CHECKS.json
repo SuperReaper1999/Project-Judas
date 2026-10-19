@@ -1,0 +1,113 @@
+{
+  "format": 1,
+  "utc": "2026-10-19T13:30:59.083021+00:00",
+  "passed": true,
+  "unitTests": 26,
+  "scope": "Tooling/registration controls only; no native engine compilation or behavioural qualification",
+  "commands": [
+    {
+      "argv": [
+        "python3",
+        "scripts/prealpha_validate.py",
+        "--check-manifest"
+      ],
+      "exit": 0,
+      "seconds": 0.06841560599968943,
+      "log": "check-1.log",
+      "logSha256": "b560f2db0375dd00797bb6c226a92dfa0c8a4a3d52e2001ed40e0e999f6f18f4"
+    },
+    {
+      "argv": [
+        "python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-p",
+        "test_prealpha_validation.py",
+        "-v"
+      ],
+      "exit": 0,
+      "seconds": 0.4162765170003695,
+      "log": "check-2.log",
+      "logSha256": "b97a60647ba07a332b2c9eecade3e472c3320f30ff3c249ac4bb09475631ffb5"
+    },
+    {
+      "argv": [
+        "python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-p",
+        "test_validation_registration.py",
+        "-v"
+      ],
+      "exit": 0,
+      "seconds": 1.1527461739988212,
+      "log": "check-3.log",
+      "logSha256": "5419e5ce689116b0a3db1cadb31bbf76601f8dac5682c12642b94eadf428a08e"
+    },
+    {
+      "argv": [
+        "python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-p",
+        "test_cmake_test_targets.py",
+        "-v"
+      ],
+      "exit": 0,
+      "seconds": 0.27098843999920064,
+      "log": "check-4.log",
+      "logSha256": "a57d5c3c134b805fbddd95e77363d58c6a064aefac74001505d4f8c9aae14cbf"
+    }
+  ],
+  "inputs": [
+    {
+      "path": "CMakeLists.txt",
+      "sha256": "ffa4857268ff97c31ada719f89f2702d7365ffd64910e4a03b2532fc2b561ab1"
+    },
+    {
+      "path": "cmake/JudasValidation.cmake",
+      "sha256": "8c93a78700a00ffe19d3694b737b458df9d2e2ce1f9f07ca879e06912e6dc68e"
+    },
+    {
+      "path": "cmake/JudasTestTargets.cmake",
+      "sha256": "61f480e15f74d820594abcc9a98628517a22bca3a8539eb5aaaa2593bcb5a0e4"
+    },
+    {
+      "path": "scripts/prealpha_validate.py",
+      "sha256": "646f0c2ba5d4afa33303b8aa7e94d9a7d4433a155a71c744f3c05e8256712f8d"
+    },
+    {
+      "path": "tests/test_prealpha_validation.py",
+      "sha256": "d4adb6c3a86435018ecc3947dff9b2adb3e2ab3bf9e6a6c1196c9bfae0b8b2d8"
+    },
+    {
+      "path": "tests/test_validation_registration.py",
+      "sha256": "5afda370801b0bfd85c86aadedeafd776834081a8278273e11c1ebd5089a0167"
+    },
+    {
+      "path": "tests/test_cmake_test_targets.py",
+      "sha256": "7b79d15baf7fb07840a71e1dd0b15e668aed89faf2259b96caf18d1c82d3d26e"
+    },
+    {
+      "path": "tools/validation/suites.json",
+      "sha256": "30933cadb31667a2904f27c6bd89c267ba7f5425e100ac099bc035d416a47523"
+    },
+    {
+      "path": ".github/workflows/prealpha.yml",
+      "sha256": "e158010d13ebe04e02e5ebab6bc986eadcb81c7eb2003aaf5a8c2fb26e558ad7"
+    },
+    {
+      "path": ".github/workflows/current-docs.yml",
+      "sha256": "a77f00ff264a56afe37fbb556239b18323a8319806551f2131fe08a536ed5f50"
+    }
+  ]
+}

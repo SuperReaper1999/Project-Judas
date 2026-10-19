@@ -116,8 +116,8 @@ for supported contact, scale and attachment semantics.
 
 Modern slots also retain motor support/motion state and remap the supporting
 identity to fresh bodies. Runtime joint limits/motor/spring settings persist;
-native handles and most solver caches rebuild. The current M78 corrective candidate
-also retains a guarded joint continuation context; see below. These guarantees belong to explicit
+native handles and most solver caches rebuild. Current captures also retain a
+guarded joint continuation context; see below. These guarantees belong to explicit
 modern slot save/load, not ordinary reload or the legacy `.judasstate` path.
 Composed projects use the same service with qualified resident/retained region
 records; the legacy delta restriction does not disable modern slot saves.
@@ -150,10 +150,12 @@ reapply authored initial velocity over a captured command. The legacy pose-delta
 `.judasstate` save rejects changed authority/kinematic intent; use modern slots.
 [Kinematic reference](entities.md#kinematic-motion-m71) · [Pose/physical reference](animation-ragdolls.md).
 
-## Joint continuation — current M78 corrective candidate
+<a id="joint-continuation--current-m78-corrective-candidate"></a>
 
-New joint-bearing modern slots pair articulation participant version 4 with
-contact participant version 2. They retain actual latched angular-drive commands,
+## Joint continuation and legacy compatibility
+
+Joint-bearing modern slots pair articulation participant version 5 (version 4
+introduced continuation) with contact participant version 2. They retain actual latched angular-drive commands,
 the selected finite-pass joint impulse history, and a separate completed contact
 observation with its real epoch/timestep. Safe native handles reconstruct from
 existing identities; no contact impulse is replayed and no enter callback is
@@ -167,7 +169,7 @@ present the remaining subset as complete or empty; the native controller keeps
 its ordinary first-sample wait. A genuinely completed empty publication remains
 distinct from an unpublished one.
 
-An independent character query-proxy refresh does not invalidate another articulation's restored physical publication. A mechanically connected proxy remains part of the physical context. The later [lifecycle correction](../M78_LIFECYCLE_CLOSURE.md) separately establishes authored query metadata/enabled publication on streamed activation/revisit; disk reconstruction alone did not prove that contract. Runtime motor tag mutation remains a distinct unresolved finding.
+An independent character query-proxy refresh does not invalidate another articulation's restored physical publication. A mechanically connected proxy remains part of the physical context. The later [lifecycle correction](../M78_LIFECYCLE_CLOSURE.md) separately establishes authored query metadata/enabled publication on streamed activation/revisit; disk reconstruction alone did not prove that contract. The same closure also records live motor tag propagation to the query capsule; [CharacterMotor metadata](character.md) describes the current rule.
 
 This is not a promise of universal bitwise trajectories or persistence of every
 cache. Old articulation/contact versions remain readable through their previous

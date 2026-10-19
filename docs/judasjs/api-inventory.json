@@ -1,7 +1,23 @@
 {
-  "checkpoint": "84121564230242a404785af4d60a1475cdb83f4c + M99 optional networking",
+  "checkpoint": "Pre-Alpha current source; public module through M99",
   "authority": "src/ScriptSystem.cpp::library + Impl::Native + ScriptBindingsUI.cpp + ScriptBindingsJoint.cpp + ScriptLocalMultiplayer.inl + ScriptNetwork.inl",
   "resultShapes": [
+    {
+      "binding": "Entity.physicalMaterial",
+      "declaration": "PhysicalMaterialInfo",
+      "fields": [
+        "asset",
+        "friction",
+        "restitution"
+      ],
+      "nativeFile": "src/ScriptSystem.cpp",
+      "needles": [
+        "JS_SetPropertyStr(c,o,\"asset\",asset.empty()?JS_NULL:JS_NewString(c,asset.c_str()))",
+        "JS_SetPropertyStr(c,o,\"friction\",JS_NewFloat64(c,friction))",
+        "JS_SetPropertyStr(c,o,\"restitution\",JS_NewFloat64(c,restitution))"
+      ],
+      "reference": "docs/judasjs/physics.md"
+    },
     {
       "binding": "network.stats",
       "declaration": "NetworkStats",
@@ -339,6 +355,1236 @@
         "connection[\"groups\"]"
       ],
       "reference": "docs/judasjs/powertrains.md"
+    }
+  ],
+  "callables": [
+    {
+      "symbol": "Animation.advance",
+      "minimum": 1,
+      "maximum": 1
+    },
+    {
+      "symbol": "Animation.configureIK",
+      "minimum": 1,
+      "maximum": 1
+    },
+    {
+      "symbol": "Animation.constructor",
+      "minimum": 1,
+      "maximum": 1
+    },
+    {
+      "symbol": "Animation.crossFade",
+      "minimum": 1,
+      "maximum": 2
+    },
+    {
+      "symbol": "Animation.ikTargets",
+      "minimum": 1,
+      "maximum": 1
+    },
+    {
+      "symbol": "Animation.jointTransform",
+      "minimum": 1,
+      "maximum": 3
+    },
+    {
+      "symbol": "Animation.layer",
+      "minimum": 2,
+      "maximum": 2
+    },
+    {
+      "symbol": "Animation.limb",
+      "minimum": 2,
+      "maximum": 2
+    },
+    {
+      "symbol": "Animation.pause",
+      "minimum": 0,
+      "maximum": 0
+    },
+    {
+      "symbol": "Animation.play",
+      "minimum": 0,
+      "maximum": 1
+    },
+    {
+      "symbol": "Animation.removeLayer",
+      "minimum": 1,
+      "maximum": 1
+    },
+    {
+      "symbol": "Animation.removeLimb",
+      "minimum": 1,
+      "maximum": 1
+    },
+    {
+      "symbol": "Animation.resume",
+      "minimum": 0,
+      "maximum": 0
+    },
+    {
+      "symbol": "Animation.rootMotion",
+      "minimum": 3,
+      "maximum": 4
+    },
+    {
+      "symbol": "Animation.seek",
+      "minimum": 1,
+      "maximum": 1
+    },
+    {
+      "symbol": "Animation.stop",
+      "minimum": 0,
+      "maximum": 0
+    },
+    {
+      "symbol": "Character.accelerate",
+      "minimum": 1,
+      "maximum": 1
+    },
+    {
+      "symbol": "Character.configure",
+      "minimum": 1,
+      "maximum": 1
+    },
+    {
+      "symbol": "Character.constructor",
+      "minimum": 1,
+      "maximum": 1
+    },
+    {
+      "symbol": "Character.displace",
+      "minimum": 1,
+      "maximum": 1
+    },
+    {
+      "symbol": "Character.ignore",
+      "minimum": 1,
+      "maximum": 1
+    },
+    {
+      "symbol": "Character.orient",
+      "minimum": 1,
+      "maximum": 1
+    },
+    {
+      "symbol": "Deformable.attach",
+      "minimum": 2,
+      "maximum": 2
+    },
+    {
+      "symbol": "Deformable.constructor",
+      "minimum": 2,
+      "maximum": 2
+    },
+    {
+      "symbol": "Deformable.force",
+      "minimum": 1,
+      "maximum": 2
+    },
+    {
+      "symbol": "Deformable.impulse",
+      "minimum": 1,
+      "maximum": 2
+    },
+    {
+      "symbol": "Deformable.impulseAt",
+      "minimum": 2,
+      "maximum": 2
+    },
+    {
+      "symbol": "Deformable.raycast",
+      "minimum": 3,
+      "maximum": 3
+    },
+    {
+      "symbol": "Deformable.release",
+      "minimum": 1,
+      "maximum": 1
+    },
+    {
+      "symbol": "Deformable.reset",
+      "minimum": 0,
+      "maximum": 0
+    },
+    {
+      "symbol": "Deformable.setMaterial",
+      "minimum": 1,
+      "maximum": 1
+    },
+    {
+      "symbol": "Entity.addTag",
+      "minimum": 1,
+      "maximum": 1
+    },
+    {
+      "symbol": "Entity.applyForce",
+      "minimum": 1,
+      "maximum": 1
+    },
+    {
+      "symbol": "Entity.applyImpulse",
+      "minimum": 1,
+      "maximum": 1
+    },
+    {
+      "symbol": "Entity.applyImpulseAtPoint",
+      "minimum": 2,
+      "maximum": 2
+    },
+    {
+      "symbol": "Entity.applyTorque",
+      "minimum": 1,
+      "maximum": 1
+    },
+    {
+      "symbol": "Entity.burst",
+      "minimum": 1,
+      "maximum": 1
+    },
+    {
+      "symbol": "Entity.clearPlanetCollision",
+      "minimum": 0,
+      "maximum": 0
+    },
+    {
+      "symbol": "Entity.clearSocket",
+      "minimum": 0,
+      "maximum": 0
+    },
+    {
+      "symbol": "Entity.constructor",
+      "minimum": 1,
+      "maximum": 1
+    },
+    {
+      "symbol": "Entity.destroy",
+      "minimum": 0,
+      "maximum": 0
+    },
+    {
+      "symbol": "Entity.hasTag",
+      "minimum": 1,
+      "maximum": 1
+    },
+    {
+      "symbol": "Entity.material",
+      "minimum": 0,
+      "maximum": 1
+    },
+    {
+      "symbol": "Entity.moveKinematic",
+      "minimum": 1,
+      "maximum": 2
+    },
+    {
+      "symbol": "Entity.pauseAudio",
+      "minimum": 0,
+      "maximum": 0
+    },
+    {
+      "symbol": "Entity.planetSample",
+      "minimum": 1,
+      "maximum": 1
+    },
+    {
+      "symbol": "Entity.playAudio",
+      "minimum": 0,
+      "maximum": 0
+    },
+    {
+      "symbol": "Entity.playAudioOneShot",
+      "minimum": 0,
+      "maximum": 0
+    },
+    {
+      "symbol": "Entity.pointVelocity",
+      "minimum": 1,
+      "maximum": 1
+    },
+    {
+      "symbol": "Entity.preparePlanetCollision",
+      "minimum": 1,
+      "maximum": 1
+    },
+    {
+      "symbol": "Entity.removeTag",
+      "minimum": 1,
+      "maximum": 1
+    },
+    {
+      "symbol": "Entity.resumeAudio",
+      "minimum": 0,
+      "maximum": 0
+    },
+    {
+      "symbol": "Entity.scriptState",
+      "minimum": 1,
+      "maximum": 1
+    },
+    {
+      "symbol": "Entity.seekAudio",
+      "minimum": 1,
+      "maximum": 1
+    },
+    {
+      "symbol": "Entity.setAudio",
+      "minimum": 1,
+      "maximum": 1
+    },
+    {
+      "symbol": "Entity.setAudioEnabled",
+      "minimum": 1,
+      "maximum": 1
+    },
+    {
+      "symbol": "Entity.setAudioVelocity",
+      "minimum": 0,
+      "maximum": 1
+    },
+    {
+      "symbol": "Entity.setCameraEnabled",
+      "minimum": 1,
+      "maximum": 1
+    },
+    {
+      "symbol": "Entity.setCameraProjection",
+      "minimum": 1,
+      "maximum": 1
+    },
+    {
+      "symbol": "Entity.setColliderEnabled",
+      "minimum": 1,
+      "maximum": 1
+    },
+    {
+      "symbol": "Entity.setKinematicVelocity",
+      "minimum": 1,
+      "maximum": 2
+    },
+    {
+      "symbol": "Entity.setLight",
+      "minimum": 1,
+      "maximum": 1
+    },
+    {
+      "symbol": "Entity.setMotionType",
+      "minimum": 1,
+      "maximum": 2
+    },
+    {
+      "symbol": "Entity.setNavigationEnabled",
+      "minimum": 2,
+      "maximum": 2
+    },
+    {
+      "symbol": "Entity.setPartVisible",
+      "minimum": 2,
+      "maximum": 2
+    },
+    {
+      "symbol": "Entity.setParticles",
+      "minimum": 1,
+      "maximum": 1
+    },
+    {
+      "symbol": "Entity.setPhysicalMaterial",
+      "minimum": 0,
+      "maximum": 2
+    },
+    {
+      "symbol": "Entity.setSocket",
+      "minimum": 2,
+      "maximum": 3,
+      "nativeOptional": {
+        "minimum": 1,
+        "reason": "A null/undefined target clears the socket before the joint argument is read."
+      }
+    },
+    {
+      "symbol": "Entity.stopAudio",
+      "minimum": 0,
+      "maximum": 0
+    },
+    {
+      "symbol": "Entity.stopKinematic",
+      "minimum": 0,
+      "maximum": 0
+    },
+    {
+      "symbol": "EntityGravity.clear",
+      "minimum": 0,
+      "maximum": 0
+    },
+    {
+      "symbol": "EntityGravity.constructor",
+      "minimum": 1,
+      "maximum": 1
+    },
+    {
+      "symbol": "EntityGravity.select",
+      "minimum": 1,
+      "maximum": 1
+    },
+    {
+      "symbol": "EntityGravity.setUniform",
+      "minimum": 1,
+      "maximum": 1
+    },
+    {
+      "symbol": "Fracture.constructor",
+      "minimum": 2,
+      "maximum": 2
+    },
+    {
+      "symbol": "Fracture.force",
+      "minimum": 2,
+      "maximum": 2
+    },
+    {
+      "symbol": "Fracture.impulse",
+      "minimum": 2,
+      "maximum": 2
+    },
+    {
+      "symbol": "Fracture.release",
+      "minimum": 2,
+      "maximum": 2
+    },
+    {
+      "symbol": "Fracture.remove",
+      "minimum": 2,
+      "maximum": 2
+    },
+    {
+      "symbol": "Joint.configure",
+      "minimum": 1,
+      "maximum": 1
+    },
+    {
+      "symbol": "Joint.constructor",
+      "minimum": 1,
+      "maximum": 1
+    },
+    {
+      "symbol": "Joint.destroy",
+      "minimum": 0,
+      "maximum": 0
+    },
+    {
+      "symbol": "Joint.setEnabled",
+      "minimum": 1,
+      "maximum": 1
+    },
+    {
+      "symbol": "Joint.setLimits",
+      "minimum": 2,
+      "maximum": 3
+    },
+    {
+      "symbol": "Joint.setMotor",
+      "minimum": 2,
+      "maximum": 3
+    },
+    {
+      "symbol": "Joint.setSpring",
+      "minimum": 3,
+      "maximum": 4
+    },
+    {
+      "symbol": "LiquidVolume.applyImpulse",
+      "minimum": 2,
+      "maximum": 2
+    },
+    {
+      "symbol": "LiquidVolume.constructor",
+      "minimum": 1,
+      "maximum": 1
+    },
+    {
+      "symbol": "LiquidVolume.transferTo",
+      "minimum": 2,
+      "maximum": 3
+    },
+    {
+      "symbol": "LocalPlayer.assign",
+      "minimum": 1,
+      "maximum": 2
+    },
+    {
+      "symbol": "LocalPlayer.clearView",
+      "minimum": 0,
+      "maximum": 0
+    },
+    {
+      "symbol": "LocalPlayer.constructor",
+      "minimum": 1,
+      "maximum": 1
+    },
+    {
+      "symbol": "LocalPlayer.leave",
+      "minimum": 0,
+      "maximum": 0
+    },
+    {
+      "symbol": "LocalPlayer.project",
+      "minimum": 1,
+      "maximum": 1
+    },
+    {
+      "symbol": "LocalPlayer.ray",
+      "minimum": 0,
+      "maximum": 1
+    },
+    {
+      "symbol": "LocalPlayer.setInputMap",
+      "minimum": 1,
+      "maximum": 1
+    },
+    {
+      "symbol": "LocalPlayer.setView",
+      "minimum": 1,
+      "maximum": 3
+    },
+    {
+      "symbol": "LocalPlayer.unassign",
+      "minimum": 1,
+      "maximum": 1
+    },
+    {
+      "symbol": "Material.assign",
+      "minimum": 1,
+      "maximum": 1
+    },
+    {
+      "symbol": "Material.clearOverrides",
+      "minimum": 0,
+      "maximum": 0
+    },
+    {
+      "symbol": "Material.constructor",
+      "minimum": 1,
+      "maximum": 2
+    },
+    {
+      "symbol": "Material.set",
+      "minimum": 1,
+      "maximum": 1
+    },
+    {
+      "symbol": "NavigationAgent.clear",
+      "minimum": 0,
+      "maximum": 0
+    },
+    {
+      "symbol": "NavigationAgent.completeLink",
+      "minimum": 0,
+      "maximum": 0
+    },
+    {
+      "symbol": "NavigationAgent.configure",
+      "minimum": 1,
+      "maximum": 1
+    },
+    {
+      "symbol": "NavigationAgent.constructor",
+      "minimum": 1,
+      "maximum": 1
+    },
+    {
+      "symbol": "NavigationAgent.setDestination",
+      "minimum": 1,
+      "maximum": 1
+    },
+    {
+      "symbol": "NetworkEntity.constructor",
+      "minimum": 2,
+      "maximum": 2
+    },
+    {
+      "symbol": "NetworkEntity.forget",
+      "minimum": 0,
+      "maximum": 0
+    },
+    {
+      "symbol": "PlayerInput.axis",
+      "minimum": 1,
+      "maximum": 1
+    },
+    {
+      "symbol": "PlayerInput.constructor",
+      "minimum": 1,
+      "maximum": 1
+    },
+    {
+      "symbol": "PlayerInput.held",
+      "minimum": 1,
+      "maximum": 1
+    },
+    {
+      "symbol": "PlayerInput.pressed",
+      "minimum": 1,
+      "maximum": 1
+    },
+    {
+      "symbol": "PlayerInput.released",
+      "minimum": 1,
+      "maximum": 1
+    },
+    {
+      "symbol": "PlayerInput.stick",
+      "minimum": 1,
+      "maximum": 1
+    },
+    {
+      "symbol": "PlayerInput.vector",
+      "minimum": 1,
+      "maximum": 1
+    },
+    {
+      "symbol": "Powertrain.constructor",
+      "minimum": 1,
+      "maximum": 1
+    },
+    {
+      "symbol": "Powertrain.set",
+      "minimum": 1,
+      "maximum": 1
+    },
+    {
+      "symbol": "Ragdoll.body",
+      "minimum": 1,
+      "maximum": 1
+    },
+    {
+      "symbol": "Ragdoll.cancelBalance",
+      "minimum": 0,
+      "maximum": 0
+    },
+    {
+      "symbol": "Ragdoll.configureBalance",
+      "minimum": 1,
+      "maximum": 1
+    },
+    {
+      "symbol": "Ragdoll.configurePhysical",
+      "minimum": 1,
+      "maximum": 1
+    },
+    {
+      "symbol": "Ragdoll.constructor",
+      "minimum": 1,
+      "maximum": 1
+    },
+    {
+      "symbol": "Ragdoll.enter",
+      "minimum": 0,
+      "maximum": 0
+    },
+    {
+      "symbol": "Ragdoll.leave",
+      "minimum": 0,
+      "maximum": 1
+    },
+    {
+      "symbol": "Ragdoll.requestBalance",
+      "minimum": 0,
+      "maximum": 2
+    },
+    {
+      "symbol": "Ragdoll.setMode",
+      "minimum": 1,
+      "maximum": 2
+    },
+    {
+      "symbol": "Terrain.brush",
+      "minimum": 2,
+      "maximum": 2
+    },
+    {
+      "symbol": "Terrain.constructor",
+      "minimum": 1,
+      "maximum": 1
+    },
+    {
+      "symbol": "Terrain.create",
+      "minimum": 1,
+      "maximum": 1
+    },
+    {
+      "symbol": "UIDocument.captureState",
+      "minimum": 0,
+      "maximum": 0
+    },
+    {
+      "symbol": "UIDocument.constructor",
+      "minimum": 1,
+      "maximum": 1
+    },
+    {
+      "symbol": "UIDocument.focus",
+      "minimum": 1,
+      "maximum": 1
+    },
+    {
+      "symbol": "UIDocument.get",
+      "minimum": 1,
+      "maximum": 1
+    },
+    {
+      "symbol": "UIDocument.hide",
+      "minimum": 0,
+      "maximum": 0
+    },
+    {
+      "symbol": "UIDocument.restoreState",
+      "minimum": 1,
+      "maximum": 1
+    },
+    {
+      "symbol": "UIDocument.show",
+      "minimum": 0,
+      "maximum": 0
+    },
+    {
+      "symbol": "UIDocument.unload",
+      "minimum": 0,
+      "maximum": 0
+    },
+    {
+      "symbol": "UIElement.configure",
+      "minimum": 1,
+      "maximum": 1
+    },
+    {
+      "symbol": "UIElement.constructor",
+      "minimum": 2,
+      "maximum": 2
+    },
+    {
+      "symbol": "UIElement.setItems",
+      "minimum": 1,
+      "maximum": 1
+    },
+    {
+      "symbol": "UIElement.setLayout",
+      "minimum": 1,
+      "maximum": 1
+    },
+    {
+      "symbol": "Weather.constructor",
+      "minimum": 1,
+      "maximum": 1
+    },
+    {
+      "symbol": "Weather.strike",
+      "minimum": 1,
+      "maximum": 1,
+      "nativeOptional": {
+        "minimum": 0,
+        "reason": "The wrapper forwards undefined; weatherStrike accepts omission and uses the field ground anchor."
+      }
+    },
+    {
+      "symbol": "Weather.transition",
+      "minimum": 1,
+      "maximum": 2
+    },
+    {
+      "symbol": "Wheel.configure",
+      "minimum": 1,
+      "maximum": 1
+    },
+    {
+      "symbol": "Wheel.constructor",
+      "minimum": 1,
+      "maximum": 1
+    },
+    {
+      "symbol": "Wheel.set",
+      "minimum": 1,
+      "maximum": 1
+    },
+    {
+      "symbol": "audio.group",
+      "minimum": 1,
+      "maximum": 1
+    },
+    {
+      "symbol": "audio.setGroup",
+      "minimum": 2,
+      "maximum": 3
+    },
+    {
+      "symbol": "console.log",
+      "minimum": 0,
+      "maximum": null
+    },
+    {
+      "symbol": "entity",
+      "minimum": 1,
+      "maximum": 1
+    },
+    {
+      "symbol": "input.axis",
+      "minimum": 1,
+      "maximum": 1
+    },
+    {
+      "symbol": "input.held",
+      "minimum": 1,
+      "maximum": 1
+    },
+    {
+      "symbol": "input.pressed",
+      "minimum": 1,
+      "maximum": 1
+    },
+    {
+      "symbol": "input.released",
+      "minimum": 1,
+      "maximum": 1
+    },
+    {
+      "symbol": "input.stick",
+      "minimum": 1,
+      "maximum": 1
+    },
+    {
+      "symbol": "input.stickDelta",
+      "minimum": 1,
+      "maximum": 1
+    },
+    {
+      "symbol": "input.stickSamples",
+      "minimum": 1,
+      "maximum": 2
+    },
+    {
+      "symbol": "input.vector",
+      "minimum": 1,
+      "maximum": 1
+    },
+    {
+      "symbol": "liquid.accounting",
+      "minimum": 0,
+      "maximum": 1
+    },
+    {
+      "symbol": "liquid.sample",
+      "minimum": 1,
+      "maximum": 1
+    },
+    {
+      "symbol": "liquid.samplePresented",
+      "minimum": 1,
+      "maximum": 1
+    },
+    {
+      "symbol": "liquid.submerged",
+      "minimum": 1,
+      "maximum": 1
+    },
+    {
+      "symbol": "localization.format",
+      "minimum": 1,
+      "maximum": 2
+    },
+    {
+      "symbol": "localization.number",
+      "minimum": 1,
+      "maximum": 2
+    },
+    {
+      "symbol": "localization.reload",
+      "minimum": 0,
+      "maximum": 0
+    },
+    {
+      "symbol": "localization.setLocale",
+      "minimum": 1,
+      "maximum": 1
+    },
+    {
+      "symbol": "mods.contributions",
+      "minimum": 1,
+      "maximum": 1
+    },
+    {
+      "symbol": "mods.resolve",
+      "minimum": 2,
+      "maximum": 2
+    },
+    {
+      "symbol": "navigation.path",
+      "minimum": 2,
+      "maximum": 3
+    },
+    {
+      "symbol": "navigation.raycast",
+      "minimum": 2,
+      "maximum": 3
+    },
+    {
+      "symbol": "navigation.sample",
+      "minimum": 1,
+      "maximum": 3
+    },
+    {
+      "symbol": "network.close",
+      "minimum": 0,
+      "maximum": 0
+    },
+    {
+      "symbol": "network.host",
+      "minimum": 0,
+      "maximum": 1
+    },
+    {
+      "symbol": "network.input",
+      "minimum": 1,
+      "maximum": 1
+    },
+    {
+      "symbol": "network.join",
+      "minimum": 0,
+      "maximum": 1
+    },
+    {
+      "symbol": "network.replicate",
+      "minimum": 1,
+      "maximum": 2
+    },
+    {
+      "symbol": "network.sendInput",
+      "minimum": 1,
+      "maximum": 1
+    },
+    {
+      "symbol": "network.setInterest",
+      "minimum": 2,
+      "maximum": 2
+    },
+    {
+      "symbol": "physics.boxCast",
+      "minimum": 4,
+      "maximum": 5
+    },
+    {
+      "symbol": "physics.capsuleCast",
+      "minimum": 5,
+      "maximum": 6
+    },
+    {
+      "symbol": "physics.capsuleCastMany",
+      "minimum": 1,
+      "maximum": 2
+    },
+    {
+      "symbol": "physics.closestPoint",
+      "minimum": 2,
+      "maximum": 3
+    },
+    {
+      "symbol": "physics.createJoint",
+      "minimum": 2,
+      "maximum": 2
+    },
+    {
+      "symbol": "physics.gravity",
+      "minimum": 1,
+      "maximum": 1
+    },
+    {
+      "symbol": "physics.joint",
+      "minimum": 1,
+      "maximum": 1
+    },
+    {
+      "symbol": "physics.raycast",
+      "minimum": 3,
+      "maximum": 4
+    },
+    {
+      "symbol": "physics.raycastMany",
+      "minimum": 1,
+      "maximum": 2
+    },
+    {
+      "symbol": "physics.sphereCast",
+      "minimum": 4,
+      "maximum": 5
+    },
+    {
+      "symbol": "physics.sphereCastMany",
+      "minimum": 1,
+      "maximum": 2
+    },
+    {
+      "symbol": "players.create",
+      "minimum": 0,
+      "maximum": 2
+    },
+    {
+      "symbol": "players.get",
+      "minimum": 1,
+      "maximum": 1
+    },
+    {
+      "symbol": "profiler.counter",
+      "minimum": 2,
+      "maximum": 3
+    },
+    {
+      "symbol": "profiler.scope",
+      "minimum": 2,
+      "maximum": 2
+    },
+    {
+      "symbol": "saves.cancel",
+      "minimum": 1,
+      "maximum": 1
+    },
+    {
+      "symbol": "saves.delete",
+      "minimum": 1,
+      "maximum": 1
+    },
+    {
+      "symbol": "saves.exclude",
+      "minimum": 1,
+      "maximum": 2
+    },
+    {
+      "symbol": "saves.exists",
+      "minimum": 1,
+      "maximum": 1
+    },
+    {
+      "symbol": "saves.list",
+      "minimum": 0,
+      "maximum": 0
+    },
+    {
+      "symbol": "saves.load",
+      "minimum": 1,
+      "maximum": 2
+    },
+    {
+      "symbol": "saves.reference",
+      "minimum": 1,
+      "maximum": 1
+    },
+    {
+      "symbol": "saves.refresh",
+      "minimum": 0,
+      "maximum": 0
+    },
+    {
+      "symbol": "saves.resolve",
+      "minimum": 1,
+      "maximum": 1
+    },
+    {
+      "symbol": "saves.save",
+      "minimum": 1,
+      "maximum": 2
+    },
+    {
+      "symbol": "saves.status",
+      "minimum": 1,
+      "maximum": 1
+    },
+    {
+      "symbol": "scenes.activateRegion",
+      "minimum": 1,
+      "maximum": 1
+    },
+    {
+      "symbol": "scenes.adopt",
+      "minimum": 1,
+      "maximum": 2
+    },
+    {
+      "symbol": "scenes.load",
+      "minimum": 1,
+      "maximum": 1
+    },
+    {
+      "symbol": "scenes.owner",
+      "minimum": 1,
+      "maximum": 1
+    },
+    {
+      "symbol": "scenes.pinRegion",
+      "minimum": 2,
+      "maximum": 3
+    },
+    {
+      "symbol": "scenes.regionStatus",
+      "minimum": 1,
+      "maximum": 1
+    },
+    {
+      "symbol": "scenes.releaseRegion",
+      "minimum": 1,
+      "maximum": 1
+    },
+    {
+      "symbol": "scenes.reload",
+      "minimum": 0,
+      "maximum": 0
+    },
+    {
+      "symbol": "scenes.removeInterest",
+      "minimum": 1,
+      "maximum": 1
+    },
+    {
+      "symbol": "scenes.requestRegion",
+      "minimum": 1,
+      "maximum": 2
+    },
+    {
+      "symbol": "scenes.resolveRegionEntity",
+      "minimum": 2,
+      "maximum": 2
+    },
+    {
+      "symbol": "scenes.setInterest",
+      "minimum": 3,
+      "maximum": 3
+    },
+    {
+      "symbol": "scenes.unloadRegion",
+      "minimum": 1,
+      "maximum": 1
+    },
+    {
+      "symbol": "session.delete",
+      "minimum": 1,
+      "maximum": 1
+    },
+    {
+      "symbol": "session.get",
+      "minimum": 1,
+      "maximum": 1
+    },
+    {
+      "symbol": "session.set",
+      "minimum": 2,
+      "maximum": 2
+    },
+    {
+      "symbol": "signals.emit",
+      "minimum": 1,
+      "maximum": 3
+    },
+    {
+      "symbol": "signals.send",
+      "minimum": 2,
+      "maximum": 4
+    },
+    {
+      "symbol": "signals.subscribe",
+      "minimum": 1,
+      "maximum": 2
+    },
+    {
+      "symbol": "signals.unsubscribe",
+      "minimum": 1,
+      "maximum": 1
+    },
+    {
+      "symbol": "ui.get",
+      "minimum": 1,
+      "maximum": 1
+    },
+    {
+      "symbol": "ui.load",
+      "minimum": 2,
+      "maximum": 2
+    },
+    {
+      "symbol": "ui.quit",
+      "minimum": 0,
+      "maximum": 0
+    },
+    {
+      "symbol": "weather.sample",
+      "minimum": 1,
+      "maximum": 1
+    },
+    {
+      "symbol": "world.clearView",
+      "minimum": 0,
+      "maximum": 0
+    },
+    {
+      "symbol": "world.entity",
+      "minimum": 1,
+      "maximum": 1
+    },
+    {
+      "symbol": "world.fluidSample",
+      "minimum": 5,
+      "maximum": 5
+    },
+    {
+      "symbol": "world.overlap",
+      "minimum": 2,
+      "maximum": 3
+    },
+    {
+      "symbol": "world.project",
+      "minimum": 1,
+      "maximum": 1
+    },
+    {
+      "symbol": "world.queryTags",
+      "minimum": 0,
+      "maximum": 2
+    },
+    {
+      "symbol": "world.requestOrigin",
+      "minimum": 1,
+      "maximum": 1
+    },
+    {
+      "symbol": "world.resetAppearance",
+      "minimum": 0,
+      "maximum": 0
+    },
+    {
+      "symbol": "world.setAppearance",
+      "minimum": 1,
+      "maximum": 1
+    },
+    {
+      "symbol": "world.setView",
+      "minimum": 1,
+      "maximum": 3
+    },
+    {
+      "symbol": "world.spawnPrefab",
+      "minimum": 1,
+      "maximum": 3
+    },
+    {
+      "symbol": "world.sweepCapsule",
+      "minimum": 2,
+      "maximum": 4
+    },
+    {
+      "symbol": "world.toAbsolute",
+      "minimum": 1,
+      "maximum": 1
+    },
+    {
+      "symbol": "world.toLocal",
+      "minimum": 1,
+      "maximum": 1
     }
   ],
   "symbols": [
@@ -995,7 +2241,7 @@
         "animationExists"
       ],
       "type": "docs/judas.d.ts:Entity.animation",
-      "reference": "docs/judasjs/entities.md"
+      "reference": "docs/judasjs/animation-ragdolls.md"
     },
     {
       "symbol": "Entity.applyForce",
@@ -1072,7 +2318,7 @@
         "cameraInfo"
       ],
       "type": "docs/judas.d.ts:Entity.camera",
-      "reference": "docs/judasjs/entities.md"
+      "reference": "docs/judasjs/effects-camera.md"
     },
     {
       "symbol": "Entity.character",
@@ -1083,7 +2329,7 @@
         "characterExists"
       ],
       "type": "docs/judas.d.ts:Entity.character",
-      "reference": "docs/judasjs/entities.md"
+      "reference": "docs/judasjs/character.md"
     },
     {
       "symbol": "Entity.children",
@@ -1116,7 +2362,7 @@
         "planetClear"
       ],
       "type": "docs/judas.d.ts:Entity.clearPlanetCollision",
-      "reference": "docs/judasjs/entities.md"
+      "reference": "docs/judasjs/planetary-terrain.md"
     },
     {
       "symbol": "Entity.clearSocket",
@@ -1158,7 +2404,7 @@
         "deformableExists"
       ],
       "type": "docs/judas.d.ts:Entity.deformable",
-      "reference": "docs/judasjs/entities.md"
+      "reference": "docs/judasjs/deformables.md"
     },
     {
       "symbol": "Entity.destroy",
@@ -1180,7 +2426,7 @@
         "fractureExists"
       ],
       "type": "docs/judas.d.ts:Entity.fracture",
-      "reference": "docs/judasjs/entities.md"
+      "reference": "docs/judasjs/fracture.md"
     },
     {
       "symbol": "Entity.gravity",
@@ -1189,7 +2435,7 @@
       ],
       "native": [],
       "type": "docs/judas.d.ts:Entity.gravity",
-      "reference": "docs/judasjs/entities.md"
+      "reference": "docs/judasjs/physics.md"
     },
     {
       "symbol": "Entity.hasTag",
@@ -1253,7 +2499,7 @@
         "liquidOwner"
       ],
       "type": "docs/judas.d.ts:Entity.liquid",
-      "reference": "docs/judasjs/entities.md"
+      "reference": "docs/judasjs/liquid.md"
     },
     {
       "symbol": "Entity.mass",
@@ -1317,7 +2563,7 @@
         "navAgentExists"
       ],
       "type": "docs/judas.d.ts:Entity.navigation",
-      "reference": "docs/judasjs/entities.md"
+      "reference": "docs/judasjs/navigation.md"
     },
     {
       "symbol": "Entity.navigationLink",
@@ -1328,7 +2574,7 @@
         "navLinkInfo"
       ],
       "type": "docs/judas.d.ts:Entity.navigationLink",
-      "reference": "docs/judasjs/entities.md"
+      "reference": "docs/judasjs/navigation.md"
     },
     {
       "symbol": "Entity.navigationObstacle",
@@ -1339,7 +2585,7 @@
         "navObstacleInfo"
       ],
       "type": "docs/judas.d.ts:Entity.navigationObstacle",
-      "reference": "docs/judasjs/entities.md"
+      "reference": "docs/judasjs/navigation.md"
     },
     {
       "symbol": "Entity.parent",
@@ -1383,7 +2629,7 @@
         "planetSample"
       ],
       "type": "docs/judas.d.ts:Entity.planetSample",
-      "reference": "docs/judasjs/entities.md"
+      "reference": "docs/judasjs/planetary-terrain.md"
     },
     {
       "symbol": "Entity.planetState",
@@ -1394,7 +2640,7 @@
         "planetInfo"
       ],
       "type": "docs/judas.d.ts:Entity.planetState",
-      "reference": "docs/judasjs/entities.md"
+      "reference": "docs/judasjs/planetary-terrain.md"
     },
     {
       "symbol": "Entity.playAudio",
@@ -1438,7 +2684,7 @@
         "powertrainExists"
       ],
       "type": "docs/judas.d.ts:Entity.powertrain",
-      "reference": "docs/judasjs/entities.md"
+      "reference": "docs/judasjs/powertrains.md"
     },
     {
       "symbol": "Entity.preparePlanetCollision",
@@ -1449,7 +2695,7 @@
         "planetCollision"
       ],
       "type": "docs/judas.d.ts:Entity.preparePlanetCollision",
-      "reference": "docs/judasjs/entities.md"
+      "reference": "docs/judasjs/planetary-terrain.md"
     },
     {
       "symbol": "Entity.presentedTransform",
@@ -1471,7 +2717,7 @@
         "ragdollExists"
       ],
       "type": "docs/judas.d.ts:Entity.ragdoll",
-      "reference": "docs/judasjs/entities.md"
+      "reference": "docs/judasjs/animation-ragdolls.md"
     },
     {
       "symbol": "Entity.removeTag",
@@ -1649,7 +2895,7 @@
         "navEnabled"
       ],
       "type": "docs/judas.d.ts:Entity.setNavigationEnabled",
-      "reference": "docs/judasjs/entities.md"
+      "reference": "docs/judasjs/navigation.md"
     },
     {
       "symbol": "Entity.setPartVisible",
@@ -1736,7 +2982,7 @@
       ],
       "native": [],
       "type": "docs/judas.d.ts:Entity.terrain",
-      "reference": "docs/judasjs/entities.md"
+      "reference": "docs/judasjs/terrain.md"
     },
     {
       "symbol": "Entity.transform",
@@ -1795,7 +3041,7 @@
         "wheelExists"
       ],
       "type": "docs/judas.d.ts:Entity.wheel",
-      "reference": "docs/judasjs/entities.md"
+      "reference": "docs/judasjs/wheels.md"
     },
     {
       "symbol": "EntityGravity",
@@ -5238,7 +6484,7 @@
         "worldOrigin"
       ],
       "type": "docs/judas.d.ts:world.origin",
-      "reference": "docs/judasjs/entities.md"
+      "reference": "docs/judasjs/planetary-terrain.md"
     },
     {
       "symbol": "world.originState",
@@ -5249,7 +6495,7 @@
         "worldOriginState"
       ],
       "type": "docs/judas.d.ts:world.originState",
-      "reference": "docs/judasjs/entities.md"
+      "reference": "docs/judasjs/planetary-terrain.md"
     },
     {
       "symbol": "world.overlap",
@@ -5293,7 +6539,7 @@
         "worldOriginRequest"
       ],
       "type": "docs/judas.d.ts:world.requestOrigin",
-      "reference": "docs/judasjs/entities.md"
+      "reference": "docs/judasjs/planetary-terrain.md"
     },
     {
       "symbol": "world.resetAppearance",
@@ -5359,7 +6605,7 @@
         "worldAbsolute"
       ],
       "type": "docs/judas.d.ts:world.toAbsolute",
-      "reference": "docs/judasjs/entities.md"
+      "reference": "docs/judasjs/planetary-terrain.md"
     },
     {
       "symbol": "world.toLocal",
@@ -5370,7 +6616,7 @@
         "worldLocal"
       ],
       "type": "docs/judas.d.ts:world.toLocal",
-      "reference": "docs/judasjs/entities.md"
+      "reference": "docs/judasjs/planetary-terrain.md"
     },
     {
       "symbol": "world.viewRay",
@@ -5733,6 +6979,7 @@
     "result objects / config / property schema": "Native structured fields (including JointConfiguration.rotationalResistance, M83 DeformableAttachmentOptions/observations and PowertrainConnection/connected) and value validation reviewed manually; representative runtime/type examples cover shapes, not every invalid value.",
     "types-only exports": "Interfaces/type aliases are tooling only; runtime export comparison excludes them.",
     "setter-only accessors": "TypeScript cannot prohibit reads; docs state these return undefined.",
-    "callback ordering / phases": "Implementation traced manually; no AST checker proves temporal semantics."
+    "callback ordering / phases": "Implementation traced manually; no AST checker proves temporal semantics.",
+    "callable argument counts": "Wrapper/declaration minimum and maximum counts (including aliases, rest arguments and overload bounds) are checked. Entity.setSocket has a null-target branch and Weather.strike explicitly accepts native undefined. Parameter types, overload gaps and native validation still require source/behavioural review."
   }
 }

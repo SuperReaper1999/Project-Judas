@@ -92,12 +92,11 @@ endif()
 include(cmake/JudasTextDependencies.cmake)
 
 # GLM is header-only, but the imported target it exports depends on the
-# packaged version: GLM 1.0+ provides `${JUDAS_GLM}` (and
-# `glm::glm`), while the GLM 0.9.9.8 that Ubuntu 24.04 ships provides only
-# `glm::glm`. Resolve whichever exists once here so a stock
+# packaged version: Android declares `glm::glm-header-only` explicitly, while
+# desktop packages commonly provide `glm::glm` or `glm`. Resolve once here so a stock
 # `apt install libglm-dev` configures cleanly (M28 portability fix).
 if(TARGET ${JUDAS_GLM})
-    set(JUDAS_GLM ${JUDAS_GLM})
+    # The optional Android dependency setup already selected its public target.
 elseif(TARGET glm::glm)
     set(JUDAS_GLM glm::glm)
 elseif(TARGET glm)

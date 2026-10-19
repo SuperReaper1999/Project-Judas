@@ -1,241 +1,125 @@
-# JudasJS — current API reference (M99 repository state)
+# JudasJS — current Pre-Alpha API reference
 
-The unnumbered [Pre-Alpha engineering pass](PREALPHA.md) does not add gameplay
-bindings. Optional API/type verification now uses a pinned clean-checkout setup:
-`npm ci --prefix tools/verification`, then `node scripts/check_judasjs_api.mjs`.
-It remains developer tooling; games and native builds do not require npm.
+Judas provides engine primitives. Project JavaScript supplies game behaviour.
+This reference describes the current repository implementation, including the public
+module developed through M99 and subsequent Pre-Alpha corrections. It is not an
+eternal compatibility promise or an Alpha release announcement.
 
-M99 adds optional [online sessions, server authority and selected entity replication](judasjs/network.md), alongside existing local multiplayer. M98/M99 combined operator acceptance was recorded on 2026-10-17; see the [exact candidate and scoped physical-phone test](evidence/m99/HUMAN_VALIDATION.md). See the [M99 scope and security boundaries](M99_NETWORK.md).
+**Start here:** [Your first visible project](FIRST_PROJECT.md) →
+[Making a game by hand](judasjs/getting-started.md) →
+[Copyable cookbook](judasjs/cookbook.md).
 
-M94 adds [editor debugging, deliberate script reload and source diagnostics](M94_DEVELOPER_TOOLS.md) without changing the public `judas` module. M93's [asset pipeline](M93_ASSET_PIPELINE.md) is human accepted; M94 is operator accepted. M95 adds the [animation timeline, event samples and collision-aware root-motion workflow](M95_ANIMATION_WORKFLOW.md); M95 is human accepted. M96 adds the [UI toolkit](M96_UI_TOOLKIT.md): editable text, scrolling, virtual lists, focus, explicit state and semantic observations; M96 is human accepted. M97 adds [live local volume editing](judasjs/terrain.md) and regional construction persistence; M97 is human accepted. M98 adds [explicit save evolution and recovery](M98_SAVE_EVOLUTION.md); combined M98/M99 human acceptance is recorded.
-
-M92 adds [individual light control and scalable per-view rendering](judasjs/rendering.md).
-M92 operator acceptance is recorded by release promotion at `bb3dbc402629a60c22738da8520e5017998709f1`; platform coverage remains scoped.
-
-
-M89 adds optional [local players, scoped input, viewports and HUD focus](judasjs/local-multiplayer.md). M89 operator acceptance is recorded; M90 main promotion is now operator-authorized.
-
-M90 extends [local-origin assembly travel](judasjs/planetary-terrain.md) and adds the
-optional `onOriginShift(event)` cache notification. No new gameplay namespace or
-second physics world is introduced. The [M90 camera follow-up and release authorization](evidence/m90-camera-followup/REPORT.md) distinguish automated correction checks from operator review.
-
-M88 adds [normalized touch/pointer snapshots](judasjs/input.md#touch-and-pointer-snapshots-m88)
-for the optional [native Android runtime](ANDROID.md). Existing gameplay APIs and
-logical gamepad bindings are shared with desktop; mobile controls remain project JS.
-M88 [operator phone acceptance](evidence/m88/HUMAN_VALIDATION.md) is recorded;
-remaining device/controller coverage is distinct from that acceptance.
-
-
-M86 adds optional [weather profiles, transitions, spatial wind and opt-in physical
-response](judasjs/weather.md). Its Linux operator acceptance is
-[recorded](evidence/m86/HUMAN_VALIDATION.md) separately from M88 acceptance.
-
-M85 adds [precision-safe planetary terrain and explicit local-origin APIs](judasjs/planetary-terrain.md). M85 Linux operator acceptance is [recorded](evidence/m85/HUMAN_VALIDATION.md); Windows remains untested.
-
-M83 adds finite [Deformable attachment strengths/observations](judasjs/deformables.md#m83-materialbody-connection-strength)
-and authored [Powertrain physical prerequisites](judasjs/powertrains.md#physical-connection-prerequisite).
-These extend existing handle snapshots/configuration, with no gameplay damage
-API or new module namespace. For that milestone’s model and limits see [model and limits](M83_MECHANICAL_DAMAGE.md).
-
-M82 adds optional [Powertrain networks](judasjs/powertrains.md): real rotational
-inertia, torque sources, gearing, bounded clutches, open differentials and brakes.
-Project JavaScript supplies driver and machinery policy. M82 has Linux operator
-acceptance; see [the record](evidence/m82/HUMAN_VALIDATION.md). Windows M82
-validation remains unperformed and nonblocking.
-
-M81 adds optional [Wheel components](judasjs/wheels.md): independent suspension,
-rolling/traction and torque/brake/steering control on ordinary rigid-body
-chassis. Game-specific vehicle behaviour remains project JavaScript. M80 and M81 have
-Linux operator acceptance. The subsystem records below
-retain their original validation scope.
-
-[Powertrain reference](judasjs/powertrains.md) · [Wheel reference](judasjs/wheels.md)
-
-## Terrain content
-
-[M76 local mods](MODDING.md) exposes only a detached content catalog; install/trust are tools, not gameplay APIs. See [catalog reference](judasjs/mods.md). M76 is a candidate pending human review.
-
-[M75 heightfield authoring](M75.md) and [M84 volumetric terrain authoring](M84_VOLUMETRIC_TERRAIN.md) create ordinary cooked assets; scripts consume them through existing entities, physics queries, CharacterMotor, navigation, scenes and saves. M97 adds opt-in [live Terrain instances](judasjs/terrain.md) while retaining this asset workflow. Gameplay still belongs to projects.
-
-
-JUDAS PROVIDES ENGINE PRIMITIVES. JAVASCRIPT PROVIDES GAME BEHAVIOUR.
-
-This reference includes M72, human validated on Linux on 2026-10-09, and the
-operator-approved gravity-selection follow-up. Native Windows M72 VM verification is recorded in [Windows](WINDOWS.md); hardware
-acceptance remains outstanding. M73 adds optional [owned signals](judasjs/signals.md),
-accepted at `18650ba23c23eaaab0542d6e0055e33cc14d1049`. It is not an eternal compatibility/semantic-version promise. Source authority is the public module and VM/lifecycle code in
-[src/ScriptSystem.cpp](../src/ScriptSystem.cpp), the extracted
-[UI](../src/ScriptBindingsUI.cpp) and [joint](../src/ScriptBindingsJoint.cpp)
-native bridges, and the runtime systems they call; demos do not define API.
-The Pre-Alpha extraction keeps the same public bindings and callback ownership.
-[M74 retargeting](M74.md) is an authoring-only candidate: it bakes ordinary named
-clips, adds no runtime JS exports and leaves this API surface unchanged.
-The follow-up adds optional [per-entity gravity selection](GRAVITY_SELECTION.md),
-with spatial gravity still the default.
-M67 is checkpointed provisionally by operator authorization; proper human validation
-remains deferred rather than claimed complete.
-M67 adds generic camera projection, transient UI layout and prefab construction
-options; see [supported authoring](NAMED_AUTHORING.md) and the
-[executed example](judasjs/examples/authoring-runtime.js).
-M50 introduced the documentation/tooling. M51 adds generic mass/inertia snapshots
-and pointer capture intent; see [engine/game boundary](M51_ENGINE_BOUNDARY.md).
-M52 exposes the existing generic impulse-at-point body operation and render pose
-through `Entity.presentedTransform` / `presentationUpdate(dt, alpha)`; the
-[Spring Range project](M52_SHOOTER_GAME.md) implements all shooting/score rules in JS.
-
-M59 added optional additive residency through [scenes streaming](judasjs/streaming.md).
-
-## Start writing a game
-
-[Making a game by hand](judasjs/getting-started.md) walks through creating a project,
-tracking/attaching scripts, inspector properties, fixed/presentation phases, IDE
-completion and export. Use the [executed cookbook](judasjs/cookbook.md) for complete
-small scripts and the subsystem pages below for exact arguments/errors. Engine
-assets/components must be authored before component handles can control them;
-calling an API does not silently construct missing gameplay machinery.
+For editor completion, copy [judas.d.ts](judas.d.ts) into your project and follow
+[IDE setup](judasjs/practices.md). Judas remains JavaScript; TypeScript, npm and
+Node are optional developer tools and are not part of the game runtime.
 
 ## Find an API
 
-| Topic | Reference |
+| Topic / searchable names | Current reference |
 |---|---|
-| network, NetworkEntity, hosting/joining, authority and replicated state | [Online multiplayer](judasjs/network.md) |
-| Weather profiles, sampled wind, transitions and storms | [Weather](judasjs/weather.md) |
-| Owned queued messages | [signals](judasjs/signals.md) |
-| Create a project, attach JS, edit properties, set up completion, export | [Making a game by hand](judasjs/getting-started.md) |
-| Imports, properties, start/restore/update/fixedUpdate/presentationUpdate/uiUpdate/destroy | [Lifecycle](judasjs/lifecycle.md) |
-| Fracture, physical parts, interface failure and explicit removal | [Fracture](judasjs/fracture.md) |
-| Deformable, cloth/solid forces, attachments and current-surface picking | [Deformables](judasjs/deformables.md) |
-| Entity, transform, tags, spawnPrefab | [Entities/prefabs](judasjs/entities.md) |
-| Entity.renderVisible, rendererVisible and imported-part visibility | [Render visibility](judasjs/entities.md#render-visibility-m72) |
-| Entity.motionType, kinematic target/velocity commands and point velocity | [Kinematic bodies](judasjs/entities.md#kinematic-motion-m71) · [Executed example](judasjs/examples/kinematic.js) |
-| profiler.scope / profiler.counter | [Custom diagnostics](judasjs/profiling.md) |
-| input, time, console | [Input/time](judasjs/input.md) |
-| physics.raycast/sphereCast/capsuleCast, their Many batches, boxCast/closestPoint, Entity.collider, Joint, contacts/triggers | [Physics](judasjs/physics.md) · [Collider inspection](judasjs/entities.md#entitycollider) |
-| Audio, particles, camera, world.fluidSample | [Effects/view](judasjs/effects-camera.md) |
-| ui, UIDocument, UIElement, onUI | [Runtime UI](judasjs/ui.md) |
-| localization, Unicode layout, catalogs/fonts | [Localization/text](judasjs/localization.md) |
-| scenes, session, script state, safe handles | [Lifetime/state](judasjs/scenes-state.md) |
-| saves, durable references, restore lifecycle | [Project save slots](judasjs/saves.md) |
-| Animation.crossFade/layers, configureIK/ikTargets/ikStatus, Ragdoll.configurePhysical/setMode/physicalState | [Animation/ragdolls](judasjs/animation-ragdolls.md) |
-| entity.character / CharacterMotor | [Character](judasjs/character.md) |
-| entity.wheel / Wheel suspension, torque, brake, steering and contact state | [Wheels](judasjs/wheels.md) |
-| navigation / NavigationAgent | [Navigation](judasjs/navigation.md) |
-| liquid / LiquidVolume / conserved reservoirs | [Liquid](judasjs/liquid.md) |
-| Entity.material whole/slot/part patches; world sun, ambient and environment controls | [Materials and appearance](judasjs/materials.md) |
-| Executed scripts | [Cookbook](judasjs/cookbook.md) |
-| JSDoc, editor setup, practical conventions | [Practices](judasjs/practices.md) |
+| Module imports, properties, start, restore, update, fixedUpdate, presentationUpdate, uiUpdate, destroy | [Lifecycle](judasjs/lifecycle.md) |
+| Entity, transform, tags, spawnPrefab, scriptState, physical materials | [Entities and prefabs](judasjs/entities.md) |
+| Entity.renderVisible, rendererVisible, imported-part visibility | [Render visibility](judasjs/entities.md#render-visibility-m72) |
+| Entity.motionType, moveKinematic, setKinematicVelocity, pointVelocity | [Kinematic bodies](judasjs/entities.md#kinematic-motion-m71) |
+| input, time, console, touch, paired sticks | [Input and time](judasjs/input.md) |
+| physics.raycast, sphereCast, capsuleCast, boxCast, closestPoint, batched casts, Joint, collision/trigger callbacks | [Physics, queries and joints](judasjs/physics.md) |
+| Entity.collider, classification, safe query witnesses | [Collider inspection](judasjs/entities.md#entitycollider) |
+| Entity.gravity, physics.gravity, FaithfulGravity / RadicalGravity, scripted selection | [Gravity](judasjs/physics.md#gravity-physical-materials-and-runtime-joint-configuration-m65) · [Selection guide](GRAVITY_SELECTION.md) |
+| CharacterMotor / entity.character, support, intent, query capsule | [Character](judasjs/character.md) |
+| navigation, NavigationAgent, links, obstacles | [Navigation](judasjs/navigation.md) |
+| Animation, clips, events, rootMotion, layers, jointTransform, limb, configureIK | [Animation and IK](judasjs/animation-ragdolls.md) |
+| Ragdoll, physical animation, configureBalance, requestBalance | [Ragdolls and physical balance](judasjs/animation-ragdolls.md#ragdollconfigurebalance-requestbalance-cancelbalance-balancestate-m77) |
+| Wheel suspension, torque, braking, steering, contact state | [Wheels](judasjs/wheels.md) |
+| Powertrain sources, shafts, gears, clutches, differentials | [Powertrains](judasjs/powertrains.md) |
+| Fracture, physical parts, interface failure, plastic observations | [Fracture](judasjs/fracture.md) |
+| Deformable, cloth/solid forces, attachments, current-surface picking | [Deformables](judasjs/deformables.md) |
+| liquid, LiquidVolume, conserved reservoirs, dynamic surfaces | [Liquid](judasjs/liquid.md) |
+| Terrain add/remove/smooth, asynchronous collision/navigation publication | [Runtime volumetric terrain](judasjs/terrain.md) |
+| world.origin, requestOrigin, Planet terrain, collision interest | [Planetary terrain and local origins](judasjs/planetary-terrain.md) |
+| Weather, profiles, spatial wind, transitions, storms | [Weather](judasjs/weather.md) |
+| Audio emitters, one-shots, groups, cursors, acoustics | [Audio](judasjs/audio.md) |
+| Particles, cameras, world.setView / project / viewRay, world.fluidSample | [Effects and cameras](judasjs/effects-camera.md) |
+| Individual lights, multiple views, rendering selection | [Rendering](judasjs/rendering.md) |
+| Material, world.appearance, sun, ambient, environment | [Materials and scene appearance](judasjs/materials.md) |
+| ui, UIDocument, UIElement, text fields, lists, focus, onUI | [Runtime UI](judasjs/ui.md) |
+| localization, Unicode layout, catalogs/fonts | [Localization and text](judasjs/localization.md) |
+| scenes.load / reload, session, safe handles, script state | [Scenes, state and lifetimes](judasjs/scenes-state.md) |
+| scenes.requestRegion, ownership, pins, suspension | [Additive streaming](judasjs/streaming.md) |
+| saves, durable references, restore, migration and recovery | [Project save slots](judasjs/saves.md) |
+| signals, queued slot-owned messages, onSignal | [Signals](judasjs/signals.md) |
+| players, LocalPlayer, PlayerInput, devices, viewports and HUDs | [Local multiplayer](judasjs/local-multiplayer.md) |
+| network, NetworkEntity, sessions, authority, replicated state | [Online multiplayer](judasjs/network.md) |
+| mods.active, contributions, resolve | [Read-only mod catalog](judasjs/mods.md) |
+| profiler.scope, profiler.counter | [Script instrumentation](judasjs/profiling.md) · [Integrated profiler](PROFILER.md) |
+| JSDoc, editor setup, conventions | [Practices](judasjs/practices.md) |
 
-## Tooling and completeness
+## Execution and ownership essentials
 
-- [judas.d.ts](judas.d.ts): offline completion/type information for JS editors;
-  no TypeScript runtime dependency.
-- [API inventory](judasjs/API_INVENTORY.md) and [machine manifest](judasjs/api-inventory.json):
-  actual bindings → declarations → reference, native bridge operations and explicit
-  internal/dynamic verification exceptions.
-- `scripts/check_judasjs_api.mjs`: source AST, declaration AST, inventory/reference
-  coverage, standard TypeScript checking and actual-VM enumeration comparison.
-- Existing milestone records remain architecture/history; start here for CURRENT
-  JS usage. No raw C++-only system is implied to be scriptable.
+- Use `update` for frame-relative mouse input, `fixedUpdate` for authoritative
+  movement and physics, `presentationUpdate` for cameras following
+  `Entity.presentedTransform`, and `uiUpdate` for menus while gameplay is paused.
+  See [phase ordering](judasjs/lifecycle.md#callbacks-and-order).
+- Ordinary positions use the current local float simulation chart. Explicit
+  `world.toAbsolute` / `toLocal` conversions use the double absolute origin.
+  There is no universal world up. Gravity direction and support normal are distinct.
+- Tags, collision layers and render layers have different purposes. Queries do not
+  silently use gameplay tags or render visibility as collision policy.
+- Returned objects are usually detached snapshots. Assign through documented
+  setters/methods; mutating a copied result does not publish native state.
+- Handles do not extend native lifetime. Reacquire after scene replacement, cold
+  load or region retirement. [Lifetime rules](judasjs/scenes-state.md#safe-handle-rules)
+  explain differences between Entity, Joint, UI and epoch-owned components.
+- Scripts are trusted QuickJS code, without Node, browser DOM, npm packages,
+  timers or a general asynchronous callback scheduler. They are not a malicious-code
+  security sandbox. The internal `__judas` dispatcher is unsupported.
+- Editor breakpoints, stepping, inspection and deliberate VM reload are described
+  in [developer tools](M94_DEVELOPER_TOOLS.md). Source edits do not trigger automatic
+  hot reload, and arbitrary closures/native handles are not reloadable save state.
 
-## Important boundaries
+Capabilities have explicit composition limits. Origin shifting, region suspension,
+modern saves and online replication support different subsets; a method's existence
+is not proof that every component combination is supported. Consult each subsystem
+page and the [current Pre-Alpha support/issue guide](PREALPHA.md).
 
-Use fixedUpdate for authoritative movement/physics, frame updates for relative
-mouse input, presentationUpdate for render-following poses/cameras, and uiUpdate
-for menus while paused. Worlds have fixed local
-float coordinates with a double absolute origin and explicit opt-in origin shifts; no
-universal world up. Tags, collision layers and render layers are distinct.
-Read returned snapshots; assign updates through explicit APIs. Safe wrappers do
-not extend native lifetime and cannot cross scene replacement.
+## Authority, verification and history
 
-Scripts are trusted QuickJS code, not Node/browser/npm or a malicious-code sandbox.
-No arbitrary async callbacks, automatic hot reload, raw bone memory, ECS, runtime layer
-registry editing. Current subsystem limits are documented
-on their pages rather than silently upgraded. Human hardware/visual/audio review
-remains authoritative.
+The public wrapper is registered in [ScriptSystem.cpp](../src/ScriptSystem.cpp).
+Native dispatch also uses [UI](../src/ScriptBindingsUI.cpp),
+[joint](../src/ScriptBindingsJoint.cpp),
+[local-player](../src/ScriptLocalMultiplayer.inl) and
+[network](../src/ScriptNetwork.inl) bridges, plus the runtime systems they call.
+C++-only systems are not automatically scriptable.
+
+[API inventory](judasjs/API_INVENTORY.md) and its
+[machine manifest](judasjs/api-inventory.json) map runtime bindings to declarations
+and reference pages, including explicitly limited dynamic checks.
+
+For optional source/type verification from a clean checkout:
+
+```sh
+npm ci --prefix tools/verification
+node scripts/check_judasjs_api.mjs
+```
+
+The checker validates the public surface, callable argument counts, selected
+structured shapes and all cookbook types. `--runtime path/to/surface.json` also
+compares a fresh actual-VM enumeration. This is not full behavioural certification;
+[the cookbook](judasjs/cookbook.md) identifies runtime fixtures and limitations.
+
+Milestone reports and `docs/evidence/` preserve the requirements, failures and
+acceptance scope at those checkpoints. They are historical records; use this
+reference for current scripting behaviour. M98/M99 combined human acceptance is
+[recorded separately](evidence/m99/HUMAN_VALIDATION.md). Later automated checks do
+not invent human, controller, hardware or platform acceptance. Current portability
+and outstanding qualification are tracked in [building/onboarding](FIRST_PROJECT.md),
+[Windows](WINDOWS.md), [Android](ANDROID.md) and [Pre-Alpha](PREALPHA.md).
 
 ## Human developer review
 
-1. Confirm this landing page and subsystem navigation are obvious.
-2. Search raycast, Joint, Animation, Ragdoll and CharacterMotor.
-3. Compare signatures/results with familiar runtime behaviour.
-4. Open judas.d.ts in a TS-aware JS editor and inspect completion.
-5. Copy/attach/run one cookbook script with its listed setup.
-6. Check lifecycle/fixedUpdate explanations are understandable.
-7. Check safe handles and scene/session lifetime rules are clear.
-8. Check tags, collision layers and render layers remain distinct.
-9. Check arbitrary-gravity coordinates do not assume world-Y.
-10. Confirm engine primitives and game behaviour remain separate.
-
-- [Navigation: queries, agents, obstacles and explicit links](judasjs/navigation.md)
-
-## Diagnostic instrumentation (M56)
-
-[profiler.scope / profiler.counter](judasjs/profiling.md) and [integrated profiler controls](PROFILER.md).
-
-- [Current materials, overrides and scene appearance](judasjs/materials.md) · [M57 foundation](MATERIALS.md) · [M72](M72.md)
-
-## M58 Unicode text and localization
-
-[Localization reference](judasjs/localization.md), [text/font integration](M58.md) and [executed localization example](judasjs/examples/localization.js). Current public surface includes M58.
-
-## Streaming audio and acoustics
-
-[Audio reference](judasjs/audio.md) covers M60 emitter settings, cursor/readiness,
-independent one-shots, authored groups/fades and approximate spatial effects.
-[Listening lab](../projects/audio_lab/README.md) provides ordinary authored content.
-
-## M61 save/load
-
-[Project slots, durable references and restore lifecycle](judasjs/saves.md) | [Subsystem participation and storage](M61_SAVES.md).
-
-M64 adds [collider snapshots / closest surface queries](M64_COLLISION.md) through the existing physics/entity APIs.
-
-M69 adds raw paired controller snapshots, explicit circular vector bindings and
-bounded ordered observation history through [input](judasjs/input.md#paired-sticks-m69),
-plus synchronous 256-entry [nearest-cast batches](judasjs/physics.md#batched-nearest-casts-m69).
-The [two focused examples](judasjs/cookbook.md#paired-input-and-batched-queries-m69-candidate)
-use the ordinary public APIs; trick recognition and ledge selection stay in game JS.
-
-M65 adds resolved joints/limb IK/visual sockets, gravity samples, shared physical
-materials/runtime joints and ordinary motor touch events. [Integration](M65_INTEGRATION.md)
-and [named authoring](CONTENT_AUTHORING.md) provide current examples.
-
-Accepted M66: [model import workflow](MODEL_IMPORT.md), [imported model cookbook](judasjs/examples/imported-model.js), exact part visibility and clip root-motion queries use ordinary entity/animation handles.
-
-## M70 pose targets and partial physical animation
-
-[Animation/IK/physical reference](judasjs/animation-ragdolls.md#multi-target-full-body-ik-m70)
-| [Character Lab](M70.md). IK solves skeletal pose without moving the entity/motor;
-physical drives consume that reference before ordinary physics resolves the actual
-body pose. Scripts select targets, regions and authority transitions. No balance,
-automatic recovery or procedural gait is supplied.
-
-## M71 kinematic bodies
-
-[Motion authority and fixed-step commands](judasjs/entities.md#kinematic-motion-m71)
-cover ordinary static/dynamic/kinematic bodies, complete pose targets, persistent
-world COM/angular velocity commands and actual point velocity. The
-[copyable example](judasjs/examples/kinematic.js) executes through the normal VM;
-the [kinematic lab](../projects/kinematic_lab/) supplies ordinary authored content.
-Modern saves and additive streaming preserve current authority, physical state
-and remaining commands. [Cookbook setup](judasjs/cookbook.md#kinematic-bodies-m71).
-
-## M72 lighting, visibility and instance materials
-
-[Appearance and material controls](judasjs/materials.md) extend the existing world
-and Material handles; [local render visibility](judasjs/entities.md#render-visibility-m72)
-keeps simulation alive while hiding supported submissions. Grouped updates validate
-before publication. Authored defaults, runtime patches, resource status and reset
-semantics are explicit. No new runtime exports or native day/night policy are added.
-See [M72 design, lifecycle and review status](M72.md).
-
-M83 adds authored [physical section connections](M83_COARSE_CRASH.md), optional
-[part-mounted wheels](judasjs/wheels.md#rigid-material-section-mounts-m83), explicit
-[material-group drive prerequisites](judasjs/powertrains.md#material-group-prerequisites-m83)
-and copied plastic observations on [fracture interfaces](judasjs/fracture.md#m83-finite-physical-material-sections).
-
-## Mutable world regions (M97)
-
-[Live volumetric terrain](judasjs/terrain.md) provides bounded add/remove/smooth edits,
-collision/navigation publication and retained/cold-save state.
-See [Living World Lab](M97_LIVING_WORLD.md) for supported regional suspension boundaries.
+1. Find raycast, Joint, Animation, Ragdoll and CharacterMotor from the table.
+2. Open `judas.d.ts` in an editor and check useful JS completion.
+3. Copy and run a cookbook script with its stated asset/component setup.
+4. Compare its signatures and results with familiar runtime behaviour.
+5. Confirm fixed/frame/presentation phases, safe lifetimes and scene/session
+   persistence are understandable.
+6. Confirm arbitrary gravity and the engine/gameplay boundary remain clear.

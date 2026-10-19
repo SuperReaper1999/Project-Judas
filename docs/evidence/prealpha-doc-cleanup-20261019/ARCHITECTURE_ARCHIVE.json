@@ -1,0 +1,9 @@
+{
+  "source": "docs/ARCHITECTURE.md",
+  "base": "be1b7d634c674dca34f3a36299da510492ca2aea",
+  "original_sha256": "b3f44c1aa88f09ba89a08c2087b2ae3928cbbbf58fbf26505924a08d219ce109",
+  "archive": "docs/ARCHITECTURE_HISTORY.md",
+  "prefix_bytes": 392,
+  "archived_payload_sha256": "b3f44c1aa88f09ba89a08c2087b2ae3928cbbbf58fbf26505924a08d219ce109",
+  "exact_payload": true
+}

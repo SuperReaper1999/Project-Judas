@@ -1,0 +1,1610 @@
+{
+  "format": 1,
+  "baseline": "be1b7d634c674dca34f3a36299da510492ca2aea",
+  "scope": "Literal CMake native test declarations and focused-gate configuration, not a proof that all engine capabilities are covered.",
+  "nativeDeclarationsUnchanged": true,
+  "declarations": [
+    {
+      "target": "judas_build_identity_tests",
+      "entry": "tests/BuildIdentityTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_scene_tests",
+      "entry": "tests/SceneTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_lifecycle_tests",
+      "entry": "tests/LifecycleTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_project_tests",
+      "entry": "tests/ProjectTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_job_tests",
+      "entry": "tests/JobTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_physics_tests",
+      "entry": "tests/PhysicsPrimitiveTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_rigid_contact_tests",
+      "entry": "tests/RigidContactTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_broadphase_tests",
+      "entry": "tests/BroadphaseTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_collision_tests",
+      "entry": "tests/CollisionTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_celestial_gravity_tests",
+      "entry": "tests/CelestialGravityTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_asset_tests",
+      "entry": "tests/AssetTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_step_climb_tests",
+      "entry": "tests/StepClimbTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_pilot_attachment_tests",
+      "entry": "tests/PilotAttachmentTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_pilot_dismount_tests",
+      "entry": "tests/PilotDismountTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_spacecraft_control_tests",
+      "entry": "tests/SpacecraftControlTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_spacecraft_flight_tests",
+      "entry": "tests/SpacecraftFlightTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_reference_frame_tests",
+      "entry": "tests/ReferenceFrameTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_ui_tests",
+      "entry": "tests/UITests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_lighting_tests",
+      "entry": "tests/LightingTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_shadow_tests",
+      "entry": "tests/ShadowTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_interactable_tests",
+      "entry": "tests/InteractableTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_player_view_tests",
+      "entry": "tests/PlayerViewTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_object_manipulation_tests",
+      "entry": "tests/ObjectManipulationTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_player_curved_locomotion_tests",
+      "entry": "tests/PlayerCurvedLocomotionTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_world_coordinates_tests",
+      "entry": "tests/WorldCoordinatesTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_compound_body_tests",
+      "entry": "tests/CompoundBodyTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_fluid_world_tests",
+      "entry": "tests/FluidWorldTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_fluid_rigid_coupling_tests",
+      "entry": "tests/FluidRigidCouplingTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_fluid_surface_tests",
+      "entry": "tests/FluidSurfaceTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_terrain_physics_tests",
+      "entry": "tests/TerrainPhysicsTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_terrain_fluid_tests",
+      "entry": "tests/TerrainFluidTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_atmosphere_tests",
+      "entry": "tests/AtmosphereTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_atmospheric_flight_tests",
+      "entry": "tests/AtmosphericFlightTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_combustion_tests",
+      "entry": "tests/CombustionTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_scene_fingerprint_tests",
+      "entry": "tests/SceneFingerprintTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_world_state_tests",
+      "entry": "tests/WorldStateTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_async_application_tests",
+      "entry": "tests/AsyncApplicationTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_uniform_gravity_scene_tests",
+      "entry": "tests/UniformGravitySceneTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_gravity_selection_tests",
+      "entry": "tests/GravitySelectionTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_contact_geometry_tests",
+      "entry": "tests/ContactGeometryProbe.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_contact_lifecycle_tests",
+      "entry": "tests/ContactLifecycleTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_contact_cache_tests",
+      "entry": "tests/ContactCacheTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_contact_storage_tests",
+      "entry": "tests/ContactStorageTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_timing_defect_probe",
+      "entry": "tests/TimingDefectProbe.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_rigid_motion_tests",
+      "entry": "tests/RigidMotionTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_poisson_policy_witness",
+      "entry": "tests/PoissonPolicyWitness.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_impact_solver_tests",
+      "entry": "tests/ImpactSolverTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_impact_timing_tests",
+      "entry": "tests/ImpactTimingTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_impact_candidate_cache_tests",
+      "entry": "tests/ImpactCandidateCacheTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_native_mesh_growth_tests",
+      "entry": "tests/NativeMeshGrowthTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_clip_polygon_tests",
+      "entry": "tests/ClipPolygonTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_impact_mesh_cost_tests",
+      "entry": "tests/ImpactMeshCostTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_impact_robustness_tests",
+      "entry": "tests/ImpactRobustnessTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_project_application_tests",
+      "entry": "tests/ProjectApplicationTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_lifecycle_integration_tests",
+      "entry": "tests/LifecycleIntegrationTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_asset_integrity_tests",
+      "entry": "tests/AssetIntegrityTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_coarse_celestial_tests",
+      "entry": "tests/CoarseCelestialTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_orbital_integrity_tests",
+      "entry": "tests/OrbitalIntegrityTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_spacecraft_frame_integration_tests",
+      "entry": "tests/SpacecraftFrameIntegrationTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_thermal_accounting_tests",
+      "entry": "tests/ThermalAccountingTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_combustion_integration_tests",
+      "entry": "tests/CombustionIntegrationTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_player_swimming_tests",
+      "entry": "tests/PlayerSwimmingTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_fluid_metadata_tests",
+      "entry": "tests/FluidMetadataTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_fluid_hydrostatics_tests",
+      "entry": "tests/FluidHydrostaticsTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_production_fluid_tests",
+      "entry": "tests/ProductionFluidTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_fluid_container_integration_tests",
+      "entry": "tests/FluidContainerIntegrationTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_player_fluid_integration_tests",
+      "entry": "tests/PlayerFluidIntegrationTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_fluid_cavity_impact_tests",
+      "entry": "tests/FluidCavityImpactTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_fluid_smoothing_budget_tests",
+      "entry": "tests/FluidSmoothingBudgetTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_fluid_boundary_contact_tests",
+      "entry": "tests/FluidBoundaryContactTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_particle_contact_batch_tests",
+      "entry": "tests/ParticleContactBatchTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_production_fluid_performance",
+      "entry": "tests/ProductionFluidPerformance.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_render_camera_tests",
+      "entry": "tests/RenderCameraTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_portal_camera_tests",
+      "entry": "tests/PortalCameraTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_audio_tests",
+      "entry": "tests/AudioTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_input_tests",
+      "entry": "tests/InputTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_prefab_tests",
+      "entry": "tests/PrefabTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_prefab_application_tests",
+      "entry": "tests/PrefabApplicationTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_visual_particle_tests",
+      "entry": "tests/VisualParticleTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_particle_application_tests",
+      "entry": "tests/ParticleApplicationTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_export_tests",
+      "entry": "tests/ExportTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_package_application_tests",
+      "entry": "tests/PackageApplicationTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_classification_tests",
+      "entry": "tests/ClassificationTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_script_tests",
+      "entry": "tests/ScriptTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_script_application_tests",
+      "entry": "tests/ScriptApplicationTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_runtime_ui_tests",
+      "entry": "tests/RuntimeUITests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_runtime_ui_application_tests",
+      "entry": "tests/RuntimeUIApplicationTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_touch_event_tests",
+      "entry": "tests/TouchEventTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_touch_application_tests",
+      "entry": "tests/TouchApplicationTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_scene_transition_tests",
+      "entry": "tests/SceneTransitionTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_physics_cast_tests",
+      "entry": "tests/PhysicsCastTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_physics_cast_application_tests",
+      "entry": "tests/PhysicsCastApplicationTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_joint_tests",
+      "entry": "tests/JointTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_joint_authoring_tests",
+      "entry": "tests/JointAuthoringTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_joint_application_tests",
+      "entry": "tests/JointApplicationTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_skeletal_animation_tests",
+      "entry": "tests/SkeletalAnimationTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_animation_application_tests",
+      "entry": "tests/AnimationApplicationTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_pose_composition_tests",
+      "entry": "tests/PoseCompositionTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_pose_composition_application_tests",
+      "entry": "tests/PoseCompositionApplicationTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_ragdoll_tests",
+      "entry": "tests/RagdollTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_ragdoll_application_tests",
+      "entry": "tests/RagdollApplicationTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_fluid_demo_integration_tests",
+      "entry": "tests/FluidDemoIntegrationTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_character_motor_tests",
+      "entry": "tests/CharacterMotorTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_character_motor_application_tests",
+      "entry": "tests/CharacterMotorApplicationTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judasjs_examples_tests",
+      "entry": "tests/JudasJSExamplesTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_boundary_migration_tests",
+      "entry": "tests/BoundaryMigrationTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_shooter_game_tests",
+      "entry": "tests/ShooterGameTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_shooter_application_tests",
+      "entry": "tests/ShooterApplicationTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_script_presentation_tests",
+      "entry": "tests/ScriptPresentationTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_navigation_tests",
+      "entry": "tests/NavigationTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_navigation_game_tests",
+      "entry": "tests/NavigationGameTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_liquid_tests",
+      "entry": "tests/LiquidTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_liquid_application_tests",
+      "entry": "tests/LiquidApplicationTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_liquid_surface_tests",
+      "entry": "tests/LiquidSurfaceTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_liquid_surface_application_tests",
+      "entry": "tests/LiquidSurfaceApplicationTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_liquid_surface_refill_tests",
+      "entry": "tests/LiquidSurfaceRefillTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_liquid_surface_loop_tests",
+      "entry": "tests/LiquidSurfaceLoopTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_profiler_tests",
+      "entry": "tests/PerformanceProfilerTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_profiler_script_tests",
+      "entry": "tests/ProfilerScriptTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_profiler_application_tests",
+      "entry": "tests/ProfilerApplicationTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_material_tests",
+      "entry": "tests/MaterialTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_material_application_tests",
+      "entry": "tests/MaterialApplicationTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_text_localization_tests",
+      "entry": "tests/TextLocalizationTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_text_render_tests",
+      "entry": "tests/TextRenderTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_localization_application_tests",
+      "entry": "tests/LocalizationApplicationTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_streaming_tests",
+      "entry": "tests/WorldStreamingTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_streaming_application_tests",
+      "entry": "tests/StreamingApplicationTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_streaming_performance_tests",
+      "entry": "tests/StreamingPerformanceTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_streaming_revisit_tests",
+      "entry": "tests/StreamingRevisitTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_audio_acoustics_tests",
+      "entry": "tests/AudioAcousticsTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_audio_world_tests",
+      "entry": "tests/AudioWorldTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_audio_application_tests",
+      "entry": "tests/AudioApplicationTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_save_storage_tests",
+      "entry": "tests/SaveStorageTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_world_persistence_tests",
+      "entry": "tests/WorldPersistenceTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_physics_continuation_tests",
+      "entry": "tests/PhysicsContinuationTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_save_application_tests",
+      "entry": "tests/SaveApplicationTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_character_publication_tests",
+      "entry": "tests/CharacterPublicationTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_save_exclusion_tests",
+      "entry": "tests/SaveExclusionTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_consumer_lifecycle_audit_tests",
+      "entry": "tests/ConsumerLifecycleAuditTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_save_streaming_tests",
+      "entry": "tests/SaveStreamingTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_save_performance_tests",
+      "entry": "tests/SavePerformanceTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_deformable_tests",
+      "entry": "tests/DeformableTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_deformable_performance_tests",
+      "entry": "tests/DeformablePerformanceTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_deformable_application_tests",
+      "entry": "tests/DeformableApplicationTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_fracture_tests",
+      "entry": "tests/FractureTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_fracture_application_tests",
+      "entry": "tests/FractureApplicationTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_fracture_performance_tests",
+      "entry": "tests/FracturePerformanceTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_collision_geometry_tests",
+      "entry": "tests/CollisionGeometryTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_collision_application_tests",
+      "entry": "tests/CollisionApplicationTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_developer_integration_tests",
+      "entry": "tests/DeveloperIntegrationTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_developer_application_tests",
+      "entry": "tests/DeveloperApplicationTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_developer_authoring_tests",
+      "entry": "tests/DeveloperAuthoringTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_consumer_authoring_tests",
+      "entry": "tests/ConsumerAuthoringTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_post_consumer_query_tests",
+      "entry": "tests/PostConsumerQueryTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_post_consumer_metadata_tests",
+      "entry": "tests/PostConsumerMetadataTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_post_consumer_ragdoll_tests",
+      "entry": "tests/PostConsumerRagdollTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_model_import_tests",
+      "entry": "tests/ModelImportTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_model_reimport_tests",
+      "entry": "tests/ModelReimportTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_model_runtime_tests",
+      "entry": "tests/ModelRuntimeTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_model_application_tests",
+      "entry": "tests/ModelApplicationTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_world_building_tests",
+      "entry": "tests/WorldBuildingTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_world_authoring_runtime_tests",
+      "entry": "tests/WorldAuthoringRuntimeTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_world_authoring_application_tests",
+      "entry": "tests/WorldAuthoringApplicationTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_world_authoring_performance",
+      "entry": "tests/WorldAuthoringPerformance.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_scalability_tests",
+      "entry": "tests/ScalabilityTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_scalability_pipeline_tests",
+      "entry": "tests/ScalabilityPipelineTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_resource_handoff_tests",
+      "entry": "tests/ResourceHandoffTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_paired_input_tests",
+      "entry": "tests/PairedInputTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_paired_input_script_tests",
+      "entry": "tests/PairedInputScriptTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_physics_batch_script_tests",
+      "entry": "tests/PhysicsBatchScriptTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_windows_readiness_tests",
+      "entry": "tests/WindowsReadinessTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_terrain_authoring_tests",
+      "entry": "tests/TerrainAuthoringTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_terrain_pipeline_tests",
+      "entry": "tests/TerrainPipelineTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_terrain_application_tests",
+      "entry": "tests/TerrainApplicationTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_multi_target_ik_tests",
+      "entry": "tests/MultiTargetIKTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_physical_animation_tests",
+      "entry": "tests/PhysicalAnimationTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_physical_balance_foundation_tests",
+      "entry": "tests/PhysicalBalanceFoundationTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_physical_balance_controller_tests",
+      "entry": "tests/PhysicalBalanceControllerTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_balance_lab_tests",
+      "entry": "tests/BalanceLabTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_character_lab_tests",
+      "entry": "tests/CharacterLabTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_character_lab_performance",
+      "entry": "tests/CharacterLabPerformance.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_kinematic_tests",
+      "entry": "tests/KinematicTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_kinematic_lab_tests",
+      "entry": "tests/KinematicLabTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_kinematic_performance",
+      "entry": "tests/KinematicPerformance.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_editor_navigation_tests",
+      "entry": "tests/EditorNavigationTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_editor_picking_tests",
+      "entry": "tests/EditorPickingTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_editor_workspace_tests",
+      "entry": "tests/EditorWorkspaceLayoutTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_editor_widget_tests",
+      "entry": "tests/EditorWidgetTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_runtime_render_tests",
+      "entry": "tests/RuntimeRenderTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_runtime_render_application_tests",
+      "entry": "tests/RuntimeRenderApplicationTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_runtime_render_authoring_tests",
+      "entry": "tests/RuntimeRenderAuthoringTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_runtime_render_retained_region_tests",
+      "entry": "tests/RuntimeRenderRetainedRegionTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_signal_tests",
+      "entry": "tests/SignalTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_signal_application_tests",
+      "entry": "tests/SignalApplicationTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_animation_retarget_tests",
+      "entry": "tests/AnimationRetargetTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_animation_retarget_cook_tests",
+      "entry": "tests/AnimationRetargetCookTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_retarget_editor_tests",
+      "entry": "tests/RetargetEditorTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_retarget_application_tests",
+      "entry": "tests/RetargetApplicationTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_retarget_lab_tests",
+      "entry": "tests/RetargetLabTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_mod_content_tests",
+      "entry": "tests/ModContentTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_mod_application_tests",
+      "entry": "tests/ModApplicationTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_navigation_dependency_tests",
+      "entry": "tests/NavigationDependencyTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_motor_runtime_tags_tests",
+      "entry": "tests/MotorRuntimeTagsTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_volume_terrain_tests",
+      "entry": "tests/VolumeTerrainTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_volume_application_tests",
+      "entry": "tests/VolumeTerrainApplicationTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_volume_performance_tests",
+      "entry": "tests/VolumeTerrainPerformanceTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_planetfall_application_tests",
+      "entry": "tests/PlanetfallApplicationTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_ball_pusher_application_tests",
+      "entry": "tests/BallPusherApplicationTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_contact_interval_tests",
+      "entry": "tests/ContactIntervalTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_collision_continuity_tests",
+      "entry": "tests/CollisionContinuityTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_sphere_impact_bounds_tests",
+      "entry": "tests/SphereImpactBoundsTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_cooked_penetration_tests",
+      "entry": "tests/CookedPenetrationTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_planet_terrain_tests",
+      "entry": "tests/PlanetTerrainTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_planet_world_tests",
+      "entry": "tests/PlanetWorldTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_planet_application_tests",
+      "entry": "tests/PlanetApplicationTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_planet_streaming_tests",
+      "entry": "tests/PlanetStreamingTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_origin_physics_tests",
+      "entry": "tests/OriginPhysicsTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_origin_assembly_tests",
+      "entry": "tests/OriginAssemblyTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_origin_participant_tests",
+      "entry": "tests/OriginParticipantTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_origin_travel_application_tests",
+      "entry": "tests/OriginTravelApplicationTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_origin_audio_tests",
+      "entry": "tests/OriginAudioTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_origin_script_tests",
+      "entry": "tests/OriginScriptTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_origin_stream_tests",
+      "entry": "tests/OriginStreamTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_stream_origin_precision_tests",
+      "entry": "tests/StreamOriginPrecisionTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_weather_tests",
+      "entry": "tests/WeatherTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_weather_authoring_tests",
+      "entry": "tests/WeatherAuthoringTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_weather_render_tests",
+      "entry": "tests/WeatherRenderTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_weather_world_tests",
+      "entry": "tests/WeatherWorldTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_weather_streaming_tests",
+      "entry": "tests/WeatherStreamingTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_weather_script_tests",
+      "entry": "tests/WeatherScriptTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_weather_application_tests",
+      "entry": "tests/WeatherApplicationTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_weather_performance_tests",
+      "entry": "tests/WeatherPerformanceTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_physics_scaling_benchmarks",
+      "entry": "tests/PhysicsScalingBenchmarks.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_physics_scaling_diagnostics",
+      "entry": "tests/PhysicsScalingBenchmarks.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_physics_scaling_tests",
+      "entry": "tests/PhysicsScalingTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_joint_scaling_tests",
+      "entry": "tests/JointScalingTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_parallel_narrowphase_tests",
+      "entry": "tests/ParallelNarrowphaseTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_primitive_contact_boolean_tests",
+      "entry": "tests/PrimitiveContactBooleanTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_rigid_motion_bounds_tests",
+      "entry": "tests/RigidMotionBoundsTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_rigid_motion_geometry_tests",
+      "entry": "tests/RigidMotionGeometryTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_physics_stress_live_benchmark",
+      "entry": "tests/PhysicsStressLiveBenchmark.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_physics_scaling_application_tests",
+      "entry": "tests/PhysicsScalingApplicationTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_contact_sat_workspace_tests",
+      "entry": "tests/ContactSatWorkspaceTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_contact_sat_filter_tests",
+      "entry": "tests/ContactSatFilterTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_contact_sphere_filter_tests",
+      "entry": "tests/ContactSphereFilterTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_impact_support_sets_tests",
+      "entry": "tests/ImpactSupportSetsTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_support_continuation_tests",
+      "entry": "tests/SupportContinuationTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_prealpha_lifecycle_tests",
+      "entry": "tests/PreAlphaLifecycleTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_first_project_tests",
+      "entry": "tests/FirstProjectTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_origin_environment_tests",
+      "entry": "tests/OriginEnvironmentTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_liquid_rotation_tests",
+      "entry": "tests/LiquidRotationTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_liquid_bake_frame_tests",
+      "entry": "tests/LiquidBakeFrameTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_collision_witness_tests",
+      "entry": "tests/CollisionWitnessTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_origin_admission_tests",
+      "entry": "tests/OriginAdmissionTests.cpp",
+      "declaration": "CMakeLists.txt"
+    },
+    {
+      "target": "judas_script_developer_tools_tests",
+      "entry": "tests/ScriptDeveloperToolsTests.cpp",
+      "declaration": "cmake/targets/DeveloperWorkflow.cmake"
+    },
+    {
+      "target": "judas_script_vm_benchmark",
+      "entry": "tests/ScriptVMBenchmark.c",
+      "declaration": "cmake/targets/DeveloperWorkflow.cmake"
+    },
+    {
+      "target": "judas_script_tools_editor_tests",
+      "entry": "tests/ScriptToolsEditorTests.cpp",
+      "declaration": "cmake/targets/DeveloperWorkflow.cmake"
+    },
+    {
+      "target": "judas_script_developer_consumer_tests",
+      "entry": "tests/ScriptDeveloperConsumerTests.cpp",
+      "declaration": "cmake/targets/DeveloperWorkflow.cmake"
+    },
+    {
+      "target": "judas_animation_workflow_tests",
+      "entry": "tests/AnimationWorkflowTests.cpp",
+      "declaration": "cmake/targets/DeveloperWorkflow.cmake"
+    },
+    {
+      "target": "judas_animation_workflow_application_tests",
+      "entry": "tests/AnimationWorkflowApplicationTests.cpp",
+      "declaration": "cmake/targets/DeveloperWorkflow.cmake"
+    },
+    {
+      "target": "judas_animation_cold_save_tests",
+      "entry": "tests/AnimationColdSaveTests.cpp",
+      "declaration": "cmake/targets/DeveloperWorkflow.cmake"
+    },
+    {
+      "target": "judas_ui_production_tests",
+      "entry": "tests/UIProductionTests.cpp",
+      "declaration": "cmake/targets/DeveloperWorkflow.cmake"
+    },
+    {
+      "target": "judas_ui_showcase_application_tests",
+      "entry": "tests/UIShowcaseApplicationTests.cpp",
+      "declaration": "cmake/targets/DeveloperWorkflow.cmake"
+    },
+    {
+      "target": "judas_touch_input_tests",
+      "entry": "tests/TouchInputTests.cpp",
+      "declaration": "cmake/targets/LocalViews.cmake"
+    },
+    {
+      "target": "judas_breakwater_application_tests",
+      "entry": "tests/BreakwaterApplicationTests.cpp",
+      "declaration": "cmake/targets/LocalViews.cmake"
+    },
+    {
+      "target": "judas_breakwater_performance",
+      "entry": "tests/BreakwaterPerformance.cpp",
+      "declaration": "cmake/targets/LocalViews.cmake"
+    },
+    {
+      "target": "judas_local_multiplayer_tests",
+      "entry": "tests/LocalMultiplayerTests.cpp",
+      "declaration": "cmake/targets/LocalViews.cmake"
+    },
+    {
+      "target": "judas_local_multiplayer_application_tests",
+      "entry": "tests/LocalMultiplayerApplicationTests.cpp",
+      "declaration": "cmake/targets/LocalViews.cmake"
+    },
+    {
+      "target": "judas_local_multiplayer_render_tests",
+      "entry": "tests/LocalMultiplayerRenderTests.cpp",
+      "declaration": "cmake/targets/LocalViews.cmake"
+    },
+    {
+      "target": "judas_local_device_adapter_tests",
+      "entry": "tests/LocalDeviceAdapterTests.cpp",
+      "declaration": "cmake/targets/LocalViews.cmake"
+    },
+    {
+      "target": "judas_local_multiplayer_script_tests",
+      "entry": "tests/LocalMultiplayerScriptTests.cpp",
+      "declaration": "cmake/targets/LocalViews.cmake"
+    },
+    {
+      "target": "judas_local_multiplayer_performance",
+      "entry": "tests/LocalMultiplayerPerformance.cpp",
+      "declaration": "cmake/targets/LocalViews.cmake"
+    },
+    {
+      "target": "judas_rendering_scale_tests",
+      "entry": "tests/RenderingScaleTests.cpp",
+      "declaration": "cmake/targets/RenderingAssets.cmake"
+    },
+    {
+      "target": "judas_rendering_architecture_tests",
+      "entry": "tests/RenderingArchitectureTests.cpp",
+      "declaration": "cmake/targets/RenderingAssets.cmake"
+    },
+    {
+      "target": "judas_rendering_lab_tests",
+      "entry": "tests/RenderingLabTests.cpp",
+      "declaration": "cmake/targets/RenderingAssets.cmake"
+    },
+    {
+      "target": "judas_rendering_shadow_scale_tests",
+      "entry": "tests/RenderingShadowScaleTests.cpp",
+      "declaration": "cmake/targets/RenderingAssets.cmake"
+    },
+    {
+      "target": "judas_rendering_lab_performance",
+      "entry": "tests/RenderingLabPerformance.cpp",
+      "declaration": "cmake/targets/RenderingAssets.cmake"
+    },
+    {
+      "target": "judas_asset_pipeline_benchmark",
+      "entry": "tests/AssetPipelineBenchmark.cpp",
+      "declaration": "cmake/targets/RenderingAssets.cmake"
+    },
+    {
+      "target": "judas_asset_pipeline_tests",
+      "entry": "tests/AssetPipelineTests.cpp",
+      "declaration": "cmake/targets/RenderingAssets.cmake"
+    },
+    {
+      "target": "judas_asset_residency_tests",
+      "entry": "tests/AssetResidencyTests.cpp",
+      "declaration": "cmake/targets/RenderingAssets.cmake"
+    },
+    {
+      "target": "judas_asset_lab_tests",
+      "entry": "tests/AssetLabTests.cpp",
+      "declaration": "cmake/targets/RenderingAssets.cmake"
+    },
+    {
+      "target": "judas_living_world_tests",
+      "entry": "tests/LivingWorldTests.cpp",
+      "declaration": "cmake/targets/WorldLifecycle.cmake"
+    },
+    {
+      "target": "judas_living_world_streaming_tests",
+      "entry": "tests/LivingWorldStreamingTests.cpp",
+      "declaration": "cmake/targets/WorldLifecycle.cmake"
+    },
+    {
+      "target": "judas_living_world_application_tests",
+      "entry": "tests/LivingWorldApplicationTests.cpp",
+      "declaration": "cmake/targets/WorldLifecycle.cmake"
+    },
+    {
+      "target": "judas_save_evolution_tests",
+      "entry": "tests/SaveEvolutionTests.cpp",
+      "declaration": "cmake/targets/WorldLifecycle.cmake"
+    },
+    {
+      "target": "judas_save_evolution_application_tests",
+      "entry": "tests/SaveEvolutionApplicationTests.cpp",
+      "declaration": "cmake/targets/WorldLifecycle.cmake"
+    },
+    {
+      "target": "judas_network_transport_tests",
+      "entry": "tests/NetworkTransportTests.cpp",
+      "declaration": "cmake/targets/WorldLifecycle.cmake"
+    },
+    {
+      "target": "judas_network_session_tests",
+      "entry": "tests/NetworkSessionTests.cpp",
+      "declaration": "cmake/targets/WorldLifecycle.cmake"
+    },
+    {
+      "target": "judas_logical_input_tests",
+      "entry": "tests/LogicalInputTests.cpp",
+      "declaration": "cmake/targets/WorldLifecycle.cmake"
+    },
+    {
+      "target": "judas_network_script_tests",
+      "entry": "tests/NetworkScriptTests.cpp",
+      "declaration": "cmake/targets/WorldLifecycle.cmake"
+    },
+    {
+      "target": "judas_network_application_tests",
+      "entry": "tests/NetworkApplicationTests.cpp",
+      "declaration": "cmake/targets/WorldLifecycle.cmake"
+    },
+    {
+      "target": "judas_network_render_tests",
+      "entry": "tests/NetworkRenderTests.cpp",
+      "declaration": "cmake/targets/WorldLifecycle.cmake"
+    },
+    {
+      "target": "judas_network_boundary_tests",
+      "entry": "tests/NetworkBoundaryTests.cpp",
+      "declaration": "cmake/targets/WorldLifecycle.cmake"
+    },
+    {
+      "target": "judas_structural_tests",
+      "entry": "tests/StructuralTests.cpp",
+      "declaration": "cmake/tests/MechanicalTests.cmake"
+    },
+    {
+      "target": "judas_structural_application_tests",
+      "entry": "tests/StructuralApplicationTests.cpp",
+      "declaration": "cmake/tests/MechanicalTests.cmake"
+    },
+    {
+      "target": "judas_bending_tests",
+      "entry": "tests/BendingTests.cpp",
+      "declaration": "cmake/tests/MechanicalTests.cmake"
+    },
+    {
+      "target": "judas_bending_application_tests",
+      "entry": "tests/BendingApplicationTests.cpp",
+      "declaration": "cmake/tests/MechanicalTests.cmake"
+    },
+    {
+      "target": "judas_wheel_tests",
+      "entry": "tests/WheelTests.cpp",
+      "declaration": "cmake/tests/MechanicalTests.cmake"
+    },
+    {
+      "target": "judas_wheel_script_tests",
+      "entry": "tests/WheelScriptTests.cpp",
+      "declaration": "cmake/tests/MechanicalTests.cmake"
+    },
+    {
+      "target": "judas_wheel_lifecycle_tests",
+      "entry": "tests/WheelLifecycleTests.cpp",
+      "declaration": "cmake/tests/MechanicalTests.cmake"
+    },
+    {
+      "target": "judas_wheel_application_tests",
+      "entry": "tests/WheelApplicationTests.cpp",
+      "declaration": "cmake/tests/MechanicalTests.cmake"
+    },
+    {
+      "target": "judas_powertrain_tests",
+      "entry": "tests/PowertrainTests.cpp",
+      "declaration": "cmake/tests/MechanicalTests.cmake"
+    },
+    {
+      "target": "judas_powertrain_script_tests",
+      "entry": "tests/PowertrainScriptTests.cpp",
+      "declaration": "cmake/tests/MechanicalTests.cmake"
+    },
+    {
+      "target": "judas_powertrain_lifecycle_tests",
+      "entry": "tests/PowertrainLifecycleTests.cpp",
+      "declaration": "cmake/tests/MechanicalTests.cmake"
+    },
+    {
+      "target": "judas_powertrain_application_tests",
+      "entry": "tests/PowertrainApplicationTests.cpp",
+      "declaration": "cmake/tests/MechanicalTests.cmake"
+    },
+    {
+      "target": "judas_mechanical_damage_tests",
+      "entry": "tests/MechanicalDamageTests.cpp",
+      "declaration": "cmake/tests/MechanicalTests.cmake"
+    },
+    {
+      "target": "judas_mechanical_connection_tests",
+      "entry": "tests/MechanicalConnectionTests.cpp",
+      "declaration": "cmake/tests/MechanicalTests.cmake"
+    },
+    {
+      "target": "judas_mechanical_damage_application_tests",
+      "entry": "tests/MechanicalDamageApplicationTests.cpp",
+      "declaration": "cmake/tests/MechanicalTests.cmake"
+    },
+    {
+      "target": "judas_mechanical_crash_application_tests",
+      "entry": "tests/MechanicalCrashApplicationTests.cpp",
+      "declaration": "cmake/tests/MechanicalTests.cmake"
+    },
+    {
+      "target": "judas_vehicle_damage_application_tests",
+      "entry": "tests/MechanicalVehicleCrashApplicationTests.cpp",
+      "declaration": "cmake/tests/MechanicalTests.cmake"
+    },
+    {
+      "target": "judas_mechanical_damage_script_tests",
+      "entry": "tests/MechanicalDamageScriptTests.cpp",
+      "declaration": "cmake/tests/MechanicalTests.cmake"
+    },
+    {
+      "target": "judas_section_material_tests",
+      "entry": "tests/SectionMaterialTests.cpp",
+      "declaration": "cmake/tests/MechanicalTests.cmake"
+    },
+    {
+      "target": "judas_coarse_crash_application_tests",
+      "entry": "tests/CoarseCrashApplicationTests.cpp",
+      "declaration": "cmake/tests/MechanicalTests.cmake"
+    }
+  ],
+  "focusedManifestUnchanged": true,
+  "focusedManifestSha256": "30933cadb31667a2904f27c6bd89c267ba7f5425e100ac099bc035d416a47523",
+  "focusedTests": 45,
+  "distinctFocusedTargets": 39,
+  "ordinaryFocusedTests": 44,
+  "manualKnownFailureTests": 1,
+  "retired": [
+    {
+      "invocation": "python3 -m unittest discover -s tests -p test_prealpha_validation.py -v",
+      "oldLocation": ".github/workflows/prealpha.yml:43",
+      "retainedLocation": "cmake/JudasValidation.cmake:prealpha.gate-negative-controls",
+      "reason": "Same command was executed before the build and again through the focused CTest job. CTest remains authoritative."
+    }
+  ],
+  "retainedVariants": [
+    {
+      "targets": [
+        "judas_physics_scaling_benchmarks",
+        "judas_physics_scaling_diagnostics"
+      ],
+      "reason": "Same entry point, different M87_ALLOCATION_DIAGNOSTICS definition; instrumentation replaces allocation operators in the diagnostic executable only."
+    }
+  ],
+  "protectedStandaloneAdapters": {
+    "tests/ContactPerformanceTests.cpp": "scripts/ftft4p_validation.py and scripts/ftft4_closure_validation.py compile this same workload against isolated source snapshots.",
+    "tests/ContactScalePerformance.cpp": "scripts/ftft4p_validation.py compiles the unchanged original broadphase fixture selected by a snapshot macro.",
+    "tests/ContactAllocationTracking.cpp": "scripts/ftft4alloc_validation.py instrumentation helper, not an independent entry point.",
+    "tests/PlayerDryTrace.cpp": "Retained historical FTFT9 per-step differential trajectory adapter."
+  },
+  "newRegistrationControls": [
+    "default gate excludes only explicit manual contracts",
+    "explicit failure option restores unchanged manual invocation",
+    "missing native target rejects configuration",
+    "removing manual exclusion is detected"
+  ],
+  "nativeTestsRemoved": [],
+  "historicalFilesModified": []
+}

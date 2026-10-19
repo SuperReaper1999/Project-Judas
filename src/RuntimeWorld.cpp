@@ -1587,7 +1587,9 @@ bool RuntimeWorld::SetRenderVisible(EntityId id,bool entityScope,bool visible){
 bool RuntimeWorld::SetMaterialSlot(EntityId id,unsigned slot,const MaterialSlot& value){
  if(!RuntimeDefinition(id)||!m_scriptDefinitions.at(id).render||slot>=64||!ValidRenderSlot(m_assets,value))return false;
  auto& r=*m_scriptDefinitions.at(id).render;
- if(r.materials.size()<=slot)r.materials.resize(slot+1);r.materials[slot]=value;
+ if(r.materials.size()<=slot)
+     r.materials.resize(slot+1);
+ r.materials[slot]=value;
  if(auto* e=FindEntity(id))e->definition.render=r;
  for(auto& v:m_staticRenderables)if(v.id==id)v.render=r;
  for(auto& v:m_dynamicVisuals)if(v.id==id)v.render=r;
@@ -1604,7 +1606,9 @@ bool RuntimeWorld::SetRuntimeMaterial(EntityId id,const std::string& key,const M
  else{auto* parts=m_assets?m_assets->TryGetModelParts(d->render->meshAsset):nullptr;
  if(!parts||std::none_of(parts->begin(),parts->end(),[&](auto& p){return p.part==key;}))return false;}}
  auto& r=*m_scriptDefinitions.at(id).render;
- if(r.runtimeMaterials.size()>=64&&!r.runtimeMaterials.count(key))return false;r.runtimeMaterials[key]=value;
+ if(r.runtimeMaterials.size()>=64&&!r.runtimeMaterials.count(key))
+     return false;
+ r.runtimeMaterials[key]=value;
  if(auto* e=FindEntity(id))e->definition.render=r;
  for(auto& v:m_staticRenderables)if(v.id==id)v.render=r;
  for(auto& v:m_dynamicVisuals)if(v.id==id)v.render=r;

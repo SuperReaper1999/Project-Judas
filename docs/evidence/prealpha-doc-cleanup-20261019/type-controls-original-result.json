@@ -1,0 +1,37 @@
+{
+  "current": {
+    "pass": true,
+    "diagnostics": []
+  },
+  "original": {
+    "pass": false,
+    "expectedNegative": true,
+    "diagnostics": [
+      {
+        "code": 2345,
+        "file": "/home/conner/Documents/GitHub/Project-Judas/docs/judasjs/type-contracts.ts",
+        "line": 14,
+        "message": "Argument of type '{}' is not assignable to parameter of type 'CameraRange'.   Type '{}' is missing the following properties from type 'CameraRange': near, far"
+      },
+      {
+        "code": 2345,
+        "file": "/home/conner/Documents/GitHub/Project-Judas/docs/judasjs/type-contracts.ts",
+        "line": 15,
+        "message": "Argument of type '{ far: number; }' is not assignable to parameter of type 'CameraRange'.   Property 'near' is missing in type '{ far: number; }' but required in type 'CameraRange'."
+      },
+      {
+        "code": 2345,
+        "file": "/home/conner/Documents/GitHub/Project-Judas/docs/judasjs/type-contracts.ts",
+        "line": 16,
+        "message": "Argument of type '{ near: number; }' is not assignable to parameter of type 'CameraRange'.   Property 'far' is missing in type '{ near: number; }' but required in type 'CameraRange'."
+      },
+      {
+        "code": 2578,
+        "file": "/home/conner/Documents/GitHub/Project-Judas/docs/judasjs/type-contracts.ts",
+        "line": 46,
+        "message": "Unused '@ts-expect-error' directive."
+      }
+    ]
+  },
+  "description": "Same compile-only contract fixture on current versus original HEAD declaration; old required camera range rejects three valid calls, old non-null material permits an unsafe dereference."
+}
