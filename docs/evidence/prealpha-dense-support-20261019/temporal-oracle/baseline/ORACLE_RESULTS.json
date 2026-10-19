@@ -1,0 +1,10 @@
+{
+  "utc": "2026-10-19T10:52:52.043539+00:00",
+  "argv": [
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/quality-prototype/baseline-complete/oracle_controls"
+  ],
+  "exit": 0,
+  "binary_sha256": "592ec89028ac1d6f0fc9cbea99abae65ec783079aca2878658bad742e09f916b",
+  "output": "floor_oracle checks=18 failures=0\n",
+  "note": "Explicit native child-exit receipt; prior displayed18/0 log preserved separately."
+}

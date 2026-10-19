@@ -1,0 +1,19 @@
+{
+  "schema": 1,
+  "version": "0.1.0-prealpha",
+  "maturity": "pre-alpha",
+  "channel": "Experimental",
+  "build_id": "0.1.0-prealpha-Experimental-8f6bd18-dirty-8854258fe768-u5bd789ffb033",
+  "source_revision": "8f6bd18b876158c131bee61fa0dc71625d912c30",
+  "source_tree": "bd7bd3ebd181d030700611ddb7dc9bb65e616942",
+  "source_dirty": true,
+  "source_fingerprint": "8854258fe768b88461c2cd7e01e777c384af5c87e9174abd8cf8ecf5e5bf8f8b",
+  "source_untracked_count": 17,
+  "source_untracked_fingerprint": "5bd789ffb033fcf9c82c05bc60b75b64ee57c88a25646d93f400652acdeac301",
+  "source_origin": "git",
+  "platform": "Linux",
+  "architecture": "x86_64",
+  "configuration": "Release",
+  "compiler": "GNU",
+  "compiler_version": "15.2.0"
+}

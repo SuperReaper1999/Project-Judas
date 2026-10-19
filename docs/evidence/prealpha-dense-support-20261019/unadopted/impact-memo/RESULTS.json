@@ -1,0 +1,4764 @@
+{
+  "utc": "2026-10-19T12:57:31.683100+00:00",
+  "snapshot": "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/contact-system-research/event-3470.json",
+  "snapshot_sha256": "dd734b9f5bdda2995b3b952072b4838bd024b540f1cff8cfffeb3a9804c60ec4",
+  "build_receipt_sha256": "55ae28689c99eff8758ec845df02955ac66bbd813f73591d35b3aa63f39150ac",
+  "runs": [
+    {
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/impact-memo-prototype/ImpactSolverTests-baseline"
+      ],
+      "actual_exit": 0,
+      "expected_exit": 0,
+      "expected_exit_observed": true,
+      "binary_sha256": "e43e91bb4c36b6369ce05a2a8ad61585a3fb987fe325a04022600d294a2c1bf4",
+      "stdout": "ImpactSolverTests-baseline.stdout",
+      "stderr": "ImpactSolverTests-baseline.stderr"
+    },
+    {
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/impact-memo-prototype/MemoControls-baseline"
+      ],
+      "actual_exit": 0,
+      "expected_exit": 0,
+      "expected_exit_observed": true,
+      "binary_sha256": "b007d0bd14fdc7d9183eef443326ab3aff1559d1dab745ec5bd62c35bff82f43",
+      "stdout": "MemoControls-baseline.stdout",
+      "stderr": "MemoControls-baseline.stderr",
+      "controls": {
+        "checks": 22,
+        "failures": 0,
+        "physical_and_diagnostic_bits": [
+          {
+            "bodies": [
+              {
+                "angular_velocity": [
+                  0,
+                  0,
+                  3189838876
+                ],
+                "force_accumulator": [
+                  0,
+                  0,
+                  0
+                ],
+                "inverse_inertia_local_columns": [
+                  [
+                    1084227584,
+                    0,
+                    0
+                  ],
+                  [
+                    0,
+                    1084227584,
+                    0
+                  ],
+                  [
+                    0,
+                    0,
+                    1084227584
+                  ]
+                ],
+                "inverse_mass": 1056964608,
+                "linear_velocity": [
+                  1048625152,
+                  1049198078,
+                  0
+                ],
+                "orientation_wxyz": [
+                  1065353216,
+                  0,
+                  0,
+                  0
+                ],
+                "position": [
+                  0,
+                  0,
+                  0
+                ],
+                "torque_accumulator": [
+                  0,
+                  0,
+                  0
+                ]
+              },
+              {
+                "angular_velocity": [
+                  0,
+                  0,
+                  3193609075
+                ],
+                "force_accumulator": [
+                  0,
+                  0,
+                  0
+                ],
+                "inverse_inertia_local_columns": [
+                  [
+                    1092616192,
+                    0,
+                    0
+                  ],
+                  [
+                    0,
+                    1092616192,
+                    0
+                  ],
+                  [
+                    0,
+                    0,
+                    1092616192
+                  ]
+                ],
+                "inverse_mass": 1065353216,
+                "linear_velocity": [
+                  1048526848,
+                  1034569830,
+                  0
+                ],
+                "orientation_wxyz": [
+                  1065353216,
+                  0,
+                  0,
+                  0
+                ],
+                "position": [
+                  1065353216,
+                  0,
+                  0
+                ],
+                "torque_accumulator": [
+                  0,
+                  0,
+                  0
+                ]
+              },
+              {
+                "angular_velocity": [
+                  0,
+                  0,
+                  1024069894
+                ],
+                "force_accumulator": [
+                  0,
+                  0,
+                  0
+                ],
+                "inverse_inertia_local_columns": [
+                  [
+                    1079334229,
+                    0,
+                    0
+                  ],
+                  [
+                    0,
+                    1079334229,
+                    0
+                  ],
+                  [
+                    0,
+                    0,
+                    1079334229
+                  ]
+                ],
+                "inverse_mass": 1051372203,
+                "linear_velocity": [
+                  1048526848,
+                  3151816714,
+                  0
+                ],
+                "orientation_wxyz": [
+                  1065353216,
+                  0,
+                  0,
+                  0
+                ],
+                "position": [
+                  1073741824,
+                  0,
+                  0
+                ],
+                "torque_accumulator": [
+                  0,
+                  0,
+                  0
+                ]
+              }
+            ],
+            "result": {
+              "ambiguous": true,
+              "angular_momentum_after": [
+                0,
+                0,
+                4486234449826021376
+              ],
+              "angular_momentum_before": [
+                0,
+                0,
+                0
+              ],
+              "contacts": 3,
+              "effective_restitution": 0,
+              "energy_budget_satisfied": true,
+              "energy_tolerance": 4540714917795033252,
+              "kinetic_after": 4598500650138887542,
+              "kinetic_before": 4617276111460331684,
+              "material_closing_contacts": 1,
+              "momentum_after": [
+                4609434218513334275,
+                4603579539595122436,
+                0
+              ],
+              "momentum_before": [
+                4609434218815029242,
+                4603579539312869376,
+                0
+              ],
+              "prescribed_boundary_work": 0,
+              "safety_fallback": false
+            },
+            "rows": [
+              {
+                "anchor_a_world_frame": false,
+                "anchor_b_world_frame": false,
+                "body_a": 1,
+                "body_b": 2,
+                "frame_a": 0,
+                "frame_b": 1,
+                "friction": 1053609165,
+                "has_local_anchors": true,
+                "initial_anchor_difference": [
+                  0,
+                  0,
+                  0
+                ],
+                "inverse_inertia_a_columns": [
+                  [
+                    1092616192,
+                    0,
+                    0
+                  ],
+                  [
+                    0,
+                    1092616192,
+                    0
+                  ],
+                  [
+                    0,
+                    0,
+                    1092616192
+                  ]
+                ],
+                "inverse_inertia_b_columns": [
+                  [
+                    1079334229,
+                    0,
+                    0
+                  ],
+                  [
+                    0,
+                    1079334229,
+                    0
+                  ],
+                  [
+                    0,
+                    0,
+                    1079334229
+                  ]
+                ],
+                "local_anchor_a": [
+                  4602678819172646912,
+                  0,
+                  0
+                ],
+                "local_anchor_b": [
+                  13826050856027422720,
+                  0,
+                  0
+                ],
+                "normal": [
+                  3212836864,
+                  0,
+                  0
+                ],
+                "normal_impulse": 0,
+                "normal_mass": 1061158912,
+                "penetration": 2147483648,
+                "point": [
+                  1069547520,
+                  0,
+                  0
+                ],
+                "position_offset_difference": [
+                  0,
+                  0,
+                  0
+                ],
+                "precise_normal": [
+                  13830554455654793216,
+                  0,
+                  0
+                ],
+                "restitution_bias": 0,
+                "signed_separation": 0,
+                "tangent_impulse": [
+                  0,
+                  0,
+                  0
+                ],
+                "velocity_offset_a": [
+                  1056964608,
+                  0,
+                  0
+                ],
+                "velocity_offset_b": [
+                  3204448256,
+                  0,
+                  0
+                ]
+              },
+              {
+                "anchor_a_world_frame": false,
+                "anchor_b_world_frame": false,
+                "body_a": 0,
+                "body_b": 1,
+                "frame_a": 2,
+                "frame_b": 0,
+                "friction": 1053609165,
+                "has_local_anchors": true,
+                "initial_anchor_difference": [
+                  0,
+                  0,
+                  0
+                ],
+                "inverse_inertia_a_columns": [
+                  [
+                    1084227584,
+                    0,
+                    0
+                  ],
+                  [
+                    0,
+                    1084227584,
+                    0
+                  ],
+                  [
+                    0,
+                    0,
+                    1084227584
+                  ]
+                ],
+                "inverse_inertia_b_columns": [
+                  [
+                    1092616192,
+                    0,
+                    0
+                  ],
+                  [
+                    0,
+                    1092616192,
+                    0
+                  ],
+                  [
+                    0,
+                    0,
+                    1092616192
+                  ]
+                ],
+                "local_anchor_a": [
+                  4602678819172646912,
+                  0,
+                  0
+                ],
+                "local_anchor_b": [
+                  13826050856027422720,
+                  0,
+                  0
+                ],
+                "normal": [
+                  3212836864,
+                  0,
+                  0
+                ],
+                "normal_impulse": 1080020992,
+                "normal_mass": 1059760811,
+                "penetration": 2147483648,
+                "point": [
+                  1056964608,
+                  0,
+                  0
+                ],
+                "position_offset_difference": [
+                  0,
+                  0,
+                  0
+                ],
+                "precise_normal": [
+                  13830554455654793216,
+                  0,
+                  0
+                ],
+                "restitution_bias": 0,
+                "signed_separation": 0,
+                "tangent_impulse": [
+                  0,
+                  3179338979,
+                  0
+                ],
+                "velocity_offset_a": [
+                  1056964608,
+                  0,
+                  0
+                ],
+                "velocity_offset_b": [
+                  3204448256,
+                  0,
+                  0
+                ]
+              },
+              {
+                "anchor_a_world_frame": false,
+                "anchor_b_world_frame": false,
+                "body_a": 1,
+                "body_b": 2,
+                "frame_a": 0,
+                "frame_b": 1,
+                "friction": 1053609165,
+                "has_local_anchors": true,
+                "initial_anchor_difference": [
+                  0,
+                  0,
+                  0
+                ],
+                "inverse_inertia_a_columns": [
+                  [
+                    1092616192,
+                    0,
+                    0
+                  ],
+                  [
+                    0,
+                    1092616192,
+                    0
+                  ],
+                  [
+                    0,
+                    0,
+                    1092616192
+                  ]
+                ],
+                "inverse_inertia_b_columns": [
+                  [
+                    1079334229,
+                    0,
+                    0
+                  ],
+                  [
+                    0,
+                    1079334229,
+                    0
+                  ],
+                  [
+                    0,
+                    0,
+                    1079334229
+                  ]
+                ],
+                "local_anchor_a": [
+                  4602678819172646912,
+                  0,
+                  0
+                ],
+                "local_anchor_b": [
+                  13826050856027422720,
+                  0,
+                  0
+                ],
+                "normal": [
+                  3212836864,
+                  0,
+                  0
+                ],
+                "normal_impulse": 1074781184,
+                "normal_mass": 1061158912,
+                "penetration": 2147483648,
+                "point": [
+                  1069547520,
+                  0,
+                  0
+                ],
+                "position_offset_difference": [
+                  0,
+                  0,
+                  0
+                ],
+                "precise_normal": [
+                  13830554455654793216,
+                  0,
+                  0
+                ],
+                "restitution_bias": 0,
+                "signed_separation": 0,
+                "tangent_impulse": [
+                  0,
+                  1017490952,
+                  0
+                ],
+                "velocity_offset_a": [
+                  1056964608,
+                  0,
+                  0
+                ],
+                "velocity_offset_b": [
+                  3204448256,
+                  0,
+                  0
+                ]
+              }
+            ],
+            "saved_order": [
+              1,
+              2,
+              0
+            ]
+          },
+          {
+            "bodies": [
+              {
+                "angular_velocity": [
+                  1046339037,
+                  3189348762,
+                  1026564400
+                ],
+                "force_accumulator": [
+                  0,
+                  0,
+                  0
+                ],
+                "inverse_inertia_local_columns": [
+                  [
+                    1092616192,
+                    0,
+                    0
+                  ],
+                  [
+                    0,
+                    1092616192,
+                    0
+                  ],
+                  [
+                    0,
+                    0,
+                    1092616192
+                  ]
+                ],
+                "inverse_mass": 1065353216,
+                "linear_velocity": [
+                  3207664448,
+                  1051945988,
+                  1015580811
+                ],
+                "orientation_wxyz": [
+                  1065353216,
+                  0,
+                  0,
+                  0
+                ],
+                "position": [
+                  0,
+                  0,
+                  0
+                ],
+                "torque_accumulator": [
+                  0,
+                  0,
+                  0
+                ]
+              },
+              {
+                "angular_velocity": [
+                  3200813193,
+                  1043542835,
+                  3187905910
+                ],
+                "force_accumulator": [
+                  0,
+                  0,
+                  0
+                ],
+                "inverse_inertia_local_columns": [
+                  [
+                    1084227584,
+                    0,
+                    0
+                  ],
+                  [
+                    0,
+                    1084227584,
+                    0
+                  ],
+                  [
+                    0,
+                    0,
+                    1084227584
+                  ]
+                ],
+                "inverse_mass": 1056964608,
+                "linear_velocity": [
+                  1051792192,
+                  1051085310,
+                  3154675851
+                ],
+                "orientation_wxyz": [
+                  1065353216,
+                  2147483648,
+                  2147483648,
+                  2147483648
+                ],
+                "position": [
+                  1065353216,
+                  0,
+                  0
+                ],
+                "torque_accumulator": [
+                  0,
+                  0,
+                  0
+                ]
+              }
+            ],
+            "result": {
+              "ambiguous": false,
+              "angular_momentum_after": [
+                13811699385801847604,
+                4585445045088917914,
+                4603833241313057177
+              ],
+              "angular_momentum_before": [
+                13812179769303970612,
+                4584304132821824308,
+                4584304133036572672
+              ],
+              "contacts": 1,
+              "effective_restitution": 1060320051,
+              "energy_budget_satisfied": true,
+              "energy_tolerance": 4531868722236131116,
+              "kinetic_after": 4603125122589043567,
+              "kinetic_before": 4608429915901429548,
+              "material_closing_contacts": 1,
+              "momentum_after": [
+                0,
+                4607182418800017408,
+                0
+              ],
+              "momentum_before": [
+                0,
+                4607182418800017408,
+                0
+              ],
+              "prescribed_boundary_work": 0,
+              "safety_fallback": false
+            },
+            "rows": [
+              {
+                "anchor_a_world_frame": false,
+                "anchor_b_world_frame": false,
+                "body_a": 0,
+                "body_b": 1,
+                "frame_a": 0,
+                "frame_b": 1,
+                "friction": 1053609165,
+                "has_local_anchors": true,
+                "initial_anchor_difference": [
+                  13824249416176474521,
+                  4596373779694328218,
+                  0
+                ],
+                "inverse_inertia_a_columns": [
+                  [
+                    1092616192,
+                    0,
+                    0
+                  ],
+                  [
+                    0,
+                    1092616192,
+                    0
+                  ],
+                  [
+                    0,
+                    0,
+                    1092616192
+                  ]
+                ],
+                "inverse_inertia_b_columns": [
+                  [
+                    1084227584,
+                    0,
+                    0
+                  ],
+                  [
+                    0,
+                    1084227584,
+                    0
+                  ],
+                  [
+                    0,
+                    0,
+                    1084227584
+                  ]
+                ],
+                "local_anchor_a": [
+                  4599075939470750515,
+                  4591870180066957722,
+                  0
+                ],
+                "local_anchor_b": [
+                  13822447976325526323,
+                  13815242216921733530,
+                  0
+                ],
+                "normal": [
+                  3212836864,
+                  0,
+                  0
+                ],
+                "normal_impulse": 1071155616,
+                "normal_mass": 1058744010,
+                "penetration": 2147483648,
+                "point": [
+                  1056964608,
+                  0,
+                  0
+                ],
+                "position_offset_difference": [
+                  0,
+                  0,
+                  0
+                ],
+                "precise_normal": [
+                  13830554455654793216,
+                  0,
+                  0
+                ],
+                "restitution_bias": 1065596486,
+                "signed_separation": 0,
+                "tangent_impulse": [
+                  0,
+                  3206957566,
+                  1015580811
+                ],
+                "velocity_offset_a": [
+                  1050253722,
+                  1036831949,
+                  0
+                ],
+                "velocity_offset_b": [
+                  3197737370,
+                  3184315597,
+                  0
+                ]
+              }
+            ],
+            "saved_order": [
+              0,
+              1
+            ]
+          },
+          {
+            "bodies": [
+              {
+                "angular_velocity": [
+                  1046339037,
+                  3189348763,
+                  1026564400
+                ],
+                "force_accumulator": [
+                  0,
+                  0,
+                  0
+                ],
+                "inverse_inertia_local_columns": [
+                  [
+                    1092616192,
+                    0,
+                    0
+                  ],
+                  [
+                    0,
+                    1092616192,
+                    0
+                  ],
+                  [
+                    0,
+                    0,
+                    1092616192
+                  ]
+                ],
+                "inverse_mass": 1065353216,
+                "linear_velocity": [
+                  3207664448,
+                  1051945988,
+                  1015580809
+                ],
+                "orientation_wxyz": [
+                  1064336059,
+                  1035710330,
+                  1044098938,
+                  1049412507
+                ],
+                "position": [
+                  0,
+                  0,
+                  0
+                ],
+                "torque_accumulator": [
+                  0,
+                  0,
+                  0
+                ]
+              },
+              {
+                "angular_velocity": [
+                  3200813194,
+                  1043542834,
+                  3187905910
+                ],
+                "force_accumulator": [
+                  0,
+                  0,
+                  0
+                ],
+                "inverse_inertia_local_columns": [
+                  [
+                    1084227584,
+                    0,
+                    0
+                  ],
+                  [
+                    0,
+                    1084227584,
+                    0
+                  ],
+                  [
+                    0,
+                    0,
+                    1084227584
+                  ]
+                ],
+                "inverse_mass": 1056964608,
+                "linear_velocity": [
+                  1051792192,
+                  1051085310,
+                  3154675849
+                ],
+                "orientation_wxyz": [
+                  1065096970,
+                  2147483648,
+                  3190966631,
+                  2147483648
+                ],
+                "position": [
+                  1065353216,
+                  0,
+                  0
+                ],
+                "torque_accumulator": [
+                  0,
+                  0,
+                  0
+                ]
+              }
+            ],
+            "result": {
+              "ambiguous": false,
+              "angular_momentum_after": [
+                13811699386682058342,
+                4585445044049449674,
+                4603833241318694322
+              ],
+              "angular_momentum_before": [
+                13812179769411344800,
+                4584304132770284674,
+                4584304133156831759
+              ],
+              "contacts": 1,
+              "effective_restitution": 1060320051,
+              "energy_budget_satisfied": true,
+              "energy_tolerance": 4531868722236117694,
+              "kinetic_after": 4603125122605861364,
+              "kinetic_before": 4608429915901416126,
+              "material_closing_contacts": 1,
+              "momentum_after": [
+                0,
+                4607182418800017408,
+                0
+              ],
+              "momentum_before": [
+                0,
+                4607182418800017408,
+                0
+              ],
+              "prescribed_boundary_work": 0,
+              "safety_fallback": false
+            },
+            "rows": [
+              {
+                "anchor_a_world_frame": false,
+                "anchor_b_world_frame": false,
+                "body_a": 0,
+                "body_b": 1,
+                "frame_a": 0,
+                "frame_b": 1,
+                "friction": 1053609165,
+                "has_local_anchors": true,
+                "initial_anchor_difference": [
+                  13824249416176474522,
+                  4596373779694328219,
+                  0
+                ],
+                "inverse_inertia_a_columns": [
+                  [
+                    1092616192,
+                    3037724672,
+                    0
+                  ],
+                  [
+                    3003121664,
+                    1092616192,
+                    887095296
+                  ],
+                  [
+                    880803840,
+                    887095296,
+                    1092616192
+                  ]
+                ],
+                "inverse_inertia_b_columns": [
+                  [
+                    1084227584,
+                    0,
+                    0
+                  ],
+                  [
+                    0,
+                    1084227584,
+                    0
+                  ],
+                  [
+                    0,
+                    0,
+                    1084227584
+                  ]
+                ],
+                "local_anchor_a": [
+                  4598886851005646447,
+                  13812421270936972490,
+                  4592683183002582122
+                ],
+                "local_anchor_b": [
+                  13822120327115913148,
+                  13815242216921733530,
+                  4592076937704400491
+                ],
+                "normal": [
+                  3212836864,
+                  0,
+                  0
+                ],
+                "normal_impulse": 1071155616,
+                "normal_mass": 1058744010,
+                "penetration": 2147483648,
+                "point": [
+                  1056964608,
+                  0,
+                  0
+                ],
+                "position_offset_difference": [
+                  0,
+                  0,
+                  0
+                ],
+                "precise_normal": [
+                  13830554455654793216,
+                  0,
+                  0
+                ],
+                "restitution_bias": 1065596486,
+                "signed_separation": 0,
+                "tangent_impulse": [
+                  0,
+                  3206957566,
+                  1015580809
+                ],
+                "velocity_offset_a": [
+                  1050253722,
+                  1036831949,
+                  0
+                ],
+                "velocity_offset_b": [
+                  3197737370,
+                  3184315597,
+                  0
+                ]
+              }
+            ],
+            "saved_order": [
+              0,
+              1
+            ]
+          },
+          {
+            "bodies": [
+              {
+                "angular_velocity": [
+                  1046339036,
+                  3189348764,
+                  1026564400
+                ],
+                "force_accumulator": [
+                  0,
+                  0,
+                  0
+                ],
+                "inverse_inertia_local_columns": [
+                  [
+                    1092616192,
+                    0,
+                    0
+                  ],
+                  [
+                    0,
+                    1092616192,
+                    0
+                  ],
+                  [
+                    0,
+                    0,
+                    1092616192
+                  ]
+                ],
+                "inverse_mass": 1065353216,
+                "linear_velocity": [
+                  3207664448,
+                  1051945988,
+                  1015580809
+                ],
+                "orientation_wxyz": [
+                  1062422834,
+                  3189409633,
+                  3197798241,
+                  3202861840
+                ],
+                "position": [
+                  0,
+                  0,
+                  0
+                ],
+                "torque_accumulator": [
+                  0,
+                  0,
+                  0
+                ]
+              },
+              {
+                "angular_velocity": [
+                  3200813193,
+                  1043542835,
+                  3187905910
+                ],
+                "force_accumulator": [
+                  0,
+                  0,
+                  0
+                ],
+                "inverse_inertia_local_columns": [
+                  [
+                    1084227584,
+                    0,
+                    0
+                  ],
+                  [
+                    0,
+                    1084227584,
+                    0
+                  ],
+                  [
+                    0,
+                    0,
+                    1084227584
+                  ]
+                ],
+                "inverse_mass": 1056964608,
+                "linear_velocity": [
+                  1051792192,
+                  1051085310,
+                  3154675849
+                ],
+                "orientation_wxyz": [
+                  1064603887,
+                  0,
+                  1050103405,
+                  0
+                ],
+                "position": [
+                  1065353216,
+                  0,
+                  0
+                ],
+                "torque_accumulator": [
+                  0,
+                  0,
+                  0
+                ]
+              }
+            ],
+            "result": {
+              "ambiguous": false,
+              "angular_momentum_after": [
+                13811699385707816596,
+                4585445043989004856,
+                4603833241325942083
+              ],
+              "angular_momentum_before": [
+                13812179769114992030,
+                4584304131859751564,
+                4584304133311450674
+              ],
+              "contacts": 1,
+              "effective_restitution": 1060320051,
+              "energy_budget_satisfied": true,
+              "energy_tolerance": 4531868722238117538,
+              "kinetic_after": 4603125122592316904,
+              "kinetic_before": 4608429915903415970,
+              "material_closing_contacts": 1,
+              "momentum_after": [
+                0,
+                4607182418800017408,
+                0
+              ],
+              "momentum_before": [
+                0,
+                4607182418800017408,
+                0
+              ],
+              "prescribed_boundary_work": 0,
+              "safety_fallback": false
+            },
+            "rows": [
+              {
+                "anchor_a_world_frame": false,
+                "anchor_b_world_frame": false,
+                "body_a": 0,
+                "body_b": 1,
+                "frame_a": 0,
+                "frame_b": 1,
+                "friction": 1053609165,
+                "has_local_anchors": true,
+                "initial_anchor_difference": [
+                  13824249416176474520,
+                  4596373779694328220,
+                  13578352876522045440
+                ],
+                "inverse_inertia_a_columns": [
+                  [
+                    1092616191,
+                    880803840,
+                    0
+                  ],
+                  [
+                    872415232,
+                    1092616192,
+                    897581056
+                  ],
+                  [
+                    880803840,
+                    897581056,
+                    1092616192
+                  ]
+                ],
+                "inverse_inertia_b_columns": [
+                  [
+                    1084227584,
+                    0,
+                    0
+                  ],
+                  [
+                    0,
+                    1084227584,
+                    0
+                  ],
+                  [
+                    0,
+                    0,
+                    1084227584
+                  ]
+                ],
+                "local_anchor_a": [
+                  4588339487747531586,
+                  4599183481419972801,
+                  13811636477593046894
+                ],
+                "local_anchor_b": [
+                  13821460811915794126,
+                  13815242216921733530,
+                  13818643073910972319
+                ],
+                "normal": [
+                  3212836864,
+                  0,
+                  0
+                ],
+                "normal_impulse": 1071155616,
+                "normal_mass": 1058744010,
+                "penetration": 2147483648,
+                "point": [
+                  1056964608,
+                  0,
+                  0
+                ],
+                "position_offset_difference": [
+                  0,
+                  0,
+                  0
+                ],
+                "precise_normal": [
+                  13830554455654793216,
+                  0,
+                  0
+                ],
+                "restitution_bias": 1065596486,
+                "signed_separation": 0,
+                "tangent_impulse": [
+                  0,
+                  3206957566,
+                  1015580809
+                ],
+                "velocity_offset_a": [
+                  1050253722,
+                  1036831949,
+                  595591168
+                ],
+                "velocity_offset_b": [
+                  3197737370,
+                  3184315597,
+                  603979776
+                ]
+              }
+            ],
+            "saved_order": [
+              0,
+              1
+            ]
+          },
+          {
+            "bodies": [
+              {
+                "angular_velocity": [
+                  0,
+                  0,
+                  1045320424
+                ],
+                "force_accumulator": [
+                  0,
+                  0,
+                  0
+                ],
+                "inverse_inertia_local_columns": [
+                  [
+                    1092616192,
+                    0,
+                    0
+                  ],
+                  [
+                    0,
+                    1092616192,
+                    0
+                  ],
+                  [
+                    0,
+                    0,
+                    1092616192
+                  ]
+                ],
+                "inverse_mass": 1065353216,
+                "linear_velocity": [
+                  1056977155,
+                  3196135045,
+                  0
+                ],
+                "orientation_wxyz": [
+                  1065353216,
+                  0,
+                  0,
+                  0
+                ],
+                "position": [
+                  0,
+                  0,
+                  0
+                ],
+                "torque_accumulator": [
+                  0,
+                  0,
+                  0
+                ]
+              },
+              {
+                "angular_velocity": [
+                  0,
+                  0,
+                  1046314079
+                ],
+                "force_accumulator": [
+                  0,
+                  0,
+                  0
+                ],
+                "inverse_inertia_local_columns": [
+                  [
+                    1092616192,
+                    0,
+                    0
+                  ],
+                  [
+                    0,
+                    1092616192,
+                    0
+                  ],
+                  [
+                    0,
+                    0,
+                    1092616192
+                  ]
+                ],
+                "inverse_mass": 1065353216,
+                "linear_velocity": [
+                  1056976902,
+                  3174117451,
+                  0
+                ],
+                "orientation_wxyz": [
+                  1065353216,
+                  0,
+                  0,
+                  0
+                ],
+                "position": [
+                  1065353216,
+                  0,
+                  0
+                ],
+                "torque_accumulator": [
+                  0,
+                  0,
+                  0
+                ]
+              },
+              {
+                "angular_velocity": [
+                  0,
+                  0,
+                  0
+                ],
+                "force_accumulator": [
+                  0,
+                  0,
+                  0
+                ],
+                "inverse_inertia_local_columns": [
+                  [
+                    1084227584,
+                    0,
+                    0
+                  ],
+                  [
+                    0,
+                    1084227584,
+                    0
+                  ],
+                  [
+                    0,
+                    0,
+                    1084227584
+                  ]
+                ],
+                "inverse_mass": 1056964608,
+                "linear_velocity": [
+                  1050228882,
+                  3196135045,
+                  0
+                ],
+                "orientation_wxyz": [
+                  1065353216,
+                  0,
+                  0,
+                  0
+                ],
+                "position": [
+                  0,
+                  1065353216,
+                  0
+                ],
+                "torque_accumulator": [
+                  0,
+                  0,
+                  0
+                ]
+              }
+            ],
+            "result": {
+              "ambiguous": true,
+              "angular_momentum_after": [
+                0,
+                0,
+                13826951576872288256
+              ],
+              "angular_momentum_before": [
+                0,
+                0,
+                13826951576167645184
+              ],
+              "contacts": 1,
+              "effective_restitution": 0,
+              "energy_budget_satisfied": true,
+              "energy_tolerance": 4530621225134718976,
+              "kinetic_after": 4601616776515569476,
+              "kinetic_before": 4604930619093706344,
+              "material_closing_contacts": 1,
+              "momentum_after": [
+                4609884578952249344,
+                13828753015475011584,
+                0
+              ],
+              "momentum_before": [
+                4609884578683813888,
+                13828753015911219200,
+                0
+              ],
+              "prescribed_boundary_work": 0,
+              "safety_fallback": false
+            },
+            "rows": [
+              {
+                "anchor_a_world_frame": false,
+                "anchor_b_world_frame": false,
+                "body_a": 0,
+                "body_b": 1,
+                "frame_a": 0,
+                "frame_b": 1,
+                "friction": 1053609165,
+                "has_local_anchors": true,
+                "initial_anchor_difference": [
+                  0,
+                  0,
+                  0
+                ],
+                "inverse_inertia_a_columns": [
+                  [
+                    1092616192,
+                    0,
+                    0
+                  ],
+                  [
+                    0,
+                    1092616192,
+                    0
+                  ],
+                  [
+                    0,
+                    0,
+                    1092616192
+                  ]
+                ],
+                "inverse_inertia_b_columns": [
+                  [
+                    1092616192,
+                    0,
+                    0
+                  ],
+                  [
+                    0,
+                    1092616192,
+                    0
+                  ],
+                  [
+                    0,
+                    0,
+                    1092616192
+                  ]
+                ],
+                "local_anchor_a": [
+                  4602678819172646912,
+                  0,
+                  0
+                ],
+                "local_anchor_b": [
+                  13826050856027422720,
+                  0,
+                  0
+                ],
+                "normal": [
+                  3212836864,
+                  0,
+                  0
+                ],
+                "normal_impulse": 1056976902,
+                "normal_mass": 1056964608,
+                "penetration": 2147483648,
+                "point": [
+                  1056964608,
+                  0,
+                  0
+                ],
+                "position_offset_difference": [
+                  0,
+                  0,
+                  0
+                ],
+                "precise_normal": [
+                  13830554455654793216,
+                  0,
+                  0
+                ],
+                "restitution_bias": 0,
+                "signed_separation": 0,
+                "tangent_impulse": [
+                  0,
+                  1026633803,
+                  0
+                ],
+                "velocity_offset_a": [
+                  1056964608,
+                  0,
+                  0
+                ],
+                "velocity_offset_b": [
+                  3204448256,
+                  0,
+                  0
+                ]
+              }
+            ],
+            "saved_order": [
+              0,
+              1,
+              2
+            ]
+          },
+          {
+            "static_skip": true
+          },
+          {
+            "joint_only_lazy": true
+          },
+          {
+            "exception": "invalid impact interval"
+          },
+          {
+            "exception": "invalid impact contact"
+          },
+          {
+            "exception": "invalid impact contact"
+          },
+          {
+            "exception": "impact requires actual contact, not positive separation"
+          },
+          {
+            "exception": "invalid impact material"
+          },
+          {
+            "exception": "nonfinite impact velocity"
+          }
+        ]
+      }
+    },
+    {
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/impact-memo-prototype/ImpactSolverTests-candidate"
+      ],
+      "actual_exit": 0,
+      "expected_exit": 0,
+      "expected_exit_observed": true,
+      "binary_sha256": "40d24731728a9bbff5869da844c91fbf26211602264cde8c2cf11d31ae437188",
+      "stdout": "ImpactSolverTests-candidate.stdout",
+      "stderr": "ImpactSolverTests-candidate.stderr"
+    },
+    {
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/impact-memo-prototype/MemoControls-candidate"
+      ],
+      "actual_exit": 0,
+      "expected_exit": 0,
+      "expected_exit_observed": true,
+      "binary_sha256": "1d480a956df619a3e5eba1a1be4907bee1d3a4d39c0d7700c5f2a9dd22dc198c",
+      "stdout": "MemoControls-candidate.stdout",
+      "stderr": "MemoControls-candidate.stderr",
+      "controls": {
+        "checks": 22,
+        "failures": 0,
+        "physical_and_diagnostic_bits": [
+          {
+            "bodies": [
+              {
+                "angular_velocity": [
+                  0,
+                  0,
+                  3189838876
+                ],
+                "force_accumulator": [
+                  0,
+                  0,
+                  0
+                ],
+                "inverse_inertia_local_columns": [
+                  [
+                    1084227584,
+                    0,
+                    0
+                  ],
+                  [
+                    0,
+                    1084227584,
+                    0
+                  ],
+                  [
+                    0,
+                    0,
+                    1084227584
+                  ]
+                ],
+                "inverse_mass": 1056964608,
+                "linear_velocity": [
+                  1048625152,
+                  1049198078,
+                  0
+                ],
+                "orientation_wxyz": [
+                  1065353216,
+                  0,
+                  0,
+                  0
+                ],
+                "position": [
+                  0,
+                  0,
+                  0
+                ],
+                "torque_accumulator": [
+                  0,
+                  0,
+                  0
+                ]
+              },
+              {
+                "angular_velocity": [
+                  0,
+                  0,
+                  3193609075
+                ],
+                "force_accumulator": [
+                  0,
+                  0,
+                  0
+                ],
+                "inverse_inertia_local_columns": [
+                  [
+                    1092616192,
+                    0,
+                    0
+                  ],
+                  [
+                    0,
+                    1092616192,
+                    0
+                  ],
+                  [
+                    0,
+                    0,
+                    1092616192
+                  ]
+                ],
+                "inverse_mass": 1065353216,
+                "linear_velocity": [
+                  1048526848,
+                  1034569830,
+                  0
+                ],
+                "orientation_wxyz": [
+                  1065353216,
+                  0,
+                  0,
+                  0
+                ],
+                "position": [
+                  1065353216,
+                  0,
+                  0
+                ],
+                "torque_accumulator": [
+                  0,
+                  0,
+                  0
+                ]
+              },
+              {
+                "angular_velocity": [
+                  0,
+                  0,
+                  1024069894
+                ],
+                "force_accumulator": [
+                  0,
+                  0,
+                  0
+                ],
+                "inverse_inertia_local_columns": [
+                  [
+                    1079334229,
+                    0,
+                    0
+                  ],
+                  [
+                    0,
+                    1079334229,
+                    0
+                  ],
+                  [
+                    0,
+                    0,
+                    1079334229
+                  ]
+                ],
+                "inverse_mass": 1051372203,
+                "linear_velocity": [
+                  1048526848,
+                  3151816714,
+                  0
+                ],
+                "orientation_wxyz": [
+                  1065353216,
+                  0,
+                  0,
+                  0
+                ],
+                "position": [
+                  1073741824,
+                  0,
+                  0
+                ],
+                "torque_accumulator": [
+                  0,
+                  0,
+                  0
+                ]
+              }
+            ],
+            "result": {
+              "ambiguous": true,
+              "angular_momentum_after": [
+                0,
+                0,
+                4486234449826021376
+              ],
+              "angular_momentum_before": [
+                0,
+                0,
+                0
+              ],
+              "contacts": 3,
+              "effective_restitution": 0,
+              "energy_budget_satisfied": true,
+              "energy_tolerance": 4540714917795033252,
+              "kinetic_after": 4598500650138887542,
+              "kinetic_before": 4617276111460331684,
+              "material_closing_contacts": 1,
+              "momentum_after": [
+                4609434218513334275,
+                4603579539595122436,
+                0
+              ],
+              "momentum_before": [
+                4609434218815029242,
+                4603579539312869376,
+                0
+              ],
+              "prescribed_boundary_work": 0,
+              "safety_fallback": false
+            },
+            "rows": [
+              {
+                "anchor_a_world_frame": false,
+                "anchor_b_world_frame": false,
+                "body_a": 1,
+                "body_b": 2,
+                "frame_a": 0,
+                "frame_b": 1,
+                "friction": 1053609165,
+                "has_local_anchors": true,
+                "initial_anchor_difference": [
+                  0,
+                  0,
+                  0
+                ],
+                "inverse_inertia_a_columns": [
+                  [
+                    1092616192,
+                    0,
+                    0
+                  ],
+                  [
+                    0,
+                    1092616192,
+                    0
+                  ],
+                  [
+                    0,
+                    0,
+                    1092616192
+                  ]
+                ],
+                "inverse_inertia_b_columns": [
+                  [
+                    1079334229,
+                    0,
+                    0
+                  ],
+                  [
+                    0,
+                    1079334229,
+                    0
+                  ],
+                  [
+                    0,
+                    0,
+                    1079334229
+                  ]
+                ],
+                "local_anchor_a": [
+                  4602678819172646912,
+                  0,
+                  0
+                ],
+                "local_anchor_b": [
+                  13826050856027422720,
+                  0,
+                  0
+                ],
+                "normal": [
+                  3212836864,
+                  0,
+                  0
+                ],
+                "normal_impulse": 0,
+                "normal_mass": 1061158912,
+                "penetration": 2147483648,
+                "point": [
+                  1069547520,
+                  0,
+                  0
+                ],
+                "position_offset_difference": [
+                  0,
+                  0,
+                  0
+                ],
+                "precise_normal": [
+                  13830554455654793216,
+                  0,
+                  0
+                ],
+                "restitution_bias": 0,
+                "signed_separation": 0,
+                "tangent_impulse": [
+                  0,
+                  0,
+                  0
+                ],
+                "velocity_offset_a": [
+                  1056964608,
+                  0,
+                  0
+                ],
+                "velocity_offset_b": [
+                  3204448256,
+                  0,
+                  0
+                ]
+              },
+              {
+                "anchor_a_world_frame": false,
+                "anchor_b_world_frame": false,
+                "body_a": 0,
+                "body_b": 1,
+                "frame_a": 2,
+                "frame_b": 0,
+                "friction": 1053609165,
+                "has_local_anchors": true,
+                "initial_anchor_difference": [
+                  0,
+                  0,
+                  0
+                ],
+                "inverse_inertia_a_columns": [
+                  [
+                    1084227584,
+                    0,
+                    0
+                  ],
+                  [
+                    0,
+                    1084227584,
+                    0
+                  ],
+                  [
+                    0,
+                    0,
+                    1084227584
+                  ]
+                ],
+                "inverse_inertia_b_columns": [
+                  [
+                    1092616192,
+                    0,
+                    0
+                  ],
+                  [
+                    0,
+                    1092616192,
+                    0
+                  ],
+                  [
+                    0,
+                    0,
+                    1092616192
+                  ]
+                ],
+                "local_anchor_a": [
+                  4602678819172646912,
+                  0,
+                  0
+                ],
+                "local_anchor_b": [
+                  13826050856027422720,
+                  0,
+                  0
+                ],
+                "normal": [
+                  3212836864,
+                  0,
+                  0
+                ],
+                "normal_impulse": 1080020992,
+                "normal_mass": 1059760811,
+                "penetration": 2147483648,
+                "point": [
+                  1056964608,
+                  0,
+                  0
+                ],
+                "position_offset_difference": [
+                  0,
+                  0,
+                  0
+                ],
+                "precise_normal": [
+                  13830554455654793216,
+                  0,
+                  0
+                ],
+                "restitution_bias": 0,
+                "signed_separation": 0,
+                "tangent_impulse": [
+                  0,
+                  3179338979,
+                  0
+                ],
+                "velocity_offset_a": [
+                  1056964608,
+                  0,
+                  0
+                ],
+                "velocity_offset_b": [
+                  3204448256,
+                  0,
+                  0
+                ]
+              },
+              {
+                "anchor_a_world_frame": false,
+                "anchor_b_world_frame": false,
+                "body_a": 1,
+                "body_b": 2,
+                "frame_a": 0,
+                "frame_b": 1,
+                "friction": 1053609165,
+                "has_local_anchors": true,
+                "initial_anchor_difference": [
+                  0,
+                  0,
+                  0
+                ],
+                "inverse_inertia_a_columns": [
+                  [
+                    1092616192,
+                    0,
+                    0
+                  ],
+                  [
+                    0,
+                    1092616192,
+                    0
+                  ],
+                  [
+                    0,
+                    0,
+                    1092616192
+                  ]
+                ],
+                "inverse_inertia_b_columns": [
+                  [
+                    1079334229,
+                    0,
+                    0
+                  ],
+                  [
+                    0,
+                    1079334229,
+                    0
+                  ],
+                  [
+                    0,
+                    0,
+                    1079334229
+                  ]
+                ],
+                "local_anchor_a": [
+                  4602678819172646912,
+                  0,
+                  0
+                ],
+                "local_anchor_b": [
+                  13826050856027422720,
+                  0,
+                  0
+                ],
+                "normal": [
+                  3212836864,
+                  0,
+                  0
+                ],
+                "normal_impulse": 1074781184,
+                "normal_mass": 1061158912,
+                "penetration": 2147483648,
+                "point": [
+                  1069547520,
+                  0,
+                  0
+                ],
+                "position_offset_difference": [
+                  0,
+                  0,
+                  0
+                ],
+                "precise_normal": [
+                  13830554455654793216,
+                  0,
+                  0
+                ],
+                "restitution_bias": 0,
+                "signed_separation": 0,
+                "tangent_impulse": [
+                  0,
+                  1017490952,
+                  0
+                ],
+                "velocity_offset_a": [
+                  1056964608,
+                  0,
+                  0
+                ],
+                "velocity_offset_b": [
+                  3204448256,
+                  0,
+                  0
+                ]
+              }
+            ],
+            "saved_order": [
+              1,
+              2,
+              0
+            ]
+          },
+          {
+            "bodies": [
+              {
+                "angular_velocity": [
+                  1046339037,
+                  3189348762,
+                  1026564400
+                ],
+                "force_accumulator": [
+                  0,
+                  0,
+                  0
+                ],
+                "inverse_inertia_local_columns": [
+                  [
+                    1092616192,
+                    0,
+                    0
+                  ],
+                  [
+                    0,
+                    1092616192,
+                    0
+                  ],
+                  [
+                    0,
+                    0,
+                    1092616192
+                  ]
+                ],
+                "inverse_mass": 1065353216,
+                "linear_velocity": [
+                  3207664448,
+                  1051945988,
+                  1015580811
+                ],
+                "orientation_wxyz": [
+                  1065353216,
+                  0,
+                  0,
+                  0
+                ],
+                "position": [
+                  0,
+                  0,
+                  0
+                ],
+                "torque_accumulator": [
+                  0,
+                  0,
+                  0
+                ]
+              },
+              {
+                "angular_velocity": [
+                  3200813193,
+                  1043542835,
+                  3187905910
+                ],
+                "force_accumulator": [
+                  0,
+                  0,
+                  0
+                ],
+                "inverse_inertia_local_columns": [
+                  [
+                    1084227584,
+                    0,
+                    0
+                  ],
+                  [
+                    0,
+                    1084227584,
+                    0
+                  ],
+                  [
+                    0,
+                    0,
+                    1084227584
+                  ]
+                ],
+                "inverse_mass": 1056964608,
+                "linear_velocity": [
+                  1051792192,
+                  1051085310,
+                  3154675851
+                ],
+                "orientation_wxyz": [
+                  1065353216,
+                  2147483648,
+                  2147483648,
+                  2147483648
+                ],
+                "position": [
+                  1065353216,
+                  0,
+                  0
+                ],
+                "torque_accumulator": [
+                  0,
+                  0,
+                  0
+                ]
+              }
+            ],
+            "result": {
+              "ambiguous": false,
+              "angular_momentum_after": [
+                13811699385801847604,
+                4585445045088917914,
+                4603833241313057177
+              ],
+              "angular_momentum_before": [
+                13812179769303970612,
+                4584304132821824308,
+                4584304133036572672
+              ],
+              "contacts": 1,
+              "effective_restitution": 1060320051,
+              "energy_budget_satisfied": true,
+              "energy_tolerance": 4531868722236131116,
+              "kinetic_after": 4603125122589043567,
+              "kinetic_before": 4608429915901429548,
+              "material_closing_contacts": 1,
+              "momentum_after": [
+                0,
+                4607182418800017408,
+                0
+              ],
+              "momentum_before": [
+                0,
+                4607182418800017408,
+                0
+              ],
+              "prescribed_boundary_work": 0,
+              "safety_fallback": false
+            },
+            "rows": [
+              {
+                "anchor_a_world_frame": false,
+                "anchor_b_world_frame": false,
+                "body_a": 0,
+                "body_b": 1,
+                "frame_a": 0,
+                "frame_b": 1,
+                "friction": 1053609165,
+                "has_local_anchors": true,
+                "initial_anchor_difference": [
+                  13824249416176474521,
+                  4596373779694328218,
+                  0
+                ],
+                "inverse_inertia_a_columns": [
+                  [
+                    1092616192,
+                    0,
+                    0
+                  ],
+                  [
+                    0,
+                    1092616192,
+                    0
+                  ],
+                  [
+                    0,
+                    0,
+                    1092616192
+                  ]
+                ],
+                "inverse_inertia_b_columns": [
+                  [
+                    1084227584,
+                    0,
+                    0
+                  ],
+                  [
+                    0,
+                    1084227584,
+                    0
+                  ],
+                  [
+                    0,
+                    0,
+                    1084227584
+                  ]
+                ],
+                "local_anchor_a": [
+                  4599075939470750515,
+                  4591870180066957722,
+                  0
+                ],
+                "local_anchor_b": [
+                  13822447976325526323,
+                  13815242216921733530,
+                  0
+                ],
+                "normal": [
+                  3212836864,
+                  0,
+                  0
+                ],
+                "normal_impulse": 1071155616,
+                "normal_mass": 1058744010,
+                "penetration": 2147483648,
+                "point": [
+                  1056964608,
+                  0,
+                  0
+                ],
+                "position_offset_difference": [
+                  0,
+                  0,
+                  0
+                ],
+                "precise_normal": [
+                  13830554455654793216,
+                  0,
+                  0
+                ],
+                "restitution_bias": 1065596486,
+                "signed_separation": 0,
+                "tangent_impulse": [
+                  0,
+                  3206957566,
+                  1015580811
+                ],
+                "velocity_offset_a": [
+                  1050253722,
+                  1036831949,
+                  0
+                ],
+                "velocity_offset_b": [
+                  3197737370,
+                  3184315597,
+                  0
+                ]
+              }
+            ],
+            "saved_order": [
+              0,
+              1
+            ]
+          },
+          {
+            "bodies": [
+              {
+                "angular_velocity": [
+                  1046339037,
+                  3189348763,
+                  1026564400
+                ],
+                "force_accumulator": [
+                  0,
+                  0,
+                  0
+                ],
+                "inverse_inertia_local_columns": [
+                  [
+                    1092616192,
+                    0,
+                    0
+                  ],
+                  [
+                    0,
+                    1092616192,
+                    0
+                  ],
+                  [
+                    0,
+                    0,
+                    1092616192
+                  ]
+                ],
+                "inverse_mass": 1065353216,
+                "linear_velocity": [
+                  3207664448,
+                  1051945988,
+                  1015580809
+                ],
+                "orientation_wxyz": [
+                  1064336059,
+                  1035710330,
+                  1044098938,
+                  1049412507
+                ],
+                "position": [
+                  0,
+                  0,
+                  0
+                ],
+                "torque_accumulator": [
+                  0,
+                  0,
+                  0
+                ]
+              },
+              {
+                "angular_velocity": [
+                  3200813194,
+                  1043542834,
+                  3187905910
+                ],
+                "force_accumulator": [
+                  0,
+                  0,
+                  0
+                ],
+                "inverse_inertia_local_columns": [
+                  [
+                    1084227584,
+                    0,
+                    0
+                  ],
+                  [
+                    0,
+                    1084227584,
+                    0
+                  ],
+                  [
+                    0,
+                    0,
+                    1084227584
+                  ]
+                ],
+                "inverse_mass": 1056964608,
+                "linear_velocity": [
+                  1051792192,
+                  1051085310,
+                  3154675849
+                ],
+                "orientation_wxyz": [
+                  1065096970,
+                  2147483648,
+                  3190966631,
+                  2147483648
+                ],
+                "position": [
+                  1065353216,
+                  0,
+                  0
+                ],
+                "torque_accumulator": [
+                  0,
+                  0,
+                  0
+                ]
+              }
+            ],
+            "result": {
+              "ambiguous": false,
+              "angular_momentum_after": [
+                13811699386682058342,
+                4585445044049449674,
+                4603833241318694322
+              ],
+              "angular_momentum_before": [
+                13812179769411344800,
+                4584304132770284674,
+                4584304133156831759
+              ],
+              "contacts": 1,
+              "effective_restitution": 1060320051,
+              "energy_budget_satisfied": true,
+              "energy_tolerance": 4531868722236117694,
+              "kinetic_after": 4603125122605861364,
+              "kinetic_before": 4608429915901416126,
+              "material_closing_contacts": 1,
+              "momentum_after": [
+                0,
+                4607182418800017408,
+                0
+              ],
+              "momentum_before": [
+                0,
+                4607182418800017408,
+                0
+              ],
+              "prescribed_boundary_work": 0,
+              "safety_fallback": false
+            },
+            "rows": [
+              {
+                "anchor_a_world_frame": false,
+                "anchor_b_world_frame": false,
+                "body_a": 0,
+                "body_b": 1,
+                "frame_a": 0,
+                "frame_b": 1,
+                "friction": 1053609165,
+                "has_local_anchors": true,
+                "initial_anchor_difference": [
+                  13824249416176474522,
+                  4596373779694328219,
+                  0
+                ],
+                "inverse_inertia_a_columns": [
+                  [
+                    1092616192,
+                    3037724672,
+                    0
+                  ],
+                  [
+                    3003121664,
+                    1092616192,
+                    887095296
+                  ],
+                  [
+                    880803840,
+                    887095296,
+                    1092616192
+                  ]
+                ],
+                "inverse_inertia_b_columns": [
+                  [
+                    1084227584,
+                    0,
+                    0
+                  ],
+                  [
+                    0,
+                    1084227584,
+                    0
+                  ],
+                  [
+                    0,
+                    0,
+                    1084227584
+                  ]
+                ],
+                "local_anchor_a": [
+                  4598886851005646447,
+                  13812421270936972490,
+                  4592683183002582122
+                ],
+                "local_anchor_b": [
+                  13822120327115913148,
+                  13815242216921733530,
+                  4592076937704400491
+                ],
+                "normal": [
+                  3212836864,
+                  0,
+                  0
+                ],
+                "normal_impulse": 1071155616,
+                "normal_mass": 1058744010,
+                "penetration": 2147483648,
+                "point": [
+                  1056964608,
+                  0,
+                  0
+                ],
+                "position_offset_difference": [
+                  0,
+                  0,
+                  0
+                ],
+                "precise_normal": [
+                  13830554455654793216,
+                  0,
+                  0
+                ],
+                "restitution_bias": 1065596486,
+                "signed_separation": 0,
+                "tangent_impulse": [
+                  0,
+                  3206957566,
+                  1015580809
+                ],
+                "velocity_offset_a": [
+                  1050253722,
+                  1036831949,
+                  0
+                ],
+                "velocity_offset_b": [
+                  3197737370,
+                  3184315597,
+                  0
+                ]
+              }
+            ],
+            "saved_order": [
+              0,
+              1
+            ]
+          },
+          {
+            "bodies": [
+              {
+                "angular_velocity": [
+                  1046339036,
+                  3189348764,
+                  1026564400
+                ],
+                "force_accumulator": [
+                  0,
+                  0,
+                  0
+                ],
+                "inverse_inertia_local_columns": [
+                  [
+                    1092616192,
+                    0,
+                    0
+                  ],
+                  [
+                    0,
+                    1092616192,
+                    0
+                  ],
+                  [
+                    0,
+                    0,
+                    1092616192
+                  ]
+                ],
+                "inverse_mass": 1065353216,
+                "linear_velocity": [
+                  3207664448,
+                  1051945988,
+                  1015580809
+                ],
+                "orientation_wxyz": [
+                  1062422834,
+                  3189409633,
+                  3197798241,
+                  3202861840
+                ],
+                "position": [
+                  0,
+                  0,
+                  0
+                ],
+                "torque_accumulator": [
+                  0,
+                  0,
+                  0
+                ]
+              },
+              {
+                "angular_velocity": [
+                  3200813193,
+                  1043542835,
+                  3187905910
+                ],
+                "force_accumulator": [
+                  0,
+                  0,
+                  0
+                ],
+                "inverse_inertia_local_columns": [
+                  [
+                    1084227584,
+                    0,
+                    0
+                  ],
+                  [
+                    0,
+                    1084227584,
+                    0
+                  ],
+                  [
+                    0,
+                    0,
+                    1084227584
+                  ]
+                ],
+                "inverse_mass": 1056964608,
+                "linear_velocity": [
+                  1051792192,
+                  1051085310,
+                  3154675849
+                ],
+                "orientation_wxyz": [
+                  1064603887,
+                  0,
+                  1050103405,
+                  0
+                ],
+                "position": [
+                  1065353216,
+                  0,
+                  0
+                ],
+                "torque_accumulator": [
+                  0,
+                  0,
+                  0
+                ]
+              }
+            ],
+            "result": {
+              "ambiguous": false,
+              "angular_momentum_after": [
+                13811699385707816596,
+                4585445043989004856,
+                4603833241325942083
+              ],
+              "angular_momentum_before": [
+                13812179769114992030,
+                4584304131859751564,
+                4584304133311450674
+              ],
+              "contacts": 1,
+              "effective_restitution": 1060320051,
+              "energy_budget_satisfied": true,
+              "energy_tolerance": 4531868722238117538,
+              "kinetic_after": 4603125122592316904,
+              "kinetic_before": 4608429915903415970,
+              "material_closing_contacts": 1,
+              "momentum_after": [
+                0,
+                4607182418800017408,
+                0
+              ],
+              "momentum_before": [
+                0,
+                4607182418800017408,
+                0
+              ],
+              "prescribed_boundary_work": 0,
+              "safety_fallback": false
+            },
+            "rows": [
+              {
+                "anchor_a_world_frame": false,
+                "anchor_b_world_frame": false,
+                "body_a": 0,
+                "body_b": 1,
+                "frame_a": 0,
+                "frame_b": 1,
+                "friction": 1053609165,
+                "has_local_anchors": true,
+                "initial_anchor_difference": [
+                  13824249416176474520,
+                  4596373779694328220,
+                  13578352876522045440
+                ],
+                "inverse_inertia_a_columns": [
+                  [
+                    1092616191,
+                    880803840,
+                    0
+                  ],
+                  [
+                    872415232,
+                    1092616192,
+                    897581056
+                  ],
+                  [
+                    880803840,
+                    897581056,
+                    1092616192
+                  ]
+                ],
+                "inverse_inertia_b_columns": [
+                  [
+                    1084227584,
+                    0,
+                    0
+                  ],
+                  [
+                    0,
+                    1084227584,
+                    0
+                  ],
+                  [
+                    0,
+                    0,
+                    1084227584
+                  ]
+                ],
+                "local_anchor_a": [
+                  4588339487747531586,
+                  4599183481419972801,
+                  13811636477593046894
+                ],
+                "local_anchor_b": [
+                  13821460811915794126,
+                  13815242216921733530,
+                  13818643073910972319
+                ],
+                "normal": [
+                  3212836864,
+                  0,
+                  0
+                ],
+                "normal_impulse": 1071155616,
+                "normal_mass": 1058744010,
+                "penetration": 2147483648,
+                "point": [
+                  1056964608,
+                  0,
+                  0
+                ],
+                "position_offset_difference": [
+                  0,
+                  0,
+                  0
+                ],
+                "precise_normal": [
+                  13830554455654793216,
+                  0,
+                  0
+                ],
+                "restitution_bias": 1065596486,
+                "signed_separation": 0,
+                "tangent_impulse": [
+                  0,
+                  3206957566,
+                  1015580809
+                ],
+                "velocity_offset_a": [
+                  1050253722,
+                  1036831949,
+                  595591168
+                ],
+                "velocity_offset_b": [
+                  3197737370,
+                  3184315597,
+                  603979776
+                ]
+              }
+            ],
+            "saved_order": [
+              0,
+              1
+            ]
+          },
+          {
+            "bodies": [
+              {
+                "angular_velocity": [
+                  0,
+                  0,
+                  1045320424
+                ],
+                "force_accumulator": [
+                  0,
+                  0,
+                  0
+                ],
+                "inverse_inertia_local_columns": [
+                  [
+                    1092616192,
+                    0,
+                    0
+                  ],
+                  [
+                    0,
+                    1092616192,
+                    0
+                  ],
+                  [
+                    0,
+                    0,
+                    1092616192
+                  ]
+                ],
+                "inverse_mass": 1065353216,
+                "linear_velocity": [
+                  1056977155,
+                  3196135045,
+                  0
+                ],
+                "orientation_wxyz": [
+                  1065353216,
+                  0,
+                  0,
+                  0
+                ],
+                "position": [
+                  0,
+                  0,
+                  0
+                ],
+                "torque_accumulator": [
+                  0,
+                  0,
+                  0
+                ]
+              },
+              {
+                "angular_velocity": [
+                  0,
+                  0,
+                  1046314079
+                ],
+                "force_accumulator": [
+                  0,
+                  0,
+                  0
+                ],
+                "inverse_inertia_local_columns": [
+                  [
+                    1092616192,
+                    0,
+                    0
+                  ],
+                  [
+                    0,
+                    1092616192,
+                    0
+                  ],
+                  [
+                    0,
+                    0,
+                    1092616192
+                  ]
+                ],
+                "inverse_mass": 1065353216,
+                "linear_velocity": [
+                  1056976902,
+                  3174117451,
+                  0
+                ],
+                "orientation_wxyz": [
+                  1065353216,
+                  0,
+                  0,
+                  0
+                ],
+                "position": [
+                  1065353216,
+                  0,
+                  0
+                ],
+                "torque_accumulator": [
+                  0,
+                  0,
+                  0
+                ]
+              },
+              {
+                "angular_velocity": [
+                  0,
+                  0,
+                  0
+                ],
+                "force_accumulator": [
+                  0,
+                  0,
+                  0
+                ],
+                "inverse_inertia_local_columns": [
+                  [
+                    1084227584,
+                    0,
+                    0
+                  ],
+                  [
+                    0,
+                    1084227584,
+                    0
+                  ],
+                  [
+                    0,
+                    0,
+                    1084227584
+                  ]
+                ],
+                "inverse_mass": 1056964608,
+                "linear_velocity": [
+                  1050228882,
+                  3196135045,
+                  0
+                ],
+                "orientation_wxyz": [
+                  1065353216,
+                  0,
+                  0,
+                  0
+                ],
+                "position": [
+                  0,
+                  1065353216,
+                  0
+                ],
+                "torque_accumulator": [
+                  0,
+                  0,
+                  0
+                ]
+              }
+            ],
+            "result": {
+              "ambiguous": true,
+              "angular_momentum_after": [
+                0,
+                0,
+                13826951576872288256
+              ],
+              "angular_momentum_before": [
+                0,
+                0,
+                13826951576167645184
+              ],
+              "contacts": 1,
+              "effective_restitution": 0,
+              "energy_budget_satisfied": true,
+              "energy_tolerance": 4530621225134718976,
+              "kinetic_after": 4601616776515569476,
+              "kinetic_before": 4604930619093706344,
+              "material_closing_contacts": 1,
+              "momentum_after": [
+                4609884578952249344,
+                13828753015475011584,
+                0
+              ],
+              "momentum_before": [
+                4609884578683813888,
+                13828753015911219200,
+                0
+              ],
+              "prescribed_boundary_work": 0,
+              "safety_fallback": false
+            },
+            "rows": [
+              {
+                "anchor_a_world_frame": false,
+                "anchor_b_world_frame": false,
+                "body_a": 0,
+                "body_b": 1,
+                "frame_a": 0,
+                "frame_b": 1,
+                "friction": 1053609165,
+                "has_local_anchors": true,
+                "initial_anchor_difference": [
+                  0,
+                  0,
+                  0
+                ],
+                "inverse_inertia_a_columns": [
+                  [
+                    1092616192,
+                    0,
+                    0
+                  ],
+                  [
+                    0,
+                    1092616192,
+                    0
+                  ],
+                  [
+                    0,
+                    0,
+                    1092616192
+                  ]
+                ],
+                "inverse_inertia_b_columns": [
+                  [
+                    1092616192,
+                    0,
+                    0
+                  ],
+                  [
+                    0,
+                    1092616192,
+                    0
+                  ],
+                  [
+                    0,
+                    0,
+                    1092616192
+                  ]
+                ],
+                "local_anchor_a": [
+                  4602678819172646912,
+                  0,
+                  0
+                ],
+                "local_anchor_b": [
+                  13826050856027422720,
+                  0,
+                  0
+                ],
+                "normal": [
+                  3212836864,
+                  0,
+                  0
+                ],
+                "normal_impulse": 1056976902,
+                "normal_mass": 1056964608,
+                "penetration": 2147483648,
+                "point": [
+                  1056964608,
+                  0,
+                  0
+                ],
+                "position_offset_difference": [
+                  0,
+                  0,
+                  0
+                ],
+                "precise_normal": [
+                  13830554455654793216,
+                  0,
+                  0
+                ],
+                "restitution_bias": 0,
+                "signed_separation": 0,
+                "tangent_impulse": [
+                  0,
+                  1026633803,
+                  0
+                ],
+                "velocity_offset_a": [
+                  1056964608,
+                  0,
+                  0
+                ],
+                "velocity_offset_b": [
+                  3204448256,
+                  0,
+                  0
+                ]
+              }
+            ],
+            "saved_order": [
+              0,
+              1,
+              2
+            ]
+          },
+          {
+            "static_skip": true
+          },
+          {
+            "joint_only_lazy": true
+          },
+          {
+            "exception": "invalid impact interval"
+          },
+          {
+            "exception": "invalid impact contact"
+          },
+          {
+            "exception": "invalid impact contact"
+          },
+          {
+            "exception": "impact requires actual contact, not positive separation"
+          },
+          {
+            "exception": "invalid impact material"
+          },
+          {
+            "exception": "nonfinite impact velocity"
+          }
+        ]
+      }
+    },
+    {
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/impact-memo-prototype/MemoControls-eager-mutant"
+      ],
+      "actual_exit": 1,
+      "expected_exit": 1,
+      "expected_exit_observed": true,
+      "binary_sha256": "1f470937821d41a68720175d9091673036c0444cdf6157091e4f6b3ea07089e9",
+      "stdout": "MemoControls-eager-mutant.stdout",
+      "stderr": "MemoControls-eager-mutant.stderr",
+      "controls": {
+        "checks": 22,
+        "failures": 1,
+        "physical_and_diagnostic_bits": [
+          {
+            "bodies": [
+              {
+                "angular_velocity": [
+                  0,
+                  0,
+                  3189838876
+                ],
+                "force_accumulator": [
+                  0,
+                  0,
+                  0
+                ],
+                "inverse_inertia_local_columns": [
+                  [
+                    1084227584,
+                    0,
+                    0
+                  ],
+                  [
+                    0,
+                    1084227584,
+                    0
+                  ],
+                  [
+                    0,
+                    0,
+                    1084227584
+                  ]
+                ],
+                "inverse_mass": 1056964608,
+                "linear_velocity": [
+                  1048625152,
+                  1049198078,
+                  0
+                ],
+                "orientation_wxyz": [
+                  1065353216,
+                  0,
+                  0,
+                  0
+                ],
+                "position": [
+                  0,
+                  0,
+                  0
+                ],
+                "torque_accumulator": [
+                  0,
+                  0,
+                  0
+                ]
+              },
+              {
+                "angular_velocity": [
+                  0,
+                  0,
+                  3193609075
+                ],
+                "force_accumulator": [
+                  0,
+                  0,
+                  0
+                ],
+                "inverse_inertia_local_columns": [
+                  [
+                    1092616192,
+                    0,
+                    0
+                  ],
+                  [
+                    0,
+                    1092616192,
+                    0
+                  ],
+                  [
+                    0,
+                    0,
+                    1092616192
+                  ]
+                ],
+                "inverse_mass": 1065353216,
+                "linear_velocity": [
+                  1048526848,
+                  1034569830,
+                  0
+                ],
+                "orientation_wxyz": [
+                  1065353216,
+                  0,
+                  0,
+                  0
+                ],
+                "position": [
+                  1065353216,
+                  0,
+                  0
+                ],
+                "torque_accumulator": [
+                  0,
+                  0,
+                  0
+                ]
+              },
+              {
+                "angular_velocity": [
+                  0,
+                  0,
+                  1024069894
+                ],
+                "force_accumulator": [
+                  0,
+                  0,
+                  0
+                ],
+                "inverse_inertia_local_columns": [
+                  [
+                    1079334229,
+                    0,
+                    0
+                  ],
+                  [
+                    0,
+                    1079334229,
+                    0
+                  ],
+                  [
+                    0,
+                    0,
+                    1079334229
+                  ]
+                ],
+                "inverse_mass": 1051372203,
+                "linear_velocity": [
+                  1048526848,
+                  3151816714,
+                  0
+                ],
+                "orientation_wxyz": [
+                  1065353216,
+                  0,
+                  0,
+                  0
+                ],
+                "position": [
+                  1073741824,
+                  0,
+                  0
+                ],
+                "torque_accumulator": [
+                  0,
+                  0,
+                  0
+                ]
+              }
+            ],
+            "result": {
+              "ambiguous": true,
+              "angular_momentum_after": [
+                0,
+                0,
+                4486234449826021376
+              ],
+              "angular_momentum_before": [
+                0,
+                0,
+                0
+              ],
+              "contacts": 3,
+              "effective_restitution": 0,
+              "energy_budget_satisfied": true,
+              "energy_tolerance": 4540714917795033252,
+              "kinetic_after": 4598500650138887542,
+              "kinetic_before": 4617276111460331684,
+              "material_closing_contacts": 1,
+              "momentum_after": [
+                4609434218513334275,
+                4603579539595122436,
+                0
+              ],
+              "momentum_before": [
+                4609434218815029242,
+                4603579539312869376,
+                0
+              ],
+              "prescribed_boundary_work": 0,
+              "safety_fallback": false
+            },
+            "rows": [
+              {
+                "anchor_a_world_frame": false,
+                "anchor_b_world_frame": false,
+                "body_a": 1,
+                "body_b": 2,
+                "frame_a": 0,
+                "frame_b": 1,
+                "friction": 1053609165,
+                "has_local_anchors": true,
+                "initial_anchor_difference": [
+                  0,
+                  0,
+                  0
+                ],
+                "inverse_inertia_a_columns": [
+                  [
+                    1092616192,
+                    0,
+                    0
+                  ],
+                  [
+                    0,
+                    1092616192,
+                    0
+                  ],
+                  [
+                    0,
+                    0,
+                    1092616192
+                  ]
+                ],
+                "inverse_inertia_b_columns": [
+                  [
+                    1079334229,
+                    0,
+                    0
+                  ],
+                  [
+                    0,
+                    1079334229,
+                    0
+                  ],
+                  [
+                    0,
+                    0,
+                    1079334229
+                  ]
+                ],
+                "local_anchor_a": [
+                  4602678819172646912,
+                  0,
+                  0
+                ],
+                "local_anchor_b": [
+                  13826050856027422720,
+                  0,
+                  0
+                ],
+                "normal": [
+                  3212836864,
+                  0,
+                  0
+                ],
+                "normal_impulse": 0,
+                "normal_mass": 1061158912,
+                "penetration": 2147483648,
+                "point": [
+                  1069547520,
+                  0,
+                  0
+                ],
+                "position_offset_difference": [
+                  0,
+                  0,
+                  0
+                ],
+                "precise_normal": [
+                  13830554455654793216,
+                  0,
+                  0
+                ],
+                "restitution_bias": 0,
+                "signed_separation": 0,
+                "tangent_impulse": [
+                  0,
+                  0,
+                  0
+                ],
+                "velocity_offset_a": [
+                  1056964608,
+                  0,
+                  0
+                ],
+                "velocity_offset_b": [
+                  3204448256,
+                  0,
+                  0
+                ]
+              },
+              {
+                "anchor_a_world_frame": false,
+                "anchor_b_world_frame": false,
+                "body_a": 0,
+                "body_b": 1,
+                "frame_a": 2,
+                "frame_b": 0,
+                "friction": 1053609165,
+                "has_local_anchors": true,
+                "initial_anchor_difference": [
+                  0,
+                  0,
+                  0
+                ],
+                "inverse_inertia_a_columns": [
+                  [
+                    1084227584,
+                    0,
+                    0
+                  ],
+                  [
+                    0,
+                    1084227584,
+                    0
+                  ],
+                  [
+                    0,
+                    0,
+                    1084227584
+                  ]
+                ],
+                "inverse_inertia_b_columns": [
+                  [
+                    1092616192,
+                    0,
+                    0
+                  ],
+                  [
+                    0,
+                    1092616192,
+                    0
+                  ],
+                  [
+                    0,
+                    0,
+                    1092616192
+                  ]
+                ],
+                "local_anchor_a": [
+                  4602678819172646912,
+                  0,
+                  0
+                ],
+                "local_anchor_b": [
+                  13826050856027422720,
+                  0,
+                  0
+                ],
+                "normal": [
+                  3212836864,
+                  0,
+                  0
+                ],
+                "normal_impulse": 1080020992,
+                "normal_mass": 1059760811,
+                "penetration": 2147483648,
+                "point": [
+                  1056964608,
+                  0,
+                  0
+                ],
+                "position_offset_difference": [
+                  0,
+                  0,
+                  0
+                ],
+                "precise_normal": [
+                  13830554455654793216,
+                  0,
+                  0
+                ],
+                "restitution_bias": 0,
+                "signed_separation": 0,
+                "tangent_impulse": [
+                  0,
+                  3179338979,
+                  0
+                ],
+                "velocity_offset_a": [
+                  1056964608,
+                  0,
+                  0
+                ],
+                "velocity_offset_b": [
+                  3204448256,
+                  0,
+                  0
+                ]
+              },
+              {
+                "anchor_a_world_frame": false,
+                "anchor_b_world_frame": false,
+                "body_a": 1,
+                "body_b": 2,
+                "frame_a": 0,
+                "frame_b": 1,
+                "friction": 1053609165,
+                "has_local_anchors": true,
+                "initial_anchor_difference": [
+                  0,
+                  0,
+                  0
+                ],
+                "inverse_inertia_a_columns": [
+                  [
+                    1092616192,
+                    0,
+                    0
+                  ],
+                  [
+                    0,
+                    1092616192,
+                    0
+                  ],
+                  [
+                    0,
+                    0,
+                    1092616192
+                  ]
+                ],
+                "inverse_inertia_b_columns": [
+                  [
+                    1079334229,
+                    0,
+                    0
+                  ],
+                  [
+                    0,
+                    1079334229,
+                    0
+                  ],
+                  [
+                    0,
+                    0,
+                    1079334229
+                  ]
+                ],
+                "local_anchor_a": [
+                  4602678819172646912,
+                  0,
+                  0
+                ],
+                "local_anchor_b": [
+                  13826050856027422720,
+                  0,
+                  0
+                ],
+                "normal": [
+                  3212836864,
+                  0,
+                  0
+                ],
+                "normal_impulse": 1074781184,
+                "normal_mass": 1061158912,
+                "penetration": 2147483648,
+                "point": [
+                  1069547520,
+                  0,
+                  0
+                ],
+                "position_offset_difference": [
+                  0,
+                  0,
+                  0
+                ],
+                "precise_normal": [
+                  13830554455654793216,
+                  0,
+                  0
+                ],
+                "restitution_bias": 0,
+                "signed_separation": 0,
+                "tangent_impulse": [
+                  0,
+                  1017490952,
+                  0
+                ],
+                "velocity_offset_a": [
+                  1056964608,
+                  0,
+                  0
+                ],
+                "velocity_offset_b": [
+                  3204448256,
+                  0,
+                  0
+                ]
+              }
+            ],
+            "saved_order": [
+              1,
+              2,
+              0
+            ]
+          },
+          {
+            "bodies": [
+              {
+                "angular_velocity": [
+                  1046339037,
+                  3189348762,
+                  1026564400
+                ],
+                "force_accumulator": [
+                  0,
+                  0,
+                  0
+                ],
+                "inverse_inertia_local_columns": [
+                  [
+                    1092616192,
+                    0,
+                    0
+                  ],
+                  [
+                    0,
+                    1092616192,
+                    0
+                  ],
+                  [
+                    0,
+                    0,
+                    1092616192
+                  ]
+                ],
+                "inverse_mass": 1065353216,
+                "linear_velocity": [
+                  3207664448,
+                  1051945988,
+                  1015580811
+                ],
+                "orientation_wxyz": [
+                  1065353216,
+                  0,
+                  0,
+                  0
+                ],
+                "position": [
+                  0,
+                  0,
+                  0
+                ],
+                "torque_accumulator": [
+                  0,
+                  0,
+                  0
+                ]
+              },
+              {
+                "angular_velocity": [
+                  3200813193,
+                  1043542835,
+                  3187905910
+                ],
+                "force_accumulator": [
+                  0,
+                  0,
+                  0
+                ],
+                "inverse_inertia_local_columns": [
+                  [
+                    1084227584,
+                    0,
+                    0
+                  ],
+                  [
+                    0,
+                    1084227584,
+                    0
+                  ],
+                  [
+                    0,
+                    0,
+                    1084227584
+                  ]
+                ],
+                "inverse_mass": 1056964608,
+                "linear_velocity": [
+                  1051792192,
+                  1051085310,
+                  3154675851
+                ],
+                "orientation_wxyz": [
+                  1065353216,
+                  2147483648,
+                  2147483648,
+                  2147483648
+                ],
+                "position": [
+                  1065353216,
+                  0,
+                  0
+                ],
+                "torque_accumulator": [
+                  0,
+                  0,
+                  0
+                ]
+              }
+            ],
+            "result": {
+              "ambiguous": false,
+              "angular_momentum_after": [
+                13811699385801847604,
+                4585445045088917914,
+                4603833241313057177
+              ],
+              "angular_momentum_before": [
+                13812179769303970612,
+                4584304132821824308,
+                4584304133036572672
+              ],
+              "contacts": 1,
+              "effective_restitution": 1060320051,
+              "energy_budget_satisfied": true,
+              "energy_tolerance": 4531868722236131116,
+              "kinetic_after": 4603125122589043567,
+              "kinetic_before": 4608429915901429548,
+              "material_closing_contacts": 1,
+              "momentum_after": [
+                0,
+                4607182418800017408,
+                0
+              ],
+              "momentum_before": [
+                0,
+                4607182418800017408,
+                0
+              ],
+              "prescribed_boundary_work": 0,
+              "safety_fallback": false
+            },
+            "rows": [
+              {
+                "anchor_a_world_frame": false,
+                "anchor_b_world_frame": false,
+                "body_a": 0,
+                "body_b": 1,
+                "frame_a": 0,
+                "frame_b": 1,
+                "friction": 1053609165,
+                "has_local_anchors": true,
+                "initial_anchor_difference": [
+                  13824249416176474521,
+                  4596373779694328218,
+                  0
+                ],
+                "inverse_inertia_a_columns": [
+                  [
+                    1092616192,
+                    0,
+                    0
+                  ],
+                  [
+                    0,
+                    1092616192,
+                    0
+                  ],
+                  [
+                    0,
+                    0,
+                    1092616192
+                  ]
+                ],
+                "inverse_inertia_b_columns": [
+                  [
+                    1084227584,
+                    0,
+                    0
+                  ],
+                  [
+                    0,
+                    1084227584,
+                    0
+                  ],
+                  [
+                    0,
+                    0,
+                    1084227584
+                  ]
+                ],
+                "local_anchor_a": [
+                  4599075939470750515,
+                  4591870180066957722,
+                  0
+                ],
+                "local_anchor_b": [
+                  13822447976325526323,
+                  13815242216921733530,
+                  0
+                ],
+                "normal": [
+                  3212836864,
+                  0,
+                  0
+                ],
+                "normal_impulse": 1071155616,
+                "normal_mass": 1058744010,
+                "penetration": 2147483648,
+                "point": [
+                  1056964608,
+                  0,
+                  0
+                ],
+                "position_offset_difference": [
+                  0,
+                  0,
+                  0
+                ],
+                "precise_normal": [
+                  13830554455654793216,
+                  0,
+                  0
+                ],
+                "restitution_bias": 1065596486,
+                "signed_separation": 0,
+                "tangent_impulse": [
+                  0,
+                  3206957566,
+                  1015580811
+                ],
+                "velocity_offset_a": [
+                  1050253722,
+                  1036831949,
+                  0
+                ],
+                "velocity_offset_b": [
+                  3197737370,
+                  3184315597,
+                  0
+                ]
+              }
+            ],
+            "saved_order": [
+              0,
+              1
+            ]
+          },
+          {
+            "bodies": [
+              {
+                "angular_velocity": [
+                  1046339037,
+                  3189348763,
+                  1026564400
+                ],
+                "force_accumulator": [
+                  0,
+                  0,
+                  0
+                ],
+                "inverse_inertia_local_columns": [
+                  [
+                    1092616192,
+                    0,
+                    0
+                  ],
+                  [
+                    0,
+                    1092616192,
+                    0
+                  ],
+                  [
+                    0,
+                    0,
+                    1092616192
+                  ]
+                ],
+                "inverse_mass": 1065353216,
+                "linear_velocity": [
+                  3207664448,
+                  1051945988,
+                  1015580809
+                ],
+                "orientation_wxyz": [
+                  1064336059,
+                  1035710330,
+                  1044098938,
+                  1049412507
+                ],
+                "position": [
+                  0,
+                  0,
+                  0
+                ],
+                "torque_accumulator": [
+                  0,
+                  0,
+                  0
+                ]
+              },
+              {
+                "angular_velocity": [
+                  3200813194,
+                  1043542834,
+                  3187905910
+                ],
+                "force_accumulator": [
+                  0,
+                  0,
+                  0
+                ],
+                "inverse_inertia_local_columns": [
+                  [
+                    1084227584,
+                    0,
+                    0
+                  ],
+                  [
+                    0,
+                    1084227584,
+                    0
+                  ],
+                  [
+                    0,
+                    0,
+                    1084227584
+                  ]
+                ],
+                "inverse_mass": 1056964608,
+                "linear_velocity": [
+                  1051792192,
+                  1051085310,
+                  3154675849
+                ],
+                "orientation_wxyz": [
+                  1065096970,
+                  2147483648,
+                  3190966631,
+                  2147483648
+                ],
+                "position": [
+                  1065353216,
+                  0,
+                  0
+                ],
+                "torque_accumulator": [
+                  0,
+                  0,
+                  0
+                ]
+              }
+            ],
+            "result": {
+              "ambiguous": false,
+              "angular_momentum_after": [
+                13811699386682058342,
+                4585445044049449674,
+                4603833241318694322
+              ],
+              "angular_momentum_before": [
+                13812179769411344800,
+                4584304132770284674,
+                4584304133156831759
+              ],
+              "contacts": 1,
+              "effective_restitution": 1060320051,
+              "energy_budget_satisfied": true,
+              "energy_tolerance": 4531868722236117694,
+              "kinetic_after": 4603125122605861364,
+              "kinetic_before": 4608429915901416126,
+              "material_closing_contacts": 1,
+              "momentum_after": [
+                0,
+                4607182418800017408,
+                0
+              ],
+              "momentum_before": [
+                0,
+                4607182418800017408,
+                0
+              ],
+              "prescribed_boundary_work": 0,
+              "safety_fallback": false
+            },
+            "rows": [
+              {
+                "anchor_a_world_frame": false,
+                "anchor_b_world_frame": false,
+                "body_a": 0,
+                "body_b": 1,
+                "frame_a": 0,
+                "frame_b": 1,
+                "friction": 1053609165,
+                "has_local_anchors": true,
+                "initial_anchor_difference": [
+                  13824249416176474522,
+                  4596373779694328219,
+                  0
+                ],
+                "inverse_inertia_a_columns": [
+                  [
+                    1092616192,
+                    3037724672,
+                    0
+                  ],
+                  [
+                    3003121664,
+                    1092616192,
+                    887095296
+                  ],
+                  [
+                    880803840,
+                    887095296,
+                    1092616192
+                  ]
+                ],
+                "inverse_inertia_b_columns": [
+                  [
+                    1084227584,
+                    0,
+                    0
+                  ],
+                  [
+                    0,
+                    1084227584,
+                    0
+                  ],
+                  [
+                    0,
+                    0,
+                    1084227584
+                  ]
+                ],
+                "local_anchor_a": [
+                  4598886851005646447,
+                  13812421270936972490,
+                  4592683183002582122
+                ],
+                "local_anchor_b": [
+                  13822120327115913148,
+                  13815242216921733530,
+                  4592076937704400491
+                ],
+                "normal": [
+                  3212836864,
+                  0,
+                  0
+                ],
+                "normal_impulse": 1071155616,
+                "normal_mass": 1058744010,
+                "penetration": 2147483648,
+                "point": [
+                  1056964608,
+                  0,
+                  0
+                ],
+                "position_offset_difference": [
+                  0,
+                  0,
+                  0
+                ],
+                "precise_normal": [
+                  13830554455654793216,
+                  0,
+                  0
+                ],
+                "restitution_bias": 1065596486,
+                "signed_separation": 0,
+                "tangent_impulse": [
+                  0,
+                  3206957566,
+                  1015580809
+                ],
+                "velocity_offset_a": [
+                  1050253722,
+                  1036831949,
+                  0
+                ],
+                "velocity_offset_b": [
+                  3197737370,
+                  3184315597,
+                  0
+                ]
+              }
+            ],
+            "saved_order": [
+              0,
+              1
+            ]
+          },
+          {
+            "bodies": [
+              {
+                "angular_velocity": [
+                  1046339036,
+                  3189348764,
+                  1026564400
+                ],
+                "force_accumulator": [
+                  0,
+                  0,
+                  0
+                ],
+                "inverse_inertia_local_columns": [
+                  [
+                    1092616192,
+                    0,
+                    0
+                  ],
+                  [
+                    0,
+                    1092616192,
+                    0
+                  ],
+                  [
+                    0,
+                    0,
+                    1092616192
+                  ]
+                ],
+                "inverse_mass": 1065353216,
+                "linear_velocity": [
+                  3207664448,
+                  1051945988,
+                  1015580809
+                ],
+                "orientation_wxyz": [
+                  1062422834,
+                  3189409633,
+                  3197798241,
+                  3202861840
+                ],
+                "position": [
+                  0,
+                  0,
+                  0
+                ],
+                "torque_accumulator": [
+                  0,
+                  0,
+                  0
+                ]
+              },
+              {
+                "angular_velocity": [
+                  3200813193,
+                  1043542835,
+                  3187905910
+                ],
+                "force_accumulator": [
+                  0,
+                  0,
+                  0
+                ],
+                "inverse_inertia_local_columns": [
+                  [
+                    1084227584,
+                    0,
+                    0
+                  ],
+                  [
+                    0,
+                    1084227584,
+                    0
+                  ],
+                  [
+                    0,
+                    0,
+                    1084227584
+                  ]
+                ],
+                "inverse_mass": 1056964608,
+                "linear_velocity": [
+                  1051792192,
+                  1051085310,
+                  3154675849
+                ],
+                "orientation_wxyz": [
+                  1064603887,
+                  0,
+                  1050103405,
+                  0
+                ],
+                "position": [
+                  1065353216,
+                  0,
+                  0
+                ],
+                "torque_accumulator": [
+                  0,
+                  0,
+                  0
+                ]
+              }
+            ],
+            "result": {
+              "ambiguous": false,
+              "angular_momentum_after": [
+                13811699385707816596,
+                4585445043989004856,
+                4603833241325942083
+              ],
+              "angular_momentum_before": [
+                13812179769114992030,
+                4584304131859751564,
+                4584304133311450674
+              ],
+              "contacts": 1,
+              "effective_restitution": 1060320051,
+              "energy_budget_satisfied": true,
+              "energy_tolerance": 4531868722238117538,
+              "kinetic_after": 4603125122592316904,
+              "kinetic_before": 4608429915903415970,
+              "material_closing_contacts": 1,
+              "momentum_after": [
+                0,
+                4607182418800017408,
+                0
+              ],
+              "momentum_before": [
+                0,
+                4607182418800017408,
+                0
+              ],
+              "prescribed_boundary_work": 0,
+              "safety_fallback": false
+            },
+            "rows": [
+              {
+                "anchor_a_world_frame": false,
+                "anchor_b_world_frame": false,
+                "body_a": 0,
+                "body_b": 1,
+                "frame_a": 0,
+                "frame_b": 1,
+                "friction": 1053609165,
+                "has_local_anchors": true,
+                "initial_anchor_difference": [
+                  13824249416176474520,
+                  4596373779694328220,
+                  13578352876522045440
+                ],
+                "inverse_inertia_a_columns": [
+                  [
+                    1092616191,
+                    880803840,
+                    0
+                  ],
+                  [
+                    872415232,
+                    1092616192,
+                    897581056
+                  ],
+                  [
+                    880803840,
+                    897581056,
+                    1092616192
+                  ]
+                ],
+                "inverse_inertia_b_columns": [
+                  [
+                    1084227584,
+                    0,
+                    0
+                  ],
+                  [
+                    0,
+                    1084227584,
+                    0
+                  ],
+                  [
+                    0,
+                    0,
+                    1084227584
+                  ]
+                ],
+                "local_anchor_a": [
+                  4588339487747531586,
+                  4599183481419972801,
+                  13811636477593046894
+                ],
+                "local_anchor_b": [
+                  13821460811915794126,
+                  13815242216921733530,
+                  13818643073910972319
+                ],
+                "normal": [
+                  3212836864,
+                  0,
+                  0
+                ],
+                "normal_impulse": 1071155616,
+                "normal_mass": 1058744010,
+                "penetration": 2147483648,
+                "point": [
+                  1056964608,
+                  0,
+                  0
+                ],
+                "position_offset_difference": [
+                  0,
+                  0,
+                  0
+                ],
+                "precise_normal": [
+                  13830554455654793216,
+                  0,
+                  0
+                ],
+                "restitution_bias": 1065596486,
+                "signed_separation": 0,
+                "tangent_impulse": [
+                  0,
+                  3206957566,
+                  1015580809
+                ],
+                "velocity_offset_a": [
+                  1050253722,
+                  1036831949,
+                  595591168
+                ],
+                "velocity_offset_b": [
+                  3197737370,
+                  3184315597,
+                  603979776
+                ]
+              }
+            ],
+            "saved_order": [
+              0,
+              1
+            ]
+          },
+          {
+            "bodies": [
+              {
+                "angular_velocity": [
+                  0,
+                  0,
+                  1045320424
+                ],
+                "force_accumulator": [
+                  0,
+                  0,
+                  0
+                ],
+                "inverse_inertia_local_columns": [
+                  [
+                    1092616192,
+                    0,
+                    0
+                  ],
+                  [
+                    0,
+                    1092616192,
+                    0
+                  ],
+                  [
+                    0,
+                    0,
+                    1092616192
+                  ]
+                ],
+                "inverse_mass": 1065353216,
+                "linear_velocity": [
+                  1056977155,
+                  3196135045,
+                  0
+                ],
+                "orientation_wxyz": [
+                  1065353216,
+                  0,
+                  0,
+                  0
+                ],
+                "position": [
+                  0,
+                  0,
+                  0
+                ],
+                "torque_accumulator": [
+                  0,
+                  0,
+                  0
+                ]
+              },
+              {
+                "angular_velocity": [
+                  0,
+                  0,
+                  1046314079
+                ],
+                "force_accumulator": [
+                  0,
+                  0,
+                  0
+                ],
+                "inverse_inertia_local_columns": [
+                  [
+                    1092616192,
+                    0,
+                    0
+                  ],
+                  [
+                    0,
+                    1092616192,
+                    0
+                  ],
+                  [
+                    0,
+                    0,
+                    1092616192
+                  ]
+                ],
+                "inverse_mass": 1065353216,
+                "linear_velocity": [
+                  1056976902,
+                  3174117451,
+                  0
+                ],
+                "orientation_wxyz": [
+                  1065353216,
+                  0,
+                  0,
+                  0
+                ],
+                "position": [
+                  1065353216,
+                  0,
+                  0
+                ],
+                "torque_accumulator": [
+                  0,
+                  0,
+                  0
+                ]
+              },
+              {
+                "angular_velocity": [
+                  0,
+                  0,
+                  0
+                ],
+                "force_accumulator": [
+                  0,
+                  0,
+                  0
+                ],
+                "inverse_inertia_local_columns": [
+                  [
+                    1084227584,
+                    0,
+                    0
+                  ],
+                  [
+                    0,
+                    1084227584,
+                    0
+                  ],
+                  [
+                    0,
+                    0,
+                    1084227584
+                  ]
+                ],
+                "inverse_mass": 1056964608,
+                "linear_velocity": [
+                  1050228882,
+                  3196135045,
+                  0
+                ],
+                "orientation_wxyz": [
+                  1065353216,
+                  0,
+                  0,
+                  0
+                ],
+                "position": [
+                  0,
+                  1065353216,
+                  0
+                ],
+                "torque_accumulator": [
+                  0,
+                  0,
+                  0
+                ]
+              }
+            ],
+            "result": {
+              "ambiguous": true,
+              "angular_momentum_after": [
+                0,
+                0,
+                13826951576872288256
+              ],
+              "angular_momentum_before": [
+                0,
+                0,
+                13826951576167645184
+              ],
+              "contacts": 1,
+              "effective_restitution": 0,
+              "energy_budget_satisfied": true,
+              "energy_tolerance": 4530621225134718976,
+              "kinetic_after": 4601616776515569476,
+              "kinetic_before": 4604930619093706344,
+              "material_closing_contacts": 1,
+              "momentum_after": [
+                4609884578952249344,
+                13828753015475011584,
+                0
+              ],
+              "momentum_before": [
+                4609884578683813888,
+                13828753015911219200,
+                0
+              ],
+              "prescribed_boundary_work": 0,
+              "safety_fallback": false
+            },
+            "rows": [
+              {
+                "anchor_a_world_frame": false,
+                "anchor_b_world_frame": false,
+                "body_a": 0,
+                "body_b": 1,
+                "frame_a": 0,
+                "frame_b": 1,
+                "friction": 1053609165,
+                "has_local_anchors": true,
+                "initial_anchor_difference": [
+                  0,
+                  0,
+                  0
+                ],
+                "inverse_inertia_a_columns": [
+                  [
+                    1092616192,
+                    0,
+                    0
+                  ],
+                  [
+                    0,
+                    1092616192,
+                    0
+                  ],
+                  [
+                    0,
+                    0,
+                    1092616192
+                  ]
+                ],
+                "inverse_inertia_b_columns": [
+                  [
+                    1092616192,
+                    0,
+                    0
+                  ],
+                  [
+                    0,
+                    1092616192,
+                    0
+                  ],
+                  [
+                    0,
+                    0,
+                    1092616192
+                  ]
+                ],
+                "local_anchor_a": [
+                  4602678819172646912,
+                  0,
+                  0
+                ],
+                "local_anchor_b": [
+                  13826050856027422720,
+                  0,
+                  0
+                ],
+                "normal": [
+                  3212836864,
+                  0,
+                  0
+                ],
+                "normal_impulse": 1056976902,
+                "normal_mass": 1056964608,
+                "penetration": 2147483648,
+                "point": [
+                  1056964608,
+                  0,
+                  0
+                ],
+                "position_offset_difference": [
+                  0,
+                  0,
+                  0
+                ],
+                "precise_normal": [
+                  13830554455654793216,
+                  0,
+                  0
+                ],
+                "restitution_bias": 0,
+                "signed_separation": 0,
+                "tangent_impulse": [
+                  0,
+                  1026633803,
+                  0
+                ],
+                "velocity_offset_a": [
+                  1056964608,
+                  0,
+                  0
+                ],
+                "velocity_offset_b": [
+                  3204448256,
+                  0,
+                  0
+                ]
+              }
+            ],
+            "saved_order": [
+              0,
+              1,
+              2
+            ]
+          },
+          {
+            "static_skip": true
+          },
+          {
+            "joint_only_lazy_error": "contact orientation must be finite and nonzero"
+          },
+          {
+            "exception": "invalid impact interval"
+          },
+          {
+            "exception": "invalid impact contact"
+          },
+          {
+            "exception": "invalid impact contact"
+          },
+          {
+            "exception": "impact requires actual contact, not positive separation"
+          },
+          {
+            "exception": "invalid impact material"
+          },
+          {
+            "exception": "nonfinite impact velocity"
+          }
+        ]
+      }
+    },
+    {
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/impact-memo-prototype/MemoReplay-baseline",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/contact-system-research/event-3470.json",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/impact-memo-prototype/replay-baseline.json"
+      ],
+      "actual_exit": 0,
+      "expected_exit": 0,
+      "expected_exit_observed": true,
+      "binary_sha256": "bb5d94f4e0f992840bc07e68a5e91aee2356edab1707836e094f8c0fe9bb036f",
+      "stdout": "MemoReplay-baseline.stdout",
+      "stderr": "MemoReplay-baseline.stderr",
+      "exact_parity_flags": {
+        "all_32_repetitions_exact_body_row_result_bits": true,
+        "all_prepared_and_solved_rows_exact_bit_parity": true,
+        "bodies_exact_bit_parity": true,
+        "result_exact_bit_parity": true
+      },
+      "timing_ms": {
+        "samples": 32,
+        "mean": 3.48954175,
+        "median": 3.4106009999999998,
+        "p95": 3.930158,
+        "maximum": 4.083555,
+        "cold_first": 4.107165
+      },
+      "output_sha256": "5fd1da278c59dac07c4cb195874e5506592cc4728309dfa4370f7eb949917e77"
+    },
+    {
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/impact-memo-prototype/MemoReplay-candidate",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/contact-system-research/event-3470.json",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/impact-memo-prototype/replay-candidate.json"
+      ],
+      "actual_exit": 0,
+      "expected_exit": 0,
+      "expected_exit_observed": true,
+      "binary_sha256": "e2944f58e26f36eae8a9339abc9c4d80c8479e72dd7264ba3dab623ded0b4b7b",
+      "stdout": "MemoReplay-candidate.stdout",
+      "stderr": "MemoReplay-candidate.stderr",
+      "exact_parity_flags": {
+        "all_32_repetitions_exact_body_row_result_bits": true,
+        "all_prepared_and_solved_rows_exact_bit_parity": true,
+        "bodies_exact_bit_parity": true,
+        "result_exact_bit_parity": true
+      },
+      "timing_ms": {
+        "samples": 32,
+        "mean": 3.36025825,
+        "median": 3.209201,
+        "p95": 4.238707,
+        "maximum": 4.366969,
+        "cold_first": 3.848951
+      },
+      "output_sha256": "59123170de6929bda587fd560cc7a82e81a16986dbf1dac909e72cca37e22fb9"
+    }
+  ],
+  "scope": "Bounded exact captured-event cost and parity. Not whole-world FPS or a new accepted physical endpoint.",
+  "all_small_physical_and_diagnostic_output_bits_exact": true,
+  "all_expected_exits_observed": true,
+  "passed": true
+}

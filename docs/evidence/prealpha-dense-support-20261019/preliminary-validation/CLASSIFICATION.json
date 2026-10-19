@@ -1,0 +1,10 @@
+{
+  "schema": "judas.dense.preliminary.validation-disposition.v1",
+  "scope": "Preserved first final-support source-identity preflight attempt, before root identity refresh; not final candidate qualification.",
+  "unavailable_wrapped_cases": 18,
+  "reason": "Tracked documentation changed while the production build was running, invalidating its frozen source_fingerprint. These wrapper preflight refusals were not executed physics failures or passes.",
+  "completed_direct_negative_tooling_checks": 13,
+  "status": "Root refreshing source identity and relinking, then rerunning the18 previously unavailable wrappers. Final receipts will be separate.",
+  "unavailable_is_neither_pass_nor_physics_failure": true,
+  "original_raw_receipts_preserved": true
+}

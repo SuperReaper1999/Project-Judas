@@ -1,0 +1,58 @@
+[
+  {
+    "argv": [
+      "cmake",
+      "-S",
+      ".",
+      "-B",
+      "build"
+    ],
+    "exit": 0,
+    "seconds": 2.360633271999177,
+    "log_sha256": "3d7cebf2f73479c5f1dde366a5467fdcb84b8a5c9e449b22f34e6538cc4fed6a"
+  },
+  {
+    "argv": [
+      "cmake",
+      "--build",
+      "build",
+      "--target",
+      "judas_contact_sat_filter_tests",
+      "judas_contact_sphere_filter_tests",
+      "judas_impact_support_sets_tests",
+      "judas_physics_stress_live_benchmark",
+      "judas_physics_scaling_diagnostics",
+      "judas_impact_timing_tests",
+      "judas_impact_robustness_tests",
+      "judas_rigid_contact_tests",
+      "judas_contact_lifecycle_tests",
+      "judas_primitive_contact_boolean_tests",
+      "judas_collision_geometry_tests",
+      "judas_physics_continuation_tests",
+      "judas_sphere_impact_bounds_tests",
+      "judas_character_motor_tests",
+      "judas_ragdoll_tests",
+      "judas_joint_tests",
+      "judas_rigid_motion_geometry_tests",
+      "judas_contact_sat_workspace_tests",
+      "judas_native_mesh_growth_tests",
+      "judas_clip_polygon_tests",
+      "judas_impact_mesh_cost_tests",
+      "judas_kinematic_tests",
+      "judas_impact_solver_tests",
+      "judas",
+      "judas_editor",
+      "judas_export",
+      "judas_support_continuation_tests",
+      "judas_character_lab_tests",
+      "judas_balance_lab_tests",
+      "judas_collision_continuity_tests",
+      "judas_prealpha_lifecycle_tests",
+      "judas_origin_physics_tests",
+      "-j3"
+    ],
+    "exit": 0,
+    "seconds": 25.888528786999814,
+    "log_sha256": "95a3387807b4a933015651761ad60709d2b0a3c59a053f5629153eed860f1dd0"
+  }
+]

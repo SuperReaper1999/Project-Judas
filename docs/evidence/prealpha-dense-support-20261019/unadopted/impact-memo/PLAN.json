@@ -1,0 +1,16 @@
+{
+  "safe_checkpoint": "8f6bd18b876158c131bee61fa0dc71625d912c30",
+  "base_archive": "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/candidate-fastpaths-final/libjudas_engine.a",
+  "base_archive_sha256": "edd3873e4c1bc5578b7ee3f94fdbe35eaaf01847d637118133acaee9af8f9711",
+  "source_original_sha256": "9c7a88edefcccdb8fe63ceeaeea0f8f11c92681320625574111be030c68d8d6f",
+  "source_candidate_sha256": "ee39f289cd36ed63d391e14f52ad8946e5dffa765cc3ba7679df396763b0c555",
+  "scope": "Single copied TU; local membership and lazy rotation lookup, unchanged m_saved order, budget/solver arithmetic, iteration policy, public layouts. No production edits.",
+  "critical_unchanged_inputs": {
+    "src/ImpactSolver.h": "704d0773d919b3476d30928e60ed1c4d02d10f686a10868b08efa02fa1b4f9e0",
+    "src/ContactSolver.cpp": "f7643cc828af1436551827898c674c0c728879d49187f313e22af950430f10e1",
+    "src/ContactSolver.h": "75e263741d45ede140f2982c365b50f18fb34bb4fc3600ff99abf45f659aa32b",
+    "src/JointSolver.cpp": "936232c5088fc956a6923ba64a4faf3e8561acd3c553695b813e3347c3a78685",
+    "src/JointSolver.h": "2798c1f8fd2efe852d479b28194f277dfddf2f229c2bcd9986b96dc682c2b4c6",
+    "tests/ImpactSolverTests.cpp": "69ec881500d0b63d8a442e4d1e0d354866fe340d5bd09ddbf488229e978a80ee"
+  }
+}

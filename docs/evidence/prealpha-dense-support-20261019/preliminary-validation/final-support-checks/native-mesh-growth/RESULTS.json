@@ -1,0 +1,107 @@
+{
+  "format": 1,
+  "startedUtc": "2026-10-19T13:00:53.679286+00:00",
+  "sourceRevision": "8f6bd18b876158c131bee61fa0dc71625d912c30",
+  "trackedWorktreeStatus": "M CMakeLists.txt\n M docs/PREALPHA_DENSE_SCALABILITY.md\n M src/physics/WorldCCDSearch.cpp\n M tools/validation/suites.json",
+  "manifestSha256": "30933cadb31667a2904f27c6bd89c267ba7f5425e100ac099bc035d416a47523",
+  "trackedDiffSha256": "1d2d97d86dcf831a777741e57bc266835533f4d3415922a05ea49e0092f513fc",
+  "platform": "Linux-7.0.0-38-generic-x86_64-with-glibc2.43",
+  "machine": "x86_64",
+  "cpuCount": 8,
+  "groups": [],
+  "tests": [
+    {
+      "status": "unavailable",
+      "exit": null,
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_native_mesh_growth_tests"
+      ],
+      "error": "stale test binary: source_fingerprint differs; reconfigure and rebuild focused targets",
+      "name": "native-mesh-growth"
+    }
+  ],
+  "knownFindings": [
+    {
+      "id": "CCD-MESH-ARRIVAL",
+      "status": "resolved-first-arrival",
+      "scheduled": true,
+      "reason": "Pass2 finite swept-SAT bounds correct the validated first-arrival contract; it now runs in the ordinary collision group. This does not close later curved-sheet continuation.",
+      "evidence": "docs/evidence/prealpha-pass2/physics"
+    },
+    {
+      "id": "CCD-MESH-CONTINUATION",
+      "status": "resolved-original-fixtures-bounded-ccd",
+      "scheduled": true,
+      "reason": "Original unchanged 90-step glancing cases and rotated control pass with native per-feature growth scheduling. This is not universal CCD: bounded sampling, native rear selection and deep initial-overlap limitations remain. Corrected mesh support costs more than the old missed-collision path.",
+      "evidence": "docs/evidence/prealpha-ccd-continuation-20261019"
+    },
+    {
+      "id": "FLU-001",
+      "status": "deferred-failing",
+      "scheduled": false,
+      "reason": "Legacy PBF settling contract retained unchanged; separate fluid review required.",
+      "evidence": "docs/evidence/m78-completion/FINDINGS_FINAL.json"
+    },
+    {
+      "id": "LEGACY-CONTINUATION",
+      "status": "documented-incompatible-history",
+      "scheduled": false,
+      "reason": "Original a106 snapshot lacks historical continuation data. New-format passes do not certify that snapshot.",
+      "evidence": "docs/evidence/m78-cold-boundary"
+    },
+    {
+      "id": "DENSE-CCD-TAIL",
+      "status": "open-performance-limit",
+      "scheduled": false,
+      "reason": "Focused correctness checks do not certify dense-pile latency; matched profiling is reported separately.",
+      "evidence": "docs/evidence/m91/REPORT.md"
+    },
+    {
+      "id": "LIQUID-BAKE-ROTATION",
+      "status": "resolved-baking",
+      "scheduled": true,
+      "reason": "Baker and runtime use the same normalized owner/field frames and oriented gravity volumes; both original bake-only runtime-publication cases pass unchanged equivalence tolerances. Original full integration exposes separate retained exact-total comparison failure.",
+      "evidence": "docs/evidence/prealpha-liquid-rotation/REPORT.md"
+    },
+    {
+      "id": "LIQUID-BAKE-KNOTS",
+      "status": "resolved-baking",
+      "scheduled": true,
+      "reason": "Positive tetrahedral density is integrated into one monotone cumulative curve, including shared endpoints; unchanged strict Surface1 decoder accepts both original rotated bakes. A later origin sampling limitation remains separately failed.",
+      "evidence": "docs/evidence/prealpha-liquid-rotation/REPORT.md"
+    },
+    {
+      "id": "LIQUID-ORIGIN-GRID-QUERY",
+      "status": "open-query-continuity-failing",
+      "scheduled": false,
+      "reason": "The original half-turn fixture now bakes and publishes, then fails its unchanged post-512m-origin query comparison: float translation crosses a discontinuous disturbed-surface cell boundary. Conserved quantities and wave bytes remain unchanged. This full integration failure is preserved, not counted as a baking pass.",
+      "evidence": "docs/evidence/prealpha-liquid-rotation/REPORT.md"
+    },
+    {
+      "id": "LIQUID-ORIGIN-TOTAL-IDENTITY",
+      "status": "resolved-oracle-causal-baseline",
+      "scheduled": true,
+      "reason": "Pass3 preserves the original failed test and demonstrates its causal-baseline error. Current atomicity compares the immediate pre-request total with the same exact equality and every physical participant byte; earlier legitimate paired-flow conservation tolerance and liquid runtime are unchanged.",
+      "evidence": "docs/evidence/prealpha-pass3/integration/REPORT.md"
+    }
+  ],
+  "humanAcceptance": "not-established",
+  "scope": "explicit manifest subset",
+  "expectedSourceIdentity": {
+    "source_revision": "8f6bd18b876158c131bee61fa0dc71625d912c30",
+    "source_fingerprint": "8854258fe768b88461c2cd7e01e777c384af5c87e9174abd8cf8ecf5e5bf8f8b",
+    "source_dirty": true,
+    "source_untracked_fingerprint": "5bd789ffb033fcf9c82c05bc60b75b64ee57c88a25646d93f400652acdeac301"
+  },
+  "passed": false,
+  "finishedUtc": "2026-10-19T13:00:53.821182+00:00",
+  "sourceRevisionAfter": "8f6bd18b876158c131bee61fa0dc71625d912c30",
+  "trackedWorktreeStatusAfter": "M CMakeLists.txt\n M docs/PREALPHA_DENSE_SCALABILITY.md\n M src/physics/WorldCCDSearch.cpp\n M tools/validation/suites.json",
+  "trackedDiffSha256After": "1d2d97d86dcf831a777741e57bc266835533f4d3415922a05ea49e0092f513fc",
+  "expectedSourceIdentityAfter": {
+    "source_revision": "8f6bd18b876158c131bee61fa0dc71625d912c30",
+    "source_fingerprint": "8854258fe768b88461c2cd7e01e777c384af5c87e9174abd8cf8ecf5e5bf8f8b",
+    "source_dirty": true,
+    "source_untracked_fingerprint": "5bd789ffb033fcf9c82c05bc60b75b64ee57c88a25646d93f400652acdeac301"
+  }
+}

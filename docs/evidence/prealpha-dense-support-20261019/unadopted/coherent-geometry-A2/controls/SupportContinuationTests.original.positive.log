@@ -1,0 +1,4 @@
+FAIL closing boxes exceeding unchanged penetration allowance must not be certified as safe support
+FAIL closing boxes exceeding unchanged penetration allowance must not be certified as safe support
+FAIL closing boxes exceeding unchanged penetration allowance must not be certified as safe support
+support_continuation checks=9 failures=3

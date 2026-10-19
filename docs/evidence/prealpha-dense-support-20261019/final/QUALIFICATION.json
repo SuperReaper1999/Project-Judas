@@ -1,0 +1,1492 @@
+{
+  "schema": "judas.dense.support.final-qualification.v1",
+  "utc": "2026-10-19T13:10:57.279395+00:00",
+  "focused_invocations": [
+    {
+      "name": "judas_impact_robustness_tests",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_impact_robustness_tests"
+      ],
+      "exit": 0,
+      "expected_exit": 0,
+      "pass_expected": true,
+      "seconds": 0.7185559219997231,
+      "log_sha256": "e35fffddbd794c7517c54055943a2dc3babe5b19f40450eafbca4271cf7a4c61"
+    },
+    {
+      "name": "judas_primitive_contact_boolean_tests",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_primitive_contact_boolean_tests"
+      ],
+      "exit": 0,
+      "expected_exit": 0,
+      "pass_expected": true,
+      "seconds": 0.1167449629992916,
+      "log_sha256": "96947ae737e3661873c57c23a99eb1f8e7a3857436c5872732702f88fdd2b818"
+    },
+    {
+      "name": "judas_sphere_impact_bounds_tests",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_sphere_impact_bounds_tests"
+      ],
+      "exit": 0,
+      "expected_exit": 0,
+      "pass_expected": true,
+      "seconds": 0.016149496999787516,
+      "log_sha256": "16f32824c21942520d6434232fcd3790d3f78c288930999cbda58d45d791375d"
+    },
+    {
+      "name": "judas_ragdoll_tests",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_ragdoll_tests"
+      ],
+      "exit": 0,
+      "expected_exit": 0,
+      "pass_expected": true,
+      "seconds": 0.26862645900109783,
+      "log_sha256": "73108a4d5d0598754a6056517854163034237994bdf3f8044d1012ff5c7c5231"
+    },
+    {
+      "name": "judas_joint_tests",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_joint_tests"
+      ],
+      "exit": 0,
+      "expected_exit": 0,
+      "pass_expected": true,
+      "seconds": 0.032120935999046196,
+      "log_sha256": "b42e210926707133c63078e1b5ac0dbf94a708d1e183ec679772be581b25ad08"
+    },
+    {
+      "name": "judas_rigid_motion_geometry_tests",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_rigid_motion_geometry_tests"
+      ],
+      "exit": 0,
+      "expected_exit": 0,
+      "pass_expected": true,
+      "seconds": 0.003641912999228225,
+      "log_sha256": "cd2ab7a2650f03d488c2456b504ccfa27e9f860da5b5338383de0b1f52ced8d7"
+    },
+    {
+      "name": "judas_contact_sat_workspace_tests",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_contact_sat_workspace_tests"
+      ],
+      "exit": 0,
+      "expected_exit": 0,
+      "pass_expected": true,
+      "seconds": 0.06414722999943478,
+      "log_sha256": "63c9d744278da3e7bc7dc41c5bda89cd2582b0ed5bb7083ff56b11c5119850da"
+    },
+    {
+      "name": "judas_kinematic_tests",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_kinematic_tests"
+      ],
+      "exit": 0,
+      "expected_exit": 0,
+      "pass_expected": true,
+      "seconds": 0.031977380998796434,
+      "log_sha256": "87fc32d0fa04c9fde088e7feeb50610f7a2eed7ca2e27f4964aae2b6b3b8e98d"
+    },
+    {
+      "name": "sat-negative",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_contact_sat_filter_tests",
+        "--omit-bound"
+      ],
+      "exit": 1,
+      "expected_exit": 1,
+      "pass_expected": true,
+      "seconds": 0.7154999730009877,
+      "log_sha256": "fe5cc7839fd776477cd54fd761197735ce3a0dc7af6b5b315703aa95e8792a20"
+    },
+    {
+      "name": "sphere-negative",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_contact_sphere_filter_tests",
+        "--omit-bound"
+      ],
+      "exit": 1,
+      "expected_exit": 1,
+      "pass_expected": true,
+      "seconds": 0.3653302780003287,
+      "log_sha256": "06d6ff49d5f5fb70abb3f607f1e095d20ef52a2d3bbdb50b5c06ecc16fdf6521"
+    },
+    {
+      "name": "support-negative",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_impact_support_sets_tests",
+        "--omit-erase"
+      ],
+      "exit": 1,
+      "expected_exit": 1,
+      "pass_expected": true,
+      "seconds": 0.21445055999902252,
+      "log_sha256": "1ccd83cb4607eb0735931cc019fd58421f709b923335aed3279ec62bb29a51f6"
+    },
+    {
+      "name": "test_prealpha_validation.py",
+      "argv": [
+        "python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-p",
+        "test_prealpha_validation.py",
+        "-v"
+      ],
+      "exit": 0,
+      "expected_exit": 0,
+      "pass_expected": true,
+      "seconds": 0.36489958399943134,
+      "log_sha256": "a8e006574e9aff0622673b2eb9672ad99491f1aeb9d8c27d04ebbc1ea8012eb2"
+    },
+    {
+      "name": "test_cmake_test_targets.py",
+      "argv": [
+        "python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-p",
+        "test_cmake_test_targets.py",
+        "-v"
+      ],
+      "exit": 0,
+      "expected_exit": 0,
+      "pass_expected": true,
+      "seconds": 0.26473790499949246,
+      "log_sha256": "d11cc7ceca4d25f35b93572fd83a5abec9e1dcc61341907cd24392d5be7dd73d"
+    },
+    {
+      "name": "support-continuation",
+      "argv": [
+        "python3",
+        "scripts/prealpha_validate.py",
+        "--build-dir",
+        "build",
+        "--test",
+        "support-continuation",
+        "--output",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/final-support-checks-refreshed/support-continuation",
+        "--timeout",
+        "120"
+      ],
+      "exit": 0,
+      "expected_exit": 0,
+      "pass_expected": true,
+      "seconds": 0.41695323000021745,
+      "log_sha256": "17542eae3a90ee223f07d9baba6bf8a1534926b5a74e83da6d48b43916732698"
+    },
+    {
+      "name": "collision-continuity",
+      "argv": [
+        "python3",
+        "scripts/prealpha_validate.py",
+        "--build-dir",
+        "build",
+        "--test",
+        "collision-continuity",
+        "--output",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/final-support-checks-refreshed/collision-continuity",
+        "--timeout",
+        "120"
+      ],
+      "exit": 0,
+      "expected_exit": 0,
+      "pass_expected": true,
+      "seconds": 0.4172057659998245,
+      "log_sha256": "6b534d3ace17272521e24750f0e471eea820d73e8b0e8d7da1fd225d8436f378"
+    },
+    {
+      "name": "composed-lifecycle",
+      "argv": [
+        "python3",
+        "scripts/prealpha_validate.py",
+        "--build-dir",
+        "build",
+        "--test",
+        "composed-lifecycle",
+        "--output",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/final-support-checks-refreshed/composed-lifecycle",
+        "--timeout",
+        "120"
+      ],
+      "exit": 0,
+      "expected_exit": 0,
+      "pass_expected": true,
+      "seconds": 1.1702093880012399,
+      "log_sha256": "1529f82c2e5a89ad2cb8c57b53aeb666ed9e94136d3fb6e8a1330a5da82f740c"
+    },
+    {
+      "name": "origin-physics",
+      "argv": [
+        "python3",
+        "scripts/prealpha_validate.py",
+        "--build-dir",
+        "build",
+        "--test",
+        "origin-physics",
+        "--output",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/final-support-checks-refreshed/origin-physics",
+        "--timeout",
+        "120"
+      ],
+      "exit": 0,
+      "expected_exit": 0,
+      "pass_expected": true,
+      "seconds": 0.4158014259992342,
+      "log_sha256": "370667497162d61e7f8bf23f78b793686756435cbe6229938ddc6c3141528be8"
+    },
+    {
+      "name": "contact-sat-filter",
+      "argv": [
+        "python3",
+        "scripts/prealpha_validate.py",
+        "--build-dir",
+        "build",
+        "--test",
+        "contact-sat-filter",
+        "--output",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/final-support-checks-refreshed/contact-sat-filter",
+        "--timeout",
+        "120"
+      ],
+      "exit": 0,
+      "expected_exit": 0,
+      "pass_expected": true,
+      "seconds": 1.121262802000274,
+      "log_sha256": "644a2afac12834207141a1ea2b6ed1dce556139b9df7a9ffc17f63172a493012"
+    },
+    {
+      "name": "contact-sphere-filter",
+      "argv": [
+        "python3",
+        "scripts/prealpha_validate.py",
+        "--build-dir",
+        "build",
+        "--test",
+        "contact-sphere-filter",
+        "--output",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/final-support-checks-refreshed/contact-sphere-filter",
+        "--timeout",
+        "120"
+      ],
+      "exit": 0,
+      "expected_exit": 0,
+      "pass_expected": true,
+      "seconds": 0.7752187340011005,
+      "log_sha256": "41a1bb72fcfba1408f0568eed69006ba2bba5603ca54ebf4df559779a0964c0e"
+    },
+    {
+      "name": "impact-support-sets",
+      "argv": [
+        "python3",
+        "scripts/prealpha_validate.py",
+        "--build-dir",
+        "build",
+        "--test",
+        "impact-support-sets",
+        "--output",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/final-support-checks-refreshed/impact-support-sets",
+        "--timeout",
+        "120"
+      ],
+      "exit": 0,
+      "expected_exit": 0,
+      "pass_expected": true,
+      "seconds": 0.6186504939996667,
+      "log_sha256": "820734a2665bdd686adb850e621aa63781305912d52bc9784ed679ce5b6b795b"
+    },
+    {
+      "name": "impact-timing",
+      "argv": [
+        "python3",
+        "scripts/prealpha_validate.py",
+        "--build-dir",
+        "build",
+        "--test",
+        "impact-timing",
+        "--output",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/final-support-checks-refreshed/impact-timing",
+        "--timeout",
+        "120"
+      ],
+      "exit": 0,
+      "expected_exit": 0,
+      "pass_expected": true,
+      "seconds": 0.3697794729996531,
+      "log_sha256": "5c6a8b0045452b317a6655cae8928cea547159879740ee791352ace43a85b5e0"
+    },
+    {
+      "name": "rigid-contact",
+      "argv": [
+        "python3",
+        "scripts/prealpha_validate.py",
+        "--build-dir",
+        "build",
+        "--test",
+        "rigid-contact",
+        "--output",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/final-support-checks-refreshed/rigid-contact",
+        "--timeout",
+        "120"
+      ],
+      "exit": 0,
+      "expected_exit": 0,
+      "pass_expected": true,
+      "seconds": 1.0173262110001815,
+      "log_sha256": "cbb1aa196cf80ae11aa63c95d1c4f109aea3c78524a5fe01032688db3487dc67"
+    },
+    {
+      "name": "contacts",
+      "argv": [
+        "python3",
+        "scripts/prealpha_validate.py",
+        "--build-dir",
+        "build",
+        "--test",
+        "contacts",
+        "--output",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/final-support-checks-refreshed/contacts",
+        "--timeout",
+        "120"
+      ],
+      "exit": 0,
+      "expected_exit": 0,
+      "pass_expected": true,
+      "seconds": 0.8728893200004677,
+      "log_sha256": "4a992563ace0e45e1691c66cdb668b54004eee2c89d6e485755fcb94a450e115"
+    },
+    {
+      "name": "collision-geometry",
+      "argv": [
+        "python3",
+        "scripts/prealpha_validate.py",
+        "--build-dir",
+        "build",
+        "--test",
+        "collision-geometry",
+        "--output",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/final-support-checks-refreshed/collision-geometry",
+        "--timeout",
+        "120"
+      ],
+      "exit": 0,
+      "expected_exit": 0,
+      "pass_expected": true,
+      "seconds": 1.668915995000134,
+      "log_sha256": "be91b8c8985105e5dac07625774411ab11d439ae660fd4722f9b124e2ce5395e"
+    },
+    {
+      "name": "physics-continuation",
+      "argv": [
+        "python3",
+        "scripts/prealpha_validate.py",
+        "--build-dir",
+        "build",
+        "--test",
+        "physics-continuation",
+        "--output",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/final-support-checks-refreshed/physics-continuation",
+        "--timeout",
+        "120"
+      ],
+      "exit": 0,
+      "expected_exit": 0,
+      "pass_expected": true,
+      "seconds": 0.9686841940001614,
+      "log_sha256": "77b24424eb5d3c4b01f1791592ff6be720368d05c156e36fb61381276467aca8"
+    },
+    {
+      "name": "character-motor",
+      "argv": [
+        "python3",
+        "scripts/prealpha_validate.py",
+        "--build-dir",
+        "build",
+        "--test",
+        "character-motor",
+        "--output",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/final-support-checks-refreshed/character-motor",
+        "--timeout",
+        "120"
+      ],
+      "exit": 0,
+      "expected_exit": 0,
+      "pass_expected": true,
+      "seconds": 1.4211964900005114,
+      "log_sha256": "992a130bd2ff2b96f2ba440356be6a10705e4548efd07153d47160b7d65fcc45"
+    },
+    {
+      "name": "native-mesh-growth",
+      "argv": [
+        "python3",
+        "scripts/prealpha_validate.py",
+        "--build-dir",
+        "build",
+        "--test",
+        "native-mesh-growth",
+        "--output",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/final-support-checks-refreshed/native-mesh-growth",
+        "--timeout",
+        "120"
+      ],
+      "exit": 0,
+      "expected_exit": 0,
+      "pass_expected": true,
+      "seconds": 0.36485222400006023,
+      "log_sha256": "fb83d0d0a0995b4069dc2e019492adcebdf6f240baed3ace9dcf4dbcbf07f841"
+    },
+    {
+      "name": "clip-polygon",
+      "argv": [
+        "python3",
+        "scripts/prealpha_validate.py",
+        "--build-dir",
+        "build",
+        "--test",
+        "clip-polygon",
+        "--output",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/final-support-checks-refreshed/clip-polygon",
+        "--timeout",
+        "120"
+      ],
+      "exit": 0,
+      "expected_exit": 0,
+      "pass_expected": true,
+      "seconds": 0.36934949200076517,
+      "log_sha256": "220c6d4b708a87d60d8c4b89ea910950d2d8e3ec7c0ad313884a321b848a1401"
+    },
+    {
+      "name": "impact-mesh-arrival",
+      "argv": [
+        "python3",
+        "scripts/prealpha_validate.py",
+        "--build-dir",
+        "build",
+        "--test",
+        "impact-mesh-arrival",
+        "--output",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/final-support-checks-refreshed/impact-mesh-arrival",
+        "--timeout",
+        "120"
+      ],
+      "exit": 0,
+      "expected_exit": 0,
+      "pass_expected": true,
+      "seconds": 4.8778705400000035,
+      "log_sha256": "04832e9298c5463012b5defce609974eeb19bfd12a616ab31cc7791d548733f3"
+    },
+    {
+      "name": "impact-mesh-continuation",
+      "argv": [
+        "python3",
+        "scripts/prealpha_validate.py",
+        "--build-dir",
+        "build",
+        "--test",
+        "impact-mesh-continuation",
+        "--output",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/final-support-checks-refreshed/impact-mesh-continuation",
+        "--timeout",
+        "120"
+      ],
+      "exit": 0,
+      "expected_exit": 0,
+      "pass_expected": true,
+      "seconds": 6.226232869999876,
+      "log_sha256": "92f0ad30344c1f23c8c8960acfa7440061a2c2b286670cfa18dea293192a6776"
+    },
+    {
+      "name": "impact-solver",
+      "argv": [
+        "python3",
+        "scripts/prealpha_validate.py",
+        "--build-dir",
+        "build",
+        "--test",
+        "impact-solver",
+        "--output",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/final-support-checks-refreshed/impact-solver",
+        "--timeout",
+        "120"
+      ],
+      "exit": 0,
+      "expected_exit": 0,
+      "pass_expected": true,
+      "seconds": 0.36713182800122013,
+      "log_sha256": "717cea8b5078c3b5bfd8ce96366c42b33b862fcd525cfc8240d118a935d06567"
+    }
+  ],
+  "focused_expected_exits_pass": true,
+  "preliminary_unavailable_wrappers": 18,
+  "unavailable_counted_as_pass": false,
+  "cold_pass": true,
+  "cold_checks": 61,
+  "physical_endpoint_comparison": {
+    "exact_equal": true,
+    "write_standing": true,
+    "read_standing": true,
+    "write": {
+      "actualBodies": [
+        {
+          "angularVelocity": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "entity": 4611686018427387904,
+          "linearVelocity": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "mass": 10.0,
+          "position": [
+            3.0825963020324707,
+            1.3603495359420776,
+            0.34025898575782776
+          ],
+          "rotation": [
+            0.9993518590927124,
+            0.0073785786516964436,
+            0.024269960820674896,
+            -0.025543829426169395
+          ],
+          "sampledGravity": [
+            0.0,
+            -9.8100004196167,
+            0.0
+          ]
+        },
+        {
+          "angularVelocity": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "entity": 4611686018427387905,
+          "linearVelocity": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "mass": 3.0,
+          "position": [
+            2.652454137802124,
+            0.8317131400108337,
+            0.34714293479919434
+          ],
+          "rotation": [
+            0.999150276184082,
+            0.020359981805086136,
+            0.014931967481970787,
+            -0.03257570043206215
+          ],
+          "sampledGravity": [
+            0.0,
+            -9.8100004196167,
+            0.0
+          ]
+        },
+        {
+          "angularVelocity": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "entity": 4611686018427387906,
+          "linearVelocity": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "mass": 2.0,
+          "position": [
+            2.6252944469451904,
+            0.47440776228904724,
+            0.2172478586435318
+          ],
+          "rotation": [
+            0.9458966255187988,
+            0.3224835693836212,
+            0.0043469080701470375,
+            -0.035570260137319565
+          ],
+          "sampledGravity": [
+            0.0,
+            -9.8100004196167,
+            0.0
+          ]
+        },
+        {
+          "angularVelocity": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "entity": 4611686018427387907,
+          "linearVelocity": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "mass": 2.0,
+          "position": [
+            2.6105496883392334,
+            0.11768226325511932,
+            0.1586635410785675
+          ],
+          "rotation": [
+            0.999822199344635,
+            -6.352671334752813e-05,
+            0.01879611425101757,
+            0.0015052082017064095
+          ],
+          "sampledGravity": [
+            0.0,
+            -9.8100004196167,
+            0.0
+          ]
+        },
+        {
+          "angularVelocity": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "entity": 4611686018427387908,
+          "linearVelocity": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "mass": 3.0,
+          "position": [
+            3.461801767349243,
+            0.8163026571273804,
+            0.4141051471233368
+          ],
+          "rotation": [
+            0.9671539068222046,
+            -0.253498375415802,
+            0.016467589884996414,
+            -0.008986193686723709
+          ],
+          "sampledGravity": [
+            0.0,
+            -9.8100004196167,
+            0.0
+          ]
+        },
+        {
+          "angularVelocity": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "entity": 4611686018427387909,
+          "linearVelocity": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "mass": 2.0,
+          "position": [
+            3.456113815307617,
+            0.4465714991092682,
+            0.5543899536132812
+          ],
+          "rotation": [
+            0.9942067861557007,
+            -0.10583553463220596,
+            0.014936499297618866,
+            -0.011350472457706928
+          ],
+          "sampledGravity": [
+            0.0,
+            -9.8100004196167,
+            0.0
+          ]
+        },
+        {
+          "angularVelocity": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "entity": 4611686018427387910,
+          "linearVelocity": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "mass": 2.0,
+          "position": [
+            3.45473051071167,
+            0.11791371554136276,
+            0.6739861965179443
+          ],
+          "rotation": [
+            0.9999927282333374,
+            0.0024425771553069353,
+            0.002938830293715,
+            -0.00022599956719204783
+          ],
+          "sampledGravity": [
+            0.0,
+            -9.8100004196167,
+            0.0
+          ]
+        }
+      ],
+      "actualRelativeComSpeed": 0.0,
+      "actualRootHeightAboveCurrentSupport": 1.3615976572036743,
+      "actualUpright": 0.998586118221283,
+      "currentPhysicalStanding": true,
+      "gravityUp": [
+        -0.0,
+        1.0,
+        -0.0
+      ],
+      "landings": 1,
+      "massWeightedCom": [
+        3.0609209537506104,
+        0.8691955208778381,
+        0.3706212043762207
+      ],
+      "massWeightedVelocity": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "owned": true,
+      "owner": 12,
+      "progress": 2,
+      "reason": "measured supported physical standing",
+      "rootAngularVelocity": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rootEntity": 4611686018427387904,
+      "rootLinearVelocity": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rootPosition": [
+        3.0825963020324707,
+        1.3603495359420776,
+        0.34025898575782776
+      ],
+      "rootRotation": [
+        0.9993518590927124,
+        0.0073785786516964436,
+        0.024269960820674896,
+        -0.025543829426169395
+      ],
+      "sampledGravity": [
+        0.0,
+        -9.8100004196167,
+        0.0
+      ],
+      "standingHeight": 1.4199999570846558,
+      "standingSpeed": 0.1599999964237213,
+      "standingTolerance": 0.18000000715255737,
+      "supportFeet": 2,
+      "supports": [
+        {
+          "acceptedContacts": 4,
+          "completedContactSamples": [
+            {
+              "accepted": true,
+              "normal": [
+                0.0,
+                1.0,
+                0.0
+              ],
+              "normalImpulse": 0.6377147436141968,
+              "otherEntity": 1,
+              "point": [
+                2.246877670288086,
+                -0.0017197924898937345,
+                -0.20790448784828186
+              ],
+              "separation": -0.003439584979787469,
+              "supportVelocity": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            {
+              "accepted": true,
+              "normal": [
+                0.0,
+                1.0,
+                0.0
+              ],
+              "normalImpulse": 0.4872898459434509,
+              "otherEntity": 1,
+              "point": [
+                2.275442600250244,
+                -0.001650019665248692,
+                0.5515584945678711
+              ],
+              "separation": -0.003300039330497384,
+              "supportVelocity": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            {
+              "accepted": true,
+              "normal": [
+                0.0,
+                1.0,
+                0.0
+              ],
+              "normalImpulse": 0.7586844563484192,
+              "otherEntity": 1,
+              "point": [
+                2.9463798999786377,
+                -0.000667169748339802,
+                -0.23421449959278107
+              ],
+              "separation": -0.001334339496679604,
+              "supportVelocity": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            {
+              "accepted": true,
+              "normal": [
+                0.0,
+                1.0,
+                0.0
+              ],
+              "normalImpulse": 0.24315637350082397,
+              "otherEntity": 1,
+              "point": [
+                2.974944591522217,
+                -0.0005973968072794378,
+                0.5252484679222107
+              ],
+              "separation": -0.0011947936145588756,
+              "supportVelocity": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            }
+          ],
+          "entity": 4611686018427387907,
+          "load": 2.126845359802246,
+          "point": [
+            2.5861852169036865,
+            -0.0011999965645372868,
+            0.04053313285112381
+          ],
+          "velocity": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "acceptedContacts": 4,
+          "completedContactSamples": [
+            {
+              "accepted": true,
+              "normal": [
+                0.0,
+                1.0,
+                0.0
+              ],
+              "normalImpulse": 0.46540284156799316,
+              "otherEntity": 1,
+              "point": [
+                3.102447509765625,
+                -3.7407884519780055e-05,
+                0.295468807220459
+              ],
+              "separation": -7.481576903956011e-05,
+              "supportVelocity": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            {
+              "accepted": true,
+              "normal": [
+                0.0,
+                1.0,
+                0.0
+              ],
+              "normalImpulse": 0.0024722800590097904,
+              "otherEntity": 1,
+              "point": [
+                3.1069138050079346,
+                -0.001894256449304521,
+                1.0554466247558594
+              ],
+              "separation": -0.003788512898609042,
+              "supportVelocity": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            {
+              "accepted": true,
+              "normal": [
+                0.0,
+                1.0,
+                0.0
+              ],
+              "normalImpulse": 0.22297675907611847,
+              "otherEntity": 1,
+              "point": [
+                3.8024353981018066,
+                -0.00019058113684877753,
+                0.291353702545166
+              ],
+              "separation": -0.00038116227369755507,
+              "supportVelocity": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            {
+              "accepted": true,
+              "normal": [
+                0.0,
+                1.0,
+                0.0
+              ],
+              "normalImpulse": 1.1063032150268555,
+              "otherEntity": 1,
+              "point": [
+                3.806901454925537,
+                -0.0020474297925829887,
+                1.0513315200805664
+              ],
+              "separation": -0.0040948595851659775,
+              "supportVelocity": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            }
+          ],
+          "entity": 4611686018427387910,
+          "load": 1.7971551418304443,
+          "point": [
+            3.6229543685913086,
+            -0.0012963077751919627,
+            0.7613020539283752
+          ],
+          "velocity": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      ]
+    },
+    "read": {
+      "actualBodies": [
+        {
+          "angularVelocity": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "entity": 4611686018427387904,
+          "linearVelocity": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "mass": 10.0,
+          "position": [
+            3.0825963020324707,
+            1.3603495359420776,
+            0.34025898575782776
+          ],
+          "rotation": [
+            0.9993518590927124,
+            0.0073785786516964436,
+            0.024269960820674896,
+            -0.025543829426169395
+          ],
+          "sampledGravity": [
+            0.0,
+            -9.8100004196167,
+            0.0
+          ]
+        },
+        {
+          "angularVelocity": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "entity": 4611686018427387905,
+          "linearVelocity": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "mass": 3.0,
+          "position": [
+            2.652454137802124,
+            0.8317131400108337,
+            0.34714293479919434
+          ],
+          "rotation": [
+            0.999150276184082,
+            0.020359981805086136,
+            0.014931967481970787,
+            -0.03257570043206215
+          ],
+          "sampledGravity": [
+            0.0,
+            -9.8100004196167,
+            0.0
+          ]
+        },
+        {
+          "angularVelocity": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "entity": 4611686018427387906,
+          "linearVelocity": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "mass": 2.0,
+          "position": [
+            2.6252944469451904,
+            0.47440776228904724,
+            0.2172478586435318
+          ],
+          "rotation": [
+            0.9458966255187988,
+            0.3224835693836212,
+            0.0043469080701470375,
+            -0.035570260137319565
+          ],
+          "sampledGravity": [
+            0.0,
+            -9.8100004196167,
+            0.0
+          ]
+        },
+        {
+          "angularVelocity": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "entity": 4611686018427387907,
+          "linearVelocity": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "mass": 2.0,
+          "position": [
+            2.6105496883392334,
+            0.11768226325511932,
+            0.1586635410785675
+          ],
+          "rotation": [
+            0.999822199344635,
+            -6.352671334752813e-05,
+            0.01879611425101757,
+            0.0015052082017064095
+          ],
+          "sampledGravity": [
+            0.0,
+            -9.8100004196167,
+            0.0
+          ]
+        },
+        {
+          "angularVelocity": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "entity": 4611686018427387908,
+          "linearVelocity": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "mass": 3.0,
+          "position": [
+            3.461801767349243,
+            0.8163026571273804,
+            0.4141051471233368
+          ],
+          "rotation": [
+            0.9671539068222046,
+            -0.253498375415802,
+            0.016467589884996414,
+            -0.008986193686723709
+          ],
+          "sampledGravity": [
+            0.0,
+            -9.8100004196167,
+            0.0
+          ]
+        },
+        {
+          "angularVelocity": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "entity": 4611686018427387909,
+          "linearVelocity": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "mass": 2.0,
+          "position": [
+            3.456113815307617,
+            0.4465714991092682,
+            0.5543899536132812
+          ],
+          "rotation": [
+            0.9942067861557007,
+            -0.10583553463220596,
+            0.014936499297618866,
+            -0.011350472457706928
+          ],
+          "sampledGravity": [
+            0.0,
+            -9.8100004196167,
+            0.0
+          ]
+        },
+        {
+          "angularVelocity": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "entity": 4611686018427387910,
+          "linearVelocity": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "mass": 2.0,
+          "position": [
+            3.45473051071167,
+            0.11791371554136276,
+            0.6739861965179443
+          ],
+          "rotation": [
+            0.9999927282333374,
+            0.0024425771553069353,
+            0.002938830293715,
+            -0.00022599956719204783
+          ],
+          "sampledGravity": [
+            0.0,
+            -9.8100004196167,
+            0.0
+          ]
+        }
+      ],
+      "actualRelativeComSpeed": 0.0,
+      "actualRootHeightAboveCurrentSupport": 1.3615976572036743,
+      "actualUpright": 0.998586118221283,
+      "currentPhysicalStanding": true,
+      "gravityUp": [
+        -0.0,
+        1.0,
+        -0.0
+      ],
+      "landings": 1,
+      "massWeightedCom": [
+        3.0609209537506104,
+        0.8691955208778381,
+        0.3706212043762207
+      ],
+      "massWeightedVelocity": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "owned": true,
+      "owner": 12,
+      "progress": 2,
+      "reason": "measured supported physical standing",
+      "rootAngularVelocity": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rootEntity": 4611686018427387904,
+      "rootLinearVelocity": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rootPosition": [
+        3.0825963020324707,
+        1.3603495359420776,
+        0.34025898575782776
+      ],
+      "rootRotation": [
+        0.9993518590927124,
+        0.0073785786516964436,
+        0.024269960820674896,
+        -0.025543829426169395
+      ],
+      "sampledGravity": [
+        0.0,
+        -9.8100004196167,
+        0.0
+      ],
+      "standingHeight": 1.4199999570846558,
+      "standingSpeed": 0.1599999964237213,
+      "standingTolerance": 0.18000000715255737,
+      "supportFeet": 2,
+      "supports": [
+        {
+          "acceptedContacts": 4,
+          "completedContactSamples": [
+            {
+              "accepted": true,
+              "normal": [
+                0.0,
+                1.0,
+                0.0
+              ],
+              "normalImpulse": 0.6377147436141968,
+              "otherEntity": 1,
+              "point": [
+                2.246877670288086,
+                -0.0017197924898937345,
+                -0.20790448784828186
+              ],
+              "separation": -0.003439584979787469,
+              "supportVelocity": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            {
+              "accepted": true,
+              "normal": [
+                0.0,
+                1.0,
+                0.0
+              ],
+              "normalImpulse": 0.4872898459434509,
+              "otherEntity": 1,
+              "point": [
+                2.275442600250244,
+                -0.001650019665248692,
+                0.5515584945678711
+              ],
+              "separation": -0.003300039330497384,
+              "supportVelocity": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            {
+              "accepted": true,
+              "normal": [
+                0.0,
+                1.0,
+                0.0
+              ],
+              "normalImpulse": 0.7586844563484192,
+              "otherEntity": 1,
+              "point": [
+                2.9463798999786377,
+                -0.000667169748339802,
+                -0.23421449959278107
+              ],
+              "separation": -0.001334339496679604,
+              "supportVelocity": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            {
+              "accepted": true,
+              "normal": [
+                0.0,
+                1.0,
+                0.0
+              ],
+              "normalImpulse": 0.24315637350082397,
+              "otherEntity": 1,
+              "point": [
+                2.974944591522217,
+                -0.0005973968072794378,
+                0.5252484679222107
+              ],
+              "separation": -0.0011947936145588756,
+              "supportVelocity": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            }
+          ],
+          "entity": 4611686018427387907,
+          "load": 2.126845359802246,
+          "point": [
+            2.5861852169036865,
+            -0.0011999965645372868,
+            0.04053313285112381
+          ],
+          "velocity": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "acceptedContacts": 4,
+          "completedContactSamples": [
+            {
+              "accepted": true,
+              "normal": [
+                0.0,
+                1.0,
+                0.0
+              ],
+              "normalImpulse": 0.46540284156799316,
+              "otherEntity": 1,
+              "point": [
+                3.102447509765625,
+                -3.7407884519780055e-05,
+                0.295468807220459
+              ],
+              "separation": -7.481576903956011e-05,
+              "supportVelocity": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            {
+              "accepted": true,
+              "normal": [
+                0.0,
+                1.0,
+                0.0
+              ],
+              "normalImpulse": 0.0024722800590097904,
+              "otherEntity": 1,
+              "point": [
+                3.1069138050079346,
+                -0.001894256449304521,
+                1.0554466247558594
+              ],
+              "separation": -0.003788512898609042,
+              "supportVelocity": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            {
+              "accepted": true,
+              "normal": [
+                0.0,
+                1.0,
+                0.0
+              ],
+              "normalImpulse": 0.22297675907611847,
+              "otherEntity": 1,
+              "point": [
+                3.8024353981018066,
+                -0.00019058113684877753,
+                0.291353702545166
+              ],
+              "separation": -0.00038116227369755507,
+              "supportVelocity": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            {
+              "accepted": true,
+              "normal": [
+                0.0,
+                1.0,
+                0.0
+              ],
+              "normalImpulse": 1.1063032150268555,
+              "otherEntity": 1,
+              "point": [
+                3.806901454925537,
+                -0.0020474297925829887,
+                1.0513315200805664
+              ],
+              "separation": -0.0040948595851659775,
+              "supportVelocity": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            }
+          ],
+          "entity": 4611686018427387910,
+          "load": 1.7971551418304443,
+          "point": [
+            3.6229543685913086,
+            -0.0012963077751919627,
+            0.7613020539283752
+          ],
+          "velocity": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      ]
+    }
+  },
+  "production_build_warnings": 0,
+  "protected_observer_existing_warnings": 2,
+  "cold_gl": "llvmpipe functional only",
+  "native_performance_and_export_gl": "NVIDIA GTX970",
+  "full_production_suite_rerun": false,
+  "windows_android": "not requalified",
+  "human_acceptance": "not established for this followup",
+  "fps_target_met": false
+}

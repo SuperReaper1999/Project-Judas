@@ -1,0 +1,25 @@
+{
+  "scope": "Independent read-only ABI/source/archive freeze verification; no behaviour/performance pass",
+  "utc": "2026-10-19T12:33:12.440292+00:00",
+  "central_receipt_sha256": "5167d88b4d9676cfd7f45ce27d35179ea2aff7148872d30d93d37a911256d186",
+  "snapshot_manifest_sha256": "f8f4bc9408462ef66398f16b29e6e4eca5260f19dd1647d34dd5f2f33346b387",
+  "independent_active_consumers_equal": true,
+  "missing_dependency_files": [],
+  "no_old_changed_header_inputs": true,
+  "preserved_public_headers": [
+    "RigidBody.h",
+    "PhysicsWorld.h",
+    "SaveArchive.h"
+  ],
+  "engine_consumers": 20,
+  "archive_members_verified": 170,
+  "full_payload_and_compile_input_verification": "freeze_candidate.py checked all ordered base/input/member bytes, every dependency byte and actual merged source archive bytes",
+  "timing_contract": {
+    "source": "src/SimulationTiming.h",
+    "source_sha256": "94768d45689caa49be5160b9c9d2884ab15ebd33bff9a6003e8d8113d920bf9d",
+    "maximum_fixed_steps_per_frame": 8,
+    "fixed_cadence_hz": 60,
+    "note": "This workload preserves the existing 60 Hz contract; per-frame catch-up count is extracted from frozen actual source."
+  },
+  "native_run": false
+}

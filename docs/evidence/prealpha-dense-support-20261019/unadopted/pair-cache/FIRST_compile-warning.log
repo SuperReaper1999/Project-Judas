@@ -1,0 +1,7 @@
+.cache/dense-scalability-20261019/persistent-pair-prototype/PairCacheTests.cpp: In function ‘void {anonymous}::Lifecycle(bool, bool)’:
+.cache/dense-scalability-20261019/persistent-pair-prototype/PairCacheTests.cpp:77:101: warning: possibly dangling reference to a temporary [-Wdangling-reference]
+   77 |    case 8:{unsigned other=Random()%bodies.size();if(other!=slot&&b.alive&&bodies[other].alive){auto key=std::minmax(Handle(slot,b),Handle(other,bodies[other]));if(!suppressed.erase(key))suppressed.insert(key);}}break;
+      |                                                                                                     ^~~
+.cache/dense-scalability-20261019/persistent-pair-prototype/PairCacheTests.cpp:77:123: note: ‘const long unsigned int’ temporary created here
+   77 |    case 8:{unsigned other=Random()%bodies.size();if(other!=slot&&b.alive&&bodies[other].alive){auto key=std::minmax(Handle(slot,b),Handle(other,bodies[other]));if(!suppressed.erase(key))suppressed.insert(key);}}break;
+      |                                                                                                                     ~~~~~~^~~~~~~~

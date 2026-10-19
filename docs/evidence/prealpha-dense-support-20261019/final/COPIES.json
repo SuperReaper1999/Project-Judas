@@ -1,0 +1,647 @@
+{
+  "utc": "2026-10-19T13:10:57.278675+00:00",
+  "files": [
+    {
+      "source": "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/final-support-build-refreshed/0.log",
+      "destination": "final/final-support-build-refreshed/0.log",
+      "sha256": "3d7cebf2f73479c5f1dde366a5467fdcb84b8a5c9e449b22f34e6538cc4fed6a",
+      "bytes": 911
+    },
+    {
+      "source": "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/final-support-build-refreshed/1.log",
+      "destination": "final/final-support-build-refreshed/1.log",
+      "sha256": "95a3387807b4a933015651761ad60709d2b0a3c59a053f5629153eed860f1dd0",
+      "bytes": 18194
+    },
+    {
+      "source": "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/final-support-build-refreshed/BUILD.json",
+      "destination": "final/final-support-build-refreshed/BUILD.json",
+      "sha256": "bc24806d45c34451fe038315f5edc6cba94f2b133e20a55282ebe2fbd455399e",
+      "bytes": 1648
+    },
+    {
+      "source": "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/final-support-checks-refreshed/RESULTS.json",
+      "destination": "final/final-support-checks-refreshed/RESULTS.json",
+      "sha256": "ff956e50df32d6b1218551c471e0db0f6b5d553cfb86c6e710fcfd8d2305086a",
+      "bytes": 10219
+    },
+    {
+      "source": "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/final-support-checks-refreshed/character-motor/RESULTS.json",
+      "destination": "final/final-support-checks-refreshed/character-motor/RESULTS.json",
+      "sha256": "d04d97bf0fb47d95258f9214cd698c69caaa723e2071385b60808c110fb5455c",
+      "bytes": 6807
+    },
+    {
+      "source": "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/final-support-checks-refreshed/character-motor/character-motor.log",
+      "destination": "final/final-support-checks-refreshed/character-motor/character-motor.log",
+      "sha256": "b181c13b767acda5d19c8671e8c3789275dcb4a382db911fcfa4c2a8e8e1f7f9",
+      "bytes": 1869
+    },
+    {
+      "source": "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/final-support-checks-refreshed/character-motor.log",
+      "destination": "final/final-support-checks-refreshed/character-motor.log",
+      "sha256": "992a130bd2ff2b96f2ba440356be6a10705e4548efd07153d47160b7d65fcc45",
+      "bytes": 161
+    },
+    {
+      "source": "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/final-support-checks-refreshed/clip-polygon/RESULTS.json",
+      "destination": "final/final-support-checks-refreshed/clip-polygon/RESULTS.json",
+      "sha256": "e7630b3de0bbf1040143ef6f31528ed79718ff68208a1d9504895a2bccc64a68",
+      "bytes": 6803
+    },
+    {
+      "source": "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/final-support-checks-refreshed/clip-polygon/clip-polygon.log",
+      "destination": "final/final-support-checks-refreshed/clip-polygon/clip-polygon.log",
+      "sha256": "ae60d7b3ba87a53ded2700140cfc874c71d62f62dd9816d025b6ac0be8f28e08",
+      "bytes": 1293
+    },
+    {
+      "source": "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/final-support-checks-refreshed/clip-polygon.log",
+      "destination": "final/final-support-checks-refreshed/clip-polygon.log",
+      "sha256": "220c6d4b708a87d60d8c4b89ea910950d2d8e3ec7c0ad313884a321b848a1401",
+      "bytes": 155
+    },
+    {
+      "source": "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/final-support-checks-refreshed/collision-continuity/RESULTS.json",
+      "destination": "final/final-support-checks-refreshed/collision-continuity/RESULTS.json",
+      "sha256": "1980d3647b3550ace65b090c989354b101162374f38c68883d5dd1bc071c2e15",
+      "bytes": 6819
+    },
+    {
+      "source": "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/final-support-checks-refreshed/collision-continuity/collision-continuity.log",
+      "destination": "final/final-support-checks-refreshed/collision-continuity/collision-continuity.log",
+      "sha256": "00391a1002b53ebfe9aba19b100eabf1c9ef5ee32cc686628a199ce5ff744505",
+      "bytes": 280
+    },
+    {
+      "source": "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/final-support-checks-refreshed/collision-continuity.log",
+      "destination": "final/final-support-checks-refreshed/collision-continuity.log",
+      "sha256": "6b534d3ace17272521e24750f0e471eea820d73e8b0e8d7da1fd225d8436f378",
+      "bytes": 171
+    },
+    {
+      "source": "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/final-support-checks-refreshed/collision-geometry/RESULTS.json",
+      "destination": "final/final-support-checks-refreshed/collision-geometry/RESULTS.json",
+      "sha256": "a5cefbdd27aa26a6b69a6bdc4e065427c0c49acf619f4918dbe28c896c676fa9",
+      "bytes": 6813
+    },
+    {
+      "source": "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/final-support-checks-refreshed/collision-geometry/collision-geometry.log",
+      "destination": "final/final-support-checks-refreshed/collision-geometry/collision-geometry.log",
+      "sha256": "287d078190dc67d01fdbc19dee598e1e76175282a66fcf86fb3997df4b070a65",
+      "bytes": 3168
+    },
+    {
+      "source": "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/final-support-checks-refreshed/collision-geometry.log",
+      "destination": "final/final-support-checks-refreshed/collision-geometry.log",
+      "sha256": "be91b8c8985105e5dac07625774411ab11d439ae660fd4722f9b124e2ce5395e",
+      "bytes": 167
+    },
+    {
+      "source": "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/final-support-checks-refreshed/composed-lifecycle/RESULTS.json",
+      "destination": "final/final-support-checks-refreshed/composed-lifecycle/RESULTS.json",
+      "sha256": "99859cdfe2345128d8eaa053de66ed10ca1b4d9b1846d38edd91b47c55219d89",
+      "bytes": 6813
+    },
+    {
+      "source": "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/final-support-checks-refreshed/composed-lifecycle/composed-lifecycle.log",
+      "destination": "final/final-support-checks-refreshed/composed-lifecycle/composed-lifecycle.log",
+      "sha256": "67870b02444a588e2cbbc1ab6f79b84d0342156225b5a75853cbbd0a908aa27f",
+      "bytes": 2076
+    },
+    {
+      "source": "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/final-support-checks-refreshed/composed-lifecycle.log",
+      "destination": "final/final-support-checks-refreshed/composed-lifecycle.log",
+      "sha256": "1529f82c2e5a89ad2cb8c57b53aeb666ed9e94136d3fb6e8a1330a5da82f740c",
+      "bytes": 167
+    },
+    {
+      "source": "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/final-support-checks-refreshed/contact-sat-filter/RESULTS.json",
+      "destination": "final/final-support-checks-refreshed/contact-sat-filter/RESULTS.json",
+      "sha256": "6265e27050eb259fbd612465ced13027da96ba438e67a6174c813db1bba6ba6d",
+      "bytes": 6813
+    },
+    {
+      "source": "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/final-support-checks-refreshed/contact-sat-filter/contact-sat-filter.log",
+      "destination": "final/final-support-checks-refreshed/contact-sat-filter/contact-sat-filter.log",
+      "sha256": "2b37d6ace9df8178052f2bd071393d1a17b3a9a7931f9c2bde4811f97ecbd610",
+      "bytes": 119
+    },
+    {
+      "source": "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/final-support-checks-refreshed/contact-sat-filter.log",
+      "destination": "final/final-support-checks-refreshed/contact-sat-filter.log",
+      "sha256": "644a2afac12834207141a1ea2b6ed1dce556139b9df7a9ffc17f63172a493012",
+      "bytes": 167
+    },
+    {
+      "source": "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/final-support-checks-refreshed/contact-sphere-filter/RESULTS.json",
+      "destination": "final/final-support-checks-refreshed/contact-sphere-filter/RESULTS.json",
+      "sha256": "d2856245b1a5c5e4f29b10f995289bb4e19733006963dc1409c078288dc3fc6e",
+      "bytes": 6819
+    },
+    {
+      "source": "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/final-support-checks-refreshed/contact-sphere-filter/contact-sphere-filter.log",
+      "destination": "final/final-support-checks-refreshed/contact-sphere-filter/contact-sphere-filter.log",
+      "sha256": "ee9f45d149b627c4543377f02519284baef002fc2a63af61cd51b94c96d9b287",
+      "bytes": 211
+    },
+    {
+      "source": "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/final-support-checks-refreshed/contact-sphere-filter.log",
+      "destination": "final/final-support-checks-refreshed/contact-sphere-filter.log",
+      "sha256": "41a1bb72fcfba1408f0568eed69006ba2bba5603ca54ebf4df559779a0964c0e",
+      "bytes": 173
+    },
+    {
+      "source": "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/final-support-checks-refreshed/contacts/RESULTS.json",
+      "destination": "final/final-support-checks-refreshed/contacts/RESULTS.json",
+      "sha256": "8477475d30daa5f61d5651193876a54e9eb0cc65da44be7812b9aaea3eb20724",
+      "bytes": 6803
+    },
+    {
+      "source": "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/final-support-checks-refreshed/contacts/contacts.log",
+      "destination": "final/final-support-checks-refreshed/contacts/contacts.log",
+      "sha256": "d521b1edc0c31bc21133f2c2994d7c93e60b2beb5d8ebe01272b53b0d7e7bbe7",
+      "bytes": 83838
+    },
+    {
+      "source": "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/final-support-checks-refreshed/contacts.log",
+      "destination": "final/final-support-checks-refreshed/contacts.log",
+      "sha256": "4a992563ace0e45e1691c66cdb668b54004eee2c89d6e485755fcb94a450e115",
+      "bytes": 147
+    },
+    {
+      "source": "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/final-support-checks-refreshed/impact-mesh-arrival/RESULTS.json",
+      "destination": "final/final-support-checks-refreshed/impact-mesh-arrival/RESULTS.json",
+      "sha256": "a27e59cf9d9292df27b242a516e032d36f2626fe3ba75ac5133887cb96b2a435",
+      "bytes": 6869
+    },
+    {
+      "source": "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/final-support-checks-refreshed/impact-mesh-arrival/impact-mesh-arrival.log",
+      "destination": "final/final-support-checks-refreshed/impact-mesh-arrival/impact-mesh-arrival.log",
+      "sha256": "3e7766dd8e405fd3300a2a6a2d391beb1d248d00c08695c33ab3fba02887c4fa",
+      "bytes": 2540
+    },
+    {
+      "source": "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/final-support-checks-refreshed/impact-mesh-arrival.log",
+      "destination": "final/final-support-checks-refreshed/impact-mesh-arrival.log",
+      "sha256": "04832e9298c5463012b5defce609974eeb19bfd12a616ab31cc7791d548733f3",
+      "bytes": 169
+    },
+    {
+      "source": "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/final-support-checks-refreshed/impact-mesh-continuation/RESULTS.json",
+      "destination": "final/final-support-checks-refreshed/impact-mesh-continuation/RESULTS.json",
+      "sha256": "d855d1f7c1834247e787cb31f0b20cd82831a847c497beec8d97685cfdb9ad62",
+      "bytes": 6979
+    },
+    {
+      "source": "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/final-support-checks-refreshed/impact-mesh-continuation/impact-mesh-continuation.log",
+      "destination": "final/final-support-checks-refreshed/impact-mesh-continuation/impact-mesh-continuation.log",
+      "sha256": "cda73afcd2e8c6390bf2df2e1332d34a5826ec2b1913afdcf4a931ca1cd5e1eb",
+      "bytes": 2546
+    },
+    {
+      "source": "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/final-support-checks-refreshed/impact-mesh-continuation.log",
+      "destination": "final/final-support-checks-refreshed/impact-mesh-continuation.log",
+      "sha256": "92f0ad30344c1f23c8c8960acfa7440061a2c2b286670cfa18dea293192a6776",
+      "bytes": 179
+    },
+    {
+      "source": "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/final-support-checks-refreshed/impact-solver/RESULTS.json",
+      "destination": "final/final-support-checks-refreshed/impact-solver/RESULTS.json",
+      "sha256": "287acaa596f7c4573efe5434ff25610f00a1f59d895c8fd87f4eca997bb7db03",
+      "bytes": 6805
+    },
+    {
+      "source": "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/final-support-checks-refreshed/impact-solver/impact-solver.log",
+      "destination": "final/final-support-checks-refreshed/impact-solver/impact-solver.log",
+      "sha256": "0abea3f165316cea297eedef5c12301181c37a8974a331115420a50bb859840a",
+      "bytes": 256
+    },
+    {
+      "source": "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/final-support-checks-refreshed/impact-solver.log",
+      "destination": "final/final-support-checks-refreshed/impact-solver.log",
+      "sha256": "717cea8b5078c3b5bfd8ce96366c42b33b862fcd525cfc8240d118a935d06567",
+      "bytes": 157
+    },
+    {
+      "source": "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/final-support-checks-refreshed/impact-support-sets/RESULTS.json",
+      "destination": "final/final-support-checks-refreshed/impact-support-sets/RESULTS.json",
+      "sha256": "3b2936e3c90fc4a6e3c83b00ae6fb297a0db6536fb6a2867dfbecc8497fbdc19",
+      "bytes": 6815
+    },
+    {
+      "source": "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/final-support-checks-refreshed/impact-support-sets/impact-support-sets.log",
+      "destination": "final/final-support-checks-refreshed/impact-support-sets/impact-support-sets.log",
+      "sha256": "b032556259b6f8e6119faab9b1c8ba68f715c4c74d33c629b7892081976fc29d",
+      "bytes": 25
+    },
+    {
+      "source": "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/final-support-checks-refreshed/impact-support-sets.log",
+      "destination": "final/final-support-checks-refreshed/impact-support-sets.log",
+      "sha256": "820734a2665bdd686adb850e621aa63781305912d52bc9784ed679ce5b6b795b",
+      "bytes": 169
+    },
+    {
+      "source": "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/final-support-checks-refreshed/impact-timing/RESULTS.json",
+      "destination": "final/final-support-checks-refreshed/impact-timing/RESULTS.json",
+      "sha256": "a98ecfc6ad35a04ab92e1792a0da419856987b05b30532b6fbfc54344d7b5b8e",
+      "bytes": 6805
+    },
+    {
+      "source": "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/final-support-checks-refreshed/impact-timing/impact-timing.log",
+      "destination": "final/final-support-checks-refreshed/impact-timing/impact-timing.log",
+      "sha256": "52d83a1b765180db902ea1ebd0332af4618925f9cb8da9a0356ea0644f206a9f",
+      "bytes": 43704
+    },
+    {
+      "source": "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/final-support-checks-refreshed/impact-timing.log",
+      "destination": "final/final-support-checks-refreshed/impact-timing.log",
+      "sha256": "5c6a8b0045452b317a6655cae8928cea547159879740ee791352ace43a85b5e0",
+      "bytes": 157
+    },
+    {
+      "source": "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/final-support-checks-refreshed/native-mesh-growth/RESULTS.json",
+      "destination": "final/final-support-checks-refreshed/native-mesh-growth/RESULTS.json",
+      "sha256": "d869cc28f506f91ff3bb3c7c4e6aa099e854ece3abfdc169f142fa53ea8ed6eb",
+      "bytes": 6814
+    },
+    {
+      "source": "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/final-support-checks-refreshed/native-mesh-growth/native-mesh-growth.log",
+      "destination": "final/final-support-checks-refreshed/native-mesh-growth/native-mesh-growth.log",
+      "sha256": "6a4a6b068530fb2f210a4c607fbd86873869ac57fa5bc5f2050eda1843a7773e",
+      "bytes": 9442
+    },
+    {
+      "source": "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/final-support-checks-refreshed/native-mesh-growth.log",
+      "destination": "final/final-support-checks-refreshed/native-mesh-growth.log",
+      "sha256": "fb83d0d0a0995b4069dc2e019492adcebdf6f240baed3ace9dcf4dbcbf07f841",
+      "bytes": 167
+    },
+    {
+      "source": "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/final-support-checks-refreshed/origin-physics/RESULTS.json",
+      "destination": "final/final-support-checks-refreshed/origin-physics/RESULTS.json",
+      "sha256": "499442572db896baa6f3cbcdeebe8e8d199238f7dc065fad08814f1e1790ab2e",
+      "bytes": 6805
+    },
+    {
+      "source": "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/final-support-checks-refreshed/origin-physics/origin-physics.log",
+      "destination": "final/final-support-checks-refreshed/origin-physics/origin-physics.log",
+      "sha256": "db2288d9a0b5644a2969a24bb80401cf4b3f666b2b31a9920a87b2e426025008",
+      "bytes": 928
+    },
+    {
+      "source": "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/final-support-checks-refreshed/origin-physics.log",
+      "destination": "final/final-support-checks-refreshed/origin-physics.log",
+      "sha256": "370667497162d61e7f8bf23f78b793686756435cbe6229938ddc6c3141528be8",
+      "bytes": 159
+    },
+    {
+      "source": "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/final-support-checks-refreshed/physics-continuation/RESULTS.json",
+      "destination": "final/final-support-checks-refreshed/physics-continuation/RESULTS.json",
+      "sha256": "12817195ee0022a7b4f4061a2db5e8057997476039e179732cf4ad699d22aba3",
+      "bytes": 6817
+    },
+    {
+      "source": "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/final-support-checks-refreshed/physics-continuation/physics-continuation.log",
+      "destination": "final/final-support-checks-refreshed/physics-continuation/physics-continuation.log",
+      "sha256": "4cc6f3c0c5aac74ddb2d2faae5934a29ee782a046fcffdd72f60f41a33866534",
+      "bytes": 30
+    },
+    {
+      "source": "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/final-support-checks-refreshed/physics-continuation.log",
+      "destination": "final/final-support-checks-refreshed/physics-continuation.log",
+      "sha256": "77b24424eb5d3c4b01f1791592ff6be720368d05c156e36fb61381276467aca8",
+      "bytes": 171
+    },
+    {
+      "source": "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/final-support-checks-refreshed/rigid-contact/RESULTS.json",
+      "destination": "final/final-support-checks-refreshed/rigid-contact/RESULTS.json",
+      "sha256": "34a4292d543838f75f19967a56e1d73ec3f45fd13b0b89e65d33c3cd3b4f5e91",
+      "bytes": 6803
+    },
+    {
+      "source": "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/final-support-checks-refreshed/rigid-contact/rigid-contact.log",
+      "destination": "final/final-support-checks-refreshed/rigid-contact/rigid-contact.log",
+      "sha256": "0129178983d9232e6d29a303a8296caba1b17a6789a2dab1edf6bdbae1d81c40",
+      "bytes": 3627
+    },
+    {
+      "source": "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/final-support-checks-refreshed/rigid-contact.log",
+      "destination": "final/final-support-checks-refreshed/rigid-contact.log",
+      "sha256": "cbb1aa196cf80ae11aa63c95d1c4f109aea3c78524a5fe01032688db3487dc67",
+      "bytes": 157
+    },
+    {
+      "source": "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/final-support-checks-refreshed/support-continuation/RESULTS.json",
+      "destination": "final/final-support-checks-refreshed/support-continuation/RESULTS.json",
+      "sha256": "2fce7690f55f930450c99af961881094efac4ffb5dbc31f522a7dfd5d2b7cd9d",
+      "bytes": 6817
+    },
+    {
+      "source": "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/final-support-checks-refreshed/support-continuation/support-continuation.log",
+      "destination": "final/final-support-checks-refreshed/support-continuation/support-continuation.log",
+      "sha256": "d7c384e0fb9700361660b9c91b3eb457469554b276fe3a491ef6822f3c340628",
+      "bytes": 456
+    },
+    {
+      "source": "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/final-support-checks-refreshed/support-continuation.log",
+      "destination": "final/final-support-checks-refreshed/support-continuation.log",
+      "sha256": "17542eae3a90ee223f07d9baba6bf8a1534926b5a74e83da6d48b43916732698",
+      "bytes": 171
+    },
+    {
+      "source": "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/final-support-application/EXPORT.json",
+      "destination": "final/final-support-application/EXPORT.json",
+      "sha256": "f462808a7fa7eda50f082593cfbe64a43b9dbbc5acba567d76989d634095ab69",
+      "bytes": 452
+    },
+    {
+      "source": "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/final-support-application/RESULTS.json",
+      "destination": "final/final-support-application/RESULTS.json",
+      "sha256": "9bdf4463885b2aa70c32bf57ac65baf6c001b1b8385962d90e1f0bf05c1c6133",
+      "bytes": 360
+    },
+    {
+      "source": "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/final-support-application/export.log",
+      "destination": "final/final-support-application/export.log",
+      "sha256": "f60cedd53d29d19187c007f8d41527bb54729e072b57b23c63803746f34dc6d3",
+      "bytes": 159
+    },
+    {
+      "source": "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/final-support-application/profile.json",
+      "destination": "final/final-support-application/profile.json",
+      "sha256": "66a2fac6fa4aeff0900c6f4903c79f66500b18352a9782927a80164324c662f3",
+      "bytes": 2285742
+    },
+    {
+      "source": "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/final-support-application/runtime.log",
+      "destination": "final/final-support-application/runtime.log",
+      "sha256": "435758caeee285858e7e8df90d104963765c0a76083f6fb45d1aecb91a9ea293",
+      "bytes": 544
+    },
+    {
+      "source": "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/runs/final-support-unprofiled-A1/AS_RUN.json",
+      "destination": "final/runs/final-support-unprofiled-A1/AS_RUN.json",
+      "sha256": "d1e89d063abbddee6e051e4a4d64c03f524f9a0e8b6dadaca0b17caffff7eb0d",
+      "bytes": 666
+    },
+    {
+      "source": "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/runs/final-support-unprofiled-A1/CONTEXT.json",
+      "destination": "final/runs/final-support-unprofiled-A1/CONTEXT.json",
+      "sha256": "4bd882f73a93382e6956b59ce2f908e587d1dc458f8b658667f1d05145db9977",
+      "bytes": 1367
+    },
+    {
+      "source": "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/runs/final-support-unprofiled-A1/RESULTS.json",
+      "destination": "final/runs/final-support-unprofiled-A1/RESULTS.json",
+      "sha256": "daf807195eac3121e3859f8d3faaf96a1a4857200f39c37221c756cb289a3792",
+      "bytes": 6990
+    },
+    {
+      "source": "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/runs/final-support-unprofiled-A1/live/begins.csv",
+      "destination": "final/runs/final-support-unprofiled-A1/live/begins.csv",
+      "sha256": "904c2ce283e164a6b1d7f4ae9448b3f402e0427a057049a2740ee7851c9877fc",
+      "bytes": 6898
+    },
+    {
+      "source": "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/runs/final-support-unprofiled-A1/live/frames.csv",
+      "destination": "final/runs/final-support-unprofiled-A1/live/frames.csv",
+      "sha256": "00df16848882f2584501bcbb18f1c5d8e446c31e6d1f8ac237756b9fb0ff24ee",
+      "bytes": 41334
+    },
+    {
+      "source": "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/runs/final-support-unprofiled-A1/live/profile-final.json",
+      "destination": "final/runs/final-support-unprofiled-A1/live/profile-final.json",
+      "sha256": "eed97e8d83999800828c3fd886821a63a064bdb2a95c8ccdb7009c1272b7b605",
+      "bytes": 636
+    },
+    {
+      "source": "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/runs/final-support-unprofiled-A1/live/quality.json",
+      "destination": "final/runs/final-support-unprofiled-A1/live/quality.json",
+      "sha256": "795245244e21bd2ac8359bb738bf6862b5bffd5f6046de836b3f4a2ea3dce381",
+      "bytes": 366
+    },
+    {
+      "source": "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/runs/final-support-unprofiled-A1/live/steps.csv",
+      "destination": "final/runs/final-support-unprofiled-A1/live/steps.csv",
+      "sha256": "7bbf2608bebbabd672bbfa41a542a272a4a8fa5c66829e88a5d386803cce5180",
+      "bytes": 40896
+    },
+    {
+      "source": "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/runs/final-support-unprofiled-A1/run.log",
+      "destination": "final/runs/final-support-unprofiled-A1/run.log",
+      "sha256": "8ce3cb783d1dd7679d22831aa7d795b6bc57a45f3d4fe4c88ea697ffc879cfc6",
+      "bytes": 595
+    },
+    {
+      "source": "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/runs/final-support-unprofiled-A1/rusage.log",
+      "destination": "final/runs/final-support-unprofiled-A1/rusage.log",
+      "sha256": "1be091c68c44b7b590ff237571162771aaaf9b9c58b3808d1e05019c60d32598",
+      "bytes": 1111
+    },
+    {
+      "source": "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/runs/final-support-realtime-A1/AS_RUN.json",
+      "destination": "final/runs/final-support-realtime-A1/AS_RUN.json",
+      "sha256": "c3696b98109ce57f704a63b0dca278f6a038a626f226e51cf856170098f6dfb8",
+      "bytes": 657
+    },
+    {
+      "source": "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/runs/final-support-realtime-A1/CONTEXT.json",
+      "destination": "final/runs/final-support-realtime-A1/CONTEXT.json",
+      "sha256": "95ed00dee41e5f7a216e7783e428c1e53195533fbdc35caa13af318c7af92381",
+      "bytes": 1370
+    },
+    {
+      "source": "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/runs/final-support-realtime-A1/RESULTS.json",
+      "destination": "final/runs/final-support-realtime-A1/RESULTS.json",
+      "sha256": "d6173e3fd7303102dfca30d4788d49c298897303834ac4a20f5c0c0d10bbd2f9",
+      "bytes": 8335
+    },
+    {
+      "source": "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/runs/final-support-realtime-A1/live/begins.csv",
+      "destination": "final/runs/final-support-realtime-A1/live/begins.csv",
+      "sha256": "e18aa5e7630708094a597658bb186a1eec6528cf0cef325efe2dcd8b7e66a8e1",
+      "bytes": 1492
+    },
+    {
+      "source": "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/runs/final-support-realtime-A1/live/frames.csv",
+      "destination": "final/runs/final-support-realtime-A1/live/frames.csv",
+      "sha256": "43323b7a7163addd3b969e0b0b5c915e970cfd7223565ec733d30b68a42a20d5",
+      "bytes": 9088
+    },
+    {
+      "source": "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/runs/final-support-realtime-A1/live/profile-final.json",
+      "destination": "final/runs/final-support-realtime-A1/live/profile-final.json",
+      "sha256": "eed97e8d83999800828c3fd886821a63a064bdb2a95c8ccdb7009c1272b7b605",
+      "bytes": 636
+    },
+    {
+      "source": "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/runs/final-support-realtime-A1/live/quality.json",
+      "destination": "final/runs/final-support-realtime-A1/live/quality.json",
+      "sha256": "ecda7e4d347806ba96f2db347a26c33b0c6a3f657d55ae2ae8f98b94e4fc0596",
+      "bytes": 366
+    },
+    {
+      "source": "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/runs/final-support-realtime-A1/live/steps.csv",
+      "destination": "final/runs/final-support-realtime-A1/live/steps.csv",
+      "sha256": "b104384d839c32140870279c7bbd065903010461235a1d206fddd5265f8747b8",
+      "bytes": 56288
+    },
+    {
+      "source": "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/runs/final-support-realtime-A1/run.log",
+      "destination": "final/runs/final-support-realtime-A1/run.log",
+      "sha256": "8ebd4a17ae72794d9611926675f184688c39ab9f011294ba723f0e3a9a309fba",
+      "bytes": 586
+    },
+    {
+      "source": "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/runs/final-support-realtime-A1/rusage.log",
+      "destination": "final/runs/final-support-realtime-A1/rusage.log",
+      "sha256": "1e3fc2f985439f78072636e9427d2ce701f48e392ddb1121645c322b1efe4adb",
+      "bytes": 1103
+    },
+    {
+      "source": "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/runs/FINAL_SUPPORT_SOURCE_PARITY.json",
+      "destination": "final/FINAL_SUPPORT_SOURCE_PARITY.json",
+      "sha256": "a4a0e24158d3c12e29fc217cdf1afc0583ac04274b5ba393d32ca0fb282a8333",
+      "bytes": 2166
+    },
+    {
+      "source": "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/final-native-host.json",
+      "destination": "final/HOST.json",
+      "sha256": "2e26f49957a69586d579e49a79c362946f2d428763df05607968e50dce5d791d",
+      "bytes": 13310
+    },
+    {
+      "source": "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/final-support-cold/PHYSICAL_ENDPOINT_COMPARISON.json",
+      "destination": "final/cold/PHYSICAL_ENDPOINT_COMPARISON.json",
+      "sha256": "2f3289eb0d3905ad2f1e4214f7a58314a9c9cfc31ef2f165db22ac1d8cdcbad3",
+      "bytes": 21140
+    },
+    {
+      "source": "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/final-support-cold/PLAN.json",
+      "destination": "final/cold/PLAN.json",
+      "sha256": "b679babb86a88911631269fd1ccd975dfcfbd8ba48c2d7e4f7d0f4c00e601eaf",
+      "bytes": 12087
+    },
+    {
+      "source": "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/final-support-cold/RESULTS.json",
+      "destination": "final/cold/RESULTS.json",
+      "sha256": "b6528ffdd2f8321268009294da7893b3cdf64577b3e34fb32b8c60bac506fc0c",
+      "bytes": 44741
+    },
+    {
+      "source": "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/final-support-cold/balance-cold-read.log",
+      "destination": "final/cold/balance-cold-read.log",
+      "sha256": "f82cd45707664fd625b557a869705216ee0f0316cf467910a2edb81ca1d705f3",
+      "bytes": 23883
+    },
+    {
+      "source": "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/final-support-cold/balance-cold-write.log",
+      "destination": "final/cold/balance-cold-write.log",
+      "sha256": "a53324803606abab2703477185fff33d220029cfefac41ccb2b64d8f8c162003",
+      "bytes": 26328
+    },
+    {
+      "source": "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/final-support-cold/character-cold-read.log",
+      "destination": "final/cold/character-cold-read.log",
+      "sha256": "70626dd50288951c13048a30495c4f0259b61e8cc335d28db4e83c5027d9228b",
+      "bytes": 1288
+    },
+    {
+      "source": "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/final-support-cold/character-cold-write.log",
+      "destination": "final/cold/character-cold-write.log",
+      "sha256": "79de15def886b11a420bf134ea90896d35cba319fc9ef16f29fdd206dc4b3d5b",
+      "bytes": 732
+    },
+    {
+      "source": "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/final-support-cold/observer-compile.log",
+      "destination": "final/cold/observer-compile.log",
+      "sha256": "809ccc17ab14849df9d217ed3b5e41fd8ab724d85ffb37bb4fcddb1ee9d70547",
+      "bytes": 1773
+    },
+    {
+      "source": "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/final-support-cold/observer-link.log",
+      "destination": "final/cold/observer-link.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "source": "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/final-support-cold/read-physical-final.json",
+      "destination": "final/cold/read-physical-final.json",
+      "sha256": "bd0c66e4a3247f70f200366374b12d140ad24c7f5f098500f86523ab69971786",
+      "bytes": 54270
+    },
+    {
+      "source": "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/final-support-cold/validate.py",
+      "destination": "final/cold/validate.py",
+      "sha256": "cc26188853616c18237d63f37faab86948cfb0d54f26c0c790a4689e9fbe2b15",
+      "bytes": 9236
+    },
+    {
+      "source": "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/final-support-cold/write-physical-final.json",
+      "destination": "final/cold/write-physical-final.json",
+      "sha256": "c3315c30fc47ea37d0fb81c3a4cb1d939355622b266217a053a000fd982091f4",
+      "bytes": 54270
+    },
+    {
+      "source": "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/final-support-cold/native/character/slots/m70.save",
+      "destination": "final/cold/character/m70.save",
+      "sha256": "163e63cbb013bf35259cae406848230bd0e0f6fa4c83f52dd6aae29e6eb9f397",
+      "bytes": 107787
+    },
+    {
+      "source": "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/final-support-cold/native/balance/slots/m77.save",
+      "destination": "final/cold/balance/m77.save",
+      "sha256": "97fcdecb820ce261f705893818f87eda918f12987c3fd4b54725b2d0a9ca45b5",
+      "bytes": 56639
+    },
+    {
+      "source": "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/candidate-support-final/FROZEN.json",
+      "destination": "final/source/FROZEN.json",
+      "sha256": "7b9d17ac8938680cbcb77cfba826424ef4dbe870635ea4c80ee548021478388c",
+      "bytes": 83094
+    },
+    {
+      "source": "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/candidate-support-final/source-inputs.tar.gz",
+      "destination": "final/source/source-inputs.tar.gz",
+      "sha256": "2fb03dc0de2592a03f1c68c320e8fd6e451134f9c6d763b7663c0ca11b08720d",
+      "bytes": 1772584
+    },
+    {
+      "source": "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/candidate-support-final/judas-build-info-Release.json",
+      "destination": "final/source/judas-build-info-Release.json",
+      "sha256": "975a6ca6c9bbd3b3719131ab9e2853cf411240839f21cfc0c3afac2465cec65b",
+      "bytes": 727
+    },
+    {
+      "source": "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/candidate-support-final/CMakeCache.txt",
+      "destination": "final/source/CMakeCache.txt",
+      "sha256": "1b626bf4859cd3f7b1192c90f4c98211a38e4ef4143abd5555cb7df99c8f4c3a",
+      "bytes": 24212
+    },
+    {
+      "source": "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/candidate-support-final-test-sources/SOURCE_SUPPLEMENT.json",
+      "destination": "final/source-test-supplement/SOURCE_SUPPLEMENT.json",
+      "sha256": "26f6587a965f7ed93fc7c8fd955b3921f08f50211c49e79fea2ee5e70614db0f",
+      "bytes": 1640
+    },
+    {
+      "source": "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/candidate-support-final-test-sources/additional-source-inputs.tar.gz",
+      "destination": "final/source-test-supplement/additional-source-inputs.tar.gz",
+      "sha256": "abece553c981ddaf91d6a99aadfd56e00b18fc21f67b15826c1dcd6953fb87c6",
+      "bytes": 7523
+    },
+    {
+      "source": "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/run_support_refreshed_checks.py",
+      "destination": "final/tools/run_support_refreshed_checks.py",
+      "sha256": "4648e4597c56968d5cf972768050b79a5abb5d7755256439cc94987e35acba34",
+      "bytes": 1207
+    },
+    {
+      "source": "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/run_support_temporal.py",
+      "destination": "final/tools/run_support_temporal.py",
+      "sha256": "c24210f0359296ee5a5f6d14dfa1b973bc0ec944e9abc155decb15fda4af2862",
+      "bytes": 2092
+    }
+  ]
+}

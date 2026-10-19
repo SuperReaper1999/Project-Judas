@@ -1,0 +1,11 @@
+{
+  "argv": [
+    "/home/conner/Documents/GitHub/Project-Judas/build/judas_export",
+    "projects/physics_stress_lab/physics_stress_lab.judasproj",
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/export-support-final",
+    "/home/conner/Documents/GitHub/Project-Judas/build/judas"
+  ],
+  "exit": 0,
+  "seconds": 0.6225458939989039,
+  "log_sha256": "f60cedd53d29d19187c007f8d41527bb54729e072b57b23c63803746f34dc6d3"
+}

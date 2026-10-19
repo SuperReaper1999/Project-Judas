@@ -1,0 +1,35 @@
+{
+  "note": "Additional source bytes only; the original snapshot is untouched. Parent archive did not include these inputs unless separately listed there.",
+  "parent_manifest_sha256": "7b9d17ac8938680cbcb77cfba826424ef4dbe870635ea4c80ee548021478388c",
+  "parent_snapshot": "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/candidate-support-final",
+  "parent_source_archive": {
+    "bytes": 1772584,
+    "mode": "0o664",
+    "mtime_ns": 1792415071164575201,
+    "path": "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/candidate-support-final/source-inputs.tar.gz",
+    "sha256": "2fb03dc0de2592a03f1c68c320e8fd6e451134f9c6d763b7663c0ca11b08720d"
+  },
+  "schema": "judas.dense.source_supplement.v1",
+  "source_archive": {
+    "bytes": 7523,
+    "mode": "0o664",
+    "mtime_ns": 1792415114908830801,
+    "path": "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/candidate-support-final-test-sources/additional-source-inputs.tar.gz",
+    "sha256": "abece553c981ddaf91d6a99aadfd56e00b18fc21f67b15826c1dcd6953fb87c6"
+  },
+  "source_inputs": {
+    "tests/ContactSatFilterTests.cpp": {
+      "bytes": 10603,
+      "sha256": "20bf9f14a3cea6af69812b7b6fd3b36f658752a08bab83a41b20590f13e6f709"
+    },
+    "tests/ContactSphereFilterTests.cpp": {
+      "bytes": 18321,
+      "sha256": "1056665d693e25bfc5a639df8fe55e10d269c948d3b947f6d618b604c0798075"
+    },
+    "tests/ImpactSupportSetsTests.cpp": {
+      "bytes": 3481,
+      "sha256": "de6338563f81672865630a1a273aa8908c4caf61934b4fee5b081eed14b18989"
+    }
+  },
+  "utc": "2026-10-19T13:05:14.910383+00:00"
+}

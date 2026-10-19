@@ -1,0 +1,2 @@
+FAIL reused slot generation cannot reuse historical enclosure
+cached_discovery checks=12 failures=1

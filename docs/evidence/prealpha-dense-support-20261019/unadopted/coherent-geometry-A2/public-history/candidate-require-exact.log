@@ -1,0 +1,3 @@
+free samples=96 exact=96 position_mismatches=0 rotation_mismatches=0 split_bodies=0 segments=16 events=0 max_position_error_m=0 max_unit_radius_rotation_error_m=0 stored_endpoint_repair_m=0
+kinematic samples=96 exact=96 position_mismatches=0 rotation_mismatches=0 split_bodies=0 segments=16 events=0 max_position_error_m=0 max_unit_radius_rotation_error_m=0 stored_endpoint_repair_m=0
+impact samples=192 exact=113 position_mismatches=49 rotation_mismatches=79 split_bodies=16 segments=32 events=16 max_position_error_m=4.8060576387852843e-07 max_unit_radius_rotation_error_m=1.5579018514236308e-07 stored_endpoint_repair_m=0

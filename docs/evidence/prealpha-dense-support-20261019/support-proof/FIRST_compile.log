@@ -1,0 +1,28 @@
+In file included from /home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/support-failure-replay/SupportReplay.cpp:4:
+/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/support-failure-replay/../event-topology-observer-v2/PairReplay.cpp:6:9: warning: ‘main’ redefined
+    6 | #define main JudasOriginalContactReplayMain
+      |         ^~~~
+/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/support-failure-replay/SupportReplay.cpp:3:9: note: this is the location of the previous definition
+    3 | #define main JudasNativePairReplayMain
+      |         ^~~~
+/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/support-failure-replay/SupportReplay.cpp: In function ‘contact_capture::Json {anonymous}::Failure(PhysicsWorld::Impl&, const std::array<unsigned int, 4>&, double, double)’:
+/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/support-failure-replay/SupportReplay.cpp:29:9: warning: this ‘if’ clause does not guard... [-Wmisleading-indentation]
+   29 |         if(it==path.begin())return done(false,"missing_segment");segments[side]=&*--it;
+      |         ^~
+/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/support-failure-replay/SupportReplay.cpp:29:66: note: ...this statement, but the latter is misleadingly indented as if it were guarded by the ‘if’
+   29 |         if(it==path.begin())return done(false,"missing_segment");segments[side]=&*--it;
+      |                                                                  ^~~~~~~~
+/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/support-failure-replay/SupportReplay.cpp: In lambda function:
+/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/support-failure-replay/SupportReplay.cpp:58:9: warning: this ‘if’ clause does not guard... [-Wmisleading-indentation]
+   58 |         if(!bound)return false;if(bound->lo>0)return true;if(!depth||bound->hi<=0)return false;
+      |         ^~
+/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/support-failure-replay/SupportReplay.cpp:58:32: note: ...this statement, but the latter is misleadingly indented as if it were guarded by the ‘if’
+   58 |         if(!bound)return false;if(bound->lo>0)return true;if(!depth||bound->hi<=0)return false;
+      |                                ^~
+/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/support-failure-replay/SupportReplay.cpp: At global scope:
+/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/support-failure-replay/SupportReplay.cpp:76:5: error: redefinition of ‘int main(int, char**)’
+   76 | int main(int argc,char**argv){
+      |     ^~~~
+/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/support-failure-replay/../event-topology-observer-v2/PairReplay.cpp:98:5: note: ‘int main(int, char**)’ previously defined here
+   98 | int main(int argc,char** argv) {
+      |     ^~~~

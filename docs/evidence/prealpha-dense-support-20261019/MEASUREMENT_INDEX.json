@@ -1,0 +1,210 @@
+{
+  "schema": "judas.dense.support.measurement-index.v1",
+  "baseline_safe_checkpoint": "8f6bd18b876158c131bee61fa0dc71625d912c30",
+  "unchanged_fixture_sha256": "a2caf62a295243d301149202c8a0a5eedafff256d68de0e3cda988846b2e05bf",
+  "simulation_steps": 270,
+  "simulated_seconds": 4.5,
+  "dynamic_body_fidelity": "1152 dynamic bodies overall, including1024 tagged loose pieces; original60Hz cadence/geometry/solver quality unchanged",
+  "ordinary_unprofiled_fixed_ms": {
+    "baseline": {
+      "count": 270,
+      "maximum": 942.047123,
+      "mean": 63.03256067407408,
+      "median": 23.004445,
+      "p95_floor": 213.604517,
+      "p99_floor": 554.115765
+    },
+    "support_candidate": {
+      "count": 270,
+      "maximum": 262.562062,
+      "mean": 46.270974422222224,
+      "median": 22.484424500000003,
+      "p95_floor": 158.841265,
+      "p99_floor": 244.524703
+    },
+    "unadopted_cached_discovery": {
+      "count": 270,
+      "maximum": 1034.592871,
+      "mean": 62.03732352222222,
+      "median": 23.1507345,
+      "p95_floor": 200.224607,
+      "p99_floor": 534.900828
+    }
+  },
+  "support_physical_trajectory_differs_from_baseline": true,
+  "support_temporal_observer_matches_every_ordinary_physical_work_row": true,
+  "cached_discovery_matches_every_original_physical_work_row": true,
+  "temporal_observations": {
+    "baseline": {
+      "utc": "2026-10-19T10:53:28.690093+00:00",
+      "csv": "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/runs/quality-capture-A1/live/temporal-quality.csv",
+      "csv_sha256": "3dea81ea3b417e8015ac71bb767172d709bcf47aca9dd86a35f3d771808bc5aa",
+      "observation_rows": 271,
+      "first_step": 0,
+      "last_step": 270,
+      "sequence_complete": true,
+      "selected_entity_counts": [
+        1024.0
+      ],
+      "actual_live_body_counts": [
+        1024.0
+      ],
+      "masses_kg": [
+        2048.0
+      ],
+      "finite_all_steps": true,
+      "plane_gravity_potential_valid_all_steps": true,
+      "actual_floor_available_all_steps": true,
+      "actual_floor_supported_counts": [
+        1024.0
+      ],
+      "fully_inside_floor_counts": [
+        1024.0
+      ],
+      "minimum_floor_clearance_m": -0.06358218648721486,
+      "minimum_clearance_step": "194",
+      "maximum_linear_kinetic_J": 1662.9601658160384,
+      "maximum_rotational_kinetic_J": 84.28148906341792,
+      "initial_mechanical_energy_J": 32346.31753646828,
+      "final_mechanical_energy_J": 26254.66731615509,
+      "maximum_energy_increase_over_initial_J": 0.0,
+      "largest_one_step_energy_increase": [
+        17,
+        8.458998655591131
+      ],
+      "sampled_native_geometry_steps": [
+        0,
+        10,
+        20,
+        30,
+        40,
+        50,
+        60,
+        70,
+        80,
+        90,
+        100,
+        110,
+        120,
+        130,
+        140,
+        150,
+        160,
+        170,
+        180,
+        190,
+        200,
+        210,
+        220,
+        230,
+        240,
+        250,
+        260,
+        270
+      ],
+      "maximum_sampled_native_penetration_m": 0.057799417906337136,
+      "sampled_uncertain_pair_total": 0,
+      "sampled_unsupported_pair_total": 0,
+      "notes": [
+        "Observer executes outside recorded physics spans; these are diagnostic runs, not wall/FPS comparisons.",
+        "Clearance uses actual finite authored-floor frame/support extents and detects already-crossed bodies even without overlapping manifolds.",
+        "Native pair geometry sampled at step0 and every10 steps; unsampled times have no invented contact-penetration result.",
+        "Energy covers tagged loose pieces only; no general whole-world conservation claim or acceptance threshold is inferred.",
+        "Potential only published when actual sampled body gravity agrees with one common plane equilibrium."
+      ]
+    },
+    "support_candidate": {
+      "utc": "2026-10-19T12:56:21.519369+00:00",
+      "csv": "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/runs/support-temporal-A1/live/temporal-quality.csv",
+      "csv_sha256": "e28f81c72bb5f3bbf997fd4cdea737446cc39ffc4722c21de3c5e130e74d7406",
+      "observation_rows": 271,
+      "first_step": 0,
+      "last_step": 270,
+      "sequence_complete": true,
+      "selected_entity_counts": [
+        1024.0
+      ],
+      "actual_live_body_counts": [
+        1024.0
+      ],
+      "masses_kg": [
+        2048.0
+      ],
+      "finite_all_steps": true,
+      "plane_gravity_potential_valid_all_steps": true,
+      "actual_floor_available_all_steps": true,
+      "actual_floor_supported_counts": [
+        1024.0
+      ],
+      "fully_inside_floor_counts": [
+        1024.0
+      ],
+      "minimum_floor_clearance_m": -0.04507465951463685,
+      "minimum_clearance_step": "196",
+      "maximum_linear_kinetic_J": 1662.9601658160384,
+      "maximum_rotational_kinetic_J": 80.58440819240721,
+      "initial_mechanical_energy_J": 32346.31753646828,
+      "final_mechanical_energy_J": 26263.335727474485,
+      "maximum_energy_increase_over_initial_J": 0.0,
+      "largest_one_step_energy_increase": [
+        17,
+        8.458998655591131
+      ],
+      "sampled_native_geometry_steps": [
+        0,
+        10,
+        20,
+        30,
+        40,
+        50,
+        60,
+        70,
+        80,
+        90,
+        100,
+        110,
+        120,
+        130,
+        140,
+        150,
+        160,
+        170,
+        180,
+        190,
+        200,
+        210,
+        220,
+        230,
+        240,
+        250,
+        260,
+        270
+      ],
+      "maximum_sampled_native_penetration_m": 0.061963176868673864,
+      "sampled_uncertain_pair_total": 0,
+      "sampled_unsupported_pair_total": 0,
+      "notes": [
+        "Observer executes outside recorded physics spans; these are diagnostic runs, not wall/FPS comparisons.",
+        "Clearance uses actual finite authored-floor frame/support extents and detects already-crossed bodies even without overlapping manifolds.",
+        "Native pair geometry sampled at step0 and every10 steps; unsampled times have no invented contact-penetration result.",
+        "Energy covers tagged loose pieces only; no general whole-world conservation claim or acceptance threshold is inferred.",
+        "Potential only published when actual sampled body gravity agrees with one common plane equilibrium."
+      ]
+    }
+  },
+  "classification": {
+    "support": "Demonstrated existing certificate incompleteness; original bounded partition could never tighten a negative lower-clearance proxy. One-line correction preserves original5mm allowance/depth3/native trajectory and contact response. Root final regressions/provenance follow separately.",
+    "coherent_geometry_A2": "Rejected actual270 regression and public motion-history mismatch; preserved source/ABI/failures.",
+    "cached_discovery": "Unadopted: exact physical parity,1.6% mean change and worse worst-step; no meaningful demonstrated end-to-end win.",
+    "impact_memo": "Unadopted: exact physics/diagnostic parity but3.7% local mean gain with worse local tails; not sufficient to justify added runtime complexity.",
+    "persistent_pair_cache": "Standalone controls only; never integrated or benchmarked end-to-end. No engine speedup claim. Original per-command process exits unavailable and explicitly marked as such."
+  },
+  "limitations": [
+    "Single matched ordinary270-step pair, not a statistical confidence claim or a sustained FPS guarantee.",
+    "Temporal runs include oracle work outside measured physics; do not compare their wall time or FPS.",
+    "Temporal geometry sampled every10steps, so contact maximum is sampled, not global.",
+    "Floor excursion improves63.58mm\u219245.07mm, while maximum sampled interbody depth worsens57.80mm\u219261.96mm. No blanket accuracy improvement is claimed.",
+    "No actual device/Windows qualification, main promotion or human acceptance is implied.",
+    "24\u201330FPS target was relaxed by operator for current older hardware; remaining dense-case latency is documented rather than hidden."
+  ]
+}

@@ -1,0 +1,14 @@
+FAIL cached ordered candidate pairs match independent original tree query
+FAIL cached ordered candidate pairs match independent original tree query
+FAIL cached ordered candidate pairs match independent original tree query
+FAIL cached ordered candidate pairs match independent original tree query
+FAIL cached ordered candidate pairs match independent original tree query
+FAIL cached ordered candidate pairs match independent original tree query
+FAIL cached ordered candidate pairs match independent original tree query
+FAIL cached ordered candidate pairs match independent original tree query
+FAIL cached ordered candidate pairs match independent original tree query
+FAIL cached ordered candidate pairs match independent original tree query
+FAIL cached ordered candidate pairs match independent original tree query
+FAIL cached ordered candidate pairs match independent original tree query
+lifecycle original_queries=151609 changed_proxy_queries=2397 reused_updates=4918 storage_bytes=11544
+pair_cache checks=24025 failures=8834

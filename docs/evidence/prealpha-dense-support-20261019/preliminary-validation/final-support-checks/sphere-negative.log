@@ -1,0 +1,20 @@
+FAIL certificate preserves legacy interval-resolved sign and exact-gap branch row=11
+FAIL certificate agrees with independent expansion row=11
+FAIL certificate preserves legacy interval-resolved sign and exact-gap branch row=33
+FAIL certificate agrees with independent expansion row=33
+FAIL certificate preserves legacy interval-resolved sign and exact-gap branch row=77
+FAIL certificate agrees with independent expansion row=77
+FAIL certificate preserves legacy interval-resolved sign and exact-gap branch row=121
+FAIL certificate agrees with independent expansion row=121
+FAIL certificate preserves legacy interval-resolved sign and exact-gap branch row=220
+FAIL certificate agrees with independent expansion row=220
+FAIL certificate preserves legacy interval-resolved sign and exact-gap branch row=231
+FAIL certificate agrees with independent expansion row=231
+FAIL certificate preserves legacy interval-resolved sign and exact-gap branch row=253
+FAIL certificate agrees with independent expansion row=253
+FAIL certificate preserves legacy interval-resolved sign and exact-gap branch row=308
+FAIL certificate agrees with independent expansion row=308
+FAIL certificate preserves legacy interval-resolved sign and exact-gap branch row=330
+FAIL certificate agrees with independent expansion row=330
+FAIL certificate preserves legacy interval-resolved sign and exact-gap branch row=341
+sphere_filter rows=200000 checks=380047 failures=7114 certified=178327 ambiguous=21673 legacy_exact_branches=14965 legacy_zero_branches=13718 independent_exact=873 exact_zeros=264 scalar_changes_legacy_branch=7010

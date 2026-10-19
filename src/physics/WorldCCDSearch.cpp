@@ -522,7 +522,11 @@ auto PhysicsWorld::Impl::SupportContinuationSafe(const std::array<unsigned, 4> &
             return false;
         if (bound->lo > 0)
             return true;
-        if (!depth || bound->hi <= 0)
+        // This encloses a lower-clearance proxy using the whole interval's
+        // worst rotational extents. Its upper endpoint does not bound actual
+        // clearance: smaller intervals can tighten those extents even when
+        // the entire current proxy is nonpositive. Exhaustion ends the proof.
+        if (!depth)
             return false;
         const double mid = (lo + hi) * .5;
         return self(self, lo, mid, depth - 1) && self(self, mid, hi, depth - 1);

@@ -1,0 +1,78 @@
+{
+  "utc": "2026-10-19T10:53:28.690093+00:00",
+  "csv": "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/runs/quality-capture-A1/live/temporal-quality.csv",
+  "csv_sha256": "3dea81ea3b417e8015ac71bb767172d709bcf47aca9dd86a35f3d771808bc5aa",
+  "observation_rows": 271,
+  "first_step": 0,
+  "last_step": 270,
+  "sequence_complete": true,
+  "selected_entity_counts": [
+    1024.0
+  ],
+  "actual_live_body_counts": [
+    1024.0
+  ],
+  "masses_kg": [
+    2048.0
+  ],
+  "finite_all_steps": true,
+  "plane_gravity_potential_valid_all_steps": true,
+  "actual_floor_available_all_steps": true,
+  "actual_floor_supported_counts": [
+    1024.0
+  ],
+  "fully_inside_floor_counts": [
+    1024.0
+  ],
+  "minimum_floor_clearance_m": -0.06358218648721486,
+  "minimum_clearance_step": "194",
+  "maximum_linear_kinetic_J": 1662.9601658160384,
+  "maximum_rotational_kinetic_J": 84.28148906341792,
+  "initial_mechanical_energy_J": 32346.31753646828,
+  "final_mechanical_energy_J": 26254.66731615509,
+  "maximum_energy_increase_over_initial_J": 0.0,
+  "largest_one_step_energy_increase": [
+    17,
+    8.458998655591131
+  ],
+  "sampled_native_geometry_steps": [
+    0,
+    10,
+    20,
+    30,
+    40,
+    50,
+    60,
+    70,
+    80,
+    90,
+    100,
+    110,
+    120,
+    130,
+    140,
+    150,
+    160,
+    170,
+    180,
+    190,
+    200,
+    210,
+    220,
+    230,
+    240,
+    250,
+    260,
+    270
+  ],
+  "maximum_sampled_native_penetration_m": 0.057799417906337136,
+  "sampled_uncertain_pair_total": 0,
+  "sampled_unsupported_pair_total": 0,
+  "notes": [
+    "Observer executes outside recorded physics spans; these are diagnostic runs, not wall/FPS comparisons.",
+    "Clearance uses actual finite authored-floor frame/support extents and detects already-crossed bodies even without overlapping manifolds.",
+    "Native pair geometry sampled at step0 and every10 steps; unsampled times have no invented contact-penetration result.",
+    "Energy covers tagged loose pieces only; no general whole-world conservation claim or acceptance threshold is inferred.",
+    "Potential only published when actual sampled body gravity agrees with one common plane equilibrium."
+  ]
+}

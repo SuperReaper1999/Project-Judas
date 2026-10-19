@@ -1,0 +1,14 @@
+FAIL layer/filter rejection counts match original, including disabled lower-slot quirk
+FAIL layer/filter rejection counts match original, including disabled lower-slot quirk
+FAIL layer/filter rejection counts match original, including disabled lower-slot quirk
+FAIL layer/filter rejection counts match original, including disabled lower-slot quirk
+FAIL layer/filter rejection counts match original, including disabled lower-slot quirk
+FAIL layer/filter rejection counts match original, including disabled lower-slot quirk
+FAIL layer/filter rejection counts match original, including disabled lower-slot quirk
+FAIL layer/filter rejection counts match original, including disabled lower-slot quirk
+FAIL layer/filter rejection counts match original, including disabled lower-slot quirk
+FAIL layer/filter rejection counts match original, including disabled lower-slot quirk
+FAIL layer/filter rejection counts match original, including disabled lower-slot quirk
+FAIL layer/filter rejection counts match original, including disabled lower-slot quirk
+lifecycle original_queries=151609 changed_proxy_queries=22971 reused_updates=4542 storage_bytes=11560
+pair_cache checks=24025 failures=3217

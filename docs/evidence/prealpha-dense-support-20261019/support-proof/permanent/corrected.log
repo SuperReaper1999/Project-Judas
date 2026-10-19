@@ -1,0 +1,5 @@
+rotation_about_normal translation=0 certified=1 partitions=7 maximum_depth_m=0
+rotation_about_normal translation=1 certified=1 partitions=7 maximum_depth_m=5.9604644775390625e-08
+over_allowance interior=0 certified=0 partitions=0 maximum_depth_m=0.016666650772094727 endpoint_depth_m=0.016666650772094727
+over_allowance interior=1 certified=0 partitions=4 maximum_depth_m=0.0099016037199317619 endpoint_depth_m=0
+Support continuation: checks=11 failures=0

@@ -1,0 +1,20 @@
+{
+  "status": "isolated, unadopted; no demonstrated whole-world speedup",
+  "candidate_scope": "Solve-local body-membership lookup and lazy immutable-orientation ContactRotation reuse; original saved encounter order and all response/budget arithmetic retained",
+  "exact_captured_event_parity": true,
+  "same_small_state_and_diagnostic_bits": true,
+  "small_checks_per_original_and_candidate": 22,
+  "expected_eager_unused_rotation_mutant_failures": 1,
+  "timing_interpretation": "One32-repetition captured-event local pair: modest mean/median improvement with worse p95/maximum. No statistical or whole-world FPS claim. Parent decides whether further whole-world qualification is justified.",
+  "base_archive_sha256": "edd3873e4c1bc5578b7ee3f94fdbe35eaaf01847d637118133acaee9af8f9711",
+  "candidate_archive_sha256": "83f7b08097c09d97a8d73bbec4ab016b44d236af03678539b3b2b610ace322fd",
+  "source_hashes": {
+    "ImpactSolver.baseline.cpp": "9c7a88edefcccdb8fe63ceeaeea0f8f11c92681320625574111be030c68d8d6f",
+    "MemoReplay.cpp": "e14cec91370909153ea74d1f28c1d0aeab1c01ff60c3956b262365edf7091b39",
+    "EagerRotationMutant.cpp": "bd4b8ef777d4e232723abfec0aade47d3fff312055fb032331972997b45eba24",
+    "ImpactSolver.cpp": "ee39f289cd36ed63d391e14f52ad8946e5dffa765cc3ba7679df396763b0c555",
+    "MemoControls.cpp": "ab2c45b2a0bb4a5f1d4bd3707e287264dd0ba2493dba7af7cc56be1f4164a6a1"
+  },
+  "results_sha256": "1d5a94e2cdc3bd9a99936baa9a7acade43e0affd9cb22e234fb9f6563c03f3de",
+  "no_production_edits": true
+}

@@ -1,0 +1,4263 @@
+{
+  "accepted": 0,
+  "diagnostic_parity_failures": 0,
+  "records": 78,
+  "rejected": 78,
+  "results": [
+    {
+      "actual_unmodified_result": false,
+      "after_global_impact_sequence": 3470,
+      "clearance_m": 0.004999999888241291,
+      "diagnostic_branch_parity": true,
+      "end_gap_interval_m": [
+        0.0024446215666388237,
+        0.002447679669679628
+      ],
+      "finish": 0.01666666753590107,
+      "manifold_rows": 1,
+      "manifold_uncertain": false,
+      "normal": [
+        -0.23665486647819586,
+        -0.7542755467986312,
+        0.6124237696838792
+      ],
+      "normal_bits": [
+        13821066447293204171,
+        13828341166543046209,
+        4603691442467158722
+      ],
+      "partition_bounds": [
+        {
+          "finish": 0.01666666753590107,
+          "gap_interval_m": [
+            -0.008830225654714812,
+            -0.007201294450814961
+          ],
+          "remaining_depth": 3,
+          "start": 0.00014349440607500547
+        }
+      ],
+      "reason": "bounded_partition_not_certified",
+      "record": 1,
+      "result": false,
+      "sampled_native_depth": {
+        "maximum_at": 0.01666666753590107,
+        "maximum_depth_m": 0.00037614314163986196,
+        "method": "257 actual native manifold samples; diagnostic, NOT a continuous proof",
+        "rows_over_unchanged_slop": 0,
+        "uncertain_samples": 0
+      },
+      "stage": "scheduled_query",
+      "start": 0.00014349440607500547,
+      "start_separations_m": [
+        2.4748253704173657e-06
+      ],
+      "whole_gap_interval_m": [
+        -0.008830225654714812,
+        -0.007201294450814961
+      ]
+    },
+    {
+      "actual_unmodified_result": false,
+      "after_global_impact_sequence": 3471,
+      "clearance_m": 0.004999999888241291,
+      "diagnostic_branch_parity": true,
+      "end_gap_interval_m": [
+        0.0022749390080944983,
+        0.002277997161046379
+      ],
+      "finish": 0.01666666753590107,
+      "manifold_rows": 1,
+      "manifold_uncertain": false,
+      "normal": [
+        -0.23667858983775808,
+        -0.7542585593809797,
+        0.6124355237189785
+      ],
+      "normal_bits": [
+        13821067302017310446,
+        13828341013533990599,
+        4603691548338094908
+      ],
+      "partition_bounds": [
+        {
+          "finish": 0.01666666753590107,
+          "gap_interval_m": [
+            -0.009169826252626028,
+            -0.007699402761236645
+          ],
+          "remaining_depth": 3,
+          "start": 0.00022355391777684056
+        }
+      ],
+      "reason": "bounded_partition_not_certified",
+      "record": 2,
+      "result": false,
+      "sampled_native_depth": {
+        "maximum_at": 0.01666666753590107,
+        "maximum_depth_m": 0.0005471709031644179,
+        "method": "257 actual native manifold samples; diagnostic, NOT a continuous proof",
+        "rows_over_unchanged_slop": 0,
+        "uncertain_samples": 0
+      },
+      "stage": "scheduled_query",
+      "start": 0.00022355391777684056,
+      "start_separations_m": [
+        8.305561115520063e-07
+      ],
+      "whole_gap_interval_m": [
+        -0.009169826252626028,
+        -0.007699402761236645
+      ]
+    },
+    {
+      "actual_unmodified_result": false,
+      "after_global_impact_sequence": 3471,
+      "clearance_m": 0.004999999888241291,
+      "diagnostic_branch_parity": true,
+      "end_gap_interval_m": [
+        0.002310460444705173,
+        0.0023135150301208983
+      ],
+      "finish": 0.01666666753590107,
+      "manifold_rows": 3,
+      "manifold_uncertain": false,
+      "normal": [
+        -0.23418044429113685,
+        -0.7548260319104458,
+        0.6126966468505737
+      ],
+      "normal_bits": [
+        13820977296838487401,
+        13828346124872135092,
+        4603693900326171208
+      ],
+      "partition_bounds": [
+        {
+          "finish": 0.01666666753590107,
+          "gap_interval_m": [
+            -0.009117570570449379,
+            -0.007648803053966307
+          ],
+          "remaining_depth": 3,
+          "start": 0.00023350132826686643
+        }
+      ],
+      "reason": "bounded_partition_not_certified",
+      "record": 3,
+      "result": false,
+      "sampled_native_depth": {
+        "maximum_at": 0.01666666753590107,
+        "maximum_depth_m": 0.0005471709031644179,
+        "method": "257 actual native manifold samples; diagnostic, NOT a continuous proof",
+        "rows_over_unchanged_slop": 0,
+        "uncertain_samples": 0
+      },
+      "stage": "before_impact",
+      "start": 0.00023350132826686643,
+      "start_separations_m": [
+        -8.210263413577223e-09,
+        3.304584066171623e-05,
+        0.00021824058094926935
+      ],
+      "whole_gap_interval_m": [
+        -0.009117570570449379,
+        -0.007648803053966307
+      ]
+    },
+    {
+      "actual_unmodified_result": false,
+      "after_global_impact_sequence": 3472,
+      "clearance_m": 0.004999999888241291,
+      "diagnostic_branch_parity": true,
+      "end_gap_interval_m": [
+        0.002751235003648209,
+        0.0027542895227100116
+      ],
+      "finish": 0.01666666753590107,
+      "manifold_rows": 3,
+      "manifold_uncertain": false,
+      "normal": [
+        -0.23418044429113685,
+        -0.7548260319104458,
+        0.6126966468505737
+      ],
+      "normal_bits": [
+        13820977296838487401,
+        13828346124872135092,
+        4603693900326171208
+      ],
+      "partition_bounds": [
+        {
+          "finish": 0.01666666753590107,
+          "gap_interval_m": [
+            -0.008415154621964632,
+            -0.006984884848389877
+          ],
+          "remaining_depth": 3,
+          "start": 0.00023350132826686643
+        }
+      ],
+      "reason": "bounded_partition_not_certified",
+      "record": 4,
+      "result": false,
+      "sampled_native_depth": {
+        "maximum_at": 0.01666666753590107,
+        "maximum_depth_m": 8.580582406592097e-05,
+        "method": "257 actual native manifold samples; diagnostic, NOT a continuous proof",
+        "rows_over_unchanged_slop": 0,
+        "uncertain_samples": 0
+      },
+      "stage": "after_trajectory_replacement",
+      "start": 0.00023350132826686643,
+      "start_separations_m": [
+        -8.210263413577223e-09,
+        3.304584066171623e-05,
+        0.00021824058094926935
+      ],
+      "whole_gap_interval_m": [
+        -0.008415154621964632,
+        -0.006984884848389877
+      ]
+    },
+    {
+      "actual_unmodified_result": false,
+      "after_global_impact_sequence": 3472,
+      "clearance_m": 0.004999999888241291,
+      "diagnostic_branch_parity": true,
+      "end_gap_interval_m": [
+        0.002751235003648209,
+        0.0027542895227100116
+      ],
+      "finish": 0.01666666753590107,
+      "manifold_rows": 3,
+      "manifold_uncertain": false,
+      "normal": [
+        -0.23418044429113685,
+        -0.7548260319104458,
+        0.6126966468505737
+      ],
+      "normal_bits": [
+        13820977296838487401,
+        13828346124872135092,
+        4603693900326171208
+      ],
+      "partition_bounds": [
+        {
+          "finish": 0.01666666753590107,
+          "gap_interval_m": [
+            -0.008415154621964632,
+            -0.006984884848389877
+          ],
+          "remaining_depth": 3,
+          "start": 0.00023350132826686643
+        }
+      ],
+      "reason": "bounded_partition_not_certified",
+      "record": 5,
+      "result": false,
+      "sampled_native_depth": {
+        "maximum_at": 0.01666666753590107,
+        "maximum_depth_m": 8.580582406592097e-05,
+        "method": "257 actual native manifold samples; diagnostic, NOT a continuous proof",
+        "rows_over_unchanged_slop": 0,
+        "uncertain_samples": 0
+      },
+      "stage": "scheduled_query",
+      "start": 0.00023350132826686643,
+      "start_separations_m": [
+        -8.210263413577223e-09,
+        3.304584066171623e-05,
+        0.00021824058094926935
+      ],
+      "whole_gap_interval_m": [
+        -0.008415154621964632,
+        -0.006984884848389877
+      ]
+    },
+    {
+      "actual_unmodified_result": false,
+      "after_global_impact_sequence": 3473,
+      "clearance_m": 0.004999999888241291,
+      "diagnostic_branch_parity": true,
+      "end_gap_interval_m": [
+        0.0028131138844744693,
+        0.0028161684202946445
+      ],
+      "finish": 0.01666666753590107,
+      "manifold_rows": 3,
+      "manifold_uncertain": false,
+      "normal": [
+        -0.2341803824673268,
+        -0.7548255938590803,
+        0.6126972101476744
+      ],
+      "normal_bits": [
+        13820977294611049898,
+        13828346120926519159,
+        4603693905399900434
+      ],
+      "partition_bounds": [
+        {
+          "finish": 0.01666666753590107,
+          "gap_interval_m": [
+            -0.008191750881888676,
+            -0.006812771234286302
+          ],
+          "remaining_depth": 3,
+          "start": 0.00023636554396947116
+        }
+      ],
+      "reason": "bounded_partition_not_certified",
+      "record": 6,
+      "result": false,
+      "sampled_native_depth": {
+        "maximum_at": 0.01666666753590107,
+        "maximum_depth_m": 8.230627815231095e-05,
+        "method": "257 actual native manifold samples; diagnostic, NOT a continuous proof",
+        "rows_over_unchanged_slop": 0,
+        "uncertain_samples": 0
+      },
+      "stage": "scheduled_query",
+      "start": 0.00023636554396947116,
+      "start_separations_m": [
+        -1.5152307941690424e-07,
+        3.2937034882274396e-05,
+        0.00021803073186116295
+      ],
+      "whole_gap_interval_m": [
+        -0.008191750881888676,
+        -0.006812771234286302
+      ]
+    },
+    {
+      "actual_unmodified_result": false,
+      "after_global_impact_sequence": 3474,
+      "clearance_m": 0.004999999888241291,
+      "diagnostic_branch_parity": true,
+      "end_gap_interval_m": [
+        0.0027939714572117157,
+        0.0027970302375859334
+      ],
+      "finish": 0.01666666753590107,
+      "manifold_rows": 1,
+      "manifold_uncertain": false,
+      "normal": [
+        -0.23696514785111966,
+        -0.7541323454955967,
+        0.6124801418668258
+      ],
+      "normal_bits": [
+        13821077626357808008,
+        13828339876700376239,
+        4603691950222642946
+      ],
+      "partition_bounds": [
+        {
+          "finish": 0.01666666753590107,
+          "gap_interval_m": [
+            -0.00801164821396017,
+            -0.006679056678272282
+          ],
+          "remaining_depth": 3,
+          "start": 0.0006146535089685576
+        }
+      ],
+      "reason": "bounded_partition_not_certified",
+      "record": 7,
+      "result": false,
+      "sampled_native_depth": {
+        "maximum_at": 0.01666666753590107,
+        "maximum_depth_m": 0.00011484413068568733,
+        "method": "257 actual native manifold samples; diagnostic, NOT a continuous proof",
+        "rows_over_unchanged_slop": 0,
+        "uncertain_samples": 0
+      },
+      "stage": "scheduled_query",
+      "start": 0.0006146535089685576,
+      "start_separations_m": [
+        4.38433874557868e-07
+      ],
+      "whole_gap_interval_m": [
+        -0.00801164821396017,
+        -0.006679056678272282
+      ]
+    },
+    {
+      "actual_unmodified_result": false,
+      "after_global_impact_sequence": 3474,
+      "clearance_m": 0.004999999888241291,
+      "diagnostic_branch_parity": true,
+      "end_gap_interval_m": [
+        0.0028406367315557636,
+        0.002843691519936467
+      ],
+      "finish": 0.01666666753590107,
+      "manifold_rows": 3,
+      "manifold_uncertain": false,
+      "normal": [
+        -0.23417007521990224,
+        -0.75476806594692,
+        0.6127720151069653
+      ],
+      "normal_bits": [
+        13820976923253324614,
+        13828345602761151622,
+        4603694579183074010
+      ],
+      "partition_bounds": [
+        {
+          "finish": 0.01666666753590107,
+          "gap_interval_m": [
+            -0.007950658427203112,
+            -0.0066202088947046
+          ],
+          "remaining_depth": 3,
+          "start": 0.0006230951818581808
+        }
+      ],
+      "reason": "bounded_partition_not_certified",
+      "record": 8,
+      "result": false,
+      "sampled_native_depth": {
+        "maximum_at": 0.01666666753590107,
+        "maximum_depth_m": 0.00011484413068568733,
+        "method": "257 actual native manifold samples; diagnostic, NOT a continuous proof",
+        "rows_over_unchanged_slop": 0,
+        "uncertain_samples": 0
+      },
+      "stage": "before_impact",
+      "start": 0.0006230951818581808,
+      "start_separations_m": [
+        -9.513500287550158e-08,
+        3.7000645909446295e-05,
+        0.00021077672996100416
+      ],
+      "whole_gap_interval_m": [
+        -0.007950658427203112,
+        -0.0066202088947046
+      ]
+    },
+    {
+      "actual_unmodified_result": false,
+      "after_global_impact_sequence": 3475,
+      "clearance_m": 0.004999999888241291,
+      "diagnostic_branch_parity": true,
+      "end_gap_interval_m": [
+        0.0028667443544770866,
+        0.0028697991535141546
+      ],
+      "finish": 0.01666666753590107,
+      "manifold_rows": 3,
+      "manifold_uncertain": false,
+      "normal": [
+        -0.23417007521990224,
+        -0.75476806594692,
+        0.6127720151069653
+      ],
+      "normal_bits": [
+        13820976923253324614,
+        13828345602761151622,
+        4603694579183074010
+      ],
+      "partition_bounds": [
+        {
+          "finish": 0.01666666753590107,
+          "gap_interval_m": [
+            -0.007920006210947801,
+            -0.006591879218034498
+          ],
+          "remaining_depth": 3,
+          "start": 0.0006230951818581808
+        }
+      ],
+      "reason": "bounded_partition_not_certified",
+      "record": 9,
+      "result": false,
+      "sampled_native_depth": {
+        "maximum_at": 0.01666666753590107,
+        "maximum_depth_m": 0.0001043030448809601,
+        "method": "257 actual native manifold samples; diagnostic, NOT a continuous proof",
+        "rows_over_unchanged_slop": 0,
+        "uncertain_samples": 0
+      },
+      "stage": "after_trajectory_replacement",
+      "start": 0.0006230951818581808,
+      "start_separations_m": [
+        -9.513500287550158e-08,
+        3.7000645909446295e-05,
+        0.00021077672996100416
+      ],
+      "whole_gap_interval_m": [
+        -0.007920006210947801,
+        -0.006591879218034498
+      ]
+    },
+    {
+      "actual_unmodified_result": false,
+      "after_global_impact_sequence": 3475,
+      "clearance_m": 0.004999999888241291,
+      "diagnostic_branch_parity": true,
+      "end_gap_interval_m": [
+        0.0028667443544770866,
+        0.0028697991535141546
+      ],
+      "finish": 0.01666666753590107,
+      "manifold_rows": 3,
+      "manifold_uncertain": false,
+      "normal": [
+        -0.23417007521990224,
+        -0.75476806594692,
+        0.6127720151069653
+      ],
+      "normal_bits": [
+        13820976923253324614,
+        13828345602761151622,
+        4603694579183074010
+      ],
+      "partition_bounds": [
+        {
+          "finish": 0.01666666753590107,
+          "gap_interval_m": [
+            -0.007920006210947801,
+            -0.006591879218034498
+          ],
+          "remaining_depth": 3,
+          "start": 0.0006230951818581808
+        }
+      ],
+      "reason": "bounded_partition_not_certified",
+      "record": 10,
+      "result": false,
+      "sampled_native_depth": {
+        "maximum_at": 0.01666666753590107,
+        "maximum_depth_m": 0.0001043030448809601,
+        "method": "257 actual native manifold samples; diagnostic, NOT a continuous proof",
+        "rows_over_unchanged_slop": 0,
+        "uncertain_samples": 0
+      },
+      "stage": "scheduled_query",
+      "start": 0.0006230951818581808,
+      "start_separations_m": [
+        -9.513500287550158e-08,
+        3.7000645909446295e-05,
+        0.00021077672996100416
+      ],
+      "whole_gap_interval_m": [
+        -0.007920006210947801,
+        -0.006591879218034498
+      ]
+    },
+    {
+      "actual_unmodified_result": false,
+      "after_global_impact_sequence": 3476,
+      "clearance_m": 0.004999999888241291,
+      "diagnostic_branch_parity": true,
+      "end_gap_interval_m": [
+        0.0028218545920727896,
+        0.002824913429707092
+      ],
+      "finish": 0.01666666753590107,
+      "manifold_rows": 1,
+      "manifold_uncertain": false,
+      "normal": [
+        -0.2369844679074545,
+        -0.7541239990290289,
+        0.6124829434842133
+      ],
+      "normal_bits": [
+        13821078322436196091,
+        13828339801522088790,
+        4603691975457368991
+      ],
+      "partition_bounds": [
+        {
+          "finish": 0.01666666753590107,
+          "gap_interval_m": [
+            -0.007966197738097985,
+            -0.006645038296493482
+          ],
+          "remaining_depth": 3,
+          "start": 0.0006399245400325673
+        }
+      ],
+      "reason": "bounded_partition_not_certified",
+      "record": 11,
+      "result": false,
+      "sampled_native_depth": {
+        "maximum_at": 0.01666666753590107,
+        "maximum_depth_m": 0.00010755264958228761,
+        "method": "257 actual native manifold samples; diagnostic, NOT a continuous proof",
+        "rows_over_unchanged_slop": 0,
+        "uncertain_samples": 0
+      },
+      "stage": "scheduled_query",
+      "start": 0.0006399245400325673,
+      "start_separations_m": [
+        2.7324508669319673e-07
+      ],
+      "whole_gap_interval_m": [
+        -0.007966197738097985,
+        -0.006645038296493482
+      ]
+    },
+    {
+      "actual_unmodified_result": false,
+      "after_global_impact_sequence": 3477,
+      "clearance_m": 0.004999999888241291,
+      "diagnostic_branch_parity": true,
+      "end_gap_interval_m": [
+        0.0030668094012023506,
+        0.0030698795220380254
+      ],
+      "finish": 0.01666666753590107,
+      "manifold_rows": 3,
+      "manifold_uncertain": false,
+      "normal": [
+        -0.24394444411163652,
+        -0.752134730306531,
+        0.6121964191775272
+      ],
+      "normal_bits": [
+        13821329082006113384,
+        13828321883782334027,
+        4603689394675847343
+      ],
+      "partition_bounds": [
+        {
+          "finish": 0.01666666753590107,
+          "gap_interval_m": [
+            -0.007464410279886595,
+            -0.006178107055794185
+          ],
+          "remaining_depth": 3,
+          "start": 0.0010526493212673475
+        }
+      ],
+      "reason": "bounded_partition_not_certified",
+      "record": 12,
+      "result": false,
+      "sampled_native_depth": {
+        "maximum_at": 0.01666666753590107,
+        "maximum_depth_m": 0.00010316861137676936,
+        "method": "257 actual native manifold samples; diagnostic, NOT a continuous proof",
+        "rows_over_unchanged_slop": 0,
+        "uncertain_samples": 0
+      },
+      "stage": "scheduled_query",
+      "start": 0.0010526493212673475,
+      "start_separations_m": [
+        0.00020220865268727461,
+        -1.7769851640148104e-07,
+        4.160648214984741e-05
+      ],
+      "whole_gap_interval_m": [
+        -0.007464410279886595,
+        -0.006178107055794185
+      ]
+    },
+    {
+      "actual_unmodified_result": false,
+      "after_global_impact_sequence": 3478,
+      "clearance_m": 0.004999999888241291,
+      "diagnostic_branch_parity": true,
+      "end_gap_interval_m": [
+        0.003105071405405443,
+        0.003108141699794067
+      ],
+      "finish": 0.01666666753590107,
+      "manifold_rows": 3,
+      "manifold_uncertain": false,
+      "normal": [
+        -0.24398091790193713,
+        -0.752087867435249,
+        0.6122394558964878
+      ],
+      "normal_bits": [
+        13821330396112900637,
+        13828321461679114741,
+        4603689782316150291
+      ],
+      "partition_bounds": [
+        {
+          "finish": 0.01666666753590107,
+          "gap_interval_m": [
+            -0.007220412320695596,
+            -0.005960438226627725
+          ],
+          "remaining_depth": 3,
+          "start": 0.0013552752861876222
+        }
+      ],
+      "reason": "bounded_partition_not_certified",
+      "record": 13,
+      "result": false,
+      "sampled_native_depth": {
+        "maximum_at": 0.01666666753590107,
+        "maximum_depth_m": 0.00010230211475509288,
+        "method": "257 actual native manifold samples; diagnostic, NOT a continuous proof",
+        "rows_over_unchanged_slop": 0,
+        "uncertain_samples": 0
+      },
+      "stage": "scheduled_query",
+      "start": 0.0013552752861876222,
+      "start_separations_m": [
+        0.00019639120243059027,
+        -1.6278142167536203e-09,
+        4.5104477823576516e-05
+      ],
+      "whole_gap_interval_m": [
+        -0.007220412320695596,
+        -0.005960438226627725
+      ]
+    },
+    {
+      "actual_unmodified_result": false,
+      "after_global_impact_sequence": 3479,
+      "clearance_m": 0.004999999888241291,
+      "diagnostic_branch_parity": true,
+      "end_gap_interval_m": [
+        0.002926927689352818,
+        0.0029299875735928115
+      ],
+      "finish": 0.01666666753590107,
+      "manifold_rows": 1,
+      "manifold_uncertain": false,
+      "normal": [
+        -0.23754420659498793,
+        -0.7538843817356129,
+        0.6125610899235036
+      ],
+      "normal_bits": [
+        13821098489147752894,
+        13828337643241382110,
+        4603692679337918727
+      ],
+      "partition_bounds": [
+        {
+          "finish": 0.01666666753590107,
+          "gap_interval_m": [
+            -0.0073807387850447536,
+            -0.0061256929524345855
+          ],
+          "remaining_depth": 3,
+          "start": 0.001355425244313631
+        }
+      ],
+      "reason": "bounded_partition_not_certified",
+      "record": 14,
+      "result": false,
+      "sampled_native_depth": {
+        "maximum_at": 0.01666666753590107,
+        "maximum_depth_m": 0.00010289992995615727,
+        "method": "257 actual native manifold samples; diagnostic, NOT a continuous proof",
+        "rows_over_unchanged_slop": 0,
+        "uncertain_samples": 0
+      },
+      "stage": "scheduled_query",
+      "start": 0.001355425244313631,
+      "start_separations_m": [
+        1.9030130276190897e-09
+      ],
+      "whole_gap_interval_m": [
+        -0.0073807387850447536,
+        -0.0061256929524345855
+      ]
+    },
+    {
+      "actual_unmodified_result": false,
+      "after_global_impact_sequence": 3479,
+      "clearance_m": 0.004999999888241291,
+      "diagnostic_branch_parity": true,
+      "end_gap_interval_m": [
+        0.00310429276737367,
+        0.003107363062006321
+      ],
+      "finish": 0.01666666753590107,
+      "manifold_rows": 3,
+      "manifold_uncertain": false,
+      "normal": [
+        -0.24398094837687878,
+        -0.7520878534319374,
+        0.6122394609540122
+      ],
+      "normal_bits": [
+        13821330397210876124,
+        13828321461552984123,
+        4603689782361704421
+      ],
+      "partition_bounds": [
+        {
+          "finish": 0.01666666753590107,
+          "gap_interval_m": [
+            -0.007222688630141255,
+            -0.0059643304507714335
+          ],
+          "remaining_depth": 3,
+          "start": 0.0013554812132337986
+        }
+      ],
+      "reason": "bounded_partition_not_certified",
+      "record": 15,
+      "result": false,
+      "sampled_native_depth": {
+        "maximum_at": 0.01666666753590107,
+        "maximum_depth_m": 0.00010289992995615727,
+        "method": "257 actual native manifold samples; diagnostic, NOT a continuous proof",
+        "rows_over_unchanged_slop": 0,
+        "uncertain_samples": 0
+      },
+      "stage": "before_impact",
+      "start": 0.0013554812132337986,
+      "start_separations_m": [
+        0.00019636559945768184,
+        -5.912466016777529e-09,
+        4.511006459601008e-05
+      ],
+      "whole_gap_interval_m": [
+        -0.007222688630141255,
+        -0.0059643304507714335
+      ]
+    },
+    {
+      "actual_unmodified_result": false,
+      "after_global_impact_sequence": 3480,
+      "clearance_m": 0.004999999888241291,
+      "diagnostic_branch_parity": true,
+      "end_gap_interval_m": [
+        0.0031046235586211193,
+        0.0031076938533144993
+      ],
+      "finish": 0.01666666753590107,
+      "manifold_rows": 3,
+      "manifold_uncertain": false,
+      "normal": [
+        -0.24398094837687878,
+        -0.7520878534319374,
+        0.6122394609540122
+      ],
+      "normal_bits": [
+        13821330397210876124,
+        13828321461552984123,
+        4603689782361704421
+      ],
+      "partition_bounds": [
+        {
+          "finish": 0.01666666753590107,
+          "gap_interval_m": [
+            -0.007222501522686281,
+            -0.005964599869119842
+          ],
+          "remaining_depth": 3,
+          "start": 0.0013554812132337986
+        }
+      ],
+      "reason": "bounded_partition_not_certified",
+      "record": 16,
+      "result": false,
+      "sampled_native_depth": {
+        "maximum_at": 0.01666666753590107,
+        "maximum_depth_m": 0.00010299535487667821,
+        "method": "257 actual native manifold samples; diagnostic, NOT a continuous proof",
+        "rows_over_unchanged_slop": 0,
+        "uncertain_samples": 0
+      },
+      "stage": "after_trajectory_replacement",
+      "start": 0.0013554812132337986,
+      "start_separations_m": [
+        0.00019636559945768184,
+        -5.912466016777529e-09,
+        4.511006459601008e-05
+      ],
+      "whole_gap_interval_m": [
+        -0.007222501522686281,
+        -0.005964599869119842
+      ]
+    },
+    {
+      "actual_unmodified_result": false,
+      "after_global_impact_sequence": 3480,
+      "clearance_m": 0.004999999888241291,
+      "diagnostic_branch_parity": true,
+      "end_gap_interval_m": [
+        0.0031046235586211193,
+        0.0031076938533144993
+      ],
+      "finish": 0.01666666753590107,
+      "manifold_rows": 3,
+      "manifold_uncertain": false,
+      "normal": [
+        -0.24398094837687878,
+        -0.7520878534319374,
+        0.6122394609540122
+      ],
+      "normal_bits": [
+        13821330397210876124,
+        13828321461552984123,
+        4603689782361704421
+      ],
+      "partition_bounds": [
+        {
+          "finish": 0.01666666753590107,
+          "gap_interval_m": [
+            -0.007222501522686281,
+            -0.005964599869119842
+          ],
+          "remaining_depth": 3,
+          "start": 0.0013554812132337986
+        }
+      ],
+      "reason": "bounded_partition_not_certified",
+      "record": 17,
+      "result": false,
+      "sampled_native_depth": {
+        "maximum_at": 0.01666666753590107,
+        "maximum_depth_m": 0.00010299535487667821,
+        "method": "257 actual native manifold samples; diagnostic, NOT a continuous proof",
+        "rows_over_unchanged_slop": 0,
+        "uncertain_samples": 0
+      },
+      "stage": "scheduled_query",
+      "start": 0.0013554812132337986,
+      "start_separations_m": [
+        0.00019636559945768184,
+        -5.912466016777529e-09,
+        4.511006459601008e-05
+      ],
+      "whole_gap_interval_m": [
+        -0.007222501522686281,
+        -0.005964599869119842
+      ]
+    },
+    {
+      "actual_unmodified_result": false,
+      "after_global_impact_sequence": 3481,
+      "clearance_m": 0.004999999888241291,
+      "diagnostic_branch_parity": true,
+      "end_gap_interval_m": [
+        0.003112713457730062,
+        0.003115783800357656
+      ],
+      "finish": 0.01666666753590107,
+      "manifold_rows": 3,
+      "manifold_uncertain": false,
+      "normal": [
+        -0.2439890203085236,
+        -0.7520775160655448,
+        0.6122489426675778
+      ],
+      "normal_bits": [
+        13821330688032862906,
+        13828321368442265256,
+        4603689867765387783
+      ],
+      "partition_bounds": [
+        {
+          "finish": 0.01666666753590107,
+          "gap_interval_m": [
+            -0.007169444261283969,
+            -0.005917551296213846
+          ],
+          "remaining_depth": 3,
+          "start": 0.0014220287332865423
+        }
+      ],
+      "reason": "bounded_partition_not_certified",
+      "record": 18,
+      "result": false,
+      "sampled_native_depth": {
+        "maximum_at": 0.01666666753590107,
+        "maximum_depth_m": 0.00010239658107152882,
+        "method": "257 actual native manifold samples; diagnostic, NOT a continuous proof",
+        "rows_over_unchanged_slop": 0,
+        "uncertain_samples": 0
+      },
+      "stage": "scheduled_query",
+      "start": 0.0014220287332865423,
+      "start_separations_m": [
+        0.00019505892595400587,
+        -2.1464935939796703e-09,
+        4.584278982461276e-05
+      ],
+      "whole_gap_interval_m": [
+        -0.007169444261283969,
+        -0.005917551296213846
+      ]
+    },
+    {
+      "actual_unmodified_result": false,
+      "after_global_impact_sequence": 3482,
+      "clearance_m": 0.004999999888241291,
+      "diagnostic_branch_parity": true,
+      "end_gap_interval_m": [
+        0.003118334413822584,
+        0.003121404791108675
+      ],
+      "finish": 0.01666666753590107,
+      "manifold_rows": 3,
+      "manifold_uncertain": false,
+      "normal": [
+        -0.24399484824337897,
+        -0.7520700379321876,
+        0.612255806077303
+      ],
+      "normal_bits": [
+        13821330898006344850,
+        13828321301085228054,
+        4603689929585486745
+      ],
+      "partition_bounds": [
+        {
+          "finish": 0.01666666753590107,
+          "gap_interval_m": [
+            -0.007131696622001311,
+            -0.005884018446495105
+          ],
+          "remaining_depth": 3,
+          "start": 0.0014701790253460936
+        }
+      ],
+      "reason": "bounded_partition_not_certified",
+      "record": 19,
+      "result": false,
+      "sampled_native_depth": {
+        "maximum_at": 0.01666666753590107,
+        "maximum_depth_m": 0.00010224732665214953,
+        "method": "257 actual native manifold samples; diagnostic, NOT a continuous proof",
+        "rows_over_unchanged_slop": 0,
+        "uncertain_samples": 0
+      },
+      "stage": "scheduled_query",
+      "start": 0.0014701790253460936,
+      "start_separations_m": [
+        0.0001938747878618141,
+        -2.3279163635647748e-07,
+        4.614196782437574e-05
+      ],
+      "whole_gap_interval_m": [
+        -0.007131696622001311,
+        -0.005884018446495105
+      ]
+    },
+    {
+      "actual_unmodified_result": false,
+      "after_global_impact_sequence": 3483,
+      "clearance_m": 0.004999999888241291,
+      "diagnostic_branch_parity": true,
+      "end_gap_interval_m": [
+        0.003120835680095854,
+        0.003123906070892472
+      ],
+      "finish": 0.01666666753590107,
+      "manifold_rows": 3,
+      "manifold_uncertain": false,
+      "normal": [
+        -0.2439971248273515,
+        -0.7520671236873417,
+        0.6122584785404237
+      ],
+      "normal_bits": [
+        13821330980028926693,
+        13828321274836044050,
+        4603689953656894574
+      ],
+      "partition_bounds": [
+        {
+          "finish": 0.01666666753590107,
+          "gap_interval_m": [
+            -0.007116085349052009,
+            -0.005870075158382609
+          ],
+          "remaining_depth": 3,
+          "start": 0.0014889454498032608
+        }
+      ],
+      "reason": "bounded_partition_not_certified",
+      "record": 20,
+      "result": false,
+      "sampled_native_depth": {
+        "maximum_at": 0.01666666753590107,
+        "maximum_depth_m": 0.00010235308102940488,
+        "method": "257 actual native manifold samples; diagnostic, NOT a continuous proof",
+        "rows_over_unchanged_slop": 0,
+        "uncertain_samples": 0
+      },
+      "stage": "scheduled_query",
+      "start": 0.0014889454498032608,
+      "start_separations_m": [
+        0.00019371767635195658,
+        -3.487911959254575e-09,
+        4.658431999310375e-05
+      ],
+      "whole_gap_interval_m": [
+        -0.007116085349052009,
+        -0.005870075158382609
+      ]
+    },
+    {
+      "actual_unmodified_result": false,
+      "after_global_impact_sequence": 3484,
+      "clearance_m": 0.004999999888241291,
+      "diagnostic_branch_parity": true,
+      "end_gap_interval_m": [
+        0.0029574769155672987,
+        0.002960537192483739
+      ],
+      "finish": 0.01666666753590107,
+      "manifold_rows": 1,
+      "manifold_uncertain": false,
+      "normal": [
+        -0.2377158811538118,
+        -0.7538108221643481,
+        0.6125850179649973
+      ],
+      "normal_bits": [
+        13821104674375586079,
+        13828336980675666635,
+        4603692894862556237
+      ],
+      "partition_bounds": [
+        {
+          "finish": 0.01666666753590107,
+          "gap_interval_m": [
+            -0.007203124350476381,
+            -0.005967366786719104
+          ],
+          "remaining_depth": 3,
+          "start": 0.0015745876000281623
+        }
+      ],
+      "reason": "bounded_partition_not_certified",
+      "record": 21,
+      "result": false,
+      "sampled_native_depth": {
+        "maximum_at": 0.01666666753590107,
+        "maximum_depth_m": 0.00010221319569575504,
+        "method": "257 actual native manifold samples; diagnostic, NOT a continuous proof",
+        "rows_over_unchanged_slop": 0,
+        "uncertain_samples": 0
+      },
+      "stage": "scheduled_query",
+      "start": 0.0015745876000281623,
+      "start_separations_m": [
+        2.2010992254022246e-07
+      ],
+      "whole_gap_interval_m": [
+        -0.007203124350476381,
+        -0.005967366786719104
+      ]
+    },
+    {
+      "actual_unmodified_result": false,
+      "after_global_impact_sequence": 3484,
+      "clearance_m": 0.004999999888241291,
+      "diagnostic_branch_parity": true,
+      "end_gap_interval_m": [
+        0.003131513385890236,
+        0.0031345838402793186
+      ],
+      "finish": 0.01666666753590107,
+      "manifold_rows": 3,
+      "manifold_uncertain": false,
+      "normal": [
+        -0.244007864581049,
+        -0.7520533962690666,
+        0.6122710602198659
+      ],
+      "normal_bits": [
+        13821331366969332694,
+        13828321151190452393,
+        4603690066982588269
+      ],
+      "partition_bounds": [
+        {
+          "finish": 0.01666666753590107,
+          "gap_interval_m": [
+            -0.007045821651033573,
+            -0.005807121487073235
+          ],
+          "remaining_depth": 3,
+          "start": 0.0015775532640944895
+        }
+      ],
+      "reason": "bounded_partition_not_certified",
+      "record": 22,
+      "result": false,
+      "sampled_native_depth": {
+        "maximum_at": 0.01666666753590107,
+        "maximum_depth_m": 0.00010221319569575504,
+        "method": "257 actual native manifold samples; diagnostic, NOT a continuous proof",
+        "rows_over_unchanged_slop": 0,
+        "uncertain_samples": 0
+      },
+      "stage": "before_impact",
+      "start": 0.0015775532640944895,
+      "start_separations_m": [
+        0.00019196067762222713,
+        -4.200022440947748e-09,
+        4.756026188129647e-05
+      ],
+      "whole_gap_interval_m": [
+        -0.007045821651033573,
+        -0.005807121487073235
+      ]
+    },
+    {
+      "actual_unmodified_result": false,
+      "after_global_impact_sequence": 3485,
+      "clearance_m": 0.004999999888241291,
+      "diagnostic_branch_parity": true,
+      "end_gap_interval_m": [
+        0.003131353619278351,
+        0.003134424073672763
+      ],
+      "finish": 0.01666666753590107,
+      "manifold_rows": 3,
+      "manifold_uncertain": false,
+      "normal": [
+        -0.244007864581049,
+        -0.7520533962690666,
+        0.6122710602198659
+      ],
+      "normal_bits": [
+        13821331366969332694,
+        13828321151190452393,
+        4603690066982588269
+      ],
+      "partition_bounds": [
+        {
+          "finish": 0.01666666753590107,
+          "gap_interval_m": [
+            -0.0070460970032453826,
+            -0.00580742931528993
+          ],
+          "remaining_depth": 3,
+          "start": 0.0015775532640944895
+        }
+      ],
+      "reason": "bounded_partition_not_certified",
+      "record": 23,
+      "result": false,
+      "sampled_native_depth": {
+        "maximum_at": 0.01666666753590107,
+        "maximum_depth_m": 0.00010216340688590231,
+        "method": "257 actual native manifold samples; diagnostic, NOT a continuous proof",
+        "rows_over_unchanged_slop": 0,
+        "uncertain_samples": 0
+      },
+      "stage": "after_trajectory_replacement",
+      "start": 0.0015775532640944895,
+      "start_separations_m": [
+        0.00019196067762222713,
+        -4.200022440947748e-09,
+        4.756026188129647e-05
+      ],
+      "whole_gap_interval_m": [
+        -0.0070460970032453826,
+        -0.00580742931528993
+      ]
+    },
+    {
+      "actual_unmodified_result": false,
+      "after_global_impact_sequence": 3485,
+      "clearance_m": 0.004999999888241291,
+      "diagnostic_branch_parity": true,
+      "end_gap_interval_m": [
+        0.003131353619278351,
+        0.003134424073672763
+      ],
+      "finish": 0.01666666753590107,
+      "manifold_rows": 3,
+      "manifold_uncertain": false,
+      "normal": [
+        -0.244007864581049,
+        -0.7520533962690666,
+        0.6122710602198659
+      ],
+      "normal_bits": [
+        13821331366969332694,
+        13828321151190452393,
+        4603690066982588269
+      ],
+      "partition_bounds": [
+        {
+          "finish": 0.01666666753590107,
+          "gap_interval_m": [
+            -0.0070460970032453826,
+            -0.00580742931528993
+          ],
+          "remaining_depth": 3,
+          "start": 0.0015775532640944895
+        }
+      ],
+      "reason": "bounded_partition_not_certified",
+      "record": 24,
+      "result": false,
+      "sampled_native_depth": {
+        "maximum_at": 0.01666666753590107,
+        "maximum_depth_m": 0.00010216340688590231,
+        "method": "257 actual native manifold samples; diagnostic, NOT a continuous proof",
+        "rows_over_unchanged_slop": 0,
+        "uncertain_samples": 0
+      },
+      "stage": "scheduled_query",
+      "start": 0.0015775532640944895,
+      "start_separations_m": [
+        0.00019196067762222713,
+        -4.200022440947748e-09,
+        4.756026188129647e-05
+      ],
+      "whole_gap_interval_m": [
+        -0.0070460970032453826,
+        -0.00580742931528993
+      ]
+    },
+    {
+      "actual_unmodified_result": false,
+      "after_global_impact_sequence": 3486,
+      "clearance_m": 0.004999999888241291,
+      "diagnostic_branch_parity": true,
+      "end_gap_interval_m": [
+        0.0031313932826205174,
+        0.003134463737303365
+      ],
+      "finish": 0.01666666753590107,
+      "manifold_rows": 3,
+      "manifold_uncertain": false,
+      "normal": [
+        -0.24400791220717502,
+        -0.7520533345295988,
+        0.6122711170741332
+      ],
+      "normal_bits": [
+        13821331368685244721,
+        13828321150634352704,
+        4603690067494685983
+      ],
+      "partition_bounds": [
+        {
+          "finish": 0.01666666753590107,
+          "gap_interval_m": [
+            -0.0070456969658585,
+            -0.0058070836527855324
+          ],
+          "remaining_depth": 3,
+          "start": 0.001578018993821394
+        }
+      ],
+      "reason": "bounded_partition_not_certified",
+      "record": 25,
+      "result": false,
+      "sampled_native_depth": {
+        "maximum_at": 0.01666666753590107,
+        "maximum_depth_m": 0.00010219942952199856,
+        "method": "257 actual native manifold samples; diagnostic, NOT a continuous proof",
+        "rows_over_unchanged_slop": 0,
+        "uncertain_samples": 0
+      },
+      "stage": "scheduled_query",
+      "start": 0.001578018993821394,
+      "start_separations_m": [
+        0.0001919266430964739,
+        -1.903399882152712e-08,
+        4.75548369211487e-05
+      ],
+      "whole_gap_interval_m": [
+        -0.0070456969658585,
+        -0.0058070836527855324
+      ]
+    },
+    {
+      "actual_unmodified_result": false,
+      "after_global_impact_sequence": 3487,
+      "clearance_m": 0.004999999888241291,
+      "diagnostic_branch_parity": true,
+      "end_gap_interval_m": [
+        0.002966546684435742,
+        0.0029696070848270794
+      ],
+      "finish": 0.01666666753590107,
+      "manifold_rows": 1,
+      "manifold_uncertain": false,
+      "normal": [
+        -0.2377701797515178,
+        -0.7537877014783766,
+        0.6125923952522402
+      ],
+      "normal_bits": [
+        13821106630688741243,
+        13828336772423041183,
+        4603692961311252393
+      ],
+      "partition_bounds": [
+        {
+          "finish": 0.01666666753590107,
+          "gap_interval_m": [
+            -0.0071486158189420545,
+            -0.005918444502423786
+          ],
+          "remaining_depth": 3,
+          "start": 0.0016428793283543334
+        }
+      ],
+      "reason": "bounded_partition_not_certified",
+      "record": 26,
+      "result": false,
+      "sampled_native_depth": {
+        "maximum_at": 0.01666666753590107,
+        "maximum_depth_m": 0.00010218730308508839,
+        "method": "257 actual native manifold samples; diagnostic, NOT a continuous proof",
+        "rows_over_unchanged_slop": 0,
+        "uncertain_samples": 0
+      },
+      "stage": "scheduled_query",
+      "start": 0.0016428793283543334,
+      "start_separations_m": [
+        1.1157124235293071e-07
+      ],
+      "whole_gap_interval_m": [
+        -0.0071486158189420545,
+        -0.005918444502423786
+      ]
+    },
+    {
+      "actual_unmodified_result": false,
+      "after_global_impact_sequence": 3488,
+      "clearance_m": 0.004999999888241291,
+      "diagnostic_branch_parity": true,
+      "end_gap_interval_m": [
+        0.0031470628560890646,
+        0.0031501334065354198
+      ],
+      "finish": 0.01666666753590107,
+      "manifold_rows": 3,
+      "manifold_uncertain": false,
+      "normal": [
+        -0.24402409194146613,
+        -0.7520326575671306,
+        0.6122900656589669
+      ],
+      "normal_bits": [
+        13821331951621607316,
+        13828320964392831770,
+        4603690238168365176
+      ],
+      "partition_bounds": [
+        {
+          "finish": 0.01666666753590107,
+          "gap_interval_m": [
+            -0.006940315229573506,
+            -0.005712608175033934
+          ],
+          "remaining_depth": 3,
+          "start": 0.001711639023195936
+        }
+      ],
+      "reason": "bounded_partition_not_certified",
+      "record": 27,
+      "result": false,
+      "sampled_native_depth": {
+        "maximum_at": 0.01666666753590107,
+        "maximum_depth_m": 0.00010230013545475813,
+        "method": "257 actual native manifold samples; diagnostic, NOT a continuous proof",
+        "rows_over_unchanged_slop": 0,
+        "uncertain_samples": 0
+      },
+      "stage": "scheduled_query",
+      "start": 0.001711639023195936,
+      "start_separations_m": [
+        0.00018925269703468084,
+        -1.4803782810712818e-08,
+        4.904591357507426e-05
+      ],
+      "whole_gap_interval_m": [
+        -0.006940315229573506,
+        -0.005712608175033934
+      ]
+    },
+    {
+      "actual_unmodified_result": false,
+      "after_global_impact_sequence": 3489,
+      "clearance_m": 0.004999999888241291,
+      "diagnostic_branch_parity": true,
+      "end_gap_interval_m": [
+        0.002978189418151753,
+        0.002981249973408766
+      ],
+      "finish": 0.01666666753590107,
+      "manifold_rows": 1,
+      "manifold_uncertain": false,
+      "normal": [
+        -0.23783821786867224,
+        -0.7537586868440727,
+        0.6126016847252
+      ],
+      "normal_bits": [
+        13821109082020253753,
+        13828336511082448704,
+        4603693044983386314
+      ],
+      "partition_bounds": [
+        {
+          "finish": 0.01666666753590107,
+          "gap_interval_m": [
+            -0.007079673597452434,
+            -0.00585646071348011
+          ],
+          "remaining_depth": 3,
+          "start": 0.0017287180358463703
+        }
+      ],
+      "reason": "bounded_partition_not_certified",
+      "record": 28,
+      "result": false,
+      "sampled_native_depth": {
+        "maximum_at": 0.01666666753590107,
+        "maximum_depth_m": 0.00010235101982059014,
+        "method": "257 actual native manifold samples; diagnostic, NOT a continuous proof",
+        "rows_over_unchanged_slop": 0,
+        "uncertain_samples": 0
+      },
+      "stage": "scheduled_query",
+      "start": 0.0017287180358463703,
+      "start_separations_m": [
+        3.2952332575489905e-07
+      ],
+      "whole_gap_interval_m": [
+        -0.007079673597452434,
+        -0.00585646071348011
+      ]
+    },
+    {
+      "actual_unmodified_result": false,
+      "after_global_impact_sequence": 3489,
+      "clearance_m": 0.004999999888241291,
+      "diagnostic_branch_parity": true,
+      "end_gap_interval_m": [
+        0.003150031960136575,
+        0.0031531025275833313
+      ],
+      "finish": 0.01666666753590107,
+      "manifold_rows": 3,
+      "manifold_uncertain": false,
+      "normal": [
+        -0.24402696442127386,
+        -0.752028986716887,
+        0.612293429470634
+      ],
+      "normal_bits": [
+        13821332055113599250,
+        13828320931328752192,
+        4603690268466887117
+      ],
+      "partition_bounds": [
+        {
+          "finish": 0.01666666753590107,
+          "gap_interval_m": [
+            -0.006921369757358415,
+            -0.005695600781068395
+          ],
+          "remaining_depth": 3,
+          "start": 0.0017353727415040428
+        }
+      ],
+      "reason": "bounded_partition_not_certified",
+      "record": 29,
+      "result": false,
+      "sampled_native_depth": {
+        "maximum_at": 0.01666666753590107,
+        "maximum_depth_m": 0.00010235101982059014,
+        "method": "257 actual native manifold samples; diagnostic, NOT a continuous proof",
+        "rows_over_unchanged_slop": 0,
+        "uncertain_samples": 0
+      },
+      "stage": "before_impact",
+      "start": 0.0017353727415040428,
+      "start_separations_m": [
+        0.0001887616610341536,
+        -2.01293651191925e-08,
+        4.9308784655310856e-05
+      ],
+      "whole_gap_interval_m": [
+        -0.006921369757358415,
+        -0.005695600781068395
+      ]
+    },
+    {
+      "actual_unmodified_result": false,
+      "after_global_impact_sequence": 3490,
+      "clearance_m": 0.004999999888241291,
+      "diagnostic_branch_parity": true,
+      "end_gap_interval_m": [
+        0.0031498817170982313,
+        0.0031529522845448765
+      ],
+      "finish": 0.01666666753590107,
+      "manifold_rows": 3,
+      "manifold_uncertain": false,
+      "normal": [
+        -0.24402696442127386,
+        -0.752028986716887,
+        0.612293429470634
+      ],
+      "normal_bits": [
+        13821332055113599250,
+        13828320931328752192,
+        4603690268466887117
+      ],
+      "partition_bounds": [
+        {
+          "finish": 0.01666666753590107,
+          "gap_interval_m": [
+            -0.006921519210649713,
+            -0.005695750020178243
+          ],
+          "remaining_depth": 3,
+          "start": 0.0017353727415040428
+        }
+      ],
+      "reason": "bounded_partition_not_certified",
+      "record": 30,
+      "result": false,
+      "sampled_native_depth": {
+        "maximum_at": 0.01666666753590107,
+        "maximum_depth_m": 0.00010223380146989758,
+        "method": "257 actual native manifold samples; diagnostic, NOT a continuous proof",
+        "rows_over_unchanged_slop": 0,
+        "uncertain_samples": 0
+      },
+      "stage": "after_trajectory_replacement",
+      "start": 0.0017353727415040428,
+      "start_separations_m": [
+        0.0001887616610341536,
+        -2.01293651191925e-08,
+        4.9308784655310856e-05
+      ],
+      "whole_gap_interval_m": [
+        -0.006921519210649713,
+        -0.005695750020178243
+      ]
+    },
+    {
+      "actual_unmodified_result": false,
+      "after_global_impact_sequence": 3490,
+      "clearance_m": 0.004999999888241291,
+      "diagnostic_branch_parity": true,
+      "end_gap_interval_m": [
+        0.0031498817170982313,
+        0.0031529522845448765
+      ],
+      "finish": 0.01666666753590107,
+      "manifold_rows": 3,
+      "manifold_uncertain": false,
+      "normal": [
+        -0.24402696442127386,
+        -0.752028986716887,
+        0.612293429470634
+      ],
+      "normal_bits": [
+        13821332055113599250,
+        13828320931328752192,
+        4603690268466887117
+      ],
+      "partition_bounds": [
+        {
+          "finish": 0.01666666753590107,
+          "gap_interval_m": [
+            -0.006921519210649713,
+            -0.005695750020178243
+          ],
+          "remaining_depth": 3,
+          "start": 0.0017353727415040428
+        }
+      ],
+      "reason": "bounded_partition_not_certified",
+      "record": 31,
+      "result": false,
+      "sampled_native_depth": {
+        "maximum_at": 0.01666666753590107,
+        "maximum_depth_m": 0.00010223380146989758,
+        "method": "257 actual native manifold samples; diagnostic, NOT a continuous proof",
+        "rows_over_unchanged_slop": 0,
+        "uncertain_samples": 0
+      },
+      "stage": "scheduled_query",
+      "start": 0.0017353727415040428,
+      "start_separations_m": [
+        0.0001887616610341536,
+        -2.01293651191925e-08,
+        4.9308784655310856e-05
+      ],
+      "whole_gap_interval_m": [
+        -0.006921519210649713,
+        -0.005695750020178243
+      ]
+    },
+    {
+      "actual_unmodified_result": false,
+      "after_global_impact_sequence": 3491,
+      "clearance_m": 0.004999999888241291,
+      "diagnostic_branch_parity": true,
+      "end_gap_interval_m": [
+        0.0030303024424279098,
+        0.0030333636986744116
+      ],
+      "finish": 0.01666666753590107,
+      "manifold_rows": 1,
+      "manifold_uncertain": false,
+      "normal": [
+        -0.23814509501595588,
+        -0.7536271470757486,
+        0.6126442988474712
+      ],
+      "normal_bits": [
+        13821120138434702994,
+        13828335326277545487,
+        4603693428817276676
+      ],
+      "partition_bounds": [
+        {
+          "finish": 0.01666666753590107,
+          "gap_interval_m": [
+            -0.006765060713505693,
+            -0.0055735875372220295
+          ],
+          "remaining_depth": 3,
+          "start": 0.002120202025079586
+        }
+      ],
+      "reason": "bounded_partition_not_certified",
+      "record": 32,
+      "result": false,
+      "sampled_native_depth": {
+        "maximum_at": 0.01666666753590107,
+        "maximum_depth_m": 0.00010228226906011662,
+        "method": "257 actual native manifold samples; diagnostic, NOT a continuous proof",
+        "rows_over_unchanged_slop": 0,
+        "uncertain_samples": 0
+      },
+      "stage": "scheduled_query",
+      "start": 0.002120202025079586,
+      "start_separations_m": [
+        6.244985389418561e-07
+      ],
+      "whole_gap_interval_m": [
+        -0.006765060713505693,
+        -0.0055735875372220295
+      ]
+    },
+    {
+      "actual_unmodified_result": false,
+      "after_global_impact_sequence": 3491,
+      "clearance_m": 0.004999999888241291,
+      "diagnostic_branch_parity": true,
+      "end_gap_interval_m": [
+        0.003196036576706416,
+        0.0031991074279569304
+      ],
+      "finish": 0.01666666753590107,
+      "manifold_rows": 3,
+      "manifold_uncertain": false,
+      "normal": [
+        -0.24407490341604482,
+        -0.751967697677382,
+        0.6123495922855063
+      ],
+      "normal_bits": [
+        13821333782297911146,
+        13828320379286161239,
+        4603690774336551379
+      ],
+      "partition_bounds": [
+        {
+          "finish": 0.01666666753590107,
+          "gap_interval_m": [
+            -0.006608573611629369,
+            -0.005415091293385904
+          ],
+          "remaining_depth": 3,
+          "start": 0.0021309989365902093
+        }
+      ],
+      "reason": "bounded_partition_not_certified",
+      "record": 33,
+      "result": false,
+      "sampled_native_depth": {
+        "maximum_at": 0.01666666753590107,
+        "maximum_depth_m": 0.00010228226906011662,
+        "method": "257 actual native manifold samples; diagnostic, NOT a continuous proof",
+        "rows_over_unchanged_slop": 0,
+        "uncertain_samples": 0
+      },
+      "stage": "before_impact",
+      "start": 0.0021309989365902093,
+      "start_separations_m": [
+        0.00018090632862943767,
+        -3.773938661577603e-09,
+        5.3710140498985925e-05
+      ],
+      "whole_gap_interval_m": [
+        -0.006608573611629369,
+        -0.005415091293385904
+      ]
+    },
+    {
+      "actual_unmodified_result": false,
+      "after_global_impact_sequence": 3492,
+      "clearance_m": 0.004999999888241291,
+      "diagnostic_branch_parity": true,
+      "end_gap_interval_m": [
+        0.0031957164985878506,
+        0.003198787349838587
+      ],
+      "finish": 0.01666666753590107,
+      "manifold_rows": 3,
+      "manifold_uncertain": false,
+      "normal": [
+        -0.24407490341604482,
+        -0.751967697677382,
+        0.6123495922855063
+      ],
+      "normal_bits": [
+        13821333782297911146,
+        13828320379286161239,
+        4603690774336551379
+      ],
+      "partition_bounds": [
+        {
+          "finish": 0.01666666753590107,
+          "gap_interval_m": [
+            -0.006608876976965388,
+            -0.00541539440400201
+          ],
+          "remaining_depth": 3,
+          "start": 0.0021309989365902093
+        }
+      ],
+      "reason": "bounded_partition_not_certified",
+      "record": 34,
+      "result": false,
+      "sampled_native_depth": {
+        "maximum_at": 0.01666666753590107,
+        "maximum_depth_m": 0.00010242731022236384,
+        "method": "257 actual native manifold samples; diagnostic, NOT a continuous proof",
+        "rows_over_unchanged_slop": 0,
+        "uncertain_samples": 0
+      },
+      "stage": "after_trajectory_replacement",
+      "start": 0.0021309989365902093,
+      "start_separations_m": [
+        0.00018090632862943767,
+        -3.773938661577603e-09,
+        5.3710140498985925e-05
+      ],
+      "whole_gap_interval_m": [
+        -0.006608876976965388,
+        -0.00541539440400201
+      ]
+    },
+    {
+      "actual_unmodified_result": false,
+      "after_global_impact_sequence": 3492,
+      "clearance_m": 0.004999999888241291,
+      "diagnostic_branch_parity": true,
+      "end_gap_interval_m": [
+        0.0031957164985878506,
+        0.003198787349838587
+      ],
+      "finish": 0.01666666753590107,
+      "manifold_rows": 3,
+      "manifold_uncertain": false,
+      "normal": [
+        -0.24407490341604482,
+        -0.751967697677382,
+        0.6123495922855063
+      ],
+      "normal_bits": [
+        13821333782297911146,
+        13828320379286161239,
+        4603690774336551379
+      ],
+      "partition_bounds": [
+        {
+          "finish": 0.01666666753590107,
+          "gap_interval_m": [
+            -0.006608876976965388,
+            -0.00541539440400201
+          ],
+          "remaining_depth": 3,
+          "start": 0.0021309989365902093
+        }
+      ],
+      "reason": "bounded_partition_not_certified",
+      "record": 35,
+      "result": false,
+      "sampled_native_depth": {
+        "maximum_at": 0.01666666753590107,
+        "maximum_depth_m": 0.00010242731022236384,
+        "method": "257 actual native manifold samples; diagnostic, NOT a continuous proof",
+        "rows_over_unchanged_slop": 0,
+        "uncertain_samples": 0
+      },
+      "stage": "scheduled_query",
+      "start": 0.0021309989365902093,
+      "start_separations_m": [
+        0.00018090632862943767,
+        -3.773938661577603e-09,
+        5.3710140498985925e-05
+      ],
+      "whole_gap_interval_m": [
+        -0.006608876976965388,
+        -0.00541539440400201
+      ]
+    },
+    {
+      "actual_unmodified_result": false,
+      "after_global_impact_sequence": 3493,
+      "clearance_m": 0.004999999888241291,
+      "diagnostic_branch_parity": true,
+      "end_gap_interval_m": [
+        0.003033217354568015,
+        0.0030362786511551375
+      ],
+      "finish": 0.01666666753590107,
+      "manifold_rows": 1,
+      "manifold_uncertain": false,
+      "normal": [
+        -0.23816282453774085,
+        -0.7536195790396323,
+        0.6126467163841921
+      ],
+      "normal_bits": [
+        13821120777208044628,
+        13828335258110736220,
+        4603693450592511627
+      ],
+      "partition_bounds": [
+        {
+          "finish": 0.01666666753590107,
+          "gap_interval_m": [
+            -0.006747134405616978,
+            -0.005557482549896347
+          ],
+          "remaining_depth": 3,
+          "start": 0.002142647911623446
+        }
+      ],
+      "reason": "bounded_partition_not_certified",
+      "record": 36,
+      "result": false,
+      "sampled_native_depth": {
+        "maximum_at": 0.01666666753590107,
+        "maximum_depth_m": 0.00010243259768188961,
+        "method": "257 actual native manifold samples; diagnostic, NOT a continuous proof",
+        "rows_over_unchanged_slop": 0,
+        "uncertain_samples": 0
+      },
+      "stage": "scheduled_query",
+      "start": 0.002142647911623446,
+      "start_separations_m": [
+        6.020689278995268e-07
+      ],
+      "whole_gap_interval_m": [
+        -0.006747134405616978,
+        -0.005557482549896347
+      ]
+    },
+    {
+      "actual_unmodified_result": false,
+      "after_global_impact_sequence": 3493,
+      "clearance_m": 0.004999999888241291,
+      "diagnostic_branch_parity": true,
+      "end_gap_interval_m": [
+        0.0031983637829768297,
+        0.003201434648955452
+      ],
+      "finish": 0.01666666753590107,
+      "manifold_rows": 3,
+      "manifold_uncertain": false,
+      "normal": [
+        -0.24407737155709008,
+        -0.7519645149149254,
+        0.6123525169398288
+      ],
+      "normal_bits": [
+        13821333871222063880,
+        13828320350618385612,
+        4603690800679495613
+      ],
+      "partition_bounds": [
+        {
+          "finish": 0.01666666753590107,
+          "gap_interval_m": [
+            -0.006592516732617797,
+            -0.005400706948518957
+          ],
+          "remaining_depth": 3,
+          "start": 0.002151479476705576
+        }
+      ],
+      "reason": "bounded_partition_not_certified",
+      "record": 37,
+      "result": false,
+      "sampled_native_depth": {
+        "maximum_at": 0.01666666753590107,
+        "maximum_depth_m": 0.00010243259768188961,
+        "method": "257 actual native manifold samples; diagnostic, NOT a continuous proof",
+        "rows_over_unchanged_slop": 0,
+        "uncertain_samples": 0
+      },
+      "stage": "before_impact",
+      "start": 0.002151479476705576,
+      "start_separations_m": [
+        0.00018049894017468926,
+        -7.1993760952793195e-09,
+        5.3932905436870904e-05
+      ],
+      "whole_gap_interval_m": [
+        -0.006592516732617797,
+        -0.005400706948518957
+      ]
+    },
+    {
+      "actual_unmodified_result": false,
+      "after_global_impact_sequence": 3494,
+      "clearance_m": 0.004999999888241291,
+      "diagnostic_branch_parity": true,
+      "end_gap_interval_m": [
+        0.0031980631870852073,
+        0.0032011340530639404
+      ],
+      "finish": 0.01666666753590107,
+      "manifold_rows": 3,
+      "manifold_uncertain": false,
+      "normal": [
+        -0.24407737155709008,
+        -0.7519645149149254,
+        0.6123525169398288
+      ],
+      "normal_bits": [
+        13821333871222063880,
+        13828320350618385612,
+        4603690800679495613
+      ],
+      "partition_bounds": [
+        {
+          "finish": 0.01666666753590107,
+          "gap_interval_m": [
+            -0.006593042569610523,
+            -0.005401232658843674
+          ],
+          "remaining_depth": 3,
+          "start": 0.002151479476705576
+        }
+      ],
+      "reason": "bounded_partition_not_certified",
+      "record": 38,
+      "result": false,
+      "sampled_native_depth": {
+        "maximum_at": 0.01666666753590107,
+        "maximum_depth_m": 0.00010243259768188961,
+        "method": "257 actual native manifold samples; diagnostic, NOT a continuous proof",
+        "rows_over_unchanged_slop": 0,
+        "uncertain_samples": 0
+      },
+      "stage": "after_trajectory_replacement",
+      "start": 0.002151479476705576,
+      "start_separations_m": [
+        0.00018049894017468926,
+        -7.1993760952793195e-09,
+        5.3932905436870904e-05
+      ],
+      "whole_gap_interval_m": [
+        -0.006593042569610523,
+        -0.005401232658843674
+      ]
+    },
+    {
+      "actual_unmodified_result": false,
+      "after_global_impact_sequence": 3494,
+      "clearance_m": 0.004999999888241291,
+      "diagnostic_branch_parity": true,
+      "end_gap_interval_m": [
+        0.0031980631870852073,
+        0.0032011340530639404
+      ],
+      "finish": 0.01666666753590107,
+      "manifold_rows": 3,
+      "manifold_uncertain": false,
+      "normal": [
+        -0.24407737155709008,
+        -0.7519645149149254,
+        0.6123525169398288
+      ],
+      "normal_bits": [
+        13821333871222063880,
+        13828320350618385612,
+        4603690800679495613
+      ],
+      "partition_bounds": [
+        {
+          "finish": 0.01666666753590107,
+          "gap_interval_m": [
+            -0.006593042569610523,
+            -0.005401232658843674
+          ],
+          "remaining_depth": 3,
+          "start": 0.002151479476705576
+        }
+      ],
+      "reason": "bounded_partition_not_certified",
+      "record": 39,
+      "result": false,
+      "sampled_native_depth": {
+        "maximum_at": 0.01666666753590107,
+        "maximum_depth_m": 0.00010243259768188961,
+        "method": "257 actual native manifold samples; diagnostic, NOT a continuous proof",
+        "rows_over_unchanged_slop": 0,
+        "uncertain_samples": 0
+      },
+      "stage": "scheduled_query",
+      "start": 0.002151479476705576,
+      "start_separations_m": [
+        0.00018049894017468926,
+        -7.1993760952793195e-09,
+        5.3932905436870904e-05
+      ],
+      "whole_gap_interval_m": [
+        -0.006593042569610523,
+        -0.005401232658843674
+      ]
+    },
+    {
+      "actual_unmodified_result": false,
+      "after_global_impact_sequence": 3495,
+      "clearance_m": 0.004999999888241291,
+      "diagnostic_branch_parity": true,
+      "end_gap_interval_m": [
+        0.0031982598627540684,
+        0.0032013307302075117
+      ],
+      "finish": 0.01666666753590107,
+      "manifold_rows": 3,
+      "manifold_uncertain": false,
+      "normal": [
+        -0.24407764748875246,
+        -0.7519641987920621,
+        0.6123527951527358
+      ],
+      "normal_bits": [
+        13821333881163549735,
+        13828320347771003993,
+        4603690803185414701
+      ],
+      "partition_bounds": [
+        {
+          "finish": 0.01666666753590107,
+          "gap_interval_m": [
+            -0.006591373151053353,
+            -0.005399746956832368
+          ],
+          "remaining_depth": 3,
+          "start": 0.0021537279616806767
+        }
+      ],
+      "reason": "bounded_partition_not_certified",
+      "record": 40,
+      "result": false,
+      "sampled_native_depth": {
+        "maximum_at": 0.01666666753590107,
+        "maximum_depth_m": 0.00010243234114232225,
+        "method": "257 actual native manifold samples; diagnostic, NOT a continuous proof",
+        "rows_over_unchanged_slop": 0,
+        "uncertain_samples": 0
+      },
+      "stage": "scheduled_query",
+      "start": 0.0021537279616806767,
+      "start_separations_m": [
+        0.00018029728526353095,
+        -1.431755593528372e-07,
+        5.3831225796441284e-05
+      ],
+      "whole_gap_interval_m": [
+        -0.006591373151053353,
+        -0.005399746956832368
+      ]
+    },
+    {
+      "actual_unmodified_result": false,
+      "after_global_impact_sequence": 3496,
+      "clearance_m": 0.004999999888241291,
+      "diagnostic_branch_parity": true,
+      "end_gap_interval_m": [
+        0.00319835441226751,
+        0.0032014252804133986
+      ],
+      "finish": 0.01666666753590107,
+      "manifold_rows": 3,
+      "manifold_uncertain": false,
+      "normal": [
+        -0.24407774736916316,
+        -0.7519640477187065,
+        0.6123529408582064
+      ],
+      "normal_bits": [
+        13821333884762120778,
+        13828320346410256177,
+        4603690804497812907
+      ],
+      "partition_bounds": [
+        {
+          "finish": 0.01666666753590107,
+          "gap_interval_m": [
+            -0.006590432686477359,
+            -0.005398887301892246
+          ],
+          "remaining_depth": 3,
+          "start": 0.0021547175197702572
+        }
+      ],
+      "reason": "bounded_partition_not_certified",
+      "record": 41,
+      "result": false,
+      "sampled_native_depth": {
+        "maximum_at": 0.01666666753590107,
+        "maximum_depth_m": 0.00010241547777462001,
+        "method": "257 actual native manifold samples; diagnostic, NOT a continuous proof",
+        "rows_over_unchanged_slop": 0,
+        "uncertain_samples": 0
+      },
+      "stage": "scheduled_query",
+      "start": 0.0021547175197702572,
+      "start_separations_m": [
+        0.0001802080749476742,
+        -2.2690895851162907e-07,
+        5.3751880769947746e-05
+      ],
+      "whole_gap_interval_m": [
+        -0.006590432686477359,
+        -0.005398887301892246
+      ]
+    },
+    {
+      "actual_unmodified_result": false,
+      "after_global_impact_sequence": 3497,
+      "clearance_m": 0.004999999888241291,
+      "diagnostic_branch_parity": true,
+      "end_gap_interval_m": [
+        0.0032041992221205034,
+        0.003207270127148223
+      ],
+      "finish": 0.01666666753590107,
+      "manifold_rows": 3,
+      "manifold_uncertain": false,
+      "normal": [
+        -0.24408395131697327,
+        -0.7519560794741323,
+        0.6123602528343799
+      ],
+      "normal_bits": [
+        13821334108282897145,
+        13828320274638689587,
+        4603690870358239248
+      ],
+      "partition_bounds": [
+        {
+          "finish": 0.01666666753590107,
+          "gap_interval_m": [
+            -0.00655040948086289,
+            -0.00536304529451664
+          ],
+          "remaining_depth": 3,
+          "start": 0.0022059546805038516
+        }
+      ],
+      "reason": "bounded_partition_not_certified",
+      "record": 42,
+      "result": false,
+      "sampled_native_depth": {
+        "maximum_at": 0.01666666753590107,
+        "maximum_depth_m": 0.00010299704343785798,
+        "method": "257 actual native manifold samples; diagnostic, NOT a continuous proof",
+        "rows_over_unchanged_slop": 0,
+        "uncertain_samples": 0
+      },
+      "stage": "scheduled_query",
+      "start": 0.0022059546805038516,
+      "start_separations_m": [
+        0.00017894750388158798,
+        -4.865163143463747e-07,
+        5.405282287868074e-05
+      ],
+      "whole_gap_interval_m": [
+        -0.00655040948086289,
+        -0.00536304529451664
+      ]
+    },
+    {
+      "actual_unmodified_result": false,
+      "after_global_impact_sequence": 3498,
+      "clearance_m": 0.004999999888241291,
+      "diagnostic_branch_parity": true,
+      "end_gap_interval_m": [
+        0.003204212277724492,
+        0.0032072831828982057
+      ],
+      "finish": 0.01666666753590107,
+      "manifold_rows": 3,
+      "manifold_uncertain": false,
+      "normal": [
+        -0.24408401469742383,
+        -0.7519560514127605,
+        0.6123602620295654
+      ],
+      "normal_bits": [
+        13821334110566418533,
+        13828320274385935219,
+        4603690870441062116
+      ],
+      "partition_bounds": [
+        {
+          "finish": 0.01666666753590107,
+          "gap_interval_m": [
+            -0.006550089284581011,
+            -0.005362756529217577
+          ],
+          "remaining_depth": 3,
+          "start": 0.0022063394746354515
+        }
+      ],
+      "reason": "bounded_partition_not_certified",
+      "record": 43,
+      "result": false,
+      "sampled_native_depth": {
+        "maximum_at": 0.01666666753590107,
+        "maximum_depth_m": 0.00010299704343785798,
+        "method": "257 actual native manifold samples; diagnostic, NOT a continuous proof",
+        "rows_over_unchanged_slop": 0,
+        "uncertain_samples": 0
+      },
+      "stage": "scheduled_query",
+      "start": 0.0022063394746354515,
+      "start_separations_m": [
+        0.00017891537578362815,
+        -5.084506186081583e-07,
+        5.4036643506782944e-05
+      ],
+      "whole_gap_interval_m": [
+        -0.006550089284581011,
+        -0.005362756529217577
+      ]
+    },
+    {
+      "actual_unmodified_result": false,
+      "after_global_impact_sequence": 3499,
+      "clearance_m": 0.004999999888241291,
+      "diagnostic_branch_parity": true,
+      "end_gap_interval_m": [
+        0.003251944081217093,
+        0.0032550152804603533
+      ],
+      "finish": 0.01666666753590107,
+      "manifold_rows": 3,
+      "manifold_uncertain": false,
+      "normal": [
+        -0.24413363002910154,
+        -0.7518925235157813,
+        0.6124184874494598
+      ],
+      "normal_bits": [
+        13821335898147132578,
+        13828319702177508893,
+        4603691394889020796
+      ],
+      "partition_bounds": [
+        {
+          "finish": 0.01666666753590107,
+          "gap_interval_m": [
+            -0.006225843509978184,
+            -0.005071980352349286
+          ],
+          "remaining_depth": 3,
+          "start": 0.002616289421156236
+        }
+      ],
+      "reason": "bounded_partition_not_certified",
+      "record": 44,
+      "result": false,
+      "sampled_native_depth": {
+        "maximum_at": 0.01666666753590107,
+        "maximum_depth_m": 0.0001031742018433035,
+        "method": "257 actual native manifold samples; diagnostic, NOT a continuous proof",
+        "rows_over_unchanged_slop": 0,
+        "uncertain_samples": 0
+      },
+      "stage": "scheduled_query",
+      "start": 0.002616289421156236,
+      "start_separations_m": [
+        0.00017110051225027734,
+        -1.8595124762210702e-07,
+        5.890971370192677e-05
+      ],
+      "whole_gap_interval_m": [
+        -0.006225843509978184,
+        -0.005071980352349286
+      ]
+    },
+    {
+      "actual_unmodified_result": false,
+      "after_global_impact_sequence": 3500,
+      "clearance_m": 0.004999999888241291,
+      "diagnostic_branch_parity": true,
+      "end_gap_interval_m": [
+        0.0032651029524972098,
+        0.003268174233115821
+      ],
+      "finish": 0.01666666753590107,
+      "manifold_rows": 3,
+      "manifold_uncertain": false,
+      "normal": [
+        -0.24414734328882995,
+        -0.7518749401107836,
+        0.612434608099846
+      ],
+      "normal_bits": [
+        13821336392219383801,
+        13828319543800276502,
+        4603691540090930940
+      ],
+      "partition_bounds": [
+        {
+          "finish": 0.01666666753590107,
+          "gap_interval_m": [
+            -0.006136400264929014,
+            -0.004991791723680244
+          ],
+          "remaining_depth": 3,
+          "start": 0.0027296825357690665
+        }
+      ],
+      "reason": "bounded_partition_not_certified",
+      "record": 45,
+      "result": false,
+      "sampled_native_depth": {
+        "maximum_at": 0.01666666753590107,
+        "maximum_depth_m": 0.00010322264923501301,
+        "method": "257 actual native manifold samples; diagnostic, NOT a continuous proof",
+        "rows_over_unchanged_slop": 0,
+        "uncertain_samples": 0
+      },
+      "stage": "scheduled_query",
+      "start": 0.0027296825357690665,
+      "start_separations_m": [
+        0.00016878207872189632,
+        -2.64099509816873e-07,
+        6.0088304952410354e-05
+      ],
+      "whole_gap_interval_m": [
+        -0.006136400264929014,
+        -0.004991791723680244
+      ]
+    },
+    {
+      "actual_unmodified_result": false,
+      "after_global_impact_sequence": 3502,
+      "clearance_m": 0.004999999888241291,
+      "diagnostic_branch_parity": true,
+      "end_gap_interval_m": [
+        0.0032868556344099443,
+        0.003289927049951739
+      ],
+      "finish": 0.01666666753590107,
+      "manifold_rows": 3,
+      "manifold_uncertain": false,
+      "normal": [
+        -0.2441701255692881,
+        -0.7518457877048474,
+        0.6124613141170272
+      ],
+      "normal_bits": [
+        13821337213037542057,
+        13828319281218747480,
+        4603691780637348992
+      ],
+      "partition_bounds": [
+        {
+          "finish": 0.01666666753590107,
+          "gap_interval_m": [
+            -0.005988060141611244,
+            -0.004858821412016983
+          ],
+          "remaining_depth": 3,
+          "start": 0.002917909627457421
+        }
+      ],
+      "reason": "bounded_partition_not_certified",
+      "record": 46,
+      "result": false,
+      "sampled_native_depth": {
+        "maximum_at": 0.01666666753590107,
+        "maximum_depth_m": 0.0001032563485580118,
+        "method": "257 actual native manifold samples; diagnostic, NOT a continuous proof",
+        "rows_over_unchanged_slop": 0,
+        "uncertain_samples": 0
+      },
+      "stage": "scheduled_query",
+      "start": 0.002917909627457421,
+      "start_separations_m": [
+        0.0001646731182811667,
+        -6.434362591067888e-07,
+        6.180069993183546e-05
+      ],
+      "whole_gap_interval_m": [
+        -0.005988060141611244,
+        -0.004858821412016983
+      ]
+    },
+    {
+      "actual_unmodified_result": false,
+      "after_global_impact_sequence": 3503,
+      "clearance_m": 0.004999999888241291,
+      "diagnostic_branch_parity": true,
+      "end_gap_interval_m": [
+        0.00328711715554791,
+        0.0032901885728388613
+      ],
+      "finish": 0.01666666753590107,
+      "manifold_rows": 3,
+      "manifold_uncertain": false,
+      "normal": [
+        -0.24417041793654942,
+        -0.7518454094497333,
+        0.6124616618973414
+      ],
+      "normal_bits": [
+        13821337223571182770,
+        13828319277811728298,
+        4603691783769875579
+      ],
+      "partition_bounds": [
+        {
+          "finish": 0.01666666753590107,
+          "gap_interval_m": [
+            -0.005986214297243503,
+            -0.004857182609680428
+          ],
+          "remaining_depth": 3,
+          "start": 0.0029204439162537517
+        }
+      ],
+      "reason": "bounded_partition_not_certified",
+      "record": 47,
+      "result": false,
+      "sampled_native_depth": {
+        "maximum_at": 0.01666666753590107,
+        "maximum_depth_m": 0.00010320230130367314,
+        "method": "257 actual native manifold samples; diagnostic, NOT a continuous proof",
+        "rows_over_unchanged_slop": 0,
+        "uncertain_samples": 0
+      },
+      "stage": "scheduled_query",
+      "start": 0.0029204439162537517,
+      "start_separations_m": [
+        0.0001650513344974569,
+        -2.0368344783028292e-07,
+        6.227386175527982e-05
+      ],
+      "whole_gap_interval_m": [
+        -0.005986214297243503,
+        -0.004857182609680428
+      ]
+    },
+    {
+      "actual_unmodified_result": false,
+      "after_global_impact_sequence": 3504,
+      "clearance_m": 0.004999999888241291,
+      "diagnostic_branch_parity": true,
+      "end_gap_interval_m": [
+        0.0031690015317113996,
+        0.0031720646507721367
+      ],
+      "finish": 0.01666666753590107,
+      "manifold_rows": 1,
+      "manifold_uncertain": false,
+      "normal": [
+        -0.23895944971797195,
+        -0.7532766901007598,
+        0.612758198265293
+      ],
+      "normal_bits": [
+        13821149478654963370,
+        13828332169641741549,
+        4603694454732027996
+      ],
+      "partition_bounds": [
+        {
+          "finish": 0.01666666753590107,
+          "gap_interval_m": [
+            -0.005925744158899353,
+            -0.004819016751875787
+          ],
+          "remaining_depth": 3,
+          "start": 0.0031645743876652223
+        }
+      ],
+      "reason": "bounded_partition_not_certified",
+      "record": 48,
+      "result": false,
+      "sampled_native_depth": {
+        "maximum_at": 0.01666666753590107,
+        "maximum_depth_m": 0.00010325572374703107,
+        "method": "257 actual native manifold samples; diagnostic, NOT a continuous proof",
+        "rows_over_unchanged_slop": 0,
+        "uncertain_samples": 0
+      },
+      "stage": "scheduled_query",
+      "start": 0.0031645743876652223,
+      "start_separations_m": [
+        1.2105965765916006e-07
+      ],
+      "whole_gap_interval_m": [
+        -0.005925744158899353,
+        -0.004819016751875787
+      ]
+    },
+    {
+      "actual_unmodified_result": false,
+      "after_global_impact_sequence": 3504,
+      "clearance_m": 0.004999999888241291,
+      "diagnostic_branch_parity": true,
+      "end_gap_interval_m": [
+        0.003315976810810747,
+        0.0033190484046038454
+      ],
+      "finish": 0.01666666753590107,
+      "manifold_rows": 3,
+      "manifold_uncertain": false,
+      "normal": [
+        -0.24420018817043368,
+        -0.7518072657940161,
+        0.6124966148452172
+      ],
+      "normal_bits": [
+        13821338296156896593,
+        13828318934244220949,
+        4603692098598041637
+      ],
+      "partition_bounds": [
+        {
+          "finish": 0.01666666753590107,
+          "gap_interval_m": [
+            -0.005791311208404265,
+            -0.004682356451852548
+          ],
+          "remaining_depth": 3,
+          "start": 0.003166330786879548
+        }
+      ],
+      "reason": "bounded_partition_not_certified",
+      "record": 49,
+      "result": false,
+      "sampled_native_depth": {
+        "maximum_at": 0.01666666753590107,
+        "maximum_depth_m": 0.00010325572374703107,
+        "method": "257 actual native manifold samples; diagnostic, NOT a continuous proof",
+        "rows_over_unchanged_slop": 0,
+        "uncertain_samples": 0
+      },
+      "stage": "before_impact",
+      "start": 0.003166330786879548,
+      "start_separations_m": [
+        0.00016039010393475994,
+        -1.801876370333133e-09,
+        6.520975230189796e-05
+      ],
+      "whole_gap_interval_m": [
+        -0.005791311208404265,
+        -0.004682356451852548
+      ]
+    },
+    {
+      "actual_unmodified_result": false,
+      "after_global_impact_sequence": 3505,
+      "clearance_m": 0.004999999888241291,
+      "diagnostic_branch_parity": true,
+      "end_gap_interval_m": [
+        0.0033159397673547778,
+        0.003319011361147876
+      ],
+      "finish": 0.01666666753590107,
+      "manifold_rows": 3,
+      "manifold_uncertain": false,
+      "normal": [
+        -0.24420018817043368,
+        -0.7518072657940161,
+        0.6124966148452172
+      ],
+      "normal_bits": [
+        13821338296156896593,
+        13828318934244220949,
+        4603692098598041637
+      ],
+      "partition_bounds": [
+        {
+          "finish": 0.01666666753590107,
+          "gap_interval_m": [
+            -0.0057913480732758645,
+            -0.004682393268447876
+          ],
+          "remaining_depth": 3,
+          "start": 0.003166330786879548
+        }
+      ],
+      "reason": "bounded_partition_not_certified",
+      "record": 50,
+      "result": false,
+      "sampled_native_depth": {
+        "maximum_at": 0.01666666753590107,
+        "maximum_depth_m": 0.00010325572374703107,
+        "method": "257 actual native manifold samples; diagnostic, NOT a continuous proof",
+        "rows_over_unchanged_slop": 0,
+        "uncertain_samples": 0
+      },
+      "stage": "after_trajectory_replacement",
+      "start": 0.003166330786879548,
+      "start_separations_m": [
+        0.00016039010393475994,
+        -1.801876370333133e-09,
+        6.520975230189796e-05
+      ],
+      "whole_gap_interval_m": [
+        -0.0057913480732758645,
+        -0.004682393268447876
+      ]
+    },
+    {
+      "actual_unmodified_result": false,
+      "after_global_impact_sequence": 3505,
+      "clearance_m": 0.004999999888241291,
+      "diagnostic_branch_parity": true,
+      "end_gap_interval_m": [
+        0.0033159397673547778,
+        0.003319011361147876
+      ],
+      "finish": 0.01666666753590107,
+      "manifold_rows": 3,
+      "manifold_uncertain": false,
+      "normal": [
+        -0.24420018817043368,
+        -0.7518072657940161,
+        0.6124966148452172
+      ],
+      "normal_bits": [
+        13821338296156896593,
+        13828318934244220949,
+        4603692098598041637
+      ],
+      "partition_bounds": [
+        {
+          "finish": 0.01666666753590107,
+          "gap_interval_m": [
+            -0.0057913480732758645,
+            -0.004682393268447876
+          ],
+          "remaining_depth": 3,
+          "start": 0.003166330786879548
+        }
+      ],
+      "reason": "bounded_partition_not_certified",
+      "record": 51,
+      "result": false,
+      "sampled_native_depth": {
+        "maximum_at": 0.01666666753590107,
+        "maximum_depth_m": 0.00010325572374703107,
+        "method": "257 actual native manifold samples; diagnostic, NOT a continuous proof",
+        "rows_over_unchanged_slop": 0,
+        "uncertain_samples": 0
+      },
+      "stage": "scheduled_query",
+      "start": 0.003166330786879548,
+      "start_separations_m": [
+        0.00016039010393475994,
+        -1.801876370333133e-09,
+        6.520975230189796e-05
+      ],
+      "whole_gap_interval_m": [
+        -0.0057913480732758645,
+        -0.004682393268447876
+      ]
+    },
+    {
+      "actual_unmodified_result": false,
+      "after_global_impact_sequence": 3506,
+      "clearance_m": 0.004999999888241291,
+      "diagnostic_branch_parity": true,
+      "end_gap_interval_m": [
+        0.0031692252241488053,
+        0.0031722883472926106
+      ],
+      "finish": 0.01666666753590107,
+      "manifold_rows": 1,
+      "manifold_uncertain": false,
+      "normal": [
+        -0.23896137901062178,
+        -0.7532759346806004,
+        0.6127583745428616
+      ],
+      "normal_bits": [
+        13821149548165056641,
+        13828332162837521652,
+        4603694456319795181
+      ],
+      "partition_bounds": [
+        {
+          "finish": 0.01666666753590107,
+          "gap_interval_m": [
+            -0.005924157723377293,
+            -0.004817596198301793
+          ],
+          "remaining_depth": 3,
+          "start": 0.0031666179822320275
+        }
+      ],
+      "reason": "bounded_partition_not_certified",
+      "record": 52,
+      "result": false,
+      "sampled_native_depth": {
+        "maximum_at": 0.01666666753590107,
+        "maximum_depth_m": 0.00010325572374703107,
+        "method": "257 actual native manifold samples; diagnostic, NOT a continuous proof",
+        "rows_over_unchanged_slop": 0,
+        "uncertain_samples": 0
+      },
+      "stage": "scheduled_query",
+      "start": 0.0031666179822320275,
+      "start_separations_m": [
+        1.0866083691024299e-07
+      ],
+      "whole_gap_interval_m": [
+        -0.005924157723377293,
+        -0.004817596198301793
+      ]
+    },
+    {
+      "actual_unmodified_result": false,
+      "after_global_impact_sequence": 3506,
+      "clearance_m": 0.004999999888241291,
+      "diagnostic_branch_parity": true,
+      "end_gap_interval_m": [
+        0.0033161124983288573,
+        0.003319184093212972
+      ],
+      "finish": 0.01666666753590107,
+      "manifold_rows": 3,
+      "manifold_uncertain": false,
+      "normal": [
+        -0.2442003916226678,
+        -0.7518070316923489,
+        0.6124968210768732
+      ],
+      "normal_bits": [
+        13821338303487035839,
+        13828318932135620586,
+        4603692100455611255
+      ],
+      "partition_bounds": [
+        {
+          "finish": 0.01666666753590107,
+          "gap_interval_m": [
+            -0.005790093943203461,
+            -0.004681276379530691
+          ],
+          "remaining_depth": 3,
+          "start": 0.003168009612235602
+        }
+      ],
+      "reason": "bounded_partition_not_certified",
+      "record": 53,
+      "result": false,
+      "sampled_native_depth": {
+        "maximum_at": 0.01666666753590107,
+        "maximum_depth_m": 0.00010325572374703107,
+        "method": "257 actual native manifold samples; diagnostic, NOT a continuous proof",
+        "rows_over_unchanged_slop": 0,
+        "uncertain_samples": 0
+      },
+      "stage": "before_impact",
+      "start": 0.003168009612235602,
+      "start_separations_m": [
+        0.00016033946124338616,
+        -4.398372777103532e-10,
+        6.523708035777176e-05
+      ],
+      "whole_gap_interval_m": [
+        -0.005790093943203461,
+        -0.004681276379530691
+      ]
+    },
+    {
+      "actual_unmodified_result": false,
+      "after_global_impact_sequence": 3507,
+      "clearance_m": 0.004999999888241291,
+      "diagnostic_branch_parity": true,
+      "end_gap_interval_m": [
+        0.0033160697379014917,
+        0.0033191413327858283
+      ],
+      "finish": 0.01666666753590107,
+      "manifold_rows": 3,
+      "manifold_uncertain": false,
+      "normal": [
+        -0.2442003916226678,
+        -0.7518070316923489,
+        0.6124968210768732
+      ],
+      "normal_bits": [
+        13821338303487035839,
+        13828318932135620586,
+        4603692100455611255
+      ],
+      "partition_bounds": [
+        {
+          "finish": 0.01666666753590107,
+          "gap_interval_m": [
+            -0.0057901306651064795,
+            -0.004681313060169051
+          ],
+          "remaining_depth": 3,
+          "start": 0.003168009612235602
+        }
+      ],
+      "reason": "bounded_partition_not_certified",
+      "record": 54,
+      "result": false,
+      "sampled_native_depth": {
+        "maximum_at": 0.01666666753590107,
+        "maximum_depth_m": 0.00010325979735475999,
+        "method": "257 actual native manifold samples; diagnostic, NOT a continuous proof",
+        "rows_over_unchanged_slop": 0,
+        "uncertain_samples": 0
+      },
+      "stage": "after_trajectory_replacement",
+      "start": 0.003168009612235602,
+      "start_separations_m": [
+        0.00016033946124338616,
+        -4.398372777103532e-10,
+        6.523708035777176e-05
+      ],
+      "whole_gap_interval_m": [
+        -0.0057901306651064795,
+        -0.004681313060169051
+      ]
+    },
+    {
+      "actual_unmodified_result": false,
+      "after_global_impact_sequence": 3507,
+      "clearance_m": 0.004999999888241291,
+      "diagnostic_branch_parity": true,
+      "end_gap_interval_m": [
+        0.0033160697379014917,
+        0.0033191413327858283
+      ],
+      "finish": 0.01666666753590107,
+      "manifold_rows": 3,
+      "manifold_uncertain": false,
+      "normal": [
+        -0.2442003916226678,
+        -0.7518070316923489,
+        0.6124968210768732
+      ],
+      "normal_bits": [
+        13821338303487035839,
+        13828318932135620586,
+        4603692100455611255
+      ],
+      "partition_bounds": [
+        {
+          "finish": 0.01666666753590107,
+          "gap_interval_m": [
+            -0.0057901306651064795,
+            -0.004681313060169051
+          ],
+          "remaining_depth": 3,
+          "start": 0.003168009612235602
+        }
+      ],
+      "reason": "bounded_partition_not_certified",
+      "record": 55,
+      "result": false,
+      "sampled_native_depth": {
+        "maximum_at": 0.01666666753590107,
+        "maximum_depth_m": 0.00010325979735475999,
+        "method": "257 actual native manifold samples; diagnostic, NOT a continuous proof",
+        "rows_over_unchanged_slop": 0,
+        "uncertain_samples": 0
+      },
+      "stage": "scheduled_query",
+      "start": 0.003168009612235602,
+      "start_separations_m": [
+        0.00016033946124338616,
+        -4.398372777103532e-10,
+        6.523708035777176e-05
+      ],
+      "whole_gap_interval_m": [
+        -0.0057901306651064795,
+        -0.004681313060169051
+      ]
+    },
+    {
+      "actual_unmodified_result": false,
+      "after_global_impact_sequence": 3508,
+      "clearance_m": 0.004999999888241291,
+      "diagnostic_branch_parity": true,
+      "end_gap_interval_m": [
+        0.0033162739285511017,
+        0.003319345524862518
+      ],
+      "finish": 0.01666666753590107,
+      "manifold_rows": 3,
+      "manifold_uncertain": false,
+      "normal": [
+        -0.24420062053448394,
+        -0.7518067221935033,
+        0.6124971097035751
+      ],
+      "normal_bits": [
+        13821338311734453198,
+        13828318929347902815,
+        4603692103055329469
+      ],
+      "partition_bounds": [
+        {
+          "finish": 0.01666666753590107,
+          "gap_interval_m": [
+            -0.005788888485867511,
+            -0.004680231576042966
+          ],
+          "remaining_depth": 3,
+          "start": 0.003169976821877015
+        }
+      ],
+      "reason": "bounded_partition_not_certified",
+      "record": 56,
+      "result": false,
+      "sampled_native_depth": {
+        "maximum_at": 0.01666666753590107,
+        "maximum_depth_m": 0.00010325572374703107,
+        "method": "257 actual native manifold samples; diagnostic, NOT a continuous proof",
+        "rows_over_unchanged_slop": 0,
+        "uncertain_samples": 0
+      },
+      "stage": "scheduled_query",
+      "start": 0.003169976821877015,
+      "start_separations_m": [
+        0.00016017514921201625,
+        -1.2869691051742294e-07,
+        6.512945732006781e-05
+      ],
+      "whole_gap_interval_m": [
+        -0.005788888485867511,
+        -0.004680231576042966
+      ]
+    },
+    {
+      "actual_unmodified_result": false,
+      "after_global_impact_sequence": 3509,
+      "clearance_m": 0.004999999888241291,
+      "diagnostic_branch_parity": true,
+      "end_gap_interval_m": [
+        0.003475727454965213,
+        0.0034787945244568225
+      ],
+      "finish": 0.01666666753590107,
+      "manifold_rows": 1,
+      "manifold_uncertain": false,
+      "normal": [
+        -0.24072695900867958,
+        -0.7525105654162251,
+        0.6130076509664351
+      ],
+      "normal_bits": [
+        13821213159888427408,
+        13828325269004053969,
+        4603696701602211816
+      ],
+      "partition_bounds": [
+        {
+          "finish": 0.01666666753590107,
+          "gap_interval_m": [
+            -0.0040904216719766014,
+            -0.0031673736197183
+          ],
+          "remaining_depth": 3,
+          "start": 0.005446301372529777
+        }
+      ],
+      "reason": "bounded_partition_not_certified",
+      "record": 57,
+      "result": false,
+      "sampled_native_depth": {
+        "maximum_at": 0.01666666753590107,
+        "maximum_depth_m": 0.00010341125059620815,
+        "method": "257 actual native manifold samples; diagnostic, NOT a continuous proof",
+        "rows_over_unchanged_slop": 0,
+        "uncertain_samples": 0
+      },
+      "stage": "scheduled_query",
+      "start": 0.005446301372529777,
+      "start_separations_m": [
+        2.9183109144695537e-08
+      ],
+      "whole_gap_interval_m": [
+        -0.0040904216719766014,
+        -0.0031673736197183
+      ]
+    },
+    {
+      "actual_unmodified_result": false,
+      "after_global_impact_sequence": 3509,
+      "clearance_m": 0.004999999888241291,
+      "diagnostic_branch_parity": true,
+      "end_gap_interval_m": [
+        0.0035829277219110414,
+        0.0035860008508829
+      ],
+      "finish": 0.01666666753590107,
+      "manifold_rows": 3,
+      "manifold_uncertain": false,
+      "normal": [
+        -0.24447584364659034,
+        -0.7514537004688544,
+        0.6128204450937919
+      ],
+      "normal_bits": [
+        13821348227692094207,
+        13828315749610887650,
+        4603695015401615261
+      ],
+      "partition_bounds": [
+        {
+          "finish": 0.01666666753590107,
+          "gap_interval_m": [
+            -0.003991043727288484,
+            -0.0030666367865010385
+          ],
+          "remaining_depth": 3,
+          "start": 0.00544691718397429
+        }
+      ],
+      "reason": "bounded_partition_not_certified",
+      "record": 58,
+      "result": false,
+      "sampled_native_depth": {
+        "maximum_at": 0.01666666753590107,
+        "maximum_depth_m": 0.00010341125059620815,
+        "method": "257 actual native manifold samples; diagnostic, NOT a continuous proof",
+        "rows_over_unchanged_slop": 0,
+        "uncertain_samples": 0
+      },
+      "stage": "before_impact",
+      "start": 0.00544691718397429,
+      "start_separations_m": [
+        0.00011523895788245753,
+        -8.60088389398328e-10,
+        9.080194674299102e-05
+      ],
+      "whole_gap_interval_m": [
+        -0.003991043727288484,
+        -0.0030666367865010385
+      ]
+    },
+    {
+      "actual_unmodified_result": false,
+      "after_global_impact_sequence": 3510,
+      "clearance_m": 0.004999999888241291,
+      "diagnostic_branch_parity": true,
+      "end_gap_interval_m": [
+        0.003583391027924207,
+        0.0035864641569318145
+      ],
+      "finish": 0.01666666753590107,
+      "manifold_rows": 3,
+      "manifold_uncertain": false,
+      "normal": [
+        -0.24447584364659034,
+        -0.7514537004688544,
+        0.6128204450937919
+      ],
+      "normal_bits": [
+        13821348227692094207,
+        13828315749610887650,
+        4603695015401615261
+      ],
+      "partition_bounds": [
+        {
+          "finish": 0.01666666753590107,
+          "gap_interval_m": [
+            -0.003990297533255754,
+            -0.0030654474458852127
+          ],
+          "remaining_depth": 3,
+          "start": 0.00544691718397429
+        }
+      ],
+      "reason": "bounded_partition_not_certified",
+      "record": 59,
+      "result": false,
+      "sampled_native_depth": {
+        "maximum_at": 0.01666666753590107,
+        "maximum_depth_m": 0.00010357201867217114,
+        "method": "257 actual native manifold samples; diagnostic, NOT a continuous proof",
+        "rows_over_unchanged_slop": 0,
+        "uncertain_samples": 0
+      },
+      "stage": "after_trajectory_replacement",
+      "start": 0.00544691718397429,
+      "start_separations_m": [
+        0.00011523895788245753,
+        -8.60088389398328e-10,
+        9.080194674299102e-05
+      ],
+      "whole_gap_interval_m": [
+        -0.003990297533255754,
+        -0.0030654474458852127
+      ]
+    },
+    {
+      "actual_unmodified_result": false,
+      "after_global_impact_sequence": 3510,
+      "clearance_m": 0.004999999888241291,
+      "diagnostic_branch_parity": true,
+      "end_gap_interval_m": [
+        0.003583391027924207,
+        0.0035864641569318145
+      ],
+      "finish": 0.01666666753590107,
+      "manifold_rows": 3,
+      "manifold_uncertain": false,
+      "normal": [
+        -0.24447584364659034,
+        -0.7514537004688544,
+        0.6128204450937919
+      ],
+      "normal_bits": [
+        13821348227692094207,
+        13828315749610887650,
+        4603695015401615261
+      ],
+      "partition_bounds": [
+        {
+          "finish": 0.01666666753590107,
+          "gap_interval_m": [
+            -0.003990297533255754,
+            -0.0030654474458852127
+          ],
+          "remaining_depth": 3,
+          "start": 0.00544691718397429
+        }
+      ],
+      "reason": "bounded_partition_not_certified",
+      "record": 60,
+      "result": false,
+      "sampled_native_depth": {
+        "maximum_at": 0.01666666753590107,
+        "maximum_depth_m": 0.00010357201867217114,
+        "method": "257 actual native manifold samples; diagnostic, NOT a continuous proof",
+        "rows_over_unchanged_slop": 0,
+        "uncertain_samples": 0
+      },
+      "stage": "scheduled_query",
+      "start": 0.00544691718397429,
+      "start_separations_m": [
+        0.00011523895788245753,
+        -8.60088389398328e-10,
+        9.080194674299102e-05
+      ],
+      "whole_gap_interval_m": [
+        -0.003990297533255754,
+        -0.0030654474458852127
+      ]
+    },
+    {
+      "actual_unmodified_result": false,
+      "after_global_impact_sequence": 3511,
+      "clearance_m": 0.004999999888241291,
+      "diagnostic_branch_parity": true,
+      "end_gap_interval_m": [
+        0.0035365315865241134,
+        0.0035395994473165237
+      ],
+      "finish": 0.01666666753590107,
+      "manifold_rows": 1,
+      "manifold_uncertain": false,
+      "normal": [
+        -0.24107212214675341,
+        -0.7523602148312618,
+        0.6130565545385828
+      ],
+      "normal_bits": [
+        13821225595701067499,
+        13828323914766377138,
+        4603697142086430419
+      ],
+      "partition_bounds": [
+        {
+          "finish": 0.01666666753590107,
+          "gap_interval_m": [
+            -0.0037292790829470727,
+            -0.0028421174551230793
+          ],
+          "remaining_depth": 3,
+          "start": 0.005893692198923022
+        }
+      ],
+      "reason": "bounded_partition_not_certified",
+      "record": 61,
+      "result": false,
+      "sampled_native_depth": {
+        "maximum_at": 0.01666666753590107,
+        "maximum_depth_m": 0.00010364001438667447,
+        "method": "257 actual native manifold samples; diagnostic, NOT a continuous proof",
+        "rows_over_unchanged_slop": 0,
+        "uncertain_samples": 0
+      },
+      "stage": "scheduled_query",
+      "start": 0.005893692198923022,
+      "start_separations_m": [
+        2.4306772958897413e-07
+      ],
+      "whole_gap_interval_m": [
+        -0.0037292790829470727,
+        -0.0028421174551230793
+      ]
+    },
+    {
+      "actual_unmodified_result": false,
+      "after_global_impact_sequence": 3512,
+      "clearance_m": 0.004999999888241291,
+      "diagnostic_branch_parity": true,
+      "end_gap_interval_m": [
+        0.0036630630543741916,
+        0.003666132576088225
+      ],
+      "finish": 0.01666666753590107,
+      "manifold_rows": 1,
+      "manifold_uncertain": false,
+      "normal": [
+        -0.24179560952768703,
+        -0.7520438403197413,
+        0.6131598041703891
+      ],
+      "normal_bits": [
+        13821251662081060938,
+        13828321065118112751,
+        4603698072076437077
+      ],
+      "partition_bounds": [
+        {
+          "finish": 0.01666666753590107,
+          "gap_interval_m": [
+            -0.002968762965882447,
+            -0.0021585635023862967
+          ],
+          "remaining_depth": 3,
+          "start": 0.006836059568248453
+        }
+      ],
+      "reason": "bounded_partition_not_certified",
+      "record": 62,
+      "result": false,
+      "sampled_native_depth": {
+        "maximum_at": 0.01666666753590107,
+        "maximum_depth_m": 0.0001037036598748875,
+        "method": "257 actual native manifold samples; diagnostic, NOT a continuous proof",
+        "rows_over_unchanged_slop": 0,
+        "uncertain_samples": 0
+      },
+      "stage": "scheduled_query",
+      "start": 0.006836059568248453,
+      "start_separations_m": [
+        4.777243114573698e-07
+      ],
+      "whole_gap_interval_m": [
+        -0.002968762965882447,
+        -0.0021585635023862967
+      ]
+    },
+    {
+      "actual_unmodified_result": false,
+      "after_global_impact_sequence": 3512,
+      "clearance_m": 0.004999999888241291,
+      "diagnostic_branch_parity": true,
+      "end_gap_interval_m": [
+        0.003746448314118076,
+        0.003749522443990409
+      ],
+      "finish": 0.01666666753590107,
+      "manifold_rows": 3,
+      "manifold_uncertain": false,
+      "normal": [
+        -0.24464450403443824,
+        -0.7512370169518887,
+        0.6130187688863789
+      ],
+      "normal_bits": [
+        13821354304322973119,
+        13828313797899275122,
+        4603696801743532048
+      ],
+      "partition_bounds": [
+        {
+          "finish": 0.01666666753590107,
+          "gap_interval_m": [
+            -0.002885119169071086,
+            -0.002074696040799679
+          ],
+          "remaining_depth": 3,
+          "start": 0.006844760976453999
+        }
+      ],
+      "reason": "bounded_partition_not_certified",
+      "record": 63,
+      "result": false,
+      "sampled_native_depth": {
+        "maximum_at": 0.01666666753590107,
+        "maximum_depth_m": 0.0001037036598748875,
+        "method": "257 actual native manifold samples; diagnostic, NOT a continuous proof",
+        "rows_over_unchanged_slop": 0,
+        "uncertain_samples": 0
+      },
+      "stage": "before_impact",
+      "start": 0.006844760976453999,
+      "start_separations_m": [
+        8.757502158512898e-05,
+        -1.5678724818446454e-08,
+        0.00010665483501381967
+      ],
+      "whole_gap_interval_m": [
+        -0.002885119169071086,
+        -0.002074696040799679
+      ]
+    },
+    {
+      "actual_unmodified_result": false,
+      "after_global_impact_sequence": 3513,
+      "clearance_m": 0.004999999888241291,
+      "diagnostic_branch_parity": true,
+      "end_gap_interval_m": [
+        0.003746130139260837,
+        0.00374920426913317
+      ],
+      "finish": 0.01666666753590107,
+      "manifold_rows": 3,
+      "manifold_uncertain": false,
+      "normal": [
+        -0.24464450403443824,
+        -0.7512370169518887,
+        0.6130187688863789
+      ],
+      "normal_bits": [
+        13821354304322973119,
+        13828313797899275122,
+        4603696801743532048
+      ],
+      "partition_bounds": [
+        {
+          "finish": 0.01666666753590107,
+          "gap_interval_m": [
+            -0.002885501549408313,
+            -0.002075078336225273
+          ],
+          "remaining_depth": 3,
+          "start": 0.006844760976453999
+        }
+      ],
+      "reason": "bounded_partition_not_certified",
+      "record": 64,
+      "result": false,
+      "sampled_native_depth": {
+        "maximum_at": 0.01666666753590107,
+        "maximum_depth_m": 0.00010435211675030587,
+        "method": "257 actual native manifold samples; diagnostic, NOT a continuous proof",
+        "rows_over_unchanged_slop": 0,
+        "uncertain_samples": 0
+      },
+      "stage": "after_trajectory_replacement",
+      "start": 0.006844760976453999,
+      "start_separations_m": [
+        8.757502158512898e-05,
+        -1.5678724818446454e-08,
+        0.00010665483501381967
+      ],
+      "whole_gap_interval_m": [
+        -0.002885501549408313,
+        -0.002075078336225273
+      ]
+    },
+    {
+      "actual_unmodified_result": false,
+      "after_global_impact_sequence": 3513,
+      "clearance_m": 0.004999999888241291,
+      "diagnostic_branch_parity": true,
+      "end_gap_interval_m": [
+        0.003746130139260837,
+        0.00374920426913317
+      ],
+      "finish": 0.01666666753590107,
+      "manifold_rows": 3,
+      "manifold_uncertain": false,
+      "normal": [
+        -0.24464450403443824,
+        -0.7512370169518887,
+        0.6130187688863789
+      ],
+      "normal_bits": [
+        13821354304322973119,
+        13828313797899275122,
+        4603696801743532048
+      ],
+      "partition_bounds": [
+        {
+          "finish": 0.01666666753590107,
+          "gap_interval_m": [
+            -0.002885501549408313,
+            -0.002075078336225273
+          ],
+          "remaining_depth": 3,
+          "start": 0.006844760976453999
+        }
+      ],
+      "reason": "bounded_partition_not_certified",
+      "record": 65,
+      "result": false,
+      "sampled_native_depth": {
+        "maximum_at": 0.01666666753590107,
+        "maximum_depth_m": 0.00010435211675030587,
+        "method": "257 actual native manifold samples; diagnostic, NOT a continuous proof",
+        "rows_over_unchanged_slop": 0,
+        "uncertain_samples": 0
+      },
+      "stage": "scheduled_query",
+      "start": 0.006844760976453999,
+      "start_separations_m": [
+        8.757502158512898e-05,
+        -1.5678724818446454e-08,
+        0.00010665483501381967
+      ],
+      "whole_gap_interval_m": [
+        -0.002885501549408313,
+        -0.002075078336225273
+      ]
+    },
+    {
+      "actual_unmodified_result": false,
+      "after_global_impact_sequence": 3514,
+      "clearance_m": 0.004999999888241291,
+      "diagnostic_branch_parity": true,
+      "end_gap_interval_m": [
+        0.0037231536375856825,
+        0.0037262239368695033
+      ],
+      "finish": 0.01666666753590107,
+      "manifold_rows": 1,
+      "manifold_uncertain": false,
+      "normal": [
+        -0.24213666709238518,
+        -0.7518943792531708,
+        0.6132085101308365
+      ],
+      "normal_bits": [
+        13821263949974831230,
+        13828319718892505325,
+        4603698510780727721
+      ],
+      "partition_bounds": [
+        {
+          "finish": 0.01666666753590107,
+          "gap_interval_m": [
+            -0.0026110563470525022,
+            -0.0018374065153404738
+          ],
+          "remaining_depth": 3,
+          "start": 0.007280751618510797
+        }
+      ],
+      "reason": "bounded_partition_not_certified",
+      "record": 66,
+      "result": false,
+      "sampled_native_depth": {
+        "maximum_at": 0.01666666753590107,
+        "maximum_depth_m": 0.00010349729598674307,
+        "method": "257 actual native manifold samples; diagnostic, NOT a continuous proof",
+        "rows_over_unchanged_slop": 0,
+        "uncertain_samples": 0
+      },
+      "stage": "scheduled_query",
+      "start": 0.007280751618510797,
+      "start_separations_m": [
+        1.1134478388846974e-07
+      ],
+      "whole_gap_interval_m": [
+        -0.0026110563470525022,
+        -0.0018374065153404738
+      ]
+    },
+    {
+      "actual_unmodified_result": false,
+      "after_global_impact_sequence": 3514,
+      "clearance_m": 0.004999999888241291,
+      "diagnostic_branch_parity": true,
+      "end_gap_interval_m": [
+        0.0037976846134146727,
+        0.0038007590510974504
+      ],
+      "finish": 0.01666666753590107,
+      "manifold_rows": 3,
+      "manifold_uncertain": false,
+      "normal": [
+        -0.2446972905752762,
+        -0.7511691715307658,
+        0.6130808362091428
+      ],
+      "normal_bits": [
+        13821356206158538303,
+        13828313186802048546,
+        4603697360796275391
+      ],
+      "partition_bounds": [
+        {
+          "finish": 0.01666666753590107,
+          "gap_interval_m": [
+            -0.002540191897457637,
+            -0.00176586193167499
+          ],
+          "remaining_depth": 3,
+          "start": 0.007282263688979641
+        }
+      ],
+      "reason": "bounded_partition_not_certified",
+      "record": 67,
+      "result": false,
+      "sampled_native_depth": {
+        "maximum_at": 0.01666666753590107,
+        "maximum_depth_m": 0.00010349729598674307,
+        "method": "257 actual native manifold samples; diagnostic, NOT a continuous proof",
+        "rows_over_unchanged_slop": 0,
+        "uncertain_samples": 0
+      },
+      "stage": "before_impact",
+      "start": 0.007282263688979641,
+      "start_separations_m": [
+        7.896152618380725e-05,
+        -1.1606108296646767e-09,
+        0.00011165504663057657
+      ],
+      "whole_gap_interval_m": [
+        -0.002540191897457637,
+        -0.00176586193167499
+      ]
+    },
+    {
+      "actual_unmodified_result": false,
+      "after_global_impact_sequence": 3515,
+      "clearance_m": 0.004999999888241291,
+      "diagnostic_branch_parity": true,
+      "end_gap_interval_m": [
+        0.0037997810904080134,
+        0.003802855528404096
+      ],
+      "finish": 0.01666666753590107,
+      "manifold_rows": 3,
+      "manifold_uncertain": false,
+      "normal": [
+        -0.2446972905752762,
+        -0.7511691715307658,
+        0.6130808362091428
+      ],
+      "normal_bits": [
+        13821356206158538303,
+        13828313186802048546,
+        4603697360796275391
+      ],
+      "partition_bounds": [
+        {
+          "finish": 0.01666666753590107,
+          "gap_interval_m": [
+            -0.002537628916286287,
+            -0.0017644738951998428
+          ],
+          "remaining_depth": 3,
+          "start": 0.007282263688979641
+        }
+      ],
+      "reason": "bounded_partition_not_certified",
+      "record": 68,
+      "result": false,
+      "sampled_native_depth": {
+        "maximum_at": 0.01666666753590107,
+        "maximum_depth_m": 0.00010137903283197192,
+        "method": "257 actual native manifold samples; diagnostic, NOT a continuous proof",
+        "rows_over_unchanged_slop": 0,
+        "uncertain_samples": 0
+      },
+      "stage": "after_trajectory_replacement",
+      "start": 0.007282263688979641,
+      "start_separations_m": [
+        7.896152618380725e-05,
+        -1.1606108296646767e-09,
+        0.00011165504663057657
+      ],
+      "whole_gap_interval_m": [
+        -0.002537628916286287,
+        -0.0017644738951998428
+      ]
+    },
+    {
+      "actual_unmodified_result": false,
+      "after_global_impact_sequence": 3515,
+      "clearance_m": 0.004999999888241291,
+      "diagnostic_branch_parity": true,
+      "end_gap_interval_m": [
+        0.0037997810904080134,
+        0.003802855528404096
+      ],
+      "finish": 0.01666666753590107,
+      "manifold_rows": 3,
+      "manifold_uncertain": false,
+      "normal": [
+        -0.2446972905752762,
+        -0.7511691715307658,
+        0.6130808362091428
+      ],
+      "normal_bits": [
+        13821356206158538303,
+        13828313186802048546,
+        4603697360796275391
+      ],
+      "partition_bounds": [
+        {
+          "finish": 0.01666666753590107,
+          "gap_interval_m": [
+            -0.002537628916286287,
+            -0.0017644738951998428
+          ],
+          "remaining_depth": 3,
+          "start": 0.007282263688979641
+        }
+      ],
+      "reason": "bounded_partition_not_certified",
+      "record": 69,
+      "result": false,
+      "sampled_native_depth": {
+        "maximum_at": 0.01666666753590107,
+        "maximum_depth_m": 0.00010137903283197192,
+        "method": "257 actual native manifold samples; diagnostic, NOT a continuous proof",
+        "rows_over_unchanged_slop": 0,
+        "uncertain_samples": 0
+      },
+      "stage": "scheduled_query",
+      "start": 0.007282263688979641,
+      "start_separations_m": [
+        7.896152618380725e-05,
+        -1.1606108296646767e-09,
+        0.00011165504663057657
+      ],
+      "whole_gap_interval_m": [
+        -0.002537628916286287,
+        -0.0017644738951998428
+      ]
+    },
+    {
+      "actual_unmodified_result": false,
+      "after_global_impact_sequence": 3516,
+      "clearance_m": 0.004999999888241291,
+      "diagnostic_branch_parity": true,
+      "end_gap_interval_m": [
+        0.0038008464106362686,
+        0.0038039208515497935
+      ],
+      "finish": 0.01666666753590107,
+      "manifold_rows": 3,
+      "manifold_uncertain": false,
+      "normal": [
+        -0.2446977824618273,
+        -0.7511685649598892,
+        0.6130813830759869
+      ],
+      "normal_bits": [
+        13821356223880619009,
+        13828313181338543798,
+        4603697365722014022
+      ],
+      "partition_bounds": [
+        {
+          "finish": 0.01666666753590107,
+          "gap_interval_m": [
+            -0.0025338319477681876,
+            -0.0017614162343317335
+          ],
+          "remaining_depth": 3,
+          "start": 0.007286262166834261
+        }
+      ],
+      "reason": "bounded_partition_not_certified",
+      "record": 70,
+      "result": false,
+      "sampled_native_depth": {
+        "maximum_at": 0.01666666753590107,
+        "maximum_depth_m": 0.00010082695075314119,
+        "method": "257 actual native manifold samples; diagnostic, NOT a continuous proof",
+        "rows_over_unchanged_slop": 0,
+        "uncertain_samples": 0
+      },
+      "stage": "scheduled_query",
+      "start": 0.007286262166834261,
+      "start_separations_m": [
+        7.871662993147455e-05,
+        -1.4509742601864772e-07,
+        0.00011156437944875863
+      ],
+      "whole_gap_interval_m": [
+        -0.0025338319477681876,
+        -0.0017614162343317335
+      ]
+    },
+    {
+      "actual_unmodified_result": false,
+      "after_global_impact_sequence": 3517,
+      "clearance_m": 0.004999999888241291,
+      "diagnostic_branch_parity": true,
+      "end_gap_interval_m": [
+        0.0038820042924190804,
+        0.0038850767829342087
+      ],
+      "finish": 0.01666666753590107,
+      "manifold_rows": 1,
+      "manifold_uncertain": false,
+      "normal": [
+        -0.24309171511577568,
+        -0.7514735877622647,
+        0.6133464477257372
+      ],
+      "normal_bits": [
+        13821298359206209329,
+        13828315928739702034,
+        4603699753212129711
+      ],
+      "partition_bounds": [
+        {
+          "finish": 0.01666666753590107,
+          "gap_interval_m": [
+            -0.0016426526369460218,
+            -0.0009674611714677828
+          ],
+          "remaining_depth": 3,
+          "start": 0.008535666616386828
+        }
+      ],
+      "reason": "bounded_partition_not_certified",
+      "record": 71,
+      "result": false,
+      "sampled_native_depth": {
+        "maximum_at": 0.01666666753590107,
+        "maximum_depth_m": 9.644163537569916e-05,
+        "method": "257 actual native manifold samples; diagnostic, NOT a continuous proof",
+        "rows_over_unchanged_slop": 0,
+        "uncertain_samples": 0
+      },
+      "stage": "scheduled_query",
+      "start": 0.008535666616386828,
+      "start_separations_m": [
+        6.566972310445705e-07
+      ],
+      "whole_gap_interval_m": [
+        -0.0016426526369460218,
+        -0.0009674611714677828
+      ]
+    },
+    {
+      "actual_unmodified_result": false,
+      "after_global_impact_sequence": 3517,
+      "clearance_m": 0.004999999888241291,
+      "diagnostic_branch_parity": true,
+      "end_gap_interval_m": [
+        0.003934710494879142,
+        0.00393778582966509
+      ],
+      "finish": 0.01666666753590107,
+      "manifold_rows": 3,
+      "manifold_uncertain": false,
+      "normal": [
+        -0.2448490581762338,
+        -0.7509733143229632,
+        0.6132601567727967
+      ],
+      "normal_bits": [
+        13821361674162627260,
+        13828311422677152391,
+        4603698975972322694
+      ],
+      "partition_bounds": [
+        {
+          "finish": 0.01666666753590107,
+          "gap_interval_m": [
+            -0.0015860229402805996,
+            -0.0009111524890369993
+          ],
+          "remaining_depth": 3,
+          "start": 0.008545324173644033
+        }
+      ],
+      "reason": "bounded_partition_not_certified",
+      "record": 72,
+      "result": false,
+      "sampled_native_depth": {
+        "maximum_at": 0.01666666753590107,
+        "maximum_depth_m": 9.644163537569916e-05,
+        "method": "257 actual native manifold samples; diagnostic, NOT a continuous proof",
+        "rows_over_unchanged_slop": 0,
+        "uncertain_samples": 0
+      },
+      "stage": "before_impact",
+      "start": 0.008545324173644033,
+      "start_separations_m": [
+        5.41371527471024e-05,
+        -6.539141783612479e-09,
+        0.00012608022833243693
+      ],
+      "whole_gap_interval_m": [
+        -0.0015860229402805996,
+        -0.0009111524890369993
+      ]
+    },
+    {
+      "actual_unmodified_result": false,
+      "after_global_impact_sequence": 3518,
+      "clearance_m": 0.004999999888241291,
+      "diagnostic_branch_parity": true,
+      "end_gap_interval_m": [
+        0.003939529963420892,
+        0.0039426052986851244
+      ],
+      "finish": 0.01666666753590107,
+      "manifold_rows": 3,
+      "manifold_uncertain": false,
+      "normal": [
+        -0.2448490581762338,
+        -0.7509733143229632,
+        0.6132601567727967
+      ],
+      "normal_bits": [
+        13821361674162627260,
+        13828311422677152391,
+        4603698975972322694
+      ],
+      "partition_bounds": [
+        {
+          "finish": 0.01666666753590107,
+          "gap_interval_m": [
+            -0.001576958785048658,
+            -0.0009022174660420723
+          ],
+          "remaining_depth": 3,
+          "start": 0.008545324173644033
+        }
+      ],
+      "reason": "bounded_partition_not_certified",
+      "record": 73,
+      "result": false,
+      "sampled_native_depth": {
+        "maximum_at": 0.01666666753590107,
+        "maximum_depth_m": 9.272448638564246e-05,
+        "method": "257 actual native manifold samples; diagnostic, NOT a continuous proof",
+        "rows_over_unchanged_slop": 0,
+        "uncertain_samples": 0
+      },
+      "stage": "after_trajectory_replacement",
+      "start": 0.008545324173644033,
+      "start_separations_m": [
+        5.41371527471024e-05,
+        -6.539141783612479e-09,
+        0.00012608022833243693
+      ],
+      "whole_gap_interval_m": [
+        -0.001576958785048658,
+        -0.0009022174660420723
+      ]
+    },
+    {
+      "actual_unmodified_result": false,
+      "after_global_impact_sequence": 3518,
+      "clearance_m": 0.004999999888241291,
+      "diagnostic_branch_parity": true,
+      "end_gap_interval_m": [
+        0.003939529963420892,
+        0.0039426052986851244
+      ],
+      "finish": 0.01666666753590107,
+      "manifold_rows": 3,
+      "manifold_uncertain": false,
+      "normal": [
+        -0.2448490581762338,
+        -0.7509733143229632,
+        0.6132601567727967
+      ],
+      "normal_bits": [
+        13821361674162627260,
+        13828311422677152391,
+        4603698975972322694
+      ],
+      "partition_bounds": [
+        {
+          "finish": 0.01666666753590107,
+          "gap_interval_m": [
+            -0.001576958785048658,
+            -0.0009022174660420723
+          ],
+          "remaining_depth": 3,
+          "start": 0.008545324173644033
+        }
+      ],
+      "reason": "bounded_partition_not_certified",
+      "record": 74,
+      "result": false,
+      "sampled_native_depth": {
+        "maximum_at": 0.01666666753590107,
+        "maximum_depth_m": 9.272448638564246e-05,
+        "method": "257 actual native manifold samples; diagnostic, NOT a continuous proof",
+        "rows_over_unchanged_slop": 0,
+        "uncertain_samples": 0
+      },
+      "stage": "scheduled_query",
+      "start": 0.008545324173644033,
+      "start_separations_m": [
+        5.41371527471024e-05,
+        -6.539141783612479e-09,
+        0.00012608022833243693
+      ],
+      "whole_gap_interval_m": [
+        -0.001576958785048658,
+        -0.0009022174660420723
+      ]
+    },
+    {
+      "actual_unmodified_result": false,
+      "after_global_impact_sequence": 3519,
+      "clearance_m": 0.004999999888241291,
+      "diagnostic_branch_parity": true,
+      "end_gap_interval_m": [
+        0.003952806118452332,
+        0.003955879301143554
+      ],
+      "finish": 0.01666666753590107,
+      "manifold_rows": 1,
+      "manifold_uncertain": false,
+      "normal": [
+        -0.2434354106745294,
+        -0.751317028470573,
+        0.6134019266026733
+      ],
+      "normal_bits": [
+        13821310742143731986,
+        13828314518578966586,
+        4603700252921428704
+      ],
+      "partition_bounds": [
+        {
+          "finish": 0.01666666753590107,
+          "gap_interval_m": [
+            -0.001240747836469494,
+            -0.0006054802643708457
+          ],
+          "remaining_depth": 3,
+          "start": 0.009018245084180266
+        }
+      ],
+      "reason": "bounded_partition_not_certified",
+      "record": 75,
+      "result": false,
+      "sampled_native_depth": {
+        "maximum_at": 0.01666666753590107,
+        "maximum_depth_m": 9.263038743895224e-05,
+        "method": "257 actual native manifold samples; diagnostic, NOT a continuous proof",
+        "rows_over_unchanged_slop": 0,
+        "uncertain_samples": 0
+      },
+      "stage": "scheduled_query",
+      "start": 0.009018245084180266,
+      "start_separations_m": [
+        3.862377227119559e-07
+      ],
+      "whole_gap_interval_m": [
+        -0.001240747836469494,
+        -0.0006054802643708457
+      ]
+    },
+    {
+      "actual_unmodified_result": false,
+      "after_global_impact_sequence": 3519,
+      "clearance_m": 0.004999999888241291,
+      "diagnostic_branch_parity": true,
+      "end_gap_interval_m": [
+        0.003997044781189171,
+        0.004000120345077744
+      ],
+      "finish": 0.01666666753590107,
+      "manifold_rows": 3,
+      "manifold_uncertain": false,
+      "normal": [
+        -0.24490699858668868,
+        -0.7508977225663628,
+        0.6133295788464056
+      ],
+      "normal_bits": [
+        13821363761685914734,
+        13828310741807138675,
+        4603699601270772367
+      ],
+      "partition_bounds": [
+        {
+          "finish": 0.01666666753590107,
+          "gap_interval_m": [
+            -0.0011940418067563666,
+            -0.0005589939820344569
+          ],
+          "remaining_depth": 3,
+          "start": 0.009025464784772314
+        }
+      ],
+      "reason": "bounded_partition_not_certified",
+      "record": 76,
+      "result": false,
+      "sampled_native_depth": {
+        "maximum_at": 0.01666666753590107,
+        "maximum_depth_m": 9.263038743895224e-05,
+        "method": "257 actual native manifold samples; diagnostic, NOT a continuous proof",
+        "rows_over_unchanged_slop": 0,
+        "uncertain_samples": 0
+      },
+      "stage": "before_impact",
+      "start": 0.009025464784772314,
+      "start_separations_m": [
+        4.539516111345954e-05,
+        -2.4732189629617096e-09,
+        0.00013129030356079374
+      ],
+      "whole_gap_interval_m": [
+        -0.0011940418067563666,
+        -0.0005589939820344569
+      ]
+    },
+    {
+      "actual_unmodified_result": false,
+      "after_global_impact_sequence": 3520,
+      "clearance_m": 0.004999999888241291,
+      "diagnostic_branch_parity": true,
+      "end_gap_interval_m": [
+        0.003996660935856763,
+        0.003999736499748445
+      ],
+      "finish": 0.01666666753590107,
+      "manifold_rows": 3,
+      "manifold_uncertain": false,
+      "normal": [
+        -0.24490699858668868,
+        -0.7508977225663628,
+        0.6133295788464056
+      ],
+      "normal_bits": [
+        13821363761685914734,
+        13828310741807138675,
+        4603699601270772367
+      ],
+      "partition_bounds": [
+        {
+          "finish": 0.01666666753590107,
+          "gap_interval_m": [
+            -0.0011947317912083292,
+            -0.0005597025957598767
+          ],
+          "remaining_depth": 3,
+          "start": 0.009025464784772314
+        }
+      ],
+      "reason": "bounded_partition_not_certified",
+      "record": 77,
+      "result": false,
+      "sampled_native_depth": {
+        "maximum_at": 0.01666666753590107,
+        "maximum_depth_m": 9.259875161998776e-05,
+        "method": "257 actual native manifold samples; diagnostic, NOT a continuous proof",
+        "rows_over_unchanged_slop": 0,
+        "uncertain_samples": 0
+      },
+      "stage": "after_trajectory_replacement",
+      "start": 0.009025464784772314,
+      "start_separations_m": [
+        4.539516111345954e-05,
+        -2.4732189629617096e-09,
+        0.00013129030356079374
+      ],
+      "whole_gap_interval_m": [
+        -0.0011947317912083292,
+        -0.0005597025957598767
+      ]
+    },
+    {
+      "actual_unmodified_result": false,
+      "after_global_impact_sequence": 3520,
+      "clearance_m": 0.004999999888241291,
+      "diagnostic_branch_parity": true,
+      "end_gap_interval_m": [
+        0.003996660935856763,
+        0.003999736499748445
+      ],
+      "finish": 0.01666666753590107,
+      "manifold_rows": 3,
+      "manifold_uncertain": false,
+      "normal": [
+        -0.24490699858668868,
+        -0.7508977225663628,
+        0.6133295788464056
+      ],
+      "normal_bits": [
+        13821363761685914734,
+        13828310741807138675,
+        4603699601270772367
+      ],
+      "partition_bounds": [
+        {
+          "finish": 0.01666666753590107,
+          "gap_interval_m": [
+            -0.0011947317912083292,
+            -0.0005597025957598767
+          ],
+          "remaining_depth": 3,
+          "start": 0.009025464784772314
+        }
+      ],
+      "reason": "bounded_partition_not_certified",
+      "record": 78,
+      "result": false,
+      "sampled_native_depth": {
+        "maximum_at": 0.01666666753590107,
+        "maximum_depth_m": 9.259875161998776e-05,
+        "method": "257 actual native manifold samples; diagnostic, NOT a continuous proof",
+        "rows_over_unchanged_slop": 0,
+        "uncertain_samples": 0
+      },
+      "stage": "scheduled_query",
+      "start": 0.009025464784772314,
+      "start_separations_m": [
+        4.539516111345954e-05,
+        -2.4732189629617096e-09,
+        0.00013129030356079374
+      ],
+      "whole_gap_interval_m": [
+        -0.0011947317912083292,
+        -0.0005597025957598767
+      ]
+    }
+  ],
+  "schema": "judas.original-support-failure-replay.v1"
+}

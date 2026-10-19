@@ -1,0 +1,670 @@
+{
+  "baseline": "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/runs/combined-fastpaths-unprofiled-A1",
+  "baseline_fixed_ms": {
+    "count": 270,
+    "maximum": 942.047123,
+    "mean": 63.03256067407408,
+    "median": 23.004445,
+    "p95_floor": 213.604517,
+    "p99_floor": 554.115765
+  },
+  "baseline_frame_intervals_ms": {
+    "count": 270,
+    "maximum": 945.111229,
+    "mean": 66.52655474444444,
+    "median": 27.067781,
+    "p95_floor": 216.888576,
+    "p99_floor": 557.147636
+  },
+  "baseline_steps": 270,
+  "baseline_wall_seconds": 18.35180812099952,
+  "both_completed": true,
+  "candidate": "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/runs/coherent-geometry-unprofiled-A2",
+  "candidate_fixed_ms": {
+    "count": 270,
+    "maximum": 1299.077929,
+    "mean": 96.68417872962964,
+    "median": 26.186704,
+    "p95_floor": 416.014135,
+    "p99_floor": 783.793559
+  },
+  "candidate_frame_intervals_ms": {
+    "count": 270,
+    "maximum": 1302.67949,
+    "mean": 100.03861393333334,
+    "median": 30.8047815,
+    "p95_floor": 419.302555,
+    "p99_floor": 786.777914
+  },
+  "candidate_steps": 270,
+  "candidate_wall_seconds": 27.42058897300012,
+  "compared_physical_fields": [
+    "step",
+    "bodies",
+    "awake",
+    "sleeping",
+    "candidates",
+    "contacts",
+    "impact_events",
+    "impact_queries",
+    "impact_iterations",
+    "impact_peak",
+    "trajectory_digest",
+    "max_linear_speed",
+    "max_angular_speed",
+    "nonfinite_fields"
+  ],
+  "exact_comparison_pass": false,
+  "exact_endpoint_geometry": false,
+  "exact_physical_rows": false,
+  "first_100_mismatches": [
+    {
+      "baseline": "10572",
+      "candidate": "10740",
+      "field": "candidates",
+      "step": 2
+    },
+    {
+      "baseline": "3ab2c233f78d01be",
+      "candidate": "a4bd26a6f124b22b",
+      "field": "trajectory_digest",
+      "step": 2
+    },
+    {
+      "baseline": "10572",
+      "candidate": "10740",
+      "field": "candidates",
+      "step": 3
+    },
+    {
+      "baseline": "30825e6189ada014",
+      "candidate": "941469ec270e53a1",
+      "field": "trajectory_digest",
+      "step": 3
+    },
+    {
+      "baseline": "10572",
+      "candidate": "10740",
+      "field": "candidates",
+      "step": 4
+    },
+    {
+      "baseline": "29fc65b6e07e58bd",
+      "candidate": "3c7783f857972876",
+      "field": "trajectory_digest",
+      "step": 4
+    },
+    {
+      "baseline": "10572",
+      "candidate": "10740",
+      "field": "candidates",
+      "step": 5
+    },
+    {
+      "baseline": "598",
+      "candidate": "4189",
+      "field": "impact_iterations",
+      "step": 5
+    },
+    {
+      "baseline": "082cb3342e25b0f5",
+      "candidate": "58128a91e5d96d42",
+      "field": "trajectory_digest",
+      "step": 5
+    },
+    {
+      "baseline": "10572",
+      "candidate": "10740",
+      "field": "candidates",
+      "step": 6
+    },
+    {
+      "baseline": "172",
+      "candidate": "1113",
+      "field": "impact_iterations",
+      "step": 6
+    },
+    {
+      "baseline": "47c0886c879e882c",
+      "candidate": "28359063e5d0a2b7",
+      "field": "trajectory_digest",
+      "step": 6
+    },
+    {
+      "baseline": "2.84491543425e-05",
+      "candidate": "2.84554025711e-05",
+      "field": "max_angular_speed",
+      "step": 6
+    },
+    {
+      "baseline": "10572",
+      "candidate": "10740",
+      "field": "candidates",
+      "step": 7
+    },
+    {
+      "baseline": "ae59cdb21500af05",
+      "candidate": "0253a78c00fbdfee",
+      "field": "trajectory_digest",
+      "step": 7
+    },
+    {
+      "baseline": "1.70502935362e-05",
+      "candidate": "1.70603016159e-05",
+      "field": "max_angular_speed",
+      "step": 7
+    },
+    {
+      "baseline": "10572",
+      "candidate": "10740",
+      "field": "candidates",
+      "step": 8
+    },
+    {
+      "baseline": "3718946a280f1c08",
+      "candidate": "1d5bacc03320baa6",
+      "field": "trajectory_digest",
+      "step": 8
+    },
+    {
+      "baseline": "1.90053867755e-06",
+      "candidate": "1.88408114354e-06",
+      "field": "max_angular_speed",
+      "step": 8
+    },
+    {
+      "baseline": "10572",
+      "candidate": "11680",
+      "field": "candidates",
+      "step": 9
+    },
+    {
+      "baseline": "64",
+      "candidate": "376",
+      "field": "impact_iterations",
+      "step": 9
+    },
+    {
+      "baseline": "2",
+      "candidate": "9",
+      "field": "impact_peak",
+      "step": 9
+    },
+    {
+      "baseline": "747ddc080e263ed6",
+      "candidate": "7cc833b49b8da888",
+      "field": "trajectory_digest",
+      "step": 9
+    },
+    {
+      "baseline": "2.95517043014e-06",
+      "candidate": "2.94991536975e-06",
+      "field": "max_angular_speed",
+      "step": 9
+    },
+    {
+      "baseline": "10740",
+      "candidate": "11680",
+      "field": "candidates",
+      "step": 10
+    },
+    {
+      "baseline": "10196",
+      "candidate": "11136",
+      "field": "impact_queries",
+      "step": 10
+    },
+    {
+      "baseline": "0",
+      "candidate": "5215",
+      "field": "impact_iterations",
+      "step": 10
+    },
+    {
+      "baseline": "0",
+      "candidate": "1",
+      "field": "impact_peak",
+      "step": 10
+    },
+    {
+      "baseline": "cdcde0000c797cee",
+      "candidate": "2cae6e8d3744a0bb",
+      "field": "trajectory_digest",
+      "step": 10
+    },
+    {
+      "baseline": "0.293053597212",
+      "candidate": "0.293053805828",
+      "field": "max_angular_speed",
+      "step": 10
+    },
+    {
+      "baseline": "10740",
+      "candidate": "11680",
+      "field": "candidates",
+      "step": 11
+    },
+    {
+      "baseline": "abcf14085e971fe1",
+      "candidate": "bd24aa96c68a4dc5",
+      "field": "trajectory_digest",
+      "step": 11
+    },
+    {
+      "baseline": "0.186009094119",
+      "candidate": "0.186008915305",
+      "field": "max_angular_speed",
+      "step": 11
+    },
+    {
+      "baseline": "10740",
+      "candidate": "11680",
+      "field": "candidates",
+      "step": 12
+    },
+    {
+      "baseline": "16407",
+      "candidate": "17187",
+      "field": "impact_queries",
+      "step": 12
+    },
+    {
+      "baseline": "719",
+      "candidate": "14704",
+      "field": "impact_iterations",
+      "step": 12
+    },
+    {
+      "baseline": "5",
+      "candidate": "9",
+      "field": "impact_peak",
+      "step": 12
+    },
+    {
+      "baseline": "bd9504f0f1899cb5",
+      "candidate": "82e0a9674a012319",
+      "field": "trajectory_digest",
+      "step": 12
+    },
+    {
+      "baseline": "1.37034845352",
+      "candidate": "1.37034952641",
+      "field": "max_angular_speed",
+      "step": 12
+    },
+    {
+      "baseline": "11680",
+      "candidate": "12620",
+      "field": "candidates",
+      "step": 13
+    },
+    {
+      "baseline": "10880",
+      "candidate": "11820",
+      "field": "impact_queries",
+      "step": 13
+    },
+    {
+      "baseline": "0",
+      "candidate": "7920",
+      "field": "impact_iterations",
+      "step": 13
+    },
+    {
+      "baseline": "0",
+      "candidate": "1",
+      "field": "impact_peak",
+      "step": 13
+    },
+    {
+      "baseline": "d7bd7c23ef2232fb",
+      "candidate": "8fbceb33df1b63c4",
+      "field": "trajectory_digest",
+      "step": 13
+    },
+    {
+      "baseline": "0.351401805878",
+      "candidate": "0.35140222311",
+      "field": "max_angular_speed",
+      "step": 13
+    },
+    {
+      "baseline": "11680",
+      "candidate": "12620",
+      "field": "candidates",
+      "step": 14
+    },
+    {
+      "baseline": "9d0aafee1c457b36",
+      "candidate": "31b9e3870ef9b3e4",
+      "field": "trajectory_digest",
+      "step": 14
+    },
+    {
+      "baseline": "0.217174187303",
+      "candidate": "0.217174395919",
+      "field": "max_angular_speed",
+      "step": 14
+    },
+    {
+      "baseline": "11680",
+      "candidate": "12620",
+      "field": "candidates",
+      "step": 15
+    },
+    {
+      "baseline": "10624",
+      "candidate": "11564",
+      "field": "impact_queries",
+      "step": 15
+    },
+    {
+      "baseline": "0",
+      "candidate": "8519",
+      "field": "impact_iterations",
+      "step": 15
+    },
+    {
+      "baseline": "0",
+      "candidate": "1",
+      "field": "impact_peak",
+      "step": 15
+    },
+    {
+      "baseline": "236fef4ae4eb0d85",
+      "candidate": "33194c566a34a085",
+      "field": "trajectory_digest",
+      "step": 15
+    },
+    {
+      "baseline": "0.236598849297",
+      "candidate": "0.236598923802",
+      "field": "max_linear_speed",
+      "step": 15
+    },
+    {
+      "baseline": "0.613453149796",
+      "candidate": "0.555015623569",
+      "field": "max_angular_speed",
+      "step": 15
+    },
+    {
+      "baseline": "12150",
+      "candidate": "12620",
+      "field": "candidates",
+      "step": 16
+    },
+    {
+      "baseline": "22",
+      "candidate": "0",
+      "field": "impact_events",
+      "step": 16
+    },
+    {
+      "baseline": "11094",
+      "candidate": "0",
+      "field": "impact_queries",
+      "step": 16
+    },
+    {
+      "baseline": "184a388e31c0901b",
+      "candidate": "209044a002d8bc8f",
+      "field": "trajectory_digest",
+      "step": 16
+    },
+    {
+      "baseline": "0.0886387005448",
+      "candidate": "0.0886386334896",
+      "field": "max_linear_speed",
+      "step": 16
+    },
+    {
+      "baseline": "0.263428002596",
+      "candidate": "0.263426780701",
+      "field": "max_angular_speed",
+      "step": 16
+    },
+    {
+      "baseline": "12150",
+      "candidate": "12620",
+      "field": "candidates",
+      "step": 17
+    },
+    {
+      "baseline": "7dc76b80f5c8024a",
+      "candidate": "60215da5fae7aa32",
+      "field": "trajectory_digest",
+      "step": 17
+    },
+    {
+      "baseline": "0.0961173698306",
+      "candidate": "0.0742603763938",
+      "field": "max_linear_speed",
+      "step": 17
+    },
+    {
+      "baseline": "0.0933946222067",
+      "candidate": "0.0882216617465",
+      "field": "max_angular_speed",
+      "step": 17
+    },
+    {
+      "baseline": "12150",
+      "candidate": "12620",
+      "field": "candidates",
+      "step": 18
+    },
+    {
+      "baseline": "2334",
+      "candidate": "2322",
+      "field": "contacts",
+      "step": 18
+    },
+    {
+      "baseline": "970575f894047253",
+      "candidate": "2ce4d9adadb97151",
+      "field": "trajectory_digest",
+      "step": 18
+    },
+    {
+      "baseline": "0.0660871937871",
+      "candidate": "0.0594863705337",
+      "field": "max_linear_speed",
+      "step": 18
+    },
+    {
+      "baseline": "0.132462695241",
+      "candidate": "0.13246306777",
+      "field": "max_angular_speed",
+      "step": 18
+    },
+    {
+      "baseline": "12150",
+      "candidate": "12620",
+      "field": "candidates",
+      "step": 19
+    },
+    {
+      "baseline": "2312",
+      "candidate": "2290",
+      "field": "contacts",
+      "step": 19
+    },
+    {
+      "baseline": "84fd0aab2395d8ab",
+      "candidate": "aa80d2d68b609011",
+      "field": "trajectory_digest",
+      "step": 19
+    },
+    {
+      "baseline": "0.0527052357793",
+      "candidate": "0.131208389997",
+      "field": "max_linear_speed",
+      "step": 19
+    },
+    {
+      "baseline": "0.129148364067",
+      "candidate": "0.216694310308",
+      "field": "max_angular_speed",
+      "step": 19
+    },
+    {
+      "baseline": "12150",
+      "candidate": "12620",
+      "field": "candidates",
+      "step": 20
+    },
+    {
+      "baseline": "2302",
+      "candidate": "2334",
+      "field": "contacts",
+      "step": 20
+    },
+    {
+      "baseline": "32d04598bd5e2cd1",
+      "candidate": "eacc1a462f56b0b2",
+      "field": "trajectory_digest",
+      "step": 20
+    },
+    {
+      "baseline": "0.0302036367357",
+      "candidate": "0.0613916143775",
+      "field": "max_linear_speed",
+      "step": 20
+    },
+    {
+      "baseline": "0.0877594351768",
+      "candidate": "0.0696187838912",
+      "field": "max_angular_speed",
+      "step": 20
+    },
+    {
+      "baseline": "12150",
+      "candidate": "12620",
+      "field": "candidates",
+      "step": 21
+    },
+    {
+      "baseline": "2324",
+      "candidate": "2334",
+      "field": "contacts",
+      "step": 21
+    },
+    {
+      "baseline": "84ed1f6bc31595f6",
+      "candidate": "62ceb517d7a2c973",
+      "field": "trajectory_digest",
+      "step": 21
+    },
+    {
+      "baseline": "0.0169406812638",
+      "candidate": "0.0169407334179",
+      "field": "max_linear_speed",
+      "step": 21
+    },
+    {
+      "baseline": "0.0863359048963",
+      "candidate": "0.0499864034355",
+      "field": "max_angular_speed",
+      "step": 21
+    },
+    {
+      "baseline": "12150",
+      "candidate": "12620",
+      "field": "candidates",
+      "step": 22
+    },
+    {
+      "baseline": "b910f81dab5d4f3d",
+      "candidate": "de86b28f8dccdf6f",
+      "field": "trajectory_digest",
+      "step": 22
+    },
+    {
+      "baseline": "0.0176732316613",
+      "candidate": "0.0176732931286",
+      "field": "max_linear_speed",
+      "step": 22
+    },
+    {
+      "baseline": "0.0845696404576",
+      "candidate": "0.0526451766491",
+      "field": "max_angular_speed",
+      "step": 22
+    },
+    {
+      "baseline": "12150",
+      "candidate": "12620",
+      "field": "candidates",
+      "step": 23
+    },
+    {
+      "baseline": "7f71888884f1dab5",
+      "candidate": "b63fa993ebd86baf",
+      "field": "trajectory_digest",
+      "step": 23
+    },
+    {
+      "baseline": "0.0183508526534",
+      "candidate": "0.018350912258",
+      "field": "max_linear_speed",
+      "step": 23
+    },
+    {
+      "baseline": "0.0586591549218",
+      "candidate": "0.0586593151093",
+      "field": "max_angular_speed",
+      "step": 23
+    },
+    {
+      "baseline": "12150",
+      "candidate": "12620",
+      "field": "candidates",
+      "step": 24
+    },
+    {
+      "baseline": "2312",
+      "candidate": "2334",
+      "field": "contacts",
+      "step": 24
+    },
+    {
+      "baseline": "eeb1a3e993e9c022",
+      "candidate": "dbb79d29c82e7c42",
+      "field": "trajectory_digest",
+      "step": 24
+    },
+    {
+      "baseline": "0.0189285185188",
+      "candidate": "0.0189285986125",
+      "field": "max_linear_speed",
+      "step": 24
+    },
+    {
+      "baseline": "0.0565042048693",
+      "candidate": "0.0565044060349",
+      "field": "max_angular_speed",
+      "step": 24
+    },
+    {
+      "baseline": "12150",
+      "candidate": "12620",
+      "field": "candidates",
+      "step": 25
+    },
+    {
+      "baseline": "2312",
+      "candidate": "2334",
+      "field": "contacts",
+      "step": 25
+    }
+  ],
+  "physical_mismatch_count": 1798,
+  "same_fixture": true,
+  "same_mode": true,
+  "same_profile_setting": true,
+  "schema": "judas.dense.compare.v1",
+  "timing_note": "Single paired observation, not a universal bound or statistical significance claim. Synthetic cadence is not FPS.",
+  "trajectory_note": "Non-identical trajectories require independently justified physical acceptance; this comparison does not silently accept them.",
+  "utc": "2026-10-19T12:39:51.993348+00:00"
+}

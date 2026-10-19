@@ -1,0 +1,31 @@
+{
+  "schema": "judas.original-support-branch-summary.v1",
+  "status": "mechanism evidence only; no numerical/production correction implemented",
+  "records": 78,
+  "actual_vs_diagnostic_mismatches": 0,
+  "reasons": {
+    "bounded_partition_not_certified": 78
+  },
+  "partition_node_counts": {
+    "1": 78
+  },
+  "all_root_bounds_have_nonpositive_upper_proxy": true,
+  "minimum_end_lower_clearance_margin_m": 0.0022749390080944983,
+  "maximum_end_lower_clearance_margin_m": 0.003997044781189171,
+  "unchanged_allowance_m": [
+    0.004999999888241291
+  ],
+  "maximum_sampled_native_penetration_m": 0.0005471709031644179,
+  "sampled_rows_over_unchanged_slop": 0,
+  "maximum_normal_angle_from_first_degrees": 0.5135198249550995,
+  "diagnostic_depth_scope": "257 native manifold samples per path; not a continuous-time physical bound",
+  "mechanism": "gap() is a conservative lower-clearance proxy using whole-interval worst-case rotational extents. Its hi is not an upper enclosure of the actual gap. certify() nevertheless prunes on hi<=0, preventing any tightening subdivision in all78 records despite a strictly positive endpoint clearance bound.",
+  "proposed_correction_boundary": "Remove nonpositive-upper-proxy subdivision pruning while retaining existing maximum depth3, original5mm slop, native trajectory, contact predicate and solver settings. Validate independently before adoption.",
+  "files_sha256": {
+    "SupportReplay.cpp": "3b7271a657ddf59bb275477935f85516d767f34c85a026ecb736c5e8c14e317e",
+    "ReplayInputs.h": "65e20db6228e9a79a5976c3c1be9d8ab208d778828b3b4448c4f098b973fc54c",
+    "BUILD.json": "cf987a578b32b02ace423c158515f93ee6db10c3c723635be2a966e88451d143",
+    "RESULTS.json": "2f1e64f94905b93e7ed0f752884cf963aa557d1913240dc3d709669bf24aa13b"
+  },
+  "utc": "2026-10-19T12:47:52.316978+00:00"
+}

@@ -1,5 +1,9 @@
 # Pre-Alpha: dense Physics Stress Lab scalability
 
+This report describes checkpoint `8f6bd18b`. The subsequent measured support
+correction and rejected precise-geometry experiment are recorded in the
+[support continuation follow-up](PREALPHA_DENSE_SUPPORT_FOLLOWUP.md).
+
 ## Status and scope
 
 **The requested 24–30 FPS target is not met.** This is a measured, physically unchanged optimization checkpoint. The numerical CCD experiments described below were rejected; subsequent coherent-geometry research remains isolated and unadopted. It is neither Alpha qualification nor new human acceptance.

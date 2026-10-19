@@ -1,0 +1,92 @@
+{
+  "scope": "Rejected isolated coherent-geometry A2; source/raw measurements preserved, no adoption",
+  "utc": "2026-10-19T12:39:52.015183+00:00",
+  "decision": "rejected performance regression; independent public history exact reconstruction also regresses",
+  "comparison_command": {
+    "argv": [
+      "/usr/bin/python3",
+      "/home/conner/Documents/GitHub/Project-Judas/scripts/physics_dense_measure.py",
+      "compare",
+      "--baseline",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/runs/combined-fastpaths-unprofiled-A1",
+      "--candidate",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/runs/coherent-geometry-unprofiled-A2",
+      "--output",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/coherent-geometry-rejection-A2/PHYSICAL_AND_TIMING_COMPARISON.json"
+    ],
+    "exit": 1,
+    "meaning": "correctly detects changed physical/work rows; not relabelled an exact pass"
+  },
+  "baseline": {
+    "run": "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/runs/combined-fastpaths-unprofiled-A1",
+    "native_exit": 0,
+    "steps": 270,
+    "fixed_ms": {
+      "count": 270,
+      "maximum": 942.047123,
+      "mean": 63.03256067407408,
+      "median": 23.004445,
+      "p95_floor": 213.604517,
+      "p99_floor": 554.115765
+    },
+    "final_digest": "192f0f4bed728953",
+    "endpoint_geometry": {
+      "candidate_pairs": 9327,
+      "contact_points": 2475,
+      "deepest_endpoint_penetration_m": 0.007217108528522143,
+      "observation_ms": 19.402478,
+      "outside_fixed_step_timing": true,
+      "population": 1024,
+      "scope": "endpoint primitive geometry for the authored loose_piece population",
+      "tag_available": true,
+      "uncertain_pairs": 0,
+      "unsupported_candidates": 0
+    },
+    "nonfinite_rows": 0,
+    "total_impact_events": 3520,
+    "total_impact_queries": 6608132,
+    "total_impact_search_iterations": 511168
+  },
+  "candidate": {
+    "run": "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/runs/coherent-geometry-unprofiled-A2",
+    "native_exit": 0,
+    "steps": 270,
+    "fixed_ms": {
+      "count": 270,
+      "maximum": 1299.077929,
+      "mean": 96.68417872962964,
+      "median": 26.186704,
+      "p95_floor": 416.014135,
+      "p99_floor": 783.793559
+    },
+    "final_digest": "bfa7a6238fcf92bb",
+    "endpoint_geometry": {
+      "candidate_pairs": 9321,
+      "contact_points": 2519,
+      "deepest_endpoint_penetration_m": 0.006710938634537866,
+      "observation_ms": 23.154869,
+      "outside_fixed_step_timing": true,
+      "population": 1024,
+      "scope": "endpoint primitive geometry for the authored loose_piece population",
+      "tag_available": true,
+      "uncertain_pairs": 0,
+      "unsupported_candidates": 0
+    },
+    "nonfinite_rows": 0,
+    "total_impact_events": 3366,
+    "total_impact_queries": 5899861,
+    "total_impact_search_iterations": 3771303
+  },
+  "history_control": "public-history/RESULTS.json",
+  "support_control_classification": {
+    "ORIGINAL": "broken precision-A1:9checks/3fail, not original8f",
+    "CORRECTED": "precision-A2:9checks/0fail;48,057projectionchecks/0fail; double-center mutant3fail",
+    "original8f": "Exact unchanged source and thresholds: native9checks/0fail; SUPPORT_CONTROLS_SAFE8F.json"
+  },
+  "qualification_not_run": [
+    "full34test plan",
+    "M70/M77cold saves",
+    "temporal quality native270"
+  ],
+  "retained_binary_scope": "Snapshot source/archive/binary identities are retained; actual immutable binaries remain at coherent-geometry-candidate-A2, not duplicated here."
+}

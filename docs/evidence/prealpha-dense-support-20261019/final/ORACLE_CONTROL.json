@@ -1,0 +1,9 @@
+{
+  "exit": 0,
+  "argv": [
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/support-temporal-qualification/oracle_controls"
+  ],
+  "binary_sha256": "5332e4bf93f37e0f7fe3f04907f905edfeae2194ae040c74a28428d783ef94d9",
+  "log_sha256": "72b8622f5ee09f429bb6aaa1f04e7bcf9b5e2a6fa67c7bd323eab83955c2f062",
+  "checks": 18
+}

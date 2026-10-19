@@ -1,0 +1,628 @@
+{
+  "utc": "2026-10-19T12:54:55.638155+00:00",
+  "archive": "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/support-completeness-candidate-A1/libjudas_engine.a",
+  "archive_sha256": "521f0b3ebd75478c84940622109ce6263a4375302742f67405da2170d6fe9d7e",
+  "commands": [
+    {
+      "argv": [
+        "/usr/bin/c++",
+        "-DDT_VIRTUAL_QUERYFILTER",
+        "-DMA_NO_ENCODING",
+        "-DMA_NO_GENERATION",
+        "-DMA_NO_RESOURCE_MANAGER",
+        "-I/home/conner/Documents/GitHub/Project-Judas/src",
+        "-I/home/conner/Documents/GitHub/Project-Judas/third_party/glad/include",
+        "-I/home/conner/Documents/GitHub/Project-Judas/third_party/miniaudio",
+        "-I/home/conner/Documents/GitHub/Project-Judas/third_party/verblib",
+        "-I/home/conner/Documents/GitHub/Project-Judas/third_party/meshoptimizer/src",
+        "-I/home/conner/Documents/GitHub/Project-Judas/build/_deps/judas_freetype-build/include",
+        "-I/home/conner/Documents/GitHub/Project-Judas/build/_deps/judas_freetype-src/include",
+        "-I/home/conner/Documents/GitHub/Project-Judas/build/_deps/judas_harfbuzz-src/src",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/third_party/quickhull",
+        "-isystem",
+        "/usr/include/SDL2",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/third_party/recastnavigation/Detour/Include",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/third_party/recastnavigation/DetourTileCache/Include",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/third_party/recastnavigation/DetourCrowd/Include",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/third_party/quickjs",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/build/unicode/icu/include",
+        "-O3",
+        "-DNDEBUG",
+        "-std=gnu++17",
+        "-Wall",
+        "-Wextra",
+        "-I/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/support-temporal-qualification",
+        "-MMD",
+        "-MF",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/support-temporal-qualification/PhysicsStressLiveBenchmark.observer.o.d",
+        "-c",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/support-temporal-qualification/PhysicsStressLiveBenchmark.observer.cpp",
+        "-o",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/support-temporal-qualification/PhysicsStressLiveBenchmark.observer.o"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+      "exit": 0,
+      "log": "compile-PhysicsStressLiveBenchmark.observer.log"
+    },
+    {
+      "argv": [
+        "/usr/bin/c++",
+        "-DDT_VIRTUAL_QUERYFILTER",
+        "-DMA_NO_ENCODING",
+        "-DMA_NO_GENERATION",
+        "-DMA_NO_RESOURCE_MANAGER",
+        "-I/home/conner/Documents/GitHub/Project-Judas/src",
+        "-I/home/conner/Documents/GitHub/Project-Judas/third_party/glad/include",
+        "-I/home/conner/Documents/GitHub/Project-Judas/third_party/miniaudio",
+        "-I/home/conner/Documents/GitHub/Project-Judas/third_party/verblib",
+        "-I/home/conner/Documents/GitHub/Project-Judas/third_party/meshoptimizer/src",
+        "-I/home/conner/Documents/GitHub/Project-Judas/build/_deps/judas_freetype-build/include",
+        "-I/home/conner/Documents/GitHub/Project-Judas/build/_deps/judas_freetype-src/include",
+        "-I/home/conner/Documents/GitHub/Project-Judas/build/_deps/judas_harfbuzz-src/src",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/third_party/quickhull",
+        "-isystem",
+        "/usr/include/SDL2",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/third_party/recastnavigation/Detour/Include",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/third_party/recastnavigation/DetourTileCache/Include",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/third_party/recastnavigation/DetourCrowd/Include",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/third_party/quickjs",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/build/unicode/icu/include",
+        "-O3",
+        "-DNDEBUG",
+        "-std=gnu++17",
+        "-Wall",
+        "-Wextra",
+        "-I/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/support-temporal-qualification",
+        "-MMD",
+        "-MF",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/support-temporal-qualification/OracleControls.o.d",
+        "-c",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/support-temporal-qualification/OracleControls.cpp",
+        "-o",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/support-temporal-qualification/OracleControls.o"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+      "exit": 0,
+      "log": "compile-OracleControls.log"
+    },
+    {
+      "argv": [
+        "/usr/bin/c++",
+        "-O3",
+        "-DNDEBUG",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/support-temporal-qualification/PhysicsStressLiveBenchmark.observer.o",
+        "CMakeFiles/judas_physics_stress_live_benchmark.dir/src/Application.cpp.o",
+        "CMakeFiles/judas_physics_stress_live_benchmark.dir/src/RuntimeOptions.cpp.o",
+        "CMakeFiles/judas_physics_stress_live_benchmark.dir/src/RuntimeDiagnostics.cpp.o",
+        "CMakeFiles/judas_physics_stress_live_benchmark.dir/src/TestHarness.cpp.o",
+        "-o",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/support-temporal-qualification/judas_physics_stress_live_benchmark",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/support-completeness-candidate-A1/libjudas_engine.a",
+        "libjudas_build_identity.a",
+        "libjudas_app_icon.a",
+        "libjudas_materials.a",
+        "/usr/lib/x86_64-linux-gnu/libSDL2.so",
+        "libjudas_glad.a",
+        "libjudas_audio_backend.a",
+        "libjudas_meshoptimizer.a",
+        "libjudas_navigation_cook.a",
+        "libjudas_navigation_backend.a",
+        "libjudas_quickjs.a",
+        "-lm",
+        "libjudas_profiler.a",
+        "_deps/judas_freetype-build/libfreetype.a",
+        "_deps/judas_harfbuzz-build/libharfbuzz.a",
+        "unicode/icu/lib/libicui18n.a",
+        "unicode/icu/lib/libicuuc.a",
+        "unicode/icu/lib/libicudata.a",
+        "-ldl",
+        "libjudas_jobs.a"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas/build",
+      "exit": 0,
+      "log": "link-live.log"
+    },
+    {
+      "argv": [
+        "/usr/bin/c++",
+        "-O3",
+        "-DNDEBUG",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/support-temporal-qualification/OracleControls.o",
+        "-o",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/support-temporal-qualification/oracle_controls",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/support-completeness-candidate-A1/libjudas_engine.a",
+        "libjudas_build_identity.a",
+        "libjudas_app_icon.a",
+        "libjudas_materials.a",
+        "/usr/lib/x86_64-linux-gnu/libSDL2.so",
+        "libjudas_glad.a",
+        "libjudas_audio_backend.a",
+        "libjudas_meshoptimizer.a",
+        "libjudas_navigation_cook.a",
+        "libjudas_navigation_backend.a",
+        "libjudas_quickjs.a",
+        "-lm",
+        "libjudas_profiler.a",
+        "_deps/judas_freetype-build/libfreetype.a",
+        "_deps/judas_harfbuzz-build/libharfbuzz.a",
+        "unicode/icu/lib/libicui18n.a",
+        "unicode/icu/lib/libicuuc.a",
+        "unicode/icu/lib/libicudata.a",
+        "-ldl",
+        "libjudas_jobs.a"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas/build",
+      "exit": 0,
+      "log": "link-controls.log"
+    }
+  ],
+  "scope": "Same original temporal observer, original Float public/private layouts. No coherent-double prototype headers or objects. Observer runs after measured physics span; not FPS evidence.",
+  "files": {
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/support-temporal-qualification/PhysicsStressLiveBenchmark.observer.cpp": {
+      "sha256": "c20e4e0cf0ddd19771a3ee53245570c5dedb336347e2e3486d0df2bcee94c4f9",
+      "bytes": 9971
+    },
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/support-temporal-qualification/TemporalObserver.h": {
+      "sha256": "039f45ab66c63cae205a8d47ff22ee9e41257edd6d5d2012debc91eafdf1b530",
+      "bytes": 7015
+    },
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/support-temporal-qualification/FloorOracle.h": {
+      "sha256": "9967977f2e72eea13a521176e7de38a1d32d50f60b364134cf5565a2585c0d27",
+      "bytes": 2503
+    },
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/support-temporal-qualification/OracleControls.cpp": {
+      "sha256": "95a7454c23042cd228cc858454293b8aba9956b0ff76f0609a5a891b0e58af8c",
+      "bytes": 2877
+    },
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/support-temporal-qualification/PhysicsStressLiveBenchmark.observer.o": {
+      "sha256": "edfdff513ada0978b2f37335d2c6c597310b77049ca305848c74bd69305a0378",
+      "bytes": 206744
+    },
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/support-temporal-qualification/judas_physics_stress_live_benchmark": {
+      "sha256": "7828efe5ea974801dd9e2d72eeebcfe8cc57d051b4b52ba20b18f39e851216c3",
+      "bytes": 55080744
+    },
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/support-temporal-qualification/oracle_controls": {
+      "sha256": "5332e4bf93f37e0f7fe3f04907f905edfeae2194ae040c74a28428d783ef94d9",
+      "bytes": 1363416
+    }
+  },
+  "compile_dependency_inputs": {
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/support-temporal-qualification/PhysicsStressLiveBenchmark.observer.cpp": {
+      "sha256": "c20e4e0cf0ddd19771a3ee53245570c5dedb336347e2e3486d0df2bcee94c4f9",
+      "bytes": 9971
+    },
+    "/home/conner/Documents/GitHub/Project-Judas/src/Application.h": {
+      "sha256": "987f48aea4a4abf150c85ccf1450050d078b9a0a759b98abc4f9301452af7123",
+      "bytes": 1659
+    },
+    "/home/conner/Documents/GitHub/Project-Judas/src/ResourceTrace.h": {
+      "sha256": "5821eee768dc0f8f7ae1795b1050a2af1af48ef06a355970b5cc2160cf6ef027",
+      "bytes": 1284
+    },
+    "/home/conner/Documents/GitHub/Project-Judas/src/EngineHost.h": {
+      "sha256": "0cd23c77f4224b78e2dc43e6d19ceb71d151eebcf88d88ca057a9c3df5c013c1",
+      "bytes": 2841
+    },
+    "/home/conner/Documents/GitHub/Project-Judas/src/AssetDatabase.h": {
+      "sha256": "5f5d9d05a9f626f2abe89f8be963a0856f7690567ecc1bc695a1ca5e2157a93b",
+      "bytes": 5954
+    },
+    "/home/conner/Documents/GitHub/Project-Judas/src/AudioSystem.h": {
+      "sha256": "62551195d2d8794eb5415d2e68dacafb3daeb06fbb8c5629e55c7dc0b22d1552",
+      "bytes": 3134
+    },
+    "/home/conner/Documents/GitHub/Project-Judas/src/AudioTypes.h": {
+      "sha256": "981dc00456a241f7015d46f224dfb81fee4bc2faee5322535d03d93aaa061029",
+      "bytes": 2282
+    },
+    "/home/conner/Documents/GitHub/Project-Judas/src/Classification.h": {
+      "sha256": "0f52e7b6ce06b2ec220d65b56e1f103e052b4f2c3fe8afc839f64981459a160e",
+      "bytes": 1442
+    },
+    "/home/conner/Documents/GitHub/Project-Judas/src/AudioEnvironment.h": {
+      "sha256": "cc52d6a478b7a2b080c6bcb1ee0495e241bf211fb36fbf57220f8c6d5cc1530d",
+      "bytes": 758
+    },
+    "/home/conner/Documents/GitHub/Project-Judas/src/AudioData.h": {
+      "sha256": "b9dc9e78828c3bc62400108f8de9a10c2346a44727429fc996c03db2cb5aa402",
+      "bytes": 601
+    },
+    "/home/conner/Documents/GitHub/Project-Judas/src/JobSystem.h": {
+      "sha256": "ac871d09ca16f98460afd6d6b8a390d7ef862e41beb805ec10d1c5544d8fa958",
+      "bytes": 6699
+    },
+    "/home/conner/Documents/GitHub/Project-Judas/src/Renderer.h": {
+      "sha256": "022418861c7fa812f8b6f6ff266673cedd491751d50e830947b6d20604a29c49",
+      "bytes": 32901
+    },
+    "/home/conner/Documents/GitHub/Project-Judas/src/FontLoader.h": {
+      "sha256": "9506b93476fcc66e880c607df46dc30c1f86901552a8a36da417e82cc0dcd726",
+      "bytes": 3321
+    },
+    "/home/conner/Documents/GitHub/Project-Judas/src/TextureData.h": {
+      "sha256": "6645f4d1e3543a5127994a99ac4ceed326f1c23bae111e991d015208b0db2efe",
+      "bytes": 1089
+    },
+    "/home/conner/Documents/GitHub/Project-Judas/src/TextLayout.h": {
+      "sha256": "c8e6c688508c4fb4541da1c760c361539f72645224075c8ea600b007b3aea2cd",
+      "bytes": 1915
+    },
+    "/home/conner/Documents/GitHub/Project-Judas/src/Light.h": {
+      "sha256": "eb3beb8ae3385a91c5ba700b3c708e5ad2c9d9517569f38132f685e19d973ba7",
+      "bytes": 2449
+    },
+    "/home/conner/Documents/GitHub/Project-Judas/src/RenderLightGrid.h": {
+      "sha256": "95f24b2c91fdb64563b5c9e1e748b67ccf3c7665d2faaffa0dda21f7efa98af3",
+      "bytes": 833
+    },
+    "/home/conner/Documents/GitHub/Project-Judas/src/MeshData.h": {
+      "sha256": "9e597eed6ac3abb67d7c8d3f0645a700c6716a6f43972b7e6b0dc9ba244eee0e",
+      "bytes": 2983
+    },
+    "/home/conner/Documents/GitHub/Project-Judas/src/Material.h": {
+      "sha256": "792972f72366e267f20e1265ce06b87997d30bcbfad86d1312a4d7eadd03a2cd",
+      "bytes": 2920
+    },
+    "/home/conner/Documents/GitHub/Project-Judas/src/DebugDraw.h": {
+      "sha256": "262e0c83e58bb06bd5f19afcf080f07eca91b9f6a9f1c071d87271bbf1bc59ff",
+      "bytes": 1639
+    },
+    "/home/conner/Documents/GitHub/Project-Judas/src/Environment.h": {
+      "sha256": "d4332df0c410a2b482a231aade983aaf4c8f8bc0f349fece1dc2b4a7d3665541",
+      "bytes": 748
+    },
+    "/home/conner/Documents/GitHub/Project-Judas/src/Visibility.h": {
+      "sha256": "fd43033d7e6f90696c7b52d523792de8dad21baa441c567a4b665b1155aeb081",
+      "bytes": 1544
+    },
+    "/home/conner/Documents/GitHub/Project-Judas/src/VisualParticles.h": {
+      "sha256": "516ee4424d7a55fa7df0b46234ba6db2f4ddaee7c662f90457e24c65a086aeff",
+      "bytes": 1909
+    },
+    "/home/conner/Documents/GitHub/Project-Judas/src/GraphicsApi.h": {
+      "sha256": "e54f96ec641c1f4d0a36dc11c608114cbd83f1349ea47dea4fc59c239259ecc0",
+      "bytes": 239
+    },
+    "/home/conner/Documents/GitHub/Project-Judas/third_party/glad/include/glad/gl.h": {
+      "sha256": "1dd88d36c984ca81cbc4a2c4098aea4b14a16af10ed109e72b6b39e8eca4a3c4",
+      "bytes": 110615
+    },
+    "/home/conner/Documents/GitHub/Project-Judas/third_party/glad/include/KHR/khrplatform.h": {
+      "sha256": "7b1e01aaa7ad8f6fc34b5c7bdf79ebf5189bb09e2c4d2e79fc5d350623d11e83",
+      "bytes": 11131
+    },
+    "/home/conner/Documents/GitHub/Project-Judas/src/ResourceManager.h": {
+      "sha256": "fdf75211497e4b7525d72e5057f002696d84c5a80451e3a02503e3b55a291f80",
+      "bytes": 16738
+    },
+    "/home/conner/Documents/GitHub/Project-Judas/src/Deformable.h": {
+      "sha256": "86e615636d3975c35c91eab8105b28fba1c21d7665869b76e4c2c0823fcba005",
+      "bytes": 7484
+    },
+    "/home/conner/Documents/GitHub/Project-Judas/src/FractureTypes.h": {
+      "sha256": "d3c36a86aa09a943da241f979df73d587f2ef8b358350e5571af53f9553fa61f",
+      "bytes": 3171
+    },
+    "/home/conner/Documents/GitHub/Project-Judas/src/JointTypes.h": {
+      "sha256": "392d773a0d9de9a77d32b712836bac84094eb53efd2006d928473816edbe590e",
+      "bytes": 3750
+    },
+    "/home/conner/Documents/GitHub/Project-Judas/src/PhysicsHandles.h": {
+      "sha256": "9fa13d0cbcfae6d61a5b3d5716aa35c523b8327d47144ec8c1413b679808966f",
+      "bytes": 452
+    },
+    "/home/conner/Documents/GitHub/Project-Judas/src/PhysicsWorld.h": {
+      "sha256": "eddadb36acc2cd46693859e844ca981d4b9f684fde68035b08ed37b757f71f03",
+      "bytes": 34212
+    },
+    "/home/conner/Documents/GitHub/Project-Judas/src/CollisionShapes.h": {
+      "sha256": "0f7d625998b5cd037412b2b64ef3aa452bfd9eee86086b570f2350e87ac24cf2",
+      "bytes": 2983
+    },
+    "/home/conner/Documents/GitHub/Project-Judas/src/GravityField.h": {
+      "sha256": "40cdb1655c59509dba047ead9f53c797d5cb461075eaa0beb7c79f1768c17ff6",
+      "bytes": 2205
+    },
+    "/home/conner/Documents/GitHub/Project-Judas/src/CollisionAsset.h": {
+      "sha256": "18c815262327136230ac4860d7981708c9b39a33c80247107ce6636cdcdd60c0",
+      "bytes": 2939
+    },
+    "/home/conner/Documents/GitHub/Project-Judas/src/PhysicalMaterial.h": {
+      "sha256": "3fe726716e2d68c52136d67c2d6968ade67c522b57c175bd5949e280988153f3",
+      "bytes": 399
+    },
+    "/home/conner/Documents/GitHub/Project-Judas/src/NavigationAsset.h": {
+      "sha256": "d3dbab32dc60b39bd5ec3aa482bc3e191a73fe2674fdfeff3f527428cc2c6ff5",
+      "bytes": 1391
+    },
+    "/home/conner/Documents/GitHub/Project-Judas/src/NavigationTypes.h": {
+      "sha256": "043985cc8df1eb45f6c6fae38f625cc25914379bb9dde8c787a026a08736a8eb",
+      "bytes": 1820
+    },
+    "/home/conner/Documents/GitHub/Project-Judas/src/Scene.h": {
+      "sha256": "aba238eb103a409aa4312ff45896bf9345185080ea370dd4e6a418b3d1501dcb",
+      "bytes": 19202
+    },
+    "/home/conner/Documents/GitHub/Project-Judas/src/PlanetTerrain.h": {
+      "sha256": "e415abb5df471da67e850a420e078c0bc56045393f992c9244d52e2e012fe352",
+      "bytes": 3457
+    },
+    "/home/conner/Documents/GitHub/Project-Judas/src/Weather.h": {
+      "sha256": "f0e4110525879c6bde64d7375963a5ede37568201c7cd3c3c463ea22805ccafa",
+      "bytes": 5311
+    },
+    "/home/conner/Documents/GitHub/Project-Judas/src/GravitySelection.h": {
+      "sha256": "ae0eba351200d8e98684c43c6b39dac2c42d50c731495d2787661a450b2265c9",
+      "bytes": 931
+    },
+    "/home/conner/Documents/GitHub/Project-Judas/src/LiquidTypes.h": {
+      "sha256": "bfc4f8056b2f86c7c7bbf8a9b1b78be7b8f494c502fc6bf819a480c7a5a54871",
+      "bytes": 1576
+    },
+    "/home/conner/Documents/GitHub/Project-Judas/src/LiquidGeometry.h": {
+      "sha256": "9f889a91e79adf93d35b7946024e1159675593adf5519dbf9ff5cb5094d8cee5",
+      "bytes": 4580
+    },
+    "/home/conner/Documents/GitHub/Project-Judas/src/LiquidSurface.h": {
+      "sha256": "393582e6349650556376b7e52ebd8443c59518280cedbaf56c2174821cdeba76",
+      "bytes": 3958
+    },
+    "/home/conner/Documents/GitHub/Project-Judas/src/PoseComposition.h": {
+      "sha256": "27855d597a84184e9aec7fd9408bf7a908a66635b3efdd2b8bd9ea0a892c6aa6",
+      "bytes": 2113
+    },
+    "/home/conner/Documents/GitHub/Project-Judas/src/SkeletalAnimation.h": {
+      "sha256": "4d67ab9dec4db111aef8c7827e19c22e9262eaa6d0202df634bfe765c1ad8bb2",
+      "bytes": 2825
+    },
+    "/home/conner/Documents/GitHub/Project-Judas/src/FullBodyIK.h": {
+      "sha256": "bb84f10a04f712c47e43fbb8137cfcbdc003df32807ec2adb39e47a5e095f814",
+      "bytes": 3886
+    },
+    "/home/conner/Documents/GitHub/Project-Judas/src/Ragdoll.h": {
+      "sha256": "6fd11cd07785d90a0b932f2e6be12d869282e3a066a419fc83b31b9bbbedaacd",
+      "bytes": 1579
+    },
+    "/home/conner/Documents/GitHub/Project-Judas/src/PhysicalAnimation.h": {
+      "sha256": "5c762c3d380956183f78a39ec17d0c62aa314b66aac75f47de517a1975447253",
+      "bytes": 3465
+    },
+    "/home/conner/Documents/GitHub/Project-Judas/src/PhysicalBalance.h": {
+      "sha256": "cbaa3820129ae1657e826b2f0ea1f82bc20863e9231861e037b99ac85e62f0a6",
+      "bytes": 5264
+    },
+    "/home/conner/Documents/GitHub/Project-Judas/src/CharacterMotor.h": {
+      "sha256": "c25d7de6f87a59d94eef8a03e2193f32a64cb9ea820401ead483d44b77be7aee",
+      "bytes": 3292
+    },
+    "/home/conner/Documents/GitHub/Project-Judas/src/Wheel.h": {
+      "sha256": "6bb34871d327be268be16471c9ada3bbc0a4d52f21170db8822574271f1a0a63",
+      "bytes": 2213
+    },
+    "/home/conner/Documents/GitHub/Project-Judas/src/Powertrain.h": {
+      "sha256": "dbe7643e04a2707f2d27b007c52fa7ffc6b8931a2ac9ac7a803e712c681b8bd1",
+      "bytes": 5354
+    },
+    "/home/conner/Documents/GitHub/Project-Judas/src/Localization.h": {
+      "sha256": "cac8085faaeb536bda244c2758833ecd1a1a7e56d138924ba4b937143135bb64",
+      "bytes": 1765
+    },
+    "/home/conner/Documents/GitHub/Project-Judas/src/Window.h": {
+      "sha256": "23e643b86ec5a6866c19fa3cf5ce300f16b49698f5d40f43e403ebf9978fc4ee",
+      "bytes": 5728
+    },
+    "/home/conner/Documents/GitHub/Project-Judas/src/InputSystem.h": {
+      "sha256": "06839fdd5ed60792204cc610f6a20fc4ad09bc54b852a1971e5516397f0b60a2",
+      "bytes": 6810
+    },
+    "/home/conner/Documents/GitHub/Project-Judas/src/InteractivePlay.h": {
+      "sha256": "53f1c16a3044f469ce4cdf44c00a2568fded6e5fd4a448ffb4f4bd6add7ca0e1",
+      "bytes": 4809
+    },
+    "/home/conner/Documents/GitHub/Project-Judas/src/AerodynamicDrag.h": {
+      "sha256": "09b1669d95ae1d8bcad8a0b192c345509f64403771f31128565f4ec4186370c9",
+      "bytes": 1650
+    },
+    "/home/conner/Documents/GitHub/Project-Judas/src/ReferenceFrame.h": {
+      "sha256": "a41443c09bcb24dec11b54fe3f096dfdad212c97886c6b3dc741b7e1c62e4eea",
+      "bytes": 1990
+    },
+    "/home/conner/Documents/GitHub/Project-Judas/src/GameSession.h": {
+      "sha256": "dc8563410932dc2c0fa1ef013413fb8141d65f11d29568fa2c312f2804a55c16",
+      "bytes": 5107
+    },
+    "/home/conner/Documents/GitHub/Project-Judas/src/EntityLifecycle.h": {
+      "sha256": "cbc55e0e306f639bfa093dc0ee017a7043a9cac9f39a732fa17d7cd52265622f",
+      "bytes": 4486
+    },
+    "/home/conner/Documents/GitHub/Project-Judas/src/FlyingPrimitiveControl.h": {
+      "sha256": "f2dc79b906696265ec32baa95411fa82e793d60078939a3c4db2ca6dce872619",
+      "bytes": 3916
+    },
+    "/home/conner/Documents/GitHub/Project-Judas/src/ObjectManipulation.h": {
+      "sha256": "c3c9a7aba98686c5eff66ed09144cd0ce6b42af04ab80ea4db1de3bb7bcddb5f",
+      "bytes": 2531
+    },
+    "/home/conner/Documents/GitHub/Project-Judas/src/Interactable.h": {
+      "sha256": "082ec699231b1195ac3bcef6c523a6e7e861019523cbecdfe057e6fb36ea22ae",
+      "bytes": 2599
+    },
+    "/home/conner/Documents/GitHub/Project-Judas/src/PilotAttachment.h": {
+      "sha256": "4888953973dd2472077960a161cf719080b3ba1114ea70d8a896a4e7cc472819",
+      "bytes": 5400
+    },
+    "/home/conner/Documents/GitHub/Project-Judas/src/PlayerController.h": {
+      "sha256": "a75a6098f78bddcb120eca2b98f6a08dc1af091e3d1a4b62afcf37e66a9825aa",
+      "bytes": 15899
+    },
+    "/home/conner/Documents/GitHub/Project-Judas/src/PlayerView.h": {
+      "sha256": "9926cb042d92ceed1bf375493a322db6d5301176444a8c5c7816050916b8c465",
+      "bytes": 1226
+    },
+    "/home/conner/Documents/GitHub/Project-Judas/src/HUD.h": {
+      "sha256": "c08c50c347f7ec3c9219d16ea430aaac5fedb01bbeb46b79388bd5ae025ee8c2",
+      "bytes": 3318
+    },
+    "/home/conner/Documents/GitHub/Project-Judas/src/PauseMenu.h": {
+      "sha256": "e6770159a9b396af6b953d50c911b94d545b2e6636e2f6552f4d1cab0135e993",
+      "bytes": 3665
+    },
+    "/home/conner/Documents/GitHub/Project-Judas/src/UIStack.h": {
+      "sha256": "4c6db720ba71e64bdf75b4c8a3c23a304f9a5218d5897f650777a5078cbc5cd0",
+      "bytes": 1431
+    },
+    "/home/conner/Documents/GitHub/Project-Judas/src/UIWidgets.h": {
+      "sha256": "4ddb50cda2578617293664d9c882caccc1948af14eaaa67e00c7c133afc243f1",
+      "bytes": 3604
+    },
+    "/home/conner/Documents/GitHub/Project-Judas/src/Simulation.h": {
+      "sha256": "7b87cccd2c7183ba0d7623570393a92f627011c75ca4ef7bd2d15b5049da52ca",
+      "bytes": 2041
+    },
+    "/home/conner/Documents/GitHub/Project-Judas/src/WorldCoordinates.h": {
+      "sha256": "60d71392f5b40a17b3632db23e3930e5dd1217bbfdf900c2f62cf40a8f11a12a",
+      "bytes": 1248
+    },
+    "/home/conner/Documents/GitHub/Project-Judas/src/RuntimeWorld.h": {
+      "sha256": "ea059d2a13ae093a66ef72bb6fcb1756cd4d3dae1a2c5a6c25d4b44e86eaf469",
+      "bytes": 43892
+    },
+    "/home/conner/Documents/GitHub/Project-Judas/src/RuntimeTerrain.h": {
+      "sha256": "971e123778004c0a5efa58af389f94b2d1f6ca4194bc1476fd1f40c086cbddc8",
+      "bytes": 1864
+    },
+    "/home/conner/Documents/GitHub/Project-Judas/src/VolumeTerrainGeometry.h": {
+      "sha256": "b19e6284963a3352b69722488d37b9bf0f334d72ff5299886b522504aa3fd4f5",
+      "bytes": 1526
+    },
+    "/home/conner/Documents/GitHub/Project-Judas/src/NavigationSystem.h": {
+      "sha256": "b9e7f84a2020145e8101bcccb4af476a9034887dd20267884a1e78277b6b5ba3",
+      "bytes": 2478
+    },
+    "/home/conner/Documents/GitHub/Project-Judas/src/LiquidSystem.h": {
+      "sha256": "1476c94beaaedb1e1b1ad6d9bc60b783c209f71c8eda2fc79a882f17fd1aa98e",
+      "bytes": 4791
+    },
+    "/home/conner/Documents/GitHub/Project-Judas/src/AtmosphereField.h": {
+      "sha256": "e02d5fe85cac5370a18e5f3e70ada42e0f3b57a83b96b09fd9f4c20f6c349f14",
+      "bytes": 3253
+    },
+    "/home/conner/Documents/GitHub/Project-Judas/src/CelestialGravity.h": {
+      "sha256": "92bf2726843b1a712a360435771eb969e3cae02c8958fc71860d722117c8e991",
+      "bytes": 1699
+    },
+    "/home/conner/Documents/GitHub/Project-Judas/src/CombustionWorld.h": {
+      "sha256": "f767f4d043e789a662513e9ece96075580d7496e2c9fafaaaba2742211c4fc34",
+      "bytes": 4962
+    },
+    "/home/conner/Documents/GitHub/Project-Judas/src/Door.h": {
+      "sha256": "580bf403ed3867da019d20fa833dd22206b4c3560a52d86c871aef8e4637fc34",
+      "bytes": 4854
+    },
+    "/home/conner/Documents/GitHub/Project-Judas/src/DynamicBody.h": {
+      "sha256": "a8647b82ea1df052ddcfa18053e2bdb03dd82f702b4d45f8f556ad132424371c",
+      "bytes": 5804
+    },
+    "/home/conner/Documents/GitHub/Project-Judas/src/FidelityPolicy.h": {
+      "sha256": "531aad2ed0a59813dbf00f8f72c3b65e2b3108612bbcaa80c42e3721ce671882",
+      "bytes": 2173
+    },
+    "/home/conner/Documents/GitHub/Project-Judas/src/FluidWorld.h": {
+      "sha256": "96ee89317ef80acd11cbfb4823cdc5dc6cbfa9bd06da878b73a6fb2277a0ec04",
+      "bytes": 7846
+    },
+    "/home/conner/Documents/GitHub/Project-Judas/src/GravityContextMap.h": {
+      "sha256": "73f07e95a78406674f605be2bdde581f30eebe70b97e6a0cdbdf17b5570bcc6c",
+      "bytes": 3021
+    },
+    "/home/conner/Documents/GitHub/Project-Judas/src/GravityVolume.h": {
+      "sha256": "acce363af30efd73cd511d06ff190e37b9f45aeaa502977430bf05f05c262777",
+      "bytes": 675
+    },
+    "/home/conner/Documents/GitHub/Project-Judas/src/LightSwitch.h": {
+      "sha256": "5460d2cc1f2f731f513e4bdd423bfbfb7741a0ec0cceec5f3e087c6b8e2c450b",
+      "bytes": 3748
+    },
+    "/home/conner/Documents/GitHub/Project-Judas/src/ScriptSystem.h": {
+      "sha256": "b2c0f3e549abfd6496347772b4d8b3e74e33f1b20f9c6510e26c210546b6e028",
+      "bytes": 4594
+    },
+    "/home/conner/Documents/GitHub/Project-Judas/src/RuntimeUI.h": {
+      "sha256": "7e50b33d5ec9f6778c8aea27dede14017cea13adf25bdd739a4ef09bbdf0a6b3",
+      "bytes": 6663
+    },
+    "/home/conner/Documents/GitHub/Project-Judas/src/TextEditing.h": {
+      "sha256": "0c10e98c8e4a4fa1816f624a65df1522674ccc6de8e5054cdf7490975da2d970",
+      "bytes": 428
+    },
+    "/home/conner/Documents/GitHub/Project-Judas/src/LocalMultiplayer.h": {
+      "sha256": "bdf0530e9f90c1fc2e8ee8ead8f98b2866833afb8eb2ca06acbcb5023aa5fe03",
+      "bytes": 3505
+    },
+    "/home/conner/Documents/GitHub/Project-Judas/src/PerformanceProfiler.h": {
+      "sha256": "82b7991f3214196bd4c1f8ad1fc5dd8d7b224caa2207e27fad18cf7f626c57a5",
+      "bytes": 7147
+    },
+    "/home/conner/Documents/GitHub/Project-Judas/src/Narrowphase.h": {
+      "sha256": "8e1b9b548209ef5d523a4547cc8a2c7d18c7017a602fab18608563781fd7f9ac",
+      "bytes": 3309
+    },
+    "/home/conner/Documents/GitHub/Project-Judas/src/Broadphase.h": {
+      "sha256": "703dec5ad810156a25b2822ef885828fc7eba3a1b86f6fc90120aef3f26abfaf",
+      "bytes": 5257
+    },
+    "/home/conner/Documents/GitHub/Project-Judas/src/Contacts.h": {
+      "sha256": "e13c354c71e02141b3c82c5abfdb8fd1cb24b376bb7116245c67ba73ee21ce5b",
+      "bytes": 7866
+    },
+    "/home/conner/Documents/GitHub/Project-Judas/src/ContactPreparedGeometry.h": {
+      "sha256": "d8b19b2079fafe05a39325a9d093a0d1de5f956ac4c10df1c9810531a36441d9",
+      "bytes": 1061
+    },
+    "/home/conner/Documents/GitHub/Project-Judas/src/ContactGeometryInternal.h": {
+      "sha256": "f8717a473924708e43e27d274e2268486646a7e2d103f3ac0e3268bf31f4dd7b",
+      "bytes": 12721
+    },
+    "/home/conner/Documents/GitHub/Project-Judas/src/RigidBody.h": {
+      "sha256": "dd5ee61ec86e2141e4458c4a1e4bc2a426298e110635c4e86f41dff5a51142df",
+      "bytes": 5782
+    },
+    "/home/conner/Documents/GitHub/Project-Judas/src/../third_party/nlohmann/json.hpp": {
+      "sha256": "9bea4c8066ef4a1c206b2be5a36302f8926f7fdc6087af5d20b417d0cf103ea6",
+      "bytes": 919975
+    },
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/support-temporal-qualification/TemporalObserver.h": {
+      "sha256": "039f45ab66c63cae205a8d47ff22ee9e41257edd6d5d2012debc91eafdf1b530",
+      "bytes": 7015
+    },
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/support-temporal-qualification/FloorOracle.h": {
+      "sha256": "9967977f2e72eea13a521176e7de38a1d32d50f60b364134cf5565a2585c0d27",
+      "bytes": 2503
+    },
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/support-temporal-qualification/OracleControls.cpp": {
+      "sha256": "95a7454c23042cd228cc858454293b8aba9956b0ff76f0609a5a891b0e58af8c",
+      "bytes": 2877
+    }
+  },
+  "original_driver_sha256": "c20e4e0cf0ddd19771a3ee53245570c5dedb336347e2e3486d0df2bcee94c4f9",
+  "application_helper_objects": {
+    "CMakeFiles/judas_physics_stress_live_benchmark.dir/src/Application.cpp.o": "2537c9f4c5e43409ca1a46fdef29394a1b5fbd99fad6ce7895546357a1a312af",
+    "CMakeFiles/judas_physics_stress_live_benchmark.dir/src/RuntimeOptions.cpp.o": "f934c3914065e6e3d9d5a68b34c0dcc0632850f596891a24048b444ee8c84706",
+    "CMakeFiles/judas_physics_stress_live_benchmark.dir/src/RuntimeDiagnostics.cpp.o": "374f133acc4031764f94892e0d3d51759ce1d0217a015c4dc434608afd3a6767",
+    "CMakeFiles/judas_physics_stress_live_benchmark.dir/src/TestHarness.cpp.o": "9c085d9c6d03f399846c85cc504693f9ac711b19fcebc6b78f550d415dd2004f"
+  },
+  "finished_utc": "2026-10-19T12:55:04.372237+00:00"
+}

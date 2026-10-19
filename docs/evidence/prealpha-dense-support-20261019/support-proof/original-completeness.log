@@ -1,0 +1,5 @@
+rotation_about_normal moving=0 accepted=0 partitions=1 max_depth=0
+rotation_about_normal moving=1 accepted=0 partitions=1 max_depth=5.9604644775390625e-08
+over_allowance middle=0 accepted=0 partitions=0 max_depth=0.016666650772094727 end_depth=0.016666650772094727
+over_allowance middle=1 accepted=0 partitions=1 max_depth=0.0099016037199317619 end_depth=0
+support completeness checks=11 failures=0

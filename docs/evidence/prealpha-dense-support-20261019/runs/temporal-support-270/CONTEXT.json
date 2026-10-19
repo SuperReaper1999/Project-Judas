@@ -1,0 +1,14 @@
+{
+  "archive_sha256": "521f0b3ebd75478c84940622109ce6263a4375302742f67405da2170d6fe9d7e",
+  "binary_sha256": "7828efe5ea974801dd9e2d72eeebcfe8cc57d051b4b52ba20b18f39e851216c3",
+  "build_receipt_sha256": "ee795875adba932e615005d3ec9fe7fb81d6856e066d257aaa04d78143f293af",
+  "driver": "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/support-temporal-qualification/PhysicsStressLiveBenchmark.observer.cpp",
+  "driver_sha256": "c20e4e0cf0ddd19771a3ee53245570c5dedb336347e2e3486d0df2bcee94c4f9",
+  "fixture_sha256": "a2caf62a295243d301149202c8a0a5eedafff256d68de0e3cda988846b2e05bf",
+  "isolated_change": "support certificate subdivision completeness",
+  "mode": "exact",
+  "profile": 0,
+  "schema": "judas.dense.observer.run.v1",
+  "source_head": "8f6bd18b876158c131bee61fa0dc71625d912c30",
+  "timing_note": "Unchanged temporal observer runs outside measured physics; wall/FPS is not benchmark evidence."
+}

@@ -1,0 +1,19 @@
+CLIP_CASE eps strip .5->1.5 points=3 min_y=0 input_min_y=0
+PASS native clipped output remains nonempty and finite
+PASS native clipping retains convexity instead of extrapolating beyond incident segment
+PASS native clipped face-witness depth cannot exceed source support-plane depth
+CLIP_CASE eps strip reversed points=3 min_y=0 input_min_y=0
+PASS native clipped output remains nonempty and finite
+PASS native clipping retains convexity instead of extrapolating beyond incident segment
+PASS native clipped face-witness depth cannot exceed source support-plane depth
+CLIP_CASE near-eps strip has large false witness depth points=3 min_y=0 input_min_y=0
+PASS native clipped output remains nonempty and finite
+PASS native clipping retains convexity instead of extrapolating beyond incident segment
+PASS native clipped face-witness depth cannot exceed source support-plane depth
+PASS genuine plane crossing preserves exact original intersection point
+PASS genuine plane crossing preserves exact original intersection point
+PASS genuine plane crossing preserves exact original intersection point
+PASS genuine plane crossing preserves exact original intersection point
+PASS existing eps-inclusive retained vertices remain exact
+PASS wholly outside segment remains absent
+SUMMARY 15 checks 0 failures
