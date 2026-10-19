@@ -1,0 +1,73 @@
+{
+  "binary": "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-doc-cleanup-20261019/build-make/judas_hearthworld_application_tests",
+  "changedInputs": [],
+  "environment": {
+    "JUDAS_WORLD_STATE": "none",
+    "SDL_AUDIODRIVER": "dummy",
+    "XDG_DATA_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/hearthworld-game/attempt-04/user-data"
+  },
+  "head": "3c5119ca707f6f287cfd9e2213d1c62a9ae91602",
+  "inputsUnchanged": true,
+  "passed": true,
+  "project": "/home/conner/Documents/GitHub/Project-Judas/projects/hearthworld/hearthworld.judasproj",
+  "runs": [
+    {
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-doc-cleanup-20261019/build-make/judas_hearthworld_application_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/projects/hearthworld/hearthworld.judasproj",
+        "write",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/hearthworld-game/attempt-04/application"
+      ],
+      "durableSaveFiles": {
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/hearthworld-game/attempt-04/user-data/judas/games/30026fff6abc9ef36c4e0b59452b48164eeb42a268c8ddfcafe7f27fbbc53db4/Saves/Slots/hearthworld-review.save": "3a81719ae470db50e6c873463dd6a7cf6538a35f150db6647c36f9ece8ef4e17"
+      },
+      "exit": 0,
+      "mode": "write",
+      "profilerEnabled": false,
+      "wallSeconds": 6.286682003999886,
+      "workingDirectory": "/home/conner/Documents/GitHub/Project-Judas"
+    },
+    {
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-doc-cleanup-20261019/build-make/judas_hearthworld_application_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/projects/hearthworld/hearthworld.judasproj",
+        "read",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/hearthworld-game/attempt-04/application"
+      ],
+      "exit": 0,
+      "mode": "read",
+      "originalSaveBytesUnchanged": true,
+      "profilerEnabled": false,
+      "wallSeconds": 0.9159208310011309,
+      "workingDirectory": "/home/conner/Documents/GitHub/Project-Judas"
+    },
+    {
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-doc-cleanup-20261019/build-make/judas_hearthworld_application_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/projects/hearthworld/hearthworld.judasproj",
+        "controls",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/hearthworld-game/attempt-04/application"
+      ],
+      "exit": 0,
+      "mode": "controls",
+      "profilerEnabled": false,
+      "wallSeconds": 1.36695415199938,
+      "workingDirectory": "/home/conner/Documents/GitHub/Project-Judas"
+    },
+    {
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-doc-cleanup-20261019/build-make/judas_hearthworld_application_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/projects/hearthworld/hearthworld.judasproj",
+        "performance",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/hearthworld-game/attempt-04/application"
+      ],
+      "exit": 0,
+      "mode": "performance",
+      "profilerEnabled": true,
+      "wallSeconds": 2.920310253997741,
+      "workingDirectory": "/home/conner/Documents/GitHub/Project-Judas"
+    }
+  ],
+  "scope": "Ordinary Hearthworld gameplay and cold-process physical persistence",
+  "utc": "2026-10-19T15:30:24.278379+00:00"
+}

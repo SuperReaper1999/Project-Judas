@@ -1,0 +1,40 @@
+Shadow maps: on
+Graphics: 3.3.0 NVIDIA 580.178.04 / NVIDIA GeForce GTX 970/PCIe/SSE2
+Renderer fragment texture units: 32 (material path uses 12)
+Project: Hearthworld (/home/conner/Documents/GitHub/Project-Judas/projects/hearthworld/hearthworld.judasproj)
+Scene: Hearthworld / a little world worth keeping (/home/conner/Documents/GitHub/Project-Judas/projects/hearthworld/Scenes/home.judas)
+World origin (m): 0.000, 0.000, 0.000
+JS: Hearthworld: WASD move, mouse look, Space jump, Shift sprint; E collect; 1 gravity / 2 axe / 3 pickaxe / 4 shovel / 5 build; LMB use, RMB grab/drop or dismantle, Q recipe, R rotate; Tab pack, Esc pause; F5 save / F9 load.
+PASS welcome menu owns input before ordinary play starts
+PASS ordinary project starts with CharacterMotor and script-owned camera
+PASS ordinary Escape navigation closes the welcome menu and captures gameplay input
+PASS no legacy/native gameplay controller is used
+PASS capture real rendered game frame
+PASS request existing cold progress through ordinary save service: 
+PASS fresh-process cold restore completes: 
+PASS restore publishes a separate validated world
+PASS cold restore retains every dynamic physical entity
+PASS restored dynamic entity 4611686018427387910 exists
+FAIL restored actual pose and momentum match the saved endpoint for 4611686018427387910
+PASS restored collision and ordinary-joint ownership match for 4611686018427387910
+PASS restored dynamic entity 4611686018427387911 exists
+FAIL restored actual pose and momentum match the saved endpoint for 4611686018427387911
+PASS restored collision and ordinary-joint ownership match for 4611686018427387911
+PASS restored dynamic entity 4611686018427387912 exists
+FAIL restored actual pose and momentum match the saved endpoint for 4611686018427387912
+PASS restored collision and ordinary-joint ownership match for 4611686018427387912
+PASS restored dynamic entity 900 exists
+PASS restored actual pose and momentum match the saved endpoint for 900
+PASS restored collision and ordinary-joint ownership match for 900
+PASS restored dynamic entity 901 exists
+PASS restored actual pose and momentum match the saved endpoint for 901
+PASS restored collision and ordinary-joint ownership match for 901
+PASS restored dynamic entity 902 exists
+PASS restored actual pose and momentum match the saved endpoint for 902
+PASS restored collision and ordinary-joint ownership match for 902
+FAIL cold restore reinstates the actual motor endpoint and velocity
+PASS cold motor restoration publishes its actual classified collision/query capsule
+FAIL fixture beforeFrame: [json.exception.out_of_range.403] key 'inventory' not found
+PASS ordinary application shuts down cleanly
+PASS observer completed its requested workflow
+SUMMARY 32 checks 5 failures

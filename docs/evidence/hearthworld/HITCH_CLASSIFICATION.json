@@ -1,0 +1,166 @@
+{
+  "classification": "Cold-save replacement CPU work in the preceding outer frame, observed as the first restored frame interval; not a dense-physics or GPU spike",
+  "applicationCsvFrame": {
+    "frame": "34",
+    "phase": "80",
+    "frame_ms": "152.093",
+    "physics_ms": "0.337193",
+    "bodies": "124",
+    "dynamic_bodies": "6",
+    "terrain_revision": "1",
+    "terrain_busy": "0",
+    "terrain_prepare_ms": "27.8415",
+    "terrain_publish_ms": "0.035211"
+  },
+  "profilerFrameId": 34,
+  "profilerHasStartupOffset": true,
+  "mainThreadScopes": [
+    {
+      "name": "World build",
+      "milliseconds": 104.001758
+    },
+    {
+      "name": "Save private preparation",
+      "milliseconds": 34.943002
+    },
+    {
+      "name": "Save restoration",
+      "milliseconds": 34.127907
+    },
+    {
+      "name": "Play frame",
+      "milliseconds": 3.600846
+    },
+    {
+      "name": "World render submission",
+      "milliseconds": 2.171218
+    },
+    {
+      "name": "Main camera",
+      "milliseconds": 2.13286
+    },
+    {
+      "name": "World culling and opaque submission",
+      "milliseconds": 1.049735
+    },
+    {
+      "name": "Simulation systems",
+      "milliseconds": 1.015082
+    },
+    {
+      "name": "Fixed simulation step",
+      "milliseconds": 1.014886
+    },
+    {
+      "name": "Save activation",
+      "milliseconds": 1.013004
+    },
+    {
+      "name": "Shadow pass submission",
+      "milliseconds": 1.004718
+    },
+    {
+      "name": "World culling and opaque submission",
+      "milliseconds": 0.979846
+    },
+    {
+      "name": "Opaque instance submission",
+      "milliseconds": 0.819497
+    },
+    {
+      "name": "Save restore entities",
+      "milliseconds": 0.789351
+    },
+    {
+      "name": "Opaque instance submission",
+      "milliseconds": 0.676512
+    },
+    {
+      "name": "Character motors",
+      "milliseconds": 0.662761
+    },
+    {
+      "name": "Character motor",
+      "milliseconds": 0.657426
+    },
+    {
+      "name": "World destroy",
+      "milliseconds": 0.358751
+    },
+    {
+      "name": "Navigation update",
+      "milliseconds": 0.217931
+    },
+    {
+      "name": "Rigid physics",
+      "milliseconds": 0.17823
+    }
+  ],
+  "gpu": {
+    "available": true,
+    "status": "Asynchronous GL 3.3 timestamp pairs",
+    "passes": [
+      {
+        "token": 193,
+        "source_frame": 34,
+        "camera": 0,
+        "pass": "Main camera",
+        "pending": false,
+        "milliseconds": 1.6928
+      },
+      {
+        "token": 194,
+        "source_frame": 34,
+        "camera": 0,
+        "pass": "Shadow",
+        "pending": false,
+        "milliseconds": 0.177344
+      },
+      {
+        "token": 195,
+        "source_frame": 34,
+        "camera": 0,
+        "pass": "Opaque instances",
+        "pending": false,
+        "milliseconds": 0.163808
+      },
+      {
+        "token": 196,
+        "source_frame": 34,
+        "camera": 0,
+        "pass": "Opaque instances",
+        "pending": false,
+        "milliseconds": 1.417856
+      },
+      {
+        "token": 197,
+        "source_frame": 34,
+        "camera": 0,
+        "pass": "Display resolve",
+        "pending": false,
+        "milliseconds": 0.087616
+      },
+      {
+        "token": 198,
+        "source_frame": 34,
+        "camera": 0,
+        "pass": "Runtime UI",
+        "pending": false,
+        "milliseconds": 0.01808
+      }
+    ]
+  },
+  "all600Frames": {
+    "medianMs": 3.2057290077209473,
+    "p95Ms": 4.102482795715332,
+    "worstMs": 152.09263610839844
+  },
+  "excludingOnlyFirstColdTransition": {
+    "samples": 599,
+    "medianMs": 3.20502,
+    "p95Ms": 4.08724,
+    "worstMs": 10.5953
+  },
+  "rawOriginalWorstRetained": true,
+  "noEngineOrThresholdChange": true
+}

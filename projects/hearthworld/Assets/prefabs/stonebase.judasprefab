@@ -1,0 +1,120 @@
+{
+  "kind": "prefab",
+  "schema": 1,
+  "data": {
+    "settings": {
+      "name": "Reusable stonebase",
+      "world-origin": [
+        0,
+        0,
+        0
+      ],
+      "sun-direction": [
+        0.3,
+        0.8,
+        0.45
+      ],
+      "sun-color": [
+        1,
+        0.96,
+        0.86
+      ],
+      "ambient": [
+        0.31,
+        0.36,
+        0.4
+      ],
+      "fluid-scale": 1,
+      "linear-rendering": true,
+      "background-color": [
+        0.2,
+        0.36,
+        0.48
+      ],
+      "exposure": 1,
+      "fluid-update-rate-hz": 30,
+      "fluid-hydrostatic-drag-rate": 2,
+      "fidelity-policy": {
+        "mode": {
+          "symbol": "none"
+        }
+      },
+      "next-id": 10000
+    },
+    "objects": [
+      {
+        "id": 1,
+        "name": "Hearthworld stonebase",
+        "fields": {
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "body": {
+            "motion": {
+              "symbol": "dynamic"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            1.2,
+            0.25,
+            1.2
+          ],
+          "body.radius": 1.2,
+          "body.terrain": "",
+          "body.mass": 50,
+          "body.friction": 0.8,
+          "body.restitution": 0.02,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": true,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0,
+          "tags": 96,
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.mesh-asset": "bac88000d24430498e06610cf364ed38",
+          "render.texture-asset": "",
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,890 @@
+{
+  "tree_pine": {
+    "path": "Assets/models/tree_pine.glb",
+    "sha256": "b5bb340f0f84b94658ad0119d6c28fc5711f9461021a842ebb26e81f29ac3327",
+    "bounds": [
+      [
+        -2.0428189475675085,
+        0.0,
+        -2.0428189475675085
+      ],
+      [
+        2.0428189475675085,
+        6.7176412856262715,
+        2.0428189475675085
+      ]
+    ],
+    "stats": {
+      "vertices": 369,
+      "triangles": 400,
+      "groups": 1
+    },
+    "source": "Claude Prompt3D trained parser and procedural tree generator"
+  },
+  "tree_pine_trunk": {
+    "path": "Assets/models/tree_pine_trunk.glb",
+    "sha256": "7c36598e5a9d04366d04cf454f4d96d765f7dc979a88266e166be4f6537971e7",
+    "bounds": [
+      [
+        -0.18682256616062382,
+        0.0,
+        -0.17767881893804374
+      ],
+      [
+        0.18682256616062382,
+        5.916047928419754,
+        0.17767881893804374
+      ]
+    ],
+    "stats": {
+      "vertices": 44,
+      "triangles": 40,
+      "groups": 1
+    }
+  },
+  "tree_pine_canopy": {
+    "path": "Assets/models/tree_pine_canopy.glb",
+    "sha256": "b9a90a01d99ff5c88456c5e947b90db124e1dd4c5bb072d5733da1b79d1fcad8",
+    "bounds": [
+      [
+        -2.0428189475675085,
+        1.120935396963743,
+        -2.0428189475675085
+      ],
+      [
+        2.0428189475675085,
+        6.7176412856262715,
+        2.0428189475675085
+      ]
+    ],
+    "stats": {
+      "vertices": 325,
+      "triangles": 360,
+      "groups": 1
+    }
+  },
+  "tree_birch": {
+    "path": "Assets/models/tree_birch.glb",
+    "sha256": "3b45f7603b0bc7fcb419c1b6df11251b88389bc54dc020db20e1c5c27c390855",
+    "bounds": [
+      [
+        -2.164711607542884,
+        -0.038347533336363704,
+        -2.445308413496101
+      ],
+      [
+        2.580035416200041,
+        6.8722440173457615,
+        2.120026572174143
+      ]
+    ],
+    "stats": {
+      "vertices": 5539,
+      "triangles": 6856,
+      "groups": 1
+    },
+    "source": "Claude Prompt3D trained parser and procedural tree generator"
+  },
+  "tree_birch_trunk": {
+    "path": "Assets/models/tree_birch_trunk.glb",
+    "sha256": "4a23b6cecdbd79b158af966bf0137216faddfc536ff62c8e4e76cf5cc891b866",
+    "bounds": [
+      [
+        -1.6427548267225092,
+        -0.038347533336363704,
+        -1.8326209285176447
+      ],
+      [
+        1.9665574698858743,
+        6.21590019941105,
+        1.4748466144104122
+      ]
+    ],
+    "stats": {
+      "vertices": 3264,
+      "triangles": 3256,
+      "groups": 1
+    }
+  },
+  "tree_birch_canopy": {
+    "path": "Assets/models/tree_birch_canopy.glb",
+    "sha256": "37f55e420336b7a226d53369cdbd4d6759405d474a79160fefea88419617b99b",
+    "bounds": [
+      [
+        -2.164711607542884,
+        5.164238616374964,
+        -2.445308413496101
+      ],
+      [
+        2.580035416200041,
+        6.8722440173457615,
+        2.120026572174143
+      ]
+    ],
+    "stats": {
+      "vertices": 2275,
+      "triangles": 3600,
+      "groups": 1
+    }
+  },
+  "home": {
+    "path": "Assets/models/home.glb",
+    "sha256": "acfc015025fc4d434e92e318a0eb086d515dbddae319cbb90d3349781fbab6ce",
+    "bounds": [
+      [
+        -4.377195587876499,
+        -0.069999999999,
+        -3.399999999999
+      ],
+      [
+        4.377195587876499,
+        4.570827199688194,
+        4.0999999999989996
+      ]
+    ],
+    "stats": {
+      "vertices": 8292,
+      "triangles": 9304,
+      "groups": 1
+    },
+    "colliders": [
+      {
+        "position": [
+          0,
+          0.04,
+          0
+        ],
+        "halfExtents": [
+          4.0,
+          0.11,
+          3.0
+        ]
+      },
+      {
+        "position": [
+          0,
+          1.575,
+          -2.9
+        ],
+        "halfExtents": [
+          4.0,
+          1.425,
+          0.1
+        ]
+      },
+      {
+        "position": [
+          -2.4,
+          1.575,
+          2.9
+        ],
+        "halfExtents": [
+          1.6,
+          1.425,
+          0.1
+        ]
+      },
+      {
+        "position": [
+          2.4,
+          1.575,
+          2.9
+        ],
+        "halfExtents": [
+          1.6,
+          1.425,
+          0.1
+        ]
+      },
+      {
+        "position": [
+          0,
+          2.75,
+          2.9
+        ],
+        "halfExtents": [
+          0.8,
+          0.25,
+          0.1
+        ]
+      },
+      {
+        "position": [
+          -3.9,
+          1.575,
+          -1.85
+        ],
+        "halfExtents": [
+          0.1,
+          1.425,
+          1.05
+        ]
+      },
+      {
+        "position": [
+          -3.9,
+          1.575,
+          1.85
+        ],
+        "halfExtents": [
+          0.1,
+          1.425,
+          1.05
+        ]
+      },
+      {
+        "position": [
+          -3.9,
+          0.675,
+          0
+        ],
+        "halfExtents": [
+          0.1,
+          0.525,
+          0.8
+        ]
+      },
+      {
+        "position": [
+          -3.9,
+          2.625,
+          0
+        ],
+        "halfExtents": [
+          0.1,
+          0.375,
+          0.8
+        ]
+      },
+      {
+        "position": [
+          3.9,
+          1.575,
+          -1.85
+        ],
+        "halfExtents": [
+          0.1,
+          1.425,
+          1.05
+        ]
+      },
+      {
+        "position": [
+          3.9,
+          1.575,
+          1.85
+        ],
+        "halfExtents": [
+          0.1,
+          1.425,
+          1.05
+        ]
+      },
+      {
+        "position": [
+          3.9,
+          0.675,
+          0
+        ],
+        "halfExtents": [
+          0.1,
+          0.525,
+          0.8
+        ]
+      },
+      {
+        "position": [
+          3.9,
+          2.625,
+          0
+        ],
+        "halfExtents": [
+          0.1,
+          0.375,
+          0.8
+        ]
+      },
+      {
+        "position": [
+          0,
+          0.12,
+          3.55
+        ],
+        "halfExtents": [
+          1.8,
+          0.1,
+          0.55
+        ]
+      }
+    ],
+    "roofColliders": [
+      {
+        "position": [
+          -2.175,
+          3.725,
+          0
+        ],
+        "halfExtents": [
+          2.292651303622075,
+          0.1,
+          3.35
+        ],
+        "rotationZRadians": 0.3217505543966422
+      },
+      {
+        "position": [
+          2.175,
+          3.725,
+          0
+        ],
+        "halfExtents": [
+          2.292651303622075,
+          0.1,
+          3.35
+        ],
+        "rotationZRadians": -0.3217505543966422
+      }
+    ],
+    "doorway": {
+      "frontZ": 3,
+      "width": 1.6,
+      "height": 2.5
+    },
+    "source": "Original Hearthworld authored geometry; matched box collision specification"
+  },
+  "axe": {
+    "path": "Assets/models/axe.glb",
+    "sha256": "1964dba73c3da7d0c9a0e024960a88dc38a2818001af212144b730f0e361b222",
+    "bounds": [
+      [
+        -0.134999999999,
+        -0.25,
+        -0.05999999999899999
+      ],
+      [
+        0.42,
+        1.05,
+        0.05999999999899999
+      ]
+    ],
+    "stats": {
+      "vertices": 472,
+      "triangles": 440,
+      "groups": 1
+    },
+    "source": "Original Hearthworld procedural tool; grip pivot at origin"
+  },
+  "shovel": {
+    "path": "Assets/models/shovel.glb",
+    "sha256": "7a6622e0e247e20654b07ecb71a4a03cf435989ce07d39e0ce3aee1b5846e3e8",
+    "bounds": [
+      [
+        -0.18,
+        -0.25,
+        -0.037091204135510994
+      ],
+      [
+        0.18,
+        1.47,
+        0.074999999999
+      ]
+    ],
+    "stats": {
+      "vertices": 478,
+      "triangles": 444,
+      "groups": 1
+    },
+    "source": "Original Hearthworld procedural tool; grip pivot at origin"
+  },
+  "pickaxe": {
+    "path": "Assets/models/pickaxe.glb",
+    "sha256": "f71e23fe426b674e07d1c44ef83c7b3fb3ea5e2908fee3f159d889d711f65c18",
+    "bounds": [
+      [
+        -0.45297112541083284,
+        -0.25,
+        -0.06181867355918499
+      ],
+      [
+        0.42269069117598523,
+        1.2412132242536644,
+        0.06181867355918499
+      ]
+    ],
+    "stats": {
+      "vertices": 536,
+      "triangles": 508,
+      "groups": 1
+    },
+    "source": "Original Hearthworld procedural tool; grip pivot at origin"
+  },
+  "fence": {
+    "path": "Assets/models/fence.glb",
+    "sha256": "bf98bb8ec3e6e8969d7866f5b946bb90def8287a8277f703c58063c799f9f265",
+    "bounds": [
+      [
+        -1.199999999999,
+        -0.6749999999990001,
+        -0.099999999999
+      ],
+      [
+        1.199999999999,
+        0.795,
+        0.099999999999
+      ]
+    ],
+    "stats": {
+      "vertices": 1086,
+      "triangles": 1212,
+      "groups": 1
+    },
+    "collisionHalfExtents": [
+      1.2,
+      0.75,
+      0.12
+    ]
+  },
+  "wall": {
+    "path": "Assets/models/wall.glb",
+    "sha256": "a4df68aefa5f3248d2089ec94a66f21e5cf296ee3dd7c4dd0550a840ee1fc756",
+    "bounds": [
+      [
+        -1.204999999999,
+        -1.249999999999,
+        -0.159999999999
+      ],
+      [
+        1.204999999999,
+        1.249999999999,
+        0.069999999999
+      ]
+    ],
+    "stats": {
+      "vertices": 1056,
+      "triangles": 1188,
+      "groups": 1
+    },
+    "collisionHalfExtents": [
+      1.2,
+      1.25,
+      0.15
+    ]
+  },
+  "floor": {
+    "path": "Assets/models/floor.glb",
+    "sha256": "7aa52b817f21bf42f5538761f8195bd4668e9c5de583672801062a2640403cdd",
+    "bounds": [
+      [
+        -1.182499999999,
+        -0.079999999999,
+        -1.1999999999989999
+      ],
+      [
+        1.182499999999,
+        0.079999999999,
+        1.1999999999989999
+      ]
+    ],
+    "stats": {
+      "vertices": 768,
+      "triangles": 864,
+      "groups": 1
+    },
+    "collisionHalfExtents": [
+      1.2,
+      0.08,
+      1.2
+    ]
+  },
+  "stone_wall": {
+    "path": "Assets/models/stone_wall.glb",
+    "sha256": "81d7c322de618e79fd10040960c4f1a12cd4bec5f5fa3b35c0d03c8a63a44660",
+    "bounds": [
+      [
+        -1.189999999999,
+        -1.2399999999990001,
+        -0.174999999999
+      ],
+      [
+        1.189999999999,
+        1.2399999999990001,
+        0.174999999999
+      ]
+    ],
+    "stats": {
+      "vertices": 2880,
+      "triangles": 3240,
+      "groups": 1
+    },
+    "collisionHalfExtents": [
+      1.2,
+      1.25,
+      0.18
+    ]
+  },
+  "pillar": {
+    "path": "Assets/models/pillar.glb",
+    "sha256": "36eb748a1bb3e8be4cc84a7c9ffc691345e5e9505a31466e638e050102cb49d8",
+    "bounds": [
+      [
+        -0.139999999999,
+        -1.2499999999990001,
+        -0.139999999999
+      ],
+      [
+        0.139999999999,
+        1.2499999999990001,
+        0.139999999999
+      ]
+    ],
+    "stats": {
+      "vertices": 288,
+      "triangles": 324,
+      "groups": 1
+    },
+    "collisionHalfExtents": [
+      0.14,
+      1.25,
+      0.14
+    ]
+  },
+  "stonebase": {
+    "path": "Assets/models/stonebase.glb",
+    "sha256": "348312e0fdb47947967fdaad7d81084a1b15bd7ad8bf2cc470bbacd13c8b0e07",
+    "bounds": [
+      [
+        -1.1899999999989999,
+        -0.19999999999900003,
+        -1.1899999999989999
+      ],
+      [
+        1.1899999999989999,
+        0.19999999999900003,
+        1.1899999999989999
+      ]
+    ],
+    "stats": {
+      "vertices": 384,
+      "triangles": 432,
+      "groups": 1
+    },
+    "collisionHalfExtents": [
+      1.2,
+      0.2,
+      1.2
+    ]
+  },
+  "gravity_gun": {
+    "path": "Assets/models/gravity_gun.glb",
+    "sha256": "b752379d40e979d9de8242b44c86556601cc33dd23c8175932edc6cfc9c95d7f",
+    "bounds": [
+      [
+        -0.2543063578063314,
+        -0.22310100652660952,
+        -0.074999999999
+      ],
+      [
+        0.2543063578063314,
+        0.3739669393598415,
+        0.652342399519561
+      ]
+    ],
+    "stats": {
+      "vertices": 618,
+      "triangles": 664,
+      "groups": 1
+    },
+    "source": "Original Hearthworld three-prong field manipulator; grip origin, forward +Z"
+  },
+  "hammer": {
+    "path": "Assets/models/hammer.glb",
+    "sha256": "8fbfc344ff0cb33aafc9604ba8340f54e6055497500f8f509ba271edd6073aee",
+    "bounds": [
+      [
+        -0.3193133680013952,
+        -0.23,
+        -0.10499999999899999
+      ],
+      [
+        0.329999999999,
+        0.734999999999,
+        0.10499999999899999
+      ]
+    ],
+    "stats": {
+      "vertices": 632,
+      "triangles": 616,
+      "groups": 1
+    },
+    "source": "Original Hearthworld claw hammer; grip origin, head +Y"
+  },
+  "woodsign": {
+    "path": "Assets/models/woodsign.glb",
+    "sha256": "55135eed3eec98e7479373f6f7ded9b78b14a2a836ae225b397d857c094482e4",
+    "bounds": [
+      [
+        -1.469999999999,
+        9.999778782798785e-13,
+        -0.07999999999900001
+      ],
+      [
+        1.469999999999,
+        1.7999999999990002,
+        0.174999999999
+      ]
+    ],
+    "stats": {
+      "vertices": 4368,
+      "triangles": 2484,
+      "groups": 1
+    },
+    "collisionHalfExtents": [
+      1.47,
+      0.9,
+      0.16
+    ],
+    "source": "Original Hearthworld sign; actual raised mesh lettering from inspected Prompt3D lettering primitive"
+  },
+  "log": {
+    "path": "Assets/models/log.glb",
+    "sha256": "e403553ebd1854b3c5377ad9af8dcb7c27884b1294f929fb2af8d9f171b3e2a9",
+    "bounds": [
+      [
+        -0.22,
+        -0.025,
+        -0.2092324335849338
+      ],
+      [
+        0.22,
+        2.225,
+        0.2092324335849338
+      ]
+    ],
+    "stats": {
+      "vertices": 132,
+      "triangles": 120,
+      "groups": 1
+    },
+    "source": "Original Hearthworld log, axis +Y from ground origin"
+  },
+  "rock_cluster": {
+    "path": "Assets/models/rock_cluster.glb",
+    "sha256": "d2eb7bc6d69621f7f9b624b5738422cd57b565c0cb5f9f5ed24e652edfb0f54c",
+    "bounds": [
+      [
+        -0.7155441641807556,
+        0.0,
+        -0.41244804859161377
+      ],
+      [
+        0.6546670198440552,
+        0.5357999801635742,
+        0.5121806859970093
+      ]
+    ],
+    "stats": {
+      "triangles": 208
+    },
+    "source": "Original Judas Low Poly Starter; verbatim reused GLB"
+  },
+  "wood_crate": {
+    "path": "Assets/models/wood_crate.glb",
+    "sha256": "b3b06e04b04d694e71c3c9f2274dd1500bb701d6f7c144dda61885efac059539",
+    "bounds": [
+      [
+        -0.5275000333786011,
+        0.0,
+        -0.5350000262260437
+      ],
+      [
+        0.5275000333786011,
+        1.0,
+        0.5350000262260437
+      ]
+    ],
+    "stats": {
+      "triangles": 688
+    },
+    "source": "Original Judas Low Poly Starter; verbatim reused GLB"
+  },
+  "barrel": {
+    "path": "Assets/models/barrel.glb",
+    "sha256": "0760725b49ef15b8dfaa6af4ec1a10602e178f725f26cd86f0918a5af816d5c8",
+    "bounds": [
+      [
+        -0.37299999594688416,
+        0.0,
+        -0.37299999594688416
+      ],
+      [
+        0.37299999594688416,
+        1.0885000228881836,
+        0.37299999594688416
+      ]
+    ],
+    "stats": {
+      "triangles": 524
+    },
+    "source": "Original Judas Low Poly Starter; verbatim reused GLB"
+  },
+  "bed": {
+    "path": "Assets/models/bed.glb",
+    "sha256": "2f475c54c697a28e3f2542e1677bb4523cfdb86eec8ccf671a10c26efc6050ef",
+    "bounds": [
+      [
+        -0.6100000143051147,
+        0.0,
+        -1.0999999046325684
+      ],
+      [
+        0.6100000143051147,
+        0.9850000143051147,
+        1.0999999046325684
+      ]
+    ],
+    "stats": {
+      "triangles": 868
+    },
+    "source": "Original Judas Low Poly Starter; verbatim reused GLB"
+  },
+  "bench": {
+    "path": "Assets/models/bench.glb",
+    "sha256": "5b8892253e9cbc57c6a2b430d9070fbb76aaa2c2b522fd3f6b8e04528455a962",
+    "bounds": [
+      [
+        -0.800000011920929,
+        0.0,
+        -0.34224510192871094
+      ],
+      [
+        0.800000011920929,
+        1.0290623903274536,
+        0.2879999876022339
+      ]
+    ],
+    "stats": {
+      "triangles": 312
+    },
+    "source": "Original Judas Low Poly Starter; verbatim reused GLB"
+  },
+  "tool_rack": {
+    "path": "Assets/models/tool_rack.glb",
+    "sha256": "bce0710bd7bdda2a12e41e6a65c7da7c9a45a61ffa84ec5da95dbd9209e51405",
+    "bounds": [
+      [
+        -0.6399999856948853,
+        0.0,
+        -0.38499999046325684
+      ],
+      [
+        0.6399999856948853,
+        1.6100000143051147,
+        0.24500000476837158
+      ]
+    ],
+    "stats": {
+      "triangles": 992
+    },
+    "source": "Original Judas Low Poly Starter; verbatim reused GLB"
+  },
+  "well": {
+    "path": "Assets/models/well.glb",
+    "sha256": "8b8039c6fff796c43a9b00913e6e4e8f898b09721b67503bcc590d1a18cd1752",
+    "bounds": [
+      [
+        -1.1399999856948853,
+        0.0,
+        -0.800000011920929
+      ],
+      [
+        1.1400001049041748,
+        2.8571481704711914,
+        0.800000011920929
+      ]
+    ],
+    "stats": {
+      "triangles": 1296
+    },
+    "source": "Original Judas Low Poly Starter; verbatim reused GLB"
+  },
+  "campfire": {
+    "path": "Assets/models/campfire.glb",
+    "sha256": "3e34b462188204b50e0bd0ebe9064611e7490dfab27627c53defffa67b90030c",
+    "bounds": [
+      [
+        -0.7079735398292542,
+        0.0,
+        -0.6810545921325684
+      ],
+      [
+        0.7079735398292542,
+        0.9100000262260437,
+        0.6810545921325684
+      ]
+    ],
+    "stats": {
+      "triangles": 728
+    },
+    "source": "Original Judas Low Poly Starter; verbatim reused GLB"
+  },
+  "chopping_stump": {
+    "path": "Assets/models/chopping_stump.glb",
+    "sha256": "9686ce85e20bdc7e591d1d419bee86d204a4788475737180edc4a5c058a65a97",
+    "bounds": [
+      [
+        -0.332835853099823,
+        0.0,
+        -0.32593250274658203
+      ],
+      [
+        0.3149999976158142,
+        0.9180247187614441,
+        0.3331657946109772
+      ]
+    ],
+    "stats": {
+      "triangles": 620
+    },
+    "source": "Original Judas Low Poly Starter; verbatim reused GLB"
+  },
+  "hanging_lantern": {
+    "path": "Assets/models/hanging_lantern.glb",
+    "sha256": "74034b5df40bec2c8ab014aa46ef77b086b1d006661b3614c5a9f29862d7f47f",
+    "bounds": [
+      [
+        -0.1550000011920929,
+        -0.7200000286102295,
+        -0.1550000011920929
+      ],
+      [
+        0.1550000011920929,
+        -0.0007234037038870156,
+        0.1550000011920929
+      ]
+    ],
+    "stats": {
+      "triangles": 520
+    },
+    "source": "Original Judas Low Poly Starter; verbatim reused GLB"
+  },
+  "character_adventurer": {
+    "path": "Assets/models/character_adventurer.glb",
+    "sha256": "efdc1ed2f7986cc183b974d9c05574dd67993f6751584a6e3f90ee74cdedaef3",
+    "bounds": [
+      [
+        -0.5401376485824585,
+        0.01250004768371582,
+        -0.14000000059604645
+      ],
+      [
+        0.5401376485824585,
+        1.875,
+        0.22500000894069672
+      ]
+    ],
+    "stats": {
+      "triangles": 1196
+    },
+    "source": "Original Judas Low Poly Starter; verbatim reused GLB"
+  }
+}

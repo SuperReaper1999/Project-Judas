@@ -1,0 +1,271 @@
+{
+  "character": {
+    "orientation": [
+      0.9997082948684692,
+      0.008221362717449665,
+      0.00018687883857637644,
+      0.02271047793328762
+    ],
+    "position": [
+      -5.449156761169434,
+      119.87354278564453,
+      1.9738026857376099
+    ],
+    "velocity": [
+      0.00790862925350666,
+      -0.16329382359981537,
+      -0.0024047414772212505
+    ]
+  },
+  "contentIdentityReadyAtRequest": false,
+  "digRay": {
+    "direction": [
+      0.0,
+      -0.4581570625305176,
+      -0.8888713121414185
+    ],
+    "distance": 5.213098049163818,
+    "origin": [
+      0.0,
+      121.57576751708984,
+      3.140730381011963
+    ]
+  },
+  "physical": {
+    "4611686018427387910": {
+      "angularVelocity": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "enabled": true,
+      "joint": true,
+      "jointEnabled": true,
+      "position": [
+        4.0034050941467285,
+        120.03617095947266,
+        0.07184764742851257
+      ],
+      "rotation": [
+        0.9998610019683838,
+        0.0002991501532960683,
+        -3.7674808476932664e-13,
+        -0.01666887477040291
+      ],
+      "velocity": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "4611686018427387911": {
+      "angularVelocity": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "enabled": true,
+      "joint": true,
+      "jointEnabled": true,
+      "position": [
+        4.048544883728027,
+        121.39036560058594,
+        0.15998664498329163
+      ],
+      "rotation": [
+        0.999860942363739,
+        0.0006587007082998753,
+        -3.047250765522008e-13,
+        -0.016668763011693954
+      ],
+      "velocity": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "4611686018427387912": {
+      "angularVelocity": [
+        0.14480428397655487,
+        -0.20763088762760162,
+        0.04523417726159096
+      ],
+      "enabled": true,
+      "joint": false,
+      "jointEnabled": false,
+      "position": [
+        -4.677515506744385,
+        119.7734375,
+        -0.22672654688358307
+      ],
+      "rotation": [
+        0.7993270754814148,
+        -0.28350579738616943,
+        -0.16623368859291077,
+        0.5030576586723328
+      ],
+      "velocity": [
+        -0.22638675570487976,
+        -0.12378474324941635,
+        0.15328913927078247
+      ]
+    },
+    "900": {
+      "angularVelocity": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "enabled": true,
+      "joint": false,
+      "jointEnabled": false,
+      "position": [
+        -2.55588960647583,
+        117.49121856689453,
+        26.6450138092041
+      ],
+      "rotation": [
+        -0.5742694735527039,
+        -0.061379414051771164,
+        -0.8097972869873047,
+        -0.1033228412270546
+      ],
+      "velocity": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "901": {
+      "angularVelocity": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "enabled": true,
+      "joint": false,
+      "jointEnabled": false,
+      "position": [
+        -3.0165257453918457,
+        116.88317108154297,
+        29.11515235900879
+      ],
+      "rotation": [
+        0.9930079579353333,
+        0.11715501546859741,
+        -0.0004904841771349311,
+        0.014484426006674767
+      ],
+      "velocity": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "902": {
+      "angularVelocity": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "enabled": true,
+      "joint": false,
+      "jointEnabled": false,
+      "position": [
+        5.524982929229736,
+        117.76518249511719,
+        25.11107635498047
+      ],
+      "rotation": [
+        0.9943476319313049,
+        0.10358867794275284,
+        5.2205192332621664e-05,
+        -0.023284154012799263
+      ],
+      "velocity": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    }
+  },
+  "requestFrame": 955,
+  "state": {
+    "actionCount": 39,
+    "buildRotation": 0,
+    "built": [
+      {
+        "contact": {
+          "x": 3.999905586242676,
+          "y": 119.93124389648438,
+          "z": 0.07178483158349991
+        },
+        "kind": "floor",
+        "reference": "entity:4611686018427387910",
+        "support": "entity:200"
+      },
+      {
+        "contact": {
+          "x": 4.006045818328857,
+          "y": 120.1160888671875,
+          "z": 0.15830719470977783
+        },
+        "kind": "wall",
+        "reference": "entity:4611686018427387911",
+        "support": "entity:4611686018427387910"
+      },
+      {
+        "contact": {
+          "x": -3.9999120235443115,
+          "y": 119.93118286132813,
+          "z": 0.07370585948228836
+        },
+        "kind": "stonebase",
+        "reference": "entity:4611686018427387912",
+        "support": "entity:200"
+      }
+    ],
+    "equipped": "shovel",
+    "harvest": {
+      "500": {
+        "felled": true,
+        "hits": 3,
+        "processHits": 2,
+        "processed": true
+      },
+      "700": {
+        "felled": false,
+        "hits": 6,
+        "processed": true
+      }
+    },
+    "heldRef": null,
+    "inventory": {
+      "stone": 0,
+      "wood": 1
+    },
+    "lastAction": "Excavation removed a foundation: the connected structure is now free to fall.",
+    "owned": {
+      "axe": true,
+      "pickaxe": true,
+      "shovel": true
+    },
+    "pitch": -0.5438531041145325,
+    "schema": 1,
+    "selectedBuild": "stonebase",
+    "stats": {
+      "dug": 2,
+      "grabs": 1,
+      "launched": 1,
+      "placed": 3,
+      "stoneMined": 6,
+      "stoneSpent": 6,
+      "treesFelled": 1,
+      "treesProcessed": 1,
+      "woodCollected": 9,
+      "woodSpent": 8
+    },
+    "third": false,
+    "yaw": 0
+  }
+}

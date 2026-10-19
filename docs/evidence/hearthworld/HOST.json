@@ -1,0 +1,10 @@
+{
+  "utc": "2026-10-19T15:34:18.232175+00:00",
+  "os": "Linux-7.0.0-38-generic-x86_64-with-glibc2.43",
+  "cpu": "Intel Core i7-4790 CPU @ 3.60GHz (4 cores / 8 threads)",
+  "gpu": "NVIDIA GeForce GTX 970 (4 GB), driver 580.178.04",
+  "ram": "16 GiB installed",
+  "build": "GNU 15.2.0 Release, Experimental",
+  "surface": "native X11 / NVIDIA OpenGL 3.3",
+  "acceptance": "automated Linux only; human pending; Windows/Android not rerun"
+}

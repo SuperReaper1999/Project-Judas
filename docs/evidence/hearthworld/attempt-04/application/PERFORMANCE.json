@@ -1,0 +1,24 @@
+{
+  "bodies": 124,
+  "fixedTimestep": 0.016666666666666666,
+  "frame": {
+    "medianMs": 3.2057290077209473,
+    "p95Ms": 4.102482795715332,
+    "worstMs": 152.09263610839844
+  },
+  "frames": 600,
+  "note": "Controlled 60-Hz application clock; measured frame cost is not a displayed FPS claim",
+  "physics": {
+    "medianMs": 0.030922,
+    "p95Ms": 0.446158,
+    "worstMs": 0.74243
+  },
+  "processResidentBytes": 233406464,
+  "profilerEnabled": true,
+  "script": {
+    "medianMs": 0.41738299999999995,
+    "p95Ms": 0.557532,
+    "worstMs": 2.36869
+  },
+  "scriptProfileSamples": 600
+}

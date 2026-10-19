@@ -1,0 +1,61 @@
+{
+  "source": "Original deterministic procedural sound design for Hearthworld; no recordings or external samples",
+  "sounds": {
+    "chop": {
+      "id": "f1030000000000000000000000000001",
+      "path": "Assets/audio/chop.wav",
+      "sha256": "987aaa991145a702e5d61590f1053ee010634f76b74b8d8e60016956ff81ae89",
+      "sampleRate": 22050,
+      "channels": 1,
+      "frames": 4851
+    },
+    "dig": {
+      "id": "f1030000000000000000000000000002",
+      "path": "Assets/audio/dig.wav",
+      "sha256": "9c7ccebb704e3a4c043dd1357c3e56eac690ff2860bb22769b63aa3520e3d997",
+      "sampleRate": 22050,
+      "channels": 1,
+      "frames": 5512
+    },
+    "build": {
+      "id": "f1030000000000000000000000000003",
+      "path": "Assets/audio/build.wav",
+      "sha256": "d62feee12e0c823cea325e66b87f1480ac189fd346224645b1cb378a9244d2ab",
+      "sampleRate": 22050,
+      "channels": 1,
+      "frames": 4630
+    },
+    "grab": {
+      "id": "f1030000000000000000000000000004",
+      "path": "Assets/audio/grab.wav",
+      "sha256": "47f13d24d27da315b64598bfd9644b4e74144c45e3553139c72fbd2c6cbd6951",
+      "sampleRate": 22050,
+      "channels": 1,
+      "frames": 5071
+    },
+    "launch": {
+      "id": "f1030000000000000000000000000005",
+      "path": "Assets/audio/launch.wav",
+      "sha256": "4c123a813666e6f0c8463ec063b7a894c10c0e3e3eb1115dad757ee450c1c814",
+      "sampleRate": 22050,
+      "channels": 1,
+      "frames": 6174
+    },
+    "pickup": {
+      "id": "f1030000000000000000000000000006",
+      "path": "Assets/audio/pickup.wav",
+      "sha256": "e2fcc37f0da63950365003e9299783b61dc0a8c7c337cd30b3d40c2b74ed19fe",
+      "sampleRate": 22050,
+      "channels": 1,
+      "frames": 5733
+    },
+    "stone": {
+      "id": "f1030000000000000000000000000007",
+      "path": "Assets/audio/stone.wav",
+      "sha256": "a3a97aee7cca2fd2e21df6a61d3bfdbe5ec87c965b5bfa00030a8a38bd3c0a20",
+      "sampleRate": 22050,
+      "channels": 1,
+      "frames": 4189
+    }
+  }
+}

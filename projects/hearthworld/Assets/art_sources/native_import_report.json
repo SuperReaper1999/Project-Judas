@@ -1,0 +1,316 @@
+{
+  "binary": "build/judas_model_import_cli",
+  "binarySha256": "bf6ae1d6ee39a8b95559ac079825c0872e04d35a0d1041c2eae3c38a7698c628",
+  "source": "Native Judas model-import inspection of exact GLB bytes; not a renderer/gameplay acceptance test",
+  "models": [
+    {
+      "model": "axe.glb",
+      "sha256": "1964dba73c3da7d0c9a0e024960a88dc38a2818001af212144b730f0e361b222",
+      "exit": 0,
+      "triangles": 440,
+      "parts": 4,
+      "clips": [],
+      "error": ""
+    },
+    {
+      "model": "barrel.glb",
+      "sha256": "0760725b49ef15b8dfaa6af4ec1a10602e178f725f26cd86f0918a5af816d5c8",
+      "exit": 0,
+      "triangles": 524,
+      "parts": 8,
+      "clips": [],
+      "error": ""
+    },
+    {
+      "model": "bed.glb",
+      "sha256": "2f475c54c697a28e3f2542e1677bb4523cfdb86eec8ccf671a10c26efc6050ef",
+      "exit": 0,
+      "triangles": 868,
+      "parts": 23,
+      "clips": [],
+      "error": ""
+    },
+    {
+      "model": "bench.glb",
+      "sha256": "5b8892253e9cbc57c6a2b430d9070fbb76aaa2c2b522fd3f6b8e04528455a962",
+      "exit": 0,
+      "triangles": 312,
+      "parts": 26,
+      "clips": [],
+      "error": ""
+    },
+    {
+      "model": "campfire.glb",
+      "sha256": "3e34b462188204b50e0bd0ebe9064611e7490dfab27627c53defffa67b90030c",
+      "exit": 0,
+      "triangles": 728,
+      "parts": 19,
+      "clips": [],
+      "error": ""
+    },
+    {
+      "model": "character_adventurer.glb",
+      "sha256": "efdc1ed2f7986cc183b974d9c05574dd67993f6751584a6e3f90ee74cdedaef3",
+      "exit": 0,
+      "triangles": 1196,
+      "parts": 8,
+      "clips": [
+        {
+          "duration": 2.0,
+          "name": "Idle",
+          "rootMotion": false
+        },
+        {
+          "duration": 1.0,
+          "name": "Jump",
+          "rootMotion": false
+        },
+        {
+          "duration": 0.800000011920929,
+          "name": "Run",
+          "rootMotion": false
+        },
+        {
+          "duration": 1.0,
+          "name": "Walk",
+          "rootMotion": false
+        }
+      ],
+      "error": ""
+    },
+    {
+      "model": "chopping_stump.glb",
+      "sha256": "9686ce85e20bdc7e591d1d419bee86d204a4788475737180edc4a5c058a65a97",
+      "exit": 0,
+      "triangles": 620,
+      "parts": 14,
+      "clips": [],
+      "error": ""
+    },
+    {
+      "model": "fence.glb",
+      "sha256": "bf98bb8ec3e6e8969d7866f5b946bb90def8287a8277f703c58063c799f9f265",
+      "exit": 0,
+      "triangles": 1212,
+      "parts": 3,
+      "clips": [],
+      "error": ""
+    },
+    {
+      "model": "floor.glb",
+      "sha256": "7aa52b817f21bf42f5538761f8195bd4668e9c5de583672801062a2640403cdd",
+      "exit": 0,
+      "triangles": 864,
+      "parts": 1,
+      "clips": [],
+      "error": ""
+    },
+    {
+      "model": "gravity_gun.glb",
+      "sha256": "b752379d40e979d9de8242b44c86556601cc33dd23c8175932edc6cfc9c95d7f",
+      "exit": 0,
+      "triangles": 664,
+      "parts": 5,
+      "clips": [],
+      "error": ""
+    },
+    {
+      "model": "hammer.glb",
+      "sha256": "8fbfc344ff0cb33aafc9604ba8340f54e6055497500f8f509ba271edd6073aee",
+      "exit": 0,
+      "triangles": 616,
+      "parts": 4,
+      "clips": [],
+      "error": ""
+    },
+    {
+      "model": "hanging_lantern.glb",
+      "sha256": "74034b5df40bec2c8ab014aa46ef77b086b1d006661b3614c5a9f29862d7f47f",
+      "exit": 0,
+      "triangles": 520,
+      "parts": 22,
+      "clips": [],
+      "error": ""
+    },
+    {
+      "model": "home.glb",
+      "sha256": "acfc015025fc4d434e92e318a0eb086d515dbddae319cbb90d3349781fbab6ce",
+      "exit": 0,
+      "triangles": 9304,
+      "parts": 6,
+      "clips": [],
+      "error": ""
+    },
+    {
+      "model": "log.glb",
+      "sha256": "e403553ebd1854b3c5377ad9af8dcb7c27884b1294f929fb2af8d9f171b3e2a9",
+      "exit": 0,
+      "triangles": 120,
+      "parts": 2,
+      "clips": [],
+      "error": ""
+    },
+    {
+      "model": "pickaxe.glb",
+      "sha256": "f71e23fe426b674e07d1c44ef83c7b3fb3ea5e2908fee3f159d889d711f65c18",
+      "exit": 0,
+      "triangles": 508,
+      "parts": 4,
+      "clips": [],
+      "error": ""
+    },
+    {
+      "model": "pillar.glb",
+      "sha256": "36eb748a1bb3e8be4cc84a7c9ffc691345e5e9505a31466e638e050102cb49d8",
+      "exit": 0,
+      "triangles": 324,
+      "parts": 2,
+      "clips": [],
+      "error": ""
+    },
+    {
+      "model": "planet.glb",
+      "sha256": "0b54684455837626f03a03eafdbce7f36980df98bf31b07e95b24607e615557b",
+      "exit": 0,
+      "triangles": 17024,
+      "parts": 1,
+      "clips": [],
+      "error": ""
+    },
+    {
+      "model": "rock_cluster.glb",
+      "sha256": "d2eb7bc6d69621f7f9b624b5738422cd57b565c0cb5f9f5ed24e652edfb0f54c",
+      "exit": 0,
+      "triangles": 208,
+      "parts": 4,
+      "clips": [],
+      "error": ""
+    },
+    {
+      "model": "shovel.glb",
+      "sha256": "7a6622e0e247e20654b07ecb71a4a03cf435989ce07d39e0ce3aee1b5846e3e8",
+      "exit": 0,
+      "triangles": 444,
+      "parts": 4,
+      "clips": [],
+      "error": ""
+    },
+    {
+      "model": "stone_wall.glb",
+      "sha256": "81d7c322de618e79fd10040960c4f1a12cd4bec5f5fa3b35c0d03c8a63a44660",
+      "exit": 0,
+      "triangles": 3240,
+      "parts": 2,
+      "clips": [],
+      "error": ""
+    },
+    {
+      "model": "stonebase.glb",
+      "sha256": "348312e0fdb47947967fdaad7d81084a1b15bd7ad8bf2cc470bbacd13c8b0e07",
+      "exit": 0,
+      "triangles": 432,
+      "parts": 2,
+      "clips": [],
+      "error": ""
+    },
+    {
+      "model": "tool_rack.glb",
+      "sha256": "bce0710bd7bdda2a12e41e6a65c7da7c9a45a61ffa84ec5da95dbd9209e51405",
+      "exit": 0,
+      "triangles": 992,
+      "parts": 32,
+      "clips": [],
+      "error": ""
+    },
+    {
+      "model": "tree_birch.glb",
+      "sha256": "3b45f7603b0bc7fcb419c1b6df11251b88389bc54dc020db20e1c5c27c390855",
+      "exit": 0,
+      "triangles": 6856,
+      "parts": 5,
+      "clips": [],
+      "error": ""
+    },
+    {
+      "model": "tree_birch_canopy.glb",
+      "sha256": "37f55e420336b7a226d53369cdbd4d6759405d474a79160fefea88419617b99b",
+      "exit": 0,
+      "triangles": 3600,
+      "parts": 3,
+      "clips": [],
+      "error": ""
+    },
+    {
+      "model": "tree_birch_trunk.glb",
+      "sha256": "4a23b6cecdbd79b158af966bf0137216faddfc536ff62c8e4e76cf5cc891b866",
+      "exit": 0,
+      "triangles": 3256,
+      "parts": 2,
+      "clips": [],
+      "error": ""
+    },
+    {
+      "model": "tree_pine.glb",
+      "sha256": "b5bb340f0f84b94658ad0119d6c28fc5711f9461021a842ebb26e81f29ac3327",
+      "exit": 0,
+      "triangles": 400,
+      "parts": 4,
+      "clips": [],
+      "error": ""
+    },
+    {
+      "model": "tree_pine_canopy.glb",
+      "sha256": "b9a90a01d99ff5c88456c5e947b90db124e1dd4c5bb072d5733da1b79d1fcad8",
+      "exit": 0,
+      "triangles": 360,
+      "parts": 3,
+      "clips": [],
+      "error": ""
+    },
+    {
+      "model": "tree_pine_trunk.glb",
+      "sha256": "7c36598e5a9d04366d04cf454f4d96d765f7dc979a88266e166be4f6537971e7",
+      "exit": 0,
+      "triangles": 40,
+      "parts": 1,
+      "clips": [],
+      "error": ""
+    },
+    {
+      "model": "wall.glb",
+      "sha256": "a4df68aefa5f3248d2089ec94a66f21e5cf296ee3dd7c4dd0550a840ee1fc756",
+      "exit": 0,
+      "triangles": 1188,
+      "parts": 2,
+      "clips": [],
+      "error": ""
+    },
+    {
+      "model": "well.glb",
+      "sha256": "8b8039c6fff796c43a9b00913e6e4e8f898b09721b67503bcc590d1a18cd1752",
+      "exit": 0,
+      "triangles": 1296,
+      "parts": 61,
+      "clips": [],
+      "error": ""
+    },
+    {
+      "model": "wood_crate.glb",
+      "sha256": "b3b06e04b04d694e71c3c9f2274dd1500bb701d6f7c144dda61885efac059539",
+      "exit": 0,
+      "triangles": 688,
+      "parts": 52,
+      "clips": [],
+      "error": ""
+    },
+    {
+      "model": "woodsign.glb",
+      "sha256": "55135eed3eec98e7479373f6f7ded9b78b14a2a836ae225b397d857c094482e4",
+      "exit": 0,
+      "triangles": 2484,
+      "parts": 4,
+      "clips": [],
+      "error": ""
+    }
+  ]
+}

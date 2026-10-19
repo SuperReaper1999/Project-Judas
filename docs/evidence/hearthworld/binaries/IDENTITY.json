@@ -1,0 +1,99 @@
+{
+  "judas": {
+    "sha256": "c5d3b9aa106a05cfb1e7f7a9364fa851473c9689cd0610834a41bd51fbb559fc",
+    "path": "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-doc-cleanup-20261019/build-make/judas",
+    "buildInfo": {
+      "architecture": "x86_64",
+      "build_id": "0.1.0-prealpha-Experimental-3c5119c-dirty-acae3cc10bcd-u84f47c24fcd0",
+      "channel": "Experimental",
+      "compiler": "GNU",
+      "compiler_version": "15.2.0",
+      "configuration": "Release",
+      "maturity": "pre-alpha",
+      "platform": "Linux",
+      "schema": 1,
+      "source_dirty": true,
+      "source_fingerprint": "acae3cc10bcddd1ecc8d2210f7e70d688e786cb0e57c7c75e52a53b7f99795d4",
+      "source_origin": "git",
+      "source_revision": "3c5119ca707f6f287cfd9e2213d1c62a9ae91602",
+      "source_tree": "8f59327853457e7f19b7420186050eb7291109d9",
+      "source_untracked_count": 16,
+      "source_untracked_fingerprint": "84f47c24fcd098f88732ceab246b2e0e19eca31f56acdd72f89f8bfa1621daf2",
+      "version": "0.1.0-prealpha"
+    }
+  },
+  "judas_editor": {
+    "sha256": "b1532555206f2b4ff53f14eeb75f9fa7922d1a1ad491a8452b25392151a55d0a",
+    "path": "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-doc-cleanup-20261019/build-make/judas_editor",
+    "buildInfo": {
+      "architecture": "x86_64",
+      "build_id": "0.1.0-prealpha-Experimental-3c5119c-dirty-acae3cc10bcd-u84f47c24fcd0",
+      "channel": "Experimental",
+      "compiler": "GNU",
+      "compiler_version": "15.2.0",
+      "configuration": "Release",
+      "maturity": "pre-alpha",
+      "platform": "Linux",
+      "schema": 1,
+      "source_dirty": true,
+      "source_fingerprint": "acae3cc10bcddd1ecc8d2210f7e70d688e786cb0e57c7c75e52a53b7f99795d4",
+      "source_origin": "git",
+      "source_revision": "3c5119ca707f6f287cfd9e2213d1c62a9ae91602",
+      "source_tree": "8f59327853457e7f19b7420186050eb7291109d9",
+      "source_untracked_count": 16,
+      "source_untracked_fingerprint": "84f47c24fcd098f88732ceab246b2e0e19eca31f56acdd72f89f8bfa1621daf2",
+      "version": "0.1.0-prealpha"
+    }
+  },
+  "judas_export": {
+    "sha256": "1a23aa81ae970800126f2cd3f41aae11092cf8f148f1f6bb362626c57caeb4d9",
+    "path": "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-doc-cleanup-20261019/build-make/judas_export",
+    "buildInfo": {
+      "architecture": "x86_64",
+      "build_id": "0.1.0-prealpha-Experimental-3c5119c-dirty-acae3cc10bcd-u84f47c24fcd0",
+      "channel": "Experimental",
+      "compiler": "GNU",
+      "compiler_version": "15.2.0",
+      "configuration": "Release",
+      "maturity": "pre-alpha",
+      "platform": "Linux",
+      "schema": 1,
+      "source_dirty": true,
+      "source_fingerprint": "acae3cc10bcddd1ecc8d2210f7e70d688e786cb0e57c7c75e52a53b7f99795d4",
+      "source_origin": "git",
+      "source_revision": "3c5119ca707f6f287cfd9e2213d1c62a9ae91602",
+      "source_tree": "8f59327853457e7f19b7420186050eb7291109d9",
+      "source_untracked_count": 16,
+      "source_untracked_fingerprint": "84f47c24fcd098f88732ceab246b2e0e19eca31f56acdd72f89f8bfa1621daf2",
+      "version": "0.1.0-prealpha"
+    }
+  },
+  "judas_script_check": {
+    "sha256": "a0578501cb4ae9a8b578f20371875360707902b3ed9b4b1f50c73630b3e27bb6",
+    "path": "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-doc-cleanup-20261019/build-make/judas_script_check",
+    "buildInfo": {
+      "architecture": "x86_64",
+      "build_id": "0.1.0-prealpha-Experimental-3c5119c-dirty-acae3cc10bcd-u84f47c24fcd0",
+      "channel": "Experimental",
+      "compiler": "GNU",
+      "compiler_version": "15.2.0",
+      "configuration": "Release",
+      "maturity": "pre-alpha",
+      "platform": "Linux",
+      "schema": 1,
+      "source_dirty": true,
+      "source_fingerprint": "acae3cc10bcddd1ecc8d2210f7e70d688e786cb0e57c7c75e52a53b7f99795d4",
+      "source_origin": "git",
+      "source_revision": "3c5119ca707f6f287cfd9e2213d1c62a9ae91602",
+      "source_tree": "8f59327853457e7f19b7420186050eb7291109d9",
+      "source_untracked_count": 16,
+      "source_untracked_fingerprint": "84f47c24fcd098f88732ceab246b2e0e19eca31f56acdd72f89f8bfa1621daf2",
+      "version": "0.1.0-prealpha"
+    }
+  },
+  "judas_hearthworld_application_tests": {
+    "sha256": "bfe2e638a451af3300744be847745d7b3d93af61539938fae6bfcb4afa20e24f",
+    "path": "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-doc-cleanup-20261019/build-make/judas_hearthworld_application_tests",
+    "buildInfo": null
+  }
+}

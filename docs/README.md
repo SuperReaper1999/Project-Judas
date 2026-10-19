@@ -56,6 +56,12 @@ This is development documentation, not an Alpha release or a compatibility promi
   [mods](MODDING.md), [local multiplayer](M89_LOCAL_MULTIPLAYER.md),
   [online multiplayer/security boundaries](M99_NETWORK.md).
 
+## Learn from a consumer game
+
+[Hearthworld survival sandbox](HEARTHWORLD_SURVIVAL_SANDBOX.md) combines a small
+planet, tool collection, physical tree felling, a force-based gravity gun,
+construction, bounded excavation and cold saves in ordinary project JavaScript.
+
 ## Current guidance and historical evidence
 
 A milestone filename can still contain a useful current subsystem contract.

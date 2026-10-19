@@ -74,7 +74,7 @@ Frame/UI work, input edges and pause follow `InteractivePlay.cpp` and the
 [lifecycle reference](judasjs/lifecycle.md).
 
 Presentation callbacks consume interpolated poses after fixed catch-up. Use
-`Entity.presentationTransform` for view-following and `Entity.transform` for
+`Entity.presentedTransform` for view-following and `Entity.transform` for
 physical state. Presentation must not own simulation. Shooting queries and
 impulses keep their ordinary authoritative semantics.
 

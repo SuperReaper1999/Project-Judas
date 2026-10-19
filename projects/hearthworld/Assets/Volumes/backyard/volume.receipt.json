@@ -1,0 +1,12 @@
+{
+  "format": "JudasVolumeTerrainCook",
+  "inputs": {
+    "Imports/backyard.judasvolume": "01fbb37ce9482070546a4613c1d937a23ce0e65b12cee243f8f442a2e7b02a74"
+  },
+  "products": {
+    "Assets/Volumes/backyard/volume.judascollision": "6bc40a8fe23983beb89659f0bed999426d2ec3c38c95efa47e09ae4043d38404",
+    "Assets/Volumes/backyard/volume.judasmodel": "1db7cacf673ba65eccfbc63969bfc3f6b502b148276cbb13c35b2adbc4a7891a"
+  },
+  "revision": "M84-1",
+  "version": 1
+}

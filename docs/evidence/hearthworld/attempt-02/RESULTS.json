@@ -1,0 +1,44 @@
+{
+  "binary": "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-doc-cleanup-20261019/build-make/judas_hearthworld_application_tests",
+  "changedInputs": [],
+  "environment": {
+    "JUDAS_WORLD_STATE": "none",
+    "SDL_AUDIODRIVER": "dummy",
+    "XDG_DATA_HOME": "/home/conner/Documents/GitHub/Project-Judas/.cache/hearthworld-game/attempt-02/user-data"
+  },
+  "head": "3c5119ca707f6f287cfd9e2213d1c62a9ae91602",
+  "inputsUnchanged": true,
+  "passed": false,
+  "project": "/home/conner/Documents/GitHub/Project-Judas/projects/hearthworld/hearthworld.judasproj",
+  "runs": [
+    {
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-doc-cleanup-20261019/build-make/judas_hearthworld_application_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/projects/hearthworld/hearthworld.judasproj",
+        "write",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/hearthworld-game/attempt-02/application"
+      ],
+      "durableSaveFiles": {
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/hearthworld-game/attempt-02/user-data/judas/games/30026fff6abc9ef36c4e0b59452b48164eeb42a268c8ddfcafe7f27fbbc53db4/Saves/Slots/hearthworld-review.save": "dac7daa39b5c1e9df9fd6a6e96a373ad6dc6197f388e52835c487ed9630cfd91"
+      },
+      "exit": 0,
+      "mode": "write",
+      "wallSeconds": 4.573349073998543,
+      "workingDirectory": "/home/conner/Documents/GitHub/Project-Judas"
+    },
+    {
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-doc-cleanup-20261019/build-make/judas_hearthworld_application_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/projects/hearthworld/hearthworld.judasproj",
+        "read",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/hearthworld-game/attempt-02/application"
+      ],
+      "exit": 1,
+      "mode": "read",
+      "wallSeconds": 0.8659104309990653,
+      "workingDirectory": "/home/conner/Documents/GitHub/Project-Judas"
+    }
+  ],
+  "scope": "Ordinary Hearthworld gameplay and cold-process physical persistence",
+  "utc": "2026-10-19T15:18:36.993797+00:00"
+}

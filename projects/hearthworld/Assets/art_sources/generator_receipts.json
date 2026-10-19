@@ -1,0 +1,137 @@
+{
+  "tool": "Claude Prompt3D, trained CPU parser + procedural geometry; not a text-to-mesh diffusion model",
+  "externalToolFiles": {
+    "prompt3d/__init__.py": "ed8ac816964b0203f19d9869ad37cb59d047efce07543e8cf3c829da9b52d31a",
+    "prompt3d/__main__.py": "fb3bf88394c07e06f197839cc008c09fe995b31143594c74150ce4ec64aa933c",
+    "prompt3d/compose.py": "9d25ce8efc089ba1478bf12701a588e8a2b3d2b7d25596b19441e1fb680ee684",
+    "prompt3d/datagen.py": "63a82f43a25d248c8dd6f9fb41284914ab89ffa1a96b2c0437e0002094a4c956",
+    "prompt3d/export.py": "2cacbd07995d37ffbe41c0ab03012ec90f8a3d256da2fd34d62ad5ff480ad811",
+    "prompt3d/geometry.py": "1e1a87761d8f1b18c03d1b276022382187a5a5d817d0c87501a6bec81d3ab500",
+    "prompt3d/library.py": "27b9dd8d5d205051eb0383683273940515a1625cd6218974b4879d19a3e81533",
+    "prompt3d/ml.py": "e4e96740e58ffc7f14e656cd01f90c18f8f7e501a1861b111b5f0a7803d3d465",
+    "prompt3d/nlu.py": "e69079d3319237768d8ab8a83ed0f25aefa635df163ae6488bd434713349bc82",
+    "prompt3d/pipeline.py": "45361e832fb79f07f4a0f50e2b1765bfcd65f7cf831af278d0c041410f81d5eb",
+    "prompt3d/scans.py": "e2fb64b1f298b17a665d43764528c207971deff16c1cc7b78eb56c43ac47709a",
+    "prompt3d/schema.py": "8e434fde65ef13ca63102af0678d2e9703cdbf149ae3082ca9648ed7414850d1",
+    "prompt3d/server.py": "0a66dad552924652df2bef1cf7b0dda819c1c8e86f9487811078c84cd0e6303b",
+    "prompt3d/texgen.py": "69b8c98bd985473b096b084842ce2b9ee0e1ebfc7c64e01a8bfcd55783077a1f",
+    "prompt3d/text.py": "8f38f0e35d51d5dd0b8f7202dfbaeccc22686f71b06bfed8c7436b22dc32c3b8",
+    "prompt3d/textures.py": "e18a9bf9caa9e8d59d57e5bc9f97b6bc41e872fcf1500b21f8b12fc58eeadff8",
+    "prompt3d/train.py": "9209353db896aec95fc8026b2330ac5e272281efcd385efbe7e7f07365e050bb",
+    "prompt3d/generators/__init__.py": "9f07d0bceeda433bd76c1cd7cf74c26efe31b50fae9033bb78da5932fa10cb2f",
+    "prompt3d/generators/animal.py": "a52c5a69d8b1b3f8e23ced90eb427e9ecc65eccba80c26bcd3a9d378ff6b0303",
+    "prompt3d/generators/boat.py": "cb104277b1f2925af4378f7b54d803036e4d0449fbfc726f25bac7e55fdd2355",
+    "prompt3d/generators/building.py": "4c44dcff1afd8ca101c226096692c52ae6b1e7140a1fffbe950b9eb3f1cd7712",
+    "prompt3d/generators/car.py": "c727f12894e61930c803a6306fef0e9646c3a88d9f90664b6e4f9fea00a217b0",
+    "prompt3d/generators/castle.py": "83dbb6211ad469293ab8a5a2cab4979a3dc18bbe920f53ffe738d4790338904a",
+    "prompt3d/generators/common.py": "035201594959586f24ab82182a7fc74b3206c430da9a2ec9de42c80fdaf2b174",
+    "prompt3d/generators/fence.py": "fef28541cab67d10f4330025efb726bb90a8ce02042a4e098450ace173051343",
+    "prompt3d/generators/furniture.py": "c71476b0de082cfa1c805248d803bfa77df507f8841b8324f75ab966e4c5bc81",
+    "prompt3d/generators/gifts.py": "2be9e26200f6feb4c116da246c6eb424ed62643bbcb4be20ec01a7a999189e44",
+    "prompt3d/generators/home.py": "e93c21c15921dff00313f8c7378492726df77aa0a6301a0f1141483c97a2dfe1",
+    "prompt3d/generators/house.py": "8486fe6631d173169dc3928dfafac5c7290240e6da5aabf353503866c6acd29a",
+    "prompt3d/generators/kitchen.py": "d6ecf208dc412d4a0a01fd727c60a5a43d69b530f00316e393f24fb90c99b5c3",
+    "prompt3d/generators/lettering.py": "ff86e765d3d361d046036c0054a2b6048a5388990e236a9acd3c68074004ab88",
+    "prompt3d/generators/person.py": "16a8f8dfcaabc209129d7a09f592eade4d569a883e3db93182237a4bff749f1d",
+    "prompt3d/generators/plane.py": "481765d77bd17f6c8d6569601f8b68b5a536bf66cb96058d37b8fdb027eeb597",
+    "prompt3d/generators/plant.py": "1afcfec73da9a0710d38d9861e3fe232a37dc882fb2f78adea44498db38d4f39",
+    "prompt3d/generators/prop.py": "bdbc196fc0bfb7e8483ea0a5ce187539ad68ea91b792ff1c1fe944eb01c82e3e",
+    "prompt3d/generators/rocket.py": "2d35b1004d9d4e56420caa02eb887957406b9657ecba48e6a506be79eebd6455",
+    "prompt3d/generators/scifi.py": "8d9cae78de2a9b70225673cded3615eb1e38fc75f4a699bc17893d6a43e4c230",
+    "prompt3d/generators/shop.py": "9c10e596d57df8a7562a61613bf32b5aab04ec0408f473c3106f8aed77edd7ea",
+    "prompt3d/generators/snowman.py": "55dbb5b17ebf019384ae1ca93e0b9bdb227ebdbea82f710da85ea54d94a1b5c4",
+    "prompt3d/generators/street.py": "a0f6337f489998c5032436ea7969068122d8a5f724c7ea765a929642470a1de1",
+    "prompt3d/generators/tableware.py": "9ab6f08a1a9ea01f40c9c349c9ab7a76faff104c6ee17ef94b7e21295f7bb91f",
+    "prompt3d/generators/tree.py": "67c24644b091007e498db7511e2ba0deb72127b5ec4ba171a23b528c91d0b5b5",
+    "prompt3d/models/classifier.npz": "c0319f29cf24049ef2661137d771e919ed1e02042981462f94d4e8ee8cafaf6b",
+    "prompt3d/models/library.npz": "ebbe916c407a1c8eb7c07181f759549fd05386d3170483154fd53849141e2175",
+    "prompt3d/models/tagger.npz": "701ccf5706d4d25b5dd035a5471781ec78f425b42fe8846e1c2eaeef945889fb"
+  },
+  "generated": [
+    {
+      "prompt": "a low poly pine tree 7 metres tall",
+      "category": "tree",
+      "confidence": 1.0,
+      "params": {
+        "features": {},
+        "size": 1.0,
+        "style": "lowpoly",
+        "type": "pine",
+        "height": 7.0,
+        "count": 1
+      },
+      "understood": [
+        {
+          "slot": "style",
+          "text": "low poly"
+        },
+        {
+          "slot": "type",
+          "text": "pine"
+        },
+        {
+          "slot": "height",
+          "text": "7 metres tall"
+        }
+      ],
+      "seed": 7421,
+      "style": "lowpoly",
+      "files": {
+        "glb": "Assets/models/tree_pine.glb"
+      },
+      "stats": {
+        "vertices": 369,
+        "triangles": 400,
+        "groups": 1
+      },
+      "dimensions_m": [
+        4.09,
+        6.72,
+        4.09
+      ]
+    },
+    {
+      "prompt": "a low poly birch tree 6 metres tall",
+      "category": "tree",
+      "confidence": 1.0,
+      "params": {
+        "features": {},
+        "size": 1.0,
+        "style": "lowpoly",
+        "type": "birch",
+        "height": 6.0,
+        "count": 1
+      },
+      "understood": [
+        {
+          "slot": "style",
+          "text": "low poly"
+        },
+        {
+          "slot": "type",
+          "text": "birch"
+        },
+        {
+          "slot": "height",
+          "text": "6 metres tall"
+        }
+      ],
+      "seed": 7422,
+      "style": "lowpoly",
+      "files": {
+        "glb": "Assets/models/tree_birch.glb"
+      },
+      "stats": {
+        "vertices": 5539,
+        "triangles": 6856,
+        "groups": 1
+      },
+      "dimensions_m": [
+        4.74,
+        6.91,
+        4.57
+      ]
+    }
+  ],
+  "runtimeRequirements": "Only the exported self-contained GLBs; no Prompt3D, Python or ML service"
+}

@@ -1,0 +1,102 @@
+{
+  "runtimeTriangleLimit": 16384,
+  "note": "Authored candidate budgets caught before game execution. The first historical source is an equivalent reconstructed over-budget candidate after the original source was overwritten; original cook counts are preserved, but this is not an archive of the original source bytes. Four final-source dabs use shared native M84 brush/extraction/cook, the same path M97 runtime prepares. Actual runtime asynchronous publication is tested separately.",
+  "cases": [
+    {
+      "resolution": [
+        33,
+        21,
+        33
+      ],
+      "samples": 22869,
+      "triangles": 24476,
+      "underRuntimeTriangleBudget": false,
+      "sourceSha256": "2278c3d1eb8fd083ab534dc5bfd9bd0bc965f692d05ebbf1db2522da58fca551",
+      "stdout": "volume cook 275 ms / 4326292 bytes"
+    },
+    {
+      "resolution": [
+        25,
+        15,
+        25
+      ],
+      "samples": 9375,
+      "triangles": 16288,
+      "underRuntimeTriangleBudget": true,
+      "sourceSha256": "cbbe24042b864e760245282f686090837c0db8748dbe293ab257ada9a6810bd8",
+      "stdout": "volume cook 214.283 ms / 2736957 bytes"
+    },
+    {
+      "resolution": [
+        25,
+        11,
+        25
+      ],
+      "samples": 6875,
+      "triangles": 13952,
+      "underRuntimeTriangleBudget": true,
+      "sourceSha256": "a319f49e6e8741912e61b9d27121c88752d70b2596361ae15792580007909599",
+      "stdout": "volume cook 174.49 ms / 2398053 bytes"
+    },
+    {
+      "resolution": [
+        23,
+        11,
+        23
+      ],
+      "samples": 5819,
+      "triangles": 12040,
+      "underRuntimeTriangleBudget": true,
+      "sourceSha256": "01fbb37ce9482070546a4613c1d937a23ce0e65b12cee243f8f442a2e7b02a74",
+      "stdout": "volume cook 155.035 ms / 2194212 bytes"
+    },
+    {
+      "brushIndex": 1,
+      "point": [
+        0,
+        4.4,
+        0
+      ],
+      "radius": 1.7,
+      "triangles": 12148,
+      "underRuntimeTriangleBudget": true,
+      "stdout": "volume cook 164.828 ms / 2211855 bytes"
+    },
+    {
+      "brushIndex": 2,
+      "point": [
+        0,
+        3.3,
+        0
+      ],
+      "radius": 1.7,
+      "triangles": 12164,
+      "underRuntimeTriangleBudget": true,
+      "stdout": "volume cook 180.539 ms / 2215037 bytes"
+    },
+    {
+      "brushIndex": 3,
+      "point": [
+        1.4,
+        4.1,
+        0
+      ],
+      "radius": 1.7,
+      "triangles": 12184,
+      "underRuntimeTriangleBudget": true,
+      "stdout": "volume cook 193.854 ms / 2218692 bytes"
+    },
+    {
+      "brushIndex": 4,
+      "point": [
+        -1.4,
+        4.1,
+        0
+      ],
+      "radius": 1.7,
+      "triangles": 12208,
+      "underRuntimeTriangleBudget": true,
+      "stdout": "volume cook 155.826 ms / 2222356 bytes"
+    }
+  ]
+}

@@ -1,0 +1,122 @@
+{
+  "timestampUtc": "2026-10-19T15:16:33.093301+00:00",
+  "records": [
+    {
+      "command": [
+        "build/judas_scene_author",
+        "--validate",
+        "scene",
+        "projects/hearthworld/Scenes/home.judas"
+      ],
+      "exit": 0,
+      "stdout": "valid scene projects/hearthworld/Scenes/home.judas\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "build/judas_scene_author",
+        "--validate",
+        "project",
+        "projects/hearthworld/hearthworld.judasproj"
+      ],
+      "exit": 0,
+      "stdout": "valid project projects/hearthworld/hearthworld.judasproj\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "build/judas_volume_author",
+        "validate",
+        "projects/hearthworld/Imports/backyard.judasvolume"
+      ],
+      "exit": 0,
+      "stdout": "valid volume 5819 samples\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "build/judas_scene_author",
+        "--validate",
+        "prefab",
+        "projects/hearthworld/Assets/prefabs/fence.judasprefab"
+      ],
+      "exit": 0,
+      "stdout": "valid prefab projects/hearthworld/Assets/prefabs/fence.judasprefab\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "build/judas_scene_author",
+        "--validate",
+        "prefab",
+        "projects/hearthworld/Assets/prefabs/floor.judasprefab"
+      ],
+      "exit": 0,
+      "stdout": "valid prefab projects/hearthworld/Assets/prefabs/floor.judasprefab\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "build/judas_scene_author",
+        "--validate",
+        "prefab",
+        "projects/hearthworld/Assets/prefabs/log.judasprefab"
+      ],
+      "exit": 0,
+      "stdout": "valid prefab projects/hearthworld/Assets/prefabs/log.judasprefab\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "build/judas_scene_author",
+        "--validate",
+        "prefab",
+        "projects/hearthworld/Assets/prefabs/pillar.judasprefab"
+      ],
+      "exit": 0,
+      "stdout": "valid prefab projects/hearthworld/Assets/prefabs/pillar.judasprefab\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "build/judas_scene_author",
+        "--validate",
+        "prefab",
+        "projects/hearthworld/Assets/prefabs/stonebase.judasprefab"
+      ],
+      "exit": 0,
+      "stdout": "valid prefab projects/hearthworld/Assets/prefabs/stonebase.judasprefab\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "build/judas_scene_author",
+        "--validate",
+        "prefab",
+        "projects/hearthworld/Assets/prefabs/wall.judasprefab"
+      ],
+      "exit": 0,
+      "stdout": "valid prefab projects/hearthworld/Assets/prefabs/wall.judasprefab\n",
+      "stderr": ""
+    }
+  ],
+  "files": {
+    "tools/CreateHearthworld.py": "0e11d7797b1cbbd0f86ad87fd7dd55cc80ad09c10be6f938b9f428372055e68e",
+    "projects/hearthworld/Scenes/home.judas": "259cc6628d36f3bb8468a74691911f6f1a66780b0112b5d7046c1b0c7dd99e8a",
+    "projects/hearthworld/Assets/prefabs/stonebase.judasprefab": "b177da1e23e33d324bb061cd9a6fd80e42961cf475588264f65354350e66e9f8",
+    "projects/hearthworld/Assets/prefabs/log.judasprefab": "117c3b57f2fead5761814ebb0d6083c2b2c62dbfaeb3d53a4359ed0032a9d896",
+    "projects/hearthworld/Assets/prefabs/pillar.judasprefab": "405a6d02e52466fc699a15053ccc86d6495988e19421fd1f61063fc98efac6bd",
+    "projects/hearthworld/Assets/prefabs/floor.judasprefab": "7683f489e6c132310b9f773e2614b42d1c85c270fe10ad9e6fd8149e016842f3",
+    "projects/hearthworld/Assets/prefabs/wall.judasprefab": "7ab2047c19237f28fac2e3479f03cd5abbf354a373800f92ced4ab4eccafcbcd",
+    "projects/hearthworld/Assets/prefabs/fence.judasprefab": "deda86ee2b7f2b8ecea63e1d313a7b22c673fe64713171d60787747367e8abc9",
+    "projects/hearthworld/Imports/backyard.judasvolume": "01fbb37ce9482070546a4613c1d937a23ce0e65b12cee243f8f442a2e7b02a74",
+    "projects/hearthworld/Assets/collision/planet.judascollision": "1751c87d1437cb2ae5c0f85f2fb19193cab2ce033805f12f3119343b56151126",
+    "projects/hearthworld/Assets/models/planet.glb": "0b54684455837626f03a03eafdbce7f36980df98bf31b07e95b24607e615557b",
+    "projects/hearthworld/Assets/Volumes/backyard/volume.judasmodel": "1db7cacf673ba65eccfbc63969bfc3f6b502b148276cbb13c35b2adbc4a7891a",
+    "projects/hearthworld/Assets/Volumes/backyard/volume.judascollision": "6bc40a8fe23983beb89659f0bed999426d2ec3c38c95efa47e09ae4043d38404",
+    "projects/hearthworld/Assets/scripts/world-data.js": "fb42ece7c56bea336ad8926caf6aad44e4106abc5cd4bf1978a769206d99b326",
+    "projects/hearthworld/Assets/scripts/soil-source.js": "ea821092f6ab97437025da36c401a7bce3d8832b64b2f38314e1a47949afb037",
+    "projects/hearthworld/Authoring/world_manifest.json": "e18e2b455559c2e112ebf912b97271d4f6886df48d6a1e84ddb099ff5fdd5dc6",
+    "projects/hearthworld/Authoring/WORLD_DESIGN.md": "78c6740ae6ba9602d12640e96dbbbff3eb38d58634a4f54cf81a06fd4f788f34"
+  }
+}

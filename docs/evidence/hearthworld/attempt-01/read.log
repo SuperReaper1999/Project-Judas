@@ -1,0 +1,19 @@
+Shadow maps: on
+Graphics: 3.3.0 NVIDIA 580.178.04 / NVIDIA GeForce GTX 970/PCIe/SSE2
+Renderer fragment texture units: 32 (material path uses 12)
+Project: Hearthworld (/home/conner/Documents/GitHub/Project-Judas/projects/hearthworld/hearthworld.judasproj)
+Scene: Hearthworld / a little world worth keeping (/home/conner/Documents/GitHub/Project-Judas/projects/hearthworld/Scenes/home.judas)
+World origin (m): 0.000, 0.000, 0.000
+JS: Hearthworld: WASD move, mouse look, Space jump, Shift sprint; E collect; 1 gravity / 2 axe / 3 pickaxe / 4 shovel / 5 build; LMB use, RMB grab/drop or dismantle, Q recipe, R rotate; Tab pack, Esc pause; F5 save / F9 load.
+PASS welcome menu owns input before ordinary play starts
+PASS ordinary project starts with CharacterMotor and script-owned camera
+PASS ordinary Escape navigation closes the welcome menu and captures gameplay input
+PASS no legacy/native gameplay controller is used
+PASS capture real rendered game frame
+PASS request existing cold progress through ordinary save service: 
+Runtime outer services: save evolution: save differs from installed content/compatibility/mods; explicit migration required
+FAIL fresh-process cold restore completes: save evolution: save differs from installed content/compatibility/mods; explicit migration required
+FAIL restore publishes a separate validated world
+PASS ordinary application shuts down cleanly
+PASS observer completed its requested workflow
+SUMMARY 10 checks 2 failures

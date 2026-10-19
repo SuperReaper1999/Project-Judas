@@ -1,0 +1,2265 @@
+{
+  "kind": "ui",
+  "schema": 1,
+  "data": {
+    "reference": [
+      1280,
+      720
+    ],
+    "visible": true,
+    "enabled": true,
+    "modal": false,
+    "elements": [
+      {
+        "id": "canvas",
+        "parent": "",
+        "text": "",
+        "texture": "",
+        "font": "9c3ee9e1ef311e9c2417661910eb145b",
+        "textKey": "",
+        "textLogicalAlign": -1,
+        "mirrorRow": false,
+        "visible": true,
+        "enabled": true,
+        "clip": false,
+        "wrap": false,
+        "fit": true,
+        "spacing": 8,
+        "fontSize": 18,
+        "value": 0,
+        "minimum": 0,
+        "maximum": 1,
+        "kind": 0,
+        "flow": 0,
+        "direction": 0,
+        "anchorMin": [
+          0,
+          0
+        ],
+        "anchorMax": [
+          1,
+          1
+        ],
+        "offset": [
+          0,
+          0
+        ],
+        "size": [
+          0,
+          0
+        ],
+        "relativeSize": [
+          0,
+          0
+        ],
+        "align": [
+          0,
+          0
+        ],
+        "textAlign": [
+          0,
+          0.5
+        ],
+        "margin": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "background": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "color": [
+          0.96,
+          0.94,
+          0.85,
+          1
+        ]
+      },
+      {
+        "id": "brand_rule",
+        "parent": "canvas",
+        "text": "",
+        "texture": "",
+        "font": "9c3ee9e1ef311e9c2417661910eb145b",
+        "textKey": "",
+        "textLogicalAlign": -1,
+        "mirrorRow": false,
+        "visible": true,
+        "enabled": true,
+        "clip": false,
+        "wrap": false,
+        "fit": true,
+        "spacing": 8,
+        "fontSize": 18,
+        "value": 0,
+        "minimum": 0,
+        "maximum": 1,
+        "kind": 1,
+        "flow": 0,
+        "direction": 0,
+        "anchorMin": [
+          0,
+          0
+        ],
+        "anchorMax": [
+          0,
+          0
+        ],
+        "offset": [
+          24,
+          22
+        ],
+        "size": [
+          4,
+          46
+        ],
+        "relativeSize": [
+          0,
+          0
+        ],
+        "align": [
+          0,
+          0
+        ],
+        "textAlign": [
+          0,
+          0.5
+        ],
+        "margin": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "background": [
+          0.96,
+          0.73,
+          0.34,
+          1
+        ],
+        "color": [
+          0.96,
+          0.94,
+          0.85,
+          1
+        ]
+      },
+      {
+        "id": "brand",
+        "parent": "canvas",
+        "text": "HEARTHWORLD",
+        "texture": "",
+        "font": "9c3ee9e1ef311e9c2417661910eb145b",
+        "textKey": "",
+        "textLogicalAlign": -1,
+        "mirrorRow": false,
+        "visible": true,
+        "enabled": true,
+        "clip": false,
+        "wrap": false,
+        "fit": true,
+        "spacing": 8,
+        "fontSize": 27,
+        "value": 0,
+        "minimum": 0,
+        "maximum": 1,
+        "kind": 2,
+        "flow": 0,
+        "direction": 0,
+        "anchorMin": [
+          0,
+          0
+        ],
+        "anchorMax": [
+          0,
+          0
+        ],
+        "offset": [
+          42,
+          18
+        ],
+        "size": [
+          420,
+          36
+        ],
+        "relativeSize": [
+          0,
+          0
+        ],
+        "align": [
+          0,
+          0
+        ],
+        "textAlign": [
+          0,
+          0.5
+        ],
+        "margin": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "background": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "color": [
+          0.96,
+          0.94,
+          0.85,
+          1
+        ]
+      },
+      {
+        "id": "brand_subtitle",
+        "parent": "canvas",
+        "text": "A little world. A place to call home.",
+        "texture": "",
+        "font": "9c3ee9e1ef311e9c2417661910eb145b",
+        "textKey": "",
+        "textLogicalAlign": -1,
+        "mirrorRow": false,
+        "visible": true,
+        "enabled": true,
+        "clip": false,
+        "wrap": false,
+        "fit": true,
+        "spacing": 8,
+        "fontSize": 14,
+        "value": 0,
+        "minimum": 0,
+        "maximum": 1,
+        "kind": 2,
+        "flow": 0,
+        "direction": 0,
+        "anchorMin": [
+          0,
+          0
+        ],
+        "anchorMax": [
+          0,
+          0
+        ],
+        "offset": [
+          44,
+          54
+        ],
+        "size": [
+          470,
+          23
+        ],
+        "relativeSize": [
+          0,
+          0
+        ],
+        "align": [
+          0,
+          0
+        ],
+        "textAlign": [
+          0,
+          0.5
+        ],
+        "margin": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "background": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "color": [
+          0.8,
+          0.87,
+          0.78,
+          1
+        ]
+      },
+      {
+        "id": "resources_panel",
+        "parent": "canvas",
+        "text": "",
+        "texture": "",
+        "font": "9c3ee9e1ef311e9c2417661910eb145b",
+        "textKey": "",
+        "textLogicalAlign": -1,
+        "mirrorRow": false,
+        "visible": true,
+        "enabled": true,
+        "clip": false,
+        "wrap": false,
+        "fit": true,
+        "spacing": 8,
+        "fontSize": 18,
+        "value": 0,
+        "minimum": 0,
+        "maximum": 1,
+        "kind": 1,
+        "flow": 0,
+        "direction": 0,
+        "anchorMin": [
+          1,
+          0
+        ],
+        "anchorMax": [
+          1,
+          0
+        ],
+        "offset": [
+          -24,
+          24
+        ],
+        "size": [
+          440,
+          48
+        ],
+        "relativeSize": [
+          0,
+          0
+        ],
+        "align": [
+          1,
+          0
+        ],
+        "textAlign": [
+          0,
+          0.5
+        ],
+        "margin": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "background": [
+          0.035,
+          0.075,
+          0.073,
+          0.84
+        ],
+        "color": [
+          0.96,
+          0.94,
+          0.85,
+          1
+        ]
+      },
+      {
+        "id": "resources",
+        "parent": "resources_panel",
+        "text": "WOOD  0    /    STONE  0",
+        "texture": "",
+        "font": "9c3ee9e1ef311e9c2417661910eb145b",
+        "textKey": "",
+        "textLogicalAlign": -1,
+        "mirrorRow": false,
+        "visible": true,
+        "enabled": true,
+        "clip": false,
+        "wrap": false,
+        "fit": true,
+        "spacing": 8,
+        "fontSize": 18,
+        "value": 0,
+        "minimum": 0,
+        "maximum": 1,
+        "kind": 2,
+        "flow": 0,
+        "direction": 0,
+        "anchorMin": [
+          0,
+          0
+        ],
+        "anchorMax": [
+          0,
+          0
+        ],
+        "offset": [
+          14,
+          8
+        ],
+        "size": [
+          412,
+          32
+        ],
+        "relativeSize": [
+          0,
+          0
+        ],
+        "align": [
+          0,
+          0
+        ],
+        "textAlign": [
+          1,
+          0.5
+        ],
+        "margin": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "background": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "color": [
+          0.95,
+          0.91,
+          0.79,
+          1
+        ]
+      },
+      {
+        "id": "objective_panel",
+        "parent": "canvas",
+        "text": "",
+        "texture": "",
+        "font": "9c3ee9e1ef311e9c2417661910eb145b",
+        "textKey": "",
+        "textLogicalAlign": -1,
+        "mirrorRow": false,
+        "visible": true,
+        "enabled": true,
+        "clip": false,
+        "wrap": false,
+        "fit": true,
+        "spacing": 8,
+        "fontSize": 18,
+        "value": 0,
+        "minimum": 0,
+        "maximum": 1,
+        "kind": 1,
+        "flow": 0,
+        "direction": 0,
+        "anchorMin": [
+          0,
+          0
+        ],
+        "anchorMax": [
+          0,
+          0
+        ],
+        "offset": [
+          24,
+          95
+        ],
+        "size": [
+          570,
+          74
+        ],
+        "relativeSize": [
+          0,
+          0
+        ],
+        "align": [
+          0,
+          0
+        ],
+        "textAlign": [
+          0,
+          0.5
+        ],
+        "margin": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "background": [
+          0.035,
+          0.075,
+          0.073,
+          0.84
+        ],
+        "color": [
+          0.96,
+          0.94,
+          0.85,
+          1
+        ]
+      },
+      {
+        "id": "objective",
+        "parent": "objective_panel",
+        "text": "Make yourself at home. Collect your tools inside the cottage.",
+        "texture": "",
+        "font": "9c3ee9e1ef311e9c2417661910eb145b",
+        "textKey": "",
+        "textLogicalAlign": -1,
+        "mirrorRow": false,
+        "visible": true,
+        "enabled": true,
+        "clip": false,
+        "wrap": true,
+        "fit": true,
+        "spacing": 8,
+        "fontSize": 17,
+        "value": 0,
+        "minimum": 0,
+        "maximum": 1,
+        "kind": 2,
+        "flow": 0,
+        "direction": 0,
+        "anchorMin": [
+          0,
+          0
+        ],
+        "anchorMax": [
+          0,
+          0
+        ],
+        "offset": [
+          15,
+          9
+        ],
+        "size": [
+          540,
+          56
+        ],
+        "relativeSize": [
+          0,
+          0
+        ],
+        "align": [
+          0,
+          0
+        ],
+        "textAlign": [
+          0,
+          0.5
+        ],
+        "margin": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "background": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "color": [
+          0.95,
+          0.91,
+          0.79,
+          1
+        ]
+      },
+      {
+        "id": "reticle",
+        "parent": "canvas",
+        "text": "+",
+        "texture": "",
+        "font": "9c3ee9e1ef311e9c2417661910eb145b",
+        "textKey": "",
+        "textLogicalAlign": -1,
+        "mirrorRow": false,
+        "visible": true,
+        "enabled": true,
+        "clip": false,
+        "wrap": false,
+        "fit": true,
+        "spacing": 8,
+        "fontSize": 26,
+        "value": 0,
+        "minimum": 0,
+        "maximum": 1,
+        "kind": 2,
+        "flow": 0,
+        "direction": 0,
+        "anchorMin": [
+          0.5,
+          0.5
+        ],
+        "anchorMax": [
+          0.5,
+          0.5
+        ],
+        "offset": [
+          0,
+          0
+        ],
+        "size": [
+          30,
+          30
+        ],
+        "relativeSize": [
+          0,
+          0
+        ],
+        "align": [
+          0.5,
+          0.5
+        ],
+        "textAlign": [
+          0.5,
+          0.5
+        ],
+        "margin": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "background": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "color": [
+          0.96,
+          0.94,
+          0.85,
+          1
+        ]
+      },
+      {
+        "id": "context",
+        "parent": "canvas",
+        "text": "",
+        "texture": "",
+        "font": "9c3ee9e1ef311e9c2417661910eb145b",
+        "textKey": "",
+        "textLogicalAlign": -1,
+        "mirrorRow": false,
+        "visible": true,
+        "enabled": true,
+        "clip": false,
+        "wrap": true,
+        "fit": true,
+        "spacing": 8,
+        "fontSize": 19,
+        "value": 0,
+        "minimum": 0,
+        "maximum": 1,
+        "kind": 2,
+        "flow": 0,
+        "direction": 0,
+        "anchorMin": [
+          0.5,
+          0.5
+        ],
+        "anchorMax": [
+          0.5,
+          0.5
+        ],
+        "offset": [
+          0,
+          34
+        ],
+        "size": [
+          670,
+          66
+        ],
+        "relativeSize": [
+          0,
+          0
+        ],
+        "align": [
+          0.5,
+          0
+        ],
+        "textAlign": [
+          0.5,
+          0.5
+        ],
+        "margin": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "background": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "color": [
+          0.95,
+          0.91,
+          0.79,
+          1
+        ]
+      },
+      {
+        "id": "notice",
+        "parent": "canvas",
+        "text": "",
+        "texture": "",
+        "font": "9c3ee9e1ef311e9c2417661910eb145b",
+        "textKey": "",
+        "textLogicalAlign": -1,
+        "mirrorRow": false,
+        "visible": true,
+        "enabled": true,
+        "clip": false,
+        "wrap": true,
+        "fit": true,
+        "spacing": 8,
+        "fontSize": 18,
+        "value": 0,
+        "minimum": 0,
+        "maximum": 1,
+        "kind": 2,
+        "flow": 0,
+        "direction": 0,
+        "anchorMin": [
+          0.5,
+          1
+        ],
+        "anchorMax": [
+          0.5,
+          1
+        ],
+        "offset": [
+          0,
+          -148
+        ],
+        "size": [
+          1000,
+          50
+        ],
+        "relativeSize": [
+          0,
+          0
+        ],
+        "align": [
+          0.5,
+          1
+        ],
+        "textAlign": [
+          0.5,
+          0.5
+        ],
+        "margin": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "background": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "color": [
+          0.96,
+          0.73,
+          0.34,
+          1
+        ]
+      },
+      {
+        "id": "tools_panel",
+        "parent": "canvas",
+        "text": "",
+        "texture": "",
+        "font": "9c3ee9e1ef311e9c2417661910eb145b",
+        "textKey": "",
+        "textLogicalAlign": -1,
+        "mirrorRow": false,
+        "visible": true,
+        "enabled": true,
+        "clip": false,
+        "wrap": false,
+        "fit": true,
+        "spacing": 8,
+        "fontSize": 18,
+        "value": 0,
+        "minimum": 0,
+        "maximum": 1,
+        "kind": 1,
+        "flow": 0,
+        "direction": 0,
+        "anchorMin": [
+          0.5,
+          1
+        ],
+        "anchorMax": [
+          0.5,
+          1
+        ],
+        "offset": [
+          0,
+          -68
+        ],
+        "size": [
+          990,
+          68
+        ],
+        "relativeSize": [
+          0,
+          0
+        ],
+        "align": [
+          0.5,
+          1
+        ],
+        "textAlign": [
+          0,
+          0.5
+        ],
+        "margin": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "background": [
+          0.08,
+          0.23,
+          0.22,
+          0.96
+        ],
+        "color": [
+          0.96,
+          0.94,
+          0.85,
+          1
+        ]
+      },
+      {
+        "id": "tools",
+        "parent": "tools_panel",
+        "text": "1 Field gun    2 Axe    3 Pickaxe    4 Shovel    5 Build",
+        "texture": "",
+        "font": "9c3ee9e1ef311e9c2417661910eb145b",
+        "textKey": "",
+        "textLogicalAlign": -1,
+        "mirrorRow": false,
+        "visible": true,
+        "enabled": true,
+        "clip": false,
+        "wrap": true,
+        "fit": true,
+        "spacing": 8,
+        "fontSize": 19,
+        "value": 0,
+        "minimum": 0,
+        "maximum": 1,
+        "kind": 2,
+        "flow": 0,
+        "direction": 0,
+        "anchorMin": [
+          0,
+          0
+        ],
+        "anchorMax": [
+          0,
+          0
+        ],
+        "offset": [
+          15,
+          8
+        ],
+        "size": [
+          960,
+          52
+        ],
+        "relativeSize": [
+          0,
+          0
+        ],
+        "align": [
+          0,
+          0
+        ],
+        "textAlign": [
+          0.5,
+          0.5
+        ],
+        "margin": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "background": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "color": [
+          0.95,
+          0.91,
+          0.79,
+          1
+        ]
+      },
+      {
+        "id": "footer",
+        "parent": "canvas",
+        "text": "WASD Move   Space Jump   E Collect   Tab Inventory   Esc Pause",
+        "texture": "",
+        "font": "9c3ee9e1ef311e9c2417661910eb145b",
+        "textKey": "",
+        "textLogicalAlign": -1,
+        "mirrorRow": false,
+        "visible": true,
+        "enabled": true,
+        "clip": false,
+        "wrap": false,
+        "fit": true,
+        "spacing": 8,
+        "fontSize": 16,
+        "value": 0,
+        "minimum": 0,
+        "maximum": 1,
+        "kind": 2,
+        "flow": 0,
+        "direction": 0,
+        "anchorMin": [
+          0.5,
+          1
+        ],
+        "anchorMax": [
+          0.5,
+          1
+        ],
+        "offset": [
+          0,
+          -18
+        ],
+        "size": [
+          1180,
+          30
+        ],
+        "relativeSize": [
+          0,
+          0
+        ],
+        "align": [
+          0.5,
+          1
+        ],
+        "textAlign": [
+          0.5,
+          0.5
+        ],
+        "margin": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "background": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "color": [
+          0.96,
+          0.94,
+          0.85,
+          1
+        ]
+      },
+      {
+        "id": "menu_bg",
+        "parent": "canvas",
+        "text": "",
+        "texture": "",
+        "font": "9c3ee9e1ef311e9c2417661910eb145b",
+        "textKey": "",
+        "textLogicalAlign": -1,
+        "mirrorRow": false,
+        "visible": false,
+        "enabled": true,
+        "clip": false,
+        "wrap": false,
+        "fit": true,
+        "spacing": 8,
+        "fontSize": 18,
+        "value": 0,
+        "minimum": 0,
+        "maximum": 1,
+        "kind": 1,
+        "flow": 0,
+        "direction": 0,
+        "anchorMin": [
+          0,
+          0
+        ],
+        "anchorMax": [
+          1,
+          1
+        ],
+        "offset": [
+          0,
+          0
+        ],
+        "size": [
+          0,
+          0
+        ],
+        "relativeSize": [
+          0,
+          0
+        ],
+        "align": [
+          0,
+          0
+        ],
+        "textAlign": [
+          0,
+          0.5
+        ],
+        "margin": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "background": [
+          0.017,
+          0.043,
+          0.041,
+          0.88
+        ],
+        "color": [
+          0.96,
+          0.94,
+          0.85,
+          1
+        ]
+      },
+      {
+        "id": "menu_card",
+        "parent": "menu_bg",
+        "text": "",
+        "texture": "",
+        "font": "9c3ee9e1ef311e9c2417661910eb145b",
+        "textKey": "",
+        "textLogicalAlign": -1,
+        "mirrorRow": false,
+        "visible": true,
+        "enabled": true,
+        "clip": false,
+        "wrap": false,
+        "fit": true,
+        "spacing": 8,
+        "fontSize": 18,
+        "value": 0,
+        "minimum": 0,
+        "maximum": 1,
+        "kind": 1,
+        "flow": 0,
+        "direction": 0,
+        "anchorMin": [
+          0.5,
+          0.5
+        ],
+        "anchorMax": [
+          0.5,
+          0.5
+        ],
+        "offset": [
+          0,
+          0
+        ],
+        "size": [
+          660,
+          590
+        ],
+        "relativeSize": [
+          0,
+          0
+        ],
+        "align": [
+          0.5,
+          0.5
+        ],
+        "textAlign": [
+          0,
+          0.5
+        ],
+        "margin": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "background": [
+          0.95,
+          0.91,
+          0.79,
+          1
+        ],
+        "color": [
+          0.96,
+          0.94,
+          0.85,
+          1
+        ]
+      },
+      {
+        "id": "menu_stripe",
+        "parent": "menu_bg",
+        "text": "",
+        "texture": "",
+        "font": "9c3ee9e1ef311e9c2417661910eb145b",
+        "textKey": "",
+        "textLogicalAlign": -1,
+        "mirrorRow": false,
+        "visible": true,
+        "enabled": true,
+        "clip": false,
+        "wrap": false,
+        "fit": true,
+        "spacing": 8,
+        "fontSize": 18,
+        "value": 0,
+        "minimum": 0,
+        "maximum": 1,
+        "kind": 1,
+        "flow": 0,
+        "direction": 0,
+        "anchorMin": [
+          0.5,
+          0.5
+        ],
+        "anchorMax": [
+          0.5,
+          0.5
+        ],
+        "offset": [
+          0,
+          -285
+        ],
+        "size": [
+          660,
+          20
+        ],
+        "relativeSize": [
+          0,
+          0
+        ],
+        "align": [
+          0.5,
+          0.5
+        ],
+        "textAlign": [
+          0,
+          0.5
+        ],
+        "margin": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "background": [
+          0.08,
+          0.23,
+          0.22,
+          0.96
+        ],
+        "color": [
+          0.96,
+          0.94,
+          0.85,
+          1
+        ]
+      },
+      {
+        "id": "menu_title",
+        "parent": "menu_bg",
+        "text": "Welcome to Hearthworld",
+        "texture": "",
+        "font": "9c3ee9e1ef311e9c2417661910eb145b",
+        "textKey": "",
+        "textLogicalAlign": -1,
+        "mirrorRow": false,
+        "visible": true,
+        "enabled": true,
+        "clip": false,
+        "wrap": false,
+        "fit": true,
+        "spacing": 8,
+        "fontSize": 30,
+        "value": 0,
+        "minimum": 0,
+        "maximum": 1,
+        "kind": 2,
+        "flow": 0,
+        "direction": 0,
+        "anchorMin": [
+          0.5,
+          0.5
+        ],
+        "anchorMax": [
+          0.5,
+          0.5
+        ],
+        "offset": [
+          0,
+          -225
+        ],
+        "size": [
+          580,
+          48
+        ],
+        "relativeSize": [
+          0,
+          0
+        ],
+        "align": [
+          0.5,
+          0.5
+        ],
+        "textAlign": [
+          0.5,
+          0.5
+        ],
+        "margin": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "background": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "color": [
+          0.11,
+          0.2,
+          0.19,
+          1
+        ]
+      },
+      {
+        "id": "menu_body",
+        "parent": "menu_bg",
+        "text": "Find the tools in your cottage. Chop trees, mine stone, dig a pool\nand build a home on your own small planet.",
+        "texture": "",
+        "font": "9c3ee9e1ef311e9c2417661910eb145b",
+        "textKey": "",
+        "textLogicalAlign": -1,
+        "mirrorRow": false,
+        "visible": true,
+        "enabled": true,
+        "clip": false,
+        "wrap": true,
+        "fit": true,
+        "spacing": 8,
+        "fontSize": 19,
+        "value": 0,
+        "minimum": 0,
+        "maximum": 1,
+        "kind": 2,
+        "flow": 0,
+        "direction": 0,
+        "anchorMin": [
+          0.5,
+          0.5
+        ],
+        "anchorMax": [
+          0.5,
+          0.5
+        ],
+        "offset": [
+          0,
+          -124
+        ],
+        "size": [
+          570,
+          126
+        ],
+        "relativeSize": [
+          0,
+          0
+        ],
+        "align": [
+          0.5,
+          0.5
+        ],
+        "textAlign": [
+          0.5,
+          0.5
+        ],
+        "margin": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "background": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "color": [
+          0.11,
+          0.2,
+          0.19,
+          1
+        ]
+      },
+      {
+        "id": "start",
+        "parent": "menu_bg",
+        "text": "Begin your homestead",
+        "texture": "",
+        "font": "9c3ee9e1ef311e9c2417661910eb145b",
+        "textKey": "",
+        "textLogicalAlign": -1,
+        "mirrorRow": false,
+        "visible": true,
+        "enabled": true,
+        "clip": false,
+        "wrap": false,
+        "fit": true,
+        "spacing": 8,
+        "fontSize": 21,
+        "value": 0,
+        "minimum": 0,
+        "maximum": 1,
+        "kind": 4,
+        "flow": 0,
+        "direction": 0,
+        "anchorMin": [
+          0.5,
+          0.5
+        ],
+        "anchorMax": [
+          0.5,
+          0.5
+        ],
+        "offset": [
+          0,
+          4
+        ],
+        "size": [
+          550,
+          56
+        ],
+        "relativeSize": [
+          0,
+          0
+        ],
+        "align": [
+          0.5,
+          0.5
+        ],
+        "textAlign": [
+          0.5,
+          0.5
+        ],
+        "margin": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "background": [
+          0.08,
+          0.23,
+          0.22,
+          0.96
+        ],
+        "color": [
+          0.96,
+          0.94,
+          0.85,
+          1
+        ]
+      },
+      {
+        "id": "resume",
+        "parent": "menu_bg",
+        "text": "Continue",
+        "texture": "",
+        "font": "9c3ee9e1ef311e9c2417661910eb145b",
+        "textKey": "",
+        "textLogicalAlign": -1,
+        "mirrorRow": false,
+        "visible": true,
+        "enabled": true,
+        "clip": false,
+        "wrap": false,
+        "fit": true,
+        "spacing": 8,
+        "fontSize": 21,
+        "value": 0,
+        "minimum": 0,
+        "maximum": 1,
+        "kind": 4,
+        "flow": 0,
+        "direction": 0,
+        "anchorMin": [
+          0.5,
+          0.5
+        ],
+        "anchorMax": [
+          0.5,
+          0.5
+        ],
+        "offset": [
+          0,
+          4
+        ],
+        "size": [
+          550,
+          56
+        ],
+        "relativeSize": [
+          0,
+          0
+        ],
+        "align": [
+          0.5,
+          0.5
+        ],
+        "textAlign": [
+          0.5,
+          0.5
+        ],
+        "margin": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "background": [
+          0.08,
+          0.23,
+          0.22,
+          0.96
+        ],
+        "color": [
+          0.96,
+          0.94,
+          0.85,
+          1
+        ]
+      },
+      {
+        "id": "save",
+        "parent": "menu_bg",
+        "text": "Save game",
+        "texture": "",
+        "font": "9c3ee9e1ef311e9c2417661910eb145b",
+        "textKey": "",
+        "textLogicalAlign": -1,
+        "mirrorRow": false,
+        "visible": true,
+        "enabled": true,
+        "clip": false,
+        "wrap": false,
+        "fit": true,
+        "spacing": 8,
+        "fontSize": 21,
+        "value": 0,
+        "minimum": 0,
+        "maximum": 1,
+        "kind": 4,
+        "flow": 0,
+        "direction": 0,
+        "anchorMin": [
+          0.5,
+          0.5
+        ],
+        "anchorMax": [
+          0.5,
+          0.5
+        ],
+        "offset": [
+          -145,
+          76
+        ],
+        "size": [
+          260,
+          48
+        ],
+        "relativeSize": [
+          0,
+          0
+        ],
+        "align": [
+          0.5,
+          0.5
+        ],
+        "textAlign": [
+          0.5,
+          0.5
+        ],
+        "margin": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "background": [
+          0.08,
+          0.23,
+          0.22,
+          0.96
+        ],
+        "color": [
+          0.96,
+          0.94,
+          0.85,
+          1
+        ]
+      },
+      {
+        "id": "load",
+        "parent": "menu_bg",
+        "text": "Load game",
+        "texture": "",
+        "font": "9c3ee9e1ef311e9c2417661910eb145b",
+        "textKey": "",
+        "textLogicalAlign": -1,
+        "mirrorRow": false,
+        "visible": true,
+        "enabled": true,
+        "clip": false,
+        "wrap": false,
+        "fit": true,
+        "spacing": 8,
+        "fontSize": 21,
+        "value": 0,
+        "minimum": 0,
+        "maximum": 1,
+        "kind": 4,
+        "flow": 0,
+        "direction": 0,
+        "anchorMin": [
+          0.5,
+          0.5
+        ],
+        "anchorMax": [
+          0.5,
+          0.5
+        ],
+        "offset": [
+          145,
+          76
+        ],
+        "size": [
+          260,
+          48
+        ],
+        "relativeSize": [
+          0,
+          0
+        ],
+        "align": [
+          0.5,
+          0.5
+        ],
+        "textAlign": [
+          0.5,
+          0.5
+        ],
+        "margin": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "background": [
+          0.08,
+          0.23,
+          0.22,
+          0.96
+        ],
+        "color": [
+          0.96,
+          0.94,
+          0.85,
+          1
+        ]
+      },
+      {
+        "id": "quit",
+        "parent": "menu_bg",
+        "text": "Quit to desktop",
+        "texture": "",
+        "font": "9c3ee9e1ef311e9c2417661910eb145b",
+        "textKey": "",
+        "textLogicalAlign": -1,
+        "mirrorRow": false,
+        "visible": true,
+        "enabled": true,
+        "clip": false,
+        "wrap": false,
+        "fit": true,
+        "spacing": 8,
+        "fontSize": 21,
+        "value": 0,
+        "minimum": 0,
+        "maximum": 1,
+        "kind": 4,
+        "flow": 0,
+        "direction": 0,
+        "anchorMin": [
+          0.5,
+          0.5
+        ],
+        "anchorMax": [
+          0.5,
+          0.5
+        ],
+        "offset": [
+          0,
+          146
+        ],
+        "size": [
+          550,
+          48
+        ],
+        "relativeSize": [
+          0,
+          0
+        ],
+        "align": [
+          0.5,
+          0.5
+        ],
+        "textAlign": [
+          0.5,
+          0.5
+        ],
+        "margin": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "background": [
+          0.08,
+          0.23,
+          0.22,
+          0.96
+        ],
+        "color": [
+          0.96,
+          0.94,
+          0.85,
+          1
+        ]
+      },
+      {
+        "id": "menu_hint",
+        "parent": "menu_bg",
+        "text": "Your buildings, inventory and excavations can be saved.\nEscape closes this menu.",
+        "texture": "",
+        "font": "9c3ee9e1ef311e9c2417661910eb145b",
+        "textKey": "",
+        "textLogicalAlign": -1,
+        "mirrorRow": false,
+        "visible": true,
+        "enabled": true,
+        "clip": false,
+        "wrap": true,
+        "fit": true,
+        "spacing": 8,
+        "fontSize": 15,
+        "value": 0,
+        "minimum": 0,
+        "maximum": 1,
+        "kind": 2,
+        "flow": 0,
+        "direction": 0,
+        "anchorMin": [
+          0.5,
+          0.5
+        ],
+        "anchorMax": [
+          0.5,
+          0.5
+        ],
+        "offset": [
+          0,
+          226
+        ],
+        "size": [
+          570,
+          62
+        ],
+        "relativeSize": [
+          0,
+          0
+        ],
+        "align": [
+          0.5,
+          0.5
+        ],
+        "textAlign": [
+          0.5,
+          0.5
+        ],
+        "margin": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "background": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "color": [
+          0.11,
+          0.2,
+          0.19,
+          1
+        ]
+      },
+      {
+        "id": "inventory_bg",
+        "parent": "canvas",
+        "text": "",
+        "texture": "",
+        "font": "9c3ee9e1ef311e9c2417661910eb145b",
+        "textKey": "",
+        "textLogicalAlign": -1,
+        "mirrorRow": false,
+        "visible": false,
+        "enabled": true,
+        "clip": false,
+        "wrap": false,
+        "fit": true,
+        "spacing": 8,
+        "fontSize": 18,
+        "value": 0,
+        "minimum": 0,
+        "maximum": 1,
+        "kind": 1,
+        "flow": 0,
+        "direction": 0,
+        "anchorMin": [
+          0,
+          0
+        ],
+        "anchorMax": [
+          1,
+          1
+        ],
+        "offset": [
+          0,
+          0
+        ],
+        "size": [
+          0,
+          0
+        ],
+        "relativeSize": [
+          0,
+          0
+        ],
+        "align": [
+          0,
+          0
+        ],
+        "textAlign": [
+          0,
+          0.5
+        ],
+        "margin": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "background": [
+          0.017,
+          0.043,
+          0.041,
+          0.86
+        ],
+        "color": [
+          0.96,
+          0.94,
+          0.85,
+          1
+        ]
+      },
+      {
+        "id": "inventory_card",
+        "parent": "inventory_bg",
+        "text": "",
+        "texture": "",
+        "font": "9c3ee9e1ef311e9c2417661910eb145b",
+        "textKey": "",
+        "textLogicalAlign": -1,
+        "mirrorRow": false,
+        "visible": true,
+        "enabled": true,
+        "clip": false,
+        "wrap": false,
+        "fit": true,
+        "spacing": 8,
+        "fontSize": 18,
+        "value": 0,
+        "minimum": 0,
+        "maximum": 1,
+        "kind": 1,
+        "flow": 0,
+        "direction": 0,
+        "anchorMin": [
+          0.5,
+          0.5
+        ],
+        "anchorMax": [
+          0.5,
+          0.5
+        ],
+        "offset": [
+          0,
+          0
+        ],
+        "size": [
+          760,
+          570
+        ],
+        "relativeSize": [
+          0,
+          0
+        ],
+        "align": [
+          0.5,
+          0.5
+        ],
+        "textAlign": [
+          0,
+          0.5
+        ],
+        "margin": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "background": [
+          0.95,
+          0.91,
+          0.79,
+          1
+        ],
+        "color": [
+          0.96,
+          0.94,
+          0.85,
+          1
+        ]
+      },
+      {
+        "id": "inventory_title",
+        "parent": "inventory_bg",
+        "text": "FIELD PACK",
+        "texture": "",
+        "font": "9c3ee9e1ef311e9c2417661910eb145b",
+        "textKey": "",
+        "textLogicalAlign": -1,
+        "mirrorRow": false,
+        "visible": true,
+        "enabled": true,
+        "clip": false,
+        "wrap": false,
+        "fit": true,
+        "spacing": 8,
+        "fontSize": 30,
+        "value": 0,
+        "minimum": 0,
+        "maximum": 1,
+        "kind": 2,
+        "flow": 0,
+        "direction": 0,
+        "anchorMin": [
+          0.5,
+          0.5
+        ],
+        "anchorMax": [
+          0.5,
+          0.5
+        ],
+        "offset": [
+          0,
+          -222
+        ],
+        "size": [
+          660,
+          52
+        ],
+        "relativeSize": [
+          0,
+          0
+        ],
+        "align": [
+          0.5,
+          0.5
+        ],
+        "textAlign": [
+          0.5,
+          0.5
+        ],
+        "margin": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "background": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "color": [
+          0.11,
+          0.2,
+          0.19,
+          1
+        ]
+      },
+      {
+        "id": "inventory_body",
+        "parent": "inventory_bg",
+        "text": "Your materials and equipment will appear here.",
+        "texture": "",
+        "font": "9c3ee9e1ef311e9c2417661910eb145b",
+        "textKey": "",
+        "textLogicalAlign": -1,
+        "mirrorRow": false,
+        "visible": true,
+        "enabled": true,
+        "clip": false,
+        "wrap": true,
+        "fit": true,
+        "spacing": 8,
+        "fontSize": 17,
+        "value": 0,
+        "minimum": 0,
+        "maximum": 1,
+        "kind": 2,
+        "flow": 0,
+        "direction": 0,
+        "anchorMin": [
+          0.5,
+          0.5
+        ],
+        "anchorMax": [
+          0.5,
+          0.5
+        ],
+        "offset": [
+          0,
+          -12
+        ],
+        "size": [
+          650,
+          360
+        ],
+        "relativeSize": [
+          0,
+          0
+        ],
+        "align": [
+          0.5,
+          0.5
+        ],
+        "textAlign": [
+          0,
+          0
+        ],
+        "margin": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "background": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "color": [
+          0.11,
+          0.2,
+          0.19,
+          1
+        ]
+      },
+      {
+        "id": "inventory_close",
+        "parent": "inventory_bg",
+        "text": "Back to the world",
+        "texture": "",
+        "font": "9c3ee9e1ef311e9c2417661910eb145b",
+        "textKey": "",
+        "textLogicalAlign": -1,
+        "mirrorRow": false,
+        "visible": true,
+        "enabled": true,
+        "clip": false,
+        "wrap": false,
+        "fit": true,
+        "spacing": 8,
+        "fontSize": 21,
+        "value": 0,
+        "minimum": 0,
+        "maximum": 1,
+        "kind": 4,
+        "flow": 0,
+        "direction": 0,
+        "anchorMin": [
+          0.5,
+          0.5
+        ],
+        "anchorMax": [
+          0.5,
+          0.5
+        ],
+        "offset": [
+          0,
+          222
+        ],
+        "size": [
+          650,
+          48
+        ],
+        "relativeSize": [
+          0,
+          0
+        ],
+        "align": [
+          0.5,
+          0.5
+        ],
+        "textAlign": [
+          0.5,
+          0.5
+        ],
+        "margin": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "background": [
+          0.08,
+          0.23,
+          0.22,
+          0.96
+        ],
+        "color": [
+          0.96,
+          0.94,
+          0.85,
+          1
+        ]
+      }
+    ]
+  }
+}

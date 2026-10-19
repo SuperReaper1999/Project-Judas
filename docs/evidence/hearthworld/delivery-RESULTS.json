@@ -1,0 +1,33 @@
+[
+  {
+    "name": "editor",
+    "argv": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-doc-cleanup-20261019/build-make/judas_editor",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/hearthworld-game/delivery-01/editor-project/hearthworld.judasproj"
+    ],
+    "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+    "exit": 0,
+    "wallSeconds": 18.15202589999899
+  },
+  {
+    "name": "export",
+    "argv": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-doc-cleanup-20261019/build-make/judas_export",
+      "/home/conner/Documents/GitHub/Project-Judas/projects/hearthworld/hearthworld.judasproj",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/hearthworld-game/delivery-01/package",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-doc-cleanup-20261019/build-make/judas"
+    ],
+    "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+    "exit": 0,
+    "wallSeconds": 1.1166244460000598
+  },
+  {
+    "name": "relocated",
+    "argv": [
+      "/tmp/Judas-Hearthworld-jr6d9mfu/judas"
+    ],
+    "cwd": "/tmp/Judas-Hearthworld-CWD-zqmgbfyx",
+    "exit": 0,
+    "wallSeconds": 1.6200081330025569
+  }
+]

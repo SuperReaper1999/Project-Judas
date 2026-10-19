@@ -1138,6 +1138,10 @@ judas_add_engine_test(judas_shooter_game_tests tests/ShooterGameTests.cpp)
 
 judas_add_engine_test(judas_shooter_application_tests tests/ShooterApplicationTests.cpp APPLICATION)
 
+# Consumer survival game: actual tool interactions, physical construction,
+# excavated collision and cold-process persistence through Application.
+judas_add_engine_test(judas_hearthworld_application_tests tests/HearthworldApplicationTests.cpp APPLICATION)
+
 judas_add_engine_test(judas_script_presentation_tests tests/ScriptPresentationTests.cpp)
 
 add_executable(judas_navigation_bake tools/NavigationBake.cpp)
