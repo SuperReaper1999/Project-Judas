@@ -1,0 +1,50 @@
+{
+  "utc": "2026-10-19T11:26:19.802050+00:00",
+  "scope": "adoption parity to separately tested isolated sphere prototype; production SAT header not replaced",
+  "files": {
+    "src/SpherePredicateFilter.h": {
+      "sha256": "808e72a74fe8156fe44690b91a665744cc3a17f034c43eeb2ded881d18ddaadb",
+      "bytes": 5358
+    },
+    "src/Contacts.cpp": {
+      "sha256": "c6b39dc56b81d5b1d02376deba96d9805524ce63e91a00b8781992b4e6e04dd1",
+      "bytes": 35460
+    },
+    "tests/ContactSphereFilterTests.cpp": {
+      "sha256": "1056665d693e25bfc5a639df8fe55e10d269c948d3b947f6d618b604c0798075",
+      "bytes": 18321
+    },
+    "CMakeLists.txt": {
+      "sha256": "fcda5e2d6895c1f5bbc5d1342f83e9c79f5b8b04b30660f678b14bc88a14c0c9",
+      "bytes": 80071
+    }
+  },
+  "code_equivalence": [
+    {
+      "region": "header",
+      "normalized_prototype_sha256": "36c15bbb4096d510b06e4ac0037cc7c7fcb2af70f569caab0695209367294d9d",
+      "normalized_production_sha256": "36c15bbb4096d510b06e4ac0037cc7c7fcb2af70f569caab0695209367294d9d",
+      "same_noncomment_nonwhitespace_code": true
+    },
+    {
+      "region": "template<class F> int SphereFilteredSign",
+      "normalized_prototype_sha256": "ab563d933b3eda5269028ad04b860f63ff8eb5a2a11f090a7a42b8b994e2842b",
+      "normalized_production_sha256": "ab563d933b3eda5269028ad04b860f63ff8eb5a2a11f090a7a42b8b994e2842b",
+      "same_noncomment_nonwhitespace_code": true
+    },
+    {
+      "region": "PairResult<ExistenceOnly> SpherePair",
+      "normalized_prototype_sha256": "3e20655e25780d0987707f5063c0b90211c36a841f10b24cf6b9931de5c6d328",
+      "normalized_production_sha256": "3e20655e25780d0987707f5063c0b90211c36a841f10b24cf6b9931de5c6d328",
+      "same_noncomment_nonwhitespace_code": true
+    },
+    {
+      "region": "PairResult<ExistenceOnly> SphereBoxPair",
+      "normalized_prototype_sha256": "2208e46d42ee4112c4c4330a5123a1a6cddfdb9b117cfb3d62f784d9aca52fe2",
+      "normalized_production_sha256": "2208e46d42ee4112c4c4330a5123a1a6cddfdb9b117cfb3d62f784d9aca52fe2",
+      "same_noncomment_nonwhitespace_code": true
+    }
+  ],
+  "tested_prototype_build_receipt_sha256": "ae277e94946452ddb1a5f99712f9e3050478959c5adef23a7a442c509d747602",
+  "tested_prototype_results_sha256": "f96622603e24fadbdd2680900e3795a98c407638e710e8883a70e13b820e2d7e"
+}

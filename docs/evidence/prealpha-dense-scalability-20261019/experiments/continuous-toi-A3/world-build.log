@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/continuous-toi-prototype-v2/build-world.py", line 50, in <module>
+    manifest['explicit_extra_source_inputs']['continuous-toi-prototype/ContinuousBoxCCD.h']=receipt['files']['ContinuousBoxCCD.h']
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: list indices must be integers or slices, not str

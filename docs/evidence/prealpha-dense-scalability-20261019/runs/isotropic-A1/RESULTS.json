@@ -1,0 +1,213 @@
+{
+  "argv": [
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/candidate-isotropic/bin/judas_physics_stress_live_benchmark",
+    "/home/conner/Documents/GitHub/Project-Judas/projects/physics_stress_lab/Scenes/room1024.judas",
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/runs/isotropic-A1/live",
+    "105",
+    "270",
+    "0",
+    "0",
+    "1",
+    "0.016666667",
+    "1",
+    "0",
+    "1"
+  ],
+  "blocks_of_30_steps": [
+    {
+      "count": 30,
+      "first_step": 1,
+      "last_step": 30,
+      "maximum": 57.90554,
+      "mean": 20.6067517,
+      "median": 20.4298075,
+      "p95_floor": 29.840538,
+      "p99_floor": 30.971509
+    },
+    {
+      "count": 30,
+      "first_step": 31,
+      "last_step": 60,
+      "maximum": 23.517314,
+      "mean": 20.423530533333334,
+      "median": 20.197274,
+      "p95_floor": 23.037012,
+      "p99_floor": 23.274174
+    },
+    {
+      "count": 30,
+      "first_step": 61,
+      "last_step": 90,
+      "maximum": 24.874884,
+      "mean": 20.253878433333334,
+      "median": 20.054301000000002,
+      "p95_floor": 22.443046,
+      "p99_floor": 22.454624
+    },
+    {
+      "count": 30,
+      "first_step": 91,
+      "last_step": 120,
+      "maximum": 46.048105,
+      "mean": 23.447363266666667,
+      "median": 21.576190500000003,
+      "p95_floor": 27.989979,
+      "p99_floor": 29.38218
+    },
+    {
+      "count": 30,
+      "first_step": 121,
+      "last_step": 150,
+      "maximum": 61.88134,
+      "mean": 25.6455069,
+      "median": 22.396857,
+      "p95_floor": 36.080832,
+      "p99_floor": 44.039638
+    },
+    {
+      "count": 30,
+      "first_step": 151,
+      "last_step": 180,
+      "maximum": 434.287685,
+      "mean": 88.08609006666667,
+      "median": 76.27981750000001,
+      "p95_floor": 117.559149,
+      "p99_floor": 131.152188
+    },
+    {
+      "count": 30,
+      "first_step": 181,
+      "last_step": 210,
+      "maximum": 93.137914,
+      "mean": 58.55275556666667,
+      "median": 56.626647,
+      "p95_floor": 84.532037,
+      "p99_floor": 85.852907
+    },
+    {
+      "count": 30,
+      "first_step": 211,
+      "last_step": 240,
+      "maximum": 359.299715,
+      "mean": 138.7858286,
+      "median": 117.929108,
+      "p95_floor": 247.625599,
+      "p99_floor": 305.078754
+    },
+    {
+      "count": 30,
+      "first_step": 241,
+      "last_step": 270,
+      "maximum": 1681.182839,
+      "mean": 435.50994963333335,
+      "median": 286.5923795,
+      "p95_floor": 1066.166882,
+      "p99_floor": 1619.50867
+    }
+  ],
+  "bodies_observed": [
+    1285
+  ],
+  "cadence": "synthetic one-60Hz-step/frame: NOT displayed FPS",
+  "completed_steps": 270,
+  "context": {
+    "binary_sha256": "14741b42764dc3260bc7992601f9d188c31309c7017e9ca0cc73e596a252c4da",
+    "environment": {
+      "DISPLAY": ":0",
+      "LIBGL_ALWAYS_SOFTWARE": null,
+      "SDL_AUDIODRIVER": null,
+      "SDL_VIDEODRIVER": null,
+      "WAYLAND_DISPLAY": "wayland-0",
+      "XDG_RUNTIME_DIR": "/run/user/1000",
+      "XDG_SESSION_TYPE": "wayland",
+      "__GL_SYNC_TO_VBLANK": null,
+      "__NV_PRIME_RENDER_OFFLOAD": null
+    },
+    "fixture_sha256": "a2caf62a295243d301149202c8a0a5eedafff256d68de0e3cda988846b2e05bf",
+    "mode": "exact",
+    "profile": 1,
+    "requested_steps": 270,
+    "requested_wall_seconds": 105,
+    "resolution_note": "Runtime default project/window settings; preserve actual runtime renderer log.",
+    "schema": "judas.dense.run.v1",
+    "snapshot": "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/candidate-isotropic",
+    "snapshot_manifest_sha256": "03a063f73cec15d100f4320ad367857881040867d12df4bb9e4d19aca552ee46",
+    "source_head": "e30d5f9bb72a1a341d3eff7485b8d6b3eb6f8ea9"
+  },
+  "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+  "endpoint_quality": {
+    "candidate_pairs": 9327,
+    "contact_points": 2475,
+    "deepest_endpoint_penetration_m": 0.007217108528522143,
+    "observation_ms": 30.079088,
+    "outside_fixed_step_timing": true,
+    "population": 1024,
+    "scope": "endpoint primitive geometry for the authored loose_piece population",
+    "tag_available": true,
+    "uncertain_pairs": 0,
+    "unsupported_candidates": 0
+  },
+  "exit": 0,
+  "final_digest": "192f0f4bed728953",
+  "finished_utc": "2026-10-19T10:42:56.829962+00:00",
+  "fixed_ms": {
+    "count": 270,
+    "maximum": 1681.182839,
+    "mean": 92.36796163333334,
+    "median": 25.915879,
+    "p95_floor": 328.117814,
+    "p99_floor": 977.215594
+  },
+  "frame_interval_ms": {
+    "count": 270,
+    "maximum": 1684.820397,
+    "mean": 96.00320177777778,
+    "median": 29.9829175,
+    "p95_floor": 331.523791,
+    "p99_floor": 980.423612
+  },
+  "frame_intervals_over_33_333ms": 127,
+  "frame_intervals_over_41_667ms": 116,
+  "maximum_rss_kib": 231128,
+  "nonfinite_or_bad_sequence_rows": [],
+  "observed_application_wall_seconds": 25.923799312,
+  "process_group": 15730,
+  "profile_retained_state": {
+    "available": true,
+    "cap_frames_in_retained_subset": 0,
+    "coverage": "Bounded retained profiler history/spikes only; not an all-run cap counter.",
+    "discarded_seconds_in_retained_subset": 0,
+    "retained_unique_frames": 120
+  },
+  "rendered_frames": 271,
+  "simulated_seconds": 4.5,
+  "simulation_seconds_per_wall_second": 0.17358566720260685,
+  "timed_out": false,
+  "timeout_seconds": 150,
+  "utc": "2026-10-19T10:42:30.456732+00:00",
+  "valid_completion": true,
+  "wall_seconds": 26.373137876000328,
+  "worst_step": {
+    "awake": "1024",
+    "bodies": "1285",
+    "broadphase_ms": "4.249675",
+    "candidates": "12628",
+    "contacts": "3122",
+    "fixed_ms": "1681.182839",
+    "frame": "269",
+    "impact_events": "51",
+    "impact_iterations": "46950",
+    "impact_peak": "20",
+    "impact_queries": "501599",
+    "max_angular_speed": "6.46908569336",
+    "max_linear_speed": "2.61625123024",
+    "narrowphase_ms": "10.973888",
+    "nonfinite_fields": "0",
+    "sleeping": "128",
+    "solver_ms": "1660.842011",
+    "step": "270",
+    "total_physics_ms": "1679.574126",
+    "trajectory_digest": "192f0f4bed728953",
+    "wall_ms": "25917.520093"
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "binary_sha256": "61f19d9d186aa4f811c5fd9419ea1da81094ca4dc5447535ed9358d50cf9ad38",
+  "environment": {
+    "DISPLAY": ":0",
+    "LIBGL_ALWAYS_SOFTWARE": null,
+    "SDL_AUDIODRIVER": null,
+    "SDL_VIDEODRIVER": null,
+    "WAYLAND_DISPLAY": "wayland-0",
+    "XDG_RUNTIME_DIR": "/run/user/1000",
+    "XDG_SESSION_TYPE": "wayland",
+    "__GL_SYNC_TO_VBLANK": null,
+    "__NV_PRIME_RENDER_OFFLOAD": null
+  },
+  "fixture_sha256": "a2caf62a295243d301149202c8a0a5eedafff256d68de0e3cda988846b2e05bf",
+  "mode": "exact",
+  "profile": 1,
+  "requested_steps": 270,
+  "requested_wall_seconds": 105,
+  "resolution_note": "Runtime default project/window settings; preserve actual runtime renderer log.",
+  "schema": "judas.dense.run.v1",
+  "snapshot": "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/candidate-parallel-toi-v2",
+  "snapshot_manifest_sha256": "8ce30605093d58b22495ae300b146292352b6469b4197a8750a75c517eb1d360",
+  "source_head": "e30d5f9bb72a1a341d3eff7485b8d6b3eb6f8ea9"
+}

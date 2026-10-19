@@ -1,0 +1,162 @@
+{
+  "utc": "2026-10-19T11:02:34.049994+00:00",
+  "scope": "isolated read-only capture and offline numerical research; no production changes",
+  "files": {
+    "ANDERSONREPLAY_BUILD.json": {
+      "bytes": 3670,
+      "sha256": "5b6a6c32a74db6a6d366a69346f1c13fc1454830cb8a98908bdf19a16fd26814"
+    },
+    "AndersonReplay.cpp": {
+      "bytes": 11122,
+      "sha256": "1f39f14768f069f49cd8e4d35979dcf4abdcbcace8ce7be1df7cf6c1a1cf778e"
+    },
+    "AndersonReplay.cpp.o": {
+      "bytes": 572016,
+      "sha256": "e83b9e41e5d0f0b4381aa620fd62fd2439ff9eb2c989f1f5a39c6d9657992250"
+    },
+    "BUILD.json": {
+      "bytes": 5752,
+      "sha256": "1d0159e3d1b4308244db31066d470b643316f89638e6b5ac96d9520ab94441e2"
+    },
+    "ContactCapture.h": {
+      "bytes": 7009,
+      "sha256": "e3440bc7f1cbbdf03ada8a567c08378888042b9b8b900b9aaa67c96ec1168416"
+    },
+    "ImpactSolver.cpp": {
+      "bytes": 7830,
+      "sha256": "084b3e49beb849386cf1bdb53f4d301ee61160db9a8bae905e2efb653a6041bf"
+    },
+    "ImpactSolver.cpp.o": {
+      "bytes": 211616,
+      "sha256": "08821626dc823feb620776723929eee891c457568753e4a8785e6669a8d4c6e2"
+    },
+    "ImpactSolver.original.cpp": {
+      "bytes": 7631,
+      "sha256": "9c7a88edefcccdb8fe63ceeaeea0f8f11c92681320625574111be030c68d8d6f"
+    },
+    "NormalSchur.h": {
+      "bytes": 10520,
+      "sha256": "d0b1b16f97b11a10b57b4c2767d04e081f6dc9bf1cd99ac2f0dc06932b86b540"
+    },
+    "REPLAY_BUILD.json": {
+      "bytes": 3456,
+      "sha256": "e440f794c2e0052e4ce9028d41ff5cb5cf5b6ddbaa900618af1731a088dde7eb"
+    },
+    "RESULTS.txt": {
+      "bytes": 6081,
+      "sha256": "61eb6f18298c79a0ec58eed7e34f37f89978fa2ed57f852159df199f8bfd2eda"
+    },
+    "Replay.cpp": {
+      "bytes": 8791,
+      "sha256": "955039f0c27a792c9d1d24cdce055ec34d77c9f6a124c23f93ffe33145a22168"
+    },
+    "Replay.cpp.o": {
+      "bytes": 521072,
+      "sha256": "f2eeeeb0c418f4d708d97cb35c3ab1f78f88e2d62b4c099156b1908c656a60e8"
+    },
+    "SCHURREPLAY_BUILD.json": {
+      "bytes": 3658,
+      "sha256": "e3bcdc2636b6128cc5cf430c1af7f486dd3ce16ca2ece14842af6a2f5eb3ef2c"
+    },
+    "SchurReplay.cpp": {
+      "bytes": 6822,
+      "sha256": "0997c2098f23256417e8f4aa3146768894630b89fba412ac0a8ce64c7301297e"
+    },
+    "SchurReplay.cpp.o": {
+      "bytes": 595512,
+      "sha256": "04f7ceb951996ef5502ad99e2c4db404675f09134d97d99af67c5468c586456e"
+    },
+    "anderson-3470.json": {
+      "bytes": 13125,
+      "sha256": "3c7cc3a1ef28a68b460b9c6b3eab2578e5d8163c094693965878b9e57c7a3e04"
+    },
+    "anderson-3470.log": {
+      "bytes": 13125,
+      "sha256": "3c7cc3a1ef28a68b460b9c6b3eab2578e5d8163c094693965878b9e57c7a3e04"
+    },
+    "anderson-build.log": {
+      "bytes": 118,
+      "sha256": "4e997a043204b6c8effe9c3c6c95c2bf9fe50682e1ce4133b6c832500174d2b2"
+    },
+    "anderson-replay": {
+      "bytes": 513944,
+      "sha256": "35455797d49cc5f113a1684cff613bea85692e0895b97af60496f94e0ce1c44e"
+    },
+    "build-replay.py": {
+      "bytes": 1963,
+      "sha256": "66c7b66a6baa644f8eb81c778cefa465d70ba4209148645858d05f8962da4379"
+    },
+    "build.log": {
+      "bytes": 439,
+      "sha256": "d7fa53004a0d4c624a370838352d3a2346648195be06b355c7d6307c53c057f7"
+    },
+    "build.py": {
+      "bytes": 4358,
+      "sha256": "b110e1ee44ecbf5c6ea3506b0620e02e04c29224bc7dc1ecde4dadfb24769eb9"
+    },
+    "capture.d": {
+      "bytes": 967,
+      "sha256": "7b76465427f62aca97c666ed02bc7ed9ef2b01b16b5205ab612217342d4286f5"
+    },
+    "event-3470.json": {
+      "bytes": 9406187,
+      "sha256": "dd734b9f5bdda2995b3b952072b4838bd024b540f1cff8cfffeb3a9804c60ec4"
+    },
+    "judas_physics_stress_live_benchmark": {
+      "bytes": 55110000,
+      "sha256": "a08b368812372148a4e9febd9b673a95f7d93305314bffa1052cd1002fcfa68e"
+    },
+    "libjudas_engine.a": {
+      "bytes": 30561748,
+      "sha256": "b841593cae912aa73c3af35cbdf1a4f0bdfe2e2a8173517e95ef52a72d65aeee"
+    },
+    "replay": {
+      "bytes": 470720,
+      "sha256": "3675a040f49305cd77c78f7fc8e19fd91bc7300ad105dbc4fb6da36c2d4551eb"
+    },
+    "replay-3470.json": {
+      "bytes": 5026,
+      "sha256": "0f2143d9971b95454d9ba05c6ef5e4abe3cc0efb173140ea7487b31fbfa87256"
+    },
+    "replay-3470.log": {
+      "bytes": 5026,
+      "sha256": "0f2143d9971b95454d9ba05c6ef5e4abe3cc0efb173140ea7487b31fbfa87256"
+    },
+    "replay-build.log": {
+      "bytes": 109,
+      "sha256": "6c12f283023a8dad44ae5a441b51aabdc70df07ccc0555ab6fa3d17ff04f4f02"
+    },
+    "schur-3470.json": {
+      "bytes": 7886,
+      "sha256": "1586f83d47569c645be81dd59dedf5f48d0474bb12d1fb1308e7ae0805c6c40d"
+    },
+    "schur-3470.log": {
+      "bytes": 7886,
+      "sha256": "1586f83d47569c645be81dd59dedf5f48d0474bb12d1fb1308e7ae0805c6c40d"
+    },
+    "schur-build.log": {
+      "bytes": 115,
+      "sha256": "4863573f26ad783cb24fd140a4c917604d59a8d3c64e22fc77bd7df20819e5b4"
+    },
+    "schur-fista-build.log": {
+      "bytes": 115,
+      "sha256": "4863573f26ad783cb24fd140a4c917604d59a8d3c64e22fc77bd7df20819e5b4"
+    },
+    "schur-replay": {
+      "bytes": 526232,
+      "sha256": "43ff21a61763b15046601e802f69dff212e310996b549990bc72f3786d122b76"
+    },
+    "snapshot/FROZEN.json": {
+      "bytes": 82121,
+      "sha256": "a2a3d2cc9e481315d40fc3afbaff459ca86042a1df9f489f5c59e2faeb4f4cdd"
+    },
+    "snapshot/bin/judas_physics_stress_live_benchmark": {
+      "bytes": 55110000,
+      "sha256": "a08b368812372148a4e9febd9b673a95f7d93305314bffa1052cd1002fcfa68e"
+    },
+    "snapshot/isolated-overrides.tar.gz": {
+      "bytes": 7490,
+      "sha256": "18a52e416bb70670130efa7b5db8fd8e6cdc08422d99bdb32980d8b69177a9ff"
+    }
+  }
+}

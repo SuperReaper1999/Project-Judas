@@ -1567,6 +1567,14 @@ add_executable(judas_contact_sat_workspace_tests tests/ContactSatWorkspaceTests.
 target_include_directories(judas_contact_sat_workspace_tests PRIVATE src)
 target_link_libraries(judas_contact_sat_workspace_tests PRIVATE ${JUDAS_GLM})
 judas_warnings(judas_contact_sat_workspace_tests)
+add_executable(judas_contact_sat_filter_tests tests/ContactSatFilterTests.cpp src/Contacts.cpp)
+target_include_directories(judas_contact_sat_filter_tests PRIVATE src)
+target_link_libraries(judas_contact_sat_filter_tests PRIVATE ${JUDAS_GLM})
+judas_warnings(judas_contact_sat_filter_tests)
+judas_add_engine_test(judas_contact_sphere_filter_tests tests/ContactSphereFilterTests.cpp)
+add_executable(judas_impact_support_sets_tests tests/ImpactSupportSetsTests.cpp)
+target_include_directories(judas_impact_support_sets_tests PRIVATE src)
+judas_warnings(judas_impact_support_sets_tests)
 
 # Direct headless fixtures need the complete private world implementation and
 # borrowed-job service, without renderer/window/resource ownership. Check both

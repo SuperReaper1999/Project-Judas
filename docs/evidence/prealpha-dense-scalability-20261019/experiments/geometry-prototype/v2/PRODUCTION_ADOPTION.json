@@ -1,0 +1,16 @@
+{
+  "production_adoption": {
+    "src/Contacts.cpp": "ab6c22d65e7a26c76de7c7fecf83b5aac927d6247ef86097264cc25edfb3c5d7",
+    "src/ContactSatFilter.h": "1f09c0c3d0663d156cea9ebc635ac33f10f73f06a3888a50591ce33b5a41334b",
+    "tests/ContactSatFilterTests.cpp": "8506d631dcb64abb9e95a29f843a44ed74ffce89ce121e54eea1b7ed6857d452",
+    "CMakeLists.txt": "738e09eb04668c4789453d61eda7d3ceead0418de93a76559da8ab6f81d16b8b"
+  },
+  "tested_prototype": {
+    "Contacts.cpp": "e339926f050e65634d4d82075de09b5b1adb54b0fb102f74ed3b1ded58bb617c",
+    "FilteredSat.h": "a19f2e6d7fb7acf3663eba81e3be04168b5812761708aeff1f34130dd611ea6b"
+  },
+  "changes_from_prototype": "Whitespace in affected Context/BoxSat methods; private header/class renamed ContactSatFilter; I() renamed Interval(); header made self-contained; explanatory comments. gamma4096, arithmetic expressions, filters and control flow preserved.",
+  "normalized_contacts_tokens_identical_after_private_renames": true,
+  "normalized_filter_tokens_identical_after_private_rename_and_self_contained_include": true,
+  "proof_comment_followup": "Independent read-only review checked operation counts; clarified scalar-polynomial vs Iv padding range, endpoint gamma3, combined gamma1133+gamma2247<gamma4096 and negligible propagated subnormal padding. Runtime coefficients and arithmetic unchanged."
+}

@@ -1,5 +1,6 @@
 #include "WorldInternal.h"
 #include "ImpactCandidateCache.h"
+#include "ImpactSupportSets.h"
 
 #include <unordered_map>
 
@@ -512,11 +513,7 @@ auto PhysicsWorld::Impl::AdvanceImpacts(float dt, bool coupledVelocityChanged) -
             // through the support before the step ends.
             for (const auto &key : eventPairs) {
                 const bool spinning = SpinsThroughSupport(key, double(dt) - now, now, true);
-                auto &into = spinning ? spinningPairs : supportPairs;
-                auto &from = spinning ? supportPairs : spinningPairs;
-                from.erase(std::remove(from.begin(), from.end(), key), from.end());
-                into.insert(std::upper_bound(into.begin(), into.end(), key), key);
-                into.erase(std::unique(into.begin(), into.end()), into.end());
+                SetImpactSupport(supportPairs, spinningPairs, key, spinning);
             }
         }
         ++stats.impactEvents;

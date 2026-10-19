@@ -1,0 +1,130 @@
+{
+  "format": 1,
+  "startedUtc": "2026-10-19T12:05:38.405370+00:00",
+  "sourceRevision": "e30d5f9bb72a1a341d3eff7485b8d6b3eb6f8ea9",
+  "trackedWorktreeStatus": "M CMakeLists.txt\n M src/Contacts.cpp\n M src/physics/WorldImpactEvents.cpp\n M tools/validation/suites.json",
+  "manifestSha256": "0ce097c431194ccedb8053b603318e16e7a326599462454e7f32304eceab68ee",
+  "trackedDiffSha256": "fc78d557687437b9f82fae4591f3a459256049e3ac84431342625fbcb1bcea9f",
+  "platform": "Linux-7.0.0-38-generic-x86_64-with-glibc2.43",
+  "machine": "x86_64",
+  "cpuCount": 8,
+  "groups": [],
+  "tests": [
+    {
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_impact_timing_tests"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+      "timeoutSeconds": 120.0,
+      "binarySha256": "fffda5ca9da59deb6e9b30f5775430fc33900cd51e7859207185400a91d808f9",
+      "exit": 0,
+      "status": "passed",
+      "binarySha256After": "fffda5ca9da59deb6e9b30f5775430fc33900cd51e7859207185400a91d808f9",
+      "seconds": 0.025089132999710273,
+      "buildIdentity": {
+        "architecture": "x86_64",
+        "build_id": "0.1.0-prealpha-Experimental-e30d5f9-dirty-3f5e178d4aa2-u4a912d9b5529",
+        "channel": "Experimental",
+        "compiler": "GNU",
+        "compiler_version": "15.2.0",
+        "configuration": "Release",
+        "maturity": "pre-alpha",
+        "platform": "Linux",
+        "schema": 1,
+        "source_dirty": true,
+        "source_fingerprint": "3f5e178d4aa2579da8f35cdebb05d4add70f5acaa5c3e2cc23f32d59f49212ec",
+        "source_origin": "git",
+        "source_revision": "e30d5f9bb72a1a341d3eff7485b8d6b3eb6f8ea9",
+        "source_tree": "5b7a0a75cc4a19d996b642c52cf57da305d2cea8",
+        "source_untracked_count": 24,
+        "source_untracked_fingerprint": "4a912d9b552981d109ffddeb0de1224bf4fc057eda1b960e67f7ea5502ae8151",
+        "version": "0.1.0-prealpha"
+      },
+      "name": "impact-timing"
+    }
+  ],
+  "knownFindings": [
+    {
+      "id": "CCD-MESH-ARRIVAL",
+      "status": "resolved-first-arrival",
+      "scheduled": true,
+      "reason": "Pass2 finite swept-SAT bounds correct the validated first-arrival contract; it now runs in the ordinary collision group. This does not close later curved-sheet continuation.",
+      "evidence": "docs/evidence/prealpha-pass2/physics"
+    },
+    {
+      "id": "CCD-MESH-CONTINUATION",
+      "status": "resolved-original-fixtures-bounded-ccd",
+      "scheduled": true,
+      "reason": "Original unchanged 90-step glancing cases and rotated control pass with native per-feature growth scheduling. This is not universal CCD: bounded sampling, native rear selection and deep initial-overlap limitations remain. Corrected mesh support costs more than the old missed-collision path.",
+      "evidence": "docs/evidence/prealpha-ccd-continuation-20261019"
+    },
+    {
+      "id": "FLU-001",
+      "status": "deferred-failing",
+      "scheduled": false,
+      "reason": "Legacy PBF settling contract retained unchanged; separate fluid review required.",
+      "evidence": "docs/evidence/m78-completion/FINDINGS_FINAL.json"
+    },
+    {
+      "id": "LEGACY-CONTINUATION",
+      "status": "documented-incompatible-history",
+      "scheduled": false,
+      "reason": "Original a106 snapshot lacks historical continuation data. New-format passes do not certify that snapshot.",
+      "evidence": "docs/evidence/m78-cold-boundary"
+    },
+    {
+      "id": "DENSE-CCD-TAIL",
+      "status": "open-performance-limit",
+      "scheduled": false,
+      "reason": "Focused correctness checks do not certify dense-pile latency; matched profiling is reported separately.",
+      "evidence": "docs/evidence/m91/REPORT.md"
+    },
+    {
+      "id": "LIQUID-BAKE-ROTATION",
+      "status": "resolved-baking",
+      "scheduled": true,
+      "reason": "Baker and runtime use the same normalized owner/field frames and oriented gravity volumes; both original bake-only runtime-publication cases pass unchanged equivalence tolerances. Original full integration exposes separate retained exact-total comparison failure.",
+      "evidence": "docs/evidence/prealpha-liquid-rotation/REPORT.md"
+    },
+    {
+      "id": "LIQUID-BAKE-KNOTS",
+      "status": "resolved-baking",
+      "scheduled": true,
+      "reason": "Positive tetrahedral density is integrated into one monotone cumulative curve, including shared endpoints; unchanged strict Surface1 decoder accepts both original rotated bakes. A later origin sampling limitation remains separately failed.",
+      "evidence": "docs/evidence/prealpha-liquid-rotation/REPORT.md"
+    },
+    {
+      "id": "LIQUID-ORIGIN-GRID-QUERY",
+      "status": "open-query-continuity-failing",
+      "scheduled": false,
+      "reason": "The original half-turn fixture now bakes and publishes, then fails its unchanged post-512m-origin query comparison: float translation crosses a discontinuous disturbed-surface cell boundary. Conserved quantities and wave bytes remain unchanged. This full integration failure is preserved, not counted as a baking pass.",
+      "evidence": "docs/evidence/prealpha-liquid-rotation/REPORT.md"
+    },
+    {
+      "id": "LIQUID-ORIGIN-TOTAL-IDENTITY",
+      "status": "resolved-oracle-causal-baseline",
+      "scheduled": true,
+      "reason": "Pass3 preserves the original failed test and demonstrates its causal-baseline error. Current atomicity compares the immediate pre-request total with the same exact equality and every physical participant byte; earlier legitimate paired-flow conservation tolerance and liquid runtime are unchanged.",
+      "evidence": "docs/evidence/prealpha-pass3/integration/REPORT.md"
+    }
+  ],
+  "humanAcceptance": "not-established",
+  "scope": "explicit manifest subset",
+  "expectedSourceIdentity": {
+    "source_revision": "e30d5f9bb72a1a341d3eff7485b8d6b3eb6f8ea9",
+    "source_fingerprint": "3f5e178d4aa2579da8f35cdebb05d4add70f5acaa5c3e2cc23f32d59f49212ec",
+    "source_dirty": true,
+    "source_untracked_fingerprint": "4a912d9b552981d109ffddeb0de1224bf4fc057eda1b960e67f7ea5502ae8151"
+  },
+  "passed": true,
+  "finishedUtc": "2026-10-19T12:05:38.651649+00:00",
+  "sourceRevisionAfter": "e30d5f9bb72a1a341d3eff7485b8d6b3eb6f8ea9",
+  "trackedWorktreeStatusAfter": "M CMakeLists.txt\n M src/Contacts.cpp\n M src/physics/WorldImpactEvents.cpp\n M tools/validation/suites.json",
+  "trackedDiffSha256After": "fc78d557687437b9f82fae4591f3a459256049e3ac84431342625fbcb1bcea9f",
+  "expectedSourceIdentityAfter": {
+    "source_revision": "e30d5f9bb72a1a341d3eff7485b8d6b3eb6f8ea9",
+    "source_fingerprint": "3f5e178d4aa2579da8f35cdebb05d4add70f5acaa5c3e2cc23f32d59f49212ec",
+    "source_dirty": true,
+    "source_untracked_fingerprint": "4a912d9b552981d109ffddeb0de1224bf4fc057eda1b960e67f7ea5502ae8151"
+  }
+}

@@ -1,0 +1,21 @@
+PLANE SPIN rotated=0 queries=0 advances=0 samples=0 ms=0.089678
+PASS spin about actual support normal requires no penetration sampling
+PASS normal-axis physical spin retained
+PASS flat spinning body stays on actual rotated support
+PLANE SPIN rotated=1 queries=0 advances=0 samples=0 ms=0.046514
+PASS spin about actual support normal requires no penetration sampling
+PASS normal-axis physical spin retained
+PASS flat spinning body stays on actual rotated support
+PASS real tumbling through support still produces continuous impacts
+PASS tumbling response remains finite
+CASE hit=0 no-spin queries=1 advances=0 samples=0; spin queries=1 advances=0 samples=0 ms=0.003731
+PASS centred sphere spin does not change frictionless translation
+PASS physical spin remains present
+PASS parallel sphere movement remains unimpeded
+PASS geometry-invariant spin adds no conservative search work
+CASE hit=1 no-spin queries=1 advances=2 samples=0; spin queries=1 advances=2 samples=0 ms=0.038765
+PASS centred sphere spin does not change frictionless translation
+PASS physical spin remains present
+PASS thin wall CCD still catches fast spinning sphere
+PASS geometry-invariant spin adds no conservative search work
+SUMMARY checks=16 failures=0

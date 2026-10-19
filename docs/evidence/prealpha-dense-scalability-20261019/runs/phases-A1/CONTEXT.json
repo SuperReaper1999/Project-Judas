@@ -1,0 +1,24 @@
+{
+  "binary_sha256": "7db9189d60dbc037bfb904da6c13e5370817471c91d16599e7c1e01ac02d9958",
+  "environment": {
+    "DISPLAY": ":0",
+    "LIBGL_ALWAYS_SOFTWARE": null,
+    "SDL_AUDIODRIVER": null,
+    "SDL_VIDEODRIVER": null,
+    "WAYLAND_DISPLAY": "wayland-0",
+    "XDG_RUNTIME_DIR": "/run/user/1000",
+    "XDG_SESSION_TYPE": "wayland",
+    "__GL_SYNC_TO_VBLANK": null,
+    "__NV_PRIME_RENDER_OFFLOAD": null
+  },
+  "fixture_sha256": "a2caf62a295243d301149202c8a0a5eedafff256d68de0e3cda988846b2e05bf",
+  "mode": "exact",
+  "profile": 1,
+  "requested_steps": 270,
+  "requested_wall_seconds": 105,
+  "resolution_note": "Runtime default project/window settings; preserve actual runtime renderer log.",
+  "schema": "judas.dense.run.v1",
+  "snapshot": "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/candidate-phase-phases",
+  "snapshot_manifest_sha256": "60fa71c829e5701a2e551130ef34d375b986d800f6f0b18f62d069a1ef5c9c4c",
+  "source_head": "e30d5f9bb72a1a341d3eff7485b8d6b3eb6f8ea9"
+}

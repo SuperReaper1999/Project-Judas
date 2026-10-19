@@ -1,0 +1,8 @@
+{
+  "snapshot": "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/contact-system-research/snapshot",
+  "binary_sha256": "a08b368812372148a4e9febd9b673a95f7d93305314bffa1052cd1002fcfa68e",
+  "environment": {
+    "JUDAS_CONTACT_CAPTURE_EVENT": "3470",
+    "JUDAS_CONTACT_CAPTURE_PATH": "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/contact-system-research/event-3470.json"
+  }
+}

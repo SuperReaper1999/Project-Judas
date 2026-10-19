@@ -1,0 +1,138 @@
+{
+  "schema": "judas.continuous-toi-research.inventory.v1",
+  "utc": "2026-10-19T11:56:11.808453+00:00",
+  "scope": "Top-level source, binaries, raw diagnostic results. Snapshot manifests separately hash preserved linked binaries and source override archives.",
+  "files": [
+    {
+      "path": "ContinuousBoxCCD.h",
+      "size_bytes": 15090,
+      "sha256": "155faed48bbf5acb22d94a8af0f42da54a50672202df96c1056abe891f95ce48"
+    },
+    {
+      "path": "INITIAL_PARTIAL_WORLD_BUILD.json",
+      "size_bytes": 7833,
+      "sha256": "0a86e285f81590abb264782ca15f343f1c6d3fafc0d0fd9dd88f2a9bd2c27eb1"
+    },
+    {
+      "path": "PairReplay.cpp",
+      "size_bytes": 7985,
+      "sha256": "360c8ff31aedb937743101a2187623a94d586334685d54781c168f7861a2e943"
+    },
+    {
+      "path": "PairReplay.cpp.o",
+      "size_bytes": 709328,
+      "sha256": "1fe19a2b1847f241fdc7c677ea507c1207a8ce9af7a28431377b620737b26e7b"
+    },
+    {
+      "path": "REPLAY_ANALYSIS.json",
+      "size_bytes": 48784,
+      "sha256": "158f1a06ab2e1c806328acebdc38fb6646ea14ca04085b1cb13c40ac0cc52804"
+    },
+    {
+      "path": "REPLAY_ANALYSIS.log",
+      "size_bytes": 465,
+      "sha256": "01588a813e831133df8c063321398a1f082219a48863789faa47f51f3e251183"
+    },
+    {
+      "path": "REPLAY_BUILD.json",
+      "size_bytes": 3712,
+      "sha256": "f905f3d1325f524ca6aeef120d811e226a54c9e9fac035571a6ee413fa6511cb"
+    },
+    {
+      "path": "WORLD_BUILD.json",
+      "size_bytes": 8486,
+      "sha256": "93dc81a3c19917d414587370f1c29ae5f3ce3dbf096aaea093165de0580b91ae"
+    },
+    {
+      "path": "WorldCCDSearch.cpp",
+      "size_bytes": 48340,
+      "sha256": "fdb9edb4bf091077a20a8a3f48b49ad462f4c17584b18e1e268634ff1457b709"
+    },
+    {
+      "path": "WorldCCDSearch.cpp.o",
+      "size_bytes": 206448,
+      "sha256": "002014dbf9b976a65ffa209183fb29153a156e3d3d76b2b3b684ff0b07c981b5"
+    },
+    {
+      "path": "WorldCCDSearch.original.cpp",
+      "size_bytes": 42442,
+      "sha256": "cdd69bf0c740b0466996bd97d701867d493ec173f27b83a46e64d0f6f7279c52"
+    },
+    {
+      "path": "analyse-replay.py",
+      "size_bytes": 3208,
+      "sha256": "ff63c3256d229320af73f2f0c4bda7ea9c70ff08202e664369f0a244dca39f9b"
+    },
+    {
+      "path": "build-replay.py",
+      "size_bytes": 1600,
+      "sha256": "150c1689f0cfae6fd8e515281b3cc0acc21252fd47c5cc0b69c14669c114aecf"
+    },
+    {
+      "path": "build-world.initial-failed.py",
+      "size_bytes": 5227,
+      "sha256": "b5ef535424df68b677b8f33621c49d8f73ba40c101f0da6bf26898d537dac916"
+    },
+    {
+      "path": "build-world.py",
+      "size_bytes": 5189,
+      "sha256": "678f10d3dcc5931c7dc42db0c4e7e3ce0a40c1442c9842eea13877fb097ce6ce"
+    },
+    {
+      "path": "finalize-metadata.log",
+      "size_bytes": 566,
+      "sha256": "04b6e1a854296329e353ca2fa3805bfa275b76b428c101e40e9f64205d418674"
+    },
+    {
+      "path": "finalize-metadata.py",
+      "size_bytes": 4342,
+      "sha256": "a0d3a931c59a7ade797a2af50a609bc552d1f102bdde4aa16c1a2b8b0d6acf27"
+    },
+    {
+      "path": "judas_physics_stress_live_benchmark",
+      "size_bytes": 55096344,
+      "sha256": "19d413a64969c203b1bb419689cee6f1546fd7c3397b41d76ac52b4c696d48bb"
+    },
+    {
+      "path": "judas_physics_stress_live_benchmark-normal",
+      "size_bytes": 55087960,
+      "sha256": "ab1d478010736a860863fc8e818b716af7fe3aafc815224b280274fc7924388c"
+    },
+    {
+      "path": "libjudas_engine.a",
+      "size_bytes": 30435718,
+      "sha256": "96131ab7042b0d8b27d63a881306450a9d2e6b22a0e8f2087697d6dcb137c593"
+    },
+    {
+      "path": "pair-replay",
+      "size_bytes": 1711968,
+      "sha256": "8e1fca792d92085fee3d9ca2551c9d16d5bbb9615f5d3f61e8d977776930ea39"
+    },
+    {
+      "path": "pair-replay.json",
+      "size_bytes": 468679,
+      "sha256": "9b392a2434166d31f9f7b1274b278d36df22690d71ab0791d770c167e05d3522"
+    },
+    {
+      "path": "pair-replay.log",
+      "size_bytes": 48,
+      "sha256": "1eb898d21d1951c5fe0204c0442c36ebbb25d3e05d00efe95f4aca25e62f0355"
+    },
+    {
+      "path": "replay-build.log",
+      "size_bytes": 118,
+      "sha256": "fd07f848e1019af14fa8305c90ab647d70bebf3f09397feebf285734628c7997"
+    },
+    {
+      "path": "world-build.log",
+      "size_bytes": 470,
+      "sha256": "18b664090a2d1faa8af5ace91dd7adbff02b650683c77f34e34264c5e7006303"
+    },
+    {
+      "path": "world.d",
+      "size_bytes": 4786,
+      "sha256": "f8081c1a6ca8fc3422860cb54ebc8ca0475d421b614492cb7f7c2974d6dbe1cd"
+    }
+  ],
+  "total_size_bytes": 143925136
+}

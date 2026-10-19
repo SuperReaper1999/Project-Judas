@@ -1,0 +1,31 @@
+{
+  "binary_sha256": "12013547623327dcaeb64ed77115c6af3f683ba30dc793f28c6eee101b1b9d7d",
+  "environment": {
+    "DISPLAY": ":0",
+    "LIBGL_ALWAYS_SOFTWARE": null,
+    "SDL_AUDIODRIVER": null,
+    "SDL_VIDEODRIVER": null,
+    "WAYLAND_DISPLAY": "wayland-0",
+    "XDG_RUNTIME_DIR": "/run/user/1000",
+    "XDG_SESSION_TYPE": "wayland",
+    "__GL_SYNC_TO_VBLANK": null,
+    "__NV_PRIME_RENDER_OFFLOAD": null
+  },
+  "fixture_sha256": "a2caf62a295243d301149202c8a0a5eedafff256d68de0e3cda988846b2e05bf",
+  "mode": "exact",
+  "profile": 1,
+  "requested_steps": 270,
+  "requested_wall_seconds": 90.0,
+  "resolution_note": "Runtime default project/window settings; preserve actual runtime renderer log.",
+  "schema": "judas.dense.run.v1",
+  "snapshot": "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/warm-force-prototype/snapshot",
+  "snapshot_manifest_sha256": "bff7644b897fd21ca48817e31f277dce4683187ace38756a334eddf896a37d55",
+  "source_head": "e30d5f9bb72a1a341d3eff7485b8d6b3eb6f8ea9",
+  "timing_contract": {
+    "fixed_cadence_hz": 60,
+    "maximum_fixed_steps_per_frame": 8,
+    "note": "This workload preserves the existing 60 Hz contract; per-frame catch-up count is extracted from frozen actual source.",
+    "source": "src/SimulationTiming.h",
+    "source_sha256": "94768d45689caa49be5160b9c9d2884ab15ebd33bff9a6003e8d8113d920bf9d"
+  }
+}

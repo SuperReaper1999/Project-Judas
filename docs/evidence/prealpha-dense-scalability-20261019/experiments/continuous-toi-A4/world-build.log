@@ -1,0 +1,7 @@
+{
+  "quality_snapshot": "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/continuous-toi-prototype-v4/snapshot",
+  "quality_binary_sha256": "0f0071ca8cab527df971f2ba9f763660f6600f06e721dfff53e41bffd57c5af6",
+  "normal_snapshot": "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/continuous-toi-prototype-v4/snapshot-normal",
+  "normal_binary_sha256": "41355ae6d747b08371b3c6ecdbfb4323e0847464e610d6c71f132f027a8b74fe",
+  "archive": "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/continuous-toi-prototype-v4/libjudas_engine.a"
+}

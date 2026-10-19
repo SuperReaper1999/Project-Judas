@@ -1,0 +1,46 @@
+{
+  "classification": "Synthetic helper accounting unit checks only; not game performance or physics evidence.",
+  "checks": [
+    {
+      "name": "successful early quit rejected",
+      "pass": true
+    },
+    {
+      "name": "full CSV catchup count",
+      "pass": true
+    },
+    {
+      "name": "counts agree",
+      "pass": true
+    },
+    {
+      "name": "full realtime capture acknowledged",
+      "pass": true
+    },
+    {
+      "name": "simulation progress still exposed",
+      "pass": true
+    },
+    {
+      "name": "low output cadence exposed",
+      "pass": true
+    },
+    {
+      "name": "synthetic has no FPS observation",
+      "pass": true
+    },
+    {
+      "name": "synthetic count completion",
+      "pass": true
+    },
+    {
+      "name": "short synthetic capture rejected",
+      "pass": true
+    },
+    {
+      "name": "actual frozen timing read",
+      "pass": true
+    }
+  ],
+  "failures": 0
+}

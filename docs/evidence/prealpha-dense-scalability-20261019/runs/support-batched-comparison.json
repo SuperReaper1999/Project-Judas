@@ -1,0 +1,69 @@
+{
+  "baseline": "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/runs/baseline-A1",
+  "baseline_fixed_ms": {
+    "count": 270,
+    "maximum": 1695.193218,
+    "mean": 93.50908134074074,
+    "median": 25.4253895,
+    "p95_floor": 339.803512,
+    "p99_floor": 974.777721
+  },
+  "baseline_frame_intervals_ms": {
+    "count": 270,
+    "maximum": 1698.306736,
+    "mean": 97.27057016666667,
+    "median": 30.1745335,
+    "p95_floor": 344.076951,
+    "p99_floor": 977.936321
+  },
+  "baseline_steps": 270,
+  "baseline_wall_seconds": 26.97192884499998,
+  "both_completed": true,
+  "candidate": "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/runs/support-batched-A1",
+  "candidate_fixed_ms": {
+    "count": 270,
+    "maximum": 1605.863302,
+    "mean": 89.7608462,
+    "median": 25.880581,
+    "p95_floor": 320.422764,
+    "p99_floor": 933.956537
+  },
+  "candidate_frame_intervals_ms": {
+    "count": 270,
+    "maximum": 1609.5535,
+    "mean": 93.4080044962963,
+    "median": 30.1748285,
+    "p95_floor": 324.136543,
+    "p99_floor": 937.06731
+  },
+  "candidate_steps": 270,
+  "candidate_wall_seconds": 25.667112007000014,
+  "compared_physical_fields": [
+    "step",
+    "bodies",
+    "awake",
+    "sleeping",
+    "candidates",
+    "contacts",
+    "impact_events",
+    "impact_queries",
+    "impact_iterations",
+    "impact_peak",
+    "trajectory_digest",
+    "max_linear_speed",
+    "max_angular_speed",
+    "nonfinite_fields"
+  ],
+  "exact_comparison_pass": true,
+  "exact_endpoint_geometry": true,
+  "exact_physical_rows": true,
+  "first_100_mismatches": [],
+  "physical_mismatch_count": 0,
+  "same_fixture": true,
+  "same_mode": true,
+  "same_profile_setting": true,
+  "schema": "judas.dense.compare.v1",
+  "timing_note": "Single paired observation, not a universal bound or statistical significance claim. Synthetic cadence is not FPS.",
+  "trajectory_note": "Non-identical trajectories require independently justified physical acceptance; this comparison does not silently accept them.",
+  "utc": "2026-10-19T10:41:23.064578+00:00"
+}

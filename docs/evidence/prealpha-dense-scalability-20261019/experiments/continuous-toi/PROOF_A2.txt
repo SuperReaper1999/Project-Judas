@@ -1,0 +1,95 @@
+ISOLATED CONTINUOUS BOX CCD PROTOTYPE, A2
+
+Scope and semantic boundary
+---------------------------
+This is NOT a behavior-preserving scalar-filter optimization. It investigates a
+new temporal collision observation: exact source float anchor/generator data define
+continuous anchored Cayley rotation and linear translation, before binary32 pose
+observation. Native contact manifolds remain a separate response requirement in the
+controller experiment. General compound shapes, nonzero pivots, prescribed
+exponential kinematics and intervals crossing motion segments retain old queries.
+Neither this helper nor its integration proves the existing bounded sampling
+fallback complete for arbitrarily short collisions.
+
+Motion
+------
+p_i(t) = p_i0 + v_i (t-begin_i)
+q_i(t) = q_i0 + .5 (Omega_i q_i0) (t-begin_i)
+R_i(t) = N(q_i(t)) / D_i(t), D_i = q_i dot q_i.
+All source floats and supplied double times denote their exact IEEE values.
+Their arithmetic is enclosed with the existing outward Iv operations under RN.
+q0 dot Omega*q0 = 0 and |Omega*q0|^2=|Omega|^2 |q0|^2, hence
+D_i(t)=|q0|^2[1+.25|Omega|^2(t-begin_i)^2] > 0.
+The input check certifies |q0|^2>0, and arithmetic uncertainty never means contact
+or separation by itself.
+
+Relative center conditioning
+----------------------------
+Compute anchors' difference first, then
+p_A-p_B = (p_A0-p_B0) + (v_A-v_B)(t-begin_A)
+          + v_B(begin_B-begin_A).
+This is algebraically identical to the two original anchored trajectories. It
+cancels shared drift before multiplication, rather than subtracting two large
+world-space displaced centers. Different segment begin times remain represented.
+
+Point separation
+----------------
+A conventional double SAT search proposes a world plane n. It supplies no contact
+truth. With that represented double n held fixed, Iv encloses
+G(t,n) = n dot (p_A-p_B)
+         - sum_k h_Ak |n dot N_Ak|/D_A
+         - sum_k h_Bk |n dot N_Bk|/D_B.
+Only a strictly positive Iv lower endpoint of G/|n| certifies separation. A zero,
+uncertain, unsupported or exceptional result retains the original query.
+
+Whole-interval prefix proof
+---------------------------
+Use t=start+(finish-start)x, x in [0,1]. Each q is linear, each N and D quadratic.
+For each of the 64 corner pairs u_A,u_B, multiply its fixed-plane separation by
+positive D_A D_B:
+F(x)=n dot[(p_A-p_B)D_A D_B + N_A u_A D_B - N_B u_B D_A].
+Its degree is at most five. Power coefficients are converted to degree-five
+Bernstein coefficients using b_k=sum_{i<=k} c_i C(k,i)/C(5,i), with outward Iv
+bounds for the rational weights. No polynomial term is truncated.
+
+At each coefficient index, checking all 64 corners is equivalent to checking
+C_k - sum_{j=1..6}|A_jk| > 0, where C is the common center term and the six A_j
+are projected, half-extent-scaled local axes after denominator clearing. The
+helper evaluates that lower bound with Iv. Positive coefficients imply F(x)>0
+on the whole closed interval, not merely at endpoints or sample points.
+
+An inconclusive proof may split at a represented double midpoint, choose a new
+fixed plane for each child, and repeat to depth three (at most eight leaves).
+Both closed children must certify. An exhausted/failed certificate is not a
+no-collision result. Midpoint point tests only propose planes and can reject a
+proof attempt; they never establish interval safety themselves.
+
+Conservative advancement when the prefix certificate is inconclusive
+-------------------------------------------------------------------
+Under Cayley motion, instantaneous rotation rate magnitude is
+|Omega|/[1+.25|Omega|^2(t-begin)^2] <= |Omega|.
+A zero-pivot box's corner radius is sqrt(hx^2+hy^2+hz^2). Therefore every pair of
+corners has relative speed <= S=|v_A-v_B|+|Omega_A|r_A+|Omega_B|r_B.
+If the current fixed plane has Euclidean gap at least g>0, no corner pair can
+close it before g/S. Iv computes S upwards, g/S downwards and time+g/S downwards.
+The equality boundary can first touch, so this is a conservative advance, not a
+strict-separation certificate for its closed endpoint. S=0 is an exact common
+translation/no-rotation case. Nonfinite arithmetic or nonadvancing time supplies
+no result and requires literal native-query fallback in the controller.
+
+Controls and honest limitations
+-------------------------------
+Tests cover co-moving boxes, huge common velocity, different segment anchors,
+rotated rational frames, a thin near miss, an actual future collision, a rotating
+bar with separated endpoints but intermediate collision, static bodies and
+unsupported inputs/rounding modes. --endpoint-only is deliberately unsafe and
+must fail. CapturedPrefixes compares fourteen preserved arrivals against the
+independent exact Fraction/Bernstein proof: twelve strictly separated prefixes
+and two already-overlapping starts.
+
+No tolerances, contact slop, damping, solver budgets, artificial time caps or
+benchmark object identities enter the helper. Interval uncertainty can retain
+native femtometre-scale false positives; no epsilon removes them. More precise
+point predicates would require a separately justified exact fallback. The
+experiment does not yet preserve unrounded anchors across physical event
+publication, nor replace native response manifold geometry.

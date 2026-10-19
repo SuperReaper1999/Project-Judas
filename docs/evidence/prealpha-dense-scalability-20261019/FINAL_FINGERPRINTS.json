@@ -1,0 +1,119 @@
+{
+  "schema": "judas.dense.fastpath.checkpoint.v1",
+  "utc": "2026-10-19T12:08:21.611084+00:00",
+  "baseline": "e30d5f9bb72a1a341d3eff7485b8d6b3eb6f8ea9",
+  "status": "Experimental fast-path checkpoint; target24/30FPS not met; numerical CCD prototypes not adopted",
+  "source": {
+    "CMakeLists.txt": {
+      "sha256": "fcda5e2d6895c1f5bbc5d1342f83e9c79f5b8b04b30660f678b14bc88a14c0c9",
+      "bytes": 80071
+    },
+    "src/Contacts.cpp": {
+      "sha256": "c6b39dc56b81d5b1d02376deba96d9805524ce63e91a00b8781992b4e6e04dd1",
+      "bytes": 35460
+    },
+    "src/ContactSatFilter.h": {
+      "sha256": "e73915003a1321e19f94f57acc8815ac4ef307d0e37fc203d0d297e3c449326c",
+      "bytes": 6495
+    },
+    "src/SpherePredicateFilter.h": {
+      "sha256": "808e72a74fe8156fe44690b91a665744cc3a17f034c43eeb2ded881d18ddaadb",
+      "bytes": 5358
+    },
+    "src/physics/WorldImpactEvents.cpp": {
+      "sha256": "9ba9298b35cfa14556f3e36c5f92b2e96b63bb6fa996a79be954e62930ca3606",
+      "bytes": 36334
+    },
+    "src/physics/ImpactSupportSets.h": {
+      "sha256": "e0650ce179a45479b7d39ad14d83572769cd16495b6a5fb8b1f326a24efeba7b",
+      "bytes": 1018
+    },
+    "tools/validation/suites.json": {
+      "sha256": "0ce097c431194ccedb8053b603318e16e7a326599462454e7f32304eceab68ee",
+      "bytes": 8597
+    },
+    "tests/ContactSatFilterTests.cpp": {
+      "sha256": "20bf9f14a3cea6af69812b7b6fd3b36f658752a08bab83a41b20590f13e6f709",
+      "bytes": 10603
+    },
+    "tests/ContactSphereFilterTests.cpp": {
+      "sha256": "1056665d693e25bfc5a639df8fe55e10d269c948d3b947f6d618b604c0798075",
+      "bytes": 18321
+    },
+    "tests/ImpactSupportSetsTests.cpp": {
+      "sha256": "de6338563f81672865630a1a273aa8908c4caf61934b4fee5b081eed14b18989",
+      "bytes": 3481
+    },
+    "scripts/physics_dense_measure.py": {
+      "sha256": "31fce063f42a400a9ada39b9d2a275854d05717f767e550d685163faf39e4595",
+      "bytes": 24665
+    },
+    "tests/test_physics_dense_measure.py": {
+      "sha256": "2cffa74fd0d5e51b8c8b44807654f2b8512d6642336aac995b0dc1b03a1b89b7",
+      "bytes": 8124
+    },
+    "tests/PhysicsStressLiveBenchmark.cpp": {
+      "sha256": "8ee71f998bacc20c692b6e3d3445fd7801e1834296020319409f0b64a722103e",
+      "bytes": 9831
+    },
+    "src/SimulationTiming.h": {
+      "sha256": "94768d45689caa49be5160b9c9d2884ab15ebd33bff9a6003e8d8113d920bf9d",
+      "bytes": 683
+    },
+    "projects/physics_stress_lab/Scenes/room1024.judas": {
+      "sha256": "a2caf62a295243d301149202c8a0a5eedafff256d68de0e3cda988846b2e05bf",
+      "bytes": 2198434
+    }
+  },
+  "binaries": {
+    "build/judas": {
+      "sha256": "b74f5de286f5f955c494f0d63c78810a9966be1b298965f51f6aac492f6a363f",
+      "bytes": 55005416
+    },
+    "build/judas_editor": {
+      "sha256": "d388de7c2b96d00efea9aa14fa2f3c29a5d5407eb9911b7dc515176ef265e8b5",
+      "bytes": 60089184
+    },
+    "build/judas_export": {
+      "sha256": "7d00e6a16d5ca9b449fb91116a0f2965dbaef8be953242c55ace38f1796e75ed",
+      "bytes": 54893736
+    },
+    "build/libjudas_engine.a": {
+      "sha256": "edd3873e4c1bc5578b7ee3f94fdbe35eaaf01847d637118133acaee9af8f9711",
+      "bytes": 30385326
+    },
+    "build/judas_physics_stress_live_benchmark": {
+      "sha256": "0db9745baf0455a06e5ce227dc48d3cb1e823ca6cca6eca43dd3cc0d4e5b78b4",
+      "bytes": 55072352
+    },
+    "build/judas_contact_sat_filter_tests": {
+      "sha256": "f030194e3a23b5b732f0db0f94a5a74fb5916cc97bdc819950ebaa1facfa66da",
+      "bytes": 390376
+    },
+    "build/judas_contact_sphere_filter_tests": {
+      "sha256": "03a381737147fb9cf084984815a89f26e07631e5be05d771cd3a14059dbfd208",
+      "bytes": 390392
+    },
+    "build/judas_impact_support_sets_tests": {
+      "sha256": "6a35e9ff6c1a5e573e05a9eb942214d7358c49589cfc84529819d53c1791658b",
+      "bytes": 191080
+    },
+    "build/judas_impact_timing_tests": {
+      "sha256": "fffda5ca9da59deb6e9b30f5775430fc33900cd51e7859207185400a91d808f9",
+      "bytes": 1642168
+    },
+    "build/judas_impact_mesh_cost_tests": {
+      "sha256": "4fe110f15e5158b430d23af9a5bd8f9cede43b3215600c0a5d1ee0855b6eec44",
+      "bytes": 1556672
+    },
+    "build/judas_physics_continuation_tests": {
+      "sha256": "34cb2b22c872ae91bac4ebdf977ce0de6bcea060a907a051c96182250a673309",
+      "bytes": 54247872
+    }
+  },
+  "notes": [
+    "These are actual final dirty-candidate build artifacts, not an invented post-commit build identity.",
+    "Native measurements use the separately frozen source/archive/binary identities in their original as-run receipts. All513 frozen source inputs still match; only subsequent tooling/provenance and documentation have been added.",
+    "Protected history, fluid research and game content are unchanged."
+  ]
+}

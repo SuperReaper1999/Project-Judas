@@ -1,0 +1,84 @@
+[
+  {
+    "name": "sat",
+    "command": [
+      "judas_contact_sat_filter_tests"
+    ],
+    "exit": 0,
+    "expected": 0,
+    "pass_expected": true,
+    "tail": "Contact SAT filter: checks=284887 failures=0 certified=131941 ambiguous=48059 exact_checks=6240 unsafe_scalar_signs=10\n"
+  },
+  {
+    "name": "sat-negative",
+    "command": [
+      "judas_contact_sat_filter_tests",
+      "--omit-bound"
+    ],
+    "exit": 1,
+    "expected": 1,
+    "pass_expected": true,
+    "tail": "69 axis=8\nFAIL certified sign preserves legacy interval resolution row=69 axis=12\nFAIL certified sign preserves legacy interval resolution row=105 axis=1\nFAIL certified sign preserves legacy interval resolution row=105 axis=4\nFAIL certified sign preserves legacy interval resolution row=105 axis=8\nFAIL certified sign preserves legacy interval resolution row=105 axis=12\nFAIL certified sign preserves legacy interval resolution row=130 axis=0\nFAIL certified sign preserves legacy interval resolution row=130 axis=3\nFAIL certified sign preserves legacy interval resolution row=130 axis=10\nFAIL certified sign preserves legacy interval resolution row=130 axis=11\nFAIL certified sign preserves legacy interval resolution row=130 axis=13\nFAIL certified sign preserves legacy interval resolution row=143 axis=0\nFAIL certified sign preserves legacy interval resolution row=143 axis=3\nContact SAT filter: checks=318931 failures=2138 certified=164898 ambiguous=15102 exact_checks=6240 unsafe_scalar_signs=10\n"
+  },
+  {
+    "name": "support",
+    "command": [
+      "judas_impact_support_sets_tests"
+    ],
+    "exit": 0,
+    "expected": 0,
+    "pass_expected": true,
+    "tail": "60000 checks, 0 failures\n"
+  },
+  {
+    "name": "support-negative",
+    "command": [
+      "judas_impact_support_sets_tests",
+      "--omit-erase"
+    ],
+    "exit": 1,
+    "expected": 1,
+    "pass_expected": true,
+    "tail": "60000 checks, 19882 failures\n"
+  },
+  {
+    "name": "timing",
+    "command": [
+      "judas_impact_timing_tests"
+    ],
+    "exit": 0,
+    "expected": 0,
+    "pass_expected": true,
+    "tail": "tSamplingFallbacks\":0,\"impactSamplingTests\":0,\"impactSamplingResolutionCaps\":0,\"impactSamplingMaxInterval\":0}\n{\"kind\":\"case\",\"name\":\"anchored_rotation\",\"case\":88,\"pass\":true,\"contacts\":1,\"impactEvents\":1,\"impactSafetyFallback\":0,\"impactEventCapFallback\":0,\"impactUncertifiedAdvances\":0,\"impactSamplingFallbacks\":0,\"impactSamplingTests\":0,\"impactSamplingResolutionCaps\":0,\"impactSamplingMaxInterval\":0}\n{\"kind\":\"case\",\"name\":\"anchored_rotation\",\"case\":89,\"pass\":true,\"contacts\":1,\"impactEvents\":1,\"impactSafetyFallback\":0,\"impactEventCapFallback\":0,\"impactUncertifiedAdvances\":0,\"impactSamplingFallbacks\":0,\"impactSamplingTests\":0,\"impactSamplingResolutionCaps\":0,\"impactSamplingMaxInterval\":0}\n{\"kind\":\"summary\",\"cases\":89,\"checks\":3197,\"failures\":0,\"pass\":true,\"impactEvents\":113,\"impactSafetyFallback\":0,\"impactEventCapFallback\":1,\"impactUncertifiedAdvances\":0,\"impactSamplingFallbacks\":1,\"impactSamplingTests\":2,\"impactSamplingResolutionCaps\":0,\"impactSamplingMaxInterval\":0.00073257637186368446}\n"
+  },
+  {
+    "name": "robustness",
+    "command": [
+      "judas_impact_robustness_tests"
+    ],
+    "exit": 0,
+    "expected": 0,
+    "pass_expected": true,
+    "tail": "00657432\n  mesh tilt 30 speed 10 maxSpin 36.7906 centre below 0 corner below 0.00773287\n  mesh tilt 30 speed 20 maxSpin 464.745 centre below 0 corner below 0.0051713\n  mesh tilt 30 speed 40 maxSpin 19.6999 centre below 0 corner below 0.00249994\n  mesh tilt 45 speed 10 maxSpin 13.3564 centre below 0 corner below 0.00247836\n  mesh tilt 45 speed 20 maxSpin 162.407 centre below 0 corner below 0.00250024\n  mesh tilt 45 speed 40 maxSpin 51.5368 centre below 0 corner below 0.00120467\ngentle slides\n  slab slide 15 maxSpin 4.21542e-05 centre below 0 corner below 1.81608e-08\n  slab slide 30 maxSpin 1.88522 centre below 0 corner below 3.50177e-07\n  slab slide 45 maxSpin 3.58187 centre below 0 corner below 0.000790238\n  mesh slide 15 maxSpin 0.199084 centre below 0 corner below 0.000241172\n  mesh slide 30 maxSpin 4.05373 centre below 0 corner below 0.00316095\n  mesh slide 45 maxSpin 11.2561 centre below 0 corner below 0.00803924\ndeepest corner below any support 0.00803924 m\nchecks 4412 failures 0\n"
+  },
+  {
+    "name": "rigid",
+    "command": [
+      "judas_rigid_contact_tests"
+    ],
+    "exit": 0,
+    "expected": 0,
+    "pass_expected": true,
+    "tail": "13)\n  OK   rebound ratio matches restitution\n    e 0.5: impact 6.377 m/s, rebound 3.270 m/s (ratio 0.513)\n  OK   rebound ratio matches restitution\nG: 40-body pile in a static bin: finite, no mechanical-energy gain\n    energy 11776.4 J -> 261.4 J, largest gain over start 0.000 J, largest one-step gain 0.003 J; last step: 144 candidates / 980 possible, 56 colliding pairs, 137 points\n  OK   pile stays finite\n  OK   pile never exceeds its initial mechanical energy\n  OK   pile dissipates energy overall\n    energy 11776.4 J -> 257.1 J, largest gain over start 0.000 J, largest one-step gain 0.000 J; last step: 240 candidates / 980 possible, 48 colliding pairs, 118 points\n  OK   pile stays finite\n  OK   pile never exceeds its initial mechanical energy\n  OK   pile dissipates energy overall\nH: isolated collisions conserve linear momentum\n    9 steps with contact; largest momentum error 0.000001 kg m/s of 9.082\n  OK   contact impulses are equal and opposite\nRigid contact tests: PASS (0 failures)\n"
+  },
+  {
+    "name": "lifecycle",
+    "command": [
+      "judas_contact_lifecycle_tests"
+    ],
+    "exit": 0,
+    "expected": 0,
+    "pass_expected": true,
+    "tail": "isabled body cannot expose completed observations\n  OK   re-enabling before another solve cannot revive disabled observations\n  OK   sensor cannot grant physical support from completed rows\n  OK   leaving sensor mode cannot revive earlier physical observations\n  OK   suppressed pair cannot expose completed support\n  OK   unsuppressing before another solve cannot revive old support\n  OK   reused support slot cannot alias completed contact generations\n  OK   destroyed observer handle fails safely after slot reuse\n  OK   new body inherits no old completed observations\n  OK   connected articulation has observed stance support before incoming impact\n  OK   incoming connected-body impact cannot erase the other load-bearing stance observations\n  OK   compound primitive TOI rows retain valid observation mapping\n  OK   distinct compound support primitives retain independent actual solved rows\nFTFT4A contact lifecycle: 30 fixtures, 90 fixed steps, 6 convenience contacts, 1076 checks, 0 failures\n"
+  }
+]

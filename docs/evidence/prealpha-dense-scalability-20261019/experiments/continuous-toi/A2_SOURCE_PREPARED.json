@@ -1,0 +1,13 @@
+{
+  "schema": "judas.continuous-box-a2.source.v1",
+  "status": "source prepared; no A2 build/run yet",
+  "files": {
+    "ContinuousBoxCCD.h": "2a306fa9598de8a813873f173c4dbc2fb65f1bd749d3c40eac14f3174719ecb2",
+    "ContinuousBoxCCD.v2.h": "909614b522ad63312005e5ae4b536ee225521da93e06ec85b11a6bcebdea611f",
+    "ContinuousBoxCCDTests.cpp": "b3f67baca3921f0b5b8846448e096adf737b51ea90d8fa2eff51259c58e15d99",
+    "CapturedPrefixes.cpp": "2b7ca2b509166bb588a5740fb14546d0feb89871ca2b6eb177ae08baac2d269a",
+    "PROOF_A2.txt": "ee077279044054bb91cd01855eadb390f408b169d8635e29c8822205d9f5f803"
+  },
+  "A1": "byte-preserved original header; A2 explicitly separate filename",
+  "main_difference": "Relative drift factoring; conservative SafeAdvance on whole-prefix ambiguity; no production adoption"
+}

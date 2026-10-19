@@ -1,0 +1,25 @@
+{
+  "queries": 18,
+  "times_changed": 0,
+  "false_arrivals_remaining": 13,
+  "missing_actual_manifolds": 0,
+  "dropped_despite_smooth_endpoint_overlap": 0
+}
+1 0.0 False None
+2 0.0 True None
+7 0.0 True None
+11 0.0 False None
+14 0.0 True None
+21 0.0 True None
+26 0.0 False None
+28 0.0 True None
+32 0.0 True None
+36 0.0 True None
+48 0.0 False None
+52 0.0 False None
+57 0.0 True None
+61 0.0 True None
+62 0.0 True None
+66 0.0 True None
+71 0.0 True None
+75 0.0 True None

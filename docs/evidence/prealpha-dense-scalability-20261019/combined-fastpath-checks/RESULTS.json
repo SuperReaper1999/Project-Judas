@@ -1,0 +1,444 @@
+[
+  {
+    "name": "contact-sat-filter",
+    "argv": [
+      "python3",
+      "scripts/prealpha_validate.py",
+      "--build-dir",
+      "build",
+      "--test",
+      "contact-sat-filter",
+      "--output",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/combined-fastpath-checks/contact-sat-filter",
+      "--timeout",
+      "120"
+    ],
+    "exit": 0,
+    "expected_exit": 0,
+    "pass_expected": true,
+    "seconds": 1.3388722210002015,
+    "log_sha256": "411686ed3da3fc56db69a9a1fd2eae0564ba8618d746abd1501f9bed96c407a5"
+  },
+  {
+    "name": "contact-sphere-filter",
+    "argv": [
+      "python3",
+      "scripts/prealpha_validate.py",
+      "--build-dir",
+      "build",
+      "--test",
+      "contact-sphere-filter",
+      "--output",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/combined-fastpath-checks/contact-sphere-filter",
+      "--timeout",
+      "120"
+    ],
+    "exit": 0,
+    "expected_exit": 0,
+    "pass_expected": true,
+    "seconds": 0.9277405020002334,
+    "log_sha256": "118414b30085de4debd9ec6727cebe781d51e4041f03fc1531b70ba27fbf4dc2"
+  },
+  {
+    "name": "impact-support-sets",
+    "argv": [
+      "python3",
+      "scripts/prealpha_validate.py",
+      "--build-dir",
+      "build",
+      "--test",
+      "impact-support-sets",
+      "--output",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/combined-fastpath-checks/impact-support-sets",
+      "--timeout",
+      "120"
+    ],
+    "exit": 0,
+    "expected_exit": 0,
+    "pass_expected": true,
+    "seconds": 0.7819592659998307,
+    "log_sha256": "b12ac5a654bdf493f6408b73d3a4c5d1042cce70cd02fb433a98f7b032e7da64"
+  },
+  {
+    "name": "impact-timing",
+    "argv": [
+      "python3",
+      "scripts/prealpha_validate.py",
+      "--build-dir",
+      "build",
+      "--test",
+      "impact-timing",
+      "--output",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/combined-fastpath-checks/impact-timing",
+      "--timeout",
+      "120"
+    ],
+    "exit": 0,
+    "expected_exit": 0,
+    "pass_expected": true,
+    "seconds": 0.567528563000451,
+    "log_sha256": "7a7abfdb5c3480e16095d550d6692e7d4e943b46ea26c42dcd3322adfcdc0b9d"
+  },
+  {
+    "name": "rigid-contact",
+    "argv": [
+      "python3",
+      "scripts/prealpha_validate.py",
+      "--build-dir",
+      "build",
+      "--test",
+      "rigid-contact",
+      "--output",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/combined-fastpath-checks/rigid-contact",
+      "--timeout",
+      "120"
+    ],
+    "exit": 0,
+    "expected_exit": 0,
+    "pass_expected": true,
+    "seconds": 1.1805253210004594,
+    "log_sha256": "af996b2158a913a425feddf5b82cb6e394c3f58e11b05151021c4cfce4e77412"
+  },
+  {
+    "name": "contacts",
+    "argv": [
+      "python3",
+      "scripts/prealpha_validate.py",
+      "--build-dir",
+      "build",
+      "--test",
+      "contacts",
+      "--output",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/combined-fastpath-checks/contacts",
+      "--timeout",
+      "120"
+    ],
+    "exit": 0,
+    "expected_exit": 0,
+    "pass_expected": true,
+    "seconds": 1.2747174629994333,
+    "log_sha256": "dd758943b3032d8311ceaf410744ba2cc4cfbf6d6d43d8c4361984f4d4b5dba7"
+  },
+  {
+    "name": "collision-geometry",
+    "argv": [
+      "python3",
+      "scripts/prealpha_validate.py",
+      "--build-dir",
+      "build",
+      "--test",
+      "collision-geometry",
+      "--output",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/combined-fastpath-checks/collision-geometry",
+      "--timeout",
+      "120"
+    ],
+    "exit": 0,
+    "expected_exit": 0,
+    "pass_expected": true,
+    "seconds": 2.4325194319999355,
+    "log_sha256": "8704d812153624c6d862e42c2f97923f2533a9d30926e509ace6ab522f7f3972"
+  },
+  {
+    "name": "physics-continuation",
+    "argv": [
+      "python3",
+      "scripts/prealpha_validate.py",
+      "--build-dir",
+      "build",
+      "--test",
+      "physics-continuation",
+      "--output",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/combined-fastpath-checks/physics-continuation",
+      "--timeout",
+      "120"
+    ],
+    "exit": 0,
+    "expected_exit": 0,
+    "pass_expected": true,
+    "seconds": 1.1294453410000642,
+    "log_sha256": "0855dc6574cbb4e337ff606c0d244f8de08083b51f315d80599c50833d47a7df"
+  },
+  {
+    "name": "character-motor",
+    "argv": [
+      "python3",
+      "scripts/prealpha_validate.py",
+      "--build-dir",
+      "build",
+      "--test",
+      "character-motor",
+      "--output",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/combined-fastpath-checks/character-motor",
+      "--timeout",
+      "120"
+    ],
+    "exit": 0,
+    "expected_exit": 0,
+    "pass_expected": true,
+    "seconds": 1.6259990990001825,
+    "log_sha256": "667f87f6a778adc5b3edcb8bca055215a3b64fc5ce9ba2c1d526eec6f0c453ea"
+  },
+  {
+    "name": "native-mesh-growth",
+    "argv": [
+      "python3",
+      "scripts/prealpha_validate.py",
+      "--build-dir",
+      "build",
+      "--test",
+      "native-mesh-growth",
+      "--output",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/combined-fastpath-checks/native-mesh-growth",
+      "--timeout",
+      "120"
+    ],
+    "exit": 0,
+    "expected_exit": 0,
+    "pass_expected": true,
+    "seconds": 0.5824660790003691,
+    "log_sha256": "aa0825a812848ef7d7e847a914da009b037eafb7773d57cc464d93bbc90b1665"
+  },
+  {
+    "name": "clip-polygon",
+    "argv": [
+      "python3",
+      "scripts/prealpha_validate.py",
+      "--build-dir",
+      "build",
+      "--test",
+      "clip-polygon",
+      "--output",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/combined-fastpath-checks/clip-polygon",
+      "--timeout",
+      "120"
+    ],
+    "exit": 0,
+    "expected_exit": 0,
+    "pass_expected": true,
+    "seconds": 0.5757781500005876,
+    "log_sha256": "02e055d63e2e9a787f4faa1e31a8c15f80192b7562add60edc09ebf6063c9b5c"
+  },
+  {
+    "name": "impact-mesh-arrival",
+    "argv": [
+      "python3",
+      "scripts/prealpha_validate.py",
+      "--build-dir",
+      "build",
+      "--test",
+      "impact-mesh-arrival",
+      "--output",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/combined-fastpath-checks/impact-mesh-arrival",
+      "--timeout",
+      "120"
+    ],
+    "exit": 0,
+    "expected_exit": 0,
+    "pass_expected": true,
+    "seconds": 5.434114278999914,
+    "log_sha256": "3f48d67eeffa94b3d9dac4364739830aa0fa0144c5ff48bba73900f6e9707318"
+  },
+  {
+    "name": "impact-mesh-continuation",
+    "argv": [
+      "python3",
+      "scripts/prealpha_validate.py",
+      "--build-dir",
+      "build",
+      "--test",
+      "impact-mesh-continuation",
+      "--output",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/combined-fastpath-checks/impact-mesh-continuation",
+      "--timeout",
+      "120"
+    ],
+    "exit": 0,
+    "expected_exit": 0,
+    "pass_expected": true,
+    "seconds": 6.937976834999972,
+    "log_sha256": "d1a245ee3cf9737a3b1a9666b7a505d9b5015262f06a775ef297cfe3c1a18d2a"
+  },
+  {
+    "name": "impact-solver",
+    "argv": [
+      "python3",
+      "scripts/prealpha_validate.py",
+      "--build-dir",
+      "build",
+      "--test",
+      "impact-solver",
+      "--output",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/combined-fastpath-checks/impact-solver",
+      "--timeout",
+      "120"
+    ],
+    "exit": 0,
+    "expected_exit": 0,
+    "pass_expected": true,
+    "seconds": 0.5795937379998577,
+    "log_sha256": "8c924c0590a317f8aafffd9ce2c32e529ec1de878df09e313765ae007ed4b083"
+  },
+  {
+    "name": "judas_impact_robustness_tests",
+    "argv": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_impact_robustness_tests"
+    ],
+    "exit": 0,
+    "expected_exit": 0,
+    "pass_expected": true,
+    "seconds": 0.7154103040002155,
+    "log_sha256": "e35fffddbd794c7517c54055943a2dc3babe5b19f40450eafbca4271cf7a4c61"
+  },
+  {
+    "name": "judas_primitive_contact_boolean_tests",
+    "argv": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_primitive_contact_boolean_tests"
+    ],
+    "exit": 0,
+    "expected_exit": 0,
+    "pass_expected": true,
+    "seconds": 0.06400283999937528,
+    "log_sha256": "96947ae737e3661873c57c23a99eb1f8e7a3857436c5872732702f88fdd2b818"
+  },
+  {
+    "name": "judas_sphere_impact_bounds_tests",
+    "argv": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_sphere_impact_bounds_tests"
+    ],
+    "exit": 0,
+    "expected_exit": 0,
+    "pass_expected": true,
+    "seconds": 0.01593148200026917,
+    "log_sha256": "478de5c3aff7d2bd8e493528f9e6611ebdbc464a5dd8f3eeddb83592e892b1dd"
+  },
+  {
+    "name": "judas_ragdoll_tests",
+    "argv": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_ragdoll_tests"
+    ],
+    "exit": 0,
+    "expected_exit": 0,
+    "pass_expected": true,
+    "seconds": 0.46493202700003167,
+    "log_sha256": "927a7df27d4315155bc1a1b2d8d40334266ffc17ba3146f2d8277dc69e034866"
+  },
+  {
+    "name": "judas_joint_tests",
+    "argv": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_joint_tests"
+    ],
+    "exit": 0,
+    "expected_exit": 0,
+    "pass_expected": true,
+    "seconds": 0.0319898160005323,
+    "log_sha256": "30f395052d14f3dab80f487376d7d2c86935ecfed87bb3d0513671d5171474d9"
+  },
+  {
+    "name": "judas_rigid_motion_geometry_tests",
+    "argv": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_rigid_motion_geometry_tests"
+    ],
+    "exit": 0,
+    "expected_exit": 0,
+    "pass_expected": true,
+    "seconds": 0.003982700999586086,
+    "log_sha256": "cd2ab7a2650f03d488c2456b504ccfa27e9f860da5b5338383de0b1f52ced8d7"
+  },
+  {
+    "name": "judas_contact_sat_workspace_tests",
+    "argv": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_contact_sat_workspace_tests"
+    ],
+    "exit": 0,
+    "expected_exit": 0,
+    "pass_expected": true,
+    "seconds": 0.06467636599973048,
+    "log_sha256": "63c9d744278da3e7bc7dc41c5bda89cd2582b0ed5bb7083ff56b11c5119850da"
+  },
+  {
+    "name": "judas_kinematic_tests",
+    "argv": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_kinematic_tests"
+    ],
+    "exit": 0,
+    "expected_exit": 0,
+    "pass_expected": true,
+    "seconds": 0.032178837999708776,
+    "log_sha256": "87fc32d0fa04c9fde088e7feeb50610f7a2eed7ca2e27f4964aae2b6b3b8e98d"
+  },
+  {
+    "name": "sat-negative",
+    "argv": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_contact_sat_filter_tests",
+      "--omit-bound"
+    ],
+    "exit": 1,
+    "expected_exit": 1,
+    "pass_expected": true,
+    "seconds": 0.7655177990000084,
+    "log_sha256": "fe5cc7839fd776477cd54fd761197735ce3a0dc7af6b5b315703aa95e8792a20"
+  },
+  {
+    "name": "sphere-negative",
+    "argv": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_contact_sphere_filter_tests",
+      "--omit-bound"
+    ],
+    "exit": 1,
+    "expected_exit": 1,
+    "pass_expected": true,
+    "seconds": 0.364713519000361,
+    "log_sha256": "06d6ff49d5f5fb70abb3f607f1e095d20ef52a2d3bbdb50b5c06ecc16fdf6521"
+  },
+  {
+    "name": "support-negative",
+    "argv": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_impact_support_sets_tests",
+      "--omit-erase"
+    ],
+    "exit": 1,
+    "expected_exit": 1,
+    "pass_expected": true,
+    "seconds": 0.264426557000661,
+    "log_sha256": "1ccd83cb4607eb0735931cc019fd58421f709b923335aed3279ec62bb29a51f6"
+  },
+  {
+    "name": "test_prealpha_validation.py",
+    "argv": [
+      "python3",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "tests",
+      "-p",
+      "test_prealpha_validation.py",
+      "-v"
+    ],
+    "exit": 0,
+    "expected_exit": 0,
+    "pass_expected": true,
+    "seconds": 0.3648380860004181,
+    "log_sha256": "46a00eab448b27005f8c603feda7db68a4df488f5cbb6b1a880c45b1089bcb22"
+  },
+  {
+    "name": "test_cmake_test_targets.py",
+    "argv": [
+      "python3",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "tests",
+      "-p",
+      "test_cmake_test_targets.py",
+      "-v"
+    ],
+    "exit": 0,
+    "expected_exit": 0,
+    "pass_expected": true,
+    "seconds": 0.26472723100050644,
+    "log_sha256": "512f8679a3d1726474a590d2ef47cb88d7e9b7728dbb22add24a4fc10dc4f7aa"
+  }
+]

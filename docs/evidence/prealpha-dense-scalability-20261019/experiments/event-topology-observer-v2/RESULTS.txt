@@ -1,0 +1,133 @@
+Read-only mode-3 chronological event and exact trajectory investigation
+=====================================================================
+Date: 2026-10-19
+Frozen source: e30d5f9bb72a1a341d3eff7485b8d6b3eb6f8ea9
+No production files modified by this investigation. No acceptance threshold,
+body count, contact count, solver iteration budget, cadence or friction law changed.
+
+Capture validity
+----------------
+The WorldImpactEvents replacement adds read-only serialization only. Root's
+runs/event-topology-v2-A1/COMPARE.json verifies exact agreement against baseline
+for all 270 physical/work rows and the endpoint. There are 2,796 chronological
+TOI events and 724 initial events, giving global impact sequence 3,520.
+
+Actual final-step topology
+-------------------------
+Step 270 has 51 chronological events, 24 distinct selected primitive keys,
+27 repeat selections, and 31 seeds already seen as actual contacts earlier in
+the step. Pair (595,851,0,0) is selected 14 times. Ten selections have zero
+closing approach in the original point-velocity expression. All selected seeds
+have actual response rows; absent seed manifolds are not the cause. These pair
+selections use ordinary zero-target TOI search after support invalidation,
+not the current-support, mesh or spinning-target branch.
+
+Exact reproduction
+------------------
+pair-trace.jsonl stores IEEE bit patterns for all scalar inputs, full body
+state, shapes and motion-segment ledgers for that pair in step 270. There are
+78 records (50 scheduled queries, 14 before impact, 14 after replacement).
+PairReplay.cpp reconstructs the original private Impl, slots and recorded
+motion and calls original ImpactTime against the frozen original archive.
+All 18 actually executed queries reproduce exactly the original double result
+bits. Other scheduled rows are support sentinel results, not executed queries.
+The native replay is evidence of the actual mechanism, not a replacement CCD
+implementation or a numerical acceptance test.
+
+Established cause
+-----------------
+Within an anchored segment the intended COM is linear and the dynamic Cayley
+quaternion numerator is linear in elapsed time. Native EvaluateGeometry casts
+elapsed time to float, rounds each COM coordinate to float, rounds quaternion
+operations, then usually normalizes to float. Exact downstream predicates
+correctly classify these rounded poses, but those sampled rounded shapes can
+jump from separated to penetrating although the smooth source trajectory is
+still separated. This fabricates new arrivals, repeatedly invoking the whole
+connected contact island. Some toggles involve one center-coordinate ULP;
+most tiny quaternion toggles involve one raw numerator component ULP rather
+than every component changing during normalization.
+
+smooth-gap-proof.py independently evaluates all 15 OBB SAT signs with Python
+Fraction from exact captured IEEE inputs. R(q)=R_raw(q)/dot(q,q) is rational,
+so no normalization square root or geometric epsilon is needed. Independent
+SAT on native represented poses agrees with native PairTouches for every
+probe. Of the 14 selected native TOIs:
+ - 12 smooth trajectories are separated at both start and native TOI.
+ - 2 smooth trajectories already overlap at both start and native TOI.
+ - Float elapsed versus double elapsed is negligible in these examples;
+   COM-coordinate and orientation-component rounding both contribute.
+
+interval-separation-proof.py closes the important endpoint-only gap. It
+chooses fixed separating planes on exact dyadic subintervals. Each of 64 OBB
+corner-pair gaps is multiplied by the two positive quaternion squared norms,
+leaving a degree <=5 exact rational polynomial. Every Bernstein coefficient
+is strictly positive. Thus all 12 separated cases are certified separated for
+EVERY time from the original query start through the native reported arrival
+(and the tiny final replay probe beyond it). Each proof takes 1-4 leaves and
+maximum depth 2. These are genuinely false arrivals under continuous anchored
+motion, not hidden transient contacts between endpoint samples.
+
+Example: event 16, replay record 21, has smooth normalized maximum gap about
++220.11 nm at query start and +220.80 nm at the native arrival while the native
+represented pose reports about -4.20 nm. The whole interval is separated.
+Event 44 has smooth gap about +210.85 -> +211.79 nm while native reports
+about -15.68 nm.
+
+Crucial limits and failed approaches
+-----------------------------------
+The all-time certificates above cover START TO NATIVE ARRIVAL, NOT the whole
+remaining fixed step. full-interval-separation-proof.py finds smooth overlap
+at the requested fixed-step endpoint in ALL 14 cases (about 0.09-0.55 mm).
+Dropping these pairs or returning no-hit for the entire interval would be
+incorrect. A repair must re-time genuine future collision after certified
+prefix advancement, or use continuous motion consistently for TOI truth.
+
+The first fixed plane chosen only at query start was too weak; preserved in
+fixed-startplane-nonproof.*. Choosing midpoint planes and at most depth-2
+subdivision establishes the short-prefix results without changing geometry.
+
+smooth-arrival-brackets.py was a bounded exploratory diagnostic, INTERRUPTED
+by its owner after three completed records. It has a partial log and source,
+NOT a complete JSON result. First record's genuine smooth overlap bracket is
+about 0.248369 ms versus native false arrival 0.233501 ms; a prefix through
+0.245887 ms was fully certified. However longer prefixes can require many
+fixed-plane leaves (138 leaves/depth 9 in the second record), and nonmonotone
+rotating geometry makes ordinary global bisection insufficient to prove a
+FIRST arrival. This warns against unbounded recursive polynomial work.
+Do not interpret the later pointwise bracket as a first-arrival certificate.
+
+Recommended correction boundary
+-------------------------------
+A generic private continuous-trajectory separation/advancement certificate is
+justified if it covers only explicitly proven intervals and re-searches the
+remainder. Restrict the first supported domain honestly; unsupported shapes,
+invalid range, segment-boundary crossings and uncertain arithmetic must retain
+the existing CCD path. No velocity-only culling, distance epsilon, enlarged
+slop, contact caps, TOI caps or whole-pair dropping is justified.
+
+The geometry-time authority must be explicit: continuous anchored motion
+versus rounded public/body pose observations. A native-candidate guard can
+remove demonstrated false arrivals but is not a full continuous-CCD overhaul;
+actual smooth first-contact versus native-manifold availability remains a
+boundary to validate. Already-overlapping smooth start states must be treated
+as existing contact episodes with real future finite-feature/penetration
+checks, not simply ignored. Exact behaviour and performance of a final repair
+are not established by this investigation.
+
+Reproduction
+------------
+python3 <this-directory>/build.py
+# Root uses the independent quality benchmark driver and exact original scene.
+JUDAS_EVENT_TOPOLOGY_OUTPUT=<this-directory>/events.jsonl \
+JUDAS_TOI_PAIR_TRACE_OUTPUT=<this-directory>/pair-trace.jsonl \
+JUDAS_TOI_PAIR_TRACE_PAIR=595,851 JUDAS_TOI_PAIR_TRACE_FIRST_STEP=270 \
+  <this-directory>/judas_physics_stress_live_benchmark <root-recorded exact arguments>
+python3 <this-directory>/build-replay.py
+<this-directory>/pair-replay <this-directory>/pair-trace.jsonl <this-directory>/pair-replay.json
+python3 <this-directory>/smooth-gap-proof.py
+python3 <this-directory>/interval-separation-proof.py
+python3 <this-directory>/full-interval-separation-proof.py
+
+Use BUILD.json, REPLAY_BUILD.json and root run AS_RUN.json for exact compiler,
+linker, executable, scene and benchmark arguments. Do not infer timed speedups
+from instrumented observer runs or exact Python analysis.

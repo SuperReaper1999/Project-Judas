@@ -1,0 +1,7 @@
+{
+  "baselineCommit": "e30d5f9bb72a1a341d3eff7485b8d6b3eb6f8ea9",
+  "baselineSourceSha256": "8a5e4022342d12be9a63a56eb41fea334d2daa977bef7b980d4139a20d7e1efe",
+  "candidateSourceSha256": "3cc951b49ae5ec9360b58a8a4f2ec9dfac2fc7323306f9047df4a3cc8764c07b",
+  "classification": "isolated exact-isotropic mathematical specialization; expected numerical trajectory differences; not adopted",
+  "productionModified": false
+}

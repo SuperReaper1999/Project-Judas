@@ -1,0 +1,100 @@
+RESEARCH PROTOTYPE; NOT ADOPTED OR EXECUTED AT CREATION
+
+Purpose
+-------
+Avoid constructing Pair<Iv> for a sphere predicate only when a scalar sign can
+be proved to equal the OLD INTERVAL'S RESOLVED SIGN. A mere exact-sign guarantee
+would be insufficient: legacy ambiguity constructs Pair<Exact>, and that can
+change the subsequent response-gap arithmetic. Return Unresolved for every zero,
+ambiguity, invalid source, negative margin or unsupported magnitude. Execute the
+original Iv/Exact branch unchanged in those cases. No response geometry changes.
+
+Source range
+------------
+All source values are binary32. Nonzero source magnitudes are restricted to
+[2^-48,2^48]; zero is allowed. Radii and box halves must be positive; margin
+nonnegative. Both quaternion norms must be positive. Everything else falls back.
+The constructor also explicitly requires FE_TONEAREST; directed environments
+retain the original interval/exact path without using these certificates.
+
+Within this source domain every binary32 scalar is an integer multiple of
+2^-71. The homogeneous pair centre numerator delta has degree5; denominator
+da*db has degree4. SpherePredicate has degree10. SphereBoxPredicate has degree14:
+  h = da*db^2                     degree6
+  dot(nb[k],delta) - half[k]*h     degree7
+  sum positive-part squares - r^2*h^2    degree14
+Thus every nonzero expanded intermediate lies on a lattice no finer than
+2^-994, inside normal binary64 range. Magnitudes remain below2^720 including
+coefficient/term-count slack, so neither true/scalar intermediates overflow.
+This is why the SAT filter's wider +/-64 domain is NOT blindly reused for
+sphere-box: degree14 there could reach the subnormal lattice2^-1218.
+
+Positive expression majorants
+----------------------------
+Let DA=2*computed(da), DB=2*computed(db). These enclose the exact positive
+four-square quaternion norms despite round-to-nearest summation. Each rotation
+numerator component's expanded absolute sum is <= that quaternion norm.
+
+P = L1(pa.position)+L1(pb.position)
+C = L1(pa.localCenter)+L1(pb.localCenter)
+H = sum(box half extents)
+R = sum(source radii and margin)
+D = DA*DB
+L = D*(P+3*C)
+
+The expanded absolute L1 sum of delta is <=L. Therefore:
+  M_sphere = 2*[L^2 + (R*D)^2]
+
+For sphere-box, each abs(dot(nb[k],delta)) has majorant DB*L. Abs and the
+positive-part map max(x,0) are1-Lipschitz, so no choice of clamp branch is
+assumed. Summing the three complete unsigned branch expressions gives
+  A = DA*DB^2 * [3*(P+3*C)+H]
+  M_sphere_box = 2*[A^2 + (R*DA*DB^2)^2]
+
+The final factor2 covers rounding in evaluating these short positive majorants.
+The result is an arithmetic-error bound, not a world-space contact tolerance.
+
+Rounded operation count and interval endpoint comparison
+-------------------------------------------------------
+Unfolding the literal current expressions conservatively gives:
+  quaternion numerator or norm: <=7 operations
+  pair denominator: <=15
+  each relative-centre numerator: <=87
+  dot(nb[k],delta): <=287
+  each sphere-box pre-clamp subtraction: <=312
+  squared pre-clamp expression: <=625
+  complete sphere-box expression including up to2 radius/margin additions:
+      <=1932 rounded scalar operations
+  complete sphere-pair expression: <600
+
+The legacy outward interval endpoints cost at most3u per arithmetic operation
+(round-to-nearest plus outward nextafter). With u=2^-53, the distance from the
+scalar expression to an old interval endpoint is therefore bounded by the sum
+of scalar gamma(1932) and interval gamma(5796), times the unsigned majorant.
+Gamma(n)=n*u/(1-n*u). Gamma(16384) leaves additional slack for positive-majorant
+rounding and subnormal padding from interval zero endpoints.
+
+Padding argument: nonzero expanded nodes lie on lattice >=2^-994, so a single
+2^-1074 padding unit is <=2^-80 times that node's nonzero unsigned majorant.
+Positive propagation through fewer than1933 expression nodes contributes much
+less than the remaining gamma slack. Identically zero subtrees remain exact
+zero through Iv's zero-special cases. Abs/Positive do not amplify differences.
+
+Certificate:
+  value > Gamma(16384)*M  => legacy Iv.lower>0
+  value <-Gamma(16384)*M  => legacy Iv.upper<0
+Otherwise use the old path. No zero certificate is supplied.
+
+Required validation before adoption
+-----------------------------------
+1. Independent review of these operation/range/majorant/padding bounds.
+2. Execute200000 actual homogeneous-kernel cases, including magnitude extremes,
+   local-centre cancellation, nonunit quaternions, exact3-4-5 tangencies, ULP
+   boundaries, positive-part clamp boundaries and nonzero margins.
+3. Compare every certified result with the ORIGINAL Iv resolved sign, not just
+   a scalar approximation or an exact mathematical sign. Exercise independent
+   Exact expansions and exact zeros where the existing exact domain permits.
+4. --omit-bound must fail on raw signs which change legacy branch behavior.
+5. Isolated full response/Boolean parity and all270 physical step digests.
+6. Matched real workload timing before any production addition. No speedup is
+   claimed from this derivation or generated test source.

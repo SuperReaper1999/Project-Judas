@@ -1,0 +1,42 @@
+In file included from /home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/continuous-toi-prototype/ContinuousBoxCCD.v3.h:4,
+                 from /home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/continuous-toi-prototype/ContinuousBoxCCDTests.v3.cpp:1:
+/home/conner/Documents/GitHub/Project-Judas/src/ContactGeometryInternal.h:267:20: error: ‘ContactPose’ does not name a type [-Wtemplate-body]
+  267 |         Pair(const ContactPose& pa, const ContactPose& pb)
+      |                    ^~~~~~~~~~~
+/home/conner/Documents/GitHub/Project-Judas/src/ContactGeometryInternal.h:267:43: error: ‘ContactPose’ does not name a type [-Wtemplate-body]
+  267 |         Pair(const ContactPose& pa, const ContactPose& pb)
+      |                                           ^~~~~~~~~~~
+/home/conner/Documents/GitHub/Project-Judas/src/ContactGeometryInternal.h:270:20: error: ‘ContactPose’ does not name a type [-Wtemplate-body]
+  270 |         Pair(const ContactPose& pa, const ContactPose& pb,
+      |                    ^~~~~~~~~~~
+/home/conner/Documents/GitHub/Project-Judas/src/ContactGeometryInternal.h:270:43: error: ‘ContactPose’ does not name a type [-Wtemplate-body]
+  270 |         Pair(const ContactPose& pa, const ContactPose& pb,
+      |                                           ^~~~~~~~~~~
+/home/conner/Documents/GitHub/Project-Judas/src/ContactGeometryInternal.h: In constructor ‘contact_geometry::Pair<T>::Pair(const int&, const int&)’:
+/home/conner/Documents/GitHub/Project-Judas/src/ContactGeometryInternal.h:268:43: error: request for member ‘orientation’ in ‘pa’, which is of non-class type ‘const int’ [-Wtemplate-body]
+  268 |             : Pair(pa, pb, Rotation<T>(pa.orientation), Rotation<T>(pb.orientation)) {}
+      |                                           ^~~~~~~~~~~
+/home/conner/Documents/GitHub/Project-Judas/src/ContactGeometryInternal.h:268:72: error: request for member ‘orientation’ in ‘pb’, which is of non-class type ‘const int’ [-Wtemplate-body]
+  268 |             : Pair(pa, pb, Rotation<T>(pa.orientation), Rotation<T>(pb.orientation)) {}
+      |                                                                        ^~~~~~~~~~~
+/home/conner/Documents/GitHub/Project-Judas/src/ContactGeometryInternal.h: In constructor ‘contact_geometry::Pair<T>::Pair(const int&, const int&, const contact_geometry::Rotation<T>&, const contact_geometry::Rotation<T>&)’:
+/home/conner/Documents/GitHub/Project-Judas/src/ContactGeometryInternal.h:274:44: error: request for member ‘position’ in ‘pa’, which is of non-class type ‘const int’ [-Wtemplate-body]
+  274 |             delta=Add(Mul(Sub(Vector<T>(pa.position),Vector<T>(pb.position)),denominator),
+      |                                            ^~~~~~~~
+/home/conner/Documents/GitHub/Project-Judas/src/ContactGeometryInternal.h:274:67: error: request for member ‘position’ in ‘pb’, which is of non-class type ‘const int’ [-Wtemplate-body]
+  274 |             delta=Add(Mul(Sub(Vector<T>(pa.position),Vector<T>(pb.position)),denominator),
+      |                                                                   ^~~~~~~~
+/home/conner/Documents/GitHub/Project-Judas/src/ContactGeometryInternal.h:275:48: error: request for member ‘localCenter’ in ‘pa’, which is of non-class type ‘const int’ [-Wtemplate-body]
+  275 |             Sub(Mul(Transform(a.n,Vector<T>(pa.localCenter)),b.d),Mul(Transform(b.n,Vector<T>(pb.localCenter)),a.d)));
+      |                                                ^~~~~~~~~~~
+/home/conner/Documents/GitHub/Project-Judas/src/ContactGeometryInternal.h:275:98: error: request for member ‘localCenter’ in ‘pb’, which is of non-class type ‘const int’ [-Wtemplate-body]
+  275 |             Sub(Mul(Transform(a.n,Vector<T>(pa.localCenter)),b.d),Mul(Transform(b.n,Vector<T>(pb.localCenter)),a.d)));
+      |                                                                                                  ^~~~~~~~~~~
+/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/continuous-toi-prototype/ContinuousBoxCCD.v3.h: In function ‘continuous_box_ccd::PointResult continuous_box_ccd::Point(const MotionView&, const MotionView&, double)’:
+/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/continuous-toi-prototype/ContinuousBoxCCD.v3.h:214:27: error: ‘ContactPose’ was not declared in this scope
+  214 |         Pair<double> pair(ContactPose{},ContactPose{});
+      |                           ^~~~~~~~~~~
+/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/continuous-toi-prototype/ContinuousBoxCCD.v3.h:214:52: error: expected ‘)’ before ‘{’ token
+  214 |         Pair<double> pair(ContactPose{},ContactPose{});
+      |                          ~                         ^
+      |                                                    )

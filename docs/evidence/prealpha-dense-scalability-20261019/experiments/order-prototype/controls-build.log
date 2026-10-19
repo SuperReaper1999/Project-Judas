@@ -1,0 +1,4 @@
+impact baseline 0 ['Impact response 46 cases 267 checks PASS; safety_fallbacks=0 (actual engine timing is validated separately)']
+controls baseline 0 ['order controls 666 checks PASS']
+impact ordered 0 ['Impact response 46 cases 267 checks PASS; safety_fallbacks=0 (actual engine timing is validated separately)']
+controls ordered 0 ['order controls 666 checks PASS']

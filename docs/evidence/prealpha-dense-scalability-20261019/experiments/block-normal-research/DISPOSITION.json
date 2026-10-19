@@ -1,0 +1,43 @@
+{
+  "disposition": "rejected; no production adoption",
+  "scope": "one preserved exact event3470; block-local normal complementarity with unchanged original per-row Coulomb kernel; no changed solver budget",
+  "source_sha256": "d9e5a3bff5242a0edc08487aa83fc1aad4c210013d1f89e1de3fab2e9c6ab57a",
+  "correctness_observation": "below initial kinetic energy, but unchanged ten sweeps do not reduce the actual normal residual; no claim of physical trajectory equivalence",
+  "baseline_10": {
+    "cumulative_solver_ms": 2.560679,
+    "iterations": 10,
+    "kinetic_J": 27.351556031695264,
+    "residual": {
+      "active": 2176,
+      "closing": 1642,
+      "maximum_active_residual_mps": 0.05334782972931862,
+      "maximum_closing_mps": 0.05334782972931862,
+      "maximum_complementarity_product_Ns_mps": 0.010278745101336417,
+      "normal_kkt_l2_mps": 0.3579793259914575,
+      "rows": 2379
+    },
+    "velocity_digest": "3eaf5d8bd0e37b6b"
+  },
+  "block_10": {
+    "block_updates": 5060,
+    "energy_J": 27.375751296156096,
+    "fallback_updates": 0,
+    "residual": {
+      "active": 2145,
+      "closing": 1657,
+      "maximum_active_residual_mps": 0.05371557176113129,
+      "maximum_closing_mps": 0.05371557176113129,
+      "maximum_complementarity_product_Ns_mps": 0.010137807972417034,
+      "normal_kkt_l2_mps": 0.36679630347961184,
+      "rows": 2379
+    },
+    "solver_ms": 3.169759,
+    "sweeps": 10,
+    "velocity_digest": "87afda1805b35b34"
+  },
+  "block_setup_ms": 3.849865,
+  "timing_qualification": "single offline observation, not a matched live engine performance claim",
+  "why_rejected": "same-sweep normal residual slightly worse, setup plus solve more expensive; does not address graph-wide convergence/event amplification",
+  "friction_qualification": "original friction update executed after each accepted block; no independent friction fixed-point convergence claim; changed normal allocation means not bit-preserving",
+  "remaining_hypothesis": "dominant numerical coupling spans the body-contact graph, not just 2-4 coplanar points in one manifold"
+}

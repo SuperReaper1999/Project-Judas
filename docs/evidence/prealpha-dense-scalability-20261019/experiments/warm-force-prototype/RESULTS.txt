@@ -1,0 +1,26 @@
+REJECTED EXPERIMENT: NEXT-STEP REGULAR SUPPORT FORCE GUESS RETENTION
+
+Full real room1024 run: ../runs/warm-force-A1/RESULTS.json.
+Completed all 270 steps with unchanged bodies, timestep, geometry, CCD,
+friction, ten solver iterations and materials. Exit 0, finite state.
+
+fixed-step ms: median 23.906161, mean 136.441869, p95 609.248739,
+              p99 1164.625885, maximum 1343.283790.
+Matched original baseline mean 93.509 ms, p95 339.804 ms, maximum 1695.19 ms.
+Although its single worst step is lower, average/p95 cost regresses badly.
+This is not a practical performance improvement and must not be adopted.
+
+Physical trajectory changed as expected: final digest 2595052ee6f7dc85.
+Observed endpoint physical quality for all 1024 loose pieces:
+9171 candidate pairs, 2613 contact points, no uncertain/unsupported pairs,
+deepest endpoint penetration 0.005547230836464578 m.
+This is only endpoint quality, not proof that the entire trajectory improves.
+
+The immutable guess snapshot contains only ordinary support solve loads.
+No impact impulse is replayed and no contact or CCD work is disabled.
+The result does not prove the original conservative clearing policy is a
+correctness defect; preserving an initial guess can alter subsequent finite-
+iteration motion and contact topology without making overall cost better.
+
+SupportGuessTests.cpp is prepared as small matching controls but has not been
+compiled/run during the root's host measurements. No passing claim is made.

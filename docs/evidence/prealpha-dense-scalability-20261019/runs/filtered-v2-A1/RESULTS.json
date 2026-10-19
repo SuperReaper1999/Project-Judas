@@ -1,0 +1,73 @@
+{
+  "argv": [
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/candidate-filtered-v2/bin/judas_physics_stress_live_benchmark",
+    "/home/conner/Documents/GitHub/Project-Judas/projects/physics_stress_lab/Scenes/room1024.judas",
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/runs/filtered-v2-A1/live",
+    "105",
+    "270",
+    "0",
+    "0",
+    "1",
+    "0.016666667",
+    "1",
+    "0",
+    "1"
+  ],
+  "blocks_of_30_steps": [],
+  "bodies_observed": [],
+  "cadence": "synthetic one-60Hz-step/frame: NOT displayed FPS",
+  "completed_steps": 0,
+  "context": {
+    "binary_sha256": "77c1ae61fbfaa513f53ca3685e189e0feb7e1aa9e00bca3225abdc40962de4c5",
+    "environment": {
+      "DISPLAY": ":0",
+      "LIBGL_ALWAYS_SOFTWARE": null,
+      "SDL_AUDIODRIVER": null,
+      "SDL_VIDEODRIVER": null,
+      "WAYLAND_DISPLAY": "wayland-0",
+      "XDG_RUNTIME_DIR": "/run/user/1000",
+      "XDG_SESSION_TYPE": "wayland",
+      "__GL_SYNC_TO_VBLANK": null,
+      "__NV_PRIME_RENDER_OFFLOAD": null
+    },
+    "fixture_sha256": "a2caf62a295243d301149202c8a0a5eedafff256d68de0e3cda988846b2e05bf",
+    "mode": "exact",
+    "profile": 1,
+    "requested_steps": 270,
+    "requested_wall_seconds": 105,
+    "resolution_note": "Runtime default project/window settings; preserve actual runtime renderer log.",
+    "schema": "judas.dense.run.v1",
+    "snapshot": "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/candidate-filtered-v2",
+    "snapshot_manifest_sha256": "f39299e4511ff9217cb5b882762b65dec87d9ec49e155e27b8ed5abcdf484262",
+    "source_head": "e30d5f9bb72a1a341d3eff7485b8d6b3eb6f8ea9"
+  },
+  "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+  "endpoint_quality": null,
+  "exit": 1,
+  "final_digest": null,
+  "finished_utc": "2026-10-19T10:26:44.260815+00:00",
+  "fixed_ms": {
+    "count": 0
+  },
+  "frame_interval_ms": {
+    "count": 0
+  },
+  "frame_intervals_over_33_333ms": 0,
+  "frame_intervals_over_41_667ms": 0,
+  "maximum_rss_kib": 24440,
+  "nonfinite_or_bad_sequence_rows": [],
+  "observed_application_wall_seconds": 0.0,
+  "process_group": 13082,
+  "profile_retained_state": {
+    "available": false
+  },
+  "rendered_frames": 0,
+  "simulated_seconds": 0.0,
+  "simulation_seconds_per_wall_second": null,
+  "timed_out": false,
+  "timeout_seconds": 150,
+  "utc": "2026-10-19T10:26:44.244766+00:00",
+  "valid_completion": false,
+  "wall_seconds": 0.015955781999991814,
+  "worst_step": null
+}

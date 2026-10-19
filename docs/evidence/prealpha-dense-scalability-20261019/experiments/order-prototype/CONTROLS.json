@@ -1,0 +1,20 @@
+{
+  "impact-baseline": {
+    "exit": 0,
+    "sha256": "36a389668892583c2384528859f46d81fd149346bfc7145ec7ce801e82618df5"
+  },
+  "controls-baseline": {
+    "exit": 0,
+    "sha256": "3c1dbc21043d6222ea1ca9f950c8fa9b19e6d4eb2a6e1af8dc1b9c400d938dcc"
+  },
+  "impact-ordered": {
+    "exit": 0,
+    "sha256": "c36a114ce937d7e7249e38bfd9d8f02488f9a7797afb8597efcd9e7fe8e70ff1"
+  },
+  "controls-ordered": {
+    "exit": 0,
+    "sha256": "78078730ee0783864130da18f06a9379feff0bbb80032c5092a50aa5361833cc"
+  },
+  "free_flight_exact_output_parity": true,
+  "anchored_order_changes_physical_result": true
+}

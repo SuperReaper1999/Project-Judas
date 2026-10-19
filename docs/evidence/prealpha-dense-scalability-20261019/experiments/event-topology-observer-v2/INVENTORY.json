@@ -1,0 +1,198 @@
+{
+  "schema": "judas.mode3-event-topology-research.inventory.v1",
+  "utc": "2026-10-19T11:38:52.027872+00:00",
+  "scope": "Top-level sources, binaries, captured data and results. Frozen header dependency manifest is retained in BUILD.json. No production modifications.",
+  "files": [
+    {
+      "path": "BUILD.json",
+      "size_bytes": 41678,
+      "sha256": "bd8650a574adc449e0a5eec0228f320239f733f6081565f87fe695c82c405e43"
+    },
+    {
+      "path": "ContactCapture.h",
+      "size_bytes": 7009,
+      "sha256": "e3440bc7f1cbbdf03ada8a567c08378888042b9b8b900b9aaa67c96ec1168416"
+    },
+    {
+      "path": "EventTopologyObserver.h",
+      "size_bytes": 6281,
+      "sha256": "51df04f57753f151256e14ab2cb5f610527fb0e9358ec7b12f6a9be24810f6e7"
+    },
+    {
+      "path": "PairReplay.cpp",
+      "size_bytes": 7985,
+      "sha256": "360c8ff31aedb937743101a2187623a94d586334685d54781c168f7861a2e943"
+    },
+    {
+      "path": "PairReplay.cpp.o",
+      "size_bytes": 709328,
+      "sha256": "1fe19a2b1847f241fdc7c677ea507c1207a8ce9af7a28431377b620737b26e7b"
+    },
+    {
+      "path": "PairScheduleCapture.h",
+      "size_bytes": 3347,
+      "sha256": "d0b839c57f91900acd86b3ff7db8754964210930e7879dee8663db981cb9d4c3"
+    },
+    {
+      "path": "REPLAY_BUILD.json",
+      "size_bytes": 3692,
+      "sha256": "ee25d35630a1f0f2d486837a3772bededb5dac4d500554e78081a82e047c1bc3"
+    },
+    {
+      "path": "RESULTS.txt",
+      "size_bytes": 7850,
+      "sha256": "f0257109f0da5b714b62bda1e763bee4edcbf36de1c7d382132ce1f175551244"
+    },
+    {
+      "path": "WorldImpactEvents.cpp",
+      "size_bytes": 38629,
+      "sha256": "1cc963bff0dc385d5450cda45f537a0d486d3a1eb61aa4f04a205c5bcf367d0f"
+    },
+    {
+      "path": "WorldImpactEvents.cpp.o",
+      "size_bytes": 321056,
+      "sha256": "c72684636110bd7a886949863392263b09a55f134628c62dc4cdfdbe3de21211"
+    },
+    {
+      "path": "WorldImpactEvents.original.cpp",
+      "size_bytes": 36611,
+      "sha256": "bfc69590b9068ecc0c243686e134e8365da9745f6c784488cdca0251b60c005b"
+    },
+    {
+      "path": "build-replay.py",
+      "size_bytes": 1552,
+      "sha256": "198426d1c85c5dcd71190b7f6a72a161700f291541fb20d82165ca8ecc95173e"
+    },
+    {
+      "path": "build.log",
+      "size_bytes": 650,
+      "sha256": "5bd0af45133cd709d667daa13afd3d3c94e8a25ced12bffce75baa5fcfa98cab"
+    },
+    {
+      "path": "build.py",
+      "size_bytes": 3998,
+      "sha256": "5cc87ad4f0c90f2677fa383f7f8233a92b7232c704b07fad2694aa8bfc53ddcf"
+    },
+    {
+      "path": "events.jsonl",
+      "size_bytes": 2803850,
+      "sha256": "36988f8729ebc8a2d79ed1775eeab25a8da37a94e6b386f3f9dc27933090481f"
+    },
+    {
+      "path": "fixed-startplane-nonproof.json",
+      "size_bytes": 14283,
+      "sha256": "6c5972327e18f14551ad6f10813b11e2265c89b131942aaee1cbf90e3accfb6a"
+    },
+    {
+      "path": "fixed-startplane-nonproof.log",
+      "size_bytes": 419,
+      "sha256": "427bdff097ffb1925e46a61cdb23d365aa3c4dcd3daf0020672f1a696779270a"
+    },
+    {
+      "path": "fixed-startplane-nonproof.py",
+      "size_bytes": 5601,
+      "sha256": "0e42fb3b03295f86bbcd52d998f71a01970e1882ed3bbacf2a65d90f38150b31"
+    },
+    {
+      "path": "full-interval-separation-proof.json",
+      "size_bytes": 25581,
+      "sha256": "16597d8b825761e96b62b7a1100011ebf89d9a4b25cf54d3a838bf01773a5813"
+    },
+    {
+      "path": "full-interval-separation-proof.log",
+      "size_bytes": 1262,
+      "sha256": "c342e502f1c9d37fda8ce8d25e95cc52759c5b008e9517d1447af6b92a6c6081"
+    },
+    {
+      "path": "full-interval-separation-proof.py",
+      "size_bytes": 2034,
+      "sha256": "d72f219a2a9b6ef6d569d4c333ef890456d5ddcfb3855735d04a90d9ed06a592"
+    },
+    {
+      "path": "interval-separation-proof.json",
+      "size_bytes": 60361,
+      "sha256": "c1f489d1832846dea2348b949ac79a1428c4306853a3b7790877585b839ca02e"
+    },
+    {
+      "path": "interval-separation-proof.log",
+      "size_bytes": 176,
+      "sha256": "e01a8c95df1fd23920ec4dc89621906436cdfcdf53d3e32c5f1f01c8147533f0"
+    },
+    {
+      "path": "interval-separation-proof.py",
+      "size_bytes": 6896,
+      "sha256": "02dfa6ae2c7d695b60b7c2afd42cf7b9c25565062cc89a86584d6e87f73cb136"
+    },
+    {
+      "path": "judas_physics_stress_live_benchmark",
+      "size_bytes": 55106752,
+      "sha256": "fcac344fa863bcd10a3badbd0ca231701fb8ee1eb7405a08fd788890f8bb419a"
+    },
+    {
+      "path": "libjudas_engine.a",
+      "size_bytes": 30549496,
+      "sha256": "8aa607dc4bda738de50e10b8938edbb5c4e942f2f5b2540e8f0d4064166d90f0"
+    },
+    {
+      "path": "observer.d",
+      "size_bytes": 5277,
+      "sha256": "8f3458b1c8e4fee647ba9f9189b3883cd26fff9bca1f6a16047a0cbc1a06e0f6"
+    },
+    {
+      "path": "pair-replay",
+      "size_bytes": 1679056,
+      "sha256": "9259d5df95a39bec73f5e0c256507c89745b5e171cb7b4a6747744674ecc1ee9"
+    },
+    {
+      "path": "pair-replay.json",
+      "size_bytes": 468663,
+      "sha256": "c878ef42f4f80dd699dcd1d575d7ff982632833b7b540ea4754717da683336b8"
+    },
+    {
+      "path": "pair-replay.log",
+      "size_bytes": 48,
+      "sha256": "1eb898d21d1951c5fe0204c0442c36ebbb25d3e05d00efe95f4aca25e62f0355"
+    },
+    {
+      "path": "pair-trace.jsonl",
+      "size_bytes": 2258898,
+      "sha256": "b66165f787a808a890e2ef891d69c54ac53ffbefb93d173d88b97d0cbde56e72"
+    },
+    {
+      "path": "prepare.py",
+      "size_bytes": 3927,
+      "sha256": "9c9c6a2e5954f5bebbd354d2fab31279a334e1ae1a184bdb819d181c5144cc26"
+    },
+    {
+      "path": "replay-build.log",
+      "size_bytes": 117,
+      "sha256": "2ec20fd622c8d5d52c65164a3f8f1986a4606a087f7d7af3844370428064f885"
+    },
+    {
+      "path": "smooth-arrival-brackets.log",
+      "size_bytes": 410,
+      "sha256": "0591c366a8b667b18468975289f1e166c52df639cc38e90f815dc69b7a007df8"
+    },
+    {
+      "path": "smooth-arrival-brackets.py",
+      "size_bytes": 2575,
+      "sha256": "0f2b60740ee96f56d0c4f8bf13cb4b132adaf20e4534f27c5fc0b3e272867345"
+    },
+    {
+      "path": "smooth-gap-proof.json",
+      "size_bytes": 849030,
+      "sha256": "2dd1198362a3b51e61d37bdeb4d22b7844bd6b71e45cc2fa5e22cf3ab6d5be0e"
+    },
+    {
+      "path": "smooth-gap-proof.log",
+      "size_bytes": 4545,
+      "sha256": "949c99482b7f0edd763841463268c8ccf790d4b8cef8f647bb509f9b4781f4f4"
+    },
+    {
+      "path": "smooth-gap-proof.py",
+      "size_bytes": 5695,
+      "sha256": "9ccb28a91423c3db6990a5541da08c883abee00ef99c9d461d0e7d81c12783c6"
+    }
+  ],
+  "total_size_bytes": 95044618
+}

@@ -1,0 +1,45 @@
+test_changed_snapshot_archive_is_rejected (test_physics_dense_measure.DenseMeasurementTests.test_changed_snapshot_archive_is_rejected) ... ok
+test_different_physics_cadence_is_rejected (test_physics_dense_measure.DenseMeasurementTests.test_different_physics_cadence_is_rejected) ... ok
+test_frame_step_accounting_mismatch_is_rejected (test_physics_dense_measure.DenseMeasurementTests.test_frame_step_accounting_mismatch_is_rejected) ... /home/conner/Documents/GitHub/Project-Judas/scripts/physics_dense_measure.py:207: ResourceWarning: unclosed file <_io.TextIOWrapper name='/tmp/tmpn8ms42p4/steps.csv' mode='r' encoding='UTF-8'>
+  return list(csv.DictReader(Path(path).open())) if Path(path).exists() else []
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/home/conner/Documents/GitHub/Project-Judas/scripts/physics_dense_measure.py:207: ResourceWarning: unclosed file <_io.TextIOWrapper name='/tmp/tmpn8ms42p4/frames.csv' mode='r' encoding='UTF-8'>
+  return list(csv.DictReader(Path(path).open())) if Path(path).exists() else []
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+ok
+test_relocated_snapshot_uses_verified_sibling_archive (test_physics_dense_measure.DenseMeasurementTests.test_relocated_snapshot_uses_verified_sibling_archive) ... ok
+test_repository_default_root_is_portable (test_physics_dense_measure.DenseMeasurementTests.test_repository_default_root_is_portable) ... ok
+test_retained_profiler_history_is_deduplicated_and_bounded (test_physics_dense_measure.DenseMeasurementTests.test_retained_profiler_history_is_deduplicated_and_bounded) ... ok
+test_short_or_failed_capture_is_rejected (test_physics_dense_measure.DenseMeasurementTests.test_short_or_failed_capture_is_rejected) ... /home/conner/Documents/GitHub/Project-Judas/scripts/physics_dense_measure.py:207: ResourceWarning: unclosed file <_io.TextIOWrapper name='/tmp/tmpknvs_so6/steps.csv' mode='r' encoding='UTF-8'>
+  return list(csv.DictReader(Path(path).open())) if Path(path).exists() else []
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/home/conner/Documents/GitHub/Project-Judas/scripts/physics_dense_measure.py:207: ResourceWarning: unclosed file <_io.TextIOWrapper name='/tmp/tmpknvs_so6/frames.csv' mode='r' encoding='UTF-8'>
+  return list(csv.DictReader(Path(path).open())) if Path(path).exists() else []
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+ok
+test_slow_realtime_capture_exposes_simulation_progress_and_full_cap_count (test_physics_dense_measure.DenseMeasurementTests.test_slow_realtime_capture_exposes_simulation_progress_and_full_cap_count) ... /home/conner/Documents/GitHub/Project-Judas/scripts/physics_dense_measure.py:207: ResourceWarning: unclosed file <_io.TextIOWrapper name='/tmp/tmppcvj1pul/steps.csv' mode='r' encoding='UTF-8'>
+  return list(csv.DictReader(Path(path).open())) if Path(path).exists() else []
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/home/conner/Documents/GitHub/Project-Judas/scripts/physics_dense_measure.py:207: ResourceWarning: unclosed file <_io.TextIOWrapper name='/tmp/tmppcvj1pul/frames.csv' mode='r' encoding='UTF-8'>
+  return list(csv.DictReader(Path(path).open())) if Path(path).exists() else []
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+ok
+test_successful_early_quit_is_not_complete_realtime_capture (test_physics_dense_measure.DenseMeasurementTests.test_successful_early_quit_is_not_complete_realtime_capture) ... /home/conner/Documents/GitHub/Project-Judas/scripts/physics_dense_measure.py:207: ResourceWarning: unclosed file <_io.TextIOWrapper name='/tmp/tmp4f4xtcs5/steps.csv' mode='r' encoding='UTF-8'>
+  return list(csv.DictReader(Path(path).open())) if Path(path).exists() else []
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/home/conner/Documents/GitHub/Project-Judas/scripts/physics_dense_measure.py:207: ResourceWarning: unclosed file <_io.TextIOWrapper name='/tmp/tmp4f4xtcs5/frames.csv' mode='r' encoding='UTF-8'>
+  return list(csv.DictReader(Path(path).open())) if Path(path).exists() else []
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+ok
+test_synthetic_completion_does_not_claim_fps (test_physics_dense_measure.DenseMeasurementTests.test_synthetic_completion_does_not_claim_fps) ... /home/conner/Documents/GitHub/Project-Judas/scripts/physics_dense_measure.py:207: ResourceWarning: unclosed file <_io.TextIOWrapper name='/tmp/tmpwtryz89m/steps.csv' mode='r' encoding='UTF-8'>
+  return list(csv.DictReader(Path(path).open())) if Path(path).exists() else []
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/home/conner/Documents/GitHub/Project-Judas/scripts/physics_dense_measure.py:207: ResourceWarning: unclosed file <_io.TextIOWrapper name='/tmp/tmpwtryz89m/frames.csv' mode='r' encoding='UTF-8'>
+  return list(csv.DictReader(Path(path).open())) if Path(path).exists() else []
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+ok
+
+----------------------------------------------------------------------
+Ran 10 tests in 0.011s
+
+OK

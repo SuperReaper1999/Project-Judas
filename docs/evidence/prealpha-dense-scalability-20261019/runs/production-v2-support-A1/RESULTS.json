@@ -1,0 +1,213 @@
+{
+  "argv": [
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/candidate-production-v2-support/bin/judas_physics_stress_live_benchmark",
+    "/home/conner/Documents/GitHub/Project-Judas/projects/physics_stress_lab/Scenes/room1024.judas",
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/runs/production-v2-support-A1/live",
+    "105",
+    "270",
+    "0",
+    "0",
+    "1",
+    "0.016666667",
+    "1",
+    "0",
+    "1"
+  ],
+  "blocks_of_30_steps": [
+    {
+      "count": 30,
+      "first_step": 1,
+      "last_step": 30,
+      "maximum": 53.999117,
+      "mean": 20.914566733333334,
+      "median": 20.9048115,
+      "p95_floor": 30.449297,
+      "p99_floor": 34.05863
+    },
+    {
+      "count": 30,
+      "first_step": 31,
+      "last_step": 60,
+      "maximum": 24.053518,
+      "mean": 20.099714166666665,
+      "median": 20.0907775,
+      "p95_floor": 22.227064,
+      "p99_floor": 23.348889
+    },
+    {
+      "count": 30,
+      "first_step": 61,
+      "last_step": 90,
+      "maximum": 23.78761,
+      "mean": 19.135024366666666,
+      "median": 18.7790855,
+      "p95_floor": 20.623559,
+      "p99_floor": 22.823913
+    },
+    {
+      "count": 30,
+      "first_step": 91,
+      "last_step": 120,
+      "maximum": 42.417314,
+      "mean": 22.050548866666666,
+      "median": 20.2152545,
+      "p95_floor": 29.89433,
+      "p99_floor": 36.537089
+    },
+    {
+      "count": 30,
+      "first_step": 121,
+      "last_step": 150,
+      "maximum": 48.666059,
+      "mean": 23.450977133333332,
+      "median": 20.4141035,
+      "p95_floor": 34.005953,
+      "p99_floor": 36.968798
+    },
+    {
+      "count": 30,
+      "first_step": 151,
+      "last_step": 180,
+      "maximum": 347.789901,
+      "mean": 74.80342033333334,
+      "median": 62.674756,
+      "p95_floor": 137.663646,
+      "p99_floor": 139.266827
+    },
+    {
+      "count": 30,
+      "first_step": 181,
+      "last_step": 210,
+      "maximum": 73.204491,
+      "mean": 47.54907583333333,
+      "median": 45.083321999999995,
+      "p95_floor": 67.774829,
+      "p99_floor": 72.957475
+    },
+    {
+      "count": 30,
+      "first_step": 211,
+      "last_step": 240,
+      "maximum": 256.996265,
+      "mean": 103.47210743333333,
+      "median": 93.892752,
+      "p95_floor": 176.757984,
+      "p99_floor": 218.645473
+    },
+    {
+      "count": 30,
+      "first_step": 241,
+      "last_step": 270,
+      "maximum": 1085.409843,
+      "mean": 292.13401976666665,
+      "median": 201.72246,
+      "p95_floor": 669.124013,
+      "p99_floor": 1009.804963
+    }
+  ],
+  "bodies_observed": [
+    1285
+  ],
+  "cadence": "synthetic one-60Hz-step/frame: NOT displayed FPS",
+  "completed_steps": 270,
+  "context": {
+    "binary_sha256": "dbfe8298d7f456037050dfb797dc93cce45429abd0cc7d8e4318d2781ab0a7d3",
+    "environment": {
+      "DISPLAY": ":0",
+      "LIBGL_ALWAYS_SOFTWARE": null,
+      "SDL_AUDIODRIVER": null,
+      "SDL_VIDEODRIVER": null,
+      "WAYLAND_DISPLAY": "wayland-0",
+      "XDG_RUNTIME_DIR": "/run/user/1000",
+      "XDG_SESSION_TYPE": "wayland",
+      "__GL_SYNC_TO_VBLANK": null,
+      "__NV_PRIME_RENDER_OFFLOAD": null
+    },
+    "fixture_sha256": "a2caf62a295243d301149202c8a0a5eedafff256d68de0e3cda988846b2e05bf",
+    "mode": "exact",
+    "profile": 1,
+    "requested_steps": 270,
+    "requested_wall_seconds": 105,
+    "resolution_note": "Runtime default project/window settings; preserve actual runtime renderer log.",
+    "schema": "judas.dense.run.v1",
+    "snapshot": "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/candidate-production-v2-support",
+    "snapshot_manifest_sha256": "bed8929ba2b9ea0e26d3ea2087eae593c0b27df0a197cbec97c2cc9b99697fce",
+    "source_head": "e30d5f9bb72a1a341d3eff7485b8d6b3eb6f8ea9"
+  },
+  "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+  "endpoint_quality": {
+    "candidate_pairs": 9327,
+    "contact_points": 2475,
+    "deepest_endpoint_penetration_m": 0.007217108528522143,
+    "observation_ms": 25.354884,
+    "outside_fixed_step_timing": true,
+    "population": 1024,
+    "scope": "endpoint primitive geometry for the authored loose_piece population",
+    "tag_available": true,
+    "uncertain_pairs": 0,
+    "unsupported_candidates": 0
+  },
+  "exit": 0,
+  "final_digest": "192f0f4bed728953",
+  "finished_utc": "2026-10-19T10:58:52.362586+00:00",
+  "fixed_ms": {
+    "count": 270,
+    "maximum": 1085.409843,
+    "mean": 69.2899394037037,
+    "median": 24.394969500000002,
+    "p95_floor": 239.617156,
+    "p99_floor": 631.227036
+  },
+  "frame_interval_ms": {
+    "count": 270,
+    "maximum": 1088.504989,
+    "mean": 72.86539787777778,
+    "median": 28.7776645,
+    "p95_floor": 243.212776,
+    "p99_floor": 634.276173
+  },
+  "frame_intervals_over_33_333ms": 127,
+  "frame_intervals_over_41_667ms": 113,
+  "maximum_rss_kib": 231412,
+  "nonfinite_or_bad_sequence_rows": [],
+  "observed_application_wall_seconds": 19.676191464,
+  "process_group": 19196,
+  "profile_retained_state": {
+    "available": true,
+    "cap_frames_in_retained_subset": 0,
+    "coverage": "Bounded retained profiler history/spikes only; not an all-run cap counter.",
+    "discarded_seconds_in_retained_subset": 0,
+    "retained_unique_frames": 120
+  },
+  "rendered_frames": 271,
+  "simulated_seconds": 4.5,
+  "simulation_seconds_per_wall_second": 0.22870279587557893,
+  "timed_out": false,
+  "timeout_seconds": 120.0,
+  "utc": "2026-10-19T10:58:32.254597+00:00",
+  "valid_completion": true,
+  "wall_seconds": 20.10789202900014,
+  "worst_step": {
+    "awake": "1024",
+    "bodies": "1285",
+    "broadphase_ms": "4.027823",
+    "candidates": "12628",
+    "contacts": "3122",
+    "fixed_ms": "1085.409843",
+    "frame": "269",
+    "impact_events": "51",
+    "impact_iterations": "46950",
+    "impact_peak": "20",
+    "impact_queries": "501599",
+    "max_angular_speed": "6.46908569336",
+    "max_linear_speed": "2.61625123024",
+    "narrowphase_ms": "8.43057",
+    "nonfinite_fields": "0",
+    "sleeping": "128",
+    "solver_ms": "1068.218814",
+    "step": "270",
+    "total_physics_ms": "1084.050195",
+    "trajectory_digest": "192f0f4bed728953",
+    "wall_ms": "19670.795748"
+  }
+}

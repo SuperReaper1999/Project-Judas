@@ -1,0 +1,15 @@
+{
+  "status": "compiled and linked; no checks executed by this script",
+  "compile_seconds": 7.600918769836426,
+  "link_seconds": {
+    "judas_physics_stress_live_benchmark": 0.7146158218383789,
+    "judas_impact_timing_tests": 0.09946417808532715,
+    "judas_physics_scaling_diagnostics": 0.09333300590515137
+  },
+  "sha256": {
+    "libjudas_engine.a": "64d7d4e90911c7a4c4ba88978495e8f1ae65f0e416ae3049e53621a8c6838887",
+    "judas_physics_stress_live_benchmark": "0935b2f28e4a2f952bf2a37f97208090b3a1f9dd96fa523ce1337f20673ce0de",
+    "judas_impact_timing_tests": "3425f8ee2015f587a8ac4c233f34ec7d666aa6333968e99b7ebf4ef49fb87fbd",
+    "judas_physics_scaling_diagnostics": "50972aac37293af7e185c236c96466859fe220011240601adf2d18f187f4c7b0"
+  }
+}

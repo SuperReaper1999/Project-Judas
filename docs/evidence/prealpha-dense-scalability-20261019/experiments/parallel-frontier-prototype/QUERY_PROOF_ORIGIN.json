@@ -1,0 +1,7 @@
+{
+  "source": ".cache/dense-scalability-20261019/parallel-prototype-v2/query-shared-parity.log",
+  "actualExecutedBinary": ".cache/dense-scalability-20261019/parallel-prototype-v2/query-parity",
+  "meaning": "Same-byte query context tested in V2; NOT a proof of new frontier traversal",
+  "contextSha256": "322e55031362c414b233a8b6f234521a06f1e4e18e6f05d13c3c36dc07886370",
+  "frontierStatus": "compiled only, no end-to-end run"
+}

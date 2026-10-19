@@ -7,6 +7,8 @@
 #include <optional>
 #include <type_traits>
 #include "ContactPreparedGeometry.h"
+#include "ContactSatFilter.h"
+#include "SpherePredicateFilter.h"
 
 namespace {
     constexpr float kEpsilon = 1.0e-6f;
@@ -42,23 +44,47 @@ namespace {
         return exact().Sign();
     }
 
+    // Successful certificates preserve the old interval's resolved branch.
+    // Ambiguity still constructs Exact when the unchanged response needs it.
+    template<class F> int SphereFilteredSign(int certificate, F legacy) {
+        if (certificate != SpherePredicateFilter::Unresolved) {
+            ++diagnostics.predicates;
+            ++diagnostics.intervalResolved;
+            return certificate;
+        }
+        return legacy();
+    }
+
     struct Context {
-        ContactPose pa,pb;
-        Pair<Iv> interval;
+        ContactPose pa, pb;
+        std::optional<Pair<Iv>> interval;
+        // Prepared orientations belong to the enclosing primitive query and
+        // outlive this context, including its deferred interval construction.
+        const ContactPreparedOrientation &orientationA, &orientationB;
         Pair<double> number;
         std::unique_ptr<Pair<Exact>> exact;
-        glm::dmat3 ra,rb;
-        glm::dvec3 a,b;
-        Context(const ContactPose& x, const ContactPose& y,
-                const ContactPreparedOrientation& preparedA,
-                const ContactPreparedOrientation& preparedB)
-            : pa(x), pb(y), interval(x,y,preparedA.interval,preparedB.interval),
-              number(x,y,preparedA.number,preparedB.number),
+        glm::dmat3 ra, rb;
+        glm::dvec3 a, b;
+
+        Context(const ContactPose &x, const ContactPose &y,
+                const ContactPreparedOrientation &preparedA,
+                const ContactPreparedOrientation &preparedB)
+            : pa(x), pb(y), orientationA(preparedA), orientationB(preparedB),
+              number(x, y, preparedA.number, preparedB.number),
               ra(preparedA.rotation), rb(preparedB.rotation),
-              a(ra*glm::dvec3(x.localCenter)),
-              b(glm::dvec3(y.position)-glm::dvec3(x.position)+rb*glm::dvec3(y.localCenter)) {}
-        const Pair<Exact>& E(){
-            if (!exact)exact=std::make_unique<Pair<Exact>>(pa,pb);
+              a(ra * glm::dvec3(x.localCenter)),
+              b(glm::dvec3(y.position) - glm::dvec3(x.position) +
+                rb * glm::dvec3(y.localCenter)) {}
+
+        const Pair<Iv> &Interval() {
+            if (!interval)
+                interval.emplace(pa, pb, orientationA.interval, orientationB.interval);
+            return *interval;
+        }
+
+        const Pair<Exact> &E() {
+            if (!exact)
+                exact = std::make_unique<Pair<Exact>>(pa, pb);
             return *exact;
         }
     };
@@ -124,15 +150,23 @@ namespace {
 
     template<bool ExistenceOnly=false>
     PairResult<ExistenceOnly> SpherePair(Context& c,float ra,float rb,float margin) {
+        const SpherePredicateFilter filter(c.pa, c.pb, c.number);
         const Iv r=Iv(double(ra))+Iv(double(rb));
-        const Iv pred=SpherePredicate(c.interval,r);
-        const int sign=Sign(pred,[&]{
-            return SpherePredicate(c.E(),Exact(double(ra))+Exact(double(rb)));
-        });
-        if (sign>0) {
-            const int beyond=Sign(SpherePredicate(c.interval,r+Iv(double(margin))),[&]{
-                return SpherePredicate(c.E(),Exact(double(ra))+Exact(double(rb))+Exact(double(margin)));
+        const int sign = SphereFilteredSign(
+            filter.Sphere(SpherePredicate(c.number, double(ra) + double(rb)), ra, rb), [&] {
+                return Sign(SpherePredicate(c.Interval(), r), [&] {
+                    return SpherePredicate(c.E(), Exact(double(ra)) + Exact(double(rb)));
+                });
             });
+        if (sign>0) {
+            const int beyond = SphereFilteredSign(
+                filter.Sphere(SpherePredicate(c.number, double(ra) + double(rb) + double(margin)),
+                              ra, rb, margin), [&] {
+                    return Sign(SpherePredicate(c.Interval(), r + Iv(double(margin))), [&] {
+                        return SpherePredicate(c.E(), Exact(double(ra)) + Exact(double(rb)) +
+                                                      Exact(double(margin)));
+                    });
+                });
             if (beyond>0)return {};
         }
 
@@ -151,14 +185,23 @@ namespace {
 
     template<bool ExistenceOnly=false>
     PairResult<ExistenceOnly> SphereBoxPair(Context& c,float radius,const glm::vec3& half,float margin) {
-        const Iv pred=SphereBoxPredicate(c.interval,half,Iv(double(radius)));
-        const int sign=Sign(pred,[&]{
-            return SphereBoxPredicate(c.E(),half,Exact(double(radius)));
-        });
-        if (sign>0){
-            const int beyond=Sign(SphereBoxPredicate(c.interval,half,Iv(double(radius))+Iv(double(margin))),[&]{
-                return SphereBoxPredicate(c.E(),half,Exact(double(radius))+Exact(double(margin)));
+        const SpherePredicateFilter filter(c.pa, c.pb, c.number);
+        const int sign = SphereFilteredSign(
+            filter.SphereBox(SphereBoxPredicate(c.number, half, double(radius)), radius, half), [&] {
+                return Sign(SphereBoxPredicate(c.Interval(), half, Iv(double(radius))), [&] {
+                    return SphereBoxPredicate(c.E(), half, Exact(double(radius)));
+                });
             });
+        if (sign>0){
+            const int beyond = SphereFilteredSign(
+                filter.SphereBox(SphereBoxPredicate(c.number, half, double(radius) + double(margin)),
+                                 radius, half, margin), [&] {
+                    return Sign(SphereBoxPredicate(c.Interval(), half,
+                                                  Iv(double(radius)) + Iv(double(margin))), [&] {
+                        return SphereBoxPredicate(c.E(), half,
+                                                  Exact(double(radius)) + Exact(double(margin)));
+                    });
+                });
             if (beyond>0)return {};
         }
 
@@ -220,75 +263,134 @@ namespace {
         glm::dvec3 normal{0};
     };
 
-    SatResult BoxSat(Context& c,const glm::vec3& ha,const glm::vec3& hb,float margin) {
+    SatResult BoxSat(Context &c, const glm::vec3 &ha, const glm::vec3 &hb, float margin) {
         SatResult result;
-        double bestFace=-std::numeric_limits<double>::infinity(),bestEdge=bestFace;
-        int face=-1,edge=-1;
-        glm::dvec3 faceAxis(0),edgeAxis(0);
-        double faceLength=0,edgeLength=0;
-        const SatWorkspace<Iv> workspace(c.interval);
-        for (int axis=0;axis<15;++axis){
-            const auto ai=Axis(c.interval,axis);
-            const Iv lengthSquared=Dot(ai,ai);
-            if (Sign(lengthSquared,[&]{
-                auto a=Axis(c.E(),axis);return Dot(a,a);
-            })==0)continue;
-            const Iv s=workspace.Evaluate(ha,hb,axis,ai);
-            bool exactGap=false;
-            const int sign=Sign(s,[&]{
-                exactGap=true;return Sat(c.E(),ha,hb,axis);
-            });
-            if (sign>0){
-                if (margin==0)return {};
-                const Iv m{double(margin)};
-                const Iv compare=s*s-m*m*c.interval.denominator*c.interval.denominator*lengthSquared;
-                const int beyond=Sign(compare,[&]{
-                    const auto&e=c.E();auto t=Axis(e,axis);auto es=Sat(e,ha,hb,axis);Exact em{double(margin)};return es*es-em*em*e.denominator*e.denominator*Dot(t,t);
+        double bestFace = -std::numeric_limits<double>::infinity(), bestEdge = bestFace;
+        int face = -1, edge = -1;
+        glm::dvec3 faceAxis(0), edgeAxis(0);
+        double faceLength = 0, edgeLength = 0;
+        const ContactSatFilter filter(c.pa, c.pb, c.number, ha, hb);
+        std::optional<SatWorkspace<Iv>> workspace;
+
+        for (int axis = 0; axis < 15; ++axis) {
+            const auto ax = Axis(c.number, axis);
+            std::optional<V<Iv>> ai;
+            std::optional<Iv> lengthSquared;
+            auto intervalAxis = [&]() -> const V<Iv> & {
+                if (!ai)
+                    ai = Axis(c.Interval(), axis);
+                return *ai;
+            };
+            auto intervalLength = [&]() -> Iv {
+                if (!lengthSquared)
+                    lengthSquared = Dot(intervalAxis(), intervalAxis());
+                return *lengthSquared;
+            };
+
+            const bool nonzero = filter.NonzeroAxis(axis, ax);
+            if (nonzero) {
+                ++diagnostics.predicates;
+                ++diagnostics.intervalResolved;
+            }
+            if (!nonzero && Sign(intervalLength(), [&] {
+                    auto a = Axis(c.E(), axis);
+                    return Dot(a, a);
+                }) == 0)
+                continue;
+
+            const double numberSat = Sat(c.number, ha, hb, axis);
+            std::optional<Iv> s;
+            auto intervalSat = [&]() -> Iv {
+                if (!s) {
+                    if (!workspace)
+                        workspace.emplace(c.Interval());
+                    s = workspace->Evaluate(ha, hb, axis, intervalAxis());
+                }
+                return *s;
+            };
+            bool exactGap = false;
+            int sign = filter.Sign(axis, numberSat);
+            // The scalar filter supplies an implicit certified interval. Keep
+            // predicate diagnostics complete without charging a full Iv path.
+            if (sign != ContactSatFilter::Unresolved) {
+                ++diagnostics.predicates;
+                ++diagnostics.intervalResolved;
+            }
+            if (sign == ContactSatFilter::Unresolved)
+                sign = Sign(intervalSat(), [&] {
+                    exactGap = true;
+                    return Sat(c.E(), ha, hb, axis);
                 });
-                if (beyond>0)return {};
+
+            if (sign > 0) {
+                if (margin == 0)
+                    return {};
+                const Iv m{double(margin)};
+                const Iv value = intervalSat();
+                const Iv compare = value * value - m * m * c.Interval().denominator *
+                                                           c.Interval().denominator *
+                                                           intervalLength();
+                const int beyond = Sign(compare, [&] {
+                    const auto &e = c.E();
+                    auto t = Axis(e, axis);
+                    auto es = Sat(e, ha, hb, axis);
+                    Exact em{double(margin)};
+                    return es * es - em * em * e.denominator * e.denominator * Dot(t, t);
+                });
+                if (beyond > 0)
+                    return {};
             }
 
-            const auto ax=Axis(c.number,axis);
-            glm::dvec3 normal(ax[0],ax[1],ax[2]);
-            double length=glm::length(normal);
-            if (!(length>0)||!std::isfinite(length))throw ArithmeticFailure();
+            glm::dvec3 normal(ax[0], ax[1], ax[2]);
+            double length = glm::length(normal);
+            if (!(length > 0) || !std::isfinite(length))
+                throw ArithmeticFailure();
             double gap;
-            if (sign==0)gap=0;
-            else if (exactGap)gap=static_cast<double>(Sat(c.E(),ha,hb,axis).Value()/(c.E().denominator.Value()*static_cast<long double>(length)));
-            else gap=Sat(c.number,ha,hb,axis)/(c.number.denominator*length);
-            if (!GapAgreesWithSign(gap,sign)) {
+            if (sign == 0)
+                gap = 0;
+            else if (exactGap)
+                gap = static_cast<double>(Sat(c.E(), ha, hb, axis).Value() /
+                                          (c.E().denominator.Value() *
+                                           static_cast<long double>(length)));
+            else
+                gap = numberSat / (c.number.denominator * length);
+            if (!GapAgreesWithSign(gap, sign)) {
                 ++diagnostics.numericGapFallbacks;
-                const auto& e=c.E();
-                gap=static_cast<double>(Sat(e,ha,hb,axis).Value()/
-                    (e.denominator.Value()*static_cast<long double>(length)));
-                if (!GapAgreesWithSign(gap,sign)) throw ArithmeticFailure();
+                const auto &e = c.E();
+                gap = static_cast<double>(Sat(e, ha, hb, axis).Value() /
+                                          (e.denominator.Value() *
+                                           static_cast<long double>(length)));
+                if (!GapAgreesWithSign(gap, sign))
+                    throw ArithmeticFailure();
             }
-            if (axis<6 && gap>bestFace){
-                bestFace=gap;
-                face=axis;
-                faceAxis=normal;
-                faceLength=length;
+            if (axis < 6 && gap > bestFace) {
+                bestFace = gap;
+                face = axis;
+                faceAxis = normal;
+                faceLength = length;
             }
-
-            if (axis>=6 && gap>bestEdge){
-                bestEdge=gap;
-                edge=axis;
-                edgeAxis=normal;
-                edgeLength=length;
+            if (axis >= 6 && gap > bestEdge) {
+                bestEdge = gap;
+                edge = axis;
+                edgeAxis = normal;
+                edgeLength = length;
             }
         }
 
-        if (face<0)throw ArithmeticFailure();
-        result.hit=true;
+        if (face < 0)
+            throw ArithmeticFailure();
+        result.hit = true;
         // A stable face preference applies ONLY to penetration. Every separating
         // or exactly touching axis retains its physical sign and is eligible.
-        const bool useEdge=edge>=0 && (bestEdge>=0?bestEdge>bestFace:bestEdge>0.95*bestFace+0.001);
-        result.axis=useEdge?edge:face;
-        result.gap=useEdge?bestEdge:bestFace;
+        const bool useEdge = edge >= 0 && (bestEdge >= 0 ? bestEdge > bestFace
+                                                       : bestEdge > 0.95 * bestFace + 0.001);
+        result.axis = useEdge ? edge : face;
+        result.gap = useEdge ? bestEdge : bestFace;
         // All signs and represented gaps above retain their original arithmetic.
         // Only the chosen response axis needs a normalized, oriented normal.
-        result.normal=(useEdge?edgeAxis:faceAxis)/(useEdge?edgeLength:faceLength);
-        if (glm::dot(result.normal,c.a-c.b)<0)result.normal=-result.normal;
+        result.normal = (useEdge ? edgeAxis : faceAxis) / (useEdge ? edgeLength : faceLength);
+        if (glm::dot(result.normal, c.a - c.b) < 0)
+            result.normal = -result.normal;
         return result;
     }
 

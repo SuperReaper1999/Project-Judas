@@ -1,0 +1,21 @@
+{
+  "argv": [
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/candidate-fastpaths-final/bin/judas_physics_stress_live_benchmark",
+    "/home/conner/Documents/GitHub/Project-Judas/projects/physics_stress_lab/Scenes/room1024.judas",
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/runs/combined-fastpaths-realtime-A1/live",
+    "35.0",
+    "10000000",
+    "0",
+    "0",
+    "1",
+    "0",
+    "1",
+    "0",
+    "1"
+  ],
+  "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+  "process_group": 33173,
+  "timed_out": false,
+  "timeout_seconds": 60.0,
+  "utc": "2026-10-19T11:48:03.989504+00:00"
+}

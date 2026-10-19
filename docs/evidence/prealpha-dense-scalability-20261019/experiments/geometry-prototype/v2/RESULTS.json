@@ -1,0 +1,31 @@
+{
+  "filtered-large.out": {
+    "command": [
+      ".cache/dense-scalability-20261019/geometry-prototype/v2/parity-filtered",
+      "--records",
+      "120000"
+    ],
+    "exit": 0,
+    "stderr": "cases=240026 hits=148228 misses=91798 uncertain=8 boolean_mismatches=0 digest=58ef791288b85955 elapsed_ms=1378.234"
+  },
+  "predicate-results.txt": {
+    "command": [
+      ".cache/dense-scalability-20261019/geometry-prototype/v2/filter-predicates"
+    ],
+    "exit": 0,
+    "stderr": ""
+  },
+  "predicate-negative-results.txt": {
+    "command": [
+      ".cache/dense-scalability-20261019/geometry-prototype/v2/filter-predicates",
+      "--omit-bound"
+    ],
+    "exit": 1,
+    "stderr": ""
+  },
+  "parity_rows": [
+    240026,
+    240026
+  ],
+  "first_mismatch": null
+}

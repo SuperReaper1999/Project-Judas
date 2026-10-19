@@ -1,0 +1,24 @@
+{
+  "status": "generated, unbuilt, unvalidated isolated prototype",
+  "inputs": {
+    "WorldInternal.h": "639e10e3b7ab6a35331e379f08f6108797d9c856b004f534f3a7860dd2f61795",
+    "WorldImpactQueries.h": "9ba01fb837b1a1dcfbf0e3d4b60b8ab63873d92b18321ea2186ed1254f9d25f8",
+    "WorldCCDSearch.cpp": "cdd69bf0c740b0466996bd97d701867d493ec173f27b83a46e64d0f6f7279c52",
+    "WorldImpactEvents.cpp": "bfc69590b9068ecc0c243686e134e8365da9745f6c784488cdca0251b60c005b"
+  },
+  "outputs": {
+    "WorldInternal.h": "4331b65c76e86bfb1abae20f0d20b12507ee77fbb084e1f3456cbdc75a613374",
+    "ParallelImpactQueries.h": "322e55031362c414b233a8b6f234521a06f1e4e18e6f05d13c3c36dc07886370",
+    "WorldImpactEvents.cpp": "72c4ab8558268d7ad9d6235861ba4792ee2fcd2db46b4e5ef572a15c261d8475"
+  },
+  "productionModified": false,
+  "arithmeticChange": "none intended; immutable owner-prepared inputs and bounded frontier prefetch need parity proof",
+  "requiredBeforeAdoption": [
+    "compile and query-level serial/parallel exact TOI controls",
+    "270-step exact physical trace with worker counts 1/2/4",
+    "moving kinematics, cooked mesh, compound, failures and job shutdown",
+    "rounding environment propagation, cancellation and worker exception",
+    "actual peak memory and cache ownership review",
+    "matched uninstrumented dense latency; no speedup assumed"
+  ]
+}

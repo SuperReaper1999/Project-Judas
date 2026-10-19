@@ -1,0 +1,57 @@
+{
+  "classification": "Read-only final-step profiler diagnostic; trajectories differ. Inclusive timings overlap, do not sum as disjoint totals. Not a matched speedup claim.",
+  "quality-capture-A1": {
+    "sha256": "4d63e24e38ed3c898e407ec449de75b9d937c5b09d0eff3cbd5f8305b4b3e3aa",
+    "frame": 271,
+    "step": 270,
+    "counters": {
+      "Physics impact events": 51,
+      "Physics impact queries": 501599,
+      "Physics impact remaining-bound rejections": 459940,
+      "Physics impact actual-bound rejections": 344326,
+      "Physics continuation coupled fallback events": 0,
+      "Physics continuation elastic fallback events": 0,
+      "Physics continuation geometry fallback events": 0,
+      "Physics peak impact island bodies": 973,
+      "Physics peak impact contact rows": 2517,
+      "Physics impact continuation cache ms": 21.358755,
+      "Physics support continuation attempts": 3967,
+      "Physics support continuation accepted": 3902,
+      "Physics support continuation partitions": 645,
+      "Physics support continuation over-budget fallback": 0,
+      "Physics support continuation proof ms": 27.552806999999998,
+      "Physics CCD search inclusive ms": 321.784964,
+      "Physics CCD geometry inclusive ms": 877.912279,
+      "Physics CCD geometry calls": 626049,
+      "Physics impact island discovery ms": 528.067509,
+      "Physics impact solve ms": 260.689712
+    }
+  },
+  "continuous-toi-A1": {
+    "sha256": "bebf7ff07a790970426285b8fbc292bb68b1d7534b73021ff860ad2f305ec4ac",
+    "frame": 271,
+    "step": 270,
+    "counters": {
+      "Physics impact events": 13,
+      "Physics impact queries": 132813,
+      "Physics impact remaining-bound rejections": 122138,
+      "Physics impact actual-bound rejections": 81132,
+      "Physics continuation coupled fallback events": 0,
+      "Physics continuation elastic fallback events": 0,
+      "Physics continuation geometry fallback events": 0,
+      "Physics peak impact island bodies": 966,
+      "Physics peak impact contact rows": 2587,
+      "Physics impact continuation cache ms": 4.825219,
+      "Physics support continuation attempts": 807,
+      "Physics support continuation accepted": 782,
+      "Physics support continuation partitions": 24,
+      "Physics support continuation over-budget fallback": 0,
+      "Physics support continuation proof ms": 5.288156,
+      "Physics CCD search inclusive ms": 72.01229,
+      "Physics CCD geometry inclusive ms": 185.082317,
+      "Physics CCD geometry calls": 145721,
+      "Physics impact island discovery ms": 117.08478199999999,
+      "Physics impact solve ms": 48.126401
+    }
+  }
+}

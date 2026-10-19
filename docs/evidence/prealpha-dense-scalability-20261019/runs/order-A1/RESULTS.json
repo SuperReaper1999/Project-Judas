@@ -1,0 +1,178 @@
+{
+  "argv": [
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/candidate-order/bin/judas_physics_stress_live_benchmark",
+    "/home/conner/Documents/GitHub/Project-Judas/projects/physics_stress_lab/Scenes/room1024.judas",
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/runs/order-A1/live",
+    "105",
+    "270",
+    "0",
+    "0",
+    "1",
+    "0.016666667",
+    "1",
+    "0",
+    "1"
+  ],
+  "blocks_of_30_steps": [
+    {
+      "count": 30,
+      "first_step": 1,
+      "last_step": 30,
+      "maximum": 56.907322,
+      "mean": 21.211346266666666,
+      "median": 20.3651905,
+      "p95_floor": 36.754308,
+      "p99_floor": 44.509259
+    },
+    {
+      "count": 30,
+      "first_step": 31,
+      "last_step": 60,
+      "maximum": 26.520574,
+      "mean": 20.9831803,
+      "median": 20.589897999999998,
+      "p95_floor": 21.917348,
+      "p99_floor": 25.991469
+    },
+    {
+      "count": 30,
+      "first_step": 61,
+      "last_step": 90,
+      "maximum": 25.570652,
+      "mean": 20.540189566666665,
+      "median": 20.2905485,
+      "p95_floor": 23.749327,
+      "p99_floor": 24.632413
+    },
+    {
+      "count": 30,
+      "first_step": 91,
+      "last_step": 120,
+      "maximum": 46.985023,
+      "mean": 26.952792266666666,
+      "median": 22.750524,
+      "p95_floor": 42.316089,
+      "p99_floor": 44.132403
+    },
+    {
+      "count": 30,
+      "first_step": 121,
+      "last_step": 150,
+      "maximum": 101.685001,
+      "mean": 37.310820633333336,
+      "median": 29.080646,
+      "p95_floor": 69.926216,
+      "p99_floor": 71.093094
+    },
+    {
+      "count": 30,
+      "first_step": 151,
+      "last_step": 180,
+      "maximum": 6864.73629,
+      "mean": 2566.7599529,
+      "median": 2025.1632614999999,
+      "p95_floor": 5712.624052,
+      "p99_floor": 5826.448024
+    },
+    {
+      "count": 2,
+      "first_step": 181,
+      "last_step": 182,
+      "maximum": 2273.72259,
+      "mean": 1703.4313104999999,
+      "median": 1703.4313104999999,
+      "p95_floor": 1133.140031,
+      "p99_floor": 1133.140031
+    }
+  ],
+  "bodies_observed": [
+    1285
+  ],
+  "cadence": "synthetic one-60Hz-step/frame: NOT displayed FPS",
+  "completed_steps": 182,
+  "context": {
+    "binary_sha256": "2f39deee084c27ebe204a3ca8c89936678b42eef9c9b439eb9713e72bd085a20",
+    "environment": {
+      "DISPLAY": ":0",
+      "LIBGL_ALWAYS_SOFTWARE": null,
+      "SDL_AUDIODRIVER": null,
+      "SDL_VIDEODRIVER": null,
+      "WAYLAND_DISPLAY": "wayland-0",
+      "XDG_RUNTIME_DIR": "/run/user/1000",
+      "XDG_SESSION_TYPE": "wayland",
+      "__GL_SYNC_TO_VBLANK": null,
+      "__NV_PRIME_RENDER_OFFLOAD": null
+    },
+    "fixture_sha256": "a2caf62a295243d301149202c8a0a5eedafff256d68de0e3cda988846b2e05bf",
+    "mode": "exact",
+    "profile": 1,
+    "requested_steps": 270,
+    "requested_wall_seconds": 105,
+    "resolution_note": "Runtime default project/window settings; preserve actual runtime renderer log.",
+    "schema": "judas.dense.run.v1",
+    "snapshot": "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/candidate-order",
+    "snapshot_manifest_sha256": "2ae2fac7080fbe97a7ece57e35eba35f5a7fee3700e4f3890e9fa0f0a7ffb5bd",
+    "source_head": "e30d5f9bb72a1a341d3eff7485b8d6b3eb6f8ea9"
+  },
+  "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+  "endpoint_quality": null,
+  "exit": -15,
+  "final_digest": "b3777b90d146ecb8",
+  "finished_utc": "2026-10-19T10:47:35.259392+00:00",
+  "fixed_ms": {
+    "count": 182,
+    "maximum": 6864.73629,
+    "mean": 462.7451158186813,
+    "median": 21.6921635,
+    "p95_floor": 3010.078795,
+    "p99_floor": 5712.624052
+  },
+  "frame_interval_ms": {
+    "count": 181,
+    "maximum": 6868.346725,
+    "mean": 456.4865975690608,
+    "median": 25.216509,
+    "p95_floor": 3247.344715,
+    "p99_floor": 5715.709338
+  },
+  "frame_intervals_over_33_333ms": 59,
+  "frame_intervals_over_41_667ms": 50,
+  "maximum_rss_kib": null,
+  "nonfinite_or_bad_sequence_rows": [],
+  "observed_application_wall_seconds": 84.90097278900001,
+  "process_group": 16673,
+  "profile_retained_state": {
+    "available": false
+  },
+  "rendered_frames": 182,
+  "simulated_seconds": 3.033333333333333,
+  "simulation_seconds_per_wall_second": 0.035727898440833177,
+  "timed_out": false,
+  "timeout_seconds": 150,
+  "utc": "2026-10-19T10:46:09.615184+00:00",
+  "valid_completion": false,
+  "wall_seconds": 85.64411437699982,
+  "worst_step": {
+    "awake": "1024",
+    "bodies": "1285",
+    "broadphase_ms": "5.32987",
+    "candidates": "13006",
+    "contacts": "2815",
+    "fixed_ms": "6864.73629",
+    "frame": "173",
+    "impact_events": "251",
+    "impact_iterations": "202852",
+    "impact_peak": "63",
+    "impact_queries": "1837905",
+    "max_angular_speed": "3.52467656136",
+    "max_linear_speed": "3.14576864243",
+    "narrowphase_ms": "11.337956",
+    "nonfinite_fields": "0",
+    "sleeping": "128",
+    "solver_ms": "6842.164872",
+    "step": "174",
+    "total_physics_ms": "6863.015306",
+    "trajectory_digest": "bda88a5b89bb14b0",
+    "wall_ms": "59393.849352"
+  }
+}

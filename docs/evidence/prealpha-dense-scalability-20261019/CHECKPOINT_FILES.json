@@ -1,0 +1,2782 @@
+{
+  "schema": "judas.changed-payload.v1",
+  "files": {
+    "CMakeLists.txt": {
+      "sha256": "fcda5e2d6895c1f5bbc5d1342f83e9c79f5b8b04b30660f678b14bc88a14c0c9",
+      "bytes": 80071
+    },
+    "docs/PREALPHA_DENSE_SCALABILITY.md": {
+      "sha256": "389583a7a303ba9a2befc560ab981fc3e24b1598b391a8822503bde5118774a4",
+      "bytes": 16939
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/COMPRESSED_RECORDS.json": {
+      "sha256": "1558ddd11a0e1b842978e833522f57c083e88d7065d9996e3651c9c468abaf39",
+      "bytes": 11427
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/FINAL_FASTPATH_COMPARE_A.json": {
+      "sha256": "b9bc5260fcc786eedf92eb13899006870f2d14d7ed17e4681480fcfcc91cb39d",
+      "bytes": 2107
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/FINAL_FASTPATH_UNPROFILED_COMPARE_A.json": {
+      "sha256": "967a1e4fac9ccf0c5bbe9dcb7107244f50791fbf616d3e04ed82c259bd7a367b",
+      "bytes": 2121
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/FINAL_FINGERPRINTS.json": {
+      "sha256": "60b63a2c12cef155464005e985c8763acb53e453f0b8dfb4713922955278d760",
+      "bytes": 4692
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/MEASUREMENT_HELPER_CHECKS.json": {
+      "sha256": "29610ebe1939263cdc8c941ff238a45de74e7ae7517ca3a6f6014b3a35e8a46d",
+      "bytes": 921
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/PORTABLE_HELPER_INITIAL_WARNINGS.log": {
+      "sha256": "ea8dbeffb5b57cbe5e3cb2a025be91403ef1cc378716520b1394608a4db8cecb",
+      "bytes": 5178
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/PORTABLE_HELPER_SCOPE.json": {
+      "sha256": "2bd5712f7bd6dcc3f54ac1b96bdca197b358bc127a87a3c8adeab3c55331397a",
+      "bytes": 1062
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/PORTABLE_HELPER_TESTS.log": {
+      "sha256": "7a6937d1cc74348d2dd90a1044ed2e7b6e1f6d40fa508d92a2bd9fb007711ba0",
+      "bytes": 1865
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/PORTABLE_HELPER_TEST_RESULTS.json": {
+      "sha256": "95fc369cdf83ea556dda3ef1126fb2120e945ddad4c316bd0390f28e9c781ad8",
+      "bytes": 454
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/README.md": {
+      "sha256": "eab0e8d0ce0b39236b90c874b011273e2183468f2ec9292b7182312684b4d4cc",
+      "bytes": 7683
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/RESIDUAL_ALL_ROWS_SUMMARY.jsonl.gz": {
+      "sha256": "9daeb50c1d08011ae9580932d5f6f46171dbb5d0ec22913fce755731fc341951",
+      "bytes": 209747
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/RUN_INDEX.json": {
+      "sha256": "ae1fd0e5eadb292e8e48ceb3eb6d39626329dd8dc31154c301d51d3841b57dab",
+      "bytes": 14976
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/application/RESULTS.json": {
+      "sha256": "aa003d904b241fa1c005a771b1136089f96f83522943351d9cbd00a4c48b70c9",
+      "bytes": 357
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/application/measurement-helper-unit.json": {
+      "sha256": "70bd752002503b1e01e5e20ecd54715e28d48031e6381890201224fbc2fb2ea3",
+      "bytes": 243
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/application/measurement-helper-unit.log": {
+      "sha256": "7a6937d1cc74348d2dd90a1044ed2e7b6e1f6d40fa508d92a2bd9fb007711ba0",
+      "bytes": 1865
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/application/runtime.log": {
+      "sha256": "276b5060c748b38bcc28b11ca2c970cca547d4840f3636d7054c4b34501d2357",
+      "bytes": 536
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/combined-fastpath-checks/RESULTS.json": {
+      "sha256": "7ca444d7fa359e9f4bd2d02d5aa234c37e70de3c3e5b326267081a85c8307a67",
+      "bytes": 12520
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/combined-fastpath-checks/character-motor.log": {
+      "sha256": "667f87f6a778adc5b3edcb8bca055215a3b64fc5ce9ba2c1d526eec6f0c453ea",
+      "bytes": 155
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/combined-fastpath-checks/character-motor/RESULTS.json": {
+      "sha256": "d114cb35a6b6d74cd70b5f658cd27c1187e04306aab32ae206d4a821c9355583",
+      "bytes": 6777
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/combined-fastpath-checks/character-motor/character-motor.log": {
+      "sha256": "6fdb7741538f88c326ac4ea6f96baf8ee542f82dcacafdd3349a175f0eebfcbb",
+      "bytes": 1869
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/combined-fastpath-checks/clip-polygon.log": {
+      "sha256": "02e055d63e2e9a787f4faa1e31a8c15f80192b7562add60edc09ebf6063c9b5c",
+      "bytes": 149
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/combined-fastpath-checks/clip-polygon/RESULTS.json": {
+      "sha256": "507a4f809a623fb65960b36ecfb080413a17546a8ef8b5e8d7f19dd27ee4f9a4",
+      "bytes": 6774
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/combined-fastpath-checks/clip-polygon/clip-polygon.log": {
+      "sha256": "ae60d7b3ba87a53ded2700140cfc874c71d62f62dd9816d025b6ac0be8f28e08",
+      "bytes": 1293
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/combined-fastpath-checks/collision-geometry.log": {
+      "sha256": "8704d812153624c6d862e42c2f97923f2533a9d30926e509ace6ab522f7f3972",
+      "bytes": 161
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/combined-fastpath-checks/collision-geometry/RESULTS.json": {
+      "sha256": "d48400b48fa05c04cf35440bc83584cd0f4bb089147ea9deef69b6b7cd368d33",
+      "bytes": 6782
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/combined-fastpath-checks/collision-geometry/collision-geometry.log": {
+      "sha256": "9dd1bc5adacf68f39954aa2b4cb21f49ab546ac4d592af90b24ce079939fbad5",
+      "bytes": 3173
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/combined-fastpath-checks/contact-sat-filter.log": {
+      "sha256": "411686ed3da3fc56db69a9a1fd2eae0564ba8618d746abd1501f9bed96c407a5",
+      "bytes": 161
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/combined-fastpath-checks/contact-sat-filter/RESULTS.json": {
+      "sha256": "01b100171082bdad67970b0df380cd5cf3575f29974667af3fd55f2119e1c572",
+      "bytes": 6783
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/combined-fastpath-checks/contact-sat-filter/contact-sat-filter.log": {
+      "sha256": "2b37d6ace9df8178052f2bd071393d1a17b3a9a7931f9c2bde4811f97ecbd610",
+      "bytes": 119
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/combined-fastpath-checks/contact-sphere-filter.log": {
+      "sha256": "118414b30085de4debd9ec6727cebe781d51e4041f03fc1531b70ba27fbf4dc2",
+      "bytes": 167
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/combined-fastpath-checks/contact-sphere-filter/RESULTS.json": {
+      "sha256": "04dd159531622645547fe6771ddd8acf5f280510c2415d77f5b7e1408b92ef0b",
+      "bytes": 6790
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/combined-fastpath-checks/contact-sphere-filter/contact-sphere-filter.log": {
+      "sha256": "ee9f45d149b627c4543377f02519284baef002fc2a63af61cd51b94c96d9b287",
+      "bytes": 211
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/combined-fastpath-checks/contacts.log": {
+      "sha256": "dd758943b3032d8311ceaf410744ba2cc4cfbf6d6d43d8c4361984f4d4b5dba7",
+      "bytes": 141
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/combined-fastpath-checks/contacts/RESULTS.json": {
+      "sha256": "7ecc9c52467e95095ab46624fd4f650ae4cdd642fb6b039191cecf0e10ea4196",
+      "bytes": 6773
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/combined-fastpath-checks/contacts/contacts.log": {
+      "sha256": "d521b1edc0c31bc21133f2c2994d7c93e60b2beb5d8ebe01272b53b0d7e7bbe7",
+      "bytes": 83838
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/combined-fastpath-checks/impact-mesh-arrival.log": {
+      "sha256": "3f48d67eeffa94b3d9dac4364739830aa0fa0144c5ff48bba73900f6e9707318",
+      "bytes": 163
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/combined-fastpath-checks/impact-mesh-arrival/RESULTS.json": {
+      "sha256": "25b770d884bf1e200dda03819c9d102ab23dac093637b9cf42d1bb1231d7b256",
+      "bytes": 6839
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/combined-fastpath-checks/impact-mesh-arrival/impact-mesh-arrival.log": {
+      "sha256": "c08e32d6fe53a6d27e247b2f56bb8bd50df9cdf6a96d188e2371d73934f26a42",
+      "bytes": 2541
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/combined-fastpath-checks/impact-mesh-continuation.log": {
+      "sha256": "d1a245ee3cf9737a3b1a9666b7a505d9b5015262f06a775ef297cfe3c1a18d2a",
+      "bytes": 173
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/combined-fastpath-checks/impact-mesh-continuation/RESULTS.json": {
+      "sha256": "d495839e824835e381ecd581c3a8dfd64ba74d8ccbd5d3a0eafc3944eb121a67",
+      "bytes": 6949
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/combined-fastpath-checks/impact-mesh-continuation/impact-mesh-continuation.log": {
+      "sha256": "d0fe70ae893cbe704c09880b6ed662e116ffa7f87b107f5a64f17c53d27c5abe",
+      "bytes": 2547
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/combined-fastpath-checks/impact-solver.log": {
+      "sha256": "8c924c0590a317f8aafffd9ce2c32e529ec1de878df09e313765ae007ed4b083",
+      "bytes": 151
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/combined-fastpath-checks/impact-solver/RESULTS.json": {
+      "sha256": "34e03ef39d6f19c9a9f69546f3f0363b589b380fd2799826f563bdc193deb8a5",
+      "bytes": 6775
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/combined-fastpath-checks/impact-solver/impact-solver.log": {
+      "sha256": "0abea3f165316cea297eedef5c12301181c37a8974a331115420a50bb859840a",
+      "bytes": 256
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/combined-fastpath-checks/impact-support-sets.log": {
+      "sha256": "b12ac5a654bdf493f6408b73d3a4c5d1042cce70cd02fb433a98f7b032e7da64",
+      "bytes": 163
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/combined-fastpath-checks/impact-support-sets/RESULTS.json": {
+      "sha256": "466699931453603dbaae522db71c3707215a29f0a8dd3192708cf17ced8c16bf",
+      "bytes": 6785
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/combined-fastpath-checks/impact-support-sets/impact-support-sets.log": {
+      "sha256": "b032556259b6f8e6119faab9b1c8ba68f715c4c74d33c629b7892081976fc29d",
+      "bytes": 25
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/combined-fastpath-checks/impact-timing.log": {
+      "sha256": "7a7abfdb5c3480e16095d550d6692e7d4e943b46ea26c42dcd3322adfcdc0b9d",
+      "bytes": 151
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/combined-fastpath-checks/impact-timing/RESULTS.json": {
+      "sha256": "63186fc3ea8cad4938d366b9cc033ee21e66e639ef4d7e0acc7beb58876bb740",
+      "bytes": 6775
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/combined-fastpath-checks/impact-timing/impact-timing.log": {
+      "sha256": "52d83a1b765180db902ea1ebd0332af4618925f9cb8da9a0356ea0644f206a9f",
+      "bytes": 43704
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/combined-fastpath-checks/judas_contact_sat_workspace_tests.log": {
+      "sha256": "63c9d744278da3e7bc7dc41c5bda89cd2582b0ed5bb7083ff56b11c5119850da",
+      "bytes": 81
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/combined-fastpath-checks/judas_impact_robustness_tests.log": {
+      "sha256": "e35fffddbd794c7517c54055943a2dc3babe5b19f40450eafbca4271cf7a4c61",
+      "bytes": 4881
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/combined-fastpath-checks/judas_joint_tests.log": {
+      "sha256": "30f395052d14f3dab80f487376d7d2c86935ecfed87bb3d0513671d5171474d9",
+      "bytes": 1437
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/combined-fastpath-checks/judas_kinematic_tests.log": {
+      "sha256": "87fc32d0fa04c9fde088e7feeb50610f7a2eed7ca2e27f4964aae2b6b3b8e98d",
+      "bytes": 6480
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/combined-fastpath-checks/judas_primitive_contact_boolean_tests.log": {
+      "sha256": "96947ae737e3661873c57c23a99eb1f8e7a3857436c5872732702f88fdd2b818",
+      "bytes": 80
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/combined-fastpath-checks/judas_ragdoll_tests.log": {
+      "sha256": "927a7df27d4315155bc1a1b2d8d40334266ffc17ba3146f2d8277dc69e034866",
+      "bytes": 2422
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/combined-fastpath-checks/judas_rigid_motion_geometry_tests.log": {
+      "sha256": "cd2ab7a2650f03d488c2456b504ccfa27e9f860da5b5338383de0b1f52ced8d7",
+      "bytes": 65
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/combined-fastpath-checks/judas_sphere_impact_bounds_tests.log": {
+      "sha256": "478de5c3aff7d2bd8e493528f9e6611ebdbc464a5dd8f3eeddb83592e892b1dd",
+      "bytes": 1224
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/combined-fastpath-checks/native-mesh-growth.log": {
+      "sha256": "aa0825a812848ef7d7e847a914da009b037eafb7773d57cc464d93bbc90b1665",
+      "bytes": 161
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/combined-fastpath-checks/native-mesh-growth/RESULTS.json": {
+      "sha256": "0e05d7fa10d3ee61143734e89f346dfe619912fbde3dbc3a20ad5279c2185ef0",
+      "bytes": 6785
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/combined-fastpath-checks/native-mesh-growth/native-mesh-growth.log": {
+      "sha256": "6a4a6b068530fb2f210a4c607fbd86873869ac57fa5bc5f2050eda1843a7773e",
+      "bytes": 9442
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/combined-fastpath-checks/physics-continuation.log": {
+      "sha256": "0855dc6574cbb4e337ff606c0d244f8de08083b51f315d80599c50833d47a7df",
+      "bytes": 165
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/combined-fastpath-checks/physics-continuation/RESULTS.json": {
+      "sha256": "23ecce0bcde4cec77aae768d57f24a2ade6f1e2095bdc8f58c8f7be1da65f5a9",
+      "bytes": 6788
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/combined-fastpath-checks/physics-continuation/physics-continuation.log": {
+      "sha256": "4cc6f3c0c5aac74ddb2d2faae5934a29ee782a046fcffdd72f60f41a33866534",
+      "bytes": 30
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/combined-fastpath-checks/rigid-contact.log": {
+      "sha256": "af996b2158a913a425feddf5b82cb6e394c3f58e11b05151021c4cfce4e77412",
+      "bytes": 151
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/combined-fastpath-checks/rigid-contact/RESULTS.json": {
+      "sha256": "229ecb63583fc65cbe1030ef12c0f3753625cf5b964604b296589fead7661b05",
+      "bytes": 6773
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/combined-fastpath-checks/rigid-contact/rigid-contact.log": {
+      "sha256": "bcc643201b76b47dde44c8f28023bebab08f80d1b90d06743d96b809c9c48dd0",
+      "bytes": 3627
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/combined-fastpath-checks/sat-negative.log": {
+      "sha256": "fe5cc7839fd776477cd54fd761197735ce3a0dc7af6b5b315703aa95e8792a20",
+      "bytes": 1556
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/combined-fastpath-checks/sphere-negative.log": {
+      "sha256": "06d6ff49d5f5fb70abb3f607f1e095d20ef52a2d3bbdb50b5c06ecc16fdf6521",
+      "bytes": 1599
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/combined-fastpath-checks/support-negative.log": {
+      "sha256": "1ccd83cb4607eb0735931cc019fd58421f709b923335aed3279ec62bb29a51f6",
+      "bytes": 29
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/combined-fastpath-checks/test_cmake_test_targets.py.log": {
+      "sha256": "512f8679a3d1726474a590d2ef47cb88d7e9b7728dbb22add24a4fc10dc4f7aa",
+      "bytes": 1715
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/combined-fastpath-checks/test_prealpha_validation.py.log": {
+      "sha256": "46a00eab448b27005f8c603feda7db68a4df488f5cbb6b1a880c45b1089bcb22",
+      "bytes": 892
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/combined-fastpath-validation/BUILD.json": {
+      "sha256": "92fc6244edbb00f0727114b881124a21be46c93c625ffaba14216e211fdbebe4",
+      "bytes": 1776
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/combined-fastpath-validation/BUILD_GATES.json": {
+      "sha256": "5eb6636333cff149624dd61a4a050924c7d8d99c360ffa6c2157fd51f353a45d",
+      "bytes": 2132
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/combined-fastpath-validation/build-gates.log": {
+      "sha256": "7f6a8948f2c03302cc20e1870f6b014a30caf7b375e79a412142781a49b26647",
+      "bytes": 13002
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/combined-fastpath-validation/build.log": {
+      "sha256": "efbfa9603e3f7dd8bf68e6a8ccebe28607fd1a60abba321738e9001a9cd30baa",
+      "bytes": 9329
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/combined-fastpath-validation/configure-gates.log": {
+      "sha256": "a885ede4c46dea2a165def341f145ad5a69a76f037e3df8e800c85240d8a1c3a",
+      "bytes": 911
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/combined-fastpath-validation/configure.log": {
+      "sha256": "a16056b772fbdee37ee4f3fc9f2ed69356a8ca809de66eaacdf355db2c54d61b",
+      "bytes": 911
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/block-normal-research/BUILD.json": {
+      "sha256": "c9aec78f3aea31561716eacf2fc506964d5c4add29045bdffc60e2e00b4c7fa3",
+      "bytes": 3457
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/block-normal-research/BlockReplay.cpp": {
+      "sha256": "d9e5a3bff5242a0edc08487aa83fc1aad4c210013d1f89e1de3fab2e9c6ab57a",
+      "bytes": 10597
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/block-normal-research/DISPOSITION.json": {
+      "sha256": "28432e087bb8b4a6f3847fb9b2f3e2184a2a56d4293ce8e1a2b729cf2b52475d",
+      "bytes": 2077
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/block-normal-research/build.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/block-normal-research/result-3470.json": {
+      "sha256": "995138a7b849210fe01c8530db0e9945dc90c0ca3965ba72cf3b070b0fc705b7",
+      "bytes": 2999
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/block-normal-research/run-3470.log": {
+      "sha256": "995138a7b849210fe01c8530db0e9945dc90c0ca3965ba72cf3b070b0fc705b7",
+      "bytes": 2999
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/contact-system-research/ANDERSONREPLAY_BUILD.json": {
+      "sha256": "5b6a6c32a74db6a6d366a69346f1c13fc1454830cb8a98908bdf19a16fd26814",
+      "bytes": 3670
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/contact-system-research/AndersonReplay.cpp": {
+      "sha256": "1f39f14768f069f49cd8e4d35979dcf4abdcbcace8ce7be1df7cf6c1a1cf778e",
+      "bytes": 11122
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/contact-system-research/BUILD.json": {
+      "sha256": "1d0159e3d1b4308244db31066d470b643316f89638e6b5ac96d9520ab94441e2",
+      "bytes": 5752
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/contact-system-research/ContactCapture.h": {
+      "sha256": "e3440bc7f1cbbdf03ada8a567c08378888042b9b8b900b9aaa67c96ec1168416",
+      "bytes": 7009
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/contact-system-research/INVENTORY.json": {
+      "sha256": "f4de1eea728f4f411834080aea81f584f63a46bff25470be3524fd56d1568ae1",
+      "bytes": 5580
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/contact-system-research/ImpactSolver.cpp": {
+      "sha256": "084b3e49beb849386cf1bdb53f4d301ee61160db9a8bae905e2efb653a6041bf",
+      "bytes": 7830
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/contact-system-research/ImpactSolver.original.cpp": {
+      "sha256": "9c7a88edefcccdb8fe63ceeaeea0f8f11c92681320625574111be030c68d8d6f",
+      "bytes": 7631
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/contact-system-research/NormalSchur.h": {
+      "sha256": "d0b1b16f97b11a10b57b4c2767d04e081f6dc9bf1cd99ac2f0dc06932b86b540",
+      "bytes": 10520
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/contact-system-research/REPLAY_BUILD.json": {
+      "sha256": "e440f794c2e0052e4ce9028d41ff5cb5cf5b6ddbaa900618af1731a088dde7eb",
+      "bytes": 3456
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/contact-system-research/RESULTS.txt": {
+      "sha256": "61eb6f18298c79a0ec58eed7e34f37f89978fa2ed57f852159df199f8bfd2eda",
+      "bytes": 6081
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/contact-system-research/Replay.cpp": {
+      "sha256": "955039f0c27a792c9d1d24cdce055ec34d77c9f6a124c23f93ffe33145a22168",
+      "bytes": 8791
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/contact-system-research/SCHURREPLAY_BUILD.json": {
+      "sha256": "e3bcdc2636b6128cc5cf430c1af7f486dd3ce16ca2ece14842af6a2f5eb3ef2c",
+      "bytes": 3658
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/contact-system-research/SchurReplay.cpp": {
+      "sha256": "0997c2098f23256417e8f4aa3146768894630b89fba412ac0a8ce64c7301297e",
+      "bytes": 6822
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/contact-system-research/anderson-3470.json": {
+      "sha256": "3c7cc3a1ef28a68b460b9c6b3eab2578e5d8163c094693965878b9e57c7a3e04",
+      "bytes": 13125
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/contact-system-research/anderson-3470.log": {
+      "sha256": "3c7cc3a1ef28a68b460b9c6b3eab2578e5d8163c094693965878b9e57c7a3e04",
+      "bytes": 13125
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/contact-system-research/anderson-build.log": {
+      "sha256": "4e997a043204b6c8effe9c3c6c95c2bf9fe50682e1ce4133b6c832500174d2b2",
+      "bytes": 118
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/contact-system-research/build-replay.py": {
+      "sha256": "66c7b66a6baa644f8eb81c778cefa465d70ba4209148645858d05f8962da4379",
+      "bytes": 1963
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/contact-system-research/build.log": {
+      "sha256": "d7fa53004a0d4c624a370838352d3a2346648195be06b355c7d6307c53c057f7",
+      "bytes": 439
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/contact-system-research/build.py": {
+      "sha256": "b110e1ee44ecbf5c6ea3506b0620e02e04c29224bc7dc1ecde4dadfb24769eb9",
+      "bytes": 4358
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/contact-system-research/replay-3470.json": {
+      "sha256": "0f2143d9971b95454d9ba05c6ef5e4abe3cc0efb173140ea7487b31fbfa87256",
+      "bytes": 5026
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/contact-system-research/replay-3470.log": {
+      "sha256": "0f2143d9971b95454d9ba05c6ef5e4abe3cc0efb173140ea7487b31fbfa87256",
+      "bytes": 5026
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/contact-system-research/replay-build.log": {
+      "sha256": "6c12f283023a8dad44ae5a441b51aabdc70df07ccc0555ab6fa3d17ff04f4f02",
+      "bytes": 109
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/contact-system-research/schur-3470.json": {
+      "sha256": "1586f83d47569c645be81dd59dedf5f48d0474bb12d1fb1308e7ae0805c6c40d",
+      "bytes": 7886
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/contact-system-research/schur-3470.log": {
+      "sha256": "1586f83d47569c645be81dd59dedf5f48d0474bb12d1fb1308e7ae0805c6c40d",
+      "bytes": 7886
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/contact-system-research/schur-build.log": {
+      "sha256": "4863573f26ad783cb24fd140a4c917604d59a8d3c64e22fc77bd7df20819e5b4",
+      "bytes": 115
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/contact-system-research/schur-fista-build.log": {
+      "sha256": "4863573f26ad783cb24fd140a4c917604d59a8d3c64e22fc77bd7df20819e5b4",
+      "bytes": 115
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/continuous-toi-A3/A3_CAPTURED_PREFIXES.json": {
+      "sha256": "809129152e35d5f352a8699c5b7fde149c223a5d2822565a309b77c4e77e4b93",
+      "bytes": 4307
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/continuous-toi-A3/A3_CONTROLS_BUILD.json": {
+      "sha256": "9ff57ac484a5ee71c724032fb66049ff46674a6c5f383feeae20f528a21d5372",
+      "bytes": 1567
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/continuous-toi-A3/A3_CONTROLS_RESULTS.json": {
+      "sha256": "4ee2a18d349d5e72467f252edbb8e6e7746ecd37d1ccbc6a380d3ad8a56808eb",
+      "bytes": 1179
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/continuous-toi-A3/CapturedPrefixes.v3.cpp": {
+      "sha256": "131e7049631deac44a60bd8fbf27fd7eeb37a94f0055f640f16fe0f03c5ca325",
+      "bytes": 2943
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/continuous-toi-A3/ContinuousBoxCCD.h": {
+      "sha256": "155faed48bbf5acb22d94a8af0f42da54a50672202df96c1056abe891f95ce48",
+      "bytes": 15090
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/continuous-toi-A3/ContinuousBoxCCD.v3.h": {
+      "sha256": "155faed48bbf5acb22d94a8af0f42da54a50672202df96c1056abe891f95ce48",
+      "bytes": 15090
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/continuous-toi-A3/ContinuousBoxCCDTests.v3.cpp": {
+      "sha256": "4806c4359a38c5239f7da9195141686451c7763e2f63ec47b1bb3ed3785159e0",
+      "bytes": 6078
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/continuous-toi-A3/ContinuousBoxCCDTests.v3.first-missing-include.log": {
+      "sha256": "fb2e5140a96a1ee1d264eb7ed2b987e756d5cd5b10ce427ae3a8713af5733b82",
+      "bytes": 4973
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/continuous-toi-A3/INITIAL_PARTIAL_WORLD_BUILD.json": {
+      "sha256": "0a86e285f81590abb264782ca15f343f1c6d3fafc0d0fd9dd88f2a9bd2c27eb1",
+      "bytes": 7833
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/continuous-toi-A3/INVENTORY.json": {
+      "sha256": "e9bdb1b06e8b84e9fdbd586a80c24d9c756748aeab146bbb124318336ad777c7",
+      "bytes": 4479
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/continuous-toi-A3/PairReplay.cpp": {
+      "sha256": "360c8ff31aedb937743101a2187623a94d586334685d54781c168f7861a2e943",
+      "bytes": 7985
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/continuous-toi-A3/REPLAY_ANALYSIS.json": {
+      "sha256": "158f1a06ab2e1c806328acebdc38fb6646ea14ca04085b1cb13c40ac0cc52804",
+      "bytes": 48784
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/continuous-toi-A3/REPLAY_ANALYSIS.log": {
+      "sha256": "01588a813e831133df8c063321398a1f082219a48863789faa47f51f3e251183",
+      "bytes": 465
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/continuous-toi-A3/REPLAY_BUILD.json": {
+      "sha256": "f905f3d1325f524ca6aeef120d811e226a54c9e9fac035571a6ee413fa6511cb",
+      "bytes": 3712
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/continuous-toi-A3/WORLD_BUILD.json": {
+      "sha256": "93dc81a3c19917d414587370f1c29ae5f3ce3dbf096aaea093165de0580b91ae",
+      "bytes": 8486
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/continuous-toi-A3/WorldCCDSearch.cpp": {
+      "sha256": "fdb9edb4bf091077a20a8a3f48b49ad462f4c17584b18e1e268634ff1457b709",
+      "bytes": 48340
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/continuous-toi-A3/WorldCCDSearch.original.cpp": {
+      "sha256": "cdd69bf0c740b0466996bd97d701867d493ec173f27b83a46e64d0f6f7279c52",
+      "bytes": 42442
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/continuous-toi-A3/analyse-replay.py": {
+      "sha256": "ff63c3256d229320af73f2f0c4bda7ea9c70ff08202e664369f0a244dca39f9b",
+      "bytes": 3208
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/continuous-toi-A3/build-replay.py": {
+      "sha256": "150c1689f0cfae6fd8e515281b3cc0acc21252fd47c5cc0b69c14669c114aecf",
+      "bytes": 1600
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/continuous-toi-A3/build-world.initial-failed.py": {
+      "sha256": "b5ef535424df68b677b8f33621c49d8f73ba40c101f0da6bf26898d537dac916",
+      "bytes": 5227
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/continuous-toi-A3/build-world.py": {
+      "sha256": "678f10d3dcc5931c7dc42db0c4e7e3ce0a40c1442c9842eea13877fb097ce6ce",
+      "bytes": 5189
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/continuous-toi-A3/captured-prefixes.v3.log": {
+      "sha256": "809129152e35d5f352a8699c5b7fde149c223a5d2822565a309b77c4e77e4b93",
+      "bytes": 4307
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/continuous-toi-A3/controls.v3.log": {
+      "sha256": "d42bedfb0687e5e452ac56bed5f7849ba9b39286bf4b6a07b92eb46197491f79",
+      "bytes": 71
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/continuous-toi-A3/endpoint-negative.v3.log": {
+      "sha256": "c685c9f86e876dd05dd6983750599a40439dbb6eb5f720ef33c79cba18589a21",
+      "bytes": 194
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/continuous-toi-A3/finalize-metadata.log": {
+      "sha256": "04b6e1a854296329e353ca2fa3805bfa275b76b428c101e40e9f64205d418674",
+      "bytes": 566
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/continuous-toi-A3/finalize-metadata.py": {
+      "sha256": "a0d3a931c59a7ade797a2af50a609bc552d1f102bdde4aa16c1a2b8b0d6acf27",
+      "bytes": 4342
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/continuous-toi-A3/pair-replay.json.gz": {
+      "sha256": "2a4d34d4a50593fbe56ce844f702c90a1b63c024ccff6e9464c483161c1805a7",
+      "bytes": 31064
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/continuous-toi-A3/pair-replay.log": {
+      "sha256": "1eb898d21d1951c5fe0204c0442c36ebbb25d3e05d00efe95f4aca25e62f0355",
+      "bytes": 48
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/continuous-toi-A3/replay-build.log": {
+      "sha256": "fd07f848e1019af14fa8305c90ab647d70bebf3f09397feebf285734628c7997",
+      "bytes": 118
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/continuous-toi-A3/snapshot/FROZEN.json": {
+      "sha256": "96865b8c8c7c4c3245181beec497a5d428bdb9565e35f746d674888b827c85ef",
+      "bytes": 84716
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/continuous-toi-A3/snapshot/isolated-overrides.tar.gz": {
+      "sha256": "204077489a9783c30b8389b505dacf18d76e119bd512b5955a699e1606313398",
+      "bytes": 31225
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/continuous-toi-A3/world-build.log": {
+      "sha256": "18b664090a2d1faa8af5ace91dd7adbff02b650683c77f34e34264c5e7006303",
+      "bytes": 470
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/continuous-toi-A4/ContinuousBoxCCD.h": {
+      "sha256": "155faed48bbf5acb22d94a8af0f42da54a50672202df96c1056abe891f95ce48",
+      "bytes": 15090
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/continuous-toi-A4/INVENTORY.json": {
+      "sha256": "4389ab7060c2add77fe9afedbc79125f29b9e96157974988fd7a144bf6908bcc",
+      "bytes": 4125
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/continuous-toi-A4/PairReplay.cpp": {
+      "sha256": "360c8ff31aedb937743101a2187623a94d586334685d54781c168f7861a2e943",
+      "bytes": 7985
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/continuous-toi-A4/REPLAY_ANALYSIS.json": {
+      "sha256": "a4f8f3700d3c3c2a108337c9dce8a8579fc9b56578787092084e2d4e1e9cc929",
+      "bytes": 48784
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/continuous-toi-A4/REPLAY_ANALYSIS.log": {
+      "sha256": "01588a813e831133df8c063321398a1f082219a48863789faa47f51f3e251183",
+      "bytes": 465
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/continuous-toi-A4/REPLAY_BUILD.json": {
+      "sha256": "28f18e45bafc7a3190f876a3f16a2efea3972ef30f216a0c2eeadb7faec05719",
+      "bytes": 3712
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/continuous-toi-A4/RESULTS.txt": {
+      "sha256": "d82c50cc550edc28df0f7fe0175b850e5357acdbcafdc448599ff081dd561198",
+      "bytes": 3868
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/continuous-toi-A4/WORLD_BUILD.json": {
+      "sha256": "9aff1db76cfaf68d72ee1a2cec91710f59285643c350f2dafc573abee09c30dd",
+      "bytes": 7833
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/continuous-toi-A4/WorldCCDSearch.cpp": {
+      "sha256": "9f33672fd343afe8a1635bd7b77a72c6755c734a2f6d406dba260ee8f9348289",
+      "bytes": 49190
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/continuous-toi-A4/WorldCCDSearch.original.cpp": {
+      "sha256": "cdd69bf0c740b0466996bd97d701867d493ec173f27b83a46e64d0f6f7279c52",
+      "bytes": 42442
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/continuous-toi-A4/analyse-replay.py": {
+      "sha256": "ff63c3256d229320af73f2f0c4bda7ea9c70ff08202e664369f0a244dca39f9b",
+      "bytes": 3208
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/continuous-toi-A4/build-replay.py": {
+      "sha256": "150c1689f0cfae6fd8e515281b3cc0acc21252fd47c5cc0b69c14669c114aecf",
+      "bytes": 1600
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/continuous-toi-A4/build-world.py": {
+      "sha256": "678f10d3dcc5931c7dc42db0c4e7e3ce0a40c1442c9842eea13877fb097ce6ce",
+      "bytes": 5189
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/continuous-toi-A4/pair-replay.json.gz": {
+      "sha256": "0be01f98c197d79905aa52ffb3a305e1a33ba501931e4515062f6e1e23192af4",
+      "bytes": 31252
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/continuous-toi-A4/pair-replay.log": {
+      "sha256": "1eb898d21d1951c5fe0204c0442c36ebbb25d3e05d00efe95f4aca25e62f0355",
+      "bytes": 48
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/continuous-toi-A4/replay-build.log": {
+      "sha256": "793879e171d93fcaa37e88ce7f8c1e93bd8cbe94d936087c11ee36946e5d849b",
+      "bytes": 118
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/continuous-toi-A4/replay-rusage.log": {
+      "sha256": "2779569a3124079a295c22fe04ea3ed9997c7541bc2d6766366cd7004b5255fb",
+      "bytes": 958
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/continuous-toi-A4/snapshot/FROZEN.json": {
+      "sha256": "88992be83953fb78d15061fc23e15c2368632dadb163125539f2374226dc474a",
+      "bytes": 84577
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/continuous-toi-A4/snapshot/isolated-overrides.tar.gz": {
+      "sha256": "d931f2e8b9c6a57c4898248618f79ffa3be1a9034a19fa547997999f046cc61e",
+      "bytes": 30123
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/continuous-toi-A4/world-build.log": {
+      "sha256": "3f65dc8d94c284a676bcb9e303e97861d50e25bade473a8b7da88e2cebdd6b2e",
+      "bytes": 618
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/continuous-toi/A1_LIMITATIONS.txt": {
+      "sha256": "62b20f88ae0d90fe895b35e394243ae66c3f5fd979b23a8353a3a82e53eaec10",
+      "bytes": 1567
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/continuous-toi/A2_SOURCE_PREPARED.json": {
+      "sha256": "63f4ee268b51203b5ce8062227c2ebfb776a77ea3f6432241b400448f6bf8cff",
+      "bytes": 797
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/continuous-toi/PROFILE_COMPARISON.json": {
+      "sha256": "c4235bec214dde9afc4794931b834c608ceebcd9eec40dbe60ab444788f05135",
+      "bytes": 2621
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/continuous-toi/PROOF_A2.txt": {
+      "sha256": "ee077279044054bb91cd01855eadb390f408b169d8635e29c8822205d9f5f803",
+      "bytes": 5242
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/continuous-toi/REPLAY_ANALYSIS.json": {
+      "sha256": "c4a5d2229f510042306d60360acda513dac4ee358516f3c71b6e376564b4fbe4",
+      "bytes": 48978
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/continuous-toi/REPLAY_BUILD.json": {
+      "sha256": "b3475a2881a8a419b8b9c9e5e2ac0ba025836fbcebb1ebc3340e2bb46fe428e9",
+      "bytes": 3694
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/continuous-toi/WORLD_ANALYSIS.json": {
+      "sha256": "8f66bcdd13ff4d4db4d547fb253d0f3eb20846e11b2a0e564a8055c233105252",
+      "bytes": 5897
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/continuous-toi/WORLD_BUILD.json": {
+      "sha256": "4f103428259484aee6419256c8f871bea1fc5828ac00641c3bb75d28aecadc37",
+      "bytes": 6058
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/continuous-toi/snapshot/FROZEN.json": {
+      "sha256": "2345e09856a5fdba81fb089b5a60a4119524d6af0d28abd7fd1a6276709b9fcd",
+      "bytes": 81909
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/continuous-toi/snapshot/isolated-overrides.tar.gz": {
+      "sha256": "19b4b200be0ef6d750cbc037f3ca012f7b339b5792a891fe2e3dea99fffb2eca",
+      "bytes": 28107
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/event-topology-observer-v2/BUILD.json": {
+      "sha256": "bd8650a574adc449e0a5eec0228f320239f733f6081565f87fe695c82c405e43",
+      "bytes": 41678
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/event-topology-observer-v2/ContactCapture.h": {
+      "sha256": "e3440bc7f1cbbdf03ada8a567c08378888042b9b8b900b9aaa67c96ec1168416",
+      "bytes": 7009
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/event-topology-observer-v2/EventTopologyObserver.h": {
+      "sha256": "51df04f57753f151256e14ab2cb5f610527fb0e9358ec7b12f6a9be24810f6e7",
+      "bytes": 6281
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/event-topology-observer-v2/INVENTORY.json": {
+      "sha256": "0c1fcbc629f8e5b37399bcc34167bd5e193e5d57c0cf396752a323e3d574f144",
+      "bytes": 6446
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/event-topology-observer-v2/PairReplay.cpp": {
+      "sha256": "360c8ff31aedb937743101a2187623a94d586334685d54781c168f7861a2e943",
+      "bytes": 7985
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/event-topology-observer-v2/PairScheduleCapture.h": {
+      "sha256": "d0b839c57f91900acd86b3ff7db8754964210930e7879dee8663db981cb9d4c3",
+      "bytes": 3347
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/event-topology-observer-v2/REPLAY_BUILD.json": {
+      "sha256": "ee25d35630a1f0f2d486837a3772bededb5dac4d500554e78081a82e047c1bc3",
+      "bytes": 3692
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/event-topology-observer-v2/RESULTS.txt": {
+      "sha256": "f0257109f0da5b714b62bda1e763bee4edcbf36de1c7d382132ce1f175551244",
+      "bytes": 7850
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/event-topology-observer-v2/WorldImpactEvents.cpp": {
+      "sha256": "1cc963bff0dc385d5450cda45f537a0d486d3a1eb61aa4f04a205c5bcf367d0f",
+      "bytes": 38629
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/event-topology-observer-v2/WorldImpactEvents.original.cpp": {
+      "sha256": "bfc69590b9068ecc0c243686e134e8365da9745f6c784488cdca0251b60c005b",
+      "bytes": 36611
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/event-topology-observer-v2/build-replay.py": {
+      "sha256": "198426d1c85c5dcd71190b7f6a72a161700f291541fb20d82165ca8ecc95173e",
+      "bytes": 1552
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/event-topology-observer-v2/build.log": {
+      "sha256": "5bd0af45133cd709d667daa13afd3d3c94e8a25ced12bffce75baa5fcfa98cab",
+      "bytes": 650
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/event-topology-observer-v2/build.py": {
+      "sha256": "5cc87ad4f0c90f2677fa383f7f8233a92b7232c704b07fad2694aa8bfc53ddcf",
+      "bytes": 3998
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/event-topology-observer-v2/fixed-startplane-nonproof.json": {
+      "sha256": "6c5972327e18f14551ad6f10813b11e2265c89b131942aaee1cbf90e3accfb6a",
+      "bytes": 14283
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/event-topology-observer-v2/fixed-startplane-nonproof.log": {
+      "sha256": "427bdff097ffb1925e46a61cdb23d365aa3c4dcd3daf0020672f1a696779270a",
+      "bytes": 419
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/event-topology-observer-v2/fixed-startplane-nonproof.py": {
+      "sha256": "0e42fb3b03295f86bbcd52d998f71a01970e1882ed3bbacf2a65d90f38150b31",
+      "bytes": 5601
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/event-topology-observer-v2/full-interval-separation-proof.json": {
+      "sha256": "16597d8b825761e96b62b7a1100011ebf89d9a4b25cf54d3a838bf01773a5813",
+      "bytes": 25581
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/event-topology-observer-v2/full-interval-separation-proof.log": {
+      "sha256": "c342e502f1c9d37fda8ce8d25e95cc52759c5b008e9517d1447af6b92a6c6081",
+      "bytes": 1262
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/event-topology-observer-v2/full-interval-separation-proof.py": {
+      "sha256": "d72f219a2a9b6ef6d569d4c333ef890456d5ddcfb3855735d04a90d9ed06a592",
+      "bytes": 2034
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/event-topology-observer-v2/interval-separation-proof.json": {
+      "sha256": "c1f489d1832846dea2348b949ac79a1428c4306853a3b7790877585b839ca02e",
+      "bytes": 60361
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/event-topology-observer-v2/interval-separation-proof.log": {
+      "sha256": "e01a8c95df1fd23920ec4dc89621906436cdfcdf53d3e32c5f1f01c8147533f0",
+      "bytes": 176
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/event-topology-observer-v2/interval-separation-proof.py": {
+      "sha256": "02dfa6ae2c7d695b60b7c2afd42cf7b9c25565062cc89a86584d6e87f73cb136",
+      "bytes": 6896
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/event-topology-observer-v2/pair-replay.json.gz": {
+      "sha256": "f5ee7243829613f1e5c41ec3f00c165baa48f9f620bfc31e79364c006bf79f18",
+      "bytes": 31264
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/event-topology-observer-v2/pair-replay.log": {
+      "sha256": "1eb898d21d1951c5fe0204c0442c36ebbb25d3e05d00efe95f4aca25e62f0355",
+      "bytes": 48
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/event-topology-observer-v2/prepare.py": {
+      "sha256": "9c9c6a2e5954f5bebbd354d2fab31279a334e1ae1a184bdb819d181c5144cc26",
+      "bytes": 3927
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/event-topology-observer-v2/replay-build.log": {
+      "sha256": "2ec20fd622c8d5d52c65164a3f8f1986a4606a087f7d7af3844370428064f885",
+      "bytes": 117
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/event-topology-observer-v2/smooth-arrival-brackets.log": {
+      "sha256": "a0123abf4e624edbebdbd9b5bb53fcd0aa9e06a98b0802fa88fb589006f799c9",
+      "bytes": 1227
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/event-topology-observer-v2/smooth-arrival-brackets.py": {
+      "sha256": "0f2b60740ee96f56d0c4f8bf13cb4b132adaf20e4534f27c5fc0b3e272867345",
+      "bytes": 2575
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/event-topology-observer-v2/smooth-gap-proof.json.gz": {
+      "sha256": "18ec57b5729787cc7a96c52b2dfb513b4cde4994be6706674687c9b8585f92d5",
+      "bytes": 120375
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/event-topology-observer-v2/smooth-gap-proof.log": {
+      "sha256": "949c99482b7f0edd763841463268c8ccf790d4b8cef8f647bb509f9b4781f4f4",
+      "bytes": 4545
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/event-topology-observer-v2/smooth-gap-proof.py": {
+      "sha256": "9ccb28a91423c3db6990a5541da08c883abee00ef99c9d461d0e7d81c12783c6",
+      "bytes": 5695
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/event-topology-observer/BUILD.json": {
+      "sha256": "ebbce8c2ef32c6a0bf2a2c3b5d21adb2b5f439926503758eed4b9ca8896ede24",
+      "bytes": 41312
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/event-topology-observer/EventTopologyObserver.h": {
+      "sha256": "d4107a289544074168e704a059498c5afbce9a97fdec1c397f2ea4a68b9b1425",
+      "bytes": 6030
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/event-topology-observer/WorldImpactEvents.cpp": {
+      "sha256": "d9acb1db2865cb1caf104fb6d372a98057b5c1922310f28c843aae02e2509c2b",
+      "bytes": 37763
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/event-topology-observer/WorldImpactEvents.original.cpp": {
+      "sha256": "bfc69590b9068ecc0c243686e134e8365da9745f6c784488cdca0251b60c005b",
+      "bytes": 36611
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/event-topology-observer/build.log": {
+      "sha256": "021877ec65724bd700903932f24ad60f6d0de47d420d98f6efeeb310f390ef64",
+      "bytes": 394
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/event-topology-observer/build.py": {
+      "sha256": "214071d07eb7b624ad837e7b0f861f084db16e765bf65b123451db27118cce97",
+      "bytes": 3717
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/event-topology-observer/prepare.py": {
+      "sha256": "3f1014f4fb06461dc94e3ab441068df5d54b013d283489f37ab65c8635444348",
+      "bytes": 2756
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/geometry-prototype/v2/Contacts.cpp": {
+      "sha256": "e339926f050e65634d4d82075de09b5b1adb54b0fb102f74ed3b1ded58bb617c",
+      "bytes": 32483
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/geometry-prototype/v2/FilterPredicates.cpp": {
+      "sha256": "883309826cc9d5204e089719e512567faccd47621c4a03f7e0de6b33af576398",
+      "bytes": 3894
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/geometry-prototype/v2/FilteredSat.h": {
+      "sha256": "a19f2e6d7fb7acf3663eba81e3be04168b5812761708aeff1f34130dd611ea6b",
+      "bytes": 5026
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/geometry-prototype/v2/LINK.json": {
+      "sha256": "1a3044b037a988441f48ab44a1ee188de6ce04f4fcbae1be93bf86ebdb449a6d",
+      "bytes": 1304
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/geometry-prototype/v2/LIVE_BENCHMARK_LINK.json": {
+      "sha256": "22efc7cd8f27019ab3f7b22511618d206b52f14bad57cfedb90e076391cdbde0",
+      "bytes": 1563
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/geometry-prototype/v2/PRODUCTION_ADOPTION.json": {
+      "sha256": "e648ebec4dea125091337ecee39adffa0f46364e4f6c5d766d707860f13ac601",
+      "bytes": 1343
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/geometry-prototype/v2/PRODUCTION_FOLLOWUP.json": {
+      "sha256": "034f5c86fbe08959160453639b4a14c395ba57712707402624d0e1d15ba0a0a8",
+      "bytes": 1184
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/geometry-prototype/v2/PROVENANCE.json": {
+      "sha256": "b4334b5bcda2c7331b5f25e403873fd41f30f0aba4f143bef4f801d1a8cb071e",
+      "bytes": 3294
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/geometry-prototype/v2/Parity.cpp": {
+      "sha256": "c5fc7a8bcdd37310477069fb7e7c4cae4b98de26655e7beaf39972890005597c",
+      "bytes": 4810
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/geometry-prototype/v2/RESULTS.json": {
+      "sha256": "32b4c54feefdfd5812c94cf17751d1d7344053a07ab7e28c3210ab74503ecc93",
+      "bytes": 767
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/geometry-prototype/v2/predicate-negative-results.txt": {
+      "sha256": "befd43ce93c11472e4ea7b10500a2ad6fa773c9d331e191221d0f9fd765ec680",
+      "bytes": 1458
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/geometry-prototype/v2/predicate-results.txt": {
+      "sha256": "a2ec515485265ff1a9a76b7a72753c6a8d55d0a579ac87f37ff108799e2052cf",
+      "bytes": 138
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/geometry-prototype/v2/primitive-boolean-results.txt": {
+      "sha256": "96947ae737e3661873c57c23a99eb1f8e7a3857436c5872732702f88fdd2b818",
+      "bytes": 80
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/geometry-prototype/v2/production-test-results.txt": {
+      "sha256": "f5aac2cd60841e623a81a99fc9df779283e3640c72badac442b2c8fb954797d0",
+      "bytes": 119
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/isotropic-prototype/BUILD.json": {
+      "sha256": "89a8986ae40f079bdfd6860e5d3a1088624ed2ff8741808538a915831a29c0ab",
+      "bytes": 17367
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/isotropic-prototype/IsotropicTests.cpp": {
+      "sha256": "e030deccaa84c5f5bb1b02ffce59b10d23f9296af851f86c6b7b70b11a6436ec",
+      "bytes": 9746
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/isotropic-prototype/NEGATIVE.json": {
+      "sha256": "6f773be8be51c87e18ebcaa6ae1ecc8e7624a419afb269ad18dc047d9deb6a32",
+      "bytes": 2435
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/isotropic-prototype/RigidBody.cpp": {
+      "sha256": "3cc951b49ae5ec9360b58a8a4f2ec9dfac2fc7323306f9047df4a3cc8764c07b",
+      "bytes": 6893
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/isotropic-prototype/RigidBodyReference.cpp": {
+      "sha256": "448ad2fe1609339c8c881d766871039fca06c6927e62e0e49d8213351e448ed6",
+      "bytes": 3114
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/isotropic-prototype/SOURCE.json": {
+      "sha256": "6b2f871a2b048067f0a042d0a6ee3613c9cdc1618cc6fd114e65385f441b8c91",
+      "bytes": 419
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/isotropic-prototype/build.log": {
+      "sha256": "2bd2b96e911146f7db2ec5742c94455f5972e3b54d7f73fcbd18dbebfd79351f",
+      "bytes": 14326
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/isotropic-prototype/build.py": {
+      "sha256": "39ac7c689f459e06fbcdb6f10d13485b3eab1e55e536a52c227f041d680f30af",
+      "bytes": 2551
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/isotropic-prototype/impact-timing.log": {
+      "sha256": "52d83a1b765180db902ea1ebd0332af4618925f9cb8da9a0356ea0644f206a9f",
+      "bytes": 43704
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/isotropic-prototype/isotropic-tests.log": {
+      "sha256": "a3e0a46a21d0d85ee4cd8609556a048488cc48ffe2319ac10121a006e117aa4b",
+      "bytes": 335
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/isotropic-prototype/rigid-motion.log": {
+      "sha256": "d9f968cc8b1bbb021f6b469c8e27314acdcdf2f72c8a2667fc6d8e43877c6cc5",
+      "bytes": 323
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/isotropic-prototype/unmodified-negative.log": {
+      "sha256": "fb92ef0a4386b14f23763ecb2c98a11ee43aeeaf7e5a45b102b10e32e91be586",
+      "bytes": 2242
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/order-prototype/BUILD.json": {
+      "sha256": "681da34712aa6b4cf83b4127140dd0e09e1b60afaeda0b57d11c472eb99d0a3d",
+      "bytes": 9176
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/order-prototype/CONTROLS.json": {
+      "sha256": "9fe58352bff75bbee510d8b1bd866e90d37d5296f08b1ec9f2333e1938ec63f5",
+      "bytes": 594
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/order-prototype/ContactSolver.cpp": {
+      "sha256": "70e9eb26fa2c1a18647b0875e3619f9ba94998d4d317a5db750bf7e60133f088",
+      "bytes": 17235
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/order-prototype/ContactSolver.h": {
+      "sha256": "9b86681077e5f54ea3e3496f2c2d85a90bfe6f88ba9ef3b0f543e5dea615b860",
+      "bytes": 8005
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/order-prototype/ImpactSolver.cpp": {
+      "sha256": "43a7de64c4864d136439cd0f57b27c7f5474d54b98cdced01fde64bf964c8d7c",
+      "bytes": 10557
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/order-prototype/ImpactSolver.h": {
+      "sha256": "704d0773d919b3476d30928e60ed1c4d02d10f686a10868b08efa02fa1b4f9e0",
+      "bytes": 1825
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/order-prototype/NOTES.txt": {
+      "sha256": "98c9507452f52ab71bca18f71f663fe844101dd19a71c5d03df9eaa8bc964286",
+      "bytes": 3481
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/order-prototype/OrderControls.cpp": {
+      "sha256": "263aed734a212ea716f4551fb3e04d74bcb5f5bdbd7176cb261e4a0e84e4bfc1",
+      "bytes": 3503
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/order-prototype/build.log": {
+      "sha256": "d8715fc054214395536925183cab77681d19f6904f26cccf59081f0896b8fe5e",
+      "bytes": 228
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/order-prototype/build.py": {
+      "sha256": "883edbe110b40a1d42251bd9bb8d52e8185dd9a08d15a915b7e36d1364bfc041",
+      "bytes": 7337
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/order-prototype/controls-baseline.log": {
+      "sha256": "7c377bde5abbf519c0ee645909aca265288942249b8f0d91b726269ca1a7b235",
+      "bytes": 4179
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/order-prototype/controls-build-failure-1.log": {
+      "sha256": "40d5953a23019de62dc8686b111ebc038350c90be394dd94b75a3874599ff9e4",
+      "bytes": 2259
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/order-prototype/controls-build.log": {
+      "sha256": "4d1b842c248d77a207a8452075c74c15532c95126fb863157d20aa7056d11092",
+      "bytes": 368
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/order-prototype/controls-ordered.log": {
+      "sha256": "7f9d835801bc540114859940c7f35d581e99c5e32e961eae7f35679afad55719",
+      "bytes": 4521
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/order-prototype/controls.py": {
+      "sha256": "aa3ba0464976097ad2ff263076564c14fbd1a9f2f32991928fa9933674e7f64a",
+      "bytes": 2689
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/order-prototype/impact-baseline.log": {
+      "sha256": "0abea3f165316cea297eedef5c12301181c37a8974a331115420a50bb859840a",
+      "bytes": 256
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/order-prototype/impact-ordered.log": {
+      "sha256": "0abea3f165316cea297eedef5c12301181c37a8974a331115420a50bb859840a",
+      "bytes": 256
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/order-prototype/snapshot.py": {
+      "sha256": "2f9ab5c837f8584be961c86c04066940eb607e9b391877191c21c21199a6de7e",
+      "bytes": 2055
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/parallel-frontier-prototype/BUILD.json": {
+      "sha256": "f6c7ec88992674c867725a5592e765181b63847a9362c26b582b33717f1c1e08",
+      "bytes": 748
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/parallel-frontier-prototype/PROTOTYPE.json": {
+      "sha256": "eb6ff6e13191d13258b6ea130107fd7ef6443ad893d4c675d0e12c66ae3cf71b",
+      "bytes": 1351
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/parallel-frontier-prototype/ParallelImpactQueries.h": {
+      "sha256": "322e55031362c414b233a8b6f234521a06f1e4e18e6f05d13c3c36dc07886370",
+      "bytes": 58438
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/parallel-frontier-prototype/QUERY_PROOF_ORIGIN.json": {
+      "sha256": "a1deef949b8e0bd1e3563e5dba11c9be18bcccdba94690c7dc76ede824eb7033",
+      "bytes": 431
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/parallel-frontier-prototype/QueryParity.cpp": {
+      "sha256": "192f4571b5dad276f7e02ffbe30d9882d798ae1c3f56e00b11e2860205cc5a20",
+      "bytes": 7340
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/parallel-frontier-prototype/WorldImpactEvents.cpp": {
+      "sha256": "72c4ab8558268d7ad9d6235861ba4792ee2fcd2db46b4e5ef572a15c261d8475",
+      "bytes": 58246
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/parallel-frontier-prototype/WorldInternal.h": {
+      "sha256": "4331b65c76e86bfb1abae20f0d20b12507ee77fbb084e1f3456cbdc75a613374",
+      "bytes": 23561
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/parallel-frontier-prototype/build.log": {
+      "sha256": "b129f94c1ea99c31b8d41193808bdc202a2f87cabedc755ce8e11685d64c6d00",
+      "bytes": 8416
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/parallel-frontier-prototype/build_prototype.py": {
+      "sha256": "861109d53500a2d8f228618b37af57c30622494212feb743c21d39ad08d28da7",
+      "bytes": 2168
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/parallel-frontier-prototype/build_query_parity.py": {
+      "sha256": "092d06e9d9082948ef5a0d87b54adf371a8bed263aa4b69d4030827a207be61c",
+      "bytes": 1207
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/parallel-frontier-prototype/create_prototype.py": {
+      "sha256": "ed51232d46195eaf691c8ab84c8edee993b6ee09fcc3ea726db6e2d819803eec",
+      "bytes": 21307
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/parallel-frontier-prototype/freeze_candidate.py": {
+      "sha256": "644bdac05d9f306abbfad564db59ed460fd32b58d75491e410c7bc4bc288cda8",
+      "bytes": 3437
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/parallel-frontier-prototype/query-shared-parity.log": {
+      "sha256": "5737f5616e745a1f787004aad5d9fc4637fdb8e5e7cbd5526c52eebd371fc95f",
+      "bytes": 303
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/parallel-prototype-v2/BUILD.json": {
+      "sha256": "b9bd78686fdde7d65e77c8b5df5faeb28cc000bae8c3b994337aaff0a6520472",
+      "bytes": 746
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/parallel-prototype-v2/PROTOTYPE.json": {
+      "sha256": "88185d611abb6b6ac7d586c53771532d3ce804e9afa1c0b955c977774b754155",
+      "bytes": 1329
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/parallel-prototype-v2/ParallelImpactQueries.h": {
+      "sha256": "322e55031362c414b233a8b6f234521a06f1e4e18e6f05d13c3c36dc07886370",
+      "bytes": 58438
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/parallel-prototype-v2/QueryParity.cpp": {
+      "sha256": "192f4571b5dad276f7e02ffbe30d9882d798ae1c3f56e00b11e2860205cc5a20",
+      "bytes": 7340
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/parallel-prototype-v2/WorldImpactEvents.cpp": {
+      "sha256": "d7bb7f4817a2c17eeabc9e5a2c81e8c07f4a779dcf4aadf327f6a1d3a6f6a16a",
+      "bytes": 47016
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/parallel-prototype-v2/WorldInternal.h": {
+      "sha256": "4331b65c76e86bfb1abae20f0d20b12507ee77fbb084e1f3456cbdc75a613374",
+      "bytes": 23561
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/parallel-prototype-v2/build.log": {
+      "sha256": "3aa136cdbf0ad1731f605aff619a99b3b5c5645b8cb40e08691f99f7045decc4",
+      "bytes": 8354
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/parallel-prototype-v2/build_prototype.py": {
+      "sha256": "861109d53500a2d8f228618b37af57c30622494212feb743c21d39ad08d28da7",
+      "bytes": 2168
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/parallel-prototype-v2/build_query_parity.py": {
+      "sha256": "092d06e9d9082948ef5a0d87b54adf371a8bed263aa4b69d4030827a207be61c",
+      "bytes": 1207
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/parallel-prototype-v2/create_prototype.py": {
+      "sha256": "535cfd8919106f9d61c9eac25e489feab7a8d7022d3dfd039ab6f90ed3d6e9cc",
+      "bytes": 19025
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/parallel-prototype-v2/freeze_candidate.py": {
+      "sha256": "e2a1c4caa93da8af89c3c1fba142dcbba5d45473778a17f0fd2df0720237e556",
+      "bytes": 3379
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/parallel-prototype-v2/query-build.log": {
+      "sha256": "20cef455d4d8ce586328dcd8341e82703a479c7b480c118d00b5d792c4ec5271",
+      "bytes": 3340
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/parallel-prototype-v2/query-shared-parity.log": {
+      "sha256": "5737f5616e745a1f787004aad5d9fc4637fdb8e5e7cbd5526c52eebd371fc95f",
+      "bytes": 303
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/parallel-prototype/BUILD.json": {
+      "sha256": "875c3a515d078a71889ad445df696df42f2d59fcbf71ee8be144fa82a0e8eb9e",
+      "bytes": 748
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/parallel-prototype/PROTOTYPE.json": {
+      "sha256": "bcab24917198560bc3bc254c6b0ad4d712cff3c528c47c0cffdeb51df2bcd286",
+      "bytes": 1329
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/parallel-prototype/ParallelImpactQueries.h": {
+      "sha256": "9f5f6aa9ed6a9f8e658aa178ee4f23e63ddb75e37990172e7bc94477d32590e1",
+      "bytes": 57169
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/parallel-prototype/QUERY_PARITY_RESULT.json": {
+      "sha256": "ade0e987c5ee432f373eca15ae4a97689bdd38310405e1ccfc55bf67cf36f0b4",
+      "bytes": 1806
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/parallel-prototype/QueryParity.cpp": {
+      "sha256": "2e5449a91fc8ef372e201dc0da9ae5c75b610d95e61447355eaf0da3cfa5dcd8",
+      "bytes": 6116
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/parallel-prototype/WorldImpactEvents.cpp": {
+      "sha256": "80cc7f4e2854c5a25dcee198641a895f712b95020ea389a88456098c04c6f55e",
+      "bytes": 45499
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/parallel-prototype/WorldInternal.h": {
+      "sha256": "4331b65c76e86bfb1abae20f0d20b12507ee77fbb084e1f3456cbdc75a613374",
+      "bytes": 23561
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/parallel-prototype/build.log": {
+      "sha256": "b7c90b66604ac479b5435eb5f86efcd65d573141a1bc54443f030cfea65d88d0",
+      "bytes": 8326
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/parallel-prototype/build_prototype.py": {
+      "sha256": "861109d53500a2d8f228618b37af57c30622494212feb743c21d39ad08d28da7",
+      "bytes": 2168
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/parallel-prototype/build_query_parity.py": {
+      "sha256": "092d06e9d9082948ef5a0d87b54adf371a8bed263aa4b69d4030827a207be61c",
+      "bytes": 1207
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/parallel-prototype/create_prototype.py": {
+      "sha256": "705b6f9f114ceaf1c1f53bc8ed97c3e3977fee8b5394f709fb6dbe591529f537",
+      "bytes": 15367
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/parallel-prototype/impact-timing.log": {
+      "sha256": "52d83a1b765180db902ea1ebd0332af4618925f9cb8da9a0356ea0644f206a9f",
+      "bytes": 43704
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/parallel-prototype/query-build-followup.log": {
+      "sha256": "ce9af2265bf83de80f3c3a2c29bbeefebc1a6b3ecf1b69acd6637743f7879f97",
+      "bytes": 3328
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/parallel-prototype/query-build.log": {
+      "sha256": "657a830dc2f47c00ed3be39936152cdda5ab34508b3172bcdcef5f75ee689ad9",
+      "bytes": 4192
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/parallel-prototype/query-parity.log": {
+      "sha256": "8bf07268bf6b0dc6e15e6279bfa231965e8a5ad7edf527376fb25bc29854f3dd",
+      "bytes": 270
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/quality-prototype/FloorOracle.h": {
+      "sha256": "9967977f2e72eea13a521176e7de38a1d32d50f60b364134cf5565a2585c0d27",
+      "bytes": 2503
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/quality-prototype/INITIAL_BUILD_FAILURE.txt": {
+      "sha256": "336ab632c51a6047a9e5db352919d818491f8d1b462f1a01e9f4d7958c89d757",
+      "bytes": 509
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/quality-prototype/OracleControls.cpp": {
+      "sha256": "95a7454c23042cd228cc858454293b8aba9956b0ff76f0609a5a891b0e58af8c",
+      "bytes": 2877
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/quality-prototype/OracleControls.initial-missing-includes.cpp": {
+      "sha256": "334238c7a822f4d4dd88f22c1bcdec834a75073dfe9c7f60d01c57c30810a1a6",
+      "bytes": 2829
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/quality-prototype/TemporalObserver.h": {
+      "sha256": "039f45ab66c63cae205a8d47ff22ee9e41257edd6d5d2012debc91eafdf1b530",
+      "bytes": 7015
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/quality-prototype/analyse.py": {
+      "sha256": "6170fa81544dd9166e5ffeee01195c503650165d3ffeebadb015681d94791afd",
+      "bytes": 3479
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/quality-prototype/build.py": {
+      "sha256": "10aa969542aade49fe1608678bcfbb88f1fe35aca7c5c792ddd79d6597f96c21",
+      "bytes": 4185
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/residual-prototype/BUILD.json": {
+      "sha256": "4cf6101c1e18394df2a0d9b8ecd184c3d3a19419bd67e55ef27c476b36de58e2",
+      "bytes": 5425
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/residual-prototype/ImpactSolver.observer.cpp": {
+      "sha256": "6141940a379b21a34df89b69883c7d08d43d1f8bbf7a5acfc8c2b568834f6153",
+      "bytes": 7980
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/residual-prototype/ImpactSolver.original.cpp": {
+      "sha256": "9c7a88edefcccdb8fe63ceeaeea0f8f11c92681320625574111be030c68d8d6f",
+      "bytes": 7631
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/residual-prototype/ResidualObserver.h": {
+      "sha256": "4f13050aac8cc85c82b16bf2fd54fccea50a4b39931b84a52cc2978fb4161c13",
+      "bytes": 10338
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/residual-prototype/build.py": {
+      "sha256": "c5828d294b68f40c0f0fd60f7bd3e89377e3a92fb1b89feb6da4bd1a72746e4b",
+      "bytes": 3244
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/sphere-filter-research/BUILD.json": {
+      "sha256": "ae277e94946452ddb1a5f99712f9e3050478959c5adef23a7a442c509d747602",
+      "bytes": 11402
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/sphere-filter-research/ContactGeometryInternal.h": {
+      "sha256": "f8717a473924708e43e27d274e2268486646a7e2d103f3ac0e3268bf31f4dd7b",
+      "bytes": 12721
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/sphere-filter-research/ContactPreparedGeometry.h": {
+      "sha256": "d8b19b2079fafe05a39325a9d093a0d1de5f956ac4c10df1c9810531a36441d9",
+      "bytes": 1061
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/sphere-filter-research/ContactSatFilter.h": {
+      "sha256": "12dd21cc3c9ec40d8296592a69c9890334ffe740982517caf8a50c669ac0e0be",
+      "bytes": 5744
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/sphere-filter-research/Contacts.cpp": {
+      "sha256": "b9d779391459cdd7794ec8e18de025a417f682d7bef9ab7c60f48ed2802c58a1",
+      "bytes": 35240
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/sphere-filter-research/Contacts.h": {
+      "sha256": "e13c354c71e02141b3c82c5abfdb8fd1cb24b376bb7116245c67ba73ee21ce5b",
+      "bytes": 7866
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/sphere-filter-research/Contacts.input.cpp": {
+      "sha256": "ab6c22d65e7a26c76de7c7fecf83b5aac927d6247ef86097264cc25edfb3c5d7",
+      "bytes": 33880
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/sphere-filter-research/PREPARED.json": {
+      "sha256": "579db895e5ce6221b00710d2bf36deebe9aa22201c4ffcd362346d2458c3f33d",
+      "bytes": 1582
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/sphere-filter-research/PROOF.txt": {
+      "sha256": "39c38d3291aaaafc28086ca277a54873582edc6d5d16a53685e6dec4ae135eaf",
+      "bytes": 5148
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/sphere-filter-research/Parity.cpp": {
+      "sha256": "c5fc7a8bcdd37310477069fb7e7c4cae4b98de26655e7beaf39972890005597c",
+      "bytes": 4810
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/sphere-filter-research/RESULTS.json": {
+      "sha256": "f96622603e24fadbdd2680900e3795a98c407638e710e8883a70e13b820e2d7e",
+      "bytes": 2759
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/sphere-filter-research/SphereFilterTests.cpp": {
+      "sha256": "409b688f6bcf6982678bfcfbc0a08bb03fb96f24cb26a32a1338a19f817eb3bc",
+      "bytes": 8905
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/sphere-filter-research/SpherePredicateFilter.h": {
+      "sha256": "cec9e55ccd75bb47edfe306fec3119eaa8eb1cade70ad78e1f7cfcbf29c89743",
+      "bytes": 3230
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/sphere-filter-research/build.py": {
+      "sha256": "b86f8f73f3059c2ffe7c75ca7f47c1888a5af4e982e48d78dbb790665c03d252",
+      "bytes": 7346
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/sphere-filter-research/parity-reference.stderr.log": {
+      "sha256": "22ec8c38cc52c63fb79d7689bffcb0feae20591ff174c929a5dffca800f7256b",
+      "bytes": 115
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/sphere-filter-research/parity-spheres.stderr.log": {
+      "sha256": "3736ae28cc96c8ddd74d1fa55f54abe7a0943ca4d5107d1974321752f51773a6",
+      "bytes": 115
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/sphere-filter-research/predicate-negative.stderr.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/sphere-filter-research/predicate-negative.stdout.log": {
+      "sha256": "f10b9d948bd5df0386df2abd93b1c1d3a58b8ece264ebae8f52fcacf2910cf4a",
+      "bytes": 1599
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/sphere-filter-research/predicate-normal.stderr.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/sphere-filter-research/predicate-normal.stdout.log": {
+      "sha256": "4ff9e9e21a76858fd26542171a89f5c6f4488972ab48f12c4a57810cfdaeae22",
+      "bytes": 211
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/support-prototype/BUILD.json": {
+      "sha256": "781156ae19340634875c1a5af7d982d6614d691e644a5dafe58dac18dddffcb1",
+      "bytes": 10167
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/support-prototype/BUILD_MINIMAL.json": {
+      "sha256": "dc5feb859f13356fc1bede3e0149c1468f3cfecd6a045a333f90d68d12c99fc1",
+      "bytes": 5204
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/support-prototype/ImpactSupportSets.h": {
+      "sha256": "6ed844b45028167705eb506ad312533c3c610bee043d3802562b29fabe7051cf",
+      "bytes": 3160
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/support-prototype/SupportSetsTests-unsorted-setup.cpp": {
+      "sha256": "cd71028fef6f47d9dee328b1d14923f2415bf374fa6a606601d31c42f6baeec6",
+      "bytes": 1809
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/support-prototype/SupportSetsTests.cpp": {
+      "sha256": "516bab5a3cb0e464a16e9beb0390119220991c06dbddbd553bd0c10d1e2d8943",
+      "bytes": 2054
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/support-prototype/WorldImpactEvents-minimal.cpp": {
+      "sha256": "93c25c0f6b1be45c2921f9579a0a2f33a07c6113f34a12200d2151ac1ae3313a",
+      "bytes": 36399
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/support-prototype/WorldImpactEvents-timed.cpp": {
+      "sha256": "09b266a1c5505c304feae80fe980872600336e7bb0c522a0f55dd1dadd9d3671",
+      "bytes": 36679
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/support-prototype/WorldImpactEvents.cpp": {
+      "sha256": "79229ddf2bd5846a23c455d0b09ef0461508e440130f5a23e2a36cf19b4fbc76",
+      "bytes": 36182
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/support-prototype/build-minimal.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/support-prototype/build.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/support-prototype/build.py": {
+      "sha256": "4b0a01afcaf19b82251b181217763a30543a663cdd1fe9d7a4c9eaf5b024a83a",
+      "bytes": 2260
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/support-prototype/build_minimal.py": {
+      "sha256": "f151fe17f9ca5caa93aaa0dc0a8163c63d0e58d7df32956126e66bcf54871b40",
+      "bytes": 2244
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/support-prototype/original-block.txt": {
+      "sha256": "fb9598e3a3c6105b0259ede3f8dbcf1a839e283e9eeeaa5db23242f3db6ec134",
+      "bytes": 803
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/warm-force-prototype/BUILD.json": {
+      "sha256": "fac26b474f900bc7baf58f654210dd7a20360f5203ea6f5321cc715b811ba319",
+      "bytes": 41271
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/warm-force-prototype/INVENTORY.json": {
+      "sha256": "07f7649fc69a04ef07e1ab174e45bdfd4fcc3205f42e1a26e5530a2eb90e2311",
+      "bytes": 37844
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/warm-force-prototype/RATIONALE.txt": {
+      "sha256": "5254f4bee3450a2aa1856b7da56a990285df38e03d5fd9264b93f8a991e93214",
+      "bytes": 3354
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/warm-force-prototype/RESULTS.txt": {
+      "sha256": "afd6c613697ab1c9c43c49095b6eed41ce50d37e7ad6df8b5ec48a126a2c8788",
+      "bytes": 1480
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/warm-force-prototype/RetainedSupportGuesses.h": {
+      "sha256": "dfed580a6bf2e96e03805ff1ae8fa15b4c63be2dfea1e59a445cc173929de36a",
+      "bytes": 2440
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/warm-force-prototype/SupportGuessTests.cpp": {
+      "sha256": "f7ea8c3d0a4ac5de61f608177cf951262a08a1c5955b10d4705116265c437fa9",
+      "bytes": 2752
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/warm-force-prototype/WorldImpactEvents.cpp": {
+      "sha256": "baa5fda50a2815be173030584102590ab91eb131a6b36a3b43c1c6cef987faa8",
+      "bytes": 36981
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/warm-force-prototype/WorldImpactEvents.original.cpp": {
+      "sha256": "bfc69590b9068ecc0c243686e134e8365da9745f6c784488cdca0251b60c005b",
+      "bytes": 36611
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/warm-force-prototype/build-tests.py": {
+      "sha256": "612a7d15a3c0b19fe165c408c3ee31ca005e6825db842099faa05ab4c730f3e2",
+      "bytes": 1192
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/warm-force-prototype/build.log": {
+      "sha256": "0ca948da662d61f001e9fabffcf7b5f21714a880278f0a7501fe101aefd07a85",
+      "bytes": 303
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/experiments/warm-force-prototype/build.py": {
+      "sha256": "acd43329cbf5807b3a675354642e035f74a64b6139ef48de26b7c9601612a8a6",
+      "bytes": 7817
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/final-fastpath-build/0.log": {
+      "sha256": "581d4315ee4e60c19c2cfa07fe9c6ee51f5db8d7ce5352b31a09a20ce98a04db",
+      "bytes": 911
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/final-fastpath-build/1.log": {
+      "sha256": "df79f4f326095c727b86a09f2acf3c9cf4bd6eb8deea715c518fb803951ff3b3",
+      "bytes": 14324
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/final-fastpath-build/BUILD.json": {
+      "sha256": "391de7c185494b7be7341ed4f94faa56df37043b434dd8e7db185efd0a86f0ab",
+      "bytes": 1420
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/final-fastpath-checks/RESULTS.json": {
+      "sha256": "d5aa2b9fa8210d50e1ff4df191b3cefd099054e2f99b426593a2f175e5c44553",
+      "bytes": 12478
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/final-fastpath-checks/character-motor.log": {
+      "sha256": "a31006223ffeee93eb4daed11e59701444fdd449fbe656dc943f9a1a6d4709db",
+      "bytes": 152
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/final-fastpath-checks/character-motor/RESULTS.json": {
+      "sha256": "0e4073a7411ed26fa4b083f244efeeefb69d95c4af322210ce599849adb8cb9b",
+      "bytes": 6777
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/final-fastpath-checks/character-motor/character-motor.log": {
+      "sha256": "21fbe0001d72761bd0c1dbc4ddf0ea715a65b444ab671eb3b799440cea71eda5",
+      "bytes": 1869
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/final-fastpath-checks/clip-polygon.log": {
+      "sha256": "5ff1d89ded22e2a7eb6e2ae1c5c5f020156ddc783a60bd5e1f40090368f93d1a",
+      "bytes": 146
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/final-fastpath-checks/clip-polygon/RESULTS.json": {
+      "sha256": "083e0a2e8ae8888a42cd8728f499335cd41764c9bb5ddec695e6a04581859794",
+      "bytes": 6773
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/final-fastpath-checks/clip-polygon/clip-polygon.log": {
+      "sha256": "ae60d7b3ba87a53ded2700140cfc874c71d62f62dd9816d025b6ac0be8f28e08",
+      "bytes": 1293
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/final-fastpath-checks/collision-geometry.log": {
+      "sha256": "c8bf38abaea2de46260f15f4958807e0866d516b6862d07b714399c71a42c7f4",
+      "bytes": 158
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/final-fastpath-checks/collision-geometry/RESULTS.json": {
+      "sha256": "ed0eb04b9688e71e26ceba2fda3673c2e1b633c79b60bfeab56880a3df9f6116",
+      "bytes": 6783
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/final-fastpath-checks/collision-geometry/collision-geometry.log": {
+      "sha256": "624b41782d1df6894e906b1847dc670abd8564e7bae392cd42c255b1fac40f57",
+      "bytes": 3167
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/final-fastpath-checks/contact-sat-filter.log": {
+      "sha256": "f8b2e60a690cf64274051dd8bef7e336469f5bb0255d8f17cebe2e7c02f95a68",
+      "bytes": 158
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/final-fastpath-checks/contact-sat-filter/RESULTS.json": {
+      "sha256": "b9b57f73e99fddcd70358a4a9e264c7fea4b58cc2e245c95daf7b7c5a3833433",
+      "bytes": 6783
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/final-fastpath-checks/contact-sat-filter/contact-sat-filter.log": {
+      "sha256": "2b37d6ace9df8178052f2bd071393d1a17b3a9a7931f9c2bde4811f97ecbd610",
+      "bytes": 119
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/final-fastpath-checks/contact-sphere-filter.log": {
+      "sha256": "da413d56bc5c1ceb875acb4dff52fa7b708047f92499b48fb5192a8d272f2e99",
+      "bytes": 164
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/final-fastpath-checks/contact-sphere-filter/RESULTS.json": {
+      "sha256": "3483d2a228fa6a6c57abda8054a518e59bebde7fb979306a845f122a3ce2625b",
+      "bytes": 6789
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/final-fastpath-checks/contact-sphere-filter/contact-sphere-filter.log": {
+      "sha256": "ee9f45d149b627c4543377f02519284baef002fc2a63af61cd51b94c96d9b287",
+      "bytes": 211
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/final-fastpath-checks/contacts.log": {
+      "sha256": "b076e850b329a7c379604df9eb989462d2ec0a78546f8ddac4cde4800d56f06f",
+      "bytes": 138
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/final-fastpath-checks/contacts/RESULTS.json": {
+      "sha256": "3d75b12c71d440f2a1e2746fd2e2a52cc914376d6e6ed02241f1e76231a3770c",
+      "bytes": 6772
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/final-fastpath-checks/contacts/contacts.log": {
+      "sha256": "d521b1edc0c31bc21133f2c2994d7c93e60b2beb5d8ebe01272b53b0d7e7bbe7",
+      "bytes": 83838
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/final-fastpath-checks/impact-mesh-arrival.log": {
+      "sha256": "e8f2abfbc80999ef85825c18b30cf34eaaf3e75d3cbc62f3d6a1c9c935136779",
+      "bytes": 160
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/final-fastpath-checks/impact-mesh-arrival/RESULTS.json": {
+      "sha256": "78acd64efdb2724c2d987ca6a0bd243afed90597dcaecccfa2f07ce971c3b777",
+      "bytes": 6839
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/final-fastpath-checks/impact-mesh-arrival/impact-mesh-arrival.log": {
+      "sha256": "babcd598e91d96cdbcf3c46cdcd101b1019b511ae6574c73007619a605acb970",
+      "bytes": 2540
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/final-fastpath-checks/impact-mesh-continuation.log": {
+      "sha256": "c78e6b54829dff6cc5694fbe8a643301404d703c7be3bcdecf3913ff0cfe70b0",
+      "bytes": 170
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/final-fastpath-checks/impact-mesh-continuation/RESULTS.json": {
+      "sha256": "8f1825dadb2d63d854c8fa442ff33e6c6e456cb10a187b96fdc72172485a9106",
+      "bytes": 6949
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/final-fastpath-checks/impact-mesh-continuation/impact-mesh-continuation.log": {
+      "sha256": "ca068372df4900112aa78379ad39f51929c6ac3978c369262b4d70afec3ad790",
+      "bytes": 2546
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/final-fastpath-checks/impact-solver.log": {
+      "sha256": "2537081a7287c49a94f8d6639055f4bc9d9e4710886b402359b1044c87959441",
+      "bytes": 148
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/final-fastpath-checks/impact-solver/RESULTS.json": {
+      "sha256": "71722deaed38a3dab998084d6dabb5c45bfc1e7222151c51043f0464fb832054",
+      "bytes": 6774
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/final-fastpath-checks/impact-solver/impact-solver.log": {
+      "sha256": "0abea3f165316cea297eedef5c12301181c37a8974a331115420a50bb859840a",
+      "bytes": 256
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/final-fastpath-checks/impact-support-sets.log": {
+      "sha256": "7b5716a1898441ea6d663cfa9e19c64348fa0c7312a9abe248d7757d5de5c428",
+      "bytes": 160
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/final-fastpath-checks/impact-support-sets/RESULTS.json": {
+      "sha256": "054b004c6fcd98714862118c522d16a9c91fe796343d6d157e7dfe9bc7aef083",
+      "bytes": 6785
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/final-fastpath-checks/impact-support-sets/impact-support-sets.log": {
+      "sha256": "b032556259b6f8e6119faab9b1c8ba68f715c4c74d33c629b7892081976fc29d",
+      "bytes": 25
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/final-fastpath-checks/impact-timing.log": {
+      "sha256": "1fbb78c5dad059e3ac328ffe729cec4e2af45068e6e758547c229e4a75b84a8a",
+      "bytes": 148
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/final-fastpath-checks/impact-timing/RESULTS.json": {
+      "sha256": "825aeb1a7508fd315b6f018349495e882cb4a6ed0dd9a9cbba6791ba2536c213",
+      "bytes": 6775
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/final-fastpath-checks/impact-timing/impact-timing.log": {
+      "sha256": "52d83a1b765180db902ea1ebd0332af4618925f9cb8da9a0356ea0644f206a9f",
+      "bytes": 43704
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/final-fastpath-checks/judas_contact_sat_workspace_tests.log": {
+      "sha256": "63c9d744278da3e7bc7dc41c5bda89cd2582b0ed5bb7083ff56b11c5119850da",
+      "bytes": 81
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/final-fastpath-checks/judas_impact_robustness_tests.log": {
+      "sha256": "e35fffddbd794c7517c54055943a2dc3babe5b19f40450eafbca4271cf7a4c61",
+      "bytes": 4881
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/final-fastpath-checks/judas_joint_tests.log": {
+      "sha256": "a7e5e1544a5d156077adbcb45b07e7fc4e771d23f66b334763ef9ff96f838a4a",
+      "bytes": 1437
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/final-fastpath-checks/judas_kinematic_tests.log": {
+      "sha256": "87fc32d0fa04c9fde088e7feeb50610f7a2eed7ca2e27f4964aae2b6b3b8e98d",
+      "bytes": 6480
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/final-fastpath-checks/judas_primitive_contact_boolean_tests.log": {
+      "sha256": "96947ae737e3661873c57c23a99eb1f8e7a3857436c5872732702f88fdd2b818",
+      "bytes": 80
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/final-fastpath-checks/judas_ragdoll_tests.log": {
+      "sha256": "dca9f333f0339e1da5c38989db285783d4e8d0e1b89a865172a9a165a8dcec05",
+      "bytes": 2422
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/final-fastpath-checks/judas_rigid_motion_geometry_tests.log": {
+      "sha256": "cd2ab7a2650f03d488c2456b504ccfa27e9f860da5b5338383de0b1f52ced8d7",
+      "bytes": 65
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/final-fastpath-checks/judas_sphere_impact_bounds_tests.log": {
+      "sha256": "864149aa430a0a54931eddfe84ab5ecde362f150443220231d67a7bfb9ffc4e5",
+      "bytes": 1224
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/final-fastpath-checks/native-mesh-growth.log": {
+      "sha256": "861edc9e0ea098e18e27d983c3b3faa0fdaaef4e789162260b4df0313ca9cdb5",
+      "bytes": 158
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/final-fastpath-checks/native-mesh-growth/RESULTS.json": {
+      "sha256": "14c78e64eb0d15e8e9e64a8bffa302e7f7607b8f41463823acd96a3131135f31",
+      "bytes": 6785
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/final-fastpath-checks/native-mesh-growth/native-mesh-growth.log": {
+      "sha256": "6a4a6b068530fb2f210a4c607fbd86873869ac57fa5bc5f2050eda1843a7773e",
+      "bytes": 9442
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/final-fastpath-checks/physics-continuation.log": {
+      "sha256": "767d8fe358dcf5e500acb2f1e3aafd5b9163b33438348dc59909f414a7ba0ac6",
+      "bytes": 162
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/final-fastpath-checks/physics-continuation/RESULTS.json": {
+      "sha256": "bd5ff30bcda782a057e86067baa59f604995631efdd8fee0d3691c131e31420a",
+      "bytes": 6788
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/final-fastpath-checks/physics-continuation/physics-continuation.log": {
+      "sha256": "4cc6f3c0c5aac74ddb2d2faae5934a29ee782a046fcffdd72f60f41a33866534",
+      "bytes": 30
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/final-fastpath-checks/rigid-contact.log": {
+      "sha256": "45c580731d640badcd3b564df51b35242243859a2f2d81cbffa8c321517b743a",
+      "bytes": 148
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/final-fastpath-checks/rigid-contact/RESULTS.json": {
+      "sha256": "a932d220838b2e7ab8d02c0f9ef310f2b941dadf6e89ef7cffa0ba9c5a0516c7",
+      "bytes": 6773
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/final-fastpath-checks/rigid-contact/rigid-contact.log": {
+      "sha256": "bcc643201b76b47dde44c8f28023bebab08f80d1b90d06743d96b809c9c48dd0",
+      "bytes": 3627
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/final-fastpath-checks/sat-negative.log": {
+      "sha256": "fe5cc7839fd776477cd54fd761197735ce3a0dc7af6b5b315703aa95e8792a20",
+      "bytes": 1556
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/final-fastpath-checks/sphere-negative.log": {
+      "sha256": "06d6ff49d5f5fb70abb3f607f1e095d20ef52a2d3bbdb50b5c06ecc16fdf6521",
+      "bytes": 1599
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/final-fastpath-checks/support-negative.log": {
+      "sha256": "1ccd83cb4607eb0735931cc019fd58421f709b923335aed3279ec62bb29a51f6",
+      "bytes": 29
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/final-fastpath-checks/test_cmake_test_targets.py.log": {
+      "sha256": "ee7885ba23b6b4f52b8743e2b54c365ef133932ae3cd0a6bd3aad9c26774dee1",
+      "bytes": 1715
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/final-fastpath-checks/test_prealpha_validation.py.log": {
+      "sha256": "57edec09e15f292dccf62b8ed93cbb92cdbf99c413b23f708ace5789e4ce6da7",
+      "bytes": 892
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/host-observation-20261019T1124.json": {
+      "sha256": "f8e9dabdbacdc45cb12fdf86a3812e607cbed96fd31c04f9cc4fe72a56b7f5dd",
+      "bytes": 1870
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/measure.initial-before-realtime-accounting.py": {
+      "sha256": "e21a940a9773d6a6024741e105ac10bcf26292efd0f02703a4872e6f1c42472b",
+      "bytes": 18228
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/measure.py": {
+      "sha256": "fe9bfbe9057a8d3e989437967a5abe955be5d98fb8a2c80e8fc3b49225229af7",
+      "bytes": 24463
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/production-checks/RESULTS.json": {
+      "sha256": "b34c90aa4d396d0d955aecd5654f9994c072c4a82f046e0bc37760645100c565",
+      "bytes": 6753
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/production-checks/lifecycle.log": {
+      "sha256": "d521b1edc0c31bc21133f2c2994d7c93e60b2beb5d8ebe01272b53b0d7e7bbe7",
+      "bytes": 83838
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/production-checks/rigid.log": {
+      "sha256": "bcc643201b76b47dde44c8f28023bebab08f80d1b90d06743d96b809c9c48dd0",
+      "bytes": 3627
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/production-checks/robustness.log": {
+      "sha256": "e35fffddbd794c7517c54055943a2dc3babe5b19f40450eafbca4271cf7a4c61",
+      "bytes": 4881
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/production-checks/sat-negative.log": {
+      "sha256": "98b93a862c58da0580d5969b1126d5f65798590675253050db0fbe29c9074be0",
+      "bytes": 1556
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/production-checks/sat.log": {
+      "sha256": "f5aac2cd60841e623a81a99fc9df779283e3640c72badac442b2c8fb954797d0",
+      "bytes": 119
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/production-checks/support-negative.log": {
+      "sha256": "1ccd83cb4607eb0735931cc019fd58421f709b923335aed3279ec62bb29a51f6",
+      "bytes": 29
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/production-checks/support.log": {
+      "sha256": "b032556259b6f8e6119faab9b1c8ba68f715c4c74d33c629b7892081976fc29d",
+      "bytes": 25
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/production-checks/timing.log": {
+      "sha256": "52d83a1b765180db902ea1ebd0332af4618925f9cb8da9a0356ea0644f206a9f",
+      "bytes": 43704
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/raw-compressed/contact-system-research/event-3470.json.gz": {
+      "sha256": "c10d1fc2942f7620813e8948b4fd335ad449715e2f4c5d246abf18a2aaf803df",
+      "bytes": 1547273
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/raw-compressed/event-topology-observer-v2/events.jsonl.gz": {
+      "sha256": "f86120752ff6be1f6727a1395263000349a944f86f02594f8d51168114dcea84",
+      "bytes": 295169
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/raw-compressed/event-topology-observer-v2/pair-trace.jsonl.gz": {
+      "sha256": "10670c977af10f0be2df379b062896aa8c8c501170fe34ae0369617ae372e047",
+      "bytes": 297601
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/raw-compressed/residual-observations-selected.jsonl.gz": {
+      "sha256": "55d725fee08dfd1f603df93135a1e620d02b8abdbb727df49da64cc7621278cb",
+      "bytes": 1323857
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/raw-compressed/runs/baseline-A2/live/profile-shutdown.json.gz": {
+      "sha256": "c5b48a753fb6c78040ceab2a3cebfb08fb7cb91545a0f030cffb1f37cc085c7d",
+      "bytes": 519720
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/raw-compressed/runs/combined-fastpaths-A1/live/profile-shutdown.json.gz": {
+      "sha256": "8da865b3555563c5304663a3f63a5ce0a7b9439a71f05b19a8fe26dbc03ef00b",
+      "bytes": 518187
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/raw-compressed/runs/combined-fastpaths-realtime-A1/live/profile-shutdown.json.gz": {
+      "sha256": "f16fce9fae864ab7197ff0bc8be3b6502915f77058874388c8c7eb39eba90934",
+      "bytes": 770617
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/baseline-A1/AS_RUN.json": {
+      "sha256": "458943d75cf75b2685b858a05b6ae34bcc78ae2df77478d2ad93bfbbb491578e",
+      "bytes": 635
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/baseline-A1/CONTEXT.json": {
+      "sha256": "0974e2af8c641a9dfeca7194d17d2a079b95e1a36c9e721526ca0187f8600ea4",
+      "bytes": 997
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/baseline-A1/RESULTS.json": {
+      "sha256": "e19b1866371ce0a71879ffb1d79876afc62033e256296e32d78818e727ad102f",
+      "bytes": 6111
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/baseline-A1/live/begins.csv": {
+      "sha256": "195f5ab5093d792a7cf407f10ddeaf62f5ee1efbf62452691bee5de2641549c8",
+      "bytes": 6973
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/baseline-A1/live/frames.csv": {
+      "sha256": "bfb9eb6d78af0ef7cfe8faad51db8ef8b0b367ccc2b373865be90328a6065f4c",
+      "bytes": 41728
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/baseline-A1/live/quality.json": {
+      "sha256": "2f61b5bf268411d39016f7e2353fd50f97e5817a962f817c0597d11c3f0026c3",
+      "bytes": 366
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/baseline-A1/live/steps.csv": {
+      "sha256": "94c74001351edca2cf89c507edd85601b2d2e2756ee84471795d9116dea30ac8",
+      "bytes": 41205
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/baseline-A1/run.log": {
+      "sha256": "dba92ee93b681ccba8f142ac25a9331e103aa3c2b5cdcac795f97b9b7865607d",
+      "bytes": 595
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/baseline-A1/rusage.log": {
+      "sha256": "4a347ac9f5db897be95f18f9f4d59ec13c9073eb269870980b87c43043c14db3",
+      "bytes": 1086
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/baseline-A2/AS_RUN.json": {
+      "sha256": "8263da8db14579ddd17fb1e6eb1456f5e9508e2d4b32e0eae9456556b55b8a1e",
+      "bytes": 639
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/baseline-A2/CONTEXT.json": {
+      "sha256": "82e2026cef11e4bd397f3cbc83dff42879d8e4403acdc2180fcd364b34c9e6b2",
+      "bytes": 1356
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/baseline-A2/RESULTS.json": {
+      "sha256": "f604ad1c76ef2f85d59c9e3b86239665b1f5f460789207919c6d4addf1c36bc5",
+      "bytes": 7169
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/baseline-A2/live/begins.csv": {
+      "sha256": "c32cd5f7b071bf9ea8ff32f7bf3871996ef77fe4c57e41bdca15e99656e674eb",
+      "bytes": 6982
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/baseline-A2/live/frames.csv": {
+      "sha256": "7f9161431bd20653ca3c9b7864acb96de9279da356fb62b0835e0a8cb15ab558",
+      "bytes": 41829
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/baseline-A2/live/quality.json": {
+      "sha256": "1cbb57428706a5799e7569ec9c8f61ca064cc3a5a520d4bffbb3b0b15f1864e7",
+      "bytes": 365
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/baseline-A2/live/steps.csv": {
+      "sha256": "efd7912a1b51c3907a0f2f913c7270ff36f25819ce8c5c3eb2eb13c1a8f8079c",
+      "bytes": 41295
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/baseline-A2/run.log": {
+      "sha256": "1ccb666f880f6d87fecdef0f0da238dcacec9b1a8699363ee72a87a06a77ea29",
+      "bytes": 593
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/baseline-A2/rusage.log": {
+      "sha256": "c00905d5eb1839a7bae31ca72347d22231698d5341cdb39c9f2597035fe33979",
+      "bytes": 1086
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/baseline-realtime-A1/AS_RUN.json": {
+      "sha256": "2f2c5d18a522170deae67aa7d2cedf6ee1bdfe76dbf2faae3c2506ca68442bf7",
+      "bytes": 641
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/baseline-realtime-A1/CONTEXT.json": {
+      "sha256": "cdef9d259f6dadafc45eb7f0ff9f71f21195544a77b26375900baab2899a2bca",
+      "bytes": 1359
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/baseline-realtime-A1/RESULTS.json": {
+      "sha256": "56f614ecbfa5797e98c4f62d98f69a0fed0f8bd718e0a673f84179c1c3970ad0",
+      "bytes": 7817
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/baseline-realtime-A1/live/begins.csv": {
+      "sha256": "bff343ef988626ef9b4d7468815a5b52f9dff447e67387c0dd527e9e3f565985",
+      "bytes": 1250
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/baseline-realtime-A1/live/frames.csv": {
+      "sha256": "58a8243271015c994d717947526e3ccea3ae1b47a23965fa275493c5d510a666",
+      "bytes": 7598
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/baseline-realtime-A1/live/quality.json": {
+      "sha256": "5273936e2adc78c7bf29df6214cfb9236eceb309ec8e28cda964fb17e09acb55",
+      "bytes": 366
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/baseline-realtime-A1/live/steps.csv": {
+      "sha256": "2ac70744c8e4e9bf75f9eadac84d4f8a52d295fe3cafb8c6b86ff014dee61efd",
+      "bytes": 44031
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/baseline-realtime-A1/run.log": {
+      "sha256": "2f418ddd3de777f55e59712d56e24208b59fa16112f3b7c90f030ad6d85be3cc",
+      "bytes": 586
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/baseline-realtime-A1/rusage.log": {
+      "sha256": "cbbfced5f93f699fac9eac1a008c8cb3d5b0bae0982178d7655c92f88aea7a69",
+      "bytes": 1089
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/baseline-unprofiled-A1/AS_RUN.json": {
+      "sha256": "8c33891fafe958a13e6fab92e4a64c1e5aedfe45cfabdc744e29b4f4dd937217",
+      "bytes": 650
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/baseline-unprofiled-A1/CONTEXT.json": {
+      "sha256": "cd6903206ff21d822da87ea197acea486dab68188e7352a94c70ca7459fc2686",
+      "bytes": 1356
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/baseline-unprofiled-A1/RESULTS.json": {
+      "sha256": "2f403fc0a07640706181687b18930d22586fcf9567cbabb06721e5c5d91baf44",
+      "bytes": 6923
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/baseline-unprofiled-A1/live/begins.csv": {
+      "sha256": "89acf412979105404c8adf106b645b36c6e526ddb7e5759f2a0577387fac607d",
+      "bytes": 6971
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/baseline-unprofiled-A1/live/frames.csv": {
+      "sha256": "2288285a6a74d794cb601477203e82a26d6bfce17b029c6fd3cdcfd7aea19b3d",
+      "bytes": 41732
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/baseline-unprofiled-A1/live/quality.json": {
+      "sha256": "40b701057fb16d2a16a9bdda3587865f1739269d55ed47ec665db2baa7e0a22f",
+      "bytes": 366
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/baseline-unprofiled-A1/live/steps.csv": {
+      "sha256": "ec14b91af7db1fdcac7e9bf20a62775fe624df4dc6fa90dd19cd4a15d351f6c5",
+      "bytes": 41210
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/baseline-unprofiled-A1/run.log": {
+      "sha256": "3f299b5afd6289da0f104df43b9f25f7749ff2e0dae21bb216a5545f57d77a8a",
+      "bytes": 595
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/baseline-unprofiled-A1/rusage.log": {
+      "sha256": "06a3da35d519e08a03806a2a626171bb50eeb0bca51bb727d7c1ae5df351784b",
+      "bytes": 1095
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/combined-fastpaths-A1/AS_RUN.json": {
+      "sha256": "7fbc478236215f953baaf2bab5ee07d28c44a1a073bb7533dcb261194256fcbd",
+      "bytes": 662
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/combined-fastpaths-A1/CONTEXT.json": {
+      "sha256": "837159e2db31aa6445fc5a7821a69784c684b958c8cf7ed7c43bfacd1971de2b",
+      "bytes": 1369
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/combined-fastpaths-A1/RESULTS.json": {
+      "sha256": "57e02a04ebcdf59d177a1cf27dbca674ed52c5c6a1315fc6c9b6c966f485991d",
+      "bytes": 7171
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/combined-fastpaths-A1/live/begins.csv": {
+      "sha256": "0c358c319807176cbec6284e1a8187c84f10622d7b352b078367ccebcb56105c",
+      "bytes": 6917
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/combined-fastpaths-A1/live/frames.csv": {
+      "sha256": "0bc2800eea94cc04d4dea684916ac50d31c900e495ccf0a0d899fa2eabaa5c81",
+      "bytes": 41507
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/combined-fastpaths-A1/live/quality.json": {
+      "sha256": "dbee25c34dfe5a9954c7573182fe9242be7175b185c757098b24e009ec915e25",
+      "bytes": 366
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/combined-fastpaths-A1/live/steps.csv": {
+      "sha256": "615f46a61af651ccf9f952d66500e94fe15b8bc4b76f9a2b2a0674fb6f2b5883",
+      "bytes": 41027
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/combined-fastpaths-A1/run.log": {
+      "sha256": "58acac8b773d1dfa8939059b88d0da9ea7ab3e625d448378e413b96a5134ed6b",
+      "bytes": 595
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/combined-fastpaths-A1/rusage.log": {
+      "sha256": "c77ed655b1609ecf9cad4589b3360e50401df65cfa6f9c063ceba9e39740de9f",
+      "bytes": 1109
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/combined-fastpaths-realtime-A1/AS_RUN.json": {
+      "sha256": "563a71e7ea81fe352ceec75cdf39960e93395e4973a58ba6689f08bf965b072a",
+      "bytes": 664
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/combined-fastpaths-realtime-A1/CONTEXT.json": {
+      "sha256": "d339922ae83a6142996729450819e2c8e88297f2c51749490d23764fedb8c1f4",
+      "bytes": 1372
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/combined-fastpaths-realtime-A1/RESULTS.json": {
+      "sha256": "917e512269c44440a36269e311cdbbb7d03887782fa0d6302bfecca1f31ce4b8",
+      "bytes": 8113
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/combined-fastpaths-realtime-A1/live/begins.csv": {
+      "sha256": "339931a2227cd1ed736a031ac430ad0de1e03296eaaa9ba5b55b38a51059cf4e",
+      "bytes": 1336
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/combined-fastpaths-realtime-A1/live/frames.csv": {
+      "sha256": "e94aa4150ac06c12f6537efcc2599cb4caa2899bd3d26c734c2b8e166b2c40a6",
+      "bytes": 8118
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/combined-fastpaths-realtime-A1/live/quality.json": {
+      "sha256": "91ce420e2c671c1c43f7b55a3635cb06228b7d9da3d13c04dcf8c9b241012d6e",
+      "bytes": 366
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/combined-fastpaths-realtime-A1/live/steps.csv": {
+      "sha256": "fe294291ec557c058dde224453d1862add2324f680e18b295396415786e80b10",
+      "bytes": 47292
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/combined-fastpaths-realtime-A1/run.log": {
+      "sha256": "a76fc93d36ecd414210e6a8c77643d8479b3f573c6bebf4bc1bcb25e2a5b711f",
+      "bytes": 586
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/combined-fastpaths-realtime-A1/rusage.log": {
+      "sha256": "24c250eb5ec5c8426cf9e6c281cac6c05370208d9dc945b4598e86faee7dabf1",
+      "bytes": 1112
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/combined-fastpaths-unprofiled-A1/AS_RUN.json": {
+      "sha256": "9beffec158f430ee728dabb70424a40ca582e26eb57c82ca7940ae7dc4499620",
+      "bytes": 673
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/combined-fastpaths-unprofiled-A1/CONTEXT.json": {
+      "sha256": "6ef7bea7f7a43aa7186dd22256d745867bcabd2b55e2b81a9f975d40ad709308",
+      "bytes": 1369
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/combined-fastpaths-unprofiled-A1/RESULTS.json": {
+      "sha256": "2ddf3ee4e7336d633763d3d18e31ded96f24cdfd91d4967aa7b8ae7a6f1a9f83",
+      "bytes": 6965
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/combined-fastpaths-unprofiled-A1/live/begins.csv": {
+      "sha256": "cecafad18cf51bb9e4101f3648cf019559ebf8a79bfadd453e5df08aec38c8ab",
+      "bytes": 6900
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/combined-fastpaths-unprofiled-A1/live/frames.csv": {
+      "sha256": "b8f1bce59816edddf12b49485c3ce41d1b77e487a87a2fa7169f7a7d158f1ab1",
+      "bytes": 41411
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/combined-fastpaths-unprofiled-A1/live/quality.json": {
+      "sha256": "b82b39b9f274a5d25327b3607af340823560de5868991fdf20d00956195ab5b1",
+      "bytes": 366
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/combined-fastpaths-unprofiled-A1/live/steps.csv": {
+      "sha256": "550a1811259091fc098b36743438e003196cfd46c7087da7e6e7bbff66bae670",
+      "bytes": 40963
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/combined-fastpaths-unprofiled-A1/run.log": {
+      "sha256": "acabac31a87500a944837a22f4835b18ac71247170e76c5f39b47c5d063e35d3",
+      "bytes": 595
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/combined-fastpaths-unprofiled-A1/rusage.log": {
+      "sha256": "4c5e63864f8dfb9231c2c499bb49e5c8f93ad1efd69c0dfa3bd04598b342dea7",
+      "bytes": 1118
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/continuous-toi-A1/AS_RUN.json": {
+      "sha256": "66d1f0c0db08fe7514477d111e0d58efd1a0f9726317c184e466696ca63bd2e4",
+      "bytes": 666
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/continuous-toi-A1/CONTEXT.json": {
+      "sha256": "7c624d82af5deece9537cd2b5543779dfca0193e297d90b12ee1b92c9c32c2c9",
+      "bytes": 1377
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/continuous-toi-A1/RESULTS.json": {
+      "sha256": "ffc354be1aeb3a7b111656cc6bb848ea7a386a77b65cb6c0448c50a58e60f0fe",
+      "bytes": 7216
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/continuous-toi-A1/live/begins.csv": {
+      "sha256": "dcd78226fd0c15a8ad4676c75fab61a234e46547df325fdd8d2d82f1ec2428cd",
+      "bytes": 6972
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/continuous-toi-A1/live/frames.csv": {
+      "sha256": "32103489b7a3edb22300a4081cec0a20e5f86cd1f26ac3d213c442a4520421e3",
+      "bytes": 41760
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/continuous-toi-A1/live/quality.json": {
+      "sha256": "1c6fa29d3874e5a3645894c98e30d87072813201f3a2e1dbcbd770535b58f810",
+      "bytes": 365
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/continuous-toi-A1/live/steps.csv": {
+      "sha256": "d327e2709fcd7abb91297b483235f4bad1cc471e2a62478612accd099504f80a",
+      "bytes": 41245
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/continuous-toi-A1/live/temporal-quality.csv": {
+      "sha256": "66d7edc6e0d92b48ff0a7871c3216a064218427ab4d0462f948eec1776e09142",
+      "bytes": 41553
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/continuous-toi-A1/run.log": {
+      "sha256": "ef2a8d3539471d60bc5d55cc2bd75878a50302ee96cf66e42b265757756d284a",
+      "bytes": 595
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/continuous-toi-A1/rusage.log": {
+      "sha256": "3da59acf9ce862452d7c08b3dbe2e066b5a8107f7885fe4d94abc61d8f3391f3",
+      "bytes": 1113
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/event-topology-A1/AS_RUN.json": {
+      "sha256": "b8b0fb22b4b48ba7ba7f2bfbdaef0e5d7891c0ac04b817b65930a05efcba7446",
+      "bytes": 663
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/event-topology-A1/CONTEXT.json": {
+      "sha256": "e9ef0c1469c8053d6552da59358f85b0623bfe987cfa119c6844d1930770fb6d",
+      "bytes": 1374
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/event-topology-A1/RESULTS.json": {
+      "sha256": "b6d88efba98d134cd7e0a200f5e6563af47151458e28d0bfbb16a058c16c22c9",
+      "bytes": 7230
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/event-topology-A1/live/begins.csv": {
+      "sha256": "04063b0d8fe797baa7a2aa07834ce67ffeffafd9f93e9d5582cdea4a82a3a8f4",
+      "bytes": 6952
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/event-topology-A1/live/frames.csv": {
+      "sha256": "91053a0599321f4b163b5d38d139d1938711edee4b7cc89f7678bf24c50c9024",
+      "bytes": 41664
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/event-topology-A1/live/quality.json": {
+      "sha256": "e4af74522384401f76e0e7b16d16a25edd111a594436e8c36a20667a45c47e1f",
+      "bytes": 366
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/event-topology-A1/live/steps.csv": {
+      "sha256": "191e0cfc4128b5f0972984796b69587763920cae9e87f00ca809b830c8be8a86",
+      "bytes": 41165
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/event-topology-A1/run.log": {
+      "sha256": "2daf8fb0c624955201bad38c441733c0fd14213e3a58dcb108c0f220b1457a2e",
+      "bytes": 595
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/event-topology-A1/rusage.log": {
+      "sha256": "bf869dc2855bc977138f6ed497921c377e583687523949554036ca3392206955",
+      "bytes": 1110
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/event-topology-v2-A1/AS_RUN.json": {
+      "sha256": "cda2c000c80ca5fce2eba69a9c80c315bbeb5f3fd0ad08232efe2db1ca74c65f",
+      "bytes": 669
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/event-topology-v2-A1/CONTEXT.json": {
+      "sha256": "05d582e4c4cc436e370c7477582f18659c3f95292169aa7b2f8eef30a3c08be7",
+      "bytes": 1377
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/event-topology-v2-A1/RESULTS.json": {
+      "sha256": "2acb836673d6d34b5c911a942381b8852490cc17fe192df555a3346941d4173d",
+      "bytes": 7237
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/event-topology-v2-A1/live/begins.csv": {
+      "sha256": "4a2bd9ab04753d122664e2918cd2bb469ec22efa39c15cccdea3b2c63b1246da",
+      "bytes": 6976
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/event-topology-v2-A1/live/frames.csv": {
+      "sha256": "b39aa70e586ced0d233b2adcbac4f1a6d1117dc64d5b0028784de1f37a72d96f",
+      "bytes": 41688
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/event-topology-v2-A1/live/quality.json": {
+      "sha256": "dbb89d6dafe63099d3d83b7ae0e089df148986b117f68ecb52e79664fdcd03fc",
+      "bytes": 366
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/event-topology-v2-A1/live/steps.csv": {
+      "sha256": "d0fc890720ea3d3f398cf3d0774285cf305564430ef768e8fe9255ae157ffb9a",
+      "bytes": 41173
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/event-topology-v2-A1/run.log": {
+      "sha256": "dcb50c6a371f618e742ac5bcbc464aff25310b8a923607199e247b8766664427",
+      "bytes": 595
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/event-topology-v2-A1/rusage.log": {
+      "sha256": "a7fe6b9029b8cad4917308d7241a1cf53ac567dd9b99ce03c46e244be1aa3933",
+      "bytes": 1117
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/filtered-v2-A1/AS_RUN.json": {
+      "sha256": "39221398180db48882898776967eb5318a41e7cacefa6ba78ade0013239e1382",
+      "bytes": 647
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/filtered-v2-A1/CONTEXT.json": {
+      "sha256": "c3d9bc4a4b22736f80a0afb9de7c058078195fefa7ba1b3785628d26e84f486c",
+      "bytes": 1006
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/filtered-v2-A1/RESULTS.json": {
+      "sha256": "e6524e562fe1c43ff23f8a613b6509d5ecb3651c2f747b90fd4dd2f9cff94ba8",
+      "bytes": 2490
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/filtered-v2-A1/run.log": {
+      "sha256": "8439363cc1212e3bbc80e570db89312df5cc4263d32e533a14643732268261a6",
+      "bytes": 47
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/filtered-v2-A1/rusage.log": {
+      "sha256": "7d666143885c6912da9f7523c1f4005ed3b3408db778c3f5378a50332a7b8a41",
+      "bytes": 1121
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/filtered-v2-comparison.json": {
+      "sha256": "508f6661a907c3146e6af6ff711992ddb88bf0d8b3618855ddec612ba385f6d5",
+      "bytes": 2110
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/filtered-v2-live-A1/AS_RUN.json": {
+      "sha256": "0f30d5cb634ba51f323990c13088ac35b67aff83ae67763be276d71aedb56c6e",
+      "bytes": 657
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/filtered-v2-live-A1/CONTEXT.json": {
+      "sha256": "ee092e9d4b7f5d36f4c6f25caf75ef95151e68157fe5475f2d001a8c9148fae5",
+      "bytes": 1011
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/filtered-v2-live-A1/RESULTS.json": {
+      "sha256": "d3141f318f9d9123adec81ccd71ef2e65a9e1f4e41d042acc166df896288ec6e",
+      "bytes": 6151
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/filtered-v2-live-A1/live/begins.csv": {
+      "sha256": "b5d531a7527e94ddec3a1c17dd15dad037fb564a1e2726c25dbb81fc3455c614",
+      "bytes": 6930
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/filtered-v2-live-A1/live/frames.csv": {
+      "sha256": "15680bc76899d41c60872c5d8d057eb344ea14b73c390297e33d598efb3e511e",
+      "bytes": 41579
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/filtered-v2-live-A1/live/quality.json": {
+      "sha256": "45cbe4c27ef3f00e949ef1b998dc015588af98a764858782883366f321d0b4ae",
+      "bytes": 366
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/filtered-v2-live-A1/live/steps.csv": {
+      "sha256": "13dc11fb27622566cdd435584db84b0f8fde55451fa8aa24e6466e82734f9db7",
+      "bytes": 41077
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/filtered-v2-live-A1/run.log": {
+      "sha256": "e2c5fd76d6ece6f7a9f554fb5c25ce9e69ea00f5132e38cdd5472c73c1808824",
+      "bytes": 593
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/filtered-v2-live-A1/rusage.log": {
+      "sha256": "00c5419fd844272ddc7284e336d86a9dbfb3a56c76451e6967f8d8950884c91a",
+      "bytes": 1106
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/fma-v2-A1/AS_RUN.json": {
+      "sha256": "c36e3a32c830e0f73f397dbafa1ac0f9b83a7361381120bb1b4177c065a7930a",
+      "bytes": 639
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/fma-v2-A1/CONTEXT.json": {
+      "sha256": "02dc818e8f20bcea266d3a1d0ef8d7fdf4b005bd5db136b46e65e55919520f1e",
+      "bytes": 1358
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/fma-v2-A1/RESULTS.json": {
+      "sha256": "bd2a11c98238d7836bcdee9f604784e89447dee1edec0115a6573135fb7a010c",
+      "bytes": 7174
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/fma-v2-A1/live/begins.csv": {
+      "sha256": "614abb90f1eb52e619dfee9997da3866cc148841455e09fcca0ca5de9130f3f4",
+      "bytes": 6925
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/fma-v2-A1/live/frames.csv": {
+      "sha256": "aabd8e53c0c0df956add0332b1bd66e1905c3a3c941292efb35800d3c21f4057",
+      "bytes": 41549
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/fma-v2-A1/live/quality.json": {
+      "sha256": "071ea81faa1b5a6fcfeed0fb50f49c4eb5258448dee0f95669c160207d1766dc",
+      "bytes": 366
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/fma-v2-A1/live/steps.csv": {
+      "sha256": "9cd3641eef3bc9661b99490d55094071c1aeff17a51dbb932f0af00474e90fc6",
+      "bytes": 41050
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/fma-v2-A1/run.log": {
+      "sha256": "1bf6d4229f86660a9f609f72242207b43cd8bc8a70537ffd3f5bdf38712349ac",
+      "bytes": 595
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/fma-v2-A1/rusage.log": {
+      "sha256": "b2c576ccfa1bfc2502badacae695b6f7f525122fb051835b70a680aae3c04b97",
+      "bytes": 1086
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/isotropic-A1/AS_RUN.json": {
+      "sha256": "7670ef38f59e98b59b7179de462c5379486be7e44e3a2ca2aa753097ce61e675",
+      "bytes": 643
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/isotropic-A1/CONTEXT.json": {
+      "sha256": "800fe10bd72c225e39fc4b1f2d76c8b231c429650aff8ae6bb5bda013ea54f5e",
+      "bytes": 1004
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/isotropic-A1/RESULTS.json": {
+      "sha256": "b719cfe55b0519a1ff7da7b6fb806e9ffcdbc52e7d1b06d59d332a3d29e991db",
+      "bytes": 6127
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/isotropic-A1/live/begins.csv": {
+      "sha256": "a4d87a722d980f16a76dc61e893af2e0012b9a17e6b171602a06f1c9ede793d9",
+      "bytes": 6964
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/isotropic-A1/live/frames.csv": {
+      "sha256": "009d9c220aa1a5a4890243cc1fe4802a328b3c75ae4c3c5e017558016f41a800",
+      "bytes": 41674
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/isotropic-A1/live/quality.json": {
+      "sha256": "6a9a56d50f7e6bb23fafe25dbff39fea7e39a5d628bf1ccd316ca310577a55a3",
+      "bytes": 366
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/isotropic-A1/live/steps.csv": {
+      "sha256": "97e1f872756b714c2885b6ece9c07f859723e2c9fd0cf5d2796df27652da838e",
+      "bytes": 41162
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/isotropic-A1/run.log": {
+      "sha256": "91c68155184ffe1d7eaca82f7f4a466faf44c1ad07c07862ead10a346af5a7b3",
+      "bytes": 595
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/isotropic-A1/rusage.log": {
+      "sha256": "a24efba3cb84eb5ffcab687e8ef77167e26511f60bbe6ab2912bc564054c4c30",
+      "bytes": 1092
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/order-A1/AS_RUN.json": {
+      "sha256": "c19d22bac0cd3afd61b55ff9309eb98322d8f2710bea4ee32471eec078e362a1",
+      "bytes": 635
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/order-A1/CONTEXT.json": {
+      "sha256": "03aa9375b4def3684caf7297eb86e0e1329b3dc30766cb261839c0064fee0ae5",
+      "bytes": 1000
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/order-A1/RESULTS.json": {
+      "sha256": "60f76aca10fb2183b2e3c4032070d53e2053095976da4bd3c053af5123238ff6",
+      "bytes": 5093
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/order-A1/live/begins.csv": {
+      "sha256": "b3f2fc88e399b74be2709b02918ef2cf764b2fa26878b1e5a32dadb908f1fc82",
+      "bytes": 4700
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/order-A1/live/frames.csv": {
+      "sha256": "f6764d7aee8f4692e802e9d84382e609899161a31e39cf29e5bf0a45e84b15b5",
+      "bytes": 28018
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/order-A1/live/quality.json": {
+      "sha256": "28a4736f01a7a316f76643ccafc88943b640e74444c9398805ab2f22702c79cb",
+      "bytes": 366
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/order-A1/live/steps.csv": {
+      "sha256": "6724d71de5f61c76731a6349e4bf8e042c1d93205e9fbb45763a7d39c337617d",
+      "bytes": 27860
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/order-A1/run.log": {
+      "sha256": "177c1c95b4bc0f0b5ab0ab970b11eda2cb7e6406497497e16003f4e2cb3afeb2",
+      "bytes": 593
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/order-A1/rusage.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/parallel-A1-comparison.json": {
+      "sha256": "f24a24daad82b622380e2a05d6169f78a964026eb606dc085583699dcce32bfc",
+      "bytes": 14063
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/parallel-A1/AS_RUN.json": {
+      "sha256": "c00812388193559717b33c9ae5f58ef45bbe8cb8b76217356fe3b3af341263d3",
+      "bytes": 645
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/parallel-A1/CONTEXT.json": {
+      "sha256": "a8d67a18fea9cb1ad4c6eadb5f60f7c3a912ba134fc7c337cc50fb384bcc7f71",
+      "bytes": 1007
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/parallel-A1/RESULTS.json": {
+      "sha256": "7464f0b28c5e124891ee73ca88710582fd5475a25c7a89232a9697aa1dd719fe",
+      "bytes": 6128
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/parallel-A1/live/begins.csv": {
+      "sha256": "c0d9d32bf9e31f8059a1e370033ff95bd33322c5bd19778e8f2c4327dfae5dc6",
+      "bytes": 6946
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/parallel-A1/live/frames.csv": {
+      "sha256": "c2df8ab1b268064ae80682baaee4148ca0a7adb6b0bc20a4320bb0200ead0028",
+      "bytes": 41674
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/parallel-A1/live/quality.json": {
+      "sha256": "ce4e9b11d1276509946458bab981a453c845fcce3dd41f64c19f9a710de4665a",
+      "bytes": 366
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/parallel-A1/live/steps.csv": {
+      "sha256": "5f2d470ba8c3fb1c96136a848621f82b23d06c6d8effaecc3821d2bc319f21e1",
+      "bytes": 41151
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/parallel-A1/run.log": {
+      "sha256": "3e2750e47faef95486f14a0148aaadb242756d04a0a105ce7128b6ce848856fe",
+      "bytes": 595
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/parallel-A1/rusage.log": {
+      "sha256": "64180a8b8ed874014f8964601cd1f3469441d59b3df696c743005ccd5ce33740",
+      "bytes": 1095
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/parallel-frontier-A1/AS_RUN.json": {
+      "sha256": "19c65ecc740582b756d084047524218edc7c1d686aa54106d640cd66bf25d91a",
+      "bytes": 661
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/parallel-frontier-A1/CONTEXT.json": {
+      "sha256": "14e51267a0d64593c569f4a9d1ea74a27c131ccdd938dd25f3b3d60706247db1",
+      "bytes": 1369
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/parallel-frontier-A1/RESULTS.json": {
+      "sha256": "3850ba5e3ecb79bdb22c5ac05265be5012907939ae743b175a1a31d0f6013258",
+      "bytes": 7184
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/parallel-frontier-A1/live/begins.csv": {
+      "sha256": "291677785d7e3498f2135a79b2effbf968cc9856288505a98577f5cb2fb119ff",
+      "bytes": 6956
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/parallel-frontier-A1/live/frames.csv": {
+      "sha256": "527f091fefd713afcd8ff4aab06da84eba6322aec33eebea1005ae71378d7194",
+      "bytes": 41758
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/parallel-frontier-A1/live/quality.json": {
+      "sha256": "9e08e86e472c3ae7b3f965e71c2d8b0cc2a3d32b25624ad97bb916d20ec8f323",
+      "bytes": 366
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/parallel-frontier-A1/live/steps.csv": {
+      "sha256": "892685088042691f8150f053413d29e9041359070cb90c3571364e27f546c74e",
+      "bytes": 41224
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/parallel-frontier-A1/run.log": {
+      "sha256": "7be5333ffe0e36e18543fb276d25959ed433f181ddf116ce53416a004e12d26c",
+      "bytes": 595
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/parallel-frontier-A1/rusage.log": {
+      "sha256": "5999ec45dd4bda9185c461bf49c72c07c93af8fed6c2bcabd1877d677e60119e",
+      "bytes": 1110
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/parallel-v2-A1/AS_RUN.json": {
+      "sha256": "36536ff2354c168e6705290d3a724dad3ee65c0aa5886bc1b6c7716566582836",
+      "bytes": 651
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/parallel-v2-A1/CONTEXT.json": {
+      "sha256": "83a850d69fff6d28444364614b32b2486467406ed3afa86721fa99852ac8ef6a",
+      "bytes": 1010
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/parallel-v2-A1/RESULTS.json": {
+      "sha256": "1673869af77469a688a9600b15534bd9846af6d6bfba03ad8409919edff3bd8c",
+      "bytes": 6140
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/parallel-v2-A1/live/begins.csv": {
+      "sha256": "f66c24976f75bcdc60df1d9cc2cd7818f670dedb5507ecb4324b7c9af96f4f85",
+      "bytes": 6937
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/parallel-v2-A1/live/frames.csv": {
+      "sha256": "ee4ae69a87697a6ea4a82c58a7c1bbe1b4a3db77cef7c22bc95a9b7c95c5877d",
+      "bytes": 41648
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/parallel-v2-A1/live/quality.json": {
+      "sha256": "111e1a361d95fe40a988fb347b2638520c335694685f2317a81671cac2ba2103",
+      "bytes": 366
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/parallel-v2-A1/live/steps.csv": {
+      "sha256": "ed7f3ba765455fe01a10084eca20cba4346cda39b76eaf8952216f5561a9df98",
+      "bytes": 41139
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/parallel-v2-A1/run.log": {
+      "sha256": "416245cd5c97922b5181ac063def6ca7611ddf0fdc734cdffa572427ec6153dc",
+      "bytes": 595
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/parallel-v2-A1/rusage.log": {
+      "sha256": "72295d35a2e5f987bedb8d42fdf7946e1d42a33ed5a7d5314223bdb3e4bdf187",
+      "bytes": 1100
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/phases-A1/AS_RUN.json": {
+      "sha256": "808fe972b74be9fb07ca63df27298f1fc368d3dfb20c6cc5faeb98b70797205f",
+      "bytes": 643
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/phases-A1/CONTEXT.json": {
+      "sha256": "48900a783c752474075cfcfafb137686f795205ff05b8df16d782aa28679826e",
+      "bytes": 1007
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/phases-A1/RESULTS.json": {
+      "sha256": "56d66181e2b24eb494fa7100545e196c5cf3c8434442a7249bb73740bce627ec",
+      "bytes": 6113
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/phases-A1/live/begins.csv": {
+      "sha256": "d5077b443632bc345a00a95aa1703beda52841b74fa5156ae5c50a7761935076",
+      "bytes": 6952
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/phases-A1/live/frames.csv": {
+      "sha256": "c59b362d25c6964d1a0e62362ac5c2085fea4a37115770f7fe9ed669b1852b1b",
+      "bytes": 41660
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/phases-A1/live/quality.json": {
+      "sha256": "f64b3188ed1750e9e38a5cab40dd2e5dd963a2bf68a3defbcf82c0db5371a9eb",
+      "bytes": 366
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/phases-A1/live/steps.csv": {
+      "sha256": "d4af9e9b23a4b5648816ec074a1c9b00c152b53f449016947eeaf27f01ab3379",
+      "bytes": 41164
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/phases-A1/run.log": {
+      "sha256": "cd5ac9b4389e21c5bbb85e42cef9a046b9167b17b1ad05acb7c38a6344d8ade8",
+      "bytes": 595
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/phases-A1/rusage.log": {
+      "sha256": "9784cddf7c503d8445c72ad96c0f257520a776ca571da95d007ed66092242643",
+      "bytes": 1092
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/production-v2-support-A1/AS_RUN.json": {
+      "sha256": "b0fe5b7ae4881756041cacfd131a58c3630f2308713820c0a83ea66e2681c1c3",
+      "bytes": 669
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/production-v2-support-A1/CONTEXT.json": {
+      "sha256": "44d645ea7f6ebe968a22d2e8ad565d21dcd50dfcc3e81f6628cbbbe0518c0399",
+      "bytes": 1016
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/production-v2-support-A1/RESULTS.json": {
+      "sha256": "f3c9874c6cbb8d3ba1da810d15d5c813676b7fe2939cf89bbe3cf573937074b3",
+      "bytes": 6177
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/production-v2-support-A1/live/begins.csv": {
+      "sha256": "c6eae5c563889b160e89161e0dda46b1d86b2fc2a04eddc51bb0e42e7ffca674",
+      "bytes": 6944
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/production-v2-support-A1/live/frames.csv": {
+      "sha256": "d729ba0d707135d32ac0b1ebce6d0ebe891b4f9960a0e57898ab656f3e9f1445",
+      "bytes": 41521
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/production-v2-support-A1/live/quality.json": {
+      "sha256": "5cbd7bcf4097b077d4a46e0fc34c286a1a3084939a83c3199ce9aa0704d514ca",
+      "bytes": 366
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/production-v2-support-A1/live/steps.csv": {
+      "sha256": "276b32ae76b24aeb32452bbe595ef7d26970790ec3758db87db8016347ff0eca",
+      "bytes": 41022
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/production-v2-support-A1/run.log": {
+      "sha256": "b1e3a6b59ccec5a234ccd29375c82a927d00bf96bd083e9b75d3759186612647",
+      "bytes": 593
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/production-v2-support-A1/rusage.log": {
+      "sha256": "f4271262c4df167133b850acaa977d068e0ce04378b034e089f50ff38040cd72",
+      "bytes": 1116
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/quality-capture-A1/AS_RUN.json": {
+      "sha256": "7843deb986056fc0c6d41a234c2d43f20d1ccf20aefa77e7403d5b63a494fbd2",
+      "bytes": 655
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/quality-capture-A1/CONTEXT.json": {
+      "sha256": "cd55b00729277201737c32186c6b4dbb2915f2444abf54d02eae86260c003af7",
+      "bytes": 1010
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/quality-capture-A1/RESULTS.json": {
+      "sha256": "80bd180ed84b4da6cf705260c39d505677348d30386c75ca17770f2ba6a53a87",
+      "bytes": 6146
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/quality-capture-A1/TEMPORAL_ANALYSIS.json": {
+      "sha256": "786d1872d6b171581d52f83a7333a5f863b351a62d98bea2894e17a299afaa32",
+      "bytes": 2186
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/quality-capture-A1/live/begins.csv": {
+      "sha256": "869f427d947f3740c02d0c9e08324f83e12c4d7459cb023501b696e46275a112",
+      "bytes": 6971
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/quality-capture-A1/live/frames.csv": {
+      "sha256": "50964aa84b7dcd79410db32d62571c4ba12e04a69b1acde992b00c64bec7e686",
+      "bytes": 41662
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/quality-capture-A1/live/quality.json": {
+      "sha256": "fb7fc57dc4e4a151c293e8240befd2f1de7a4029e149c36cb8d2318bdaccbb73",
+      "bytes": 366
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/quality-capture-A1/live/steps.csv": {
+      "sha256": "8f14e76931ece2f95b5f5587e3c5de725437f82d443ce071aa7ab76cca8e90c3",
+      "bytes": 41157
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/quality-capture-A1/live/temporal-quality.csv": {
+      "sha256": "3dea81ea3b417e8015ac71bb767172d709bcf47aca9dd86a35f3d771808bc5aa",
+      "bytes": 41532
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/quality-capture-A1/run.log": {
+      "sha256": "4dddc37dd241c8cba10cf64c8076ec227fb81a6c8b95f50bf8923e611db0b059",
+      "bytes": 595
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/quality-capture-A1/rusage.log": {
+      "sha256": "9a338e6d3075b406012b7faf085ccaebb92dd6c01a0eaa8f6aedf220491a13b3",
+      "bytes": 1105
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/quality-capture-comparison.json": {
+      "sha256": "1b102cdaca7c1f0f3a13b7203d57eb55dfe1df4b97f17f0b93edd495af93196d",
+      "bytes": 2098
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/residual-observer-comparison.json": {
+      "sha256": "d097983c1badfcd58ba23898a5229f2c53619b134f6ac3478a991189394bc6ee",
+      "bytes": 2121
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/residual-observer/AS_RUN.json": {
+      "sha256": "b929e15484ac0ce877b3ec1db74c275722430733ee54ae3de66ae092fe8dc3d0",
+      "bytes": 656
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/residual-observer/CONTEXT.json": {
+      "sha256": "cd7651290141a5ed3de89342a4bc6fc4cf5ff8129d352e0070e0c0c90407ca34",
+      "bytes": 1012
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/residual-observer/RESULTS.json": {
+      "sha256": "3e8e272e235cfc2a7905e636245d29b9257f32ddcee0c519d2be5b5892bca1e4",
+      "bytes": 6152
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/residual-observer/live/begins.csv": {
+      "sha256": "06ffd95fb0c39d9bbd238ddf3e6b1cbbf8d6ff63cf7a0aa5c7e0b24251856029",
+      "bytes": 6982
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/residual-observer/live/frames.csv": {
+      "sha256": "6f28f5a076f4694043c4bd3d2c733ecf0d2bb4ea862bf8f3937d4720ae798e96",
+      "bytes": 41757
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/residual-observer/live/quality.json": {
+      "sha256": "16332d8a4e3b2ad90604a948027485b3f6f409a2eece7efcb88273829ca2b72b",
+      "bytes": 366
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/residual-observer/live/steps.csv": {
+      "sha256": "ac89d644c46a7876a8e219be9216ff44966ab3ab252d9130209dfc8a09f0bb7d",
+      "bytes": 41231
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/residual-observer/run.log": {
+      "sha256": "f395c796732ba36327bf493a9bee4bc31e47f4bcbef452e4f16a6f9d06389392",
+      "bytes": 595
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/residual-observer/rusage.log": {
+      "sha256": "54134af808cbb5a7716df3b992efd1c824feb51d0ed86a650c32e297bf9d931b",
+      "bytes": 1105
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/sphere-filter-A1/AS_RUN.json": {
+      "sha256": "1895313f9bc14135ee53270f7b9b9bc2fe1c3af2141bd5cf1bbf438ab372a552",
+      "bytes": 653
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/sphere-filter-A1/CONTEXT.json": {
+      "sha256": "f9939b0a7a1605cce7f33bd54230843b59727a46874ba04862d11ee848979548",
+      "bytes": 1365
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/sphere-filter-A1/RESULTS.json": {
+      "sha256": "544be369fe7bf4f078c5c6e4f4659d8d9fa5e0b077b651cc14a5be618aa10d79",
+      "bytes": 7144
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/sphere-filter-A1/live/begins.csv": {
+      "sha256": "086818620966b6b8d699e0fa20e2cc3cfa9e084d1b59cb7e65aa3e20c686f986",
+      "bytes": 6922
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/sphere-filter-A1/live/frames.csv": {
+      "sha256": "6a99ffe0b03e69b8a6566216235e0686ba361d61869d86bc2dca71d628c3bedb",
+      "bytes": 41490
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/sphere-filter-A1/live/quality.json": {
+      "sha256": "f682942c335f50055d1757fecbab663750d1cf5ba74e410fcf2ebfb2545e42ba",
+      "bytes": 366
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/sphere-filter-A1/live/steps.csv": {
+      "sha256": "d8125c492c192292be08e5f5d4edf08ec7ea128a8483e41b4baa2865973a1e49",
+      "bytes": 41015
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/sphere-filter-A1/run.log": {
+      "sha256": "bd5f87daa1f868a9c9404136a151ff548c8484a0cd6a501354add71e20cd1aed",
+      "bytes": 595
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/sphere-filter-A1/rusage.log": {
+      "sha256": "2b773b31dac6ac984054ae213e2a6010b34cc47ed5ec014326c9e12fa2234d5b",
+      "bytes": 1100
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/support-batched-A1/AS_RUN.json": {
+      "sha256": "1690217cca56ba17774150dfb3d30ff9e8fe127a8f26dec34be95a9f7f036f21",
+      "bytes": 655
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/support-batched-A1/CONTEXT.json": {
+      "sha256": "4493b3e1cdbe5aa0788434235ebaec8c1444326e38a874f109218358f4ae1256",
+      "bytes": 1010
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/support-batched-A1/RESULTS.json": {
+      "sha256": "5ede199eb18848b227b47fff7789c6dd2a910572a3024e8ec0b9c38720a08d15",
+      "bytes": 6144
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/support-batched-A1/live/begins.csv": {
+      "sha256": "774e611543c29bd0ed001c4b68e0c65dd85134c57ed800564887cd01aeaf0fcb",
+      "bytes": 6959
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/support-batched-A1/live/frames.csv": {
+      "sha256": "c227fe53148bd0a9fc5a7052523aaf479799ce2c8956ae761e3b4dc584c975ca",
+      "bytes": 41671
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/support-batched-A1/live/quality.json": {
+      "sha256": "70b7b64ed804108b8bb179e879a36c2d6ba5fb0b7c6db923f77d1e0fe5123539",
+      "bytes": 366
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/support-batched-A1/live/steps.csv": {
+      "sha256": "5dbe6c8495ce3b19fba412b61b342320bb4cf8eb8aa2c20796b7a0d2faeff3e4",
+      "bytes": 41164
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/support-batched-A1/run.log": {
+      "sha256": "f74ed0c459c31cb01181382ebff3440f6725c04aee27e3e5c261629670306a15",
+      "bytes": 595
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/support-batched-A1/rusage.log": {
+      "sha256": "b206e32fda5d8f40623f9bea9a98fade0c9f0fdecb99211a8620e42833aa6997",
+      "bytes": 1104
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/support-batched-comparison.json": {
+      "sha256": "ebf43faa10f7b27bf520aee95329278be67094d18fff5bb3c9f5a78d07afeccc",
+      "bytes": 2092
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/support-timed-A1/AS_RUN.json": {
+      "sha256": "0ce9341a27e5345732626c9dab0a47f54bab9a6838ce5d975374b7689a1367e9",
+      "bytes": 651
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/support-timed-A1/CONTEXT.json": {
+      "sha256": "f8639b7cddeacf1a508b549ab8eaaf51a7f638a57fbc2b0984d0dd7d1a60c062",
+      "bytes": 1008
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/support-timed-A1/RESULTS.json": {
+      "sha256": "c3767f04923d814b34e868aad4d9e9b5e9447661c458dd7e7c0887e740d68f0e",
+      "bytes": 6154
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/support-timed-A1/live/begins.csv": {
+      "sha256": "b926f4d54060b94e92762ba53b4c92dd3afdcc7bad29f76f317dc79937e35d6d",
+      "bytes": 6945
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/support-timed-A1/live/frames.csv": {
+      "sha256": "1b6664590ac5a28b6bd5739acdea550cdf76d589b7d2aebf4cfe57b19158078b",
+      "bytes": 41682
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/support-timed-A1/live/quality.json": {
+      "sha256": "d1abc35f06ee6282b9ba07c631d55eeeaf6a995d0c86b8e90b86541f9b34be1d",
+      "bytes": 366
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/support-timed-A1/live/steps.csv": {
+      "sha256": "eefcbaeeafb650e1c45f1774e512194f9dc37034a79750542106815be4832afb",
+      "bytes": 41153
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/support-timed-A1/run.log": {
+      "sha256": "9c2d7ac2aef7c7f6e7159781f8bde787aa8e4cc0758eac12ac816e8e04cc767b",
+      "bytes": 595
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/support-timed-A1/rusage.log": {
+      "sha256": "d80568462bb66ed337e5e1e5dfc780625821e1c61ae7c70c5bef0b58e867c9a8",
+      "bytes": 1100
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/warm-force-A1/AS_RUN.json": {
+      "sha256": "4c995f8d633bf05134f0ef3d846d319bd566c377822df55173f111f1746bb695",
+      "bytes": 657
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/warm-force-A1/CONTEXT.json": {
+      "sha256": "54f3d24536f815b705dea6e2bac51f9f6e4ed287ae4923292d2a9ab5f5118860",
+      "bytes": 1372
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/warm-force-A1/RESULTS.json": {
+      "sha256": "1f84e7c04bb61b1540a4cb9f94700c49388bf33ce021ea67b2c73a23b0109bf2",
+      "bytes": 7191
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/warm-force-A1/live/begins.csv": {
+      "sha256": "250f59850ee775c9a844e2d56b66b1aea1ff1b0400a5aa2af680a030fac034fe",
+      "bytes": 7032
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/warm-force-A1/live/frames.csv": {
+      "sha256": "4dce7b2599c25da57f6aaeae2dc9c9c8a0adb5cc25049170333514ab5808454c",
+      "bytes": 41912
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/warm-force-A1/live/quality.json": {
+      "sha256": "9f886dc6f69cf8342c3b4435875723092e222e695191d7e499c85d3e67165216",
+      "bytes": 366
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/warm-force-A1/live/steps.csv": {
+      "sha256": "b0edd4cd8b0cba1a4423689c3af048f04051388972ccd1a727722f747d56ab76",
+      "bytes": 41239
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/warm-force-A1/run.log": {
+      "sha256": "53b3d8030fce67c148fa86c04a1546bb764556569b7c3c87f104cdf4dd9e8176",
+      "bytes": 595
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/runs/warm-force-A1/rusage.log": {
+      "sha256": "168bfd13763c671d236da6ad70355499d20887e27c00fc004e61ec9498228aac",
+      "bytes": 1104
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/snapshots/baseline-e30/CMakeCache.txt": {
+      "sha256": "1b626bf4859cd3f7b1192c90f4c98211a38e4ef4143abd5555cb7df99c8f4c3a",
+      "bytes": 24212
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/snapshots/baseline-e30/FROZEN.json": {
+      "sha256": "dc32a7eeb328719a33064ecbd86212df199d3cb902d2984ea8a5c363d739f449",
+      "bytes": 81422
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/snapshots/baseline-e30/judas-build-info-Release.json": {
+      "sha256": "73a2ad30a6491476d5a9793f07d519ecc2d05059a883215d6ce4b1cdb9378c2b",
+      "bytes": 728
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/snapshots/baseline-e30/source-inputs.tar.gz": {
+      "sha256": "d0a45f85e4157f46fd629341f64e07538bafc38c358efb15c50dc50574a2fa43",
+      "bytes": 1765467
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/snapshots/candidate-fastpaths-final/CMakeCache.txt": {
+      "sha256": "1b626bf4859cd3f7b1192c90f4c98211a38e4ef4143abd5555cb7df99c8f4c3a",
+      "bytes": 24212
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/snapshots/candidate-fastpaths-final/FROZEN.json": {
+      "sha256": "4aca200148e6e0658ebb63311220905ee52bc78852c5f886dc2c29ad74fa410d",
+      "bytes": 83604
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/snapshots/candidate-fastpaths-final/judas-build-info-Release.json": {
+      "sha256": "db8902b3e67ce6f5e811c3c0f33f5152a79b4028bfd3ac3024e291619c4c2570",
+      "bytes": 727
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/snapshots/candidate-fastpaths-final/source-inputs.tar.gz": {
+      "sha256": "d518950acb44d170e77b87612ac8468f4101b80509fb447341a853f346c4d8ff",
+      "bytes": 1777712
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/sphere-adoption/ADOPTION.json": {
+      "sha256": "a12b2ed5111702df9f0667207c176cecd3ae4b81b26f1f378ba4a1a46f7e5445",
+      "bytes": 2293
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/sphere-adoption/RESULTS.json": {
+      "sha256": "0ca252f1b2c934f798d8bdef08a6d5bc9a0df9eba8cdf21657c2a4d9f8c0d858",
+      "bytes": 2000
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/sphere-adoption/build.txt": {
+      "sha256": "729e628610e9c32cdd71d4c8dac5086dc8d16c08f13b80220f5e97b0b21eba96",
+      "bytes": 1041
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/sphere-adoption/configure.txt": {
+      "sha256": "742cadfeddd3220f386aa47ff3637a0dfeaee6103795c60a90fe6d69d3f63329",
+      "bytes": 911
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/sphere-adoption/negative.txt": {
+      "sha256": "06d6ff49d5f5fb70abb3f607f1e095d20ef52a2d3bbdb50b5c06ecc16fdf6521",
+      "bytes": 1599
+    },
+    "docs/evidence/prealpha-dense-scalability-20261019/sphere-adoption/normal.txt": {
+      "sha256": "ee9f45d149b627c4543377f02519284baef002fc2a63af61cd51b94c96d9b287",
+      "bytes": 211
+    },
+    "scripts/physics_dense_measure.py": {
+      "sha256": "31fce063f42a400a9ada39b9d2a275854d05717f767e550d685163faf39e4595",
+      "bytes": 24665
+    },
+    "src/ContactSatFilter.h": {
+      "sha256": "e73915003a1321e19f94f57acc8815ac4ef307d0e37fc203d0d297e3c449326c",
+      "bytes": 6495
+    },
+    "src/Contacts.cpp": {
+      "sha256": "c6b39dc56b81d5b1d02376deba96d9805524ce63e91a00b8781992b4e6e04dd1",
+      "bytes": 35460
+    },
+    "src/SpherePredicateFilter.h": {
+      "sha256": "808e72a74fe8156fe44690b91a665744cc3a17f034c43eeb2ded881d18ddaadb",
+      "bytes": 5358
+    },
+    "src/physics/ImpactSupportSets.h": {
+      "sha256": "e0650ce179a45479b7d39ad14d83572769cd16495b6a5fb8b1f326a24efeba7b",
+      "bytes": 1018
+    },
+    "src/physics/WorldImpactEvents.cpp": {
+      "sha256": "9ba9298b35cfa14556f3e36c5f92b2e96b63bb6fa996a79be954e62930ca3606",
+      "bytes": 36334
+    },
+    "tests/ContactSatFilterTests.cpp": {
+      "sha256": "20bf9f14a3cea6af69812b7b6fd3b36f658752a08bab83a41b20590f13e6f709",
+      "bytes": 10603
+    },
+    "tests/ContactSphereFilterTests.cpp": {
+      "sha256": "1056665d693e25bfc5a639df8fe55e10d269c948d3b947f6d618b604c0798075",
+      "bytes": 18321
+    },
+    "tests/ImpactSupportSetsTests.cpp": {
+      "sha256": "de6338563f81672865630a1a273aa8908c4caf61934b4fee5b081eed14b18989",
+      "bytes": 3481
+    },
+    "tests/test_physics_dense_measure.py": {
+      "sha256": "2cffa74fd0d5e51b8c8b44807654f2b8512d6642336aac995b0dc1b03a1b89b7",
+      "bytes": 8124
+    },
+    "tools/validation/suites.json": {
+      "sha256": "0ce097c431194ccedb8053b603318e16e7a326599462454e7f32304eceab68ee",
+      "bytes": 8597
+    }
+  },
+  "self_exclusion": "This inventory lists all other payload files; it is included in the staging list but cannot hash itself."
+}

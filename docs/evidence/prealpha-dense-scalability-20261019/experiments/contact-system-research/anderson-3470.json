@@ -1,0 +1,382 @@
+{
+  "accepted_extrapolations": 15,
+  "bodies": 969,
+  "contacts": 2379,
+  "energy_rejected_trials": 0,
+  "final_velocity_digest": "7f1dc277bed5058a",
+  "history_size_limit": 5,
+  "map_budget": 40,
+  "map_evaluations": 40,
+  "original_pgs10_normal": {
+    "active": 2176,
+    "closing": 1642,
+    "maximum_active_residual_mps": 0.05334782972931862,
+    "maximum_closing_mps": 0.05334782972931862,
+    "maximum_complementarity_product_Ns_mps": 0.010278745101336417,
+    "normal_kkt_l2_mps": 0.3579793259914575,
+    "rows": 2379
+  },
+  "progress": [
+    {
+      "elapsed_ms": 0.675264,
+      "energy_J": 27.35155466741178,
+      "energy_guard_pass": true,
+      "full_fixed_point_residual_norm": 0.34896202228887674,
+      "map_evaluations": 1,
+      "normal": {
+        "active": 2176,
+        "closing": 1643,
+        "maximum_active_residual_mps": 0.05334789678454399,
+        "maximum_closing_mps": 0.05334789678454399,
+        "maximum_complementarity_product_Ns_mps": 0.010278758021141643,
+        "normal_kkt_l2_mps": 0.3579793709237681,
+        "rows": 2379
+      },
+      "policy": "initial original-PGS10 impulses reconstructed"
+    },
+    {
+      "elapsed_ms": 1.361252,
+      "energy_J": 27.252324264996698,
+      "energy_guard_pass": true,
+      "full_fixed_point_residual_norm": 0.3230523331007359,
+      "map_evaluations": 2,
+      "normal": {
+        "active": 2179,
+        "closing": 1634,
+        "maximum_active_residual_mps": 0.05018645152449608,
+        "maximum_closing_mps": 0.05018645152449608,
+        "maximum_complementarity_product_Ns_mps": 0.010441030128702233,
+        "normal_kkt_l2_mps": 0.3308901994485981,
+        "rows": 2379
+      },
+      "policy": "ordinary original full sweep"
+    },
+    {
+      "elapsed_ms": 2.576204,
+      "energy_J": 26.59326501615026,
+      "energy_guard_pass": true,
+      "full_fixed_point_residual_norm": 0.16952981578114462,
+      "map_evaluations": 4,
+      "normal": {
+        "active": 2139,
+        "closing": 1091,
+        "maximum_active_residual_mps": 0.028707992285490036,
+        "maximum_closing_mps": 0.028707992285490036,
+        "maximum_complementarity_product_Ns_mps": 0.007666899632830182,
+        "normal_kkt_l2_mps": 0.17293578070038995,
+        "rows": 2379
+      },
+      "policy": "safeguarded Anderson accepted"
+    },
+    {
+      "elapsed_ms": 3.625404,
+      "energy_J": 26.57478754486128,
+      "energy_guard_pass": true,
+      "full_fixed_point_residual_norm": 0.1381706025516404,
+      "map_evaluations": 6,
+      "normal": {
+        "active": 2178,
+        "closing": 1079,
+        "maximum_active_residual_mps": 0.02728215418756008,
+        "maximum_closing_mps": 0.02728215418756008,
+        "maximum_complementarity_product_Ns_mps": 0.00909660231732945,
+        "normal_kkt_l2_mps": 0.138598016389931,
+        "rows": 2379
+      },
+      "policy": "ordinary original full sweep"
+    },
+    {
+      "elapsed_ms": 4.808056,
+      "energy_J": 26.533568909503437,
+      "energy_guard_pass": true,
+      "full_fixed_point_residual_norm": 0.12416272430149446,
+      "map_evaluations": 8,
+      "normal": {
+        "active": 2180,
+        "closing": 1024,
+        "maximum_active_residual_mps": 0.024600617587566376,
+        "maximum_closing_mps": 0.024600617587566376,
+        "maximum_complementarity_product_Ns_mps": 0.007123787818742344,
+        "normal_kkt_l2_mps": 0.12023013027972584,
+        "rows": 2379
+      },
+      "policy": "safeguarded Anderson accepted"
+    },
+    {
+      "elapsed_ms": 6.285788,
+      "energy_J": 26.506503300349184,
+      "energy_guard_pass": true,
+      "full_fixed_point_residual_norm": 0.10941542029747903,
+      "map_evaluations": 10,
+      "normal": {
+        "active": 2216,
+        "closing": 1022,
+        "maximum_active_residual_mps": 0.02335931546986103,
+        "maximum_closing_mps": 0.02335931546986103,
+        "maximum_complementarity_product_Ns_mps": 0.00674201355201981,
+        "normal_kkt_l2_mps": 0.12090401082451294,
+        "rows": 2379
+      },
+      "policy": "safeguarded Anderson accepted"
+    },
+    {
+      "elapsed_ms": 7.461888,
+      "energy_J": 26.48079284477354,
+      "energy_guard_pass": true,
+      "full_fixed_point_residual_norm": 0.09739940757696446,
+      "map_evaluations": 12,
+      "normal": {
+        "active": 2163,
+        "closing": 988,
+        "maximum_active_residual_mps": 0.025771941989660263,
+        "maximum_closing_mps": 0.025771941989660263,
+        "maximum_complementarity_product_Ns_mps": 0.007875233862373321,
+        "normal_kkt_l2_mps": 0.09268412582085503,
+        "rows": 2379
+      },
+      "policy": "safeguarded Anderson accepted"
+    },
+    {
+      "elapsed_ms": 8.631547,
+      "energy_J": 26.46261097345548,
+      "energy_guard_pass": true,
+      "full_fixed_point_residual_norm": 0.08771578260131578,
+      "map_evaluations": 14,
+      "normal": {
+        "active": 2158,
+        "closing": 987,
+        "maximum_active_residual_mps": 0.01990760862827301,
+        "maximum_closing_mps": 0.01990760862827301,
+        "maximum_complementarity_product_Ns_mps": 0.0063975386147125946,
+        "normal_kkt_l2_mps": 0.08089753216847168,
+        "rows": 2379
+      },
+      "policy": "safeguarded Anderson accepted"
+    },
+    {
+      "elapsed_ms": 9.800162,
+      "energy_J": 26.449106373982858,
+      "energy_guard_pass": true,
+      "full_fixed_point_residual_norm": 0.07856907640405536,
+      "map_evaluations": 16,
+      "normal": {
+        "active": 2158,
+        "closing": 1006,
+        "maximum_active_residual_mps": 0.01689712330698967,
+        "maximum_closing_mps": 0.01689712330698967,
+        "maximum_complementarity_product_Ns_mps": 0.005653542819848867,
+        "normal_kkt_l2_mps": 0.0733639096284571,
+        "rows": 2379
+      },
+      "policy": "safeguarded Anderson accepted"
+    },
+    {
+      "elapsed_ms": 10.990848,
+      "energy_J": 26.44398559893957,
+      "energy_guard_pass": true,
+      "full_fixed_point_residual_norm": 0.07295966440128487,
+      "map_evaluations": 18,
+      "normal": {
+        "active": 2159,
+        "closing": 1024,
+        "maximum_active_residual_mps": 0.01810048148036003,
+        "maximum_closing_mps": 0.01810048148036003,
+        "maximum_complementarity_product_Ns_mps": 0.0061499194825819226,
+        "normal_kkt_l2_mps": 0.0680917814072911,
+        "rows": 2379
+      },
+      "policy": "ordinary original full sweep"
+    },
+    {
+      "elapsed_ms": 12.210036,
+      "energy_J": 26.439458783477814,
+      "energy_guard_pass": true,
+      "full_fixed_point_residual_norm": 0.06843597457246031,
+      "map_evaluations": 20,
+      "normal": {
+        "active": 2155,
+        "closing": 1023,
+        "maximum_active_residual_mps": 0.017850361764431,
+        "maximum_closing_mps": 0.017850361764431,
+        "maximum_complementarity_product_Ns_mps": 0.006157815674119327,
+        "normal_kkt_l2_mps": 0.06435469165958582,
+        "rows": 2379
+      },
+      "policy": "ordinary original full sweep"
+    },
+    {
+      "elapsed_ms": 13.378895,
+      "energy_J": 26.421818670283255,
+      "energy_guard_pass": true,
+      "full_fixed_point_residual_norm": 0.0646276588972071,
+      "map_evaluations": 22,
+      "normal": {
+        "active": 2140,
+        "closing": 1048,
+        "maximum_active_residual_mps": 0.023063788190484047,
+        "maximum_closing_mps": 0.023063788190484047,
+        "maximum_complementarity_product_Ns_mps": 0.005457818399909331,
+        "normal_kkt_l2_mps": 0.06877323692646785,
+        "rows": 2379
+      },
+      "policy": "safeguarded Anderson accepted"
+    },
+    {
+      "elapsed_ms": 14.545537,
+      "energy_J": 26.41931569989166,
+      "energy_guard_pass": true,
+      "full_fixed_point_residual_norm": 0.055763485112554065,
+      "map_evaluations": 24,
+      "normal": {
+        "active": 2145,
+        "closing": 1063,
+        "maximum_active_residual_mps": 0.01453174278140068,
+        "maximum_closing_mps": 0.01453174278140068,
+        "maximum_complementarity_product_Ns_mps": 0.005408390463944035,
+        "normal_kkt_l2_mps": 0.05236578213253499,
+        "rows": 2379
+      },
+      "policy": "ordinary original full sweep"
+    },
+    {
+      "elapsed_ms": 15.745447,
+      "energy_J": 26.413497479939835,
+      "energy_guard_pass": true,
+      "full_fixed_point_residual_norm": 0.05091170863253335,
+      "map_evaluations": 26,
+      "normal": {
+        "active": 2142,
+        "closing": 1057,
+        "maximum_active_residual_mps": 0.012124811299145222,
+        "maximum_closing_mps": 0.012124811299145222,
+        "maximum_complementarity_product_Ns_mps": 0.004626514974017809,
+        "normal_kkt_l2_mps": 0.046653339128105216,
+        "rows": 2379
+      },
+      "policy": "safeguarded Anderson accepted"
+    },
+    {
+      "elapsed_ms": 16.920242,
+      "energy_J": 26.407482453444803,
+      "energy_guard_pass": true,
+      "full_fixed_point_residual_norm": 0.04584386482212978,
+      "map_evaluations": 28,
+      "normal": {
+        "active": 2142,
+        "closing": 1101,
+        "maximum_active_residual_mps": 0.009087832644581795,
+        "maximum_closing_mps": 0.009087832644581795,
+        "maximum_complementarity_product_Ns_mps": 0.0035691801410601687,
+        "normal_kkt_l2_mps": 0.04052434383807203,
+        "rows": 2379
+      },
+      "policy": "safeguarded Anderson accepted"
+    },
+    {
+      "elapsed_ms": 18.214086000000002,
+      "energy_J": 26.403037322997278,
+      "energy_guard_pass": true,
+      "full_fixed_point_residual_norm": 0.041689106898396756,
+      "map_evaluations": 30,
+      "normal": {
+        "active": 2140,
+        "closing": 1120,
+        "maximum_active_residual_mps": 0.008111802861094475,
+        "maximum_closing_mps": 0.008111802861094475,
+        "maximum_complementarity_product_Ns_mps": 0.0033022733429760587,
+        "normal_kkt_l2_mps": 0.0360893621314523,
+        "rows": 2379
+      },
+      "policy": "safeguarded Anderson accepted"
+    },
+    {
+      "elapsed_ms": 19.46504,
+      "energy_J": 26.399338564122658,
+      "energy_guard_pass": true,
+      "full_fixed_point_residual_norm": 0.03734951904244072,
+      "map_evaluations": 32,
+      "normal": {
+        "active": 2143,
+        "closing": 1146,
+        "maximum_active_residual_mps": 0.007571670692414045,
+        "maximum_closing_mps": 0.007571670692414045,
+        "maximum_complementarity_product_Ns_mps": 0.0030566773473406084,
+        "normal_kkt_l2_mps": 0.0320510964921883,
+        "rows": 2379
+      },
+      "policy": "safeguarded Anderson accepted"
+    },
+    {
+      "elapsed_ms": 20.679695,
+      "energy_J": 26.39474000369869,
+      "energy_guard_pass": true,
+      "full_fixed_point_residual_norm": 0.03311296078972872,
+      "map_evaluations": 34,
+      "normal": {
+        "active": 2142,
+        "closing": 1166,
+        "maximum_active_residual_mps": 0.006255657412111759,
+        "maximum_closing_mps": 0.006255657412111759,
+        "maximum_complementarity_product_Ns_mps": 0.0026830434898190703,
+        "normal_kkt_l2_mps": 0.02892387675432689,
+        "rows": 2379
+      },
+      "policy": "safeguarded Anderson accepted"
+    },
+    {
+      "elapsed_ms": 21.976933,
+      "energy_J": 26.39150880416374,
+      "energy_guard_pass": true,
+      "full_fixed_point_residual_norm": 0.03029174730560656,
+      "map_evaluations": 36,
+      "normal": {
+        "active": 2138,
+        "closing": 1162,
+        "maximum_active_residual_mps": 0.004773725755512714,
+        "maximum_closing_mps": 0.004773725755512714,
+        "maximum_complementarity_product_Ns_mps": 0.002350569997349894,
+        "normal_kkt_l2_mps": 0.025320127608828184,
+        "rows": 2379
+      },
+      "policy": "safeguarded Anderson accepted"
+    },
+    {
+      "elapsed_ms": 23.403654,
+      "energy_J": 26.388646131051928,
+      "energy_guard_pass": true,
+      "full_fixed_point_residual_norm": 0.027761839508736806,
+      "map_evaluations": 38,
+      "normal": {
+        "active": 2138,
+        "closing": 1149,
+        "maximum_active_residual_mps": 0.004226401913911104,
+        "maximum_closing_mps": 0.004226401913911104,
+        "maximum_complementarity_product_Ns_mps": 0.0020113127926362773,
+        "normal_kkt_l2_mps": 0.02296541130686439,
+        "rows": 2379
+      },
+      "policy": "safeguarded Anderson accepted"
+    },
+    {
+      "elapsed_ms": 24.773828,
+      "energy_J": 26.386585755552147,
+      "energy_guard_pass": true,
+      "full_fixed_point_residual_norm": 0.025863566221836408,
+      "map_evaluations": 40,
+      "normal": {
+        "active": 2138,
+        "closing": 1174,
+        "maximum_active_residual_mps": 0.003769777249544859,
+        "maximum_closing_mps": 0.003769777249544859,
+        "maximum_complementarity_product_Ns_mps": 0.00179909279845758,
+        "normal_kkt_l2_mps": 0.021271277666359195,
+        "rows": 2379
+      },
+      "policy": "safeguarded Anderson accepted"
+    }
+  ],
+  "rank_or_history_rejections": 1,
+  "rejected_extrapolations": 4,
+  "schema": "judas.offline-full-law-anderson.v1",
+  "scope": "offline original full Coulomb PGS fixed-point map; cone-projected history acceleration; physical same-event total-impulse reconstruction; no production code change"
+}

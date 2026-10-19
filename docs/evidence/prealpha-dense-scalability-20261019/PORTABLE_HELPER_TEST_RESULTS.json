@@ -1,0 +1,19 @@
+{
+  "classification": "Synthetic helper accounting and provenance guards only; no engine/FPS qualification",
+  "utc": "2026-10-19T12:01:33.668622+00:00",
+  "argv": [
+    "/usr/bin/python3",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "tests",
+    "-p",
+    "test_physics_dense_measure.py",
+    "-v"
+  ],
+  "exit": 0,
+  "test_cases": 11,
+  "original_warning_log": "PORTABLE_HELPER_INITIAL_WARNINGS.log",
+  "log": "PORTABLE_HELPER_TESTS.log"
+}

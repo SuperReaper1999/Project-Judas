@@ -1,0 +1,105 @@
+ACTUAL DENSE CONTACT SYSTEM: ISOLATED NUMERICAL INVESTIGATION
+
+This directory contains research diagnostics, not a production solver change.
+No root/src production files were edited by this workstream.
+
+Snapshot provenance
+-------------------
+The frozen e30 baseline's original ImpactSolver.cpp received only an opt-in,
+one-shot observer. Selected event: 3470, first event of physics step 270.
+The parent's genuine 270-step lab capture retained exact physical digest and
+endpoint parity. The observer's one-time JSON output is not a performance test.
+All floats are stored as uint32 IEEE-754 bits and doubles as uint64 bits.
+Every pre-solve body field, exact contact geometry/material/flag, duration,
+inelastic flag and body encounter order is retained. Post-solve complete body,
+constraint and impact-result fields are retained as exact-bit reference data.
+
+Native offline replay
+---------------------
+969 bodies, 2379 actual-contact rows, original dt=0.01666666753590107 s.
+Reconstruction against the ORIGINAL baseline engine archive gives exact parity
+for every body field, every prepared/solved row, every ImpactResult field.
+Original pre-velocity digest: 9d8e4076b4a64895.
+Original post-velocity digest: 3eaf5d8bd0e37b6b.
+Original ImpactSolver10 cost in the bounded replay: 4.16398 ms.
+Kinetic energy decreases from 29.6409423233 J to 27.3515560317 J.
+There is no demonstrated impact energy-injection defect in this event.
+
+Fixed-geometry convergence reference (NOT an engine-budget change)
+-----------------------------------------------------------------
+iterations | solve ms | max closing m/s | normal KKT L2 m/s
+10         |   2.561  | 0.0533478       | 0.357979
+20         |   5.111  | 0.0304588       | 0.174909
+50         |  12.141  | 0.00843732      | 0.0370895
+100        |  23.380  | 0.00237434      | 0.00935895
+200        |  45.607  | 0.00114949      | 0.00298505
+500        | 100.309  | 0.0000682231    | 0.000310610
+1000       | 171.904  | 0.0000585584    | 0.000205801
+2000       | 298.458  | 0.0000585710    | 0.0000613897
+
+This demonstrates coupled underconvergence at the original ten iterations.
+Blindly increasing PGS iterations is not proposed as the runtime correction.
+It is too costly, and the scalar normal residual is not the full Coulomb law.
+
+Frozen-friction Schur experiment (REJECTED as a practical solver)
+----------------------------------------------------------------
+A=J_n M^-1 J_n^T uses the original represented physical mass and cached inertia.
+b=J_n*v_current - A*lambda_current - bias; same-event total lambda>=0.
+Negative delta-lambda removes a provisional impulse from THIS event only.
+No historical/cross-event impulse is removed; no adhesion is introduced.
+Original inverse-inertia max asymmetry: 1.4305114746e-6.
+Random Schur bilinear relative asymmetry: 1.4510802493e-10.
+The operator was NOT silently symmetrized or given artificial compliance.
+Sampled diagonal matches the matrix-free operator exactly.
+First projected active-CG normal solve hits its bounded 64*256 search limit,
+takes about 746 ms and is not converged to its diagnostic 1e-8 target.
+Frozen normals reduce max closing to .004319 m/s but leave 98 Coulomb violations.
+One ORIGINAL full normal/friction sweep returns max closing to .046992 m/s.
+Five such alternating passes take 3.79 seconds and still leave .021558 m/s.
+This route is not a performance improvement or a correct full-law replacement.
+The original failed run is preserved in schur-3470.json. An unused FISTA helper
+was subsequently compiled but never run; it is not claimed as a tested solution.
+
+Full-law safeguarded Anderson experiment (NO measured practical win)
+-------------------------------------------------------------------
+The fixed-point map is one ORIGINAL ContactSolver normal+friction sweep.
+Unknowns are same-event normal and vector tangent impulses.
+Extrapolation uses at most four history differences, projects to unilateral
+and Coulomb limits, and is accepted only when the full-map residual improves
+over an ordinary next sweep and the original physical energy budget passes.
+Velocities are reconstructed from the event's original state and the original
+mass/inertia operator; binary64 accumulation changes rounding relative to
+incremental binary32 trial updates, explicitly a diagnostic numerical change.
+At most 40 full map evaluations after the original PGS10 initialization:
+15 accepted extrapolations, 4 rejected, zero energy-rejected trials.
+Max closing .0533478 -> .00376978 m/s; normal KKT L2 .357979 -> .0212713.
+Total diagnostic time: 24.77 ms, including state reconstruction and observations.
+Original PGS100 takes 23.38 ms and reaches BETTER .00237434 / .00935895 residual.
+Thus this implementation is not a demonstrated speedup at matched quality.
+No whole-world test or engine adoption is justified by this isolated result.
+
+Related rejected ordering experiment
+------------------------------------
+../order-prototype contains the original-order-preserving support-graph BFS
+experiment, passing direct controls but catastrophically regressing actual
+mode-3 event amplification. It was stopped honestly rather than labelled green.
+
+Reproduction
+------------
+python3 .cache/dense-scalability-20261019/contact-system-research/build.py
+  Builds capture observer. The snapshot subdirectory must not already exist.
+  Environment JUDAS_CONTACT_CAPTURE_EVENT=3470 and
+  JUDAS_CONTACT_CAPTURE_PATH=<this directory>/event-3470.json select one event.
+  The parent's temporal-observer driver may link the same capture archive.
+
+python3 .cache/dense-scalability-20261019/contact-system-research/build-replay.py
+<this directory>/replay <this directory>/event-3470.json <output.json>
+
+python3 <this directory>/build-replay.py SchurReplay
+<this directory>/schur-replay <snapshot.json> <output.json> cg
+
+python3 <this directory>/build-replay.py AndersonReplay
+<this directory>/anderson-replay <snapshot.json> <output.json> 40
+
+Read original binary/source hashes in the build receipts and final inventory.
+This is one actual event; it does not establish universal engine behaviour.

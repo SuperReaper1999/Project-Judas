@@ -1,0 +1,58 @@
+ISOLATED NEXT-STEP SUPPORTING-FORCE GUESS EXPERIMENT
+
+This is not an accepted production fix. It deliberately changes numerical
+continuation and requires actual game/physics/lifetime and physical quality
+checks, rather than bit-identical trajectories alone.
+
+Existing ownership and order
+----------------------------
+PhysicsWorld.cpp solves ordinary persistent/supporting contacts, then publishes
+that solve's accumulated impulses into contactCache. Only afterward does
+AdvanceImpacts advance chronological collision events. ImpactSolver owns its
+own separate contact solver; it never reads contactCache's warm impulses.
+The next fixed step consumes contactCache through existing body generations,
+collision-primitive keys, nearest local anchor and compatible normal matching.
+
+Baseline M91 code conservatively zeros every cache load in a velocity-changing
+free inelastic island. Its comment treats velocity change as invalidating a load
+estimate. That is not evidence that warm guesses must be erased for numerical
+correctness: an ordinary warm start is an initial guess, not a prescribed load;
+the accumulated unilateral/Coulomb solve can give excess impulse back. However,
+finite iteration can make a stale initial guess harmful, so preservation must
+be tested against real physical trajectories and negative controls.
+
+This experiment
+---------------
+At AdvanceImpacts entry, take an immutable snapshot of the ordinary support
+force solve's cache. Retain unchanged primitive groups' existing guesses.
+For TOI geometry that replaces a primitive group's contact identities, retain
+only a one-to-one matching prior force guess, using the same generation,
+primitive, near-anchor and normal criteria, plus observation-revision checks.
+Entirely new features start with zero. No impact normal or tangent impulse is
+ever copied into this force cache. No warm impulse is applied inside the current
+chronological event; guesses are consumed only by a later ordinary fixed step.
+Elastic departure, hard joints and external coupling retain conservative cache
+invalidation; invalidated snapshot entries cannot reappear later in the step.
+
+Important unchanged second cold-start path
+-----------------------------------------
+ResolveInitialImpacts also clears warm inputs for an initial contact island
+containing a new impact. This experiment intentionally leaves that policy
+unchanged so the effect of AdvanceImpacts force-guess erasure is isolated.
+
+Required evaluation
+-------------------
+Run exact original room1024 for 270 steps with unchanged dt, body count, CCD,
+contact geometry, friction, iteration count and materials. Compare actual
+geometry penetration, containment, finite state, energy, settling and cost.
+Numerical digests may change and must not be falsely labelled identical.
+Then exercise impulse/elastic arrival, moving-boundary, curved-mesh, articulated,
+M70/M77 and cold-save continuation regressions before any adoption.
+This helper has no public API, data-layout change, scene-name branch or mode flag.
+
+Build provenance
+----------------
+The original e30 archive receives one WorldImpactEvents object replacement.
+Frozen baseline source headers are copied and searched ahead of live headers,
+so unrelated evolving private declarations cannot change the isolated ABI.
+BUILD.json and snapshot/FROZEN.json record exact source and binary hashes.

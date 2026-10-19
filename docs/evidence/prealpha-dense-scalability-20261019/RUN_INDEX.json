@@ -1,0 +1,468 @@
+{
+  "scope": "Indexed existing observations, not a new test run. Numerical retiming A3/A4 rejected; subsequent coherent geometry research remains isolated.",
+  "runs": [
+    {
+      "run": "baseline-A1",
+      "results_path": "runs/baseline-A1/RESULTS.json",
+      "disposition": "accepted source baseline",
+      "actual_exit": 0,
+      "valid_capture": true,
+      "completed_steps": 270,
+      "fixed_ms": {
+        "count": 270,
+        "maximum": 1695.193218,
+        "mean": 93.50908134074074,
+        "median": 25.4253895,
+        "p95_floor": 339.803512,
+        "p99_floor": 974.777721
+      },
+      "final_digest": "192f0f4bed728953",
+      "endpoint_depth_m": 0.007217108528522143
+    },
+    {
+      "run": "baseline-A2",
+      "results_path": "runs/baseline-A2/RESULTS.json",
+      "disposition": "matched accepted baseline repeat",
+      "actual_exit": 0,
+      "valid_capture": true,
+      "completed_steps": 270,
+      "fixed_ms": {
+        "count": 270,
+        "maximum": 1748.515978,
+        "mean": 98.17494115185185,
+        "median": 27.0628315,
+        "p95_floor": 358.157062,
+        "p99_floor": 1056.314564
+      },
+      "final_digest": "192f0f4bed728953",
+      "endpoint_depth_m": 0.007217108528522143
+    },
+    {
+      "run": "baseline-realtime-A1",
+      "results_path": "runs/baseline-realtime-A1/RESULTS.json",
+      "disposition": "diagnostic, different horizon from candidate",
+      "actual_exit": 0,
+      "valid_capture": true,
+      "completed_steps": 289,
+      "fixed_ms": {
+        "count": 289,
+        "maximum": 1718.234573,
+        "mean": 124.30858793771627,
+        "median": 30.026553,
+        "p95_floor": 589.378153,
+        "p99_floor": 1047.316389
+      },
+      "final_digest": "f58fec2f24cd9b4a",
+      "endpoint_depth_m": 0.006176626490698389
+    },
+    {
+      "run": "combined-fastpaths-A1",
+      "results_path": "runs/combined-fastpaths-A1/RESULTS.json",
+      "disposition": "adopted fast paths, exact270 physical/work parity; FPS target failed",
+      "actual_exit": 0,
+      "valid_capture": true,
+      "completed_steps": 270,
+      "fixed_ms": {
+        "count": 270,
+        "maximum": 1089.441326,
+        "mean": 66.61240707777777,
+        "median": 24.073633,
+        "p95_floor": 210.306779,
+        "p99_floor": 594.201835
+      },
+      "final_digest": "192f0f4bed728953",
+      "endpoint_depth_m": 0.007217108528522143
+    },
+    {
+      "run": "combined-fastpaths-realtime-A1",
+      "results_path": "runs/combined-fastpaths-realtime-A1/RESULTS.json",
+      "disposition": "target failed; horizon and overshoot prohibit aggregate speedup comparison",
+      "actual_exit": 0,
+      "valid_capture": true,
+      "completed_steps": 310,
+      "fixed_ms": {
+        "count": 310,
+        "maximum": 2524.296055,
+        "mean": 160.84818201935485,
+        "median": 36.069972,
+        "p95_floor": 809.419215,
+        "p99_floor": 1922.783542
+      },
+      "final_digest": "c15063d7e825938a",
+      "endpoint_depth_m": 0.005448364697426202
+    },
+    {
+      "run": "continuous-toi-A1",
+      "results_path": "runs/continuous-toi-A1/RESULTS.json",
+      "disposition": "not adopted: semantic boundary incomplete, changed trajectory and larger endpoint depth",
+      "actual_exit": 0,
+      "valid_capture": true,
+      "completed_steps": 270,
+      "fixed_ms": {
+        "count": 270,
+        "maximum": 790.278667,
+        "mean": 80.42026007037038,
+        "median": 29.2415835,
+        "p95_floor": 330.184739,
+        "p99_floor": 560.271001
+      },
+      "final_digest": "fba404d3f1b32f74",
+      "endpoint_depth_m": 0.02087548232169715
+    },
+    {
+      "run": "event-topology-A1",
+      "results_path": "runs/event-topology-A1/RESULTS.json",
+      "disposition": "intermediate diagnostic; see actual result and associated experiment",
+      "actual_exit": 0,
+      "valid_capture": true,
+      "completed_steps": 270,
+      "fixed_ms": {
+        "count": 270,
+        "maximum": 1686.38292,
+        "mean": 92.96387684814815,
+        "median": 24.7964415,
+        "p95_floor": 334.034749,
+        "p99_floor": 995.244005
+      },
+      "final_digest": "192f0f4bed728953",
+      "endpoint_depth_m": 0.007217108528522143
+    },
+    {
+      "run": "event-topology-v2-A1",
+      "results_path": "runs/event-topology-v2-A1/RESULTS.json",
+      "disposition": "intermediate diagnostic; see actual result and associated experiment",
+      "actual_exit": 0,
+      "valid_capture": true,
+      "completed_steps": 270,
+      "fixed_ms": {
+        "count": 270,
+        "maximum": 1916.977017,
+        "mean": 102.22090367407408,
+        "median": 25.8882665,
+        "p95_floor": 381.567801,
+        "p99_floor": 1062.507751
+      },
+      "final_digest": "192f0f4bed728953",
+      "endpoint_depth_m": 0.007217108528522143
+    },
+    {
+      "run": "filtered-v2-A1",
+      "results_path": "runs/filtered-v2-A1/RESULTS.json",
+      "disposition": "preserved initial zero-step link failure",
+      "actual_exit": 1,
+      "valid_capture": false,
+      "completed_steps": 0,
+      "fixed_ms": {
+        "count": 0
+      },
+      "final_digest": null,
+      "endpoint_depth_m": null
+    },
+    {
+      "run": "filtered-v2-live-A1",
+      "results_path": "runs/filtered-v2-live-A1/RESULTS.json",
+      "disposition": "intermediate diagnostic; see actual result and associated experiment",
+      "actual_exit": 0,
+      "valid_capture": true,
+      "completed_steps": 270,
+      "fixed_ms": {
+        "count": 270,
+        "maximum": 1194.252669,
+        "mean": 73.68558608888888,
+        "median": 25.215895,
+        "p95_floor": 268.146938,
+        "p99_floor": 677.077824
+      },
+      "final_digest": "192f0f4bed728953",
+      "endpoint_depth_m": 0.007217108528522143
+    },
+    {
+      "run": "fma-v2-A1",
+      "results_path": "runs/fma-v2-A1/RESULTS.json",
+      "disposition": "not adopted: no justified incremental benefit over generic SAT",
+      "actual_exit": 0,
+      "valid_capture": true,
+      "completed_steps": 270,
+      "fixed_ms": {
+        "count": 270,
+        "maximum": 1217.496045,
+        "mean": 72.82016935185185,
+        "median": 23.444205500000002,
+        "p95_floor": 246.435902,
+        "p99_floor": 691.402409
+      },
+      "final_digest": "192f0f4bed728953",
+      "endpoint_depth_m": 0.007217108528522143
+    },
+    {
+      "run": "isotropic-A1",
+      "results_path": "runs/isotropic-A1/RESULTS.json",
+      "disposition": "not adopted: insufficient measured benefit",
+      "actual_exit": 0,
+      "valid_capture": true,
+      "completed_steps": 270,
+      "fixed_ms": {
+        "count": 270,
+        "maximum": 1681.182839,
+        "mean": 92.36796163333334,
+        "median": 25.915879,
+        "p95_floor": 328.117814,
+        "p99_floor": 977.215594
+      },
+      "final_digest": "192f0f4bed728953",
+      "endpoint_depth_m": 0.007217108528522143
+    },
+    {
+      "run": "order-A1",
+      "results_path": "runs/order-A1/RESULTS.json",
+      "disposition": "rejected: severe regression, incomplete capture",
+      "actual_exit": -15,
+      "valid_capture": false,
+      "completed_steps": 182,
+      "fixed_ms": {
+        "count": 182,
+        "maximum": 6864.73629,
+        "mean": 462.7451158186813,
+        "median": 21.6921635,
+        "p95_floor": 3010.078795,
+        "p99_floor": 5712.624052
+      },
+      "final_digest": "b3777b90d146ecb8",
+      "endpoint_depth_m": null
+    },
+    {
+      "run": "parallel-A1",
+      "results_path": "runs/parallel-A1/RESULTS.json",
+      "disposition": "not adopted: small gain, chronology remains",
+      "actual_exit": 0,
+      "valid_capture": true,
+      "completed_steps": 270,
+      "fixed_ms": {
+        "count": 270,
+        "maximum": 1589.592551,
+        "mean": 90.31043283703704,
+        "median": 25.413177,
+        "p95_floor": 315.093404,
+        "p99_floor": 981.08095
+      },
+      "final_digest": "192f0f4bed728953",
+      "endpoint_depth_m": 0.007217108528522143
+    },
+    {
+      "run": "parallel-frontier-A1",
+      "results_path": "runs/parallel-frontier-A1/RESULTS.json",
+      "disposition": "rejected: mean/p95/worst regression",
+      "actual_exit": 0,
+      "valid_capture": true,
+      "completed_steps": 270,
+      "fixed_ms": {
+        "count": 270,
+        "maximum": 2230.938361,
+        "mean": 110.32386947037037,
+        "median": 27.3569575,
+        "p95_floor": 429.900424,
+        "p99_floor": 1168.252794
+      },
+      "final_digest": "192f0f4bed728953",
+      "endpoint_depth_m": 0.007217108528522143
+    },
+    {
+      "run": "parallel-v2-A1",
+      "results_path": "runs/parallel-v2-A1/RESULTS.json",
+      "disposition": "not adopted: small gain, chronology remains",
+      "actual_exit": 0,
+      "valid_capture": true,
+      "completed_steps": 270,
+      "fixed_ms": {
+        "count": 270,
+        "maximum": 1505.681221,
+        "mean": 87.85651177777778,
+        "median": 24.4676435,
+        "p95_floor": 314.974676,
+        "p99_floor": 866.901822
+      },
+      "final_digest": "192f0f4bed728953",
+      "endpoint_depth_m": 0.007217108528522143
+    },
+    {
+      "run": "phases-A1",
+      "results_path": "runs/phases-A1/RESULTS.json",
+      "disposition": "intermediate diagnostic; see actual result and associated experiment",
+      "actual_exit": 0,
+      "valid_capture": true,
+      "completed_steps": 270,
+      "fixed_ms": {
+        "count": 270,
+        "maximum": 1659.909433,
+        "mean": 92.6442347037037,
+        "median": 26.9412145,
+        "p95_floor": 359.604055,
+        "p99_floor": 964.716669
+      },
+      "final_digest": "192f0f4bed728953",
+      "endpoint_depth_m": 0.007217108528522143
+    },
+    {
+      "run": "production-v2-support-A1",
+      "results_path": "runs/production-v2-support-A1/RESULTS.json",
+      "disposition": "intermediate diagnostic; see actual result and associated experiment",
+      "actual_exit": 0,
+      "valid_capture": true,
+      "completed_steps": 270,
+      "fixed_ms": {
+        "count": 270,
+        "maximum": 1085.409843,
+        "mean": 69.2899394037037,
+        "median": 24.394969500000002,
+        "p95_floor": 239.617156,
+        "p99_floor": 631.227036
+      },
+      "final_digest": "192f0f4bed728953",
+      "endpoint_depth_m": 0.007217108528522143
+    },
+    {
+      "run": "quality-capture-A1",
+      "results_path": "runs/quality-capture-A1/RESULTS.json",
+      "disposition": "read-only observer exact physical parity; not wall/FPS evidence",
+      "actual_exit": 0,
+      "valid_capture": true,
+      "completed_steps": 270,
+      "fixed_ms": {
+        "count": 270,
+        "maximum": 1893.91062,
+        "mean": 93.3008741,
+        "median": 25.7721655,
+        "p95_floor": 330.253374,
+        "p99_floor": 1041.885228
+      },
+      "final_digest": "192f0f4bed728953",
+      "endpoint_depth_m": 0.007217108528522143
+    },
+    {
+      "run": "residual-observer",
+      "results_path": "runs/residual-observer/RESULTS.json",
+      "disposition": "read-only observer exact physical parity; not wall/FPS evidence",
+      "actual_exit": 0,
+      "valid_capture": true,
+      "completed_steps": 270,
+      "fixed_ms": {
+        "count": 270,
+        "maximum": 1780.566412,
+        "mean": 98.78554926296296,
+        "median": 32.61130300000001,
+        "p95_floor": 362.809831,
+        "p99_floor": 1029.026058
+      },
+      "final_digest": "192f0f4bed728953",
+      "endpoint_depth_m": 0.007217108528522143
+    },
+    {
+      "run": "sphere-filter-A1",
+      "results_path": "runs/sphere-filter-A1/RESULTS.json",
+      "disposition": "intermediate diagnostic; see actual result and associated experiment",
+      "actual_exit": 0,
+      "valid_capture": true,
+      "completed_steps": 270,
+      "fixed_ms": {
+        "count": 270,
+        "maximum": 1149.76439,
+        "mean": 68.89998334444445,
+        "median": 23.719504,
+        "p95_floor": 231.225976,
+        "p99_floor": 653.424237
+      },
+      "final_digest": "192f0f4bed728953",
+      "endpoint_depth_m": 0.007217108528522143
+    },
+    {
+      "run": "support-batched-A1",
+      "results_path": "runs/support-batched-A1/RESULTS.json",
+      "disposition": "intermediate diagnostic; see actual result and associated experiment",
+      "actual_exit": 0,
+      "valid_capture": true,
+      "completed_steps": 270,
+      "fixed_ms": {
+        "count": 270,
+        "maximum": 1605.863302,
+        "mean": 89.7608462,
+        "median": 25.880581,
+        "p95_floor": 320.422764,
+        "p99_floor": 933.956537
+      },
+      "final_digest": "192f0f4bed728953",
+      "endpoint_depth_m": 0.007217108528522143
+    },
+    {
+      "run": "support-timed-A1",
+      "results_path": "runs/support-timed-A1/RESULTS.json",
+      "disposition": "intermediate diagnostic; see actual result and associated experiment",
+      "actual_exit": 0,
+      "valid_capture": true,
+      "completed_steps": 270,
+      "fixed_ms": {
+        "count": 270,
+        "maximum": 1716.429985,
+        "mean": 91.78488022592593,
+        "median": 24.3987945,
+        "p95_floor": 340.415453,
+        "p99_floor": 995.760035
+      },
+      "final_digest": "192f0f4bed728953",
+      "endpoint_depth_m": 0.007217108528522143
+    },
+    {
+      "run": "warm-force-A1",
+      "results_path": "runs/warm-force-A1/RESULTS.json",
+      "disposition": "rejected: changed trajectory and mean/p95 regression",
+      "actual_exit": 0,
+      "valid_capture": true,
+      "completed_steps": 270,
+      "fixed_ms": {
+        "count": 270,
+        "maximum": 1343.28379,
+        "mean": 136.44186852962963,
+        "median": 23.906161,
+        "p95_floor": 609.248739,
+        "p99_floor": 1164.625885
+      },
+      "final_digest": "2595052ee6f7dc85",
+      "endpoint_depth_m": 0.005547230836464578
+    },
+    {
+      "run": "baseline-unprofiled-A1",
+      "results_path": "runs/baseline-unprofiled-A1/RESULTS.json",
+      "disposition": "single matched unprofiled exact270 pair; exact physical/work/endpoint parity; not an FPS pass",
+      "actual_exit": 0,
+      "valid_capture": true,
+      "completed_steps": 270,
+      "fixed_ms": {
+        "count": 270,
+        "maximum": 1658.782228,
+        "mean": 92.74207232962964,
+        "median": 28.424,
+        "p95_floor": 338.077247,
+        "p99_floor": 983.602713
+      },
+      "final_digest": "192f0f4bed728953",
+      "endpoint_depth_m": 0.007217108528522143
+    },
+    {
+      "run": "combined-fastpaths-unprofiled-A1",
+      "results_path": "runs/combined-fastpaths-unprofiled-A1/RESULTS.json",
+      "disposition": "single matched unprofiled exact270 pair; exact physical/work/endpoint parity; not an FPS pass",
+      "actual_exit": 0,
+      "valid_capture": true,
+      "completed_steps": 270,
+      "fixed_ms": {
+        "count": 270,
+        "maximum": 942.047123,
+        "mean": 63.03256067407408,
+        "median": 23.004445,
+        "p95_floor": 213.604517,
+        "p99_floor": 554.115765
+      },
+      "final_digest": "192f0f4bed728953",
+      "endpoint_depth_m": 0.007217108528522143
+    }
+  ]
+}

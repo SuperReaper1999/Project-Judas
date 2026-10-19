@@ -1,0 +1,62 @@
+ISOLATED EXPERIMENT: SUPPORT-GRAPH CONTACT ORDER
+
+This is NOT a production correction and must not be adopted from unit results.
+
+Construction
+------------
+Frozen baseline: baseline-e30/FROZEN.json (e30d5f9bb72a1a341d3eff7485b8d6b3eb6f8ea9).
+Replacement translation units: ContactSolver.cpp and ImpactSolver.cpp only.
+No production source files changed. No object-layout or public API change.
+Friend-only ordered solver duplicates the original normal/friction arithmetic.
+Published Constraints() and observation indices remain in their original order.
+All ten velocity iterations and all original physical contacts remain present.
+
+Only inelastic events without hard joints may use the alternate row order.
+Distances are BFS graph distances from infinite-mass boundary bodies, with no
+world-up assumption. Stable counting sort visits increasing minimum endpoint
+distance. Equal-distance and unanchored rows retain original encounter order.
+Free-flight groups, elastic events and hard-joint solves keep the original path.
+Safety-retry energy accounting and prescribed-boundary work remain unchanged.
+
+Bounded controls
+----------------
+Original and ordered ImpactSolverTests: 46 cases / 267 checks PASS each.
+Original and ordered custom controls: 666 checks PASS each.
+The custom tests exercise all signed Cartesian orientations, reversed encounter
+order, fixed and translating infinite-mass boundaries, original published row
+identities/counts, unilateral impulses, Coulomb bounds, finite state and energy.
+Free-flight outputs match the baseline exactly.
+Reversed six-body chain changes to the support-first result, demonstrating that
+the experiment actually changes response rather than being an inert control.
+Its kinetic energy changes from 0.7287198921 J to 0.5718674284 J, but the boundary
+closing residual becomes about 0.166956 m/s where the original reverse order
+made that row exact. Thus lower aggregate energy is NOT enough to establish
+better chronological continuation or performance.
+
+Actual game outcome
+-------------------
+The parent agent ran the genuine mode-3 fixture. The experiment is rejected:
+step 174 reached 6.864 seconds and 251 impact events; the run was stopped after
+approximately 59 seconds before reaching step 175/270. Original failure and
+early-stop evidence are preserved by the parent run. Do not claim completion of
+270 steps, a performance improvement, or candidate acceptance from this run.
+
+Interpretation
+--------------
+Changing row order can move residual to interfaces that cause further physical
+events, amplifying rediscovery. Do not blindly try the opposite order as a fix.
+Inspect global coupled contact convergence and the conditions that induce later
+events. A fixed-geometry replay of an actual large event would permit testing
+coherent contact-solver alternatives without rerunning the full game per guess.
+
+Reproduction
+------------
+python3 .cache/dense-scalability-20261019/order-prototype/build.py
+python3 .cache/dense-scalability-20261019/order-prototype/controls.py
+
+snapshot/FROZEN.json is compatible with the existing measure.py matched driver.
+The live executable is the benchmark driver, never the ordinary Judas main.
+BUILD.json records exact compiler/link commands and SHA-256 fingerprints.
+CONTROLS.json records direct-test executables and output-parity checks.
+The first control tooling link failed on a duplicate validation-wrapper main;
+controls-build-failure-1.log preserves it; only the isolated wrapper was fixed.

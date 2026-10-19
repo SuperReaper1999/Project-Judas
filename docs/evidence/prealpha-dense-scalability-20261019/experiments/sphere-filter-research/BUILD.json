@@ -1,0 +1,261 @@
+{
+  "utc": "2026-10-19T11:11:30.986034+00:00",
+  "commands": [
+    {
+      "argv": [
+        "/usr/bin/c++",
+        "-DDT_VIRTUAL_QUERYFILTER",
+        "-DMA_NO_ENCODING",
+        "-DMA_NO_GENERATION",
+        "-DMA_NO_RESOURCE_MANAGER",
+        "-I/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/sphere-filter-research",
+        "-I/home/conner/Documents/GitHub/Project-Judas/src",
+        "-I/home/conner/Documents/GitHub/Project-Judas/third_party/glad/include",
+        "-I/home/conner/Documents/GitHub/Project-Judas/third_party/miniaudio",
+        "-I/home/conner/Documents/GitHub/Project-Judas/third_party/verblib",
+        "-I/home/conner/Documents/GitHub/Project-Judas/third_party/meshoptimizer/src",
+        "-I/home/conner/Documents/GitHub/Project-Judas/build/_deps/judas_freetype-build/include",
+        "-I/home/conner/Documents/GitHub/Project-Judas/build/_deps/judas_freetype-src/include",
+        "-I/home/conner/Documents/GitHub/Project-Judas/build/_deps/judas_harfbuzz-src/src",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/third_party/quickhull",
+        "-isystem",
+        "/usr/include/SDL2",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/third_party/cgltf",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/third_party/recastnavigation/Detour/Include",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/third_party/recastnavigation/DetourTileCache/Include",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/third_party/recastnavigation/DetourCrowd/Include",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/third_party/quickjs",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/build/unicode/icu/include",
+        "-O3",
+        "-DNDEBUG",
+        "-std=gnu++17",
+        "-Wall",
+        "-Wextra",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/sphere-filter-research/SphereFilterTests.cpp",
+        "-o",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/sphere-filter-research/sphere-filter-tests"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+      "exit": 0,
+      "output": ""
+    },
+    {
+      "argv": [
+        "/usr/bin/c++",
+        "-DDT_VIRTUAL_QUERYFILTER",
+        "-DMA_NO_ENCODING",
+        "-DMA_NO_GENERATION",
+        "-DMA_NO_RESOURCE_MANAGER",
+        "-I/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/sphere-filter-research",
+        "-I/home/conner/Documents/GitHub/Project-Judas/src",
+        "-I/home/conner/Documents/GitHub/Project-Judas/third_party/glad/include",
+        "-I/home/conner/Documents/GitHub/Project-Judas/third_party/miniaudio",
+        "-I/home/conner/Documents/GitHub/Project-Judas/third_party/verblib",
+        "-I/home/conner/Documents/GitHub/Project-Judas/third_party/meshoptimizer/src",
+        "-I/home/conner/Documents/GitHub/Project-Judas/build/_deps/judas_freetype-build/include",
+        "-I/home/conner/Documents/GitHub/Project-Judas/build/_deps/judas_freetype-src/include",
+        "-I/home/conner/Documents/GitHub/Project-Judas/build/_deps/judas_harfbuzz-src/src",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/third_party/quickhull",
+        "-isystem",
+        "/usr/include/SDL2",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/third_party/cgltf",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/third_party/recastnavigation/Detour/Include",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/third_party/recastnavigation/DetourTileCache/Include",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/third_party/recastnavigation/DetourCrowd/Include",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/third_party/quickjs",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/build/unicode/icu/include",
+        "-O3",
+        "-DNDEBUG",
+        "-std=gnu++17",
+        "-Wall",
+        "-Wextra",
+        "-c",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/sphere-filter-research/Contacts.cpp",
+        "-o",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/sphere-filter-research/Contacts.cpp.o"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+      "exit": 0,
+      "output": ""
+    },
+    {
+      "argv": [
+        "/usr/bin/c++",
+        "-DDT_VIRTUAL_QUERYFILTER",
+        "-DMA_NO_ENCODING",
+        "-DMA_NO_GENERATION",
+        "-DMA_NO_RESOURCE_MANAGER",
+        "-I/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/sphere-filter-research",
+        "-I/home/conner/Documents/GitHub/Project-Judas/src",
+        "-I/home/conner/Documents/GitHub/Project-Judas/third_party/glad/include",
+        "-I/home/conner/Documents/GitHub/Project-Judas/third_party/miniaudio",
+        "-I/home/conner/Documents/GitHub/Project-Judas/third_party/verblib",
+        "-I/home/conner/Documents/GitHub/Project-Judas/third_party/meshoptimizer/src",
+        "-I/home/conner/Documents/GitHub/Project-Judas/build/_deps/judas_freetype-build/include",
+        "-I/home/conner/Documents/GitHub/Project-Judas/build/_deps/judas_freetype-src/include",
+        "-I/home/conner/Documents/GitHub/Project-Judas/build/_deps/judas_harfbuzz-src/src",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/third_party/quickhull",
+        "-isystem",
+        "/usr/include/SDL2",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/third_party/cgltf",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/third_party/recastnavigation/Detour/Include",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/third_party/recastnavigation/DetourTileCache/Include",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/third_party/recastnavigation/DetourCrowd/Include",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/third_party/quickjs",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/build/unicode/icu/include",
+        "-O3",
+        "-DNDEBUG",
+        "-std=gnu++17",
+        "-Wall",
+        "-Wextra",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/sphere-filter-research/Parity.cpp",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/sphere-filter-research/Contacts.cpp.o",
+        "-o",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/sphere-filter-research/parity-spheres"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+      "exit": 0,
+      "output": ""
+    },
+    {
+      "argv": [
+        "ar",
+        "r",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/sphere-filter-research/libjudas_engine.a",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/sphere-filter-research/Contacts.cpp.o"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+      "exit": 0,
+      "output": ""
+    },
+    {
+      "argv": [
+        "/usr/bin/c++",
+        "-O3",
+        "-DNDEBUG",
+        "CMakeFiles/judas_physics_stress_live_benchmark.dir/tests/PhysicsStressLiveBenchmark.cpp.o",
+        "CMakeFiles/judas_physics_stress_live_benchmark.dir/src/Application.cpp.o",
+        "CMakeFiles/judas_physics_stress_live_benchmark.dir/src/RuntimeOptions.cpp.o",
+        "CMakeFiles/judas_physics_stress_live_benchmark.dir/src/RuntimeDiagnostics.cpp.o",
+        "CMakeFiles/judas_physics_stress_live_benchmark.dir/src/TestHarness.cpp.o",
+        "-o",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/sphere-filter-research/judas_physics_stress_live_benchmark",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/sphere-filter-research/libjudas_engine.a",
+        "libjudas_build_identity.a",
+        "libjudas_app_icon.a",
+        "libjudas_materials.a",
+        "/usr/lib/x86_64-linux-gnu/libSDL2.so",
+        "libjudas_glad.a",
+        "libjudas_audio_backend.a",
+        "libjudas_meshoptimizer.a",
+        "libjudas_navigation_cook.a",
+        "libjudas_navigation_backend.a",
+        "libjudas_quickjs.a",
+        "-lm",
+        "libjudas_profiler.a",
+        "_deps/judas_freetype-build/libfreetype.a",
+        "_deps/judas_harfbuzz-build/libharfbuzz.a",
+        "unicode/icu/lib/libicui18n.a",
+        "unicode/icu/lib/libicuuc.a",
+        "unicode/icu/lib/libicudata.a",
+        "-ldl",
+        "libjudas_jobs.a"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas/build",
+      "exit": 0,
+      "output": ""
+    }
+  ],
+  "artifacts": {
+    "Contacts.cpp.o": {
+      "sha256": "bd15269f875bd48a828fc1f64b05dd386c60cdc50c5db739efa00bfea5a378a9",
+      "bytes": 219320
+    },
+    "sphere-filter-tests": {
+      "sha256": "73ca06d8c37032007552c84c7222b17b4c94834de2e871aeb22bd8b0a16a7829",
+      "bytes": 136464
+    },
+    "SphereFilterTests.cpp": {
+      "sha256": "409b688f6bcf6982678bfcfbc0a08bb03fb96f24cb26a32a1338a19f817eb3bc",
+      "bytes": 8905
+    },
+    "ContactPreparedGeometry.h": {
+      "sha256": "d8b19b2079fafe05a39325a9d093a0d1de5f956ac4c10df1c9810531a36441d9",
+      "bytes": 1061
+    },
+    "PROOF.txt": {
+      "sha256": "39c38d3291aaaafc28086ca277a54873582edc6d5d16a53685e6dec4ae135eaf",
+      "bytes": 5148
+    },
+    "Contacts.cpp": {
+      "sha256": "b9d779391459cdd7794ec8e18de025a417f682d7bef9ab7c60f48ed2802c58a1",
+      "bytes": 35240
+    },
+    "PREPARED.json": {
+      "sha256": "579db895e5ce6221b00710d2bf36deebe9aa22201c4ffcd362346d2458c3f33d",
+      "bytes": 1582
+    },
+    "build.py": {
+      "sha256": "b86f8f73f3059c2ffe7c75ca7f47c1888a5af4e982e48d78dbb790665c03d252",
+      "bytes": 7346
+    },
+    "judas_physics_stress_live_benchmark": {
+      "sha256": "ebb5ac6f73fa4a24b02f5947328947dea96425e2c03f305905c98a240ddcbd31",
+      "bytes": 55072344
+    },
+    "ContactSatFilter.h": {
+      "sha256": "12dd21cc3c9ec40d8296592a69c9890334ffe740982517caf8a50c669ac0e0be",
+      "bytes": 5744
+    },
+    "SpherePredicateFilter.h": {
+      "sha256": "cec9e55ccd75bb47edfe306fec3119eaa8eb1cade70ad78e1f7cfcbf29c89743",
+      "bytes": 3230
+    },
+    "libjudas_engine.a": {
+      "sha256": "189b8b08479f60f3df096a6b76130144c2dfc662d9523191444881b9c973668e",
+      "bytes": 30382978
+    },
+    "ContactGeometryInternal.h": {
+      "sha256": "f8717a473924708e43e27d274e2268486646a7e2d103f3ac0e3268bf31f4dd7b",
+      "bytes": 12721
+    },
+    "Contacts.input.cpp": {
+      "sha256": "ab6c22d65e7a26c76de7c7fecf83b5aac927d6247ef86097264cc25edfb3c5d7",
+      "bytes": 33880
+    },
+    "parity-spheres": {
+      "sha256": "4005d59be2e0cec71f2ce854e3ad6d8410feb5de1d33a8ff533b48f3d7728a34",
+      "bytes": 172800
+    },
+    "Parity.cpp": {
+      "sha256": "c5fc7a8bcdd37310477069fb7e7c4cae4b98de26655e7beaf39972890005597c",
+      "bytes": 4810
+    },
+    "Contacts.h": {
+      "sha256": "e13c354c71e02141b3c82c5abfdb8fd1cb24b376bb7116245c67ba73ee21ce5b",
+      "bytes": 7866
+    }
+  },
+  "finished_utc": "2026-10-19T11:11:40.386284+00:00"
+}

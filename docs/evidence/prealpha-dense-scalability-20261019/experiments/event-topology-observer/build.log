@@ -1,0 +1,7 @@
+{
+  "snapshot": "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/event-topology-observer/snapshot",
+  "binary_sha256": "709f1684fdfaba678f7b2f81c5a5c0eb7baf5f617966f5c64e4dd12131783dc6",
+  "environment": {
+    "JUDAS_EVENT_TOPOLOGY_OUTPUT": "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/event-topology-observer/events.jsonl"
+  }
+}

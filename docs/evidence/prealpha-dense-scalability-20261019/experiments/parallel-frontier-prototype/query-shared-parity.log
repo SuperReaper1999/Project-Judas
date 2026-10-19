@@ -1,0 +1,4 @@
+{"shared":1,"repetition":0,"queries":1536,"laneQueries":[450,383,292,411],"failures":0}
+{"shared":1,"repetition":1,"queries":1536,"laneQueries":[370,343,416,407],"failures":0}
+{"shared":1,"repetition":2,"queries":1536,"laneQueries":[410,340,394,392],"failures":0}
+{"hits":760,"misses":776,"failures":0}

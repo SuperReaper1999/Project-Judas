@@ -1,0 +1,37 @@
+{
+  "schema": "judas.continuous-box-a3.controls.v1",
+  "helper_sha256": "155faed48bbf5acb22d94a8af0f42da54a50672202df96c1056abe891f95ce48",
+  "tests": [
+    {
+      "label": "controls",
+      "args": [
+        ".cache/dense-scalability-20261019/continuous-toi-prototype/ContinuousBoxCCDTests.v3"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "pass": true
+    },
+    {
+      "label": "endpoint-negative",
+      "args": [
+        ".cache/dense-scalability-20261019/continuous-toi-prototype/ContinuousBoxCCDTests.v3",
+        "--endpoint-only"
+      ],
+      "exit_code": 1,
+      "expected_exit_code": 1,
+      "pass": true
+    },
+    {
+      "label": "captured-prefixes",
+      "args": [
+        ".cache/dense-scalability-20261019/continuous-toi-prototype/CapturedPrefixes.v3",
+        ".cache/dense-scalability-20261019/event-topology-observer-v2/pair-trace.jsonl",
+        ".cache/dense-scalability-20261019/event-topology-observer-v2/interval-separation-proof.json",
+        ".cache/dense-scalability-20261019/continuous-toi-prototype/A3_CAPTURED_PREFIXES.json"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "pass": true
+    }
+  ]
+}

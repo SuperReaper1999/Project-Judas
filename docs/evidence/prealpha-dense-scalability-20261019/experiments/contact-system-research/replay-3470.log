@@ -1,0 +1,147 @@
+{
+  "all_prepared_and_solved_rows_exact_bit_parity": true,
+  "before_velocity_digest": "9d8e4076b4a64895",
+  "bodies": 969,
+  "bodies_exact_bit_parity": true,
+  "constant_geometry_pgs_reference": [
+    {
+      "cumulative_solver_ms": 2.560679,
+      "iterations": 10,
+      "kinetic_J": 27.351556031695264,
+      "residual": {
+        "active": 2176,
+        "closing": 1642,
+        "maximum_active_residual_mps": 0.05334782972931862,
+        "maximum_closing_mps": 0.05334782972931862,
+        "maximum_complementarity_product_Ns_mps": 0.010278745101336417,
+        "normal_kkt_l2_mps": 0.3579793259914575,
+        "rows": 2379
+      },
+      "velocity_digest": "3eaf5d8bd0e37b6b"
+    },
+    {
+      "cumulative_solver_ms": 5.111431,
+      "iterations": 20,
+      "kinetic_J": 26.74932432911928,
+      "residual": {
+        "active": 2166,
+        "closing": 1452,
+        "maximum_active_residual_mps": 0.03045875020325184,
+        "maximum_closing_mps": 0.03045875020325184,
+        "maximum_complementarity_product_Ns_mps": 0.00957773571732029,
+        "normal_kkt_l2_mps": 0.17490905814035793,
+        "rows": 2379
+      },
+      "velocity_digest": "5a14e01440a52741"
+    },
+    {
+      "cumulative_solver_ms": 12.141434,
+      "iterations": 50,
+      "kinetic_J": 26.418251890400217,
+      "residual": {
+        "active": 2137,
+        "closing": 1214,
+        "maximum_active_residual_mps": 0.008437316864728928,
+        "maximum_closing_mps": 0.008437316864728928,
+        "maximum_complementarity_product_Ns_mps": 0.0036407526213423635,
+        "normal_kkt_l2_mps": 0.037089495925980785,
+        "rows": 2379
+      },
+      "velocity_digest": "f6b43a577e28cfe6"
+    },
+    {
+      "cumulative_solver_ms": 23.380298,
+      "iterations": 100,
+      "kinetic_J": 26.379678953006476,
+      "residual": {
+        "active": 2118,
+        "closing": 1096,
+        "maximum_active_residual_mps": 0.00237433984875679,
+        "maximum_closing_mps": 0.00237433984875679,
+        "maximum_complementarity_product_Ns_mps": 0.0011109775513050701,
+        "normal_kkt_l2_mps": 0.009358949139780134,
+        "rows": 2379
+      },
+      "velocity_digest": "de6342b5e6716246"
+    },
+    {
+      "cumulative_solver_ms": 45.606679,
+      "iterations": 200,
+      "kinetic_J": 26.378167940638622,
+      "residual": {
+        "active": 2106,
+        "closing": 1011,
+        "maximum_active_residual_mps": 0.0016928347758948803,
+        "maximum_closing_mps": 0.0011494908249005675,
+        "maximum_complementarity_product_Ns_mps": 0.0006605146880533791,
+        "normal_kkt_l2_mps": 0.0029850517970624077,
+        "rows": 2379
+      },
+      "velocity_digest": "d0c9e2f7f133588b"
+    },
+    {
+      "cumulative_solver_ms": 100.308921,
+      "iterations": 500,
+      "kinetic_J": 26.378857114919647,
+      "residual": {
+        "active": 2105,
+        "closing": 1016,
+        "maximum_active_residual_mps": 0.00016883588978089392,
+        "maximum_closing_mps": 6.822310388088226e-05,
+        "maximum_complementarity_product_Ns_mps": 1.719878971290223e-05,
+        "normal_kkt_l2_mps": 0.0003106104891444269,
+        "rows": 2379
+      },
+      "velocity_digest": "6a43ef5ebaab2e72"
+    },
+    {
+      "cumulative_solver_ms": 171.90409699999998,
+      "iterations": 1000,
+      "kinetic_J": 26.378950890464335,
+      "residual": {
+        "active": 2102,
+        "closing": 977,
+        "maximum_active_residual_mps": 0.00019377926946617663,
+        "maximum_closing_mps": 5.8558391174301505e-05,
+        "maximum_complementarity_product_Ns_mps": 1.161536912375671e-05,
+        "normal_kkt_l2_mps": 0.00020580126054686702,
+        "rows": 2379
+      },
+      "velocity_digest": "2b72007c761a021f"
+    },
+    {
+      "cumulative_solver_ms": 298.45805299999995,
+      "iterations": 2000,
+      "kinetic_J": 26.37901632821167,
+      "residual": {
+        "active": 2101,
+        "closing": 999,
+        "maximum_active_residual_mps": 5.857099677086808e-05,
+        "maximum_closing_mps": 5.857099677086808e-05,
+        "maximum_complementarity_product_Ns_mps": 1.2481762262470488e-05,
+        "normal_kkt_l2_mps": 6.138970162396633e-05,
+        "rows": 2379
+      },
+      "velocity_digest": "d91c2804799937ee"
+    }
+  ],
+  "contacts": 2379,
+  "dt": 0.01666666753590107,
+  "kinetic_after_J": 27.351556031695264,
+  "kinetic_before_J": 29.640942323336283,
+  "original_10_pgs_after_velocity_digest": "3eaf5d8bd0e37b6b",
+  "original_10_pgs_ms": 4.16398,
+  "original_10_pgs_residual": {
+    "active": 2176,
+    "closing": 1642,
+    "maximum_active_residual_mps": 0.05334782972931862,
+    "maximum_closing_mps": 0.05334782972931862,
+    "maximum_complementarity_product_Ns_mps": 0.010278745101336417,
+    "normal_kkt_l2_mps": 0.3579793259914575,
+    "rows": 2379
+  },
+  "reference_scope": "Offline fixed-geometry convergence diagnosis only; unchanged production remains ten velocity iterations. No reference result is accepted as a gameplay fix.",
+  "result_exact_bit_parity": true,
+  "schema": "judas.contact-replay.v1",
+  "sequence": 3470
+}

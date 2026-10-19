@@ -1,0 +1,142 @@
+{
+  "schema": "judas.continuous-toi-a1-world-quality-diagnostic.v1",
+  "utc": "2026-10-19T11:45:07.160702+00:00",
+  "scope": "A numerical experiment, not production acceptance. No new physical thresholds introduced. Timings are diagnostic single observations, not FPS or a significance claim.",
+  "baseline_run": "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/runs/quality-capture-A1",
+  "candidate_run": "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/runs/continuous-toi-A1",
+  "baseline": {
+    "observations": 271,
+    "first_step": "0",
+    "last_step": "270",
+    "selected_entity_counts": [
+      1024
+    ],
+    "live_body_counts": [
+      1024
+    ],
+    "mass_kg": [
+      2048.0
+    ],
+    "all_finite": true,
+    "all_valid_uniform_gravity_potential": true,
+    "floor_supported_counts": [
+      1024
+    ],
+    "fully_inside_floor_counts": [
+      1024
+    ],
+    "minimum_floor_clearance_m": -0.06358218648721486,
+    "minimum_clearance_step": 194,
+    "initial_mechanical_energy_J": 32346.31753646828,
+    "final_mechanical_energy_J": 26254.66731615509,
+    "maximum_energy_increase_over_initial_J": 0.0,
+    "largest_one_step_energy_increase_J": 8.458998655591131,
+    "maximum_linear_kinetic_J": 1662.9601658160384,
+    "maximum_rotational_kinetic_J": 84.28148906341792,
+    "maximum_sampled_contact_penetration_m": 0.057799417906337136,
+    "sampled_contact_uncertain_total": 0.0,
+    "sampled_contact_unsupported_total": 0.0,
+    "maximum_linear_speed_mps": 5.92779016495,
+    "maximum_angular_speed_rps": 12.4631061554,
+    "chronological_and_initial_events_total": 3520,
+    "impact_query_total": 6608132,
+    "impact_search_iterations_total": 511168,
+    "last_30_event_total": 495,
+    "last_30_impact_query_total": 3926623,
+    "last_30_search_iterations_total": 343495,
+    "last_step_impact_events": 51,
+    "last_step_contacts": 3122,
+    "endpoint_quality": {
+      "candidate_pairs": 9327,
+      "contact_points": 2475,
+      "deepest_endpoint_penetration_m": 0.007217108528522143,
+      "observation_ms": 31.511217,
+      "outside_fixed_step_timing": true,
+      "population": 1024,
+      "scope": "endpoint primitive geometry for the authored loose_piece population",
+      "tag_available": true,
+      "uncertain_pairs": 0,
+      "unsupported_candidates": 0
+    }
+  },
+  "candidate": {
+    "observations": 271,
+    "first_step": "0",
+    "last_step": "270",
+    "selected_entity_counts": [
+      1024
+    ],
+    "live_body_counts": [
+      1024
+    ],
+    "mass_kg": [
+      2048.0
+    ],
+    "all_finite": true,
+    "all_valid_uniform_gravity_potential": true,
+    "floor_supported_counts": [
+      1024
+    ],
+    "fully_inside_floor_counts": [
+      1024
+    ],
+    "minimum_floor_clearance_m": -0.06112406328803344,
+    "minimum_clearance_step": 194,
+    "initial_mechanical_energy_J": 32346.31753646828,
+    "final_mechanical_energy_J": 26261.899184105154,
+    "maximum_energy_increase_over_initial_J": 0.0,
+    "largest_one_step_energy_increase_J": 8.45674614332529,
+    "maximum_linear_kinetic_J": 1662.9601658160384,
+    "maximum_rotational_kinetic_J": 76.62907846480046,
+    "maximum_sampled_contact_penetration_m": 0.05604090669277953,
+    "sampled_contact_uncertain_total": 0.0,
+    "sampled_contact_unsupported_total": 0.0,
+    "maximum_linear_speed_mps": 5.92909574509,
+    "maximum_angular_speed_rps": 12.0130834579,
+    "chronological_and_initial_events_total": 3309,
+    "impact_query_total": 5345124,
+    "impact_search_iterations_total": 370187,
+    "last_30_event_total": 385,
+    "last_30_impact_query_total": 3046456,
+    "last_30_search_iterations_total": 231492,
+    "last_step_impact_events": 13,
+    "last_step_contacts": 3122,
+    "endpoint_quality": {
+      "candidate_pairs": 9292,
+      "contact_points": 2526,
+      "deepest_endpoint_penetration_m": 0.02087548232169715,
+      "observation_ms": 29.918657,
+      "outside_fixed_step_timing": true,
+      "population": 1024,
+      "scope": "endpoint primitive geometry for the authored loose_piece population",
+      "tag_available": true,
+      "uncertain_pairs": 0,
+      "unsupported_candidates": 0
+    }
+  },
+  "first_physical_difference": {
+    "step": "5",
+    "differences": {
+      "trajectory_digest": [
+        "082cb3342e25b0f5",
+        "3d1d390c666c84b9"
+      ]
+    }
+  },
+  "deltas": {
+    "minimum_floor_clearance_m": 0.002458123199181428,
+    "final_mechanical_energy_J": 7.231867950064043,
+    "maximum_sampled_contact_penetration_m": -0.0017585112135576064,
+    "chronological_and_initial_events_total": -211,
+    "impact_query_total": -1263008,
+    "impact_search_iterations_total": -140981
+  },
+  "source_data_sha256": {
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/runs/quality-capture-A1/live/steps.csv": "8f14e76931ece2f95b5f5587e3c5de725437f82d443ce071aa7ab76cca8e90c3",
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/runs/quality-capture-A1/live/temporal-quality.csv": "3dea81ea3b417e8015ac71bb767172d709bcf47aca9dd86a35f3d771808bc5aa",
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/runs/quality-capture-A1/live/quality.json": "fb7fc57dc4e4a151c293e8240befd2f1de7a4029e149c36cb8d2318bdaccbb73",
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/runs/continuous-toi-A1/live/steps.csv": "d327e2709fcd7abb91297b483235f4bad1cc471e2a62478612accd099504f80a",
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/runs/continuous-toi-A1/live/temporal-quality.csv": "66d7edc6e0d92b48ff0a7871c3216a064218427ab4d0462f948eec1776e09142",
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/runs/continuous-toi-A1/live/quality.json": "1c6fa29d3874e5a3645894c98e30d87072813201f3a2e1dbcbd770535b58f810"
+  }
+}

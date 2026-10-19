@@ -1,0 +1,63 @@
+{
+  "utc": "2026-10-19T11:25:47.307515+00:00",
+  "commands": [
+    {
+      "name": "configure",
+      "argv": [
+        "cmake",
+        "-S",
+        ".",
+        "-B",
+        "build"
+      ],
+      "actual_exit": 0,
+      "expected_exit": 0,
+      "wall_seconds": 2.268237446999592,
+      "log": ".cache/dense-scalability-20261019/sphere-adoption/configure.txt",
+      "sha256": "742cadfeddd3220f386aa47ff3637a0dfeaee6103795c60a90fe6d69d3f63329"
+    },
+    {
+      "name": "build",
+      "argv": [
+        "cmake",
+        "--build",
+        "build",
+        "--target",
+        "judas_contact_sphere_filter_tests",
+        "--parallel",
+        "2"
+      ],
+      "actual_exit": 0,
+      "expected_exit": 0,
+      "wall_seconds": 12.793702130000383,
+      "log": ".cache/dense-scalability-20261019/sphere-adoption/build.txt",
+      "sha256": "729e628610e9c32cdd71d4c8dac5086dc8d16c08f13b80220f5e97b0b21eba96"
+    },
+    {
+      "name": "normal",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_contact_sphere_filter_tests"
+      ],
+      "actual_exit": 0,
+      "expected_exit": 0,
+      "wall_seconds": 0.3802634430003309,
+      "log": ".cache/dense-scalability-20261019/sphere-adoption/normal.txt",
+      "sha256": "ee9f45d149b627c4543377f02519284baef002fc2a63af61cd51b94c96d9b287"
+    },
+    {
+      "name": "negative",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_contact_sphere_filter_tests",
+        "--omit-bound"
+      ],
+      "actual_exit": 1,
+      "expected_exit": 1,
+      "wall_seconds": 0.3505480969997734,
+      "log": ".cache/dense-scalability-20261019/sphere-adoption/negative.txt",
+      "sha256": "06d6ff49d5f5fb70abb3f607f1e095d20ef52a2d3bbdb50b5c06ecc16fdf6521"
+    }
+  ],
+  "scope": "production sphere certificate adoption focused checks; no performance claim",
+  "binary_sha256": "1a5680bf8692268584659cf7ee8c0abefb728c6e7851259bc128209284c1ba46",
+  "finished_utc": "2026-10-19T11:26:03.102273+00:00"
+}

@@ -1,0 +1,25 @@
+A1 numerical research boundary (2026-10-19)
+=========================================
+This is an experiment, not a production-accepted fix.
+
+The exact native input replay contains 18 genuinely executed queries. Thirteen
+return times change under the continuous-Cayley separation guard. All reported
+hits have real native manifolds; no query is dropped despite continuous overlap
+at its requested endpoint. Three new returned times have tiny positive exact
+continuous SAT gaps (about 0.4-1.8 femtometres); this is explicit interval
+uncertainty fallback, not a new geometric tolerance. The original two already-
+overlapping-at-start cases are retained rather than discarded.
+
+Important review finding: after a failed bounded polynomial certificate, A1
+enters the original sampling code and preserves its budget, but touchingAt
+still uses the smooth separation guard. This is not a literal original-query
+fallback. Existing temporal sampling is not a continuous proof and can miss
+very short intersections. A production correction must resolve that boundary,
+for example certified point gap/speed advancement with conservative rounding,
+and explicit native-query fallback whenever the new path is unsupported or
+cannot make safe progress. Do not infer complete CCD fidelity or acceptance
+from the fact that these 18 queries still find future contacts.
+
+A1 sources and binary are byte-preserved in snapshot/isolated-overrides.tar.gz
+and WORLD_BUILD.json. ContinuousBoxCCD.v2.h is a separate, intentional later
+experiment. Do not substitute it silently for the A1 header.

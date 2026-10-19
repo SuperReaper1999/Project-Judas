@@ -1,0 +1,65 @@
+A4 coherent conservative phase: rejected, not a production fix
+============================================================
+2026-10-19. No production changes. Frozen final parity-proven geometry fastpath
+archive plus ONE WorldCCDSearch.cpp replacement. ContinuousBoxCCD.h is the
+checked-interval V3 helper, unchanged from its independently exercised controls.
+
+Architecture tested
+-------------------
+A private simple-BoxBox zero-pivot, non-prescribed dynamic/static path uses
+continuous anchored Cayley geometry. Every new-phase advance uses its precise
+point separation plus a whole-prefix Bernstein certificate or conservative
+point-gap/speed bound. Source velocities/rotation generators, actual masses,
+contact geometry, friction, solver budgets, timestep and body counts unchanged.
+
+The old eight-small-proximity-advance heuristic is bypassed ONLY in the new
+certified convex phase. The existing 64 advancement cap and 32 bisection updates
+remain unchanged. Unsupported/uncertain/nonprogress/exhaustion retries the SAME
+legacy search implementation from the ORIGINAL query start with native truth.
+The native 14-float pose cache stores native truth only; precise queries remain
+outside that cache. SafeAdvance's downward-rounded absolute endpoint is carried
+directly into the next time, never rounded upward by subtract/re-add.
+A smooth contact without an actual native manifold triggers native fallback.
+No impulse is supplied across a gap. No scene, entity ID or game policy used.
+
+Actual reproduced result
+------------------------
+All 18 captured original queries return exactly their original native times.
+All 16 smooth-separated new-phase attempts exhaust the unchanged 64 advance cap
+and retry native. The two already-overlapping-at-start queries retry after the
+first new-phase observation. No future contacts are dropped, and all reported
+hits still have actual native manifolds. But the false arrivals remain.
+
+Process elapsed 0.82 s, user 0.81 s for 18 queries including diagnostic output/probes.
+This is not a precise isolated per-query timing benchmark, but establishes that
+the research path is not practically cheap in its current form. No full 270
+world run was performed because it has no demonstrated retiming benefit.
+Do not adopt, raise the budget, or call this a corrected mechanism.
+
+The original quantization cause remains established separately by exact native
+replay and rational all-time prefix proof. A1's changed-predicate bounded sampler
+reduced final-step events 51 -> 13 but was not a fully conservative replacement.
+A3 added literal native fallback; it always fell back at the existing eight-small-
+advance heuristic. A4 established that simply allowing the already-existing 64
+advances and making every new advance conservative still fails economically.
+All earlier sources and failed attempts remain preserved in separate folders.
+
+Helper controls
+---------------
+The geometry agent's A3_CONTROLS_RESULTS.json records 33 positive/negative checks,
+a deliberate endpoint-only mutant detected by 2 failures, and 14 actual captured
+prefix cases agreeing with the exact rational reference (12 separated-prefix
+proofs, 2 already-overlapping cases). These qualify the helper's bounded claims;
+they do not make the A4 world-query optimization successful.
+
+Evidence
+--------
+WORLD_BUILD.json / snapshot/FROZEN.json / snapshot-normal/FROZEN.json:
+ exact build, base archive, source and distinct quality/ordinary binary hashes.
+REPLAY_BUILD.json: exact replay compiler/link/source/binary hashes.
+pair-replay.json: all 18 original input reproductions, iterations and probes.
+REPLAY_ANALYSIS.json: independent rational geometry at each returned time.
+replay-rusage.log: whole-process timing/memory.
+
+No benchmark or acceptance fixture weakened, no additional solver budget,
+no production files edited, and no full-world A4 performance claim.

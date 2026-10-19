@@ -1,0 +1,70 @@
+{
+  "utc": "2026-10-19T11:12:06.601375+00:00",
+  "classification": "isolated mathematical and full-response functional validation; not an FPS or native workload timing result",
+  "results": [
+    {
+      "name": "predicate-normal",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/sphere-filter-research/sphere-filter-tests"
+      ],
+      "exit": 0,
+      "expected_exit": 0,
+      "wall_seconds": 0.3647496290000163,
+      "binary_sha256": "73ca06d8c37032007552c84c7222b17b4c94834de2e871aeb22bd8b0a16a7829",
+      "stdout_sha256": "4ff9e9e21a76858fd26542171a89f5c6f4488972ab48f12c4a57810cfdaeae22",
+      "stderr": "",
+      "pass": true
+    },
+    {
+      "name": "predicate-negative",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/sphere-filter-research/sphere-filter-tests",
+        "--omit-bound"
+      ],
+      "exit": 1,
+      "expected_exit": 1,
+      "wall_seconds": 0.36491790999980367,
+      "binary_sha256": "73ca06d8c37032007552c84c7222b17b4c94834de2e871aeb22bd8b0a16a7829",
+      "stdout_sha256": "f10b9d948bd5df0386df2abd93b1c1d3a58b8ece264ebae8f52fcacf2910cf4a",
+      "stderr": "",
+      "pass": true
+    },
+    {
+      "name": "parity-reference",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/geometry-prototype/parity-reference",
+        "--records",
+        "120000"
+      ],
+      "exit": 0,
+      "expected_exit": 0,
+      "wall_seconds": 3.2703448709999066,
+      "binary_sha256": "2758f7e3cd9edcfbbb186e5d5923a1601490baf3ec9a6400f37ad19670f97dd4",
+      "stdout_sha256": "0686d98a4080532117ff23ae0c5e258503a8849ee73ea83053222ea3132943a0",
+      "stderr": "cases=240026 hits=148228 misses=91798 uncertain=8 boolean_mismatches=0 digest=58ef791288b85955 elapsed_ms=3224.895\n",
+      "pass": true
+    },
+    {
+      "name": "parity-spheres",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/sphere-filter-research/parity-spheres",
+        "--records",
+        "120000"
+      ],
+      "exit": 0,
+      "expected_exit": 0,
+      "wall_seconds": 1.416963300000134,
+      "binary_sha256": "4005d59be2e0cec71f2ce854e3ad6d8410feb5de1d33a8ff533b48f3d7728a34",
+      "stdout_sha256": "0686d98a4080532117ff23ae0c5e258503a8849ee73ea83053222ea3132943a0",
+      "stderr": "cases=240026 hits=148228 misses=91798 uncertain=8 boolean_mismatches=0 digest=58ef791288b85955 elapsed_ms=1382.821\n",
+      "pass": true
+    }
+  ],
+  "parity": {
+    "reference_rows": 240026,
+    "candidate_rows": 240026,
+    "all_response_rows_identical": true,
+    "response_bytes": 6609623
+  },
+  "finished_utc": "2026-10-19T11:12:12.123754+00:00"
+}

@@ -1,0 +1,37 @@
+{
+  "commands": [
+    [
+      "/usr/bin/c++",
+      "-O3",
+      "-DNDEBUG",
+      "-std=c++17",
+      "-Wall",
+      "-Wextra",
+      "-I/home/conner/Documents/GitHub/Project-Judas/src",
+      "-I/home/conner/Documents/GitHub/Project-Judas",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/continuous-toi-prototype/ContinuousBoxCCDTests.v3.cpp",
+      "-o",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/continuous-toi-prototype/ContinuousBoxCCDTests.v3"
+    ],
+    [
+      "/usr/bin/c++",
+      "-O3",
+      "-DNDEBUG",
+      "-std=c++17",
+      "-Wall",
+      "-Wextra",
+      "-I/home/conner/Documents/GitHub/Project-Judas/src",
+      "-I/home/conner/Documents/GitHub/Project-Judas",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/continuous-toi-prototype/CapturedPrefixes.v3.cpp",
+      "-o",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/continuous-toi-prototype/CapturedPrefixes.v3"
+    ]
+  ],
+  "files": {
+    "ContinuousBoxCCD.v3.h": "155faed48bbf5acb22d94a8af0f42da54a50672202df96c1056abe891f95ce48",
+    "ContinuousBoxCCDTests.v3.cpp": "4806c4359a38c5239f7da9195141686451c7763e2f63ec47b1bb3ed3785159e0",
+    "CapturedPrefixes.v3.cpp": "131e7049631deac44a60bd8fbf27fd7eeb37a94f0055f640f16fe0f03c5ca325",
+    "ContinuousBoxCCDTests.v3": "2eb19ccf41d336fe2e4745115fd1fcb85d6beca512b94302ba80b63c359ecd83",
+    "CapturedPrefixes.v3": "84bfb030e9d30bd2c06e6a88c63e9e6a9799960edc13cf4381b61854ea9ef296"
+  }
+}

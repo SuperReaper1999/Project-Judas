@@ -1,0 +1,670 @@
+{
+  "baseline": "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/runs/baseline-A1",
+  "baseline_fixed_ms": {
+    "count": 270,
+    "maximum": 1695.193218,
+    "mean": 93.50908134074074,
+    "median": 25.4253895,
+    "p95_floor": 339.803512,
+    "p99_floor": 974.777721
+  },
+  "baseline_frame_intervals_ms": {
+    "count": 270,
+    "maximum": 1698.306736,
+    "mean": 97.27057016666667,
+    "median": 30.1745335,
+    "p95_floor": 344.076951,
+    "p99_floor": 977.936321
+  },
+  "baseline_steps": 270,
+  "baseline_wall_seconds": 26.97192884499998,
+  "both_completed": true,
+  "candidate": "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/runs/parallel-A1",
+  "candidate_fixed_ms": {
+    "count": 270,
+    "maximum": 1589.592551,
+    "mean": 90.31043283703704,
+    "median": 25.413177,
+    "p95_floor": 315.093404,
+    "p99_floor": 981.08095
+  },
+  "candidate_frame_intervals_ms": {
+    "count": 270,
+    "maximum": 1593.200874,
+    "mean": 93.74201841481482,
+    "median": 29.023359,
+    "p95_floor": 318.594603,
+    "p99_floor": 984.426731
+  },
+  "candidate_steps": 270,
+  "candidate_wall_seconds": 25.81583013799991,
+  "compared_physical_fields": [
+    "step",
+    "bodies",
+    "awake",
+    "sleeping",
+    "candidates",
+    "contacts",
+    "impact_events",
+    "impact_queries",
+    "impact_iterations",
+    "impact_peak",
+    "trajectory_digest",
+    "max_linear_speed",
+    "max_angular_speed",
+    "nonfinite_fields"
+  ],
+  "exact_comparison_pass": false,
+  "exact_endpoint_geometry": true,
+  "exact_physical_rows": false,
+  "first_100_mismatches": [
+    {
+      "baseline": "281",
+      "candidate": "279",
+      "field": "impact_iterations",
+      "step": 147
+    },
+    {
+      "baseline": "429",
+      "candidate": "424",
+      "field": "impact_iterations",
+      "step": 150
+    },
+    {
+      "baseline": "2001",
+      "candidate": "1994",
+      "field": "impact_iterations",
+      "step": 152
+    },
+    {
+      "baseline": "16885",
+      "candidate": "16870",
+      "field": "impact_iterations",
+      "step": 153
+    },
+    {
+      "baseline": "1317",
+      "candidate": "1316",
+      "field": "impact_iterations",
+      "step": 154
+    },
+    {
+      "baseline": "1021",
+      "candidate": "1013",
+      "field": "impact_iterations",
+      "step": 155
+    },
+    {
+      "baseline": "914",
+      "candidate": "906",
+      "field": "impact_iterations",
+      "step": 156
+    },
+    {
+      "baseline": "498",
+      "candidate": "496",
+      "field": "impact_iterations",
+      "step": 158
+    },
+    {
+      "baseline": "2569",
+      "candidate": "2563",
+      "field": "impact_iterations",
+      "step": 159
+    },
+    {
+      "baseline": "2861",
+      "candidate": "2854",
+      "field": "impact_iterations",
+      "step": 160
+    },
+    {
+      "baseline": "1081",
+      "candidate": "1078",
+      "field": "impact_iterations",
+      "step": 162
+    },
+    {
+      "baseline": "987",
+      "candidate": "985",
+      "field": "impact_iterations",
+      "step": 163
+    },
+    {
+      "baseline": "656",
+      "candidate": "653",
+      "field": "impact_iterations",
+      "step": 164
+    },
+    {
+      "baseline": "1157",
+      "candidate": "1154",
+      "field": "impact_iterations",
+      "step": 165
+    },
+    {
+      "baseline": "1093",
+      "candidate": "1092",
+      "field": "impact_iterations",
+      "step": 166
+    },
+    {
+      "baseline": "715",
+      "candidate": "714",
+      "field": "impact_iterations",
+      "step": 167
+    },
+    {
+      "baseline": "882",
+      "candidate": "880",
+      "field": "impact_iterations",
+      "step": 168
+    },
+    {
+      "baseline": "1026",
+      "candidate": "1019",
+      "field": "impact_iterations",
+      "step": 169
+    },
+    {
+      "baseline": "1668",
+      "candidate": "1659",
+      "field": "impact_iterations",
+      "step": 170
+    },
+    {
+      "baseline": "1068",
+      "candidate": "1066",
+      "field": "impact_iterations",
+      "step": 171
+    },
+    {
+      "baseline": "1460",
+      "candidate": "1453",
+      "field": "impact_iterations",
+      "step": 172
+    },
+    {
+      "baseline": "1320",
+      "candidate": "1313",
+      "field": "impact_iterations",
+      "step": 173
+    },
+    {
+      "baseline": "1736",
+      "candidate": "1734",
+      "field": "impact_iterations",
+      "step": 174
+    },
+    {
+      "baseline": "1518",
+      "candidate": "1511",
+      "field": "impact_iterations",
+      "step": 175
+    },
+    {
+      "baseline": "972",
+      "candidate": "968",
+      "field": "impact_iterations",
+      "step": 176
+    },
+    {
+      "baseline": "762",
+      "candidate": "757",
+      "field": "impact_iterations",
+      "step": 177
+    },
+    {
+      "baseline": "200",
+      "candidate": "198",
+      "field": "impact_iterations",
+      "step": 178
+    },
+    {
+      "baseline": "1400",
+      "candidate": "1387",
+      "field": "impact_iterations",
+      "step": 179
+    },
+    {
+      "baseline": "1180",
+      "candidate": "1165",
+      "field": "impact_iterations",
+      "step": 180
+    },
+    {
+      "baseline": "705",
+      "candidate": "702",
+      "field": "impact_iterations",
+      "step": 181
+    },
+    {
+      "baseline": "749",
+      "candidate": "748",
+      "field": "impact_iterations",
+      "step": 182
+    },
+    {
+      "baseline": "989",
+      "candidate": "985",
+      "field": "impact_iterations",
+      "step": 183
+    },
+    {
+      "baseline": "818",
+      "candidate": "815",
+      "field": "impact_iterations",
+      "step": 184
+    },
+    {
+      "baseline": "708",
+      "candidate": "707",
+      "field": "impact_iterations",
+      "step": 185
+    },
+    {
+      "baseline": "565",
+      "candidate": "564",
+      "field": "impact_iterations",
+      "step": 186
+    },
+    {
+      "baseline": "977",
+      "candidate": "976",
+      "field": "impact_iterations",
+      "step": 191
+    },
+    {
+      "baseline": "777",
+      "candidate": "776",
+      "field": "impact_iterations",
+      "step": 192
+    },
+    {
+      "baseline": "865",
+      "candidate": "860",
+      "field": "impact_iterations",
+      "step": 193
+    },
+    {
+      "baseline": "1545",
+      "candidate": "1532",
+      "field": "impact_iterations",
+      "step": 194
+    },
+    {
+      "baseline": "940",
+      "candidate": "938",
+      "field": "impact_iterations",
+      "step": 196
+    },
+    {
+      "baseline": "1017",
+      "candidate": "1016",
+      "field": "impact_iterations",
+      "step": 197
+    },
+    {
+      "baseline": "927",
+      "candidate": "924",
+      "field": "impact_iterations",
+      "step": 198
+    },
+    {
+      "baseline": "1724",
+      "candidate": "1721",
+      "field": "impact_iterations",
+      "step": 199
+    },
+    {
+      "baseline": "1381",
+      "candidate": "1379",
+      "field": "impact_iterations",
+      "step": 202
+    },
+    {
+      "baseline": "1036",
+      "candidate": "1034",
+      "field": "impact_iterations",
+      "step": 206
+    },
+    {
+      "baseline": "648",
+      "candidate": "647",
+      "field": "impact_iterations",
+      "step": 208
+    },
+    {
+      "baseline": "830",
+      "candidate": "829",
+      "field": "impact_iterations",
+      "step": 209
+    },
+    {
+      "baseline": "1724",
+      "candidate": "1722",
+      "field": "impact_iterations",
+      "step": 210
+    },
+    {
+      "baseline": "1476",
+      "candidate": "1475",
+      "field": "impact_iterations",
+      "step": 212
+    },
+    {
+      "baseline": "2436",
+      "candidate": "2430",
+      "field": "impact_iterations",
+      "step": 213
+    },
+    {
+      "baseline": "1545",
+      "candidate": "1543",
+      "field": "impact_iterations",
+      "step": 214
+    },
+    {
+      "baseline": "836",
+      "candidate": "830",
+      "field": "impact_iterations",
+      "step": 215
+    },
+    {
+      "baseline": "1536",
+      "candidate": "1526",
+      "field": "impact_iterations",
+      "step": 216
+    },
+    {
+      "baseline": "1769",
+      "candidate": "1767",
+      "field": "impact_iterations",
+      "step": 217
+    },
+    {
+      "baseline": "2940",
+      "candidate": "2934",
+      "field": "impact_iterations",
+      "step": 218
+    },
+    {
+      "baseline": "2798",
+      "candidate": "2796",
+      "field": "impact_iterations",
+      "step": 221
+    },
+    {
+      "baseline": "1667",
+      "candidate": "1665",
+      "field": "impact_iterations",
+      "step": 222
+    },
+    {
+      "baseline": "2204",
+      "candidate": "2198",
+      "field": "impact_iterations",
+      "step": 223
+    },
+    {
+      "baseline": "4983",
+      "candidate": "4970",
+      "field": "impact_iterations",
+      "step": 225
+    },
+    {
+      "baseline": "1715",
+      "candidate": "1714",
+      "field": "impact_iterations",
+      "step": 226
+    },
+    {
+      "baseline": "1305",
+      "candidate": "1301",
+      "field": "impact_iterations",
+      "step": 228
+    },
+    {
+      "baseline": "4612",
+      "candidate": "4600",
+      "field": "impact_iterations",
+      "step": 229
+    },
+    {
+      "baseline": "3621",
+      "candidate": "3613",
+      "field": "impact_iterations",
+      "step": 230
+    },
+    {
+      "baseline": "3272",
+      "candidate": "3270",
+      "field": "impact_iterations",
+      "step": 231
+    },
+    {
+      "baseline": "1315",
+      "candidate": "1313",
+      "field": "impact_iterations",
+      "step": 232
+    },
+    {
+      "baseline": "774",
+      "candidate": "772",
+      "field": "impact_iterations",
+      "step": 233
+    },
+    {
+      "baseline": "2777",
+      "candidate": "2775",
+      "field": "impact_iterations",
+      "step": 234
+    },
+    {
+      "baseline": "5285",
+      "candidate": "5283",
+      "field": "impact_iterations",
+      "step": 236
+    },
+    {
+      "baseline": "8672",
+      "candidate": "8661",
+      "field": "impact_iterations",
+      "step": 237
+    },
+    {
+      "baseline": "6865",
+      "candidate": "6858",
+      "field": "impact_iterations",
+      "step": 238
+    },
+    {
+      "baseline": "2669",
+      "candidate": "2665",
+      "field": "impact_iterations",
+      "step": 239
+    },
+    {
+      "baseline": "5205",
+      "candidate": "5202",
+      "field": "impact_iterations",
+      "step": 240
+    },
+    {
+      "baseline": "4380",
+      "candidate": "4377",
+      "field": "impact_iterations",
+      "step": 241
+    },
+    {
+      "baseline": "4231",
+      "candidate": "4230",
+      "field": "impact_iterations",
+      "step": 242
+    },
+    {
+      "baseline": "446",
+      "candidate": "445",
+      "field": "impact_iterations",
+      "step": 243
+    },
+    {
+      "baseline": "2232",
+      "candidate": "2229",
+      "field": "impact_iterations",
+      "step": 244
+    },
+    {
+      "baseline": "3881",
+      "candidate": "3875",
+      "field": "impact_iterations",
+      "step": 245
+    },
+    {
+      "baseline": "3659",
+      "candidate": "3653",
+      "field": "impact_iterations",
+      "step": 246
+    },
+    {
+      "baseline": "4197",
+      "candidate": "4194",
+      "field": "impact_iterations",
+      "step": 247
+    },
+    {
+      "baseline": "5011",
+      "candidate": "5008",
+      "field": "impact_iterations",
+      "step": 248
+    },
+    {
+      "baseline": "1050",
+      "candidate": "1047",
+      "field": "impact_iterations",
+      "step": 249
+    },
+    {
+      "baseline": "3348",
+      "candidate": "3343",
+      "field": "impact_iterations",
+      "step": 250
+    },
+    {
+      "baseline": "6368",
+      "candidate": "6367",
+      "field": "impact_iterations",
+      "step": 251
+    },
+    {
+      "baseline": "6416",
+      "candidate": "6404",
+      "field": "impact_iterations",
+      "step": 252
+    },
+    {
+      "baseline": "4986",
+      "candidate": "4980",
+      "field": "impact_iterations",
+      "step": 253
+    },
+    {
+      "baseline": "8847",
+      "candidate": "8839",
+      "field": "impact_iterations",
+      "step": 254
+    },
+    {
+      "baseline": "12845",
+      "candidate": "12830",
+      "field": "impact_iterations",
+      "step": 255
+    },
+    {
+      "baseline": "5426",
+      "candidate": "5423",
+      "field": "impact_iterations",
+      "step": 256
+    },
+    {
+      "baseline": "9271",
+      "candidate": "9265",
+      "field": "impact_iterations",
+      "step": 257
+    },
+    {
+      "baseline": "8145",
+      "candidate": "8133",
+      "field": "impact_iterations",
+      "step": 258
+    },
+    {
+      "baseline": "7126",
+      "candidate": "7115",
+      "field": "impact_iterations",
+      "step": 259
+    },
+    {
+      "baseline": "16940",
+      "candidate": "16904",
+      "field": "impact_iterations",
+      "step": 260
+    },
+    {
+      "baseline": "17092",
+      "candidate": "17087",
+      "field": "impact_iterations",
+      "step": 261
+    },
+    {
+      "baseline": "28853",
+      "candidate": "28827",
+      "field": "impact_iterations",
+      "step": 262
+    },
+    {
+      "baseline": "4755",
+      "candidate": "4741",
+      "field": "impact_iterations",
+      "step": 263
+    },
+    {
+      "baseline": "9945",
+      "candidate": "9904",
+      "field": "impact_iterations",
+      "step": 264
+    },
+    {
+      "baseline": "14697",
+      "candidate": "14691",
+      "field": "impact_iterations",
+      "step": 265
+    },
+    {
+      "baseline": "11134",
+      "candidate": "11129",
+      "field": "impact_iterations",
+      "step": 266
+    },
+    {
+      "baseline": "18266",
+      "candidate": "18250",
+      "field": "impact_iterations",
+      "step": 267
+    },
+    {
+      "baseline": "29322",
+      "candidate": "29272",
+      "field": "impact_iterations",
+      "step": 268
+    }
+  ],
+  "physical_mismatch_count": 102,
+  "same_fixture": true,
+  "same_mode": true,
+  "same_profile_setting": true,
+  "schema": "judas.dense.compare.v1",
+  "timing_note": "Single paired observation, not a universal bound or statistical significance claim. Synthetic cadence is not FPS.",
+  "trajectory_note": "Non-identical trajectories require independently justified physical acceptance; this comparison does not silently accept them.",
+  "utc": "2026-10-19T10:25:17.768751+00:00"
+}

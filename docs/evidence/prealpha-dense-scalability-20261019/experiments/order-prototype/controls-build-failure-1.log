@@ -1,0 +1,14 @@
+/usr/bin/x86_64-linux-gnu-ld.bfd: CMakeFiles/judas_impact_solver_tests.dir/tests/ValidationMain.cpp.o: in function `main':
+ValidationMain.cpp:(.text.startup+0x0): multiple definition of `main'; /home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/order-prototype/OrderControls.cpp.o:OrderControls.cpp:(.text.startup+0x0): first defined here
+/usr/bin/x86_64-linux-gnu-ld.bfd: CMakeFiles/judas_impact_solver_tests.dir/tests/ValidationMain.cpp.o: in function `main':
+ValidationMain.cpp:(.text.startup+0x1e): undefined reference to `JudasValidationMain()'
+collect2: error: ld returned 1 exit status
+impact baseline 0 ['Impact response 46 cases 267 checks PASS; safety_fallbacks=0 (actual engine timing is validated separately)']
+Traceback (most recent call last):
+  File "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/order-prototype/controls.py", line 31, in <module>
+    subprocess.run(link, cwd=BUILD, check=True)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.14/subprocess.py", line 578, in run
+    raise CalledProcessError(retcode, process.args,
+                             output=stdout, stderr=stderr)
+subprocess.CalledProcessError: Command '['/usr/bin/c++', '-O3', '-DNDEBUG', '/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/order-prototype/OrderControls.cpp.o', 'CMakeFiles/judas_impact_solver_tests.dir/tests/ValidationMain.cpp.o', '-o', '/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/order-prototype/controls-baseline', '/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/baseline-e30/libjudas_engine.a', 'libjudas_profiler.a', 'libjudas_build_identity.a', 'libjudas_app_icon.a', 'libjudas_materials.a', 'libjudas_profiler.a', '/usr/lib/x86_64-linux-gnu/libSDL2.so', 'libjudas_glad.a', 'libjudas_audio_backend.a', 'libjudas_meshoptimizer.a', 'libjudas_navigation_cook.a', 'libjudas_navigation_backend.a', 'libjudas_quickjs.a', '-lm', '_deps/judas_freetype-build/libfreetype.a', '_deps/judas_harfbuzz-build/libharfbuzz.a', 'unicode/icu/lib/libicui18n.a', 'unicode/icu/lib/libicuuc.a', 'unicode/icu/lib/libicudata.a', '-ldl', 'libjudas_jobs.a']' returned non-zero exit status 1.

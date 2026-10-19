@@ -1,0 +1,11 @@
+test_archive_added_input_cannot_certify_an_old_binary (test_prealpha_validation.GateTests.test_archive_added_input_cannot_certify_an_old_binary) ... ok
+test_deferred_findings_are_not_tests (test_prealpha_validation.GateTests.test_deferred_findings_are_not_tests) ... ok
+test_exit_and_timeout_controls (test_prealpha_validation.GateTests.test_exit_and_timeout_controls) ... ok
+test_identity_probe_is_bound_to_test_bytes (test_prealpha_validation.GateTests.test_identity_probe_is_bound_to_test_bytes) ... ok
+test_manifest_rejects_duplicates_and_bad_targets (test_prealpha_validation.GateTests.test_manifest_rejects_duplicates_and_bad_targets) ... ok
+test_stale_or_absent_embedded_identity_cannot_pass (test_prealpha_validation.GateTests.test_stale_or_absent_embedded_identity_cannot_pass) ... ok
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.248s
+
+OK

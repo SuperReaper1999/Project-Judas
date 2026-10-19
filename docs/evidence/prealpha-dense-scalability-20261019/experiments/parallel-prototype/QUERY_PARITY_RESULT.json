@@ -1,0 +1,33 @@
+{
+  "status": "query-kernel exact parity passed; full integration and performance pending",
+  "utc": "2026-10-19T10:23:24.231578+00:00",
+  "queryCases": 1536,
+  "parallelRepetitions": 3,
+  "bitwiseTOIComparisons": 4608,
+  "hitsPerCorpus": 760,
+  "missesPerCorpus": 776,
+  "failures": 0,
+  "physicalFixtures": [
+    "sphere/sphere",
+    "sphere/box",
+    "box/box",
+    "offset compound box",
+    "static cooked two-triangle sheet",
+    "rotated and translated bodies",
+    "angular motion",
+    "piecewise prescribed motion",
+    "both argument orders",
+    "positive penetration target",
+    "nonzero start time"
+  ],
+  "timingSuite": "existing judas_impact_timing_tests exit 0; does not install pool, therefore serial fallback only",
+  "preservedFailure": "query-build.log: first fixture used nonexistent CompoundBox.center; corrected fixture authoring to actual localCenter. No production or algorithm failure claimed.",
+  "sha256": {
+    ".cache/dense-scalability-20261019/parallel-prototype/QueryParity.cpp": "2e5449a91fc8ef372e201dc0da9ae5c75b610d95e61447355eaf0da3cfa5dcd8",
+    ".cache/dense-scalability-20261019/parallel-prototype/query-parity": "a4f2388ddbb6846e94999478ed9e576a5bfbce2a5f710bdf06e47993a52fa59e",
+    ".cache/dense-scalability-20261019/parallel-prototype/query-parity.log": "8bf07268bf6b0dc6e15e6279bfa231965e8a5ad7edf527376fb25bc29854f3dd",
+    ".cache/dense-scalability-20261019/parallel-prototype/impact-timing.log": "52d83a1b765180db902ea1ebd0332af4618925f9cb8da9a0356ea0644f206a9f",
+    ".cache/dense-scalability-20261019/parallel-prototype/create_prototype.py": "705b6f9f114ceaf1c1f53bc8ed97c3e3977fee8b5394f709fb6dbe591529f537",
+    ".cache/dense-scalability-20261019/parallel-prototype/BUILD.json": "875c3a515d078a71889ad445df696df42f2d59fcbf71ee8be144fa82a0e8eb9e"
+  }
+}

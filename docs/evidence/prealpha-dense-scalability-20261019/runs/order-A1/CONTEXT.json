@@ -1,0 +1,24 @@
+{
+  "binary_sha256": "2f39deee084c27ebe204a3ca8c89936678b42eef9c9b439eb9713e72bd085a20",
+  "environment": {
+    "DISPLAY": ":0",
+    "LIBGL_ALWAYS_SOFTWARE": null,
+    "SDL_AUDIODRIVER": null,
+    "SDL_VIDEODRIVER": null,
+    "WAYLAND_DISPLAY": "wayland-0",
+    "XDG_RUNTIME_DIR": "/run/user/1000",
+    "XDG_SESSION_TYPE": "wayland",
+    "__GL_SYNC_TO_VBLANK": null,
+    "__NV_PRIME_RENDER_OFFLOAD": null
+  },
+  "fixture_sha256": "a2caf62a295243d301149202c8a0a5eedafff256d68de0e3cda988846b2e05bf",
+  "mode": "exact",
+  "profile": 1,
+  "requested_steps": 270,
+  "requested_wall_seconds": 105,
+  "resolution_note": "Runtime default project/window settings; preserve actual runtime renderer log.",
+  "schema": "judas.dense.run.v1",
+  "snapshot": "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/candidate-order",
+  "snapshot_manifest_sha256": "2ae2fac7080fbe97a7ece57e35eba35f5a7fee3700e4f3890e9fa0f0a7ffb5bd",
+  "source_head": "e30d5f9bb72a1a341d3eff7485b8d6b3eb6f8ea9"
+}

@@ -1,0 +1,70 @@
+{
+  "source_head": "e30d5f9bb72a1a341d3eff7485b8d6b3eb6f8ea9",
+  "scope": "isolated \u03b34096 lazy-context SAT filter prototype; no production source edits",
+  "inputs": {
+    ".cache/dense-scalability-20261019/geometry-prototype/v2/Contacts.cpp.o": {
+      "sha256": "b7e5641dd9052da2d45f29e992c169a3336b8fee05b5b3867fd7c75efd77047f",
+      "bytes": 208800
+    },
+    ".cache/dense-scalability-20261019/geometry-prototype/v2/filter-predicates": {
+      "sha256": "06341881269371b2b773040c1f32fcf001ffefe5acb1df550459427ba4c79e69",
+      "bytes": 143952
+    },
+    ".cache/dense-scalability-20261019/geometry-prototype/v2/primitive-boolean-results.txt": {
+      "sha256": "96947ae737e3661873c57c23a99eb1f8e7a3857436c5872732702f88fdd2b818",
+      "bytes": 80
+    },
+    ".cache/dense-scalability-20261019/geometry-prototype/v2/LINK.json": {
+      "sha256": "1a3044b037a988441f48ab44a1ee188de6ce04f4fcbae1be93bf86ebdb449a6d",
+      "bytes": 1304
+    },
+    ".cache/dense-scalability-20261019/geometry-prototype/v2/Contacts.cpp": {
+      "sha256": "e339926f050e65634d4d82075de09b5b1adb54b0fb102f74ed3b1ded58bb617c",
+      "bytes": 32483
+    },
+    ".cache/dense-scalability-20261019/geometry-prototype/v2/predicate-results.txt": {
+      "sha256": "a2ec515485265ff1a9a76b7a72753c6a8d55d0a579ac87f37ff108799e2052cf",
+      "bytes": 138
+    },
+    ".cache/dense-scalability-20261019/geometry-prototype/v2/judas-filtered": {
+      "sha256": "77c1ae61fbfaa513f53ca3685e189e0feb7e1aa9e00bca3225abdc40962de4c5",
+      "bytes": 54996576
+    },
+    ".cache/dense-scalability-20261019/geometry-prototype/v2/FilteredSat.h": {
+      "sha256": "a19f2e6d7fb7acf3663eba81e3be04168b5812761708aeff1f34130dd611ea6b",
+      "bytes": 5026
+    },
+    ".cache/dense-scalability-20261019/geometry-prototype/v2/parity-filtered": {
+      "sha256": "4fc97ad2dbb8f70cea73eec617b690fadc0941ced091b2adcfa8b867e05cf637",
+      "bytes": 167952
+    },
+    ".cache/dense-scalability-20261019/geometry-prototype/v2/libjudas_engine.a": {
+      "sha256": "2eda8dc934e9e8d783775e09712b31114209a40b2c723de550053c39ffe428e0",
+      "bytes": 30371898
+    },
+    ".cache/dense-scalability-20261019/geometry-prototype/v2/FilterPredicates.cpp": {
+      "sha256": "883309826cc9d5204e089719e512567faccd47621c4a03f7e0de6b33af576398",
+      "bytes": 3894
+    },
+    ".cache/dense-scalability-20261019/geometry-prototype/v2/RESULTS.json": {
+      "sha256": "32b4c54feefdfd5812c94cf17751d1d7344053a07ab7e28c3210ab74503ecc93",
+      "bytes": 767
+    },
+    ".cache/dense-scalability-20261019/geometry-prototype/v2/primitive-boolean": {
+      "sha256": "1238d8638d793e6913134900e7fd8eae2023bb9804fc8e5a4fe2e6e8fd11e8a2",
+      "bytes": 190896
+    },
+    ".cache/dense-scalability-20261019/geometry-prototype/v2/Parity.cpp": {
+      "sha256": "c5fc7a8bcdd37310477069fb7e7c4cae4b98de26655e7beaf39972890005597c",
+      "bytes": 4810
+    },
+    ".cache/dense-scalability-20261019/geometry-prototype/v2/filtered-large.out": {
+      "sha256": "0686d98a4080532117ff23ae0c5e258503a8849ee73ea83053222ea3132943a0",
+      "bytes": 6609623
+    },
+    ".cache/dense-scalability-20261019/geometry-prototype/v2/predicate-negative-results.txt": {
+      "sha256": "befd43ce93c11472e4ea7b10500a2ad6fa773c9d331e191221d0f9fd765ec680",
+      "bytes": 1458
+    }
+  }
+}

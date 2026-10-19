@@ -1,0 +1,21 @@
+{
+  "argv": [
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/warm-force-prototype/snapshot/bin/judas_physics_stress_live_benchmark",
+    "/home/conner/Documents/GitHub/Project-Judas/projects/physics_stress_lab/Scenes/room1024.judas",
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/runs/warm-force-A1/live",
+    "90.0",
+    "270",
+    "0",
+    "0",
+    "1",
+    "0.016666667",
+    "1",
+    "0",
+    "1"
+  ],
+  "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+  "process_group": 20957,
+  "timed_out": false,
+  "timeout_seconds": 100.0,
+  "utc": "2026-10-19T11:08:00.150356+00:00"
+}

@@ -1,0 +1,15 @@
+{
+  "argv": [
+    "python3",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "tests",
+    "-p",
+    "test_physics_dense_measure.py",
+    "-v"
+  ],
+  "exit": 0,
+  "scope": "11 synthetic measurement-tool tests; not engine performance"
+}

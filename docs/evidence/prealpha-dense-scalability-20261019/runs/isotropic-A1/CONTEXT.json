@@ -1,0 +1,24 @@
+{
+  "binary_sha256": "14741b42764dc3260bc7992601f9d188c31309c7017e9ca0cc73e596a252c4da",
+  "environment": {
+    "DISPLAY": ":0",
+    "LIBGL_ALWAYS_SOFTWARE": null,
+    "SDL_AUDIODRIVER": null,
+    "SDL_VIDEODRIVER": null,
+    "WAYLAND_DISPLAY": "wayland-0",
+    "XDG_RUNTIME_DIR": "/run/user/1000",
+    "XDG_SESSION_TYPE": "wayland",
+    "__GL_SYNC_TO_VBLANK": null,
+    "__NV_PRIME_RENDER_OFFLOAD": null
+  },
+  "fixture_sha256": "a2caf62a295243d301149202c8a0a5eedafff256d68de0e3cda988846b2e05bf",
+  "mode": "exact",
+  "profile": 1,
+  "requested_steps": 270,
+  "requested_wall_seconds": 105,
+  "resolution_note": "Runtime default project/window settings; preserve actual runtime renderer log.",
+  "schema": "judas.dense.run.v1",
+  "snapshot": "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/candidate-isotropic",
+  "snapshot_manifest_sha256": "03a063f73cec15d100f4320ad367857881040867d12df4bb9e4d19aca552ee46",
+  "source_head": "e30d5f9bb72a1a341d3eff7485b8d6b3eb6f8ea9"
+}

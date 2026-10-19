@@ -1,0 +1,63 @@
+{
+  "utc": "2026-10-19T11:34:55.290248+00:00",
+  "targets": [
+    "judas_contact_sat_filter_tests",
+    "judas_contact_sphere_filter_tests",
+    "judas_impact_support_sets_tests",
+    "judas_physics_stress_live_benchmark",
+    "judas_physics_scaling_diagnostics",
+    "judas_impact_timing_tests",
+    "judas_impact_robustness_tests",
+    "judas_rigid_contact_tests",
+    "judas_contact_lifecycle_tests",
+    "judas_primitive_contact_boolean_tests",
+    "judas_collision_geometry_tests",
+    "judas_physics_continuation_tests",
+    "judas_sphere_impact_bounds_tests",
+    "judas_character_motor_tests",
+    "judas_ragdoll_tests",
+    "judas_joint_tests",
+    "judas_rigid_motion_geometry_tests",
+    "judas_contact_sat_workspace_tests"
+  ],
+  "commands": [
+    {
+      "argv": [
+        "cmake",
+        "-S",
+        ".",
+        "-B",
+        "build"
+      ],
+      "exit": 0
+    },
+    {
+      "argv": [
+        "cmake",
+        "--build",
+        "build",
+        "--target",
+        "judas_contact_sat_filter_tests",
+        "judas_contact_sphere_filter_tests",
+        "judas_impact_support_sets_tests",
+        "judas_physics_stress_live_benchmark",
+        "judas_physics_scaling_diagnostics",
+        "judas_impact_timing_tests",
+        "judas_impact_robustness_tests",
+        "judas_rigid_contact_tests",
+        "judas_contact_lifecycle_tests",
+        "judas_primitive_contact_boolean_tests",
+        "judas_collision_geometry_tests",
+        "judas_physics_continuation_tests",
+        "judas_sphere_impact_bounds_tests",
+        "judas_character_motor_tests",
+        "judas_ragdoll_tests",
+        "judas_joint_tests",
+        "judas_rigid_motion_geometry_tests",
+        "judas_contact_sat_workspace_tests",
+        "-j3"
+      ],
+      "exit": 0
+    }
+  ]
+}

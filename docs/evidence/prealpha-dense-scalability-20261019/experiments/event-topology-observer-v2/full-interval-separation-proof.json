@@ -1,0 +1,865 @@
+{
+  "schema": "judas.exact-rational-obb-full-query-interval.v1",
+  "method": "Exact-rational 15-axis OBB controls for the recorded binary inputs.\n\nThe Cayley quaternion need not be normalized to construct R(q)/dot(q,q).\nThus smooth trajectories, their rotation matrices, all SAT axes and SAT signs\ncan be evaluated as exact fractions. No epsilon classifies these contacts.\n",
+  "input_sha256": {
+    "interval-separation-proof.py": "02dfa6ae2c7d695b60b7c2afd42cf7b9c25565062cc89a86584d6e87f73cb136",
+    "pair-trace.jsonl": "b66165f787a808a890e2ef891d69c54ac53ffbefb93d173d88b97d0cbde56e72",
+    "smooth-gap-proof.json": "2dd1198362a3b51e61d37bdeb4d22b7844bd6b71e45cc2fa5e22cf3ab6d5be0e"
+  },
+  "results": [
+    {
+      "record": 2,
+      "event": 3,
+      "start_time_s": 0.00022355391777684056,
+      "finish_time_s": 0.01666666753590107,
+      "start_sat": {
+        "separated": true,
+        "all_axis_exact_signs": [
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          1
+        ],
+        "maximum_normalized_gap_m": 8.305561115136091e-07,
+        "winning_axis": 14,
+        "winning_unnormalized_gap_numerator": "1023218219453473248018247834497369",
+        "winning_unnormalized_gap_denominator": "17422460869497999733230595188466795151360"
+      },
+      "finish_sat": {
+        "separated": false,
+        "all_axis_exact_signs": [
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1
+        ],
+        "maximum_normalized_gap_m": -0.0005474223342859309,
+        "winning_axis": 14,
+        "winning_unnormalized_gap_numerator": "-719718396615321090114807008765484284730574410886801824850981463668816432314716221570586618806532847056432133581714823207387377148693625856753094472773367405871058141",
+        "winning_unnormalized_gap_denominator": "17566504157875256664312019919708708458312941914144214322779646086081309024089113986525879578579028557398529946256225023094057240920595877982119656148371870767028864286720"
+      },
+      "leaf_count": 1,
+      "maximum_subdivision_depth": 0,
+      "proof": {
+        "certified": false,
+        "reason": "smooth start or endpoint overlap",
+        "depth": 0
+      }
+    },
+    {
+      "record": 7,
+      "event": 6,
+      "start_time_s": 0.0006146535089685576,
+      "finish_time_s": 0.01666666753590107,
+      "start_sat": {
+        "separated": true,
+        "all_axis_exact_signs": [
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          1
+        ],
+        "maximum_normalized_gap_m": 4.3843387474847004e-07,
+        "winning_axis": 14,
+        "winning_unnormalized_gap_numerator": "1877490885163741918921676828261",
+        "winning_unnormalized_gap_denominator": "60494655483091002334788488508751872000"
+      },
+      "finish_sat": {
+        "separated": false,
+        "all_axis_exact_signs": [
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1
+        ],
+        "maximum_normalized_gap_m": -0.00011480057021450409,
+        "winning_axis": 4,
+        "winning_unnormalized_gap_numerator": "-89148565667797597325570830166972059327512932001565379408401776315524271250795164210396144077549600549869108163413450898682919022247480300451928508298258125834143",
+        "winning_unnormalized_gap_denominator": "776551592916516910372916662659727855432518357031064310709326099649767345926479721128800665113368551265093450638241443414352322590269658434277971996293606620004352000"
+      },
+      "leaf_count": 1,
+      "maximum_subdivision_depth": 0,
+      "proof": {
+        "certified": false,
+        "reason": "smooth start or endpoint overlap",
+        "depth": 0
+      }
+    },
+    {
+      "record": 14,
+      "event": 11,
+      "start_time_s": 0.001355425244313631,
+      "finish_time_s": 0.01666666753590107,
+      "start_sat": {
+        "separated": true,
+        "all_axis_exact_signs": [
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          1
+        ],
+        "maximum_normalized_gap_m": 1.903013142262135e-09,
+        "winning_axis": 14,
+        "winning_unnormalized_gap_numerator": "734917068738056179736451669347",
+        "winning_unnormalized_gap_denominator": "5444519560335442021524499226962000084992"
+      },
+      "finish_sat": {
+        "separated": false,
+        "all_axis_exact_signs": [
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1
+        ],
+        "maximum_normalized_gap_m": -0.00010299529501835713,
+        "winning_axis": 4,
+        "winning_unnormalized_gap_numerator": "-759194847993247178880797325280742044668366695756577327969131384135230619001408318472329149975248357439573732578303151398903057563908975242065728240780728653761083",
+        "winning_unnormalized_gap_denominator": "7371160477359027294328170349710590717845374005762969368532426878542337015246555525798487595029280591702064639390607714245327088178181878249758729912974673158493700096"
+      },
+      "leaf_count": 1,
+      "maximum_subdivision_depth": 0,
+      "proof": {
+        "certified": false,
+        "reason": "smooth start or endpoint overlap",
+        "depth": 0
+      }
+    },
+    {
+      "record": 21,
+      "event": 16,
+      "start_time_s": 0.0015745876000281623,
+      "finish_time_s": 0.01666666753590107,
+      "start_sat": {
+        "separated": true,
+        "all_axis_exact_signs": [
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          1
+        ],
+        "maximum_normalized_gap_m": 2.201099225959608e-07,
+        "winning_axis": 14,
+        "winning_unnormalized_gap_numerator": "340216690003995940225791309170943",
+        "winning_unnormalized_gap_denominator": "21778078555689078356249101195952224010240"
+      },
+      "finish_sat": {
+        "separated": false,
+        "all_axis_exact_signs": [
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1
+        ],
+        "maximum_normalized_gap_m": -0.00010205720450094813,
+        "winning_axis": 4,
+        "winning_unnormalized_gap_numerator": "-38516717640590270213793021633008556273045188636745789211638920540178432674896681214920449423442590536825278497854349303620906115695118246839833385717006369706197663",
+        "winning_unnormalized_gap_denominator": "377403220369733352159479440924379619494062821452117424706695570531806835320524616434265249800125157163966941250946121369929472021775181653859478144466742494789436964864"
+      },
+      "leaf_count": 1,
+      "maximum_subdivision_depth": 0,
+      "proof": {
+        "certified": false,
+        "reason": "smooth start or endpoint overlap",
+        "depth": 0
+      }
+    },
+    {
+      "record": 28,
+      "event": 21,
+      "start_time_s": 0.0017287180358463703,
+      "finish_time_s": 0.01666666753590107,
+      "start_sat": {
+        "separated": true,
+        "all_axis_exact_signs": [
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          1
+        ],
+        "maximum_normalized_gap_m": 3.2952332590594773e-07,
+        "winning_axis": 14,
+        "winning_unnormalized_gap_numerator": "169849106778875750650927465775747",
+        "winning_unnormalized_gap_denominator": "7259357152280572922642917814707675987968"
+      },
+      "finish_sat": {
+        "separated": false,
+        "all_axis_exact_signs": [
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1
+        ],
+        "maximum_normalized_gap_m": -0.00010196273604079313,
+        "winning_axis": 4,
+        "winning_unnormalized_gap_numerator": "-1008835942179026432966400371680596414067306687136250774400528157578340534033797928792710480664059616104756020006438776203340968968919470632868696740417642238569",
+        "winning_unnormalized_gap_denominator": "9894163116370402114412120282756304228162609252351666137069648835427463017628348674080252933422586779670933805262675636850502850154926469346640556550062490672693248"
+      },
+      "leaf_count": 1,
+      "maximum_subdivision_depth": 0,
+      "proof": {
+        "certified": false,
+        "reason": "smooth start or endpoint overlap",
+        "depth": 0
+      }
+    },
+    {
+      "record": 32,
+      "event": 23,
+      "start_time_s": 0.002120202025079586,
+      "finish_time_s": 0.01666666753590107,
+      "start_sat": {
+        "separated": true,
+        "all_axis_exact_signs": [
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          1
+        ],
+        "maximum_normalized_gap_m": 3.6380122836188654e-07,
+        "winning_axis": 14,
+        "winning_unnormalized_gap_numerator": "71071643068147813151242539267360589225627588416638024725432163502431696697883754684852377457491109824021",
+        "winning_unnormalized_gap_denominator": "2748465987653265266814332953046435300763419016969056313648456599076228941754027588427641287539959949078762094592"
+      },
+      "finish_sat": {
+        "separated": false,
+        "all_axis_exact_signs": [
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1
+        ],
+        "maximum_normalized_gap_m": -0.00010211746594854339,
+        "winning_axis": 4,
+        "winning_unnormalized_gap_numerator": "-19733722948723090861240368705961661167186779504283773475072828036171421487616236433626519972291341759415369454917131979364690666171839754259379127292516312125",
+        "winning_unnormalized_gap_denominator": "193245325522147589388641891848408690803222826949397656845834714823682501286384754006462541095878791772085719908044497897528843074831558096941255421529535759253504"
+      },
+      "leaf_count": 1,
+      "maximum_subdivision_depth": 0,
+      "proof": {
+        "certified": false,
+        "reason": "smooth start or endpoint overlap",
+        "depth": 0
+      }
+    },
+    {
+      "record": 36,
+      "event": 25,
+      "start_time_s": 0.002142647911623446,
+      "finish_time_s": 0.01666666753590107,
+      "start_sat": {
+        "separated": true,
+        "all_axis_exact_signs": [
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          1
+        ],
+        "maximum_normalized_gap_m": 2.887524209726497e-07,
+        "winning_axis": 14,
+        "winning_unnormalized_gap_numerator": "5195996549648661549892378896823073203230286507559269138065466796425114620916072794666989203231977350413",
+        "winning_unnormalized_gap_denominator": "253148229773422442051466306182347994933507505148351288943012765223462184813454610426073413225752023125058387968"
+      },
+      "finish_sat": {
+        "separated": false,
+        "all_axis_exact_signs": [
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1
+        ],
+        "maximum_normalized_gap_m": -0.00010219701355352733,
+        "winning_axis": 4,
+        "winning_unnormalized_gap_numerator": "-26332131259577125621370907278579787314556750712386676192215858551092287184750702569273916921809438967332045383586542925577937410930174380197571905839415895779",
+        "winning_unnormalized_gap_denominator": "257660476994127110755940362656431620626900500357818393844011763161471636247945147854126197186346911055124139020166528638502925037391975240718958252561071838593024"
+      },
+      "leaf_count": 1,
+      "maximum_subdivision_depth": 0,
+      "proof": {
+        "certified": false,
+        "reason": "smooth start or endpoint overlap",
+        "depth": 0
+      }
+    },
+    {
+      "record": 48,
+      "event": 36,
+      "start_time_s": 0.0031645743876652223,
+      "finish_time_s": 0.01666666753590107,
+      "start_sat": {
+        "separated": false,
+        "all_axis_exact_signs": [
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1
+        ],
+        "maximum_normalized_gap_m": -1.7671081238520187e-07,
+        "winning_axis": 14,
+        "winning_unnormalized_gap_numerator": "-10097525147181500165074884399058755843679181728552995809553468918795773306746149242470043416700595647693",
+        "winning_unnormalized_gap_denominator": "801636023039326229962767437193833418184390229006259301914303844955554213256916428687200758842092460367545368576"
+      },
+      "finish_sat": {
+        "separated": false,
+        "all_axis_exact_signs": [
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1
+        ],
+        "maximum_normalized_gap_m": -0.00010307519186620868,
+        "winning_axis": 4,
+        "winning_unnormalized_gap_numerator": "-1274802220945308154872503956561585625019108237518512149943355886302935973219266353096506103901097536617078455685186279260434590310836960011864781470545155899381",
+        "winning_unnormalized_gap_denominator": "12367691952492293190514616282073966663158143560647324675794285241431134757413463263536998601897212728075410817742968498905163905003970046026948545073321979555086336"
+      },
+      "leaf_count": 1,
+      "maximum_subdivision_depth": 0,
+      "proof": {
+        "certified": false,
+        "reason": "smooth start or endpoint overlap",
+        "depth": 0
+      }
+    },
+    {
+      "record": 52,
+      "event": 38,
+      "start_time_s": 0.0031666179822320275,
+      "finish_time_s": 0.01666666753590107,
+      "start_sat": {
+        "separated": false,
+        "all_axis_exact_signs": [
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1
+        ],
+        "maximum_normalized_gap_m": -2.1451005253567876e-07,
+        "winning_axis": 14,
+        "winning_unnormalized_gap_numerator": "-6537333169818554370599335644364325979154135964532181769379800461775127342538100865739794537793387668035",
+        "winning_unnormalized_gap_denominator": "427539227447609278635958332909065378279876312892703707910433793932117926003666574031545067197954306014397333504"
+      },
+      "finish_sat": {
+        "separated": false,
+        "all_axis_exact_signs": [
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1
+        ],
+        "maximum_normalized_gap_m": -0.00010310759473303195,
+        "winning_axis": 4,
+        "winning_unnormalized_gap_numerator": "-85013534175055860033328448998965812822131482076772486909108937204714186048576255489186806906322512068044450055710360044542606406112169956619250165042178071501",
+        "winning_unnormalized_gap_denominator": "824512824638907026453617744385563065261517617227145674978805461329097290842022731379575913237891768137117868908458596327733020207867526824161309747002179602874368"
+      },
+      "leaf_count": 1,
+      "maximum_subdivision_depth": 0,
+      "proof": {
+        "certified": false,
+        "reason": "smooth start or endpoint overlap",
+        "depth": 0
+      }
+    },
+    {
+      "record": 57,
+      "event": 41,
+      "start_time_s": 0.005446301372529777,
+      "finish_time_s": 0.01666666753590107,
+      "start_sat": {
+        "separated": true,
+        "all_axis_exact_signs": [
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          1
+        ],
+        "maximum_normalized_gap_m": 2.9183109125556914e-08,
+        "winning_axis": 14,
+        "winning_unnormalized_gap_numerator": "22791811139522924148939871813671",
+        "winning_unnormalized_gap_denominator": "10889036734500422191631942939668252196864"
+      },
+      "finish_sat": {
+        "separated": false,
+        "all_axis_exact_signs": [
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1
+        ],
+        "maximum_normalized_gap_m": -0.00010347620980062983,
+        "winning_axis": 4,
+        "winning_unnormalized_gap_numerator": "-372428208176652535392651656526668225557716247571367521759913295147053992799825893863543337227157187947384276335693432715065532207067578413749287975320369392857",
+        "winning_unnormalized_gap_denominator": "3599167469452342645551647654023834260379011921696208451260452162930167362073907787640274391300581753434046833341838549945398117119439550992981665071394313683861504"
+      },
+      "leaf_count": 1,
+      "maximum_subdivision_depth": 0,
+      "proof": {
+        "certified": false,
+        "reason": "smooth start or endpoint overlap",
+        "depth": 0
+      }
+    },
+    {
+      "record": 62,
+      "event": 44,
+      "start_time_s": 0.006836059568248453,
+      "finish_time_s": 0.01666666753590107,
+      "start_sat": {
+        "separated": true,
+        "all_axis_exact_signs": [
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          1
+        ],
+        "maximum_normalized_gap_m": 2.1084657081814831e-07,
+        "winning_axis": 14,
+        "winning_unnormalized_gap_numerator": "4753222944829432213970227410859512132448824292595707774900333637002467245759001371058519711927287551",
+        "winning_unnormalized_gap_denominator": "313139080966025894588015451936535930298759492096658749123359141544978701273979327155415333265486504787968000"
+      },
+      "finish_sat": {
+        "separated": false,
+        "all_axis_exact_signs": [
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1
+        ],
+        "maximum_normalized_gap_m": -0.0001035830667661423,
+        "winning_axis": 4,
+        "winning_unnormalized_gap_numerator": "-122163153295088086623432500418955312223368928942464935198121286977000923213208610817680186488387276867483682138203926139063017635214176720745112783819721992922831",
+        "winning_unnormalized_gap_denominator": "1179373782887638709880393200463669096640780826492372050852896357058600819418017801889925147459950549341471382675597528798853681223599595978353270898065374195251937280"
+      },
+      "leaf_count": 1,
+      "maximum_subdivision_depth": 0,
+      "proof": {
+        "certified": false,
+        "reason": "smooth start or endpoint overlap",
+        "depth": 0
+      }
+    },
+    {
+      "record": 66,
+      "event": 46,
+      "start_time_s": 0.007280751618510797,
+      "finish_time_s": 0.01666666753590107,
+      "start_sat": {
+        "separated": true,
+        "all_axis_exact_signs": [
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          1
+        ],
+        "maximum_normalized_gap_m": 1.1134478405711756e-07,
+        "winning_axis": 14,
+        "winning_unnormalized_gap_numerator": "17478054530518255972979652638185",
+        "winning_unnormalized_gap_denominator": "2177807519286801264319712466399079170048"
+      },
+      "finish_sat": {
+        "separated": false,
+        "all_axis_exact_signs": [
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1
+        ],
+        "maximum_normalized_gap_m": -0.00010341243737535656,
+        "winning_axis": 4,
+        "winning_unnormalized_gap_numerator": "-99252690211864509581764507745853910369312576370236747065911756147799479849686572561234889281639064798535886690960978823301019957007704090617309578452312207427",
+        "winning_unnormalized_gap_denominator": "959775175316742642920310739311327895556695027294915296723970480289480956800074685781272901905666554229809749580889193035913937875970417175683559765423168826638336"
+      },
+      "leaf_count": 1,
+      "maximum_subdivision_depth": 0,
+      "proof": {
+        "certified": false,
+        "reason": "smooth start or endpoint overlap",
+        "depth": 0
+      }
+    },
+    {
+      "record": 71,
+      "event": 49,
+      "start_time_s": 0.008535666616386828,
+      "finish_time_s": 0.01666666753590107,
+      "start_sat": {
+        "separated": true,
+        "all_axis_exact_signs": [
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          1
+        ],
+        "maximum_normalized_gap_m": 6.566972309281293e-07,
+        "winning_axis": 14,
+        "winning_unnormalized_gap_numerator": "1034310071727437350090363577085793",
+        "winning_unnormalized_gap_denominator": "21778071690956785626758834969967105146880"
+      },
+      "finish_sat": {
+        "separated": false,
+        "all_axis_exact_signs": [
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1
+        ],
+        "maximum_normalized_gap_m": -9.623853780255037e-05,
+        "winning_axis": 4,
+        "winning_unnormalized_gap_numerator": "-264264634564340055071521352235636388182773656240918203987879053079733896519529465555282321906385983752526282085170021589283920456193083467389216066402701",
+        "winning_unnormalized_gap_denominator": "2745933599973470481873638315262558389082432066597725528924945340994952243101346971029924807507978817001357882987401051540291799865666786903191898909088677888"
+      },
+      "leaf_count": 1,
+      "maximum_subdivision_depth": 0,
+      "proof": {
+        "certified": false,
+        "reason": "smooth start or endpoint overlap",
+        "depth": 0
+      }
+    },
+    {
+      "record": 75,
+      "event": 51,
+      "start_time_s": 0.009018245084180266,
+      "finish_time_s": 0.01666666753590107,
+      "start_sat": {
+        "separated": true,
+        "all_axis_exact_signs": [
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          1
+        ],
+        "maximum_normalized_gap_m": 3.862377226595506e-07,
+        "winning_axis": 14,
+        "winning_unnormalized_gap_numerator": "14502682628585899368346229180935",
+        "winning_unnormalized_gap_denominator": "518525637262261707029979105492760428544"
+      },
+      "finish_sat": {
+        "separated": false,
+        "all_axis_exact_signs": [
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1
+        ],
+        "maximum_normalized_gap_m": -9.224220064141622e-05,
+        "winning_axis": 4,
+        "winning_unnormalized_gap_numerator": "-906563302679050299027542509469981345339336330575675100115236033782575693217398825117221522562383213409184886209772468049897405554741431708174406630075343350246747",
+        "winning_unnormalized_gap_denominator": "9828075396891696992395131419529199395905064734639389652407065052282271749533732675530320581508026773225588325107709533011751091166685893934846302104724670880858243072"
+      },
+      "leaf_count": 1,
+      "maximum_subdivision_depth": 0,
+      "proof": {
+        "certified": false,
+        "reason": "smooth start or endpoint overlap",
+        "depth": 0
+      }
+    }
+  ]
+}

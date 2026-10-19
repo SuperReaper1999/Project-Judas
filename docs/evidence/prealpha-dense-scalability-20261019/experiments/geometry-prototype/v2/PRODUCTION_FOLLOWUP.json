@@ -1,0 +1,19 @@
+{
+  "purpose": "record intentional production follow-up without overwriting tested v2 receipt",
+  "files": {
+    "src/Contacts.cpp": "ab6c22d65e7a26c76de7c7fecf83b5aac927d6247ef86097264cc25edfb3c5d7",
+    "src/ContactSatFilter.h": "e73915003a1321e19f94f57acc8815ac4ef307d0e37fc203d0d297e3c449326c",
+    "tests/ContactSatFilterTests.cpp": "20bf9f14a3cea6af69812b7b6fd3b36f658752a08bab83a41b20590f13e6f709"
+  },
+  "runtime_changes_from_tested_v2": [
+    "The new filter explicitly declines non-round-to-nearest environments; legacy Iv/Exact path retains existing behavior. Native arithmetic already declares an RN contract."
+  ],
+  "non_runtime_changes": [
+    "Expanded proof comments explaining legacy-Iv endpoint sign preservation, zero padding and nonzero-axis squared-length positivity.",
+    "Focused directed-rounding negative controls added to SAT test."
+  ],
+  "unchanged": [
+    "gamma4096, gamma64, SAT polynomial expressions, gap arithmetic, axis ranking and contact response"
+  ],
+  "validation_status": "Final production build and directed-rounding follow-up checks pending parent final-source validation; pre-follow-up v2 parity/performance receipts remain unchanged."
+}

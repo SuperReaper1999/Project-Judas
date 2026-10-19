@@ -1,0 +1,21 @@
+FAIL filter does not preserve legacy interval sign row=0 axis=0
+FAIL filter does not preserve legacy interval sign row=0 axis=3
+FAIL filter does not preserve legacy interval sign row=0 axis=10
+FAIL filter does not preserve legacy interval sign row=0 axis=11
+FAIL filter does not preserve legacy interval sign row=0 axis=13
+FAIL filter does not preserve legacy interval sign row=69 axis=1
+FAIL filter does not preserve legacy interval sign row=69 axis=4
+FAIL filter does not preserve legacy interval sign row=69 axis=8
+FAIL filter does not preserve legacy interval sign row=69 axis=12
+FAIL filter does not preserve legacy interval sign row=105 axis=1
+FAIL filter does not preserve legacy interval sign row=105 axis=4
+FAIL filter does not preserve legacy interval sign row=105 axis=8
+FAIL filter does not preserve legacy interval sign row=105 axis=12
+FAIL filter does not preserve legacy interval sign row=130 axis=0
+FAIL filter does not preserve legacy interval sign row=130 axis=3
+FAIL filter does not preserve legacy interval sign row=130 axis=10
+FAIL filter does not preserve legacy interval sign row=130 axis=11
+FAIL filter does not preserve legacy interval sign row=130 axis=13
+FAIL filter does not preserve legacy interval sign row=143 axis=0
+FAIL filter does not preserve legacy interval sign row=143 axis=3
+checks=318682 failures=2138 certified=164898 ambiguous=15102 axis_fallback=31923 legacy_ambiguity=2128 exact_checks=6240 unsafe_scalar_signs=10

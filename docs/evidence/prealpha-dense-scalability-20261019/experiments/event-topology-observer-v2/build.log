@@ -1,0 +1,10 @@
+{
+  "snapshot": "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/event-topology-observer-v2/snapshot",
+  "binary_sha256": "fcac344fa863bcd10a3badbd0ca231701fb8ee1eb7405a08fd788890f8bb419a",
+  "environment": {
+    "JUDAS_EVENT_TOPOLOGY_OUTPUT": "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/event-topology-observer-v2/events.jsonl",
+    "JUDAS_TOI_PAIR_TRACE_OUTPUT": "/home/conner/Documents/GitHub/Project-Judas/.cache/dense-scalability-20261019/event-topology-observer-v2/pair-trace.jsonl",
+    "JUDAS_TOI_PAIR_TRACE_PAIR": "595,851",
+    "JUDAS_TOI_PAIR_TRACE_FIRST_STEP": "270"
+  }
+}

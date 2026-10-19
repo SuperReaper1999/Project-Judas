@@ -1,0 +1,47 @@
+{
+  "utc": "2026-10-19T11:10:59.796663+00:00",
+  "source_head": "e30d5f9bb72a1a341d3eff7485b8d6b3eb6f8ea9",
+  "inputs": {
+    "SphereFilterTests.cpp": {
+      "sha256": "409b688f6bcf6982678bfcfbc0a08bb03fb96f24cb26a32a1338a19f817eb3bc",
+      "bytes": 8905
+    },
+    "ContactPreparedGeometry.h": {
+      "sha256": "d8b19b2079fafe05a39325a9d093a0d1de5f956ac4c10df1c9810531a36441d9",
+      "bytes": 1061
+    },
+    "PROOF.txt": {
+      "sha256": "39c38d3291aaaafc28086ca277a54873582edc6d5d16a53685e6dec4ae135eaf",
+      "bytes": 5148
+    },
+    "Contacts.cpp": {
+      "sha256": "b9d779391459cdd7794ec8e18de025a417f682d7bef9ab7c60f48ed2802c58a1",
+      "bytes": 35240
+    },
+    "ContactSatFilter.h": {
+      "sha256": "12dd21cc3c9ec40d8296592a69c9890334ffe740982517caf8a50c669ac0e0be",
+      "bytes": 5744
+    },
+    "SpherePredicateFilter.h": {
+      "sha256": "cec9e55ccd75bb47edfe306fec3119eaa8eb1cade70ad78e1f7cfcbf29c89743",
+      "bytes": 3230
+    },
+    "ContactGeometryInternal.h": {
+      "sha256": "f8717a473924708e43e27d274e2268486646a7e2d103f3ac0e3268bf31f4dd7b",
+      "bytes": 12721
+    },
+    "Contacts.input.cpp": {
+      "sha256": "ab6c22d65e7a26c76de7c7fecf83b5aac927d6247ef86097264cc25edfb3c5d7",
+      "bytes": 33880
+    },
+    "Parity.cpp": {
+      "sha256": "c5fc7a8bcdd37310477069fb7e7c4cae4b98de26655e7beaf39972890005597c",
+      "bytes": 4810
+    },
+    "Contacts.h": {
+      "sha256": "e13c354c71e02141b3c82c5abfdb8fd1cb24b376bb7116245c67ba73ee21ce5b",
+      "bytes": 7866
+    }
+  },
+  "scope": "isolated sphere certificate research; no production edit"
+}
