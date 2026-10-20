@@ -9,6 +9,7 @@ import json
 import os
 from pathlib import Path
 import struct
+import subprocess
 import sys
 import tempfile
 import unittest
@@ -85,6 +86,21 @@ class DistributionChecks(unittest.TestCase):
         self.temp = tempfile.TemporaryDirectory(prefix="judas-distribution-")
         self.addCleanup(self.temp.cleanup)
         self.root = Path(self.temp.name)
+
+    def test_android_cli_does_not_dirty_clean_source_before_configuration(self):
+        import shutil
+
+        for name in ("build_android.py", "package_sdk.py", "verify_android.py", "binary_dependencies.py"):
+            shutil.copyfile(ROOT / "tools" / name, self.root / name)
+        before = {path.name: path.read_bytes() for path in self.root.iterdir()}
+        # Ignore inherited Python flags so a caller's -B/environment cannot hide
+        # an entry point which writes caches into its own source checkout.
+        result = subprocess.run([sys.executable, "-E", str(self.root / "build_android.py"), "--help"],
+                                capture_output=True, text=True, timeout=30)
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        after = {path.relative_to(self.root).as_posix(): path.read_bytes()
+                 for path in self.root.rglob("*") if path.is_file()}
+        self.assertEqual(after, before, "Android CLI startup changed source inputs")
 
     def test_elf_actual_requirements_ignore_exported_version_decoy(self):
         result = binary_dependencies.elf(elf_fixture())

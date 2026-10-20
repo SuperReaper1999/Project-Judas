@@ -10,6 +10,10 @@ except ImportError:
     fcntl=None
 from pathlib import Path
 from xml.sax.saxutils import escape
+
+# Imports must not add untracked inputs before native build provenance is read.
+sys.dont_write_bytecode = True
+
 from package_sdk import identity, probe_identity
 from verify_android import verify_apk, ANDROID_SYSTEM_LIBRARIES
 
