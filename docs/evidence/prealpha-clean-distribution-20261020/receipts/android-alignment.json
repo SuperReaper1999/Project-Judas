@@ -1,0 +1,16 @@
+{
+  "name": "android-alignment",
+  "utc": "2026-10-20T14:14:14.861798+00:00",
+  "argv": [
+    "/home/conner/Android/Sdk/build-tools/36.0.0/zipalign",
+    "-c",
+    "-P",
+    "16",
+    "4",
+    ".cache/prealpha-clean-distribution-20261020/Breakwater-Clean.apk"
+  ],
+  "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+  "environmentPolicy": "system PATH; inherited user identity/display only; no compiler/engine/package-cache overrides; no Judas cache reuse",
+  "exit": 0,
+  "seconds": 0.0043481180000526365
+}

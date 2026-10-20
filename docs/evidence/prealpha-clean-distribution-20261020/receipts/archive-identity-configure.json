@@ -1,0 +1,19 @@
+{
+  "name": "archive-identity-configure",
+  "utc": "2026-10-20T13:23:26.162038+00:00",
+  "argv": [
+    "/usr/bin/cmake",
+    "-S",
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-clean-distribution-20261020/source-no-git",
+    "-B",
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-clean-distribution-20261020/archive-identity",
+    "-DCMAKE_BUILD_TYPE=Release",
+    "-DJUDAS_BUILD_CHANNEL=Experimental",
+    "-DJUDAS_BUILD_IDENTITY_ONLY=ON",
+    "-Djudas_git=/not-installed/git"
+  ],
+  "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+  "environmentPolicy": "system PATH; inherited user identity/display only; no compiler/engine/package-cache overrides; no Judas cache reuse",
+  "exit": 0,
+  "seconds": 0.9032861470000171
+}

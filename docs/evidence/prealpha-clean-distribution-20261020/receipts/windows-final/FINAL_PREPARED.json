@@ -1,0 +1,18 @@
+﻿{
+    "allSourceHashesMatch":  true,
+    "files":  1478,
+    "source":  {
+                   "channel":  "Experimental",
+                   "revision":  "39d0234ada05ec554738e9e93166c55928f21f6b",
+                   "schema":  1,
+                   "selection":  "engine",
+                   "source_dirty":  false,
+                   "source_files_sha256":  "eca277767429b899c822f6f804756e42e1b8cd2f5e7351cffbb8938fa0495c9d",
+                   "source_fingerprint":  "e95356556092322152ce89af88503ef9017c1fc39f253382eb0cb8f383a592a0",
+                   "tree":  "64639e17a9b956c9c87f643ff798e6084237d047"
+               },
+    "coreBefore":  "F66A535FF6BB0EAF2CE171C931A4FE0F2760FFD797E17A5B317CF1AED30AAE21",
+    "coreUnchanged":  true,
+    "sdk":  "P:\\JudasValidation\\CleanDistribution\\Moved SDK résumé",
+    "coreAfter":  "F66A535FF6BB0EAF2CE171C931A4FE0F2760FFD797E17A5B317CF1AED30AAE21"
+}

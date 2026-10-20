@@ -1,0 +1,74 @@
+﻿[
+    {
+        "name":  "sdk-verify",
+        "expectedExit":  0,
+        "exe":  "C:\\JudasValidation\\Python\\python.exe",
+        "arguments":  "\"P:\\JudasValidation\\CleanDistribution\\Moved SDK résumé\\tools\\package_sdk.py\" verify \"P:\\JudasValidation\\CleanDistribution\\Moved SDK résumé\"",
+        "exit":  0,
+        "seconds":  6.0363023999999994
+    },
+    {
+        "name":  "sdk-imports",
+        "expectedExit":  0,
+        "exe":  "C:\\JudasValidation\\Python\\python.exe",
+        "arguments":  "\"P:\\JudasValidation\\CleanDistribution\\Moved SDK résumé\\tools\\inspect_sdk.py\" \"P:\\JudasValidation\\CleanDistribution\\Moved SDK résumé\" --system-directory C:\\Windows\\System32 --output \"P:\\JudasValidation\\CleanDistribution\\Results\\SDK_HOST.json\"",
+        "exit":  0,
+        "seconds":  3.5562373999999997
+    },
+    {
+        "name":  "native-storage",
+        "expectedExit":  0,
+        "exe":  "P:\\JudasValidation\\CleanDistribution\\Moved SDK résumé\\judas_windows_readiness_tests.exe",
+        "arguments":  "",
+        "exit":  0,
+        "seconds":  0.24571959999999998
+    },
+    {
+        "name":  "script-check",
+        "expectedExit":  0,
+        "exe":  "P:\\JudasValidation\\CleanDistribution\\Moved SDK résumé\\judas_script_check.exe",
+        "arguments":  "\"P:\\JudasValidation\\CleanDistribution\\Projects\\My First Game\\My_First_Game.judasproj\"",
+        "exit":  0,
+        "seconds":  0.166014
+    },
+    {
+        "name":  "sdk-export",
+        "expectedExit":  0,
+        "exe":  "P:\\JudasValidation\\CleanDistribution\\Moved SDK résumé\\judas_export.exe",
+        "arguments":  "\"P:\\JudasValidation\\CleanDistribution\\Projects\\My First Game\\My_First_Game.judasproj\" \"P:\\JudasValidation\\CleanDistribution\\Game Package\" \"P:\\JudasValidation\\CleanDistribution\\Moved SDK résumé\\judas.exe\"",
+        "exit":  0,
+        "seconds":  0.5399115
+    },
+    {
+        "name":  "moved-standalone",
+        "expectedExit":  0,
+        "exe":  "P:\\JudasValidation\\CleanDistribution\\Relocated Game résumé\\judas.exe",
+        "arguments":  "",
+        "exit":  0,
+        "seconds":  3.3619654
+    },
+    {
+        "name":  "sdk-editor-new-project",
+        "expectedExit":  0,
+        "exe":  "P:\\JudasValidation\\CleanDistribution\\Software GL SDK\\judas_editor.exe",
+        "arguments":  "",
+        "exit":  0,
+        "seconds":  4.6511008999999994
+    },
+    {
+        "name":  "sdk-editor-play-stop",
+        "expectedExit":  0,
+        "exe":  "P:\\JudasValidation\\CleanDistribution\\Software GL SDK\\judas_editor.exe",
+        "arguments":  "\"P:\\JudasValidation\\CleanDistribution\\Projects\\My First Game\\My_First_Game.judasproj\"",
+        "exit":  0,
+        "seconds":  8.1512381
+    },
+    {
+        "name":  "sdk-final-verify",
+        "expectedExit":  0,
+        "exe":  "C:\\JudasValidation\\Python\\python.exe",
+        "arguments":  "\"P:\\JudasValidation\\CleanDistribution\\Moved SDK résumé\\tools\\package_sdk.py\" verify \"P:\\JudasValidation\\CleanDistribution\\Moved SDK résumé\"",
+        "exit":  0,
+        "seconds":  2.3858742
+    }
+]

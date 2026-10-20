@@ -1,0 +1,44 @@
+[
+  {
+    "name": "model-create",
+    "argv": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-clean-distribution-20261020/Qualified-Linux-SDK/judas_model_import_cli",
+      "--create",
+      "/tmp/Judas-Clean-Corrected-20261020-ijoc0d4i/FirstProject/My First Game",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-clean-distribution-20261020/checkout/tests/fixtures/m66/multipart.glb",
+      "Assets/models/multipart.judasmodel"
+    ],
+    "exit": 0,
+    "seconds": 0.04086897500019404
+  },
+  {
+    "name": "model-cook",
+    "argv": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-clean-distribution-20261020/Qualified-Linux-SDK/judas_model_import_cli",
+      "--recipe",
+      "/tmp/Judas-Clean-Corrected-20261020-ijoc0d4i/FirstProject/My First Game/Imports/multipart.judasimport"
+    ],
+    "exit": 0,
+    "seconds": 0.02250838500003738
+  },
+  {
+    "name": "model-inspect",
+    "argv": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-clean-distribution-20261020/Qualified-Linux-SDK/judas_model_import_cli",
+      "--inspect",
+      "/tmp/Judas-Clean-Corrected-20261020-ijoc0d4i/FirstProject/My First Game/Assets/models/multipart.judasmodel"
+    ],
+    "exit": 0,
+    "seconds": 0.019695390999913798
+  },
+  {
+    "name": "model-reimport",
+    "argv": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-clean-distribution-20261020/Qualified-Linux-SDK/judas_model_import_cli",
+      "--recipe",
+      "/tmp/Judas-Clean-Corrected-20261020-ijoc0d4i/FirstProject/My First Game/Imports/multipart.judasimport"
+    ],
+    "exit": 0,
+    "seconds": 0.03092466800035254
+  }
+]

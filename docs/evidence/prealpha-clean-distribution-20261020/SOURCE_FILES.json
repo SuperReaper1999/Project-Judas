@@ -1,0 +1,11 @@
+{
+  "qualifiedSource": "39d0234ada05ec554738e9e93166c55928f21f6b",
+  "changedSourceFiles": {
+    "README.md": "82fca9b2c72db71b03ecb98d8396f7b62187019d10fc19f9dd85caabfd09d2d1",
+    "docs/DOCUMENTATION_MAINTENANCE.md": "d2b74b2a0ab6a10745fc295db97aa89430534a6acd450c95e3eb79c527686819",
+    "docs/FIRST_PROJECT.md": "2ab7e7bc0559432e6be760045a16b1a585d26a010fc37ddaab4d9ff9a4548bf9",
+    "scripts/prealpha_distribution_checks.py": "c94ae777bb70cb6db79a125e8d2f0292c5185f227878b624a84fd4fcdac3f4ad",
+    "tools/build_android.py": "6f4a79eb88ddead1776091b521950eee487a70578b0a77b7ab73a938fd4cbe76"
+  },
+  "newEvidenceAndReportCommitDoesNotChangeCompiledInputs": true
+}

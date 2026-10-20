@@ -10,3 +10,6 @@ docs/evidence/m87/live-slowdown-followup/** -text
 
 # Linux-to-Windows qualification keeps raw native receipts and numerical samples.
 docs/evidence/windows-cross/** -text
+
+# Preserve native qualification captures and their recorded byte hashes.
+docs/evidence/prealpha-clean-distribution-20261020/** -text

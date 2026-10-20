@@ -1,0 +1,67 @@
+{
+  "schema": 1,
+  "utc": "2026-10-20T14:18:13.712992+00:00",
+  "acceptedStartingPoint": "3ecf26cdf248e271c96d17928bd33634e37f30ce",
+  "qualifiedSource": "39d0234ada05ec554738e9e93166c55928f21f6b",
+  "engineSourceOrRuntimeChanged": false,
+  "linux": {
+    "freshGitHubClone": true,
+    "coldSdkBuildSeconds": 555.298677148,
+    "toolCount": 17,
+    "payloadFiles": 224,
+    "nativeAssertions": {
+      "identity": 55,
+      "storage": 14,
+      "firstProject": 20,
+      "editor": 49
+    },
+    "relocatedReadOnlySdkPassed": true,
+    "scriptCheckExportStandalonePassed": true,
+    "editorPlayStopAuthoredSceneIdentical": true,
+    "modelImportCookReimportPassed": true,
+    "localSdkMinimumGlibc": "2.43",
+    "baselineCISeparateReceipt": "https://github.com/SuperReaper1999/Project-Judas/actions/runs/39435308378",
+    "baselineCIMatchesFinalSource": true
+  },
+  "windows": {
+    "nativeVmPassed": true,
+    "freshNoGitArchiveBuild": true,
+    "coldDocumentedBuildSeconds": 1888.9194481999998,
+    "toolCount": 18,
+    "payloadFiles": 248,
+    "nativeStorageAssertions": 21,
+    "editorAssertions": 49,
+    "relocatedSdkExportAndGamePassed": true,
+    "coreArchiveUnchanged": true,
+    "graphics": "Mesa llvmpipe only in separate harness copies",
+    "physicalGpuAcceptance": false
+  },
+  "android": {
+    "buildSeconds": 689.2240224250004,
+    "abi": "arm64-v8a",
+    "targetSdk": 36,
+    "minSdk": 26,
+    "apkSha256": "f3b9c7caa4c4b0056d06006963ce0052e837d5d154bfa911ee0be4694166b449",
+    "bytes": 53584343,
+    "independentInventorySignatureAlignmentPassed": true,
+    "freshTargetBuild": true,
+    "sourceRemainedClean": true,
+    "deviceOrEmulatorRun": false,
+    "developmentSigning": true
+  },
+  "fixes": [
+    "SDK/source onboarding paths and archive contents",
+    "Android CLI startup no longer changes source provenance"
+  ],
+  "remainingBoundaries": [
+    "Local Linux SDK is not an older-glibc or universal binary",
+    "Baseline CI artifact does not publish the full native SDK",
+    "Windows physical GPU and audible output not qualified here",
+    "Android package checks do not establish new hardware or emulator acceptance",
+    "Legacy diagnostic HUD remains enabled by default for UI-less projects",
+    "IDE setup remains project-owned/manual"
+  ],
+  "humanValidationClaimed": false,
+  "mainPromoted": false,
+  "protectedHistoryAndIndependentResearchChanged": false
+}

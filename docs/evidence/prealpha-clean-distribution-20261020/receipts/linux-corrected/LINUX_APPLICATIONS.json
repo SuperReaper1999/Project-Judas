@@ -1,0 +1,161 @@
+[
+  {
+    "name": "sdk-moved-verify",
+    "argv": [
+      "/usr/bin/python3",
+      "/tmp/Judas-Clean-Corrected-20261020-ijoc0d4i/Linux SDK r\u00e9sum\u00e9/tools/package_sdk.py",
+      "verify",
+      "/tmp/Judas-Clean-Corrected-20261020-ijoc0d4i/Linux SDK r\u00e9sum\u00e9"
+    ],
+    "cwd": "/tmp/Judas-Clean-Corrected-20261020-ijoc0d4i/Unrelated CWD",
+    "exit": 0,
+    "expectedExit": 0,
+    "seconds": 9.156276179000088
+  },
+  {
+    "name": "sdk-host-loader",
+    "argv": [
+      "/usr/bin/python3",
+      "/tmp/Judas-Clean-Corrected-20261020-ijoc0d4i/Linux SDK r\u00e9sum\u00e9/tools/inspect_sdk.py",
+      "/tmp/Judas-Clean-Corrected-20261020-ijoc0d4i/Linux SDK r\u00e9sum\u00e9",
+      "--host-check",
+      "--output",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-clean-distribution-20261020/receipts/linux-corrected/SDK_HOST.json"
+    ],
+    "cwd": "/tmp/Judas-Clean-Corrected-20261020-ijoc0d4i/Unrelated CWD",
+    "exit": 0,
+    "expectedExit": 0,
+    "seconds": 11.516729901999952
+  },
+  {
+    "name": "sdk-baseline-negative",
+    "argv": [
+      "/usr/bin/python3",
+      "/tmp/Judas-Clean-Corrected-20261020-ijoc0d4i/Linux SDK r\u00e9sum\u00e9/tools/inspect_sdk.py",
+      "/tmp/Judas-Clean-Corrected-20261020-ijoc0d4i/Linux SDK r\u00e9sum\u00e9",
+      "--host-check",
+      "--max-glibc",
+      "2.39",
+      "--require-os",
+      "ubuntu:24.04",
+      "--output",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-clean-distribution-20261020/receipts/linux-corrected/SDK_BASELINE_NEGATIVE.json"
+    ],
+    "cwd": "/tmp/Judas-Clean-Corrected-20261020-ijoc0d4i/Unrelated CWD",
+    "exit": 1,
+    "expectedExit": 1,
+    "seconds": 13.25398023400021
+  },
+  {
+    "name": "sdk-missing-tool-negative",
+    "argv": [
+      "/usr/bin/python3",
+      "/tmp/Judas-Clean-Corrected-20261020-ijoc0d4i/Linux SDK r\u00e9sum\u00e9/tools/package_sdk.py",
+      "verify",
+      "/tmp/Judas-Clean-Corrected-20261020-ijoc0d4i/Linux SDK r\u00e9sum\u00e9"
+    ],
+    "cwd": "/tmp/Judas-Clean-Corrected-20261020-ijoc0d4i/Unrelated CWD",
+    "exit": 1,
+    "expectedExit": 1,
+    "seconds": 12.261347354999998
+  },
+  {
+    "name": "sdk-restored-verify",
+    "argv": [
+      "/usr/bin/python3",
+      "/tmp/Judas-Clean-Corrected-20261020-ijoc0d4i/Linux SDK r\u00e9sum\u00e9/tools/package_sdk.py",
+      "verify",
+      "/tmp/Judas-Clean-Corrected-20261020-ijoc0d4i/Linux SDK r\u00e9sum\u00e9"
+    ],
+    "cwd": "/tmp/Judas-Clean-Corrected-20261020-ijoc0d4i/Unrelated CWD",
+    "exit": 0,
+    "expectedExit": 0,
+    "seconds": 6.817401292999875
+  },
+  {
+    "name": "native-identity",
+    "argv": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-clean-distribution-20261020/build-linux/judas_build_identity_tests"
+    ],
+    "cwd": "/tmp/Judas-Clean-Corrected-20261020-ijoc0d4i/Unrelated CWD",
+    "exit": 0,
+    "expectedExit": 0,
+    "seconds": 0.3756453179998971
+  },
+  {
+    "name": "native-storage",
+    "argv": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-clean-distribution-20261020/build-linux/judas_windows_readiness_tests"
+    ],
+    "cwd": "/tmp/Judas-Clean-Corrected-20261020-ijoc0d4i/Unrelated CWD",
+    "exit": 0,
+    "expectedExit": 0,
+    "seconds": 0.3847546019997026
+  },
+  {
+    "name": "first-project",
+    "argv": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-clean-distribution-20261020/build-linux/judas_first_project_tests",
+      "/tmp/Judas-Clean-Corrected-20261020-ijoc0d4i/FirstProject"
+    ],
+    "cwd": "/tmp/Judas-Clean-Corrected-20261020-ijoc0d4i/Linux SDK r\u00e9sum\u00e9",
+    "exit": 0,
+    "expectedExit": 0,
+    "seconds": 0.46015655299970604
+  },
+  {
+    "name": "first-project-script-check",
+    "argv": [
+      "/tmp/Judas-Clean-Corrected-20261020-ijoc0d4i/Linux SDK r\u00e9sum\u00e9/judas_script_check",
+      "/tmp/Judas-Clean-Corrected-20261020-ijoc0d4i/FirstProject/My First Game/My_First_Game.judasproj"
+    ],
+    "cwd": "/tmp/Judas-Clean-Corrected-20261020-ijoc0d4i/Unrelated CWD",
+    "exit": 0,
+    "expectedExit": 0,
+    "seconds": 0.022727146999841352
+  },
+  {
+    "name": "first-project-export",
+    "argv": [
+      "/tmp/Judas-Clean-Corrected-20261020-ijoc0d4i/Linux SDK r\u00e9sum\u00e9/judas_export",
+      "/tmp/Judas-Clean-Corrected-20261020-ijoc0d4i/FirstProject/My First Game/My_First_Game.judasproj",
+      "/tmp/Judas-Clean-Corrected-20261020-ijoc0d4i/Game Package r\u00e9sum\u00e9",
+      "/tmp/Judas-Clean-Corrected-20261020-ijoc0d4i/Linux SDK r\u00e9sum\u00e9/judas"
+    ],
+    "cwd": "/tmp/Judas-Clean-Corrected-20261020-ijoc0d4i/Unrelated CWD",
+    "exit": 0,
+    "expectedExit": 0,
+    "seconds": 2.4983396749998974
+  },
+  {
+    "name": "first-project-standalone",
+    "argv": [
+      "/tmp/Judas-Clean-Corrected-20261020-ijoc0d4i/Game Package r\u00e9sum\u00e9/judas"
+    ],
+    "cwd": "/tmp/Judas-Clean-Corrected-20261020-ijoc0d4i/Unrelated CWD",
+    "exit": 0,
+    "expectedExit": 0,
+    "seconds": 4.741825654000422
+  },
+  {
+    "name": "sdk-editor-new-project",
+    "argv": [
+      "/tmp/Judas-Clean-Corrected-20261020-ijoc0d4i/Linux SDK r\u00e9sum\u00e9/judas_editor"
+    ],
+    "cwd": "/tmp/Judas-Clean-Corrected-20261020-ijoc0d4i/Unrelated CWD",
+    "exit": 0,
+    "expectedExit": 0,
+    "seconds": 5.147308986000098
+  },
+  {
+    "name": "sdk-editor-visible-project",
+    "argv": [
+      "/tmp/Judas-Clean-Corrected-20261020-ijoc0d4i/Linux SDK r\u00e9sum\u00e9/judas_editor",
+      "/tmp/Judas-Clean-Corrected-20261020-ijoc0d4i/FirstProject/My First Game/My_First_Game.judasproj"
+    ],
+    "cwd": "/tmp/Judas-Clean-Corrected-20261020-ijoc0d4i/Unrelated CWD",
+    "exit": 0,
+    "expectedExit": 0,
+    "seconds": 6.118148913999903
+  }
+]

@@ -1,0 +1,20 @@
+{
+  "name": "linux-configure",
+  "utc": "2026-10-20T13:11:07.029959+00:00",
+  "argv": [
+    "/usr/bin/cmake",
+    "-S",
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-clean-distribution-20261020/checkout",
+    "-B",
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-clean-distribution-20261020/build-linux",
+    "-DCMAKE_BUILD_TYPE=Release",
+    "-DJUDAS_BUILD_CHANNEL=Experimental",
+    "-DJUDAS_SDK_RELEASE=ON",
+    "-DCMAKE_FIND_USE_PACKAGE_REGISTRY=OFF",
+    "-DCMAKE_FIND_USE_SYSTEM_PACKAGE_REGISTRY=OFF"
+  ],
+  "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+  "environmentPolicy": "system PATH; inherited user identity/display only; no compiler/engine/package-cache overrides; no Judas cache reuse",
+  "exit": 0,
+  "seconds": 5.722511800000007
+}

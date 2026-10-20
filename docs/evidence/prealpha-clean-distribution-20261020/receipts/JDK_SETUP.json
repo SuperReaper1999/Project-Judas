@@ -1,0 +1,15 @@
+{
+  "method": "Official Ubuntu matching JDK/JRE packages, private extraction; no system installation",
+  "jdk": "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-clean-distribution-20261020/jdk-extracted/usr/lib/jvm/java-25-openjdk-amd64",
+  "version": "javac 25.0.4.1\n",
+  "packages": [
+    {
+      "file": "openjdk-25-jdk-headless_25.0.4.1+1-1~26.04.4_amd64.deb",
+      "sha256": "7561b5bccd2644d8a2da5dcdfb597a40234f481e098bf785d1a8c8f90202e655"
+    },
+    {
+      "file": "openjdk-25-jre-headless_25.0.4.1+1-1~26.04.4_amd64.deb",
+      "sha256": "fc2084482511d56ccb4c33746fe693313a5c0fdcc9a0442e8227e6ba948006d1"
+    }
+  ]
+}

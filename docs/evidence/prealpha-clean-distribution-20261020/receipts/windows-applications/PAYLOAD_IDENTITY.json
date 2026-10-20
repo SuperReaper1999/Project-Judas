@@ -1,0 +1,43 @@
+{
+  "build": {
+    "architecture": "AMD64",
+    "build_id": "0.1.0-prealpha-Experimental-39d0234-clean-e95356556092",
+    "channel": "Experimental",
+    "compiler": "MSVC",
+    "compiler_version": "19.44.35229.0",
+    "configuration": "Release",
+    "maturity": "pre-alpha",
+    "platform": "Windows",
+    "schema": 1,
+    "source_dirty": false,
+    "source_fingerprint": "e95356556092322152ce89af88503ef9017c1fc39f253382eb0cb8f383a592a0",
+    "source_origin": "archive",
+    "source_revision": "39d0234ada05ec554738e9e93166c55928f21f6b",
+    "source_tree": "64639e17a9b956c9c87f643ff798e6084237d047",
+    "source_untracked_count": 0,
+    "source_untracked_fingerprint": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "version": "0.1.0-prealpha"
+  },
+  "preset": "release",
+  "tools": [
+    "judas.exe",
+    "judas_editor.exe",
+    "judas_export.exe",
+    "judas_scene_author.exe",
+    "judas_navigation_bake.exe",
+    "judas_liquid_bake.exe",
+    "judas_environment_bake.exe",
+    "judas_deformable_bake.exe",
+    "judas_collision_cook.exe",
+    "judas_model_import_cli.exe",
+    "judas_terrain_author.exe",
+    "judas_volume_author.exe",
+    "judas_mod.exe",
+    "judas_cook.exe",
+    "judas_script_check.exe",
+    "judas_save.exe",
+    "judas_server.exe",
+    "judas_windows_readiness_tests.exe"
+  ],
+  "files": 248
+}

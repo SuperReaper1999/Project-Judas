@@ -1,0 +1,7 @@
+{
+  "tests": 1,
+  "expectedFailures": 1,
+  "errors": 0,
+  "passedAsNegativeControl": true,
+  "sourceRevision": "9dd8a222f2303a53399a10f889fc6cbd1c32ea52"
+}

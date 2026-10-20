@@ -1,0 +1,10 @@
+Shadow maps: on
+Graphics: 3.3.0 NVIDIA 580.178.04 / NVIDIA GeForce GTX 970/PCIe/SSE2
+Renderer fragment texture units: 32 (material path uses 12)
+World state: /tmp/Judas-Clean-Corrected-20261020-ijoc0d4i/UserData/judas/games/b7bd70656ba92e8c2f16315f88b20bd793aa439400782bce671fb57d49311a91/Saves/main.judasstate (none saved)
+Project: My First Game (/tmp/Judas-Clean-Corrected-20261020-ijoc0d4i/Game Package résumé/game.judasproj)
+Scene:  (/tmp/Judas-Clean-Corrected-20261020-ijoc0d4i/Game Package résumé/Scenes/main.judas)
+World origin (m): 0.000, 0.000, 0.000
+step,time,posX,posY,posZ,upX,upY,upZ,grounded,velX,velY,velZ,gravX,gravY,gravZ,controlled,frame,steps,paused
+JS: My first Judas project is running.
+[TestHarness] Wrote screenshot: /home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-clean-distribution-20261020/receipts/linux-corrected/first-project-export.png

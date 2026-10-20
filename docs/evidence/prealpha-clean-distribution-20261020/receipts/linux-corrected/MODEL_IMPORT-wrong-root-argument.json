@@ -1,0 +1,14 @@
+[
+  {
+    "name": "model-create",
+    "argv": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-clean-distribution-20261020/Qualified-Linux-SDK/judas_model_import_cli",
+      "--create",
+      "/tmp/Judas-Clean-Corrected-20261020-ijoc0d4i/FirstProject/My First Game/My_First_Game.judasproj",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-clean-distribution-20261020/checkout/tests/fixtures/m66/multipart.glb",
+      "Assets/models/multipart.judasmodel"
+    ],
+    "exit": 1,
+    "seconds": 0.020438254000055167
+  }
+]

@@ -1,0 +1,1097 @@
+Downloading https://github.com/microsoft/vcpkg-tool/releases/download/2025-02-11/vcpkg.exe -> P:\JudasValidation\CleanDistribution\vcpkg\vcpkg.exe... done.
+Validating signature... done.
+
+vcpkg package management program version 2025-02-11-bec4296bf5289dc9ce83b4f5095943e44162f9c2
+
+See LICENSE.txt for license information.
+-- Running vcpkg install
+Detecting compiler hash for triplet x64-windows...
+A suitable version of powershell-core was not found (required v7.2.24).
+Downloading https://github.com/PowerShell/PowerShell/releases/download/v7.2.24/PowerShell-7.2.24-win-x64.zip -> PowerShell-7.2.24-win-x64.zip
+Successfully downloaded PowerShell-7.2.24-win-x64.zip
+Extracting powershell-core...
+A suitable version of 7zip was not found (required v24.9.0).
+Downloading https://github.com/ip7z/7zip/releases/download/24.09/7z2409.exe -> 7z2409.7z.exe
+Successfully downloaded 7z2409.7z.exe
+Extracting 7zip...
+A suitable version of 7zr was not found (required v24.9.0).
+Downloading https://github.com/ip7z/7zip/releases/download/24.09/7zr.exe -> 44d8504a-7zr.exe
+Successfully downloaded 44d8504a-7zr.exe
+Compiler found: C:/JudasValidation/VS2022/VC/Tools/MSVC/14.44.35207/bin/Hostx64/x64/cl.exe
+Detecting compiler hash for triplet x64-windows-static-md...
+Compiler found: C:/JudasValidation/VS2022/VC/Tools/MSVC/14.44.35207/bin/Hostx64/x64/cl.exe
+The following packages will be built and installed:
+    glm:x64-windows-static-md@1.0.1#3 -- P:\JudasValidation\CleanDistribution\vcpkg\buildtrees\versioning_\versions\glm\f8b09027afe97c717e95bd81d1d4f37c057d1c78
+    sdl2:x64-windows-static-md@2.30.12 -- P:\JudasValidation\CleanDistribution\vcpkg\buildtrees\versioning_\versions\sdl2\519decfc6f5bcc4be3b919c10e0792798f7c006f
+  * vcpkg-cmake:x64-windows@2024-04-23 -- P:\JudasValidation\CleanDistribution\vcpkg\buildtrees\versioning_\versions\vcpkg-cmake\e74aa1e8f93278a8e71372f1fa08c3df420eb840
+  * vcpkg-cmake-config:x64-windows@2024-05-23 -- P:\JudasValidation\CleanDistribution\vcpkg\buildtrees\versioning_\versions\vcpkg-cmake-config\97a63e4bc1a17422ffe4eff71da53b4b561a7841
+Additional packages (*) will be modified to complete this operation.
+Installing 1/4 vcpkg-cmake-config:x64-windows@2024-05-23...
+Building vcpkg-cmake-config:x64-windows@2024-05-23...
+P:\JudasValidation\CleanDistribution\vcpkg\buildtrees\versioning_\versions\vcpkg-cmake-config\97a63e4bc1a17422ffe4eff71da53b4b561a7841: info: installing overlay port from here
+-- Installing: P:/JudasValidation/CleanDistribution/vcpkg/packages/vcpkg-cmake-config_x64-windows/share/vcpkg-cmake-config/vcpkg_cmake_config_fixup.cmake
+-- Installing: P:/JudasValidation/CleanDistribution/vcpkg/packages/vcpkg-cmake-config_x64-windows/share/vcpkg-cmake-config/vcpkg-port-config.cmake
+-- Installing: P:/JudasValidation/CleanDistribution/vcpkg/packages/vcpkg-cmake-config_x64-windows/share/vcpkg-cmake-config/copyright
+-- Skipping post-build validation due to VCPKG_POLICY_EMPTY_PACKAGE
+Elapsed time to handle vcpkg-cmake-config:x64-windows: 106 ms
+vcpkg-cmake-config:x64-windows package ABI: 38bfda3830449be0eb4bd0ae1bc02423f404e04cd1d01e24574981cb11bf858d
+Installing 2/4 vcpkg-cmake:x64-windows@2024-04-23...
+Building vcpkg-cmake:x64-windows@2024-04-23...
+P:\JudasValidation\CleanDistribution\vcpkg\buildtrees\versioning_\versions\vcpkg-cmake\e74aa1e8f93278a8e71372f1fa08c3df420eb840: info: installing overlay port from here
+-- Installing: P:/JudasValidation/CleanDistribution/vcpkg/packages/vcpkg-cmake_x64-windows/share/vcpkg-cmake/vcpkg_cmake_configure.cmake
+-- Installing: P:/JudasValidation/CleanDistribution/vcpkg/packages/vcpkg-cmake_x64-windows/share/vcpkg-cmake/vcpkg_cmake_build.cmake
+-- Installing: P:/JudasValidation/CleanDistribution/vcpkg/packages/vcpkg-cmake_x64-windows/share/vcpkg-cmake/vcpkg_cmake_install.cmake
+-- Installing: P:/JudasValidation/CleanDistribution/vcpkg/packages/vcpkg-cmake_x64-windows/share/vcpkg-cmake/vcpkg-port-config.cmake
+-- Installing: P:/JudasValidation/CleanDistribution/vcpkg/packages/vcpkg-cmake_x64-windows/share/vcpkg-cmake/copyright
+-- Performing post-build validation
+Elapsed time to handle vcpkg-cmake:x64-windows: 121 ms
+vcpkg-cmake:x64-windows package ABI: ed8b8c6b9d32ee46fa8805f52d91d50e6d5c3df8bc68f866f5afa56ae638775a
+Installing 3/4 glm:x64-windows-static-md@1.0.1#3...
+Building glm:x64-windows-static-md@1.0.1#3...
+P:\JudasValidation\CleanDistribution\vcpkg\buildtrees\versioning_\versions\glm\f8b09027afe97c717e95bd81d1d4f37c057d1c78: info: installing overlay port from here
+Downloading https://github.com/g-truc/glm/archive/1.0.1.tar.gz -> g-truc-glm-1.0.1.tar.gz
+Successfully downloaded g-truc-glm-1.0.1.tar.gz
+-- Extracting source P:/JudasValidation/CleanDistribution/Downloads/g-truc-glm-1.0.1.tar.gz
+-- Applying patch fix-clang.patch
+-- Using source at P:/JudasValidation/CleanDistribution/vcpkg/buildtrees/glm/src/1.0.1-cf6930f99d.clean
+-- Found external ninja('1.12.1').
+-- Configuring x64-windows-static-md
+-- Building x64-windows-static-md-dbg
+-- Building x64-windows-static-md-rel
+-- Installing: P:/JudasValidation/CleanDistribution/vcpkg/packages/glm_x64-windows-static-md/share/glm/copyright
+-- Installing: P:/JudasValidation/CleanDistribution/vcpkg/packages/glm_x64-windows-static-md/share/glm/usage
+-- Performing post-build validation
+Elapsed time to handle glm:x64-windows-static-md: 18 s
+glm:x64-windows-static-md package ABI: 017f9061d2ba6e52d6943ef58cfa8c29fb0b3268d5ce010b7f8967bbb1cd2ddf
+Installing 4/4 sdl2:x64-windows-static-md@2.30.12...
+Building sdl2:x64-windows-static-md@2.30.12...
+P:\JudasValidation\CleanDistribution\vcpkg\buildtrees\versioning_\versions\sdl2\519decfc6f5bcc4be3b919c10e0792798f7c006f: info: installing overlay port from here
+Downloading https://github.com/libsdl-org/SDL/archive/release-2.30.12.tar.gz -> libsdl-org-SDL-release-2.30.12.tar.gz
+Successfully downloaded libsdl-org-SDL-release-2.30.12.tar.gz
+-- Extracting source P:/JudasValidation/CleanDistribution/Downloads/libsdl-org-SDL-release-2.30.12.tar.gz
+-- Applying patch deps.patch
+-- Applying patch alsa-dep-fix.patch
+-- Applying patch cxx-linkage-pkgconfig.diff
+-- Using source at P:/JudasValidation/CleanDistribution/vcpkg/buildtrees/sdl2/src/se-2.30.12-377bb68937.clean
+-- Found external ninja('1.12.1').
+-- Configuring x64-windows-static-md
+-- Building x64-windows-static-md-dbg
+-- Building x64-windows-static-md-rel
+-- Fixing pkgconfig file: P:/JudasValidation/CleanDistribution/vcpkg/packages/sdl2_x64-windows-static-md/lib/pkgconfig/sdl2.pc
+-- Fixing pkgconfig file: P:/JudasValidation/CleanDistribution/vcpkg/packages/sdl2_x64-windows-static-md/debug/lib/pkgconfig/sdl2.pc
+-- Installing: P:/JudasValidation/CleanDistribution/vcpkg/packages/sdl2_x64-windows-static-md/share/sdl2/usage
+-- Installing: P:/JudasValidation/CleanDistribution/vcpkg/packages/sdl2_x64-windows-static-md/share/sdl2/copyright
+-- Performing post-build validation
+Elapsed time to handle sdl2:x64-windows-static-md: 1.5 min
+sdl2:x64-windows-static-md package ABI: 2a51f6daadd1b13247d75d47b008b99e9f19d63962ac945a10f9ebd42f96b7ea
+Total install time: 1.8 min
+The package glm provides CMake targets:
+
+    find_package(glm CONFIG REQUIRED)
+    target_link_libraries(main PRIVATE glm::glm)
+
+    # Or use the header-only version
+    find_package(glm CONFIG REQUIRED)
+    target_link_libraries(main PRIVATE glm::glm-header-only)
+
+sdl2 provides CMake targets:
+
+    find_package(SDL2 CONFIG REQUIRED)
+    target_link_libraries(main
+        PRIVATE
+        $<TARGET_NAME_IF_EXISTS:SDL2::SDL2main>
+        $<IF:$<TARGET_EXISTS:SDL2::SDL2>,SDL2::SDL2,SDL2::SDL2-static>
+    )
+
+-- Running vcpkg install - done
+-- Selecting Windows SDK version 10.0.22621.0 to target Windows 10.0.19045.
+-- The C compiler identification is MSVC 19.44.35229.0
+-- The CXX compiler identification is MSVC 19.44.35229.0
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Check for working C compiler: C:/JudasValidation/VS2022/VC/Tools/MSVC/14.44.35207/bin/Hostx64/x64/cl.exe - skipped
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: C:/JudasValidation/VS2022/VC/Tools/MSVC/14.44.35207/bin/Hostx64/x64/cl.exe - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Performing Test CMAKE_HAVE_LIBC_PTHREAD
+-- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Failed
+-- Looking for pthread_create in pthreads
+-- Looking for pthread_create in pthreads - not found
+-- Looking for pthread_create in pthread
+-- Looking for pthread_create in pthread - not found
+-- Found Threads: TRUE
+-- Found Python3: C:/JudasValidation/Python/python.exe (found version "3.13.16") found components: Interpreter
+-- Looking for atexit
+-- Looking for atexit - found
+-- Looking for mprotect
+-- Looking for mprotect - not found
+-- Looking for sysconf
+-- Looking for sysconf - not found
+-- Looking for getpagesize
+-- Looking for getpagesize - not found
+-- Looking for mmap
+-- Looking for mmap - not found
+-- Looking for isatty
+-- Looking for isatty - found
+-- Looking for unistd.h
+-- Looking for unistd.h - not found
+-- Looking for sys/mman.h
+-- Looking for sys/mman.h - not found
+-- Looking for stdbool.h
+-- Looking for stdbool.h - found
+-- Found PkgConfig: C:/JudasValidation/Pkgconf/PFiles64/pkgconf-3.0.8/pkgconf.exe (found version "3.0.8")
+-- Configuring done (179.6s)
+-- Generating done (31.0s)
+-- Build files have been written to: P:/JudasValidation/CleanDistribution/Build
+MSBuild version 17.14.60+43b635718 for .NET Framework
+
+  Checking File Globs
+  1>Checking Build System
+  Creating directories for 'judas_icu_build'
+  Building Custom Rule P:/JudasValidation/CleanDistribution/Source/CMakeLists.txt
+  Performing download step (verify and extract) for 'judas_icu_build'
+  -- verifying file...
+       file='P:/JudasValidation/CleanDistribution/Source/third_party/text/icu4c-76_1-src.tgz'
+  -- verifying file... done
+  -- extracting...
+       src='P:/JudasValidation/CleanDistribution/Source/third_party/text/icu4c-76_1-src.tgz'
+       dst='P:/JudasValidation/CleanDistribution/Build/unicode/windows-icu'
+  -- extracting... [tar xfz]
+  -- extracting... [analysis]
+  -- extracting... [rename]
+  -- extracting... [clean up]
+  -- extracting... done
+  No update step for 'judas_icu_build'
+  No patch step for 'judas_icu_build'
+  No configure step for 'judas_icu_build'
+  Performing build step for 'judas_icu_build'
+  -- judas_icu_build build command succeeded.  See also P:/JudasValidation/CleanDistribution/Build/unicode/build/src/judas_icu_build-stamp/judas_icu_build-build-*.log
+  No install step for 'judas_icu_build'
+  Completed 'judas_icu_build'
+  Building Custom Rule P:/JudasValidation/CleanDistribution/Source/CMakeLists.txt
+  Building Custom Rule P:/JudasValidation/CleanDistribution/Build/_deps/judas_freetype-src/CMakeLists.txt
+  Building Custom Rule P:/JudasValidation/CleanDistribution/Build/_deps/judas_harfbuzz-src/CMakeLists.txt
+  Building Custom Rule P:/JudasValidation/CleanDistribution/Source/CMakeLists.txt
+  Building Custom Rule P:/JudasValidation/CleanDistribution/Source/CMakeLists.txt
+  Building Custom Rule P:/JudasValidation/CleanDistribution/Source/CMakeLists.txt
+  Building Custom Rule P:/JudasValidation/CleanDistribution/Source/CMakeLists.txt
+  autofit.c
+  AudioBackend.c
+  harfbuzz.cc
+  BuildIdentity.cpp
+  AppIcon.cpp
+  gl.c
+  Building Custom Rule P:/JudasValidation/CleanDistribution/Source/CMakeLists.txt
+  Building Custom Rule P:/JudasValidation/CleanDistribution/Source/CMakeLists.txt
+  ReverbBackend.c
+  Generating Code...
+  ftbase.c
+  judas_glad.vcxproj -> P:\JudasValidation\CleanDistribution\Build\Release\judas_glad.lib
+  PerformanceProfiler.cpp
+  ftbbox.c
+  ftbdf.c
+  BuildUpdate.cpp
+  JobSystem.cpp
+  TextureLoader.cpp
+  ftbitmap.c
+  Building Custom Rule P:/JudasValidation/CleanDistribution/Source/CMakeLists.txt
+  ftcid.c
+  ftfstype.c
+  ftgasp.c
+  ftglyph.c
+  ftgxval.c
+  CookedTexture.cpp
+  ftinit.c
+  ftmm.c
+  Generating Code...
+  ToolProcess.cpp
+  ftotval.c
+  ftpatent.c
+  ftpfr.c
+  ftstroke.c
+  ftsynth.c
+  allocator.cpp
+  clusterizer.cpp
+  fttype1.c
+  indexanalyzer.cpp
+  indexcodec.cpp
+  Generating Code...
+  ftwinfnt.c
+  indexgenerator.cpp
+  judas_jobs.vcxproj -> P:\JudasValidation\CleanDistribution\Build\Release\judas_jobs.lib
+  judas_profiler.vcxproj -> P:\JudasValidation\CleanDistribution\Build\Release\judas_profiler.lib
+  overdrawoptimizer.cpp
+  partition.cpp
+  bdf.c
+  quantization.cpp
+  rasterizer.cpp
+  simplifier.cpp
+  spatialorder.cpp
+  Generating Code...
+  stripifier.cpp
+  vcacheoptimizer.cpp
+  vertexcodec.cpp
+  judas_app_icon.vcxproj -> P:\JudasValidation\CleanDistribution\Build\Release\judas_app_icon.lib
+  vertexfilter.cpp
+  vfetchoptimizer.cpp
+  Building Custom Rule P:/JudasValidation/CleanDistribution/Source/CMakeLists.txt
+  Generating Code...
+  Building Custom Rule P:/JudasValidation/CleanDistribution/Source/CMakeLists.txt
+  judas_audio_backend.vcxproj -> P:\JudasValidation\CleanDistribution\Build\Release\judas_audio_backend.lib
+  Building Custom Rule P:/JudasValidation/CleanDistribution/Source/CMakeLists.txt
+  Compiling...
+  ftbzip2.c
+  ftcache.c
+  cff.c
+  quickjs.c
+  DetourAlloc.cpp
+  DetourAssert.cpp
+  DetourCommon.cpp
+  DetourNavMesh.cpp
+  Building Custom Rule P:/JudasValidation/CleanDistribution/Source/CMakeLists.txt
+  type1cid.c
+  DetourNavMeshBuilder.cpp
+  judas_meshoptimizer.vcxproj -> P:\JudasValidation\CleanDistribution\Build\Release\judas_meshoptimizer.lib
+P:\JudasValidation\CleanDistribution\Source\third_party\quickjs\quickjs.c(5013,5): warning C4098: 'JS_FreeCString': 'void' function returning a value [P:\JudasValidation\CleanDistribution\Build\judas_quickjs.vcxproj]
+P:\JudasValidation\CleanDistribution\Source\third_party\quickjs\quickjs.c(5018,5): warning C4098: 'JS_FreeCStringRT': 'void' function returning a value [P:\JudasValidation\CleanDistribution\Build\judas_quickjs.vcxproj]
+P:\JudasValidation\CleanDistribution\Source\third_party\quickjs\quickjs.c(5023,5): warning C4098: 'JS_FreeCStringUTF16': 'void' function returning a value [P:\JudasValidation\CleanDistribution\Build\judas_quickjs.vcxproj]
+P:\JudasValidation\CleanDistribution\Source\third_party\quickjs\quickjs.c(5028,5): warning C4098: 'JS_FreeCStringRT_UTF16': 'void' function returning a value [P:\JudasValidation\CleanDistribution\Build\judas_quickjs.vcxproj]
+  DetourNavMeshQuery.cpp
+  ftgzip.c
+  DetourNode.cpp
+  DetourCrowd.cpp
+  dtoa.c
+  DetourLocalBoundary.cpp
+  ftlzw.c
+  DetourObstacleAvoidance.cpp
+  pcf.c
+  DetourPathCorridor.cpp
+  libregexp.c
+  DetourPathQueue.cpp
+  DetourProximityGrid.cpp
+  pfr.c
+  DetourTileCache.cpp
+  libunicode.c
+  DetourTileCacheBuilder.cpp
+  psaux.c
+  Generating Code...
+  Generating Code...
+  pshinter.c
+  psnames.c
+  raster.c
+  sdf.c
+  ufbx.c
+  imgui.cpp
+  sfnt.c
+  imgui_draw.cpp
+  Building Custom Rule P:/JudasValidation/CleanDistribution/Source/CMakeLists.txt
+  judas_build_identity.vcxproj -> P:\JudasValidation\CleanDistribution\Build\Release\judas_build_identity.lib
+  imgui_tables.cpp
+  judas_navigation_backend.vcxproj -> P:\JudasValidation\CleanDistribution\Build\Release\judas_navigation_backend.lib
+  imgui_widgets.cpp
+  smooth.c
+  svg.c
+  imgui_impl_sdl2.cpp
+  truetype.c
+  Building Custom Rule P:/JudasValidation/CleanDistribution/Source/CMakeLists.txt
+  imgui_impl_opengl3.cpp
+  type1.c
+  mikktspace.c
+  Generating Code...
+  type42.c
+  winfnt.c
+  Generating Code...
+  judas_materials.vcxproj -> P:\JudasValidation\CleanDistribution\Build\Release\judas_materials.lib
+  judas_ufbx.vcxproj -> P:\JudasValidation\CleanDistribution\Build\Release\judas_ufbx.lib
+  NavigationGeometryBake.cpp
+  Recast.cpp
+  RecastAlloc.cpp
+  RecastArea.cpp
+  RecastAssert.cpp
+  RecastContour.cpp
+  RecastFilter.cpp
+  RecastLayers.cpp
+  RecastMesh.cpp
+  RecastMeshDetail.cpp
+  RecastRasterization.cpp
+  RecastRegion.cpp
+  Generating Code...
+  judas_imgui.vcxproj -> P:\JudasValidation\CleanDistribution\Build\Release\judas_imgui.lib
+  Compiling...
+  ftsystem.c
+P:\JudasValidation\CleanDistribution\Build\_deps\judas_freetype-src\builds\windows\ftsystem.c(29,9): warning C4005: 'WIN32_LEAN_AND_MEAN': macro redefinition [P:\JudasValidation\CleanDistribution\Build\_deps\judas_freetype-build\freetype.vcxproj]
+      P:\JudasValidation\CleanDistribution\Build\_deps\judas_freetype-src\builds\windows\ftsystem.c(29,9):
+      'WIN32_LEAN_AND_MEAN' previously declared on the command line
+  
+  ftdebug.c
+  Generating Code...
+  judas_quickjs.vcxproj -> P:\JudasValidation\CleanDistribution\Build\Release\judas_quickjs.lib
+  judas_navigation_cook.vcxproj -> P:\JudasValidation\CleanDistribution\Build\Release\judas_navigation_cook.lib
+  freetype.vcxproj -> P:\JudasValidation\CleanDistribution\Build\_deps\judas_freetype-build\Release\freetype.lib
+  harfbuzz.vcxproj -> P:\JudasValidation\CleanDistribution\Build\_deps\judas_harfbuzz-build\Release\harfbuzz.lib
+  Building Custom Rule P:/JudasValidation/CleanDistribution/Source/CMakeLists.txt
+  NetworkSession.cpp
+P:\JudasValidation\CleanDistribution\Source\src\NetworkSession.cpp(73,87): warning C4458: declaration of 'p' hides class member [P:\JudasValidation\CleanDistribution\Build\judas_engine.vcxproj]
+      P:\JudasValidation\CleanDistribution\Source\src\NetworkSession.h(53,36):
+      see declaration of 'NetworkSession::p'
+  
+  NetworkTransport.cpp
+  Wheel.cpp
+  WorldWheels.cpp
+  Powertrain.cpp
+  PowertrainAuthoring.cpp
+  WorldPowertrains.cpp
+  ModContent.cpp
+P:\JudasValidation\CleanDistribution\Source\src\modding\ModContent.cpp(92,120): warning C4456: declaration of 'v' hides previous local declaration [P:\JudasValidation\CleanDistribution\Build\judas_engine.vcxproj]
+      P:\JudasValidation\CleanDistribution\Source\src\modding\ModContent.cpp(84,138):
+      see declaration of 'v'
+  
+P:\JudasValidation\CleanDistribution\Source\src\modding\ModContent.cpp(93,114): warning C4456: declaration of 'v' hides previous local declaration [P:\JudasValidation\CleanDistribution\Build\judas_engine.vcxproj]
+      P:\JudasValidation\CleanDistribution\Source\src\modding\ModContent.cpp(84,138):
+      see declaration of 'v'
+  
+  ContentStorage.cpp
+  ModStore.cpp
+  ModRuntime.cpp
+  WorldFracture.cpp
+  Fracture.cpp
+P:\JudasValidation\CleanDistribution\Source\src\Fracture.cpp(91,19): warning C4457: declaration of 'a' hides function parameter [P:\JudasValidation\CleanDistribution\Build\judas_engine.vcxproj]
+      P:\JudasValidation\CleanDistribution\Source\src\Fracture.cpp(23,43):
+      see declaration of 'a'
+  
+  DeformableAsset.cpp
+  Deformable.cpp
+P:\JudasValidation\CleanDistribution\Source\src\Deformable.cpp(194,19): warning C4458: declaration of 'lambda' hides class member [P:\JudasValidation\CleanDistribution\Build\judas_engine.vcxproj]
+      P:\JudasValidation\CleanDistribution\Source\src\Deformable.h(137,42):
+      see declaration of 'DeformableInstance::lambda'
+  
+  WorldDeformables.cpp
+  TextLayout.cpp
+  TextEditing.cpp
+  Localization.cpp
+  Material.cpp
+  Generating Code...
+  Compiling...
+  Environment.cpp
+P:\JudasValidation\CleanDistribution\Source\src\Environment.cpp(36,525): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data [P:\JudasValidation\CleanDistribution\Build\judas_engine.vcxproj]
+  Tangents.cpp
+  LiquidGeometry.cpp
+P:\JudasValidation\CleanDistribution\Source\src\LiquidGeometry.cpp(137,57): warning C4459: declaration of 'faces' hides global declaration [P:\JudasValidation\CleanDistribution\Build\judas_engine.vcxproj]
+      P:\JudasValidation\CleanDistribution\Source\src\LiquidGeometry.cpp(12,11):
+      see declaration of '`anonymous-namespace'::faces'
+  
+P:\JudasValidation\CleanDistribution\Source\src\LiquidGeometry.cpp(140,85): warning C4459: declaration of 'faces' hides global declaration [P:\JudasValidation\CleanDistribution\Build\judas_engine.vcxproj]
+      P:\JudasValidation\CleanDistribution\Source\src\LiquidGeometry.cpp(12,11):
+      see declaration of '`anonymous-namespace'::faces'
+  
+  LiquidTypes.cpp
+  LiquidSystem.cpp
+P:\JudasValidation\CleanDistribution\Source\src\LiquidSystem.cpp(65,606): warning C4457: declaration of 'p' hides function parameter [P:\JudasValidation\CleanDistribution\Build\judas_engine.vcxproj]
+      P:\JudasValidation\CleanDistribution\Source\src\LiquidSystem.cpp(65,117):
+      see declaration of 'p'
+  
+P:\JudasValidation\CleanDistribution\Source\src\LiquidSystem.cpp(65,768): warning C4457: declaration of 'p' hides function parameter [P:\JudasValidation\CleanDistribution\Build\judas_engine.vcxproj]
+      P:\JudasValidation\CleanDistribution\Source\src\LiquidSystem.cpp(65,117):
+      see declaration of 'p'
+  
+  LiquidSurface.cpp
+  VolumeTerrainGeometry.cpp
+P:\JudasValidation\CleanDistribution\Source\src\VolumeTerrainGeometry.cpp(47,59): warning C4267: 'initializing': conversion from 'size_t' to 'unsigned int', possible loss of data [P:\JudasValidation\CleanDistribution\Build\judas_engine.vcxproj]
+  RuntimeTerrain.cpp
+  NavigationSystem.cpp
+P:\JudasValidation\CleanDistribution\Source\src\NavigationSystem.cpp(36,515): warning C4267: 'argument': conversion from 'size_t' to 'const int', possible loss of data [P:\JudasValidation\CleanDistribution\Build\judas_engine.vcxproj]
+P:\JudasValidation\CleanDistribution\Source\src\NavigationSystem.cpp(78,792): warning C4456: declaration of 'state' hides previous local declaration [P:\JudasValidation\CleanDistribution\Build\judas_engine.vcxproj]
+      P:\JudasValidation\CleanDistribution\Source\src\NavigationSystem.cpp(72,193):
+      see declaration of 'state'
+  
+P:\JudasValidation\CleanDistribution\Source\src\NavigationSystem.cpp(78,1338): warning C4456: declaration of 'count' hides previous local declaration [P:\JudasValidation\CleanDistribution\Build\judas_engine.vcxproj]
+      P:\JudasValidation\CleanDistribution\Source\src\NavigationSystem.cpp(78,302):
+      see declaration of 'count'
+  
+  NavigationTypes.cpp
+  NavigationAsset.cpp
+P:\JudasValidation\CleanDistribution\Source\src\NavigationAsset.cpp(23,82): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data [P:\JudasValidation\CleanDistribution\Build\judas_engine.vcxproj]
+P:\JudasValidation\CleanDistribution\Source\src\NavigationAsset.cpp(55,733): warning C4267: 'argument': conversion from 'size_t' to 'unsigned int', possible loss of data [P:\JudasValidation\CleanDistribution\Build\judas_engine.vcxproj]
+P:\JudasValidation\CleanDistribution\Source\src\NavigationAsset.cpp(55,817): warning C4267: 'argument': conversion from 'size_t' to 'unsigned int', possible loss of data [P:\JudasValidation\CleanDistribution\Build\judas_engine.vcxproj]
+P:\JudasValidation\CleanDistribution\Source\src\NavigationAsset.cpp(55,870): warning C4267: 'argument': conversion from 'size_t' to 'unsigned int', possible loss of data [P:\JudasValidation\CleanDistribution\Build\judas_engine.vcxproj]
+  FullBodyIK.cpp
+  PhysicalAnimation.cpp
+  PhysicalBalance.cpp
+  WorldPhysicalBalance.cpp
+  WorldAnimation.cpp
+  PoseComposition.cpp
+  WorldRagdoll.cpp
+P:\JudasValidation\CleanDistribution\Source\src\WorldRagdoll.cpp(289,28): warning C4456: declaration of 'previous' hides previous local declaration [P:\JudasValidation\CleanDistribution\Build\judas_engine.vcxproj]
+      P:\JudasValidation\CleanDistribution\Source\src\WorldRagdoll.cpp(285,21):
+      see declaration of 'previous'
+  
+  GltfLoader.cpp
+P:\JudasValidation\CleanDistribution\Source\src\GltfLoader.cpp(105,974): warning C4457: declaration of 'error' hides function parameter [P:\JudasValidation\CleanDistribution\Build\judas_engine.vcxproj]
+      P:\JudasValidation\CleanDistribution\Source\src\GltfLoader.cpp(41,116):
+      see declaration of 'error'
+  
+P:\JudasValidation\CleanDistribution\Source\src\GltfLoader.cpp(118,86): warning C4456: declaration of 'map' hides previous local declaration [P:\JudasValidation\CleanDistribution\Build\judas_engine.vcxproj]
+      P:\JudasValidation\CleanDistribution\Source\src\GltfLoader.cpp(85,8):
+      see declaration of 'map'
+  
+  WorldCharacter.cpp
+  Generating Code...
+P:\JudasValidation\CleanDistribution\Source\src\VolumeTerrainGeometry.cpp(44,1): warning C4701: potentially uninitialized local variable 'n' used [P:\JudasValidation\CleanDistribution\Build\judas_engine.vcxproj]
+  Compiling...
+  WorldGravity.cpp
+  WorldStreaming.cpp
+P:\JudasValidation\CleanDistribution\Source\src\WorldStreaming.cpp(247,50): warning C4457: declaration of 'target' hides function parameter [P:\JudasValidation\CleanDistribution\Build\judas_engine.vcxproj]
+      P:\JudasValidation\CleanDistribution\Source\src\WorldStreaming.cpp(241,61):
+      see declaration of 'target'
+  
+P:\JudasValidation\CleanDistribution\Source\src\WorldStreaming.cpp(309,66): warning C4456: declaration of 'id' hides previous local declaration [P:\JudasValidation\CleanDistribution\Build\judas_engine.vcxproj]
+      P:\JudasValidation\CleanDistribution\Source\src\WorldStreaming.cpp(290,15):
+      see declaration of 'id'
+  
+  WorldRegions.cpp
+  WorldScripts.cpp
+  RuntimeUI.cpp
+P:\JudasValidation\CleanDistribution\Source\src\RuntimeUI.cpp(101,420): warning C4244: '=': conversion from 'int' to 'float', possible loss of data [P:\JudasValidation\CleanDistribution\Build\judas_engine.vcxproj]
+  RuntimeUIControls.cpp
+  ScriptSystem.cpp
+P:\JudasValidation\CleanDistribution\Source\src\ScriptSystem.cpp(1611,75): warning C4267: 'argument': conversion from 'size_t' to 'uint32_t', possible loss of data [P:\JudasValidation\CleanDistribution\Build\judas_engine.vcxproj]
+P:\JudasValidation\CleanDistribution\Source\src\ScriptSystem.cpp(1611,173): warning C4267: 'argument': conversion from 'size_t' to 'uint32_t', possible loss of data [P:\JudasValidation\CleanDistribution\Build\judas_engine.vcxproj]
+  ScriptBindingsUI.cpp
+  ScriptBindingsJoint.cpp
+  Classification.cpp
+  GamePackage.cpp
+  ProjectExporter.cpp
+  AssetDependencies.cpp
+  AudioStream.cpp
+  AudioEnvironment.cpp
+  AudioData.cpp
+  AudioSystem.cpp
+  WorldAudio.cpp
+P:\JudasValidation\CleanDistribution\Source\src\WorldAudio.cpp(93,13): warning C4267: 'initializing': conversion from 'size_t' to 'unsigned int', possible loss of data [P:\JudasValidation\CleanDistribution\Build\judas_engine.vcxproj]
+P:\JudasValidation\CleanDistribution\Source\src\WorldAudio.cpp(96,21): warning C4244: '=': conversion from 'int' to 'float', possible loss of data [P:\JudasValidation\CleanDistribution\Build\judas_engine.vcxproj]
+  Window.cpp
+P:\JudasValidation\CleanDistribution\Source\src\Window.cpp(151,119): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data [P:\JudasValidation\CleanDistribution\Build\judas_engine.vcxproj]
+P:\JudasValidation\CleanDistribution\Source\src\Window.cpp(175,78): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data [P:\JudasValidation\CleanDistribution\Build\judas_engine.vcxproj]
+P:\JudasValidation\CleanDistribution\Source\src\Window.cpp(209,230): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data [P:\JudasValidation\CleanDistribution\Build\judas_engine.vcxproj]
+P:\JudasValidation\CleanDistribution\Source\src\Window.cpp(210,300): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data [P:\JudasValidation\CleanDistribution\Build\judas_engine.vcxproj]
+P:\JudasValidation\CleanDistribution\Source\src\Window.cpp(212,148): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data [P:\JudasValidation\CleanDistribution\Build\judas_engine.vcxproj]
+P:\JudasValidation\CleanDistribution\Source\src\Window.cpp(214,354): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data [P:\JudasValidation\CleanDistribution\Build\judas_engine.vcxproj]
+P:\JudasValidation\CleanDistribution\Source\src\Window.cpp(262,123): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data [P:\JudasValidation\CleanDistribution\Build\judas_engine.vcxproj]
+P:\JudasValidation\CleanDistribution\Source\src\Window.cpp(264,144): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data [P:\JudasValidation\CleanDistribution\Build\judas_engine.vcxproj]
+  LocalMultiplayer.cpp
+  Generating Code...
+P:\JudasValidation\CleanDistribution\Source\src\ScriptSystem.cpp(834,1): warning C4701: potentially uninitialized local variable 'b' used [P:\JudasValidation\CleanDistribution\Build\judas_engine.vcxproj]
+P:\JudasValidation\CleanDistribution\Source\src\ScriptNetwork.inl(21,1): warning C4701: potentially uninitialized local variable 'position' used [P:\JudasValidation\CleanDistribution\Build\judas_engine.vcxproj]
+  Compiling...
+  InputSystem.cpp
+  Renderer.cpp
+P:\JudasValidation\CleanDistribution\Source\src\Renderer.cpp(1662,80): warning C4244: 'argument': conversion from 'int' to 'GLfloat', possible loss of data [P:\JudasValidation\CleanDistribution\Build\judas_engine.vcxproj]
+P:\JudasValidation\CleanDistribution\Source\src\Renderer.cpp(1662,119): warning C4244: 'argument': conversion from 'int' to 'GLfloat', possible loss of data [P:\JudasValidation\CleanDistribution\Build\judas_engine.vcxproj]
+  RenderLightGrid.cpp
+  SkeletalAnimation.cpp
+  CharacterMotor.cpp
+  PlayerController.cpp
+  PlayerView.cpp
+  StepClimb.cpp
+  DynamicBody.cpp
+  FlyingPrimitiveControl.cpp
+  PilotAttachment.cpp
+  PilotControl.cpp
+  ReferenceFrame.cpp
+  CollisionAuthoring.cpp
+  CollisionSource.cpp
+P:\JudasValidation\CleanDistribution\Source\src\CollisionSource.cpp(34,46): warning C4267: 'argument': conversion from 'size_t' to '_Ty', possible loss of data [P:\JudasValidation\CleanDistribution\Build\judas_engine.vcxproj]
+P:\JudasValidation\CleanDistribution\Source\src\CollisionSource.cpp(34,46): warning C4267:         with [P:\JudasValidation\CleanDistribution\Build\judas_engine.vcxproj]
+P:\JudasValidation\CleanDistribution\Source\src\CollisionSource.cpp(34,46): warning C4267:         [ [P:\JudasValidation\CleanDistribution\Build\judas_engine.vcxproj]
+P:\JudasValidation\CleanDistribution\Source\src\CollisionSource.cpp(34,46): warning C4267:             _Ty=uint32_t [P:\JudasValidation\CleanDistribution\Build\judas_engine.vcxproj]
+P:\JudasValidation\CleanDistribution\Source\src\CollisionSource.cpp(34,46): warning C4267:         ] [P:\JudasValidation\CleanDistribution\Build\judas_engine.vcxproj]
+P:\JudasValidation\CleanDistribution\Source\src\CollisionSource.cpp(53,339): warning C4267: 'argument': conversion from 'size_t' to '_Ty', possible loss of data [P:\JudasValidation\CleanDistribution\Build\judas_engine.vcxproj]
+P:\JudasValidation\CleanDistribution\Source\src\CollisionSource.cpp(53,339): warning C4267:         with [P:\JudasValidation\CleanDistribution\Build\judas_engine.vcxproj]
+P:\JudasValidation\CleanDistribution\Source\src\CollisionSource.cpp(53,339): warning C4267:         [ [P:\JudasValidation\CleanDistribution\Build\judas_engine.vcxproj]
+P:\JudasValidation\CleanDistribution\Source\src\CollisionSource.cpp(53,339): warning C4267:             _Ty=uint32_t [P:\JudasValidation\CleanDistribution\Build\judas_engine.vcxproj]
+P:\JudasValidation\CleanDistribution\Source\src\CollisionSource.cpp(53,339): warning C4267:         ] [P:\JudasValidation\CleanDistribution\Build\judas_engine.vcxproj]
+P:\JudasValidation\CleanDistribution\Source\src\CollisionSource.cpp(56,220): warning C4267: 'argument': conversion from 'size_t' to '_Ty', possible loss of data [P:\JudasValidation\CleanDistribution\Build\judas_engine.vcxproj]
+P:\JudasValidation\CleanDistribution\Source\src\CollisionSource.cpp(56,220): warning C4267:         with [P:\JudasValidation\CleanDistribution\Build\judas_engine.vcxproj]
+P:\JudasValidation\CleanDistribution\Source\src\CollisionSource.cpp(56,220): warning C4267:         [ [P:\JudasValidation\CleanDistribution\Build\judas_engine.vcxproj]
+P:\JudasValidation\CleanDistribution\Source\src\CollisionSource.cpp(56,220): warning C4267:             _Ty=uint32_t [P:\JudasValidation\CleanDistribution\Build\judas_engine.vcxproj]
+P:\JudasValidation\CleanDistribution\Source\src\CollisionSource.cpp(56,220): warning C4267:         ] [P:\JudasValidation\CleanDistribution\Build\judas_engine.vcxproj]
+  ModelLoader.cpp
+P:\JudasValidation\CleanDistribution\Source\third_party\tiny_obj_loader.h(12700,18): warning C4456: declaration of 'total_faces' hides previous local declaration [P:\JudasValidation\CleanDistribution\Build\judas_engine.vcxproj]
+  (compiling source file '../Source/src/ModelLoader.cpp')
+      P:\JudasValidation\CleanDistribution\Source\third_party\tiny_obj_loader.h(12349,10):
+      see declaration of 'total_faces'
+  
+P:\JudasValidation\CleanDistribution\Source\third_party\tiny_obj_loader.h(13697,18): warning C4456: declaration of 'total_faces' hides previous local declaration [P:\JudasValidation\CleanDistribution\Build\judas_engine.vcxproj]
+  (compiling source file '../Source/src/ModelLoader.cpp')
+      P:\JudasValidation\CleanDistribution\Source\third_party\tiny_obj_loader.h(13319,10):
+      see declaration of 'total_faces'
+  
+P:\JudasValidation\CleanDistribution\Source\third_party\tiny_obj_loader.h(6887,18): warning C4505: 'tinyobj::parseTagTriple': unreferenced function with internal linkage has been removed [P:\JudasValidation\CleanDistribution\Build\judas_engine.vcxproj]
+  (compiling source file '../Source/src/ModelLoader.cpp')
+  
+P:\JudasValidation\CleanDistribution\Source\third_party\tiny_obj_loader.h(6913,13): warning C4505: 'tinyobj::parseTriple': unreferenced function with internal linkage has been removed [P:\JudasValidation\CleanDistribution\Build\judas_engine.vcxproj]
+  (compiling source file '../Source/src/ModelLoader.cpp')
+  
+P:\JudasValidation\CleanDistribution\Source\third_party\tiny_obj_loader.h(6967,23): warning C4505: 'tinyobj::parseRawTriple': unreferenced function with internal linkage has been removed [P:\JudasValidation\CleanDistribution\Build\judas_engine.vcxproj]
+  (compiling source file '../Source/src/ModelLoader.cpp')
+  
+  ModelArchive.cpp
+  AssetCook.cpp
+P:\JudasValidation\CleanDistribution\Source\third_party\stb_dxt.h(177,23): warning C4244: '=': conversion from 'int' to 'unsigned char', possible loss of data [P:\JudasValidation\CleanDistribution\Build\judas_engine.vcxproj]
+  (compiling source file '../Source/src/AssetCook.cpp')
+  
+P:\JudasValidation\CleanDistribution\Source\third_party\stb_dxt.h(178,23): warning C4244: '=': conversion from 'int' to 'unsigned char', possible loss of data [P:\JudasValidation\CleanDistribution\Build\judas_engine.vcxproj]
+  (compiling source file '../Source/src/AssetCook.cpp')
+  
+P:\JudasValidation\CleanDistribution\Source\third_party\stb_dxt.h(179,23): warning C4244: '=': conversion from 'int' to 'unsigned char', possible loss of data [P:\JudasValidation\CleanDistribution\Build\judas_engine.vcxproj]
+  (compiling source file '../Source/src/AssetCook.cpp')
+  
+  FontLoader.cpp
+  UIWidgets.cpp
+  Generating Code...
+  Compiling...
+  PauseMenu.cpp
+  HUD.cpp
+  LightTransforms.cpp
+  LightAttenuation.cpp
+  ShadowTransforms.cpp
+  HingeTransform.cpp
+  InteractionSystem.cpp
+  ObjectManipulation.cpp
+  FluidWorld.cpp
+  ProductionFluidCoupling.cpp
+  FluidHydrostatics.cpp
+  FluidSurface.cpp
+  CombustionWorld.cpp
+  FirePresentation.cpp
+  TerrainDemo.cpp
+  TerrainLibrary.cpp
+  Door.cpp
+  LightSwitch.cpp
+  FaithfulGravity.cpp
+  RadicalGravity.cpp
+  Generating Code...
+  Compiling...
+  SphericalVolume.cpp
+  BoxVolume.cpp
+  GravityContextMap.cpp
+  CelestialGravity.cpp
+  AtmosphereField.cpp
+  AerodynamicDrag.cpp
+  VisualParticles.cpp
+  Prefab.cpp
+  Scene.cpp
+  Ragdoll.cpp
+  SceneSerialization.cpp
+  NamedAuthoring.cpp
+  SceneFingerprint.cpp
+P:\JudasValidation\CleanDistribution\Source\src\SceneFingerprint.cpp(469,141): warning C4456: declaration of 's' hides previous local declaration [P:\JudasValidation\CleanDistribution\Build\judas_engine.vcxproj]
+      P:\JudasValidation\CleanDistribution\Source\src\SceneFingerprint.cpp(314,17):
+      see declaration of 's'
+  
+  Project.cpp
+  AssetDatabase.cpp
+  AsyncFile.cpp
+  ResourceManager.cpp
+  EnginePaths.cpp
+  DebugDraw.cpp
+  WorldDebugView.cpp
+  Generating Code...
+P:\JudasValidation\CleanDistribution\Source\src\SceneSerialization.cpp(912,1): warning C4701: potentially uninitialized local variable 'seed' used [P:\JudasValidation\CleanDistribution\Build\judas_engine.vcxproj]
+  Compiling...
+  SceneSession.cpp
+  PlanetTerrain.cpp
+  PlanetTiles.cpp
+  WorldPlanets.cpp
+  Weather.cpp
+  WorldWeather.cpp
+  WorldOrigin.cpp
+  RuntimeWorld.cpp
+P:\JudasValidation\CleanDistribution\Source\src\RuntimeWorld.cpp(491,42): warning C4458: declaration of 'view' hides class member [P:\JudasValidation\CleanDistribution\Build\judas_engine.vcxproj]
+      P:\JudasValidation\CleanDistribution\Source\src\RuntimeWorld.h(417,32):
+      see declaration of 'RuntimeWorld::view'
+  
+P:\JudasValidation\CleanDistribution\Source\src\RuntimeWorld.cpp(1356,30): warning C4458: declaration of 'view' hides class member [P:\JudasValidation\CleanDistribution\Build\judas_engine.vcxproj]
+      P:\JudasValidation\CleanDistribution\Source\src\RuntimeWorld.h(417,32):
+      see declaration of 'RuntimeWorld::view'
+  
+  GameSession.cpp
+  Simulation.cpp
+  WorldPresentation.cpp
+P:\JudasValidation\CleanDistribution\Source\src\WorldPresentation.cpp(605,5): warning C4244: 'argument': conversion from 'const size_t' to 'double', possible loss of data [P:\JudasValidation\CleanDistribution\Build\judas_engine.vcxproj]
+P:\JudasValidation\CleanDistribution\Source\src\WorldPresentation.cpp(606,5): warning C4244: 'argument': conversion from 'const size_t' to 'double', possible loss of data [P:\JudasValidation\CleanDistribution\Build\judas_engine.vcxproj]
+  GameplayHud.cpp
+  EngineHost.cpp
+  InteractivePlay.cpp
+  ScreenshotWriter.cpp
+  FidelityPolicy.cpp
+  CoarseSimulation.cpp
+  WorldState.cpp
+  SaveStorage.cpp
+  SaveStorageWindows.cpp
+  Generating Code...
+  Compiling...
+  PlatformServices.cpp
+  SaveEvolution.cpp
+  SaveService.cpp
+  MotorPersistence.cpp
+  LiquidPersistence.cpp
+  CollisionAsset.cpp
+P:\JudasValidation\CleanDistribution\Source\src\CollisionAsset.cpp(27,34): warning C4267: 'argument': conversion from 'size_t' to 'unsigned int', possible loss of data [P:\JudasValidation\CleanDistribution\Build\judas_engine.vcxproj]
+P:\JudasValidation\CleanDistribution\Source\src\CollisionAsset.cpp(99,25): warning C4267: 'initializing': conversion from 'size_t' to 'unsigned int', possible loss of data [P:\JudasValidation\CleanDistribution\Build\judas_engine.vcxproj]
+P:\JudasValidation\CleanDistribution\Source\src\CollisionAsset.cpp(21,17): warning C4267: 'initializing': conversion from 'size_t' to 'unsigned int', possible loss of data [P:\JudasValidation\CleanDistribution\Build\judas_engine.vcxproj]
+      P:\JudasValidation\CleanDistribution\Source\src\CollisionAsset.cpp(21,17):
+      the template instantiation context (the oldest one first) is
+          P:\JudasValidation\CleanDistribution\Source\src\CollisionAsset.cpp(27,4):
+          see reference to function template instantiation 'unsigned int `anonymous-namespace'::build::<lambda_53783ae5118bcac79a97197ba35f8f4a>::operator ()<`anonymous-namespace'::build::<lambda_53783ae5118bcac79a97197ba35f8f4a>&>(`anonymous-namespace'::build::<lambda_53783ae5118bcac79a97197ba35f8f4a> &,unsigned int,unsigned int) const' being compiled
+  
+C:\JudasValidation\VS2022\VC\Tools\MSVC\14.44.35207\include\utility(274,54): warning C4267: 'initializing': conversion from 'size_t' to '_Ty2', possible loss of data [P:\JudasValidation\CleanDistribution\Build\judas_engine.vcxproj]
+C:\JudasValidation\VS2022\VC\Tools\MSVC\14.44.35207\include\utility(274,54): warning C4267:         with [P:\JudasValidation\CleanDistribution\Build\judas_engine.vcxproj]
+C:\JudasValidation\VS2022\VC\Tools\MSVC\14.44.35207\include\utility(274,54): warning C4267:         [ [P:\JudasValidation\CleanDistribution\Build\judas_engine.vcxproj]
+C:\JudasValidation\VS2022\VC\Tools\MSVC\14.44.35207\include\utility(274,54): warning C4267:             _Ty2=unsigned int [P:\JudasValidation\CleanDistribution\Build\judas_engine.vcxproj]
+C:\JudasValidation\VS2022\VC\Tools\MSVC\14.44.35207\include\utility(274,54): warning C4267:         ] [P:\JudasValidation\CleanDistribution\Build\judas_engine.vcxproj]
+  (compiling source file '../Source/src/CollisionAsset.cpp')
+      C:\JudasValidation\VS2022\VC\Tools\MSVC\14.44.35207\include\utility(274,54):
+      the template instantiation context (the oldest one first) is
+          P:\JudasValidation\CleanDistribution\Source\src\CollisionAsset.cpp(104,593):
+          see reference to function template instantiation 'std::pair<std::_Tree_iterator<std::_Tree_val<std::_Tree_simple_types<std::pair<const unsigned int,unsigned int>>>>,bool> std::_Tree<std::_Tmap_traits<_Kty,_Ty,_Pr,_Alloc,false>>::emplace<const _Ty&,unsigned __int64>(const _Ty &,unsigned __int64 &&)' being compiled
+          with
+          [
+              _Kty=unsigned int,
+              _Ty=unsigned int,
+              _Pr=std::less<unsigned int>,
+              _Alloc=std::allocator<std::pair<const unsigned int,unsigned int>>
+          ]
+              P:\JudasValidation\CleanDistribution\Source\src\CollisionAsset.cpp(104,593):
+              see the first reference to 'std::_Tree<std::_Tmap_traits<_Kty,_Ty,_Pr,_Alloc,false>>::emplace' in 'CookCollision'
+          with
+          [
+              _Kty=unsigned int,
+              _Ty=unsigned int,
+              _Pr=std::less<unsigned int>,
+              _Alloc=std::allocator<std::pair<const unsigned int,unsigned int>>
+          ]
+          C:\JudasValidation\VS2022\VC\Tools\MSVC\14.44.35207\include\xtree(1048,30):
+          see reference to function template instantiation 'std::pair<std::_Tree_node<std::pair<const unsigned int,unsigned int>,std::_Default_allocator_traits<_Alloc>::void_pointer> *,bool> std::_Tree<std::_Tmap_traits<_Kty,_Ty,_Pr,_Alloc,false>>::_Emplace<const _Ty&,unsigned __int64>(const _Ty &,unsigned __int64 &&)' being compiled
+          with
+          [
+              _Alloc=std::allocator<std::pair<const unsigned int,unsigned int>>,
+              _Kty=unsigned int,
+              _Ty=unsigned int,
+              _Pr=std::less<unsigned int>
+          ]
+          C:\JudasValidation\VS2022\VC\Tools\MSVC\14.44.35207\include\xtree(1023,49):
+          see reference to function template instantiation 'std::_Tree_temp_node<std::allocator<std::_Tree_node<std::pair<const unsigned int,unsigned int>,std::_Default_allocator_traits<_Alloc>::void_pointer>>>::_Tree_temp_node<const _Ty&,unsigned __int64>(_Alnode &,std::_Tree_node<std::pair<const unsigned int,unsigned int>,std::_Default_allocator_traits<_Alloc>::void_pointer> *,const _Ty &,unsigned __int64 &&)' being compiled
+          with
+          [
+              _Alloc=std::allocator<std::pair<const unsigned int,unsigned int>>,
+              _Ty=uint32_t,
+              _Alnode=std::allocator<std::_Tree_node<std::pair<const unsigned int,unsigned int>,std::_Default_allocator_traits<std::allocator<std::pair<const unsigned int,unsigned int>>>::void_pointer>>
+          ]
+          C:\JudasValidation\VS2022\VC\Tools\MSVC\14.44.35207\include\xtree(830,25):
+          see reference to function template instantiation 'void std::_Default_allocator_traits<_Alloc>::construct<_Ty,const unsigned int&,unsigned __int64>(_Alloc &,_Objty *const ,const unsigned int &,unsigned __int64 &&)' being compiled
+          with
+          [
+              _Alloc=std::allocator<std::_Tree_node<std::pair<const unsigned int,unsigned int>,std::_Default_allocator_traits<std::allocator<std::pair<const unsigned int,unsigned int>>>::void_pointer>>,
+              _Ty=std::pair<const unsigned int,unsigned int>,
+              _Objty=std::pair<const unsigned int,unsigned int>
+          ]
+          C:\JudasValidation\VS2022\VC\Tools\MSVC\14.44.35207\include\xmemory(732,82):
+          see reference to function template instantiation 'std::pair<const unsigned int,unsigned int>::pair<const _Ty&,unsigned __int64,0>(_Other1,_Other2 &&) noexcept' being compiled
+          with
+          [
+              _Ty=uint32_t,
+              _Other1=const uint32_t &,
+              _Other2=size_t
+          ]
+  
+  CollisionGeometry.cpp
+P:\JudasValidation\CleanDistribution\Source\src\CollisionGeometry.cpp(144,60): warning C4244: '=': conversion from 'double' to 'float', possible loss of data [P:\JudasValidation\CleanDistribution\Build\judas_engine.vcxproj]
+  QuickHull.cpp
+P:\JudasValidation\CleanDistribution\Source\third_party\quickhull\QuickHull.cpp(45,130): warning C4100: 'CCW': unreferenced parameter [P:\JudasValidation\CleanDistribution\Build\judas_engine.vcxproj]
+      P:\JudasValidation\CleanDistribution\Source\third_party\quickhull\QuickHull.cpp(45,130):
+      the template instantiation context (the oldest one first) is
+          P:\JudasValidation\CleanDistribution\Source\third_party\quickhull\QuickHull.cpp(511,33):
+          see reference to class template instantiation 'quickhull::QuickHull<float>' being compiled
+          P:\JudasValidation\CleanDistribution\Source\third_party\quickhull\QuickHull.cpp(45,154):
+          while compiling class template member function 'quickhull::HalfEdgeMesh<FloatType,size_t> quickhull::QuickHull<FloatType>::getConvexHullAsMesh(const FloatType *,size_t,bool,FloatType)'
+          with
+          [
+              FloatType=float
+          ]
+  
+  JointSolver.cpp
+  PhysicsCastGeometry.cpp
+  ImpactSolver.cpp
+  RigidBody.cpp
+  RigidBodyGravity.cpp
+P:\JudasValidation\CleanDistribution\Source\src\RigidBody.h(23,8): warning C4099: 'RigidBody': type name first seen using 'class' now seen using 'struct' [P:\JudasValidation\CleanDistribution\Build\judas_engine.vcxproj]
+  (compiling source file '../Source/src/RigidBodyGravity.cpp')
+      P:\JudasValidation\CleanDistribution\Source\src\RigidBody.h(23,8):
+      see declaration of 'RigidBody'
+  
+  Contacts.cpp
+  ContactSolver.cpp
+P:\JudasValidation\CleanDistribution\Source\src\ContactSolver.cpp(212,59): warning C4244: '=': conversion from 'double' to 'float', possible loss of data [P:\JudasValidation\CleanDistribution\Build\judas_engine.vcxproj]
+  RadialTerrain.cpp
+  Broadphase.cpp
+  Narrowphase.cpp
+  PhysicsWorld.cpp
+  WorldBodies.cpp
+  Generating Code...
+  Compiling...
+  WorldBounds.cpp
+  WorldCCDSearch.cpp
+P:\JudasValidation\CleanDistribution\Source\src\physics\WorldCCDSearch.cpp(714,25): warning C4456: declaration of 'bb' hides previous local declaration [P:\JudasValidation\CleanDistribution\Build\judas_engine.vcxproj]
+      P:\JudasValidation\CleanDistribution\Source\src\physics\WorldCCDSearch.cpp(560,17):
+      see declaration of 'bb'
+  
+  WorldContacts.cpp
+P:\JudasValidation\CleanDistribution\Source\src\physics\WorldContacts.cpp(84,5): warning C4244: 'argument': conversion from 'unsigned __int64' to 'double', possible loss of data [P:\JudasValidation\CleanDistribution\Build\judas_engine.vcxproj]
+P:\JudasValidation\CleanDistribution\Source\src\physics\WorldContacts.cpp(236,5): warning C4244: 'argument': conversion from 'size_t' to 'double', possible loss of data [P:\JudasValidation\CleanDistribution\Build\judas_engine.vcxproj]
+P:\JudasValidation\CleanDistribution\Source\src\physics\WorldContacts.cpp(240,5): warning C4244: 'argument': conversion from 'unsigned __int64' to 'double', possible loss of data [P:\JudasValidation\CleanDistribution\Build\judas_engine.vcxproj]
+P:\JudasValidation\CleanDistribution\Source\src\physics\WorldContacts.cpp(242,5): warning C4244: 'argument': conversion from 'unsigned __int64' to 'double', possible loss of data [P:\JudasValidation\CleanDistribution\Build\judas_engine.vcxproj]
+  WorldImpactEvents.cpp
+  WorldJoints.cpp
+  WorldParticles.cpp
+  WorldQueries.cpp
+P:\JudasValidation\CleanDistribution\Source\src\physics\WorldQueries.cpp(496,32): warning C4244: '=': conversion from 'double' to 'float', possible loss of data [P:\JudasValidation\CleanDistribution\Build\judas_engine.vcxproj]
+  WorldSleep.cpp
+P:\JudasValidation\CleanDistribution\Source\src\physics\WorldSleep.cpp(41,45): warning C4456: declaration of 'b' hides previous local declaration [P:\JudasValidation\CleanDistribution\Build\judas_engine.vcxproj]
+      P:\JudasValidation\CleanDistribution\Source\src\physics\WorldSleep.cpp(14,15):
+      see declaration of 'b'
+  
+  Generating Code...
+  WorldPersistence.cpp
+P:\JudasValidation\CleanDistribution\Source\src\WorldPersistence.cpp(284,472): warning C4457: declaration of 'error' hides function parameter [P:\JudasValidation\CleanDistribution\Build\judas_engine.vcxproj]
+      P:\JudasValidation\CleanDistribution\Source\src\WorldPersistence.cpp(269,109):
+      see declaration of 'error'
+  
+C:\JudasValidation\VS2022\VC\Tools\MSVC\14.44.35207\include\utility(274,54): warning C4244: 'initializing': conversion from 'const SceneObjectId' to '_Ty2', possible loss of data [P:\JudasValidation\CleanDistribution\Build\judas_engine.vcxproj]
+C:\JudasValidation\VS2022\VC\Tools\MSVC\14.44.35207\include\utility(274,54): warning C4244:         with [P:\JudasValidation\CleanDistribution\Build\judas_engine.vcxproj]
+C:\JudasValidation\VS2022\VC\Tools\MSVC\14.44.35207\include\utility(274,54): warning C4244:         [ [P:\JudasValidation\CleanDistribution\Build\judas_engine.vcxproj]
+C:\JudasValidation\VS2022\VC\Tools\MSVC\14.44.35207\include\utility(274,54): warning C4244:             _Ty2=unsigned int [P:\JudasValidation\CleanDistribution\Build\judas_engine.vcxproj]
+C:\JudasValidation\VS2022\VC\Tools\MSVC\14.44.35207\include\utility(274,54): warning C4244:         ] [P:\JudasValidation\CleanDistribution\Build\judas_engine.vcxproj]
+  (compiling source file '../Source/src/WorldPersistence.cpp')
+      C:\JudasValidation\VS2022\VC\Tools\MSVC\14.44.35207\include\utility(274,54):
+      the template instantiation context (the oldest one first) is
+          P:\JudasValidation\CleanDistribution\Source\src\WorldPersistence.cpp(361,592):
+          see reference to function template instantiation 'std::pair<uint64_t,unsigned int>::pair<const SceneObjectId&,const uint64_t&,0>(_Other1,_Other2) noexcept' being compiled
+          with
+          [
+              _Other1=const SceneObjectId &,
+              _Other2=const uint64_t &
+          ]
+              P:\JudasValidation\CleanDistribution\Source\src\WorldPersistence.cpp(361,580):
+              see the first reference to 'std::pair<uint64_t,unsigned int>::pair' in 'WorldPersistence::Restore'
+  
+C:\JudasValidation\VS2022\VC\Tools\MSVC\14.44.35207\include\utility(274,54): warning C4244: 'initializing': conversion from 'EntityId' to '_Ty2', possible loss of data [P:\JudasValidation\CleanDistribution\Build\judas_engine.vcxproj]
+C:\JudasValidation\VS2022\VC\Tools\MSVC\14.44.35207\include\utility(274,54): warning C4244:         with [P:\JudasValidation\CleanDistribution\Build\judas_engine.vcxproj]
+C:\JudasValidation\VS2022\VC\Tools\MSVC\14.44.35207\include\utility(274,54): warning C4244:         [ [P:\JudasValidation\CleanDistribution\Build\judas_engine.vcxproj]
+C:\JudasValidation\VS2022\VC\Tools\MSVC\14.44.35207\include\utility(274,54): warning C4244:             _Ty2=unsigned int [P:\JudasValidation\CleanDistribution\Build\judas_engine.vcxproj]
+C:\JudasValidation\VS2022\VC\Tools\MSVC\14.44.35207\include\utility(274,54): warning C4244:         ] [P:\JudasValidation\CleanDistribution\Build\judas_engine.vcxproj]
+  (compiling source file '../Source/src/WorldPersistence.cpp')
+      C:\JudasValidation\VS2022\VC\Tools\MSVC\14.44.35207\include\utility(274,54):
+      the template instantiation context (the oldest one first) is
+          P:\JudasValidation\CleanDistribution\Source\src\WorldPersistence.cpp(361,350):
+          see reference to function template instantiation 'std::pair<std::_Tree_const_iterator<std::_Tree_val<std::_Tree_simple_types<std::pair<uint64_t,unsigned int>>>>,bool> std::_Tree<std::_Tset_traits<_Kty,_Pr,_Alloc,false>>::emplace<SceneObjectId&,uint64_t&>(SceneObjectId &,uint64_t &)' being compiled
+          with
+          [
+              _Kty=std::pair<uint64_t,unsigned int>,
+              _Pr=std::less<std::pair<uint64_t,unsigned int>>,
+              _Alloc=std::allocator<std::pair<uint64_t,unsigned int>>
+          ]
+              P:\JudasValidation\CleanDistribution\Source\src\WorldPersistence.cpp(361,239):
+              see the first reference to 'std::_Tree<std::_Tset_traits<_Kty,_Pr,_Alloc,false>>::emplace' in 'WorldPersistence::Restore'
+          with
+          [
+              _Kty=std::pair<uint64_t,unsigned int>,
+              _Pr=std::less<std::pair<uint64_t,unsigned int>>,
+              _Alloc=std::allocator<std::pair<uint64_t,unsigned int>>
+          ]
+          C:\JudasValidation\VS2022\VC\Tools\MSVC\14.44.35207\include\xtree(1048,30):
+          see reference to function template instantiation 'std::pair<std::_Tree_node<std::pair<uint64_t,unsigned int>,std::_Default_allocator_traits<_Alloc>::void_pointer> *,bool> std::_Tree<std::_Tset_traits<_Kty,_Pr,_Alloc,false>>::_Emplace<EntityId&,EntityId&>(EntityId &,EntityId &)' being compiled
+          with
+          [
+              _Alloc=std::allocator<std::pair<uint64_t,unsigned int>>,
+              _Kty=std::pair<uint64_t,unsigned int>,
+              _Pr=std::less<std::pair<uint64_t,unsigned int>>
+          ]
+          C:\JudasValidation\VS2022\VC\Tools\MSVC\14.44.35207\include\xtree(1026,46):
+          see reference to function template instantiation 'std::_Tree_temp_node<std::allocator<std::_Tree_node<std::pair<uint64_t,unsigned int>,std::_Default_allocator_traits<_Alloc>::void_pointer>>>::_Tree_temp_node<EntityId&,EntityId&>(_Alnode &,std::_Tree_node<std::pair<uint64_t,unsigned int>,std::_Default_allocator_traits<_Alloc>::void_pointer> *,EntityId &,EntityId &)' being compiled
+          with
+          [
+              _Alloc=std::allocator<std::pair<uint64_t,unsigned int>>,
+              _Alnode=std::allocator<std::_Tree_node<std::pair<uint64_t,unsigned int>,std::_Default_allocator_traits<std::allocator<std::pair<uint64_t,unsigned int>>>::void_pointer>>
+          ]
+          C:\JudasValidation\VS2022\VC\Tools\MSVC\14.44.35207\include\xtree(830,25):
+          see reference to function template instantiation 'void std::_Default_allocator_traits<_Alloc>::construct<_Ty,EntityId&,EntityId&>(_Alloc &,_Objty *const ,EntityId &,EntityId &)' being compiled
+          with
+          [
+              _Alloc=std::allocator<std::_Tree_node<std::pair<uint64_t,unsigned int>,std::_Default_allocator_traits<std::allocator<std::pair<uint64_t,unsigned int>>>::void_pointer>>,
+              _Ty=std::pair<uint64_t,unsigned int>,
+              _Objty=std::pair<uint64_t,unsigned int>
+          ]
+          C:\JudasValidation\VS2022\VC\Tools\MSVC\14.44.35207\include\xmemory(732,82):
+          see reference to function template instantiation 'std::pair<uint64_t,unsigned int>::pair<EntityId&,EntityId&,0>(_Other1,_Other2) noexcept' being compiled
+          with
+          [
+              _Other1=EntityId &,
+              _Other2=EntityId &
+          ]
+  
+  WorldPersistence.cpp
+  judas_engine.vcxproj -> P:\JudasValidation\CleanDistribution\Build\Release\judas_engine.lib
+  Building Custom Rule P:/JudasValidation/CleanDistribution/Source/CMakeLists.txt
+  Building Custom Rule P:/JudasValidation/CleanDistribution/Source/CMakeLists.txt
+  Building Custom Rule P:/JudasValidation/CleanDistribution/Source/CMakeLists.txt
+  Building Custom Rule P:/JudasValidation/CleanDistribution/Source/CMakeLists.txt
+  Building Custom Rule P:/JudasValidation/CleanDistribution/Source/CMakeLists.txt
+  Building Custom Rule P:/JudasValidation/CleanDistribution/Source/CMakeLists.txt
+  Building Custom Rule P:/JudasValidation/CleanDistribution/Source/CMakeLists.txt
+  Building Custom Rule P:/JudasValidation/CleanDistribution/Source/CMakeLists.txt
+  Building Custom Rule P:/JudasValidation/CleanDistribution/Source/CMakeLists.txt
+  Building Custom Rule P:/JudasValidation/CleanDistribution/Source/CMakeLists.txt
+  Building Custom Rule P:/JudasValidation/CleanDistribution/Source/CMakeLists.txt
+  Building Custom Rule P:/JudasValidation/CleanDistribution/Source/CMakeLists.txt
+  DeformableBake.cpp
+  FbxImport.cpp
+  main.cpp
+  NavigationBake.cpp
+  WindowsReadinessTests.cpp
+  AssetCookMain.cpp
+  EnvironmentBake.cpp
+  Building Custom Rule P:/JudasValidation/CleanDistribution/Source/CMakeLists.txt
+  Application.cpp
+P:\JudasValidation\CleanDistribution\Source\src\FbxImport.cpp(25,71): warning C4244: 'argument': conversion from 'ufbx_real' to 'T', possible loss of data [P:\JudasValidation\CleanDistribution\Build\judas_model_import.vcxproj]
+P:\JudasValidation\CleanDistribution\Source\src\FbxImport.cpp(25,71): warning C4244:         with [P:\JudasValidation\CleanDistribution\Build\judas_model_import.vcxproj]
+P:\JudasValidation\CleanDistribution\Source\src\FbxImport.cpp(25,71): warning C4244:         [ [P:\JudasValidation\CleanDistribution\Build\judas_model_import.vcxproj]
+P:\JudasValidation\CleanDistribution\Source\src\FbxImport.cpp(25,71): warning C4244:             T=float [P:\JudasValidation\CleanDistribution\Build\judas_model_import.vcxproj]
+P:\JudasValidation\CleanDistribution\Source\src\FbxImport.cpp(25,71): warning C4244:         ] [P:\JudasValidation\CleanDistribution\Build\judas_model_import.vcxproj]
+P:\JudasValidation\CleanDistribution\Source\src\FbxImport.cpp(25,67): warning C4244: 'argument': conversion from 'ufbx_real' to 'T', possible loss of data [P:\JudasValidation\CleanDistribution\Build\judas_model_import.vcxproj]
+P:\JudasValidation\CleanDistribution\Source\src\FbxImport.cpp(25,67): warning C4244:         with [P:\JudasValidation\CleanDistribution\Build\judas_model_import.vcxproj]
+P:\JudasValidation\CleanDistribution\Source\src\FbxImport.cpp(25,67): warning C4244:         [ [P:\JudasValidation\CleanDistribution\Build\judas_model_import.vcxproj]
+P:\JudasValidation\CleanDistribution\Source\src\FbxImport.cpp(25,67): warning C4244:             T=float [P:\JudasValidation\CleanDistribution\Build\judas_model_import.vcxproj]
+P:\JudasValidation\CleanDistribution\Source\src\FbxImport.cpp(25,67): warning C4244:         ] [P:\JudasValidation\CleanDistribution\Build\judas_model_import.vcxproj]
+P:\JudasValidation\CleanDistribution\Source\src\FbxImport.cpp(25,63): warning C4244: 'argument': conversion from 'ufbx_real' to 'T', possible loss of data [P:\JudasValidation\CleanDistribution\Build\judas_model_import.vcxproj]
+P:\JudasValidation\CleanDistribution\Source\src\FbxImport.cpp(25,63): warning C4244:         with [P:\JudasValidation\CleanDistribution\Build\judas_model_import.vcxproj]
+P:\JudasValidation\CleanDistribution\Source\src\FbxImport.cpp(25,63): warning C4244:         [ [P:\JudasValidation\CleanDistribution\Build\judas_model_import.vcxproj]
+P:\JudasValidation\CleanDistribution\Source\src\FbxImport.cpp(25,63): warning C4244:             T=float [P:\JudasValidation\CleanDistribution\Build\judas_model_import.vcxproj]
+P:\JudasValidation\CleanDistribution\Source\src\FbxImport.cpp(25,63): warning C4244:         ] [P:\JudasValidation\CleanDistribution\Build\judas_model_import.vcxproj]
+P:\JudasValidation\CleanDistribution\Source\src\FbxImport.cpp(25,59): warning C4244: 'argument': conversion from 'ufbx_real' to 'T', possible loss of data [P:\JudasValidation\CleanDistribution\Build\judas_model_import.vcxproj]
+P:\JudasValidation\CleanDistribution\Source\src\FbxImport.cpp(25,59): warning C4244:         with [P:\JudasValidation\CleanDistribution\Build\judas_model_import.vcxproj]
+P:\JudasValidation\CleanDistribution\Source\src\FbxImport.cpp(25,59): warning C4244:         [ [P:\JudasValidation\CleanDistribution\Build\judas_model_import.vcxproj]
+P:\JudasValidation\CleanDistribution\Source\src\FbxImport.cpp(25,59): warning C4244:             T=float [P:\JudasValidation\CleanDistribution\Build\judas_model_import.vcxproj]
+P:\JudasValidation\CleanDistribution\Source\src\FbxImport.cpp(25,59): warning C4244:         ] [P:\JudasValidation\CleanDistribution\Build\judas_model_import.vcxproj]
+P:\JudasValidation\CleanDistribution\Source\src\FbxImport.cpp(108,84): warning C4267: 'initializing': conversion from 'size_t' to 'unsigned int', possible loss of data [P:\JudasValidation\CleanDistribution\Build\judas_model_import.vcxproj]
+P:\JudasValidation\CleanDistribution\Source\src\FbxImport.cpp(112,557): warning C4267: 'argument': conversion from 'size_t' to 'glm::vec<4,glm::uint,glm::packed_highp>::length_type', possible loss of data [P:\JudasValidation\CleanDistribution\Build\judas_model_import.vcxproj]
+P:\JudasValidation\CleanDistribution\Source\src\FbxImport.cpp(112,614): warning C4267: 'argument': conversion from 'size_t' to 'glm::vec<4,float,glm::packed_highp>::length_type', possible loss of data [P:\JudasValidation\CleanDistribution\Build\judas_model_import.vcxproj]
+P:\JudasValidation\CleanDistribution\Source\src\FbxImport.cpp(112,657): warning C4267: 'argument': conversion from 'size_t' to 'glm::vec<4,glm::uint,glm::packed_highp>::length_type', possible loss of data [P:\JudasValidation\CleanDistribution\Build\judas_model_import.vcxproj]
+P:\JudasValidation\CleanDistribution\Source\src\FbxImport.cpp(112,717): warning C4267: 'argument': conversion from 'size_t' to 'glm::vec<4,float,glm::packed_highp>::length_type', possible loss of data [P:\JudasValidation\CleanDistribution\Build\judas_model_import.vcxproj]
+P:\JudasValidation\CleanDistribution\Source\src\FbxImport.cpp(172,23): warning C4457: declaration of 'settings' hides function parameter [P:\JudasValidation\CleanDistribution\Build\judas_model_import.vcxproj]
+      P:\JudasValidation\CleanDistribution\Source\src\FbxImport.cpp(170,134):
+      see declaration of 'settings'
+  
+  DedicatedMain.cpp
+  ScriptCheck.cpp
+  ObjImport.cpp
+  SaveEvolutionMain.cpp
+  ExportMain.cpp
+  CollisionCook.cpp
+P:\JudasValidation\CleanDistribution\Source\src\RuntimeOptions.h(44,8): warning C4099: 'RuntimeOptions': type name first seen using 'class' now seen using 'struct' [P:\JudasValidation\CleanDistribution\Build\judas.vcxproj]
+  (compiling source file '../Source/src/Application.cpp')
+      P:\JudasValidation\CleanDistribution\Source\src\RuntimeOptions.h(44,8):
+      see declaration of 'RuntimeOptions'
+  
+  ModelCook.cpp
+  judas_cook.vcxproj -> P:\JudasValidation\CleanDistribution\Build\Release\judas_cook.exe
+P:\JudasValidation\CleanDistribution\Source\src\Application.cpp(178,23): warning C4456: declaration of 'world' hides previous local declaration [P:\JudasValidation\CleanDistribution\Build\judas.vcxproj]
+      P:\JudasValidation\CleanDistribution\Source\src\Application.cpp(113,19):
+      see declaration of 'world'
+  
+  judas_navigation_baker.vcxproj -> P:\JudasValidation\CleanDistribution\Build\Release\judas_navigation_baker.lib
+  LiquidBake.cpp
+  judas_deformable_bake.vcxproj -> P:\JudasValidation\CleanDistribution\Build\Release\judas_deformable_bake.exe
+  judas_script_check.vcxproj -> P:\JudasValidation\CleanDistribution\Build\Release\judas_script_check.exe
+  RuntimeOptions.cpp
+  judas_environment_bake.vcxproj -> P:\JudasValidation\CleanDistribution\Build\Release\judas_environment_bake.exe
+  judas_server.vcxproj -> P:\JudasValidation\CleanDistribution\Build\Release\judas_server.exe
+  judas_export.vcxproj -> P:\JudasValidation\CleanDistribution\Build\Release\judas_export.exe
+  judas_windows_readiness_tests.vcxproj -> P:\JudasValidation\CleanDistribution\Build\Release\judas_windows_readiness_tests.exe
+  RuntimeDiagnostics.cpp
+  ModelCollision.cpp
+  judas_save.vcxproj -> P:\JudasValidation\CleanDistribution\Build\Release\judas_save.exe
+P:\JudasValidation\CleanDistribution\Source\src\ModelCollision.cpp(35,17): warning C4267: 'initializing': conversion from 'size_t' to 'unsigned int', possible loss of data [P:\JudasValidation\CleanDistribution\Build\judas_model_import.vcxproj]
+  judas_collision_cook.vcxproj -> P:\JudasValidation\CleanDistribution\Build\Release\judas_collision_cook.exe
+  TestHarness.cpp
+  AnimationRetarget.cpp
+  judas_liquid_bake.vcxproj -> P:\JudasValidation\CleanDistribution\Build\Release\judas_liquid_bake.exe
+  Building Custom Rule P:/JudasValidation/CleanDistribution/Source/CMakeLists.txt
+  NavigationDependencies.cpp
+  Generating Code...
+  AnimationEventAuthoring.cpp
+  Generating Code...
+  ContentReferences.cpp
+  WorldBuilder.cpp
+  judas.vcxproj -> P:\JudasValidation\CleanDistribution\Build\Release\judas.exe
+  AuthoringDocument.cpp
+  SkeletonAuthoring.cpp
+  RecipePreview.cpp
+  TerrainAuthoring.cpp
+  judas_model_import.vcxproj -> P:\JudasValidation\CleanDistribution\Build\Release\judas_model_import.lib
+  Building Custom Rule P:/JudasValidation/CleanDistribution/Source/CMakeLists.txt
+  ModelImportCli.cpp
+  VolumeTerrain.cpp
+  ModAuthoring.cpp
+  judas_model_import_cli.vcxproj -> P:\JudasValidation\CleanDistribution\Build\Release\judas_model_import_cli.exe
+  Generating Code...
+  judas_world_authoring.vcxproj -> P:\JudasValidation\CleanDistribution\Build\Release\judas_world_authoring.lib
+  Building Custom Rule P:/JudasValidation/CleanDistribution/Source/CMakeLists.txt
+  Building Custom Rule P:/JudasValidation/CleanDistribution/Source/CMakeLists.txt
+  Building Custom Rule P:/JudasValidation/CleanDistribution/Source/CMakeLists.txt
+  Building Custom Rule P:/JudasValidation/CleanDistribution/Source/CMakeLists.txt
+  NavigationBake.cpp
+  TerrainAuthor.cpp
+  Building Custom Rule P:/JudasValidation/CleanDistribution/Source/CMakeLists.txt
+  ModTool.cpp
+  SceneAuthor.cpp
+  EditorMain.cpp
+  StructuredAuthor.cpp
+  EditorMilestoneNotice.cpp
+  AuthoringCLI.cpp
+  Building Custom Rule P:/JudasValidation/CleanDistribution/Source/CMakeLists.txt
+  EditorApplication.cpp
+  VolumeTerrainAuthor.cpp
+  judas_terrain_author.vcxproj -> P:\JudasValidation\CleanDistribution\Build\Release\judas_terrain_author.exe
+  judas_mod.vcxproj -> P:\JudasValidation\CleanDistribution\Build\Release\judas_mod.exe
+  judas_navigation_bake.vcxproj -> P:\JudasValidation\CleanDistribution\Build\Release\judas_navigation_bake.exe
+P:\JudasValidation\CleanDistribution\Source\src\editor\EditorApplication.cpp(896,40): warning C4456: declaration of 'error' hides previous local declaration [P:\JudasValidation\CleanDistribution\Build\judas_editor.vcxproj]
+      P:\JudasValidation\CleanDistribution\Source\src\editor\EditorApplication.cpp(883,33):
+      see declaration of 'error'
+  
+P:\JudasValidation\CleanDistribution\Source\src\editor\EditorApplication.cpp(1173,170): warning C4456: declaration of 'error' hides previous local declaration [P:\JudasValidation\CleanDistribution\Build\judas_editor.vcxproj]
+      P:\JudasValidation\CleanDistribution\Source\src\editor\EditorApplication.cpp(1159,14):
+      see declaration of 'error'
+  
+P:\JudasValidation\CleanDistribution\Source\src\editor\EditorApplication.cpp(1420,38): warning C4244: '=': conversion from 'SDL_WindowEventID' to 'Uint8', possible loss of data [P:\JudasValidation\CleanDistribution\Build\judas_editor.vcxproj]
+P:\JudasValidation\CleanDistribution\Source\src\editor\EditorApplication.cpp(1476,38): warning C4456: declaration of 'error' hides previous local declaration [P:\JudasValidation\CleanDistribution\Build\judas_editor.vcxproj]
+      P:\JudasValidation\CleanDistribution\Source\src\editor\EditorApplication.cpp(1299,17):
+      see declaration of 'error'
+  
+P:\JudasValidation\CleanDistribution\Source\src\editor\EditorApplication.cpp(1530,29): warning C4456: declaration of 'error' hides previous local declaration [P:\JudasValidation\CleanDistribution\Build\judas_editor.vcxproj]
+      P:\JudasValidation\CleanDistribution\Source\src\editor\EditorApplication.cpp(1299,17):
+      see declaration of 'error'
+  
+P:\JudasValidation\CleanDistribution\Source\src\editor\EditorApplication.cpp(1699,46): warning C4456: declaration of 'error' hides previous local declaration [P:\JudasValidation\CleanDistribution\Build\judas_editor.vcxproj]
+      P:\JudasValidation\CleanDistribution\Source\src\editor\EditorApplication.cpp(1299,17):
+      see declaration of 'error'
+  
+  RecipeCLI.cpp
+P:\JudasValidation\CleanDistribution\Source\src\editor\EditorApplication.cpp(1774,33): warning C4456: declaration of 'error' hides previous local declaration [P:\JudasValidation\CleanDistribution\Build\judas_editor.vcxproj]
+      P:\JudasValidation\CleanDistribution\Source\src\editor\EditorApplication.cpp(1299,17):
+      see declaration of 'error'
+  
+P:\JudasValidation\CleanDistribution\Source\src\editor\EditorApplication.cpp(1778,400): warning C4456: declaration of 'error' hides previous local declaration [P:\JudasValidation\CleanDistribution\Build\judas_editor.vcxproj]
+      P:\JudasValidation\CleanDistribution\Source\src\editor\EditorApplication.cpp(1299,17):
+      see declaration of 'error'
+  
+P:\JudasValidation\CleanDistribution\Source\src\editor\EditorApplication.cpp(1780,295): warning C4456: declaration of 'error' hides previous local declaration [P:\JudasValidation\CleanDistribution\Build\judas_editor.vcxproj]
+      P:\JudasValidation\CleanDistribution\Source\src\editor\EditorApplication.cpp(1299,17):
+      see declaration of 'error'
+  
+P:\JudasValidation\CleanDistribution\Source\src\editor\EditorApplication.cpp(1790,405): warning C4456: declaration of 'error' hides previous local declaration [P:\JudasValidation\CleanDistribution\Build\judas_editor.vcxproj]
+      P:\JudasValidation\CleanDistribution\Source\src\editor\EditorApplication.cpp(1299,17):
+      see declaration of 'error'
+  
+P:\JudasValidation\CleanDistribution\Source\src\editor\EditorApplication.cpp(1985,125): warning C4456: declaration of 'error' hides previous local declaration [P:\JudasValidation\CleanDistribution\Build\judas_editor.vcxproj]
+      P:\JudasValidation\CleanDistribution\Source\src\editor\EditorApplication.cpp(1299,17):
+      see declaration of 'error'
+  
+P:\JudasValidation\CleanDistribution\Source\src\editor\EditorApplication.cpp(2028,80): warning C4456: declaration of 'error' hides previous local declaration [P:\JudasValidation\CleanDistribution\Build\judas_editor.vcxproj]
+      P:\JudasValidation\CleanDistribution\Source\src\editor\EditorApplication.cpp(1299,17):
+      see declaration of 'error'
+  
+  judas_volume_author.vcxproj -> P:\JudasValidation\CleanDistribution\Build\Release\judas_volume_author.exe
+  ContentServicesCLI.cpp
+  ScriptTools.cpp
+  Generating Code...
+  EditorCamera.cpp
+  EditorPicking.cpp
+  EditorHistory.cpp
+  EditorPanels.cpp
+  judas_scene_author.vcxproj -> P:\JudasValidation\CleanDistribution\Build\Release\judas_scene_author.exe
+P:\JudasValidation\CleanDistribution\Source\src\editor\EditorPanels.cpp(1213,764): warning C4456: declaration of 'name' hides previous local declaration [P:\JudasValidation\CleanDistribution\Build\judas_editor.vcxproj]
+      P:\JudasValidation\CleanDistribution\Source\src\editor\EditorPanels.cpp(1150,10):
+      see declaration of 'name'
+  
+P:\JudasValidation\CleanDistribution\Source\src\editor\EditorPanels.cpp(1244,112): warning C4456: declaration of 'name' hides previous local declaration [P:\JudasValidation\CleanDistribution\Build\judas_editor.vcxproj]
+      P:\JudasValidation\CleanDistribution\Source\src\editor\EditorPanels.cpp(1150,10):
+      see declaration of 'name'
+  
+P:\JudasValidation\CleanDistribution\Source\src\editor\EditorPanels.cpp(1246,130): warning C4456: declaration of 'name' hides previous local declaration [P:\JudasValidation\CleanDistribution\Build\judas_editor.vcxproj]
+      P:\JudasValidation\CleanDistribution\Source\src\editor\EditorPanels.cpp(1150,10):
+      see declaration of 'name'
+  
+P:\JudasValidation\CleanDistribution\Source\src\editor\EditorPanels.cpp(1259,62): warning C4456: declaration of 'name' hides previous local declaration [P:\JudasValidation\CleanDistribution\Build\judas_editor.vcxproj]
+      P:\JudasValidation\CleanDistribution\Source\src\editor\EditorPanels.cpp(1150,10):
+      see declaration of 'name'
+  
+  RenderPreview.cpp
+  RetargetPanel.cpp
+  AnimationTimeline.cpp
+  WorldTools.cpp
+P:\JudasValidation\CleanDistribution\Source\src\editor\WorldTools.cpp(102,26): warning C4456: declaration of 'id' hides previous local declaration [P:\JudasValidation\CleanDistribution\Build\judas_editor.vcxproj]
+      P:\JudasValidation\CleanDistribution\Source\src\editor\WorldTools.cpp(64,14):
+      see declaration of 'id'
+  
+  TerrainTools.cpp
+  VolumeTerrainTools.cpp
+  ModTools.cpp
+  ProfilerView.cpp
+  EditorWidgets.cpp
+  ComponentEditors.cpp
+P:\JudasValidation\CleanDistribution\Source\src\editor\ComponentEditors.cpp(823,23): warning C4456: declaration of 'm' hides previous local declaration [P:\JudasValidation\CleanDistribution\Build\judas_editor.vcxproj]
+      P:\JudasValidation\CleanDistribution\Source\src\editor\ComponentEditors.cpp(797,11):
+      see declaration of 'm'
+  
+P:\JudasValidation\CleanDistribution\Source\src\editor\ComponentEditors.cpp(1169,37): warning C4456: declaration of 'path' hides previous local declaration [P:\JudasValidation\CleanDistribution\Build\judas_editor.vcxproj]
+      P:\JudasValidation\CleanDistribution\Source\src\editor\ComponentEditors.cpp(1163,18):
+      see declaration of 'path'
+  
+P:\JudasValidation\CleanDistribution\Source\src\editor\ComponentEditors.cpp(1169,120): warning C4456: declaration of 'relative' hides previous local declaration [P:\JudasValidation\CleanDistribution\Build\judas_editor.vcxproj]
+      P:\JudasValidation\CleanDistribution\Source\src\editor\ComponentEditors.cpp(1163,106):
+      see declaration of 'relative'
+  
+  GizmoMath.cpp
+  Generating Code...
+  judas_editor.vcxproj -> P:\JudasValidation\CleanDistribution\Build\Release\judas_editor.exe
+  {"build": {"architecture": "AMD64", "build_id": "0.1.0-prealpha-Experimental-3ecf26c-clean-1797f5db3c61", "channel": "Experimental", "compiler": "MSVC", "compiler_version": "19.44.35229.0", "configuration": "Release", "maturity": "pre-alpha", "platform": "Windows", "schema": 1, "source_dirty": false, "source_fingerprint": "1797f5db3c612c3ba0dfb34ef26fb81c6e1f1e2f39f228ac7cf8aecc70f8fcd2", "source_origin": "archive", "source_revision": "3ecf26cdf248e271c96d17928bd33634e37f30ce", "source_tree": "1859caa7d1497d61ba3758848d5243cc091dc593", "source_untracked_count": 0, "source_untracked_fingerprint": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855", "version": "0.1.0-prealpha"}, "files": 248, "ok": true, "tools": 18}
+  Building Custom Rule P:/JudasValidation/CleanDistribution/Source/CMakeLists.txt
+PASS authoring numeric locale uses decimal point
+PASS nested authoring numeric locale remains C
+PASS authoring numeric locale restores caller locale
+PASS executable root independent of cwd
+PASS executable root after unrelated cwd
+PASS absolute user save location
+PASS import replacement changes race stamp
+PASS replace existing staged destination
+PASS exclusive export staging directory
+PASS save first generation
+PASS save replacement and backup
+PASS save metadata/payload round trip
+PASS previous generation recovery
+PASS path traversal rejected
+PASS failed publication not advertised
+PASS slot listing excludes temporary files
+PASS exclusive save lock rejects concurrent writer
+PASS delete current and previous generation
+PASS bounded native build-info capture
+PASS native process with spaced argument
+PASS child receives exact quoted path
+SUMMARY checks=21 failures=0
+UNVALIDATED Windows SDK ready: P:\JudasValidation\CleanDistribution\Build\windows-sdk
+Open docs/WINDOWS.md and perform the native editor/export checks. This script cannot supply human acceptance.

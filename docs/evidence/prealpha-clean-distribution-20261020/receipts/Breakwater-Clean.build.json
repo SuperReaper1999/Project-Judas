@@ -1,0 +1,109 @@
+{
+  "schema": 1,
+  "kind": "judas-android-apk",
+  "application": {
+    "id": "org.projectjudas.breakwater",
+    "name": "Breakwater",
+    "versionCode": 1,
+    "versionName": "development"
+  },
+  "preset": "development",
+  "engine": {
+    "arm64-v8a": {
+      "schema": 1,
+      "version": "0.1.0-prealpha",
+      "maturity": "pre-alpha",
+      "channel": "Experimental",
+      "build_id": "0.1.0-prealpha-Experimental-39d0234-clean-e95356556092",
+      "source_revision": "39d0234ada05ec554738e9e93166c55928f21f6b",
+      "source_tree": "64639e17a9b956c9c87f643ff798e6084237d047",
+      "source_dirty": false,
+      "source_fingerprint": "e95356556092322152ce89af88503ef9017c1fc39f253382eb0cb8f383a592a0",
+      "source_untracked_count": 0,
+      "source_untracked_fingerprint": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source_origin": "git",
+      "platform": "Android",
+      "architecture": "arm64-v8a",
+      "configuration": "Release",
+      "compiler": "Clang",
+      "compiler_version": "19.0.1"
+    }
+  },
+  "desktopTools": {
+    "exporter": {
+      "architecture": "x86_64",
+      "build_id": "0.1.0-prealpha-Experimental-39d0234-clean-e95356556092",
+      "channel": "Experimental",
+      "compiler": "GNU",
+      "compiler_version": "15.2.0",
+      "configuration": "Release",
+      "maturity": "pre-alpha",
+      "platform": "Linux",
+      "schema": 1,
+      "source_dirty": false,
+      "source_fingerprint": "e95356556092322152ce89af88503ef9017c1fc39f253382eb0cb8f383a592a0",
+      "source_origin": "git",
+      "source_revision": "39d0234ada05ec554738e9e93166c55928f21f6b",
+      "source_tree": "64639e17a9b956c9c87f643ff798e6084237d047",
+      "source_untracked_count": 0,
+      "source_untracked_fingerprint": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "version": "0.1.0-prealpha"
+    },
+    "desktopRuntime": {
+      "architecture": "x86_64",
+      "build_id": "0.1.0-prealpha-Experimental-39d0234-clean-e95356556092",
+      "channel": "Experimental",
+      "compiler": "GNU",
+      "compiler_version": "15.2.0",
+      "configuration": "Release",
+      "maturity": "pre-alpha",
+      "platform": "Linux",
+      "schema": 1,
+      "source_dirty": false,
+      "source_fingerprint": "e95356556092322152ce89af88503ef9017c1fc39f253382eb0cb8f383a592a0",
+      "source_origin": "git",
+      "source_revision": "39d0234ada05ec554738e9e93166c55928f21f6b",
+      "source_tree": "64639e17a9b956c9c87f643ff798e6084237d047",
+      "source_untracked_count": 0,
+      "source_untracked_fingerprint": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "version": "0.1.0-prealpha"
+    }
+  },
+  "abis": [
+    "arm64-v8a"
+  ],
+  "targetSdk": 36,
+  "minSdk": 26,
+  "ndk": "28.2.13676358",
+  "buildTools": "36.0.0",
+  "jdk": "javac 25.0.4.1",
+  "developmentSigning": true,
+  "shadows": "off",
+  "contentFiles": 41,
+  "contentBytes": 2348574,
+  "native": {
+    "arm64-v8a": {
+      "libmain.so": "751662a7b8ea118a3a549d6365c0c966c08145bb6bf4d671a7306d0ed0426375",
+      "_deps/judas_sdl-build/libSDL2.so": "7f1f18ca07b690e638271e33b19fbc80e505d129e85c48ccb2ccbeb180f2df75"
+    }
+  },
+  "shippedNative": [
+    {
+      "bytes": 49117880,
+      "path": "lib/arm64-v8a/libmain.so",
+      "sha256": "8c06545620720bbec8021580ad2d412d6acabf17e2c17ee47803cfcef71edfdd"
+    },
+    {
+      "bytes": 1257168,
+      "path": "lib/arm64-v8a/libSDL2.so",
+      "sha256": "2b1db4974f825f41916256b884519cb0575ce0833786f1cea9ee7b42e193ad04"
+    },
+    {
+      "bytes": 1253544,
+      "path": "lib/arm64-v8a/libc++_shared.so",
+      "sha256": "cd61762848882a16c8244c964a6f396c0caa0b440588a210ce9cc4ab0e6d9f0c"
+    }
+  ],
+  "apk": "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-clean-distribution-20261020/Breakwater-Clean.apk",
+  "sha256": "f3b9c7caa4c4b0056d06006963ce0052e837d5d154bfa911ee0be4694166b449"
+}

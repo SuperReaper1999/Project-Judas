@@ -1,0 +1,21 @@
+test_android_publication_restores_entire_previous_bundle_on_failure (__main__.DistributionChecks.test_android_publication_restores_entire_previous_bundle_on_failure) ... ok
+test_android_stale_configured_identity_fails_before_native_compile (__main__.DistributionChecks.test_android_stale_configured_identity_fails_before_native_compile) ... ok
+test_apk_bad_alignment_identity_and_budget_rejected (__main__.DistributionChecks.test_apk_bad_alignment_identity_and_budget_rejected) ... ok
+test_apk_canonical_android_abi_name_and_wrong_cpu_identity (__main__.DistributionChecks.test_apk_canonical_android_abi_name_and_wrong_cpu_identity) ... ok
+test_apk_corruption_missing_and_phantom_content_rejected (__main__.DistributionChecks.test_apk_corruption_missing_and_phantom_content_rejected) ... ok
+test_apk_external_receipt_must_match_shipped_not_build_input (__main__.DistributionChecks.test_apk_external_receipt_must_match_shipped_not_build_input) ... ok
+test_apk_unshipped_or_desktop_native_dependency_rejected (__main__.DistributionChecks.test_apk_unshipped_or_desktop_native_dependency_rejected) ... ok
+test_apk_verified_native_and_content_bytes (__main__.DistributionChecks.test_apk_verified_native_and_content_bytes) ... ok
+test_elf_actual_requirements_ignore_exported_version_decoy (__main__.DistributionChecks.test_elf_actual_requirements_ignore_exported_version_decoy) ... ok
+test_elf_malformed_tables_and_chains_fail (__main__.DistributionChecks.test_elf_malformed_tables_and_chains_fail) ... ok
+test_jdk_requires_complete_coherent_modern_tools (__main__.DistributionChecks.test_jdk_requires_complete_coherent_modern_tools) ... ok
+test_mocked_complete_builder_reaches_compiler_signing_and_verified_publication (__main__.DistributionChecks.test_mocked_complete_builder_reaches_compiler_signing_and_verified_publication) ... ok
+test_native_build_reconfiguration_cannot_publish_stale_identity (__main__.DistributionChecks.test_native_build_reconfiguration_cannot_publish_stale_identity) ... ok
+test_pe_regular_and_delayed_imports (__main__.DistributionChecks.test_pe_regular_and_delayed_imports) ... ok
+test_sdk_declared_glibc_gate_rejects_newer_binary (__main__.DistributionChecks.test_sdk_declared_glibc_gate_rejects_newer_binary) ... ok
+test_windows_transitive_missing_import_detected (__main__.DistributionChecks.test_windows_transitive_missing_import_detected) ... ok
+
+----------------------------------------------------------------------
+Ran 16 tests in 0.040s
+
+OK

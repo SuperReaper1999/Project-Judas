@@ -1,0 +1,13 @@
+Shadow maps: on
+Graphics: 3.3.0 NVIDIA 580.178.04 / NVIDIA GeForce GTX 970/PCIe/SSE2
+Renderer fragment texture units: 32 (material path uses 12)
+[editor autotest] duplicate created id 2: scene CHANGED; undo restores: IDENTICAL
+[editor autotest] wrote: /tmp/Judas-Clean-Final-20261020-w2qj8w94/Visible Editor.edit.png
+[editor autotest] edit frame: 3 draw calls, 12 triangles, 36 debug lines
+[editor autotest] wrote: /tmp/Judas-Clean-Final-20261020-w2qj8w94/Visible Editor.play.png
+[editor autotest] play frame: 1 steps, step 0.038 ms, 0 bodies, 0 contacts, 3 draw calls, 24 triangles, 1 shadow passes, 0 lights, 138 debug lines, 0 particles
+[editor autotest] resources: 0 meshes, 0 textures, 0 terrain meshes, hits 0, misses 0, failed 0, uploads 0, resident 0 bytes
+[editor autotest] jobs: 7 workers, 0 completed, 0 failed, 0 cancelled
+[editor autotest] authored scene after play/stop is IDENTICAL
+[editor autotest] save ok
+JS: My first Judas project is running.

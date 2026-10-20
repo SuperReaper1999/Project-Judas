@@ -1,0 +1,6 @@
+﻿{
+    "start":  "2026-10-20T13:27:29.8716664Z",
+    "error":  "Resolve-Path : Cannot find path \u0027P:\\JudasValidation\\CleanDistribution\\Source\\tests\\fixtures\\m66\\cafÃ© color.png\u0027 \r\nbecause it does not exist.\r\nAt \r\nC:\\Windows\\system32\\WindowsPowerShell\\v1.0\\Modules\\Microsoft.PowerShell.Utility\\Microsoft.PowerShell.Utility.psm1:106 \r\nchar:36\r\n+ ...     $pathsToProcess += Resolve-Path -LiteralPath $LiteralPath | Forea ...\r\n+                            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\r\n    + CategoryInfo          : ObjectNotFound: (P:\\JudasValidat...cafÃ© color.png:String) [Resolve-Path], ItemNotFoundE \r\n   xception\r\n    + FullyQualifiedErrorId : PathNotFound,Microsoft.PowerShell.Commands.ResolvePathCommand\r\n \r\n",
+    "end":  "2026-10-20T13:27:49.3560416Z",
+    "exit":  1
+}

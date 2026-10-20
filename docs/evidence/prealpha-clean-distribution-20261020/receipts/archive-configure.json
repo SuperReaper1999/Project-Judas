@@ -1,0 +1,21 @@
+{
+  "name": "archive-configure",
+  "utc": "2026-10-20T13:23:20.628531+00:00",
+  "argv": [
+    "/usr/bin/cmake",
+    "-S",
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-clean-distribution-20261020/source-no-git",
+    "-B",
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-clean-distribution-20261020/archive-configure",
+    "-DCMAKE_BUILD_TYPE=Release",
+    "-DJUDAS_BUILD_CHANNEL=Experimental",
+    "-DJUDAS_SDK_RELEASE=ON",
+    "-Djudas_git=/not-installed/git",
+    "-DCMAKE_FIND_USE_PACKAGE_REGISTRY=OFF",
+    "-DCMAKE_FIND_USE_SYSTEM_PACKAGE_REGISTRY=OFF"
+  ],
+  "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+  "environmentPolicy": "system PATH; inherited user identity/display only; no compiler/engine/package-cache overrides; no Judas cache reuse",
+  "exit": 0,
+  "seconds": 5.496897122999826
+}

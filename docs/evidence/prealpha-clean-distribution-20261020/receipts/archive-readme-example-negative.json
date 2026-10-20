@@ -1,0 +1,6 @@
+{
+  "exit": 1,
+  "stdout": "",
+  "stderr": "could not open project file: /home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-clean-distribution-20261020/source-no-git/judas_tech_demo.judasproj\n",
+  "cause": "README repository-only example is absent from documented engine-only archive"
+}

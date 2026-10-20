@@ -1,0 +1,16 @@
+test_android_cli_does_not_dirty_clean_source_before_configuration (checks.DistributionChecks.test_android_cli_does_not_dirty_clean_source_before_configuration) ... FAIL
+
+======================================================================
+FAIL: test_android_cli_does_not_dirty_clean_source_before_configuration (checks.DistributionChecks.test_android_cli_does_not_dirty_clean_source_before_configuration)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/conner/Documents/GitHub/Project-Judas/scripts/prealpha_distribution_checks.py", line 103, in test_android_cli_does_not_dirty_clean_source_before_configuration
+    self.assertEqual(after, before, "Android CLI startup changed source inputs")
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: {'bin[52186 chars]()\n', '__pycache__/verify_android.cpython-314[105012 chars]x00'} != {'bin[52186 chars]()\n'}
+Diff is 384542 characters long. Set self.maxDiff to None to see it. : Android CLI startup changed source inputs
+
+----------------------------------------------------------------------
+Ran 1 test in 0.149s
+
+FAILED (failures=1)

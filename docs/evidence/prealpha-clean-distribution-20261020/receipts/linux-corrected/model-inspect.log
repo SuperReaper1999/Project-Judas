@@ -1,0 +1,64 @@
+{
+  "clips": [
+    {
+      "duration": 1.0,
+      "name": "Translate",
+      "rootMotion": false
+    }
+  ],
+  "joints": [
+    "Shared",
+    "Shared/BoneA",
+    "Shared/BoneB",
+    "SkinA",
+    "SkinB",
+    "OtherRig",
+    "OtherRig/OtherBone",
+    "OtherSkin",
+    "MirroredAttachment",
+    "__JudasMotionRoot"
+  ],
+  "materialDefaults": [
+    {
+      "alpha": 0,
+      "factor": [
+        0.800000011920929,
+        0.30000001192092896,
+        0.10000000149011612,
+        1.0
+      ],
+      "imageAlphaMax": 0,
+      "imageAlphaMin": 255
+    }
+  ],
+  "materials": [
+    "Fixture"
+  ],
+  "parts": [
+    {
+      "identity": "MirroredAttachment/material/Fixture",
+      "material": 0,
+      "ordinal": 0,
+      "triangles": 1
+    },
+    {
+      "identity": "OtherSkin/material/Fixture",
+      "material": 0,
+      "ordinal": 1,
+      "triangles": 1
+    },
+    {
+      "identity": "SkinA/material/Fixture",
+      "material": 0,
+      "ordinal": 2,
+      "triangles": 1
+    },
+    {
+      "identity": "SkinB/material/Fixture",
+      "material": 0,
+      "ordinal": 3,
+      "triangles": 1
+    }
+  ],
+  "skeletonSignature": "2f785ce05f7de305a54f62878382b851b107402f928827d6941e4e995a81ee65"
+}

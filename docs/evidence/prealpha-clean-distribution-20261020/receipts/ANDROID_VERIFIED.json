@@ -1,0 +1,142 @@
+{
+  "bytes": 53584343,
+  "contentBytes": 2348574,
+  "contentFiles": 41,
+  "engine": {
+    "arm64-v8a": {
+      "architecture": "arm64-v8a",
+      "build_id": "0.1.0-prealpha-Experimental-39d0234-clean-e95356556092",
+      "channel": "Experimental",
+      "compiler": "Clang",
+      "compiler_version": "19.0.1",
+      "configuration": "Release",
+      "maturity": "pre-alpha",
+      "platform": "Android",
+      "schema": 1,
+      "source_dirty": false,
+      "source_fingerprint": "e95356556092322152ce89af88503ef9017c1fc39f253382eb0cb8f383a592a0",
+      "source_origin": "git",
+      "source_revision": "39d0234ada05ec554738e9e93166c55928f21f6b",
+      "source_tree": "64639e17a9b956c9c87f643ff798e6084237d047",
+      "source_untracked_count": 0,
+      "source_untracked_fingerprint": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "version": "0.1.0-prealpha"
+    }
+  },
+  "kind": "judas-android-verification",
+  "native": {
+    "lib/arm64-v8a/libSDL2.so": {
+      "format": "ELF64",
+      "interpreter": null,
+      "load_alignments": [
+        16384,
+        16384,
+        16384
+      ],
+      "machine": 183,
+      "needed": [
+        "libGLESv1_CM.so",
+        "libGLESv2.so",
+        "libOpenSLES.so",
+        "libandroid.so",
+        "libc++_shared.so",
+        "libc.so",
+        "libdl.so",
+        "liblog.so",
+        "libm.so"
+      ],
+      "search_paths": [],
+      "version_requirements": {
+        "libc.so": [
+          "LIBC",
+          "LIBC_N"
+        ],
+        "libdl.so": [
+          "LIBC"
+        ],
+        "libm.so": [
+          "LIBC"
+        ]
+      }
+    },
+    "lib/arm64-v8a/libc++_shared.so": {
+      "format": "ELF64",
+      "interpreter": null,
+      "load_alignments": [
+        16384,
+        16384,
+        16384,
+        16384
+      ],
+      "machine": 183,
+      "needed": [
+        "libc.so",
+        "libdl.so",
+        "libm.so"
+      ],
+      "search_paths": [],
+      "version_requirements": {
+        "libc.so": [
+          "LIBC"
+        ],
+        "libdl.so": [
+          "LIBC"
+        ]
+      }
+    },
+    "lib/arm64-v8a/libmain.so": {
+      "format": "ELF64",
+      "interpreter": null,
+      "load_alignments": [
+        16384,
+        16384,
+        16384
+      ],
+      "machine": 183,
+      "needed": [
+        "libGLESv3.so",
+        "libSDL2.so",
+        "libandroid.so",
+        "libc++_shared.so",
+        "libc.so",
+        "libdl.so",
+        "liblog.so",
+        "libm.so"
+      ],
+      "search_paths": [],
+      "version_requirements": {
+        "libc.so": [
+          "LIBC",
+          "LIBC_N"
+        ],
+        "libdl.so": [
+          "LIBC"
+        ],
+        "libm.so": [
+          "LIBC"
+        ]
+      }
+    }
+  },
+  "passed": true,
+  "schema": 1,
+  "scope": "ZIP/content/native-byte/ELF verification only; signatures, ZIP alignment and device execution are separate",
+  "sha256": "f3b9c7caa4c4b0056d06006963ce0052e837d5d154bfa911ee0be4694166b449",
+  "shippedNative": [
+    {
+      "bytes": 49117880,
+      "path": "lib/arm64-v8a/libmain.so",
+      "sha256": "8c06545620720bbec8021580ad2d412d6acabf17e2c17ee47803cfcef71edfdd"
+    },
+    {
+      "bytes": 1257168,
+      "path": "lib/arm64-v8a/libSDL2.so",
+      "sha256": "2b1db4974f825f41916256b884519cb0575ce0833786f1cea9ee7b42e193ad04"
+    },
+    {
+      "bytes": 1253544,
+      "path": "lib/arm64-v8a/libc++_shared.so",
+      "sha256": "cd61762848882a16c8244c964a6f396c0caa0b440588a210ce9cc4ab0e6d9f0c"
+    }
+  ]
+}

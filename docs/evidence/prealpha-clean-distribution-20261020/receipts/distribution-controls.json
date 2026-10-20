@@ -1,0 +1,15 @@
+{
+  "name": "distribution-controls",
+  "utc": "2026-10-20T13:25:39.944255+00:00",
+  "argv": [
+    "/usr/bin/python3",
+    "-B",
+    ".cache/prealpha-clean-distribution-20261020/checkout/scripts/prealpha_distribution_checks.py",
+    "--output",
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-clean-distribution-20261020/receipts/DISTRIBUTION_CONTROLS.json"
+  ],
+  "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+  "environmentPolicy": "system PATH; inherited user identity/display only; no compiler/engine/package-cache overrides; no Judas cache reuse",
+  "exit": 0,
+  "seconds": 0.17484404399988307
+}

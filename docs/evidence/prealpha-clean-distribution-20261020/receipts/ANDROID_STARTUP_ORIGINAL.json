@@ -1,0 +1,21 @@
+{
+  "sourceRevision": "9dd8a222f2303a53399a10f889fc6cbd1c32ea52",
+  "command": [
+    "/usr/bin/python3",
+    "-E",
+    "build_android.py",
+    "--help"
+  ],
+  "exit": 0,
+  "filesBefore": {
+    "binary_dependencies.py": "96b54e5cb592082901ef0eb3b1c84dd98bd14da2dbbd3a06140368df74210733",
+    "verify_android.py": "2d147363d310cdaa5394af29377f0a4981585b2c2f0caf05cbf5357430c4a9d2",
+    "package_sdk.py": "fa61ba82c396a3f968541f0c4ebdd837b821e8273dfc4c1d1328576586d5a736",
+    "build_android.py": "750a8245a8347c87e539a5a4fad422674fecd1d6abdcbf95ed2d88b2b85db4d7"
+  },
+  "filesAdded": [
+    "__pycache__/package_sdk.cpython-314.pyc",
+    "__pycache__/verify_android.cpython-314.pyc"
+  ],
+  "effect": "Untracked Python bytecode changes clean-checkout provenance before native Android configuration; a clean desktop tool no longer matches that checkout."
+}

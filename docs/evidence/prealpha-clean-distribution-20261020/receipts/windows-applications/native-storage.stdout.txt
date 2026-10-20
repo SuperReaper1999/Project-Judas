@@ -1,0 +1,22 @@
+PASS authoring numeric locale uses decimal point
+PASS nested authoring numeric locale remains C
+PASS authoring numeric locale restores caller locale
+PASS executable root independent of cwd
+PASS executable root after unrelated cwd
+PASS absolute user save location
+PASS import replacement changes race stamp
+PASS replace existing staged destination
+PASS exclusive export staging directory
+PASS save first generation
+PASS save replacement and backup
+PASS save metadata/payload round trip
+PASS previous generation recovery
+PASS path traversal rejected
+PASS failed publication not advertised
+PASS slot listing excludes temporary files
+PASS exclusive save lock rejects concurrent writer
+PASS delete current and previous generation
+PASS bounded native build-info capture
+PASS native process with spaced argument
+PASS child receives exact quoted path
+SUMMARY checks=21 failures=0

@@ -1,0 +1,14 @@
+{
+  "name": "android-signature",
+  "utc": "2026-10-20T14:14:14.839076+00:00",
+  "argv": [
+    "/home/conner/Android/Sdk/build-tools/36.0.0/apksigner",
+    "verify",
+    "--verbose",
+    ".cache/prealpha-clean-distribution-20261020/Breakwater-Clean.apk"
+  ],
+  "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+  "environmentPolicy": "system PATH; inherited user identity/display only; no compiler/engine/package-cache overrides; no Judas cache reuse",
+  "exit": 0,
+  "seconds": 1.7879359469998235
+}

@@ -1,0 +1,7 @@
+Shadow maps: on
+Graphics: 4.6 (Core Profile) Mesa 26.2.4 (git-9a0169f2a7) / llvmpipe (LLVM 23.1.2, 256 bits)
+Renderer fragment texture units: 32 (material path uses 12)
+World state: C:/Users/Conner/AppData/Local/judas/games/b7bd70656ba92e8c2f16315f88b20bd793aa439400782bce671fb57d49311a91/Saves/main.judasstate (none saved)
+Project: My First Game (P:/JudasValidation/CleanDistribution/Relocated Game r├⌐sum├⌐/game.judasproj)
+Scene:  (P:/JudasValidation/CleanDistribution/Relocated Game r├⌐sum├⌐/Scenes/main.judas)
+World origin (m): 0.000, 0.000, 0.000

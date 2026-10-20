@@ -1,0 +1,19 @@
+{
+  "name": "linux-tool-refresh",
+  "utc": "2026-10-20T14:00:31.067415+00:00",
+  "argv": [
+    "/usr/bin/cmake",
+    "--build",
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-clean-distribution-20261020/build-linux",
+    "--target",
+    "judas_linux_sdk",
+    "judas_first_project_tests",
+    "judas_build_identity_tests",
+    "judas_windows_readiness_tests",
+    "-j1"
+  ],
+  "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+  "environmentPolicy": "system PATH; inherited user identity/display only; no compiler/engine/package-cache overrides; no Judas cache reuse",
+  "exit": 0,
+  "seconds": 66.64747743599992
+}

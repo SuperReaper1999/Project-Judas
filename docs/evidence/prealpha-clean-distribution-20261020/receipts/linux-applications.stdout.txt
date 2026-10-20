@@ -1,0 +1,14 @@
+sdk-moved-verify 0
+sdk-host-loader 0
+sdk-baseline-negative 1
+sdk-missing-tool-negative 1
+sdk-restored-verify 0
+native-identity 0
+native-storage 0
+first-project 0
+first-project-script-check 0
+first-project-export 0
+first-project-standalone 0
+sdk-editor-new-project 0
+sdk-editor-visible-project 0
+Linux SDK onboarding/export complete

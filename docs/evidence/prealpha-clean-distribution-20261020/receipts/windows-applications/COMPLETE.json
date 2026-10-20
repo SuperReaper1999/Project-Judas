@@ -1,0 +1,8 @@
+﻿{
+    "passed":  true,
+    "nativeWindows":  true,
+    "sdk":  "P:\\JudasValidation\\CleanDistribution\\Moved SDK résumé",
+    "cwd":  "P:\\JudasValidation\\CleanDistribution\\Unrelated CWD",
+    "hardwareAcceptance":  false,
+    "softwareGraphics":  "Mesa llvmpipe injected only in separate harness copies"
+}

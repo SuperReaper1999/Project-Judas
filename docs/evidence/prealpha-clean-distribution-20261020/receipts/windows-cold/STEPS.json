@@ -1,0 +1,52 @@
+﻿[
+    {
+        "arguments":  [
+                          "-NoProfile",
+                          "-ExecutionPolicy",
+                          "Bypass",
+                          "-File",
+                          "P:\\JudasValidation\\CleanDistribution\\Source\\packaging\\windows\\Build-Windows.ps1",
+                          "-VcpkgRoot",
+                          "P:\\JudasValidation\\CleanDistribution\\vcpkg",
+                          "-PkgConfig",
+                          "C:\\JudasValidation\\Pkgconf\\PFiles64\\pkgconf-3.0.8\\pkgconf.exe",
+                          "-Channel",
+                          "Experimental",
+                          "-BuildDirectory",
+                          "P:\\JudasValidation\\CleanDistribution\\Build"
+                      ],
+        "exe":  "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
+        "seconds":  1888.9194481999998,
+        "name":  "documented-build",
+        "exit":  0
+    },
+    {
+        "arguments":  [
+                          "-S",
+                          "P:\\JudasValidation\\CleanDistribution\\Source",
+                          "-B",
+                          "P:\\JudasValidation\\CleanDistribution\\Build",
+                          "-DJUDAS_SDK_RELEASE=ON"
+                      ],
+        "exe":  "C:\\JudasValidation\\VS2022\\Common7\\IDE\\CommonExtensions\\Microsoft\\CMake\\CMake\\bin\\cmake.exe",
+        "seconds":  56.0318452,
+        "name":  "strict-configure",
+        "exit":  0
+    },
+    {
+        "arguments":  [
+                          "--build",
+                          "P:\\JudasValidation\\CleanDistribution\\Build",
+                          "--config",
+                          "Release",
+                          "--target",
+                          "judas_windows_sdk",
+                          "--parallel",
+                          "2"
+                      ],
+        "exe":  "C:\\JudasValidation\\VS2022\\Common7\\IDE\\CommonExtensions\\Microsoft\\CMake\\CMake\\bin\\cmake.exe",
+        "seconds":  57.137496,
+        "name":  "strict-stage",
+        "exit":  0
+    }
+]

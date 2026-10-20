@@ -1,0 +1,13 @@
+{
+  "overall_pass": true,
+  "checks": 49,
+  "frames": 65,
+  "fixed_steps": 36,
+  "project": "project/FTFT6_Tiny.judasproj",
+  "startup_scene": "project/Scenes/edited.judas",
+  "authored_fingerprint": "4af5edfe678d1669fb88a2da2715094107ecf6b483673870910f7ff1cdea3af7",
+  "asset_id": "c07c8877f33d5a8f29546204eea012d8",
+  "moved_entity": 4,
+  "destroyed_entity": 5,
+  "created_entity": 4611686018427387904
+}

@@ -1,0 +1,16 @@
+{
+  "name": "archive-identity-build",
+  "utc": "2026-10-20T13:23:27.104133+00:00",
+  "argv": [
+    "/usr/bin/cmake",
+    "--build",
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-clean-distribution-20261020/archive-identity",
+    "--target",
+    "judas_build_identity_tests",
+    "-j2"
+  ],
+  "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+  "environmentPolicy": "system PATH; inherited user identity/display only; no compiler/engine/package-cache overrides; no Judas cache reuse",
+  "exit": 0,
+  "seconds": 10.252678031999949
+}

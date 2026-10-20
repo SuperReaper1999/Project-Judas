@@ -1,0 +1,3 @@
+step,time,posX,posY,posZ,upX,upY,upZ,grounded,velX,velY,velZ,gravX,gravY,gravZ,controlled,frame,steps,paused
+JS: My first Judas project is running.
+[TestHarness] Wrote screenshot: P:\JudasValidation\CleanDistribution/Results/standalone.png

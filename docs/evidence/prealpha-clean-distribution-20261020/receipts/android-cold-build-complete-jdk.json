@@ -1,0 +1,33 @@
+{
+  "name": "android-cold-build-complete-jdk",
+  "utc": "2026-10-20T14:01:59.822910+00:00",
+  "argv": [
+    "/usr/bin/env",
+    "JAVA_HOME=/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-clean-distribution-20261020/jdk-extracted/usr/lib/jvm/java-25-openjdk-amd64",
+    "/usr/bin/python3",
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-clean-distribution-20261020/checkout/tools/build_android.py",
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-clean-distribution-20261020/checkout/projects/breakwater/breakwater.judasproj",
+    "--cache",
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-clean-distribution-20261020/android-clean",
+    "--sdk",
+    "/home/conner/Android/Sdk",
+    "--exporter",
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-clean-distribution-20261020/build-linux/judas_export",
+    "--desktop-runtime",
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-clean-distribution-20261020/build-linux/judas",
+    "--icu-host-tools",
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-clean-distribution-20261020/build-linux/unicode/build/src/judas_icu_build-build",
+    "--channel",
+    "Experimental",
+    "--abis",
+    "arm64-v8a",
+    "--jobs",
+    "2",
+    "--output",
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-clean-distribution-20261020/Breakwater-Clean.apk"
+  ],
+  "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+  "environmentPolicy": "system PATH; inherited user identity/display only; no compiler/engine/package-cache overrides; no Judas cache reuse",
+  "exit": 0,
+  "seconds": 689.2240224250004
+}

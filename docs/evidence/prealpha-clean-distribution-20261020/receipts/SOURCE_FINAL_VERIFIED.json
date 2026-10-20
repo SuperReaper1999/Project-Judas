@@ -1,0 +1,12 @@
+{
+  "sourceRevision": "39d0234a",
+  "archive": "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-clean-distribution-20261020/Judas-Experimental-source-final.tar.gz",
+  "sha256": "a1f43aeaf008c47a9ce83f5663990758d517340ab4e7bd8ca5777d237d2f42eb",
+  "bytes": 67774948,
+  "files": 1478,
+  "allManifestHashesMatch": true,
+  "noGitHistory": true,
+  "repeatArchive": "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-clean-distribution-20261020/Judas-Experimental-source-repeat.tar.gz",
+  "repeatSha256": "a1f43aeaf008c47a9ce83f5663990758d517340ab4e7bd8ca5777d237d2f42eb",
+  "byteIdenticalRepeatedPackaging": true
+}
