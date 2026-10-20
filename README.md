@@ -16,18 +16,17 @@ or performance result as a guarantee.
 
 ## Current status
 
-The current human-accepted `main` checkpoint is
-**`e30d5f9bb72a1a341d3eff7485b8d6b3eb6f8ea9`**. It includes M98 save evolution,
-M99 optional online multiplayer, Pre-Alpha Passes 1–5, the accepted rotated-liquid
-corrections and the curved-mesh CCD follow-up. Earlier milestone acceptance retains its original
-[platform scope](docs/evidence/m99/HUMAN_VALIDATION.md); it does not certify every
-subsequent platform or system combination.
+`main` contains operator-accepted checkpoints; `Experimental` is the development
+channel and may contain newer work awaiting review. The current source includes
+M98 save evolution, M99 optional online multiplayer, Pre-Alpha corrections,
+Hearthworld and optional Linux-to-Windows game export. This is not an Alpha
+release or universal platform certification. Earlier milestone acceptance retains
+its original [platform scope](docs/evidence/m99/HUMAN_VALIDATION.md).
 
-The unnumbered **Pre-Alpha stabilization/rework phase** continues on
-`Experimental`; its newer dense-contact optimizations and this documentation/API
-cleanup require separate human review. `main` requires explicit human
-acceptance of each candidate. It is not an Alpha
-release. See [current work, validation and support boundaries](docs/PREALPHA.md)
+For an exact checkout identity use `git rev-parse HEAD`; for a built tool use
+`judas_editor --build-info-json` or its packaged `BUILD_INFO.json`. These identify
+the actual source, compiler and channel rather than a checkpoint copied into this
+README. See [current work, validation and support boundaries](docs/PREALPHA.md)
 and [build identity, channels and distribution](docs/BUILD_RELEASES.md).
 
 Included M92 rendering adds opaque mesh instancing,
@@ -120,7 +119,12 @@ For only the editor/runtime, build targets `judas_editor judas` instead.
 Use a separate build directory with `-DJUDAS_BUILD_CHANNEL=main` for accepted
 release builds. See [distribution and relocation checks](docs/DISTRIBUTION.md).
 
-Run a project or scene with the runtime, or open one in the editor:
+From an unpacked SDK, start `./judas_editor` on Linux or
+`.\judas_editor.exe` on Windows. Follow [your first visible project](docs/FIRST_PROJECT.md)
+to create a project without repository examples. The verified **engine source
+archive** also excludes game projects; see [source archive scope](docs/DISTRIBUTION.md#source-archives-without-git-history).
+
+In a **full Git checkout**, run the included projects with your source-build tools:
 
 ```sh
 ./build/Experimental/judas judas_tech_demo.judasproj

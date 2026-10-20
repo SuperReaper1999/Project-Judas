@@ -67,3 +67,14 @@ artifact. API drift checks, link checks and compilation are useful focused
 controls; none establishes complete prose correctness, physics correctness,
 hardware qualification or Alpha readiness. These still require source review,
 behavioural evidence and the recorded human review process.
+
+## Release status and distribution examples
+
+Do not copy a "current main" commit into evergreen onboarding prose: it becomes
+stale at the next promotion. Exact identities belong in build manifests and
+checkpoint-specific evidence; direct users to `--build-info-json` or Git for the
+checkout they actually have. Separate commands for a full Git checkout, a verified
+engine source archive and an unpacked SDK. SDK/archive profiles intentionally omit
+repository games, and SDK executables live at its root rather than under `build/`.
+Local-link checks do not prove these commands work; qualify the actual moved SDK
+and create/export a new project before claiming that workflow passed.

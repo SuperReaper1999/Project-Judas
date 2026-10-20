@@ -10,11 +10,18 @@ provide a character controller or camera policy for new projects.
 
 ## 1. Open the editor and make a project
 
-Use the editor from your SDK, or the matching configured build:
+From the root of an **unpacked SDK**, start:
 
 ```sh
-./build/Experimental/judas_editor
+./judas_editor
 ```
+
+On Windows use `.\judas_editor.exe`. From a **configured source checkout**,
+use `./build/Experimental/judas_editor` instead. Below, terminal examples use
+SDK-root paths; source-build users substitute `./build/Experimental/` before each
+tool name. Keep the whole SDK together; it contains the fonts, types and guides.
+The engine source archive and SDK omit repository game projects, so create your
+own project as below rather than trying to launch `projects/tiny_game`.
 
 Choose **File → New project…**, a new directory and a name such as **My First
 Game**. The editor opens `Scenes/main.judas`, with a floor, authored gravity,
@@ -84,7 +91,7 @@ successful compilation does not prove game logic.
 You can also check all registered project modules from a terminal:
 
 ```sh
-./build/Experimental/judas_script_check '/absolute/My First Game/My_First_Game.judasproj'
+./judas_script_check '/absolute/My First Game/My_First_Game.judasproj'
 ```
 
 ## 4. Save and export
@@ -95,8 +102,8 @@ uses saved disk content, not unsaved editor changes. Choose a fresh directory
 outside the project. The equivalent command is:
 
 ```sh
-./build/Experimental/judas_export '/absolute/My First Game/My_First_Game.judasproj' \
-  '/absolute/My First Game Package' ./build/Experimental/judas
+./judas_export '/absolute/My First Game/My_First_Game.judasproj' \
+  '/absolute/My First Game Package' ./judas
 ```
 
 Use runtime/exporter binaries from the same build and channel. Exports reject
