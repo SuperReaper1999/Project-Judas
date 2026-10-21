@@ -1,8 +1,8 @@
-Read docs/PREALPHA_CCD_QUERY_FOLLOWUP.txt and RESULTS.json first.
+Read docs/PREALPHA_CCD_QUERY_FOLLOWUP.txt and RESULTS.json.gz first.
 
 The accepted baseline is 45f0614fa2eb21a6dc534d555f8abc87a31f4901.
 The frozen baseline core is eab321ffb7a997355987a42229424f1953765979164a6da94d1e2d65787781e5.
-The final measured candidate core is recorded in HOST.json and RESULTS.json.
+The final measured candidate core is recorded in HOST.json and RESULTS.json.gz.
 Build outputs are deliberately not committed. The retained raw benchmark driver
 is identical for each comparison; archive/source hashes identify physics code,
 not the observer's older embedded build identity. A new build can have different
@@ -42,7 +42,7 @@ between matched comparisons. A busy desktop can affect the measured timings.
 
 ARTIFACTS.json hashes original and stored bytes. Large logs/CSVs/JSON are gzip
 with deterministic mtime=0. HOST.json records hardware/compiler/provenance.
-root-analysis/TABLES.json contains strict wall windows and physical comparisons.
+root-analysis/TABLES.json.gz contains strict wall windows and physical comparisons.
 The source-guard-rejected candidate-b run is retained; candidate-b-retry is used
 for normal comparisons. Only src/physics/WorldModules.md changed in that rejected
 run. Do not silently replace the rejected receipt with a pass.

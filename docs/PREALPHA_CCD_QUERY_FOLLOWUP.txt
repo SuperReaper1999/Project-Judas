@@ -68,7 +68,7 @@ EVIDENCE AND REPRODUCTION
 Raw traces, normal comparisons, rejected experiments, commands, hashes and
 focused integration results are under:
   docs/evidence/prealpha-ccd-query-followup-20261021/
-Start with RESULTS.json, REPRODUCTION.txt and the artifact index.
+Start with RESULTS.json.gz, REPRODUCTION.txt and the artifact index.
 
 Read-only historical reports remain applicable to their recorded checkpoints;
 this report does not retroactively change their measurements or acceptance.
