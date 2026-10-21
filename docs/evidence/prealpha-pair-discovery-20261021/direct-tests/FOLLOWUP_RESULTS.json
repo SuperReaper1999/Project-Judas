@@ -1,0 +1,33 @@
+[
+  {
+    "name": "impact-discovery-followup",
+    "argv": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_impact_discovery_tests"
+    ],
+    "exit": 0,
+    "expected": 0,
+    "seconds": 0.015612344999681227,
+    "binary_sha256": "d92e89869594f0b3fb22990555feb4fd023383f91fb3e516d5c4526697803214"
+  },
+  {
+    "name": "impact-discovery-stale-bound",
+    "argv": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_impact_discovery_tests",
+      "--stale-bound"
+    ],
+    "exit": 1,
+    "expected": 1,
+    "seconds": 0.01562030999957642,
+    "binary_sha256": "d92e89869594f0b3fb22990555feb4fd023383f91fb3e516d5c4526697803214"
+  },
+  {
+    "name": "broadphase",
+    "argv": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_broadphase_tests"
+    ],
+    "exit": 0,
+    "expected": 0,
+    "seconds": 8.074876564998704,
+    "binary_sha256": "6f9cd725a7172608c9d06f4789594413f2b8e527b9d8e5c0860bc1544be4d764"
+  }
+]

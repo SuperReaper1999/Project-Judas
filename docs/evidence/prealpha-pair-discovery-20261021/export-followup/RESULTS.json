@@ -1,0 +1,30 @@
+{
+  "core_sha256": "eab321ffb7a997355987a42229424f1953765979164a6da94d1e2d65787781e5",
+  "cases": [
+    {
+      "name": "export",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_export",
+        "/home/conner/Documents/GitHub/Project-Judas/projects/physics_stress_lab/physics_stress_lab.judasproj",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/physics-hitch-followup-20261021/export-followup/exported",
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+      "exit": 0,
+      "seconds": 0.4147110909998446
+    },
+    {
+      "name": "relocated",
+      "argv": [
+        "/tmp/Judas-Physics-Discovery-pjwiumyi/judas"
+      ],
+      "cwd": "/tmp",
+      "exit": 0,
+      "seconds": 2.718347628000629
+    }
+  ],
+  "pass_all": true,
+  "core_unchanged": true,
+  "read_only_installation_unchanged": true,
+  "package": "/tmp/Judas-Physics-Discovery-pjwiumyi"
+}

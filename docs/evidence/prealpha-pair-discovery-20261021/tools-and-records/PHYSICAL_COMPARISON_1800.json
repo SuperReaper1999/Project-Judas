@@ -1,0 +1,42 @@
+{
+  "steps": 1800,
+  "field_mismatches": {
+    "trajectory_digest": 0,
+    "bodies": 0,
+    "awake": 0,
+    "sleeping": 0,
+    "candidates": 0,
+    "contacts": 0,
+    "impact_events": 0,
+    "impact_queries": 0,
+    "impact_iterations": 0,
+    "impact_peak": 0,
+    "max_linear_speed": 0,
+    "max_angular_speed": 0,
+    "nonfinite_fields": 0
+  },
+  "endpoint_quality_baseline": {
+    "candidate_pairs": 9464,
+    "contact_points": 3200,
+    "deepest_endpoint_penetration_m": 0.005004293425849371,
+    "observation_ms": 14.780385,
+    "outside_fixed_step_timing": true,
+    "population": 1024,
+    "scope": "endpoint primitive geometry for the authored loose_piece population",
+    "tag_available": true,
+    "uncertain_pairs": 0,
+    "unsupported_candidates": 0
+  },
+  "endpoint_quality_combined": {
+    "candidate_pairs": 9464,
+    "contact_points": 3200,
+    "deepest_endpoint_penetration_m": 0.005004293425849371,
+    "observation_ms": 14.752292,
+    "outside_fixed_step_timing": true,
+    "population": 1024,
+    "scope": "endpoint primitive geometry for the authored loose_piece population",
+    "tag_available": true,
+    "uncertain_pairs": 0,
+    "unsupported_candidates": 0
+  }
+}

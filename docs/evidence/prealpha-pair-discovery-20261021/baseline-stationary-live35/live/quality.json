@@ -1,0 +1,12 @@
+{
+  "candidate_pairs": 9469,
+  "contact_points": 3202,
+  "deepest_endpoint_penetration_m": 0.0050066086550835725,
+  "observation_ms": 14.773873,
+  "outside_fixed_step_timing": true,
+  "population": 1024,
+  "scope": "endpoint primitive geometry for the authored loose_piece population",
+  "tag_available": true,
+  "uncertain_pairs": 0,
+  "unsupported_candidates": 0
+}

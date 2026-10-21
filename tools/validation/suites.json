@@ -18,6 +18,7 @@
     {"name":"support-continuation","target":"judas_support_continuation_tests","groups":["collision"]},
     {"name":"support-guess-ownership","target":"judas_support_guess_ownership_tests","groups":["collision"]},
     {"name":"candidate-reuse","target":"judas_candidate_reuse_tests","groups":["collision"]},
+    {"name":"impact-discovery","target":"judas_impact_discovery_tests","groups":["collision"]},
     {"name":"native-mesh-growth","target":"judas_native_mesh_growth_tests","groups":["collision"]},
     {"name":"clip-polygon","target":"judas_clip_polygon_tests","groups":["collision"]},
     {"name":"impact-mesh-arrival","target":"judas_impact_mesh_cost_tests","groups":["collision"],"args":["60","","1.2","entry"]},

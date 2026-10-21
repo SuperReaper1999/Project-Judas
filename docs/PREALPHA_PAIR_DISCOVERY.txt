@@ -1,0 +1,210 @@
+PRE-ALPHA: PAIR DISCOVERY AND REMAINING IMPACT HITCHES
+21 October 2026 — Linux-qualified Experimental follow-up; human review pending.
+
+BASELINE AND SCOPE
+
+The operator accepted and promoted 129509774df1c5e1ac7996f47430f67b232bdd00.
+This follow-up develops on Experimental; main stays at that accepted checkpoint.
+It does not claim an Alpha release, universal 60 Hz physics or new human testing.
+
+The original room1024.judas is unchanged:
+  SHA256 a2caf62a295243d301149202c8a0a5eedafff256d68de0e3cda988846b2e05bf
+1,024 loose objects, 1,285 bodies, 96 joints, 60 Hz, ten velocity sweeps,
+four existing geometry lanes and the existing eight-step catch-up policy.
+No body count, mass, contact fidelity, damping, CCD policy or cadence reduction.
+
+MECHANISMS AND CORRECTIONS
+
+1. Broadphase pair discovery
+
+The accepted implementation still queried the same tree separately for every
+participating body. Each unordered pair was retained once, but overlapping
+subtrees were visited repeatedly. A new optional DynamicAabbTree::QueryPairs
+traverses pairs of subtrees, partitions their leaf products without duplication,
+and marks active ancestors to avoid inactive/inactive work. It returns exactly
+the same overlapping fat-proxy pairs. WorldBounds retains current classification,
+collision filtering and the canonical sorted output.
+
+PairQueryScratch belongs to the caller. Its marks are refreshed by query epochs,
+not saved neighbor memberships. The ordinary Query API and tree mutation/order
+are unchanged. The tree object's layout is unchanged; unused trees allocate no
+pair scratch. PhysicsWorld reuses its derived scratch and active-proxy vector.
+Callbacks may not mutate the tree. Recursive use of one scratch is rejected;
+ordinary Query or pair queries with separate scratch can nest safely.
+
+2. Growing-impact discovery
+
+An expanded body queried nearby fat proxies, then prepared the other bodies'
+event-time poses/orientations even for many empty pairs. At step 153 the new
+existing-enclosure check rejects 14,639 such neighbors before that preparation.
+It compares the expanding body's actual event-time bound with the other's
+already supported remaining-trajectory enclosure, which contains NOW as well.
+Finite disjoint bounds prove no current contact. Inclusive overlap preserves
+boundary contacts. Unsupported, uncertain and nonzero-pivot shapes retain the
+original path. Tentative solver impulses change velocity at fixed geometry;
+a published motion change invalidates the existing remaining-bound cache.
+
+No manifold, response or sampled miss is retained by this check. A copied outer
+query avoids aliasing the shared per-body bound scratch. Solver arithmetic,
+rows, event chronology, iterations, observations and save formats are unchanged.
+
+CAUSAL AND ADVERSARIAL PROOF
+
+A private diagnostic runs the ORIGINAL per-body tree traversal alongside the
+new one: 1,015 exact candidate-array comparisons over 900 unchanged steps,
+zero disagreements. Every new rejected pair is also queried through the original
+native zero-margin geometry: at least 712,704 audited rejections, no contact or
+uncertainty disagreements, and identical physical trajectory digests. These
+instrumented runs are correctness evidence, not performance comparisons.
+
+The expanded broadphase fixture checks independent brute AABB overlaps and the
+original per-active Query oracle: mixed/empty/all/sparse active sets, duplicate
+IDs, closed boundaries, move/destroy/reuse, epoch wrap, callbacks and exceptions.
+A deliberately broken mixed-active-pair wrapper produces 17 expected failures.
+
+ImpactDiscoveryTests has 31 checks. Independent native geometry proves actual
+contacts at event time, including a moving endpoint whose stored anchor is still
+separated. Other cases cover changed trajectories, earlier conservative bounds,
+rotation, large translated coordinates, boundary contact, unsupported geometry
+and invalid bounds. A real force-driven collision exercises the new rejection
+counter without losing the wall response. The stale-storage-bound negative
+control fails four checks as intended. Both normal fixtures pass.
+
+One NEW rotating test fixture initially assumed endpoint contact after a bar had
+already swung diagonally past the box. The preserved failed fixture/log and its
+follow-up identify the actual interior half-time crossing. Existing engine tests,
+thresholds and protected fixtures were not modified to hide that authoring error.
+
+An exact-pose manifold-cache probe was rejected before implementation: at the
+worst step none of 17,322 incremental pair requests repeated the same represented
+geometry. Across 942,639 requests it found only 1,157 potential negative and 32
+positive reuses. A cache would add lookup/storage costs to nearly every request.
+The earlier rejected full-manifold cache remains preserved in its original report.
+The new tree traversal and enclosure check avoid work without caching that truth.
+
+MATCHED NORMAL RELEASE RESULTS
+
+Ryzen 5 5600 (6 cores/12 threads), 8 GB RAM, GTX 970, native NVIDIA 580.178.04;
+GCC 15.2.0, Release -O3 -DNDEBUG. Workloads/builds were serialized. Neither
+software rendering, a VM nor Android builds were used for these measurements.
+
+All 1,800 steps             Accepted 12950977    Combined candidate
+Mean fixed-step ms                    14.192                13.304
+Median ms                             12.661                11.830
+p95 ms                                22.386                20.949
+Worst ms                              60.726                53.706
+
+The mean improves 6.3%, p95 6.4%, worst 11.6%. All 13 recorded trajectory/physical/contact/CCD fields agree exactly across
+1,800 steps. Endpoint native geometry
+also agrees: 1,024 loose pieces, 9,464 neighboring pairs, 3,200 contact points,
+zero uncertain/unsupported queries and 5.004293 mm deepest overlap.
+Peak whole-process RSS is 233,680 versus 233,532 KiB; both runs have zero swaps
+and major faults. No memory-savings claim is inferred from that small variation.
+Profiled pair scratch at step 153 is 29,000 bytes.
+
+Normal live 35-second captures (approximate start-to-start output cadence):
+                                    Accepted              Candidate
+Stationary overall FPS                 88.05                 108.72
+Stationary frame p95 ms                29.31                  18.75
+Stationary worst frame ms             219.35                 208.74
+Held-WASD overall FPS                  88.34                 113.90
+Held-WASD frame p95 ms                 27.35                  17.75
+Held-WASD worst frame ms              217.30                 214.74
+
+WASD is ordinary logical input through the native physical-input route. Actual
+view positions are recorded every frame; the camera moves. Keys are held for
+wall-timed two-second directions at seconds 2–10 and 12–20. Earlier captures
+with repeated key-state injection are retained separately: 76.85 to 109.71 FPS.
+They are not substituted for the final held-key data. Natural frame partitioning
+and the existing frame-delta policy produce slightly different camera paths;
+these are application measurements, not an isolated camera/render microbenchmark.
+All common physics prefixes match exactly (2,067 steps in each final live pair).
+A separate 900-step WASD run also matches the stationary physical prefix exactly.
+Its source-stability guard saw concurrent header editing; that receipt is kept
+and is not used as clean-source performance qualification.
+
+Final held-WASD strict wall windows:
+  0–10 s: 56.3 to 71.4 FPS; p95 93.63 to 58.07 ms.
+  10–20 s: 69.2 to 102.2 FPS; p95 42.39 to 20.31 ms.
+  20 s–stop: 122.45 to 149.99 FPS; p95 15.25 to 14.28 ms.
+These marker rates are not GPU presentation timestamps. The frame belonging to
+an interval is associated with its actual fixed-step work in the raw tables.
+
+DIAGNOSTIC ATTRIBUTION AND REMAINING LIMITS
+
+At the same original worst step 153, profiler-enabled comparisons show:
+  Discovery: 10.646 to 6.042 ms.
+  Candidate generation, both passes together: 4.348 to 3.762 ms.
+  CCD geometry calls: 28,271 to 14,036.
+  CCD search: 16.126 to 16.028 ms; impact solve: 3.116 to 3.058 ms.
+  Original 140 events and 12,692 CCD requests remain identical.
+Profiler search/geometry/discovery counters overlap; they must not be added as
+independent CPU costs. Root-query counts now describe batched traversals, and
+overlapping-leaf counts describe pair endpoints, not old repeated body visits.
+
+The approximately 0.2-second initial catch-up hitch REMAINS. This is a measured
+improvement, not all-phase smoothness. The remaining expensive bursts lie in
+continuous searches, geometry, contact response and several 60 Hz steps sharing
+one render interval. This pass does not prove every remaining query necessary
+or establish an unavoidable hardware floor. Relevant next work should isolate
+the remaining search and observation-publication costs before another redesign.
+There is no camera-specific engine fix or change to timing/backlog policy here.
+
+QUALIFICATION
+
+The 31 existing affected focused suites pass with fresh drivers/direct modules
+and the current engine archive, plus the new 31-check discovery fixture.
+Coverage includes broadphase, parallel geometry/fallback, contacts/caches,
+collision events, original curved-mesh continuity, impact robustness, joints,
+CharacterMotor, ragdolls, cold physics continuation, gravity, origins, wheels,
+powertrains, structures and bending. No full production-suite marathon.
+
+Native M70/M77 cold writer/readers pass. The protected original M77 observer
+checks the actual restored physical endpoint: exact equality and standing.
+Hearthworld gameplay writer/reader passes; streaming writer/two fresh readers
+pass. Editor Play/Stop preserves every owned authored scene byte.
+JudasJS static/types pass: 40 exports, 473 public symbols, 311 native operations,
+17 callbacks, 51 examples, seven negative controls, TypeScript 5.9.3. Live API
+enumeration is not rerun; no JudasJS bindings or declarations change.
+
+The first export correctly rejected mismatched runtime/exporter source identities
+after validation wiring changed. Preserve that failure; normal matching relinking
+and the corrected export/relocation results are separate receipts. No guard was
+bypassed. The matching export and read-only relocated launch from /tmp pass,
+including ordinary input switching to room1024 and the watch tour. Installation
+bytes remain unchanged. The initial attempt to build a newly declared target before regenerating
+the build was also retained. Final package/identity receipts accompany delivery.
+
+Windows/Android are not rerun under the current 8 GB host restriction. Automation
+uses dummy audio; this does not constitute listening validation. FLU-001, legacy
+save limitations, protected historical evidence, existing games and independent
+fluid research are unchanged. No main promotion, tag or M100 work.
+
+EVIDENCE AND REPRODUCTION
+
+docs/evidence/prealpha-pair-discovery-20261021/ contains raw before/after data,
+counts, failed controls, sources, recipes, exact argv and source/binary hashes.
+Large CSV/JSONL/log files use deterministic gzip with original/stored hashes.
+Original project scenes and binaries are not duplicated into tracked evidence.
+
+Current qualified physics archive SHA256:
+  eab321ffb7a997355987a42229424f1953765979164a6da94d1e2d65787781e5
+Source/checkpoint inventories and build-identity-only publication relinking are
+recorded separately. Their bytes must not be confused with earlier as-run ELFs.
+
+Build Release judas_physics_stress_live_benchmark. The original scene argument is
+projects/physics_stress_lab/Scenes/room1024.judas. After SCENE OUTPUT use:
+  240 1800 0 0 1 0.016666667 0 0 1   (fixed-step comparison)
+  35 10000000 0 0 0 0 0 0 1         (real elapsed-time live capture)
+Use native desktop graphics. The preserved private diagnostic-driver source and
+actual build recipes reproduce held-WASD input, camera readback and stage/probe
+observations. Rebuild against the selected checkpoint, adapting absolute root
+paths; existing binary timestamps alone are not provenance.
+
+HUMAN CHECKLIST
+
+1. Launch the new lab, press 3, watch the initial 20 seconds and later settling.
+2. Move with WASD, Q/E and mouse look throughout; inspect the remaining hitches.
+3. Inspect real collisions and pile behavior; try M/J/K to drive and wake machinery.
+4. Try 1/2 and rotated 4; pause/resume, save/load and reload.
+5. Repeat from the relocated standalone. New human acceptance remains pending.

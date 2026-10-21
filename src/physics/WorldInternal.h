@@ -211,6 +211,8 @@ struct PhysicsWorld::Impl {
     // (reused so its storage is not reallocated every step) and statistics.
     DynamicAabbTree tree;
     std::vector<std::pair<unsigned int, unsigned int>> candidatePairs;
+    std::vector<int> candidateProxies;
+    DynamicAabbTree::PairQueryScratch candidateScratch;
     mutable std::vector<unsigned int> queryScratch;
     struct JointRecord {
         JointHandle handle;
@@ -242,6 +244,8 @@ struct PhysicsWorld::Impl {
     std::vector<SleepIsland> sleepIslands;
     std::size_t sleepGraphEdges = 0, sleepIslandCount = 0, sleepScratchBytes = 0;
     void Settle(float dt);
+    bool ImpactDiscoverySeparated(unsigned a, unsigned b, const Aabb& query,
+                                  double start, double finish);
     struct IncrementalImpact;
     bool TryIncrementalImpact(const std::array<unsigned, 4>& selected, double now, float dt,
                               const std::vector<unsigned char>& jointBodies,
@@ -303,7 +307,7 @@ struct PhysicsWorld::Impl {
         std::size_t coupledFallbackEvents = 0, elasticFallbackEvents = 0,
                     geometryFallbackEvents = 0, peakImpactBodies = 0, peakImpactRows = 0,
                     incrementalEvents = 0, incrementalFallbacks = 0, incrementalBodies = 0,
-                    incrementalRows = 0;
+                    incrementalRows = 0, incrementalBoundsRejected = 0;
         std::size_t candidatePasses = 0, candidateQueries = 0, candidateLeaves = 0;
     } work;
     // Indexed output only: workers never mutate physics bodies, geometry

@@ -38,6 +38,14 @@ still averages 9.9 FPS. Trajectories change and transient penetration remains
 measurable; this is scoped Linux qualification pending human testing, not
 all-phase smoothness or general 60 Hz certification.
 
+The operator subsequently accepted the support-history checkpoint `80f7b2a5`
+and [broadphase reuse](PREALPHA_BROADPHASE_REUSE.txt) at `12950977` for main.
+The latest [pair-discovery and impact-hitch follow-up](PREALPHA_PAIR_DISCOVERY.txt)
+reduces repeated tree traversal and growing-impact geometry preparation, with
+identical 1,800-step physical results. Mean fixed cost is 14.19 to 13.30 ms and
+worst 60.73 to 53.71 ms on the Ryzen host. Initial roughly 0.2-second catch-up
+hitches remain. This new follow-up requires its own human acceptance.
+
 ## Evidence and acceptance history
 
 - [Original assessment](evidence/prealpha-pass2/ORIGINAL_ASSESSMENT.md), frozen

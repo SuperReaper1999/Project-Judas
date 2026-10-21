@@ -11,6 +11,7 @@
 #include <chrono>
 #include <cmath>
 #include <cstdio>
+#include <limits>
 #include <set>
 #include <string>
 #include <utility>
@@ -194,6 +195,145 @@ void TestTree() {
     Check(valid, "tree structure stays valid through inserts, moves, removals");
     Check(exact, "tree queries return exactly the brute-force overlapping set");
     Check(tree.Height() <= 3 * static_cast<int>(std::ceil(std::log2(2000.0))), "tree height stays logarithmic");
+}
+
+void TestTreePairs() {
+    std::printf("A2: unordered active-leaf pair traversal against independent overlap and query oracles\n");
+    DynamicAabbTree tree;
+    DynamicAabbTree::PairQueryScratch scratch;
+    using ProxyPairSet = std::set<std::pair<int, int>>;
+    std::vector<int> proxies;
+    std::vector<Aabb> boxes;
+    const auto pairKey = [](int a, int b) { return std::make_pair(std::min(a, b), std::max(a, b)); };
+    const auto verify = [&](const std::vector<int>& active, const std::string& label) {
+        const std::set<int> activeSet(active.begin(), active.end());
+        ProxyPairSet brute;
+        for (std::size_t a = 0; a < proxies.size(); ++a)
+            for (std::size_t b = a + 1; b < proxies.size(); ++b)
+                if ((activeSet.count(proxies[a]) || activeSet.count(proxies[b])) &&
+                    boxes[a].Overlaps(boxes[b]))
+                    brute.insert(pairKey(proxies[a], proxies[b]));
+        ProxyPairSet original;
+        for (const int activeProxy : active)
+            tree.Query(tree.FatAabb(activeProxy), [&](int other) {
+                if (other != activeProxy)
+                    original.insert(pairKey(activeProxy, other));
+            });
+        ProxyPairSet result;
+        std::size_t callbacks = 0;
+        bool noSelfPairs = true;
+        tree.QueryPairs(active, scratch, [&](int a, int b) {
+            ++callbacks;
+            noSelfPairs = noSelfPairs && a != b;
+            result.insert(pairKey(a, b));
+        });
+        Check(result == brute && result == original && callbacks == result.size() && noSelfPairs,
+              label + ": exact pairs, no duplicates or self-pairs");
+        return result;
+    };
+    verify({}, "empty tree");
+    Check(scratch.marks.empty() && scratch.stack.empty(), "unused pair traversal allocates no scratch");
+    const auto add = [&](const Aabb& box, unsigned userData) {
+        boxes.push_back(box);
+        proxies.push_back(tree.CreateProxy(box, userData));
+    };
+    add({{-1, -1, -1}, {1, 1, 1}}, 4000000000u);
+    verify(proxies, "single leaf");
+    add({{1, -1, -1}, {3, 1, 1}}, 17);
+    add({{1, 1, -1}, {3, 3, 1}}, 17);
+    add({{1, 1, 1}, {3, 3, 3}}, 0);
+    const auto touching = verify(proxies, "closed face, edge and corner contacts; duplicate user data");
+    Check(touching.size() == 6, "all six boundary-touching pairs are actually exercised");
+    verify({}, "inactive overlapping leaves");
+    verify({proxies[0], proxies[0]}, "one active leaf, duplicated active ID");
+    verify({proxies[3]}, "changed active set does not retain previous epoch marks");
+    scratch.epoch = std::numeric_limits<std::uint64_t>::max();
+    std::fill(scratch.marks.begin(), scratch.marks.end(), 1);
+    verify({proxies[0]}, "epoch wrap clears stale marks");
+
+    Random rng(7493u);
+    const auto randomBox = [&]() {
+        const glm::vec3 center(rng.Range(-5, 5), rng.Range(-5, 5), rng.Range(-5, 5));
+        const glm::vec3 half(rng.Range(.1f, 2), rng.Range(.1f, 2), rng.Range(.1f, 2));
+        return Aabb{center - half, center + half};
+    };
+    for (unsigned i = 0; i < 124; ++i)
+        add(randomBox(), i % 7 == 0 ? 0 : 700000u - i * 13);
+    verify(proxies, "tree growth and all leaves active");
+    std::vector<int> active;
+    for (std::size_t i = 0; i < proxies.size(); i += 5)
+        active.push_back(proxies[i]);
+    verify(active, "mixed active and inactive subtrees");
+    verify({proxies.back()}, "single sparse active path in grown tree");
+    bool valid = true, reused = false;
+    for (unsigned round = 0; round < 12; ++round) {
+        const auto moving = static_cast<std::size_t>(round * 17) % proxies.size();
+        boxes[moving] = randomBox();
+        tree.MoveProxy(proxies[moving], boxes[moving]);
+        const auto replaced = static_cast<std::size_t>(round * 23 + 1) % proxies.size();
+        const int removed = proxies[replaced];
+        tree.DestroyProxy(removed);
+        bool rejectsDead = false;
+        try {
+            tree.QueryPairs({removed}, scratch, [](int, int) {});
+        } catch (const std::invalid_argument&) {
+            rejectsDead = true;
+        }
+        Check(rejectsDead && !scratch.inUse, "destroyed proxy is rejected without poisoning scratch");
+        boxes[replaced] = randomBox();
+        proxies[replaced] = tree.CreateProxy(boxes[replaced], round * 977u);
+        reused = reused || proxies[replaced] == removed;
+        active.clear();
+        for (std::size_t i = round % 4; i < proxies.size(); i += 4)
+            active.push_back(proxies[i]);
+        verify(active, "move/destroy/reuse round " + std::to_string(round));
+        valid = valid && tree.Validate();
+    }
+    Check(valid && reused, "pair queries preserve tree invariants and exercise actual proxy reuse");
+    bool rejectsInvalid = false;
+    try {
+        tree.QueryPairs({-1}, scratch, [](int, int) {});
+    } catch (const std::invalid_argument&) {
+        rejectsInvalid = true;
+    }
+    Check(rejectsInvalid && !scratch.inUse, "invalid active ID is rejected and query guard is restored");
+
+    const auto expected = verify(proxies, "reference before nested queries");
+    ProxyPairSet nestedResult;
+    bool nestedChecked = false, sameScratchRejected = false, ordinaryExact = false;
+    tree.QueryPairs(proxies, scratch, [&](int a, int b) {
+        nestedResult.insert(pairKey(a, b));
+        if (nestedChecked)
+            return;
+        nestedChecked = true;
+        try {
+            tree.QueryPairs(proxies, scratch, [](int, int) {});
+        } catch (const std::logic_error&) {
+            sameScratchRejected = true;
+        }
+        std::set<int> ordinary, ordinaryBrute;
+        tree.Query(boxes.front(), [&](int proxy) { ordinary.insert(proxy); });
+        for (std::size_t i = 0; i < proxies.size(); ++i)
+            if (boxes.front().Overlaps(boxes[i]))
+                ordinaryBrute.insert(proxies[i]);
+        ordinaryExact = ordinary == ordinaryBrute;
+        DynamicAabbTree::PairQueryScratch nestedScratch;
+        ProxyPairSet independentlyNested;
+        tree.QueryPairs(proxies, nestedScratch,
+                        [&](int first, int second) { independentlyNested.insert(pairKey(first, second)); });
+        Check(independentlyNested == expected, "nested pair query with separate scratch remains exact");
+    });
+    Check(nestedChecked && sameScratchRejected && ordinaryExact && nestedResult == expected && !scratch.inUse,
+          "nested ordinary queries are safe, same-scratch nesting fails explicitly, outer pairs stay exact");
+    struct CallbackFailure {};
+    bool callbackFailed = false;
+    try {
+        tree.QueryPairs(proxies, scratch, [](int, int) { throw CallbackFailure{}; });
+    } catch (const CallbackFailure&) {
+        callbackFailed = true;
+    }
+    Check(callbackFailed && !scratch.inUse, "throwing callback releases scratch for later queries");
+    verify(proxies, "query after callback failure");
 }
 
 // --- B: static scenes ------------------------------------------------------
@@ -463,6 +603,7 @@ void TestScaleStatistics() {
 
 int main() {
     TestTree();
+    TestTreePairs();
     TestStaticScenes();
     TestMovingScenes();
     TestDestroyedAndReused();

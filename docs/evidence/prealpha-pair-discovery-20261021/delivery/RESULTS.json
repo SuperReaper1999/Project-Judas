@@ -1,0 +1,29 @@
+{
+  "core_sha256": "eab321ffb7a997355987a42229424f1953765979164a6da94d1e2d65787781e5",
+  "results": [
+    {
+      "name": "editor",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_editor",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/physics-hitch-followup-20261021/delivery/editor-project/physics_stress_lab.judasproj"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+      "exit": 0,
+      "seconds": 2.1172147580000455,
+      "log_sha256": "7ea5a7f5af27556ac06b5bddc75fdbba038c5c3208a6c50eb4dc1b419ae3974a"
+    },
+    {
+      "name": "export",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_export",
+        "/home/conner/Documents/GitHub/Project-Judas/projects/physics_stress_lab/physics_stress_lab.judasproj",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/physics-hitch-followup-20261021/delivery/exported",
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+      "exit": 1,
+      "seconds": 0.03186915600053908,
+      "log_sha256": "bd804be797c2b9430c22ba58278a70c59ceec253333966380853215d5422123d"
+    }
+  ]
+}

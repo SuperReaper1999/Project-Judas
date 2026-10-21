@@ -1,0 +1,12 @@
+[
+  {
+    "name": "impact-discovery",
+    "argv": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_impact_discovery_tests"
+    ],
+    "exit": 1,
+    "expected": 0,
+    "seconds": 0.015587758000037866,
+    "binary_sha256": "7779b15874fbf7170963edc2129a8e20ad9d1620fb6eaba6d632ea862fc2bfc0"
+  }
+]

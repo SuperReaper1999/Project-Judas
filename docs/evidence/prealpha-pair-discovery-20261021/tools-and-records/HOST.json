@@ -1,0 +1,16 @@
+{
+  "utc": "2026-10-21T16:41:59.842747+00:00",
+  "cpu_model": "AMD Ryzen 5 5600 6-Core Processor",
+  "logical_cpus": 12,
+  "memory": [
+    "MemTotal:        8045260 kB",
+    "MemFree:          755076 kB",
+    "MemAvailable:    4589548 kB"
+  ],
+  "kernel": "7.0.0-38-generic",
+  "compiler": "c++ (Ubuntu 15.2.0-16ubuntu1) 15.2.0",
+  "baseline_commit": "129509774df1c5e1ac7996f47430f67b232bdd00",
+  "benchmark_serialized": true,
+  "graphics": "native NVIDIA confirmed in every measurement receipt",
+  "platform_scope": "Linux; no Windows or Android workload this pass; 8GB host restriction retained"
+}

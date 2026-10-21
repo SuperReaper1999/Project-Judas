@@ -560,6 +560,13 @@ void PhysicsWorld::Step(float fixedDeltaTime, const VelocityCoupling *coupling) 
                           double(w.work.incrementalBodies), ProfileCounterMode::Latest);
     JUDAS_PROFILE_COUNTER("Physics incremental impact rows", double(w.work.incrementalRows),
                           ProfileCounterMode::Latest);
+    JUDAS_PROFILE_COUNTER("Physics incremental discovery bound rejections",
+                          double(w.work.incrementalBoundsRejected), ProfileCounterMode::Latest);
+    JUDAS_PROFILE_COUNTER("Physics broadphase pair scratch bytes",
+                          double(w.candidateScratch.marks.capacity() * sizeof(std::uint64_t) +
+                                 w.candidateScratch.stack.capacity() * sizeof(std::pair<int, int>) +
+                                 w.candidateProxies.capacity() * sizeof(int)),
+                          ProfileCounterMode::Latest);
     JUDAS_PROFILE_COUNTER("Physics peak impact contact rows", double(w.work.peakImpactRows),
                           ProfileCounterMode::Latest);
     JUDAS_PROFILE_COUNTER("Physics impact continuation cache ms",

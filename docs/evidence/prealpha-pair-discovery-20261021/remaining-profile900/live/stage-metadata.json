@@ -1,0 +1,12 @@
+{
+  "capacity_dropped_frames": 0,
+  "captured_frames": 901,
+  "fixed_ids": "Profiler step IDs and benchmark steps are separate identities; absolute monotonic boundaries and benchmark frame link are preserved.",
+  "max_frames": 4096,
+  "missing_completed_snapshots": 0,
+  "publication": "Current afterFrame is not published; next-beforeFrame reads previous FrameId minus one, shutdown reads final ended frame.",
+  "schema": "judas.private.completed-profiler-frames.v1",
+  "scope": "Raw existing profiler records; elapsed spans on named threads overlap; inclusive rows are not additive.",
+  "timing_qualification": "Snapshot copying/JSON output occurs outside fixed-step timer but perturbs frame work and live cadence; never substitute for uninstrumented performance.",
+  "worker_qualification": "Only work already instrumented/registered by existing profiler appears; absence is not zero worker CPU."
+}

@@ -2,6 +2,25 @@
 #include "WorldInternal.h"
 using namespace JudasPhysicsDetail;
 
+bool PhysicsWorld::Impl::ImpactDiscoverySeparated(unsigned a, unsigned b, const Aabb& query,
+                                                  double start, double finish) {
+    const auto supported = [](const Body& body) {
+        return ContinuationPrimitive(body) && std::isfinite(body.boundingRadius) &&
+               body.boundingRadius > 0;
+    };
+    if (!supported(bodies[a]) || !supported(bodies[b]) ||
+        !rigid_motion_bounds::FiniteBound(query))
+        return false;
+    // An existing remaining-trajectory enclosure contains the other's geometry
+    // at this instant too. Reject only disjoint finite enclosures, before
+    // preparing that other's event-time orientation and tight shape bounds.
+    // This is not contact truth or a retained neighbor set. Published velocity
+    // changes invalidate RemainingImpactBound through InvalidateImpactPose;
+    // an earlier unchanged interval's enclosure remains a safe superset.
+    const auto& remaining = RemainingImpactBound(b, start, finish);
+    return rigid_motion_bounds::FiniteBound(remaining) && !query.Overlaps(remaining);
+}
+
 bool PhysicsWorld::Impl::TryIncrementalImpact(const std::array<unsigned, 4>& selected, double now,
                                               float dt,
                                               const std::vector<unsigned char>& jointBodies,
@@ -76,7 +95,9 @@ bool PhysicsWorld::Impl::TryIncrementalImpact(const std::array<unsigned, 4>& sel
         if (body.rigidBody.IsStatic())
             return true;
         PhysicsWorkTimer timer(work.impactIslands, work.active);
-        const auto& candidates = QuerySlots(ActualImpactBound(slot, ImpactPoseAt(slot, now)));
+        // Copy: PairAt and remaining-bound preparation share per-body scratch.
+        const Aabb query = ActualImpactBound(slot, ImpactPoseAt(slot, now));
+        const auto& candidates = QuerySlots(query);
         for (auto other : candidates) {
             if (other == slot || !CanCollide(slot, other))
                 continue;
@@ -86,6 +107,11 @@ bool PhysicsWorld::Impl::TryIncrementalImpact(const std::array<unsigned, 4>& sel
                 continue;
             // This participant is provisionally awake in the transaction.
             // World sleep flags must not hide its still-sleeping neighbours.
+            if (ImpactDiscoverySeparated(slot, other, query, now, dt)) {
+                if (work.active)
+                    ++work.incrementalBoundsRejected;
+                continue;
+            }
             if (!pair(slot, other))
                 return false;
         }

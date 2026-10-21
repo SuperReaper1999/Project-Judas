@@ -1,0 +1,128 @@
+[
+  {
+    "name": "baseline1800",
+    "exit": 0,
+    "argv": [
+      "python3",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/physics-hitch-followup-20261021/run_current.py",
+      "--binary",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/physics-hitch-followup-20261021/diagnostic-build/live",
+      "--core",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/physics-hitch-followup-20261021/baseline/libjudas_engine.a",
+      "--output",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/physics-hitch-followup-20261021/baseline1800",
+      "--mode",
+      "1800",
+      "--camera",
+      "stationary",
+      "--extra-source",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/physics-hitch-followup-20261021/diagnostic-build/DiagnosticLive.cpp",
+      "--execute"
+    ]
+  },
+  {
+    "name": "combined1800",
+    "exit": 0,
+    "argv": [
+      "python3",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/physics-hitch-followup-20261021/run_current.py",
+      "--binary",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/physics-hitch-followup-20261021/combined/live",
+      "--core",
+      "/home/conner/Documents/GitHub/Project-Judas/build/libjudas_engine.a",
+      "--output",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/physics-hitch-followup-20261021/combined1800",
+      "--mode",
+      "1800",
+      "--camera",
+      "stationary",
+      "--extra-source",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/physics-hitch-followup-20261021/diagnostic-build/DiagnosticLive.cpp",
+      "--execute"
+    ]
+  },
+  {
+    "name": "baseline-stationary-live35",
+    "exit": 0,
+    "argv": [
+      "python3",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/physics-hitch-followup-20261021/run_current.py",
+      "--binary",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/physics-hitch-followup-20261021/diagnostic-build/live",
+      "--core",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/physics-hitch-followup-20261021/baseline/libjudas_engine.a",
+      "--output",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/physics-hitch-followup-20261021/baseline-stationary-live35",
+      "--mode",
+      "live35",
+      "--camera",
+      "stationary",
+      "--extra-source",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/physics-hitch-followup-20261021/diagnostic-build/DiagnosticLive.cpp",
+      "--execute"
+    ]
+  },
+  {
+    "name": "combined-stationary-live35",
+    "exit": 0,
+    "argv": [
+      "python3",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/physics-hitch-followup-20261021/run_current.py",
+      "--binary",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/physics-hitch-followup-20261021/combined/live",
+      "--core",
+      "/home/conner/Documents/GitHub/Project-Judas/build/libjudas_engine.a",
+      "--output",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/physics-hitch-followup-20261021/combined-stationary-live35",
+      "--mode",
+      "live35",
+      "--camera",
+      "stationary",
+      "--extra-source",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/physics-hitch-followup-20261021/diagnostic-build/DiagnosticLive.cpp",
+      "--execute"
+    ]
+  },
+  {
+    "name": "baseline-wasd-live35-v3",
+    "exit": 0,
+    "argv": [
+      "python3",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/physics-hitch-followup-20261021/run_current.py",
+      "--binary",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/physics-hitch-followup-20261021/diagnostic-build/live",
+      "--core",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/physics-hitch-followup-20261021/baseline/libjudas_engine.a",
+      "--output",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/physics-hitch-followup-20261021/baseline-wasd-live35-v3",
+      "--mode",
+      "live35",
+      "--camera",
+      "wasd",
+      "--extra-source",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/physics-hitch-followup-20261021/diagnostic-build/DiagnosticLive.cpp",
+      "--execute"
+    ]
+  },
+  {
+    "name": "combined-wasd-live35",
+    "exit": 0,
+    "argv": [
+      "python3",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/physics-hitch-followup-20261021/run_current.py",
+      "--binary",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/physics-hitch-followup-20261021/combined/live",
+      "--core",
+      "/home/conner/Documents/GitHub/Project-Judas/build/libjudas_engine.a",
+      "--output",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/physics-hitch-followup-20261021/combined-wasd-live35",
+      "--mode",
+      "live35",
+      "--camera",
+      "wasd",
+      "--extra-source",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/physics-hitch-followup-20261021/diagnostic-build/DiagnosticLive.cpp",
+      "--execute"
+    ]
+  }
+]

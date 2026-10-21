@@ -1,5 +1,9 @@
 #pragma once
 
+#include <algorithm>
+#include <cstdint>
+#include <stdexcept>
+#include <utility>
 #include <vector>
 
 #include <glm/glm.hpp>
@@ -89,6 +93,92 @@ public:
             } else {
                 stack.push_back(node.child1);
                 stack.push_back(node.child2);
+            }
+        }
+    }
+
+    struct PairQueryScratch {
+        // Callers may retain this storage across queries. Marks scale with
+        // allocated tree slots, while the stack holds pending traversal work,
+        // not an output array of every overlapping pair.
+        std::vector<std::uint64_t> marks;
+        std::uint64_t epoch = 0;
+        std::vector<std::pair<int, int>> stack;
+        bool inUse = false;
+    };
+
+    // Enumerate each unordered overlapping leaf pair exactly once when at
+    // least one leaf is in activeProxies. User data need not be ordered or
+    // unique; callbacks receive the live proxy IDs, never user-data values.
+    // Traversal order is tree-dependent. Callers needing order must sort.
+    //
+    // Mark only active leaves and their ancestors; no per-query full-tree
+    // clear is needed. Marks and depth-first traversal storage are lazy and
+    // retained by the caller, adding no storage to unrelated trees. Callbacks
+    // must not mutate the tree. Ordinary Query and nested QueryPairs with a
+    // different scratch object are safe; recursive reuse of this scratch is
+    // rejected, and concurrent reuse is unsupported. Distinct scratch objects
+    // may query a read-only tree concurrently if callers exclude tree mutation.
+    template <typename Callback>
+    void QueryPairs(const std::vector<int>& activeProxies, PairQueryScratch& scratch,
+                    Callback&& callback) const {
+        if (scratch.inUse)
+            throw std::logic_error("recursive broadphase pair query");
+        struct QueryGuard {
+            bool& active;
+            explicit QueryGuard(bool& flag) : active(flag) { active = true; }
+            ~QueryGuard() { active = false; }
+        } guard(scratch.inUse);
+        if (activeProxies.empty())
+            return;
+
+        scratch.marks.resize(m_nodes.size(), 0);
+        if (++scratch.epoch == 0) {
+            std::fill(scratch.marks.begin(), scratch.marks.end(), 0);
+            scratch.epoch = 1;
+        }
+        for (const int proxy : activeProxies) {
+            if (proxy < 0 || static_cast<std::size_t>(proxy) >= m_nodes.size() ||
+                m_nodes[static_cast<std::size_t>(proxy)].height != 0 ||
+                !m_nodes[static_cast<std::size_t>(proxy)].IsLeaf())
+                throw std::invalid_argument("pair query requires live leaf proxies");
+            for (int node = proxy; node != kNull; node = m_nodes[static_cast<std::size_t>(node)].parent) {
+                auto& mark = scratch.marks[static_cast<std::size_t>(node)];
+                if (mark == scratch.epoch)
+                    break;
+                mark = scratch.epoch;
+            }
+        }
+
+        auto& stack = scratch.stack;
+        stack.clear();
+        stack.emplace_back(m_root, m_root);
+        while (!stack.empty()) {
+            const auto [first, second] = stack.back();
+            stack.pop_back();
+            if (scratch.marks[static_cast<std::size_t>(first)] != scratch.epoch &&
+                scratch.marks[static_cast<std::size_t>(second)] != scratch.epoch)
+                continue;
+            const Node& a = m_nodes[static_cast<std::size_t>(first)];
+            const Node& b = m_nodes[static_cast<std::size_t>(second)];
+            if (first == second) {
+                if (!a.IsLeaf()) {
+                    // These disjoint sets partition all unordered descendants:
+                    // pairs within each child, and pairs between the children.
+                    stack.emplace_back(a.child1, a.child1);
+                    stack.emplace_back(a.child2, a.child2);
+                    stack.emplace_back(a.child1, a.child2);
+                }
+            } else if (a.aabb.Overlaps(b.aabb)) {
+                if (a.IsLeaf() && b.IsLeaf()) {
+                    callback(first, second);
+                } else if (!a.IsLeaf() && (b.IsLeaf() || a.height >= b.height)) {
+                    stack.emplace_back(a.child1, second);
+                    stack.emplace_back(a.child2, second);
+                } else {
+                    stack.emplace_back(first, b.child1);
+                    stack.emplace_back(first, b.child2);
+                }
             }
         }
     }

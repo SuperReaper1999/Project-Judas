@@ -32,6 +32,21 @@ checks available to the compiler. `WorldImpactQueries.h` does the same for the
 shared represented-pose/contact query path. Neither header owns independent
 state or supplies an alternative collision policy.
 
+`WorldBounds.cpp` discovers candidate pairs with an active-leaf tree traversal.
+Caller-owned ancestor marks and traversal scratch are derived anew each query;
+no old candidate membership is retained across steps, mutations or origin changes.
+Each overlapping unordered leaf pair is visited once, then current collision
+policy is applied and the result is canonically sorted. Other tree queries keep
+their existing interface. The profiler's root-query count describes a batched
+traversal now; its overlapping-leaf count counts emitted pair endpoints, not the
+old repeated single-body-query visits.
+
+Growing impact discovery also checks the existing remaining-trajectory enclosure
+of a candidate against the expanding body's actual event-time bound. Only a
+finite, disjoint enclosure avoids preparing detailed geometry. Touching,
+uncertain and unsupported cases retain native contact queries; no negative
+manifold, impulse or contact truth is cached by this check.
+
 `ImpactCandidateCache.h` retains sorted broadphase candidate lists only during
 one impact-event pass. Any fat-proxy reinsertion invalidates those lists,
 including movement of the other endpoint. A contained query filters the retained

@@ -36,7 +36,9 @@ lights and shared multi-view planetary LOD. See the
 M91 collision continuity remains included. The later [curved-mesh correction](docs/PREALPHA.md)
 and [dense-contact follow-up](docs/PREALPHA_DENSE_SUPPORT_FOLLOWUP.md) document
 current behaviour and remaining expensive cases. The latter does **not** meet a
-24–30 FPS target for the 1,024-piece stress room on the measured i7-4790 host.
+24–30 FPS target for the 1,024-piece stress room on the measured i7-4790 host. Current Ryzen measurements and the remaining impact hitches are recorded in
+[accepted broadphase reuse](docs/PREALPHA_BROADPHASE_REUSE.txt) and the
+[latest pair-discovery follow-up](docs/PREALPHA_PAIR_DISCOVERY.txt).
 
 M90 brings vehicles, wheels, powertrains, characters, navigation, articulated
 poses, attachments, deformables, audio and particles through checked local-origin
