@@ -1,0 +1,31 @@
+Shadow maps: on
+Graphics: 3.3.0 NVIDIA 580.178.04 / NVIDIA GeForce GTX 970/PCIe/SSE2
+Renderer fragment texture units: 32 (material path uses 12)
+diagnostic swap=0 hidden=0 tour=0 frame_seconds=0 profile=0 periodic_export=0
+Project: Judas Physics Stress Lab (/home/conner/Documents/GitHub/Project-Judas/projects/physics_stress_lab/physics_stress_lab.judasproj)
+Scene: Physics Stress Lab / 1024 loose bodies (projects/physics_stress_lab/Scenes/room1024.judas)
+World origin (m): 0.000, 0.000, 0.000
+completed frames=404 steps=895 wall_ms=35084.1
+	Command being timed: ".cache/physics-exhaustive-profile-20261021/sampled-live projects/physics_stress_lab/Scenes/room1024.judas .cache/physics-exhaustive-profile-20261021/live35-sampled 35 10000000 0 0 0 0 0 0 1"
+	User time (seconds): 41.55
+	System time (seconds): 0.22
+	Percent of CPU this job got: 117%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:35.45
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 179368
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 38838
+	Voluntary context switches: 3812
+	Involuntary context switches: 1342
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 1552
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0

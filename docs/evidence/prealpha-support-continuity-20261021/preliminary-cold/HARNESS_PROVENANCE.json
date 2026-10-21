@@ -1,0 +1,18 @@
+{
+  "original": "/home/conner/Documents/GitHub/Project-Judas/.cache/contact-redesign-20261021/cold/validate.py",
+  "original_sha256": "cc26188853616c18237d63f37faab86948cfb0d54f26c0c790a4689e9fbe2b15",
+  "copied_sha256": "65ff95284c594eae1232b802f8687a4ae3e74989f602b23bd3d20c4a9157fde4",
+  "only_change": "output-root/repository/build wiring; observer, fixtures, controller, settings and acceptance unchanged",
+  "commands_not_run": [
+    [
+      "python3",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/persistent-contact-20261021/final-cold/validate.py",
+      "prepare"
+    ],
+    [
+      "python3",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/persistent-contact-20261021/final-cold/validate.py",
+      "run"
+    ]
+  ]
+}

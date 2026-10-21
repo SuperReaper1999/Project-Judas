@@ -1,0 +1,3 @@
+dd4cc421db0910d17989619e7bb87f3a37019d0bac075482de0d5354df217c29  src/physics/WorldIncrementalImpact.cpp
+185558da16665e0dafbbbf7c18fc06ad2f1c63b320f0928170b743f68cb8deb7  src/ImpactSolver.cpp
+d8b26d74d3d0f9feea59f76aa9fd8ae048488e7502e4906ab7c9fef90b010354  src/ContactSolver.cpp

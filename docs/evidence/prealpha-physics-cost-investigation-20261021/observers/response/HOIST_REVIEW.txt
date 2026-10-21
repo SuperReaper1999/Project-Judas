@@ -1,0 +1,103 @@
+Read-only repeated-operation review (input f5624f0b)
+=================================================
+No implementation changes, builds or runs performed for this review.
+These are opportunities, not measured speedup claims or root-cause closure.
+
+Exact local hoists under the present trial contract
+-------------------------------------------------
+1. src/physics/WorldIncrementalImpact.cpp:48-64
+   identity, selected comparison, supportPairs binary_search and
+   SpinPenetrationTarget(identity) are identical for every point of the same
+   manifold. The target is a pure quarter-PrimitiveFeature read
+   (src/physics/WorldCCDSearch.cpp:541-543); trial construction does not change
+   authoritative shapes or supportPairs. Compute once per actual nonempty
+   primitive manifold, after successful initialize, preserving scalar types and
+   expression order. Materials sqrt(max friction product) and max restitution
+   are constant even across all primitive pairs of the body pair (lines54-55).
+   The exact trial position assignments at49-50 are identical for all points and
+   can occur once immediately before the point loop. There is no interleaved
+   callback in that loop. Keep row insertion order unchanged.
+   Negative control: compound manifold with >=2 points, friction/restitution,
+   continuing/noncontinuing and selected primitive; compare every row field and
+   exact resulting physical digests. NaN materials remain existing semantics;
+   do not change max ordering or add a fallback when hoisting.
+
+2. src/physics/WorldIncrementalImpact.cpp:97-99 and123-125
+   forcedExpansion is append-only during one trial; expanded flags only change
+   0->1. The seed loop consumes the dynamically growing entire queue BEFORE the
+   first SolveGrowing. Each callback currently rescans all previously consumed
+   entries only to skip them. A monotonically retained queue cursor can resume
+   at the first unconsumed entry in later callbacks. It preserves the exact
+   ascending append order and checks newly appended entries during expansion.
+   This is genuine removable repeated bookkeeping, not permission to omit any
+   force-activated body. Count forced_queue_already_expanded first; it may be a
+   small component of cost.
+   Negative controls: deferred wake chains appending several generations of
+   neighbors; append new deferred bodies in later solver ranges; rejected trial
+   rollback; ensure no queue cursor survives Reset or rejects.
+
+3. src/ContactSolver.cpp:305-312 and ImpactSolver.cpp:224-235
+   Each range reconstructs/zeroes a seen byte vector and fresh activated vector.
+   Growing also constructs a fresh next vector each callback. Reusing their
+   storage can remove allocation, but initialization and output semantics must
+   remain exact. The seen flags must be reset per range (or use checked epoch
+   tags), because already-expanded and newly changing bodies are different
+   concepts. This is storage reuse, not skipping required activation detection.
+   The current fresh activated list is frame-deduplicated by seen, making unique
+   generally redundant in this caller; SORT remains necessary to preserve the
+   established body-slot expansion order. Do not remove sort based on one run.
+   Measure allocation payload/calls and duplicate counter before implementing.
+
+4. ImpactSolver.cpp:22-39,194-198,248-253
+   Measure recomputes inverse world inertia, determinant and its matrix inverse
+   for incoming and final budget measurements of the same body at one event
+   pose. Current growing solve changes velocities only; trial body orientation,
+   inverse mass and local inertia stay fixed. A per-event prepared budget frame
+   could reuse immutable mass/inertia while measuring fresh velocities twice.
+   Contact PrepareAppended also prepares inverse world inertia at164.
+   This is conditional on the CURRENT growing callback contract; do not cache
+   globally or assume arbitrary future callbacks cannot mutate physical frames.
+   Preserve exact before/after summation order, matrix precision, zero-determinant
+   handling and throwing behavior. Any matrix inverse precomputation must use
+   identical expressions/types to retain the rounding contract.
+   Negative controls: rotated anisotropic dynamic inertia, static/moving static
+   boundaries, zero inverse inertia rotating body throwing, growing late body,
+   energy-guard rejection. It may be secondary versus geometry/query cost.
+
+Proof-based reuse, not a trivial scalar hoist
+--------------------------------------------
+5. WorldIncrementalImpact.cpp:79 bypasses the candidate cache used at
+   WorldImpactEvents.cpp:401 and723. The existing per-Advance cache uses exact
+   fat-proxy bounds, insertion revision and enclosing-query checks; it stores
+   conservative body candidates, not contact truth. Wiring the same cache into
+   this path can avoid repeated tree traversal/sort across events, provided its
+   completeness conditions and existing deterministic candidate order hold.
+   This needs a scoped interface and positive/negative cache invalidation tests,
+   not blindly keeping last candidates or assuming stationary surroundings.
+
+6. ImpactSolver.cpp:224-237 runs all10 outer sweeps even after a COMPLETE sweep
+   changes no normal/tangent accumulator and appends no rows. Deterministic row
+   kernel at fixed poses and unchanged rows then has an exact fixed point.
+   The first no-change sweep establishes the certificate; later sweeps should
+   not affect body velocities/impulses. Empty activated alone is insufficient:
+   accumulator changes can round away at endpoints. Instrumentation counts the
+   full certificate but deliberately does not terminate early. Measure actual
+   prevalence before considering an API/control change. Retain closure/budget
+   checks on any future early termination.
+
+Work that CANNOT be safely hoisted based on current evidence
+----------------------------------------------------------
+- ContactSolver.cpp:266-289 friction PointVelocity, slip direction, tangent
+  effective mass and Coulomb projection depend on the velocity after the normal
+  impulse and preceding rows. Old velocities/normal speed are not valid reuse.
+- PairAt across changed poses/generations cannot reuse a manifold from merely
+  the same body IDs or nearly equal floats. Exact geometry keys and bounded
+  ownership/invalidation are required; CCD observer measures that separately.
+- Newly activated body neighborhoods cannot be omitted because an impulse looks
+  small. A tiny represented velocity change can alter a later exact threshold.
+- Deferred gravity seed expansion cannot be deferred past the solve merely to
+  shrink the first domain. It establishes physically consistent incoming state
+  for awakened bodies, and has a preserved failing negative control.
+- Warm-start guesses invalidated by changed velocities cannot simply be restored
+  as a cache optimization. Their force-history ownership requires a coherent
+  continuation model and separate physical tests.

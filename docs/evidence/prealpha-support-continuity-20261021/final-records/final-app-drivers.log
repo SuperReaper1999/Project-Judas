@@ -1,0 +1,10 @@
+{
+  "report": "/home/conner/Documents/GitHub/Project-Judas/.cache/persistent-contact-20261021/final-app-drivers/BUILD.json",
+  "build_completed_no_tests_run": true,
+  "binaries": [
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/persistent-contact-20261021/final-app-drivers/judas_character_lab_tests",
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/persistent-contact-20261021/final-app-drivers/judas_balance_lab_tests",
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/persistent-contact-20261021/final-app-drivers/judas_hearthworld_application_tests",
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/persistent-contact-20261021/final-app-drivers/judas_save_streaming_tests"
+  ]
+}

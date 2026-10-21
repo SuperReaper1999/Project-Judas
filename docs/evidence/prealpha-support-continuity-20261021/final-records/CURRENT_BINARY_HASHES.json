@@ -1,0 +1,11 @@
+{
+  "files": {
+    "build/libjudas_engine.a": "6b57d6c554c728a92afeb227581a863c41be9246cd2790aefe41afb3e047b4b7",
+    "build/judas": "45f4cd6c3e04dc67b811d4c80ed7303378a70448abe2b569184e09463d9b54b2",
+    "build/judas_editor": "cfd6417a8e0b4b13563987355014daca796da5e2cfd13523e452110a4d8e4034",
+    "build/judas_export": "714765cafa2781f787fb77f0b76f06341ec5927f1b86820cf0a7e7dc5ceee2ea",
+    "build/judas_physics_stress_live_benchmark": "bf014260df3cc7670ce25b1e7f2a84c2f689f3d5ba8313ecbf52d50f3ea0271c",
+    "build/judas_support_guess_ownership_tests": "f7c4d5416b2cf700e146f3387ab86881d3b331d09ae4f761ac8b95c140ee2971"
+  },
+  "qualification": "Current file hashes after final matching-identity rebuild; earlier as-run receipt hashes are not replaced or retroactively relabelled."
+}

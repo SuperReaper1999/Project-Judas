@@ -1,0 +1,9 @@
+{
+  "accumulator_only_changes": 38,
+  "actually_evaluated": 596861,
+  "checks": 300,
+  "exact_skips": 281484,
+  "failures": 0,
+  "full_visits": 878345,
+  "tracked_visits": 878345
+}

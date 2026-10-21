@@ -1,0 +1,2 @@
+Original M77 mechanical fixtures and lab content: CC0-1.0. https://creativecommons.org/publicdomain/zero/1.0/
+Weighted feet are explicit physical geometry/mass, not hidden assistance.

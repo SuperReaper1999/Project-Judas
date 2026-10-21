@@ -1,0 +1,836 @@
+{
+  "unobserved900": {
+    "steps": 900,
+    "windows": {
+      "1-300": {
+        "n": 300,
+        "mean_ms": 17.42553476,
+        "median_ms": 15.344393,
+        "p95_ms": 29.2401986,
+        "worst_ms": 54.183133,
+        "events": 3156,
+        "queries": 675397,
+        "nonfinite_sum": 0
+      },
+      "301-600": {
+        "n": 300,
+        "mean_ms": 44.18263732,
+        "median_ms": 42.4288705,
+        "p95_ms": 78.78880525000001,
+        "worst_ms": 103.909481,
+        "events": 1799,
+        "queries": 1830822,
+        "nonfinite_sum": 0
+      },
+      "601-900": {
+        "n": 300,
+        "mean_ms": 51.72143733666667,
+        "median_ms": 49.236554,
+        "p95_ms": 89.22033305000002,
+        "worst_ms": 124.894936,
+        "events": 1073,
+        "queries": 1533908,
+        "nonfinite_sum": 0
+      },
+      "300-900": {
+        "n": 601,
+        "mean_ms": 47.90623775207987,
+        "median_ms": 45.529043,
+        "p95_ms": 82.617686,
+        "worst_ms": 124.894936,
+        "events": 2877,
+        "queries": 3365067,
+        "nonfinite_sum": 0
+      },
+      "1-900": {
+        "n": 900,
+        "mean_ms": 37.77653647222222,
+        "median_ms": 33.7417025,
+        "p95_ms": 77.58056295,
+        "worst_ms": 124.894936,
+        "events": 6028,
+        "queries": 4040127,
+        "nonfinite_sum": 0
+      }
+    },
+    "quality": {
+      "candidate_pairs": 9478,
+      "contact_points": 3754,
+      "deepest_endpoint_penetration_m": 0.023602347995183515,
+      "observation_ms": 15.000599,
+      "outside_fixed_step_timing": true,
+      "population": 1024,
+      "scope": "endpoint primitive geometry for the authored loose_piece population",
+      "tag_available": true,
+      "uncertain_pairs": 0,
+      "unsupported_candidates": 0
+    }
+  },
+  "unobserved900-B": {
+    "steps": 900,
+    "windows": {
+      "1-300": {
+        "n": 300,
+        "mean_ms": 17.14807503,
+        "median_ms": 15.3197325,
+        "p95_ms": 28.583335100000003,
+        "worst_ms": 53.809658,
+        "events": 3156,
+        "queries": 675397,
+        "nonfinite_sum": 0
+      },
+      "301-600": {
+        "n": 300,
+        "mean_ms": 43.97113811,
+        "median_ms": 42.442828000000006,
+        "p95_ms": 78.94062565,
+        "worst_ms": 104.271172,
+        "events": 1799,
+        "queries": 1830822,
+        "nonfinite_sum": 0
+      },
+      "601-900": {
+        "n": 300,
+        "mean_ms": 51.284481406666664,
+        "median_ms": 48.947983,
+        "p95_ms": 87.85662225000002,
+        "worst_ms": 124.646555,
+        "events": 1073,
+        "queries": 1533908,
+        "nonfinite_sum": 0
+      },
+      "300-900": {
+        "n": 601,
+        "mean_ms": 47.58241591181364,
+        "median_ms": 45.291882,
+        "p95_ms": 82.000704,
+        "worst_ms": 124.646555,
+        "events": 2877,
+        "queries": 3365067,
+        "nonfinite_sum": 0
+      },
+      "1-900": {
+        "n": 900,
+        "mean_ms": 37.46789818222222,
+        "median_ms": 33.4597635,
+        "p95_ms": 76.44750834999994,
+        "worst_ms": 124.646555,
+        "events": 6028,
+        "queries": 4040127,
+        "nonfinite_sum": 0
+      }
+    },
+    "quality": {
+      "candidate_pairs": 9478,
+      "contact_points": 3754,
+      "deepest_endpoint_penetration_m": 0.023602347995183515,
+      "observation_ms": 14.997639,
+      "outside_fixed_step_timing": true,
+      "population": 1024,
+      "scope": "endpoint primitive geometry for the authored loose_piece population",
+      "tag_available": true,
+      "uncertain_pairs": 0,
+      "unsupported_candidates": 0
+    }
+  },
+  "sampled900": {
+    "steps": 900,
+    "windows": {
+      "1-300": {
+        "n": 300,
+        "mean_ms": 17.17326577,
+        "median_ms": 15.079907500000001,
+        "p95_ms": 29.322415650000003,
+        "worst_ms": 54.829769,
+        "events": 3156,
+        "queries": 675397,
+        "nonfinite_sum": 0
+      },
+      "301-600": {
+        "n": 300,
+        "mean_ms": 44.14527711,
+        "median_ms": 42.3787205,
+        "p95_ms": 79.37512105,
+        "worst_ms": 104.303028,
+        "events": 1799,
+        "queries": 1830822,
+        "nonfinite_sum": 0
+      },
+      "601-900": {
+        "n": 300,
+        "mean_ms": 51.81917102333333,
+        "median_ms": 49.15047,
+        "p95_ms": 91.53297005000002,
+        "worst_ms": 126.932113,
+        "events": 1073,
+        "queries": 1533908,
+        "nonfinite_sum": 0
+      },
+      "300-900": {
+        "n": 601,
+        "mean_ms": 47.936502926788684,
+        "median_ms": 45.424493,
+        "p95_ms": 83.559226,
+        "worst_ms": 126.932113,
+        "events": 2877,
+        "queries": 3365067,
+        "nonfinite_sum": 0
+      },
+      "1-900": {
+        "n": 900,
+        "mean_ms": 37.71257130111111,
+        "median_ms": 33.520998500000005,
+        "p95_ms": 78.49454874999999,
+        "worst_ms": 126.932113,
+        "events": 6028,
+        "queries": 4040127,
+        "nonfinite_sum": 0
+      }
+    },
+    "quality": {
+      "candidate_pairs": 9478,
+      "contact_points": 3754,
+      "deepest_endpoint_penetration_m": 0.023602347995183515,
+      "observation_ms": 15.106368,
+      "outside_fixed_step_timing": true,
+      "population": 1024,
+      "scope": "endpoint primitive geometry for the authored loose_piece population",
+      "tag_available": true,
+      "uncertain_pairs": 0,
+      "unsupported_candidates": 0
+    }
+  },
+  "disabled900": {
+    "steps": 900,
+    "windows": {
+      "1-300": {
+        "n": 300,
+        "mean_ms": 17.378027123333332,
+        "median_ms": 15.302999,
+        "p95_ms": 29.4451788,
+        "worst_ms": 56.801688,
+        "events": 3156,
+        "queries": 675397,
+        "nonfinite_sum": 0
+      },
+      "301-600": {
+        "n": 300,
+        "mean_ms": 44.95103098,
+        "median_ms": 43.205348,
+        "p95_ms": 80.8506569,
+        "worst_ms": 110.859442,
+        "events": 1799,
+        "queries": 1830822,
+        "nonfinite_sum": 0
+      },
+      "601-900": {
+        "n": 300,
+        "mean_ms": 53.04666847666667,
+        "median_ms": 50.341731,
+        "p95_ms": 90.00382230000002,
+        "worst_ms": 143.78744,
+        "events": 1073,
+        "queries": 1533908,
+        "nonfinite_sum": 0
+      },
+      "300-900": {
+        "n": 601,
+        "mean_ms": 48.95147116971714,
+        "median_ms": 46.396206,
+        "p95_ms": 84.965291,
+        "worst_ms": 143.78744,
+        "events": 2877,
+        "queries": 3365067,
+        "nonfinite_sum": 0
+      },
+      "1-900": {
+        "n": 900,
+        "mean_ms": 38.458575526666664,
+        "median_ms": 34.4026275,
+        "p95_ms": 80.66963809999999,
+        "worst_ms": 143.78744,
+        "events": 6028,
+        "queries": 4040127,
+        "nonfinite_sum": 0
+      }
+    },
+    "quality": {
+      "candidate_pairs": 9478,
+      "contact_points": 3754,
+      "deepest_endpoint_penetration_m": 0.023602347995183515,
+      "observation_ms": 15.251742,
+      "outside_fixed_step_timing": true,
+      "population": 1024,
+      "scope": "endpoint primitive geometry for the authored loose_piece population",
+      "tag_available": true,
+      "uncertain_pairs": 0,
+      "unsupported_candidates": 0
+    }
+  },
+  "observed900": {
+    "steps": 900,
+    "windows": {
+      "1-300": {
+        "n": 300,
+        "mean_ms": 17.386147113333333,
+        "median_ms": 15.5027105,
+        "p95_ms": 29.349210700000004,
+        "worst_ms": 54.839869,
+        "events": 3156,
+        "queries": 675397,
+        "nonfinite_sum": 0
+      },
+      "301-600": {
+        "n": 300,
+        "mean_ms": 69.84960204333333,
+        "median_ms": 66.4404555,
+        "p95_ms": 134.68325995,
+        "worst_ms": 191.436567,
+        "events": 1799,
+        "queries": 1830822,
+        "nonfinite_sum": 0
+      },
+      "601-900": {
+        "n": 300,
+        "mean_ms": 75.43088028666666,
+        "median_ms": 72.3413435,
+        "p95_ms": 136.64770790000003,
+        "worst_ms": 231.258174,
+        "events": 1073,
+        "queries": 1533908,
+        "nonfinite_sum": 0
+      },
+      "300-900": {
+        "n": 601,
+        "mean_ms": 72.55798710648918,
+        "median_ms": 68.200745,
+        "p95_ms": 134.98002,
+        "worst_ms": 231.258174,
+        "events": 2877,
+        "queries": 3365067,
+        "nonfinite_sum": 0
+      },
+      "1-900": {
+        "n": 900,
+        "mean_ms": 54.22220981444445,
+        "median_ms": 48.0860825,
+        "p95_ms": 128.62890654999998,
+        "worst_ms": 231.258174,
+        "events": 6028,
+        "queries": 4040127,
+        "nonfinite_sum": 0
+      }
+    },
+    "quality": {
+      "candidate_pairs": 9478,
+      "contact_points": 3754,
+      "deepest_endpoint_penetration_m": 0.023602347995183515,
+      "observation_ms": 14.994257,
+      "outside_fixed_step_timing": true,
+      "population": 1024,
+      "scope": "endpoint primitive geometry for the authored loose_piece population",
+      "tag_available": true,
+      "uncertain_pairs": 0,
+      "unsupported_candidates": 0
+    }
+  },
+  "stages900": {
+    "steps": 900,
+    "windows": {
+      "1-300": {
+        "n": 300,
+        "mean_ms": 17.313696166666666,
+        "median_ms": 15.2623435,
+        "p95_ms": 29.483177949999998,
+        "worst_ms": 54.794076,
+        "events": 3156,
+        "queries": 675397,
+        "nonfinite_sum": 0
+      },
+      "301-600": {
+        "n": 300,
+        "mean_ms": 62.80204921333333,
+        "median_ms": 59.736483,
+        "p95_ms": 120.30696255000002,
+        "worst_ms": 167.439806,
+        "events": 1799,
+        "queries": 1830822,
+        "nonfinite_sum": 0
+      },
+      "601-900": {
+        "n": 300,
+        "mean_ms": 66.45187861,
+        "median_ms": 63.649322,
+        "p95_ms": 117.08770040000002,
+        "worst_ms": 196.996819,
+        "events": 1073,
+        "queries": 1533908,
+        "nonfinite_sum": 0
+      },
+      "300-900": {
+        "n": 601,
+        "mean_ms": 64.55592052246256,
+        "median_ms": 61.98097,
+        "p95_ms": 120.218151,
+        "worst_ms": 196.996819,
+        "events": 2877,
+        "queries": 3365067,
+        "nonfinite_sum": 0
+      },
+      "1-900": {
+        "n": 900,
+        "mean_ms": 48.85587466333333,
+        "median_ms": 43.424685,
+        "p95_ms": 111.83894629999998,
+        "worst_ms": 196.996819,
+        "events": 6028,
+        "queries": 4040127,
+        "nonfinite_sum": 0
+      }
+    },
+    "quality": {
+      "candidate_pairs": 9478,
+      "contact_points": 3754,
+      "deepest_endpoint_penetration_m": 0.023602347995183515,
+      "observation_ms": 15.131774,
+      "outside_fixed_step_timing": true,
+      "population": 1024,
+      "scope": "endpoint primitive geometry for the authored loose_piece population",
+      "tag_available": true,
+      "uncertain_pairs": 0,
+      "unsupported_candidates": 0
+    }
+  },
+  "cache-control900": {
+    "steps": 900,
+    "windows": {
+      "1-300": {
+        "n": 300,
+        "mean_ms": 17.68223603,
+        "median_ms": 15.6747365,
+        "p95_ms": 30.759610450000004,
+        "worst_ms": 56.70492,
+        "events": 3156,
+        "queries": 675397,
+        "nonfinite_sum": 0
+      },
+      "301-600": {
+        "n": 300,
+        "mean_ms": 42.40672509666667,
+        "median_ms": 41.179626,
+        "p95_ms": 74.3437493,
+        "worst_ms": 96.899324,
+        "events": 1799,
+        "queries": 1830822,
+        "nonfinite_sum": 0
+      },
+      "601-900": {
+        "n": 300,
+        "mean_ms": 49.12638990666667,
+        "median_ms": 47.464819500000004,
+        "p95_ms": 81.93801750000002,
+        "worst_ms": 114.430395,
+        "events": 1073,
+        "queries": 1533908,
+        "nonfinite_sum": 0
+      },
+      "300-900": {
+        "n": 601,
+        "mean_ms": 45.72389080366057,
+        "median_ms": 43.609354,
+        "p95_ms": 77.657766,
+        "worst_ms": 114.430395,
+        "events": 2877,
+        "queries": 3365067,
+        "nonfinite_sum": 0
+      },
+      "1-900": {
+        "n": 900,
+        "mean_ms": 36.40511701111111,
+        "median_ms": 33.3199085,
+        "p95_ms": 72.91541894999993,
+        "worst_ms": 114.430395,
+        "events": 6028,
+        "queries": 4040127,
+        "nonfinite_sum": 0
+      }
+    },
+    "quality": {
+      "candidate_pairs": 9478,
+      "contact_points": 3754,
+      "deepest_endpoint_penetration_m": 0.023602347995183515,
+      "observation_ms": 15.411414,
+      "outside_fixed_step_timing": true,
+      "population": 1024,
+      "scope": "endpoint primitive geometry for the authored loose_piece population",
+      "tag_available": true,
+      "uncertain_pairs": 0,
+      "unsupported_candidates": 0
+    }
+  },
+  "cache-control900-B": {
+    "steps": 900,
+    "windows": {
+      "1-300": {
+        "n": 300,
+        "mean_ms": 17.18733772,
+        "median_ms": 15.5006585,
+        "p95_ms": 28.590468050000002,
+        "worst_ms": 54.68525,
+        "events": 3156,
+        "queries": 675397,
+        "nonfinite_sum": 0
+      },
+      "301-600": {
+        "n": 300,
+        "mean_ms": 41.98377478333333,
+        "median_ms": 40.683329,
+        "p95_ms": 73.31662870000001,
+        "worst_ms": 96.251294,
+        "events": 1799,
+        "queries": 1830822,
+        "nonfinite_sum": 0
+      },
+      "601-900": {
+        "n": 300,
+        "mean_ms": 49.017249926666665,
+        "median_ms": 46.858642,
+        "p95_ms": 82.97578285000003,
+        "worst_ms": 118.476717,
+        "events": 1073,
+        "queries": 1533908,
+        "nonfinite_sum": 0
+      },
+      "300-900": {
+        "n": 601,
+        "mean_ms": 45.458078091514146,
+        "median_ms": 43.49333,
+        "p95_ms": 77.680876,
+        "worst_ms": 118.476717,
+        "events": 2877,
+        "queries": 3365067,
+        "nonfinite_sum": 0
+      },
+      "1-900": {
+        "n": 900,
+        "mean_ms": 36.062787476666664,
+        "median_ms": 32.727748000000005,
+        "p95_ms": 72.09882784999999,
+        "worst_ms": 118.476717,
+        "events": 6028,
+        "queries": 4040127,
+        "nonfinite_sum": 0
+      }
+    },
+    "quality": {
+      "candidate_pairs": 9478,
+      "contact_points": 3754,
+      "deepest_endpoint_penetration_m": 0.023602347995183515,
+      "observation_ms": 15.477625,
+      "outside_fixed_step_timing": true,
+      "population": 1024,
+      "scope": "endpoint primitive geometry for the authored loose_piece population",
+      "tag_available": true,
+      "uncertain_pairs": 0,
+      "unsupported_candidates": 0
+    }
+  },
+  "sleep900": {
+    "steps": 900,
+    "windows": {
+      "1-300": {
+        "n": 300,
+        "mean_ms": 17.33130420333333,
+        "median_ms": 15.408251,
+        "p95_ms": 29.329642300000007,
+        "worst_ms": 54.191185,
+        "events": 3156,
+        "queries": 675397,
+        "nonfinite_sum": 0
+      },
+      "301-600": {
+        "n": 300,
+        "mean_ms": 45.08963771,
+        "median_ms": 43.6386655,
+        "p95_ms": 80.34631260000002,
+        "worst_ms": 113.392509,
+        "events": 1799,
+        "queries": 1830822,
+        "nonfinite_sum": 0
+      },
+      "601-900": {
+        "n": 300,
+        "mean_ms": 52.28141166,
+        "median_ms": 49.641281,
+        "p95_ms": 89.95805895000004,
+        "worst_ms": 128.00524,
+        "events": 1073,
+        "queries": 1533908,
+        "nonfinite_sum": 0
+      },
+      "300-900": {
+        "n": 601,
+        "mean_ms": 48.65588508818636,
+        "median_ms": 46.181432,
+        "p95_ms": 85.41224,
+        "worst_ms": 128.00524,
+        "events": 2877,
+        "queries": 3365067,
+        "nonfinite_sum": 0
+      },
+      "1-900": {
+        "n": 900,
+        "mean_ms": 38.234117857777775,
+        "median_ms": 34.011314999999996,
+        "p95_ms": 79.02132129999995,
+        "worst_ms": 128.00524,
+        "events": 6028,
+        "queries": 4040127,
+        "nonfinite_sum": 0
+      }
+    },
+    "quality": {
+      "candidate_pairs": 9478,
+      "contact_points": 3754,
+      "deepest_endpoint_penetration_m": 0.023602347995183515,
+      "observation_ms": 15.095424,
+      "outside_fixed_step_timing": true,
+      "population": 1024,
+      "scope": "endpoint primitive geometry for the authored loose_piece population",
+      "tag_available": true,
+      "uncertain_pairs": 0,
+      "unsupported_candidates": 0
+    }
+  },
+  "long1800": {
+    "steps": 1800,
+    "windows": {
+      "1-300": {
+        "n": 300,
+        "mean_ms": 17.404296893333335,
+        "median_ms": 15.3083645,
+        "p95_ms": 29.3657805,
+        "worst_ms": 54.066272,
+        "events": 3156,
+        "queries": 675397,
+        "nonfinite_sum": 0
+      },
+      "301-600": {
+        "n": 300,
+        "mean_ms": 44.66011222666667,
+        "median_ms": 42.4504915,
+        "p95_ms": 79.7049591,
+        "worst_ms": 104.236588,
+        "events": 1799,
+        "queries": 1830822,
+        "nonfinite_sum": 0
+      },
+      "601-900": {
+        "n": 300,
+        "mean_ms": 51.59637772666667,
+        "median_ms": 49.056675,
+        "p95_ms": 88.4709885,
+        "worst_ms": 125.123348,
+        "events": 1073,
+        "queries": 1533908,
+        "nonfinite_sum": 0
+      },
+      "300-900": {
+        "n": 601,
+        "mean_ms": 48.08294605324459,
+        "median_ms": 45.589797,
+        "p95_ms": 83.193662,
+        "worst_ms": 125.123348,
+        "events": 2877,
+        "queries": 3365067,
+        "nonfinite_sum": 0
+      },
+      "901-1800": {
+        "n": 900,
+        "mean_ms": 63.62368296555555,
+        "median_ms": 60.5474175,
+        "p95_ms": 115.9293817,
+        "worst_ms": 297.794964,
+        "events": 3325,
+        "queries": 5794691,
+        "nonfinite_sum": 0
+      },
+      "1-1800": {
+        "n": 1800,
+        "mean_ms": 50.75530595722222,
+        "median_ms": 47.8628555,
+        "p95_ms": 99.7487026,
+        "worst_ms": 297.794964,
+        "events": 9353,
+        "queries": 9834818,
+        "nonfinite_sum": 0
+      }
+    },
+    "quality": {
+      "candidate_pairs": 9490,
+      "contact_points": 3927,
+      "deepest_endpoint_penetration_m": 0.02186600378596105,
+      "observation_ms": 15.337045,
+      "outside_fixed_step_timing": true,
+      "population": 1024,
+      "scope": "endpoint primitive geometry for the authored loose_piece population",
+      "tag_available": true,
+      "uncertain_pairs": 0,
+      "unsupported_candidates": 0
+    }
+  },
+  "observed1800-late": {
+    "steps": 1800,
+    "windows": {
+      "1-300": {
+        "n": 300,
+        "mean_ms": 17.45020767666667,
+        "median_ms": 15.354374499999999,
+        "p95_ms": 30.118958400000004,
+        "worst_ms": 55.294803,
+        "events": 3156,
+        "queries": 675397,
+        "nonfinite_sum": 0
+      },
+      "301-600": {
+        "n": 300,
+        "mean_ms": 44.953144916666666,
+        "median_ms": 43.733079000000004,
+        "p95_ms": 80.65786905000002,
+        "worst_ms": 107.09796,
+        "events": 1799,
+        "queries": 1830822,
+        "nonfinite_sum": 0
+      },
+      "601-900": {
+        "n": 300,
+        "mean_ms": 53.07218105333333,
+        "median_ms": 50.7974445,
+        "p95_ms": 90.0646112,
+        "worst_ms": 128.153616,
+        "events": 1073,
+        "queries": 1533908,
+        "nonfinite_sum": 0
+      },
+      "300-900": {
+        "n": 601,
+        "mean_ms": 48.96590212978369,
+        "median_ms": 46.580076,
+        "p95_ms": 84.751523,
+        "worst_ms": 128.153616,
+        "events": 2877,
+        "queries": 3365067,
+        "nonfinite_sum": 0
+      },
+      "901-1800": {
+        "n": 900,
+        "mean_ms": 95.95017621111111,
+        "median_ms": 90.128315,
+        "p95_ms": 184.38358879999996,
+        "worst_ms": 525.939604,
+        "events": 3325,
+        "queries": 5794691,
+        "nonfinite_sum": 0
+      },
+      "1-1800": {
+        "n": 1800,
+        "mean_ms": 67.22101038,
+        "median_ms": 57.7515005,
+        "p95_ms": 155.75624484999997,
+        "worst_ms": 525.939604,
+        "events": 9353,
+        "queries": 9834818,
+        "nonfinite_sum": 0
+      }
+    },
+    "quality": {
+      "candidate_pairs": 9490,
+      "contact_points": 3927,
+      "deepest_endpoint_penetration_m": 0.02186600378596105,
+      "observation_ms": 15.49724,
+      "outside_fixed_step_timing": true,
+      "population": 1024,
+      "scope": "endpoint primitive geometry for the authored loose_piece population",
+      "tag_available": true,
+      "uncertain_pairs": 0,
+      "unsupported_candidates": 0
+    }
+  },
+  "live35-sampled": {
+    "steps": 895,
+    "windows": {
+      "1-300": {
+        "n": 300,
+        "mean_ms": 17.495272553333333,
+        "median_ms": 15.3984245,
+        "p95_ms": 28.969761250000005,
+        "worst_ms": 54.023542,
+        "events": 3156,
+        "queries": 675397,
+        "nonfinite_sum": 0
+      },
+      "301-600": {
+        "n": 300,
+        "mean_ms": 44.50046604333333,
+        "median_ms": 42.7426825,
+        "p95_ms": 79.26302735,
+        "worst_ms": 112.26065,
+        "events": 1799,
+        "queries": 1830822,
+        "nonfinite_sum": 0
+      },
+      "601-900": {
+        "n": 295,
+        "mean_ms": 52.634466186440676,
+        "median_ms": 50.439382,
+        "p95_ms": 90.93436870000001,
+        "worst_ms": 126.400696,
+        "events": 1064,
+        "queries": 1516801,
+        "nonfinite_sum": 0
+      },
+      "300-900": {
+        "n": 596,
+        "mean_ms": 48.48933564261745,
+        "median_ms": 45.992065,
+        "p95_ms": 83.30455925000001,
+        "worst_ms": 126.400696,
+        "events": 2868,
+        "queries": 3347960,
+        "nonfinite_sum": 0
+      },
+      "1-895": {
+        "n": 895,
+        "mean_ms": 38.129485032402236,
+        "median_ms": 34.146626,
+        "p95_ms": 78.2346803,
+        "worst_ms": 126.400696,
+        "events": 6019,
+        "queries": 4023020,
+        "nonfinite_sum": 0
+      }
+    },
+    "quality": {
+      "candidate_pairs": 9483,
+      "contact_points": 3753,
+      "deepest_endpoint_penetration_m": 0.02478636193982192,
+      "observation_ms": 15.077064,
+      "outside_fixed_step_timing": true,
+      "population": 1024,
+      "scope": "endpoint primitive geometry for the authored loose_piece population",
+      "tag_available": true,
+      "uncertain_pairs": 0,
+      "unsupported_candidates": 0
+    },
+    "live_cadence": {
+      "late_window": "frames ending after 10s, through automatic35s stop",
+      "late_fps": 2.3539337538086444,
+      "late_mean_frame_ms": 424.82079131666666,
+      "late_mean_fixed_steps_per_frame": 8,
+      "completed_steps": 895,
+      "frames": 404,
+      "real_cadence": true,
+      "synthetic_fps_claim": false
+    }
+  }
+}

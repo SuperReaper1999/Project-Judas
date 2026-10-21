@@ -1,0 +1,20 @@
+{
+  "parsed": [
+    "build_cache_control.py",
+    "build_observers.py",
+    "build_stages.py",
+    "ccd/analyze_ccd.py",
+    "events/prepare.py",
+    "finalize.py",
+    "relink.py",
+    "response/instrument.py",
+    "response/summarize.py",
+    "sampler/bucket_cpu_symbols.py",
+    "sampler/compare_all900.py",
+    "sampler/compare_steps.py",
+    "sampler/symbolize_cpu_samples.py",
+    "write_report.py"
+  ],
+  "count": 14,
+  "scope": "Python AST parsing only; not an engine regression suite"
+}

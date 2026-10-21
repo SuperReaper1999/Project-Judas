@@ -1,0 +1,295 @@
+PRE-ALPHA: ORDINARY SUPPORT CONTINUITY ACROSS IMPACTS
+21 October 2026 — Linux qualification, Experimental only; human review pending.
+
+Input: f5624f0bb4f92ece7211199ca8fe51abc08a2b19.
+Main remains 3ecf26cdf248e271c96d17928bd33634e37f30ce.
+No M100, release tag, platform certification or main promotion.
+
+OUTCOME
+
+The remaining persistent-contact ownership defect is corrected. The original
+1,024-piece scene improves substantially without changing counts, materials,
+gravity, CCD, solver iteration counts, cadence or catch-up policy.
+
+This is NOT all-phase smoothness: the final visible capture averages 28.9 FPS
+overall and 36.5 FPS in its late window, but its busy 10–20 second settling
+window still averages 9.9 FPS. That remaining limitation is not hidden by the
+late result. General dense/coupled workloads are not certified at 60 Hz.
+
+ROOT CAUSE AND CORRECTION
+
+There are three different quantities:
+
+  1. Ordinary support impulses estimated by the current fixed-step solve.
+  2. Additional impulses needed for a later, genuine impact in that step.
+  3. Completed actual contact reactions published to observers/controllers.
+
+The earlier growing-impact correction separated (2) from re-projecting an
+entire stack's unrelated resting residual. But WorldImpactEvents.cpp still
+erased (1) whenever that event changed an endpoint velocity. Repeated events
+therefore cold-started the next ordinary ten-sweep solve. The less accurate
+finite-pass support solution produced additional motion and impacts, which
+erased more guesses. The trace measured thousands of erased support entries
+per step. This was feedback across fixed-step boundaries, not merely a slow
+triangle primitive or insufficient GPU rendering speed.
+
+The correction preserves the ordinary support guesses inside the EXISTING
+continuationEligible branch. It does not apply them during the event, copy
+event impulses into them, or treat a cached contact as fresh geometry.
+
+At the next ordinary step, native geometry, body generations, primitive IDs,
+normal agreement and nearest unused anchors still determine whether a guess
+matches. ContactSolver prepares fresh frames/effective masses, reprojects the
+friction guess and applies it once as an iterative initial estimate. The
+normal/friction iterations can subtract excess accumulated impulse. Changed
+velocities alone do not make that initial estimate invalid.
+
+New event-only groups retain zero-load identity. Actual completed event loads
+continue to replace their own observation groups separately. Hard joints,
+external velocity coupling, elastic flights and unsupported geometry retain
+their previous invalidation/fallback policies. Existing sleep quietness gates
+and generation/ownership checks remain; no forced sleep is introduced.
+
+Only src/physics/WorldImpactEvents.cpp changes runtime behavior. It becomes
+smaller. PhysicsWorld remains the existing coordinator; there is no new graph,
+public API, component, save format or alternative physics world.
+
+CAUSAL PROOF, NOT JUST A FASTER PILE
+
+The new active SupportGuessOwnershipTests.cpp exercises an actual warmed box,
+floor and separated projectile impact. Both implementations produce the same
+15.47565 m/s immediate target response. The old code discards all four ordinary
+support guesses; the corrected code preserves all four, bit for bit from the
+ordinary solver producer. Actual projectile impact reaction is independently
+observable, while its new warm identity has zero impulse.
+
+The exact same corrected fixture fails only the intended preservation assertion
+against the original core (55 checks, one failure), and passes against the final
+core (59 checks, zero failures). Counts differ because positive producer rows
+exist only in the corrected cache. This is not a new timing threshold.
+
+Private paired physical checks additionally cover mass/inertia changes,
+separation, tiny and large actual impacts, elastic return, rotated gravity,
+finite support departure, disabling/moving/masking/suppressing supports,
+sensor changes, slot reuse and reset. The lifecycle pair retains all 98 recorded
+physical outcomes exactly, including real gravity flight; only the intended
+immediate warm estimate differs. Invalid history is discarded by subsequent
+native matching. Completed observation revisions are not falsely described as
+the ordinary cache's invalidation mechanism.
+
+NUMERICAL CHANGE
+
+Dense pile trajectories DO change: the same finite-pass solver now starts from
+better retained estimates. This is not bit-identical physics versus the old
+pile. No force, impulse, velocity, contact-depth or iteration threshold was
+retuned. The existing inelastic energy guard and prescribed-boundary work
+accounting remain. The 1,800-step final run matches every physical/work row of
+the private corrected control exactly, and an independent final 900-step run
+matches its prefix. These are corrected-repeat comparisons, not old/new parity.
+
+MATCHED PERFORMANCE
+
+Host: Ryzen 5 5600, 6 cores/12 threads, 8 GB RAM, GTX 970; GCC Release -O3
+-DNDEBUG. Native desktop OpenGL reports NVIDIA 580.178.04. Workloads run
+serially. No Windows VM or Android build runs alongside them.
+
+Same room1024.judas, SHA256:
+  a2caf62a295243d301149202c8a0a5eedafff256d68de0e3cda988846b2e05bf
+1,024 loose pieces; 1,285 total bodies; 96 joints; 60 Hz; ten velocity sweeps.
+Profiling disabled for these timings. Endpoint geometry is measured outside
+the fixed-step span. Synthetic runs establish step costs, not displayed FPS.
+
+Window                       Mean ms    Median ms    p95 ms    Worst ms
+Original first 900              37.78       33.74      77.58      124.89
+Original independent repeat     37.47       33.46      76.45      124.65
+Final first 900                 17.78       16.21      28.33       61.33
+Final 1800-run first 900         17.72       16.23      28.20       60.78
+Original steps 901–1800          63.62       60.55     115.93      297.80
+Final steps 901–1800             15.50       15.07      17.77       27.26
+
+For steps 901–1800, actual events fall 3,325→64 and CCD queries
+5,794,691→17,574. These requests disappear because support behavior becomes
+steadier; no-impact results are not blindly reused after motion changes.
+
+Visible 35-second native runs retain the original eight-step catch-up policy,
+same camera/scene/resolution, swap interval 0, tour off and real elapsed time:
+
+Observation                                  Original        Final
+Whole capture output FPS                        11.15         28.90
+Busy 10–20 second output FPS                      2.36          9.92
+Late 20 seconds through stop output FPS           2.39         36.50
+Late mean frame time ms                        418.19         27.40
+Late p95 frame time ms                          510.33         35.70
+Completed fixed steps                             903          1981
+
+The late window includes the final stopping frame, so its endpoint can extend
+slightly beyond 35 seconds. Live runs advance to different simulated times;
+their cadence is a user-visible result, not matched-state speedup certification.
+The synthetic fixed-step runs provide the controlled workload comparison.
+
+Process high-water RSS in the original/final 1,800-step applications is
+176,052→233,192 KiB. Both report zero swaps and major page faults. This is an
+observed whole-application increase, not a memory-saving claim or a measured
+allocation attribution: trajectories, live scratch populations and rendering
+driver allocations differ. No new persistent graph/container is added by the
+production correction. The raw resource records are preserved.
+
+WHY THE BUSY PHASE STILL HITCHES
+
+In the final live capture, fixed steps during wall seconds 10–20 average
+17.26 ms, already over the 16.67 ms physics interval before rendering/runtime
+overhead. The unchanged accumulator consequently runs multiple steps per
+displayed frame. Their average is about 5.6 steps/frame in that window; a
+212.8 ms frame is not a single 212.8 ms collision solve.
+
+Actual recorded mean coarse times there: rigid physics 16.32 ms, contact
+generation 4.82 ms, combined solver/impact phase 5.53 ms, broadphase plus
+end-of-step bookkeeping 3.12 ms. These are existing inclusive/coarse timer
+boundaries, not disjoint CPU sampling percentages. The remaining work needs
+roughly a few milliseconds/step reduction to sustain both 60 Hz simulation and
+30 FPS rendering throughout. It is not established to be unavoidable hardware
+cost, nor is every remaining collision request proved redundant.
+
+A bounded exact row-dependency prototype was tested on top of the correction.
+Its positive/negative controls pass and all 900 physical/work rows match, but
+native mean time is 17.78→17.93 ms: no demonstrated net benefit. Its complexity
+is NOT adopted. An initial llvmpipe run is retained as an invalid timing
+comparison; the subsequent native NVIDIA run provides the quoted result.
+
+The separate SAT-feature/face-continuation prototype remains source-only,
+unqualified and unused. A larger persistent graph is not introduced merely to
+satisfy the initial architectural proposal when the measured primary defect
+is a wrong history-ownership rule. Earlier unsuccessful warm-retention research
+is also preserved: it predated the growing-impact correction and did not solve
+re-projection of the entire resting island. That earlier failure is not
+retroactively relabelled a success.
+
+PHYSICAL OBSERVATIONS
+
+An independent observer checks all 901 states from step 0 through 900, outside
+timed spans, using native pair geometry and a separate analytic floor oracle.
+Its physical/work digests match its corresponding unobserved run exactly.
+
+                                      Original             Corrected
+Loose-piece mass, every state          2,048 kg             2,048 kg
+Bodies finite/inside floor             all 1,024            all 1,024
+Uncertain/unsupported native queries   0                    0
+Largest observed actual overlap        74.339 mm            40.618 mm
+Final actual overlap                   23.602 mm             5.007 mm
+Peak selected mechanical energy        32,346.318 J         32,346.318 J
+Final selected mechanical energy       22,221.849 J         24,051.510 J
+
+The selected body energy never exceeds its initial value, but it is NOT
+monotonic: maximum positive step changes are 8.28 J and 9.78 J respectively.
+Position correction, finite integration and external boundaries make a whole-
+world conservation claim inappropriate. Peak rotational energy also differs.
+The transient four-centimetre overlap is a remaining limitation, not a new
+all-time 5 mm accuracy claim. The final 1,800-step endpoint depth is 5.004 mm.
+
+QUALIFICATION
+
+- Final Release runtime/module/tool builds succeed without compiler warnings.
+  This is an incremental module rebuild, not a claimed full clean build.
+  All 25 selected test drivers and four application drivers are freshly compiled
+  against current headers, avoiding stale test-object provenance.
+- 25 focused suites pass: growing/tracked response, impacts/timing/robustness,
+  support, original curved-mesh continuity, rigid/contact geometry, lifecycle,
+  caches, native mesh growth, event scheduling, joints, kinematics,
+  CharacterMotor, ragdolls, physical continuation, origin/assemblies, wheels,
+  powertrains, structural destruction, bending and gravity selection.
+- These include the unchanged 4,412 impact robustness and 406 collision
+  continuity assertions. No full production-suite marathon was run.
+- New actual ownership regression passes; original-core negative fails the
+  preservation requirement. The registered gate's final receipt is retained
+  separately from an earlier correct stale-build-identity refusal.
+- Public cold-support slots: calm and impacted five-body stacks, two independent
+  fresh readers, exact capture boundary, missing/truncated participant negatives.
+  All 20 original/corrected process invocations pass. Small ten-step cold
+  trajectory differences are identical between implementations; current saves
+  do not promise universal bitwise persistence of ordinary warm caches. No new
+  cache serialization was added to hide those differences.
+- Unchanged M70 and M77 cold writer/readers pass using fresh test drivers.
+  M77's ACTUAL restored endpoint exactly equals uninterrupted continuation and
+  is physically standing; a cached controller flag is not the oracle.
+- Hearthworld gameplay writer/readers pass 66+41 checks: forestry, mining,
+  construction/support loss, gravity manipulation, excavation, accounting and
+  fresh-process persistence. Streamed-range writer/two readers pass.
+- Native editor Play/Stop leaves its owned authored scene identical. Relocated
+  exported runtime runs from /tmp with a read-only installation and exits 0.
+  Export initially rejects a mismatched runtime/exporter input identity; rebuilding
+  the matching pair resolves it without changing the guard or game content.
+- JudasJS static API/type/drift checks pass: 40 exports, 473 public symbols,
+  TypeScript 5.9.3, 51 examples. Live enumeration was not repeated; no public API
+  changes were made. Build/registration negative-control checks pass.
+- Automated audio uses the dummy driver; audio listening and human acceptance
+  are not claimed. Windows/Android are not rerun under the current RAM constraint.
+
+PRESERVED FAILURES AND PROVENANCE
+
+The original profiling investigation and all prior evidence remain unchanged.
+The new package preserves source-only control/prototype inputs, logs and raw
+tables (lossless deterministic gzip), with original and stored-byte SHA256s.
+Core binaries/objects remain outside tracked evidence.
+
+Explicitly classified qualification failures:
+  * A stale BendingTests object crashes with BOTH cores; freshly compiled
+    BendingTests passes both. No runtime regression was established.
+  * The first new private save fixture used a human label instead of a 64-char
+    content hash. Both engines reject it; corrected fixture uses canonical
+    scene fingerprint and version-4 compatibility identity.
+  * The first NEW ownership fixture incorrectly demanded immediate cache
+    erasure on destruction. Both engines instead invalidate the handle first
+    and discard disposable rows at the next step. Exact original source/results
+    are retained; the corrected oracle checks the actual ownership contract and
+    the same 60 physical freefall steps. No accepted old test was weakened.
+  * The temporal original-core observer child exits 0 and its immutable binary,
+    core and fixture guards pass. The outer runner exits 1 because the production
+    source file was edited while that frozen binary ran. The receipt is not
+    rewritten into a clean source-monitor pass.
+  * Runtime/exporter and registered-test stale-identity refusals are preserved;
+    matching builds are used for their corrected follow-ups.
+  * The sandbox row-prototype run uses llvmpipe; its timings are excluded.
+
+REPRODUCTION
+
+Use the repository's normal dependencies and Release configuration:
+  cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DJUDAS_ENABLE_VALIDATION=ON
+  cmake --build build --target judas judas_export judas_editor \
+    judas_support_guess_ownership_tests judas_physics_stress_live_benchmark -j2
+  python3 scripts/prealpha_validate.py --build-dir build \
+    --test support-guess-ownership --output /tmp/judas-support-gate-UNIQUE
+
+Unchanged synthetic long run (fresh output; native graphics, profiling off):
+  SDL_AUDIODRIVER=dummy build/judas_physics_stress_live_benchmark \
+    projects/physics_stress_lab/Scenes/room1024.judas /tmp/judas-long-UNIQUE \
+    240 1800 0 0 1 0.016666667 0 0 1
+Real visible cadence (fresh output):
+  SDL_AUDIODRIVER=dummy build/judas_physics_stress_live_benchmark \
+    projects/physics_stress_lab/Scenes/room1024.judas /tmp/judas-live-UNIQUE \
+    35 10000000 0 0 0 0 0 0 1
+
+Run one workload at a time. Check its Graphics line: a sandbox can silently
+select llvmpipe even with the same environment variables. Rebuild matching tools
+after changing source/build provenance. Capture binary/core/fixture hashes.
+The package's original qualification scripts preserve their as-run private
+path wiring; the commands above use normal repository targets directly.
+
+Baseline core SHA256:
+  05f626d3fb5400bfd1db23ec37a3cd3e6490f8452145365662466eebccd705ec
+Final source, qualified-binary and exact changed-file inventories accompany
+docs/evidence/prealpha-support-continuity-20261021/.
+
+HUMAN CHECKLIST
+
+1. Open projects/physics_stress_lab/physics_stress_lab.judasproj, or its export.
+2. Press 3 and observe BOTH the busy settling period and the later settled pile.
+   Expect a large improvement; the roughly 10 FPS settling window remains.
+3. Press P to drop more real bodies; J/K and M exercise impulse/motor wake-up.
+4. Try 1, 2 and rotated 4. Geometry, gravity and physical response remain real.
+5. F6/F7 save/load, Escape pause/resume, R reload; editor Play/Stop.
+6. Run the relocated package. Confirm response, input and presentation yourself.
+
+FLU-001, legacy missing-save-history restrictions, independent fluid research,
+protected history and existing games remain untouched. Further dense-phase
+work should target measured ordinary contact/solver/bookkeeping costs and valid
+dependency proofs; the late ownership feedback fix does not close all latency.

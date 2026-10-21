@@ -1,0 +1,9 @@
+{
+  "variant": "candidate",
+  "source_sha256": "e8394477fdb83498d0b4a59800070567b39dcf309f0836c447f2ff43fff4eb9b",
+  "object_sha256": "a35ba6e617c3ff6b37a25fb398ab62317a0c37416ade6164a671dbedfc76b38f",
+  "archive": "/home/conner/Documents/GitHub/Project-Judas/build/libjudas_engine.a",
+  "archive_sha256": "6b57d6c554c728a92afeb227581a863c41be9246cd2790aefe41afb3e047b4b7",
+  "binary_sha256": "ce5031eea5a872d9d3997e6d574d623ec782d525c2cb9629b4c52ecba3b564be",
+  "exit_code": 0
+}

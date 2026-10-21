@@ -1,0 +1,116 @@
+Response observer overlays — 21 October 2026
+==========================================
+
+Files to compile explicitly:
+  ContactSolver.cpp
+  ImpactSolver.cpp
+  WorldIncrementalImpact.cpp
+with ResponseAudit.h on the same include path, original src and src/physics
+headers, and the parent's consistent copied WorldInternal/WorldImpactQueries.
+Do not compile *.original.cpp; those preserve exact input source bytes.
+No production source/header was edited. No builds or simulation runs were done
+by this observer author. instrument.py recreates the overlays from current input.
+source-sha256.txt identifies the exact source used.
+
+Public observer API:
+  response_audit::SetEnabled(bool)
+  response_audit::Reset()                 // clears Stats, preserves enable/context
+  response_audit::Header(std::ostream&)
+  response_audit::WriteStep(std::ostream&, uint64_t step)
+Call Reset immediately before each physics step; WriteStep immediately after.
+Counters are inline thread_local: read/write on the authoritative physics thread.
+Header and data order are generated from the same field list. Data are numeric CSV.
+
+All original iteration counts, append order, seed/forced expansion order, contact
+expressions, budget arithmetic and acceptance conditions remain intact. The exact
+fixed-point counters DO NOT terminate or skip a sweep. The instrumentation adds
+reads, integer counts, diagnostic-only warm sums, and coarse clocks. Parent must
+verify physical digests against uninstrumented source before accepting evidence.
+
+Counter meanings / limitations
+------------------------------
+- domain_attempts includes rejected or unsupported incremental trials;
+  accepted/rejected are counted on exit. Rejection includes exception unwinding.
+  Body, geometry and row counters include all attempted private work, not only
+  trials eventually published.
+- domain_reset_flag_bytes is 3 * global body-slot count per trial, corresponding
+  to the three assign(size,0) byte arrays. It does not claim cache-miss traffic.
+- initialized_dynamic means non-static (a prescribed non-static participant can
+  cause immediate rejection before being counted); expanded_dynamic is the
+  non-static branch that actually performs its spatial query.
+- pair_unique counts successful std::set inserts, including pairs with no
+  contact. visited_node_alloc_lower_count is a LOWER BOUND of one retained set
+  node allocation per successful insert. Duplicate emplace may also allocate
+  transient nodes; the observer does not count those implementation-dependent
+  allocations. Payload lower bytes include only the pair value, not links or
+  allocator overhead. This is intentionally not an allocator-total estimate.
+- manifold_queries counts PairAt calls including its exact bound early rejection.
+  manifold_nonempty counts contact manifolds that survived both body initializes.
+  manifold_points counts reported points even when later initialization rejects.
+- continuing_rows/new_rows use the actual production classification. They do not
+  infer gameplay support or physical load from a contact's existence.
+- support_capture_visits counts actual short-circuit predicate visits, not the
+  sizes of both support containers.
+- callback_already_expanded is an activated body whose geometry was already
+  expanded in this event. callback_next_duplicates counts duplicates removed
+  from the pending batch; these are distinct from repeated callbacks.
+- forced_queue_scans counts seed and repeated callback scans together.
+  forced_queue_already_expanded identifies visits that cannot add geometry.
+- *_vector_growth_count observes capacity changes around each push/reset;
+  *_vector_growth_bytes sums NEW capacity payload at each growth. It does not
+  subtract prior capacity, count allocator metadata or claim retained bytes.
+  Zero sizes do not imply zero allocations elsewhere.
+- frame_node_requests counts RegisterFrame calls, frame_index_insertions unique
+  actual frame registrations. frame_upstream_* counts actual PMR pool upstream
+  allocation requests; pool-internal allocations reuse backing storage and are
+  not separate heap calls. frame_vector_growth_* is separately counted.
+- range_seen_alloc_count counts one ordinary vector allocation when frame size
+  is nonzero; bytes are initialized byte-vector payload, not allocator overhead.
+- ordinary/legacy/growing row counters use the enclosing ImpactSolver context.
+  Every row visit is counted including normalMass<=0 rows. Accumulator changes
+  use the exact existing normal/tangent comparison. Endpoint changes use exact
+  represented linear/angular vector inequality before/after the entire row.
+  *_zero_velocity_changes counts changed accumulators with no represented
+  endpoint velocity change. Endpoint counts are endpoints, not unique bodies.
+- solver_sweep_fixed_points is a COMPLETE outer growing sweep with no accumulator
+  changes and no appended rows. solver_sweep_after_fixed_point counts later
+  immediately consecutive fixed-point sweeps; solver_fixed_point_row_visits is
+  their exact row work. The first fixed-point pass establishes the certificate
+  and is not counted as redundant. No termination is changed.
+- warm_* values are PROVIDED pending warm inputs before tangent reprojection
+  and inactive-mass filtering. They do not claim an applied impulse. Raw sums
+  are diagnostic double sums only, excluded from all physics calculations.
+  Context-specific warm_zero + warm_any_nonzero equals prepare-row count.
+  Ordinary context is the authoritative resting solve, not legacy TOI fallback.
+- ns_* clocks are COARSE and INCLUSIVE, hence not additive. ns_domain contains
+  seed + solver + callback growth; ns_solver_growing contains append + range +
+  nested callbacks + budget. ns_solver_ranges includes row loop/activation list,
+  while ns_domain_growth covers the callback's geometry and queue work.
+  ns_solver_append includes initial per-body budget Measure plus PrepareAppended.
+  ns_solver_budget starts at final closure verification and includes final
+  Measure, boundary work and acceptance. No per-row or per-body clock is added.
+  These timings measure instrumented code; they are not uninstrumented speedups.
+
+Falsifiable source hypotheses
+----------------------------
+1. Many activation callbacks may be pure already-expanded bookkeeping.
+   Measure callback_already_expanded / callback_activated_inputs and forced
+   scans / deferred bodies before deciding that domain growth is global waste.
+2. The same ten growing sweeps may continue after an exact represented fixed
+   point. Measure solver_sweep_after_fixed_point and row visits. Any experiment
+   to stop must compare exact final velocities, accumulators, closure and energy
+   across original cases, random controls and world trajectories. Do not infer
+   a fixed point from an empty activated list: accumulators may still change.
+3. New event-domain expansion calls direct QuerySlots rather than the existing
+   conservative candidate cache. CCD observer must measure repeated identical
+   geometry separately; pair_duplicates only proves repeated SET LOOKUPS inside
+   one domain, not duplicate ComputeContacts calls.
+4. If ordinary warm coverage collapses after events while growing rows are
+   overwhelmingly continuing, force-history ownership may remain a significant
+   source of repeated propagation. Correlate actual per-event invalidations with
+   the next step's ordinary warm guesses. Do not restore invalid impulses merely
+   to improve performance; a later change needs a physical continuation model.
+5. Forced deferred gravity expands neighbors before the first solve. It is
+   necessary for newly awakened force integration, so a large seed is not by
+   itself proof of unnecessary work. Separate deferred_gravity_bodies and
+   ns_domain_seed from impulse-driven callback growth before attributing cause.

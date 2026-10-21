@@ -99,7 +99,12 @@ historical data it never stored.
 
 The original four curved-mesh continuation regressions are corrected and asserting
 in the focused gate. Bounded CCD sampling, sidedness and deep initial overlap
-remain limitations. Dense contacts retain severe real-time limits. See
+remain limitations. Dense-contact cost is workload dependent. The latest
+[ordinary support-history correction](PREALPHA_SUPPORT_CONTINUITY.txt) removes
+repeated cold starts after eligible primitive impacts; it preserves separate
+ownership of ordinary iterative guesses and actual completed event reactions.
+It improves the measured 1,024-piece room without changing CCD or solver quality,
+but does not establish universal 60 Hz performance. See
 [current measured limits](PREALPHA.md#remaining-readiness-concerns) and the
 [dense-support follow-up](PREALPHA_DENSE_SUPPORT_FOLLOWUP.md).
 

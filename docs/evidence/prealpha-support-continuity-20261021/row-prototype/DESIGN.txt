@@ -1,0 +1,56 @@
+Private exact ordered-row dependency prototype
+=============================================
+No production edits, builds or runs have been performed by its author.
+Current selected implementation: RowDependency.h + ContactSolver.cpp +
+ImpactSolver.cpp. Public headers/layouts remain original. Preserve CPU isolation;
+parent controls compilation and runs. Originals/input manifest are retained.
+
+An event-scoped TLS pointer attaches private state to exactly one ContactSolver.
+SolveGrowing constructs that state after Clear; ordinary/legacy paths do not
+activate it. Explicit private Graph/Scope can activate it for direct-row tests.
+Nested scopes restore the prior owner, and no state outlives the event/solver.
+
+Rows retain consumed frame revisions A/B plus an ownDirty bit. Frames retain exact
+represented linear/angular velocities and inverse mass with a revision. On each
+originally ordered visit, lazy per-endpoint bit checks observe outside mutations
+and bump revisions. After each evaluated row, changes bump endpoint revisions.
+There is no incident-row walk: a later or earlier row sees the new revision when
+its original ordinal is next considered. Append preserves old IDs and adds dirty
+rows/frames. Reprepare/retarget/nontracked solves invalidate the relevant state.
+Revision wrap invalidates all certificates explicitly.
+
+A row is reusable ONLY after an evaluation returned no accumulator change at
+those exact endpoint states. Changed normal/tangent accumulators remain dirty
+regardless of represented body updates. This preserves a heavy/fast fixture where
+all body impulses round away but the normal accumulator increases0.5 each pass.
+Original10 sweeps, row order, ranges, append points, per-row arithmetic, transient
+activation detection and final closure/energy checks remain unchanged.
+
+This first prototype still considers each original row ordinal, doing cheap exact
+endpoint/version checks and skipping certified idempotent kernels. It does not
+pretend to eliminate persistent graph discovery or native geometry. A true sparse
+index requires reliable notification of every external dependency mutation; the
+lazy checks preserve the existing public mutable-body usage without that new API.
+
+Adjacency draft is preserved as RowDependency.adjacency-rejected.h, not compiled:
+walking incident rows after each tiny velocity change risks degree-multiplied work.
+The selected revision design performs scalar bumps instead.
+
+Files and intended checks
+-------------------------
+- RowDependencyTests.cpp: quiescent certificate, earlier-row reactivation,
+  accumulator-only updates, transient cancellation, retarget, outside velocity
+  mutation, warm-appended rows and reset/reused IDs. Baseline runs the full ordered
+  tracked kernel; candidate uses private graph. Compares exact velocity/impulse
+  bits AND activated-body order. --broken-endpoint /--broken-own /--broken-target
+  deliberately disable separate mechanisms and must return failure.
+- TrackedContactRowsDependencyTests.cpp: unchanged300 seeded original randomized
+  cases, with only private graph activation added to the tracked solver. Exact
+  body/impulse oracle remains unchanged. Include third_party in header search.
+- Existing tests/GrowingImpactTests.cpp can run against these overlay TUs to
+  exercise actual SolveGrowing chain/appending, immutable inputs and budgets.
+
+Private switches: row_dependency::SetEnabled(bool) controls scheduling;
+SetStatsEnabled(bool),ResetStats(),stats provide counters. Exact is default.
+Control enum exists ONLY for adversarial private tests, not as an engine policy.
+No stats/algorithm setting changes solver inputs or acceptance thresholds.

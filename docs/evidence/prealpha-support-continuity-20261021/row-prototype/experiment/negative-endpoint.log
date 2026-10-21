@@ -1,0 +1,7 @@
+FAIL exact transient activation sequence
+FAIL later neighbor response reactivates earlier clean row next sweep
+FAIL exact transient activation sequence
+FAIL external body velocity edits are caught by exact lazy observation
+FAIL exact transient activation sequence
+FAIL new warm row invalidates old endpoint dependencies and remains ordered
+{"checks":26,"failures":6,"considered":106,"evaluated":45,"skipped":61,"accumulator_only":10}

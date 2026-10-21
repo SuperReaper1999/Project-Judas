@@ -1,0 +1,52 @@
+[
+  {
+    "kind": "baseline-link",
+    "argv": [
+      "/usr/bin/c++",
+      "-O3",
+      "-DNDEBUG",
+      "CMakeFiles/judas_bending_tests.dir/tests/BendingTests.cpp.o",
+      "-o",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/persistent-contact-20261021/focused-support-control/bending-original-relinked",
+      "libjudas_engine.a",
+      "libjudas_build_identity.a",
+      "libjudas_app_icon.a",
+      "libjudas_materials.a",
+      "/usr/lib/x86_64-linux-gnu/libSDL2.so",
+      "libjudas_glad.a",
+      "libjudas_audio_backend.a",
+      "libjudas_meshoptimizer.a",
+      "libjudas_navigation_cook.a",
+      "libjudas_navigation_backend.a",
+      "libjudas_quickjs.a",
+      "-lm",
+      "libjudas_profiler.a",
+      "_deps/judas_freetype-build/libfreetype.a",
+      "_deps/judas_harfbuzz-build/libharfbuzz.a",
+      "unicode/icu/lib/libicui18n.a",
+      "unicode/icu/lib/libicuuc.a",
+      "unicode/icu/lib/libicudata.a",
+      "-ldl",
+      "libjudas_jobs.a"
+    ],
+    "exit": 0
+  },
+  {
+    "kind": "original-existing",
+    "argv": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_bending_tests"
+    ],
+    "exit": 0,
+    "seconds": 1.516580143000283,
+    "binary_sha256": "05dbbe91a831e0042f4a84c8fd225ec90b2adbec2f67f7b45d2ab443c8acb38e"
+  },
+  {
+    "kind": "original-relinked",
+    "argv": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/persistent-contact-20261021/focused-support-control/bending-original-relinked"
+    ],
+    "exit": -11,
+    "seconds": 0.3141785849993539,
+    "binary_sha256": "dc90f280bef8fc4755e994b19ddc0e8e7b94b6f65acadbd8dcd5f655fa455f6f"
+  }
+]

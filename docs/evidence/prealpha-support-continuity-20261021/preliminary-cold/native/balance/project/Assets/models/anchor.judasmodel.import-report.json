@@ -1,0 +1,46 @@
+{
+  "assetId": "13d9c04e155aa9002ce3009285a660b7",
+  "clips": [
+    {
+      "duration": 1.0,
+      "loop": false,
+      "motionExtracted": false,
+      "name": "Rest"
+    }
+  ],
+  "diagnostics": [],
+  "hierarchyNodes": 8,
+  "importRecord": "{\"digest\":\"26c93c5caea6965fbcdcdad82babffe368d15678b9c9be60d86685f3d79a6267\",\"inputs\":{\"Sources/13d9c04e155aa9002ce3009285a660b7/anchor.gltf\":\"f4db079e3e2a2ce3d9572e8b05cde80f1ddb0d802c965e807fc7bc14aa572ba6\"},\"manifest\":{\"assetId\":\"13d9c04e155aa9002ce3009285a660b7\",\"clips\":[{\"duration\":1.0,\"loop\":false,\"motionExtracted\":false,\"name\":\"Rest\"}],\"diagnostics\":[],\"hierarchyNodes\":8,\"inputs\":{\"Sources/13d9c04e155aa9002ce3009285a660b7/anchor.gltf\":\"f4db079e3e2a2ce3d9572e8b05cde80f1ddb0d802c965e807fc7bc14aa572ba6\"},\"joints\":[\"Chassis\",\"Chassis/PortLink\",\"Chassis/PortLink/PortRod\",\"Chassis/PortLink/PortRod/PortShoe\",\"Chassis/StarboardLink\",\"Chassis/StarboardLink/StarboardRod\",\"Chassis/StarboardLink/StarboardRod/StarboardShoe\",\"Exact collider-box presentation\",\"__JudasMotionRoot\"],\"materialKeys\":[\"Painted fixture\"],\"parts\":[{\"identity\":\"Exact collider-box presentation/material/Painted fixture\",\"node\":7,\"triangles\":84}],\"recipeDigest\":\"26c93c5caea6965fbcdcdad82babffe368d15678b9c9be60d86685f3d79a6267\",\"revision\":\"M66-ufbx-0.23.1-cgltf-1.15-cook-10-M74-retarget-1-model-1\",\"skinPaletteEntries\":7,\"sourceBones\":0,\"sourceUnitMeters\":1.0,\"vertices\":252},\"recipe\":\"Imports/anchor.judasimport\",\"revision\":\"M66-ufbx-0.23.1-cgltf-1.15-cook-10-M74-retarget-1-model-1\"}",
+  "inputs": {
+    "Sources/13d9c04e155aa9002ce3009285a660b7/anchor.gltf": "f4db079e3e2a2ce3d9572e8b05cde80f1ddb0d802c965e807fc7bc14aa572ba6"
+  },
+  "joints": [
+    "Chassis",
+    "Chassis/PortLink",
+    "Chassis/PortLink/PortRod",
+    "Chassis/PortLink/PortRod/PortShoe",
+    "Chassis/StarboardLink",
+    "Chassis/StarboardLink/StarboardRod",
+    "Chassis/StarboardLink/StarboardRod/StarboardShoe",
+    "Exact collider-box presentation",
+    "__JudasMotionRoot"
+  ],
+  "materialKeys": [
+    "Painted fixture"
+  ],
+  "outputHash": "983523d869799f6a89ed9624eacea2ee166b3cbe223b602a490c7647e16b8dd0",
+  "parts": [
+    {
+      "identity": "Exact collider-box presentation/material/Painted fixture",
+      "node": 7,
+      "triangles": 84
+    }
+  ],
+  "recipeDigest": "26c93c5caea6965fbcdcdad82babffe368d15678b9c9be60d86685f3d79a6267",
+  "recordHash": "39afd0ebc186db75b989fa19fbeefd7c8c9c7fd382c3140e1e85ba0002d678f3",
+  "revision": "M66-ufbx-0.23.1-cgltf-1.15-cook-10-M74-retarget-1-model-1",
+  "skinPaletteEntries": 7,
+  "sourceBones": 0,
+  "sourceUnitMeters": 1.0,
+  "vertices": 252
+}

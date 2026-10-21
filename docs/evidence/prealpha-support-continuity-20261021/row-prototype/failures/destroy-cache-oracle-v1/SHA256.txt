@@ -1,0 +1,5 @@
+e0349f05ccceb4ba9dfca5010f807f2013b9bb7fb0c822770b97deaecd3cea9b  .cache/persistent-contact-20261021/row-prototype/failures/destroy-cache-oracle-v1/FAILURE.txt
+31267bcad92b6481cabc13a66a91307a0760a033d0919b1886abc4167435c45d  .cache/persistent-contact-20261021/row-prototype/failures/destroy-cache-oracle-v1/RESULTS.json
+71a19acec3a0384486e486c16b765c541774e2bb7d271b6eee17f23464736158  .cache/persistent-contact-20261021/row-prototype/failures/destroy-cache-oracle-v1/SupportGuessOwnershipTests.cpp
+28e631e59a4365912533a2b8910807c1d5e4b67eadd6a77c6a8891b934186dae  .cache/persistent-contact-20261021/row-prototype/failures/destroy-cache-oracle-v1/baseline.run.log
+4abddcc3b046719a53699fe7045d86198416464a9d616e938817492c30b45121  .cache/persistent-contact-20261021/row-prototype/failures/destroy-cache-oracle-v1/candidate.run.log

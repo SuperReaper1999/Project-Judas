@@ -1,0 +1,4 @@
+{
+  "original_package_preserved": "/home/conner/Documents/GitHub/Project-Judas/.cache/persistent-contact-20261021/package-v1-copied-cache-metadata",
+  "correction": "Exclude .cache components as well as cache components; ten generated model-import cache metadata files were never staged and have no role in numerical evidence. Original simulation receipts, sources, hashes and private cache inputs unchanged. Regenerate only the source/data packaging inventory."
+}

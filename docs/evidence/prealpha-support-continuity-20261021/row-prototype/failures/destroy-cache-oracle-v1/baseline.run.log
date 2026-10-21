@@ -1,0 +1,5 @@
+FAIL eligible velocity-changing impact preserves ordinary numerical guesses
+ordinary_support produced=4 preserved=0 events=1 target_vx=15.475647926330566
+FAIL destroyed support removes warm-history ownership
+feature rotated=1 upward_departure_observed=1
+{"checks":55,"failures":2}

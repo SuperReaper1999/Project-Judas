@@ -1,0 +1,14 @@
+{
+  "utc": "2026-10-21T13:59:39.874975+00:00",
+  "head": "f5624f0bb4f92ece7211199ca8fe51abc08a2b19",
+  "branch": "Experimental",
+  "frozen_core_verified": true,
+  "fixture_verified": true,
+  "source_count": 517,
+  "current_source_mismatches": [],
+  "current_build_core_sha256": "05f626d3fb5400bfd1db23ec37a3cd3e6490f8452145365662466eebccd705ec",
+  "current_build_matches_frozen": true,
+  "copied_files": 37,
+  "copied_bytes": 37141801,
+  "no_engine_executed": true
+}

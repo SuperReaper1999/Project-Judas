@@ -1,0 +1,6 @@
+{
+  "classification": "private probe setup defect, not demonstrated engine failure",
+  "source_sha256": "8ddf0442e9472ce0164c2cb37342edd79289a90581259226ebe8f3edd026c520",
+  "failure": "GameSnapshot.content was a human label rather than a required 64-character identity; public SaveStorage rejected invalid metadata before testing restoration. Original baseline/control logs remain unchanged in cold-public-paired.",
+  "followup": "Use a real scene-content fingerprint, explicit compatibility/contentVersion, and sequence mutating calls before reading error text."
+}

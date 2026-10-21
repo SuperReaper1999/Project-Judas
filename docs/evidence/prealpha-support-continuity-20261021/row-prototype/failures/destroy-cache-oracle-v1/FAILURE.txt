@@ -1,0 +1,18 @@
+New fixture-authoring error, not an engine regression.
+====================================================
+Exact first active source and paired receipts preserved here before correction.
+Candidate:59 checks,1 failure. Original:55 checks,2 failures.
+Both fail the new assertion that DestroyBody immediately erases disposable
+contactCache storage. The original also fails the intended preservation oracle.
+
+Actual contract: Remove marks the body dead immediately; Get and sleep/history
+consumers reject dead/generation-invalid owners. Disposable rows are collected
+by the next ordinary step. Immediate storage erasure was an unsupported fixture
+assumption, not a public engine guarantee.
+
+Correction changes ONLY that new oracle: assert Get(originalHandle)==nullptr
+immediately, then assert no destroyed-floor cache row after the FIRST of the same
+60 ordinary steps. Keep total60 steps, freefall, sleeping, physics inputs and all
+ordinary-guess/observation/fallback assertions unchanged. No runtime change.
+Root owns the fresh compilation and paired rerun. Existing accepted regressions
+and original failed receipts are unchanged.

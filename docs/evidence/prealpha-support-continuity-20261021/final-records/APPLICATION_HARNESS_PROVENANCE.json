@@ -1,0 +1,6 @@
+{
+  "original": "/home/conner/Documents/GitHub/Project-Judas/.cache/contact-redesign-20261021/application_checks.py",
+  "original_sha256": "ca58d6469fca3e637280e2f42ff45f2aa8ca43670453ccfd3834259f5f718655",
+  "copy_sha256": "8e26888762267a71495a60cb451a3e0d93808d3421c555aa18a2602590583e1a",
+  "only_changes": "fresh output/package-prefix and fresh test-driver binary wiring; authored inputs/120frames/PlayStop behavior unchanged"
+}

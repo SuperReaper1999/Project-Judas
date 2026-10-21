@@ -1,0 +1,23 @@
+	Command being timed: "/home/conner/Documents/GitHub/Project-Judas/.cache/persistent-contact-20261021/row-prototype/experiment/live /home/conner/Documents/GitHub/Project-Judas/projects/physics_stress_lab/Scenes/room1024.judas /home/conner/Documents/GitHub/Project-Judas/.cache/persistent-contact-20261021/row-prototype/run900/live 180 900 0 0 1 0.016666667 0 0 1"
+	User time (seconds): 195.20
+	System time (seconds): 9.38
+	Percent of CPU this job got: 280%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 1:13.04
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 322996
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 125
+	Minor (reclaiming a frame) page faults: 4141286
+	Voluntary context switches: 160193
+	Involuntary context switches: 18623
+	Swaps: 0
+	File system inputs: 9464
+	File system outputs: 1056
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0

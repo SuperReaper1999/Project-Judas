@@ -1,0 +1,58 @@
+{
+  "rows": 98,
+  "keys_identical": true,
+  "differences": {
+    "right_m": [],
+    "up_m": [],
+    "forward_m": [],
+    "right_velocity": [],
+    "up_velocity": [],
+    "sleeping": [],
+    "suspended": [],
+    "warm_rows": [],
+    "warm_positive": [
+      {
+        "key": [
+          "impact_departure:flat",
+          "after_actual_impact",
+          "0"
+        ],
+        "baseline": "0",
+        "candidate": "4"
+      },
+      {
+        "key": [
+          "impact_departure:rotated",
+          "after_actual_impact",
+          "0"
+        ],
+        "baseline": "0",
+        "candidate": "4"
+      }
+    ],
+    "warm_normal": [
+      {
+        "key": [
+          "impact_departure:flat",
+          "after_actual_impact",
+          "0"
+        ],
+        "baseline": "0",
+        "candidate": "0.32700002193450928"
+      },
+      {
+        "key": [
+          "impact_departure:rotated",
+          "after_actual_impact",
+          "0"
+        ],
+        "baseline": "0",
+        "candidate": "0.3269999772310257"
+      }
+    ],
+    "impact_events": []
+  },
+  "both_pass": true,
+  "baseline_checks": 15516,
+  "candidate_checks": 15516
+}

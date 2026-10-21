@@ -1,0 +1,120 @@
+Interpretation of the exact response observer, input f5624f0b
+===========================================================
+
+Observed scope: actual physical steps300–900 inclusive (601 steps), not all900
+steps. Parent's parity-observed900.json establishes identical digests and workload
+counts for this entire window. Observer costs are intrusive (~51% total timing
+increase against the parent's matched sampler run), so use counts for architectural
+conclusions; do not transplant observer phase milliseconds into production costs.
+No production changes, builds or additional benchmark runs were made here.
+Generated summaries: observed900-summary.json and observed900-late-summary.json.
+
+1. The persistent state is still largely an ID classification, not a persistent
+   contact-constraint graph. PhysicsWorld.cpp:330-341 publishes supportPairs;
+   WorldIncrementalImpact.h:19-31 clears visited/rows/keys/pairs for EVERY arrival;
+   ImpactSolver.cpp:160-161 clears its frames and constraints for EVERY trial.
+   WorldIncrementalImpact.cpp:39 reconstructs actual geometry;48-64 rebuilds rows
+   even for known support. 3,062,808 /3,065,581 reconstructed domain rows are
+   continuing (99.9095%). This confirms repeated reconstruction of established
+   support at distinct instants. It does NOT prove those distinct-pose geometry
+   answers may be reused without a geometric validity certificate.
+
+2. One accepted arrival still has a large physical domain. All2695 accepted
+   incremental events average362.8 non-static island bodies /1137.5 rows /
+   257.6 finally changed bodies; p95=749 /2622 /566, max875 /3254 /716.
+   At steps601–900,1055 accepted events average514.3 bodies /1739.2 rows /
+   366.2 finally changed bodies; p95=794 /2810 /617. There are4.484 accepted
+   events per observed step, late3.517. Per observed step, attempted domains
+   initialize1631.5 bodies, issue14765.7 manifold queries, build5100.8 rows and
+   visit41182.7 growing solver rows. Late:1812.2 /16399.5 /6116.3 /49216.0.
+   Source: WorldIncrementalImpact.cpp:9-64 and ImpactSolver.cpp:224-237.
+   Exact event sizes exclude the66 rejected single-contact elastic trials.
+
+3. The expensive reuse opportunity is NOT exact identical native queries. The
+   parent's CCD observer establishes only two domain exact duplicates; a larger
+   exact-key manifold cache would add work with almost no hit rate here. Current
+   event poses differ, so repeated pair identity alone cannot certify contact.
+   Direct tree-query caching may remove a smaller traversal/sort component, but
+   it is not demonstrated as the main fix. Across this window35% of pair SET
+   LOOKUPS are duplicates; that count must not be confused with duplicate SAT
+   evaluations (WorldIncrementalImpact.cpp:32-39,69-90).
+
+4. The cold row schedule does substantial zero-effect work, but whole-solve early
+   exit is irrelevant.15,349,811 /24,750,778 growing row visits (62.02%) do not
+   change accumulators; however later sweeps after a certified exact fixed point
+   contain ONLY327 visits (0.00132%). Active changes keep propagating into rows
+   that were clean earlier. Therefore do not skip a row permanently or terminate
+   on empty activation. Needed dependency: per-row endpoint velocity revisions,
+   geometry/material/target revisions and OWN accumulator state/idempotence.
+   A row whose accumulator changed while endpoint updates rounded away is not
+   yet clean:497,471 such visits exist. Source:ContactSolver.cpp:251-291,305-338;
+   ImpactSolver.cpp:224-237. Current instrumentation changes no termination.
+
+5. Most activation queue traffic is known-neighbor bookkeeping rather than new
+   growth:5,729,805 activated inputs,5,023,529 already expanded (87.67%). No
+   duplicate next-batch entries occur. Forced-gravity counts are EXACTLY ZERO,
+   disproving my earlier forced-queue cursor lead for this actual workload.
+   ContactSolver.cpp:307 constructs seen per range; WorldIncrementalImpact.cpp:
+   111-125 rebuilds/sorts each next list and checks expanded again. This is real
+   removable bookkeeping, but it does not justify omitting first-time discovery
+   for genuinely changed bodies. Exact transient row changes still matter.
+
+6. Support history is discarded after many events, reinforcing repeated cold
+   work across steps. WorldImpactEvents.cpp:625-630 zeros ordinary guesses for
+   represented changed endpoints;640-672 replaces changed groups with zero-load
+   identity. Across observed events1,289,246 previously nonzero entries are zeroed
+   (2145.2/step). Ordinary preparation receives nonzero guesses in only29.71%
+   of2,341,864 rows; late26.06%. All3,065,515 growing rows start zero as designed.
+   This supports investigation of coherent force/impulse continuation, not blindly
+   restoring guesses. Cache entries and prepared points have different matching
+   multiplicities, so this is NOT a causal1:1 lost-warm-start fraction.
+
+7. Large coupling is partly real under the existing approximate discrete model.
+   Final event deltas affect257.6 bodies on average;73.28% of changed-body
+   observations have maximum component delta<=1e-5,47.38%<=1e-7, but only4.90%
+   are<=one ordered ULP in every component. Small absolute magnitude does not
+   prove rounding-only noise, and mixed linear/angular component bins are not a
+   physical error norm. WorldImpactEvents.cpp:610-615 correctly treats any exact
+   represented velocity change as a new trajectory;684-696 changes motion and
+   rescheduling follows. Removing those dependencies needs interval/trajectory
+   validity proofs or a coherent changed temporal discretization, not a cutoff.
+
+8. Fresh graph/storage ownership also causes substantial confirmed churn.
+   WorldImpactEvents.cpp:190 owns responseStorage for only one Advance call;
+   WorldIncrementalImpact.h:11,19-31 clears the node-allocating visited set every
+   event; ContactSolver.cpp:305-307 creates a new seen vector per range. Over601
+   observed steps:8,874,179 retained visited-node inserts,124,487 seen-vector
+   allocations,335,031 next-vector growths and534,475 activated-vector growths.
+   All observed categories sum to a LOWER BOUND9,931,749 allocation/growth events
+   (~16,525/step) and2.343GB cumulative capacity/payload requests (~3.90MB/step).
+   This is NOT peak memory, allocation-total or a measured allocator time share:
+   bytes include entire new capacity at each growth; set payload excludes node
+   links/metadata and duplicate-emplace temporary allocations; some solver
+   vector categories also include ordinary/initial-impact work.
+
+9. The next defensible architectural prototype is a step-owned persistent
+   contact graph, separating stable identity/adjacency/allocated storage from
+   event-time geometric validity and event impulse state. Keep generation and
+   exact feature ownership; refresh/invalidate geometry from provable bounds or
+   actual feature checks, not prior existence. Use endpoint/row dirty revisions
+   and deterministic ordered worklists so already-certified clean rows avoid
+   repeated kernels, while ALL genuinely affected constraints propagate. Track
+   ordinary support-force guesses separately from incremental impact impulses;
+   never warm-apply a previous TOI impulse as a resting load. First prove exact
+   row skipping under identical inputs/order, then measure discovery saved by
+   persistent topology. If changed stepping/integration is necessary to avoid
+   countless distinct micro-events, explicitly compare physical invariants and
+   trajectories rather than claiming bit-identical behavior. This is a justified
+   redesign direction, not a completed or guaranteed performance fix.
+
+10. Falsifiable closure controls for that prototype: exact isolated growing/full
+    contact replay,100-body propagation chain, transient-activation counterexample,
+    rounded-away accumulator changes, lost/restored feature and body-generation
+    reuse, actual separation/rotation/finite-feature arrivals, hard-joint fallback,
+    prescribed moving boundaries, failed-trial rollback and energy/penetration.
+    Then match original600/900-step hashes where the algorithm is unchanged; for
+    declared numerical-model changes preserve all original fixtures and report
+    trajectory differences, energy/enclosure/penetration, CCD and real live FPS.
+    Allocation/storage-only changes should preserve exact digests. A reduction
+    in node allocations or scalar hoists alone must not be sold as removal of
+    the large persistent-support recertification architecture.

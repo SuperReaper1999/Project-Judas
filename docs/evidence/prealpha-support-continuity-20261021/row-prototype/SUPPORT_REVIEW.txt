@@ -1,0 +1,55 @@
+Warm ownership review — source only
+==================================
+The control's causal result supersedes the old inference that an entirely new
+persistent contact graph was necessarily the next performance prerequisite.
+The old rule invalidated numerical INITIAL GUESSES after any represented velocity
+change. That was too aggressive: ordinary warm matching already uses actual
+current geometry, generation/primitive identity, anchor proximity and normal
+agreement (PhysicsWorld.cpp250–267). Prepare reprojects friction and later solve
+iterations can subtract an excessive normal/tangent guess. A warm load is not an
+assertion that the previous velocity or external force is still authoritative.
+
+Smallest clean production correction: within existing continuationEligible scope,
+preserve ordinary support guesses regardless of velocityChanged; retain current
+generation checks/group identity policy and add zero-load identity only for new
+groups. Do not copy normal/tangent impulses from responseSolver into contactCache.
+Keep completedContactObservations as actual interval observations, separate from
+next-step initial guesses. Preserve original hard-joint, external-coupling,
+elastic-flight and geometry fallback invalidation. No new component/public API,
+new graph, force threshold or solver-budget change is required for that repair.
+Simplify redundant SameBodies branch only behavior-preservingly.
+
+Qualification boundaries
+------------------------
+- Finite10-sweep outputs intentionally change when a better initial guess is
+  preserved. Do not call dense trajectories bit-identical. Keep physical gates.
+- Current retained flag is whole body/primitive group. If actual event geometry
+  changes face/anchor, old point guesses may fail normal/anchor matching next
+  step and no new zero-load point is appended in that group. This is conservative
+  but could reclassify a later point as new; exercise rotating face transitions.
+  Do not add a broad point-merge redesign before demonstrating a concrete defect.
+- Explicit shape/filter/generation mutation paths must still invalidate guesses;
+  normal/anchor matching is not a substitute for owner/context invalidation.
+- Settle uses positive warm rows for speculative support connectivity AND actual
+  stepTouches gathered anywhere in the interval. Thus even the old rule could
+  leave a just-departed body in an anchored island through actual early contacts.
+  Retention can add speculative connectivity, but sleeping still requires all
+  unchanged speed, pose, time and support gates. Prove launched bodies stay awake
+  and support destruction yields real freefall. Do not merely report higher sleep.
+- Cold-save and stream continuation must preserve the exact intended numerical
+  guesses while actual completed observations remain separate. Run existing
+  M70/M77 continuation and ownership/lifecycle tests on combined final source.
+- Public mass/gravity/load changes can make a guess poor; unilateral/friction
+  solve must remove the excess without instability. Root's cold-reference and
+  new-impact controls exercise that independently of the1024 pile.
+
+SupportGuessOwnershipTests.cpp is an actual PhysicsWorld::Step integration test.
+Compile only its TU with -fno-access-control to inspect existing private state;
+no engine/header definition or public API changes. Primary oracle compares exact
+ordinary solver-produced floor guesses against post-TOI cache while also proving
+actual projectile impact, represented target change, separate positive impact
+observations and zero-load new identity. The old clearing branch should fail the
+preserved-guess assertion. Additional checks exercise hard-joint/external/elastic
+fallback, physical rotation, awake departure and destroyed-support freefall.
+No builds/runs were performed by this author. Any failed setup/assertion must be
+preserved and investigated, not weakened merely to obtain a green fixture.

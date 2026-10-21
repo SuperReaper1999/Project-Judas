@@ -1,0 +1,63 @@
+{
+  "schema": "judas.private-support-control-focused.v1",
+  "execute": true,
+  "control_archive_sha256": "7c5297d1910d1fcfb0180d065cbb799c7cc75f5e053ad7437ceab7ae3a9eb6ba",
+  "control_event_object_sha256": "3ae3aa7bf842dcee4f9841e538d5a2e2725daaf16c7f6f004f4e17007cb8b054",
+  "plans": [
+    {
+      "target": "judas_gravity_selection_tests",
+      "argv": [
+        "/usr/bin/c++",
+        "-O3",
+        "-DNDEBUG",
+        "CMakeFiles/judas_gravity_selection_tests.dir/tests/GravitySelectionTests.cpp.o",
+        "CMakeFiles/judas_gravity_selection_tests.dir/src/editor/EditorHistory.cpp.o",
+        "-o",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/persistent-contact-20261021/focused-support-gravity/judas_gravity_selection_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/persistent-contact-20261021/support-control/libjudas_engine.a",
+        "libjudas_profiler.a",
+        "libjudas_build_identity.a",
+        "libjudas_app_icon.a",
+        "libjudas_materials.a",
+        "libjudas_profiler.a",
+        "/usr/lib/x86_64-linux-gnu/libSDL2.so",
+        "libjudas_glad.a",
+        "libjudas_audio_backend.a",
+        "libjudas_meshoptimizer.a",
+        "libjudas_navigation_cook.a",
+        "libjudas_navigation_backend.a",
+        "libjudas_quickjs.a",
+        "-lm",
+        "_deps/judas_freetype-build/libfreetype.a",
+        "_deps/judas_harfbuzz-build/libharfbuzz.a",
+        "unicode/icu/lib/libicui18n.a",
+        "unicode/icu/lib/libicuuc.a",
+        "unicode/icu/lib/libicudata.a",
+        "-ldl",
+        "libjudas_jobs.a"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas/build",
+      "direct_world_event_replacements": 0,
+      "engine_archive_replacements": 1,
+      "original_link_sha256": "839e5639c14441911cc3e5b6c6173a8a240f92094b36d9833087ba43091edc32"
+    }
+  ],
+  "notes": [
+    "Existing test objects are reused; every target must consume the actual control world implementation.",
+    "The private event object changes no headers or ABI; compiled against the same frozen normal source/header set.",
+    "Run only after root grants the sole CPU workload slot."
+  ],
+  "results": [
+    {
+      "target": "judas_gravity_selection_tests",
+      "link_exit": 0,
+      "link_seconds": 0.5790204899994933,
+      "exit": 0,
+      "binary_sha256": "02e28caafb54121322d728ea49b181e5dd0e3a541966273b112a3838582e1b7d",
+      "seconds": 0.2691676499998721
+    }
+  ],
+  "utc": "2026-10-21T14:11:12.899188+00:00",
+  "protected_inputs_unchanged": true,
+  "pass_all": true
+}

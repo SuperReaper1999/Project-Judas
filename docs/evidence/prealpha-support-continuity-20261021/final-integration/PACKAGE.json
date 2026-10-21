@@ -1,0 +1,9 @@
+{
+  "relocatedPackage": "/tmp/Judas-support-continuity-20261021-sxwyknpr",
+  "unrelatedWorkingDirectory": "/tmp",
+  "installationReadOnly": true,
+  "runtime_sha256": "e01814df2fe02ef8877b1990c074302e1e3b3baff902070d971a56eb571a30d3",
+  "humanAcceptance": false,
+  "audioListening": false,
+  "original_export_refusal_preserved": "export.log; correct provenance mismatch diagnostic before matched pair rebuild"
+}

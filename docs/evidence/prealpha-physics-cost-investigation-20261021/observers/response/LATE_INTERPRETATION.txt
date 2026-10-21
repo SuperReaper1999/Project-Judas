@@ -1,0 +1,77 @@
+Late901–1800 contact-response comparison (no new benchmark workload)
+=================================================================
+
+Read and summarized existing observed1800-late CSV files only.
+Summary: observed1800-late-summary.json.
+Comparison: response-late-comparison.json.
+The600/900 labels are simulation step IDs, not file-row indices.
+
+                                steps300–900          steps901–1800
+Observed steps                          601                    900
+Accepted incremental events           2695                   3311
+Rejected trials                         66                      4
+Accepted events /step                 4.484                  3.679
+Bodies /accepted event mean          362.80                 646.44
+Bodies /accepted event p95              749                    853
+Bodies /accepted event max              875                    928
+Rows /accepted event mean           1137.48                2340.52
+Rows /accepted event p95               2622                   3211
+Rows /accepted event max               3254                   3610
+Finally changed bodies/event mean    257.64                 474.29
+Finally changed bodies/event p95        566                    680
+Finally changed bodies/event max        716                    781
+Continuing reconstructed rows       99.9095%               99.9564%
+Growing row visits/step            41182.66               69197.09
+Domain manifold queries/step       14765.69               21712.59
+Reconstructed rows/step             5100.80                8610.52
+No accumulator change visit frac    62.0175%               64.9159%
+Later true fixed-point row visits      327                    551
+Fraction of all growing visits      0.00132%               0.00088%
+Already-expanded callback fraction   87.6702%               87.4685%
+Ordinary nonzero warm input fraction 29.7088%               20.4801%
+Nonzero cached entries zeroed/step  2145.17                2973.01
+Force-deferred seed expansions            0                      0
+
+Source-backed conclusions
+-------------------------
+1. This is not merely too many arrivals: events per step fall18%, while mean
+   event-body domain grows78% and mean event-row domain more than doubles.
+   A resting pile's connected support becomes larger as it settles. The engine
+   rebuilds almost exclusively existing support, not a corresponding growth in
+   genuinely new impact geometry. Current clearing/reconstruction ownership is
+   WorldIncrementalImpact.h:19-31,WorldIncrementalImpact.cpp:31-64 and
+   ImpactSolver.cpp:160-201. Per-step row work rises68%, manifold work47%.
+
+2. The extra zero-effect row percentage does not offer a whole-solve shortcut:
+   40,427,943 of62,277,381 late growing visits leave accumulators unchanged, but
+   only551 visits occur after a full proven fixed point. Ongoing coupling keeps
+   revisiting rows that were clean earlier. Dependency-indexed scheduling must
+   know both endpoint changes and the row's own accumulator state.1,214,022 late
+   row visits change accumulators while both represented endpoint velocities
+   remain unchanged, so endpoint-dirty tests alone are insufficient. Source:
+   ContactSolver.cpp:251-291,305-338;ImpactSolver.cpp:224-237.
+
+3. Warm support continuity deteriorates alongside growing coupling.2,675,706
+   nonzero cache entries are zeroed late, averaging2973/step. Only825,274 of
+   4,029,644 ordinary rows receive a nonzero warm guess (20.48%). This matches
+   the explicit policy atWorldImpactEvents.cpp:625-672, but does NOT isolate how
+   much of the next-step cost it causes. Keeping old guesses without a sound
+   ordinary-force/impact-impulse model would be an unjustified physics change.
+   Discarded cache entries and matched prepared points are not a1:1 cohort.
+
+4. Small deltas remain a numerical description, not a safe propagation cutoff:
+   77.49% of1,570,391 late changed-body observations have max mixed component
+   delta<=1e-5,53.54%<=1e-7; only4.99% have every component within one ordered ULP.
+   WorldImpactEvents.cpp:610-615,684-696 must preserve real changed trajectories
+   unless a later architecture supplies conservative validity certificates or
+   explicitly changes the integration model. No magnitude cutoff is justified.
+
+5. Confirmed allocation churn scales with reconstructed work:19,541,331 retained
+   visited-node inserts and200,044 seen-vector allocations in the late window.
+   These are lower-bound storage events, not a measured malloc-time share,
+   retained RSS or proof that an allocator replacement solves the architecture.
+   Reusing a step/world-owned graph and storage has coherent value, but the
+   distinct-pose contact recertification and mechanical propagation remain the
+   central engineering problem. Parent's separate native timing control must
+   establish actual long-run runtime cost; intrusive observer clocks are not a
+   substitute for that measurement.

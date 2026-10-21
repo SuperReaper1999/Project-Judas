@@ -1,0 +1,280 @@
+{
+  "schema": "judas.generic-public-cold-support-probe.v1",
+  "source": "/home/conner/Documents/GitHub/Project-Judas/.cache/persistent-contact-20261021/measure/ColdSupportSnapshot.cpp",
+  "source_sha256": "8ddf0442e9472ce0164c2cb37342edd79289a90581259226ebe8f3edd026c520",
+  "compile": [
+    "/usr/bin/c++",
+    "-DDT_VIRTUAL_QUERYFILTER",
+    "-DMA_NO_ENCODING",
+    "-DMA_NO_GENERATION",
+    "-DMA_NO_RESOURCE_MANAGER",
+    "-I/home/conner/Documents/GitHub/Project-Judas/src",
+    "-I/home/conner/Documents/GitHub/Project-Judas/third_party/glad/include",
+    "-I/home/conner/Documents/GitHub/Project-Judas/third_party/miniaudio",
+    "-I/home/conner/Documents/GitHub/Project-Judas/third_party/verblib",
+    "-I/home/conner/Documents/GitHub/Project-Judas/third_party/meshoptimizer/src",
+    "-I/home/conner/Documents/GitHub/Project-Judas/build/_deps/judas_freetype-build/include",
+    "-I/home/conner/Documents/GitHub/Project-Judas/build/_deps/judas_freetype-src/include",
+    "-I/home/conner/Documents/GitHub/Project-Judas/build/_deps/judas_harfbuzz-src/src",
+    "-isystem",
+    "/home/conner/Documents/GitHub/Project-Judas/third_party/quickhull",
+    "-isystem",
+    "/usr/include/SDL2",
+    "-isystem",
+    "/home/conner/Documents/GitHub/Project-Judas/third_party/recastnavigation/Detour/Include",
+    "-isystem",
+    "/home/conner/Documents/GitHub/Project-Judas/third_party/recastnavigation/DetourTileCache/Include",
+    "-isystem",
+    "/home/conner/Documents/GitHub/Project-Judas/third_party/recastnavigation/DetourCrowd/Include",
+    "-isystem",
+    "/home/conner/Documents/GitHub/Project-Judas/third_party/quickjs",
+    "-isystem",
+    "/home/conner/Documents/GitHub/Project-Judas/build/unicode/icu/include",
+    "-O3",
+    "-DNDEBUG",
+    "-std=gnu++17",
+    "-Wall",
+    "-Wextra",
+    "-Wpedantic",
+    "-c",
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/persistent-contact-20261021/measure/ColdSupportSnapshot.cpp",
+    "-o",
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/persistent-contact-20261021/cold-public-paired/ColdSupportSnapshot.cpp.o"
+  ],
+  "plans": [
+    {
+      "name": "baseline",
+      "core": "/home/conner/Documents/GitHub/Project-Judas/.cache/persistent-contact-20261021/measure/baseline/frozen/libjudas_engine.a",
+      "core_sha256": "05f626d3fb5400bfd1db23ec37a3cd3e6490f8452145365662466eebccd705ec",
+      "link": [
+        "/usr/bin/c++",
+        "-O3",
+        "-DNDEBUG",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/persistent-contact-20261021/cold-public-paired/ColdSupportSnapshot.cpp.o",
+        "-o",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/persistent-contact-20261021/cold-public-paired/baseline",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/persistent-contact-20261021/measure/baseline/frozen/libjudas_engine.a",
+        "libjudas_build_identity.a",
+        "libjudas_app_icon.a",
+        "libjudas_materials.a",
+        "/usr/lib/x86_64-linux-gnu/libSDL2.so",
+        "libjudas_glad.a",
+        "libjudas_audio_backend.a",
+        "libjudas_meshoptimizer.a",
+        "libjudas_navigation_cook.a",
+        "libjudas_navigation_backend.a",
+        "libjudas_quickjs.a",
+        "-lm",
+        "libjudas_profiler.a",
+        "_deps/judas_freetype-build/libfreetype.a",
+        "_deps/judas_harfbuzz-build/libharfbuzz.a",
+        "unicode/icu/lib/libicui18n.a",
+        "unicode/icu/lib/libicuuc.a",
+        "unicode/icu/lib/libicudata.a",
+        "-ldl",
+        "libjudas_jobs.a"
+      ],
+      "protocol": [
+        [
+          "/home/conner/Documents/GitHub/Project-Judas/.cache/persistent-contact-20261021/cold-public-paired/baseline",
+          "/home/conner/Documents/GitHub/Project-Judas/.cache/persistent-contact-20261021/cold-public-paired/baseline-slots",
+          "write",
+          "calm"
+        ],
+        [
+          "/home/conner/Documents/GitHub/Project-Judas/.cache/persistent-contact-20261021/cold-public-paired/baseline",
+          "/home/conner/Documents/GitHub/Project-Judas/.cache/persistent-contact-20261021/cold-public-paired/baseline-slots",
+          "read",
+          "calm"
+        ],
+        [
+          "/home/conner/Documents/GitHub/Project-Judas/.cache/persistent-contact-20261021/cold-public-paired/baseline",
+          "/home/conner/Documents/GitHub/Project-Judas/.cache/persistent-contact-20261021/cold-public-paired/baseline-slots",
+          "read-repeat",
+          "calm"
+        ],
+        [
+          "/home/conner/Documents/GitHub/Project-Judas/.cache/persistent-contact-20261021/cold-public-paired/baseline",
+          "/home/conner/Documents/GitHub/Project-Judas/.cache/persistent-contact-20261021/cold-public-paired/baseline-slots",
+          "missing-contact",
+          "calm"
+        ],
+        [
+          "/home/conner/Documents/GitHub/Project-Judas/.cache/persistent-contact-20261021/cold-public-paired/baseline",
+          "/home/conner/Documents/GitHub/Project-Judas/.cache/persistent-contact-20261021/cold-public-paired/baseline-slots",
+          "truncated-contact",
+          "calm"
+        ],
+        [
+          "/home/conner/Documents/GitHub/Project-Judas/.cache/persistent-contact-20261021/cold-public-paired/baseline",
+          "/home/conner/Documents/GitHub/Project-Judas/.cache/persistent-contact-20261021/cold-public-paired/baseline-slots",
+          "write",
+          "impacted"
+        ],
+        [
+          "/home/conner/Documents/GitHub/Project-Judas/.cache/persistent-contact-20261021/cold-public-paired/baseline",
+          "/home/conner/Documents/GitHub/Project-Judas/.cache/persistent-contact-20261021/cold-public-paired/baseline-slots",
+          "read",
+          "impacted"
+        ],
+        [
+          "/home/conner/Documents/GitHub/Project-Judas/.cache/persistent-contact-20261021/cold-public-paired/baseline",
+          "/home/conner/Documents/GitHub/Project-Judas/.cache/persistent-contact-20261021/cold-public-paired/baseline-slots",
+          "read-repeat",
+          "impacted"
+        ],
+        [
+          "/home/conner/Documents/GitHub/Project-Judas/.cache/persistent-contact-20261021/cold-public-paired/baseline",
+          "/home/conner/Documents/GitHub/Project-Judas/.cache/persistent-contact-20261021/cold-public-paired/baseline-slots",
+          "missing-contact",
+          "impacted"
+        ],
+        [
+          "/home/conner/Documents/GitHub/Project-Judas/.cache/persistent-contact-20261021/cold-public-paired/baseline",
+          "/home/conner/Documents/GitHub/Project-Judas/.cache/persistent-contact-20261021/cold-public-paired/baseline-slots",
+          "truncated-contact",
+          "impacted"
+        ]
+      ]
+    },
+    {
+      "name": "control",
+      "core": "/home/conner/Documents/GitHub/Project-Judas/build/libjudas_engine.a",
+      "core_sha256": "6b57d6c554c728a92afeb227581a863c41be9246cd2790aefe41afb3e047b4b7",
+      "link": [
+        "/usr/bin/c++",
+        "-O3",
+        "-DNDEBUG",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/persistent-contact-20261021/cold-public-paired/ColdSupportSnapshot.cpp.o",
+        "-o",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/persistent-contact-20261021/cold-public-paired/control",
+        "/home/conner/Documents/GitHub/Project-Judas/build/libjudas_engine.a",
+        "libjudas_build_identity.a",
+        "libjudas_app_icon.a",
+        "libjudas_materials.a",
+        "/usr/lib/x86_64-linux-gnu/libSDL2.so",
+        "libjudas_glad.a",
+        "libjudas_audio_backend.a",
+        "libjudas_meshoptimizer.a",
+        "libjudas_navigation_cook.a",
+        "libjudas_navigation_backend.a",
+        "libjudas_quickjs.a",
+        "-lm",
+        "libjudas_profiler.a",
+        "_deps/judas_freetype-build/libfreetype.a",
+        "_deps/judas_harfbuzz-build/libharfbuzz.a",
+        "unicode/icu/lib/libicui18n.a",
+        "unicode/icu/lib/libicuuc.a",
+        "unicode/icu/lib/libicudata.a",
+        "-ldl",
+        "libjudas_jobs.a"
+      ],
+      "protocol": [
+        [
+          "/home/conner/Documents/GitHub/Project-Judas/.cache/persistent-contact-20261021/cold-public-paired/control",
+          "/home/conner/Documents/GitHub/Project-Judas/.cache/persistent-contact-20261021/cold-public-paired/control-slots",
+          "write",
+          "calm"
+        ],
+        [
+          "/home/conner/Documents/GitHub/Project-Judas/.cache/persistent-contact-20261021/cold-public-paired/control",
+          "/home/conner/Documents/GitHub/Project-Judas/.cache/persistent-contact-20261021/cold-public-paired/control-slots",
+          "read",
+          "calm"
+        ],
+        [
+          "/home/conner/Documents/GitHub/Project-Judas/.cache/persistent-contact-20261021/cold-public-paired/control",
+          "/home/conner/Documents/GitHub/Project-Judas/.cache/persistent-contact-20261021/cold-public-paired/control-slots",
+          "read-repeat",
+          "calm"
+        ],
+        [
+          "/home/conner/Documents/GitHub/Project-Judas/.cache/persistent-contact-20261021/cold-public-paired/control",
+          "/home/conner/Documents/GitHub/Project-Judas/.cache/persistent-contact-20261021/cold-public-paired/control-slots",
+          "missing-contact",
+          "calm"
+        ],
+        [
+          "/home/conner/Documents/GitHub/Project-Judas/.cache/persistent-contact-20261021/cold-public-paired/control",
+          "/home/conner/Documents/GitHub/Project-Judas/.cache/persistent-contact-20261021/cold-public-paired/control-slots",
+          "truncated-contact",
+          "calm"
+        ],
+        [
+          "/home/conner/Documents/GitHub/Project-Judas/.cache/persistent-contact-20261021/cold-public-paired/control",
+          "/home/conner/Documents/GitHub/Project-Judas/.cache/persistent-contact-20261021/cold-public-paired/control-slots",
+          "write",
+          "impacted"
+        ],
+        [
+          "/home/conner/Documents/GitHub/Project-Judas/.cache/persistent-contact-20261021/cold-public-paired/control",
+          "/home/conner/Documents/GitHub/Project-Judas/.cache/persistent-contact-20261021/cold-public-paired/control-slots",
+          "read",
+          "impacted"
+        ],
+        [
+          "/home/conner/Documents/GitHub/Project-Judas/.cache/persistent-contact-20261021/cold-public-paired/control",
+          "/home/conner/Documents/GitHub/Project-Judas/.cache/persistent-contact-20261021/cold-public-paired/control-slots",
+          "read-repeat",
+          "impacted"
+        ],
+        [
+          "/home/conner/Documents/GitHub/Project-Judas/.cache/persistent-contact-20261021/cold-public-paired/control",
+          "/home/conner/Documents/GitHub/Project-Judas/.cache/persistent-contact-20261021/cold-public-paired/control-slots",
+          "missing-contact",
+          "impacted"
+        ],
+        [
+          "/home/conner/Documents/GitHub/Project-Judas/.cache/persistent-contact-20261021/cold-public-paired/control",
+          "/home/conner/Documents/GitHub/Project-Judas/.cache/persistent-contact-20261021/cold-public-paired/control-slots",
+          "truncated-contact",
+          "impacted"
+        ]
+      ]
+    }
+  ],
+  "results": [
+    {
+      "name": "baseline",
+      "link_exit": 0,
+      "protocol": [
+        {
+          "argv": [
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/persistent-contact-20261021/cold-public-paired/baseline",
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/persistent-contact-20261021/cold-public-paired/baseline-slots",
+            "write",
+            "calm"
+          ],
+          "exit": 1
+        }
+      ],
+      "binary_sha256": "2055a649d1e398f165e50a97ac13db3bec9540b53629ac4badec48b426bc2cae"
+    },
+    {
+      "name": "control",
+      "link_exit": 0,
+      "protocol": [
+        {
+          "argv": [
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/persistent-contact-20261021/cold-public-paired/control",
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/persistent-contact-20261021/cold-public-paired/control-slots",
+            "write",
+            "calm"
+          ],
+          "exit": 1
+        }
+      ],
+      "binary_sha256": "254ac2e7bdbf859678c3166580b1ccbf0e57df9963ffd93554b7510ec2f41241"
+    }
+  ],
+  "notes": [
+    "No contact warm cache is read, injected or serialized by this probe.",
+    "WorldPersistence, GameSnapshot and SaveStorage perform actual public capture/restoration.",
+    "Every reader is a new process; negative controls mutate only in-memory participant copies.",
+    "No generic exact trajectory promise is inferred from narrowly qualified M70/M77 contracts."
+  ],
+  "compile_exit": 0,
+  "cores_unchanged": true,
+  "source_unchanged": true,
+  "positive_and_negative_protocols_passed": false
+}

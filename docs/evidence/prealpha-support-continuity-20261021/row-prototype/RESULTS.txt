@@ -1,0 +1,43 @@
+PRIVATE EXACT ROW DEPENDENCY EXPERIMENT — FINAL
+===============================================
+
+Decision: NOT ADOPTED. Correctness prototype passes; no demonstrated net benefit.
+
+The native900 run's actual renderer log confirms NVIDIA GeForce GTX970 /
+NVIDIA580.178.04, matching the reference. The same unchanged room1024 workload,
+60Hz cadence, ten sweeps, materials, original CCD and profiling-off settings were
+used. The private archive overlays only ContactSolver.cpp and ImpactSolver.cpp
+on final core6b57d6c554c7; no class/header layout change.
+
+All900 digests, workload counts, speed maxima and finite-state observations match
+exactly. Endpoint population1024 and deepest overlap0.0050070729133087m match.
+
+Fixed-step costs (ms), reference -> private dependency scheduler:
+Mean   17.780233 -> 17.930045 (+0.843%)
+Median 16.211150 -> 16.444863
+p95    28.337376 -> 28.551366
+Worst  61.330680 -> 61.220540
+Quantiles here use the shared comparison utility's linear interpolation.
+
+This single matched run shows no net improvement; its small difference is within
+repeat/environment variation and is not claimed as a proven slowdown. The extra
+state/checking complexity is therefore not justified for production. No further
+workloads or optimization attempts were run. Warm initial-guess ownership is the
+independently demonstrated primary correction.
+
+Positive controls:26 focused dependency assertions,300 original seeded exact
+randomized row cases,50 existing growing-impact assertions; all pass. The random
+oracle skips281484/878345 kernels exactly, but this synthetic skip rate is not an
+end-to-end speed claim. Three broken mechanisms fail independently: missing
+endpoint invalidation6 failures; missing own-accumulator dependency2; missing
+target invalidation2. Commands/logs/source/binary hashes are preserved under
+experiment/BUILD_AND_ORACLES.json and COMMANDS.json.
+
+The FIRST sandbox900 run silently selected Mesa llvmpipe CPU rendering. Its
+physical/work parity is valid, but its timing is NOT a matched native result and
+must not be used as performance evidence. Preserve run900/ and
+RUN900_BACKEND_MISMATCH.json; the corrected native run is run900-native/.
+
+Production source was not changed for this prototype. Original source and the
+predicted-expensive adjacency draft remain private evidence. No commit/push/tag
+or performance acceptance is implied. CPU lane was returned to root.

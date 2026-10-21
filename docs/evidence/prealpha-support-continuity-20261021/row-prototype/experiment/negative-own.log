@@ -1,0 +1,3 @@
+FAIL own-accumulator changes cannot be declared clean from rounded body updates
+FAIL all ten own-state-only evaluations remain necessary
+{"checks":26,"failures":2,"considered":106,"evaluated":73,"skipped":33,"accumulator_only":1}

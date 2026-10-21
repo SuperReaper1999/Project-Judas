@@ -25,8 +25,18 @@ open; no new human acceptance or main promotion is implied.
 The subsequent [persistent-contact and growing-impact redesign](PREALPHA_INCREMENTAL_IMPACTS.md)
 removes the demonstrated re-projection of unrelated resting residuals. Matched
 600-step Linux physics cost falls from 67.57 to 30.98 ms mean, with a 535.21 to
-104.85 ms worst step. Dense live rendering remains far below 24–30 FPS. This is
-Experimental qualification, not human acceptance or closure of the stress limit.
+104.85 ms worst step. That checkpoint's dense live rendering remained far below
+24–30 FPS. This is historical Experimental qualification, not human acceptance.
+
+The subsequent [support-history correction](PREALPHA_SUPPORT_CONTINUITY.txt)
+addresses the remaining feedback loop: eligible impacts were erasing ordinary
+support guesses and repeatedly cold-starting the next fixed-step solve. The
+matched final live reproduction reaches about 36.5 FPS in its late window on the
+Ryzen 5 5600, with unchanged scene, 60 Hz cadence, CCD and iteration counts.
+The whole capture averages 28.9 FPS, but the busy 10–20 second settling window
+still averages 9.9 FPS. Trajectories change and transient penetration remains
+measurable; this is scoped Linux qualification pending human testing, not
+all-phase smoothness or general 60 Hz certification.
 
 ## Evidence and acceptance history
 

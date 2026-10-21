@@ -1590,6 +1590,7 @@ add_executable(judas_impact_support_sets_tests tests/ImpactSupportSetsTests.cpp)
 target_include_directories(judas_impact_support_sets_tests PRIVATE src)
 judas_warnings(judas_impact_support_sets_tests)
 judas_add_engine_test(judas_support_continuation_tests tests/SupportContinuationTests.cpp)
+judas_add_engine_test(judas_support_guess_ownership_tests tests/SupportGuessOwnershipTests.cpp)
 
 # Direct headless fixtures need the complete private world implementation and
 # borrowed-job service, without renderer/window/resource ownership. Check both

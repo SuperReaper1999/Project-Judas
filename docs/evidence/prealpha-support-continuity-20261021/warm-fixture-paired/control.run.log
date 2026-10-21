@@ -1,0 +1,16 @@
+cold_reference mass=0.125 upward=0 warm_v=0 cold_v=0
+cold_reference mass=0.125 upward=2 warm_v=1.8365001678466797 cold_v=1.8364999294281006
+cold_reference mass=0.125 upward=50 warm_v=49.836494445800781 cold_v=49.836498260498047
+cold_reference mass=1 upward=0 warm_v=0 cold_v=0
+cold_reference mass=1 upward=2 warm_v=1.8365001678466797 cold_v=1.8364999294281006
+cold_reference mass=1 upward=50 warm_v=49.836498260498047 cold_v=49.836498260498047
+cold_reference mass=16 upward=0 warm_v=0 cold_v=0
+cold_reference mass=16 upward=2 warm_v=1.8364999294281006 cold_v=1.8364999294281006
+cold_reference mass=16 upward=50 warm_v=49.836498260498047 cold_v=49.836498260498047
+cold_reference mass=128 upward=0 warm_v=0 cold_v=0
+cold_reference mass=128 upward=2 warm_v=1.8364999294281006 cold_v=1.8364999294281006
+cold_reference mass=128 upward=50 warm_v=49.836498260498047 cold_v=49.836498260498047
+new_inelastic incoming=0.25 events=2 final_kinetic=0.010416666734382296
+new_inelastic incoming=50 events=3 final_kinetic=416.66666666666788
+elastic_return events=3 reversals=3
+Warm guess checks=691 failures=0

@@ -1,0 +1,90 @@
+{
+  "1-300": {
+    "n": 300,
+    "mean_ms": 17.404296893333335,
+    "median_ms": 15.3083645,
+    "p95_ms": 29.364487,
+    "worst_ms": 54.066272,
+    "events": 3156,
+    "queries": 675397,
+    "awake_final": 1024,
+    "sleeping_final": 128
+  },
+  "301-600": {
+    "n": 300,
+    "mean_ms": 44.66011222666667,
+    "median_ms": 42.4504915,
+    "p95_ms": 79.690326,
+    "worst_ms": 104.236588,
+    "events": 1799,
+    "queries": 1830822,
+    "awake_final": 1021,
+    "sleeping_final": 131
+  },
+  "601-900": {
+    "n": 300,
+    "mean_ms": 51.59637772666667,
+    "median_ms": 49.056675,
+    "p95_ms": 88.428305,
+    "worst_ms": 125.123348,
+    "events": 1073,
+    "queries": 1533908,
+    "awake_final": 1023,
+    "sleeping_final": 129
+  },
+  "901-1200": {
+    "n": 300,
+    "mean_ms": 62.26920480333333,
+    "median_ms": 60.3837985,
+    "p95_ms": 107.652603,
+    "worst_ms": 170.924283,
+    "events": 1116,
+    "queries": 1918195,
+    "awake_final": 1022,
+    "sleeping_final": 130
+  },
+  "1201-1500": {
+    "n": 300,
+    "mean_ms": 65.71406532666667,
+    "median_ms": 63.9629885,
+    "p95_ms": 115.925314,
+    "worst_ms": 132.635648,
+    "events": 1135,
+    "queries": 2003218,
+    "awake_final": 1022,
+    "sleeping_final": 130
+  },
+  "1501-1800": {
+    "n": 300,
+    "mean_ms": 62.88777876666666,
+    "median_ms": 56.626763,
+    "p95_ms": 119.89942,
+    "worst_ms": 297.794964,
+    "events": 1074,
+    "queries": 1873278,
+    "awake_final": 1019,
+    "sleeping_final": 133
+  },
+  "300-900": {
+    "n": 601,
+    "mean_ms": 48.08294605324459,
+    "median_ms": 45.589797,
+    "p95_ms": 83.193662,
+    "worst_ms": 125.123348,
+    "events": 2877,
+    "queries": 3365067,
+    "awake_final": 1023,
+    "sleeping_final": 129
+  },
+  "901-1800": {
+    "n": 900,
+    "mean_ms": 63.62368296555555,
+    "median_ms": 60.5474175,
+    "p95_ms": 115.925314,
+    "worst_ms": 297.794964,
+    "events": 3325,
+    "queries": 5794691,
+    "awake_final": 1019,
+    "sleeping_final": 133
+  }
+}

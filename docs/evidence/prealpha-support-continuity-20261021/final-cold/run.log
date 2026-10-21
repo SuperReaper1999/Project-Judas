@@ -1,0 +1,4 @@
+character-cold-write exit 0 pass True
+character-cold-read exit 0 pass True
+balance-cold-write exit 0 pass True
+balance-cold-read exit 0 pass True

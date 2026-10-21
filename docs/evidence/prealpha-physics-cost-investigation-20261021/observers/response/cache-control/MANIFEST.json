@@ -1,0 +1,17 @@
+{
+  "purpose": "private bounded causal candidate-cache control; observations disabled; no production edits",
+  "production_inputs": {
+    "src/physics/WorldIncrementalImpact.cpp": "dd4cc421db0910d17989619e7bb87f3a37019d0bac075482de0d5354df217c29",
+    "src/physics/WorldImpactEvents.cpp": "4b34e7184a953ac0c55ec5cf95179c254eaf9c1702092b0ecb7f428bfb5499b7",
+    "src/physics/WorldIncrementalImpact.h": "78424f787abdb082dfdb6adcbefd7818576b311395d8aebd566d56261683cf8d",
+    "src/physics/ImpactCandidateCache.h": "17a6efa64a9a5dfd5663cd14790f19cfd96c874a589283f9b62d97b179df112d"
+  },
+  "outputs": {
+    "WorldIncrementalImpact.original.cpp": "dd4cc421db0910d17989619e7bb87f3a37019d0bac075482de0d5354df217c29",
+    "WorldImpactEvents.cpp": "c202effb9e59fb172630060c15c38b14ed5d836003513a148194825e7119159d",
+    "WorldImpactEvents.original.cpp": "4b34e7184a953ac0c55ec5cf95179c254eaf9c1702092b0ecb7f428bfb5499b7",
+    "WorldIncrementalImpact.cpp": "d785d9a8a641986332fefb628e02587fe0b4adbe41390a5489ba648e66906987",
+    "CacheControl.h": "85fc43a7ebf1913a92095ae4dc01b7d28430710efdbb7c83c62bbe9f56f43e16",
+    "WorldIncrementalImpact.h": "78424f787abdb082dfdb6adcbefd7818576b311395d8aebd566d56261683cf8d"
+  }
+}

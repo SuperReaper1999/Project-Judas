@@ -1,0 +1,128 @@
+{
+  "schema": "judas.private-row-dependency-result.v1",
+  "classification": "correctness-prototype-passes-no-demonstrated-net-performance-benefit-not-adopted",
+  "algorithm": "Ordered existing ten sweeps; exact endpoint velocity/inverse-mass revisions plus own-accumulator idempotence certificate; no magnitude threshold or changed activation/append order.",
+  "backend_verification": {
+    "reference": "Graphics: 3.3.0 NVIDIA 580.178.04 / NVIDIA GeForce GTX 970/PCIe/SSE2",
+    "native_diagnostic": "Graphics: 3.3.0 NVIDIA 580.178.04 / NVIDIA GeForce GTX 970/PCIe/SSE2",
+    "source": "actual runtime logs, not merely requested environment flags",
+    "native_log_sha256": "f02271ce3cb596848427e904f5f33885fbaaff2b4d399148f828b624c28ea772"
+  },
+  "normal_core_sha256": "6b57d6c554c728a92afeb227581a863c41be9246cd2790aefe41afb3e047b4b7",
+  "private_core_sha256": "46958b11935bb87e017fb88c5ab560cb942ea6c937bbea8b7874cb735c6ac034",
+  "private_binary_sha256": "d759744c765591f46f5015873dec17ecc8eba1975d48d196f3d409b24bfcff8a",
+  "native_completed_steps": 900,
+  "native_exit": 0,
+  "native_receipt_integrity": {
+    "source_inputs_unchanged": true,
+    "binary_unchanged": true,
+    "core_unchanged": true,
+    "fixture_unchanged": true
+  },
+  "parity": {
+    "complete_window_digest_parity": true,
+    "all_available_workload_counters_match": true,
+    "physical_observations": {
+      "max_linear_speed": {
+        "available_in_both": true,
+        "parity": true,
+        "mismatches": []
+      },
+      "max_angular_speed": {
+        "available_in_both": true,
+        "parity": true,
+        "mismatches": []
+      },
+      "nonfinite_fields": {
+        "available_in_both": true,
+        "parity": true,
+        "mismatches": []
+      }
+    }
+  },
+  "fixed_step_ms": {
+    "available_in_both": true,
+    "baseline": {
+      "count": 900,
+      "finite_count": 900,
+      "nonfinite_count": 0,
+      "mean": 17.780232856666665,
+      "median": 16.21115,
+      "p95": 28.337375549999997,
+      "worst": 61.33068,
+      "total": 16002.209571
+    },
+    "diagnostic": {
+      "count": 900,
+      "finite_count": 900,
+      "nonfinite_count": 0,
+      "mean": 17.930044624444445,
+      "median": 16.444862999999998,
+      "p95": 28.55136629999999,
+      "worst": 61.22054,
+      "total": 16137.040162
+    },
+    "paired_diagnostic_minus_baseline": {
+      "count": 900,
+      "finite_count": 900,
+      "nonfinite_count": 0,
+      "mean": 0.14981176777777777,
+      "median": 0.11503400000000052,
+      "p95": 1.1070722999999998,
+      "worst": 9.429247,
+      "total": 134.830591
+    },
+    "ratios_diagnostic_over_baseline": {
+      "mean": 1.0084257483569237,
+      "median": 1.0144168057170526,
+      "p95": 1.0075515373547002,
+      "worst": 0.9982041614408971,
+      "total": 1.0084257483569237
+    }
+  },
+  "positive_oracles": {
+    "dependency": {
+      "checks": 26,
+      "failures": 0,
+      "considered": 106,
+      "evaluated": 82,
+      "skipped": 24,
+      "accumulator_only": 10
+    },
+    "tracked_random": {
+      "checks": 300,
+      "failures": 0,
+      "considered": 878345,
+      "evaluated": 596861,
+      "skipped": 281484,
+      "accumulator_only": 38
+    },
+    "growing": {
+      "checks": 50,
+      "failures": 0
+    }
+  },
+  "negative_controls": {
+    "missing_endpoint_dependency": {
+      "checks": 26,
+      "failures": 6
+    },
+    "missing_own_accumulator_dependency": {
+      "checks": 26,
+      "failures": 2
+    },
+    "missing_target_invalidation": {
+      "checks": 26,
+      "failures": 2
+    }
+  },
+  "initial_sandbox_run": {
+    "path": "run900",
+    "classification": "valid-exact-physical-parity-invalid-matched-performance",
+    "actual_renderer": "Mesa llvmpipe CPU software rendering",
+    "reason": "Reference used native NVIDIA; software-render CPU contention makes timing attribution invalid. Original run and backend-mismatch receipt retained."
+  },
+  "conclusion": "Native mean is about0.84% slower; one matched repeat demonstrates no net benefit. Treat difference as repeat/environment noise, not a proven slowdown. Reject additional scheduling complexity for this correction; no more runs. Warm-guess ownership repair remains the demonstrated primary improvement.",
+  "production_adoption": false,
+  "production_files_changed_by_prototype": []
+}

@@ -1,0 +1,4 @@
+  File "/home/conner/Documents/GitHub/Project-Judas/.cache/physics-exhaustive-profile-20261021/finalize.py", line 32
+    live=name=='live35-sampled';n=1800 if name in ['long1800','observed1800-late']else900
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+SyntaxError: expected 'else' after 'if' expression

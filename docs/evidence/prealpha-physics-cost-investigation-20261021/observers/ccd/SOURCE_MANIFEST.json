@@ -1,0 +1,82 @@
+{
+  "source_commit": "f5624f0bb4f92ece7211199ca8fe51abc08a2b19",
+  "production_changes": false,
+  "compiled_or_executed": false,
+  "files": [
+    {
+      "path": "WorldCCDSearch.cpp",
+      "original_path": "src/physics/WorldCCDSearch.cpp",
+      "original_sha256": "3be8ec99e65da3ff643c9a45c0d0d5dcfbde3b78054a2ee65167ecf49aea500d",
+      "observer_sha256": "4e7cf9040ddb70ffc7458e5e4934c790e666e0c773101ad4cb9bda448857e05c",
+      "byte_exact_copy": false
+    },
+    {
+      "path": "WorldImpactQueries.h",
+      "original_path": "src/physics/WorldImpactQueries.h",
+      "original_sha256": "9ba01fb837b1a1dcfbf0e3d4b60b8ab63873d92b18321ea2186ed1254f9d25f8",
+      "observer_sha256": "f40762a6b80a89153d641a198960f4a7c2d156843ecbaeb00cd41d2cc23ee80a",
+      "byte_exact_copy": false
+    },
+    {
+      "path": "WorldInternal.h",
+      "original_path": "src/physics/WorldInternal.h",
+      "original_sha256": "8ec1cd43af864829a606311e75a1916f81e9444be2dc007b254ae6151fd6b69a",
+      "observer_sha256": "8ec1cd43af864829a606311e75a1916f81e9444be2dc007b254ae6151fd6b69a",
+      "byte_exact_copy": true
+    },
+    {
+      "path": "WorldHotAccessors.h",
+      "original_path": "src/physics/WorldHotAccessors.h",
+      "original_sha256": "600bec28d7b5d07b5a922136699ffa69c36c759484c7b8449f045c2df6ea4b1f",
+      "observer_sha256": "600bec28d7b5d07b5a922136699ffa69c36c759484c7b8449f045c2df6ea4b1f",
+      "byte_exact_copy": true
+    },
+    {
+      "path": "CCDAudit.h",
+      "observer_sha256": "8203b6f497f487d90ceb7b14ae9b2b56b66e16161a1ab98ea6af468cd2a0b73b"
+    },
+    {
+      "path": "README.md",
+      "observer_sha256": "98a700b1ab83ff914fb04b5bcebc051765192205aeb721ce3e36fac59a1c1061"
+    },
+    {
+      "path": "SOURCE_REVIEW.md",
+      "observer_sha256": "ffd44ec01070f3a20c099e041bd9229a2a970c8676b5f9ff0cd29e474fa36401"
+    },
+    {
+      "path": "analyze_ccd.py",
+      "observer_sha256": "12f1c28a71ddebd93fa1c168b8776686280f6ddc047bae585d2c0464258e0231"
+    },
+    {
+      "path": "OBSERVED900_FINDINGS.md",
+      "observer_sha256": "21adf205c34cb2b4b9ec5d53a4a49e4de95e31333540be91a1949adccb448710"
+    },
+    {
+      "path": "observed900-summary.json",
+      "observer_sha256": "10169594b659e92857f3722a4515240e8701b01ce860e581cb49f552a34c178f"
+    },
+    {
+      "path": "observed900-summary.md",
+      "observer_sha256": "95619dc65841a4088a2c45e779ca5b15a25b49040d9c3606a2861c32d86be613"
+    },
+    {
+      "path": "OBSERVED1800_LATE_FINDINGS.md",
+      "observer_sha256": "af3135e9189422be496dbb9db1a9658fd3aea0bc3cfeba9b3983cd3dbc3ac62a"
+    },
+    {
+      "path": "observed1800-late-summary.json",
+      "observer_sha256": "b46288a26627701fd38e36185761aaa7f563665c1f2b961ea81b41f36ea446cb"
+    },
+    {
+      "path": "observed1800-late-summary.md",
+      "observer_sha256": "c01e9c123937c65768be7e1b0b68f59e00cc5b85af04b67114c87f803b116f74"
+    }
+  ],
+  "analysis_script_executed": true,
+  "analysis_only_input": "../observed900/ccd.csv",
+  "analysis_only_inputs": [
+    "../observed900/ccd.csv",
+    "../observed1800-late/ccd.csv",
+    "../long1800/steps.csv"
+  ]
+}

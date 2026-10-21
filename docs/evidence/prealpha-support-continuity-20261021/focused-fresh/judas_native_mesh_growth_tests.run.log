@@ -1,0 +1,133 @@
+CASE box identity
+PASS initial finite-footprint contact is absent despite .4m infinite-plane depth
+PASS initial absent finite facet cannot enter actual current-face budget
+PASS unknown future face receives exactly amount without infinite-plane inheritance
+PASS infinite-plane overlap alone never schedules finite contact
+PASS below-threshold shallow query has real finite edge contact
+PASS new actual finite depth below amount remains below event threshold
+PASS authored finite z edge yields actual .02m penetration
+PASS independent native global predicate sees real finite penetration beyond amount
+PASS future face uses default amount without needing a preselected swept-facet entry
+PASS reverse native dispatcher retains finite actual contact
+PASS current finite facet starts with actual .1m penetration
+PASS current face keeps maximum actual accepted depth plus amount
+PASS own actual-depth anchor cannot exceed its budget
+PASS existing actual depth growth below amount does not trigger
+PASS existing actual depth growth beyond amount triggers
+PASS deep current facet has actual .4m penetration
+PASS actual deep current contact is not restricted by rejected .25m cap
+PASS deep current facet keeps unchanged actual-depth growth threshold
+PASS rear-entry native contact stays absent during geometric overlap
+PASS rear entry acquires neither current budget nor future support
+PASS finite-edge miss remains absent while cutting the same infinite plane
+PASS all actual finite features survive regardless of reduced response manifold membership
+PASS two current facets retain distinct actual per-feature depth allowances
+PASS deep global anchor remains .4m and does not exceed itself
+PASS shallow current facet growth .001m remains below unchanged amount
+PASS old global-depth criterion misses shallower facet growth despite unchanged deepest facet
+PASS per-feature growth catches .02m shallow facet that old global .4025m allowance misses
+PASS deep current face anchors continuation while nearby new finite face is absent
+PASS new finite face inherits amount even beside .4m current-face depth
+PASS new face with .001m real penetration remains below unchanged amount
+PASS old global initial-depth allowance misses newly introduced finite-face depth
+PASS new .01m finite-face penetration exceeds default amount inside active continuation
+CASE box arbitrary rotation and translation
+PASS initial finite-footprint contact is absent despite .4m infinite-plane depth
+PASS initial absent finite facet cannot enter actual current-face budget
+PASS unknown future face receives exactly amount without infinite-plane inheritance
+PASS infinite-plane overlap alone never schedules finite contact
+PASS below-threshold shallow query has real finite edge contact
+PASS new actual finite depth below amount remains below event threshold
+PASS authored finite z edge yields actual .02m penetration
+PASS independent native global predicate sees real finite penetration beyond amount
+PASS future face uses default amount without needing a preselected swept-facet entry
+PASS reverse native dispatcher retains finite actual contact
+PASS current finite facet starts with actual .1m penetration
+PASS current face keeps maximum actual accepted depth plus amount
+PASS own actual-depth anchor cannot exceed its budget
+PASS existing actual depth growth below amount does not trigger
+PASS existing actual depth growth beyond amount triggers
+PASS deep current facet has actual .4m penetration
+PASS actual deep current contact is not restricted by rejected .25m cap
+PASS deep current facet keeps unchanged actual-depth growth threshold
+PASS rear-entry native contact stays absent during geometric overlap
+PASS rear entry acquires neither current budget nor future support
+PASS finite-edge miss remains absent while cutting the same infinite plane
+PASS all actual finite features survive regardless of reduced response manifold membership
+PASS two current facets retain distinct actual per-feature depth allowances
+PASS deep global anchor remains .4m and does not exceed itself
+PASS shallow current facet growth .001m remains below unchanged amount
+PASS old global-depth criterion misses shallower facet growth despite unchanged deepest facet
+PASS per-feature growth catches .02m shallow facet that old global .4025m allowance misses
+PASS deep current face anchors continuation while nearby new finite face is absent
+PASS new finite face inherits amount even beside .4m current-face depth
+PASS new face with .001m real penetration remains below unchanged amount
+PASS old global initial-depth allowance misses newly introduced finite-face depth
+PASS new .01m finite-face penetration exceeds default amount inside active continuation
+CASE convex hull identity
+PASS initial finite-footprint contact is absent despite .4m infinite-plane depth
+PASS initial absent finite facet cannot enter actual current-face budget
+PASS unknown future face receives exactly amount without infinite-plane inheritance
+PASS infinite-plane overlap alone never schedules finite contact
+PASS below-threshold shallow query has real finite edge contact
+PASS new actual finite depth below amount remains below event threshold
+PASS authored finite z edge yields actual .02m penetration
+PASS independent native global predicate sees real finite penetration beyond amount
+PASS future face uses default amount without needing a preselected swept-facet entry
+PASS reverse native dispatcher retains finite actual contact
+PASS current finite facet starts with actual .1m penetration
+PASS current face keeps maximum actual accepted depth plus amount
+PASS own actual-depth anchor cannot exceed its budget
+PASS existing actual depth growth below amount does not trigger
+PASS existing actual depth growth beyond amount triggers
+PASS deep current facet has actual .4m penetration
+PASS actual deep current contact is not restricted by rejected .25m cap
+PASS deep current facet keeps unchanged actual-depth growth threshold
+PASS rear-entry native contact stays absent during geometric overlap
+PASS rear entry acquires neither current budget nor future support
+PASS finite-edge miss remains absent while cutting the same infinite plane
+PASS all actual finite features survive regardless of reduced response manifold membership
+PASS two current facets retain distinct actual per-feature depth allowances
+PASS deep global anchor remains .4m and does not exceed itself
+PASS shallow current facet growth .001m remains below unchanged amount
+PASS old global-depth criterion misses shallower facet growth despite unchanged deepest facet
+PASS per-feature growth catches .02m shallow facet that old global .4025m allowance misses
+PASS deep current face anchors continuation while nearby new finite face is absent
+PASS new finite face inherits amount even beside .4m current-face depth
+PASS new face with .001m real penetration remains below unchanged amount
+PASS old global initial-depth allowance misses newly introduced finite-face depth
+PASS new .01m finite-face penetration exceeds default amount inside active continuation
+CASE convex hull arbitrary rotation and translation
+PASS initial finite-footprint contact is absent despite .4m infinite-plane depth
+PASS initial absent finite facet cannot enter actual current-face budget
+PASS unknown future face receives exactly amount without infinite-plane inheritance
+PASS infinite-plane overlap alone never schedules finite contact
+PASS below-threshold shallow query has real finite edge contact
+PASS new actual finite depth below amount remains below event threshold
+PASS authored finite z edge yields actual .02m penetration
+PASS independent native global predicate sees real finite penetration beyond amount
+PASS future face uses default amount without needing a preselected swept-facet entry
+PASS reverse native dispatcher retains finite actual contact
+PASS current finite facet starts with actual .1m penetration
+PASS current face keeps maximum actual accepted depth plus amount
+PASS own actual-depth anchor cannot exceed its budget
+PASS existing actual depth growth below amount does not trigger
+PASS existing actual depth growth beyond amount triggers
+PASS deep current facet has actual .4m penetration
+PASS actual deep current contact is not restricted by rejected .25m cap
+PASS deep current facet keeps unchanged actual-depth growth threshold
+PASS rear-entry native contact stays absent during geometric overlap
+PASS rear entry acquires neither current budget nor future support
+PASS finite-edge miss remains absent while cutting the same infinite plane
+PASS all actual finite features survive regardless of reduced response manifold membership
+PASS two current facets retain distinct actual per-feature depth allowances
+PASS deep global anchor remains .4m and does not exceed itself
+PASS shallow current facet growth .001m remains below unchanged amount
+PASS old global-depth criterion misses shallower facet growth despite unchanged deepest facet
+PASS per-feature growth catches .02m shallow facet that old global .4025m allowance misses
+PASS deep current face anchors continuation while nearby new finite face is absent
+PASS new finite face inherits amount even beside .4m current-face depth
+PASS new face with .001m real penetration remains below unchanged amount
+PASS old global initial-depth allowance misses newly introduced finite-face depth
+PASS new .01m finite-face penetration exceeds default amount inside active continuation
+SUMMARY 128 checks 0 failures

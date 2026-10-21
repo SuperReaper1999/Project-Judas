@@ -1,0 +1,309 @@
+from pathlib import Path
+import json
+r=Path.cwd();w=r/'.cache/physics-exhaustive-profile-20261021';x=json.loads((w/'MEASUREMENTS.json').read_text());v=json.loads((w/'FINAL_VERIFICATION.json').read_text())
+p=r/'docs/PREALPHA_PHYSICS_COST_INVESTIGATION.txt'
+s='''PHYSICS LAB SCENARIO 3 — DEEP CPU INVESTIGATION
+2026-10-21 | selected route: detailed profiling and cause isolation
+
+Result
+======
+The remaining slowdown comes from how a dense, connected support network is
+reconstructed and recertified after successive impacts. The previous correction
+removed false propagation from zero-effect events. Real, often small, represented
+changes still spread through hundreds of bodies. Each arrival reconstructs much
+of the same established support graph at a NEW physical instant, prepares new
+constraint rows, propagates response, then reschedules dependent collision tests.
+
+This is established computational scaling. It is not proof that all resulting
+physics can be skipped. Positions, orientations, motion anchors and intervals
+really differ; old Boolean misses are generally invalid on the new trajectories.
+The appropriate next prototype is persistent, explicitly validated support and
+separation episodes with dependency-driven updates. Another general query cache
+or a larger early-exit threshold would not address the measured work.
+
+No production engine, project, scene, public API or test was changed in this
+investigation. One private candidate-index reuse control was measured, not merged.
+The existing game remains slow. No commit, push, main promotion, M100 work or
+human acceptance is claimed by this investigation.
+
+Baseline and method
+===================
+Experimental f5624f0bb4f92ece7211199ca8fe51abc08a2b19.
+Ryzen 5 5600, 8 GB RAM, GTX 970, native Linux, GCC 15.2.0 Release -O3 -DNDEBUG.
+Actual desktop GL: NVIDIA 580.178.04. Desktop applications remained running;
+recorded host load was low. No simultaneous VM, Android build or heavy benchmark.
+No page swapping reported by the measured processes. This is not a GPU benchmark.
+
+Original room1024.judas: 1024 loose pieces, 1285 total bodies, 96 joints, 60 Hz,
+unchanged ten velocity sweeps, unchanged CCD, original geometry and material data.
+The original non-tour scene was loaded directly; no repeated gameplay impulses
+were injected. Eight-step application catch-up policy was retained for live runs.
+
+Hardware perf events are denied by the host (perf_event_paranoid=4); native perf
+also failed and noninteractive sudo was unavailable. No host security setting
+was changed. CPU occupancy uses a 2 ms main-thread CPU-time signal sampler with
+raw instruction pointers, recorded ELF load mappings and addr2line resolution.
+This does not measure hardware cycles, worker-thread CPU, GPU time or call stacks.
+The ordinary engine archive is unchanged; only the measurement driver adds the
+sampler. Last-completed-step labels are approximate delivery attribution, not
+exact instantaneous current-step labels. 15064 late-window samples, 99.77% named.
+No capacity drops; one reported overrun in the 900-step sampled run. Signal,
+timer and mask cleanup were successful. Live samples confirm the same cost shape.
+
+Exact counters run in a separate private build. Every native geometry query
+still executes. Complete keys retain body/shape identity, directed order, exact
+pose bits, margins and query kind. Repeated results are checked using explicit
+field digests. Request keys additionally retain actual motion segment anchors.
+No result is substituted and no iteration or physics input is changed.
+
+Measured normal operation
+=========================
+Fixed-step costs below include existing game-side fixed-step work; they are not
+claims of displayed FPS. Quantiles use linear interpolation; raw rows are kept.
+
+Workload                         Mean ms  Median ms  p95 ms   Worst ms
+First 900, normal A                 37.78      33.74    77.58     124.89
+First 900, independent normal B     37.47      33.46    76.45     124.65
+Long run, steps 901-1800            63.62      60.55   115.93     297.79
+
+The longer run reaches 30 simulated seconds in about 95.4 seconds of application
+wall time. The worst number is an observed wall-time tail, not independently
+certified as wholly CPU execution without preemption.
+
+Actual visible 35-second run: 895 fixed steps; late display cadence 2.35 FPS;
+mean late frame interval 424.82 ms and eight fixed steps per late frame. The
+normal application is repeatedly doing expensive catch-up work. Changing that
+cap would change simulation throughput; it would not remove the physics cost.
+At 60 Hz physics, sustained throughput still needs about 16.67 ms per step even
+if the presentation target is only 24-30 FPS. That target remains unmet.
+
+Disjoint direct-PC CPU ownership, late sampled normal core
+=======================================================
+                                     Synthetic run   Real live run
+Contact geometry / interval math            27.64%          28.74%
+Bounds / candidates / owned sorting         21.22%          22.25%
+Event / contact / domain processing         19.38%          20.13%
+Constraint response                        14.35%          14.89%
+Physics coordinator / other                 4.75%           5.17%
+Game / runtime / rendering                   5.11%           2.43%
+Explicit allocator routines                  2.46%           2.45%
+Unclassified helpers                         5.09%           3.94%
+
+Every sample is assigned at most once with published source/function rules.
+These are direct sampled instruction ownership, not inclusive call costs.
+Inlining, timer bias and lack of call stacks limit caller attribution. Generic
+helpers stay unclassified where ownership cannot be established. Allocation
+churn exists, but the allocator is not the dominant measured CPU consumer.
+Removing the ENTIRE response-kernel bucket would give only about a 1.17x upper
+bound on this main-thread sample mix. Arithmetic-only solver optimization cannot
+provide the several-fold throughput improvement required here.
+
+What grows as the pile connects
+==============================
+Observed physical step window                 300-900          901-1800
+Observed steps                                   601               900
+Accepted growing events per step                 4.48              3.68
+Mean dynamic bodies per accepted event            363               646
+Mean rows per accepted event                     1137              2341
+Mean finally changed bodies per event             258               474
+Continuing-support fraction of rebuilt rows     99.9095%          99.9564%
+Domain geometry calls per step                  14766             21713
+Growing constraint-row visits per step          41183             69197
+No-accumulator-change row visits                62.02%            64.92%
+Visits after exact whole-sweep fixed point         327               551
+Total growing row visits                    24750778          62277500*
+
+* The exact late total is in the response summary; the displayed value is rounded.
+Fewer events occur later, yet their connected response domains are much larger.
+This is why event-count-only explanations miss the increasing cost.
+
+Important source path through one event
+======================================
+1. PhysicsWorld.cpp publishes ordinary support classifications and solves the
+   fixed-step contacts. WorldImpactEvents.cpp:112 advances the event frontier.
+2. WorldIncrementalImpact.cpp:9 resets a trial. Its header:19 clears visited
+   pairs/rows/keys. Existing support IDs are not persistent prepared constraints.
+3. WorldIncrementalImpact.cpp:32-90 discovers the response domain: per-body tree
+   queries/sorts, pair set lookups, actual geometry, rebuilt rows and body frames.
+4. ImpactSolver.cpp:155-237 clears/reprepares and grows the trial solve, maintaining
+   impulses within that one event but rebuilding again for the next arrival.
+5. WorldImpactEvents.cpp:625-672 invalidates load guesses for changed endpoints;
+   :684-696 publishes replacement motion anchors; :717-752 finds dirty neighbours
+   and schedules new collision work. WorldCCDSearch.cpp:558 onward recertifies
+   those new trajectories.
+6. The next arrival repeats the process. Late domains commonly involve much of
+   the pile. This combines discovery, geometric certification and response costs.
+
+Evidence distinguishing genuine waste from attractive guesses
+=============================================================
+A. Exact query memoization is negligible here.
+   Steps300-900: 113/11530621 manifold calls repeat exactly (0.00098%);
+   1743/2636150 Boolean calls repeat (0.06612%).
+   Steps901-1800: 1428/25593710 manifolds (0.00558%);
+   3215/5848355 Boolean calls (0.05497%).
+   Complete ImpactTime input repeats: ZERO in both observed windows.
+   No record overflows or repeated-result disagreements. Late maximum combined
+   retained keys227353, below262144. Literal repeated geometry consumes only
+   2.791 ms TOTAL in the later900 instrumented steps. This cannot solve the lag.
+
+B. No-impact results are frequent but mostly belong to DIFFERENT trajectories.
+   99.858% and99.874% of ImpactTime calls return no impact. Rescheduled requests
+   are99.910% and99.927% misses. Only4 and428 recurrent requests respectively
+   share start geometry, with velocity/interval/motion anchors changed.
+   Existing whole-remainder swept bounds have already filtered broad misses.
+   Most retained searches take about one advancement iteration (1.025 /1.013).
+   No penetration-threshold search is exercised in these windows. This is not
+   a runaway curved-mesh refinement loop. Box/sphere pile response dominates.
+   Reusing old false answers requires a retained conservative separating proof,
+   not merely equality of pair IDs or an assertion that velocities changed little.
+
+C. Response-domain discovery is the larger manifold workload.
+   It accounts for76.96% /76.35% of instrumented manifold calls. Repeated pair
+   lookups within a domain are already deduplicated before native geometry.
+   About35% of pair-set attempts repeat, which is bookkeeping, not duplicate SAT.
+   A small impact nevertheless leads to extensive new-pose support reconstruction.
+
+D. Whole-solve early exit is not an effective correction.
+   Many individual row visits change nothing, but other rows continue changing
+   their endpoints. Only327/24.75 million and551/62.28 million visits occur after
+   a completely idle sweep with no appended rows. Skipping a row forever after
+   one quiet visit would be wrong. Changes in its own accumulated impulse matter
+   even when rounded body updates are zero:497471 such visits occur in the first
+   observed window. Correct row reuse needs endpoint AND own-state dependencies.
+
+E. Candidate-cache bypass is real but small.
+   The growing path directly calls QuerySlots at WorldIncrementalImpact.cpp:79.
+   Fallback island discovery and dirty scheduling already use impactCandidates
+   at WorldImpactEvents.cpp:401 /723. A PRIVATE control routed growing discovery
+   through that same conservative candidate cache; contact truth was never reused.
+   Exact sorted candidates, proxy invalidation and fallback rules are retained.
+   Mean A:37.78 ->36.41 ms (3.63% reduction); repeat B:37.47 ->36.06 ms (3.75%).
+   P95 A:77.58 ->72.92; B:76.45 ->72.10. All900 digests and work counters match.
+   The diagnostic TLS callback is not a proposed production API. No broad
+   regressions were run for this private variation; it is not release-qualified
+   or installed into the editor. It establishes a modest opportunity, not closure.
+
+F. Queue and allocation traffic are measurable secondary costs.
+   87.67% /87.47% of activation inputs are already-expanded bodies. Pending batch
+   duplicates are zero. Forced-gravity queue scans are zero, disproving that lead.
+   8.87 million then19.54 million retained visited-set nodes are allocated across
+   the observed windows, plus range/activation/list growth. These are lower bounds
+   on calls/payload, not peak RSS or total allocations; direct allocator CPU is
+   only about2.5%. Reusing owned graph/storage and avoiding known-expanded queue
+   work is justified to prototype, but cannot be presented as the entire problem.
+
+G. Warm continuation deserves ownership work, not a blind cache restoration.
+   Initially29.71% of ordinary prepared rows receive nonzero warm guesses; later
+   only20.48%. Events zero previously nonzero entries about2145 /2973 times per
+   step. All growing-impact rows intentionally start with zero event impulse.
+   This shows substantial cold reconstruction. It DOES NOT prove old loads are
+   valid after impact, or establish a one-to-one lost-warm-start fraction. A repair
+   must distinguish continuous support forces from new impact impulses correctly.
+
+H. Quiet bodies cannot simply be forced asleep.
+   Existing unchanged sleep trace: at step900 a965-body island has maximum linear
+   speed0.413 m/s, angular speed1.832 rad/s, supported=true, quiet=false. At step600
+   a950-body island has speed2.01 m/s and spin5.22 rad/s. These exceed the actual
+   sleep limits. Forcing sleep would hide represented physical motion. The trace
+   itself is expensive and is excluded from authoritative timing comparisons.
+
+I. Small changes are not automatically roundoff-only changes.
+   73.28% /77.49% of changed-body observations have all linear/angular component
+   deltas <=1e-5; only4.90% /4.99% stay within one ordered ULP in every component.
+   These are mixed-unit diagnostic bins, not physical tolerances. No epsilon,
+   island limit, impulse cutoff, CCD budget or reduced cadence was introduced.
+
+Qualification and limits
+========================
+All900 physical digests, velocity maxima, nonfinite counts and workload counters
+match for normal repeats, sampling, disabled observation, full observation,
+stage observation, sleep trace and both candidate-cache controls. New runs also
+match all600 rows from the previously qualified f562 candidate. All1800 rows of
+the longer ordinary run match the separate late observer. No nonfinite fields.
+Current endpoint native-geometry observations contain all1024 tagged pieces:
+900-step deepest overlap23.60 mm;1800-step21.87 mm, uncertain0. This is endpoint
+coverage, not a new claim that the entire trajectory has zero penetration.
+
+The exact observer slows the first900 run from37.78 to54.22 ms mean. Stage scopes
+alone create7.13 million active scopes over601 observed steps and more than14.25
+million CPU-clock reads, materially perturbing the measured work. These raw spans
+are preserved, but are NOT used as uninstrumented cost percentages or speedups.
+The separate normal-core PC samples provide cost ownership. Timer cleanup and
+physical parity do not eliminate sampling bias or make hardware cycles available.
+
+The first private observer link failed because an archive contains two distinct
+WorldPersistence.cpp.o members. The private builder now reconstructs the ordered
+CMake archive and verifies exact equality to the frozen original before replacing
+specific object paths. The original failure log is retained. A report-packaging
+script syntax failure is also retained; it is unrelated to physics correctness.
+Utilities now parse. No full production-suite rerun or new platform qualification
+was warranted: production behaviour was not edited. Windows/Android were not run.
+
+Recommended next substantial implementation
+==========================================
+1. Extend existing support/contact ownership into a persistent prepared graph.
+   Retain topology and storage across arrivals instead of re-creating established
+   support rows. Give features/normals/witnesses explicit validity and expiration;
+   dirty only changed geometry/material/filter/generation dependencies. Retain a
+   complete native-geometry fallback. Finite features and sidedness must remain
+   correct, particularly under the accepted curved-mesh CCD corrections.
+2. Make response incremental over that graph, preserving valid accumulated state.
+   Track endpoint velocity revisions AND own accumulator state; process affected
+   rows in a defined order. Preserve transient activations, rollback, restitution,
+   unilateral/friction constraints and force-versus-impact ownership. Show that
+   omitted work is idempotent or reactivated by every relevant dependency.
+3. Retain certified separation/contact episodes, not Boolean miss results.
+   Store separating witnesses, conservative slack and expiry; cheaply revalidate
+   projected bounds on replacement trajectories and fall back when proof fails.
+   Measure certificate hit rate and total cost before claiming an improvement.
+
+The prototype must first survive exact controls, the original curved-mesh cases,
+contact/CCD/impact regressions, physical invariants, save continuation and the
+original long/live1024 workload. A changed solve order can legitimately change a
+chaotic pile, but it requires honest trajectory/invariant comparison and negative
+controls. This investigation does not establish that such a prototype will meet
+24-30 displayed FPS; it establishes where it must remove architectural work.
+
+Evidence and reproduction
+=========================
+Companion: docs/evidence/prealpha-physics-cost-investigation-20261021/
+- metadata/MEASUREMENTS.json and RUNS.json: exact settings, raw timing summaries,
+  binary hashes and commands. Earlier run starts were not independently wrapped;
+  log modification timestamps are identified honestly. Matched repeat UTC starts
+  and finishes are recorded explicitly.
+- runs/: raw step/frame/CPU-PC/event/CCD/response tables (gzip), logs, native
+  quality observations, ELF mappings and symbolization.
+- observers/: diagnostic source, source reviews, analysis utilities and notes.
+- as-built-sources/: exact private compiled translation units/headers.
+- baseline/: frozen original source archive and517-input manifest.
+- parity/: complete comparisons and physical/workload matching.
+- metadata/FINAL_VERIFICATION.json: current source, fixture, core and branch refs.
+- MANIFEST.json: SHA256/byte inventory for this evidence set.
+
+The original frozen archive/exact sampled executable remain in the ignored work
+folder .cache/physics-exhaustive-profile-20261021/. Diagnostic builders require
+that exact normal archive hash and original CMake objects; they fail on baseline
+drift. They are not an environment-independent bit-reproducible build promise.
+A clean rebuild on another toolchain must be qualified as a new binary, then run
+against the original fixtures. Original numerical acceptance is not weakened.
+
+On this checkout, after inspecting the frozen metadata:
+  python3 .cache/physics-exhaustive-profile-20261021/build_observers.py sampler
+  python3 .cache/physics-exhaustive-profile-20261021/build_observers.py overlay
+  python3 .cache/physics-exhaustive-profile-20261021/build_cache_control.py
+The recorded RUNS.json supplies each environment and argv. Runs require native
+desktop graphics. Execute CPU-intensive runs sequentially, with no physics lab
+or build left running alongside them. Decompress copied *.csv.gz for offline
+analysis using the supplied scripts. Do not count synthetic one-step frames as
+playable FPS.
+
+Status
+======
+Investigation report/evidence are uncommitted. Engine remains at f5624f0b on
+Experimental; main remains at3ecf26cd. No production source, existing game,
+protected history, independent fluid research or historical evidence changed.
+No runtime configuration/security settings were altered. This is a completed
+profiling investigation, not a claimed completed performance correction.
+'''
+p.write_text(s)
+print(p)

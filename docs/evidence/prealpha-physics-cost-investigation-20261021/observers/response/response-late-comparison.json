@@ -1,0 +1,268 @@
+{
+  "observed900-summary.json": {
+    "steps": 601,
+    "first": 300,
+    "last": 900,
+    "accepted": 2695,
+    "rejected": 66,
+    "accepted_per_step": 4.484193011647254,
+    "island": {
+      "count": 2695,
+      "sum": 977738,
+      "mean": 362.7970315398887,
+      "median": 392,
+      "p95": 749,
+      "max": 875
+    },
+    "rows": {
+      "count": 2695,
+      "sum": 3065515,
+      "mean": 1137.4823747680891,
+      "median": 1166,
+      "p95": 2622,
+      "max": 3254
+    },
+    "changed": {
+      "count": 2695,
+      "sum": 694328,
+      "mean": 257.6356215213358,
+      "median": 265,
+      "p95": 566,
+      "max": 716
+    },
+    "continuing": 3062808,
+    "new": 2773,
+    "continuing_fraction": 0.999095440635886,
+    "growing_rows": 24750778,
+    "noacc": 15349811,
+    "noacc_fraction": 0.6201748890479322,
+    "own_acc_change_noendpoint": 497471,
+    "fixed": {
+      "full_sweeps": 26950,
+      "exact_fixed_point_sweeps": 209,
+      "later_fixed_point_sweeps": 181,
+      "later_fixed_point_row_visits": 327,
+      "exact_fixed_point_fraction": 0.007755102040816327,
+      "later_fixed_point_row_fraction": 1.3211705910820257e-05,
+      "range_calls_per_full_sweep": 4.619183673469387
+    },
+    "perstep": {
+      "initialized_bodies": 1631.5424292845257,
+      "expanded_dynamic": 1184.4925124792014,
+      "manifold_queries": 14765.688851913477,
+      "manifold_points": 5100.800332778702,
+      "appended_domain_rows": 5100.800332778702,
+      "growing_rows": 41182.658901830284,
+      "ordinary_rows": 38966.1231281198,
+      "query_candidates": 23772.239600665558,
+      "pair_unique": 14765.688851913477,
+      "pair_duplicates": 7826.65224625624,
+      "callback_activated_inputs": 9533.785357737104,
+      "callback_already_expanded": 8358.28452579035,
+      "solver_sweeps": 44.84193011647255,
+      "solver_append_frame_requests": 1631.322795341098
+    },
+    "dup": {
+      "pair_set_duplicate_fraction": 0.34642944758346905,
+      "callbacks_already_expanded_fraction": 0.8767015631422012,
+      "pending_batch_duplicate_fraction": 0.0,
+      "forced_queue_already_expanded_fraction": null,
+      "forced_queue_scans_per_force_activated_body": null,
+      "spatial_candidates_per_query": 20.069556666853963,
+      "manifold_points_per_query": 0.345449533979425,
+      "continuing_row_fraction": 0.999095440635886
+    },
+    "warm": {
+      "ordinary": {
+        "prepare_rows": 2341864,
+        "normal_nonzero": 695740,
+        "tangent_nonzero": 686296,
+        "any_nonzero": 695740,
+        "zero": 1646124,
+        "normal_sum": 157707.7503999999,
+        "nonzero_fraction": 0.2970881315055016
+      },
+      "legacy": {
+        "prepare_rows": 163918,
+        "normal_nonzero": 0,
+        "tangent_nonzero": 0,
+        "any_nonzero": 0,
+        "zero": 163918,
+        "normal_sum": 0,
+        "nonzero_fraction": 0.0
+      },
+      "growing": {
+        "prepare_rows": 3065515,
+        "normal_nonzero": 0,
+        "tangent_nonzero": 0,
+        "any_nonzero": 0,
+        "zero": 3065515,
+        "normal_sum": 0,
+        "nonzero_fraction": 0.0
+      }
+    },
+    "warmzeroed": 1289246,
+    "warmzeroed_perstep": 2145.1680532445926,
+    "warmsumdiscard": 257846.11713470024,
+    "delta": {
+      "maximum_component_delta_le_1e_7": 328983,
+      "maximum_component_delta_gt_1e_7_le_1e_5": 179855,
+      "maximum_component_delta_gt_1e_5": 185556,
+      "all_components_le_one_ordered_ulp": 33995,
+      "changed_body_observations": 694394,
+      "le_1e_7_fraction": 0.47376993464805284,
+      "le_1e_5_fraction": 0.7327799491355051,
+      "le_one_ulp_fraction": 0.04895635618971362,
+      "max_component_delta": 7.80487,
+      "min_positive_component_delta": 5.42101e-20
+    },
+    "seenalloc": 124487,
+    "visited": 8874179,
+    "timings": {
+      "ns_domain": 20.046461334442597,
+      "ns_solver_growing": 19.46912836439268,
+      "ns_domain_growth": 15.264133916805326,
+      "ns_solver_ranges": 3.308080262895175,
+      "ns_ordinary_rows": 3.1180649816971715,
+      "ns_solver_append": 0.758936840266223,
+      "ns_prepare": 0.3684360183028286,
+      "ns_solver_legacy": 0.31256545757071547,
+      "ns_domain_seed": 0.2425555241264559,
+      "ns_legacy_rows": 0.22322265391014975,
+      "ns_solver_budget": 0.1057777371048253
+    }
+  },
+  "observed1800-late-summary.json": {
+    "steps": 900,
+    "first": 901,
+    "last": 1800,
+    "accepted": 3311,
+    "rejected": 4,
+    "accepted_per_step": 3.678888888888889,
+    "island": {
+      "count": 3311,
+      "sum": 2140349,
+      "mean": 646.4358199939595,
+      "median": 699,
+      "p95": 853,
+      "max": 928
+    },
+    "rows": {
+      "count": 3311,
+      "sum": 7749466,
+      "mean": 2340.5212926608274,
+      "median": 2539,
+      "p95": 3211,
+      "max": 3610
+    },
+    "changed": {
+      "count": 3311,
+      "sum": 1570387,
+      "mean": 474.2938689217759,
+      "median": 509,
+      "p95": 680,
+      "max": 781
+    },
+    "continuing": 7746095,
+    "new": 3375,
+    "continuing_fraction": 0.9995644863455179,
+    "growing_rows": 62277381,
+    "noacc": 40427943,
+    "noacc_fraction": 0.6491593312185046,
+    "own_acc_change_noendpoint": 1214022,
+    "fixed": {
+      "full_sweeps": 33110,
+      "exact_fixed_point_sweeps": 169,
+      "later_fixed_point_sweeps": 150,
+      "later_fixed_point_row_visits": 551,
+      "exact_fixed_point_fraction": 0.005104198127453941,
+      "later_fixed_point_row_fraction": 8.847513995490594e-06,
+      "range_calls_per_full_sweep": 6.041800060404712
+    },
+    "perstep": {
+      "initialized_bodies": 2381.8722222222223,
+      "expanded_dynamic": 1790.6022222222223,
+      "manifold_queries": 21712.59,
+      "manifold_points": 8610.522222222222,
+      "appended_domain_rows": 8610.522222222222,
+      "growing_rows": 69197.09,
+      "ordinary_rows": 44773.822222222225,
+      "query_candidates": 36286.30888888889,
+      "pair_unique": 21712.59,
+      "pair_duplicates": 12786.8,
+      "callback_activated_inputs": 14230.346666666666,
+      "callback_already_expanded": 12447.065555555555,
+      "solver_sweeps": 36.78888888888889,
+      "solver_append_frame_requests": 2381.8633333333332
+    },
+    "dup": {
+      "pair_set_duplicate_fraction": 0.3706384373752695,
+      "callbacks_already_expanded_fraction": 0.8746846332782398,
+      "pending_batch_duplicate_fraction": 0.0,
+      "forced_queue_already_expanded_fraction": null,
+      "forced_queue_scans_per_force_activated_body": null,
+      "spatial_candidates_per_query": 20.26486309385669,
+      "manifold_points_per_query": 0.39656817644611825,
+      "continuing_row_fraction": 0.9995644863455179
+    },
+    "warm": {
+      "ordinary": {
+        "prepare_rows": 4029644,
+        "normal_nonzero": 825274,
+        "tangent_nonzero": 817838,
+        "any_nonzero": 825274,
+        "zero": 3204370,
+        "normal_sum": 164080.59650000013,
+        "nonzero_fraction": 0.20480072185036693
+      },
+      "legacy": {
+        "prepare_rows": 18360,
+        "normal_nonzero": 0,
+        "tangent_nonzero": 0,
+        "any_nonzero": 0,
+        "zero": 18360,
+        "normal_sum": 0,
+        "nonzero_fraction": 0.0
+      },
+      "growing": {
+        "prepare_rows": 7749466,
+        "normal_nonzero": 0,
+        "tangent_nonzero": 0,
+        "any_nonzero": 0,
+        "zero": 7749466,
+        "normal_sum": 0,
+        "nonzero_fraction": 0.0
+      }
+    },
+    "warmzeroed": 2675706,
+    "warmzeroed_perstep": 2973.0066666666667,
+    "warmsumdiscard": 498844.8765701597,
+    "delta": {
+      "maximum_component_delta_le_1e_7": 840786,
+      "maximum_component_delta_gt_1e_7_le_1e_5": 376094,
+      "maximum_component_delta_gt_1e_5": 353511,
+      "all_components_le_one_ordered_ulp": 78322,
+      "changed_body_observations": 1570391,
+      "le_1e_7_fraction": 0.535399145817825,
+      "le_1e_5_fraction": 0.7748898204332552,
+      "le_one_ulp_fraction": 0.04987420330350849,
+      "max_component_delta": 3.93704,
+      "min_positive_component_delta": 1.03398e-25
+    },
+    "seenalloc": 200044,
+    "visited": 19541331,
+    "timings": {
+      "ns_domain": 32.11945466888889,
+      "ns_solver_growing": 31.36455097888889,
+      "ns_domain_growth": 24.46570066111111,
+      "ns_solver_ranges": 5.471019651111111,
+      "ns_ordinary_rows": 3.6440932733333335,
+      "ns_solver_append": 1.2197465022222223,
+      "ns_prepare": 0.5039120244444445,
+      "ns_domain_seed": 0.2263977911111111,
+      "ns_solver_budget": 0.16853251,
+      "ns_solver_legacy": 0.02311480888888889,
+      "ns_legacy_rows": 0.016711752222222223
+    }
+  }
+}

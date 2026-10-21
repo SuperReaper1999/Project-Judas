@@ -1,0 +1,47 @@
+{
+  "status": "physical-parity-passes-performance-comparison-invalid",
+  "reason": "Diagnostic run silently selected Mesa llvmpipe software renderer while reference used NVIDIA GTX970. Matching environment flags did not establish matching actual backend. Software-render CPU contention invalidates net performance attribution.",
+  "reference_backend": "3.3.0 NVIDIA 580.178.04 / NVIDIA GeForce GTX 970/PCIe/SSE2",
+  "diagnostic_backend": "4.5 (Core Profile) Mesa 26.0.8-1ubuntu0.3 / llvmpipe (LLVM 21.1.8, 256 bits)",
+  "positive_oracles": {
+    "dependency": {
+      "checks": 26,
+      "failures": 0,
+      "considered": 106,
+      "evaluated": 82,
+      "skipped": 24,
+      "accumulator_only": 10
+    },
+    "tracked": {
+      "checks": 300,
+      "failures": 0,
+      "considered": 878345,
+      "evaluated": 596861,
+      "skipped": 281484,
+      "accumulator_only": 38
+    },
+    "growing": {
+      "checks": 50,
+      "failures": 0
+    }
+  },
+  "negative_controls": {
+    "endpoint": {
+      "checks": 26,
+      "failures": 6
+    },
+    "own": {
+      "checks": 26,
+      "failures": 2
+    },
+    "target": {
+      "checks": 26,
+      "failures": 2
+    }
+  },
+  "physical900": "All900 digests, work counters, speed maxima and nonfinite counts exactly match reference; endpoint penetration/population/contact observations match.",
+  "not_a_speed_claim": true,
+  "no_production_edits": true,
+  "no_further_runs_started": true,
+  "parent_notified_cpu_lane_released": true
+}

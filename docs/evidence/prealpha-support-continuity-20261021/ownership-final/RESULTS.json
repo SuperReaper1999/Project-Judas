@@ -1,0 +1,51 @@
+{
+  "utc": "2026-10-21T14:28:17.453539+00:00",
+  "source_sha256": "4560107c12e3db2fe8cc527dba5b1a73f2df5cec7a3abaef23c66840ad2a20a5",
+  "link": [
+    "/usr/bin/c++",
+    "-O3",
+    "-DNDEBUG",
+    "CMakeFiles/judas_support_guess_ownership_tests.dir/tests/SupportGuessOwnershipTests.cpp.o",
+    "CMakeFiles/judas_support_guess_ownership_tests.dir/tests/ValidationMain.cpp.o",
+    "-o",
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/persistent-contact-20261021/ownership-paired-v2/baseline",
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/persistent-contact-20261021/measure/baseline/frozen/libjudas_engine.a",
+    "libjudas_build_identity.a",
+    "libjudas_app_icon.a",
+    "libjudas_materials.a",
+    "/usr/lib/x86_64-linux-gnu/libSDL2.so",
+    "libjudas_glad.a",
+    "libjudas_audio_backend.a",
+    "libjudas_meshoptimizer.a",
+    "libjudas_navigation_cook.a",
+    "libjudas_navigation_backend.a",
+    "libjudas_quickjs.a",
+    "-lm",
+    "libjudas_profiler.a",
+    "_deps/judas_freetype-build/libfreetype.a",
+    "_deps/judas_harfbuzz-build/libharfbuzz.a",
+    "unicode/icu/lib/libicui18n.a",
+    "unicode/icu/lib/libicuuc.a",
+    "unicode/icu/lib/libicudata.a",
+    "-ldl",
+    "libjudas_jobs.a"
+  ],
+  "tests": [
+    {
+      "name": "baseline",
+      "binary_sha256": "f82e6960288a8823778bea4b64b11fceb9811b031c8b1b73f2e5ab886f9a9a13",
+      "exit": 1,
+      "seconds": 0.03397053199932998,
+      "log": "/home/conner/Documents/GitHub/Project-Judas/.cache/persistent-contact-20261021/ownership-paired-v2/baseline.run.log"
+    },
+    {
+      "name": "candidate",
+      "binary_sha256": "525de4b2dbd917cdb4c9f68aa260c8827b7fa6d25388857a25589d394a8fd9a5",
+      "exit": 0,
+      "seconds": 0.033485226000266266,
+      "log": "/home/conner/Documents/GitHub/Project-Judas/.cache/persistent-contact-20261021/ownership-paired-v2/candidate.run.log"
+    }
+  ],
+  "expected_original_preservation_failure": true,
+  "candidate_pass": true
+}

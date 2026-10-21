@@ -618,17 +618,13 @@ auto PhysicsWorld::Impl::AdvanceImpacts(float dt, bool coupledVelocityChanged) -
             PhysicsWorkTimer timer(work.continuationCache, work.active);
             if (continuationEligible) {
                 cachePublication.dirty = true;
-                // A velocity-changing island invalidates its old load guesses,
-                // not contact identity. New actual TOI features also need zero-load
-                // identity for next step's ordinary geometric support matching.
-                // Neither old warm impulses nor impact impulses are replayed here.
-                for (auto &cached : contactCache)
-                    if (incremental ? (velocityChanged[cached.key.slotA] ||
-                                       velocityChanged[cached.key.slotB])
-                                    : (included[cached.key.slotA] || included[cached.key.slotB])) {
-                        cached.normalImpulse = 0;
-                        cached.tangentImpulse = glm::vec3(0);
-                    }
+                // Ordinary support impulses are next-step iterative guesses, not
+                // this event's impulses. A changed velocity does not invalidate
+                // those guesses: the next ordinary solve rematches fresh geometry,
+                // generations, normals and anchors, reprojects friction and solves
+                // from the actual velocities. Erasing an entire connected stack's
+                // guesses here repeatedly cold-starts it and creates more impacts.
+                // Never copy or apply the event impulses as support guesses.
                 auto replaced = observationKeys;
                 std::sort(replaced.begin(), replaced.end());
                 replaced.erase(std::unique(replaced.begin(), replaced.end(),
@@ -646,31 +642,23 @@ auto PhysicsWorld::Impl::AdvanceImpacts(float dt, bool coupledVelocityChanged) -
                                            return false;
                                        if (!at->SameBodies(c.key))
                                            return true;
-                                       const auto index = std::size_t(at - replaced.begin());
-                                       if (incremental && !velocityChanged[c.key.slotA] &&
-                                           !velocityChanged[c.key.slotB]) {
-                                           retained[index] = 1;
-                                           return false; // untouched ordinary support guess, not an
-                                                         // impact load
-                                       }
-                                       return true;
+                                       retained[std::size_t(at - replaced.begin())] = 1;
+                                       return false;
                                    }),
                     contactCache.end());
-                // An elastic departure is a new flight, not support. In particular,
-                // a short ballistic return must still receive its own restitution.
-                if (result.effectiveRestitution == 0) {
-                    const auto& contactRows = responseSolver->Constraints();
-                    for (std::size_t i = 0; i < contactRows.size(); ++i) {
-                        const auto &row = contactRows[i];
-                        const auto &key = observationKeys[i];
-                        const auto group = std::lower_bound(replaced.begin(), replaced.end(), key);
-                        if (retained[std::size_t(group - replaced.begin())])
-                            continue;
-                        contactCache.push_back({key, row.localAnchorA, row.normal, 0, glm::vec3(0),
-                                                float(row.signedSeparation),
-                                                bodies[key.slotA].contactObservationRevision,
-                                                bodies[key.slotB].contactObservationRevision});
-                    }
+                // New TOI groups need zero-load identity for next step's ordinary
+                // contact matching, independently of actual completed observations.
+                const auto& contactRows = responseSolver->Constraints();
+                for (std::size_t i = 0; i < contactRows.size(); ++i) {
+                    const auto &row = contactRows[i];
+                    const auto &key = observationKeys[i];
+                    const auto group = std::lower_bound(replaced.begin(), replaced.end(), key);
+                    if (retained[std::size_t(group - replaced.begin())])
+                        continue;
+                    contactCache.push_back({key, row.localAnchorA, row.normal, 0, glm::vec3(0),
+                                            float(row.signedSeparation),
+                                            bodies[key.slotA].contactObservationRevision,
+                                            bodies[key.slotB].contactObservationRevision});
                 }
             } else {
                 contactCache.erase(std::remove_if(contactCache.begin(), contactCache.end(),

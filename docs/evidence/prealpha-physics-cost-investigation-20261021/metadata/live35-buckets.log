@@ -1,0 +1,54 @@
+{
+  "output": ".cache/physics-exhaustive-profile-20261021/live35-sampled/sampling/symbolized/source-buckets",
+  "window_samples": 14552,
+  "buckets": {
+    "native_contact_geometry_interval": {
+      "window_samples": 4182,
+      "other_samples": 643,
+      "symbols": 46,
+      "window_percent": 28.738317757009344
+    },
+    "bounds_candidates_sort": {
+      "window_samples": 3238,
+      "other_samples": 775,
+      "symbols": 17,
+      "window_percent": 22.25123694337548
+    },
+    "event_contact_domain_processing": {
+      "window_samples": 2929,
+      "other_samples": 385,
+      "symbols": 60,
+      "window_percent": 20.12781748213304
+    },
+    "constraint_response": {
+      "window_samples": 2167,
+      "other_samples": 411,
+      "symbols": 19,
+      "window_percent": 14.891423859263332
+    },
+    "physics_coordinator_other": {
+      "window_samples": 753,
+      "other_samples": 209,
+      "symbols": 29,
+      "window_percent": 5.174546454095657
+    },
+    "unclassified": {
+      "window_samples": 574,
+      "other_samples": 255,
+      "symbols": 120,
+      "window_percent": 3.9444749862561848
+    },
+    "allocator": {
+      "window_samples": 356,
+      "other_samples": 71,
+      "symbols": 22,
+      "window_percent": 2.4463991203958217
+    },
+    "game_runtime_render": {
+      "window_samples": 353,
+      "other_samples": 363,
+      "symbols": 70,
+      "window_percent": 2.425783397471138
+    }
+  }
+}

@@ -1,0 +1,42 @@
+Private candidate-cache causal control
+====================================
+Compile only WorldIncrementalImpact.cpp and WorldImpactEvents.cpp against the
+UNCHANGED current original ContactSolver, ImpactSolver and world implementation.
+WorldIncrementalImpact.h is an exact byte copy of the original. CacheControl.h
+adds only a thread-local callback pointer, never a public/Impl signature change.
+No response/CCD observer instrumentation is included in this control.
+No production edits, builds or runs performed by the author.
+
+The existing impactCandidates lambda and ImpactCandidateCache are unchanged.
+One std::function adapter is created per Advance invocation; a scoped pointer is
+active ONLY for TryIncrementalImpact, restoring the prior value on normal or
+exceptional exit. The expand query uses that adapter if present, direct QuerySlots
+otherwise. The TLS mechanism is diagnostic plumbing, not proposed production API.
+
+Soundness preconditions of the existing certified conservative candidate cache:
+- World/bodies/shapes cannot be added, removed or filtered by gameplay callbacks
+  inside AdvanceWithImpacts. Existing engine rule remains.
+- Every fat-proxy change during the pass advances reinsertionsSinceStep; existing
+  cache invalidates all entries whenever that revision differs. CoverStepReach
+  does this; no alternate tree mutation was added.
+- A cached slot's fat bound must exactly match; query must be enclosed by it.
+  Otherwise the existing cache uses original QuerySlots. Budget limits also
+  fall back to original queries; no candidates are truncated.
+- Cached original(fat) includes every fat proxy intersecting any enclosed query.
+  Filtering each cached ID by its CURRENT fat AABB overlap yields the same set
+  as a direct QuerySlots(query), preserving sorted ascending ID order.
+- Neither initialize nor PairAt performs nested candidate queries while expand
+  iterates its returned candidate vector. The cache's filtered scratch therefore
+  cannot be overwritten during that iteration. expand itself is sequential.
+- Callback lifetime remains inside the stack-owned impactCandidates lambda and
+  cache. There is no pointer retained across Advance, thread or simulation step.
+- The cache retains candidates only, never contacts, poses, times, response,
+  sleeping/filter decisions or no-impact certificates.
+
+Causal expectations:
+If exact physical digests and all workload outcomes match but timing does not
+improve, direct QuerySlots traversal/sort reuse is not the leading remaining
+cost. Even a successful result would establish this conservative candidate-index
+reuse only, not prove contact manifolds are reusable at different event poses.
+The std::function indirection is overhead included in the measured control.
+Compare matched steps with profiling/observers disabled and preserve both results.

@@ -1,0 +1,7 @@
+2026-10-21 private harness preparation failure, before linking/running any suite.
+The origin_assembly CMake link line legitimately repeats libjudas_engine.a.
+The first harness incorrectly rejected engines=2 rather than replacing both.
+Original diagnostic:
+RuntimeError: judas_origin_assembly_tests: ambiguous/absent production-world path: direct=0, archive=2
+Correction: preserve both archive positions, replacing every occurrence with the
+private control archive. No engine source, object, test or numerical gate changed.

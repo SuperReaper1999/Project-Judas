@@ -1,0 +1,340 @@
+{
+  "timings": {
+    "baseline900": {
+      "steps": 900,
+      "fixed_ms": {
+        "mean": 37.77653647222222,
+        "median": 33.7417025,
+        "p95": 77.580337,
+        "worst": 124.894936
+      },
+      "events": 6028,
+      "queries": 4040127,
+      "search_iterations": 2685398,
+      "nonfinite": 0
+    },
+    "baseline900_repeat": {
+      "steps": 900,
+      "fixed_ms": {
+        "mean": 37.46789818222222,
+        "median": 33.4597635,
+        "p95": 76.379451,
+        "worst": 124.646555
+      },
+      "events": 6028,
+      "queries": 4040127,
+      "search_iterations": 2685398,
+      "nonfinite": 0
+    },
+    "baseline_late900": {
+      "steps": 900,
+      "fixed_ms": {
+        "mean": 63.62368296555555,
+        "median": 60.5474175,
+        "p95": 115.925314,
+        "worst": 297.794964
+      },
+      "events": 3325,
+      "queries": 5794691,
+      "search_iterations": 5797100,
+      "nonfinite": 0
+    },
+    "final900": {
+      "steps": 900,
+      "fixed_ms": {
+        "mean": 17.780232856666668,
+        "median": 16.21115,
+        "p95": 28.333374,
+        "worst": 61.33068
+      },
+      "events": 4263,
+      "queries": 1374498,
+      "search_iterations": 345493,
+      "nonfinite": 0
+    },
+    "final1800_first900": {
+      "steps": 900,
+      "fixed_ms": {
+        "mean": 17.722144364444443,
+        "median": 16.227967,
+        "p95": 28.204471,
+        "worst": 60.784118
+      },
+      "events": 4263,
+      "queries": 1374498,
+      "search_iterations": 345493,
+      "nonfinite": 0
+    },
+    "final1800_late900": {
+      "steps": 900,
+      "fixed_ms": {
+        "mean": 15.499096474444444,
+        "median": 15.0675925,
+        "p95": 17.771104,
+        "worst": 27.259168
+      },
+      "events": 64,
+      "queries": 17574,
+      "search_iterations": 17831,
+      "nonfinite": 0
+    }
+  },
+  "parity": {
+    "final_vs_private_corrected_control_1800": {
+      "left_count": 1800,
+      "right_count": 1800,
+      "compared": 1800,
+      "exact_rows": 1800,
+      "mismatches": [],
+      "scope": "Exact physical/work fields, excluding timestamps, frame assignment and timings."
+    },
+    "final900_independent_repeat_vs_final1800_prefix": {
+      "left_count": 900,
+      "right_count": 1800,
+      "compared": 900,
+      "exact_rows": 900,
+      "mismatches": [],
+      "scope": "Exact physical/work fields, excluding timestamps, frame assignment and timings."
+    },
+    "control_observer_vs_unobserved": {
+      "left_count": 900,
+      "right_count": 900,
+      "compared": 900,
+      "exact_rows": 900,
+      "mismatches": [],
+      "scope": "Exact physical/work fields, excluding timestamps, frame assignment and timings."
+    },
+    "baseline_observer_vs_unobserved": {
+      "left_count": 900,
+      "right_count": 900,
+      "compared": 900,
+      "exact_rows": 900,
+      "mismatches": [],
+      "scope": "Exact physical/work fields, excluding timestamps, frame assignment and timings."
+    },
+    "private_row_dependency_vs_final900": {
+      "left_count": 900,
+      "right_count": 900,
+      "compared": 900,
+      "exact_rows": 900,
+      "mismatches": [],
+      "scope": "Exact physical/work fields, excluding timestamps, frame assignment and timings."
+    }
+  },
+  "live": {
+    "baseline": {
+      "frames": 391,
+      "whole_capture_fps": 11.145795696903711,
+      "eight_or_more_fixed_steps_frames": 93,
+      "windows": {
+        "first0_10": {
+          "frames": 329,
+          "interval_ms": {
+            "mean": 27.43463892401216,
+            "median": 13.614064,
+            "p95": 182.593868,
+            "worst": 438.439104
+          },
+          "fps_from_mean_interval": 36.45027014096221,
+          "fixed_steps_per_frame": 1.2613981762917934,
+          "simulated_seconds_per_wall_second": 0.766305071352549
+        },
+        "settling10_20": {
+          "frames": 24,
+          "interval_ms": {
+            "mean": 423.3822241666667,
+            "median": 412.09288849999996,
+            "p95": 547.514088,
+            "worst": 570.488814
+          },
+          "fps_from_mean_interval": 2.361931944517219,
+          "fixed_steps_per_frame": 8,
+          "simulated_seconds_per_wall_second": 0.3149242592689625
+        },
+        "late20_to_stop": {
+          "frames": 38,
+          "interval_ms": {
+            "mean": 418.19439344736844,
+            "median": 428.4597715,
+            "p95": 510.332531,
+            "worst": 515.559462
+          },
+          "fps_from_mean_interval": 2.391232440388645,
+          "fixed_steps_per_frame": 7.7894736842105265,
+          "simulated_seconds_per_wall_second": 0.3104407027872978
+        }
+      }
+    },
+    "final": {
+      "frames": 1012,
+      "whole_capture_fps": 28.902652136676835,
+      "eight_or_more_fixed_steps_frames": 78,
+      "windows": {
+        "first0_10": {
+          "frames": 361,
+          "interval_ms": {
+            "mean": 27.050957520775622,
+            "median": 13.239944,
+            "p95": 157.857694,
+            "worst": 236.739062
+          },
+          "fps_from_mean_interval": 36.967268135776045,
+          "fixed_steps_per_frame": 1.4210526315789473,
+          "simulated_seconds_per_wall_second": 0.8755405611104853
+        },
+        "settling10_20": {
+          "frames": 101,
+          "interval_ms": {
+            "mean": 100.78337848514852,
+            "median": 111.864195,
+            "p95": 180.617131,
+            "worst": 212.802865
+          },
+          "fps_from_mean_interval": 9.922271063252364,
+          "fixed_steps_per_frame": 5.594059405940594,
+          "simulated_seconds_per_wall_second": 0.9250962294946511
+        },
+        "late20_to_stop": {
+          "frames": 550,
+          "interval_ms": {
+            "mean": 27.395860301818182,
+            "median": 31.966019,
+            "p95": 35.697701,
+            "worst": 50.743081
+          },
+          "fps_from_mean_interval": 36.50186520821297,
+          "fixed_steps_per_frame": 1.6418181818181818,
+          "simulated_seconds_per_wall_second": 0.9988237661520095
+        }
+      }
+    }
+  },
+  "memory": {
+    "baseline1800": {
+      "Elapsed (wall clock) time (h": "mm:ss or m:ss): 1:35.73",
+      "Maximum resident set size (kbytes)": "176052",
+      "Major (requiring I/O) page faults": "0",
+      "Swaps": "0"
+    },
+    "final1800": {
+      "Elapsed (wall clock) time (h": "mm:ss or m:ss): 0:34.28",
+      "Maximum resident set size (kbytes)": "233192",
+      "Major (requiring I/O) page faults": "0",
+      "Swaps": "0"
+    }
+  },
+  "physical": {
+    "baseline900": {
+      "states": 901,
+      "mass_kg": {
+        "first": 2048.0,
+        "min": 2048.0,
+        "max": 2048.0,
+        "last": 2048.0
+      },
+      "mechanical_energy_J": {
+        "first": 32346.31753646828,
+        "min": 22212.975326904023,
+        "max": 32346.31753646828,
+        "last": 22221.8488757035
+      },
+      "kinetic_rotational_J": {
+        "first": 0.0,
+        "min": 0.0,
+        "max": 62.76410467732027,
+        "last": 15.372556093612513
+      },
+      "deepest_actual_penetration_m": {
+        "first": 0.0,
+        "min": 0.0,
+        "max": 0.07433861250071788,
+        "last": 0.023602347995183515
+      },
+      "min_floor_clearance_m": {
+        "first": 0.03999999165534973,
+        "min": -0.07433861250071788,
+        "max": 0.03999999165534973,
+        "last": -0.023602347995183515
+      },
+      "fully_inside_floor": {
+        "first": 1024.0,
+        "min": 1024.0,
+        "max": 1024.0,
+        "last": 1024.0
+      },
+      "geometry_uncertain": {
+        "first": 0.0,
+        "min": 0.0,
+        "max": 0.0,
+        "last": 0.0
+      },
+      "finite": {
+        "first": 1.0,
+        "min": 1.0,
+        "max": 1.0,
+        "last": 1.0
+      },
+      "max_positive_step_energy_change_J": 8.279246242054796
+    },
+    "control900": {
+      "states": 901,
+      "mass_kg": {
+        "first": 2048.0,
+        "min": 2048.0,
+        "max": 2048.0,
+        "last": 2048.0
+      },
+      "mechanical_energy_J": {
+        "first": 32346.31753646828,
+        "min": 24051.509579759073,
+        "max": 32346.31753646828,
+        "last": 24051.509579759073
+      },
+      "kinetic_rotational_J": {
+        "first": 0.0,
+        "min": 0.0,
+        "max": 69.49567231895955,
+        "last": 13.7755967751828
+      },
+      "deepest_actual_penetration_m": {
+        "first": 0.0,
+        "min": 0.0,
+        "max": 0.04061806689146366,
+        "last": 0.0050070729133087
+      },
+      "min_floor_clearance_m": {
+        "first": 0.03999999165534973,
+        "min": -0.04061806689146363,
+        "max": 0.03999999165534973,
+        "last": -0.005002710076283445
+      },
+      "fully_inside_floor": {
+        "first": 1024.0,
+        "min": 1024.0,
+        "max": 1024.0,
+        "last": 1024.0
+      },
+      "geometry_uncertain": {
+        "first": 0.0,
+        "min": 0.0,
+        "max": 0.0,
+        "last": 0.0
+      },
+      "finite": {
+        "first": 1.0,
+        "min": 1.0,
+        "max": 1.0,
+        "last": 1.0
+      },
+      "max_positive_step_energy_change_J": 9.778198087115015
+    }
+  },
+  "limitations": [
+    "Original and corrected dense trajectories differ; exact parity is only between corrected repeats or observer/control pairs.",
+    "The late target is met, but the 10-20 second settling interval still averages roughly 10 FPS.",
+    "Physics settings, counts, collision fidelity, energy guard and eight-step catch-up policy are unchanged.",
+    "Temporal baseline runner source-monitor warning is preserved; immutable binary/core/fixture passed their guards.",
+    "Sandbox row-prototype timing used llvmpipe and is invalid as a performance comparison; only native900 is compared.",
+    "Native row tracking provides no demonstrated net benefit; it remains private and is not production code."
+  ]
+}

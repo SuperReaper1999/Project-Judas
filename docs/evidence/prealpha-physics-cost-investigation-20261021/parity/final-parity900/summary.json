@@ -1,0 +1,496 @@
+{
+  "schema": "judas.all900-observer-comparison.v1",
+  "reference": ".cache/physics-exhaustive-profile-20261021/unobserved900/steps.csv",
+  "actual_steps_inclusive": [
+    1,
+    900
+  ],
+  "results": [
+    {
+      "run": "sampled900",
+      "status": "complete_exact_match",
+      "report": ".cache/physics-exhaustive-profile-20261021/final-parity900/sampled900.json",
+      "common_steps": 900,
+      "digest_mismatch_count": 0,
+      "complete_physical_and_work_parity": true,
+      "fixed_ms": {
+        "available_in_both": true,
+        "baseline": {
+          "count": 900,
+          "finite_count": 900,
+          "nonfinite_count": 0,
+          "mean": 37.776536472222226,
+          "median": 33.7417025,
+          "p95": 77.58056295,
+          "worst": 124.894936,
+          "total": 33998.882825
+        },
+        "diagnostic": {
+          "count": 900,
+          "finite_count": 900,
+          "nonfinite_count": 0,
+          "mean": 37.71257130111111,
+          "median": 33.520998500000005,
+          "p95": 78.49454874999999,
+          "worst": 126.932113,
+          "total": 33941.314171
+        },
+        "paired_diagnostic_minus_baseline": {
+          "count": 900,
+          "finite_count": 900,
+          "nonfinite_count": 0,
+          "mean": -0.06396517111111098,
+          "median": -0.0645930000000039,
+          "p95": 1.0701730999999968,
+          "worst": 36.97726,
+          "total": -57.56865399999989
+        },
+        "ratios_diagnostic_over_baseline": {
+          "mean": 0.9983067486571156,
+          "median": 0.993459014108728,
+          "p95": 1.0117811184302574,
+          "worst": 1.0163111256968818,
+          "total": 0.9983067486571156
+        }
+      }
+    },
+    {
+      "run": "disabled900",
+      "status": "complete_exact_match",
+      "report": ".cache/physics-exhaustive-profile-20261021/final-parity900/disabled900.json",
+      "common_steps": 900,
+      "digest_mismatch_count": 0,
+      "complete_physical_and_work_parity": true,
+      "fixed_ms": {
+        "available_in_both": true,
+        "baseline": {
+          "count": 900,
+          "finite_count": 900,
+          "nonfinite_count": 0,
+          "mean": 37.776536472222226,
+          "median": 33.7417025,
+          "p95": 77.58056295,
+          "worst": 124.894936,
+          "total": 33998.882825
+        },
+        "diagnostic": {
+          "count": 900,
+          "finite_count": 900,
+          "nonfinite_count": 0,
+          "mean": 38.458575526666664,
+          "median": 34.4026275,
+          "p95": 80.66963809999999,
+          "worst": 143.78744,
+          "total": 34612.717974
+        },
+        "paired_diagnostic_minus_baseline": {
+          "count": 900,
+          "finite_count": 900,
+          "nonfinite_count": 0,
+          "mean": 0.6820390544444445,
+          "median": 0.4651009999999989,
+          "p95": 2.5632919000000016,
+          "worst": 42.52010200000001,
+          "total": 613.835149
+        },
+        "ratios_diagnostic_over_baseline": {
+          "mean": 1.0180545682091833,
+          "median": 1.0195877786546188,
+          "p95": 1.0398176428803547,
+          "worst": 1.151267173874848,
+          "total": 1.0180545682091835
+        }
+      }
+    },
+    {
+      "run": "observed900",
+      "status": "complete_exact_match",
+      "report": ".cache/physics-exhaustive-profile-20261021/final-parity900/observed900.json",
+      "common_steps": 900,
+      "digest_mismatch_count": 0,
+      "complete_physical_and_work_parity": true,
+      "fixed_ms": {
+        "available_in_both": true,
+        "baseline": {
+          "count": 900,
+          "finite_count": 900,
+          "nonfinite_count": 0,
+          "mean": 37.776536472222226,
+          "median": 33.7417025,
+          "p95": 77.58056295,
+          "worst": 124.894936,
+          "total": 33998.882825
+        },
+        "diagnostic": {
+          "count": 900,
+          "finite_count": 900,
+          "nonfinite_count": 0,
+          "mean": 54.22220981444445,
+          "median": 48.0860825,
+          "p95": 128.62890654999998,
+          "worst": 231.258174,
+          "total": 48799.988833
+        },
+        "paired_diagnostic_minus_baseline": {
+          "count": 900,
+          "finite_count": 900,
+          "nonfinite_count": 0,
+          "mean": 16.44567334222222,
+          "median": 11.714916000000002,
+          "p95": 50.92851235,
+          "worst": 107.901809,
+          "total": 14801.106008
+        },
+        "ratios_diagnostic_over_baseline": {
+          "mean": 1.4353409517655231,
+          "median": 1.4251231839887155,
+          "p95": 1.6580042946182305,
+          "worst": 1.8516217022602102,
+          "total": 1.4353409517655233
+        }
+      }
+    },
+    {
+      "run": "stages900",
+      "status": "complete_exact_match",
+      "report": ".cache/physics-exhaustive-profile-20261021/final-parity900/stages900.json",
+      "common_steps": 900,
+      "digest_mismatch_count": 0,
+      "complete_physical_and_work_parity": true,
+      "fixed_ms": {
+        "available_in_both": true,
+        "baseline": {
+          "count": 900,
+          "finite_count": 900,
+          "nonfinite_count": 0,
+          "mean": 37.776536472222226,
+          "median": 33.7417025,
+          "p95": 77.58056295,
+          "worst": 124.894936,
+          "total": 33998.882825
+        },
+        "diagnostic": {
+          "count": 900,
+          "finite_count": 900,
+          "nonfinite_count": 0,
+          "mean": 48.85587466333333,
+          "median": 43.424685,
+          "p95": 111.83894629999998,
+          "worst": 196.996819,
+          "total": 43970.287197
+        },
+        "paired_diagnostic_minus_baseline": {
+          "count": 900,
+          "finite_count": 900,
+          "nonfinite_count": 0,
+          "mean": 11.07933819111111,
+          "median": 6.946056500000001,
+          "p95": 40.6955185,
+          "worst": 73.64045399999999,
+          "total": 9971.404371999999
+        },
+        "ratios_diagnostic_over_baseline": {
+          "mean": 1.2932862360014912,
+          "median": 1.2869737382101567,
+          "p95": 1.4415846192309691,
+          "worst": 1.5773002918228805,
+          "total": 1.2932862360014912
+        }
+      }
+    },
+    {
+      "run": "sleep900",
+      "status": "complete_exact_match",
+      "report": ".cache/physics-exhaustive-profile-20261021/final-parity900/sleep900.json",
+      "common_steps": 900,
+      "digest_mismatch_count": 0,
+      "complete_physical_and_work_parity": true,
+      "fixed_ms": {
+        "available_in_both": true,
+        "baseline": {
+          "count": 900,
+          "finite_count": 900,
+          "nonfinite_count": 0,
+          "mean": 37.776536472222226,
+          "median": 33.7417025,
+          "p95": 77.58056295,
+          "worst": 124.894936,
+          "total": 33998.882825
+        },
+        "diagnostic": {
+          "count": 900,
+          "finite_count": 900,
+          "nonfinite_count": 0,
+          "mean": 38.234117857777775,
+          "median": 34.011314999999996,
+          "p95": 79.02132129999995,
+          "worst": 128.00524,
+          "total": 34410.706072
+        },
+        "paired_diagnostic_minus_baseline": {
+          "count": 900,
+          "finite_count": 900,
+          "nonfinite_count": 0,
+          "mean": 0.45758138555555555,
+          "median": 0.07601600000000097,
+          "p95": 2.4218844499999963,
+          "worst": 34.29656699999998,
+          "total": 411.823247
+        },
+        "ratios_diagnostic_over_baseline": {
+          "mean": 1.0121128464461535,
+          "median": 1.0079904829935595,
+          "p95": 1.0185711252305363,
+          "worst": 1.0249033635759257,
+          "total": 1.0121128464461537
+        }
+      }
+    },
+    {
+      "run": "cache-control900",
+      "status": "complete_exact_match",
+      "report": ".cache/physics-exhaustive-profile-20261021/final-parity900/cache-control900.json",
+      "common_steps": 900,
+      "digest_mismatch_count": 0,
+      "complete_physical_and_work_parity": true,
+      "fixed_ms": {
+        "available_in_both": true,
+        "baseline": {
+          "count": 900,
+          "finite_count": 900,
+          "nonfinite_count": 0,
+          "mean": 37.776536472222226,
+          "median": 33.7417025,
+          "p95": 77.58056295,
+          "worst": 124.894936,
+          "total": 33998.882825
+        },
+        "diagnostic": {
+          "count": 900,
+          "finite_count": 900,
+          "nonfinite_count": 0,
+          "mean": 36.40511701111111,
+          "median": 33.3199085,
+          "p95": 72.91541894999993,
+          "worst": 114.430395,
+          "total": 32764.60531
+        },
+        "paired_diagnostic_minus_baseline": {
+          "count": 900,
+          "finite_count": 900,
+          "nonfinite_count": 0,
+          "mean": -1.3714194611111108,
+          "median": -0.8735819999999999,
+          "p95": 1.0009061499999985,
+          "worst": 17.070965000000005,
+          "total": -1234.2775149999998
+        },
+        "ratios_diagnostic_over_baseline": {
+          "mean": 0.963696527284349,
+          "median": 0.9874993266863162,
+          "p95": 0.9398671030138475,
+          "worst": 0.9162132482296961,
+          "total": 0.9636965272843491
+        }
+      }
+    },
+    {
+      "run": "cache-control900-B",
+      "status": "complete_exact_match",
+      "report": ".cache/physics-exhaustive-profile-20261021/final-parity900/cache-control900-B.json",
+      "common_steps": 900,
+      "digest_mismatch_count": 0,
+      "complete_physical_and_work_parity": true,
+      "fixed_ms": {
+        "available_in_both": true,
+        "baseline": {
+          "count": 900,
+          "finite_count": 900,
+          "nonfinite_count": 0,
+          "mean": 37.776536472222226,
+          "median": 33.7417025,
+          "p95": 77.58056295,
+          "worst": 124.894936,
+          "total": 33998.882825
+        },
+        "diagnostic": {
+          "count": 900,
+          "finite_count": 900,
+          "nonfinite_count": 0,
+          "mean": 36.06278747666667,
+          "median": 32.727748000000005,
+          "p95": 72.09882784999999,
+          "worst": 118.476717,
+          "total": 32456.508729
+        },
+        "paired_diagnostic_minus_baseline": {
+          "count": 900,
+          "finite_count": 900,
+          "nonfinite_count": 0,
+          "mean": -1.7137489955555556,
+          "median": -1.1982320000000026,
+          "p95": 0.43729604999999927,
+          "worst": 37.278476999999995,
+          "total": -1542.374096
+        },
+        "ratios_diagnostic_over_baseline": {
+          "mean": 0.9546345653785464,
+          "median": 0.9699495157364986,
+          "p95": 0.9293413853733835,
+          "worst": 0.9486110549750392,
+          "total": 0.9546345653785464
+        }
+      }
+    },
+    {
+      "run": "unobserved900-B",
+      "status": "complete_exact_match",
+      "report": ".cache/physics-exhaustive-profile-20261021/final-parity900/unobserved900-B.json",
+      "common_steps": 900,
+      "digest_mismatch_count": 0,
+      "complete_physical_and_work_parity": true,
+      "fixed_ms": {
+        "available_in_both": true,
+        "baseline": {
+          "count": 900,
+          "finite_count": 900,
+          "nonfinite_count": 0,
+          "mean": 37.776536472222226,
+          "median": 33.7417025,
+          "p95": 77.58056295,
+          "worst": 124.894936,
+          "total": 33998.882825
+        },
+        "diagnostic": {
+          "count": 900,
+          "finite_count": 900,
+          "nonfinite_count": 0,
+          "mean": 37.46789818222222,
+          "median": 33.4597635,
+          "p95": 76.44750834999994,
+          "worst": 124.646555,
+          "total": 33721.108364
+        },
+        "paired_diagnostic_minus_baseline": {
+          "count": 900,
+          "finite_count": 900,
+          "nonfinite_count": 0,
+          "mean": -0.30863828999999987,
+          "median": -0.17363650000000153,
+          "p95": 0.4879161000000024,
+          "worst": 1.702777000000001,
+          "total": -277.77446099999986
+        },
+        "ratios_diagnostic_over_baseline": {
+          "mean": 0.9918298944577157,
+          "median": 0.9916441975623488,
+          "p95": 0.985395122735442,
+          "worst": 0.9980112804573599,
+          "total": 0.9918298944577159
+        }
+      }
+    },
+    {
+      "run": "long1800",
+      "status": "complete_exact_match",
+      "report": ".cache/physics-exhaustive-profile-20261021/final-parity900/long1800.json",
+      "common_steps": 900,
+      "digest_mismatch_count": 0,
+      "complete_physical_and_work_parity": true,
+      "fixed_ms": {
+        "available_in_both": true,
+        "baseline": {
+          "count": 900,
+          "finite_count": 900,
+          "nonfinite_count": 0,
+          "mean": 37.776536472222226,
+          "median": 33.7417025,
+          "p95": 77.58056295,
+          "worst": 124.894936,
+          "total": 33998.882825
+        },
+        "diagnostic": {
+          "count": 900,
+          "finite_count": 900,
+          "nonfinite_count": 0,
+          "mean": 37.88692894888889,
+          "median": 34.02663,
+          "p95": 78.10633419999995,
+          "worst": 125.123348,
+          "total": 34098.236054
+        },
+        "paired_diagnostic_minus_baseline": {
+          "count": 900,
+          "finite_count": 900,
+          "nonfinite_count": 0,
+          "mean": 0.11039247666666677,
+          "median": 0.04138850000000005,
+          "p95": 1.4410042000000025,
+          "worst": 21.773041000000006,
+          "total": 99.35322900000008
+        },
+        "ratios_diagnostic_over_baseline": {
+          "mean": 1.0029222498136596,
+          "median": 1.0084443723608787,
+          "p95": 1.0067771002169552,
+          "worst": 1.0018288331562137,
+          "total": 1.0029222498136598
+        }
+      }
+    },
+    {
+      "run": "observed1800-late",
+      "status": "complete_exact_match",
+      "report": ".cache/physics-exhaustive-profile-20261021/final-parity900/observed1800-late.json",
+      "common_steps": 900,
+      "digest_mismatch_count": 0,
+      "complete_physical_and_work_parity": true,
+      "fixed_ms": {
+        "available_in_both": true,
+        "baseline": {
+          "count": 900,
+          "finite_count": 900,
+          "nonfinite_count": 0,
+          "mean": 37.776536472222226,
+          "median": 33.7417025,
+          "p95": 77.58056295,
+          "worst": 124.894936,
+          "total": 33998.882825
+        },
+        "diagnostic": {
+          "count": 900,
+          "finite_count": 900,
+          "nonfinite_count": 0,
+          "mean": 38.491844548888885,
+          "median": 34.4331695,
+          "p95": 80.09940194999999,
+          "worst": 128.153616,
+          "total": 34642.660094
+        },
+        "paired_diagnostic_minus_baseline": {
+          "count": 900,
+          "finite_count": 900,
+          "nonfinite_count": 0,
+          "mean": 0.7153080766666667,
+          "median": 0.5723175000000005,
+          "p95": 2.743268249999999,
+          "worst": 15.022710000000004,
+          "total": 643.777269
+        },
+        "ratios_diagnostic_over_baseline": {
+          "mean": 1.018935247734864,
+          "median": 1.0204929493406563,
+          "p95": 1.03246739781488,
+          "worst": 1.0260913701096737,
+          "total": 1.0189352477348643
+        }
+      }
+    }
+  ],
+  "all_requested_runs_complete_and_exact": true,
+  "notes": [
+    "Missing or incomplete files are explicit; rerun after outstanding measurements finish.",
+    "All 900 per-step physical digests, velocity maxima, nonfinite counts and workload counters are compared.",
+    "Timing differences do not establish observer overhead without matched build/hardware/load/cadence context."
+  ]
+}

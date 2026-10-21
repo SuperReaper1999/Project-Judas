@@ -41,7 +41,7 @@ This is development documentation, not an Alpha release or a compatibility promi
 | Conserved liquid quantities/surfaces | [Reservoirs](LIQUID_RESERVOIRS.md), [dynamic surfaces](LIQUID_SURFACES.md) |
 | Editable volumes and planets | [Volumetric terrain](M84_VOLUMETRIC_TERRAIN.md), [planetary terrain](M85_PLANETARY_TERRAIN.md) |
 | Continuous travel and persistent regions | [Assembly travel](M90_ASSEMBLY_TRAVEL.md), [living worlds](M97_LIVING_WORLD.md) |
-| Collision policy and practical dense limits | [Collision continuity](M91_COLLISION_CONTINUITY.md), [latest measured follow-up](PREALPHA_EVENT_DEPENDENCIES.md) |
+| Collision policy and practical dense limits | [Collision continuity](M91_COLLISION_CONTINUITY.md), [support ownership and measured costs](PREALPHA_SUPPORT_CONTINUITY.txt) |
 
 ## Content, presentation and game services
 

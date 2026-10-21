@@ -1,0 +1,73 @@
+[
+  {
+    "name": "api",
+    "argv": [
+      "node",
+      "scripts/check_judasjs_api.mjs"
+    ],
+    "exit": 0,
+    "seconds": 0.8151413479999974,
+    "log_sha256": "d8f0f2bf6bb1eb7bbfefce9dbc31b73db84d261a1b99c49f3170229df15732c9"
+  },
+  {
+    "name": "manifest",
+    "argv": [
+      "python3",
+      "scripts/prealpha_validate.py",
+      "--check-manifest"
+    ],
+    "exit": 0,
+    "seconds": 0.06406485699972109,
+    "log_sha256": "9dee895db92eeb5b4c3367c413999bab0d903c6085b5b5a4983d71f354e0fffd"
+  },
+  {
+    "name": "build-registration",
+    "argv": [
+      "python3",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "tests",
+      "-p",
+      "test_cmake_test_targets.py",
+      "-v"
+    ],
+    "exit": 0,
+    "seconds": 0.21429977800016786,
+    "log_sha256": "dbe6865565fad39d95356a35706a59c17e4596ac614974f2f3340ff1b5a045ed"
+  },
+  {
+    "name": "validation-registration",
+    "argv": [
+      "python3",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "tests",
+      "-p",
+      "test_validation_registration.py",
+      "-v"
+    ],
+    "exit": 0,
+    "seconds": 0.9654102540007443,
+    "log_sha256": "24ffe461973fe2cef70ebc7e5709220978564e1337039df98dc9a6aefc265684"
+  },
+  {
+    "name": "ownership-gate",
+    "argv": [
+      "python3",
+      "scripts/prealpha_validate.py",
+      "--build-dir",
+      "build",
+      "--test",
+      "support-guess-ownership",
+      "--output",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/persistent-contact-20261021/tooling/ownership-gate"
+    ],
+    "exit": 1,
+    "seconds": 0.46558116100004554,
+    "log_sha256": "d007c2ef0337eaeb01d314711751f74fc5b7a027fa1df43a870ce07e4de4b262"
+  }
+]

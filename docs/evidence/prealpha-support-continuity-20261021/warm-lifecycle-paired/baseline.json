@@ -1,0 +1,9 @@
+{
+  "variant": "baseline",
+  "source_sha256": "e8394477fdb83498d0b4a59800070567b39dcf309f0836c447f2ff43fff4eb9b",
+  "object_sha256": "a35ba6e617c3ff6b37a25fb398ab62317a0c37416ade6164a671dbedfc76b38f",
+  "archive": "/home/conner/Documents/GitHub/Project-Judas/.cache/persistent-contact-20261021/measure/baseline/frozen/libjudas_engine.a",
+  "archive_sha256": "05f626d3fb5400bfd1db23ec37a3cd3e6490f8452145365662466eebccd705ec",
+  "binary_sha256": "8347fc712bb3af2239ff5e193e706385617ebc961795ff0d837b79804666ab32",
+  "exit_code": 0
+}

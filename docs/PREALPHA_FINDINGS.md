@@ -32,7 +32,7 @@ in [the report](PREALPHA_CLEANUP.md).
 |---|---|---|---|
 | A-01 | resolved | fresh_focused_gate | Actual-sheet arrival and continuation asserting fixtures pass in the final source gate. Earlier oracle/removed-collider controls and causal history remain preserved; no changed physics in this cleanup. [Evidence](evidence/prealpha-pass5/AUDIT_DISPOSITION.md). |
 | A-02 | resolved | fresh_focused_gate_plus_carried_causal_evidence | The four original asserting curved-mesh continuation failures remain corrected in fresh focused validation. Per-triangle mechanism research is carried forward; bounded temporal search/rear/deep-overlap limits remain. [Evidence](evidence/prealpha-ccd-continuation-20261019/REPORT.md). |
-| B-01 | improved | fresh_matched_linux_event_dependencies_20261021 | Pending-impact heap, endpoint dependencies and whole-interval separation pruning remove 82.63% of CCD queries with all 600 physical step digests unchanged. Two matched runs improve mean 75.18/74.81 to 67.57/67.28 ms; live late FPS rises from 0.926 to 1.120 but still severely stalls. Connected response and contact-episode limits remain; no 24/30 FPS claim. [Evidence](PREALPHA_EVENT_DEPENDENCIES.md). |
+| B-01 | improved | fresh_matched_linux_support_history_20261021 | Preserving ordinary numerical support guesses across eligible primitive impacts breaks repeated cold-start feedback. Late steps 901–1800 improve 63.62→15.50 ms mean and 297.80→27.26 ms worst; matched live late cadence 2.39→36.50 FPS. Same 1,024-piece fixture, 60 Hz, ten sweeps and CCD. Busy settling at 10–20 seconds still averages 9.9 FPS. Dense trajectories change; overlap/hitches and general coupling limits remain. Late-window target met, not all-phase smoothness or human acceptance. [Evidence](PREALPHA_SUPPORT_CONTINUITY.txt). |
 | C-01 | resolved | carried_forward_not_reexecuted | Retain the exact prior bounded conclusion/evidence. This specific member was not independently reexecuted in Pass5. [Evidence](evidence/prealpha-pass5/AUDIT_DISPOSITION.md). |
 | C-02 | resolved | carried_forward_not_reexecuted | Retain the exact prior bounded conclusion/evidence. This specific member was not independently reexecuted in Pass5. [Evidence](evidence/prealpha-pass5/AUDIT_DISPOSITION.md). |
 | C-03 | resolved | carried_forward_not_reexecuted | Retain the exact prior bounded conclusion/evidence. This specific member was not independently reexecuted in Pass5. [Evidence](evidence/prealpha-pass5/AUDIT_DISPOSITION.md). |
@@ -87,7 +87,7 @@ in [the report](PREALPHA_CLEANUP.md).
 
 ## Remaining Alpha-readiness work
 
-- Dense physics latency remains outside practical budgets; no hardware upgrade is presumed to solve it.
+- Dense physics latency remains workload dependent. The latest support-history correction meets the scoped late-window live target; the busy settling phase and general dense/coupled costs remain. No hardware upgrade is presumed to solve them.
 - FLU-001, original legacy-save missing history and half-turn liquid query identity remain unchanged.
 - Native topology migration, content merge, unsupported suspension and online replication retain their documented boundaries.
 - Current Windows/Android physical hardware qualification and broad clean-machine ABI/device coverage remain incomplete.
@@ -104,3 +104,14 @@ p95177.78→71.67ms and worst535.21→104.85ms. Late live cadence improves0.97�
 so the real-time requirement remains unmet. Different dense trajectories and
 mixed penetration measurements are explicit. Existing deferred findings and
 platform limitations are not reclassified by this work. Main is unchanged.
+
+## 21 October: ordinary support history
+
+The [subsequent correction](PREALPHA_SUPPORT_CONTINUITY.txt) addresses the other
+ownership boundary: eligible events were erasing the next ordinary solve's
+support guesses. Retaining these numerical estimates, separately from actual
+impact reactions, reduces late CCD queries5,794,691→17,574 and events3,325→64
+over the same 900-step window. B-01 remains **improved**, with the scoped late
+real-time target now met. The 10–20 second settling window still averages 9.9 FPS.
+This does not reclassify unrelated findings, establish all-phase smoothness or
+universal 60 Hz performance, or claim human acceptance.

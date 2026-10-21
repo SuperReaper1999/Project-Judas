@@ -1,0 +1,197 @@
+{
+  "schema": "judas.persistent-contact.baselines.v1",
+  "head": "f5624f0bb4f92ece7211199ca8fe51abc08a2b19",
+  "core_sha256": "05f626d3fb5400bfd1db23ec37a3cd3e6490f8452145365662466eebccd705ec",
+  "records": {
+    "baseline/frozen/FROZEN.json": {
+      "source": "/home/conner/Documents/GitHub/Project-Judas/.cache/physics-exhaustive-profile-20261021/baseline-snapshot/FROZEN.json",
+      "sha256": "ef4d1b388327a415e2f73d08a1ad62fb01ed2cd7ae4c68583c1a6804ee8dafd7",
+      "bytes": 84330
+    },
+    "baseline/frozen/source-inputs.tar.gz": {
+      "source": "/home/conner/Documents/GitHub/Project-Judas/.cache/physics-exhaustive-profile-20261021/baseline-snapshot/source-inputs.tar.gz",
+      "sha256": "bb5fc0efcfba9511d8c29fb171f4670e09303117f2a201b1e1bc17bdb55493ea",
+      "bytes": 1782615
+    },
+    "baseline/frozen/libjudas_engine.a": {
+      "source": "/home/conner/Documents/GitHub/Project-Judas/.cache/physics-exhaustive-profile-20261021/baseline-snapshot/libjudas_engine.a",
+      "sha256": "05f626d3fb5400bfd1db23ec37a3cd3e6490f8452145365662466eebccd705ec",
+      "bytes": 30481212
+    },
+    "baseline/room1024.judas": {
+      "source": "/home/conner/Documents/GitHub/Project-Judas/projects/physics_stress_lab/Scenes/room1024.judas",
+      "sha256": "a2caf62a295243d301149202c8a0a5eedafff256d68de0e3cda988846b2e05bf",
+      "bytes": 2198434
+    },
+    "baseline/provenance/RUNS.json": {
+      "source": "/home/conner/Documents/GitHub/Project-Judas/.cache/physics-exhaustive-profile-20261021/RUNS.json",
+      "sha256": "3af6d69acc148dc63e0f4c5db5853cad3bb1de8e77d39af4fc01571c017c2e91",
+      "bytes": 10991
+    },
+    "baseline/provenance/MATCHED_CACHE_REPEATS.json": {
+      "source": "/home/conner/Documents/GitHub/Project-Judas/.cache/physics-exhaustive-profile-20261021/MATCHED_CACHE_REPEATS.json",
+      "sha256": "99327e335e8d26376bbf6d61af0f43b723803aebecbe50b720613d9c27463018",
+      "bytes": 1563
+    },
+    "baseline/unobserved900/steps.csv": {
+      "source": "/home/conner/Documents/GitHub/Project-Judas/.cache/physics-exhaustive-profile-20261021/unobserved900/steps.csv",
+      "sha256": "04edee02b344aff87f1e68b922aa3399d0f809fee8eacd5ab3265a7486c93d34",
+      "bytes": 137910
+    },
+    "baseline/unobserved900/frames.csv": {
+      "source": "/home/conner/Documents/GitHub/Project-Judas/.cache/physics-exhaustive-profile-20261021/unobserved900/frames.csv",
+      "sha256": "89d6e09e40c051f2c08f2609715a1dbccb5b7fe68480d5201c56f29030f0b7b9",
+      "bytes": 139786
+    },
+    "baseline/unobserved900/begins.csv": {
+      "source": "/home/conner/Documents/GitHub/Project-Judas/.cache/physics-exhaustive-profile-20261021/unobserved900/begins.csv",
+      "sha256": "bcc7fe5a1b542d5f2f1428262183e708983d50067901b4ec9cebbb7750b874b7",
+      "bytes": 23550
+    },
+    "baseline/unobserved900/quality.json": {
+      "source": "/home/conner/Documents/GitHub/Project-Judas/.cache/physics-exhaustive-profile-20261021/unobserved900/quality.json",
+      "sha256": "00071a095fff35f32a07d945f5946ce70c12e5eb049095667b54c263e1f85356",
+      "bytes": 366
+    },
+    "baseline/unobserved900.log": {
+      "source": "/home/conner/Documents/GitHub/Project-Judas/.cache/physics-exhaustive-profile-20261021/unobserved900.log",
+      "sha256": "6279f1e8e37c27d182b055ad46247ca719ef0d943772a1930d3083374e6933e5",
+      "bytes": 1471
+    },
+    "baseline/unobserved900-B/steps.csv": {
+      "source": "/home/conner/Documents/GitHub/Project-Judas/.cache/physics-exhaustive-profile-20261021/unobserved900-B/steps.csv",
+      "sha256": "de94a9760df18c4267e3c5169f5469bd9869dd03fca58e30c9797d851f12438d",
+      "bytes": 137843
+    },
+    "baseline/unobserved900-B/frames.csv": {
+      "source": "/home/conner/Documents/GitHub/Project-Judas/.cache/physics-exhaustive-profile-20261021/unobserved900-B/frames.csv",
+      "sha256": "77804ef0399c43fb6cafe6a6f0165550a97f79aa762aab28d7e9033d6be57395",
+      "bytes": 139587
+    },
+    "baseline/unobserved900-B/begins.csv": {
+      "source": "/home/conner/Documents/GitHub/Project-Judas/.cache/physics-exhaustive-profile-20261021/unobserved900-B/begins.csv",
+      "sha256": "8ca21e4d59cad29bea39d55efa5a92e3fbc19cd6340f6a6ad388a4d601caf978",
+      "bytes": 23550
+    },
+    "baseline/unobserved900-B/quality.json": {
+      "source": "/home/conner/Documents/GitHub/Project-Judas/.cache/physics-exhaustive-profile-20261021/unobserved900-B/quality.json",
+      "sha256": "8daad8beebef2ba0ef2e005afbaebf538cfc5e966d1d960987c59fa65250855c",
+      "bytes": 366
+    },
+    "baseline/unobserved900-B.log": {
+      "source": "/home/conner/Documents/GitHub/Project-Judas/.cache/physics-exhaustive-profile-20261021/unobserved900-B.log",
+      "sha256": "d1b8781adddd2afcb5a5586bbde5a679e114a8f418433500b2bd627ab6e0459f",
+      "bytes": 1649
+    },
+    "baseline/long1800/steps.csv": {
+      "source": "/home/conner/Documents/GitHub/Project-Judas/.cache/physics-exhaustive-profile-20261021/long1800/steps.csv",
+      "sha256": "90a59a4a1b470df51194a94157de8284455efb471d67e5b4727848642fa78e94",
+      "bytes": 279222
+    },
+    "baseline/long1800/frames.csv": {
+      "source": "/home/conner/Documents/GitHub/Project-Judas/.cache/physics-exhaustive-profile-20261021/long1800/frames.csv",
+      "sha256": "4e29081aaab1069f9c6a52f1325a59c1972456e23bccf3f91362b31a409a8bf8",
+      "bytes": 282948
+    },
+    "baseline/long1800/begins.csv": {
+      "source": "/home/conner/Documents/GitHub/Project-Judas/.cache/physics-exhaustive-profile-20261021/long1800/begins.csv",
+      "sha256": "b5943e8e808e3eeb7bb89c2a5fa3da576b745e69fc0181f9e0232065a5e26741",
+      "bytes": 48553
+    },
+    "baseline/long1800/quality.json": {
+      "source": "/home/conner/Documents/GitHub/Project-Judas/.cache/physics-exhaustive-profile-20261021/long1800/quality.json",
+      "sha256": "ba75275fe974102b4b609c62296fac4ec34f1465cd25b1b31a31a5f882d6d8a4",
+      "bytes": 365
+    },
+    "baseline/long1800.log": {
+      "source": "/home/conner/Documents/GitHub/Project-Judas/.cache/physics-exhaustive-profile-20261021/long1800.log",
+      "sha256": "a49893df6ff32a5af18fd3ad67d0ca53f19ac48197555b09ea57d3a4f0c62f94",
+      "bytes": 1472
+    },
+    "baseline/live35-sampled/steps.csv": {
+      "source": "/home/conner/Documents/GitHub/Project-Judas/.cache/physics-exhaustive-profile-20261021/live35-sampled/steps.csv",
+      "sha256": "32322da709d907fe445aec95d5a43fad4064bdf9185ec0acfc920a1b27c2e4bd",
+      "bytes": 137164
+    },
+    "baseline/live35-sampled/frames.csv": {
+      "source": "/home/conner/Documents/GitHub/Project-Judas/.cache/physics-exhaustive-profile-20261021/live35-sampled/frames.csv",
+      "sha256": "170bf500c5dc48bda208059b320e591ac3c1fc6692a544a397ef625ab900c499",
+      "bytes": 59435
+    },
+    "baseline/live35-sampled/begins.csv": {
+      "source": "/home/conner/Documents/GitHub/Project-Judas/.cache/physics-exhaustive-profile-20261021/live35-sampled/begins.csv",
+      "sha256": "21b46ac0da9ad5a27aa00f1e0a58bf52460cf5b3668942e7c54c584b23601e7d",
+      "bytes": 10182
+    },
+    "baseline/live35-sampled/quality.json": {
+      "source": "/home/conner/Documents/GitHub/Project-Judas/.cache/physics-exhaustive-profile-20261021/live35-sampled/quality.json",
+      "sha256": "a98572867dfd307c67137c95132ab20a8965d41f56c5e09d7af25e6bf9d825af",
+      "bytes": 365
+    },
+    "baseline/live35-sampled.log": {
+      "source": "/home/conner/Documents/GitHub/Project-Judas/.cache/physics-exhaustive-profile-20261021/live35-sampled.log",
+      "sha256": "01681cbd3fc1d37237b56e5c0089a66a892fe524d2efe929f10c263049083393",
+      "bytes": 1460
+    },
+    "baseline/sampled900/sampling/metadata.json": {
+      "source": "/home/conner/Documents/GitHub/Project-Judas/.cache/physics-exhaustive-profile-20261021/sampled900/sampling/metadata.json",
+      "sha256": "60634d6367da02318dbf421501c4bd4694761c5ee2cc2718e5b3d9956b199f5f",
+      "bytes": 1310
+    },
+    "baseline/sampled900/sampling/cpu-pc.csv": {
+      "source": "/home/conner/Documents/GitHub/Project-Judas/.cache/physics-exhaustive-profile-20261021/sampled900/sampling/cpu-pc.csv",
+      "sha256": "aa5e1f3e9a6fa7ceacdc8d165dc3e71a5caa942473622e4b0343f563da74cb09",
+      "bytes": 479227
+    },
+    "baseline/sampled900/sampling/modules.csv": {
+      "source": "/home/conner/Documents/GitHub/Project-Judas/.cache/physics-exhaustive-profile-20261021/sampled900/sampling/modules.csv",
+      "sha256": "50d044c0f578752c48214df7dc1a93e4b2bccabcffadcd74f67fbbc59719918c",
+      "bytes": 29999
+    },
+    "baseline/sampled900/sampling/maps.txt": {
+      "source": "/home/conner/Documents/GitHub/Project-Judas/.cache/physics-exhaustive-profile-20261021/sampled900/sampling/maps.txt",
+      "sha256": "2035d3d6c52154a7f80f7677b409142511187c6f83828060cc60c7e7cfb8be6d",
+      "bytes": 46523
+    },
+    "baseline/sampled900/sampling/symbolized/source-buckets/buckets.json": {
+      "source": "/home/conner/Documents/GitHub/Project-Judas/.cache/physics-exhaustive-profile-20261021/sampled900/sampling/symbolized/source-buckets/buckets.json",
+      "sha256": "d686b2735b73a47ec9bcf331a020f74836bca264b2ebfb2a016d4ee455d23c2d",
+      "bytes": 23441
+    },
+    "baseline/live35-sampled/sampling/metadata.json": {
+      "source": "/home/conner/Documents/GitHub/Project-Judas/.cache/physics-exhaustive-profile-20261021/live35-sampled/sampling/metadata.json",
+      "sha256": "07b1ec1236e58021f6b7b54855ec13afdf2fd0fe6e4e5566961a681f31f388cb",
+      "bytes": 1310
+    },
+    "baseline/live35-sampled/sampling/cpu-pc.csv": {
+      "source": "/home/conner/Documents/GitHub/Project-Judas/.cache/physics-exhaustive-profile-20261021/live35-sampled/sampling/cpu-pc.csv",
+      "sha256": "496984ed4aa9acf48eaf87737ceb918adec118ccf51bb54ec39c4505fb5c5de2",
+      "bytes": 464661
+    },
+    "baseline/live35-sampled/sampling/modules.csv": {
+      "source": "/home/conner/Documents/GitHub/Project-Judas/.cache/physics-exhaustive-profile-20261021/live35-sampled/sampling/modules.csv",
+      "sha256": "1e6a10016a3199c3b3e724bc8ef22c71af002f9614521f829fd51672c4f2d643",
+      "bytes": 29999
+    },
+    "baseline/live35-sampled/sampling/maps.txt": {
+      "source": "/home/conner/Documents/GitHub/Project-Judas/.cache/physics-exhaustive-profile-20261021/live35-sampled/sampling/maps.txt",
+      "sha256": "1d11e6ff480f371bd2285d9ee3762668516789ab4855bdee7977a983f815b410",
+      "bytes": 46670
+    },
+    "baseline/live35-sampled/sampling/symbolized/source-buckets/buckets.json": {
+      "source": "/home/conner/Documents/GitHub/Project-Judas/.cache/physics-exhaustive-profile-20261021/live35-sampled/sampling/symbolized/source-buckets/buckets.json",
+      "sha256": "62eca7e27a7a780b7d9aea710345291c667e375dec17288ca7121dbd6c744d39",
+      "bytes": 23907
+    },
+    "compare_steps_frozen.py": {
+      "source": "/home/conner/Documents/GitHub/Project-Judas/.cache/physics-exhaustive-profile-20261021/sampler/compare_steps.py",
+      "sha256": "30a2af419f23661f7de49fcc867d504955907905c48b0773f60336fbb0cff44e",
+      "bytes": 8365
+    }
+  },
+  "notes": [
+    "Live35 baseline includes the explicitly recorded 2 ms CPU sampler.",
+    "Normal900/1800 timing baselines are not the instrumented demand observer.",
+    "Current-source differences are candidate work, never rewritten baseline expectations."
+  ]
+}

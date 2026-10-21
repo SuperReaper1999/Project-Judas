@@ -1,0 +1,26 @@
+{
+  "utc": "2026-10-21T13:21:34.195079+00:00",
+  "context": "native host observation after main measurements; desktop left running",
+  "processes": [
+    "    PID COMMAND         %CPU   RSS",
+    "  12589 python3         50.0 12988",
+    "   3331 ChatGPT         10.8 853900",
+    "   2830 ChatGPT          5.8 291692",
+    "   2790 ChatGPT          2.5 625576",
+    "   1824 kwin_wayland     2.2 240588",
+    "   3349 codex            1.8 491668",
+    "   1867 Xwayland         1.2 134044",
+    "   3821 ChatGPT          0.4 435800",
+    "   1929 plasmashell      0.3 443236",
+    "   4188 ChatGPT          0.2 338344",
+    "  12020 MainThread       0.1 118052",
+    "    907 nvidia-modeset/  0.1     0",
+    "   2835 ChatGPT          0.1 151912",
+    "    910 irq/63-nvidia    0.1     0",
+    "   3717 ChatGPT          0.0 200232",
+    "   1872 nvidia-drm/time  0.0     0",
+    "    945 avahi-daemon     0.0  4724"
+  ],
+  "loadavg": "0.64 0.78 0.60 1/982 12590\n",
+  "memory": "               total        used        free      shared  buff/cache   available\nMem:            7856        4270         834          78        3128        3586\nSwap:          16383           0       16383\n"
+}

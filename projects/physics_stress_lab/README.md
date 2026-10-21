@@ -106,6 +106,12 @@ M91 evidence report. Human acceptance and Windows validation are separate states
 The [current redesign report](../../docs/PREALPHA_INCREMENTAL_IMPACTS.md) covers
 new impacts growing through real velocity dependencies while continuing support
 keeps its ordinary force ownership. The scene, counts, materials, cadence and
-controls are unchanged. Press **3** for the original dense failure; expect
-remaining severe slow frames. Automated checks establish the scoped numerical
-contracts, not human acceptance or real-time certification.
+controls are unchanged. The later
+[ordinary support-history correction](../../docs/PREALPHA_SUPPORT_CONTINUITY.txt)
+stops eligible impacts from repeatedly cold-starting the next ordinary solve.
+Its matched 1,024-piece live capture improves from about 2.4 to 36.5 FPS in the
+late 20–35 second window on the Ryzen 5 5600. Press **3** to inspect that same
+workload. The whole capture averages 28.9 FPS, but the busy 10–20 second settling
+window still averages 9.9 FPS. Hitches and transient overlap remain; this is not
+all-phase smoothness or universal 60 Hz certification. Automated checks do not
+establish human acceptance.

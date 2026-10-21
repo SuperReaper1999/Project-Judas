@@ -1,0 +1,7 @@
+{
+  "output": ".cache/persistent-contact-20261021/row-prototype/PARITY_NATIVE_900.json",
+  "complete_window_digest_parity": true,
+  "common_steps": 900,
+  "digest_mismatches": 0,
+  "all_available_workload_counters_match": true
+}

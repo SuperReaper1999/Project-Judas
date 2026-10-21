@@ -1,0 +1,786 @@
+{
+  "schema": "judas.generic-public-cold-support-probe.v1",
+  "source": "/home/conner/Documents/GitHub/Project-Judas/.cache/persistent-contact-20261021/measure/ColdSupportSnapshot.cpp",
+  "source_sha256": "70558e3f1ccddd1a4bf00916083d6f697d4d382c772d7abcb7d3a111b1372e5e",
+  "compile": [
+    "/usr/bin/c++",
+    "-DDT_VIRTUAL_QUERYFILTER",
+    "-DMA_NO_ENCODING",
+    "-DMA_NO_GENERATION",
+    "-DMA_NO_RESOURCE_MANAGER",
+    "-I/home/conner/Documents/GitHub/Project-Judas/src",
+    "-I/home/conner/Documents/GitHub/Project-Judas/third_party/glad/include",
+    "-I/home/conner/Documents/GitHub/Project-Judas/third_party/miniaudio",
+    "-I/home/conner/Documents/GitHub/Project-Judas/third_party/verblib",
+    "-I/home/conner/Documents/GitHub/Project-Judas/third_party/meshoptimizer/src",
+    "-I/home/conner/Documents/GitHub/Project-Judas/build/_deps/judas_freetype-build/include",
+    "-I/home/conner/Documents/GitHub/Project-Judas/build/_deps/judas_freetype-src/include",
+    "-I/home/conner/Documents/GitHub/Project-Judas/build/_deps/judas_harfbuzz-src/src",
+    "-isystem",
+    "/home/conner/Documents/GitHub/Project-Judas/third_party/quickhull",
+    "-isystem",
+    "/usr/include/SDL2",
+    "-isystem",
+    "/home/conner/Documents/GitHub/Project-Judas/third_party/recastnavigation/Detour/Include",
+    "-isystem",
+    "/home/conner/Documents/GitHub/Project-Judas/third_party/recastnavigation/DetourTileCache/Include",
+    "-isystem",
+    "/home/conner/Documents/GitHub/Project-Judas/third_party/recastnavigation/DetourCrowd/Include",
+    "-isystem",
+    "/home/conner/Documents/GitHub/Project-Judas/third_party/quickjs",
+    "-isystem",
+    "/home/conner/Documents/GitHub/Project-Judas/build/unicode/icu/include",
+    "-O3",
+    "-DNDEBUG",
+    "-std=gnu++17",
+    "-Wall",
+    "-Wextra",
+    "-Wpedantic",
+    "-c",
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/persistent-contact-20261021/measure/ColdSupportSnapshot.cpp",
+    "-o",
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/persistent-contact-20261021/cold-public-paired-v2/ColdSupportSnapshot.cpp.o"
+  ],
+  "plans": [
+    {
+      "name": "baseline",
+      "core": "/home/conner/Documents/GitHub/Project-Judas/.cache/persistent-contact-20261021/measure/baseline/frozen/libjudas_engine.a",
+      "core_sha256": "05f626d3fb5400bfd1db23ec37a3cd3e6490f8452145365662466eebccd705ec",
+      "link": [
+        "/usr/bin/c++",
+        "-O3",
+        "-DNDEBUG",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/persistent-contact-20261021/cold-public-paired-v2/ColdSupportSnapshot.cpp.o",
+        "-o",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/persistent-contact-20261021/cold-public-paired-v2/baseline",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/persistent-contact-20261021/measure/baseline/frozen/libjudas_engine.a",
+        "libjudas_build_identity.a",
+        "libjudas_app_icon.a",
+        "libjudas_materials.a",
+        "/usr/lib/x86_64-linux-gnu/libSDL2.so",
+        "libjudas_glad.a",
+        "libjudas_audio_backend.a",
+        "libjudas_meshoptimizer.a",
+        "libjudas_navigation_cook.a",
+        "libjudas_navigation_backend.a",
+        "libjudas_quickjs.a",
+        "-lm",
+        "libjudas_profiler.a",
+        "_deps/judas_freetype-build/libfreetype.a",
+        "_deps/judas_harfbuzz-build/libharfbuzz.a",
+        "unicode/icu/lib/libicui18n.a",
+        "unicode/icu/lib/libicuuc.a",
+        "unicode/icu/lib/libicudata.a",
+        "-ldl",
+        "libjudas_jobs.a"
+      ],
+      "protocol": [
+        [
+          "/home/conner/Documents/GitHub/Project-Judas/.cache/persistent-contact-20261021/cold-public-paired-v2/baseline",
+          "/home/conner/Documents/GitHub/Project-Judas/.cache/persistent-contact-20261021/cold-public-paired-v2/baseline-slots",
+          "write",
+          "calm"
+        ],
+        [
+          "/home/conner/Documents/GitHub/Project-Judas/.cache/persistent-contact-20261021/cold-public-paired-v2/baseline",
+          "/home/conner/Documents/GitHub/Project-Judas/.cache/persistent-contact-20261021/cold-public-paired-v2/baseline-slots",
+          "read",
+          "calm"
+        ],
+        [
+          "/home/conner/Documents/GitHub/Project-Judas/.cache/persistent-contact-20261021/cold-public-paired-v2/baseline",
+          "/home/conner/Documents/GitHub/Project-Judas/.cache/persistent-contact-20261021/cold-public-paired-v2/baseline-slots",
+          "read-repeat",
+          "calm"
+        ],
+        [
+          "/home/conner/Documents/GitHub/Project-Judas/.cache/persistent-contact-20261021/cold-public-paired-v2/baseline",
+          "/home/conner/Documents/GitHub/Project-Judas/.cache/persistent-contact-20261021/cold-public-paired-v2/baseline-slots",
+          "missing-contact",
+          "calm"
+        ],
+        [
+          "/home/conner/Documents/GitHub/Project-Judas/.cache/persistent-contact-20261021/cold-public-paired-v2/baseline",
+          "/home/conner/Documents/GitHub/Project-Judas/.cache/persistent-contact-20261021/cold-public-paired-v2/baseline-slots",
+          "truncated-contact",
+          "calm"
+        ],
+        [
+          "/home/conner/Documents/GitHub/Project-Judas/.cache/persistent-contact-20261021/cold-public-paired-v2/baseline",
+          "/home/conner/Documents/GitHub/Project-Judas/.cache/persistent-contact-20261021/cold-public-paired-v2/baseline-slots",
+          "write",
+          "impacted"
+        ],
+        [
+          "/home/conner/Documents/GitHub/Project-Judas/.cache/persistent-contact-20261021/cold-public-paired-v2/baseline",
+          "/home/conner/Documents/GitHub/Project-Judas/.cache/persistent-contact-20261021/cold-public-paired-v2/baseline-slots",
+          "read",
+          "impacted"
+        ],
+        [
+          "/home/conner/Documents/GitHub/Project-Judas/.cache/persistent-contact-20261021/cold-public-paired-v2/baseline",
+          "/home/conner/Documents/GitHub/Project-Judas/.cache/persistent-contact-20261021/cold-public-paired-v2/baseline-slots",
+          "read-repeat",
+          "impacted"
+        ],
+        [
+          "/home/conner/Documents/GitHub/Project-Judas/.cache/persistent-contact-20261021/cold-public-paired-v2/baseline",
+          "/home/conner/Documents/GitHub/Project-Judas/.cache/persistent-contact-20261021/cold-public-paired-v2/baseline-slots",
+          "missing-contact",
+          "impacted"
+        ],
+        [
+          "/home/conner/Documents/GitHub/Project-Judas/.cache/persistent-contact-20261021/cold-public-paired-v2/baseline",
+          "/home/conner/Documents/GitHub/Project-Judas/.cache/persistent-contact-20261021/cold-public-paired-v2/baseline-slots",
+          "truncated-contact",
+          "impacted"
+        ]
+      ]
+    },
+    {
+      "name": "control",
+      "core": "/home/conner/Documents/GitHub/Project-Judas/build/libjudas_engine.a",
+      "core_sha256": "6b57d6c554c728a92afeb227581a863c41be9246cd2790aefe41afb3e047b4b7",
+      "link": [
+        "/usr/bin/c++",
+        "-O3",
+        "-DNDEBUG",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/persistent-contact-20261021/cold-public-paired-v2/ColdSupportSnapshot.cpp.o",
+        "-o",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/persistent-contact-20261021/cold-public-paired-v2/control",
+        "/home/conner/Documents/GitHub/Project-Judas/build/libjudas_engine.a",
+        "libjudas_build_identity.a",
+        "libjudas_app_icon.a",
+        "libjudas_materials.a",
+        "/usr/lib/x86_64-linux-gnu/libSDL2.so",
+        "libjudas_glad.a",
+        "libjudas_audio_backend.a",
+        "libjudas_meshoptimizer.a",
+        "libjudas_navigation_cook.a",
+        "libjudas_navigation_backend.a",
+        "libjudas_quickjs.a",
+        "-lm",
+        "libjudas_profiler.a",
+        "_deps/judas_freetype-build/libfreetype.a",
+        "_deps/judas_harfbuzz-build/libharfbuzz.a",
+        "unicode/icu/lib/libicui18n.a",
+        "unicode/icu/lib/libicuuc.a",
+        "unicode/icu/lib/libicudata.a",
+        "-ldl",
+        "libjudas_jobs.a"
+      ],
+      "protocol": [
+        [
+          "/home/conner/Documents/GitHub/Project-Judas/.cache/persistent-contact-20261021/cold-public-paired-v2/control",
+          "/home/conner/Documents/GitHub/Project-Judas/.cache/persistent-contact-20261021/cold-public-paired-v2/control-slots",
+          "write",
+          "calm"
+        ],
+        [
+          "/home/conner/Documents/GitHub/Project-Judas/.cache/persistent-contact-20261021/cold-public-paired-v2/control",
+          "/home/conner/Documents/GitHub/Project-Judas/.cache/persistent-contact-20261021/cold-public-paired-v2/control-slots",
+          "read",
+          "calm"
+        ],
+        [
+          "/home/conner/Documents/GitHub/Project-Judas/.cache/persistent-contact-20261021/cold-public-paired-v2/control",
+          "/home/conner/Documents/GitHub/Project-Judas/.cache/persistent-contact-20261021/cold-public-paired-v2/control-slots",
+          "read-repeat",
+          "calm"
+        ],
+        [
+          "/home/conner/Documents/GitHub/Project-Judas/.cache/persistent-contact-20261021/cold-public-paired-v2/control",
+          "/home/conner/Documents/GitHub/Project-Judas/.cache/persistent-contact-20261021/cold-public-paired-v2/control-slots",
+          "missing-contact",
+          "calm"
+        ],
+        [
+          "/home/conner/Documents/GitHub/Project-Judas/.cache/persistent-contact-20261021/cold-public-paired-v2/control",
+          "/home/conner/Documents/GitHub/Project-Judas/.cache/persistent-contact-20261021/cold-public-paired-v2/control-slots",
+          "truncated-contact",
+          "calm"
+        ],
+        [
+          "/home/conner/Documents/GitHub/Project-Judas/.cache/persistent-contact-20261021/cold-public-paired-v2/control",
+          "/home/conner/Documents/GitHub/Project-Judas/.cache/persistent-contact-20261021/cold-public-paired-v2/control-slots",
+          "write",
+          "impacted"
+        ],
+        [
+          "/home/conner/Documents/GitHub/Project-Judas/.cache/persistent-contact-20261021/cold-public-paired-v2/control",
+          "/home/conner/Documents/GitHub/Project-Judas/.cache/persistent-contact-20261021/cold-public-paired-v2/control-slots",
+          "read",
+          "impacted"
+        ],
+        [
+          "/home/conner/Documents/GitHub/Project-Judas/.cache/persistent-contact-20261021/cold-public-paired-v2/control",
+          "/home/conner/Documents/GitHub/Project-Judas/.cache/persistent-contact-20261021/cold-public-paired-v2/control-slots",
+          "read-repeat",
+          "impacted"
+        ],
+        [
+          "/home/conner/Documents/GitHub/Project-Judas/.cache/persistent-contact-20261021/cold-public-paired-v2/control",
+          "/home/conner/Documents/GitHub/Project-Judas/.cache/persistent-contact-20261021/cold-public-paired-v2/control-slots",
+          "missing-contact",
+          "impacted"
+        ],
+        [
+          "/home/conner/Documents/GitHub/Project-Judas/.cache/persistent-contact-20261021/cold-public-paired-v2/control",
+          "/home/conner/Documents/GitHub/Project-Judas/.cache/persistent-contact-20261021/cold-public-paired-v2/control-slots",
+          "truncated-contact",
+          "impacted"
+        ]
+      ]
+    }
+  ],
+  "results": [
+    {
+      "name": "baseline",
+      "link_exit": 0,
+      "protocol": [
+        {
+          "argv": [
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/persistent-contact-20261021/cold-public-paired-v2/baseline",
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/persistent-contact-20261021/cold-public-paired-v2/baseline-slots",
+            "write",
+            "calm"
+          ],
+          "exit": 0
+        },
+        {
+          "argv": [
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/persistent-contact-20261021/cold-public-paired-v2/baseline",
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/persistent-contact-20261021/cold-public-paired-v2/baseline-slots",
+            "read",
+            "calm"
+          ],
+          "exit": 0
+        },
+        {
+          "argv": [
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/persistent-contact-20261021/cold-public-paired-v2/baseline",
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/persistent-contact-20261021/cold-public-paired-v2/baseline-slots",
+            "read-repeat",
+            "calm"
+          ],
+          "exit": 0
+        },
+        {
+          "argv": [
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/persistent-contact-20261021/cold-public-paired-v2/baseline",
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/persistent-contact-20261021/cold-public-paired-v2/baseline-slots",
+            "missing-contact",
+            "calm"
+          ],
+          "exit": 0
+        },
+        {
+          "argv": [
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/persistent-contact-20261021/cold-public-paired-v2/baseline",
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/persistent-contact-20261021/cold-public-paired-v2/baseline-slots",
+            "truncated-contact",
+            "calm"
+          ],
+          "exit": 0
+        },
+        {
+          "argv": [
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/persistent-contact-20261021/cold-public-paired-v2/baseline",
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/persistent-contact-20261021/cold-public-paired-v2/baseline-slots",
+            "write",
+            "impacted"
+          ],
+          "exit": 0
+        },
+        {
+          "argv": [
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/persistent-contact-20261021/cold-public-paired-v2/baseline",
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/persistent-contact-20261021/cold-public-paired-v2/baseline-slots",
+            "read",
+            "impacted"
+          ],
+          "exit": 0
+        },
+        {
+          "argv": [
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/persistent-contact-20261021/cold-public-paired-v2/baseline",
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/persistent-contact-20261021/cold-public-paired-v2/baseline-slots",
+            "read-repeat",
+            "impacted"
+          ],
+          "exit": 0
+        },
+        {
+          "argv": [
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/persistent-contact-20261021/cold-public-paired-v2/baseline",
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/persistent-contact-20261021/cold-public-paired-v2/baseline-slots",
+            "missing-contact",
+            "impacted"
+          ],
+          "exit": 0
+        },
+        {
+          "argv": [
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/persistent-contact-20261021/cold-public-paired-v2/baseline",
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/persistent-contact-20261021/cold-public-paired-v2/baseline-slots",
+            "truncated-contact",
+            "impacted"
+          ],
+          "exit": 0
+        }
+      ],
+      "binary_sha256": "6914b5ec24026d2e9ed7ace69f70f5432eaf1e245bab2cc5ec8d7fdab87acfa6",
+      "comparisons": {
+        "calm": {
+          "exact_captured_boundary": true,
+          "independent_cold_process_repeat_exact": true,
+          "rows": [
+            {
+              "step": 0,
+              "max_position_delta_m": 0.0,
+              "max_linear_delta_m_s": 0.0,
+              "max_angular_delta_rad_s": 0.0,
+              "max_quaternion_component_delta": 0.0
+            },
+            {
+              "step": 1,
+              "max_position_delta_m": 0.001254553482536615,
+              "max_linear_delta_m_s": 0.07527352165274803,
+              "max_angular_delta_rad_s": 0.018775714841202575,
+              "max_quaternion_component_delta": 0.00012918509310111403
+            },
+            {
+              "step": 2,
+              "max_position_delta_m": 0.0023378309161126713,
+              "max_linear_delta_m_s": 0.06591108857621424,
+              "max_angular_delta_rad_s": 0.024784383421062782,
+              "max_quaternion_component_delta": 0.00030051713110879064
+            },
+            {
+              "step": 3,
+              "max_position_delta_m": 0.0028269980791912988,
+              "max_linear_delta_m_s": 0.03673576696215753,
+              "max_angular_delta_rad_s": 0.019127107231203106,
+              "max_quaternion_component_delta": 0.0004215988446958363
+            },
+            {
+              "step": 4,
+              "max_position_delta_m": 0.0029533613759613678,
+              "max_linear_delta_m_s": 0.03318319737354622,
+              "max_angular_delta_rad_s": 0.010443304319214974,
+              "max_quaternion_component_delta": 0.0004708371707238257
+            },
+            {
+              "step": 5,
+              "max_position_delta_m": 0.0031143573589813905,
+              "max_linear_delta_m_s": 0.037363357663524874,
+              "max_angular_delta_rad_s": 0.011286226123868353,
+              "max_quaternion_component_delta": 0.00047992676263675094
+            },
+            {
+              "step": 6,
+              "max_position_delta_m": 0.0035098438289508905,
+              "max_linear_delta_m_s": 0.03954759789226588,
+              "max_angular_delta_rad_s": 0.011084313285445154,
+              "max_quaternion_component_delta": 0.0005009032320231199
+            },
+            {
+              "step": 7,
+              "max_position_delta_m": 0.004119978415750838,
+              "max_linear_delta_m_s": 0.043546735287918394,
+              "max_angular_delta_rad_s": 0.011882755885055095,
+              "max_quaternion_component_delta": 0.0005585548933595419
+            },
+            {
+              "step": 8,
+              "max_position_delta_m": 0.004841070111765312,
+              "max_linear_delta_m_s": 0.04702572244376462,
+              "max_angular_delta_rad_s": 0.015252379986316253,
+              "max_quaternion_component_delta": 0.0006475261761806905
+            },
+            {
+              "step": 9,
+              "max_position_delta_m": 0.0055824076181318445,
+              "max_linear_delta_m_s": 0.047425479589211686,
+              "max_angular_delta_rad_s": 0.01586121821659862,
+              "max_quaternion_component_delta": 0.0007451655110344291
+            },
+            {
+              "step": 10,
+              "max_position_delta_m": 0.006291438295531191,
+              "max_linear_delta_m_s": 0.04524316061011614,
+              "max_angular_delta_rad_s": 0.014489899431734534,
+              "max_quaternion_component_delta": 0.0008336590835824609
+            }
+          ],
+          "exact_uninterrupted_trajectory": false,
+          "qualification": "Post-boundary differences are diagnostic, not an assumed universal exact-save contract."
+        },
+        "impacted": {
+          "exact_captured_boundary": true,
+          "independent_cold_process_repeat_exact": true,
+          "rows": [
+            {
+              "step": 0,
+              "max_position_delta_m": 0.0,
+              "max_linear_delta_m_s": 0.0,
+              "max_angular_delta_rad_s": 0.0,
+              "max_quaternion_component_delta": 0.0
+            },
+            {
+              "step": 1,
+              "max_position_delta_m": 0.0012694769179530125,
+              "max_linear_delta_m_s": 0.07617531847684106,
+              "max_angular_delta_rad_s": 0.01849281846438068,
+              "max_quaternion_component_delta": 0.00013076607137918472
+            },
+            {
+              "step": 2,
+              "max_position_delta_m": 0.0024274345122481944,
+              "max_linear_delta_m_s": 0.07119408724938336,
+              "max_angular_delta_rad_s": 0.02668983749789658,
+              "max_quaternion_component_delta": 0.00032311154063791037
+            },
+            {
+              "step": 3,
+              "max_position_delta_m": 0.0030783527822443734,
+              "max_linear_delta_m_s": 0.0511121089237617,
+              "max_angular_delta_rad_s": 0.023468523953519584,
+              "max_quaternion_component_delta": 0.0004881101194769144
+            },
+            {
+              "step": 4,
+              "max_position_delta_m": 0.0035122758620444567,
+              "max_linear_delta_m_s": 0.05327972359139609,
+              "max_angular_delta_rad_s": 0.016598582971630298,
+              "max_quaternion_component_delta": 0.0005932124331593513
+            },
+            {
+              "step": 5,
+              "max_position_delta_m": 0.004102472881297221,
+              "max_linear_delta_m_s": 0.05908941493360772,
+              "max_angular_delta_rad_s": 0.016438893648702307,
+              "max_quaternion_component_delta": 0.0006673990283161402
+            },
+            {
+              "step": 6,
+              "max_position_delta_m": 0.004967987842488546,
+              "max_linear_delta_m_s": 0.06392501692903028,
+              "max_angular_delta_rad_s": 0.017086625782555674,
+              "max_quaternion_component_delta": 0.0007594330236315727
+            },
+            {
+              "step": 7,
+              "max_position_delta_m": 0.0060466122685360404,
+              "max_linear_delta_m_s": 0.06965232006509865,
+              "max_angular_delta_rad_s": 0.018922726748170436,
+              "max_quaternion_component_delta": 0.0008912073681131005
+            },
+            {
+              "step": 8,
+              "max_position_delta_m": 0.007229517111093123,
+              "max_linear_delta_m_s": 0.07352824714538739,
+              "max_angular_delta_rad_s": 0.02279974492790362,
+              "max_quaternion_component_delta": 0.001055019092746079
+            },
+            {
+              "step": 9,
+              "max_position_delta_m": 0.008418645591143777,
+              "max_linear_delta_m_s": 0.07329464155952166,
+              "max_angular_delta_rad_s": 0.02351731467822213,
+              "max_quaternion_component_delta": 0.0012260399525985122
+            },
+            {
+              "step": 10,
+              "max_position_delta_m": 0.009545570625472417,
+              "max_linear_delta_m_s": 0.06939777950868252,
+              "max_angular_delta_rad_s": 0.021704507181279958,
+              "max_quaternion_component_delta": 0.0013841083855368197
+            }
+          ],
+          "exact_uninterrupted_trajectory": false,
+          "qualification": "Post-boundary differences are diagnostic, not an assumed universal exact-save contract."
+        }
+      }
+    },
+    {
+      "name": "control",
+      "link_exit": 0,
+      "protocol": [
+        {
+          "argv": [
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/persistent-contact-20261021/cold-public-paired-v2/control",
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/persistent-contact-20261021/cold-public-paired-v2/control-slots",
+            "write",
+            "calm"
+          ],
+          "exit": 0
+        },
+        {
+          "argv": [
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/persistent-contact-20261021/cold-public-paired-v2/control",
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/persistent-contact-20261021/cold-public-paired-v2/control-slots",
+            "read",
+            "calm"
+          ],
+          "exit": 0
+        },
+        {
+          "argv": [
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/persistent-contact-20261021/cold-public-paired-v2/control",
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/persistent-contact-20261021/cold-public-paired-v2/control-slots",
+            "read-repeat",
+            "calm"
+          ],
+          "exit": 0
+        },
+        {
+          "argv": [
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/persistent-contact-20261021/cold-public-paired-v2/control",
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/persistent-contact-20261021/cold-public-paired-v2/control-slots",
+            "missing-contact",
+            "calm"
+          ],
+          "exit": 0
+        },
+        {
+          "argv": [
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/persistent-contact-20261021/cold-public-paired-v2/control",
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/persistent-contact-20261021/cold-public-paired-v2/control-slots",
+            "truncated-contact",
+            "calm"
+          ],
+          "exit": 0
+        },
+        {
+          "argv": [
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/persistent-contact-20261021/cold-public-paired-v2/control",
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/persistent-contact-20261021/cold-public-paired-v2/control-slots",
+            "write",
+            "impacted"
+          ],
+          "exit": 0
+        },
+        {
+          "argv": [
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/persistent-contact-20261021/cold-public-paired-v2/control",
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/persistent-contact-20261021/cold-public-paired-v2/control-slots",
+            "read",
+            "impacted"
+          ],
+          "exit": 0
+        },
+        {
+          "argv": [
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/persistent-contact-20261021/cold-public-paired-v2/control",
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/persistent-contact-20261021/cold-public-paired-v2/control-slots",
+            "read-repeat",
+            "impacted"
+          ],
+          "exit": 0
+        },
+        {
+          "argv": [
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/persistent-contact-20261021/cold-public-paired-v2/control",
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/persistent-contact-20261021/cold-public-paired-v2/control-slots",
+            "missing-contact",
+            "impacted"
+          ],
+          "exit": 0
+        },
+        {
+          "argv": [
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/persistent-contact-20261021/cold-public-paired-v2/control",
+            "/home/conner/Documents/GitHub/Project-Judas/.cache/persistent-contact-20261021/cold-public-paired-v2/control-slots",
+            "truncated-contact",
+            "impacted"
+          ],
+          "exit": 0
+        }
+      ],
+      "binary_sha256": "9fed599ca68b4571b7afaa8ab2c4c77fff1c872e9aa0914a21fe3713d149681b",
+      "comparisons": {
+        "calm": {
+          "exact_captured_boundary": true,
+          "independent_cold_process_repeat_exact": true,
+          "rows": [
+            {
+              "step": 0,
+              "max_position_delta_m": 0.0,
+              "max_linear_delta_m_s": 0.0,
+              "max_angular_delta_rad_s": 0.0,
+              "max_quaternion_component_delta": 0.0
+            },
+            {
+              "step": 1,
+              "max_position_delta_m": 0.001254553482536615,
+              "max_linear_delta_m_s": 0.07527352165274803,
+              "max_angular_delta_rad_s": 0.018775714841202575,
+              "max_quaternion_component_delta": 0.00012918509310111403
+            },
+            {
+              "step": 2,
+              "max_position_delta_m": 0.0023378309161126713,
+              "max_linear_delta_m_s": 0.06591108857621424,
+              "max_angular_delta_rad_s": 0.024784383421062782,
+              "max_quaternion_component_delta": 0.00030051713110879064
+            },
+            {
+              "step": 3,
+              "max_position_delta_m": 0.0028269980791912988,
+              "max_linear_delta_m_s": 0.03673576696215753,
+              "max_angular_delta_rad_s": 0.019127107231203106,
+              "max_quaternion_component_delta": 0.0004215988446958363
+            },
+            {
+              "step": 4,
+              "max_position_delta_m": 0.0029533613759613678,
+              "max_linear_delta_m_s": 0.03318319737354622,
+              "max_angular_delta_rad_s": 0.010443304319214974,
+              "max_quaternion_component_delta": 0.0004708371707238257
+            },
+            {
+              "step": 5,
+              "max_position_delta_m": 0.0031143573589813905,
+              "max_linear_delta_m_s": 0.037363357663524874,
+              "max_angular_delta_rad_s": 0.011286226123868353,
+              "max_quaternion_component_delta": 0.00047992676263675094
+            },
+            {
+              "step": 6,
+              "max_position_delta_m": 0.0035098438289508905,
+              "max_linear_delta_m_s": 0.03954759789226588,
+              "max_angular_delta_rad_s": 0.011084313285445154,
+              "max_quaternion_component_delta": 0.0005009032320231199
+            },
+            {
+              "step": 7,
+              "max_position_delta_m": 0.004119978415750838,
+              "max_linear_delta_m_s": 0.043546735287918394,
+              "max_angular_delta_rad_s": 0.011882755885055095,
+              "max_quaternion_component_delta": 0.0005585548933595419
+            },
+            {
+              "step": 8,
+              "max_position_delta_m": 0.004841070111765312,
+              "max_linear_delta_m_s": 0.04702572244376462,
+              "max_angular_delta_rad_s": 0.015252379986316253,
+              "max_quaternion_component_delta": 0.0006475261761806905
+            },
+            {
+              "step": 9,
+              "max_position_delta_m": 0.0055824076181318445,
+              "max_linear_delta_m_s": 0.047425479589211686,
+              "max_angular_delta_rad_s": 0.01586121821659862,
+              "max_quaternion_component_delta": 0.0007451655110344291
+            },
+            {
+              "step": 10,
+              "max_position_delta_m": 0.006291438295531191,
+              "max_linear_delta_m_s": 0.04524316061011614,
+              "max_angular_delta_rad_s": 0.014489899431734534,
+              "max_quaternion_component_delta": 0.0008336590835824609
+            }
+          ],
+          "exact_uninterrupted_trajectory": false,
+          "qualification": "Post-boundary differences are diagnostic, not an assumed universal exact-save contract."
+        },
+        "impacted": {
+          "exact_captured_boundary": true,
+          "independent_cold_process_repeat_exact": true,
+          "rows": [
+            {
+              "step": 0,
+              "max_position_delta_m": 0.0,
+              "max_linear_delta_m_s": 0.0,
+              "max_angular_delta_rad_s": 0.0,
+              "max_quaternion_component_delta": 0.0
+            },
+            {
+              "step": 1,
+              "max_position_delta_m": 0.0012694769179530125,
+              "max_linear_delta_m_s": 0.07617531847684106,
+              "max_angular_delta_rad_s": 0.01849281846438068,
+              "max_quaternion_component_delta": 0.00013076607137918472
+            },
+            {
+              "step": 2,
+              "max_position_delta_m": 0.0024274345122481944,
+              "max_linear_delta_m_s": 0.07119408724938336,
+              "max_angular_delta_rad_s": 0.02668983749789658,
+              "max_quaternion_component_delta": 0.00032311154063791037
+            },
+            {
+              "step": 3,
+              "max_position_delta_m": 0.0030783527822443734,
+              "max_linear_delta_m_s": 0.0511121089237617,
+              "max_angular_delta_rad_s": 0.023468523953519584,
+              "max_quaternion_component_delta": 0.0004881101194769144
+            },
+            {
+              "step": 4,
+              "max_position_delta_m": 0.0035122758620444567,
+              "max_linear_delta_m_s": 0.05327972359139609,
+              "max_angular_delta_rad_s": 0.016598582971630298,
+              "max_quaternion_component_delta": 0.0005932124331593513
+            },
+            {
+              "step": 5,
+              "max_position_delta_m": 0.004102472881297221,
+              "max_linear_delta_m_s": 0.05908941493360772,
+              "max_angular_delta_rad_s": 0.016438893648702307,
+              "max_quaternion_component_delta": 0.0006673990283161402
+            },
+            {
+              "step": 6,
+              "max_position_delta_m": 0.004967987842488546,
+              "max_linear_delta_m_s": 0.06392501692903028,
+              "max_angular_delta_rad_s": 0.017086625782555674,
+              "max_quaternion_component_delta": 0.0007594330236315727
+            },
+            {
+              "step": 7,
+              "max_position_delta_m": 0.0060466122685360404,
+              "max_linear_delta_m_s": 0.06965232006509865,
+              "max_angular_delta_rad_s": 0.018922726748170436,
+              "max_quaternion_component_delta": 0.0008912073681131005
+            },
+            {
+              "step": 8,
+              "max_position_delta_m": 0.007229517111093123,
+              "max_linear_delta_m_s": 0.07352824714538739,
+              "max_angular_delta_rad_s": 0.02279974492790362,
+              "max_quaternion_component_delta": 0.001055019092746079
+            },
+            {
+              "step": 9,
+              "max_position_delta_m": 0.008418645591143777,
+              "max_linear_delta_m_s": 0.07329464155952166,
+              "max_angular_delta_rad_s": 0.02351731467822213,
+              "max_quaternion_component_delta": 0.0012260399525985122
+            },
+            {
+              "step": 10,
+              "max_position_delta_m": 0.009545570625472417,
+              "max_linear_delta_m_s": 0.06939777950868252,
+              "max_angular_delta_rad_s": 0.021704507181279958,
+              "max_quaternion_component_delta": 0.0013841083855368197
+            }
+          ],
+          "exact_uninterrupted_trajectory": false,
+          "qualification": "Post-boundary differences are diagnostic, not an assumed universal exact-save contract."
+        }
+      }
+    }
+  ],
+  "notes": [
+    "No contact warm cache is read, injected or serialized by this probe.",
+    "WorldPersistence, GameSnapshot and SaveStorage perform actual public capture/restoration.",
+    "Every reader is a new process; negative controls mutate only in-memory participant copies.",
+    "No generic exact trajectory promise is inferred from narrowly qualified M70/M77 contracts."
+  ],
+  "compile_exit": 0,
+  "cores_unchanged": true,
+  "source_unchanged": true,
+  "positive_and_negative_protocols_passed": true
+}

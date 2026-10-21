@@ -1,0 +1,25 @@
+[
+  {
+    "name": "export-followup",
+    "argv": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_export",
+      "/home/conner/Documents/GitHub/Project-Judas/projects/physics_stress_lab/physics_stress_lab.judasproj",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/persistent-contact-20261021/final-integration/exported-followup",
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas"
+    ],
+    "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+    "exit": 0,
+    "seconds": 0.4645325749997937,
+    "log_sha256": "896ed7707b3d22006d27e08c1433839fdd54696aa5a6d8ff0f80879bf5c01e4c"
+  },
+  {
+    "name": "relocated-standalone",
+    "argv": [
+      "/tmp/Judas-support-continuity-20261021-sxwyknpr/judas"
+    ],
+    "cwd": "/tmp",
+    "exit": 0,
+    "seconds": 0.6648543979999886,
+    "log_sha256": "1a67f9ec9bd629d9bec02ddf2110aad1ffa4508b4bb263e8e4be719cbff07a3c"
+  }
+]

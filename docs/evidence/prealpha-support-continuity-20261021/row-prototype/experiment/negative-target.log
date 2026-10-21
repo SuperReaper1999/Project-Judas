@@ -1,0 +1,3 @@
+FAIL exact transient activation sequence
+FAIL explicit retarget invalidates otherwise identical endpoint certificate
+{"checks":26,"failures":2,"considered":106,"evaluated":80,"skipped":26,"accumulator_only":10}

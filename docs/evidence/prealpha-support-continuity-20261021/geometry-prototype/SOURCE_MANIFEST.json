@@ -1,0 +1,48 @@
+{
+  "source_commit": "f5624f0bb4f92ece7211199ca8fe51abc08a2b19",
+  "original_source": "src/Contacts.cpp",
+  "original_source_sha256": "c6b39dc56b81d5b1d02376deba96d9805524ce63e91a00b8781992b4e6e04dd1",
+  "production_changes": false,
+  "compiled": false,
+  "executed": false,
+  "files": [
+    {
+      "path": "Contacts.cpp",
+      "bytes": 45002,
+      "sha256": "6dec54482ff47ae35624e50703b5a74b3dd592929c7134fa4bdd938372e72b63"
+    },
+    {
+      "path": "DESIGN_AND_VALIDATION.md",
+      "bytes": 12745,
+      "sha256": "c429e1d43c1eb9114de0c2edffd2c9acf21caa3f93eaeeb97ce97faa16051f88"
+    },
+    {
+      "path": "GeometryEpisodeQualification.cpp",
+      "bytes": 15938,
+      "sha256": "3d57a58b654da6f3ffbc9f5ca0ad25519347a21dc0e6099584032a42b6cd26be"
+    },
+    {
+      "path": "PrimitiveContactEpisode.h",
+      "bytes": 2608,
+      "sha256": "e972b3a199921eba4c7eced406f76da8bd7b4abf781b8fa0a813ac812d0f8ae0"
+    },
+    {
+      "path": "WARM_OWNERSHIP_REVIEW.md",
+      "bytes": 8851,
+      "sha256": "1486c866f69480c98dbc71a01730d8a57183eac034ada743dda27102a2ead557"
+    },
+    {
+      "path": "WarmSupportLifecycleQualification.cpp",
+      "bytes": 12106,
+      "sha256": "e8394477fdb83498d0b4a59800070567b39dcf309f0836c447f2ff43fff4eb9b"
+    }
+  ],
+  "qualification_fixture_compiled": false,
+  "qualification_fixture_executed": false,
+  "warm_lifecycle_fixture_compiled": true,
+  "warm_lifecycle_fixture_executed": true,
+  "warm_lifecycle_paired_evidence": "../warm-lifecycle-paired",
+  "warm_lifecycle_baseline_checks": 15516,
+  "warm_lifecycle_candidate_checks": 15516,
+  "warm_lifecycle_failures": 0
+}

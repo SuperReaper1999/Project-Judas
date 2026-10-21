@@ -1,0 +1,310 @@
+{
+  "schema": "judas.matched-step-comparison.v1",
+  "actual_step_window_inclusive": [
+    1,
+    900
+  ],
+  "files": {
+    "baseline": {
+      "path": ".cache/physics-exhaustive-profile-20261021/unobserved900/steps.csv",
+      "sha256": "04edee02b344aff87f1e68b922aa3399d0f809fee8eacd5ab3265a7486c93d34"
+    },
+    "diagnostic": {
+      "path": ".cache/physics-exhaustive-profile-20261021/stages900/steps.csv",
+      "sha256": "574e8d9de367e8f6ad5c1a033a656a3d1c7397f50c593d6d920b1d256340e241"
+    }
+  },
+  "selected_counts": {
+    "baseline": 900,
+    "diagnostic": 900,
+    "common": 900
+  },
+  "missing_in_baseline": [],
+  "missing_in_diagnostic": [],
+  "expected_window_missing_in_both": [],
+  "digest_parity_on_common_steps": true,
+  "complete_window_digest_parity": true,
+  "digest_mismatches": [],
+  "workload_counters": {
+    "bodies": {
+      "available_in_both": true,
+      "parity": true,
+      "mismatches": []
+    },
+    "awake": {
+      "available_in_both": true,
+      "parity": true,
+      "mismatches": []
+    },
+    "sleeping": {
+      "available_in_both": true,
+      "parity": true,
+      "mismatches": []
+    },
+    "candidates": {
+      "available_in_both": true,
+      "parity": true,
+      "mismatches": []
+    },
+    "contacts": {
+      "available_in_both": true,
+      "parity": true,
+      "mismatches": []
+    },
+    "impact_events": {
+      "available_in_both": true,
+      "parity": true,
+      "mismatches": []
+    },
+    "impact_queries": {
+      "available_in_both": true,
+      "parity": true,
+      "mismatches": []
+    },
+    "impact_iterations": {
+      "available_in_both": true,
+      "parity": true,
+      "mismatches": []
+    },
+    "impact_peak": {
+      "available_in_both": true,
+      "parity": true,
+      "mismatches": []
+    },
+    "nonfinite_fields": {
+      "available_in_both": true,
+      "parity": true,
+      "mismatches": []
+    }
+  },
+  "physical_observations": {
+    "max_linear_speed": {
+      "available_in_both": true,
+      "parity": true,
+      "mismatches": []
+    },
+    "max_angular_speed": {
+      "available_in_both": true,
+      "parity": true,
+      "mismatches": []
+    },
+    "nonfinite_fields": {
+      "available_in_both": true,
+      "parity": true,
+      "mismatches": []
+    }
+  },
+  "timings_ms": {
+    "fixed_ms": {
+      "available_in_both": true,
+      "baseline": {
+        "count": 900,
+        "finite_count": 900,
+        "nonfinite_count": 0,
+        "mean": 37.776536472222226,
+        "median": 33.7417025,
+        "p95": 77.58056295,
+        "worst": 124.894936,
+        "total": 33998.882825
+      },
+      "diagnostic": {
+        "count": 900,
+        "finite_count": 900,
+        "nonfinite_count": 0,
+        "mean": 48.85587466333333,
+        "median": 43.424685,
+        "p95": 111.83894629999998,
+        "worst": 196.996819,
+        "total": 43970.287197
+      },
+      "paired_diagnostic_minus_baseline": {
+        "count": 900,
+        "finite_count": 900,
+        "nonfinite_count": 0,
+        "mean": 11.07933819111111,
+        "median": 6.946056500000001,
+        "p95": 40.6955185,
+        "worst": 73.64045399999999,
+        "total": 9971.404371999999
+      },
+      "ratios_diagnostic_over_baseline": {
+        "mean": 1.2932862360014912,
+        "median": 1.2869737382101567,
+        "p95": 1.4415846192309691,
+        "worst": 1.5773002918228805,
+        "total": 1.2932862360014912
+      }
+    },
+    "total_physics_ms": {
+      "available_in_both": true,
+      "baseline": {
+        "count": 900,
+        "finite_count": 900,
+        "nonfinite_count": 0,
+        "mean": 36.765371182222225,
+        "median": 32.6070175,
+        "p95": 76.51913605,
+        "worst": 123.783531,
+        "total": 33088.834064
+      },
+      "diagnostic": {
+        "count": 900,
+        "finite_count": 900,
+        "nonfinite_count": 0,
+        "mean": 47.85911357444444,
+        "median": 42.365242,
+        "p95": 110.61389584999996,
+        "worst": 195.866376,
+        "total": 43073.202217
+      },
+      "paired_diagnostic_minus_baseline": {
+        "count": 900,
+        "finite_count": 900,
+        "nonfinite_count": 0,
+        "mean": 11.093742392222222,
+        "median": 7.005739000000002,
+        "p95": 40.7240839,
+        "worst": 73.579167,
+        "total": 9984.368153
+      },
+      "ratios_diagnostic_over_baseline": {
+        "mean": 1.3017443326557943,
+        "median": 1.2992676193092485,
+        "p95": 1.4455716773608287,
+        "worst": 1.5823298496792761,
+        "total": 1.3017443326557943
+      }
+    },
+    "broadphase_ms": {
+      "available_in_both": true,
+      "baseline": {
+        "count": 900,
+        "finite_count": 900,
+        "nonfinite_count": 0,
+        "mean": 2.8901960144444447,
+        "median": 3.1172495,
+        "p95": 3.22022205,
+        "worst": 3.990055,
+        "total": 2601.176413
+      },
+      "diagnostic": {
+        "count": 900,
+        "finite_count": 900,
+        "nonfinite_count": 0,
+        "mean": 2.8807301288888887,
+        "median": 3.1153399999999998,
+        "p95": 3.22545115,
+        "worst": 3.964637,
+        "total": 2592.657116
+      },
+      "paired_diagnostic_minus_baseline": {
+        "count": 900,
+        "finite_count": 900,
+        "nonfinite_count": 0,
+        "mean": -0.009465885555555562,
+        "median": -0.003627000000000047,
+        "p95": 0.05996904999999998,
+        "worst": 0.8025440000000001,
+        "total": -8.519297000000005
+      },
+      "ratios_diagnostic_over_baseline": {
+        "mean": 0.9967248292128811,
+        "median": 0.999387440755063,
+        "p95": 1.001623832120521,
+        "worst": 0.9936296617465173,
+        "total": 0.9967248292128811
+      }
+    },
+    "narrowphase_ms": {
+      "available_in_both": true,
+      "baseline": {
+        "count": 900,
+        "finite_count": 900,
+        "nonfinite_count": 0,
+        "mean": 5.045366032222223,
+        "median": 5.119455,
+        "p95": 5.8649476499999995,
+        "worst": 8.254127,
+        "total": 4540.829429
+      },
+      "diagnostic": {
+        "count": 900,
+        "finite_count": 900,
+        "nonfinite_count": 0,
+        "mean": 5.135183225555555,
+        "median": 5.3311645,
+        "p95": 5.916816699999999,
+        "worst": 8.422675,
+        "total": 4621.664903
+      },
+      "paired_diagnostic_minus_baseline": {
+        "count": 900,
+        "finite_count": 900,
+        "nonfinite_count": 0,
+        "mean": 0.08981719333333331,
+        "median": 0.09998900000000033,
+        "p95": 0.645776949999999,
+        "worst": 1.9075980000000001,
+        "total": 80.83547399999998
+      },
+      "ratios_diagnostic_over_baseline": {
+        "mean": 1.017801918187841,
+        "median": 1.0413539136490113,
+        "p95": 1.008843906731205,
+        "worst": 1.0204198457329285,
+        "total": 1.0178019181878413
+      }
+    },
+    "solver_ms": {
+      "available_in_both": true,
+      "baseline": {
+        "count": 900,
+        "finite_count": 900,
+        "nonfinite_count": 0,
+        "mean": 26.210950562222223,
+        "median": 21.493513999999998,
+        "p95": 65.00187645,
+        "worst": 112.194274,
+        "total": 23589.855506
+      },
+      "diagnostic": {
+        "count": 900,
+        "finite_count": 900,
+        "nonfinite_count": 0,
+        "mean": 37.22999035777778,
+        "median": 31.051215,
+        "p95": 99.00856239999995,
+        "worst": 184.529877,
+        "total": 33506.991322
+      },
+      "paired_diagnostic_minus_baseline": {
+        "count": 900,
+        "finite_count": 900,
+        "nonfinite_count": 0,
+        "mean": 11.019039795555555,
+        "median": 6.889855000000001,
+        "p95": 40.33330309999998,
+        "worst": 73.596841,
+        "total": 9917.135816
+      },
+      "ratios_diagnostic_over_baseline": {
+        "mean": 1.4203983281490473,
+        "median": 1.4446783806500882,
+        "p95": 1.5231646808866846,
+        "worst": 1.644735247362089,
+        "total": 1.4203983281490475
+      }
+    }
+  },
+  "notes": [
+    "Actual step numbers differ from sampler last-completed-step tags; choose ranges deliberately.",
+    "Timing statistics use identical common step IDs; p95 uses linear interpolation at (N-1)*0.95.",
+    "Profiler categories can be inclusive and overlap; do not sum category timings.",
+    "Digest/workload parity detects observer interference; timing differences alone do not establish causation or significance.",
+    "Complete-window parity requires every requested step in both files; partial overlap is separately reported."
+  ],
+  "available_workload_counter_count": 10,
+  "all_available_workload_counters_match": true,
+  "all_physical_observations_present_and_match": true,
+  "complete_window_physical_and_work_parity": true
+}

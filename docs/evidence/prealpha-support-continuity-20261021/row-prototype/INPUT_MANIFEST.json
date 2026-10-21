@@ -1,0 +1,10 @@
+{
+  "production_inputs": {
+    "src/ContactSolver.cpp": "d8b26d74d3d0f9feea59f76aa9fd8ae048488e7502e4906ab7c9fef90b010354",
+    "src/ImpactSolver.cpp": "185558da16665e0dafbbbf7c18fc06ad2f1c63b320f0928170b743f68cb8deb7",
+    "src/ContactSolver.h": "081171606681e809e18045a55485565fabb4cd507598ace7407fe2673d940a9c",
+    "src/ImpactSolver.h": "0ce6652b668bd4673a4db5b7ad7599d2c03a75c857c68213bb4910397607eb49",
+    "tests/TrackedContactRowsTests.cpp": "08e23fc06129979064718942497e3d41dba3eac15fd65663b11be1823ed83d6f"
+  },
+  "purpose": "private exact ordered-row dependency scheduling; not built or run"
+}

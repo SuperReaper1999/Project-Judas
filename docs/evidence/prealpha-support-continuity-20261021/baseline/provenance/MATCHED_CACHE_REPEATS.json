@@ -1,0 +1,46 @@
+[
+  {
+    "name": "cache-control900-B",
+    "argv": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/physics-exhaustive-profile-20261021/cache-control-live",
+      "/home/conner/Documents/GitHub/Project-Judas/projects/physics_stress_lab/Scenes/room1024.judas",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/physics-exhaustive-profile-20261021/cache-control900-B",
+      "180",
+      "900",
+      "0",
+      "0",
+      "1",
+      "0.016666667",
+      "0",
+      "0",
+      "1"
+    ],
+    "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+    "started_utc": "2026-10-21T13:30:07.593310+00:00",
+    "finished_utc": "2026-10-21T13:30:42.418964+00:00",
+    "binary_sha256": "0a53f655701128813190aae69dad6e493f6f1fc1b7fbf30187bcc4c98a66532e",
+    "exit_code": 0
+  },
+  {
+    "name": "unobserved900-B",
+    "argv": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/physics-exhaustive-profile-20261021/sampled-live",
+      "/home/conner/Documents/GitHub/Project-Judas/projects/physics_stress_lab/Scenes/room1024.judas",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/physics-exhaustive-profile-20261021/unobserved900-B",
+      "180",
+      "900",
+      "0",
+      "0",
+      "1",
+      "0.016666667",
+      "0",
+      "0",
+      "1"
+    ],
+    "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+    "started_utc": "2026-10-21T13:30:42.527455+00:00",
+    "finished_utc": "2026-10-21T13:31:18.604080+00:00",
+    "binary_sha256": "4952936c0f280910bd2ceead75ef45fbf30691c49613a907faad70ed50f45100",
+    "exit_code": 0
+  }
+]

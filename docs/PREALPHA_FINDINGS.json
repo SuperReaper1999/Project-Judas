@@ -166,9 +166,9 @@
       "workstream": "P1-01",
       "original_quote": "Dense-contact physics still has severe latency tails",
       "status": "improved",
-      "scope": "fresh_matched_linux_incremental_impacts_20261021",
-      "disposition": "Actual old event28 changes751 bodies through unrelated resting-residual projection; immutable current-event support targets reduce this to0, and event18 from810 to3. Growing private domains retain event impulses, expand on exact per-row body-velocity dependencies and retain legacy fallback. Matched600-step mean67.57->30.98ms, p95177.78->71.67, worst535.21->104.85; real late cadence0.97->2.40FPS, still far below24/30. Physical trajectories intentionally differ; all601 native geometry states recorded, mixed penetration tails retained. Not closure or human acceptance.",
-      "evidence": "docs/PREALPHA_INCREMENTAL_IMPACTS.md"
+      "scope": "fresh_matched_linux_support_history_20261021",
+      "disposition": "Input f5624f0bb4f92ece7211199ca8fe51abc08a2b19. Eligible primitive impacts now preserve ordinary iterative support guesses without copying event impulses. Same1024-piece fixture/60Hz/ten sweeps/CCD: late steps901-1800 mean63.62->15.50ms, p95115.93->17.77ms, worst297.80->27.26ms; queries5794691->17574 and events3325->64. Matched unsampled live late20-35s cadence2.39->36.50FPS; whole capture28.9FPS, but busy10-20s settling still9.9FPS. Dense trajectories change; max all-step observed penetration74.34->40.62mm and endpoint23.60->5.01mm over900 steps. Fresh regression/cold-save/consumer qualification is recorded separately. Scoped late-window target met; all-phase smoothness and general coupled/dense limits remain open. Not universal60Hz, human acceptance or Alpha readiness.",
+      "evidence": "docs/PREALPHA_SUPPORT_CONTINUITY.txt"
     },
     {
       "id": "C-01",

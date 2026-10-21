@@ -1,0 +1,46 @@
+{
+  "assetId": "ff4c2e71c9f6145a0a820a5b27f9d59a",
+  "clips": [
+    {
+      "duration": 1.0,
+      "loop": false,
+      "motionExtracted": false,
+      "name": "Rest"
+    }
+  ],
+  "diagnostics": [],
+  "hierarchyNodes": 8,
+  "importRecord": "{\"digest\":\"3ba8a5a3e2a8d822f54a37bcb78b4c643418cefe1321fd6fa167a82168dad32f\",\"inputs\":{\"Sources/ff4c2e71c9f6145a0a820a5b27f9d59a/receiver.gltf\":\"441e7206dba13194b248d553b7f4673a9a055d767508b8d23e49ef890be982fb\"},\"manifest\":{\"assetId\":\"ff4c2e71c9f6145a0a820a5b27f9d59a\",\"clips\":[{\"duration\":1.0,\"loop\":false,\"motionExtracted\":false,\"name\":\"Rest\"}],\"diagnostics\":[],\"hierarchyNodes\":8,\"inputs\":{\"Sources/ff4c2e71c9f6145a0a820a5b27f9d59a/receiver.gltf\":\"441e7206dba13194b248d553b7f4673a9a055d767508b8d23e49ef890be982fb\"},\"joints\":[\"Housing\",\"Housing/Aster\",\"Housing/Aster/Birch\",\"Housing/Aster/Birch/Copper\",\"Housing/Dune\",\"Housing/Dune/Elm\",\"Housing/Dune/Elm/Flint\",\"Exact collider-box presentation\",\"__JudasMotionRoot\"],\"materialKeys\":[\"Painted fixture\"],\"parts\":[{\"identity\":\"Exact collider-box presentation/material/Painted fixture\",\"node\":7,\"triangles\":84}],\"recipeDigest\":\"3ba8a5a3e2a8d822f54a37bcb78b4c643418cefe1321fd6fa167a82168dad32f\",\"revision\":\"M66-ufbx-0.23.1-cgltf-1.15-cook-10-M74-retarget-1-model-1\",\"skinPaletteEntries\":7,\"sourceBones\":0,\"sourceUnitMeters\":1.0,\"vertices\":252},\"recipe\":\"Imports/receiver.judasimport\",\"revision\":\"M66-ufbx-0.23.1-cgltf-1.15-cook-10-M74-retarget-1-model-1\"}",
+  "inputs": {
+    "Sources/ff4c2e71c9f6145a0a820a5b27f9d59a/receiver.gltf": "441e7206dba13194b248d553b7f4673a9a055d767508b8d23e49ef890be982fb"
+  },
+  "joints": [
+    "Housing",
+    "Housing/Aster",
+    "Housing/Aster/Birch",
+    "Housing/Aster/Birch/Copper",
+    "Housing/Dune",
+    "Housing/Dune/Elm",
+    "Housing/Dune/Elm/Flint",
+    "Exact collider-box presentation",
+    "__JudasMotionRoot"
+  ],
+  "materialKeys": [
+    "Painted fixture"
+  ],
+  "outputHash": "c9bd8ac12d91e908f08d81e554c9142b7b0d990614c25acd6156cf3c1fb56d3e",
+  "parts": [
+    {
+      "identity": "Exact collider-box presentation/material/Painted fixture",
+      "node": 7,
+      "triangles": 84
+    }
+  ],
+  "recipeDigest": "3ba8a5a3e2a8d822f54a37bcb78b4c643418cefe1321fd6fa167a82168dad32f",
+  "recordHash": "ebb5d9179b337054a8e6db9f5053fd69b41939bad9aba194e4f3e7f666bd8cb0",
+  "revision": "M66-ufbx-0.23.1-cgltf-1.15-cook-10-M74-retarget-1-model-1",
+  "skinPaletteEntries": 7,
+  "sourceBones": 0,
+  "sourceUnitMeters": 1.0,
+  "vertices": 252
+}
