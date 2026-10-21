@@ -90,7 +90,8 @@
     "docs/judasjs/wheels.md",
     "src/physics/WorldModules.md",
     "docs/PREALPHA_FINDINGS.md",
-    "docs/PREALPHA_CLEANUP.md"
+    "docs/PREALPHA_CLEANUP.md",
+    "docs/PREALPHA_EVENT_DEPENDENCIES.md"
   ],
   "historical_exclusions": [
     {

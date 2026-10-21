@@ -1,0 +1,21 @@
+{
+  "argv": [
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/event-architecture-20261021/final-snapshot/bin/judas_physics_stress_live_benchmark",
+    "/home/conner/Documents/GitHub/Project-Judas/projects/physics_stress_lab/Scenes/room1024.judas",
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/event-architecture-20261021/candidate270-A/live",
+    "300.0",
+    "270",
+    "0",
+    "0",
+    "1",
+    "0.016666667",
+    "0",
+    "0",
+    "1"
+  ],
+  "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+  "process_group": 11335,
+  "timed_out": false,
+  "timeout_seconds": 360.0,
+  "utc": "2026-10-21T00:53:36.644750+00:00"
+}

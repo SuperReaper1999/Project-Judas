@@ -1,0 +1,21 @@
+{
+  "steps": 347,
+  "allPhysicalAndWorkFieldsMatch": true,
+  "baseline": ".cache/ryzen-scenario3-20261020/realtime-A1",
+  "fields": [
+    "step",
+    "bodies",
+    "awake",
+    "sleeping",
+    "candidates",
+    "contacts",
+    "impact_events",
+    "impact_queries",
+    "impact_iterations",
+    "impact_peak",
+    "trajectory_digest",
+    "max_linear_speed",
+    "max_angular_speed",
+    "nonfinite_fields"
+  ]
+}

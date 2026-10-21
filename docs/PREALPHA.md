@@ -17,6 +17,11 @@ with [documentation](README.md), [your first project](FIRST_PROJECT.md),
 The [current audit disposition](PREALPHA_FINDINGS.md) reconciles all original
 findings and distinguishes carried-forward evidence from fresh checks.
 
+The [event-dependency follow-up](PREALPHA_EVENT_DEPENDENCIES.md) records the
+21 October Linux correction, exact physical comparisons and rejected experiments.
+Most CCD queries are eliminated, but the live dense-pile frame-rate limit remains
+open; no new human acceptance or main promotion is implied.
+
 ## Evidence and acceptance history
 
 - [Original assessment](evidence/prealpha-pass2/ORIGINAL_ASSESSMENT.md), frozen

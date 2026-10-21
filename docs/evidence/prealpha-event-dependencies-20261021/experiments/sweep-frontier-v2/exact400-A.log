@@ -1,0 +1,15 @@
+{
+  "output": "/home/conner/Documents/GitHub/Project-Judas/.cache/event-architecture-20261021/sweep-frontier-v2/exact400-A",
+  "exit": 0,
+  "valid_completion": true,
+  "completed_steps": 400,
+  "fixed_ms": {
+    "count": 400,
+    "mean": 77.051616855,
+    "median": 32.0628315,
+    "p95_floor": 244.03584,
+    "p99_floor": 320.788613,
+    "maximum": 668.500988
+  },
+  "cadence": "synthetic one-60Hz-step/frame: NOT displayed FPS"
+}

@@ -1,0 +1,30 @@
+{
+  "archiveHashMatches": true,
+  "comparedAgainst": "b7db703ca3fc3c0d39ecc31009a1148b5b778762",
+  "identicalPhysicsInputs": [
+    "src/Contacts.cpp",
+    "src/ImpactSolver.cpp",
+    "src/RigidMotion.h",
+    "src/RigidMotionBounds.h",
+    "src/physics/.clang-format",
+    "src/physics/ImpactCandidateCache.h",
+    "src/physics/ImpactSupportSets.h",
+    "src/physics/WorldBodies.cpp",
+    "src/physics/WorldBounds.cpp",
+    "src/physics/WorldCCDSearch.cpp",
+    "src/physics/WorldContacts.cpp",
+    "src/physics/WorldHotAccessors.h",
+    "src/physics/WorldImpactEvents.cpp",
+    "src/physics/WorldImpactQueries.h",
+    "src/physics/WorldInternal.h",
+    "src/physics/WorldJoints.cpp",
+    "src/physics/WorldModules.md",
+    "src/physics/WorldParticles.cpp",
+    "src/physics/WorldPersistence.cpp",
+    "src/physics/WorldProfiling.h",
+    "src/physics/WorldQueries.cpp",
+    "src/physics/WorldSleep.cpp"
+  ],
+  "differentInputs": [],
+  "unavailableInputs": []
+}

@@ -1,0 +1,90 @@
+-- GLOB mismatch!
+The following files were added:
+  +/home/conner/Documents/GitHub/Project-Judas/cmake/JudasWindowsCrossDependencies.cmake
+  +/home/conner/Documents/GitHub/Project-Judas/cmake/JudasWindowsCrossICU.cmake
+  +/home/conner/Documents/GitHub/Project-Judas/cmake/JudasWindowsCrossRuntime.cmake
+  +/home/conner/Documents/GitHub/Project-Judas/cmake/toolchains/WindowsMinGW64.cmake
+-- GLOB mismatch!
+The following files were added:
+  +/home/conner/Documents/GitHub/Project-Judas/scripts/__pycache__/check_windows_cross.cpython-314.pyc
+  +/home/conner/Documents/GitHub/Project-Judas/scripts/__pycache__/hearthworld_delivery.cpython-314.pyc
+  +/home/conner/Documents/GitHub/Project-Judas/scripts/__pycache__/hearthworld_validate.cpython-314.pyc
+  +/home/conner/Documents/GitHub/Project-Judas/scripts/check_current_docs.py
+  +/home/conner/Documents/GitHub/Project-Judas/scripts/check_windows_cross.py
+  +/home/conner/Documents/GitHub/Project-Judas/scripts/hearthworld_delivery.py
+  +/home/conner/Documents/GitHub/Project-Judas/scripts/hearthworld_validate.py
+-- GLOB mismatch!
+The following files were added:
+  +/home/conner/Documents/GitHub/Project-Judas/src/physics/ImpactEventSchedule.h
+-- GLOB mismatch!
+The following files were added:
+  +/home/conner/Documents/GitHub/Project-Judas/tests/HearthworldApplicationTests.cpp
+  +/home/conner/Documents/GitHub/Project-Judas/tests/ImpactEventScheduleTests.cpp
+  +/home/conner/Documents/GitHub/Project-Judas/tests/WindowsCrossAudioTests.cpp
+  +/home/conner/Documents/GitHub/Project-Judas/tests/test_current_docs.py
+  +/home/conner/Documents/GitHub/Project-Judas/tests/test_validation_registration.py
+-- GLOB mismatch!
+The following files were added:
+  +/home/conner/Documents/GitHub/Project-Judas/tools/CreateHearthworld.py
+  +/home/conner/Documents/GitHub/Project-Judas/tools/__pycache__/CreateHearthworld.cpython-314.pyc
+  +/home/conner/Documents/GitHub/Project-Judas/tools/__pycache__/build_windows_cross.cpython-314.pyc
+  +/home/conner/Documents/GitHub/Project-Judas/tools/__pycache__/export_windows.cpython-314.pyc
+  +/home/conner/Documents/GitHub/Project-Judas/tools/__pycache__/windows_runtime.cpython-314.pyc
+  +/home/conner/Documents/GitHub/Project-Judas/tools/build_windows_cross.py
+  +/home/conner/Documents/GitHub/Project-Judas/tools/export_windows.py
+  +/home/conner/Documents/GitHub/Project-Judas/tools/verification/current-docs.json
+  +/home/conner/Documents/GitHub/Project-Judas/tools/windows_runtime.py
+WARNHarfBuzz has a Meson port and tries to migrate all the other build systems to it, please consider using it as we might remove our cmake port soon.
+-- Found Python3: /usr/bin/python3 (found version "3.14.4") found components: Interpreter
+CMake Deprecation Warning at build/_deps/judas_freetype-src/CMakeLists.txt:113 (cmake_minimum_required):
+  Compatibility with CMake < 3.10 will be removed from a future version of
+  CMake.
+
+  Update the VERSION argument <min> value.  Or, use the <min>...<max> syntax
+  to tell CMake that the project requires at least <min> but has been updated
+  to work with policies introduced by <max> or earlier.
+
+
+-- Found Python3: /usr/bin/python3 (found suitable version "3.14.4", minimum required is "3.11") found components: Interpreter
+-- Configuring done (1.2s)
+-- Generating done (1.2s)
+-- Build files have been written to: /home/conner/Documents/GitHub/Project-Judas/build
+[  0%] Building CXX object CMakeFiles/judas_build_identity.dir/src/BuildIdentity.cpp.o
+[ 14%] Built target freetype
+[ 14%] Built target judas_app_icon
+[ 21%] Built target judas_navigation_backend
+[ 21%] Built target judas_glad
+[ 21%] Built target judas_profiler
+[ 21%] Built target judas_meshoptimizer
+[ 28%] Built target judas_icu_build
+[ 28%] Built target judas_quickjs
+[ 28%] Built target judas_jobs
+[ 28%] Built target judas_audio_backend
+[ 28%] Built target harfbuzz
+[ 35%] Built target judas_navigation_cook
+[ 35%] Built target judas_materials
+[ 35%] Linking CXX static library libjudas_build_identity.a
+[ 35%] Built target judas_build_identity
+[ 35%] Building CXX object CMakeFiles/judas_engine.dir/src/ProjectExporter.cpp.o
+[ 35%] Building CXX object CMakeFiles/judas_engine.dir/src/RuntimeWorld.cpp.o
+[ 35%] Building CXX object CMakeFiles/judas_engine.dir/src/physics/WorldImpactEvents.cpp.o
+[ 35%] Linking CXX static library libjudas_engine.a
+[100%] Built target judas_engine
+[  0%] Built target judas_build_identity
+[ 13%] Built target freetype
+[ 13%] Built target judas_app_icon
+[ 20%] Built target judas_navigation_backend
+[ 20%] Built target judas_glad
+[ 20%] Built target judas_profiler
+[ 20%] Built target judas_meshoptimizer
+[ 26%] Built target judas_icu_build
+[ 26%] Built target judas_quickjs
+[ 26%] Built target judas_jobs
+[ 26%] Built target judas_audio_backend
+[ 26%] Built target harfbuzz
+[ 33%] Built target judas_navigation_cook
+[ 33%] Built target judas_materials
+[ 93%] Built target judas_engine
+[100%] Linking CXX executable judas_physics_stress_live_benchmark
+[100%] Built target judas_physics_stress_live_benchmark
+gmake: *** No rule to make target 'judas_impact_event_schedule_tests'.  Stop.

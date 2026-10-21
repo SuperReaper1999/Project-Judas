@@ -1,0 +1,113 @@
+diff --git a/src/physics/WorldImpactEvents.cpp b/src/physics/WorldImpactEvents.cpp
+index 6e669204..4df05d89 100644
+--- a/src/physics/WorldImpactEvents.cpp
++++ b/src/physics/WorldImpactEvents.cpp
+@@ -1,3 +1,6 @@
++#include <cstdio>
++#include <cstdlib>
++#include <chrono>
+ #include "WorldInternal.h"
+ #include "ImpactCandidateCache.h"
+ #include "ImpactSupportSets.h"
+@@ -107,7 +110,11 @@ auto PhysicsWorld::Impl::ResolveInitialImpacts(float dt) -> void {
+     }
+ }
+ 
++// DIAGNOSTIC TRACE (scratch investigation only; read-only observation).
++namespace { struct JudasEventTrace { FILE* f=nullptr; unsigned long step=0; JudasEventTrace(){ if(const char* p=std::getenv("JUDAS_EVENT_TRACE")){ f=std::fopen(p,"w"); if(f) std::fprintf(f,"step,event,now,scheduled,island,touching,rows,changed,dv_lt_1e6,dv_lt_1e4,dv_lt_1e2,dv_max,dirty,dirty_new,dirty_same,dirty_same_noimpact,dirty_imminent,restitution,capture,ms_scan,ms_island,ms_solve,ms_changed,ms_support,ms_dirty_mark,ms_reschedule\n"); } } ~JudasEventTrace(){ if(f) std::fclose(f);} }; JudasEventTrace g_trace;
++ using TC=std::chrono::steady_clock; inline double tms(TC::time_point a, TC::time_point b){return std::chrono::duration<double,std::milli>(b-a).count();} }
+ auto PhysicsWorld::Impl::AdvanceImpacts(float dt, bool coupledVelocityChanged) -> void {
++    ++g_trace.step; unsigned long traceEvent=0;
+     // Keep published contact storage ordered even if a later physical
+     // query throws. Successful steps sort once; failure observers retain
+     // the same lower_bound invariant as the former per-event publication.
+@@ -267,6 +274,7 @@ auto PhysicsWorld::Impl::AdvanceImpacts(float dt, bool coupledVelocityChanged) -
+     std::vector<unsigned char> dirtyScheduled;
+     std::vector<std::array<unsigned, 4>> dirty;
+     for (;;) {
++        const auto tr0 = TC::now();
+         double earliest = double(dt) + 1;
+         unsigned seedA = 0, seedB = 0;
+         std::array<unsigned, 4> selected{};
+@@ -280,6 +288,7 @@ auto PhysicsWorld::Impl::AdvanceImpacts(float dt, bool coupledVelocityChanged) -
+         }
+         if (earliest > dt)
+             break;
++        const auto tr1 = TC::now();
+         if (!jointNeighboursReady) {
+             impactJointNeighbours.resize(bodies.size());
+             for (const auto &joint : joints)
+@@ -389,6 +398,7 @@ auto PhysicsWorld::Impl::AdvanceImpacts(float dt, bool coupledVelocityChanged) -
+         // This only chooses restitution zero: separated support geometry
+         // is never inserted into the actual-contact impulse rows below.
+         // Spinning support pairs are still supports.
++        const auto tr2 = TC::now();
+         const auto supports = [&](const auto &pair) {
+             return included[pair[0]] || included[pair[1]];
+         };
+@@ -468,6 +478,7 @@ auto PhysicsWorld::Impl::AdvanceImpacts(float dt, bool coupledVelocityChanged) -
+         }();
+         if (!result.energyBudgetSatisfied)
+             throw std::runtime_error("inelastic impact energy guard failed");
++        const auto tr3 = TC::now();
+         // Replace only primitive groups for which actual TOI geometry
+         // was solved. Never replay warm impulses or duplicate repeated
+         // TOI loads. Unaffected stance groups retain their completed rows.
+@@ -586,12 +597,15 @@ auto PhysicsWorld::Impl::AdvanceImpacts(float dt, bool coupledVelocityChanged) -
+             }
+         }
+         std::vector<unsigned> changed;
++        std::size_t dv6 = 0, dv4 = 0, dv2 = 0; double dvMax = 0;
+         for (std::size_t i = 0; i < island.size(); ++i) {
+             const auto slot = island[i];
+             auto &b = bodies[slot];
+             if (SamePosition(oldVelocities[i].first, b.rigidBody.linearVelocity) &&
+                 SamePosition(oldVelocities[i].second, b.rigidBody.angularVelocity))
+                 continue;
++            { const double dv = double(glm::length(b.rigidBody.linearVelocity - oldVelocities[i].first)) + double(glm::length(b.rigidBody.angularVelocity - oldVelocities[i].second)) * double(b.boundingRadius);
++              dv6 += dv < 1e-6; dv4 += dv < 1e-4; dv2 += dv < 1e-2; dvMax = std::max(dvMax, dv); }
+             changed.push_back(slot);
+             // Membership remains nonzero; value two also marks the
+             // changed subset without scanning it for every scheduled pair.
+@@ -600,6 +614,7 @@ auto PhysicsWorld::Impl::AdvanceImpacts(float dt, bool coupledVelocityChanged) -
+             InvalidateImpactPose(slot);
+             CoverStepReach(b, static_cast<float>(dt - now));
+         }
++        const auto tr4 = TC::now();
+         // Solver rows and event pairs retain discovery order. Membership
+         // needs no such order: avoid rescanning every actual event pair
+         // for every incident support in a large connected assembly.
+@@ -615,6 +630,7 @@ auto PhysicsWorld::Impl::AdvanceImpacts(float dt, bool coupledVelocityChanged) -
+                                        !SupportContinuationSafe(pair, now, dt));
+                            }),
+             supportPairs.end());
++        const auto tr5 = TC::now();
+         // Cached event times depend only on the two anchored trajectories.
+         // Recompute incident queries after an actual velocity change; retain
+         // every unaffected event (including disjoint simultaneous events).
+@@ -654,8 +670,24 @@ auto PhysicsWorld::Impl::AdvanceImpacts(float dt, bool coupledVelocityChanged) -
+         // Known keys were marked once; previously unscheduled keys arose from
+         // one canonical body-pair expansion. Retain the original unique order.
+         std::sort(dirty.begin(), dirty.end());
+-        for (const auto &key : dirty)
++        const auto tr6 = TC::now();
++        std::size_t dNew = 0, dSame = 0, dSameNo = 0, dImm = 0;
++        for (const auto &key : dirty) {
++            const auto found = scheduledIndex.find(key);
++            const bool had = found != scheduledIndex.end();
++            const double before = had ? scheduledImpacts[found->second].time : 0;
+             schedule(key);
++            const auto after = scheduledIndex.find(key);
++            if (after == scheduledIndex.end()) continue;
++            const double t = scheduledImpacts[after->second].time;
++            if (!had) ++dNew; else if (t == before) { ++dSame; if (t > dt) ++dSameNo; }
++            if (t <= dt) ++dImm;
++        }
++        const auto tr7 = TC::now();
++        if (g_trace.f) std::fprintf(g_trace.f, "%lu,%lu,%.9g,%zu,%zu,%zu,%zu,%zu,%zu,%zu,%zu,%.6g,%zu,%zu,%zu,%zu,%zu,%g,%d,%.4f,%.4f,%.4f,%.4f,%.4f,%.4f,%.4f\n",
++            g_trace.step, ++traceEvent, now, scheduledImpacts.size(), island.size(), touching.size(), rows.size(), changed.size(), dv6, dv4, dv2, dvMax,
++            dirty.size(), dNew, dSame, dSameNo, dImm, double(result.effectiveRestitution), int(capture),
++            tms(tr0,tr1), tms(tr1,tr2), tms(tr2,tr3), tms(tr3,tr4), tms(tr4,tr5), tms(tr5,tr6), tms(tr6,tr7));
+         if (now >= dt)
+             break;
+     }

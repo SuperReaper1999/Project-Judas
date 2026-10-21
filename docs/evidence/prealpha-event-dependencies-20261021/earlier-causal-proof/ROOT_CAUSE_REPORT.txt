@@ -1,0 +1,133 @@
+SCENARIO 3 ROOT-CAUSE INVESTIGATION — 2026-10-20
+
+Status: demonstrated numerical/event-amplification mechanism; no production repair
+implemented or claimed. Linux-only investigation. No tracked source changes,
+commits, pushes, Windows VM or Android workloads.
+
+CHECKPOINT AND FIXTURE
+Experimental b7db703ca3fc3c0d39ecc31009a1148b5b778762.
+room1024.judas: 1,024 loose pieces, 1,285 bodies, 96 joints, unchanged 60 Hz
+physics cadence and quality. Ryzen 5 5600, 8 GB RAM, GTX 970.
+Frozen unmodified engine archive SHA256:
+521f0b3ebd75478c84940622109ce6263a4375302742f67405da2170d6fe9d7e
+This archive matches the current validated clean-checkout core byte-for-byte.
+Fixture SHA256:
+a2caf62a295243d301149202c8a0a5eedafff256d68de0e3cda988846b2e05bf
+
+OBSERVED COST
+Unmodified visible-run step 347 took 614.205563 ms. It processed 61 impact
+events, 451,605 impact queries and 65,348 search iterations. 47 events involved
+more than 900 bodies; the largest island had 945 bodies. This is repeated
+whole-connected-pile work inside ONE nominal 16.67 ms physics step.
+12,067 unique primitive-pair keys generated 524,131 scheduling operations.
+390,660 of the 451,605 queries exited on disjoint bounds (86.5%).
+The instrumentation found zero repeated schedules with identical start time
+and both motion-segment counts. A simple identical-query cache is not the fix:
+solver velocity changes genuinely invalidate the previously scheduled inputs.
+
+PROVEN CAUSAL CHAIN
+1. RigidMotionSegment::EvaluateGeometry evaluates elapsed time, positions and
+   quaternions in binary32 (src/RigidMotion.h:28-53). At tiny time increments,
+   represented geometry advances in coordinate-sized jumps.
+2. The contact predicates classify that represented geometry. Near tangency,
+   these jumps can create separation/contact transitions that do not exist in
+   the underlying continuous anchored trajectory.
+3. WorldCCDSearch::ImpactTime (src/physics/WorldCCDSearch.cpp:546 onward) can
+   select such a transition as an impact. Contact continuation is checked by
+   SupportContinuationSafe (same file:448 onward).
+4. AdvanceImpacts builds and solves the connected contact island. Changes to
+   velocities replace motion segments and invalidate incident pair events
+   (src/physics/WorldImpactEvents.cpp:588-658). In this packed scene that means
+   hundreds of bodies and thousands of rows/pairs, repeatedly.
+
+A SINGLE-BIT CAUSAL CONTROL
+Sphere 612 versus box 868, chronological event 18 of step 347:
+- Before: t=0.0029807312302433785 s, native contact false.
+- Arrival: t=0.0029807312302860232 s, native contact true.
+- Only sampled geometric difference: box position.z changes from float bits
+  1095965201 to 1095965202: 0.00000095367431640625 m (0.954 micrometres).
+- All other sampled positions and orientations are bit-identical.
+- An exact rational whole-prefix certificate proves the unrounded anchored
+  trajectories remain separated through this reported arrival. Gap at arrival
+  is approximately 0.000000014401240866490639 m (14.4 nanometres).
+- This event solves 936 bodies and 2,474 contact rows.
+This is a concrete representation-to-event-amplification mechanism, not an
+assumption based on a profiler label or a faster/slower CPU.
+
+INDEPENDENT VERIFICATION
+Both read-only instrumented captures match all 347 original physical/work rows,
+including trajectory digests, contact/query counts and maximum speeds.
+The isolated native two-body replay reproduces all 20 captured query times
+bit-for-bit using the UNMODIFIED engine archive (zero mismatches).
+An independent exact-rational sphere-to-oriented-box distance oracle agrees
+with all 236 native contact probe classifications. Four positive/negative
+geometry controls and two continuous-overlap controls pass.
+The most frequently selected pair occurs 12 times:
+- Seven query prefixes are certified continuously separated through the native
+  reported arrival.
+- Four are certified continuously overlapping throughout the query prefix;
+  their continuous contact episode never ended.
+- One is not certified and remains potentially a genuine continuous arrival.
+These eleven classified selections account for 87,773 TOI queries and 8,459
+island-body visits. Nine select islands containing 935-945 bodies.
+Certificates use exact IEEE inputs, rational arithmetic and Bernstein bounds
+on degree-six polynomials; no geometric epsilon. Failed bounded certificates
+are reported unresolved, never silently classified as collision or separation.
+
+IMPORTANT CONTRACT AND SCOPE QUALIFICATIONS
+Current engine geometry explicitly follows represented float arithmetic.
+Native predicates are correct for their supplied rounded poses. Thus the
+continuous model comparison establishes an architectural numerical limitation;
+it is not proof that a SAT sign or native query violates its current float-pose
+contract. Earlier sub-ULP quaternion renormalization protection already exists;
+that is not a missing fix discovered here.
+This investigation classifies one representative pair, not all 61 events.
+Residual closing velocities and genuine later collisions also exist. Several
+certified separated prefixes lead to real contact later in the SAME remaining
+step: dropping their pairs or skipping the interval would be wrong.
+Coarse diagnostic phase timers include observation overhead. They show repeated
+discovery/rescheduling is substantial, but are NOT a production speedup result
+or a reliable precise production cost partition. No repaired-runtime FPS is
+claimed. Memory bandwidth has not been measured.
+
+REPAIR BOUNDARY
+A coherent repair must define continuous collision geometry and contact-episode
+ownership consistently across TOI, manifold generation, solver publication and
+motion replacement, while preserving the externally exposed float state where
+required. Merely computing one predicate in double can introduce inconsistent
+geometry elsewhere. A previous broad double experiment already failed physical
+parity and performance; it is not an accepted solution.
+Required controls for a future repair: native replay, near-tangent episode
+continuity, real separation/re-impact, future collisions after a safe prefix,
+curved/finite-feature CCD, physical invariants and matched full-pile timing.
+Do not add event caps, reduce cadence/quality, inflate contact tolerances,
+ignore small velocity changes or return stale cached TOIs to force performance.
+Parallel execution may accelerate independent work, but cannot by itself remove
+this causal chain of sequential event/solve/replan dependencies.
+
+PRESERVED FAILURES
+smooth-gap-proof.log: prior box-only oracle rejected this sphere-box case.
+It was not evidence against the engine. The shape-correct oracle replaced it.
+sphere-box-exact-first-wrapper.log and its source: an initial helper-import
+NameError was preserved, then fixed without changing numerical criteria.
+Original runtime captures and existing research remain untouched.
+
+REPRODUCTION AND EVIDENCE
+BUILD.json, build.py, prepare.py, build.log: isolated diagnostic core build.
+capture-build.py, capture-build.log, capture612868/: exact pair capture build/run.
+observe347/, PHYSICAL_PARITY.json: original observer and physical parity.
+CAPTURE_PARITY.json: full bit-capture parity.
+REPLAY_BUILD.json, build-replay.py, PairReplay.cpp, DecodeBodies.h,
+pair-replay.log/json: unmodified-core native replay.
+sphere_box_exact.py and sphere-box-exact.json/log: exact geometry/prefix proof.
+episode_proof.py and episode-proof.json/log: continuous episode and single-bit
+causal control. Run these Python scripts from repository root with their saved
+inputs present; scripts preserve exact equations and rational coefficients.
+step347.json and events347.jsonl: full-step event and scheduling statistics.
+pair-trace.jsonl: exact body/motion/query inputs.
+Previous matched hardware evidence: ../ryzen-scenario3-20261020/RESULTS.txt and
+COMPARISON.json. Existing i7/Ryzen identical-work comparison demonstrates a
+hardware benefit, but hardware alone did not remove the pathological work.
+
+All material here is diagnostic, outside tracked source. Existing unrelated
+untracked historical artifacts in the worktree were left unchanged.

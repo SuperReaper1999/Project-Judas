@@ -1,0 +1,15 @@
+{
+  "note": "Live captures have different endpoint step counts; only their explicit common prefix is compared. Exact-cadence runs separately establish endpoint equality.",
+  "baseline-live35": {
+    "steps": 441,
+    "referenceSteps": 600,
+    "comparedPrefixSteps": 441,
+    "mismatches": []
+  },
+  "candidate-live35": {
+    "steps": 491,
+    "referenceSteps": 600,
+    "comparedPrefixSteps": 491,
+    "mismatches": []
+  }
+}

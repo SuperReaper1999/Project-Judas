@@ -166,9 +166,9 @@
       "workstream": "P1-01",
       "original_quote": "Dense-contact physics still has severe latency tails",
       "status": "improved",
-      "scope": "carried_forward_measured_be1b7d63",
-      "disposition": "Matched 270-step mean/p95/worst improves 92.742/338.077/1658.782 to46.827/158.741/387.280ms. Longer real-time work still stalls (948.381ms worst); practical frame target unmet. No rebenchmark in documentation cleanup.",
-      "evidence": "docs/PREALPHA_DENSE_SUPPORT_FOLLOWUP.md"
+      "scope": "fresh_matched_linux_event_dependencies_20261021",
+      "disposition": "Pending-impact heap, endpoint dependencies and whole-interval separation pruning remove 82.63% of CCD queries with all 600 physical step digests unchanged. Two matched runs improve mean 75.18/74.81 to 67.57/67.28 ms; live late FPS rises from 0.926 to 1.120 but still severely stalls. Connected response and contact-episode limits remain; no 24/30 FPS claim.",
+      "evidence": "docs/PREALPHA_EVENT_DEPENDENCIES.md"
     },
     {
       "id": "C-01",
@@ -628,6 +628,14 @@
       "scope": "carried_forward_not_reexecuted",
       "disposition": "Linux identities/checksums/dependencies cover17 native tools; actual packaged inspector/read-only follow-up and selected operations run. Native Windows current runtime/editor/export are qualified with distinct software-GL scope, not an all-hardware clean-machine certification. Fresh hosted Ubuntu24.04 build,17-tool SDK qualifier and strict package verification pass at050016.",
       "evidence": "docs/evidence/prealpha-pass5/AUDIT_DISPOSITION.md"
+    }
+  ],
+  "updates": [
+    {
+      "date": "2026-10-21",
+      "input_commit": "b7db703ca3fc3c0d39ecc31009a1148b5b778762",
+      "finding": "B-01",
+      "evidence": "docs/PREALPHA_EVENT_DEPENDENCIES.md"
     }
   ]
 }

@@ -2,7 +2,7 @@
 #include "ImpactCandidateCache.h"
 #include "ImpactSupportSets.h"
 
-#include <unordered_map>
+#include "ImpactEventSchedule.h"
 
 using namespace JudasPhysicsDetail;
 
@@ -185,22 +185,21 @@ auto PhysicsWorld::Impl::AdvanceImpacts(float dt, bool coupledVelocityChanged) -
     std::vector<std::vector<unsigned>> impactJointNeighbours;
     bool jointNeighboursReady = false;
     double now = 0;
-    scheduledImpacts.clear();
-    // This index owns no encounter order. The event vector and sorted dirty
-    // keys retain the existing chronological and lexicographic policy.
-    struct ScheduledKeyHash {
-        std::size_t operator()(const std::array<unsigned, 4> &key) const noexcept {
-            std::uint64_t value = (std::uint64_t(key[0]) << 32) | key[1];
-            const std::uint64_t parts = (std::uint64_t(key[2]) << 32) | key[3];
-            value += parts * 0x9e3779b97f4a7c15ULL;
-            value ^= value >> 30;
-            value *= 0xbf58476d1ce4e5b9ULL;
-            value ^= value >> 27;
-            value *= 0x94d049bb133111ebULL;
-            return std::size_t(value ^ (value >> 31));
-        }
+    ImpactEventSchedule<ScheduledImpact> frontier(scheduledImpacts, bodies.size(), dt);
+    const auto separatedSweeps = [&](unsigned a, unsigned b) {
+        const auto simple = [&](unsigned slot) {
+            const auto &body = bodies[slot];
+            return (body.shape.type == ShapeType::Box || body.shape.type == ShapeType::Sphere) &&
+                   body.shape.pivotOffset == glm::vec3(0) && std::isfinite(body.boundingRadius) &&
+                   body.boundingRadius > 0;
+        };
+        if (!simple(a) || !simple(b))
+            return false;
+        const auto &first = RemainingImpactBound(a, now, dt);
+        const auto &second = RemainingImpactBound(b, now, dt);
+        return rigid_motion_bounds::FiniteBound(first) && rigid_motion_bounds::FiniteBound(second) &&
+               !first.Overlaps(second);
     };
-    std::unordered_map<std::array<unsigned, 4>, std::size_t, ScheduledKeyHash> scheduledIndex;
     auto schedule = [&](const std::array<unsigned, 4> &key) {
         if (!CanRespond(key[0], key[1]))
             return;
@@ -212,20 +211,14 @@ auto PhysicsWorld::Impl::AdvanceImpacts(float dt, bool coupledVelocityChanged) -
                                 ? ImpactTime(key[0], key[1], int(key[2]), int(key[3]), now, dt,
                                              SpinPenetrationTarget(key))
                                 : ImpactTime(key[0], key[1], int(key[2]), int(key[3]), now, dt);
-        const auto found = scheduledIndex.find(key);
-        if (found != scheduledIndex.end())
-            scheduledImpacts[found->second].time = time;
-        else {
-            scheduledIndex.emplace(key, scheduledImpacts.size());
-            scheduledImpacts.push_back({key, time});
-        }
+        frontier.Set(key, time);
     };
     // These three initial lists may overlap after time-zero impulses.
     // They share the same anchored trajectories and query interval; reuse
-    // an already scheduled key. Actual event-induced dirty keys below are
-    // still rescheduled unconditionally after their trajectories change.
+    // an already scheduled key. Later dependency invalidation re-certifies
+    // changed paths; a sampled no-impact answer is never trusted on new motion.
     const auto scheduleInitial = [&](const std::array<unsigned, 4>& key) {
-        if (scheduledIndex.find(key) == scheduledIndex.end())
+        if (!frontier.Contains(key))
             schedule(key);
     };
     for (const auto &key : separatedPairs)
@@ -264,19 +257,15 @@ auto PhysicsWorld::Impl::AdvanceImpacts(float dt, bool coupledVelocityChanged) -
     std::vector<std::array<unsigned, 4>> eventPairs;
     std::vector<std::array<unsigned, 4>> eventPairMembership;
     ImpactPairVisitSet dirtyBodyPairs;
-    std::vector<unsigned char> dirtyScheduled;
     std::vector<std::array<unsigned, 4>> dirty;
     for (;;) {
         double earliest = double(dt) + 1;
         unsigned seedA = 0, seedB = 0;
         std::array<unsigned, 4> selected{};
-        for (const auto &event : scheduledImpacts) {
-            if (event.time < earliest || (event.time == earliest && event.key < selected)) {
-                earliest = event.time;
-                selected = event.key;
-                seedA = event.key[0];
-                seedB = event.key[1];
-            }
+        if (const auto* event = frontier.First()) {
+            earliest = event->time;
+            selected = event->key;
+            seedA = selected[0]; seedB = selected[1];
         }
         if (earliest > dt)
             break;
@@ -347,6 +336,14 @@ auto PhysicsWorld::Impl::AdvanceImpacts(float dt, bool coupledVelocityChanged) -
                     const uint64_t pairKey = (uint64_t(pair.first) << 32) | pair.second;
                     if (visitedPairs.Contains(pairKey))
                         continue;
+                    // Reuse the whole-interval separation certificate during
+                    // island discovery too. A body may be in the world's fat
+                    // proxy neighbourhood without being able to touch this
+                    // island anywhere in its remaining trajectory.
+                    if (separatedSweeps(a, b)) {
+                        visitedPairs.Insert(pairKey);
+                        continue;
+                    }
                     bool hit = false, reliableMiss = true;
                     std::optional<DiscoveredManifold> discovered;
                     for (int pa = 0; pa < PrimitiveCount(bodies[a].shape); ++pa)
@@ -619,21 +616,10 @@ auto PhysicsWorld::Impl::AdvanceImpacts(float dt, bool coupledVelocityChanged) -
         // Recompute incident queries after an actual velocity change; retain
         // every unaffected event (including disjoint simultaneous events).
         dirty.clear();
-        dirtyScheduled.assign(scheduledImpacts.size(), 0);
-        auto markDirty = [&](const std::array<unsigned, 4> &key) {
-            const auto found = scheduledIndex.find(key);
-            if (found != scheduledIndex.end()) {
-                auto &marked = dirtyScheduled[found->second];
-                if (marked)
-                    return;
-                marked = 1;
-            }
-            dirty.push_back(key);
-        };
-        markDirty(selected); // retire the event even if its impulse is zero
-        for (const auto &event : scheduledImpacts)
-            if (included[event.key[0]] == 2 || included[event.key[1]] == 2)
-                markDirty(event.key);
+        auto markDirty = [&](const std::array<unsigned, 4> &key) { dirty.push_back(key); };
+        markDirty(selected); // retire even a zero-impulse event
+        for (unsigned slot : changed)
+            frontier.ForIncident(slot, dt, markDirty);
         dirtyBodyPairs.Begin(bodies.size());
         for (unsigned slot : changed) {
             const auto &candidates = impactCandidates(slot, tree.FatAabb(bodies[slot].proxy));
@@ -646,14 +632,21 @@ auto PhysicsWorld::Impl::AdvanceImpacts(float dt, bool coupledVelocityChanged) -
                     if (dirtyBodyPairs.Contains(pairKey))
                         continue;
                     dirtyBodyPairs.Insert(pairKey);
+                    // A separating swept enclosure certifies the whole remaining
+                    // interval, not just a sampled miss. Changed trajectories have
+                    // already invalidated their per-body bounds above. Reject
+                    // before expanding children or touching the event frontier.
+                    if (separatedSweeps(a, b))
+                        continue;
                     for (int pa = 0; pa < PrimitiveCount(bodies[a].shape); ++pa)
                         for (int pb = 0; pb < PrimitiveCount(bodies[b].shape); ++pb)
                             markDirty({a, b, unsigned(pa), unsigned(pb)});
                 }
         }
-        // Known keys were marked once; previously unscheduled keys arose from
-        // one canonical body-pair expansion. Retain the original unique order.
+        // Endpoint dependencies and overlap discovery may find the same key.
+        // Preserve exact lexicographic query order after identity deduplication.
         std::sort(dirty.begin(), dirty.end());
+        dirty.erase(std::unique(dirty.begin(), dirty.end()), dirty.end());
         for (const auto &key : dirty)
             schedule(key);
         if (now >= dt)

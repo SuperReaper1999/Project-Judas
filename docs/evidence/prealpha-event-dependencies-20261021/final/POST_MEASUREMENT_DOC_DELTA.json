@@ -1,0 +1,11 @@
+{
+  "verification": "The strict all-input check reported this difference and stopped; it was investigated, not overwritten. All executable source inputs and binary hashes still match.",
+  "differences": [
+    {
+      "path": "src/physics/WorldModules.md",
+      "frozenSha256": "96e8b1166d08808fc9020c39ac0bdbf17ee82847cad625e61eb2eedb3d8ac877",
+      "currentSha256": "23c6e89c78dcaf6c10bf4946ba6829543216e89f58f025f21804e8dedbfa0f24",
+      "classification": "Intentional documentation added after measurements; not compiled input. Original frozen expected bytes retained."
+    }
+  ]
+}

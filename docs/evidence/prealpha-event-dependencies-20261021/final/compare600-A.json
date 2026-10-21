@@ -1,0 +1,70 @@
+{
+  "allow_query_reduction": true,
+  "baseline": "/home/conner/Documents/GitHub/Project-Judas/.cache/event-architecture-20261021/baseline600-A",
+  "baseline_fixed_ms": {
+    "count": 600,
+    "maximum": 614.486861,
+    "mean": 75.17964698833333,
+    "median": 54.532155,
+    "p95_floor": 198.638171,
+    "p99_floor": 262.8935
+  },
+  "baseline_frame_intervals_ms": {
+    "count": 600,
+    "maximum": 616.818018,
+    "mean": 77.452624375,
+    "median": 56.7618955,
+    "p95_floor": 200.925515,
+    "p99_floor": 265.193588
+  },
+  "baseline_steps": 600,
+  "baseline_wall_seconds": 46.811420921000035,
+  "both_completed": true,
+  "candidate": "/home/conner/Documents/GitHub/Project-Judas/.cache/event-architecture-20261021/candidate600-A",
+  "candidate_fixed_ms": {
+    "count": 600,
+    "maximum": 535.214303,
+    "mean": 67.568339255,
+    "median": 49.044200000000004,
+    "p95_floor": 177.78082,
+    "p99_floor": 233.036201
+  },
+  "candidate_frame_intervals_ms": {
+    "count": 600,
+    "maximum": 537.64107,
+    "mean": 69.91637217333333,
+    "median": 51.3897585,
+    "p95_floor": 180.264175,
+    "p99_floor": 235.455835
+  },
+  "candidate_steps": 600,
+  "candidate_wall_seconds": 42.29246470899989,
+  "compared_physical_fields": [
+    "step",
+    "bodies",
+    "awake",
+    "sleeping",
+    "candidates",
+    "contacts",
+    "impact_events",
+    "impact_iterations",
+    "impact_peak",
+    "trajectory_digest",
+    "max_linear_speed",
+    "max_angular_speed",
+    "nonfinite_fields"
+  ],
+  "exact_comparison_pass": true,
+  "exact_endpoint_geometry": true,
+  "exact_physical_rows": true,
+  "first_100_mismatches": [],
+  "impact_queries_removed": 22575306,
+  "physical_mismatch_count": 0,
+  "same_fixture": true,
+  "same_mode": true,
+  "same_profile_setting": true,
+  "schema": "judas.dense.compare.v1",
+  "timing_note": "Single paired observation, not a universal bound or statistical significance claim. Synthetic cadence is not FPS.",
+  "trajectory_note": "Non-identical trajectories require independently justified physical acceptance; this comparison does not silently accept them.",
+  "utc": "2026-10-21T00:57:31.251202+00:00"
+}

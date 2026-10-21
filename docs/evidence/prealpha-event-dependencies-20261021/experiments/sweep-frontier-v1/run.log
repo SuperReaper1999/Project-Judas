@@ -1,0 +1,15 @@
+{
+  "output": "/home/conner/Documents/GitHub/Project-Judas/.cache/event-architecture-20261021/sweep-frontier-v1/exact270",
+  "exit": 0,
+  "valid_completion": true,
+  "completed_steps": 270,
+  "fixed_ms": {
+    "count": 270,
+    "mean": 29.097434,
+    "median": 14.613125,
+    "p95_floor": 99.499566,
+    "p99_floor": 162.019071,
+    "maximum": 167.025423
+  },
+  "cadence": "synthetic one-60Hz-step/frame: NOT displayed FPS"
+}

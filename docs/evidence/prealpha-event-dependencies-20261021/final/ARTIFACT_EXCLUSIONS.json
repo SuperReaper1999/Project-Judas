@@ -1,0 +1,27 @@
+{
+  "reason": "Owned test-project copies and generated importer cache JSON are not qualification results; excluded during intended-file review. Original runtime artifacts remain in ignored work area.",
+  "excluded": [
+    "cold/native/balance/project/Authoring/template-render-body.json",
+    "cold/native/balance/project/Authoring/template-render-animation-motor.json",
+    "cold/native/balance/project/Authoring/template-empty.json",
+    "cold/native/balance/project/Authoring/profiles.json",
+    "cold/native/balance/project/Authoring/template-gravity.json",
+    "cold/native/balance/project/.cache/model-import/f4db079e3e2a2ce3d9572e8b05cde80f1ddb0d802c965e807fc7bc14aa572ba6-488757f33c08d98b6652e986a214f38ae632b1adc0715772c453cf00fd5d5acd.json",
+    "cold/native/balance/project/.cache/model-import/bfdea788ae7bbfbde87dc3854e6db7e70bc5e6a79b436890ae88ca247d50f90e-488757f33c08d98b6652e986a214f38ae632b1adc0715772c453cf00fd5d5acd.json",
+    "cold/native/balance/project/.cache/model-import/441e7206dba13194b248d553b7f4673a9a055d767508b8d23e49ef890be982fb-488757f33c08d98b6652e986a214f38ae632b1adc0715772c453cf00fd5d5acd.json",
+    "cold/native/balance/project/Assets/models/stride.judasmodel.import-report.json",
+    "cold/native/balance/project/Assets/models/anchor.judasmodel.import-report.json",
+    "cold/native/balance/project/Assets/models/receiver.judasmodel.import-report.json",
+    "cold/native/character/project/Authoring/template-render-body.json",
+    "cold/native/character/project/Authoring/joint-names.json",
+    "cold/native/character/project/Authoring/template-render-animation-motor.json",
+    "cold/native/character/project/Authoring/template-empty.json",
+    "cold/native/character/project/Authoring/template-gravity.json",
+    "cold/native/character/project/Authoring/template-body.json",
+    "cold/native/character/project/Authoring/template-render.json",
+    "cold/native/character/project/.cache/model-import/a61cdf321c67f4b76e960315c049feaa1def76917d5bfce14b211b7494dd2815-57eec3dd7f91c09913167693e8dd9c5e3d716b077717333434da637450408605.json",
+    "cold/native/character/project/.cache/model-import/c1e2d723c62bf67d25bc2ea35f5b94431dec9435a6ec0cd45739c228deba5399-57eec3dd7f91c09913167693e8dd9c5e3d716b077717333434da637450408605.json",
+    "cold/native/character/project/Assets/models/alternate.judasmodel.import-report.json.gz",
+    "cold/native/character/project/Assets/models/figure.judasmodel.import-report.json.gz"
+  ]
+}

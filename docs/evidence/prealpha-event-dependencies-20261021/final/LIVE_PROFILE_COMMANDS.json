@@ -1,0 +1,100 @@
+[
+  {
+    "name": "baseline-live35",
+    "argv": [
+      "python3",
+      "scripts/physics_dense_measure.py",
+      "run",
+      "--snapshot",
+      ".cache/dense-scalability-20261019/candidate-support-final",
+      "--output",
+      ".cache/event-architecture-20261021/baseline-live35",
+      "--mode",
+      "realtime",
+      "--steps",
+      "400",
+      "--seconds",
+      "35",
+      "--timeout",
+      "240",
+      "--profile",
+      "0",
+      "--visible"
+    ],
+    "exit": 0,
+    "elapsed": 35.63280091599995
+  },
+  {
+    "name": "candidate-live35",
+    "argv": [
+      "python3",
+      "scripts/physics_dense_measure.py",
+      "run",
+      "--snapshot",
+      ".cache/event-architecture-20261021/final-snapshot",
+      "--output",
+      ".cache/event-architecture-20261021/candidate-live35",
+      "--mode",
+      "realtime",
+      "--steps",
+      "400",
+      "--seconds",
+      "35",
+      "--timeout",
+      "240",
+      "--profile",
+      "0",
+      "--visible"
+    ],
+    "exit": 0,
+    "elapsed": 35.545960265000076
+  },
+  {
+    "name": "baseline-profile400",
+    "argv": [
+      "python3",
+      "scripts/physics_dense_measure.py",
+      "run",
+      "--snapshot",
+      ".cache/dense-scalability-20261019/candidate-support-final",
+      "--output",
+      ".cache/event-architecture-20261021/baseline-profile400",
+      "--mode",
+      "exact",
+      "--steps",
+      "400",
+      "--seconds",
+      "180",
+      "--timeout",
+      "240",
+      "--profile",
+      "1"
+    ],
+    "exit": 0,
+    "elapsed": 33.112478779000185
+  },
+  {
+    "name": "candidate-profile400",
+    "argv": [
+      "python3",
+      "scripts/physics_dense_measure.py",
+      "run",
+      "--snapshot",
+      ".cache/event-architecture-20261021/final-snapshot",
+      "--output",
+      ".cache/event-architecture-20261021/candidate-profile400",
+      "--mode",
+      "exact",
+      "--steps",
+      "400",
+      "--seconds",
+      "180",
+      "--timeout",
+      "240",
+      "--profile",
+      "1"
+    ],
+    "exit": 0,
+    "elapsed": 29.105649706999884
+  }
+]

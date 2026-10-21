@@ -1,0 +1,15 @@
+{
+  "output": "/home/conner/Documents/GitHub/Project-Judas/.cache/event-architecture-20261021/frontier-v5/exact400-A",
+  "exit": 0,
+  "valid_completion": true,
+  "completed_steps": 400,
+  "fixed_ms": {
+    "count": 400,
+    "mean": 67.1883317175,
+    "median": 31.778712,
+    "p95_floor": 201.225677,
+    "p99_floor": 259.453379,
+    "maximum": 533.942447
+  },
+  "cadence": "synthetic one-60Hz-step/frame: NOT displayed FPS"
+}

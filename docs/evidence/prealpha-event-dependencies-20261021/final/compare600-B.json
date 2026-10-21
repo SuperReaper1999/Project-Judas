@@ -1,0 +1,70 @@
+{
+  "allow_query_reduction": true,
+  "baseline": "/home/conner/Documents/GitHub/Project-Judas/.cache/event-architecture-20261021/baseline600-B",
+  "baseline_fixed_ms": {
+    "count": 600,
+    "maximum": 616.140321,
+    "mean": 74.80746252333333,
+    "median": 54.651686,
+    "p95_floor": 199.987686,
+    "p99_floor": 261.891727
+  },
+  "baseline_frame_intervals_ms": {
+    "count": 600,
+    "maximum": 618.50975,
+    "mean": 77.05055545833333,
+    "median": 56.87796,
+    "p95_floor": 202.359249,
+    "p99_floor": 264.284179
+  },
+  "baseline_steps": 600,
+  "baseline_wall_seconds": 46.54866635899998,
+  "both_completed": true,
+  "candidate": "/home/conner/Documents/GitHub/Project-Judas/.cache/event-architecture-20261021/candidate600-B",
+  "candidate_fixed_ms": {
+    "count": 600,
+    "maximum": 533.40463,
+    "mean": 67.28039100666666,
+    "median": 48.2700895,
+    "p95_floor": 177.132097,
+    "p99_floor": 233.471793
+  },
+  "candidate_frame_intervals_ms": {
+    "count": 600,
+    "maximum": 535.760503,
+    "mean": 69.532909855,
+    "median": 50.848442500000004,
+    "p95_floor": 179.403692,
+    "p99_floor": 235.85114
+  },
+  "candidate_steps": 600,
+  "candidate_wall_seconds": 42.037368115999925,
+  "compared_physical_fields": [
+    "step",
+    "bodies",
+    "awake",
+    "sleeping",
+    "candidates",
+    "contacts",
+    "impact_events",
+    "impact_iterations",
+    "impact_peak",
+    "trajectory_digest",
+    "max_linear_speed",
+    "max_angular_speed",
+    "nonfinite_fields"
+  ],
+  "exact_comparison_pass": true,
+  "exact_endpoint_geometry": true,
+  "exact_physical_rows": true,
+  "first_100_mismatches": [],
+  "impact_queries_removed": 22575306,
+  "physical_mismatch_count": 0,
+  "same_fixture": true,
+  "same_mode": true,
+  "same_profile_setting": true,
+  "schema": "judas.dense.compare.v1",
+  "timing_note": "Single paired observation, not a universal bound or statistical significance claim. Synthetic cadence is not FPS.",
+  "trajectory_note": "Non-identical trajectories require independently justified physical acceptance; this comparison does not silently accept them.",
+  "utc": "2026-10-21T00:57:31.307501+00:00"
+}

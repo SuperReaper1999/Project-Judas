@@ -1,0 +1,70 @@
+{
+  "allow_query_reduction": true,
+  "baseline": "/home/conner/Documents/GitHub/Project-Judas/.cache/event-architecture-20261021/baseline270-A",
+  "baseline_fixed_ms": {
+    "count": 270,
+    "maximum": 177.269329,
+    "mean": 30.112361288888888,
+    "median": 14.5856245,
+    "p95_floor": 104.535058,
+    "p99_floor": 165.581284
+  },
+  "baseline_frame_intervals_ms": {
+    "count": 270,
+    "maximum": 179.649117,
+    "mean": 32.331042259259256,
+    "median": 16.735995000000003,
+    "p95_floor": 106.812654,
+    "p99_floor": 167.930275
+  },
+  "baseline_steps": 270,
+  "baseline_wall_seconds": 9.08160802500015,
+  "both_completed": true,
+  "candidate": "/home/conner/Documents/GitHub/Project-Judas/.cache/event-architecture-20261021/candidate270-A",
+  "candidate_fixed_ms": {
+    "count": 270,
+    "maximum": 150.058247,
+    "mean": 27.938847296296295,
+    "median": 14.356006,
+    "p95_floor": 93.395839,
+    "p99_floor": 144.000171
+  },
+  "candidate_frame_intervals_ms": {
+    "count": 270,
+    "maximum": 152.462091,
+    "mean": 30.199224362962962,
+    "median": 16.772198,
+    "p95_floor": 95.841862,
+    "p99_floor": 146.314977
+  },
+  "candidate_steps": 270,
+  "candidate_wall_seconds": 8.47842209800001,
+  "compared_physical_fields": [
+    "step",
+    "bodies",
+    "awake",
+    "sleeping",
+    "candidates",
+    "contacts",
+    "impact_events",
+    "impact_iterations",
+    "impact_peak",
+    "trajectory_digest",
+    "max_linear_speed",
+    "max_angular_speed",
+    "nonfinite_fields"
+  ],
+  "exact_comparison_pass": true,
+  "exact_endpoint_geometry": true,
+  "exact_physical_rows": true,
+  "first_100_mismatches": [],
+  "impact_queries_removed": 3424166,
+  "physical_mismatch_count": 0,
+  "same_fixture": true,
+  "same_mode": true,
+  "same_profile_setting": true,
+  "schema": "judas.dense.compare.v1",
+  "timing_note": "Single paired observation, not a universal bound or statistical significance claim. Synthetic cadence is not FPS.",
+  "trajectory_note": "Non-identical trajectories require independently justified physical acceptance; this comparison does not silently accept them.",
+  "utc": "2026-10-21T00:57:31.195015+00:00"
+}

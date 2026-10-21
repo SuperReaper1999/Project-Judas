@@ -1002,6 +1002,7 @@ target_link_libraries(judas_impact_solver_tests PRIVATE judas_engine)
 add_executable(judas_impact_timing_tests tests/ImpactTimingTests.cpp)
 target_link_libraries(judas_impact_timing_tests PRIVATE judas_engine)
 judas_add_engine_test(judas_impact_candidate_cache_tests tests/ImpactCandidateCacheTests.cpp)
+judas_add_engine_test(judas_impact_event_schedule_tests tests/ImpactEventScheduleTests.cpp)
 judas_add_engine_test(judas_native_mesh_growth_tests tests/NativeMeshGrowthTests.cpp)
 judas_add_engine_test(judas_clip_polygon_tests tests/ClipPolygonTests.cpp)
 # Continuous-impact cost of a jointed ragdoll resting in static triangle meshes (timings reported, not asserted).

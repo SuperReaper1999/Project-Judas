@@ -136,6 +136,37 @@ class DenseMeasurementTests(unittest.TestCase):
             self.assertFalse(self.capture(directory, exit_code=7)['valid_completion'])
             self.assertFalse(self.capture(directory, timed_out=True)['valid_completion'])
 
+    def test_query_reduction_keeps_physical_negative_controls(self):
+        for changed, allowed, expected in [
+                ('impact_queries', False, 1), ('impact_queries', True, 0),
+                ('query_increase', True, 1), ('trajectory_digest', True, 1),
+                ('impact_events', True, 1), ('impact_iterations', True, 1),
+                ('short', True, 1), ('endpoint', True, 1)]:
+            with self.subTest(changed=changed, allowed=allowed), tempfile.TemporaryDirectory() as tmp:
+                root = Path(tmp)
+                a, b = root / 'a', root / 'b'
+                for directory in [a, b]:
+                    (directory / 'live').mkdir(parents=True)
+                    (directory / 'RESULTS.json').write_text(json.dumps(dict(
+                        valid_completion=True, endpoint_quality={'penetration': .001},
+                        context=dict(fixture_sha256='fixture', mode='exact', profile=0),
+                        fixed_ms={}, frame_interval_ms={}, wall_seconds=1)))
+                row = {key: '1' for key in dense.PHYSICAL_FIELDS}
+                row['impact_queries'] = '100'
+                other = dict(row)
+                if changed == 'query_increase': other['impact_queries'] = '101'
+                elif changed not in ['short', 'endpoint']: other[changed] = '0'
+                csv_file(a / 'live/steps.csv', [row, row])
+                csv_file(b / 'live/steps.csv', [other] if changed == 'short' else [other, other])
+                if changed == 'endpoint':
+                    data = json.loads((b / 'RESULTS.json').read_text())
+                    data['endpoint_quality']['penetration'] = .1
+                    (b / 'RESULTS.json').write_text(json.dumps(data))
+                args = SimpleNamespace(baseline=a, candidate=b, output=root / 'comparison.json',
+                                       allow_query_reduction=allowed)
+                with contextlib.redirect_stdout(io.StringIO()):
+                    self.assertEqual(dense.compare(args), expected)
+
     def test_retained_profiler_history_is_deduplicated_and_bounded(self):
         with tempfile.TemporaryDirectory() as temporary:
             directory = Path(temporary)

@@ -1,0 +1,187 @@
+[
+  {
+    "command": [
+      "judas_impact_event_schedule_tests"
+    ],
+    "exit": 0,
+    "seconds": 1.2169436239998959,
+    "sha256": "8872fd994d2b165c199ecc80222c6ef5eb396fece4d362c32e030297cc586394"
+  },
+  {
+    "command": [
+      "judas_impact_event_schedule_tests",
+      "--omit-update"
+    ],
+    "exit": 0,
+    "seconds": 1.215803152000035,
+    "sha256": "a36c8d50cd2947f089d039c14af5eb34528ec0bbc25b7df173ec9b8618bd0856"
+  },
+  {
+    "command": [
+      "judas_impact_solver_tests"
+    ],
+    "exit": 0,
+    "seconds": 0.003666525999960868,
+    "sha256": "0abea3f165316cea297eedef5c12301181c37a8974a331115420a50bb859840a"
+  },
+  {
+    "command": [
+      "judas_impact_timing_tests"
+    ],
+    "exit": 0,
+    "seconds": 0.015561599999955433,
+    "sha256": "52d83a1b765180db902ea1ebd0332af4618925f9cb8da9a0356ea0644f206a9f"
+  },
+  {
+    "command": [
+      "judas_impact_robustness_tests"
+    ],
+    "exit": 0,
+    "seconds": 0.4142756039998403,
+    "sha256": "e35fffddbd794c7517c54055943a2dc3babe5b19f40450eafbca4271cf7a4c61"
+  },
+  {
+    "command": [
+      "judas_native_mesh_growth_tests"
+    ],
+    "exit": 0,
+    "seconds": 0.0036715149999508867,
+    "sha256": "6a4a6b068530fb2f210a4c607fbd86873869ac57fa5bc5f2050eda1843a7773e"
+  },
+  {
+    "command": [
+      "judas_support_continuation_tests"
+    ],
+    "exit": 0,
+    "seconds": 0.015550208999911774,
+    "sha256": "d7c384e0fb9700361660b9c91b3eb457469554b276fe3a491ef6822f3c340628"
+  },
+  {
+    "command": [
+      "judas_collision_continuity_tests"
+    ],
+    "exit": 0,
+    "seconds": 0.031627611000203615,
+    "sha256": "00391a1002b53ebfe9aba19b100eabf1c9ef5ee32cc686628a199ce5ff744505"
+  },
+  {
+    "command": [
+      "judas_rigid_motion_tests"
+    ],
+    "exit": 0,
+    "seconds": 0.03174910000007003,
+    "sha256": "d9f968cc8b1bbb021f6b469c8e27314acdcdf2f72c8a2667fc6d8e43877c6cc5"
+  },
+  {
+    "command": [
+      "judas_rigid_motion_bounds_tests"
+    ],
+    "exit": 0,
+    "seconds": 0.16385971700015034,
+    "sha256": "32c8cdfad63ba056fb1c8c35bf9e5610ff7069140f7181cfd926b66f4ecfdee9"
+  },
+  {
+    "command": [
+      "judas_rigid_motion_geometry_tests"
+    ],
+    "exit": 0,
+    "seconds": 0.0035247680000338732,
+    "sha256": "cd2ab7a2650f03d488c2456b504ccfa27e9f860da5b5338383de0b1f52ced8d7"
+  },
+  {
+    "command": [
+      "judas_joint_tests"
+    ],
+    "exit": 0,
+    "seconds": 0.03167247599981238,
+    "sha256": "4169219c696385040941afe5ecc2affcd70171d03dfa075bb1c469e5dc0713c4"
+  },
+  {
+    "command": [
+      "judas_kinematic_tests"
+    ],
+    "exit": 0,
+    "seconds": 0.031748509000181,
+    "sha256": "87fc32d0fa04c9fde088e7feeb50610f7a2eed7ca2e27f4964aae2b6b3b8e98d"
+  },
+  {
+    "command": [
+      "judas_rigid_contact_tests"
+    ],
+    "exit": 0,
+    "seconds": 0.4644042890001856,
+    "sha256": "0129178983d9232e6d29a303a8296caba1b17a6789a2dab1edf6bdbae1d81c40"
+  },
+  {
+    "command": [
+      "judas_character_motor_tests"
+    ],
+    "exit": 0,
+    "seconds": 0.36419536000016706,
+    "sha256": "d7d50e8a8dcefe0fb52a48a44cc19e1e970e50f69d153869747dd84e2ce6734d"
+  },
+  {
+    "command": [
+      "judas_ragdoll_tests"
+    ],
+    "exit": 0,
+    "seconds": 0.41438883799992254,
+    "sha256": "880d571df0fb6aacd33451562f03762863efeaf2a5947ea490f33b793edbca55"
+  },
+  {
+    "command": [
+      "judas_physics_continuation_tests"
+    ],
+    "exit": 0,
+    "seconds": 0.01578964000009364,
+    "sha256": "4cc6f3c0c5aac74ddb2d2faae5934a29ee782a046fcffdd72f60f41a33866534"
+  },
+  {
+    "command": [
+      "judas_impact_mesh_cost_tests",
+      "60",
+      "",
+      "1.2"
+    ],
+    "exit": 0,
+    "seconds": 3.8223999790000107,
+    "sha256": "31b1e4d800536815dff4578bf28ab313664c6bb1be2f20fb78df3ad31c8df4fb"
+  },
+  {
+    "command": [
+      "judas_impact_mesh_cost_tests",
+      "60",
+      "",
+      "1.2",
+      "entry"
+    ],
+    "exit": 0,
+    "seconds": 2.968252791000168,
+    "sha256": "628374ee1ac0adf60aeb793590d17359746a557be9bfce592ec0af5903cd837e"
+  },
+  {
+    "command": [
+      "judas_contact_lifecycle_tests"
+    ],
+    "exit": 0,
+    "seconds": 0.06398891499998172,
+    "sha256": "d521b1edc0c31bc21133f2c2994d7c93e60b2beb5d8ebe01272b53b0d7e7bbe7"
+  },
+  {
+    "command": [
+      "judas_origin_stream_tests"
+    ],
+    "exit": 0,
+    "seconds": 0.11462284099980025,
+    "sha256": "fbdcb66e3e2a00899bd4a65aa5db04a7cab6f8b270fb4ac905d85029e9ee6dbc"
+  },
+  {
+    "command": [
+      "judas_save_streaming_tests",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/event-architecture-20261021/focused/save-stream"
+    ],
+    "exit": 2,
+    "seconds": 0.015734189999875525,
+    "sha256": "5aae809d27f9b4a68609a939ba1e0fe60f8ec20436f76050b84afbf50db5864d"
+  }
+]

@@ -1,0 +1,38 @@
+{
+  "parent": "b7db703ca3fc3c0d39ecc31009a1148b5b778762",
+  "mainUnchanged": "3ecf26cdf248e271c96d17928bd33634e37f30ce",
+  "source": {
+    "CMakeLists.txt": "b224a2265728dc7539f2a31f64d9ca9a07899662713657c71d05635338bc3b42",
+    "src/physics/WorldImpactEvents.cpp": "e70d8178c133e57907f539c9d44cd1a0ca163428df10fdbfacb9063f413b1681",
+    "src/physics/ImpactEventSchedule.h": "83a850dd8f19edc102fdd437a80b9c78436ab89ff0227478902985165593ebfb",
+    "src/physics/WorldModules.md": "23c6e89c78dcaf6c10bf4946ba6829543216e89f58f025f21804e8dedbfa0f24",
+    "tests/ImpactEventScheduleTests.cpp": "96b00514b25d12afa7835d2ad0435ce2f84a54ba035fe47b1de311d964e57935",
+    "scripts/physics_dense_measure.py": "ef18fa8002945a4a9fd34ac01c27a344e63aab9e072dd22a0a7c67d8ecb16ed6",
+    "tests/test_physics_dense_measure.py": "f9a2084a45cb98962a4de8482508b7f495d7c12509a2e1363fccf0ba560b0ecc",
+    "tools/validation/suites.json": "45a9becd3637ddbb96be6341234f6fa3be51a9f7cec59e102e75653ea09ad6a6",
+    "tools/verification/current-docs.json": "59d1641f5b5257977b146a1187d44a5730aa056444497922d57f95b82f18d0f0",
+    "docs/PREALPHA.md": "79ad0521105d98d5d9600ff9b9f85ffd29b9d9f77d0696bba11fefa767ebc16c",
+    "docs/PREALPHA_FINDINGS.json": "3d1c64290d8ca4e7b2b2eeac7cbb08a880786d6deb01383f27b930b406beff6e",
+    "docs/PREALPHA_FINDINGS.md": "bc32c414ccca862bff3e02ba0c73c4ea070eeba65b3f1c81346e50995c7c7845",
+    "docs/README.md": "88b346683135d790f2cadd946c55f644b65197e73ceb8d81dee5674cc738d5f4",
+    "docs/PREALPHA_EVENT_DEPENDENCIES.md": "1a137a84e7591e689b34ef27bcf380893c1d484dfc4f178f459ca8eaffde20d9"
+  },
+  "frozenInputsChecked": 516,
+  "frozenInputMatches": 515,
+  "postMeasurementDocChanges": [
+    "src/physics/WorldModules.md"
+  ],
+  "allFrozenExecutableInputsMatch": true,
+  "fixtureSha256": "a2caf62a295243d301149202c8a0a5eedafff256d68de0e3cda988846b2e05bf",
+  "binaries": {
+    "libjudas_engine.a": "c724dbbba56538f0fe3b5017dab12f3bb928facdb9b0add21d77297964698eae",
+    "judas_physics_stress_live_benchmark": "0010f4b635d546771b82e67d7a0e8ad20ee8cc775cf5b1cf94f657f0829572be",
+    "judas": "41a63663597125615f20ec515b0391a30d618b262d0fb57c2ea50bb581976b2d",
+    "judas_editor": "5db1809f5cd993f976161780ec1675f60dd0004c55c513c2f36b014e8cbd62d3",
+    "judas_export": "e69e64f4eaf32db53855362384fdf0c057da23b3efc1184ed4e8905965de5338",
+    "judas_impact_event_schedule_tests": "28e6aff4606f81e1716c6d4eb69ec1c670ad6f000f965494a7abf39e994b0dda"
+  },
+  "nativeCoreAndBenchmarkMatchFrozenMeasurements": true,
+  "originalClaudeArchiveHashUnchanged": true,
+  "scope": "Pre-commit tested byte identities. Later documentation and evidence additions do not retroactively change embedded build provenance."
+}

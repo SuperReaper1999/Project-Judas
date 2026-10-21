@@ -38,6 +38,17 @@ superset against current proxy bounds; queries outside that enclosure or the
 cache budget use the ordinary tree query. Collision filters, actual geometry,
 contact response and impact times are still evaluated normally.
 
+`ImpactEventSchedule.h` owns the step-local pending-event heap and endpoint
+adjacency index. Chronology remains exact time followed by lexicographic pair
+identity. No-impact identities occupy neither the heap nor its dependency lists;
+a changed endpoint discovers them again through broadphase candidates. The
+existing `RemainingImpactBound` supplies a whole-interval separation certificate
+before pair expansion and during island discovery. It is invalidated on every
+actual motion change and can retain a conservative superset on an unchanged
+trajectory. Uncertain/unsupported shapes use the original query. These are
+geometric proofs, not cached sampled misses or velocity tolerances. See
+[the event dependency investigation](../../docs/PREALPHA_EVENT_DEPENDENCIES.md).
+
 ## Ordering and interfaces
 
 The public coordinator retains the existing `Step`, `StepCoupled` and origin

@@ -1,0 +1,157 @@
+{
+  "runs": {
+    "baseline270-A": {
+      "steps": 270,
+      "fixed_ms": {
+        "count": 270,
+        "maximum": 177.269329,
+        "mean": 30.112361288888888,
+        "median": 14.5856245,
+        "p95_floor": 104.535058,
+        "p99_floor": 165.581284
+      },
+      "impact_events": 3071,
+      "impact_queries": 4136546,
+      "impact_search_iterations": 287596,
+      "maximum_rss_kib": 180132,
+      "simulation_seconds_per_wall_second": 0.5153909068248478,
+      "valid_completion": true
+    },
+    "candidate270-A": {
+      "steps": 270,
+      "fixed_ms": {
+        "count": 270,
+        "maximum": 150.058247,
+        "mean": 27.938847296296295,
+        "median": 14.356006,
+        "p95_floor": 93.395839,
+        "p99_floor": 144.000171
+      },
+      "impact_events": 3071,
+      "impact_queries": 712380,
+      "impact_search_iterations": 287596,
+      "maximum_rss_kib": 177820,
+      "simulation_seconds_per_wall_second": 0.5517638507896069,
+      "valid_completion": true
+    },
+    "baseline600-A": {
+      "steps": 600,
+      "fixed_ms": {
+        "count": 600,
+        "maximum": 614.486861,
+        "mean": 75.17964698833333,
+        "median": 54.532155,
+        "p95_floor": 198.638171,
+        "p99_floor": 262.8935
+      },
+      "impact_events": 5682,
+      "impact_queries": 27321013,
+      "impact_search_iterations": 3924868,
+      "maximum_rss_kib": 180296,
+      "simulation_seconds_per_wall_second": 0.21517701321072408,
+      "valid_completion": true
+    },
+    "candidate600-A": {
+      "steps": 600,
+      "fixed_ms": {
+        "count": 600,
+        "maximum": 535.214303,
+        "mean": 67.568339255,
+        "median": 49.044200000000004,
+        "p95_floor": 177.78082,
+        "p99_floor": 233.036201
+      },
+      "impact_events": 5682,
+      "impact_queries": 4745707,
+      "impact_search_iterations": 3924868,
+      "maximum_rss_kib": 177920,
+      "simulation_seconds_per_wall_second": 0.23837010022302496,
+      "valid_completion": true
+    },
+    "candidate600-B": {
+      "steps": 600,
+      "fixed_ms": {
+        "count": 600,
+        "maximum": 533.40463,
+        "mean": 67.28039100666666,
+        "median": 48.2700895,
+        "p95_floor": 177.132097,
+        "p99_floor": 233.471793
+      },
+      "impact_events": 5682,
+      "impact_queries": 4745707,
+      "impact_search_iterations": 3924868,
+      "maximum_rss_kib": 176660,
+      "simulation_seconds_per_wall_second": 0.23968448823677332,
+      "valid_completion": true
+    },
+    "baseline600-B": {
+      "steps": 600,
+      "fixed_ms": {
+        "count": 600,
+        "maximum": 616.140321,
+        "mean": 74.80746252333333,
+        "median": 54.651686,
+        "p95_floor": 199.987686,
+        "p99_floor": 261.891727
+      },
+      "impact_events": 5682,
+      "impact_queries": 27321013,
+      "impact_search_iterations": 3924868,
+      "maximum_rss_kib": 180304,
+      "simulation_seconds_per_wall_second": 0.2162999800226831,
+      "valid_completion": true
+    },
+    "baseline-live35": {
+      "steps": 441,
+      "fixed_ms": {
+        "count": 441,
+        "maximum": 614.099892,
+        "mean": 77.77191963945579,
+        "median": 43.013949,
+        "p95_floor": 222.375871,
+        "p99_floor": 273.863985
+      },
+      "impact_events": 5120,
+      "impact_queries": 21939300,
+      "impact_search_iterations": 2831580,
+      "maximum_rss_kib": 180160,
+      "simulation_seconds_per_wall_second": 0.20953628357838325,
+      "valid_completion": true,
+      "lateFrameWindow": {
+        "policy": "complete intervals starting after the first five wall seconds, through application exit",
+        "frames": 28,
+        "covered_seconds": 30.236697057,
+        "fps": 0.9260270705896367,
+        "p95_ms": 1774.627782,
+        "worst_ms": 2086.996982
+      }
+    },
+    "candidate-live35": {
+      "steps": 491,
+      "fixed_ms": {
+        "count": 491,
+        "maximum": 535.491739,
+        "mean": 69.7190307718941,
+        "median": 46.018317,
+        "p95_floor": 182.146563,
+        "p99_floor": 246.007618
+      },
+      "impact_events": 5353,
+      "impact_queries": 4041481,
+      "impact_search_iterations": 3226608,
+      "maximum_rss_kib": 178028,
+      "simulation_seconds_per_wall_second": 0.2335743360354048,
+      "valid_completion": true,
+      "lateFrameWindow": {
+        "policy": "complete intervals starting after the first five wall seconds, through application exit",
+        "frames": 34,
+        "covered_seconds": 30.34956741,
+        "fps": 1.1202795592004782,
+        "p95_ms": 1445.618003,
+        "worst_ms": 1961.26179
+      }
+    }
+  },
+  "profileCounters": "PROFILE_SUMMARY.json"
+}

@@ -392,8 +392,20 @@ def compare(args):
     br = rows(candidate / "live/steps.csv")
     mismatches = []
     mismatch_count = 0
+    allow_query_reduction = getattr(args, "allow_query_reduction", False)
+    query_reductions = []
+    compared_fields = tuple(field for field in PHYSICAL_FIELDS
+                            if not (allow_query_reduction and field == "impact_queries"))
     for index, (left, right) in enumerate(zip(ar, br), 1):
-        for field in PHYSICAL_FIELDS:
+        if allow_query_reduction:
+            reduction = int(left["impact_queries"]) - int(right["impact_queries"])
+            query_reductions.append(reduction)
+            if reduction < 0:
+                mismatch_count += 1
+                if len(mismatches) < 100:
+                    mismatches.append({"step": index, "field": "unexpected_query_increase",
+                                       "baseline": left["impact_queries"], "candidate": right["impact_queries"]})
+        for field in compared_fields:
             if left.get(field) != right.get(field):
                 mismatch_count += 1
                 if len(mismatches) < 100:
@@ -411,7 +423,9 @@ def compare(args):
         "same_mode": a["context"]["mode"] == b["context"]["mode"],
         "same_profile_setting": a["context"]["profile"] == b["context"]["profile"],
         "baseline_steps": len(ar), "candidate_steps": len(br),
-        "compared_physical_fields": list(PHYSICAL_FIELDS),
+        "compared_physical_fields": list(compared_fields),
+        "allow_query_reduction": allow_query_reduction,
+        "impact_queries_removed": sum(query_reductions) if allow_query_reduction else None,
         "exact_physical_rows": exact, "physical_mismatch_count": mismatch_count,
         "first_100_mismatches": mismatches, "exact_endpoint_geometry": aq == bq,
         "baseline_fixed_ms": a["fixed_ms"], "candidate_fixed_ms": b["fixed_ms"],
@@ -455,6 +469,8 @@ def main():
     c.add_argument("--baseline", type=Path, required=True)
     c.add_argument("--candidate", type=Path, required=True)
     c.add_argument("--output", type=Path, required=True)
+    c.add_argument("--allow-query-reduction", action="store_true",
+                   help="Allow only fewer impact queries per step; all other work/physical fields and endpoint geometry must still match exactly.")
     args = parser.parse_args()
     if args.command == "freeze":
         freeze(args)

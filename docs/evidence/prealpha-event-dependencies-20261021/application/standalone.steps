@@ -1,0 +1,4 @@
+FRAMES 120
+LOG_EVERY 30
+TAP F5 5
+SCREENSHOT 100 /home/conner/Documents/GitHub/Project-Judas/.cache/event-architecture-20261021/application/standalone.png
