@@ -7,6 +7,18 @@ produce their motion. Motor power can be removed without disabling physics.
 
 Open `physics_stress_lab.judasproj` in the editor, or run its normal exported package.
 
+## Latest Pre-Alpha result
+
+The operator accepted the support-history checkpoint `80f7b2a5` on main. The
+subsequent [broadphase follow-up](../../docs/PREALPHA_BROADPHASE_REUSE.txt) is on
+Experimental pending its own human review. It removes a repeated tree traversal
+when the candidate list is provably unchanged. The normal 1,800-step comparison
+retains every recorded physical digest and reduces mean step cost from 16.71 to
+14.23 ms. The normal live busy window improves from 9.5 to 57 FPS on the Ryzen 5
+5600, but initial impact hitches remain. Counts, CCD, cadence and catch-up policy
+are unchanged. The sections below preserve earlier checkpoint measurements;
+they are not the latest performance result or universal 60 Hz certification.
+
 ## Controls
 
 | Input | Action |
@@ -52,7 +64,7 @@ improved in the measured failure region, but isolated stalls remain. It is not a
 press **3** deliberately to inspect the worst case. No body is frozen or removed
 to improve the result. M91 was human accepted at the checkpoint recorded in the
 [current architecture](../../docs/ARCHITECTURE.md#physics-ownership-and-modules).
-Pre-Alpha changes remain pending separate human acceptance.
+Later Pre-Alpha acceptance and current pending work are distinguished above.
 
 ## Pre-Alpha Pass2
 
@@ -69,7 +81,7 @@ passes the original four numerical fast-box failures with native per-triangle
 depth-growth queries. It also reports increased articulated-mesh costs honestly.
 This room exercises ordinary machinery; it is **not** a visual reproduction of
 the separate curved-trough fixture and does not certify that fixture or 60 Hz
-performance. The 1,024-piece limit above is unchanged.
+performance. See the latest result above for subsequent dense-pile measurements.
 
 ## Project organization
 
@@ -103,7 +115,7 @@ M91 evidence report. Human acceptance and Windows validation are separate states
 
 ## Persistent contacts and incremental impacts
 
-The [current redesign report](../../docs/PREALPHA_INCREMENTAL_IMPACTS.md) covers
+The [incremental-impact report](../../docs/PREALPHA_INCREMENTAL_IMPACTS.md) covers
 new impacts growing through real velocity dependencies while continuing support
 keeps its ordinary force ownership. The scene, counts, materials, cadence and
 controls are unchanged. The later

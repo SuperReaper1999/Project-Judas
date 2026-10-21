@@ -1,0 +1,4 @@
+{
+  "sha256": "f794d0f6fcfa467034643bc81912ced18e5c1402153bb0cacd6651cc513722a0",
+  "note": "Final selection excludes temporary exported/editor-owned project copies. LargeJSON/log and CSV/JSONL compression preserves original bytes and hashes; prior helper snapshots remain."
+}

@@ -1,0 +1,32 @@
+{
+  "head": "80f7b2a5f96cdf1d56c5c88043c16edefe70a4c3",
+  "input": "src/PhysicsWorld.cpp",
+  "source_sha256": "76718c9e325e7bc83bd7131b092afb7b7b894b952b69f004218aef31cb37d8c1",
+  "validation": "source-only; no builds or workload runs",
+  "files": {
+    "OrdinaryCandidateGuardTests.cpp": "962b0b7804f858aa4215ec002f8a8516f2a8a0ade18827065f072e0bec905aea",
+    "SOURCE_AUDIT.txt": "63ea0acb5840665a0d50e681657dc8c2e8ac3497aacb589944028d3c4b2a99db",
+    "all/PhysicsWorld.cpp": "e033908e2ffd8b18f89281ea9ab14fcf2fa5ba598e9bd8036bb7417c91e15cb8",
+    "broken-always-reuse/PhysicsWorld.cpp": "1eb71c8717a872e32ce1f6ec16e83d20b8bcf15c930db98a2920f853a8b60734",
+    "build_candidate_driver.py": "d13de5dd7d7fe56c6f359dde3aa52c24b4d6fc73edcb86348956f1e2d0dff915",
+    "build_guard_control.py": "2172c60ce78526cbea5ebb6c656af1d5e6e230871f18d9f3996386c93f2de43d",
+    "candidate-driver-source/CandidateLive.cpp": "3e86119a440b2813fc8803f32d4ff02f7dd3b67174afb2dd0026c38e7569f4bf",
+    "candidate-driver-source/MainThreadSampler.h": "1c087714d193f754b23ab3be1ca5cced8df25336b02dad8729b5834e7d51e78b",
+    "candidate-driver-source/OrdinaryCandidateAudit.h": "28c0c9e8f471f7b067b8cfc5f16e54c506866baf2742bc916868b1e7939e963d",
+    "candidate-driver-source/SOURCE.json": "1ba59f90d08c7d36438058a5b7ec1eba07cab1f1ae791ab3b4c7754ecd350771",
+    "combined/PhysicsWorld.cpp": "28ef8cb94b2726f8d09f3d549d4ca7d447eddb5612865a271507d29d6fa1643a",
+    "diagnostic/OrdinaryCandidateAudit.h": "28c0c9e8f471f7b067b8cfc5f16e54c506866baf2742bc916868b1e7939e963d",
+    "diagnostic/PhysicsWorld.cpp": "d1d610d837c56d7cae32611afa18aa13fc207eb1f169a5cd2be7c900f1087247",
+    "empty-manifold/PhysicsWorld.cpp": "9002e11656a726494ba8fe84fa12e6fea6a08d83519cdf3a5a819b4ccac4d7e2",
+    "original/PhysicsWorld.cpp": "76718c9e325e7bc83bd7131b092afb7b7b894b952b69f004218aef31cb37d8c1",
+    "prediction-reuse/PhysicsWorld.cpp": "e930a06f96eebd8efea2646ffc8b6e5534ad4fb63de8f5c01302dbc5c8a5fabf",
+    "prepared-pose-elision/PhysicsWorld.cpp": "3576d3ea24df22674bcdc6e572e877b9c3da4bbd3bdab09cd264a5fe248e8299",
+    "prepared-pose-elision/README.txt": "1c8c2d6d625d0547276c7e3ee34683d989d06c0cfe6f28c45d7ab0e409c6469c",
+    "prepared-pose-elision/prepared-pose-elision.patch": "32b29bc5f6aadde701bdf0e9f485d72d20e103dd633b19f9de9c7f2a665999ce",
+    "previous-guard32/COMMANDS.json": "46343bbda6a56e9bd029baf2f8b6641f6c407dd6d2d1ff0558091f69be8819ad",
+    "previous-guard32/OrdinaryCandidateGuardTests.cpp": "5b1fc33889b0a36d19bda22fcbce6b2496b0abb05f25615069c1bd881d4d1360",
+    "previous-guard32/PRESERVED.json": "25fee218c396d3295aff6ce5299386947487c7ed8b5f3b3f8e9eff0642537c55",
+    "previous-guard32/RESULT.json": "b7069a7ee6530b038ab393db42f182cbca404f6f18e11fdba151aa1f76652a27",
+    "previous-guard32/fixture-run.log": "ab8f7e8f32799746afe6d340d741e691289697821372f532e396524e5d919da4"
+  }
+}

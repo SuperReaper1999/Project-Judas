@@ -1,0 +1,11 @@
+{
+  "schema": "judas.private.measurement-tools-addendum.v1",
+  "utc": "2026-10-21T15:28:34.194741+00:00",
+  "prior_manifest": ".cache/support-followup-20261021/MEASUREMENT_TOOL_FINGERPRINTS.json",
+  "prior_manifest_sha256": "701cd8438b9bb74b0dc51ca626e4ea24a451a96ad2cc1d3946e1ef88a8675c1c",
+  "previous_helpers_changed_since_prior_manifest": [],
+  "added_tool": {
+    ".cache/support-followup-20261021/final_tables.py": "e27090ae22a9e6a41cdb8bae3dbecc9483417eeda8e659a8a694ffed7e408f2f"
+  },
+  "scope": "Offline strict wall-window normal performance tables and full common-prefix physical/work equality. Original helper manifest remains unchanged."
+}

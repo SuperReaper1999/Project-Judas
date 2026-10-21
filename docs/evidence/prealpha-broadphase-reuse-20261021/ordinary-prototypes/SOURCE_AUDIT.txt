@@ -1,0 +1,111 @@
+ORDINARY CONTACT SOURCE AUDIT — PRIVATE CONTROLS ONLY
+====================================================
+Source: Experimental80f7b2a5f96cdf1d56c5c88043c16edefe70a4c3
+No production source change, compilation or workload run performed by this agent.
+
+1. CANDIDATE REUSE: EXACT LOCAL CERTIFICATE
+------------------------------------------
+PhysicsWorld.cpp87 generates the sorted candidate array used to awaken predicted
+impact neighbors. PhysicsWorld.cpp148 regenerates the same complete array after
+force/torque integration. We may retain the first list only when no tree proxy
+has changed in this strictly local interval.
+
+GenerateCandidatePairs (physics/WorldBounds.cpp127–157) depends on:
+- aliveSlots and each indexed body/generation;
+- enabled, HasMotion, sensor and queryOnly flags;
+- collision suppression pairs and collision layers/masks;
+- current broadphase tree structure, fat AABBs and proxy userData.
+HasMotion (WorldInternal.h174–175) is !simulationSuspended &&
+(isDynamic || isKinematic); it does NOT inspect sleeping or velocities.
+CanCollide (WorldHotAccessors.h35–41) reads only generations, suppression,
+enabled, layers and masks. Tree Query (Broadphase.h77–95) changes scratch stack
+capacity/content only, not any node or candidate predicate.
+
+All intervening work is present directly in PhysicsWorld.cpp88–147:
+- Wake: WorldSleep.cpp5–50 changes sleeping and quietSeconds and traverses
+  valid joints/touches/ordinary support observations. It does not alter body
+  membership, collision classification, proxy geometry or any callback.
+- Dynamic integration clears motion segments, copies current pose to previous
+  pose, refreshes derived pose/bound caches, consumes deferred stored gravity,
+  integrates velocities from force/torque accumulators, and clears those
+  accumulators. RigidBody.cpp87–99 changes only velocities/accumulators.
+- CurrentBound/PreviousBound/Orientation prepare derived caches only
+  (WorldBounds.cpp5–60). TightBound may change its derived previousBound field;
+  this does not enter candidate generation except if a later CoverStepReach
+  actually changes the tree.
+- CoverStepReach (WorldBounds.cpp104–110) calls MoveProxy only if the requested
+  reach exceeds the existing fat AABB. Every such call increments the local
+  reinsertionsSinceStep counter. The only other MoveProxy call is RefreshProxy
+  (112–118), which also increments it and is not in this interval.
+- Profiler scope Begin/End changes profiler data only. No user/coupling callback
+  is called here; coupling begins only at PhysicsWorld.cpp344–345.
+- Gravity is supplied before Step by the caller; deferred acceleration here is
+  a stored vector. No gravity selection/resolver callback is invoked.
+- PublishKinematics runs BEFORE the first candidate array, so its changes are
+  already represented in the snapshot.
+
+Important boundary: the counter is NOT a universal tree revision. AddBody and
+Remove call CreateProxy/DestroyProxy without incrementing it (WorldBodies.cpp146,
+156); ShiftOrigin also changes the tree (PhysicsWorld.cpp866). None can run in
+this callback-free interval under PhysicsWorld's single-owner stepping model;
+ShiftOrigin explicitly rejects stepping. Do not reuse this local certificate
+across Step boundaries or callbacks. External concurrent world mutation is not
+supported/certified. The bounded interval can increment at most once per live
+integrated body, so size_t wraparound is not a plausible condition here.
+
+Observable diagnostics: a skipped actual candidate pass also skips its work
+counter increments and rejected-layer count increments. Do not manufacture old
+counts. Contact candidates, ordering, geometry, solver policy and physical
+numerical operations remain the same on a certified hit. Cache/reinsertions and
+physical digests should match; candidate traversal counters should decrease.
+The actual hit rate and cost benefit are UNKNOWN until measured.
+
+2. EMPTY-MANIFOLD WARM LOOKUP
+-----------------------------
+PhysicsWorld.cpp210–218 always searches contactCache after producing a manifold,
+even when manifold.count is zero. In that case both following point loops are
+empty, the touching fallback is gated by count, and no observation, match, cache
+used bit, row, pending cache or pairPoints can change. Continuing the inner
+primitive-B loop before ContactKey/equal_range is exact and leaves every geometry
+query untouched. This is a distinct causal control; no claimed magnitude yet.
+
+3. PRIVATE VARIANTS
+-------------------
+original/PhysicsWorld.cpp: byte-preserved reference.
+empty-manifold/PhysicsWorld.cpp: only empty manifold shortcut.
+prediction-reuse/PhysicsWorld.cpp: local revision snapshot/guard only.
+combined/PhysicsWorld.cpp: both independent controls.
+diagnostic/PhysicsWorld.cpp: BOTH original full queries retained, copies first
+candidate list and checks exact sorted equality whenever local certificate holds.
+It never skips a query, so physics and candidate diagnostics remain baseline.
+The copy/comparison makes this diagnostic unsuitable for timing comparisons.
+OrdinaryCandidateAudit.h API: Reset(), Header(out), WriteStep(out,step), public
+thread_local stats in namespace ordinary_candidate_audit. Reset per step to emit
+per-step records; otherwise counters accumulate deliberately.
+
+4. MEANINGFUL POSITIVE/NEGATIVE CONTROLS (NOT YET EXECUTED)
+--------------------------------------------------------
+A. A free dynamic body or settled pile whose fat proxies enclose integrated reach:
+   certified==1, arrays bit-identical. Repeat with ordinary asleep bodies.
+B. Neighbor motion wakes a sleeping dynamic body but all fat bounds still enclose
+   reach: certificate remains valid despite awake-state changes.
+C. Large force and torque applied before Step increase velocity reach beyond the
+   existing fat proxy: reinsertions>0, fallback to full second query. Configure a
+   nearby initially excluded body so the second pass must gain a candidate.
+D. Deliberately broken always-reuse control on C must produce different lists;
+   this detects an absent invalidation mechanism rather than mere symbol access.
+E. Mixed static/dynamic/kinematic, sensor/queryOnly, disabled, suspended and
+   collision-filtered bodies: certified list still equals baseline. Change
+   classification between completed Steps; first list must see the change.
+F. Create/remove/reuse slots and shift origin only between completed Steps:
+   no certificate is carried over; generation/filter ordering remains current.
+G. Exact full 900-step physical digests, contact/CCD counts and deepest endpoint
+   overlap against reference. Query-work counters are intentionally allowed to
+   drop; no cadence/iterations/contact fidelity/material changes.
+H. Empty-manifold control: large fat-bound overlap with physically separated
+   shapes, both prepared simple and compound/asset paths; actual contacts,
+   cacheUsed, events and resulting trajectories remain exact. Broken control
+   that skips nonempty manifolds must fail a real support/impact fixture.
+
+Reject speed claims if certified hit rate is negligible or matched timing shows
+noise. No new graph or persistent broadphase ownership redesign is proposed.

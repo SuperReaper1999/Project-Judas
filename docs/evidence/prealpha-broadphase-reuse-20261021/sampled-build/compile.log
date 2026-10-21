@@ -1,0 +1,4 @@
+/home/conner/Documents/GitHub/Project-Judas/.cache/support-followup-20261021/sampled-build/SampledLive.cpp:3:10: fatal error: glad/glad.h: No such file or directory
+    3 | #include <glad/glad.h>
+      |          ^~~~~~~~~~~~~
+compilation terminated.

@@ -1,0 +1,9 @@
+{
+  "classification": "source-only preparation; driver preserves exact full two candidate passes via diagnostic core; no timing claim",
+  "sources": {
+    ".cache/support-followup-20261021/ordinary-prototypes/candidate-driver-source/CandidateLive.cpp": "3e86119a440b2813fc8803f32d4ff02f7dd3b67174afb2dd0026c38e7569f4bf",
+    ".cache/support-followup-20261021/ordinary-prototypes/candidate-driver-source/MainThreadSampler.h": "1c087714d193f754b23ab3be1ca5cced8df25336b02dad8729b5834e7d51e78b",
+    ".cache/support-followup-20261021/ordinary-prototypes/candidate-driver-source/OrdinaryCandidateAudit.h": "28c0c9e8f471f7b067b8cfc5f16e54c506866baf2742bc916868b1e7939e963d"
+  },
+  "input_driver_sha256": "fe14bf665d7bf0204c9afecd079d4f270701f5cda37652f62e86e65a5cdf1325"
+}

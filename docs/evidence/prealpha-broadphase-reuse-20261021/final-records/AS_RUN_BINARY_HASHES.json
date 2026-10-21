@@ -1,0 +1,11 @@
+{
+  "classification": "Original qualified final-core and normal build binaries before publication identity relinking; never relabel as byte-identical to later identity builds.",
+  "files": {
+    "build/libjudas_engine.a": "9fca0072987ae11fcae8265c1ddad12bd1c21d34e0ba7c2a9923572afe916c0c",
+    "build/judas": "c78472f7d1cdd83ea8c3eabff9f5c9c134a2fb3f3fa5cbf29170478d3fcd2c1e",
+    "build/judas_export": "67cb63d49392dff9ac6e05bfef1879177a6614583d5488dd9a32916a872d9844",
+    "build/judas_editor": "5116ffb0d60c518fe6c1da1188e412bb76ae7c610246777e08ebb67942024aac",
+    "build/judas_candidate_reuse_tests": "0e74b292222901d7f76c54590a8f5996bfca139fd1dd49f7422e102e176358a5",
+    "build/judas_physics_stress_live_benchmark": "f4e1c6dae906c551be6274e879094e6c78e4d14b6b8954939ebda70a1f025f88"
+  }
+}

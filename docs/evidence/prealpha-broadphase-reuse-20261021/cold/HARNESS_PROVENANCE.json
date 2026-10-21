@@ -1,0 +1,19 @@
+{
+  "original": "/home/conner/Documents/GitHub/Project-Judas/.cache/contact-redesign-20261021/cold/validate.py",
+  "original_sha256": "cc26188853616c18237d63f37faab86948cfb0d54f26c0c790a4689e9fbe2b15",
+  "copied_sha256": "4489bfb2968b55e171ad48a93e64bec9a351707dcb4745de666c9a16d1fe872e",
+  "only_change": "output-root/repository/build/optional explicit character binary wiring; observer, fixtures, controller, settings and acceptance unchanged",
+  "explicit_character_binary": "/home/conner/Documents/GitHub/Project-Judas/.cache/support-followup-20261021/app-drivers/judas_character_lab_tests",
+  "commands_not_run": [
+    [
+      "python3",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/support-followup-20261021/cold/validate.py",
+      "prepare"
+    ],
+    [
+      "python3",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/support-followup-20261021/cold/validate.py",
+      "run"
+    ]
+  ]
+}

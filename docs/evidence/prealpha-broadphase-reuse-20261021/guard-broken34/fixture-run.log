@@ -1,0 +1,5 @@
+FAIL changed-tree fallback discovers newly reachable wall candidate
+FAIL force fixture causes an actual physical collision episode
+FAIL actual CCD prevents the forced body crossing the wall
+FAIL force-expanded proxy executes genuine second-pass candidate discovery
+{"checks":34,"failures":4}

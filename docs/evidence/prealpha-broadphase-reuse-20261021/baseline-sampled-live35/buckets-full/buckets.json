@@ -1,0 +1,518 @@
+{
+  "schema": "judas.disjoint-source-owned-pc-buckets.v1",
+  "window_samples": 17705,
+  "buckets": {
+    "bounds_candidates_sort": {
+      "window_samples": 5630,
+      "other_samples": 0,
+      "symbols": 18,
+      "window_percent": 31.798926856820106
+    },
+    "native_contact_geometry_interval": {
+      "window_samples": 3623,
+      "other_samples": 0,
+      "symbols": 48,
+      "window_percent": 20.463146003953685
+    },
+    "constraint_response": {
+      "window_samples": 2652,
+      "other_samples": 0,
+      "symbols": 18,
+      "window_percent": 14.978819542502118
+    },
+    "event_contact_domain_processing": {
+      "window_samples": 1692,
+      "other_samples": 0,
+      "symbols": 59,
+      "window_percent": 9.556622423044338
+    },
+    "game_runtime_render": {
+      "window_samples": 1528,
+      "other_samples": 0,
+      "symbols": 141,
+      "window_percent": 8.630330415136967
+    },
+    "physics_coordinator_other": {
+      "window_samples": 1436,
+      "other_samples": 0,
+      "symbols": 27,
+      "window_percent": 8.11070319118893
+    },
+    "unclassified": {
+      "window_samples": 865,
+      "other_samples": 0,
+      "symbols": 154,
+      "window_percent": 4.8856255295114375
+    },
+    "allocator": {
+      "window_samples": 279,
+      "other_samples": 0,
+      "symbols": 18,
+      "window_percent": 1.5758260378424174
+    }
+  },
+  "rules_first_match_wins": [
+    {
+      "id": "allocator_named",
+      "bucket": "allocator",
+      "field": "symbol",
+      "pattern": "^(?:operator (?:new|delete)\\b|std::pmr::(?:unsynchronized_pool_resource|monotonic_buffer_resource)::|ContactSolver::FrameUpstream::do_(?:de)?allocate)",
+      "sources": [
+        "src/ContactSolver.cpp:64",
+        "system C++ allocation symbols"
+      ],
+      "explanation": "Explicit allocation-resource implementation; not every container helper."
+    },
+    {
+      "id": "allocator_libc_source",
+      "bucket": "allocator",
+      "field": "representative_location",
+      "pattern": "(?:^|/)malloc(?:/|\\.c)",
+      "sources": [
+        "system libc malloc/malloc.c"
+      ],
+      "explanation": "PC resolved inside libc allocator implementation."
+    },
+    {
+      "id": "bounds_owned_tu",
+      "bucket": "bounds_candidates_sort",
+      "field": "source_file",
+      "pattern": "^(?:WorldBounds|Broadphase)\\.cpp$",
+      "sources": [
+        "src/physics/WorldBounds.cpp:5",
+        "src/Broadphase.cpp:6"
+      ],
+      "explanation": "Bounds/broadphase TU, including specialized sort helpers reported as owned by it."
+    },
+    {
+      "id": "bounds_named",
+      "bucket": "bounds_candidates_sort",
+      "field": "symbol",
+      "pattern": "^(?:PhysicsWorld::Impl::(?:Orientation|CurrentBound|PreviousBound|TightBound|StepReach|CoverStepReach|RefreshProxy|QuerySlots|GenerateCandidatePairs)\\(|DynamicAabbTree::|ShapeAabb\\(|PrepareShapeBounds\\()",
+      "sources": [
+        "src/physics/WorldBounds.cpp:5",
+        "src/physics/WorldBounds.cpp:120",
+        "src/physics/WorldBounds.cpp:127",
+        "src/Narrowphase.cpp:215",
+        "src/Narrowphase.cpp:242",
+        "src/Broadphase.cpp:6"
+      ],
+      "explanation": "Named bounds/candidate methods, tree implementation and explicit shape-bound preparation."
+    },
+    {
+      "id": "geometry_owned_tu",
+      "bucket": "native_contact_geometry_interval",
+      "field": "source_file",
+      "pattern": "^(?:Contacts|Narrowphase|CollisionGeometry)\\.cpp$|^(?:ContactGeometryInternal|ContactSatFilter|ContactPreparedGeometry)\\.h$",
+      "sources": [
+        "src/Contacts.cpp:599",
+        "src/Narrowphase.cpp:10",
+        "src/CollisionGeometry.cpp",
+        "src/ContactGeometryInternal.h",
+        "src/ContactSatFilter.h"
+      ],
+      "explanation": "Native contact geometry TU/header after the explicit shape-bounds rule."
+    },
+    {
+      "id": "geometry_named",
+      "bucket": "native_contact_geometry_interval",
+      "field": "symbol",
+      "pattern": "^(?:contact_geometry::|rigid_motion_bounds::|(?:double|float|bool|contact_geometry::[A-Za-z_]+|std::array<contact_geometry::Iv, 3ul>) contact_geometry::|ContactPreparedOrientation::|ContactSatFilter::|SpherePredicateFilter::|ContactRotation\\(|Primitive(?:At|Count|Contacts|HasContacts)\\(|ComputeContacts\\(|SphereVs|BoxVs|ClosestPoint|CapsuleDistance)",
+      "sources": [
+        "src/Contacts.cpp:577",
+        "src/Contacts.cpp:599",
+        "src/Narrowphase.cpp:10",
+        "src/ContactGeometryInternal.h",
+        "src/RigidMotionBounds.h:25"
+      ],
+      "explanation": "Direct geometry, predicates and interval-bound functions; not arbitrary functions whose template arguments merely mention geometry types."
+    },
+    {
+      "id": "response_owned_tu",
+      "bucket": "constraint_response",
+      "field": "source_file",
+      "pattern": "^(?:ContactSolver|ImpactSolver|JointSolver)\\.cpp$",
+      "sources": [
+        "src/ContactSolver.cpp:253",
+        "src/ImpactSolver.cpp:53",
+        "src/ImpactSolver.cpp:155",
+        "src/JointSolver.cpp"
+      ],
+      "explanation": "Constraint/impact response implementation; called discovery callbacks retain their own symbol ownership."
+    },
+    {
+      "id": "response_named",
+      "bucket": "constraint_response",
+      "field": "symbol",
+      "pattern": "^(?:ContactSolver|ImpactSolver|JointSolver)::",
+      "sources": [
+        "src/ContactSolver.cpp:88",
+        "src/ContactSolver.cpp:305",
+        "src/ImpactSolver.cpp:155",
+        "src/JointSolver.cpp"
+      ],
+      "explanation": "Explicit response methods, including response-local frame registration and row preparation."
+    },
+    {
+      "id": "event_owned_tu",
+      "bucket": "event_contact_domain_processing",
+      "field": "source_file",
+      "pattern": "^(?:WorldImpactEvents|WorldIncrementalImpact|WorldCCDSearch|WorldContacts)\\.cpp$",
+      "sources": [
+        "src/physics/WorldImpactEvents.cpp:112",
+        "src/physics/WorldIncrementalImpact.cpp:5",
+        "src/physics/WorldCCDSearch.cpp:546",
+        "src/physics/WorldContacts.cpp:77"
+      ],
+      "explanation": "Event/domain/contact orchestration TU, including owner-specific sorting/container helpers. Pure geometry namespace rules win earlier."
+    },
+    {
+      "id": "event_named",
+      "bucket": "event_contact_domain_processing",
+      "field": "symbol",
+      "pattern": "^(?:PhysicsWorld::Impl::(?:ResolveInitialImpacts|AdvanceImpacts|TryIncrementalImpact|PrepareInitialContactGeometry|Observe|FinishTouches|RemainingImpactBound|NormalSpeed|DriftGenerator|PlaneDrift|StaticMeshPolyPair|MeshDepthGrowthSafe|PrimitiveFeature|SpinsThroughSupport|SupportContinuationSafe|SpinPenetrationTarget|ImpactTime|GeometryPoseAt|ActualImpactBound|PairAt)\\(|JudasPhysicsDetail::ContactKey::)|JudasPhysicsDetail::Impact(?:EventSchedule|CandidateCache)",
+      "sources": [
+        "src/physics/WorldCCDSearch.cpp:5",
+        "src/physics/WorldCCDSearch.cpp:546",
+        "src/physics/WorldImpactQueries.h:16",
+        "src/physics/WorldImpactQueries.h:87",
+        "src/physics/ImpactEventSchedule.h:18",
+        "src/physics/ImpactCandidateCache.h:14"
+      ],
+      "explanation": "Named query/event orchestration and containers specialized on the explicit event schedule/cache types. No inference for generic key-only std algorithms."
+    },
+    {
+      "id": "physics_coordinator_named",
+      "bucket": "physics_coordinator_other",
+      "field": "symbol",
+      "pattern": "^(?:PhysicsWorld::|RigidMotion::|RigidMotionSegment::|AngularDriftGenerator\\(|TransportAngularVelocity\\(|IntegrateRigidBody|DynamicBody::)",
+      "sources": [
+        "src/PhysicsWorld.cpp",
+        "src/RigidMotion.h:63",
+        "src/RigidBody.cpp",
+        "src/physics/WorldSleep.cpp"
+      ],
+      "explanation": "Other explicit physics ownership. Step self samples can contain inlined work and are not assigned to an assumed inner stage."
+    },
+    {
+      "id": "physics_coordinator_tu",
+      "bucket": "physics_coordinator_other",
+      "field": "source_file",
+      "pattern": "^PhysicsWorld\\.cpp$|^(?:RigidBody|RigidMotion)\\.(?:cpp|h)$",
+      "sources": [
+        "src/PhysicsWorld.cpp",
+        "src/RigidBody.cpp",
+        "src/RigidMotion.h"
+      ],
+      "explanation": "Other coordinator/motion TU-owned specialized helpers."
+    },
+    {
+      "id": "game_runtime_named",
+      "bucket": "game_runtime_render",
+      "field": "symbol",
+      "pattern": "^(?:RuntimeWorld::|Renderer::|ScriptSystem::|InputSystem::|ResourceManager::|EngineHost::|Window::|Application::|RuntimeUI::|AudioSystem::|GameSession::|InteractivePlay::|RuntimeDiagnostics::|Frustum::|JobSystem::|LiquidSystem::OpticalPaths\\(|SphericalVolume::|DrawWorldGeometry\\(|RenderWorldFrame\\(|BuildRenderMaterialBindings\\(|ResolveRenderMaterial\\(|EncodeMaterialOverrides|PhysicalDigest::|digest$|JS_|js_|find_own_property|free_gc_object|add_shape_property|build_arg_list)",
+      "sources": [
+        "src/RuntimeWorld.cpp",
+        "src/Renderer.cpp",
+        "src/WorldPresentation.cpp",
+        "src/ScriptSystem.cpp",
+        "third_party/quickjs/quickjs.c",
+        "private driver SampledLive.cpp"
+      ],
+      "explanation": "Named application/game-facing runtime, presentation, scripting and benchmark-observer work; not purely gameplay code."
+    },
+    {
+      "id": "game_runtime_tu",
+      "bucket": "game_runtime_render",
+      "field": "source_file",
+      "pattern": "^(?:WorldPresentation|WorldScripts|WorldCharacter|WorldAudio|WorldWeather|RuntimeWorld|ScriptSystem|RuntimeUI|Renderer|Material|ResourceManager|Simulation|SampledLive)\\.cpp$|^quickjs\\.c$",
+      "sources": [
+        "src/WorldPresentation.cpp",
+        "src/WorldScripts.cpp",
+        "src/Simulation.cpp",
+        "src/RuntimeUI.cpp",
+        "src/ResourceManager.cpp"
+      ],
+      "explanation": "Application/runtime/render/observer TU-owned specialized helpers."
+    },
+    {
+      "id": "presentation_shared_image",
+      "bucket": "game_runtime_render",
+      "field": "path",
+      "pattern": "/(?:lib(?:GL|EGL|glapi|gallium|nvidia|SDL|X11|Xext|xcb|wayland)[^/]*|[^/]*_dri\\.so)",
+      "sources": [
+        "loaded image metadata"
+      ],
+      "explanation": "Direct CPU PCs in graphics/window/input platform libraries, not GPU execution time."
+    }
+  ],
+  "source_fingerprints": {
+    "src/ContactSolver.cpp": "d8b26d74d3d0f9feea59f76aa9fd8ae048488e7502e4906ab7c9fef90b010354",
+    "src/physics/WorldBounds.cpp": "67c30882a5251028627934f9269f6e21a723d2c51fe811c9b34eddfe1f153f62",
+    "src/Broadphase.cpp": "3da0fe038b48e9502b54c33b8e24fee79a80b670c8a23f0d17afbace241d0785",
+    "src/Narrowphase.cpp": "f8df5c5b97cbf20989bd42298b2451699631461cffa333a657112c921afa5890",
+    "src/Contacts.cpp": "c6b39dc56b81d5b1d02376deba96d9805524ce63e91a00b8781992b4e6e04dd1",
+    "src/CollisionGeometry.cpp": "ece2c2ec97adb4574458650511a2129c174df13605b5f36558ac2a56862e3263",
+    "src/ContactGeometryInternal.h": "f8717a473924708e43e27d274e2268486646a7e2d103f3ac0e3268bf31f4dd7b",
+    "src/ContactSatFilter.h": "e73915003a1321e19f94f57acc8815ac4ef307d0e37fc203d0d297e3c449326c",
+    "src/RigidMotionBounds.h": "1023cc513770f3d4d7b855b0bd2b5addd9a38ae15c323f19d5fa2353368767a2",
+    "src/ImpactSolver.cpp": "185558da16665e0dafbbbf7c18fc06ad2f1c63b320f0928170b743f68cb8deb7",
+    "src/JointSolver.cpp": "936232c5088fc956a6923ba64a4faf3e8561acd3c553695b813e3347c3a78685",
+    "src/physics/WorldImpactEvents.cpp": "1dd4896f5b9c4480b8a2d20e28c8f76f325a9624f9fc20c5534ee9e32df34f3f",
+    "src/physics/WorldIncrementalImpact.cpp": "dd4cc421db0910d17989619e7bb87f3a37019d0bac075482de0d5354df217c29",
+    "src/physics/WorldCCDSearch.cpp": "3be8ec99e65da3ff643c9a45c0d0d5dcfbde3b78054a2ee65167ecf49aea500d",
+    "src/physics/WorldContacts.cpp": "d8f842da964ed78c07adc002a33c3e862f79a19a943035c3bc46af568a88d521",
+    "src/physics/WorldImpactQueries.h": "9ba01fb837b1a1dcfbf0e3d4b60b8ab63873d92b18321ea2186ed1254f9d25f8",
+    "src/physics/ImpactEventSchedule.h": "83a850dd8f19edc102fdd437a80b9c78436ab89ff0227478902985165593ebfb",
+    "src/physics/ImpactCandidateCache.h": "17a6efa64a9a5dfd5663cd14790f19cfd96c874a589283f9b62d97b179df112d",
+    "src/PhysicsWorld.cpp": "76718c9e325e7bc83bd7131b092afb7b7b894b952b69f004218aef31cb37d8c1",
+    "src/RigidMotion.h": "a0de3be5c3634358879d0b63528c98d32f462bb6abc97e49dabaaa912b57a8e0",
+    "src/RigidBody.cpp": "8a5e4022342d12be9a63a56eb41fea334d2daa977bef7b980d4139a20d7e1efe",
+    "src/physics/WorldSleep.cpp": "2edda5d49060ab3d06b3d81306aa95d5b75a1f184136fa061f57d0e453754389",
+    "src/RuntimeWorld.cpp": "d3c0fd1a7cce61239696881078ec3a5a05347761ea521c899f28758dd10de0ab",
+    "src/Renderer.cpp": "8a5b1ba52acf6e6f2a175122917f014ac2e8d3259f3536f17cb74f902aa10982",
+    "src/WorldPresentation.cpp": "90d923540867862c6f57353bb32c5a67e6b42a3e02296b54d5d9563057dfc67e",
+    "src/ScriptSystem.cpp": "e91aa35e7076cda032d00525ff237a09d7917fc5725c8e8fe3844588f891b173",
+    "third_party/quickjs/quickjs.c": "225ff728d99648550567d2ec9396bd08dd52e7f03039b5a7cd440c450b5af3db",
+    "src/WorldScripts.cpp": "c38cc967dd479cac292436b1f24f40cf0bf4b8086ef802b9e20d3f50910d0511",
+    "src/Simulation.cpp": "76cbe62ec798c4e455e03d8e2f3d35084eac75c2d4c048cc91a054d18ba08a65",
+    "src/RuntimeUI.cpp": "bb4a4f2bdca316708e0bc2846a568eea8f8fd2d345cd8a64329290f030bfa37d",
+    "src/ResourceManager.cpp": "d1fab26984722b3709f0ef3555a5580702cb1ba66b1ba5019aa6e287b83a7eab"
+  },
+  "unclassified_top": [
+    {
+      "module": "3",
+      "path": "/usr/lib/x86_64-linux-gnu/libstdc++.so.6",
+      "category": "shared_image",
+      "symbol": "std::_Rb_tree_increment(std::_Rb_tree_node_base*)",
+      "symbol_quality": "addr2line",
+      "all_samples": "108",
+      "window_samples": "108",
+      "other_samples": "0",
+      "window_percent": "0.6099971759390003",
+      "unique_pcs": "13",
+      "representative_location": "??:?",
+      "bucket": "unclassified",
+      "rule": "no_provable_owner"
+    },
+    {
+      "module": "6",
+      "path": "/usr/lib/x86_64-linux-gnu/libc.so.6",
+      "category": "shared_image",
+      "symbol": "__memcpy_avx_unaligned_erms",
+      "symbol_quality": "addr2line",
+      "all_samples": "74",
+      "window_samples": "74",
+      "other_samples": "0",
+      "window_percent": "0.4179610279582039",
+      "unique_pcs": "27",
+      "representative_location": "./string/../sysdeps/x86_64/multiarch/memmove-vec-unaligned-erms.S:540",
+      "bucket": "unclassified",
+      "rule": "no_provable_owner"
+    },
+    {
+      "module": "3",
+      "path": "/usr/lib/x86_64-linux-gnu/libstdc++.so.6",
+      "category": "shared_image",
+      "symbol": "std::_Rb_tree_insert_and_rebalance(bool, std::_Rb_tree_node_base*, std::_Rb_tree_node_base*, std::_Rb_tree_node_base&)",
+      "symbol_quality": "addr2line",
+      "all_samples": "51",
+      "window_samples": "51",
+      "other_samples": "0",
+      "window_percent": "0.28805422197119457",
+      "unique_pcs": "23",
+      "representative_location": "??:?",
+      "bucket": "unclassified",
+      "rule": "no_provable_owner"
+    },
+    {
+      "module": "0",
+      "path": "/home/conner/Documents/GitHub/Project-Judas/.cache/support-followup-20261021/sampled-build-v2/sampled-live",
+      "category": "main_executable",
+      "symbol": "glm::vec<3, bool, (glm::qualifier)0> glm::lessThanEqual<3, float, (glm::qualifier)0>(glm::vec<3, float, (glm::qualifier)0> const&, glm::vec<3, float, (glm::qualifier)0> const&)",
+      "symbol_quality": "addr2line",
+      "all_samples": "41",
+      "window_samples": "41",
+      "other_samples": "0",
+      "window_percent": "0.2315730019768427",
+      "unique_pcs": "7",
+      "representative_location": "??:?",
+      "bucket": "unclassified",
+      "rule": "no_provable_owner"
+    },
+    {
+      "module": "3",
+      "path": "/usr/lib/x86_64-linux-gnu/libstdc++.so.6",
+      "category": "shared_image",
+      "symbol": "std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::_M_append(char const*, unsigned long)",
+      "symbol_quality": "addr2line",
+      "all_samples": "40",
+      "window_samples": "40",
+      "other_samples": "0",
+      "window_percent": "0.2259248799774075",
+      "unique_pcs": "19",
+      "representative_location": "??:?",
+      "bucket": "unclassified",
+      "rule": "no_provable_owner"
+    },
+    {
+      "module": "6",
+      "path": "/usr/lib/x86_64-linux-gnu/libc.so.6",
+      "category": "shared_image",
+      "symbol": "__strlen_avx2",
+      "symbol_quality": "addr2line",
+      "all_samples": "38",
+      "window_samples": "38",
+      "other_samples": "0",
+      "window_percent": "0.21462863597853712",
+      "unique_pcs": "6",
+      "representative_location": "./string/../sysdeps/x86_64/multiarch/strlen-avx2.S:86",
+      "bucket": "unclassified",
+      "rule": "no_provable_owner"
+    },
+    {
+      "module": "4",
+      "path": "/usr/lib/x86_64-linux-gnu/libm.so.6",
+      "category": "shared_image",
+      "symbol": "__GI___fegetround",
+      "symbol_quality": "addr2line",
+      "all_samples": "32",
+      "window_samples": "32",
+      "other_samples": "0",
+      "window_percent": "0.18073990398192602",
+      "unique_pcs": "2",
+      "representative_location": "./math/../sysdeps/x86_64/fpu/fegetround.c:30",
+      "bucket": "unclassified",
+      "rule": "no_provable_owner"
+    },
+    {
+      "module": "6",
+      "path": "/usr/lib/x86_64-linux-gnu/libc.so.6",
+      "category": "shared_image",
+      "symbol": "__memcmp_avx2_movbe",
+      "symbol_quality": "addr2line",
+      "all_samples": "31",
+      "window_samples": "31",
+      "other_samples": "0",
+      "window_percent": "0.1750917819824908",
+      "unique_pcs": "18",
+      "representative_location": "./string/../sysdeps/x86_64/multiarch/memcmp-avx2-movbe.S:417",
+      "bucket": "unclassified",
+      "rule": "no_provable_owner"
+    },
+    {
+      "module": "6",
+      "path": "/usr/lib/x86_64-linux-gnu/libc.so.6",
+      "category": "shared_image",
+      "symbol": "__internal_syscall_cancel",
+      "symbol_quality": "addr2line",
+      "all_samples": "29",
+      "window_samples": "29",
+      "other_samples": "0",
+      "window_percent": "0.16379553798362045",
+      "unique_pcs": "2",
+      "representative_location": "./nptl/./nptl/cancellation.c:40",
+      "bucket": "unclassified",
+      "rule": "no_provable_owner"
+    },
+    {
+      "module": "6",
+      "path": "/usr/lib/x86_64-linux-gnu/libc.so.6",
+      "category": "shared_image",
+      "symbol": "__syscall_cancel_arch",
+      "symbol_quality": "addr2line",
+      "all_samples": "24",
+      "window_samples": "24",
+      "other_samples": "0",
+      "window_percent": "0.1355549279864445",
+      "unique_pcs": "1",
+      "representative_location": "./nptl/../sysdeps/unix/sysv/linux/x86_64/syscall_cancel.S:56",
+      "bucket": "unclassified",
+      "rule": "no_provable_owner"
+    },
+    {
+      "module": "0",
+      "path": "/home/conner/Documents/GitHub/Project-Judas/.cache/support-followup-20261021/sampled-build-v2/sampled-live",
+      "category": "main_executable",
+      "symbol": "glm::mat<3, 3, double, (glm::qualifier)0>::col_type glm::operator*<double, (glm::qualifier)0>(glm::mat<3, 3, double, (glm::qualifier)0> const&, glm::mat<3, 3, double, (glm::qualifier)0>::row_type const&)",
+      "symbol_quality": "addr2line",
+      "all_samples": "23",
+      "window_samples": "23",
+      "other_samples": "0",
+      "window_percent": "0.12990680598700932",
+      "unique_pcs": "13",
+      "representative_location": "??:?",
+      "bucket": "unclassified",
+      "rule": "no_provable_owner"
+    },
+    {
+      "module": "6",
+      "path": "/usr/lib/x86_64-linux-gnu/libc.so.6",
+      "category": "shared_image",
+      "symbol": "__GI___ioctl",
+      "symbol_quality": "addr2line",
+      "all_samples": "20",
+      "window_samples": "20",
+      "other_samples": "0",
+      "window_percent": "0.11296243998870376",
+      "unique_pcs": "1",
+      "representative_location": "./misc/../sysdeps/unix/sysv/linux/ioctl.c:36",
+      "bucket": "unclassified",
+      "rule": "no_provable_owner"
+    },
+    {
+      "module": "6",
+      "path": "/usr/lib/x86_64-linux-gnu/libc.so.6",
+      "category": "shared_image",
+      "symbol": "__memset_avx2_unaligned_erms",
+      "symbol_quality": "addr2line",
+      "all_samples": "17",
+      "window_samples": "17",
+      "other_samples": "0",
+      "window_percent": "0.09601807399039819",
+      "unique_pcs": "10",
+      "representative_location": "./string/../sysdeps/x86_64/multiarch/memset-vec-unaligned-erms.S:294",
+      "bucket": "unclassified",
+      "rule": "no_provable_owner"
+    },
+    {
+      "module": "4",
+      "path": "/usr/lib/x86_64-linux-gnu/libm.so.6",
+      "category": "shared_image",
+      "symbol": "__nextafterf",
+      "symbol_quality": "addr2line",
+      "all_samples": "15",
+      "window_samples": "15",
+      "other_samples": "0",
+      "window_percent": "0.08472182999152782",
+      "unique_pcs": "13",
+      "representative_location": "./math/../sysdeps/ieee754/flt-32/s_nextafterf.c:60",
+      "bucket": "unclassified",
+      "rule": "no_provable_owner"
+    },
+    {
+      "module": "0",
+      "path": "/home/conner/Documents/GitHub/Project-Judas/.cache/support-followup-20261021/sampled-build-v2/sampled-live",
+      "category": "main_executable",
+      "symbol": "std::_Hashtable<RigidBody*, std::pair<RigidBody* const, unsigned long>, std::pmr::polymorphic_allocator<std::pair<RigidBody* const, unsigned long> >, std::__detail::_Select1st, std::equal_to<RigidBody*>, std::hash<RigidBody*>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, false, true> >::_M_insert_unique_node(unsigned long, unsigned long, std::__detail::_Hash_node<std::pair<RigidBody* const, unsigned long>, false>*, unsigned long)",
+      "symbol_quality": "addr2line",
+      "all_samples": "12",
+      "window_samples": "12",
+      "other_samples": "0",
+      "window_percent": "0.06777746399322225",
+      "unique_pcs": "6",
+      "representative_location": "??:?",
+      "bucket": "unclassified",
+      "rule": "no_provable_owner"
+    }
+  ],
+  "limitations": [
+    "Disjoint direct instruction-pointer samples, never summed inclusive profiler spans.",
+    "No call stacks: generic libc/libm/container functions without proven owner remain unclassified.",
+    "Reported TU ownership identifies the emitted function, not the callers of shared specializations.",
+    "Optimized functions can include inlined work; these rules do not recover folded inlined callees.",
+    "WorldCCDSearch planning is event/domain processing; its separately named interval/geometry functions belong to native geometry.",
+    "Physics coordinator self samples are deliberately separate rather than assigned to guessed inner stages.",
+    "Sample tags retain last-completed-step semantics; rendering and observation can share a physics step tag."
+  ]
+}

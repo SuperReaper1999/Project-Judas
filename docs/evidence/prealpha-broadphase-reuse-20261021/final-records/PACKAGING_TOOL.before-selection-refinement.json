@@ -1,0 +1,4 @@
+{
+  "sha256": "874eb297db7425c536bafbca8cf4b9323817edfb2aed753d906c9b3f21ce0f46",
+  "note": "Final packaging compression includes large JSON/log records; earlier measurement helper fingerprints describe their original preparation snapshots."
+}

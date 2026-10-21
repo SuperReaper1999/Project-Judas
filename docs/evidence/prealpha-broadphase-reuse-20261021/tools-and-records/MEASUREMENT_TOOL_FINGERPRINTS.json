@@ -1,0 +1,19 @@
+{
+  "schema": "judas.private.accepted80f-measurement-tools.v1",
+  "utc": "2026-10-21T15:24:49.942824+00:00",
+  "sources": {
+    ".cache/support-followup-20261021/analyze_stages.py": "eb7e7ad573e2d501b97037cac2c744ca0980b33393cb5119687ff73757d7e90a",
+    ".cache/support-followup-20261021/build_sampled_driver.py": "d66fb9ffee1834ef25380a0258c68ad0b3adf62edd772727b75990eb274a8b99",
+    ".cache/support-followup-20261021/build_variants.py": "0df02d1e5c32e0aad05cd64da1188fbf00580aaa17cc1386d164c2a84eb380ac",
+    ".cache/support-followup-20261021/freeze_baseline.py": "7a6b50fa9e4c5422f54ce89f4d21e12e8c0f6ad109f5925eb10a19f48bebc574",
+    ".cache/support-followup-20261021/run_current.py": "ab056de008f3a469d5c79dc5dac604439ec7689d4780bafba2e91a7af27b10fc",
+    ".cache/support-followup-20261021/summarize_run.py": "e325baee8e0fe0aa2453e112794c6a619a0692020dbc374a62cdb7f646d6f14e",
+    ".cache/support-followup-20261021/StageCapture.h": "6aa1412c29e12f93eae01dab51c260fa1745db2a040462317eb00fd5779ecc83"
+  },
+  "reused_readonly_tools": {
+    ".cache/physics-exhaustive-profile-20261021/sampler/MainThreadSampler.h": "1c087714d193f754b23ab3be1ca5cced8df25336b02dad8729b5834e7d51e78b",
+    ".cache/physics-exhaustive-profile-20261021/sampler/symbolize_cpu_samples.py": "382c596341973f22845c86c1a365dadc3b0152937fb037ecf515c516520c98fd",
+    ".cache/physics-exhaustive-profile-20261021/sampler/bucket_cpu_symbols.py": "675d28595c5b7305bc35d135a2dd71a5f8d82e9fedde22d3c4614dca87f65a9c"
+  },
+  "note": "Source/tool fingerprint record only; never a substitute for engine/run receipts. Builder1 failed wrong glad header; sampled-build-v2 and stage-build are independent successful builds. All original logs retained."
+}

@@ -1,0 +1,9 @@
+{
+  "classification": "original private guard fixture;32 assertions, diagnostic two-pass core passed; byte-preserved before adding optimization-presence checks",
+  "files": {
+    "OrdinaryCandidateGuardTests.cpp": "5b1fc33889b0a36d19bda22fcbce6b2496b0abb05f25615069c1bd881d4d1360",
+    "COMMANDS.json": "46343bbda6a56e9bd029baf2f8b6641f6c407dd6d2d1ff0558091f69be8819ad",
+    "RESULT.json": "b7069a7ee6530b038ab393db42f182cbca404f6f18e11fdba151aa1f76652a27",
+    "fixture-run.log": "ab8f7e8f32799746afe6d340d741e691289697821372f532e396524e5d919da4"
+  }
+}

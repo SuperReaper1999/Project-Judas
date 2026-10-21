@@ -85,6 +85,10 @@ void PhysicsWorld::Step(float fixedDeltaTime, const VelocityCoupling *coupling) 
         if (w.bodies[i].HasMotion() && !w.bodies[i].sleeping)
             w.CoverStepReach(w.bodies[i], fixedDeltaTime);
     w.GenerateCandidatePairs();
+    // The callback-free interval to contact generation only wakes bodies and
+    // integrates velocities. Its candidate policy stays unchanged; only a
+    // proxy expansion can change the list. Do not carry this across steps.
+    const auto predictionProxyReinsertions = w.reinsertionsSinceStep;
     for (auto [a, b] : w.candidatePairs) {
         auto &aa = w.bodies[a];
         auto &bb = w.bodies[b];
@@ -145,7 +149,8 @@ void PhysicsWorld::Step(float fixedDeltaTime, const VelocityCoupling *coupling) 
         solverLabel("Physics contact and joint solver"), proxiesLabel("Physics proxy refresh");
     ProfileScope broadScope(broadLabel);
     const Clock::time_point broadphaseStart = Clock::now();
-    w.GenerateCandidatePairs();
+    if (w.reinsertionsSinceStep != predictionProxyReinsertions)
+        w.GenerateCandidatePairs();
     w.stats.candidatePairs = w.candidatePairs.size();
     broadScope.End();
     ProfileScope narrowScope(narrowLabel);

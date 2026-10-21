@@ -1,0 +1,30 @@
+{
+  "schema": "judas.original-core-layout-control.v1",
+  "comparison": {
+    "baseline900": {
+      "source": ".cache/support-followup-20261021/baseline900/live/steps.csv",
+      "source_sha256": "7cd820c400190b88a188955055bf3c29aa1ed2807f78bde23c15822a94529602",
+      "first900": {
+        "n": 900,
+        "mean_ms": 18.031075292222223,
+        "median_ms": 16.530273,
+        "p95_ms": 28.920411999999992,
+        "worst_ms": 61.846989
+      }
+    },
+    "baseline1800": {
+      "source": ".cache/support-followup-20261021/baseline1800/live/steps.csv",
+      "source_sha256": "7072fe85cfeb779d9bc6499b59adbc06743fd0a06521dcbfa13d07bde955afaf",
+      "first900": {
+        "n": 900,
+        "mean_ms": 17.93152659777778,
+        "median_ms": 16.456438,
+        "p95_ms": 28.595930599999996,
+        "worst_ms": 63.268096
+      }
+    }
+  },
+  "physical_first900": "All13physical/work fields exactly match; see final-analysis-short-long/TABLES.json baseline900=baseline1800 comparison.",
+  "qualification": "900-vs1800 stopping budget differs but prefix conditions/physical paths match; this is original-code rebuild/layout noise control, not a separate claimed optimization.",
+  "mean_change_percent": -0.5520951625518689
+}

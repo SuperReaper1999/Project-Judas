@@ -1,0 +1,233 @@
+PRE-ALPHA: REUSE UNCHANGED BROADPHASE CANDIDATES
+21 October 2026 — Linux-qualified Experimental follow-up; human review pending.
+
+RELEASE STATE
+
+The operator accepted 80f7b2a5f96cdf1d56c5c88043c16edefe70a4c3, and main was
+fast-forwarded to that exact checkpoint. This subsequent correction belongs to
+Experimental only. It is not included in that human acceptance. No M100 or tag.
+
+FINDING
+
+After the support-history correction, the previous event storm is no longer the
+dominant steady cost. Fresh sampling of that accepted core identifies repeated
+broadphase traversal and pair sorting. During completed-step tags 500–1079 these
+account for 33.1% of main-thread CPU instruction samples. These are software
+CPU-timer PCs, not hardware cycles, call stacks or GPU time.
+
+Existing-profiler scopes independently show 821 complete candidate passes across
+401 selected steps (500–900): 401 prediction/wake passes, 401 ordinary contact
+passes and 19 continuous-impact refresh passes. Candidate discovery costs
+5.525 ms/step in that instrumented run; the second ordinary pass alone costs
+2.680 ms/step. Worker waits and overlapping geometry jobs are not added to these
+main-thread costs. No profiler events were dropped or frames truncated.
+
+The final diagnostic reduces these 821 passes to 421: all 401 prediction passes,
+19 impact refreshes and the one required ordinary fallback at step 670. Candidate
+cost falls to 2.829 ms/step. The guarded second-pass scope averages 0.00665 ms;
+it is empty on 400 steps and performs the real fallback on the remaining step.
+
+The first list wakes predicted neighbors. The second follows velocity/force
+integration. In this strictly local, callback-free interval, identities,
+classification, collision filtering and all other pair-membership inputs cannot
+change. Waking affects sleep state, which candidate membership does not read.
+Only CoverStepReach can change a tree proxy; its actual reinsertion increments
+the existing counter.
+
+CORRECTION AND BOUNDARY
+
+PhysicsWorld::Step records that counter after prediction. If integration has not
+changed it, the already sorted candidate list is reused. Otherwise the complete
+ordinary traversal runs. This is not cached collision truth: current native
+geometry, warm matching, constraints, CCD and event processing still execute.
+
+The certificate must NOT be generalized across callbacks, lifecycle changes or
+Step boundaries. The counter is not a universal tree revision: create/destroy
+and origin changes use other paths. They cannot occur in this local interval,
+and each new Step always generates a fresh first list. Kinematic publication
+precedes it; material-coupling callbacks follow ordinary contact generation.
+
+Only src/PhysicsWorld.cpp changes runtime behavior: one local snapshot and one
+conditional traversal. There is no new graph, persistent cache, public API,
+save format or component. The coordinator remains 872 lines. Actual candidate
+work and rejected-layer diagnostic counts legitimately decrease; they describe
+executed work, not an invariant physical quantity.
+
+DIRECT CAUSAL PROOF
+
+A private diagnostic retains BOTH original passes and compares the exact sorted
+arrays. Across all 900 original steps, 899 certificates hold, one is invalidated
+by a real proxy expansion, and zero candidate arrays disagree on certified hits.
+The original physical/contact/CCD digests remain unchanged.
+
+The active CandidateReuseTests fixture has 34 checks. It independently enumerates
+fat-AABB overlaps and filters, tests mixed body classifications, a real sleeping
+neighbor wake, slot generations, filtering, suspension and origin changes between
+steps. A real 7,200 N force expands a body's reach to a previously excluded wall;
+the fallback discovers that pair and CCD prevents crossing.
+
+The unchanged original core fails only the new one-pass assertion (34 checks,
+one failure). An intentionally unsafe always-reuse control fails four assertions:
+new wall discovery, collision delivery, physical non-crossing and the required
+second pass. The corrected normal build passes all 34. Neither test thresholds
+nor the original scene have been weakened.
+
+MATCHED NORMAL RELEASE MEASUREMENTS
+
+Ryzen 5 5600, 6 cores/12 threads, 8 GB RAM, GTX 970, NVIDIA 580.178.04;
+GCC 15.2.0, Release -O3 -DNDEBUG. Native NVIDIA is confirmed in each run log.
+Performance workloads are serialized, without simultaneous VM/Android builds.
+
+Unchanged room1024.judas SHA256:
+  a2caf62a295243d301149202c8a0a5eedafff256d68de0e3cda988846b2e05bf
+1,024 loose pieces, 1,285 total bodies, 96 joints, 60 Hz, ten velocity sweeps;
+same materials, sleeping policy, CCD, four geometry lanes and eight-step catch-up.
+The timing runs disable both profilers. Synthetic runs measure fixed-step costs;
+only the real elapsed-time runs support displayed-cadence claims.
+
+Matched window                  Mean ms   Median ms   p95 ms   Worst ms
+Accepted core, first 900           18.03       16.53    28.92      61.85
+Final normal build, first 900      15.42       13.74    25.94      58.74
+Original control, all 1,800        16.71       15.33    24.84      63.27
+Final normal build, all 1,800      14.23       12.68    22.62      58.85
+Original control, steps 901–1800   15.49       15.08    17.90      26.78
+Final normal, steps 901–1800       12.84       12.41    16.89      24.41
+
+All 1,800 per-step trajectory digests and recorded physical/contact/CCD fields
+match exactly, as does the independent final 900-step run. The rebuilt original
+source control differs from the original normal timing by only 0.55%, far below
+the observed 14.5–14.8% mean improvement. Its physical prefix is also exact.
+
+Normal live 35-second runs, original policy, no profiling or sampling:
+                                    Accepted core       Final normal build
+Whole-capture output FPS                    26.62                    76.12
+0–10 second frame-marker cadence            36.50                    53.70
+10–20 second frame-marker cadence            9.50                    57.00
+20 seconds through stop                     31.38                   103.74
+Late interval p95 ms                        51.84                    16.36
+Late worst interval ms                      99.85                    23.10
+Completed fixed steps                       1,981                    2,050
+
+The private prototype separately records 82.19 whole-capture FPS and 64.5 in
+the busy marker window. The normal final build's lower result is reported here;
+do not select only the best capture. Live runs reach different endpoints; all
+1,981 common-step digests/physical fields match. Frame markers, preceding-frame
+work association and fixed-step associations are retained separately in raw
+tables. The stopping frame can extend a marker window slightly beyond 35 s.
+
+This large FPS change follows crossing the simulation-time budget: removing
+roughly 2.7 ms of duplicate work leaves more time to display frames instead of
+repeatedly running catch-up steps. The existing catch-up and backlog-discard
+policy is unchanged; these results do not claim zero discarded time.
+
+PHYSICAL AND MEMORY OBSERVATIONS
+
+At the same 1,800-step endpoint both implementations have 1,024 loose pieces,
+9,464 queried neighboring pairs, 3,200 contact points, zero uncertain/unsupported
+queries, and exactly the same 5.004293 mm deepest overlap. All recorded states
+are finite. No new penetration, energy, mass or trajectory improvement is claimed:
+the purpose is to execute the same physics with less redundant discovery work.
+
+In the matched 1,800-step runs, whole-application peak RSS is 233,448 versus
+233,456 KiB; both report zero process swaps and major faults. This is specific to
+those runs, not every startup capture. The correction adds no persistent
+allocation. This is not a general memory-savings claim.
+
+REMAINING SLOWDOWNS
+
+All-phase smoothness is NOT established. The final live first and busy windows
+still have 232/180 ms maximum frame intervals; busy p95 is 75.27 ms. Some impact
+bursts therefore remain perceptible despite the much higher average cadence.
+
+The worst first-900 fixed step remains step 153: 140 actual impact events and
+12,692 CCD requests, with about 50 ms in the combined solve/impact phase. The
+recorded requests and physical outcome are identical to the accepted core.
+This change removes the redundant candidate pass, not that remaining event
+response/search cost. It does not prove that every remaining request or row is
+necessary. Further tail work should profile these exact bursts rather than
+reduce counts, cadence or fidelity, or assume an unavoidable hardware limit.
+
+The final instrumented 500–900 window still spends 4.69 ms/step in contact
+generation (including the owner's 2.18 ms parallel-geometry batch), 2.90 ms in
+continuous impacts and 2.70 ms in velocity constraints. Concurrent worker spans
+are excluded from additive cost claims. These are measured remaining stages,
+not proof that their entire contents are redundant.
+
+Two isolated alternatives—skipping empty-manifold history lookups and unused
+prepared primitive-pose copies—showed only about 1% changes in these runs, without
+a demonstrated benefit beyond run/layout variation. Neither is adopted. Their
+sources, results and the source-only combined variant remain in the evidence.
+Initial geometry already uses workers; this pass does not invent a new threading
+implementation or claim the earlier workload had been single threaded.
+
+VALIDATION AND HANDOFF
+
+The final-source qualification receipts record fresh test drivers and direct
+engine modules, not stale test objects. The affected 31 focused suites pass,
+including broadphase, parallel narrowphase/fallback, ownership, collision events,
+contacts/caches, original curved-mesh continuation, impact robustness, joints,
+CharacterMotor, ragdolls, persistence, gravity, origin/assemblies, wheels,
+powertrains, structural destruction and bending.
+
+Unchanged M70 and M77 cold writer/readers pass. The protected original observer
+confirms the actual restored M77 endpoint is exactly equal and physically standing,
+not merely a cached controller flag. Hearthworld writer/reader passes 66+41
+checks through actual forestry, mining, construction, excavation, manipulation,
+accounting and cold persistence. Streamed-range writer and two fresh readers pass.
+
+Native editor Play/Stop preserves every owned authored scene byte for byte.
+The normal relocated, read-only package launches from /tmp, switches through
+ordinary input to Scenes/room1024.judas, checks the scene and runs the watch tour.
+The installation remains unchanged. JudasJS static drift/types pass: 40 exports,
+473 public symbols, 51 checked examples and seven negative controls. Live VM
+enumeration is not rerun; the public API is unchanged.
+
+No full production-suite marathon, Windows or Android rerun is claimed. Current
+8 GB platform constraints remain; audio automation uses the dummy driver.
+FLU-001, historical cold-save limitations and unrelated defects are untouched.
+
+Tooling failures are retained: wrong runtime target name; a newly generated
+target unavailable to an already-parsed make invocation; a missing unused direct
+object prerequisite; and stale directly compiled test modules. The latter are
+rebuilt from their actual generated recipes. None is relabelled a physics pass.
+The intentionally failing original/always-reuse controls are separate from these.
+The registered gate also correctly refuses a configured build identity made
+stale by later README edits. Publication metadata must be reconfigured and
+relinked; the post-checkpoint receipt is separate from the original run evidence.
+
+EVIDENCE AND REPRODUCTION
+
+docs/evidence/prealpha-broadphase-reuse-20261021/ contains raw runs, stage/sampling
+data, exact commands/flags, fixtures, controls, analysis tools, original/stored
+hashes and final source/binary identities. CSV/JSONL and large JSON/log records
+use lossless deterministic gzip; original and stored hashes are both retained.
+Build outputs and private save slots remain outside tracked evidence.
+
+The qualified final physics archive SHA256 is:
+  9fca0072987ae11fcae8265c1ddad12bd1c21d34e0ba7c2a9923572afe916c0c
+Of 171 archive object members, 170 match the accepted core exactly; only
+PhysicsWorld.cpp.o differs. Build-identity relinking is recorded separately from
+the original as-run binary hashes. Source manifests and package checksums allow
+these identities to be audited without committing binaries.
+
+Build the normal Release judas_physics_stress_live_benchmark target. Its recorded
+argv is authoritative. The synthetic 900 arguments after SCENE OUTPUT are:
+  180 900 0 0 1 0.016666667 0 0 1
+The live 35-second arguments are:
+  35 10000000 0 0 0 0 0 0 1
+Require native desktop graphics; llvmpipe timings are not comparable. Sampled
+and profiler-enabled runs are diagnostic, not normal performance comparisons.
+
+HUMAN CHECKLIST
+
+1. Open Physics Stress Lab and press 3. Watch at least 40 seconds, including the
+   first impact bursts and subsequent settling. Compare feel, not just the HUD.
+2. Inspect real pile contacts and moving machinery; check for launches, tunneling
+   or objects being hidden/frozen. Transient overlap remains a documented limit.
+3. Try 1, 2 and rotated 4, then M/J/K to power down and wake machinery.
+4. Pause/resume, save/load moving objects, reload, and editor Play/Stop.
+5. Run the relocated standalone and repeat scenario 3 from another directory.
+
+The new correction requires separate human acceptance before main promotion.
+Historical evidence, existing game content and independent fluid research remain
+unchanged. Final paths and hashes are in the evidence manifests and handoff.

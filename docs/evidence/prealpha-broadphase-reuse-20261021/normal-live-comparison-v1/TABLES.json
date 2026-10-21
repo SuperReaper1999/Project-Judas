@@ -1,0 +1,559 @@
+{
+  "schema": "judas.normal-performance-and-prefix-tables.v1",
+  "runs": {
+    "baseline": {
+      "label": "baseline",
+      "root": ".cache/support-followup-20261021/baseline-normal-live35",
+      "mode": "live35",
+      "normal_performance_eligible": true,
+      "diagnostic_classification": {
+        "sampled": false,
+        "profile_enabled": false,
+        "stage_capture": false
+      },
+      "steps": 1981,
+      "frames": 932,
+      "stop_before_swap_wall_ms": 35009.297469,
+      "body_counts": [
+        1285
+      ],
+      "nonfinite_sum": 0,
+      "fixture_sha256": "a2caf62a295243d301149202c8a0a5eedafff256d68de0e3cda988846b2e05bf",
+      "binary_sha256": "8f6cb77a4df455d34f4cb49ecf4a72cf0efd3aa63f81b342e3162f20b70d74d7",
+      "core_sha256": "6b57d6c554c728a92afeb227581a863c41be9246cd2790aefe41afb3e047b4b7",
+      "child_exit": 0,
+      "native_nvidia_confirmed": true,
+      "workload_settings": [
+        "35",
+        "10000000",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "1"
+      ],
+      "input_hashes": {
+        "steps.csv": "0aa8ce6c2d7aecef2bc70828d48cdde21281879c799915c925002f118f3a529c",
+        "frames.csv": "2dd4bf6436a9d959aa721abf3ea74b53b1175719023b9c681abcd2150c14e634",
+        "begins.csv": "b8b5a7e93f24db32f014af2ea75b1aae30aa2631fa702e3e8e9eaf5a8bd494d3"
+      },
+      "as_run_sha256": "ecef609411ef0e45d07a93d8c119f1d5e43dfedcbcaf97e2cdf98f395b233bb6",
+      "fixed_windows": {
+        "1-300": {
+          "fixed_ms": {
+            "n": 300,
+            "mean": 15.459492413333333,
+            "median": 14.449927500000001,
+            "p95": 23.856571350000003,
+            "worst": 60.872777
+          },
+          "rigid_physics_ms": {
+            "n": 300,
+            "mean": 14.714140863333334,
+            "median": 13.6127285,
+            "p95": 23.1222627,
+            "worst": 60.046007
+          },
+          "impact_queries": 546422,
+          "impact_events": 2769
+        },
+        "301-600": {
+          "fixed_ms": {
+            "n": 300,
+            "mean": 20.7506803,
+            "median": 18.864951499999997,
+            "p95": 31.72380595000001,
+            "worst": 47.725041
+          },
+          "rigid_physics_ms": {
+            "n": 300,
+            "mean": 19.853891316666665,
+            "median": 17.854765999999998,
+            "p95": 30.877403600000008,
+            "worst": 46.875058
+          },
+          "impact_queries": 680589,
+          "impact_events": 1201
+        },
+        "601-900": {
+          "fixed_ms": {
+            "n": 300,
+            "mean": 17.415239346666667,
+            "median": 15.847138000000001,
+            "p95": 24.537065899999998,
+            "worst": 44.410497
+          },
+          "rigid_physics_ms": {
+            "n": 300,
+            "mean": 16.477506716666667,
+            "median": 14.900155999999999,
+            "p95": 23.634690000000003,
+            "worst": 43.471306
+          },
+          "impact_queries": 147487,
+          "impact_events": 293
+        },
+        "901-1800": {
+          "fixed_ms": {
+            "n": 900,
+            "mean": 15.558936081111112,
+            "median": 15.0942925,
+            "p95": 18.05935095,
+            "worst": 28.222847
+          },
+          "rigid_physics_ms": {
+            "n": 900,
+            "mean": 14.606774297777777,
+            "median": 14.246985,
+            "p95": 16.233981999999997,
+            "worst": 26.835279
+          },
+          "impact_queries": 17574,
+          "impact_events": 64
+        },
+        "1-1981": {
+          "fixed_ms": {
+            "n": 1981,
+            "mean": 16.579138036850075,
+            "median": 15.298783,
+            "p95": 24.299144,
+            "worst": 60.872777
+          },
+          "rigid_physics_ms": {
+            "n": 1981,
+            "mean": 15.669368171125694,
+            "median": 14.427429,
+            "p95": 23.365132,
+            "worst": 60.046007
+          },
+          "impact_queries": 1393685,
+          "impact_events": 4334
+        }
+      },
+      "strict_wall_windows": [
+        {
+          "window_start_ms": 0.0,
+          "window_end_ms": 10000.0,
+          "window_duration_ms": 10000.0,
+          "fully_measured_marker_intervals_completed": 365,
+          "measured_marker_interval_coverage_ms": 9999.999499,
+          "fractional_interval_equivalents_by_exact_wall_overlap": 365.80517772577,
+          "completed_marker_interval_ms": {
+            "n": 365,
+            "mean": 27.028027717808218,
+            "median": 13.285184999999956,
+            "p95": 158.1669767999999,
+            "worst": 242.12575099999958
+          },
+          "frames_with_eight_fixed_steps": 42,
+          "mean_observed_steps_per_completed_interval": 1.3835616438356164,
+          "fixed_steps_observed_completed_in_window": 511,
+          "fixed_ms_by_observation_completion": 9168.76924,
+          "fixed_ms_of_steps_observed_completed": {
+            "n": 511,
+            "mean": 17.942796947162428,
+            "median": 16.659972,
+            "p95": 29.1294975,
+            "worst": 60.872777
+          },
+          "impact_queries_by_observation_completion": 1112013,
+          "impact_events_by_observation_completion": 3790,
+          "pre_swap_nonfixed_ms_for_completed_intervals": {
+            "n": 365,
+            "mean": 2.143430065753425,
+            "median": 1.8803280000000004,
+            "p95": 2.9557042000000027,
+            "worst": 48.948038
+          },
+          "completed_marker_intervals_per_wall_second": 36.5,
+          "fractional_marker_interval_rate_per_second": 36.580517772577004
+        },
+        {
+          "window_start_ms": 10000.0,
+          "window_end_ms": 20000.0,
+          "window_duration_ms": 10000.0,
+          "fully_measured_marker_intervals_completed": 95,
+          "measured_marker_interval_coverage_ms": 10000.0,
+          "fractional_interval_equivalents_by_exact_wall_overlap": 94.45549425587426,
+          "completed_marker_interval_ms": {
+            "n": 95,
+            "mean": 106.58528931578948,
+            "median": 111.02066900000136,
+            "p95": 170.3040432000007,
+            "worst": 205.63766099999884
+          },
+          "frames_with_eight_fixed_steps": 37,
+          "mean_observed_steps_per_completed_interval": 6.042105263157895,
+          "fixed_steps_observed_completed_in_window": 568,
+          "fixed_ms_by_observation_completion": 9731.579282,
+          "fixed_ms_of_steps_observed_completed": {
+            "n": 568,
+            "mean": 17.133062116197184,
+            "median": 15.623792,
+            "p95": 24.546112700000002,
+            "worst": 44.410497
+          },
+          "impact_queries_by_observation_completion": 268995,
+          "impact_events_by_observation_completion": 492,
+          "pre_swap_nonfixed_ms_for_completed_intervals": {
+            "n": 95,
+            "mean": 2.7787931157894743,
+            "median": 2.774876000000006,
+            "p95": 3.6709652000000035,
+            "worst": 4.258675000000011
+          },
+          "completed_marker_intervals_per_wall_second": 9.5,
+          "fractional_marker_interval_rate_per_second": 9.445549425587426
+        },
+        {
+          "window_start_ms": 20000.0,
+          "window_end_ms": 35009.297469,
+          "window_duration_ms": 15009.297468999997,
+          "fully_measured_marker_intervals_completed": 471,
+          "measured_marker_interval_coverage_ms": 15007.543250000002,
+          "fractional_interval_equivalents_by_exact_wall_overlap": 470.7393280183557,
+          "completed_marker_interval_ms": {
+            "n": 471,
+            "mean": 31.882611777070068,
+            "median": 32.22091999999975,
+            "p95": 51.837830499998745,
+            "worst": 99.84759000000122
+          },
+          "frames_with_eight_fixed_steps": 0,
+          "mean_observed_steps_per_completed_interval": 1.9150743099787686,
+          "fixed_steps_observed_completed_in_window": 902,
+          "fixed_ms_by_observation_completion": 13942.923929,
+          "fixed_ms_of_steps_observed_completed": {
+            "n": 902,
+            "mean": 15.45778706097561,
+            "median": 15.059968,
+            "p95": 17.844487299999997,
+            "worst": 28.222847
+          },
+          "impact_queries_by_observation_completion": 12677,
+          "impact_events_by_observation_completion": 52,
+          "pre_swap_nonfixed_ms_for_completed_intervals": {
+            "n": 471,
+            "mean": 2.1788190721868363,
+            "median": 2.1451379999999993,
+            "p95": 2.5534025000000007,
+            "worst": 3.202802999999996
+          },
+          "completed_marker_intervals_per_wall_second": 31.380549354345007,
+          "fractional_marker_interval_rate_per_second": 31.363181987072643
+        }
+      ],
+      "quality": {
+        "candidate_pairs": 9467,
+        "contact_points": 3202,
+        "deepest_endpoint_penetration_m": 0.005006644734590871,
+        "observation_ms": 14.746542,
+        "outside_fixed_step_timing": true,
+        "population": 1024,
+        "scope": "endpoint primitive geometry for the authored loose_piece population",
+        "tag_available": true,
+        "uncertain_pairs": 0,
+        "unsupported_candidates": 0
+      }
+    },
+    "prediction": {
+      "label": "prediction",
+      "root": ".cache/support-followup-20261021/prediction-live35",
+      "mode": "live35",
+      "normal_performance_eligible": true,
+      "diagnostic_classification": {
+        "sampled": false,
+        "profile_enabled": false,
+        "stage_capture": false
+      },
+      "steps": 2061,
+      "frames": 2877,
+      "stop_before_swap_wall_ms": 35003.705089,
+      "body_counts": [
+        1285
+      ],
+      "nonfinite_sum": 0,
+      "fixture_sha256": "a2caf62a295243d301149202c8a0a5eedafff256d68de0e3cda988846b2e05bf",
+      "binary_sha256": "b2c0756812861a44be487c33bfb6784831dc651e0cc73ab8bbd7547111937527",
+      "core_sha256": "8d91756866f6adca00d270fe0ce2c74263c2e413e2002edfa0a7da439f8dfcb9",
+      "child_exit": 0,
+      "native_nvidia_confirmed": true,
+      "workload_settings": [
+        "35",
+        "10000000",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "1"
+      ],
+      "input_hashes": {
+        "steps.csv": "3f84d0511bd2d1600f8a35d74bb25c61c7d6381bdc78c972e5386ed7d4a5a07e",
+        "frames.csv": "1db298914fda8df9829025ee4491bcb16d519caf4a534cb417915657fb052d45",
+        "begins.csv": "9eee22b01c0f1ed7b725c940174bd7e140a8d9bb1c63b08222e67f732615c577"
+      },
+      "as_run_sha256": "a643d0fbddc1c612bfae24b408e5753e6e80c4b556e1d4fa61c661d8e68aa8ec",
+      "fixed_windows": {
+        "1-300": {
+          "fixed_ms": {
+            "n": 300,
+            "mean": 13.77009024,
+            "median": 12.386419499999999,
+            "p95": 22.136206450000003,
+            "worst": 58.704456
+          },
+          "rigid_physics_ms": {
+            "n": 300,
+            "mean": 12.994089943333334,
+            "median": 11.5142685,
+            "p95": 20.999085350000005,
+            "worst": 57.923373
+          },
+          "impact_queries": 546422,
+          "impact_events": 2769
+        },
+        "301-600": {
+          "fixed_ms": {
+            "n": 300,
+            "mean": 18.2637703,
+            "median": 16.358097,
+            "p95": 29.651266600000007,
+            "worst": 46.838749
+          },
+          "rigid_physics_ms": {
+            "n": 300,
+            "mean": 17.37086452,
+            "median": 15.285003,
+            "p95": 28.838488400000006,
+            "worst": 45.981562
+          },
+          "impact_queries": 680589,
+          "impact_events": 1201
+        },
+        "601-900": {
+          "fixed_ms": {
+            "n": 300,
+            "mean": 15.031310176666667,
+            "median": 13.637584499999999,
+            "p95": 22.51219405,
+            "worst": 44.087819
+          },
+          "rigid_physics_ms": {
+            "n": 300,
+            "mean": 14.064836283333333,
+            "median": 12.6971805,
+            "p95": 21.551756649999998,
+            "worst": 43.023321
+          },
+          "impact_queries": 147487,
+          "impact_events": 293
+        },
+        "901-1800": {
+          "fixed_ms": {
+            "n": 900,
+            "mean": 13.030642015555555,
+            "median": 12.671557,
+            "p95": 15.48795645,
+            "worst": 21.775813
+          },
+          "rigid_physics_ms": {
+            "n": 900,
+            "mean": 12.078215214444445,
+            "median": 11.8220495,
+            "p95": 13.329444099999998,
+            "worst": 19.538292
+          },
+          "impact_queries": 17574,
+          "impact_events": 64
+        },
+        "1-2061": {
+          "fixed_ms": {
+            "n": 2061,
+            "mean": 14.129678670063075,
+            "median": 12.838042,
+            "p95": 21.645218,
+            "worst": 58.704456
+          },
+          "rigid_physics_ms": {
+            "n": 2061,
+            "mean": 13.21163384619117,
+            "median": 11.969533,
+            "p95": 20.627968,
+            "worst": 57.923373
+          },
+          "impact_queries": 1394221,
+          "impact_events": 4337
+        }
+      },
+      "strict_wall_windows": [
+        {
+          "window_start_ms": 0.0,
+          "window_end_ms": 10000.0,
+          "window_duration_ms": 10000.0,
+          "fully_measured_marker_intervals_completed": 476,
+          "measured_marker_interval_coverage_ms": 9999.999569,
+          "fractional_interval_equivalents_by_exact_wall_overlap": 476.8807942932336,
+          "completed_marker_interval_ms": {
+            "n": 476,
+            "mean": 20.881647647058823,
+            "median": 2.3062810000000695,
+            "p95": 99.65938949999986,
+            "worst": 223.1471649999994
+          },
+          "frames_with_eight_fixed_steps": 16,
+          "mean_observed_steps_per_completed_interval": 1.1701680672268908,
+          "fixed_steps_observed_completed_in_window": 561,
+          "fixed_ms_by_observation_completion": 8918.209243,
+          "fixed_ms_of_steps_observed_completed": {
+            "n": 561,
+            "mean": 15.896986172905526,
+            "median": 14.361164,
+            "p95": 26.957199,
+            "worst": 58.704456
+          },
+          "impact_queries_by_observation_completion": 1162078,
+          "impact_events_by_observation_completion": 3880,
+          "pre_swap_nonfixed_ms_for_completed_intervals": {
+            "n": 476,
+            "mean": 2.162734266806723,
+            "median": 1.9028,
+            "p95": 2.901846500000005,
+            "worst": 50.292796
+          },
+          "completed_marker_intervals_per_wall_second": 47.6,
+          "fractional_marker_interval_rate_per_second": 47.68807942932336
+        },
+        {
+          "window_start_ms": 10000.0,
+          "window_end_ms": 20000.0,
+          "window_duration_ms": 10000.0,
+          "fully_measured_marker_intervals_completed": 645,
+          "measured_marker_interval_coverage_ms": 10000.0,
+          "fractional_interval_equivalents_by_exact_wall_overlap": 644.9419040596459,
+          "completed_marker_interval_ms": {
+            "n": 645,
+            "mean": 15.576945849612406,
+            "median": 14.654067000003124,
+            "p95": 53.37547780000015,
+            "worst": 175.43211200000042
+          },
+          "frames_with_eight_fixed_steps": 4,
+          "mean_observed_steps_per_completed_interval": 0.9348837209302325,
+          "fixed_steps_observed_completed_in_window": 599,
+          "fixed_ms_by_observation_completion": 8652.686419,
+          "fixed_ms_of_steps_observed_completed": {
+            "n": 599,
+            "mean": 14.44521939732888,
+            "median": 13.121446,
+            "p95": 20.9406895,
+            "worst": 44.087819
+          },
+          "impact_queries_by_observation_completion": 220677,
+          "impact_events_by_observation_completion": 409,
+          "pre_swap_nonfixed_ms_for_completed_intervals": {
+            "n": 645,
+            "mean": 1.986923031007752,
+            "median": 1.9345099999999995,
+            "p95": 2.5566764000000033,
+            "worst": 4.530558999999997
+          },
+          "completed_marker_intervals_per_wall_second": 64.5,
+          "fractional_marker_interval_rate_per_second": 64.49419040596459
+        },
+        {
+          "window_start_ms": 20000.0,
+          "window_end_ms": 35003.705089,
+          "window_duration_ms": 15003.705089000003,
+          "fully_measured_marker_intervals_completed": 1755,
+          "measured_marker_interval_coverage_ms": 15001.982138,
+          "fractional_interval_equivalents_by_exact_wall_overlap": 1754.1773016471204,
+          "completed_marker_interval_ms": {
+            "n": 1755,
+            "mean": 8.555662309971508,
+            "median": 14.101303999996162,
+            "p95": 15.987059400001087,
+            "worst": 22.356689999996888
+          },
+          "frames_with_eight_fixed_steps": 0,
+          "mean_observed_steps_per_completed_interval": 0.5133903133903134,
+          "fixed_steps_observed_completed_in_window": 901,
+          "fixed_ms_by_observation_completion": 11550.372077,
+          "fixed_ms_of_steps_observed_completed": {
+            "n": 901,
+            "mean": 12.819502860155383,
+            "median": 12.520151,
+            "p95": 15.067267,
+            "worst": 20.275974
+          },
+          "impact_queries_by_observation_completion": 11466,
+          "impact_events_by_observation_completion": 48,
+          "pre_swap_nonfixed_ms_for_completed_intervals": {
+            "n": 1755,
+            "mean": 1.8859007276353277,
+            "median": 1.876811,
+            "p95": 2.125765499999999,
+            "worst": 3.080982999999998
+          },
+          "completed_marker_intervals_per_wall_second": 116.97110744243312,
+          "fractional_marker_interval_rate_per_second": 116.916274429654
+        }
+      ],
+      "quality": {
+        "candidate_pairs": 9468,
+        "contact_points": 3204,
+        "deepest_endpoint_penetration_m": 0.005006595082140608,
+        "observation_ms": 14.69812,
+        "outside_fixed_step_timing": true,
+        "population": 1024,
+        "scope": "endpoint primitive geometry for the authored loose_piece population",
+        "tag_available": true,
+        "uncertain_pairs": 0,
+        "unsupported_candidates": 0
+      }
+    }
+  },
+  "comparisons": [
+    {
+      "left": "baseline",
+      "right": "prediction",
+      "common_steps": 1981,
+      "left_steps": 1981,
+      "right_steps": 2061,
+      "fields": [
+        "trajectory_digest",
+        "bodies",
+        "awake",
+        "sleeping",
+        "candidates",
+        "contacts",
+        "impact_events",
+        "impact_queries",
+        "impact_iterations",
+        "impact_peak",
+        "max_linear_speed",
+        "max_angular_speed",
+        "nonfinite_fields"
+      ],
+      "all_common_prefix_physical_and_work_fields_exact": true,
+      "mismatches": {},
+      "fixture_match": true,
+      "workload_settings_match": true,
+      "normal_direct_timing_comparison_eligible": true,
+      "reason_if_ineligible": null
+    }
+  ],
+  "limitations": [
+    "Sampled, profile-on and stage-capture results are explicitly diagnostic and excluded from direct normal performance comparisons.",
+    "Strict windows are [0,10s),[10s,20s),[20s,final before-swap observation). Marker intervals are intersected exactly with each wall window; no post10s catch-all replaces these windows.",
+    "Marker interval belongs to the preceding frame. All fixed times are summed from that exact frame identity, never copied from last-step-only frame fields.",
+    "Marker rates are benchmark start-to-start cadence, not GPU presentation timestamps; synthetic mode rates are intentionally omitted.",
+    "steps.csv wall_ms is the post-digest completed-observation time. Fixed durations crossing a wall-window boundary cannot be exactly split from ordinary logs; completion-attributed durations are labelled accordingly.",
+    "Fractional interval-equivalent rates describe exact window overlap, not an integer frame-present count. Last frame has no next start marker; measured coverage remains explicit.",
+    "Eight steps indicates catch-up maximum, not proof of discarded backlog; profiler cap/discard fields are the authority.",
+    "A digest compares actual published pose, velocities and sleep for every live body. Common-prefix equality does not certify unobserved post-prefix behaviour or universal physics correctness."
+  ]
+}

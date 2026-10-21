@@ -1,0 +1,99 @@
+{
+  "core_sha256": "9fca0072987ae11fcae8265c1ddad12bd1c21d34e0ba7c2a9923572afe916c0c",
+  "results": [
+    {
+      "name": "hearthworld-write",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/support-followup-20261021/app-drivers/judas_hearthworld_application_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/projects/hearthworld/hearthworld.judasproj",
+        "write",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/support-followup-20261021/integration/hearthworld"
+      ],
+      "utc": "2026-10-21T15:49:00.267120+00:00",
+      "exit": 0,
+      "seconds": 4.221779903000424,
+      "native_nvidia": true,
+      "graphics": [
+        "Graphics: 3.3.0 NVIDIA 580.178.04 / NVIDIA GeForce GTX 970/PCIe/SSE2"
+      ],
+      "binary_sha256": "ba56f3e350a040bbd1f0d7322013fcef450f67ec5879cd33846a133762128384",
+      "log_sha256": "743d4f519fa135026f6d0dd83db33bffb9613303c103a30d822edf55adab8759"
+    },
+    {
+      "name": "hearthworld-read",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/support-followup-20261021/app-drivers/judas_hearthworld_application_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/projects/hearthworld/hearthworld.judasproj",
+        "read",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/support-followup-20261021/integration/hearthworld"
+      ],
+      "utc": "2026-10-21T15:49:01.264431+00:00",
+      "exit": 0,
+      "seconds": 0.9156414660010341,
+      "native_nvidia": true,
+      "graphics": [
+        "Graphics: 3.3.0 NVIDIA 580.178.04 / NVIDIA GeForce GTX 970/PCIe/SSE2"
+      ],
+      "binary_sha256": "ba56f3e350a040bbd1f0d7322013fcef450f67ec5879cd33846a133762128384",
+      "log_sha256": "f3c5ec7e7883ee4be5fa15aa8e90953e8b13eb332b2fdcb380fbcd1bb7233d58"
+    },
+    {
+      "name": "stream-write",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/support-followup-20261021/app-drivers/judas_save_streaming_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/projects/streamed_range/streamed_range.judasproj",
+        "write",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/support-followup-20261021/integration/stream"
+      ],
+      "utc": "2026-10-21T15:49:02.105360+00:00",
+      "exit": 0,
+      "seconds": 0.7652134239997395,
+      "native_nvidia": true,
+      "graphics": [
+        "Graphics: 3.3.0 NVIDIA 580.178.04 / NVIDIA GeForce GTX 970/PCIe/SSE2"
+      ],
+      "binary_sha256": "1217a9504f115f8887c488c1a4a482447483c1c60216b088eaa611fc2b65cc3c",
+      "log_sha256": "8a616ef3a10f0a123d35dd0dfdde51c1a94c9275cf7f7ed89b5388669baeb905"
+    },
+    {
+      "name": "stream-read",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/support-followup-20261021/app-drivers/judas_save_streaming_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/projects/streamed_range/streamed_range.judasproj",
+        "read",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/support-followup-20261021/integration/stream"
+      ],
+      "utc": "2026-10-21T15:49:02.996063+00:00",
+      "exit": 0,
+      "seconds": 0.8151301580001018,
+      "native_nvidia": true,
+      "graphics": [
+        "Graphics: 3.3.0 NVIDIA 580.178.04 / NVIDIA GeForce GTX 970/PCIe/SSE2"
+      ],
+      "binary_sha256": "1217a9504f115f8887c488c1a4a482447483c1c60216b088eaa611fc2b65cc3c",
+      "log_sha256": "13885fbd6c8ead5f8a422a3e68090a0a38016ba7e91d3d061a24700434790129"
+    },
+    {
+      "name": "stream-read-b",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/support-followup-20261021/app-drivers/judas_save_streaming_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/projects/streamed_range/streamed_range.judasproj",
+        "read-b",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/support-followup-20261021/integration/stream"
+      ],
+      "utc": "2026-10-21T15:49:03.887749+00:00",
+      "exit": 0,
+      "seconds": 0.8151682499992603,
+      "native_nvidia": true,
+      "graphics": [
+        "Graphics: 3.3.0 NVIDIA 580.178.04 / NVIDIA GeForce GTX 970/PCIe/SSE2"
+      ],
+      "binary_sha256": "1217a9504f115f8887c488c1a4a482447483c1c60216b088eaa611fc2b65cc3c",
+      "log_sha256": "fc758807ff75a40d25861d99cb0fa7d00ad8937d65cbe0953d52a305de7275d2"
+    }
+  ],
+  "native_nvidia_required": true,
+  "audio": "dummy; no listening qualification",
+  "core_unchanged": true,
+  "pass_all": true
+}
