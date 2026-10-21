@@ -1,13 +1,14 @@
 #pragma once
 
-#include <cstddef>
-#include <vector>
-#include <glm/glm.hpp>
 #include "ContactSolver.h"
+#include <cstddef>
+#include <functional>
+#include <glm/glm.hpp>
+#include <vector>
 
 // An event contains actual touching/overlapping geometry at one physical time.
-// The caller supplies the complete connected island, including contacts which
-// were separating before the event but can be induced by another impulse.
+// Solve takes a complete connected island. SolveGrowing asks its owner to append
+// contacts reached by real impulses, at the same immutable physical instant.
 struct ImpactContact {
     RigidBody* a = nullptr;
     RigidBody* b = nullptr;
@@ -15,6 +16,11 @@ struct ImpactContact {
     float friction = 0.0f;
     float restitution = 0.0f;
     bool persistent = false;
+    // Only an existing authoritative support may retain its accepted incoming
+    // normal-velocity defect. Selected/new contacts remain strict. The allowance
+    // is bounded by the existing slop and by the owner's physical feature size.
+    bool continuing = false;
+    float maxDefectDisplacement = ContactSolver::kPenetrationSlop;
 };
 
 struct ImpactResult {
@@ -41,6 +47,13 @@ class ImpactSolver {
 public:
     ImpactResult Solve(const std::vector<ImpactContact>& contacts, float dt,
                        bool forceInelastic = false, JointSolver* joints = nullptr);
+    // Transaction kernel: no warm replay, fixed iteration budget, immutable
+    // incoming body snapshots. expand may append actual contacts, never remove
+    // rows/change existing poses. false rejects the trial; the caller must then
+    // discard its private bodies. Energy/residual rejection is not a repair.
+    bool SolveGrowing(std::vector<ImpactContact>& contacts, float dt,
+                      const std::function<bool(const std::vector<RigidBody*>&)>& expand,
+                      ImpactResult& result);
     const std::vector<ContactConstraint>& Constraints() const { return m_solver.Constraints(); }
 
 private:

@@ -1,0 +1,333 @@
+{
+  "acceptance_note": "Capture completion only. Target24/30 FPS, fixed-cadence simulation progress, physical accuracy and regression qualification require separate review; synthetic runs never certify FPS.",
+  "argv": [
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/contact-redesign-20261021/temporal/snapshot-final-v3/bin/judas_physics_stress_live_benchmark",
+    "/home/conner/Documents/GitHub/Project-Judas/projects/physics_stress_lab/Scenes/room1024.judas",
+    "/home/conner/Documents/GitHub/Project-Judas/.cache/contact-redesign-20261021/temporal/final600/live",
+    "180.0",
+    "600",
+    "0",
+    "0",
+    "1",
+    "0.016666667",
+    "0",
+    "0",
+    "1"
+  ],
+  "blocks_of_30_steps": [
+    {
+      "count": 30,
+      "first_step": 1,
+      "last_step": 30,
+      "maximum": 29.194803,
+      "mean": 12.352739933333334,
+      "median": 12.0993235,
+      "p95_floor": 21.099699,
+      "p99_floor": 22.936215
+    },
+    {
+      "count": 30,
+      "first_step": 31,
+      "last_step": 60,
+      "maximum": 15.02592,
+      "mean": 12.4505065,
+      "median": 12.2734415,
+      "p95_floor": 13.5421,
+      "p99_floor": 13.754181
+    },
+    {
+      "count": 30,
+      "first_step": 61,
+      "last_step": 90,
+      "maximum": 17.61246,
+      "mean": 12.381375933333333,
+      "median": 12.138206499999999,
+      "p95_floor": 13.572408,
+      "p99_floor": 14.895744
+    },
+    {
+      "count": 30,
+      "first_step": 91,
+      "last_step": 120,
+      "maximum": 24.586187,
+      "mean": 12.7261884,
+      "median": 12.085276499999999,
+      "p95_floor": 13.468442,
+      "p99_floor": 15.117943
+    },
+    {
+      "count": 30,
+      "first_step": 121,
+      "last_step": 150,
+      "maximum": 30.035469,
+      "mean": 13.240300533333333,
+      "median": 12.3178455,
+      "p95_floor": 15.511195,
+      "p99_floor": 15.685976
+    },
+    {
+      "count": 30,
+      "first_step": 151,
+      "last_step": 180,
+      "maximum": 54.956619,
+      "mean": 25.3129734,
+      "median": 21.443844,
+      "p95_floor": 46.860333,
+      "p99_floor": 47.069878
+    },
+    {
+      "count": 30,
+      "first_step": 181,
+      "last_step": 210,
+      "maximum": 27.421797,
+      "mean": 21.0051434,
+      "median": 21.746630000000003,
+      "p95_floor": 26.597462,
+      "p99_floor": 26.868604
+    },
+    {
+      "count": 30,
+      "first_step": 211,
+      "last_step": 240,
+      "maximum": 29.661773,
+      "mean": 21.551428766666668,
+      "median": 22.0640535,
+      "p95_floor": 27.266084,
+      "p99_floor": 27.300418
+    },
+    {
+      "count": 30,
+      "first_step": 241,
+      "last_step": 270,
+      "maximum": 31.847718,
+      "mean": 21.48772213333333,
+      "median": 20.349699,
+      "p95_floor": 29.220631,
+      "p99_floor": 31.504701
+    },
+    {
+      "count": 30,
+      "first_step": 271,
+      "last_step": 300,
+      "maximum": 31.702965,
+      "mean": 23.056089366666665,
+      "median": 23.110388,
+      "p95_floor": 29.124591,
+      "p99_floor": 30.741732
+    },
+    {
+      "count": 30,
+      "first_step": 301,
+      "last_step": 330,
+      "maximum": 33.076085,
+      "mean": 22.9954963,
+      "median": 22.051916,
+      "p95_floor": 30.995982,
+      "p99_floor": 31.311366
+    },
+    {
+      "count": 30,
+      "first_step": 331,
+      "last_step": 360,
+      "maximum": 37.508539,
+      "mean": 25.158649933333333,
+      "median": 23.450424499999997,
+      "p95_floor": 33.41243,
+      "p99_floor": 34.40359
+    },
+    {
+      "count": 30,
+      "first_step": 361,
+      "last_step": 390,
+      "maximum": 44.274193,
+      "mean": 30.1759555,
+      "median": 27.5266705,
+      "p95_floor": 42.946308,
+      "p99_floor": 44.083904
+    },
+    {
+      "count": 30,
+      "first_step": 391,
+      "last_step": 420,
+      "maximum": 87.43723,
+      "mean": 52.243776866666664,
+      "median": 49.830922,
+      "p95_floor": 81.634432,
+      "p99_floor": 81.860649
+    },
+    {
+      "count": 30,
+      "first_step": 421,
+      "last_step": 450,
+      "maximum": 84.00791,
+      "mean": 57.50747166666667,
+      "median": 60.2293265,
+      "p95_floor": 77.161734,
+      "p99_floor": 83.436893
+    },
+    {
+      "count": 30,
+      "first_step": 451,
+      "last_step": 480,
+      "maximum": 101.269749,
+      "mean": 59.4178248,
+      "median": 57.607690500000004,
+      "p95_floor": 88.856599,
+      "p99_floor": 94.77285
+    },
+    {
+      "count": 30,
+      "first_step": 481,
+      "last_step": 510,
+      "maximum": 104.432626,
+      "mean": 55.01168956666667,
+      "median": 53.363332,
+      "p95_floor": 80.078987,
+      "p99_floor": 87.651826
+    },
+    {
+      "count": 30,
+      "first_step": 511,
+      "last_step": 540,
+      "maximum": 77.639525,
+      "mean": 52.38220723333333,
+      "median": 49.176222499999994,
+      "p95_floor": 73.949603,
+      "p99_floor": 73.960634
+    },
+    {
+      "count": 30,
+      "first_step": 541,
+      "last_step": 570,
+      "maximum": 79.227481,
+      "mean": 45.39772033333333,
+      "median": 45.188137999999995,
+      "p95_floor": 67.972066,
+      "p99_floor": 72.182499
+    },
+    {
+      "count": 30,
+      "first_step": 571,
+      "last_step": 600,
+      "maximum": 84.405721,
+      "mean": 45.20467743333333,
+      "median": 44.101954,
+      "p95_floor": 72.609945,
+      "p99_floor": 76.585205
+    }
+  ],
+  "bodies_observed": [
+    1285
+  ],
+  "cadence": "synthetic one-60Hz-step/frame: NOT displayed FPS",
+  "capture_completed": true,
+  "catchup_accounting_note": "Every frame with exactly the frozen maximum step count enters the source catch-up-cap branch. Discarded seconds remain available only for bounded retained profiler history; cap reach alone does not imply positive discarded time.",
+  "catchup_limit_reached_frames_full_csv": 0,
+  "completed_steps": 600,
+  "context": {
+    "binary_sha256": "fa1998ed9074bc1310cad679cc74a69c2897d4ecede196f9be9fd06de11c1c4b",
+    "environment": {
+      "DISPLAY": ":0",
+      "LIBGL_ALWAYS_SOFTWARE": null,
+      "SDL_AUDIODRIVER": null,
+      "SDL_VIDEODRIVER": null,
+      "WAYLAND_DISPLAY": "wayland-0",
+      "XDG_RUNTIME_DIR": "/run/user/1000",
+      "XDG_SESSION_TYPE": "wayland",
+      "__GL_SYNC_TO_VBLANK": null,
+      "__NV_PRIME_RENDER_OFFLOAD": null
+    },
+    "fixture_sha256": "a2caf62a295243d301149202c8a0a5eedafff256d68de0e3cda988846b2e05bf",
+    "mode": "exact",
+    "profile": 0,
+    "requested_steps": 600,
+    "requested_wall_seconds": 180.0,
+    "resolution_note": "Runtime default project/window settings; preserve actual runtime renderer log.",
+    "schema": "judas.dense.run.v1",
+    "snapshot": "/home/conner/Documents/GitHub/Project-Judas/.cache/contact-redesign-20261021/temporal/snapshot-final-v3",
+    "snapshot_manifest_sha256": "54418c2fc6b36b882bcfbf67968a35a409c4f3b2d17743145c8ead0954858e89",
+    "source_head": "6059bafb43be4650162d9a6bdec05ea027135abc",
+    "timing_contract": {
+      "fixed_cadence_hz": 60,
+      "maximum_fixed_steps_per_frame": 8,
+      "note": "This workload preserves the existing 60 Hz contract; per-frame catch-up count is extracted from frozen actual source.",
+      "source": "src/SimulationTiming.h",
+      "source_sha256": "94768d45689caa49be5160b9c9d2884ab15ebd33bff9a6003e8d8113d920bf9d"
+    }
+  },
+  "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+  "endpoint_quality": {
+    "candidate_pairs": 9459,
+    "contact_points": 3410,
+    "deepest_endpoint_penetration_m": 0.017114197287356914,
+    "observation_ms": 14.979993,
+    "outside_fixed_step_timing": true,
+    "population": 1024,
+    "scope": "endpoint primitive geometry for the authored loose_piece population",
+    "tag_available": true,
+    "uncertain_pairs": 0,
+    "unsupported_candidates": 0
+  },
+  "exit": 0,
+  "final_digest": "3f030ea6c33bd976",
+  "finished_utc": "2026-10-21T03:35:53.252318+00:00",
+  "fixed_ms": {
+    "count": 600,
+    "maximum": 104.432626,
+    "mean": 31.0529969,
+    "median": 24.618108,
+    "p95_floor": 71.927007,
+    "p99_floor": 84.946662
+  },
+  "frame_and_step_csv_counts_agree": true,
+  "frame_interval_ms": {
+    "count": 600,
+    "maximum": 122.217,
+    "mean": 47.645461995,
+    "median": 41.0995785,
+    "p95_floor": 89.48288,
+    "p99_floor": 102.543973
+  },
+  "frame_intervals_over_33_333ms": 426,
+  "frame_intervals_over_41_667ms": 295,
+  "maximum_rss_kib": 176008,
+  "nonfinite_or_bad_sequence_rows": [],
+  "observed_application_wall_seconds": 28.591104709,
+  "process_group": 49699,
+  "profile_retained_state": {
+    "available": false
+  },
+  "realtime_requested_window_reached": null,
+  "rendered_cadence_observation": null,
+  "rendered_frames": 601,
+  "simulated_seconds": 10.0,
+  "simulation_seconds_per_wall_second": 0.3497591331912463,
+  "timed_out": false,
+  "timeout_seconds": 240.0,
+  "utc": "2026-10-21T03:35:24.281476+00:00",
+  "valid_completion": true,
+  "wall_seconds": 28.97075978599969,
+  "worst_step": {
+    "awake": "1021",
+    "bodies": "1285",
+    "broadphase_ms": "3.220176",
+    "candidates": "12749",
+    "contacts": "3824",
+    "fixed_ms": "104.432626",
+    "frame": "486",
+    "impact_events": "9",
+    "impact_iterations": "13102",
+    "impact_peak": "21",
+    "impact_queries": "20730",
+    "max_angular_speed": "8.69325733185",
+    "max_linear_speed": "2.57340240479",
+    "narrowphase_ms": "5.596709",
+    "nonfinite_fields": "0",
+    "sleeping": "131",
+    "solver_ms": "91.68744",
+    "step": "487",
+    "total_physics_ms": "103.389449",
+    "trajectory_digest": "c3ddb2e413df5d51",
+    "wall_ms": "21138.352376"
+  }
+}

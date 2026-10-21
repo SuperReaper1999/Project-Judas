@@ -1,0 +1,26 @@
+[
+  {
+    "mode": "write",
+    "argv": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_hearthworld_application_tests",
+      "/home/conner/Documents/GitHub/Project-Judas/projects/hearthworld/hearthworld.judasproj",
+      "write",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/contact-redesign-20261021/hearthworld/game"
+    ],
+    "exit": 0,
+    "seconds": 4.371335652998823,
+    "binary_sha256": "3d6a32ff40d8839df534701d29066a080485d81d40407fa140870b5f71dc496a"
+  },
+  {
+    "mode": "read",
+    "argv": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_hearthworld_application_tests",
+      "/home/conner/Documents/GitHub/Project-Judas/projects/hearthworld/hearthworld.judasproj",
+      "read",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/contact-redesign-20261021/hearthworld/game"
+    ],
+    "exit": 0,
+    "seconds": 0.9153901760000736,
+    "binary_sha256": "3d6a32ff40d8839df534701d29066a080485d81d40407fa140870b5f71dc496a"
+  }
+]

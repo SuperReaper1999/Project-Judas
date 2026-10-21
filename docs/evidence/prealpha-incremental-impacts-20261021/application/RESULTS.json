@@ -1,0 +1,75 @@
+[
+  {
+    "name": "save-stream-write",
+    "argv": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_save_streaming_tests",
+      "/home/conner/Documents/GitHub/Project-Judas/projects/streamed_range/streamed_range.judasproj",
+      "write",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/contact-redesign-20261021/application/save-stream"
+    ],
+    "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+    "exit": 0,
+    "seconds": 0.9156062339989148,
+    "log_sha256": "6cec38a4a57b721292cafbfd473cd8a55a8e1715fe1fc461df3dbd898f1233cb"
+  },
+  {
+    "name": "save-stream-read",
+    "argv": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_save_streaming_tests",
+      "/home/conner/Documents/GitHub/Project-Judas/projects/streamed_range/streamed_range.judasproj",
+      "read",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/contact-redesign-20261021/application/save-stream"
+    ],
+    "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+    "exit": 0,
+    "seconds": 0.815968573999271,
+    "log_sha256": "7ac39e5e3a1ac51a9554f75966310108ee0d5682345eed0ae2651585e80523bc"
+  },
+  {
+    "name": "save-stream-read-b",
+    "argv": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_save_streaming_tests",
+      "/home/conner/Documents/GitHub/Project-Judas/projects/streamed_range/streamed_range.judasproj",
+      "read-b",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/contact-redesign-20261021/application/save-stream"
+    ],
+    "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+    "exit": 0,
+    "seconds": 0.8150013900012709,
+    "log_sha256": "acbd398fc4d6142c3c19e60f84e922c9e1edbef2f1fa3a58870a473dc658bce2"
+  },
+  {
+    "name": "editor-play-stop",
+    "argv": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_editor",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/contact-redesign-20261021/application/editor-owned/physics_stress_lab/physics_stress_lab.judasproj"
+    ],
+    "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+    "exit": 0,
+    "seconds": 2.2232092790000024,
+    "log_sha256": "418b6a2e696ed5cf7676d8d05b1f32912aa1996c3e9550e05dc3be233f6e99a7"
+  },
+  {
+    "name": "export",
+    "argv": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_export",
+      "/home/conner/Documents/GitHub/Project-Judas/projects/physics_stress_lab/physics_stress_lab.judasproj",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/contact-redesign-20261021/application/exported",
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas"
+    ],
+    "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+    "exit": 0,
+    "seconds": 0.7152477809995617,
+    "log_sha256": "d5f26583c427eaaf1bd6e8d07f8d3ff0fcdd6295cdcdf4a911b0c06dcc40103a"
+  },
+  {
+    "name": "relocated-standalone",
+    "argv": [
+      "/tmp/Judas-incremental-impact-20261021-fydf8k_8/judas"
+    ],
+    "cwd": "/tmp",
+    "exit": 0,
+    "seconds": 0.7147996749990853,
+    "log_sha256": "91bdf6839b4826d853f82baffb13d550a9e0b2a28576efecf8e428533d91fdbb"
+  }
+]

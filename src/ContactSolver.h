@@ -95,7 +95,17 @@ public:
     // `fixedDeltaTime` lets a speculative contact (negative penetration)
     // allow exactly its gap to close within the step; 0 treats it as touching.
     void Prepare(float fixedDeltaTime = 0.0f);
+    // Append at the SAME immutable physical instant. Existing rows keep their
+    // accumulated impulses and frames. Only newly appended rows are prepared.
+    // Poses of previously prepared bodies must not change until Clear().
+    void PrepareAppended(float fixedDeltaTime, std::size_t firstRow, std::size_t firstFrame);
     void SolveVelocities(int iterations = kVelocityIterations);
+    // Report each represented body-velocity change after any row, including
+    // transients cancelled by later rows. Exact equality; no magnitude cutoff.
+    void SolveTrackedVelocities(int iterations, std::vector<RigidBody*>& activated);
+    void SolveTrackedVelocityRange(std::size_t firstRow, int iterations,
+                                   std::vector<RigidBody*>& activated);
+    void SetInelasticVelocityTarget(std::size_t row, float target);
     void SolvePositions(int iterations = kPositionIterations);
     // PhysicsWorld supplies its freshly keyed post-integration rotation.
     // Copies the value; no pointer to a reallocatable geometry cache is kept.

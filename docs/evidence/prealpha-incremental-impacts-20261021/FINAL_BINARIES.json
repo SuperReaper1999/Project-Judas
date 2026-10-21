@@ -1,0 +1,187 @@
+{
+  "engine_archive_sha256": "05f626d3fb5400bfd1db23ec37a3cd3e6490f8452145365662466eebccd705ec",
+  "core_byte_identical_to_qualified_final": true,
+  "note": "Two new regression executables and runtime/export had build provenance refreshed after comment/test-label cleanup. Their final CTest and final-export receipts are separate. Core bytes remain identical; all measured run fingerprints are retained in their own manifests. Binaries identify the dirty parent6059 candidate, not the later commit hash.",
+  "artifacts": {
+    "judas": {
+      "sha256": "6139537203ccd543b6fc425c90dfc6388dace609e50aa6061aa4aa3702c937c5",
+      "bytes": 55057536,
+      "tested_receipt_sha256": null,
+      "matches_earlier_tested_executable": null
+    },
+    "judas_character_motor_tests": {
+      "sha256": "3e56815e54b0efa0fc7845a7c32bd7cacc5fb54010a3456b0ad2ab775e289e1b",
+      "bytes": 54250216,
+      "tested_receipt_sha256": "3e56815e54b0efa0fc7845a7c32bd7cacc5fb54010a3456b0ad2ab775e289e1b",
+      "matches_earlier_tested_executable": true
+    },
+    "judas_collision_continuity_tests": {
+      "sha256": "0514aa5f8972746f31ec33b61c1851cd53e2e0999d0cef458bd0b1d7807767ce",
+      "bytes": 1590728,
+      "tested_receipt_sha256": "0514aa5f8972746f31ec33b61c1851cd53e2e0999d0cef458bd0b1d7807767ce",
+      "matches_earlier_tested_executable": true
+    },
+    "judas_collision_geometry_tests": {
+      "sha256": "6f4b13c19dc94a67e36c76a18a95bb4b125bc956db5638f6c20eee99a9c1346b",
+      "bytes": 54288136,
+      "tested_receipt_sha256": "6f4b13c19dc94a67e36c76a18a95bb4b125bc956db5638f6c20eee99a9c1346b",
+      "matches_earlier_tested_executable": true
+    },
+    "judas_contact_cache_tests": {
+      "sha256": "a3fafe2cb8aadb63084dea785bd9a5259509f5473e9fe695ca1029f0718ff924",
+      "bytes": 1538256,
+      "tested_receipt_sha256": "a3fafe2cb8aadb63084dea785bd9a5259509f5473e9fe695ca1029f0718ff924",
+      "matches_earlier_tested_executable": true
+    },
+    "judas_contact_lifecycle_tests": {
+      "sha256": "dee21a80be6a4ebf5c1b2ec0c7fae1930f290a301eda39a51e21127a2eeac0de",
+      "bytes": 54275616,
+      "tested_receipt_sha256": "dee21a80be6a4ebf5c1b2ec0c7fae1930f290a301eda39a51e21127a2eeac0de",
+      "matches_earlier_tested_executable": true
+    },
+    "judas_deformable_tests": {
+      "sha256": "bc17440ba6de99a753f74c74ebfc0ad6e55ec8f7d198f8bc6aafcf5e74b7c536",
+      "bytes": 54314272,
+      "tested_receipt_sha256": "bc17440ba6de99a753f74c74ebfc0ad6e55ec8f7d198f8bc6aafcf5e74b7c536",
+      "matches_earlier_tested_executable": true
+    },
+    "judas_editor": {
+      "sha256": "515402b178b448a36c5b6d8e34a79ad2ff4e5640e0843ecf16432c66fa98c3a1",
+      "bytes": 60145392,
+      "tested_receipt_sha256": null,
+      "matches_earlier_tested_executable": null
+    },
+    "judas_export": {
+      "sha256": "9dc9422d71ac7f7a6dc1c7b70c2feace40d16d5546f6896aee835c1ee63d1f7f",
+      "bytes": 54949944,
+      "tested_receipt_sha256": null,
+      "matches_earlier_tested_executable": null
+    },
+    "judas_growing_impact_tests": {
+      "sha256": "302d730b97a2a5e7da0befa2a6a817372db1f1a676ea1028a36eba0ea6ad1e96",
+      "bytes": 464192,
+      "tested_receipt_sha256": "ed1105c89db0ded7ee9ca6417041fac7ff01108d93b9c2585ef008cc0a411919",
+      "matches_earlier_tested_executable": false
+    },
+    "judas_impact_event_schedule_tests": {
+      "sha256": "c64be35474f30e4b687297f4c7335e38304c9d63e059e4449f6c5435b53615b7",
+      "bytes": 200624,
+      "tested_receipt_sha256": "c64be35474f30e4b687297f4c7335e38304c9d63e059e4449f6c5435b53615b7",
+      "matches_earlier_tested_executable": true
+    },
+    "judas_impact_robustness_tests": {
+      "sha256": "2db3d623e02fb2b463b484bec52297a3903f7738f435b14ebfc6a66cb99cef83",
+      "bytes": 1455328,
+      "tested_receipt_sha256": "2db3d623e02fb2b463b484bec52297a3903f7738f435b14ebfc6a66cb99cef83",
+      "matches_earlier_tested_executable": true
+    },
+    "judas_impact_solver_tests": {
+      "sha256": "4b76819d597fe3b866873c83ea9a97c1afdbffbbc4851b6cfc21d8b0bd9c114c",
+      "bytes": 413144,
+      "tested_receipt_sha256": "4b76819d597fe3b866873c83ea9a97c1afdbffbbc4851b6cfc21d8b0bd9c114c",
+      "matches_earlier_tested_executable": true
+    },
+    "judas_impact_timing_tests": {
+      "sha256": "26b1649e29b079e25b84ab66917fd4bd18cf9cff4c64e9d194b3d395b083dbd8",
+      "bytes": 1698248,
+      "tested_receipt_sha256": "26b1649e29b079e25b84ab66917fd4bd18cf9cff4c64e9d194b3d395b083dbd8",
+      "matches_earlier_tested_executable": true
+    },
+    "judas_joint_tests": {
+      "sha256": "5cdf8eae6bcca042969e1981646510c8d891dcf63429bd54be27be2509a2f747",
+      "bytes": 1415536,
+      "tested_receipt_sha256": "5cdf8eae6bcca042969e1981646510c8d891dcf63429bd54be27be2509a2f747",
+      "matches_earlier_tested_executable": true
+    },
+    "judas_kinematic_tests": {
+      "sha256": "1d75929ad963196544cc11d25e77cecb4e4d6d0b82862737f7ea9b55bd433123",
+      "bytes": 1543888,
+      "tested_receipt_sha256": "1d75929ad963196544cc11d25e77cecb4e4d6d0b82862737f7ea9b55bd433123",
+      "matches_earlier_tested_executable": true
+    },
+    "judas_native_mesh_growth_tests": {
+      "sha256": "7396c8d0ba5173c0fb308996a808c4af757fae170ad3689eda96532b6f177537",
+      "bytes": 767816,
+      "tested_receipt_sha256": "7396c8d0ba5173c0fb308996a808c4af757fae170ad3689eda96532b6f177537",
+      "matches_earlier_tested_executable": true
+    },
+    "judas_origin_assembly_tests": {
+      "sha256": "825c98d5e73416977ee6b78c564f8be8ed4fa9adb054c93e451cc0de1fab974f",
+      "bytes": 54247248,
+      "tested_receipt_sha256": "825c98d5e73416977ee6b78c564f8be8ed4fa9adb054c93e451cc0de1fab974f",
+      "matches_earlier_tested_executable": true
+    },
+    "judas_origin_physics_tests": {
+      "sha256": "3968434481f4446df989c5c0f2a7f9ced623ab14323dcdd7683926ef151db0af",
+      "bytes": 1639200,
+      "tested_receipt_sha256": "3968434481f4446df989c5c0f2a7f9ced623ab14323dcdd7683926ef151db0af",
+      "matches_earlier_tested_executable": true
+    },
+    "judas_physics_continuation_tests": {
+      "sha256": "c8f2407f0fbe036f4b46f55cb3149406f0bf23be3be1b4f9a4ab423932305609",
+      "bytes": 54304080,
+      "tested_receipt_sha256": "c8f2407f0fbe036f4b46f55cb3149406f0bf23be3be1b4f9a4ab423932305609",
+      "matches_earlier_tested_executable": true
+    },
+    "judas_physics_stress_live_benchmark": {
+      "sha256": "e280d250cd2bb867b001bbf34861df8088c22498922309e83fd9a1d23696f3ff",
+      "bytes": 55124464,
+      "tested_receipt_sha256": null,
+      "matches_earlier_tested_executable": null
+    },
+    "judas_powertrain_tests": {
+      "sha256": "1e924e1934673990964f74fc1921548de5a214496befa9448d09337114287996",
+      "bytes": 171560,
+      "tested_receipt_sha256": "1e924e1934673990964f74fc1921548de5a214496befa9448d09337114287996",
+      "matches_earlier_tested_executable": true
+    },
+    "judas_prealpha_lifecycle_tests": {
+      "sha256": "3731278a07548cb8fd926e79e64aee0e1e371aa2b8c83f82e2384e52ce752302",
+      "bytes": 54246592,
+      "tested_receipt_sha256": "3731278a07548cb8fd926e79e64aee0e1e371aa2b8c83f82e2384e52ce752302",
+      "matches_earlier_tested_executable": true
+    },
+    "judas_ragdoll_tests": {
+      "sha256": "92d18dd4e7131c658d9735a139ab20f73a56ea889c8154deffa0fba68330f988",
+      "bytes": 54291776,
+      "tested_receipt_sha256": "92d18dd4e7131c658d9735a139ab20f73a56ea889c8154deffa0fba68330f988",
+      "matches_earlier_tested_executable": true
+    },
+    "judas_rigid_contact_tests": {
+      "sha256": "7705ee6a0e54f85580ddf16137460b049584d2786ed63bbd66f5a552f30f33d6",
+      "bytes": 1733264,
+      "tested_receipt_sha256": "7705ee6a0e54f85580ddf16137460b049584d2786ed63bbd66f5a552f30f33d6",
+      "matches_earlier_tested_executable": true
+    },
+    "judas_structural_tests": {
+      "sha256": "585e4fee31b37b7217342a79b22b63584b2b8e3f10fc90c0d6040c15af661aa5",
+      "bytes": 396928,
+      "tested_receipt_sha256": "585e4fee31b37b7217342a79b22b63584b2b8e3f10fc90c0d6040c15af661aa5",
+      "matches_earlier_tested_executable": true
+    },
+    "judas_support_continuation_tests": {
+      "sha256": "44fd82258a3f65e11596b95e9789c43d7509ce2036800fb29e1cfde3aded08e1",
+      "bytes": 1568872,
+      "tested_receipt_sha256": "44fd82258a3f65e11596b95e9789c43d7509ce2036800fb29e1cfde3aded08e1",
+      "matches_earlier_tested_executable": true
+    },
+    "judas_tracked_contact_rows_tests": {
+      "sha256": "78685656accd8fbbd2dcc2ef805ba7422bd6a787e804dad34cb273b57797e041",
+      "bytes": 374224,
+      "tested_receipt_sha256": "f6eb6b233ae5d3bf322d3e6a5c902810aad15e877eba149391f4cd9ab588d4c6",
+      "matches_earlier_tested_executable": false
+    },
+    "judas_wheel_tests": {
+      "sha256": "16f869179c2a4c6674f8e51c07a0031828e72d03b3139792bf1db3f8af0123d1",
+      "bytes": 1538344,
+      "tested_receipt_sha256": "16f869179c2a4c6674f8e51c07a0031828e72d03b3139792bf1db3f8af0123d1",
+      "matches_earlier_tested_executable": true
+    },
+    "libjudas_engine.a": {
+      "sha256": "05f626d3fb5400bfd1db23ec37a3cd3e6490f8452145365662466eebccd705ec",
+      "bytes": 30481212,
+      "tested_receipt_sha256": null,
+      "matches_earlier_tested_executable": null
+    }
+  }
+}

@@ -1,0 +1,102 @@
+[
+  {
+    "event": 10,
+    "legacy_actual_mismatches": 0,
+    "negative_accepted": true,
+    "negative_no_support_changed": 848,
+    "new_accepted": true,
+    "new_changed": 41,
+    "new_energy_ok": true,
+    "old_changed": 848
+  },
+  {
+    "event": 13,
+    "legacy_actual_mismatches": 0,
+    "negative_accepted": true,
+    "negative_no_support_changed": 816,
+    "new_accepted": true,
+    "new_changed": 24,
+    "new_energy_ok": true,
+    "old_changed": 816
+  },
+  {
+    "event": 18,
+    "legacy_actual_mismatches": 0,
+    "negative_accepted": true,
+    "negative_no_support_changed": 810,
+    "new_accepted": true,
+    "new_changed": 3,
+    "new_energy_ok": true,
+    "old_changed": 810
+  },
+  {
+    "event": 21,
+    "legacy_actual_mismatches": 0,
+    "negative_accepted": true,
+    "negative_no_support_changed": 812,
+    "new_accepted": true,
+    "new_changed": 9,
+    "new_energy_ok": true,
+    "old_changed": 812
+  },
+  {
+    "event": 25,
+    "legacy_actual_mismatches": 0,
+    "negative_accepted": true,
+    "negative_no_support_changed": 784,
+    "new_accepted": true,
+    "new_changed": 3,
+    "new_energy_ok": true,
+    "old_changed": 784
+  },
+  {
+    "event": 28,
+    "legacy_actual_mismatches": 0,
+    "negative_accepted": true,
+    "negative_no_support_changed": 751,
+    "new_accepted": true,
+    "new_changed": 0,
+    "new_energy_ok": true,
+    "old_changed": 751
+  },
+  {
+    "event": 35,
+    "legacy_actual_mismatches": 0,
+    "negative_accepted": true,
+    "negative_no_support_changed": 714,
+    "new_accepted": true,
+    "new_changed": 4,
+    "new_energy_ok": true,
+    "old_changed": 714
+  },
+  {
+    "event": 38,
+    "legacy_actual_mismatches": 0,
+    "negative_accepted": true,
+    "negative_no_support_changed": 644,
+    "new_accepted": true,
+    "new_changed": 4,
+    "new_energy_ok": true,
+    "old_changed": 644
+  },
+  {
+    "event": 58,
+    "legacy_actual_mismatches": 0,
+    "negative_accepted": true,
+    "negative_no_support_changed": 619,
+    "new_accepted": true,
+    "new_changed": 5,
+    "new_energy_ok": true,
+    "old_changed": 619
+  },
+  {
+    "event": 9,
+    "legacy_actual_mismatches": 0,
+    "negative_accepted": true,
+    "negative_no_support_changed": 854,
+    "new_accepted": true,
+    "new_changed": 19,
+    "new_energy_ok": true,
+    "old_changed": 854
+  }
+]

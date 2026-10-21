@@ -17,7 +17,8 @@ These headers are implementation details, not an SDK interface.
 | `WorldBodies.cpp` | Body creation/destruction, motion commands, impulses, physical properties and public body observations |
 | `WorldBounds.cpp` | Prepared bounds, broadphase proxies, ordered candidate discovery and cache accounting |
 | `WorldCCDSearch.cpp` | Conservative impact search, finite drift bounds and continuation certification |
-| `WorldImpactEvents.cpp` | Initial impact response, event scheduling, affected-island discovery and velocity publication |
+| `WorldImpactEvents.cpp` | Initial response, event scheduling, fallback islands and authoritative observation/motion publication |
+| `WorldIncrementalImpact.cpp/.h` | Private growing contact transaction for free primitives; actual impulse dependencies, deferred-gravity preparation and commit/fallback boundary |
 | `WorldContacts.cpp` | Contact observations, touch phases and optional joined initial-geometry preparation |
 | `WorldSleep.cpp` | Wake propagation, sleep islands and explicit sleep-state persistence |
 | `WorldJoints.cpp` | Joint construction/configuration and preparing existing solver inputs |
@@ -48,6 +49,18 @@ actual motion change and can retain a conservative superset on an unchanged
 trajectory. Uncertain/unsupported shapes use the original query. These are
 geometric proofs, not cached sampled misses or velocity tolerances. See
 [the event dependency investigation](../../docs/PREALPHA_EVENT_DEPENDENCIES.md).
+
+The [persistent-contact redesign](../../docs/PREALPHA_INCREMENTAL_IMPACTS.md)
+separates ordinary support-force warm starts from new impact increments. A new
+impact grows its private contact domain only through actual per-row represented
+velocity changes, without an island-size or impulse cutoff. Appended constraints
+retain the event's earlier impulses and immutable incoming velocity snapshots.
+The existing support sets own continuation classification; no second history
+registry, save schema or component lifecycle is introduced. Hard-jointed dynamic
+bodies, non-primitive geometry and external velocity coupling retain the complete
+legacy solve. A rejected trial publishes no body, sleep or observation changes.
+Growing-event solve timing excludes its nested discovery timing; other profiler
+categories retain their documented inclusive meaning.
 
 ## Ordering and interfaces
 

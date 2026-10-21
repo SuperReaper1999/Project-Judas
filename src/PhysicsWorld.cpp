@@ -547,6 +547,14 @@ void PhysicsWorld::Step(float fixedDeltaTime, const VelocityCoupling *coupling) 
                           double(w.work.geometryFallbackEvents), ProfileCounterMode::Latest);
     JUDAS_PROFILE_COUNTER("Physics peak impact island bodies", double(w.work.peakImpactBodies),
                           ProfileCounterMode::Latest);
+    JUDAS_PROFILE_COUNTER("Physics incremental impact events", double(w.work.incrementalEvents),
+                          ProfileCounterMode::Latest);
+    JUDAS_PROFILE_COUNTER("Physics incremental impact fallbacks",
+                          double(w.work.incrementalFallbacks), ProfileCounterMode::Latest);
+    JUDAS_PROFILE_COUNTER("Physics incremental impact body visits",
+                          double(w.work.incrementalBodies), ProfileCounterMode::Latest);
+    JUDAS_PROFILE_COUNTER("Physics incremental impact rows", double(w.work.incrementalRows),
+                          ProfileCounterMode::Latest);
     JUDAS_PROFILE_COUNTER("Physics peak impact contact rows", double(w.work.peakImpactRows),
                           ProfileCounterMode::Latest);
     JUDAS_PROFILE_COUNTER("Physics impact continuation cache ms",

@@ -1,0 +1,31 @@
+{
+  "binary_sha256": "f26d2f6f2d71e8bbef08c24e5000adb421505e1d904ef91c57cb3186362576a2",
+  "environment": {
+    "DISPLAY": ":0",
+    "LIBGL_ALWAYS_SOFTWARE": null,
+    "SDL_AUDIODRIVER": null,
+    "SDL_VIDEODRIVER": null,
+    "WAYLAND_DISPLAY": "wayland-0",
+    "XDG_RUNTIME_DIR": "/run/user/1000",
+    "XDG_SESSION_TYPE": "wayland",
+    "__GL_SYNC_TO_VBLANK": null,
+    "__NV_PRIME_RENDER_OFFLOAD": null
+  },
+  "fixture_sha256": "a2caf62a295243d301149202c8a0a5eedafff256d68de0e3cda988846b2e05bf",
+  "mode": "exact",
+  "profile": 0,
+  "requested_steps": 600,
+  "requested_wall_seconds": 180.0,
+  "resolution_note": "Runtime default project/window settings; preserve actual runtime renderer log.",
+  "schema": "judas.dense.run.v1",
+  "snapshot": "/home/conner/Documents/GitHub/Project-Judas/.cache/contact-redesign-20261021/final-snapshot",
+  "snapshot_manifest_sha256": "08b51bbfd203aaf55000d5931c9892ce76ef45ff01ff3ce45b4aefc7f5bac36b",
+  "source_head": "6059bafb43be4650162d9a6bdec05ea027135abc",
+  "timing_contract": {
+    "fixed_cadence_hz": 60,
+    "maximum_fixed_steps_per_frame": 8,
+    "note": "This workload preserves the existing 60 Hz contract; per-frame catch-up count is extracted from frozen actual source.",
+    "source": "src/SimulationTiming.h",
+    "source_sha256": "94768d45689caa49be5160b9c9d2884ab15ebd33bff9a6003e8d8113d920bf9d"
+  }
+}

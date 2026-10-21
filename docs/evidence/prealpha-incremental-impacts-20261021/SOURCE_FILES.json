@@ -1,0 +1,89 @@
+{
+  "parent_commit": "6059bafb43be4650162d9a6bdec05ea027135abc",
+  "files": {
+    "CMakeLists.txt": {
+      "sha256": "577d1fa5f8f7fca44c974dff7ca7e3561e3307f2f2313f87abb0ed80cea23f95",
+      "bytes": 81072
+    },
+    "cmake/PhysicsWorldSources.cmake": {
+      "sha256": "67778ea0ba4bb75ad0ab8cd29ed3d4aea08ca20f3593ced8c4edf32320fa8459",
+      "bytes": 627
+    },
+    "docs/PREALPHA.md": {
+      "sha256": "40bc0caefb8c994971bf5e8cb4e45b7cc3d84159ae117ead80ac4a4b796a2ca2",
+      "bytes": 12029
+    },
+    "docs/PREALPHA_FINDINGS.json": {
+      "sha256": "49acb569139a6bcb02fe9fc55f0a3bf75874630134d0639a6d3e712ca0a081b9",
+      "bytes": 31352
+    },
+    "docs/PREALPHA_FINDINGS.md": {
+      "sha256": "c7949fd76d4e3ce6dd69fea6882413b140373f7a12e333dc741454315582b8e8",
+      "bytes": 18331
+    },
+    "docs/PREALPHA_IMPACT_RESPONSE_INVESTIGATION.md": {
+      "sha256": "778355dbb8bb797f3d91f769bd67cda5186b057f3f71de82832abfc2756836ad",
+      "bytes": 9567
+    },
+    "docs/PREALPHA_INCREMENTAL_IMPACTS.md": {
+      "sha256": "25a00053ada8787f1b1f60e3932ade3b13e7ec632a107ac92ceeba89f4cb52f6",
+      "bytes": 14485
+    },
+    "projects/physics_stress_lab/README.md": {
+      "sha256": "cefa2eae03e6a21c6c73cc63ecf8c6940d38daf06f18fc89e2da3d023c9972a1",
+      "bytes": 6323
+    },
+    "src/ContactSolver.cpp": {
+      "sha256": "d8b26d74d3d0f9feea59f76aa9fd8ae048488e7502e4906ab7c9fef90b010354",
+      "bytes": 18085
+    },
+    "src/ContactSolver.h": {
+      "sha256": "081171606681e809e18045a55485565fabb4cd507598ace7407fe2673d940a9c",
+      "bytes": 8513
+    },
+    "src/ImpactSolver.cpp": {
+      "sha256": "185558da16665e0dafbbbf7c18fc06ad2f1c63b320f0928170b743f68cb8deb7",
+      "bytes": 14630
+    },
+    "src/ImpactSolver.h": {
+      "sha256": "0ce6652b668bd4673a4db5b7ad7599d2c03a75c857c68213bb4910397607eb49",
+      "bytes": 2711
+    },
+    "src/PhysicsWorld.cpp": {
+      "sha256": "76718c9e325e7bc83bd7131b092afb7b7b894b952b69f004218aef31cb37d8c1",
+      "bytes": 45467
+    },
+    "src/physics/WorldImpactEvents.cpp": {
+      "sha256": "4b34e7184a953ac0c55ec5cf95179c254eaf9c1702092b0ecb7f428bfb5499b7",
+      "bytes": 42053
+    },
+    "src/physics/WorldIncrementalImpact.cpp": {
+      "sha256": "dd4cc421db0910d17989619e7bb87f3a37019d0bac075482de0d5354df217c29",
+      "bytes": 6791
+    },
+    "src/physics/WorldIncrementalImpact.h": {
+      "sha256": "78424f787abdb082dfdb6adcbefd7818576b311395d8aebd566d56261683cf8d",
+      "bytes": 1260
+    },
+    "src/physics/WorldInternal.h": {
+      "sha256": "8ec1cd43af864829a606311e75a1916f81e9444be2dc007b254ae6151fd6b69a",
+      "bytes": 23920
+    },
+    "src/physics/WorldModules.md": {
+      "sha256": "53889691b8b1c1c166d9bf90c3283b734fb504e7fb8dbba19324a938ccbce110",
+      "bytes": 6353
+    },
+    "tests/GrowingImpactTests.cpp": {
+      "sha256": "33b57b93d2c51e245b693868bad834479e23f9ca42995d95ff3153b4dbe9967a",
+      "bytes": 13195
+    },
+    "tests/TrackedContactRowsTests.cpp": {
+      "sha256": "08e23fc06129979064718942497e3d41dba3eac15fd65663b11be1823ed83d6f",
+      "bytes": 4237
+    },
+    "tools/validation/suites.json": {
+      "sha256": "5b4eea03a9f743bfab9680e2d72c0440817ab3d38b683b84ae4d46f09ecc62d3",
+      "bytes": 9143
+    }
+  }
+}

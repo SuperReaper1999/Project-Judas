@@ -1,0 +1,130 @@
+{
+  "utc": "2026-10-21T01:32:17.481499+00:00",
+  "baseCoreSha256": "c724dbbba56538f0fe3b5017dab12f3bb928facdb9b0add21d77297964698eae",
+  "commands": [
+    {
+      "argv": [
+        "/usr/bin/c++",
+        "-DDT_VIRTUAL_QUERYFILTER",
+        "-DMA_NO_ENCODING",
+        "-DMA_NO_GENERATION",
+        "-DMA_NO_RESOURCE_MANAGER",
+        "-I/home/conner/Documents/GitHub/Project-Judas",
+        "-I/home/conner/Documents/GitHub/Project-Judas/.cache/dense-root-cause-20261020/include/src/physics",
+        "-I/home/conner/Documents/GitHub/Project-Judas/.cache/dense-root-cause-20261020/include/src",
+        "-I/home/conner/Documents/GitHub/Project-Judas/.cache/impact-response-20261021/dispatch-certificate",
+        "-I/home/conner/Documents/GitHub/Project-Judas/src",
+        "-I/home/conner/Documents/GitHub/Project-Judas/third_party/glad/include",
+        "-I/home/conner/Documents/GitHub/Project-Judas/third_party/miniaudio",
+        "-I/home/conner/Documents/GitHub/Project-Judas/third_party/verblib",
+        "-I/home/conner/Documents/GitHub/Project-Judas/third_party/meshoptimizer/src",
+        "-I/home/conner/Documents/GitHub/Project-Judas/build/_deps/judas_freetype-build/include",
+        "-I/home/conner/Documents/GitHub/Project-Judas/build/_deps/judas_freetype-src/include",
+        "-I/home/conner/Documents/GitHub/Project-Judas/build/_deps/judas_harfbuzz-src/src",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/third_party/quickhull",
+        "-isystem",
+        "/usr/include/SDL2",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/third_party/cgltf",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/third_party/recastnavigation/Detour/Include",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/third_party/recastnavigation/DetourTileCache/Include",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/third_party/recastnavigation/DetourCrowd/Include",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/third_party/quickjs",
+        "-isystem",
+        "/home/conner/Documents/GitHub/Project-Judas/build/unicode/icu/include",
+        "-O3",
+        "-DNDEBUG",
+        "-std=gnu++17",
+        "-Wall",
+        "-Wextra",
+        "-MMD",
+        "-MF",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/impact-response-20261021/dispatch-certificate/WorldImpactEvents.d",
+        "-c",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/impact-response-20261021/dispatch-certificate/WorldImpactEvents.cpp",
+        "-o",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/impact-response-20261021/dispatch-certificate/WorldImpactEvents.cpp.o"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas"
+    },
+    {
+      "argv": [
+        "ar",
+        "r",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/impact-response-20261021/dispatch-certificate/libjudas_engine.a",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/impact-response-20261021/dispatch-certificate/WorldImpactEvents.cpp.o"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas"
+    },
+    {
+      "argv": [
+        "/usr/bin/c++",
+        "-O3",
+        "-DNDEBUG",
+        "CMakeFiles/judas_physics_stress_live_benchmark.dir/tests/PhysicsStressLiveBenchmark.cpp.o",
+        "CMakeFiles/judas_physics_stress_live_benchmark.dir/src/Application.cpp.o",
+        "CMakeFiles/judas_physics_stress_live_benchmark.dir/src/RuntimeOptions.cpp.o",
+        "CMakeFiles/judas_physics_stress_live_benchmark.dir/src/RuntimeDiagnostics.cpp.o",
+        "CMakeFiles/judas_physics_stress_live_benchmark.dir/src/TestHarness.cpp.o",
+        "-o",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/impact-response-20261021/dispatch-certificate/judas_physics_stress_live_benchmark",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/impact-response-20261021/dispatch-certificate/libjudas_engine.a",
+        "libjudas_build_identity.a",
+        "libjudas_app_icon.a",
+        "libjudas_materials.a",
+        "/usr/lib/x86_64-linux-gnu/libSDL2.so",
+        "libjudas_glad.a",
+        "libjudas_audio_backend.a",
+        "libjudas_meshoptimizer.a",
+        "libjudas_navigation_cook.a",
+        "libjudas_navigation_backend.a",
+        "libjudas_quickjs.a",
+        "-lm",
+        "libjudas_profiler.a",
+        "_deps/judas_freetype-build/libfreetype.a",
+        "_deps/judas_harfbuzz-build/libharfbuzz.a",
+        "unicode/icu/lib/libicui18n.a",
+        "unicode/icu/lib/libicuuc.a",
+        "unicode/icu/lib/libicudata.a",
+        "-ldl",
+        "libjudas_jobs.a"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas/build"
+    }
+  ],
+  "artifacts": {
+    "WorldImpactEvents.cpp": {
+      "sha256": "3366f426907bbdb836c83711afdc7fb71897426239d332410fae09ab65792baf",
+      "bytes": 37611
+    },
+    "ImpactEventSchedule.h": {
+      "sha256": "83a850dd8f19edc102fdd437a80b9c78436ab89ff0227478902985165593ebfb",
+      "bytes": 5270
+    },
+    "build.py": {
+      "sha256": "946dcde125beed09f378fee0aa33c78cd75f4c295107f0c1e43c2814355bd19b",
+      "bytes": 1836
+    },
+    "judas_physics_stress_live_benchmark": {
+      "sha256": "b905576cf122bf4de83da7eb374517b3e2fd1ee4eff7014152f87aff388ca375",
+      "bytes": 55076944
+    },
+    "WorldImpactEvents.cpp.o": {
+      "sha256": "28dfa669a06359a983b80ebeadaa7f36b160e594f359285fe0d303d8bd9cd9a3",
+      "bytes": 151160
+    },
+    "WorldImpactEvents.d": {
+      "sha256": "2911052fb09cfb2808b27732249b057e1588539775ff93919bedd1f4e999b691",
+      "bytes": 4115
+    },
+    "build.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    }
+  }
+}

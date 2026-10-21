@@ -1,0 +1,622 @@
+[
+  {
+    "actual_mismatch": 0,
+    "after_full_residual": {
+      "closing_rows": 1240,
+      "maximum_closing_speed_m_s": 0.03313879668712616
+    },
+    "after_second_residual": {
+      "closing_rows": 1239,
+      "maximum_closing_speed_m_s": 0.010832644067704678
+    },
+    "bodies": 936,
+    "changed_identically_without_seed": 250,
+    "energy_guards": [
+      true,
+      true,
+      true,
+      true,
+      true
+    ],
+    "event": 10,
+    "full": {
+      "changed": 848,
+      "max_mixed_velocity_norm": 0.6901712637466132,
+      "nonseed_changed": 846,
+      "sum_mixed_velocity_norm": 2.9771266228577775
+    },
+    "identical_without_seed": 338,
+    "incoming_residual": {
+      "closing_rows": 1266,
+      "maximum_closing_speed_m_s": 0.40287846326828003
+    },
+    "min_seed_normal_velocity": -0.40287846326828003,
+    "only_seed": {
+      "changed": 2,
+      "max_mixed_velocity_norm": 0.6346694709737194,
+      "nonseed_changed": 0,
+      "sum_mixed_velocity_norm": 0.9725525973413027
+    },
+    "rows": 2474,
+    "second_projection_no_new_impact": {
+      "changed": 823,
+      "max_mixed_velocity_norm": 0.04018584939819276,
+      "nonseed_changed": 821,
+      "sum_mixed_velocity_norm": 0.735141366386927
+    },
+    "seed_normal_impulse": 0.13763080537319183,
+    "seed_rows": [
+      2
+    ],
+    "without_seed": {
+      "changed": 847,
+      "max_mixed_velocity_norm": 0.010474578855044497,
+      "nonseed_changed": 846,
+      "sum_mixed_velocity_norm": 0.9595958594094006
+    },
+    "zero_velocity_control": {
+      "changed": 0,
+      "max_mixed_velocity_norm": 0.0,
+      "nonseed_changed": 0,
+      "sum_mixed_velocity_norm": 0.0
+    }
+  },
+  {
+    "actual_mismatch": 0,
+    "after_full_residual": {
+      "closing_rows": 1218,
+      "maximum_closing_speed_m_s": 0.002876936923712492
+    },
+    "after_second_residual": {
+      "closing_rows": 1204,
+      "maximum_closing_speed_m_s": 0.0021813097409904003
+    },
+    "bodies": 940,
+    "changed_identically_without_seed": 293,
+    "energy_guards": [
+      true,
+      true,
+      true,
+      true,
+      true
+    ],
+    "event": 13,
+    "full": {
+      "changed": 816,
+      "max_mixed_velocity_norm": 0.17175961631962122,
+      "nonseed_changed": 814,
+      "sum_mixed_velocity_norm": 0.6107840999522218
+    },
+    "identical_without_seed": 417,
+    "incoming_residual": {
+      "closing_rows": 1227,
+      "maximum_closing_speed_m_s": 0.05545362830162048
+    },
+    "min_seed_normal_velocity": -0.05545362830162048,
+    "only_seed": {
+      "changed": 2,
+      "max_mixed_velocity_norm": 0.13997014078254752,
+      "nonseed_changed": 0,
+      "sum_mixed_velocity_norm": 0.21988269722875073
+    },
+    "rows": 2482,
+    "second_projection_no_new_impact": {
+      "changed": 800,
+      "max_mixed_velocity_norm": 0.005314068261768192,
+      "nonseed_changed": 798,
+      "sum_mixed_velocity_norm": 0.20136429385902307
+    },
+    "seed_normal_impulse": 0.07445475459098816,
+    "seed_rows": [
+      1
+    ],
+    "without_seed": {
+      "changed": 816,
+      "max_mixed_velocity_norm": 0.00798689352384865,
+      "nonseed_changed": 814,
+      "sum_mixed_velocity_norm": 0.30876518575398404
+    },
+    "zero_velocity_control": {
+      "changed": 0,
+      "max_mixed_velocity_norm": 0.0,
+      "nonseed_changed": 0,
+      "sum_mixed_velocity_norm": 0.0
+    }
+  },
+  {
+    "actual_mismatch": 0,
+    "after_full_residual": {
+      "closing_rows": 1118,
+      "maximum_closing_speed_m_s": 0.0007326150080189109
+    },
+    "after_second_residual": {
+      "closing_rows": 1108,
+      "maximum_closing_speed_m_s": 0.0004986407002434134
+    },
+    "bodies": 937,
+    "changed_identically_without_seed": 807,
+    "energy_guards": [
+      true,
+      true,
+      true,
+      true,
+      true
+    ],
+    "event": 18,
+    "full": {
+      "changed": 810,
+      "max_mixed_velocity_norm": 0.0017346531174445858,
+      "nonseed_changed": 808,
+      "sum_mixed_velocity_norm": 0.06973919178272915
+    },
+    "identical_without_seed": 934,
+    "incoming_residual": {
+      "closing_rows": 1152,
+      "maximum_closing_speed_m_s": 0.0009306363645009696
+    },
+    "min_seed_normal_velocity": -1.5941550373099744e-06,
+    "only_seed": {
+      "changed": 2,
+      "max_mixed_velocity_norm": 4.69587648937634e-06,
+      "nonseed_changed": 0,
+      "sum_mixed_velocity_norm": 6.371445641835317e-06
+    },
+    "rows": 2474,
+    "second_projection_no_new_impact": {
+      "changed": 784,
+      "max_mixed_velocity_norm": 0.0012027928954151227,
+      "nonseed_changed": 783,
+      "sum_mixed_velocity_norm": 0.044813892204889794
+    },
+    "seed_normal_impulse": 1.989121756196255e-06,
+    "seed_rows": [
+      1
+    ],
+    "without_seed": {
+      "changed": 809,
+      "max_mixed_velocity_norm": 0.0017346531174445858,
+      "nonseed_changed": 808,
+      "sum_mixed_velocity_norm": 0.06973340026035708
+    },
+    "zero_velocity_control": {
+      "changed": 0,
+      "max_mixed_velocity_norm": 0.0,
+      "nonseed_changed": 0,
+      "sum_mixed_velocity_norm": 0.0
+    }
+  },
+  {
+    "actual_mismatch": 0,
+    "after_full_residual": {
+      "closing_rows": 1103,
+      "maximum_closing_speed_m_s": 0.0004496987967286259
+    },
+    "after_second_residual": {
+      "closing_rows": 1087,
+      "maximum_closing_speed_m_s": 0.00030011587659828365
+    },
+    "bodies": 945,
+    "changed_identically_without_seed": 803,
+    "energy_guards": [
+      true,
+      true,
+      true,
+      true,
+      true
+    ],
+    "event": 21,
+    "full": {
+      "changed": 812,
+      "max_mixed_velocity_norm": 0.01950767548841339,
+      "nonseed_changed": 810,
+      "sum_mixed_velocity_norm": 0.11462369932754654
+    },
+    "identical_without_seed": 936,
+    "incoming_residual": {
+      "closing_rows": 1050,
+      "maximum_closing_speed_m_s": 0.015959490090608597
+    },
+    "min_seed_normal_velocity": -0.0030350429005920887,
+    "only_seed": {
+      "changed": 2,
+      "max_mixed_velocity_norm": 0.0076372881693325696,
+      "nonseed_changed": 0,
+      "sum_mixed_velocity_norm": 0.012457918120515443
+    },
+    "rows": 2489,
+    "second_projection_no_new_impact": {
+      "changed": 786,
+      "max_mixed_velocity_norm": 0.001438324255746439,
+      "nonseed_changed": 784,
+      "sum_mixed_velocity_norm": 0.037570111584059145
+    },
+    "seed_normal_impulse": 0.0038244854658842087,
+    "seed_rows": [
+      1
+    ],
+    "without_seed": {
+      "changed": 810,
+      "max_mixed_velocity_norm": 0.01950767548841339,
+      "nonseed_changed": 809,
+      "sum_mixed_velocity_norm": 0.10228566802055362
+    },
+    "zero_velocity_control": {
+      "changed": 0,
+      "max_mixed_velocity_norm": 0.0,
+      "nonseed_changed": 0,
+      "sum_mixed_velocity_norm": 0.0
+    }
+  },
+  {
+    "actual_mismatch": 0,
+    "after_full_residual": {
+      "closing_rows": 1014,
+      "maximum_closing_speed_m_s": 6.675400072708726e-05
+    },
+    "after_second_residual": {
+      "closing_rows": 1007,
+      "maximum_closing_speed_m_s": 3.707430005306378e-05
+    },
+    "bodies": 937,
+    "changed_identically_without_seed": 781,
+    "energy_guards": [
+      true,
+      true,
+      true,
+      true,
+      true
+    ],
+    "event": 25,
+    "full": {
+      "changed": 784,
+      "max_mixed_velocity_norm": 0.00031112200669471894,
+      "nonseed_changed": 782,
+      "sum_mixed_velocity_norm": 0.008898692451489726
+    },
+    "identical_without_seed": 934,
+    "incoming_residual": {
+      "closing_rows": 1025,
+      "maximum_closing_speed_m_s": 9.035708353621885e-05
+    },
+    "min_seed_normal_velocity": -7.42516276659444e-05,
+    "only_seed": {
+      "changed": 2,
+      "max_mixed_velocity_norm": 0.00020349560418634688,
+      "nonseed_changed": 0,
+      "sum_mixed_velocity_norm": 0.0002812082328481188
+    },
+    "rows": 2475,
+    "second_projection_no_new_impact": {
+      "changed": 738,
+      "max_mixed_velocity_norm": 0.00017642278975167825,
+      "nonseed_changed": 736,
+      "sum_mixed_velocity_norm": 0.00515646350957775
+    },
+    "seed_normal_impulse": 0.00010411533003207296,
+    "seed_rows": [
+      1
+    ],
+    "without_seed": {
+      "changed": 781,
+      "max_mixed_velocity_norm": 0.00031112200669471894,
+      "nonseed_changed": 781,
+      "sum_mixed_velocity_norm": 0.00869334486801307
+    },
+    "zero_velocity_control": {
+      "changed": 0,
+      "max_mixed_velocity_norm": 0.0,
+      "nonseed_changed": 0,
+      "sum_mixed_velocity_norm": 0.0
+    }
+  },
+  {
+    "actual_mismatch": 0,
+    "after_full_residual": {
+      "closing_rows": 968,
+      "maximum_closing_speed_m_s": 0.0002605617046356201
+    },
+    "after_second_residual": {
+      "closing_rows": 961,
+      "maximum_closing_speed_m_s": 0.0001035392633639276
+    },
+    "bodies": 946,
+    "changed_identically_without_seed": 751,
+    "energy_guards": [
+      true,
+      true,
+      true,
+      true,
+      true
+    ],
+    "event": 28,
+    "full": {
+      "changed": 751,
+      "max_mixed_velocity_norm": 0.0029340329575507844,
+      "nonseed_changed": 751,
+      "sum_mixed_velocity_norm": 0.02613068519983782
+    },
+    "identical_without_seed": 946,
+    "incoming_residual": {
+      "closing_rows": 1002,
+      "maximum_closing_speed_m_s": 0.0007250159978866577
+    },
+    "min_seed_normal_velocity": 4.788952355738729e-05,
+    "only_seed": {
+      "changed": 0,
+      "max_mixed_velocity_norm": 0.0,
+      "nonseed_changed": 0,
+      "sum_mixed_velocity_norm": 0.0
+    },
+    "rows": 2490,
+    "second_projection_no_new_impact": {
+      "changed": 731,
+      "max_mixed_velocity_norm": 0.0006462787290986257,
+      "nonseed_changed": 731,
+      "sum_mixed_velocity_norm": 0.009506279299473307
+    },
+    "seed_normal_impulse": 0.0,
+    "seed_rows": [
+      1
+    ],
+    "without_seed": {
+      "changed": 751,
+      "max_mixed_velocity_norm": 0.0029340329575507844,
+      "nonseed_changed": 751,
+      "sum_mixed_velocity_norm": 0.02613068519983782
+    },
+    "zero_velocity_control": {
+      "changed": 0,
+      "max_mixed_velocity_norm": 0.0,
+      "nonseed_changed": 0,
+      "sum_mixed_velocity_norm": 0.0
+    }
+  },
+  {
+    "actual_mismatch": 0,
+    "after_full_residual": {
+      "closing_rows": 803,
+      "maximum_closing_speed_m_s": 0.004722465295344591
+    },
+    "after_second_residual": {
+      "closing_rows": 773,
+      "maximum_closing_speed_m_s": 0.0025857314467430115
+    },
+    "bodies": 941,
+    "changed_identically_without_seed": 710,
+    "energy_guards": [
+      true,
+      true,
+      true,
+      true,
+      true
+    ],
+    "event": 35,
+    "full": {
+      "changed": 714,
+      "max_mixed_velocity_norm": 0.04462012754210794,
+      "nonseed_changed": 712,
+      "sum_mixed_velocity_norm": 0.6881924953777188
+    },
+    "identical_without_seed": 937,
+    "incoming_residual": {
+      "closing_rows": 732,
+      "maximum_closing_speed_m_s": 0.03388671204447746
+    },
+    "min_seed_normal_velocity": -0.01934647001326084,
+    "only_seed": {
+      "changed": 2,
+      "max_mixed_velocity_norm": 0.052593650884334944,
+      "nonseed_changed": 0,
+      "sum_mixed_velocity_norm": 0.07402514212208543
+    },
+    "rows": 2487,
+    "second_projection_no_new_impact": {
+      "changed": 659,
+      "max_mixed_velocity_norm": 0.007778330794535161,
+      "nonseed_changed": 657,
+      "sum_mixed_velocity_norm": 0.13825075584108107
+    },
+    "seed_normal_impulse": 0.02678947150707245,
+    "seed_rows": [
+      1
+    ],
+    "without_seed": {
+      "changed": 712,
+      "max_mixed_velocity_norm": 0.041669461048367246,
+      "nonseed_changed": 711,
+      "sum_mixed_velocity_norm": 0.6126214882596972
+    },
+    "zero_velocity_control": {
+      "changed": 0,
+      "max_mixed_velocity_norm": 0.0,
+      "nonseed_changed": 0,
+      "sum_mixed_velocity_norm": 0.0
+    }
+  },
+  {
+    "actual_mismatch": 0,
+    "after_full_residual": {
+      "closing_rows": 734,
+      "maximum_closing_speed_m_s": 0.0007996552158147097
+    },
+    "after_second_residual": {
+      "closing_rows": 717,
+      "maximum_closing_speed_m_s": 0.0004436428425833583
+    },
+    "bodies": 940,
+    "changed_identically_without_seed": 640,
+    "energy_guards": [
+      true,
+      true,
+      true,
+      true,
+      true
+    ],
+    "event": 38,
+    "full": {
+      "changed": 644,
+      "max_mixed_velocity_norm": 0.0024150866286766935,
+      "nonseed_changed": 642,
+      "sum_mixed_velocity_norm": 0.04751133060244687
+    },
+    "identical_without_seed": 936,
+    "incoming_residual": {
+      "closing_rows": 771,
+      "maximum_closing_speed_m_s": 0.001523408805951476
+    },
+    "min_seed_normal_velocity": -0.0006050881929695606,
+    "only_seed": {
+      "changed": 2,
+      "max_mixed_velocity_norm": 0.0017042165265636218,
+      "nonseed_changed": 0,
+      "sum_mixed_velocity_norm": 0.0021237511491867195
+    },
+    "rows": 2486,
+    "second_projection_no_new_impact": {
+      "changed": 569,
+      "max_mixed_velocity_norm": 0.0014314392103432962,
+      "nonseed_changed": 567,
+      "sum_mixed_velocity_norm": 0.028421036490111802
+    },
+    "seed_normal_impulse": 0.0007882131612859666,
+    "seed_rows": [
+      1
+    ],
+    "without_seed": {
+      "changed": 642,
+      "max_mixed_velocity_norm": 0.0024150866286766935,
+      "nonseed_changed": 641,
+      "sum_mixed_velocity_norm": 0.04535403505319085
+    },
+    "zero_velocity_control": {
+      "changed": 0,
+      "max_mixed_velocity_norm": 0.0,
+      "nonseed_changed": 0,
+      "sum_mixed_velocity_norm": 0.0
+    }
+  },
+  {
+    "actual_mismatch": 0,
+    "after_full_residual": {
+      "closing_rows": 684,
+      "maximum_closing_speed_m_s": 0.0011042979313060641
+    },
+    "after_second_residual": {
+      "closing_rows": 645,
+      "maximum_closing_speed_m_s": 0.0006976409931667149
+    },
+    "bodies": 938,
+    "changed_identically_without_seed": 614,
+    "energy_guards": [
+      true,
+      true,
+      true,
+      true,
+      true
+    ],
+    "event": 58,
+    "full": {
+      "changed": 619,
+      "max_mixed_velocity_norm": 0.010140567768737927,
+      "nonseed_changed": 617,
+      "sum_mixed_velocity_norm": 0.07673985866772712
+    },
+    "identical_without_seed": 933,
+    "incoming_residual": {
+      "closing_rows": 713,
+      "maximum_closing_speed_m_s": 0.0017639874713495374
+    },
+    "min_seed_normal_velocity": -0.00176068558357656,
+    "only_seed": {
+      "changed": 2,
+      "max_mixed_velocity_norm": 0.0036060966002948894,
+      "nonseed_changed": 0,
+      "sum_mixed_velocity_norm": 0.006847228154590828
+    },
+    "rows": 2460,
+    "second_projection_no_new_impact": {
+      "changed": 540,
+      "max_mixed_velocity_norm": 0.006387734025613654,
+      "nonseed_changed": 538,
+      "sum_mixed_velocity_norm": 0.03870976331124125
+    },
+    "seed_normal_impulse": 0.001702612149529159,
+    "seed_rows": [
+      1
+    ],
+    "without_seed": {
+      "changed": 618,
+      "max_mixed_velocity_norm": 0.010140567768737927,
+      "nonseed_changed": 617,
+      "sum_mixed_velocity_norm": 0.06740238938927964
+    },
+    "zero_velocity_control": {
+      "changed": 0,
+      "max_mixed_velocity_norm": 0.0,
+      "nonseed_changed": 0,
+      "sum_mixed_velocity_norm": 0.0
+    }
+  },
+  {
+    "actual_mismatch": 0,
+    "after_full_residual": {
+      "closing_rows": 1272,
+      "maximum_closing_speed_m_s": 0.007775020785629749
+    },
+    "after_second_residual": {
+      "closing_rows": 1249,
+      "maximum_closing_speed_m_s": 0.00495515763759613
+    },
+    "bodies": 936,
+    "changed_identically_without_seed": 225,
+    "energy_guards": [
+      true,
+      true,
+      true,
+      true,
+      true
+    ],
+    "event": 9,
+    "full": {
+      "changed": 854,
+      "max_mixed_velocity_norm": 0.10596523780979558,
+      "nonseed_changed": 852,
+      "sum_mixed_velocity_norm": 1.7168465999343117
+    },
+    "identical_without_seed": 307,
+    "incoming_residual": {
+      "closing_rows": 1310,
+      "maximum_closing_speed_m_s": 0.02847921848297119
+    },
+    "min_seed_normal_velocity": -0.02847921848297119,
+    "only_seed": {
+      "changed": 2,
+      "max_mixed_velocity_norm": 0.06647916954947922,
+      "nonseed_changed": 0,
+      "sum_mixed_velocity_norm": 0.1187150587946058
+    },
+    "rows": 2475,
+    "second_projection_no_new_impact": {
+      "changed": 829,
+      "max_mixed_velocity_norm": 0.010579667452133965,
+      "nonseed_changed": 827,
+      "sum_mixed_velocity_norm": 0.94873414944173
+    },
+    "seed_normal_impulse": 0.03561561554670334,
+    "seed_rows": [
+      1
+    ],
+    "without_seed": {
+      "changed": 854,
+      "max_mixed_velocity_norm": 0.026615083580286095,
+      "nonseed_changed": 852,
+      "sum_mixed_velocity_norm": 1.5904118823400157
+    },
+    "zero_velocity_control": {
+      "changed": 0,
+      "max_mixed_velocity_norm": 0.0,
+      "nonseed_changed": 0,
+      "sum_mixed_velocity_norm": 0.0
+    }
+  }
+]

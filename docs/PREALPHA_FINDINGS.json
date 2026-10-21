@@ -166,9 +166,9 @@
       "workstream": "P1-01",
       "original_quote": "Dense-contact physics still has severe latency tails",
       "status": "improved",
-      "scope": "fresh_matched_linux_event_dependencies_20261021",
-      "disposition": "Pending-impact heap, endpoint dependencies and whole-interval separation pruning remove 82.63% of CCD queries with all 600 physical step digests unchanged. Two matched runs improve mean 75.18/74.81 to 67.57/67.28 ms; live late FPS rises from 0.926 to 1.120 but still severely stalls. Connected response and contact-episode limits remain; no 24/30 FPS claim.",
-      "evidence": "docs/PREALPHA_EVENT_DEPENDENCIES.md"
+      "scope": "fresh_matched_linux_incremental_impacts_20261021",
+      "disposition": "Actual old event28 changes751 bodies through unrelated resting-residual projection; immutable current-event support targets reduce this to0, and event18 from810 to3. Growing private domains retain event impulses, expand on exact per-row body-velocity dependencies and retain legacy fallback. Matched600-step mean67.57->30.98ms, p95177.78->71.67, worst535.21->104.85; real late cadence0.97->2.40FPS, still far below24/30. Physical trajectories intentionally differ; all601 native geometry states recorded, mixed penetration tails retained. Not closure or human acceptance.",
+      "evidence": "docs/PREALPHA_INCREMENTAL_IMPACTS.md"
     },
     {
       "id": "C-01",

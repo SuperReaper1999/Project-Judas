@@ -1,0 +1,22 @@
+{
+  "matched_steps": 347,
+  "compared_fields": [
+    "step",
+    "bodies",
+    "awake",
+    "sleeping",
+    "candidates",
+    "contacts",
+    "impact_events",
+    "impact_queries",
+    "impact_iterations",
+    "impact_peak",
+    "trajectory_digest",
+    "max_linear_speed",
+    "max_angular_speed",
+    "nonfinite_fields"
+  ],
+  "mismatches": [],
+  "physical_capture_equivalent": true,
+  "timing_not_comparable": "Step347 serializes ten full cases within the instrumented solve; do not use the observed timing as production baseline."
+}

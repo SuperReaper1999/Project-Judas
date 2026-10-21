@@ -1,0 +1,26 @@
+[
+  {
+    "name": "wheel",
+    "exit": 0,
+    "seconds": 0.1138883169987821,
+    "binary_sha256": "16f869179c2a4c6674f8e51c07a0031828e72d03b3139792bf1db3f8af0123d1"
+  },
+  {
+    "name": "powertrain",
+    "exit": 0,
+    "seconds": 0.16411788699952012,
+    "binary_sha256": "1e924e1934673990964f74fc1921548de5a214496befa9448d09337114287996"
+  },
+  {
+    "name": "structural",
+    "exit": 0,
+    "seconds": 0.03182056699915847,
+    "binary_sha256": "585e4fee31b37b7217342a79b22b63584b2b8e3f10fc90c0d6040c15af661aa5"
+  },
+  {
+    "name": "deformable",
+    "exit": 0,
+    "seconds": 0.31418008399850805,
+    "binary_sha256": "bc17440ba6de99a753f74c74ebfc0ad6e55ec8f7d198f8bc6aafcf5e74b7c536"
+  }
+]

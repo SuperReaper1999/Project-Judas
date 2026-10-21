@@ -1,0 +1,22 @@
+{
+  "current_checkpoint": {
+    "steps": 400,
+    "mean_ms": 67.4020710225,
+    "median_ms": 31.2987005,
+    "p95_ms": 201.884073,
+    "worst_ms": 535.214303,
+    "events": 4835,
+    "queries": 3171426,
+    "search_iterations": 2399326
+  },
+  "dispatch_prototype": {
+    "steps": 400,
+    "mean_ms": 67.3527504575,
+    "median_ms": 31.4030185,
+    "p95_ms": 227.949941,
+    "worst_ms": 324.60449,
+    "events": 4780,
+    "queries": 3135313,
+    "search_iterations": 2390836
+  }
+}

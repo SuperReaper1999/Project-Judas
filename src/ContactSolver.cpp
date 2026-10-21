@@ -3,6 +3,7 @@
 #include <algorithm>
 #include <cmath>
 #include <cstring>
+#include <stdexcept>
 
 #include "RigidBody.h"
 
@@ -143,10 +144,17 @@ void ContactSolver::AddContact(RigidBody& bodyA, RigidBody& bodyB, const Contact
     m_pending.push_back(Pending{restitution, std::max(warmNormalImpulse, 0.0f), warmTangentImpulse});
 }
 
-void ContactSolver::Prepare(float fixedDeltaTime) {
+void ContactSolver::Prepare(float fixedDeltaTime) { PrepareAppended(fixedDeltaTime, 0, 0); }
+
+void ContactSolver::PrepareAppended(float fixedDeltaTime, std::size_t firstRow,
+                                    std::size_t firstFrame) {
+    if (firstRow > m_constraints.size() || firstFrame > m_frames.size() ||
+        m_pending.size() != m_constraints.size() - firstRow)
+        throw std::invalid_argument("invalid contact preparation range");
     // Frames live only within this solve. The body pointers have the same
     // lifetime contract as constraints; Clear drops every pointer/key.
-    for (BodyFrame& frame : m_frames) {
+    for (std::size_t index = firstFrame; index < m_frames.size(); ++index) {
+        auto& frame = m_frames[index];
         const RigidBody& body = *frame.body;
         if (!frame.rotationValid || !SameQuaternion(frame.orientation,body.orientation)) {
             frame.rotation = ContactRotation(body.orientation);
@@ -156,7 +164,7 @@ void ContactSolver::Prepare(float fixedDeltaTime) {
         frame.inverseInertia = body.IsStatic() ? glm::mat3(0.0f) : body.InverseInertiaWorld();
         ++m_frameBuilds;
     }
-    for (std::size_t i = 0; i < m_constraints.size(); ++i) {
+    for (std::size_t i = firstRow; i < m_constraints.size(); ++i) {
         ContactConstraint& c = m_constraints[i];
         const RigidBody& a = *c.bodyA;
         const RigidBody& b = *c.bodyB;
@@ -193,7 +201,7 @@ void ContactSolver::Prepare(float fixedDeltaTime) {
         c.normalImpulse = 0.0f;
         c.tangentImpulse = glm::vec3(0.0f);
         const float closingSpeed = glm::dot(PointVelocity(a, rA) - PointVelocity(b, rB), c.normal);
-        const float restitution = m_pending[i].restitution;
+        const float restitution = m_pending[i - firstRow].restitution;
         const bool bounces = -closingSpeed > kRestitutionVelocityThreshold;
         // FTFT4A preserves the measured signed gap. The existing separated
         // impact target/step order remains unchanged and is OPEN FTFT4B.
@@ -216,11 +224,12 @@ void ContactSolver::Prepare(float fixedDeltaTime) {
     // Warm start after every restitution target has been read from the
     // untouched velocities. The friction part is re-projected onto this
     // step's tangent plane and kept inside this step's Coulomb disc.
-    for (std::size_t i = 0; i < m_constraints.size(); ++i) {
+    for (std::size_t i = firstRow; i < m_constraints.size(); ++i) {
         ContactConstraint& c = m_constraints[i];
         if (c.normalMass <= 0.0f) continue;
-        c.normalImpulse = m_pending[i].warmNormal;
-        glm::vec3 tangent = m_pending[i].warmTangent - c.normal * glm::dot(m_pending[i].warmTangent, c.normal);
+        c.normalImpulse = m_pending[i - firstRow].warmNormal;
+        glm::vec3 tangent = m_pending[i - firstRow].warmTangent -
+                            c.normal * glm::dot(m_pending[i - firstRow].warmTangent, c.normal);
         const float limit = c.friction * c.normalImpulse;
         const float magnitude = glm::length(tangent);
         if (magnitude > limit) tangent = magnitude > kEpsilon ? tangent * (limit / magnitude) : glm::vec3(0.0f);
@@ -233,42 +242,99 @@ void ContactSolver::Prepare(float fixedDeltaTime) {
     m_pending.clear();
 }
 
-void ContactSolver::SolveVelocities(int iterations) {
-    for (int iteration = 0; iteration < iterations; ++iteration) {
-        for (ContactConstraint& c : m_constraints) {
-            if (c.normalMass <= 0.0f) continue;
-            const glm::vec3 rA = c.velocityOffsetA;
-            const glm::vec3 rB = c.velocityOffsetB;
+void ContactSolver::SetInelasticVelocityTarget(std::size_t row, float target) {
+    if (row >= m_constraints.size() || !std::isfinite(target) || target > 0 ||
+        m_constraints[row].restitutionBias != 0)
+        throw std::invalid_argument("invalid inelastic velocity target");
+    m_constraints[row].restitutionBias = target;
+}
 
-            // --- Normal: accumulate, clamp the total at zero, apply delta.
-            const float vn = glm::dot(PointVelocity(*c.bodyA, rA) - PointVelocity(*c.bodyB, rB), c.normal);
-            const float lambda = c.normalMass * (c.restitutionBias - vn);
-            const float newNormal = std::max(c.normalImpulse + lambda, 0.0f);
-            const float appliedNormal = newNormal - c.normalImpulse;
-            c.normalImpulse = newNormal;
-            if (appliedNormal != 0.0f) ApplyImpulse(c, rA, rB, c.normal * appliedNormal);
+namespace {
+bool SolveVelocityConstraint(ContactConstraint& c) {
+    if (c.normalMass <= 0.0f)
+        return false;
+    const glm::vec3 rA = c.velocityOffsetA;
+    const glm::vec3 rB = c.velocityOffsetB;
 
-            // --- Friction: Coulomb disc against the ACCUMULATED normal
-            // impulse of this point.
-            const glm::vec3 relative = PointVelocity(*c.bodyA, rA) - PointVelocity(*c.bodyB, rB);
-            const glm::vec3 slip = relative - c.normal * glm::dot(relative, c.normal);
-            const float slipSpeed = glm::length(slip);
-            const float limit = c.friction * c.normalImpulse;
-            glm::vec3 newTangent = c.tangentImpulse;
-            if (slipSpeed > kEpsilon) {
-                const glm::vec3 direction = slip / slipSpeed;
-                const float k = InverseEffectiveMass(c, rA, rB, direction);
-                if (k > kEpsilon) newTangent -= direction * (slipSpeed / k);
-            }
-            const float magnitude = glm::length(newTangent);
-            if (magnitude > limit) {
-                newTangent = magnitude > kEpsilon ? newTangent * (limit / magnitude) : glm::vec3(0.0f);
-            }
-            const glm::vec3 appliedTangent = newTangent - c.tangentImpulse;
-            c.tangentImpulse = newTangent;
-            if (glm::dot(appliedTangent, appliedTangent) > 0.0f) ApplyImpulse(c, rA, rB, appliedTangent);
-        }
+    // --- Normal: accumulate, clamp the total at zero, apply delta.
+    const float vn = glm::dot(PointVelocity(*c.bodyA, rA) - PointVelocity(*c.bodyB, rB), c.normal);
+    const float lambda = c.normalMass * (c.restitutionBias - vn);
+    const glm::vec3 oldTangent = c.tangentImpulse;
+    const float oldNormal = c.normalImpulse;
+    const float newNormal = std::max(c.normalImpulse + lambda, 0.0f);
+    const float appliedNormal = newNormal - c.normalImpulse;
+    c.normalImpulse = newNormal;
+    if (appliedNormal != 0.0f)
+        ApplyImpulse(c, rA, rB, c.normal * appliedNormal);
+
+    // --- Friction: Coulomb disc against the ACCUMULATED normal
+    // impulse of this point.
+    const glm::vec3 relative = PointVelocity(*c.bodyA, rA) - PointVelocity(*c.bodyB, rB);
+    const glm::vec3 slip = relative - c.normal * glm::dot(relative, c.normal);
+    const float slipSpeed = glm::length(slip);
+    const float limit = c.friction * c.normalImpulse;
+    glm::vec3 newTangent = c.tangentImpulse;
+    if (slipSpeed > kEpsilon) {
+        const glm::vec3 direction = slip / slipSpeed;
+        const float k = InverseEffectiveMass(c, rA, rB, direction);
+        if (k > kEpsilon)
+            newTangent -= direction * (slipSpeed / k);
     }
+    const float magnitude = glm::length(newTangent);
+    if (magnitude > limit) {
+        newTangent = magnitude > kEpsilon ? newTangent * (limit / magnitude) : glm::vec3(0.0f);
+    }
+    const glm::vec3 appliedTangent = newTangent - c.tangentImpulse;
+    c.tangentImpulse = newTangent;
+    if (glm::dot(appliedTangent, appliedTangent) > 0.0f)
+        ApplyImpulse(c, rA, rB, appliedTangent);
+    return c.normalImpulse != oldNormal || glm::any(glm::notEqual(c.tangentImpulse, oldTangent));
+}
+} // namespace
+
+void ContactSolver::SolveVelocities(int iterations) {
+    for (int iteration = 0; iteration < iterations; ++iteration)
+        for (auto& c : m_constraints)
+            SolveVelocityConstraint(c);
+}
+
+void ContactSolver::SolveTrackedVelocities(int iterations, std::vector<RigidBody*>& activated) {
+    SolveTrackedVelocityRange(0, iterations, activated);
+}
+
+void ContactSolver::SolveTrackedVelocityRange(std::size_t firstRow, int iterations,
+                                              std::vector<RigidBody*>& activated) {
+    std::vector<unsigned char> seen(m_frames.size(), 0);
+    for (auto* body : activated) {
+        const auto found = m_frameIndex.find(body);
+        if (found != m_frameIndex.end())
+            seen[found->second] = 1;
+    }
+    for (int iteration = 0; iteration < iterations; ++iteration)
+        for (std::size_t index = firstRow; index < m_constraints.size(); ++index) {
+            auto& c = m_constraints[index];
+            const auto linearA = c.bodyA->linearVelocity, angularA = c.bodyA->angularVelocity;
+            const auto linearB = c.bodyB->linearVelocity, angularB = c.bodyB->angularVelocity;
+            if (!SolveVelocityConstraint(c))
+                continue;
+            // Downstream constraints depend on represented body velocities, not
+            // merely on a row's accumulator changing. Check after EACH row, so
+            // a transient response cancelled by a later row is still discovered.
+            // Exact equality, no magnitude cutoff. A rounded-away impulse cannot
+            // change an unqueried neighbour's constraint velocity.
+            const bool changedA =
+                linearA != c.bodyA->linearVelocity || angularA != c.bodyA->angularVelocity;
+            const bool changedB =
+                linearB != c.bodyB->linearVelocity || angularB != c.bodyB->angularVelocity;
+            if (changedA && !c.bodyA->IsStatic() && !seen[c.frameA]) {
+                seen[c.frameA] = 1;
+                activated.push_back(c.bodyA);
+            }
+            if (changedB && !c.bodyB->IsStatic() && !seen[c.frameB]) {
+                seen[c.frameB] = 1;
+                activated.push_back(c.bodyB);
+            }
+        }
 }
 
 void ContactSolver::SolvePositions(int iterations) {

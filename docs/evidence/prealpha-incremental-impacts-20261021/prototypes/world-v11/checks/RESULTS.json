@@ -1,0 +1,98 @@
+[
+  {
+    "target": "GrowingImpactTests",
+    "exit": 0,
+    "seconds": 0.0022235449996514944,
+    "binary_sha256": "7ae33f9b2d48246ca2a0c493c95fb3a9b7ea0a707b599239182eb1631647b819"
+  },
+  {
+    "target": "IncrementalRowsTests",
+    "exit": 0,
+    "seconds": 0.14962146499965456,
+    "binary_sha256": "3f4b31d87bcafde72a607e7a0b9ad9b2cbbf960c7305390415e1ab558e9058be"
+  },
+  {
+    "target": "judas_impact_solver_tests",
+    "exit": 0,
+    "seconds": 0.0016850889987836126,
+    "binary_sha256": "7accb2b6db109f43399d4fb8cce9f30ebb45f8c73497bb18cb38fded2063b564"
+  },
+  {
+    "target": "judas_impact_timing_tests",
+    "exit": 0,
+    "seconds": 0.012435692000508425,
+    "binary_sha256": "f86cd1ac4df352843d58ac369ae97eb48b8288c291032bea8de495ee958fbae6"
+  },
+  {
+    "target": "judas_impact_robustness_tests",
+    "exit": 0,
+    "seconds": 0.40521306799928425,
+    "binary_sha256": "51a81afd8fbbeb03f4a0d2a4cb5810b1a367b7b0defb7845194eb77e005fc601"
+  },
+  {
+    "target": "judas_support_continuation_tests",
+    "exit": 0,
+    "seconds": 0.01411605400062399,
+    "binary_sha256": "27176731f6fee83d8084c85e662bc2222a1f087d2439a6d35e494f694e5b9569"
+  },
+  {
+    "target": "judas_collision_continuity_tests",
+    "exit": 0,
+    "seconds": 0.015560838999590487,
+    "binary_sha256": "9f461dc17fd76cde0cb227af1b1fef954ae976aaf3afc03a475ae99a812ca269"
+  },
+  {
+    "target": "judas_joint_tests",
+    "exit": 0,
+    "seconds": 0.023759988000165322,
+    "binary_sha256": "4a3d3a3d012c9c0fc14ae9d19372cac348e127638d7971a9b11b0bb6ecf64575"
+  },
+  {
+    "target": "judas_kinematic_tests",
+    "exit": 0,
+    "seconds": 0.015639496999938274,
+    "binary_sha256": "d66e1a809b3e88a6bef5802545c08740f501ce1425d307047c96af40151b10aa"
+  },
+  {
+    "target": "judas_rigid_contact_tests",
+    "exit": 0,
+    "seconds": 0.4241916360006144,
+    "binary_sha256": "b5e2428f0e1ee87690fd6c7e0d4c3aa18a939d38141dcea3dd450e1e85bc7ccc"
+  },
+  {
+    "target": "judas_character_motor_tests",
+    "exit": 0,
+    "seconds": 0.34517728600076225,
+    "binary_sha256": "6bba70a520723e2d642ed59de82f09464f63d01c802ab1d992d3f9beafb0a86a"
+  },
+  {
+    "target": "judas_ragdoll_tests",
+    "exit": 0,
+    "seconds": 0.17714339200028917,
+    "binary_sha256": "04370088e8473c44c01fe0da3110b0f09535aa84c31a2604ef188ecc9e9733b2"
+  },
+  {
+    "target": "judas_physics_continuation_tests",
+    "exit": 0,
+    "seconds": 0.01416174900077749,
+    "binary_sha256": "56593010d253a23348da9949cead170c7de7c98591c415e47ecd3b11d1176815"
+  },
+  {
+    "target": "judas_contact_lifecycle_tests",
+    "exit": 0,
+    "seconds": 0.020566533999954117,
+    "binary_sha256": "dbd4f0c8fac455193cbd23f56ac3dca8b5a95141a28744fa7a49196bcccaccbe"
+  },
+  {
+    "target": "judas_native_mesh_growth_tests",
+    "exit": 0,
+    "seconds": 0.0020455600006243913,
+    "binary_sha256": "140824f34a7da907ca8ef21e5d0ee87efb3ce4e48467c9a0ac92f7cfbda627d6"
+  },
+  {
+    "target": "judas_collision_geometry_tests",
+    "exit": 0,
+    "seconds": 0.4280196290001186,
+    "binary_sha256": "e5ccd6794491e65ab0ea83cd0e3426e372949002d95388048e13e9246067bc8f"
+  }
+]

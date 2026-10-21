@@ -100,3 +100,12 @@ the controlled M87/M91 benchmarks, not visual FPS or HUD sampling alone.
 
 Automated benchmark coverage and remaining performance limits are recorded in the
 M91 evidence report. Human acceptance and Windows validation are separate states.
+
+## Persistent contacts and incremental impacts
+
+The [current redesign report](../../docs/PREALPHA_INCREMENTAL_IMPACTS.md) covers
+new impacts growing through real velocity dependencies while continuing support
+keeps its ordinary force ownership. The scene, counts, materials, cadence and
+controls are unchanged. Press **3** for the original dense failure; expect
+remaining severe slow frames. Automated checks establish the scoped numerical
+contracts, not human acceptance or real-time certification.

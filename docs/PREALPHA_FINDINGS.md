@@ -93,3 +93,14 @@ in [the report](PREALPHA_CLEANUP.md).
 - Current Windows/Android physical hardware qualification and broad clean-machine ABI/device coverage remain incomplete.
 - Larger scripting/runtime/editor modules and manual component integration remain incremental maintainability work.
 - These focused checks do not establish every-feature or every-combination validation. No M100 or Alpha declaration.
+
+## 21 October: persistent-contact redesign
+
+**B-01 remains improved/open.** The [current implementation and evidence](PREALPHA_INCREMENTAL_IMPACTS.md)
+replace unrelated support re-projection with a private, growing impact response.
+Actual event28 changes751→0 bodies and event18 changes810→3; disabling continuing
+support restores the old results. Matched600-step mean67.57→30.98ms,
+p95177.78→71.67ms and worst535.21→104.85ms. Late live cadence improves0.97→2.40FPS,
+so the real-time requirement remains unmet. Different dense trajectories and
+mixed penetration measurements are explicit. Existing deferred findings and
+platform limitations are not reclassified by this work. Main is unchanged.

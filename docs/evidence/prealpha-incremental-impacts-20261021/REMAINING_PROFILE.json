@@ -1,0 +1,54 @@
+{
+  "scope": "Retained final profiler-history window, synthetic one step per frame. Costs are per observed frame/step; discovery excluded from growing solve timer. Not all600-step average.",
+  "step_range": [
+    483,
+    600
+  ],
+  "counters": {
+    "Physics peak impact island bodies": {
+      "count": 118,
+      "mean": 528.7627118644068,
+      "max": 721
+    },
+    "Physics incremental impact events": {
+      "count": 118,
+      "mean": 4.8474576271186445,
+      "max": 12
+    },
+    "Physics incremental impact fallbacks": {
+      "count": 118,
+      "mean": 0.09322033898305085,
+      "max": 2
+    },
+    "Physics incremental impact body visits": {
+      "count": 118,
+      "mean": 1634.457627118644,
+      "max": 4563
+    },
+    "Physics incremental impact rows": {
+      "count": 118,
+      "mean": 4951.728813559322,
+      "max": 14250
+    },
+    "Physics impact continuation cache ms": {
+      "count": 118,
+      "mean": 1.048622559322034,
+      "max": 2.610516
+    },
+    "Physics impact island discovery ms": {
+      "count": 118,
+      "mean": 11.8205426779661,
+      "max": 33.717017
+    },
+    "Physics impact solve ms": {
+      "count": 118,
+      "mean": 4.097161898305084,
+      "max": 10.589174
+    },
+    "Physics impact observation publication ms": {
+      "count": 118,
+      "mean": 0.6842281779661017,
+      "max": 1.503666
+    }
+  }
+}

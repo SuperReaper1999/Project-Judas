@@ -22,6 +22,12 @@ The [event-dependency follow-up](PREALPHA_EVENT_DEPENDENCIES.md) records the
 Most CCD queries are eliminated, but the live dense-pile frame-rate limit remains
 open; no new human acceptance or main promotion is implied.
 
+The subsequent [persistent-contact and growing-impact redesign](PREALPHA_INCREMENTAL_IMPACTS.md)
+removes the demonstrated re-projection of unrelated resting residuals. Matched
+600-step Linux physics cost falls from 67.57 to 30.98 ms mean, with a 535.21 to
+104.85 ms worst step. Dense live rendering remains far below 24–30 FPS. This is
+Experimental qualification, not human acceptance or closure of the stress limit.
+
 ## Evidence and acceptance history
 
 - [Original assessment](evidence/prealpha-pass2/ORIGINAL_ASSESSMENT.md), frozen

@@ -1,0 +1,64 @@
+{
+  "baseline": {
+    "states": 601,
+    "population": [
+      1024
+    ],
+    "mass_kg": [
+      2048.0
+    ],
+    "nonfinite_states": 0,
+    "minimum_inside_floor": 1024,
+    "gravity_mismatches": 0,
+    "max_pair_penetration_m": 0.07227274094746422,
+    "p95_pair_penetration_m": 0.019522782363163654,
+    "minimum_floor_clearance_m": -0.07227274094746428,
+    "initial_energy_j": 32346.31753646828,
+    "max_energy_j": 32346.31753646828,
+    "final_energy_j": 23899.81454695998,
+    "final_depth_m": 0.015317129780545946,
+    "uncertain_geometry": 0,
+    "unsupported_geometry": 0,
+    "fixed_ms": {
+      "count": 600,
+      "maximum": 533.656699,
+      "mean": 67.68135200333333,
+      "median": 48.889720999999994,
+      "p95_floor": 177.986611,
+      "p99_floor": 236.663477
+    }
+  },
+  "final": {
+    "states": 601,
+    "population": [
+      1024
+    ],
+    "mass_kg": [
+      2048.0
+    ],
+    "nonfinite_states": 0,
+    "minimum_inside_floor": 1024,
+    "gravity_mismatches": 0,
+    "max_pair_penetration_m": 0.07433861250071788,
+    "p95_pair_penetration_m": 0.019696326276092566,
+    "minimum_floor_clearance_m": -0.07433861250071788,
+    "initial_energy_j": 32346.31753646828,
+    "max_energy_j": 32346.31753646828,
+    "final_energy_j": 22928.612548279474,
+    "final_depth_m": 0.017114197287356914,
+    "uncertain_geometry": 0,
+    "unsupported_geometry": 0,
+    "fixed_ms": {
+      "count": 600,
+      "maximum": 104.432626,
+      "mean": 31.0529969,
+      "median": 24.618108,
+      "p95_floor": 71.927007,
+      "p99_floor": 84.946662
+    }
+  },
+  "observer_parity": {
+    "steps": 600,
+    "mismatching_trajectory_steps": []
+  }
+}

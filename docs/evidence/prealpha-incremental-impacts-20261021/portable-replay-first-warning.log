@@ -1,0 +1,5 @@
+/home/conner/Documents/GitHub/Project-Judas/docs/evidence/prealpha-incremental-impacts-20261021/causal/ReplayAssertions.cpp: In function ‘int main(int, char**)’:
+/home/conner/Documents/GitHub/Project-Judas/docs/evidence/prealpha-incremental-impacts-20261021/causal/ReplayAssertions.cpp:20:14: warning: variable ‘old’ set but not used [-Wunused-but-set-variable]
+   20 |   const auto old=a.Solve(legacy.rows,j["dt"],j["capture"]);const auto nop=[](const auto&){return true;};
+      |              ^~~
+Ten original events passed, including ownership-negative controls: /home/conner/Documents/GitHub/Project-Judas/.cache/contact-redesign-20261021/portable-replay-final

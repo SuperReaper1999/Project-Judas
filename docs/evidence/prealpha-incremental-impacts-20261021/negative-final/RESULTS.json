@@ -1,0 +1,42 @@
+[
+  {
+    "name": "positive",
+    "exit": 0,
+    "expected": "pass",
+    "pass": true,
+    "source_sha256": "185558da16665e0dafbbbf7c18fc06ad2f1c63b320f0928170b743f68cb8deb7",
+    "binary_sha256": "db1380a0c64b8e54f29d34765a175d46c1f4cca7ff56654a4ce8ba0b4980096e"
+  },
+  {
+    "name": "forget-continuing-support",
+    "exit": 1,
+    "expected": "detected-broken-mechanism",
+    "pass": true,
+    "source_sha256": "7fd8a0ebb1e6f6c0ac94d18fd5c29ff3ccd2309f2e66d8cd778857081174e97d",
+    "binary_sha256": "b314191377d6c39a887817f2884269be9874e3b70403e0854c8be9ddc1f677d4"
+  },
+  {
+    "name": "rebaseline-partially-solved",
+    "exit": 1,
+    "expected": "detected-broken-mechanism",
+    "pass": true,
+    "source_sha256": "b1d2bcee5c53e30b82c1b7808dff7bfbef47d52064649493726e9b1a0674c284",
+    "binary_sha256": "3894b0b6611f9b1f8e414c812da691fd1fb17170e0f6819cbced1bbbc55714a5"
+  },
+  {
+    "name": "restart-on-growth",
+    "exit": 1,
+    "expected": "detected-broken-mechanism",
+    "pass": true,
+    "source_sha256": "f6b17598126eb61439bea52cd0b73bd0bea56a4832c6e2b68e3dfb3063c02182",
+    "binary_sha256": "de52ea3ffea8aa969c46a4a9c4ccb5b6fe3f73dc7ae5abcd1e311326db4ea496"
+  },
+  {
+    "name": "omit-transient-activation",
+    "exit": 1,
+    "expected": "detected-broken-mechanism",
+    "pass": true,
+    "source_sha256": "8d82674e78bd75ec559da7117cc35883eef54df274b3a6ad580ab40d57680162",
+    "binary_sha256": "c94d9b35fb7b691a7eb3beefbcf36287f39dcbd35ee57d611f2cb076612dfd9d"
+  }
+]

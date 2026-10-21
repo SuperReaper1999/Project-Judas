@@ -1,0 +1,21 @@
+{
+  "steps": 400,
+  "matched_fields": [
+    "step",
+    "frame",
+    "bodies",
+    "awake",
+    "sleeping",
+    "candidates",
+    "contacts",
+    "impact_events",
+    "impact_queries",
+    "impact_iterations",
+    "impact_peak",
+    "trajectory_digest",
+    "max_linear_speed",
+    "max_angular_speed",
+    "nonfinite_fields"
+  ],
+  "mismatches": []
+}

@@ -242,6 +242,10 @@ struct PhysicsWorld::Impl {
     std::vector<SleepIsland> sleepIslands;
     std::size_t sleepGraphEdges = 0, sleepIslandCount = 0, sleepScratchBytes = 0;
     void Settle(float dt);
+    struct IncrementalImpact;
+    bool TryIncrementalImpact(const std::array<unsigned, 4>& selected, double now, float dt,
+                              const std::vector<unsigned char>& jointBodies,
+                              IncrementalImpact& trial);
     ContactSolver solver;
     ContactSolver particleSolver; // independent storage; never replays the rigid warm cache
     PhysicsWorld::ParticleContactStats particleContactStats;
@@ -297,7 +301,9 @@ struct PhysicsWorld::Impl {
         std::size_t continuationAttempts = 0, continuationAccepted = 0, continuationPartitions = 0,
                     continuationOverBudget = 0;
         std::size_t coupledFallbackEvents = 0, elasticFallbackEvents = 0,
-                    geometryFallbackEvents = 0, peakImpactBodies = 0, peakImpactRows = 0;
+                    geometryFallbackEvents = 0, peakImpactBodies = 0, peakImpactRows = 0,
+                    incrementalEvents = 0, incrementalFallbacks = 0, incrementalBodies = 0,
+                    incrementalRows = 0;
         std::size_t candidatePasses = 0, candidateQueries = 0, candidateLeaves = 0;
     } work;
     // Indexed output only: workers never mutate physics bodies, geometry

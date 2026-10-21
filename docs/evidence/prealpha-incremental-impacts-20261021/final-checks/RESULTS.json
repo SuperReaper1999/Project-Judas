@@ -1,0 +1,191 @@
+[
+  {
+    "target": "judas_growing_impact_tests",
+    "argv": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_growing_impact_tests"
+    ],
+    "exit": 0,
+    "seconds": 0.003549036000549677,
+    "binary_sha256": "ed1105c89db0ded7ee9ca6417041fac7ff01108d93b9c2585ef008cc0a411919"
+  },
+  {
+    "target": "judas_tracked_contact_rows_tests",
+    "argv": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_tracked_contact_rows_tests"
+    ],
+    "exit": 0,
+    "seconds": 0.16402711500086298,
+    "binary_sha256": "f6eb6b233ae5d3bf322d3e6a5c902810aad15e877eba149391f4cd9ab588d4c6"
+  },
+  {
+    "target": "judas_impact_solver_tests",
+    "argv": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_impact_solver_tests"
+    ],
+    "exit": 0,
+    "seconds": 0.003499523001664784,
+    "binary_sha256": "4b76819d597fe3b866873c83ea9a97c1afdbffbbc4851b6cfc21d8b0bd9c114c"
+  },
+  {
+    "target": "judas_impact_timing_tests",
+    "argv": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_impact_timing_tests"
+    ],
+    "exit": 0,
+    "seconds": 0.015552062999631744,
+    "binary_sha256": "26b1649e29b079e25b84ab66917fd4bd18cf9cff4c64e9d194b3d395b083dbd8"
+  },
+  {
+    "target": "judas_impact_robustness_tests",
+    "argv": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_impact_robustness_tests"
+    ],
+    "exit": 0,
+    "seconds": 0.41418918399904214,
+    "binary_sha256": "2db3d623e02fb2b463b484bec52297a3903f7738f435b14ebfc6a66cb99cef83"
+  },
+  {
+    "target": "judas_support_continuation_tests",
+    "argv": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_support_continuation_tests"
+    ],
+    "exit": 0,
+    "seconds": 0.015682769000704866,
+    "binary_sha256": "44fd82258a3f65e11596b95e9789c43d7509ce2036800fb29e1cfde3aded08e1"
+  },
+  {
+    "target": "judas_collision_continuity_tests",
+    "argv": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_collision_continuity_tests"
+    ],
+    "exit": 0,
+    "seconds": 0.03225430599923129,
+    "binary_sha256": "0514aa5f8972746f31ec33b61c1851cd53e2e0999d0cef458bd0b1d7807767ce"
+  },
+  {
+    "target": "judas_joint_tests",
+    "argv": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_joint_tests"
+    ],
+    "exit": 0,
+    "seconds": 0.03166275900002802,
+    "binary_sha256": "5cdf8eae6bcca042969e1981646510c8d891dcf63429bd54be27be2509a2f747"
+  },
+  {
+    "target": "judas_kinematic_tests",
+    "argv": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_kinematic_tests"
+    ],
+    "exit": 0,
+    "seconds": 0.031643052001527394,
+    "binary_sha256": "1d75929ad963196544cc11d25e77cecb4e4d6d0b82862737f7ea9b55bd433123"
+  },
+  {
+    "target": "judas_rigid_contact_tests",
+    "argv": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_rigid_contact_tests"
+    ],
+    "exit": 0,
+    "seconds": 0.46429179400001885,
+    "binary_sha256": "7705ee6a0e54f85580ddf16137460b049584d2786ed63bbd66f5a552f30f33d6"
+  },
+  {
+    "target": "judas_character_motor_tests",
+    "argv": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_character_motor_tests"
+    ],
+    "exit": 0,
+    "seconds": 0.3644225070001994,
+    "binary_sha256": "3e56815e54b0efa0fc7845a7c32bd7cacc5fb54010a3456b0ad2ab775e289e1b"
+  },
+  {
+    "target": "judas_ragdoll_tests",
+    "argv": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_ragdoll_tests"
+    ],
+    "exit": 0,
+    "seconds": 0.2141192660001252,
+    "binary_sha256": "92d18dd4e7131c658d9735a139ab20f73a56ea889c8154deffa0fba68330f988"
+  },
+  {
+    "target": "judas_physics_continuation_tests",
+    "argv": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_physics_continuation_tests"
+    ],
+    "exit": 0,
+    "seconds": 0.015726091000033193,
+    "binary_sha256": "c8f2407f0fbe036f4b46f55cb3149406f0bf23be3be1b4f9a4ab423932305609"
+  },
+  {
+    "target": "judas_contact_lifecycle_tests",
+    "argv": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_contact_lifecycle_tests"
+    ],
+    "exit": 0,
+    "seconds": 0.031808052999622305,
+    "binary_sha256": "dee21a80be6a4ebf5c1b2ec0c7fae1930f290a301eda39a51e21127a2eeac0de"
+  },
+  {
+    "target": "judas_contact_cache_tests",
+    "argv": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_contact_cache_tests"
+    ],
+    "exit": 0,
+    "seconds": 0.03183997400083172,
+    "binary_sha256": "a3fafe2cb8aadb63084dea785bd9a5259509f5473e9fe695ca1029f0718ff924"
+  },
+  {
+    "target": "judas_native_mesh_growth_tests",
+    "argv": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_native_mesh_growth_tests"
+    ],
+    "exit": 0,
+    "seconds": 0.0035082690010312945,
+    "binary_sha256": "7396c8d0ba5173c0fb308996a808c4af757fae170ad3689eda96532b6f177537"
+  },
+  {
+    "target": "judas_collision_geometry_tests",
+    "argv": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_collision_geometry_tests"
+    ],
+    "exit": 0,
+    "seconds": 0.46463409900025,
+    "binary_sha256": "6f4b13c19dc94a67e36c76a18a95bb4b125bc956db5638f6c20eee99a9c1346b"
+  },
+  {
+    "target": "judas_impact_event_schedule_tests",
+    "argv": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_impact_event_schedule_tests"
+    ],
+    "exit": 0,
+    "seconds": 1.2174887550008862,
+    "binary_sha256": "c64be35474f30e4b687297f4c7335e38304c9d63e059e4449f6c5435b53615b7"
+  },
+  {
+    "target": "judas_origin_physics_tests",
+    "argv": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_origin_physics_tests"
+    ],
+    "exit": 0,
+    "seconds": 0.015732322999610915,
+    "binary_sha256": "3968434481f4446df989c5c0f2a7f9ced623ab14323dcdd7683926ef151db0af"
+  },
+  {
+    "target": "judas_origin_assembly_tests",
+    "argv": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_origin_assembly_tests"
+    ],
+    "exit": 0,
+    "seconds": 0.06389476200092759,
+    "binary_sha256": "825c98d5e73416977ee6b78c564f8be8ed4fa9adb054c93e451cc0de1fab974f"
+  },
+  {
+    "target": "judas_prealpha_lifecycle_tests",
+    "argv": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_prealpha_lifecycle_tests"
+    ],
+    "exit": 0,
+    "seconds": 0.21406074500009709,
+    "binary_sha256": "3731278a07548cb8fd926e79e64aee0e1e371aa2b8c83f82e2384e52ce752302"
+  }
+]

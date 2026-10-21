@@ -1,0 +1,141 @@
+{
+  "baseline_projection_subtraction": {
+    "all_constraints": [
+      [
+        1.9073486328125e-06,
+        0.0,
+        0.0
+      ],
+      [
+        -9.5367431640625e-07,
+        0.0,
+        0.0
+      ],
+      [
+        -9.5367431640625e-07,
+        0.0,
+        0.0
+      ]
+    ],
+    "closing_speed_old_contact": 1.0,
+    "difference_added_to_incoming": [
+      [
+        1.9073486328125e-06,
+        0.0,
+        0.0
+      ],
+      [
+        0.4999990463256836,
+        0.0,
+        0.0
+      ],
+      [
+        -0.5000009536743164,
+        0.0,
+        0.0
+      ]
+    ],
+    "expected_exact_closing_speed": 1.0,
+    "full_energy_guard": true,
+    "incoming": [
+      [
+        1.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        -1.0,
+        0.0,
+        0.0
+      ]
+    ],
+    "old_constraints": [
+      [
+        1.0,
+        0.0,
+        0.0
+      ],
+      [
+        -0.5,
+        0.0,
+        0.0
+      ],
+      [
+        -0.5,
+        0.0,
+        0.0
+      ]
+    ],
+    "old_energy_guard": true,
+    "unsafe_approach_rejected": true
+  },
+  "failures": 0,
+  "separating_seed_resting_residual": {
+    "after_all": [
+      [
+        -1.0,
+        0.0,
+        0.0
+      ],
+      [
+        -0.004999999888241291,
+        0.0,
+        0.0
+      ],
+      [
+        -0.004999999888241291,
+        0.0,
+        0.0
+      ]
+    ],
+    "after_without_seed": [
+      [
+        -1.0,
+        0.0,
+        0.0
+      ],
+      [
+        -0.004999999888241291,
+        0.0,
+        0.0
+      ],
+      [
+        -0.004999999888241291,
+        0.0,
+        0.0
+      ]
+    ],
+    "full_energy_guard": true,
+    "identical": true,
+    "passed": true,
+    "seed_impulse": 0.0,
+    "without_seed_energy_guard": true
+  },
+  "true_impact_propagates": {
+    "after": [
+      [
+        0.33333396911621094,
+        0.0,
+        0.0
+      ],
+      [
+        0.33333301544189453,
+        0.0,
+        0.0
+      ],
+      [
+        0.33333301544189453,
+        0.0,
+        0.0
+      ]
+    ],
+    "energy_guard": true,
+    "expected_exact_velocity": 0.3333333333333333,
+    "passed": true
+  }
+}

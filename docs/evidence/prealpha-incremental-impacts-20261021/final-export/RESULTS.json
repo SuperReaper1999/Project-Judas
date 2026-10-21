@@ -1,0 +1,23 @@
+[
+  {
+    "name": "export",
+    "argv": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_export",
+      "/home/conner/Documents/GitHub/Project-Judas/projects/physics_stress_lab/physics_stress_lab.judasproj",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/contact-redesign-20261021/final-export/package",
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas"
+    ],
+    "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+    "exit": 0,
+    "seconds": 0.464506098000129
+  },
+  {
+    "name": "relocated-standalone",
+    "argv": [
+      "/tmp/Judas-incremental-contact-final-yos_wck3/judas"
+    ],
+    "cwd": "/tmp",
+    "exit": 0,
+    "seconds": 0.6651917580002191
+  }
+]

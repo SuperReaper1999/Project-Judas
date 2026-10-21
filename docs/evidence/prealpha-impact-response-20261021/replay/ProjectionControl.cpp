@@ -1,0 +1,15 @@
+#include "CaseIO.h"
+#include <iostream>
+#include <cmath>
+ImpactContact row(RigidBody& a,RigidBody& b){Contact g;g.hit=true;g.normal={-1,0,0};g.preciseNormal=g.normal;g.point=(a.position+b.position)*.5f;g.penetration=0;g.signedSeparation=0;return {&a,&b,g,0,0,false};}
+DiagnosisJSON v(const std::vector<RigidBody>& b){DiagnosisJSON j=DiagnosisJSON::array();for(auto&x:b)j.push_back(DV(x.linearVelocity));return j;}
+int main(){unsigned failures=0;DiagnosisJSON output;
+ // Equal masses on one line; angular inertia intentionally locked so the
+ // exact mass-weighted projection is independently elementary.
+ std::vector<RigidBody> initial(3);for(int i=0;i<3;++i){initial[i].inverseMass=1;initial[i].position={float(i),0,0};}initial[0].linearVelocity={1,0,0};initial[2].linearVelocity={-1,0,0};auto all=initial,old=initial;ImpactSolver s;auto fa=s.Solve({row(all[0],all[1]),row(all[1],all[2])},1.f/60,true);auto fb=s.Solve({row(old[1],old[2])},1.f/60,true);auto delta=initial;for(unsigned i=0;i<3;++i)delta[i].linearVelocity+=all[i].linearVelocity-old[i].linearVelocity;float closing=delta[1].linearVelocity.x-delta[2].linearVelocity.x;
+ output["baseline_projection_subtraction"]={{"incoming",v(initial)},{"all_constraints",v(all)},{"old_constraints",v(old)},{"difference_added_to_incoming",v(delta)},{"closing_speed_old_contact",closing},{"expected_exact_closing_speed",1.0},{"full_energy_guard",fa.energyBudgetSatisfied},{"old_energy_guard",fb.energyBudgetSatisfied},{"unsafe_approach_rejected",closing>.99f}};failures+=!(closing>.99f);
+ // A real impulse must reach beyond the initially colliding pair.
+ auto chain=initial;chain[2].linearVelocity={0,0,0};auto fc=s.Solve({row(chain[0],chain[1]),row(chain[1],chain[2])},1.f/60,true);bool propagation=chain[2].linearVelocity.x>.333f&&chain[2].linearVelocity.x<.334f;output["true_impact_propagates"]={{"after",v(chain)},{"expected_exact_velocity",1.0/3.0},{"passed",propagation},{"energy_guard",fc.energyBudgetSatisfied}};failures+=!propagation;
+ // Residual resting closure can exist separately from a separating seed.
+ auto residual=initial;residual[0].linearVelocity={-1,0,0};residual[1].linearVelocity={0,0,0};residual[2].linearVelocity={-.01f,0,0};auto without=residual;auto fd=s.Solve({row(residual[0],residual[1]),row(residual[1],residual[2])},1.f/60,true);float seedImpulse=s.Constraints()[0].normalImpulse;auto fe=s.Solve({row(without[1],without[2])},1.f/60,true);bool identical=true;for(unsigned i=0;i<3;++i)identical &= residual[i].linearVelocity==without[i].linearVelocity;output["separating_seed_resting_residual"]={{"after_all",v(residual)},{"after_without_seed",v(without)},{"seed_impulse",seedImpulse},{"identical",identical},{"full_energy_guard",fd.energyBudgetSatisfied},{"without_seed_energy_guard",fe.energyBudgetSatisfied},{"passed",identical&&seedImpulse==0&&residual[1].linearVelocity.x!=0}};failures+=!(identical&&seedImpulse==0&&residual[1].linearVelocity.x!=0);
+ output["failures"]=failures;std::cout<<output.dump(2)<<'\n';return failures?1:0;}

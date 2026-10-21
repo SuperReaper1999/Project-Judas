@@ -1,0 +1,15 @@
+{
+  "scope": "Tests plus ContactSolver, ImpactSolver and RigidBody instrumented; other archive modules are Release, not a whole-engine sanitizer qualification. Leak detection disabled: restricted runner ptrace makes LSan unavailable; original failure retained.",
+  "results": [
+    {
+      "name": "growing",
+      "exit": 0,
+      "sha256": "2818949097fcdd095270ec8d1821c16427882432750383e5aadf2b3951c328d3"
+    },
+    {
+      "name": "rows",
+      "exit": 0,
+      "sha256": "d38087f4b2a6b202df8cfbd45df46a6f299f07b4ca3af157e71fb64fe292b663"
+    }
+  ]
+}

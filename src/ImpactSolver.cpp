@@ -3,6 +3,7 @@
 #include "JointSolver.h"
 
 #include <algorithm>
+#include <array>
 #include <cmath>
 #include <limits>
 #include <stdexcept>
@@ -146,4 +147,131 @@ ImpactResult ImpactSolver::Solve(const std::vector<ImpactContact>& contacts, flo
         run(true);
     }
     return result;
+}
+
+// All contacts and bodies belong to one trial physical instant. Appending rows
+// never reapplies earlier impulses or changes poses. The caller publishes only
+// after successful closure and budget verification.
+bool ImpactSolver::SolveGrowing(std::vector<ImpactContact>& contacts, float dt,
+                                const std::function<bool(const std::vector<RigidBody*>&)>& expand,
+                                ImpactResult& result) {
+    if (!(dt > 0) || !std::isfinite(dt))
+        throw std::invalid_argument("invalid growing impact interval");
+    m_saved.clear();
+    m_solver.Clear();
+    result = {};
+    result.ambiguous = true;
+    const auto append = [&](std::size_t first) {
+        const auto firstFrame = m_solver.FrameNodeRequests();
+        for (std::size_t i = first; i < contacts.size(); ++i) {
+            const auto& c = contacts[i];
+            if (!c.a || !c.b || c.a == c.b || !c.geometry.hit ||
+                (c.a->IsStatic() && c.b->IsStatic()))
+                throw std::invalid_argument("invalid growing impact contact");
+            const double gap = c.geometry.hasLocalAnchors ? c.geometry.signedSeparation
+                                                          : -double(c.geometry.penetration);
+            if (!std::isfinite(gap) || gap > 0 || !std::isfinite(c.friction) || c.friction < 0 ||
+                !std::isfinite(c.maxDefectDisplacement) || c.maxDefectDisplacement < 0 ||
+                c.maxDefectDisplacement > ContactSolver::kPenetrationSlop)
+                throw std::invalid_argument("invalid growing impact constraint");
+            for (auto* body : {c.a, c.b})
+                if (!Finite(body->linearVelocity) || !Finite(body->angularVelocity))
+                    throw std::invalid_argument("nonfinite growing impact state");
+            m_solver.AddContact(*c.a, *c.b, c.geometry, c.friction, 0);
+            const auto& frame = m_solver.Constraints().back();
+            const std::array<std::pair<RigidBody*, std::size_t>, 2> participants{
+                {{c.a, frame.frameA}, {c.b, frame.frameB}}};
+            for (const auto& participant : participants) {
+                auto* body = participant.first;
+                const auto index = participant.second;
+                if (index < m_saved.size()) {
+                    if (m_saved[index].body != body)
+                        throw std::logic_error("growing body index mismatch");
+                    continue;
+                }
+                if (index != m_saved.size())
+                    throw std::logic_error("growing body index gap");
+                m_saved.push_back({body, body->linearVelocity, body->angularVelocity});
+                const auto budget = Measure(*body);
+                result.kineticBefore += budget.kinetic;
+                result.momentumBefore += budget.momentum;
+                result.angularMomentumBefore += budget.angular;
+            }
+        }
+        m_solver.PrepareAppended(0, first, firstFrame);
+        for (std::size_t i = first; i < contacts.size(); ++i) {
+            const auto& c = m_solver.Constraints()[i];
+            if (m_saved[c.frameA].body != c.bodyA || m_saved[c.frameB].body != c.bodyB)
+                throw std::logic_error("growing impact frame mapping changed");
+            const auto& a = m_saved[c.frameA];
+            const auto& b = m_saved[c.frameB];
+            const auto va = a.linear + glm::cross(a.angular, c.velocityOffsetA);
+            const auto vb = b.linear + glm::cross(b.angular, c.velocityOffsetB);
+            const float incoming = std::min(glm::dot(va - vb, c.normal), 0.f);
+            // Ordinary support has already accepted this incoming state.
+            // Solve only the NEW impact increment, without another projection
+            // of an unrelated resting residual. The per-event baseline never
+            // changes during iterations or domain growth. Large defects are
+            // not waived: they retain a strict zero-velocity target.
+            const float target = contacts[i].continuing && std::isfinite(incoming) &&
+                                         -double(incoming) * dt <= contacts[i].maxDefectDisplacement
+                                     ? incoming
+                                     : 0.f;
+            m_solver.SetInelasticVelocityTarget(i, target);
+        }
+    };
+    append(0);
+    for (int iteration = 0; iteration < ContactSolver::kVelocityIterations; ++iteration) {
+        std::size_t first = 0;
+        for (;;) {
+            const auto count = contacts.size();
+            std::vector<RigidBody*> activated;
+            m_solver.SolveTrackedVelocityRange(first, 1, activated);
+            if (!expand(activated))
+                return false;
+            if (contacts.size() == count)
+                break;
+            append(count);
+            first = count;
+        }
+    }
+    result.contacts = contacts.size();
+    for (std::size_t i = 0; i < m_solver.Constraints().size(); ++i) {
+        const auto& c = m_solver.Constraints()[i];
+        const auto va =
+            c.bodyA->linearVelocity + glm::cross(c.bodyA->angularVelocity, c.velocityOffsetA);
+        const auto vb =
+            c.bodyB->linearVelocity + glm::cross(c.bodyB->angularVelocity, c.velocityOffsetB);
+        if (-double(glm::dot(va - vb, c.normal)) * dt > contacts[i].maxDefectDisplacement)
+            return false;
+    }
+    for (const auto& saved : m_saved) {
+        const auto budget = Measure(*saved.body);
+        result.kineticAfter += budget.kinetic;
+        result.momentumAfter += budget.momentum;
+        result.angularMomentumAfter += budget.angular;
+    }
+    // Reaction at prescribed infinite-mass boundaries is external work,
+    // with exactly the established legacy impact-budget convention.
+    for (const auto& c : m_solver.Constraints()) {
+        const glm::dvec3 impulse =
+            glm::dvec3(c.normal) * double(c.normalImpulse) + glm::dvec3(c.tangentImpulse);
+        if (c.bodyA->IsStatic())
+            result.prescribedBoundaryWork -=
+                glm::dot(impulse, PointVelocity(*c.bodyA, glm::dvec3(c.velocityOffsetA)));
+        if (c.bodyB->IsStatic())
+            result.prescribedBoundaryWork +=
+                glm::dot(impulse, PointVelocity(*c.bodyB, glm::dvec3(c.velocityOffsetB)));
+    }
+    result.energyTolerance =
+        kEnergyRelativeTolerance *
+        std::max({1.0, result.kineticBefore, std::abs(result.prescribedBoundaryWork)});
+    result.energyBudgetSatisfied = std::isfinite(result.kineticAfter) &&
+                                   result.kineticAfter <= result.kineticBefore +
+                                                              result.prescribedBoundaryWork +
+                                                              result.energyTolerance;
+    for (const auto& saved : m_saved)
+        result.energyBudgetSatisfied &=
+            Finite(saved.body->linearVelocity) && Finite(saved.body->angularVelocity);
+    return result.energyBudgetSatisfied;
 }

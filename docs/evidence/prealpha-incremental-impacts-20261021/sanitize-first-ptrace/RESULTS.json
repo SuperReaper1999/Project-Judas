@@ -1,0 +1,15 @@
+{
+  "scope": "Tests plus ContactSolver, ImpactSolver and RigidBody instrumented; other archive modules are Release, not a whole-engine sanitizer qualification.",
+  "results": [
+    {
+      "name": "growing",
+      "exit": 1,
+      "sha256": "8cfe5f2c37c0da1a202fc1b93673799fc5fc464a999db0a648a2aa3806e9e53c"
+    },
+    {
+      "name": "rows",
+      "exit": 1,
+      "sha256": "b2da21abb3c4e27dddcd53325c459d7de7e803e191d1936b030290937d73ce97"
+    }
+  ]
+}
