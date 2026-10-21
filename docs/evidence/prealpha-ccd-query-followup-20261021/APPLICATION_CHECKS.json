@@ -1,0 +1,36 @@
+[
+  {
+    "name": "cold-prepare",
+    "args": [
+      "python3",
+      ".cache/ccd-query-followup-20261021/cold/validate.py",
+      "prepare"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "cold",
+    "args": [
+      "python3",
+      ".cache/ccd-query-followup-20261021/cold/validate.py",
+      "run"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "games",
+    "args": [
+      "python3",
+      ".cache/ccd-query-followup-20261021/run_game_checks.py"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "delivery",
+    "args": [
+      "python3",
+      ".cache/ccd-query-followup-20261021/delivery.py"
+    ],
+    "exit": 0
+  }
+]

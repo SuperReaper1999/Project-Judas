@@ -9,15 +9,16 @@ Open `physics_stress_lab.judasproj` in the editor, or run its normal exported pa
 
 ## Latest Pre-Alpha result
 
-The operator accepted the support-history checkpoint `80f7b2a5` on main. The
-subsequent [broadphase follow-up](../../docs/PREALPHA_BROADPHASE_REUSE.txt) is on
-Experimental pending its own human review. It removes a repeated tree traversal
-when the candidate list is provably unchanged. The normal 1,800-step comparison
-retains every recorded physical digest and reduces mean step cost from 16.71 to
-14.23 ms. The normal live busy window improves from 9.5 to 57 FPS on the Ryzen 5
-5600, but initial impact hitches remain. Counts, CCD, cadence and catch-up policy
-are unchanged. The sections below preserve earlier checkpoint measurements;
-they are not the latest performance result or universal 60 Hz certification.
+The operator accepted the pair-discovery checkpoint `45f0614fa2` on main.
+The subsequent [CCD query/history follow-up](../../docs/PREALPHA_CCD_QUERY_FOLLOWUP.txt)
+is on Experimental pending human review. It replaces per-event whole-world
+history scans with contact-group updates, certifies cheaper margin predicates
+and schedules independent eligible searches on the existing job pool. Matched
+1,800-step mean is 13.21–13.29 → 12.33–12.44 ms, worst 53.38–53.57 →
+43.20–43.69 ms, with exact physical trajectory hashes. Actual held-WASD capture
+improves 109 → 137 FPS overall, but the worst frame still takes 191 ms. Counts,
+CCD, cadence and catch-up policy are unchanged. This is not consistent smoothness
+or universal 60 Hz certification. Older sections preserve their own measurements.
 
 ## Controls
 

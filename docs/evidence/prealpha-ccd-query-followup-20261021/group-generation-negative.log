@@ -1,0 +1,13 @@
+FAIL staged generation/group rows match independent erase/append/stable-sort
+FAIL ordered publication preserves every row and warm-guess bit
+FAIL global fallback safely rebases subsequent group updates
+FAIL ordered publication preserves every row and warm-guess bit
+FAIL staged generation/group rows match independent erase/append/stable-sort
+FAIL staged generation/group rows match independent erase/append/stable-sort
+FAIL ordered publication preserves every row and warm-guess bit
+FAIL staged generation/group rows match independent erase/append/stable-sort
+FAIL ordered publication preserves every row and warm-guess bit
+FAIL staged generation/group rows match independent erase/append/stable-sort
+FAIL staged generation/group rows match independent erase/append/stable-sort
+FAIL ordered publication preserves every row and warm-guess bit
+Contact group updates: checks=20209 failures=1751 negative=1

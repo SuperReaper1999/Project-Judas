@@ -116,6 +116,19 @@ void PredicateCorpus(bool omitBound) {
             } else {
                 ++ambiguous;
             }
+            // Compare independent legacy interval/exact margin expressions.
+            for (float margin : {0x1p-64f, .001f, .1f, 1.f, 0x1p64f}) {
+                if (!(old.lo > 0) || !(squaredLength.lo > 0)) continue;
+                const Iv m{double(margin)};
+                const Iv legacy = old * old - m * m * interval.denominator *
+                                    interval.denominator * squaredLength;
+                const int answer = filter.BeyondMargin(int(axis), scalar, margin,
+                                                         interval.denominator, squaredLength);
+                if (answer != ContactSatFilter::Unresolved) {
+                    Check(answer > 0 ? legacy.lo > 0 : legacy.hi < 0,
+                          "margin certificate preserves legacy interval branch", row, axis);
+                }
+            }
             if (filter.NonzeroAxis(int(axis), numberAxis))
                 Check(squaredLength.lo > 0,
                       "certified nonzero axis preserves legacy interval resolution", row, axis);
@@ -135,6 +148,53 @@ void PredicateCorpus(bool omitBound) {
     Check(ambiguous > 1000, "real ambiguity and out-of-domain fallback exercised");
     Check(exactChecks > 1000, "independent exact arithmetic exercised");
     Check(unsafeScalarSigns > 0, "unfiltered scalar arithmetic really fails this corpus");
+}
+
+// Exact-margin ties and their adjacent binary32 margins must keep the old
+// interval/exact fallback. An unchecked scalar comparison fails these ties.
+void MarginBoundaries(bool omitMarginBound) {
+    const glm::vec3 half(.5f);
+    for (unsigned axis = 0; axis < 3; ++axis) {
+        ContactPose a, b;
+        b.position[axis] = 1.125f;
+        const Pair<double> number(a, b);
+        const Pair<Iv> interval(a, b);
+        const Pair<Exact> exact(a, b);
+        const ContactSatFilter filter(a, b, number, half, half);
+        const auto direction = Axis(interval, int(axis));
+        const Iv length = Dot(direction, direction);
+        const Iv sat = SatWorkspace<Iv>(interval).Evaluate(half, half, int(axis), direction);
+        for (float margin : {std::nextafter(.125f, 0.f), .125f,
+                             std::nextafter(.125f, 1.f)}) {
+            const Iv m{double(margin)};
+            const Iv legacy = sat * sat - m * m * interval.denominator *
+                              interval.denominator * length;
+            const auto exactAxis = Axis(exact, int(axis));
+            const auto exactSat = Sat(exact, half, half, int(axis));
+            const Exact em{double(margin)};
+            const int expected = (exactSat * exactSat - em * em * exact.denominator *
+                                  exact.denominator * Dot(exactAxis, exactAxis)).Sign();
+            int answer = filter.BeyondMargin(int(axis), Sat(number, half, half, int(axis)),
+                                             margin, interval.denominator, length);
+            if (omitMarginBound)
+                answer = .125 >= double(margin) ? 1 : -1;
+            if (answer != ContactSatFilter::Unresolved) {
+                Check(answer > 0 ? legacy.lo > 0 : legacy.hi < 0,
+                      "margin boundary preserves legacy resolution", axis);
+                Check(answer == expected, "margin boundary matches independent exact polynomial", axis);
+            }
+            if (margin == .125f)
+                Check(answer == ContactSatFilter::Unresolved,
+                      "exact margin tie requires the established fallback", axis);
+            const auto box = Shape::Box(half);
+            Check(PrimitiveHasContacts(box, a, box, b, margin) == (expected <= 0),
+                  "public contact query retains equality and adjacent-margin truth", axis);
+        }
+        for (float invalid : {0.f, -1.f, std::numeric_limits<float>::infinity(),
+                              std::numeric_limits<float>::quiet_NaN(), 0x1p-65f})
+            Check(filter.BeyondMargin(int(axis), .125, invalid, interval.denominator, length) ==
+                      ContactSatFilter::Unresolved, "invalid margin keeps fallback", axis);
+    }
 }
 
 void DomainFallbacks() {
@@ -230,11 +290,13 @@ void PublicGeometry() {
 
 int main(int argc, char **argv) {
     const bool omitBound = argc == 2 && std::string(argv[1]) == "--omit-bound";
-    if (argc > 2 || (argc == 2 && !omitBound)) {
-        std::fprintf(stderr, "Usage: judas_contact_sat_filter_tests [--omit-bound]\n");
+    const bool omitMarginBound = argc == 2 && std::string(argv[1]) == "--omit-margin-bound";
+    if (argc > 2 || (argc == 2 && !omitBound && !omitMarginBound)) {
+        std::fprintf(stderr, "Usage: judas_contact_sat_filter_tests [--omit-bound|--omit-margin-bound]\n");
         return 2;
     }
     PredicateCorpus(omitBound);
+    MarginBoundaries(omitMarginBound);
     DomainFallbacks();
     RoundingFallbacks();
     PublicGeometry();

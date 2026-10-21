@@ -513,6 +513,12 @@ void PhysicsWorld::Step(float fixedDeltaTime, const VelocityCoupling *coupling) 
                           ProfileCounterMode::Latest);
     JUDAS_PROFILE_COUNTER("Physics impact sampling resolution caps",
                           double(w.stats.impactSamplingResolutionCaps), ProfileCounterMode::Latest);
+    JUDAS_PROFILE_COUNTER("Physics CCD query scratch bytes", double(w.CCDQueryBytes()), ProfileCounterMode::Latest);
+    JUDAS_PROFILE_COUNTER("Physics parallel CCD batches", double(w.work.ccdParallelBatches), ProfileCounterMode::Latest);
+    JUDAS_PROFILE_COUNTER("Physics parallel CCD queries", double(w.work.ccdParallelQueries), ProfileCounterMode::Latest);
+    JUDAS_PROFILE_COUNTER("Physics worker CCD queries", double(w.work.ccdWorkerQueries), ProfileCounterMode::Latest);
+    JUDAS_PROFILE_COUNTER("Physics CCD peak lanes", double(w.work.ccdPeakLanes), ProfileCounterMode::Latest);
+    JUDAS_PROFILE_COUNTER("Physics CCD batch wall ms", double(w.work.ccdBatchNanoseconds) / 1e6, ProfileCounterMode::Latest);
     JUDAS_PROFILE_COUNTER("Physics impact pose evaluations", double(w.impactPoseEvaluations),
                           ProfileCounterMode::Latest);
     JUDAS_PROFILE_COUNTER("Physics impact pose reuses", double(w.impactPoseReuses),

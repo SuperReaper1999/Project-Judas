@@ -2,7 +2,7 @@
 
 using namespace JudasPhysicsDetail;
 
-auto PhysicsWorld::Impl::RemainingImpactBound(unsigned slot, double start, double finish)
+auto PhysicsWorld::Impl::CCDQuery::RemainingImpactBound(unsigned slot, double start, double finish)
     -> const Aabb & {
     EnsureImpactPoseStorage();
     auto &sample = impactPoseSamples[slot];
@@ -77,7 +77,7 @@ auto PhysicsWorld::Impl::DriftGenerator(unsigned slot, double time) const -> glm
     return it == segments.begin() ? body.rigidBody.angularVelocity : (--it)->driftAngularVelocity;
 }
 
-auto PhysicsWorld::Impl::PlaneDrift(unsigned a, unsigned b, int pa, int pb, double time,
+auto PhysicsWorld::Impl::CCDQuery::PlaneDrift(unsigned a, unsigned b, int pa, int pb, double time,
                                     const glm::dvec3 &n) -> double {
     struct Vertex {
         glm::dvec3 r, velocity;
@@ -187,7 +187,7 @@ auto PhysicsWorld::Impl::StaticMeshPolyPair(unsigned a, unsigned b, int pa, int 
            (second == ShapeType::TriangleMesh && !bodies[b].HasMotion() && poly(first));
 }
 
-auto PhysicsWorld::Impl::MeshDepthGrowthSafe(unsigned moving, unsigned meshSlot, int movingPart,
+auto PhysicsWorld::Impl::CCDQuery::MeshDepthGrowthSafe(unsigned moving, unsigned meshSlot, int movingPart,
                                              int meshPart, double start, double finish,
                                              const MeshFeatureBudget &budget) -> bool {
     // This is only a sufficient depth-growth rejection. It does not replace
@@ -373,7 +373,7 @@ auto PhysicsWorld::Impl::PrimitiveFeature(unsigned slot, int part) const -> doub
     return std::numeric_limits<double>::infinity();
 }
 
-auto PhysicsWorld::Impl::SpinsThroughSupport(const std::array<unsigned, 4> &key, double remaining,
+auto PhysicsWorld::Impl::CCDQuery::SpinsThroughSupport(const std::array<unsigned, 4> &key, double remaining,
                                              double time, bool changedVelocity) -> bool {
     const auto convex = [](ShapeType type) {
         return type == ShapeType::Box || type == ShapeType::Sphere || type == ShapeType::ConvexHull;
@@ -445,13 +445,13 @@ auto PhysicsWorld::Impl::SpinsThroughSupport(const std::array<unsigned, 4> &key,
     return projected > feature;
 }
 
-auto PhysicsWorld::Impl::SupportContinuationSafe(const std::array<unsigned, 4> &key, double start,
+auto PhysicsWorld::Impl::CCDQuery::SupportContinuationSafe(const std::array<unsigned, 4> &key, double start,
                                                  double finish) -> bool {
     PhysicsWorkTimer timer(work.continuationProof, work.active);
     ++work.continuationAttempts;
     const auto &a = bodies[key[0]];
     const auto &b = bodies[key[1]];
-    if (!ContinuationPrimitive(a) || !ContinuationPrimitive(b))
+    if (!Impl::ContinuationPrimitive(a) || !Impl::ContinuationPrimitive(b))
         return false;
     const auto &aa = ImpactPoseAt(key[0], start);
     const auto &bb = ImpactPoseAt(key[1], start);
@@ -543,7 +543,7 @@ auto PhysicsWorld::Impl::SpinPenetrationTarget(const std::array<unsigned, 4> &ke
            std::min(PrimitiveFeature(key[0], int(key[2])), PrimitiveFeature(key[1], int(key[3])));
 }
 
-auto PhysicsWorld::Impl::ImpactTime(unsigned a, unsigned b, int pa, int pb, double start,
+auto PhysicsWorld::Impl::CCDQuery::ImpactTime(unsigned a, unsigned b, int pa, int pb, double start,
                                     double finish, double target) -> double {
     PhysicsWorkTimer timer(work.toi, work.active);
     // A target can finish inside the step. Never certify a plane across
@@ -819,4 +819,38 @@ auto PhysicsWorld::Impl::ImpactTime(unsigned a, unsigned b, int pa, int pb, doub
         lo = hi;
     }
     return finish + 1;
+}
+
+auto PhysicsWorld::Impl::RemainingImpactBound(unsigned slot, double start, double finish) -> const Aabb & {
+    CCDQuery query(*this);
+    return query.RemainingImpactBound(slot, start, finish);
+}
+
+
+auto PhysicsWorld::Impl::PlaneDrift(unsigned a, unsigned b, int pa, int pb, double time, const glm::dvec3 &n) -> double {
+    CCDQuery query(*this);
+    return query.PlaneDrift(a, b, pa, pb, time, n);
+}
+
+
+auto PhysicsWorld::Impl::MeshDepthGrowthSafe(unsigned moving, unsigned meshSlot, int movingPart, int meshPart, double start, double finish, const MeshFeatureBudget &budget) -> bool {
+    CCDQuery query(*this);
+    return query.MeshDepthGrowthSafe(moving, meshSlot, movingPart, meshPart, start, finish, budget);
+}
+
+
+auto PhysicsWorld::Impl::SpinsThroughSupport(const std::array<unsigned, 4> &key, double remaining, double time, bool changedVelocity) -> bool {
+    CCDQuery query(*this);
+    return query.SpinsThroughSupport(key, remaining, time, changedVelocity);
+}
+
+auto PhysicsWorld::Impl::SupportContinuationSafe(const std::array<unsigned, 4> &key, double start, double finish) -> bool {
+    CCDQuery query(*this);
+    return query.SupportContinuationSafe(key, start, finish);
+}
+
+
+auto PhysicsWorld::Impl::ImpactTime(unsigned a, unsigned b, int pa, int pb, double start, double finish, double target) -> double {
+    CCDQuery query(*this);
+    return query.ImpactTime(a, b, pa, pb, start, finish, target);
 }

@@ -17,6 +17,7 @@ These headers are implementation details, not an SDK interface.
 | `WorldBodies.cpp` | Body creation/destruction, motion commands, impulses, physical properties and public body observations |
 | `WorldBounds.cpp` | Prepared bounds, broadphase proxies, ordered candidate discovery and cache accounting |
 | `WorldCCDSearch.cpp` | Conservative impact search, finite drift bounds and continuation certification |
+| `WorldCCDQuery.h` / `WorldCCDDispatch.cpp` | Private read-only CCD views, bounded lane scratch and joined independent query batches |
 | `WorldImpactEvents.cpp` | Initial response, event scheduling, fallback islands and authoritative observation/motion publication |
 | `WorldIncrementalImpact.cpp/.h` | Private growing contact transaction for free primitives; actual impulse dependencies, deferred-gravity preparation and commit/fallback boundary |
 | `WorldContacts.cpp` | Contact observations, touch phases and optional joined initial-geometry preparation |
@@ -77,6 +78,16 @@ legacy solve. A rejected trial publishes no body, sleep or observation changes.
 Growing-event solve timing excludes its nested discovery timing; other profiler
 categories retain their documented inclusive meaning.
 
+`ContactGroupUpdates.h` stages only touched primitive groups in the sorted
+completed-observation and warm-start stores. Reads resolve the latest patch or
+binary-search the original store. Generation-sensitive replacement remains with
+the event owner. One ordered splice publishes at the boundary, including failure
+unwind; coupled fallback publishes before globally removing its affected rows.
+No solver reads the staged history and no new persistent state is introduced.
+This removes repeated whole-world erases/scans without changing warm-start values
+or stable row order. The independent reference test compares the former
+mutation/sort algorithm, including slot reuse and failure publication.
+
 ## Ordering and interfaces
 
 The public coordinator retains the existing `Step`, `StepCoupled` and origin
@@ -84,8 +95,13 @@ translation order. Moving a method does not authorize changing when it runs.
 Methods in the modules operate on that coordinator's private state; scratch data
 must not become another source of physical truth.
 
-Only initial contact geometry may borrow the existing job service. Workers write
-private indexed results; the owner joins them before consuming the results.
+Initial contact geometry and eligible independent CCD searches may borrow the
+existing job service. Workers read one frozen event boundary and write private
+indexed results; the owner joins them before canonical event publication. CCD
+queries own derived pose/bounds samples, never body motion or contact history.
+Small, unsupported, over-budget and unavailable-pool batches retain serial search.
+The optional scratch payload is bounded at 32 MiB; metadata is counted separately.
+The profiler distinguishes summed query CPU time from elapsed batch wall time.
 Body mutation, event ordering, solving and callback publication remain on the
 world owner. No public method becomes generally thread-safe.
 

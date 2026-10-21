@@ -1,0 +1,42 @@
+{
+  "core_sha256": "1cfe0d4df35fbd8fb8d164059631422efd266a84da0bb4e076135f1b02515455",
+  "results": [
+    {
+      "name": "editor",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_editor",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/ccd-query-followup-20261021/delivery/editor-project/physics_stress_lab.judasproj"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+      "exit": 0,
+      "seconds": 2.0702879249984107,
+      "log_sha256": "68198d787dfc7c70ffb2c6a0b1a98b28f933b54c35bff7f6a256390f298c2533"
+    },
+    {
+      "name": "export",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_export",
+        "/home/conner/Documents/GitHub/Project-Judas/projects/physics_stress_lab/physics_stress_lab.judasproj",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/ccd-query-followup-20261021/delivery/exported",
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+      "exit": 0,
+      "seconds": 0.4645728520008561,
+      "log_sha256": "5f1d09e77ec0c1f6c2879acabf4b16f14d0a31b17eff31b6d3caf16edf4b740f"
+    },
+    {
+      "name": "relocated-standalone",
+      "argv": [
+        "/tmp/Judas-Physics-CCD-e2oeb1k2/judas"
+      ],
+      "cwd": "/tmp",
+      "exit": 0,
+      "seconds": 2.71860617999846,
+      "log_sha256": "a6e94785eb2d33f30c3926752c74b9f77133ac2c652432570869ba8e552693a8"
+    }
+  ],
+  "pass_all": true,
+  "core_unchanged": true,
+  "package_path": "/tmp/Judas-Physics-CCD-e2oeb1k2"
+}

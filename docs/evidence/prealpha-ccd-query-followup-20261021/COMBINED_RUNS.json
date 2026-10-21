@@ -1,0 +1,80 @@
+[
+  {
+    "name": "root-accepted1800-a",
+    "exit": 0,
+    "argv": [
+      "python3",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/ccd-query-followup-20261021/run_current.py",
+      "--binary",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/ccd-query-followup-20261021/accepted-live",
+      "--core",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/ccd-query-followup-20261021/accepted.a",
+      "--output",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/ccd-query-followup-20261021/root-accepted1800-a",
+      "--mode",
+      "1800",
+      "--camera",
+      "stationary",
+      "--extra-source",
+      "/home/conner/Documents/GitHub/Project-Judas/src/physics/WorldCCDQuery.h",
+      "--extra-source",
+      "/home/conner/Documents/GitHub/Project-Judas/src/physics/WorldCCDDispatch.cpp",
+      "--extra-source",
+      "/home/conner/Documents/GitHub/Project-Judas/src/physics/ContactGroupUpdates.h",
+      "--execute"
+    ],
+    "utc": "2026-10-21T20:20:08.551211+00:00"
+  },
+  {
+    "name": "root-candidate1800-a",
+    "exit": 0,
+    "argv": [
+      "python3",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/ccd-query-followup-20261021/run_current.py",
+      "--binary",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/ccd-query-followup-20261021/combined-driver/live",
+      "--core",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/ccd-query-followup-20261021/combined-driver/libjudas_engine.a",
+      "--output",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/ccd-query-followup-20261021/root-candidate1800-a",
+      "--mode",
+      "1800",
+      "--camera",
+      "stationary",
+      "--extra-source",
+      "/home/conner/Documents/GitHub/Project-Judas/src/physics/WorldCCDQuery.h",
+      "--extra-source",
+      "/home/conner/Documents/GitHub/Project-Judas/src/physics/WorldCCDDispatch.cpp",
+      "--extra-source",
+      "/home/conner/Documents/GitHub/Project-Judas/src/physics/ContactGroupUpdates.h",
+      "--execute"
+    ],
+    "utc": "2026-10-21T20:20:35.209285+00:00"
+  },
+  {
+    "name": "root-candidate1800-b",
+    "exit": 1,
+    "argv": [
+      "python3",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/ccd-query-followup-20261021/run_current.py",
+      "--binary",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/ccd-query-followup-20261021/combined-driver/live",
+      "--core",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/ccd-query-followup-20261021/combined-driver/libjudas_engine.a",
+      "--output",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/ccd-query-followup-20261021/root-candidate1800-b",
+      "--mode",
+      "1800",
+      "--camera",
+      "stationary",
+      "--extra-source",
+      "/home/conner/Documents/GitHub/Project-Judas/src/physics/WorldCCDQuery.h",
+      "--extra-source",
+      "/home/conner/Documents/GitHub/Project-Judas/src/physics/WorldCCDDispatch.cpp",
+      "--extra-source",
+      "/home/conner/Documents/GitHub/Project-Judas/src/physics/ContactGroupUpdates.h",
+      "--execute"
+    ],
+    "utc": "2026-10-21T20:21:02.320558+00:00"
+  }
+]

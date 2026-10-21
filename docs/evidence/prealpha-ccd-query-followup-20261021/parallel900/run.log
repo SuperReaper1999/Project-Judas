@@ -1,0 +1,28 @@
+Shadow maps: on
+Graphics: 3.3.0 NVIDIA 580.178.04 / NVIDIA GeForce GTX 970/PCIe/SSE2
+Renderer fragment texture units: 32 (material path uses 12)
+NATIVE_GL vendor=NVIDIA Corporation renderer=NVIDIA GeForce GTX 970/PCIe/SSE2
+BUILD_IDENTITY {
+  "architecture": "x86_64",
+  "build_id": "0.1.0-prealpha-Experimental-45f0614-dirty-48c89beb3ade-ud4212fbdfe59",
+  "channel": "Experimental",
+  "compiler": "GNU",
+  "compiler_version": "15.2.0",
+  "configuration": "Release",
+  "maturity": "pre-alpha",
+  "platform": "Linux",
+  "schema": 1,
+  "source_dirty": true,
+  "source_fingerprint": "48c89beb3ade620e793b5068f66ae706d1c578d78639fcf8edfd5bdc3d3d7efa",
+  "source_origin": "git",
+  "source_revision": "45f0614fa2eb21a6dc534d555f8abc87a31f4901",
+  "source_tree": "12382bed508c4db65659b127fc045570e8307d36",
+  "source_untracked_count": 18,
+  "source_untracked_fingerprint": "d4212fbdfe59b9b13b6351c31ea15b63c6085e3948cc3ac83bd110c368d17575",
+  "version": "0.1.0-prealpha"
+}
+diagnostic swap=0 hidden=1 tour=0 frame_seconds=0.0166667 profile=0 periodic_export=0
+Project: Judas Physics Stress Lab (/home/conner/Documents/GitHub/Project-Judas/projects/physics_stress_lab/physics_stress_lab.judasproj)
+Scene: Physics Stress Lab / 1024 loose bodies (/home/conner/Documents/GitHub/Project-Judas/projects/physics_stress_lab/Scenes/room1024.judas)
+World origin (m): 0.000, 0.000, 0.000
+completed frames=901 steps=900 wall_ms=15071.1

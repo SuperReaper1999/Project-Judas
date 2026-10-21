@@ -1,0 +1,99 @@
+{
+  "core_sha256": "1cfe0d4df35fbd8fb8d164059631422efd266a84da0bb4e076135f1b02515455",
+  "results": [
+    {
+      "name": "hearthworld-write",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_hearthworld_application_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/projects/hearthworld/hearthworld.judasproj",
+        "write",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/ccd-query-followup-20261021/integration/hearthworld"
+      ],
+      "utc": "2026-10-21T20:26:00.633091+00:00",
+      "exit": 0,
+      "seconds": 4.272744038000383,
+      "native_nvidia": true,
+      "graphics": [
+        "Graphics: 3.3.0 NVIDIA 580.178.04 / NVIDIA GeForce GTX 970/PCIe/SSE2"
+      ],
+      "binary_sha256": "500270ae43f2f34f3b478a1b54cb58491f25be28131dadb2de5608cf589ddd09",
+      "log_sha256": "224cff035c43afc31a893260a7f23829cf332fb60978d98eb9c4725a5cf79140"
+    },
+    {
+      "name": "hearthworld-read",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_hearthworld_application_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/projects/hearthworld/hearthworld.judasproj",
+        "read",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/ccd-query-followup-20261021/integration/hearthworld"
+      ],
+      "utc": "2026-10-21T20:26:01.630794+00:00",
+      "exit": 0,
+      "seconds": 0.9159191429971543,
+      "native_nvidia": true,
+      "graphics": [
+        "Graphics: 3.3.0 NVIDIA 580.178.04 / NVIDIA GeForce GTX 970/PCIe/SSE2"
+      ],
+      "binary_sha256": "500270ae43f2f34f3b478a1b54cb58491f25be28131dadb2de5608cf589ddd09",
+      "log_sha256": "f3c5ec7e7883ee4be5fa15aa8e90953e8b13eb332b2fdcb380fbcd1bb7233d58"
+    },
+    {
+      "name": "stream-write",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_save_streaming_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/projects/streamed_range/streamed_range.judasproj",
+        "write",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/ccd-query-followup-20261021/integration/stream"
+      ],
+      "utc": "2026-10-21T20:26:02.519706+00:00",
+      "exit": 0,
+      "seconds": 0.8156572910011164,
+      "native_nvidia": true,
+      "graphics": [
+        "Graphics: 3.3.0 NVIDIA 580.178.04 / NVIDIA GeForce GTX 970/PCIe/SSE2"
+      ],
+      "binary_sha256": "3ec59012cb26b76878674df9e5085ca37300ff73e1e1e3a28c48da01a29eb289",
+      "log_sha256": "85aec11a331628a7ccb9a1eac77e339a7b4e5571f84e907442adc91a807499a9"
+    },
+    {
+      "name": "stream-read",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_save_streaming_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/projects/streamed_range/streamed_range.judasproj",
+        "read",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/ccd-query-followup-20261021/integration/stream"
+      ],
+      "utc": "2026-10-21T20:26:03.407425+00:00",
+      "exit": 0,
+      "seconds": 0.8151726070027507,
+      "native_nvidia": true,
+      "graphics": [
+        "Graphics: 3.3.0 NVIDIA 580.178.04 / NVIDIA GeForce GTX 970/PCIe/SSE2"
+      ],
+      "binary_sha256": "3ec59012cb26b76878674df9e5085ca37300ff73e1e1e3a28c48da01a29eb289",
+      "log_sha256": "7ac39e5e3a1ac51a9554f75966310108ee0d5682345eed0ae2651585e80523bc"
+    },
+    {
+      "name": "stream-read-b",
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_save_streaming_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/projects/streamed_range/streamed_range.judasproj",
+        "read-b",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/ccd-query-followup-20261021/integration/stream"
+      ],
+      "utc": "2026-10-21T20:26:04.345376+00:00",
+      "exit": 0,
+      "seconds": 0.865355701000226,
+      "native_nvidia": true,
+      "graphics": [
+        "Graphics: 3.3.0 NVIDIA 580.178.04 / NVIDIA GeForce GTX 970/PCIe/SSE2"
+      ],
+      "binary_sha256": "3ec59012cb26b76878674df9e5085ca37300ff73e1e1e3a28c48da01a29eb289",
+      "log_sha256": "e5cf585eec3ce64133da3d6d3e280e858216a56e81ee1fed9d5d1bece164ca2d"
+    }
+  ],
+  "native_nvidia_required": true,
+  "audio": "dummy; no listening qualification",
+  "core_unchanged": true,
+  "pass_all": true
+}

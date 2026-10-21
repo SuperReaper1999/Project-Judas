@@ -87,8 +87,9 @@ joints, sleeping, particles and persistence. They share one private state owner.
 module list to engine and direct fixtures; configuration rejects a partial world.
 See the [module map](../src/physics/WorldModules.md) for ordering and scratch lifetime.
 
-Initial geometry can borrow the existing job pool over frozen inputs. The owner
-joins results in deterministic pair order. Solving, chronology, body mutation and
+Initial geometry and eligible independent CCD queries can borrow the existing
+job pool over frozen inputs, using private derived scratch and bounded batches.
+The owner joins results in deterministic pair order. Solving, chronology, body mutation and
 callbacks remain owner-thread work; public physics methods are not generally
 thread-safe.
 
@@ -104,7 +105,10 @@ remain limitations. Dense-contact cost is workload dependent. The latest
 repeated cold starts after eligible primitive impacts; it preserves separate
 ownership of ordinary iterative guesses and actual completed event reactions.
 It improves the measured 1,024-piece room without changing CCD or solver quality,
-but does not establish universal 60 Hz performance. See
+but does not establish universal 60 Hz performance. The subsequent
+[CCD query and contact-history follow-up](PREALPHA_CCD_QUERY_FOLLOWUP.txt) removes
+whole-world history scans per event and certifies cheap margin decisions before
+full interval arithmetic, preserving exact fallback and physical trajectories. See
 [current measured limits](PREALPHA.md#remaining-readiness-concerns) and the
 [dense-support follow-up](PREALPHA_DENSE_SUPPORT_FOLLOWUP.md).
 

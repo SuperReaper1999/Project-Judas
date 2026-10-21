@@ -278,7 +278,10 @@ namespace {
             std::optional<Iv> lengthSquared;
             auto intervalAxis = [&]() -> const V<Iv> & {
                 if (!ai)
-                    ai = Axis(c.Interval(), axis);
+                    ai = axis < 3 ? c.orientationA.interval.n[axis]
+                       : axis < 6 ? c.orientationB.interval.n[axis - 3]
+                       : Cross(c.orientationA.interval.n[(axis - 6) / 3],
+                               c.orientationB.interval.n[(axis - 6) % 3]);
                 return *ai;
             };
             auto intervalLength = [&]() -> Iv {
@@ -325,20 +328,30 @@ namespace {
             if (sign > 0) {
                 if (margin == 0)
                     return {};
-                const Iv m{double(margin)};
-                const Iv value = intervalSat();
-                const Iv compare = value * value - m * m * c.Interval().denominator *
-                                                           c.Interval().denominator *
-                                                           intervalLength();
-                const int beyond = Sign(compare, [&] {
-                    const auto &e = c.E();
-                    auto t = Axis(e, axis);
-                    auto es = Sat(e, ha, hb, axis);
-                    Exact em{double(margin)};
-                    return es * es - em * em * e.denominator * e.denominator * Dot(t, t);
-                });
-                if (beyond > 0)
-                    return {};
+                const int marginSign = filter.BeyondMargin(
+                    axis, numberSat, margin,
+                    c.orientationA.interval.d * c.orientationB.interval.d, intervalLength());
+                if (marginSign != ContactSatFilter::Unresolved) {
+                    ++diagnostics.predicates;
+                    ++diagnostics.intervalResolved;
+                    if (marginSign > 0)
+                        return {};
+                } else {
+                    const Iv m{double(margin)};
+                    const Iv value = intervalSat();
+                    const Iv compare = value * value - m * m * c.Interval().denominator *
+                                                               c.Interval().denominator *
+                                                               intervalLength();
+                    const int beyond = Sign(compare, [&] {
+                        const auto &e = c.E();
+                        auto t = Axis(e, axis);
+                        auto es = Sat(e, ha, hb, axis);
+                        Exact em{double(margin)};
+                        return es * es - em * em * e.denominator * e.denominator * Dot(t, t);
+                    });
+                    if (beyond > 0)
+                        return {};
+                }
             }
 
             glm::dvec3 normal(ax[0], ax[1], ax[2]);

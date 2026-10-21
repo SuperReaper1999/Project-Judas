@@ -1,0 +1,23 @@
+	Command being timed: "/home/conner/Documents/GitHub/Project-Judas/.cache/ccd-query-followup-20261021/combined-driver/live /home/conner/Documents/GitHub/Project-Judas/projects/physics_stress_lab/Scenes/room1024.judas /home/conner/Documents/GitHub/Project-Judas/.cache/ccd-query-followup-20261021/root-candidate-profile900/live 180 900 0 0 1 0.016666667 1 0 1"
+	User time (seconds): 19.36
+	System time (seconds): 0.33
+	Percent of CPU this job got: 129%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:15.27
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 293320
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 65725
+	Voluntary context switches: 5448
+	Involuntary context switches: 689
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 65896
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0

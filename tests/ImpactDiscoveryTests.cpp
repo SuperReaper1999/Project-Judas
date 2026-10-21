@@ -1,9 +1,10 @@
-// Exact event-time geometry controls for incremental discovery rejection.
+// Exact event-time geometry and isolated CCD query-batch controls.
 // Private access stays in this fixture; no public test API or solver tuning.
 #include <algorithm>
 #include <array>
 #include <atomic>
 #include <chrono>
+#include <cfenv>
 #include <cmath>
 #include <condition_variable>
 #include <cstdint>
@@ -39,6 +40,7 @@
 namespace {
 unsigned checks = 0, failures = 0;
 bool staleBoundControl = false;
+bool staleQueryControl = false;
 
 void Check(bool value, const std::string& label) {
     ++checks;
@@ -290,13 +292,207 @@ void ActualStepDiscovery() {
     profiler.Freeze(frozen);
     profiler.Clear();
 }
+void PoolRounding(JobSystem& jobs, int setTo, int expected = -1) {
+    std::mutex mutex;
+    std::condition_variable condition;
+    unsigned reached = 0;
+    bool release = false;
+    std::array<int, 3> observed{};
+    std::array<JobHandle, 3> handles;
+    for (unsigned i = 0; i < handles.size(); ++i)
+        handles[i] = jobs.Submit([&, i](JobContext&) {
+            observed[i] = std::fegetround();
+            std::fesetround(setTo);
+            std::unique_lock<std::mutex> lock(mutex);
+            ++reached;
+            condition.notify_all();
+            condition.wait(lock, [&] { return release; });
+        });
+    {
+        std::unique_lock<std::mutex> lock(mutex);
+        condition.wait(lock, [&] { return reached == handles.size(); });
+        release = true;
+    }
+    condition.notify_all();
+    for (const auto handle : handles) {
+        jobs.Wait(handle);
+        jobs.Forget(handle);
+    }
+    if (expected >= 0)
+        for (auto value : observed)
+            Check(value == expected, "CCD restores each borrowed worker's rounding environment");
+}
+
+void IndependentQueryBatch() {
+    PhysicsWorld physics;
+    physics.Init();
+    std::vector<PhysicsWorld::Impl::CCDRequest> requests;
+    for (unsigned i = 0; i < 320; ++i) {
+        const glm::vec3 origin(-3, 4.f * i, 0);
+        const auto rotation = glm::angleAxis(.13f * float(i % 7), glm::normalize(glm::vec3(1, 2, 3)));
+        const auto moving = physics.CreateShape(i % 2 ? Shape::Sphere(.25f) : Shape::Box({.3f, .2f, .25f}),
+                                                {origin, rotation}, true, 1, 0, 0);
+        physics.SetLinearVelocity(moving, {6, 0, 0});
+        const auto wall = physics.CreateShape(Shape::Box({.15f, 1, 1}),
+                                              {{0, origin.y, 0}, rotation}, false, 0, 0, 0);
+        PhysicsWorld::Impl::CCDRequest hit;
+        hit.key = {Slot(moving), Slot(wall), 0, 0};
+        requests.push_back(hit);
+        if (i % 2 == 0) {
+            const auto distant = physics.CreateStaticSphere({50, origin.y, 0}, .25f, 0, 0);
+            PhysicsWorld::Impl::CCDRequest miss;
+            miss.key = {Slot(moving), Slot(distant), 0, 0};
+            requests.push_back(miss);
+        }
+    }
+    BeginMotion(physics);
+    auto& world = *physics.m_impl;
+    const auto evaluate = [&](JobSystem* jobs, unsigned lanes, double start) {
+        physics.SetJobSystem(jobs, lanes);
+        world.stats = {};
+        world.work = {};
+        world.work.active = true;
+        auto outputs = requests;
+        world.EvaluateImpactQueries(outputs, start, 1);
+        return outputs;
+    };
+    const auto serial = evaluate(nullptr, 1, 0);
+    Check(world.ccdQueryStorage.empty(), "serial queries allocate no worker scratch");
+    JobSystem jobs(3);
+    PoolRounding(jobs, FE_UPWARD);
+    const auto parallel = evaluate(&jobs, 4, 0);
+    PoolRounding(jobs, FE_TONEAREST, FE_UPWARD);
+    std::size_t sampleBytes = 0;
+    for (const auto& scratch : world.ccdQueryStorage)
+        if (scratch)
+            sampleBytes += (scratch->impactPoseSamples.capacity() + scratch->impactAnchorSamples.capacity()) *
+                           sizeof(PhysicsWorld::Impl::ImpactPoseSample);
+    Check(sampleBytes > 0 && sampleBytes <= 32 * 1024 * 1024 && world.CCDQueryBytes() >= sampleBytes,
+          "optional query samples are bounded and included in cache accounting");
+    Check(world.work.ccdParallelBatches == 1 && world.work.ccdPeakLanes == 4,
+          "large independent search batch uses the bounded job path");
+    Check(world.work.ccdParallelQueries == 320,
+          "cheap separated enclosures remain outside the worker batch");
+    for (std::size_t i = 0; i < parallel.size(); ++i) {
+        Check(parallel[i].ready && !parallel[i].error, "every borrowed query joins with a complete result");
+        Check(parallel[i].time == serial[i].time, "parallel query preserves the exact serial impact time");
+        const auto& key = parallel[i].key;
+        const auto a = Sample(world, key[0], 0), b = Sample(world, key[1], 0);
+        const bool far = b.position.x == 50;
+        if (far) {
+            Check(parallel[i].time > 1, "independent distant geometry has no impact");
+        } else {
+            Check(parallel[i].time > 0 && parallel[i].time < 1,
+                  "crossing with separated endpoints is detected within the interval");
+            const auto actual = ActualContacts(world, key[0], key[1], parallel[i].time);
+            Check(actual.count > 0 && !actual.uncertain,
+                  "reported TOI has actual independently constructed zero-margin contact");
+            Check(ActualContacts(world, key[0], key[1], 0).count == 0 &&
+                      ActualContacts(world, key[0], key[1], 1).count == 0,
+                  "test cannot pass using endpoint overlap alone");
+        }
+        Check(physics.GetTransform(world.MakeHandle(key[0])).position == a.position,
+              "query batch does not publish body movement");
+    }
+    auto ordinaryRequests = requests;
+    requests.assign(16385, ordinaryRequests.front());
+    const auto oversized = evaluate(&jobs, 4, 0);
+    Check(world.work.ccdParallelBatches == 0 && world.stats.impactQueries >= oversized.size(),
+          "above-budget batch still searches every query through the serial path");
+    Check(std::all_of(oversized.begin(), oversized.end(), [&](const auto& result) {
+              return result.ready && !result.error && result.time == serial.front().time;
+          }), "above-budget fallback preserves every actual collision");
+    requests = std::move(ordinaryRequests);
+    JobSystem busy(1);
+    std::mutex mutex;
+    std::condition_variable condition;
+    bool started = false, release = false;
+    const auto unrelated = busy.Submit([&](JobContext&) {
+        std::unique_lock<std::mutex> lock(mutex);
+        started = true;
+        condition.notify_all();
+        condition.wait(lock, [&] { return release; });
+    }, JobPriority::Normal, "unrelated blocked resource");
+    {
+        std::unique_lock<std::mutex> lock(mutex);
+        condition.wait(lock, [&] { return started; });
+    }
+    try {
+        const auto blocked = evaluate(&busy, 4, 0);
+        Check(busy.StateOf(unrelated) == JobState::Running,
+              "owner drains its CCD work without waiting for unrelated resource jobs");
+        for (std::size_t i = 0; i < blocked.size(); ++i)
+            Check(blocked[i].time == serial[i].time,
+                  "cancelled queued CCD lanes lose no collision result");
+    } catch (...) {
+        { std::lock_guard<std::mutex> lock(mutex); release = true; }
+        condition.notify_all();
+        busy.Shutdown();
+        throw;
+    }
+    { std::lock_guard<std::mutex> lock(mutex); release = true; }
+    condition.notify_all();
+    busy.Wait(unrelated);
+    busy.Forget(unrelated);
+    busy.Shutdown();
+    JobSystem stopping(1);
+    const auto blocker = stopping.Submit([](JobContext& context) {
+        while (!context.CancelRequested()) std::this_thread::yield();
+        context.ReportCancelled();
+    });
+    while (stopping.StateOf(blocker) != JobState::Running) std::this_thread::yield();
+    std::atomic<bool> sawSubmission{false};
+    std::thread shutdown([&] {
+        const auto deadline = std::chrono::steady_clock::now() + std::chrono::seconds(3);
+        while (stopping.Stats().submitted < 2 && std::chrono::steady_clock::now() < deadline)
+            std::this_thread::yield();
+        sawSubmission = stopping.Stats().submitted >= 2;
+        stopping.Shutdown();
+    });
+    try {
+        const auto cancelled = evaluate(&stopping, 4, 0);
+        for (std::size_t i = 0; i < cancelled.size(); ++i)
+            Check(cancelled[i].time == serial[i].time,
+                  "concurrent pool shutdown joins CCD readers before owner fallback");
+    } catch (...) { shutdown.join(); throw; }
+    shutdown.join();
+    Check(sawSubmission && stopping.IsShutDown(), "shutdown actually overlaps a submitted CCD batch");
+    // A later event changes the motion without changing the entity generation.
+    // Reusing an old no-impact or TOI answer would now be wrong.
+    for (const auto& request : requests) {
+        auto& body = world.bodies[request.key[0]];
+        if (body.motion.Segments().back().begin == 0) {
+            body.rigidBody.linearVelocity = {0, 10, 0};
+            body.motion.ChangeVelocity(body.rigidBody, .25);
+            world.InvalidateImpactPose(request.key[0]);
+        }
+    }
+    world.impactQueryAnchorTime = .25;
+    const auto changedSerial = evaluate(nullptr, 1, .25);
+    auto changedParallel = evaluate(&jobs, 4, .25);
+    if (staleQueryControl)
+        for (std::size_t i = 0; i < changedParallel.size(); ++i)
+            changedParallel[i].time = serial[i].time;
+    for (std::size_t i = 0; i < changedParallel.size(); ++i)
+        Check(changedSerial[i].time == changedParallel[i].time && changedParallel[i].time > 1,
+              "retained worker scratch observes the changed event trajectory");
+    jobs.Shutdown();
+    const auto stopped = evaluate(&jobs, 4, .25);
+    Check(world.work.ccdParallelBatches == 0, "stopped pool retains the serial fallback");
+    for (std::size_t i = 0; i < stopped.size(); ++i)
+        Check(stopped[i].time == changedSerial[i].time, "stopped-pool query matches independent serial result");
+    physics.SetJobSystem(nullptr);
+}
+
 } // namespace
 
 int main(int argc, char** argv) {
     if (argc == 2 && std::string(argv[1]) == "--stale-bound")
         staleBoundControl = true;
+    else if (argc == 2 && std::string(argv[1]) == "--stale-query-result")
+        staleQueryControl = true;
     else if (argc != 1) {
-        std::cerr << "usage: impact-discovery-tests [--stale-bound]\n";
+        std::cerr << "usage: impact-discovery-tests [--stale-bound|--stale-query-result]\n";
         return 2;
     }
     ClearGapAndClosedBoundary();
@@ -306,7 +502,9 @@ int main(int argc, char** argv) {
     ChangedTrajectoryInvalidatesEnclosure();
     UnsupportedAndUncertainBounds();
     ActualStepDiscovery();
+    IndependentQueryBatch();
     std::cout << "{\"checks\":" << checks << ",\"failures\":" << failures
-              << ",\"stale_bound_control\":" << (staleBoundControl ? "true" : "false") << "}\n";
+              << ",\"stale_bound_control\":" << (staleBoundControl ? "true" : "false")
+              << ",\"stale_query_control\":" << (staleQueryControl ? "true" : "false") << "}\n";
     return failures ? 1 : 0;
 }

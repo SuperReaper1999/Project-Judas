@@ -1,0 +1,1 @@
+The initial staging attempt correctly refused ignored copied native-project cache metadata. All cold/native project metadata was excluded. Original command/results, hashes and actual physical endpoint comparisons remain. No ignore rule was bypassed and no generated cache/build output is committed.

@@ -166,9 +166,9 @@
       "workstream": "P1-01",
       "original_quote": "Dense-contact physics still has severe latency tails",
       "status": "improved",
-      "scope": "fresh_matched_linux_support_history_20261021",
-      "disposition": "Input f5624f0bb4f92ece7211199ca8fe51abc08a2b19. Eligible primitive impacts now preserve ordinary iterative support guesses without copying event impulses. Same1024-piece fixture/60Hz/ten sweeps/CCD: late steps901-1800 mean63.62->15.50ms, p95115.93->17.77ms, worst297.80->27.26ms; queries5794691->17574 and events3325->64. Matched unsampled live late20-35s cadence2.39->36.50FPS; whole capture28.9FPS, but busy10-20s settling still9.9FPS. Dense trajectories change; max all-step observed penetration74.34->40.62mm and endpoint23.60->5.01mm over900 steps. Fresh regression/cold-save/consumer qualification is recorded separately. Scoped late-window target met; all-phase smoothness and general coupled/dense limits remain open. Not universal60Hz, human acceptance or Alpha readiness.",
-      "evidence": "docs/PREALPHA_SUPPORT_CONTINUITY.txt"
+      "scope": "fresh_matched_linux_ccd_query_history_20261021",
+      "disposition": "Accepted input 45f0614fa2. Per-event whole-world contact-history scans replaced by generation-aware group patches; certified positive-margin SAT and bounded joined CCD batches retain physical policy. All1800 physical digests and contact/event/query counts exact; search iterations alone differ in21 steps due tighter conservative bounds. Repeated mean13.21-13.29 to12.33-12.44ms, worst53.38-53.57 to43.20-43.69ms. Held-WASD live109 to137FPS, worst211 to191ms. Scoped improvement, not all-phase smoothness, general60Hz or human acceptance. Linux regressions/cold physical endpoints/editor/relocated export pass; Windows/Android not rerun.",
+      "evidence": "docs/PREALPHA_CCD_QUERY_FOLLOWUP.txt"
     },
     {
       "id": "C-01",

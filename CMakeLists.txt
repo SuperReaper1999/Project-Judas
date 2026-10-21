@@ -1593,6 +1593,7 @@ judas_add_engine_test(judas_support_continuation_tests tests/SupportContinuation
 judas_add_engine_test(judas_support_guess_ownership_tests tests/SupportGuessOwnershipTests.cpp)
 judas_add_engine_test(judas_candidate_reuse_tests tests/CandidateReuseTests.cpp)
 judas_add_engine_test(judas_impact_discovery_tests tests/ImpactDiscoveryTests.cpp)
+judas_add_engine_test(judas_contact_group_updates_tests tests/ContactGroupUpdatesTests.cpp)
 
 # Direct headless fixtures need the complete private world implementation and
 # borrowed-job service, without renderer/window/resource ownership. Check both

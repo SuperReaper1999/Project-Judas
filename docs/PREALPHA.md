@@ -44,7 +44,13 @@ The latest [pair-discovery and impact-hitch follow-up](PREALPHA_PAIR_DISCOVERY.t
 reduces repeated tree traversal and growing-impact geometry preparation, with
 identical 1,800-step physical results. Mean fixed cost is 14.19 to 13.30 ms and
 worst 60.73 to 53.71 ms on the Ryzen host. Initial roughly 0.2-second catch-up
-hitches remain. This new follow-up requires its own human acceptance.
+hitches remain. The operator accepted that checkpoint as `45f0614fa2`.
+
+The subsequent [CCD query/history investigation](PREALPHA_CCD_QUERY_FOLLOWUP.txt)
+traces the exact slow steps, replaces per-event global history scans with
+primitive-group updates, adds certified positive-margin predicates and borrows
+workers for independent eligible searches. This follow-up has its own Linux
+measurements and pending human review; all-phase smoothness remains open.
 
 ## Evidence and acceptance history
 

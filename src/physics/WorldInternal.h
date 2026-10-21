@@ -280,6 +280,17 @@ struct PhysicsWorld::Impl {
     // represented pose/orientation preparation once until that trajectory
     // changes. Time and generation are part of the key; every step and every
     // Begin/ChangeVelocity invalidates samples explicitly.
+    struct CCDRequest {
+        std::array<unsigned, 4> key;
+        double target = 0, time = 0;
+        bool query = true, ready = false;
+        std::exception_ptr error;
+    };
+    void EvaluateImpactQueries(std::vector<CCDRequest>& requests, double start, double finish);
+    struct CCDQuery;
+    struct CCDQueryStorage;
+    std::vector<std::unique_ptr<CCDQueryStorage>> ccdQueryStorage;
+
     struct ImpactPoseSample {
         RigidBody pose;
         std::optional<ContactPreparedOrientation> orientation;
@@ -309,6 +320,9 @@ struct PhysicsWorld::Impl {
                     incrementalEvents = 0, incrementalFallbacks = 0, incrementalBodies = 0,
                     incrementalRows = 0, incrementalBoundsRejected = 0;
         std::size_t candidatePasses = 0, candidateQueries = 0, candidateLeaves = 0;
+        std::size_t ccdParallelBatches = 0, ccdParallelQueries = 0, ccdWorkerQueries = 0,
+                    ccdPeakLanes = 0;
+        std::uint64_t ccdBatchNanoseconds = 0;
     } work;
     // Indexed output only: workers never mutate physics bodies, geometry
     // caches, solver rows, touches, warm starts or event scheduling.
@@ -436,6 +450,7 @@ struct PhysicsWorld::Impl {
     const Aabb &CurrentBound(Body &body);
     const Aabb &PreviousBound(Body &body);
     std::size_t CacheBytes() const;
+    std::size_t CCDQueryBytes() const;
     void EnsureImpactPoseStorage();
 
     // The tight broadphase bound a body must stay inside. For a dynamic
@@ -497,4 +512,5 @@ struct PhysicsWorld::Impl {
 };
 
 #include "WorldHotAccessors.h"
+#include "WorldCCDQuery.h"
 #include "WorldImpactQueries.h"

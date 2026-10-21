@@ -92,6 +92,29 @@ class ContactSatFilter {
         return Unresolved;
     }
 
+    // Enclose the established interval SAT result with the same certified
+    // scalar-to-interval error bound used by Sign. The axis norm and pair
+    // denominator are the original interval expressions, not approximations.
+    // A resolved comparison therefore preserves the legacy margin branch.
+    int BeyondMargin(int axis, double value, float margin,
+                     contact_geometry::Iv denominator,
+                     contact_geometry::Iv axisLengthSquared) const {
+        using namespace contact_geometry;
+        if (!valid || !std::isfinite(value) || !Bounded(double(margin)) || !(margin > 0))
+            return Unresolved;
+        const double error = Gamma(4096) * magnitude * AxisMagnitude(axis);
+        const Iv sat{Down(value - error), Up(value + error)};
+        const Iv m{double(margin)};
+        const Iv compare = sat * sat - m * m * denominator * denominator * axisLengthSquared;
+        if (!std::isfinite(compare.lo) || !std::isfinite(compare.hi))
+            return Unresolved;
+        if (compare.lo > 0)
+            return 1;
+        if (compare.hi < 0)
+            return -1;
+        return Unresolved;
+    }
+
     bool NonzeroAxis(int axis, const contact_geometry::V<double> &value) const {
         if (!valid)
             return false;

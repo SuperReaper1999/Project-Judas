@@ -6,6 +6,7 @@ set(JUDAS_PHYSICS_WORLD_SOURCES
     src/physics/WorldBodies.cpp
     src/physics/WorldBounds.cpp
     src/physics/WorldCCDSearch.cpp
+    src/physics/WorldCCDDispatch.cpp
     src/physics/WorldContacts.cpp
     src/physics/WorldIncrementalImpact.cpp
     src/physics/WorldImpactEvents.cpp

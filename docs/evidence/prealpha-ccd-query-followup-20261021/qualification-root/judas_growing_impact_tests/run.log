@@ -1,0 +1,26 @@
+{
+  "checks": 50,
+  "details": [
+    {
+      "chain_bodies": 2,
+      "equal": true,
+      "far_velocity": 0.5
+    },
+    {
+      "chain_bodies": 3,
+      "equal": true,
+      "far_velocity": 0.33333301544189453
+    },
+    {
+      "chain_bodies": 32,
+      "equal": true,
+      "far_velocity": 4.450544565770542e-06
+    },
+    {
+      "chain_bodies": 100,
+      "equal": true,
+      "far_velocity": 5.381063834760054e-23
+    }
+  ],
+  "failures": 0
+}

@@ -1,0 +1,74 @@
+{
+  "candidate-profile900": {
+    "153": {
+      "fixed_ms": 49.580784,
+      "counters": {
+        "Physics impact queries": 12692.0,
+        "Physics CCD query scratch bytes": 7405216.0,
+        "Physics parallel CCD batches": 1.0,
+        "Physics parallel CCD queries": 609.0,
+        "Physics CCD batch wall ms": 3.110719,
+        "Physics impact continuation cache ms": 1.8415599999999999,
+        "Physics CCD search inclusive ms": 18.952241,
+        "Physics CCD geometry inclusive ms": 12.286532999999999,
+        "Physics CCD geometry calls": 14036.0,
+        "Physics impact island discovery ms": 6.103765,
+        "Physics impact solve ms": 3.097366,
+        "Physics impact observation publication ms": 2.7165969999999997
+      }
+    },
+    "461": {
+      "fixed_ms": 41.380262,
+      "counters": {
+        "Physics impact queries": 12730.0,
+        "Physics CCD query scratch bytes": 7405216.0,
+        "Physics parallel CCD batches": 5.0,
+        "Physics parallel CCD queries": 3025.0,
+        "Physics CCD batch wall ms": 2.763724,
+        "Physics impact continuation cache ms": 0.731869,
+        "Physics CCD search inclusive ms": 12.042233,
+        "Physics CCD geometry inclusive ms": 9.335158,
+        "Physics CCD geometry calls": 13767.0,
+        "Physics impact island discovery ms": 7.054205,
+        "Physics impact solve ms": 5.194382,
+        "Physics impact observation publication ms": 0.8239949999999999
+      }
+    }
+  },
+  "root-candidate-profile900": {
+    "153": {
+      "fixed_ms": 45.154759,
+      "counters": {
+        "Physics impact queries": 12692.0,
+        "Physics CCD query scratch bytes": 7405216.0,
+        "Physics parallel CCD batches": 1.0,
+        "Physics parallel CCD queries": 609.0,
+        "Physics CCD batch wall ms": 2.840518,
+        "Physics impact continuation cache ms": 0.43118199999999995,
+        "Physics CCD search inclusive ms": 17.332551,
+        "Physics CCD geometry inclusive ms": 10.97123,
+        "Physics CCD geometry calls": 14036.0,
+        "Physics impact island discovery ms": 6.238364,
+        "Physics impact solve ms": 3.066503,
+        "Physics impact observation publication ms": 0.6881079999999999
+      }
+    },
+    "461": {
+      "fixed_ms": 39.554716,
+      "counters": {
+        "Physics impact queries": 12730.0,
+        "Physics CCD query scratch bytes": 7405216.0,
+        "Physics parallel CCD batches": 5.0,
+        "Physics parallel CCD queries": 3025.0,
+        "Physics CCD batch wall ms": 2.441715,
+        "Physics impact continuation cache ms": 0.45705399999999996,
+        "Physics CCD search inclusive ms": 10.43362,
+        "Physics CCD geometry inclusive ms": 7.759418999999999,
+        "Physics CCD geometry calls": 13767.0,
+        "Physics impact island discovery ms": 7.152210999999999,
+        "Physics impact solve ms": 5.20765,
+        "Physics impact observation publication ms": 0.5968439999999999
+      }
+    }
+  }
+}

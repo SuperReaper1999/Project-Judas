@@ -1,4 +1,5 @@
 #include "WorldInternal.h"
+#include "ContactGroupUpdates.h"
 #include "ImpactCandidateCache.h"
 #include "ImpactSupportSets.h"
 
@@ -113,27 +114,26 @@ auto PhysicsWorld::Impl::AdvanceImpacts(float dt, bool coupledVelocityChanged) -
     // Keep published contact storage ordered even if a later physical
     // query throws. Successful steps sort once; failure observers retain
     // the same lower_bound invariant as the former per-event publication.
+    ContactGroupUpdates<CachedContact> observationUpdates(completedContactObservations);
+    ContactGroupUpdates<CachedContact> cacheUpdates(contactCache);
     struct ObservationPublication {
-        std::vector<CachedContact> &rows;
+        ContactGroupUpdates<CachedContact>& updates;
         PhysicsWorkSample &work;
-        bool active, dirty = false;
+        bool active;
         void Publish() {
-            if (!dirty)
+            if (updates.Empty())
                 return;
             PhysicsWorkTimer timer(work, active);
-            std::stable_sort(
-                rows.begin(), rows.end(),
-                [](const CachedContact &a, const CachedContact &b) { return a.key < b.key; });
-            dirty = false;
+            updates.Publish();
         }
         ~ObservationPublication() {
             Publish();
         }
-    } observationPublication{completedContactObservations, work.impactObservations, work.active};
+    } observationPublication{observationUpdates, work.impactObservations, work.active};
     // The incoming cache is already ordered. Only newly appended TOI
     // identities require publication; erasure and impulse changes preserve
     // order. Keep that invariant on failure as well as successful return.
-    ObservationPublication cachePublication{contactCache, work.continuationCache, work.active};
+    ObservationPublication cachePublication{cacheUpdates, work.continuationCache, work.active};
     stepDuration = dt;
     impactQueryAnchorTime = 0;
     impactPoseEvaluations = impactPoseReuses = impactOrientationBuilds = impactTruthRequests =
@@ -217,6 +217,30 @@ auto PhysicsWorld::Impl::AdvanceImpacts(float dt, bool coupledVelocityChanged) -
                                 : ImpactTime(key[0], key[1], int(key[2]), int(key[3]), now, dt);
         frontier.Set(key, time);
     };
+    std::vector<CCDRequest> queryRequests;
+    const auto scheduleBatch = [&](const std::vector<std::array<unsigned, 4>>& keys) {
+        if (!contactJobs || contactJobs->IsShutDown() || contactJobLanes < 2 || keys.size() < 256 || keys.size() > 16384) {
+            for (const auto& key : keys)
+                schedule(key);
+            return;
+        }
+        queryRequests.clear();
+        for (const auto& key : keys) {
+            if (!CanRespond(key[0], key[1]))
+                continue;
+            CCDRequest request;
+            request.key = key;
+            if (!StaticMeshPolyPair(key[0], key[1], int(key[2]), int(key[3]))) {
+                request.query = !std::binary_search(supportPairs.begin(), supportPairs.end(), key);
+                if (request.query && std::binary_search(spinningPairs.begin(), spinningPairs.end(), key))
+                    request.target = SpinPenetrationTarget(key);
+            }
+            queryRequests.push_back(std::move(request));
+        }
+        EvaluateImpactQueries(queryRequests, now, dt);
+        for (const auto& request : queryRequests)
+            frontier.Set(request.key, request.time);
+    };
     // These three initial lists may overlap after time-zero impulses.
     // They share the same anchored trajectories and query interval; reuse
     // an already scheduled key. Later dependency invalidation re-certifies
@@ -225,13 +249,25 @@ auto PhysicsWorld::Impl::AdvanceImpacts(float dt, bool coupledVelocityChanged) -
         if (!frontier.Contains(key))
             schedule(key);
     };
-    for (const auto &key : separatedPairs)
-        scheduleInitial(key);
-    for (const auto &key : spinningPairs)
-        scheduleInitial(key);
-    for (const auto &key : supportPairs)
-        if (StaticMeshPolyPair(key[0], key[1], int(key[2]), int(key[3])))
+    if (contactJobs && !contactJobs->IsShutDown() && contactJobLanes > 1 &&
+        separatedPairs.size() + spinningPairs.size() + supportPairs.size() >= 256) {
+        std::vector<std::array<unsigned, 4>> initial(separatedPairs);
+        initial.insert(initial.end(), spinningPairs.begin(), spinningPairs.end());
+        for (const auto& key : supportPairs)
+            if (StaticMeshPolyPair(key[0], key[1], int(key[2]), int(key[3])))
+                initial.push_back(key);
+        std::sort(initial.begin(), initial.end());
+        initial.erase(std::unique(initial.begin(), initial.end()), initial.end());
+        scheduleBatch(initial);
+    } else {
+        for (const auto &key : separatedPairs)
             scheduleInitial(key);
+        for (const auto &key : spinningPairs)
+            scheduleInitial(key);
+        for (const auto &key : supportPairs)
+            if (StaticMeshPolyPair(key[0], key[1], int(key[2]), int(key[3])))
+                scheduleInitial(key);
+    }
     // Capacities live through this event pass; values and membership are
     // rebuilt for each event. No cross-time contact truth is cached.
     // All proxy changes in this event pass go through CoverStepReach, which
@@ -554,15 +590,12 @@ auto PhysicsWorld::Impl::AdvanceImpacts(float dt, bool coupledVelocityChanged) -
                                                  return a.SameBodies(b);
                                              }),
                                  replacedGroups.end());
-            observationPublication.dirty = true;
-            completedContactObservations.erase(
-                std::remove_if(
-                    completedContactObservations.begin(), completedContactObservations.end(),
-                    [&](const CachedContact &cached) {
-                        return std::binary_search(replacedGroups.begin(), replacedGroups.end(),
-                                                  cached.key, groupLess);
-                    }),
-                completedContactObservations.end());
+            for (const auto& key : replacedGroups) {
+                auto& group = observationUpdates.Edit(key);
+                group.erase(std::remove_if(group.begin(), group.end(), [&](const CachedContact& row) {
+                    return row.key.SameBodies(key);
+                }), group.end());
+            }
             const auto& observed = responseSolver->Constraints();
             if (observed.size() != observationKeys.size())
                 throw std::runtime_error("impact observation mapping mismatch");
@@ -571,7 +604,7 @@ auto PhysicsWorld::Impl::AdvanceImpacts(float dt, bool coupledVelocityChanged) -
                 const auto &key = observationKeys[i];
                 if (row.normalImpulse <= 0)
                     continue;
-                completedContactObservations.push_back(
+                observationUpdates.Edit(key).push_back(
                     {key, row.localAnchorA, row.normal, row.normalImpulse, row.tangentImpulse,
                      float(row.signedSeparation), bodies[key.slotA].contactObservationRevision,
                      bodies[key.slotB].contactObservationRevision});
@@ -617,7 +650,6 @@ auto PhysicsWorld::Impl::AdvanceImpacts(float dt, bool coupledVelocityChanged) -
         {
             PhysicsWorkTimer timer(work.continuationCache, work.active);
             if (continuationEligible) {
-                cachePublication.dirty = true;
                 // Ordinary support impulses are next-step iterative guesses, not
                 // this event's impulses. A changed velocity does not invalidate
                 // those guesses: the next ordinary solve rematches fresh geometry,
@@ -633,19 +665,21 @@ auto PhysicsWorld::Impl::AdvanceImpacts(float dt, bool coupledVelocityChanged) -
                                            }),
                                replaced.end());
                 std::vector<unsigned char> retained(replaced.size(), 0);
-                contactCache.erase(
-                    std::remove_if(contactCache.begin(), contactCache.end(),
-                                   [&](const CachedContact& c) {
-                                       const auto at = std::lower_bound(replaced.begin(),
-                                                                        replaced.end(), c.key);
-                                       if (at == replaced.end() || c.key < *at || *at < c.key)
-                                           return false;
-                                       if (!at->SameBodies(c.key))
-                                           return true;
-                                       retained[std::size_t(at - replaced.begin())] = 1;
-                                       return false;
-                                   }),
-                    contactCache.end());
+                for (std::size_t i = 0; i < replaced.size(); ++i) {
+                    const auto& key = replaced[i];
+                    const auto range = cacheUpdates.Read(key);
+                    bool stale = false;
+                    for (auto row = range.first; row != range.second; ++row) {
+                        if (row->key.SameBodies(key)) retained[i] = 1;
+                        else stale = true;
+                    }
+                    if (stale) {
+                        auto& group = cacheUpdates.Edit(key);
+                        group.erase(std::remove_if(group.begin(), group.end(), [&](const CachedContact& row) {
+                            return !row.key.SameBodies(key);
+                        }), group.end());
+                    }
+                }
                 // New TOI groups need zero-load identity for next step's ordinary
                 // contact matching, independently of actual completed observations.
                 const auto& contactRows = responseSolver->Constraints();
@@ -655,12 +689,13 @@ auto PhysicsWorld::Impl::AdvanceImpacts(float dt, bool coupledVelocityChanged) -
                     const auto group = std::lower_bound(replaced.begin(), replaced.end(), key);
                     if (retained[std::size_t(group - replaced.begin())])
                         continue;
-                    contactCache.push_back({key, row.localAnchorA, row.normal, 0, glm::vec3(0),
+                    cacheUpdates.Edit(key).push_back({key, row.localAnchorA, row.normal, 0, glm::vec3(0),
                                             float(row.signedSeparation),
                                             bodies[key.slotA].contactObservationRevision,
                                             bodies[key.slotB].contactObservationRevision});
                 }
             } else {
+                cachePublication.Publish();
                 contactCache.erase(std::remove_if(contactCache.begin(), contactCache.end(),
                                                   [&](const CachedContact &c) {
                                                       return included[c.key.slotA] ||
@@ -733,8 +768,7 @@ auto PhysicsWorld::Impl::AdvanceImpacts(float dt, bool coupledVelocityChanged) -
         // Preserve exact lexicographic query order after identity deduplication.
         std::sort(dirty.begin(), dirty.end());
         dirty.erase(std::unique(dirty.begin(), dirty.end()), dirty.end());
-        for (const auto &key : dirty)
-            schedule(key);
+        scheduleBatch(dirty);
         if (now >= dt)
             break;
     }

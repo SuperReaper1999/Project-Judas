@@ -1,0 +1,2 @@
+INFO jointless save warm/cold bitwise identity: not guaranteed; original serial behaviour retained (serial and parallel cold controls agree)
+Parallel narrowphase: 55 checks, 0 failures

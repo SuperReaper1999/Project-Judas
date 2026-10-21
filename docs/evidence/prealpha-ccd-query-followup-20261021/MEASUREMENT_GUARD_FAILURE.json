@@ -1,0 +1,11 @@
+{
+  "discarded_run": "root-candidate1800-b",
+  "reason": "Documentation under src was edited during the benchmark. Core and workload unchanged, but source guard correctly rejected the run. Preserve and rerun without any src edits.",
+  "changed": [
+    {
+      "path": "src/physics/WorldModules.md",
+      "before": "c15c96dec95aae75519963cfdaf7883e81f3a02bf954bef9bdd7013573ea29dd",
+      "now": "2dc8dffd6f7d5773d02fa6c1c1beaf1ca6ad2cdc382f2c13660be0a58b42d775"
+    }
+  ]
+}

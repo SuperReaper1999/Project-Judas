@@ -38,7 +38,8 @@ and [dense-contact follow-up](docs/PREALPHA_DENSE_SUPPORT_FOLLOWUP.md) document
 current behaviour and remaining expensive cases. The latter does **not** meet a
 24–30 FPS target for the 1,024-piece stress room on the measured i7-4790 host. Current Ryzen measurements and the remaining impact hitches are recorded in
 [accepted broadphase reuse](docs/PREALPHA_BROADPHASE_REUSE.txt) and the
-[latest pair-discovery follow-up](docs/PREALPHA_PAIR_DISCOVERY.txt).
+[pair-discovery follow-up](docs/PREALPHA_PAIR_DISCOVERY.txt) and
+[latest CCD query/history investigation](docs/PREALPHA_CCD_QUERY_FOLLOWUP.txt).
 
 M90 brings vehicles, wheels, powertrains, characters, navigation, articulated
 poses, attachments, deformables, audio and particles through checked local-origin

@@ -64,10 +64,21 @@ auto PhysicsWorld::Impl::CacheBytes() const -> std::size_t {
         if (body.boundPreparation)
             bytes += body.boundPreparation->children.capacity() * sizeof(PreparedBoxBound);
     bytes += initialContactGeometry.capacity() * sizeof(InitialContactGeometry);
+    bytes += CCDQueryBytes();
     return bytes +
            (impactPoseSamples.capacity() + impactAnchorSamples.capacity()) *
                sizeof(ImpactPoseSample) +
            solver.FrameStorageBytes();
+}
+
+auto PhysicsWorld::Impl::CCDQueryBytes() const -> std::size_t {
+    std::size_t bytes = ccdQueryStorage.capacity() * sizeof(std::unique_ptr<CCDQueryStorage>);
+    for (const auto& scratch : ccdQueryStorage)
+        if (scratch)
+            bytes += sizeof(CCDQueryStorage) +
+                     (scratch->impactPoseSamples.capacity() + scratch->impactAnchorSamples.capacity()) *
+                         sizeof(ImpactPoseSample);
+    return bytes;
 }
 
 auto PhysicsWorld::Impl::TightBound(Body &body) -> Aabb {

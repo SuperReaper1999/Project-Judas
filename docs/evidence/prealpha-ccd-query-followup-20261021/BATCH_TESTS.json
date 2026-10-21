@@ -1,0 +1,28 @@
+[
+  {
+    "name": "batch-positive",
+    "argv": [
+      "build/judas_impact_discovery_tests"
+    ],
+    "exit": 0,
+    "expected": 0
+  },
+  {
+    "name": "stale-query-negative",
+    "argv": [
+      "build/judas_impact_discovery_tests",
+      "--stale-query-result"
+    ],
+    "exit": 1,
+    "expected": 1
+  },
+  {
+    "name": "stale-bound-negative",
+    "argv": [
+      "build/judas_impact_discovery_tests",
+      "--stale-bound"
+    ],
+    "exit": 1,
+    "expected": 1
+  }
+]

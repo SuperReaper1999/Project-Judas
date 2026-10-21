@@ -1,0 +1,60 @@
+Read docs/PREALPHA_CCD_QUERY_FOLLOWUP.txt and RESULTS.json first.
+
+The accepted baseline is 45f0614fa2eb21a6dc534d555f8abc87a31f4901.
+The frozen baseline core is eab321ffb7a997355987a42229424f1953765979164a6da94d1e2d65787781e5.
+The final measured candidate core is recorded in HOST.json and RESULTS.json.
+Build outputs are deliberately not committed. The retained raw benchmark driver
+is identical for each comparison; archive/source hashes identify physics code,
+not the observer's older embedded build identity. A new build can have different
+provenance bytes, so compare physical digests/work counts, not executable bytes.
+
+Linux Release setup (native desktop required):
+  cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DJUDAS_BUILD_CHANNEL=Experimental
+  cmake --build build --target judas_physics_stress_live_benchmark -j2
+  cmake --build build --target judas_contact_group_updates_tests judas_contact_sat_filter_tests judas_impact_discovery_tests -j2
+
+Run the positive fixtures normally. Negative controls must exit 1:
+  build/judas_contact_group_updates_tests --drop-generation
+  build/judas_contact_sat_filter_tests --omit-margin-bound
+  build/judas_contact_sat_filter_tests --omit-bound
+  build/judas_impact_discovery_tests --stale-query-result
+  build/judas_impact_discovery_tests --stale-bound
+The source/command receipts preserve the actual original invocations/results.
+
+Run the archived native observer through reproduce.py. It prints a plan unless
+--execute is supplied. Use a FRESH output directory; keep builds and games serial:
+  python3 docs/evidence/prealpha-ccd-query-followup-20261021/reproduce.py --output /tmp/judas-ccd-candidate --mode 1800 --execute
+  python3 docs/evidence/prealpha-ccd-query-followup-20261021/reproduce.py --output /tmp/judas-ccd-wasd --mode live35 --camera wasd --execute
+
+The helper uses the configured benchmark target's real compiler/link flags and
+application objects. It changes only the observer object and chosen physics
+archive. --core can select a separately rebuilt accepted archive. For a clean
+baseline rebuild, use an isolated worktree at the exact accepted commit with
+the same compiler, Release configuration and dependencies. Do not mix individual
+Impl-dependent physics objects across these versions. The actual variant build
+receipts explain which full candidate archive each private source used.
+
+The observer keeps all 1,024 pieces, 60 Hz, ten sweeps and native CCD. Fixed-mode
+FPS is not meaningful. In live35 mode inspect frame-association CSVs: sum ALL
+fixed steps by frame identity before attributing a hitch. WASD readback is in
+camera.csv. Do not change hardware load, graphics quality, physics or input policy
+between matched comparisons. A busy desktop can affect the measured timings.
+
+ARTIFACTS.json hashes original and stored bytes. Large logs/CSVs/JSON are gzip
+with deterministic mtime=0. HOST.json records hardware/compiler/provenance.
+root-analysis/TABLES.json contains strict wall windows and physical comparisons.
+The source-guard-rejected candidate-b run is retained; candidate-b-retry is used
+for normal comparisons. Only src/physics/WorldModules.md changed in that rejected
+run. Do not silently replace the rejected receipt with a pass.
+
+qualification-root/ links each original fixture to the exact final core. cold/
+contains fresh-process original M70/M77 commands and actual endpoint equality.
+integration/ covers existing consumer saves/streaming; delivery/ records normal
+editor Play/Stop and relocated read-only export. Dummy audio is not a listening
+test. These checks do not imply Windows/Android or human acceptance.
+
+The original per-query/event instrumentation and unsuccessful lazy/small-batch
+sources are preserved for causal investigation. Those runs are diagnostic or
+rejected, not additive speedups. Absolute workspace paths in raw receipts remain
+historical provenance; adjust them when reproducing elsewhere. No protected
+research or independent fluid solver was used or changed.

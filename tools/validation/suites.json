@@ -12,6 +12,7 @@
     {"name":"impact-candidates","target":"judas_impact_candidate_cache_tests","groups":["collision"]},
     {"name":"impact-event-schedule","target":"judas_impact_event_schedule_tests","groups":["collision"]},
     {"name":"impact-event-schedule-negative","target":"judas_impact_event_schedule_tests","groups":["collision"],"args":["--omit-update"]},
+    {"name":"contact-group-updates","target":"judas_contact_group_updates_tests","groups":["collision"]},
     {"name":"contact-sat-filter","target":"judas_contact_sat_filter_tests","groups":["collision"]},
     {"name":"contact-sphere-filter","target":"judas_contact_sphere_filter_tests","groups":["collision"]},
     {"name":"impact-support-sets","target":"judas_impact_support_sets_tests","groups":["collision"]},

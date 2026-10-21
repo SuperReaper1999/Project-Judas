@@ -1,0 +1,87 @@
+[
+  {
+    "name": "group-positive",
+    "args": [
+      "build/judas_contact_group_updates_tests"
+    ],
+    "exit": 0,
+    "expected": 0,
+    "binary_sha256": "361ef94632da904363b0b241f1f103092cde278c1a9ecf6e633589ad67db881c",
+    "log_sha256": "d5c5a378eb0e85d35a25cec8b2909e5d5e38a26ae7e793b8c502472f3ca5e6fc"
+  },
+  {
+    "name": "group-generation-negative",
+    "args": [
+      "build/judas_contact_group_updates_tests",
+      "--drop-generation"
+    ],
+    "exit": 1,
+    "expected": 1,
+    "binary_sha256": "361ef94632da904363b0b241f1f103092cde278c1a9ecf6e633589ad67db881c",
+    "log_sha256": "3612d2404c9c95fd84ee2efc5becc5b8d55e3782a6fe5ec9cd56cc01bbceab59"
+  },
+  {
+    "name": "margin-positive",
+    "args": [
+      "build/judas_contact_sat_filter_tests"
+    ],
+    "exit": 0,
+    "expected": 0,
+    "binary_sha256": "fac58e453f8e6faafae08249af581a389151735551dd27b821f3dcb9c0fdcc38",
+    "log_sha256": "dfa1521020cefc7ffb39caf4f874bdfecb91ee1be3a954c9869a09866c9d47a7"
+  },
+  {
+    "name": "margin-unsafe-negative",
+    "args": [
+      "build/judas_contact_sat_filter_tests",
+      "--omit-margin-bound"
+    ],
+    "exit": 1,
+    "expected": 1,
+    "binary_sha256": "fac58e453f8e6faafae08249af581a389151735551dd27b821f3dcb9c0fdcc38",
+    "log_sha256": "a0bbde59ffd8916cf7cc5568c8136ce04a7da0fdd7e2e63cb7ad57bc948ac4da"
+  },
+  {
+    "name": "sat-unsafe-negative",
+    "args": [
+      "build/judas_contact_sat_filter_tests",
+      "--omit-bound"
+    ],
+    "exit": 1,
+    "expected": 1,
+    "binary_sha256": "fac58e453f8e6faafae08249af581a389151735551dd27b821f3dcb9c0fdcc38",
+    "log_sha256": "9509201aa7723539fb89be3360af1299d93b13448d776730d2272338328a1328"
+  },
+  {
+    "name": "batch-combined",
+    "args": [
+      "build/judas_impact_discovery_tests"
+    ],
+    "exit": 0,
+    "expected": 0,
+    "binary_sha256": "d4dce899e1b0bac2a7d5abf691cf49b2e2cb0b9f5223e5ab45174fde96c868af",
+    "log_sha256": "4a0f8edf278b88ef0bc50d5fe6a0de614f4ec72fcb7e63c2f57df6d41494b424"
+  },
+  {
+    "name": "stale-query-final-negative",
+    "args": [
+      "build/judas_impact_discovery_tests",
+      "--stale-query-result"
+    ],
+    "exit": 1,
+    "expected": 1,
+    "binary_sha256": "d4dce899e1b0bac2a7d5abf691cf49b2e2cb0b9f5223e5ab45174fde96c868af",
+    "log_sha256": "42a9dea5b7d3555ea92e30d4aa760a29cc23c3c50f22b2f71241888f0fce0086"
+  },
+  {
+    "name": "stale-bound-final-negative",
+    "args": [
+      "build/judas_impact_discovery_tests",
+      "--stale-bound"
+    ],
+    "exit": 1,
+    "expected": 1,
+    "binary_sha256": "d4dce899e1b0bac2a7d5abf691cf49b2e2cb0b9f5223e5ab45174fde96c868af",
+    "log_sha256": "75de0564ad3983fb4b66fd57ad50ce28875369241dd59c7364a3dbea944fbe19"
+  }
+]

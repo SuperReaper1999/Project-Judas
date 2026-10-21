@@ -25,7 +25,7 @@ inline auto PhysicsWorld::Impl::GeometryPoseAt(unsigned slot, double time) const
     return pose;
 }
 
-inline auto PhysicsWorld::Impl::ImpactPoseAt(unsigned slot, double time)
+inline auto PhysicsWorld::Impl::CCDQuery::ImpactPoseAt(unsigned slot, double time)
     -> const ImpactPoseSample & {
     EnsureImpactPoseStorage();
     // Independent pair queries share the current event's start pose.
@@ -47,7 +47,7 @@ inline auto PhysicsWorld::Impl::ImpactPoseAt(unsigned slot, double time)
     return sample;
 }
 
-inline auto PhysicsWorld::Impl::ActualImpactBound(unsigned slot, const ImpactPoseSample &pose)
+inline auto PhysicsWorld::Impl::CCDQuery::ActualImpactBound(unsigned slot, const ImpactPoseSample &pose)
     -> const Aabb & {
     auto &sample = impactPoseSamples[slot];
     if (!sample.tightValid || !SamePosition(sample.tightPosition, pose.pose.position) ||
@@ -66,7 +66,7 @@ inline auto PhysicsWorld::Impl::ActualImpactBound(unsigned slot, const ImpactPos
     return sample.tightBound;
 }
 
-inline auto PhysicsWorld::Impl::SimpleImpactBoundsSeparated(unsigned a, unsigned b,
+inline auto PhysicsWorld::Impl::CCDQuery::SimpleImpactBoundsSeparated(unsigned a, unsigned b,
                                                             const ImpactPoseSample &aa,
                                                             const ImpactPoseSample &bb) -> bool {
     const auto simple = [](const Shape &shape) {
@@ -84,7 +84,7 @@ inline auto PhysicsWorld::Impl::SimpleImpactBoundsSeparated(unsigned a, unsigned
     return true;
 }
 
-inline auto PhysicsWorld::Impl::PairAt(unsigned a, unsigned b, int pa, int pb, double time,
+inline auto PhysicsWorld::Impl::CCDQuery::PairAt(unsigned a, unsigned b, int pa, int pb, double time,
                                        float margin) -> ContactManifold {
     PhysicsWorkTimer timer(work.geometry, work.active);
     const auto &aa = ImpactPoseAt(a, time);
@@ -96,7 +96,7 @@ inline auto PhysicsWorld::Impl::PairAt(unsigned a, unsigned b, int pa, int pb, d
                            &*aa.orientation, &*bb.orientation);
 }
 
-inline auto PhysicsWorld::Impl::PairPenetration(unsigned a, unsigned b, int pa, int pb, double time)
+inline auto PhysicsWorld::Impl::CCDQuery::PairPenetration(unsigned a, unsigned b, int pa, int pb, double time)
     -> double {
     const auto manifold = PairAt(a, b, pa, pb, time, 0);
     double deepest = 0;
@@ -108,7 +108,7 @@ inline auto PhysicsWorld::Impl::PairPenetration(unsigned a, unsigned b, int pa, 
     return deepest;
 }
 
-inline auto PhysicsWorld::Impl::PairPenetrationExceeds(unsigned a, unsigned b, int pa, int pb,
+inline auto PhysicsWorld::Impl::CCDQuery::PairPenetrationExceeds(unsigned a, unsigned b, int pa, int pb,
                                                        double time, double target) -> bool {
     PhysicsWorkTimer timer(work.geometry, work.active);
     const auto &aa = ImpactPoseAt(a, time);
@@ -120,7 +120,7 @@ inline auto PhysicsWorld::Impl::PairPenetrationExceeds(unsigned a, unsigned b, i
     return PairPenetration(a, b, pa, pb, time) > target;
 }
 
-inline auto PhysicsWorld::Impl::PairTouches(unsigned a, unsigned b, int pa, int pb, double time)
+inline auto PhysicsWorld::Impl::CCDQuery::PairTouches(unsigned a, unsigned b, int pa, int pb, double time)
     -> bool {
     PhysicsWorkTimer timer(work.geometry, work.active);
     const auto &aa = ImpactPoseAt(a, time);
@@ -139,7 +139,7 @@ inline auto PhysicsWorld::Impl::PairTouches(unsigned a, unsigned b, int pa, int 
     return ComputeContacts(posa, posb, 0, &*aa.orientation, &*bb.orientation).count > 0;
 }
 
-inline auto PhysicsWorld::Impl::EnsureImpactPoseStorage() -> void {
+inline auto PhysicsWorld::Impl::CCDQuery::EnsureImpactPoseStorage() -> void {
     if (impactPoseSamples.size() >= bodies.size())
         return;
     const auto capacity = impactPoseSamples.capacity();
@@ -154,4 +154,44 @@ inline auto PhysicsWorld::Impl::EnsureImpactPoseStorage() -> void {
         ++cacheCounters.allocations;
         cacheCounters.allocatedBytes += impactPoseSamples.capacity() * sizeof(ImpactPoseSample);
     }
+}
+
+inline auto PhysicsWorld::Impl::ImpactPoseAt(unsigned slot, double time) -> const PhysicsWorld::Impl::ImpactPoseSample & {
+    CCDQuery query(*this);
+    return query.ImpactPoseAt(slot, time);
+}
+
+inline auto PhysicsWorld::Impl::ActualImpactBound(unsigned slot, const ImpactPoseSample &pose) -> const Aabb & {
+    CCDQuery query(*this);
+    return query.ActualImpactBound(slot, pose);
+}
+
+inline auto PhysicsWorld::Impl::SimpleImpactBoundsSeparated(unsigned a, unsigned b, const ImpactPoseSample &aa, const ImpactPoseSample &bb) -> bool {
+    CCDQuery query(*this);
+    return query.SimpleImpactBoundsSeparated(a, b, aa, bb);
+}
+
+inline auto PhysicsWorld::Impl::PairAt(unsigned a, unsigned b, int pa, int pb, double time, float margin) -> ContactManifold {
+    CCDQuery query(*this);
+    return query.PairAt(a, b, pa, pb, time, margin);
+}
+
+inline auto PhysicsWorld::Impl::PairPenetration(unsigned a, unsigned b, int pa, int pb, double time) -> double {
+    CCDQuery query(*this);
+    return query.PairPenetration(a, b, pa, pb, time);
+}
+
+inline auto PhysicsWorld::Impl::PairPenetrationExceeds(unsigned a, unsigned b, int pa, int pb, double time, double target) -> bool {
+    CCDQuery query(*this);
+    return query.PairPenetrationExceeds(a, b, pa, pb, time, target);
+}
+
+inline auto PhysicsWorld::Impl::PairTouches(unsigned a, unsigned b, int pa, int pb, double time) -> bool {
+    CCDQuery query(*this);
+    return query.PairTouches(a, b, pa, pb, time);
+}
+
+inline auto PhysicsWorld::Impl::EnsureImpactPoseStorage() -> void {
+    CCDQuery query(*this);
+    query.EnsureImpactPoseStorage();
 }

@@ -1,0 +1,197 @@
+PRE-ALPHA: CCD QUERIES AND EVENT-LOCAL CONTACT HISTORY
+====================================================
+
+Input: human-accepted 45f0614fa2eb21a6dc534d555f8abc87a31f4901.
+Development: Experimental only. This correction has not been human accepted.
+No M100, release tag or main promotion. Linux is the measured acceptance host.
+
+MECHANISMS ESTABLISHED
+
+The remaining hitches are not explained by rendering or mouse movement alone.
+In the preserved moving-camera capture, an approximately 204 ms frame contained
+eight fixed steps totalling approximately 200 ms. A frame's last fixed-step
+statistic alone understated that accumulated work.
+
+An event/query trace of the unchanged 1,024-piece scene found:
+
+  Step 153: 138 distinct CCD impacts, 3,194 response rows. Updating local contact
+  groups repeatedly scanned 303,999 completed-observation rows and 383,847
+  warm-start rows. These are repeated visits, not that many unique contacts.
+  Those two stages totalled about 4.7 ms in this instrumented trace.
+
+  Step 461: 13 distinct CCD impacts. Of 12,730 searches, 4,087 terminated at a
+  proximity miss; these spent about 11.2 ms of aggregate diagnostic query time.
+  Their positive-margin SAT comparisons rebuilt full interval expressions even
+  where the existing arithmetic error bound could certify the decision.
+
+These were real sources of avoidable work. The events were not duplicate copies
+of one impact. Changed trajectories can move future impact times even by small
+amounts; a previous sampled no-impact result is not valid merely because a new
+velocity is close. No tolerance-based velocity cutoff or blind reuse was added.
+Trace timings are diagnostic, not ordinary-run speed comparisons.
+
+CORRECTIONS
+
+1. ContactGroupUpdates stages only affected primitive groups in the sorted warm
+   and observation stores. It preserves generation-sensitive erase/retention,
+   bitwise warm guesses, zero-load new identities and stable within-group order.
+   Untouched groups are read by binary search, not repeatedly scanned globally.
+   One ordered splice publishes on completion or failure unwind. A coupled
+   fallback publishes first before its existing global invalidation. This is
+   derived step-local mutation bookkeeping, not another persistent history or
+   physics model. No solver consumes unpublished history.
+
+2. The existing adaptive SAT filter now certifies the positive-margin polynomial
+   from an outward enclosure of the scalar result. Its established scalar-to-
+   interval error bound, original interval axis norm and quaternion denominator
+   preserve the old interval branch. Unresolved, out-of-domain, non-nearest and
+   exact-boundary cases keep the original interval/exact evaluation. It supplies
+   no approximate gap, witness, contact normal or response. Near-margin equality
+   and adjacent binary32 values have an independent exact-arithmetic oracle.
+
+3. Eligible independent CCD queries borrow the existing bounded job service over
+   a frozen event boundary. The CCDQuery view owns private derived samples and
+   counters; workers cannot mutate bodies, motion, warm starts or the frontier.
+   The owner joins and publishes canonical results before solving the next event.
+   Cheap disjoint bounds stay serial. Small batches, compound/mesh/prescribed
+   paths, absent/busy/shutdown services and over-budget work have serial paths.
+   Limits: four configured lanes by default, 256 heavy-query minimum, 16,384
+   request batch maximum, 32 MiB retained sample-payload budget plus metadata.
+   These select an execution path; no collision request is discarded.
+
+The solver, ten sweeps, 60 Hz cadence, CCD precision/sampling budgets, scene,
+object count, camera controls and catch-up policy are unchanged. No public JS,
+component, save-format or physical gameplay interface changed.
+
+EVIDENCE AND REPRODUCTION
+
+Raw traces, normal comparisons, rejected experiments, commands, hashes and
+focused integration results are under:
+  docs/evidence/prealpha-ccd-query-followup-20261021/
+Start with RESULTS.json, REPRODUCTION.txt and the artifact index.
+
+Read-only historical reports remain applicable to their recorded checkpoints;
+this report does not retroactively change their measurements or acceptance.
+
+MATCHED FINAL LINUX RESULTS
+
+Ryzen 5 5600, 8 GB RAM, GTX 970, native NVIDIA 580.178.04; GCC 15.2.0,
+Release -O3 -DNDEBUG. One workload/build at a time. The same frozen driver was
+linked to the accepted and candidate archives; its older embedded identity is
+not a substitute for the recorded archive/source hashes.
+
+Normal fixed-step runs, 1,800 steps, accepted/candidate/candidate/accepted order:
+                         Accepted A/B          Combined candidate A/B
+  Mean ms                13.290 / 13.211       12.327 / 12.443
+  Median ms              11.875 / 11.800       11.033 / 11.179
+  p95 ms                 20.866 / 20.790       19.188 / 19.148
+  Worst ms               53.565 / 53.382       43.196 / 43.695
+
+The repeat-pair averages improve about 6.5% mean, 8.0% p95 and 18.8% worst.
+These are fixed-step costs, not displayed FPS. All 1,800 physical trajectory
+hashes, populations, sleep states, candidates, contacts, impact events, query
+counts and speed extrema match. The candidate repeats match all 13 fields.
+Search iteration counts alone differ: private per-batch remaining bounds are
+sometimes tighter than the retained serial superset, removing 48 search
+iterations across 21 steps. The search budgets were not changed.
+
+Endpoint quality is identical: 1,024 loose pieces, 9,464 candidate pairs, 3,200
+contact points, 5.004293 mm deepest endpoint overlap, zero nonfinite fields,
+uncertain queries or unsupported candidates. This endpoint observation is
+outside the timing interval and is not an all-time penetration bound.
+
+Normal live 35-second WASD runs, accepted versus candidate:
+  Approximate start-to-start marker cadence    109.15 -> 136.54 FPS
+  p95 marker interval                         18.593 -> 16.637 ms
+  Worst marker interval                       211.238 -> 191.098 ms
+  Fixed work inside that worst frame          207.644 -> 188.334 ms
+  Steps inside that frame                     8 -> 8
+
+Actual camera position/orientation is read back every frame. Logical movement
+is held through the normal input path. Time-based camera paths differ slightly
+with frame cadence, so this is a real combined gameplay/camera comparison, not
+an isolated rendering microbenchmark. The common 2,082-step physical prefix
+matches; only the same search-iteration counter differs. FPS alone hides the
+remaining hitch and must not be presented as consistent smoothness.
+
+The profiled same-step comparison independently localizes the history gain:
+  Step 153 observation publication   2.717 -> 0.688 ms
+           continuation cache        1.842 -> 0.431 ms
+           CCD inclusive lane CPU    18.952 -> 17.333 ms
+  Step 461 CCD inclusive lane CPU    12.042 -> 10.434 ms
+
+Those profiler-on figures compare the intermediate parallel-only candidate to
+the final combined candidate, not the accepted baseline; keep them separate
+from ordinary-run timings. Inclusive/nested timers and summed lane CPU must
+not be added to elapsed batch wall time. Scratch payload including metadata
+is 7,405,216 bytes in this scene. RSS variation is not claimed as a memory saving.
+
+VALIDATION
+
+24 focused final-archive regression fixtures pass: parallel narrowphase,
+support-guess ownership, growing impacts, tracked rows, impact solver/timing/
+robustness, support continuation, collision continuity, joints, kinematics,
+rigid contacts, CharacterMotor, ragdolls, physical continuation, contact lifecycle/
+cache, native mesh growth, collision geometry, event schedule, origin physics,
+wheels, powertrains and gravity selection. No full-suite rerun.
+
+New/extended tests:
+  Contact-group reference model: 20,209 checks, zero failures. Deliberately
+  dropping generations produces 1,751 expected failures.
+  SAT predicates/margins: 512,319 checks, zero failures. Unchecked scalar margin
+  comparisons produce 9 expected failures; existing unsafe-sign control fails.
+  Independent CCD batch: 4,523 checks, zero failures, including native geometry
+  at TOI, rotated walls, changed trajectories, unavailable/busy/shutdown pools,
+  worker rounding restoration and over-budget serial fallback. Existing stale
+  bound/result negative controls remain preserved.
+
+Fresh native processes pass M70 cold-write/read and the original protected M77
+standing observer. The actual restored physical endpoint is exactly equal and
+standing, not merely a cached controller flag. Save bytes remain unchanged on
+read. Hearthworld cold persistence and streamed-range write/read/read-b pass.
+Native editor Play/Stop retains byte-identical authored scenes. Ordinary export
+launches from an unrelated /tmp directory with a read-only installation,
+selects scene 3, runs the tour and captures the native-rendered scene.
+Audio used the dummy backend; no human listening claim. Windows/Android are
+not rerun and no new platform acceptance is implied.
+
+PRESERVED ATTEMPTS AND LIMITS
+
+Full-run per-query attribution, exact-step event traces and their raw records
+remain available. Naive and cache-aware lazy orientation preparation failed to
+produce a reliable gain. Lowering the worker threshold to 32 queries also lost
+time with current scratch preparation; it was rejected. The margin-only probe
+had no reliable worst-step benefit by itself; the combined final result above
+is the actual delivery, not a sum of prototype gains.
+
+A repeated run was correctly rejected by the source guard after this module's
+Markdown documentation changed during measurement. Its core/fixture stayed
+unchanged; the raw rejected run is retained and a fresh frozen-source retry
+supplies the accepted comparison. An initial make invocation discovered a newly
+added target only after regeneration; the subsequent explicit target build and
+all tests pass. Neither event is disguised as an engine physics failure.
+
+Remaining limit: approximately 191 ms live hitches still occur during the dense
+settling burst. At step 461 the final diagnostic still spends about 10.4 ms
+summed CCD-query CPU, 7.2 ms growing-contact discovery and 5.2 ms solving. These
+are not additive wall-time categories. Correct event-by-event dependencies and
+fresh geometry are still required. This work removes two established sources
+of waste and safely schedules independent queries; it does not establish that
+all remaining search work is necessary or that no further improvement exists.
+Further certified exclusion/dependency improvements need their own causal proof.
+Do not blame hardware alone or call this universal 60 Hz qualification.
+
+Public physics/JS APIs, save schema and physical policy remain unchanged.
+Existing games, protected history, accepted fluids and independent research
+were not modified. FLU-001 and unrelated deferred issues remain deferred.
+
+HUMAN CHECKLIST
+
+- Launch the exported Physics Stress Lab; press 3 for the unchanged 1,024 pieces.
+- Move with WASD and look around during the initial collapse and settling burst.
+- Compare responsiveness, especially the isolated early hitches; they remain.
+- Press F5 for the watch tour, M for motors, J for one assembly impulse.
+- Test F6/F7 save/load, R reload, Escape pause and the rotated room with 4.
+- Report any missed collisions, unstable assemblies or persistence differences.
+
+Main promotion requires acceptance of this exact Experimental candidate.

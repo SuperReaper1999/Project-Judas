@@ -1,0 +1,10 @@
+FAIL margin boundary preserves legacy resolution row=0 axis=0
+FAIL margin boundary matches independent exact polynomial row=0 axis=0
+FAIL exact margin tie requires the established fallback row=0 axis=0
+FAIL margin boundary preserves legacy resolution row=1 axis=0
+FAIL margin boundary matches independent exact polynomial row=1 axis=0
+FAIL exact margin tie requires the established fallback row=1 axis=0
+FAIL margin boundary preserves legacy resolution row=2 axis=0
+FAIL margin boundary matches independent exact polynomial row=2 axis=0
+FAIL exact margin tie requires the established fallback row=2 axis=0
+Contact SAT filter: checks=512325 failures=9 certified=131941 ambiguous=48059 exact_checks=6240 unsafe_scalar_signs=10

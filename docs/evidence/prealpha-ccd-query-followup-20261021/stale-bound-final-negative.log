@@ -1,0 +1,11 @@
+CONTACT closed sphere-box boundary count=1 separation=0
+CONTACT rotated translated near-contact count=1 separation=-0.050447012007860045
+FAIL moving endpoint at event time retains actual narrowphase contact
+CONTACT moving endpoint at event time count=1 separation=0
+FAIL earlier enclosure reused at later event retains actual narrowphase contact
+CONTACT earlier enclosure reused at later event count=1 separation=-0.5
+FAIL overlapping future enclosure conservatively retains the current miss
+FAIL changed trajectory after an impact retains actual narrowphase contact
+CONTACT changed trajectory after an impact count=1 separation=-0.25
+STEP impacts=1 incremental=1 rejected=1 x=1.2000000476837158 vx=0
+{"checks":4523,"failures":4,"stale_bound_control":true,"stale_query_control":false}
