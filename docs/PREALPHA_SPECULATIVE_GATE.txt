@@ -96,3 +96,24 @@ Note: build_shared_inertia_driver.py was accidentally re-run once with
 (binary sha 1f11ebc8...; the copied engine library hash a21f20a3... is
 unchanged). The original binary (cd870cdd...) recorded in that folder's
 receipts is no longer present there.
+
+5. FOLLOW-UP: DYNAMIC-ONLY GATE — ALSO REJECTED (probe level)
+----------------------------------------------------------------------
+Variant: speculative routing only when BOTH bodies are dynamic, so every
+landing on static geometry keeps exact TOI. The room-lattice probe still
+failed to settle: the second layer's box-on-box landings (256 speculative
+encounters in one step) left 13-24 mm penetration, and the lattice gained
+energy (peak ~5 m/s by step 180), while exact TOI sleeps by step 60.
+Patch: .cache/speculative-gate-20261022/rejected-gate-dynamic-only/.
+A diagnostic raising the velocity-iteration constant produced output
+bit-identical to the default, so whether solver convergence is the cause
+was NOT established by it.
+
+Where this leaves the event-reduction route: per the profiled worst step
+(31 events), CCD search ~10.8 ms, impact solve ~8.1 ms and discovery
+~5.7 ms are event work, with ~14 ms of other work on top, so the 16.7 ms
+target needs far fewer events, not cheaper ones. Simultaneous stacked
+landings are what this engine's speculative path cannot yet reproduce;
+a credible next design must resolve them as well as exact TOI does (e.g.
+substepped or block-coupled stack response), and must pass the ordinary
+settling gate before any severe-case timing is considered.
