@@ -215,3 +215,50 @@ Evidence root: .cache/speculative-gate-20261022/simultaneous-investigation/
   time inside one shared solve (time-ordered rows within a step), which is
   new work not attempted here. Neither more velocity iterations nor a full
   rewrite was indicated by the evidence.
+
+8. Option (b) investigated: sharing work across exact-time events (2026-10-23)
+  Question: within one step, do successive TOI events repeatedly do the SAME
+  work, so that related contacts could be resolved together while each
+  arrival keeps its exact time? Diagnostic-only instrumentation (reverted;
+  nothing committed to src) on severe900 at 69b23643:
+
+8.1 Repetition exists and is concentrated in the worst steps
+  Whole run: 4,574 events in 900 steps, 395 steps with more than one event.
+    Domain bodies 147,987 vs 104,462 unique per step (1.42x).
+    Changed bodies 100,973 vs 74,132 unique (1.36x).
+  Worst steps: re-solving of 2-3.3x, e.g.
+    step 258, 39.7 ms: 28 events, 1,711 domain / 522 unique;
+    step 314, 38.7 ms: 17 events, 1,745 / 607.
+  Same-instant events already share one dependency flush (existing
+  exact-equality coalescing in AdvanceImpacts).
+
+8.2 Cost of the per-event parts (main-thread PC samples by phase, worst 40 steps)
+    dependency flush + TOI queries   19.1%
+    domain expansion geometry         9.8%  (PairAt/candidates in TryIncrementalImpact)
+    growing solve arithmetic          9.0%
+    publish/invalidate                7.1%
+    -> 45% of worst-step time. Ordinary narrowphase 12.7%, velocity solve 12.6%.
+  Over the whole burst these per-event parts are only about 17%; the
+  velocity solve (25.6%) and narrowphase (23.5%) dominate.
+  Upper bound: removing ALL cross-event repetition (domains 2.4x -> 1x)
+  would save at most about 26% of a worst step (about 40 -> 30 ms), still
+  far above 16.7 ms, and only by merging distinct arrival times.
+
+8.3 The repeated work is not the same work
+  Of 447,004 domain PairAt evaluations, 139,187 (31%) revisit a pair already
+  evaluated earlier in the same step. Only 147 (0.03%) of those see
+  bit-identical poses for both bodies. The rest evaluate a genuinely changed
+  state: a later time, and velocities changed by the intervening event.
+  Under exact arrival times each event must solve its own domain at its own
+  instant. No exact cache, shared domain or shared solve can reuse the
+  earlier result, and the module's "no cross-time contact truth" rule is
+  correct here. Exact sharing would gain about 0%.
+
+8.4 Decision
+  Not prototyped further, per the operator's instruction not to force a
+  change without meaningful gain. The material reduction in the measured
+  record still comes only from reducing the NUMBER of exact-time events, that
+  is, a lagged/speculative contract for slow, non-bouncing encounters
+  (section 7.3, an operator decision on impact_timing/M91/rigid_contact).
+  Or the bounded remaining hitch (worst step about 40 ms) is accepted under
+  exact semantics. No human validation is claimed.
