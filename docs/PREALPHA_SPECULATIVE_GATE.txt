@@ -142,3 +142,76 @@ Patch: .cache/speculative-gate-20261022/rejected-miss-certificates/.
 Correction to an earlier claim: the profiler's inclusive "CCD search"
 scope (~10.8 ms in the worst step) overstated how much wall time the
 ImpactTime advancement loop costs; removing 23% of its iterations saved ~1%.
+
+7. SIMULTANEOUS-CONTACT INVESTIGATION (23 Oct 2026) — FINDINGS, NOT ADOPTED
+----------------------------------------------------------------------
+Question: why do landings need separate TOI events, and why can't the
+ordinary velocity solve take those contacts together without penetration,
+artificial energy or unstable stacking?
+Evidence root: .cache/speculative-gate-20261022/simultaneous-investigation/
+(patch simultaneous-contact.diff, test SpeculativeGateTests.cpp, probe source).
+
+7.1 Corrections to sections 2 and 5
+  * The probe test target was linked from a stale binary for part of the
+    earlier work (fixed by reconfiguring). The section 5 "13-24 mm"
+    dynamic-only result and the 40-iteration "bit-identical" diagnostic are
+    therefore INVALID. On a fresh build the dynamic-only gate penetrates at most
+    ~5 mm.
+  * The ordinary "all 1,152 asleep" gate measures preservation of an
+    authored, perfectly aligned lattice. With 0.5 mm horizontal jitter the
+    UNMODIFIED exact engine also fails to settle: its box-on-sphere columns
+    (unstable equilibria) topple, and KE rises 0.1 -> 390 J from released
+    potential energy. A full energy audit (KE + rotational + PE) shows no mode
+    manufactures net energy. Exact mode itself gains ~15 J between steps 30
+    and 90 (position correction of 7.6 mm penetrations).
+
+7.2 The asymmetry source, and a contract-preserving block correction
+  ContactSolver::PrepareBlocks admitted a row to a normal block only when
+  signedSeparation <= 0. A patch arriving exactly at contact has corners at
+  +1e-7 and -1e-7, so it was split into sequential point rows. Their
+  Gauss-Seidel order adds ~2e-4 rad/s of spurious spin (measured), which an
+  unstable column then amplifies. Exact TOI landings end a hair inside the
+  contact and always form blocks, which is why they stayed symmetric. Allowing
+  anchored positive-gap rows into blocks (target -gap/dt is an ordinary LCP
+  row) makes the speculative lattice settle like exact: all asleep by
+  step 90, deepest 0.2 mm (exact 3.1 mm), energy constant.
+  On its own (exact routing) this rule passes impact_timing, M91
+  continuity and rigid_contact, and is digest-identical on ordinary900.
+  But severe900 gave mean/p95/worst 12.03/23.55/42.88 ms: NO performance
+  gain. Not adopted alone.
+
+7.3 Speculative routing + gap-tolerant blocks: large gain, breaks contracts
+  run          mean    p95     worst  over16.7  events  sleep  deepest  worst frame
+  ordinary900  1.669   6.110   10.28     0         32  1152   0.22 mm     67.6 ms
+  severe900   10.701  14.018   28.76    24        481   139   6.12 mm     75.3 ms
+  live120     11.208  12.605   23.49    22        483    —    6.12 mm     60.8 ms
+  (8d87a640 for comparison: severe900 11.58/20.98/39.5 ms, 112 over budget,
+   5,020 events; live120 worst frame 197.8 ms, worst step 39.3 ms.)
+  A negative-control family (12 fast/spinning cases at a thin wall) crosses
+  in 2 cases with eligibility bypassed and in none with exact TOI or the
+  default gate.
+  Contract failures (fixtures not changed):
+    impact_timing: isolated outgoing velocity (12), post-impact isolated floor
+      event actual impact time (2) and restitution (2), restitution threshold
+      suppresses micro bounce (1)
+    collision_continuity (M91): new separated body receives actual collision
+      impulse (2), real impact revalidates a gapped support (2)
+    rigid_contact: static friction on a rotated 20-degree incline (97 mm creep)
+  Restitutive encounters above 0.5 m/s were already routed back to exact TOI.
+  Root cause of the impact_timing/M91 failures: a speculative row
+  is a ONE-STEP-LAGGED impact. It applies only enough impulse to close the gap
+  (the approacher still moves at -gap/dt and the struck body receives part of
+  the momentum), with the remainder in the next step. These contracts require
+  the full impulse at the actual contact time with analytical endpoints
+  (2e-6). Meeting them needs contact times inside the step, which is what TOI
+  events provide. The current architecture is deliberately sequential in
+  that sense.
+
+7.4 What a correct simultaneous response would require
+  Either (a) accept a lagged-impact contract for slow, non-bouncing
+  box/sphere encounters, with the gap-tolerant block rule, and revise the
+  affected fixtures deliberately (an operator decision; not done here); or
+  (b) keep exact arrival semantics but resolve each arriving patch at its own
+  time inside one shared solve (time-ordered rows within a step), which is
+  new work not attempted here. Neither more velocity iterations nor a full
+  rewrite was indicated by the evidence.
