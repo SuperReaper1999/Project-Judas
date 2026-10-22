@@ -45,6 +45,7 @@ struct PhysicsWorld::Impl::CCDQuery {
     std::size_t& impactTruthReuses;
     std::size_t& impactBoundsRejected;
     std::size_t& impactActualBoundsRejected;
+    std::size_t ownerAnchorBorrows = 0;
     PhysicsWorld::StepStats& stats;
     WorkDiagnostics& work;
     CacheCounters& cacheCounters;

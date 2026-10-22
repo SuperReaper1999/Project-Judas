@@ -8,7 +8,12 @@ struct PhysicsWorld::Impl::IncrementalImpact {
     std::vector<std::pair<glm::vec3, glm::vec3>> original;
     std::vector<unsigned char> initialized, expanded, gravityConsumed;
     std::vector<unsigned> slots, forcedExpansion;
-    std::set<std::pair<unsigned, unsigned>> visited;
+    ImpactPairVisitSet visited;
+    bool Visit(unsigned a,unsigned b) {
+        const auto key=(std::uint64_t(a)<<32)|b;
+        if(visited.Contains(key))return false;
+        visited.Insert(key);return true;
+    }
     std::vector<ImpactContact> rows;
     std::vector<JudasPhysicsDetail::ContactKey> keys;
     std::vector<std::array<unsigned, 4>> pairs;
@@ -17,6 +22,12 @@ struct PhysicsWorld::Impl::IncrementalImpact {
     ImpactResult result;
     bool capture = false;
     void Reset(std::size_t size) {
+        // Clear every prepared row/frame before a resize can relocate bodies.
+        // Nothing from the previous event is a physical continuation cache.
+        solver.Clear();
+        rows.clear();
+        keys.clear();
+        pairs.clear();
         bodies.resize(size);
         incoming.resize(size);
         original.resize(size);
@@ -25,10 +36,7 @@ struct PhysicsWorld::Impl::IncrementalImpact {
         gravityConsumed.assign(size, 0);
         slots.clear();
         forcedExpansion.clear();
-        visited.clear();
-        rows.clear();
-        keys.clear();
-        pairs.clear();
+        visited.Begin(size);
         result = {};
         capture = false;
     }

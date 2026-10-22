@@ -357,6 +357,15 @@ auto PhysicsWorld::Impl::CCDQuery::MeshDepthGrowthSafe(unsigned moving, unsigned
 
 auto PhysicsWorld::Impl::PrimitiveFeature(unsigned slot, int part) const -> double {
     const Shape &shape = bodies[slot].shape;
+    // Primitive metadata has no dependency on a body pose. Borrow the
+    // simple shape rather than constructing an owning posed primitive.
+    if (shape.type == ShapeType::Sphere) return double(shape.radius);
+    if (shape.type == ShapeType::ConvexHull) {
+        const auto extent = shape.asset->maximum - shape.asset->minimum;
+        return std::min({extent.x, extent.y, extent.z}) * .5;
+    }
+    if (shape.type == ShapeType::Box)
+        return double(std::min({shape.halfExtents.x, shape.halfExtents.y, shape.halfExtents.z}));
     auto primitive = PrimitiveAt(shape, bodies[slot].rigidBody, part);
     if (primitive.shape.type == ShapeType::Sphere)
         return double(primitive.shape.radius);
@@ -378,10 +387,14 @@ auto PhysicsWorld::Impl::CCDQuery::SpinsThroughSupport(const std::array<unsigned
     const auto convex = [](ShapeType type) {
         return type == ShapeType::Box || type == ShapeType::Sphere || type == ShapeType::ConvexHull;
     };
-    const auto typeA =
-        PrimitiveAt(bodies[key[0]].shape, bodies[key[0]].rigidBody, int(key[2])).shape.type;
-    const auto typeB =
-        PrimitiveAt(bodies[key[1]].shape, bodies[key[1]].rigidBody, int(key[3])).shape.type;
+    const auto type = [&](unsigned slot, unsigned part) {
+        const auto& body = bodies[slot];
+        return body.shape.type != ShapeType::CompoundBoxes
+                   ? body.shape.type
+                   : PrimitiveAt(body.shape, body.rigidBody, int(part)).shape.type;
+    };
+    const auto typeA = type(key[0], key[2]);
+    const auto typeB = type(key[1], key[3]);
     // A mesh/terrain contact normal is only a LOCAL triangle plane, not a
     // separating plane for the whole concave primitive. Keep its old rule.
     if (!convex(typeA) || !convex(typeB)) {
@@ -396,14 +409,27 @@ auto PhysicsWorld::Impl::CCDQuery::SpinsThroughSupport(const std::array<unsigned
             std::min(PrimitiveFeature(key[0], int(key[2])), PrimitiveFeature(key[1], int(key[3])));
         return std::isfinite(feature) && oldSweep > feature;
     }
-    std::array<glm::dvec3, 2> omega{};
     double sweep = 0;
     for (int side = 0; side < 2; ++side) {
         const unsigned slot = key[std::size_t(side)];
         const auto &body = bodies[slot];
         if (!body.HasMotion() ||
-            PrimitiveAt(body.shape, body.rigidBody, int(key[std::size_t(2 + side)])).shape.type ==
-                ShapeType::Sphere)
+            (side ? typeB : typeA) == ShapeType::Sphere)
+            continue;
+        sweep +=
+            double(glm::length(body.rigidBody.angularVelocity)) * body.boundingRadius * remaining;
+    }
+    const double feature =
+        std::min(PrimitiveFeature(key[0], int(key[2])), PrimitiveFeature(key[1], int(key[3])));
+    if (!std::isfinite(feature) || sweep <= feature)
+        return false;
+    // The same sweep gate already rejects this case independently of the
+    // angular predictor. Only calculate that predictor when it will be read.
+    std::array<glm::dvec3, 2> omega{};
+    for (int side = 0; side < 2; ++side) {
+        const unsigned slot = key[std::size_t(side)];
+        const auto& body = bodies[slot];
+        if (!body.HasMotion() || (side ? typeB : typeA) == ShapeType::Sphere)
             continue;
         // Use the same anchored geometric generator as the trajectory.
         // Immediately after an impulse the replacement segment has not
@@ -416,13 +442,7 @@ auto PhysicsWorld::Impl::CCDQuery::SpinsThroughSupport(const std::array<unsigned
                                               body.rigidBody.orientation,
                                               body.rigidBody.angularVelocity, float(remaining))
                 : DriftGenerator(slot, time));
-        sweep +=
-            double(glm::length(body.rigidBody.angularVelocity)) * body.boundingRadius * remaining;
     }
-    const double feature =
-        std::min(PrimitiveFeature(key[0], int(key[2])), PrimitiveFeature(key[1], int(key[3])));
-    if (!std::isfinite(feature) || sweep <= feature)
-        return false;
     // A fixed support plane also bounds penetration after rotation. For
     // anchored drift about omega, projected vertex speed is bounded by
     // |n x omega|*R. In particular, rotation ABOUT n cannot penetrate that
@@ -583,16 +603,18 @@ auto PhysicsWorld::Impl::CCDQuery::ImpactTime(unsigned a, unsigned b, int pa, in
         }
     }
     const auto posa = ImpactPoseAt(a, start).pose, posb = ImpactPoseAt(b, start).pose;
-    const auto firstPrimitive = PrimitiveAt(ba.shape, posa, pa),
-               secondPrimitive = PrimitiveAt(bb.shape, posb, pb);
-    const bool firstMesh = firstPrimitive.shape.type == ShapeType::TriangleMesh && !ba.HasMotion();
-    const bool secondMesh =
-        secondPrimitive.shape.type == ShapeType::TriangleMesh && !bb.HasMotion();
+    const auto type = [](const Body& body, const RigidBody& pose, int part) {
+        return body.shape.type != ShapeType::CompoundBoxes
+            ? body.shape.type : PrimitiveAt(body.shape, pose, part).shape.type;
+    };
+    const auto firstType = type(ba, posa, pa), secondType = type(bb, posb, pb);
+    const bool firstMesh = firstType == ShapeType::TriangleMesh && !ba.HasMotion();
+    const bool secondMesh = secondType == ShapeType::TriangleMesh && !bb.HasMotion();
     const auto convexPoly = [](ShapeType type) {
         return type == ShapeType::Box || type == ShapeType::ConvexHull;
     };
-    const bool meshAdvance = (firstMesh && convexPoly(secondPrimitive.shape.type)) ||
-                             (secondMesh && convexPoly(firstPrimitive.shape.type));
+    const bool meshAdvance = (firstMesh && convexPoly(secondType)) ||
+                             (secondMesh && convexPoly(firstType));
     const glm::dvec3 relative = glm::dvec3(ba.HasMotion() ? posa.linearVelocity : glm::vec3(0)) -
                                 glm::dvec3(bb.HasMotion() ? posb.linearVelocity : glm::vec3(0));
     const double angular =
@@ -605,6 +627,8 @@ auto PhysicsWorld::Impl::CCDQuery::ImpactTime(unsigned a, unsigned b, int pa, in
         return finish + 1;
     MeshFeatureBudget meshBudget;
     if (meshAdvance) {
+        const auto firstPrimitive = PrimitiveAt(ba.shape, posa, pa),
+                   secondPrimitive = PrimitiveAt(bb.shape, posb, pb);
         meshBudget = BuildMeshFeatureBudget(firstMesh ? secondPrimitive : firstPrimitive,
                                            firstMesh ? firstPrimitive : secondPrimitive,
                                            SpinPenetrationTarget({a, b, unsigned(pa), unsigned(pb)}));

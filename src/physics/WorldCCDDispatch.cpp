@@ -129,6 +129,29 @@ auto PhysicsWorld::Impl::EvaluateImpactQueries(std::vector<CCDRequest>& requests
             }
         }
     }
+    // The owner has already certified these remaining-trajectory enclosures
+    // while filtering the same immutable batch. Carry those certificates into
+    // private query lanes instead of rebuilding the same interval rotation and
+    // swept geometry once per lane. Copy only the bound fields: sample poses,
+    // contact truth and orientations keep their independent invalidation rules.
+    // A new event invalidates owner bounds before another batch is prepared.
+    static const bool nativeBounds = std::getenv("JUDAS_VALIDATION_NATIVE_CCD_BOUNDS") != nullptr;
+    std::size_t handedOff = 0;
+    if (!nativeBounds)
+        for (unsigned lane = 0; lane < lanes; ++lane)
+            for (std::size_t slot = 0; slot < impactPoseSamples.size(); ++slot) {
+                const auto& from = impactPoseSamples[slot];
+                if (slot >= bodies.size() || !(from.boundStart <= start && from.boundFinish >= finish) ||
+                    from.boundGeneration != bodies[slot].generation)
+                    continue;
+                auto& to = ccdQueryStorage[lane]->impactPoseSamples[slot];
+                to.remainingBound = from.remainingBound;
+                to.boundStart = from.boundStart;
+                to.boundFinish = from.boundFinish;
+                to.boundGeneration = from.boundGeneration;
+                ++handedOff;
+            }
+    JUDAS_PROFILE_COUNTER("Physics CCD bound handoffs", handedOff, ProfileCounterMode::Sum);
     std::array<InitialGeometryDiagnostics, JobSystem::kMaxWorkers + 1> diagnostics{};
     std::atomic<std::size_t> next{0};
     const auto run = [&](unsigned lane) {
@@ -154,6 +177,7 @@ auto PhysicsWorld::Impl::EvaluateImpactQueries(std::vector<CCDRequest>& requests
                 ++diagnostics[lane].manifolds;
             }
         }
+        JUDAS_PROFILE_COUNTER("Physics CCD owner anchor borrows", query.ownerAnchorBorrows, ProfileCounterMode::Sum);
         AddContactDiagnostics(diagnostics[lane].contacts, GetContactGeometryDiagnostics(), contactsBefore);
         AddCookedDiagnostics(diagnostics[lane].cooked, GetCollisionGeometryStats(), cookedBefore);
     };

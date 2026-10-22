@@ -27,6 +27,18 @@ inline auto PhysicsWorld::Impl::GeometryPoseAt(unsigned slot, double time) const
 
 inline auto PhysicsWorld::Impl::CCDQuery::ImpactPoseAt(unsigned slot, double time)
     -> const ImpactPoseSample & {
+    // A parallel batch borrows a frozen world until every query lane joins.
+    // Reuse an owner-prepared anchor by const reference; trial/bisection poses
+    // and all tight-bound/contact observations remain private to this lane.
+    if (!serialWorld && time == impactQueryAnchorTime && slot < world.impactAnchorSamples.size()) {
+        const auto& anchor = world.impactAnchorSamples[slot];
+        if (anchor.time == time && anchor.generation == bodies[slot].generation &&
+            anchor.orientation && anchor.orientation->Matches(anchor.pose.orientation)) {
+            ++impactPoseReuses;
+            ++ownerAnchorBorrows;
+            return anchor;
+        }
+    }
     EnsureImpactPoseStorage();
     // Independent pair queries share the current event's start pose.
     // Bisection samples must not evict that immutable geometric sample.
@@ -91,6 +103,17 @@ inline auto PhysicsWorld::Impl::CCDQuery::PairAt(unsigned a, unsigned b, int pa,
     const auto &bb = ImpactPoseAt(b, time);
     if (margin == 0 && SimpleImpactBoundsSeparated(a, b, aa, bb))
         return {};
+    // Single boxes/spheres already use identity-child primitive arithmetic.
+    // Borrow their immutable shapes instead of constructing two owning Shape
+    // and RigidBody copies for every trial time in a continuous query.
+    const auto simple = [](const Shape& shape) {
+        return !shape.asset && (shape.type == ShapeType::Box || shape.type == ShapeType::Sphere);
+    };
+    if (simple(bodies[a].shape) && simple(bodies[b].shape))
+        return PrimitiveContacts(
+            bodies[a].shape, {aa.pose.position, aa.pose.orientation, -bodies[a].shape.pivotOffset},
+            bodies[b].shape, {bb.pose.position, bb.pose.orientation, -bodies[b].shape.pivotOffset},
+            margin, &*aa.orientation, &*bb.orientation);
     return ComputeContacts(PrimitiveAt(bodies[a].shape, aa.pose, pa, &*aa.orientation),
                            PrimitiveAt(bodies[b].shape, bb.pose, pb, &*bb.orientation), margin,
                            &*aa.orientation, &*bb.orientation);
@@ -113,6 +136,10 @@ inline auto PhysicsWorld::Impl::CCDQuery::PairPenetrationExceeds(unsigned a, uns
     PhysicsWorkTimer timer(work.geometry, work.active);
     const auto &aa = ImpactPoseAt(a, time);
     const auto &bb = ImpactPoseAt(b, time);
+    if (!bodies[a].shape.asset && !bodies[b].shape.asset &&
+        (bodies[a].shape.type == ShapeType::Box || bodies[a].shape.type == ShapeType::Sphere) &&
+        (bodies[b].shape.type == ShapeType::Box || bodies[b].shape.type == ShapeType::Sphere))
+        return PairPenetration(a, b, pa, pb, time) > target;
     const auto posa = PrimitiveAt(bodies[a].shape, aa.pose, pa, &*aa.orientation);
     const auto posb = PrimitiveAt(bodies[b].shape, bb.pose, pb, &*bb.orientation);
     if (posa.shape.asset || posb.shape.asset)
@@ -127,6 +154,13 @@ inline auto PhysicsWorld::Impl::CCDQuery::PairTouches(unsigned a, unsigned b, in
     const auto &bb = ImpactPoseAt(b, time);
     if (SimpleImpactBoundsSeparated(a, b, aa, bb))
         return false;
+    if (!bodies[a].shape.asset && !bodies[b].shape.asset &&
+        (bodies[a].shape.type == ShapeType::Box || bodies[a].shape.type == ShapeType::Sphere) &&
+        (bodies[b].shape.type == ShapeType::Box || bodies[b].shape.type == ShapeType::Sphere))
+        return PrimitiveHasContacts(
+            bodies[a].shape, {aa.pose.position, aa.pose.orientation, -bodies[a].shape.pivotOffset},
+            bodies[b].shape, {bb.pose.position, bb.pose.orientation, -bodies[b].shape.pivotOffset}, 0,
+            &*aa.orientation, &*bb.orientation);
     const auto posa = PrimitiveAt(bodies[a].shape, aa.pose, pa, &*aa.orientation);
     const auto posb = PrimitiveAt(bodies[b].shape, bb.pose, pb, &*bb.orientation);
     if (posa.shape.asset || posb.shape.asset)

@@ -18,6 +18,7 @@
 #include <cmath>
 #include <limits>
 #include <map>
+#include <memory>
 #include <optional>
 #include <set>
 #include <stdexcept>
@@ -30,6 +31,7 @@
 #include <vector>
 
 #include "Broadphase.h"
+#include "OverlapPairIndex.h"
 #include "CollisionShapes.h"
 #include "ContactSolver.h"
 #include "Contacts.h"
@@ -210,6 +212,7 @@ struct PhysicsWorld::Impl {
     // Milestone 32: broadphase, the per-step candidate list, the solver
     // (reused so its storage is not reallocated every step) and statistics.
     DynamicAabbTree tree;
+    JudasPhysicsDetail::OverlapPairIndex overlapPairs{32*1024*1024};
     std::vector<std::pair<unsigned int, unsigned int>> candidatePairs;
     std::vector<int> candidateProxies;
     DynamicAabbTree::PairQueryScratch candidateScratch;
@@ -247,6 +250,13 @@ struct PhysicsWorld::Impl {
     bool ImpactDiscoverySeparated(unsigned a, unsigned b, const Aabb& query,
                                   double start, double finish);
     struct IncrementalImpact;
+    // Optional derived transaction storage. Only capacities/pool memory survive
+    // events and steps; Reset discards every previous row, frame and body view.
+    // The custom deleter keeps the complete type local to its own module.
+    struct IncrementalImpactDeleter {
+        void operator()(IncrementalImpact* workspace) const noexcept;
+    };
+    std::unique_ptr<IncrementalImpact, IncrementalImpactDeleter> incrementalImpact;
     bool TryIncrementalImpact(const std::array<unsigned, 4>& selected, double now, float dt,
                               const std::vector<unsigned char>& jointBodies,
                               IncrementalImpact& trial);
@@ -483,6 +493,7 @@ struct PhysicsWorld::Impl {
     bool CanRespond(unsigned a, unsigned b) const;
     bool MatchesQuery(unsigned slot, const PhysicsQueryFilter &filter) const;
     void GenerateCandidatePairs();
+    const std::vector<unsigned>& ImpactCandidates(unsigned slot, const Aabb& query);
 
     BodyHandle MakeHandle(unsigned int slot) const;
 

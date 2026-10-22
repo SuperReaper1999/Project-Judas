@@ -4,6 +4,8 @@
 #include <glm/gtc/quaternion.hpp>
 #include <glm/gtc/matrix_inverse.hpp>
 
+#include <cmath>
+
 // Judas-owned rigid body state. No physics middleware backs this — mass,
 // orientation, velocity, and the force/torque accumulators are plain data
 // this engine integrates itself. Nothing here assumes a world-space "up":
@@ -74,7 +76,37 @@ struct RigidBody {
     // 3x3) cost of recomputing it.
     glm::mat3 InverseInertiaWorld() const {
         const glm::mat3 rotation = glm::mat3_cast(orientation);
-        return rotation * inverseInertiaLocal * glm::transpose(rotation);
+        const auto original = [&] {
+            return rotation * inverseInertiaLocal * glm::transpose(rotation);
+        };
+        for (unsigned column = 0; column < 3; ++column) {
+            for (unsigned row = 0; row < 3; ++row) {
+                if (!std::isfinite(rotation[column][row]) ||
+                    !std::isfinite(inverseInertiaLocal[column][row]) ||
+                    inverseInertiaLocal[column][row] != inverseInertiaLocal[row][column])
+                    return original();
+            }
+        }
+
+        // A symmetric physical tensor must remain reciprocal after rotation.
+        // Independently rounded float products can make mirrored entries differ;
+        // a four-point contact's null mode then appears to have negative mass.
+        // Evaluate the same rotation in double and publish each mirrored pair
+        // from one float conversion. Actual impulses and response matrices both
+        // consume this tensor. No eigenvalue, rank or quaternion is repaired.
+        const glm::dmat3 preciseRotation(rotation);
+        const glm::dmat3 world = preciseRotation * glm::dmat3(inverseInertiaLocal) *
+                                glm::transpose(preciseRotation);
+        glm::mat3 represented(0.0f);
+        for (unsigned row = 0; row < 3; ++row) {
+            for (unsigned column = row; column < 3; ++column) {
+                const float value = float(world[column][row]);
+                if (!std::isfinite(value))
+                    return original();
+                represented[column][row] = represented[row][column] = value;
+            }
+        }
+        return represented;
     }
 };
 

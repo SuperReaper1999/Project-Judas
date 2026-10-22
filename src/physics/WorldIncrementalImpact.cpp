@@ -2,6 +2,11 @@
 #include "WorldInternal.h"
 using namespace JudasPhysicsDetail;
 
+void PhysicsWorld::Impl::IncrementalImpactDeleter::operator()(
+    IncrementalImpact* workspace) const noexcept {
+    delete workspace;
+}
+
 bool PhysicsWorld::Impl::ImpactDiscoverySeparated(unsigned a, unsigned b, const Aabb& query,
                                                   double start, double finish) {
     const auto supported = [](const Body& body) {
@@ -26,6 +31,10 @@ bool PhysicsWorld::Impl::TryIncrementalImpact(const std::array<unsigned, 4>& sel
                                               const std::vector<unsigned char>& jointBodies,
                                               IncrementalImpact& trial) {
     trial.Reset(bodies.size());
+    // Growing shocks retain the same normal-patch response as ordinary
+    // support. Point-only sweeps left quiet piles rocking and prevented sleep.
+    // The private trial still validates displacement and energy before publish.
+    trial.solver.EnableBlockNormals(solver.BlockNormalsEnabled());
     const auto initialize = [&](unsigned slot) {
         if (trial.initialized[slot])
             return true;
@@ -49,7 +58,7 @@ bool PhysicsWorld::Impl::TryIncrementalImpact(const std::array<unsigned, 4>& sel
     };
     const auto pair = [&](unsigned first, unsigned second) {
         const auto key = std::minmax(first, second);
-        if (!trial.visited.emplace(key.first, key.second).second)
+        if (!trial.Visit(key.first, key.second))
             return true;
         auto& a = bodies[key.first];
         auto& b = bodies[key.second];
@@ -97,7 +106,7 @@ bool PhysicsWorld::Impl::TryIncrementalImpact(const std::array<unsigned, 4>& sel
         PhysicsWorkTimer timer(work.impactIslands, work.active);
         // Copy: PairAt and remaining-bound preparation share per-body scratch.
         const Aabb query = ActualImpactBound(slot, ImpactPoseAt(slot, now));
-        const auto& candidates = QuerySlots(query);
+        const auto& candidates = ImpactCandidates(slot, query);
         for (auto other : candidates) {
             if (other == slot || !CanCollide(slot, other))
                 continue;

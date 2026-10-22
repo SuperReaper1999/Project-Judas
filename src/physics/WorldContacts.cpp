@@ -137,10 +137,10 @@ auto PhysicsWorld::Impl::PrepareInitialContactGeometry(float dt) -> void {
     const auto compute = [&](InitialContactGeometry &output) {
         const auto &a = bodies[output.a];
         const auto &b = bodies[output.b];
-        const auto childA = PrimitiveAt(a.shape, a.rigidBody, 0, output.orientationA);
-        const auto childB = PrimitiveAt(b.shape, b.rigidBody, 0, output.orientationB);
-        output.manifold = ComputeContacts(childA, childB, output.margin, output.orientationA,
-                                          output.orientationB);
+        const ContactPose poseA{a.rigidBody.position, a.rigidBody.orientation, -a.shape.pivotOffset};
+        const ContactPose poseB{b.rigidBody.position, b.rigidBody.orientation, -b.shape.pivotOffset};
+        output.manifold = PrimitiveContacts(a.shape, poseA, b.shape, poseB, output.margin,
+                                            output.orientationA, output.orientationB);
         output.touching = false;
         for (int p = 0; p < output.manifold.count; ++p) {
             const auto &c = output.manifold.points[p];
@@ -149,7 +149,7 @@ auto PhysicsWorld::Impl::PrepareInitialContactGeometry(float dt) -> void {
         }
         if (!output.touching && output.manifold.count)
             output.touching =
-                ComputeContacts(childA, childB, 0, output.orientationA, output.orientationB).count >
+                PrimitiveContacts(a.shape, poseA, b.shape, poseB, 0, output.orientationA, output.orientationB).count >
                 0;
         output.ready = true;
     };

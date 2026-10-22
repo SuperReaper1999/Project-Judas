@@ -1,11 +1,11 @@
 #include "WorldInternal.h"
 #include "ContactGroupUpdates.h"
-#include "ImpactCandidateCache.h"
 #include "ImpactSupportSets.h"
 
 #include "ImpactEventSchedule.h"
 #include "WorldIncrementalImpact.h"
 #include <optional>
+#include <cstdlib>
 
 using namespace JudasPhysicsDetail;
 
@@ -40,8 +40,13 @@ auto PhysicsWorld::Impl::ResolveInitialImpacts(float dt) -> void {
         }
         return i;
     };
+    // Instantaneous impulses cannot cross a positive geometric gap. Those
+    // speculative rows remain intact for the later ordinary velocity solve.
+    const auto actual = [&](const StartContact& contact) {
+        return geometry[contact.constraint].signedSeparation <= 0;
+    };
     for (const auto &c : startContacts)
-        if (!bodies[c.a].rigidBody.IsStatic() && !bodies[c.b].rigidBody.IsStatic())
+        if (actual(c) && !bodies[c.a].rigidBody.IsStatic() && !bodies[c.b].rigidBody.IsStatic())
             parent[root(c.b)] = root(c.a);
     for (const auto &joint : joints)
         if (JointActive(joint) && joint.state.settings.bodyB.IsValid()) {
@@ -53,6 +58,8 @@ auto PhysicsWorld::Impl::ResolveInitialImpacts(float dt) -> void {
     std::vector<std::pair<unsigned, std::size_t>> order;
     for (std::size_t i = 0; i < startContacts.size(); ++i) {
         const auto &c = startContacts[i];
+        if (!actual(c))
+            continue;
         order.emplace_back(root(bodies[c.a].rigidBody.IsStatic() ? c.b : c.a), i);
     }
     std::sort(order.begin(), order.end());
@@ -187,7 +194,6 @@ auto PhysicsWorld::Impl::AdvanceImpacts(float dt, bool coupledVelocityChanged) -
     std::vector<std::vector<unsigned>> impactJointNeighbours;
     bool jointNeighboursReady = false;
     std::vector<unsigned char> jointBodies;
-    std::optional<IncrementalImpact> responseStorage;
     double now = 0;
     ImpactEventSchedule<ScheduledImpact> frontier(scheduledImpacts, bodies.size(), dt);
     const auto separatedSweeps = [&](unsigned a, unsigned b) {
@@ -273,13 +279,8 @@ auto PhysicsWorld::Impl::AdvanceImpacts(float dt, bool coupledVelocityChanged) -
     // All proxy changes in this event pass go through CoverStepReach, which
     // advances reinsertionsSinceStep. Wake changes only sleep/island state;
     // callers cannot create bodies or run gameplay callbacks inside this pass.
-    ImpactCandidateCache candidateCache;
-    const auto impactCandidates = [&](unsigned slot,
-                                      const Aabb &query) -> const std::vector<unsigned> & {
-        return candidateCache.Get(
-            slot, tree.FatAabb(bodies[slot].proxy), query, reinsertionsSinceStep,
-            [&](const Aabb &box) -> const std::vector<unsigned> & { return QuerySlots(box); },
-            [&](unsigned other) -> const Aabb & { return tree.FatAabb(bodies[other].proxy); });
+    const auto impactCandidates = [&](unsigned slot, const Aabb& query) -> const std::vector<unsigned>& {
+        return ImpactCandidates(slot, query);
     };
     ImpactPairVisitSet visitedPairs;
     struct DiscoveredManifold {
@@ -298,6 +299,32 @@ auto PhysicsWorld::Impl::AdvanceImpacts(float dt, bool coupledVelocityChanged) -
     std::vector<std::array<unsigned, 4>> eventPairMembership;
     ImpactPairVisitSet dirtyBodyPairs;
     std::vector<std::array<unsigned, 4>> dirty;
+    std::vector<unsigned> pendingChanged;
+    std::size_t pendingEvents=0, simultaneousGroups=0, simultaneousEvents=0, peakSimultaneous=0;
+    const auto flushDependencies = [&] {
+        if(dirty.empty())return;
+        if(pendingEvents>1){++simultaneousGroups;simultaneousEvents+=pendingEvents;peakSimultaneous=std::max(peakSimultaneous,pendingEvents);}
+        std::sort(pendingChanged.begin(),pendingChanged.end());
+        pendingChanged.erase(std::unique(pendingChanged.begin(),pendingChanged.end()),pendingChanged.end());
+        dirtyBodyPairs.Begin(bodies.size());
+        for(unsigned slot:pendingChanged){
+            const auto& candidates=impactCandidates(slot,tree.FatAabb(bodies[slot].proxy));
+            for(unsigned other:candidates)if(other!=slot&&CanRespond(slot,other)){
+                const auto a=std::min(slot,other),b=std::max(slot,other);
+                const std::uint64_t pairKey=(std::uint64_t(a)<<32)|b;
+                if(dirtyBodyPairs.Contains(pairKey))continue;
+                dirtyBodyPairs.Insert(pairKey);
+                if(separatedSweeps(a,b))continue;
+                for(int pa=0;pa<PrimitiveCount(bodies[a].shape);++pa)
+                    for(int pb=0;pb<PrimitiveCount(bodies[b].shape);++pb)
+                        dirty.push_back({a,b,unsigned(pa),unsigned(pb)});
+            }
+        }
+        std::sort(dirty.begin(),dirty.end());
+        dirty.erase(std::unique(dirty.begin(),dirty.end()),dirty.end());
+        scheduleBatch(dirty);
+        dirty.clear();pendingChanged.clear();pendingEvents=0;
+    };
     for (;;) {
         double earliest = double(dt) + 1;
         unsigned seedA = 0, seedB = 0;
@@ -307,8 +334,10 @@ auto PhysicsWorld::Impl::AdvanceImpacts(float dt, bool coupledVelocityChanged) -
             selected = event->key;
             seedA = selected[0]; seedB = selected[1];
         }
-        if (earliest > dt)
+        if (earliest > dt) {
+            if(!dirty.empty()){flushDependencies();continue;}
             break;
+        }
         if (!jointNeighboursReady) {
             impactJointNeighbours.resize(bodies.size());
             for (const auto &joint : joints)
@@ -343,15 +372,18 @@ auto PhysicsWorld::Impl::AdvanceImpacts(float dt, bool coupledVelocityChanged) -
                 b.rigidBody.angularVelocity = p.angularVelocity;
             }
         // Construct expensive solver/scratch storage only after an actual event.
-        if (!responseStorage)
-            responseStorage.emplace();
-        auto& localResponse = *responseStorage;
+        if (!incrementalImpact)
+            incrementalImpact.reset(new IncrementalImpact());
+        auto& localResponse = *incrementalImpact;
         ImpactResult result;
         bool capture = false;
         ImpactSolver* responseSolver = &impactSolver;
         const bool incremental =
             !coupledVelocityChanged &&
             TryIncrementalImpact(selected, now, dt, jointBodies, localResponse);
+        // A rejected private trial has published nothing. Complete pending
+        // same-instant dependencies before entering the coupled legacy path.
+        if(!incremental&&!dirty.empty()) {flushDependencies();continue;}
         if (incremental) {
             if (work.active) {
                 ++work.incrementalEvents;
@@ -736,39 +768,28 @@ auto PhysicsWorld::Impl::AdvanceImpacts(float dt, bool coupledVelocityChanged) -
         // Cached event times depend only on the two anchored trajectories.
         // Recompute incident queries after an actual velocity change; retain
         // every unaffected event (including disjoint simultaneous events).
-        dirty.clear();
+        const auto firstInvalidated=dirty.size();
         auto markDirty = [&](const std::array<unsigned, 4> &key) { dirty.push_back(key); };
-        markDirty(selected); // retire even a zero-impulse event
-        for (unsigned slot : changed)
-            frontier.ForIncident(slot, dt, markDirty);
-        dirtyBodyPairs.Begin(bodies.size());
-        for (unsigned slot : changed) {
-            const auto &candidates = impactCandidates(slot, tree.FatAabb(bodies[slot].proxy));
-            for (unsigned other : candidates)
-                if (other != slot && CanRespond(slot, other)) {
-                    const auto a = std::min(slot, other), b = std::max(slot, other);
-                    const std::uint64_t pairKey = (std::uint64_t(a) << 32) | b;
-                    // Both changed endpoints can discover the same pair. Expand
-                    // its children once; no contact or TOI result is reused.
-                    if (dirtyBodyPairs.Contains(pairKey))
-                        continue;
-                    dirtyBodyPairs.Insert(pairKey);
-                    // A separating swept enclosure certifies the whole remaining
-                    // interval, not just a sampled miss. Changed trajectories have
-                    // already invalidated their per-body bounds above. Reject
-                    // before expanding children or touching the event frontier.
-                    if (separatedSweeps(a, b))
-                        continue;
-                    for (int pa = 0; pa < PrimitiveCount(bodies[a].shape); ++pa)
-                        for (int pb = 0; pb < PrimitiveCount(bodies[b].shape); ++pb)
-                            markDirty({a, b, unsigned(pa), unsigned(pb)});
-                }
-        }
-        // Endpoint dependencies and overlap discovery may find the same key.
-        // Preserve exact lexicographic query order after identity deduplication.
-        std::sort(dirty.begin(), dirty.end());
-        dirty.erase(std::unique(dirty.begin(), dirty.end()), dirty.end());
-        scheduleBatch(dirty);
+        markDirty(selected);
+        for(unsigned slot:changed)frontier.ForIncident(slot,dt,markDirty);
+        // Retire invalidated times immediately; they cannot be selected from
+        // stale trajectories. New velocity segments begin exactly at `now`,
+        // so their first possible replacement event cannot precede `now`.
+        for(std::size_t i=firstInvalidated;i<dirty.size();++i)
+            frontier.Set(dirty[i],double(dt)+1);
+        pendingChanged.insert(pendingChanged.end(),changed.begin(),changed.end());
+        ++pendingEvents;
+        const auto* next=frontier.First();
+        const bool nextFree=next&&ContinuationPrimitive(bodies[next->key[0]])&&
+            ContinuationPrimitive(bodies[next->key[1]])&&
+            !jointBodies[next->key[0]]&&!jointBodies[next->key[1]];
+        // Exact represented time equality only: never coalesce nearby TOIs.
+        // Growing response has already closed every actual contact reached by
+        // changed velocities. Process untouched arrivals at this SAME instant
+        // before rediscovering their combined future dependency set once.
+        static const bool eager=std::getenv("JUDAS_VALIDATION_EAGER_IMPACTS")!=nullptr;
+        if(eager||!(incremental&&continuationEligible&&nextFree&&next->time==now))
+            flushDependencies();
         if (now >= dt)
             break;
     }
@@ -778,6 +799,9 @@ auto PhysicsWorld::Impl::AdvanceImpacts(float dt, bool coupledVelocityChanged) -
     // key/row order as sorting the entire history after every impact.
     observationPublication.Publish();
     cachePublication.Publish();
+    JUDAS_PROFILE_COUNTER("Physics exact-time impact groups", simultaneousGroups, ProfileCounterMode::Latest);
+    JUDAS_PROFILE_COUNTER("Physics exact-time grouped impacts", simultaneousEvents, ProfileCounterMode::Latest);
+    JUDAS_PROFILE_COUNTER("Physics exact-time peak group", peakSimultaneous, ProfileCounterMode::Latest);
     for (const auto slot : aliveSlots)
         if (bodies[slot].HasMotion() && !bodies[slot].sleeping) {
             auto &body = bodies[slot];

@@ -87,13 +87,17 @@ void Contacts(){
     Check(physics.ReadBodyContactSample(replacement,contacts)&&contacts.empty(),"replacement inherits no old support");
 }
 void SaveBounds(){
-    // M77 adds one optional native participant to the existing maximal save.
+    // Keep the historical M77 composition readable. M95 expanded the
+    // envelope to 22 records; this generic bound is not an M77 subsystem limit.
  GameSnapshot bounded;bounded.project="m77-bound";bounded.scene="Scenes/standing.judas";bounded.content=std::string(64,'a');bounded.metadata="{}";
  for(int n=0;n<17;++n)bounded.participants["participant-"+std::to_string(n)]={1,"x"};
  GameSnapshot decoded;std::string decodeError;
- Check(DecodeGameSnapshot(EncodeGameSnapshot(bounded),decoded,decodeError)&&decoded.participants.size()==17,"maximal 17-participant save retains every native record");
+ Check(DecodeGameSnapshot(EncodeGameSnapshot(bounded),decoded,decodeError)&&decoded.participants.size()==17,"historical 17-participant save retains every native record");
+ for(int n=17;n<22;++n)bounded.participants["participant-"+std::to_string(n)]={1,"later optional state"};
+ Check(DecodeGameSnapshot(EncodeGameSnapshot(bounded),decoded,decodeError)&&decoded.participants.size()==22,
+       "current 22-participant envelope retains historical and later state together");
  bounded.participants["overflow"]={1,"x"};bool rejected=false;try{EncodeGameSnapshot(bounded);}catch(const std::exception&){rejected=true;}
- Check(rejected,"eighteenth save participant still rejects instead of dropping state");
+ Check(rejected,"twenty-third save participant rejects instead of dropping state");
 }
 
 }

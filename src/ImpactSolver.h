@@ -54,6 +54,10 @@ public:
     bool SolveGrowing(std::vector<ImpactContact>& contacts, float dt,
                       const std::function<bool(const std::vector<RigidBody*>&)>& expand,
                       ImpactResult& result);
+    // Discard prepared body pointers before their owner's backing storage moves.
+    // Retains vector and frame-pool capacities; no numerical state is retained.
+    void Clear() { m_saved.clear(); m_solver.Clear(); }
+    void EnableBlockNormals(bool enabled) { m_solver.EnableBlockNormals(enabled); }
     const std::vector<ContactConstraint>& Constraints() const { return m_solver.Constraints(); }
 
 private:

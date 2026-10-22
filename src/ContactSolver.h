@@ -8,6 +8,7 @@
 #include <glm/gtc/quaternion.hpp>
 
 #include "Contacts.h"
+#include "ContactBlock.h"
 
 struct RigidBody;
 
@@ -45,20 +46,28 @@ struct RigidBody;
 // by that correction, so it cannot add energy). The friction direction is the
 // current tangential slip itself — no tangent basis is constructed, so
 // nothing here depends on how the world is rotated.
+
 struct ContactConstraint {
+    // Velocity phase: one compact consecutive span visited on every sweep.
     std::size_t frameA = 0, frameB = 0;
     RigidBody* bodyA = nullptr;
     RigidBody* bodyB = nullptr;
-    glm::vec3 point{0.0f};
     glm::vec3 normal{0.0f};      // separates A from B, toward A
-    float penetration = 0.0f;    // at detection (negative: a speculative contact's gap)
     float friction = 0.0f;
     float restitutionBias = 0.0f;  // target separating normal speed (negative: gap/dt a
                                    // speculative contact may still close this step)
     float normalMass = 0.0f;       // 1 / effective mass along the normal
     float normalImpulse = 0.0f;    // accumulated this step
     glm::vec3 tangentImpulse{0.0f};  // accumulated this step (lies in the tangent plane)
-    // Physical anchors come from pair-local geometry, never the debug point.
+    glm::vec3 velocityOffsetA{0.0f}; // fixed throughout the velocity solve
+    glm::vec3 velocityOffsetB{0.0f};
+    glm::mat3 inverseInertiaA{0.0f};  // world-space, fixed during the velocity phase
+    glm::mat3 inverseInertiaB{0.0f};
+
+    // Geometry/preparation/position fields retain their original types and
+    // arithmetic. Physical anchors remain independent of the debug point.
+    glm::vec3 point{0.0f};
+    float penetration = 0.0f;    // at detection (negative: a speculative contact's gap)
     glm::dvec3 localAnchorA{0.0};
     glm::dvec3 localAnchorB{0.0};
     glm::dvec3 preciseNormal{0.0};
@@ -67,10 +76,6 @@ struct ContactConstraint {
     double signedSeparation = 0.0;  // positive gap, negative penetration
     bool hasLocalAnchors = false;
     bool anchorAInWorldFrame = false, anchorBInWorldFrame = false;
-    glm::vec3 velocityOffsetA{0.0f}; // fixed throughout the velocity solve
-    glm::vec3 velocityOffsetB{0.0f};
-    glm::mat3 inverseInertiaA{0.0f};  // world-space, fixed during the velocity phase
-    glm::mat3 inverseInertiaB{0.0f};
 };
 
 class ContactSolver {
@@ -82,6 +87,12 @@ public:
     static constexpr float kPenetrationSlop = 0.005f;
 
     void Clear();
+    // Internal rigid-contact path. Particle coupling keeps the point solver.
+    void EnableBlockNormals(bool enabled) { m_blockNormals = enabled; }
+    bool BlockNormalsEnabled() const { return m_blockNormals; }
+    // Coupled joint rows retain their established point/contact alternation.
+    // Call after adding contacts and before preparing this solve.
+    void PreservePointNormals(RigidBody& body);
     // One manifold point between two bodies (either may be static). The
     // bodies must outlive the solve; `contact.hit` must be true.
     void AddContact(RigidBody& bodyA, RigidBody& bodyB, const Contact& contact, float friction,
@@ -100,8 +111,9 @@ public:
     // Poses of previously prepared bodies must not change until Clear().
     void PrepareAppended(float fixedDeltaTime, std::size_t firstRow, std::size_t firstFrame);
     void SolveVelocities(int iterations = kVelocityIterations);
-    // Report each represented body-velocity change after any row, including
-    // transients cancelled by later rows. Exact equality; no magnitude cutoff.
+    // Report represented velocity changes at each operation boundary: one
+    // point row or one completed pair block. Changes between operations stay
+    // reported even if a later operation cancels them. No magnitude cutoff.
     void SolveTrackedVelocities(int iterations, std::vector<RigidBody*>& activated);
     void SolveTrackedVelocityRange(std::size_t firstRow, int iterations,
                                    std::vector<RigidBody*>& activated);
@@ -126,12 +138,17 @@ public:
     std::size_t FrameStorageBytes() const;
 
 private:
+    struct Block;
+    static bool SolveBlockState(Block&, ContactConstraint* rows,
+                                std::vector<unsigned char>* seen,
+                                std::vector<RigidBody*>* activated);
     struct BodyFrame {
         RigidBody* body = nullptr;
         glm::quat orientation{1,0,0,0};
         glm::dmat3 rotation{1.0};
         glm::mat3 inverseInertia{0.0f};
         bool rotationValid = false;
+        bool pointNormals = false;
     };
     // Declaration order ensures map destruction precedes pool, then upstream.
     // Only storage survives Clear: every key/frame is reconstructed each solve.
@@ -154,4 +171,17 @@ private:
     };
     std::vector<ContactConstraint> m_constraints;
     std::vector<Pending> m_pending;
+    struct Block {
+        std::size_t first=0;
+        unsigned count=0;
+        contact_block::Matrix response{};
+        contact_block::NormalPatch normal;
+    };
+    bool m_blockNormals=false;
+    std::vector<Block> m_blocks;
+    std::vector<std::size_t> m_blockAt;
+    void PrepareBlocks(std::size_t firstRow);
+    bool SolveBlock(Block& block, std::vector<unsigned char>* seen,
+                    std::vector<RigidBody*>* activated);
+
 };

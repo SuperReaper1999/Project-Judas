@@ -66,6 +66,11 @@ trajectory. Uncertain/unsupported shapes use the original query. These are
 geometric proofs, not cached sampled misses or velocity tolerances. See
 [the event dependency investigation](../../docs/PREALPHA_EVENT_DEPENDENCIES.md).
 
+At the initial physical instant, only actually touching rows connect impact
+components. Positive-gap speculative rows remain available for the later
+ordinary gap/time solve; they cannot merge disconnected shock/restitution
+components or invalidate the other component's warm guesses.
+
 The [persistent-contact redesign](../../docs/PREALPHA_INCREMENTAL_IMPACTS.md)
 separates ordinary support-force warm starts from new impact increments. A new
 impact grows its private contact domain only through actual per-row represented
@@ -77,6 +82,40 @@ bodies, non-primitive geometry and external velocity coupling retain the complet
 legacy solve. A rejected trial publishes no body, sleep or observation changes.
 Growing-event solve timing excludes its nested discovery timing; other profiler
 categories retain their documented inclusive meaning.
+
+The world lazily owns the growing transaction's scratch storage. It reuses
+capacity across fixed steps, but resets every row, frame, membership set and
+result for each attempted event. Solver views and saved body pointers retire
+before private body arrays can relocate. Current event-time poses initialize
+every participating body; scratch is neither continuation history nor saved
+physical state. Separate worlds own separate workspaces, and shutdown releases
+their retained high-water capacity. A world without an impact allocates none of
+this optional workspace.
+
+Ordinary free-body support and transient growing impacts share the prepared
+normal-patch response. A point-only transient prototype reduced disturbed solve
+cost but regressed ordinary settling and sleeping; it is not retained. Every
+manifold point remains represented. The existing energy and feature-displacement
+guards still decide private-trial publication; they are not proofs of exact
+complementarity or universal CCD completeness.
+
+`ContactConstraint` groups velocity-phase data together before cold geometry
+and positional anchors. Its named data and save contracts are unchanged, but
+native consumers require matching rebuilt headers and engine binaries.
+`ContactVelocity.h` evaluates friction's angular mass through the explicit
+`r x direction` Jacobian. This preserves exact represented rotational nulls and
+avoids two redundant outer cross products; normal mass, Coulomb limits and
+iteration policy remain unchanged. Floating association can change trajectories.
+
+`RigidBody::InverseInertiaWorld` publishes symmetric authored tensors with exactly
+matching mirrored entries. Independent float rounding previously made the world
+tensor slightly asymmetric; completing a four-point normal matrix from its upper
+triangle could then create a false negative eigenvalue. Contacts, joints, direct
+impulses and impact energy observations now share the corrected tensor. The native
+quaternion-to-rotation mapping and normal solver tolerances remain unchanged.
+Malformed or already asymmetric authored local tensors retain the original path;
+the correction does not invent positive inertia for locked or invalid axes.
+
 
 `ContactGroupUpdates.h` stages only touched primitive groups in the sorted
 completed-observation and warm-start stores. Reads resolve the latest patch or

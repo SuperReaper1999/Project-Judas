@@ -1,10 +1,15 @@
 #include "physics/WorldInternal.h"
+#include <cstdlib>
 
 using namespace JudasPhysicsDetail;
 
 // Public fixed-step coordinator. Cohesive implementation modules share one Impl.
 bool PhysicsWorld::Init() {
     m_impl = new Impl();
+    if(std::getenv("JUDAS_VALIDATION_NATIVE_OVERLAPS"))m_impl->overlapPairs.UseNativeQueries();
+    const bool blockNormals=std::getenv("JUDAS_VALIDATION_POINT_CONTACTS")==nullptr;
+    m_impl->solver.EnableBlockNormals(blockNormals);
+    m_impl->impactSolver.EnableBlockNormals(blockNormals);
     return true;
 }
 
@@ -208,14 +213,15 @@ void PhysicsWorld::Step(float fixedDeltaTime, const VelocityCoupling *coupling) 
         const auto &orientationB = prepared ? *prepared->orientationB : w.Orientation(b);
         const glm::dmat3 inverseA = glm::transpose(orientationA.rotation);
         for (int partA = 0; partA < PrimitiveCount(a.shape); ++partA) {
-            const PrimitivePose childA = PrimitiveAt(a.shape, a.rigidBody, partA, &orientationA);
+            std::optional<PrimitivePose> childA;
+            if (!prepared) childA.emplace(PrimitiveAt(a.shape, a.rigidBody, partA, &orientationA));
             for (int partB = 0; partB < PrimitiveCount(b.shape); ++partB) {
-                const PrimitivePose childB =
-                    PrimitiveAt(b.shape, b.rigidBody, partB, &orientationB);
+                std::optional<PrimitivePose> childB;
+                if (!prepared) childB.emplace(PrimitiveAt(b.shape, b.rigidBody, partB, &orientationB));
                 const ContactManifold manifold =
                     prepared
                         ? prepared->manifold
-                        : ComputeContacts(childA, childB, margin, &orientationA, &orientationB);
+                        : ComputeContacts(*childA, *childB, margin, &orientationA, &orientationB);
                 const ContactKey key{slotA, slotB, a.generation, b.generation, partA, partB};
                 const auto range = std::equal_range(
                     w.contactCache.begin(), w.contactCache.end(),
@@ -231,7 +237,7 @@ void PhysicsWorld::Step(float fixedDeltaTime, const VelocityCoupling *coupling) 
                     }
                     if (!touchingManifold && manifold.count)
                         touchingManifold =
-                            ComputeContacts(childA, childB, 0, &orientationA, &orientationB).count >
+                            ComputeContacts(*childA, *childB, 0, &orientationA, &orientationB).count >
                             0;
                 }
                 for (int p = 0; p < manifold.count; ++p) {
@@ -343,6 +349,24 @@ void PhysicsWorld::Step(float fixedDeltaTime, const VelocityCoupling *coupling) 
                          w.supportPairs.end());
     {
         JUDAS_PROFILE_SCOPE("Physics contact row preparation");
+        // A normal patch eliminates the free-body normal degrees of freedom.
+        // Articulated bodies also depend on interleaved joint rows; retain the
+        // existing point/contact ordering until a joint-coupled block exists.
+        for (const auto& joint : w.joints) {
+            if (!w.JointActive(joint))
+                continue;
+            for (const auto handle : {joint.state.settings.bodyA, joint.state.settings.bodyB})
+                if (handle.IsValid()) {
+                    auto& body = w.bodies[handle.id & Impl::kSlotMask].rigidBody;
+                    if (!body.IsStatic())
+                        w.solver.PreservePointNormals(body);
+                }
+        }
+        if (coupling)
+            for (const auto& row : w.solver.Constraints()) {
+                w.solver.PreservePointNormals(*row.bodyA);
+                w.solver.PreservePointNormals(*row.bodyB);
+            }
         w.solver.Prepare(fixedDeltaTime);
     }
     if (coupling) {
@@ -468,6 +492,8 @@ void PhysicsWorld::Step(float fixedDeltaTime, const VelocityCoupling *coupling) 
     w.stats.proxyReinsertions = w.reinsertionsSinceStep;
     w.reinsertionsSinceStep = 0;
     w.stats.treeHeight = w.tree.Height();
+    JUDAS_PROFILE_COUNTER("Physics block normal solves", contact_block::diagnostics.solves, ProfileCounterMode::Latest);
+    JUDAS_PROFILE_COUNTER("Physics block normal fallbacks", contact_block::diagnostics.fallbacks, ProfileCounterMode::Latest);
     w.stats.orientationCacheHits = w.cacheCounters.orientationHits - cachesBefore.orientationHits;
     w.stats.orientationCacheRebuilds =
         w.cacheCounters.orientationRebuilds - cachesBefore.orientationRebuilds;
@@ -882,4 +908,5 @@ void PhysicsWorld::ShiftOrigin(glm::dvec3 delta) {
     for (auto &e : w.touchEvents)
         shift(e.point);
     w.tree.ShiftOrigin(delta);
+    w.overlapPairs.Invalidate();
 }

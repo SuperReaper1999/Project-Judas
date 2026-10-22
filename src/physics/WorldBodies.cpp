@@ -153,6 +153,7 @@ auto PhysicsWorld::Impl::Remove(BodyHandle handle) -> void {
         return;
     const unsigned int slot = handle.id & kSlotMask;
     body->alive = false;
+    overlapPairs.Remove(slot);
     tree.DestroyProxy(body->proxy);
     body->proxy = DynamicAabbTree::kNull;
     freeSlots.push_back(slot);

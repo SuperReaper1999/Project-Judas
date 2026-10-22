@@ -2,6 +2,7 @@
 // Original FTFT4A cases have no temporal-impact acceptance: all fixture surfaces are independently shown
 // to touch exactly (canonical axes) or overlap slightly (represented oblique
 // geometry). There is no positive-gap-as-touching expectation in this suite.
+#include <algorithm>
 #include <cmath>
 #include <cstdio>
 #include <string>
@@ -322,9 +323,26 @@ void TestCompletedSupportObservations() {
     physics.SetPairCollisionEnabled(fixture.body,fixture.floor,true);
     Check(physics.ReadBodyContactSample(fixture.body,contacts)&&contacts.empty(),"unsuppressing before another solve cannot revive old support");
     fixture.Step();
+    // A different collider can still have a legitimate completed reaction.
+    // Slot reuse must reject the removed/replacement floor's observations,
+    // without erasing real contacts belonging to that other collider.
+    physics.ReadBodyContactSample(fixture.body,contacts);
+    auto otherContacts=contacts;
+    otherContacts.erase(std::remove_if(otherContacts.begin(),otherContacts.end(),
+        [&](const auto& contact){return contact.other.id==fixture.floor.id;}),otherContacts.end());
+    Check(!otherContacts.empty(),"slot-reuse fixture exercises another real load-bearing contact");
     const auto removedFloor=fixture.floor;physics.DestroyBody(removedFloor);
     fixture.floor=physics.CreateStaticBox({0,-.5f,0},{4,.5f,3},.8f,0);
-    Check(fixture.floor.id!=removedFloor.id&&physics.ReadBodyContactSample(fixture.body,contacts)&&contacts.empty(),"reused support slot cannot alias completed contact generations");
+    const bool readAfterReuse=physics.ReadBodyContactSample(fixture.body,contacts);
+    const bool staleFloor=std::any_of(contacts.begin(),contacts.end(),[&](const auto& contact){
+        return contact.other.id==removedFloor.id||contact.other.id==fixture.floor.id;});
+    Check(fixture.floor.id!=removedFloor.id&&readAfterReuse&&!staleFloor,"reused support slot cannot alias completed contact generations");
+    bool retainedOtherContacts=readAfterReuse&&contacts.size()==otherContacts.size();
+    for(std::size_t i=0;retainedOtherContacts&&i<contacts.size();++i)
+        retainedOtherContacts=contacts[i].other.id==otherContacts[i].other.id&&
+            contacts[i].normalImpulse==otherContacts[i].normalImpulse&&
+            contacts[i].point==otherContacts[i].point&&contacts[i].normal==otherContacts[i].normal;
+    Check(retainedOtherContacts,"removing a neighbour preserves other genuine completed reactions");
     const auto removedBody=fixture.body;physics.DestroyBody(removedBody);
     fixture.body=physics.CreateDynamicBox({0,8,0},{.5f,.5f,.5f},4,.8f,0);
     Check(!physics.ReadBodyContactSample(removedBody,contacts)&&contacts.empty(),"destroyed observer handle fails safely after slot reuse");
