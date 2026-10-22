@@ -117,3 +117,28 @@ landings are what this engine's speculative path cannot yet reproduce;
 a credible next design must resolve them as well as exact TOI does (e.g.
 substepped or block-coupled stack response), and must pass the ordinary
 settling gate before any severe-case timing is considered.
+
+6. MISS CERTIFICATES FOR NEGLIGIBLE VELOCITY CHANGES — CORRECT, NOT ADOPTED
+----------------------------------------------------------------------
+Motivation: instrumenting the "velocity changed" decision over severe900
+showed 100,973 changed bodies; 28% changed by < 1 um/s and 38% by < 10 um/s
+(only 5.6% were rounding-level, <= 4 ulps), yet each sent ~26 neighbours
+back through CCD.
+Design: a no-proximity-manifold miss at t0 proves separation > R (queried
+0.1 mm beyond the reach to certify slack, without changing any answer). After
+an event at `now`, a pair is skipped when
+  S_old*(now - t0) + S_new*(finish - now) < R - guard
+using the query's own closing-speed bound, provided each body's trajectory
+is unchanged since t0 or changed once exactly at `now`.
+Result (severe900, same binary):
+  certificates off        mean 11.959  p95 21.580  worst 41.201  queries 489,270
+  validation (query run)  zero violations; any wrong skip would have thrown
+  certificates on         mean 11.836  p95 21.723  worst 39.797  queries 410,069
+  digests identical to 8d87a640 on all 900 severe and ordinary steps.
+16% of queries and 23% of advancement iterations were removed, but time
+changed ~1% (within run-to-run noise) and the worst step did not move. Not
+adopted: complexity without a material gain.
+Patch: .cache/speculative-gate-20261022/rejected-miss-certificates/.
+Correction to an earlier claim: the profiler's inclusive "CCD search"
+scope (~10.8 ms in the worst step) overstated how much wall time the
+ImpactTime advancement loop costs; removing 23% of its iterations saved ~1%.
