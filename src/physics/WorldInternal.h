@@ -412,6 +412,8 @@ struct PhysicsWorld::Impl {
     bool SpinsThroughSupport(const std::array<unsigned, 4> &key, double remaining, double time = 0,
                              bool changedVelocity = false);
     static bool ContinuationPrimitive(const Body &body);
+    // Mesh/terrain contacts keep per-point normals (outside normal blocks).
+    static bool ConcaveShape(const Body &body);
     bool SupportContinuationSafe(const std::array<unsigned, 4> &key, double start, double finish);
     // A quarter of the existing half-dimension feature (one eighth of the
     // full thickness for boxes), measured relative to the current overlap.

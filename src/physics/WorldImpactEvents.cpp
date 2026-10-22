@@ -83,6 +83,7 @@ auto PhysicsWorld::Impl::ResolveInitialImpacts(float dt) -> void {
                 auto &b = bodies[c.b];
                 rows.push_back({&a.rigidBody, &b.rigidBody, geometry[c.constraint], c.friction,
                                 std::max(a.restitution, b.restitution), persistent});
+                rows.back().pointNormals = ConcaveShape(a) || ConcaveShape(b);
             }
             std::vector<unsigned char> included(bodies.size(), 0);
             for (unsigned slot : aliveSlots)
@@ -586,6 +587,7 @@ auto PhysicsWorld::Impl::AdvanceImpacts(float dt, bool coupledVelocityChanged) -
                                 {&a.rigidBody, &b.rigidBody, m.points[k],
                                  std::sqrt(std::max(0.f, a.friction) * std::max(0.f, b.friction)),
                                  std::max(a.restitution, b.restitution), false});
+                            rows.back().pointNormals = ConcaveShape(a) || ConcaveShape(b);
                             lastStepContacts.push_back(
                                 {m.points[k].point, m.points[k].normal, m.points[k].penetration});
                         }

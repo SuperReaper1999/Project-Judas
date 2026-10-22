@@ -21,6 +21,8 @@ struct ImpactContact {
     // is bounded by the existing slop and by the owner's physical feature size.
     bool continuing = false;
     float maxDefectDisplacement = ContactSolver::kPenetrationSlop;
+    // Concave mesh/terrain row: solved as points, outside normal blocks.
+    bool pointNormals = false;
 };
 
 struct ImpactResult {

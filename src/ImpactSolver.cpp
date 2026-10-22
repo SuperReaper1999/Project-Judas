@@ -105,8 +105,8 @@ ImpactResult ImpactSolver::Solve(const std::vector<ImpactContact>& contacts, flo
         }
         // Geometry is already at the event, so no speculative gap/time target.
         // The persistent solver and its numerical expressions are unchanged.
-        if (joints && !joints->Empty())
-            for (const auto& contact : contacts) {
+        for (const auto& contact : contacts)
+            if ((joints && !joints->Empty()) || contact.pointNormals) {
                 m_solver.PreservePointNormals(*contact.a);
                 m_solver.PreservePointNormals(*contact.b);
             }

@@ -362,6 +362,15 @@ void PhysicsWorld::Step(float fixedDeltaTime, const VelocityCoupling *coupling) 
                         w.solver.PreservePointNormals(body);
                 }
         }
+        // Concave mesh/terrain rows use local triangle normals whose
+        // continuation is validated per point (curved-mesh CCD contract).
+        // Keep their prior point behaviour outside the block scope.
+        for (const auto& c : w.startContacts) {
+            if (Impl::ConcaveShape(w.bodies[c.a]) || Impl::ConcaveShape(w.bodies[c.b])) {
+                w.solver.PreservePointNormals(w.bodies[c.a].rigidBody);
+                w.solver.PreservePointNormals(w.bodies[c.b].rigidBody);
+            }
+        }
         if (coupling)
             for (const auto& row : w.solver.Constraints()) {
                 w.solver.PreservePointNormals(*row.bodyA);

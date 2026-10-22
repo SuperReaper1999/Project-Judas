@@ -92,6 +92,10 @@ inline auto PhysicsWorld::Impl::Get(BodyHandle handle) const -> const Body * {
     return &bodies[slot];
 }
 
+inline auto PhysicsWorld::Impl::ConcaveShape(const Body &body) -> bool {
+    return body.shape.type == ShapeType::TriangleMesh || body.shape.type == ShapeType::Terrain;
+}
+
 inline auto PhysicsWorld::Impl::ContinuationPrimitive(const Body &body) -> bool {
     return !body.shape.asset && body.shape.pivotOffset == glm::vec3(0) &&
            (body.shape.type == ShapeType::Box || body.shape.type == ShapeType::Sphere);
