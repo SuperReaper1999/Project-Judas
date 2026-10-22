@@ -10,6 +10,7 @@
 using namespace JudasPhysicsDetail;
 
 auto PhysicsWorld::Impl::ResolveInitialImpacts(float dt) -> void {
+    initialImpactBodies.clear();
     if (std::none_of(startContacts.begin(), startContacts.end(),
                      [](const auto &c) { return c.newImpact; }))
         return;
@@ -87,8 +88,10 @@ auto PhysicsWorld::Impl::ResolveInitialImpacts(float dt) -> void {
             }
             std::vector<unsigned char> included(bodies.size(), 0);
             for (unsigned slot : aliveSlots)
-                if (root(slot) == order[begin].first)
+                if (root(slot) == order[begin].first) {
                     included[slot] = 1;
+                    initialImpactBodies.push_back(slot);
+                }
             PrepareJoints(eventJointSolver, JointInputs(&included), dt, false, true);
             const auto result = [&] {
                 PhysicsWorkTimer timer(work.impactSolve, work.active);
@@ -163,7 +166,8 @@ auto PhysicsWorld::Impl::AdvanceImpacts(float dt, bool coupledVelocityChanged) -
         }
     // Initial touching impacts can launch a previously stationary body.
     // Refresh those trajectories before searching for a separated event.
-    if (stats.impactEvents || coupledVelocityChanged) {
+    static const bool globalReseed = std::getenv("JUDAS_VALIDATION_GLOBAL_RESEED") != nullptr;
+    if (coupledVelocityChanged || (stats.impactEvents && globalReseed)) {
         for (auto slot : aliveSlots)
             if (bodies[slot].isDynamic)
                 CoverStepReach(bodies[slot], dt);
@@ -173,6 +177,29 @@ auto PhysicsWorld::Impl::AdvanceImpacts(float dt, bool coupledVelocityChanged) -
             for (int pa = 0; pa < PrimitiveCount(bodies[pair.first].shape); ++pa)
                 for (int pb = 0; pb < PrimitiveCount(bodies[pair.second].shape); ++pb)
                     separatedPairs.push_back({pair.first, pair.second, unsigned(pa), unsigned(pb)});
+    } else if (stats.impactEvents) {
+        // Time-zero impacts changed only their islands' velocities. Like an
+        // event's dependencies, re-cover and search the pairs incident to
+        // those bodies; every other pair keeps its narrowphase routing.
+        std::sort(initialImpactBodies.begin(), initialImpactBodies.end());
+        for (const unsigned slot : initialImpactBodies)
+            if (bodies[slot].isDynamic)
+                CoverStepReach(bodies[slot], dt);
+        for (const unsigned slot : initialImpactBodies) {
+            if (!bodies[slot].isDynamic)
+                continue;
+            for (const unsigned other : ImpactCandidates(slot, tree.FatAabb(bodies[slot].proxy))) {
+                if (other == slot || !CanRespond(slot, other))
+                    continue;
+                const unsigned a = std::min(slot, other), b = std::max(slot, other);
+                for (int pa = 0; pa < PrimitiveCount(bodies[a].shape); ++pa)
+                    for (int pb = 0; pb < PrimitiveCount(bodies[b].shape); ++pb)
+                        separatedPairs.push_back({a, b, unsigned(pa), unsigned(pb)});
+            }
+        }
+        std::sort(separatedPairs.begin(), separatedPairs.end());
+        separatedPairs.erase(std::unique(separatedPairs.begin(), separatedPairs.end()),
+                             separatedPairs.end());
     }
     // Support pairs whose rotation over the step could carry a feature
     // through the support remain under continuous search.

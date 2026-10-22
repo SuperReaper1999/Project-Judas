@@ -1,0 +1,98 @@
+PROJECT JUDAS — SPECULATIVE-ENCOUNTER GATE: REJECTED, PLUS RESEED DIAGNOSTIC
+22 October 2026
+======================================================================
+
+Status: the planned change was REJECTED by its own whole-workload gate.
+The hitch is NOT fixed. No human validation is claimed.
+
+Checkpoint (stopped contact-response work, re-validated, committed):
+  89e980c0fe8b469234d231de857f62209a1f6ae3 on Experimental
+  31 focused programs, 6 M70/M77 cold-process operations and
+  6 save/editor/export/relocated-standalone operations all exited 0
+  (.cache/speculative-gate-20261022/checkpoint-*/).
+
+Evidence root: .cache/speculative-gate-20261022/
+  bench.py, build_driver.py      runners (same driver/run.py as before)
+  <variant>/BENCHMARKS.json      summary rows; <variant>/<run>/live/*.csv raw
+  rejected-gate/                 the rejected source as a patch + its probe test
+
+1. BASELINE AT THE CHECKPOINT (matches the stopped-state numbers)
+----------------------------------------------------------------------
+  run          mean    p95     worst   events  queries    sleeping  worst frame
+  ordinary900  1.690   5.552   14.748  1,142      11,168  1152/1152    60.9 ms
+  severe900   12.113  23.006   41.759  5,020   1,430,823   140/1152    65.9 ms
+  live120     10.395  13.236   39.622  5,438   1,563,814       —      215.6 ms
+
+2. SPECULATIVE-ENCOUNTER GATE — REJECTED
+----------------------------------------------------------------------
+Idea: a newly encountered, separated, slow box/sphere pair gets a
+speculative solver row instead of an initial exact TOI query (pairs whose
+motion later changes are still re-queried exactly).
+
+First whole-workload run (fraction 0.25, angle 0.1 rad):
+  severe900   mean 10.919  p95 15.442  worst 38.074  events 1,191  queries 937,574
+  ordinary900 mean 10.812  p95 15.304  worst 37.913  sleeping 133/1152   <-- FAIL
+
+Events fell 76% and severe p95 fell to 15.4 ms, but the ORDINARY scene no
+longer settles: 1,019 pieces stay awake and gain energy (peak speeds near
+5 m/s from rest). That breaks the plan's rejection criteria, so it was not
+adopted. Root causes found with a reduced room-lattice probe:
+  a. Solver: a speculative row whose approach "reaches" the gap was
+     treated as a restitution bounce AT the gap (target 0 with this
+     scene's restitution), stopping bodies short; corrected with a
+     close-the-gap target for these rows only.
+  b. Dependency blind spot: a speculative row changes velocities inside
+     the velocity solve, outside the event pass; neighbours narrowphased
+     at the earlier motion can then close with no constraint. Mitigated
+     with a neighbour search plus a fixed 0.02 m speculative distance.
+  c. Symmetry: a speculative four-point landing leaves small spurious spin
+     (~2e-4 rad/s) that exact TOI landings do not; in the authored
+     box-on-sphere columns (unstable equilibria that exact landings keep
+     perfectly symmetric) this grows into collapse. Allowing these rows
+     into normal blocks did not remove it.
+After a-c the probe still did not settle. The engine's resting behaviour
+currently depends on exact, symmetric TOI landings; a speculative path
+would need its own landing/patch treatment, not more local patches.
+
+3. SCOPED TIME-ZERO RESEED (committed after the concave-block fix)
+----------------------------------------------------------------------
+Any time-zero impact made AdvanceImpacts regenerate broadphase and
+re-query EVERY candidate pair (~12k). Those 116 severe steps held 90% of
+all queries. Scoping the reseed to the impacted islands' pairs:
+  ordinary900 identical physics; queries 11,168 -> 6,808
+  severe900   900/900 trajectory digests identical to baseline
+              queries 1,430,823 -> 489,270 (-66%)
+              mean 12.113 -> 11.961, worst 41.759 -> 43.147 ms
+              reseed steps' mean 21.86 -> 20.20 ms
+Qualified on top of 99fb6880 (concave mesh contacts kept outside normal
+blocks; that fixed a curved-trough crossing introduced by 89e980c0): 31
+focused programs, cold, application and collision group all pass; digests
+match 99fb6880 on all 900 ordinary and severe steps. Matched runs:
+  run          mean    p95     worst   over16.7  queries    worst frame
+  severe900 before 11.849  22.718  39.509   138   1,430,823     66.6 ms
+  severe900 after  11.581  20.977  39.543   112     489,270     70.7 ms
+  live120   before 10.395  13.236  39.622   153   1,563,814    215.6 ms
+  live120   after   9.972  12.722  39.297   115     622,569    197.8 ms
+(live120 "before" is the 89e980c0 baseline.) JUDAS_VALIDATION_GLOBAL_RESEED=1
+restores the old global reseed for comparison.
+Correct and exact here, but a small gain: the removed queries were cheap
+whole-AABB misses. The worst steps still carry ~12k queries from
+per-event dependency flushes (16-40 events per step, peak domains of
+hundreds of bodies) and ~25-37 ms inside the inclusive solver clock.
+
+4. WHAT THIS ESTABLISHES
+----------------------------------------------------------------------
+  * Reducing event COUNT works for cost (gate: -76% events, p95 15.4 ms),
+    but not at the expense of resting quality; the bottleneck for that
+    route is landing/resting fidelity, not CCD.
+  * Query COUNT is again shown not to be the cost driver.
+  * Not established: a design that removes events while preserving
+    settling; whether the remaining per-event response+flush work can be
+    bounded; human-visible effect of either change.
+
+Note: build_shared_inertia_driver.py was accidentally re-run once with
+--help (it takes no options), which re-linked
+.cache/contact-response-20261022/shared-reciprocal-inertia/stress-v3 in place
+(binary sha 1f11ebc8...; the copied engine library hash a21f20a3... is
+unchanged). The original binary (cd870cdd...) recorded in that folder's
+receipts is no longer present there.

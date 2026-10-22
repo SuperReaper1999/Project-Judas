@@ -273,6 +273,7 @@ struct PhysicsWorld::Impl {
     };
     std::vector<StartContact> startContacts;
     std::vector<std::array<unsigned, 4>> separatedPairs;
+    std::vector<unsigned> initialImpactBodies; // islands changed by time-zero impacts
     std::vector<std::array<unsigned, 4>> supportPairs;
     std::vector<std::array<unsigned, 4>>
         spinningPairs; // sorted; continuous search with a penetration target
