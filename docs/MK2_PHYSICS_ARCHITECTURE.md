@@ -409,8 +409,50 @@ All 30 MK2 runs pass every check of the program, including the 24-box fast famil
    - with 10× joint iterations the robot absorbs the push upright and never steps, which still
      fails the test's real-step requirement;
    - with the final joint warm-start rule it starts no step by frame 20, then falls with "no
-     clear reachable corrective foothold". The next step is an instrumented comparison of the stance-ankle torque and
-   swing-hip response in the first 10 frames after the push.
+     clear reachable corrective foothold".
+
+   **Cause (stage 3 follow-up, instrumented).** The corrective step depends on MK1's
+   under-converged 10-sweep solve, not on a contract MK2 breaks. The evidence:
+   - *MK1 fails the same test once it converges.* At 15, 20 or 40 velocity sweeps (a temporary
+     iteration override), MK1 fails the push check with either support reference below. MK1
+     at 5 or 10 sweeps passes. MK1 at 40 sweeps shows MK2's standing limit cycle exactly.
+   - *Trigger: the lean loop limit-cycles on the centre of pressure.* `PhysicalBalance` measures
+     balance error as COM minus the load-weighted contact centre (CoP) and leans every joint
+     drive by `positionResponse` (0.8) times that error. The ankle torque the lean produces
+     moves the CoP within the same step. At k = 800 N·m/rad and about 235 N of weight, a
+     converged solve moves it by about 2.7 × the error, so the loop gain exceeds 1.
+     - Under MK2 (and MK1 at 40 sweeps), each foot's CoP flips between toe (+0.31 m) and heel
+       (−0.22 m) every frame while the robot stands still. The lean flips with it.
+     - At the push frame the CoP happened to be on the toe, so the capture point was only
+       0.055 m beyond it, below the 0.18 m trigger. `PlanStep` ran only frames later, with the
+       robot tipping onto its toes, and its foothold ray missed.
+     - MK1 at 10 sweeps holds the CoP under the COM (capdist 0.001 at rest, 0.367 at the push)
+       because the drive torque is only partly delivered each step.
+     - With 1 or 2 MK2 substeps the CoP is steady and the push plans a step.
+     - Neither null-space load spreading nor the joint warm-start rule causes the cycle:
+       disabling each leaves it unchanged.
+   - *Swing: the foot lands short in converged solves.* In MK2 and in MK1 at 40 sweeps the
+     swing foot lifts, but it touches down 0.25–0.34 m from the planned foothold, outside the
+     0.12 m `touchdownTolerance`. In MK2 it touches toe-first with the foot body 16 cm up, so
+     the landing never registers and the 3 × `stepSeconds` swing deadline fails the step.
+     MK1 at 10 sweeps tracks the swing reference onto the target.
+   - *A partial controller remedy, not committed.* Measuring the double-support error from
+     the unweighted contact centroid instead of the CoP removes the limit cycle. MK1 still
+     passes 15/15 and the MK2 push plans a step, but MK2 then fails in the swing as above. The
+     same centroid in single support breaks MK1's swing. The temporary patch is kept at
+     `.cache/mk2-20261023/cop-debug/debug.patch` (gitignored).
+
+   Making the solver less converged would weaken physics, so the remaining fix is a balance
+   controller that is robust to a converged contact solve. That needs a lean loop that does
+   not feed back its own actuated CoP, and swing-foot tracking that reaches the foothold
+   when drive torque is fully delivered. The change alters MK1 default trajectories and needs
+   its own MK1 regression pass.
+
+   Separately, MK2 reports joint reaction impulses (`reactionImpulse`,
+   `reactionAngularImpulse`) and drive impulses from the last substep only, because they reset
+   in every substep `Prepare`. The balance `saturated` counter (drive impulse / dt) therefore
+   reads about 1/4 of the real torque under MK2. This is observation-only and is not the cause
+   above.
 6. **MK1 event-bookkeeping tests** need MK2-appropriate restatements. These cover candidate
    reuse, impact batches and discovery, support-guess ownership and contact-lifecycle TOI
    observations.
