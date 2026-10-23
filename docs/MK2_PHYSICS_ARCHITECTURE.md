@@ -1013,9 +1013,14 @@ All 30 MK2 runs pass every check of the program, including the 24-box fast famil
     The pairwise impact pass is also capped at 64 resolutions per substep for the whole world
     (`kMk2ImpactPairs`), each found by scanning every block: a large simultaneous impact gets
     only 64 exact (restitution-bearing) resolutions.
-11. **structural_lab overload fixture** (open, operator decision). The check expects bridge A
-    (120 kPa) to fail under a 1000 kg overload whose settled demand is about 84 kPa under both
-    solvers; only MK1's 123 kPa transient exceeded capacity (§4).
+11. ~~**structural_lab overload fixture**~~ (closed, operator delegated the decision). The lab's
+    1000 kg overload gave bridge A a settled 84 kPa against its 120 kPa capacity under both
+    solvers; A failed only on MK1's 123 kPa transient. The lab's load is now 2000 kg (the check is
+    unchanged): settled demand 142-147 kPa, A fails under both solvers (MK1 4 links, MK2 5), B
+    (1 MPa) and C (middle pier) hold under both. Unrelated and pre-existing under both solvers
+    with the original script: structural_lab cold `read` fails "fresh-process restoration matches
+    exact topology, physical poses and owned joint continuation", and `radial` fails its gravity
+    sample check.
 
 ## 6. Stages
 

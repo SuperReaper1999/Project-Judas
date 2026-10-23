@@ -102,7 +102,9 @@ Scene 2 uses the actual spatial RadicalGravity field, with that explicit uniform
 region taking precedence locally. It is not a rotated flat-scene physics branch.
 
 WASD/mouse move/look; Space launches; click applies a 500 N·s hit-point impulse;
-B toggles a 1000 kg-equivalent force in the sampled gravity direction; R removes
+B toggles a 2000 kg-equivalent force in the sampled gravity direction (raised from 1000 kg, whose
+settled stress on A was about 84 kPa against its 120 kPa capacity: A only failed on a solver
+transient); R removes
 right anchors and actual right pedestals; H removes C's middle anchor/pedestal;
 P spawns an independent bridge prefab; F3 requests/releases the annex;
 1/2 uniform/radial scenes; F5/F8 save/load; F9 reload; Escape pause.

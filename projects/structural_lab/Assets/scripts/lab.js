@@ -16,14 +16,14 @@ export default class {
    if(a==='spawn'&&this.state.spawned.length<4){const e=world.spawnPrefab('79797979797979797979797979790006',{position:{x:0,y:7,z:-7-this.state.spawned.length*3},rotation:{w:1,x:0,y:0,z:0},scale:{x:1,y:1,z:1}});this.state.spawned.push(e.id);}
    if(a==='region'){if(this.region){scenes.releaseRegion(this.region);this.region=0;this.state.region=false;}else{this.region=scenes.requestRegion('annex');this.state.region=true;}}
   }this.pending=[];
-  if(this.state.load)for(const id of ['100','200','300']){const e=world.entity(id);if(e?.fracture){const g=physics.gravity(e.transform.position);e.fracture.force(4,mul(g,1000));}}
+  if(this.state.load)for(const id of ['100','200','300']){const e=world.entity(id);if(e?.fracture){const g=physics.gravity(e.transform.position);e.fracture.force(4,mul(g,2000));}}
  }
  uiUpdate(){if(!this.hud)return;if(input.pressed('pause')){this.hud.modal=!this.hud.modal;this.hud.get('pause').visible=this.hud.modal;input.pointerCapture=!this.hud.modal;}
   if(input.pressed('save_game'))this.command('save');if(input.pressed('load_game'))this.command('load');
   if(this.request){const s=saves.status(this.request);if(s&&['completed','failed','cancelled'].includes(s.state)){this.message=s.state+(s.error?' — '+s.error:'');this.request=0;}}
   this.hud.get('title').text='JUDAS / LOAD-BEARING STRUCTURES';
   this.hud.get('score').text=this.owners().map((e,i)=>`${['A','B','C','D'][i]||'Prefab'}: ${e.fracture.state.interfaces.filter(b=>b.broken).length}/7 failed`).join('  |  ');
-  this.hud.get('progress').text=`A:120kPa  B:1MPa  C:120kPa + middle pier | overload ${this.state.load?'1000kg equivalent':'off'} | right supports ${this.state.right?'released':'present'}`;
+  this.hud.get('progress').text=`A:120kPa  B:1MPa  C:120kPa + middle pier | overload ${this.state.load?'2000kg equivalent':'off'} | right supports ${this.state.right?'released':'present'}`;
   this.hud.get('message').text=this.owners().map(e=>e.deformable.state.error||e.fracture.state.error).find(Boolean)||this.message;
  }
  command(op){if(!this.request)this.request=op==='save'?saves.save('structure-current',{name:'Structure topology and motion'}):op==='load'?saves.load('structure-current'):saves.delete('structure-current');}
