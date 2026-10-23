@@ -620,6 +620,65 @@ All 30 MK2 runs pass every check of the program, including the 24-box fast famil
      rigs the ankle sits 0.45 m above the ground, so the horizontal ground force needed to
      brake tips the foot over its toe, and the plain torque cap does not account for it.
 
+   **Capture controller, third iteration.** Per-frame traces of the slender push found
+   three more causes; each is fixed:
+   - **Follow-up steps could not advance.** Footholds translated the support pattern from
+     the swing foot's own position. A trailing foot therefore reached only alongside the
+     leading foot: two steps gained one step's reach, and the third had to do all the work.
+     - The foothold is now the authored support pattern anchored at the stance foot (stance
+       sole plus the rest-pose offset between the soles, `CaptureRestSoles`). It is
+       translated by at most `stepReach` so its centre lands on the capture point.
+     - A first step from the authored stance is unchanged.
+   - **The stance foot spun.** In single support the stance foot rolled onto its toe edge
+     and then yawed at 3–5 rad/s about a toe corner, so its centre travelled about 0.4 m
+     with the body. The swing of a leg set 0.4 m to the side twists the pelvis. The stance
+     hip held the trunk's world yaw, and the reaction reached a foot that cannot resist yaw
+     on an edge.
+     - The single-support stance ankle's target now keeps the shank's current yaw.
+     - The trunk now leans with the supporting attitudes in single support as well as
+       double support, instead of being held upright.
+     - Each change was measured alone across all four solver configurations. Leaning the
+       trunk the opposite way, against the correction, was clearly worse.
+   - **Restored tasks lost posture.** A restored task now uses the authored rest pose as its
+     standing posture until it measures one, instead of the 5 cm pull.
+
+   Rejected in this iteration:
+   - a ZMP- or friction-bounded stance hip, which never bound at the useful setting and
+     only shortened the slide at 0.4;
+   - a 0.4–0.8 ankle-cap factor, which keeps the stance foot planted but loses the braking;
+   - an earlier trigger margin of 0.05–0.15 m;
+   - a flat-foot reference (constant or edge-only), which breaks get-up;
+   - yaw-free ankles in double support too.
+
+   Results, capture controller with all three iterations (established controller unchanged):
+   - **Harness, flat ground:** 20/28 required scenarios (legacy 16/28) and 51/84 other
+     directions standing (legacy 10/84). The slender rig passes 3/3 under MK1, MK1 ×20,
+     MK1 ×40 and MK2. At 31 and 33 N·s it passes 3/3 in six of eight solver cells. Weaker
+     pushes (25–27 N·s) do not need the declared step under MK2, so that scenario's
+     "denied fails" requirement does not apply to them.
+   - **Harness, planet:** 8/16 required scenarios (legacy 8/16) and 31/56 directions (legacy
+     10/56).
+   - **Balance lab:** standing, supports, recovery, radial and cold-read pass under MK1,
+     MK1 ×20, MK1 ×40 and MK2. This includes the established controller's standing
+     failures at ×20, ×40 and MK2, and its cold failures at ×20 and MK2.
+   - **The one failing check** is cold-write's "capture while corrective step is actually in
+     progress" under the three MK1 settings.
+     - The fixture saves 20 frames after the push. The capture swing runs 3× the authored
+       `stepSeconds` (about 0.23 s), so under MK1 the first step has already landed (frame
+       16–20).
+     - The state saved after landing restores and passes cold-read. Under MK2 the step
+       starts later, the save is taken mid-step, and both write and read pass.
+     - Slowing the swing to make frame 20 fall mid-swing did not give a robust result.
+       2.1–2.6× rates with 0–0.1 s lift-off delays were swept, and only 2.5× with 0.05 s
+       passed every cell. Every neighbouring setting failed MK1 ×40 standing or cold-read.
+       That single passing setting is a coincidence of timing, not a margin, so it was not
+       adopted.
+     - This fixture assumes the established controller's 0.7 s step. It needs a decision on
+       whether to make it controller-agnostic; it has not been changed.
+   - **Not yet tested** on these changes: corrective steps on supports other than the
+     authored flat and radial grounds, beyond the lab's supports scene; and human
+     validation. The established controller remains the default.
+
    Separately, MK2 reports joint reaction impulses (`reactionImpulse`,
    `reactionAngularImpulse`) and drive impulses from the last substep only, because they reset
    in every substep `Prepare`. The balance `saturated` counter (drive impulse / dt) therefore
