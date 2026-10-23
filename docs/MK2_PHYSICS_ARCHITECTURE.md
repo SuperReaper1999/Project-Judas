@@ -1,7 +1,8 @@
 # Judas Physics MK2: architecture
 
-Status: **working prototype** (Experimental, opt-in). MK1 stays the default, the reference and
-the fallback.
+Status: **working prototype** (Experimental, opt-in). MK1 stays the default until gap 8 is
+fixed; the operator's direction is that MK2 replaces MK1, with physical accuracy (not MK1
+compatibility) as the acceptance bar.
 
 - Opt-in: set `JUDAS_PHYSICS_MK2=1` in the environment. It is read at `PhysicsWorld::Init`.
 - No human validation has been done. Everything below is automated tests, probes and benchmarks
@@ -126,14 +127,60 @@ are not.
 - **Why it mattered:** the balance controller builds its support polygon from these loads, and
   under MK2 each foot looked like a single point.
 
-### 2.2 Restitution pass
+### 2.2 Impacts at their arrival instant
 
-After the substeps, rows whose pre-solve approach speed exceeds 0.5 m/s get a block restitution
-solve, iterated over up to 8 sweeps.
+A step-end restitution pass (as Box2D v3) was replaced, because it was inaccurate in ways the
+MK1 timing suite measured:
 
-- The target is e × the measured approach velocity.
-- Iterating propagates impulses through simultaneous chains. In a three-body elastic line the
-  result is symmetric, momentum is exact and the energy matches (9.000 → 8.999).
+- a bounce was held at the contact until the next step, so it lagged by e·|v|·dt (7.8 mm for
+  a 1 m/s, e = 0.5 bounce at 60 Hz);
+- only approaches that existed at the step start could bounce, so a ball set moving inside
+  the step struck its neighbour inelastically;
+- the speculative row slowed an approach in the relax so it would arrive exactly at the next
+  substep's end: an impulse across an open gap that also crossed touching neighbours.
+
+Now, at each substep start (pre-solve velocities, so the physical impact speed):
+
+1. **Detection.** A row whose gap s closes within the substep at approach speed v
+   (|v| > 0.5 m/s) arrives at fraction τ = s/(|v|h) (a gap closing exactly at the substep's end
+   counts). Its coupled set is every block sharing a dynamic body with an arrival; the whole set
+   shares the earliest instant, as the impulse crosses it rigidly.
+2. **Configuration.** The set's bodies are placed at their arrival poses (pre-impact free flight)
+   and each arriving pair is re-collided there. Its anchors have slid apart since the step start;
+   an impulse through their midpoint missed the contact point and turned into spin (a frictional
+   e = 0.5 bounce left at 0.94 instead of 1.00).
+3. **Sequential propagation.** The most-approaching pair of the set is resolved on its own, as
+   its whole manifold block (a flat landing stays symmetric): a converged compression of fresh,
+   push-only impulses, then e × that compression (Poisson). Repeat while any pair approaches
+   (bound 64, then a converged inelastic solve, which only dissipates). A two-body impact with
+   e ≤ 1 cannot gain energy, and each is checked: one that would (friction) is redone
+   inelastically.
+   - Simultaneous Newton targets were tried first and rejected: a heavy–light–heavy column gained
+     3.1 J. Simultaneous Poisson with restitution only on the fast rows gained 4 J in a cradle.
+   - The result is the physical one for rigid elastic bodies: a cradle passes the ball's speed to
+     its far ball, simultaneous arrivals rebound symmetrically, and a column resolves as its
+     sequence of binary impacts.
+4. **Ledger.** Each struck body moves without its impact's velocity change until τ, then with it
+   (two segments), so positions match the exact trajectory. Afterwards the substep solves as
+   usual from the post-impact velocities.
+
+In the relax, a still-open row that will arrive at impact speed within the next substep is left
+free; slow approaches keep the speculative limit (it holds settling contacts and fast spinning
+bodies).
+
+Segments integrate their (midpoint, torque-free) angular rate by its exact rotation. MK1's
+first-order quaternion update turns 2·atan(θ/2) per segment: at 100 rad/s and 60 Hz a free body
+turned 17% too slowly. MK1 keeps its integrator (`RigidMotionSegment::exactRotation` is MK2's).
+
+Measured at the engine's 60 Hz step (`judas_mk2_physics_tests` G):
+
+| Case | Error |
+|---|---|
+| e = 0.5 bounce, 12 steps | 2e-7 m (was 7.8 mm) |
+| separated elastic chain | 5e-7 m (was 42 mm), velocities exact |
+| Newton's cradle | 2e-7 m, (0, 0, 6) m/s |
+| 100 m/s rattle between walls 1 m apart, 1 s | 2.3e-6 m, speed exact |
+| 100 rad/s free spin | 6e-8 rad |
 
 ### 2.3 Bounded CCD pass (`Mk2Continuous`)
 
@@ -156,13 +203,25 @@ exceeds 0.25 × their smallest feature.
    - Before this stage every touching pair was treated as hit at t = 0. Rigidly carried anchors
      then misjudged fast-spinning boxes: some were frozen in place every step while their
      velocity grew, and others were never re-swept and passed through the trough.
-3. On a clamp:
-   - The fast body's ledger is held at the hit pose.
-   - `Mk2ResolveArrival` runs MK1's `ImpactSolver` on private copies at that pose, using manifold
-     margins of 1 mm, 5 mm and 1 cm, and copies the velocities back.
+3. Arrivals are taken in time order across all fast bodies:
+   - `Mk2ResolveArrival` runs MK1's `ImpactSolver` on private copies at the arrival poses, using
+     manifold margins of 1 mm, 5 mm and 1 cm, and copies the velocities back.
+   - Both bodies' ledgers then continue from that instant with their new velocities (re-timed),
+     and their new paths are swept again from there; a body is also struck this way when it was
+     set moving inside the step (a chain at a 0.2 s step now ends exact, where a hold left the
+     far ball 0.4 m short). Re-timed paths have no rows, so no pair on them is row-owned.
+   - Without an exact response (no manifold, or the energy budget refuses) the body is held at
+     the arrival instead; continuing would carry it into the contact.
+   - Bounds: 4 re-timings per body and 256 arrivals per step; past them a body is held at its
+     arrival for the rest of the step (velocity kept), so no unbounded event chain can form.
 
-Each clamp counts as `stats.impactEvents`. The pass runs at most once per fast body per step,
-so it cannot cascade by construction.
+Each resolved arrival counts as `stats.impactEvents`, as does each pair the in-substep impact
+propagation resolves (§2.2).
+
+The exact query searches a body's ledger segment by segment (`CCDQuery::ImpactTime` splits at
+segment ends): under MK2 dynamic ledgers have one segment per substep plus any impact instant.
+It took the relative velocity at the window's start for the whole window, so a body at rest at
+t = 0 and struck later looked motionless and every sweep against it missed.
 
 **Fast kinematic movers** (gap 3, closed) are swept first, by the same reach test. A kinematic
 body cannot be held, so it strikes:
@@ -174,7 +233,11 @@ body cannot be held, so it strikes:
 - Each pair's earliest arrival is resolved by `Mk2ResolveArrival` (the kinematic keeps its
   velocity and infinite mass). That works on post-solve velocities, so it adds nothing where
   rows already separate the pair.
-- Poses are kept: the struck body leaves under the next step's rows.
+- The struck body continues from the arrival with its new velocity (as above).
+- In each substep a kinematic body acts with its prescribed motion over that substep (ledger
+  displacement / h), not its commanded rate. A scripted pusher that had reached its target
+  still carried its next command's 64 m/s, and its stationary contact struck a crate from 60 to
+  64 m/s.
 
 Every arrival the pass resolves (fast dynamic or kinematic) is also observed as a touch of the
 step, as MK1 observes its impact events.
@@ -368,6 +431,16 @@ log.
   MK1, MK1 ×20, MK1 ×40 and MK2. `physical_balance_controller` keeps its 3 MK2 failures from
   before (established controller, gap 5). The capture harness under MK2 (flat rigs 0–2) is
   unchanged in total, 5/7 required and 9/21 other directions.
+
+**After the arrival-instant impact model (§2.2, §2.3):** MK1 unchanged (53 of 56; the three
+argument programs pass when run with arguments). MK2 49 of 56 without arguments: `kinematic`,
+`kinematic_lab`, `collision_geometry`, `collision_continuity`, `impact_timing`, `rigid_motion`,
+`candidate_reuse` and `contact_lifecycle` pass. Failing under MK2: `impact_batch_continuation`,
+`impact_discovery`, `support_guess_ownership` (MK1 pipeline, by construction) and
+`post_consumer_ragdoll` (gap 8). The capture controller passes every balance_lab mode, cold
+included, under MK1, ×20, ×40 and MK2; the established controller's development program now
+has 4 MK2 failures (its first corrective step no longer starts: gap 5). Not re-measured:
+room1024 timing.
 
 **Programs run with their arguments** (absolute XDG paths):
 
@@ -780,13 +853,39 @@ All 30 MK2 runs pass every check of the program, including the 24-box fast famil
      support-guess ownership, TOI-solve observations). MK2 does not run that pipeline, so an
      MK2 version would be an invented test, not a restatement. They are MK1 acceptance only
      and fail under MK2 by construction.
-   - `impact_timing` is the acceptance suite of MK1's exact sequential event model (2e-6
-     analytical endpoints, Newton's-cradle chains resolved one impact at a time). MK2 solves
-     restitution simultaneously after each substep, so its endpoints lag by up to e·v·h and
-     its chain velocities follow the simultaneous model, which `judas_mk2_physics_tests`
-     checks (momentum, symmetry, no energy gain). Restating it means choosing which impact
-     model MK2 commits to; that is a design decision, not a test edit.
-7. **Probe-only crash, unexplained.** Probes linked by hand against the release test objects
+   - `impact_timing` (MK1's exact event-timing acceptance) is restated (§2.2): the operator chose
+     physical accuracy over MK1 compatibility, since MK2 is to replace MK1. It now passes under
+     both solvers (3,197 MK1 / 3,195 MK2 checks). MK1's checks are unchanged; where MK1 encodes
+     its own event policy, the MK2 branch states the exact physical result instead:
+     - coupled elastic impacts: MK1 captures them inelastically; MK2 expects the elastic result
+       (symmetric rebound, Newton's cradle, the e = 1 exchange), positions included;
+     - the 16-event cap fixture (about 18 bounces in one 0.2 s step): MK2 asserts no escape, no
+       energy gain and full tangential travel (the 60 Hz rattle is exact, §2.2);
+     - overlap recovery: MK2 recovers gently, so the start-versus-end ledger fixture is given
+       real departure speed;
+     - free rotations: MK2's oracle is the exact rotation, not MK1's first-order update.
+   - Test oracles corrected, not loosened: the MK2 thin-wall family counted a spinning plate thrown
+     sideways off the wall's 10 m edge as a crossing; a crossing now also requires the centre to
+     be within the wall's extent.
+8. **Jointed chains slowly gain energy** (open; exposed by gap 4's ragdoll). An undamped
+   pendulum, measured over 60 s at 60 Hz (swing energy about 0.002 J per link):
+
+   | Joint position correction per substep | 1 link | 2 links | 3 links |
+   |---|---|---|---|
+   | 0.1 (current) | −3.3e-5 J | **+2.1e-4 J** | −4.3e-4 J |
+   | 0.03 | −6.6e-5 J | −1.5e-4 J | −2.2e-4 J |
+   | 1.0 | −2.8e-5 J | +3.8e-6 J | −5.1e-3 J |
+
+   MK1 drifts similarly (two links: −4.5e-4 J at 10 s, +4.4e-5 J at 60 s). In the imported
+   13-bone rig the collapse now ends with the left foot (undamped hinge, as authored; the right
+   foot has resistance 0.05) hanging 2–3 mm off the floor and swinging between −0.27 and −0.43
+   rad. Its peak rate grows from 0.64 to 0.68 rad/s between 10 and 30 s, so the rig never sleeps
+   and `post_consumer_ragdoll` fails under MK2. A 0.02 correction rate lets that foot decay, but
+   no single rate is neutral across chains, and a Box2D-style soft step (60 Hz, damping ratio 2)
+   over-damps real swings (a single pendulum lost 40% in a minute). Both rejected; a
+   position-level joint correction is the likely fix. Before today's impact work the collapse
+   ended in a pose where the rig slept, so this is exposure of an existing drift, not a new one.
+9. **Probe-only crash, unexplained.** Probes linked by hand against the release test objects
    abort with a double free inside `PhysicsWorld::Step`, under MK1 as well. The same scenario
    passes in the real test binary, and an ASan+UBSan build at `-O3` reports nothing.
 
