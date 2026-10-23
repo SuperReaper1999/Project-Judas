@@ -542,6 +542,84 @@ All 30 MK2 runs pass every check of the program, including the 24-box fast famil
    default-path results are unchanged: the 56-program suite matches stage 3 exactly under MK1
    and MK2, and every MK1 balance-lab, character-lab and save program passes.
 
+   **Capture controller, second iteration.** The harness gained `HARNESS_PLANET=1`: the rig
+   stands on a radius-100 static sphere with radial gravity and
+   `plantedOrientationWeight` 1, as the lab's radial scene authors it. It reproduced the radial
+   failure in under a second. Three causes were found and fixed:
+   - **Authored planted-foot reference ignored.** The radial scene authors
+     `plantedOrientationWeight` 1 because a box on a sphere touches at one point and does not
+     hold its face. The capture ankle leaned the shank from the actual foot, so leaning only
+     rolled the foot. The planted ankle now measures the shank lean from
+     `slerp(actual foot, upright foot reference, plantedOrientationWeight)`, as the
+     established controller does.
+   - **Point-contact centroid chatter.** The contact centroid of a point contact jumps across
+     the sole as the foot rocks, and leaning toward it made the feet chatter (loads 0–470 N
+     against a 275 N weight) until the rig slumped. The lean target is now the contact
+     centroid moved toward the sole's geometric centre by the same weight. Using the sole
+     centre unconditionally broke flat-ground recovery, where a foot rolled on its edge
+     really is supported at that edge.
+   - **No posture stiffness against a trunk push.** Supporting legs were struts at the actual
+     root, so nothing resisted the trunk moving away from the feet, and the COM followed the
+     trunk. Under converged solves the 5 cm COM pull also beat against the ankle lean (both
+     act on the same error through the ankles): the slender rig drifted and vibrated while
+     standing under MK1 ×40. In double support the reference root is now pulled, by at most
+     0.2 m (`kPostureReach`), toward the root offset from the soles' midpoint measured at the
+     task's first confirmed standing.
+     - The measured posture is not persisted, so saves are still unchanged. A restored task
+       uses the 5 cm pull until it stands again.
+     - The authored rest pose was tried as the posture. It breaks get-up, where rigs stand
+       with staggered feet that are far from the rest arrangement.
+     - Updating the posture on every standing frame lets it drift with the body, and was also
+       worse.
+
+   Rejected on the harness, each across all four solver configurations and the planet runs:
+   - capping the stance hip by the ZMP bound;
+   - a 0.5–0.7 ankle-cap factor;
+   - a flatter planted-foot reference on flat ground;
+   - waiting for a lateral weight shift before lift-off;
+   - an equal load share;
+   - a stronger lean position gain;
+   - removing the pull without a posture;
+   - anchoring both hips to the trunk's world attitude in double support;
+   - a DCM regulator that sets the desired CoP from the capture point, clamps it to the
+     planted soles and converts ankle torque (including the horizontal ground force acting
+     through the ankle height) to lean through the drive stiffness. It scored 22–24/44
+     against 27/44.
+
+   Results with the second iteration, harness at 29 N·s on flat ground (all four solver
+   configurations, rigs 0–2):
+
+   | | Legacy | Capture, first | Capture, second |
+   |---|---|---|---|
+   | Required scenarios | 16/28 | 16/28 | 19/28 |
+   | Other directions standing | 10/84 | 29/84 | 50/84 |
+
+   On the planet (rigs 0 and 2; the slender rig falls there under both controllers), legacy
+   and the second iteration both pass 8/16 required scenarios, with 10/56 and 30/56 other
+   directions standing. The first iteration did not stand on the planet at all.
+
+   Balance lab with capture forced on, against the established controller:
+
+   | Mode | MK1 | MK1 ×20 | MK1 ×40 | MK2 | Legacy fails at |
+   |---|---|---|---|---|---|
+   | standing | pass | fail | pass | fail | ×20, ×40, MK2 |
+   | supports | pass | pass | pass | pass | — |
+   | recovery | pass | pass | pass | pass | — |
+   | radial | pass | pass | pass | pass | — |
+   | cold write/read | fail | fail | fail | fail | ×20 (read), MK2 |
+
+   What remains:
+   - **Slender 29 N·s push.** The rig runs out of its 3 steps at MK1 ×20 and MK2. The first
+     step is reach-bound: it lands about 0.40 m ahead with its toe at the capture point. A
+     trailing-foot step is clamped to `stepReach` from its own position, so it only reaches
+     alongside the leading foot.
+   - **Cold-save timing.** Cold write expects a step in progress 20 frames after the push.
+     With the 3× swing the first step has landed by then. At 2× the write passes, but push
+     recovery then fails everywhere, and so does the restored read.
+   - **Heavy-footed rigs (0, 2).** The forward push fails under both controllers. On these
+     rigs the ankle sits 0.45 m above the ground, so the horizontal ground force needed to
+     brake tips the foot over its toe, and the plain torque cap does not account for it.
+
    Separately, MK2 reports joint reaction impulses (`reactionImpulse`,
    `reactionAngularImpulse`) and drive impulses from the last substep only, because they reset
    in every substep `Prepare`. The balance `saturated` counter (drive impulse / dt) therefore
