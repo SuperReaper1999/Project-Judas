@@ -64,6 +64,10 @@ Each step runs N = 4 substeps of h = dt/4. Each substep:
    - From substep 1 on, the whole block is scaled by min(1, Σsteady / Σcurrent).
    - An impact spike is therefore never re-applied, and because the whole block is scaled
      uniformly the cap creates no torque.
+   - A row's steady load is the first relaxed substep in which it carries load. Earlier it was
+     taken only from substep 0, so a contact that closed later in the step kept a zero cap: its
+     warm start was erased every substep and its cache every step. An imported ragdoll's leg
+     resting on such rows rocked at about 6 Hz with no friction and never slept (gap 4).
 3. Runs 2 biased iterations. Each sweep solves the joints first and the contacts last, so its
    final velocity never approaches a contact.
    - Rows are **rigid**: soft contacts were tried and sank about 1 cm per contact in a 20-stack.
@@ -160,6 +164,21 @@ exceeds 0.25 × their smallest feature.
 Each clamp counts as `stats.impactEvents`. The pass runs at most once per fast body per step,
 so it cannot cascade by construction.
 
+**Fast kinematic movers** (gap 3, closed) are swept first, by the same reach test. A kinematic
+body cannot be held, so it strikes:
+
+- Its ledger is swept against every dynamic candidate it does not touch at the start.
+- Rows do not own these arrivals. A speculative row is linearized at one anchor and cannot
+  follow a spinning surface: an arm turning a full circle in one step has equal endpoint poses,
+  so its rows never see the body its sweep passes through.
+- Each pair's earliest arrival is resolved by `Mk2ResolveArrival` (the kinematic keeps its
+  velocity and infinite mass). That works on post-solve velocities, so it adds nothing where
+  rows already separate the pair.
+- Poses are kept: the struck body leaves under the next step's rows.
+
+Every arrival the pass resolves (fast dynamic or kinematic) is also observed as a touch of the
+step, as MK1 observes its impact events.
+
 ### 2.4 Narrowphase options (MK2-only; MK1 keeps its exact behaviour)
 
 - **`facePreference`:** a separated box-box edge axis must beat the best face axis by 1e-6.
@@ -187,7 +206,9 @@ so it cannot cascade by construction.
 - **Contact identity and cache format** are MK1's (`ContactKey`, local anchors).
   - The warm-start cache stores the final relaxed substep load × N, before restitution.
   - Touch events and contact observations (`ReadBodyContactSample`) receive each point's
-    step-total impulse, impacts and restitution included, which is MK1's meaning. Before
+    step-total impulse, impacts and restitution included, which is MK1's meaning.
+  - A speculative row that closes its gap and carries load during the step is a touch of that
+    step, as MK1 records the same arrival as an impact event (gap 1). Before
     stage 3, observers read the warm-start value: an impulse or torque applied once per step is
     absorbed in substep 0 and was invisible.
   - Saves, `ReadBodyContactSample`, the sleep graph and cold continuation therefore read the same
@@ -331,6 +352,23 @@ log.
 | collision_continuity | 6 FAIL | **Real gap 2**: arrival impulse timing |
 | post_consumer_ragdoll | 1 FAIL | **Real gap 4**: passive joint resistance |
 
+**After closing gaps 1–4** (same runner, release build; FAIL counts per log):
+
+- MK1: unchanged, 53 of 56 (the three argument programs exit 2 and are run below).
+- MK2: 45 of 56 without arguments. `kinematic`, `collision_geometry` and
+  `post_consumer_ragdoll` now pass. `rigid_motion` and `collision_continuity` pass after the
+  restatements in gap 6 and 2; the suite run above predates those two edits, which were run
+  separately under both solvers (rigid_motion 10,239 checks, collision_continuity 406 checks,
+  0 failures each).
+- Still failing under MK2, by construction: the five MK1 pipeline programs and `impact_timing`
+  (gap 6).
+- Argument programs: save_streaming, character_lab and balance_lab are unchanged on both
+  solvers (the established controller still fails standing-push and cold under MK2, gap 5).
+  With `JUDAS_BALANCE_CAPTURE_STEPPING=1` every balance_lab mode, cold included, passes under
+  MK1, MK1 ×20, MK1 ×40 and MK2. `physical_balance_controller` keeps its 3 MK2 failures from
+  before (established controller, gap 5). The capture harness under MK2 (flat rigs 0–2) is
+  unchanged in total, 5/7 required and 9/21 other directions.
+
 **Programs run with their arguments** (absolute XDG paths):
 
 | Run | MK1 | MK2 |
@@ -377,15 +415,32 @@ All 30 MK2 runs pass every check of the program, including the 24-box fast famil
 
 ## 5. Known gaps (next stage)
 
-1. **M42 mesh-triangle touch events** (`collision_geometry`). Touch is observed per step, and
-   short triangle contacts within a step are not reported. Per-substep re-collision now sees
-   them, but does not publish them.
-2. **Same-step arrival impulse** (`collision_continuity`). A newly arriving separated body gets
-   its impulse within the step, but the test expects it at the exact arrival instant.
-3. **Kinematic rotation contact** (`kinematic`). Contact generated by a full rotation between
-   equivalent endpoint attitudes is not detected; it needs swept kinematic rotation.
-4. **Ragdoll passive resistance** (`post_consumer_ragdoll`). Joint passive resistance scales with
-   substeps.
+1. ~~**M42 mesh-triangle touch events**~~ (closed). The box started 1 mm above the mesh; its
+   speculative row closed that gap in step 0, but MK2 observed touches only for pairs touching
+   at narrowphase time, so the enter event was missing. A row that carries load is now a touch
+   of its step (§2.5).
+2. ~~**Same-step arrival impulse**~~ (closed as a restatement, `collision_continuity`). Every
+   physical check of the case passes under MK2 (momentum, energy, nonpenetration, the struck
+   body leaves above 0.1 m/s); only MK1's TOI event count and interval-proof counter were
+   missing, so those two clauses are MK1-only. The elastic case's 47 mm gap is sized for MK1,
+   which applies the step's velocity change at its start (50 mm of travel); MK2 integrates it
+   over its substeps (31 mm; exact 25 mm), so the ball lands one step later. Its MK2 branch
+   checks the bounces that occur: 4.5 m/s from 6 and 3.375 from 4.5, exactly e = 0.75.
+3. ~~**Kinematic rotation contact**~~ (closed, `kinematic`). Fast kinematic movers are swept in
+   the continuous pass (§2.3). A full-turn arm now strikes the sphere (235 m/s; MK1 385 m/s,
+   which resolves the same sweep as a sequence of events), and both TOI evidence checks pass.
+4. ~~**Ragdoll passive resistance**~~ (closed, `post_consumer_ragdoll`). Two findings:
+   - The resistance is not wrong. MK2 applies the implicit damper once per substep, so one step
+     gives w0/(1 + c·h/I)^4 = 3.8200517 rad/s (measured 3.8200517); MK1's single implicit
+     step gives 3.8230088, and the exact exponential is 3.8190361. The expectation is now per
+     solver.
+   - That check had hidden a real one behind it: under MK2 no imported 13-bone rig ever slept
+     (0/13 after 30 s; one leg rocked at about 6 Hz). The cause was the steady-load cap (§2.1).
+     Ruled out first, each measured: a single hinge resting on its limit (sleeps in 0.8 s on
+     both solvers), and a bounded in-step warm start for limit rows (no effect). Extra
+     joint-only iterations or warm resistance rows settled the rest case but failed resettling
+     after a disturbance; extra contact-only iterations fixed every case, which pointed at the
+     contacts. With the fix, 1, 10 and 20 rigs (13, 130 and 260 bones) all sleep and resettle.
 5. **Balance-lab corrective stepping** (`balance_lab` standing push and cold-read). Stage 3
    fixed standing, get-up and recovery. After the push, MK2's swing foot unloads about 8 frames
    later than MK1's, lifts about 60% as fast and pitches toe-down to about 34° (MK1: about
@@ -716,9 +771,21 @@ All 30 MK2 runs pass every check of the program, including the 24-box fast famil
    in every substep `Prepare`. The balance `saturated` counter (drive impulse / dt) therefore
    reads about 1/4 of the real torque under MK2. This is observation-only and is not the cause
    above.
-6. **MK1 event-bookkeeping tests** need MK2-appropriate restatements. These cover candidate
-   reuse, impact batches and discovery, support-guess ownership and contact-lifecycle TOI
-   observations.
+6. **MK1 pipeline tests.** Restated where the program asserts world-level physics:
+   `rigid_motion` (the angular-momentum check holds under MK2; only `impactEvents > 0` is
+   MK1-only) and `collision_continuity` (gap 2). Deliberately **not** restated:
+   - `candidate_reuse`, `impact_batch_continuation`, `impact_discovery`,
+     `support_guess_ownership` and `contact_lifecycle` are white-box tests of MK1's TOI event
+     pipeline (candidate reuse, borrowed-worker CCD batches, incremental discovery,
+     support-guess ownership, TOI-solve observations). MK2 does not run that pipeline, so an
+     MK2 version would be an invented test, not a restatement. They are MK1 acceptance only
+     and fail under MK2 by construction.
+   - `impact_timing` is the acceptance suite of MK1's exact sequential event model (2e-6
+     analytical endpoints, Newton's-cradle chains resolved one impact at a time). MK2 solves
+     restitution simultaneously after each substep, so its endpoints lag by up to e·v·h and
+     its chain velocities follow the simultaneous model, which `judas_mk2_physics_tests`
+     checks (momentum, symmetry, no energy gain). Restating it means choosing which impact
+     model MK2 commits to; that is a design decision, not a test edit.
 7. **Probe-only crash, unexplained.** Probes linked by hand against the release test objects
    abort with a double free inside `PhysicsWorld::Step`, under MK1 as well. The same scenario
    passes in the real test binary, and an ASan+UBSan build at `-O3` reports nothing.
@@ -733,5 +800,5 @@ All 30 MK2 runs pass every check of the program, including the 24-box fast famil
 5. Stage 3 (done): balance lab. Patch load distribution, joint warm start, and step-total
    observations; corrective stepping remains (gap 5).
 6. Graph-coloured, deterministic parallel island solve, and narrowphase manifold reuse.
-7. Restate the MK1 bookkeeping tests (gap 6).
+7. ~~Restate the MK1 bookkeeping tests~~ (done where physical, gap 6). Gaps 1–4 closed.
 8. Default switch only after human acceptance.
