@@ -448,6 +448,39 @@ All 30 MK2 runs pass every check of the program, including the 24-box fast famil
    when drive torque is fully delivered. The change alters MK1 default trajectories and needs
    its own MK1 regression pass.
 
+   **Controller redesign attempt (not committed).** Each piece below was tried against a matrix
+   of MK1 at 10, 20 and 40 sweeps and MK2. The matrix runs every balance-lab mode, cold
+   write/read, and the foundation and controller-development programs. No combination passed
+   the push check across the matrix while keeping MK1 green.
+   - *Geometric centroid as the double-support lean reference.* This removes the limit cycle
+     under every solver. On its own it keeps MK1's balance lab green (all modes, cold), but it
+     fails three MK1 controller-development checks: the step envelope, touchdown and
+     post-step standing. Those are the same three MK2 fails at baseline. Moving the step
+     trigger or plan centre to the centroid as well breaks MK1's step.
+   - *Swing tracking.* The original swing IK runs from a root reference that stays 0.45–0.7 m
+     behind the real root. The landing therefore depends on tracking error: MK1 at 10 sweeps
+     overshoots its plan by about 0.2 m and survives on it. Solving the swing chain from the
+     actual hip, with velocity feed-forward from a one-step lookahead, makes the foot follow
+     its world path. But world-referenced swing joints pitch the trunk (upright about 0.80)
+     unless the stance hip holds the trunk's world attitude, which is SIMBICON-style.
+   - *Placement.* With tracked placement, the 0.4 m `stepReach` and 0.7 s swing land behind
+     a COM that is still moving about 1 m/s. Following the capture point during the swing is
+     bounded by the same reach.
+   - *Stance support.* A stance-ankle torque bound of load × sole half-extent (ZMP) helps
+     only in single support; applied always, it stops MK1 standing up. The stance leg either
+     kicks off (posture reference behind the body) or crouches (reference at the body).
+   - *Touchdown.* Accepting a touchdown at any contact once the schedule completes lets the
+     untracked foot land 1.2 m out. The robot then holds a wide crouch below the standing
+     band, which also blocks the second step.
+   - A shorter swing (0.3–0.4 s) or a 0.7 m reach did not stabilise the post-landing phase
+     either.
+
+   The conclusion is that the corrective step needs a purpose-built stepping controller,
+   with world-frame trunk control, tracked capture-point placement, ZMP-bounded stance and
+   explicit post-step stance recovery. It should be developed with its own fast iteration
+   harness and retuned against MK1. It is not a local patch to `PhysicalBalance`. The patches
+   and matrix script are kept under `.cache/mk2-20261023/redesign-wip/` (gitignored).
+
    Separately, MK2 reports joint reaction impulses (`reactionImpulse`,
    `reactionAngularImpulse`) and drive impulses from the last substep only, because they reset
    in every substep `Prepare`. The balance `saturated` counter (drive impulse / dt) therefore
