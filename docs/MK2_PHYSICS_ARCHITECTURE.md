@@ -481,6 +481,67 @@ All 30 MK2 runs pass every check of the program, including the 24-box fast famil
    harness and retuned against MK1. It is not a local patch to `PhysicalBalance`. The patches
    and matrix script are kept under `.cache/mk2-20261023/redesign-wip/` (gitignored).
 
+   **Capture stepping controller (experimental, opt-in).** `BalanceSettings::captureStepping`
+   (JSON `captureStepping`, default off; `JUDAS_BALANCE_CAPTURE_STEPPING` forces it for
+   validation) selects `src/PhysicalBalanceCapture.cpp` for balance and corrective steps
+   after measured standing. Get-up and the initial stand stay on the established
+   controller, and no history field was added, so saves are unchanged. The design follows
+   the findings above:
+   - supporting legs are struts under the body, with COM regulation only through the
+     planted ankles (attitude lean from the contact centroid) plus a 5 cm double-support
+     posture pull;
+   - the planted-ankle torque is bounded by the foot's share of body weight × the sole
+     half-extent (ZMP), expressed per drive axis;
+   - joint targets are relative, with measured anchors only at the planted ankle, the stance
+     hip (trunk world attitude) and the swing hip;
+   - the swing chain is solved from the actual hip with one-step velocity feed-forward;
+     the foothold follows the capture point until mid-swing, the swing clock runs 3× the
+     authored `stepSeconds`, and the foot keeps descending past its schedule until it
+     finds support;
+   - a step starts when the capture point leaves the support polygon, with lift-off as soon
+     as the stance foot has support;
+   - the first step keeps the established lighter/authored-order choice, and later steps
+     swing the trailing foot.
+
+   Development used a fast harness, `judas_balance_step_harness [legacy|capture] [rig]
+   [impulse]`. It reuses the controller-development rigs in a bare world and runs, in about
+   0.4 s, the forward push with stepping allowed and denied, a weak push and seven other
+   push directions. Solver convergence is varied with the new validation switch
+   `JUDAS_VALIDATION_VELOCITY_ITERATIONS` (MK1 sweeps, default 10) or with
+   `JUDAS_PHYSICS_MK2`. Harness results at 29 N·s, as required scenarios passed and other
+   directions standing:
+
+   | Solver | Rig | Legacy | Capture |
+   |---|---|---|---|
+   | MK1 | 0 | 1/2, 2/7 | 1/2, 3/7 |
+   | MK1 | 1 (slender) | 3/3, 1/7 | 3/3, 2/7 |
+   | MK1 | 2 | 1/2, 1/7 | 1/2, 6/7 |
+   | MK1 ×20 | 0 / 1 / 2 | 1/2, 2/3, 1/2 | 1/2, 2/3, 1/2 |
+   | MK1 ×40 | 0 / 1 / 2 | 1/2, 1/3, 1/2 | 1/2, 1/3, 1/2 |
+   | MK2 | 0 / 1 / 2 | 1/2, 2/3, 1/2 | 1/2, 2/3, 1/2 |
+   | Other directions standing, all cells | | 10/84 | 29/84 |
+
+   Capture is no worse on the required scenarios, and it recovers far more push directions.
+   But it does not yet pass the matrix: the slender rig's 29 N·s forward push fails at MK1
+   ×20, ×40 and MK2. The measured limit is geometric and timing-bound:
+   - with `stepReach` 0.4 m, the first foothold's toe ends about 0.83 m out;
+   - the capture point at landing is about 0.86 m;
+   - so the body needs a second and third step, and runs out of the `maximumSteps` (3)
+     budget while crouching.
+
+   The heavy-footed rigs (0, 2) fail the forward push under both controllers. 18 N·s is
+   absorbed in place without a step, and 24 N·s passes all three required scenarios at MK1.
+   In the balance lab with capture forced on (`JUDAS_BALANCE_CAPTURE_STEPPING=1`), it is
+   worse than the established controller:
+   - standing (push check), radial (JS request reaching standing under radial gravity) and
+     cold write/read fail under every solver;
+   - recovery fails at MK1 ×40 (face-down rig) and MK2 (face-up JS request);
+   - only supports passes throughout.
+
+   The established controller stays the default until capture passes the matrix. Its
+   default-path results are unchanged: the 56-program suite matches stage 3 exactly under MK1
+   and MK2, and every MK1 balance-lab, character-lab and save program passes.
+
    Separately, MK2 reports joint reaction impulses (`reactionImpulse`,
    `reactionAngularImpulse`) and drive impulses from the last substep only, because they reset
    in every substep `Prepare`. The balance `saturated` counter (drive impulse / dt) therefore
