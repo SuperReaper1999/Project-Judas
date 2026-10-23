@@ -231,7 +231,7 @@ struct PhysicsWorld::Impl {
     std::string ContinuationJointContext(const JointRecord &joint) const;
     std::vector<JointRecord> joints;
     std::set<std::pair<unsigned, unsigned>> suppressedPairs;
-    JointSolver jointSolver, eventJointSolver;
+    JointSolver jointSolver, eventJointSolver, mk2JointProjection;
     RigidBody worldAnchor;
     bool JointActive(const JointRecord &joint) const;
     std::vector<JointInput> JointInputs(const std::vector<unsigned char> *included = nullptr);
@@ -397,7 +397,8 @@ struct PhysicsWorld::Impl {
     void PrepareInitialContactGeometry(float dt);
     void PrepareJoints(JointSolver &target, const std::vector<JointInput> &inputs, float dt,
                        bool warm = true, bool impact = false, bool append = false,
-                       float positionalRate = 0.2f, bool warmEqualityOnly = false);
+                       float positionalRate = 0.2f, bool warmEqualityOnly = false,
+                       bool projection = false, float speculativeRate = -1);
     void InvalidateImpactPose(unsigned slot);
 
     RigidBody PoseAt(unsigned slot, double time) const;

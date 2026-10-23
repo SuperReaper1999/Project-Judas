@@ -1,5 +1,7 @@
 #include "WorldInternal.h"
 
+#include <unordered_map>
+
 using namespace JudasPhysicsDetail;
 
 // Judas Physics MK2 substepped simultaneous contact solve. See
@@ -13,6 +15,10 @@ using namespace JudasPhysicsDetail;
 namespace {
 constexpr int kMk2Substeps = 4;
 constexpr int kMk2Iterations = 2;      // biased sweeps per substep
+// With joints in the solve: an articulation resting on contacts needs these
+// to converge (at 2 a resting ragdoll kept a residual solver velocity above
+// the sleep threshold that the position projection cancelled every substep).
+constexpr int kMk2JointIterations = 4;
 constexpr int kMk2RelaxIterations = 1; // unbiased sweeps per substep
 // Rows are rigid (exact non-approach). Overlap deeper than the slop is
 // recovered by a gentle velocity bias (a fixed fraction per substep, capped);
@@ -40,11 +46,16 @@ constexpr int kMk2ArrivalsPerStep = 256;
 // A body whose step motion exceeds this fraction of its smallest feature is
 // swept by the exact continuous query after the solve (bounded: once per body).
 constexpr double kMk2FastFraction = 0.25;
-// Joint position error corrected per substep. Contacts recover gently (they
-// carry stacks); a joint correcting much faster than a contact turns a
-// friction-locked ragdoll pose into persistent penetration (the ratio of the
-// two rates sets how a conflict is shared), so MK2 halves MK1's 0.2.
-constexpr float kMk2JointPositionalRate = 0.1f;
+// Joint position error is corrected by a pseudo-velocity that moves the
+// substep's poses but never enters the bodies' velocities (split impulse):
+// a velocity bias, at any fixed rate, pumped energy into chains (gap 8).
+// Contacts recover gently (they carry stacks); a joint correcting much faster
+// than a contact turns a friction-locked ragdoll pose into persistent
+// penetration, so the joint rate stays at MK1-contact scale.
+constexpr float kMk2JointProjectionRate = 0.1f;
+constexpr int kMk2JointProjectionIterations = 4;
+// An approaching limit's velocity allowance (its full remaining gap per dt).
+constexpr float kMk2JointLimitApproachRate = 0.2f;
 
 // Velocities live in the bodies' own RigidBody storage, so joint rows and
 // contact rows act on the same state. Only step-local derived data is here.
@@ -712,6 +723,12 @@ void PhysicsWorld::Impl::Mk2Solve(float dt) {
     // Per-body substep motion: one ledger segment per substep, so queries see
     // the actually travelled path and integration matches the ledger exactly.
     std::vector<std::vector<RigidMotionSegment>> segments(state.size());
+    std::vector<glm::vec3> pseudoLinear(state.size()), pseudoAngular(state.size());
+    std::vector<std::pair<glm::vec3, glm::vec3>> savedVelocity;
+    std::unordered_map<const RigidBody *, std::size_t> stateOf;
+    for (std::size_t i = 0; i < state.size(); ++i)
+        if (state[i].dynamic)
+            stateOf.emplace(state[i].rb, i);
     for (int step = 0; step < substeps; ++step) {
         const double begin = double(dt) * step / substeps,
                      end = step + 1 == substeps ? double(dt) : double(dt) * (step + 1) / substeps;
@@ -1002,8 +1019,9 @@ void PhysicsWorld::Impl::Mk2Solve(float dt) {
             }
         }
         bool haveJoints = false;
+        std::vector<JointInput> inputs;
         if (!joints.empty()) {
-            const auto inputs = JointInputs();
+            inputs = JointInputs();
             haveJoints = !inputs.empty();
             if (step == 0)
                 for (const auto &input : inputs)
@@ -1014,16 +1032,45 @@ void PhysicsWorld::Impl::Mk2Solve(float dt) {
             // re-apply a limit stop's impact spike (a collapsing ragdoll
             // rebounded off its own knee and hip stops) and let drives carry
             // in-step history MK1 never had.
-            PrepareJoints(jointSolver, inputs, h, true, false, false,
-                          kMk2JointPositionalRate, step > 0);
+            // No positional bias: joint error is the projection's (below).
+            PrepareJoints(jointSolver, inputs, h, true, false, false, 0.0f, step > 0, false,
+                          kMk2JointLimitApproachRate);
         }
         // Joints first, contacts last in every sweep (as Box2D v3): the final
         // velocity of each sweep never approaches a contact, so a joint pull
-        // becomes joint error (recovered by the joint bias), not penetration.
-        for (int iteration = 0; iteration < kMk2Iterations; ++iteration) {
+        // becomes joint error (recovered by the position projection), not penetration.
+        const int iterations = haveJoints ? kMk2JointIterations : kMk2Iterations;
+        for (int iteration = 0; iteration < iterations; ++iteration) {
             if (haveJoints)
                 jointSolver.SolveIteration();
             SolveRows(state, rows, blocks, h, true);
+        }
+        // The joints' position correction for this substep, as pseudo-velocity
+        // solved from rest on the same members; real velocities are restored.
+        // (Contact rows in this solve were measured: no change in the rag-
+        // doll's joint error or penetration, at extra cost.)
+        std::fill(pseudoLinear.begin(), pseudoLinear.end(), glm::vec3(0));
+        std::fill(pseudoAngular.begin(), pseudoAngular.end(), glm::vec3(0));
+        if (haveJoints) {
+            const auto &members = jointSolver.Bodies();
+            savedVelocity.clear();
+            for (auto *rb : members) {
+                savedVelocity.push_back({rb->linearVelocity, rb->angularVelocity});
+                rb->linearVelocity = rb->angularVelocity = glm::vec3(0);
+            }
+            PrepareJoints(mk2JointProjection, inputs, h, false, false, false,
+                          kMk2JointProjectionRate, false, true);
+            for (int iteration = 0; iteration < kMk2JointProjectionIterations; ++iteration)
+                mk2JointProjection.SolveIteration();
+            for (std::size_t m = 0; m < members.size(); ++m) {
+                auto *rb = members[m];
+                if (const auto found = stateOf.find(rb); found != stateOf.end()) {
+                    pseudoLinear[found->second] = rb->linearVelocity;
+                    pseudoAngular[found->second] = rb->angularVelocity;
+                }
+                rb->linearVelocity = savedVelocity[m].first;
+                rb->angularVelocity = savedVelocity[m].second;
+            }
         }
         for (std::size_t i = 0; i < state.size(); ++i) {
             auto &s = state[i];
@@ -1042,8 +1089,8 @@ void PhysicsWorld::Impl::Mk2Solve(float dt) {
                     seg.inverseInertiaLocal = body.rigidBody.inverseInertiaLocal;
                     seg.position = body.rigidBody.position;
                     seg.orientation = body.rigidBody.orientation;
-                    seg.linearVelocity = v;
-                    seg.angularVelocity = w;
+                    seg.linearVelocity = v + pseudoLinear[i];
+                    seg.angularVelocity = w + pseudoAngular[i];
                     seg.driftAngularVelocity =
                         AngularDriftGenerator(seg.inverseInertiaLocal, seg.orientation,
                                               seg.angularVelocity, float(to - from));
@@ -1054,7 +1101,12 @@ void PhysicsWorld::Impl::Mk2Solve(float dt) {
                     segments[i].push_back(seg);
                     body.rigidBody.position = next.position;
                     body.rigidBody.orientation = next.orientation;
-                    return next.angularVelocity;
+                    // The real velocity, transported (angular momentum kept) to
+                    // the pose actually reached: transport is linear, so remove
+                    // the pseudo-velocity's transported part, not its raw value.
+                    return next.angularVelocity -
+                           TransportAngularVelocity(seg.inverseInertiaLocal, seg.orientation,
+                                                    next.orientation, pseudoAngular[i]);
                 };
                 const glm::vec3 v = body.rigidBody.linearVelocity;
                 glm::vec3 w = body.rigidBody.angularVelocity;

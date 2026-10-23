@@ -1,8 +1,8 @@
 # Judas Physics MK2: architecture
 
-Status: **working prototype** (Experimental, opt-in). MK1 stays the default until gap 8 is
-fixed; the operator's direction is that MK2 replaces MK1, with physical accuracy (not MK1
-compatibility) as the acceptance bar.
+Status: **working prototype** (Experimental, opt-in). Gap 8 is closed (§5); MK1 stays the
+default until the switch is accepted (§6, stage 8). The operator's direction is that MK2
+replaces MK1, with physical accuracy (not MK1 compatibility) as the acceptance bar.
 
 - Opt-in: set `JUDAS_PHYSICS_MK2=1` in the environment. It is read at `PhysicsWorld::Init`.
 - No human validation has been done. Everything below is automated tests, probes and benchmarks
@@ -69,15 +69,29 @@ Each step runs N = 4 substeps of h = dt/4. Each substep:
      taken only from substep 0, so a contact that closed later in the step kept a zero cap: its
      warm start was erased every substep and its cache every step. An imported ragdoll's leg
      resting on such rows rocked at about 6 Hz with no friction and never slept (gap 4).
-3. Runs 2 biased iterations. Each sweep solves the joints first and the contacts last, so its
-   final velocity never approaches a contact.
+3. Runs 2 biased iterations (4 when the substep has joints). Each sweep solves the joints
+   first and the contacts last, so its final velocity never approaches a contact.
    - Rows are **rigid**: soft contacts were tried and sank about 1 cm per contact in a 20-stack.
    - Speculative rows (s > 0) target −s/h.
    - Penetration recovers at 0.02·(s + slop)/h, with a 0.5 mm slop, capped at 3 m/s. A
      stronger tier for overlap beyond 2.5 mm was tried and rejected: it toppled the 20-stack.
-   - Joints correct 0.1 of their position error per substep (MK1: 0.2). The ratio of the joint
-     and contact rates decides how a friction-locked pose conflict splits into joint error versus
-     penetration; at 0.2, a ragdoll's head sat 10 mm into a flat floor for seconds.
+   - Joint rows carry **no positional bias** here: their position error is the projection's
+     (step 3a). Only an approaching (not yet violated) limit keeps its speculative allowance of
+     its remaining gap per substep.
+   - 4 sweeps with joints: at 2, a ragdoll resting on the floor kept a residual solver velocity
+     (0.017 m/s, 0.063 rad/s) above the sleep threshold while its bodies did not move (the
+     projection cancelled it every substep); at 3 one of three rigs still did.
+3a. Projects joint position error (split impulse). From rest, on the joints' members only, a
+   pseudo-velocity is solved against the rigid rows (anchors, hinge axes, violated limits) at
+   0.1 of the error per substep, 4 sweeps (`JointSolver::Prepare(..., projection)`). It is added
+   to the substep's integration segments and never stored in the bodies' velocities.
+   - The real angular velocity leaving the segment is transported (angular momentum kept) to the
+     pose actually reached, so `w_end = T(w + p) − T(p)`, not `T(w + p) − p`: for a body turning
+     off its principal axes the latter leaves `(I₁⁻¹I₀ − 1)p` in the velocity every substep.
+   - Contact rows in the projection (nonlinear Gauss–Seidel) were tried: no measured change in the
+     ragdoll's joint error (6e-5 m) or penetration, at more cost; at 2 sweeps they made it worse.
+   - The rate 0.1 keeps the joint–contact conflict split of before: at 0.2 a ragdoll's head sat
+     10 mm into a flat floor for seconds.
 4. Integrates poses through the motion ledger, one `RigidMotionSegment` per substep, so player
    sweeps and `GetBodyMotionSegments` see the travelled path.
 5. Re-collides concave pairs (triangle mesh, terrain) at the new poses, then refreshes geometry:
@@ -92,9 +106,8 @@ Each step runs N = 4 substeps of h = dt/4. Each substep:
    - **Lever arms:** they are rotated from the contact's precise local anchors to one common
      point: rA = dqA·rA0 − d/2 and rB = dqB·rB0 + d/2, where d is the anchor gap.
    - **Separation:** it is updated from displacements only, so it is safe in large worlds.
-6. Runs 1 relax iteration with no bias. The joints' rigid positional bias is dropped here too
-   (springs, resistance and motors keep their targets), so no positional correction outlives
-   its substep as motion.
+6. Runs 1 relax iteration with no bias (springs, resistance and motors keep their targets), so
+   no contact correction outlives its substep as motion; joint correction never enters it.
 
 Two further rules apply across the step:
 
@@ -437,7 +450,12 @@ argument programs pass when run with arguments). MK2 49 of 56 without arguments:
 `kinematic_lab`, `collision_geometry`, `collision_continuity`, `impact_timing`, `rigid_motion`,
 `candidate_reuse` and `contact_lifecycle` pass. Failing under MK2: `impact_batch_continuation`,
 `impact_discovery`, `support_guess_ownership` (MK1 pipeline, by construction) and
-`post_consumer_ragdoll` (gap 8). The capture controller passes every balance_lab mode, cold
+`post_consumer_ragdoll` (gap 8).
+
+**After closing gap 8:** MK1 unchanged (53 of 56 without arguments, as before; the argument
+programs pass with arguments). MK2 50 of 56: `post_consumer_ragdoll` passes (93 checks: 1, 10 and
+20 rigs sleep, three disturb/resettle cycles, cold save and restore). Failing under MK2: the three
+MK1 pipeline programs only. Established controller unchanged (gap 5). The capture controller passes every balance_lab mode, cold
 included, under MK1, ×20, ×40 and MK2; the established controller's development program now
 has 4 MK2 failures (its first corrective step no longer starts: gap 5). Not re-measured:
 room1024 timing.
@@ -867,24 +885,42 @@ All 30 MK2 runs pass every check of the program, including the 24-box fast famil
    - Test oracles corrected, not loosened: the MK2 thin-wall family counted a spinning plate thrown
      sideways off the wall's 10 m edge as a crossing; a crossing now also requires the centre to
      be within the wall's extent.
-8. **Jointed chains slowly gain energy** (open; exposed by gap 4's ragdoll). An undamped
-   pendulum, measured over 60 s at 60 Hz (swing energy about 0.002 J per link):
+8. ~~**Jointed chains slowly gain energy**~~ (closed). Joint position error was corrected by a
+   velocity bias at a fixed rate (0.1/substep); relax removed it only partly, and its phase lag
+   pumped undamped chains. An undamped pendulum, 60 s at 60 Hz (swing energy about 0.002 J per
+   link), before:
 
    | Joint position correction per substep | 1 link | 2 links | 3 links |
    |---|---|---|---|
-   | 0.1 (current) | −3.3e-5 J | **+2.1e-4 J** | −4.3e-4 J |
+   | 0.1 (then current) | −3.3e-5 J | **+2.1e-4 J** | −4.3e-4 J |
    | 0.03 | −6.6e-5 J | −1.5e-4 J | −2.2e-4 J |
    | 1.0 | −2.8e-5 J | +3.8e-6 J | −5.1e-3 J |
 
-   MK1 drifts similarly (two links: −4.5e-4 J at 10 s, +4.4e-5 J at 60 s). In the imported
-   13-bone rig the collapse now ends with the left foot (undamped hinge, as authored; the right
-   foot has resistance 0.05) hanging 2–3 mm off the floor and swinging between −0.27 and −0.43
-   rad. Its peak rate grows from 0.64 to 0.68 rad/s between 10 and 30 s, so the rig never sleeps
-   and `post_consumer_ragdoll` fails under MK2. A 0.02 correction rate lets that foot decay, but
-   no single rate is neutral across chains, and a Box2D-style soft step (60 Hz, damping ratio 2)
-   over-damps real swings (a single pendulum lost 40% in a minute). Both rejected; a
-   position-level joint correction is the likely fix. Before today's impact work the collapse
-   ended in a pose where the rig slept, so this is exposure of an existing drift, not a new one.
+   No single rate was neutral, and a Box2D-style soft step (60 Hz, damping ratio 2) over-damped
+   real swings (a single pendulum lost 40% in a minute). The fix (§2, step 3a) has three parts,
+   each measured:
+   - **Split-impulse projection.** Joint error becomes a pseudo-velocity in the integration
+     only. `mk2_physics` H (ball and hinge, 1–3 links, 10→60 s, against the authored pose's
+     energy): −3.1%, −2.5%, −2.2%; no gain. The old solver in the same test: −3.1%, −1.9%, −2.2%
+     for ball chains, and the three-link hinge **diverged** (−1.4e4 J). The 1-link loss is the
+     same in both, so it is the integrator's own numerical damping, not the correction.
+   - **Transported real velocity.** With only the projection, the imported rig's left foot still
+     gained (peak rate 0.324 → 0.335 rad/s from 15 to 30 s, about 1.1% per 5 s). That foot hinges
+     about an axis 2.4° off vertical (a weakly restored swing, about 2e-4 J) and turns off its
+     principal axes; `w_end = T(w + p) − p` left `(I₁⁻¹I₀ − 1)p` every substep. With
+     `T(w + p) − T(p)` the single rig settles by 12 s and passes every check.
+     - Isolated reproductions (`mk2_physics` I and J: a pendulum on a friction-supported body,
+       limits, a floor 2.5 mm below, a weakly restored swing on resting and static parents, an arm
+       rolled off its principal axes) all lose energy slowly under the fix, **and also under the
+       raw subtraction**: none discriminates. The transport is argued from angular momentum, and
+       shown only in the rig, a chaotic 13-body collapse.
+   - **4 sweeps with joints** (§2, step 3): with 2, 10 and 20 rigs at the rig's second row
+     settled with a forearm at 0.063 rad/s, a residual solver velocity the projection cancelled
+     every substep. Measured at 3 (one rig unsettled) and 4 (93/93 checks).
+
+   Float precision matters at the rig's coordinates (x ≈ 78.6, ULP 7.6e-6 m against about 1e-4
+   m of foot travel per substep): the 1-link pendulum at that position loses 0.1% instead of
+   3.1%, a different numerical damping, not a gain.
 9. **Probe-only crash, unexplained.** Probes linked by hand against the release test objects
    abort with a double free inside `PhysicsWorld::Step`, under MK1 as well. The same scenario
    passes in the real test binary, and an ASan+UBSan build at `-O3` reports nothing.

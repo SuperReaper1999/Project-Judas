@@ -12,7 +12,10 @@
 
 #include <glm/glm.hpp>
 #include <glm/gtc/quaternion.hpp>
+#define GLM_ENABLE_EXPERIMENTAL
+#include <glm/gtx/quaternion.hpp>
 
+#include "CollisionShapes.h"
 #include "PhysicsWorld.h"
 
 namespace {
@@ -319,6 +322,200 @@ void TestImpactAccuracy() {
 
 } // namespace
 
+// Gap 8: an undamped pendulum of 1-3 jointed links conserves its swing energy.
+// Joint position correction must not pump energy into chains (a velocity bias
+// at any fixed rate did), nor drain a real swing (a soft step did).
+void TestJointChainEnergy() {
+    std::printf("H: undamped jointed chains neither gain nor lose swing energy\n");
+    const glm::vec3 half(0.015f, 0.05f, 0.015f);
+    const float mass = 1.0f, g = 9.81f;
+    const glm::vec3 inertia = mass / 3.0f * glm::vec3(half.y * half.y + half.z * half.z,
+                                                      half.x * half.x + half.z * half.z,
+                                                      half.x * half.x + half.y * half.y);
+    for (const JointType type : {JointType::Ball, JointType::Hinge})
+        for (int links = 1; links <= 3; ++links) {
+            PhysicsWorld w;
+            w.Init();
+            const glm::vec3 pivot(0, 1, 0);
+            const glm::quat tilt = glm::angleAxis(0.06f, glm::vec3(0, 0, 1));
+            const glm::quat frame = glm::angleAxis(-1.5707963f, glm::vec3(0, 1, 0));
+            std::vector<BodyHandle> b;
+            for (int i = 0; i < links; ++i)
+                b.push_back(w.CreateShape(Shape::Box(half),
+                                          {pivot + tilt * glm::vec3(0, -half.y * (1 + 2 * i), 0), tilt},
+                                          true, mass, 0, 0));
+            for (int i = 0; i < links; ++i) {
+                JointSettings j;
+                j.type = type;
+                j.bodyA = b[i];
+                j.anchorA = {0, half.y, 0};
+                j.frameA = j.frameB = frame;
+                if (i == 0) {
+                    j.anchorB = pivot;
+                } else {
+                    j.bodyB = b[i - 1];
+                    j.anchorB = {0, -half.y, 0};
+                    w.SetPairCollisionEnabled(b[i], b[i - 1], false);
+                }
+                w.CreateJoint(j);
+            }
+            const auto energy = [&] {
+                double e = 0;
+                for (auto h : b) {
+                    const auto pose = w.GetTransform(h);
+                    const glm::vec3 v = w.GetLinearVelocity(h);
+                    const glm::vec3 wl = glm::conjugate(pose.rotation) * w.GetAngularVelocity(h);
+                    e += 0.5 * mass * glm::dot(v, v) + 0.5 * glm::dot(wl * wl, inertia) +
+                         mass * g * pose.position.y;
+                }
+                return e;
+            };
+            // Mean energy over one-second windows, so the swing phase averages out.
+            double early = 0, late = 0, swing = 0;
+            double bottom = 0;
+            for (int i = 0; i < links; ++i) bottom += mass * g * (pivot.y - half.y * (1 + 2 * i));
+            swing = energy() - bottom; // the authored pose, at rest
+            int asleep = 0;
+            for (int s = 0; s < 3600; ++s) {
+                StepWithGravity(w, b, {0, -g, 0});
+                const double e = energy();
+                if (s >= 540 && s < 600) early += e / 60;
+                if (s >= 3540) late += e / 60;
+            }
+            for (auto h : b) asleep += w.IsSleeping(h);
+            const double drift = late - early;
+            std::printf("    %s x%d: swing %.3e J, drift 10->60 s %+.3e J (%+.2f%%), asleep %d\n",
+                        type == JointType::Ball ? "ball" : "hinge", links, swing, drift,
+                        100 * drift / swing, asleep);
+            const std::string name = std::string(type == JointType::Ball ? "ball" : "hinge") + " x" +
+                                     std::to_string(links);
+            Check(asleep == 0, name + " keeps swinging (not put to sleep)");
+            Check(drift <= 1e-3 * swing, name + " gains no energy");
+            Check(drift >= -0.05 * swing, name + " loses under 5% in 50 s");
+        }
+}
+
+// Gap 8, as the imported rig met it: an undamped hinged pendulum hanging from
+// a body that rests, by friction, on a static ledge. The resting support must
+// not feed the swing.
+void TestSupportedPendulumEnergy() {
+    std::printf("I: a pendulum on a contact-supported body gains no energy\n");
+    const glm::vec3 half(0.015f, 0.05f, 0.015f), legHalf(0.1f);
+    const float mass = 1.0f, legMass = 5.0f, g = 9.81f;
+    for (int variant = 0; variant < 3; ++variant) {
+        const bool limits = variant >= 1, floorBelow = variant == 2;
+        PhysicsWorld w;
+        w.Init();
+        w.CreateStaticBox({0, 0.5f, 0}, glm::vec3(0.5f), 0.65f, 0.0f);
+        // A floor 2.5 mm under the hanging foot's lowest point (the rig's case).
+        if (floorBelow)
+            w.CreateStaticBox({1.0f, 0.95f - 0.0025f - 0.25f, 0}, glm::vec3(0.45f, 0.25f, 0.5f), 0.65f, 0.0f);
+        const auto leg = w.CreateDynamicBox({0.4f, 1.0f + legHalf.y, 0}, legHalf, legMass, 0.65f, 0.0f);
+        const glm::vec3 pivot(0.53f, 1.05f, 0);
+        const glm::quat tilt = glm::angleAxis(0.06f, glm::vec3(0, 0, 1));
+        const auto foot = w.CreateShape(Shape::Box(half), {pivot + tilt * glm::vec3(0, -half.y, 0), tilt},
+                                        true, mass, 0, 0);
+        w.SetPairCollisionEnabled(leg, foot, false);
+        JointSettings j;
+        j.type = JointType::Hinge;
+        j.bodyA = foot;
+        j.bodyB = leg;
+        j.anchorA = {0, half.y, 0};
+        j.anchorB = pivot - glm::vec3(0.4f, 1.0f + legHalf.y, 0);
+        j.frameA = j.frameB = glm::angleAxis(-1.5707963f, glm::vec3(0, 1, 0));
+        j.limits = limits;
+        j.lower = -0.6f;
+        j.upper = 0.6f;
+        w.CreateJoint(j);
+        const std::vector<BodyHandle> b{leg, foot};
+        const auto footEnergy = [&] {
+            const auto pose = w.GetTransform(foot);
+            const glm::vec3 v = w.GetLinearVelocity(foot);
+            const glm::vec3 inertia = mass / 3.0f * glm::vec3(half.y * half.y + half.z * half.z,
+                                                              half.x * half.x + half.z * half.z,
+                                                              half.x * half.x + half.y * half.y);
+            // Swing energy about the (slowly settling) pivot, relative to the leg.
+            const auto legPose = w.GetTransform(leg);
+            const glm::vec3 pivotNow = legPose.position + legPose.rotation * j.anchorB;
+            const glm::vec3 vr = v - w.GetLinearVelocity(leg);
+            const glm::vec3 wr = glm::conjugate(pose.rotation) * (w.GetAngularVelocity(foot) - w.GetAngularVelocity(leg));
+            return 0.5 * mass * glm::dot(vr, vr) + 0.5 * glm::dot(wr * wr, inertia) +
+                   mass * g * (pose.position.y - (pivotNow.y - half.y));
+        };
+        const double swing = footEnergy();
+        double early = 0, late = 0;
+        for (int s = 0; s < 3600; ++s) {
+            StepWithGravity(w, b, {0, -g, 0});
+            const double e = footEnergy();
+            if (s >= 540 && s < 600) early += e / 60;
+            if (s >= 3540) late += e / 60;
+        }
+        const double drift = late - early;
+        std::printf("    limits %d floor %d: swing %.3e J, foot drift 10->60 s %+.3e J (%+.2f%%), leg asleep %d\n",
+                    limits, floorBelow, swing, drift, 100 * drift / swing, w.IsSleeping(leg));
+        Check(drift <= 1e-3 * swing, std::string("supported pendulum gains no energy, limits ") +
+                                         (limits ? "on" : "off") + (floorBelow ? ", floor below" : ""));
+    }
+}
+
+// The imported rig's foot regime: a horizontal arm on a hinge whose axis is
+// 2.4 degrees off vertical (a weakly restored swing, so a small energy error
+// is a large fraction of it), from a box resting by friction or a static one.
+void TestWeakSwingEnergy() {
+    std::printf("J: a weakly restored swing gains no energy\n");
+    // Variant 2 rolls the arm about its long axis, so the hinge is not one of
+    // its principal axes (as the rig's foot): the real angular velocity must
+    // be transported to the pose the projection actually reached.
+    for (int variant = 0; variant < 3; ++variant) {
+        const bool staticLeg = variant == 1, rolled = variant == 2;
+        PhysicsWorld w;
+        w.Init();
+        w.CreateStaticBox({0, 0.5f, 0}, glm::vec3(0.5f), 0.65f, 0.0f);
+        const glm::vec3 legC(0.4f, 1.1f, 0), legHalf(0.1f);
+        const auto leg = staticLeg ? w.CreateStaticBox(legC, legHalf, 0.65f, 0.0f)
+                                   : w.CreateDynamicBox(legC, legHalf, 4, 0.65f, 0.0f);
+        // The arm points along +z: the lowest point of its tilted circle.
+        const glm::vec3 half(0.04f, 0.015f, 0.05f);
+        const glm::vec3 pivot(0.4f, 1.1f, 0.13f);
+        const glm::quat roll = rolled ? glm::angleAxis(0.5f, glm::vec3(0, 0, 1)) : glm::quat(1, 0, 0, 0);
+        const auto foot = w.CreateShape(Shape::Box(half), {pivot + glm::vec3(0, 0, half.z), roll}, true, 1.2f, 0, 0);
+        w.SetPairCollisionEnabled(leg, foot, false);
+        const float tilt = 0.042f; // radians off vertical
+        const glm::vec3 axis(0, std::cos(tilt), std::sin(tilt));
+        JointSettings j;
+        j.type = JointType::Hinge;
+        j.bodyA = foot;
+        j.bodyB = leg;
+        j.anchorA = {0, 0, -half.z};
+        j.anchorB = pivot - legC;
+        j.frameB = glm::rotation(glm::vec3(1, 0, 0), axis);
+        j.frameA = glm::conjugate(roll) * j.frameB;
+        j.limits = true;
+        j.lower = -0.6f;
+        j.upper = 0.6f;
+        const auto jh = w.CreateJoint(j);
+        w.SetAngularVelocity(foot, axis * 0.33f);
+        std::vector<BodyHandle> b{foot};
+        if (!staticLeg) b.push_back(leg);
+        // Peak relative swing rate over the second and the last ten seconds.
+        float peak = 0, early = 0, late = 0;
+        for (int s = 0; s < 3600; ++s) {
+            StepWithGravity(w, b, {0, -9.81f, 0});
+            peak = std::max(peak, glm::length(w.GetAngularVelocity(foot) - w.GetAngularVelocity(leg)));
+            if (s == 1199) early = peak, peak = 0;
+            if (s == 2999) peak = 0;
+        }
+        late = peak;
+        JointState js;
+        w.GetJoint(jh, js);
+        const char *name = rolled ? "rolled arm" : staticLeg ? "static parent" : "resting parent";
+        std::printf("    %s: peak rate 10-20 s %.4f, 50-60 s %.4f rad/s, at %.4f rad\n",
+                    name, early, late, js.coordinate);
+        Check(early > 0.1f && late <= early * 1.001f,
+              std::string("weak swing keeps swinging and gains no energy, ") + name);
+    }
+}
+
 int main() {
     setenv("JUDAS_PHYSICS_MK2", "1", 1);
     TestColumns();
@@ -328,6 +525,9 @@ int main() {
     TestFastObjects();
     TestDeterminism();
     TestImpactAccuracy();
+    TestJointChainEnergy();
+    TestSupportedPendulumEnergy();
+    TestWeakSwingEnergy();
     std::printf("MK2 physics tests: %s (%d failures)\n", g_failures ? "FAIL" : "PASS", g_failures);
     return g_failures ? 1 : 0;
 }

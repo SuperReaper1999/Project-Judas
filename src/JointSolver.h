@@ -14,7 +14,11 @@ public:
  // positionalRate: fraction of a rigid row's position error corrected per dt.
  // warmEqualityOnly: warm only rigid two-sided (equality) rows; limits,
  // drives, springs and materials start cold.
- void Prepare(const std::vector<JointInput>& inputs,float dt,bool warm=true,bool impact=false,bool append=false,float positionalRate=.2f,bool warmEqualityOnly=false);
+ // projection: only the rigid rows (equality and limits), cold, with no
+ // observation or cache writes, for a pseudo-velocity position solve.
+ // speculativeRate: rate of an approaching (not yet violated) limit's
+ // allowance; negative uses positionalRate.
+ void Prepare(const std::vector<JointInput>& inputs,float dt,bool warm=true,bool impact=false,bool append=false,float positionalRate=.2f,bool warmEqualityOnly=false,bool projection=false,float speculativeRate=-1);
  // useBias=false (substep relax) drops only the rigid rows' positional
  // correction; springs, resistance and motors keep their targets.
  void SolveIteration(std::size_t first=0,bool useBias=true);
