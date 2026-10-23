@@ -86,7 +86,13 @@ int main(int argc,char** argv){
   Check(WorldPersistence::Restore(world,snapshot.participants,error),"fresh-process participants restore: "+error);WorldPersistence::Published(world);auto* b=world.PhysicalBalanceSnapshot(savedOwner);const auto saved=Json::parse(snapshot.metadata);
   Check(b&&b->configured&&b->controller.History().elapsed==saved["elapsed"].get<float>()&&b->controller.History().referenceTime==saved["referenceTime"].get<float>(),"fresh process preserves step/recovery clocks without replay");
   Check(b&&!b->controller.Observation().available,"fresh controller does not fabricate saved contact observations");
-  Check(game.Begin(world,error),"restored game starts: "+error);Step(world,game,window,resources,recoverySave?1080:720);Metrics(world,savedOwner);Check(Standing(world,savedOwner),"restored native task reaches measured physical standing");
+  // A mid-step capture restores into the same swing, which must then finish as
+  // a physical landing before the task stands again.
+  const bool midStep=saved.value("midStep",false);
+  if(midStep)Check(b&&b->controller.History().swing==saved["swing"].get<int>()&&b->controller.History().lifted&&b->controller.History().landings==saved["landings"].get<unsigned>(),"restored task resumes the saved corrective swing");
+  Check(game.Begin(world,error),"restored game starts: "+error);Step(world,game,window,resources,recoverySave?1080:720);Metrics(world,savedOwner);
+  if(midStep){auto* after=world.PhysicalBalanceSnapshot(savedOwner);Check(after&&after->controller.History().landings>saved["landings"].get<unsigned>(),"restored corrective swing completes a physical landing");}
+  Check(Standing(world,savedOwner),"restored native task reaches measured physical standing");
  }else{
   Check(game.Begin(world,error),"ordinary game starts: "+error);Step(world,game,window,resources,40);Check(!world.RagdollActive(12)&&!world.PhysicalBalanceSnapshot(12),"authored configuration does not activate physical authority");
   auto* a=world.RuntimeAnimation(10);auto* shared=world.RuntimeAnimation(13);auto* other=world.RuntimeAnimation(11);
@@ -101,10 +107,21 @@ int main(int argc,char** argv){
   Check(Standing(world,actor),"normal resource/JS path reaches actual standing");
   }
   if(write){
-   if(!recoverySave&&!standingSave){Pulse(world,game,window,resources,"key:J");Step(world,game,window,resources,20);}
+   // The capture is taken at the first frame a genuine corrective step is in
+   // progress, within a bounded window after the push: a planned swing whose
+   // foot has physically left its support and that is 40% through the
+   // controller's own swing schedule, where the original fixed frame-20
+   // capture fell for the established controller. Step timing belongs to the
+   // controller; the requirement is that the save lands mid-step.
+   const bool midStep=!recoverySave&&!standingSave;
+   auto swinging=[&](const RuntimeWorld::BalanceRuntime* s){if(!s)return false;const auto& h=s->controller.History();return h.swing>=0&&h.lifted&&h.swingTime>=.4f*s->controller.Settings().stepSeconds;};
+   if(midStep){Pulse(world,game,window,resources,"key:J");int frame=0;for(;frame<90&&!swinging(world.PhysicalBalanceSnapshot(savedOwner));++frame)Step(world,game,window,resources,1);
+    if(auto* s=world.PhysicalBalanceSnapshot(savedOwner))std::cout<<"MID-STEP CAPTURE frame="<<frame<<" swing="<<s->controller.History().swing<<" swingTime="<<s->controller.History().swingTime<<" lifted="<<s->controller.History().lifted<<'\n';}
    auto* b=world.PhysicalBalanceSnapshot(savedOwner);Check(b&&b->configured,"capture contains an owned native task");
-   if(!recoverySave&&!standingSave)Check(b&&b->controller.History().swing>=0,"capture while corrective step is actually in progress");
-   snapshot.project=project.Settings().saveIdentity;snapshot.scene="Scenes/"+label+".judas";snapshot.displayName="M77 native task";snapshot.metadata=Json{{"elapsed",b->controller.History().elapsed},{"referenceTime",b->controller.History().referenceTime}}.dump();ComputeSceneFingerprint(scene,snapshot.content,error);
+   if(midStep)Check(swinging(b),"capture while corrective step is actually in progress");
+   Json metadata{{"elapsed",b->controller.History().elapsed},{"referenceTime",b->controller.History().referenceTime}};
+   if(midStep)metadata.update(Json{{"midStep",true},{"swing",b->controller.History().swing},{"landings",b->controller.History().landings}});
+   snapshot.project=project.Settings().saveIdentity;snapshot.scene="Scenes/"+label+".judas";snapshot.displayName="M77 native task";snapshot.metadata=metadata.dump();ComputeSceneFingerprint(scene,snapshot.content,error);
    Check(WorldPersistence::Capture(world,snapshot.participants,error)&&storage.Write("m77",snapshot,error),"atomic save retains physical and native task state: "+error);
    Check(snapshot.participants.at("physical-animation").version==2&&snapshot.participants.count("physical-balance"),"active task declares its required save participant");
    // Restore validation runs on disposable candidates, as the normal save system
@@ -121,6 +138,9 @@ int main(int argc,char** argv){
    }
    const auto unchanged=world.Physics().GetTransform(b->controller.Bodies()[0].body);
    Check(glm::length(unchanged.position-livePose.position)<1e-6f,"failed detached restores leave live physical state untouched");
+   // Reference for the restored read: the same world, uninterrupted from the
+   // mid-step capture, completes the step and stands.
+   if(midStep){Step(world,game,window,resources,720);Metrics(world,savedOwner);auto* after=world.PhysicalBalanceSnapshot(savedOwner);Check(after&&after->controller.History().landings>metadata["landings"].get<unsigned>()&&Standing(world,savedOwner),"uninterrupted run from the mid-step capture lands and stands");}
 
   }
   if(label=="standing"&&!write&&mode!="lifecycle"&&mode!="regions"&&mode!="fault"&&mode!="cookbook"&&mode!="low-grip"){
