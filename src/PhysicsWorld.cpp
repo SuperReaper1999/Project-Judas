@@ -1,4 +1,5 @@
 #include "physics/WorldInternal.h"
+#include <cstdio>
 #include <cstdlib>
 
 using namespace JudasPhysicsDetail;
@@ -11,6 +12,13 @@ bool PhysicsWorld::Init() {
     m_impl->solver.EnableBlockNormals(blockNormals);
     m_impl->impactSolver.EnableBlockNormals(blockNormals);
     m_impl->mk2Enabled = std::getenv("JUDAS_PHYSICS_MK2") != nullptr;
+    // Once per process: which solver this run validates.
+    static const bool announced = [&] {
+        std::fprintf(stderr, "Physics solver: %s\n",
+                     m_impl->mk2Enabled ? "MK2 (JUDAS_PHYSICS_MK2)" : "MK1");
+        return true;
+    }();
+    (void)announced;
     if (const char *sweeps = std::getenv("JUDAS_VALIDATION_VELOCITY_ITERATIONS"))
         m_impl->velocityIterations = std::clamp(std::atoi(sweeps), 1, 200);
     return true;
