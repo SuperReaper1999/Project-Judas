@@ -3,6 +3,7 @@
 #include "PerformanceProfiler.h"
 #include <array>
 #include <cstdio>
+#include <cstdlib>
 #include <cstring>
 #include <vector>
 
@@ -69,6 +70,8 @@ void Compare(Fixture& serial,Fixture& jobs) {
 }
 }
 int main() {
+    // White-box checks of the MK1 TOI-event pipeline: pinned to MK1.
+    setenv("JUDAS_PHYSICS_MK1", "1", 1);
     auto& profiler=PerformanceProfiler::Get();
     profiler.RegisterThread("impact batch owner"); profiler.Enable(true); profiler.Clear();
     bool batches=false,workers=false,bounds=false;

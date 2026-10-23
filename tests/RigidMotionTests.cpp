@@ -145,7 +145,7 @@ int main() {
   check(w.GetTransform(b).position==oracle.position);
   // MK1 integrates by the first-order quaternion update (bitwise oracle);
   // MK2 by the exact rotation of the same rate.
-  if(std::getenv("JUDAS_PHYSICS_MK2"))check(std::abs(glm::dot(w.GetTransform(b).rotation,glm::normalize(glm::angleAxis(100.f/60,glm::vec3(0,0,1))*start.orientation)))>=1-1e-6f);
+  if(PhysicsWorld::Mk2Selected())check(std::abs(glm::dot(w.GetTransform(b).rotation,glm::normalize(glm::angleAxis(100.f/60,glm::vec3(0,0,1))*start.orientation)))>=1-1e-6f);
   else check(w.GetTransform(b).rotation==oracle.orientation);
  }
  // Actual PhysicsWorld: torque-free anisotropic rotation must preserve the
@@ -210,7 +210,7 @@ int main() {
   const auto before=total();world.Step(1.f/60);
   // MK1 resolves this arrival as a TOI event; MK2's speculative rows own it.
   // Both must conserve the transported angular momentum.
-  check(std::getenv("JUDAS_PHYSICS_MK2")||world.LastStepStats().impactEvents>0);check(glm::length(total()-before)<1e-5);
+  check(PhysicsWorld::Mk2Selected()||world.LastStepStats().impactEvents>0);check(glm::length(total()-before)<1e-5);
  }
  std::cout<<"Rigid motion checks "<<checks<<" PASS\n";
 }

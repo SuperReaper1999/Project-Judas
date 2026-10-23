@@ -15,9 +15,10 @@ using namespace JudasPhysicsDetail;
 namespace {
 constexpr int kMk2Substeps = 4;
 constexpr int kMk2Iterations = 2;      // biased sweeps per substep
-// With joints in the solve: an articulation resting on contacts needs these
-// to converge (at 2 a resting ragdoll kept a residual solver velocity above
-// the sleep threshold that the position projection cancelled every substep).
+// Sweeps for joints and the contact blocks touching jointed bodies: an
+// articulation resting on contacts needs these to converge (at 2 a resting
+// ragdoll kept a residual solver velocity above the sleep threshold that the
+// position projection cancelled every substep).
 constexpr int kMk2JointIterations = 4;
 constexpr int kMk2RelaxIterations = 1; // unbiased sweeps per substep
 // Rows are rigid (exact non-approach). Overlap deeper than the slop is
@@ -725,6 +726,7 @@ void PhysicsWorld::Impl::Mk2Solve(float dt) {
     std::vector<std::vector<RigidMotionSegment>> segments(state.size());
     std::vector<glm::vec3> pseudoLinear(state.size()), pseudoAngular(state.size());
     std::vector<std::pair<glm::vec3, glm::vec3>> savedVelocity;
+    std::vector<char> jointMember(state.size()), jointBlocks;
     std::unordered_map<const RigidBody *, std::size_t> stateOf;
     for (std::size_t i = 0; i < state.size(); ++i)
         if (state[i].dynamic)
@@ -1039,11 +1041,29 @@ void PhysicsWorld::Impl::Mk2Solve(float dt) {
         // Joints first, contacts last in every sweep (as Box2D v3): the final
         // velocity of each sweep never approaches a contact, so a joint pull
         // becomes joint error (recovered by the position projection), not penetration.
-        const int iterations = haveJoints ? kMk2JointIterations : kMk2Iterations;
-        for (int iteration = 0; iteration < iterations; ++iteration) {
+        for (int iteration = 0; iteration < kMk2Iterations; ++iteration) {
             if (haveJoints)
                 jointSolver.SolveIteration();
             SolveRows(state, rows, blocks, h, true);
+        }
+        // Articulations take further sweeps, with only the contact blocks that
+        // touch a jointed body: the rest of the world keeps its own count.
+        if (haveJoints) {
+            std::fill(jointMember.begin(), jointMember.end(), char(0));
+            for (auto *rb : jointSolver.Bodies())
+                if (const auto found = stateOf.find(rb); found != stateOf.end())
+                    jointMember[found->second] = 1;
+            jointBlocks.assign(blocks.size(), char(0));
+            for (std::size_t k = 0; k < blocks.size(); ++k)
+                for (std::size_t r = 0; r < blocks[k].count; ++r) {
+                    const auto &row = rows[blocks[k].first + r];
+                    if (jointMember[row.a] || jointMember[row.b])
+                        jointBlocks[k] = 1;
+                }
+            for (int iteration = kMk2Iterations; iteration < kMk2JointIterations; ++iteration) {
+                jointSolver.SolveIteration();
+                SolveRows(state, rows, blocks, h, true, &jointBlocks);
+            }
         }
         // The joints' position correction for this substep, as pseudo-velocity
         // solved from rest on the same members; real velocities are restored.

@@ -5,7 +5,7 @@
 // in the controller and balance-lab programs.
 //
 // Usage: judas_balance_step_harness [legacy|capture] [rig 0|1|2] [impulse N s]
-// Solver selection is the ordinary environment (JUDAS_PHYSICS_MK2,
+// Solver selection is the ordinary environment (MK2 unless JUDAS_PHYSICS_MK1,
 // JUDAS_VALIDATION_VELOCITY_ITERATIONS). BALANCE_TRACE=1 prints per-frame state
 // for the stepping push, BALANCE_TRACE_DENIED=1 for the denied one.
 // HARNESS_PLANET=1 stands the rig on a radius-100 static sphere with radial
@@ -76,7 +76,7 @@ void Report(const char* name,const Outcome& o){std::printf("%-22s standing %d la
 int main(int argc,char** argv){
  g_capture=argc>1&&!std::strcmp(argv[1],"capture");const int rig=argc>2?std::atoi(argv[2]):1;const float impulse=argc>3?float(std::atof(argv[3])):29.f;
  const bool trace=std::getenv("BALANCE_TRACE")!=nullptr;g_planet=std::getenv("HARNESS_PLANET")!=nullptr;
- std::printf("controller %s rig %d impulse %.1f planet %d mk2 %d sweeps %s\n",g_capture?"capture":"legacy",rig,impulse,int(g_planet),std::getenv("JUDAS_PHYSICS_MK2")!=nullptr,std::getenv("JUDAS_VALIDATION_VELOCITY_ITERATIONS")?std::getenv("JUDAS_VALIDATION_VELOCITY_ITERATIONS"):"default");
+ std::printf("controller %s rig %d impulse %.1f planet %d mk2 %d sweeps %s\n",g_capture?"capture":"legacy",rig,impulse,int(g_planet),PhysicsWorld::Mk2Selected(),std::getenv("JUDAS_VALIDATION_VELOCITY_ITERATIONS")?std::getenv("JUDAS_VALIDATION_VELOCITY_ITERATIONS"):"default");
  int required=0,passed=0;
  // The slender rig (1) is the declared corrective-step comparison: the push
  // needs a real step and defeats in-place balance. Heavier-footed rigs only

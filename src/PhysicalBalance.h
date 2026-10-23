@@ -37,12 +37,13 @@ struct BalanceSettings {
     float touchdownTolerance=.12f;
     float transferLoadFraction=.6f,transferRadiusFraction=.75f,transferSeconds=2;
     unsigned maximumSteps=3;
-    // Experimental opt-in capture-point stepping controller for balance and
+    // Capture-point stepping controller (the default) for balance and
     // corrective steps after measured standing (world-frame trunk, tracked
     // capture-point placement, ZMP-bounded stance, trailing-foot follow-up
     // steps). Get-up and the initial stand use the established controller
-    // either way. JUDAS_BALANCE_CAPTURE_STEPPING forces it on for validation.
-    bool captureStepping=false;
+    // either way. false selects the established stepping controller.
+    // JUDAS_BALANCE_CAPTURE_STEPPING=0/1 forces it off/on for validation.
+    bool captureStepping=true;
     PhysicsQueryFilter query;
 };
 // Stable authored skeleton keys; physical body/constraint handles are resolved

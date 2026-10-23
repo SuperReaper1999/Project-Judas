@@ -61,7 +61,7 @@ std::string SerializeBalanceDefinition(const BalanceDefinition& definition){
     j["stepTrigger"]=s.stepTrigger;
     j["stepReach"]=s.stepReach;
     j["stepHeight"]=s.stepHeight;
-    if(s.captureStepping)j["captureStepping"]=true;
+    if(!s.captureStepping)j["captureStepping"]=false;
     j["stepSeconds"]=s.stepSeconds;
     j["touchdownTolerance"]=s.touchdownTolerance;
     j["transferLoadFraction"]=s.transferLoadFraction;
@@ -127,7 +127,7 @@ bool PhysicalBalanceController::Configure(PhysicsWorld& world,const std::vector<
         if(glm::length(upper)<.01f||glm::length(lower)<.01f)return reject("balance needs nonzero authored physical limb segments");
         if(knee.settings.type==JointType::Hinge&&(glm::length(glm::cross(upper,knee.settings.frameB*glm::vec3(1,0,0)))<.001f||glm::length(glm::cross(lower,knee.settings.frameA*glm::vec3(1,0,0)))<.001f))return reject("balance hinge axes cannot be parallel to limb segments");
     }
-    m_bodies=bodies;m_settings=settings;if(std::getenv("JUDAS_BALANCE_CAPTURE_STEPPING"))m_settings.captureStepping=true;for(const auto& body:bodies)m_settings.query.ignoredBodies.push_back(body.body);
+    m_bodies=bodies;m_settings=settings;if(const char* capture=std::getenv("JUDAS_BALANCE_CAPTURE_STEPPING"))m_settings.captureStepping=std::string(capture)!="0";for(const auto& body:bodies)m_settings.query.ignoredBodies.push_back(body.body);
     m_contacts.reserve(32);m_desired.resize(bodies.size());m_history={};m_observation={};m_waitingForSample=false;m_captureStanceReady=false;error.clear();return true;
 }
 bool PhysicalBalanceController::Request(PhysicsWorld& world,BalanceTask task,bool steps,bool effort,std::string& error){

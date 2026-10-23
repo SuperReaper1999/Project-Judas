@@ -1,12 +1,19 @@
 # Judas Physics MK2: architecture
 
-Status: **working prototype** (Experimental, opt-in). Gap 8 is closed (§5); MK1 stays the
-default until the switch is accepted (§6, stage 8). The operator's direction is that MK2
-replaces MK1, with physical accuracy (not MK1 compatibility) as the acceptance bar.
+Status: **default solver on Experimental** (gap 8 closed, §5; switched 2026-10-23 at the
+operator's instruction after a first hand test). Not promoted to main. The operator's direction
+is that MK2 replaces MK1, with physical accuracy (not MK1 compatibility) as the acceptance bar.
 
-- Opt-in: set `JUDAS_PHYSICS_MK2=1` in the environment. It is read at `PhysicsWorld::Init`.
-- No human validation has been done. Everything below is automated tests, probes and benchmarks
-  on one Linux machine.
+- Default: MK2 runs unless `JUDAS_PHYSICS_MK1=1` is set (read at `PhysicsWorld::Init`;
+  `PhysicsWorld::Mk2Selected()` reports the choice, and each process logs
+  `Physics solver: ...` once). `JUDAS_PHYSICS_MK2` is no longer read.
+- The capture-point balance controller is the default too (`BalanceSettings::captureStepping`
+  = true, serialized only when false; `JUDAS_BALANCE_CAPTURE_STEPPING=0` forces the established
+  controller).
+- Human validation so far: the operator ran `physics_stress_lab` under MK2 (5731cbb5 build) and
+  reported that the 1,024-piece room no longer explodes and runs fine. Ragdoll and balance demos
+  have not been hand-tested. Everything else below is automated tests, probes and benchmarks on
+  one Linux machine.
 
 ## 1. What MK1 taught us (evidence, not opinion)
 
@@ -337,8 +344,9 @@ MK2 states its own bound instead: arrival timing is within one substep.
 
 ### 4.2 room1024 (same machine, release build)
 
-Both engines were run with the same `stress-v3` driver and binary. MK1 runs at the default; MK2
-runs with `JUDAS_PHYSICS_MK2=1`. Times are fixed-step milliseconds.
+Both engines were run with the same `stress-v3` driver and binary. Up to stage 3 MK1 ran at the
+default and MK2 with `JUDAS_PHYSICS_MK2=1`; after the default switch MK2 runs at the default and
+MK1 with `JUDAS_PHYSICS_MK1=1`. Times are fixed-step milliseconds.
 
 **MK1 is unaffected.** After stage 2 the MK1 ordinary900 trajectory digests are still
 identical to the previous checkpoint on 900 of 900 steps.
@@ -370,6 +378,31 @@ is now found once per block per geometry refresh, from the adjugate.
 | live120 (WASD) | worst frame after the first 3 s | 212.8 ms | 23.4 ms | 41.7 ms | 99.4 ms (same frame) |
 | live120 (WASD) | worst step / steps over budget | 45.9 / 131 | 21.0 / 3 | 24.3 / 7 | 21.1 / 2 |
 | live120 (WASD) | mean step | 10.4 | 11.1 | 11.6 | 11.8 |
+
+**After the default switch** (gap 8 closed, arrival-instant impacts; single runs, machine idle;
+`.cache/speculative-gate-20261022/mk2-scoped`, MK1 from `mk2-default-mk1`):
+
+| Workload | Metric | MK1 (opt-in) | MK2 stage 3 | MK2 now |
+|---|---|---|---|---|
+| ordinary900 | mean / p95 / worst step | 1.70 / 5.60 / 14.3 | 1.98 / 8.59 / 12.9 | 1.84 / 7.77 / 11.4 |
+| ordinary900 | sleeping at end / deepest penetration | 1,152 / 3.1 mm | 1,152 / 0.8 mm | 1,152 / 0.7 mm |
+| severe900 | mean / p95 / worst step | – | 10.9 / 12.9 / 16.2 | **11.9 / 17.8 / 22.0** |
+| severe900 | steps over 16.67 ms | – | 0 | **70** |
+| severe900 | solver phase mean | – | 5.6 | **6.9** |
+| severe900 | impact events / TOI queries | – | 0 / 12.4k | 35.8k / 53.1k |
+| severe900 | sleeping at end / deepest penetration | – | 138 / 5.8 mm | 136 / 5.7 mm |
+| live120 (WASD) | mean / worst step, steps over budget | – | 11.8 / 21.1, 2 | **12.1 / 22.5, 74** |
+| live120 (WASD) | worst visible frame | – | 99.4 ms | **140 ms** |
+
+- **The regression is the arrival-instant impact model** (25acbfcb, not timed when it landed):
+  it resolves about 40 arrivals per severe step in the solver phase. With gap 8's projection and
+  extra joint sweeps switched off in a temporary build, severe900 is unchanged (mean 11.92 ms),
+  so gap 8 costs nothing measurable here.
+- The first default-switch build ran the extra joint sweeps over the whole world whenever any
+  joint was awake (severe 12.0 / 22.8 ms, 83 over budget); they now cover only the joints and
+  the contact blocks touching jointed bodies.
+- Open (gap 10): the arrival pass's cost in dense bursts. The operator's hand test of the
+  1,024-piece room (5731cbb5) reported it running fine; no measured frame-time target is met.
 
 How to read these numbers:
 
@@ -450,15 +483,23 @@ argument programs pass when run with arguments). MK2 49 of 56 without arguments:
 `kinematic_lab`, `collision_geometry`, `collision_continuity`, `impact_timing`, `rigid_motion`,
 `candidate_reuse` and `contact_lifecycle` pass. Failing under MK2: `impact_batch_continuation`,
 `impact_discovery`, `support_guess_ownership` (MK1 pipeline, by construction) and
-`post_consumer_ragdoll` (gap 8).
+`post_consumer_ragdoll` (gap 8). The capture controller passes every balance_lab mode, cold
+included, under MK1, ×20, ×40 and MK2; the established controller's development program now
+has 4 MK2 failures (its first corrective step no longer starts: gap 5).
 
 **After closing gap 8:** MK1 unchanged (53 of 56 without arguments, as before; the argument
 programs pass with arguments). MK2 50 of 56: `post_consumer_ragdoll` passes (93 checks: 1, 10 and
 20 rigs sleep, three disturb/resettle cycles, cold save and restore). Failing under MK2: the three
-MK1 pipeline programs only. Established controller unchanged (gap 5). The capture controller passes every balance_lab mode, cold
-included, under MK1, ×20, ×40 and MK2; the established controller's development program now
-has 4 MK2 failures (its first corrective step no longer starts: gap 5). Not re-measured:
-room1024 timing.
+MK1 pipeline programs only. Established controller unchanged (gap 5).
+
+**After the default switch** (MK2 and the capture controller default; MK1 via
+`JUDAS_PHYSICS_MK1=1`): all 56 no-argument programs pass under both solvers (the three MK1
+pipeline programs pin MK1 at `main`; the three argument programs exit 2 there and pass with
+arguments). `physical_balance_controller` now passes 119/119 (it ran the established controller
+before). balance_lab with the capture controller passes every mode, cold included, under MK1,
+×20, ×40 and MK2; forcing the established controller (`JUDAS_BALANCE_CAPTURE_STEPPING=0`) keeps
+its known gap 5 failures (standing push, cold) under MK1 ×20, ×40 and MK2. The capture harness
+under MK2 is unchanged (5/7 required). Timing: §4.2.
 
 **Programs run with their arguments** (absolute XDG paths):
 
@@ -924,6 +965,10 @@ All 30 MK2 runs pass every check of the program, including the 24-box fast famil
 9. **Probe-only crash, unexplained.** Probes linked by hand against the release test objects
    abort with a double free inside `PhysicsWorld::Step`, under MK1 as well. The same scenario
    passes in the real test binary, and an ASan+UBSan build at `-O3` reports nothing.
+10. **Arrival-pass cost in dense bursts** (open, measured after the default switch, §4.2). The
+    arrival-instant impact model adds about 1.3 ms of mean solver time in severe900 and 70 steps
+    over 16.67 ms (stage 3: 0). Candidates: cheaper arrival re-collision, batching arrivals per
+    island, or bounding re-timings per step; none tried yet.
 
 ## 6. Stages
 
@@ -936,4 +981,5 @@ All 30 MK2 runs pass every check of the program, including the 24-box fast famil
    observations; corrective stepping remains (gap 5).
 6. Graph-coloured, deterministic parallel island solve, and narrowphase manifold reuse.
 7. ~~Restate the MK1 bookkeeping tests~~ (done where physical, gap 6). Gaps 1–4 closed.
-8. Default switch only after human acceptance.
+8. ~~Default switch~~ (done on Experimental, 2026-10-23, after the operator's stress-lab hand test
+   and instruction; §4 "After the default switch"). Promotion to main needs operator acceptance.

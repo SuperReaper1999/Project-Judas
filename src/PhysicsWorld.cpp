@@ -4,6 +4,9 @@
 
 using namespace JudasPhysicsDetail;
 
+// MK2 is the default solver; JUDAS_PHYSICS_MK1 selects the legacy MK1 path.
+bool PhysicsWorld::Mk2Selected() { return std::getenv("JUDAS_PHYSICS_MK1") == nullptr; }
+
 // Public fixed-step coordinator. Cohesive implementation modules share one Impl.
 bool PhysicsWorld::Init() {
     m_impl = new Impl();
@@ -11,11 +14,11 @@ bool PhysicsWorld::Init() {
     const bool blockNormals=std::getenv("JUDAS_VALIDATION_POINT_CONTACTS")==nullptr;
     m_impl->solver.EnableBlockNormals(blockNormals);
     m_impl->impactSolver.EnableBlockNormals(blockNormals);
-    m_impl->mk2Enabled = std::getenv("JUDAS_PHYSICS_MK2") != nullptr;
+    m_impl->mk2Enabled = Mk2Selected();
     // Once per process: which solver this run validates.
     static const bool announced = [&] {
         std::fprintf(stderr, "Physics solver: %s\n",
-                     m_impl->mk2Enabled ? "MK2 (JUDAS_PHYSICS_MK2)" : "MK1");
+                     m_impl->mk2Enabled ? "MK2" : "MK1 (JUDAS_PHYSICS_MK1)");
         return true;
     }();
     (void)announced;

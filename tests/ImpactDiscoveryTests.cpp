@@ -8,6 +8,7 @@
 #include <cmath>
 #include <condition_variable>
 #include <cstdint>
+#include <cstdlib>
 #include <cstring>
 #include <deque>
 #include <exception>
@@ -487,6 +488,8 @@ void IndependentQueryBatch() {
 } // namespace
 
 int main(int argc, char** argv) {
+    // White-box checks of the MK1 TOI-event pipeline: pinned to MK1.
+    setenv("JUDAS_PHYSICS_MK1", "1", 1);
     if (argc == 2 && std::string(argv[1]) == "--stale-bound")
         staleBoundControl = true;
     else if (argc == 2 && std::string(argv[1]) == "--stale-query-result")

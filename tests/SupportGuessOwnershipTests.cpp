@@ -7,6 +7,7 @@
 #include <cmath>
 #include <condition_variable>
 #include <cstdint>
+#include <cstdlib>
 #include <cstring>
 #include <deque>
 #include <exception>
@@ -280,6 +281,8 @@ void RotatingFeatureAndRemoval() {
 } // namespace
 
 int main() {
+    // White-box checks of the MK1 TOI-event pipeline: pinned to MK1.
+    setenv("JUDAS_PHYSICS_MK1", "1", 1);
     std::cout << std::setprecision(17);
     OrdinaryOwnership();
     ScopeFallback(false);

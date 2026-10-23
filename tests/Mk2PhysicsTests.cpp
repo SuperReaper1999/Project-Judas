@@ -1,6 +1,6 @@
 // Judas Physics MK2 prototype acceptance (docs/MK2_PHYSICS_ARCHITECTURE.md).
-// Physical invariants of the opt-in substepped simultaneous solve, measured
-// in the real PhysicsWorld. MK1 remains the default and is not exercised here.
+// Physical invariants of the substepped simultaneous solve (the default),
+// measured in the real PhysicsWorld. MK1 is not exercised here.
 
 #include <algorithm>
 #include <cmath>
@@ -517,7 +517,7 @@ void TestWeakSwingEnergy() {
 }
 
 int main() {
-    setenv("JUDAS_PHYSICS_MK2", "1", 1);
+    unsetenv("JUDAS_PHYSICS_MK1");
     TestColumns();
     TestRotatedStack();
     TestMomentum();

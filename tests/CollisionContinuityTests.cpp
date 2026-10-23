@@ -88,7 +88,7 @@ void ContactInteraction(bool rotated){
     // MK1 resolves the arrival as a TOI event and revalidates the gapped
     // support by interval proof; MK2's speculative rows own both, so only the
     // physical outcomes below apply to it.
-    const bool mk2=std::getenv("JUDAS_PHYSICS_MK2")!=nullptr;
+    const bool mk2=PhysicsWorld::Mk2Selected();
     Check((mk2||world.LastStepStats().impactEvents>0)&&vb.x>.1f,"new separated body receives actual collision impulse");
     Check(std::abs(va.x+vb.x-.5f)<2e-5f,"frictionless impact preserves tangential momentum against static support");
     Check(glm::dot(va,va)+glm::dot(vb,vb)<=.2504f+2e-5f,"contact continuation does not inject kinetic energy");
@@ -102,7 +102,7 @@ void ElasticSeparation(){
     PhysicsWorld world;world.Init();world.CreateStaticBox({0,-.5f,0},{3,.5f,3},0,0);
     const float delta=1.f/60;const float gap=3*(delta-.001f);
     const auto body=world.CreateDynamicSphere({0,.25f+gap,0},.25f,1,0,.75f);
-    if(std::getenv("JUDAS_PHYSICS_MK2")){
+    if(PhysicsWorld::Mk2Selected()){
         // The gap is sized for MK1, which applies the step's velocity change at
         // its start (50 mm of travel). MK2 integrates it over its substeps (31 mm;
         // exact 25 mm), so the first arrival comes a step later and inside it.

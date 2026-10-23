@@ -87,6 +87,17 @@ joints, sleeping, particles and persistence. They share one private state owner.
 module list to engine and direct fixtures; configuration rejects a partial world.
 See the [module map](../src/physics/WorldModules.md) for ordering and scratch lifetime.
 
+The default contact and joint solve is **Judas Physics MK2**
+(`src/physics/WorldMk2Solver.cpp`): a substepped simultaneous block solve with
+arrival-instant impacts, a bounded fast-body CCD pass and split-impulse joint
+position projection. The legacy MK1 TOI-event pipeline remains selectable with
+`JUDAS_PHYSICS_MK1=1` and is still what its white-box pipeline tests pin. The
+[MK2 architecture](MK2_PHYSICS_ARCHITECTURE.md) records design, measurements and
+open gaps. Physical balance uses the capture-point stepping controller by default
+(`BalanceSettings::captureStepping`; `false` or `JUDAS_BALANCE_CAPTURE_STEPPING=0`
+selects the established controller). The MK1-era paragraphs below describe the
+MK1 path.
+
 Initial geometry and eligible independent CCD queries can borrow the existing
 job pool over frozen inputs, using private derived scratch and bounded batches.
 The owner joins results in deterministic pair order. Solving, chronology, body mutation and

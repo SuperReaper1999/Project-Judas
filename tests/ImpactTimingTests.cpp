@@ -21,7 +21,7 @@ int checks=0, failures=0, cases=0;
 // coupled event, a 16-event cap); MK2 resolves each impact at its arrival
 // instant by sequential propagation. Where the expectations differ the MK2
 // branch states the exact physical result instead.
-const bool mk2=std::getenv("JUDAS_PHYSICS_MK2")!=nullptr;
+const bool mk2=PhysicsWorld::Mk2Selected();
 // An undisturbed free spin's endpoint. MK1's integrator is the first-order
 // quaternion update (bitwise oracle); MK2 integrates the exact rotation.
 bool SameFreeRotation(const glm::quat& actual,const RigidBody& start,const RigidBody& mk1Oracle,float dt) {
