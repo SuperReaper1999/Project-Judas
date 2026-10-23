@@ -26,6 +26,11 @@ constexpr float kMk2RestitutionThreshold = 0.5f; // MK1 kRestitutionVelocityThre
 // swept by the exact continuous query after the solve (bounded: once per body).
 constexpr double kMk2FastFraction = 0.25;
 constexpr int kMk2RestitutionSweeps = 8;
+// Joint position error corrected per substep. Contacts recover gently (they
+// carry stacks); a joint correcting much faster than a contact turns a
+// friction-locked ragdoll pose into persistent penetration (the ratio of the
+// two rates sets how a conflict is shared), so MK2 halves MK1's 0.2.
+constexpr float kMk2JointPositionalRate = 0.1f;
 
 // Velocities live in the bodies' own RigidBody storage, so joint rows and
 // contact rows act on the same state. Only step-local derived data is here.
@@ -43,6 +48,7 @@ struct SolverBody {
 struct Row {
     unsigned a, b; // solver body indices
     glm::vec3 rA0, rB0; // step-start arms to the common contact point
+    glm::vec3 gap0{0};  // AnchorGap when the anchors last coincided (re-collision)
     glm::vec3 rA, rB;   // current substep arms, both to one current common point
     glm::vec3 n, t1, t2;
     float separation, normalMass, tangentMass1, tangentMass2;
@@ -482,13 +488,104 @@ void PhysicsWorld::Impl::Mk2Solve(float dt) {
         for (auto &row : rows) {
             const auto &A = state[row.a];
             const auto &B = state[row.b];
-            const glm::vec3 d = AnchorGap(A, B, row);
+            const glm::vec3 d = AnchorGap(A, B, row) - row.gap0;
             row.rA = A.dq * row.rA0 - 0.5f * d;
             row.rB = B.dq * row.rB0 + 0.5f * d;
             PrepareRow(A, B, row);
         }
         for (auto &block : blocks)
             PrepareBlock(state, rows, block);
+    };
+
+    // Concave pairs (triangle mesh, terrain) are re-collided every substep. A
+    // row's fixed normal is exact only for convex pairs: a body sliding along
+    // a curved mesh would follow the tangent plane of the face it started on
+    // while the surface rises ahead, and each crease it crosses would be
+    // missed until the next step. Each row is moved to the nearest new contact
+    // of its pair (impulses kept, friction re-projected); a row left without
+    // one becomes far speculative, so the solver releases its impulse.
+    struct Recollision {
+        std::size_t first, count;
+        unsigned slotA, slotB;
+        int partA, partB;
+        float margin;
+    };
+    std::vector<Recollision> recollisions;
+    for (std::size_t i = 0; i < rows.size() && i < pendingCache.size();) {
+        const auto &key = pendingCache[i].key;
+        std::size_t j = i + 1;
+        while (j < rows.size() && j < pendingCache.size() && pendingCache[j].key.SameBodies(key))
+            ++j;
+        const auto &a = bodies[key.slotA], &b = bodies[key.slotB];
+        if (ConcaveShape(a) || ConcaveShape(b))
+            recollisions.push_back(
+                {i, j - i, key.slotA, key.slotB, key.partA, key.partB,
+                 ContactMargin((glm::length(a.rigidBody.linearVelocity - b.rigidBody.linearVelocity) +
+                                glm::length(a.rigidBody.angularVelocity) * a.boundingRadius +
+                                glm::length(b.rigidBody.angularVelocity) * b.boundingRadius) *
+                               dt)});
+        i = j;
+    }
+    const auto recollide = [&] {
+        for (const auto &g : recollisions) {
+            const auto &bodyA = bodies[g.slotA], &bodyB = bodies[g.slotB];
+            const auto manifold =
+                ComputeContacts(PrimitiveAt(bodyA.shape, bodyA.rigidBody, g.partA),
+                                PrimitiveAt(bodyB.shape, bodyB.rigidBody, g.partB), g.margin,
+                                nullptr, nullptr, true);
+            if (manifold.uncertain)
+                continue;
+            bool used[4] = {false, false, false, false};
+            for (std::size_t k = 0; k < g.count; ++k) {
+                auto &row = rows[g.first + k];
+                const auto &A = state[row.a];
+                const auto &B = state[row.b];
+                const glm::vec3 d = AnchorGap(A, B, row) - row.gap0;
+                const glm::vec3 armA = A.dq * row.rA0 - 0.5f * d;
+                int best = -1;
+                float nearest = std::numeric_limits<float>::infinity();
+                std::array<glm::vec3, 4> relA{}, relB{};
+                for (int m = 0; m < manifold.count && m < 4; ++m) {
+                    const auto &c = manifold.points[m];
+                    if (c.hasLocalAnchors) {
+                        relA[m] = glm::vec3(c.anchorAInWorldFrame
+                                                ? c.localAnchorA
+                                                : ContactRotation(A.rb->orientation) * c.localAnchorA);
+                        relB[m] = glm::vec3(c.anchorBInWorldFrame
+                                                ? c.localAnchorB
+                                                : ContactRotation(B.rb->orientation) * c.localAnchorB);
+                    } else {
+                        relA[m] = glm::vec3(glm::dvec3(c.point) - glm::dvec3(A.rb->position));
+                        relB[m] = glm::vec3(glm::dvec3(c.point) - glm::dvec3(B.rb->position));
+                    }
+                    const float distance = glm::length(relA[m] - armA);
+                    if (!used[m] && distance < nearest) {
+                        nearest = distance;
+                        best = m;
+                    }
+                }
+                if (best < 0) {
+                    row.separation = 1e3f; // far speculative: released by the solver
+                    continue;
+                }
+                used[best] = true;
+                const auto &c = manifold.points[best];
+                const glm::vec3 tangent = row.t1 * row.tangent1 + row.t2 * row.tangent2;
+                row.rA0 = glm::transpose(A.dq) * relA[best];
+                row.rB0 = glm::transpose(B.dq) * relB[best];
+                row.n = c.normal;
+                row.t1 = Orthogonal(row.n);
+                row.t2 = glm::cross(row.n, row.t1);
+                const glm::vec3 planar = tangent - row.n * glm::dot(tangent, row.n);
+                row.tangent1 = glm::dot(planar, row.t1);
+                row.tangent2 = glm::dot(planar, row.t2);
+                // The anchors coincide now: later gaps are measured from here.
+                row.gap0 = AnchorGap(A, B, row);
+                row.separation =
+                    float(c.hasLocalAnchors ? c.signedSeparation : -double(c.penetration)) -
+                    glm::dot(row.gap0, row.n);
+            }
+        }
     };
 
     // Per-body substep motion: one ledger segment per substep, so queries see
@@ -533,12 +630,15 @@ void PhysicsWorld::Impl::Mk2Solve(float dt) {
             if (step == 0)
                 for (const auto &input : inputs)
                     jointTotals.push_back({input.state});
-            PrepareJoints(jointSolver, inputs, h);
+            PrepareJoints(jointSolver, inputs, h, true, false, false, kMk2JointPositionalRate);
         }
+        // Joints first, contacts last in every sweep (as Box2D v3): the final
+        // velocity of each sweep never approaches a contact, so a joint pull
+        // becomes joint error (recovered by the joint bias), not penetration.
         for (int iteration = 0; iteration < kMk2Iterations; ++iteration) {
-            SolveRows(state, rows, blocks, h, true);
             if (haveJoints)
                 jointSolver.SolveIteration();
+            SolveRows(state, rows, blocks, h, true);
         }
         for (std::size_t i = 0; i < state.size(); ++i) {
             auto &s = state[i];
@@ -576,11 +676,14 @@ void PhysicsWorld::Impl::Mk2Solve(float dt) {
             }
         }
         // Poses moved: relax (and the next substep) use the current geometry.
+        recollide();
         refreshGeometry();
+        // Relax removes every positional bias velocity, joints' included, so
+        // neither joint nor contact correction outlives its substep as motion.
         for (int iteration = 0; iteration < kMk2RelaxIterations; ++iteration) {
-            SolveRows(state, rows, blocks, h, false);
             if (haveJoints)
-                jointSolver.SolveIteration();
+                jointSolver.SolveIteration(0, false);
+            SolveRows(state, rows, blocks, h, false);
         }
         if (haveJoints)
             collectJoints();
@@ -789,25 +892,27 @@ void PhysicsWorld::Impl::Mk2Continuous(float dt) {
             const unsigned a = std::min(slot, other), b = std::max(slot, other);
             for (int pa = 0; pa < PrimitiveCount(bodies[a].shape); ++pa)
                 for (int pb = 0; pb < PrimitiveCount(bodies[b].shape); ++pb) {
-                    // A pair touching at the start, or solved by rows this
-                    // step, arrived legitimately unless it ended crossed: deep
-                    // behind its own row plane, behind the first-touch plane
-                    // carried to the step end, or deeply overlapped at the end.
-                    // A pair with neither had no response at all.
+                    // A pair touching at the start is searched (as in MK1) to
+                    // the first time a mesh or spinning pair penetrates a
+                    // quarter feature deep; otherwise its rows own it. A pair
+                    // with rows arrived legitimately unless it then went
+                    // deep: behind its own row plane, behind the first-touch
+                    // plane carried to the step end, deeply overlapped at the
+                    // end, or past the same depth search from first touch. A
+                    // pair with neither had no response at all.
                     const bool touching = PairTouches(a, b, pa, pb, 0);
                     const double limit = std::min(earliest, double(dt));
-                    const double hit = touching ? 0 : ImpactTime(a, b, pa, pb, 0, limit);
+                    const double hit = ImpactTime(a, b, pa, pb, 0, limit);
                     if (!(hit < limit))
                         continue;
                     const std::array<unsigned, 4> key{a, b, unsigned(pa), unsigned(pb)};
                     const auto row = std::lower_bound(mk2RowPairs.begin(), mk2RowPairs.end(), key);
                     const bool solved = row != mk2RowPairs.end() && *row == key;
-                    if (touching || solved) {
+                    if (!touching && solved) {
                         const double depth =
                             0.25 * std::min(PrimitiveFeature(a, pa), PrimitiveFeature(b, pb));
                         bool passed =
-                            (solved && -mk2RowEndSeparation[std::size_t(row - mk2RowPairs.begin())] >
-                                           depth) ||
+                            -mk2RowEndSeparation[std::size_t(row - mk2RowPairs.begin())] > depth ||
                             Mk2Crossed(slot, other, a, b, pa, pb, hit, dt);
                         if (!passed) {
                             const auto end = PairAt(a, b, pa, pb, dt, 0);
@@ -819,6 +924,7 @@ void PhysicsWorld::Impl::Mk2Continuous(float dt) {
                                                        depth;
                             }
                         }
+                        passed = passed || ImpactTime(a, b, pa, pb, hit, limit) < limit;
                         if (!passed)
                             continue;
                     }

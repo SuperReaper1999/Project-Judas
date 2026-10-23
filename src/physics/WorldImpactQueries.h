@@ -113,10 +113,11 @@ inline auto PhysicsWorld::Impl::CCDQuery::PairAt(unsigned a, unsigned b, int pa,
         return PrimitiveContacts(
             bodies[a].shape, {aa.pose.position, aa.pose.orientation, -bodies[a].shape.pivotOffset},
             bodies[b].shape, {bb.pose.position, bb.pose.orientation, -bodies[b].shape.pivotOffset},
-            margin, &*aa.orientation, &*bb.orientation);
+            margin, &*aa.orientation, &*bb.orientation, world.mk2Step);
+    // An MK2 step's continuous pass judges the same manifolds as its rows.
     return ComputeContacts(PrimitiveAt(bodies[a].shape, aa.pose, pa, &*aa.orientation),
                            PrimitiveAt(bodies[b].shape, bb.pose, pb, &*bb.orientation), margin,
-                           &*aa.orientation, &*bb.orientation);
+                           &*aa.orientation, &*bb.orientation, world.mk2Step);
 }
 
 inline auto PhysicsWorld::Impl::CCDQuery::PairPenetration(unsigned a, unsigned b, int pa, int pb, double time)

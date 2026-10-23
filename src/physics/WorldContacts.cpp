@@ -122,7 +122,7 @@ auto PhysicsWorld::Impl::PrepareInitialContactGeometry(float dt) -> void {
             InitialContactGeometry output;
             output.a = pair.first;
             output.b = pair.second;
-            output.margin = margin;
+            output.margin = ContactMargin(margin);
             output.orientationA = &Orientation(a);
             output.orientationB = &Orientation(b);
             initialContactGeometry.push_back(std::move(output));

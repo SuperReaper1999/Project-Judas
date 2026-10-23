@@ -28,7 +28,7 @@ bool JointSolver::PointerMembership::Insert(const void* pointer){
 }
 void JointSolver::Apply(Row& r,float p){r.a->linearVelocity+=r.linearA*(p*r.a->inverseMass);r.b->linearVelocity+=r.linearB*(p*r.b->inverseMass);
  r.a->angularVelocity+=r.inertiaA*r.angularA*p;r.b->angularVelocity+=r.inertiaB*r.angularB*p;}
-void JointSolver::Prepare(const std::vector<JointInput>& inputs,float dt,bool warm,bool impact,bool append){
+void JointSolver::Prepare(const std::vector<JointInput>& inputs,float dt,bool warm,bool impact,bool append,float positionalRate){
  if(!append){m_rows.clear();m_bodies.clear();m_bodyMembership.Clear();m_preparedMembership.Clear();}const float inf=std::numeric_limits<float>::infinity();
  for(auto& input:inputs){
   // A material contact may awaken a formerly sleeping articulation midway
@@ -42,14 +42,14 @@ void JointSolver::Prepare(const std::vector<JointInput>& inputs,float dt,bool wa
   auto basis=glm::mat3_cast(fa);auto ra=qa*(s.anchorA-input.pivotOffsetA),rb=qb*(s.anchorB-input.pivotOffsetB),delta=(b.position-a.position)+rb-ra;
   auto ia=a.InverseInertiaWorld(),ib=b.InverseInertiaWorld();int index=0;
   auto row=[&](glm::vec3 la,glm::vec3 lb,glm::vec3 aa,glm::vec3 ab,float error,float low=-std::numeric_limits<float>::infinity(),float high=std::numeric_limits<float>::infinity(),bool soft=false,bool motor=false,bool resistance=false){
-   float gamma=0,bias=impact?0:.2f*error/dt;
+   float gamma=0,bias=impact?0:positionalRate*error/dt;
    if(soft){float denominator=dt*(s.damping+dt*s.stiffness);if(denominator<=0)return;gamma=1/denominator;bias=error*dt*s.stiffness*gamma;}
    if(resistance){gamma=1/(dt*s.rotationalResistance);bias=0;}
    if(motor)bias=-s.speed;
    float k=a.inverseMass*glm::dot(la,la)+b.inverseMass*glm::dot(lb,lb)+glm::dot(aa,ia*aa)+glm::dot(ab,ib*ab);
    if(k+gamma<=0)return;
    float* cache=impact?nullptr:&(*input.warm)[index];float lambda=warm&&cache?std::clamp(*cache,low,high):0;
-   m_rows.push_back({&a,&b,la,lb,aa,ab,ia,ib,1/(k+gamma),bias,gamma,low,high,lambda,cache,motor?&input.state->motorImpulse:nullptr,input.state});++index;
+   m_rows.push_back({&a,&b,la,lb,aa,ab,ia,ib,1/(k+gamma),bias,gamma,low,high,lambda,cache,motor?&input.state->motorImpulse:nullptr,input.state,!soft&&!motor&&!resistance});++index;
    if(lambda!=0){Apply(m_rows.back(),lambda);input.state->reactionImpulse+=la*lambda;input.state->reactionAngularImpulse+=aa*lambda;}
   };
   auto linear=[&](glm::vec3 n,float error,float low=-std::numeric_limits<float>::infinity(),float high=std::numeric_limits<float>::infinity(),bool soft=false,bool motor=false){row(-n,n,-glm::cross(ra,n)+glm::cross(n,delta),glm::cross(rb,n),error,low,high,soft,motor);};
@@ -147,6 +147,6 @@ void JointSolver::Prepare(const std::vector<JointInput>& inputs,float dt,bool wa
   }
  }
 }
-void JointSolver::SolveIteration(std::size_t first){for(std::size_t i=first;i<m_rows.size();++i){auto& r=m_rows[i];float velocity=glm::dot(r.linearA,r.a->linearVelocity)+glm::dot(r.linearB,r.b->linearVelocity)+glm::dot(r.angularA,r.a->angularVelocity)+glm::dot(r.angularB,r.b->angularVelocity);
- float total=std::clamp(r.impulse-(velocity+r.bias+r.gamma*r.impulse)*r.mass,r.low,r.high),change=total-r.impulse;r.impulse=total;Apply(r,change);r.observation->reactionImpulse+=r.linearA*change;r.observation->reactionAngularImpulse+=r.angularA*change;if(r.cache)*r.cache=total;if(r.motor)*r.motor=total;}}
+void JointSolver::SolveIteration(std::size_t first,bool useBias){for(std::size_t i=first;i<m_rows.size();++i){auto& r=m_rows[i];const float bias=useBias||!r.positional?r.bias:0;float velocity=glm::dot(r.linearA,r.a->linearVelocity)+glm::dot(r.linearB,r.b->linearVelocity)+glm::dot(r.angularA,r.a->angularVelocity)+glm::dot(r.angularB,r.b->angularVelocity);
+ float total=std::clamp(r.impulse-(velocity+bias+r.gamma*r.impulse)*r.mass,r.low,r.high),change=total-r.impulse;r.impulse=total;Apply(r,change);r.observation->reactionImpulse+=r.linearA*change;r.observation->reactionAngularImpulse+=r.angularA*change;if(r.cache)*r.cache=total;if(r.motor)*r.motor=total;}}
 void JointSolver::ResetImpulses(){for(auto& r:m_rows)r.impulse=0;}

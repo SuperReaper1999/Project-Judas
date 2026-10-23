@@ -11,8 +11,11 @@ class JointSolver {
 public:
  // Appending adds only newly awakened joint participants at the same physical
  // boundary. Existing rows, accumulated impulses and observations are retained.
- void Prepare(const std::vector<JointInput>& inputs,float dt,bool warm=true,bool impact=false,bool append=false);
- void SolveIteration(std::size_t first=0);
+ // positionalRate: fraction of a rigid row's position error corrected per dt.
+ void Prepare(const std::vector<JointInput>& inputs,float dt,bool warm=true,bool impact=false,bool append=false,float positionalRate=.2f);
+ // useBias=false (substep relax) drops only the rigid rows' positional
+ // correction; springs, resistance and motors keep their targets.
+ void SolveIteration(std::size_t first=0,bool useBias=true);
  void ResetImpulses();
  const std::vector<RigidBody*>& Bodies()const{return m_bodies;}
  bool Empty()const{return m_rows.empty();}
@@ -32,7 +35,7 @@ private:
   std::size_t used=0;
  };
  struct Row {RigidBody* a;RigidBody* b;glm::vec3 linearA,linearB,angularA,angularB;glm::mat3 inertiaA,inertiaB;
-  float mass,bias,gamma,low,high,impulse;float* cache=nullptr;float* motor=nullptr;JointState* observation=nullptr;};
+  float mass,bias,gamma,low,high,impulse;float* cache=nullptr;float* motor=nullptr;JointState* observation=nullptr;bool positional=false;};
  void Apply(Row& r,float impulse);
  std::vector<Row> m_rows;std::vector<RigidBody*> m_bodies;
  PointerMembership m_bodyMembership,m_preparedMembership;

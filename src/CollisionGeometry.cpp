@@ -193,7 +193,7 @@ bool triangleDepthWithinBudget(const Poly& query, const Poly& triangle,
 // stop after the first accepted witness; it never changes SAT, clipping, margins,
 // sidedness, crease handling or the contacts used by a physical solver.
 template<class Consumer>
-bool visitCookedPolyContacts(const PrimitivePose& a,const PrimitivePose& b,double margin,Consumer consume,double penetrationThreshold=INFINITY,uint32_t* acceptedFeature=nullptr,const MeshFeatureBudget* depthBudget=nullptr) {
+bool visitCookedPolyContacts(const PrimitivePose& a,const PrimitivePose& b,double margin,Consumer consume,double penetrationThreshold=INFINITY,uint32_t* acceptedFeature=nullptr,const MeshFeatureBudget* depthBudget=nullptr,bool edgeNormals=false) {
  PolyScratchLease lease;auto& scratch=lease.frame;V origin=PrimitiveCenter(b);auto& pa=scratch.first;polyInto(pa,a,origin);uint32_t triangleFeature=UINT32_MAX;
  const bool budgetQuery=depthBudget!=nullptr;
  double triangleLimit=budgetQuery?depthBudget->newFeatureLimit:INFINITY;
@@ -219,6 +219,30 @@ bool visitCookedPolyContacts(const PrimitivePose& a,const PrimitivePose& b,doubl
   // SAT separation is authoritative. Choosing a response normal must never
   // turn an edge-separated finite triangle into an overlapping infinite plane.
   if(s.gap>margin)return false;
+  // Opt-in (MK2 speculative manifolds): a triangle's normal cone. An axis other
+  // than the face normal, including the query's own face axes, is a solver
+  // normal only at an active (convex) edge or vertex feature of the triangle.
+  // Across an inactive (coplanar or concave) crease the neighbour owns that
+  // direction, so this triangle answers along its own face normal.
+  if(edgeNormals&&pb.triangle){
+   const V n=unit(pb.normals[0]);
+   if(glm::dot(s.normal,n)<1-1e-6){
+    double top=-INFINITY;for(V p:pb.points)top=std::max(top,glm::dot(p,s.normal));
+    bool support[3];unsigned count=0;for(unsigned k=0;k<3;++k){support[k]=glm::dot(pb.points[k],s.normal)>top-1e-7;count+=support[k];}
+    bool active=count==3;
+    // pb.active[e] is the edge from vertex e to vertex e+1.
+    for(unsigned e=0;e<3;++e){
+     if(count==2&&support[e]&&support[(e+1)%3])active=pb.active[e];
+     if(count==1&&support[e])active=pb.active[e]||pb.active[(e+2)%3];
+    }
+    if(!active){
+     double alo=INFINITY;for(V p:pa.points)alo=std::min(alo,glm::dot(p,n));
+     double bhi=-INFINITY;for(V p:pb.points)bhi=std::max(bhi,glm::dot(p,n));
+     if(alo-bhi>margin)return false;
+     s={alo-bhi,n,false};
+    }
+   }
+  }
   // Deep in a thin body, a least-overlap axis dominated by the backward face
   // component can drive it through the sheet. Guard that rear 45-degree cone
   // (backward component > total tangential component), using the selected
@@ -393,7 +417,7 @@ ContactManifold CookedContacts(const PrimitivePose& a,const PrimitivePose& b,dou
  if(a.shape.type!=ShapeType::Box&&a.shape.type!=ShapeType::ConvexHull)throw std::invalid_argument("unsupported cooked contact pair");
  visitCookedPolyContacts(a,b,margin,[&](V x,V y,V normal,double gap){
   contacts.push_back(make(a,b,x,y,normal,gap));return false;
- });
+ },INFINITY,nullptr,nullptr,nearest);
  reduce(contacts,out,nearest);return out;
 }
 // Boolean truth for CCD observations, not a replacement response manifold.

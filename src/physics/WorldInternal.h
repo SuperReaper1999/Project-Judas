@@ -259,6 +259,14 @@ struct PhysicsWorld::Impl {
         glm::vec3 warmTangent;
     };
     bool mk2Enabled = false, mk2Step = false;
+    // An MK2 step generates every feature within at least this distance as a
+    // speculative row: two bodies resting together have no relative motion, so
+    // a motion-only margin would cull just-separated corners by rounding and
+    // keep a lopsided patch. Speculative rows are exact, so the floor is free.
+    static constexpr float kMk2MinimumMargin = 0.002f;
+    float ContactMargin(float motionMargin) const {
+        return mk2Step ? std::max(motionMargin, kMk2MinimumMargin) : motionMargin;
+    }
     std::vector<Mk2Point> mk2Points;
     std::vector<std::array<unsigned, 4>> mk2RowPairs; // sorted (slotA, slotB, partA, partB)
     std::vector<float> mk2RowEndSeparation;           // per row pair, deepest end-of-step
@@ -385,7 +393,8 @@ struct PhysicsWorld::Impl {
                                      const CollisionGeometryStats &before = {});
     void PrepareInitialContactGeometry(float dt);
     void PrepareJoints(JointSolver &target, const std::vector<JointInput> &inputs, float dt,
-                       bool warm = true, bool impact = false, bool append = false);
+                       bool warm = true, bool impact = false, bool append = false,
+                       float positionalRate = 0.2f);
     void InvalidateImpactPose(unsigned slot);
 
     RigidBody PoseAt(unsigned slot, double time) const;

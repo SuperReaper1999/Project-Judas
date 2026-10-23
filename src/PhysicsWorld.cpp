@@ -210,10 +210,11 @@ void PhysicsWorld::Step(float fixedDeltaTime, const VelocityCoupling *coupling) 
         // rest on a support that is g*dt^2 (2.7 mm at 60 Hz, 9.81 m/s^2).
         const float margin =
             prepared ? prepared->margin
-                     : (glm::length(a.rigidBody.linearVelocity - b.rigidBody.linearVelocity) +
-                        glm::length(a.rigidBody.angularVelocity) * a.boundingRadius +
-                        glm::length(b.rigidBody.angularVelocity) * b.boundingRadius) *
-                           fixedDeltaTime;
+                     : w.ContactMargin(
+                           (glm::length(a.rigidBody.linearVelocity - b.rigidBody.linearVelocity) +
+                            glm::length(a.rigidBody.angularVelocity) * a.boundingRadius +
+                            glm::length(b.rigidBody.angularVelocity) * b.boundingRadius) *
+                           fixedDeltaTime);
         int pairPoints = 0;
         const auto &orientationA = prepared ? *prepared->orientationA : w.Orientation(a);
         const auto &orientationB = prepared ? *prepared->orientationB : w.Orientation(b);
