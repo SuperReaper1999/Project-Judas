@@ -1,3 +1,4 @@
+#include "Project.h"
 #include "LiquidSurface.h"
 #include "LiquidSystem.h"
 #include "RuntimeWorld.h"
@@ -174,7 +175,7 @@ int main(){
  }
 
  // A bounded splash is detached owned water, not massless decoration.
- Scene splashScene;auto& splashObject=splashScene.CreateObject("reservoir");splashObject.liquidBasin=LiquidBasinSettings{};auto splashEntity=splashObject.id;RuntimeWorld splashWorld;
+ Scene splashScene;auto& splashObject=splashScene.CreateObject("reservoir");splashObject.liquidBasin=LiquidBasinSettings{};auto splashEntity=splashObject.id;RuntimeWorld splashWorld;ProjectSettings experimental;experimental.advancedFluidDynamics=true;splashWorld.ConfigureProject(experimental);
  bool splashBuilt=splashWorld.Build(splashScene,nullptr,error);auto splashData=std::make_shared<LiquidSurfaceData>(*data);splashData->settings.splashSpeed=.001;splashData->settings.parcelBudget=2;
  auto splashBasin=std::make_shared<LiquidBasinData>(basin);splashBasin->dynamicSurface=splashData;LiquidBasinSettings splashSettings;splashSettings.initialVolume=32;
  auto splashOwner=splashWorld.Liquids().AddBasin(splashEntity,splashSettings,{},splashBasin,error);splashWorld.Liquids().SurfaceImpulse(splashOwner,{1,.5,2},{100,0,0});splashWorld.Liquids().Update(splashWorld,1./60);

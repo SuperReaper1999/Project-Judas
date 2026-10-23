@@ -234,7 +234,16 @@ void DrawWorldTransparents(Renderer& r, const RuntimeWorld& world, const GameSes
     r.FlushMaterialBlends();r.SetMaterialBindings({});
     const std::vector<DynamicBody>& bodies = world.DynamicBodies();
     const std::vector<RuntimeWorld::DynamicVisual>& visuals = world.DynamicVisuals();
-    if(!world.Liquids().States().empty()){
+    if(world.BasicWaterEnabled()){
+        const auto waters=world.BasicWaters(alpha);
+        if(!waters.empty()){
+            r.BeginTransparentPass();
+            for(const auto& water:waters)if(world.RenderVisible(water.entity)){r.SetRenderLayer(world.RenderLayerOf(water.entity));r.DrawBasicWater(water.settings,water.position,water.rotation,world.SimulationTimeSeconds());}
+            r.SetRenderLayer(0);
+            r.EndTransparentPass();
+        }
+    }
+    if(world.AdvancedFluidsEnabled()&&!world.Liquids().States().empty()){
       r.BeginTransparentPass();
       for(const auto& [id,s]:world.Liquids().States())if(s.enabled&&s.equilibriumValid&&s.volume>0&&(!s.entity||EntityRenderVisible(world,s.entity))){
         auto pose=s.pose;if(s.container)if(auto* o=world.RuntimeDefinition(s.entity))pose=world.PresentedTransform(s.entity,o->transform,alpha);
@@ -411,10 +420,10 @@ std::vector<DynamicLight> BuildWorldLights(const RuntimeWorld& world, const Game
 }
 
 void UpdateFluidSurface(Renderer& renderer, const RuntimeWorld& world, float /*alpha*/) {
-    JUDAS_PROFILE_SCOPE("Legacy fluid surface update");
     // 30 Hz particle state is held; rigid interpolation alpha would replay the
     // same fluid interval twice. Presentation never feeds the field sampler.
     if (!world.HasFluid() || !world.FluidMesh().IsValid() || !world.FluidSurfaceDirty()) return;
+    JUDAS_PROFILE_SCOPE("Legacy fluid surface update");
     std::vector<glm::vec3> positions;
     positions.reserve(world.Fluid().Particles().size());
     for (std::size_t i = 0; i < world.Fluid().Particles().size(); ++i) {
@@ -556,7 +565,7 @@ void RenderWorldFrame(Renderer& renderer, int width, int height, const RuntimeWo
             world.PrepareWeather(renderer,world.Settings().worldOrigin+glm::dvec3(position),camera.id);
             renderer.SetRenderMask(c.renderMask);
             lightPass();
-            renderer.SetWaterPaths(32,18,world.Liquids().OpticalPaths(renderer.ViewMatrix(),renderer.ProjectionMatrix(),32,18,alpha));
+            renderer.SetWaterPaths(32,18,world.WaterOpticalPaths(renderer.ViewMatrix(),renderer.ProjectionMatrix(),32,18,alpha));
             DrawWorldGeometry(renderer, world, session, alpha, WorldDrawOptions{});
             DrawWorldTransparents(renderer, world, session, alpha);
             renderer.DrawWeather(true);
@@ -576,7 +585,7 @@ void RenderWorldFrame(Renderer& renderer, int width, int height, const RuntimeWo
             renderer.SetCamera(glm::lookAt(pose.position,pose.position+q*glm::vec3(0,0,-1),q*glm::vec3(0,1,0)),glm::perspective(glm::radians(p.fov),float(vw)/vh,p.nearPlane,p.farPlane));
             world.PrepareWeather(renderer,world.Settings().worldOrigin+glm::dvec3(pose.position),p.id|(uint64_t(1)<<63));
             renderer.SetRenderMask(p.renderMask);lightPass();
-            renderer.SetWaterPaths(32,18,world.Liquids().OpticalPaths(renderer.ViewMatrix(),renderer.ProjectionMatrix(),32,18,alpha));
+            renderer.SetWaterPaths(32,18,world.WaterOpticalPaths(renderer.ViewMatrix(),renderer.ProjectionMatrix(),32,18,alpha));
             DrawWorldGeometry(renderer,world,session,alpha,WorldDrawOptions{});DrawWorldTransparents(renderer,world,session,alpha);renderer.DrawWeather(true);renderer.EndRenderTarget();
         }
         renderer.ClearWeather();renderer.BeginFrame(width,height);renderer.EndFrame();renderer.BeginUIFrame(width,height);
@@ -592,7 +601,7 @@ void RenderWorldFrame(Renderer& renderer, int width, int height, const RuntimeWo
     world.PrepareWeather(renderer,world.Settings().worldOrigin+glm::dvec3(glm::inverse(renderer.ViewMatrix())[3]));
     renderer.SetRenderMask(settings.mainCameraRenderMask);
     lightPass();
-    renderer.SetWaterPaths(32,18,world.Liquids().OpticalPaths(renderer.ViewMatrix(),renderer.ProjectionMatrix(),32,18,alpha));
+    renderer.SetWaterPaths(32,18,world.WaterOpticalPaths(renderer.ViewMatrix(),renderer.ProjectionMatrix(),32,18,alpha));
     DrawWorldGeometry(renderer, world, session, alpha, WorldDrawOptions{});
     DrawWorldTransparents(renderer, world, session, alpha);
     renderer.DrawWeather();
@@ -613,7 +622,10 @@ void RenderWorldFrame(Renderer& renderer, int width, int height, const RuntimeWo
     JUDAS_PROFILE_COUNTER("Secondary passes",stats.offscreenPasses-beforeStats.offscreenPasses,ProfileCounterMode::Sum);
 }
 
-void DrawAuthoredScene(Renderer& r, const Scene& scene, ResourceManager& assets) {
+void DrawAuthoredScene(Renderer& r,const Scene& scene,ResourceManager& assets){
+    DrawAuthoredScene(r,scene,assets,true);
+}
+void DrawAuthoredScene(Renderer& r, const Scene& scene, ResourceManager& assets, bool basicWater) {
     JUDAS_PROFILE_SCOPE("Editor authored submission");
     // Authored previews do not render shadow maps of their own. Never sample
     // maps generated for a previous runtime camera or Play session.
@@ -660,6 +672,11 @@ void DrawAuthoredScene(Renderer& r, const Scene& scene, ResourceManager& assets)
             } else {
                 DrawRenderable(r, &assets, render, position, rotation, o.transform.scale, 1.0f);
             }
+        }
+        if(basicWater&&o.basicWater&&!r.IsShadowPass()){
+            r.EndMeshBatch();r.SetMaterialBindings({});r.BeginTransparentPass();
+            r.DrawBasicWater(*o.basicWater,position,rotation,0);
+            r.EndTransparentPass();r.BeginMeshBatch();
         }
         // Authored liquid is shown as its particle lattice bounds.
         if (o.fluidVolume && !r.IsShadowPass()) {

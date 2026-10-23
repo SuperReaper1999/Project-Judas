@@ -19,7 +19,7 @@ int main(int argc,char** argv){
  host.OpenProjectAssets(project.RootDir(),project.AssetsDir());auto& window=host.GetWindow();window.SetTestInputMode(true);window.Input().SetMap(project.Settings().input,error);
  for(const char* name:{"lab","radial"}){
   if(argc>1&&std::string(argv[1])!=name)continue;
-  bool radial=std::string(name)=="radial",baseline=argc>2&&std::string(argv[2])=="--baseline";Scene scene;RuntimeWorld world;GameSession game;world.legacyGameplay=false;
+  bool radial=std::string(name)=="radial",baseline=argc>2&&std::string(argv[2])=="--baseline";Scene scene;RuntimeWorld world;world.ConfigureProject(project.Settings());GameSession game;world.legacyGameplay=false;
   if(!LoadSceneFromFile(project.RootDir()+"/Scenes/"+name+".judas",scene,error)||!world.Build(scene,&host.Resources(),error,&project.Settings().classification)||!game.Begin(world,error)){std::puts(error.c_str());return 1;}
   world.legacyGameplay=false;host.Resources().WaitForAll();
   auto step=[&](){window.Input().BeginFixedStep();world.UpdateUIScripts(&window.Input(),1.f/60);world.UpdateScripts(&window.Input(),1.f/60);StepPlayedWorld(game,window,1.f/60);world.PresentationScripts(&window.Input(),1.f/60,.5f);window.Input().BeginFrame();};

@@ -1,0 +1,12 @@
+FRAMES 250
+ENTITY 64
+AXIS move_y 1 5 160
+SCREENSHOT 35 /home/conner/Documents/GitHub/Project-Judas/.cache/project-settings-water/worktree/docs/evidence/prealpha-project-settings-water/standalone-overview.png
+SCREENSHOT 160 /home/conner/Documents/GitHub/Project-Judas/.cache/project-settings-water/worktree/docs/evidence/prealpha-project-settings-water/standalone-swimming.png
+ACTION pause 1 180 181
+EXPECT_PAUSED 1 181
+SCREENSHOT 182 /home/conner/Documents/GitHub/Project-Judas/.cache/project-settings-water/worktree/docs/evidence/prealpha-project-settings-water/standalone-pause.png
+ACTION pause 1 199 200
+EXPECT_PAUSED 0 201
+ACTION reset 1 210 211
+SCREENSHOT 235 /home/conner/Documents/GitHub/Project-Judas/.cache/project-settings-water/worktree/docs/evidence/prealpha-project-settings-water/standalone-reloaded.png

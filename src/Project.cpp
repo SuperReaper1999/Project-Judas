@@ -60,6 +60,9 @@ std::string Generic(const fs::path& p) { return p.generic_string(); }
 std::string Project::SerializeToString(const ProjectSettings& s) {
     std::string out = "JudasProject " + std::to_string(kProjectFormatVersion) + "\n";
     out += "name " + Quote(s.name) + "\n";
+    out += "basic-water " + Quote(s.basicWater ? "true" : "false") + "\n";
+    out += "water-swimming " + Quote(s.waterSwimming ? "true" : "false") + "\n";
+    out += "advanced-fluid-dynamics " + Quote(s.advancedFluidDynamics ? "true" : "false") + "\n";
     if(s.visualBudgetMiB)out+="visual-budget-mib "+Quote(std::to_string(s.visualBudgetMiB))+"\n";
     if(!s.modContract.empty())out+="mod-contract "+Quote(s.modContract)+"\n";
     if (!s.audio.groups.empty()) out += "audio-groups " + Quote(s.audio.Serialize()) + "\n";
@@ -135,6 +138,11 @@ bool Project::ParseFromString(const std::string& text, ProjectSettings& outSetti
     }
     for (const auto& [key, value] : values) {
         if(key=="mod-contract"){try{if(value.size()>1024*1024||!AuthoringJSON::parse(value).is_object())throw std::runtime_error("invalid bounded mod contract");s.modContract=value;}catch(const std::exception& e){outError=e.what();return false;}}
+        else if (key == "basic-water" || key == "water-swimming" || key == "advanced-fluid-dynamics") {
+            if (value!="true" && value!="false") {outError=key+" must be true or false";return false;}
+            bool& setting=key=="basic-water"?s.basicWater:key=="water-swimming"?s.waterSwimming:s.advancedFluidDynamics;
+            setting=value=="true";
+        }
         else if (key == "name") s.name = value;
         else if (key == "audio-groups") {if(!ProjectAudioSettings::Parse(value,s.audio,outError))return false;}
         else if (key == "icon-asset") s.iconAsset = value;

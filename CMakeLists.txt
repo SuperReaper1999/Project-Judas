@@ -319,6 +319,8 @@ add_library(judas_engine STATIC
     src/RuntimeWorld.cpp
     src/GameSession.cpp
     src/Simulation.cpp
+    src/BasicWater.cpp
+    src/WorldWater.cpp
     src/WorldPresentation.cpp
     src/GameplayHud.cpp
     src/EngineHost.cpp
@@ -406,6 +408,7 @@ add_executable(judas_editor
     src/editor/EditorPicking.cpp
     src/editor/EditorHistory.cpp
     src/editor/EditorPanels.cpp
+    src/editor/ProjectSettingsPanel.cpp
     src/editor/RenderPreview.cpp
     src/editor/RetargetPanel.cpp
     src/editor/AnimationTimeline.cpp
@@ -1677,3 +1680,9 @@ elseif(WIN32)
 endif()
 include(cmake/JudasSdk.cmake)
 include(cmake/JudasValidation.cmake)
+
+# Project policy and lightweight water share no advanced solver implementation.
+judas_add_engine_test(judas_project_water_tests tests/ProjectWaterTests.cpp)
+judas_add_engine_test(judas_project_settings_editor_tests tests/ProjectSettingsEditorTests.cpp
+    SOURCES src/editor/ProjectSettingsPanel.cpp LIBRARIES judas_imgui)
+judas_add_engine_test(judas_basic_water_application_tests tests/BasicWaterApplicationTests.cpp)

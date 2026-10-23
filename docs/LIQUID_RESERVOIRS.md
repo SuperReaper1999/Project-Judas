@@ -1,5 +1,7 @@
 # Conserved liquid reservoirs — M54
 
+> Advanced fluid projects must explicitly enable **Project Settings → Experimental → Advanced Fluid Dynamics** (default off). The shipped fluid examples opt in. For ordinary visual water and swimming without these solvers, use [basic water](PROJECT_SETTINGS_AND_WATER.md).
+
 Accepted M54 foundation, originally based on `16f7d59fa3289e7e7c43aaeb7e88471be6fe348f`.
 It is separate from retained legacy PBF and protected P1 research. M54 itself
 had no waves; [M55](LIQUID_SURFACES.md) adds optional dynamic surfaces while

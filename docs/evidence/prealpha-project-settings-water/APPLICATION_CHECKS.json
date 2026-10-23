@@ -1,0 +1,51 @@
+[
+  {
+    "label": "cold-write-final",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/project-settings-water/worktree/build-water/judas_basic_water_application_tests",
+      "--cold-write",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/project-settings-water/worktree/.cache/water-review/cold-final-source"
+    ],
+    "exit": 0,
+    "seconds": 0.36443090438842773,
+    "binary_sha256": "82e2bae8b3d4c34d9756e84fbee4c33adea7664a66a4bb6338fc8ed14e5c229b",
+    "log": "docs/evidence/prealpha-project-settings-water/cold-write-final.log"
+  },
+  {
+    "label": "cold-read-final",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/project-settings-water/worktree/build-water/judas_basic_water_application_tests",
+      "--cold-read",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/project-settings-water/worktree/.cache/water-review/cold-final-source"
+    ],
+    "exit": 0,
+    "seconds": 0.36449122428894043,
+    "binary_sha256": "82e2bae8b3d4c34d9756e84fbee4c33adea7664a66a4bb6338fc8ed14e5c229b",
+    "log": "docs/evidence/prealpha-project-settings-water/cold-read-final.log",
+    "save_sha256_before": "9ed0dad1f8b1c0413a103d25ba4fc4ca01f6fc98aa4db384f68cb1885428e040",
+    "save_sha256_after": "9ed0dad1f8b1c0413a103d25ba4fc4ca01f6fc98aa4db384f68cb1885428e040"
+  },
+  {
+    "label": "water-profile-final",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/project-settings-water/worktree/build-water/judas_basic_water_application_tests",
+      "--profile",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/project-settings-water/worktree/docs/evidence/prealpha-project-settings-water/water-profile-final"
+    ],
+    "exit": 0,
+    "seconds": 0.7149696350097656,
+    "binary_sha256": "82e2bae8b3d4c34d9756e84fbee4c33adea7664a66a4bb6338fc8ed14e5c229b",
+    "log": "docs/evidence/prealpha-project-settings-water/water-profile-final.log"
+  },
+  {
+    "label": "editor-final",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/project-settings-water/worktree/build-water/judas_editor",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/project-settings-water/worktree/.cache/water-editor-review-project/basic_water_lab.judasproj"
+    ],
+    "exit": 0,
+    "seconds": 1.7663862705230713,
+    "binary_sha256": "a23868641ac984d68ee815a206091f5510ee4fffb39eb36f793c9385d27f68ea",
+    "log": "docs/evidence/prealpha-project-settings-water/editor-final.log"
+  }
+]

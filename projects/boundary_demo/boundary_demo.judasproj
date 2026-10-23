@@ -1,4 +1,5 @@
 JudasProject 1
+advanced-fluid-dynamics "true"
 name "Engine primitives / project behaviour"
 startup-scene "Scenes/flat.judas"
 assets-dir "Assets"

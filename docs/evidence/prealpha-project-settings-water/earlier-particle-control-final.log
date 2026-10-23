@@ -1,0 +1,4 @@
+PRECONDITION neutral_020 warmup_steps=240 mean_particle_speed=0.0314854
+PRECONDITION neutral_020 observed_release_surface=1.79422 body_top=1 clearance=0.794216
+CASE neutral_020 failures=0 acceptance_failures=0 diagnostic_checks=1 diagnostic_failures=0 observational_scale=0 mass=216.0000153 particles=1152 y=0.6950281262 vy=-0.0007599294186 fraction=1 observed_fraction=1 max_speed=0.007209757809 particle_ms=16.774662 executed_ms=20.082789 amortized_ms=11.72991041
+SUMMARY checks=729 failures=0 acceptance_failures=0 diagnostic_checks=1 diagnostic_failures=0 strict_diagnostics=0 steps=480

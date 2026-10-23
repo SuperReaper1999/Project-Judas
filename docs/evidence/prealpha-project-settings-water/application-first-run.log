@@ -1,0 +1,3 @@
+SDL_Init failed: x11 not available
+PASS load ordinary basic-water project: 
+Window initialization failed.

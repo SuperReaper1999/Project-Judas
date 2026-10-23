@@ -1,0 +1,26 @@
+Shadow maps: on
+Graphics: 3.3.0 NVIDIA 580.178.04 / NVIDIA GeForce GTX 970/PCIe/SSE2
+Renderer fragment texture units: 32 (material path uses 12)
+PASS load ordinary basic-water project: 
+GL NVIDIA GeForce GTX 970/PCIe/SSE2 | 3.3.0 NVIDIA 580.178.04
+PASS project logical input map
+PASS load authored swimming scene: 
+PASS ordinary world construction: 
+PASS default scene has a real motor and no advanced fluid owners
+PASS ordinary InteractivePlay begins: 
+PASS capture actual water renderer and HUD
+PASS place real motor in authored pool without injecting any water sample
+PASS capture actual water renderer and HUD
+PASS logical pause action opens the authored menu
+PASS pause stops gameplay and physics without leaking input
+PASS logical pause resumes cleanly
+PASS all 240 water render frames have no GL error
+PASS ordinary project scripts remain healthy
+PASS rendering/swimming/pausing never activates an advanced solver
+ENDPOINT mode=0 y=-0.822977 vy=-0.0464979
+PASS public basic-water sample produces the density-consistent floating endpoint through JS
+MEASURE basic-water fixed-step n=229 mean=0.0719837 p95=0.093346 worst=0.171363 ms
+MEASURE basic-water render-and-frame n=240 mean=0.46547 p95=0.500945 worst=20.5521 ms
+PASS capture real authored/script/motor state for a new process: 
+PASS write native save slot atomically: 
+BasicWaterApplicationTests: 18 checks, 0 failures

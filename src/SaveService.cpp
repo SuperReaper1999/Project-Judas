@@ -152,6 +152,7 @@ void SaveService::Advance(std::unique_ptr<RuntimeWorld>& world,InteractivePlay& 
   if(bool(saved.participants.count("kinematic-motion"))!=hasKinematic){error="kinematic motion participant does not match snapshot components";Finish(error);return;}
   if(saved.participants.size()!=size_t(11+hasWeather+hasPlanet+hasDeformable+hasKinematic+hasWheel+hasPowertrain+saved.participants.count("sleep")+saved.participants.count("view-projection")+saved.participants.count("physical-animation")+saved.participants.count("physical-balance")+saved.participants.count("animation-observations")+saved.participants.count("runtime-terrain"))||bool(saved.participants.count("deformables"))!=hasDeformable){error="deformable participant does not match snapshot components";Finish(error);return;}
   m_restoreStart=Clock::now();m_stagedSession=std::make_shared<SceneSession>(m_session.m_project,saved.scene);m_staged=std::make_unique<RuntimeWorld>();m_staged->SetSceneControl(m_stagedSession);m_staged->audioGroups=m_session.m_project.Settings().audio;m_staged->legacyGameplay=m_session.m_project.Settings().legacyGameplay;
+  m_staged->ConfigureProject(m_session.m_project.Settings());
   if(!m_staged->Build(scene,&m_resources,error,&m_session.m_project.Settings().classification,&m_session.m_project.Settings().navigation,true)){Finish(error);return;}s.state="preparing";
  }
  if(s.state!="preparing"&&s.state!="restoring")return;

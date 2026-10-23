@@ -1,6 +1,7 @@
 // Exercise the shipped scenes through ordinary fixed steps. Test manipulation
 // supplies hand targets through the existing force/torque API, never moves water.
 #include "SceneSerialization.h"
+#include "Project.h"
 #include "RuntimeWorld.h"
 #include "GameSession.h"
 #include "Window.h"
@@ -29,7 +30,7 @@ void Run(const string& kind,const filesystem::path& out){
  }
  glm::vec3 origin=kind=="planet"?q*glm::vec3(0,30,0):glm::vec3(0);
  auto Point=[&](glm::vec3 p){return origin+q*p;};auto Local=[&](glm::vec3 p){return glm::inverse(q)*(p-origin);};
- RuntimeWorld world;GameSession session;Window window;window.SetTestInputMode(true);
+ RuntimeWorld world;ProjectSettings experimental;experimental.advancedFluidDynamics=true;world.ConfigureProject(experimental);GameSession session;Window window;window.SetTestInputMode(true);
  Check(world.Build(scene,nullptr,error)&&session.Begin(world,error),kind+" construct "+error);if(!session.IsActive())return;
  auto Handle=[&](EntityId id){return world.DynamicBodies().at(world.FindEntity(id)->slot).Handle();};
  const auto quadrature=MakeCompoundFluidVolume(world.FindEntity(cup)->definition.body->compoundBoxes);cout<<kind<<" cup_solid_partitions="<<quadrature.solidBoxes.size()<<" cup_volume_samples="<<quadrature.samples.size()<<'\n';

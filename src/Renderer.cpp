@@ -4,6 +4,7 @@
 #include "Renderer.h"
 #include "SkeletalAnimation.h"
 #include "Weather.h"
+#include "BasicWater.h"
 
 #include <algorithm>
 #include <cmath>
@@ -52,6 +53,9 @@ uniform mat4 uView;
 uniform mat4 uProjection;
 uniform mat3 uNormalMatrix;
 uniform vec4 uColor;
+uniform bool uBasicWater;
+uniform vec4 uBasicWaterWave; // amplitude, wavelength, speed, time
+uniform vec2 uBasicWaterSize;
 out vec4 vTint;
 
 out vec3 vWorldNormal;
@@ -76,6 +80,15 @@ void main() {
     vec4 localPosition=skin*vec4(aLocalPos,1.0);
     mat3 linear=mat3(skin);
     vec3 normal=abs(determinant(linear))>1e-8?transpose(inverse(linear))*aLocalNormal:linear*aLocalNormal;
+    if(uBasicWater){
+        vec2 p=aLocalPos.xz*uBasicWaterSize;
+        float k=6.2831853/uBasicWaterWave.y;
+        float a=k*(p.x*.8+p.y*.6)+uBasicWaterWave.z*uBasicWaterWave.w;
+        float b=k*1.71*(p.x*-.6+p.y*.8)-uBasicWaterWave.z*uBasicWaterWave.w*1.37;
+        localPosition.y=uBasicWaterWave.x*(.7*sin(a)+.3*sin(b));
+        vec2 d=uBasicWaterWave.x*k*(.7*cos(a)*vec2(.8,.6)+.513*cos(b)*vec2(-.6,.8));
+        normal=vec3(-d.x*uBasicWaterSize.x,1,-d.y*uBasicWaterSize.y);
+    }
     vWorldNormal = normalMatrix * normal;
     vec3 tangent=mat3(model)*linear*aTangent.xyz;
     vWorldTangent=vec4(tangent,aTangent.w*(determinant(mat3(model)*linear)<0.0?-1.0:1.0));
@@ -103,6 +116,8 @@ out vec4 FragColor;
 
 uniform sampler2D uTexture;
 in vec4 vTint;
+uniform bool uBasicWater;
+uniform vec3 uBasicWaterUp;
 uniform bool uWaterEnabled;
 uniform sampler2D uWaterPaths;
 uniform mat4 uWaterViewProjection;
@@ -259,6 +274,16 @@ void main() {
     if(uMaterialModel==0){FragColor=vec4(lighting*base.rgb,base.a);if(uModern)FragColor.rgb=decodeSRGB(FragColor.rgb);}
     else {vec3 emission=uEmission*(uHasEmissive?(uEmissiveLinear?texture(uEmissive,mapUV(4)).rgb:decodeSRGB(texture(uEmissive,mapUV(4)).rgb)):vec3(1.0))*uEmissionIntensity;float metal=uMetallic,rough=uRoughness;if(uHasMR){vec4 mr=texture(uMR,mapUV(1));rough*=mr.g;metal*=mr.b;}vec3 v=normalize(uCameraPosition-vWorldPos);FragColor=vec4((uMaterialModel==2?base.rgb:pbrLight(base.rgb,metal,clamp(rough,0.05,1.0),normal,v,materialUV))+emission,uAlphaMode==0?1.0:base.a);}
 
+    if(uBasicWater){
+        vec3 n=normalize(gl_FrontFacing?normal:-normal);
+        vec3 eye=normalize(uCameraPosition-vWorldPos);
+        float fresnel=.035+.965*pow(1.0-clamp(abs(dot(n,eye)),0.0,1.0),5.0);
+        vec3 sky=mix(vec3(.17,.34,.43),vec3(.57,.74,.83),clamp(dot(n,uBasicWaterUp)*.5+.5,0.0,1.0));
+        float glint=pow(max(0.0,dot(reflect(-uLightDirection,n),eye)),160.0);
+        vec3 water=base.rgb*(.35+uAmbientColor+.32*uLightColor*max(0.0,dot(n,uLightDirection)));
+        FragColor=vec4(mix(water,sky,fresnel*.8)+uLightColor*glint*.85,
+                       mix(base.a,1.0,fresnel*.65));
+    }
     if (uWaterEnabled) {
         vec4 clip = uWaterViewProjection * vec4(vWorldPos,1.0);
         vec2 uv = clip.xy / clip.w * .5 + .5;
@@ -902,7 +927,7 @@ void Renderer::Shutdown() {
     if (m_debugVbo) { glDeleteBuffers(1, &m_debugVbo); m_debugVbo = 0; }
     if (m_debugVao) { glDeleteVertexArrays(1, &m_debugVao); m_debugVao = 0; }
     if (m_debugShaderProgram) { glDeleteProgram(m_debugShaderProgram); m_debugShaderProgram = 0; }
-    m_transientSurface={};
+    m_transientSurface={};m_basicWaterMesh={};
     m_fontLoaded=false;m_uiFonts.clear();m_defaultUIFont.clear();m_defaultTextFont.reset();m_textFonts.clear();
     TraceResourceOperation(ResourceTracePoint::RendererShutdownEnd);
 }
@@ -949,7 +974,9 @@ void Renderer::SetCamera(const glm::mat4& view, const glm::mat4& projection) {
 
 void Renderer::SetWaterPaths(unsigned columns,unsigned rows,const std::vector<glm::vec2>& paths){
  JUDAS_PROFILE_SCOPE("Water boundary upload");
-    if(!m_shaderProgram||paths.size()!=size_t(columns)*rows||!columns||!rows)return;
+    if(!m_shaderProgram)return;
+    if(paths.empty()){glUseProgram(m_shaderProgram);glUniform1i(glGetUniformLocation(m_shaderProgram,"uWaterEnabled"),0);return;}
+    if(paths.size()!=size_t(columns)*rows||!columns||!rows)return;
     if(!m_waterPathTexture){glGenTextures(1,&m_waterPathTexture);}
     glActiveTexture(GL_TEXTURE4);glBindTexture(GL_TEXTURE_2D,m_waterPathTexture);
     glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_NEAREST);glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_NEAREST);
@@ -1661,6 +1688,37 @@ void Renderer::DrawUIImage(glm::vec2 position,glm::vec2 size,TextureHandle textu
     glUniform4f(m_uiUColor,tint.r,tint.g,tint.b,tint.a);
     const bool invert=imported!=flipVertical;glUniform2f(m_uiUUVOffset,0,invert?1:0);glUniform2f(m_uiUUVScale,1,invert?-1:1);
     glBindTexture(GL_TEXTURE_2D,ResolveTexture(texture));glDrawArrays(GL_TRIANGLES,0,6);++m_uiDrawCalls;
+}
+
+void Renderer::DrawBasicWater(const BasicWaterSettings& water,const glm::vec3& position,
+                              const glm::quat& rotation,double seconds) {
+    if(m_shadowPassActive||!water.enabled||!AllowsLayer(m_renderLayer))return;
+    JUDAS_PROFILE_SCOPE("Basic water surface");
+    RendererProfileScope gpu(*this,"Basic water surface");
+    if(!m_basicWaterMesh.IsValid()){
+        MeshData grid;constexpr unsigned cells=48;
+        auto vertex=[&](unsigned x,unsigned z){MeshVertex v{};v.position={2.f*x/cells-1,0,2.f*z/cells-1};v.normal={0,1,0};v.uv={float(x)/cells,float(z)/cells};return v;};
+        for(unsigned z=0;z<cells;++z)for(unsigned x=0;x<cells;++x){
+            const auto a=vertex(x,z),b=vertex(x+1,z),c=vertex(x,z+1),d=vertex(x+1,z+1);
+            for(const auto& v:{a,c,b,b,c,d})grid.vertices.push_back(v);
+        }
+        m_basicWaterMesh=CreateMesh(grid);
+        if(!m_basicWaterMesh.IsValid())return;
+        // Conservative shader-displacement bounds, independent of visual phase.
+        m_meshes[m_basicWaterMesh.id].bounds.Include({-1,-5,-1});
+        m_meshes[m_basicWaterMesh.id].bounds.Include({1,5,1});
+    }
+    glUseProgram(m_shaderProgram);
+    glUniform1i(glGetUniformLocation(m_shaderProgram,"uBasicWater"),1);
+    glUniform4f(glGetUniformLocation(m_shaderProgram,"uBasicWaterWave"),water.waveAmplitude,
+                water.wavelength,water.waveSpeed,float(std::fmod(seconds,65536.)));
+    glUniform2f(glGetUniformLocation(m_shaderProgram,"uBasicWaterSize"),water.halfExtents.x,water.halfExtents.z);
+    const auto up=rotation*glm::vec3(0,1,0);
+    glUniform3f(glGetUniformLocation(m_shaderProgram,"uBasicWaterUp"),up.x,up.y,up.z);
+    GLboolean cull=glIsEnabled(GL_CULL_FACE);glDisable(GL_CULL_FACE);
+    DrawMesh(m_basicWaterMesh,position,rotation,{water.halfExtents.x,1,water.halfExtents.z},{},water.color,water.opacity);
+    if(cull)glEnable(GL_CULL_FACE);
+    glUseProgram(m_shaderProgram);glUniform1i(glGetUniformLocation(m_shaderProgram,"uBasicWater"),0);
 }
 
 void Renderer::DrawTransientSurface(const MeshData& data,const glm::vec3& tint,float alpha){

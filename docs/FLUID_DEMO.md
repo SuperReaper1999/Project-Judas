@@ -1,5 +1,7 @@
 # Retained legacy particle-fluid demonstration
 
+> Advanced fluid projects must explicitly enable **Project Settings → Experimental → Advanced Fluid Dynamics** (default off). The shipped fluid examples opt in. For ordinary visual water and swimming without these solvers, use [basic water](PROJECT_SETTINGS_AND_WATER.md).
+
 For current conserved reservoirs/containers and dynamic surfaces, see
 [Liquid reservoirs](LIQUID_RESERVOIRS.md) and [Liquid surfaces](LIQUID_SURFACES.md).
 This project preserves the accepted legacy PBF/cavity repair; its 20 Hz cadence

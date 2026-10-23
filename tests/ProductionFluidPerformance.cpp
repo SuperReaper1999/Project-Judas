@@ -1,3 +1,4 @@
+#include "Project.h"
 // Real authored demo scenes, ordinary fixed-step simulation, no renderer timing.
 #include <algorithm>
 #include <chrono>
@@ -25,7 +26,7 @@ int main(int argc,char**argv){
  for(const std::string name:{"classic","terrain"}){
   Scene scene;std::string error;const auto started=Clock::now();
   if(!LoadSceneFromFile("assets/scenes/"+name+".judas",scene,error)){std::cerr<<error<<'\n';return 2;}
-  RuntimeWorld world;GameSession session;Window window;window.SetTestInputMode(true);
+  RuntimeWorld world;ProjectSettings experimental;experimental.advancedFluidDynamics=true;world.ConfigureProject(experimental);GameSession session;Window window;window.SetTestInputMode(true);
   if(!world.Build(scene,nullptr,error)||!session.Begin(world,error)){std::cerr<<error<<'\n';return 2;}
   const double construction=Ms(started);std::vector<double> particle,executed,total;double amortized=0;int frames=360;
   std::size_t batches=0,iterations=0,products=0,accelerations=0,caps=0,breakdowns=0;float residual=0;

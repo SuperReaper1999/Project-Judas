@@ -123,3 +123,5 @@ and outstanding qualification are tracked in [building/onboarding](FIRST_PROJECT
 5. Confirm fixed/frame/presentation phases, safe lifetimes and scene/session
    persistence are understandable.
 6. Confirm arbitrary gravity and the engine/gameplay boundary remain clear.
+
+Project-wide water policy and basic/experimental water ownership: [Project Settings and water](PROJECT_SETTINGS_AND_WATER.md).

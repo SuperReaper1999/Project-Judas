@@ -62,9 +62,9 @@ bool RuntimeWorld::EntityRequiresFull(const SceneObject& o) {
 
 bool RuntimeWorld::ValidateVisualAssets(const SceneObject& o, std::string& error) const {
     if(o.deformable){const auto* db=m_assets?m_assets->Assets():nullptr;auto* record=db?db->Find(o.deformable->asset):nullptr;if(!record||record->missing||record->type!=AssetType::Deformable){error="missing/wrong-type deformable asset";return false;}}
-    if(o.liquidBasin||o.liquidContainer){const auto* db=m_assets?m_assets->Assets():nullptr;for(auto id:o.liquidBasin?std::vector<std::string>{o.liquidBasin->geometry,o.liquidBasin->asset}:std::vector<std::string>{o.liquidContainer->geometry}){const auto* a=db?db->Find(id):nullptr;LiquidResource resource;if(!a||a->missing||a->type!=AssetType::Liquid){error="missing/wrong-type liquid asset";return false;}std::ifstream file(a->path,std::ios::binary);std::vector<unsigned char> bytes{std::istreambuf_iterator<char>(file),{}};if(!DecodeLiquidResource(bytes,resource,error))return false;}}
+    if(m_advancedFluids&&(o.liquidBasin||o.liquidContainer)){const auto* db=m_assets?m_assets->Assets():nullptr;for(auto id:o.liquidBasin?std::vector<std::string>{o.liquidBasin->geometry,o.liquidBasin->asset}:std::vector<std::string>{o.liquidContainer->geometry}){const auto* a=db?db->Find(id):nullptr;LiquidResource resource;if(!a||a->missing||a->type!=AssetType::Liquid){error="missing/wrong-type liquid asset";return false;}std::ifstream file(a->path,std::ios::binary);std::vector<unsigned char> bytes{std::istreambuf_iterator<char>(file),{}};if(!DecodeLiquidResource(bytes,resource,error))return false;}}
 
-    if(o.liquidContainer){const auto* db=m_assets?m_assets->Assets():nullptr;const auto* a=db?db->Find(o.liquidContainer->geometry):nullptr;LiquidGeometry geometry;if(!a||!LoadLiquidGeometry(a->path,geometry,error))return false;double capacity=0;for(auto& t:geometry.cells)capacity+=LiquidClip(t,{0,0,0,0},1).volume;if(o.liquidContainer->initialVolume>capacity){error="initial container volume exceeds physical capacity";return false;}}
+    if(m_advancedFluids&&o.liquidContainer){const auto* db=m_assets?m_assets->Assets():nullptr;const auto* a=db?db->Find(o.liquidContainer->geometry):nullptr;LiquidGeometry geometry;if(!a||!LoadLiquidGeometry(a->path,geometry,error))return false;double capacity=0;for(auto& t:geometry.cells)capacity+=LiquidClip(t,{0,0,0,0},1).volume;if(o.liquidContainer->initialVolume>capacity){error="initial container volume exceeds physical capacity";return false;}}
     if (!o.render || o.render->shape != SceneShape::Mesh || !m_assets) return true;
     const AssetDatabase* db = m_assets->Assets();
     const auto check = [&](const AssetId& id, AssetType type) {
@@ -302,10 +302,11 @@ bool RuntimeWorld::Build(const Scene& authored, ResourceManager* resources, std:
     }
     if(resources&&resources->Assets()){std::string navBytes="Judas.NavSources.1";bool has=false;for(const auto& o:scene.Objects())if(o.navigationSurface){has=true;auto* asset=resources->Assets()->Find(o.navigationSurface->asset);if(asset){std::ifstream file(asset->path,std::ios::binary);std::ostringstream contents;contents<<file.rdbuf();navBytes+=asset->id+SceneFingerprintSha256(contents.str());}}if(has)fingerprint=SceneFingerprintSha256(fingerprint+navBytes);}
     if(resources&&resources->Assets()){bool localized=std::any_of(resources->Assets()->Records().begin(),resources->Assets()->Records().end(),[](const auto& p){return p.second.type==AssetType::Catalog;});if(auto control=SceneControl())localized|=!control->Localization(resources).Configuration().fonts.empty();if(localized){std::string bytes="Judas.LocalizationSources.1";for(auto& p:resources->Assets()->Records())if(p.second.type==AssetType::Catalog||p.second.type==AssetType::Font){std::ifstream f(p.second.path,std::ios::binary);if(!f){outError="cannot fingerprint localization dependency "+p.first;return false;}std::string content(std::istreambuf_iterator<char>(f),{});bytes+=p.first+SceneFingerprintSha256(content);}if(auto control=SceneControl())bytes+=control->Localization(resources).Configuration().Encode();fingerprint=SceneFingerprintSha256(fingerprint+bytes);}}
-    if(resources&&resources->Assets()){std::string liquidBytes="Judas.LiquidSources.1";bool has=false;for(const auto& o:scene.Objects())if(o.liquidBasin||o.liquidContainer){has=true;std::vector<std::string> ids;if(o.liquidBasin)ids={o.liquidBasin->geometry,o.liquidBasin->asset};else ids={o.liquidContainer->geometry};for(auto id:ids){auto* asset=resources->Assets()->Find(id);if(!asset||asset->missing||asset->type!=AssetType::Liquid){outError="missing/wrong-type liquid asset";return false;}std::ifstream file(asset->path,std::ios::binary);std::ostringstream contents;contents<<file.rdbuf();liquidBytes+=id+SceneFingerprintSha256(contents.str());}if(o.liquidBasin&&!runtimeSnapshot){LiquidBasinData data;auto* asset=resources->Assets()->Find(o.liquidBasin->asset);if(!LoadLiquidBasin(asset->path,data,outError)||LiquidSourceFingerprint(scene,o,*resources->Assets(),outError)!=data.fingerprint){outError="stale/invalid liquid bake: "+outError;return false;}}}if(has)fingerprint=SceneFingerprintSha256(fingerprint+liquidBytes);}
+    if(m_advancedFluids&&resources&&resources->Assets()){std::string liquidBytes="Judas.LiquidSources.1";bool has=false;for(const auto& o:scene.Objects())if(o.liquidBasin||o.liquidContainer){has=true;std::vector<std::string> ids;if(o.liquidBasin)ids={o.liquidBasin->geometry,o.liquidBasin->asset};else ids={o.liquidContainer->geometry};for(auto id:ids){auto* asset=resources->Assets()->Find(id);if(!asset||asset->missing||asset->type!=AssetType::Liquid){outError="missing/wrong-type liquid asset";return false;}std::ifstream file(asset->path,std::ios::binary);std::ostringstream contents;contents<<file.rdbuf();liquidBytes+=id+SceneFingerprintSha256(contents.str());}if(o.liquidBasin&&!runtimeSnapshot){LiquidBasinData data;auto* asset=resources->Assets()->Find(o.liquidBasin->asset);if(!LoadLiquidBasin(asset->path,data,outError)||LiquidSourceFingerprint(scene,o,*resources->Assets(),outError)!=data.fingerprint){outError="stale/invalid liquid bake: "+outError;return false;}}}if(has)fingerprint=SceneFingerprintSha256(fingerprint+liquidBytes);}
     for(const auto& o:scene.Objects())if(!ValidateLiquidComponents(o,outError))return false;
     Destroy();
     m_restoreConstruction=runtimeSnapshot;
+    m_liquid=std::make_unique<LiquidSystem>(m_advancedFluids);
     m_categories=selected;
     m_navigation=std::make_unique<NavigationSystem>(navigation?*navigation:ProjectNavigation{});
     m_assets = resources;
@@ -352,7 +353,7 @@ bool RuntimeWorld::Build(const Scene& authored, ResourceManager* resources, std:
     m_fluidSettings.particleRadius *= m_settings.fluidScale;
     m_fluidSettings.smoothingRadius *= m_settings.fluidScale;
     m_fluidSettings.maxDensityCorrection *= m_settings.fluidScale;
-    m_fluid = std::make_unique<FluidWorld>(m_fluidSettings);
+    if(m_advancedFluids)m_fluid = std::make_unique<FluidWorld>(m_fluidSettings);
 
     if (m_settings.fidelityPolicy == SceneFidelityPolicy::Distance) {
         m_policy = std::make_unique<DistanceFidelityPolicy>(m_settings.fidelityFullRadius,
@@ -371,9 +372,11 @@ bool RuntimeWorld::Build(const Scene& authored, ResourceManager* resources, std:
     if (!AppendSceneObjects(scene, true, loadContext, outError)) { Destroy(); return false; }
     if(runtimeSnapshot)m_policy=std::move(restoredPolicy);
     SynchronizeJoints();
-    for(const auto& o:scene.Objects())if((runtimeSnapshot||m_hasScripts||o.animation||o.ragdoll||o.characterMotor||o.wheel||o.powertrain||o.deformable||o.weather||!NavigationProperties(o).empty()||!LiquidProperties(o).empty())&&!FindEntity(o.id)){
+    for(const auto& o:scene.Objects())if((runtimeSnapshot||m_hasScripts||o.animation||o.ragdoll||o.characterMotor||o.wheel||o.powertrain||o.deformable||o.weather||o.basicWater||!NavigationProperties(o).empty()||!LiquidProperties(o).empty())&&!FindEntity(o.id)){
         std::string unsupported;
-        if(o.scripts.empty()&&!ValidateEntityDefinition(o,unsupported))continue;
+        // A validated cold snapshot contains scene-authored global owners too.
+        // Runtime-spawn restrictions must not omit their saved state records.
+        if(!runtimeSnapshot&&o.scripts.empty()&&!ValidateEntityDefinition(o,unsupported))continue;
         EntityRecord e;e.id=o.id;e.name=o.name;e.definition=o;e.authored=true;e.requiresFull=true;
         e.state=StateFromDefinition(o);e.slot=std::numeric_limits<std::size_t>::max();m_extraEntities.push_back(e);
     }
@@ -406,7 +409,7 @@ bool RuntimeWorld::AppendSceneObjects(const Scene& scene, bool authored,
         return false;
     };
 
-    const bool particleWater=!m_fluidVolumes.empty()||std::any_of(scene.Objects().begin(),scene.Objects().end(),[](const auto& o){return bool(o.fluidVolume);});
+    const bool particleWater=m_advancedFluids&&(!m_fluidVolumes.empty()||std::any_of(scene.Objects().begin(),scene.Objects().end(),[](const auto& o){return bool(o.fluidVolume);}));
     for (const SceneObject& o : scene.Objects()) {
         if(!ValidateCollisionPlacement(o,outError)||!ValidateCollisionFluid(o,particleWater,outError))return fail(o,outError);
         if(o.ui&&o.ui->enabled){std::string uiError;if(!UI().Load(o.ui->asset,o.ui->name,o.id,uiError))return fail(o,uiError);}
@@ -415,9 +418,14 @@ bool RuntimeWorld::AppendSceneObjects(const Scene& scene, bool authored,
             m_planets.emplace(o.id,std::make_unique<PlanetTiles>(*o.planet,&m_physics,0,kAllCategories,o.tags));}
         m_hasScripts|=!o.scripts.empty();
         if(o.deformable){if(o.body||o.animation||o.ragdoll||o.characterMotor||o.transform.scale!=glm::vec3(1))return fail(o,"deformable owns node motion; owner cannot have another motion producer or nonunit scale");std::string error;if(!ValidDeformableSettings(*o.deformable,error)||!ValidateVisualAssets(o,error))return fail(o,error);if(m_assets){m_assets->AddRef(o.deformable->asset);m_referencedAssets.push_back(o.deformable->asset);m_assets->RequestDeformable(o.deformable->asset);}}
-        m_hasLiquid|=!LiquidProperties(o).empty();
+        m_hasLiquid|=m_advancedFluids&&!LiquidProperties(o).empty();
+        if(o.basicWater){
+            if(!ValidateBasicWater(*o.basicWater,outError))return fail(o,outError);
+            if(o.transform.scale!=glm::vec3(1))return fail(o,"basic water uses explicit extents; scale must be one");
+            m_basicWaterOwners.insert(o.id);
+        }
         if(o.body&&m_assets){std::vector<std::string> ids;if(!o.body->collisionAsset.empty())ids.push_back(o.body->collisionAsset);for(auto& c:o.body->compoundBoxes)if(!c.assetId.empty())ids.push_back(c.assetId);for(auto& id:ids){m_assets->AddRef(id);m_referencedAssets.push_back(id);m_assets->RequestCollision(id,JobPriority::High);}}
-        if((o.liquidBasin||o.liquidContainer)&&m_assets){std::vector<std::string> ids;if(o.liquidBasin)ids={o.liquidBasin->geometry,o.liquidBasin->asset};else ids={o.liquidContainer->geometry};for(auto id:ids){m_assets->AddRef(id);m_referencedAssets.push_back(id);m_assets->RequestLiquid(id);}}
+        if(m_advancedFluids&&(o.liquidBasin||o.liquidContainer)&&m_assets){std::vector<std::string> ids;if(o.liquidBasin)ids={o.liquidBasin->geometry,o.liquidBasin->asset};else ids={o.liquidContainer->geometry};for(auto id:ids){m_assets->AddRef(id);m_referencedAssets.push_back(id);m_assets->RequestLiquid(id);}}
         m_hasNavigation|=o.navigationSurface.has_value()||o.navigationAgent.has_value()||o.navigationObstacle.has_value()||o.navigationLink.has_value()||o.navigationModifier.has_value();
         m_scriptDefinitions[o.id]=o;
         if(!RegisterWeather(o,outError))return fail(o,outError);
@@ -679,7 +687,7 @@ bool RuntimeWorld::AppendSceneObjects(const Scene& scene, bool authored,
         }
 
         // --- Fluid volume ---
-        if (o.fluidVolume) {
+        if (m_advancedFluids && o.fluidVolume) {
             FluidVolume fv;
             fv.id = o.id;
             fv.component = *o.fluidVolume;
@@ -781,6 +789,7 @@ std::vector<BodyHandle> RuntimeWorld::PickableBodies() const {
 }
 
 void RuntimeWorld::PopulateFluid() {
+    if(!m_advancedFluids || !m_fluid)return;
     if (!m_fluidVolumes.empty()) m_fluidCoupling = std::make_unique<ProductionFluidCoupling>();
     else m_fluidCoupling.reset();
     m_fluid->Clear();
@@ -885,7 +894,7 @@ void RuntimeWorld::RestoreAuthoredState() {
     ++m_entityVersion;
     RebuildCelestialParticipants();
     m_combustion.Reset();
-    m_liquid=std::make_unique<LiquidSystem>();
+    m_liquid=std::make_unique<LiquidSystem>(m_advancedFluids);
     PopulateFluid();
     // Weather is reconstructed after authored owner poses and hierarchy have
     // been restored, so immediate queries see the reset field.
@@ -1079,6 +1088,7 @@ bool RuntimeWorld::DestroyEntity(EntityId id, std::string* outError) {
     ReleaseEntityAudio(id);
     if(m_ui)m_ui->RemoveOwner(id);
     ReleaseRenderResources(id);
+    m_basicWaterOwners.erase(id);
     e->lifecycle = EntityLifecycle::Destroyed;
     if (m_cameraRenderer) for (auto& camera : m_renderCameras) {
         if (camera.id == id) { m_cameraRenderer->DestroyRenderTarget(camera.target); camera.target = {}; }
@@ -1404,7 +1414,7 @@ void RuntimeWorld::Destroy() {
     ClearCharacters();
     m_animationInstances.clear();m_physicalAnimations.clear();m_balances.clear();m_animationOwners.clear();
     m_jointOwners.clear();m_jointParticipants.clear();m_runtimeJoints.clear();m_wheels.clear();m_wheelOwners.clear();m_wheelParticipants.clear();m_powertrains.clear();m_powertrainOwners.clear();m_powertrainParticipants.clear();
-    m_runtimeTerrain.reset();m_liquid=std::make_unique<LiquidSystem>();m_hasLiquid=false;m_navigation.reset();m_ui.reset();m_localization.reset();pointerCapture=false;m_scriptDefinitions.clear();m_scriptOwners.clear();m_characterOwners.clear();m_touchEntityHistory.clear();m_touchArticulationHistory.clear();m_hasScripts=false;m_hasNavigation=false;
+    m_runtimeTerrain.reset();m_liquid=std::make_unique<LiquidSystem>(false);m_hasLiquid=false;m_basicWaterOwners.clear();m_navigation.reset();m_ui.reset();m_localization.reset();pointerCapture=false;m_scriptDefinitions.clear();m_scriptOwners.clear();m_characterOwners.clear();m_touchEntityHistory.clear();m_touchArticulationHistory.clear();m_hasScripts=false;m_hasNavigation=false;
     EndAudio();
     m_particleEmitters.clear();
     m_audioEmitters.clear();m_audioZones.clear();m_audioIdentities.clear();m_audioListener.reset();m_audioSystem=nullptr;

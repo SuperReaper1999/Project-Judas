@@ -13,13 +13,14 @@ void LiquidSurface::Persist(SaveArchive& a){
  // Derived aperture/optical/mesh caches are rebuilt from immutable geometry.
 }
 bool LiquidSystem::PreparePersistence(RuntimeWorld& world,std::string& error){
+ if(!world.AdvancedFluidsEnabled()){if(!m_states.empty()||!m_parcels.empty()){error="advanced fluid state requires Project Settings > Experimental > Advanced Fluid Dynamics";return false;}return true;}
  Synchronize(world);
  if(!m_errors.empty()){error="liquid participant: "+m_errors.begin()->second;return false;}
  for(const auto& o:world.ScriptObjects())if((o.liquidBasin||o.liquidContainer)&&!Handle(o.id).id){error="loading";return false;}
  return true;
 }
 void LiquidSystem::Persist(SaveArchive& a){
- uint32_t count=uint32_t(m_states.size());a(count);a.Require(count==m_states.size(),"saved liquid owner count mismatch");
+ uint32_t count=uint32_t(m_states.size());a(count);a.Require(m_simulationAllowed||count==0,"saved advanced liquid state requires Project Settings > Experimental > Advanced Fluid Dynamics");a.Require(count==m_states.size(),"saved liquid owner count mismatch");
  std::set<SceneObjectId> seen;
  for(uint32_t i=0;i<count;++i){SceneObjectId entity=0;LiquidState* state=nullptr;
   if(!a.reading){auto it=m_states.begin();std::advance(it,i);state=&it->second;entity=state->entity;}

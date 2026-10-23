@@ -1,3 +1,4 @@
+#include "Project.h"
 // FTFT9 actual authored-scene -> ordinary fixed-step hybrid body checks.
 #include <algorithm>
 #include <chrono>
@@ -62,7 +63,7 @@ Result Run(const std::string& name,float spacing,float densityRatio,float sizeSc
    if(!present&&start>=0){const int n=x-start;auto& water=scene.CreateObject("liquid");water.fluidVolume=SceneFluidVolumeComponent{};water.fluidVolume->spacing=spacing;water.fluidVolume->countX=n;water.fluidVolume->countY=1;water.fluidVolume->countZ=1;water.transform.rotation=q;water.transform.position=q*glm::vec3((start+.5f*n)*spacing-1,(y+.5f)*spacing,(z+.5f)*spacing-1);particles+=n;start=-1;}
  }}
  std::string text,error;SaveSceneToString(scene,text);std::ofstream(out/(name+".judas"))<<text;Scene loaded;Check(LoadSceneFromString(text,loaded,error),name+" scene load "+error);
- RuntimeWorld world;GameSession session;Window window;window.SetTestInputMode(true);if(!world.Build(loaded,nullptr,error)||!session.Begin(world,error)){Check(false,name+" runtime build "+error);return {};}
+ RuntimeWorld world;ProjectSettings experimental;experimental.advancedFluidDynamics=true;world.ConfigureProject(experimental);GameSession session;Window window;window.SetTestInputMode(true);if(!world.Build(loaded,nullptr,error)||!session.Begin(world,error)){Check(false,name+" runtime build "+error);return {};}
  SceneObject dynamicDefinition=*loaded.Find(id); dynamicDefinition.id=kInvalidSceneObjectId;dynamicDefinition.body->motion=SceneBodyMotion::Dynamic;
  EntityId dynamicId=id;
  auto snapshot=[&](const std::string& stage,BodyHandle observed){

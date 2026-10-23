@@ -1,3 +1,4 @@
+#include "Project.h"
 // FTFT9 direct production-path contained-particle impulse budget witness.
 #include <cmath>
 #include <iomanip>
@@ -15,7 +16,7 @@ int Run(float bodyMass,const glm::quat& rotation,const glm::vec3& offset,float b
  auto& gravity=scene.CreateObject("zero acceleration");gravity.gravity=SceneGravityComponent{};gravity.gravity->kind=SceneGravityKind::Uniform;gravity.gravity->magnitude=0;gravity.gravity->regionShape=SceneRegionShape::Box;gravity.gravity->regionHalfExtents=glm::vec3(100);
  auto& wall=scene.CreateObject("boundary");const auto id=wall.id;wall.body=SceneBodyComponent{};wall.body->motion=SceneBodyMotion::Dynamic;wall.body->mass=bodyMass;wall.body->initialLinearVelocity=rotation*glm::vec3(boost,0,0);wall.body->halfExtents={.05f,1,1};wall.body->friction=0;wall.body->restitution=0;wall.body->fluidCavities.push_back({{-.55f,0,0},{.5f,.5f,.5f}});wall.transform.position=offset+rotation*glm::vec3(.55f,0,0);wall.transform.rotation=rotation;
  auto& volume=scene.CreateObject("liquid");volume.fluidVolume=SceneFluidVolumeComponent{};volume.fluidVolume->countX=1;volume.fluidVolume->countY=1;volume.fluidVolume->countZ=1;volume.fluidVolume->spacing=std::cbrt(.1f);volume.transform.position={.47f,0,0};
- RuntimeWorld world;GameSession session;Window window;window.SetTestInputMode(true);std::string error;
+ RuntimeWorld world;ProjectSettings experimental;experimental.advancedFluidDynamics=true;world.ConfigureProject(experimental);GameSession session;Window window;window.SetTestInputMode(true);std::string error;
  if(!world.Build(scene,nullptr,error)||!session.Begin(world,error)){std::cerr<<error<<'\n';return 2;}
  // Public runtime API sets the prescribed initial fluid velocity. There is no
  // alternative integration/contact path: the ordinary StepPlayedWorld runs.

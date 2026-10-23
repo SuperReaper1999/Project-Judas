@@ -87,6 +87,7 @@ int RunDedicated(const std::string& projectPath, unsigned port, double duration)
     world.legacyGameplay = false;
     world.audioGroups = project.Settings().audio;
     world.SetSceneControl(control);
+    world.ConfigureProject(project.Settings());
     if (!world.Build(scene, &resources, error, &project.Settings().classification,
                      &project.Settings().navigation))
         throw std::runtime_error("World: " + error);

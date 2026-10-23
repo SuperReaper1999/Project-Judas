@@ -947,6 +947,9 @@ JSValue ScriptSystem::Impl::Native(JSContext* c,JSValueConst,int argc,JSValueCon
         glm::vec3 p,up,tangent;double height,radius;
         if(!ReadVec(c,arg(1),p)||!ReadVec(c,arg(2),up)||!ReadVec(c,arg(5),tangent)||JS_ToFloat64(c,&height,arg(3))||JS_ToFloat64(c,&radius,arg(4))||!std::isfinite(height)||!std::isfinite(radius)||height<0||radius<=0||glm::length(up)<1e-6f||glm::length(glm::cross(up,tangent))<1e-6f)return JS_ThrowTypeError(c,"invalid liquid query");
         auto sample=world.HasFluid()?world.FluidCoupling().SampleField(p,glm::normalize(up),float(height),float(radius),tangent):FluidFieldSample{};
+        if(!world.WaterSwimmingEnabled())sample={};
+        else {auto basic=world.SampleWater(p,glm::normalize(up),float(height),float(radius));
+            if(basic.immersion>sample.fraction)sample={basic.immersion,basic.density,basic.velocity,{0,0,0}};}
         auto o=JS_NewObject(c);JS_SetPropertyStr(c,o,"immersion",JS_NewFloat64(c,sample.fraction));JS_SetPropertyStr(c,o,"density",JS_NewFloat64(c,sample.density));JS_SetPropertyStr(c,o,"velocity",Vec(c,sample.velocity));JS_SetPropertyStr(c,o,"acceleration",Vec(c,sample.acceleration));return o;
     }
     if(op.rfind("fracture",0)==0){

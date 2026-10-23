@@ -1,3 +1,4 @@
+#include "Project.h"
 #include "RuntimeWorld.h"
 #include "ResourceManager.h"
 #include "WorldPersistence.h"
@@ -121,7 +122,7 @@ void LiquidContract(const fs::path& output, bool radial, std::optional<glm::quat
     auto scene = LiquidFixture(output, assets, radial, error, authoredRotation);
     JobSystem jobs(2);
     ResourceManager resources(nullptr, &assets, &jobs);
-    RuntimeWorld world;
+    RuntimeWorld world;ProjectSettings fluids;fluids.advancedFluidDynamics=true;world.ConfigureProject(fluids);
     world.legacyGameplay = false;
     const bool built = world.Build(scene, &resources, error);
     Check(built, "authored world validates original baked fingerprint: " + error);
@@ -256,7 +257,7 @@ void LiquidContract(const fs::path& output, bool radial, std::optional<glm::quat
     }
     Check(captured, "shifted disturbed liquid captures through normal participants: " + error);
     Scene saved;
-    RuntimeWorld cold;
+    RuntimeWorld cold;ProjectSettings coldFluids;coldFluids.advancedFluidDynamics=true;cold.ConfigureProject(coldFluids);
     cold.legacyGameplay = false;
     Check(WorldPersistence::SceneFrom(chunks, saved, error) &&
           cold.Build(saved, &resources, error, nullptr, nullptr, true) &&
@@ -327,7 +328,7 @@ void ColdContract(const fs::path& output) {
     JobSystem jobs(2);
     ResourceManager resources(nullptr, &assets, &jobs);
     Scene scene;
-    RuntimeWorld world;
+    RuntimeWorld world;ProjectSettings fluids;fluids.advancedFluidDynamics=true;world.ConfigureProject(fluids);
     world.legacyGameplay = false;
     Check(WorldPersistence::SceneFrom(snapshot.participants, scene, error) &&
           world.Build(scene, &resources, error, nullptr, nullptr, true),
@@ -367,7 +368,7 @@ void AtmosphereContract() {
     fuel.body = SceneBodyComponent{};
     fuel.body->motion = SceneBodyMotion::Dynamic;
     fuel.combustible = SceneCombustibleComponent{};
-    RuntimeWorld world;
+    RuntimeWorld world;ProjectSettings fluids;fluids.advancedFluidDynamics=true;world.ConfigureProject(fluids);
     world.legacyGameplay = false;
     std::string error;
     Check(world.Build(scene, nullptr, error), "ordinary gas and combustible world builds: " + error);
@@ -426,7 +427,7 @@ void TransientThermalContract() {
 void CaptureFailureContract() {
     Scene scene;
     scene.CreateObject("motor").characterMotor = CharacterMotorSettings{};
-    RuntimeWorld world;
+    RuntimeWorld world;ProjectSettings fluids;fluids.advancedFluidDynamics=true;world.ConfigureProject(fluids);
     world.legacyGameplay = false;
     std::string error;
     Check(world.Build(scene, nullptr, error), "normal motor world builds for late-participant failure control");
@@ -444,7 +445,7 @@ void CaptureFailureContract() {
 void LegacyBoundaryContract() {
     Scene scene;
     scene.CreateObject("legacy particle owner").fluidVolume = SceneFluidVolumeComponent{};
-    RuntimeWorld world;
+    RuntimeWorld world;ProjectSettings experimental;experimental.advancedFluidDynamics=true;world.ConfigureProject(experimental);
     world.legacyGameplay = false;
     std::string error;
     const bool built = world.Build(scene, nullptr, error);

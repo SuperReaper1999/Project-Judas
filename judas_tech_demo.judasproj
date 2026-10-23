@@ -1,4 +1,5 @@
 JudasProject 1
+advanced-fluid-dynamics "true"
 name "Judas Technology Demonstration"
 startup-scene "assets/scenes/terrain.judas"
 assets-dir "assets"

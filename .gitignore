@@ -32,3 +32,6 @@ projects/*/Saves/*.judasstate
 
 # M93 source artwork uses OBJ meshes, not compiler object files.
 !projects/asset_lab/SourceArt/*.obj
+
+# Isolated Pre-Alpha project-settings/water review build.
+/build-water/

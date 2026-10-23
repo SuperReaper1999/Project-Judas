@@ -98,6 +98,7 @@ bool OptEq(const std::optional<T>& a, const std::optional<T>& b, F&& equal) {
 }  // namespace
 
 bool SceneObjectsEqual(const SceneObject& a, const SceneObject& b) {
+    if(bool(a.basicWater)!=bool(b.basicWater)||(a.basicWater&&EncodeBasicWater(*a.basicWater)!=EncodeBasicWater(*b.basicWater)))return false;
     if(bool(a.planet)!=bool(b.planet)||(a.planet&&EncodePlanetSettings(*a.planet)!=EncodePlanetSettings(*b.planet)))return false;
     if(bool(a.weather)!=bool(b.weather)||(a.weather&&EncodeWeatherSettings(*a.weather)!=EncodeWeatherSettings(*b.weather)))return false;
     if(bool(a.weatherResponse)!=bool(b.weatherResponse)||(a.weatherResponse&&EncodeWeatherResponseSettings(*a.weatherResponse)!=EncodeWeatherResponseSettings(*b.weatherResponse)))return false;

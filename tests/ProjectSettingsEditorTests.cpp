@@ -1,0 +1,47 @@
+#include "editor/EditorPanels.h"
+#include "editor/EditorDocument.h"
+#include "Project.h"
+#include "imgui.h"
+#include "imgui_internal.h"
+#include <chrono>
+#include <filesystem>
+#include <iostream>
+namespace {
+int checks=0,failures=0;
+void Check(bool v,const char* what){++checks;failures+=!v;std::cout<<(v?"PASS ":"FAIL ")<<what<<'\n';}
+}
+int main(){
+    const auto root=std::filesystem::temp_directory_path()/("judas-water-settings-"+std::to_string(std::chrono::steady_clock::now().time_since_epoch().count()));
+    Project project;std::string error;
+    Check(Project::CreateNew(root.string(),"Settings workflow",project,error),"create ordinary project");
+    ImGui::CreateContext();auto& io=ImGui::GetIO();io.IniFilename=nullptr;io.LogFilename=nullptr;io.DisplaySize={1280,800};io.DeltaTime=1.f/60;
+    unsigned char* pixels;int width,height;io.Fonts->GetTexDataAsRGBA32(&pixels,&width,&height);
+    EditorPanelState state;state.project=&project;state.showProjectSettings=true;state.mode=EditorMode::Edit;EditorRequests requests;EditorDocument doc;
+    auto frame=[&](){requests={};ImGui::NewFrame();ImGui::SetNextWindowPos({20,20},ImGuiCond_Always);DrawProjectSettingsPanel(doc,state,requests);ImGui::Render();};
+    auto child=[&](const char* component)->ImGuiWindow*{for(auto* w:ImGui::GetCurrentContext()->Windows)if(w->ParentWindow&&std::string(w->ParentWindow->Name)=="Project Settings"&&std::string(w->Name).find(std::string("/")+component+"_")!=std::string::npos)return w;return nullptr;};
+    auto activate=[&](ImGuiWindow* w,const char* label){Check(w!=nullptr,"actual settings window available");if(w){ImGui::ActivateItemByID(w->GetID(label));frame();frame();}};
+    frame();frame();
+    activate(child("Categories"),"Experimental");
+    Check(!project.Settings().advancedFluidDynamics,"fresh project leaves advanced fluids disabled");
+    activate(child("Settings"),"Advanced Fluid Dynamics");
+    Check(!project.Settings().advancedFluidDynamics&&ImGui::IsPopupOpen("Enable experimental fluid physics?",ImGuiPopupFlags_AnyPopupId),"checkbox opens explicit warning without enabling the solver");
+    activate(ImGui::FindWindowByName("Enable experimental fluid physics?"),"Cancel");
+    Check(!project.Settings().advancedFluidDynamics,"warning cancel does not opt in");
+    activate(child("Settings"),"Advanced Fluid Dynamics");
+    activate(ImGui::FindWindowByName("Enable experimental fluid physics?"),"Enable experimental fluids");
+    Check(project.Settings().advancedFluidDynamics,"warning confirmation explicitly opts in");
+    activate(ImGui::FindWindowByName("Project Settings"),"Save project");
+    // Queue once more and inspect that exact frame's ordinary editor request.
+    ImGui::ActivateItemByID(ImGui::FindWindowByName("Project Settings")->GetID("Save project"));frame();
+    Check(requests.saveProject,"Save project button emits the real editor command");
+    Check(project.Save(error),"ordinary project save succeeds");Project reopened;
+    Check(reopened.Load(project.ProjectFile(),error)&&reopened.Settings().advancedFluidDynamics,"fresh editor session retains explicit opt-in in named project data");
+    state.mode=EditorMode::Play;activate(child("Settings"),"Advanced Fluid Dynamics");Check(project.Settings().advancedFluidDynamics,"running world settings cannot be changed through disabled controls");
+    state.mode=EditorMode::Edit;activate(child("Settings"),"Advanced Fluid Dynamics");Check(!project.Settings().advancedFluidDynamics,"explicit opt-out applies to next world");
+    activate(child("Categories"),"Water");Check(project.Settings().basicWater&&project.Settings().waterSwimming,"basic water and swimming remain independent of opt-out");
+    activate(child("Settings"),"Create basic water");
+    ImGui::ActivateItemByID(child("Settings")->GetID("Create basic water"));frame();
+    Check(requests.createKind=="basic-water","Water page uses ordinary scene create command");
+    ImGui::DestroyContext();std::filesystem::remove_all(root);
+    std::cout<<"ProjectSettingsEditorTests: "<<checks<<" checks, "<<failures<<" failures\n";return failures?1:0;
+}

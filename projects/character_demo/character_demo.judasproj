@@ -1,4 +1,5 @@
 JudasProject 1
+advanced-fluid-dynamics "true"
 name "Scriptable Character Motor"
 startup-scene "Scenes/flat.judas"
 assets-dir "Assets"

@@ -2,6 +2,7 @@
 #include "Deformable.h"
 #include "PlanetTerrain.h"
 #include "Weather.h"
+#include "BasicWater.h"
 #include "Classification.h"
 #include "Material.h"
 #include "GravitySelection.h"
@@ -311,6 +312,7 @@ struct SceneSocketComponent {SceneObjectId target=0;std::string joint;SceneTrans
 struct SceneJointComponent {SceneObjectId bodyA=0,bodyB=0;JointSettings settings;};
 
 struct SceneObject {
+    std::optional<BasicWaterSettings> basicWater;
     std::optional<PlanetSettings> planet;
     // M86 profiles are ordinary authored components. Runtime interpolation,
     // storms and sampled wind belong to RuntimeWorld's WeatherSystem.

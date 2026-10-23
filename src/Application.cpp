@@ -109,6 +109,7 @@ int Application::Run(int argc, char** argv, ApplicationControl* control) {
     sceneControl->EnableSaves(!options.worldStatePath.empty());
     if(options.project.IsLoaded())worldOwner->audioGroups=options.project.Settings().audio;
     worldOwner->legacyGameplay = !options.project.IsLoaded() || options.project.Settings().legacyGameplay;
+    if(options.project.IsLoaded())worldOwner->ConfigureProject(options.project.Settings());
     worldOwner->SetSceneControl(sceneControl);
     RuntimeWorld& world=*worldOwner;
     if (!world.Build(scene, &host.Resources(), error, options.project.IsLoaded()?&options.project.Settings().classification:nullptr, options.project.IsLoaded()?&options.project.Settings().navigation:nullptr)) {

@@ -23,7 +23,7 @@ int main(int argc,char** argv){
  host.OpenProjectAssets(project.RootDir(),project.AssetsDir());auto& window=host.GetWindow();window.SetTestInputMode(true);window.Input().SetMap(project.Settings().input,error);
  for(const char* name:{"lab","radial"}){
   if(argc>1&&std::string(argv[1])!=name)continue;
-  bool radial=std::string(name)=="radial";Scene scene;RuntimeWorld world;GameSession game;
+  bool radial=std::string(name)=="radial";Scene scene;RuntimeWorld world;world.ConfigureProject(project.Settings());GameSession game;
   check(LoadSceneFromFile(project.RootDir()+"/Scenes/"+name+".judas",scene,error),"registered surface scene loads normally");world.legacyGameplay=false;
   check(world.Build(scene,&host.Resources(),error,&project.Settings().classification)&&game.Begin(world,error),"ordinary resource/world/session build");
   if(!world.IsBuilt()){std::puts(error.c_str());return 1;}

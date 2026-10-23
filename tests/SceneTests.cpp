@@ -1,3 +1,4 @@
+#include "Project.h"
 // Milestone 28: scene data, serialization, stable identity, mutation,
 // runtime instantiation and the authored/runtime boundary — headless (a
 // RuntimeWorld built without a ResourceManager creates no GPU state), no
@@ -289,7 +290,7 @@ void SectionRuntimeLoading() {
     }
     Scene classic;
     LoadSceneFromFile("assets/scenes/classic.judas", classic, error);
-    RuntimeWorld classicWorld;
+    RuntimeWorld classicWorld;ProjectSettings fluids;fluids.advancedFluidDynamics=true;classicWorld.ConfigureProject(fluids);
     classicWorld.Build(classic, nullptr, error);
     Check(classicWorld.GetVehicle().has_value() && classicWorld.Doors().size() == 1 &&
               classicWorld.LightSwitches().size() == 1 && classicWorld.CelestialParticipants().size() == 3 &&
@@ -297,7 +298,7 @@ void SectionRuntimeLoading() {
           "classic scene: vehicle, door, switch, three Newtonian participants, 125 water particles");
     Scene terrain;
     LoadSceneFromFile("assets/scenes/terrain.judas", terrain, error);
-    RuntimeWorld terrainWorld;
+    RuntimeWorld terrainWorld;terrainWorld.ConfigureProject(fluids);
     terrainWorld.Build(terrain, nullptr, error);
     Check(terrainWorld.Terrains().size() == 1 && terrainWorld.GetAtmosphere().has_value() &&
               terrainWorld.Combustibles().size() == 3 && terrainWorld.PointMassSources().size() == 1 &&

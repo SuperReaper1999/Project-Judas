@@ -1,7 +1,11 @@
 # `liquid` and `Entity.liquid` — conserved liquid (M54–M55)
 
 Judas owns quantities, geometry and transfers. JS owns why a game drains, scoops
-or displays water. This API is separate from legacy `world.fluidSample` (PBF).
+or displays water. This API requires **Project Settings → Experimental → Advanced
+Fluid Dynamics**, disabled by default. It is separate from basic-water swimming
+through `world.fluidSample` (which can also sample an opted-in legacy PBF field).
+See [project policy and basic water](../PROJECT_SETTINGS_AND_WATER.md). When advanced
+fluids are disabled, authored owners remain inert and `entity.liquid` is null.
 Units: m³, kg/m³, metres, seconds, N·s for impulses. One litre = .001 m³.
 
 ## `entity.liquid: LiquidVolume | null`

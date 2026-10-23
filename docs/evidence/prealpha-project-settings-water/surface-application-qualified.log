@@ -1,0 +1,69 @@
+Shadow maps: on
+Graphics: 3.3.0 NVIDIA 580.178.04 / NVIDIA GeForce GTX 970/PCIe/SSE2
+Renderer fragment texture units: 32 (material path uses 12)
+PASS ordinary M55 project and logical input map
+PASS normal EngineHost/GL resources
+PASS registered surface scene loads normally
+PASS ordinary resource/world/session build
+PASS baked resources and ordinary JS callbacks resolve without faults
+PASS swimming-sized conserved spatial partition, no bulk particles
+PASS ordinary prefab bucket starts dry
+PASS JS drain changes owner and local allocation together
+PASS JS refill restores quantity while preserving surface state
+PASS normal query reports actual local occupied depth and separate gravity up
+PASS generic momentum impulse disturbs existing water without creating volume
+PASS waves persist and owner/parcel ledger stays conserved
+M55 lab scoop step 0 volume 0.000873317636
+M55 lab scoop step 10 volume 0.00977631658
+M55 lab scoop step 20 volume 0.0186896059
+M55 lab scoop step 30 volume 0.025088
+M55 lab acquired 25.088000000 L ledger 0
+PASS physical opening acquires real moving-surface water with paired ownership
+PASS removed cup retains real conserved water
+PASS pouring moves retained water through conserved parcels
+PASS JS liquid response drives normal CharacterMotor under selected gravity
+M55 lab fixed median 2.8803 p95 2.9974 max 3.0278 ms
+M55 lab offscreen render 640x360 median 17.0744 p95 17.3195 max 17.4285 ms
+M55 lab cells 384 faces 728 parcels 4 bodies 42 draws 16 solve 0.44517 ms iterations 3 residual 1.48079611004e-08 partition 1.70530256582e-13
+M55 lab post-interaction last liquid 2.56679 containers 0.15010 storage 1.19902 solve 0.68421 loading 0.53346 ms; storage tets 6000 base 2717
+M55 body 201 position -3.000 2.944 -3.000 speed 0.016 angular 0.000
+M55 body 4030 position 1.077 2.182 -12.008 speed 0.007 angular 0.204
+M55 lab 100 sample queries 0.029626 ms
+M55 lab optical paths 0.612815 ms
+M55 lab mesh 17421 vertices 0.453595 ms
+PASS complete ledger closes within M54 floating-point tolerance
+PASS continued interaction has no retained solve/script failures
+PASS reload reconstructs surface state and rejects old handles
+PASS Stop clears surfaces, containers and parcels
+PASS registered surface scene loads normally
+PASS ordinary resource/world/session build
+PASS baked resources and ordinary JS callbacks resolve without faults
+PASS swimming-sized conserved spatial partition, no bulk particles
+PASS ordinary prefab bucket starts dry
+PASS JS drain changes owner and local allocation together
+PASS JS refill restores quantity while preserving surface state
+PASS normal query reports actual local occupied depth and separate gravity up
+PASS generic momentum impulse disturbs existing water without creating volume
+PASS waves persist and owner/parcel ledger stays conserved
+M55 radial scoop step 0 volume 0.000670998934
+M55 radial scoop step 10 volume 0.00754488612
+M55 radial scoop step 20 volume 0.01440458
+M55 radial scoop step 30 volume 0.021279241
+M55 radial acquired 25.088000000 L ledger -4.26325641456e-14
+PASS physical opening acquires real moving-surface water with paired ownership
+PASS removed cup retains real conserved water
+PASS pouring moves retained water through conserved parcels
+PASS JS liquid response drives normal CharacterMotor under selected gravity
+M55 radial fixed median 7.7198 p95 8.7308 max 9.1644 ms
+M55 radial offscreen render 640x360 median 17.2991 p95 17.5939 max 17.6917 ms
+M55 radial cells 192 faces 356 parcels 0 bodies 12 draws 10 solve 0.51756 ms iterations 4 residual 2.62822604663e-09 partition 2.84217094304e-14
+M55 radial post-interaction last liquid 6.65229 containers 1.11378 storage 3.39773 solve 0.51853 loading 1.62226 ms; storage tets 28721 base 24862
+M55 body 4108 position 1.006 21.649 -0.038 speed 0.007 angular 0.680
+M55 radial 100 sample queries 0.801902 ms
+M55 radial optical paths 1.089394 ms
+M55 radial mesh 42459 vertices 1.353903 ms
+PASS complete ledger closes within M54 floating-point tolerance
+PASS continued interaction has no retained solve/script failures
+PASS reload reconstructs surface state and rejects old handles
+PASS Stop clears surfaces, containers and parcels
+M55 application 38 checks 0 failures

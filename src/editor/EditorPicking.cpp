@@ -275,6 +275,14 @@ EditorPickHit EditorScenePicker::Pick(const Scene& authored, glm::vec3 origin, g
                           render.halfExtents, render.radius, render.shape == SceneShape::Sphere);
             }
         }
+        if(object.basicWater&&object.basicWater->enabled){
+            Ray local;double distance=0;
+            if(LocalRay(world,transform.position,transform.rotation,glm::vec3(1),local)&&std::abs(local.direction.y)>1e-12){
+                distance=-local.origin.y/local.direction.y;
+                const auto p=local.origin+local.direction*distance;const auto h=object.basicWater->halfExtents;
+                if(distance>=0&&std::abs(p.x)<=h.x&&std::abs(p.z)<=h.z)accept(object.id,distance);
+            }
+        }
         if (object.fluidVolume) {
             const auto& fluid = *object.fluidVolume;
             const glm::vec3 half = 0.5f * fluid.spacing * glm::vec3(fluid.countX, fluid.countY, fluid.countZ);

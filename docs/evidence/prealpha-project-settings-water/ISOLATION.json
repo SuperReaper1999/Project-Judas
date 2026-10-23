@@ -1,0 +1,26 @@
+{
+  "checked_utc": "2026-10-23T18:39:52.672602+00:00",
+  "base": "313f20a82c87cd309968f75344d365f8f0c2428d",
+  "original_tracked_worktree_clean": true,
+  "original_branch": "Experimental",
+  "refs": {
+    "Experimental": "313f20a82c87cd309968f75344d365f8f0c2428d",
+    "origin/Experimental": "313f20a82c87cd309968f75344d365f8f0c2428d",
+    "main": "45f0614fa2eb21a6dc534d555f8abc87a31f4901",
+    "origin/main": "45f0614fa2eb21a6dc534d555f8abc87a31f4901"
+  },
+  "protected_implementation_diff_empty": [
+    "src/physics",
+    "src/PhysicsWorld.cpp",
+    "src/PhysicsWorld.h",
+    "src/ContactSolver.cpp",
+    "src/ImpactSolver.cpp",
+    "src/PhysicalBalance.cpp",
+    "src/PhysicalBalanceController.cpp",
+    "src/FluidWorld.cpp",
+    "src/FluidHydrostatics.cpp",
+    "src/LiquidSurface.cpp",
+    "src/LiquidGeometry.cpp"
+  ],
+  "independent_fluid_research": "No reads, writes or integration during implementation; original research remains isolated."
+}

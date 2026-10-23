@@ -314,6 +314,7 @@ declare module "judas" {
     project(point:Vec3):ViewportPoint|null;
     readonly viewport:{width:number;height:number};
     clearView(): boolean;
+    /** Basic prescribed-water swimming (default), or opted-in PBF. Greatest immersion wins; visual waves do not alter occupancy. */
     fluidSample(point: Vec3, up: Vec3, halfHeight: number, radius: number, tangent: Vec3): FluidSample;
     readonly viewRay: Ray | null;
     queryTags(required?: string[], excluded?: string[]): Entity[];

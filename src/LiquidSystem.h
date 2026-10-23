@@ -24,7 +24,7 @@ class LiquidSystem {
 public:
  bool PreparePersistence(RuntimeWorld&,std::string&);
  void Persist(class SaveArchive&);
- LiquidSystem();
+ explicit LiquidSystem(bool simulationAllowed=true);
  // Local geometry, wave allocation, flow and quantity remain unchanged.
  // Only owner poses and detached world-space parcels follow the physics chart.
  bool CanShiftOrigin(glm::dvec3 delta,std::string& error)const;
@@ -53,6 +53,7 @@ public:
  const std::map<SceneObjectId,std::string>& Errors()const{return m_errors;}
  const std::map<SceneObjectId,bool>& Connections()const{return m_connections;}
 private:
+ bool m_simulationAllowed=true;
  LiquidStepTimes m_stepTimes;
  std::uint64_t m_generation=0,m_next=1,m_nextParcel=1;
  std::map<std::uint64_t,LiquidState> m_states;

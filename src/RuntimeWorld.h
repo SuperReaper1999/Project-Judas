@@ -1,6 +1,7 @@
 #include "RuntimeTerrain.h"
 #include "NavigationSystem.h"
 #include "LiquidSystem.h"
+#include <stdexcept>
 #pragma once
 
 #include <memory>
@@ -249,6 +250,13 @@ public:
     // resource manager. On failure nothing is left allocated and `outError`
     // says which object/component could not be realised.
     bool Build(const Scene& scene, ResourceManager* resources, std::string& outError, const ProjectClassification* categories=nullptr,const ProjectNavigation* navigation=nullptr,bool runtimeSnapshot=false);
+    void ConfigureProject(const struct ProjectSettings&);
+    bool AdvancedFluidsEnabled() const { return m_advancedFluids; }
+    bool BasicWaterEnabled() const { return m_basicWaterEnabled; }
+    bool WaterSwimmingEnabled() const { return m_waterSwimming; }
+    std::vector<BasicWaterInstance> BasicWaters(float alpha=1) const;
+    BasicWaterSample SampleWater(glm::vec3 center,glm::vec3 up,float halfHeight,float radius) const;
+    std::vector<glm::vec2> WaterOpticalPaths(const glm::mat4&,const glm::mat4&,unsigned,unsigned,float) const;
     bool HasPlanets()const{return !m_planets.empty();}
     void PreparePlanets(Renderer&,glm::dvec3 eye,double fov,unsigned pixels,double dt)const;
     void PreparePlanets(Renderer&,const std::vector<PlanetView>&,double dt)const;
@@ -319,16 +327,16 @@ public:
     const CombustionWorld& Combustion() const { return m_combustion; }
     const std::vector<Combustible>& Combustibles() const { return m_combustibles; }
 
-    FluidWorld& Fluid() { return *m_fluid; }
-    const FluidWorld& Fluid() const { return *m_fluid; }
+    FluidWorld& Fluid() { if(!m_fluid)throw std::logic_error("Advanced Fluid Dynamics is disabled; use basic water/swimming queries");return *m_fluid; }
+    const FluidWorld& Fluid() const { if(!m_fluid)throw std::logic_error("Advanced Fluid Dynamics is disabled; use basic water/swimming queries");return *m_fluid; }
     const FluidSettings& FluidSettingsUsed() const { return m_fluidSettings; }
     const std::vector<FluidVolume>& FluidVolumes() const { return m_fluidVolumes; }
     MeshHandle FluidMesh() const { return m_fluidMesh; }
-    bool FluidSurfaceDirty() const { return m_fluidSurfaceRevision != m_fluid->Revision(); }
+    bool FluidSurfaceDirty() const { return m_fluid && m_fluidSurfaceRevision != m_fluid->Revision(); }
     void MarkFluidSurfaceUploaded() const { m_fluidSurfaceRevision = m_fluid->Revision(); }
     ProductionFluidCoupling& FluidCoupling() { return *m_fluidCoupling; }
     const ProductionFluidCoupling& FluidCoupling() const { return *m_fluidCoupling; }
-    bool HasFluid() const { return !m_fluidVolumes.empty(); }
+    bool HasFluid() const { return m_advancedFluids && !m_fluidVolumes.empty(); }
     // The M25 held-key water source: adds one particle at the next emitter
     // slot if any emitter has capacity. Returns false when none does.
     void UpdateScripts(const InputSystem* input,float dt);
@@ -397,7 +405,7 @@ public:
     void UpdateCharacters(float dt,bool onlyM70=false,bool skipM70=false);
     LiquidSystem& Liquids(){return *m_liquid;}
     const LiquidSystem& Liquids()const{return *m_liquid;}
-    void UpdateLiquids(double dt){if(m_liquid&&m_hasLiquid)m_liquid->Update(*this,dt);}
+    void UpdateLiquids(double dt){if(m_advancedFluids&&m_liquid&&m_hasLiquid)m_liquid->Update(*this,dt);}
     RuntimeTerrain& LiveTerrain(){if(!m_runtimeTerrain)m_runtimeTerrain=std::make_unique<RuntimeTerrain>(*this);return *m_runtimeTerrain;}
     bool RuntimeTerrainBusy(EntityId id)const{auto* status=m_runtimeTerrain?m_runtimeTerrain->Status(id):nullptr;return status&&status->busy;}
     bool HasRuntimeTerrain(EntityId id)const{return m_runtimeTerrain&&m_runtimeTerrain->Has(id);}
@@ -636,8 +644,10 @@ private:
     ProjectClassification m_categories;
     std::unique_ptr<RuntimeTerrain> m_runtimeTerrain;
     std::unique_ptr<NavigationSystem> m_navigation;
-    std::unique_ptr<LiquidSystem> m_liquid=std::make_unique<LiquidSystem>();
+    std::unique_ptr<LiquidSystem> m_liquid=std::make_unique<LiquidSystem>(false);
     bool m_hasLiquid=false;
+    bool m_advancedFluids=false, m_basicWaterEnabled=true, m_waterSwimming=true;
+    std::set<EntityId> m_basicWaterOwners;
     std::map<EntityId,EntityCategories> m_entityCategories;
     bool m_built = false;
     PhysicsWorld m_physics;

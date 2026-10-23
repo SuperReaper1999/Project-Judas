@@ -32,6 +32,10 @@ namespace JudasMods {struct Session;}
 // the existing assets/ tree); a new game gets Assets/ Scenes/ Saves/ from
 // the editor's New Project. Neither layout is assumed by engine code.
 struct ProjectSettings {
+    // Applied at world construction. Changing them in the editor requires restarting Play.
+    bool basicWater = true;
+    bool waterSwimming = true;
+    bool advancedFluidDynamics = false;
     unsigned visualBudgetMiB=0; // opt-in cooked visual working set; 0 preserves pinned legacy demand
     // Missing field preserves historical projects; newly created projects opt out.
     bool legacyGameplay = true;

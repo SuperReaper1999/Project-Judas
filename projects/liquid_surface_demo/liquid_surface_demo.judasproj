@@ -1,4 +1,5 @@
 JudasProject 1
+advanced-fluid-dynamics "true"
 name "Dynamic Liquid Surface Lab"
 startup-scene "Scenes/lab.judas"
 assets-dir "Assets"

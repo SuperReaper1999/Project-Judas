@@ -402,6 +402,8 @@ bool ComputeSceneFingerprint(const Scene& scene, std::string& outFingerprint,
     }
     size_t deformables=0;for(const auto& o:scene.Objects())deformables+=o.deformable.has_value();
     if(deformables){w.Text("Judas.Deformable.1");w.U64(deformables);for(const auto& o:scene.Objects())if(o.deformable){w.U64(o.id);auto properties=DeformableProperties(o);w.U64(properties.size());for(auto [k,v]:properties){w.Text(k);w.Text(v);}}}
+    size_t waters=0;for(const auto& o:scene.Objects())waters+=o.basicWater.has_value();
+    if(waters){w.Text("Judas.BasicWater.1");w.U64(waters);for(const auto& o:scene.Objects())if(o.basicWater){std::string error;if(!ValidateBasicWater(*o.basicWater,error))w.Fail(error);w.U64(o.id);w.Text(EncodeBasicWater(*o.basicWater));}}
     size_t liquid=0;for(const auto& o:scene.Objects())liquid+=!LiquidProperties(o).empty();
     if(liquid){w.Text("Judas.ConservedLiquid.1");w.U64(liquid);for(const auto& o:scene.Objects()){auto properties=LiquidProperties(o);if(properties.empty())continue;std::string error;if(!ValidateLiquidComponents(o,error))w.Fail(error);w.U64(o.id);w.U64(properties.size());for(auto [k,v]:properties){w.Text(k);w.Text(v);}}}
     size_t navigation=0;for(const auto& o:scene.Objects())navigation+=!NavigationProperties(o).empty();

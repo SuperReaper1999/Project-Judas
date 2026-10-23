@@ -1,0 +1,164 @@
+{
+  "scope": "Release native Linux, Ryzen 5 5600, GTX 970; 960x540; 240 controlled rendered frames per mode; not swap-paced FPS",
+  "comparison": "Modes 1 and 2 have the same dry physical endpoint and authored inputs; mode 0 swims and has a different trajectory. GPU pass timers are nested; do not sum them.",
+  "modes": [
+    {
+      "mode": 0,
+      "name": "basic water + swimming",
+      "retained_frames": 120,
+      "gpu": {
+        "Main camera": {
+          "n": 119,
+          "median_ms": 0.287616,
+          "p95_ms": 0.28976,
+          "worst_ms": 0.292736
+        },
+        "Shadow": {
+          "n": 119,
+          "median_ms": 0.032544,
+          "p95_ms": 0.033312,
+          "worst_ms": 0.036448
+        },
+        "Opaque instances": {
+          "n": 238,
+          "median_ms": 0.1068,
+          "p95_ms": 0.192544,
+          "worst_ms": 0.194016
+        },
+        "Basic water surface": {
+          "n": 119,
+          "median_ms": 0.054688,
+          "p95_ms": 0.0552,
+          "worst_ms": 0.05536
+        },
+        "Runtime UI": {
+          "n": 119,
+          "median_ms": 0.000768,
+          "p95_ms": 0.004,
+          "worst_ms": 0.007328
+        }
+      },
+      "diagnostics": {
+        "dropped_events": 0,
+        "exhausted_labels": 0,
+        "exhausted_nodes": 0,
+        "exhausted_threads": 0,
+        "incomplete_scopes": 0,
+        "open_scopes": 0,
+        "truncated_records": 0,
+        "gpu_dropped": 0,
+        "nested_frames": 0
+      },
+      "advanced_work_scopes": [],
+      "peak_rss_bytes": 114855936,
+      "profiler_reserved_estimate_bytes": 70525920
+    },
+    {
+      "mode": 1,
+      "name": "basic water, swimming disabled",
+      "retained_frames": 120,
+      "gpu": {
+        "Main camera": {
+          "n": 119,
+          "median_ms": 0.272352,
+          "p95_ms": 0.273696,
+          "worst_ms": 0.2768
+        },
+        "Shadow": {
+          "n": 119,
+          "median_ms": 0.029568,
+          "p95_ms": 0.03072,
+          "worst_ms": 0.0336
+        },
+        "Opaque instances": {
+          "n": 238,
+          "median_ms": 0.115632,
+          "p95_ms": 0.211136,
+          "worst_ms": 0.211648
+        },
+        "Basic water surface": {
+          "n": 119,
+          "median_ms": 0.0232,
+          "p95_ms": 0.023936,
+          "worst_ms": 0.024256
+        },
+        "Runtime UI": {
+          "n": 119,
+          "median_ms": 0.000736,
+          "p95_ms": 0.004032,
+          "worst_ms": 0.007392
+        }
+      },
+      "diagnostics": {
+        "dropped_events": 0,
+        "exhausted_labels": 0,
+        "exhausted_nodes": 0,
+        "exhausted_threads": 0,
+        "incomplete_scopes": 0,
+        "open_scopes": 0,
+        "truncated_records": 0,
+        "gpu_dropped": 0,
+        "nested_frames": 0
+      },
+      "advanced_work_scopes": [],
+      "peak_rss_bytes": 114855936,
+      "profiler_reserved_estimate_bytes": 70525920
+    },
+    {
+      "mode": 2,
+      "name": "basic water disabled",
+      "retained_frames": 120,
+      "gpu": {
+        "Main camera": {
+          "n": 119,
+          "median_ms": 0.204928,
+          "p95_ms": 0.208064,
+          "worst_ms": 0.210112
+        },
+        "Shadow": {
+          "n": 119,
+          "median_ms": 0.029792,
+          "p95_ms": 0.032864,
+          "worst_ms": 0.034688
+        },
+        "Opaque instances": {
+          "n": 238,
+          "median_ms": 0.096096,
+          "p95_ms": 0.171648,
+          "worst_ms": 0.172032
+        },
+        "Runtime UI": {
+          "n": 119,
+          "median_ms": 0.001376,
+          "p95_ms": 0.005248,
+          "worst_ms": 0.005856
+        }
+      },
+      "diagnostics": {
+        "dropped_events": 0,
+        "exhausted_labels": 0,
+        "exhausted_nodes": 0,
+        "exhausted_threads": 0,
+        "incomplete_scopes": 0,
+        "open_scopes": 0,
+        "truncated_records": 0,
+        "gpu_dropped": 0,
+        "nested_frames": 0
+      },
+      "advanced_work_scopes": [],
+      "peak_rss_bytes": 114855936,
+      "profiler_reserved_estimate_bytes": 70525920
+    }
+  ],
+  "cpu_log_lines": [
+    "ENDPOINT mode=0 y=-0.822977 vy=-0.0464979",
+    "MEASURE basic-water fixed-step n=229 mean=0.0754056 p95=0.087645 worst=0.216708 ms",
+    "MEASURE basic-water render-and-frame n=240 mean=0.48471 p95=0.481097 worst=19.819 ms",
+    "ENDPOINT mode=1 y=-2.28272 vy=-0.1635",
+    "MEASURE swimming-off fixed-step n=229 mean=0.0821233 p95=0.098125 worst=0.141807 ms",
+    "MEASURE swimming-off render-and-frame n=240 mean=0.39172 p95=0.472681 worst=2.17171 ms",
+    "ENDPOINT mode=2 y=-2.28272 vy=-0.1635",
+    "MEASURE water-off fixed-step n=229 mean=0.0801258 p95=0.092294 worst=0.120478 ms",
+    "MEASURE water-off render-and-frame n=240 mean=0.346926 p95=0.398422 worst=2.04078 ms"
+  ]
+}

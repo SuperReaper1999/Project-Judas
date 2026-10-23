@@ -1,5 +1,7 @@
 # Dynamic liquid surfaces — M55
 
+> Advanced fluid projects must explicitly enable **Project Settings → Experimental → Advanced Fluid Dynamics** (default off). The shipped fluid examples opt in. For ordinary visual water and swimming without these solvers, use [basic water](PROJECT_SETTINGS_AND_WATER.md).
+
 **Current status:** M55 is operator-accepted and checkpointed. The unnumbered
 Pre-Alpha rotated-bake follow-up described below is a separate correction awaiting
 human acceptance. Original milestone measurements below remain historical;

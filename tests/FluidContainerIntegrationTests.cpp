@@ -1,3 +1,4 @@
+#include "Project.h"
 // FTFT9: actual authored-container, GameSession and StepPlayedWorld coupling.
 #include <algorithm>
 #include <chrono>
@@ -117,7 +118,7 @@ Result Run(const fs::path& output, const std::string& kind, float spacing, float
     Scene authored = Fixture(spacing,mass,hasSupport,gravity,sealed), loaded;
     std::string text,error; SaveSceneToString(authored,text); std::ofstream(output/(result.name+".judas"))<<text;
     Check(LoadSceneFromString(text,loaded,error),result.name+" serialized scene load: "+error);
-    RuntimeWorld world; GameSession session; Window window; window.SetTestInputMode(true);
+    RuntimeWorld world;ProjectSettings experimental;experimental.advancedFluidDynamics=true;world.ConfigureProject(experimental); GameSession session; Window window; window.SetTestInputMode(true);
     if (!world.Build(loaded,nullptr,error) || !session.Begin(world,error)) {
         Check(false,result.name+" ordinary runtime/session: "+error); result.failed=failures-beforeFailures; return result;
     }

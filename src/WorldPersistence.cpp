@@ -20,8 +20,8 @@ void layerSettings(SaveArchive& a,AnimationLayerSettings& s){a(s.id,s.clip,s.ref
 void constraint(SaveArchive& a,JointSettings& s,unsigned version){a(s.type,s.anchorA,s.anchorB,s.frameA,s.frameB,s.enabled,s.limits,s.motor,s.spring,s.lower,s.upper,s.speed,s.maxForce,s.rest,s.stiffness,s.damping);if(version>=2)a(s.rotationalResistance);a.Require(ValidJointSettings(s),"invalid saved constraint");}
 bool NeedsAnimationObservation(const RuntimeWorld::AnimationInstance& instance){return instance.asset&&std::any_of(instance.asset->clips.begin(),instance.asset->clips.end(),[](const auto& clip){return !clip.events.empty()||!clip.motion.empty();});}
 uint32_t count(SaveArchive& a,size_t size,uint32_t limit=8192){uint32_t n=uint32_t(size);a(n);a.Require(n<=limit,"participant record limit");return n;}
-const char* UnsupportedSnapshotComponent(const SceneObject& object) {
- if(object.fluidVolume)return "legacy PBF";
+const char* UnsupportedSnapshotComponent(const SceneObject& object,bool advancedFluids) {
+ if(advancedFluids&&object.fluidVolume)return "legacy PBF";
  if(object.atmosphere)return "atmosphere";
  if(object.combustible)return "combustion";
  if(object.vehicle)return "legacy vehicle";
@@ -298,7 +298,7 @@ bool WorldPersistence::Prepare(RuntimeWorld& w,std::string& error){
  error.clear();
  // Diagnose unsupported ownership before creating lazy participants or touching
  // a caller's existing snapshot. Live-origin support does not imply save support.
- for(const auto& object:w.ScriptObjects())if(const auto* component=UnsupportedSnapshotComponent(object)){
+ for(const auto& object:w.ScriptObjects())if(const auto* component=UnsupportedSnapshotComponent(object,w.AdvancedFluidsEnabled())){
   error="entity "+std::to_string(object.id)+" component "+component+": no modern slot participant; separate legacy contract only";
   return false;
  }

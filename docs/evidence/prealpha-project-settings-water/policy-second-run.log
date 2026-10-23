@@ -1,0 +1,48 @@
+PASS basic water/swimming on, advanced off by default
+PASS project policy round trip
+PASS all policy values persist independently
+PASS missing old fields select safe defaults
+PASS invalid project boolean rejected atomically
+PASS invalid project boolean rejected atomically
+PASS invalid project boolean rejected atomically
+PASS invalid project boolean rejected atomically
+PASS named authoring preserves all project policy flags
+PASS water component exact codec round trip
+PASS unknown water schema rejected
+PASS boolean is not a numeric density
+PASS unknown water field rejected
+PASS invalid water geometry rejected
+PASS invalid water geometry rejected
+PASS invalid water geometry rejected
+PASS fully immersed capsule samples wet without a fluid solver
+PASS dry capsule samples dry
+PASS surface partial immersion
+PASS outside footprint is dry
+PASS overlap never double counts immersion
+PASS rotated water/swimming/current are covariant
+PASS underwater optical interval uses real water depth
+PASS no water produces no attenuation
+PASS water scene serializes
+PASS water scene persistence preserves component
+PASS water scene fingerprint
+PASS wave parameters participate in content identity
+PASS default world constructs authored basic and dormant advanced components: 
+PASS default world allocates no particle field or particle owners
+PASS runtime water query works with advanced disabled
+PASS default world session begins
+PASS 120 real steps perform no advanced fluid work
+PASS default emitter cannot activate a hidden particle solver
+PASS live project policy cannot mutate under an existing world
+PASS cold-save capture with dormant advanced authorship: 
+PASS cold save reconstructs basic water authoring
+FAIL cold restore uses ordinary persistence with default policy: 
+PASS restored water remains usable without a fluid solver
+PASS basic water supports existing live origin shifts
+PASS water frame follows shifted world
+PASS Play/Stop reconstruction retains immutable project policy
+PASS explicit opt-in creates existing PBF field
+PASS opt-in session begins
+PASS opt-in existing particle path executes
+PASS basic-water project switch controls rendering volumes and queries
+PASS swimming can be disabled independently of water surfaces
+ProjectWaterTests: 47 checks, 1 failures

@@ -47,7 +47,7 @@ void StepWorld(GameSession& session, const InputSystem& input, const Window* win
     }
     world.CommitOrigin();
     world.UpdateNavigation(fixedDeltaTime);
-    world.Liquids().BeginStep();
+    if(world.AdvancedFluidsEnabled())world.Liquids().BeginStep();
     world.NetworkBeforeFixed(fixedDeltaTime);
     world.FixedScripts(&input,fixedDeltaTime);
     // Joining is legal from a fixed callback (including its first start/restore
@@ -167,7 +167,10 @@ void StepWorld(GameSession& session, const InputSystem& input, const Window* win
     if (world.HasFluid()) {
         if (legacy && !session.IsPiloting() && window->IsActionActive(Action::AddTerrainWater)) world.EmitFluidParticle();
         world.FluidCoupling().PrepareRigidStep(world, fixedDeltaTime);
-    } else player.SetFluidSample({});
+    } else {
+        auto sample=world.SampleWater(player.GetPosition(),player.GetOrientation()*glm::vec3(0,1,0),PlayerController::CapsuleHalfHeight(),PlayerController::CapsuleRadius());
+        player.SetFluidSample({sample.immersion,sample.density,sample.velocity,{0,0,0}});
+    }
     // Mechanical sources advance once; wheel contacts then feed their actual
     // axle load back into the same rotational network before rigid integration.
     if(world.MechanicalIterations()==0){
@@ -191,7 +194,10 @@ void StepWorld(GameSession& session, const InputSystem& input, const Window* win
         // Liquid walls follow the already resolved rigid trajectory, including
         // impacts and support correction, never a gravity-only endpoint guess.
         world.FluidCoupling().AdvanceResolvedLiquid(world, fixedDeltaTime);
-        player.SetFluidSample(!legacy || world.view ? PlayerFluidSample{} : world.FluidCoupling().SamplePlayer(world, player));
+        auto sample=!legacy||world.view||!world.WaterSwimmingEnabled()?PlayerFluidSample{}:world.FluidCoupling().SamplePlayer(world,player);
+        const auto basic=world.SampleWater(player.GetPosition(),player.GetOrientation()*glm::vec3(0,1,0),PlayerController::CapsuleHalfHeight(),PlayerController::CapsuleRadius());
+        if(basic.immersion>sample.immersion)sample={basic.immersion,basic.density,basic.velocity,{0,0,0}};
+        player.SetFluidSample(sample);
         if (measurements && measurements->measureFluid) {
             measurements->fluidMilliseconds = world.FluidCoupling().Measurements().totalMilliseconds;
             measurements->fluidMeasured = true; // includes field/coupling cost even on particle hold frames

@@ -494,3 +494,11 @@ Native dispatcher operations are implementation details, not additional JS APIs.
 
 The machine check fails missing/phantom exports/members, getter/setter drift, callable argument-count drift and inventory drift.
 The manifest also records callable bounds and explicit argument-count exceptions. Structured return/configuration types and behavioural semantics require source review; it is not full semantic certification.
+
+## Project water policy
+
+`world.fluidSample` retains its registered signature and return shape. It now
+samples default basic-water volumes without a fluid solver, plus an explicitly
+opted-in PBF field where present. Conserved `liquid` bindings require the disabled-
+by-default Advanced Fluid Dynamics project setting. No public export was added.
+See [project settings and water](../PROJECT_SETTINGS_AND_WATER.md).

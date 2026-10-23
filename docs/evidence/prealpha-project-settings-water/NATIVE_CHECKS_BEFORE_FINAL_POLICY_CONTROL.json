@@ -1,0 +1,106 @@
+[
+  {
+    "label": "policy",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/project-settings-water/worktree/build-water/judas_project_water_tests"
+    ],
+    "exit": 0,
+    "seconds": 0.03189587593078613,
+    "binary_sha256": "25369bdd511296ad971c0097eb5ae9780f86c9ddc2ada3690de38ec9cf452039",
+    "log": "docs/evidence/prealpha-project-settings-water/policy-final.log"
+  },
+  {
+    "label": "settings-ui",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/project-settings-water/worktree/build-water/judas_project_settings_editor_tests"
+    ],
+    "exit": 0,
+    "seconds": 0.015955686569213867,
+    "binary_sha256": "5ce647d6840150544ea4d08bfc2f6aa440a41a0f0aab0b7c3b4a6c83a864f35d",
+    "log": "docs/evidence/prealpha-project-settings-water/settings-ui-final.log"
+  },
+  {
+    "label": "scene-regression",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/project-settings-water/worktree/build-water/judas_scene_tests"
+    ],
+    "exit": 0,
+    "seconds": 0.03185772895812988,
+    "binary_sha256": "67481017bca9a7d6eefd4998e073e7e9445ee9394884a0cda78dc45ae6c52bb6",
+    "log": "docs/evidence/prealpha-project-settings-water/scene-regression-final.log"
+  },
+  {
+    "label": "project-regression",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/project-settings-water/worktree/build-water/judas_project_tests"
+    ],
+    "exit": 0,
+    "seconds": 0.06391358375549316,
+    "binary_sha256": "91efed391af30ddba0bfbe7ca2163f68affcfeb5566e21bf635195183b2ff8c9",
+    "log": "docs/evidence/prealpha-project-settings-water/project-regression-final.log"
+  },
+  {
+    "label": "conserved-surface",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/project-settings-water/worktree/build-water/judas_liquid_surface_tests"
+    ],
+    "exit": 0,
+    "seconds": 0.8148882389068604,
+    "binary_sha256": "d6f9180c26a932150feae3513796190f2388f678d46caa7c39a4b6ab55d501c9",
+    "log": "docs/evidence/prealpha-project-settings-water/conserved-surface-final.log"
+  },
+  {
+    "label": "mk2",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/project-settings-water/worktree/build-water/judas_mk2_physics_tests"
+    ],
+    "exit": 0,
+    "seconds": 0.5145142078399658,
+    "binary_sha256": "2dd52eab7ffd2f1861533845aa618904fb2d179f93ab4906b68b28c84c22c4e1",
+    "log": "docs/evidence/prealpha-project-settings-water/mk2-final.log"
+  },
+  {
+    "label": "balance-foundation",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/project-settings-water/worktree/build-water/judas_physical_balance_foundation_tests"
+    ],
+    "exit": 0,
+    "seconds": 0.015812158584594727,
+    "binary_sha256": "2b61a008bf87ec2d2e6c6b4d10ce8ac41e947d164ca615b3d2c6dac34c7ac567",
+    "log": "docs/evidence/prealpha-project-settings-water/balance-foundation-final.log"
+  },
+  {
+    "label": "balance-controller",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/project-settings-water/worktree/build-water/judas_physical_balance_controller_tests"
+    ],
+    "exit": 0,
+    "seconds": 0.9651632308959961,
+    "binary_sha256": "70fcb6915f44bf74c6b0bd6cd413076188c308d6d6cdd352a76e3b82969aec8b",
+    "log": "docs/evidence/prealpha-project-settings-water/balance-controller-final.log"
+  },
+  {
+    "label": "origin-environment",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/project-settings-water/worktree/build-water/judas_origin_environment_tests",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/project-settings-water/worktree/.cache/water-review/origin-qualified"
+    ],
+    "exit": 0,
+    "seconds": 0.2895512580871582,
+    "binary_sha256": "e3697f0194b92169a738f8de905b2f8ef64c1761536b7e96923c21e37e7768a4",
+    "log": "docs/evidence/prealpha-project-settings-water/origin-environment-final.log"
+  },
+  {
+    "label": "particle-control",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/project-settings-water/worktree/build-water/judas_production_fluid_tests",
+      "--neutral",
+      "--output",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/project-settings-water/worktree/.cache/water-final-checks/particles"
+    ],
+    "exit": 0,
+    "seconds": 4.820749044418335,
+    "binary_sha256": "7192d1e40cb155503cf48122cf6aa3dc88c1bba802bc07aadc2365aca2b7d3c2",
+    "log": "docs/evidence/prealpha-project-settings-water/particle-control-final.log"
+  }
+]

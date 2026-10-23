@@ -1,0 +1,9 @@
+{
+  "exit": 0,
+  "seconds": 0.415468692779541,
+  "working_directory": "/tmp",
+  "runtime": "/tmp/judas-stillwater-review-1792780328267041896/judas",
+  "sha256": "f9b4158d9cf889cadcb3538e5fdc231af17fe94b30926f4dc87c8c13b60f8ae8",
+  "harness": "docs/evidence/prealpha-project-settings-water/standalone.harness",
+  "log": "docs/evidence/prealpha-project-settings-water/relocated-standalone-final.log"
+}

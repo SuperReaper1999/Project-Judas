@@ -76,8 +76,8 @@ preserve velocity/orientation, support state and its supporting identity, then
 reconstruct generation-safe handles. Do not retain a support wrapper across Load.
 
 Use [conserved `liquid.sample`](liquid.md) for M54/M55 water, or
-[`world.fluidSample`](effects-camera.md#worldfluidsample) for the separate legacy
-PBF field, to implement buoyancy/drag/propulsion in project JS. Existing
+[`world.fluidSample`](effects-camera.md#worldfluidsample) for default basic-water volumes or the explicitly enabled
+legacy PBF field, to implement buoyancy/drag/propulsion in project JS. Existing
 coarse production liquid limitations still apply; do not turn the motor into a
 hardcoded swim mode. Copyable [motor example](examples/character.js), current full
 project [character demo](../../projects/character_demo/character_demo.judasproj).

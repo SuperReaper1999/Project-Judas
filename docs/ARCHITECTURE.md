@@ -201,3 +201,22 @@ See [build identity](BUILD_RELEASES.md), [distribution](DISTRIBUTION.md) and
 Linux is the acceptance reference. Windows VM/Android receipts have individual
 version/hardware scope. Main is human-tested release lineage; Experimental is
 development. No M100 or Alpha release is declared.
+
+## Project policy and basic water (Pre-Alpha isolated candidate)
+
+Project-wide water policy is serialized by both Project and NamedAuthoring codecs
+and captured by RuntimeWorld::ConfigureProject before construction. Runtime,
+editor Play, scene replacement, dedicated hosting and cold-save staging apply
+the same policy. UI lives in `src/editor/ProjectSettingsPanel.cpp`; it reuses the
+existing project input, classification, navigation, localization, audio, residency
+and export settings rather than introducing a parallel configuration service.
+
+`BasicWater` is a prescribed oriented volume with GPU visual waves and cheap
+swimming/optical queries. It does not own conserved quantity or rigid-body forces.
+RuntimeWorld indexes authored/streamed owners; `WorldWater.cpp` samples their
+existing entity poses. Advanced FluidWorld/LiquidSystem updates and allocations
+are gated by explicit project opt-in. No fluid numerical solver, MK2 contact
+solver or physical balance policy is redesigned by this separation.
+
+See [Project Settings and water](PROJECT_SETTINGS_AND_WATER.md) for exact defaults,
+intentional Pre-Alpha compatibility changes, supported ownership and limitations.

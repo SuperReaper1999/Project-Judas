@@ -1,0 +1,12 @@
+{
+  "package": "/tmp/judas-stillwater-review-1792780328267041896",
+  "runtime_sha256": "f9b4158d9cf889cadcb3538e5fdc231af17fe94b30926f4dc87c8c13b60f8ae8",
+  "project_sha256": "cc3f0fe049369f497602c8374d40284e4eba1f5e384ac4c660feaa55cbfcc285",
+  "read_only": true,
+  "working_directory_for_smoke": "/tmp",
+  "project_flags": [
+    "basic-water \"true\"",
+    "water-swimming \"true\"",
+    "advanced-fluid-dynamics \"false\""
+  ]
+}

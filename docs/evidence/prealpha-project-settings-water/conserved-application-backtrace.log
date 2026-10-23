@@ -1,0 +1,41 @@
+
+This GDB supports auto-downloading debuginfo from the following URLs:
+  <https://debuginfod.ubuntu.com>
+Enable debuginfod for this session? (y or [n]) [answered N; input not from terminal]
+Debuginfod has been disabled.
+To make this setting permanent, add 'set debuginfod enabled off' to .gdbinit.
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/usr/lib/x86_64-linux-gnu/libthread_db.so.1".
+PASS ordinary registered M54 project
+Shadow maps: on
+Graphics: 3.3.0 NVIDIA 580.178.04 / NVIDIA GeForce GTX 970/PCIe/SSE2
+Renderer fragment texture units: 32 (material path uses 12)
+[New Thread 0x7fffee2096c0 (LWP 51229)]
+[New Thread 0x7fffeda086c0 (LWP 51230)]
+[New Thread 0x7fffed2076c0 (LWP 51231)]
+[New Thread 0x7fffeca066c0 (LWP 51232)]
+[New Thread 0x7fffdffff6c0 (LWP 51233)]
+[New Thread 0x7fffdf7fe6c0 (LWP 51234)]
+[New Thread 0x7fffdeffd6c0 (LWP 51235)]
+[New Thread 0x7fffde7fc6c0 (LWP 51236)]
+[New Thread 0x7fffddffb6c0 (LWP 51237)]
+[New Thread 0x7fffdd7fa6c0 (LWP 51238)]
+[New Thread 0x7fffdcff96c0 (LWP 51239)]
+PASS normal EngineHost
+PASS current scene loads
+PASS ordinary resource/world/session path
+
+Thread 1 "judas_liquid_ap" received signal SIGSEGV, Segmentation fault.
+0x000055555578f40d in ScriptSystem::Impl::Native(JSContext*, JSValue, int, JSValue*) ()
+#0  0x000055555578f40d in ScriptSystem::Impl::Native(JSContext*, JSValue, int, JSValue*) ()
+#1  0x000055555613e9fa in js_call_c_function ()
+#2  0x00005555560a21d5 in JS_CallInternal ()
+#3  0x000055555611855d in js_function_apply ()
+#4  0x00005555560a74f8 in JS_CallInternal ()
+#5  0x00005555560a1d7e in JS_CallInternal ()
+#6  0x00005555560bbd60 in JS_CallFree ()
+#7  0x00005555560aa563 in JS_CallInternal ()
+#8  0x00005555560b0517 in JS_Call ()
+#9  0x00005555557ddd67 in ScriptSystem::Impl::Callback(ScriptSystem::Impl::Instance&, char const*, bool) ()
+#10 0x000055555577ee44 in ScriptSystem::UIFrame(InputSystem const*, float) ()
+#11 0x0000555555708163 in RuntimeWorld::UpdateUIScripts(InputSystem*, float) ()

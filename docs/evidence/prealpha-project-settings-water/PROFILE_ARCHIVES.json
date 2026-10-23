@@ -1,0 +1,56 @@
+[
+  {
+    "path": "docs/evidence/prealpha-project-settings-water/application-final-source/profile-0.json.gz",
+    "original_sha256": "0d0ee84434aa330548048ca36889019df0f13cceeb36d848239b9aa64149e0ca",
+    "original_bytes": 2900483,
+    "gzip_bytes": 195005
+  },
+  {
+    "path": "docs/evidence/prealpha-project-settings-water/application-final-source/profile-1.json.gz",
+    "original_sha256": "6057c8ec343951be01f468f52cd6683cae6db58e101f4f2c780dc648f715a52f",
+    "original_bytes": 2923607,
+    "gzip_bytes": 197141
+  },
+  {
+    "path": "docs/evidence/prealpha-project-settings-water/application-final-source/profile-2.json.gz",
+    "original_sha256": "a41f25839fe380e59a734dc72a8f0b3b4b9e116a96c1abeaf3c93b4aa5420abb",
+    "original_bytes": 2884401,
+    "gzip_bytes": 191771
+  },
+  {
+    "path": "docs/evidence/prealpha-project-settings-water/application-qualified/profile-0.json.gz",
+    "original_sha256": "73b03aaad80d65091c74f968e7f162481e1eb5118fe8901a1448773a0e603fc6",
+    "original_bytes": 2924063,
+    "gzip_bytes": 197498
+  },
+  {
+    "path": "docs/evidence/prealpha-project-settings-water/application-qualified/profile-1.json.gz",
+    "original_sha256": "ca726330091c8bcca553fd5d099eeb2baaf36a3b180f9cd06fb8376e832186ed",
+    "original_bytes": 2947449,
+    "gzip_bytes": 201009
+  },
+  {
+    "path": "docs/evidence/prealpha-project-settings-water/application-qualified/profile-2.json.gz",
+    "original_sha256": "e342421b1cc043d7a62fee5fe579e0e45c72e7f5a1007605a2aec3071431e95c",
+    "original_bytes": 2908184,
+    "gzip_bytes": 194265
+  },
+  {
+    "path": "docs/evidence/prealpha-project-settings-water/water-profile-final/profile-0.json.gz",
+    "original_sha256": "07b24637212da2ec91e31d480bc26cb4ae1b988bf562c324528a3d5cc1b86f78",
+    "original_bytes": 2900190,
+    "gzip_bytes": 196246
+  },
+  {
+    "path": "docs/evidence/prealpha-project-settings-water/water-profile-final/profile-1.json.gz",
+    "original_sha256": "9554d30e12829dfee1055d5bfb2c8095bbf4f95c69a81a5dfc35a35e05c5f71c",
+    "original_bytes": 2922828,
+    "gzip_bytes": 198104
+  },
+  {
+    "path": "docs/evidence/prealpha-project-settings-water/water-profile-final/profile-2.json.gz",
+    "original_sha256": "6ba991fe793343ade489bc93e947e0ca5a82ad76b4b5c6eb73b5e5f6f9a0d108",
+    "original_bytes": 2883984,
+    "gzip_bytes": 191994
+  }
+]

@@ -504,6 +504,7 @@ bool EditorApplication::StartPlay(std::string& outError) {
     m_world = std::make_unique<RuntimeWorld>();
     m_world->legacyGameplay = m_project.Settings().legacyGameplay;
     m_world->audioGroups=m_project.Settings().audio;
+    m_world->ConfigureProject(m_project.Settings());
     m_world->SetSceneControl(std::make_shared<SceneSession>(m_project,m_document.Path()));
     m_world->SceneControl()->SetEditorSaveIsolation(true);
     if (!m_world->Build(playedScene, &m_host->Resources(), outError, &m_project.Settings().classification, &m_project.Settings().navigation)) {
@@ -1116,7 +1117,7 @@ void EditorApplication::FrameEditMode(float deltaSeconds) {
             p.second->Prepare(renderer,eye,scene.Settings().worldOrigin,2*std::atan(1./double(renderer.ProjectionMatrix()[1][1])),900,1./60);p.second->Draw(renderer,scene.Settings().worldOrigin);}
         for(auto it=m_planetPreview.begin();it!=m_planetPreview.end();)if(!keep.count(it->first))it=m_planetPreview.erase(it);else ++it;
     }
-    DrawAuthoredScene(renderer, scene, m_host->Resources());
+    DrawAuthoredScene(renderer, scene, m_host->Resources(),m_project.Settings().basicWater);
     if(m_panels.worldPreview&&!m_project.Settings().worldManifest.empty()){
         auto key=m_project.ProjectFile()+m_document.Path()+std::to_string(m_panels.worldPreviewRevision);
         if(key!=m_regionPreviewKey){m_regionPreviewKey=key;m_regionPreview.clear();
@@ -1132,7 +1133,7 @@ void EditorApplication::FrameEditMode(float deltaSeconds) {
                 }
             }
         }
-        for(auto& region:m_regionPreview)DrawAuthoredScene(renderer,region,m_host->Resources());
+        for(auto& region:m_regionPreview)DrawAuthoredScene(renderer,region,m_host->Resources(),m_project.Settings().basicWater);
     }else {m_regionPreview.clear();m_regionPreviewKey.clear();}
     renderer.DrawWeather();
     DrawEditOverlay(renderer, scene);

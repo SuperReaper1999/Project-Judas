@@ -871,6 +871,19 @@ void DrawDeformable(EditorDocument& doc,SceneObject& o,EditorPanelState& state){
 }
 
 void LiquidMaterialEditor(EditorDocument& doc,LiquidMaterial& material){TextField(doc,"Liquid material identity",material.id);LiquidNumber(doc,"Density kg/m3",material.density);}
+void DrawBasicWater(EditorDocument& doc,SceneObject& o,EditorPanelState&){
+    auto& w=*o.basicWater;Checkbox(doc,"Enabled",w.enabled);
+    DragVec3(doc,"Half width / depth / half length",w.halfExtents,.1f);
+    ColorEdit(doc,"Water colour",w.color);
+    DragScalar(doc,"Wave amplitude (visual metres)",w.waveAmplitude,.01f,0,5);
+    DragScalar(doc,"Wavelength (metres)",w.wavelength,.1f,.1f,10000);
+    DragScalar(doc,"Wave speed",w.waveSpeed,.05f,-20,20);
+    DragScalar(doc,"Opacity",w.opacity,.01f,0,1);
+    DragVec3(doc,"Local swimming current",w.flow,.05f);
+    DragScalar(doc,"Swimming density",w.density,10,1,10000);
+    ImGui::TextWrapped("Lightweight prescribed volume: local +Y surface, water below it. Visual waves do not simulate flow or change the mean swimming volume. Scale must be one; use explicit extents. No rigid-body buoyancy or conserved quantity.");
+    std::string error;if(!ValidateBasicWater(w,error))ImGui::TextColored({1,.4f,.3f,1},"%s",error.c_str());
+}
 void DrawLiquidBasin(EditorDocument& doc,SceneObject& o,EditorPanelState& state){auto& b=*o.liquidBasin;Checkbox(doc,"Enabled",b.enabled);AssetField(doc,"Physical cavity",b.geometry,AssetType::Liquid,true,state);AssetField(doc,"Baked capacity",b.asset,AssetType::Liquid,true,state);LiquidMaterialEditor(doc,b.material);LiquidNumber(doc,"Initial volume m3",b.initialVolume);LiquidNumber(doc,"Curve volume tolerance m3",b.volumeTolerance);LiquidNumber(doc,"Height tolerance metres",b.heightTolerance);
  Checkbox(doc,"Dynamic surface (rebake required)",b.surface.enabled);
  if(b.surface.enabled){int columns=int(b.surface.columns),rows=int(b.surface.rows);
@@ -1052,6 +1065,7 @@ const std::vector<ComponentEditor>& ComponentEditorRegistry() {
         Make<WeatherResponseSettings>("Weather wind response",'W',&SceneObject::weatherResponse,DrawWeatherResponse),
         Make<PlanetSettings>("Planet terrain",'T',&SceneObject::planet,DrawPlanet),
         Make<DeformableSettings>("Deformable",'D',&SceneObject::deformable,DrawDeformable),
+        Make<BasicWaterSettings>("Basic water",'W',&SceneObject::basicWater,DrawBasicWater),
         Make<LiquidBasinSettings>("Liquid basin",'Q',&SceneObject::liquidBasin,DrawLiquidBasin),
         Make<LiquidContainerSettings>("Liquid container",'C',&SceneObject::liquidContainer,DrawLiquidContainer),
         Make<LiquidConnectionSettings>("Liquid connection",'S',&SceneObject::liquidConnection,DrawLiquidConnection),

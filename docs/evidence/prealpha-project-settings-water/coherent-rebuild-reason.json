@@ -1,0 +1,8 @@
+{
+  "reason": "Headers changed while the large ScriptSystem translation unit was already compiling. Object completion newer than header can hide a stale inline layout. Force all dependencies of both headers to rebuild, then rerun final qualification.",
+  "observed_mtimes": {
+    "src/LiquidSystem.h": 1792778014444792437,
+    "src/RuntimeWorld.h": 1792778014445334038,
+    "build-water/CMakeFiles/judas_engine.dir/src/ScriptSystem.cpp.o": 1792778015429775963
+  }
+}

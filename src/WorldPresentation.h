@@ -62,6 +62,7 @@ void UpdateFluidSurface(Renderer& renderer, const RuntimeWorld& world, float pre
 // their authored transforms, with no physics and no runtime instance.
 // Meshes/terrains resolve through `resources`; unresolvable ones are skipped.
 void DrawAuthoredScene(Renderer& renderer, const Scene& scene, ResourceManager& resources);
+void DrawAuthoredScene(Renderer& renderer, const Scene& scene, ResourceManager& resources, bool basicWater);
 std::vector<DynamicLight> BuildAuthoredLights(const Scene& scene);
 
 struct WeatherSample;

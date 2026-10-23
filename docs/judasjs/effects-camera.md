@@ -48,14 +48,23 @@ deliberately. Main view feeds normal presentation/audio; secondary cameras stay 
 ## world.fluidSample
 
 `fluidSample(point,up,halfHeight,radius,tangent)` returns detached
-`{immersion,density,velocity,acceleration}` from the existing production particle
-field. Point/geometry in metres, density kg/m³, velocity m/s, acceleration m/s².
-Up normalizes; tangent must not be parallel to up. Nonnegative half-height and
-positive radius required. Dry worlds return zero/dry data. This is approximate
-field sampling, not direct water ownership, exact pressure or a new fluid solver.
-Use sampled liquid acceleration with Judas gravity for project-specific swimming
-behaviour; the motor provides geometric motion, not a built-in swim mode.
-Existing 20 Hz demo/coarse-fluid limitations remain [documented](../FLUID_DEMO.md).
+`{immersion,density,velocity,acceleration}` from basic prescribed water, or an
+explicitly enabled advanced particle field. Basic water is available by default
+without any fluid solver. Point/geometry use metres, density kg/m³, velocity m/s
+and acceleration m/s². Up normalizes; tangent must not be parallel to up.
+Nonnegative half-height and positive radius are required.
+
+Basic water samples its mean oriented volume using bounded capsule-centre-line
+quadrature; its visual waves do not change immersion. Its current is prescribed,
+and acceleration is zero. Overlapping water uses greatest immersion, never summed
+buoyancy. If both a basic and particle sample exist, greatest immersion wins.
+Dry worlds and projects with swimming queries disabled return dry/zero data.
+
+Use the sample with resolved Judas gravity for project-owned buoyancy, drag and
+propulsion. CharacterMotor remains geometric movement, not a built-in swim mode.
+See [Project Settings and water](../PROJECT_SETTINGS_AND_WATER.md) for authoring,
+defaults, experimental opt-in, approximation limits and the Stillwater project.
+The particle path still has its [existing limitations](../FLUID_DEMO.md).
 
 ## Portal views: off-axis frustum and oblique clip plane
 

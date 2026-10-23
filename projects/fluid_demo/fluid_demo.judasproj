@@ -1,4 +1,5 @@
 JudasProject 1
+advanced-fluid-dynamics "true"
 name "Production Fluid / Pool and Planet"
 startup-scene "Scenes/pool.judas"
 assets-dir "Assets"

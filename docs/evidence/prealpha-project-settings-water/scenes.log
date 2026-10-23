@@ -1,0 +1,2 @@
+terminate called after throwing an instance of 'std::logic_error'
+  what():  Advanced Fluid Dynamics is disabled; use basic water/swimming queries
