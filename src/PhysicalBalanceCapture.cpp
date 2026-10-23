@@ -7,7 +7,9 @@
 //   knees cannot move the COM without ankle torque, so the COM is regulated
 //   through the planted ankles by leaning the supporting attitudes, with the
 //   error measured from the contact centroid (never the centre of pressure the
-//   same ankle torque produces). Double support adds a small posture pull.
+//   same ankle torque produces). In double support the struts also hold the
+//   root near the posture measured at the task's first confirmed standing,
+//   which resists a push that moves the trunk away from the feet.
 // - Planted ankle torque is bounded by the foot's share of body weight times
 //   the sole half-extent (ZMP); more only rolls the foot onto an edge.
 // - Joint targets are relative between desired attitudes, which keeps the
@@ -48,9 +50,14 @@ float OutsideHull(const std::vector<glm::vec3>& points,glm::vec3 p,glm::vec3 up)
 float Smooth(float t){t=std::clamp(t,0.f,1.f);return t*t*(3-2*t);}
 glm::vec3 RotationVector(glm::quat q){if(q.w<0)q=-q;glm::vec3 v(q.x,q.y,q.z);float l=glm::length(v);return l>1e-7f?v*(2*std::atan2(l,q.w)/l):2.f*v;}
 glm::vec3 ClampLength(glm::vec3 v,float limit){float l=glm::length(v);return l>limit&&l>0?v*(limit/l):v;}
-// Double-support posture pull toward the support centre (metres). Both feet can
-// react it; it holds position against slow drift that ankle lean alone leaves.
+// Double-support posture pull toward the support centre (metres) until a
+// standing posture has been measured. Both feet can react it; it holds
+// position against slow drift that ankle lean alone leaves.
 constexpr float kDoubleSupportPull=.05f;
+// Largest double-support correction toward the measured standing posture
+// (metres). Measured on the harness: .1 and .3 recovered slightly less; the
+// stance must stay a strut where the posture is far out of reach.
+constexpr float kPostureReach=.2f;
 // Capture steps run the authored swing this many times faster. The authored
 // stepSeconds is an unhurried swing; a capture step must land before the
 // capture point leaves its reach. Measured on the harness: urgency-scaled
@@ -180,14 +187,29 @@ bool PhysicalBalanceController::CaptureStep(PhysicsWorld& world,const glm::quat&
         // support centre (or, while transferring and in single support, the
         // stance foot). The error is measured from the contact centroid, not
         // the centre of pressure that this same ankle torque produces.
-        glm::vec3 target=base;if(single&&supports[1-swing].contacts)target=supports[1-swing].centre;
+        // Horizontal targets are the planted contact centroids, moved toward
+        // the soles' geometric centres by plantedOrientationWeight: a foot held
+        // at its authored upright reference supports from its whole sole. The
+        // centroid of a point contact (a box on a curved surface) jumps across
+        // the sole as the foot rocks, and leaning toward it chatters.
+        auto sole=[&](unsigned f){const auto& e=m_settings.effectors[f];return glm::mix(supports[f].centre,World(world.GetTransform(m_bodies[e.foot].body),e.contactOffset),m_settings.plantedOrientationWeight);};
+        glm::vec3 target(0);unsigned soles=0;for(unsigned f=0;f<2;++f)if(supports[f].contacts){target+=sole(f);++soles;}
+        target/=float(soles);if(single&&supports[1-swing].contacts)target=sole(1-swing);
         auto error=Tangent(m_observation.com-target,up);
         auto tilt=glm::cross(up,-(error*m_settings.positionResponse+velocity*m_settings.velocityResponse));float lean=glm::length(tilt);
         auto correction=lean>1e-5f?glm::angleAxis(std::min(lean,m_settings.maximumLean),tilt/lean):glm::quat(1,0,0,0);
-        // In double support both feet can react a small posture pull toward
-        // the target, which holds position against slow drift; single
-        // support keeps the strut under the body.
-        const glm::vec3 shift=single?glm::vec3(0):ClampLength(Tangent(target-m_observation.com,up),kDoubleSupportPull);
+        // In double support both feet can react a correction toward the
+        // standing posture: the root offset from the soles' midpoint measured
+        // at the first confirmed standing. A push on the trunk otherwise moves
+        // it freely away from the feet, and the COM follows the trunk. Before
+        // a posture is measured (after a restore) a small pull toward the
+        // target holds position against drift. Single support keeps the strut
+        // under the body.
+        glm::vec3 shift(0);
+        if(!single&&count==2){const auto mid=(World(world.GetTransform(m_bodies[m_settings.effectors[0].foot].body),m_settings.effectors[0].contactOffset)+World(world.GetTransform(m_bodies[m_settings.effectors[1].foot].body),m_settings.effectors[1].contactOffset))*.5f;
+            if(!m_captureStanceReady&&m_history.progress==BalanceProgress::Succeeded&&swing<0){m_captureStance=glm::inverse(upright)*(root.position-mid);m_captureStanceReady=true;}
+            shift=m_captureStanceReady?ClampLength(Tangent(mid+upright*m_captureStance-root.position,up),kPostureReach):ClampLength(Tangent(target-m_observation.com,up),kDoubleSupportPull);
+        }else if(!single)shift=ClampLength(Tangent(target-m_observation.com,up),kDoubleSupportPull);
         BodyTransform reference{root.position+shift,upright*m_bodies[0].restRotation};
         // Height above the floor the contacting supports actually stand on; a
         // bouncing foot must not raise its own floor.
@@ -253,7 +275,13 @@ bool PhysicalBalanceController::CaptureStep(PhysicsWorld& world,const glm::quat&
             drive.relativeAngularVelocity=parentRate-rate(i);
         }else if(chain>=0&&planted[chain]){
             if(i==m_settings.effectors[chain].foot){
-                drive.target=glm::inverse(childPose.rotation)*w[m_bodies[i].parent];
+                // The shank's lean is measured from the planted foot: its
+                // contacting face, or the authored upright foot reference by
+                // plantedOrientationWeight. A point contact (a box on a curved
+                // surface) does not hold the face, so leaning from it only
+                // rolls the foot.
+                const auto foot=glm::slerp(childPose.rotation,upright*m_bodies[i].restRotation,m_settings.plantedOrientationWeight);
+                drive.target=glm::inverse(foot)*w[m_bodies[i].parent];
                 drive.relativeAngularVelocity=supports[chain].contacts?-world.GetAngularVelocity(supports[chain].body):glm::vec3(0);
                 // The foot's share of body weight, from the measured split
                 // when the feet carry a meaningful load: one bounce frame must

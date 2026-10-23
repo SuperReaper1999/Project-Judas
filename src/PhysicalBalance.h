@@ -132,5 +132,9 @@ private:
     std::vector<PhysicsWorld::BodyContactSample> m_contacts;
     std::vector<glm::quat> m_desired;
     std::vector<glm::quat> m_captureAhead; // swing reference one control step ahead
+    // Root offset from the soles' midpoint in the upright frame, measured at
+    // the task's first confirmed standing. Derived from measurement and not
+    // persisted: a restored task measures it again when it next stands.
+    glm::vec3 m_captureStance{0};bool m_captureStanceReady=false;
     bool m_waitingForSample=false;
 };

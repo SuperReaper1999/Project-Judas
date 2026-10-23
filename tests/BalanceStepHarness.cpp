@@ -6,7 +6,11 @@
 //
 // Usage: judas_balance_step_harness [legacy|capture] [rig 0|1|2] [impulse N s]
 // Solver selection is the ordinary environment (JUDAS_PHYSICS_MK2,
-// JUDAS_VALIDATION_VELOCITY_ITERATIONS). BALANCE_TRACE=1 prints per-frame state.
+// JUDAS_VALIDATION_VELOCITY_ITERATIONS). BALANCE_TRACE=1 prints per-frame state
+// for the stepping push, BALANCE_TRACE_DENIED=1 for the denied one.
+// HARNESS_PLANET=1 stands the rig on a radius-100 static sphere with radial
+// gravity and an upright planted-foot reference, as the balance lab's radial
+// scene authors it.
 #include "PhysicalBalance.h"
 #include <algorithm>
 #include <cmath>
@@ -15,13 +19,16 @@
 #include <cstring>
 #include <string>
 namespace {
+bool g_planet=false;
+constexpr float kPlanetRadius=100;
 struct Fixture {
  PhysicsWorld world;PhysicalBalanceController controller;BalanceSettings settings;
  std::vector<BalanceBody> mapping;std::vector<glm::vec3> gravity;
  glm::quat frame;BodyHandle ground;std::string error;
  Fixture(float fallen=0,glm::quat orientation=glm::quat(1,0,0,0),bool floor=true,bool ceiling=false,int variant=0):frame(orientation){
   const bool slender=variant==1;world.Init();
-  if(floor)ground=world.CreateShape(Shape::Box({5,.2f,5}),{frame*glm::vec3(0,-.2f,0),frame},false,0,.8f,0);
+  if(floor&&g_planet)ground=world.CreateShape(Shape::Sphere(kPlanetRadius),{frame*glm::vec3(0,-kPlanetRadius,0),frame},false,0,.8f,0);
+  else if(floor)ground=world.CreateShape(Shape::Box({5,.2f,5}),{frame*glm::vec3(0,-.2f,0),frame},false,0,.8f,0);
   if(ceiling)world.CreateShape(Shape::Box({5,.2f,5}),{frame*glm::vec3(0,.8f,0),frame},false,0,.8f,0);
   glm::vec3 positions[]={{0,1.4f,0},{-.4f,1.05f,0},{-.4f,.65f,0},{-.4f,.3f,.08f},{.4f,1.05f,0},{.4f,.65f,0},{.4f,.3f,.08f}};
   glm::vec3 sizes[]={{.25f,.25f,.15f},{.09f,.2f,.09f},{.07f,.2f,.07f},{.3f,.3f,.3f},{.09f,.2f,.09f},{.07f,.2f,.07f},{.3f,.3f,.3f}};
@@ -33,13 +40,17 @@ struct Fixture {
   for(int i=0;i<7;i++){auto centre=rotation*(positions[i]-positions[0]);auto basis=glm::mat3_cast(rotation);for(int k=0;k<3;k++)basis[k]=glm::abs(basis[k]);minimum=std::min(minimum,centre.y-(basis*sizes[i]).y);}
   for(int i=0;i<7;i++){auto body=world.CreateShape(Shape::Box(sizes[i]),{frame*(rotation*(positions[i]-positions[0])+glm::vec3(0,-minimum+.02f,0)),frame*rotation},true,masses[i],.8f,0);mapping.push_back({body,{},parents[i],glm::quat(1,0,0,0)});}
   for(int i=1;i<7;i++){glm::vec3 point=positions[i];point.y+=(i==3||i==6)?(variant==2?.14f:.15f):(variant==2&&(i==1||i==4)?.18f:.2f);JointSettings j;j.type=(i==2||i==5)?JointType::Hinge:JointType::Ball;j.limits=true;j.lower=-2.7f;j.upper=2.7f;j.bodyA=mapping[i].body;j.bodyB=mapping[parents[i]].body;j.anchorA=point-positions[i];j.anchorB=point-positions[parents[i]];mapping[i].joint=world.CreateJoint(j);world.SetPairCollisionEnabled(j.bodyA,j.bodyB,false);}
-  settings.standingHeight=variant==2?1.35f:(slender?1.42f:1.4f);if(slender)settings.touchdownTolerance=.2f;
+  settings.standingHeight=variant==2?1.35f:(slender?1.42f:1.4f);if(slender)settings.touchdownTolerance=.2f;if(g_planet)settings.plantedOrientationWeight=1;
   
   for(int f=0;f<2;f++){auto& e=settings.effectors[f];e.upper=f?4:1;e.lower=f?5:2;e.foot=f?6:3;e.contactOffset={0,-sizes[e.foot].y,0};e.halfExtents=sizes[e.foot];for(int a=0;a<3;a++)for(float sign:{-1.f,1.f}){glm::vec3 normal(0);normal[a]=sign;e.patches.push_back({normal*e.halfExtents,normal,(slender||variant==2)?.52f:.44f});}}
   gravity.assign(7,frame*glm::vec3(0,-9.81f,0));
   controller.Configure(world,mapping,settings,error);
  }
- void Advance(int count,bool control=true,bool applyGravity=true){for(int k=0;k<count;k++){if(control)controller.Prepare(world,gravity,1.f/60);if(applyGravity)for(size_t i=0;i<mapping.size();++i)world.ApplyLinearAcceleration(mapping[i].body,gravity[i],1.f/60);world.Step(1.f/60);}}
+ void Advance(int count,bool control=true,bool applyGravity=true){for(int k=0;k<count;k++){
+  if(g_planet)for(size_t i=0;i<mapping.size();++i)gravity[i]=glm::normalize(frame*glm::vec3(0,-kPlanetRadius,0)-world.GetTransform(mapping[i].body).position)*9.81f;
+  if(control)controller.Prepare(world,gravity,1.f/60);
+  if(applyGravity)for(size_t i=0;i<mapping.size();++i)world.ApplyLinearAcceleration(mapping[i].body,gravity[i],1.f/60);
+  world.Step(1.f/60);}}
  bool Standing(){auto pose=world.GetTransform(mapping[0].body);float upright=glm::dot(pose.rotation*settings.up,frame*glm::vec3(0,1,0));float height=glm::dot(pose.position,frame*glm::vec3(0,1,0));float speed=0,mass=0;for(const auto& b:mapping){speed+=glm::length(world.GetLinearVelocity(b.body))*world.GetMass(b.body);mass+=world.GetMass(b.body);}return upright>.97f&&height>1.2f&&speed/mass<.1f;}
 };
 bool g_capture=false;
@@ -62,14 +73,14 @@ void Report(const char* name,const Outcome& o){std::printf("%-22s standing %d la
 }
 int main(int argc,char** argv){
  g_capture=argc>1&&!std::strcmp(argv[1],"capture");const int rig=argc>2?std::atoi(argv[2]):1;const float impulse=argc>3?float(std::atof(argv[3])):29.f;
- const bool trace=std::getenv("BALANCE_TRACE")!=nullptr;
- std::printf("controller %s rig %d impulse %.1f mk2 %d sweeps %s\n",g_capture?"capture":"legacy",rig,impulse,std::getenv("JUDAS_PHYSICS_MK2")!=nullptr,std::getenv("JUDAS_VALIDATION_VELOCITY_ITERATIONS")?std::getenv("JUDAS_VALIDATION_VELOCITY_ITERATIONS"):"default");
+ const bool trace=std::getenv("BALANCE_TRACE")!=nullptr;g_planet=std::getenv("HARNESS_PLANET")!=nullptr;
+ std::printf("controller %s rig %d impulse %.1f planet %d mk2 %d sweeps %s\n",g_capture?"capture":"legacy",rig,impulse,int(g_planet),std::getenv("JUDAS_PHYSICS_MK2")!=nullptr,std::getenv("JUDAS_VALIDATION_VELOCITY_ITERATIONS")?std::getenv("JUDAS_VALIDATION_VELOCITY_ITERATIONS"):"default");
  int required=0,passed=0;
  // The slender rig (1) is the declared corrective-step comparison: the push
  // needs a real step and defeats in-place balance. Heavier-footed rigs only
  // have to remain or return to standing.
  auto allowed=Push(rig,{0,0,impulse},true,trace);Report("step forward",allowed);++required;passed+=rig==1?allowed.standing&&allowed.landings>=1&&allowed.moved>.15f&&allowed.clearance>.025f:allowed.standing;
- auto denied=Push(rig,{0,0,impulse},false,false);Report("denied forward",denied);if(rig==1){++required;passed+=!denied.standing&&denied.landings==0;}
+ auto denied=Push(rig,{0,0,impulse},false,std::getenv("BALANCE_TRACE_DENIED")!=nullptr);Report("denied forward",denied);if(rig==1){++required;passed+=!denied.standing&&denied.landings==0;}
  auto weak=Push(rig,{0,0,2},true,false);Report("weak push",weak);++required;passed+=weak.standing&&weak.landings==0;
  int directions=0;for(int a=1;a<8;a++){float t=a*.7853982f;auto o=Push(rig,{impulse*std::sin(t),0,impulse*std::cos(t)},true,false);char n[32];std::snprintf(n,sizeof n,"step %3d deg",a*45);Report(n,o);directions+=o.standing;}
  std::printf("HARNESS required %d/%d, other directions standing %d/7\n",passed,required,directions);
