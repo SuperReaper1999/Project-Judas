@@ -144,8 +144,12 @@ Contact make(const PrimitivePose& a,const PrimitivePose& b,V pa,V pb,V normal,do
  Contact c;c.hit=true;c.signedSeparation=gap;c.penetration=-gap;c.normal=glm::vec3(normal);c.preciseNormal=normal;c.point=glm::vec3((pa+pb)*.5);c.hasLocalAnchors=true;V midpoint=(pa+pb)*.5;
  M ra=glm::transpose(ContactRotation(a.parentOrientation)),rb=glm::transpose(ContactRotation(b.parentOrientation));c.localAnchorA=ra*(midpoint-V(a.parentPosition));c.localAnchorB=rb*(midpoint-V(b.parentPosition));c.localWitnessA=ra*(pa-V(a.parentPosition));c.localWitnessB=rb*(pb-V(b.parentPosition));c.separationState=gap>0?SeparationState::Separated:gap<0?SeparationState::Penetrating:SeparationState::Touching;return c;
 }
-void reduce(std::vector<Contact>& contacts,ContactManifold& out) {
+void reduce(std::vector<Contact>& contacts,ContactManifold& out,bool nearest=false) {
  std::stable_sort(contacts.begin(),contacts.end(),[](const Contact& a,const Contact& b){return a.signedSeparation<b.signedSeparation;});if(contacts.empty())return;
+ // Opt-in (MK2 speculative manifolds): coverage is chosen among features near
+ // the closest one. At a large margin, far separated edge features of other
+ // triangles would otherwise displace the actual approaching face patch.
+ if(nearest){const double limit=contacts.front().signedSeparation+.02;contacts.erase(std::find_if(contacts.begin(),contacts.end(),[&](const Contact& c){return c.signedSeparation>limit;}),contacts.end());}
  // Deepest first, then maximize coverage. Deduplicate shared-face witnesses.
  std::vector<unsigned> chosen;chosen.push_back(0);while(chosen.size()<4){double best=1e-12;unsigned selected=UINT32_MAX;for(unsigned i=0;i<contacts.size();++i){double score=INFINITY;for(auto j:chosen)score=std::min(score,glm::dot(contacts[i].localAnchorB-contacts[j].localAnchorB,contacts[i].localAnchorB-contacts[j].localAnchorB));if(score>best){best=score;selected=i;}}if(selected==UINT32_MAX)break;chosen.push_back(selected);}for(auto i:chosen)out.Add(contacts[i]);
 }
@@ -379,18 +383,18 @@ double MeshSeparationAdvance(const PrimitivePose& query,const PrimitivePose& mes
  }
  return earliest;
 }
-ContactManifold CookedContacts(const PrimitivePose& a,const PrimitivePose& b,double margin) {
+ContactManifold CookedContacts(const PrimitivePose& a,const PrimitivePose& b,double margin,bool nearest) {
  const bool newA=a.shape.asset!=nullptr,newB=b.shape.asset!=nullptr;
  if(!newA&&!newB)throw std::invalid_argument("CookedContacts called without cooked geometry");
- if(a.shape.type==ShapeType::TriangleMesh){auto out=CookedContacts(b,a,margin);for(int i=0;i<out.count;++i){auto& c=out.points[i];c.normal=-c.normal;c.preciseNormal=-c.preciseNormal;std::swap(c.localAnchorA,c.localAnchorB);std::swap(c.localWitnessA,c.localWitnessB);}return out;}
+ if(a.shape.type==ShapeType::TriangleMesh){auto out=CookedContacts(b,a,margin,nearest);for(int i=0;i<out.count;++i){auto& c=out.points[i];c.normal=-c.normal;c.preciseNormal=-c.preciseNormal;std::swap(c.localAnchorA,c.localAnchorB);std::swap(c.localWitnessA,c.localWitnessB);}return out;}
  ContactManifold out;std::vector<Contact> contacts;
  if(a.shape.type==ShapeType::Sphere||a.shape.type==ShapeType::Capsule){M r=PrimitiveRotation(a);V center=PrimitiveCenter(a);double half=a.shape.type==ShapeType::Capsule?a.shape.halfHeight:0;auto d=SegmentGeometry(center-r[1]*half,center+r[1]*half,a.shape.radius,b,margin);if(d.valid&&d.gap<=margin)out.Add(make(a,b,d.queryPoint-d.normal*double(a.shape.radius),d.point,d.normal,d.gap));return out;}
- if(b.shape.type==ShapeType::Sphere||b.shape.type==ShapeType::Capsule){auto result=CookedContacts(b,a,margin);for(int i=0;i<result.count;++i){auto& c=result.points[i];c.normal=-c.normal;c.preciseNormal=-c.preciseNormal;std::swap(c.localAnchorA,c.localAnchorB);std::swap(c.localWitnessA,c.localWitnessB);}return result;}
+ if(b.shape.type==ShapeType::Sphere||b.shape.type==ShapeType::Capsule){auto result=CookedContacts(b,a,margin,nearest);for(int i=0;i<result.count;++i){auto& c=result.points[i];c.normal=-c.normal;c.preciseNormal=-c.preciseNormal;std::swap(c.localAnchorA,c.localAnchorB);std::swap(c.localWitnessA,c.localWitnessB);}return result;}
  if(a.shape.type!=ShapeType::Box&&a.shape.type!=ShapeType::ConvexHull)throw std::invalid_argument("unsupported cooked contact pair");
  visitCookedPolyContacts(a,b,margin,[&](V x,V y,V normal,double gap){
   contacts.push_back(make(a,b,x,y,normal,gap));return false;
  });
- reduce(contacts,out);return out;
+ reduce(contacts,out,nearest);return out;
 }
 // Boolean truth for CCD observations, not a replacement response manifold.
 bool CookedHasContacts(const PrimitivePose& a,const PrimitivePose& b,double margin) {

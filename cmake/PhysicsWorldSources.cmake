@@ -9,6 +9,7 @@ set(JUDAS_PHYSICS_WORLD_SOURCES
     src/physics/WorldCCDDispatch.cpp
     src/physics/WorldContacts.cpp
     src/physics/WorldIncrementalImpact.cpp
+    src/physics/WorldMk2Solver.cpp
     src/physics/WorldImpactEvents.cpp
     src/physics/WorldJoints.cpp
     src/physics/WorldParticles.cpp

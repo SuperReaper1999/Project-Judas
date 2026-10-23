@@ -179,6 +179,9 @@ struct PhysicsWorld::Impl {
         bool sleeping = false, deferredAcceleration = false;
         float quietSeconds = 0;
         glm::vec3 lastAcceleration{0};
+        // Velocity added by ApplyLinearAcceleration (or deferred gravity)
+        // since the last Step. MK2 re-applies it per substep; MK1 ignores it.
+        glm::vec3 stepVelocityDelta{0};
         bool alive = false;
         // Milestone 29: a slot is reused after DestroyBody; the generation
         // in the handle's upper bits makes a handle from a previous
@@ -247,6 +250,23 @@ struct PhysicsWorld::Impl {
     std::vector<SleepIsland> sleepIslands;
     std::size_t sleepGraphEdges = 0, sleepIslandCount = 0, sleepScratchBytes = 0;
     void Settle(float dt);
+    // Judas Physics MK2 (docs/MK2_PHYSICS_ARCHITECTURE.md): opt-in substepped
+    // simultaneous solve that replaces MK1's impact events for one step.
+    struct Mk2Point {
+        unsigned a, b;
+        Contact contact;
+        float friction, restitution, warmNormal;
+        glm::vec3 warmTangent;
+    };
+    bool mk2Enabled = false, mk2Step = false;
+    std::vector<Mk2Point> mk2Points;
+    std::vector<std::array<unsigned, 4>> mk2RowPairs; // sorted (slotA, slotB, partA, partB)
+    std::vector<float> mk2RowEndSeparation;           // per row pair, deepest end-of-step
+    void Mk2Solve(float dt);
+    void Mk2Continuous(float dt);
+    void Mk2ResolveArrival(unsigned fast, unsigned other, int partFast, int partOther, double hit);
+    bool Mk2Crossed(unsigned fast, unsigned other, unsigned a, unsigned b, int pa, int pb, double hit,
+                    float dt);
     bool ImpactDiscoverySeparated(unsigned a, unsigned b, const Aabb& query,
                                   double start, double finish);
     struct IncrementalImpact;

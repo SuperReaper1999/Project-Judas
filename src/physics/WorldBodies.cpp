@@ -388,6 +388,7 @@ void PhysicsWorld::ApplyLinearAcceleration(BodyHandle handle, const glm::vec3 &a
     }
     body->deferredAcceleration = false;
     body->rigidBody.linearVelocity += acceleration * fixedDeltaTime;
+    body->stepVelocityDelta += acceleration * fixedDeltaTime;
 }
 
 void PhysicsWorld::ApplyForce(BodyHandle handle, const glm::vec3 &force) {
@@ -658,6 +659,7 @@ void PhysicsWorld::SetLinearVelocity(BodyHandle handle, const glm::vec3 &velocit
         if (velocity != body->rigidBody.linearVelocity)
             m_impl->Wake(handle.id & Impl::kSlotMask);
         body->rigidBody.linearVelocity = velocity;
+        body->stepVelocityDelta = glm::vec3(0);
     }
 }
 
@@ -865,6 +867,7 @@ void PhysicsWorld::ResetBody(BodyHandle handle, const glm::vec3 &position,
     body->kinematic = {};
     body->kinematicActiveDuration = 0;
     body->previousOrientation = rotation;
+    body->stepVelocityDelta = glm::vec3(0.0f);
     body->rigidBody.linearVelocity = glm::vec3(0.0f);
     body->rigidBody.angularVelocity = glm::vec3(0.0f);
     body->rigidBody.ClearAccumulators();

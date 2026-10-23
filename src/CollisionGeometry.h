@@ -21,7 +21,7 @@ glm::dmat3 PrimitiveRotation(const PrimitivePose&);
 glm::dvec3 PrimitiveCenter(const PrimitivePose&);
 GeometryDistance SegmentGeometry(glm::dvec3 a,glm::dvec3 b,double radius,const PrimitivePose& target,double range=std::numeric_limits<double>::infinity(),bool nearestSurface=false,uint32_t feature=UINT32_MAX);
 GeometryDistance PointGeometry(glm::dvec3 point,const PrimitivePose& target,double range=std::numeric_limits<double>::infinity());
-ContactManifold CookedContacts(const PrimitivePose&,const PrimitivePose&,double margin);
+ContactManifold CookedContacts(const PrimitivePose&,const PrimitivePose&,double margin,bool nearest=false);
 // Exact accepted-contact existence; full manifolds remain authoritative for response.
 bool CookedHasContacts(const PrimitivePose&,const PrimitivePose&,double margin);
 // Exact deep-contact existence for continuous penetration searches.

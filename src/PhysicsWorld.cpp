@@ -10,6 +10,7 @@ bool PhysicsWorld::Init() {
     const bool blockNormals=std::getenv("JUDAS_VALIDATION_POINT_CONTACTS")==nullptr;
     m_impl->solver.EnableBlockNormals(blockNormals);
     m_impl->impactSolver.EnableBlockNormals(blockNormals);
+    m_impl->mk2Enabled = std::getenv("JUDAS_PHYSICS_MK2") != nullptr;
     return true;
 }
 
@@ -53,6 +54,10 @@ void PhysicsWorld::Step(float fixedDeltaTime, const VelocityCoupling *coupling) 
             joint.restoredContinuationDt = 0;
         }
 
+    // MK2 prototype scope: velocity coupling and coupled intervals keep the
+    // MK1 pipeline until their substep integration exists.
+    w.mk2Step = w.mk2Enabled && !coupling && !w.coupledStep;
+    w.mk2Points.clear();
     w.parallelContactDiagnostics = {};
     w.parallelCookedDiagnostics = {};
     w.stats = StepStats{};
@@ -136,6 +141,7 @@ void PhysicsWorld::Step(float fixedDeltaTime, const VelocityCoupling *coupling) 
             continue;
         if (body.deferredAcceleration) {
             body.rigidBody.linearVelocity += body.lastAcceleration * fixedDeltaTime;
+            body.stepVelocityDelta += body.lastAcceleration * fixedDeltaTime;
             body.deferredAcceleration = false;
         }
         IntegrateRigidBodyVelocity(body.rigidBody, fixedDeltaTime);
@@ -221,7 +227,8 @@ void PhysicsWorld::Step(float fixedDeltaTime, const VelocityCoupling *coupling) 
                 const ContactManifold manifold =
                     prepared
                         ? prepared->manifold
-                        : ComputeContacts(*childA, *childB, margin, &orientationA, &orientationB);
+                        : ComputeContacts(*childA, *childB, margin, &orientationA, &orientationB,
+                                          w.mk2Step);
                 const ContactKey key{slotA, slotB, a.generation, b.generation, partA, partB};
                 const auto range = std::equal_range(
                     w.contactCache.begin(), w.contactCache.end(),
@@ -276,6 +283,23 @@ void PhysicsWorld::Step(float fixedDeltaTime, const VelocityCoupling *coupling) 
                         warmNormal = w.contactCache[static_cast<std::size_t>(best)].normalImpulse;
                         warmTangent = w.contactCache[static_cast<std::size_t>(best)].tangentImpulse;
                     }
+                    if (w.mk2Step) {
+                        // MK2: every manifold point, new or persistent, joins
+                        // one simultaneous substepped solve. No TOI routing.
+                        w.pendingCache.push_back({key, anchor, contact.normal, 0, glm::vec3(0),
+                                                  float(contact.hasLocalAnchors
+                                                            ? contact.signedSeparation
+                                                            : -double(contact.penetration)),
+                                                  a.contactObservationRevision,
+                                                  b.contactObservationRevision});
+                        w.mk2Points.push_back({slotA, slotB, contact, friction,
+                                               std::max(a.restitution, b.restitution),
+                                               warmNormal, warmTangent});
+                        w.lastStepContacts.push_back(
+                            {contact.point, contact.normal, contact.penetration});
+                        ++pairPoints;
+                        continue;
+                    }
                     // A separated, newly encountered pair is handled at TOI.
                     // Existing cached support retains its gap-closing constraint.
                     const double gap = contact.hasLocalAnchors ? contact.signedSeparation
@@ -313,6 +337,11 @@ void PhysicsWorld::Step(float fixedDeltaTime, const VelocityCoupling *coupling) 
     narrowScope.End();
     ProfileScope solverScope(solverLabel);
     const Clock::time_point solverStart = Clock::now();
+    if (w.mk2Step) {
+        static ProfileLabel mk2Label("Physics MK2 substep solve");
+        ProfileScope mk2Scope(mk2Label);
+        w.Mk2Solve(fixedDeltaTime);
+    } else {
 
     // 4) Accumulated-impulse velocity solve (src/ContactSolver.h), then
     // positions from the solved velocities, then direct penetration removal.
@@ -333,7 +362,7 @@ void PhysicsWorld::Step(float fixedDeltaTime, const VelocityCoupling *coupling) 
     static ProfileLabel initialImpactsLabel("Physics initial impacts"),
         velocityLabel("Physics velocity constraints"),
         continuousImpactsLabel("Physics continuous impacts"),
-        positionsLabel("Physics position constraints"), settleLabel("Physics sleeping assessment");
+        positionsLabel("Physics position constraints");
     ProfileScope initialImpactsScope(initialImpactsLabel);
     w.ResolveInitialImpacts(fixedDeltaTime);
     initialImpactsScope.End();
@@ -477,6 +506,8 @@ void PhysicsWorld::Step(float fixedDeltaTime, const VelocityCoupling *coupling) 
     if (coupling && coupling->finish)
         coupling->finish(fixedDeltaTime);
     positionsScope.End();
+    }
+    static ProfileLabel settleLabel("Physics sleeping assessment");
     ProfileScope settleScope(settleLabel);
     w.Settle(fixedDeltaTime);
     settleScope.End();
@@ -498,6 +529,8 @@ void PhysicsWorld::Step(float fixedDeltaTime, const VelocityCoupling *coupling) 
     if (!w.queryTouchesPending && !w.coupledStep)
         w.FinishTouches();
     touchesScope.End();
+    for (const auto slot : w.aliveSlots)
+        w.bodies[slot].stepVelocityDelta = glm::vec3(0);
     w.stats.proxyReinsertions = w.reinsertionsSinceStep;
     w.reinsertionsSinceStep = 0;
     w.stats.treeHeight = w.tree.Height();

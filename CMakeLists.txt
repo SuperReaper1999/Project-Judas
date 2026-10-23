@@ -503,6 +503,16 @@ target_include_directories(judas_rigid_contact_tests PRIVATE src)
 target_link_libraries(judas_rigid_contact_tests PRIVATE ${JUDAS_GLM})
 judas_warnings(judas_rigid_contact_tests)
 
+# Judas Physics MK2 prototype acceptance (opt-in solver; MK1 stays default).
+add_executable(judas_mk2_physics_tests
+    tests/Mk2PhysicsTests.cpp
+    ${JUDAS_PHYSICS_SOURCES}
+    ${JUDAS_PHYSICS_WORLD_SOURCES}
+)
+target_include_directories(judas_mk2_physics_tests PRIVATE src)
+target_link_libraries(judas_mk2_physics_tests PRIVATE ${JUDAS_GLM})
+judas_warnings(judas_mk2_physics_tests)
+
 # Milestone 32: dynamic AABB tree and PhysicsWorld broadphase against a
 # brute-force all-pairs + narrowphase oracle. Headless.
 add_executable(judas_broadphase_tests

@@ -263,7 +263,8 @@ namespace {
         glm::dvec3 normal{0};
     };
 
-    SatResult BoxSat(Context &c, const glm::vec3 &ha, const glm::vec3 &hb, float margin) {
+    SatResult BoxSat(Context &c, const glm::vec3 &ha, const glm::vec3 &hb, float margin,
+                     bool facePreference = false) {
         SatResult result;
         double bestFace = -std::numeric_limits<double>::infinity(), bestEdge = bestFace;
         int face = -1, edge = -1;
@@ -395,8 +396,14 @@ namespace {
         result.hit = true;
         // A stable face preference applies ONLY to penetration. Every separating
         // or exactly touching axis retains its physical sign and is eligible.
-        const bool useEdge = edge >= 0 && (bestEdge >= 0 ? bestEdge > bestFace
-                                                       : bestEdge > 0.95 * bestFace + 0.001);
+        // Opt-in (MK2): a separated edge axis must beat the best face axis by
+        // more than rounding. Exactly parallel faces otherwise lose to a
+        // degenerate edge cross product by ~1e-9 m and a face landing becomes
+        // a single corner. The chosen face gap is then a conservative bound.
+        constexpr double kFaceTie = 1e-6;
+        const bool useEdge =
+            edge >= 0 && (bestEdge >= 0 ? bestEdge > bestFace + (facePreference ? kFaceTie : 0.0)
+                                        : bestEdge > 0.95 * bestFace + 0.001);
         result.axis = useEdge ? edge : face;
         result.gap = useEdge ? bestEdge : bestFace;
         // All signs and represented gaps above retain their original arithmetic.
@@ -442,9 +449,10 @@ namespace {
         return out;
     }
 
-    ContactManifold BoxPair(Context& c,const glm::vec3& ha,const glm::vec3& hb,float margin){
+    ContactManifold BoxPair(Context& c,const glm::vec3& ha,const glm::vec3& hb,float margin,
+                            bool facePreference=false){
         ContactManifold manifold;
-        const auto sat=BoxSat(c,ha,hb,margin);
+        const auto sat=BoxSat(c,ha,hb,margin,facePreference);
         if (!sat.hit)return manifold;
         if (sat.axis>=6){
             const int ia=(sat.axis-6)/3,ib=(sat.axis-6)%3;
@@ -611,7 +619,8 @@ bool ContactPreparedOrientation::Matches(const glm::quat& orientation) const {
 
 ContactManifold PrimitiveContacts(const Shape& a,const ContactPose& pa,const Shape& b,const ContactPose& pb,float margin,
                                   const ContactPreparedOrientation* preparedA,
-                                  const ContactPreparedOrientation* preparedB){
+                                  const ContactPreparedOrientation* preparedB,
+                                  bool facePreference){
     ContactManifold result;
     if (!Valid(pa)||!Valid(pb)){
         ++diagnostics.invalidInputs;
@@ -645,7 +654,7 @@ ContactManifold PrimitiveContacts(const Shape& a,const ContactPose& pa,const Sha
             Context c(pa,pb,orientationA,orientationB);
             if (a.type==ShapeType::Sphere&&b.type==ShapeType::Sphere)result.Add(SpherePair(c,a.radius,b.radius,margin));
             else if (a.type==ShapeType::Sphere&&b.type==ShapeType::Box)result.Add(SphereBoxPair(c,a.radius,b.halfExtents,margin));
-            else if (a.type==ShapeType::Box&&b.type==ShapeType::Box)result=BoxPair(c,a.halfExtents,b.halfExtents,margin);
+            else if (a.type==ShapeType::Box&&b.type==ShapeType::Box)result=BoxPair(c,a.halfExtents,b.halfExtents,margin,facePreference);
         }
     }
     catch(const ArithmeticFailure&){

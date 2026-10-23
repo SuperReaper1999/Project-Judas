@@ -36,7 +36,8 @@ PrimitivePose PrimitiveAt(const Shape& shape, const RigidBody& parent, int index
 ContactManifold ComputeContacts(const PrimitivePose& a, const PrimitivePose& b,
                                 float margin = 0.0f,
                                 const ContactPreparedOrientation* preparedA = nullptr,
-                                const ContactPreparedOrientation* preparedB = nullptr);
+                                const ContactPreparedOrientation* preparedB = nullptr,
+                                bool facePreference = false);
 
 // A terrain sample expressed in simulation space for a terrain body's pose.
 TerrainSample SampleTerrainAtWorld(const RadialTerrain& terrain, const RigidBody& body,

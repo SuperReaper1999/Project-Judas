@@ -106,7 +106,8 @@ ContactManifold PrimitiveContacts(const Shape& a, const ContactPose& poseA,
                                   const Shape& b, const ContactPose& poseB,
                                   float margin = 0.0f,
                                   const ContactPreparedOrientation* preparedA = nullptr,
-                                  const ContactPreparedOrientation* preparedB = nullptr);
+                                  const ContactPreparedOrientation* preparedB = nullptr,
+                                  bool facePreference = false);
 
 // Accepted-contact existence with exactly PrimitiveContacts' boundary and
 // uncertainty policy. Zero-margin box/sphere pairs share the full validated

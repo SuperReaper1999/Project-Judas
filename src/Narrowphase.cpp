@@ -139,21 +139,24 @@ const RigidBody& bodyB, float margin) {
 
 ContactManifold ComputeContacts(const PrimitivePose& a, const PrimitivePose& b, float margin,
                                 const ContactPreparedOrientation* preparedA,
-                                const ContactPreparedOrientation* preparedB) {
+                                const ContactPreparedOrientation* preparedB,
+                                bool facePreference) {
     if (a.shape.type==ShapeType::Capsule||b.shape.type==ShapeType::Capsule||a.shape.type == ShapeType::Terrain || b.shape.type == ShapeType::Terrain)
     return ComputeContacts(a.shape, a.body, b.shape, b.body, margin);
-    if(a.shape.asset||b.shape.asset)return CookedContacts(a,b,margin);
+    if(a.shape.asset||b.shape.asset)return CookedContacts(a,b,margin,facePreference);
     const auto identity=[](glm::quat q){return q==glm::quat(1,0,0,0);};
     // Preserve the proven primitive/identity-child arithmetic exactly. An extra
     // float normalization here can perturb an otherwise unimpulsed island member.
     if(identity(a.childRotation)&&identity(b.childRotation))
         return PrimitiveContacts(a.shape,{a.parentPosition,a.parentOrientation,a.parentLocalCenter},
-            b.shape,{b.parentPosition,b.parentOrientation,b.parentLocalCenter},margin,preparedA,preparedB);
+            b.shape,{b.parentPosition,b.parentOrientation,b.parentLocalCenter},margin,preparedA,preparedB,
+            facePreference);
     const glm::quat qa=identity(a.childRotation)?a.parentOrientation:glm::normalize(a.parentOrientation*a.childRotation);
     const glm::quat qb=identity(b.childRotation)?b.parentOrientation:glm::normalize(b.parentOrientation*b.childRotation);
     auto out=PrimitiveContacts(a.shape, {a.parentPosition, qa, glm::conjugate(a.childRotation)*a.parentLocalCenter},
         b.shape, {b.parentPosition, qb, glm::conjugate(b.childRotation)*b.parentLocalCenter}, margin,
-        identity(a.childRotation)?preparedA:nullptr,identity(b.childRotation)?preparedB:nullptr);
+        identity(a.childRotation)?preparedA:nullptr,identity(b.childRotation)?preparedB:nullptr,
+        facePreference);
     const auto ra=ContactRotation(a.childRotation),rb=ContactRotation(b.childRotation);
     for(int i=0;i<out.count;++i){auto& c=out.points[i];c.localAnchorA=ra*c.localAnchorA;c.localWitnessA=ra*c.localWitnessA;c.localAnchorB=rb*c.localAnchorB;c.localWitnessB=rb*c.localWitnessB;}
     return out;
