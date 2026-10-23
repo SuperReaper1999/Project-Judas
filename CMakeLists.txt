@@ -221,6 +221,7 @@ add_library(judas_engine STATIC
     src/FullBodyIK.cpp
     src/PhysicalAnimation.cpp
     src/PhysicalBalance.cpp
+    src/PhysicalBalanceCapture.cpp
     src/WorldPhysicalBalance.cpp
     src/WorldAnimation.cpp
     src/PoseComposition.cpp
@@ -1440,6 +1441,8 @@ judas_add_engine_test(judas_physical_animation_tests tests/PhysicalAnimationTest
 judas_add_engine_test(judas_physical_balance_foundation_tests tests/PhysicalBalanceFoundationTests.cpp)
 judas_add_engine_test(judas_physical_balance_controller_tests tests/PhysicalBalanceControllerTests.cpp)
 judas_add_engine_test(judas_balance_lab_tests tests/BalanceLabTests.cpp)
+# Development instrument for balance stepping; not an acceptance suite.
+judas_add_engine_test(judas_balance_step_harness tests/BalanceStepHarness.cpp)
 judas_add_engine_test(judas_character_lab_tests tests/CharacterLabTests.cpp)
 judas_add_engine_test(judas_character_lab_performance tests/CharacterLabPerformance.cpp)
 

@@ -1,31 +1,19 @@
 #include "PhysicalBalance.h"
+#include "PhysicalBalanceMath.h"
 #include "SaveArchive.h"
 #include "PerformanceProfiler.h"
 #include <algorithm>
 #include <cmath>
+#include <cstdlib>
 #include <set>
 #include "../third_party/nlohmann/json.hpp"
 
 
+using namespace PhysicalBalanceMath;
 namespace {
 bool Finite(glm::vec3 v){return std::isfinite(v.x)&&std::isfinite(v.y)&&std::isfinite(v.z);}
 bool Unit(glm::vec3 v){return Finite(v)&&std::abs(glm::length(v)-1)<1e-4f;}
 bool Quaternion(glm::quat q){return Finite({q.x,q.y,q.z})&&std::isfinite(q.w)&&std::abs(glm::length(q)-1)<1e-4f;}
-glm::vec3 Tangent(glm::vec3 v,glm::vec3 n){return v-n*glm::dot(v,n);}
-glm::quat Align(glm::vec3 from,glm::vec3 to,glm::vec3 fallback){
-    from=glm::normalize(from);to=glm::normalize(to);
-    if(glm::dot(from,to)<-.9999f){auto axis=Tangent(fallback,from);if(glm::dot(axis,axis)<1e-8f)axis=Tangent(glm::vec3(from.z,from.x,from.y),from);return glm::angleAxis(3.1415926536f,glm::normalize(axis));}
-    return glm::normalize(glm::quat(1+glm::dot(from,to),glm::cross(from,to)));
-}
-glm::vec3 Local(BodyTransform t,glm::vec3 p){return glm::inverse(t.rotation)*(p-t.position);}
-glm::vec3 World(BodyTransform t,glm::vec3 p){return t.position+t.rotation*p;}
-glm::quat LinkFrame(glm::vec3 localDirection,glm::vec3 localAxis,glm::vec3 direction,glm::vec3 axis){
-    auto y=glm::normalize(localDirection),x=glm::normalize(Tangent(localAxis,y));
-    glm::mat3 local(x,y,glm::cross(x,y));
-    y=glm::normalize(direction);x=glm::normalize(Tangent(axis,y));
-    glm::mat3 target(x,y,glm::cross(x,y));
-    return glm::normalize(glm::quat_cast(target*glm::transpose(local)));
-}
 }
 bool ValidBalanceDefinition(const BalanceDefinition& definition,std::string& error){
     const auto& settings=definition.settings;
@@ -73,6 +61,7 @@ std::string SerializeBalanceDefinition(const BalanceDefinition& definition){
     j["stepTrigger"]=s.stepTrigger;
     j["stepReach"]=s.stepReach;
     j["stepHeight"]=s.stepHeight;
+    if(s.captureStepping)j["captureStepping"]=true;
     j["stepSeconds"]=s.stepSeconds;
     j["touchdownTolerance"]=s.touchdownTolerance;
     j["transferLoadFraction"]=s.transferLoadFraction;
@@ -95,6 +84,7 @@ bool ParseBalanceDefinition(const std::string& text,BalanceDefinition& output,st
         s.trunkLeanFraction=j.value("trunkLeanFraction",s.trunkLeanFraction);
         s.plantedOrientationWeight=j.value("plantedOrientationWeight",s.plantedOrientationWeight);
         s.standingHeight=j.value("standingHeight",s.standingHeight);
+        s.captureStepping=j.value("captureStepping",s.captureStepping);
         s.standingTolerance=j.value("standingTolerance",s.standingTolerance);
         s.standingSpeed=j.value("standingSpeed",s.standingSpeed);
         s.settleSeconds=j.value("settleSeconds",s.settleSeconds);
@@ -137,7 +127,7 @@ bool PhysicalBalanceController::Configure(PhysicsWorld& world,const std::vector<
         if(glm::length(upper)<.01f||glm::length(lower)<.01f)return reject("balance needs nonzero authored physical limb segments");
         if(knee.settings.type==JointType::Hinge&&(glm::length(glm::cross(upper,knee.settings.frameB*glm::vec3(1,0,0)))<.001f||glm::length(glm::cross(lower,knee.settings.frameA*glm::vec3(1,0,0)))<.001f))return reject("balance hinge axes cannot be parallel to limb segments");
     }
-    m_bodies=bodies;m_settings=settings;for(const auto& body:bodies)m_settings.query.ignoredBodies.push_back(body.body);
+    m_bodies=bodies;m_settings=settings;if(std::getenv("JUDAS_BALANCE_CAPTURE_STEPPING"))m_settings.captureStepping=true;for(const auto& body:bodies)m_settings.query.ignoredBodies.push_back(body.body);
     m_contacts.reserve(32);m_desired.resize(bodies.size());m_history={};m_observation={};m_waitingForSample=false;error.clear();return true;
 }
 bool PhysicalBalanceController::Request(PhysicsWorld& world,BalanceTask task,bool steps,bool effort,std::string& error){
@@ -175,8 +165,9 @@ bool PhysicalBalanceController::Observe(PhysicsWorld& world,const std::vector<gl
             // One effector straddling independently moving bodies is not a
             // coherent planted reference. Refuse rather than average identities.
             if(support.contacts&&support.body.id!=contact.other.id)return false;
-            support.body=contact.other;support.point+=contact.point*contact.normalImpulse;support.normal+=contact.normal*contact.normalImpulse;support.velocity+=contact.supportVelocity*contact.normalImpulse;support.load+=contact.normalImpulse;++support.contacts;
+            support.body=contact.other;support.point+=contact.point*contact.normalImpulse;support.normal+=contact.normal*contact.normalImpulse;support.velocity+=contact.supportVelocity*contact.normalImpulse;support.load+=contact.normalImpulse;support.centre+=contact.point;++support.contacts;
         }
+        if(support.contacts)support.centre/=float(support.contacts);
         if(support.load>0){support.point/=support.load;support.velocity/=support.load;if(glm::dot(support.normal,support.normal)>1e-8f)support.normal=glm::normalize(support.normal);}
     }
     auto root=world.GetTransform(m_bodies[0].body);m_observation.upright=glm::dot(root.rotation*m_settings.up,m_observation.up);
@@ -312,46 +303,49 @@ void PhysicalBalanceController::Prepare(PhysicsWorld& world,const std::vector<gl
     if(m_history.swing>=0&&m_observation.supports[1-m_history.swing].contacts){const auto& stance=m_observation.supports[1-m_history.swing];supportPoint=stance.point;supportVelocity=stance.velocity;}
     auto error=count?Tangent(m_observation.com-supportPoint,up):glm::vec3(0);
     auto velocity=Tangent(m_observation.velocity-supportVelocity,up);
-    auto tilt=glm::cross(up,-(error*m_settings.positionResponse+velocity*m_settings.velocityResponse));float lean=glm::length(tilt);
-    auto correction=lean>1e-5f?glm::angleAxis(std::min(lean,m_settings.maximumLean),tilt/lean):glm::quat(1,0,0,0);
-    auto legCorrection=glm::slerp(glm::quat(1,0,0,0),correction,m_settings.legLeanFraction);
-    auto& desired=m_desired;for(size_t i=0;i<m_bodies.size();++i)desired[i]=legCorrection*upright*m_bodies[i].restRotation;
-    // Separate trunk attitude from leg lean. Making every desired body share
-    // the same lean cancels the hip correction entirely and leaves a one-leg
-    // stance acting as an uncontrolled rigid inverted pendulum.
-    desired[0]=glm::slerp(glm::quat(1,0,0,0),correction,m_settings.trunkLeanFraction)*upright*m_bodies[0].restRotation;
-    if(m_history.stepping&&m_history.hasStood&&(m_history.postStepTargets.empty()||m_history.postStepTime>=m_settings.stepSeconds)&&m_history.swing<0&&count==2&&m_observation.upright>.8f&&std::abs(m_observation.height-m_settings.standingHeight)<m_settings.standingTolerance){float height=std::max(glm::dot(m_observation.com-supportPoint,up),.1f);auto capture=m_observation.com+velocity*std::sqrt(height/glm::length(m_observation.gravity));if((glm::length(velocity)>m_settings.standingSpeed||m_observation.upright<.96f)&&glm::length(Tangent(capture-supportPoint,up))>m_settings.stepTrigger&&!PlanStep(world,capture,upright))m_history.reason="no clear reachable corrective foothold";}
-    if(m_history.swing>=0){
-        if(m_history.swingTime<0){m_history.transferTime+=dt;const auto& stance=m_observation.supports[1-m_history.swing];
-            const auto& effector=m_settings.effectors[1-m_history.swing];float radius=0;for(const auto& patch:effector.patches)radius=std::max(radius,patch.radius);
-            const float remainingMass=m_observation.mass-world.GetMass(m_bodies[m_settings.effectors[m_history.swing].foot].body);
-            if(stance.contacts&&glm::length(Tangent(m_observation.com-stance.point,up))<radius*m_settings.transferRadiusFraction&&stance.load/dt>remainingMass*glm::length(m_observation.gravity)*m_settings.transferLoadFraction)m_history.swingTime=0;
-            else if(m_history.transferTime>m_settings.transferSeconds){Fail(world,"insufficient physical load transfer for corrective step");return;}
-        }else m_history.swingTime+=dt;
-        if(!SwingReferences(world,upright,desired)){Fail(world,"corrective step lost support, reach or physical touchdown");return;}
-    }
-    if(m_history.swing<0&&m_history.lastSwing>=0&&!SwingReferences(world,upright,desired)){Fail(world,"changed support no longer supports planted stance reference");return;}
-    if(m_history.lastSwing>=0||m_history.swing>=0)for(auto& pose:desired)pose=correction*pose;
-    const float ramp=std::clamp(m_history.referenceTime/m_settings.referenceSeconds,0.f,1.f);
-    const bool landed=m_history.landings!=priorLandings;
-    if(landed){m_history.postStepTargets.assign(m_bodies.size(),glm::quat(1,0,0,0));m_history.postStepTime=0;}
-    for(size_t i=1;i<m_bodies.size();++i){JointState state;if(!world.GetJoint(m_bodies[i].joint,state)||!state.settings.enabled||state.settings.motor||state.settings.spring){Fail(world,"joint ownership changed");return;}
-        JointAngularDrive drive;drive.enabled=m_history.effort;drive.stiffness=m_settings.stiffness;drive.damping=m_settings.damping;drive.maxTorque=m_settings.maxTorque;
-        drive.target=glm::inverse(desired[i])*desired[m_bodies[i].parent];
-        for(unsigned f=0;f<2;++f)if(i==m_settings.effectors[f].foot&&(m_history.swing!=int(f)||m_history.swingTime<0)&&m_observation.supports[f].contacts){
-            auto foot=world.GetTransform(m_bodies[i].body);
-            auto orientation=glm::slerp(foot.rotation,desired[i],m_settings.plantedOrientationWeight);
-            drive.target=glm::inverse(orientation)*desired[m_bodies[i].parent];
-            // Compensate prescribed support rotation, not a rolling foot's
-            // observed angular velocity. Cancelling the latter removes relative
-            // damping precisely when a planted reference is being lost.
-            drive.relativeAngularVelocity=-world.GetAngularVelocity(m_observation.supports[f].body);
+    if(m_settings.captureStepping&&m_history.hasStood){if(!CaptureStep(world,upright,dt))return;}
+    else{
+        auto tilt=glm::cross(up,-(error*m_settings.positionResponse+velocity*m_settings.velocityResponse));float lean=glm::length(tilt);
+        auto correction=lean>1e-5f?glm::angleAxis(std::min(lean,m_settings.maximumLean),tilt/lean):glm::quat(1,0,0,0);
+        auto legCorrection=glm::slerp(glm::quat(1,0,0,0),correction,m_settings.legLeanFraction);
+        auto& desired=m_desired;for(size_t i=0;i<m_bodies.size();++i)desired[i]=legCorrection*upright*m_bodies[i].restRotation;
+        // Separate trunk attitude from leg lean. Making every desired body share
+        // the same lean cancels the hip correction entirely and leaves a one-leg
+        // stance acting as an uncontrolled rigid inverted pendulum.
+        desired[0]=glm::slerp(glm::quat(1,0,0,0),correction,m_settings.trunkLeanFraction)*upright*m_bodies[0].restRotation;
+        if(m_history.stepping&&m_history.hasStood&&(m_history.postStepTargets.empty()||m_history.postStepTime>=m_settings.stepSeconds)&&m_history.swing<0&&count==2&&m_observation.upright>.8f&&std::abs(m_observation.height-m_settings.standingHeight)<m_settings.standingTolerance){float height=std::max(glm::dot(m_observation.com-supportPoint,up),.1f);auto capture=m_observation.com+velocity*std::sqrt(height/glm::length(m_observation.gravity));if((glm::length(velocity)>m_settings.standingSpeed||m_observation.upright<.96f)&&glm::length(Tangent(capture-supportPoint,up))>m_settings.stepTrigger&&!PlanStep(world,capture,upright))m_history.reason="no clear reachable corrective foothold";}
+        if(m_history.swing>=0){
+            if(m_history.swingTime<0){m_history.transferTime+=dt;const auto& stance=m_observation.supports[1-m_history.swing];
+                const auto& effector=m_settings.effectors[1-m_history.swing];float radius=0;for(const auto& patch:effector.patches)radius=std::max(radius,patch.radius);
+                const float remainingMass=m_observation.mass-world.GetMass(m_bodies[m_settings.effectors[m_history.swing].foot].body);
+                if(stance.contacts&&glm::length(Tangent(m_observation.com-stance.point,up))<radius*m_settings.transferRadiusFraction&&stance.load/dt>remainingMass*glm::length(m_observation.gravity)*m_settings.transferLoadFraction)m_history.swingTime=0;
+                else if(m_history.transferTime>m_settings.transferSeconds){Fail(world,"insufficient physical load transfer for corrective step");return;}
+            }else m_history.swingTime+=dt;
+            if(!SwingReferences(world,upright,desired)){Fail(world,"corrective step lost support, reach or physical touchdown");return;}
         }
-        drive.target=glm::slerp(m_history.initialTargets[i],drive.target,ramp);
-        if(landed)m_history.postStepTargets[i]=drive.target;
-        else if(m_history.swing<0&&!m_history.postStepTargets.empty()&&m_history.postStepTime<m_settings.stepSeconds){float blend=m_history.postStepTime/m_settings.stepSeconds;blend=blend*blend*(3-2*blend);drive.target=glm::slerp(m_history.postStepTargets[i],drive.target,blend);}
-        if(!world.SetJointAngularDrive(m_bodies[i].joint,drive)){Fail(world,"bounded joint drive rejected");return;}
-        if(glm::length(state.angularDrive.impulses)/dt>=m_settings.maxTorque*.98f)++m_observation.saturated;
+        if(m_history.swing<0&&m_history.lastSwing>=0&&!SwingReferences(world,upright,desired)){Fail(world,"changed support no longer supports planted stance reference");return;}
+        if(m_history.lastSwing>=0||m_history.swing>=0)for(auto& pose:desired)pose=correction*pose;
+        const float ramp=std::clamp(m_history.referenceTime/m_settings.referenceSeconds,0.f,1.f);
+        const bool landed=m_history.landings!=priorLandings;
+        if(landed){m_history.postStepTargets.assign(m_bodies.size(),glm::quat(1,0,0,0));m_history.postStepTime=0;}
+        for(size_t i=1;i<m_bodies.size();++i){JointState state;if(!world.GetJoint(m_bodies[i].joint,state)||!state.settings.enabled||state.settings.motor||state.settings.spring){Fail(world,"joint ownership changed");return;}
+            JointAngularDrive drive;drive.enabled=m_history.effort;drive.stiffness=m_settings.stiffness;drive.damping=m_settings.damping;drive.maxTorque=m_settings.maxTorque;
+            drive.target=glm::inverse(desired[i])*desired[m_bodies[i].parent];
+            for(unsigned f=0;f<2;++f)if(i==m_settings.effectors[f].foot&&(m_history.swing!=int(f)||m_history.swingTime<0)&&m_observation.supports[f].contacts){
+                auto foot=world.GetTransform(m_bodies[i].body);
+                auto orientation=glm::slerp(foot.rotation,desired[i],m_settings.plantedOrientationWeight);
+                drive.target=glm::inverse(orientation)*desired[m_bodies[i].parent];
+                // Compensate prescribed support rotation, not a rolling foot's
+                // observed angular velocity. Cancelling the latter removes relative
+                // damping precisely when a planted reference is being lost.
+                drive.relativeAngularVelocity=-world.GetAngularVelocity(m_observation.supports[f].body);
+            }
+            drive.target=glm::slerp(m_history.initialTargets[i],drive.target,ramp);
+            if(landed)m_history.postStepTargets[i]=drive.target;
+            else if(m_history.swing<0&&!m_history.postStepTargets.empty()&&m_history.postStepTime<m_settings.stepSeconds){float blend=m_history.postStepTime/m_settings.stepSeconds;blend=blend*blend*(3-2*blend);drive.target=glm::slerp(m_history.postStepTargets[i],drive.target,blend);}
+            if(!world.SetJointAngularDrive(m_bodies[i].joint,drive)){Fail(world,"bounded joint drive rejected");return;}
+            if(glm::length(state.angularDrive.impulses)/dt>=m_settings.maxTorque*.98f)++m_observation.saturated;
+        }
     }
     bool standing=count==2&&m_history.swing<0&&m_observation.upright>.96f&&std::abs(m_observation.height-m_settings.standingHeight)<m_settings.standingTolerance&&m_observation.speed<m_settings.standingSpeed;
     m_history.settled=standing?std::min(m_history.settled+dt,m_settings.settleSeconds):0;

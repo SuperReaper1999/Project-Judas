@@ -259,6 +259,9 @@ struct PhysicsWorld::Impl {
         glm::vec3 warmTangent;
     };
     bool mk2Enabled = false, mk2Step = false;
+    // MK1 velocity sweeps; JUDAS_VALIDATION_VELOCITY_ITERATIONS overrides it to
+    // test consumers against a more converged solve.
+    int velocityIterations = ContactSolver::kVelocityIterations;
     // An MK2 step generates every feature within at least this distance as a
     // speculative row: two bodies resting together have no relative motion, so
     // a motion-only margin would cull just-separated corners by rounding and

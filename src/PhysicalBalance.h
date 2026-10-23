@@ -37,6 +37,12 @@ struct BalanceSettings {
     float touchdownTolerance=.12f;
     float transferLoadFraction=.6f,transferRadiusFraction=.75f,transferSeconds=2;
     unsigned maximumSteps=3;
+    // Experimental opt-in capture-point stepping controller for balance and
+    // corrective steps after measured standing (world-frame trunk, tracked
+    // capture-point placement, ZMP-bounded stance, trailing-foot follow-up
+    // steps). Get-up and the initial stand use the established controller
+    // either way. JUDAS_BALANCE_CAPTURE_STEPPING forces it on for validation.
+    bool captureStepping=false;
     PhysicsQueryFilter query;
 };
 // Stable authored skeleton keys; physical body/constraint handles are resolved
@@ -54,7 +60,8 @@ enum class BalanceTask { None, Stand, Recover };
 enum class BalanceProgress { Idle, Executing, Succeeded, Failed, Cancelled };
 struct BalanceSupport {
     BodyHandle body;
-    glm::vec3 point{0},velocity{0},normal{0};
+    glm::vec3 point{0},velocity{0},normal{0}; // point: load-weighted centre of pressure
+    glm::vec3 centre{0}; // unweighted centroid of the accepted contacts
     float load=0;
     unsigned contacts=0;
 };
@@ -113,11 +120,17 @@ private:
     bool Observe(PhysicsWorld&,const std::vector<glm::vec3>&);
     bool PlanStep(PhysicsWorld&,const glm::vec3&,const glm::quat&);
     bool SwingReferences(PhysicsWorld&,const glm::quat&,std::vector<glm::quat>&);
+    // Capture stepping controller (PhysicalBalanceCapture.cpp).
+    bool CaptureStep(PhysicsWorld&,const glm::quat& upright,float dt);
+    bool CapturePlan(PhysicsWorld&,glm::vec3 capture,const glm::quat& upright);
+    bool CaptureFoothold(PhysicsWorld&,int foot,const BodyTransform& pose,glm::vec3 displacement,const glm::quat& upright,BodyHandle& support,glm::vec3& destination) const;
+    bool CaptureLeg(PhysicsWorld&,unsigned chain,glm::vec3 hip,glm::vec3 ankle,const glm::quat& upright,std::vector<glm::quat>& attitudes) const;
     std::vector<BalanceBody> m_bodies;
     BalanceSettings m_settings;
     BalanceHistory m_history;
     BalanceObservation m_observation;
     std::vector<PhysicsWorld::BodyContactSample> m_contacts;
     std::vector<glm::quat> m_desired;
+    std::vector<glm::quat> m_captureAhead; // swing reference one control step ahead
     bool m_waitingForSample=false;
 };

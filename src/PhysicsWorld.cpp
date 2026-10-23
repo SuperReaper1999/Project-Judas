@@ -11,6 +11,8 @@ bool PhysicsWorld::Init() {
     m_impl->solver.EnableBlockNormals(blockNormals);
     m_impl->impactSolver.EnableBlockNormals(blockNormals);
     m_impl->mk2Enabled = std::getenv("JUDAS_PHYSICS_MK2") != nullptr;
+    if (const char *sweeps = std::getenv("JUDAS_VALIDATION_VELOCITY_ITERATIONS"))
+        m_impl->velocityIterations = std::clamp(std::atoi(sweeps), 1, 200);
     return true;
 }
 
@@ -423,7 +425,7 @@ void PhysicsWorld::Step(float fixedDeltaTime, const VelocityCoupling *coupling) 
         if (!w.joints.empty())
             w.PrepareJoints(w.jointSolver, w.JointInputs(), fixedDeltaTime);
         const unsigned rounds =
-            std::max(unsigned(ContactSolver::kVelocityIterations), coupling->iterations);
+            std::max(unsigned(w.velocityIterations), coupling->iterations);
         std::vector<unsigned char> awake(w.bodies.size(), 0);
         for (auto slot : w.aliveSlots)
             awake[slot] = !w.bodies[slot].sleeping;
@@ -455,10 +457,10 @@ void PhysicsWorld::Step(float fixedDeltaTime, const VelocityCoupling *coupling) 
             }
         }
     } else if (w.joints.empty())
-        w.solver.SolveVelocities();
+        w.solver.SolveVelocities(w.velocityIterations);
     else {
         w.PrepareJoints(w.jointSolver, w.JointInputs(), fixedDeltaTime);
-        for (int i = 0; i < ContactSolver::kVelocityIterations; ++i) {
+        for (int i = 0; i < w.velocityIterations; ++i) {
             w.solver.SolveVelocities(1);
             w.jointSolver.SolveIteration();
         }
