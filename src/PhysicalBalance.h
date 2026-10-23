@@ -123,7 +123,8 @@ private:
     // Capture stepping controller (PhysicalBalanceCapture.cpp).
     bool CaptureStep(PhysicsWorld&,const glm::quat& upright,float dt);
     bool CapturePlan(PhysicsWorld&,glm::vec3 capture,const glm::quat& upright);
-    bool CaptureFoothold(PhysicsWorld&,int foot,const BodyTransform& pose,glm::vec3 displacement,const glm::quat& upright,BodyHandle& support,glm::vec3& destination) const;
+    bool CaptureFoothold(PhysicsWorld&,int foot,const BodyTransform& pose,glm::vec3 base,glm::vec3 displacement,const glm::quat& upright,BodyHandle& support,glm::vec3& destination) const;
+    void CaptureRestSoles(PhysicsWorld&,const glm::quat& upright,std::array<glm::vec3,2>& soles) const;
     bool CaptureLeg(PhysicsWorld&,unsigned chain,glm::vec3 hip,glm::vec3 ankle,const glm::quat& upright,std::vector<glm::quat>& attitudes) const;
     std::vector<BalanceBody> m_bodies;
     BalanceSettings m_settings;

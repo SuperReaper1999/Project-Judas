@@ -5,11 +5,11 @@
 //
 // - Supporting legs are struts under the body where it actually is. Hips and
 //   knees cannot move the COM without ankle torque, so the COM is regulated
-//   through the planted ankles by leaning the supporting attitudes, with the
-//   error measured from the contact centroid (never the centre of pressure the
-//   same ankle torque produces). In double support the struts also hold the
-//   root near the posture measured at the task's first confirmed standing,
-//   which resists a push that moves the trunk away from the feet.
+//   through the planted ankles by leaning the supporting attitudes and the
+//   trunk, with the error measured from the contact centroid (never the centre
+//   of pressure the same ankle torque produces). In double support the struts
+//   also hold the root near the posture measured at the task's first confirmed
+//   standing, which resists a push that moves the trunk away from the feet.
 // - Planted ankle torque is bounded by the foot's share of body weight times
 //   the sole half-extent (ZMP); more only rolls the foot onto an edge.
 // - Joint targets are relative between desired attitudes, which keeps the
@@ -17,11 +17,15 @@
 //   world anchor matters: a planted ankle aims its shank from the actual foot;
 //   in single support the stance hip holds the trunk's world attitude from the
 //   actual thigh and the swing hip aims the swing thigh from the actual trunk.
+//   The single-support stance ankle carries no yaw: a foot on an edge or corner
+//   cannot resist it and spins.
 // - The swing chain is solved from the actual hip toward a foot path that
 //   follows the capture point until mid-swing, with velocity feed-forward
 //   from a one-step lookahead, and keeps descending past its schedule until
 //   the foot finds support.
-// - A step starts when the capture point leaves the support polygon.
+// - A step starts when the capture point leaves the support polygon. The
+//   foothold is the authored support pattern anchored at the stance foot,
+//   translated (by at most stepReach) so its centre lands on the capture point.
 #include "PhysicalBalance.h"
 #include "PhysicalBalanceMath.h"
 #include "PerformanceProfiler.h"
@@ -87,10 +91,22 @@ bool PhysicalBalanceController::CaptureLeg(PhysicsWorld& world,unsigned chain,gl
     return true;
 }
 
-bool PhysicalBalanceController::CaptureFoothold(PhysicsWorld& world,int foot,const BodyTransform& pose,glm::vec3 displacement,const glm::quat& upright,BodyHandle& support,glm::vec3& destination) const{
+// Sole positions of the authored rest pose relative to the root, by forward
+// kinematics through the chain anchors with every body at its upright rest
+// attitude.
+void PhysicalBalanceController::CaptureRestSoles(PhysicsWorld& world,const glm::quat& upright,std::array<glm::vec3,2>& soles) const{
+    for(unsigned f=0;f<2;++f){const auto& e=m_settings.effectors[f];JointState hip,knee,ankle;
+        world.GetJoint(m_bodies[e.upper].joint,hip);world.GetJoint(m_bodies[e.lower].joint,knee);world.GetJoint(m_bodies[e.foot].joint,ankle);
+        const auto r0=upright*m_bodies[0].restRotation,ru=upright*m_bodies[e.upper].restRotation,rl=upright*m_bodies[e.lower].restRotation,rf=upright*m_bodies[e.foot].restRotation;
+        soles[f]=r0*hip.settings.anchorB-ru*hip.settings.anchorA+ru*knee.settings.anchorB-rl*knee.settings.anchorA+rl*ankle.settings.anchorB-rf*ankle.settings.anchorA+rf*e.contactOffset;}
+}
+
+// The foothold is the sole point base moved by the displacement, bounded by
+// stepReach, and the swing foot's travel from pose must be clear.
+bool PhysicalBalanceController::CaptureFoothold(PhysicsWorld& world,int foot,const BodyTransform& pose,glm::vec3 base,glm::vec3 displacement,const glm::quat& upright,BodyHandle& support,glm::vec3& destination) const{
     const auto& effector=m_settings.effectors[foot];
     displacement=ClampLength(Tangent(displacement,m_observation.up),m_settings.stepReach);
-    const auto origin=World(pose,effector.contactOffset)+displacement+m_observation.up*m_settings.stepHeight;
+    const auto origin=base+displacement+m_observation.up*m_settings.stepHeight;
     auto hit=world.Raycast(origin,-m_observation.up,2*m_settings.stepHeight+.15f,m_settings.query);
     if(!hit.hit||glm::dot(hit.normal,m_observation.up)<effector.normalAcceptance)return false;
     // Translational conservative foot envelope, as the established planner.
@@ -113,10 +129,14 @@ bool PhysicalBalanceController::CapturePlan(PhysicsWorld& world,glm::vec3 captur
     if(m_history.landings>0){const auto d0=glm::length(Tangent(capture-m_observation.supports[0].centre,m_observation.up)),d1=glm::length(Tangent(capture-m_observation.supports[1].centre,m_observation.up));foot=d1>d0?1:0;}
     const auto& stance=m_observation.supports[1-foot];if(!stance.contacts)return false;
     const auto& effector=m_settings.effectors[foot];auto pose=world.GetTransform(m_bodies[effector.foot].body);
-    // Translate the support pattern so its centre lands on the capture point.
-    auto centre=(m_observation.supports[0].centre+m_observation.supports[1].centre)*.5f;
+    // Translate the authored support pattern, anchored at the stance foot, so
+    // its centre lands on the capture point. Anchoring at the swing foot's own
+    // position would leave a trailing foot only able to reach alongside the
+    // leading one, and the steps after the first would gain nothing.
+    std::array<glm::vec3,2> rest;CaptureRestSoles(world,upright,rest);const auto offset=Tangent(rest[foot]-rest[1-foot],m_observation.up);
+    const auto stanceSole=World(world.GetTransform(m_bodies[m_settings.effectors[1-foot].foot].body),m_settings.effectors[1-foot].contactOffset);
     BodyHandle platformBody;glm::vec3 destination;
-    if(!CaptureFoothold(world,foot,pose,capture-centre,upright,platformBody,destination))return false;
+    if(!CaptureFoothold(world,foot,pose,stanceSole+offset,capture-(stanceSole+offset*.5f),upright,platformBody,destination))return false;
     auto platform=world.GetTransform(platformBody);
     m_history.swing=foot;m_history.plannedSupport=platformBody;m_history.startLocal=Local(platform,pose.position);m_history.landingLocal=Local(platform,destination);
     m_history.stanceSupport=stance.body;auto stanceFrame=world.GetTransform(stance.body);
@@ -166,7 +186,9 @@ bool PhysicalBalanceController::CaptureStep(PhysicsWorld& world,const glm::quat&
                 auto platform=world.GetTransform(m_history.plannedSupport);const auto& effector=m_settings.effectors[swing];
                 BodyTransform start=platform;start.position=World(platform,m_history.startLocal);start.rotation=upright*m_bodies[effector.foot].restRotation;
                 auto capture=captureAbout(stance.centre);BodyHandle body;glm::vec3 destination;
-                if(CaptureFoothold(world,swing,start,capture-(World(start,effector.contactOffset)+stance.centre)*.5f,upright,body,destination)&&body.id==m_history.plannedSupport.id&&body.world==m_history.plannedSupport.world)m_history.landingLocal=Local(platform,destination);
+                std::array<glm::vec3,2> rest;CaptureRestSoles(world,upright,rest);const auto offset=Tangent(rest[swing]-rest[1-swing],up);
+                const auto stanceSole=World(world.GetTransform(m_bodies[m_settings.effectors[1-swing].foot].body),m_settings.effectors[1-swing].contactOffset);
+                if(CaptureFoothold(world,swing,start,stanceSole+offset,capture-(stanceSole+offset*.5f),upright,body,destination)&&body.id==m_history.plannedSupport.id&&body.world==m_history.plannedSupport.world)m_history.landingLocal=Local(platform,destination);
             }
         }
     }
@@ -201,14 +223,14 @@ bool PhysicalBalanceController::CaptureStep(PhysicsWorld& world,const glm::quat&
         // In double support both feet can react a correction toward the
         // standing posture: the root offset from the soles' midpoint measured
         // at the first confirmed standing. A push on the trunk otherwise moves
-        // it freely away from the feet, and the COM follows the trunk. Before
-        // a posture is measured (after a restore) a small pull toward the
-        // target holds position against drift. Single support keeps the strut
-        // under the body.
+        // it freely away from the feet, and the COM follows the trunk. Until a
+        // posture is measured (after a restore) the authored rest pose stands
+        // in for it. Single support keeps the strut under the body.
         glm::vec3 shift(0);
         if(!single&&count==2){const auto mid=(World(world.GetTransform(m_bodies[m_settings.effectors[0].foot].body),m_settings.effectors[0].contactOffset)+World(world.GetTransform(m_bodies[m_settings.effectors[1].foot].body),m_settings.effectors[1].contactOffset))*.5f;
             if(!m_captureStanceReady&&m_history.progress==BalanceProgress::Succeeded&&swing<0){m_captureStance=glm::inverse(upright)*(root.position-mid);m_captureStanceReady=true;}
-            shift=m_captureStanceReady?ClampLength(Tangent(mid+upright*m_captureStance-root.position,up),kPostureReach):ClampLength(Tangent(target-m_observation.com,up),kDoubleSupportPull);
+            glm::vec3 stance=m_captureStance;if(!m_captureStanceReady){std::array<glm::vec3,2> rest;CaptureRestSoles(world,upright,rest);stance=-glm::inverse(upright)*((rest[0]+rest[1])*.5f);}
+            shift=ClampLength(Tangent(mid+upright*stance-root.position,up),kPostureReach);
         }else if(!single)shift=ClampLength(Tangent(target-m_observation.com,up),kDoubleSupportPull);
         BodyTransform reference{root.position+shift,upright*m_bodies[0].restRotation};
         // Height above the floor the contacting supports actually stand on; a
@@ -225,7 +247,10 @@ bool PhysicalBalanceController::CaptureStep(PhysicsWorld& world,const glm::quat&
         for(unsigned f=0;f<2;++f)if(planted[f]){JointState hip,ankle;world.GetJoint(m_bodies[m_settings.effectors[f].upper].joint,hip);world.GetJoint(m_bodies[m_settings.effectors[f].foot].joint,ankle);
             CaptureLeg(world,f,World(reference,hip.settings.anchorB),World(world.GetTransform(m_bodies[m_settings.effectors[f].foot].body),ankle.settings.anchorA),upright,w);}
         for(unsigned f=0;f<2;++f)if(planted[f]){const auto& e=m_settings.effectors[f];for(auto b:{e.upper,e.lower,e.foot})w[b]=correction*w[b];}
-        if(!single)w[0]=correction*w[0];
+        // The trunk leans with the supporting attitudes in both phases. Held
+        // upright in single support, the stance hip spun the stance leg (and
+        // with it the foot) to keep it there.
+        w[0]=correction*w[0];
     }
     if(single){
         const auto& effector=m_settings.effectors[swing];auto platform=world.GetTransform(m_history.plannedSupport);
@@ -281,7 +306,14 @@ bool PhysicalBalanceController::CaptureStep(PhysicsWorld& world,const glm::quat&
                 // surface) does not hold the face, so leaning from it only
                 // rolls the foot.
                 const auto foot=glm::slerp(childPose.rotation,upright*m_bodies[i].restRotation,m_settings.plantedOrientationWeight);
-                drive.target=glm::inverse(foot)*w[m_bodies[i].parent];
+                // In single support the stance ankle's target keeps the shank's
+                // current yaw: the swing leg twists the pelvis, and a stance
+                // foot balanced on an edge or corner spins under any yaw.
+                auto shank=w[m_bodies[i].parent];
+                if(single){auto error=shank*glm::inverse(parentPose.rotation);if(error.w<0)error=-error;
+                    const auto along=up*glm::dot(glm::vec3(error.x,error.y,error.z),up);glm::quat twist(error.w,along.x,along.y,along.z);
+                    const float length=std::sqrt(twist.w*twist.w+glm::dot(along,along));if(length>1e-6f)shank=glm::inverse(twist*(1/length))*shank;}
+                drive.target=glm::inverse(foot)*shank;
                 drive.relativeAngularVelocity=supports[chain].contacts?-world.GetAngularVelocity(supports[chain].body):glm::vec3(0);
                 // The foot's share of body weight, from the measured split
                 // when the feet carry a meaningful load: one bounce frame must
