@@ -4,29 +4,11 @@
 #include <algorithm>
 #include <cmath>
 #include <glm/gtc/quaternion.hpp>
-namespace {std::atomic<std::uint64_t> nextDevice{1},nextPlayer{1};
+namespace {std::atomic<std::uint64_t> nextPlayer{1};
 bool In(glm::vec4 r,float x,float y){return x>=r.x&&y>=r.y&&x<r.x+r.z&&y<r.y+r.w;}
 bool Overlap(glm::vec4 a,glm::vec4 b){return std::min(a.x+a.z,b.x+b.z)>std::max(a.x,b.x)&&std::min(a.y+a.w,b.y+b.w)>std::max(a.y,b.y);}
 bool Accept(const LocalPlayers::Assignment& a,const std::string& control){return a.controls.empty()||a.controls.count(control);}
 }
-InputDeviceHub::InputDeviceHub(){for(auto kind:{"keyboard","mouse","touch"})devices[kind]={kind,kind,std::string("SDL ")+kind,true,{},{}};changes.reserve(256);}
-std::string InputDeviceHub::Connect(const std::string& kind,const std::string& name){
- unsigned live=0;for(auto& d:devices)live+=d.second.connected;if(live>=19)return {};
- // Retire disconnected device records; their tokens are never recycled.
- for(auto it=devices.begin();it!=devices.end();)if(!it->second.connected)it=devices.erase(it);else ++it;
- auto id=kind+":"+std::to_string(nextDevice++);devices[id]={id,kind,name,true,{},{}};return id;
-}
-const InputDeviceHub::Device* InputDeviceHub::Find(const std::string& id)const{auto it=devices.find(id);return it==devices.end()?nullptr:&it->second;}
-void InputDeviceHub::Disconnect(const std::string& id){auto it=devices.find(id);if(it==devices.end())return;it->second.connected=false;it->second.values.clear();}
-void InputDeviceHub::BeginFrame(){textEvents.clear();++frame;changes.clear();touchChanges.clear();overflow=false;for(auto& d:devices)for(auto control:{"mouse:dx","mouse:dy","mouse:wheelX","mouse:wheelY"}){auto it=d.second.values.find(control);if(it!=d.second.values.end())it->second=0;}}
-void InputDeviceHub::Reset(){textEvents.clear();for(auto& d:devices){d.second.values.clear();d.second.pointer={};}touches.clear();changes.clear();touchChanges.clear();++resetRevision;}
-void InputDeviceHub::Set(const std::string& device,const std::string& control,float value){
- auto it=devices.find(device);if(it==devices.end()||!it->second.connected||!std::isfinite(value)||overflow)return;
- auto& old=it->second.values[control];if(old==value)return;old=value;
- if(changes.size()>=4096){Reset();overflow=true;return;}changes.push_back({device,control,value});
-}
-void InputDeviceHub::RecordTouch(InputTouch contact,bool down){if(!contact.id||!std::isfinite(contact.x)||!std::isfinite(contact.y)||!std::isfinite(contact.pressure)||overflow)return;if(touchChanges.size()>=4096){Reset();overflow=true;return;}touchChanges.push_back({contact,down});}
-void InputDeviceHub::Pointer(const std::string& device,InputPointer value){auto it=devices.find(device);if(it!=devices.end())it->second.pointer=value;}
 LocalPlayers::~LocalPlayers(){if(renderer)for(auto& p:players)renderer->DestroyRenderTarget(p.second.target);}
 LocalPlayers::Player* LocalPlayers::Create(const std::string& name,const InputMap& map,std::string& error){if(players.size()>=8||name.size()>128){error="At most eight players and 128-byte names";return nullptr;}Player p;p.id=nextPlayer++;p.name=name;if(!p.input.SetMap(map,error))return nullptr;auto id=p.id;return &players.emplace(id,std::move(p)).first->second;}
 LocalPlayers::Player* LocalPlayers::Find(uint64_t id){auto it=players.find(id);return it==players.end()?nullptr:&it->second;}

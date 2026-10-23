@@ -1,5 +1,5 @@
 #include "Window.h"
-#include "LocalMultiplayer.h"
+#include "InputDeviceHub.h"
 #include "AppIcon.h"
 
 #include <cstdio>

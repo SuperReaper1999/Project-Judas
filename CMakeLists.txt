@@ -247,6 +247,7 @@ add_library(judas_engine STATIC
     src/AudioSystem.cpp
     src/WorldAudio.cpp
     src/Window.cpp
+    src/InputDeviceHub.cpp
     src/LocalMultiplayer.cpp
     src/InputSystem.cpp
     src/Renderer.cpp
@@ -1259,12 +1260,16 @@ judas_warnings(judas_streaming_performance_tests -Wpedantic)
 judas_add_engine_test(judas_streaming_revisit_tests tests/StreamingRevisitTests.cpp APPLICATION)
 
 # Historical targets compile Window.cpp directly instead of linking the engine.
-# Keep their window/icon dependency identical to the editor and standalone game.
+# Keep their window/icon dependency identical to the editor and standalone game,
+# including the GL-free device hub that Window's controller adapter publishes to.
 get_property(JUDAS_ICON_TARGETS DIRECTORY PROPERTY BUILDSYSTEM_TARGETS)
 foreach(JUDAS_ICON_TARGET IN LISTS JUDAS_ICON_TARGETS)
     get_target_property(JUDAS_ICON_SOURCES ${JUDAS_ICON_TARGET} SOURCES)
     if("src/Window.cpp" IN_LIST JUDAS_ICON_SOURCES)
         target_link_libraries(${JUDAS_ICON_TARGET} PRIVATE judas_app_icon)
+        if(NOT "src/InputDeviceHub.cpp" IN_LIST JUDAS_ICON_SOURCES)
+            target_sources(${JUDAS_ICON_TARGET} PRIVATE src/InputDeviceHub.cpp)
+        endif()
     endif()
 endforeach()
 
