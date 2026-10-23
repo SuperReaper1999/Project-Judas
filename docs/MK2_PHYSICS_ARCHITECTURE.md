@@ -340,7 +340,7 @@ log.
 | balance_lab supports, radial, recovery | pass | pass (stage 3) |
 | balance_lab standing: reaches standing | pass | pass (stage 3) |
 | balance_lab standing: push → corrective step → standing | pass | **fail (real gap 5)** |
-| balance_lab cold-write: capture while a corrective step is in progress | pass | **fail (gap 5: no step has started by frame 20)** |
+| balance_lab cold-write: capture while a corrective step is in progress | pass | **fail (gap 5: no corrective step starts)** |
 | balance_lab cold-read (restores that capture) | pass | **fail (real gap 5)** |
 
 With every joint row cold after substep 0, cold-write passed (a step did start) but the step
@@ -678,6 +678,38 @@ All 30 MK2 runs pass every check of the program, including the 24-box fast famil
    - **Not yet tested** on these changes: corrective steps on supports other than the
      authored flat and radial grounds, beyond the lab's supports scene; and human
      validation. The established controller remains the default.
+
+   **Cold-save fixture made controller-agnostic** (operator decision). Balance-lab
+   cold-write no longer saves at a fixed frame 20. It steps for up to 90 frames after the
+   push. It saves at the first frame a genuine corrective step is in progress: a planned
+   swing whose foot has left its support and is 40% through that controller's own swing
+   schedule. For the established controller that is the moment the old frame-20 capture
+   fell (frame 20, swing time 0.28 s); for the capture controller it is frames 6–16.
+   Requirements:
+   - The write requires the mid-step capture. It also continues the same world
+     uninterrupted, and requires that run to land the step and stand; this is the
+     reference for the restore.
+   - The read requires the restored task to resume the saved swing (same swing foot,
+     lifted, same landing count), to complete a physical landing and then to stand.
+
+   Results:
+   - **Capture controller:** every lab mode passes, including the new cold write and read,
+     under MK1, MK1 ×20, MK1 ×40 and MK2. It also passes with the capture at 25% and 50% of
+     the swing.
+   - **Established controller, MK1:** passes, as before, so every MK1 argument-taking
+     balance, character and save program still passes.
+     - Its restore is phase-sensitive. At 25% and 50% of its swing the uninterrupted run
+       lands and stands, but the restored run falls.
+     - Saves treat joint and contact warm-start impulses as disposable history, so a
+       restore is not bit-exact. The established controller depends on MK1's
+       under-converged solve (gap 5 above), so the difference matters to it early and late
+       in a swing.
+     - This is recorded here, not hidden by the 40% choice.
+   - **Established controller, MK1 ×20 and ×40:** cold now fails. The uninterrupted
+     reference itself fails to land and stand, which is the same recovery gap as its
+     standing-push failures under those solvers. At ×40 the old fixture passed only because
+     its read required eventual standing, not completion of the saved step.
+   - **Established controller, MK2:** it never steps (gap 5), as before.
 
    Separately, MK2 reports joint reaction impulses (`reactionImpulse`,
    `reactionAngularImpulse`) and drive impulses from the last substep only, because they reset
