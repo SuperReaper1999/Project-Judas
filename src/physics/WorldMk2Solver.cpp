@@ -790,8 +790,11 @@ void PhysicsWorld::Impl::Mk2Solve(float dt) {
             row.totalNormal += row.normalImpulse;
             row.totalTangent += row.t1 * row.tangent1 + row.t2 * row.tangent2;
             // A row that just engaged has no carried load yet; its first
-            // relaxed substep value becomes the steady estimate.
-            if (step == 0 && row.steadyNormal == 0)
+            // loaded relaxed substep becomes the steady estimate. Only at
+            // substep 0, a contact that closed later kept a zero cap, so its
+            // warm start was erased every substep and its cache every step:
+            // a ragdoll leg resting on such rows rocked without friction.
+            if (row.steadyNormal == 0)
                 row.steadyNormal = row.normalImpulse;
         }
     }
@@ -920,6 +923,11 @@ void PhysicsWorld::Impl::Mk2Solve(float dt) {
         const auto &key = pendingCache[i].key;
         const unsigned ha = MakeHandle(key.slotA).id, hb = MakeHandle(key.slotB).id;
         const auto pair = std::minmax(ha, hb);
+        // A speculative row that closed its gap and carried load this step is
+        // a touch of this step (MK1 records the same arrival as an impact).
+        if (rows[i].totalNormal > 0 && i < mk2Points.size() &&
+            !stepTouches.count({pair.first, pair.second}))
+            Observe(mk2Points[i].a, mk2Points[i].b, mk2Points[i].contact);
         if (auto it = stepTouches.find({pair.first, pair.second}); it != stepTouches.end()) {
             it->second.normalImpulse += rows[i].totalNormal;
             it->second.impulseAvailable = true;
@@ -972,11 +980,8 @@ void PhysicsWorld::Impl::Mk2Continuous(float dt) {
             impactPoseSamples[slot].tightValid = false;
     }
     std::vector<unsigned> candidates;
-    for (const auto slot : aliveSlots) {
-        auto &body = bodies[slot];
-        if (!body.isDynamic || body.sleeping || body.simulationSuspended || body.sensor ||
-            body.queryOnly || body.rigidBody.IsStatic())
-            continue;
+    const auto fastReach = [&](unsigned slot) {
+        const auto &body = bodies[slot];
         double feature = std::numeric_limits<double>::infinity(), reach = 0;
         for (int part = 0; part < PrimitiveCount(body.shape); ++part)
             feature = std::min(feature, PrimitiveFeature(slot, part));
@@ -985,7 +990,55 @@ void PhysicsWorld::Impl::Mk2Continuous(float dt) {
                                      double(glm::length(segment.angularVelocity)) *
                                          double(body.boundingRadius)) *
                                         double(dt));
-        if (!(reach > kMk2FastFraction * feature))
+        return reach > kMk2FastFraction * feature;
+    };
+    // A fast kinematic mover cannot be held; it strikes. Its recorded path is
+    // swept against each dynamic candidate not touching it at the start. A
+    // speculative row is linearized at one anchor and cannot follow a spinning
+    // surface (an arm's equal endpoint poses miss a body its sweep passes
+    // through), so rows do not own these arrivals; the exact impulse acts on
+    // the post-solve velocities and adds nothing where rows already separate.
+    // Poses are kept: the struck body leaves under the next step's rows.
+    for (const auto slot : aliveSlots) {
+        const auto &body = bodies[slot];
+        if (!body.isKinematic || body.simulationSuspended || body.sensor || body.queryOnly ||
+            !body.HasMotion() || !fastReach(slot))
+            continue;
+        const auto &found = ImpactCandidates(slot, RemainingImpactBound(slot, 0, dt));
+        candidates.assign(found.begin(), found.end());
+        for (const auto other : candidates) {
+            const auto &o = bodies[other];
+            if (other == slot || !o.isDynamic || o.isKinematic || o.rigidBody.IsStatic() ||
+                o.simulationSuspended || o.sensor || o.queryOnly || !CanRespond(slot, other))
+                continue;
+            const unsigned a = std::min(slot, other), b = std::max(slot, other);
+            double earliest = double(dt);
+            int hitPartA = 0, hitPartB = 0;
+            for (int pa = 0; pa < PrimitiveCount(bodies[a].shape); ++pa)
+                for (int pb = 0; pb < PrimitiveCount(bodies[b].shape); ++pb) {
+                    if (PairTouches(a, b, pa, pb, 0))
+                        continue;
+                    const double hit = ImpactTime(a, b, pa, pb, 0, earliest);
+                    if (hit < earliest) {
+                        earliest = hit;
+                        hitPartA = slot == a ? pa : pb;
+                        hitPartB = slot == a ? pb : pa;
+                    }
+                }
+            if (!(earliest < double(dt)))
+                continue;
+            if (o.sleeping)
+                Wake(other);
+            ++stats.impactEvents;
+            Mk2ResolveArrival(slot, other, hitPartA, hitPartB, earliest);
+        }
+    }
+    for (const auto slot : aliveSlots) {
+        auto &body = bodies[slot];
+        if (!body.isDynamic || body.sleeping || body.simulationSuspended || body.sensor ||
+            body.queryOnly || body.rigidBody.IsStatic())
+            continue;
+        if (!fastReach(slot))
             continue;
         const Aabb query = RemainingImpactBound(slot, 0, dt);
         const auto &found = ImpactCandidates(slot, query);
@@ -1108,7 +1161,7 @@ bool PhysicsWorld::Impl::Mk2Crossed(unsigned fast, unsigned other, unsigned a, u
 // The held fast body arrived at `hit`: resolve that arrival with MK1's exact
 // impact solver on the actual first-touch manifold, with both bodies at their
 // first-touch poses, so the hold does not leave it approaching next step.
-// Velocities only; poses and ledgers are not changed here.
+// Velocities and the step's touch only; poses and ledgers are not changed here.
 void PhysicsWorld::Impl::Mk2ResolveArrival(unsigned fast, unsigned other, int partFast,
                                            int partOther, double hit) {
     const unsigned a = std::min(fast, other), b = std::max(fast, other);
@@ -1163,4 +1216,7 @@ void PhysicsWorld::Impl::Mk2ResolveArrival(unsigned fast, unsigned other, int pa
             bodies[slot].rigidBody.linearVelocity = copy->linearVelocity;
             bodies[slot].rigidBody.angularVelocity = copy->angularVelocity;
         }
+    // The arrival is a touch of this step, as for MK1's impact events.
+    for (const auto &row : rows)
+        Observe(a, b, row.geometry);
 }

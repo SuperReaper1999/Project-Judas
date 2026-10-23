@@ -1,3 +1,4 @@
+#include <cstdlib>
 #include "RigidMotion.h"
 #include "PhysicsWorld.h"
 #include <iostream>
@@ -203,7 +204,9 @@ int main() {
   };
   auto total=[&]{return angular(a,3,inertia)+angular(c,5,glm::dmat3(.4*5*.2*.2));};
   const auto before=total();world.Step(1.f/60);
-  check(world.LastStepStats().impactEvents>0);check(glm::length(total()-before)<1e-5);
+  // MK1 resolves this arrival as a TOI event; MK2's speculative rows own it.
+  // Both must conserve the transported angular momentum.
+  check(std::getenv("JUDAS_PHYSICS_MK2")||world.LastStepStats().impactEvents>0);check(glm::length(total()-before)<1e-5);
  }
  std::cout<<"Rigid motion checks "<<checks<<" PASS\n";
 }
