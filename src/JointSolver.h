@@ -12,7 +12,9 @@ public:
  // Appending adds only newly awakened joint participants at the same physical
  // boundary. Existing rows, accumulated impulses and observations are retained.
  // positionalRate: fraction of a rigid row's position error corrected per dt.
- void Prepare(const std::vector<JointInput>& inputs,float dt,bool warm=true,bool impact=false,bool append=false,float positionalRate=.2f);
+ // warmEqualityOnly: warm only rigid two-sided (equality) rows; limits,
+ // drives, springs and materials start cold.
+ void Prepare(const std::vector<JointInput>& inputs,float dt,bool warm=true,bool impact=false,bool append=false,float positionalRate=.2f,bool warmEqualityOnly=false);
  // useBias=false (substep relax) drops only the rigid rows' positional
  // correction; springs, resistance and motors keep their targets.
  void SolveIteration(std::size_t first=0,bool useBias=true);

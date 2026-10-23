@@ -73,6 +73,8 @@ struct Block {
     std::array<std::array<double, 4>, 4> k{};
     unsigned preferred = 0;
     bool usable = false;
+    std::array<double, 4> null{}; // unit null direction of k, when hasNull
+    bool hasNull = false;
 };
 
 // Active-set enumeration over at most 16 masks, preferred (last) set first.
@@ -153,6 +155,94 @@ bool SolveBlockLcp(Block &block, const std::array<double, 4> &q, std::array<doub
             return false;
     block.preferred = 0;
     return true;
+}
+
+// A coplanar patch is statically indeterminate: K has a null direction (for
+// a box face, +1 -1 +1 -1 over its corners) in which impulses exert no force
+// or torque. The LCP may return any point of that line (a box carried on two
+// diagonal corners) and keeps it through its preferred set. Motion is the
+// same along the whole line, but everything that reads per-point loads is
+// not: friction cones, warm starts, ReadBodyContactSample (a balance
+// controller's support polygon). Move to the minimum-norm nonnegative point.
+void SpreadNullSpace(const Block &block, std::array<double, 4> &x) {
+    if (!block.hasNull)
+        return;
+    const unsigned n = unsigned(block.count);
+    // Minimise |x + t u|^2 over the t that keep every impulse >= 0.
+    double xu = 0, low = -INFINITY, high = INFINITY;
+    for (unsigned i = 0; i < n; ++i) {
+        const double u = block.null[i];
+        xu += x[i] * u;
+        if (u > 1e-12)
+            low = std::max(low, -x[i] / u);
+        else if (u < -1e-12)
+            high = std::min(high, -x[i] / u);
+    }
+    if (!(low <= high))
+        return;
+    const double t = std::clamp(-xu, low, high);
+    for (unsigned i = 0; i < n; ++i)
+        x[i] = std::max(0.0, x[i] + t * block.null[i]);
+}
+
+// The null direction of a rank n-1 block: every nonzero column of its
+// adjugate lies along it (K adj(K) = det(K) I = 0). A full-rank block, or one
+// of lower rank (a zero adjugate), has none to spread along.
+void FindNullSpace(Block &block) {
+    block.hasNull = false;
+    const unsigned n = unsigned(block.count);
+    if (!block.usable || n < 3)
+        return;
+    const auto &k = block.k;
+    const auto minor = [&](unsigned row, unsigned col) {
+        unsigned r[3], c[3], m = 0, q = 0;
+        for (unsigned i = 0; i < n; ++i)
+            if (i != row)
+                r[m++] = i;
+        for (unsigned j = 0; j < n; ++j)
+            if (j != col)
+                c[q++] = j;
+        if (n == 3)
+            return k[r[0]][c[0]] * k[r[1]][c[1]] - k[r[0]][c[1]] * k[r[1]][c[0]];
+        return k[r[0]][c[0]] * (k[r[1]][c[1]] * k[r[2]][c[2]] - k[r[1]][c[2]] * k[r[2]][c[1]]) -
+               k[r[0]][c[1]] * (k[r[1]][c[0]] * k[r[2]][c[2]] - k[r[1]][c[2]] * k[r[2]][c[0]]) +
+               k[r[0]][c[2]] * (k[r[1]][c[0]] * k[r[2]][c[1]] - k[r[1]][c[1]] * k[r[2]][c[0]]);
+    };
+    double scale = 0;
+    for (unsigned i = 0; i < n; ++i)
+        scale = std::max(scale, k[i][i]);
+    std::array<double, 4> best{};
+    double bestNorm = 0;
+    for (unsigned col = 0; col < n; ++col) {
+        // Column `col` of adj(K): cofactors of row `col` (K is symmetric).
+        std::array<double, 4> u{};
+        double norm = 0;
+        for (unsigned i = 0; i < n; ++i) {
+            u[i] = ((i + col) % 2 ? -1 : 1) * minor(col, i);
+            norm += u[i] * u[i];
+        }
+        if (norm > bestNorm) {
+            bestNorm = norm;
+            best = u;
+        }
+    }
+    if (!(bestNorm > 0) || !(scale > 0))
+        return;
+    const double length = std::sqrt(bestNorm);
+    for (unsigned i = 0; i < n; ++i)
+        best[i] /= length;
+    // Accept only a genuine null direction: |K u| negligible against K.
+    double residual = 0;
+    for (unsigned i = 0; i < n; ++i) {
+        double r = 0;
+        for (unsigned j = 0; j < n; ++j)
+            r += k[i][j] * best[j];
+        residual = std::max(residual, std::abs(r));
+    }
+    if (residual > 1e-6 * scale)
+        return;
+    block.null = best;
+    block.hasNull = true;
 }
 
 glm::vec3 Orthogonal(const glm::vec3 &n) {
@@ -243,6 +333,7 @@ void PrepareBlock(const std::vector<SolverBody> &state, const std::vector<Row> &
             k[x][y] = k[y][x] = double(A.invMass + B.invMass) + double(glm::dot(rx.rnA, ry.wnA)) +
                                 double(glm::dot(rx.rnB, ry.wnB));
         }
+    FindNullSpace(block);
 }
 
 // The velocity target for a row in this sweep (vn >= target).
@@ -306,6 +397,7 @@ void SolveRows(std::vector<SolverBody> &bodies, std::vector<Row> &rows,
                 for (std::size_t j = 0; j < block.count; ++j)
                     q[i] -= block.k[i][j] * previous[j];
             if (SolveBlockLcp(block, q, next)) {
+                SpreadNullSpace(block, next);
                 for (std::size_t i = 0; i < block.count; ++i)
                     ApplyNormal(bodies, rows[block.first + i], float(next[i]));
                 solved = true;
@@ -630,7 +722,14 @@ void PhysicsWorld::Impl::Mk2Solve(float dt) {
             if (step == 0)
                 for (const auto &input : inputs)
                     jointTotals.push_back({input.state});
-            PrepareJoints(jointSolver, inputs, h, true, false, false, kMk2JointPositionalRate);
+            // Joints warm-start once per step, from the step's history, as
+            // in MK1 (whose controllers also reset drive history every
+            // step). Re-warming each substep from the previous substep would
+            // re-apply a limit stop's impact spike (a collapsing ragdoll
+            // rebounded off its own knee and hip stops) and let drives carry
+            // in-step history MK1 never had.
+            PrepareJoints(jointSolver, inputs, h, true, false, false,
+                          kMk2JointPositionalRate, step > 0);
         }
         // Joints first, contacts last in every sweep (as Box2D v3): the final
         // velocity of each sweep never approaches a contact, so a joint pull
@@ -831,18 +930,29 @@ void PhysicsWorld::Impl::Mk2Solve(float dt) {
         pendingCache[i].tangentImpulse =
             (rows[i].t1 * rows[i].tangent1 + rows[i].t2 * rows[i].tangent2) * float(substeps);
     }
+    // Observers (ReadBodyContactSample) read MK1's semantics: the impulse each
+    // point delivered over the whole step, impacts and restitution included.
+    // The warm-start cache keeps the steady final-substep load.
+    std::vector<CachedContact> observed(pendingCache.begin(), pendingCache.end());
+    for (std::size_t i = 0; i < rows.size() && i < observed.size(); ++i) {
+        observed[i].normalImpulse = rows[i].totalNormal;
+        observed[i].tangentImpulse = rows[i].totalTangent;
+    }
     for (const auto &cached : contactCache)
         if (cached.key.slotA < bodies.size() && cached.key.slotB < bodies.size() &&
             bodies[cached.key.slotA].alive && bodies[cached.key.slotB].alive &&
             bodies[cached.key.slotA].generation == cached.key.generationA &&
             bodies[cached.key.slotB].generation == cached.key.generationB &&
             (bodies[cached.key.slotA].sleeping || bodies[cached.key.slotA].rigidBody.IsStatic()) &&
-            (bodies[cached.key.slotB].sleeping || bodies[cached.key.slotB].rigidBody.IsStatic()))
+            (bodies[cached.key.slotB].sleeping || bodies[cached.key.slotB].rigidBody.IsStatic())) {
             pendingCache.push_back(cached);
-    std::stable_sort(pendingCache.begin(), pendingCache.end(),
-                     [](const CachedContact &x, const CachedContact &y) { return x.key < y.key; });
+            observed.push_back(cached);
+        }
+    const auto byKey = [](const CachedContact &x, const CachedContact &y) { return x.key < y.key; };
+    std::stable_sort(pendingCache.begin(), pendingCache.end(), byKey);
+    std::stable_sort(observed.begin(), observed.end(), byKey);
     std::swap(contactCache, pendingCache);
-    completedContactObservations = contactCache;
+    completedContactObservations = std::move(observed);
 }
 
 // Bounded continuous pass for fast bodies. The substep solve's speculative

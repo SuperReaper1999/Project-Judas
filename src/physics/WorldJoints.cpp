@@ -28,9 +28,9 @@ auto PhysicsWorld::Impl::JointInputs(const std::vector<unsigned char> *included)
 
 auto PhysicsWorld::Impl::PrepareJoints(JointSolver &target, const std::vector<JointInput> &inputs,
                                        float dt, bool warm, bool impact, bool append,
-                                       float positionalRate) -> void {
+                                       float positionalRate, bool warmEqualityOnly) -> void {
     PhysicsWorkTimer timer(work.jointPreparation, work.active);
-    target.Prepare(inputs, dt, warm, impact, append, positionalRate);
+    target.Prepare(inputs, dt, warm, impact, append, positionalRate, warmEqualityOnly);
 }
 
 JointHandle PhysicsWorld::CreateJoint(const JointSettings &settings) {

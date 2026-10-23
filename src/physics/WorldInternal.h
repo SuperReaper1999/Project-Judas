@@ -394,7 +394,7 @@ struct PhysicsWorld::Impl {
     void PrepareInitialContactGeometry(float dt);
     void PrepareJoints(JointSolver &target, const std::vector<JointInput> &inputs, float dt,
                        bool warm = true, bool impact = false, bool append = false,
-                       float positionalRate = 0.2f);
+                       float positionalRate = 0.2f, bool warmEqualityOnly = false);
     void InvalidateImpactPose(unsigned slot);
 
     RigidBody PoseAt(unsigned slot, double time) const;

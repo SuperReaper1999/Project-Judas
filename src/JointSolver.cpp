@@ -1,5 +1,6 @@
 #include "JointSolver.h"
 #include <algorithm>
+#include <cmath>
 #include <cstdint>
 #include <limits>
 std::size_t JointSolver::PointerMembership::Hash(const void* pointer){
@@ -28,7 +29,7 @@ bool JointSolver::PointerMembership::Insert(const void* pointer){
 }
 void JointSolver::Apply(Row& r,float p){r.a->linearVelocity+=r.linearA*(p*r.a->inverseMass);r.b->linearVelocity+=r.linearB*(p*r.b->inverseMass);
  r.a->angularVelocity+=r.inertiaA*r.angularA*p;r.b->angularVelocity+=r.inertiaB*r.angularB*p;}
-void JointSolver::Prepare(const std::vector<JointInput>& inputs,float dt,bool warm,bool impact,bool append,float positionalRate){
+void JointSolver::Prepare(const std::vector<JointInput>& inputs,float dt,bool warm,bool impact,bool append,float positionalRate,bool warmEqualityOnly){
  if(!append){m_rows.clear();m_bodies.clear();m_bodyMembership.Clear();m_preparedMembership.Clear();}const float inf=std::numeric_limits<float>::infinity();
  for(auto& input:inputs){
   // A material contact may awaken a formerly sleeping articulation midway
@@ -48,7 +49,8 @@ void JointSolver::Prepare(const std::vector<JointInput>& inputs,float dt,bool wa
    if(motor)bias=-s.speed;
    float k=a.inverseMass*glm::dot(la,la)+b.inverseMass*glm::dot(lb,lb)+glm::dot(aa,ia*aa)+glm::dot(ab,ib*ab);
    if(k+gamma<=0)return;
-   float* cache=impact?nullptr:&(*input.warm)[index];float lambda=warm&&cache?std::clamp(*cache,low,high):0;
+   const bool equality=!soft&&!motor&&!resistance&&std::isinf(low)&&std::isinf(high);
+   float* cache=impact?nullptr:&(*input.warm)[index];float lambda=warm&&(!warmEqualityOnly||equality)&&cache?std::clamp(*cache,low,high):0;
    m_rows.push_back({&a,&b,la,lb,aa,ab,ia,ib,1/(k+gamma),bias,gamma,low,high,lambda,cache,motor?&input.state->motorImpulse:nullptr,input.state,!soft&&!motor&&!resistance});++index;
    if(lambda!=0){Apply(m_rows.back(),lambda);input.state->reactionImpulse+=la*lambda;input.state->reactionAngularImpulse+=aa*lambda;}
   };
@@ -79,7 +81,7 @@ void JointSolver::Prepare(const std::vector<JointInput>& inputs,float dt,bool wa
     auto aa=angularAxis?-n:-glm::cross(ra,n)+glm::cross(n,delta),ab=angularAxis?n:glm::cross(rb,n);
     float gamma=1/(dt*(damping+dt*k)),bias=error*dt*k*gamma;
     float effective=a.inverseMass*glm::dot(la,la)+b.inverseMass*glm::dot(lb,lb)+glm::dot(aa,ia*aa)+glm::dot(ab,ib*ab);
-    auto* cache=&(*input.warm)[index++];float lambda=warm?*cache:0;
+    auto* cache=&(*input.warm)[index++];float lambda=warm&&!warmEqualityOnly?*cache:0;
     m_rows.push_back({&a,&b,la,lb,aa,ab,ia,ib,1/(effective+gamma),bias,gamma,-inf,inf,lambda,cache,nullptr,input.state});
     if(lambda!=0){Apply(m_rows.back(),lambda);input.state->reactionImpulse+=la*lambda;input.state->reactionAngularImpulse+=aa*lambda;}
    };
@@ -134,7 +136,7 @@ void JointSolver::Prepare(const std::vector<JointInput>& inputs,float dt,bool wa
    const float cap=drive.maxTorque*dt/std::sqrt(float(axes));
    for(int k=0;k<axes;++k){auto n=basis[k];float stiffnessBias=(glm::dot(rotationError,n)*dt*drive.stiffness-glm::dot(drive.relativeAngularVelocity,n)*dt*drive.damping)*gamma;
     float effective=glm::dot(n,(ia+ib)*n);if(effective+gamma<=0)continue;
-    auto* cache=&input.state->angularDrive.impulses[k];float lambda=warm?std::clamp(*cache,-cap,cap):0;
+    auto* cache=&input.state->angularDrive.impulses[k];float lambda=warm&&!warmEqualityOnly?std::clamp(*cache,-cap,cap):0;
     m_rows.push_back({&a,&b,{0,0,0},{0,0,0},-n,n,ia,ib,1/(effective+gamma),stiffnessBias,gamma,-cap,cap,lambda,cache,nullptr,input.state});
     if(lambda!=0){Apply(m_rows.back(),lambda);input.state->reactionAngularImpulse-=n*lambda;}
    }
