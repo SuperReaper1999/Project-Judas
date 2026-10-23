@@ -259,6 +259,9 @@ struct PhysicsWorld::Impl {
         glm::vec3 warmTangent;
     };
     bool mk2Enabled = false, mk2Step = false;
+    // Substep length the joints' warm starts were last written in (MK2):
+    // a coupled interval's substeps differ in length from an ordinary step's.
+    float mk2JointWarmH = 0;
     // MK1 velocity sweeps; JUDAS_VALIDATION_VELOCITY_ITERATIONS overrides it to
     // test consumers against a more converged solve.
     int velocityIterations = ContactSolver::kVelocityIterations;
@@ -273,7 +276,7 @@ struct PhysicsWorld::Impl {
     std::vector<Mk2Point> mk2Points;
     std::vector<std::array<unsigned, 4>> mk2RowPairs; // sorted (slotA, slotB, partA, partB)
     std::vector<float> mk2RowEndSeparation;           // per row pair, deepest end-of-step
-    void Mk2Solve(float dt);
+    void Mk2Solve(float dt, const PhysicsWorld::VelocityCoupling *coupling = nullptr);
     void Mk2Continuous(float dt);
     bool Mk2ResolveArrival(unsigned fast, unsigned other, int partFast, int partOther, double hit);
     bool Mk2Crossed(unsigned fast, unsigned other, unsigned a, unsigned b, int pa, int pb, double hit,

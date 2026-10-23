@@ -128,6 +128,19 @@ Two further rules apply across the step:
   - Making every joint row cold after substep 0 cost ragdoll contact quality: mean bone
     penetration roughly doubled, and on the dense trough reached 6.6 mm against MK1's 4.8.
 - **Unconstrained bodies** use MK1's exact single-segment free flight.
+- **Coupled steps** (`StepCoupled` intervals, `VelocityCoupling` participants) run through MK2
+  too; until this change they fell back to MK1. A participant keeps its per-step contract:
+  `begin(dt)` once, exactly `iterations` `solve(dt, round)` calls spread over the substeps
+  (10 → 3, 3, 2, 2; each substep still runs at least its 2 rigid sweeps), `finish(dt)` once
+  after the last pose advance. Every awake dynamic body is integrated per substep, and a body
+  the participant wakes mid-solve joins at that round (its rows re-prepared, its joints
+  appended). Joint warm starts are rescaled when the substep length changes (coupled
+  intervals are shorter steps): without that, a late-woken articulation started at a quarter
+  of its load and sagged 1.4 mm.
+  - Solving each coupled interval as one substep was tried first and rejected: the coarse
+    crash lab's 24.6 m/s car reached its barrier with half MK1's crush (0.10 m) and no link
+    failure. With per-substep coupling it crushes 0.20 m and breaks two links (MK1: 0.23 m, two
+    links), and it stops where it struck; MK1 rebounds 2.2 m.
 
 **Manifolds are block-solved.** Each manifold (2–4 points) is a regularised active-set LCP:
 Cholesky with a 1e-9 diagonal, then friction on an isotropic cone. This symmetric response keeps
@@ -500,6 +513,34 @@ before). balance_lab with the capture controller passes every mode, cold include
 ×20, ×40 and MK2; forcing the established controller (`JUDAS_BALANCE_CAPTURE_STEPPING=0`) keeps
 its known gap 5 failures (standing push, cold) under MK1 ×20, ×40 and MK2. The capture harness
 under MK2 is unchanged (5/7 required). Timing: §4.2.
+
+**After coupled steps moved to MK2** (no MK1 fallback remains; the old fallback was reached by
+the coarse crash lab's `StepCoupled` intervals and by direct `Step(dt, coupling)` users). The main
+suite was blind to it: none of its programs took the fallback. Added coverage (scratch
+`coupled_suite.sh`, `coarse_matrix.sh`):
+
+- coarse crash lab, 6 cases × 5 modes: 29 of 30 pass under both solvers; `group lifecycle`
+  fails identically under both (prefab spawn publication).
+- fracture, structural, bending, damage, deformable and fluid-coupling programs: same results
+  as MK1 except the two below. `structural radial`, `bending radial` and both
+  `mechanical_crash` modes fail identically under both solvers.
+- main suite (56 × 2), argument programs, capture balance matrix and `prealpha_validate.py`
+  (11 gates) all pass.
+- **structural_lab overload** fails under MK2 (since the default switch, not this change): A's
+  120 kPa bonds hold the 1000 kg overload. Measured on identical bridge B, both solvers settle to
+  the same static demand, about 84 kPa; MK1 peaks at 123 kPa (+47%) and rings for 100+ steps,
+  MK2 peaks at 114 kPa and settles within about 10 steps. The check passed only on MK1's
+  overshoot of a load whose static stress is 70% of capacity. Fixture decision left to the
+  operator (gap 11).
+- **physics_scaling**: 2 checks fail under MK2, both bookkeeping of a 2,112-sphere simultaneous
+  impact: MK2 reports 64 impact events (the global `kMk2ImpactPairs` cap) where MK1 reports one
+  per sphere, and MK1's per-event joint preparations do not exist. Every sphere stops exactly
+  (restitution 0). With restitution, the cap would leave all but 64 pairs without an exact
+  bounce: part of gap 10. The profiler contract check now passes (MK2 rows are prepared under
+  "Physics contact row preparation"), and the late-wake checks pass unchanged.
+- room1024 (not coupled): ordinary900 1.83 ms mean, 1,152 asleep; severe900 11.96 / 22.6 ms,
+  85 steps over budget (previous run 11.86 / 22.0, 70; repeat-run spread on that count is
+  70–83).
 
 **Programs run with their arguments** (absolute XDG paths):
 
@@ -969,6 +1010,12 @@ All 30 MK2 runs pass every check of the program, including the 24-box fast famil
     arrival-instant impact model adds about 1.3 ms of mean solver time in severe900 and 70 steps
     over 16.67 ms (stage 3: 0). Candidates: cheaper arrival re-collision, batching arrivals per
     island, or bounding re-timings per step; none tried yet.
+    The pairwise impact pass is also capped at 64 resolutions per substep for the whole world
+    (`kMk2ImpactPairs`), each found by scanning every block: a large simultaneous impact gets
+    only 64 exact (restitution-bearing) resolutions.
+11. **structural_lab overload fixture** (open, operator decision). The check expects bridge A
+    (120 kPa) to fail under a 1000 kg overload whose settled demand is about 84 kPa under both
+    solvers; only MK1's 123 kPa transient exceeded capacity (§4).
 
 ## 6. Stages
 

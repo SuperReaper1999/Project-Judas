@@ -134,6 +134,17 @@ translation order. Moving a method does not authorize changing when it runs.
 Methods in the modules operate on that coordinator's private state; scratch data
 must not become another source of physical truth.
 
+`WorldMk2Solver.cpp` (MK2, the default) solves every step it is selected for,
+`StepCoupled` intervals and `VelocityCoupling` participants included; MK1's TOI
+pipeline runs only under `JUDAS_PHYSICS_MK1`. A coupling keeps its per-step
+contract: `begin(dt)` once after row preparation, exactly `iterations`
+`solve(dt, round)` calls spread across the substeps' velocity rounds, and
+`finish(dt)` once after the last pose advance. Every awake dynamic body is then
+integrated per substep. A body a participant wakes mid-solve joins at that round
+(deferred velocity consumed, its rows re-prepared, its joints appended without
+re-warming solved rows). Joint warm starts are per-substep impulses and are
+rescaled when a step's substep length differs from the one that wrote them.
+
 Initial contact geometry and eligible independent CCD searches may borrow the
 existing job service. Workers read one frozen event boundary and write private
 indexed results; the owner joins them before canonical event publication. CCD

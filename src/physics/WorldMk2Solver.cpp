@@ -14,6 +14,7 @@ using namespace JudasPhysicsDetail;
 // (JointSolver) are prepared and solved inside the same substeps.
 namespace {
 constexpr int kMk2Substeps = 4;
+ProfileLabel mk2RowPreparationLabel("Physics contact row preparation");
 constexpr int kMk2Iterations = 2;      // biased sweeps per substep
 // Sweeps for joints and the contact blocks touching jointed bodies: an
 // articulation resting on contacts needs these to converge (at 2 a resting
@@ -460,7 +461,14 @@ void SolveRows(std::vector<SolverBody> &bodies, std::vector<Row> &rows,
 }
 } // namespace
 
-void PhysicsWorld::Impl::Mk2Solve(float dt) {
+void PhysicsWorld::Impl::Mk2Solve(float dt, const PhysicsWorld::VelocityCoupling *coupling) {
+    // A velocity-coupled participant keeps its per-step contract: begin(dt)
+    // once after row preparation, exactly `iterations` solve(dt, round) calls,
+    // finish(dt) once after the last pose advance. Its rounds are spread over
+    // the substeps, so its impulses act inside each substep's velocity solve.
+    // (Solving a coupled step as one substep let a 24.6 m/s crash car reach
+    // its barrier with half the crush and no link failure.)
+    int participantRound = 0;
     const int substeps = kMk2Substeps;
     const float h = dt / float(substeps);
 
@@ -493,6 +501,20 @@ void PhysicsWorld::Impl::Mk2Solve(float dt) {
     std::vector<int> index(bodies.size(), -1);
     std::vector<SolverBody> state;
     state.reserve(aliveSlots.size());
+    const auto makeDynamic = [&](SolverBody &s) {
+        auto &body = bodies[s.slot];
+        s.dynamic = true;
+        if (body.deferredAcceleration) {
+            body.rigidBody.linearVelocity += body.lastAcceleration * dt;
+            body.stepVelocityDelta += body.lastAcceleration * dt;
+            body.deferredAcceleration = false;
+        }
+        s.invMass = body.rigidBody.inverseMass;
+        s.invI = body.rigidBody.InverseInertiaWorld();
+        // External acceleration is redistributed evenly across substeps.
+        s.gravityStep = body.stepVelocityDelta / float(substeps);
+        body.rigidBody.linearVelocity -= body.stepVelocityDelta;
+    };
     const auto addBody = [&](unsigned slot) -> unsigned {
         if (index[slot] >= 0)
             return unsigned(index[slot]);
@@ -503,20 +525,9 @@ void PhysicsWorld::Impl::Mk2Solve(float dt) {
         s.x0 = body.rigidBody.position;
         s.q0 = body.rigidBody.orientation;
         s.kinematic = body.isKinematic && !body.simulationSuspended;
-        s.dynamic = body.isDynamic && !body.sleeping && !body.simulationSuspended &&
-                    !body.rigidBody.IsStatic();
-        if (s.dynamic) {
-            if (body.deferredAcceleration) {
-                body.rigidBody.linearVelocity += body.lastAcceleration * dt;
-                body.stepVelocityDelta += body.lastAcceleration * dt;
-                body.deferredAcceleration = false;
-            }
-            s.invMass = body.rigidBody.inverseMass;
-            s.invI = body.rigidBody.InverseInertiaWorld();
-            // External acceleration is redistributed evenly across substeps.
-            s.gravityStep = body.stepVelocityDelta / float(substeps);
-            body.rigidBody.linearVelocity -= body.stepVelocityDelta;
-        }
+        if (body.isDynamic && !body.sleeping && !body.simulationSuspended &&
+            !body.rigidBody.IsStatic())
+            makeDynamic(s);
         index[slot] = int(state.size());
         state.push_back(s);
         return unsigned(state.size() - 1);
@@ -529,6 +540,8 @@ void PhysicsWorld::Impl::Mk2Solve(float dt) {
 
     std::vector<Row> rows;
     rows.reserve(mk2Points.size());
+    // Profiled under MK1's name: the same work (contact rows from manifolds).
+    ProfileScope rowPreparation(mk2RowPreparationLabel);
     for (const auto &p : mk2Points) {
         const unsigned ia = addBody(p.a), ib = addBody(p.b);
         const auto &A = state[ia];
@@ -573,6 +586,11 @@ void PhysicsWorld::Impl::Mk2Solve(float dt) {
             for (const auto handle : {joint.state.settings.bodyA, joint.state.settings.bodyB})
                 if (handle.IsValid() && index[handle.id & kSlotMask] >= 0)
                     state[std::size_t(index[handle.id & kSlotMask])].constrained = true;
+    // A coupled participant may act on any awake body, whose pose its finish
+    // then reads: every one is integrated inside the substep.
+    if (coupling)
+        for (auto &s : state)
+            s.constrained |= s.dynamic;
     // An unconstrained body gains nothing from substeps: it keeps MK1's exact
     // single-segment free flight (identical endpoint and ledger).
     for (auto &s : state)
@@ -594,6 +612,8 @@ void PhysicsWorld::Impl::Mk2Solve(float dt) {
         blocks.push_back(std::move(block));
         i = j;
     }
+
+    rowPreparation.End();
 
     // Joint observations are per-step totals; Prepare resets them per substep.
     struct JointTotals {
@@ -1025,9 +1045,22 @@ void PhysicsWorld::Impl::Mk2Solve(float dt) {
         if (!joints.empty()) {
             inputs = JointInputs();
             haveJoints = !inputs.empty();
-            if (step == 0)
+            if (step == 0) {
                 for (const auto &input : inputs)
                     jointTotals.push_back({input.state});
+                // Warm starts are impulses per substep: rescale them when this
+                // step's substep differs from the one that wrote them (a
+                // coupled interval after ordinary steps, or back).
+                if (mk2JointWarmH > 0 && mk2JointWarmH != h) {
+                    const float scale = h / mk2JointWarmH;
+                    for (auto &joint : joints) {
+                        for (auto &value : joint.warm)
+                            value *= scale;
+                        joint.state.angularDrive.impulses *= scale;
+                    }
+                }
+                mk2JointWarmH = h;
+            }
             // Joints warm-start once per step, from the step's history, as
             // in MK1 (whose controllers also reset drive history every
             // step). Re-warming each substep from the previous substep would
@@ -1038,12 +1071,94 @@ void PhysicsWorld::Impl::Mk2Solve(float dt) {
             PrepareJoints(jointSolver, inputs, h, true, false, false, 0.0f, step > 0, false,
                           kMk2JointLimitApproachRate);
         }
+        // A coupled participant's impulse may wake a sleeping body mid-solve
+        // (as MK1's material rounds). It joins at this boundary: its deferred
+        // external velocity is consumed, rows prepared against it as a static
+        // participant are re-prepared, and its articulation's joints are
+        // appended without re-applying the warm starts already solved.
+        const auto joinAwakened = [&] {
+            for (bool changed = true; changed;) {
+                changed = false;
+                for (const auto &joint : joints) {
+                    if (!JointActive(joint))
+                        continue;
+                    auto *a = Get(joint.state.settings.bodyA);
+                    auto *b = Get(joint.state.settings.bodyB);
+                    if (!a || !b)
+                        continue;
+                    if (a->isDynamic && !a->sleeping && b->sleeping) {
+                        Wake(joint.state.settings.bodyB.id & kSlotMask);
+                        changed = true;
+                    } else if (b->isDynamic && !b->sleeping && a->sleeping) {
+                        Wake(joint.state.settings.bodyA.id & kSlotMask);
+                        changed = true;
+                    }
+                }
+            }
+            bool joined = false;
+            for (const auto slot : aliveSlots) {
+                auto &body = bodies[slot];
+                if (!body.isDynamic || body.sleeping || body.simulationSuspended ||
+                    body.rigidBody.IsStatic())
+                    continue;
+                if (index[slot] >= 0 && state[std::size_t(index[slot])].dynamic)
+                    continue;
+                const unsigned i = index[slot] >= 0 ? unsigned(index[slot]) : addBody(slot);
+                auto &s = state[i];
+                if (!s.dynamic)
+                    makeDynamic(s);
+                s.constrained = true;
+                s.rb->linearVelocity += s.gravityStep; // this substep's share
+                stateOf.emplace(s.rb, i);
+                joined = true;
+            }
+            if (!joined)
+                return;
+            segments.resize(state.size());
+            pseudoLinear.resize(state.size());
+            pseudoAngular.resize(state.size());
+            jointMember.resize(state.size());
+            arrival.resize(state.size(), 2.0f);
+            if (!impactLinear.empty()) {
+                impactLinear.resize(state.size());
+                impactAngular.resize(state.size());
+            }
+            for (auto &row : rows)
+                PrepareRow(state[row.a], state[row.b], row);
+            for (auto &block : blocks)
+                PrepareBlock(state, rows, block);
+            if (!joints.empty()) {
+                const auto oldRows = jointSolver.RowCount();
+                inputs = JointInputs();
+                PrepareJoints(jointSolver, inputs, h, true, false, true, 0.0f, step > 0, false,
+                              kMk2JointLimitApproachRate);
+                for (const auto &input : inputs)
+                    if (std::none_of(jointTotals.begin(), jointTotals.end(),
+                                     [&](const JointTotals &t) { return t.state == input.state; }))
+                        jointTotals.push_back({input.state});
+                haveJoints = !inputs.empty();
+                if (haveJoints)
+                    jointSolver.SolveIteration(oldRows);
+            }
+        };
+        if (coupling && coupling->begin && step == 0) {
+            coupling->begin(dt);
+            joinAwakened();
+        }
+        const int share = coupling ? int(coupling->iterations) / substeps +
+                                         (step < int(coupling->iterations) % substeps)
+                                   : 0;
+        const int rounds = std::max(kMk2Iterations, share);
         // Joints first, contacts last in every sweep (as Box2D v3): the final
         // velocity of each sweep never approaches a contact, so a joint pull
         // becomes joint error (recovered by the position projection), not penetration.
-        for (int iteration = 0; iteration < kMk2Iterations; ++iteration) {
+        for (int iteration = 0; iteration < rounds; ++iteration) {
             if (haveJoints)
                 jointSolver.SolveIteration();
+            if (coupling && coupling->solve && iteration < share) {
+                coupling->solve(dt, unsigned(participantRound++));
+                joinAwakened();
+            }
             SolveRows(state, rows, blocks, h, true);
         }
         // Articulations take further sweeps, with only the contact blocks that
@@ -1060,7 +1175,7 @@ void PhysicsWorld::Impl::Mk2Solve(float dt) {
                     if (jointMember[row.a] || jointMember[row.b])
                         jointBlocks[k] = 1;
                 }
-            for (int iteration = kMk2Iterations; iteration < kMk2JointIterations; ++iteration) {
+            for (int iteration = rounds; iteration < kMk2JointIterations; ++iteration) {
                 jointSolver.SolveIteration();
                 SolveRows(state, rows, blocks, h, true, &jointBlocks);
             }
@@ -1189,6 +1304,8 @@ void PhysicsWorld::Impl::Mk2Solve(float dt) {
             if (row.steadyNormal == 0)
                 row.steadyNormal = row.normalImpulse;
         }
+        if (coupling && coupling->finish && step + 1 == substeps)
+            coupling->finish(dt);
     }
     for (auto &row : rows)
         row.cachedNormal = row.normalImpulse;

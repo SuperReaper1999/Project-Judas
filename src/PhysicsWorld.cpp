@@ -67,9 +67,9 @@ void PhysicsWorld::Step(float fixedDeltaTime, const VelocityCoupling *coupling) 
             joint.restoredContinuationDt = 0;
         }
 
-    // MK2 prototype scope: velocity coupling and coupled intervals keep the
-    // MK1 pipeline until their substep integration exists.
-    w.mk2Step = w.mk2Enabled && !coupling && !w.coupledStep;
+    // MK2 solves every step it is selected for, coupled intervals and
+    // velocity-coupled participants included.
+    w.mk2Step = w.mk2Enabled;
     w.mk2Points.clear();
     w.parallelContactDiagnostics = {};
     w.parallelCookedDiagnostics = {};
@@ -354,7 +354,7 @@ void PhysicsWorld::Step(float fixedDeltaTime, const VelocityCoupling *coupling) 
     if (w.mk2Step) {
         static ProfileLabel mk2Label("Physics MK2 substep solve");
         ProfileScope mk2Scope(mk2Label);
-        w.Mk2Solve(fixedDeltaTime);
+        w.Mk2Solve(fixedDeltaTime, coupling);
     } else {
 
     // 4) Accumulated-impulse velocity solve (src/ContactSolver.h), then
