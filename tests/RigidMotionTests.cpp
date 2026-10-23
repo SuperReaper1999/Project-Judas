@@ -141,8 +141,12 @@ int main() {
   w.SetAngularVelocity(b,{0,0,100});w.SetLinearVelocity(b,{1,2,3});
   if(elsewhere){w.CreateStaticBox({0,-.5,0},{10,.5,10},0,1);auto x=w.CreateDynamicSphere({0,.501,0},.5,1,0,1);w.SetLinearVelocity(x,{0,-1,0});}
   RigidBody oracle;oracle.inverseMass=1;oracle.position={100,100,100};oracle.linearVelocity={1,2,3};oracle.angularVelocity={0,0,100};
-  IntegrateRigidBodyPosition(oracle,1.f/60);w.Step(1.f/60);
-  check(w.GetTransform(b).position==oracle.position);check(w.GetTransform(b).rotation==oracle.orientation);
+  const RigidBody start=oracle;IntegrateRigidBodyPosition(oracle,1.f/60);w.Step(1.f/60);
+  check(w.GetTransform(b).position==oracle.position);
+  // MK1 integrates by the first-order quaternion update (bitwise oracle);
+  // MK2 by the exact rotation of the same rate.
+  if(std::getenv("JUDAS_PHYSICS_MK2"))check(std::abs(glm::dot(w.GetTransform(b).rotation,glm::normalize(glm::angleAxis(100.f/60,glm::vec3(0,0,1))*start.orientation)))>=1-1e-6f);
+  else check(w.GetTransform(b).rotation==oracle.orientation);
  }
  // Actual PhysicsWorld: torque-free anisotropic rotation must preserve the
  // world momentum VECTOR, while energy convergence is a separate assertion.

@@ -275,7 +275,7 @@ struct PhysicsWorld::Impl {
     std::vector<float> mk2RowEndSeparation;           // per row pair, deepest end-of-step
     void Mk2Solve(float dt);
     void Mk2Continuous(float dt);
-    void Mk2ResolveArrival(unsigned fast, unsigned other, int partFast, int partOther, double hit);
+    bool Mk2ResolveArrival(unsigned fast, unsigned other, int partFast, int partOther, double hit);
     bool Mk2Crossed(unsigned fast, unsigned other, unsigned a, unsigned b, int pa, int pb, double hit,
                     float dt);
     bool ImpactDiscoverySeparated(unsigned a, unsigned b, const Aabb& query,

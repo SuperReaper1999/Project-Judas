@@ -25,6 +25,10 @@ struct RigidMotionSegment {
     glm::vec3 endPosition{0};
     glm::quat endOrientation{1,0,0,0};
     bool prescribed=false;
+    // Integrate the dynamic drift rate by its exact rotation (MK2) instead of
+    // the first-order quaternion update, whose angle is 2 atan(theta/2): at
+    // 100 rad/s and 60 Hz a free body would turn 17% too slowly.
+    bool exactRotation=false;
     RigidMotionGeometry EvaluateGeometry(double time) const {
         if (time < begin || time > end) throw std::out_of_range("motion segment time");
         RigidMotionGeometry result;
@@ -43,7 +47,7 @@ struct RigidMotionSegment {
             // Dynamic drift uses the midpoint angular predictor fixed at the
             // segment anchor; observations never re-evaluate the predictor.
             const float speed=glm::length(driftAngularVelocity);
-            const glm::quat advanced = prescribed
+            const glm::quat advanced = prescribed || exactRotation
                 ? (speed>0 && elapsed!=0 ? glm::angleAxis(speed*elapsed,driftAngularVelocity/speed)*orientation : orientation)
                 : orientation + (omega * orientation) * (0.5f * elapsed);
             const auto same = [](float a, float b) { return std::memcmp(&a, &b, sizeof(float)) == 0; };
@@ -67,8 +71,8 @@ struct RigidMotionSegment {
 };
 class RigidMotion {
 public:
-    void Begin(unsigned int owner, const RigidBody& body, double duration) {
-        segments.clear(); Append(owner, body, 0, duration);
+    void Begin(unsigned int owner, const RigidBody& body, double duration, bool exactRotation=false) {
+        segments.clear(); Append(owner, body, 0, duration, false, exactRotation);
     }
     void BeginPrescribed(unsigned int owner,const RigidBody& body,double duration,double activeDuration) {
         segments.clear();
@@ -115,7 +119,7 @@ public:
         previous.end = time; previous.endPosition = pose.position; previous.endOrientation = pose.orientation;
         RigidBody next = body; next.position = pose.position; next.orientation = pose.orientation;
         const auto owner = previous.owner;
-        Append(owner, next, time, finish);
+        Append(owner, next, time, finish, false, previous.exactRotation);
     }
     void Clear() { segments.clear(); }
     void ShiftOrigin(glm::dvec3 delta) { for(auto& s:segments){s.position=glm::vec3(glm::dvec3(s.position)-delta);s.endPosition=glm::vec3(glm::dvec3(s.endPosition)-delta);} }
@@ -125,9 +129,9 @@ public:
     std::size_t StorageBytes() const { return segments.capacity()*sizeof(RigidMotionSegment); }
     const std::vector<RigidMotionSegment>& Segments() const { return segments; }
 private:
-    void Append(unsigned int owner, const RigidBody& body, double begin, double end,bool prescribed=false) {
+    void Append(unsigned int owner, const RigidBody& body, double begin, double end,bool prescribed=false,bool exactRotation=false) {
         RigidMotionSegment s;
-        s.inverseMass=body.inverseMass;s.inverseInertiaLocal=body.inverseInertiaLocal; s.prescribed=prescribed; s.owner=owner; s.begin=begin; s.end=end; s.position=body.position;
+        s.inverseMass=body.inverseMass;s.inverseInertiaLocal=body.inverseInertiaLocal; s.prescribed=prescribed; s.exactRotation=exactRotation; s.owner=owner; s.begin=begin; s.end=end; s.position=body.position;
         s.orientation=body.orientation; s.linearVelocity=body.linearVelocity; s.angularVelocity=body.angularVelocity;
         s.driftAngularVelocity=prescribed?body.angularVelocity:AngularDriftGenerator(body.inverseInertiaLocal,body.orientation,body.angularVelocity,static_cast<float>(end-begin));
         const auto pose=s.EvaluateGeometry(end); s.endPosition=pose.position; s.endOrientation=pose.orientation;

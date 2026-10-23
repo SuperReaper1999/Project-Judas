@@ -105,23 +105,27 @@ void ElasticSeparation(){
     if(std::getenv("JUDAS_PHYSICS_MK2")){
         // The gap is sized for MK1, which applies the step's velocity change at
         // its start (50 mm of travel). MK2 integrates it over its substeps (31 mm;
-        // exact 25 mm), so the first arrival comes a step later. Restated on the
-        // bounces that actually occur: each keeps the authored restitution of
-        // its arrival speed (bounded by the speed entering and leaving the step's
-        // gravity), and the departure never becomes support.
-        float bounce[2]={0,0},entering[2]={0,0};int bounces=0;bool above=true;
+        // exact 25 mm), so the first arrival comes a step later and inside it.
+        // Restated on the bounces that actually occur. In a bounce step the
+        // velocity changes only by gravity (-g dt) and the impact J = (1+e)u, so
+        // the implied arrival speed u = J/(1+e) must lie between the speed
+        // entering the step plus one substep of gravity and that plus the whole
+        // step's gravity (an inelastic stop implies far less). The departure
+        // never becomes support.
+        const float e=.75f,g=180,substep=delta/4;
+        float implied[2]={0,0},low[2]={0,0},high[2]={0,0};int bounces=0;bool above=true;
         for(int k=0;k<16&&bounces<2;++k){
             const float before=world.GetLinearVelocity(body).y;
-            world.ApplyLinearAcceleration(body,{0,-180,0},delta);world.Step(delta);
-            const float after=world.GetLinearVelocity(body).y;
+            world.ApplyLinearAcceleration(body,{0,-g,0},delta);world.Step(delta);
             above=above&&world.GetTransform(body).position.y>=.24999f;
-            if(before<=0&&after>0){entering[bounces]=-before;bounce[bounces++]=after;}
+            const float after=world.GetLinearVelocity(body).y;
+            if(before<=0&&after>0){implied[bounces]=(after-before+g*delta)/(1+e);low[bounces]=-before+g*substep;high[bounces]=-before+g*delta;++bounces;}
         }
-        const auto authored=[&](int i){return bounces>i&&bounce[i]>=.75f*entering[i]-1e-4f&&bounce[i]<=.75f*(entering[i]+3)+1e-4f;};
+        const auto authored=[&](int i){return bounces>i&&implied[i]>=low[i]-1e-3f&&implied[i]<=high[i]+1e-3f;};
         Check(authored(0),"first isolated impact retains authored restitution");
-        Check(authored(1)&&bounce[1]>.5f,"elastic departure does not become persistent support or suppress the next real bounce");
+        Check(authored(1),"elastic departure does not become persistent support or suppress the next real bounce");
         Check(above,"short airborne return keeps actual geometry above floor");
-        std::printf("ELASTIC mk2 bounces=%d first=%.9g (entering %.9g) second=%.9g (entering %.9g)\n",bounces,bounce[0],entering[0],bounce[1],entering[1]);
+        std::printf("ELASTIC mk2 bounces=%d arrival %.4f in [%.4f, %.4f], %.4f in [%.4f, %.4f]\n",bounces,implied[0],low[0],high[0],implied[1],low[1],high[1]);
         return;
     }
     world.ApplyLinearAcceleration(body,{0,-180,0},delta);world.Step(delta);

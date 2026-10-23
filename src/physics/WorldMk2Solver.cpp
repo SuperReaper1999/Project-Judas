@@ -22,10 +22,24 @@ constexpr float kMk2Slop = 0.0005f;
 constexpr float kMk2RecoveryPerSubstep = 0.02f;
 constexpr float kMk2MaxPushVelocity = 3.0f;
 constexpr float kMk2RestitutionThreshold = 0.5f; // MK1 kRestitutionVelocityThreshold
+constexpr float kMk2FreeSpeed = 1e6f; // a target no physical approach reaches
+// Sweeps that converge each phase of a substep's coupled impacts (a body
+// struck from two sides at once is one system, not one sequential sweep), and
+// the bound on compression/restitution cycles a rebound may set off.
+constexpr int kMk2ImpactSweeps = 8;
+// Pairwise resolutions of a substep's impact set, and the approach speed
+// below which a touching pair is no longer an impact.
+constexpr int kMk2ImpactPairs = 64;
+constexpr float kMk2ImpactApproach = 1e-4f;
+// Bounds of the continuous pass's time-ordered arrivals: re-timings of one
+// body per step, and arrivals of the whole step.
+constexpr int kMk2ArrivalsPerBody = 4;
+// Manifold margin when an arriving pair is re-collided at its arrival pose.
+constexpr float kMk2ArrivalMargin = 0.01f;
+constexpr int kMk2ArrivalsPerStep = 256;
 // A body whose step motion exceeds this fraction of its smallest feature is
 // swept by the exact continuous query after the solve (bounded: once per body).
 constexpr double kMk2FastFraction = 0.25;
-constexpr int kMk2RestitutionSweeps = 8;
 // Joint position error corrected per substep. Contacts recover gently (they
 // carry stacks); a joint correcting much faster than a contact turns a
 // friction-locked ragdoll pose into persistent penetration (the ratio of the
@@ -52,7 +66,11 @@ struct Row {
     glm::vec3 rA, rB;   // current substep arms, both to one current common point
     glm::vec3 n, t1, t2;
     float separation, normalMass, tangentMass1, tangentMass2;
-    float friction, restitution, relativeVelocity;
+    float friction, restitution;
+    // In-substep impact (see the substep loop): an arriving row is resolved
+    // at its arrival instant. `arrivesNext`: still open after this substep's
+    // motion, but closing within the next at an impact speed.
+    bool arriving = false, arrivesNext = false;
     float normalImpulse, tangent1, tangent2, maxNormalImpulse = 0;
     float steadyNormal = 0; // per-substep support load carried from the last step
     float cachedNormal = 0; // final relaxed substep load, before restitution
@@ -338,7 +356,7 @@ void PrepareBlock(const std::vector<SolverBody> &state, const std::vector<Row> &
 
 // The velocity target for a row in this sweep (vn >= target).
 float RowTarget(const std::vector<SolverBody> &bodies, const Row &row, float inverseH,
-                bool useBias) {
+                bool useBias, bool impact) {
     const auto &a = bodies[row.a];
     const auto &b = bodies[row.b];
     // Current separation from relative anchor motion (normal held fixed).
@@ -346,11 +364,21 @@ float RowTarget(const std::vector<SolverBody> &bodies, const Row &row, float inv
     // exact zero, so large world coordinates never round the gap.
     const glm::vec3 d = AnchorGap(a, b, row);
     const float s = glm::dot(d, row.n) + row.separation;
+    // Impact phase: arriving and touching rows are in contact at the arrival
+    // instant; nothing else takes part, and nothing is biased.
+    if (impact)
+        return row.arriving || s <= kMk2Slop ? 0.0f : -kMk2FreeSpeed;
+    float target = 0;
+    // Speculative: may close exactly the gap. In the relax, a row that will
+    // arrive at impact speed within the next substep is left free: slowing it
+    // there would push across the open gap (a ghost impulse that also crosses
+    // any touching neighbours), and the next substep resolves its arrival
+    // exactly at its own speed and instant.
     if (s > 0)
-        return -s * inverseH; // speculative: may close exactly the gap
-    if (useBias && s < -kMk2Slop)
-        return std::min(-kMk2RecoveryPerSubstep * inverseH * (s + kMk2Slop), kMk2MaxPushVelocity);
-    return 0;
+        target = !useBias && row.arrivesNext ? -kMk2FreeSpeed : -s * inverseH;
+    else if (useBias && s < -kMk2Slop)
+        target = std::min(-kMk2RecoveryPerSubstep * inverseH * (s + kMk2Slop), kMk2MaxPushVelocity);
+    return target;
 }
 
 void ApplyNormal(std::vector<SolverBody> &bodies, Row &row, float next) {
@@ -380,9 +408,13 @@ void SolveFriction(std::vector<SolverBody> &bodies, Row &row) {
 }
 
 void SolveRows(std::vector<SolverBody> &bodies, std::vector<Row> &rows,
-               std::vector<Block> &blocks, float h, bool useBias) {
+               std::vector<Block> &blocks, float h, bool useBias,
+               const std::vector<char> *only = nullptr, bool impact = false) {
     const float inverseH = 1.0f / h;
-    for (auto &block : blocks) {
+    for (std::size_t index = 0; index < blocks.size(); ++index) {
+        if (only && !(*only)[index])
+            continue;
+        auto &block = blocks[index];
         bool solved = false;
         if (block.usable) {
             // Patch LCP on the accumulated impulses against each row's target.
@@ -390,7 +422,7 @@ void SolveRows(std::vector<SolverBody> &bodies, std::vector<Row> &rows,
             for (std::size_t i = 0; i < block.count; ++i) {
                 const auto &row = rows[block.first + i];
                 q[i] = double(RowNormalSpeed(bodies, row)) -
-                       double(RowTarget(bodies, row, inverseH, useBias));
+                       double(RowTarget(bodies, row, inverseH, useBias, impact));
                 previous[i] = row.normalImpulse;
             }
             for (std::size_t i = 0; i < block.count; ++i)
@@ -406,7 +438,7 @@ void SolveRows(std::vector<SolverBody> &bodies, std::vector<Row> &rows,
         if (!solved)
             for (std::size_t i = 0; i < block.count; ++i) {
                 auto &row = rows[block.first + i];
-                const float impulse = row.normalMass * (RowTarget(bodies, row, inverseH, useBias) -
+                const float impulse = row.normalMass * (RowTarget(bodies, row, inverseH, useBias, impact) -
                                                         RowNormalSpeed(bodies, row));
                 ApplyNormal(bodies, row, std::max(row.normalImpulse + impulse, 0.0f));
             }
@@ -516,13 +548,6 @@ void PhysicsWorld::Impl::Mk2Solve(float dt) {
         PrepareRow(A, B, row);
         row.friction = p.friction;
         row.restitution = p.restitution;
-        // Approach speed before any contact response, including the step's
-        // external acceleration: the physical impact speed.
-        const auto pointVelocity = [&](const SolverBody &s, const glm::vec3 &r) {
-            return s.rb->linearVelocity + s.gravityStep * float(substeps) +
-                   glm::cross(s.rb->angularVelocity, r);
-        };
-        row.relativeVelocity = glm::dot(pointVelocity(A, row.rA) - pointVelocity(B, row.rB), row.n);
         row.normalImpulse = row.steadyNormal = p.warmNormal / float(substeps);
         row.tangent1 = glm::dot(p.warmTangent, row.t1) / float(substeps);
         row.tangent2 = glm::dot(p.warmTangent, row.t2) / float(substeps);
@@ -618,15 +643,15 @@ void PhysicsWorld::Impl::Mk2Solve(float dt) {
                                dt)});
         i = j;
     }
-    const auto recollide = [&] {
-        for (const auto &g : recollisions) {
+    const auto recollideGroup = [&](const Recollision &g) {
+        {
             const auto &bodyA = bodies[g.slotA], &bodyB = bodies[g.slotB];
             const auto manifold =
                 ComputeContacts(PrimitiveAt(bodyA.shape, bodyA.rigidBody, g.partA),
                                 PrimitiveAt(bodyB.shape, bodyB.rigidBody, g.partB), g.margin,
                                 nullptr, nullptr, true);
             if (manifold.uncertain)
-                continue;
+                return;
             bool used[4] = {false, false, false, false};
             for (std::size_t k = 0; k < g.count; ++k) {
                 auto &row = rows[g.first + k];
@@ -679,6 +704,10 @@ void PhysicsWorld::Impl::Mk2Solve(float dt) {
             }
         }
     };
+    const auto recollide = [&] {
+        for (const auto &g : recollisions)
+            recollideGroup(g);
+    };
 
     // Per-body substep motion: one ledger segment per substep, so queries see
     // the actually travelled path and integration matches the ledger exactly.
@@ -689,6 +718,263 @@ void PhysicsWorld::Impl::Mk2Solve(float dt) {
         for (auto &s : state)
             if (s.dynamic && s.constrained)
                 s.rb->linearVelocity += s.gravityStep;
+        // A kinematic body acts with its prescribed motion over this substep,
+        // not its commanded rate: a target reached (or a command starting)
+        // inside the step moves it for only part of the step, and a body that
+        // has stopped must not strike at the speed it was given.
+        for (auto &s : state)
+            if (s.kinematic && bodies[s.slot].HasMotion()) {
+                const auto &motion = bodies[s.slot].motion;
+                const auto from = motion.EvaluateGeometryAfterEvents(begin);
+                const auto to = motion.EvaluateGeometryAfterEvents(end);
+                s.rb->linearVelocity = glm::vec3(
+                    (glm::dvec3(to.position) - glm::dvec3(from.position)) / (end - begin));
+                s.rb->angularVelocity = motion.EvaluateAfterEvents(begin).angularVelocity;
+            }
+        // Impacts at their arrival instant. A row whose gap s closes inside
+        // this substep at its pre-solve approach speed v (the physical impact
+        // speed) arrives at fraction s/(|v|h). Its coupled set (every block
+        // sharing a dynamic body with an arrival) is resolved instantaneously
+        // from the pre-solve velocities, before the substep's ordinary solve,
+        // and each struck body's ledger changes velocity at that instant
+        // (below). Restitution is Poisson's: each cycle compresses the set
+        // (a converged inelastic solve of fresh, push-only impulses), then adds
+        // e times each fast-approaching contact's compression impulse; a
+        // rebound driven into a neighbour starts another cycle, so a column
+        // resolves as its sequence of binary impacts. For frictionless
+        // contacts the loss is (1-e^2)/2 P'AP >= 0, so unlike simultaneous
+        // Newton targets it never creates energy. (A restitution pass after the
+        // substeps instead held each bounce at the contact until the next step,
+        // e|v|dt late, and saw only approaches that existed at the step start.)
+        std::vector<char> impacting(blocks.size(), 0);
+        std::vector<float> arrival(state.size(), 2.0f), impactNormal;
+        std::vector<glm::vec3> impactLinear, impactAngular;
+        bool anyImpact = false;
+        for (std::size_t index = 0; index < blocks.size(); ++index)
+            for (std::size_t k = 0; k < blocks[index].count; ++k) {
+                auto &row = rows[blocks[index].first + k];
+                const float gap =
+                    glm::dot(AnchorGap(state[row.a], state[row.b], row), row.n) + row.separation;
+                const float v = RowNormalSpeed(state, row);
+                // A gap closing exactly at the substep's end arrives in it
+                // (otherwise the speculative row stops it there inelastically).
+                if (!(v < -kMk2RestitutionThreshold) || !(std::max(gap, 0.0f) <= -v * h + kMk2Slop))
+                    continue;
+                row.arriving = true;
+                impacting[index] = 1;
+                anyImpact = true;
+                for (const unsigned body : {row.a, row.b})
+                    if (state[body].dynamic)
+                        arrival[body] =
+                            std::min(arrival[body], std::min(1.0f, std::max(gap, 0.0f) / (-v * h)));
+            }
+        if (anyImpact) {
+            std::vector<char> struck(state.size(), 0);
+            for (std::size_t index = 0; index < blocks.size(); ++index)
+                if (impacting[index])
+                    for (std::size_t k = 0; k < blocks[index].count; ++k) {
+                        const auto &row = rows[blocks[index].first + k];
+                        struck[row.a] |= char(state[row.a].dynamic);
+                        struck[row.b] |= char(state[row.b].dynamic);
+                    }
+            for (std::size_t index = 0; index < blocks.size(); ++index) {
+                const auto &row = rows[blocks[index].first];
+                impacting[index] |= char(struck[row.a] || struck[row.b]);
+            }
+            // One instant per coupled set: the impulse crosses it rigidly.
+            for (bool changed = true; changed;) {
+                changed = false;
+                for (std::size_t index = 0; index < blocks.size(); ++index) {
+                    if (!impacting[index])
+                        continue;
+                    const auto &row = rows[blocks[index].first];
+                    const float t = std::min(arrival[row.a], arrival[row.b]);
+                    for (const unsigned body : {row.a, row.b})
+                        if (state[body].dynamic && t < arrival[body]) {
+                            arrival[body] = t;
+                            changed = true;
+                        }
+                }
+            }
+            const auto each = [&](auto &&f) {
+                for (std::size_t index = 0; index < blocks.size(); ++index)
+                    if (impacting[index])
+                        for (std::size_t k = 0; k < blocks[index].count; ++k)
+                            f(blocks[index].first + k);
+            };
+            std::vector<float> warmNormal(rows.size()), warmT1(rows.size()), warmT2(rows.size());
+            impactNormal.assign(rows.size(), 0.0f);
+            each([&](std::size_t i) {
+                warmNormal[i] = rows[i].normalImpulse;
+                warmT1[i] = rows[i].tangent1;
+                warmT2[i] = rows[i].tangent2;
+            });
+            impactLinear.resize(state.size());
+            impactAngular.resize(state.size());
+            for (std::size_t i = 0; i < state.size(); ++i) {
+                impactLinear[i] = state[i].rb->linearVelocity;
+                impactAngular[i] = state[i].rb->angularVelocity;
+            }
+            // Solve the impact in its own configuration: each struck body at
+            // its pose at the arrival instant (pre-impact free flight), so the
+            // impulses act through the actual contact points and conserve
+            // angular momentum. The substep then starts from the start poses.
+            std::vector<std::pair<glm::vec3, glm::quat>> startPose(state.size());
+            for (std::size_t i = 0; i < state.size(); ++i) {
+                auto &body = *state[i].rb;
+                startPose[i] = {body.position, body.orientation};
+                if (!state[i].dynamic || !(arrival[i] > 0 && arrival[i] <= 1))
+                    continue;
+                RigidMotionSegment flight;
+                flight.exactRotation = true;
+                flight.begin = 0;
+                flight.end = double(h) * arrival[i];
+                flight.inverseMass = body.inverseMass;
+                flight.inverseInertiaLocal = body.inverseInertiaLocal;
+                flight.position = body.position;
+                flight.orientation = body.orientation;
+                flight.linearVelocity = body.linearVelocity;
+                flight.angularVelocity = body.angularVelocity;
+                flight.driftAngularVelocity = AngularDriftGenerator(
+                    flight.inverseInertiaLocal, flight.orientation, flight.angularVelocity,
+                    float(flight.end));
+                const auto pose = flight.EvaluateGeometry(flight.end);
+                body.position = pose.position;
+                body.orientation = pose.orientation;
+            }
+            const auto placeAt = [&] {
+                for (auto &s : state) {
+                    s.dp = glm::vec3(glm::dvec3(s.rb->position) - glm::dvec3(s.x0));
+                    s.dq = glm::mat3_cast(s.rb->orientation * glm::conjugate(s.q0));
+                }
+                refreshGeometry();
+            };
+            placeAt();
+            // At the arrival configuration each arriving pair is re-collided:
+            // a row's anchors have slid apart since the step start (by the
+            // tangential travel), and an impulse through their midpoint would
+            // act off the actual contact point and turn into spin.
+            for (std::size_t index = 0; index < blocks.size(); ++index) {
+                const auto &block = blocks[index];
+                bool arrives = false;
+                for (std::size_t k = 0; k < block.count; ++k)
+                    arrives = arrives || rows[block.first + k].arriving;
+                if (!arrives || block.first >= pendingCache.size())
+                    continue;
+                const auto &key = pendingCache[block.first].key;
+                recollideGroup({block.first, block.count, key.slotA, key.slotB, key.partA,
+                                key.partB, kMk2ArrivalMargin});
+            }
+            refreshGeometry();
+            // Sequential impact propagation: repeatedly resolve the most
+            // approaching pair of the set on its own (its whole manifold block,
+            // so a flat landing stays symmetric): a compression of fresh,
+            // push-only impulses, then e times that compression (Poisson). A
+            // two-body impact with e <= 1 never gains energy, and each is
+            // checked: one that would (friction) is resolved inelastically.
+            // A struck column therefore resolves as its sequence of binary
+            // impacts (a cradle passes the ball's speed to the far end), and
+            // simultaneous arrivals rebound symmetrically. A set still
+            // approaching after the bound ends with a converged inelastic
+            // solve, which only dissipates.
+            std::vector<char> single(blocks.size(), 0);
+            const auto kinetic = [&](const Block &block) {
+                double k = 0;
+                for (const unsigned body : {rows[block.first].a, rows[block.first].b}) {
+                    const auto &sb = state[body];
+                    if (!sb.dynamic)
+                        continue;
+                    const glm::dvec3 v(sb.rb->linearVelocity), w(sb.rb->angularVelocity);
+                    k += 0.5 * glm::dot(v, v) / double(sb.invMass) +
+                         0.5 * glm::dot(w, glm::dvec3(glm::inverse(sb.invI) * glm::vec3(w)));
+                }
+                return k;
+            };
+            const auto approachOf = [&](const Block &block) {
+                float v = 0;
+                for (std::size_t k = 0; k < block.count; ++k)
+                    v = std::min(v, RowNormalSpeed(state, rows[block.first + k]));
+                return v;
+            };
+            const auto resolve = [&](std::size_t index, bool elastic) {
+                const auto &block = blocks[index];
+                single[index] = 1;
+                std::vector<float> fast(block.count);
+                for (std::size_t k = 0; k < block.count; ++k) {
+                    auto &row = rows[block.first + k];
+                    fast[k] = RowNormalSpeed(state, row) < -kMk2RestitutionThreshold ? row.restitution : 0;
+                    row.normalImpulse = row.tangent1 = row.tangent2 = 0;
+                }
+                for (int sweep = 0; sweep < kMk2ImpactSweeps; ++sweep)
+                    SolveRows(state, rows, blocks, h, false, &single, true);
+                single[index] = 0;
+                for (std::size_t k = 0; k < block.count; ++k) {
+                    auto &row = rows[block.first + k];
+                    impactNormal[block.first + k] += row.normalImpulse;
+                    if (elastic && fast[k] > 0 && row.normalImpulse > 0) {
+                        const float extra = fast[k] * row.normalImpulse;
+                        ApplyAxis(state[row.a], state[row.b], row.n, row.wnA, row.wnB, extra);
+                        impactNormal[block.first + k] += extra;
+                    }
+                }
+            };
+            std::vector<std::pair<glm::vec3, glm::vec3>> before(2);
+            for (int impact = 0; impact < kMk2ImpactPairs; ++impact) {
+                std::size_t worst = blocks.size();
+                float most = -kMk2ImpactApproach;
+                for (std::size_t index = 0; index < blocks.size(); ++index)
+                    if (impacting[index]) {
+                        const float v = approachOf(blocks[index]);
+                        if (v < most) {
+                            most = v;
+                            worst = index;
+                        }
+                    }
+                if (worst == blocks.size())
+                    break;
+                const auto &block = blocks[worst];
+                const unsigned bodyA = rows[block.first].a, bodyB = rows[block.first].b;
+                before[0] = {state[bodyA].rb->linearVelocity, state[bodyA].rb->angularVelocity};
+                before[1] = {state[bodyB].rb->linearVelocity, state[bodyB].rb->angularVelocity};
+                ++stats.impactEvents;
+                const double k0 = kinetic(block);
+                const std::vector<float> saved(impactNormal.begin() + block.first,
+                                               impactNormal.begin() + block.first + block.count);
+                resolve(worst, true);
+                if (kinetic(block) > k0 * (1 + 1e-6) + 1e-9) {
+                    state[bodyA].rb->linearVelocity = before[0].first;
+                    state[bodyA].rb->angularVelocity = before[0].second;
+                    state[bodyB].rb->linearVelocity = before[1].first;
+                    state[bodyB].rb->angularVelocity = before[1].second;
+                    std::copy(saved.begin(), saved.end(), impactNormal.begin() + block.first);
+                    resolve(worst, false);
+                }
+            }
+            bool approaching = false;
+            for (std::size_t index = 0; index < blocks.size(); ++index)
+                approaching = approaching ||
+                              (impacting[index] && approachOf(blocks[index]) < -kMk2ImpactApproach);
+            if (approaching) {
+                each([&](std::size_t i) { rows[i].normalImpulse = rows[i].tangent1 = rows[i].tangent2 = 0; });
+                for (int sweep = 0; sweep < kMk2ImpactSweeps; ++sweep)
+                    SolveRows(state, rows, blocks, h, false, &impacting, true);
+                each([&](std::size_t i) { impactNormal[i] += rows[i].normalImpulse; });
+            }
+            for (std::size_t i = 0; i < state.size(); ++i) {
+                state[i].rb->position = startPose[i].first;
+                state[i].rb->orientation = startPose[i].second;
+            }
+            placeAt();
+            each([&](std::size_t i) {
+                rows[i].normalImpulse = warmNormal[i];
+                rows[i].tangent1 = warmT1[i];
+                rows[i].tangent2 = warmT2[i];
+            });
+            for (std::size_t i = 0; i < state.size(); ++i) {
+                impactLinear[i] = state[i].rb->linearVelocity - impactLinear[i];
+                impactAngular[i] = state[i].rb->angularVelocity - impactAngular[i];
+            }
+        }
         // Warm start with at most the steady support load. Re-applying an
         // impact substep's spike would have to be removed again by the next
         // sweep; down a chain one sweep cannot, and the stack would pop. A
@@ -743,29 +1029,50 @@ void PhysicsWorld::Impl::Mk2Solve(float dt) {
             auto &s = state[i];
             auto &body = bodies[s.slot];
             if (s.dynamic && s.constrained) {
-                RigidMotionSegment seg;
-                seg.owner = MakeHandle(s.slot).id;
-                seg.begin = begin;
-                seg.end = end;
-                seg.inverseMass = body.rigidBody.inverseMass;
-                seg.inverseInertiaLocal = body.rigidBody.inverseInertiaLocal;
-                seg.position = body.rigidBody.position;
-                seg.orientation = body.rigidBody.orientation;
-                seg.linearVelocity = body.rigidBody.linearVelocity;
-                seg.angularVelocity = body.rigidBody.angularVelocity;
-                seg.driftAngularVelocity =
-                    AngularDriftGenerator(seg.inverseInertiaLocal, seg.orientation,
-                                          seg.angularVelocity, float(end - begin));
-                const auto pose = seg.EvaluateGeometry(end);
-                seg.endPosition = pose.position;
-                seg.endOrientation = pose.orientation;
-                const RigidBody next = seg.Evaluate(end);
-                segments[i].push_back(seg);
-                body.rigidBody.position = next.position;
-                body.rigidBody.orientation = next.orientation;
-                body.rigidBody.angularVelocity = next.angularVelocity;
-                s.dp = glm::vec3(glm::dvec3(next.position) - glm::dvec3(s.x0));
-                s.dq = glm::mat3_cast(next.orientation * glm::conjugate(s.q0));
+                // A struck body moves without its impact's velocity change
+                // until the arrival instant, then with it.
+                const auto advance = [&](double from, double to, const glm::vec3 &v,
+                                         const glm::vec3 &w) {
+                    RigidMotionSegment seg;
+                    seg.exactRotation = true;
+                    seg.owner = MakeHandle(s.slot).id;
+                    seg.begin = from;
+                    seg.end = to;
+                    seg.inverseMass = body.rigidBody.inverseMass;
+                    seg.inverseInertiaLocal = body.rigidBody.inverseInertiaLocal;
+                    seg.position = body.rigidBody.position;
+                    seg.orientation = body.rigidBody.orientation;
+                    seg.linearVelocity = v;
+                    seg.angularVelocity = w;
+                    seg.driftAngularVelocity =
+                        AngularDriftGenerator(seg.inverseInertiaLocal, seg.orientation,
+                                              seg.angularVelocity, float(to - from));
+                    const auto pose = seg.EvaluateGeometry(to);
+                    seg.endPosition = pose.position;
+                    seg.endOrientation = pose.orientation;
+                    const RigidBody next = seg.Evaluate(to);
+                    segments[i].push_back(seg);
+                    body.rigidBody.position = next.position;
+                    body.rigidBody.orientation = next.orientation;
+                    return next.angularVelocity;
+                };
+                const glm::vec3 v = body.rigidBody.linearVelocity;
+                glm::vec3 w = body.rigidBody.angularVelocity;
+                if (arrival[i] == 1.0f) { // at the substep's end (none is 2)
+                    body.rigidBody.angularVelocity =
+                        advance(begin, end, v - impactLinear[i], w - impactAngular[i]) +
+                        impactAngular[i];
+                } else if (arrival[i] > 0 && arrival[i] < 1) {
+                    const double at = begin + (end - begin) * double(arrival[i]);
+                    const glm::vec3 spin = advance(begin, at, v - impactLinear[i],
+                                                   w - impactAngular[i]);
+                    w = spin + impactAngular[i];
+                    body.rigidBody.angularVelocity = advance(at, end, v, w);
+                } else {
+                    body.rigidBody.angularVelocity = advance(begin, end, v, w);
+                }
+                s.dp = glm::vec3(glm::dvec3(body.rigidBody.position) - glm::dvec3(s.x0));
+                s.dq = glm::mat3_cast(body.rigidBody.orientation * glm::conjugate(s.q0));
             } else if (s.kinematic && body.HasMotion()) {
                 const auto pose = body.motion.EvaluateGeometryAfterEvents(end);
                 body.rigidBody.position = pose.position;
@@ -777,6 +1084,13 @@ void PhysicsWorld::Impl::Mk2Solve(float dt) {
         // Poses moved: relax (and the next substep) use the current geometry.
         recollide();
         refreshGeometry();
+        for (auto &row : rows) {
+            const float gap =
+                glm::dot(AnchorGap(state[row.a], state[row.b], row), row.n) + row.separation;
+            const float v = RowNormalSpeed(state, row);
+            row.arrivesNext = !row.arriving && gap > 0 && v < -kMk2RestitutionThreshold &&
+                              gap <= -v * h + kMk2Slop;
+        }
         // Relax removes every positional bias velocity, joints' included, so
         // neither joint nor contact correction outlives its substep as motion.
         for (int iteration = 0; iteration < kMk2RelaxIterations; ++iteration) {
@@ -786,9 +1100,15 @@ void PhysicsWorld::Impl::Mk2Solve(float dt) {
         }
         if (haveJoints)
             collectJoints();
-        for (auto &row : rows) {
-            row.totalNormal += row.normalImpulse;
+        for (std::size_t i = 0; i < rows.size(); ++i) {
+            auto &row = rows[i];
+            row.totalNormal += row.normalImpulse + (impactNormal.empty() ? 0.0f : impactNormal[i]);
             row.totalTangent += row.t1 * row.tangent1 + row.t2 * row.tangent2;
+            // An impact is a spike, not a support load: never a steady estimate.
+            if (row.arriving) {
+                row.arriving = false;
+                continue;
+            }
             // A row that just engaged has no carried load yet; its first
             // loaded relaxed substep becomes the steady estimate. Only at
             // substep 0, a contact that closed later kept a zero cap, so its
@@ -806,58 +1126,6 @@ void PhysicsWorld::Impl::Mk2Solve(float dt) {
         t.state->motorImpulse = t.motor;
     }
 
-    // Restitution from the pre-solve approach speed, only for rows that
-    // actually carried load this step. A fully bouncing patch is solved as a
-    // block so a symmetric landing rebounds without manufactured spin.
-    const auto bounces = [&](const Row &row) {
-        return row.restitution != 0 && row.relativeVelocity < -kMk2RestitutionThreshold &&
-               row.maxNormalImpulse > 0;
-    };
-    // Coupled bouncing patches (a body struck from two sides at once) form one
-    // restitution system: iterate it to convergence, not one sequential sweep.
-    for (int sweep = 0; sweep < kMk2RestitutionSweeps; ++sweep)
-    for (auto &block : blocks) {
-        bool all = block.usable;
-        bool any = false;
-        for (std::size_t i = 0; i < block.count; ++i) {
-            all = all && bounces(rows[block.first + i]);
-            any = any || bounces(rows[block.first + i]);
-        }
-        if (!any)
-            continue;
-        if (all) {
-            std::array<double, 4> q{}, next{};
-            for (std::size_t i = 0; i < block.count; ++i) {
-                const auto &row = rows[block.first + i];
-                q[i] = double(RowNormalSpeed(state, row)) +
-                       double(row.restitution * row.relativeVelocity);
-                for (std::size_t j = 0; j < block.count; ++j)
-                    q[i] -= block.k[i][j] * double(rows[block.first + j].normalImpulse);
-            }
-            if (SolveBlockLcp(block, q, next)) {
-                for (std::size_t i = 0; i < block.count; ++i) {
-                    auto &row = rows[block.first + i];
-                    const float before = row.normalImpulse;
-                    ApplyNormal(state, row, float(next[i]));
-                    row.totalNormal += row.normalImpulse - before;
-                }
-                continue;
-            }
-        }
-        for (std::size_t i = 0; i < block.count; ++i) {
-            auto &row = rows[block.first + i];
-            if (!bounces(row))
-                continue;
-            auto &a = state[row.a];
-            auto &b = state[row.b];
-            const float vn = AxisSpeed(a, b, row.n, row.rnA, row.rnB);
-            const float impulse = -row.normalMass * (vn + row.restitution * row.relativeVelocity);
-            const float before = row.normalImpulse;
-            ApplyNormal(state, row, std::max(row.normalImpulse + impulse, 0.0f));
-            row.totalNormal += row.normalImpulse - before;
-        }
-    }
-
     // Publish ledgers and kinematic endpoints.
     for (const auto slot : aliveSlots) {
         auto &body = bodies[slot];
@@ -867,7 +1135,7 @@ void PhysicsWorld::Impl::Mk2Solve(float dt) {
         if (i >= 0 && state[std::size_t(i)].dynamic && state[std::size_t(i)].constrained) {
             body.motion.SetRecorded(std::move(segments[std::size_t(i)]));
         } else {
-            body.motion.Begin(MakeHandle(slot).id, body.rigidBody, dt);
+            body.motion.Begin(MakeHandle(slot).id, body.rigidBody, dt, true);
             if (i >= 0 && state[std::size_t(i)].dynamic) {
                 const auto pose = body.motion.EvaluateAfterEvents(dt);
                 body.rigidBody.position = pose.position;
@@ -965,12 +1233,15 @@ void PhysicsWorld::Impl::Mk2Solve(float dt) {
 
 // Bounded continuous pass for fast bodies. The substep solve's speculative
 // rows close only the gaps they were built from; a fast or spinning body can
-// still cross geometry its linearized rows did not represent. Each fast body's
-// actually recorded ledger path is swept once with the exact MK1 query against
-// every candidate it did not already touch at the start of the step. At the
-// earliest arrival its pose is held for the rest of the step (velocity kept),
-// and the next step's rows resolve the contact. One sweep per fast body, so no
-// event chain can form.
+// still meet geometry its linearized rows did not represent, and a body set
+// moving by an impact inside the step meets bodies it had no rows with. Each
+// fast body's recorded ledger path is swept with the exact MK1 query. Arrivals
+// are taken in time order: each is resolved with the exact impulse and both
+// bodies' ledgers continue from that instant with their new velocities, so
+// the rest of the step is not lost; the re-timed paths are swept again from
+// there. A body is re-timed at most kMk2ArrivalsPerBody times per step; past
+// that its pose is held for the rest of the step (velocity kept), so no
+// unbounded event chain can form.
 void PhysicsWorld::Impl::Mk2Continuous(float dt) {
     stepDuration = dt;
     impactQueryAnchorTime = 0;
@@ -992,60 +1263,79 @@ void PhysicsWorld::Impl::Mk2Continuous(float dt) {
                                         double(dt));
         return reach > kMk2FastFraction * feature;
     };
-    // A fast kinematic mover cannot be held; it strikes. Its recorded path is
-    // swept against each dynamic candidate not touching it at the start. A
-    // speculative row is linearized at one anchor and cannot follow a spinning
-    // surface (an arm's equal endpoint poses miss a body its sweep passes
-    // through), so rows do not own these arrivals; the exact impulse acts on
-    // the post-solve velocities and adds nothing where rows already separate.
-    // Poses are kept: the struck body leaves under the next step's rows.
-    for (const auto slot : aliveSlots) {
+    const auto movable = [&](unsigned slot) {
         const auto &body = bodies[slot];
-        if (!body.isKinematic || body.simulationSuspended || body.sensor || body.queryOnly ||
-            !body.HasMotion() || !fastReach(slot))
-            continue;
-        const auto &found = ImpactCandidates(slot, RemainingImpactBound(slot, 0, dt));
-        candidates.assign(found.begin(), found.end());
-        for (const auto other : candidates) {
-            const auto &o = bodies[other];
-            if (other == slot || !o.isDynamic || o.isKinematic || o.rigidBody.IsStatic() ||
-                o.simulationSuspended || o.sensor || o.queryOnly || !CanRespond(slot, other))
-                continue;
-            const unsigned a = std::min(slot, other), b = std::max(slot, other);
-            double earliest = double(dt);
-            int hitPartA = 0, hitPartB = 0;
-            for (int pa = 0; pa < PrimitiveCount(bodies[a].shape); ++pa)
-                for (int pb = 0; pb < PrimitiveCount(bodies[b].shape); ++pb) {
-                    if (PairTouches(a, b, pa, pb, 0))
-                        continue;
-                    const double hit = ImpactTime(a, b, pa, pb, 0, earliest);
-                    if (hit < earliest) {
-                        earliest = hit;
-                        hitPartA = slot == a ? pa : pb;
-                        hitPartB = slot == a ? pb : pa;
-                    }
-                }
-            if (!(earliest < double(dt)))
-                continue;
-            if (o.sleeping)
-                Wake(other);
-            ++stats.impactEvents;
-            Mk2ResolveArrival(slot, other, hitPartA, hitPartB, earliest);
-        }
-    }
-    for (const auto slot : aliveSlots) {
+        return body.isDynamic && !body.isKinematic && !body.rigidBody.IsStatic() &&
+               !body.simulationSuspended && !body.sensor && !body.queryOnly;
+    };
+    // Continue (or hold) a body's ledger from `at` with its current velocity.
+    const auto retime = [&](unsigned slot, double at, bool hold) {
         auto &body = bodies[slot];
-        if (!body.isDynamic || body.sleeping || body.simulationSuspended || body.sensor ||
-            body.queryOnly || body.rigidBody.IsStatic())
-            continue;
-        if (!fastReach(slot))
-            continue;
-        const Aabb query = RemainingImpactBound(slot, 0, dt);
-        const auto &found = ImpactCandidates(slot, query);
+        std::vector<RigidMotionSegment> kept;
+        for (auto segment : body.motion.Segments()) {
+            if (segment.begin >= at && !kept.empty())
+                break;
+            if (segment.end > at) {
+                const auto pose = segment.EvaluateGeometry(at);
+                segment.end = at;
+                segment.endPosition = pose.position;
+                segment.endOrientation = pose.orientation;
+            }
+            kept.push_back(segment);
+        }
+        if (kept.empty())
+            return;
+        RigidMotionSegment next = kept.back();
+        next.begin = at;
+        next.end = dt;
+        next.position = next.endPosition;
+        next.orientation = next.endOrientation;
+        if (hold) {
+            next.linearVelocity = next.angularVelocity = next.driftAngularVelocity = glm::vec3(0);
+        } else {
+            next.linearVelocity = body.rigidBody.linearVelocity;
+            next.angularVelocity = body.rigidBody.angularVelocity;
+            next.driftAngularVelocity =
+                AngularDriftGenerator(next.inverseInertiaLocal, next.orientation,
+                                      next.angularVelocity, float(double(dt) - at));
+        }
+        const auto pose = next.EvaluateGeometry(dt);
+        next.endPosition = pose.position;
+        next.endOrientation = pose.orientation;
+        if (!hold)
+            body.rigidBody.angularVelocity = next.Evaluate(dt).angularVelocity;
+        kept.push_back(next);
+        body.rigidBody.position = next.endPosition;
+        body.rigidBody.orientation = next.endOrientation;
+        body.motion.SetRecorded(std::move(kept));
+        InvalidateImpactPose(slot);
+        if (slot < impactPoseSamples.size())
+            impactPoseSamples[slot].tightValid = false;
+    };
+    struct Mover {
+        unsigned slot;
+        double from = 0;     // swept from here
+        bool firstSweep = true; // rows still describe this path
+        int arrivals = 0;
+        double hit = 0;
+        unsigned other = 0;
+        int partA = 0, partB = 0;
+        bool found = false;
+    };
+    std::vector<Mover> movers;
+    const auto moverOf = [&](unsigned slot) -> Mover * {
+        for (auto &m : movers)
+            if (m.slot == slot)
+                return &m;
+        return nullptr;
+    };
+    // The earliest arrival on a mover's path from `from`.
+    const auto sweep = [&](Mover &m) {
+        const unsigned slot = m.slot;
+        m.found = false;
+        const auto &found = ImpactCandidates(slot, RemainingImpactBound(slot, m.from, dt));
         candidates.assign(found.begin(), found.end());
         double earliest = double(dt) + 1;
-        unsigned hitOther = 0;
-        int hitPartA = 0, hitPartB = 0;
         for (const auto other : candidates) {
             if (other == slot || !CanRespond(slot, other))
                 continue;
@@ -1057,20 +1347,21 @@ void PhysicsWorld::Impl::Mk2Continuous(float dt) {
                 for (int pb = 0; pb < PrimitiveCount(bodies[b].shape); ++pb) {
                     // A pair touching at the start is searched (as in MK1) to
                     // the first time a mesh or spinning pair penetrates a
-                    // quarter feature deep; otherwise its rows own it. A pair
-                    // with rows arrived legitimately unless it then went
-                    // deep: behind its own row plane, behind the first-touch
-                    // plane carried to the step end, deeply overlapped at the
-                    // end, or past the same depth search from first touch. A
-                    // pair with neither had no response at all.
-                    const bool touching = PairTouches(a, b, pa, pb, 0);
+                    // quarter feature deep; otherwise its rows own it. On the
+                    // first sweep, a pair with rows arrived legitimately unless
+                    // it then went deep: behind its own row plane, behind the
+                    // first-touch plane carried to the step end, deeply
+                    // overlapped at the end, or past the same depth search from
+                    // first touch. A pair with neither had no response at all,
+                    // and neither has any pair on a re-timed path.
+                    const bool touching = PairTouches(a, b, pa, pb, m.from);
                     const double limit = std::min(earliest, double(dt));
-                    const double hit = ImpactTime(a, b, pa, pb, 0, limit);
+                    const double hit = ImpactTime(a, b, pa, pb, m.from, limit);
                     if (!(hit < limit))
                         continue;
                     const std::array<unsigned, 4> key{a, b, unsigned(pa), unsigned(pb)};
                     const auto row = std::lower_bound(mk2RowPairs.begin(), mk2RowPairs.end(), key);
-                    const bool solved = row != mk2RowPairs.end() && *row == key;
+                    const bool solved = m.firstSweep && row != mk2RowPairs.end() && *row == key;
                     if (!touching && solved) {
                         const double depth =
                             0.25 * std::min(PrimitiveFeature(a, pa), PrimitiveFeature(b, pb));
@@ -1092,44 +1383,121 @@ void PhysicsWorld::Impl::Mk2Continuous(float dt) {
                             continue;
                     }
                     earliest = hit;
-                    hitOther = other;
-                    hitPartA = pa;
-                    hitPartB = pb;
+                    m.found = true;
+                    m.hit = hit;
+                    m.other = other;
+                    m.partA = slot == a ? pa : pb;
+                    m.partB = slot == a ? pb : pa;
                 }
         }
-        if (!(earliest < double(dt)))
-            continue;
-        ++stats.impactEvents;
-        Mk2ResolveArrival(slot, hitOther, hitPartA, hitPartB, earliest);
-        auto recorded = body.motion.Segments();
-        std::vector<RigidMotionSegment> clamped;
-        for (auto segment : recorded) {
-            if (segment.begin >= earliest && !clamped.empty())
-                break;
-            if (segment.end > earliest) {
-                const auto pose = segment.EvaluateGeometry(earliest);
-                segment.end = earliest;
-                segment.endPosition = pose.position;
-                segment.endOrientation = pose.orientation;
-            }
-            clamped.push_back(segment);
+    };
+    // A struck dynamic body continues from the arrival with its new velocity
+    // and is swept from there (it may now be fast).
+    const auto struck = [&](unsigned other, double at) {
+        if (!movable(other))
+            return;
+        if (bodies[other].sleeping)
+            Wake(other);
+        Mover *m = moverOf(other);
+        if (!m) {
+            movers.push_back({other, at, false});
+            m = &movers.back();
         }
-        if (clamped.empty())
+        if (m->arrivals >= kMk2ArrivalsPerBody) {
+            retime(other, at, true);
+            m->found = false;
+            return;
+        }
+        ++m->arrivals;
+        retime(other, at, false);
+        m->from = at;
+        m->firstSweep = false;
+        sweep(*m);
+    };
+    // A fast kinematic mover cannot be held; it strikes. Its recorded path is
+    // swept against each dynamic candidate not touching it at the start. A
+    // speculative row is linearized at one anchor and cannot follow a spinning
+    // surface (an arm's equal endpoint poses miss a body its sweep passes
+    // through), so rows do not own these arrivals; the exact impulse acts on
+    // the post-solve velocities and adds nothing where rows already separate.
+    for (const auto slot : aliveSlots) {
+        const auto &body = bodies[slot];
+        if (!body.isKinematic || body.simulationSuspended || body.sensor || body.queryOnly ||
+            !body.HasMotion() || !fastReach(slot))
             continue;
-        RigidMotionSegment hold = clamped.back();
-        hold.begin = earliest;
-        hold.end = dt;
-        hold.position = hold.endPosition;
-        hold.orientation = hold.endOrientation;
-        hold.linearVelocity = hold.angularVelocity = hold.driftAngularVelocity = glm::vec3(0);
-        clamped.push_back(hold);
-        body.rigidBody.position = hold.position;
-        body.rigidBody.orientation = hold.orientation;
-        body.motion.SetRecorded(std::move(clamped));
-        InvalidateImpactPose(slot);
-        if (slot < impactPoseSamples.size())
-            impactPoseSamples[slot].tightValid = false;
+        const auto &found = ImpactCandidates(slot, RemainingImpactBound(slot, 0, dt));
+        candidates.assign(found.begin(), found.end());
+        const std::vector<unsigned> struckBy(candidates);
+        for (const auto other : struckBy) {
+            const auto &o = bodies[other];
+            if (other == slot || !movable(other) || !CanRespond(slot, other))
+                continue;
+            const unsigned a = std::min(slot, other), b = std::max(slot, other);
+            double earliest = double(dt);
+            int hitPartA = 0, hitPartB = 0;
+            for (int pa = 0; pa < PrimitiveCount(bodies[a].shape); ++pa)
+                for (int pb = 0; pb < PrimitiveCount(bodies[b].shape); ++pb) {
+                    if (PairTouches(a, b, pa, pb, 0))
+                        continue;
+                    const double hit = ImpactTime(a, b, pa, pb, 0, earliest);
+                    if (hit < earliest) {
+                        earliest = hit;
+                        hitPartA = slot == a ? pa : pb;
+                        hitPartB = slot == a ? pb : pa;
+                    }
+                }
+            if (!(earliest < double(dt)))
+                continue;
+            if (o.sleeping)
+                Wake(other);
+            ++stats.impactEvents;
+            if (Mk2ResolveArrival(slot, other, hitPartA, hitPartB, earliest))
+                struck(other, earliest);
+        }
     }
+    for (const auto slot : aliveSlots) {
+        const auto &body = bodies[slot];
+        if (!movable(slot) || body.sleeping || moverOf(slot) || !fastReach(slot))
+            continue;
+        movers.push_back({slot, 0, true});
+        sweep(movers.back());
+    }
+    for (int events = 0; events < kMk2ArrivalsPerStep; ++events) {
+        Mover *next = nullptr;
+        for (auto &m : movers)
+            if (m.found && (!next || m.hit < next->hit))
+                next = &m;
+        if (!next)
+            break;
+        const unsigned slot = next->slot, other = next->other;
+        const double at = next->hit;
+        ++stats.impactEvents;
+        // Without an exact response the path would continue into the contact.
+        const bool resolved = Mk2ResolveArrival(slot, other, next->partA, next->partB, at);
+        if (!resolved || next->arrivals >= kMk2ArrivalsPerBody) {
+            retime(slot, at, true);
+            next->found = false;
+        } else {
+            ++next->arrivals;
+            retime(slot, at, false);
+            next->from = at;
+            next->firstSweep = false;
+            sweep(*next);
+        }
+        if (resolved)
+            struck(other, at);
+        // Paths swept against a body that has just been re-timed are stale.
+        for (auto &m : movers)
+            if (m.found && m.slot != slot && m.slot != other && (m.other == slot || m.other == other))
+                sweep(m);
+    }
+    // Arrivals left once the step's bound is spent are held there.
+    for (auto &m : movers)
+        if (m.found) {
+            ++stats.impactEvents;
+            Mk2ResolveArrival(m.slot, m.other, m.partA, m.partB, m.hit);
+            retime(m.slot, m.hit, true);
+        }
 }
 
 // Whether `fast` (one of a, b) ends the step behind the contact plane of its
@@ -1162,7 +1530,8 @@ bool PhysicsWorld::Impl::Mk2Crossed(unsigned fast, unsigned other, unsigned a, u
 // impact solver on the actual first-touch manifold, with both bodies at their
 // first-touch poses, so the hold does not leave it approaching next step.
 // Velocities and the step's touch only; poses and ledgers are not changed here.
-void PhysicsWorld::Impl::Mk2ResolveArrival(unsigned fast, unsigned other, int partFast,
+// False when no first-touch manifold or no energy-safe response exists.
+bool PhysicsWorld::Impl::Mk2ResolveArrival(unsigned fast, unsigned other, int partFast,
                                            int partOther, double hit) {
     const unsigned a = std::min(fast, other), b = std::max(fast, other);
     const int pa = fast == a ? partFast : partOther, pb = fast == a ? partOther : partFast;
@@ -1175,7 +1544,7 @@ void PhysicsWorld::Impl::Mk2ResolveArrival(unsigned fast, unsigned other, int pa
             break;
     }
     if (!manifold.count || manifold.uncertain)
-        return;
+        return false;
     const auto movable = [&](unsigned slot) {
         const auto &body = bodies[slot];
         return body.isDynamic && !body.rigidBody.IsStatic() && !body.sleeping &&
@@ -1210,7 +1579,7 @@ void PhysicsWorld::Impl::Mk2ResolveArrival(unsigned fast, unsigned other, int pa
     const auto result =
         impactSolver.Solve(rows, stepDuration > 0 ? float(stepDuration) : 1.f / 60);
     if (!result.energyBudgetSatisfied)
-        return;
+        return false;
     for (auto [copy, slot] : {std::pair<RigidBody *, unsigned>{&bodyA, a}, {&bodyB, b}})
         if (movable(slot)) {
             bodies[slot].rigidBody.linearVelocity = copy->linearVelocity;
@@ -1219,4 +1588,5 @@ void PhysicsWorld::Impl::Mk2ResolveArrival(unsigned fast, unsigned other, int pa
     // The arrival is a touch of this step, as for MK1's impact events.
     for (const auto &row : rows)
         Observe(a, b, row.geometry);
+    return true;
 }

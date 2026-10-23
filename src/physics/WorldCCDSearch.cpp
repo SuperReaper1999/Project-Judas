@@ -568,8 +568,10 @@ auto PhysicsWorld::Impl::CCDQuery::ImpactTime(unsigned a, unsigned b, int pa, in
     PhysicsWorkTimer timer(work.toi, work.active);
     // A target can finish inside the step. Never certify a plane across
     // its velocity discontinuity; search the two real ledger intervals.
+    // MK2 records each dynamic body's substeps (and any impact instant) as
+    // separate segments, so its dynamic ledgers are searched the same way.
     for (auto slot : {a, b})
-        if (bodies[slot].isKinematic)
+        if (bodies[slot].isKinematic || (world.mk2Step && bodies[slot].isDynamic))
             for (const auto &s : bodies[slot].motion.Segments())
                 if (s.end > start && s.end < finish) {
                     auto first = ImpactTime(a, b, pa, pb, start, s.end, target);

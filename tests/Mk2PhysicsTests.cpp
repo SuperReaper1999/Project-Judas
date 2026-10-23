@@ -168,7 +168,8 @@ void TestSimultaneous() {
 }
 
 // Thin static wall, fast and spinning primitives, every orientation of a
-// small family. A crossing is the centre ending beyond the wall's far face.
+// small family. A crossing is the centre ending beyond the wall's far face
+// within the wall's extent.
 void TestFastObjects() {
     std::printf("E: fast and spinning primitives do not tunnel through a 2 cm wall\n");
     int crossings = 0, cases = 0;
@@ -190,7 +191,10 @@ void TestFastObjects() {
                     bool crossed = false;
                     for (int s = 0; s < 120 && !crossed; ++s) {
                         w.Step(kDt);
-                        crossed = w.GetTransform(b).position.x > 0.01f;
+                        // Through the wall, not around its 10 m edge: a spinning
+                        // body can be thrown sideways along the face and leave it.
+                        const glm::vec3 p = w.GetTransform(b).position;
+                        crossed = p.x > 0.01f && std::abs(p.y) < 5 && std::abs(p.z) < 5;
                     }
                     ++cases;
                     crossings += crossed;
@@ -228,6 +232,91 @@ void TestDeterminism() {
               std::memcmp(first.data(), second.data(), first.size() * sizeof(float)) == 0,
           "two runs of a 30-body pile are bitwise identical");
 }
+
+// Impacts against exact solutions at the engine's own 60 Hz step: each is
+// resolved at its arrival instant (sequential propagation, Poisson
+// restitution), so positions and velocities match the analytic trajectory.
+void TestImpactAccuracy() {
+    std::printf("G: impacts at their arrival instant match exact trajectories\n");
+    {
+        PhysicsWorld w;
+        w.Init();
+        w.CreateStaticBox({0, -0.5f, 0}, {10, 0.5f, 10}, 0, 0);
+        const auto ball = w.CreateDynamicSphere({0, 0.501f, 0}, 0.5f, 1, 0, 0.5f);
+        w.SetLinearVelocity(ball, {0, -1, 0});
+        double worst = 0;
+        for (int step = 1; step <= 12; ++step) {
+            w.Step(kDt);
+            const double gap = double(w.GetTransform(ball).position.y) - 0.5;
+            worst = std::max(worst, std::abs(gap - 0.5 * (step * double(kDt) - 0.001)));
+        }
+        std::printf("    bounce: worst endpoint error %.3g m, outgoing %.6f m/s\n", worst,
+                    w.GetLinearVelocity(ball).y);
+        Check(worst < 1e-5 && std::abs(w.GetLinearVelocity(ball).y - 0.5f) < 1e-5f,
+              "a bounce leaves the floor at its arrival instant with e|v|");
+    }
+    // Spheres in a row: separated (binary impacts at 0.08 s and 0.16 s), and a
+    // cradle (a ball striking two touching ones).
+    for (const bool cradle : {false, true}) {
+        PhysicsWorld w;
+        w.Init();
+        std::vector<BodyHandle> b;
+        const float speed = cradle ? 6.f : 10.f;
+        for (const float x : cradle ? std::vector<float>{0.f, 1.5f, 2.5f} : std::vector<float>{0.f, 1.8f, 3.6f})
+            b.push_back(w.CreateDynamicSphere({x, 0, 0}, 0.5f, 1, 0, 1));
+        w.SetLinearVelocity(b[0], {speed, 0, 0});
+        for (int step = 0; step < 12; ++step) w.Step(kDt);
+        const double t = 0.2, hit = 0.5 / speed;
+        const std::vector<double> ex = cradle ? std::vector<double>{0.5, 1.5, 2.5 + speed * (t - hit)}
+                                              : std::vector<double>{0.8, 2.6, 4.0},
+                                  ev{0, 0, speed};
+        double dx = 0, dv = 0;
+        for (int i = 0; i < 3; ++i) {
+            dx = std::max(dx, std::abs(double(w.GetTransform(b[i]).position.x) - ex[i]));
+            dv = std::max(dv, std::abs(double(w.GetLinearVelocity(b[i]).x) - ev[i]));
+        }
+        std::printf("    %s: worst position error %.3g m, velocity error %.3g m/s\n",
+                    cradle ? "cradle" : "separated chain", dx, dv);
+        Check(dx < 1e-4 && dv < 1e-4, cradle ? "a struck cradle passes the speed to its far ball"
+                                             : "a separated chain resolves its binary impacts in sequence");
+    }
+    {
+        // A ball rattling between walls 1 m apart at 100 m/s: one or two
+        // elastic bounces per step, for one second.
+        PhysicsWorld w;
+        w.Init();
+        w.CreateStaticBox({0.6f, 0, 0}, {0.05f, 4, 4}, 0, 1);
+        w.CreateStaticBox({-0.6f, 0, 0}, {0.05f, 4, 4}, 0, 1);
+        const auto ball = w.CreateDynamicSphere({0, 0, 0}, 0.05f, 1, 0, 1);
+        w.SetLinearVelocity(ball, {100, 0, 0});
+        double worst = 0, speedError = 0;
+        for (int step = 1; step <= 60; ++step) {
+            w.Step(kDt);
+            double u = std::fmod(100.0 * step * double(kDt) + 0.5, 2.0); // unfolded, period 2 m
+            const double exact = u < 1 ? u - 0.5 : 1.5 - u;
+            worst = std::max(worst, std::abs(double(w.GetTransform(ball).position.x) - exact));
+            speedError = std::max(speedError, std::abs(double(glm::length(w.GetLinearVelocity(ball))) - 100));
+        }
+        std::printf("    rattle: worst position error %.3g m, speed error %.3g m/s\n", worst, speedError);
+        Check(worst < 1e-3 && speedError < 1e-3, "a rattling elastic ball keeps its speed and exact path");
+    }
+    {
+        // Free spin at 100 rad/s: the first-order quaternion update would turn
+        // 2 atan(theta/2) per step, 17% short.
+        PhysicsWorld w;
+        w.Init();
+        const glm::quat q0 = glm::normalize(glm::quat(0.7f, 0.2f, -0.3f, 0.4f));
+        const auto body = w.CreateDynamicSphere({0, 0, 0}, 0.5f, 1, 0, 0);
+        w.ResetBody(body, {0, 0, 0}, q0);
+        w.SetAngularVelocity(body, {0, 0, 100});
+        w.Step(kDt);
+        const glm::quat exact = glm::angleAxis(100.f * kDt, glm::vec3(0, 0, 1)) * q0;
+        const float error = glm::angle(w.GetTransform(body).rotation * glm::conjugate(exact));
+        std::printf("    free spin: rotation error %.3g rad\n", error);
+        Check(error < 1e-5f, "a free spin turns by its exact rotation");
+    }
+}
+
 } // namespace
 
 int main() {
@@ -238,6 +327,7 @@ int main() {
     TestSimultaneous();
     TestFastObjects();
     TestDeterminism();
+    TestImpactAccuracy();
     std::printf("MK2 physics tests: %s (%d failures)\n", g_failures ? "FAIL" : "PASS", g_failures);
     return g_failures ? 1 : 0;
 }
