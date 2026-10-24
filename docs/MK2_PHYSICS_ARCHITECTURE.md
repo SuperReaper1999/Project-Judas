@@ -4,9 +4,11 @@ Status: **default solver on Experimental** (gap 8 closed, §5; switched 2026-10-
 operator's instruction after a first hand test). Not promoted to main. The operator's direction
 is that MK2 replaces MK1, with physical accuracy (not MK1 compatibility) as the acceptance bar.
 
-- Default: MK2 runs unless `JUDAS_PHYSICS_MK1=1` is set (read at `PhysicsWorld::Init`;
-  `PhysicsWorld::Mk2Selected()` reports the choice, and each process logs
-  `Physics solver: ...` once). `JUDAS_PHYSICS_MK2` is no longer read.
+- MK2 is the only solver. MK1's time-of-impact pipeline was removed (§7) with its opt-in
+  (`JUDAS_PHYSICS_MK1`), `PhysicsWorld::Mk2Selected()`, the per-process `Physics solver: ...`
+  log line and MK1's validation switches (`JUDAS_VALIDATION_VELOCITY_ITERATIONS`, `_GLOBAL_RESEED`,
+  `_EAGER_IMPACTS`, `_NATIVE_CCD_BOUNDS`). Sections below that compare against MK1 record
+  measurements made while it existed.
 - The capture-point balance controller is the default too (`BalanceSettings::captureStepping`
   = true, serialized only when false; `JUDAS_BALANCE_CAPTURE_STEPPING=0` forces the established
   controller).
@@ -1097,3 +1099,27 @@ All 30 MK2 runs pass every check of the program, including the 24-box fast famil
 7. ~~Restate the MK1 bookkeeping tests~~ (done where physical, gap 6). Gaps 1–4 closed.
 8. ~~Default switch~~ (done on Experimental, 2026-10-23, after the operator's stress-lab hand test
    and instruction; §4 "After the default switch"). Promotion to main needs operator acceptance.
+
+## 7. MK1 removal
+
+Removed on branch `mk1-removal` after the default switch, with MK2 trajectories unchanged
+(the check is in the commit message: ordinary900 and severe900 trajectory digests are identical
+step for step before and after).
+
+- Engine: `WorldImpactEvents.cpp` (`AdvanceImpacts`, `ResolveInitialImpacts`),
+  `WorldIncrementalImpact.cpp/.h`, `WorldCCDDispatch.cpp` (parallel CCD batches), the
+  step-local helpers only they used (`ImpactEventSchedule.h`, `ImpactCandidateCache.h`,
+  `ImpactSupportSets.h`, `ContactGroupUpdates.h`), the support-continuation certificate, MK1's
+  narrowphase routing (separated pairs to TOI, start contacts, support pairs) and its velocity /
+  position solve in `PhysicsWorld::Step`, and their profiler counters. `ContactSolver` stays
+  (particle coupling uses it) and `ImpactSolver` stays (MK2's fast-body arrivals use it), as does
+  the exact CCD search (`WorldCCDSearch.cpp`) the fast-body pass calls.
+- Tests removed with the pipeline (white-box MK1 internals, no MK2 counterpart):
+  `impact_discovery`, `support_guess_ownership`, `impact_batch_continuation`,
+  `support_continuation`, `initial_impact_domain`, `impact_workspace`, `impact_event_schedule`,
+  `impact_candidate_cache`, `impact_support_sets`, `contact_group_updates`. Their physical
+  behaviours are restated in `mk2_physics` K (removed support, fast impact into a resting box,
+  elastic departure) and covered by `collision_continuity`, `impact_robustness`, `impact_timing`
+  and `mk2_physics` E (no tunnelling). Tests that branched on the solver keep their MK2 checks.
+- Saves: no MK1-only state was ever saved (gap 14); MK1-written joint continuation still loads.
+

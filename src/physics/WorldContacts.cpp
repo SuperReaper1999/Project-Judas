@@ -140,7 +140,7 @@ auto PhysicsWorld::Impl::PrepareInitialContactGeometry(float dt) -> void {
         const ContactPose poseA{a.rigidBody.position, a.rigidBody.orientation, -a.shape.pivotOffset};
         const ContactPose poseB{b.rigidBody.position, b.rigidBody.orientation, -b.shape.pivotOffset};
         output.manifold = PrimitiveContacts(a.shape, poseA, b.shape, poseB, output.margin,
-                                            output.orientationA, output.orientationB, mk2Step);
+                                            output.orientationA, output.orientationB, true);
         output.touching = false;
         for (int p = 0; p < output.manifold.count; ++p) {
             const auto &c = output.manifold.points[p];

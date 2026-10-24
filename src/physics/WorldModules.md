@@ -16,10 +16,8 @@ These headers are implementation details, not an SDK interface.
 |---|---|
 | `WorldBodies.cpp` | Body creation/destruction, motion commands, impulses, physical properties and public body observations |
 | `WorldBounds.cpp` | Prepared bounds, broadphase proxies, ordered candidate discovery and cache accounting |
-| `WorldCCDSearch.cpp` | Conservative impact search, finite drift bounds and continuation certification |
-| `WorldCCDQuery.h` / `WorldCCDDispatch.cpp` | Private read-only CCD views, bounded lane scratch and joined independent query batches |
-| `WorldImpactEvents.cpp` | Initial response, event scheduling, fallback islands and authoritative observation/motion publication |
-| `WorldIncrementalImpact.cpp/.h` | Private growing contact transaction for free primitives; actual impulse dependencies, deferred-gravity preparation and commit/fallback boundary |
+| `WorldMk2Solver.cpp` | The substepped simultaneous solve: contact blocks, joints, arrival-instant impacts, fast-body continuous pass and contact history publication |
+| `WorldCCDSearch.cpp` / `WorldCCDQuery.h` | Conservative impact search and finite drift bounds, behind a private read-only CCD view (the fast-body pass's exact query) |
 | `WorldContacts.cpp` | Contact observations, touch phases and optional joined initial-geometry preparation |
 | `WorldSleep.cpp` | Wake propagation, sleep islands and explicit sleep-state persistence |
 | `WorldJoints.cpp` | Joint construction/configuration and preparing existing solver inputs |
@@ -42,63 +40,6 @@ their existing interface. The profiler's root-query count describes a batched
 traversal now; its overlapping-leaf count counts emitted pair endpoints, not the
 old repeated single-body-query visits.
 
-Growing impact discovery also checks the existing remaining-trajectory enclosure
-of a candidate against the expanding body's actual event-time bound. Only a
-finite, disjoint enclosure avoids preparing detailed geometry. Touching,
-uncertain and unsupported cases retain native contact queries; no negative
-manifold, impulse or contact truth is cached by this check.
-
-`ImpactCandidateCache.h` retains sorted broadphase candidate lists only during
-one impact-event pass. Any fat-proxy reinsertion invalidates those lists,
-including movement of the other endpoint. A contained query filters the retained
-superset against current proxy bounds; queries outside that enclosure or the
-cache budget use the ordinary tree query. Collision filters, actual geometry,
-contact response and impact times are still evaluated normally.
-
-`ImpactEventSchedule.h` owns the step-local pending-event heap and endpoint
-adjacency index. Chronology remains exact time followed by lexicographic pair
-identity. No-impact identities occupy neither the heap nor its dependency lists;
-a changed endpoint discovers them again through broadphase candidates. The
-existing `RemainingImpactBound` supplies a whole-interval separation certificate
-before pair expansion and during island discovery. It is invalidated on every
-actual motion change and can retain a conservative superset on an unchanged
-trajectory. Uncertain/unsupported shapes use the original query. These are
-geometric proofs, not cached sampled misses or velocity tolerances. See
-[the event dependency investigation](../../docs/PREALPHA_EVENT_DEPENDENCIES.md).
-
-At the initial physical instant, only actually touching rows connect impact
-components. Positive-gap speculative rows remain available for the later
-ordinary gap/time solve; they cannot merge disconnected shock/restitution
-components or invalidate the other component's warm guesses.
-
-The [persistent-contact redesign](../../docs/PREALPHA_INCREMENTAL_IMPACTS.md)
-separates ordinary support-force warm starts from new impact increments. A new
-impact grows its private contact domain only through actual per-row represented
-velocity changes, without an island-size or impulse cutoff. Appended constraints
-retain the event's earlier impulses and immutable incoming velocity snapshots.
-The existing support sets own continuation classification; no second history
-registry, save schema or component lifecycle is introduced. Hard-jointed dynamic
-bodies, non-primitive geometry and external velocity coupling retain the complete
-legacy solve. A rejected trial publishes no body, sleep or observation changes.
-Growing-event solve timing excludes its nested discovery timing; other profiler
-categories retain their documented inclusive meaning.
-
-The world lazily owns the growing transaction's scratch storage. It reuses
-capacity across fixed steps, but resets every row, frame, membership set and
-result for each attempted event. Solver views and saved body pointers retire
-before private body arrays can relocate. Current event-time poses initialize
-every participating body; scratch is neither continuation history nor saved
-physical state. Separate worlds own separate workspaces, and shutdown releases
-their retained high-water capacity. A world without an impact allocates none of
-this optional workspace.
-
-Ordinary free-body support and transient growing impacts share the prepared
-normal-patch response. A point-only transient prototype reduced disturbed solve
-cost but regressed ordinary settling and sleeping; it is not retained. Every
-manifold point remains represented. The existing energy and feature-displacement
-guards still decide private-trial publication; they are not proofs of exact
-complementarity or universal CCD completeness.
-
 `ContactConstraint` groups velocity-phase data together before cold geometry
 and positional anchors. Its named data and save contracts are unchanged, but
 native consumers require matching rebuilt headers and engine binaries.
@@ -116,17 +57,6 @@ quaternion-to-rotation mapping and normal solver tolerances remain unchanged.
 Malformed or already asymmetric authored local tensors retain the original path;
 the correction does not invent positive inertia for locked or invalid axes.
 
-
-`ContactGroupUpdates.h` stages only touched primitive groups in the sorted
-completed-observation and warm-start stores. Reads resolve the latest patch or
-binary-search the original store. Generation-sensitive replacement remains with
-the event owner. One ordered splice publishes at the boundary, including failure
-unwind; coupled fallback publishes before globally removing its affected rows.
-No solver reads the staged history and no new persistent state is introduced.
-This removes repeated whole-world erases/scans without changing warm-start values
-or stable row order. The independent reference test compares the former
-mutation/sort algorithm, including slot reuse and failure publication.
-
 ## Ordering and interfaces
 
 The public coordinator retains the existing `Step`, `StepCoupled` and origin
@@ -134,9 +64,10 @@ translation order. Moving a method does not authorize changing when it runs.
 Methods in the modules operate on that coordinator's private state; scratch data
 must not become another source of physical truth.
 
-`WorldMk2Solver.cpp` (MK2, the default) solves every step it is selected for,
-`StepCoupled` intervals and `VelocityCoupling` participants included; MK1's TOI
-pipeline runs only under `JUDAS_PHYSICS_MK1`. A coupling keeps its per-step
+`WorldMk2Solver.cpp` solves every step, `StepCoupled` intervals and
+`VelocityCoupling` participants included. (MK1's time-of-impact event pipeline
+was retired; docs/MK2_PHYSICS_ARCHITECTURE.md records the replacement.) A
+coupling keeps its per-step
 contract: `begin(dt)` once after row preparation, exactly `iterations`
 `solve(dt, round)` calls spread across the substeps' velocity rounds, and
 `finish(dt)` once after the last pose advance. Every awake dynamic body is then
@@ -145,15 +76,11 @@ integrated per substep. A body a participant wakes mid-solve joins at that round
 re-warming solved rows). Joint warm starts are per-substep impulses and are
 rescaled when a step's substep length differs from the one that wrote them.
 
-Initial contact geometry and eligible independent CCD searches may borrow the
-existing job service. Workers read one frozen event boundary and write private
-indexed results; the owner joins them before canonical event publication. CCD
-queries own derived pose/bounds samples, never body motion or contact history.
-Small, unsupported, over-budget and unavailable-pool batches retain serial search.
-The optional scratch payload is bounded at 32 MiB; metadata is counted separately.
-The profiler distinguishes summed query CPU time from elapsed batch wall time.
-Body mutation, event ordering, solving and callback publication remain on the
-world owner. No public method becomes generally thread-safe.
+Initial contact geometry may borrow the existing job service. Workers read one
+frozen step boundary and write private indexed results; the owner joins them
+before contact generation. CCD queries own derived pose/bounds samples, never
+body motion or contact history. Body mutation, solving and callback publication
+remain on the world owner. No public method becomes generally thread-safe.
 
 Generation checks, restored-context invalidation, completed observations and warm
 starts remain distinct mechanisms. A cached contact is not a general license to

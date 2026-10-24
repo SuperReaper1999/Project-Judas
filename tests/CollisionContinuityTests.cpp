@@ -81,32 +81,27 @@ void ContactInteraction(bool rotated){
     auto& profiler=PerformanceProfiler::Get();profiler.Clear();profiler.Enable(true);
     {ProfileFrame frame("M91 actual impact on continuing support");world.Step(float(dt));}
     profiler.Enable(false);
-    bool proved=false;for(const auto& frame:profiler.History())for(const auto& counter:frame.counters)
-        if(counter.name=="Physics support continuation accepted")proved|=counter.value>0;
     const auto va=glm::inverse(q)*world.GetLinearVelocity(a),vb=glm::inverse(q)*world.GetLinearVelocity(b);
     const auto pa=glm::inverse(q)*world.GetTransform(a).position,pb=glm::inverse(q)*world.GetTransform(b).position;
-    // MK1 resolves the arrival as a TOI event and revalidates the gapped
-    // support by interval proof; MK2's speculative rows own both, so only the
-    // physical outcomes below apply to it.
-    const bool mk2=PhysicsWorld::Mk2Selected();
-    Check((mk2||world.LastStepStats().impactEvents>0)&&vb.x>.1f,"new separated body receives actual collision impulse");
+    // The substep solve's speculative rows own both the arrival and the gapped
+    // support; the physical outcomes below are what must hold.
+    Check(vb.x>.1f,"new separated body receives actual collision impulse");
     Check(std::abs(va.x+vb.x-.5f)<2e-5f,"frictionless impact preserves tangential momentum against static support");
     Check(glm::dot(va,va)+glm::dot(vb,vb)<=.2504f+2e-5f,"contact continuation does not inject kinetic energy");
     Check(pa.y>=.2499f&&pb.y>=.2499f&&glm::length(pa-pb)>=.4999f,"actual supported and colliding geometry remains nonpenetrating in physical oracle");
-    Check(mk2||proved,"real impact revalidates a gapped support using a complete interval proof");
     const auto d=profiler.Diagnostics();Check(!d.droppedEvents&&!d.truncatedFrames&&!d.openScopes,"continuation diagnostics fit bounded profiler");
-    std::printf("INTERACTION rotated=%d events=%zu momentum=%.9g proved=%d\n",int(rotated),world.LastStepStats().impactEvents,va.x+vb.x,int(proved));
+    std::printf("INTERACTION rotated=%d events=%zu momentum=%.9g\n",int(rotated),world.LastStepStats().impactEvents,va.x+vb.x);
     profiler.Clear();
 }
 void ElasticSeparation(){
     PhysicsWorld world;world.Init();world.CreateStaticBox({0,-.5f,0},{3,.5f,3},0,0);
     const float delta=1.f/60;const float gap=3*(delta-.001f);
     const auto body=world.CreateDynamicSphere({0,.25f+gap,0},.25f,1,0,.75f);
-    if(PhysicsWorld::Mk2Selected()){
-        // The gap is sized for MK1, which applies the step's velocity change at
-        // its start (50 mm of travel). MK2 integrates it over its substeps (31 mm;
-        // exact 25 mm), so the first arrival comes a step later and inside it.
-        // Restated on the bounces that actually occur. In a bounce step the
+    {
+        // The gap was sized for MK1 (retired), which applied the step's velocity
+        // change at its start (50 mm of travel). The substeps integrate it
+        // (31 mm; exact 25 mm), so the first arrival comes a step later and
+        // inside it. Stated on the bounces that actually occur. In a bounce step the
         // velocity changes only by gravity (-g dt) and the impact J = (1+e)u, so
         // the implied arrival speed u = J/(1+e) must lie between the speed
         // entering the step plus one substep of gravity and that plus the whole
@@ -125,17 +120,8 @@ void ElasticSeparation(){
         Check(authored(0),"first isolated impact retains authored restitution");
         Check(authored(1),"elastic departure does not become persistent support or suppress the next real bounce");
         Check(above,"short airborne return keeps actual geometry above floor");
-        std::printf("ELASTIC mk2 bounces=%d arrival %.4f in [%.4f, %.4f], %.4f in [%.4f, %.4f]\n",bounces,implied[0],low[0],high[0],implied[1],low[1],high[1]);
-        return;
+        std::printf("ELASTIC bounces=%d arrival %.4f in [%.4f, %.4f], %.4f in [%.4f, %.4f]\n",bounces,implied[0],low[0],high[0],implied[1],low[1],high[1]);
     }
-    world.ApplyLinearAcceleration(body,{0,-180,0},delta);world.Step(delta);
-    const float first=world.GetLinearVelocity(body).y;
-    world.ApplyLinearAcceleration(body,{0,-180,0},delta);world.Step(delta);
-    const float second=world.GetLinearVelocity(body).y;
-    Check(first>2.24f,"first isolated impact retains authored restitution");
-    Check(second>.5f&&world.LastStepStats().impactEvents>0,"elastic departure does not become persistent support or suppress the next real bounce");
-    Check(world.GetTransform(body).position.y>=.24999f,"short airborne return keeps actual geometry above floor");
-    std::printf("ELASTIC first=%.9g second=%.9g second_events=%zu\n",first,second,world.LastStepStats().impactEvents);
 }
 
 }

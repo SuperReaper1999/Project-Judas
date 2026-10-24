@@ -590,7 +590,6 @@ void TestSupportAndImpactOwnership() {
 }
 
 int main() {
-    unsetenv("JUDAS_PHYSICS_MK1");
     TestColumns();
     TestRotatedStack();
     TestMomentum();

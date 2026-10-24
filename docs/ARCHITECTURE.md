@@ -87,41 +87,32 @@ joints, sleeping, particles and persistence. They share one private state owner.
 module list to engine and direct fixtures; configuration rejects a partial world.
 See the [module map](../src/physics/WorldModules.md) for ordering and scratch lifetime.
 
-The default contact and joint solve is **Judas Physics MK2**
+The contact and joint solve is **Judas Physics MK2**
 (`src/physics/WorldMk2Solver.cpp`): a substepped simultaneous block solve with
 arrival-instant impacts, a bounded fast-body CCD pass and split-impulse joint
-position projection. The legacy MK1 TOI-event pipeline remains selectable with
-`JUDAS_PHYSICS_MK1=1` and is still what its white-box pipeline tests pin. The
+position projection. It replaced the MK1 time-of-impact event pipeline, which was
+retired with its white-box pipeline tests. The
 [MK2 architecture](MK2_PHYSICS_ARCHITECTURE.md) records design, measurements and
 open gaps. Physical balance uses the capture-point stepping controller by default
 (`BalanceSettings::captureStepping`; `false` or `JUDAS_BALANCE_CAPTURE_STEPPING=0`
-selects the established controller). The MK1-era paragraphs below describe the
-MK1 path.
+selects the established controller).
 
-Initial geometry and eligible independent CCD queries can borrow the existing
-job pool over frozen inputs, using private derived scratch and bounded batches.
-The owner joins results in deterministic pair order. Solving, chronology, body mutation and
-callbacks remain owner-thread work; public physics methods are not generally
-thread-safe.
+Initial contact geometry can borrow the existing job pool over frozen inputs,
+using private derived scratch. The owner joins results in deterministic pair
+order. Solving, body mutation and callbacks remain owner-thread work; public
+physics methods are not generally thread-safe.
 
 Contacts, continuation identities, warm starts and completed observations are
 separate state. A cache hit does not license skipping geometric invalidation.
 Modern saves retain supported continuation data; an older snapshot cannot supply
-historical data it never stored.
+historical data it never stored. Joint continuation records written by MK1 load
+as per-step warm impulses.
 
-The original four curved-mesh continuation regressions are corrected and asserting
-in the focused gate. Bounded CCD sampling, sidedness and deep initial overlap
-remain limitations. Dense-contact cost is workload dependent. The latest
-[ordinary support-history correction](PREALPHA_SUPPORT_CONTINUITY.txt) removes
-repeated cold starts after eligible primitive impacts; it preserves separate
-ownership of ordinary iterative guesses and actual completed event reactions.
-It improves the measured 1,024-piece room without changing CCD or solver quality,
-but does not establish universal 60 Hz performance. The subsequent
-[CCD query and contact-history follow-up](PREALPHA_CCD_QUERY_FOLLOWUP.txt) removes
-whole-world history scans per event and certifies cheap margin decisions before
-full interval arithmetic, preserving exact fallback and physical trajectories. See
-[current measured limits](PREALPHA.md#remaining-readiness-concerns) and the
-[dense-support follow-up](PREALPHA_DENSE_SUPPORT_FOLLOWUP.md).
+Bounded CCD sampling, sidedness and deep initial overlap remain limitations.
+Dense-contact cost is workload dependent and universal 60 Hz performance is not
+established; see [current measured limits](PREALPHA.md#remaining-readiness-concerns)
+and the MK2 architecture's timing tables. The pre-alpha support-continuity and
+CCD-query follow-up reports describe the retired MK1 pipeline.
 
 ## Coordinates, gravity and large worlds
 

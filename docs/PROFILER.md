@@ -102,16 +102,16 @@ macro-step's final contact publication follows its last native-step diagnostics,
 so that final scoped work is not included in the preceding step counters.
 Cooked collision counters report visited BVH nodes, triangles and convex tests
 within the rigid step. They do not include independent caller queries outside it.
-`Physics CCD search inclusive ms`, `Physics CCD geometry inclusive ms`, impact
-island discovery and impact solve costs are aggregate counters, with constant
+`Physics CCD search inclusive ms`, `Physics CCD geometry inclusive ms` and
+`Physics impact solve ms` are aggregate counters, with constant
 storage per world. Timers run only during active collection. Recursive searches
 do not double-count their own category; geometry includes work inside searches
 and contact-island discovery, so these categories **overlap**. Do not sum them.
 This avoids emitting one scope event per contact/search predicate. The aggregate
 geometry-call counter counts nested calls; it is work, not unique body pairs.
 
-The live-slowdown follow-up adds `Physics impact observation publication ms` and
-these bounded observations:
+The live-slowdown follow-up adds these bounded observations (its impact
+observation publication timer belonged to the removed MK1 pipeline):
 
 - `Physics initial geometry worker lanes`: configured/used batch contexts,
   including the caller; zero when no joined batch was selected.

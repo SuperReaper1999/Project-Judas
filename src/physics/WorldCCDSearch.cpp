@@ -50,23 +50,6 @@ auto PhysicsWorld::Impl::CCDQuery::RemainingImpactBound(unsigned slot, double st
     return sample.remainingBound;
 }
 
-auto PhysicsWorld::Impl::NormalSpeed(const Contact &c, const RigidBody &a, const RigidBody &b)
-    -> double {
-    const glm::dvec3 ra =
-        c.hasLocalAnchors
-            ? (c.anchorAInWorldFrame ? c.localAnchorA
-                                     : ContactRotation(a.orientation) * c.localAnchorA)
-            : glm::dvec3(c.point) - glm::dvec3(a.position);
-    const glm::dvec3 rb =
-        c.hasLocalAnchors
-            ? (c.anchorBInWorldFrame ? c.localAnchorB
-                                     : ContactRotation(b.orientation) * c.localAnchorB)
-            : glm::dvec3(c.point) - glm::dvec3(b.position);
-    return glm::dot(glm::dvec3(c.normal), glm::dvec3(a.linearVelocity - b.linearVelocity) +
-                                              glm::cross(glm::dvec3(a.angularVelocity), ra) -
-                                              glm::cross(glm::dvec3(b.angularVelocity), rb));
-}
-
 auto PhysicsWorld::Impl::DriftGenerator(unsigned slot, double time) const -> glm::vec3 {
     const auto &body = bodies[slot];
     if (!body.HasMotion())
@@ -465,99 +448,6 @@ auto PhysicsWorld::Impl::CCDQuery::SpinsThroughSupport(const std::array<unsigned
     return projected > feature;
 }
 
-auto PhysicsWorld::Impl::CCDQuery::SupportContinuationSafe(const std::array<unsigned, 4> &key, double start,
-                                                 double finish) -> bool {
-    PhysicsWorkTimer timer(work.continuationProof, work.active);
-    ++work.continuationAttempts;
-    const auto &a = bodies[key[0]];
-    const auto &b = bodies[key[1]];
-    if (!Impl::ContinuationPrimitive(a) || !Impl::ContinuationPrimitive(b))
-        return false;
-    const auto &aa = ImpactPoseAt(key[0], start);
-    const auto &bb = ImpactPoseAt(key[1], start);
-    const float clearance = std::min(
-        ContactSolver::kPenetrationSlop,
-        float(.25 * std::min(PrimitiveFeature(key[0], key[2]), PrimitiveFeature(key[1], key[3]))));
-    const auto m = PairAt(key[0], key[1], key[2], key[3], start, clearance);
-    if (!m.count || m.uncertain)
-        return false;
-    const glm::dvec3 normal = m.points[0].preciseNormal;
-    // Preserve the original fallback for penetration already beyond the
-    // ordinary position solver's allowance; do not enlarge that allowance.
-    for (int i = 0; i < m.count; ++i)
-        if (m.points[i].signedSeparation < -clearance) {
-            ++work.continuationOverBudget;
-            return false;
-        }
-    std::array<const RigidMotionSegment *, 2> segments{};
-    for (unsigned side = 0; side < 2; ++side) {
-        const auto &body = bodies[key[side]];
-        if (!body.HasMotion())
-            continue;
-        const auto &path = body.motion.Segments();
-        auto it = std::upper_bound(path.begin(), path.end(), start,
-                                   [](double t, const auto &s) { return t < s.begin; });
-        if (it == path.begin())
-            return false;
-        segments[side] = &*--it;
-        if (finish > segments[side]->end)
-            return false;
-    }
-    using contact_geometry::Iv;
-    Iv norm(0);
-    for (int k = 0; k < 3; ++k)
-        norm = norm + Iv(normal[k]) * Iv(normal[k]);
-    const Iv allowance = Iv(double(clearance)) * contact_geometry::Sqrt(norm);
-    auto gap = [&](double lo, double hi) -> std::optional<Iv> {
-        auto extent = [&](unsigned side, const ImpactPoseSample &sample) {
-            auto pose = sample.pose;
-            pose.position = glm::vec3(0);
-            return rigid_motion_bounds::TryPrimitiveSweepProjection(
-                bodies[key[side]].shape, segments[side], pose, pose, lo, hi, normal, glm::dvec3(0),
-                *sample.orientation);
-        };
-        const auto first = extent(0, aa), second = extent(1, bb);
-        const auto relative = rigid_motion_bounds::TryRelativeCentreProjection(
-            segments[0], segments[1], aa.pose, bb.pose, lo, hi, normal);
-        if (!first || !second || !relative)
-            return std::nullopt;
-        return *relative + Iv(first->lo) - Iv(second->hi) + allowance;
-    };
-    const auto entire = gap(start, finish);
-    if (!entire)
-        return false;
-    if (entire->lo > 0) {
-        ++work.continuationAccepted;
-        return true;
-    }
-    const auto end = gap(finish, finish);
-    if (!end || end->hi <= 0)
-        return false;
-    // Subdivision tightens a conservative rotation enclosure; it is not
-    // temporal collision sampling. Every accepted leaf covers ALL times.
-    auto certify = [&](auto &&self, double lo, double hi, unsigned depth) -> bool {
-        ++work.continuationPartitions;
-        const auto bound = gap(lo, hi);
-        if (!bound)
-            return false;
-        if (bound->lo > 0)
-            return true;
-        // This encloses a lower-clearance proxy using the whole interval's
-        // worst rotational extents. Its upper endpoint does not bound actual
-        // clearance: smaller intervals can tighten those extents even when
-        // the entire current proxy is nonpositive. Exhaustion ends the proof.
-        if (!depth)
-            return false;
-        const double mid = (lo + hi) * .5;
-        return self(self, lo, mid, depth - 1) && self(self, mid, hi, depth - 1);
-    };
-    if (certify(certify, start, finish, 3)) {
-        ++work.continuationAccepted;
-        return true;
-    }
-    return false;
-}
-
 auto PhysicsWorld::Impl::SpinPenetrationTarget(const std::array<unsigned, 4> &key) const -> double {
     return .25 *
            std::min(PrimitiveFeature(key[0], int(key[2])), PrimitiveFeature(key[1], int(key[3])));
@@ -571,7 +461,7 @@ auto PhysicsWorld::Impl::CCDQuery::ImpactTime(unsigned a, unsigned b, int pa, in
     // MK2 records each dynamic body's substeps (and any impact instant) as
     // separate segments, so its dynamic ledgers are searched the same way.
     for (auto slot : {a, b})
-        if (bodies[slot].isKinematic || (world.mk2Step && bodies[slot].isDynamic))
+        if (bodies[slot].isKinematic || bodies[slot].isDynamic)
             for (const auto &s : bodies[slot].motion.Segments())
                 if (s.end > start && s.end < finish) {
                     auto first = ImpactTime(a, b, pa, pb, start, s.end, target);
@@ -869,12 +759,6 @@ auto PhysicsWorld::Impl::SpinsThroughSupport(const std::array<unsigned, 4> &key,
     CCDQuery query(*this);
     return query.SpinsThroughSupport(key, remaining, time, changedVelocity);
 }
-
-auto PhysicsWorld::Impl::SupportContinuationSafe(const std::array<unsigned, 4> &key, double start, double finish) -> bool {
-    CCDQuery query(*this);
-    return query.SupportContinuationSafe(key, start, finish);
-}
-
 
 auto PhysicsWorld::Impl::ImpactTime(unsigned a, unsigned b, int pa, int pb, double start, double finish, double target) -> double {
     CCDQuery query(*this);

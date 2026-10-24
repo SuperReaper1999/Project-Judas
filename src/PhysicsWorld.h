@@ -121,9 +121,6 @@ public:
     bool SetJointAngularDrive(JointHandle, const JointAngularDrive&);
 
     bool Init();
-    // The solver Init selects for this process: MK2 unless JUDAS_PHYSICS_MK1
-    // is set (read at Init, so tests and tools can report or branch on it).
-    static bool Mk2Selected();
     void Shutdown();
 
     // Optional borrowed execution service for independent contact geometry.

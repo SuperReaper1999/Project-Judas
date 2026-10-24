@@ -17,15 +17,10 @@
 
 namespace {
 int checks=0, failures=0, cases=0;
-// MK1 resolves coupled impacts by its event policy (inelastic capture of a
-// coupled event, a 16-event cap); MK2 resolves each impact at its arrival
-// instant by sequential propagation. Where the expectations differ the MK2
-// branch states the exact physical result instead.
-const bool mk2=PhysicsWorld::Mk2Selected();
-// An undisturbed free spin's endpoint. MK1's integrator is the first-order
-// quaternion update (bitwise oracle); MK2 integrates the exact rotation.
-bool SameFreeRotation(const glm::quat& actual,const RigidBody& start,const RigidBody& mk1Oracle,float dt) {
-    if(!mk2)return actual==mk1Oracle.orientation;
+// Each impact is resolved at its arrival instant by sequential propagation
+// (docs/MK2_PHYSICS_ARCHITECTURE.md); the checks state the exact physical result.
+// An undisturbed free spin's endpoint: the exact rotation.
+bool SameFreeRotation(const glm::quat& actual,const RigidBody& start,float dt) {
     const float speed=glm::length(start.angularVelocity);
     const glm::quat exact=speed>0?glm::normalize(glm::angleAxis(speed*dt,start.angularVelocity/speed)*start.orientation):start.orientation;
     return std::abs(glm::dot(actual,exact))>=1-1e-6f;
@@ -219,7 +214,7 @@ void FastThin() {
     Check(Near(pose.position.x,expected,tolerance),"fast body detects a thin obstacle before crossing it");
     Check(Near(v,glm::dvec3(-500,0,0),1e-4),"fast isolated impact restitution");
     Check(w.GetTransform(unrelated).position==spinReference.position,"fast unrelated impact preserves translation anchor");
-    Check(SameFreeRotation(w.GetTransform(unrelated).rotation,spinStart,spinReference,dt),"fast unrelated impact preserves exact angular endpoint");
+    Check(SameFreeRotation(w.GetTransform(unrelated).rotation,spinStart,dt),"fast unrelated impact preserves exact angular endpoint");
     std::cout << "{\"kind\":\"fast_thin\",\"speed\":" << speed << ",\"expected_x\":" << expected << ",\"actual_x\":" << pose.position.x << ",\"position_tolerance\":" << tolerance << "}\n";
     EndCase("fast_thin",before,w);
 }
@@ -229,23 +224,21 @@ void Coupled() {
         for(int i=0;i<3;++i)b.push_back(w.CreateDynamicSphere({1.25f*float(i-1),0,0},.5f,1,0,(mixed&&i==2)?.5f:1.f));
         w.SetLinearVelocity(b[0],{3,0,0});w.SetLinearVelocity(b[2],{-3,0,0});const auto a=Spheres(w,b,{1,1,1});Step(w,.2f);const auto z=Spheres(w,b,{1,1,1});
         Check(z.energy<=a.energy+1e-4,"simultaneous event energy");Check(Near(z.momentum,a.momentum,1e-4),"simultaneous event momentum");
-        if(mk2){ // Elastic (pair e = max = 1) arrivals at t=1/12 rebound for the rest of the step.
+        { // Elastic (pair e = max = 1) arrivals at t=1/12 rebound for the rest of the step.
             const double rebound=3*(double(.2f)-.25/3);const double ex[]={-1-rebound,0,1+rebound},ev[]={-3,0,3};
             for(int i=0;i<3;++i){Check(Near(w.GetLinearVelocity(b[i]),glm::dvec3(ev[i],0,0),2e-4),"simultaneous elastic arrivals rebound symmetrically");Check(Near(double(w.GetTransform(b[i]).position.x),ex[i],2e-5),"simultaneous rebound endpoint");}
-        } else
-        for(int i=0;i<3;++i){Check(Near(w.GetLinearVelocity(b[i]),glm::dvec3(0),2e-4),"simultaneous event inelastic capture");Check(Near(double(w.GetTransform(b[i]).position.x),i-1,2e-5),"simultaneous event contact endpoint");}
+        }
         std::cout << "{\"kind\":\"simultaneous\",\"mixed_restitution\":" << mixed << ",\"before_energy\":" << a.energy << ",\"after_energy\":" << z.energy << ",\"momentum_residual\":" << glm::length(z.momentum-a.momentum) << "}\n";EndCase("simultaneous",before,w);
     }
     { // Incoming isolated body strikes two bodies already touching: capture island.
         const int before=failures;PhysicsWorld w;w.Init();std::vector<BodyHandle>b;
         for(float x:{0.f,1.5f,2.5f})b.push_back(w.CreateDynamicSphere({x,0,0},.5f,1,0,1));
         w.SetLinearVelocity(b[0],{6,0,0});const auto a=Spheres(w,b,{1,1,1});Step(w,.2f);const auto z=Spheres(w,b,{1,1,1});
-        const double t=(.5/6),advance=2*(double(.2f)-t);
-        if(mk2){ // Newton's cradle: the struck ball stops at contact, the far ball leaves at 6.
+        const double t=(.5/6);
+        { // Newton's cradle: the struck ball stops at contact, the far ball leaves at 6.
             const double ex[]={.5,1.5,2.5+6*(double(.2f)-t)},ev[]={0,0,6};
             for(int i=0;i<3;++i){Check(Near(w.GetLinearVelocity(b[i]),glm::dvec3(ev[i],0,0),2e-4),"impact into touching island propagates to the far ball");Check(Near(double(w.GetTransform(b[i]).position.x),ex[i],4e-5),"propagated island consumes time");}
-        } else
-        for(int i=0;i<3;++i){Check(Near(w.GetLinearVelocity(b[i]),glm::dvec3(2,0,0),2e-4),"impact into touching island captures all");Check(Near(double(w.GetTransform(b[i]).position.x),.5+i+advance,4e-5),"captured island consumes time");}
+        }
         Check(z.energy<=a.energy+1e-4,"touching island dissipates");Check(Near(z.momentum,a.momentum,1e-4),"touching island momentum");EndCase("persistent_island",before,w);
     }
 }
@@ -261,13 +254,9 @@ void PersistentGapImpact() {
     // B keeps the cache from ordinary support/lift steps. A-B reaches contact
     // after .05 s while B's support gap has grown by another .005 m.
     Step(w,.1f);
-    if(mk2){ // e = 1 binary exchange at t=.05: A stops at contact, B leaves at 10.
-        Check(Near(w.GetLinearVelocity(a),glm::dvec3(0,.1,0),2e-5)&&Near(w.GetLinearVelocity(b),glm::dvec3(10,.1,0),2e-5),"cached support incident to impact exchanges elastically");
-        Check(Near(w.GetTransform(a).position.x,-1,2e-5)&&Near(w.GetTransform(b).position.x,.5,2e-5),"persistent-gap impact consumes remaining horizontal travel");
-    } else {
-    for(auto body:{a,b})Check(Near(w.GetLinearVelocity(body),glm::dvec3(5,.1,0),2e-5),"cached support incident to impact selects inelastic capture");
-    Check(Near(w.GetTransform(a).position.x,-.75,2e-5)&&Near(w.GetTransform(b).position.x,.25,2e-5),"persistent-gap impact consumes remaining horizontal travel");
-    }
+    // e = 1 binary exchange at t=.05: A stops at contact, B leaves at 10.
+    Check(Near(w.GetLinearVelocity(a),glm::dvec3(0,.1,0),2e-5)&&Near(w.GetLinearVelocity(b),glm::dvec3(10,.1,0),2e-5),"cached support incident to impact exchanges elastically");
+    Check(Near(w.GetTransform(a).position.x,-1,2e-5)&&Near(w.GetTransform(b).position.x,.5,2e-5),"persistent-gap impact consumes remaining horizontal travel");
     for(auto body:{a,b})Check(Near(w.GetTransform(body).position.y,double(initialHeight)+double(.1f)*double(.1f),2e-6),"cached positive gap receives no premature floor impulse");
     const float xa=w.GetTransform(a).position.x,xb=w.GetTransform(b).position.x;
     const double pairGap=double(xb)-double(xa)-1;
@@ -307,20 +296,13 @@ void EventCap() {
     w.CreateStaticBox({-wallX,0,0},{wallHalfWidth,4,4},0,1);
     const auto b=w.CreateDynamicSphere({0,0,0},radius,1,0,1);w.SetLinearVelocity(b,{100,0,1});
     Step(w,dt);const auto p=w.GetTransform(b).position,v=w.GetLinearVelocity(b);
-    // The seventeenth impact is the positive wall. Inelastic capture removes
-    // normal speed there; tangential travel must consume the full remaining dt.
+    // Tangential travel must consume the full remaining dt.
     const double expectedX=double(wallX)-double(wallHalfWidth)-double(radius);
-    if(mk2){ // ~18 bounces in one 0.2 s step exceed MK2's per-step bound (a 60 Hz
-        // rattle is exact; judas_mk2_physics_tests). What must still hold here:
-        Check(std::abs(p.x)<=expectedX+2e-6,"bounded rattle never leaves the walls");
-        Check(std::abs(v.x)<=100+1e-3&&Near(v.z,1,2e-6),"bounded rattle creates no energy and keeps tangential speed");
-        Check(Near(p.z,double(dt),2e-6),"event cap consumes remaining tangential travel time");
-    } else {
-    Check(w.LastStepStats().impactEventCapFallback>0,"event-cap fallback is observable");
-    Check(Near(p.x,expectedX,2e-6),"event cap captures at contact rather than in midair");
+    // ~18 bounces in one 0.2 s step exceed the per-step impact bound (a 60 Hz
+    // rattle is exact; judas_mk2_physics_tests). What must still hold here:
+    Check(std::abs(p.x)<=expectedX+2e-6,"bounded rattle never leaves the walls");
+    Check(std::abs(v.x)<=100+1e-3&&Near(v.z,1,2e-6),"bounded rattle creates no energy and keeps tangential speed");
     Check(Near(p.z,double(dt),2e-6),"event cap consumes remaining tangential travel time");
-    Check(Near(v,glm::dvec3(0,0,1),2e-6),"event cap is inelastic without tangential damping");
-    }
     std::cout << "{\"kind\":\"event_cap\",\"position\":";Vec(p);
     std::cout << ",\"velocity\":";Vec(v);Events<PhysicsWorld::StepStats>::Print(w.LastStepStats());std::cout << "}\n";
     EndCase("event_cap",before,w);
@@ -329,9 +311,9 @@ void Ledger() {
     {const int before=failures;PhysicsWorld w;w.Init();w.CreatePlayerShape(.05f,.05f);
         w.CreateStaticBox({-.5f,0,0},{.5f,4,4},0,0);
         const auto b=w.CreateDynamicSphere({.45f,0,0},.5f,1,0,0);const float initial=w.GetTransform(b).position.x;
-        // MK2 recovers an overlap gently (stable stacks), never 2 cm in a step;
+        // An overlap is recovered gently (stable stacks), never 2 cm in a step;
         // the ledger property is exercised with real departure speed instead.
-        if(mk2)w.SetLinearVelocity(b,{3,0,0});
+        w.SetLinearVelocity(b,{3,0,0});
         Step(w,1.f/60);const glm::vec3 current=w.GetTransform(b).position;
         Check(current.x>initial+.02f,"endpoint correction fixture actually corrects penetration");
         const glm::vec3 from=current+glm::vec3(.65f,0,0),displacement(-.2f,0,0);
@@ -367,10 +349,9 @@ void Ledger() {
         Check(w.GetLinearVelocity(c)==reference.GetLinearVelocity(alone),"unimpulsed connected body keeps linear velocity");
         Check(w.GetAngularVelocity(c)==reference.GetAngularVelocity(alone),"unimpulsed connected body keeps angular velocity");
         Check(w.GetTransform(c).position==reference.GetTransform(alone).position,"unimpulsed connected body keeps translation anchor");
-        // MK2 integrates a constrained body per substep and a free one in one
+        // A constrained body is integrated per substep and a free one in one
         // segment, both by the exact rotation: equal to rounding, not bitwise.
-        if(mk2)Check(std::abs(glm::dot(w.GetTransform(c).rotation,reference.GetTransform(alone).rotation))>=1-1e-6f,"unimpulsed connected body keeps its rotation");
-        else Check(w.GetTransform(c).rotation==reference.GetTransform(alone).rotation,"unimpulsed connected body keeps exact rotation anchor");
+        Check(std::abs(glm::dot(w.GetTransform(c).rotation,reference.GetTransform(alone).rotation))>=1-1e-6f,"unimpulsed connected body keeps its rotation");
         const auto observed=w.GetTransform(c).rotation,expected=reference.GetTransform(alone).rotation;
         std::cout << "{\"kind\":\"connected_unimpulsed_rotation\",\"expected_quaternion\":[" << expected.w << ',' << expected.x << ',' << expected.y << ',' << expected.z
                   << "],\"observed_quaternion\":[" << observed.w << ',' << observed.x << ',' << observed.y << ',' << observed.z << "]}\n";
@@ -381,7 +362,7 @@ void Ledger() {
         w.SetLinearVelocity(body,{1,2,3});w.SetAngularVelocity(body,{0,0,omega});
         w.CreateStaticBox({0,-.5f,0},{10,.5f,10},0,1);auto impact=w.CreateDynamicSphere({0,.501f,0},.5f,1,0,1);w.SetLinearVelocity(impact,{0,-1,0});
         RigidBody oracle;oracle.inverseMass=1;oracle.position={100,100,100};oracle.linearVelocity={1,2,3};oracle.angularVelocity={0,0,omega};const RigidBody start=oracle;IntegrateRigidBodyPosition(oracle,1.f/60);Step(w,1.f/60);
-        Check(w.GetTransform(body).position==oracle.position,"unaffected translation endpoint unchanged");Check(SameFreeRotation(w.GetTransform(body).rotation,start,oracle,1.f/60),"unaffected anchored rotation endpoint unchanged");EndCase("anchored_rotation",before,w);
+        Check(w.GetTransform(body).position==oracle.position,"unaffected translation endpoint unchanged");Check(SameFreeRotation(w.GetTransform(body).rotation,start,1.f/60),"unaffected anchored rotation endpoint unchanged");EndCase("anchored_rotation",before,w);
     }
 }
 }

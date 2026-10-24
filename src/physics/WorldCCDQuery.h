@@ -117,7 +117,6 @@ struct PhysicsWorld::Impl::CCDQuery {
     }
     bool SpinsThroughSupport(const std::array<unsigned, 4>& key, double remaining,
                              double time = 0, bool changedVelocity = false);
-    bool SupportContinuationSafe(const std::array<unsigned, 4> &key, double start, double finish);
     double SpinPenetrationTarget(const std::array<unsigned, 4>& key) const {
         return world.SpinPenetrationTarget(key);
     }

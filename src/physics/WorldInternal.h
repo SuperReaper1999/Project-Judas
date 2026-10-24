@@ -41,7 +41,6 @@
 #include "RigidMotion.h"
 #include "RigidMotionBounds.h"
 #include "ImpactSolver.h"
-#include "ImpactPairVisitSet.h"
 #include "JointSolver.h"
 #include <atomic>
 
@@ -231,7 +230,7 @@ struct PhysicsWorld::Impl {
     std::string ContinuationJointContext(const JointRecord &joint) const;
     std::vector<JointRecord> joints;
     std::set<std::pair<unsigned, unsigned>> suppressedPairs;
-    JointSolver jointSolver, eventJointSolver, mk2JointProjection;
+    JointSolver jointSolver, mk2JointProjection;
     RigidBody worldAnchor;
     bool JointActive(const JointRecord &joint) const;
     std::vector<JointInput> JointInputs(const std::vector<unsigned char> *included = nullptr);
@@ -250,28 +249,24 @@ struct PhysicsWorld::Impl {
     std::vector<SleepIsland> sleepIslands;
     std::size_t sleepGraphEdges = 0, sleepIslandCount = 0, sleepScratchBytes = 0;
     void Settle(float dt);
-    // Judas Physics MK2 (docs/MK2_PHYSICS_ARCHITECTURE.md): opt-in substepped
-    // simultaneous solve that replaces MK1's impact events for one step.
+    // Judas Physics MK2 (docs/MK2_PHYSICS_ARCHITECTURE.md): the substepped
+    // simultaneous solve every step runs.
     struct Mk2Point {
         unsigned a, b;
         Contact contact;
         float friction, restitution, warmNormal;
         glm::vec3 warmTangent;
     };
-    bool mk2Enabled = false, mk2Step = false;
     // Substep length the joints' warm starts were last written in (MK2):
     // a coupled interval's substeps differ in length from an ordinary step's.
     float mk2JointWarmH = 0;
-    // MK1 velocity sweeps; JUDAS_VALIDATION_VELOCITY_ITERATIONS overrides it to
-    // test consumers against a more converged solve.
-    int velocityIterations = ContactSolver::kVelocityIterations;
-    // An MK2 step generates every feature within at least this distance as a
+    // A step generates every feature within at least this distance as a
     // speculative row: two bodies resting together have no relative motion, so
     // a motion-only margin would cull just-separated corners by rounding and
     // keep a lopsided patch. Speculative rows are exact, so the floor is free.
     static constexpr float kMk2MinimumMargin = 0.002f;
     float ContactMargin(float motionMargin) const {
-        return mk2Step ? std::max(motionMargin, kMk2MinimumMargin) : motionMargin;
+        return std::max(motionMargin, kMk2MinimumMargin);
     }
     std::vector<Mk2Point> mk2Points;
     std::vector<std::array<unsigned, 4>> mk2RowPairs; // sorted (slotA, slotB, partA, partB)
@@ -281,43 +276,10 @@ struct PhysicsWorld::Impl {
     bool Mk2ResolveArrival(unsigned fast, unsigned other, int partFast, int partOther, double hit);
     bool Mk2Crossed(unsigned fast, unsigned other, unsigned a, unsigned b, int pa, int pb, double hit,
                     float dt);
-    bool ImpactDiscoverySeparated(unsigned a, unsigned b, const Aabb& query,
-                                  double start, double finish);
-    struct IncrementalImpact;
-    // Optional derived transaction storage. Only capacities/pool memory survive
-    // events and steps; Reset discards every previous row, frame and body view.
-    // The custom deleter keeps the complete type local to its own module.
-    struct IncrementalImpactDeleter {
-        void operator()(IncrementalImpact* workspace) const noexcept;
-    };
-    std::unique_ptr<IncrementalImpact, IncrementalImpactDeleter> incrementalImpact;
-    bool TryIncrementalImpact(const std::array<unsigned, 4>& selected, double now, float dt,
-                              const std::vector<unsigned char>& jointBodies,
-                              IncrementalImpact& trial);
     ContactSolver solver;
     ContactSolver particleSolver; // independent storage; never replays the rigid warm cache
     PhysicsWorld::ParticleContactStats particleContactStats;
     ImpactSolver impactSolver;
-    struct StartContact {
-        unsigned a, b;
-        std::size_t constraint;
-        float friction, warmNormal;
-        glm::vec3 warmTangent;
-        bool newImpact;
-    };
-    std::vector<StartContact> startContacts;
-    std::vector<std::array<unsigned, 4>> separatedPairs;
-    std::vector<unsigned> initialImpactBodies; // islands changed by time-zero impacts
-    std::vector<std::array<unsigned, 4>> supportPairs;
-    std::vector<std::array<unsigned, 4>>
-        spinningPairs; // sorted; continuous search with a penetration target
-    struct ScheduledImpact {
-        std::array<unsigned, 4> key;
-        double time;
-    };
-    std::vector<ScheduledImpact> scheduledImpacts;
-    std::vector<unsigned> impactCounts;
-    std::vector<unsigned char> impactCapped;
     double stepDuration = 0;
 
     // A derived CCD sample, never an integration anchor. Many incident pairs
@@ -325,13 +287,6 @@ struct PhysicsWorld::Impl {
     // represented pose/orientation preparation once until that trajectory
     // changes. Time and generation are part of the key; every step and every
     // Begin/ChangeVelocity invalidates samples explicitly.
-    struct CCDRequest {
-        std::array<unsigned, 4> key;
-        double target = 0, time = 0;
-        bool query = true, ready = false;
-        std::exception_ptr error;
-    };
-    void EvaluateImpactQueries(std::vector<CCDRequest>& requests, double start, double finish);
     struct CCDQuery;
     struct CCDQueryStorage;
     std::vector<std::unique_ptr<CCDQueryStorage>> ccdQueryStorage;
@@ -356,18 +311,8 @@ struct PhysicsWorld::Impl {
     std::size_t impactActualBoundsRejected = 0;
     struct WorkDiagnostics {
         bool active = false;
-        PhysicsWorkSample toi, geometry, impactIslands, impactSolve, jointPreparation,
-            impactObservations, continuationProof, continuationCache;
-        std::size_t continuationAttempts = 0, continuationAccepted = 0, continuationPartitions = 0,
-                    continuationOverBudget = 0;
-        std::size_t coupledFallbackEvents = 0, elasticFallbackEvents = 0,
-                    geometryFallbackEvents = 0, peakImpactBodies = 0, peakImpactRows = 0,
-                    incrementalEvents = 0, incrementalFallbacks = 0, incrementalBodies = 0,
-                    incrementalRows = 0, incrementalBoundsRejected = 0;
+        PhysicsWorkSample toi, geometry, impactSolve, jointPreparation;
         std::size_t candidatePasses = 0, candidateQueries = 0, candidateLeaves = 0;
-        std::size_t ccdParallelBatches = 0, ccdParallelQueries = 0, ccdWorkerQueries = 0,
-                    ccdPeakLanes = 0;
-        std::uint64_t ccdBatchNanoseconds = 0;
     } work;
     // Indexed output only: workers never mutate physics bodies, geometry
     // caches, solver rows, touches, warm starts or event scheduling.
@@ -405,7 +350,6 @@ struct PhysicsWorld::Impl {
     void InvalidateImpactPose(unsigned slot);
 
     RigidBody PoseAt(unsigned slot, double time) const;
-    static double NormalSpeed(const Contact &c, const RigidBody &a, const RigidBody &b);
     // This RigidBody-shaped adapter serves the existing geometric primitive
     // APIs only. It deliberately does not transport angular velocity; physical
     // event/solver publication must continue to use PoseAt above.
@@ -448,10 +392,8 @@ struct PhysicsWorld::Impl {
     // on the ground, and changes how they come to rest.)
     bool SpinsThroughSupport(const std::array<unsigned, 4> &key, double remaining, double time = 0,
                              bool changedVelocity = false);
-    static bool ContinuationPrimitive(const Body &body);
     // Mesh/terrain contacts keep per-point normals (outside normal blocks).
     static bool ConcaveShape(const Body &body);
-    bool SupportContinuationSafe(const std::array<unsigned, 4> &key, double start, double finish);
     // A quarter of the existing half-dimension feature (one eighth of the
     // full thickness for boxes), measured relative to the current overlap.
     double SpinPenetrationTarget(const std::array<unsigned, 4> &key) const;
@@ -461,10 +403,6 @@ struct PhysicsWorld::Impl {
     // depth lets the search continue after an event that ended at the target.
     double ImpactTime(unsigned a, unsigned b, int pa, int pb, double start, double finish,
                       double target = 0);
-
-    void ResolveInitialImpacts(float dt);
-
-    void AdvanceImpacts(float dt, bool coupledVelocityChanged = false);
 
     static void KinematicVelocity(const Body &body, float dt, glm::vec3 &linear, glm::vec3 &angular,
                                   double &duration);

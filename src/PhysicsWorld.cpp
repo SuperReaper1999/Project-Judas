@@ -4,9 +4,6 @@
 
 using namespace JudasPhysicsDetail;
 
-// MK2 is the default solver; JUDAS_PHYSICS_MK1 selects the legacy MK1 path.
-bool PhysicsWorld::Mk2Selected() { return std::getenv("JUDAS_PHYSICS_MK1") == nullptr; }
-
 // Public fixed-step coordinator. Cohesive implementation modules share one Impl.
 bool PhysicsWorld::Init() {
     m_impl = new Impl();
@@ -14,16 +11,6 @@ bool PhysicsWorld::Init() {
     const bool blockNormals=std::getenv("JUDAS_VALIDATION_POINT_CONTACTS")==nullptr;
     m_impl->solver.EnableBlockNormals(blockNormals);
     m_impl->impactSolver.EnableBlockNormals(blockNormals);
-    m_impl->mk2Enabled = Mk2Selected();
-    // Once per process: which solver this run validates.
-    static const bool announced = [&] {
-        std::fprintf(stderr, "Physics solver: %s\n",
-                     m_impl->mk2Enabled ? "MK2" : "MK1 (JUDAS_PHYSICS_MK1)");
-        return true;
-    }();
-    (void)announced;
-    if (const char *sweeps = std::getenv("JUDAS_VALIDATION_VELOCITY_ITERATIONS"))
-        m_impl->velocityIterations = std::clamp(std::atoi(sweeps), 1, 200);
     return true;
 }
 
@@ -67,9 +54,6 @@ void PhysicsWorld::Step(float fixedDeltaTime, const VelocityCoupling *coupling) 
             joint.restoredContinuationDt = 0;
         }
 
-    // MK2 solves every step it is selected for, coupled intervals and
-    // velocity-coupled participants included.
-    w.mk2Step = w.mk2Enabled;
     w.mk2Points.clear();
     w.parallelContactDiagnostics = {};
     w.parallelCookedDiagnostics = {};
@@ -184,8 +168,6 @@ void PhysicsWorld::Step(float fixedDeltaTime, const VelocityCoupling *coupling) 
     w.solver.Clear();
     w.lastStepContacts.clear();
     w.pendingCache.clear();
-    w.startContacts.clear();
-    w.separatedPairs.clear();
     w.cacheUsed.assign(w.contactCache.size(), 0);
     w.PrepareInitialContactGeometry(fixedDeltaTime);
     std::size_t initialGeometryIndex = 0;
@@ -242,7 +224,7 @@ void PhysicsWorld::Step(float fixedDeltaTime, const VelocityCoupling *coupling) 
                     prepared
                         ? prepared->manifold
                         : ComputeContacts(*childA, *childB, margin, &orientationA, &orientationB,
-                                          w.mk2Step);
+                                          true);
                 const ContactKey key{slotA, slotB, a.generation, b.generation, partA, partB};
                 const auto range = std::equal_range(
                     w.contactCache.begin(), w.contactCache.end(),
@@ -297,49 +279,20 @@ void PhysicsWorld::Step(float fixedDeltaTime, const VelocityCoupling *coupling) 
                         warmNormal = w.contactCache[static_cast<std::size_t>(best)].normalImpulse;
                         warmTangent = w.contactCache[static_cast<std::size_t>(best)].tangentImpulse;
                     }
-                    if (w.mk2Step) {
-                        // MK2: every manifold point, new or persistent, joins
-                        // one simultaneous substepped solve. No TOI routing.
-                        w.pendingCache.push_back({key, anchor, contact.normal, 0, glm::vec3(0),
-                                                  float(contact.hasLocalAnchors
-                                                            ? contact.signedSeparation
-                                                            : -double(contact.penetration)),
-                                                  a.contactObservationRevision,
-                                                  b.contactObservationRevision});
-                        w.mk2Points.push_back({slotA, slotB, contact, friction,
-                                               std::max(a.restitution, b.restitution),
-                                               warmNormal, warmTangent});
-                        w.lastStepContacts.push_back(
-                            {contact.point, contact.normal, contact.penetration});
-                        ++pairPoints;
-                        continue;
-                    }
-                    // A separated, newly encountered pair is handled at TOI.
-                    // Existing cached support retains its gap-closing constraint.
-                    const double gap = contact.hasLocalAnchors ? contact.signedSeparation
-                                                               : -double(contact.penetration);
-                    if (gap > 0 && best < 0 && !touchingManifold) {
-                        const std::array<unsigned, 4> pair{slotA, slotB, unsigned(partA),
-                                                           unsigned(partB)};
-                        if (w.separatedPairs.empty() || w.separatedPairs.back() != pair)
-                            w.separatedPairs.push_back(pair);
-                        continue;
-                    }
-                    const auto constraint = w.solver.Constraints().size();
-                    w.solver.AddContact(a.rigidBody, b.rigidBody, contact, friction, 0, warmNormal,
-                                        warmTangent, &orientationA.rotation,
-                                        &orientationB.rotation);
-                    if (w.solver.Constraints().size() > constraint) {
-                        w.pendingCache.push_back({key, anchor, contact.normal, 0, glm::vec3(0),
-                                                  float(gap), a.contactObservationRevision,
-                                                  b.contactObservationRevision});
-                        w.startContacts.push_back(
-                            {slotA, slotB, constraint, friction, warmNormal, warmTangent,
-                             best < 0 && gap <= 0 &&
-                                 Impl::NormalSpeed(contact, a.rigidBody, b.rigidBody) < -0.5});
-                    }
+                    // Every manifold point, new or persistent, joins one
+                    // simultaneous substepped solve (WorldMk2Solver.cpp).
+                    w.pendingCache.push_back({key, anchor, contact.normal, 0, glm::vec3(0),
+                                              float(contact.hasLocalAnchors
+                                                        ? contact.signedSeparation
+                                                        : -double(contact.penetration)),
+                                              a.contactObservationRevision,
+                                              b.contactObservationRevision});
+                    w.mk2Points.push_back({slotA, slotB, contact, friction,
+                                           std::max(a.restitution, b.restitution),
+                                           warmNormal, warmTangent});
                     w.lastStepContacts.push_back(
                         {contact.point, contact.normal, contact.penetration});
+                    ++pairPoints;
                     ++pairPoints;
                 }
             }
@@ -351,175 +304,10 @@ void PhysicsWorld::Step(float fixedDeltaTime, const VelocityCoupling *coupling) 
     narrowScope.End();
     ProfileScope solverScope(solverLabel);
     const Clock::time_point solverStart = Clock::now();
-    if (w.mk2Step) {
+    {
         static ProfileLabel mk2Label("Physics MK2 substep solve");
         ProfileScope mk2Scope(mk2Label);
         w.Mk2Solve(fixedDeltaTime, coupling);
-    } else {
-
-    // 4) Accumulated-impulse velocity solve (src/ContactSolver.h), then
-    // positions from the solved velocities, then direct penetration removal.
-    // A newly gravity-driven neighbour can reach an asleep body without any
-    // prior velocity. Actual start contacts, not the early prediction alone,
-    // must wake participating state before the velocity solver changes it.
-    for (const auto &c : w.startContacts)
-        for (auto slot : {c.a, c.b})
-            if (w.bodies[slot].sleeping)
-                w.Wake(slot);
-    for (auto slot : w.aliveSlots) {
-        auto &body = w.bodies[slot];
-        if (body.isDynamic && !body.sleeping && body.deferredAcceleration) {
-            body.rigidBody.linearVelocity += body.lastAcceleration * fixedDeltaTime;
-            body.deferredAcceleration = false;
-        }
-    }
-    static ProfileLabel initialImpactsLabel("Physics initial impacts"),
-        velocityLabel("Physics velocity constraints"),
-        continuousImpactsLabel("Physics continuous impacts"),
-        positionsLabel("Physics position constraints");
-    ProfileScope initialImpactsScope(initialImpactsLabel);
-    w.ResolveInitialImpacts(fixedDeltaTime);
-    initialImpactsScope.End();
-    ProfileScope velocityScope(velocityLabel);
-    w.supportPairs.clear();
-    for (const auto &c : w.startContacts)
-        if (!c.newImpact) {
-            const auto &key = w.pendingCache[c.constraint].key;
-            w.supportPairs.push_back({c.a, c.b, unsigned(key.partA), unsigned(key.partB)});
-        }
-    std::sort(w.supportPairs.begin(), w.supportPairs.end());
-    w.supportPairs.erase(std::unique(w.supportPairs.begin(), w.supportPairs.end()),
-                         w.supportPairs.end());
-    {
-        JUDAS_PROFILE_SCOPE("Physics contact row preparation");
-        // A normal patch eliminates the free-body normal degrees of freedom.
-        // Articulated bodies also depend on interleaved joint rows; retain the
-        // existing point/contact ordering until a joint-coupled block exists.
-        for (const auto& joint : w.joints) {
-            if (!w.JointActive(joint))
-                continue;
-            for (const auto handle : {joint.state.settings.bodyA, joint.state.settings.bodyB})
-                if (handle.IsValid()) {
-                    auto& body = w.bodies[handle.id & Impl::kSlotMask].rigidBody;
-                    if (!body.IsStatic())
-                        w.solver.PreservePointNormals(body);
-                }
-        }
-        // Concave mesh/terrain rows use local triangle normals whose
-        // continuation is validated per point (curved-mesh CCD contract).
-        // Keep their prior point behaviour outside the block scope.
-        for (const auto& c : w.startContacts) {
-            if (Impl::ConcaveShape(w.bodies[c.a]) || Impl::ConcaveShape(w.bodies[c.b])) {
-                w.solver.PreservePointNormals(w.bodies[c.a].rigidBody);
-                w.solver.PreservePointNormals(w.bodies[c.b].rigidBody);
-            }
-        }
-        if (coupling)
-            for (const auto& row : w.solver.Constraints()) {
-                w.solver.PreservePointNormals(*row.bodyA);
-                w.solver.PreservePointNormals(*row.bodyB);
-            }
-        w.solver.Prepare(fixedDeltaTime);
-    }
-    if (coupling) {
-        if (coupling->begin)
-            coupling->begin(fixedDeltaTime);
-        // Material participants may have awakened their connected island.
-        // Consume deferred gravity and include those joints at THIS boundary.
-        for (auto slot : w.aliveSlots) {
-            auto &body = w.bodies[slot];
-            if (body.isDynamic && !body.sleeping && body.deferredAcceleration) {
-                body.rigidBody.linearVelocity += body.lastAcceleration * fixedDeltaTime;
-                body.deferredAcceleration = false;
-            }
-        }
-        if (!w.joints.empty())
-            w.PrepareJoints(w.jointSolver, w.JointInputs(), fixedDeltaTime);
-        const unsigned rounds =
-            std::max(unsigned(w.velocityIterations), coupling->iterations);
-        std::vector<unsigned char> awake(w.bodies.size(), 0);
-        for (auto slot : w.aliveSlots)
-            awake[slot] = !w.bodies[slot].sleeping;
-        for (unsigned iteration = 0; iteration < rounds; ++iteration) {
-            w.solver.SolveVelocities(1);
-            if (!w.joints.empty())
-                w.jointSolver.SolveIteration();
-            if (coupling->solve)
-                coupling->solve(fixedDeltaTime, iteration);
-            // A real material contact may wake a previously unmapped island.
-            // Include that island's native joints without warm-starting the
-            // already solved rows twice, and consume only deferred gravity.
-            bool newlyAwake = false;
-            for (auto slot : w.aliveSlots) {
-                auto &body = w.bodies[slot];
-                if (!awake[slot] && !body.sleeping) {
-                    awake[slot] = 1;
-                    newlyAwake = true;
-                }
-                if (body.isDynamic && !body.sleeping && body.deferredAcceleration) {
-                    body.rigidBody.linearVelocity += body.lastAcceleration * fixedDeltaTime;
-                    body.deferredAcceleration = false;
-                }
-            }
-            if (newlyAwake && !w.joints.empty()) {
-                const auto oldRows = w.jointSolver.RowCount();
-                w.PrepareJoints(w.jointSolver, w.JointInputs(), fixedDeltaTime, true, false, true);
-                w.jointSolver.SolveIteration(oldRows);
-            }
-        }
-    } else if (w.joints.empty())
-        w.solver.SolveVelocities(w.velocityIterations);
-    else {
-        w.PrepareJoints(w.jointSolver, w.JointInputs(), fixedDeltaTime);
-        for (int i = 0; i < w.velocityIterations; ++i) {
-            w.solver.SolveVelocities(1);
-            w.jointSolver.SolveIteration();
-        }
-    }
-    // Remember this step's converged impulses for the next step's warm start.
-    static ProfileLabel historyLabel("Physics contact history publication");
-    ProfileScope historyScope(historyLabel);
-    const std::vector<ContactConstraint> &solved = w.solver.Constraints();
-    for (std::size_t i = 0; i < solved.size() && i < w.pendingCache.size(); ++i) {
-        const auto &key = w.pendingCache[i].key;
-        const unsigned ha = w.MakeHandle(key.slotA).id, hb = w.MakeHandle(key.slotB).id;
-        const auto pair = std::minmax(ha, hb);
-        if (auto it = w.stepTouches.find({pair.first, pair.second}); it != w.stepTouches.end()) {
-            it->second.normalImpulse += solved[i].normalImpulse;
-            it->second.impulseAvailable = true;
-        }
-        w.pendingCache[i].normalImpulse = solved[i].normalImpulse;
-        w.pendingCache[i].tangentImpulse = solved[i].tangentImpulse;
-    }
-    for (const auto &cached : w.contactCache)
-        if (cached.key.slotA < w.bodies.size() && cached.key.slotB < w.bodies.size() &&
-            w.bodies[cached.key.slotA].alive && w.bodies[cached.key.slotB].alive &&
-            w.bodies[cached.key.slotA].generation == cached.key.generationA &&
-            w.bodies[cached.key.slotB].generation == cached.key.generationB &&
-            (w.bodies[cached.key.slotA].sleeping ||
-             w.bodies[cached.key.slotA].rigidBody.IsStatic()) &&
-            (w.bodies[cached.key.slotB].sleeping ||
-             w.bodies[cached.key.slotB].rigidBody.IsStatic()))
-            w.pendingCache.push_back(cached);
-    std::stable_sort(w.pendingCache.begin(), w.pendingCache.end(),
-                     [](const CachedContact &x, const CachedContact &y) { return x.key < y.key; });
-    std::swap(w.contactCache, w.pendingCache);
-    w.completedContactObservations = w.contactCache;
-    historyScope.End();
-    velocityScope.End();
-    ProfileScope continuousImpactsScope(continuousImpactsLabel);
-    w.AdvanceImpacts(fixedDeltaTime, coupling != nullptr);
-    continuousImpactsScope.End();
-    ProfileScope positionsScope(positionsLabel);
-    for (const unsigned int slot : w.aliveSlots) {
-        auto &body = w.bodies[slot];
-        if (body.HasMotion())
-            w.solver.UpdatePreparedRotation(body.rigidBody, w.Orientation(body).rotation);
-    }
-    w.solver.SolvePositions();
-    if (coupling && coupling->finish)
-        coupling->finish(fixedDeltaTime);
-    positionsScope.End();
     }
     static ProfileLabel settleLabel("Physics sleeping assessment");
     ProfileScope settleScope(settleLabel);
@@ -596,11 +384,6 @@ void PhysicsWorld::Step(float fixedDeltaTime, const VelocityCoupling *coupling) 
     JUDAS_PROFILE_COUNTER("Physics impact sampling resolution caps",
                           double(w.stats.impactSamplingResolutionCaps), ProfileCounterMode::Latest);
     JUDAS_PROFILE_COUNTER("Physics CCD query scratch bytes", double(w.CCDQueryBytes()), ProfileCounterMode::Latest);
-    JUDAS_PROFILE_COUNTER("Physics parallel CCD batches", double(w.work.ccdParallelBatches), ProfileCounterMode::Latest);
-    JUDAS_PROFILE_COUNTER("Physics parallel CCD queries", double(w.work.ccdParallelQueries), ProfileCounterMode::Latest);
-    JUDAS_PROFILE_COUNTER("Physics worker CCD queries", double(w.work.ccdWorkerQueries), ProfileCounterMode::Latest);
-    JUDAS_PROFILE_COUNTER("Physics CCD peak lanes", double(w.work.ccdPeakLanes), ProfileCounterMode::Latest);
-    JUDAS_PROFILE_COUNTER("Physics CCD batch wall ms", double(w.work.ccdBatchNanoseconds) / 1e6, ProfileCounterMode::Latest);
     JUDAS_PROFILE_COUNTER("Physics impact pose evaluations", double(w.impactPoseEvaluations),
                           ProfileCounterMode::Latest);
     JUDAS_PROFILE_COUNTER("Physics impact pose reuses", double(w.impactPoseReuses),
@@ -632,59 +415,20 @@ void PhysicsWorld::Step(float fixedDeltaTime, const VelocityCoupling *coupling) 
     JUDAS_PROFILE_COUNTER("Physics joint rows",
                           double(w.joints.empty() ? 0 : w.jointSolver.RowCount()),
                           ProfileCounterMode::Latest);
-    JUDAS_PROFILE_COUNTER("Physics continuation coupled fallback events",
-                          double(w.work.coupledFallbackEvents), ProfileCounterMode::Latest);
-    JUDAS_PROFILE_COUNTER("Physics continuation elastic fallback events",
-                          double(w.work.elasticFallbackEvents), ProfileCounterMode::Latest);
-    JUDAS_PROFILE_COUNTER("Physics continuation geometry fallback events",
-                          double(w.work.geometryFallbackEvents), ProfileCounterMode::Latest);
-    JUDAS_PROFILE_COUNTER("Physics peak impact island bodies", double(w.work.peakImpactBodies),
-                          ProfileCounterMode::Latest);
-    JUDAS_PROFILE_COUNTER("Physics incremental impact events", double(w.work.incrementalEvents),
-                          ProfileCounterMode::Latest);
-    JUDAS_PROFILE_COUNTER("Physics incremental impact fallbacks",
-                          double(w.work.incrementalFallbacks), ProfileCounterMode::Latest);
-    JUDAS_PROFILE_COUNTER("Physics incremental impact body visits",
-                          double(w.work.incrementalBodies), ProfileCounterMode::Latest);
-    JUDAS_PROFILE_COUNTER("Physics incremental impact rows", double(w.work.incrementalRows),
-                          ProfileCounterMode::Latest);
-    JUDAS_PROFILE_COUNTER("Physics incremental discovery bound rejections",
-                          double(w.work.incrementalBoundsRejected), ProfileCounterMode::Latest);
     JUDAS_PROFILE_COUNTER("Physics broadphase pair scratch bytes",
                           double(w.candidateScratch.marks.capacity() * sizeof(std::uint64_t) +
                                  w.candidateScratch.stack.capacity() * sizeof(std::pair<int, int>) +
                                  w.candidateProxies.capacity() * sizeof(int)),
                           ProfileCounterMode::Latest);
-    JUDAS_PROFILE_COUNTER("Physics peak impact contact rows", double(w.work.peakImpactRows),
-                          ProfileCounterMode::Latest);
-    JUDAS_PROFILE_COUNTER("Physics impact continuation cache ms",
-                          double(w.work.continuationCache.nanoseconds) * 1e-6,
-                          ProfileCounterMode::Sum);
-    JUDAS_PROFILE_COUNTER("Physics support continuation attempts",
-                          double(w.work.continuationAttempts), ProfileCounterMode::Latest);
-    JUDAS_PROFILE_COUNTER("Physics support continuation accepted",
-                          double(w.work.continuationAccepted), ProfileCounterMode::Latest);
-    JUDAS_PROFILE_COUNTER("Physics support continuation partitions",
-                          double(w.work.continuationPartitions), ProfileCounterMode::Latest);
-    JUDAS_PROFILE_COUNTER("Physics support continuation over-budget fallback",
-                          double(w.work.continuationOverBudget), ProfileCounterMode::Latest);
-    JUDAS_PROFILE_COUNTER("Physics support continuation proof ms",
-                          double(w.work.continuationProof.nanoseconds) * 1e-6,
-                          ProfileCounterMode::Sum);
     JUDAS_PROFILE_COUNTER("Physics CCD search inclusive ms", double(w.work.toi.nanoseconds) * 1e-6,
                           ProfileCounterMode::Sum);
     JUDAS_PROFILE_COUNTER("Physics CCD geometry inclusive ms",
                           double(w.work.geometry.nanoseconds) * 1e-6, ProfileCounterMode::Sum);
     JUDAS_PROFILE_COUNTER("Physics CCD geometry calls", double(w.work.geometry.calls),
                           ProfileCounterMode::Sum);
-    JUDAS_PROFILE_COUNTER("Physics impact island discovery ms",
-                          double(w.work.impactIslands.nanoseconds) * 1e-6, ProfileCounterMode::Sum);
     JUDAS_PROFILE_COUNTER("Physics impact solve ms", double(w.work.impactSolve.nanoseconds) * 1e-6,
                           ProfileCounterMode::Sum);
     JUDAS_PROFILE_COUNTER("Physics impact solve calls", double(w.work.impactSolve.calls),
-                          ProfileCounterMode::Sum);
-    JUDAS_PROFILE_COUNTER("Physics impact observation publication ms",
-                          double(w.work.impactObservations.nanoseconds) * 1e-6,
                           ProfileCounterMode::Sum);
     JUDAS_PROFILE_COUNTER("Physics joint preparation ms",
                           double(w.work.jointPreparation.nanoseconds) * 1e-6,
