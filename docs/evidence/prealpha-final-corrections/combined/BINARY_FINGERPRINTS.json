@@ -1,0 +1,58 @@
+{
+  "algorithm": "sha256",
+  "scope": "Native Linux Release binaries actually used in the qualification; binaries remain untracked.",
+  "files": [
+    {
+      "path": "build/judas",
+      "sha256": "c3aadaa608daaae17ef4b8ec9b41ef0e57531e7169e716907ec36aebef168238"
+    },
+    {
+      "path": "build/judas_editor",
+      "sha256": "ccb5bcb2562475a4f2c98f682a0fb0b10900022e859062d8b5b4c4dafd746c6b"
+    },
+    {
+      "path": "build/judas_mk2_physics_tests",
+      "sha256": "e3678e5b392611649c4f74d051b3476e4b01b006af87cb4a484963b3edb0f61f"
+    },
+    {
+      "path": "build/judas_physical_balance_controller_tests",
+      "sha256": "b883f1ae1c9b273bf3830c18897d044674bbb3078a1a8132ff31f31ec51f19cf"
+    },
+    {
+      "path": "build/judas_project_water_tests",
+      "sha256": "42023893d6aad92c20d3f0ae10348e698abea12fbee6558ead1f9be1935c0383"
+    },
+    {
+      "path": "build/judas_project_fluid_policy_tests",
+      "sha256": "6bd73cf42bd427c97708dc81e834cb74ff5a3bb11f64c65969dc840adb73a4dd"
+    },
+    {
+      "path": "build/judas_project_settings_editor_tests",
+      "sha256": "0e5b20f28b7908223aff8c169d95aa2ad219d656fc40a966e7611a02b8c4237d"
+    },
+    {
+      "path": "build/judas_basic_water_application_tests",
+      "sha256": "95be66c795f0e934b805e0d3d2f5e138c5a081819cebcab4a44994199affd989"
+    },
+    {
+      "path": "build/judas_editor_file_browser_tests",
+      "sha256": "9786d67a95d58cd2c12328d127616dd93e947f206c5dd20b38282ec295509aa2"
+    },
+    {
+      "path": "build/judas_first_project_tests",
+      "sha256": "cd712cd967b674d726ec33ae678eaede281c737313c44049ba358552f011c1e8"
+    },
+    {
+      "path": "build/judas_character_motor_tests",
+      "sha256": "b4f713e33fc62d2e9aeb4debfc13a7daa549bb7ded8156f97365ef0da8e28c46"
+    },
+    {
+      "path": "build/judas_save_evolution_tests",
+      "sha256": "ad220499b60dabc5ab2b9075bd5431afd7e30ae2e1c82a66e5f706749113d3a1"
+    },
+    {
+      "path": "build/judas_living_world_streaming_tests",
+      "sha256": "357a3c2df7b94708601c3d02edee7af5b8ce788a079a54a3883fa877993e10ce"
+    }
+  ]
+}

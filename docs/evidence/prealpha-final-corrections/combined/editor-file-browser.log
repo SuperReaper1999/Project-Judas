@@ -1,0 +1,13 @@
+PASS picker lists directories first and filters files
+PASS unavailable directory gives actionable error
+PASS select existing scene
+PASS wrong file type rejected
+PASS missing open-file rejected
+PASS save-path choice never creates or overwrites files
+PASS new project/export folder choice is non-mutating
+PASS file cannot masquerade as project directory
+PASS save cannot target missing parent
+PASS real ImGui picker opens without creating any files
+PASS actual path-picker dialog is available
+PASS actual ImGui choice returns the selected folder and closes the picker
+Editor file browser: 12 checks, 0 failures

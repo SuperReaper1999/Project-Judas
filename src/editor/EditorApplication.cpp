@@ -1,4 +1,5 @@
 #include "ScriptTools.h"
+#include "ProjectStarter.h"
 #include "BuildIdentity.h"
 #include "Ragdoll.h"
 #include "ModelCook.h"
@@ -57,6 +58,7 @@ extern char** environ;
 #include "WorldState.h"
 
 #include "imgui.h"
+#include "imgui_internal.h"
 #include "imgui_impl_opengl3.h"
 #include "imgui_impl_sdl2.h"
 #include "../../third_party/nlohmann/json.hpp"
@@ -393,6 +395,7 @@ bool EditorApplication::OpenProject(const std::string& projectFile, std::string&
     m_project = project;
     m_scenePicker.Clear();
     m_host->OpenProjectAssets(m_project.RootDir(), m_project.AssetsDir());
+    m_panels.projectHistory.reset();
     m_host->Resources().ConfigureVisualStreaming(uint64_t(m_project.Settings().visualBudgetMiB)*1024*1024);
     {std::string assetError;if(!JudasMods::OpenAuthorAssets(m_project,m_host->Assets(),assetError))m_panels.status=assetError;}
     if(!m_host->GetWindow().Input().SetMap(m_project.Settings().input,outError))return false;
@@ -402,12 +405,14 @@ bool EditorApplication::OpenProject(const std::string& projectFile, std::string&
     return true;
 }
 
-bool EditorApplication::CreateProject(const std::string& directory, const std::string& name, std::string& outError) {
+bool EditorApplication::CreateProject(const std::string& directory, const std::string& name, std::string& outError, bool visibleStarter) {
     Project project;
     if (!Project::CreateNew(directory, name, project, outError)) return false;
     // A starter scene so the new project runs immediately.
     const std::string sceneRelative = project.Settings().scenesDir + "/main.judas";
-    if (!SaveSceneToFile(MakeStarterScene(), project.Resolve(sceneRelative), outError)) return false;
+    Scene starter=MakeStarterScene();
+    if(visibleStarter&&!PopulateVisibleProjectStarter(project,starter,outError))return false;
+    if (!SaveSceneToFile(starter, project.Resolve(sceneRelative), outError)) return false;
     project.Settings().startupScene = sceneRelative;
     if (!project.Save(outError)) return false;
     if (!OpenProject(project.ProjectFile(), outError)) return false;
@@ -443,9 +448,9 @@ bool EditorApplication::OpenScene(const std::string& path, std::string& outError
 
 bool EditorApplication::RunProject(std::string& outMessage) {
     if (!m_project.IsLoaded()) { outMessage = "no project open"; return false; }
-    if (m_project.Settings().startupScene.empty()) { outMessage = "the project has no startup scene (Project settings)"; return false; }
-    std::string saveError;
-    if (!m_project.Save(saveError)) { outMessage = "could not save the project before running: " + saveError; return false; }
+    Project saved;
+    if(!saved.Load(m_project.ProjectFile(),outMessage))return false;
+    if (saved.Settings().startupScene.empty()) { outMessage = "the saved project has no startup scene (Project settings)"; return false; }
 #ifdef _WIN32
     const auto runtime = fs::u8path(EngineExecutableDir()) / RuntimeExecutableName();
     if (!fs::is_regular_file(runtime)) { outMessage = "runtime not found beside editor: " + runtime.u8string(); return false; }
@@ -584,29 +589,39 @@ void EditorApplication::HandleRequests(EditorRequests& r) {
         m_documentActionApproved = m_documentActionPending = false;
         approvedDocumentAction = true;
     }
-    if (r.quit && m_document.IsDirty() && m_panels.mode == EditorMode::Play) StopPlay();
+    if (r.quit && (m_document.IsDirty()||m_project.IsDirty()) && m_panels.mode == EditorMode::Play) StopPlay();
     const bool terrainReplaces = r.quit || r.newScene || r.open || r.newProject || r.openProject || r.play || r.runProject || r.exportProject || !r.openSceneRelative.empty();
     if(terrainReplaces&&m_terrain&&!m_terrain->Guard(m_panels))return;
     if(terrainReplaces&&m_volumeTerrain&&!m_volumeTerrain->Guard(m_panels))return;
     const bool replacesDocument = r.quit || r.newScene || r.open || r.newProject || r.openProject ||
                                   !r.openSceneRelative.empty();
-    if (replacesDocument && m_document.IsDirty() && !approvedDocumentAction) {
-        // Preserve the requested action, not a document copy: the normal save
-        // path must finish successfully before a replacement can proceed.
-        m_pendingDocumentAction = {};
-        m_pendingDocumentAction.quit = r.quit;
-        m_pendingDocumentAction.newScene = r.newScene;
-        m_pendingDocumentAction.open = r.open;
-        m_pendingDocumentAction.newProject = r.newProject;
-        m_pendingDocumentAction.openProject = r.openProject;
-        m_pendingDocumentAction.openSceneRelative = r.openSceneRelative;
-        m_documentActionPending = true;
-        r.quit = r.newScene = r.open = r.newProject = r.openProject = false;
-        r.openSceneRelative.clear();
+    const bool replacesProject=r.quit||r.newProject||r.openProject;
+    const bool shipping=r.runProject||r.exportProject;
+    const bool sceneDirty=m_document.IsDirty()&&(replacesDocument||shipping);
+    const bool projectDirty=m_project.IsDirty()&&(replacesProject||shipping);
+    if ((sceneDirty||projectDirty) && !approvedDocumentAction) {
+        m_pendingDocumentAction=r;
+        m_actionNeedsScene=sceneDirty;m_actionNeedsProject=projectDirty;
+        m_confirmationTitle=shipping?"Save before run or export":
+            sceneDirty?(projectDirty?"Unsaved changes":"Unsaved scene"):"Unsaved project";
+        m_documentActionPending=true;
+        r={};
         CancelCameraNavigation();
-        ImGui::OpenPopup("Unsaved scene");
     }
-    if (m_documentActionSaveAs && !ImGui::IsPopupOpen("Save scene as")) r.saveAs = true;
+    auto savePending=[&](){
+        if(m_actionNeedsScene&&m_document.IsDirty()){
+            if(m_document.Path().empty()){m_documentActionSaveAs=true;return false;}
+            if(!m_document.Save(error)){m_panels.status="Save failed: "+error;return false;}
+            RefreshProjectLists();
+        }
+        if(m_actionNeedsProject&&m_project.IsDirty()&&!m_project.Save(error)){
+            m_panels.status="Save failed: "+error;return false;
+        }
+        m_documentActionApproved=true;return true;
+    };
+    if(m_documentActionPending&&!m_documentActionApproved&&!m_documentActionSaveAs)
+        ImGui::OpenPopup(m_confirmationTitle.c_str());
+    if (m_documentActionSaveAs && !m_fileBrowser.Active() && !ImGui::IsPopupOpen("Save scene as")) r.saveAs = true;
     if (r.quit) m_quit = true;
     if (r.play && m_panels.mode == EditorMode::Edit) {
         if (!StartPlay(error)) m_panels.status = "Play failed: " + error;
@@ -642,13 +657,16 @@ void EditorApplication::HandleRequests(EditorRequests& r) {
     if (m_panels.mode != EditorMode::Edit) return;
 
     // --- Project ---
+    if(r.browseImport){m_fileBrowserParent.clear();m_fileBrowser.Open(EditorFileBrowser::Target::Import,EditorFileBrowser::Mode::OpenFile,m_panels.importSourceInput);}
+    if(r.browseExport){m_fileBrowserParent.clear();m_fileBrowser.Open(EditorFileBrowser::Target::Export,EditorFileBrowser::Mode::Directory,m_panels.exportDestination);}
     if (r.newProject) ImGui::OpenPopup("New project");
     if (r.openProject) ImGui::OpenPopup("Open project");
     if (r.saveProject) m_panels.status = m_project.Save(error) ? "Saved project " + m_project.ProjectFile() : "Project save failed: " + error;
     if (r.exportProject) {
         ProjectExportOptions options; options.destination = m_panels.exportDestination;
         ProjectExportResult result;
-        const bool exported = m_project.Save(error) && ExportProject(m_project, options, result, error);
+        Project saved;
+        const bool exported = saved.Load(m_project.ProjectFile(),error) && ExportProject(saved, options, result, error);
         m_panels.runProjectInfo = exported ? "Exported " + result.packageDirectory + " (" +
             std::to_string(result.assetCount) + " assets)" : error;
         m_panels.status = m_panels.runProjectInfo;
@@ -759,6 +777,16 @@ void EditorApplication::HandleRequests(EditorRequests& r) {
             if (action(m_panels.pathInput)) ImGui::CloseCurrentPopup();
         }
         ImGui::SameLine();
+        if(ImGui::Button("Browse...")){
+            m_fileBrowserParent=title;
+            const bool saving=std::strcmp(title,"Save scene as")==0;
+            const bool project=std::strcmp(title,"Open project")==0;
+            auto start=m_panels.pathInput;
+            if(start.empty())start=m_project.IsLoaded()?m_project.RootDir():".";
+            else if(m_project.IsLoaded()&&!fs::u8path(start).is_absolute())start=m_project.Resolve(start);
+            m_fileBrowser.Open(EditorFileBrowser::Target::Document,saving?EditorFileBrowser::Mode::SaveFile:EditorFileBrowser::Mode::OpenFile,start,project?".judasproj":".judas");
+        }
+        ImGui::SameLine();
         if (ImGui::Button("Cancel") || ImGui::IsKeyPressed(ImGuiKey_Escape)) {
             if (m_documentActionSaveAs && std::strcmp(title, "Save scene as") == 0) {
                 m_documentActionSaveAs = m_documentActionPending = false;
@@ -785,7 +813,7 @@ void EditorApplication::HandleRequests(EditorRequests& r) {
                   RefreshProjectLists();
                   if (saved && m_documentActionSaveAs) {
                       m_documentActionSaveAs = false;
-                      m_documentActionApproved = true;
+                      savePending();
                   }
                   return saved;
               });
@@ -801,54 +829,55 @@ void EditorApplication::HandleRequests(EditorRequests& r) {
         return true;
     });
     if (ImGui::BeginPopupModal("New project", nullptr, ImGuiWindowFlags_AlwaysAutoResize)) {
-        static char directory[512] = "";
-        static char name[128] = "";
-        ImGui::InputTextWithHint("Directory", "projects/my_game (created if missing)", directory, sizeof(directory));
-        ImGui::InputTextWithHint("Name", "My Game", name, sizeof(name));
-        ImGui::TextDisabled("Creates <dir>/<name>.judasproj with Assets/, Scenes/main.judas and Saves/.");
-        if (ImGui::Button("Create") && directory[0] && name[0]) {
+        char directory[4096],name[128];
+        std::snprintf(directory,sizeof(directory),"%s",m_newProjectDirectory.c_str());
+        std::snprintf(name,sizeof(name),"%s",m_newProjectName.c_str());
+        if(ImGui::InputTextWithHint("Directory","Choose a new project folder",directory,sizeof(directory)))m_newProjectDirectory=directory;
+        ImGui::SameLine();if(ImGui::Button("Browse...")){m_fileBrowserParent="New project";m_fileBrowser.Open(EditorFileBrowser::Target::NewProject,EditorFileBrowser::Mode::Directory,m_newProjectDirectory);}
+        if(ImGui::InputTextWithHint("Name","My Game",name,sizeof(name)))m_newProjectName=name;
+        ImGui::Combo("Template",&m_newProjectTemplate,"Visible script starter\0Empty scene\0");
+        ImGui::TextWrapped(m_newProjectTemplate==0?"A rotating object, an ordinary JavaScript camera and an editable script. No hidden gameplay controller.":"A floor, light and gravity. Add your own scripts, player and camera.");
+        if (ImGui::Button("Create") && !m_newProjectDirectory.empty() && !m_newProjectName.empty()) {
             std::string e;
-            m_panels.status = CreateProject(directory, name, e) ? "Created project " + m_project.ProjectFile()
-                                                                 : "New project failed: " + e;
-            ImGui::CloseCurrentPopup();
+            if(CreateProject(m_newProjectDirectory,m_newProjectName,e,m_newProjectTemplate==0)){
+                m_panels.status="Created project "+m_project.ProjectFile();ImGui::CloseCurrentPopup();
+            }else m_panels.status="New project failed: "+e;
         }
-        ImGui::SameLine();
-        if (ImGui::Button("Cancel")) ImGui::CloseCurrentPopup();
+        ImGui::SameLine();if(ImGui::Button("Cancel"))ImGui::CloseCurrentPopup();
+        ImGui::TextWrapped("%s",m_panels.status.c_str());
         ImGui::EndPopup();
     }
     ImGui::SetNextWindowSize({460, 0}, ImGuiCond_Appearing);
-    if (ImGui::BeginPopupModal("Unsaved scene", nullptr, ImGuiWindowFlags_AlwaysAutoResize)) {
-        ImGui::TextUnformatted("Save your scene before continuing?");
-        ImGui::Spacing();
-        ImGui::PushTextWrapPos(0);
-        ImGui::TextDisabled("%s", m_document.Path().empty() ? "This scene has not been saved." : m_document.Path().c_str());
-        ImGui::PopTextWrapPos();
-        ImGui::Spacing();
-        if (ImGui::Button("Save and continue")) {
-            if (m_document.Path().empty()) {
-                m_documentActionSaveAs = true;
-                ImGui::CloseCurrentPopup();
-            } else if (m_document.Save(error)) {
-                RefreshProjectLists();
-                m_documentActionApproved = true;
-                ImGui::CloseCurrentPopup();
-            } else m_panels.status = "Save failed: " + error;
+    if (m_documentActionPending&&!m_confirmationTitle.empty()&&ImGui::BeginPopupModal(m_confirmationTitle.c_str(), nullptr, ImGuiWindowFlags_AlwaysAutoResize)) {
+        const bool shipping=m_pendingDocumentAction.runProject||m_pendingDocumentAction.exportProject;
+        ImGui::TextUnformatted(shipping?"Run and export use saved project and scene files.":"Save your changes before continuing?");
+        if(m_actionNeedsScene)ImGui::BulletText("Scene: %s",m_document.Path().empty()?"Untitled":m_document.Path().c_str());
+        if(m_actionNeedsProject)ImGui::BulletText("Project settings: %s",m_project.Settings().name.c_str());
+        if(ImGui::Button(shipping?"Save all and continue":"Save and continue")){
+            if(savePending()||m_documentActionSaveAs)ImGui::CloseCurrentPopup();
         }
         ImGui::SameLine();
-        if (ImGui::Button("Discard")) {
-            m_documentActionApproved = true;
-            ImGui::CloseCurrentPopup();
+        if(ImGui::Button(shipping?"Use saved version":"Discard")){
+            if(shipping||!m_actionNeedsProject||m_project.DiscardSettings(error)){
+                m_documentActionApproved=true;ImGui::CloseCurrentPopup();
+            }else m_panels.status="Discard failed: "+error;
         }
         ImGui::SameLine();
-        if (ImGui::Button("Cancel") || ImGui::IsKeyPressed(ImGuiKey_Escape)) {
-            m_documentActionPending = m_documentActionApproved = m_documentActionSaveAs = false;
-            m_pendingDocumentAction = {};
-            ImGui::CloseCurrentPopup();
+        if(ImGui::Button("Cancel")||ImGui::IsKeyPressed(ImGuiKey_Escape)){
+            m_documentActionPending=m_documentActionApproved=m_documentActionSaveAs=false;
+            m_pendingDocumentAction={};ImGui::CloseCurrentPopup();
         }
-        if (m_panels.status.rfind("Save failed:", 0) == 0) {
-            ImGui::PushTextWrapPos(0); ImGui::TextUnformatted(m_panels.status.c_str()); ImGui::PopTextWrapPos();
-        }
+        if(m_panels.status.rfind("Save failed:",0)==0)ImGui::TextWrapped("%s",m_panels.status.c_str());
         ImGui::EndPopup();
+    }
+    if(auto selected=m_fileBrowser.Draw()){
+        if(!selected->path.empty())switch(selected->target){
+        case EditorFileBrowser::Target::Document:m_panels.pathInput=selected->path;break;
+        case EditorFileBrowser::Target::NewProject:m_newProjectDirectory=selected->path;break;
+        case EditorFileBrowser::Target::Import:m_panels.importSourceInput=selected->path;break;
+        case EditorFileBrowser::Target::Export:m_panels.exportDestination=selected->path;break;
+        }
+        if(!m_fileBrowserParent.empty()){ImGui::OpenPopup(m_fileBrowserParent.c_str());m_fileBrowserParent.clear();}
     }
 }
 
@@ -1381,7 +1410,8 @@ int EditorApplication::Run(int argc, char** argv) {
     const char* autotest = std::getenv("JUDAS_EDITOR_AUTOTEST");
     int autotestFrame = 0;
     const bool navigationAutotest = autotest && std::getenv("JUDAS_EDITOR_AUTOTEST_PAN");
-    const bool polishAutotest = autotest && std::getenv("JUDAS_EDITOR_AUTOTEST_POLISH");
+    const bool projectUnsavedAutotest=autotest&&std::getenv("JUDAS_EDITOR_AUTOTEST_PROJECT_UNSAVED");
+    const bool polishAutotest = autotest && (std::getenv("JUDAS_EDITOR_AUTOTEST_POLISH")||projectUnsavedAutotest);
     const bool pickingAutotest = autotest && std::getenv("JUDAS_EDITOR_AUTOTEST_PICKING");
     glm::vec3 dollyStartPosition{0}, dollyAnchor{0};
     float dollyStartDistance = 0;
@@ -1636,19 +1666,46 @@ int EditorApplication::Run(int argc, char** argv) {
         const char* exportDestination = std::getenv("JUDAS_EDITOR_AUTOTEST_EXPORT");
         const bool automatedExport = autotest && autotestFrame == 14 && exportDestination;
         if (automatedExport) {
+            m_document.BeginEdit();m_document.GetScene().Settings().name+=" [unsaved export]";m_document.CommitEdit();
+            m_project.Settings().name+=" [unsaved export]";
             m_panels.exportDestination = exportDestination;
             requests.exportProject = true;
         }
         if(importRecipe&&autotestFrame==1)requests.dropMeshAssetId=m_panels.importAccepted->assetId;
         if (polishAutotest && autotestFrame == 11) requests.newScene = true;
+        if(projectUnsavedAutotest&&autotestFrame==11){
+            std::string error;m_document.Save(error);
+            m_project.Settings().name+=" - unsaved";requests.newScene=false;requests.quit=true;
+        }
+        if(autotest&&exportDestination&&m_documentActionPending){
+            if(auto* dialog=ImGui::FindWindowByName("Save before run or export"))
+                ImGui::ActivateItemByID(dialog->GetID(std::getenv("JUDAS_EDITOR_AUTOTEST_EXPORT_SAVED")?"Use saved version":"Save all and continue"));
+        }
         HandleRequests(requests);
+        if(projectUnsavedAutotest&&autotestFrame==11)
+            navigationCheck(m_project.IsDirty()&&!m_document.IsDirty()&&m_confirmationTitle=="Unsaved project"&&!m_quit,"project-only edits receive their own close guard");
+        if(autotest&&exportDestination&&autotestFrame==19){
+            const bool success=m_panels.runProjectInfo.rfind("Exported ",0)==0;
+            navigationCheck(success,"explicit export choice produces the requested package");
+            if(success){
+                Project packaged;Scene scene;std::string error;
+                const bool savedOnly=std::getenv("JUDAS_EDITOR_AUTOTEST_EXPORT_SAVED")!=nullptr;
+                const bool loaded=packaged.Load((fs::u8path(exportDestination)/"game.judasproj").string(),error)&&LoadSceneFromFile(packaged.StartupScenePath(),scene,error);
+                navigationCheck(loaded&&((packaged.Settings().name.find("[unsaved export]")!=std::string::npos)==!savedOnly)&&((scene.Settings().name.find("[unsaved export]")!=std::string::npos)==!savedOnly),"exported scene and project match the explicit saved-content choice");
+                navigationCheck(m_document.IsDirty()==savedOnly&&m_project.IsDirty()==savedOnly,"use-saved preserves live edits; save-all clears both dirty baselines");
+            }
+            // Authoring changed deliberately before export; Play/Stop must
+            // preserve that current document, whichever disk version shipped.
+            SaveSceneToString(m_document.GetScene(),autotestBaseline);
+            std::fprintf(stderr,"[editor export choice] %s\n",m_panels.runProjectInfo.c_str());
+        }
         if (polishAutotest) {
             if (autotestFrame == 11) {
                 std::string actual; SaveSceneToString(m_document.GetScene(), actual);
                 navigationCheck(m_documentActionPending && !m_documentActionApproved && actual == autotestBaseline,
                                 "new-scene request preserves unsaved document until a choice");
             } else if (autotestFrame == 13) {
-                navigationCheck(ImGui::IsPopupOpen("Unsaved scene") && m_documentActionPending,
+                navigationCheck(ImGui::IsPopupOpen(m_confirmationTitle.c_str()) && m_documentActionPending,
                                 "unsaved-document confirmation remains open across frames");
             } else if (autotestFrame == 14) {
                 navigationCheck(!m_documentActionPending && !m_documentActionApproved && !m_documentActionSaveAs,

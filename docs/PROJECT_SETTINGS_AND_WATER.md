@@ -1,9 +1,11 @@
 # Project Settings and water
 
-This Pre-Alpha change is developed independently of the active Experimental
-checkout. It starts at Claude's committed MK2 checkpoint
-`313f20a82c87cd309968f75344d365f8f0c2428d`. It changes no MK2 solver or balance
-controller implementation. Integration into Experimental requires operator review.
+Project Settings and basic water are integrated with the human-accepted MK2
+engine baseline `c859901cc9a52cf5b7104887f56b5e7ad4269b1d`. MK2 is the
+authoritative physics engine. The later Experimental corrections described in
+[Final Pre-Alpha corrections](PREALPHA_FINAL_CORRECTIONS.md) strengthen policy,
+persistence and editing workflows without changing fluid numerical methods or
+the MK2/balance solvers. Those corrections still require human review.
 
 ## Configure a project
 
@@ -25,7 +27,11 @@ existing project controls rather than adding global switches for every component
 | Experimental | **Advanced Fluid Dynamics**, explicit confirmation warning; legacy gameplay compatibility |
 | Export | Existing scene inclusion/exclusion, asset closure/runtime roots and package destination |
 
-**Save project** persists configuration. Save scene edits separately. Stop/restart
+**Save project** persists configuration and resets its independent dirty indicator.
+**Undo settings / Redo settings** affect configuration, separately from scene
+undo. Closing/replacing a project protects unsaved configuration with
+Save/Discard/Cancel. Run/Export offer an explicit save-all or saved-version choice.
+Save scene edits separately during ordinary editing. Stop/restart
 Play for runtime policy changes. Runtime construction, scene replacement and cold
 save staging receive the same captured project policy. Configuration controls are
 unavailable during Play; the world also rejects native reconfiguration after Build.

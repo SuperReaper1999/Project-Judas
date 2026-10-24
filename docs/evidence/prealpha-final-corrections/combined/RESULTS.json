@@ -1,0 +1,491 @@
+{
+  "format": 1,
+  "startedUtc": "2026-10-24T17:13:17.438456+00:00",
+  "sourceRevision": "e820d50f29f0926a257c4f6ef703d4424c2c1a45",
+  "trackedWorktreeStatus": "M CMakeLists.txt\n M docs/EDITOR_GUIDE.md\n M docs/FIRST_PROJECT.md\n M docs/MK2_PHYSICS_ARCHITECTURE.md\n M docs/PREALPHA.md\n M docs/PREALPHA_FINDINGS.json\n M docs/PREALPHA_FINDINGS.md\n M docs/PROJECT_SETTINGS_AND_WATER.md\n M src/Project.cpp\n M src/Project.h\n M src/editor/EditorApplication.cpp\n M src/editor/EditorApplication.h\n M src/editor/EditorPanels.cpp\n M src/editor/EditorPanels.h\n M src/editor/ProjectSettingsPanel.cpp\n M tests/BasicWaterApplicationTests.cpp\n M tests/FirstProjectTests.cpp\n M tests/ProjectSettingsEditorTests.cpp\n M tools/validation/suites.json\n M tools/verification/current-docs.json",
+  "manifestSha256": "8a2d35c5f8aea4ff936c116c5274cd486ed36bd941638ae4045512b2d572863d",
+  "trackedDiffSha256": "e5ee30bb9622fbabd83f6f44fb524d3521caafcfe608eba6a22d45a5b142babd",
+  "platform": "Linux-7.0.0-38-generic-x86_64-with-glibc2.43",
+  "machine": "x86_64",
+  "cpuCount": 12,
+  "groups": [
+    "water"
+  ],
+  "tests": [
+    {
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_character_motor_tests"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+      "timeoutSeconds": 120,
+      "binarySha256": "b4f713e33fc62d2e9aeb4debfc13a7daa549bb7ded8156f97365ef0da8e28c46",
+      "exit": 0,
+      "status": "passed",
+      "binarySha256After": "b4f713e33fc62d2e9aeb4debfc13a7daa549bb7ded8156f97365ef0da8e28c46",
+      "seconds": 0.42520835699906456,
+      "buildIdentity": {
+        "architecture": "x86_64",
+        "build_id": "0.1.0-prealpha-Experimental-e820d50-dirty-1da4a1035574-u4664820fede7",
+        "channel": "Experimental",
+        "compiler": "GNU",
+        "compiler_version": "15.2.0",
+        "configuration": "Release",
+        "maturity": "pre-alpha",
+        "platform": "Linux",
+        "schema": 1,
+        "source_dirty": true,
+        "source_fingerprint": "1da4a1035574a88368e174ed63759e8aa78a6f85fdc9e7ca64668e46fa8d2fe7",
+        "source_origin": "git",
+        "source_revision": "e820d50f29f0926a257c4f6ef703d4424c2c1a45",
+        "source_tree": "ccccb291269aa0c47973a2a4b1594bb89d6dceaf",
+        "source_untracked_count": 22,
+        "source_untracked_fingerprint": "4664820fede7e575d53890f9f387dfb3afb0f0d4be66a194c12edf0157e98185",
+        "version": "0.1.0-prealpha"
+      },
+      "name": "character-motor"
+    },
+    {
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_living_world_streaming_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/final-corrections-combined-gates/terrain-streaming"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+      "timeoutSeconds": 120,
+      "binarySha256": "357a3c2df7b94708601c3d02edee7af5b8ce788a079a54a3883fa877993e10ce",
+      "exit": 0,
+      "status": "passed",
+      "binarySha256After": "357a3c2df7b94708601c3d02edee7af5b8ce788a079a54a3883fa877993e10ce",
+      "seconds": 0.17324745299993083,
+      "buildIdentity": {
+        "architecture": "x86_64",
+        "build_id": "0.1.0-prealpha-Experimental-e820d50-dirty-1da4a1035574-u4664820fede7",
+        "channel": "Experimental",
+        "compiler": "GNU",
+        "compiler_version": "15.2.0",
+        "configuration": "Release",
+        "maturity": "pre-alpha",
+        "platform": "Linux",
+        "schema": 1,
+        "source_dirty": true,
+        "source_fingerprint": "1da4a1035574a88368e174ed63759e8aa78a6f85fdc9e7ca64668e46fa8d2fe7",
+        "source_origin": "git",
+        "source_revision": "e820d50f29f0926a257c4f6ef703d4424c2c1a45",
+        "source_tree": "ccccb291269aa0c47973a2a4b1594bb89d6dceaf",
+        "source_untracked_count": 22,
+        "source_untracked_fingerprint": "4664820fede7e575d53890f9f387dfb3afb0f0d4be66a194c12edf0157e98185",
+        "version": "0.1.0-prealpha"
+      },
+      "name": "terrain-streaming"
+    },
+    {
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_save_evolution_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/final-corrections-combined-gates/saves"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+      "timeoutSeconds": 120,
+      "binarySha256": "ad220499b60dabc5ab2b9075bd5431afd7e30ae2e1c82a66e5f706749113d3a1",
+      "exit": 0,
+      "status": "passed",
+      "binarySha256After": "ad220499b60dabc5ab2b9075bd5431afd7e30ae2e1c82a66e5f706749113d3a1",
+      "seconds": 0.22501056700093613,
+      "buildIdentity": {
+        "architecture": "x86_64",
+        "build_id": "0.1.0-prealpha-Experimental-e820d50-dirty-1da4a1035574-u4664820fede7",
+        "channel": "Experimental",
+        "compiler": "GNU",
+        "compiler_version": "15.2.0",
+        "configuration": "Release",
+        "maturity": "pre-alpha",
+        "platform": "Linux",
+        "schema": 1,
+        "source_dirty": true,
+        "source_fingerprint": "1da4a1035574a88368e174ed63759e8aa78a6f85fdc9e7ca64668e46fa8d2fe7",
+        "source_origin": "git",
+        "source_revision": "e820d50f29f0926a257c4f6ef703d4424c2c1a45",
+        "source_tree": "ccccb291269aa0c47973a2a4b1594bb89d6dceaf",
+        "source_untracked_count": 22,
+        "source_untracked_fingerprint": "4664820fede7e575d53890f9f387dfb3afb0f0d4be66a194c12edf0157e98185",
+        "version": "0.1.0-prealpha"
+      },
+      "name": "save-evolution"
+    },
+    {
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_first_project_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/final-corrections-combined-gates/first-project"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+      "timeoutSeconds": 120,
+      "binarySha256": "cd712cd967b674d726ec33ae678eaede281c737313c44049ba358552f011c1e8",
+      "exit": 0,
+      "status": "passed",
+      "binarySha256After": "cd712cd967b674d726ec33ae678eaede281c737313c44049ba358552f011c1e8",
+      "seconds": 0.09636382099961338,
+      "buildIdentity": {
+        "architecture": "x86_64",
+        "build_id": "0.1.0-prealpha-Experimental-e820d50-dirty-1da4a1035574-u4664820fede7",
+        "channel": "Experimental",
+        "compiler": "GNU",
+        "compiler_version": "15.2.0",
+        "configuration": "Release",
+        "maturity": "pre-alpha",
+        "platform": "Linux",
+        "schema": 1,
+        "source_dirty": true,
+        "source_fingerprint": "1da4a1035574a88368e174ed63759e8aa78a6f85fdc9e7ca64668e46fa8d2fe7",
+        "source_origin": "git",
+        "source_revision": "e820d50f29f0926a257c4f6ef703d4424c2c1a45",
+        "source_tree": "ccccb291269aa0c47973a2a4b1594bb89d6dceaf",
+        "source_untracked_count": 22,
+        "source_untracked_fingerprint": "4664820fede7e575d53890f9f387dfb3afb0f0d4be66a194c12edf0157e98185",
+        "version": "0.1.0-prealpha"
+      },
+      "name": "first-project"
+    },
+    {
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_mk2_physics_tests"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+      "timeoutSeconds": 120,
+      "binarySha256": "e3678e5b392611649c4f74d051b3476e4b01b006af87cb4a484963b3edb0f61f",
+      "exit": 0,
+      "status": "passed",
+      "binarySha256After": "e3678e5b392611649c4f74d051b3476e4b01b006af87cb4a484963b3edb0f61f",
+      "seconds": 1.2187365809986659,
+      "buildIdentity": {
+        "architecture": "x86_64",
+        "build_id": "0.1.0-prealpha-Experimental-e820d50-dirty-1da4a1035574-u4664820fede7",
+        "channel": "Experimental",
+        "compiler": "GNU",
+        "compiler_version": "15.2.0",
+        "configuration": "Release",
+        "maturity": "pre-alpha",
+        "platform": "Linux",
+        "schema": 1,
+        "source_dirty": true,
+        "source_fingerprint": "1da4a1035574a88368e174ed63759e8aa78a6f85fdc9e7ca64668e46fa8d2fe7",
+        "source_origin": "git",
+        "source_revision": "e820d50f29f0926a257c4f6ef703d4424c2c1a45",
+        "source_tree": "ccccb291269aa0c47973a2a4b1594bb89d6dceaf",
+        "source_untracked_count": 22,
+        "source_untracked_fingerprint": "4664820fede7e575d53890f9f387dfb3afb0f0d4be66a194c12edf0157e98185",
+        "version": "0.1.0-prealpha"
+      },
+      "name": "mk2-physics"
+    },
+    {
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_physical_balance_controller_tests"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+      "timeoutSeconds": 120,
+      "binarySha256": "b883f1ae1c9b273bf3830c18897d044674bbb3078a1a8132ff31f31ec51f19cf",
+      "exit": 0,
+      "status": "passed",
+      "binarySha256After": "b883f1ae1c9b273bf3830c18897d044674bbb3078a1a8132ff31f31ec51f19cf",
+      "seconds": 3.021696771000279,
+      "buildIdentity": {
+        "architecture": "x86_64",
+        "build_id": "0.1.0-prealpha-Experimental-e820d50-dirty-1da4a1035574-u4664820fede7",
+        "channel": "Experimental",
+        "compiler": "GNU",
+        "compiler_version": "15.2.0",
+        "configuration": "Release",
+        "maturity": "pre-alpha",
+        "platform": "Linux",
+        "schema": 1,
+        "source_dirty": true,
+        "source_fingerprint": "1da4a1035574a88368e174ed63759e8aa78a6f85fdc9e7ca64668e46fa8d2fe7",
+        "source_origin": "git",
+        "source_revision": "e820d50f29f0926a257c4f6ef703d4424c2c1a45",
+        "source_tree": "ccccb291269aa0c47973a2a4b1594bb89d6dceaf",
+        "source_untracked_count": 22,
+        "source_untracked_fingerprint": "4664820fede7e575d53890f9f387dfb3afb0f0d4be66a194c12edf0157e98185",
+        "version": "0.1.0-prealpha"
+      },
+      "name": "balance-controller"
+    },
+    {
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_project_water_tests"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+      "timeoutSeconds": 120,
+      "binarySha256": "42023893d6aad92c20d3f0ae10348e698abea12fbee6558ead1f9be1935c0383",
+      "exit": 0,
+      "status": "passed",
+      "binarySha256After": "42023893d6aad92c20d3f0ae10348e698abea12fbee6558ead1f9be1935c0383",
+      "seconds": 0.07627454300018144,
+      "buildIdentity": {
+        "architecture": "x86_64",
+        "build_id": "0.1.0-prealpha-Experimental-e820d50-dirty-1da4a1035574-u4664820fede7",
+        "channel": "Experimental",
+        "compiler": "GNU",
+        "compiler_version": "15.2.0",
+        "configuration": "Release",
+        "maturity": "pre-alpha",
+        "platform": "Linux",
+        "schema": 1,
+        "source_dirty": true,
+        "source_fingerprint": "1da4a1035574a88368e174ed63759e8aa78a6f85fdc9e7ca64668e46fa8d2fe7",
+        "source_origin": "git",
+        "source_revision": "e820d50f29f0926a257c4f6ef703d4424c2c1a45",
+        "source_tree": "ccccb291269aa0c47973a2a4b1594bb89d6dceaf",
+        "source_untracked_count": 22,
+        "source_untracked_fingerprint": "4664820fede7e575d53890f9f387dfb3afb0f0d4be66a194c12edf0157e98185",
+        "version": "0.1.0-prealpha"
+      },
+      "name": "project-water-policy"
+    },
+    {
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_project_fluid_policy_tests"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+      "timeoutSeconds": 120,
+      "binarySha256": "6bd73cf42bd427c97708dc81e834cb74ff5a3bb11f64c65969dc840adb73a4dd",
+      "exit": 0,
+      "status": "passed",
+      "binarySha256After": "6bd73cf42bd427c97708dc81e834cb74ff5a3bb11f64c65969dc840adb73a4dd",
+      "seconds": 0.4276475280003069,
+      "buildIdentity": {
+        "architecture": "x86_64",
+        "build_id": "0.1.0-prealpha-Experimental-e820d50-dirty-1da4a1035574-u4664820fede7",
+        "channel": "Experimental",
+        "compiler": "GNU",
+        "compiler_version": "15.2.0",
+        "configuration": "Release",
+        "maturity": "pre-alpha",
+        "platform": "Linux",
+        "schema": 1,
+        "source_dirty": true,
+        "source_fingerprint": "1da4a1035574a88368e174ed63759e8aa78a6f85fdc9e7ca64668e46fa8d2fe7",
+        "source_origin": "git",
+        "source_revision": "e820d50f29f0926a257c4f6ef703d4424c2c1a45",
+        "source_tree": "ccccb291269aa0c47973a2a4b1594bb89d6dceaf",
+        "source_untracked_count": 22,
+        "source_untracked_fingerprint": "4664820fede7e575d53890f9f387dfb3afb0f0d4be66a194c12edf0157e98185",
+        "version": "0.1.0-prealpha"
+      },
+      "name": "project-fluid-policy"
+    },
+    {
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_project_settings_editor_tests"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+      "timeoutSeconds": 120,
+      "binarySha256": "0e5b20f28b7908223aff8c169d95aa2ad219d656fc40a966e7611a02b8c4237d",
+      "exit": 0,
+      "status": "passed",
+      "binarySha256After": "0e5b20f28b7908223aff8c169d95aa2ad219d656fc40a966e7611a02b8c4237d",
+      "seconds": 0.07838137600083428,
+      "buildIdentity": {
+        "architecture": "x86_64",
+        "build_id": "0.1.0-prealpha-Experimental-e820d50-dirty-1da4a1035574-u4664820fede7",
+        "channel": "Experimental",
+        "compiler": "GNU",
+        "compiler_version": "15.2.0",
+        "configuration": "Release",
+        "maturity": "pre-alpha",
+        "platform": "Linux",
+        "schema": 1,
+        "source_dirty": true,
+        "source_fingerprint": "1da4a1035574a88368e174ed63759e8aa78a6f85fdc9e7ca64668e46fa8d2fe7",
+        "source_origin": "git",
+        "source_revision": "e820d50f29f0926a257c4f6ef703d4424c2c1a45",
+        "source_tree": "ccccb291269aa0c47973a2a4b1594bb89d6dceaf",
+        "source_untracked_count": 22,
+        "source_untracked_fingerprint": "4664820fede7e575d53890f9f387dfb3afb0f0d4be66a194c12edf0157e98185",
+        "version": "0.1.0-prealpha"
+      },
+      "name": "project-settings-editor"
+    },
+    {
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_basic_water_application_tests",
+        "--profile",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/final-corrections-combined-gates/water"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+      "timeoutSeconds": 120,
+      "binarySha256": "95be66c795f0e934b805e0d3d2f5e138c5a081819cebcab4a44994199affd989",
+      "exit": 0,
+      "status": "passed",
+      "binarySha256After": "95be66c795f0e934b805e0d3d2f5e138c5a081819cebcab4a44994199affd989",
+      "seconds": 1.0751761389983585,
+      "buildIdentity": {
+        "architecture": "x86_64",
+        "build_id": "0.1.0-prealpha-Experimental-e820d50-dirty-1da4a1035574-u4664820fede7",
+        "channel": "Experimental",
+        "compiler": "GNU",
+        "compiler_version": "15.2.0",
+        "configuration": "Release",
+        "maturity": "pre-alpha",
+        "platform": "Linux",
+        "schema": 1,
+        "source_dirty": true,
+        "source_fingerprint": "1da4a1035574a88368e174ed63759e8aa78a6f85fdc9e7ca64668e46fa8d2fe7",
+        "source_origin": "git",
+        "source_revision": "e820d50f29f0926a257c4f6ef703d4424c2c1a45",
+        "source_tree": "ccccb291269aa0c47973a2a4b1594bb89d6dceaf",
+        "source_untracked_count": 22,
+        "source_untracked_fingerprint": "4664820fede7e575d53890f9f387dfb3afb0f0d4be66a194c12edf0157e98185",
+        "version": "0.1.0-prealpha"
+      },
+      "name": "basic-water-application"
+    },
+    {
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_basic_water_application_tests",
+        "--cold-cycle",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/final-corrections-combined-gates/cold"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+      "timeoutSeconds": 120,
+      "binarySha256": "95be66c795f0e934b805e0d3d2f5e138c5a081819cebcab4a44994199affd989",
+      "exit": 0,
+      "status": "passed",
+      "binarySha256After": "95be66c795f0e934b805e0d3d2f5e138c5a081819cebcab4a44994199affd989",
+      "seconds": 0.7749098499989486,
+      "buildIdentity": {
+        "architecture": "x86_64",
+        "build_id": "0.1.0-prealpha-Experimental-e820d50-dirty-1da4a1035574-u4664820fede7",
+        "channel": "Experimental",
+        "compiler": "GNU",
+        "compiler_version": "15.2.0",
+        "configuration": "Release",
+        "maturity": "pre-alpha",
+        "platform": "Linux",
+        "schema": 1,
+        "source_dirty": true,
+        "source_fingerprint": "1da4a1035574a88368e174ed63759e8aa78a6f85fdc9e7ca64668e46fa8d2fe7",
+        "source_origin": "git",
+        "source_revision": "e820d50f29f0926a257c4f6ef703d4424c2c1a45",
+        "source_tree": "ccccb291269aa0c47973a2a4b1594bb89d6dceaf",
+        "source_untracked_count": 22,
+        "source_untracked_fingerprint": "4664820fede7e575d53890f9f387dfb3afb0f0d4be66a194c12edf0157e98185",
+        "version": "0.1.0-prealpha"
+      },
+      "name": "basic-water-cold"
+    },
+    {
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_editor_file_browser_tests"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+      "timeoutSeconds": 120,
+      "binarySha256": "9786d67a95d58cd2c12328d127616dd93e947f206c5dd20b38282ec295509aa2",
+      "exit": 0,
+      "status": "passed",
+      "binarySha256After": "9786d67a95d58cd2c12328d127616dd93e947f206c5dd20b38282ec295509aa2",
+      "seconds": 0.006059146999177756,
+      "buildIdentity": {
+        "architecture": "x86_64",
+        "build_id": "0.1.0-prealpha-Experimental-e820d50-dirty-1da4a1035574-u4664820fede7",
+        "channel": "Experimental",
+        "compiler": "GNU",
+        "compiler_version": "15.2.0",
+        "configuration": "Release",
+        "maturity": "pre-alpha",
+        "platform": "Linux",
+        "schema": 1,
+        "source_dirty": true,
+        "source_fingerprint": "1da4a1035574a88368e174ed63759e8aa78a6f85fdc9e7ca64668e46fa8d2fe7",
+        "source_origin": "git",
+        "source_revision": "e820d50f29f0926a257c4f6ef703d4424c2c1a45",
+        "source_tree": "ccccb291269aa0c47973a2a4b1594bb89d6dceaf",
+        "source_untracked_count": 22,
+        "source_untracked_fingerprint": "4664820fede7e575d53890f9f387dfb3afb0f0d4be66a194c12edf0157e98185",
+        "version": "0.1.0-prealpha"
+      },
+      "name": "editor-file-browser"
+    }
+  ],
+  "knownFindings": [
+    {
+      "id": "CCD-MESH-ARRIVAL",
+      "status": "resolved-first-arrival",
+      "scheduled": true,
+      "reason": "Pass2 finite swept-SAT bounds correct the validated first-arrival contract; it now runs in the ordinary collision group. This does not close later curved-sheet continuation.",
+      "evidence": "docs/evidence/prealpha-pass2/physics"
+    },
+    {
+      "id": "CCD-MESH-CONTINUATION",
+      "status": "resolved-original-fixtures-bounded-ccd",
+      "scheduled": true,
+      "reason": "Original unchanged mesh arrival/continuation fixtures pass with authoritative MK2. Bounded CCD, sidedness and deep initial-overlap limits remain; MK1 event scheduling has been removed.",
+      "evidence": "docs/evidence/prealpha-ccd-continuation-20261019"
+    },
+    {
+      "id": "FLU-001",
+      "status": "deferred-failing",
+      "scheduled": false,
+      "reason": "Legacy PBF settling contract retained unchanged; separate fluid review required.",
+      "evidence": "docs/evidence/m78-completion/FINDINGS_FINAL.json"
+    },
+    {
+      "id": "LEGACY-CONTINUATION",
+      "status": "documented-incompatible-history",
+      "scheduled": false,
+      "reason": "Original a106 snapshot lacks historical continuation data. New-format passes do not certify that snapshot.",
+      "evidence": "docs/evidence/m78-cold-boundary"
+    },
+    {
+      "id": "DENSE-CCD-TAIL",
+      "status": "open-performance-limit",
+      "scheduled": false,
+      "reason": "Original MK1 global event cascade is retired. Current MK2 measurements have their own workload scope; focused correctness gates do not certify universal dense-pile latency.",
+      "evidence": "docs/MK2_PHYSICS_ARCHITECTURE.md"
+    },
+    {
+      "id": "LIQUID-BAKE-ROTATION",
+      "status": "resolved-baking",
+      "scheduled": true,
+      "reason": "Baker and runtime use the same normalized owner/field frames and oriented gravity volumes; both original bake-only runtime-publication cases pass unchanged equivalence tolerances. Original full integration exposes separate retained exact-total comparison failure.",
+      "evidence": "docs/evidence/prealpha-liquid-rotation/REPORT.md"
+    },
+    {
+      "id": "LIQUID-BAKE-KNOTS",
+      "status": "resolved-baking",
+      "scheduled": true,
+      "reason": "Positive tetrahedral density is integrated into one monotone cumulative curve, including shared endpoints; unchanged strict Surface1 decoder accepts both original rotated bakes. A later origin sampling limitation remains separately failed.",
+      "evidence": "docs/evidence/prealpha-liquid-rotation/REPORT.md"
+    },
+    {
+      "id": "LIQUID-ORIGIN-GRID-QUERY",
+      "status": "open-query-continuity-failing",
+      "scheduled": false,
+      "reason": "The original half-turn fixture now bakes and publishes, then fails its unchanged post-512m-origin query comparison: float translation crosses a discontinuous disturbed-surface cell boundary. Conserved quantities and wave bytes remain unchanged. This full integration failure is preserved, not counted as a baking pass.",
+      "evidence": "docs/evidence/prealpha-liquid-rotation/REPORT.md"
+    },
+    {
+      "id": "LIQUID-ORIGIN-TOTAL-IDENTITY",
+      "status": "resolved-oracle-causal-baseline",
+      "scheduled": true,
+      "reason": "Pass3 preserves the original failed test and demonstrates its causal-baseline error. Current atomicity compares the immediate pre-request total with the same exact equality and every physical participant byte; earlier legitimate paired-flow conservation tolerance and liquid runtime are unchanged.",
+      "evidence": "docs/evidence/prealpha-pass3/integration/REPORT.md"
+    }
+  ],
+  "humanAcceptance": "not-established",
+  "scope": "explicit manifest subset",
+  "expectedSourceIdentity": {
+    "source_revision": "e820d50f29f0926a257c4f6ef703d4424c2c1a45",
+    "source_fingerprint": "1da4a1035574a88368e174ed63759e8aa78a6f85fdc9e7ca64668e46fa8d2fe7",
+    "source_dirty": true,
+    "source_untracked_fingerprint": "4664820fede7e575d53890f9f387dfb3afb0f0d4be66a194c12edf0157e98185"
+  },
+  "passed": true,
+  "finishedUtc": "2026-10-24T17:13:25.810544+00:00",
+  "sourceRevisionAfter": "e820d50f29f0926a257c4f6ef703d4424c2c1a45",
+  "trackedWorktreeStatusAfter": "M CMakeLists.txt\n M docs/EDITOR_GUIDE.md\n M docs/FIRST_PROJECT.md\n M docs/MK2_PHYSICS_ARCHITECTURE.md\n M docs/PREALPHA.md\n M docs/PREALPHA_FINDINGS.json\n M docs/PREALPHA_FINDINGS.md\n M docs/PROJECT_SETTINGS_AND_WATER.md\n M src/Project.cpp\n M src/Project.h\n M src/editor/EditorApplication.cpp\n M src/editor/EditorApplication.h\n M src/editor/EditorPanels.cpp\n M src/editor/EditorPanels.h\n M src/editor/ProjectSettingsPanel.cpp\n M tests/BasicWaterApplicationTests.cpp\n M tests/FirstProjectTests.cpp\n M tests/ProjectSettingsEditorTests.cpp\n M tools/validation/suites.json\n M tools/verification/current-docs.json",
+  "trackedDiffSha256After": "e5ee30bb9622fbabd83f6f44fb524d3521caafcfe608eba6a22d45a5b142babd",
+  "expectedSourceIdentityAfter": {
+    "source_revision": "e820d50f29f0926a257c4f6ef703d4424c2c1a45",
+    "source_fingerprint": "1da4a1035574a88368e174ed63759e8aa78a6f85fdc9e7ca64668e46fa8d2fe7",
+    "source_dirty": true,
+    "source_untracked_fingerprint": "4664820fede7e575d53890f9f387dfb3afb0f0d4be66a194c12edf0157e98185"
+  }
+}

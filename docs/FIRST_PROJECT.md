@@ -23,10 +23,16 @@ tool name. Keep the whole SDK together; it contains the fonts, types and guides.
 The engine source archive and SDK omit repository game projects, so create your
 own project as below rather than trying to launch `projects/tiny_game`.
 
-Choose **File → New project…**, a new directory and a name such as **My First
-Game**. The editor opens `Scenes/main.judas`, with a floor, authored gravity,
-light and historical start marker. That marker does not move or create a modern
-player: new projects deliberately use `legacy-gameplay false`.
+Choose **File → New project…**, use **Browse…** to choose a new directory and
+enter a name such as **My First Game**. The default **Visible script starter**
+creates a rotating box, tracked `Assets/game.js` and a script-owned camera.
+Press Play immediately; edit the speed property or script, then check/reload.
+This uses the same public example described below; no hidden native controller
+or C++ compilation is involved. Existing scripts are never overwritten.
+
+Choose **Empty scene** if you want to assemble everything below yourself. That
+scene has a floor, authored gravity, light and historical start marker. The marker
+does not create a modern player: new projects use `legacy-gameplay false`.
 
 Create a box and name it **My rotating box**. Set its position to `(0, 2, 0)`.
 Give it a **Render** component with box shape. Remove its **Body** component if
@@ -35,6 +41,9 @@ a physical body's transform would teleport it rather than simulate motion.
 Keep the floor and light.
 
 ## 2. Attach the complete starter script
+
+**Visible script starter users:** this step is already done for `Assets/game.js`;
+continue to step 3. The manual instructions below are for the Empty scene option.
 
 Copy [first-project.js](judasjs/examples/first-project.js) to your project's
 `Assets/first-project.js`. SDK users can find the same file under
@@ -96,9 +105,11 @@ You can also check all registered project modules from a terminal:
 
 ## 4. Save and export
 
-Save source, scene and project settings; choose `Scenes/main.judas` as startup
+Project settings have their own dirty indicator and Undo/Redo. Closing or replacing
+a project offers Save/Discard/Cancel. Save source, scene and project settings; choose `Scenes/main.judas` as startup
 scene. **Run project** checks ordinary startup. **Export project (Release)**
-uses saved disk content, not unsaved editor changes. Choose a fresh directory
+uses saved disk content. With unsaved scene/project changes, explicitly choose
+**Save all and continue**, **Use saved version**, or **Cancel**. Choose a fresh directory
 outside the project. The equivalent command is:
 
 ```sh

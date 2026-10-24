@@ -198,6 +198,7 @@ bool Project::Load(const std::string& projectFilePath, std::string& outError) {
         return false;
     }
     m_settings = settings;
+    m_savedSettings = SerializeToString(settings);
     m_loadedSource=buffer.str();m_hasLoadedSource=true;
     m_runtimeSaveDirectory.clear();
     m_projectFile = Generic(fs::absolute(projectFilePath).lexically_normal());
@@ -205,6 +206,14 @@ bool Project::Load(const std::string& projectFilePath, std::string& outError) {
     return true;
 }
 
+bool Project::IsDirty() const {
+    return IsLoaded() && SerializeToString(m_settings) != m_savedSettings;
+}
+bool Project::DiscardSettings(std::string& error) {
+    ProjectSettings saved;
+    if(!ParseFromString(m_savedSettings,saved,error))return false;
+    m_settings=std::move(saved);return true;
+}
 bool Project::Save(std::string& outError) const {
     if(!m_settings.input.Validate(outError)||!m_settings.classification.Validate(outError)||!m_settings.navigation.Validate(outError)||!m_settings.localization.Validate(outError)||!m_settings.audio.Validate(outError))return false;
     if (m_projectFile.empty()) {
@@ -213,13 +222,13 @@ bool Project::Save(std::string& outError) const {
     }
     if(m_hasLoadedSource){std::ifstream input(m_projectFile,std::ios::binary);std::string current(std::istreambuf_iterator<char>(input),{});if(current!=m_loadedSource){outError="Project changed externally; reload or Save As a reviewed copy";return false;}}
     if(!WriteAuthoredDocument(m_projectFile,SerializeToString(m_settings),"project",outError))return false;
-    std::ifstream input(m_projectFile,std::ios::binary);m_loadedSource.assign(std::istreambuf_iterator<char>(input),{});return true;
+    std::ifstream input(m_projectFile,std::ios::binary);m_loadedSource.assign(std::istreambuf_iterator<char>(input),{});m_savedSettings=SerializeToString(m_settings);return true;
 }
 
 bool Project::SaveAs(const std::string& projectFilePath, std::string& outError) {
-    auto oldFile=m_projectFile,oldRoot=m_rootDir,oldSource=m_loadedSource;bool oldLoaded=m_hasLoadedSource;
+    auto oldFile=m_projectFile,oldRoot=m_rootDir,oldSource=m_loadedSource,oldSettings=m_savedSettings;bool oldLoaded=m_hasLoadedSource;
     m_projectFile = Generic(fs::absolute(projectFilePath).lexically_normal());m_rootDir = Generic(fs::path(m_projectFile).parent_path());m_hasLoadedSource=false;
-    if(Save(outError)){m_hasLoadedSource=true;return true;}m_projectFile=oldFile;m_rootDir=oldRoot;m_loadedSource=oldSource;m_hasLoadedSource=oldLoaded;return false;
+    if(Save(outError)){m_hasLoadedSource=true;return true;}m_projectFile=oldFile;m_rootDir=oldRoot;m_loadedSource=oldSource;m_savedSettings=oldSettings;m_hasLoadedSource=oldLoaded;return false;
 }
 
 bool Project::CreateNew(const std::string& rootDir, const std::string& name, Project& outProject, std::string& outError) {

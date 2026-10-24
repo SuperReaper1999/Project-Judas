@@ -1,4 +1,5 @@
 #include "EditorPanels.h"
+#include "ProjectSettingsHistory.h"
 #include "EditorDocument.h"
 #include "Project.h"
 #include "ResourceManager.h"
@@ -23,11 +24,14 @@ void DrawProjectSettingsPanel(EditorDocument& doc,EditorPanelState& state,Editor
     if(!ImGui::Begin("Project Settings",&state.showProjectSettings)){ImGui::End();return;}
     auto& project=*state.project;
     if(!project.IsLoaded()){ImGui::TextDisabled("Open a project to configure it.");ImGui::End();return;}
+    if(!state.projectHistory)state.projectHistory=std::make_shared<ProjectSettingsHistory>();
+    auto& history=*state.projectHistory;history.Observe(project);
     auto& s=project.Settings();
     static int page=0;
     const char* categories[]={"General","Rendering","Physics and gravity","Input","Audio","World and persistence",
                               "Navigation","Localization","Water","Networking","Experimental","Export"};
     ImGui::TextDisabled("%s",project.ProjectFile().c_str());
+    if(project.IsDirty())ImGui::TextColored({1,.75f,.3f,1},"Unsaved project settings");
     ImGui::BeginChild("Categories",{182,-64},true);
     for(int i=0;i<12;++i)if(ImGui::Selectable(categories[i],page==i))page=i;
     ImGui::EndChild();ImGui::SameLine();
@@ -214,12 +218,16 @@ void DrawProjectSettingsPanel(EditorDocument& doc,EditorPanelState& state,Editor
     }
         char destination[4096];CopyToBuffer(state.exportDestination,destination,sizeof(destination));
         if(ImGui::InputText("Package directory",destination,sizeof(destination)))state.exportDestination=destination;
+        ImGui::SameLine();if(ImGui::Button("Browse package folder..."))requests.browseExport=true;
         ImGui::TextWrapped("Save project and scene edits first. Export copies the project policy, selected content and runtime dependencies. Choose a destination outside the project.");
         if(ImGui::Button("Export project (Release)"))requests.exportProject=true;
     }
     ImGui::EndDisabled();
     ImGui::EndChild();ImGui::Separator();
     ImGui::BeginDisabled(!editing);
+    history.Observe(project);
+    ImGui::BeginDisabled(!history.CanUndo());if(ImGui::Button("Undo settings"))history.Undo(project);ImGui::EndDisabled();
+    ImGui::SameLine();ImGui::BeginDisabled(!history.CanRedo());if(ImGui::Button("Redo settings"))history.Redo(project);ImGui::EndDisabled();
     if(ImGui::Button("Save project"))requests.saveProject=true;
     ImGui::SameLine();if(ImGui::Button("Run project"))requests.runProject=true;
     ImGui::EndDisabled();

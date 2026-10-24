@@ -1,0 +1,146 @@
+{
+  "algorithm": "sha256",
+  "scope": "Final task-owned source, configuration and current/archive documentation; evidence has its separate inventory. No build outputs are staged.",
+  "files": [
+    {
+      "path": "CMakeLists.txt",
+      "sha256": "5978796e9a1e24edf4526dc0f61ccd8626f9377f6db0ff9f923cd819b7efae1a"
+    },
+    {
+      "path": "docs/EDITOR_GUIDE.md",
+      "sha256": "bfbf230307ae9c7c6baf49dc4bb5dd7d2eda3082f1c50977bb6a0147f9ac5f08"
+    },
+    {
+      "path": "docs/FIRST_PROJECT.md",
+      "sha256": "c1f7a1abd6df0fd33259db1f46f93675f7c02721a5eebb466ee9ae963f976369"
+    },
+    {
+      "path": "docs/MK2_PHYSICS_ARCHITECTURE.md",
+      "sha256": "66472bc4ba3843038e7d373d9a6da4f01e93eaba8afc8114bec8f093638ff823"
+    },
+    {
+      "path": "docs/MK2_PHYSICS_DEVELOPMENT.md",
+      "sha256": "07d5395b910ed0c63b105a162cdc780371564205576cea9688780bede8a491f1"
+    },
+    {
+      "path": "docs/PREALPHA.md",
+      "sha256": "b4ef077f5956676dea5f1408d08aa80ff82c26d4727c16fd2ef4f88fc4777ad6"
+    },
+    {
+      "path": "docs/PREALPHA_FINAL_CORRECTIONS.md",
+      "sha256": "ac3594917244e36492ee94dfed793991a7608df1235010a7091d85b26ebc0f5f"
+    },
+    {
+      "path": "docs/PREALPHA_FINDINGS.json",
+      "sha256": "7f235201694afcc21cc230c68928a6701b1aa50fff05a65095a27ccdd68a29ea"
+    },
+    {
+      "path": "docs/PREALPHA_FINDINGS.md",
+      "sha256": "8226f408a6e3a07c770cdc7da64adaf36b433a40cf375965a5701059e727eb9d"
+    },
+    {
+      "path": "docs/PROJECT_SETTINGS_AND_WATER.md",
+      "sha256": "e55478abc498ba3aa284a317b4724bcaca04cc54b263add94194da65ffc3f281"
+    },
+    {
+      "path": "src/AdvancedFluidPolicy.h",
+      "sha256": "ed05d87327f574710fdbbe2be8af97d033468e0ef8e7648ee4312d92c0ae7169"
+    },
+    {
+      "path": "src/AssetDependencies.cpp",
+      "sha256": "3e68c203b2a5d61d4d0f990163d78781a55d8f3fbc70bcac4d114b82043e8755"
+    },
+    {
+      "path": "src/AssetDependencies.h",
+      "sha256": "c5b9c8f8445b0cc4a389a34195337d4f09ca44574b4ceb6b7fc8f5c566c2e111"
+    },
+    {
+      "path": "src/LiquidPersistence.cpp",
+      "sha256": "39b010954e73258f1613443b2fdfb9f75b32d14cc13444a81c78060890275be2"
+    },
+    {
+      "path": "src/Project.cpp",
+      "sha256": "c7d20f49ff187f15063d4aa7c056522ab46c81e2f2593b49bcc48a29b10bee3c"
+    },
+    {
+      "path": "src/Project.h",
+      "sha256": "4dd6379e9490bb115ecfa57e4312485446cabec3fba287f1ee58b64230825d1e"
+    },
+    {
+      "path": "src/ProjectExporter.cpp",
+      "sha256": "7b9d4332e5a1d648e38fb89d07f4d523cd517ded3ef2d9c11d024763a460ade4"
+    },
+    {
+      "path": "src/ProjectStarter.cpp",
+      "sha256": "b60253b14c9ca112aa26098bf621737afb50d2a71a4ee35bbb822952bdf8e2d3"
+    },
+    {
+      "path": "src/ProjectStarter.h",
+      "sha256": "aae20ab67cbdfb751487db27bb1c4f3b211bf3abe2db4cc1be2111f5e643d329"
+    },
+    {
+      "path": "src/WorldStreaming.cpp",
+      "sha256": "acd162eccdec9bd56374e7dda28d8bb941ecafc198f409e6e60d5bba71f4c41a"
+    },
+    {
+      "path": "src/editor/EditorApplication.cpp",
+      "sha256": "75e04e2b16c2ceffbb9eba3e0c19cd9d83ee889db13f98cba956e8502c2f2587"
+    },
+    {
+      "path": "src/editor/EditorApplication.h",
+      "sha256": "1bfe8edb50855573b4a97a7b2fbf827f2279091839ec22712cb5a4db1c17e815"
+    },
+    {
+      "path": "src/editor/EditorPanels.cpp",
+      "sha256": "e43425d7508b79e59744bb4f8d6f2f2e2227a1a3f94d44158e4c97bdcc9f3d81"
+    },
+    {
+      "path": "src/editor/EditorPanels.h",
+      "sha256": "1657a31b159eec9bcb600b614da49822754b6d2d7e00dd0bbfc3904331aaedfa"
+    },
+    {
+      "path": "src/editor/FileBrowser.cpp",
+      "sha256": "abc50149a32bd6709b28261acc4d6ab7be610cb392e10838cbaecc7f3d177007"
+    },
+    {
+      "path": "src/editor/FileBrowser.h",
+      "sha256": "2920e1e44ad55abd1c826ab5cbcf6785c7b1d561633cbad07464a9a18189d253"
+    },
+    {
+      "path": "src/editor/ProjectSettingsHistory.h",
+      "sha256": "b294a979c0ab64cc32b9bc74fedc550e9aa55a4972a1cf97aae04ed588b0d91a"
+    },
+    {
+      "path": "src/editor/ProjectSettingsPanel.cpp",
+      "sha256": "7bf500392df0cd891b17b9799993d7e3a259af0f9a65b4a9b6e2e41b85c49465"
+    },
+    {
+      "path": "tests/BasicWaterApplicationTests.cpp",
+      "sha256": "b91a66ca623f756b256fff73b437da07b3ec0c593a9906d7c857b976bf0ce345"
+    },
+    {
+      "path": "tests/EditorFileBrowserTests.cpp",
+      "sha256": "bf38edd82619ef7baec0e4fe54dd9fe22fe12afbf857f9bea98cdf170f47641b"
+    },
+    {
+      "path": "tests/FirstProjectTests.cpp",
+      "sha256": "cfddf819b053c15be0c28603580e9880987163023bb10dbcf90141c42845758e"
+    },
+    {
+      "path": "tests/ProjectFluidPolicyTests.cpp",
+      "sha256": "52586abb34d2ca528bf09e9cec5664c64f846eb67bb8de2520828941395d7d19"
+    },
+    {
+      "path": "tests/ProjectSettingsEditorTests.cpp",
+      "sha256": "3091a4b7a72a710ef86289054dba1ed895583142712162ae81e5372188ba3eee"
+    },
+    {
+      "path": "tools/validation/suites.json",
+      "sha256": "8a2d35c5f8aea4ff936c116c5274cd486ed36bd941638ae4045512b2d572863d"
+    },
+    {
+      "path": "tools/verification/current-docs.json",
+      "sha256": "3d0d366aba6cbc8e3ce2510981b6d988e560aa378d6c453e83b119ab1a276460"
+    }
+  ]
+}

@@ -91,7 +91,9 @@
     "src/physics/WorldModules.md",
     "docs/PREALPHA_FINDINGS.md",
     "docs/PREALPHA_CLEANUP.md",
-    "docs/PREALPHA_EVENT_DEPENDENCIES.md"
+    "docs/MK2_PHYSICS_ARCHITECTURE.md",
+    "docs/PROJECT_SETTINGS_AND_WATER.md",
+    "docs/PREALPHA_FINAL_CORRECTIONS.md"
   ],
   "historical_exclusions": [
     {

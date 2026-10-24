@@ -14,12 +14,26 @@
 #include <chrono>
 #include <filesystem>
 #include <iostream>
+#include <fstream>
+#include "ToolProcess.h"
 #include <numeric>
 namespace {
 int checks=0,failures=0;
 void Check(bool v,const std::string& s){++checks;failures+=!v;std::cout<<(v?"PASS ":"FAIL ")<<s<<'\n';}
 }
 int main(int argc,char** argv){
+    if(argc==3&&std::string(argv[1])=="--cold-cycle"){
+        const std::filesystem::path directory=argv[2];
+        if(std::filesystem::exists(directory)){std::cerr<<"cold cycle requires fresh output\n";return 1;}
+        std::string log,error;const auto executable=std::filesystem::absolute(argv[0]);
+        if(!CaptureToolOutput(executable,{"--cold-write",directory.string()},log,error,std::chrono::seconds(30),65536)){std::cerr<<log<<error;return 1;}
+        std::cout<<log;auto read=[&](){std::ifstream f(directory/"water.save",std::ios::binary);return std::string(std::istreambuf_iterator<char>(f),{});};
+        const auto before=read();if(before.empty())return 1;
+        if(!CaptureToolOutput(executable,{"--cold-read",directory.string()},log,error,std::chrono::seconds(30),65536)){std::cerr<<log<<error;return 1;}
+        std::cout<<log;if(read()!=before){std::cerr<<"cold read changed save bytes\n";return 1;}
+        std::cout<<"PASS actual fresh-process water continuation and unchanged source save\n";return 0;
+    }
+
     std::string error;Project project;Check(project.Load("projects/basic_water_lab/basic_water_lab.judasproj",error),"load ordinary basic-water project: "+error);
     EngineHost host;if(!host.Init("Basic water workflow",960,540,false,error)){std::cerr<<error<<'\n';return 1;}
     std::cout<<"GL "<<glGetString(GL_RENDERER)<<" | "<<glGetString(GL_VERSION)<<'\n';

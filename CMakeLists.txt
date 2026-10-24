@@ -304,6 +304,7 @@ add_library(judas_engine STATIC
     src/NamedAuthoring.cpp
     src/SceneFingerprint.cpp
     src/Project.cpp
+    src/ProjectStarter.cpp
     src/AssetDatabase.cpp
     src/AsyncFile.cpp
     src/ResourceManager.cpp
@@ -410,6 +411,7 @@ add_executable(judas_editor
     src/editor/EditorHistory.cpp
     src/editor/EditorPanels.cpp
     src/editor/ProjectSettingsPanel.cpp
+    src/editor/FileBrowser.cpp
     src/editor/RenderPreview.cpp
     src/editor/RetargetPanel.cpp
     src/editor/AnimationTimeline.cpp
@@ -1668,7 +1670,6 @@ elseif(WIN32)
     include(cmake/JudasWindowsSdk.cmake)
 endif()
 include(cmake/JudasSdk.cmake)
-include(cmake/JudasValidation.cmake)
 
 # Project policy and lightweight water share no advanced solver implementation.
 judas_add_engine_test(judas_project_water_tests tests/ProjectWaterTests.cpp)
@@ -1677,3 +1678,10 @@ judas_add_engine_test(judas_project_settings_editor_tests tests/ProjectSettingsE
 judas_add_engine_test(judas_basic_water_application_tests tests/BasicWaterApplicationTests.cpp)
 
 judas_add_engine_test(judas_project_fluid_policy_tests tests/ProjectFluidPolicyTests.cpp)
+add_dependencies(judas_project_fluid_policy_tests judas)
+
+judas_add_engine_test(judas_editor_file_browser_tests tests/EditorFileBrowserTests.cpp
+    SOURCES src/editor/FileBrowser.cpp LIBRARIES judas_imgui)
+
+# Finalize after every native test has declared its authoritative entry point.
+include(cmake/JudasValidation.cmake)

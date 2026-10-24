@@ -23,6 +23,7 @@
 // and project/assets; gameplay policy remains in project scripts.
 
 struct AssetCookPanelTask;
+class ProjectSettingsHistory;
 enum class EditorMode { Edit, Play };
 
 // The Asset Browser's drag payload type: the dragged asset's id bytes.
@@ -46,6 +47,7 @@ struct EditorRequests {
     bool newProject = false;
     bool openProject = false;
     bool saveProject = false;
+    bool browseImport = false, browseExport = false;
     bool exportProject = false;
     bool runProject = false;
     bool rescanAssets = false;
@@ -164,6 +166,7 @@ struct EditorPanelState {
     std::string runtimeInfo;      // one-line runtime summary while playing
 
     // Milestone 30: project, assets, gizmo, debug view, profiler.
+    std::shared_ptr<ProjectSettingsHistory> projectHistory;
     Project* project = nullptr;              // the open project (may be !IsLoaded())
     AssetDatabase* assets = nullptr;   // its asset database
     ResourceManager* resources = nullptr;    // Milestone 31: live resource states for the browser

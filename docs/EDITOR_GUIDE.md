@@ -229,3 +229,19 @@ unavailable manual check. No update is installed and no repository is written.
 See [build identity and channels](BUILD_RELEASES.md#update-notification).
 The [original milestone-notice receipt](evidence/editor-milestone-notice/RESULTS.md)
 describes its older `gh` implementation, not this current path.
+
+## Project documents and first-project workflow
+
+New project offers **Visible script starter** (an ordinary tracked `Assets/game.js`
+and render-only owner/camera) or **Empty scene**. Use Browse to choose a folder.
+Scene/project Open and Save As, asset source import and export destinations also
+have a bounded integrated file picker. It caches listings until navigation or
+Refresh; choosing a path does not create/overwrite content.
+
+Project Settings has its own dirty indicator and settings Undo/Redo. Scene undo
+still affects scenes. Closing/replacing a project offers Save/Discard/Cancel;
+failed/conflicting saves preserve live changes. Run/Export read saved content,
+with **Save all and continue / Use saved version / Cancel** when edits exist.
+Choosing the saved version does not discard the live edits. See
+[the first-project walkthrough](FIRST_PROJECT.md) and
+[current correction scope](PREALPHA_FINAL_CORRECTIONS.md).

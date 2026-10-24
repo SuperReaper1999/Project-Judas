@@ -1,0 +1,62 @@
+Shadow maps: on
+Graphics: 3.3.0 NVIDIA 580.178.04 / NVIDIA GeForce GTX 970/PCIe/SSE2
+Renderer fragment texture units: 32 (material path uses 12)
+PASS load ordinary basic-water project: 
+GL NVIDIA GeForce GTX 970/PCIe/SSE2 | 3.3.0 NVIDIA 580.178.04
+PASS project logical input map
+PASS load authored swimming scene: 
+PASS ordinary world construction: 
+PASS default scene has a real motor and no advanced fluid owners
+PASS ordinary InteractivePlay begins: 
+PASS capture actual water renderer and HUD
+PASS place real motor in authored pool without injecting any water sample
+PASS capture actual water renderer and HUD
+PASS logical pause action opens the authored menu
+PASS pause stops gameplay and physics without leaking input
+PASS logical pause resumes cleanly
+PASS all 240 water render frames have no GL error
+PASS ordinary project scripts remain healthy
+PASS rendering/swimming/pausing never activates an advanced solver
+ENDPOINT mode=0 y=-0.822977 vy=-0.0464979
+PASS public basic-water sample produces the density-consistent floating endpoint through JS
+MEASURE basic-water fixed-step n=229 mean=0.073179 p95=0.084809 worst=0.210226 ms
+MEASURE basic-water render-and-frame n=240 mean=0.540291 p95=0.421636 worst=34.9939 ms
+PASS export bounded CPU/GPU water evidence
+PASS load authored swimming scene: 
+PASS ordinary world construction: 
+PASS default scene has a real motor and no advanced fluid owners
+PASS ordinary InteractivePlay begins: 
+PASS capture actual water renderer and HUD
+PASS place real motor in authored pool without injecting any water sample
+PASS capture actual water renderer and HUD
+PASS logical pause action opens the authored menu
+PASS pause stops gameplay and physics without leaking input
+PASS logical pause resumes cleanly
+PASS all 240 water render frames have no GL error
+PASS ordinary project scripts remain healthy
+PASS rendering/swimming/pausing never activates an advanced solver
+ENDPOINT mode=1 y=-2.28272 vy=-0.1635
+PASS negative control: disabling swimming makes the same motor sink to the physical bottom
+MEASURE swimming-off fixed-step n=229 mean=0.0777503 p95=0.087285 worst=0.092144 ms
+MEASURE swimming-off render-and-frame n=240 mean=0.377199 p95=0.396748 worst=2.0871 ms
+PASS export bounded CPU/GPU water evidence
+PASS load authored swimming scene: 
+PASS ordinary world construction: 
+PASS default scene has a real motor and no advanced fluid owners
+PASS ordinary InteractivePlay begins: 
+PASS capture actual water renderer and HUD
+PASS place real motor in authored pool without injecting any water sample
+PASS capture actual water renderer and HUD
+PASS logical pause action opens the authored menu
+PASS pause stops gameplay and physics without leaking input
+PASS logical pause resumes cleanly
+PASS all 240 water render frames have no GL error
+PASS ordinary project scripts remain healthy
+PASS rendering/swimming/pausing never activates an advanced solver
+ENDPOINT mode=2 y=-2.28272 vy=-0.1635
+PASS negative control: disabling swimming makes the same motor sink to the physical bottom
+MEASURE water-off fixed-step n=229 mean=0.0805495 p95=0.100319 worst=0.131067 ms
+MEASURE water-off render-and-frame n=240 mean=0.356934 p95=0.437114 worst=2.04092 ms
+PASS export bounded CPU/GPU water evidence
+PASS positive and negative endpoints differ by more than the motor half-span (radius + halfHeight)
+BasicWaterApplicationTests: 48 checks, 0 failures

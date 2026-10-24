@@ -13,6 +13,7 @@
 #include "EditorPicking.h"
 #include "GizmoMath.h"
 #include "Project.h"
+#include "FileBrowser.h"
 
 class EngineHost;
 class InteractivePlay;
@@ -61,7 +62,7 @@ private:
     void PickAtPixel(int x, int y);
     void RefreshProjectLists();
     bool OpenProject(const std::string& projectFile, std::string& outError);
-    bool CreateProject(const std::string& directory, const std::string& name, std::string& outError);
+    bool CreateProject(const std::string& directory, const std::string& name, std::string& outError, bool visibleStarter=true);
     bool OpenScene(const std::string& path, std::string& outError);
     bool RunProject(std::string& outMessage);
     std::string ResolveScenePath(const std::string& input) const;
@@ -79,6 +80,11 @@ private:
     bool m_documentActionPending = false;
     bool m_documentActionApproved = false;
     bool m_documentActionSaveAs = false;
+    bool m_actionNeedsScene=false, m_actionNeedsProject=false;
+    std::string m_confirmationTitle;
+    EditorFileBrowser m_fileBrowser;
+    std::string m_newProjectDirectory, m_newProjectName, m_fileBrowserParent;
+    int m_newProjectTemplate=0;
     void DrawModelImportPreview(float deltaSeconds);
     RenderTargetHandle m_modelPreviewTarget,m_uiPreviewTarget;
     std::unique_ptr<RuntimeUI> m_uiPreview;uint64_t m_uiPreviewRevision=0;

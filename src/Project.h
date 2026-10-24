@@ -69,6 +69,8 @@ public:
     // object untouched.
     bool Load(const std::string& projectFilePath, std::string& outError);
     bool Save(std::string& outError) const;
+    bool IsDirty() const;
+    bool DiscardSettings(std::string& outError);
     bool SaveAs(const std::string& projectFilePath, std::string& outError);
 
     // Creates a new project directory tree with a project file and empty
@@ -111,6 +113,7 @@ public:
 private:
     std::string m_projectFile;
     mutable std::string m_loadedSource;
+    mutable std::string m_savedSettings;
     bool m_hasLoadedSource=false;
     std::string m_rootDir;
     ProjectSettings m_settings;

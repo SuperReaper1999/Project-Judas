@@ -1,0 +1,25 @@
+[  0%] Built target judas_build_identity
+[  0%] Built target judas_jobs
+[  0%] Built target judas_profiler
+[  0%] Building CXX object CMakeFiles/judas_mk2_physics_tests.dir/src/Broadphase.cpp.o
+[  0%] Building CXX object CMakeFiles/judas_mk2_physics_tests.dir/src/CollisionAsset.cpp.o
+[  0%] Building CXX object CMakeFiles/judas_mk2_physics_tests.dir/src/CollisionGeometry.cpp.o
+[  0%] Building CXX object CMakeFiles/judas_mk2_physics_tests.dir/src/ContactSolver.cpp.o
+[  0%] Building CXX object CMakeFiles/judas_mk2_physics_tests.dir/src/Contacts.cpp.o
+[  0%] Building CXX object CMakeFiles/judas_mk2_physics_tests.dir/src/ImpactSolver.cpp.o
+[  0%] Building CXX object CMakeFiles/judas_mk2_physics_tests.dir/src/JointSolver.cpp.o
+[  0%] Building CXX object CMakeFiles/judas_mk2_physics_tests.dir/src/Narrowphase.cpp.o
+[  0%] Building CXX object CMakeFiles/judas_mk2_physics_tests.dir/src/PhysicsCastGeometry.cpp.o
+[  0%] Building CXX object CMakeFiles/judas_mk2_physics_tests.dir/src/PhysicsWorld.cpp.o
+[  0%] Building CXX object CMakeFiles/judas_mk2_physics_tests.dir/src/RadialTerrain.cpp.o
+[  0%] Building CXX object CMakeFiles/judas_mk2_physics_tests.dir/src/RigidBody.cpp.o
+[100%] Building CXX object CMakeFiles/judas_mk2_physics_tests.dir/src/RigidBodyGravity.cpp.o
+[100%] Building CXX object CMakeFiles/judas_mk2_physics_tests.dir/src/physics/WorldBodies.cpp.o
+[100%] Building CXX object CMakeFiles/judas_mk2_physics_tests.dir/src/physics/WorldBounds.cpp.o
+[100%] Building CXX object CMakeFiles/judas_mk2_physics_tests.dir/src/physics/WorldCCDSearch.cpp.o
+/bin/sh: 1: Cannot fork
+gmake[3]: *** [CMakeFiles/judas_mk2_physics_tests.dir/build.make:330: CMakeFiles/judas_mk2_physics_tests.dir/src/physics/WorldContacts.cpp.o] Error 2
+gmake[3]: *** Waiting for unfinished jobs....
+gmake[2]: *** [CMakeFiles/Makefile2:2244: CMakeFiles/judas_mk2_physics_tests.dir/all] Error 2
+gmake[1]: *** [CMakeFiles/Makefile2:2251: CMakeFiles/judas_mk2_physics_tests.dir/rule] Error 2
+gmake: *** [Makefile:538: judas_mk2_physics_tests] Error 2

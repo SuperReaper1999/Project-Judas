@@ -1,6 +1,7 @@
 #include "AssetDatabase.h"
 #include "InputSystem.h"
 #include "Project.h"
+#include "ProjectStarter.h"
 #include "ResourceManager.h"
 #include "RuntimeWorld.h"
 #include "SceneSerialization.h"
@@ -51,6 +52,11 @@ int main(int argc, char** argv) {
         check(!project.Settings().legacyGameplay && !project.Settings().saveIdentity.empty(),
               "modern project has explicit identity and no implicit gameplay controller");
         const auto source = Read("docs/judasjs/examples/first-project.js");
+        Scene starter;
+        check(PopulateVisibleProjectStarter(project,starter,error),"visible template creates ordinary tracked game.js and scene owner: "+error);
+        check(starter.Objects().size()==1&&!starter.Objects()[0].body&&starter.Objects()[0].scripts.size()==1,"visible starter has a render-only script owner, no hidden controller");
+        check(Read(fs::path(project.AssetsDir())/"game.js")==source,"template uses the documented public-API script exactly");
+        check(!PopulateVisibleProjectStarter(project,starter,error),"template refuses overwriting an existing game script");
         const fs::path script = fs::path(project.AssetsDir()) / "first-project.js";
         Write(script, source);
         AssetDatabase assets;

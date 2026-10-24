@@ -1109,7 +1109,8 @@ void DrawAssetBrowserPanel(EditorDocument& doc, EditorPanelState& state, EditorR
             requests.importDestination = state.importDestinationInput;
         }
         ImGui::SameLine();
-        ImGui::TextDisabled("(path field; the editor has no OS file dialog)");
+        if(ImGui::Button("Browse source..."))requests.browseImport=true;
+        ImGui::TextDisabled("Import copies and tracks the source. Cook when a platform/runtime format is needed.");
     }
 
     if (!db.Untracked().empty()) {

@@ -1,0 +1,11 @@
+Shadow maps: on
+Graphics: 3.3.0 NVIDIA 580.178.04 / NVIDIA GeForce GTX 970/PCIe/SSE2
+Renderer fragment texture units: 32 (material path uses 12)
+Project: Stillwater - Basic Water Lab (/tmp/judas-final-corrections-relocated/export-saved/game.judasproj)
+Scene: Stillwater / basic water, advanced OFF (/tmp/judas-final-corrections-relocated/export-saved/Scenes/stillwater.judas)
+World origin (m): 0.000, 0.000, 0.000
+step,time,posX,posY,posZ,upX,upY,upZ,grounded,velX,velY,velZ,gravX,gravY,gravZ,controlled,frame,steps,paused
+0,0.00000,0.000000,1.013953,9.139069,0.000000,0.980067,-0.198669,0,0.000000,0.000000,0.000000,0.000000,-9.810000,0.000000,0,0,1,0
+30,0.50000,0.000000,0.881228,9.139069,0.000000,0.980067,-0.198669,0,0.000000,0.000000,0.000000,0.000000,-9.810000,0.000000,0,30,1,0
+60,1.00000,0.000000,0.881228,9.139069,0.000000,0.980067,-0.198669,0,0.000000,0.000000,0.000000,0.000000,-9.810000,0.000000,0,60,1,0
+[TestHarness] Wrote screenshot: /tmp/judas-final-corrections-relocated/water.png

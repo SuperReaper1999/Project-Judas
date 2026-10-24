@@ -1,0 +1,78 @@
+{
+  "recordedUtc": "2026-10-24T17:16:58.571014+00:00",
+  "base": "c859901cc9a52cf5b7104887f56b5e7ad4269b1d",
+  "fluidCheckpoint": "e820d50f29f0926a257c4f6ef703d4424c2c1a45",
+  "branch": "Experimental",
+  "humanAcceptance": "pending",
+  "mainPromotion": false,
+  "M100Started": false,
+  "nativePlatform": "Linux Release",
+  "windows": "not rerun",
+  "android": "not rerun",
+  "combinedCases": [
+    {
+      "name": "character-motor",
+      "status": "passed",
+      "seconds": null
+    },
+    {
+      "name": "terrain-streaming",
+      "status": "passed",
+      "seconds": null
+    },
+    {
+      "name": "save-evolution",
+      "status": "passed",
+      "seconds": null
+    },
+    {
+      "name": "first-project",
+      "status": "passed",
+      "seconds": null
+    },
+    {
+      "name": "mk2-physics",
+      "status": "passed",
+      "seconds": null
+    },
+    {
+      "name": "balance-controller",
+      "status": "passed",
+      "seconds": null
+    },
+    {
+      "name": "project-water-policy",
+      "status": "passed",
+      "seconds": null
+    },
+    {
+      "name": "project-fluid-policy",
+      "status": "passed",
+      "seconds": null
+    },
+    {
+      "name": "project-settings-editor",
+      "status": "passed",
+      "seconds": null
+    },
+    {
+      "name": "basic-water-application",
+      "status": "passed",
+      "seconds": null
+    },
+    {
+      "name": "basic-water-cold",
+      "status": "passed",
+      "seconds": null
+    },
+    {
+      "name": "editor-file-browser",
+      "status": "passed",
+      "seconds": null
+    }
+  ],
+  "sourceFingerprints": "SOURCE_FINGERPRINTS.json",
+  "binaryFingerprints": "BINARY_FINGERPRINTS.json",
+  "evidenceScope": "Scoped automated qualification, not engine-wide certification. Two genuine development interruptions preserved under before/. Runtime/editor provenance match; final documentation/evidence recorded after compilation.",
+  "protectedHistory": "No changes to existing protected evidence or independent research. Byte-preserved current-document archives checked against e820d50f."
+}
