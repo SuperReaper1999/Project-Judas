@@ -1,0 +1,236 @@
+{
+  "format": 1,
+  "startedUtc": "2026-10-24T17:58:49.601540+00:00",
+  "sourceRevision": "0aaef603b0347a55350a81beff896cff21d914bf",
+  "trackedWorktreeStatus": "M CMakeLists.txt\n M src/PhysicsWorld.cpp\n M src/PhysicsWorld.h\n M src/editor/EditorApplication.cpp\n M src/editor/EditorPanels.cpp\n M src/physics/WorldMk2Solver.cpp\n M tools/validation/suites.json",
+  "manifestSha256": "5f7293aaec5018e06d763bb70da271cf8418249c8c0213799f8d0d11c80ed06d",
+  "trackedDiffSha256": "98fcfe0e82b5c23367fb13240bfab400624085b6e0a890962b6de4c1c69925ad",
+  "platform": "Linux-7.0.0-38-generic-x86_64-with-glibc2.43",
+  "machine": "x86_64",
+  "cpuCount": 12,
+  "groups": [],
+  "tests": [
+    {
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_impact_mesh_cost_tests",
+        "60",
+        "",
+        "1.2",
+        "entry"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+      "timeoutSeconds": 120,
+      "binarySha256": "eefb9aff9a2f544ab69365a1788d644785fb2889822c421c6b5b24c91387a7ea",
+      "exit": 0,
+      "status": "passed",
+      "binarySha256After": "eefb9aff9a2f544ab69365a1788d644785fb2889822c421c6b5b24c91387a7ea",
+      "seconds": 1.9209344259979844,
+      "buildIdentity": {
+        "architecture": "x86_64",
+        "build_id": "0.1.0-prealpha-Experimental-0aaef60-dirty-091655f79443-u985e813d5cf0",
+        "channel": "Experimental",
+        "compiler": "GNU",
+        "compiler_version": "15.2.0",
+        "configuration": "Release",
+        "maturity": "pre-alpha",
+        "platform": "Linux",
+        "schema": 1,
+        "source_dirty": true,
+        "source_fingerprint": "091655f794432d10d77c063f6aa7e591dc88e060cd9ff09c326166adf646d449",
+        "source_origin": "git",
+        "source_revision": "0aaef603b0347a55350a81beff896cff21d914bf",
+        "source_tree": "7dcb67174d1a6585d6f894564363e49f2322ce0b",
+        "source_untracked_count": 17,
+        "source_untracked_fingerprint": "985e813d5cf01aff3ad1a9020e6df8139daecaf22885c3df9bf2d283037f122a",
+        "version": "0.1.0-prealpha"
+      },
+      "name": "impact-mesh-arrival"
+    },
+    {
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_impact_mesh_cost_tests",
+        "60",
+        "",
+        "1.2"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+      "timeoutSeconds": 120,
+      "binarySha256": "eefb9aff9a2f544ab69365a1788d644785fb2889822c421c6b5b24c91387a7ea",
+      "exit": 0,
+      "status": "passed",
+      "binarySha256After": "eefb9aff9a2f544ab69365a1788d644785fb2889822c421c6b5b24c91387a7ea",
+      "seconds": 3.5228522190009244,
+      "buildIdentity": {
+        "architecture": "x86_64",
+        "build_id": "0.1.0-prealpha-Experimental-0aaef60-dirty-091655f79443-u985e813d5cf0",
+        "channel": "Experimental",
+        "compiler": "GNU",
+        "compiler_version": "15.2.0",
+        "configuration": "Release",
+        "maturity": "pre-alpha",
+        "platform": "Linux",
+        "schema": 1,
+        "source_dirty": true,
+        "source_fingerprint": "091655f794432d10d77c063f6aa7e591dc88e060cd9ff09c326166adf646d449",
+        "source_origin": "git",
+        "source_revision": "0aaef603b0347a55350a81beff896cff21d914bf",
+        "source_tree": "7dcb67174d1a6585d6f894564363e49f2322ce0b",
+        "source_untracked_count": 17,
+        "source_untracked_fingerprint": "985e813d5cf01aff3ad1a9020e6df8139daecaf22885c3df9bf2d283037f122a",
+        "version": "0.1.0-prealpha"
+      },
+      "name": "impact-mesh-continuation",
+      "finding": "CCD-MESH-CONTINUATION",
+      "findingStatus": "resolved-original-fixtures-bounded-ccd",
+      "classification": "resolved-original-fixtures-bounded-ccd; observed result remains authoritative"
+    },
+    {
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_collision_continuity_tests"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+      "timeoutSeconds": 120,
+      "binarySha256": "3591af6e3c296366b0695556ca67c1f06d697152307238f99debc2f80b4cf4d4",
+      "exit": 0,
+      "status": "passed",
+      "binarySha256After": "3591af6e3c296366b0695556ca67c1f06d697152307238f99debc2f80b4cf4d4",
+      "seconds": 0.03521906699825195,
+      "buildIdentity": {
+        "architecture": "x86_64",
+        "build_id": "0.1.0-prealpha-Experimental-0aaef60-dirty-091655f79443-u985e813d5cf0",
+        "channel": "Experimental",
+        "compiler": "GNU",
+        "compiler_version": "15.2.0",
+        "configuration": "Release",
+        "maturity": "pre-alpha",
+        "platform": "Linux",
+        "schema": 1,
+        "source_dirty": true,
+        "source_fingerprint": "091655f794432d10d77c063f6aa7e591dc88e060cd9ff09c326166adf646d449",
+        "source_origin": "git",
+        "source_revision": "0aaef603b0347a55350a81beff896cff21d914bf",
+        "source_tree": "7dcb67174d1a6585d6f894564363e49f2322ce0b",
+        "source_untracked_count": 17,
+        "source_untracked_fingerprint": "985e813d5cf01aff3ad1a9020e6df8139daecaf22885c3df9bf2d283037f122a",
+        "version": "0.1.0-prealpha"
+      },
+      "name": "collision-continuity"
+    },
+    {
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_contact_lifecycle_tests"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+      "timeoutSeconds": 120,
+      "binarySha256": "25418aea6a5804728242a7982eb103835ef2b7f465979533a57a512ac8386320",
+      "exit": 0,
+      "status": "passed",
+      "binarySha256After": "25418aea6a5804728242a7982eb103835ef2b7f465979533a57a512ac8386320",
+      "seconds": 0.09473125799922855,
+      "buildIdentity": {
+        "architecture": "x86_64",
+        "build_id": "0.1.0-prealpha-Experimental-0aaef60-dirty-091655f79443-u985e813d5cf0",
+        "channel": "Experimental",
+        "compiler": "GNU",
+        "compiler_version": "15.2.0",
+        "configuration": "Release",
+        "maturity": "pre-alpha",
+        "platform": "Linux",
+        "schema": 1,
+        "source_dirty": true,
+        "source_fingerprint": "091655f794432d10d77c063f6aa7e591dc88e060cd9ff09c326166adf646d449",
+        "source_origin": "git",
+        "source_revision": "0aaef603b0347a55350a81beff896cff21d914bf",
+        "source_tree": "7dcb67174d1a6585d6f894564363e49f2322ce0b",
+        "source_untracked_count": 17,
+        "source_untracked_fingerprint": "985e813d5cf01aff3ad1a9020e6df8139daecaf22885c3df9bf2d283037f122a",
+        "version": "0.1.0-prealpha"
+      },
+      "name": "contacts"
+    }
+  ],
+  "knownFindings": [
+    {
+      "id": "CCD-MESH-ARRIVAL",
+      "status": "resolved-first-arrival",
+      "scheduled": true,
+      "reason": "Pass2 finite swept-SAT bounds correct the validated first-arrival contract; it now runs in the ordinary collision group. This does not close later curved-sheet continuation.",
+      "evidence": "docs/evidence/prealpha-pass2/physics"
+    },
+    {
+      "id": "CCD-MESH-CONTINUATION",
+      "status": "resolved-original-fixtures-bounded-ccd",
+      "scheduled": true,
+      "reason": "Original unchanged mesh arrival/continuation fixtures pass with authoritative MK2. Bounded CCD, sidedness and deep initial-overlap limits remain; MK1 event scheduling has been removed.",
+      "evidence": "docs/evidence/prealpha-ccd-continuation-20261019"
+    },
+    {
+      "id": "FLU-001",
+      "status": "deferred-failing",
+      "scheduled": false,
+      "reason": "Legacy PBF settling contract retained unchanged; separate fluid review required.",
+      "evidence": "docs/evidence/m78-completion/FINDINGS_FINAL.json"
+    },
+    {
+      "id": "LEGACY-CONTINUATION",
+      "status": "documented-incompatible-history",
+      "scheduled": false,
+      "reason": "Original a106 snapshot lacks historical continuation data. New-format passes do not certify that snapshot.",
+      "evidence": "docs/evidence/m78-cold-boundary"
+    },
+    {
+      "id": "DENSE-CCD-TAIL",
+      "status": "open-performance-limit",
+      "scheduled": false,
+      "reason": "Original MK1 global event cascade is retired. Current MK2 measurements have their own workload scope; focused correctness gates do not certify universal dense-pile latency.",
+      "evidence": "docs/MK2_PHYSICS_ARCHITECTURE.md"
+    },
+    {
+      "id": "LIQUID-BAKE-ROTATION",
+      "status": "resolved-baking",
+      "scheduled": true,
+      "reason": "Baker and runtime use the same normalized owner/field frames and oriented gravity volumes; both original bake-only runtime-publication cases pass unchanged equivalence tolerances. Original full integration exposes separate retained exact-total comparison failure.",
+      "evidence": "docs/evidence/prealpha-liquid-rotation/REPORT.md"
+    },
+    {
+      "id": "LIQUID-BAKE-KNOTS",
+      "status": "resolved-baking",
+      "scheduled": true,
+      "reason": "Positive tetrahedral density is integrated into one monotone cumulative curve, including shared endpoints; unchanged strict Surface1 decoder accepts both original rotated bakes. A later origin sampling limitation remains separately failed.",
+      "evidence": "docs/evidence/prealpha-liquid-rotation/REPORT.md"
+    },
+    {
+      "id": "LIQUID-ORIGIN-GRID-QUERY",
+      "status": "open-query-continuity-failing",
+      "scheduled": false,
+      "reason": "The original half-turn fixture now bakes and publishes, then fails its unchanged post-512m-origin query comparison: float translation crosses a discontinuous disturbed-surface cell boundary. Conserved quantities and wave bytes remain unchanged. This full integration failure is preserved, not counted as a baking pass.",
+      "evidence": "docs/evidence/prealpha-liquid-rotation/REPORT.md"
+    },
+    {
+      "id": "LIQUID-ORIGIN-TOTAL-IDENTITY",
+      "status": "resolved-oracle-causal-baseline",
+      "scheduled": true,
+      "reason": "Pass3 preserves the original failed test and demonstrates its causal-baseline error. Current atomicity compares the immediate pre-request total with the same exact equality and every physical participant byte; earlier legitimate paired-flow conservation tolerance and liquid runtime are unchanged.",
+      "evidence": "docs/evidence/prealpha-pass3/integration/REPORT.md"
+    }
+  ],
+  "humanAcceptance": "not-established",
+  "scope": "explicit manifest subset",
+  "expectedSourceIdentity": {
+    "source_revision": "0aaef603b0347a55350a81beff896cff21d914bf",
+    "source_fingerprint": "091655f794432d10d77c063f6aa7e591dc88e060cd9ff09c326166adf646d449",
+    "source_dirty": true,
+    "source_untracked_fingerprint": "985e813d5cf01aff3ad1a9020e6df8139daecaf22885c3df9bf2d283037f122a"
+  },
+  "passed": true,
+  "finishedUtc": "2026-10-24T17:58:55.413644+00:00",
+  "sourceRevisionAfter": "0aaef603b0347a55350a81beff896cff21d914bf",
+  "trackedWorktreeStatusAfter": "M CMakeLists.txt\n M src/PhysicsWorld.cpp\n M src/PhysicsWorld.h\n M src/editor/EditorApplication.cpp\n M src/editor/EditorPanels.cpp\n M src/physics/WorldMk2Solver.cpp\n M tools/validation/suites.json",
+  "trackedDiffSha256After": "98fcfe0e82b5c23367fb13240bfab400624085b6e0a890962b6de4c1c69925ad",
+  "expectedSourceIdentityAfter": {
+    "source_revision": "0aaef603b0347a55350a81beff896cff21d914bf",
+    "source_fingerprint": "091655f794432d10d77c063f6aa7e591dc88e060cd9ff09c326166adf646d449",
+    "source_dirty": true,
+    "source_untracked_fingerprint": "985e813d5cf01aff3ad1a9020e6df8139daecaf22885c3df9bf2d283037f122a"
+  }
+}

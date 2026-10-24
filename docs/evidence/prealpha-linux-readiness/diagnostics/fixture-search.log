@@ -1,0 +1,14 @@
+v1 speed100 spin100 holds1 body1 step0 response0 attempts5 missing0 energy0 pos-0.403709 vel-209.064
+v2 speed100 spin0 holds1 body1 step0 response0 attempts5 missing0 energy0 pos0.347909 vel499.609
+v2 speed1000 spin0 holds1 body1 step0 response0 attempts5 missing0 energy0 pos0.427846 vel44400.1
+v2 speed1000 spin1000 holds1 body1 step0 response0 attempts5 missing0 energy0 pos-0.423767 vel352.719
+v2 speed5000 spin0 holds1 body1 step0 response0 attempts5 missing0 energy0 pos-0.416257 vel35121.5
+v2 speed5000 spin100 holds1 body1 step0 response0 attempts5 missing0 energy0 pos0.367909 vel6591.74
+v2 speed5000 spin1000 holds1 body1 step0 response0 attempts5 missing0 energy0 pos-0.417528 vel-7128.39
+v3 speed100 spin100 holds1 body1 step0 response0 attempts5 missing0 energy0 pos0.49939 vel288.355
+v3 speed1000 spin0 holds1 body1 step0 response0 attempts5 missing0 energy0 pos-0.5 vel1000
+v3 speed1000 spin100 holds1 body1 step0 response0 attempts5 missing0 energy0 pos-0.5 vel1000.22
+v3 speed1000 spin1000 holds1 body1 step0 response0 attempts5 missing0 energy0 pos0.49939 vel2883.55
+v3 speed5000 spin0 holds1 body1 step0 response0 attempts5 missing0 energy0 pos-0.5 vel5000
+v3 speed5000 spin100 holds1 body1 step0 response0 attempts5 missing0 energy0 pos-0.5 vel5000.04
+v3 speed5000 spin1000 holds1 body1 step0 response0 attempts5 missing0 energy0 pos0.499982 vel24503.2

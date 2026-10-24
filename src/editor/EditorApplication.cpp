@@ -1453,6 +1453,18 @@ int EditorApplication::Run(int argc, char** argv) {
     };
     std::uint64_t profilerFrozenFrame = 0;
     std::size_t profilerFrozenSteps = 0;
+    // Exercise the same project-creation path from a relocated SDK, without a
+    // development-tree project fixture. Never overwrite an existing directory.
+    if (autotest) {
+        if (const char* directory = std::getenv("JUDAS_EDITOR_AUTOTEST_NEW_PROJECT")) {
+            std::string error;
+            const bool created = !fs::exists(fs::u8path(directory)) &&
+                CreateProject(directory, "SDK First Game", error, true);
+            std::fprintf(stderr, "[editor onboarding] packaged visible starter: %s %s\n",
+                         created ? "PASS" : "FAIL", error.c_str());
+            if (!created) return 1;
+        }
+    }
     std::string autotestBaseline;
     if(autotest&&std::getenv("JUDAS_EDITOR_AUTOTEST_LIQUID_BAKE")){std::vector<SceneObjectId> ids;for(const auto& o:m_document.GetScene().Objects())if(o.liquidBasin)ids.push_back(o.id);for(auto id:ids){bool ok=BakeEditorLiquid(m_document,id,m_panels);std::fprintf(stderr,"[editor autotest] liquid bake %llu: %s: %s\n",static_cast<unsigned long long>(id),ok?"PASS":"FAIL",m_panels.status.c_str());}}
     if(autotest&&std::getenv("JUDAS_EDITOR_AUTOTEST_NAV_BAKE")){std::vector<SceneObjectId> surfaces;for(const auto& o:m_document.GetScene().Objects())if(o.navigationSurface)surfaces.push_back(o.id);for(auto id:surfaces){bool ok=BakeEditorNavigation(m_document,id,m_panels);std::fprintf(stderr,"[editor autotest] navigation bake %llu: %s: %s\n",static_cast<unsigned long long>(id),ok?"PASS":"FAIL",m_panels.status.c_str());}}

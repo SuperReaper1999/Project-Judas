@@ -1,0 +1,27 @@
+PASS valid conserved geometry fixture
+PASS enabled system admits owner
+PASS removing last owner retains its actual volume as a parcel
+PASS enabled parcel-only restore conserves exact quantity
+PASS disabled restore rejects advanced owner/parcel state with actionable diagnostic
+PASS failed disabled restore publishes no ledger or parcels
+PASS disabled restore rejects advanced owner/parcel state with actionable diagnostic
+PASS failed disabled restore publishes no ledger or parcels
+PASS disabled empty participant remains compatible
+PASS rejected reads never modify source advanced state
+PASS even zero-quantity advanced history cannot mutate a disabled system
+PASS create public project fixture
+PASS save unchanged dormant authoring
+PASS disabled world starts without advanced dependencies
+PASS dormant region requires no advanced geometry or bake
+PASS prepared region preserves authored fluid component
+PASS ordinary region request accepted
+PASS dormant region actually publishes through streaming
+PASS disabled conserved authoring creates no physical suspension pin
+PASS release region demand
+PASS disabled fluid region actually unloads
+PASS opt-in restores required bake/geometry validation
+PASS disabled authored basin exports without unregistered advanced assets: 
+PASS export preserves disabled project policy
+PASS export retains inert authored component
+PASS enabled export refuses missing advanced assets
+Project fluid policy: 26 checks, 0 failures

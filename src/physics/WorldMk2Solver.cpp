@@ -490,6 +490,7 @@ void PhysicsWorld::Impl::Mk2Solve(float dt, const PhysicsWorld::VelocityCoupling
     // the substeps, so its impulses act inside each substep's velocity solve.
     // (Solving a coupled step as one substep let a 24.6 m/s crash car reach
     // its barrier with half the crush and no link failure.)
+    std::size_t frictionlessRetries = 0, inelasticFallbacks = 0, coupledImpactFallbacks = 0;
     int participantRound = 0;
     const int substeps = kMk2Substeps;
     const float h = dt / float(substeps);
@@ -1067,10 +1068,12 @@ void PhysicsWorld::Impl::Mk2Solve(float dt, const PhysicsWorld::VelocityCoupling
                 // the bounce is kept; inelastic is the last resort. (Going
                 // straight to inelastic made a struck elastic sphere stick.)
                 if (gained()) {
+                    ++frictionlessRetries;
                     undo();
                     resolve(worst, true, true);
                 }
                 if (gained()) {
+                    ++inelasticFallbacks;
                     undo();
                     resolve(worst, false);
                 }
@@ -1082,6 +1085,7 @@ void PhysicsWorld::Impl::Mk2Solve(float dt, const PhysicsWorld::VelocityCoupling
             for (const auto index : impactingList)
                 approaching = approaching || approachOf(blocks[index]) < -kMk2ImpactApproach;
             if (approaching) {
+                ++coupledImpactFallbacks;
                 each([&](std::size_t i) { rows[i].normalImpulse = rows[i].tangent1 = rows[i].tangent2 = 0; });
                 for (int sweep = 0; sweep < kMk2ImpactSweeps; ++sweep)
                     SolveBlocks(state, rows, blocks, impactingList, h, false, true);
@@ -1506,6 +1510,11 @@ void PhysicsWorld::Impl::Mk2Solve(float dt, const PhysicsWorld::VelocityCoupling
     std::stable_sort(observed.begin(), observed.end(), byKey);
     std::swap(contactCache, pendingCache);
     completedContactObservations = std::move(observed);
+    // Frame sums naturally include every coupled interval and fixed step. Batch
+    // telemetry here instead of recording a profiler event per retry/contact.
+    JUDAS_PROFILE_COUNTER("Physics restitution frictionless retries", double(frictionlessRetries), ProfileCounterMode::Sum);
+    JUDAS_PROFILE_COUNTER("Physics restitution inelastic fallbacks", double(inelasticFallbacks), ProfileCounterMode::Sum);
+    JUDAS_PROFILE_COUNTER("Physics restitution coupled fallbacks", double(coupledImpactFallbacks), ProfileCounterMode::Sum);
 }
 
 // Bounded continuous pass for fast bodies. The substep solve's speculative
@@ -1681,6 +1690,9 @@ void PhysicsWorld::Impl::Mk2Continuous(float dt) {
             m = &movers.back();
         }
         if (m->arrivals >= kMk2ArrivalsPerBody) {
+            ++stats.impactSafetyFallback;
+            ++stats.impactEventCapFallback;
+            ++stats.impactBodyCapHolds;
             retime(other, at, true);
             m->found = false;
             return;
@@ -1752,6 +1764,13 @@ void PhysicsWorld::Impl::Mk2Continuous(float dt) {
         // Without an exact response the path would continue into the contact.
         const bool resolved = Mk2ResolveArrival(slot, other, next->partA, next->partB, at);
         if (!resolved || next->arrivals >= kMk2ArrivalsPerBody) {
+            ++stats.impactSafetyFallback;
+            if (!resolved) {
+                ++stats.impactResponseHolds;
+            } else {
+                ++stats.impactEventCapFallback;
+                ++stats.impactBodyCapHolds;
+            }
             retime(slot, at, true);
             next->found = false;
         } else {
@@ -1771,6 +1790,9 @@ void PhysicsWorld::Impl::Mk2Continuous(float dt) {
     // Arrivals left once the step's bound is spent are held there.
     for (auto &m : movers)
         if (m.found) {
+            ++stats.impactSafetyFallback;
+            ++stats.impactEventCapFallback;
+            ++stats.impactStepCapHolds;
             ++stats.impactEvents;
             Mk2ResolveArrival(m.slot, m.other, m.partA, m.partB, m.hit);
             retime(m.slot, m.hit, true);
@@ -1810,6 +1832,7 @@ bool PhysicsWorld::Impl::Mk2Crossed(unsigned fast, unsigned other, unsigned a, u
 // False when no first-touch manifold or no energy-safe response exists.
 bool PhysicsWorld::Impl::Mk2ResolveArrival(unsigned fast, unsigned other, int partFast,
                                            int partOther, double hit) {
+    ++stats.impactResponseAttempts;
     const unsigned a = std::min(fast, other), b = std::max(fast, other);
     const int pa = fast == a ? partFast : partOther, pb = fast == a ? partOther : partFast;
     // The search stops at (just before) first touch: widen the margin until
@@ -1820,8 +1843,10 @@ bool PhysicsWorld::Impl::Mk2ResolveArrival(unsigned fast, unsigned other, int pa
         if (manifold.count || manifold.uncertain)
             break;
     }
-    if (!manifold.count || manifold.uncertain)
+    if (!manifold.count || manifold.uncertain) {
+        ++stats.impactMissingManifolds;
         return false;
+    }
     const auto movable = [&](unsigned slot) {
         const auto &body = bodies[slot];
         return body.isDynamic && !body.rigidBody.IsStatic() && !body.sleeping &&
@@ -1855,8 +1880,11 @@ bool PhysicsWorld::Impl::Mk2ResolveArrival(unsigned fast, unsigned other, int pa
     }
     const auto result =
         impactSolver.Solve(rows, stepDuration > 0 ? float(stepDuration) : 1.f / 60);
-    if (!result.energyBudgetSatisfied)
+    if (!result.energyBudgetSatisfied) {
+        ++stats.impactEnergyRejections;
         return false;
+    }
+    ++stats.impactResponsesApplied;
     for (auto [copy, slot] : {std::pair<RigidBody *, unsigned>{&bodyA, a}, {&bodyB, b}})
         if (movable(slot)) {
             bodies[slot].rigidBody.linearVelocity = copy->linearVelocity;

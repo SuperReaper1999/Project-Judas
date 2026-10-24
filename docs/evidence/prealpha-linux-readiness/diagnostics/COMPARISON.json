@@ -1,0 +1,8 @@
+{
+  "base": "0aaef603b0347a55350a81beff896cff21d914bf",
+  "physicalRows": 303,
+  "beforeSha256": "e04b6e646151403c3a2f0f9cf6030c23399b89388f02e0ab2e082579ac0b328f",
+  "afterSha256": "e04b6e646151403c3a2f0f9cf6030c23399b89388f02e0ab2e082579ac0b328f",
+  "exact": true,
+  "scope": "Original four sphere-channel fixtures; rejects a stationary segment alone as a hold oracle. Real box-cap and coupled reporting are independently tested in Mk2DiagnosticsTests."
+}

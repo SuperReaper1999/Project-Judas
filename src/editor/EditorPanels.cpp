@@ -1164,6 +1164,13 @@ void DrawProfilerPanel(EditorPanelState& state) {
     ImGui::Text("  PhysicsWorld::Step %.3f ms (broadphase %.3f, narrowphase %.3f, solver %.3f)",
                 p.physics.totalMilliseconds, p.physics.broadphaseMilliseconds, p.physics.narrowphaseMilliseconds,
                 p.physics.solverMilliseconds);
+    ImGui::Text("CCD holds: %zu operations (body limit %zu, step limit %zu, response %zu)",
+                p.physics.impactSafetyFallback, p.physics.impactBodyCapHolds,
+                p.physics.impactStepCapHolds, p.physics.impactResponseHolds);
+    ImGui::Text("CCD responses: %zu / %zu applied; missing manifold %zu, energy rejection %zu",
+                p.physics.impactResponsesApplied, p.physics.impactResponseAttempts,
+                p.physics.impactMissingManifolds, p.physics.impactEnergyRejections);
+    ImGui::TextDisabled("A hold truncates remaining travel, keeping physical velocity. Counts are not unique bodies.");
     ImGui::Text("Entities: %zu full / %zu coarse / %zu dormant / %zu destroyed", p.entitiesFull, p.entitiesCoarse,
                 p.entitiesDormant, p.entitiesDestroyed);
     ImGui::Separator();

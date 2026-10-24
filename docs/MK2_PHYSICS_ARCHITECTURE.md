@@ -50,8 +50,21 @@ re-timing at four arrivals per body and 256 per step. A body can be held at an
 arrival when response is unavailable or a bound is exhausted: this prevents
 unbounded work/tunnelling, but can lose travelled distance in extreme cases.
 Sidedness, deep initial overlap and bounded temporal search are not a promise of
-exact unrestricted continuous dynamics. Legacy StepStats fallback fields do not
-yet quantify every MK2 hold; do not interpret zero as proof no hold occurred.
+exact unrestricted continuous dynamics. StepStats and the profiler now count actual path-hold operations, partitioned into
+per-body arrival limit, per-step arrival limit and unavailable response. They are
+not unique-body counts; coupled intervals sum operations. `impactSafetyFallback`
+is the total, and `impactEventCapFallback` is the body/step-cap subset. These
+counters describe existing safety behaviour, not a newly enabled clamp.
+
+Continuous response attempts are partitioned into applied responses, unavailable
+or uncertain manifolds, and rejected energy budgets. A rejected kinematic response
+need not produce a path hold. The older `impactEvents` includes both substep
+restitution work and continuous arrival attempts; it is not a unique collision
+count. Native counts reset each step. The matching CCD profiler counters use the
+completed public step, including StepCoupled totals, rather than only its last
+interval. Restitution frictionless retries, inelastic fallbacks and coupled-impact
+fallbacks are separate profiler **frame sums**, batched once per solve instead of
+emitting an event per contact/retry. No thresholds, budgets or responses change.
 
 Dense-contact cost depends on content, joints, contact representation and hardware.
 The development record contains reproducible ordinary/severe room1024 and live

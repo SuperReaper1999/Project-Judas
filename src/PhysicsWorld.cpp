@@ -4,6 +4,36 @@
 
 using namespace JudasPhysicsDetail;
 
+namespace {
+// Latest means the completed public step, including all StepCoupled intervals.
+void PublishImpactCounters(const PhysicsWorld::StepStats& stats) {
+    JUDAS_PROFILE_COUNTER("Physics impact events", double(stats.impactEvents),
+                          ProfileCounterMode::Latest);
+    JUDAS_PROFILE_COUNTER("Physics impact queries", double(stats.impactQueries),
+                          ProfileCounterMode::Latest);
+    JUDAS_PROFILE_COUNTER("Physics impact search iterations",
+                          double(stats.impactSearchIterations), ProfileCounterMode::Latest);
+    JUDAS_PROFILE_COUNTER("Physics impact sampling fallbacks",
+                          double(stats.impactSamplingFallbacks), ProfileCounterMode::Latest);
+    JUDAS_PROFILE_COUNTER("Physics impact sampling tests", double(stats.impactSamplingTests),
+                          ProfileCounterMode::Latest);
+    JUDAS_PROFILE_COUNTER("Physics impact search limits", double(stats.impactSearchLimit),
+                          ProfileCounterMode::Latest);
+    JUDAS_PROFILE_COUNTER("Physics impact search stalls", double(stats.impactSearchStalls),
+                          ProfileCounterMode::Latest);
+    JUDAS_PROFILE_COUNTER("Physics impact sampling resolution caps",
+                          double(stats.impactSamplingResolutionCaps), ProfileCounterMode::Latest);
+    JUDAS_PROFILE_COUNTER("Physics CCD path holds", double(stats.impactSafetyFallback), ProfileCounterMode::Latest);
+    JUDAS_PROFILE_COUNTER("Physics CCD body limit holds", double(stats.impactBodyCapHolds), ProfileCounterMode::Latest);
+    JUDAS_PROFILE_COUNTER("Physics CCD step limit holds", double(stats.impactStepCapHolds), ProfileCounterMode::Latest);
+    JUDAS_PROFILE_COUNTER("Physics CCD response holds", double(stats.impactResponseHolds), ProfileCounterMode::Latest);
+    JUDAS_PROFILE_COUNTER("Physics CCD response attempts", double(stats.impactResponseAttempts), ProfileCounterMode::Latest);
+    JUDAS_PROFILE_COUNTER("Physics CCD responses applied", double(stats.impactResponsesApplied), ProfileCounterMode::Latest);
+    JUDAS_PROFILE_COUNTER("Physics CCD missing manifolds", double(stats.impactMissingManifolds), ProfileCounterMode::Latest);
+    JUDAS_PROFILE_COUNTER("Physics CCD energy rejections", double(stats.impactEnergyRejections), ProfileCounterMode::Latest);
+}
+} // namespace
+
 // Public fixed-step coordinator. Cohesive implementation modules share one Impl.
 bool PhysicsWorld::Init() {
     m_impl = new Impl();
@@ -367,22 +397,7 @@ void PhysicsWorld::Step(float fixedDeltaTime, const VelocityCoupling *coupling) 
     JUDAS_PROFILE_COUNTER("Physics contacts last step", double(w.stats.contactPoints),
                           ProfileCounterMode::Latest);
     JUDAS_PROFILE_COUNTER("Physics joints", double(w.joints.size()), ProfileCounterMode::Latest);
-    JUDAS_PROFILE_COUNTER("Physics impact events", double(w.stats.impactEvents),
-                          ProfileCounterMode::Latest);
-    JUDAS_PROFILE_COUNTER("Physics impact queries", double(w.stats.impactQueries),
-                          ProfileCounterMode::Latest);
-    JUDAS_PROFILE_COUNTER("Physics impact search iterations",
-                          double(w.stats.impactSearchIterations), ProfileCounterMode::Latest);
-    JUDAS_PROFILE_COUNTER("Physics impact sampling fallbacks",
-                          double(w.stats.impactSamplingFallbacks), ProfileCounterMode::Latest);
-    JUDAS_PROFILE_COUNTER("Physics impact sampling tests", double(w.stats.impactSamplingTests),
-                          ProfileCounterMode::Latest);
-    JUDAS_PROFILE_COUNTER("Physics impact search limits", double(w.stats.impactSearchLimit),
-                          ProfileCounterMode::Latest);
-    JUDAS_PROFILE_COUNTER("Physics impact search stalls", double(w.stats.impactSearchStalls),
-                          ProfileCounterMode::Latest);
-    JUDAS_PROFILE_COUNTER("Physics impact sampling resolution caps",
-                          double(w.stats.impactSamplingResolutionCaps), ProfileCounterMode::Latest);
+    PublishImpactCounters(w.stats);
     JUDAS_PROFILE_COUNTER("Physics CCD query scratch bytes", double(w.CCDQueryBytes()), ProfileCounterMode::Latest);
     JUDAS_PROFILE_COUNTER("Physics impact pose evaluations", double(w.impactPoseEvaluations),
                           ProfileCounterMode::Latest);
@@ -583,6 +598,13 @@ void PhysicsWorld::StepCoupled(float dt, unsigned intervals,
             SUM(impactEvents);
             SUM(impactSafetyFallback);
             SUM(impactEventCapFallback);
+            SUM(impactEnergyRejections);
+            SUM(impactMissingManifolds);
+            SUM(impactResponsesApplied);
+            SUM(impactResponseAttempts);
+            SUM(impactResponseHolds);
+            SUM(impactStepCapHolds);
+            SUM(impactBodyCapHolds);
             SUM(impactQueries);
             SUM(impactSearchIterations);
             SUM(impactSearchLimit);
@@ -675,6 +697,7 @@ void PhysicsWorld::StepCoupled(float dt, unsigned intervals,
             joint.state.motorImpulse = it->second.motor;
         }
     w.stats = totals;
+    PublishImpactCounters(w.stats);
     if (!w.queryTouchesPending)
         w.FinishTouches();
 }

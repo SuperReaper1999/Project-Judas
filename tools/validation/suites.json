@@ -46,6 +46,7 @@
     {"name":"origin-environment","target":"judas_origin_environment_tests","groups":["lifecycle"],"args":["{output}/origin-environment"]},
     {"name":"origin-admission","target":"judas_origin_admission_tests","groups":["core","lifecycle"],"args":[]},
     {"name":"liquid-origin-query-controls","target":"judas_origin_environment_tests","groups":["liquid"],"args":["--query-controls","knots","{output}/query-controls"]},
+    {"name":"mk2-diagnostics","target":"judas_mk2_diagnostics_tests","groups":["core","mk2","collision"]},
     {"name":"mk2-physics","target":"judas_mk2_physics_tests","groups":["core","collision","mk2"]},
     {"name":"balance-controller","target":"judas_physical_balance_controller_tests","groups":["mk2","lifecycle"]},
     {"name":"project-water-policy","target":"judas_project_water_tests","groups":["core","water"]},

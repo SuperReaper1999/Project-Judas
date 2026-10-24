@@ -1,0 +1,1266 @@
+CASE zero box offset=(0,0,0)
+  OK   ordinary authored scene serializes
+  OK   exactly one dynamic entity and static support, no other contact bodies
+  OK   real runtime shapes available
+  OK   body/support share actual stored orientation
+  OK   support contact is inside the face, away from edges
+  OK   represented canonical geometry is exactly touching
+  GEOMETRY gap=0 class=touching body=(0,1,0) support=(0,0,0) stored_q=(1,0,0,0) gravity=(0,0,0)
+  OK   entity after ordinary fixed step
+  STEP initial contacts=4 position=(0,1,0) velocity=(0,0,0) angular=(0,0,0) speed=0 displacement=0 delta_entities=0
+  OK   supported surface has first-step contact
+  OK   no first-step gravity velocity spike (<1e-4 m/s)
+  OK   no artificial first-step angular velocity (<1e-4 rad/s)
+  OK   no first-step gravity position spike (<1e-5 m)
+  OK   unchanged supported entity produces no moved delta under unmodified persistence policy
+  OK   Full -> Coarse: 
+  OK   released old body handle is invalid
+  OK   Coarse -> Full: 
+  OK   reconstruction obtains a fresh body handle
+  OK   reconstruction preserves exact retained pose and velocities
+  OK   entity after ordinary fixed step
+  STEP reconstructed contacts=4 position=(0,1,0) velocity=(0,0,0) angular=(0,0,0) speed=0 displacement=0 delta_entities=0
+  OK   supported surface has first-step contact
+  OK   no first-step gravity velocity spike (<1e-4 m/s)
+  OK   no artificial first-step angular velocity (<1e-4 rad/s)
+  OK   no first-step gravity position spike (<1e-5 m)
+  OK   unchanged supported entity produces no moved delta under unmodified persistence policy
+  OK   valid baseline delta serializes
+  OK   valid baseline delta parses: 
+  OK   saved delta carries the actual matching authored content fingerprint
+  OK   real FTFT1 preflight accepts valid baseline: 
+  OK   reload introduces no artificial moved records
+  OK   entity after ordinary fixed step
+  STEP persisted-reload contacts=4 position=(0,1,0) velocity=(0,0,0) angular=(0,0,0) speed=0 displacement=0 delta_entities=0
+  OK   supported surface has first-step contact
+  OK   no first-step gravity velocity spike (<1e-4 m/s)
+  OK   no artificial first-step angular velocity (<1e-4 rad/s)
+  OK   no first-step gravity position spike (<1e-5 m)
+  OK   unchanged supported entity produces no moved delta under unmodified persistence policy
+CASE_RESULT zero box PASS
+CASE zero box offset=(137,-42,88)
+  OK   ordinary authored scene serializes
+  OK   exactly one dynamic entity and static support, no other contact bodies
+  OK   real runtime shapes available
+  OK   body/support share actual stored orientation
+  OK   support contact is inside the face, away from edges
+  OK   represented canonical geometry is exactly touching
+  GEOMETRY gap=0 class=touching body=(137,-41,88) support=(137,-42,88) stored_q=(1,0,0,0) gravity=(0,0,0)
+  OK   entity after ordinary fixed step
+  STEP initial contacts=4 position=(137,-41,88) velocity=(0,0,0) angular=(0,0,0) speed=0 displacement=0 delta_entities=0
+  OK   supported surface has first-step contact
+  OK   no first-step gravity velocity spike (<1e-4 m/s)
+  OK   no artificial first-step angular velocity (<1e-4 rad/s)
+  OK   no first-step gravity position spike (<1e-5 m)
+  OK   unchanged supported entity produces no moved delta under unmodified persistence policy
+  OK   Full -> Coarse: 
+  OK   released old body handle is invalid
+  OK   Coarse -> Full: 
+  OK   reconstruction obtains a fresh body handle
+  OK   reconstruction preserves exact retained pose and velocities
+  OK   entity after ordinary fixed step
+  STEP reconstructed contacts=4 position=(137,-41,88) velocity=(0,0,0) angular=(0,0,0) speed=0 displacement=0 delta_entities=0
+  OK   supported surface has first-step contact
+  OK   no first-step gravity velocity spike (<1e-4 m/s)
+  OK   no artificial first-step angular velocity (<1e-4 rad/s)
+  OK   no first-step gravity position spike (<1e-5 m)
+  OK   unchanged supported entity produces no moved delta under unmodified persistence policy
+  OK   valid baseline delta serializes
+  OK   valid baseline delta parses: 
+  OK   saved delta carries the actual matching authored content fingerprint
+  OK   real FTFT1 preflight accepts valid baseline: 
+  OK   reload introduces no artificial moved records
+  OK   entity after ordinary fixed step
+  STEP persisted-reload contacts=4 position=(137,-41,88) velocity=(0,0,0) angular=(0,0,0) speed=0 displacement=0 delta_entities=0
+  OK   supported surface has first-step contact
+  OK   no first-step gravity velocity spike (<1e-4 m/s)
+  OK   no artificial first-step angular velocity (<1e-4 rad/s)
+  OK   no first-step gravity position spike (<1e-5 m)
+  OK   unchanged supported entity produces no moved delta under unmodified persistence policy
+CASE_RESULT zero box PASS
+CASE zero sphere offset=(0,0,0)
+  OK   ordinary authored scene serializes
+  OK   exactly one dynamic entity and static support, no other contact bodies
+  OK   real runtime shapes available
+  OK   body/support share actual stored orientation
+  OK   support contact is inside the face, away from edges
+  OK   represented canonical geometry is exactly touching
+  GEOMETRY gap=0 class=touching body=(0,1,0) support=(0,0,0) stored_q=(1,0,0,0) gravity=(0,0,0)
+  OK   entity after ordinary fixed step
+  STEP initial contacts=1 position=(0,1,0) velocity=(0,0,0) angular=(0,0,0) speed=0 displacement=0 delta_entities=0
+  OK   supported surface has first-step contact
+  OK   no first-step gravity velocity spike (<1e-4 m/s)
+  OK   no artificial first-step angular velocity (<1e-4 rad/s)
+  OK   no first-step gravity position spike (<1e-5 m)
+  OK   unchanged supported entity produces no moved delta under unmodified persistence policy
+  OK   Full -> Coarse: 
+  OK   released old body handle is invalid
+  OK   Coarse -> Full: 
+  OK   reconstruction obtains a fresh body handle
+  OK   reconstruction preserves exact retained pose and velocities
+  OK   entity after ordinary fixed step
+  STEP reconstructed contacts=1 position=(0,1,0) velocity=(0,0,0) angular=(0,0,0) speed=0 displacement=0 delta_entities=0
+  OK   supported surface has first-step contact
+  OK   no first-step gravity velocity spike (<1e-4 m/s)
+  OK   no artificial first-step angular velocity (<1e-4 rad/s)
+  OK   no first-step gravity position spike (<1e-5 m)
+  OK   unchanged supported entity produces no moved delta under unmodified persistence policy
+  OK   valid baseline delta serializes
+  OK   valid baseline delta parses: 
+  OK   saved delta carries the actual matching authored content fingerprint
+  OK   real FTFT1 preflight accepts valid baseline: 
+  OK   reload introduces no artificial moved records
+  OK   entity after ordinary fixed step
+  STEP persisted-reload contacts=1 position=(0,1,0) velocity=(0,0,0) angular=(0,0,0) speed=0 displacement=0 delta_entities=0
+  OK   supported surface has first-step contact
+  OK   no first-step gravity velocity spike (<1e-4 m/s)
+  OK   no artificial first-step angular velocity (<1e-4 rad/s)
+  OK   no first-step gravity position spike (<1e-5 m)
+  OK   unchanged supported entity produces no moved delta under unmodified persistence policy
+CASE_RESULT zero sphere PASS
+CASE zero sphere offset=(137,-42,88)
+  OK   ordinary authored scene serializes
+  OK   exactly one dynamic entity and static support, no other contact bodies
+  OK   real runtime shapes available
+  OK   body/support share actual stored orientation
+  OK   support contact is inside the face, away from edges
+  OK   represented canonical geometry is exactly touching
+  GEOMETRY gap=0 class=touching body=(137,-41,88) support=(137,-42,88) stored_q=(1,0,0,0) gravity=(0,0,0)
+  OK   entity after ordinary fixed step
+  STEP initial contacts=1 position=(137,-41,88) velocity=(0,0,0) angular=(0,0,0) speed=0 displacement=0 delta_entities=0
+  OK   supported surface has first-step contact
+  OK   no first-step gravity velocity spike (<1e-4 m/s)
+  OK   no artificial first-step angular velocity (<1e-4 rad/s)
+  OK   no first-step gravity position spike (<1e-5 m)
+  OK   unchanged supported entity produces no moved delta under unmodified persistence policy
+  OK   Full -> Coarse: 
+  OK   released old body handle is invalid
+  OK   Coarse -> Full: 
+  OK   reconstruction obtains a fresh body handle
+  OK   reconstruction preserves exact retained pose and velocities
+  OK   entity after ordinary fixed step
+  STEP reconstructed contacts=1 position=(137,-41,88) velocity=(0,0,0) angular=(0,0,0) speed=0 displacement=0 delta_entities=0
+  OK   supported surface has first-step contact
+  OK   no first-step gravity velocity spike (<1e-4 m/s)
+  OK   no artificial first-step angular velocity (<1e-4 rad/s)
+  OK   no first-step gravity position spike (<1e-5 m)
+  OK   unchanged supported entity produces no moved delta under unmodified persistence policy
+  OK   valid baseline delta serializes
+  OK   valid baseline delta parses: 
+  OK   saved delta carries the actual matching authored content fingerprint
+  OK   real FTFT1 preflight accepts valid baseline: 
+  OK   reload introduces no artificial moved records
+  OK   entity after ordinary fixed step
+  STEP persisted-reload contacts=1 position=(137,-41,88) velocity=(0,0,0) angular=(0,0,0) speed=0 displacement=0 delta_entities=0
+  OK   supported surface has first-step contact
+  OK   no first-step gravity velocity spike (<1e-4 m/s)
+  OK   no artificial first-step angular velocity (<1e-4 rad/s)
+  OK   no first-step gravity position spike (<1e-5 m)
+  OK   unchanged supported entity produces no moved delta under unmodified persistence policy
+CASE_RESULT zero sphere PASS
+CASE up_y box offset=(0,0,0)
+  OK   ordinary authored scene serializes
+  OK   exactly one dynamic entity and static support, no other contact bodies
+  OK   real runtime shapes available
+  OK   body/support share actual stored orientation
+  OK   support contact is inside the face, away from edges
+  OK   represented canonical geometry is exactly touching
+  GEOMETRY gap=0 class=touching body=(0,1,0) support=(0,0,0) stored_q=(1,0,0,0) gravity=(0,-9.81000042,0)
+  OK   entity after ordinary fixed step
+  STEP initial contacts=4 position=(0,1,0) velocity=(0,0,0) angular=(0,0,0) speed=0 displacement=0 delta_entities=0
+  OK   supported surface has first-step contact
+  OK   no first-step gravity velocity spike (<1e-4 m/s)
+  OK   no artificial first-step angular velocity (<1e-4 rad/s)
+  OK   no first-step gravity position spike (<1e-5 m)
+  OK   unchanged supported entity produces no moved delta under unmodified persistence policy
+  OK   Full -> Coarse: 
+  OK   released old body handle is invalid
+  OK   Coarse -> Full: 
+  OK   reconstruction obtains a fresh body handle
+  OK   reconstruction preserves exact retained pose and velocities
+  OK   entity after ordinary fixed step
+  STEP reconstructed contacts=4 position=(0,1,0) velocity=(0,0,0) angular=(0,0,0) speed=0 displacement=0 delta_entities=0
+  OK   supported surface has first-step contact
+  OK   no first-step gravity velocity spike (<1e-4 m/s)
+  OK   no artificial first-step angular velocity (<1e-4 rad/s)
+  OK   no first-step gravity position spike (<1e-5 m)
+  OK   unchanged supported entity produces no moved delta under unmodified persistence policy
+  OK   valid baseline delta serializes
+  OK   valid baseline delta parses: 
+  OK   saved delta carries the actual matching authored content fingerprint
+  OK   real FTFT1 preflight accepts valid baseline: 
+  OK   reload introduces no artificial moved records
+  OK   entity after ordinary fixed step
+  STEP persisted-reload contacts=4 position=(0,1,0) velocity=(0,0,0) angular=(0,0,0) speed=0 displacement=0 delta_entities=0
+  OK   supported surface has first-step contact
+  OK   no first-step gravity velocity spike (<1e-4 m/s)
+  OK   no artificial first-step angular velocity (<1e-4 rad/s)
+  OK   no first-step gravity position spike (<1e-5 m)
+  OK   unchanged supported entity produces no moved delta under unmodified persistence policy
+CASE_RESULT up_y box PASS
+CASE up_y box offset=(137,-42,88)
+  OK   ordinary authored scene serializes
+  OK   exactly one dynamic entity and static support, no other contact bodies
+  OK   real runtime shapes available
+  OK   body/support share actual stored orientation
+  OK   support contact is inside the face, away from edges
+  OK   represented canonical geometry is exactly touching
+  GEOMETRY gap=0 class=touching body=(137,-41,88) support=(137,-42,88) stored_q=(1,0,0,0) gravity=(0,-9.81000042,0)
+  OK   entity after ordinary fixed step
+  STEP initial contacts=4 position=(137,-41,88) velocity=(0,0,0) angular=(0,0,0) speed=0 displacement=0 delta_entities=0
+  OK   supported surface has first-step contact
+  OK   no first-step gravity velocity spike (<1e-4 m/s)
+  OK   no artificial first-step angular velocity (<1e-4 rad/s)
+  OK   no first-step gravity position spike (<1e-5 m)
+  OK   unchanged supported entity produces no moved delta under unmodified persistence policy
+  OK   Full -> Coarse: 
+  OK   released old body handle is invalid
+  OK   Coarse -> Full: 
+  OK   reconstruction obtains a fresh body handle
+  OK   reconstruction preserves exact retained pose and velocities
+  OK   entity after ordinary fixed step
+  STEP reconstructed contacts=4 position=(137,-41,88) velocity=(0,0,0) angular=(0,0,0) speed=0 displacement=0 delta_entities=0
+  OK   supported surface has first-step contact
+  OK   no first-step gravity velocity spike (<1e-4 m/s)
+  OK   no artificial first-step angular velocity (<1e-4 rad/s)
+  OK   no first-step gravity position spike (<1e-5 m)
+  OK   unchanged supported entity produces no moved delta under unmodified persistence policy
+  OK   valid baseline delta serializes
+  OK   valid baseline delta parses: 
+  OK   saved delta carries the actual matching authored content fingerprint
+  OK   real FTFT1 preflight accepts valid baseline: 
+  OK   reload introduces no artificial moved records
+  OK   entity after ordinary fixed step
+  STEP persisted-reload contacts=4 position=(137,-41,88) velocity=(0,0,0) angular=(0,0,0) speed=0 displacement=0 delta_entities=0
+  OK   supported surface has first-step contact
+  OK   no first-step gravity velocity spike (<1e-4 m/s)
+  OK   no artificial first-step angular velocity (<1e-4 rad/s)
+  OK   no first-step gravity position spike (<1e-5 m)
+  OK   unchanged supported entity produces no moved delta under unmodified persistence policy
+CASE_RESULT up_y box PASS
+CASE up_y sphere offset=(0,0,0)
+  OK   ordinary authored scene serializes
+  OK   exactly one dynamic entity and static support, no other contact bodies
+  OK   real runtime shapes available
+  OK   body/support share actual stored orientation
+  OK   support contact is inside the face, away from edges
+  OK   represented canonical geometry is exactly touching
+  GEOMETRY gap=0 class=touching body=(0,1,0) support=(0,0,0) stored_q=(1,0,0,0) gravity=(0,-9.81000042,0)
+  OK   entity after ordinary fixed step
+  STEP initial contacts=1 position=(0,1,0) velocity=(0,0,0) angular=(0,0,0) speed=0 displacement=0 delta_entities=0
+  OK   supported surface has first-step contact
+  OK   no first-step gravity velocity spike (<1e-4 m/s)
+  OK   no artificial first-step angular velocity (<1e-4 rad/s)
+  OK   no first-step gravity position spike (<1e-5 m)
+  OK   unchanged supported entity produces no moved delta under unmodified persistence policy
+  OK   Full -> Coarse: 
+  OK   released old body handle is invalid
+  OK   Coarse -> Full: 
+  OK   reconstruction obtains a fresh body handle
+  OK   reconstruction preserves exact retained pose and velocities
+  OK   entity after ordinary fixed step
+  STEP reconstructed contacts=1 position=(0,1,0) velocity=(0,0,0) angular=(0,0,0) speed=0 displacement=0 delta_entities=0
+  OK   supported surface has first-step contact
+  OK   no first-step gravity velocity spike (<1e-4 m/s)
+  OK   no artificial first-step angular velocity (<1e-4 rad/s)
+  OK   no first-step gravity position spike (<1e-5 m)
+  OK   unchanged supported entity produces no moved delta under unmodified persistence policy
+  OK   valid baseline delta serializes
+  OK   valid baseline delta parses: 
+  OK   saved delta carries the actual matching authored content fingerprint
+  OK   real FTFT1 preflight accepts valid baseline: 
+  OK   reload introduces no artificial moved records
+  OK   entity after ordinary fixed step
+  STEP persisted-reload contacts=1 position=(0,1,0) velocity=(0,0,0) angular=(0,0,0) speed=0 displacement=0 delta_entities=0
+  OK   supported surface has first-step contact
+  OK   no first-step gravity velocity spike (<1e-4 m/s)
+  OK   no artificial first-step angular velocity (<1e-4 rad/s)
+  OK   no first-step gravity position spike (<1e-5 m)
+  OK   unchanged supported entity produces no moved delta under unmodified persistence policy
+CASE_RESULT up_y sphere PASS
+CASE up_y sphere offset=(137,-42,88)
+  OK   ordinary authored scene serializes
+  OK   exactly one dynamic entity and static support, no other contact bodies
+  OK   real runtime shapes available
+  OK   body/support share actual stored orientation
+  OK   support contact is inside the face, away from edges
+  OK   represented canonical geometry is exactly touching
+  GEOMETRY gap=0 class=touching body=(137,-41,88) support=(137,-42,88) stored_q=(1,0,0,0) gravity=(0,-9.81000042,0)
+  OK   entity after ordinary fixed step
+  STEP initial contacts=1 position=(137,-41,88) velocity=(0,0,0) angular=(0,0,0) speed=0 displacement=0 delta_entities=0
+  OK   supported surface has first-step contact
+  OK   no first-step gravity velocity spike (<1e-4 m/s)
+  OK   no artificial first-step angular velocity (<1e-4 rad/s)
+  OK   no first-step gravity position spike (<1e-5 m)
+  OK   unchanged supported entity produces no moved delta under unmodified persistence policy
+  OK   Full -> Coarse: 
+  OK   released old body handle is invalid
+  OK   Coarse -> Full: 
+  OK   reconstruction obtains a fresh body handle
+  OK   reconstruction preserves exact retained pose and velocities
+  OK   entity after ordinary fixed step
+  STEP reconstructed contacts=1 position=(137,-41,88) velocity=(0,0,0) angular=(0,0,0) speed=0 displacement=0 delta_entities=0
+  OK   supported surface has first-step contact
+  OK   no first-step gravity velocity spike (<1e-4 m/s)
+  OK   no artificial first-step angular velocity (<1e-4 rad/s)
+  OK   no first-step gravity position spike (<1e-5 m)
+  OK   unchanged supported entity produces no moved delta under unmodified persistence policy
+  OK   valid baseline delta serializes
+  OK   valid baseline delta parses: 
+  OK   saved delta carries the actual matching authored content fingerprint
+  OK   real FTFT1 preflight accepts valid baseline: 
+  OK   reload introduces no artificial moved records
+  OK   entity after ordinary fixed step
+  STEP persisted-reload contacts=1 position=(137,-41,88) velocity=(0,0,0) angular=(0,0,0) speed=0 displacement=0 delta_entities=0
+  OK   supported surface has first-step contact
+  OK   no first-step gravity velocity spike (<1e-4 m/s)
+  OK   no artificial first-step angular velocity (<1e-4 rad/s)
+  OK   no first-step gravity position spike (<1e-5 m)
+  OK   unchanged supported entity produces no moved delta under unmodified persistence policy
+CASE_RESULT up_y sphere PASS
+CASE down_y box offset=(0,0,0)
+  OK   ordinary authored scene serializes
+  OK   exactly one dynamic entity and static support, no other contact bodies
+  OK   real runtime shapes available
+  OK   body/support share actual stored orientation
+  OK   support contact is inside the face, away from edges
+  OK   represented canonical geometry is exactly touching
+  GEOMETRY gap=0 class=touching body=(0,-1,0) support=(0,0,0) stored_q=(0,1,0,0) gravity=(0,9.81000042,0)
+  OK   entity after ordinary fixed step
+  STEP initial contacts=4 position=(0,-1,0) velocity=(0,0,0) angular=(0,0,0) speed=0 displacement=0 delta_entities=0
+  OK   supported surface has first-step contact
+  OK   no first-step gravity velocity spike (<1e-4 m/s)
+  OK   no artificial first-step angular velocity (<1e-4 rad/s)
+  OK   no first-step gravity position spike (<1e-5 m)
+  OK   unchanged supported entity produces no moved delta under unmodified persistence policy
+  OK   Full -> Coarse: 
+  OK   released old body handle is invalid
+  OK   Coarse -> Full: 
+  OK   reconstruction obtains a fresh body handle
+  OK   reconstruction preserves exact retained pose and velocities
+  OK   entity after ordinary fixed step
+  STEP reconstructed contacts=4 position=(0,-1,0) velocity=(0,0,0) angular=(0,0,0) speed=0 displacement=0 delta_entities=0
+  OK   supported surface has first-step contact
+  OK   no first-step gravity velocity spike (<1e-4 m/s)
+  OK   no artificial first-step angular velocity (<1e-4 rad/s)
+  OK   no first-step gravity position spike (<1e-5 m)
+  OK   unchanged supported entity produces no moved delta under unmodified persistence policy
+  OK   valid baseline delta serializes
+  OK   valid baseline delta parses: 
+  OK   saved delta carries the actual matching authored content fingerprint
+  OK   real FTFT1 preflight accepts valid baseline: 
+  OK   reload introduces no artificial moved records
+  OK   entity after ordinary fixed step
+  STEP persisted-reload contacts=4 position=(0,-1,0) velocity=(0,0,0) angular=(0,0,0) speed=0 displacement=0 delta_entities=0
+  OK   supported surface has first-step contact
+  OK   no first-step gravity velocity spike (<1e-4 m/s)
+  OK   no artificial first-step angular velocity (<1e-4 rad/s)
+  OK   no first-step gravity position spike (<1e-5 m)
+  OK   unchanged supported entity produces no moved delta under unmodified persistence policy
+CASE_RESULT down_y box PASS
+CASE down_y box offset=(137,-42,88)
+  OK   ordinary authored scene serializes
+  OK   exactly one dynamic entity and static support, no other contact bodies
+  OK   real runtime shapes available
+  OK   body/support share actual stored orientation
+  OK   support contact is inside the face, away from edges
+  OK   represented canonical geometry is exactly touching
+  GEOMETRY gap=0 class=touching body=(137,-43,88) support=(137,-42,88) stored_q=(0,1,0,0) gravity=(0,9.81000042,0)
+  OK   entity after ordinary fixed step
+  STEP initial contacts=4 position=(137,-43,88) velocity=(0,0,0) angular=(0,0,0) speed=0 displacement=0 delta_entities=0
+  OK   supported surface has first-step contact
+  OK   no first-step gravity velocity spike (<1e-4 m/s)
+  OK   no artificial first-step angular velocity (<1e-4 rad/s)
+  OK   no first-step gravity position spike (<1e-5 m)
+  OK   unchanged supported entity produces no moved delta under unmodified persistence policy
+  OK   Full -> Coarse: 
+  OK   released old body handle is invalid
+  OK   Coarse -> Full: 
+  OK   reconstruction obtains a fresh body handle
+  OK   reconstruction preserves exact retained pose and velocities
+  OK   entity after ordinary fixed step
+  STEP reconstructed contacts=4 position=(137,-43,88) velocity=(0,0,0) angular=(0,0,0) speed=0 displacement=0 delta_entities=0
+  OK   supported surface has first-step contact
+  OK   no first-step gravity velocity spike (<1e-4 m/s)
+  OK   no artificial first-step angular velocity (<1e-4 rad/s)
+  OK   no first-step gravity position spike (<1e-5 m)
+  OK   unchanged supported entity produces no moved delta under unmodified persistence policy
+  OK   valid baseline delta serializes
+  OK   valid baseline delta parses: 
+  OK   saved delta carries the actual matching authored content fingerprint
+  OK   real FTFT1 preflight accepts valid baseline: 
+  OK   reload introduces no artificial moved records
+  OK   entity after ordinary fixed step
+  STEP persisted-reload contacts=4 position=(137,-43,88) velocity=(0,0,0) angular=(0,0,0) speed=0 displacement=0 delta_entities=0
+  OK   supported surface has first-step contact
+  OK   no first-step gravity velocity spike (<1e-4 m/s)
+  OK   no artificial first-step angular velocity (<1e-4 rad/s)
+  OK   no first-step gravity position spike (<1e-5 m)
+  OK   unchanged supported entity produces no moved delta under unmodified persistence policy
+CASE_RESULT down_y box PASS
+CASE down_y sphere offset=(0,0,0)
+  OK   ordinary authored scene serializes
+  OK   exactly one dynamic entity and static support, no other contact bodies
+  OK   real runtime shapes available
+  OK   body/support share actual stored orientation
+  OK   support contact is inside the face, away from edges
+  OK   represented canonical geometry is exactly touching
+  GEOMETRY gap=0 class=touching body=(0,-1,0) support=(0,0,0) stored_q=(0,1,0,0) gravity=(0,9.81000042,0)
+  OK   entity after ordinary fixed step
+  STEP initial contacts=1 position=(0,-1,0) velocity=(0,0,0) angular=(0,0,0) speed=0 displacement=0 delta_entities=0
+  OK   supported surface has first-step contact
+  OK   no first-step gravity velocity spike (<1e-4 m/s)
+  OK   no artificial first-step angular velocity (<1e-4 rad/s)
+  OK   no first-step gravity position spike (<1e-5 m)
+  OK   unchanged supported entity produces no moved delta under unmodified persistence policy
+  OK   Full -> Coarse: 
+  OK   released old body handle is invalid
+  OK   Coarse -> Full: 
+  OK   reconstruction obtains a fresh body handle
+  OK   reconstruction preserves exact retained pose and velocities
+  OK   entity after ordinary fixed step
+  STEP reconstructed contacts=1 position=(0,-1,0) velocity=(0,0,0) angular=(0,0,0) speed=0 displacement=0 delta_entities=0
+  OK   supported surface has first-step contact
+  OK   no first-step gravity velocity spike (<1e-4 m/s)
+  OK   no artificial first-step angular velocity (<1e-4 rad/s)
+  OK   no first-step gravity position spike (<1e-5 m)
+  OK   unchanged supported entity produces no moved delta under unmodified persistence policy
+  OK   valid baseline delta serializes
+  OK   valid baseline delta parses: 
+  OK   saved delta carries the actual matching authored content fingerprint
+  OK   real FTFT1 preflight accepts valid baseline: 
+  OK   reload introduces no artificial moved records
+  OK   entity after ordinary fixed step
+  STEP persisted-reload contacts=1 position=(0,-1,0) velocity=(0,0,0) angular=(0,0,0) speed=0 displacement=0 delta_entities=0
+  OK   supported surface has first-step contact
+  OK   no first-step gravity velocity spike (<1e-4 m/s)
+  OK   no artificial first-step angular velocity (<1e-4 rad/s)
+  OK   no first-step gravity position spike (<1e-5 m)
+  OK   unchanged supported entity produces no moved delta under unmodified persistence policy
+CASE_RESULT down_y sphere PASS
+CASE down_y sphere offset=(137,-42,88)
+  OK   ordinary authored scene serializes
+  OK   exactly one dynamic entity and static support, no other contact bodies
+  OK   real runtime shapes available
+  OK   body/support share actual stored orientation
+  OK   support contact is inside the face, away from edges
+  OK   represented canonical geometry is exactly touching
+  GEOMETRY gap=0 class=touching body=(137,-43,88) support=(137,-42,88) stored_q=(0,1,0,0) gravity=(0,9.81000042,0)
+  OK   entity after ordinary fixed step
+  STEP initial contacts=1 position=(137,-43,88) velocity=(0,0,0) angular=(0,0,0) speed=0 displacement=0 delta_entities=0
+  OK   supported surface has first-step contact
+  OK   no first-step gravity velocity spike (<1e-4 m/s)
+  OK   no artificial first-step angular velocity (<1e-4 rad/s)
+  OK   no first-step gravity position spike (<1e-5 m)
+  OK   unchanged supported entity produces no moved delta under unmodified persistence policy
+  OK   Full -> Coarse: 
+  OK   released old body handle is invalid
+  OK   Coarse -> Full: 
+  OK   reconstruction obtains a fresh body handle
+  OK   reconstruction preserves exact retained pose and velocities
+  OK   entity after ordinary fixed step
+  STEP reconstructed contacts=1 position=(137,-43,88) velocity=(0,0,0) angular=(0,0,0) speed=0 displacement=0 delta_entities=0
+  OK   supported surface has first-step contact
+  OK   no first-step gravity velocity spike (<1e-4 m/s)
+  OK   no artificial first-step angular velocity (<1e-4 rad/s)
+  OK   no first-step gravity position spike (<1e-5 m)
+  OK   unchanged supported entity produces no moved delta under unmodified persistence policy
+  OK   valid baseline delta serializes
+  OK   valid baseline delta parses: 
+  OK   saved delta carries the actual matching authored content fingerprint
+  OK   real FTFT1 preflight accepts valid baseline: 
+  OK   reload introduces no artificial moved records
+  OK   entity after ordinary fixed step
+  STEP persisted-reload contacts=1 position=(137,-43,88) velocity=(0,0,0) angular=(0,0,0) speed=0 displacement=0 delta_entities=0
+  OK   supported surface has first-step contact
+  OK   no first-step gravity velocity spike (<1e-4 m/s)
+  OK   no artificial first-step angular velocity (<1e-4 rad/s)
+  OK   no first-step gravity position spike (<1e-5 m)
+  OK   unchanged supported entity produces no moved delta under unmodified persistence policy
+CASE_RESULT down_y sphere PASS
+CASE up_x box offset=(0,0,0)
+  OK   ordinary authored scene serializes
+  OK   exactly one dynamic entity and static support, no other contact bodies
+  OK   real runtime shapes available
+  OK   body/support share actual stored orientation
+  OK   support contact is inside the face, away from edges
+  OK   represented canonical geometry is exactly touching
+  GEOMETRY gap=0 class=touching body=(1,0,0) support=(0,0,0) stored_q=(0.707106769,0,0,-0.707106769) gravity=(-9.80999947,-9.53674316e-07,0)
+  OK   entity after ordinary fixed step
+  STEP initial contacts=4 position=(1,-1.54627804e-11,-5.11325184e-12) velocity=(5.53759372e-10,-3.16785265e-10,-1.88981095e-10) angular=(2.6137612e-12,3.79645287e-10,-6.36207642e-10) speed=6.65369204e-10 displacement=1.62862796e-11 delta_entities=0
+  OK   supported surface has first-step contact
+  OK   no first-step gravity velocity spike (<1e-4 m/s)
+  OK   no artificial first-step angular velocity (<1e-4 rad/s)
+  OK   no first-step gravity position spike (<1e-5 m)
+  OK   unchanged supported entity produces no moved delta under unmodified persistence policy
+  OK   Full -> Coarse: 
+  OK   released old body handle is invalid
+  OK   Coarse -> Full: 
+  OK   reconstruction obtains a fresh body handle
+  OK   reconstruction preserves exact retained pose and velocities
+  OK   entity after ordinary fixed step
+  STEP reconstructed contacts=4 position=(1,-2.79668753e-11,2.40903976e-12) velocity=(-1.05717701e-09,2.52152743e-10,2.22814045e-10) angular=(2.8537693e-11,-4.62736877e-10,4.76718831e-10) speed=1.10943699e-09 displacement=1.45923707e-11 delta_entities=0
+  OK   supported surface has first-step contact
+  OK   no first-step gravity velocity spike (<1e-4 m/s)
+  OK   no artificial first-step angular velocity (<1e-4 rad/s)
+  OK   no first-step gravity position spike (<1e-5 m)
+  OK   unchanged supported entity produces no moved delta under unmodified persistence policy
+  OK   valid baseline delta serializes
+  OK   valid baseline delta parses: 
+  OK   saved delta carries the actual matching authored content fingerprint
+  OK   real FTFT1 preflight accepts valid baseline: 
+  OK   reload introduces no artificial moved records
+  OK   entity after ordinary fixed step
+  STEP persisted-reload contacts=4 position=(1,-1.54627804e-11,-5.11325184e-12) velocity=(5.53759372e-10,-3.16785265e-10,-1.88981095e-10) angular=(2.6137612e-12,3.79645287e-10,-6.36207642e-10) speed=6.65369204e-10 displacement=1.62862796e-11 delta_entities=0
+  OK   supported surface has first-step contact
+  OK   no first-step gravity velocity spike (<1e-4 m/s)
+  OK   no artificial first-step angular velocity (<1e-4 rad/s)
+  OK   no first-step gravity position spike (<1e-5 m)
+  OK   unchanged supported entity produces no moved delta under unmodified persistence policy
+CASE_RESULT up_x box PASS
+CASE up_x box offset=(137,-42,88)
+  OK   ordinary authored scene serializes
+  OK   exactly one dynamic entity and static support, no other contact bodies
+  OK   real runtime shapes available
+  OK   body/support share actual stored orientation
+  OK   support contact is inside the face, away from edges
+  OK   represented canonical geometry is exactly touching
+  GEOMETRY gap=0 class=touching body=(138,-42,88) support=(137,-42,88) stored_q=(0.707106769,0,0,-0.707106769) gravity=(-9.80999947,-9.53674316e-07,0)
+  OK   entity after ordinary fixed step
+  STEP initial contacts=4 position=(138,-42,88) velocity=(5.53759372e-10,-3.16785265e-10,-1.88981095e-10) angular=(2.6137612e-12,3.79645287e-10,-6.36207642e-10) speed=6.65369204e-10 displacement=0 delta_entities=0
+  OK   supported surface has first-step contact
+  OK   no first-step gravity velocity spike (<1e-4 m/s)
+  OK   no artificial first-step angular velocity (<1e-4 rad/s)
+  OK   no first-step gravity position spike (<1e-5 m)
+  OK   unchanged supported entity produces no moved delta under unmodified persistence policy
+  OK   Full -> Coarse: 
+  OK   released old body handle is invalid
+  OK   Coarse -> Full: 
+  OK   reconstruction obtains a fresh body handle
+  OK   reconstruction preserves exact retained pose and velocities
+  OK   entity after ordinary fixed step
+  STEP reconstructed contacts=4 position=(138,-42,88) velocity=(-1.05717701e-09,2.52152743e-10,2.22814045e-10) angular=(2.8537693e-11,-4.62736877e-10,4.76718831e-10) speed=1.10943699e-09 displacement=0 delta_entities=0
+  OK   supported surface has first-step contact
+  OK   no first-step gravity velocity spike (<1e-4 m/s)
+  OK   no artificial first-step angular velocity (<1e-4 rad/s)
+  OK   no first-step gravity position spike (<1e-5 m)
+  OK   unchanged supported entity produces no moved delta under unmodified persistence policy
+  OK   valid baseline delta serializes
+  OK   valid baseline delta parses: 
+  OK   saved delta carries the actual matching authored content fingerprint
+  OK   real FTFT1 preflight accepts valid baseline: 
+  OK   reload introduces no artificial moved records
+  OK   entity after ordinary fixed step
+  STEP persisted-reload contacts=4 position=(138,-42,88) velocity=(5.53759372e-10,-3.16785265e-10,-1.88981095e-10) angular=(2.6137612e-12,3.79645287e-10,-6.36207642e-10) speed=6.65369204e-10 displacement=0 delta_entities=0
+  OK   supported surface has first-step contact
+  OK   no first-step gravity velocity spike (<1e-4 m/s)
+  OK   no artificial first-step angular velocity (<1e-4 rad/s)
+  OK   no first-step gravity position spike (<1e-5 m)
+  OK   unchanged supported entity produces no moved delta under unmodified persistence policy
+CASE_RESULT up_x box PASS
+CASE up_x sphere offset=(0,0,0)
+  OK   ordinary authored scene serializes
+  OK   exactly one dynamic entity and static support, no other contact bodies
+  OK   real runtime shapes available
+  OK   body/support share actual stored orientation
+  OK   support contact is inside the face, away from edges
+  OK   represented canonical geometry is exactly touching
+  GEOMETRY gap=0 class=touching body=(1,0,0) support=(0,0,0) stored_q=(0.707106769,0,0,-0.707106769) gravity=(-9.80999947,-9.53674316e-07,0)
+  OK   entity after ordinary fixed step
+  STEP initial contacts=1 position=(1,-1.18284771e-10,0) velocity=(0,-1.13567191e-08,0) angular=(0,0,-2.27134382e-08) speed=1.13567191e-08 displacement=1.18284771e-10 delta_entities=0
+  OK   supported surface has first-step contact
+  OK   no first-step gravity velocity spike (<1e-4 m/s)
+  OK   no artificial first-step angular velocity (<1e-4 rad/s)
+  OK   no first-step gravity position spike (<1e-5 m)
+  OK   unchanged supported entity produces no moved delta under unmodified persistence policy
+  OK   Full -> Coarse: 
+  OK   released old body handle is invalid
+  OK   Coarse -> Full: 
+  OK   reconstruction obtains a fresh body handle
+  OK   reconstruction preserves exact retained pose and velocities
+  OK   entity after ordinary fixed step
+  STEP reconstructed contacts=1 position=(1,-4.25905811e-10,0) velocity=(0,-2.27217285e-08,0) angular=(0,0,-4.5443457e-08) speed=2.27217285e-08 displacement=3.0762104e-10 delta_entities=0
+  OK   supported surface has first-step contact
+  OK   no first-step gravity velocity spike (<1e-4 m/s)
+  OK   no artificial first-step angular velocity (<1e-4 rad/s)
+  OK   no first-step gravity position spike (<1e-5 m)
+  OK   unchanged supported entity produces no moved delta under unmodified persistence policy
+  OK   valid baseline delta serializes
+  OK   valid baseline delta parses: 
+  OK   saved delta carries the actual matching authored content fingerprint
+  OK   real FTFT1 preflight accepts valid baseline: 
+  OK   reload introduces no artificial moved records
+  OK   entity after ordinary fixed step
+  STEP persisted-reload contacts=1 position=(1,-1.18284771e-10,0) velocity=(0,-1.13567191e-08,0) angular=(0,0,-2.27134382e-08) speed=1.13567191e-08 displacement=1.18284771e-10 delta_entities=0
+  OK   supported surface has first-step contact
+  OK   no first-step gravity velocity spike (<1e-4 m/s)
+  OK   no artificial first-step angular velocity (<1e-4 rad/s)
+  OK   no first-step gravity position spike (<1e-5 m)
+  OK   unchanged supported entity produces no moved delta under unmodified persistence policy
+CASE_RESULT up_x sphere PASS
+CASE up_x sphere offset=(137,-42,88)
+  OK   ordinary authored scene serializes
+  OK   exactly one dynamic entity and static support, no other contact bodies
+  OK   real runtime shapes available
+  OK   body/support share actual stored orientation
+  OK   support contact is inside the face, away from edges
+  OK   represented canonical geometry is exactly touching
+  GEOMETRY gap=0 class=touching body=(138,-42,88) support=(137,-42,88) stored_q=(0.707106769,0,0,-0.707106769) gravity=(-9.80999947,-9.53674316e-07,0)
+  OK   entity after ordinary fixed step
+  STEP initial contacts=1 position=(138,-42,88) velocity=(0,-1.13532668e-08,0) angular=(0,0,-2.27065335e-08) speed=1.13532668e-08 displacement=0 delta_entities=0
+  OK   supported surface has first-step contact
+  OK   no first-step gravity velocity spike (<1e-4 m/s)
+  OK   no artificial first-step angular velocity (<1e-4 rad/s)
+  OK   no first-step gravity position spike (<1e-5 m)
+  OK   unchanged supported entity produces no moved delta under unmodified persistence policy
+  OK   Full -> Coarse: 
+  OK   released old body handle is invalid
+  OK   Coarse -> Full: 
+  OK   reconstruction obtains a fresh body handle
+  OK   reconstruction preserves exact retained pose and velocities
+  OK   entity after ordinary fixed step
+  STEP reconstructed contacts=1 position=(138,-42,88) velocity=(0,-2.27065318e-08,0) angular=(0,0,-4.54130635e-08) speed=2.27065318e-08 displacement=0 delta_entities=0
+  OK   supported surface has first-step contact
+  OK   no first-step gravity velocity spike (<1e-4 m/s)
+  OK   no artificial first-step angular velocity (<1e-4 rad/s)
+  OK   no first-step gravity position spike (<1e-5 m)
+  OK   unchanged supported entity produces no moved delta under unmodified persistence policy
+  OK   valid baseline delta serializes
+  OK   valid baseline delta parses: 
+  OK   saved delta carries the actual matching authored content fingerprint
+  OK   real FTFT1 preflight accepts valid baseline: 
+  OK   reload introduces no artificial moved records
+  OK   entity after ordinary fixed step
+  STEP persisted-reload contacts=1 position=(138,-42,88) velocity=(0,-1.13532668e-08,0) angular=(0,0,-2.27065335e-08) speed=1.13532668e-08 displacement=0 delta_entities=0
+  OK   supported surface has first-step contact
+  OK   no first-step gravity velocity spike (<1e-4 m/s)
+  OK   no artificial first-step angular velocity (<1e-4 rad/s)
+  OK   no first-step gravity position spike (<1e-5 m)
+  OK   unchanged supported entity produces no moved delta under unmodified persistence policy
+CASE_RESULT up_x sphere PASS
+CASE down_x box offset=(0,0,0)
+  OK   ordinary authored scene serializes
+  OK   exactly one dynamic entity and static support, no other contact bodies
+  OK   real runtime shapes available
+  OK   body/support share actual stored orientation
+  OK   support contact is inside the face, away from edges
+  OK   represented canonical geometry is exactly touching
+  GEOMETRY gap=0 class=touching body=(-1,0,0) support=(0,0,0) stored_q=(0.707106769,0,0,0.707106769) gravity=(9.80999947,-9.53674316e-07,0)
+  OK   entity after ordinary fixed step
+  STEP initial contacts=4 position=(-1,-1.20733024e-11,4.2318306e-12) velocity=(0,3.60348591e-11,3.64542896e-10) angular=(3.37513286e-12,7.26371852e-10,-6.86696117e-11) speed=3.66319586e-10 displacement=1.27934755e-11 delta_entities=0
+  OK   supported surface has first-step contact
+  OK   no first-step gravity velocity spike (<1e-4 m/s)
+  OK   no artificial first-step angular velocity (<1e-4 rad/s)
+  OK   no first-step gravity position spike (<1e-5 m)
+  OK   unchanged supported entity produces no moved delta under unmodified persistence policy
+  OK   Full -> Coarse: 
+  OK   released old body handle is invalid
+  OK   Coarse -> Full: 
+  OK   reconstruction obtains a fresh body handle
+  OK   reconstruction preserves exact retained pose and velocities
+  OK   entity after ordinary fixed step
+  STEP reconstructed contacts=4 position=(-1,-2.06686179e-11,-2.66795397e-12) velocity=(6.29272023e-10,3.2391867e-10,-5.90554439e-10) angular=(-3.58039336e-12,-1.17331533e-09,-6.51440402e-10) speed=9.2177066e-10 displacement=1.10220904e-11 delta_entities=0
+  OK   supported surface has first-step contact
+  OK   no first-step gravity velocity spike (<1e-4 m/s)
+  OK   no artificial first-step angular velocity (<1e-4 rad/s)
+  OK   no first-step gravity position spike (<1e-5 m)
+  OK   unchanged supported entity produces no moved delta under unmodified persistence policy
+  OK   valid baseline delta serializes
+  OK   valid baseline delta parses: 
+  OK   saved delta carries the actual matching authored content fingerprint
+  OK   real FTFT1 preflight accepts valid baseline: 
+  OK   reload introduces no artificial moved records
+  OK   entity after ordinary fixed step
+  STEP persisted-reload contacts=4 position=(-1,-1.20733024e-11,4.2318306e-12) velocity=(0,3.60348591e-11,3.64542896e-10) angular=(3.37513286e-12,7.26371852e-10,-6.86696117e-11) speed=3.66319586e-10 displacement=1.27934755e-11 delta_entities=0
+  OK   supported surface has first-step contact
+  OK   no first-step gravity velocity spike (<1e-4 m/s)
+  OK   no artificial first-step angular velocity (<1e-4 rad/s)
+  OK   no first-step gravity position spike (<1e-5 m)
+  OK   unchanged supported entity produces no moved delta under unmodified persistence policy
+CASE_RESULT down_x box PASS
+CASE down_x box offset=(137,-42,88)
+  OK   ordinary authored scene serializes
+  OK   exactly one dynamic entity and static support, no other contact bodies
+  OK   real runtime shapes available
+  OK   body/support share actual stored orientation
+  OK   support contact is inside the face, away from edges
+  OK   represented canonical geometry is exactly touching
+  GEOMETRY gap=0 class=touching body=(136,-42,88) support=(137,-42,88) stored_q=(0.707106769,0,0,0.707106769) gravity=(9.80999947,-9.53674316e-07,0)
+  OK   entity after ordinary fixed step
+  STEP initial contacts=4 position=(136,-42,88) velocity=(0,3.60348591e-11,3.64542896e-10) angular=(3.37513286e-12,7.26371852e-10,-6.86696117e-11) speed=3.66319586e-10 displacement=0 delta_entities=0
+  OK   supported surface has first-step contact
+  OK   no first-step gravity velocity spike (<1e-4 m/s)
+  OK   no artificial first-step angular velocity (<1e-4 rad/s)
+  OK   no first-step gravity position spike (<1e-5 m)
+  OK   unchanged supported entity produces no moved delta under unmodified persistence policy
+  OK   Full -> Coarse: 
+  OK   released old body handle is invalid
+  OK   Coarse -> Full: 
+  OK   reconstruction obtains a fresh body handle
+  OK   reconstruction preserves exact retained pose and velocities
+  OK   entity after ordinary fixed step
+  STEP reconstructed contacts=4 position=(136,-42,88) velocity=(6.29272023e-10,3.2391867e-10,-5.90554439e-10) angular=(-3.58039336e-12,-1.17331533e-09,-6.51440402e-10) speed=9.2177066e-10 displacement=0 delta_entities=0
+  OK   supported surface has first-step contact
+  OK   no first-step gravity velocity spike (<1e-4 m/s)
+  OK   no artificial first-step angular velocity (<1e-4 rad/s)
+  OK   no first-step gravity position spike (<1e-5 m)
+  OK   unchanged supported entity produces no moved delta under unmodified persistence policy
+  OK   valid baseline delta serializes
+  OK   valid baseline delta parses: 
+  OK   saved delta carries the actual matching authored content fingerprint
+  OK   real FTFT1 preflight accepts valid baseline: 
+  OK   reload introduces no artificial moved records
+  OK   entity after ordinary fixed step
+  STEP persisted-reload contacts=4 position=(136,-42,88) velocity=(0,3.60348591e-11,3.64542896e-10) angular=(3.37513286e-12,7.26371852e-10,-6.86696117e-11) speed=3.66319586e-10 displacement=0 delta_entities=0
+  OK   supported surface has first-step contact
+  OK   no first-step gravity velocity spike (<1e-4 m/s)
+  OK   no artificial first-step angular velocity (<1e-4 rad/s)
+  OK   no first-step gravity position spike (<1e-5 m)
+  OK   unchanged supported entity produces no moved delta under unmodified persistence policy
+CASE_RESULT down_x box PASS
+CASE down_x sphere offset=(0,0,0)
+  OK   ordinary authored scene serializes
+  OK   exactly one dynamic entity and static support, no other contact bodies
+  OK   real runtime shapes available
+  OK   body/support share actual stored orientation
+  OK   support contact is inside the face, away from edges
+  OK   represented canonical geometry is exactly touching
+  GEOMETRY gap=0 class=touching body=(-1,0,0) support=(0,0,0) stored_q=(0.707106769,0,0,0.707106769) gravity=(9.80999947,-9.53674316e-07,0)
+  OK   entity after ordinary fixed step
+  STEP initial contacts=1 position=(-1,-1.18284771e-10,0) velocity=(0,-1.13567191e-08,0) angular=(0,0,2.27134382e-08) speed=1.13567191e-08 displacement=1.18284771e-10 delta_entities=0
+  OK   supported surface has first-step contact
+  OK   no first-step gravity velocity spike (<1e-4 m/s)
+  OK   no artificial first-step angular velocity (<1e-4 rad/s)
+  OK   no first-step gravity position spike (<1e-5 m)
+  OK   unchanged supported entity produces no moved delta under unmodified persistence policy
+  OK   Full -> Coarse: 
+  OK   released old body handle is invalid
+  OK   Coarse -> Full: 
+  OK   reconstruction obtains a fresh body handle
+  OK   reconstruction preserves exact retained pose and velocities
+  OK   entity after ordinary fixed step
+  STEP reconstructed contacts=1 position=(-1,-4.25905811e-10,0) velocity=(0,-2.27217285e-08,0) angular=(0,0,4.5443457e-08) speed=2.27217285e-08 displacement=3.0762104e-10 delta_entities=0
+  OK   supported surface has first-step contact
+  OK   no first-step gravity velocity spike (<1e-4 m/s)
+  OK   no artificial first-step angular velocity (<1e-4 rad/s)
+  OK   no first-step gravity position spike (<1e-5 m)
+  OK   unchanged supported entity produces no moved delta under unmodified persistence policy
+  OK   valid baseline delta serializes
+  OK   valid baseline delta parses: 
+  OK   saved delta carries the actual matching authored content fingerprint
+  OK   real FTFT1 preflight accepts valid baseline: 
+  OK   reload introduces no artificial moved records
+  OK   entity after ordinary fixed step
+  STEP persisted-reload contacts=1 position=(-1,-1.18284771e-10,0) velocity=(0,-1.13567191e-08,0) angular=(0,0,2.27134382e-08) speed=1.13567191e-08 displacement=1.18284771e-10 delta_entities=0
+  OK   supported surface has first-step contact
+  OK   no first-step gravity velocity spike (<1e-4 m/s)
+  OK   no artificial first-step angular velocity (<1e-4 rad/s)
+  OK   no first-step gravity position spike (<1e-5 m)
+  OK   unchanged supported entity produces no moved delta under unmodified persistence policy
+CASE_RESULT down_x sphere PASS
+CASE down_x sphere offset=(137,-42,88)
+  OK   ordinary authored scene serializes
+  OK   exactly one dynamic entity and static support, no other contact bodies
+  OK   real runtime shapes available
+  OK   body/support share actual stored orientation
+  OK   support contact is inside the face, away from edges
+  OK   represented canonical geometry is exactly touching
+  GEOMETRY gap=0 class=touching body=(136,-42,88) support=(137,-42,88) stored_q=(0.707106769,0,0,0.707106769) gravity=(9.80999947,-9.53674316e-07,0)
+  OK   entity after ordinary fixed step
+  STEP initial contacts=1 position=(136,-42,88) velocity=(0,-1.13532668e-08,0) angular=(0,0,2.27065335e-08) speed=1.13532668e-08 displacement=0 delta_entities=0
+  OK   supported surface has first-step contact
+  OK   no first-step gravity velocity spike (<1e-4 m/s)
+  OK   no artificial first-step angular velocity (<1e-4 rad/s)
+  OK   no first-step gravity position spike (<1e-5 m)
+  OK   unchanged supported entity produces no moved delta under unmodified persistence policy
+  OK   Full -> Coarse: 
+  OK   released old body handle is invalid
+  OK   Coarse -> Full: 
+  OK   reconstruction obtains a fresh body handle
+  OK   reconstruction preserves exact retained pose and velocities
+  OK   entity after ordinary fixed step
+  STEP reconstructed contacts=1 position=(136,-42,88) velocity=(0,-2.27065318e-08,0) angular=(0,0,4.54130635e-08) speed=2.27065318e-08 displacement=0 delta_entities=0
+  OK   supported surface has first-step contact
+  OK   no first-step gravity velocity spike (<1e-4 m/s)
+  OK   no artificial first-step angular velocity (<1e-4 rad/s)
+  OK   no first-step gravity position spike (<1e-5 m)
+  OK   unchanged supported entity produces no moved delta under unmodified persistence policy
+  OK   valid baseline delta serializes
+  OK   valid baseline delta parses: 
+  OK   saved delta carries the actual matching authored content fingerprint
+  OK   real FTFT1 preflight accepts valid baseline: 
+  OK   reload introduces no artificial moved records
+  OK   entity after ordinary fixed step
+  STEP persisted-reload contacts=1 position=(136,-42,88) velocity=(0,-1.13532668e-08,0) angular=(0,0,2.27065335e-08) speed=1.13532668e-08 displacement=0 delta_entities=0
+  OK   supported surface has first-step contact
+  OK   no first-step gravity velocity spike (<1e-4 m/s)
+  OK   no artificial first-step angular velocity (<1e-4 rad/s)
+  OK   no first-step gravity position spike (<1e-5 m)
+  OK   unchanged supported entity produces no moved delta under unmodified persistence policy
+CASE_RESULT down_x sphere PASS
+CASE up_z box offset=(0,0,0)
+  OK   ordinary authored scene serializes
+  OK   exactly one dynamic entity and static support, no other contact bodies
+  OK   real runtime shapes available
+  OK   body/support share actual stored orientation
+  OK   support contact is inside the face, away from edges
+  OK   represented canonical geometry is exactly touching
+  GEOMETRY gap=0 class=touching body=(0,0,1) support=(0,0,0) stored_q=(0.707106769,0.707106769,0,0) gravity=(0,-9.53674316e-07,-9.80999947)
+  OK   entity after ordinary fixed step
+  STEP initial contacts=4 position=(-3.11868608e-12,-5.37016612e-12,1) velocity=(-4.79169648e-10,6.0568256e-10,0) angular=(-1.20666444e-09,-9.53333523e-10,4.96927196e-12) speed=7.72304942e-10 displacement=6.21006328e-12 delta_entities=0
+  OK   supported surface has first-step contact
+  OK   no first-step gravity velocity spike (<1e-4 m/s)
+  OK   no artificial first-step angular velocity (<1e-4 rad/s)
+  OK   no first-step gravity position spike (<1e-5 m)
+  OK   unchanged supported entity produces no moved delta under unmodified persistence policy
+  OK   Full -> Coarse: 
+  OK   released old body handle is invalid
+  OK   Coarse -> Full: 
+  OK   reconstruction obtains a fresh body handle
+  OK   reconstruction preserves exact retained pose and velocities
+  OK   entity after ordinary fixed step
+  STEP reconstructed contacts=4 position=(-1.86348853e-12,-2.08771351e-11,1) velocity=(-2.98850972e-10,-1.31743338e-10,-6.29272079e-10) angular=(2.68165073e-10,-5.95470395e-10,2.21637726e-12) speed=7.08979209e-10 displacement=1.55576871e-11 delta_entities=0
+  OK   supported surface has first-step contact
+  OK   no first-step gravity velocity spike (<1e-4 m/s)
+  OK   no artificial first-step angular velocity (<1e-4 rad/s)
+  OK   no first-step gravity position spike (<1e-5 m)
+  OK   unchanged supported entity produces no moved delta under unmodified persistence policy
+  OK   valid baseline delta serializes
+  OK   valid baseline delta parses: 
+  OK   saved delta carries the actual matching authored content fingerprint
+  OK   real FTFT1 preflight accepts valid baseline: 
+  OK   reload introduces no artificial moved records
+  OK   entity after ordinary fixed step
+  STEP persisted-reload contacts=4 position=(-3.11868608e-12,-5.37016612e-12,1) velocity=(-4.79169648e-10,6.0568256e-10,0) angular=(-1.20666444e-09,-9.53333523e-10,4.96927196e-12) speed=7.72304942e-10 displacement=6.21006328e-12 delta_entities=0
+  OK   supported surface has first-step contact
+  OK   no first-step gravity velocity spike (<1e-4 m/s)
+  OK   no artificial first-step angular velocity (<1e-4 rad/s)
+  OK   no first-step gravity position spike (<1e-5 m)
+  OK   unchanged supported entity produces no moved delta under unmodified persistence policy
+CASE_RESULT up_z box PASS
+CASE up_z box offset=(137,-42,88)
+  OK   ordinary authored scene serializes
+  OK   exactly one dynamic entity and static support, no other contact bodies
+  OK   real runtime shapes available
+  OK   body/support share actual stored orientation
+  OK   support contact is inside the face, away from edges
+  OK   represented canonical geometry is exactly touching
+  GEOMETRY gap=0 class=touching body=(137,-42,89) support=(137,-42,88) stored_q=(0.707106769,0.707106769,0,0) gravity=(0,-9.53674316e-07,-9.80999947)
+  OK   entity after ordinary fixed step
+  STEP initial contacts=4 position=(137,-42,89) velocity=(-4.79169648e-10,6.0568256e-10,0) angular=(-1.20666444e-09,-9.53333523e-10,4.96927196e-12) speed=7.72304942e-10 displacement=0 delta_entities=0
+  OK   supported surface has first-step contact
+  OK   no first-step gravity velocity spike (<1e-4 m/s)
+  OK   no artificial first-step angular velocity (<1e-4 rad/s)
+  OK   no first-step gravity position spike (<1e-5 m)
+  OK   unchanged supported entity produces no moved delta under unmodified persistence policy
+  OK   Full -> Coarse: 
+  OK   released old body handle is invalid
+  OK   Coarse -> Full: 
+  OK   reconstruction obtains a fresh body handle
+  OK   reconstruction preserves exact retained pose and velocities
+  OK   entity after ordinary fixed step
+  STEP reconstructed contacts=4 position=(137,-42,89) velocity=(-2.98850972e-10,-1.31743338e-10,-6.29272079e-10) angular=(2.68165073e-10,-5.95470395e-10,2.21637726e-12) speed=7.08979209e-10 displacement=0 delta_entities=0
+  OK   supported surface has first-step contact
+  OK   no first-step gravity velocity spike (<1e-4 m/s)
+  OK   no artificial first-step angular velocity (<1e-4 rad/s)
+  OK   no first-step gravity position spike (<1e-5 m)
+  OK   unchanged supported entity produces no moved delta under unmodified persistence policy
+  OK   valid baseline delta serializes
+  OK   valid baseline delta parses: 
+  OK   saved delta carries the actual matching authored content fingerprint
+  OK   real FTFT1 preflight accepts valid baseline: 
+  OK   reload introduces no artificial moved records
+  OK   entity after ordinary fixed step
+  STEP persisted-reload contacts=4 position=(137,-42,89) velocity=(-4.79169648e-10,6.0568256e-10,0) angular=(-1.20666444e-09,-9.53333523e-10,4.96927196e-12) speed=7.72304942e-10 displacement=0 delta_entities=0
+  OK   supported surface has first-step contact
+  OK   no first-step gravity velocity spike (<1e-4 m/s)
+  OK   no artificial first-step angular velocity (<1e-4 rad/s)
+  OK   no first-step gravity position spike (<1e-5 m)
+  OK   unchanged supported entity produces no moved delta under unmodified persistence policy
+CASE_RESULT up_z box PASS
+CASE up_z sphere offset=(0,0,0)
+  OK   ordinary authored scene serializes
+  OK   exactly one dynamic entity and static support, no other contact bodies
+  OK   real runtime shapes available
+  OK   body/support share actual stored orientation
+  OK   support contact is inside the face, away from edges
+  OK   represented canonical geometry is exactly touching
+  GEOMETRY gap=0 class=touching body=(0,0,1) support=(0,0,0) stored_q=(0.707106769,0.707106769,0,0) gravity=(0,-9.53674316e-07,-9.80999947)
+  OK   entity after ordinary fixed step
+  STEP initial contacts=1 position=(0,-1.18284771e-10,1) velocity=(0,-1.13567191e-08,0) angular=(2.27134382e-08,0,0) speed=1.13567191e-08 displacement=1.18284771e-10 delta_entities=0
+  OK   supported surface has first-step contact
+  OK   no first-step gravity velocity spike (<1e-4 m/s)
+  OK   no artificial first-step angular velocity (<1e-4 rad/s)
+  OK   no first-step gravity position spike (<1e-5 m)
+  OK   unchanged supported entity produces no moved delta under unmodified persistence policy
+  OK   Full -> Coarse: 
+  OK   released old body handle is invalid
+  OK   Coarse -> Full: 
+  OK   reconstruction obtains a fresh body handle
+  OK   reconstruction preserves exact retained pose and velocities
+  OK   entity after ordinary fixed step
+  STEP reconstructed contacts=1 position=(0,-4.25905811e-10,1) velocity=(0,-2.27217285e-08,0) angular=(4.5443457e-08,0,0) speed=2.27217285e-08 displacement=3.0762104e-10 delta_entities=0
+  OK   supported surface has first-step contact
+  OK   no first-step gravity velocity spike (<1e-4 m/s)
+  OK   no artificial first-step angular velocity (<1e-4 rad/s)
+  OK   no first-step gravity position spike (<1e-5 m)
+  OK   unchanged supported entity produces no moved delta under unmodified persistence policy
+  OK   valid baseline delta serializes
+  OK   valid baseline delta parses: 
+  OK   saved delta carries the actual matching authored content fingerprint
+  OK   real FTFT1 preflight accepts valid baseline: 
+  OK   reload introduces no artificial moved records
+  OK   entity after ordinary fixed step
+  STEP persisted-reload contacts=1 position=(0,-1.18284771e-10,1) velocity=(0,-1.13567191e-08,0) angular=(2.27134382e-08,0,0) speed=1.13567191e-08 displacement=1.18284771e-10 delta_entities=0
+  OK   supported surface has first-step contact
+  OK   no first-step gravity velocity spike (<1e-4 m/s)
+  OK   no artificial first-step angular velocity (<1e-4 rad/s)
+  OK   no first-step gravity position spike (<1e-5 m)
+  OK   unchanged supported entity produces no moved delta under unmodified persistence policy
+CASE_RESULT up_z sphere PASS
+CASE up_z sphere offset=(137,-42,88)
+  OK   ordinary authored scene serializes
+  OK   exactly one dynamic entity and static support, no other contact bodies
+  OK   real runtime shapes available
+  OK   body/support share actual stored orientation
+  OK   support contact is inside the face, away from edges
+  OK   represented canonical geometry is exactly touching
+  GEOMETRY gap=0 class=touching body=(137,-42,89) support=(137,-42,88) stored_q=(0.707106769,0.707106769,0,0) gravity=(0,-9.53674316e-07,-9.80999947)
+  OK   entity after ordinary fixed step
+  STEP initial contacts=1 position=(137,-42,89) velocity=(0,-1.13532668e-08,0) angular=(2.27065335e-08,0,0) speed=1.13532668e-08 displacement=0 delta_entities=0
+  OK   supported surface has first-step contact
+  OK   no first-step gravity velocity spike (<1e-4 m/s)
+  OK   no artificial first-step angular velocity (<1e-4 rad/s)
+  OK   no first-step gravity position spike (<1e-5 m)
+  OK   unchanged supported entity produces no moved delta under unmodified persistence policy
+  OK   Full -> Coarse: 
+  OK   released old body handle is invalid
+  OK   Coarse -> Full: 
+  OK   reconstruction obtains a fresh body handle
+  OK   reconstruction preserves exact retained pose and velocities
+  OK   entity after ordinary fixed step
+  STEP reconstructed contacts=1 position=(137,-42,89) velocity=(0,-2.27065318e-08,0) angular=(4.54130635e-08,0,0) speed=2.27065318e-08 displacement=0 delta_entities=0
+  OK   supported surface has first-step contact
+  OK   no first-step gravity velocity spike (<1e-4 m/s)
+  OK   no artificial first-step angular velocity (<1e-4 rad/s)
+  OK   no first-step gravity position spike (<1e-5 m)
+  OK   unchanged supported entity produces no moved delta under unmodified persistence policy
+  OK   valid baseline delta serializes
+  OK   valid baseline delta parses: 
+  OK   saved delta carries the actual matching authored content fingerprint
+  OK   real FTFT1 preflight accepts valid baseline: 
+  OK   reload introduces no artificial moved records
+  OK   entity after ordinary fixed step
+  STEP persisted-reload contacts=1 position=(137,-42,89) velocity=(0,-1.13532668e-08,0) angular=(2.27065335e-08,0,0) speed=1.13532668e-08 displacement=0 delta_entities=0
+  OK   supported surface has first-step contact
+  OK   no first-step gravity velocity spike (<1e-4 m/s)
+  OK   no artificial first-step angular velocity (<1e-4 rad/s)
+  OK   no first-step gravity position spike (<1e-5 m)
+  OK   unchanged supported entity produces no moved delta under unmodified persistence policy
+CASE_RESULT up_z sphere PASS
+CASE down_z box offset=(0,0,0)
+  OK   ordinary authored scene serializes
+  OK   exactly one dynamic entity and static support, no other contact bodies
+  OK   real runtime shapes available
+  OK   body/support share actual stored orientation
+  OK   support contact is inside the face, away from edges
+  OK   represented canonical geometry is exactly touching
+  GEOMETRY gap=0 class=touching body=(0,0,-1) support=(0,0,0) stored_q=(0.707106769,-0.707106769,0,0) gravity=(0,-9.53674316e-07,9.80999947)
+  OK   entity after ordinary fixed step
+  STEP initial contacts=4 position=(-4.56275556e-12,-5.59298788e-12,-1) velocity=(-6.07289607e-10,4.77441531e-10,2.5170882e-10) angular=(9.51066448e-10,1.21814836e-09,3.54820318e-12) speed=8.12470591e-10 displacement=7.21805038e-12 delta_entities=0
+  OK   supported surface has first-step contact
+  OK   no first-step gravity velocity spike (<1e-4 m/s)
+  OK   no artificial first-step angular velocity (<1e-4 rad/s)
+  OK   no first-step gravity position spike (<1e-5 m)
+  OK   unchanged supported entity produces no moved delta under unmodified persistence policy
+  OK   Full -> Coarse: 
+  OK   released old body handle is invalid
+  OK   Coarse -> Full: 
+  OK   reconstruction obtains a fresh body handle
+  OK   reconstruction preserves exact retained pose and velocities
+  OK   entity after ordinary fixed step
+  STEP reconstructed contacts=4 position=(1.34550834e-12,-1.76338631e-11,-1) velocity=(7.24901583e-10,-3.71925823e-10,1.18303145e-09) angular=(-7.49083295e-10,-1.44817058e-09,1.6235303e-12) speed=1.43644507e-09 displacement=1.34123173e-11 delta_entities=0
+  OK   supported surface has first-step contact
+  OK   no first-step gravity velocity spike (<1e-4 m/s)
+  OK   no artificial first-step angular velocity (<1e-4 rad/s)
+  OK   no first-step gravity position spike (<1e-5 m)
+  OK   unchanged supported entity produces no moved delta under unmodified persistence policy
+  OK   valid baseline delta serializes
+  OK   valid baseline delta parses: 
+  OK   saved delta carries the actual matching authored content fingerprint
+  OK   real FTFT1 preflight accepts valid baseline: 
+  OK   reload introduces no artificial moved records
+  OK   entity after ordinary fixed step
+  STEP persisted-reload contacts=4 position=(-4.56275556e-12,-5.59298788e-12,-1) velocity=(-6.07289607e-10,4.77441531e-10,2.5170882e-10) angular=(9.51066448e-10,1.21814836e-09,3.54820318e-12) speed=8.12470591e-10 displacement=7.21805038e-12 delta_entities=0
+  OK   supported surface has first-step contact
+  OK   no first-step gravity velocity spike (<1e-4 m/s)
+  OK   no artificial first-step angular velocity (<1e-4 rad/s)
+  OK   no first-step gravity position spike (<1e-5 m)
+  OK   unchanged supported entity produces no moved delta under unmodified persistence policy
+CASE_RESULT down_z box PASS
+CASE down_z box offset=(137,-42,88)
+  OK   ordinary authored scene serializes
+  OK   exactly one dynamic entity and static support, no other contact bodies
+  OK   real runtime shapes available
+  OK   body/support share actual stored orientation
+  OK   support contact is inside the face, away from edges
+  OK   represented canonical geometry is exactly touching
+  GEOMETRY gap=0 class=touching body=(137,-42,87) support=(137,-42,88) stored_q=(0.707106769,-0.707106769,0,0) gravity=(0,-9.53674316e-07,9.80999947)
+  OK   entity after ordinary fixed step
+  STEP initial contacts=4 position=(137,-42,87) velocity=(-6.07289607e-10,4.77441531e-10,2.5170882e-10) angular=(9.51066448e-10,1.21814836e-09,3.54820318e-12) speed=8.12470591e-10 displacement=0 delta_entities=0
+  OK   supported surface has first-step contact
+  OK   no first-step gravity velocity spike (<1e-4 m/s)
+  OK   no artificial first-step angular velocity (<1e-4 rad/s)
+  OK   no first-step gravity position spike (<1e-5 m)
+  OK   unchanged supported entity produces no moved delta under unmodified persistence policy
+  OK   Full -> Coarse: 
+  OK   released old body handle is invalid
+  OK   Coarse -> Full: 
+  OK   reconstruction obtains a fresh body handle
+  OK   reconstruction preserves exact retained pose and velocities
+  OK   entity after ordinary fixed step
+  STEP reconstructed contacts=4 position=(137,-42,87) velocity=(7.24901583e-10,-3.71925823e-10,1.18303145e-09) angular=(-7.49083295e-10,-1.44817058e-09,1.6235303e-12) speed=1.43644507e-09 displacement=0 delta_entities=0
+  OK   supported surface has first-step contact
+  OK   no first-step gravity velocity spike (<1e-4 m/s)
+  OK   no artificial first-step angular velocity (<1e-4 rad/s)
+  OK   no first-step gravity position spike (<1e-5 m)
+  OK   unchanged supported entity produces no moved delta under unmodified persistence policy
+  OK   valid baseline delta serializes
+  OK   valid baseline delta parses: 
+  OK   saved delta carries the actual matching authored content fingerprint
+  OK   real FTFT1 preflight accepts valid baseline: 
+  OK   reload introduces no artificial moved records
+  OK   entity after ordinary fixed step
+  STEP persisted-reload contacts=4 position=(137,-42,87) velocity=(-6.07289607e-10,4.77441531e-10,2.5170882e-10) angular=(9.51066448e-10,1.21814836e-09,3.54820318e-12) speed=8.12470591e-10 displacement=0 delta_entities=0
+  OK   supported surface has first-step contact
+  OK   no first-step gravity velocity spike (<1e-4 m/s)
+  OK   no artificial first-step angular velocity (<1e-4 rad/s)
+  OK   no first-step gravity position spike (<1e-5 m)
+  OK   unchanged supported entity produces no moved delta under unmodified persistence policy
+CASE_RESULT down_z box PASS
+CASE down_z sphere offset=(0,0,0)
+  OK   ordinary authored scene serializes
+  OK   exactly one dynamic entity and static support, no other contact bodies
+  OK   real runtime shapes available
+  OK   body/support share actual stored orientation
+  OK   support contact is inside the face, away from edges
+  OK   represented canonical geometry is exactly touching
+  GEOMETRY gap=0 class=touching body=(0,0,-1) support=(0,0,0) stored_q=(0.707106769,-0.707106769,0,0) gravity=(0,-9.53674316e-07,9.80999947)
+  OK   entity after ordinary fixed step
+  STEP initial contacts=1 position=(0,-1.18284771e-10,-1) velocity=(0,-1.13567191e-08,0) angular=(-2.27134382e-08,0,0) speed=1.13567191e-08 displacement=1.18284771e-10 delta_entities=0
+  OK   supported surface has first-step contact
+  OK   no first-step gravity velocity spike (<1e-4 m/s)
+  OK   no artificial first-step angular velocity (<1e-4 rad/s)
+  OK   no first-step gravity position spike (<1e-5 m)
+  OK   unchanged supported entity produces no moved delta under unmodified persistence policy
+  OK   Full -> Coarse: 
+  OK   released old body handle is invalid
+  OK   Coarse -> Full: 
+  OK   reconstruction obtains a fresh body handle
+  OK   reconstruction preserves exact retained pose and velocities
+  OK   entity after ordinary fixed step
+  STEP reconstructed contacts=1 position=(0,-4.25905811e-10,-1) velocity=(0,-2.27217285e-08,0) angular=(-4.5443457e-08,0,0) speed=2.27217285e-08 displacement=3.0762104e-10 delta_entities=0
+  OK   supported surface has first-step contact
+  OK   no first-step gravity velocity spike (<1e-4 m/s)
+  OK   no artificial first-step angular velocity (<1e-4 rad/s)
+  OK   no first-step gravity position spike (<1e-5 m)
+  OK   unchanged supported entity produces no moved delta under unmodified persistence policy
+  OK   valid baseline delta serializes
+  OK   valid baseline delta parses: 
+  OK   saved delta carries the actual matching authored content fingerprint
+  OK   real FTFT1 preflight accepts valid baseline: 
+  OK   reload introduces no artificial moved records
+  OK   entity after ordinary fixed step
+  STEP persisted-reload contacts=1 position=(0,-1.18284771e-10,-1) velocity=(0,-1.13567191e-08,0) angular=(-2.27134382e-08,0,0) speed=1.13567191e-08 displacement=1.18284771e-10 delta_entities=0
+  OK   supported surface has first-step contact
+  OK   no first-step gravity velocity spike (<1e-4 m/s)
+  OK   no artificial first-step angular velocity (<1e-4 rad/s)
+  OK   no first-step gravity position spike (<1e-5 m)
+  OK   unchanged supported entity produces no moved delta under unmodified persistence policy
+CASE_RESULT down_z sphere PASS
+CASE down_z sphere offset=(137,-42,88)
+  OK   ordinary authored scene serializes
+  OK   exactly one dynamic entity and static support, no other contact bodies
+  OK   real runtime shapes available
+  OK   body/support share actual stored orientation
+  OK   support contact is inside the face, away from edges
+  OK   represented canonical geometry is exactly touching
+  GEOMETRY gap=0 class=touching body=(137,-42,87) support=(137,-42,88) stored_q=(0.707106769,-0.707106769,0,0) gravity=(0,-9.53674316e-07,9.80999947)
+  OK   entity after ordinary fixed step
+  STEP initial contacts=1 position=(137,-42,87) velocity=(0,-1.13532668e-08,0) angular=(-2.27065335e-08,0,0) speed=1.13532668e-08 displacement=0 delta_entities=0
+  OK   supported surface has first-step contact
+  OK   no first-step gravity velocity spike (<1e-4 m/s)
+  OK   no artificial first-step angular velocity (<1e-4 rad/s)
+  OK   no first-step gravity position spike (<1e-5 m)
+  OK   unchanged supported entity produces no moved delta under unmodified persistence policy
+  OK   Full -> Coarse: 
+  OK   released old body handle is invalid
+  OK   Coarse -> Full: 
+  OK   reconstruction obtains a fresh body handle
+  OK   reconstruction preserves exact retained pose and velocities
+  OK   entity after ordinary fixed step
+  STEP reconstructed contacts=1 position=(137,-42,87) velocity=(0,-2.27065318e-08,0) angular=(-4.54130635e-08,0,0) speed=2.27065318e-08 displacement=0 delta_entities=0
+  OK   supported surface has first-step contact
+  OK   no first-step gravity velocity spike (<1e-4 m/s)
+  OK   no artificial first-step angular velocity (<1e-4 rad/s)
+  OK   no first-step gravity position spike (<1e-5 m)
+  OK   unchanged supported entity produces no moved delta under unmodified persistence policy
+  OK   valid baseline delta serializes
+  OK   valid baseline delta parses: 
+  OK   saved delta carries the actual matching authored content fingerprint
+  OK   real FTFT1 preflight accepts valid baseline: 
+  OK   reload introduces no artificial moved records
+  OK   entity after ordinary fixed step
+  STEP persisted-reload contacts=1 position=(137,-42,87) velocity=(0,-1.13532668e-08,0) angular=(-2.27065335e-08,0,0) speed=1.13532668e-08 displacement=0 delta_entities=0
+  OK   supported surface has first-step contact
+  OK   no first-step gravity velocity spike (<1e-4 m/s)
+  OK   no artificial first-step angular velocity (<1e-4 rad/s)
+  OK   no first-step gravity position spike (<1e-5 m)
+  OK   unchanged supported entity produces no moved delta under unmodified persistence policy
+CASE_RESULT down_z sphere PASS
+CASE oblique box offset=(0,0,0)
+  OK   ordinary authored scene serializes
+  OK   exactly one dynamic entity and static support, no other contact bodies
+  OK   real runtime shapes available
+  OK   body/support share actual stored orientation
+  OK   support contact is inside the face, away from edges
+  OK   represented oblique geometry has known shallow overlap
+  GEOMETRY gap=-2.0166238149082332809e-06 class=penetrating body=(0.666665316,0.733331859,0.133333072) support=(0,0,0) stored_q=(0.774596691,0.258198887,0.516397774,-0.258198887) gravity=(-6.53999996,-7.19400024,-1.30800009)
+  OK   entity after ordinary fixed step
+  STEP initial contacts=4 position=(0.666665316,0.733331859,0.133333072) velocity=(8.84417817e-10,8.2018399e-11,-3.70748904e-10) angular=(-5.66043878e-10,7.27280847e-10,-1.1820408e-09) speed=9.62484648e-10 displacement=0 delta_entities=0
+  OK   supported surface has first-step contact
+  OK   no first-step gravity velocity spike (<1e-4 m/s)
+  OK   no artificial first-step angular velocity (<1e-4 rad/s)
+  OK   no first-step gravity position spike (<1e-5 m)
+  OK   unchanged supported entity produces no moved delta under unmodified persistence policy
+  OK   Full -> Coarse: 
+  OK   released old body handle is invalid
+  OK   Coarse -> Full: 
+  OK   reconstruction obtains a fresh body handle
+  OK   reconstruction preserves exact retained pose and velocities
+  OK   entity after ordinary fixed step
+  STEP reconstructed contacts=4 position=(0.666665316,0.733331859,0.133333072) velocity=(8.84417817e-10,8.2018399e-11,-3.70748904e-10) angular=(-5.66043878e-10,7.27280847e-10,-1.1820408e-09) speed=9.62484648e-10 displacement=0 delta_entities=0
+  OK   supported surface has first-step contact
+  OK   no first-step gravity velocity spike (<1e-4 m/s)
+  OK   no artificial first-step angular velocity (<1e-4 rad/s)
+  OK   no first-step gravity position spike (<1e-5 m)
+  OK   unchanged supported entity produces no moved delta under unmodified persistence policy
+  OK   valid baseline delta serializes
+  OK   valid baseline delta parses: 
+  OK   saved delta carries the actual matching authored content fingerprint
+  OK   real FTFT1 preflight accepts valid baseline: 
+  OK   reload introduces no artificial moved records
+  OK   entity after ordinary fixed step
+  STEP persisted-reload contacts=4 position=(0.666665316,0.733331859,0.133333072) velocity=(8.84417817e-10,8.2018399e-11,-3.70748904e-10) angular=(-5.66043878e-10,7.27280847e-10,-1.1820408e-09) speed=9.62484648e-10 displacement=0 delta_entities=0
+  OK   supported surface has first-step contact
+  OK   no first-step gravity velocity spike (<1e-4 m/s)
+  OK   no artificial first-step angular velocity (<1e-4 rad/s)
+  OK   no first-step gravity position spike (<1e-5 m)
+  OK   unchanged supported entity produces no moved delta under unmodified persistence policy
+CASE_RESULT oblique box PASS
+CASE oblique sphere offset=(0,0,0)
+  OK   ordinary authored scene serializes
+  OK   exactly one dynamic entity and static support, no other contact bodies
+  OK   real runtime shapes available
+  OK   body/support share actual stored orientation
+  OK   support contact is inside the face, away from edges
+  OK   represented oblique geometry has known shallow overlap
+  GEOMETRY gap=-2.0166238149082332809e-06 class=penetrating body=(0.666665316,0.733331859,0.133333072) support=(0,0,0) stored_q=(0.774596691,0.258198887,0.516397774,-0.258198887) gravity=(-6.53999996,-7.19400024,-1.30800009)
+  OK   entity after ordinary fixed step
+  STEP initial contacts=1 position=(0.666665316,0.733331859,0.133333072) velocity=(1.2306256e-09,-2.07205897e-09,1.10258669e-09) angular=(-3.79861143e-10,-3.94644628e-09,-5.07758013e-09) speed=2.65020117e-09 displacement=0 delta_entities=0
+  OK   supported surface has first-step contact
+  OK   no first-step gravity velocity spike (<1e-4 m/s)
+  OK   no artificial first-step angular velocity (<1e-4 rad/s)
+  OK   no first-step gravity position spike (<1e-5 m)
+  OK   unchanged supported entity produces no moved delta under unmodified persistence policy
+  OK   Full -> Coarse: 
+  OK   released old body handle is invalid
+  OK   Coarse -> Full: 
+  OK   reconstruction obtains a fresh body handle
+  OK   reconstruction preserves exact retained pose and velocities
+  OK   entity after ordinary fixed step
+  STEP reconstructed contacts=1 position=(0.666665316,0.733331859,0.133333072) velocity=(2.57123878e-09,-2.48191467e-09,3.12264348e-09) angular=(-3.63440354e-11,-9.28375066e-09,-8.13599943e-09) speed=4.74574247e-09 displacement=0 delta_entities=0
+  OK   supported surface has first-step contact
+  OK   no first-step gravity velocity spike (<1e-4 m/s)
+  OK   no artificial first-step angular velocity (<1e-4 rad/s)
+  OK   no first-step gravity position spike (<1e-5 m)
+  OK   unchanged supported entity produces no moved delta under unmodified persistence policy
+  OK   valid baseline delta serializes
+  OK   valid baseline delta parses: 
+  OK   saved delta carries the actual matching authored content fingerprint
+  OK   real FTFT1 preflight accepts valid baseline: 
+  OK   reload introduces no artificial moved records
+  OK   entity after ordinary fixed step
+  STEP persisted-reload contacts=1 position=(0.666665316,0.733331859,0.133333072) velocity=(1.2306256e-09,-2.07205897e-09,1.10258669e-09) angular=(-3.79861143e-10,-3.94644628e-09,-5.07758013e-09) speed=2.65020117e-09 displacement=0 delta_entities=0
+  OK   supported surface has first-step contact
+  OK   no first-step gravity velocity spike (<1e-4 m/s)
+  OK   no artificial first-step angular velocity (<1e-4 rad/s)
+  OK   no first-step gravity position spike (<1e-5 m)
+  OK   unchanged supported entity produces no moved delta under unmodified persistence policy
+CASE_RESULT oblique sphere PASS
+  OK   sphere convenience query retains exact touching
+  OK   sphere convenience query reports exact zero separation
+  CONVENIENCE identity sphere-box impulse=2 expected=2 velocityA=(0,0,0) velocityB=(0,0,0) angularA=(0,0,0) angularB=(0,0,0)
+  OK   central normal impulse agrees with independent two-mass mechanics
+  OK   sphere orientation does not change central post-impact linear velocities
+  OK   central normal impulse creates no angular velocity in either body
+  OK   sphere convenience query retains exact touching
+  OK   sphere convenience query reports exact zero separation
+  CONVENIENCE quarter_z sphere-box impulse=2 expected=2 velocityA=(0,0,0) velocityB=(0,0,0) angularA=(0,0,0) angularB=(0,0,0)
+  OK   central normal impulse agrees with independent two-mass mechanics
+  OK   sphere orientation does not change central post-impact linear velocities
+  OK   central normal impulse creates no angular velocity in either body
+  OK   sphere convenience query retains exact touching
+  OK   sphere convenience query reports exact zero separation
+  CONVENIENCE oblique sphere-box impulse=2 expected=2 velocityA=(0,0,0) velocityB=(0,0,0) angularA=(-1.38777878e-16,2.48154184e-24,-5.51453709e-25) angularB=(0,0,0)
+  OK   central normal impulse agrees with independent two-mass mechanics
+  OK   sphere orientation does not change central post-impact linear velocities
+  OK   central normal impulse creates no angular velocity in either body
+  OK   sphere convenience query retains exact touching
+  OK   sphere convenience query reports exact zero separation
+  CONVENIENCE identity sphere-sphere impulse=1.20000005 expected=1.2 velocityA=(0,-0.399999976,0) velocityB=(0,-0.400000006,0) angularA=(0,0,0) angularB=(0,0,0)
+  OK   central normal impulse agrees with independent two-mass mechanics
+  OK   sphere orientation does not change central post-impact linear velocities
+  OK   central normal impulse creates no angular velocity in either body
+  OK   sphere convenience query retains exact touching
+  OK   sphere convenience query reports exact zero separation
+  CONVENIENCE quarter_z sphere-sphere impulse=1.20000005 expected=1.2 velocityA=(0,-0.399999976,0) velocityB=(0,-0.400000006,0) angularA=(0,0,0) angularB=(0,0,0)
+  OK   central normal impulse agrees with independent two-mass mechanics
+  OK   sphere orientation does not change central post-impact linear velocities
+  OK   central normal impulse creates no angular velocity in either body
+  OK   sphere convenience query retains exact touching
+  OK   sphere convenience query reports exact zero separation
+  CONVENIENCE oblique sphere-sphere impulse=1.20000005 expected=1.2 velocityA=(0,-0.399999976,0) velocityB=(0,-0.400000006,0) angularA=(-8.32667268e-17,1.48892526e-24,-3.30872225e-25) angularB=(2.77555789e-17,-1.70950674e-24,-5.55111512e-17)
+  OK   central normal impulse agrees with independent two-mass mechanics
+  OK   sphere orientation does not change central post-impact linear velocities
+  OK   central normal impulse creates no angular velocity in either body
+  OK   completed start solve exposes real load-bearing floor rows
+  OK   incoming sphere produces an actual bounded TOI solve
+  OK   completed TOI observations remain available after warm-cache invalidation
+  OK   actual ground reaction is observable without a scripted ground or balance controller
+  COMPLETED_TOI floor_rows=4 normal_impulse=40.9803314 events=23
+  OK   completed-row contact overflow remains fail-closed
+  OK   completed-row candidate overflow remains fail-closed
+  OK   zero completed-row budget is invalid
+  OK   current collision masks exclude completed support observations
+  OK   restoring a filter before another solve cannot revive old observations
+  OK   next real solve reacquires support after filter invalidation
+  OK   physical-material mutation invalidates completed observations with warm history
+  OK   next real solve reacquires support after material invalidation
+  OK   even same-pose reset invalidates completed observation revisions
+  OK   disabled body cannot expose completed observations
+  OK   re-enabling before another solve cannot revive disabled observations
+  OK   sensor cannot grant physical support from completed rows
+  OK   leaving sensor mode cannot revive earlier physical observations
+  OK   suppressed pair cannot expose completed support
+  OK   unsuppressing before another solve cannot revive old support
+  OK   slot-reuse fixture exercises another real load-bearing contact
+  OK   reused support slot cannot alias completed contact generations
+  OK   removing a neighbour preserves other genuine completed reactions
+  OK   destroyed observer handle fails safely after slot reuse
+  OK   new body inherits no old completed observations
+  OK   connected articulation has observed stance support before incoming impact
+  OK   incoming connected-body impact cannot erase the other load-bearing stance observations
+  OK   compound primitive TOI rows retain valid observation mapping
+  OK   distinct compound support primitives retain independent actual solved rows
+FTFT4A contact lifecycle: 30 fixtures, 90 fixed steps, 6 convenience contacts, 1078 checks, 0 failures

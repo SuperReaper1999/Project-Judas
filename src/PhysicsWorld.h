@@ -261,7 +261,15 @@ public:
         std::size_t shapeCacheRebuilds = 0, solverFrameBuilds = 0;
         std::size_t geometryCacheBytes = 0, geometryCacheAllocations = 0;
         std::size_t geometryCacheAllocatedBytes = 0, solverFrameNodeRequests = 0;
-        std::size_t impactEvents=0, impactSafetyFallback=0, impactEventCapFallback=0;
+        // impactEvents includes substep restitution events and continuous arrival attempts.
+        std::size_t impactEvents=0;
+        // Actual path-hold operations (not unique bodies). Cap holds are a subset.
+        // StepCoupled sums operations across its intervals. No physical state is inferred.
+        std::size_t impactSafetyFallback=0, impactEventCapFallback=0;
+        std::size_t impactBodyCapHolds=0, impactStepCapHolds=0, impactResponseHolds=0;
+        std::size_t impactResponseAttempts=0, impactResponsesApplied=0;
+        // Failed continuous responses include kinematic arrivals that cannot be held.
+        std::size_t impactMissingManifolds=0, impactEnergyRejections=0;
         std::size_t impactQueries=0, impactSearchIterations=0, impactPeakIterations=0, impactSearchLimit=0;
         std::size_t impactUncertifiedAdvances=0; // proximity geometry cannot certify an advance
         std::size_t impactSearchStalls=0; // advancement stopped progressing; finished by sampling

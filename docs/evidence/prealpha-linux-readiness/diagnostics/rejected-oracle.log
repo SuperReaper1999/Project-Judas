@@ -1,0 +1,30 @@
+FAIL a stationary remaining ledger segment with retained velocity reports a real hold
+PASS hold reasons partition actual hold operations
+PASS aggregate cap count agrees with detailed reasons
+PASS every attempted continuous response has a recorded outcome
+PASS completed profiler snapshot exists
+PASS Physics CCD path holds matches completed public-step totals
+PASS Physics CCD body limit holds matches completed public-step totals
+PASS Physics CCD step limit holds matches completed public-step totals
+PASS Physics CCD response holds matches completed public-step totals
+PASS Physics CCD response attempts matches completed public-step totals
+PASS Physics CCD responses applied matches completed public-step totals
+PASS Physics CCD missing manifolds matches completed public-step totals
+PASS Physics CCD energy rejections matches completed public-step totals
+PASS Physics impact queries matches completed public-step totals
+CASE count=1 speed=1 intervals=1 heldPaths=0 operations=0 bodyCap=0 stepCap=0 responseHold=0 attempts=0 applied=0 missing=0 energy=0
+PASS free slow motion independently reports no CCD hold or response
+PASS hold reasons partition actual hold operations
+PASS aggregate cap count agrees with detailed reasons
+PASS every attempted continuous response has a recorded outcome
+PASS completed profiler snapshot exists
+PASS Physics CCD path holds matches completed public-step totals
+PASS Physics CCD body limit holds matches completed public-step totals
+PASS Physics CCD step limit holds matches completed public-step totals
+PASS Physics CCD response holds matches completed public-step totals
+PASS Physics CCD response attempts matches completed public-step totals
+PASS Physics CCD responses applied matches completed public-step totals
+PASS Physics CCD missing manifolds matches completed public-step totals
+PASS Physics CCD energy rejections matches completed public-step totals
+PASS Physics impact queries matches completed public-step totals
+CASE count=1 speed=5000 intervals=1 heldPaths=1 operations=0 bodyCap=0 stepCap=0 responseHold=0 attempts=1 applied=1 missing=0 energy=0

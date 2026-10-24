@@ -1683,5 +1683,7 @@ add_dependencies(judas_project_fluid_policy_tests judas)
 judas_add_engine_test(judas_editor_file_browser_tests tests/EditorFileBrowserTests.cpp
     SOURCES src/editor/FileBrowser.cpp LIBRARIES judas_imgui)
 
+judas_add_engine_test(judas_mk2_diagnostics_tests tests/Mk2DiagnosticsTests.cpp)
+
 # Finalize after every native test has declared its authoritative entry point.
 include(cmake/JudasValidation.cmake)
