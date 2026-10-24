@@ -1003,9 +1003,13 @@ All 30 MK2 runs pass every check of the program, including the 24-box fast famil
    Float precision matters at the rig's coordinates (x ≈ 78.6, ULP 7.6e-6 m against about 1e-4
    m of foot travel per substep): the 1-link pendulum at that position loses 0.1% instead of
    3.1%, a different numerical damping, not a gain.
-9. **Probe-only crash, unexplained.** Probes linked by hand against the release test objects
-   abort with a double free inside `PhysicsWorld::Step`, under MK1 as well. The same scenario
-   passes in the real test binary, and an ASan+UBSan build at `-O3` reports nothing.
+9. ~~**Probe-only crash**~~ (closed, not an engine defect). Probes linked by hand against the
+   release test objects aborted with a double free inside `PhysicsWorld::Step`, under MK1 as
+   well. Test translation units compile with `-Dmain=JudasValidationMain`
+   (`tests/ValidationMain.cpp`), so a probe's `main` becomes an ordinary `int` function: the
+   probes had no `return`, which is undefined behaviour there (unlike in `main`), and the
+   optimiser's code for it corrupted the heap. With `return 0` the probe runs clean. A syntax
+   check of all 121 test units built with that macro found no other function missing a return.
 10. ~~**Arrival-pass cost in dense bursts**~~ (closed). The arrival-instant impact phase cost
     1.35 ms per severe900 step: three whole-world geometry refreshes per substep, every pair
     resolution sweeping all blocks through a one-block mask, and a full scan to pick each next

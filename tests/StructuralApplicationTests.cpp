@@ -19,13 +19,18 @@ static Window* testWindow=nullptr;
 static void key(SDL_Scancode k,bool down){testWindow->QueueTestPhysical(std::string("key:")+SDL_GetScancodeName(k),down?1.f:0.f);}
 int main(int argc,char** argv){if(argc!=4)return 2;
  std::string project=argv[1],mode=argv[2],out=argv[3],error;std::filesystem::create_directories(out);
- unsigned frame=0,ready=0,phase=0,continuedAt=0;float restoredY=0;EntityId restoredPiece=0;int lastBroken=-1;bool frozen=false;RuntimeWorld* initial=nullptr;uint64_t epoch=0,region=0;EntityId spawned=0;GameSnapshot snapshot;std::vector<double> times;
+ unsigned frame=0,ready=0,phase=0,continuedAt=0,captureRetries=0;float restoredY=0;EntityId restoredPiece=0;int lastBroken=-1;bool frozen=false;RuntimeWorld* initial=nullptr;uint64_t epoch=0,region=0;EntityId spawned=0;GameSnapshot snapshot;std::vector<double> times;
  ApplicationControl c;c.hidden=true;c.frameSeconds=[&](float){return frozen?0.f:1.f/60;};
  c.hostReady=[&](EngineHost& h){testWindow=&h.GetWindow();h.GetWindow().SetTestInputMode(true);SDL_GL_SetSwapInterval(0);std::string e;h.Audio().Init(e,true);};
  c.worldReady=[&](EngineHost&,RuntimeWorld& w,InteractivePlay&){initial=&w;};
  c.beforeFrame=[&](EngineHost& h,RuntimeWorld& w,InteractivePlay&){h.GetRenderer().ResetStats();
   if(mode=="read"&&phase==1){key(SDL_SCANCODE_F8,true);phase=2;}else if(mode=="read"&&phase==2)key(SDL_SCANCODE_F8,false);
-  if(mode=="read"&&&w!=initial&&phase==2){frozen=true;std::map<std::string,SaveChunk> chunks;WorldPersistence::Capture(w,chunks,error);
+  // The clock is frozen from the restored world's first frame. Its scripts
+  // start at the next lifecycle boundary, so a capture refused for that
+  // (retryable) reason is retried on the following frozen frames: the
+  // compared physical state cannot have advanced.
+  if(mode=="read"&&&w!=initial&&phase==2){frozen=true;std::map<std::string,SaveChunk> chunks;const bool captured=WorldPersistence::Capture(w,chunks,error);
+   if(!captured&&error.find("retry after lifecycle boundary")!=std::string::npos&&++captureRetries<=10)return;
    check(chunks.count("deformables")&&chunks.at("deformables").data==snapshot.participants.at("deformables").data,"fresh-process restoration matches exact topology, physical poses and owned joint continuation");phase=3;}
  };
  c.afterFrame=[&](EngineHost& h,RuntimeWorld& w,InteractivePlay& play){++frame;
