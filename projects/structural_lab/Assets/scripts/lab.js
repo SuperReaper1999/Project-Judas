@@ -13,7 +13,7 @@ export default class {
    if(a==='load')this.state.load=!this.state.load;
    if(a==='release'){this.state.right=true;for(const id of ['501','511','521'])this.remove(id);for(const id of ['100','200','300'])world.entity(id)?.deformable?.release('right');this.message='Right support anchors removed. Physics alone decides remaining connection failure.';}
    if(a==='adopt'){world.entity('300')?.deformable?.release('middle');this.remove('523');this.state.middle=true;}
-   if(a==='push'){const r=world.viewRay;if(r){const h=physics.raycast(r.origin,r.direction,60,{ignored:[world.entity('10')]});if(h?.entity?.mass>0){h.entity.applyImpulseAtPoint(mul(r.direction,500),h.point);this.message='500 N.s at the actual hit point.';}}}
+   if(a==='push'){const r=world.viewRay;if(r){const h=physics.raycast(r.origin,r.direction,60,{ignored:[world.entity('10')]});const e=h?.entity;if(e?.valid&&e.motionType==='dynamic'&&e.mass>0){e.applyImpulseAtPoint(mul(r.direction,500),h.point);this.message='500 N.s at the actual hit point.';}}}
    if(a==='spawn'&&this.state.spawned.length<4){const e=world.spawnPrefab('79797979797979797979797979790006',{position:{x:0,y:7,z:-7-this.state.spawned.length*3},rotation:{w:1,x:0,y:0,z:0},scale:{x:1,y:1,z:1}});this.state.spawned.push(e.id);}
    if(a==='region'){if(this.region){scenes.releaseRegion(this.region);this.region=0;this.state.region=false;}else{this.region=scenes.requestRegion('annex');this.state.region=true;}}
   }
