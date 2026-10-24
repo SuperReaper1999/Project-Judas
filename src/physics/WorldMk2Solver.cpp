@@ -1,6 +1,9 @@
 #include "WorldInternal.h"
 
+#include <queue>
+#include <tuple>
 #include <unordered_map>
+
 
 using namespace JudasPhysicsDetail;
 
@@ -35,9 +38,13 @@ constexpr float kMk2FreeSpeed = 1e6f; // a target no physical approach reaches
 // struck from two sides at once is one system, not one sequential sweep), and
 // the bound on compression/restitution cycles a rebound may set off.
 constexpr int kMk2ImpactSweeps = 8;
-// Pairwise resolutions of a substep's impact set, and the approach speed
-// below which a touching pair is no longer an impact.
+// Pairwise resolutions of a substep's impact set: at least kMk2ImpactPairs,
+// and kMk2ImpactsPerBlock per impacting block (a pair may be struck again as
+// an impulse travels down a chain), so a large simultaneous impact resolves
+// every pair, not only the first 64. Also the approach speed below which a
+// touching pair is no longer an impact.
 constexpr int kMk2ImpactPairs = 64;
+constexpr std::size_t kMk2ImpactsPerBlock = 4;
 constexpr float kMk2ImpactApproach = 1e-4f;
 // Bounds of the continuous pass's time-ordered arrivals: re-timings of one
 // body per step, and arrivals of the whole step.
@@ -420,14 +427,10 @@ void SolveFriction(std::vector<SolverBody> &bodies, Row &row) {
     ApplyAxis(a, b, row.t2, row.w2A, row.w2B, d2);
 }
 
-void SolveRows(std::vector<SolverBody> &bodies, std::vector<Row> &rows,
-               std::vector<Block> &blocks, float h, bool useBias,
-               const std::vector<char> *only = nullptr, bool impact = false) {
-    const float inverseH = 1.0f / h;
-    for (std::size_t index = 0; index < blocks.size(); ++index) {
-        if (only && !(*only)[index])
-            continue;
-        auto &block = blocks[index];
+// One manifold block's normal (patch LCP or sequential) and friction rows.
+void SolveBlock(std::vector<SolverBody> &bodies, std::vector<Row> &rows, Block &block,
+                float inverseH, bool useBias, bool impact) {
+    {
         bool solved = false;
         if (block.usable) {
             // Patch LCP on the accumulated impulses against each row's target.
@@ -458,6 +461,25 @@ void SolveRows(std::vector<SolverBody> &bodies, std::vector<Row> &rows,
         for (std::size_t i = 0; i < block.count; ++i)
             SolveFriction(bodies, rows[block.first + i]);
     }
+}
+
+void SolveRows(std::vector<SolverBody> &bodies, std::vector<Row> &rows,
+               std::vector<Block> &blocks, float h, bool useBias,
+               const std::vector<char> *only = nullptr, bool impact = false) {
+    const float inverseH = 1.0f / h;
+    for (std::size_t index = 0; index < blocks.size(); ++index)
+        if (!only || (*only)[index])
+            SolveBlock(bodies, rows, blocks[index], inverseH, useBias, impact);
+}
+
+// The listed blocks only, in list order (an ascending list is SolveRows with
+// the same mask, without scanning every block of the world).
+void SolveBlocks(std::vector<SolverBody> &bodies, std::vector<Row> &rows,
+                 std::vector<Block> &blocks, const std::vector<std::size_t> &list, float h,
+                 bool useBias, bool impact) {
+    const float inverseH = 1.0f / h;
+    for (const auto index : list)
+        SolveBlock(bodies, rows, blocks[index], inverseH, useBias, impact);
 }
 } // namespace
 
@@ -644,6 +666,33 @@ void PhysicsWorld::Impl::Mk2Solve(float dt, const PhysicsWorld::VelocityCoupling
         }
         for (auto &block : blocks)
             PrepareBlock(state, rows, block);
+    };
+    // refreshGeometry restricted to what changed: bodies whose pose moved and
+    // blocks re-collided. Every other row and block would be recomputed from
+    // identical inputs, so the result is the full refresh's, exactly.
+    const auto refreshChanged = [&](const std::vector<char> &moved,
+                                    const std::vector<char> &dirtyBlock) {
+        for (std::size_t i = 0; i < state.size(); ++i)
+            if (moved[i] && state[i].dynamic && state[i].constrained)
+                state[i].invI = state[i].rb->InverseInertiaWorld();
+        for (std::size_t k = 0; k < blocks.size(); ++k) {
+            auto &block = blocks[k];
+            bool changed = false;
+            for (std::size_t r = 0; r < block.count; ++r) {
+                auto &row = rows[block.first + r];
+                if (!dirtyBlock[k] && !moved[row.a] && !moved[row.b])
+                    continue;
+                const auto &A = state[row.a];
+                const auto &B = state[row.b];
+                const glm::vec3 d = AnchorGap(A, B, row) - row.gap0;
+                row.rA = A.dq * row.rA0 - 0.5f * d;
+                row.rB = B.dq * row.rB0 + 0.5f * d;
+                PrepareRow(A, B, row);
+                changed = true;
+            }
+            if (changed)
+                PrepareBlock(state, rows, block);
+        }
     };
 
     // Concave pairs (triangle mesh, terrain) are re-collided every substep. A
@@ -835,11 +884,14 @@ void PhysicsWorld::Impl::Mk2Solve(float dt, const PhysicsWorld::VelocityCoupling
                         }
                 }
             }
+            std::vector<std::size_t> impactingList;
+            for (std::size_t index = 0; index < blocks.size(); ++index)
+                if (impacting[index])
+                    impactingList.push_back(index);
             const auto each = [&](auto &&f) {
-                for (std::size_t index = 0; index < blocks.size(); ++index)
-                    if (impacting[index])
-                        for (std::size_t k = 0; k < blocks[index].count; ++k)
-                            f(blocks[index].first + k);
+                for (const auto index : impactingList)
+                    for (std::size_t k = 0; k < blocks[index].count; ++k)
+                        f(blocks[index].first + k);
             };
             std::vector<float> warmNormal(rows.size()), warmT1(rows.size()), warmT2(rows.size());
             impactNormal.assign(rows.size(), 0.0f);
@@ -859,11 +911,14 @@ void PhysicsWorld::Impl::Mk2Solve(float dt, const PhysicsWorld::VelocityCoupling
             // impulses act through the actual contact points and conserve
             // angular momentum. The substep then starts from the start poses.
             std::vector<std::pair<glm::vec3, glm::quat>> startPose(state.size());
+            std::vector<char> moved(state.size(), 0), recollided(blocks.size(), 0),
+                clean(blocks.size(), 0);
             for (std::size_t i = 0; i < state.size(); ++i) {
                 auto &body = *state[i].rb;
                 startPose[i] = {body.position, body.orientation};
                 if (!state[i].dynamic || !(arrival[i] > 0 && arrival[i] <= 1))
                     continue;
+                moved[i] = 1;
                 RigidMotionSegment flight;
                 flight.exactRotation = true;
                 flight.begin = 0;
@@ -881,14 +936,16 @@ void PhysicsWorld::Impl::Mk2Solve(float dt, const PhysicsWorld::VelocityCoupling
                 body.position = pose.position;
                 body.orientation = pose.orientation;
             }
-            const auto placeAt = [&] {
-                for (auto &s : state) {
-                    s.dp = glm::vec3(glm::dvec3(s.rb->position) - glm::dvec3(s.x0));
-                    s.dq = glm::mat3_cast(s.rb->orientation * glm::conjugate(s.q0));
-                }
-                refreshGeometry();
+            const auto placeAt = [&](const std::vector<char> &dirtyBlock) {
+                for (std::size_t i = 0; i < state.size(); ++i)
+                    if (moved[i]) {
+                        auto &s = state[i];
+                        s.dp = glm::vec3(glm::dvec3(s.rb->position) - glm::dvec3(s.x0));
+                        s.dq = glm::mat3_cast(s.rb->orientation * glm::conjugate(s.q0));
+                    }
+                refreshChanged(moved, dirtyBlock);
             };
-            placeAt();
+            placeAt(clean);
             // At the arrival configuration each arriving pair is re-collided:
             // a row's anchors have slid apart since the step start (by the
             // tangential travel), and an impulse through their midpoint would
@@ -903,8 +960,9 @@ void PhysicsWorld::Impl::Mk2Solve(float dt, const PhysicsWorld::VelocityCoupling
                 const auto &key = pendingCache[block.first].key;
                 recollideGroup({block.first, block.count, key.slotA, key.slotB, key.partA,
                                 key.partB, kMk2ArrivalMargin});
+                recollided[index] = 1;
             }
-            refreshGeometry();
+            refreshChanged(moved, recollided);
             // Sequential impact propagation: repeatedly resolve the most
             // approaching pair of the set on its own (its whole manifold block,
             // so a flat landing stays symmetric): a compression of fresh,
@@ -916,7 +974,6 @@ void PhysicsWorld::Impl::Mk2Solve(float dt, const PhysicsWorld::VelocityCoupling
             // simultaneous arrivals rebound symmetrically. A set still
             // approaching after the bound ends with a converged inelastic
             // solve, which only dissipates.
-            std::vector<char> single(blocks.size(), 0);
             const auto kinetic = [&](const Block &block) {
                 double k = 0;
                 for (const unsigned body : {rows[block.first].a, rows[block.first].b}) {
@@ -936,17 +993,17 @@ void PhysicsWorld::Impl::Mk2Solve(float dt, const PhysicsWorld::VelocityCoupling
                 return v;
             };
             const auto resolve = [&](std::size_t index, bool elastic) {
+                PhysicsWorkTimer timer(work.impactSolve, work.active);
                 const auto &block = blocks[index];
-                single[index] = 1;
                 std::vector<float> fast(block.count);
                 for (std::size_t k = 0; k < block.count; ++k) {
                     auto &row = rows[block.first + k];
                     fast[k] = RowNormalSpeed(state, row) < -kMk2RestitutionThreshold ? row.restitution : 0;
                     row.normalImpulse = row.tangent1 = row.tangent2 = 0;
                 }
+                const float inverseH = 1.0f / h;
                 for (int sweep = 0; sweep < kMk2ImpactSweeps; ++sweep)
-                    SolveRows(state, rows, blocks, h, false, &single, true);
-                single[index] = 0;
+                    SolveBlock(state, rows, blocks[index], inverseH, false, true);
                 for (std::size_t k = 0; k < block.count; ++k) {
                     auto &row = rows[block.first + k];
                     impactNormal[block.first + k] += row.normalImpulse;
@@ -958,19 +1015,32 @@ void PhysicsWorld::Impl::Mk2Solve(float dt, const PhysicsWorld::VelocityCoupling
                 }
             };
             std::vector<std::pair<glm::vec3, glm::vec3>> before(2);
-            for (int impact = 0; impact < kMk2ImpactPairs; ++impact) {
-                std::size_t worst = blocks.size();
-                float most = -kMk2ImpactApproach;
-                for (std::size_t index = 0; index < blocks.size(); ++index)
-                    if (impacting[index]) {
-                        const float v = approachOf(blocks[index]);
-                        if (v < most) {
-                            most = v;
-                            worst = index;
-                        }
-                    }
-                if (worst == blocks.size())
+            // Most-approaching pair first, ties to the lower block index. A
+            // resolution changes only its two bodies, so only blocks sharing
+            // one are re-scored (stale queue entries are skipped by version).
+            // (Only dynamic bodies: an impulse never changes a static or
+            // kinematic velocity, and a floor would link every block.)
+            std::vector<std::vector<std::size_t>> bodyBlocks(state.size());
+            for (const auto index : impactingList) {
+                const auto &row = rows[blocks[index].first];
+                for (const unsigned body : {row.a, row.b})
+                    if (state[body].dynamic)
+                        bodyBlocks[body].push_back(index);
+            }
+            using Candidate = std::tuple<float, std::size_t, unsigned>;
+            std::priority_queue<Candidate, std::vector<Candidate>, std::greater<Candidate>> queue;
+            std::vector<unsigned> version(blocks.size(), 0);
+            for (const auto index : impactingList)
+                queue.push({approachOf(blocks[index]), index, 0u});
+            const std::size_t impactBound =
+                std::max<std::size_t>(kMk2ImpactPairs, kMk2ImpactsPerBlock * impactingList.size());
+            for (std::size_t impact = 0; impact < impactBound; ++impact) {
+                while (!queue.empty() && std::get<2>(queue.top()) != version[std::get<1>(queue.top())])
+                    queue.pop();
+                if (queue.empty() || !(std::get<0>(queue.top()) < -kMk2ImpactApproach))
                     break;
+                const std::size_t worst = std::get<1>(queue.top());
+                queue.pop();
                 const auto &block = blocks[worst];
                 const unsigned bodyA = rows[block.first].a, bodyB = rows[block.first].b;
                 before[0] = {state[bodyA].rb->linearVelocity, state[bodyA].rb->angularVelocity};
@@ -988,22 +1058,24 @@ void PhysicsWorld::Impl::Mk2Solve(float dt, const PhysicsWorld::VelocityCoupling
                     std::copy(saved.begin(), saved.end(), impactNormal.begin() + block.first);
                     resolve(worst, false);
                 }
+                for (const unsigned body : {bodyA, bodyB})
+                    for (const auto index : bodyBlocks[body])
+                        queue.push({approachOf(blocks[index]), index, ++version[index]});
             }
             bool approaching = false;
-            for (std::size_t index = 0; index < blocks.size(); ++index)
-                approaching = approaching ||
-                              (impacting[index] && approachOf(blocks[index]) < -kMk2ImpactApproach);
+            for (const auto index : impactingList)
+                approaching = approaching || approachOf(blocks[index]) < -kMk2ImpactApproach;
             if (approaching) {
                 each([&](std::size_t i) { rows[i].normalImpulse = rows[i].tangent1 = rows[i].tangent2 = 0; });
                 for (int sweep = 0; sweep < kMk2ImpactSweeps; ++sweep)
-                    SolveRows(state, rows, blocks, h, false, &impacting, true);
+                    SolveBlocks(state, rows, blocks, impactingList, h, false, true);
                 each([&](std::size_t i) { impactNormal[i] += rows[i].normalImpulse; });
             }
             for (std::size_t i = 0; i < state.size(); ++i) {
                 state[i].rb->position = startPose[i].first;
                 state[i].rb->orientation = startPose[i].second;
             }
-            placeAt();
+            placeAt(recollided);
             each([&](std::size_t i) {
                 rows[i].normalImpulse = warmNormal[i];
                 rows[i].tangent1 = warmT1[i];

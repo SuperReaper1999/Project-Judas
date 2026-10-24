@@ -153,7 +153,9 @@ void SimultaneousImpactDiagnostics(){
     Check(off.impacts==count&&on.impacts==count&&off.stopped&&on.stopped,"thousands of independent actual ground impacts stop incoming physical bodies");
     Check(off.endpoints==on.endpoints,"aggregated impact diagnostics preserve every physical endpoint and quiet clock exactly");
     const auto history=profiler.History();bool preparations=false;
-    if(history.size()==1)for(const auto& c:history.front().counters)if(c.name=="Physics joint preparation calls")preparations=c.value>=count;
+    // Every impact's solve is recorded: MK1 prepares and solves each event's
+    // domain, MK2 resolves each pair of the simultaneous set.
+    if(history.size()==1)for(const auto& c:history.front().counters)if(c.name=="Physics impact solve calls")preparations=c.value>=count;
     Check(preparations,"bounded aggregate records every independent impact preparation rather than omitting the expensive path");
     Check(history.size()==1&&history.front().scopes.size()<100,"physics profiler scope count stays bounded across thousands of independent impact events");
     const auto after=profiler.Diagnostics();

@@ -1006,13 +1006,25 @@ All 30 MK2 runs pass every check of the program, including the 24-box fast famil
 9. **Probe-only crash, unexplained.** Probes linked by hand against the release test objects
    abort with a double free inside `PhysicsWorld::Step`, under MK1 as well. The same scenario
    passes in the real test binary, and an ASan+UBSan build at `-O3` reports nothing.
-10. **Arrival-pass cost in dense bursts** (open, measured after the default switch, §4.2). The
-    arrival-instant impact model adds about 1.3 ms of mean solver time in severe900 and 70 steps
-    over 16.67 ms (stage 3: 0). Candidates: cheaper arrival re-collision, batching arrivals per
-    island, or bounding re-timings per step; none tried yet.
-    The pairwise impact pass is also capped at 64 resolutions per substep for the whole world
-    (`kMk2ImpactPairs`), each found by scanning every block: a large simultaneous impact gets
-    only 64 exact (restitution-bearing) resolutions.
+10. ~~**Arrival-pass cost in dense bursts**~~ (closed). The arrival-instant impact phase cost
+    1.35 ms per severe900 step: three whole-world geometry refreshes per substep, every pair
+    resolution sweeping all blocks through a one-block mask, and a full scan to pick each next
+    pair. Now (bit-identical trajectories, 900/900 digests on ordinary900 and severe900):
+    refreshes cover only moved bodies and re-collided blocks, a resolution solves its own block,
+    and the next pair comes from a priority queue re-scored only for blocks sharing a dynamic
+    body with the pair just resolved (ties to the lower index, as before). Phase cost 0.47 ms.
+    - The global cap of 64 resolutions per substep is now per set: at least 64, and 4 per
+      impacting block. A 2,112-sphere simultaneous landing resolves every pair (it stopped all of
+      them before only because restitution was 0). This changes trajectories where a substep had
+      more than 64 impacts.
+    - A first version re-scored every block touching either body, and a floor touches them all:
+      the opening 1,152-body landing took 26 ms. Only dynamic bodies are now linked (3 ms).
+    - room1024: ordinary900 1.83 / 7.91 / 11.96 ms (mean / p95 / worst), 1,152 asleep;
+      severe900 11.17 / 14.37 / 20.32, 3 steps over 16.67 ms (before: 11.96 / 18.3 / 22.6, 85;
+      stage 3: 10.9 / 12.9 / 16.2, 0); live120 11.96 / 13.42 / 18.83, 2 over budget, worst frame
+      63.8 ms (before 140 ms). Penetration and sleep counts unchanged, no nonfinite fields.
+    - Both solvers now publish "Physics impact solve calls"; `physics_scaling`'s aggregate check
+      reads it instead of MK1's per-event joint preparation count, and passes 130/130 under both.
 11. ~~**structural_lab overload fixture**~~ (closed, operator delegated the decision). The lab's
     1000 kg overload gave bridge A a settled 84 kPa against its 120 kPa capacity under both
     solvers; A failed only on MK1's 123 kPa transient. The lab's load is now 2000 kg (the check is

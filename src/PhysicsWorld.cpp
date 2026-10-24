@@ -681,6 +681,8 @@ void PhysicsWorld::Step(float fixedDeltaTime, const VelocityCoupling *coupling) 
                           double(w.work.impactIslands.nanoseconds) * 1e-6, ProfileCounterMode::Sum);
     JUDAS_PROFILE_COUNTER("Physics impact solve ms", double(w.work.impactSolve.nanoseconds) * 1e-6,
                           ProfileCounterMode::Sum);
+    JUDAS_PROFILE_COUNTER("Physics impact solve calls", double(w.work.impactSolve.calls),
+                          ProfileCounterMode::Sum);
     JUDAS_PROFILE_COUNTER("Physics impact observation publication ms",
                           double(w.work.impactObservations.nanoseconds) * 1e-6,
                           ProfileCounterMode::Sum);
