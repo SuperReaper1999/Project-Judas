@@ -1,0 +1,25 @@
+[0/2] Re-checking globbed directories...
+[1/23] Building CXX object CMakeFiles/judas_build_identity.dir/src/BuildIdentity.cpp.o
+[2/23] Linking CXX static library libjudas_build_identity.a
+[3/23] Linking CXX executable judas
+[4/23] Linking CXX executable judas_editor
+[5/23] Linking CXX executable judas_rigid_motion_tests
+[6/23] Linking CXX executable judas_scene_author
+[7/23] Linking CXX executable judas_export
+[8/23] Linking CXX executable judas_hearthworld_application_tests
+[9/23] Linking CXX executable judas_navigation_bake
+[10/23] Linking CXX executable judas_liquid_bake
+[11/23] Linking CXX executable judas_environment_bake
+[12/23] Linking CXX executable judas_deformable_bake
+[13/23] Linking CXX executable judas_collision_cook
+[14/23] Linking CXX executable judas_terrain_author
+[15/23] Linking CXX executable judas_model_import_cli
+[16/23] Linking CXX executable judas_mod
+[17/23] Linking CXX executable judas_volume_author
+[18/23] Linking CXX executable judas_cook
+[19/23] Linking CXX executable judas_script_check
+[20/23] Linking CXX executable judas_save
+[21/23] Linking CXX executable judas_server
+[22/23] Linking CXX executable judas_mk2_diagnostics_tests
+[23/23] cd /build && /usr/bin/python3 /source/tools/package_sdk.py stage --source /source --bin-dir /build --build-info /build/judas-build-info-Release.json --output /build/linux-sdk --replace --probe-tools
+{"build": {"architecture": "x86_64", "build_id": "0.1.0-prealpha-Experimental-04388ff-dirty-f6d4e60474ca-u84f47c24fcd0", "channel": "Experimental", "compiler": "GNU", "compiler_version": "13.3.0", "configuration": "Release", "maturity": "pre-alpha", "platform": "Linux", "schema": 1, "source_dirty": true, "source_fingerprint": "f6d4e60474ca9afe0c8477407396eea16a7edba8a3e5bd8e142a14c7a3dd7ffe", "source_origin": "git", "source_revision": "04388ffd1f9590bda0fa8114f235f5057b1c1a7c", "source_tree": "a89bf2ffa3afffe18d6c4ca04544374e502d9fe7", "source_untracked_count": 16, "source_untracked_fingerprint": "84f47c24fcd098f88732ceab246b2e0e19eca31f56acdd72f89f8bfa1621daf2", "version": "0.1.0-prealpha"}, "files": 234, "ok": true, "tools": 17}

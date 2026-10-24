@@ -94,7 +94,9 @@
     "docs/MK2_PHYSICS_ARCHITECTURE.md",
     "docs/PROJECT_SETTINGS_AND_WATER.md",
     "docs/PREALPHA_FINAL_CORRECTIONS.md",
-    "docs/PREALPHA_LINUX_READINESS.md"
+    "docs/PREALPHA_LINUX_READINESS.md",
+    "docs/LINUX_BASELINE_BUILD.md",
+    "docs/PREALPHA_ELASTIC_LINUX_BASELINE.md"
   ],
   "historical_exclusions": [
     {

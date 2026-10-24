@@ -56,14 +56,15 @@ This reconciles all 54 original findings. Current Linux results and remaining li
 | L-07 | deferred | Universal replication/native migration/suspension, multiple charts, per-mip streaming, every render path and public-Internet security are not promised. |
 | L-08 | deferred | Universal replication/native migration/suspension, multiple charts, per-mip streaming, every render path and public-Internet security are not promised. |
 | L-09 | deferred | Universal replication/native migration/suspension, multiple charts, per-mip streaming, every render path and public-Internet security are not promised. |
-| L-10 | improved | Current Linux source and SDK are qualified on Ubuntu 26.04.1/GCC 15.2; actual glibc 2.43 is recorded and Ubuntu24 policy is correctly rejected. Windows/Android deferred. No universal Linux binary claim. |
+| L-10 | improved | Ubuntu 24.04 isolated SDK build, all 17 older-loader checks, editor and source/SDK-absent moved export now pass; maximum GLIBC 2.38. Other distributions/hardware and Windows/Android remain unqualified. See [investigation](PREALPHA_ELASTIC_LINUX_BASELINE.md). |
 | CAP-01 | open | Legacy gameplay controller is not MK1. Existing games retain it; breadth not fully reexecuted. |
 | CAP-02 | deferred | Advanced workflows have explicit boundaries; no claim of universal composition or every-feature certification. |
 | D-03 | improved | All 17 Linux SDK tools staged with matching clean-source identity and checksums; representative actual workflows pass. Current Windows SDK qualification explicitly deferred. |
 
 ## Newly reproduced numerical limit
 
-**MK2-ELASTIC-CONFINEMENT** remains open: high-rate elastic spinning confinement
-can gain energy. This is not introduced by the diagnostic counters and is not
-reclassified as an accepted physical result. See the readiness report and exact
-reproduction for scope and next action.
+**MK2-ELASTIC-CONFINEMENT** remains open, including a 5 m/s / 20 rad/s elastic
+case gaining 31.845% in two seconds without safety holds. Arrival pose/velocity
+inconsistency, incompatible rotation maps and nonpassive state transitions are
+now evidenced; local repair experiments failed and were not installed.
+See [the investigation and rejected experiments](PREALPHA_ELASTIC_LINUX_BASELINE.md).

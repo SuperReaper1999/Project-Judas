@@ -1,0 +1,1 @@
+{"passed": false, "errors": ["Baseline requires ubuntu:24.04; actual host is ubuntu:26.04"], "output": ".cache/prealpha-elastic-linux/wrong-host-negative.json"}

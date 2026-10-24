@@ -1,0 +1,121 @@
+--- src/physics/WorldMk2Solver.cpp
++++ pullback-exact.cpp
+@@ -491,6 +491,19 @@
+     // (Solving a coupled step as one substep let a 24.6 m/s crash car reach
+     // its barrier with half the crush and no link failure.)
+     std::size_t frictionlessRetries = 0, inelasticFallbacks = 0, coupledImpactFallbacks = 0;
++    const auto traceEnergy = [&](const char* stage) {
++        if (!std::getenv("JUDAS_TRACE_ELASTIC")) return;
++        double energy=0;
++        for (const auto slot: aliveSlots) {
++            const auto& rb=bodies[slot].rigidBody;
++            if (!bodies[slot].isDynamic) continue;
++            const glm::dvec3 v(rb.linearVelocity), w(rb.angularVelocity);
++            energy += .5*glm::dot(v,v)/rb.inverseMass + .5*glm::dot(w, glm::inverse(glm::dmat3(rb.InverseInertiaWorld()))*w);
++            std::fprintf(stderr,"  v %.6g %.6g %.6g w %.6g %.6g %.6g q %.6g %.6g %.6g %.6g\n",v.x,v.y,v.z,w.x,w.y,w.z,rb.orientation.w,rb.orientation.x,rb.orientation.y,rb.orientation.z);
++        }
++        std::fprintf(stderr,"ENERGY %s %.12g\n",stage,energy);
++    };
++    traceEnergy("entry");
+     int participantRound = 0;
+     const int substeps = kMk2Substeps;
+     const float h = dt / float(substeps);
+@@ -930,7 +943,7 @@
+                 flight.orientation = body.orientation;
+                 flight.linearVelocity = body.linearVelocity;
+                 flight.angularVelocity = body.angularVelocity;
+-                flight.driftAngularVelocity = AngularDriftGenerator(
++                flight.driftAngularVelocity = Exact(
+                     flight.inverseInertiaLocal, flight.orientation, flight.angularVelocity,
+                     float(flight.end));
+                 const auto pose = flight.EvaluateGeometry(flight.end);
+@@ -1092,6 +1105,8 @@
+                 each([&](std::size_t i) { impactNormal[i] += rows[i].normalImpulse; });
+             }
+             for (std::size_t i = 0; i < state.size(); ++i) {
++                auto& rb = *state[i].rb;
++                rb.angularVelocity = startPose[i].second * (glm::conjugate(rb.orientation) * rb.angularVelocity);
+                 state[i].rb->position = startPose[i].first;
+                 state[i].rb->orientation = startPose[i].second;
+             }
+@@ -1106,6 +1121,7 @@
+                 impactAngular[i] = state[i].rb->angularVelocity - impactAngular[i];
+             }
+         }
++        traceEnergy("after-impact");
+         // Warm start with at most the steady support load. Re-applying an
+         // impact substep's spike would have to be removed again by the next
+         // sweep; down a chain one sweep cannot, and the stack would pop. A
+@@ -1299,6 +1315,7 @@
+                 rb->angularVelocity = savedVelocity[m].second;
+             }
+         }
++        traceEnergy("before-integrate");
+         for (std::size_t i = 0; i < state.size(); ++i) {
+             auto &s = state[i];
+             auto &body = bodies[s.slot];
+@@ -1319,7 +1336,7 @@
+                     seg.linearVelocity = v + pseudoLinear[i];
+                     seg.angularVelocity = w + pseudoAngular[i];
+                     seg.driftAngularVelocity =
+-                        AngularDriftGenerator(seg.inverseInertiaLocal, seg.orientation,
++                        Exact(seg.inverseInertiaLocal, seg.orientation,
+                                               seg.angularVelocity, float(to - from));
+                     const auto pose = seg.EvaluateGeometry(to);
+                     seg.endPosition = pose.position;
+@@ -1335,17 +1352,18 @@
+                            TransportAngularVelocity(seg.inverseInertiaLocal, seg.orientation,
+                                                     next.orientation, pseudoAngular[i]);
+                 };
++                const auto impactFrame = body.rigidBody.orientation;
+                 const glm::vec3 v = body.rigidBody.linearVelocity;
+                 glm::vec3 w = body.rigidBody.angularVelocity;
+                 if (arrival[i] == 1.0f) { // at the substep's end (none is 2)
+                     body.rigidBody.angularVelocity =
+                         advance(begin, end, v - impactLinear[i], w - impactAngular[i]) +
+-                        impactAngular[i];
++                        body.rigidBody.orientation * (glm::conjugate(impactFrame) * impactAngular[i]);
+                 } else if (arrival[i] > 0 && arrival[i] < 1) {
+                     const double at = begin + (end - begin) * double(arrival[i]);
+                     const glm::vec3 spin = advance(begin, at, v - impactLinear[i],
+                                                    w - impactAngular[i]);
+-                    w = spin + impactAngular[i];
++                    w = spin + body.rigidBody.orientation * (glm::conjugate(impactFrame) * impactAngular[i]);
+                     body.rigidBody.angularVelocity = advance(at, end, v, w);
+                 } else {
+                     body.rigidBody.angularVelocity = advance(begin, end, v, w);
+@@ -1360,6 +1378,7 @@
+                 s.dq = glm::mat3_cast(pose.orientation * glm::conjugate(s.q0));
+             }
+         }
++        traceEnergy("after-integrate");
+         // Poses moved: relax (and the next substep) use the current geometry.
+         recollide();
+         refreshGeometry();
+@@ -1396,6 +1415,7 @@
+             if (row.steadyNormal == 0)
+                 row.steadyNormal = row.normalImpulse;
+         }
++        traceEnergy("after-relax");
+         if (coupling && coupling->finish && step + 1 == substeps)
+             coupling->finish(dt);
+     }
+@@ -1465,7 +1485,9 @@
+             mk2RowEndSeparation.back() = std::min(mk2RowEndSeparation.back(), endSeparation);
+         }
+     }
++    traceEnergy("before-continuous");
+     Mk2Continuous(dt);
++    traceEnergy("after-continuous");
+ 
+     // Contact history: step-total impulses in MK1's cache format.
+     for (std::size_t i = 0; i < rows.size() && i < pendingCache.size(); ++i) {
+@@ -1582,7 +1604,7 @@
+             next.linearVelocity = body.rigidBody.linearVelocity;
+             next.angularVelocity = body.rigidBody.angularVelocity;
+             next.driftAngularVelocity =
+-                AngularDriftGenerator(next.inverseInertiaLocal, next.orientation,
++                Exact(next.inverseInertiaLocal, next.orientation,
+                                       next.angularVelocity, float(double(dt) - at));
+         }
+         const auto pose = next.EvaluateGeometry(dt);

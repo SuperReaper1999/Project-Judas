@@ -1,0 +1,4 @@
+FAIL ideal-elastic no-force energy creation: speed100 spin100 before5077.33334 after125043.475 ratio24.6277852 hold1
+1 preserved failing energy cases; not a green physics gate
+
+exit 1

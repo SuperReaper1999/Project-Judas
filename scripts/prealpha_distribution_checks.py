@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Dependency/ABI and APK-integrity positive/negative controls, without compilers."""
+"""Dependency/ABI, Linux baseline and APK-integrity controls, without compilers."""
 
 import argparse
 import contextlib
@@ -19,6 +19,7 @@ import zipfile
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "tools"))
 import binary_dependencies
+import build_linux_baseline
 import build_android
 import inspect_sdk
 import verify_android
@@ -346,6 +347,51 @@ class DistributionChecks(unittest.TestCase):
         self.assertFalse(output.exists())
         self.assertTrue(any('--build' in command for command in commands))
         self.assertFalse(any(Path(command[0]).name == 'apksigner' for command in commands))
+
+
+    def test_linux_baseline_container_uses_readonly_source_and_separate_build(self):
+        command = build_linux_baseline.environment_command(self.root / 'source', self.root / 'output',
+                                                           engine='podman', image='fixture@sha256:test')
+        self.assertEqual(command[:3], ['podman', 'run', '--rm'])
+        self.assertIn('--pull=never', command)
+        self.assertIn('--network=none', command)
+        self.assertIn(f'type=bind,src={self.root}/source,dst=/source,readonly', command)
+        self.assertIn(f'type=bind,src={self.root}/output,dst=/build', command)
+        self.assertEqual(command[-1], 'fixture@sha256:test')
+        self.assertFalse(any('/home/' in arg and str(self.root) not in arg for arg in command))
+
+    def test_linux_baseline_rejects_unsafe_mount_layouts(self):
+        for source, build in ((self.root, self.root), (self.root / 'source', self.root)):
+            with self.assertRaisesRegex(ValueError, 'Build directory'):
+                build_linux_baseline.environment_command(source, build, engine='docker', image='fixture')
+        with self.assertRaisesRegex(ValueError, 'commas'):
+            build_linux_baseline.environment_command(self.root / 'a,b', self.root / 'out', engine='docker', image='fixture')
+        with self.assertRaisesRegex(ValueError, 'Choose Docker'):
+            build_linux_baseline.environment_command(self.root / 'source', self.root / 'out')
+
+    def test_linux_baseline_rootfs_requires_prepared_mount_points(self):
+        source, build, root = self.root / 'source', self.root / 'output', self.root / 'rootfs'
+        root.mkdir()
+        with self.assertRaisesRegex(ValueError, 'lacks /source'):
+            build_linux_baseline.environment_command(source, build, rootfs=root)
+        for name in ('source', 'build', 'bin', 'etc'):
+            (root / name).mkdir()
+        (root / 'bin/sh').touch(); (root / 'etc/os-release').touch()
+        command = build_linux_baseline.environment_command(source, build, rootfs=root)
+        self.assertEqual(command[:5], ['bwrap', '--clearenv', '--ro-bind', str(root), '/'])
+        self.assertIn('C.UTF-8', command)
+        self.assertIn('--unshare-user', command)
+        self.assertNotIn('--bind', command[:command.index('/source')])
+        for invalid in (source, build, self.root, build / "nested-rootfs"):
+            with self.assertRaisesRegex(ValueError, 'Rootfs must be separate'):
+                build_linux_baseline.environment_command(source, build, rootfs=invalid)
+
+    def test_linux_baseline_cli_rejects_invalid_jobs_without_starting_backend(self):
+        for jobs in ('0', '33'):
+            result = subprocess.run([sys.executable, str(ROOT / 'tools/build_linux_baseline.py'), '--jobs', jobs],
+                                    capture_output=True, text=True, timeout=10)
+            self.assertNotEqual(result.returncode, 0)
+            self.assertIn('--jobs must be', result.stderr)
 
 
 def main():

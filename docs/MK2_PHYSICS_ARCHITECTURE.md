@@ -72,6 +72,12 @@ WASD measurements with exact stage identities. Those are not universal 60 Hz
 certification or fresh measurements of every later checkpoint. The old Pre-Alpha
 TOI-event/island hitch diagnoses describe the removed MK1 architecture.
 
+Perfectly elastic anisotropic spinning contact is an open correctness defect,
+not only a rate-cap limitation. The [numerical investigation](PREALPHA_ELASTIC_LINUX_BASELINE.md)
+records a moderate-rate energy gain, inconsistent arrival/velocity frames and
+rotation integration, and rejected local corrections. Existing passing suites
+must not be presented as a general no-energy-gain guarantee.
+
 ## Validation
 
 The focused manifest schedules MK2 foundation, physical balance, original physical

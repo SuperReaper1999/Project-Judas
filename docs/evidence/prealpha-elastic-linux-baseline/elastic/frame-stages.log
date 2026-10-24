@@ -1,0 +1,608 @@
+  v 1 0 0 w 0 0 0 q 1 0 0 0
+ENERGY entry 0.5
+  v 1 0 0 w 0 0 0 q 1 0 0 0
+ENERGY after-impact 0.5
+  v 1 0 0 w 0 0 0 q 1 0 0 0
+ENERGY before-integrate 0.5
+  v 1 0 0 w 0 0 0 q 1 0 0 0
+ENERGY after-integrate 0.5
+  v 1 0 0 w 0 0 0 q 1 0 0 0
+ENERGY after-relax 0.5
+  v 1 0 0 w 0 0 0 q 1 0 0 0
+ENERGY after-impact 0.5
+  v 1 0 0 w 0 0 0 q 1 0 0 0
+ENERGY before-integrate 0.5
+  v 1 0 0 w 0 0 0 q 1 0 0 0
+ENERGY after-integrate 0.5
+  v 1 0 0 w 0 0 0 q 1 0 0 0
+ENERGY after-relax 0.5
+  v 1 0 0 w 0 0 0 q 1 0 0 0
+ENERGY after-impact 0.5
+  v 1 0 0 w 0 0 0 q 1 0 0 0
+ENERGY before-integrate 0.5
+  v 1 0 0 w 0 0 0 q 1 0 0 0
+ENERGY after-integrate 0.5
+  v 1 0 0 w 0 0 0 q 1 0 0 0
+ENERGY after-relax 0.5
+  v 1 0 0 w 0 0 0 q 1 0 0 0
+ENERGY after-impact 0.5
+  v 1 0 0 w 0 0 0 q 1 0 0 0
+ENERGY before-integrate 0.5
+  v 1 0 0 w 0 0 0 q 1 0 0 0
+ENERGY after-integrate 0.5
+  v 1 0 0 w 0 0 0 q 1 0 0 0
+ENERGY after-relax 0.5
+  v 1 0 0 w 0 0 0 q 1 0 0 0
+ENERGY before-continuous 0.5
+  v 1 0 0 w 0 0 0 q 1 0 0 0
+ENERGY after-continuous 0.5
+  v 1 0 0 w 0 0 5 q 1 0 0 0
+ENERGY entry 0.69333335064
+  v 1 0 0 w 0 0 5 q 1 0 0 0
+ENERGY after-impact 0.69333335064
+  v 1 0 0 w 0 0 5 q 1 0 0 0
+ENERGY before-integrate 0.69333335064
+  v 1 0 0 w 0 0 5 q 1 0 0 0
+ENERGY after-integrate 0.69333335064
+  v 1 0 0 w 0 0 5 q 1 0 0 0
+ENERGY after-relax 0.69333335064
+  v 1 0 0 w 0 0 5 q 1 0 0 0
+ENERGY after-impact 0.69333335064
+  v 1 0 0 w 0 0 5 q 1 0 0 0
+ENERGY before-integrate 0.69333335064
+  v 1 0 0 w 0 0 5 q 1 0 0 0
+ENERGY after-integrate 0.69333335064
+  v 1 0 0 w 0 0 5 q 1 0 0 0
+ENERGY after-relax 0.69333335064
+  v 1 0 0 w 0 0 5 q 1 0 0 0
+ENERGY after-impact 0.69333335064
+  v 1 0 0 w 0 0 5 q 1 0 0 0
+ENERGY before-integrate 0.69333335064
+  v 1 0 0 w 0 0 5 q 1 0 0 0
+ENERGY after-integrate 0.69333335064
+  v 1 0 0 w 0 0 5 q 1 0 0 0
+ENERGY after-relax 0.69333335064
+  v 1 0 0 w 0 0 5 q 1 0 0 0
+ENERGY after-impact 0.69333335064
+  v 1 0 0 w 0 0 5 q 1 0 0 0
+ENERGY before-integrate 0.69333335064
+  v 1 0 0 w 0 0 5 q 1 0 0 0
+ENERGY after-integrate 0.69333335064
+  v 1 0 0 w 0 0 5 q 1 0 0 0
+ENERGY after-relax 0.69333335064
+  v 1 0 0 w 0 0 5 q 0.999132 0 0 0.0416546
+ENERGY before-continuous 0.69333335064
+  v 1 0 0 w 0 0 5 q 0.999132 0 0 0.0416546
+ENERGY after-continuous 0.69333335064
+  v 1 0 0 w 0 0 20 q 1 0 0 0
+ENERGY entry 3.59333361024
+  v 1 0 0 w 0 0 20 q 1 0 0 0
+ENERGY after-impact 3.59333361024
+  v 1 0 0 w 0 0 20 q 1 0 0 0
+ENERGY before-integrate 3.59333361024
+  v 1 0 0 w 0 0 20 q 1 0 0 0
+ENERGY after-integrate 3.59333361024
+  v 1 0 0 w 0 0 20 q 1 0 0 0
+ENERGY after-relax 3.59333361024
+  v 1 0 0 w 0 0 20 q 1 0 0 0
+ENERGY after-impact 3.59333361024
+  v 1 0 0 w 0 0 20 q 1 0 0 0
+ENERGY before-integrate 3.59333361024
+  v 1 0 0 w 0 0 20 q 1 0 0 0
+ENERGY after-integrate 3.59333361024
+  v 1 0 0 w 0 0 20 q 1 0 0 0
+ENERGY after-relax 3.59333361024
+  v 1 0 0 w 0 0 20 q 1 0 0 0
+ENERGY after-impact 3.59333361024
+  v 1 0 0 w 0 0 20 q 1 0 0 0
+ENERGY before-integrate 3.59333361024
+  v 1 0 0 w 0 0 20 q 1 0 0 0
+ENERGY after-integrate 3.59333361024
+  v 1 0 0 w 0 0 20 q 1 0 0 0
+ENERGY after-relax 3.59333361024
+  v 1 0 0 w 0 0 20 q 1 0 0 0
+ENERGY after-impact 3.59333361024
+  v 1 0 0 w 0 0 20 q 1 0 0 0
+ENERGY before-integrate 3.59333361024
+  v 1 0 0 w 0 0 20 q 1 0 0 0
+ENERGY after-integrate 3.59333361024
+  v 1 0 0 w 0 0 20 q 1 0 0 0
+ENERGY after-relax 3.59333361024
+  v 1 0 0 w 0 0 20 q 0.986143 0 0 0.165896
+ENERGY before-continuous 3.59333361024
+  v 1 0 0 w 0 0 20 q 0.986143 0 0 0.165896
+ENERGY after-continuous 3.59333361024
+  v 1 0 0 w 0 0 100 q 1 0 0 0
+ENERGY entry 77.8333402561
+  v 1 0 0 w 0 0 100 q 1 0 0 0
+ENERGY after-impact 77.8333402561
+  v 1 0 0 w 0 0 100 q 1 0 0 0
+ENERGY before-integrate 77.8333402561
+  v 1 0 0 w 0 0 100 q 1 0 0 0
+ENERGY after-integrate 77.8333402561
+  v 1 0 0 w 0 0 100 q 1 0 0 0
+ENERGY after-relax 77.8333402561
+  v 1 0 0 w 0 0 100 q 1 0 0 0
+ENERGY after-impact 77.8333402561
+  v 1 0 0 w 0 0 100 q 1 0 0 0
+ENERGY before-integrate 77.8333402561
+  v 1 0 0 w 0 0 100 q 1 0 0 0
+ENERGY after-integrate 77.8333402561
+  v 1 0 0 w 0 0 100 q 1 0 0 0
+ENERGY after-relax 77.8333402561
+  v 1 0 0 w 0 0 100 q 1 0 0 0
+ENERGY after-impact 77.8333402561
+  v 1 0 0 w 0 0 100 q 1 0 0 0
+ENERGY before-integrate 77.8333402561
+  v 1 0 0 w 0 0 100 q 1 0 0 0
+ENERGY after-integrate 77.8333402561
+  v 1 0 0 w 0 0 100 q 1 0 0 0
+ENERGY after-relax 77.8333402561
+  v 1 0 0 w 0 0 100 q 1 0 0 0
+ENERGY after-impact 77.8333402561
+  v 1 0 0 w 0 0 100 q 1 0 0 0
+ENERGY before-integrate 77.8333402561
+  v 1 0 0 w 0 0 100 q 1 0 0 0
+ENERGY after-integrate 77.8333402561
+  v 1 0 0 w 0 0 100 q 1 0 0 0
+ENERGY after-relax 77.8333402561
+  v 1 0 0 w 0 0 100 q 0.672412 0 0 0.740177
+ENERGY before-continuous 77.8333402561
+  v 1 0 0 w 0 0 100 q 0.672412 0 0 0.740177
+ENERGY after-continuous 77.8333402561
+  v 5 0 0 w 0 0 0 q 1 0 0 0
+ENERGY entry 12.5
+  v 5 0 0 w 0 0 0 q 1 0 0 0
+ENERGY after-impact 12.5
+  v 5 0 0 w 0 0 0 q 1 0 0 0
+ENERGY before-integrate 12.5
+  v 5 0 0 w 0 0 0 q 1 0 0 0
+ENERGY after-integrate 12.5
+  v 5 0 0 w 0 0 0 q 1 0 0 0
+ENERGY after-relax 12.5
+  v 5 0 0 w 0 0 0 q 1 0 0 0
+ENERGY after-impact 12.5
+  v 5 0 0 w 0 0 0 q 1 0 0 0
+ENERGY before-integrate 12.5
+  v 5 0 0 w 0 0 0 q 1 0 0 0
+ENERGY after-integrate 12.5
+  v 5 0 0 w 0 0 0 q 1 0 0 0
+ENERGY after-relax 12.5
+  v 5 0 0 w 0 0 0 q 1 0 0 0
+ENERGY after-impact 12.5
+  v 5 0 0 w 0 0 0 q 1 0 0 0
+ENERGY before-integrate 12.5
+  v 5 0 0 w 0 0 0 q 1 0 0 0
+ENERGY after-integrate 12.5
+  v 5 0 0 w 0 0 0 q 1 0 0 0
+ENERGY after-relax 12.5
+  v 5 0 0 w 0 0 0 q 1 0 0 0
+ENERGY after-impact 12.5
+  v 5 0 0 w 0 0 0 q 1 0 0 0
+ENERGY before-integrate 12.5
+  v 5 0 0 w 0 0 0 q 1 0 0 0
+ENERGY after-integrate 12.5
+  v 5 0 0 w 0 0 0 q 1 0 0 0
+ENERGY after-relax 12.5
+  v 5 0 0 w 0 0 0 q 1 0 0 0
+ENERGY before-continuous 12.5
+  v 5 0 0 w 0 0 0 q 1 0 0 0
+ENERGY after-continuous 12.5
+  v 5 0 0 w 0 0 5 q 1 0 0 0
+ENERGY entry 12.6933333506
+  v 5 0 0 w 0 0 5 q 1 0 0 0
+ENERGY after-impact 12.6933333506
+  v 5 0 0 w 0 0 5 q 1 0 0 0
+ENERGY before-integrate 12.6933333506
+  v 5 0 0 w 0 0 5 q 1 0 0 0
+ENERGY after-integrate 12.6933333506
+  v 5 0 0 w 0 0 5 q 1 0 0 0
+ENERGY after-relax 12.6933333506
+  v 5 0 0 w 0 0 5 q 1 0 0 0
+ENERGY after-impact 12.6933333506
+  v 5 0 0 w 0 0 5 q 1 0 0 0
+ENERGY before-integrate 12.6933333506
+  v 5 0 0 w 0 0 5 q 1 0 0 0
+ENERGY after-integrate 12.6933333506
+  v 5 0 0 w 0 0 5 q 1 0 0 0
+ENERGY after-relax 12.6933333506
+  v 5 0 0 w 0 0 5 q 1 0 0 0
+ENERGY after-impact 12.6933333506
+  v 5 0 0 w 0 0 5 q 1 0 0 0
+ENERGY before-integrate 12.6933333506
+  v 5 0 0 w 0 0 5 q 1 0 0 0
+ENERGY after-integrate 12.6933333506
+  v 5 0 0 w 0 0 5 q 1 0 0 0
+ENERGY after-relax 12.6933333506
+  v 5 0 0 w 0 0 5 q 1 0 0 0
+ENERGY after-impact 12.6933333506
+  v 5 0 0 w 0 0 5 q 1 0 0 0
+ENERGY before-integrate 12.6933333506
+  v 5 0 0 w 0 0 5 q 1 0 0 0
+ENERGY after-integrate 12.6933333506
+  v 5 0 0 w 0 0 5 q 1 0 0 0
+ENERGY after-relax 12.6933333506
+  v 5 0 0 w 0 0 5 q 0.999132 0 0 0.0416546
+ENERGY before-continuous 12.6933333506
+  v 5 0 0 w 0 0 5 q 0.999132 0 0 0.0416546
+ENERGY after-continuous 12.6933333506
+  v 5 0 0 w 0 0 20 q 1 0 0 0
+ENERGY entry 15.5933336102
+  v 5 0 0 w 0 0 20 q 1 0 0 0
+ENERGY after-impact 15.5933336102
+  v 5 0 0 w 0 0 20 q 1 0 0 0
+ENERGY before-integrate 15.5933336102
+  v 5 0 0 w 0 0 20 q 1 0 0 0
+ENERGY after-integrate 15.5933336102
+  v 5 0 0 w 0 0 20 q 1 0 0 0
+ENERGY after-relax 15.5933336102
+  v 5 0 0 w 0 0 20 q 1 0 0 0
+ENERGY after-impact 15.5933336102
+  v 5 0 0 w 0 0 20 q 1 0 0 0
+ENERGY before-integrate 15.5933336102
+  v 5 0 0 w 0 0 20 q 1 0 0 0
+ENERGY after-integrate 15.5933336102
+  v 5 0 0 w 0 0 20 q 1 0 0 0
+ENERGY after-relax 15.5933336102
+  v 5 0 0 w 0 0 20 q 1 0 0 0
+ENERGY after-impact 15.5933336102
+  v 5 0 0 w 0 0 20 q 1 0 0 0
+ENERGY before-integrate 15.5933336102
+  v 5 0 0 w 0 0 20 q 1 0 0 0
+ENERGY after-integrate 15.5933336102
+  v 5 0 0 w 0 0 20 q 1 0 0 0
+ENERGY after-relax 15.5933336102
+  v 5 0 0 w 0 0 20 q 1 0 0 0
+ENERGY after-impact 15.5933336102
+  v 5 0 0 w 0 0 20 q 1 0 0 0
+ENERGY before-integrate 15.5933336102
+  v 5 0 0 w 0 0 20 q 1 0 0 0
+ENERGY after-integrate 15.5933336102
+  v 5 0 0 w 0 0 20 q 1 0 0 0
+ENERGY after-relax 15.5933336102
+  v 5 0 0 w 0 0 20 q 0.986143 0 0 0.165896
+ENERGY before-continuous 15.5933336102
+  v 5 0 0 w 0 0 20 q 0.986143 0 0 0.165896
+ENERGY after-continuous 15.5933336102
+  v 5 0 0 w 0 0 100 q 1 0 0 0
+ENERGY entry 89.8333402561
+  v 5 0 0 w 0 0 100 q 1 0 0 0
+ENERGY after-impact 89.8333402561
+  v 5 0 0 w 0 0 100 q 1 0 0 0
+ENERGY before-integrate 89.8333402561
+  v 5 0 0 w 0 0 100 q 1 0 0 0
+ENERGY after-integrate 89.8333402561
+  v 5 0 0 w 0 0 100 q 1 0 0 0
+ENERGY after-relax 89.8333402561
+  v 5 0 0 w 0 0 100 q 1 0 0 0
+ENERGY after-impact 89.8333402561
+  v 5 0 0 w 0 0 100 q 1 0 0 0
+ENERGY before-integrate 89.8333402561
+  v 5 0 0 w 0 0 100 q 1 0 0 0
+ENERGY after-integrate 89.8333402561
+  v 5 0 0 w 0 0 100 q 1 0 0 0
+ENERGY after-relax 89.8333402561
+  v 5 0 0 w 0 0 100 q 1 0 0 0
+ENERGY after-impact 89.8333402561
+  v 5 0 0 w 0 0 100 q 1 0 0 0
+ENERGY before-integrate 89.8333402561
+  v 5 0 0 w 0 0 100 q 1 0 0 0
+ENERGY after-integrate 89.8333402561
+  v 5 0 0 w 0 0 100 q 1 0 0 0
+ENERGY after-relax 89.8333402561
+  v 5 0 0 w 0 0 100 q 1 0 0 0
+ENERGY after-impact 89.8333402561
+  v 5 0 0 w 0 0 100 q 1 0 0 0
+ENERGY before-integrate 89.8333402561
+  v 5 0 0 w 0 0 100 q 1 0 0 0
+ENERGY after-integrate 89.8333402561
+  v 5 0 0 w 0 0 100 q 1 0 0 0
+ENERGY after-relax 89.8333402561
+  v 5 0 0 w 0 0 100 q 0.672412 0 0 0.740177
+ENERGY before-continuous 89.8333402561
+  v 5 0 0 w 0 0 100 q 0.672412 0 0 0.740177
+ENERGY after-continuous 89.8333402561
+  v 20 0 0 w 0 0 0 q 1 0 0 0
+ENERGY entry 200
+  v 20 0 0 w 0 0 0 q 1 0 0 0
+ENERGY after-impact 200
+  v 20 0 0 w 0 0 0 q 1 0 0 0
+ENERGY before-integrate 200
+  v 20 0 0 w 0 0 0 q 1 0 0 0
+ENERGY after-integrate 200
+  v 20 0 0 w 0 0 0 q 1 0 0 0
+ENERGY after-relax 200
+  v 20 0 0 w 0 0 0 q 1 0 0 0
+ENERGY after-impact 200
+  v 20 0 0 w 0 0 0 q 1 0 0 0
+ENERGY before-integrate 200
+  v 20 0 0 w 0 0 0 q 1 0 0 0
+ENERGY after-integrate 200
+  v 20 0 0 w 0 0 0 q 1 0 0 0
+ENERGY after-relax 200
+  v 20 0 0 w 0 0 0 q 1 0 0 0
+ENERGY after-impact 200
+  v 20 0 0 w 0 0 0 q 1 0 0 0
+ENERGY before-integrate 200
+  v 20 0 0 w 0 0 0 q 1 0 0 0
+ENERGY after-integrate 200
+  v 20 0 0 w 0 0 0 q 1 0 0 0
+ENERGY after-relax 200
+  v 20 0 0 w 0 0 0 q 1 0 0 0
+ENERGY after-impact 200
+  v 20 0 0 w 0 0 0 q 1 0 0 0
+ENERGY before-integrate 200
+  v 20 0 0 w 0 0 0 q 1 0 0 0
+ENERGY after-integrate 200
+  v 20 0 0 w 0 0 0 q 1 0 0 0
+ENERGY after-relax 200
+  v 20 0 0 w 0 0 0 q 1 0 0 0
+ENERGY before-continuous 200
+  v 20 0 0 w 0 0 0 q 1 0 0 0
+ENERGY after-continuous 200
+  v 20 0 0 w 0 0 5 q 1 0 0 0
+ENERGY entry 200.193333351
+  v 20 0 0 w 0 0 5 q 1 0 0 0
+ENERGY after-impact 200.193333351
+  v 20 0 0 w 0 0 5 q 1 0 0 0
+ENERGY before-integrate 200.193333351
+  v 20 0 0 w 0 0 5 q 1 0 0 0
+ENERGY after-integrate 200.193333351
+  v 20 0 0 w 0 0 5 q 1 0 0 0
+ENERGY after-relax 200.193333351
+  v 20 0 0 w 0 0 5 q 1 0 0 0
+ENERGY after-impact 200.193333351
+  v 20 0 0 w 0 0 5 q 1 0 0 0
+ENERGY before-integrate 200.193333351
+  v 20 0 0 w 0 0 5 q 1 0 0 0
+ENERGY after-integrate 200.193333351
+  v 20 0 0 w 0 0 5 q 1 0 0 0
+ENERGY after-relax 200.193333351
+  v 20 0 0 w 0 0 5 q 1 0 0 0
+ENERGY after-impact 200.193333351
+  v 20 0 0 w 0 0 5 q 1 0 0 0
+ENERGY before-integrate 200.193333351
+  v 20 0 0 w 0 0 5 q 1 0 0 0
+ENERGY after-integrate 200.193333351
+  v 20 0 0 w 0 0 5 q 1 0 0 0
+ENERGY after-relax 200.193333351
+  v 20 0 0 w 0 0 5 q 1 0 0 0
+ENERGY after-impact 200.193333351
+  v 20 0 0 w 0 0 5 q 1 0 0 0
+ENERGY before-integrate 200.193333351
+  v 20 0 0 w 0 0 5 q 1 0 0 0
+ENERGY after-integrate 200.193333351
+  v 20 0 0 w 0 0 5 q 1 0 0 0
+ENERGY after-relax 200.193333351
+  v 20 0 0 w 0 0 5 q 0.999132 0 0 0.0416546
+ENERGY before-continuous 200.193333351
+  v 20 0 0 w 0 0 5 q 0.999132 0 0 0.0416546
+ENERGY after-continuous 200.193333351
+  v 20 0 0 w 0 0 20 q 1 0 0 0
+ENERGY entry 203.09333361
+  v 20 0 0 w 0 0 20 q 1 0 0 0
+ENERGY after-impact 203.09333361
+  v 20 0 0 w 0 0 20 q 1 0 0 0
+ENERGY before-integrate 203.09333361
+  v 20 0 0 w 0 0 20 q 1 0 0 0
+ENERGY after-integrate 203.09333361
+  v 20 0 0 w 0 0 20 q 1 0 0 0
+ENERGY after-relax 203.09333361
+  v 20 0 0 w 0 0 20 q 1 0 0 0
+ENERGY after-impact 203.09333361
+  v 20 0 0 w 0 0 20 q 1 0 0 0
+ENERGY before-integrate 203.09333361
+  v 20 0 0 w 0 0 20 q 1 0 0 0
+ENERGY after-integrate 203.09333361
+  v 20 0 0 w 0 0 20 q 1 0 0 0
+ENERGY after-relax 203.09333361
+  v 20 0 0 w 0 0 20 q 1 0 0 0
+ENERGY after-impact 203.09333361
+  v 20 0 0 w 0 0 20 q 1 0 0 0
+ENERGY before-integrate 203.09333361
+  v 20 0 0 w 0 0 20 q 1 0 0 0
+ENERGY after-integrate 203.09333361
+  v 20 0 0 w 0 0 20 q 1 0 0 0
+ENERGY after-relax 203.09333361
+  v 20 0 0 w 0 0 20 q 1 0 0 0
+ENERGY after-impact 203.09333361
+  v 20 0 0 w 0 0 20 q 1 0 0 0
+ENERGY before-integrate 203.09333361
+  v 20 0 0 w 0 0 20 q 1 0 0 0
+ENERGY after-integrate 203.09333361
+  v 20 0 0 w 0 0 20 q 1 0 0 0
+ENERGY after-relax 203.09333361
+  v 20 0 0 w 0 0 20 q 0.986143 0 0 0.165896
+ENERGY before-continuous 203.09333361
+  v 20 0 0 w 0 0 20 q 0.986143 0 0 0.165896
+ENERGY after-continuous 203.09333361
+  v 20 0 0 w 0 0 100 q 1 0 0 0
+ENERGY entry 277.333340256
+  v 20 0 0 w 0 0 100 q 1 0 0 0
+ENERGY after-impact 277.333340256
+  v 20 0 0 w 0 0 100 q 1 0 0 0
+ENERGY before-integrate 277.333340256
+  v 20 0 0 w 0 0 100 q 0.978377 0 0 0.20683
+ENERGY after-integrate 277.333340256
+  v 20 0 0 w 0 0 100 q 0.978377 0 0 0.20683
+ENERGY after-relax 277.333340256
+  v 20 0 0 w 0 0 100 q 0.978377 0 0 0.20683
+ENERGY after-impact 277.333340256
+  v 20 0 0 w 0 0 100 q 0.978377 0 0 0.20683
+ENERGY before-integrate 277.333340256
+  v 20 0 0 w 0 0 100 q 0.914443 0 0 0.404715
+ENERGY after-integrate 277.333340256
+  v 20 0 0 w 0 0 100 q 0.914443 0 0 0.404715
+ENERGY after-relax 277.333340256
+  v 20 0 0 w 0 0 100 q 0.914443 0 0 0.404715
+ENERGY after-impact 277.333340256
+  v 20 0 0 w 0 0 100 q 0.914443 0 0 0.404715
+ENERGY before-integrate 277.333340256
+  v 20 0 0 w 0 0 100 q 0.810963 0 0 0.585097
+ENERGY after-integrate 277.333340256
+  v 20 0 0 w 0 0 100 q 0.810963 0 0 0.585097
+ENERGY after-relax 277.333340256
+  v 20 0 0 w 0 0 100 q 0.810963 0 0 0.585097
+ENERGY after-impact 277.333340256
+  v 20 0 0 w 0 0 100 q 0.810963 0 0 0.585097
+ENERGY before-integrate 277.333340256
+  v 20 0 0 w 0 0 100 q 0.672412 0 0 0.740177
+ENERGY after-integrate 277.333340256
+  v 20 0 0 w 0 0 100 q 0.672412 0 0 0.740177
+ENERGY after-relax 277.333340256
+  v 20 0 0 w 0 0 100 q 0.672412 0 0 0.740177
+ENERGY before-continuous 277.333340256
+  v 20 0 0 w 0 0 100 q 0.672412 0 0 0.740177
+ENERGY after-continuous 277.333340256
+  v 100 0 0 w 0 0 0 q 1 0 0 0
+ENERGY entry 5000
+  v 100 0 0 w 0 0 0 q 1 0 0 0
+ENERGY after-impact 5000
+  v 100 0 0 w 0 0 0 q 1 0 0 0
+ENERGY before-integrate 5000
+  v 100 0 0 w 0 0 0 q 1 0 0 0
+ENERGY after-integrate 5000
+  v 100 0 0 w 0 0 0 q 1 0 0 0
+ENERGY after-relax 5000
+  v -100 0 0 w 0 0 0 q 1 0 0 0
+ENERGY after-impact 5000
+  v -100 0 0 w 0 0 0 q 1 0 0 0
+ENERGY before-integrate 5000
+  v -100 0 0 w 0 0 0 q 1 0 0 0
+ENERGY after-integrate 5000
+  v -100 0 0 w 0 0 0 q 1 0 0 0
+ENERGY after-relax 5000
+  v -100 0 0 w 0 0 0 q 1 0 0 0
+ENERGY after-impact 5000
+  v -100 0 0 w 0 0 0 q 1 0 0 0
+ENERGY before-integrate 5000
+  v -100 0 0 w 0 0 0 q 1 0 0 0
+ENERGY after-integrate 5000
+  v -100 0 0 w 0 0 0 q 1 0 0 0
+ENERGY after-relax 5000
+  v 100 0 0 w 0 0 0 q 1 0 0 0
+ENERGY after-impact 5000
+  v 100 0 0 w 0 0 0 q 1 0 0 0
+ENERGY before-integrate 5000
+  v 100 0 0 w 0 0 0 q 1 0 0 0
+ENERGY after-integrate 5000
+  v 100 0 0 w 0 0 0 q 1 0 0 0
+ENERGY after-relax 5000
+  v 100 0 0 w 0 0 0 q 1 0 0 0
+ENERGY before-continuous 5000
+  v 100 0 0 w 0 0 0 q 1 0 0 0
+ENERGY after-continuous 5000
+  v 100 0 0 w 0 0 5 q 1 0 0 0
+ENERGY entry 5000.19333335
+  v 100 0 0 w 0 0 5 q 1 0 0 0
+ENERGY after-impact 5000.19333335
+  v 100 0 0 w 0 0 5 q 1 0 0 0
+ENERGY before-integrate 5000.19333335
+  v 100 0 0 w 0 0 5 q 0.999946 0 0 0.0104165
+ENERGY after-integrate 5000.19333335
+  v 100 0 0 w 0 0 5 q 0.999946 0 0 0.0104165
+ENERGY after-relax 5000.19333335
+  v -100 0 0 w 5.86513e-08 3.05253e-05 -5 q 0.999946 0 0 0.0104165
+ENERGY after-impact 5000.19333335
+  v -100 0 0 w 5.86513e-08 3.05253e-05 -5 q 0.999946 0 0 0.0104165
+ENERGY before-integrate 5000.19333335
+  v -100 0 0 w 4.95198e-07 3.05168e-05 -5 q 0.999997 1.10865e-09 5.61324e-08 0.00243779
+ENERGY after-integrate 5000.19333335
+  v -100 0 0 w 4.95198e-07 3.05168e-05 -5 q 0.999997 1.10865e-09 5.61324e-08 0.00243779
+ENERGY after-relax 5000.19333335
+  v -100 0 0 w 4.95198e-07 3.05168e-05 -5 q 0.999997 1.10865e-09 5.61324e-08 0.00243779
+ENERGY after-impact 5000.19333335
+  v -100 0 0 w 4.95198e-07 3.05168e-05 -5 q 0.999997 1.10865e-09 5.61324e-08 0.00243779
+ENERGY before-integrate 5000.19333335
+  v -100 0 0 w 1.05567e-06 3.05002e-05 -5 q 0.999968 3.46386e-09 1.19678e-07 -0.00797879
+ENERGY after-integrate 5000.19333335
+  v -100 0 0 w 1.05567e-06 3.05002e-05 -5 q 0.999968 3.46386e-09 1.19678e-07 -0.00797879
+ENERGY after-relax 5000.19333335
+  v 100 0 0 w -1.5858e-06 3.05575e-05 5.00006 q 0.999968 3.46386e-09 1.19678e-07 -0.00797879
+ENERGY after-impact 5000.19333807
+  v 100 0 0 w -1.5858e-06 3.05575e-05 5.00006 q 0.999968 3.46386e-09 1.19678e-07 -0.00797879
+ENERGY before-integrate 5000.19333807
+  v 100 0 0 w -1.79463e-06 3.05014e-05 5.00006 q 0.999988 9.47187e-10 1.83223e-07 -0.00487459
+ENERGY after-integrate 5000.19333807
+  v 100 0 0 w -1.79463e-06 3.05014e-05 5.00006 q 0.999988 9.47187e-10 1.83223e-07 -0.00487459
+ENERGY after-relax 5000.19333807
+  v 100 0 0 w -1.79463e-06 3.05014e-05 5.00006 q 0.999988 9.47187e-10 1.83223e-07 -0.00487459
+ENERGY before-continuous 5000.19333807
+  v 100 0 0 w -1.79463e-06 3.05014e-05 5.00006 q 0.999988 9.47187e-10 1.83223e-07 -0.00487459
+ENERGY after-continuous 5000.19333807
+  v 100 0 0 w 0 0 20 q 1 0 0 0
+ENERGY entry 5003.09333361
+  v 100 0 0 w 0 0 20 q 1 0 0 0
+ENERGY after-impact 5003.09333361
+  v 100 0 0 w 0 0 20 q 1 0 0 0
+ENERGY before-integrate 5003.09333361
+  v 100 0 0 w 0 0 20 q 0.999132 0 0 0.0416546
+ENERGY after-integrate 5003.09333361
+  v 100 0 0 w 0 0 20 q 0.999132 0 0 0.0416546
+ENERGY after-relax 5003.09333361
+  v -100 0 0 w -3.3618e-07 -6.12157e-05 -20 q 0.999132 0 0 0.0416546
+ENERGY after-impact 5003.09333361
+  v -100 0 0 w -3.3618e-07 -6.12157e-05 -20 q 0.999132 0 0 0.0416546
+ENERGY before-integrate 5003.09333361
+  v -100 0 0 w -4.07697e-06 -6.09979e-05 -20 q 0.999974 -9.12992e-09 -1.15831e-07 0.007284
+ENERGY after-integrate 5003.09333361
+  v -100 0 0 w -4.07697e-06 -6.09979e-05 -20 q 0.999974 -9.12992e-09 -1.15831e-07 0.007284
+ENERGY after-relax 5003.09333361
+  v -100 0 0 w -4.07697e-06 -6.09979e-05 -20 q 0.999974 -9.12992e-09 -1.15831e-07 0.007284
+ENERGY after-impact 5003.09333361
+  v -100 0 0 w -4.07697e-06 -6.09979e-05 -20 q 0.999974 -9.12992e-09 -1.15831e-07 0.007284
+ENERGY before-integrate 5003.09333361
+  v -100 0 0 w -8.49749e-06 -6.04471e-05 -20 q 0.999409 -2.7985e-08 -2.41912e-07 -0.0343758
+ENERGY after-integrate 5003.09333361
+  v -100 0 0 w -8.49749e-06 -6.04471e-05 -20 q 0.999409 -2.7985e-08 -2.41912e-07 -0.0343758
+ENERGY after-relax 5003.09333361
+  v 100 0 0 w -4.8721e-06 6.23724e-05 20.0001 q 0.999409 -2.7985e-08 -2.41912e-07 -0.0343758
+ENERGY after-impact 5003.09411543
+  v 100 0 0 w -4.8721e-06 6.23724e-05 20.0001 q 0.999409 -2.7985e-08 -2.41912e-07 -0.0343758
+ENERGY before-integrate 5003.09411543
+  v 100 0 0 w -7.04158e-06 6.12312e-05 20.0001 q 0.999895 -3.85623e-08 -1.81958e-07 -0.0145264
+ENERGY after-integrate 5003.09411543
+  v 100 0 0 w -7.04158e-06 6.12312e-05 20.0001 q 0.999895 -3.85623e-08 -1.81958e-07 -0.0145264
+ENERGY after-relax 5003.09411543
+  v 100 0 0 w -7.04158e-06 6.12312e-05 20.0001 q 0.999895 -3.85623e-08 -1.81958e-07 -0.0145264
+ENERGY before-continuous 5003.09411543
+  v 100 0 0 w -7.04158e-06 6.12312e-05 20.0001 q 0.999895 -3.85623e-08 -1.81958e-07 -0.0145264
+ENERGY after-continuous 5003.09411543
+  v 100 0 0 w 0 0 100 q 1 0 0 0
+ENERGY entry 5077.33334026
+  v 21.2961 0 0 w -2.79276e-05 1326.47 -573.249 q 1 0 0 0
+ENERGY after-impact 5378.00710938
+  v 31.8805 0 0 w -2.79276e-05 1148.08 -436.382 q 1 0 0 0
+ENERGY before-integrate 3936.00457416
+  v 31.8805 0 0 w -486.611 708.387 -449.158 q 0.900003 0.0802056 -0.215446 0.37033
+ENERGY after-integrate 3230.32615811
+  v 14.2649 0 0 w -604.624 868.288 -694.043 q 0.900003 0.0802056 -0.215446 0.37033
+ENERGY after-relax 5534.89017103
+  v 14.2649 0 0 w -604.624 868.288 -694.043 q 0.900003 0.0802056 -0.215446 0.37033
+ENERGY after-impact 5534.89017103
+  v 14.2649 0 0 w -604.624 868.288 -694.043 q 0.900003 0.0802056 -0.215446 0.37033
+ENERGY before-integrate 5534.89017103
+  v 14.2649 0 0 w -696.834 2112.17 -1689.8 q -0.323209 -0.0823966 0.90095 -0.277553
+ENERGY after-integrate 13326.0481177
+  v 14.2649 0 0 w -696.834 2112.17 -1689.8 q -0.323209 -0.0823966 0.90095 -0.277553
+ENERGY after-relax 13326.0481177
+  v 14.2649 0 0 w -696.834 2112.17 -1689.8 q -0.323209 -0.0823966 0.90095 -0.277553
+ENERGY after-impact 13326.0481177
+  v 14.2649 0 0 w -696.834 2112.17 -1689.8 q -0.323209 -0.0823966 0.90095 -0.277553
+ENERGY before-integrate 13326.0481177
+  v 14.2649 0 0 w -171.91 2328.72 -1817.57 q 0.204007 -0.0862755 0.946228 -0.235778
+ENERGY after-integrate 14444.2035583
+  v 14.2649 0 0 w -171.91 2328.72 -1817.57 q 0.204007 -0.0862755 0.946228 -0.235778
+ENERGY after-relax 14444.2035583
+  v 14.2649 0 0 w -171.91 2328.72 -1817.57 q 0.204007 -0.0862755 0.946228 -0.235778
+ENERGY after-impact 14444.2035583
+  v 14.2649 0 0 w -171.91 2328.72 -1817.57 q 0.204007 -0.0862755 0.946228 -0.235778
+ENERGY before-integrate 14444.2035583
+  v 14.2649 0 0 w -175.172 2328.4 -1871.86 q 0.388469 -0.133586 0.884749 -0.220149
+ENERGY after-integrate 14727.2743962
+  v 14.2649 0 0 w -175.172 2328.4 -1871.86 q 0.388469 -0.133586 0.884749 -0.220149
+ENERGY after-relax 14727.2743962
+  v 14.2649 0 0 w -175.172 2328.4 -1871.86 q 0.388469 -0.133586 0.884749 -0.220149
+ENERGY before-continuous 14727.2743962
+  v 12.1657 0 0 w -225.759 1734.44 -972.696 q 0.887809 -0.0403444 -0.448651 0.0942391
+ENERGY after-continuous 8776.89212767

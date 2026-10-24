@@ -38,7 +38,7 @@ that a particular checkpoint passed. GPU/application checks remain separate.
 SDKs built on newer systems retain those systems' actual ABI requirements. The
 pass-1 Ubuntu 26.04 build requires glibc 2.43 and is **not** an Ubuntu 24.04 binary.
 Nothing rewrites that requirement or claims universal Linux/AppImage portability.
-Build from source on a compatible host if no qualified binary is available.
+Use the optional [Ubuntu 24.04 baseline build](LINUX_BASELINE_BUILD.md) from a newer Linux host. It builds against the complete older development environment; it does not relabel newer binaries. Build from source on a compatible host if no qualified binary is available.
 
 ```sh
 python3 tools/inspect_sdk.py build/linux-sdk --host-check --max-glibc 2.39 --require-os ubuntu:24.04 --output /outside/sdk-qualification.json

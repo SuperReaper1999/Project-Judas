@@ -1,0 +1,11 @@
+--- src/RigidMotion.h
++++ src/RigidMotion.h
+@@ -133,7 +133,7 @@
+         RigidMotionSegment s;
+         s.inverseMass=body.inverseMass;s.inverseInertiaLocal=body.inverseInertiaLocal; s.prescribed=prescribed; s.exactRotation=exactRotation; s.owner=owner; s.begin=begin; s.end=end; s.position=body.position;
+         s.orientation=body.orientation; s.linearVelocity=body.linearVelocity; s.angularVelocity=body.angularVelocity;
+-        s.driftAngularVelocity=prescribed?body.angularVelocity:AngularDriftGenerator(body.inverseInertiaLocal,body.orientation,body.angularVelocity,static_cast<float>(end-begin));
++        s.driftAngularVelocity=prescribed?body.angularVelocity:(exactRotation ? Exact : AngularDriftGenerator)(body.inverseInertiaLocal,body.orientation,body.angularVelocity,static_cast<float>(end-begin));
+         const auto pose=s.EvaluateGeometry(end); s.endPosition=pose.position; s.endOrientation=pose.orientation;
+         segments.push_back(s);
+     }

@@ -1,0 +1,37 @@
+{
+  "schema": 1,
+  "input_commit": "04388ffd1f9590bda0fa8114f235f5057b1c1a7c",
+  "disposition": {
+    "linux_baseline_workflow": "validated on Ubuntu 24.04 userland with host Linux kernel",
+    "elastic_energy": "OPEN; cause investigation and rejected prototypes only"
+  },
+  "production_cpp_changed": false,
+  "platforms": {
+    "linux26": "native diagnostics 106 + unchanged exact original failure",
+    "ubuntu24_userland": "17 tool SDK, editor workflows, moved export with source/SDK absent, physics and real consumer cold saves",
+    "gpu": "Mesa llvmpipe; physical GPU acceptance not claimed",
+    "windows_android": "not run, explicitly deferred"
+  },
+  "checks": {
+    "mk2_diagnostics_ubuntu24": 106,
+    "rigid_motion_ubuntu24": 10237,
+    "hearthworld_write": 66,
+    "hearthworld_fresh_read": 41,
+    "distribution_unit_cases": 21,
+    "packaging_unit_cases": 28,
+    "original_energy_probe": {
+      "case_count": 16,
+      "known_failure_count": 1,
+      "high_rate_ratio": 24.6277852
+    },
+    "two_second_envelope": {
+      "case_count": 64,
+      "above_original_1_0001_comparator": 5,
+      "moderate_case": "5 m/s,20 rad/s,e=1: ratio1.31845052,326 impact work events,0 holds"
+    }
+  },
+  "physics_fix_shipped": false,
+  "source_fingerprint_count": 520,
+  "binary_manifest_fingerprint_count": 25,
+  "remaining": "Coherent event-pose / velocity-frame / accumulated-contact / rotation integration repair is still required; rejected local patches are not installed."
+}

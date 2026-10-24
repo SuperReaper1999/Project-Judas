@@ -1,0 +1,16 @@
+{
+  "schema": 1,
+  "input_commit": "04388ffd1f9590bda0fa8114f235f5057b1c1a7c",
+  "physics_source_modified": false,
+  "original_energy_check_exit": 1,
+  "one_step_case_count": 16,
+  "envelope_case_count": 64,
+  "envelope_above_roundoff_comparator": [
+    "e1 speed5 spin5 steps120 before12.6933333 peak12.7162164 final3.09604084 ratio1.00180276 events202 holds0",
+    "e1 speed5 spin20 steps120 before15.5933335 peak20.5590387 final20.5590387 ratio1.31845052 events326 holds0",
+    "e1 speed5 spin100 steps120 before89.8333386 peak711.714303 final711.714303 ratio7.92260774 events1052 holds0",
+    "e1 speed100 spin5 steps120 before5000.19333 peak110849.25 final17.0102227 ratio22.1689928 events2588 holds7",
+    "e1 speed100 spin100 steps120 before5077.33334 peak284355.721 final6.41803458e-06 ratio56.0049345 events831 holds5"
+  ],
+  "energy_defect": "OPEN; rejected experiments are not production fixes"
+}

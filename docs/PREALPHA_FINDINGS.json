@@ -599,8 +599,8 @@
       "original_quote": "Unperformed hardware/platform validation.",
       "status": "improved",
       "scope": "linux_readiness_current_or_explicit_deferred",
-      "disposition": "Current Linux source and SDK are qualified on Ubuntu 26.04.1/GCC 15.2; actual glibc 2.43 is recorded and Ubuntu24 policy is correctly rejected. Windows/Android deferred. No universal Linux binary claim.",
-      "evidence": "docs/PREALPHA_LINUX_READINESS.md"
+      "disposition": "Ubuntu 24.04 x86-64 SDK now builds and runs in its actual isolated userland: all 17 tools, GLIBC maximum 2.38, older-loader checks, editor workflow and source/SDK-absent moved export. Optional baseline helper preserves ordinary native builds. Other distributions and physical GPU/audio-device qualification are not inferred; Windows/Android deferred.",
+      "evidence": "docs/PREALPHA_ELASTIC_LINUX_BASELINE.md"
     },
     {
       "id": "CAP-01",
@@ -642,9 +642,9 @@
     {
       "id": "MK2-ELASTIC-CONFINEMENT",
       "status": "open",
-      "severity": "P1 within the extreme elastic/spinning confinement envelope",
-      "evidence": "docs/evidence/prealpha-linux-readiness/elastic-limit",
-      "disposition": "Direct native no-force e=1/friction=0 test: 100 m/s and 100 rad/s box between static walls gains kinetic energy (5077.33 to 125043.48, ratio 24.6278) in one 1/60 step. Other tested rates include contact/free-flight controls. Same ordinary-project fixture gives an identical endpoint on retained accepted runtime and diagnostic candidate. Root numerical mechanism not established; no solver retune or speculative fix. Requires targeted triage before claiming unrestricted high-rate elastic correctness."
+      "severity": "P1: elastic spinning impacts, including tested moderate gameplay rates",
+      "evidence": "docs/evidence/prealpha-elastic-linux-baseline",
+      "disposition": "Open. Arrival-pose rewind keeps incompatible angular velocity; exponential drift uses a Cayley midpoint predictor; relaxation and continuous re-timing also cross configurations. First impact conserves energy locally then pose rewind raises 5077.33 to 5781.02. A 5 m/s, 20 rad/s e=1 case gains 31.845% in two seconds with zero holds. Local transport/pullback and combined integrator experiments rejected. No production physics correction shipped; coherent interval/contact-state repair still required."
     }
   ]
 }

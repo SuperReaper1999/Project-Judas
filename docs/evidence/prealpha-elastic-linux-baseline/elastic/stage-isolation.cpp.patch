@@ -1,0 +1,80 @@
+--- src/physics/WorldMk2Solver.cpp
++++ stage-isolation.cpp
+@@ -491,6 +491,19 @@
+     // (Solving a coupled step as one substep let a 24.6 m/s crash car reach
+     // its barrier with half the crush and no link failure.)
+     std::size_t frictionlessRetries = 0, inelasticFallbacks = 0, coupledImpactFallbacks = 0;
++    const auto traceEnergy = [&](const char* stage) {
++        if (!std::getenv("JUDAS_TRACE_ELASTIC")) return;
++        double energy=0;
++        for (const auto slot: aliveSlots) {
++            const auto& rb=bodies[slot].rigidBody;
++            if (!bodies[slot].isDynamic) continue;
++            const glm::dvec3 v(rb.linearVelocity), w(rb.angularVelocity);
++            energy += .5*glm::dot(v,v)/rb.inverseMass + .5*glm::dot(w, glm::inverse(glm::dmat3(rb.InverseInertiaWorld()))*w);
++            std::fprintf(stderr,"  v %.6g %.6g %.6g w %.6g %.6g %.6g q %.6g %.6g %.6g %.6g\n",v.x,v.y,v.z,w.x,w.y,w.z,rb.orientation.w,rb.orientation.x,rb.orientation.y,rb.orientation.z);
++        }
++        std::fprintf(stderr,"ENERGY %s %.12g\n",stage,energy);
++    };
++    traceEnergy("entry");
+     int participantRound = 0;
+     const int substeps = kMk2Substeps;
+     const float h = dt / float(substeps);
+@@ -964,6 +977,7 @@
+                 recollided[index] = 1;
+             }
+             refreshChanged(moved, recollided);
++            traceEnergy("at-arrival-before-impulses");
+             // Sequential impact propagation: repeatedly resolve the most
+             // approaching pair of the set on its own (its whole manifold block,
+             // so a flat landing stays symmetric): a compression of fresh,
+@@ -1091,6 +1105,7 @@
+                     SolveBlocks(state, rows, blocks, impactingList, h, false, true);
+                 each([&](std::size_t i) { impactNormal[i] += rows[i].normalImpulse; });
+             }
++            traceEnergy("at-arrival-after-impulses");
+             for (std::size_t i = 0; i < state.size(); ++i) {
+                 state[i].rb->position = startPose[i].first;
+                 state[i].rb->orientation = startPose[i].second;
+@@ -1106,6 +1121,7 @@
+                 impactAngular[i] = state[i].rb->angularVelocity - impactAngular[i];
+             }
+         }
++        traceEnergy("after-impact");
+         // Warm start with at most the steady support load. Re-applying an
+         // impact substep's spike would have to be removed again by the next
+         // sweep; down a chain one sweep cannot, and the stack would pop. A
+@@ -1299,6 +1315,7 @@
+                 rb->angularVelocity = savedVelocity[m].second;
+             }
+         }
++        traceEnergy("before-integrate");
+         for (std::size_t i = 0; i < state.size(); ++i) {
+             auto &s = state[i];
+             auto &body = bodies[s.slot];
+@@ -1360,6 +1377,7 @@
+                 s.dq = glm::mat3_cast(pose.orientation * glm::conjugate(s.q0));
+             }
+         }
++        traceEnergy("after-integrate");
+         // Poses moved: relax (and the next substep) use the current geometry.
+         recollide();
+         refreshGeometry();
+@@ -1396,6 +1414,7 @@
+             if (row.steadyNormal == 0)
+                 row.steadyNormal = row.normalImpulse;
+         }
++        traceEnergy("after-relax");
+         if (coupling && coupling->finish && step + 1 == substeps)
+             coupling->finish(dt);
+     }
+@@ -1465,7 +1484,9 @@
+             mk2RowEndSeparation.back() = std::min(mk2RowEndSeparation.back(), endSeparation);
+         }
+     }
++    traceEnergy("before-continuous");
+     Mk2Continuous(dt);
++    traceEnergy("after-continuous");
+ 
+     // Contact history: step-total impulses in MK1's cache format.
+     for (std::size_t i = 0; i < rows.size() && i < pendingCache.size(); ++i) {

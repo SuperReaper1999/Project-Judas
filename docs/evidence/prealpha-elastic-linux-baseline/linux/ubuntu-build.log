@@ -1,0 +1,453 @@
+-- The C compiler identification is GNU 13.3.0
+-- The CXX compiler identification is GNU 13.3.0
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Check for working C compiler: /usr/bin/cc - skipped
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /usr/bin/c++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Performing Test CMAKE_HAVE_LIBC_PTHREAD
+-- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Success
+-- Found Threads: TRUE  
+WARNHarfBuzz has a Meson port and tries to migrate all the other build systems to it, please consider using it as we might remove our cmake port soon.
+-- Found Python3: /usr/bin/python3 (found version "3.12.3") found components: Interpreter 
+-- Looking for atexit
+-- Looking for atexit - found
+-- Looking for mprotect
+-- Looking for mprotect - found
+-- Looking for sysconf
+-- Looking for sysconf - found
+-- Looking for getpagesize
+-- Looking for getpagesize - found
+-- Looking for mmap
+-- Looking for mmap - found
+-- Looking for isatty
+-- Looking for isatty - found
+-- Looking for unistd.h
+-- Looking for unistd.h - found
+-- Looking for sys/mman.h
+-- Looking for sys/mman.h - found
+-- Looking for stdbool.h
+-- Looking for stdbool.h - found
+-- Performing Test CXX_SUPPORTS_FLAG_BSYMB_FUNCS
+-- Performing Test CXX_SUPPORTS_FLAG_BSYMB_FUNCS - Success
+-- Performing Test COMPILER_SUPPORTS_CXX11
+-- Performing Test COMPILER_SUPPORTS_CXX11 - Success
+-- Found PkgConfig: /usr/bin/pkg-config (found version "1.8.1") 
+-- Looking for fcntl.h
+-- Looking for fcntl.h - found
+-- Configuring done (43.2s)
+-- Generating done (0.3s)
+-- Build files have been written to: /build
+[0/2] Re-checking globbed directories...
+[1/395] Building CXX object CMakeFiles/judas_build_identity.dir/src/BuildUpdate.cpp.o
+[2/395] Building CXX object CMakeFiles/judas_build_identity.dir/src/ToolProcess.cpp.o
+[3/395] Building CXX object CMakeFiles/judas_build_identity.dir/src/BuildIdentity.cpp.o
+[4/395] Linking CXX static library libjudas_build_identity.a
+[5/395] Building CXX object CMakeFiles/judas_app_icon.dir/src/AppIcon.cpp.o
+[6/395] Building CXX object CMakeFiles/judas_app_icon.dir/src/CookedTexture.cpp.o
+[7/395] Building CXX object CMakeFiles/judas_meshoptimizer.dir/third_party/meshoptimizer/src/allocator.cpp.o
+[8/395] Building CXX object CMakeFiles/judas_meshoptimizer.dir/third_party/meshoptimizer/src/clusterizer.cpp.o
+[9/395] Building CXX object CMakeFiles/judas_meshoptimizer.dir/third_party/meshoptimizer/src/indexanalyzer.cpp.o
+[10/395] Building CXX object CMakeFiles/judas_meshoptimizer.dir/third_party/meshoptimizer/src/indexcodec.cpp.o
+[11/395] Building CXX object CMakeFiles/judas_meshoptimizer.dir/third_party/meshoptimizer/src/indexgenerator.cpp.o
+[12/395] Building CXX object CMakeFiles/judas_app_icon.dir/src/TextureLoader.cpp.o
+[13/395] Linking CXX static library libjudas_app_icon.a
+[14/395] Building CXX object CMakeFiles/judas_meshoptimizer.dir/third_party/meshoptimizer/src/overdrawoptimizer.cpp.o
+[15/395] Building CXX object CMakeFiles/judas_meshoptimizer.dir/third_party/meshoptimizer/src/quantization.cpp.o
+[16/395] Building CXX object CMakeFiles/judas_meshoptimizer.dir/third_party/meshoptimizer/src/rasterizer.cpp.o
+[17/395] Building CXX object CMakeFiles/judas_meshoptimizer.dir/third_party/meshoptimizer/src/partition.cpp.o
+[18/395] Building CXX object CMakeFiles/judas_meshoptimizer.dir/third_party/meshoptimizer/src/spatialorder.cpp.o
+[19/395] Building CXX object CMakeFiles/judas_meshoptimizer.dir/third_party/meshoptimizer/src/stripifier.cpp.o
+[20/395] Building CXX object CMakeFiles/judas_meshoptimizer.dir/third_party/meshoptimizer/src/vcacheoptimizer.cpp.o
+[21/395] Building CXX object CMakeFiles/judas_meshoptimizer.dir/third_party/meshoptimizer/src/simplifier.cpp.o
+[22/395] Building CXX object CMakeFiles/judas_meshoptimizer.dir/third_party/meshoptimizer/src/vertexcodec.cpp.o
+[23/395] Building CXX object CMakeFiles/judas_meshoptimizer.dir/third_party/meshoptimizer/src/vfetchoptimizer.cpp.o
+[24/395] Building CXX object CMakeFiles/judas_meshoptimizer.dir/third_party/meshoptimizer/src/vertexfilter.cpp.o
+[25/395] Linking CXX static library libjudas_meshoptimizer.a
+[26/395] Building C object CMakeFiles/judas_quickjs.dir/third_party/quickjs/dtoa.c.o
+[27/395] Building C object CMakeFiles/judas_quickjs.dir/third_party/quickjs/libregexp.c.o
+[28/395] Building C object CMakeFiles/judas_quickjs.dir/third_party/quickjs/libunicode.c.o
+[29/395] Building CXX object CMakeFiles/judas_navigation_backend.dir/third_party/recastnavigation/Detour/Source/DetourAlloc.cpp.o
+[30/395] Building CXX object CMakeFiles/judas_navigation_backend.dir/third_party/recastnavigation/Detour/Source/DetourAssert.cpp.o
+[31/395] Building CXX object CMakeFiles/judas_navigation_backend.dir/third_party/recastnavigation/Detour/Source/DetourCommon.cpp.o
+[32/395] Building CXX object CMakeFiles/judas_navigation_backend.dir/third_party/recastnavigation/Detour/Source/DetourNavMesh.cpp.o
+[33/395] Building CXX object CMakeFiles/judas_navigation_backend.dir/third_party/recastnavigation/Detour/Source/DetourNavMeshBuilder.cpp.o
+[34/395] Building CXX object CMakeFiles/judas_navigation_backend.dir/third_party/recastnavigation/Detour/Source/DetourNavMeshQuery.cpp.o
+[35/395] Building CXX object CMakeFiles/judas_navigation_backend.dir/third_party/recastnavigation/Detour/Source/DetourNode.cpp.o
+[36/395] Building CXX object CMakeFiles/judas_navigation_backend.dir/third_party/recastnavigation/DetourCrowd/Source/DetourCrowd.cpp.o
+[37/395] Building CXX object CMakeFiles/judas_navigation_backend.dir/third_party/recastnavigation/DetourCrowd/Source/DetourLocalBoundary.cpp.o
+[38/395] Building CXX object CMakeFiles/judas_navigation_backend.dir/third_party/recastnavigation/DetourCrowd/Source/DetourObstacleAvoidance.cpp.o
+[39/395] Building CXX object CMakeFiles/judas_navigation_backend.dir/third_party/recastnavigation/DetourCrowd/Source/DetourPathCorridor.cpp.o
+[40/395] Building CXX object CMakeFiles/judas_navigation_backend.dir/third_party/recastnavigation/DetourCrowd/Source/DetourPathQueue.cpp.o
+[41/395] Building CXX object CMakeFiles/judas_navigation_backend.dir/third_party/recastnavigation/DetourCrowd/Source/DetourProximityGrid.cpp.o
+[42/395] Building CXX object CMakeFiles/judas_navigation_backend.dir/third_party/recastnavigation/DetourTileCache/Source/DetourTileCache.cpp.o
+[43/395] Building CXX object CMakeFiles/judas_navigation_backend.dir/third_party/recastnavigation/DetourTileCache/Source/DetourTileCacheBuilder.cpp.o
+[44/395] Linking CXX static library libjudas_navigation_backend.a
+[45/395] Building CXX object CMakeFiles/judas_navigation_cook.dir/src/NavigationGeometryBake.cpp.o
+[46/395] Building CXX object CMakeFiles/judas_navigation_cook.dir/third_party/recastnavigation/Recast/Source/Recast.cpp.o
+[47/395] Building CXX object CMakeFiles/judas_navigation_cook.dir/third_party/recastnavigation/Recast/Source/RecastAlloc.cpp.o
+[48/395] Building CXX object CMakeFiles/judas_navigation_cook.dir/third_party/recastnavigation/Recast/Source/RecastArea.cpp.o
+[49/395] Building CXX object CMakeFiles/judas_navigation_cook.dir/third_party/recastnavigation/Recast/Source/RecastAssert.cpp.o
+[50/395] Building CXX object CMakeFiles/judas_navigation_cook.dir/third_party/recastnavigation/Recast/Source/RecastContour.cpp.o
+[51/395] Building CXX object CMakeFiles/judas_navigation_cook.dir/third_party/recastnavigation/Recast/Source/RecastFilter.cpp.o
+[52/395] Building CXX object CMakeFiles/judas_navigation_cook.dir/third_party/recastnavigation/Recast/Source/RecastLayers.cpp.o
+[53/395] Building CXX object CMakeFiles/judas_navigation_cook.dir/third_party/recastnavigation/Recast/Source/RecastMesh.cpp.o
+[54/395] Building CXX object CMakeFiles/judas_navigation_cook.dir/third_party/recastnavigation/Recast/Source/RecastMeshDetail.cpp.o
+[55/395] Building CXX object CMakeFiles/judas_navigation_cook.dir/third_party/recastnavigation/Recast/Source/RecastRasterization.cpp.o
+[56/395] Building CXX object CMakeFiles/judas_navigation_cook.dir/third_party/recastnavigation/Recast/Source/RecastRegion.cpp.o
+[57/395] Linking CXX static library libjudas_navigation_cook.a
+[58/395] Building C object CMakeFiles/judas_glad.dir/third_party/glad/src/gl.c.o
+[59/395] Linking C static library libjudas_glad.a
+[60/395] Building CXX object CMakeFiles/judas_profiler.dir/src/PerformanceProfiler.cpp.o
+[61/395] Linking CXX static library libjudas_profiler.a
+[62/395] Building C object CMakeFiles/judas_materials.dir/third_party/mikktspace/mikktspace.c.o
+[63/395] Linking CXX static library libjudas_materials.a
+[64/395] Building CXX object CMakeFiles/judas_jobs.dir/src/JobSystem.cpp.o
+[65/395] Linking CXX static library libjudas_jobs.a
+[66/395] Building C object CMakeFiles/judas_quickjs.dir/third_party/quickjs/quickjs.c.o
+[67/395] Linking C static library libjudas_quickjs.a
+[68/395] Building C object CMakeFiles/judas_audio_backend.dir/src/ReverbBackend.c.o
+[69/395] Building CXX object CMakeFiles/judas_imgui.dir/third_party/imgui/imgui.cpp.o
+[70/395] Building CXX object CMakeFiles/judas_imgui.dir/third_party/imgui/imgui_draw.cpp.o
+[71/395] Building C object CMakeFiles/judas_audio_backend.dir/src/AudioBackend.c.o
+[72/395] Linking C static library libjudas_audio_backend.a
+[73/395] Building CXX object CMakeFiles/judas_imgui.dir/third_party/imgui/imgui_tables.cpp.o
+[74/395] Building CXX object CMakeFiles/judas_imgui.dir/third_party/imgui/backends/imgui_impl_sdl2.cpp.o
+[75/395] Building CXX object CMakeFiles/judas_imgui.dir/third_party/imgui/backends/imgui_impl_opengl3.cpp.o
+[76/395] Building CXX object CMakeFiles/judas_imgui.dir/third_party/imgui/imgui_widgets.cpp.o
+[77/395] Linking CXX static library libjudas_imgui.a
+[78/395] Creating directories for 'judas_icu_build'
+[79/395] Performing download step (verify and extract) for 'judas_icu_build'
+-- verifying file...
+     file='/source/third_party/text/icu4c-76_1-src.tgz'
+-- verifying file... done
+-- extracting...
+     src='/source/third_party/text/icu4c-76_1-src.tgz'
+     dst='/build/unicode/build/src/judas_icu_build'
+-- extracting... [tar xfz]
+-- extracting... [analysis]
+-- extracting... [rename]
+-- extracting... [clean up]
+-- extracting... done
+[80/395] No update step for 'judas_icu_build'
+[81/395] No patch step for 'judas_icu_build'
+[82/395] Performing configure step for 'judas_icu_build'
+[83/395] Building C object CMakeFiles/judas_ufbx.dir/third_party/ufbx/ufbx.c.o
+[84/395] Linking C static library libjudas_ufbx.a
+[85/395] Building CXX object _deps/judas_harfbuzz-build/CMakeFiles/harfbuzz.dir/src/harfbuzz.cc.o
+[86/395] Linking C static library _deps/judas_harfbuzz-build/libharfbuzz.a
+[87/395] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/autofit/autofit.c.o
+[88/395] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/base/ftbase.c.o
+[89/395] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/base/ftbbox.c.o
+[90/395] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/base/ftbdf.c.o
+[91/395] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/base/ftbitmap.c.o
+[92/395] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/base/ftcid.c.o
+[93/395] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/base/ftfstype.c.o
+[94/395] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/base/ftgasp.c.o
+[95/395] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/base/ftglyph.c.o
+[96/395] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/base/ftgxval.c.o
+[97/395] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/base/ftinit.c.o
+[98/395] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/base/ftmm.c.o
+[99/395] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/base/ftotval.c.o
+[100/395] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/base/ftpatent.c.o
+[101/395] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/base/ftpfr.c.o
+[102/395] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/base/ftstroke.c.o
+[103/395] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/base/ftsynth.c.o
+[104/395] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/base/fttype1.c.o
+[105/395] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/base/ftwinfnt.c.o
+[106/395] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/bdf/bdf.c.o
+[107/395] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/bzip2/ftbzip2.c.o
+[108/395] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/cache/ftcache.c.o
+[109/395] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/cff/cff.c.o
+[110/395] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/cid/type1cid.c.o
+[111/395] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/gzip/ftgzip.c.o
+[112/395] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/lzw/ftlzw.c.o
+[113/395] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/pcf/pcf.c.o
+[114/395] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/pfr/pfr.c.o
+[115/395] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/psaux/psaux.c.o
+[116/395] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/pshinter/pshinter.c.o
+[117/395] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/psnames/psnames.c.o
+[118/395] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/raster/raster.c.o
+[119/395] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/sdf/sdf.c.o
+[120/395] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/sfnt/sfnt.c.o
+[121/395] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/smooth/smooth.c.o
+[122/395] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/svg/svg.c.o
+[123/395] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/truetype/truetype.c.o
+[124/395] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/type1/type1.c.o
+[125/395] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/type42/type42.c.o
+[126/395] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/winfonts/winfnt.c.o
+[127/395] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/builds/unix/ftsystem.c.o
+[128/395] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/base/ftdebug.c.o
+[129/395] Linking C static library _deps/judas_freetype-build/libfreetype.a
+[130/395] Performing build step for 'judas_icu_build'
+[131/395] Performing install step for 'judas_icu_build'
+[132/395] Completed 'judas_icu_build'
+[133/395] Building CXX object CMakeFiles/judas_navigation_baker.dir/src/NavigationBake.cpp.o
+[134/395] Building CXX object CMakeFiles/judas_engine.dir/src/NetworkTransport.cpp.o
+[135/395] Building CXX object CMakeFiles/judas_engine.dir/src/Wheel.cpp.o
+[136/395] Building CXX object CMakeFiles/judas_engine.dir/src/WorldWheels.cpp.o
+[137/395] Building CXX object CMakeFiles/judas_engine.dir/src/Powertrain.cpp.o
+[138/395] Building CXX object CMakeFiles/judas_engine.dir/src/NetworkSession.cpp.o
+[139/395] Building CXX object CMakeFiles/judas_engine.dir/src/WorldPowertrains.cpp.o
+[140/395] Building CXX object CMakeFiles/judas_engine.dir/src/PowertrainAuthoring.cpp.o
+[141/395] Building CXX object CMakeFiles/judas_engine.dir/src/modding/ContentStorage.cpp.o
+[142/395] Building CXX object CMakeFiles/judas_engine.dir/src/modding/ModStore.cpp.o
+[143/395] Building CXX object CMakeFiles/judas_engine.dir/src/modding/ModContent.cpp.o
+[144/395] Building CXX object CMakeFiles/judas_engine.dir/src/WorldFracture.cpp.o
+[145/395] Building CXX object CMakeFiles/judas_engine.dir/src/modding/ModRuntime.cpp.o
+[146/395] Building CXX object CMakeFiles/judas_engine.dir/src/Fracture.cpp.o
+[147/395] Building CXX object CMakeFiles/judas_engine.dir/src/DeformableAsset.cpp.o
+[148/395] Building CXX object CMakeFiles/judas_engine.dir/src/Deformable.cpp.o
+[149/395] Building CXX object CMakeFiles/judas_engine.dir/src/TextLayout.cpp.o
+[150/395] Building CXX object CMakeFiles/judas_engine.dir/src/TextEditing.cpp.o
+[151/395] Building CXX object CMakeFiles/judas_engine.dir/src/WorldDeformables.cpp.o
+[152/395] Building CXX object CMakeFiles/judas_engine.dir/src/Localization.cpp.o
+[153/395] Building CXX object CMakeFiles/judas_engine.dir/src/Environment.cpp.o
+[154/395] Building CXX object CMakeFiles/judas_engine.dir/src/Tangents.cpp.o
+[155/395] Building CXX object CMakeFiles/judas_engine.dir/src/Material.cpp.o
+[156/395] Building CXX object CMakeFiles/judas_engine.dir/src/LiquidTypes.cpp.o
+[157/395] Building CXX object CMakeFiles/judas_engine.dir/src/LiquidGeometry.cpp.o
+[158/395] Building CXX object CMakeFiles/judas_engine.dir/src/LiquidSurface.cpp.o
+[159/395] Building CXX object CMakeFiles/judas_engine.dir/src/LiquidSystem.cpp.o
+[160/395] Building CXX object CMakeFiles/judas_engine.dir/src/RuntimeTerrain.cpp.o
+[161/395] Building CXX object CMakeFiles/judas_engine.dir/src/VolumeTerrainGeometry.cpp.o
+[162/395] Building CXX object CMakeFiles/judas_engine.dir/src/NavigationTypes.cpp.o
+[163/395] Building CXX object CMakeFiles/judas_engine.dir/src/NavigationSystem.cpp.o
+[164/395] Building CXX object CMakeFiles/judas_engine.dir/src/NavigationAsset.cpp.o
+[165/395] Building CXX object CMakeFiles/judas_engine.dir/src/PhysicalAnimation.cpp.o
+[166/395] Building CXX object CMakeFiles/judas_engine.dir/src/FullBodyIK.cpp.o
+[167/395] Building CXX object CMakeFiles/judas_engine.dir/src/PhysicalBalanceCapture.cpp.o
+[168/395] Building CXX object CMakeFiles/judas_engine.dir/src/PhysicalBalanceGetUp.cpp.o
+[169/395] Building CXX object CMakeFiles/judas_engine.dir/src/WorldPhysicalBalance.cpp.o
+[170/395] Building CXX object CMakeFiles/judas_engine.dir/src/PhysicalBalance.cpp.o
+[171/395] Building CXX object CMakeFiles/judas_engine.dir/src/PoseComposition.cpp.o
+[172/395] Building CXX object CMakeFiles/judas_engine.dir/src/WorldAnimation.cpp.o
+[173/395] Building CXX object CMakeFiles/judas_engine.dir/src/WorldRagdoll.cpp.o
+[174/395] Building CXX object CMakeFiles/judas_engine.dir/src/WorldCharacter.cpp.o
+[175/395] Building CXX object CMakeFiles/judas_engine.dir/src/GltfLoader.cpp.o
+[176/395] Building CXX object CMakeFiles/judas_engine.dir/src/WorldGravity.cpp.o
+[177/395] Building CXX object CMakeFiles/judas_engine.dir/src/WorldRegions.cpp.o
+[178/395] Building CXX object CMakeFiles/judas_engine.dir/src/WorldStreaming.cpp.o
+[179/395] Building CXX object CMakeFiles/judas_engine.dir/src/WorldScripts.cpp.o
+[180/395] Building CXX object CMakeFiles/judas_engine.dir/src/RuntimeUI.cpp.o
+[181/395] Building CXX object CMakeFiles/judas_engine.dir/src/RuntimeUIControls.cpp.o
+[182/395] Building CXX object CMakeFiles/judas_engine.dir/src/ScriptBindingsUI.cpp.o
+[183/395] Building CXX object CMakeFiles/judas_engine.dir/src/ScriptBindingsJoint.cpp.o
+[184/395] Building CXX object CMakeFiles/judas_engine.dir/src/Classification.cpp.o
+[185/395] Building CXX object CMakeFiles/judas_engine.dir/src/GamePackage.cpp.o
+[186/395] Building CXX object CMakeFiles/judas_engine.dir/src/ProjectExporter.cpp.o
+[187/395] Building CXX object CMakeFiles/judas_engine.dir/src/ScriptSystem.cpp.o
+[188/395] Building CXX object CMakeFiles/judas_engine.dir/src/AssetDependencies.cpp.o
+[189/395] Building CXX object CMakeFiles/judas_engine.dir/src/AudioStream.cpp.o
+[190/395] Building CXX object CMakeFiles/judas_engine.dir/src/AudioData.cpp.o
+[191/395] Building CXX object CMakeFiles/judas_engine.dir/src/AudioEnvironment.cpp.o
+[192/395] Building CXX object CMakeFiles/judas_engine.dir/src/AudioSystem.cpp.o
+[193/395] Building CXX object CMakeFiles/judas_engine.dir/src/WorldAudio.cpp.o
+[194/395] Building CXX object CMakeFiles/judas_engine.dir/src/Window.cpp.o
+[195/395] Building CXX object CMakeFiles/judas_engine.dir/src/InputDeviceHub.cpp.o
+[196/395] Building CXX object CMakeFiles/judas_engine.dir/src/LocalMultiplayer.cpp.o
+[197/395] Building CXX object CMakeFiles/judas_engine.dir/src/InputSystem.cpp.o
+[198/395] Building CXX object CMakeFiles/judas_engine.dir/src/RenderLightGrid.cpp.o
+[199/395] Building CXX object CMakeFiles/judas_engine.dir/src/SkeletalAnimation.cpp.o
+[200/395] Building CXX object CMakeFiles/judas_engine.dir/src/Renderer.cpp.o
+[201/395] Building CXX object CMakeFiles/judas_engine.dir/src/CharacterMotor.cpp.o
+[202/395] Building CXX object CMakeFiles/judas_engine.dir/src/PlayerView.cpp.o
+[203/395] Building CXX object CMakeFiles/judas_engine.dir/src/StepClimb.cpp.o
+[204/395] Building CXX object CMakeFiles/judas_engine.dir/src/PlayerController.cpp.o
+[205/395] Building CXX object CMakeFiles/judas_engine.dir/src/DynamicBody.cpp.o
+[206/395] Building CXX object CMakeFiles/judas_engine.dir/src/PilotAttachment.cpp.o
+[207/395] Building CXX object CMakeFiles/judas_engine.dir/src/FlyingPrimitiveControl.cpp.o
+[208/395] Building CXX object CMakeFiles/judas_engine.dir/src/PilotControl.cpp.o
+[209/395] Building CXX object CMakeFiles/judas_engine.dir/src/ReferenceFrame.cpp.o
+[210/395] Building CXX object CMakeFiles/judas_engine.dir/src/CollisionAuthoring.cpp.o
+[211/395] Building CXX object CMakeFiles/judas_engine.dir/src/CollisionSource.cpp.o
+[212/395] Building CXX object CMakeFiles/judas_engine.dir/src/ModelLoader.cpp.o
+[213/395] Building CXX object CMakeFiles/judas_engine.dir/src/ModelArchive.cpp.o
+[214/395] Building CXX object CMakeFiles/judas_engine.dir/src/FontLoader.cpp.o
+[215/395] Building CXX object CMakeFiles/judas_engine.dir/src/UIWidgets.cpp.o
+[216/395] Building CXX object CMakeFiles/judas_engine.dir/src/PauseMenu.cpp.o
+[217/395] Building CXX object CMakeFiles/judas_engine.dir/src/HUD.cpp.o
+[218/395] Building CXX object CMakeFiles/judas_engine.dir/src/LightTransforms.cpp.o
+[219/395] Building CXX object CMakeFiles/judas_engine.dir/src/LightAttenuation.cpp.o
+[220/395] Building CXX object CMakeFiles/judas_engine.dir/src/ShadowTransforms.cpp.o
+[221/395] Building CXX object CMakeFiles/judas_engine.dir/src/HingeTransform.cpp.o
+[222/395] Building CXX object CMakeFiles/judas_engine.dir/src/InteractionSystem.cpp.o
+[223/395] Building CXX object CMakeFiles/judas_engine.dir/src/ObjectManipulation.cpp.o
+[224/395] Building CXX object CMakeFiles/judas_engine.dir/src/AssetCook.cpp.o
+[225/395] Building CXX object CMakeFiles/judas_engine.dir/src/FluidWorld.cpp.o
+[226/395] Building CXX object CMakeFiles/judas_engine.dir/src/ProductionFluidCoupling.cpp.o
+[227/395] Building CXX object CMakeFiles/judas_engine.dir/src/FluidHydrostatics.cpp.o
+[228/395] Building CXX object CMakeFiles/judas_engine.dir/src/FluidSurface.cpp.o
+[229/395] Building CXX object CMakeFiles/judas_engine.dir/src/FirePresentation.cpp.o
+[230/395] Building CXX object CMakeFiles/judas_engine.dir/src/CombustionWorld.cpp.o
+[231/395] Building CXX object CMakeFiles/judas_engine.dir/src/TerrainDemo.cpp.o
+[232/395] Building CXX object CMakeFiles/judas_engine.dir/src/TerrainLibrary.cpp.o
+[233/395] Building CXX object CMakeFiles/judas_engine.dir/src/Door.cpp.o
+[234/395] Building CXX object CMakeFiles/judas_engine.dir/src/FaithfulGravity.cpp.o
+[235/395] Building CXX object CMakeFiles/judas_engine.dir/src/LightSwitch.cpp.o
+[236/395] Building CXX object CMakeFiles/judas_engine.dir/src/RadicalGravity.cpp.o
+[237/395] Building CXX object CMakeFiles/judas_engine.dir/src/SphericalVolume.cpp.o
+[238/395] Building CXX object CMakeFiles/judas_engine.dir/src/BoxVolume.cpp.o
+[239/395] Building CXX object CMakeFiles/judas_engine.dir/src/GravityContextMap.cpp.o
+[240/395] Building CXX object CMakeFiles/judas_engine.dir/src/CelestialGravity.cpp.o
+[241/395] Building CXX object CMakeFiles/judas_engine.dir/src/AtmosphereField.cpp.o
+[242/395] Building CXX object CMakeFiles/judas_engine.dir/src/AerodynamicDrag.cpp.o
+[243/395] Building CXX object CMakeFiles/judas_engine.dir/src/VisualParticles.cpp.o
+[244/395] Building CXX object CMakeFiles/judas_engine.dir/src/Scene.cpp.o
+[245/395] Building CXX object CMakeFiles/judas_engine.dir/src/Ragdoll.cpp.o
+[246/395] Building CXX object CMakeFiles/judas_engine.dir/src/Prefab.cpp.o
+[247/395] Building CXX object CMakeFiles/judas_engine.dir/src/NamedAuthoring.cpp.o
+[248/395] Building CXX object CMakeFiles/judas_engine.dir/src/SceneSerialization.cpp.o
+[249/395] Building CXX object CMakeFiles/judas_engine.dir/src/SceneFingerprint.cpp.o
+[250/395] Building CXX object CMakeFiles/judas_engine.dir/src/ProjectStarter.cpp.o
+[251/395] Building CXX object CMakeFiles/judas_engine.dir/src/Project.cpp.o
+[252/395] Building CXX object CMakeFiles/judas_engine.dir/src/AsyncFile.cpp.o
+[253/395] Building CXX object CMakeFiles/judas_engine.dir/src/ResourceManager.cpp.o
+[254/395] Building CXX object CMakeFiles/judas_engine.dir/src/AssetDatabase.cpp.o
+[255/395] Building CXX object CMakeFiles/judas_engine.dir/src/DebugDraw.cpp.o
+[256/395] Building CXX object CMakeFiles/judas_engine.dir/src/EnginePaths.cpp.o
+[257/395] Building CXX object CMakeFiles/judas_engine.dir/src/WorldDebugView.cpp.o
+[258/395] Building CXX object CMakeFiles/judas_engine.dir/src/SceneSession.cpp.o
+[259/395] Building CXX object CMakeFiles/judas_engine.dir/src/PlanetTiles.cpp.o
+[260/395] Building CXX object CMakeFiles/judas_engine.dir/src/PlanetTerrain.cpp.o
+[261/395] Building CXX object CMakeFiles/judas_engine.dir/src/WorldPlanets.cpp.o
+[262/395] Building CXX object CMakeFiles/judas_engine.dir/src/Weather.cpp.o
+[263/395] Building CXX object CMakeFiles/judas_engine.dir/src/WorldOrigin.cpp.o
+[264/395] Building CXX object CMakeFiles/judas_engine.dir/src/WorldWeather.cpp.o
+[265/395] Building CXX object CMakeFiles/judas_engine.dir/src/GameSession.cpp.o
+[266/395] Building CXX object CMakeFiles/judas_engine.dir/src/Simulation.cpp.o
+[267/395] Building CXX object CMakeFiles/judas_engine.dir/src/BasicWater.cpp.o
+[268/395] Building CXX object CMakeFiles/judas_engine.dir/src/RuntimeWorld.cpp.o
+[269/395] Building CXX object CMakeFiles/judas_engine.dir/src/WorldWater.cpp.o
+[270/395] Building CXX object CMakeFiles/judas_engine.dir/src/GameplayHud.cpp.o
+[271/395] Building CXX object CMakeFiles/judas_engine.dir/src/WorldPresentation.cpp.o
+[272/395] Building CXX object CMakeFiles/judas_engine.dir/src/EngineHost.cpp.o
+[273/395] Building CXX object CMakeFiles/judas_engine.dir/src/InteractivePlay.cpp.o
+[274/395] Building CXX object CMakeFiles/judas_engine.dir/src/ScreenshotWriter.cpp.o
+[275/395] Building CXX object CMakeFiles/judas_engine.dir/src/FidelityPolicy.cpp.o
+[276/395] Building CXX object CMakeFiles/judas_engine.dir/src/CoarseSimulation.cpp.o
+[277/395] Building CXX object CMakeFiles/judas_engine.dir/src/SaveStorage.cpp.o
+[278/395] Building CXX object CMakeFiles/judas_engine.dir/src/SaveStorageWindows.cpp.o
+[279/395] Building CXX object CMakeFiles/judas_engine.dir/src/PlatformServices.cpp.o
+[280/395] Building CXX object CMakeFiles/judas_engine.dir/src/WorldState.cpp.o
+[281/395] Building CXX object CMakeFiles/judas_engine.dir/src/SaveEvolution.cpp.o
+[282/395] Building CXX object CMakeFiles/judas_engine.dir/src/MotorPersistence.cpp.o
+[283/395] Building CXX object CMakeFiles/judas_engine.dir/src/SaveService.cpp.o
+[284/395] Building CXX object CMakeFiles/judas_engine.dir/src/LiquidPersistence.cpp.o
+[285/395] Building CXX object CMakeFiles/judas_engine.dir/src/CollisionAsset.cpp.o
+[286/395] Building CXX object CMakeFiles/judas_engine.dir/src/CollisionGeometry.cpp.o
+[287/395] Building CXX object CMakeFiles/judas_engine.dir/third_party/quickhull/QuickHull.cpp.o
+[288/395] Building CXX object CMakeFiles/judas_engine.dir/src/WorldPersistence.cpp.o
+[289/395] Building CXX object CMakeFiles/judas_engine.dir/src/JointSolver.cpp.o
+[290/395] Building CXX object CMakeFiles/judas_engine.dir/src/PhysicsCastGeometry.cpp.o
+[291/395] Building CXX object CMakeFiles/judas_engine.dir/src/ImpactSolver.cpp.o
+[292/395] Building CXX object CMakeFiles/judas_engine.dir/src/RigidBodyGravity.cpp.o
+[293/395] Building CXX object CMakeFiles/judas_engine.dir/src/RigidBody.cpp.o
+[294/395] Building CXX object CMakeFiles/judas_engine.dir/src/ContactSolver.cpp.o
+[295/395] Building CXX object CMakeFiles/judas_engine.dir/src/Contacts.cpp.o
+[296/395] Building CXX object CMakeFiles/judas_engine.dir/src/RadialTerrain.cpp.o
+[297/395] Building CXX object CMakeFiles/judas_engine.dir/src/Broadphase.cpp.o
+[298/395] Building CXX object CMakeFiles/judas_engine.dir/src/Narrowphase.cpp.o
+[299/395] Building CXX object CMakeFiles/judas_engine.dir/src/PhysicsWorld.cpp.o
+[300/395] Building CXX object CMakeFiles/judas_engine.dir/src/physics/WorldBounds.cpp.o
+[301/395] Building CXX object CMakeFiles/judas_engine.dir/src/physics/WorldBodies.cpp.o
+[302/395] Building CXX object CMakeFiles/judas_engine.dir/src/physics/WorldContacts.cpp.o
+[303/395] Building CXX object CMakeFiles/judas_engine.dir/src/physics/WorldCCDSearch.cpp.o
+[304/395] Building CXX object CMakeFiles/judas_engine.dir/src/physics/WorldJoints.cpp.o
+[305/395] Building CXX object CMakeFiles/judas_engine.dir/src/physics/WorldParticles.cpp.o
+[306/395] Building CXX object CMakeFiles/judas_engine.dir/src/physics/WorldMk2Solver.cpp.o
+[307/395] Building CXX object CMakeFiles/judas_engine.dir/src/physics/WorldQueries.cpp.o
+[308/395] Building CXX object CMakeFiles/judas_engine.dir/src/physics/WorldPersistence.cpp.o
+[309/395] Building CXX object CMakeFiles/judas.dir/src/main.cpp.o
+[310/395] Building CXX object CMakeFiles/judas_engine.dir/src/physics/WorldSleep.cpp.o
+[311/395] Linking CXX static library libjudas_engine.a
+[312/395] Linking CXX static library libjudas_navigation_baker.a
+[313/395] Building CXX object CMakeFiles/judas.dir/src/RuntimeOptions.cpp.o
+[314/395] Building CXX object CMakeFiles/judas.dir/src/Application.cpp.o
+[315/395] Building CXX object CMakeFiles/judas.dir/src/RuntimeDiagnostics.cpp.o
+[316/395] Building CXX object CMakeFiles/judas_editor.dir/src/editor/EditorMain.cpp.o
+[317/395] Building CXX object CMakeFiles/judas_editor.dir/src/editor/EditorMilestoneNotice.cpp.o
+[318/395] Building CXX object CMakeFiles/judas.dir/src/TestHarness.cpp.o
+[319/395] Linking CXX executable judas
+[320/395] Building CXX object CMakeFiles/judas_editor.dir/src/editor/ScriptTools.cpp.o
+[321/395] Building CXX object CMakeFiles/judas_editor.dir/src/editor/EditorCamera.cpp.o
+[322/395] Building CXX object CMakeFiles/judas_editor.dir/src/editor/EditorPicking.cpp.o
+[323/395] Building CXX object CMakeFiles/judas_editor.dir/src/editor/EditorHistory.cpp.o
+[324/395] Building CXX object CMakeFiles/judas_editor.dir/src/editor/EditorApplication.cpp.o
+[325/395] Building CXX object CMakeFiles/judas_editor.dir/src/editor/ProjectSettingsPanel.cpp.o
+[326/395] Building CXX object CMakeFiles/judas_editor.dir/src/editor/FileBrowser.cpp.o
+[327/395] Building CXX object CMakeFiles/judas_editor.dir/src/editor/RenderPreview.cpp.o
+[328/395] Building CXX object CMakeFiles/judas_editor.dir/src/editor/EditorPanels.cpp.o
+[329/395] Building CXX object CMakeFiles/judas_editor.dir/src/editor/AnimationTimeline.cpp.o
+[330/395] Building CXX object CMakeFiles/judas_editor.dir/src/editor/RetargetPanel.cpp.o
+[331/395] Building CXX object CMakeFiles/judas_editor.dir/src/editor/WorldTools.cpp.o
+[332/395] Building CXX object CMakeFiles/judas_editor.dir/src/editor/TerrainTools.cpp.o
+[333/395] Building CXX object CMakeFiles/judas_editor.dir/src/editor/ModTools.cpp.o
+[334/395] Building CXX object CMakeFiles/judas_editor.dir/src/editor/VolumeTerrainTools.cpp.o
+[335/395] Building CXX object CMakeFiles/judas_editor.dir/src/editor/ProfilerView.cpp.o
+[336/395] Building CXX object CMakeFiles/judas_editor.dir/src/editor/EditorWidgets.cpp.o
+[337/395] Building CXX object CMakeFiles/judas_editor.dir/src/editor/GizmoMath.cpp.o
+[338/395] Building CXX object CMakeFiles/judas_scene_author.dir/tools/SceneAuthor.cpp.o
+[339/395] Building CXX object CMakeFiles/judas_scene_author.dir/tools/StructuredAuthor.cpp.o
+[340/395] Building CXX object CMakeFiles/judas_editor.dir/src/editor/ComponentEditors.cpp.o
+[341/395] Building CXX object CMakeFiles/judas_scene_author.dir/tools/RecipeCLI.cpp.o
+[342/395] Building CXX object CMakeFiles/judas_scene_author.dir/tools/AuthoringCLI.cpp.o
+[343/395] Building CXX object CMakeFiles/judas_rigid_motion_tests.dir/tests/RigidMotionTests.cpp.o
+[344/395] Building CXX object CMakeFiles/judas_scene_author.dir/tools/ContentServicesCLI.cpp.o
+[345/395] Linking CXX executable judas_rigid_motion_tests
+[346/395] Building CXX object CMakeFiles/judas_export.dir/src/ExportMain.cpp.o
+[347/395] Linking CXX executable judas_export
+[348/395] Building CXX object CMakeFiles/judas_navigation_bake.dir/tools/NavigationBake.cpp.o
+[349/395] Building CXX object CMakeFiles/judas_environment_bake.dir/tools/EnvironmentBake.cpp.o
+[350/395] Building CXX object CMakeFiles/judas_liquid_bake.dir/tools/LiquidBake.cpp.o
+[351/395] Linking CXX executable judas_environment_bake
+[352/395] Linking CXX executable judas_liquid_bake
+[353/395] Building CXX object CMakeFiles/judas_collision_cook.dir/tools/CollisionCook.cpp.o
+[354/395] Building CXX object CMakeFiles/judas_deformable_bake.dir/tools/DeformableBake.cpp.o
+[355/395] Linking CXX executable judas_collision_cook
+[356/395] Linking CXX executable judas_deformable_bake
+[357/395] Building CXX object CMakeFiles/judas_model_import.dir/src/ObjImport.cpp.o
+[358/395] Building CXX object CMakeFiles/judas_model_import.dir/src/FbxImport.cpp.o
+[359/395] Building CXX object CMakeFiles/judas_model_import.dir/src/ModelCollision.cpp.o
+[360/395] Building CXX object CMakeFiles/judas_model_import.dir/src/ModelCook.cpp.o
+[361/395] Building CXX object CMakeFiles/judas_model_import.dir/src/AnimationRetarget.cpp.o
+[362/395] Building CXX object CMakeFiles/judas_model_import.dir/src/authoring/AnimationEventAuthoring.cpp.o
+[363/395] Linking CXX static library libjudas_model_import.a
+[364/395] Building CXX object CMakeFiles/judas_model_import_cli.dir/tools/ModelImportCli.cpp.o
+[365/395] Linking CXX executable judas_model_import_cli
+[366/395] Building CXX object CMakeFiles/judas_world_authoring.dir/src/authoring/NavigationDependencies.cpp.o
+[367/395] Building CXX object CMakeFiles/judas_world_authoring.dir/src/authoring/ContentReferences.cpp.o
+[368/395] Building CXX object CMakeFiles/judas_world_authoring.dir/src/authoring/AuthoringDocument.cpp.o
+[369/395] Building CXX object CMakeFiles/judas_world_authoring.dir/src/authoring/SkeletonAuthoring.cpp.o
+[370/395] Building CXX object CMakeFiles/judas_world_authoring.dir/src/authoring/RecipePreview.cpp.o
+[371/395] Building CXX object CMakeFiles/judas_world_authoring.dir/src/authoring/WorldBuilder.cpp.o
+[372/395] Building CXX object CMakeFiles/judas_world_authoring.dir/src/authoring/VolumeTerrain.cpp.o
+[373/395] Building CXX object CMakeFiles/judas_world_authoring.dir/src/authoring/TerrainAuthoring.cpp.o
+[374/395] Building CXX object CMakeFiles/judas_terrain_author.dir/tools/TerrainAuthor.cpp.o
+[375/395] Building CXX object CMakeFiles/judas_mod.dir/tools/ModTool.cpp.o
+[376/395] Building CXX object CMakeFiles/judas_world_authoring.dir/src/authoring/ModAuthoring.cpp.o
+[377/395] Linking CXX static library libjudas_world_authoring.a
+[378/395] Linking CXX executable judas_editor
+[379/395] Linking CXX executable judas_scene_author
+[380/395] Building CXX object CMakeFiles/judas_volume_author.dir/tools/VolumeTerrainAuthor.cpp.o
+[381/395] Linking CXX executable judas_navigation_bake
+[382/395] Linking CXX executable judas_terrain_author
+[383/395] Linking CXX executable judas_mod
+[384/395] Linking CXX executable judas_volume_author
+[385/395] Building CXX object CMakeFiles/judas_cook.dir/src/AssetCookMain.cpp.o
+[386/395] Linking CXX executable judas_cook
+[387/395] Building CXX object CMakeFiles/judas_script_check.dir/tools/ScriptCheck.cpp.o
+[388/395] Linking CXX executable judas_script_check
+[389/395] Building CXX object CMakeFiles/judas_save.dir/tools/SaveEvolutionMain.cpp.o
+[390/395] Building CXX object CMakeFiles/judas_server.dir/src/DedicatedMain.cpp.o
+[391/395] Linking CXX executable judas_save
+[392/395] Linking CXX executable judas_server
+[393/395] Building CXX object CMakeFiles/judas_mk2_diagnostics_tests.dir/tests/Mk2DiagnosticsTests.cpp.o
+[394/395] Linking CXX executable judas_mk2_diagnostics_tests
+[395/395] cd /build && /usr/bin/python3 /source/tools/package_sdk.py stage --source /source --bin-dir /build --build-info /build/judas-build-info-Release.json --output /build/linux-sdk --replace --probe-tools
+{"build": {"architecture": "x86_64", "build_id": "0.1.0-prealpha-Experimental-04388ff-clean-5d11b3205bc2-u84f47c24fcd0", "channel": "Experimental", "compiler": "GNU", "compiler_version": "13.3.0", "configuration": "Release", "maturity": "pre-alpha", "platform": "Linux", "schema": 1, "source_dirty": false, "source_fingerprint": "5d11b3205bc2ced34df9605272cfa35ebaf977ee9a760a1169f6d663f96319f8", "source_origin": "git", "source_revision": "04388ffd1f9590bda0fa8114f235f5057b1c1a7c", "source_tree": "a89bf2ffa3afffe18d6c4ca04544374e502d9fe7", "source_untracked_count": 16, "source_untracked_fingerprint": "84f47c24fcd098f88732ceab246b2e0e19eca31f56acdd72f89f8bfa1621daf2", "version": "0.1.0-prealpha"}, "files": 232, "ok": true, "tools": 17}

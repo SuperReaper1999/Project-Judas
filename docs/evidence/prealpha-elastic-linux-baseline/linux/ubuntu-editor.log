@@ -1,0 +1,23 @@
+Shadow maps: on
+Graphics: 4.5 (Core Profile) Mesa 25.2.8-0ubuntu0.24.04.4 / llvmpipe (LLVM 20.1.2, 256 bits)
+Renderer fragment texture units: 32 (material path uses 12)
+[editor onboarding] packaged visible starter: PASS 
+[editor autotest] duplicate created id 5: scene CHANGED; undo restores: IDENTICAL
+[editor navigation] new-scene request preserves unsaved document until a choice: PASS
+[editor autotest] wrote: /build/ubuntu-editor.unsaved.png
+[editor navigation] unsaved-document confirmation remains open across frames: PASS
+[editor navigation] Escape cancels unsaved-document action: PASS
+[editor autotest] wrote: /build/ubuntu-editor.resized.png
+[editor navigation] resized scene target follows workspace dimensions: PASS
+[editor navigation] scene picking uses the central viewport projection after resize: PASS
+[editor autotest] export project: 
+[editor autotest] wrote: /build/ubuntu-editor.edit.png
+[editor autotest] edit frame: 3 draw calls, 24 triangles, 30 debug lines
+[editor navigation] explicit export choice produces the requested package: PASS
+[editor navigation] exported scene and project match the explicit saved-content choice: PASS
+[editor navigation] use-saved preserves live edits; save-all clears both dirty baselines: PASS
+[editor export choice] Exported /build/ubuntu-package (1 assets)
+[editor autotest] wrote: /build/ubuntu-editor.play.png
+[editor autotest] play frame: 0 steps, step 0.000 ms, 0 bodies, 0 contacts, 3 draw calls, 24 triangles, 0 shadow passes, 1 lights, 30 debug lines, 0 particles
+[editor autotest] resources: 0 meshes, 0 textures, 0 terrain meshes, hits 0, misses 0, failed 0, uploads 0, resident 0 bytes
+[editor autotest] jobs: 11 workers, 0 completed, 0 failed, 0 cancelled

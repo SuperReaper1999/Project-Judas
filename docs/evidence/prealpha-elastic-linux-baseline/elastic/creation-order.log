@@ -1,0 +1,16 @@
+VEL 1 0 0 OMEGA 0 0 0 speed1 spin0 before0.5 after0.5 ratio1 hold0
+VEL 1 0 0 OMEGA 0 0 5 speed1 spin5 before0.693333346 after0.693333343 ratio0.999999995 hold0
+VEL 1 0 0 OMEGA 0 0 20 speed1 spin20 before3.59333354 after3.59333348 ratio0.999999983 hold0
+VEL 1 0 0 OMEGA 0 0 100 speed1 spin100 before77.8333386 after77.8333359 ratio0.999999966 hold0
+VEL 5 0 0 OMEGA 0 0 0 speed5 spin0 before12.5 after12.5 ratio1 hold0
+VEL 5 0 0 OMEGA 0 0 5 speed5 spin5 before12.6933333 after12.6933333 ratio1 hold0
+VEL 5 0 0 OMEGA 0 0 20 speed5 spin20 before15.5933335 after15.5933335 ratio0.999999996 hold0
+VEL 5 0 0 OMEGA 0 0 100 speed5 spin100 before89.8333386 after89.8333359 ratio0.99999997 hold0
+VEL 20 0 0 OMEGA 0 0 0 speed20 spin0 before200 after200 ratio1 hold0
+VEL 20 0 0 OMEGA 0 0 5 speed20 spin5 before200.193333 after200.193333 ratio1 hold0
+VEL 20 0 0 OMEGA 0 0 20 speed20 spin20 before203.093334 after203.093333 ratio1 hold0
+VEL 20 0 0 OMEGA 0 0 100 speed20 spin100 before277.333339 after277.333336 ratio0.99999999 hold0
+VEL 100 0 0 OMEGA 0 0 0 speed100 spin0 before5000 after5000 ratio1 hold0
+VEL 100 0 0 OMEGA 0 0 5 speed100 spin5 before5000.19333 after5000.19333 ratio1 hold0
+VEL 100.000008 0 0 OMEGA 0 0 20 speed100 spin20 before5003.09333 after5003.09431 ratio1.0000002 hold0
+VEL -23.643013 0 0 OMEGA 0 0 -803.034058 speed100 spin100 before5077.33334 after5266.44232 ratio1.03724573 hold0
