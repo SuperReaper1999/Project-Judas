@@ -516,6 +516,79 @@ void TestWeakSwingEnergy() {
     }
 }
 
+// MK1's white-box support/impact ownership tests, restated as physical
+// outcomes through the public API: a sleeping body loses its support, a fast
+// shot strikes a resting box, and an elastic shot departs.
+void TestSupportAndImpactOwnership() {
+    std::printf("K: removed support, fast impact into a resting box, elastic departure\n");
+    const glm::vec3 g(0, -9.81f, 0);
+    {
+        PhysicsWorld w;
+        w.Init();
+        w.SetSleepingEnabled(true);
+        w.CreateStaticBox({0, -0.5f, 0}, {100, 0.5f, 100}, 0.5f, 0);
+        auto support = w.CreateDynamicBox({0, 0.5f, 0}, {0.5f, 0.5f, 0.5f}, 8, 0.5f, 0);
+        auto top = w.CreateDynamicBox({0, 1.5f, 0}, {0.3f, 0.5f, 0.3f}, 4, 0.5f, 0);
+        for (int s = 0; s < 300; ++s) StepWithGravity(w, {support, top}, g);
+        const bool settled = w.IsSleeping(top) && w.IsSleeping(support);
+        w.DestroyBody(support);
+        const float before = w.GetTransform(top).position.y;
+        bool awake = true, staleOther = false;
+        std::vector<PhysicsWorld::BodyContactSample> contacts;
+        for (int s = 0; s < 20; ++s) {
+            StepWithGravity(w, {top}, g);
+            awake &= !w.IsSleeping(top);
+            if (w.ReadBodyContactSample(top, contacts))
+                for (const auto& c : contacts) staleOther |= c.other.id == support.id;
+        }
+        const float travel = before - w.GetTransform(top).position.y;
+        for (int s = 0; s < 300; ++s) StepWithGravity(w, {top}, g);
+        const float rest = w.GetTransform(top).position.y;
+        std::printf("    settled %d, fell %.3f m in 20 steps, rests at %.4f m\n", settled, travel, rest);
+        Check(settled, "support and top body settle asleep before removal");
+        Check(awake && travel > 0.5f, "removed support: the top body wakes and falls under gravity");
+        Check(!staleOther, "no contact observation resolves to the destroyed support");
+        Check(std::abs(rest - 0.5f) < 0.01f, "the fallen body comes to rest on the floor");
+    }
+    for (const float restitution : {0.f, 1.f}) {
+        PhysicsWorld w;
+        w.Init();
+        w.SetSleepingEnabled(true);
+        w.CreateStaticBox({0, -0.5f, 0}, {100, 0.5f, 100}, 0.5f, restitution);
+        auto box = w.CreateDynamicBox({0, 0.5f, 0}, {0.5f, 0.5f, 0.5f}, 8, 0.5f, restitution);
+        for (int s = 0; s < 300; ++s) StepWithGravity(w, {box}, g);
+        const bool asleep = w.IsSleeping(box);
+        auto shot = w.CreateDynamicSphere({-2, 0.55f, 0}, 0.2f, 2, 0.2f, restitution);
+        w.SetLinearVelocity(shot, {80, 0, 0});
+        bool crossed = false, observed = false;
+        float hitStep = -1;
+        std::vector<PhysicsWorld::BodyContactSample> contacts;
+        for (int s = 0; s < 30; ++s) {
+            StepWithGravity(w, {box, shot}, g);
+            const auto p = w.GetTransform(shot).position, q = w.GetTransform(box).position;
+            crossed |= p.x > q.x;
+            if (w.ReadBodyContactSample(box, contacts))
+                for (const auto& c : contacts)
+                    if (c.other.id == shot.id && c.normalImpulse > 0) {
+                        observed = true;
+                        if (hitStep < 0) hitStep = float(s);
+                    }
+        }
+        const float boxSpeed = glm::length(w.GetLinearVelocity(box));
+        const float shotVx = w.GetLinearVelocity(shot).x;
+        std::printf("    e=%.0f: target asleep %d, hit observed %d at step %.0f, box %.3f m/s, shot vx %.3f\n",
+                    restitution, asleep, observed, hitStep, boxSpeed, shotVx);
+        const std::string tag = restitution > 0 ? " (elastic)" : " (inelastic)";
+        Check(asleep, "target box sleeps before the shot" + tag);
+        Check(!crossed, "the 80 m/s shot never passes the target's centre" + tag);
+        Check(observed, "the target's contact observation carries the shot's reaction" + tag);
+        if (restitution > 0)
+            Check(shotVx < -1.f, "elastic shot departs backward with real restitution");
+        else
+            Check(shotVx > -1.f && shotVx < 40.f, "inelastic shot gives up its approach speed");
+    }
+}
+
 int main() {
     unsetenv("JUDAS_PHYSICS_MK1");
     TestColumns();
@@ -528,6 +601,7 @@ int main() {
     TestJointChainEnergy();
     TestSupportedPendulumEnergy();
     TestWeakSwingEnergy();
+    TestSupportAndImpactOwnership();
     std::printf("MK2 physics tests: %s (%d failures)\n", g_failures ? "FAIL" : "PASS", g_failures);
     return g_failures ? 1 : 0;
 }

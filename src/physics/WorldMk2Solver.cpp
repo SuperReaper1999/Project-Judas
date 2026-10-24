@@ -992,20 +992,24 @@ void PhysicsWorld::Impl::Mk2Solve(float dt, const PhysicsWorld::VelocityCoupling
                     v = std::min(v, RowNormalSpeed(state, rows[block.first + k]));
                 return v;
             };
-            const auto resolve = [&](std::size_t index, bool elastic) {
+            const auto resolve = [&](std::size_t index, bool elastic, bool frictionless = false) {
                 PhysicsWorkTimer timer(work.impactSolve, work.active);
                 const auto &block = blocks[index];
-                std::vector<float> fast(block.count);
+                std::vector<float> fast(block.count), friction(block.count);
                 for (std::size_t k = 0; k < block.count; ++k) {
                     auto &row = rows[block.first + k];
                     fast[k] = RowNormalSpeed(state, row) < -kMk2RestitutionThreshold ? row.restitution : 0;
                     row.normalImpulse = row.tangent1 = row.tangent2 = 0;
+                    friction[k] = row.friction;
+                    if (frictionless)
+                        row.friction = 0;
                 }
                 const float inverseH = 1.0f / h;
                 for (int sweep = 0; sweep < kMk2ImpactSweeps; ++sweep)
                     SolveBlock(state, rows, blocks[index], inverseH, false, true);
                 for (std::size_t k = 0; k < block.count; ++k) {
                     auto &row = rows[block.first + k];
+                    row.friction = friction[k];
                     impactNormal[block.first + k] += row.normalImpulse;
                     if (elastic && fast[k] > 0 && row.normalImpulse > 0) {
                         const float extra = fast[k] * row.normalImpulse;
@@ -1049,13 +1053,25 @@ void PhysicsWorld::Impl::Mk2Solve(float dt, const PhysicsWorld::VelocityCoupling
                 const double k0 = kinetic(block);
                 const std::vector<float> saved(impactNormal.begin() + block.first,
                                                impactNormal.begin() + block.first + block.count);
-                resolve(worst, true);
-                if (kinetic(block) > k0 * (1 + 1e-6) + 1e-9) {
+                const auto gained = [&] { return kinetic(block) > k0 * (1 + 1e-6) + 1e-9; };
+                const auto undo = [&] {
                     state[bodyA].rb->linearVelocity = before[0].first;
                     state[bodyA].rb->angularVelocity = before[0].second;
                     state[bodyB].rb->linearVelocity = before[1].first;
                     state[bodyB].rb->angularVelocity = before[1].second;
                     std::copy(saved.begin(), saved.end(), impactNormal.begin() + block.first);
+                };
+                resolve(worst, true);
+                // Friction can make a Poisson rebound gain energy at an
+                // off-centre point. Frictionless, it loses (1-e^2)/2 P'AP, so
+                // the bounce is kept; inelastic is the last resort. (Going
+                // straight to inelastic made a struck elastic sphere stick.)
+                if (gained()) {
+                    undo();
+                    resolve(worst, true, true);
+                }
+                if (gained()) {
+                    undo();
                     resolve(worst, false);
                 }
                 for (const unsigned body : {bodyA, bodyB})

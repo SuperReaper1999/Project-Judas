@@ -195,14 +195,22 @@ void PhysicsWorld::PersistJointContinuation(SaveArchive &a, JointHandle handle) 
     auto &joint = *found;
     auto context = m_impl->ContinuationJointContext(joint);
     const auto expectedContext = context;
-    uint32_t version = 1;
+    uint32_t version = 2;
     float dt = m_impl->completedObservationsReady ? m_impl->completedSolverDt : 0;
     auto warm = joint.warm;
     auto drive = joint.state.angularDrive;
     a(version, context, dt);
-    a.Require(version == 1, "newer joint continuation format");
+    a.Require(version == 1 || version == 2, "newer joint continuation format");
     a.Require(context == expectedContext, "joint continuation physical context differs");
     a.Require(dt >= 0 && dt <= .1f, "invalid joint continuation interval");
+    // Warm impulses are per solve interval: version 2 records MK2's substep
+    // length; version 1 (MK1) solved joints once per step.
+    float warmH = dt > 0 && m_impl->mk2JointWarmH > 0 ? std::min(m_impl->mk2JointWarmH, dt) : dt;
+    if (version >= 2)
+        a(warmH);
+    else
+        warmH = dt;
+    a.Require(warmH >= 0 && warmH <= dt, "invalid joint continuation warm interval");
     for (auto &value : warm)
         a(value);
     a(drive.enabled, drive.target, drive.relativeAngularVelocity, drive.stiffness, drive.damping,
@@ -221,6 +229,8 @@ void PhysicsWorld::PersistJointContinuation(SaveArchive &a, JointHandle handle) 
         joint.warm = warm;
         joint.restoredContinuationDt = dt;
         m_impl->completedSolverDt = dt;
+        if (warmH > 0)
+            m_impl->mk2JointWarmH = warmH;
     }
 }
 

@@ -3,6 +3,7 @@
 #include "WorldPersistence.h"
 #include "RuntimeWorld.h"
 #include <cstdio>
+#include <cstring>
 #include <cmath>
 #include <functional>
 #include <limits>
@@ -45,7 +46,12 @@ void JointContinuation(){
  Check(Throws([&]{truncated.Restore(current.substr(0,current.size()-1));}),"truncated joint record rejects before use");
  auto nonfinite=current;Word(nonfinite,nonfinite.size()-4,0x7fc00000);Check(Throws([&]{truncated.Restore(nonfinite);}),"nonfinite numerical history rejects");
  auto newer=current;Word(newer,0,99);Check(Throws([&]{truncated.Restore(newer);}),"unsupported newer solver identity rejects");
- auto nonunit=current;SaveArchive scan(current);uint32_t version=0;std::string context;float interval=0;scan(version,context,interval);for(int i=0;i<12;++i){float impulse=0;scan(impulse);}bool enabled=false;scan(enabled);Word(nonunit,scan.position,0x40000000);
+ // Version 1 (MK1) has no warm interval: its impulses were per whole step.
+ {SaveArchive layout(current);uint32_t version=0;std::string context;float interval=0;layout(version,context,interval);const auto at=layout.position;
+  auto legacy=current.substr(0,at)+current.substr(at+4);Word(legacy,0,1);auto perStep=current;uint32_t bits=0;std::memcpy(&bits,&interval,4);Word(perStep,at,bits);
+  Articulation old,stated;old.MatchMotion(restored);stated.MatchMotion(restored);old.Restore(legacy);stated.Restore(perStep);old.world.Step(dt);stated.world.Step(dt);
+  Check(version==2&&old.world.GetAngularVelocity(old.a)==stated.world.GetAngularVelocity(stated.a)&&old.world.GetLinearVelocity(old.b)==stated.world.GetLinearVelocity(stated.b),"version 1 joint history restores as per-step impulses");}
+ auto nonunit=current;SaveArchive scan(current);uint32_t version=0;std::string context;float interval=0,warmInterval=0;scan(version,context,interval);if(version>=2)scan(warmInterval);for(int i=0;i<12;++i){float impulse=0;scan(impulse);}bool enabled=false;scan(enabled);Word(nonunit,scan.position,0x40000000);
  Check(Throws([&]{truncated.Restore(nonunit);}),"unnormalized saved latched quaternion cannot bypass command validation");
  Articulation stale;stale.world.DestroyBody(stale.a);Check(Throws([&]{stale.Restore(current);}),"destroyed joint/body handles cannot accept saved continuation");
  // A changed timestep must discard numerical guesses, without discarding the
