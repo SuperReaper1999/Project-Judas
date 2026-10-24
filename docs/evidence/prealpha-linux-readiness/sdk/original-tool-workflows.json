@@ -1,0 +1,124 @@
+[
+  {
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-linux-readiness/sdk-relocated/judas_scene_author",
+      "--validate",
+      "project",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-linux-readiness/sdk-created-export-game/SDK_First_Game.judasproj"
+    ],
+    "exit": 0,
+    "expected": 0,
+    "seconds": 0.0055744130004313774,
+    "stdout": "valid project /home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-linux-readiness/sdk-created-export-game/SDK_First_Game.judasproj\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-linux-readiness/sdk-relocated/judas_scene_author",
+      "--validate",
+      "scene",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-linux-readiness/sdk-created-export-game/Scenes/main.judas"
+    ],
+    "exit": 0,
+    "expected": 0,
+    "seconds": 0.004450443000678206,
+    "stdout": "valid scene /home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-linux-readiness/sdk-created-export-game/Scenes/main.judas\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-linux-readiness/sdk-relocated/judas_scene_author",
+      "--create",
+      "ui",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-linux-readiness/sdk-workflows/menu.judasui"
+    ],
+    "exit": 0,
+    "expected": 0,
+    "seconds": 0.005436401999759255,
+    "stdout": "wrote /home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-linux-readiness/sdk-workflows/menu.judasui\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-linux-readiness/sdk-relocated/judas_scene_author",
+      "--validate",
+      "ui",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-linux-readiness/sdk-workflows/menu.judasui"
+    ],
+    "exit": 0,
+    "expected": 0,
+    "seconds": 0.004440564996912144,
+    "stdout": "valid ui /home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-linux-readiness/sdk-workflows/menu.judasui\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-linux-readiness/sdk-relocated/judas_script_check",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-linux-readiness/sdk-created-export-game/SDK_First_Game.judasproj"
+    ],
+    "exit": 0,
+    "expected": 0,
+    "seconds": 0.014826121001533465,
+    "stdout": "1 registered script modules; 0 compile/link failures (maximum 128 reported). No project code executed.\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-linux-readiness/sdk-relocated/judas_script_check",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-linux-readiness/sdk-created-export-game/SDK_First_Game.judasproj"
+    ],
+    "exit": 1,
+    "expected": 1,
+    "seconds": 0.006874004000565037,
+    "stdout": "1 registered script modules; 1 compile/link failures (maximum 128 reported). No project code executed.\n",
+    "stderr": "Assets/game.js: SyntaxError: Unexpected identifier 'invalid'\n    at Assets/game.js:1:47\n\n"
+  },
+  {
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-linux-readiness/sdk-relocated/judas_script_check",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-linux-readiness/sdk-created-export-game/SDK_First_Game.judasproj"
+    ],
+    "exit": 0,
+    "expected": 0,
+    "seconds": 0.006280313999013742,
+    "stdout": "1 registered script modules; 0 compile/link failures (maximum 128 reported). No project code executed.\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-linux-readiness/sdk-relocated/judas_script_check",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-linux-readiness/sdk-workflows/missing.judasproj"
+    ],
+    "exit": 2,
+    "expected": 2,
+    "seconds": 0.0043269500019960105,
+    "stdout": "",
+    "stderr": "Project: could not open project file: /home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-linux-readiness/sdk-workflows/missing.judasproj\n"
+  },
+  {
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-linux-readiness/sdk-relocated/judas_save",
+      "identity",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-linux-readiness/sdk-created-export-game/SDK_First_Game.judasproj"
+    ],
+    "exit": 0,
+    "expected": 0,
+    "seconds": 0.004919327999232337,
+    "stdout": "{\n  \"compatibility\": \"\",\n  \"content\": \"052e15ba491792b08c0255b594c6dec5b245d4aeabc9d2275ca0a244c3deb5f7\",\n  \"version\": 0\n}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-linux-readiness/sdk-relocated/judas_model_import_cli",
+      "--create",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-linux-readiness/sdk-created-export-game/SDK_First_Game.judasproj",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-linux-readiness/sdk-workflows/triangle.obj",
+      "Assets/triangle.judasmodel"
+    ],
+    "exit": 1,
+    "expected": 0,
+    "seconds": 0.013026517000980675,
+    "stdout": "{\n  \"error\": \"filesystem error: cannot create directories: Not a directory [/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-linux-readiness/sdk-created-export-game/SDK_First_Game.judasproj/Sources/0b651eb93057ffe84a4250c7273d6724]\",\n  \"recipe\": \"\",\n  \"success\": false\n}\n",
+    "stderr": ""
+  }
+]

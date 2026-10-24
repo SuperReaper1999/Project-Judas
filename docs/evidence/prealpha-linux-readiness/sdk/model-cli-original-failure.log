@@ -1,0 +1,14 @@
+Traceback (most recent call last):
+  File "/tmp/judas-sdk-tool-workflows.py", line 25, in <module>
+    run('judas_model_import_cli','--create',project,source,'Assets/triangle.judasmodel')
+    ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/judas-sdk-tool-workflows.py", line 9, in run
+    if p.returncode!=expected:raise RuntimeError(str(command)+'\n'+p.stdout+p.stderr)
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: ['/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-linux-readiness/sdk-relocated/judas_model_import_cli', '--create', '/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-linux-readiness/sdk-created-export-game/SDK_First_Game.judasproj', '/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-linux-readiness/sdk-workflows/triangle.obj', 'Assets/triangle.judasmodel']
+{
+  "error": "filesystem error: cannot create directories: Not a directory [/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-linux-readiness/sdk-created-export-game/SDK_First_Game.judasproj/Sources/0b651eb93057ffe84a4250c7273d6724]",
+  "recipe": "",
+  "success": false
+}
+

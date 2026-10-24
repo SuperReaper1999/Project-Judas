@@ -1,0 +1,71 @@
+[
+  {
+    "args": [
+      "--create",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-linux-readiness/sdk-created-export-game/SDK_First_Game.judasproj",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-linux-readiness/sdk-workflows/triangle.obj",
+      "Assets/triangle-file.judasmodel"
+    ],
+    "exit": 0,
+    "stdout": "{\n  \"error\": \"\",\n  \"recipe\": \"/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-linux-readiness/sdk-created-export-game/Imports/triangle-file.judasimport\",\n  \"success\": true\n}\n",
+    "stderr": ""
+  },
+  {
+    "args": [
+      "--recipe",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-linux-readiness/sdk-created-export-game/Imports/triangle-file.judasimport"
+    ],
+    "exit": 0,
+    "stdout": "{\n  \"assetId\": \"ce7489c726b024176803aca49d841903\",\n  \"decodedProducts\": 0,\n  \"diagnostics\": [],\n  \"error\": \"\",\n  \"hierarchyNodes\": 0,\n  \"output\": \"/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-linux-readiness/sdk-created-export-game/Assets/triangle-file.judasmodel\",\n  \"paletteEntries\": 0,\n  \"parts\": 1,\n  \"receiptHit\": false,\n  \"sourceBones\": 0,\n  \"sourceUnitMeters\": 1.0,\n  \"success\": true,\n  \"unchanged\": false,\n  \"vertices\": 3\n}\n",
+    "stderr": ""
+  },
+  {
+    "args": [
+      "--inspect",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-linux-readiness/sdk-created-export-game/Assets/triangle-file.judasmodel"
+    ],
+    "exit": 0,
+    "stdout": "{\n  \"clips\": [],\n  \"joints\": [],\n  \"materialDefaults\": [\n    {\n      \"alpha\": 0,\n      \"factor\": [\n        1.0,\n        1.0,\n        1.0,\n        1.0\n      ],\n      \"imageAlphaMax\": 0,\n      \"imageAlphaMin\": 255\n    }\n  ],\n  \"materials\": [\n    \"__default\"\n  ],\n  \"parts\": [\n    {\n      \"identity\": \"sdk_triangle/material/__default\",\n      \"material\": 0,\n      \"ordinal\": 0,\n      \"triangles\": 1\n    }\n  ]\n}\n",
+    "stderr": ""
+  },
+  {
+    "args": [
+      "--create",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-linux-readiness/sdk-created-export-game",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-linux-readiness/sdk-workflows/triangle.obj",
+      "Assets/triangle-directory.judasmodel"
+    ],
+    "exit": 0,
+    "stdout": "{\n  \"error\": \"\",\n  \"recipe\": \"/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-linux-readiness/sdk-created-export-game/Imports/triangle-directory.judasimport\",\n  \"success\": true\n}\n",
+    "stderr": ""
+  },
+  {
+    "args": [
+      "--recipe",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-linux-readiness/sdk-created-export-game/Imports/triangle-directory.judasimport"
+    ],
+    "exit": 0,
+    "stdout": "{\n  \"assetId\": \"6e2718df645bde01dac04bed777f6217\",\n  \"decodedProducts\": 0,\n  \"diagnostics\": [],\n  \"error\": \"\",\n  \"hierarchyNodes\": 0,\n  \"output\": \"/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-linux-readiness/sdk-created-export-game/Assets/triangle-directory.judasmodel\",\n  \"paletteEntries\": 0,\n  \"parts\": 1,\n  \"receiptHit\": false,\n  \"sourceBones\": 0,\n  \"sourceUnitMeters\": 1.0,\n  \"success\": true,\n  \"unchanged\": false,\n  \"vertices\": 3\n}\n",
+    "stderr": ""
+  },
+  {
+    "args": [
+      "--inspect",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-linux-readiness/sdk-created-export-game/Assets/triangle-directory.judasmodel"
+    ],
+    "exit": 0,
+    "stdout": "{\n  \"clips\": [],\n  \"joints\": [],\n  \"materialDefaults\": [\n    {\n      \"alpha\": 0,\n      \"factor\": [\n        1.0,\n        1.0,\n        1.0,\n        1.0\n      ],\n      \"imageAlphaMax\": 0,\n      \"imageAlphaMin\": 255\n    }\n  ],\n  \"materials\": [\n    \"__default\"\n  ],\n  \"parts\": [\n    {\n      \"identity\": \"sdk_triangle/material/__default\",\n      \"material\": 0,\n      \"ordinal\": 0,\n      \"triangles\": 1\n    }\n  ]\n}\n",
+    "stderr": ""
+  },
+  {
+    "args": [
+      "--create",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-linux-readiness/missing.judasproj",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-linux-readiness/sdk-workflows/triangle.obj",
+      "Assets/no.judasmodel"
+    ],
+    "exit": 1,
+    "stdout": "{\n  \"code\": \"cli-operation\",\n  \"message\": \"Project: could not open project file: /home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-linux-readiness/missing.judasproj\",\n  \"severity\": \"error\",\n  \"success\": false\n}\n",
+    "stderr": ""
+  }
+]

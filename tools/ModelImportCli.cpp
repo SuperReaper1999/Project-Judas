@@ -1,4 +1,5 @@
 #include "BuildIdentity.h"
+#include "Project.h"
 #include "ModelImport.h"
 #include "PerformanceProfiler.h"
 #include "ModelLoader.h"
@@ -42,7 +43,22 @@ int main(int argc,char** argv){
    for(size_t i=0;i<source.skeletal->skeleton.names.size();++i)j["sourceJoints"].push_back(SkeletonJointKey(source.skeletal->skeleton,int(i)));for(size_t i=0;i<target.skeletal->skeleton.names.size();++i)j["targetJoints"].push_back(SkeletonJointKey(target.skeletal->skeleton,int(i)));for(const auto& clip:source.skeletal->clips)j["takes"].push_back({{"name",clip.name},{"duration",clip.duration},{"motionExtracted",!clip.motion.empty()}});
    std::cout<<j.dump(2)<<'\n';return 0;
   }
-  if(argc==5&&std::string(argv[1])=="--create") {std::string recipe;bool ok=CreateModelRecipe(argv[2],argv[3],argv[4],recipe,error);std::cout<<Json{{"success",ok},{"recipe",recipe},{"error",error}}.dump(2)<<'\n';return ok?0:1;}
+  if (argc == 5 && std::string(argv[1]) == "--create") {
+    std::filesystem::path root = std::filesystem::u8path(argv[2]);
+    std::error_code ec;
+    // Other project tools accept a .judasproj file. Retain the original
+    // directory form while resolving that ordinary file form deliberately.
+    if (std::filesystem::is_regular_file(root, ec) ||
+        (!std::filesystem::is_directory(root, ec) && root.extension() == ".judasproj")) {
+      Project project;
+      if (!project.Load(root.u8string(), error)) throw std::runtime_error("Project: " + error);
+      root = std::filesystem::u8path(project.RootDir());
+    }
+    std::string recipe;
+    const bool okay = CreateModelRecipe(root.u8string(), argv[3], argv[4], recipe, error);
+    std::cout << Json{{"success", okay}, {"recipe", recipe}, {"error", error}}.dump(2) << '\n';
+    return okay ? 0 : 1;
+  }
   if(argc==3&&std::string(argv[1])=="--recipe") {ModelCookTask task;task.previewRequired=false;bool ok=CookModelRecipe(argv[2],task)&&PublishModelImport(task,error);auto j=Report(task.report);j["success"]=ok;j["unchanged"]=task.unchanged;j["receiptHit"]=task.receiptHit;j["decodedProducts"]=task.decodedProducts;j["output"]=task.output;j["assetId"]=task.assetId;j["error"]=error.empty()?task.error:error;std::cout<<j.dump(2)<<'\n';return !ok?1:task.report.diagnostics.empty()?0:2;}
   if(argc>=5&&std::string(argv[1])=="--collision"){
    MeshData source,cleaned;ModelCollisionCleanup settings;ModelCollisionCleanupReport cleanup;CollisionCookSettings cook;CollisionAsset asset;CollisionDiagnostic diagnostic;

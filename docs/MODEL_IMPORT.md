@@ -66,6 +66,7 @@ shared CLI, measured tolerances, invalidation and supported limits.
 
 ```sh
 build/judas_model_import_cli --create /absolute/project /absolute/actor.fbx Assets/models/actor.judasmodel
+# A .judasproj file is also accepted in place of /absolute/project.
 build/judas_model_import_cli --recipe /absolute/project/Imports/actor.judasimport
 build/judas_model_import_cli --inspect /absolute/project/Assets/models/actor.judasmodel
 build/judas_model_import_cli --collision /absolute/project/Assets/models/ramp.judasmodel 0 /absolute/project/Assets/collision/ramp.judascollision --remove-degenerates --orient

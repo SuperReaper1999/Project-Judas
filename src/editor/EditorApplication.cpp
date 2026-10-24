@@ -1676,7 +1676,10 @@ int EditorApplication::Run(int argc, char** argv) {
         // Export automation submits the same UI request during an active ImGui
         // frame. HandleRequests also owns modal UI and cannot run after Render.
         const char* exportDestination = std::getenv("JUDAS_EDITOR_AUTOTEST_EXPORT");
-        const bool automatedExport = autotest && autotestFrame == 14 && exportDestination;
+        // Polish intentionally queues Escape at frame 14. Test export only
+        // after that cancellation/release has completed, not in the same frame.
+        const int exportRequestFrame = polishAutotest ? 17 : 14;
+        const bool automatedExport = autotest && autotestFrame == exportRequestFrame && exportDestination;
         if (automatedExport) {
             m_document.BeginEdit();m_document.GetScene().Settings().name+=" [unsaved export]";m_document.CommitEdit();
             m_project.Settings().name+=" [unsaved export]";
@@ -1696,7 +1699,7 @@ int EditorApplication::Run(int argc, char** argv) {
         HandleRequests(requests);
         if(projectUnsavedAutotest&&autotestFrame==11)
             navigationCheck(m_project.IsDirty()&&!m_document.IsDirty()&&m_confirmationTitle=="Unsaved project"&&!m_quit,"project-only edits receive their own close guard");
-        if(autotest&&exportDestination&&autotestFrame==19){
+        if(autotest&&exportDestination&&autotestFrame==exportRequestFrame+5){
             const bool success=m_panels.runProjectInfo.rfind("Exported ",0)==0;
             navigationCheck(success,"explicit export choice produces the requested package");
             if(success){

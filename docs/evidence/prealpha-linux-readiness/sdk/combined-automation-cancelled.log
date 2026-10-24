@@ -1,0 +1,27 @@
+Shadow maps: on
+Graphics: 3.3.0 NVIDIA 580.178.04 / NVIDIA GeForce GTX 970/PCIe/SSE2
+Renderer fragment texture units: 32 (material path uses 12)
+[editor onboarding] packaged visible starter: PASS 
+[editor autotest] duplicate created id 5: scene CHANGED; undo restores: IDENTICAL
+[editor navigation] new-scene request preserves unsaved document until a choice: PASS
+[editor autotest] wrote: /home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-linux-readiness/sdk-editor.unsaved.png
+[editor navigation] unsaved-document confirmation remains open across frames: PASS
+[editor navigation] Escape cancels unsaved-document action: PASS
+[editor autotest] export project: 
+[editor autotest] wrote: /home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-linux-readiness/sdk-editor.resized.png
+[editor navigation] resized scene target follows workspace dimensions: PASS
+[editor navigation] scene picking uses the central viewport projection after resize: PASS
+[editor navigation] explicit export choice produces the requested package: FAIL
+[editor export choice] 
+[editor autotest] wrote: /home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-linux-readiness/sdk-editor.edit.png
+[editor autotest] edit frame: 3 draw calls, 24 triangles, 30 debug lines
+[editor autotest] wrote: /home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-linux-readiness/sdk-editor.play.png
+[editor autotest] play frame: 1 steps, step 0.008 ms, 1 bodies, 0 contacts, 2 draw calls, 48 triangles, 1 shadow passes, 1 lights, 0 debug lines, 0 particles
+[editor autotest] resources: 0 meshes, 0 textures, 0 terrain meshes, hits 0, misses 0, failed 0, uploads 0, resident 0 bytes
+[editor autotest] jobs: 11 workers, 0 completed, 0 failed, 0 cancelled
+[editor navigation] desktop close request waits for unsaved-document confirmation: PASS
+[editor navigation] cancelled desktop close preserves authored state and editor session: PASS
+[editor autotest] wrote: /home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-linux-readiness/sdk-editor.restored.png
+[editor autotest] authored scene after play/stop is IDENTICAL
+[editor autotest] save ok
+JS: My first Judas project is running.
