@@ -82,3 +82,8 @@ Ubuntu24 SDK, all 17 actual tool workflows, relocated exports and targeted legac
 coverage. It also preserves the newly discovered **MK2-EXTERNAL-KICK-TIMING**
 regression and its generic correction. All 29 affected follow-up invocations pass;
 this new correction awaits human acceptance. See [support boundaries](ALPHA_SUPPORT_MATRIX.md).
+
+Clean corrected Linux SDK/runtime: `f7691198ee299a5752c8a55c93fb42e639d033cf`.
+All 17 tool loaders/identities, packaged workflows and five final physical/save/
+network checks pass. This remains Experimental, awaiting human acceptance; main
+stays at c76e92dc. Later receipt-only documentation does not change runtime code.

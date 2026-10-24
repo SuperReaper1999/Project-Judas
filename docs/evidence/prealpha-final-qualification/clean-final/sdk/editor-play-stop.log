@@ -1,0 +1,13 @@
+Shadow maps: on
+Graphics: 4.5 (Core Profile) Mesa 25.2.8-0ubuntu0.24.04.4 / llvmpipe (LLVM 20.1.2, 256 bits)
+Renderer fragment texture units: 32 (material path uses 12)
+[editor autotest] duplicate created id 5: scene CHANGED; undo restores: IDENTICAL
+[editor autotest] wrote: /build/editor-play.edit.png
+[editor autotest] edit frame: 3 draw calls, 24 triangles, 262 debug lines
+[editor autotest] wrote: /build/editor-play.play.png
+[editor autotest] play frame: 1 steps, step 0.015 ms, 1 bodies, 0 contacts, 3 draw calls, 48 triangles, 1 shadow passes, 1 lights, 247 debug lines, 0 particles
+[editor autotest] resources: 0 meshes, 0 textures, 0 terrain meshes, hits 0, misses 0, failed 0, uploads 0, resident 0 bytes
+[editor autotest] jobs: 11 workers, 0 completed, 0 failed, 0 cancelled
+[editor autotest] authored scene after play/stop is IDENTICAL
+[editor autotest] save ok
+JS: My first Judas project is running.

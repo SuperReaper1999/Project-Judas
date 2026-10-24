@@ -1,0 +1,5 @@
+{
+  "permission_review": "The first final-spot-check request timed out in automatic approval review before execution. A simpler launcher was approved. Its first invocation discovered the original driver had never been created; creating it and running the same five checks succeeded. No unsafe verdict or user reauthorization was inferred.",
+  "checkout_cache": "Helper-generated .pyc caused a strict all-files checkout assertion; it was never a compiled input. Only disposable bytecode/output aliases in the owned checkout were removed after tests. No protected or user-owned untracked file was deleted.",
+  "package_scope": "Final SDK is clean runtime checkpoint f7691198; this later receipt/documentation checkpoint does not change runtime sources. The initial exact c76 SDK and failures are retained."
+}

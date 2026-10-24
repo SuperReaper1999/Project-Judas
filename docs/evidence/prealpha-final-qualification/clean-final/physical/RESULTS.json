@@ -1,0 +1,52 @@
+[
+  {
+    "name": "rotation",
+    "command": [
+      "/build/judas_mk2_rotation_tests"
+    ],
+    "exit": 0,
+    "seconds": 8.629009408999991,
+    "binary_sha256": "8e71f771df1224e304fc9bf308dd997834e45063129fc99914a86bff583ed31a"
+  },
+  {
+    "name": "wheel",
+    "command": [
+      "/build/judas_wheel_tests"
+    ],
+    "exit": 0,
+    "seconds": 0.16404281999712111,
+    "binary_sha256": "773f16aa5b9521ae37dbbd269e60ea2b8dfddfa0a10d83cd4183a7762f4f2c04"
+  },
+  {
+    "name": "legacy-spacecraft",
+    "command": [
+      "/build/judas_spacecraft_frame_integration_tests",
+      "--output",
+      "/build/final-binary-checks/spacecraft"
+    ],
+    "exit": 0,
+    "seconds": 0.11382112099818187,
+    "binary_sha256": "fd31aa34acb858330b64810cd1e395f23f9bf4ec4f2b4c48653933048ed2e11f"
+  },
+  {
+    "name": "cold-read",
+    "command": [
+      "/build/judas_mk2_rotation_cold_tests",
+      "read",
+      "/build/qualification-followup/rotation-cold"
+    ],
+    "exit": 0,
+    "seconds": 0.16398754599504173,
+    "binary_sha256": "25620bdf5229a80bf1edf99fbb0c9a6aedff44eeebc14fb9e9d6e5b2e26c7e0f"
+  },
+  {
+    "name": "network",
+    "command": [
+      "/build/judas_network_session_tests",
+      "/build/final-binary-checks/network"
+    ],
+    "exit": 0,
+    "seconds": 0.7649090370032354,
+    "binary_sha256": "086ebf53e47382dc21da1eb2b9e6eb218ff976f15742caa34fa3ce541a4968e9"
+  }
+]

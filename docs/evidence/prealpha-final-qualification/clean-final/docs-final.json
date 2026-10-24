@@ -1,0 +1,10 @@
+{
+  "documents": 94,
+  "local_links": 1957,
+  "tracked_destinations_required": true,
+  "errors": [
+    "docs/PREALPHA_FINAL_QUALIFICATION.md:63: untracked destination evidence/prealpha-final-qualification/clean-final/FINAL_QUALIFICATION.json",
+    "docs/PREALPHA_FINAL_QUALIFICATION.md:219: untracked destination evidence/prealpha-final-qualification/clean-final/FINAL_ARTIFACTS.json"
+  ],
+  "pass": false
+}

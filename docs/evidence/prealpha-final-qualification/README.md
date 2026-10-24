@@ -52,6 +52,21 @@ Windows/Android/phone/public-Internet acceptance. The corrected runtime remains
 Experimental for human review. FLU-001, half-turn liquid sampling, old incomplete
 save histories and unsupported system combinations remain explicit limits.
 
-A clean committed SDK receipt follows the validated implementation checkpoint;
-it will identify its exact source and binaries independently of these earlier
-records. The exact-c76 SDK remains preserved rather than overwritten.
+## Final clean committed SDK
+
+`clean-final/FINAL_QUALIFICATION.json` closes the distribution follow-up at
+`f7691198ee299a5752c8a55c93fb42e639d033cf`. All 17 loaders/identities and the
+packaged workflows pass. Five final physical/save/network checks and a real
+headless dedicated run pass. Raw logs, SDK manifests, source/build identity,
+archive checksum and reproducible drivers are alongside it.
+
+The exact-c76 SDK remains preserved rather than overwritten. The local corrected
+SDK is `sdk-final`; the archive is described by `clean-final/FINAL_ARTIFACTS.json`.
+Later documentation receipts do not relabel the binary's source checkpoint.
+`PHASE1_FINGERPRINTS.json` applies to commit f7691198, not later amended status
+pages. `FINAL_FINGERPRINTS.json` verifies the complete final intended inventory,
+excluding itself to avoid a self-referential hash.
+
+The first final-doc check ran before staging its two new JSON link destinations
+and correctly rejected them (`clean-final/docs-final.json`). The final tracked-link
+check is recorded separately after registration; the rejection is not overwritten.

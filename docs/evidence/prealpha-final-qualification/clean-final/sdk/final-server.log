@@ -1,0 +1,4 @@
+Judas dedicated initialized: project=/build/game/SDK_First_Game.judasproj port=28979 fixedHz=60 duration=1.000
+No display, renderer or audio device; project scripts own host startup and gameplay.
+JS: My first Judas project is running.
+Judas dedicated stopped: fixedSteps=59 discardedCatchupSeconds=0.000000

@@ -1,0 +1,8 @@
+{
+  "passed": true,
+  "payload_files": 237,
+  "executable_modes_verified": 17,
+  "archive_sha256": "ede3f65b4211136e54c745ed619e60f583f04f12ad047ea3027e25bf47cb7c4c",
+  "seconds": 6.357222223996359,
+  "scope": "Read/decompress every SDK manifest payload directly from the local archive; check its size/hash and tool executable mode. Games were separately run from relocated package-only namespaces."
+}

@@ -93,7 +93,6 @@
     "docs/PREALPHA_CLEANUP.md",
     "docs/MK2_PHYSICS_ARCHITECTURE.md",
     "docs/PROJECT_SETTINGS_AND_WATER.md",
-    "docs/PREALPHA_FINAL_CORRECTIONS.md",
     "docs/LINUX_BASELINE_BUILD.md",
     "docs/ALPHA_SUPPORT_MATRIX.md",
     "docs/PREALPHA_FINAL_QUALIFICATION.md"
@@ -122,6 +121,10 @@
     {
       "document": "docs/PREALPHA_ELASTIC_LINUX_BASELINE.md",
       "reason": "Checkpoint-time qualification/investigation record, preserved unchanged. Current status is PREALPHA.md, ALPHA_SUPPORT_MATRIX.md and PREALPHA_FINAL_QUALIFICATION.md; later accepted rotation repair supersedes its open-defect status."
+    },
+    {
+      "document": "docs/PREALPHA_FINAL_CORRECTIONS.md",
+      "reason": "Checkpoint-time correction report, including its original pending-review statement. Preserved unchanged; current acceptance/qualification is recorded in PREALPHA.md and PREALPHA_FINAL_QUALIFICATION.md."
     }
   ]
 }

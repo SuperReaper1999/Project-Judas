@@ -649,7 +649,8 @@
       "input_commit": "c76e92dc20b5765f61d6077bf618a8b94ac22462",
       "finding": "CAP-01 / MK2-EXTERNAL-KICK-TIMING / Linux qualification",
       "evidence": "docs/PREALPHA_FINAL_QUALIFICATION.md",
-      "status": "bounded_qualification_complete_clean_sdk_receipt_followup"
+      "status": "bounded_qualification_complete",
+      "clean_runtime_checkpoint": "f7691198ee299a5752c8a55c93fb42e639d033cf"
     }
   ],
   "new_findings": [
@@ -667,5 +668,6 @@
       "evidence": "docs/PREALPHA_FINAL_QUALIFICATION.md",
       "disposition": "Exact accepted SDK qualification reproduced wheel settling failures on GCC13/GCC15. Balanced public-kick negative controls expose unintended free flight. Preserve chronological CCD while restoring unconstrained pre-step kick timing; both original wheel checks and all 29 affected follow-up invocations pass. No damping or budget changes."
     }
-  ]
+  ],
+  "linux_qualified_runtime_checkpoint": "f7691198ee299a5752c8a55c93fb42e639d033cf"
 }

@@ -46,9 +46,23 @@ than changing cwd on the development host, but not a new physical-machine test.
 
 The accepted-source SDK is retained separately because qualification found the
 wheel regression below. The corrected candidate was incrementally rebuilt and
-requalified with its genuine dirty-candidate identity. A final clean committed
-SDK identity/receipt will be recorded after checkpointing; the accepted-source
-SDK is not falsely relabelled as containing the correction.
+requalified with its genuine dirty-candidate identity, then checkpointed as
+`f7691198ee299a5752c8a55c93fb42e639d033cf`. A subsequent clean committed build is
+`0.1.0-prealpha-Experimental-f769119-clean-252bc26f2546`, with zero untracked build
+inputs. All 17 ABI/loader/identity checks, packaged editor/CLI workflows and both
+package-only moved exports pass again. The clean rebuild has the same GLIBC 2.38
+maximum and no warnings. Its 48.75 s configure +37.27 s incremental build are not
+another claimed full clean build.
+
+Five final clean-binary checks pass: rotation/energy, wheels, legacy spacecraft,
+restoration of the actual previous cold snapshot, and multi-process networking.
+The packaged dedicated executable separately starts its world, executes JS and
+advances 59 fixed steps over its one-second bounded run, without a display or audio
+device. The 29-case follow-up's physical source hashes exactly match this clean
+checkpoint; documentation/build identity changes do not trigger another full run.
+[Final clean receipt](evidence/prealpha-final-qualification/clean-final/FINAL_QUALIFICATION.json)
+records the actual identities and binary hashes. The accepted-source SDK is not
+falsely relabelled as containing the correction.
 
 ## Runtime defect found and corrected
 
@@ -167,7 +181,7 @@ validation; it has not acquired human acceptance from these tests.
 - Windows/Android qualification and the operator-built game trial remain separate.
 
 No demonstrated major redesign is required by this pass. The bounded correction
-and support decisions are ready for human review once the clean SDK receipt is
+and support decisions are ready for human review with the clean SDK receipt
 attached. This is not a declaration of Alpha readiness.
 
 ## Reproduction and human checklist
@@ -182,10 +196,32 @@ only SDK plus output; moved games mount only package plus the test driver.
 
 1. Launch the qualified SDK editor; create a Visible script project and Play/Stop.
 2. Change/check a script, save/reopen and export; move the package and launch it.
-3. Optional wheel check: stationary suspension should settle; drive/steer/brake and
-   cross uneven ground. No source quality or physics-budget switch is needed.
+3. Optional wheel check: open `projects/wheel_lab/wheel_lab.judasproj` with the
+   qualified SDK editor. W/S drive, A/D steer, Space brakes, V runs the tour;
+   stationary suspension should settle and uneven ground should remain usable.
+   No source quality or physics-budget switch is needed.
 4. Optional existing-game check: Hearthworld save/quit/reopen, then inspect carried
    objects, buildings and excavation. Your actual game-building trial stays deferred.
 5. Review the support matrix before choosing advanced fluids, migration or online
    combinations. Windows/Android stay deferred; no controller/hardware claim is
    inferred from synthetic Linux input.
+
+## Local deliverables
+
+All are local qualification artifacts, not published releases:
+
+- SDK: `.cache/prealpha-final-qualification/sdk-final/`.
+- Archive: `.cache/prealpha-final-qualification/Judas-PreAlpha-Linux-Ubuntu24-f7691198.tar.gz`
+  (416,770,175 bytes; SHA-256
+  `ede3f65b4211136e54c745ed619e60f583f04f12ad047ea3027e25bf47cb7c4c`).
+- Payload: 237 manifest files, 934,406,243 logical bytes; 17 executables.
+- Created editable project: `.cache/prealpha-final-qualification/sdk-work-final/game/SDK_First_Game.judasproj`.
+- Moved games: `.cache/prealpha-final-qualification/final-moved-editor-export/`
+  and `final-moved-cli-export/` beside it.
+- Source/build/ABI/artifact details: [artifact manifest](evidence/prealpha-final-qualification/clean-final/FINAL_ARTIFACTS.json).
+
+The engine and bundled SDK docs identify their exact clean runtime checkpoint
+f7691198. This later qualification/support supplement records the finished tests;
+it does not pretend that a binary contains subsequent documentation commits.
+The initial c76 SDK remains under `.cache/prealpha-final-qualification/sdk/` for
+comparison. Use the corrected **sdk-final**, not that preserved failing baseline.
