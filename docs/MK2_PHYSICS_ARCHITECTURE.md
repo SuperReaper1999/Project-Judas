@@ -1074,6 +1074,16 @@ All 30 MK2 runs pass every check of the program, including the 24-box fast famil
     loads as per-step impulses (`physics_continuation` checks both). No other saved state is
     MK1-only: touches, forces, kinematic targets, sleep, completed contact observations and joint
     material history are solver-neutral, and no TOI cache or impact schedule is saved.
+15. ~~**balance_lab Stride cannot get up**~~ (closed; the bug predates MK2). Lying flat, the
+    slender Stride rig thrashed under B or G until the 15 s deadline on both solvers: driving every
+    joint straight to the standing pose lifts its light feet instead of its trunk. The controller
+    now gives the ordinary stand 2.5 s (`getUpPatience`); if it has not lifted the root past
+    `getUpUpright` (0.6), a staged joint-space get-up plays (`PhysicalBalanceGetUp.cpp`): three
+    authorable keys per facing, then the ordinary stand takes over once upright on both feet, with
+    up to four attempts. Rigs whose plain stand already works never enter it, so all MK1/MK2
+    balance rows are unchanged. Keys were searched under MK2 over 27 lying poses per facing and
+    checked on 48 unsearched ones (46/48 each; misses are Stride rolled 27 degrees onto a side). In
+    the app, F1 walk, P, then B or G stands Stride in 5.8 s. Under MK1 the harness get-up is 6/6.
 
 ## 6. Stages
 

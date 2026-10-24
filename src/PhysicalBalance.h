@@ -23,6 +23,9 @@ struct BalanceEffector {
     std::vector<BalanceContactPatch> patches;
     float normalAcceptance=.65f;
 };
+// One get-up pose: joint angles (degrees) about the rig's lateral axis
+// (up x forward), applied to both chains, held for `seconds`.
+struct BalanceGetUpKey {float seconds=1,hip=0,knee=0,ankle=0;};
 struct BalanceSettings {
     glm::vec3 up{0,1,0},forward{0,0,1}; // authored root-local axes, not world axes
     std::array<BalanceEffector,2> effectors;
@@ -44,6 +47,16 @@ struct BalanceSettings {
     // either way. false selects the established stepping controller.
     // JUDAS_BALANCE_CAPTURE_STEPPING=0/1 forces it off/on for validation.
     bool captureStepping=true;
+    // Get-up from lying: when the ordinary stand has not lifted the root past
+    // getUpUpright within getUpPatience seconds of the task, a staged
+    // joint-space motion chosen by which way the rig faces, then the ordinary
+    // stand takes over once the root is upright on both feet. A failed rise
+    // is retried from a fresh assessment, up to getUpAttempts. Defaults were
+    // searched under MK2 for the balance lab's three rigs (both facings).
+    std::array<BalanceGetUpKey,3> getUpFaceUp{{{.71f,161.35f,-78.00f,-70.21f},{.18f,151.17f,-99.20f,45.30f},{.81f,.60f,-2.96f,5.61f}}};
+    std::array<BalanceGetUpKey,3> getUpFaceDown{{{.73f,143.05f,-1.02f,82.19f},{.20f,154.62f,-87.71f,94.34f},{.47f,150.48f,-28.05f,-17.34f}}};
+    float getUpUpright=.6f,getUpPatience=2.5f;
+    unsigned getUpAttempts=4;
     PhysicsQueryFilter query;
 };
 // Stable authored skeleton keys; physical body/constraint handles are resolved
@@ -139,4 +152,8 @@ private:
     // persisted: a restored task measures it again when it next stands.
     glm::vec3 m_captureStance{0};bool m_captureStanceReady=false;
     bool m_waitingForSample=false;
+    // Get-up progress (PhysicalBalanceGetUp.cpp). Derived and not persisted:
+    // a restored task assesses the lying rig again and restarts the motion.
+    bool GetUp(PhysicsWorld&,const glm::vec3& up,float dt);
+    bool m_getUp=false,m_getUpFaceUp=false;float m_getUpTime=0;unsigned m_getUpAttempts=0;bool m_getUpReached=false;
 };

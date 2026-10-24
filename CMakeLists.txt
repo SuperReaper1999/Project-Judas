@@ -222,6 +222,7 @@ add_library(judas_engine STATIC
     src/PhysicalAnimation.cpp
     src/PhysicalBalance.cpp
     src/PhysicalBalanceCapture.cpp
+    src/PhysicalBalanceGetUp.cpp
     src/WorldPhysicalBalance.cpp
     src/WorldAnimation.cpp
     src/PoseComposition.cpp

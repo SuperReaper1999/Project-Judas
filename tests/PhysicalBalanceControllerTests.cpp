@@ -108,4 +108,19 @@ void InternalEffort(){
  }
 }
 }
-int main(){Recovery(1.5707963f,glm::quat(1,0,0,0));Recovery(-1.5707963f,glm::quat(1,0,0,0));Recovery(1.4f,glm::quat(1,0,0,0));Recovery(-1.4f,glm::quat(1,0,0,0));Recovery(1.5707963f,glm::angleAxis(.9f,glm::normalize(glm::vec3(1,2,3))));Recovery(1.5707963f,glm::quat(1,0,0,0),2);Recovery(-1.5707963f,glm::quat(1,0,0,0),2);CorrectiveStep();Negatives();Supports();History();DisturbancesAndLosses();InternalEffort();std::printf("Physical balance controller development: %d checks, %d failures\n",checks,failures);return failures?1:0;}
+// Authored get-up keys round-trip, default keys are not written (existing
+// content keeps its bytes) and out-of-envelope keys are rejected.
+void GetUpAuthoring(){
+    BalanceDefinition d;d.chains={{{"lu","ll","lf"},{"ru","rl","rf"}}};
+    for(auto& e:d.settings.effectors)e.patches={BalanceContactPatch{}};
+    std::string error;Check(ValidBalanceDefinition(d,error),"default balance definition with get-up defaults is valid");
+    Check(SerializeBalanceDefinition(d).find("getUp")==std::string::npos,"default get-up settings are not serialized");
+    d.settings.getUpFaceDown[1]={.5f,120,-90,30};d.settings.getUpPatience=4;d.settings.getUpAttempts=2;
+    BalanceDefinition back;Check(ParseBalanceDefinition(SerializeBalanceDefinition(d),back,error),"authored get-up settings parse");
+    Check(back.settings.getUpFaceDown[1].hip==120&&back.settings.getUpFaceDown[1].seconds==.5f&&back.settings.getUpPatience==4&&back.settings.getUpAttempts==2&&back.settings.getUpFaceUp[0].hip==d.settings.getUpFaceUp[0].hip,"authored get-up settings round-trip");
+    auto bad=d;bad.settings.getUpFaceUp[2].knee=200;Check(!ValidBalanceDefinition(bad,error),"get-up joint angle beyond 180 degrees rejected");
+    bad=d;bad.settings.getUpFaceUp[0].seconds=0;Check(!ValidBalanceDefinition(bad,error),"zero-length get-up key rejected");
+    bad=d;bad.settings.getUpAttempts=0;Check(!ValidBalanceDefinition(bad,error),"zero get-up attempts rejected");
+    Check(!ParseBalanceDefinition(R"({"getUpFaceUp":[[1,0,0,0]],"chains":[{},{}]})",back,error),"short get-up key list rejected");
+}
+int main(){Recovery(1.5707963f,glm::quat(1,0,0,0));Recovery(-1.5707963f,glm::quat(1,0,0,0));Recovery(1.4f,glm::quat(1,0,0,0));Recovery(-1.4f,glm::quat(1,0,0,0));Recovery(1.5707963f,glm::angleAxis(.9f,glm::normalize(glm::vec3(1,2,3))));Recovery(1.5707963f,glm::quat(1,0,0,0),2);Recovery(-1.5707963f,glm::quat(1,0,0,0),2);CorrectiveStep();Negatives();Supports();History();DisturbancesAndLosses();InternalEffort();GetUpAuthoring();std::printf("Physical balance controller development: %d checks, %d failures\n",checks,failures);return failures?1:0;}

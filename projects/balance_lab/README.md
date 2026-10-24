@@ -38,8 +38,18 @@ These variants use normal shapes, materials and ordered gravity zones.
 
 **Get-up:** F3, Tab twice selects face-up Anchor; P, wait two seconds, G.
 Tab once selects distinct face-down Receiver; repeat P/wait/G. These two
-weighted-foot robots recover under finite paired joint effort. Stride is the
-step fixture, not a demonstrated get-up fixture.
+weighted-foot robots recover under finite paired joint effort.
+
+**Stride get-up:** F1, Stride selected, hold W to walk it over, P so it falls
+flat, then B or G. Stride's light feet cannot anchor the plain stand drive, so
+after 2.5 s without lifting its root the controller switches to a staged
+get-up (feet planted flat, gathered under the hips, then extended), chosen by
+which way it faces, and hands back to the ordinary stand once upright on both
+feet. A failed rise is retried (four attempts). Automated checks: all three
+rigs face up and face down (`judas_balance_step_harness getup`), 27 searched
+lying poses per facing, and 48 unsearched poses per facing (46/48 each; the
+misses are poses rolled 27 degrees onto a side, beyond the searched envelope).
+Not hand-tested.
 
 **Planet:** F4, Tab twice selects Anchor; P/wait/B. The real radial field is
 sampled at each physical body. This scene explicitly authors planted orientation

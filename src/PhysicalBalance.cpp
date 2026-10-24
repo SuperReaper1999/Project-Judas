@@ -22,6 +22,8 @@ bool ValidBalanceDefinition(const BalanceDefinition& definition,std::string& err
     const float values[]={settings.stiffness,settings.damping,settings.maxTorque,settings.positionResponse,settings.velocityResponse,settings.maximumLean,settings.standingHeight,settings.standingTolerance,settings.standingSpeed,settings.settleSeconds,settings.attemptSeconds,settings.referenceSeconds,settings.gravityCoherence,settings.stepTrigger,settings.stepReach,settings.stepHeight,settings.stepSeconds,settings.touchdownTolerance,settings.transferLoadFraction,settings.transferRadiusFraction,settings.transferSeconds};
     for(float value:values)if(!std::isfinite(value)||value<=0)return reject("balance gains, dimensions and deadlines must be finite and positive");
     if(settings.stiffness>10000||settings.damping>1000||settings.maxTorque>10000||settings.maximumLean>1||settings.gravityCoherence>1||settings.attemptSeconds>120||settings.maximumSteps>8||settings.stepReach>3||settings.stepHeight>2)return reject("balance configuration exceeds bounded control envelope");
+    for(const auto* keys:{&settings.getUpFaceUp,&settings.getUpFaceDown})for(const auto& key:*keys)if(!std::isfinite(key.seconds)||key.seconds<=0||key.seconds>5||!(std::abs(key.hip)<=180)||!(std::abs(key.knee)<=180)||!(std::abs(key.ankle)<=180))return reject("invalid bounded get-up keys");
+    if(!std::isfinite(settings.getUpUpright)||settings.getUpUpright<=0||settings.getUpUpright>=1||!std::isfinite(settings.getUpPatience)||settings.getUpPatience<0||settings.getUpPatience>30||settings.getUpAttempts<1||settings.getUpAttempts>8)return reject("invalid bounded get-up assessment");
     if(settings.transferLoadFraction>1||settings.transferRadiusFraction>1||settings.transferSeconds>10)return reject("invalid bounded physical load transfer settings");
     if(settings.positionResponse>10||settings.velocityResponse>10||settings.standingHeight>10||settings.standingTolerance>2||settings.standingSpeed>10||settings.settleSeconds>30||settings.referenceSeconds>60||settings.stepSeconds>10||settings.touchdownTolerance>2)return reject("balance dimensions, response and history exceed bounded envelope");
     if(!std::isfinite(settings.legLeanFraction)||!std::isfinite(settings.trunkLeanFraction)||settings.legLeanFraction<0||settings.legLeanFraction>1||settings.trunkLeanFraction<0||settings.trunkLeanFraction>1||!std::isfinite(settings.plantedOrientationWeight)||settings.plantedOrientationWeight<0||settings.plantedOrientationWeight>1)return reject("invalid authored hip/ankle lean fractions");
@@ -68,6 +70,13 @@ std::string SerializeBalanceDefinition(const BalanceDefinition& definition){
     j["transferRadiusFraction"]=s.transferRadiusFraction;
     j["transferSeconds"]=s.transferSeconds;
     j["maximumSteps"]=s.maximumSteps;
+    {const BalanceSettings defaults;auto keysJson=[](const std::array<BalanceGetUpKey,3>& keys){BalanceJson a=BalanceJson::array();for(const auto& k:keys)a.push_back({k.seconds,k.hip,k.knee,k.ankle});return a;};
+     auto same=[](const std::array<BalanceGetUpKey,3>& a,const std::array<BalanceGetUpKey,3>& b){for(size_t i=0;i<a.size();++i)if(a[i].seconds!=b[i].seconds||a[i].hip!=b[i].hip||a[i].knee!=b[i].knee||a[i].ankle!=b[i].ankle)return false;return true;};
+     if(!same(s.getUpFaceUp,defaults.getUpFaceUp))j["getUpFaceUp"]=keysJson(s.getUpFaceUp);
+     if(!same(s.getUpFaceDown,defaults.getUpFaceDown))j["getUpFaceDown"]=keysJson(s.getUpFaceDown);
+     if(s.getUpUpright!=defaults.getUpUpright)j["getUpUpright"]=s.getUpUpright;
+     if(s.getUpPatience!=defaults.getUpPatience)j["getUpPatience"]=s.getUpPatience;
+     if(s.getUpAttempts!=defaults.getUpAttempts)j["getUpAttempts"]=s.getUpAttempts;}
     j["includeLayers"]=s.query.includeLayers;j["excludeLayers"]=s.query.excludeLayers;j["requiredTags"]=s.query.requiredTags;j["excludedTags"]=s.query.excludedTags;
     for(unsigned f=0;f<2;++f){const auto& c=definition.chains[f];const auto& e=s.effectors[f];BalanceJson v={{"upper",c.upper},{"lower",c.lower},{"foot",c.foot},{"contactOffset",VectorJson(e.contactOffset)},{"halfExtents",VectorJson(e.halfExtents)},{"normalAcceptance",e.normalAcceptance},{"patches",BalanceJson::array()}};for(const auto& p:e.patches)v["patches"].push_back({{"offset",VectorJson(p.offset)},{"normal",VectorJson(p.normal)},{"radius",p.radius}});j["chains"].push_back(std::move(v));}
     return j.dump();
@@ -85,6 +94,10 @@ bool ParseBalanceDefinition(const std::string& text,BalanceDefinition& output,st
         s.plantedOrientationWeight=j.value("plantedOrientationWeight",s.plantedOrientationWeight);
         s.standingHeight=j.value("standingHeight",s.standingHeight);
         s.captureStepping=j.value("captureStepping",s.captureStepping);
+        for(auto [name,keys]:{std::pair{"getUpFaceUp",&s.getUpFaceUp},std::pair{"getUpFaceDown",&s.getUpFaceDown}})if(j.contains(name)){const auto& a=j.at(name);if(!a.is_array()||a.size()!=keys->size())throw std::runtime_error("get-up keys require three [seconds,hip,knee,ankle] entries");for(size_t i=0;i<keys->size();++i){const auto& k=a.at(i);if(!k.is_array()||k.size()!=4)throw std::runtime_error("get-up key requires [seconds,hip,knee,ankle]");(*keys)[i]={k.at(0).get<float>(),k.at(1).get<float>(),k.at(2).get<float>(),k.at(3).get<float>()};}}
+        s.getUpUpright=j.value("getUpUpright",s.getUpUpright);
+        s.getUpPatience=j.value("getUpPatience",s.getUpPatience);
+        s.getUpAttempts=j.value("getUpAttempts",s.getUpAttempts);
         s.standingTolerance=j.value("standingTolerance",s.standingTolerance);
         s.standingSpeed=j.value("standingSpeed",s.standingSpeed);
         s.settleSeconds=j.value("settleSeconds",s.settleSeconds);
@@ -134,10 +147,10 @@ bool PhysicalBalanceController::Request(PhysicsWorld& world,BalanceTask task,boo
     if(m_bodies.empty()||(task!=BalanceTask::Stand&&task!=BalanceTask::Recover)){error="balance task needs configured articulation and stand/recover intent";return false;}
     std::vector<glm::quat> initial(m_bodies.size(),glm::quat(1,0,0,0));
     for(size_t i=0;i<m_bodies.size();++i){if(!world.IsDynamicBody(m_bodies[i].body)||!world.IsBodyEnabled(m_bodies[i].body)){error="balance mapped body no longer available";return false;}if(i){JointState state;if(!world.GetJoint(m_bodies[i].joint,state)){error="balance mapped joint no longer available";return false;}initial[i]=glm::inverse(world.GetTransform(m_bodies[i].body).rotation)*world.GetTransform(m_bodies[m_bodies[i].parent].body).rotation;}}
-    m_waitingForSample=false;m_captureStanceReady=false;m_history={};m_history.task=task;m_history.progress=BalanceProgress::Executing;m_history.stepping=steps;m_history.effort=effort;m_history.initialTargets=std::move(initial);m_observation={};error.clear();return true;
+    m_waitingForSample=false;m_captureStanceReady=false;m_getUp=false;m_getUpAttempts=0;m_getUpReached=false;m_history={};m_history.task=task;m_history.progress=BalanceProgress::Executing;m_history.stepping=steps;m_history.effort=effort;m_history.initialTargets=std::move(initial);m_observation={};error.clear();return true;
 }
 void PhysicalBalanceController::Release(PhysicsWorld& world){JointAngularDrive disabled;for(size_t i=1;i<m_bodies.size();++i)world.SetJointAngularDrive(m_bodies[i].joint,disabled);}
-void PhysicalBalanceController::Cancel(PhysicsWorld& world){Release(world);m_history.progress=BalanceProgress::Cancelled;m_history.task=BalanceTask::None;m_history.swing=-1;m_history.reason="cancelled";m_observation={};}
+void PhysicalBalanceController::Cancel(PhysicsWorld& world){Release(world);m_getUp=false;m_history.progress=BalanceProgress::Cancelled;m_history.task=BalanceTask::None;m_history.swing=-1;m_history.reason="cancelled";m_observation={};}
 void PhysicalBalanceController::ShiftOrigin(glm::dvec3 delta){
     auto shift=[&](glm::vec3& p){p=glm::vec3(glm::dvec3(p)-delta);};
     shift(m_observation.com);
@@ -291,6 +304,7 @@ void PhysicalBalanceController::Prepare(PhysicsWorld& world,const std::vector<gl
     if(!m_history.postStepTargets.empty())m_history.postStepTime=std::min(m_history.postStepTime+dt,m_settings.stepSeconds);
     const unsigned priorLandings=m_history.landings;
     auto root=world.GetTransform(m_bodies[0].body);auto up=m_observation.up;
+    if(GetUp(world,up,dt)){if(m_history.progress==BalanceProgress::Executing&&m_history.elapsed>m_settings.attemptSeconds)Fail(world,"physical standing deadline exceeded");return;}
     if(!m_history.frameReady){m_history.rootReference=Align(root.rotation*m_settings.up,up,root.rotation*m_settings.forward)*root.rotation;m_history.frameReady=true;}
     BodyHandle carrier;for(const auto& support:m_observation.supports)if(support.contacts){carrier=support.body;break;}
     if(carrier.id!=m_history.frameSupport.id||carrier.world!=m_history.frameSupport.world){m_history.frameSupport=carrier;if(carrier.IsValid())m_history.supportReference=glm::inverse(world.GetTransform(carrier).rotation)*m_history.rootReference;}
@@ -370,5 +384,5 @@ void PhysicalBalanceController::PersistHistory(SaveArchive& a,const std::functio
     for(auto q:h.postStepTargets)a.Require(Quaternion(q),"invalid saved post-step reference rotation");
     a.Require(Quaternion(h.rootReference)&&Quaternion(h.supportReference),"invalid saved balance frame");
     a.Require(h.swing<0||(h.plannedSupport.IsValid()&&h.stanceSupport.IsValid()),"saved step lacks physical support references");
-    if(a.reading){m_observation={};m_waitingForSample=true;m_captureStanceReady=false;}
+    if(a.reading){m_observation={};m_waitingForSample=true;m_captureStanceReady=false;m_getUp=false;m_getUpAttempts=0;m_getUpReached=false;}
 }

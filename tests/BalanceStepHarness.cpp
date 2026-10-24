@@ -20,6 +20,7 @@
 #include <string>
 namespace {
 bool g_planet=false;
+glm::vec3 g_fallAxis(1,0,0); // lying pose: rotation axis of the authored fall
 constexpr float kPlanetRadius=100;
 struct Fixture {
  PhysicsWorld world;PhysicalBalanceController controller;BalanceSettings settings;
@@ -36,7 +37,7 @@ struct Fixture {
   if(slender){positions[0]={0,1.42f,0};positions[1]={-.4f,.87f,0};positions[2]={-.4f,.47f,0};positions[3]={-.4f,.12f,.08f};positions[4]={.4f,.87f,0};positions[5]={.4f,.47f,0};positions[6]={.4f,.12f,.08f};sizes[0]={.25f,.4f,.15f};sizes[3]=sizes[6]={.35f,.12f,.38f};const float lightMasses[]={10,3,2,2,3,2,2};std::copy(lightMasses,lightMasses+7,masses);}
   if(variant==2){positions[0]={0,1.35f,0};positions[1]={-.34f,1.0f,0};positions[2]={-.34f,.62f,0};positions[3]={-.34f,.28f,.06f};positions[4]={.34f,1.0f,0};positions[5]={.34f,.62f,0};positions[6]={.34f,.28f,.06f};sizes[0]={.28f,.24f,.18f};sizes[1]=sizes[4]={.1f,.18f,.1f};sizes[2]=sizes[5]={.08f,.2f,.08f};sizes[3]=sizes[6]={.28f,.28f,.33f};const float differentMasses[]={3.5f,1.5f,.75f,12,1.5f,.75f,9};std::copy(differentMasses,differentMasses+7,masses);}
 
-  auto rotation=glm::angleAxis(fallen,glm::vec3(1,0,0));float minimum=100;
+  auto rotation=glm::angleAxis(fallen,glm::normalize(g_fallAxis));float minimum=100;
   for(int i=0;i<7;i++){auto centre=rotation*(positions[i]-positions[0]);auto basis=glm::mat3_cast(rotation);for(int k=0;k<3;k++)basis[k]=glm::abs(basis[k]);minimum=std::min(minimum,centre.y-(basis*sizes[i]).y);}
   for(int i=0;i<7;i++){auto body=world.CreateShape(Shape::Box(sizes[i]),{frame*(rotation*(positions[i]-positions[0])+glm::vec3(0,-minimum+.02f,0)),frame*rotation},true,masses[i],.8f,0);mapping.push_back({body,{},parents[i],glm::quat(1,0,0,0)});}
   for(int i=1;i<7;i++){glm::vec3 point=positions[i];point.y+=(i==3||i==6)?(variant==2?.14f:.15f):(variant==2&&(i==1||i==4)?.18f:.2f);JointSettings j;j.type=(i==2||i==5)?JointType::Hinge:JointType::Ball;j.limits=true;j.lower=-2.7f;j.upper=2.7f;j.bodyA=mapping[i].body;j.bodyB=mapping[parents[i]].body;j.anchorA=point-positions[i];j.anchorB=point-positions[parents[i]];mapping[i].joint=world.CreateJoint(j);world.SetPairCollisionEnabled(j.bodyA,j.bodyB,false);}
@@ -73,7 +74,57 @@ Outcome Push(int rig,glm::vec3 impulse,bool allowSteps,bool trace){
 }
 void Report(const char* name,const Outcome& o){std::printf("%-22s standing %d landings %u lift %.3f moved %.3f minUp %.3f stand@%d reason %s\n",name,int(o.standing),o.landings,o.clearance,o.moved,o.minUp,o.standFrame,o.reason.c_str());}
 }
+// Get-up from lying face up / face down: settle passively, request recovery,
+// report whether and when measured standing is reached within the attempt.
+int GetUp(int rig){
+ int stood=0;
+ for(float fallen:{1.5708f,-1.5708f}){
+  Fixture f(fallen,glm::quat(1,0,0,0),true,false,rig);f.Advance(180,false);
+  f.controller.Request(f.world,BalanceTask::Recover,true,true,f.error);
+  int frame=-1;float bestUp=-1,bestHeight=0;
+  for(int k=0;k<960&&frame<0;k++){f.Advance(1);const auto& o=f.controller.Observation();bestUp=std::max(bestUp,o.upright);bestHeight=std::max(bestHeight,glm::dot(f.world.GetTransform(f.mapping[0].body).position,glm::vec3(0,1,0)));
+   if(std::getenv("BALANCE_TRACE_GETUP")&&k%15==0)std::printf("G %4d up %.3f h %.3f c %u/%u %s\n",k,o.upright,o.height,o.supports[0].contacts,o.supports[1].contacts,f.controller.History().reason.c_str());
+   if(f.controller.History().progress==BalanceProgress::Succeeded)frame=k;}
+  std::printf("getup rig %d %s: %s at %.2f s, best upright %.3f, best root height %.3f, %s\n",rig,fallen>0?"face down":"face up",frame>=0?"stood":"FAILED",frame/60.f,bestUp,bestHeight,f.controller.History().reason.c_str());
+  stood+=frame>=0;
+ }
+ return stood;
+}
+// Searches get-up keyframes for one facing through the real controller over
+// every rig and a spread of lying poses (fall angle and tilted fall axis).
+struct GetUpCase{int rig;float angle;glm::vec3 axis;};
+std::vector<GetUpCase> GetUpCases(bool faceUp){std::vector<GetUpCase> c;const float s=faceUp?-1:1;
+ for(int rig=0;rig<3;++rig)for(float a:{1.35f,1.5708f,1.8f})for(glm::vec3 axis:{glm::vec3(1,0,0),glm::vec3(1,0,.35f),glm::vec3(1,0,-.35f)})c.push_back({rig,s*a,axis});
+ return c;}
+float GetUpScore(bool faceUp,const std::array<BalanceGetUpKey,3>& keys,const std::vector<GetUpCase>& cases,int* stood=nullptr,bool print=false){
+ float score=0;int count=0;
+ for(const auto& c:cases){g_fallAxis=c.axis;Fixture f(c.angle,glm::quat(1,0,0,0),true,false,c.rig);(faceUp?f.settings.getUpFaceUp:f.settings.getUpFaceDown)=keys;f.controller.Configure(f.world,f.mapping,f.settings,f.error);
+  f.Advance(180,false);f.controller.Request(f.world,BalanceTask::Recover,true,true,f.error);int frame=-1;
+  for(int k=0;k<960&&frame<0&&f.controller.History().progress==BalanceProgress::Executing;k++){f.Advance(1);if(f.controller.History().progress==BalanceProgress::Succeeded)frame=k;}
+  if(frame<0&&f.controller.History().progress==BalanceProgress::Succeeded)frame=959;
+  if(print)std::printf("  rig %d angle %.2f axis %.2f,%.2f,%.2f: %s %.2f s %s\n",c.rig,c.angle,c.axis.x,c.axis.y,c.axis.z,frame>=0?"stood":"FAILED",frame/60.f,f.controller.History().reason.c_str());
+  if(frame>=0){++count;score+=1+.02f*(16-frame/60.f);}}
+ g_fallAxis={1,0,0};if(stood)*stood=count;return score;
+}
+void GetUpSearch(bool faceUp,int trials,unsigned seed){
+ std::srand(seed);auto u=[](float a,float b){return a+(b-a)*float(std::rand())/float(RAND_MAX);};
+ const auto cases=GetUpCases(faceUp);BalanceSettings defaults;auto best=faceUp?defaults.getUpFaceUp:defaults.getUpFaceDown;int stood=0;float bestScore=GetUpScore(faceUp,best,cases,&stood);
+ std::printf("start score %.3f stood %d/%zu\n",bestScore,stood,cases.size());
+ for(int t=0;t<trials;++t){auto keys=best;
+  if(t%4==3){for(auto& k:keys){k.seconds=u(.15f,1.5f);k.hip=u(-30,170);k.knee=u(-160,10);k.ankle=u(-90,90);}}
+  else{const float r=t%4==0?25:8;for(auto& k:keys){k.seconds=std::clamp(k.seconds+u(-.2f,.2f),.1f,2.f);k.hip=std::clamp(k.hip+u(-r,r),-60.f,175.f);k.knee=std::clamp(k.knee+u(-r,r),-170.f,20.f);k.ankle=std::clamp(k.ankle+u(-r,r),-110.f,110.f);}}
+  float s=GetUpScore(faceUp,keys,cases,&stood);
+  if(s>bestScore){bestScore=s;best=keys;std::printf("trial %d score %.3f stood %d/%zu :",t,s,stood,cases.size());for(const auto& k:keys)std::printf(" {%.2ff,%.2ff,%.2ff,%.2ff}",k.seconds,k.hip,k.knee,k.ankle);std::printf("\n");std::fflush(stdout);}}
+}
+// Held-out lying poses the search never sees: "gtest up|down <12 key values>".
+std::vector<GetUpCase> HeldOutCases(bool faceUp){std::vector<GetUpCase> c;const float s=faceUp?-1:1;
+ for(int rig=0;rig<3;++rig)for(float a:{1.25f,1.45f,1.68f,1.9f})for(glm::vec3 axis:{glm::vec3(1,0,.2f),glm::vec3(1,0,-.2f),glm::vec3(1,0,.5f),glm::vec3(1,0,-.5f)})c.push_back({rig,s*a,axis});
+ return c;}
 int main(int argc,char** argv){
+ if(argc>14&&!std::strcmp(argv[1],"gtest")){bool up=!std::strcmp(argv[2],"up");std::array<BalanceGetUpKey,3> k;for(int i=0;i<3;i++)k[i]={float(std::atof(argv[3+4*i])),float(std::atof(argv[4+4*i])),float(std::atof(argv[5+4*i])),float(std::atof(argv[6+4*i]))};int n=0;float sc=GetUpScore(up,k,HeldOutCases(up),&n,std::getenv("GTEST_PRINT")!=nullptr);std::printf("HELDOUT %d/48 score %.3f\n",n,sc);return 0;}
+ if(argc>4&&!std::strcmp(argv[1],"gsearch")){GetUpSearch(!std::strcmp(argv[2],"up"),std::atoi(argv[3]),unsigned(std::atoi(argv[4])));return 0;}
+ if(argc>2&&!std::strcmp(argv[1],"gcases")){BalanceSettings d;int n=0;bool up=!std::strcmp(argv[2],"up");GetUpScore(up,up?d.getUpFaceUp:d.getUpFaceDown,GetUpCases(up),&n,true);std::printf("STOOD %d/27\n",n);return 0;}
+ if(argc>1&&!std::strcmp(argv[1],"getup")){int total=0;for(int rig=0;rig<3;++rig)total+=GetUp(rig);std::printf("GETUP %d/6\n",total);return total==6?0:1;}
  g_capture=argc>1&&!std::strcmp(argv[1],"capture");const int rig=argc>2?std::atoi(argv[2]):1;const float impulse=argc>3?float(std::atof(argv[3])):29.f;
  const bool trace=std::getenv("BALANCE_TRACE")!=nullptr;g_planet=std::getenv("HARNESS_PLANET")!=nullptr;
  std::printf("controller %s rig %d impulse %.1f planet %d mk2 %d sweeps %s\n",g_capture?"capture":"legacy",rig,impulse,int(g_planet),PhysicsWorld::Mk2Selected(),std::getenv("JUDAS_VALIDATION_VELOCITY_ITERATIONS")?std::getenv("JUDAS_VALIDATION_VELOCITY_ITERATIONS"):"default");
