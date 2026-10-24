@@ -292,9 +292,16 @@ void DeformableInstance::Attach(double h,double fraction,PhysicsWorld& physics,c
             // prior sampled anchor, independently of prescribed target motion.
             double priorFraction=fraction-1./settings.substeps;
             V priorDestination=target(t.previous,local)*(1-priorFraction)+target(t.current,local)*priorFraction;
+            // Action and reaction share one point. Applying the body's
+            // reaction at the anchor while the node lags it made every drifted
+            // pin a couple (node-anchor) x impulse that no real force produces
+            // (a driven rover's arms pitched it nose-up by about 2 kN m). A
+            // node's velocity is (x-start)/h, so its momentum acts at start.
+            // The drift bias still pulls the node back to its anchor.
+            const V point=start[n];
             for(int axis=0;axis<3;++axis){V normal(0);normal[axis]=1;
-                V relative=(positions[n]-start[n])/h-pointVelocity(physics,t.body,destination);
-                double den=inverseMass[n]+effective(physics,t.body,destination,normal);
+                V relative=(positions[n]-start[n])/h-pointVelocity(physics,t.body,point);
+                double den=inverseMass[n]+effective(physics,t.body,point,normal);
                 if(den<=0)continue;
                 double impulse=-(relative[axis]+.1*(start[n]-priorDestination)[axis]/h)/den;
                 positions[n]+=normal*inverseMass[n]*impulse*h;
@@ -303,11 +310,11 @@ void DeformableInstance::Attach(double h,double fraction,PhysicsWorld& physics,c
                 // lever arm. Preserve that same arm for the actual reaction;
                 // rounding an absolute world point to float before subtracting
                 // the COM would alter a small patch's torque at large origins.
-                const V arm=destination-V(physics.GetCenterOfMass(t.body));
+                const V arm=point-V(physics.GetCenterOfMass(t.body));
                 physics.ApplyLinearImpulse(t.body,glm::vec3(reaction));
                 physics.ApplyAngularImpulse(t.body,glm::vec3(glm::cross(arm,reaction)));
                 attachmentImpulse[a]+=reaction;
-                attachmentMoment[a]+=glm::cross(destination-centre,reaction);
+                attachmentMoment[a]+=glm::cross(point-centre,reaction);
             }
         }
     }

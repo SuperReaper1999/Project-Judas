@@ -67,6 +67,30 @@ int main(){
     for(int i=0;i<60;++i){auto oldPose=physics.GetTransform(carrier);physics.Step(1.f/60);auto newPose=physics.GetTransform(carrier);carrierTarget.previous=glm::translate(glm::dmat4(1),glm::dvec3(oldPose.position))*glm::mat4_cast(glm::dquat(oldPose.rotation));carrierTarget.current=glm::translate(glm::dmat4(1),glm::dvec3(newPose.position))*glm::mat4_cast(glm::dquat(newPose.rotation));supported.Step(1./60,physics,zero,{carrierTarget});auto omega=physics.GetAngularVelocity(carrier);double energy=physics.GetMass(carrier)*.5*glm::dot(physics.GetLinearVelocity(carrier),physics.GetLinearVelocity(carrier))+.5*glm::dot(omega,physics.GetInertiaWorld(carrier)*omega);for(size_t n=0;n<pinSheet->nodes.size();++n)energy+=.5*pinSheet->measures[n]*carried.material.density*glm::dot(supported.velocities[n],supported.velocities[n]);carrierEnergy=std::max(carrierEnergy,energy);}
     std::printf("DYNAMIC_ATTACHMENT max_energy=%.9g carrier_speed=%.9g\n",carrierEnergy,glm::length(physics.GetLinearVelocity(carrier)));check(glm::length(physics.GetLinearVelocity(carrier))>.001f,"free rigid support receives finite cloth attachment reaction");check(carrierEnergy<.04&&supported.error.empty(),"unforced dynamic attachment remains in bounded energy envelope");physics.DestroyBody(carrier);
 
+    // A drifted pin (node away from its body anchor) must not create angular
+    // momentum: the node's impulse and the body's reaction act at one point.
+    // (Before the fix the change was about half of drift x reaction.)
+    // Free rigid body, free solid, no gravity; the patch starts 0.3 m off its
+    // anchors and carries a load from the material's own initial motion.
+    {auto body=physics.CreateDynamicBox({0,2,0},{.1f,.1f,.1f},2,0,0);DeformableSettings free;free.material.damping=0;free.material.density=50;free.selfContact=false;
+     DeformableAttachment pin;pin.group="left";pin.kind=DeformableAttachment::Kind::Body;pin.target=1;pin.offset={0,-1.7,.2};free.attachments={pin};
+     DeformableInstance arm;arm.Initialize(block,free,glm::dmat4(1),30);arm.Impulse("",{0,0,3});
+     DeformableTarget target;target.valid=true;target.body=body;const auto pose=physics.GetTransform(body);
+     target.previous=target.current=glm::translate(glm::dmat4(1),glm::dvec3(pose.position))*glm::mat4_cast(glm::dquat(pose.rotation));
+     double nodeMass=0;for(size_t n=0;n<block->nodes.size();++n)nodeMass+=block->measures[n]*free.material.density;
+     const auto angular=[&]{glm::dvec3 l=glm::dvec3(glm::cross(physics.GetCenterOfMass(body),physics.GetLinearVelocity(body)))*double(physics.GetMass(body))+glm::dvec3(physics.GetInertiaWorld(body)*physics.GetAngularVelocity(body));
+      for(size_t n=0;n<block->nodes.size();++n)l+=glm::cross(arm.positions[n],arm.velocities[n])*block->measures[n]*free.material.density;return l;};
+     const auto before=angular();arm.Step(1./60,physics,zero,{target});const auto after=angular();
+     double reaction=glm::length(glm::dvec3(physics.GetLinearVelocity(body)))*physics.GetMass(body);
+     std::printf("DRIFTED_PIN angular_before=%.9g,%.9g,%.9g after=%.9g,%.9g,%.9g body_impulse=%.9g\n",before.x,before.y,before.z,after.x,after.y,after.z,reaction);
+     check(std::abs(nodeMass-arm.Mass())<1e-9*arm.Mass(),"lumped node masses match the material mass");
+     // The material's own projection keeps angular momentum only to second
+     // order (about 2e-4 of a spinning block's per step), so the bound is 1% of
+     // the couple an anchor-applied reaction makes: |drift| x |reaction|.
+     const double couple=glm::length(glm::dvec3(0,.3,.2))*reaction;
+     check(reaction>.1&&glm::length(after-before)<.01*couple,"drifted body attachment adds no spurious couple");
+     physics.DestroyBody(body);}
+
 
     // Independent small specimen loads: compression, bending and a zero-net-force
     // twisting couple. All change physical forces, never rest geometry.
