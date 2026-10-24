@@ -1,0 +1,70 @@
+{
+  "algorithm": "sha256",
+  "scope": "Final task implementation, validation configuration and current documentation; evidence is separate. SDK binaries are the independently qualified clean-source 8c903df checkpoint; the final checkpoint updates documentation/evidence only.",
+  "files": [
+    {
+      "path": "CMakeLists.txt",
+      "sha256": "43e95a90ade9653c5bce0d51f2f022538b0eb496e7e48367221aa6d711dbf785"
+    },
+    {
+      "path": "docs/MK2_PHYSICS_ARCHITECTURE.md",
+      "sha256": "f674d2c2bf6399b3213fac2abbf144ee3dead870c55f2cd812e9bcabc2daf99a"
+    },
+    {
+      "path": "docs/MODEL_IMPORT.md",
+      "sha256": "4172ebc4f9b3e57fc40ba134cd23a2a0b95628a9b6c5d8a840ed7c1d2f288b94"
+    },
+    {
+      "path": "docs/PREALPHA.md",
+      "sha256": "bf1acdf3a16ded26e656fa99641a3fcc23b54c9ec27cca273ed70409072bb87b"
+    },
+    {
+      "path": "docs/PREALPHA_FINDINGS.json",
+      "sha256": "49256025692c1df8547c9474211e3948029abaf6c495b241a8a71709ad6a32fb"
+    },
+    {
+      "path": "docs/PREALPHA_FINDINGS.md",
+      "sha256": "877019f7d5ab505646f1a0995c4168001323f4de5b4b361409f09deec35316ba"
+    },
+    {
+      "path": "docs/PREALPHA_LINUX_READINESS.md",
+      "sha256": "0c85afc7911a19e46f65947c87147c2144b63d191ed1668817308286a19a7111"
+    },
+    {
+      "path": "src/PhysicsWorld.cpp",
+      "sha256": "6861cdaf7740f9a880ce1a9fc82db6a8475ff8e1e3e3759a446a9267cc31b2ff"
+    },
+    {
+      "path": "src/PhysicsWorld.h",
+      "sha256": "9e5bd1d479824f1c01d80462018eaa4451da0a7df6026b75e7baa07c2b2e4142"
+    },
+    {
+      "path": "src/editor/EditorApplication.cpp",
+      "sha256": "ff1fff1bd93b2ad460ee41579299a0e8c6cec82282a45a8da57ab203f75dfcfe"
+    },
+    {
+      "path": "src/editor/EditorPanels.cpp",
+      "sha256": "0ceae1feb65261cdbab5a30c515b05fd5b86eba750f9a3754c6cb8790aa012b4"
+    },
+    {
+      "path": "src/physics/WorldMk2Solver.cpp",
+      "sha256": "d3e354aeeb385b52bed7e647cdc5109031f97dfd7de69fd13e4d519e8cd226ce"
+    },
+    {
+      "path": "tests/Mk2DiagnosticsTests.cpp",
+      "sha256": "ad9a50bec589078e577e7f84a27d39be71845aa383450a39bf2b25622e1efdf6"
+    },
+    {
+      "path": "tools/ModelImportCli.cpp",
+      "sha256": "62513ef57422bad910d8395223a11ab282a37960eb9a3137a98b21bbc8ecbe36"
+    },
+    {
+      "path": "tools/validation/suites.json",
+      "sha256": "5f7293aaec5018e06d763bb70da271cf8418249c8c0213799f8d0d11c80ed06d"
+    },
+    {
+      "path": "tools/verification/current-docs.json",
+      "sha256": "cd52138cd410b02b58fbc8ba6c4577a3c78ae9951d344fc42e5ff0dcdb352561"
+    }
+  ]
+}

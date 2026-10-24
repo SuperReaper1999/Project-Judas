@@ -1,0 +1,8 @@
+Shadow maps: on
+Graphics: 3.3.0 NVIDIA 580.178.04 / NVIDIA GeForce GTX 970/PCIe/SSE2
+Renderer fragment texture units: 32 (material path uses 12)
+Project: Confined elastic body probe (/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-linux-readiness/energy-project/game.judasproj)
+Scene: Elastic confinement (/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-linux-readiness/energy-project/Scenes/main.judas)
+World origin (m): 0.000, 0.000, 0.000
+step,time,posX,posY,posZ,upX,upY,upZ,grounded,velX,velY,velZ,gravX,gravY,gravZ,controlled,frame,steps,paused,obj0PosX,obj0PosY,obj0PosZ,obj0VelX,obj0VelY,obj0VelZ
+JS: ENERGY_ENDPOINT {"v":{"x":-23.64301300048828,"y":0,"z":0},"w":{"x":0,"y":0,"z":-803.0340576171875},"q":{"x":0,"y":0,"z":0.9503774046897888,"w":0.31109946966171265}}

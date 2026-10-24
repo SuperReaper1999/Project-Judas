@@ -6,9 +6,8 @@ verified corrections awaiting their own human acceptance.
 
 ## Accepted baseline
 
-The operator accepted MK2, including MK1 removal, at
-`c859901cc9a52cf5b7104887f56b5e7ad4269b1d`. Project Settings/basic water were also
-human-tested before integration. MK2 is the sole production solver, including
+The operator accepted MK2, including MK1 removal, then accepted the project/water
+and editor corrections at `0aaef603b0347a55350a81beff896cff21d914bf`. MK2 is the sole production solver, including
 coupled work. See [the current contract](MK2_PHYSICS_ARCHITECTURE.md).
 
 ## Current correction work
@@ -16,7 +15,9 @@ coupled work. See [the current contract](MK2_PHYSICS_ARCHITECTURE.md).
 The [final Pre-Alpha corrections](PREALPHA_FINAL_CORRECTIONS.md) address disabled-
 fluid admission, streaming/export consistency, project-document protection,
 explicit saved-content export, current validation and editor onboarding.
-Experimental pushes are automated qualification, not a new human acceptance.
+The follow-up [Linux readiness report](PREALPHA_LINUX_READINESS.md) records MK2
+diagnostics, fresh SDK/tool qualification and cross-system tests. Experimental
+pushes are automated qualification, not a new human acceptance.
 The tracked [finding register](PREALPHA_FINDINGS.md) distinguishes remaining limits.
 
 Start with [your first project](FIRST_PROJECT.md), [the editor guide](EDITOR_GUIDE.md),
@@ -26,13 +27,15 @@ Start with [your first project](FIRST_PROJECT.md), [the editor guide](EDITOR_GUI
 ## Remaining readiness concerns
 
 - Selected Linux native/editor/game checks do not certify every engine feature.
-- Current MK2 Windows/Android/hardware combinations require their own qualification;
+- Windows/Android qualification is explicitly deferred by the operator;
   historical platform receipts apply to their recorded source. Windows VM timing
   remains diagnostic, not a physical-host performance gate.
 - Advanced fluid dynamics remain default-off and experimental. FLU-001 and the
   retained half-turn sampling issue are not silently reclassified as passes.
 - Replication, physical charts, regional suspension, terrain edits and migrations
   retain explicit supported subsets. No universal compatibility promise is made.
+- High-rate elastic spinning confinement has a newly preserved energy failure;
+  its root mechanism remains open. See the Linux readiness report.
 - Dense MK2 performance is workload-dependent. Do not apply the retired MK1
   event-cascade diagnosis or old pending benchmark status to current MK2.
 

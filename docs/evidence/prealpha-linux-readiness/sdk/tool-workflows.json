@@ -1,0 +1,250 @@
+[
+  {
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-linux-readiness/sdk-final/judas_scene_author",
+      "--validate",
+      "project",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-linux-readiness/sdk-final-game/SDK_First_Game.judasproj"
+    ],
+    "exit": 0,
+    "expected": 0,
+    "seconds": 0.005494322002050467,
+    "stdout": "valid project /home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-linux-readiness/sdk-final-game/SDK_First_Game.judasproj\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-linux-readiness/sdk-final/judas_scene_author",
+      "--validate",
+      "scene",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-linux-readiness/sdk-final-game/Scenes/main.judas"
+    ],
+    "exit": 0,
+    "expected": 0,
+    "seconds": 0.004887357001280179,
+    "stdout": "valid scene /home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-linux-readiness/sdk-final-game/Scenes/main.judas\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-linux-readiness/sdk-final/judas_scene_author",
+      "--create",
+      "ui",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-linux-readiness/sdk-final-workflows/menu.judasui"
+    ],
+    "exit": 0,
+    "expected": 0,
+    "seconds": 0.0063532919994031545,
+    "stdout": "wrote /home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-linux-readiness/sdk-final-workflows/menu.judasui\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-linux-readiness/sdk-final/judas_scene_author",
+      "--validate",
+      "ui",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-linux-readiness/sdk-final-workflows/menu.judasui"
+    ],
+    "exit": 0,
+    "expected": 0,
+    "seconds": 0.00585845900059212,
+    "stdout": "valid ui /home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-linux-readiness/sdk-final-workflows/menu.judasui\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-linux-readiness/sdk-final/judas_script_check",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-linux-readiness/sdk-final-game/SDK_First_Game.judasproj"
+    ],
+    "exit": 0,
+    "expected": 0,
+    "seconds": 0.01811542499854113,
+    "stdout": "1 registered script modules; 0 compile/link failures (maximum 128 reported). No project code executed.\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-linux-readiness/sdk-final/judas_script_check",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-linux-readiness/sdk-final-game/SDK_First_Game.judasproj"
+    ],
+    "exit": 1,
+    "expected": 1,
+    "seconds": 0.007223863998660818,
+    "stdout": "1 registered script modules; 1 compile/link failures (maximum 128 reported). No project code executed.\n",
+    "stderr": "Assets/game.js: SyntaxError: Unexpected identifier 'invalid'\n    at Assets/game.js:1:47\n\n"
+  },
+  {
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-linux-readiness/sdk-final/judas_script_check",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-linux-readiness/sdk-final-game/SDK_First_Game.judasproj"
+    ],
+    "exit": 0,
+    "expected": 0,
+    "seconds": 0.007027063002169598,
+    "stdout": "1 registered script modules; 0 compile/link failures (maximum 128 reported). No project code executed.\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-linux-readiness/sdk-final/judas_script_check",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-linux-readiness/sdk-final-workflows/missing.judasproj"
+    ],
+    "exit": 2,
+    "expected": 2,
+    "seconds": 0.0043063610028184485,
+    "stdout": "",
+    "stderr": "Project: could not open project file: /home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-linux-readiness/sdk-final-workflows/missing.judasproj\n"
+  },
+  {
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-linux-readiness/sdk-final/judas_save",
+      "identity",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-linux-readiness/sdk-final-game/SDK_First_Game.judasproj"
+    ],
+    "exit": 0,
+    "expected": 0,
+    "seconds": 0.005060021998360753,
+    "stdout": "{\n  \"compatibility\": \"\",\n  \"content\": \"d87e3b4cbbc1bd63f20abb1e10436a159e438bb93ccf70c8c55f3074b40ba3e4\",\n  \"version\": 0\n}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-linux-readiness/sdk-final/judas_model_import_cli",
+      "--create",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-linux-readiness/sdk-final-game/SDK_First_Game.judasproj",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-linux-readiness/sdk-final-workflows/triangle.obj",
+      "Assets/triangle.judasmodel"
+    ],
+    "exit": 0,
+    "expected": 0,
+    "seconds": 0.01281519799886155,
+    "stdout": "{\n  \"error\": \"\",\n  \"recipe\": \"/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-linux-readiness/sdk-final-game/Imports/triangle.judasimport\",\n  \"success\": true\n}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-linux-readiness/sdk-final/judas_model_import_cli",
+      "--recipe",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-linux-readiness/sdk-final-game/Imports/triangle.judasimport"
+    ],
+    "exit": 0,
+    "expected": 0,
+    "seconds": 0.018411873999866657,
+    "stdout": "{\n  \"assetId\": \"a73f05f30283799563b34ca44d6a9b91\",\n  \"decodedProducts\": 0,\n  \"diagnostics\": [],\n  \"error\": \"\",\n  \"hierarchyNodes\": 0,\n  \"output\": \"/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-linux-readiness/sdk-final-game/Assets/triangle.judasmodel\",\n  \"paletteEntries\": 0,\n  \"parts\": 1,\n  \"receiptHit\": false,\n  \"sourceBones\": 0,\n  \"sourceUnitMeters\": 1.0,\n  \"success\": true,\n  \"unchanged\": false,\n  \"vertices\": 3\n}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-linux-readiness/sdk-final/judas_model_import_cli",
+      "--inspect",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-linux-readiness/sdk-final-game/Assets/triangle.judasmodel"
+    ],
+    "exit": 0,
+    "expected": 0,
+    "seconds": 0.013952212997537572,
+    "stdout": "{\n  \"clips\": [],\n  \"joints\": [],\n  \"materialDefaults\": [\n    {\n      \"alpha\": 0,\n      \"factor\": [\n        1.0,\n        1.0,\n        1.0,\n        1.0\n      ],\n      \"imageAlphaMax\": 0,\n      \"imageAlphaMin\": 255\n    }\n  ],\n  \"materials\": [\n    \"__default\"\n  ],\n  \"parts\": [\n    {\n      \"identity\": \"sdk_triangle/material/__default\",\n      \"material\": 0,\n      \"ordinal\": 0,\n      \"triangles\": 1\n    }\n  ]\n}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-linux-readiness/sdk-final/judas_cook",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-linux-readiness/sdk-final-game/Assets/triangle.judasmodel",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-linux-readiness/sdk-final-workflows/triangle.judasmesh"
+    ],
+    "exit": 0,
+    "expected": 0,
+    "seconds": 0.018515518997446634,
+    "stdout": "Cooked /home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-linux-readiness/sdk-final-workflows/triangle.judasmesh\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-linux-readiness/sdk-final/judas_volume_author",
+      "create",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-linux-readiness/sdk-final-game/Assets/soil.judasvolume",
+      "9",
+      "9",
+      "9",
+      "8",
+      "8",
+      "8"
+    ],
+    "exit": 0,
+    "expected": 0,
+    "seconds": 0.016045710999605944,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-linux-readiness/sdk-final/judas_volume_author",
+      "validate",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-linux-readiness/sdk-final-game/Assets/soil.judasvolume"
+    ],
+    "exit": 0,
+    "expected": 0,
+    "seconds": 0.005800478997116443,
+    "stdout": "valid volume 729 samples\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-linux-readiness/sdk-final/judas_volume_author",
+      "brush",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-linux-readiness/sdk-final-game/Assets/soil.judasvolume",
+      "remove",
+      "0",
+      "0",
+      "0",
+      "2",
+      "1"
+    ],
+    "exit": 0,
+    "expected": 0,
+    "seconds": 0.006034099998942111,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-linux-readiness/sdk-final/judas_volume_author",
+      "cook",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-linux-readiness/sdk-final-game/SDK_First_Game.judasproj",
+      "Assets/soil.judasvolume"
+    ],
+    "exit": 0,
+    "expected": 0,
+    "seconds": 0.020005007998406654,
+    "stdout": "volume cook 14.2029 ms / 214177 bytes\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-linux-readiness/sdk-final/judas_deformable_bake",
+      "sheet",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-linux-readiness/sdk-final-workflows/sheet.judasdeform",
+      "4",
+      "4",
+      "2",
+      "2",
+      "1"
+    ],
+    "exit": 0,
+    "expected": 0,
+    "seconds": 0.004000764998636441,
+    "stdout": "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-linux-readiness/sdk-final-workflows/sheet.judasdeform: 16 nodes 18 triangles 0 tetrahedra 16 render vertices\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-linux-readiness/sdk-final/judas_export",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-linux-readiness/sdk-final-game/SDK_First_Game.judasproj",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-linux-readiness/sdk-final-cli-export"
+    ],
+    "exit": 0,
+    "expected": 0,
+    "seconds": 0.2948540450015571,
+    "stdout": "Exported /home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-linux-readiness/sdk-final-cli-export: 4 assets, 1 scenes, 56874746 bytes, 0.280 seconds\n",
+    "stderr": ""
+  }
+]

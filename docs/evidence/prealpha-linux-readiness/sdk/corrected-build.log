@@ -1,0 +1,77 @@
+[  0%] Built target judas_icu_build
+[  0%] Built target judas_quickjs
+[ 11%] Built target freetype
+[ 17%] Built target judas_navigation_backend
+[ 17%] Built target judas_glad
+[ 17%] Built target judas_profiler
+[ 17%] Building CXX object CMakeFiles/judas_build_identity.dir/src/BuildIdentity.cpp.o
+[ 17%] Built target judas_app_icon
+[ 23%] Built target judas_meshoptimizer
+[ 23%] Built target judas_jobs
+[ 23%] Built target judas_audio_backend
+[ 23%] Built target harfbuzz
+[ 23%] Built target judas_ufbx
+[ 29%] Built target judas_imgui
+[ 35%] Built target judas_navigation_cook
+[ 35%] Built target judas_materials
+[ 35%] Linking CXX static library libjudas_build_identity.a
+[ 35%] Built target judas_build_identity
+[ 82%] Built target judas_engine
+[ 82%] Built target judas_navigation_baker
+[ 82%] Linking CXX executable judas_server
+[ 82%] Linking CXX executable judas_liquid_bake
+[ 82%] Built target judas_liquid_bake
+[ 82%] Built target judas_server
+[ 82%] Linking CXX executable judas_environment_bake
+[ 82%] Linking CXX executable judas_deformable_bake
+[ 82%] Built target judas_environment_bake
+[ 82%] Built target judas_deformable_bake
+[ 82%] Linking CXX executable judas_collision_cook
+[ 88%] Built target judas_model_import
+[ 88%] Linking CXX executable judas
+[ 88%] Built target judas_collision_cook
+[ 88%] Linking CXX executable judas_export
+[ 88%] Built target judas
+[ 88%] Linking CXX executable judas_cook
+[ 88%] Built target judas_export
+[ 88%] Linking CXX executable judas_script_check
+[ 88%] Built target judas_cook
+[ 88%] Linking CXX executable judas_save
+[ 88%] Built target judas_script_check
+[ 88%] Built target judas_save
+[ 88%] Building CXX object CMakeFiles/judas_model_import_cli.dir/tools/ModelImportCli.cpp.o
+[ 88%] Built target judas_world_authoring
+[ 88%] Linking CXX executable judas_navigation_bake
+[ 88%] Built target judas_navigation_bake
+[ 88%] Building CXX object CMakeFiles/judas_editor.dir/src/editor/EditorApplication.cpp.o
+[ 88%] Linking CXX executable judas_model_import_cli
+[ 88%] Built target judas_model_import_cli
+[ 88%] Linking CXX executable judas_scene_author
+[ 88%] Built target judas_scene_author
+[ 88%] Linking CXX executable judas_terrain_author
+[ 88%] Built target judas_terrain_author
+[ 88%] Linking CXX executable judas_mod
+[ 94%] Built target judas_mod
+[ 94%] Linking CXX executable judas_volume_author
+[ 94%] Built target judas_volume_author
+[ 94%] Linking CXX executable judas_editor
+[100%] Built target judas_editor
+{"build": {"architecture": "x86_64", "build_id": "0.1.0-prealpha-Experimental-8c903df-clean-434cb9ba4d4a", "channel": "Experimental", "compiler": "GNU", "compiler_version": "15.2.0", "configuration": "Release", "maturity": "pre-alpha", "platform": "Linux", "schema": 1, "source_dirty": false, "source_fingerprint": "434cb9ba4d4afe785066f634a7e44399f0ae5b75afc076c8d3e2c942d1443d4c", "source_origin": "git", "source_revision": "8c903dfcb80d743dc869609d9fa3eb4e659709ca", "source_tree": "32512cf98a6a9cc756efe4910d70ee944f8f2849", "source_untracked_count": 0, "source_untracked_fingerprint": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855", "version": "0.1.0-prealpha"}, "files": 232, "ok": true, "tools": 17}
+[100%] Built target judas_linux_sdk
+[  0%] Built target judas_icu_build
+[  0%] Built target judas_quickjs
+[ 15%] Built target freetype
+[ 15%] Built target judas_glad
+[ 23%] Built target judas_navigation_backend
+[ 23%] Built target judas_profiler
+[ 23%] Built target judas_build_identity
+[ 23%] Built target judas_app_icon
+[ 30%] Built target judas_meshoptimizer
+[ 30%] Built target judas_jobs
+[ 30%] Built target judas_audio_backend
+[ 30%] Built target harfbuzz
+[ 38%] Built target judas_navigation_cook
+[ 38%] Built target judas_materials
+[100%] Built target judas_engine
+[100%] Linking CXX executable judas_mk2_diagnostics_tests
+[100%] Built target judas_mk2_diagnostics_tests

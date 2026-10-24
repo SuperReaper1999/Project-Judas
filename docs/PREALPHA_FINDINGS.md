@@ -1,14 +1,14 @@
 # Current Pre-Alpha finding dispositions
 
-Accepted baseline: `c859901cc9a52cf5b7104887f56b5e7ad4269b1d`. MK2 is production physics.
+Accepted baseline: `0aaef603b0347a55350a81beff896cff21d914bf`. MK2 is production physics.
 Experimental corrections require their own human acceptance. Original quotes and the previous register hash remain in [JSON](PREALPHA_FINDINGS.json).
-This reconciles all 54 original findings. Fresh checks and explicit carried limitations are documented in [the correction report](PREALPHA_FINAL_CORRECTIONS.md).
+This reconciles all 54 original findings. Current Linux results and remaining limitations are documented in [the readiness report](PREALPHA_LINUX_READINESS.md).
 
 | ID | Status | Current scope / disposition |
 | --- | --- | --- |
 | A-01 | resolved | Fresh mesh arrival/continuation and collision-continuity pass; old MK1 scheduling mechanism is retired, not a current defect. |
 | A-02 | resolved | Fresh mesh arrival/continuation and collision-continuity pass; old MK1 scheduling mechanism is retired, not a current defect. |
-| B-01 | improved | MK1 global event-cascade diagnosis is retired. MK2 measurements have their own stage/workload scope; no universal 60 Hz claim or new long-room benchmark in this correction. |
+| B-01 | improved | MK2 limits are now observable through actual per-body/step/response hold counters and completed coupled-step profiler totals. No new dense-performance speedup claim; high-rate elastic confinement remains separately open. |
 | C-01 | resolved | Current provenance infrastructure retained; current c859 identities and matching relocated game export verified. No new channel changes or update-service qualification. |
 | C-02 | resolved | Current provenance infrastructure retained; current c859 identities and matching relocated game export verified. No new channel changes or update-service qualification. |
 | C-03 | resolved | Current provenance infrastructure retained; current c859 identities and matching relocated game export verified. No new channel changes or update-service qualification. |
@@ -30,19 +30,19 @@ This reconciles all 54 original findings. Fresh checks and explicit carried limi
 | R-02 | resolved | Debugger/network/reload boundaries source-inspected; no new combined debugger/network pause experiment. |
 | R-03 | unsupported_by_evidence | No new residency scaling benchmark or measured eviction regression; retain uncertainty. |
 | R-04 | resolved | Bounded exporter identity probing infrastructure retained; current ordinary export passes. Hung-tool negative not rerun. |
-| R-05 | improved | Useful rejection paths exist; F02 gives an inconsistent late bake failure, including an empty diagnostic suffix. |
-| DX-01 | improved | Visible script starter and bounded cached file browser added using ordinary assets/public JS. Settings dirty/undo/close and explicit Save all versus saved-version export address actual workflow traps; human re-test pending. |
+| R-05 | improved | Dormant-fluid policy diagnostics fixed at 0aaef603. Model import now accepts project files or directory roots and rejects missing project files before writing. Broader errors are not universally certified. |
+| DX-01 | improved | Project settings/picker/starter improvements human-accepted at 0aaef603. Fresh packaged SDK creation, editor navigation, Play/Stop and explicit export now pass automatically. Operator-built game trial is still outstanding. |
 | DX-02 | resolved | Current main/MK2 status refreshed; old development chronology is byte-preserved separately. |
-| DX-03 | improved | Current API/type drift passes; not every public value/order/runtime-enumeration contract was executed. |
+| DX-03 | improved | API/type checker passes for 473 symbols, 40 exports and 51 examples. Actual SDK script-check syntax-error/recovery controls pass; not every public value/ordering contract is certified. |
 | DX-04 | improved | Current MK2 production contract separated from the byte-preserved development archive; current architecture is an ownership map, not an interim alternate-solver claim. |
 | DX-05 | resolved | Current TypeScript checker runs from tools/verification without an old milestone cache prerequisite. |
 | DX-06 | resolved | Current network session/boundaries pass; broader human endpoint-guidance UX was not requalified. |
 | DX-07 | unsupported_by_evidence | No new evidence for historical phone listener closure; do not invent or reopen a current defect. |
-| DX-08 | improved | Current-reference set classifies removed-MK1 event research as historical. CI finalizes after new test declarations; original physical mesh contracts retained. |
-| PL-01 | resolved | Current focused manifest includes authoritative MK2, balance, fluid policy, actual settings controls, file picker, water rendering and genuine cold writer/reader continuation. No retired MK1 white-box scheduling tests restored. |
-| PL-02 | improved | Inventory exists; no fresh all-17-tool SDK/clean-machine/current Windows qualification in this audit (F09). |
-| PL-03 | deferred | Windows VM timings are diagnostic; no new VM or physical Windows GPU evidence. |
-| PL-04 | deferred | MinGW Linux-to-Windows and MSVC paths exist; current MK2 Windows binaries not qualified here. |
+| DX-08 | improved | Current docs distinguish removed MK1 history. Focused manifest schedules MK2 diagnostics, including positive cap holds and coupled profiler/native parity; original collision contracts remain. |
+| PL-01 | resolved | Authoritative focused CI now also schedules real MK2 hold/profiler diagnostics. Fifteen selected cross-system and four collision/contact cases pass; this is not a full-suite rerun. |
+| PL-02 | improved | Fresh tracked Linux checkout builds all 17 SDK tools. Relocated SDK tool identities, host-loader closure, ordinary project creation, positive/negative tool operations and moved exports pass. Windows deferred by operator. |
+| PL-03 | deferred | Windows and Android qualification explicitly deferred by operator; no VM or hardware claims. |
+| PL-04 | deferred | Existing MinGW/MSVC paths preserved; no Windows qualification in this operator-deferred pass. |
 | PL-05 | resolved | Android identity/signing presets exist; no package/version/channel/signing changes or current phone rerun. |
 | PL-06 | resolved | Android identity/signing presets exist; no package/version/channel/signing changes or current phone rerun. |
 | PL-07 | deferred | No fresh direct-LAN/Internet/mobile connectivity claim; native socket tests are not physical phone/network acceptance. |
@@ -56,7 +56,14 @@ This reconciles all 54 original findings. Fresh checks and explicit carried limi
 | L-07 | deferred | Universal replication/native migration/suspension, multiple charts, per-mip streaming, every render path and public-Internet security are not promised. |
 | L-08 | deferred | Universal replication/native migration/suspension, multiple charts, per-mip streaming, every render path and public-Internet security are not promised. |
 | L-09 | deferred | Universal replication/native migration/suspension, multiple charts, per-mip streaming, every render path and public-Internet security are not promised. |
-| L-10 | open | Linux selected tests current; Windows/Android/current hardware matrices not requalified (F09). |
+| L-10 | improved | Current Linux source and SDK are qualified on Ubuntu 26.04.1/GCC 15.2; actual glibc 2.43 is recorded and Ubuntu24 policy is correctly rejected. Windows/Android deferred. No universal Linux binary claim. |
 | CAP-01 | open | Legacy gameplay controller is not MK1. Existing games retain it; breadth not fully reexecuted. |
 | CAP-02 | deferred | Advanced workflows have explicit boundaries; no claim of universal composition or every-feature certification. |
-| D-03 | improved | Inventory exists; no fresh all-17-tool SDK/clean-machine/current Windows qualification in this audit (F09). |
+| D-03 | improved | All 17 Linux SDK tools staged with matching clean-source identity and checksums; representative actual workflows pass. Current Windows SDK qualification explicitly deferred. |
+
+## Newly reproduced numerical limit
+
+**MK2-ELASTIC-CONFINEMENT** remains open: high-rate elastic spinning confinement
+can gain energy. This is not introduced by the diagnostic counters and is not
+reclassified as an accepted physical result. See the readiness report and exact
+reproduction for scope and next action.

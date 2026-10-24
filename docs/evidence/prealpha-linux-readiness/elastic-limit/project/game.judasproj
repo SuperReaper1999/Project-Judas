@@ -1,0 +1,7 @@
+JudasProject 1
+name "Confined elastic body probe"
+startup-scene "Scenes/main.judas"
+assets-dir "Assets"
+scenes-dir "Scenes"
+saves-dir "Saves"
+legacy-gameplay "false"

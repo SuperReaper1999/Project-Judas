@@ -1,0 +1,64 @@
+JudasScene 3
+settings
+ name "Elastic confinement"
+ world-origin 0 0 0
+ sun-direction .4 .7 .35
+ sun-color 1 .98 .92
+ ambient .16 .17 .19
+ fluid-scale 1
+ fidelity-policy none
+ next-id 4
+end
+object 1 "Fixture 1"
+ position 0 0 0
+ rotation 1 0 0 0
+ scale 1 1 1
+ body dynamic box
+ body.half-extents .08 .2 .05
+ body.radius .5
+ body.terrain ""
+ body.mass 1
+ body.friction 0
+ body.restitution 1
+ body.initial-velocity 0 0 0
+ body.pickable false
+ body.managed false
+ body.compound-count 0
+ scripts 1
+ script.0.id 1
+ script.0.asset "f1b67636fffaf9e1258bdd1f5da2555f"
+ script.0.enabled true
+ script.0.properties "{}"
+end
+object 2 "Fixture 2"
+ position 0.6 0 0
+ rotation 1 0 0 0
+ scale 1 1 1
+ body static box
+ body.half-extents .05 1 1
+ body.radius .5
+ body.terrain ""
+ body.mass 1
+ body.friction 0
+ body.restitution 1
+ body.initial-velocity 0 0 0
+ body.pickable false
+ body.managed false
+ body.compound-count 0
+end
+object 3 "Fixture 3"
+ position -0.6 0 0
+ rotation 1 0 0 0
+ scale 1 1 1
+ body static box
+ body.half-extents .05 1 1
+ body.radius .5
+ body.terrain ""
+ body.mass 1
+ body.friction 0
+ body.restitution 1
+ body.initial-velocity 0 0 0
+ body.pickable false
+ body.managed false
+ body.compound-count 0
+end

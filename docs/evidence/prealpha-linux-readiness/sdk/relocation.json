@@ -1,0 +1,18 @@
+[
+  {
+    "package": "editor",
+    "frames": 90,
+    "scriptExecuted": true,
+    "screenshot": true,
+    "developmentOrSdkPathFileCalls": 0,
+    "traceSha256": "42830426ef0991c16b1a6eee5ccb6c843d269374bbc0635261d9aa361ba20d30"
+  },
+  {
+    "package": "cli",
+    "frames": 90,
+    "scriptExecuted": true,
+    "screenshot": true,
+    "developmentOrSdkPathFileCalls": 0,
+    "traceSha256": "b65413d26e6c32c077d0d678befbe684dca694bc5d28ae9d2bdc6f1eee338326"
+  }
+]

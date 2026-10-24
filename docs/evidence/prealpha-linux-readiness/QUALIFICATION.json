@@ -1,0 +1,52 @@
+{
+  "recordedUtc": "2026-10-24T18:27:41.314279+00:00",
+  "acceptedMain": "0aaef603b0347a55350a81beff896cff21d914bf",
+  "diagnosticCheckpoint": "ca3de268fb3099ffa47c5ffdd5502ec68f6ef8d1",
+  "qualifiedSdkCheckpoint": "8c903dfcb80d743dc869609d9fa3eb4e659709ca",
+  "mainModified": false,
+  "M100Started": false,
+  "releasePublished": false,
+  "channelChanged": false,
+  "humanAcceptance": "pending for these new Experimental changes",
+  "crossSystemNativeCases": {
+    "selected": 15,
+    "passed": 15
+  },
+  "collisionNativeCases": {
+    "selected": 4,
+    "passed": 4
+  },
+  "mk2DiagnosticChecks": 106,
+  "consumerGame": {
+    "name": "Hearthworld",
+    "writeChecks": 66,
+    "separateReadChecks": 41,
+    "failures": 0
+  },
+  "sdk": {
+    "sourceClean": true,
+    "untrackedBuildInputs": 0,
+    "publicToolIdentityChecks": 17,
+    "manifestPayloadFiles": 232,
+    "actualToolOperationsIncludingExpectedErrors": 19,
+    "host": "Ubuntu 26.04.1 x86-64 GCC 15.2 GTX 970",
+    "hostLoaderQualification": "passed",
+    "glibc": "2.43",
+    "ubuntu24Baseline": "correctly rejected / not qualified",
+    "relocatedPackages": 2,
+    "framesEach": 90,
+    "sourceOrSdkFileAccesses": 0,
+    "checksumsAfterWorkflows": "verified"
+  },
+  "knownFailed": [
+    "MK2-ELASTIC-CONFINEMENT: confirmed high-rate numerical energy creation; source fixture retained; not solved",
+    "FLU-001: deferred unchanged, not rerun",
+    "half-turn disturbed-liquid sampling: deferred unchanged, not rerun"
+  ],
+  "windows": "explicitly deferred; no qualification",
+  "android": "explicitly deferred; no qualification",
+  "protectedHistory": "unchanged; only new task evidence and current documentation added",
+  "sourceFingerprints": "SOURCE_FINGERPRINTS.json",
+  "sdkBinaryFingerprints": "sdk/tool-identities.json",
+  "qualificationScope": "Bounded Linux native/source/SDK/editor/export checks; no universal feature, timing, platform or Alpha certification."
+}

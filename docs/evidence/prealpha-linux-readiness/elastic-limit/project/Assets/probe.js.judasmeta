@@ -1,0 +1,4 @@
+JudasAssetMeta 1
+id "f1b67636fffaf9e1258bdd1f5da2555f"
+type script
+source "probe.js"

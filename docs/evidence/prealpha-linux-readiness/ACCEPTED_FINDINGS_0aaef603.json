@@ -1,0 +1,641 @@
+{
+  "schema": 1,
+  "scope": "Current final Pre-Alpha corrections on Experimental; accepted main stays c859901c. Automated qualification is scoped, not human acceptance.",
+  "input_commit": "c859901cc9a52cf5b7104887f56b5e7ad4269b1d",
+  "assessment": "docs/evidence/prealpha-pass2/ORIGINAL_ASSESSMENT.md",
+  "assessment_sha256": "7d306dc2756e771f931aa7be1cf82bf31aad942f49240f89ac0d71069a7ac6a5",
+  "parent_register": "docs/evidence/prealpha-final-corrections/before/PREALPHA_FINDINGS.json",
+  "parent_sha256": "49b56407ce90dc0b9f5482b0d454ed993aab91a19e2862b4a671814b67c372b0",
+  "workstreams": [
+    {
+      "id": "P0-01",
+      "priority": "P0",
+      "name": "Explicit build identity and two release channels",
+      "status": "resolved",
+      "finding_ids": [
+        "C-01",
+        "C-02",
+        "C-03",
+        "C-04",
+        "C-05",
+        "C-06",
+        "C-07"
+      ]
+    },
+    {
+      "id": "P0-02",
+      "priority": "P0",
+      "name": "Reliable regression and release gates",
+      "status": "resolved",
+      "finding_ids": [
+        "R-04",
+        "DX-05",
+        "PL-01"
+      ]
+    },
+    {
+      "id": "P0-03",
+      "priority": "P0",
+      "name": "Curved-mesh collision correctness",
+      "status": "resolved",
+      "finding_ids": [
+        "A-01",
+        "A-02"
+      ]
+    },
+    {
+      "id": "P1-01",
+      "priority": "P1",
+      "name": "Dense-contact predictability",
+      "status": "improved",
+      "finding_ids": [
+        "B-01",
+        "R-03"
+      ]
+    },
+    {
+      "id": "P1-02",
+      "priority": "P1",
+      "name": "Packaging and clean-machine usability",
+      "status": "improved",
+      "finding_ids": [
+        "D-01",
+        "D-02",
+        "PL-04",
+        "PL-05",
+        "PL-06",
+        "PL-08",
+        "L-07",
+        "D-03"
+      ]
+    },
+    {
+      "id": "P1-03",
+      "priority": "P1",
+      "name": "Composed lifecycle contracts",
+      "status": "improved",
+      "finding_ids": [
+        "E-01",
+        "E-02",
+        "E-03",
+        "E-04",
+        "E-05",
+        "E-06",
+        "R-01",
+        "R-02",
+        "DX-07",
+        "L-01",
+        "L-02",
+        "L-03",
+        "L-04",
+        "L-05",
+        "L-06"
+      ]
+    },
+    {
+      "id": "P1-04",
+      "priority": "P1",
+      "name": "Incremental architecture cleanup",
+      "status": "improved",
+      "finding_ids": [
+        "M-01",
+        "M-02",
+        "L-08"
+      ]
+    },
+    {
+      "id": "P2-01",
+      "priority": "P2",
+      "name": "Editor onboarding and actionable diagnostics",
+      "status": "improved",
+      "finding_ids": [
+        "R-05",
+        "DX-01",
+        "DX-06"
+      ]
+    },
+    {
+      "id": "P2-02",
+      "priority": "P2",
+      "name": "Current documentation and support matrix",
+      "status": "improved",
+      "finding_ids": [
+        "DX-02",
+        "DX-03",
+        "DX-04",
+        "DX-08",
+        "CAP-02"
+      ]
+    },
+    {
+      "id": "P2-03",
+      "priority": "P2",
+      "name": "Platform and release qualification",
+      "status": "improved",
+      "finding_ids": [
+        "PL-02",
+        "PL-03",
+        "PL-07",
+        "L-09",
+        "L-10",
+        "CAP-01"
+      ]
+    }
+  ],
+  "findings": [
+    {
+      "id": "A-01",
+      "workstream": "P0-03",
+      "original_quote": "The crossing measurement is explicitly **reported rather than asserted**.",
+      "status": "resolved",
+      "scope": "final_prealpha_current_or_explicit_carried_scope",
+      "disposition": "Fresh mesh arrival/continuation and collision-continuity pass; old MK1 scheduling mechanism is retired, not a current defect.",
+      "evidence": "docs/PREALPHA_FINAL_CORRECTIONS.md"
+    },
+    {
+      "id": "A-02",
+      "workstream": "P0-03",
+      "original_quote": "All three curved-trough resolutions: **24 fast-box crossings each**.",
+      "status": "resolved",
+      "scope": "final_prealpha_current_or_explicit_carried_scope",
+      "disposition": "Fresh mesh arrival/continuation and collision-continuity pass; old MK1 scheduling mechanism is retired, not a current defect.",
+      "evidence": "docs/PREALPHA_FINAL_CORRECTIONS.md"
+    },
+    {
+      "id": "B-01",
+      "workstream": "P1-01",
+      "original_quote": "Dense-contact physics still has severe latency tails",
+      "status": "improved",
+      "scope": "final_prealpha_current_or_explicit_carried_scope",
+      "disposition": "MK1 global event-cascade diagnosis is retired. MK2 measurements have their own stage/workload scope; no universal 60 Hz claim or new long-room benchmark in this correction.",
+      "evidence": "docs/PREALPHA_FINAL_CORRECTIONS.md"
+    },
+    {
+      "id": "C-01",
+      "workstream": "P0-01",
+      "original_quote": "The editor\u2019s current identity is inferred from milestone numbers in recent Git commit subjects, with an **M76 fallback** when suitable history is unavailable.",
+      "status": "resolved",
+      "scope": "final_prealpha_current_or_explicit_carried_scope",
+      "disposition": "Current provenance infrastructure retained; current c859 identities and matching relocated game export verified. No new channel changes or update-service qualification.",
+      "evidence": "docs/PREALPHA_FINAL_CORRECTIONS.md"
+    },
+    {
+      "id": "C-02",
+      "workstream": "P0-01",
+      "original_quote": "Unnumbered Pre-Alpha corrections cannot be identified reliably.",
+      "status": "resolved",
+      "scope": "final_prealpha_current_or_explicit_carried_scope",
+      "disposition": "Current provenance infrastructure retained; current c859 identities and matching relocated game export verified. No new channel changes or update-service qualification.",
+      "evidence": "docs/PREALPHA_FINAL_CORRECTIONS.md"
+    },
+    {
+      "id": "C-03",
+      "workstream": "P0-01",
+      "original_quote": "Source archives can acquire the fallback identity.",
+      "status": "resolved",
+      "scope": "final_prealpha_current_or_explicit_carried_scope",
+      "disposition": "Current provenance infrastructure retained; current c859 identities and matching relocated game export verified. No new channel changes or update-service qualification.",
+      "evidence": "docs/PREALPHA_FINAL_CORRECTIONS.md"
+    },
+    {
+      "id": "C-04",
+      "workstream": "P0-01",
+      "original_quote": "Reconfiguration watches `main` references but does not explicitly watch the Experimental branch reference.",
+      "status": "resolved",
+      "scope": "final_prealpha_current_or_explicit_carried_scope",
+      "disposition": "Current provenance infrastructure retained; current c859 identities and matching relocated game export verified. No new channel changes or update-service qualification.",
+      "evidence": "docs/PREALPHA_FINAL_CORRECTIONS.md"
+    },
+    {
+      "id": "C-05",
+      "workstream": "P0-01",
+      "original_quote": "Runtime `--build-info` identifies platform/configuration, not the exact engine build.",
+      "status": "resolved",
+      "scope": "final_prealpha_current_or_explicit_carried_scope",
+      "disposition": "Current provenance infrastructure retained; current c859 identities and matching relocated game export verified. No new channel changes or update-service qualification.",
+      "evidence": "docs/PREALPHA_FINAL_CORRECTIONS.md"
+    },
+    {
+      "id": "C-06",
+      "workstream": "P0-01",
+      "original_quote": "Export runtime probing cannot establish precise engine/tool compatibility.",
+      "status": "resolved",
+      "scope": "final_prealpha_current_or_explicit_carried_scope",
+      "disposition": "Current provenance infrastructure retained; current c859 identities and matching relocated game export verified. No new channel changes or update-service qualification.",
+      "evidence": "docs/PREALPHA_FINAL_CORRECTIONS.md"
+    },
+    {
+      "id": "C-07",
+      "workstream": "P0-01",
+      "original_quote": "Update notification compares milestone numbers from `main`, so newer unnumbered stabilization builds can remain invisible.",
+      "status": "resolved",
+      "scope": "final_prealpha_current_or_explicit_carried_scope",
+      "disposition": "Current provenance infrastructure retained; current c859 identities and matching relocated game export verified. No new channel changes or update-service qualification.",
+      "evidence": "docs/PREALPHA_FINAL_CORRECTIONS.md"
+    },
+    {
+      "id": "D-01",
+      "workstream": "P1-02",
+      "original_quote": "The Windows SDK uses an explicit staging list that omits newer tools, including:",
+      "status": "resolved",
+      "scope": "final_prealpha_current_or_explicit_carried_scope",
+      "disposition": "Shared SDK tool inventory/finalization exists; no fresh all-tool Windows staging here.",
+      "evidence": "docs/PREALPHA_FINAL_CORRECTIONS.md"
+    },
+    {
+      "id": "D-02",
+      "workstream": "P1-02",
+      "original_quote": "The SDK configuration is included before later targets are declared, so its one-time target scan also misses later additions.",
+      "status": "resolved",
+      "scope": "final_prealpha_current_or_explicit_carried_scope",
+      "disposition": "Shared SDK tool inventory/finalization exists; no fresh all-tool Windows staging here.",
+      "evidence": "docs/PREALPHA_FINAL_CORRECTIONS.md"
+    },
+    {
+      "id": "E-01",
+      "workstream": "P1-03",
+      "original_quote": "Live origin changes reject active liquids, legacy fluid, atmosphere and combustion.",
+      "status": "improved",
+      "scope": "final_prealpha_current_or_explicit_carried_scope",
+      "disposition": "Fresh origin-assembly pass; chart, PBF and pending-operation rejection boundaries remain explicit.",
+      "evidence": "docs/PREALPHA_FINAL_CORRECTIONS.md"
+    },
+    {
+      "id": "E-02",
+      "workstream": "P1-03",
+      "original_quote": "Regional suspension pins unsupported liquid groups and certain active navigation/articulation states.",
+      "status": "deferred",
+      "scope": "final_prealpha_current_or_explicit_carried_scope",
+      "disposition": "Active physical liquid/articulation limits remain; disabled fluid authoring no longer demands advanced geometry or creates a conserved-liquid suspension pin. New regression exercises actual publish/release/unload.",
+      "evidence": "docs/PREALPHA_FINAL_CORRECTIONS.md"
+    },
+    {
+      "id": "E-03",
+      "workstream": "P1-03",
+      "original_quote": "Runtime excavation supports bounded local volumes, not arbitrary editing of every planetary terrain representation.",
+      "status": "deferred",
+      "scope": "final_prealpha_current_or_explicit_carried_scope",
+      "disposition": "Fresh terrain-lifecycle pass; local volumetric edits, not arbitrary planetary representation edits.",
+      "evidence": "docs/PREALPHA_FINAL_CORRECTIONS.md"
+    },
+    {
+      "id": "E-04",
+      "workstream": "P1-03",
+      "original_quote": "Online replication excludes vehicles, powertrains, articulation, deformables, terrain and several other systems.",
+      "status": "improved",
+      "scope": "final_prealpha_current_or_explicit_carried_scope",
+      "disposition": "Fresh genuine network session/boundary passes; representation rejection list remains explicit, not universal replication.",
+      "evidence": "docs/PREALPHA_FINAL_CORRECTIONS.md"
+    },
+    {
+      "id": "E-05",
+      "workstream": "P1-03",
+      "original_quote": "Saves do not automatically merge newly authored world content into an old complete-world snapshot.",
+      "status": "deferred",
+      "scope": "final_prealpha_current_or_explicit_carried_scope",
+      "disposition": "SaveEvolution source rejects changed physical identity/topology and arbitrary opaque native rewrites; no automatic authored-world merge.",
+      "evidence": "docs/PREALPHA_FINAL_CORRECTIONS.md"
+    },
+    {
+      "id": "E-06",
+      "workstream": "P1-03",
+      "original_quote": "Migrations cannot generally rewrite opaque retained native-region state.",
+      "status": "deferred",
+      "scope": "final_prealpha_current_or_explicit_carried_scope",
+      "disposition": "SaveEvolution source rejects changed physical identity/topology and arbitrary opaque native rewrites; no automatic authored-world merge.",
+      "evidence": "docs/PREALPHA_FINAL_CORRECTIONS.md"
+    },
+    {
+      "id": "M-01",
+      "workstream": "P1-04",
+      "original_quote": "Important behaviour is concentrated in large, densely written files:",
+      "status": "improved",
+      "scope": "final_prealpha_current_or_explicit_carried_scope",
+      "disposition": "Physics coordinator remains 714 lines with coherent MK2 modules. Project settings have independent document ownership; targeted editor picker/starter modules improve usability without a wholesale rewrite.",
+      "evidence": "docs/PREALPHA_FINAL_CORRECTIONS.md"
+    },
+    {
+      "id": "M-02",
+      "workstream": "P1-04",
+      "original_quote": "Adding a component can require coordinated changes across serialization, prefabs, runtime construction, persistence, streaming, origin changes, editor controls, bindings and export.",
+      "status": "improved",
+      "scope": "final_prealpha_current_or_explicit_carried_scope",
+      "disposition": "Shared typed dependency collection carries advanced-fluid policy through scene/prefab export. Regional preparation/pins and persistence honor it; integration parity has new behavioral controls. Broader component registry debt remains.",
+      "evidence": "docs/PREALPHA_FINAL_CORRECTIONS.md"
+    },
+    {
+      "id": "R-01",
+      "workstream": "P1-03",
+      "original_quote": "Missed lifecycle updates when new components bypass one manual integration path.",
+      "status": "improved",
+      "scope": "final_prealpha_current_or_explicit_carried_scope",
+      "disposition": "Parcel-only/ledger disabled restore holes corrected before publication. Current native/region/export controls preserve authoring and quantity; no universal component-composition certification.",
+      "evidence": "docs/PREALPHA_FINAL_CORRECTIONS.md"
+    },
+    {
+      "id": "R-02",
+      "workstream": "P1-03",
+      "original_quote": "Debugger pauses interacting poorly with networking timeouts.",
+      "status": "resolved",
+      "scope": "final_prealpha_current_or_explicit_carried_scope",
+      "disposition": "Debugger/network/reload boundaries source-inspected; no new combined debugger/network pause experiment.",
+      "evidence": "docs/PREALPHA_FINAL_CORRECTIONS.md"
+    },
+    {
+      "id": "R-03",
+      "workstream": "P1-01",
+      "original_quote": "Resource eviction becoming expensive with large residency sets.",
+      "status": "unsupported_by_evidence",
+      "scope": "final_prealpha_current_or_explicit_carried_scope",
+      "disposition": "No new residency scaling benchmark or measured eviction regression; retain uncertainty.",
+      "evidence": "docs/PREALPHA_FINAL_CORRECTIONS.md"
+    },
+    {
+      "id": "R-04",
+      "workstream": "P0-02",
+      "original_quote": "Blocking export-runtime probing hanging on an unresponsive executable.",
+      "status": "resolved",
+      "scope": "final_prealpha_current_or_explicit_carried_scope",
+      "disposition": "Bounded exporter identity probing infrastructure retained; current ordinary export passes. Hung-tool negative not rerun.",
+      "evidence": "docs/PREALPHA_FINAL_CORRECTIONS.md"
+    },
+    {
+      "id": "R-05",
+      "workstream": "P2-01",
+      "original_quote": "Unsupported subsystem combinations producing late failures instead of early authoring diagnostics.",
+      "status": "improved",
+      "scope": "final_prealpha_current_or_explicit_carried_scope",
+      "disposition": "Useful rejection paths exist; F02 gives an inconsistent late bake failure, including an empty diagnostic suffix.",
+      "evidence": "docs/PREALPHA_FINAL_CORRECTIONS.md"
+    },
+    {
+      "id": "DX-01",
+      "workstream": "P2-01",
+      "original_quote": "New-project onboarding still requires substantial manual assembly of modern character, camera and input behaviour.",
+      "status": "improved",
+      "scope": "final_prealpha_current_or_explicit_carried_scope",
+      "disposition": "Visible script starter and bounded cached file browser added using ordinary assets/public JS. Settings dirty/undo/close and explicit Save all versus saved-version export address actual workflow traps; human re-test pending.",
+      "evidence": "docs/PREALPHA_FINAL_CORRECTIONS.md"
+    },
+    {
+      "id": "DX-02",
+      "workstream": "P2-02",
+      "original_quote": "The current M96 guide still says human review is pending despite acceptance.",
+      "status": "resolved",
+      "scope": "final_prealpha_current_or_explicit_carried_scope",
+      "disposition": "Current main/MK2 status refreshed; old development chronology is byte-preserved separately.",
+      "evidence": "docs/PREALPHA_FINAL_CORRECTIONS.md"
+    },
+    {
+      "id": "DX-03",
+      "workstream": "P2-02",
+      "original_quote": "Some current documentation describes an older API surface.",
+      "status": "improved",
+      "scope": "final_prealpha_current_or_explicit_carried_scope",
+      "disposition": "Current API/type drift passes; not every public value/order/runtime-enumeration contract was executed.",
+      "evidence": "docs/PREALPHA_FINAL_CORRECTIONS.md"
+    },
+    {
+      "id": "DX-04",
+      "workstream": "P2-02",
+      "original_quote": "Architecture documentation mixes current guidance with extensive historical chronology.",
+      "status": "improved",
+      "scope": "final_prealpha_current_or_explicit_carried_scope",
+      "disposition": "Current MK2 production contract separated from the byte-preserved development archive; current architecture is an ownership map, not an interim alternate-solver claim.",
+      "evidence": "docs/PREALPHA_FINAL_CORRECTIONS.md"
+    },
+    {
+      "id": "DX-05",
+      "workstream": "P0-02",
+      "original_quote": "At least one final-check runner depends on TypeScript installed beneath an older milestone cache directory, making fresh-machine reproduction fragile.",
+      "status": "resolved",
+      "scope": "final_prealpha_current_or_explicit_carried_scope",
+      "disposition": "Current TypeScript checker runs from tools/verification without an old milestone cache prerequisite.",
+      "evidence": "docs/PREALPHA_FINAL_CORRECTIONS.md"
+    },
+    {
+      "id": "DX-06",
+      "workstream": "P2-01",
+      "original_quote": "Networking exposes low-level connection errors where users need clear host/listener/endpoint guidance.",
+      "status": "resolved",
+      "scope": "final_prealpha_current_or_explicit_carried_scope",
+      "disposition": "Current network session/boundaries pass; broader human endpoint-guidance UX was not requalified.",
+      "evidence": "docs/PREALPHA_FINAL_CORRECTIONS.md"
+    },
+    {
+      "id": "DX-07",
+      "workstream": "P1-03",
+      "original_quote": "The M99 phone evidence also records an unexplained listener closure before successful USB-forwarded testing.",
+      "status": "unsupported_by_evidence",
+      "scope": "final_prealpha_current_or_explicit_carried_scope",
+      "disposition": "No new evidence for historical phone listener closure; do not invent or reopen a current defect.",
+      "evidence": "docs/PREALPHA_FINAL_CORRECTIONS.md"
+    },
+    {
+      "id": "DX-08",
+      "workstream": "P2-02",
+      "original_quote": "automated checks for API coverage, links, packaged documentation and current status.",
+      "status": "improved",
+      "scope": "final_prealpha_current_or_explicit_carried_scope",
+      "disposition": "Current-reference set classifies removed-MK1 event research as historical. CI finalizes after new test declarations; original physical mesh contracts retained.",
+      "evidence": "docs/PREALPHA_FINAL_CORRECTIONS.md"
+    },
+    {
+      "id": "PL-01",
+      "workstream": "P0-02",
+      "original_quote": "historical suite passes should be supplemented by a small, reproducible current release gate.",
+      "status": "resolved",
+      "scope": "final_prealpha_current_or_explicit_carried_scope",
+      "disposition": "Current focused manifest includes authoritative MK2, balance, fluid policy, actual settings controls, file picker, water rendering and genuine cold writer/reader continuation. No retired MK1 white-box scheduling tests restored.",
+      "evidence": "docs/PREALPHA_FINAL_CORRECTIONS.md"
+    },
+    {
+      "id": "PL-02",
+      "workstream": "P2-03",
+      "original_quote": "SDK completeness and latest-feature coverage need attention.",
+      "status": "improved",
+      "scope": "final_prealpha_current_or_explicit_carried_scope",
+      "disposition": "Inventory exists; no fresh all-17-tool SDK/clean-machine/current Windows qualification in this audit (F09).",
+      "evidence": "docs/PREALPHA_FINAL_CORRECTIONS.md"
+    },
+    {
+      "id": "PL-03",
+      "workstream": "P2-03",
+      "original_quote": "VM timings must remain diagnostic, not native-host performance claims.",
+      "status": "deferred",
+      "scope": "final_prealpha_current_or_explicit_carried_scope",
+      "disposition": "Windows VM timings are diagnostic; no new VM or physical Windows GPU evidence.",
+      "evidence": "docs/PREALPHA_FINAL_CORRECTIONS.md"
+    },
+    {
+      "id": "PL-04",
+      "workstream": "P1-02",
+      "original_quote": "The packaging workflow is Linux-hosted.",
+      "status": "deferred",
+      "scope": "final_prealpha_current_or_explicit_carried_scope",
+      "disposition": "MinGW Linux-to-Windows and MSVC paths exist; current MK2 Windows binaries not qualified here.",
+      "evidence": "docs/PREALPHA_FINAL_CORRECTIONS.md"
+    },
+    {
+      "id": "PL-05",
+      "workstream": "P1-02",
+      "original_quote": "Default packaging identity still originates from the original Android demonstration unless overridden.",
+      "status": "resolved",
+      "scope": "final_prealpha_current_or_explicit_carried_scope",
+      "disposition": "Android identity/signing presets exist; no package/version/channel/signing changes or current phone rerun.",
+      "evidence": "docs/PREALPHA_FINAL_CORRECTIONS.md"
+    },
+    {
+      "id": "PL-06",
+      "workstream": "P1-02",
+      "original_quote": "Custom signing is already supported; it should become an explicit release preset.",
+      "status": "resolved",
+      "scope": "final_prealpha_current_or_explicit_carried_scope",
+      "disposition": "Android identity/signing presets exist; no package/version/channel/signing changes or current phone rerun.",
+      "evidence": "docs/PREALPHA_FINAL_CORRECTIONS.md"
+    },
+    {
+      "id": "PL-07",
+      "workstream": "P2-03",
+      "original_quote": "Latest multiplayer phone acceptance used **USB forwarding**, not direct Wi-Fi or Internet connectivity.",
+      "status": "deferred",
+      "scope": "final_prealpha_current_or_explicit_carried_scope",
+      "disposition": "No fresh direct-LAN/Internet/mobile connectivity claim; native socket tests are not physical phone/network acceptance.",
+      "evidence": "docs/PREALPHA_FINAL_CORRECTIONS.md"
+    },
+    {
+      "id": "PL-08",
+      "workstream": "P1-02",
+      "original_quote": "Tracked evidence alone contains approximately **44,700 files and 2.24 GiB of file contents**.",
+      "status": "improved",
+      "scope": "final_prealpha_current_or_explicit_carried_scope",
+      "disposition": "SDK excludes historical evidence; no repository history/archive deletion or disk-cleanup work.",
+      "evidence": "docs/PREALPHA_FINAL_CORRECTIONS.md"
+    },
+    {
+      "id": "L-01",
+      "workstream": "P1-03",
+      "original_quote": "**FLU-001:** deferred legacy-PBF settling issue; unchanged.",
+      "status": "deferred",
+      "scope": "final_prealpha_current_or_explicit_carried_scope",
+      "disposition": "FLU-001 unchanged; not rerun and not claimed solved. Advanced fluids remain experimental opt-in.",
+      "evidence": "docs/PREALPHA_FINAL_CORRECTIONS.md"
+    },
+    {
+      "id": "L-02",
+      "workstream": "P1-03",
+      "original_quote": "Historical cold saves lacking continuation data: no invented reconstruction.",
+      "status": "deferred",
+      "scope": "final_prealpha_current_or_explicit_carried_scope",
+      "disposition": "Absent historical continuation data is not reconstructed; Alpha need not accept all Pre-Alpha saves.",
+      "evidence": "docs/PREALPHA_FINAL_CORRECTIONS.md"
+    },
+    {
+      "id": "L-03",
+      "workstream": "P1-03",
+      "original_quote": "General replication of every Judas physical system.",
+      "status": "deferred",
+      "scope": "final_prealpha_current_or_explicit_carried_scope",
+      "disposition": "Universal replication/native migration/suspension, multiple charts, per-mip streaming, every render path and public-Internet security are not promised.",
+      "evidence": "docs/PREALPHA_FINAL_CORRECTIONS.md"
+    },
+    {
+      "id": "L-04",
+      "workstream": "P1-03",
+      "original_quote": "Arbitrary native-topology save migration.",
+      "status": "deferred",
+      "scope": "final_prealpha_current_or_explicit_carried_scope",
+      "disposition": "Universal replication/native migration/suspension, multiple charts, per-mip streaming, every render path and public-Internet security are not promised.",
+      "evidence": "docs/PREALPHA_FINAL_CORRECTIONS.md"
+    },
+    {
+      "id": "L-05",
+      "workstream": "P1-03",
+      "original_quote": "Unrestricted suspension of every assembly.",
+      "status": "deferred",
+      "scope": "final_prealpha_current_or_explicit_carried_scope",
+      "disposition": "Universal replication/native migration/suspension, multiple charts, per-mip streaming, every render path and public-Internet security are not promised.",
+      "evidence": "docs/PREALPHA_FINAL_CORRECTIONS.md"
+    },
+    {
+      "id": "L-06",
+      "workstream": "P1-03",
+      "original_quote": "Multiple distant simultaneous physics charts.",
+      "status": "deferred",
+      "scope": "final_prealpha_current_or_explicit_carried_scope",
+      "disposition": "Universal replication/native migration/suspension, multiple charts, per-mip streaming, every render path and public-Internet security are not promised.",
+      "evidence": "docs/PREALPHA_FINAL_CORRECTIONS.md"
+    },
+    {
+      "id": "L-07",
+      "workstream": "P1-02",
+      "original_quote": "Full per-mip texture streaming.",
+      "status": "deferred",
+      "scope": "final_prealpha_current_or_explicit_carried_scope",
+      "disposition": "Universal replication/native migration/suspension, multiple charts, per-mip streaming, every render path and public-Internet security are not promised.",
+      "evidence": "docs/PREALPHA_FINAL_CORRECTIONS.md"
+    },
+    {
+      "id": "L-08",
+      "workstream": "P1-04",
+      "original_quote": "Every renderer feature being instanced or shadowed.",
+      "status": "deferred",
+      "scope": "final_prealpha_current_or_explicit_carried_scope",
+      "disposition": "Universal replication/native migration/suspension, multiple charts, per-mip streaming, every render path and public-Internet security are not promised.",
+      "evidence": "docs/PREALPHA_FINAL_CORRECTIONS.md"
+    },
+    {
+      "id": "L-09",
+      "workstream": "P2-03",
+      "original_quote": "Security certification for untrusted scripts or public Internet servers.",
+      "status": "deferred",
+      "scope": "final_prealpha_current_or_explicit_carried_scope",
+      "disposition": "Universal replication/native migration/suspension, multiple charts, per-mip streaming, every render path and public-Internet security are not promised.",
+      "evidence": "docs/PREALPHA_FINAL_CORRECTIONS.md"
+    },
+    {
+      "id": "L-10",
+      "workstream": "P2-03",
+      "original_quote": "Unperformed hardware/platform validation.",
+      "status": "open",
+      "scope": "final_prealpha_current_or_explicit_carried_scope",
+      "disposition": "Linux selected tests current; Windows/Android/current hardware matrices not requalified (F09).",
+      "evidence": "docs/PREALPHA_FINAL_CORRECTIONS.md"
+    },
+    {
+      "id": "CAP-01",
+      "workstream": "P2-03",
+      "original_quote": "Historical compatibility controllers still exist and need their own regression coverage.",
+      "status": "open",
+      "scope": "final_prealpha_current_or_explicit_carried_scope",
+      "disposition": "Legacy gameplay controller is not MK1. Existing games retain it; breadth not fully reexecuted.",
+      "evidence": "docs/PREALPHA_FINAL_CORRECTIONS.md"
+    },
+    {
+      "id": "CAP-02",
+      "workstream": "P2-02",
+      "original_quote": "Several advanced workflows remain bounded rather than universal.",
+      "status": "deferred",
+      "scope": "final_prealpha_current_or_explicit_carried_scope",
+      "disposition": "Advanced workflows have explicit boundaries; no claim of universal composition or every-feature certification.",
+      "evidence": "docs/PREALPHA_FINAL_CORRECTIONS.md"
+    },
+    {
+      "id": "D-03",
+      "workstream": "P1-02",
+      "original_quote": "clean-machine checks for every shipped executable.",
+      "status": "improved",
+      "scope": "final_prealpha_current_or_explicit_carried_scope",
+      "disposition": "Inventory exists; no fresh all-17-tool SDK/clean-machine/current Windows qualification in this audit (F09).",
+      "evidence": "docs/PREALPHA_FINAL_CORRECTIONS.md"
+    }
+  ],
+  "updates": [
+    {
+      "date": "2026-10-21",
+      "input_commit": "b7db703ca3fc3c0d39ecc31009a1148b5b778762",
+      "finding": "B-01",
+      "evidence": "docs/PREALPHA_EVENT_DEPENDENCIES.md"
+    }
+  ]
+}

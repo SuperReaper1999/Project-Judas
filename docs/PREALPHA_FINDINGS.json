@@ -1,11 +1,11 @@
 {
   "schema": 1,
-  "scope": "Current final Pre-Alpha corrections on Experimental; accepted main stays c859901c. Automated qualification is scoped, not human acceptance.",
-  "input_commit": "c859901cc9a52cf5b7104887f56b5e7ad4269b1d",
+  "scope": "Linux Pre-Alpha qualification after accepted 0aaef603; Experimental changes awaiting human acceptance. Windows/Android explicitly deferred. No M100.",
+  "input_commit": "0aaef603b0347a55350a81beff896cff21d914bf",
   "assessment": "docs/evidence/prealpha-pass2/ORIGINAL_ASSESSMENT.md",
   "assessment_sha256": "7d306dc2756e771f931aa7be1cf82bf31aad942f49240f89ac0d71069a7ac6a5",
-  "parent_register": "docs/evidence/prealpha-final-corrections/before/PREALPHA_FINDINGS.json",
-  "parent_sha256": "49b56407ce90dc0b9f5482b0d454ed993aab91a19e2862b4a671814b67c372b0",
+  "parent_register": "docs/evidence/prealpha-linux-readiness/ACCEPTED_FINDINGS_0aaef603.json",
+  "parent_sha256": "7f235201694afcc21cc230c68928a6701b1aa50fff05a65095a27ccdd68a29ea",
   "workstreams": [
     {
       "id": "P0-01",
@@ -166,9 +166,9 @@
       "workstream": "P1-01",
       "original_quote": "Dense-contact physics still has severe latency tails",
       "status": "improved",
-      "scope": "final_prealpha_current_or_explicit_carried_scope",
-      "disposition": "MK1 global event-cascade diagnosis is retired. MK2 measurements have their own stage/workload scope; no universal 60 Hz claim or new long-room benchmark in this correction.",
-      "evidence": "docs/PREALPHA_FINAL_CORRECTIONS.md"
+      "scope": "linux_readiness_current_or_explicit_deferred",
+      "disposition": "MK2 limits are now observable through actual per-body/step/response hold counters and completed coupled-step profiler totals. No new dense-performance speedup claim; high-rate elastic confinement remains separately open.",
+      "evidence": "docs/PREALPHA_LINUX_READINESS.md"
     },
     {
       "id": "C-01",
@@ -364,18 +364,18 @@
       "workstream": "P2-01",
       "original_quote": "Unsupported subsystem combinations producing late failures instead of early authoring diagnostics.",
       "status": "improved",
-      "scope": "final_prealpha_current_or_explicit_carried_scope",
-      "disposition": "Useful rejection paths exist; F02 gives an inconsistent late bake failure, including an empty diagnostic suffix.",
-      "evidence": "docs/PREALPHA_FINAL_CORRECTIONS.md"
+      "scope": "linux_readiness_current_or_explicit_deferred",
+      "disposition": "Dormant-fluid policy diagnostics fixed at 0aaef603. Model import now accepts project files or directory roots and rejects missing project files before writing. Broader errors are not universally certified.",
+      "evidence": "docs/PREALPHA_LINUX_READINESS.md"
     },
     {
       "id": "DX-01",
       "workstream": "P2-01",
       "original_quote": "New-project onboarding still requires substantial manual assembly of modern character, camera and input behaviour.",
       "status": "improved",
-      "scope": "final_prealpha_current_or_explicit_carried_scope",
-      "disposition": "Visible script starter and bounded cached file browser added using ordinary assets/public JS. Settings dirty/undo/close and explicit Save all versus saved-version export address actual workflow traps; human re-test pending.",
-      "evidence": "docs/PREALPHA_FINAL_CORRECTIONS.md"
+      "scope": "linux_readiness_current_or_explicit_deferred",
+      "disposition": "Project settings/picker/starter improvements human-accepted at 0aaef603. Fresh packaged SDK creation, editor navigation, Play/Stop and explicit export now pass automatically. Operator-built game trial is still outstanding.",
+      "evidence": "docs/PREALPHA_LINUX_READINESS.md"
     },
     {
       "id": "DX-02",
@@ -391,9 +391,9 @@
       "workstream": "P2-02",
       "original_quote": "Some current documentation describes an older API surface.",
       "status": "improved",
-      "scope": "final_prealpha_current_or_explicit_carried_scope",
-      "disposition": "Current API/type drift passes; not every public value/order/runtime-enumeration contract was executed.",
-      "evidence": "docs/PREALPHA_FINAL_CORRECTIONS.md"
+      "scope": "linux_readiness_current_or_explicit_deferred",
+      "disposition": "API/type checker passes for 473 symbols, 40 exports and 51 examples. Actual SDK script-check syntax-error/recovery controls pass; not every public value/ordering contract is certified.",
+      "evidence": "docs/PREALPHA_LINUX_READINESS.md"
     },
     {
       "id": "DX-04",
@@ -436,45 +436,45 @@
       "workstream": "P2-02",
       "original_quote": "automated checks for API coverage, links, packaged documentation and current status.",
       "status": "improved",
-      "scope": "final_prealpha_current_or_explicit_carried_scope",
-      "disposition": "Current-reference set classifies removed-MK1 event research as historical. CI finalizes after new test declarations; original physical mesh contracts retained.",
-      "evidence": "docs/PREALPHA_FINAL_CORRECTIONS.md"
+      "scope": "linux_readiness_current_or_explicit_deferred",
+      "disposition": "Current docs distinguish removed MK1 history. Focused manifest schedules MK2 diagnostics, including positive cap holds and coupled profiler/native parity; original collision contracts remain.",
+      "evidence": "docs/PREALPHA_LINUX_READINESS.md"
     },
     {
       "id": "PL-01",
       "workstream": "P0-02",
       "original_quote": "historical suite passes should be supplemented by a small, reproducible current release gate.",
       "status": "resolved",
-      "scope": "final_prealpha_current_or_explicit_carried_scope",
-      "disposition": "Current focused manifest includes authoritative MK2, balance, fluid policy, actual settings controls, file picker, water rendering and genuine cold writer/reader continuation. No retired MK1 white-box scheduling tests restored.",
-      "evidence": "docs/PREALPHA_FINAL_CORRECTIONS.md"
+      "scope": "linux_readiness_current_or_explicit_deferred",
+      "disposition": "Authoritative focused CI now also schedules real MK2 hold/profiler diagnostics. Fifteen selected cross-system and four collision/contact cases pass; this is not a full-suite rerun.",
+      "evidence": "docs/PREALPHA_LINUX_READINESS.md"
     },
     {
       "id": "PL-02",
       "workstream": "P2-03",
       "original_quote": "SDK completeness and latest-feature coverage need attention.",
       "status": "improved",
-      "scope": "final_prealpha_current_or_explicit_carried_scope",
-      "disposition": "Inventory exists; no fresh all-17-tool SDK/clean-machine/current Windows qualification in this audit (F09).",
-      "evidence": "docs/PREALPHA_FINAL_CORRECTIONS.md"
+      "scope": "linux_readiness_current_or_explicit_deferred",
+      "disposition": "Fresh tracked Linux checkout builds all 17 SDK tools. Relocated SDK tool identities, host-loader closure, ordinary project creation, positive/negative tool operations and moved exports pass. Windows deferred by operator.",
+      "evidence": "docs/PREALPHA_LINUX_READINESS.md"
     },
     {
       "id": "PL-03",
       "workstream": "P2-03",
       "original_quote": "VM timings must remain diagnostic, not native-host performance claims.",
       "status": "deferred",
-      "scope": "final_prealpha_current_or_explicit_carried_scope",
-      "disposition": "Windows VM timings are diagnostic; no new VM or physical Windows GPU evidence.",
-      "evidence": "docs/PREALPHA_FINAL_CORRECTIONS.md"
+      "scope": "linux_readiness_current_or_explicit_deferred",
+      "disposition": "Windows and Android qualification explicitly deferred by operator; no VM or hardware claims.",
+      "evidence": "docs/PREALPHA_LINUX_READINESS.md"
     },
     {
       "id": "PL-04",
       "workstream": "P1-02",
       "original_quote": "The packaging workflow is Linux-hosted.",
       "status": "deferred",
-      "scope": "final_prealpha_current_or_explicit_carried_scope",
-      "disposition": "MinGW Linux-to-Windows and MSVC paths exist; current MK2 Windows binaries not qualified here.",
-      "evidence": "docs/PREALPHA_FINAL_CORRECTIONS.md"
+      "scope": "linux_readiness_current_or_explicit_deferred",
+      "disposition": "Existing MinGW/MSVC paths preserved; no Windows qualification in this operator-deferred pass.",
+      "evidence": "docs/PREALPHA_LINUX_READINESS.md"
     },
     {
       "id": "PL-05",
@@ -597,10 +597,10 @@
       "id": "L-10",
       "workstream": "P2-03",
       "original_quote": "Unperformed hardware/platform validation.",
-      "status": "open",
-      "scope": "final_prealpha_current_or_explicit_carried_scope",
-      "disposition": "Linux selected tests current; Windows/Android/current hardware matrices not requalified (F09).",
-      "evidence": "docs/PREALPHA_FINAL_CORRECTIONS.md"
+      "status": "improved",
+      "scope": "linux_readiness_current_or_explicit_deferred",
+      "disposition": "Current Linux source and SDK are qualified on Ubuntu 26.04.1/GCC 15.2; actual glibc 2.43 is recorded and Ubuntu24 policy is correctly rejected. Windows/Android deferred. No universal Linux binary claim.",
+      "evidence": "docs/PREALPHA_LINUX_READINESS.md"
     },
     {
       "id": "CAP-01",
@@ -625,9 +625,9 @@
       "workstream": "P1-02",
       "original_quote": "clean-machine checks for every shipped executable.",
       "status": "improved",
-      "scope": "final_prealpha_current_or_explicit_carried_scope",
-      "disposition": "Inventory exists; no fresh all-17-tool SDK/clean-machine/current Windows qualification in this audit (F09).",
-      "evidence": "docs/PREALPHA_FINAL_CORRECTIONS.md"
+      "scope": "linux_readiness_current_or_explicit_deferred",
+      "disposition": "All 17 Linux SDK tools staged with matching clean-source identity and checksums; representative actual workflows pass. Current Windows SDK qualification explicitly deferred.",
+      "evidence": "docs/PREALPHA_LINUX_READINESS.md"
     }
   ],
   "updates": [
@@ -636,6 +636,15 @@
       "input_commit": "b7db703ca3fc3c0d39ecc31009a1148b5b778762",
       "finding": "B-01",
       "evidence": "docs/PREALPHA_EVENT_DEPENDENCIES.md"
+    }
+  ],
+  "new_findings": [
+    {
+      "id": "MK2-ELASTIC-CONFINEMENT",
+      "status": "open",
+      "severity": "P1 within the extreme elastic/spinning confinement envelope",
+      "evidence": "docs/evidence/prealpha-linux-readiness/elastic-limit",
+      "disposition": "Direct native no-force e=1/friction=0 test: 100 m/s and 100 rad/s box between static walls gains kinetic energy (5077.33 to 125043.48, ratio 24.6278) in one 1/60 step. Other tested rates include contact/free-flight controls. Same ordinary-project fixture gives an identical endpoint on retained accepted runtime and diagnostic candidate. Root numerical mechanism not established; no solver retune or speculative fix. Requires targeted triage before claiming unrestricted high-rate elastic correctness."
     }
   ]
 }
