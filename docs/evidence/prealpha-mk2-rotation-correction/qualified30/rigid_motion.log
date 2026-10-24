@@ -1,0 +1,5 @@
+FREE hz=60 energy_relative=1.25326e-06 orientation_error_rad=0.000193171
+FREE hz=120 energy_relative=1.68538e-06 orientation_error_rad=4.60076e-05
+FREE hz=240 energy_relative=3.52057e-06 orientation_error_rad=8.11798e-06
+FREE hz=480 energy_relative=7.36345e-06 orientation_error_rad=6.99743e-06
+Rigid motion checks 10237 PASS

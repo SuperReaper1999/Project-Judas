@@ -120,6 +120,7 @@ struct PhysicsWorld::Impl::CCDQuery {
     double SpinPenetrationTarget(const std::array<unsigned, 4>& key) const {
         return world.SpinPenetrationTarget(key);
     }
-    double ImpactTime(unsigned a, unsigned b, int pa, int pb, double start, double finish, double target = 0);
+    double ImpactTime(unsigned a, unsigned b, int pa, int pb, double start, double finish, double target = 0, bool absoluteTarget = false,
+                      const MeshFeatureBudget* episode = nullptr);
     void EnsureImpactPoseStorage();
 };

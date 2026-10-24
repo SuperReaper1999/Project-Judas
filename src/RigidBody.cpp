@@ -79,6 +79,39 @@ glm::vec3 AngularDriftGenerator(const glm::mat3& inverseInertiaLocal,
  throw std::runtime_error("angular midpoint did not converge");
 }
 
+bool TryAngularDriftGenerator(const glm::mat3& inverseInertiaLocal,
+    const glm::quat& orientation, const glm::vec3& velocity, float duration,
+    glm::vec3& generator) {
+    const glm::dmat3 inverseBody(inverseInertiaLocal);
+    if (duration == 0 || velocity == glm::vec3(0) || !(glm::determinant(inverseBody) > 0)) {
+        generator = velocity;
+        return true;
+    }
+    const auto rotation = glm::mat3_cast(glm::normalize(glm::dquat(orientation)));
+    const auto initial = glm::inverse(inverseBody) * glm::transpose(rotation) * glm::dvec3(velocity);
+    auto middle = initial;
+    const double half = .5 * duration;
+    const double tolerance = 1e-12 * std::max(glm::length(initial), 1e-12);
+    for (int iteration = 0; iteration < 12; ++iteration) {
+        const auto omega = inverseBody * middle;
+        const auto residual = middle - initial - half * glm::cross(middle, omega);
+        if (glm::length(residual) <= tolerance) {
+            generator = glm::vec3(rotation * omega);
+            return true;
+        }
+        glm::dmat3 jacobian(1);
+        for (int axis = 0; axis < 3; ++axis) {
+            glm::dvec3 unit(0);
+            unit[axis] = 1;
+            jacobian[axis] = unit - half * (glm::cross(unit, omega) + glm::cross(middle, inverseBody * unit));
+        }
+        if (!std::isfinite(glm::determinant(jacobian)) || glm::determinant(jacobian) == 0)
+            return false;
+        middle -= glm::inverse(jacobian) * residual;
+    }
+    return false;
+}
+
 void IntegrateRigidBody(RigidBody& body, float fixedDeltaTime) {
     IntegrateRigidBodyVelocity(body, fixedDeltaTime);
     IntegrateRigidBodyPosition(body, fixedDeltaTime);

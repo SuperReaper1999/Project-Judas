@@ -1,0 +1,5 @@
+ENCLOSURES relative_failures=0 shape_failures=0 rounded_vs_ideal_deviations=60856
+INTERACTION rotated=0 events=0 momentum=0.49999994
+INTERACTION rotated=1 events=0 momentum=0.5
+ELASTIC bounces=2 arrival 4.5000 in [3.7500, 6.0000], 4.1250 in [1.8750, 4.1250]
+M91 continuity checks=404 failures=0

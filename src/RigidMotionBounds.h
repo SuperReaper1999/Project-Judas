@@ -81,7 +81,7 @@ inline float HiFloat(double value){float f=float(value);return double(f)<value?s
 inline Iv Square(Iv v){const auto a=contact_geometry::Abs(v);return a*a;}
 inline std::optional<contact_geometry::M<Iv>> TryDynamicRotationInterval(
         const RigidMotionSegment& segment,double start,double finish){
-    if(segment.prescribed||!std::isfinite(start)||!std::isfinite(finish)||start>finish||
+    if(segment.prescribed||segment.exactRotation||!std::isfinite(start)||!std::isfinite(finish)||start>finish||
        start<segment.begin||finish>segment.end||!std::isfinite(float(finish-segment.begin))||
        !Finite3(segment.driftAngularVelocity)||!Finite4(segment.orientation))return std::nullopt;
     try{
@@ -209,16 +209,18 @@ inline std::optional<Iv> TryRelativeCentreProjection(const RigidMotionSegment* a
             auto drift=[&](const RigidMotionSegment* segment,const RigidBody& from){
                 if(!segment)return Drift{Iv(double(from.position[k])),Iv(0),Iv(0)};
                 const double velocity=segment->linearVelocity[k];
-                const Iv elapsed=Iv(start)-Iv(segment->begin);
-                const double maximumElapsed=std::max(std::abs(start-segment->begin),std::abs(finish-segment->begin));
-                const double doubleMagnitude=std::max({std::abs(start),std::abs(finish),std::abs(segment->begin)});
+                const auto origin = segment->anchoredTranslation ? segment->translationOrigin : segment->position;
+                const double anchor = segment->anchoredTranslation ? segment->translationTime : segment->begin;
+                const Iv elapsed=Iv(start)-Iv(anchor);
+                const double maximumElapsed=std::max(std::abs(start-anchor),std::abs(finish-anchor));
+                const double doubleMagnitude=std::max({std::abs(start),std::abs(finish),std::abs(anchor)});
                 const double doubleError=std::nextafter(doubleMagnitude,std::numeric_limits<double>::infinity())-doubleMagnitude;
                 const Iv timeError=Iv(doubleError)+Iv(FloatRoundingBound(maximumElapsed+doubleError));
                 const double roundedElapsed=double(std::nextafter(float(maximumElapsed+doubleError),std::numeric_limits<float>::infinity()));
                 const double product=std::abs(velocity)*roundedElapsed;
                 const Iv error=Iv(std::abs(velocity))*timeError+Iv(FloatRoundingBound(product))+
-                    Iv(FloatRoundingBound(std::abs(double(segment->position[k]))+product));
-                return Drift{Iv(double(segment->position[k]))+Iv(velocity)*elapsed,Iv(velocity),error};
+                    Iv(FloatRoundingBound(std::abs(double(origin[k]))+product));
+                return Drift{Iv(double(origin[k]))+Iv(velocity)*elapsed,Iv(velocity),error};
             };
             const auto first=drift(a,fromA),second=drift(b,fromB);
             const Iv error=first.error+second.error;

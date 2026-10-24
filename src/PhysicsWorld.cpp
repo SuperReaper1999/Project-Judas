@@ -663,6 +663,8 @@ void PhysicsWorld::StepCoupled(float dt, unsigned intervals,
                     for (auto segment : b->motion.Segments()) {
                         segment.begin += double(interval) * h;
                         segment.end += double(interval) * h;
+                        if (segment.anchoredTranslation)
+                            segment.translationTime += double(interval) * h;
                         s.motion.push_back(segment);
                     }
             if (after)

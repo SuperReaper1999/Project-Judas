@@ -1,0 +1,8 @@
+Shadow maps: on
+Graphics: 3.3.0 NVIDIA 580.178.04 / NVIDIA GeForce GTX 970/PCIe/SSE2
+Renderer fragment texture units: 32 (material path uses 12)
+Project: Confined elastic body probe (/home/conner/Documents/GitHub/Project-Judas/.cache/mk2-rotation-repair/js-original24/game.judasproj)
+Scene: Elastic confinement (/home/conner/Documents/GitHub/Project-Judas/.cache/mk2-rotation-repair/js-original24/Scenes/main.judas)
+World origin (m): 0.000, 0.000, 0.000
+step,time,posX,posY,posZ,upX,upY,upZ,grounded,velX,velY,velZ,gravX,gravY,gravZ,controlled,frame,steps,paused,obj0PosX,obj0PosY,obj0PosZ,obj0VelX,obj0VelY,obj0VelZ
+JS: ENERGY_ENDPOINT {"v":{"x":95.19842529296875,"y":0,"z":0},"w":{"x":0,"y":0,"z":-265.7042541503906},"q":{"x":0,"y":0,"z":0.34660881757736206,"w":0.9380097985267639}}

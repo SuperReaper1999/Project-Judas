@@ -532,7 +532,11 @@ public:
         glm::vec3 linearVelocity{0}, angularVelocity{0}; // angular pose generator, not transported endpoint velocity
         bool movable = false;
         glm::vec3 pivotOffset{0}; // COM-relative authored pivot, value owned
-        bool prescribed = false; // exponential prescribed rotation; anchored dynamic Cayley drift
+        bool prescribed = false; // prescribed constant angular rate
+        bool exactRotation = false; // analytic principal-axis leaf, otherwise Cayley midpoint
+        bool anchoredTranslation = false;
+        glm::vec3 translationOrigin{0}; // center-of-mass origin of the velocity episode
+        double translationTime = 0;
     };
     std::vector<BodyMotionSegment> GetBodyMotionSegments(BodyHandle handle) const;
     // Uses the authoritative anchored position integrator, never restarts

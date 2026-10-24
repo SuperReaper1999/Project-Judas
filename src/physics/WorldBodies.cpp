@@ -798,7 +798,11 @@ PhysicsWorld::GetBodyMotionSegments(BodyHandle handle) const {
              source.driftAngularVelocity,
              source.inverseMass > 0 || source.prescribed,
              body->shape.pivotOffset,
-             source.prescribed});
+             source.prescribed,
+             source.exactRotation,
+             source.anchoredTranslation,
+             source.translationOrigin,
+             source.translationTime});
     }
     if (!result.empty())
         result.back().endPose = {body->rigidBody.position -
@@ -821,6 +825,10 @@ BodyTransform PhysicsWorld::EvaluateBodyMotionSegment(const BodyMotionSegment &s
     source.driftAngularVelocity = segment.angularVelocity;
     source.inverseMass = segment.movable && !segment.prescribed ? 1.f : 0.f;
     source.prescribed = segment.prescribed;
+    source.exactRotation = segment.exactRotation;
+    source.anchoredTranslation = segment.anchoredTranslation;
+    source.translationOrigin = segment.translationOrigin;
+    source.translationTime = segment.translationTime;
     const auto body = source.Evaluate(time);
     return {body.position - body.orientation * segment.pivotOffset, body.orientation};
 }

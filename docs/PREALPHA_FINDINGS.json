@@ -167,7 +167,7 @@
       "original_quote": "Dense-contact physics still has severe latency tails",
       "status": "improved",
       "scope": "linux_readiness_current_or_explicit_deferred",
-      "disposition": "MK2 limits are now observable through actual per-body/step/response hold counters and completed coupled-step profiler totals. No new dense-performance speedup claim; high-rate elastic confinement remains separately open.",
+      "disposition": "MK2 bounds remain observable through actual hold counters. Rotation/contact consistency is corrected with independent energy/collision evidence; matched benchmarks show modest cost, not a dense-performance speedup. Extreme bounded-work and high-spin accuracy limitations remain.",
       "evidence": "docs/PREALPHA_LINUX_READINESS.md"
     },
     {
@@ -636,15 +636,22 @@
       "input_commit": "b7db703ca3fc3c0d39ecc31009a1148b5b778762",
       "finding": "B-01",
       "evidence": "docs/PREALPHA_EVENT_DEPENDENCIES.md"
+    },
+    {
+      "date": "2026-10-24",
+      "input_commit": "bded63dfdaefdeec6484d66b3211712c200c2941",
+      "finding": "MK2-ELASTIC-CONFINEMENT",
+      "evidence": "docs/PREALPHA_MK2_ROTATION_CORRECTION.md",
+      "status": "resolved_tested_scope_human_pending"
     }
   ],
   "new_findings": [
     {
       "id": "MK2-ELASTIC-CONFINEMENT",
-      "status": "open",
+      "status": "resolved_tested_scope_human_pending",
       "severity": "P1: elastic spinning impacts, including tested moderate gameplay rates",
-      "evidence": "docs/evidence/prealpha-elastic-linux-baseline",
-      "disposition": "Open. Arrival-pose rewind keeps incompatible angular velocity; exponential drift uses a Cayley midpoint predictor; relaxation and continuous re-timing also cross configurations. First impact conserves energy locally then pose rewind raises 5077.33 to 5781.02. A 5 m/s, 20 rad/s e=1 case gains 31.845% in two seconds with zero holds. Local transport/pullback and combined integrator experiments rejected. No production physics correction shipped; coherent interval/contact-state repair still required."
+      "evidence": "docs/PREALPHA_MK2_ROTATION_CORRECTION.md",
+      "disposition": "Consistent adaptive midpoint/Cayley trajectories, same-configuration relaxation and chronological arrival response repair the original two-second energy-gain cases. Original retained executable reproduces 31.845%; candidate peak gain 0.0000203%, zero holds. Independent rotation, impact timing, momentum, curved meshes, cold-process saves and consumer tests pass on Linux. No damping, energy clamp or cutoff retune. Long-run dissipation, extreme-spin phase error and bounded-arrival limits remain documented; Windows/Android and human acceptance are pending."
     }
   ]
 }

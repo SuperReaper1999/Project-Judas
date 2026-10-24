@@ -87,10 +87,10 @@ auto PhysicsWorld::Impl::CCDQuery::PlaneDrift(unsigned a, unsigned b, int pa, in
         const auto &segments = body.motion.Segments();
         auto segment = std::upper_bound(segments.begin(), segments.end(), time,
                                         [](double t, const auto &s) { return t < s.begin; });
-        const double elapsed =
-            body.isDynamic && segment != segments.begin() ? time - (--segment)->begin : 0;
-        const glm::dvec3 instantaneous =
-            body.isKinematic ? omega : omega / (1 + .25 * w2 * elapsed * elapsed);
+        const RigidMotionSegment* leaf = segment == segments.begin() ? nullptr : &*--segment;
+        const double elapsed = leaf ? time - leaf->begin : 0;
+        const glm::dvec3 instantaneous = !leaf || leaf->prescribed || leaf->exactRotation
+            ? omega : omega / (1 + .25 * w2 * elapsed * elapsed);
         auto vertex = [&](glm::dvec3 local) {
             const glm::dvec3 r = rotation * local;
             const glm::dvec3 perpendicular =
@@ -454,19 +454,8 @@ auto PhysicsWorld::Impl::SpinPenetrationTarget(const std::array<unsigned, 4> &ke
 }
 
 auto PhysicsWorld::Impl::CCDQuery::ImpactTime(unsigned a, unsigned b, int pa, int pb, double start,
-                                    double finish, double target) -> double {
+                                    double finish, double target, bool absoluteTarget, const MeshFeatureBudget* episode) -> double {
     PhysicsWorkTimer timer(work.toi, work.active);
-    // A target can finish inside the step. Never certify a plane across
-    // its velocity discontinuity; search the two real ledger intervals.
-    // MK2 records each dynamic body's substeps (and any impact instant) as
-    // separate segments, so its dynamic ledgers are searched the same way.
-    for (auto slot : {a, b})
-        if (bodies[slot].isKinematic || bodies[slot].isDynamic)
-            for (const auto &s : bodies[slot].motion.Segments())
-                if (s.end > start && s.end < finish) {
-                    auto first = ImpactTime(a, b, pa, pb, start, s.end, target);
-                    return first <= s.end ? first : ImpactTime(a, b, pa, pb, s.end, finish, target);
-                }
     ++stats.impactQueries;
     const auto &ba = bodies[a];
     const auto &bb = bodies[b];
@@ -518,7 +507,8 @@ auto PhysicsWorld::Impl::CCDQuery::ImpactTime(unsigned a, unsigned b, int pa, in
     if (!(speed > 0))
         return finish + 1;
     MeshFeatureBudget meshBudget;
-    if (meshAdvance) {
+    if (episode) meshBudget = *episode;
+    else if (meshAdvance) {
         const auto firstPrimitive = PrimitiveAt(ba.shape, posa, pa),
                    secondPrimitive = PrimitiveAt(bb.shape, posb, pb);
         meshBudget = BuildMeshFeatureBudget(firstMesh ? secondPrimitive : firstPrimitive,
@@ -532,8 +522,22 @@ auto PhysicsWorld::Impl::CCDQuery::ImpactTime(unsigned a, unsigned b, int pa, in
         return finish + 1;
     // Native mesh start depths were already collected in the one traversal
     // above. With no accepted start contact their global penetration is zero.
-    if (target > 0 && !meshAdvance)
+    if (target > 0 && !meshAdvance && !absoluteTarget)
         target += PairPenetration(a, b, pa, pb, start);
+    if (target == 0 && !meshContinuation && PairTouches(a,b,pa,pb,start) &&
+        SpinsThroughSupport({a,b,unsigned(pa),unsigned(pb)},finish-start,start))
+        return ImpactTime(a,b,pa,pb,start,finish,SpinPenetrationTarget({a,b,unsigned(pa),unsigned(pb)}));
+    // Integrator knots are NOT new contact episodes. Carry the original
+    // absolute penetration target and native mesh-face budget across them.
+    for (auto slot : {a,b})
+        if (bodies[slot].isKinematic || bodies[slot].isDynamic)
+            for (const auto& segment : bodies[slot].motion.Segments())
+                if (segment.end > start && segment.end < finish) {
+                    const auto* anchor = meshAdvance ? &meshBudget : nullptr;
+                    const double first = ImpactTime(a,b,pa,pb,start,segment.end,target,true,anchor);
+                    return first <= segment.end ? first :
+                        ImpactTime(a,b,pa,pb,segment.end,finish,target,true,anchor);
+                }
     // Bisection still performs all 32 represented-time bracket updates.
     // Binary32 pose integration can map several of those times to exactly
     // the same pair of poses. Contact truth for that identical geometry is
@@ -560,7 +564,7 @@ auto PhysicsWorld::Impl::CCDQuery::ImpactTime(unsigned a, unsigned b, int pa, in
                 return old.touching;
             }
         bool touching;
-        if (meshAdvance && at == start) {
+        if (meshAdvance && at == start && !episode) {
             // A budget cannot be exceeded at its own actual-depth anchor;
             // absent native start contacts also give a proven false query.
             touching = false;

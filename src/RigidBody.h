@@ -146,3 +146,9 @@ glm::vec3 TransportAngularVelocity(const glm::mat3& inverseInertiaLocal,
 // is an explicit error rather than a nonconservative fallback.
 glm::vec3 AngularDriftGenerator(const glm::mat3& inverseInertiaLocal,
     const glm::quat& orientation,const glm::vec3& velocity,float duration);
+
+// One bounded Newton trial of the Cayley body-momentum midpoint. Failure asks
+// the trajectory builder to subdivide the physical interval, not add damping.
+bool TryAngularDriftGenerator(const glm::mat3& inverseInertiaLocal,
+    const glm::quat& orientation, const glm::vec3& velocity, float duration,
+    glm::vec3& generator);

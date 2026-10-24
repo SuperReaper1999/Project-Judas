@@ -131,6 +131,7 @@ set(JUDAS_PHYSICS_SOURCES
     src/PhysicsCastGeometry.cpp
     src/ImpactSolver.cpp
     src/RigidBody.cpp
+    src/RigidRotation.cpp
     src/RigidBodyGravity.cpp
     src/Contacts.cpp
     src/ContactSolver.cpp
@@ -511,7 +512,7 @@ target_include_directories(judas_rigid_contact_tests PRIVATE src)
 target_link_libraries(judas_rigid_contact_tests PRIVATE ${JUDAS_GLM})
 judas_warnings(judas_rigid_contact_tests)
 
-# Judas Physics MK2 prototype acceptance (opt-in solver; MK1 stays default).
+# Judas Physics MK2 production acceptance. Headless.
 add_executable(judas_mk2_physics_tests
     tests/Mk2PhysicsTests.cpp
     ${JUDAS_PHYSICS_SOURCES}
@@ -1684,6 +1685,8 @@ judas_add_engine_test(judas_editor_file_browser_tests tests/EditorFileBrowserTes
     SOURCES src/editor/FileBrowser.cpp LIBRARIES judas_imgui)
 
 judas_add_engine_test(judas_mk2_diagnostics_tests tests/Mk2DiagnosticsTests.cpp)
+judas_add_engine_test(judas_mk2_rotation_tests tests/Mk2RotationTests.cpp)
+judas_add_engine_test(judas_mk2_rotation_cold_tests tests/Mk2RotationColdTests.cpp)
 
 # Finalize after every native test has declared its authoritative entry point.
 include(cmake/JudasValidation.cmake)

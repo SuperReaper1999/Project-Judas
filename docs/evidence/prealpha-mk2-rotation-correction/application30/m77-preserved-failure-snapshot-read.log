@@ -1,0 +1,20 @@
+Shadow maps: on
+Graphics: 3.3.0 NVIDIA 580.178.04 / NVIDIA GeForce GTX 970/PCIe/SSE2
+Renderer fragment texture units: 32 (material path uses 12)
+PASS actual GL host: 
+PASS normal project loads: 
+PASS logical project controls: 
+PASS normal authored/captured scene: 
+PASS normal immutable assets and world publish: 
+PASS fresh-process participants restore: 
+PASS fresh process preserves step/recovery clocks without replay
+PASS fresh controller does not fabricate saved contact observations
+PASS restored task resumes the saved corrective swing
+PASS restored game starts: 
+ACTOR 12 status=2 root=2.91919,1.40835,0.779056 height=1.40892 up=0.999773 speed=0.024308 supports=4/2 landings=1 reason=measured supported physical standing
+PASS restored corrective swing completes a physical landing
+PASS restored native task reaches measured physical standing
+PASS ordinary lab callback health matches deliberate fault policy
+PASS real final pose/skinning and diagnostic rendering path executes
+PASS Stop destroys the owned runtime world
+SUMMARY 15 checks 0 failures

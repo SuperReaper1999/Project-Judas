@@ -25,9 +25,16 @@ struct RigidMotionSegment {
     glm::vec3 endPosition{0};
     glm::quat endOrientation{1,0,0,0};
     bool prescribed=false;
-    // Integrate the dynamic drift rate by its exact rotation (MK2) instead of
-    // the first-order quaternion update, whose angle is 2 atan(theta/2): at
-    // 100 rad/s and 60 Hz a free body would turn 17% too slowly.
+    // Rotation leaves and solver intervals need not restart unchanged linear
+    // flight. This anchor belongs to a velocity episode, in the ledger clock.
+    glm::vec3 linearProjection{0}, angularProjection{0};
+    bool hasPhysicalLinearVelocity = false;
+    glm::vec3 physicalLinearVelocity{0};
+    bool anchoredTranslation = false;
+    glm::vec3 translationOrigin{0};
+    double translationTime = 0;
+    // This leaf is an analytic principal-axis rotation. General dynamic
+    // leaves use the Cayley map matching their implicit midpoint predictor.
     bool exactRotation=false;
     RigidMotionGeometry EvaluateGeometry(double time) const {
         if (time < begin || time > end) throw std::out_of_range("motion segment time");
@@ -41,7 +48,9 @@ struct RigidMotionSegment {
         // This is an exact bit test, not an angular tolerance or a CCD time cap.
         if (prescribed || !(inverseMass <= 0.0f)) {
             const float elapsed = static_cast<float>(time - begin);
-            result.position += result.linearVelocity * elapsed;
+            result.position = anchoredTranslation
+                ? translationOrigin + result.linearVelocity * float(time - translationTime)
+                : position + result.linearVelocity * elapsed;
             const glm::quat omega(0.0f, driftAngularVelocity.x, driftAngularVelocity.y, driftAngularVelocity.z);
             // Prescribed angular velocity is the actual constant world rate.
             // Dynamic drift uses the midpoint angular predictor fixed at the
@@ -62,13 +71,19 @@ struct RigidMotionSegment {
         RigidBody result;
         result.inverseMass=inverseMass;result.inverseInertiaLocal=inverseInertiaLocal;
         result.position=geometry.position;result.orientation=geometry.orientation;
-        result.linearVelocity=geometry.linearVelocity;result.angularVelocity=angularVelocity;
+        result.linearVelocity=hasPhysicalLinearVelocity ? physicalLinearVelocity : geometry.linearVelocity;
+        result.angularVelocity=angularVelocity;
         if(!prescribed&&!result.IsStatic())
             result.angularVelocity=TransportAngularVelocity(inverseInertiaLocal,orientation,result.orientation,angularVelocity);
         return result;
     }
 
 };
+// Append an anchored, error-controlled torque-free trajectory. Every dynamic
+// leaf uses its matching Cayley midpoint; principal-axis drift remains analytic.
+void AppendDynamicRigidMotion(std::vector<RigidMotionSegment>& segments,
+    unsigned owner, const RigidBody& body, double begin, double end);
+
 class RigidMotion {
 public:
     void Begin(unsigned int owner, const RigidBody& body, double duration, bool exactRotation=false) {
@@ -122,7 +137,7 @@ public:
         Append(owner, next, time, finish, false, previous.exactRotation);
     }
     void Clear() { segments.clear(); }
-    void ShiftOrigin(glm::dvec3 delta) { for(auto& s:segments){s.position=glm::vec3(glm::dvec3(s.position)-delta);s.endPosition=glm::vec3(glm::dvec3(s.endPosition)-delta);} }
+    void ShiftOrigin(glm::dvec3 delta) { for(auto& s:segments){s.position=glm::vec3(glm::dvec3(s.position)-delta);s.endPosition=glm::vec3(glm::dvec3(s.endPosition)-delta);if(s.anchoredTranslation)s.translationOrigin=glm::vec3(glm::dvec3(s.translationOrigin)-delta);} }
     // Concatenate already resolved coupled intervals without restarting their
     // angular integrators. The same generation owner must span every segment.
     void SetRecorded(std::vector<RigidMotionSegment> values) { segments=std::move(values); }
@@ -130,6 +145,10 @@ public:
     const std::vector<RigidMotionSegment>& Segments() const { return segments; }
 private:
     void Append(unsigned int owner, const RigidBody& body, double begin, double end,bool prescribed=false,bool exactRotation=false) {
+        if (!prescribed && exactRotation && !body.IsStatic()) {
+            AppendDynamicRigidMotion(segments, owner, body, begin, end);
+            return;
+        }
         RigidMotionSegment s;
         s.inverseMass=body.inverseMass;s.inverseInertiaLocal=body.inverseInertiaLocal; s.prescribed=prescribed; s.exactRotation=exactRotation; s.owner=owner; s.begin=begin; s.end=end; s.position=body.position;
         s.orientation=body.orientation; s.linearVelocity=body.linearVelocity; s.angularVelocity=body.angularVelocity;

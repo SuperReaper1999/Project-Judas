@@ -1,0 +1,14 @@
+{
+  "source_commit": "bded63dfdaefdeec6484d66b3211712c200c2941",
+  "utc": "2026-10-24T20:20:11.398966+00:00",
+  "compiler": "c++ (Ubuntu 15.2.0-16ubuntu1) 15.2.0",
+  "library_sha256": "2e037954af5b05e32df84bec35dfd72c9db5446009939a5f63961e412cc69297",
+  "binary_sha256": "ff0453f5182ea54f9cc13a17a744af13991a1e641e38e699f84b3a6dbd3e71cc",
+  "flags": [
+    "-O3",
+    "-DNDEBUG",
+    "-DM87_ALLOCATION_DIAGNOSTICS",
+    "-std=gnu++17"
+  ],
+  "note": "Baseline archived headers/benchmark from input commit; preserved native engine archive from the immediately preceding unmodified-source build. Candidate uses matching compiler/driver flags."
+}

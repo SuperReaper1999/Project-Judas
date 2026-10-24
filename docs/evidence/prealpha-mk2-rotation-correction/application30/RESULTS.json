@@ -1,0 +1,140 @@
+[
+  {
+    "name": "m77-cold-write",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_balance_lab_tests",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/mk2-rotation-repair/application30/m77-cold",
+      "cold-write"
+    ],
+    "working_directory": "/home/conner/Documents/GitHub/Project-Judas",
+    "returncode": 0,
+    "seconds": 0.664802734998375,
+    "explicit_environment": {
+      "SDL_VIDEODRIVER": "x11",
+      "SDL_AUDIODRIVER": "dummy",
+      "JUDAS_WORLD_STATE": "none"
+    },
+    "binary_sha256": "2f477005f72bfc9683a1de92b303fa52134897031c5fd07acc0eef87b7df2bd1"
+  },
+  {
+    "name": "m77-cold-read",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_balance_lab_tests",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/mk2-rotation-repair/application30/m77-cold",
+      "cold-read"
+    ],
+    "working_directory": "/home/conner/Documents/GitHub/Project-Judas",
+    "returncode": 0,
+    "seconds": 0.41448813100214466,
+    "explicit_environment": {
+      "SDL_VIDEODRIVER": "x11",
+      "SDL_AUDIODRIVER": "dummy",
+      "JUDAS_WORLD_STATE": "none"
+    },
+    "binary_sha256": "2f477005f72bfc9683a1de92b303fa52134897031c5fd07acc0eef87b7df2bd1"
+  },
+  {
+    "name": "m77-preserved-failure-snapshot-read",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_balance_lab_tests",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/mk2-rotation-repair/combined22/m77-cold-desktop",
+      "cold-read"
+    ],
+    "working_directory": "/home/conner/Documents/GitHub/Project-Judas",
+    "returncode": 0,
+    "seconds": 0.41442560399809736,
+    "explicit_environment": {
+      "SDL_VIDEODRIVER": "x11",
+      "SDL_AUDIODRIVER": "dummy",
+      "JUDAS_WORLD_STATE": "none"
+    },
+    "binary_sha256": "2f477005f72bfc9683a1de92b303fa52134897031c5fd07acc0eef87b7df2bd1"
+  },
+  {
+    "name": "hearthworld-write",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_hearthworld_application_tests",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/mk2-rotation-repair/hearthworld24/hearthworld.judasproj",
+      "write",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/mk2-rotation-repair/application30/hearthworld"
+    ],
+    "working_directory": "/home/conner/Documents/GitHub/Project-Judas",
+    "returncode": 0,
+    "seconds": 3.970703125,
+    "explicit_environment": {
+      "SDL_VIDEODRIVER": "x11",
+      "SDL_AUDIODRIVER": "dummy",
+      "JUDAS_WORLD_STATE": "none"
+    },
+    "binary_sha256": "1c4cc40f6f935c09abc85b8619cce82bb1909668cd7b4202f9dc7272d161ac89"
+  },
+  {
+    "name": "hearthworld-cold-read",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_hearthworld_application_tests",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/mk2-rotation-repair/hearthworld24/hearthworld.judasproj",
+      "read",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/mk2-rotation-repair/application30/hearthworld"
+    ],
+    "working_directory": "/home/conner/Documents/GitHub/Project-Judas",
+    "returncode": 0,
+    "seconds": 0.6649083340016659,
+    "explicit_environment": {
+      "SDL_VIDEODRIVER": "x11",
+      "SDL_AUDIODRIVER": "dummy",
+      "JUDAS_WORLD_STATE": "none"
+    },
+    "binary_sha256": "1c4cc40f6f935c09abc85b8619cce82bb1909668cd7b4202f9dc7272d161ac89"
+  },
+  {
+    "name": "original-js-probe",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/mk2-rotation-repair/js-original24/game.judasproj"
+    ],
+    "working_directory": "/home/conner/Documents/GitHub/Project-Judas",
+    "returncode": 0,
+    "seconds": 0.21424144099728437,
+    "explicit_environment": {
+      "SDL_VIDEODRIVER": "x11",
+      "SDL_AUDIODRIVER": "dummy",
+      "JUDAS_WORLD_STATE": "none",
+      "JUDAS_TEST_SCRIPT": "/home/conner/Documents/GitHub/Project-Judas/.cache/mk2-rotation-repair/js-original24/probe.test"
+    },
+    "binary_sha256": "60e87e46c98c1cbf70a8eeb694e543f4f6f3ea090d1f837771ec5a84f2f7b529"
+  },
+  {
+    "name": "export-probe",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_export",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/mk2-rotation-repair/js-original24/game.judasproj",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/mk2-rotation-repair/application30/exported-probe",
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas"
+    ],
+    "working_directory": "/home/conner/Documents/GitHub/Project-Judas",
+    "returncode": 0,
+    "seconds": 0.21438608400058,
+    "explicit_environment": {
+      "SDL_VIDEODRIVER": "x11",
+      "SDL_AUDIODRIVER": "dummy",
+      "JUDAS_WORLD_STATE": "none"
+    },
+    "binary_sha256": "a5470b1263e5098b199ca1238d69528ee00554f52e87acb60dc36621cf5bd353"
+  },
+  {
+    "name": "relocated-export",
+    "command": [
+      "/tmp/judas-mk2-rotation-339140/judas"
+    ],
+    "working_directory": "/tmp",
+    "returncode": 0,
+    "seconds": 0.21437307900123415,
+    "explicit_environment": {
+      "SDL_VIDEODRIVER": "x11",
+      "SDL_AUDIODRIVER": "dummy",
+      "JUDAS_WORLD_STATE": "none",
+      "JUDAS_TEST_SCRIPT": "/home/conner/Documents/GitHub/Project-Judas/.cache/mk2-rotation-repair/application30/relocated-input.test"
+    },
+    "binary_sha256": "60e87e46c98c1cbf70a8eeb694e543f4f6f3ea090d1f837771ec5a84f2f7b529"
+  }
+]

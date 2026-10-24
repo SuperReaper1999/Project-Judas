@@ -8,7 +8,7 @@ This reconciles all 54 original findings. Current Linux results and remaining li
 | --- | --- | --- |
 | A-01 | resolved | Fresh mesh arrival/continuation and collision-continuity pass; old MK1 scheduling mechanism is retired, not a current defect. |
 | A-02 | resolved | Fresh mesh arrival/continuation and collision-continuity pass; old MK1 scheduling mechanism is retired, not a current defect. |
-| B-01 | improved | MK2 limits are now observable through actual per-body/step/response hold counters and completed coupled-step profiler totals. No new dense-performance speedup claim; high-rate elastic confinement remains separately open. |
+| B-01 | improved | Rotation/contact consistency corrected with independent evidence. Matched benchmarks show modest cost, not a dense-performance speedup. Extreme bounded-work and high-spin accuracy limitations remain. |
 | C-01 | resolved | Current provenance infrastructure retained; current c859 identities and matching relocated game export verified. No new channel changes or update-service qualification. |
 | C-02 | resolved | Current provenance infrastructure retained; current c859 identities and matching relocated game export verified. No new channel changes or update-service qualification. |
 | C-03 | resolved | Current provenance infrastructure retained; current c859 identities and matching relocated game export verified. No new channel changes or update-service qualification. |
@@ -61,10 +61,16 @@ This reconciles all 54 original findings. Current Linux results and remaining li
 | CAP-02 | deferred | Advanced workflows have explicit boundaries; no claim of universal composition or every-feature certification. |
 | D-03 | improved | All 17 Linux SDK tools staged with matching clean-source identity and checksums; representative actual workflows pass. Current Windows SDK qualification explicitly deferred. |
 
-## Newly reproduced numerical limit
+## Rotation/contact correction — automated Linux qualification
 
-**MK2-ELASTIC-CONFINEMENT** remains open, including a 5 m/s / 20 rad/s elastic
-case gaining 31.845% in two seconds without safety holds. Arrival pose/velocity
-inconsistency, incompatible rotation maps and nonpassive state transitions are
-now evidenced; local repair experiments failed and were not installed.
-See [the investigation and rejected experiments](PREALPHA_ELASTIC_LINUX_BASELINE.md).
+**MK2-ELASTIC-CONFINEMENT** is corrected within the tested scope; human acceptance
+is pending. The retained original executable again gains 31.845% in two seconds;
+the candidate peak gain is 0.0000203%, with zero holds. Consistent rotation maps,
+same-configuration relaxation and chronological arrival response address the
+underlying mechanism. Independent timing, momentum, curved-mesh, joint, cold-save
+and consumer checks pass. No damping, energy clamp or restitution-cutoff retune.
+
+See [correction, costs and limitations](PREALPHA_MK2_ROTATION_CORRECTION.md).
+Long-run dissipation, extreme-spin phase error and bounded-arrival limitations
+remain; Windows/Android are not qualified. Original failures and rejected
+experiments remain in [the earlier investigation](PREALPHA_ELASTIC_LINUX_BASELINE.md).

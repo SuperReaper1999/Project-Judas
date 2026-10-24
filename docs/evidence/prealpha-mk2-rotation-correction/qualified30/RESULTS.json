@@ -1,0 +1,226 @@
+[
+  {
+    "name": "mk2_rotation",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_mk2_rotation_tests"
+    ],
+    "returncode": 0,
+    "seconds": 8.475961819000077,
+    "started_utc": "2026-10-24T21:54:56.608160+00:00",
+    "binary_sha256": "01fb2c4430b0f7291605267b3d9183cc78ae3e4df0ba84833b2e7f07aeae964a"
+  },
+  {
+    "name": "mk2_physics",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_mk2_physics_tests"
+    ],
+    "returncode": 0,
+    "seconds": 3.418448200001876,
+    "started_utc": "2026-10-24T21:55:05.086311+00:00",
+    "binary_sha256": "0cb830e4a34b67cc7b87be2c437778573ae38ffd695f5634d53167bf8cfa8691"
+  },
+  {
+    "name": "physics_continuation",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_physics_continuation_tests"
+    ],
+    "returncode": 0,
+    "seconds": 0.015796987998328405,
+    "started_utc": "2026-10-24T21:55:08.507060+00:00",
+    "binary_sha256": "eef119ab17b84159de18ee73c21d69dbdd402737fb7dc274a9aa06841a86e441"
+  },
+  {
+    "name": "mk2_diagnostics",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_mk2_diagnostics_tests"
+    ],
+    "returncode": 0,
+    "seconds": 0.2141488359993673,
+    "started_utc": "2026-10-24T21:55:08.576439+00:00",
+    "binary_sha256": "9e07e88f7e42418eb960363d6acf1b7c53dd666096f152d9c41944f70f4cd61d"
+  },
+  {
+    "name": "joint",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_joint_tests"
+    ],
+    "returncode": 0,
+    "seconds": 0.06410381900059292,
+    "started_utc": "2026-10-24T21:55:08.792746+00:00",
+    "binary_sha256": "1584fe6cd0c02c7e7ab1af86bca19a698261e973679bb3389257c9c856fa172c"
+  },
+  {
+    "name": "ragdoll",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_ragdoll_tests"
+    ],
+    "returncode": 0,
+    "seconds": 0.21436536500186776,
+    "started_utc": "2026-10-24T21:55:08.858107+00:00",
+    "binary_sha256": "3b08f87c74a0a918e50c25e1658c70105c0b4bb54c2c30ba0298c212de623647"
+  },
+  {
+    "name": "physical_animation",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_physical_animation_tests"
+    ],
+    "returncode": 0,
+    "seconds": 0.1139296250003099,
+    "started_utc": "2026-10-24T21:55:09.126290+00:00",
+    "binary_sha256": "8de49af9414eecf2a1c7c520076d10a018959818569c0e35ce6f1118e3dda0be"
+  },
+  {
+    "name": "physical_balance_controller",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_physical_balance_controller_tests"
+    ],
+    "returncode": 0,
+    "seconds": 3.4201035299993237,
+    "started_utc": "2026-10-24T21:55:09.293929+00:00",
+    "binary_sha256": "708def3e517e10a9d79adc8bceeb7418ea93284c244ae33be9beec7d1975d699"
+  },
+  {
+    "name": "kinematic",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_kinematic_tests"
+    ],
+    "returncode": 0,
+    "seconds": 0.03184909799892921,
+    "started_utc": "2026-10-24T21:55:12.716793+00:00",
+    "binary_sha256": "0c0cd2a44cbb265ca5ad388a5203592b5511eebcea351dc3e729342cd370b6b3"
+  },
+  {
+    "name": "character_motor",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_character_motor_tests"
+    ],
+    "returncode": 0,
+    "seconds": 0.3642736440015142,
+    "started_utc": "2026-10-24T21:55:12.750059+00:00",
+    "binary_sha256": "af27538349002ce379b0a8252e19f228bffc28d4f82990de6021d858fede18c8"
+  },
+  {
+    "name": "collision_geometry",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_collision_geometry_tests"
+    ],
+    "returncode": 0,
+    "seconds": 0.41497834700203384,
+    "started_utc": "2026-10-24T21:55:13.169847+00:00",
+    "binary_sha256": "b96006fc7fba0ad7c8f41ce407616fe802a450b3e8f2351b5d4800a271368613"
+  },
+  {
+    "name": "impact_robustness",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_impact_robustness_tests"
+    ],
+    "returncode": 0,
+    "seconds": 2.618308100998547,
+    "started_utc": "2026-10-24T21:55:13.639782+00:00",
+    "binary_sha256": "ba6921831ce90437875fbd99cea2f446ac39224af79f991200ecfe0740fde41b"
+  },
+  {
+    "name": "impact_timing",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_impact_timing_tests"
+    ],
+    "returncode": 0,
+    "seconds": 0.015804641996510327,
+    "started_utc": "2026-10-24T21:55:16.259329+00:00",
+    "binary_sha256": "489f98bcfe8058eca6f3d42f9ef54376552c9925c7650d2ffef1075a0cd51c2b"
+  },
+  {
+    "name": "collision_continuity",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_collision_continuity_tests"
+    ],
+    "returncode": 0,
+    "seconds": 0.03180092700131354,
+    "started_utc": "2026-10-24T21:55:16.276632+00:00",
+    "binary_sha256": "f0decc1f6ac049e9cafa907485c9047f53ee09cd2129dcddecebf87bf9764462"
+  },
+  {
+    "name": "rigid_motion",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_rigid_motion_tests"
+    ],
+    "returncode": 0,
+    "seconds": 0.031718179998279084,
+    "started_utc": "2026-10-24T21:55:16.309724+00:00",
+    "binary_sha256": "a2717814888934a73c280f430e688a3edbfcced4b976c2391914423f1eb39b2f"
+  },
+  {
+    "name": "rigid_motion_geometry",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_rigid_motion_geometry_tests"
+    ],
+    "returncode": 0,
+    "seconds": 0.0035377320018596947,
+    "started_utc": "2026-10-24T21:55:16.342689+00:00",
+    "binary_sha256": "c5bff866fb0068c9e7a1b937ad363a8c915e0be40248911b0100dc6ba0436a3f"
+  },
+  {
+    "name": "rigid_motion_bounds",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_rigid_motion_bounds_tests"
+    ],
+    "returncode": 0,
+    "seconds": 0.16384626099898014,
+    "started_utc": "2026-10-24T21:55:16.346545+00:00",
+    "binary_sha256": "d7370950673aea4cf2103e125f29740f39b882b63e3e61dae7b847b3b4b3fb60"
+  },
+  {
+    "name": "contact_lifecycle",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_contact_lifecycle_tests"
+    ],
+    "returncode": 0,
+    "seconds": 0.03168821400322486,
+    "started_utc": "2026-10-24T21:55:16.511089+00:00",
+    "binary_sha256": "f18db986bdfedf00012bbcf19d1605deb0da54d847da38b79e4113fb957fe548"
+  },
+  {
+    "name": "origin_physics",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_origin_physics_tests"
+    ],
+    "returncode": 0,
+    "seconds": 0.015771389997098595,
+    "started_utc": "2026-10-24T21:55:16.597771+00:00",
+    "binary_sha256": "d08ba19abdb27d29ab056ae84644b00273cbc1aa733a33091bee9da6a37829ca"
+  },
+  {
+    "name": "origin_assembly",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_origin_assembly_tests"
+    ],
+    "returncode": 0,
+    "seconds": 0.11392510599762318,
+    "started_utc": "2026-10-24T21:55:16.615127+00:00",
+    "binary_sha256": "59e8a8698760f159863ffd560ba749d1141683363cda594a64faa6a0e1217986"
+  },
+  {
+    "name": "rotation-cold",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_mk2_rotation_cold_tests",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/mk2-rotation-repair/qualified30/rotation-cold"
+    ],
+    "returncode": 0,
+    "seconds": 0.16398951100200065,
+    "started_utc": "2026-10-24T21:55:16.782466+00:00",
+    "binary_sha256": "a20cc09967f124b3e28aa149fc32b115e6a0ae9d6057415cfda9376624beec16"
+  },
+  {
+    "name": "mesh-continuation",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/build/judas_impact_mesh_cost_tests",
+      "60",
+      "",
+      "1.2"
+    ],
+    "returncode": 0,
+    "seconds": 44.29149252199932,
+    "started_utc": "2026-10-24T21:55:17.001182+00:00",
+    "binary_sha256": "3c8da5bcd4fe1ba25a6a9b9d8897a4e02970953ce86ded8efc65b94ac8f238b0"
+  }
+]

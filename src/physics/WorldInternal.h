@@ -272,7 +272,8 @@ struct PhysicsWorld::Impl {
     std::vector<std::array<unsigned, 4>> mk2RowPairs; // sorted (slotA, slotB, partA, partB)
     std::vector<float> mk2RowEndSeparation;           // per row pair, deepest end-of-step
     void Mk2Solve(float dt, const PhysicsWorld::VelocityCoupling *coupling = nullptr);
-    void Mk2Continuous(float dt);
+    void Mk2Continuous(float dt, const std::vector<char>* required = nullptr,
+        std::vector<unsigned>* arrivalCounts = nullptr, unsigned* eventCount = nullptr);
     bool Mk2ResolveArrival(unsigned fast, unsigned other, int partFast, int partOther, double hit);
     bool Mk2Crossed(unsigned fast, unsigned other, unsigned a, unsigned b, int pa, int pb, double hit,
                     float dt);
@@ -415,6 +416,9 @@ struct PhysicsWorld::Impl {
     // Island velocity changes may invalidate warm starts without erasing
     // untouched load-bearing contacts from the completed physical step.
     std::vector<CachedContact> completedContactObservations;
+    std::vector<CachedContact> mk2ImpactObservations;
+    bool mk2ContinuousAwakened = false; // step-local active-set publication, not persisted
+
     uint64_t completedObservationEpoch = 0;
     float completedObservationDt = 0, completedSolverDt = 0;
     bool completedObservationsReady = false, restoredCompletedObservations = false;

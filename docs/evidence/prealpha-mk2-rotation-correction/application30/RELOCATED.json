@@ -1,0 +1,5 @@
+{
+  "package": "/tmp/judas-mk2-rotation-339140",
+  "runtime_sha256": "60e87e46c98c1cbf70a8eeb694e543f4f6f3ea090d1f837771ec5a84f2f7b529",
+  "note": "External input script is a two-line test driver, not game content. Launched from unrelated /tmp working directory; same host runtime libraries."
+}

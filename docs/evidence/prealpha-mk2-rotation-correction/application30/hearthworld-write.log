@@ -1,0 +1,76 @@
+Shadow maps: on
+Graphics: 3.3.0 NVIDIA 580.178.04 / NVIDIA GeForce GTX 970/PCIe/SSE2
+Renderer fragment texture units: 32 (material path uses 12)
+Project: Hearthworld (/home/conner/Documents/GitHub/Project-Judas/.cache/mk2-rotation-repair/hearthworld24/hearthworld.judasproj)
+Scene: Hearthworld / a little world worth keeping (/home/conner/Documents/GitHub/Project-Judas/.cache/mk2-rotation-repair/hearthworld24/Scenes/home.judas)
+World origin (m): 0.000, 0.000, 0.000
+JS: Hearthworld: WASD move, mouse look, Space jump, Shift sprint; E collect; 1 gravity / 2 axe / 3 pickaxe / 4 shovel / 5 build; LMB use, RMB grab/drop or dismantle, Q recipe, R rotate; Tab pack, Esc pause; F5 save / F9 load.
+PASS welcome menu owns input before ordinary play starts
+PASS ordinary project starts with CharacterMotor and script-owned camera
+PASS ordinary Escape navigation closes the welcome menu and captures gameplay input
+PASS no legacy/native gameplay controller is used
+PASS capture real rendered game frame
+PASS logical walking moves the actual supported CharacterMotor toward the home
+PASS new game has no fabricated building resources
+PASS insufficient-resource construction creates no body or resource debt
+PASS ordinary E interaction collects the axe
+PASS collected tool leaves no duplicate world pickup
+PASS ordinary E interaction collects the shovel
+PASS collected tool leaves no duplicate world pickup
+PASS ordinary E interaction collects the pickaxe
+PASS collected tool leaves no duplicate world pickup
+PASS tool collection does not manufacture wood or stone
+PASS axe impact on a rock grants no mining resources
+PASS partially chopped tree remains an inactive static physical assembly
+PASS partially chopped tree remains an inactive static physical assembly
+PASS three valid axe impacts fell one independently tracked tree
+PASS felling releases an actual finite-mass rigid body
+PASS a falling tree grants no wood before physical processing and collection
+PASS the released trunk physically rotates and falls under radial gravity
+PASS capture real rendered game frame
+PASS processing consumes the real fallen trunk exactly once
+PASS processing creates collectable physical logs rather than free inventory
+PASS one processed tree produces three independent physical log bodies
+PASS collecting three actual logs accounts for exactly nine wood
+PASS six real pickaxe hits conserve the finite stone deposit yield
+PASS exhausted deposit is recorded for persistence
+PASS gravity gun selects a real dynamic prop through its public ray query
+PASS bounded grip forces move a finite-mass collidable prop without transform parenting
+PASS physical grip remains attached while manipulating the prop
+PASS capture real rendered game frame
+PASS launch releases the grip and applies real forward physical momentum
+PASS gravity-gun manipulation and launch do not alter resource accounting
+PASS ordinary walking and support work on the planet's side under radial gravity
+PASS far-side support comes from the actual planetary collider
+PASS an obstructed physical placement retains all resources and creates no piece
+PASS real prefab construction debits exactly the floor recipe
+PASS floor is an ordinary dynamic body with an actual fixed connection to the terrain
+PASS constructed floor exposes genuine physical collision
+PASS logical recipe input selects the wall
+PASS a second constructed piece debits wood and stone once
+PASS wall connects physically to the constructed floor rather than a decorative parent
+PASS recipe cycling reaches the stone foundation
+PASS three connected-world constructions use the exact gathered resources
+PASS resource ledger balances collection, construction expenditure and remaining inventory
+PASS shovel is aimed at the independent excavatable backyard collider
+PASS capture original finite terrain field before gameplay excavation
+PASS actual shovel input modifies the authoritative volumetric density field
+PASS excavation publishes a deeper actual collision surface, not just a visual hole
+PASS excavation changes terrain without inventing building resources
+EDIT_LATENCY_MS 21.9149 prepare_ms=15.8974 publish_ms=0.019897
+PASS unrelated excavation retains both floor and attached-wall physical connections
+PASS foundation excavation does not release a separately supported structure
+PASS removing real soil under the authored anchor releases the foundation joint
+PASS the unsupported foundation physically falls or tips without scripted pose changes
+PASS the independently supported floor and wall remain connected after support loss elsewhere
+PASS capture final physically excavated world after support loss
+PASS the original backyard pit remains collision-enabled after further excavation
+PASS capture real rendered game frame
+PASS queue a durable ordinary cold save: 
+PASS gameplay cold save completes: 
+PASS observe the actual save-capture boundary independently of request time
+PASS full game loop finishes without script errors
+FINAL_STATE {"actionCount":39,"buildRotation":0,"built":[{"contact":{"x":3.999905586242676,"y":119.93124389648438,"z":0.07178483158349991},"kind":"floor","reference":"entity:4611686018427387910","support":"entity:200"},{"contact":{"x":4.006045818328857,"y":120.1160888671875,"z":0.15830719470977783},"kind":"wall","reference":"entity:4611686018427387911","support":"entity:4611686018427387910"},{"contact":{"x":-3.9999120235443115,"y":119.93118286132813,"z":0.07370585948228836},"kind":"stonebase","reference":"entity:4611686018427387912","support":"entity:200"}],"equipped":"shovel","harvest":{"500":{"felled":true,"hits":3,"processHits":2,"processed":true},"700":{"felled":false,"hits":6,"processed":true}},"heldRef":null,"inventory":{"stone":0,"wood":1},"lastAction":"Excavation removed a foundation: the connected structure is now free to fall.","owned":{"axe":true,"pickaxe":true,"shovel":true},"pitch":-0.5438531041145325,"schema":1,"selectedBuild":"stonebase","stats":{"dug":2,"grabs":1,"launched":1,"placed":3,"stoneMined":6,"stoneSpent":6,"treesFelled":1,"treesProcessed":1,"woodCollected":9,"woodSpent":8},"third":false,"yaw":0}
+PASS ordinary application shuts down cleanly
+PASS observer completed its requested workflow
+SUMMARY 66 checks 0 failures
