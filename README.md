@@ -33,13 +33,15 @@ Included M92 rendering adds opaque mesh instancing,
 per-view tiled dynamic lighting, selected spotlight shadows, scripted individual
 lights and shared multi-view planetary LOD. See the
 [Rendering Lab](projects/rendering_lab/README.md) and [M92 evidence](docs/evidence/m92/REPORT.md).
-M91 collision continuity remains included. The later [curved-mesh correction](docs/PREALPHA.md)
-and [dense-contact follow-up](docs/PREALPHA_DENSE_SUPPORT_FOLLOWUP.md) document
-current behaviour and remaining expensive cases. The latter does **not** meet a
-24–30 FPS target for the 1,024-piece stress room on the measured i7-4790 host. Current Ryzen measurements and the remaining impact hitches are recorded in
-[accepted broadphase reuse](docs/PREALPHA_BROADPHASE_REUSE.txt) and the
-[pair-discovery follow-up](docs/PREALPHA_PAIR_DISCOVERY.txt) and
-[latest CCD query/history investigation](docs/PREALPHA_CCD_QUERY_FOLLOWUP.txt).
+M91 collision continuity remains included. **MK2 is now the authoritative physics
+engine**; older MK1 performance investigations remain historical evidence.
+The [current physics contract](docs/MK2_PHYSICS_ARCHITECTURE.md) and
+[accepted rotation/contact correction](docs/PREALPHA_MK2_ROTATION_CORRECTION.md)
+describe current behaviour and measured limits. Dense workloads remain
+content-dependent; historical FPS values are not current universal guarantees.
+See the [support matrix](docs/ALPHA_SUPPORT_MATRIX.md) and
+[final Linux qualification](docs/PREALPHA_FINAL_QUALIFICATION.md) before choosing
+an SDK or assuming cross-system/platform coverage.
 
 M90 brings vehicles, wheels, powertrains, characters, navigation, articulated
 poses, attachments, deformables, audio and particles through checked local-origin

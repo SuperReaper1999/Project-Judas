@@ -1,0 +1,5 @@
+baseline-host: exit 0; /home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-final-qualification/build24/baseline-evidence/20261024T224025168938Z/baseline-host.log
+configure: exit 0; /home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-final-qualification/build24/baseline-evidence/20261024T224025168938Z/configure.log
+build: exit 0; /home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-final-qualification/build24/baseline-evidence/20261024T224025168938Z/build.log
+qualify: exit 0; /home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-final-qualification/build24/baseline-evidence/20261024T224025168938Z/qualify.log
+Qualified SDK: /home/conner/Documents/GitHub/Project-Judas/.cache/prealpha-final-qualification/build24/linux-sdk

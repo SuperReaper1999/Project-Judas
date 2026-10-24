@@ -6,9 +6,11 @@ verified corrections awaiting their own human acceptance.
 
 ## Accepted baseline
 
-The operator accepted MK2, including MK1 removal, then accepted the project/water
-and editor corrections at `0aaef603b0347a55350a81beff896cff21d914bf`. MK2 is the sole production solver, including
-coupled work. See [the current contract](MK2_PHYSICS_ARCHITECTURE.md).
+The current human-accepted engine checkpoint is
+`c76e92dc20b5765f61d6077bf618a8b94ac22462`, including the rotation/contact correction.
+MK2 is the sole production solver, including coupled work. Main and Experimental
+were aligned at that acceptance; subsequent qualification/documentation work is
+Experimental until separately accepted. See [the current contract](MK2_PHYSICS_ARCHITECTURE.md).
 
 ## Current correction work
 
@@ -19,6 +21,12 @@ The follow-up [Linux readiness report](PREALPHA_LINUX_READINESS.md) records MK2
 diagnostics, fresh SDK/tool qualification and cross-system tests. Experimental
 pushes are automated qualification, not a new human acceptance.
 The tracked [finding register](PREALPHA_FINDINGS.md) distinguishes remaining limits.
+The [final bounded qualification](PREALPHA_FINAL_QUALIFICATION.md) supersedes old
+pending status, with the [intended Alpha support matrix](ALPHA_SUPPORT_MATRIX.md).
+Prior reports retain their checkpoint-time failures and platform claims.
+Final qualification found and corrected a free-body external-kick timing regression
+that disturbed wheel suspension. This new Experimental correction has automated
+Linux coverage and awaits human acceptance; it is not part of accepted main yet.
 
 Start with [your first project](FIRST_PROJECT.md), [the editor guide](EDITOR_GUIDE.md),
 [Project Settings/water](PROJECT_SETTINGS_AND_WATER.md), [JudasJS](JUDASJS.md),
@@ -34,8 +42,9 @@ Start with [your first project](FIRST_PROJECT.md), [the editor guide](EDITOR_GUI
   retained half-turn sampling issue are not silently reclassified as passes.
 - Replication, physical charts, regional suspension, terrain edits and migrations
   retain explicit supported subsets. No universal compatibility promise is made.
-- High-rate elastic spinning confinement has a newly preserved energy failure;
-  its root mechanism remains open. See the Linux readiness report.
+- The reproduced elastic energy-gain defect is corrected and human accepted.
+  Long-run dissipation, extreme-spin phase error and bounded arrivals remain
+  documented in the [correction report](PREALPHA_MK2_ROTATION_CORRECTION.md).
 - Dense MK2 performance is workload-dependent. Do not apply the retired MK1
   event-cascade diagnosis or old pending benchmark status to current MK2.
 

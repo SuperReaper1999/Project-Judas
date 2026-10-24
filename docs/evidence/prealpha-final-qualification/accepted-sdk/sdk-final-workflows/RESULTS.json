@@ -1,0 +1,250 @@
+[
+  {
+    "command": [
+      "/source/judas_scene_author",
+      "--validate",
+      "project",
+      "/build/game/SDK_First_Game.judasproj"
+    ],
+    "exit": 0,
+    "expected": 0,
+    "seconds": 0.005380394999519922,
+    "stdout": "valid project /build/game/SDK_First_Game.judasproj\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/source/judas_scene_author",
+      "--validate",
+      "scene",
+      "/build/game/Scenes/main.judas"
+    ],
+    "exit": 0,
+    "expected": 0,
+    "seconds": 0.005402196002251003,
+    "stdout": "valid scene /build/game/Scenes/main.judas\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/source/judas_scene_author",
+      "--create",
+      "ui",
+      "/build/sdk-final-workflows/menu.judasui"
+    ],
+    "exit": 0,
+    "expected": 0,
+    "seconds": 0.0053529740034719,
+    "stdout": "wrote /build/sdk-final-workflows/menu.judasui\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/source/judas_scene_author",
+      "--validate",
+      "ui",
+      "/build/sdk-final-workflows/menu.judasui"
+    ],
+    "exit": 0,
+    "expected": 0,
+    "seconds": 0.005008694002754055,
+    "stdout": "valid ui /build/sdk-final-workflows/menu.judasui\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/source/judas_script_check",
+      "/build/game/SDK_First_Game.judasproj"
+    ],
+    "exit": 0,
+    "expected": 0,
+    "seconds": 0.007494771998608485,
+    "stdout": "1 registered script modules; 0 compile/link failures (maximum 128 reported). No project code executed.\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/source/judas_script_check",
+      "/build/game/SDK_First_Game.judasproj"
+    ],
+    "exit": 1,
+    "expected": 1,
+    "seconds": 0.007082764997903723,
+    "stdout": "1 registered script modules; 1 compile/link failures (maximum 128 reported). No project code executed.\n",
+    "stderr": "Assets/game.js: SyntaxError: Unexpected identifier 'invalid'\n    at Assets/game.js:1:47\n\n"
+  },
+  {
+    "command": [
+      "/source/judas_script_check",
+      "/build/game/SDK_First_Game.judasproj"
+    ],
+    "exit": 0,
+    "expected": 0,
+    "seconds": 0.0070416380040114745,
+    "stdout": "1 registered script modules; 0 compile/link failures (maximum 128 reported). No project code executed.\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/source/judas_script_check",
+      "/build/sdk-final-workflows/missing.judasproj"
+    ],
+    "exit": 2,
+    "expected": 2,
+    "seconds": 0.004670215996156912,
+    "stdout": "",
+    "stderr": "Project: could not open project file: /build/sdk-final-workflows/missing.judasproj\n"
+  },
+  {
+    "command": [
+      "/source/judas_save",
+      "identity",
+      "/build/game/SDK_First_Game.judasproj"
+    ],
+    "exit": 0,
+    "expected": 0,
+    "seconds": 0.0053401889963424765,
+    "stdout": "{\n  \"compatibility\": \"\",\n  \"content\": \"35dfa41fb1fada85713fbaa815753b1f20facaebe70bd9008786aaf972be23d5\",\n  \"version\": 0\n}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/source/judas_model_import_cli",
+      "--create",
+      "/build/game/SDK_First_Game.judasproj",
+      "/build/sdk-final-workflows/triangle.obj",
+      "Assets/triangle.judasmodel"
+    ],
+    "exit": 0,
+    "expected": 0,
+    "seconds": 0.01285984800051665,
+    "stdout": "{\n  \"error\": \"\",\n  \"recipe\": \"/build/game/Imports/triangle.judasimport\",\n  \"success\": true\n}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/source/judas_model_import_cli",
+      "--recipe",
+      "/build/game/Imports/triangle.judasimport"
+    ],
+    "exit": 0,
+    "expected": 0,
+    "seconds": 0.01399857499927748,
+    "stdout": "{\n  \"assetId\": \"351776138de7bd75975c3ede82c5d553\",\n  \"decodedProducts\": 0,\n  \"diagnostics\": [],\n  \"error\": \"\",\n  \"hierarchyNodes\": 0,\n  \"output\": \"/build/game/Assets/triangle.judasmodel\",\n  \"paletteEntries\": 0,\n  \"parts\": 1,\n  \"receiptHit\": false,\n  \"sourceBones\": 0,\n  \"sourceUnitMeters\": 1.0,\n  \"success\": true,\n  \"unchanged\": false,\n  \"vertices\": 3\n}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/source/judas_model_import_cli",
+      "--inspect",
+      "/build/game/Assets/triangle.judasmodel"
+    ],
+    "exit": 0,
+    "expected": 0,
+    "seconds": 0.013169501995434985,
+    "stdout": "{\n  \"clips\": [],\n  \"joints\": [],\n  \"materialDefaults\": [\n    {\n      \"alpha\": 0,\n      \"factor\": [\n        1.0,\n        1.0,\n        1.0,\n        1.0\n      ],\n      \"imageAlphaMax\": 0,\n      \"imageAlphaMin\": 255\n    }\n  ],\n  \"materials\": [\n    \"__default\"\n  ],\n  \"parts\": [\n    {\n      \"identity\": \"sdk_triangle/material/__default\",\n      \"material\": 0,\n      \"ordinal\": 0,\n      \"triangles\": 1\n    }\n  ]\n}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/source/judas_cook",
+      "/build/game/Assets/triangle.judasmodel",
+      "/build/sdk-final-workflows/triangle.judasmesh"
+    ],
+    "exit": 0,
+    "expected": 0,
+    "seconds": 0.005862794998392928,
+    "stdout": "Cooked /build/sdk-final-workflows/triangle.judasmesh\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/source/judas_volume_author",
+      "create",
+      "/build/game/Assets/soil.judasvolume",
+      "9",
+      "9",
+      "9",
+      "8",
+      "8",
+      "8"
+    ],
+    "exit": 0,
+    "expected": 0,
+    "seconds": 0.005412806000094861,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/source/judas_volume_author",
+      "validate",
+      "/build/game/Assets/soil.judasvolume"
+    ],
+    "exit": 0,
+    "expected": 0,
+    "seconds": 0.00456963599572191,
+    "stdout": "valid volume 729 samples\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/source/judas_volume_author",
+      "brush",
+      "/build/game/Assets/soil.judasvolume",
+      "remove",
+      "0",
+      "0",
+      "0",
+      "2",
+      "1"
+    ],
+    "exit": 0,
+    "expected": 0,
+    "seconds": 0.005975006002699956,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/source/judas_volume_author",
+      "cook",
+      "/build/game/SDK_First_Game.judasproj",
+      "Assets/soil.judasvolume"
+    ],
+    "exit": 0,
+    "expected": 0,
+    "seconds": 0.016789948000223376,
+    "stdout": "volume cook 10.869 ms / 214177 bytes\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/source/judas_deformable_bake",
+      "sheet",
+      "/build/sdk-final-workflows/sheet.judasdeform",
+      "4",
+      "4",
+      "2",
+      "2",
+      "1"
+    ],
+    "exit": 0,
+    "expected": 0,
+    "seconds": 0.004711664005299099,
+    "stdout": "/build/sdk-final-workflows/sheet.judasdeform: 16 nodes 18 triangles 0 tetrahedra 16 render vertices\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/source/judas_export",
+      "/build/game/SDK_First_Game.judasproj",
+      "/build/cli-export"
+    ],
+    "exit": 0,
+    "expected": 0,
+    "seconds": 0.21089567599847214,
+    "stdout": "Exported /build/cli-export: 4 assets, 1 scenes, 56234642 bytes, 0.206 seconds\n",
+    "stderr": ""
+  }
+]

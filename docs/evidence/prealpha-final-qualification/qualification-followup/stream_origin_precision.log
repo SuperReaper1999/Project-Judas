@@ -1,0 +1,80 @@
+PASS create isolated ordinary precision project: 
+PASS save script-owned execution policy: 
+PASS write ordinary nonbinary-position regional source: 
+PASS validate ordinary public region source: 
+PASS build fresh public native world: 
+PASS asynchronous retained region reaches publication: 
+PASS actual rigid region is active: 
+PASS zero-origin-delta: actual native writer body exists
+PASS zero-origin-delta: initial large-origin authored local coordinates preserve exact float bits
+PASS zero-origin-delta: only the ordinary rigid box exists in native physics
+PASS release actual region demand
+PASS region captures actual rigid state and unregisters
+PASS zero-origin-delta: suspended writer retains no live physics body
+PASS zero-origin-delta: chosen supported origin delta is exactly representable
+PASS zero-origin-delta: native origin transaction commits while region is suspended: 
+PASS zero-origin-delta: actual published origin equals requested supported anchor before serialization
+PASS zero-origin-delta: suspended state is serialized through real public archive
+PASS zero-origin-delta: changed-origin retained state uses a capture-origin-aware archive
+COMMITTED_ARCHIVE case=zero-origin-delta version=1 published=1000000000000,-1000000000000,1000000000000 bytes=615
+PASS build fresh public native world: 
+PASS zero-origin-delta: cold metadata decode grants no native bodies before activation
+PASS asynchronous retained region reaches publication: 
+PASS actual rigid region is active: 
+PASS zero-origin-delta: fresh restored native body is enabled
+PASS zero-origin-delta: retained state remaps a fresh runtime entity identity
+ORIGIN_PRECISION case=zero-origin-delta capture=1000000000000,-1000000000000,1000000000000 target=1000000000000,-1000000000000,1000000000000
+saved_actual_native decimal=9.99999975e-05,1.20000005,-0.000169999999 bits=38d1b717,3f99999a,b9324207
+required_delta_result decimal=9.99999975e-05,1.20000005,-0.000169999999 bits=38d1b717,3f99999a,b9324207
+restored_actual_native decimal=9.99999975e-05,1.20000005,-0.000169999999 bits=38d1b717,3f99999a,b9324207
+PASS zero-origin-delta: actual restored native position equals required delta operation bit for bit
+PASS zero-origin-delta: exact zero-delta round trip preserves original native position bits
+PASS zero-origin-delta: cold reconstructed entity exposes actual physical state
+PASS zero-origin-delta: cold entity physical state agrees with required native position
+PASS zero-origin-delta: actual native velocities are preserved without any physical step
+PASS release actual region demand
+PASS region captures actual rigid state and unregisters
+PASS build fresh public native world: 
+PASS asynchronous retained region reaches publication: 
+PASS actual rigid region is active: 
+PASS zero-origin-delta: second cold retained body actually exists
+second_restored_actual_native decimal=9.99999975e-05,1.20000005,-0.000169999999 bits=38d1b717,3f99999a,b9324207
+PASS zero-origin-delta: second cold retained round trip preserves the same required position bits
+PASS build fresh public native world: 
+PASS asynchronous retained region reaches publication: 
+PASS actual rigid region is active: 
+PASS one-anchor-quantum-delta: actual native writer body exists
+PASS one-anchor-quantum-delta: initial large-origin authored local coordinates preserve exact float bits
+PASS one-anchor-quantum-delta: only the ordinary rigid box exists in native physics
+PASS release actual region demand
+PASS region captures actual rigid state and unregisters
+PASS one-anchor-quantum-delta: suspended writer retains no live physics body
+PASS one-anchor-quantum-delta: chosen supported origin delta is exactly representable
+PASS one-anchor-quantum-delta: native origin transaction commits while region is suspended: 
+PASS one-anchor-quantum-delta: actual published origin equals requested supported anchor before serialization
+PASS one-anchor-quantum-delta: suspended state is serialized through real public archive
+PASS one-anchor-quantum-delta: changed-origin retained state uses a capture-origin-aware archive
+COMMITTED_ARCHIVE case=one-anchor-quantum-delta version=7 published=999999999488,-999999999488,999999999488 bytes=659
+PASS build fresh public native world: 
+PASS one-anchor-quantum-delta: cold metadata decode grants no native bodies before activation
+PASS asynchronous retained region reaches publication: 
+PASS actual rigid region is active: 
+PASS one-anchor-quantum-delta: fresh restored native body is enabled
+PASS one-anchor-quantum-delta: retained state remaps a fresh runtime entity identity
+ORIGIN_PRECISION case=one-anchor-quantum-delta capture=1000000000000,-1000000000000,1000000000000 target=999999999488,-999999999488,999999999488
+saved_actual_native decimal=9.99999975e-05,1.20000005,-0.000169999999 bits=38d1b717,3f99999a,b9324207
+required_delta_result decimal=512.000122,-510.799988,511.999817 bits=44000002,c3ff6666,43fffffa
+restored_actual_native decimal=512.000122,-510.799988,511.999817 bits=44000002,c3ff6666,43fffffa
+PASS one-anchor-quantum-delta: actual restored native position equals required delta operation bit for bit
+PASS one-anchor-quantum-delta: cold reconstructed entity exposes actual physical state
+PASS one-anchor-quantum-delta: cold entity physical state agrees with required native position
+PASS one-anchor-quantum-delta: actual native velocities are preserved without any physical step
+PASS release actual region demand
+PASS region captures actual rigid state and unregisters
+PASS build fresh public native world: 
+PASS asynchronous retained region reaches publication: 
+PASS actual rigid region is active: 
+PASS one-anchor-quantum-delta: second cold retained body actually exists
+second_restored_actual_native decimal=512.000122,-510.799988,511.999817 bits=44000002,c3ff6666,43fffffa
+PASS one-anchor-quantum-delta: second cold retained round trip preserves the same required position bits
+SUMMARY 67 checks 0 failures

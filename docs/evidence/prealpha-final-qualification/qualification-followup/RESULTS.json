@@ -1,0 +1,318 @@
+[
+  {
+    "name": "mk2_physics",
+    "command": [
+      "/build/judas_mk2_physics_tests"
+    ],
+    "exit": 0,
+    "seconds": 3.8195082699967315,
+    "utc": "2026-10-24T23:01:47.386756+00:00",
+    "binary_sha256": "52d0b7a02ecf2cdb9d3a02e45611e606d4cee866acd14b62c34acaa2b55c2b01"
+  },
+  {
+    "name": "mk2_rotation",
+    "command": [
+      "/build/judas_mk2_rotation_tests"
+    ],
+    "exit": 0,
+    "seconds": 8.576157035000506,
+    "utc": "2026-10-24T23:01:55.965879+00:00",
+    "binary_sha256": "8e71f771df1224e304fc9bf308dd997834e45063129fc99914a86bff583ed31a"
+  },
+  {
+    "name": "mk2_diagnostics",
+    "command": [
+      "/build/judas_mk2_diagnostics_tests"
+    ],
+    "exit": 0,
+    "seconds": 0.21406146600202192,
+    "utc": "2026-10-24T23:01:56.181893+00:00",
+    "binary_sha256": "d280992f206c248d1c9c43c2f585da06351449a253f6df14747cf045b99344c7"
+  },
+  {
+    "name": "joint",
+    "command": [
+      "/build/judas_joint_tests"
+    ],
+    "exit": 0,
+    "seconds": 0.11386094100453192,
+    "utc": "2026-10-24T23:01:56.297098+00:00",
+    "binary_sha256": "1a43e2170cc9c0162488e09d9aa552e98c95c80cb0d15ec5ebbaf096feef2720"
+  },
+  {
+    "name": "wheel",
+    "command": [
+      "/build/judas_wheel_tests"
+    ],
+    "exit": 0,
+    "seconds": 0.16394889599905582,
+    "utc": "2026-10-24T23:01:56.462953+00:00",
+    "binary_sha256": "773f16aa5b9521ae37dbbd269e60ea2b8dfddfa0a10d83cd4183a7762f4f2c04"
+  },
+  {
+    "name": "wheel_lifecycle",
+    "command": [
+      "/build/judas_wheel_lifecycle_tests"
+    ],
+    "exit": 0,
+    "seconds": 0.03176306199748069,
+    "utc": "2026-10-24T23:01:56.497020+00:00",
+    "binary_sha256": "63d26aa365a486eb9389c324890c5c0b43cfa50a2fcb263491d7245e34e84e60"
+  },
+  {
+    "name": "powertrain",
+    "command": [
+      "/build/judas_powertrain_tests"
+    ],
+    "exit": 0,
+    "seconds": 0.16398235799715621,
+    "utc": "2026-10-24T23:01:56.736908+00:00",
+    "binary_sha256": "4bf431c6c945d755391f01c910468245e022a154e1e02455a50bd878cf1e68b3"
+  },
+  {
+    "name": "powertrain_lifecycle",
+    "command": [
+      "/build/judas_powertrain_lifecycle_tests"
+    ],
+    "exit": 0,
+    "seconds": 0.03162003099714639,
+    "utc": "2026-10-24T23:01:56.768948+00:00",
+    "binary_sha256": "44aa9c50b46f269887e6af1ab91ba9c4ea6516abb3da9e21574aad4e1e1ac77c"
+  },
+  {
+    "name": "character_motor",
+    "command": [
+      "/build/judas_character_motor_tests"
+    ],
+    "exit": 0,
+    "seconds": 0.31435647800390143,
+    "utc": "2026-10-24T23:01:57.179074+00:00",
+    "binary_sha256": "da8b431e8661285759f997593ea0f3152cfcd001a8723f7138c0f98a3867b0b7"
+  },
+  {
+    "name": "physical_balance_controller",
+    "command": [
+      "/build/judas_physical_balance_controller_tests"
+    ],
+    "exit": 0,
+    "seconds": 3.2183693170009064,
+    "utc": "2026-10-24T23:02:00.463201+00:00",
+    "binary_sha256": "4a0f55969b6adbc60ae075eb5a565a5788b691a882d4b711b3a09a43fdbeec3d"
+  },
+  {
+    "name": "physics_continuation",
+    "command": [
+      "/build/judas_physics_continuation_tests"
+    ],
+    "exit": 0,
+    "seconds": 0.031773962000443134,
+    "utc": "2026-10-24T23:02:00.497751+00:00",
+    "binary_sha256": "1aaf639e15bbfd5dddc603b69477488bf699e96812d4edd1aa594555e3a273c1"
+  },
+  {
+    "name": "contact_lifecycle",
+    "command": [
+      "/build/judas_contact_lifecycle_tests"
+    ],
+    "exit": 0,
+    "seconds": 0.06378173400298692,
+    "utc": "2026-10-24T23:02:00.656209+00:00",
+    "binary_sha256": "bcfba90045facffe866f357c145d3606978d722c727440a6429c99e95ffb046e"
+  },
+  {
+    "name": "prealpha_lifecycle",
+    "command": [
+      "/build/judas_prealpha_lifecycle_tests"
+    ],
+    "exit": 0,
+    "seconds": 0.21406879899586784,
+    "utc": "2026-10-24T23:02:00.982247+00:00",
+    "binary_sha256": "d720772075815bf6447966e0ff27401b8e0b53daf8467dd80900facfa4151f93"
+  },
+  {
+    "name": "origin_assembly",
+    "command": [
+      "/build/judas_origin_assembly_tests"
+    ],
+    "exit": 0,
+    "seconds": 0.16417593300138833,
+    "utc": "2026-10-24T23:02:01.200983+00:00",
+    "binary_sha256": "fe0833d50a698f0ca6ec36fa2e74e8f6597c3e2d332cd957ab1e9c8c45350425"
+  },
+  {
+    "name": "stream_origin_precision",
+    "command": [
+      "/build/judas_stream_origin_precision_tests"
+    ],
+    "exit": 0,
+    "seconds": 0.06384152700047707,
+    "utc": "2026-10-24T23:02:01.378548+00:00",
+    "binary_sha256": "5b70b5905ec6c90e6bf269dff3a8fb5a6f19ffc97a88c88c1a00d72544f54257"
+  },
+  {
+    "name": "player_swimming",
+    "command": [
+      "/build/judas_player_swimming_tests"
+    ],
+    "exit": 0,
+    "seconds": 0.03178817799926037,
+    "utc": "2026-10-24T23:02:01.526975+00:00",
+    "binary_sha256": "ff5c2df79ad1cb8804358943375d073835a4a42e2288e4b7b4176cd19e03bf0f"
+  },
+  {
+    "name": "player_curved_locomotion",
+    "command": [
+      "/build/judas_player_curved_locomotion_tests"
+    ],
+    "exit": 0,
+    "seconds": 0.06374575699737761,
+    "utc": "2026-10-24T23:02:01.595032+00:00",
+    "binary_sha256": "15ea8a763748693f637585e6b2518986ab3cd653da5a92453d4665b7461952a2"
+  },
+  {
+    "name": "rotation-cold",
+    "command": [
+      "/build/judas_mk2_rotation_cold_tests",
+      "/build/qualification-followup/rotation-cold"
+    ],
+    "exit": 0,
+    "seconds": 0.16387556699919514,
+    "utc": "2026-10-24T23:02:01.764067+00:00",
+    "binary_sha256": "eb435dffc4140807757a917641c3dea7553eeb8a77b02e543dc1688578880423"
+  },
+  {
+    "name": "network-session",
+    "command": [
+      "/build/judas_network_session_tests",
+      "/build/qualification-followup/network-session"
+    ],
+    "exit": 0,
+    "seconds": 0.7149609319967567,
+    "utc": "2026-10-24T23:02:02.539699+00:00",
+    "binary_sha256": "f5438d647918cf90e560171cd1bb83ab33aa1475e8badaeb4e0e30efb5244805"
+  },
+  {
+    "name": "gravity-selection",
+    "command": [
+      "/build/judas_gravity_selection_tests",
+      "/build/qualification-followup/gravity-selection"
+    ],
+    "exit": 0,
+    "seconds": 0.2641338399989763,
+    "utc": "2026-10-24T23:02:02.859368+00:00",
+    "binary_sha256": "ac5d4cc0021c8ec202047b9649357159519f2cd73187042cc39515bae415511e"
+  },
+  {
+    "name": "mesh-continuation",
+    "command": [
+      "/build/judas_impact_mesh_cost_tests",
+      "60",
+      "",
+      "1.2"
+    ],
+    "exit": 0,
+    "seconds": 44.63179569700151,
+    "utc": "2026-10-24T23:02:47.598087+00:00",
+    "binary_sha256": "a2df2f8723703e965cd735f3fd21baddf468d3c2c61d7d4c5243657552eef231"
+  },
+  {
+    "name": "spacecraft-session",
+    "command": [
+      "/build/judas_spacecraft_frame_integration_tests",
+      "--output",
+      "/build/qualification-followup/spacecraft-session"
+    ],
+    "exit": 0,
+    "seconds": 0.06382840299920645,
+    "utc": "2026-10-24T23:02:47.664065+00:00",
+    "binary_sha256": "88527777fdda02ea8dbad2994da063cb43be5072e9b5ff28388f6edcf27d3771"
+  },
+  {
+    "name": "basic-water-cold",
+    "command": [
+      "/build/judas_basic_water_application_tests",
+      "--cold-cycle",
+      "/build/qualification-followup/water-cold"
+    ],
+    "exit": 0,
+    "seconds": 5.667693032999523,
+    "utc": "2026-10-24T23:02:53.444349+00:00",
+    "binary_sha256": "d0927dcd56f13398a3e91e2eda6ef9493ab8ca534ead7b2e79d730aa293b3127"
+  },
+  {
+    "name": "m77-write",
+    "command": [
+      "/build/judas_balance_lab_tests",
+      "/build/qualification-followup/m77",
+      "cold-write"
+    ],
+    "exit": 0,
+    "seconds": 1.1154835510023986,
+    "utc": "2026-10-24T23:02:54.626423+00:00",
+    "binary_sha256": "798d0c458a25ad8467fef3176106d733fb327d122ae2a403a40d6941113f2251"
+  },
+  {
+    "name": "m77-read",
+    "command": [
+      "/build/judas_balance_lab_tests",
+      "/build/qualification-followup/m77",
+      "cold-read"
+    ],
+    "exit": 0,
+    "seconds": 0.4644547269999748,
+    "utc": "2026-10-24T23:02:55.187066+00:00",
+    "binary_sha256": "798d0c458a25ad8467fef3176106d733fb327d122ae2a403a40d6941113f2251"
+  },
+  {
+    "name": "hearthworld-write",
+    "command": [
+      "/build/judas_hearthworld_application_tests",
+      "/build/owned-followup/hearthworld/hearthworld.judasproj",
+      "write",
+      "/build/qualification-followup/hearthworld"
+    ],
+    "exit": 0,
+    "seconds": 43.470944362998125,
+    "utc": "2026-10-24T23:03:38.734381+00:00",
+    "binary_sha256": "70dcd7ae444f5cbd21fa411855f7ba35ef81c7038c7e3be71c0cdf430c361fdb"
+  },
+  {
+    "name": "hearthworld-read",
+    "command": [
+      "/build/judas_hearthworld_application_tests",
+      "/build/owned-followup/hearthworld/hearthworld.judasproj",
+      "read",
+      "/build/qualification-followup/hearthworld"
+    ],
+    "exit": 0,
+    "seconds": 1.470306860996061,
+    "utc": "2026-10-24T23:03:40.275193+00:00",
+    "binary_sha256": "70dcd7ae444f5cbd21fa411855f7ba35ef81c7038c7e3be71c0cdf430c361fdb"
+  },
+  {
+    "name": "powertrain-write",
+    "command": [
+      "/build/judas_powertrain_application_tests",
+      "/build/owned-followup/powertrain_lab/powertrain_lab.judasproj",
+      "write",
+      "/build/qualification-followup/powertrain"
+    ],
+    "exit": 0,
+    "seconds": 6.55799378699885,
+    "utc": "2026-10-24T23:03:46.887831+00:00",
+    "binary_sha256": "e9bfb11d26b2cec5f24a7f39ed9e2eea4e532bb12c2c1a64b18e4de568937151"
+  },
+  {
+    "name": "powertrain-read",
+    "command": [
+      "/build/judas_powertrain_application_tests",
+      "/build/owned-followup/powertrain_lab/powertrain_lab.judasproj",
+      "read",
+      "/build/qualification-followup/powertrain"
+    ],
+    "exit": 0,
+    "seconds": 0.7164403909991961,
+    "utc": "2026-10-24T23:03:47.689499+00:00",
+    "binary_sha256": "e9bfb11d26b2cec5f24a7f39ed9e2eea4e532bb12c2c1a64b18e4de568937151"
+  }
+]

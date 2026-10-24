@@ -1,6 +1,6 @@
 # Current Pre-Alpha finding dispositions
 
-Accepted baseline: `0aaef603b0347a55350a81beff896cff21d914bf`. MK2 is production physics.
+Accepted baseline: `c76e92dc20b5765f61d6077bf618a8b94ac22462`. MK2 is production physics.
 Experimental corrections require their own human acceptance. Original quotes and the previous register hash remain in [JSON](PREALPHA_FINDINGS.json).
 This reconciles all 54 original findings. Current Linux results and remaining limitations are documented in [the readiness report](PREALPHA_LINUX_READINESS.md).
 
@@ -9,13 +9,13 @@ This reconciles all 54 original findings. Current Linux results and remaining li
 | A-01 | resolved | Fresh mesh arrival/continuation and collision-continuity pass; old MK1 scheduling mechanism is retired, not a current defect. |
 | A-02 | resolved | Fresh mesh arrival/continuation and collision-continuity pass; old MK1 scheduling mechanism is retired, not a current defect. |
 | B-01 | improved | Rotation/contact consistency corrected with independent evidence. Matched benchmarks show modest cost, not a dense-performance speedup. Extreme bounded-work and high-spin accuracy limitations remain. |
-| C-01 | resolved | Current provenance infrastructure retained; current c859 identities and matching relocated game export verified. No new channel changes or update-service qualification. |
-| C-02 | resolved | Current provenance infrastructure retained; current c859 identities and matching relocated game export verified. No new channel changes or update-service qualification. |
-| C-03 | resolved | Current provenance infrastructure retained; current c859 identities and matching relocated game export verified. No new channel changes or update-service qualification. |
-| C-04 | resolved | Current provenance infrastructure retained; current c859 identities and matching relocated game export verified. No new channel changes or update-service qualification. |
-| C-05 | resolved | Current provenance infrastructure retained; current c859 identities and matching relocated game export verified. No new channel changes or update-service qualification. |
-| C-06 | resolved | Current provenance infrastructure retained; current c859 identities and matching relocated game export verified. No new channel changes or update-service qualification. |
-| C-07 | resolved | Current provenance infrastructure retained; current c859 identities and matching relocated game export verified. No new channel changes or update-service qualification. |
+| C-01 | resolved | Fresh clean c76e92dc Ubuntu24 SDK: all 17 identities, ABI/loader checks, actual tool workflows and package-only relocated exports pass. Corrected runtime follow-up has its own recorded source identity. No release/channel change. |
+| C-02 | resolved | Fresh clean c76e92dc Ubuntu24 SDK: all 17 identities, ABI/loader checks, actual tool workflows and package-only relocated exports pass. Corrected runtime follow-up has its own recorded source identity. No release/channel change. |
+| C-03 | resolved | Fresh clean c76e92dc Ubuntu24 SDK: all 17 identities, ABI/loader checks, actual tool workflows and package-only relocated exports pass. Corrected runtime follow-up has its own recorded source identity. No release/channel change. |
+| C-04 | resolved | Fresh clean c76e92dc Ubuntu24 SDK: all 17 identities, ABI/loader checks, actual tool workflows and package-only relocated exports pass. Corrected runtime follow-up has its own recorded source identity. No release/channel change. |
+| C-05 | resolved | Fresh clean c76e92dc Ubuntu24 SDK: all 17 identities, ABI/loader checks, actual tool workflows and package-only relocated exports pass. Corrected runtime follow-up has its own recorded source identity. No release/channel change. |
+| C-06 | resolved | Fresh clean c76e92dc Ubuntu24 SDK: all 17 identities, ABI/loader checks, actual tool workflows and package-only relocated exports pass. Corrected runtime follow-up has its own recorded source identity. No release/channel change. |
+| C-07 | resolved | Fresh clean c76e92dc Ubuntu24 SDK: all 17 identities, ABI/loader checks, actual tool workflows and package-only relocated exports pass. Corrected runtime follow-up has its own recorded source identity. No release/channel change. |
 | D-01 | resolved | Shared SDK tool inventory/finalization exists; no fresh all-tool Windows staging here. |
 | D-02 | resolved | Shared SDK tool inventory/finalization exists; no fresh all-tool Windows staging here. |
 | E-01 | improved | Fresh origin-assembly pass; chart, PBF and pending-operation rejection boundaries remain explicit. |
@@ -56,15 +56,15 @@ This reconciles all 54 original findings. Current Linux results and remaining li
 | L-07 | deferred | Universal replication/native migration/suspension, multiple charts, per-mip streaming, every render path and public-Internet security are not promised. |
 | L-08 | deferred | Universal replication/native migration/suspension, multiple charts, per-mip streaming, every render path and public-Internet security are not promised. |
 | L-09 | deferred | Universal replication/native migration/suspension, multiple charts, per-mip streaming, every render path and public-Internet security are not promised. |
-| L-10 | improved | Ubuntu 24.04 isolated SDK build, all 17 older-loader checks, editor and source/SDK-absent moved export now pass; maximum GLIBC 2.38. Other distributions/hardware and Windows/Android remain unqualified. See [investigation](PREALPHA_ELASTIC_LINUX_BASELINE.md). |
-| CAP-01 | open | Legacy gameplay controller is not MK1. Existing games retain it; breadth not fully reexecuted. |
+| L-10 | improved | Fresh exact-c76 Ubuntu24 SDK, all 17 older-loader checks, actual editor/tools and SDK/source-absent moved games pass; highest GLIBC 2.38. Corrected source retains the same baseline workflow. Other distributions/hardware and Windows/Android remain unqualified. |
+| CAP-01 | improved | Retained legacy player locomotion/swimming/input and spacecraft control/frame/release now exercised. Three stale fixed-world-omega SAS assertions replaced by independent angular-momentum checks at unchanged tolerance; originals retained. Modern JS adapter-off negative passes. Not every old project certified. |
 | CAP-02 | deferred | Advanced workflows have explicit boundaries; no claim of universal composition or every-feature certification. |
 | D-03 | improved | All 17 Linux SDK tools staged with matching clean-source identity and checksums; representative actual workflows pass. Current Windows SDK qualification explicitly deferred. |
 
-## Rotation/contact correction — automated Linux qualification
+## Rotation/contact correction — human accepted
 
-**MK2-ELASTIC-CONFINEMENT** is corrected within the tested scope; human acceptance
-is pending. The retained original executable again gains 31.845% in two seconds;
+**MK2-ELASTIC-CONFINEMENT** is corrected within the tested scope and was human
+accepted at `c76e92dc`. The retained original executable again gains 31.845% in two seconds;
 the candidate peak gain is 0.0000203%, with zero holds. Consistent rotation maps,
 same-configuration relaxation and chronological arrival response address the
 underlying mechanism. Independent timing, momentum, curved-mesh, joint, cold-save
@@ -74,3 +74,11 @@ See [correction, costs and limitations](PREALPHA_MK2_ROTATION_CORRECTION.md).
 Long-run dissipation, extreme-spin phase error and bounded-arrival limitations
 remain; Windows/Android are not qualified. Original failures and rejected
 experiments remain in [the earlier investigation](PREALPHA_ELASTIC_LINUX_BASELINE.md).
+
+## Final bounded qualification follow-up
+
+[Final Linux qualification](PREALPHA_FINAL_QUALIFICATION.md) records the fresh
+Ubuntu24 SDK, all 17 actual tool workflows, relocated exports and targeted legacy
+coverage. It also preserves the newly discovered **MK2-EXTERNAL-KICK-TIMING**
+regression and its generic correction. All 29 affected follow-up invocations pass;
+this new correction awaits human acceptance. See [support boundaries](ALPHA_SUPPORT_MATRIX.md).

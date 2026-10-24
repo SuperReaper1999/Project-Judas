@@ -18,6 +18,8 @@ This is development documentation, not an Alpha release or a compatibility promi
 | Task | Reference |
 |---|---|
 | Versions, channels and source archives | [Build identity](BUILD_RELEASES.md) |
+| Intended Alpha support boundaries | [Support matrix](ALPHA_SUPPORT_MATRIX.md) |
+| Final bounded Linux qualification | [Current receipts and limits](PREALPHA_FINAL_QUALIFICATION.md) |
 | Packages, SDKs and checksums | [Distribution](DISTRIBUTION.md) |
 | Windows prerequisites and qualified scope | [Windows](WINDOWS.md) |
 | Native APK export and mobile limits | [Android](ANDROID.md) |

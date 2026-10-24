@@ -1,0 +1,4 @@
+WARNHarfBuzz has a Meson port and tries to migrate all the other build systems to it, please consider using it as we might remove our cmake port soon.
+-- Configuring done (47.8s)
+-- Generating done (0.4s)
+-- Build files have been written to: /build

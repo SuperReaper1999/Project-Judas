@@ -320,7 +320,32 @@ void MotionView() {
 }
 }
 
+// Instantaneous public pre-step kicks must not be retimed merely because the
+// world now records four chronological CCD intervals for every awake body.
+void ExternalKickTiming() {
+    for (const auto rotation : {glm::quat(1,0,0,0), glm::angleAxis(.73f,glm::normalize(glm::vec3(1,2,3)))}) {
+        PhysicsWorld world;world.Init();
+        const auto body=world.CreateDynamicBox({0,0,0},{.2f,.3f,.4f},400,0,0);
+        const glm::vec3 initial=rotation*glm::vec3(1,0,0), acceleration=rotation*glm::vec3(0,-9.81f,0);
+        world.SetLinearVelocity(body,initial);
+        world.ApplyLinearAcceleration(body,acceleration,kDt);
+        world.ApplyLinearImpulse(body,-acceleration*(400*kDt),false);
+        const auto kicked=world.GetLinearVelocity(body);
+        world.Step(kDt);
+        Check(glm::length(world.GetTransform(body).position-kicked*kDt)<1e-7f,
+              "balanced external kicks preserve the actual free-flight trajectory");
+        Check(glm::length(world.GetLinearVelocity(body)-kicked)<1e-7f,
+              "chronological intervals do not create physical momentum from balanced kicks");
+        world.ApplyLinearAcceleration(body,acceleration,kDt);
+        const auto accelerated=world.GetLinearVelocity(body),start=world.GetTransform(body).position;
+        world.Step(kDt);
+        Check(glm::length(world.GetTransform(body).position-(start+accelerated*kDt))<1e-7f,
+              "unconstrained public acceleration preserves its pre-step kick timing");
+    }
+}
+
 int main() {
+    ExternalKickTiming();
     try { FreeRotation(); ElasticEnvelope(); ArrivalTiming(); FreePairMomentum(); BoundedContactContinuation(); ReactionObservations(); RestitutionCutoff(); LateWake(); MotionView(); }
     catch (const std::exception& error) { ++failures; std::printf("EXCEPTION %s\n",error.what()); }
     std::printf("MK2 rotation: %u checks %u failures\n",checks,failures);

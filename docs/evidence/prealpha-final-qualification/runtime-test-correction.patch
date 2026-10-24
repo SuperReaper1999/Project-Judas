@@ -1,0 +1,87 @@
+diff --git a/src/physics/WorldMk2Solver.cpp b/src/physics/WorldMk2Solver.cpp
+index d0a395bd..33191341 100644
+--- a/src/physics/WorldMk2Solver.cpp
++++ b/src/physics/WorldMk2Solver.cpp
+@@ -644,7 +644,17 @@ void PhysicsWorld::Impl::Mk2Solve(float dt, const PhysicsWorld::VelocityCoupling
+                     state[std::size_t(index[handle.id & kSlotMask])].constrained = true;
+     // Every awake body shares the chronological intervals. An unchanged
+     // linear flight keeps one velocity-episode anchor across those intervals.
+-    for (auto &s : state) s.constrained |= s.dynamic;
++    for (auto &s : state) {
++        // The public acceleration/force kick is already applied before Step.
++        // Only actual constraint/coupling solves distribute it over substeps.
++        // Free flights still share the chronological CCD intervals, without
++        // moving a pre-step impulse to a different time from its counter-impulse.
++        if (s.dynamic && !s.constrained && !coupling) {
++            s.rb->linearVelocity += s.gravityStep * float(substeps);
++            s.gravityStep = glm::vec3(0);
++        }
++        s.constrained |= s.dynamic;
++    }
+ 
+     // Manifold blocks: consecutive points of one primitive pair (cache order).
+     std::vector<Block> blocks;
+diff --git a/tests/Mk2RotationTests.cpp b/tests/Mk2RotationTests.cpp
+index 35504c47..2281197d 100644
+--- a/tests/Mk2RotationTests.cpp
++++ b/tests/Mk2RotationTests.cpp
+@@ -320,7 +320,32 @@ void MotionView() {
+ }
+ }
+ 
++// Instantaneous public pre-step kicks must not be retimed merely because the
++// world now records four chronological CCD intervals for every awake body.
++void ExternalKickTiming() {
++    for (const auto rotation : {glm::quat(1,0,0,0), glm::angleAxis(.73f,glm::normalize(glm::vec3(1,2,3)))}) {
++        PhysicsWorld world;world.Init();
++        const auto body=world.CreateDynamicBox({0,0,0},{.2f,.3f,.4f},400,0,0);
++        const glm::vec3 initial=rotation*glm::vec3(1,0,0), acceleration=rotation*glm::vec3(0,-9.81f,0);
++        world.SetLinearVelocity(body,initial);
++        world.ApplyLinearAcceleration(body,acceleration,kDt);
++        world.ApplyLinearImpulse(body,-acceleration*(400*kDt),false);
++        const auto kicked=world.GetLinearVelocity(body);
++        world.Step(kDt);
++        Check(glm::length(world.GetTransform(body).position-kicked*kDt)<1e-7f,
++              "balanced external kicks preserve the actual free-flight trajectory");
++        Check(glm::length(world.GetLinearVelocity(body)-kicked)<1e-7f,
++              "chronological intervals do not create physical momentum from balanced kicks");
++        world.ApplyLinearAcceleration(body,acceleration,kDt);
++        const auto accelerated=world.GetLinearVelocity(body),start=world.GetTransform(body).position;
++        world.Step(kDt);
++        Check(glm::length(world.GetTransform(body).position-(start+accelerated*kDt))<1e-7f,
++              "unconstrained public acceleration preserves its pre-step kick timing");
++    }
++}
++
+ int main() {
++    ExternalKickTiming();
+     try { FreeRotation(); ElasticEnvelope(); ArrivalTiming(); FreePairMomentum(); BoundedContactContinuation(); ReactionObservations(); RestitutionCutoff(); LateWake(); MotionView(); }
+     catch (const std::exception& error) { ++failures; std::printf("EXCEPTION %s\n",error.what()); }
+     std::printf("MK2 rotation: %u checks %u failures\n",checks,failures);
+diff --git a/tests/SpacecraftFrameIntegrationTests.cpp b/tests/SpacecraftFrameIntegrationTests.cpp
+index 71445ed7..4378160c 100644
+--- a/tests/SpacecraftFrameIntegrationTests.cpp
++++ b/tests/SpacecraftFrameIntegrationTests.cpp
+@@ -114,7 +114,21 @@ void Sas(const Frame& frame,const fs::path& directory) {
+     // Captured target initially equals current attitude, so only the documented
+     // -10*omega angular-acceleration damping acts. This is torque/inertia, not a
+     // replacement orientation or angular-rate assignment in the test.
+-    Vector(name+" first SAS impulse",physics.GetAngularVelocity(h),glm::dvec3(omega)*(1.-10.*double(dt)),2e-6);
++    // World angular velocity changes during free asymmetric rotation. Check
++    // the applied torque through independent cuboid inertia and spatial angular
++    // momentum, expressed in initial-inertia angular-velocity units so the
++    // existing 2e-6 tolerance is unchanged. The original fixed-omega oracle is
++    // preserved with its failing reproduction in final qualification evidence.
++    glm::dmat3 local(0);
++    local[0][0]=shipMass/3.*(double(halfExtents.y)*halfExtents.y+double(halfExtents.z)*halfExtents.z);
++    local[1][1]=shipMass/3.*(double(halfExtents.x)*halfExtents.x+double(halfExtents.z)*halfExtents.z);
++    local[2][2]=shipMass/3.*(double(halfExtents.x)*halfExtents.x+double(halfExtents.y)*halfExtents.y);
++    const auto first=glm::mat3_cast(glm::normalize(glm::dquat(target)));
++    const auto last=glm::mat3_cast(glm::normalize(glm::dquat(physics.GetTransform(h).rotation)));
++    const auto inertia=first*local*glm::transpose(first);
++    const auto momentum=last*local*glm::transpose(last)*glm::dvec3(physics.GetAngularVelocity(h));
++    Vector(name+" first SAS torque changes spatial angular momentum",
++           glm::inverse(inertia)*momentum,glm::dvec3(omega)*(1.-10.*double(dt)),2e-6);
+     const double moved=glm::length(glm::dquat(physics.GetTransform(h).rotation)-glm::dquat(target));
+     Check(moved>1e-5&&moved<.02,name+" finite torque step moves continuously instead of snapping");
+     Vector(name+" SAS leaves translation inertial",physics.GetLinearVelocity(h),glm::dvec3(v),2e-6);

@@ -1,0 +1,15 @@
+judas_terrain_author 0
+judas_terrain_author 0
+judas_terrain_author 0
+judas_terrain_author 0
+judas_collision_cook 0
+judas_collision_cook 1
+judas_environment_bake 1
+Traceback (most recent call last):
+  File "/build/extra-tools.py", line 15, in <module>
+    run('judas_environment_bake',root/'fixtures/studio.hdr',out/'studio.judasenv',8,8)
+  File "/build/extra-tools.py", line 7, in run
+    print(tool,p.returncode,flush=True);assert p.returncode==expected,p.stdout+p.stderr
+                                               ^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: environment width must be power-of-two 16..512, samples 32..1024
+

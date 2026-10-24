@@ -1,0 +1,32 @@
+Shadow maps: on
+Graphics: 4.5 (Core Profile) Mesa 25.2.8-0ubuntu0.24.04.4 / llvmpipe (LLVM 20.1.2, 256 bits)
+Renderer fragment texture units: 32 (material path uses 12)
+PASS actual GL host: 
+PASS normal project loads: 
+PASS logical project controls: 
+PASS normal authored/captured scene: 
+PASS normal immutable assets and world publish: 
+PASS ordinary game starts: 
+PASS authored configuration does not activate physical authority
+PASS shared immutable asset and distinct second rig use ordinary resource sharing
+ACTOR 12 status=2 root=2.99726,1.41872,-0.0191155 height=1.41958 up=0.999796 speed=0.00326283 supports=4/4 landings=0 reason=measured supported physical standing
+PASS real JS request makes full dynamic authority with explicit motor handoff
+PASS normal resource/JS path reaches actual standing
+MID-STEP CAPTURE frame=12 swing=1 swingTime=0.3 lifted=1
+PASS capture contains an owned native task
+PASS capture while corrective step is actually in progress
+PASS atomic save retains physical and native task state: 
+PASS active task declares its required save participant
+PASS detached restore candidate is ready
+PASS missing/newer/truncated native task participant is rejected
+PASS detached restore candidate is ready
+PASS missing/newer/truncated native task participant is rejected
+PASS detached restore candidate is ready
+PASS missing/newer/truncated native task participant is rejected
+PASS failed detached restores leave live physical state untouched
+ACTOR 12 status=2 root=3.03116,1.34222,0.208212 height=1.34438 up=0.999866 speed=0.00622766 supports=4/4 landings=1 reason=measured supported physical standing
+PASS uninterrupted run from the mid-step capture lands and stands
+PASS ordinary lab callback health matches deliberate fault policy
+PASS real final pose/skinning and diagnostic rendering path executes
+PASS Stop destroys the owned runtime world
+SUMMARY 25 checks 0 failures

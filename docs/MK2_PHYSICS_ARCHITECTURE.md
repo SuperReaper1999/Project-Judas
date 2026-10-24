@@ -39,6 +39,10 @@ A coupling receives `begin(dt)` once, exactly its requested `solve(dt,round)`
 calls spread over substeps, then `finish(dt)` once. Bodies woken during coupling
 join through the same owner, without a second simulation system. Gameplay forces
 and per-entity gravity are engine primitives; input policy remains project JS.
+All awake bodies share the chronological intervals. Pre-applied external kicks
+are redistributed only for actual constraints/velocity couplings; free flight
+retains its public pre-step impulse timing. The [qualification follow-up](PREALPHA_FINAL_QUALIFICATION.md)
+records the suspension regression and balanced-kick proof for this correction.
 
 ## Contacts, persistence and determinism
 
@@ -93,7 +97,7 @@ The [rotation/contact correction](PREALPHA_MK2_ROTATION_CORRECTION.md) repairs t
 moderate-rate elastic energy-gain reproduction through consistent rotation and
 chronological response. Its measured energy, collision, momentum, cold-save and
 performance evidence is separate from the preserved original failure record.
-It is automated Linux qualification awaiting human acceptance, not a universal
+It was human accepted at `c76e92dc20b5765f61d6077bf618a8b94ac22462`, not a universal
 no-energy-error guarantee: nominal e=1 still loses some energy over long runs,
 extreme spin has measured phase error, and bounded arrivals can truncate motion.
 

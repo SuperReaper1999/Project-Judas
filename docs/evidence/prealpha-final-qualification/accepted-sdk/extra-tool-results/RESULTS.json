@@ -1,0 +1,115 @@
+[
+  {
+    "tool": "judas_terrain_author",
+    "command": [
+      "/source/judas_terrain_author",
+      "create",
+      "/build/game/Assets/ground.judasterrain",
+      "9",
+      "9",
+      "8",
+      "8"
+    ],
+    "exit": 0,
+    "expected": 0,
+    "seconds": 0.027689070004271343,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "tool": "judas_terrain_author",
+    "command": [
+      "/source/judas_terrain_author",
+      "brush",
+      "/build/game/Assets/ground.judasterrain",
+      "raise",
+      "0",
+      "0",
+      "0",
+      "2",
+      "0.5"
+    ],
+    "exit": 0,
+    "expected": 0,
+    "seconds": 0.006199910996656399,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "tool": "judas_terrain_author",
+    "command": [
+      "/source/judas_terrain_author",
+      "validate",
+      "/build/game/Assets/ground.judasterrain"
+    ],
+    "exit": 0,
+    "expected": 0,
+    "seconds": 0.005565703999309335,
+    "stdout": "valid terrain 9 x 9\n",
+    "stderr": ""
+  },
+  {
+    "tool": "judas_terrain_author",
+    "command": [
+      "/source/judas_terrain_author",
+      "cook",
+      "/build/game/SDK_First_Game.judasproj",
+      "Assets/ground.judasterrain"
+    ],
+    "exit": 0,
+    "expected": 0,
+    "seconds": 0.03694440099934582,
+    "stdout": "cook 29.0723 ms, 1062935 bytes; geometry 1, appearance 1\n",
+    "stderr": ""
+  },
+  {
+    "tool": "judas_collision_cook",
+    "command": [
+      "/source/judas_collision_cook",
+      "mesh",
+      "/build/sdk-final-workflows/triangle.obj",
+      "/build/extra-tool-results/triangle.judascollision",
+      "00000000000000000000000000000001",
+      "0"
+    ],
+    "exit": 0,
+    "expected": 0,
+    "seconds": 0.021026046000770293,
+    "stdout": "/build/extra-tool-results/triangle.judascollision: 3 vertices 1 triangles 1 BVH nodes, volume 0 m3\n",
+    "stderr": ""
+  },
+  {
+    "tool": "judas_collision_cook",
+    "command": [
+      "/source/judas_collision_cook",
+      "mesh",
+      "/build/sdk-final-workflows/triangle.obj",
+      "/build/extra-tool-results/invalid.judascollision",
+      "00000000000000000000000000000001",
+      "0",
+      "0",
+      "1",
+      "1"
+    ],
+    "exit": 1,
+    "expected": 1,
+    "seconds": 0.008285413001431152,
+    "stdout": "",
+    "stderr": "collision source transform requires positive nonsingular scale; mirrors unsupported\n"
+  },
+  {
+    "tool": "judas_environment_bake",
+    "command": [
+      "/source/judas_environment_bake",
+      "/build/fixtures/studio.hdr",
+      "/build/extra-tool-results/studio.judasenv",
+      "8",
+      "8"
+    ],
+    "exit": 1,
+    "expected": 0,
+    "seconds": 0.023478249997424427,
+    "stdout": "",
+    "stderr": "environment width must be power-of-two 16..512, samples 32..1024\n"
+  }
+]

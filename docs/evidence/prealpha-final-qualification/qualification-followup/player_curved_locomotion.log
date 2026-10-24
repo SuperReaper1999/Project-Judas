@@ -1,0 +1,63 @@
+Flat-ground locomotion control
+  OK   flat walk remains grounded
+  OK   flat control traverses normally at walking speed
+  OK   flat support clearance is also stable during walking
+  flat clearance range 0.017275..0.017275 m
+Curved locomotion under a rotated universe
+  OK   first- and third-person presentation transforms remain finite on the sphere
+  OK   torch origin follows the presented player-local eye while traversing curvature
+  OK   continuous curved-surface walk has no grounded-state chatter
+  OK   continuous curved-surface support clearance stays within 2 mm
+  OK   capsule remains near its intended 20 mm skin margin
+  OK   local frame incorporates each small curvature change without angular snaps
+  OK   local frame does not hold still for repeated steps while walking
+  OK   player local up stays close to current radial gravity while walking
+  OK   first- and third-person presented camera positions advance smoothly
+  OK   walk includes deliberate direction changes
+  OK   standing remains stationary after the long curved traversal
+  OK   jump leaves and reacquires curved support
+  OK   landing returns to the bounded curved-surface support band
+  [sphere] clearance range 0.017275..0.017387 m, max frame rotation 0.1826 deg, final r 20.91738 m
+  OK   first- and third-person presentation transforms remain finite on the sphere
+  OK   torch origin follows the presented player-local eye while traversing curvature
+  OK   continuous curved-surface walk has no grounded-state chatter
+  OK   continuous curved-surface support clearance stays within 2 mm
+  OK   capsule remains near its intended 20 mm skin margin
+  OK   local frame incorporates each small curvature change without angular snaps
+  OK   local frame does not hold still for repeated steps while walking
+  OK   player local up stays close to current radial gravity while walking
+  OK   first- and third-person presented camera positions advance smoothly
+  OK   walk includes deliberate direction changes
+  OK   standing remains stationary after the long curved traversal
+  OK   jump leaves and reacquires curved support
+  OK   landing returns to the bounded curved-surface support band
+  [rotated sphere] clearance range 0.017279..0.017387 m, max frame rotation 0.1826 deg, final r 20.91738 m
+  OK   rotating the full sphere scenario preserves support-clearance behaviour
+  OK   rotating the universe rotates the long-walk endpoint equivalently
+  OK   player local up follows radial gravity in the rotated scenario
+Ascending spacecraft release (world frame)
+  OK   pilot-release physics world initializes
+  OK   pilot-release player shape initializes
+  OK   release returns control to ordinary player movement
+  OK   first detached step preserves clearance while the ascending hull advances first
+  OK   inherited upward point velocity survives release and gravity
+  OK   release reacquires the ascending spacecraft as physical support
+  OK   release support is the spacecraft the pilot left
+  OK   support transform carry preserves clearance during sustained coasting
+  release clearance 1.167274..1.167276 m, final grounded=1, final gap=1.167275 m
+  OK   player remains grounded while walking on the rising spacecraft
+  OK   player movement remains available while coasting with the ascending spacecraft
+Ascending spacecraft release (rotated world frame)
+  OK   pilot-release physics world initializes
+  OK   pilot-release player shape initializes
+  OK   release returns control to ordinary player movement
+  OK   first detached step preserves clearance while the ascending hull advances first
+  OK   inherited upward point velocity survives release and gravity
+  OK   release reacquires the ascending spacecraft as physical support
+  OK   release support is the spacecraft the pilot left
+  OK   support transform carry preserves clearance during sustained coasting
+  release clearance 1.167274..1.167276 m, final grounded=1, final gap=1.167275 m
+  OK   player remains grounded while walking on the rising spacecraft
+  OK   player movement remains available while coasting with the ascending spacecraft
+
+ALL TESTS PASSED

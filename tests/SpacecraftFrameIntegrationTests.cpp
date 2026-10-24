@@ -114,7 +114,21 @@ void Sas(const Frame& frame,const fs::path& directory) {
     // Captured target initially equals current attitude, so only the documented
     // -10*omega angular-acceleration damping acts. This is torque/inertia, not a
     // replacement orientation or angular-rate assignment in the test.
-    Vector(name+" first SAS impulse",physics.GetAngularVelocity(h),glm::dvec3(omega)*(1.-10.*double(dt)),2e-6);
+    // World angular velocity changes during free asymmetric rotation. Check
+    // the applied torque through independent cuboid inertia and spatial angular
+    // momentum, expressed in initial-inertia angular-velocity units so the
+    // existing 2e-6 tolerance is unchanged. The original fixed-omega oracle is
+    // preserved with its failing reproduction in final qualification evidence.
+    glm::dmat3 local(0);
+    local[0][0]=shipMass/3.*(double(halfExtents.y)*halfExtents.y+double(halfExtents.z)*halfExtents.z);
+    local[1][1]=shipMass/3.*(double(halfExtents.x)*halfExtents.x+double(halfExtents.z)*halfExtents.z);
+    local[2][2]=shipMass/3.*(double(halfExtents.x)*halfExtents.x+double(halfExtents.y)*halfExtents.y);
+    const auto first=glm::mat3_cast(glm::normalize(glm::dquat(target)));
+    const auto last=glm::mat3_cast(glm::normalize(glm::dquat(physics.GetTransform(h).rotation)));
+    const auto inertia=first*local*glm::transpose(first);
+    const auto momentum=last*local*glm::transpose(last)*glm::dvec3(physics.GetAngularVelocity(h));
+    Vector(name+" first SAS torque changes spatial angular momentum",
+           glm::inverse(inertia)*momentum,glm::dvec3(omega)*(1.-10.*double(dt)),2e-6);
     const double moved=glm::length(glm::dquat(physics.GetTransform(h).rotation)-glm::dquat(target));
     Check(moved>1e-5&&moved<.02,name+" finite torque step moves continuously instead of snapping");
     Vector(name+" SAS leaves translation inertial",physics.GetLinearVelocity(h),glm::dvec3(v),2e-6);

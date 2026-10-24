@@ -1,0 +1,4 @@
+{
+  "initial_error": "environment_command correctly rejects a writable work directory containing its read-only SDK mount source",
+  "correction": "SDK moved to a sibling directory. No binary or manifest changed. Qualification not claimed for the rejected layout."
+}

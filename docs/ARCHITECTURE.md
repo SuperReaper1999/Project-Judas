@@ -204,7 +204,7 @@ Linux is the acceptance reference. Windows VM/Android receipts have individual
 version/hardware scope. Main is human-tested release lineage; Experimental is
 development. No M100 or Alpha release is declared.
 
-## Project policy and basic water (Pre-Alpha isolated candidate)
+## Project policy and basic water
 
 Project-wide water policy is serialized by both Project and NamedAuthoring codecs
 and captured by RuntimeWorld::ConfigureProject before construction. Runtime,

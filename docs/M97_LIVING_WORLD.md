@@ -1,6 +1,6 @@
 # M97 — Living World
 
-Current Experimental implementation; human acceptance pending.
+Human-accepted M97 implementation; current platform qualification remains separate.
 
 Open `projects/living_world_lab/living_world_lab.judasproj` in the editor. The normal
 project contains three independently retained quarries, an editable finite rock,

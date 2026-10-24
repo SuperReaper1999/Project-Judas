@@ -12,7 +12,7 @@ limitations below. Runtime-label source editing now includes a shaped-text previ
 **Current M96 extension:** [UI toolkit](M96_UI_TOOLKIT.md) and [public API](judasjs/ui.md)
 add native editable text/IME, scrolling, virtual lists, focus, semantic observations
 and explicit control-state snapshots. The editor retains its normal canvas, named
-source, undo and explicit save workflow. M96 human acceptance is pending.
+source, undo and explicit save workflow. M96 was human accepted; current platform coverage remains separate.
 
 ## Authoring
 

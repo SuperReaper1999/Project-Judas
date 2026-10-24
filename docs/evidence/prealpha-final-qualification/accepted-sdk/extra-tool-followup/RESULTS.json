@@ -1,0 +1,101 @@
+[
+  {
+    "tool": "judas_environment_bake",
+    "command": [
+      "/source/judas_environment_bake",
+      "/build/fixtures/studio.hdr",
+      "/build/extra-tool-followup/studio.judasenv",
+      "16",
+      "32"
+    ],
+    "exit": 0,
+    "expected": 0,
+    "seconds": 0.024184009998862166,
+    "stdout": "Baked /build/extra-tool-followup/studio.judasenv content 91632939cbe6d8c40ce6056eae71a889792dac51c3c65d1729148cfcc9d01419, 5 levels in 0.017 s\n",
+    "stderr": ""
+  },
+  {
+    "tool": "judas_mod",
+    "command": [
+      "/source/judas_mod",
+      "kit",
+      "/build/fixtures/modding_lab/modding_lab.judasproj",
+      "/build/extra-tool-followup/kit",
+      "/source/docs"
+    ],
+    "exit": 0,
+    "expected": 0,
+    "seconds": 0.133692986004462,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "tool": "judas_mod",
+    "command": [
+      "/source/judas_mod",
+      "new",
+      "/build/extra-tool-followup/kit",
+      "/build/extra-tool-followup/new-mod",
+      "qualification-mod"
+    ],
+    "exit": 0,
+    "expected": 0,
+    "seconds": 0.025485915000899695,
+    "stdout": "/build/extra-tool-followup/new-mod/qualification_mod.judasproj\n",
+    "stderr": ""
+  },
+  {
+    "tool": "judas_navigation_bake",
+    "command": [
+      "/source/judas_navigation_bake",
+      "/build/fixtures/modding_lab/modding_lab.judasproj",
+      "Scenes/landscape.judas"
+    ],
+    "exit": 0,
+    "expected": 0,
+    "seconds": 0.0663987090010778,
+    "stdout": "surface 50: 25 layers, 25 polygons, 23.56 ms, source 7879c86baaf801eca415099a74c0999f592fbbdd3d1ae6779df1581f409407be\n",
+    "stderr": ""
+  },
+  {
+    "tool": "judas_liquid_bake",
+    "command": [
+      "/source/judas_liquid_bake",
+      "/build/fixtures/liquid_reservoir_demo/liquid_reservoir_demo.judasproj",
+      "Scenes/lab.judas"
+    ],
+    "exit": 0,
+    "expected": 0,
+    "seconds": 0.07372074399609119,
+    "stdout": "basin 20: 3392.000000 L capacity, 1025 curve samples, 6 integration cells, interpolation <=0.01 L, curved height bound 0 m; 30.659 ms; 72dc7ea2a91c833305fd49717f0ee20e7743d52335b8b53797adf23b728d7673\nbasin 21: 1728.000000 L capacity, 2 curve samples, 6 integration cells, interpolation <=0.01 L, curved height bound 0 m; 0.185 ms; e9514a941445e6053227bfdbe431a30ff4f0909b4230626a18137a2a168c6bfc\nbasin 22: 1728.000000 L capacity, 2 curve samples, 6 integration cells, interpolation <=0.01 L, curved height bound 0 m; 0.162 ms; 9c51210219fcd32682417417397c021f715cdd9535274ca36cc7e58817eceab0\nbasin 30: 1728.000000 L capacity, 2 curve samples, 6 integration cells, interpolation <=0.01 L, curved height bound 0 m; 0.157 ms; 584bc22f75d153656c425471ac15054ad0e1e3208bc9f0f071421dac252fe763\nbasin 31: 1728.000000 L capacity, 2 curve samples, 6 integration cells, interpolation <=0.01 L, curved height bound 0 m; 0.157 ms; fe9dbbd4bd2894f892de20d56d9d17bc1e0e156046e70c9458e9fbaa58b61f0a\nbasin 32: 1728.000000 L capacity, 2 curve samples, 6 integration cells, interpolation <=0.01 L, curved height bound 0 m; 0.155 ms; 76fc6285e5ab309fb3c698aed7779c0517b75c6396a6a7cced5f30450be16eb9\n",
+    "stderr": ""
+  },
+  {
+    "tool": "judas_server",
+    "command": [
+      "/source/judas_server",
+      "/build/game/SDK_First_Game.judasproj",
+      "28978",
+      "1"
+    ],
+    "exit": 0,
+    "expected": 0,
+    "seconds": 1.0919994299983955,
+    "stdout": "Judas dedicated initialized: project=/build/game/SDK_First_Game.judasproj port=28978 fixedHz=60 duration=1.000\nNo display, renderer or audio device; project scripts own host startup and gameplay.\nJS: My first Judas project is running.\nJudas dedicated stopped: fixedSteps=59 discardedCatchupSeconds=0.000000\n",
+    "stderr": ""
+  },
+  {
+    "tool": "judas_server",
+    "command": [
+      "/source/judas_server",
+      "/build/fixtures/modding_lab/modding_lab.judasproj",
+      "28978",
+      "1"
+    ],
+    "exit": 1,
+    "expected": 1,
+    "seconds": 0.017846440001449082,
+    "stdout": "",
+    "stderr": "Judas dedicated: dedicated hosting of composed/streamed worlds is not supported yet\n"
+  }
+]

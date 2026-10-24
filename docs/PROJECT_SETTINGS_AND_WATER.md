@@ -5,7 +5,8 @@ engine baseline `c859901cc9a52cf5b7104887f56b5e7ad4269b1d`. MK2 is the
 authoritative physics engine. The later Experimental corrections described in
 [Final Pre-Alpha corrections](PREALPHA_FINAL_CORRECTIONS.md) strengthen policy,
 persistence and editing workflows without changing fluid numerical methods or
-the MK2/balance solvers. Those corrections still require human review.
+the MK2/balance solvers. Those corrections and the later rotation repair are
+in the human-accepted `c76e92dc` baseline.
 
 ## Configure a project
 
@@ -197,7 +198,8 @@ Open `projects/basic_water_lab/basic_water_lab.judasproj` in this branch's edito
 9. Run the relocated Stillwater export and repeat the basic swim/pause checks.
 
 Automation results, measurements and failure/follow-up records are maintained in
-`docs/evidence/prealpha-project-settings-water`. Human acceptance is pending.
+`docs/evidence/prealpha-project-settings-water`. Project settings/basic water were human accepted and integrated before the accepted
+`c76e92dc` baseline; later platform qualification remains separate.
 
 ### Dormant authored content
 

@@ -644,7 +644,17 @@ void PhysicsWorld::Impl::Mk2Solve(float dt, const PhysicsWorld::VelocityCoupling
                     state[std::size_t(index[handle.id & kSlotMask])].constrained = true;
     // Every awake body shares the chronological intervals. An unchanged
     // linear flight keeps one velocity-episode anchor across those intervals.
-    for (auto &s : state) s.constrained |= s.dynamic;
+    for (auto &s : state) {
+        // The public acceleration/force kick is already applied before Step.
+        // Only actual constraint/coupling solves distribute it over substeps.
+        // Free flights still share the chronological CCD intervals, without
+        // moving a pre-step impulse to a different time from its counter-impulse.
+        if (s.dynamic && !s.constrained && !coupling) {
+            s.rb->linearVelocity += s.gravityStep * float(substeps);
+            s.gravityStep = glm::vec3(0);
+        }
+        s.constrained |= s.dynamic;
+    }
 
     // Manifold blocks: consecutive points of one primitive pair (cache order).
     std::vector<Block> blocks;

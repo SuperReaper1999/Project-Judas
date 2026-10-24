@@ -1,0 +1,30 @@
+{
+  "accepted_input": "c76e92dc20b5765f61d6077bf618a8b94ac22462",
+  "tested_build": {
+    "schema": 1,
+    "version": "0.1.0-prealpha",
+    "maturity": "pre-alpha",
+    "channel": "Experimental",
+    "build_id": "0.1.0-prealpha-Experimental-c76e92d-dirty-6c8f9f2b71f8",
+    "source_revision": "c76e92dc20b5765f61d6077bf618a8b94ac22462",
+    "source_tree": "c0337119344fa4565bc3ea7e534b74c3beb39b45",
+    "source_dirty": true,
+    "source_fingerprint": "6c8f9f2b71f813f629d0b7b4140ebca3937c5bb1264f8c0e73e5d1f63e37647b",
+    "source_untracked_count": 0,
+    "source_untracked_fingerprint": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "source_origin": "git",
+    "platform": "Linux",
+    "architecture": "x86_64",
+    "configuration": "Release",
+    "compiler": "GNU",
+    "compiler_version": "13.3.0"
+  },
+  "changed_compiled_inputs": {
+    "src/physics/WorldMk2Solver.cpp": "d909345bae17f672028bfb34c434657285923c4c9514be6ad2c17110d676c5a9",
+    "tests/Mk2RotationTests.cpp": "1f42b99b5cd8c2084b17c4baa1970b12ad3cdeff7a8d70be52c145f28e9e9b9a",
+    "tests/SpacecraftFrameIntegrationTests.cpp": "17dd7b47e9e376e6c16cf77e1fce799f75233930fa61234d7fc370a6aeab5d94"
+  },
+  "final_followup_invocations": 29,
+  "all_passed": true,
+  "note": "All follow-up binary hashes reverified against the current on-disk test binaries. Initial clean c76 SDK retained separately. Final clean committed SDK qualification is a subsequent receipt, not a relabel of this dirty build."
+}

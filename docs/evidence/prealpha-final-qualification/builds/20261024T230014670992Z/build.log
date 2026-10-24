@@ -1,0 +1,67 @@
+[0/2] Re-checking globbed directories...
+[1/65] Building CXX object CMakeFiles/judas_build_identity.dir/src/BuildIdentity.cpp.o
+[2/65] Linking CXX static library libjudas_build_identity.a
+[3/65] Building CXX object CMakeFiles/judas_engine.dir/src/physics/WorldMk2Solver.cpp.o
+[4/65] Linking CXX static library libjudas_engine.a
+[5/65] Linking CXX executable judas
+[6/65] Linking CXX executable judas_editor
+[7/65] Building CXX object CMakeFiles/judas_mk2_physics_tests.dir/src/physics/WorldMk2Solver.cpp.o
+[8/65] Linking CXX executable judas_scene_author
+[9/65] Linking CXX executable judas_mk2_physics_tests
+[10/65] Building CXX object CMakeFiles/judas_spacecraft_control_tests.dir/src/physics/WorldMk2Solver.cpp.o
+[11/65] Linking CXX executable judas_spacecraft_control_tests
+[12/65] Building CXX object CMakeFiles/judas_spacecraft_flight_tests.dir/src/physics/WorldMk2Solver.cpp.o
+[13/65] Linking CXX executable judas_spacecraft_flight_tests
+[14/65] Linking CXX executable judas_gravity_selection_tests
+[15/65] Linking CXX executable judas_contact_lifecycle_tests
+[16/65] Linking CXX executable judas_impact_mesh_cost_tests
+[17/65] Building CXX object CMakeFiles/judas_player_curved_locomotion_tests.dir/src/physics/WorldMk2Solver.cpp.o
+[18/65] Linking CXX executable judas_player_curved_locomotion_tests
+[19/65] Linking CXX executable judas_player_swimming_tests
+[20/65] Building CXX object CMakeFiles/judas_spacecraft_frame_integration_tests.dir/tests/SpacecraftFrameIntegrationTests.cpp.o
+[21/65] Linking CXX executable judas_input_tests
+[22/65] Linking CXX executable judas_spacecraft_frame_integration_tests
+[23/65] Linking CXX executable judas_joint_tests
+[24/65] Linking CXX executable judas_export
+[25/65] Linking CXX executable judas_character_motor_tests
+[26/65] Linking CXX executable judas_boundary_migration_tests
+[27/65] Linking CXX executable judas_hearthworld_application_tests
+[28/65] Linking CXX executable judas_navigation_bake
+[29/65] Linking CXX executable judas_liquid_bake
+[30/65] Linking CXX executable judas_environment_bake
+[31/65] Linking CXX executable judas_physics_continuation_tests
+[32/65] Linking CXX executable judas_save_exclusion_tests
+[33/65] Linking CXX executable judas_deformable_bake
+[34/65] Linking CXX executable judas_collision_cook
+[35/65] Linking CXX executable judas_model_import_cli
+[36/65] Linking CXX executable judas_physical_balance_controller_tests
+[37/65] Linking CXX executable judas_balance_lab_tests
+[38/65] Linking CXX executable judas_terrain_author
+[39/65] Linking CXX executable judas_wheel_tests
+[40/65] Linking CXX executable judas_mod
+[41/65] Linking CXX executable judas_wheel_lifecycle_tests
+[42/65] Linking CXX executable judas_powertrain_tests
+[43/65] Linking CXX executable judas_powertrain_lifecycle_tests
+[44/65] Linking CXX executable judas_powertrain_application_tests
+[45/65] Linking CXX executable judas_origin_assembly_tests
+[46/65] Linking CXX executable judas_volume_author
+[47/65] Linking CXX executable judas_cook
+[48/65] Linking CXX executable judas_stream_origin_precision_tests
+[49/65] Linking CXX executable judas_script_check
+[50/65] Linking CXX executable judas_living_world_streaming_tests
+[51/65] Linking CXX executable judas_save
+[52/65] Linking CXX executable judas_save_evolution_tests
+[53/65] Linking CXX executable judas_server
+[54/65] Linking CXX executable judas_network_session_tests
+[55/65] Linking CXX executable judas_prealpha_lifecycle_tests
+[56/65] Linking CXX executable judas_network_boundary_tests
+[57/65] Linking CXX executable judas_origin_admission_tests
+[58/65] Linking CXX executable judas_project_water_tests
+[59/65] Linking CXX executable judas_basic_water_application_tests
+[60/65] Linking CXX executable judas_project_fluid_policy_tests
+[61/65] Linking CXX executable judas_mk2_diagnostics_tests
+[62/65] Linking CXX executable judas_mk2_rotation_cold_tests
+[63/65] Building CXX object CMakeFiles/judas_mk2_rotation_tests.dir/tests/Mk2RotationTests.cpp.o
+[64/65] Linking CXX executable judas_mk2_rotation_tests
+[65/65] cd /build && /usr/bin/python3 /source/tools/package_sdk.py stage --source /source --bin-dir /build --build-info /build/judas-build-info-Release.json --output /build/linux-sdk --replace --probe-tools
+{"build": {"architecture": "x86_64", "build_id": "0.1.0-prealpha-Experimental-c76e92d-dirty-6c8f9f2b71f8", "channel": "Experimental", "compiler": "GNU", "compiler_version": "13.3.0", "configuration": "Release", "maturity": "pre-alpha", "platform": "Linux", "schema": 1, "source_dirty": true, "source_fingerprint": "6c8f9f2b71f813f629d0b7b4140ebca3937c5bb1264f8c0e73e5d1f63e37647b", "source_origin": "git", "source_revision": "c76e92dc20b5765f61d6077bf618a8b94ac22462", "source_tree": "c0337119344fa4565bc3ea7e534b74c3beb39b45", "source_untracked_count": 0, "source_untracked_fingerprint": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855", "version": "0.1.0-prealpha"}, "files": 235, "ok": true, "tools": 17}

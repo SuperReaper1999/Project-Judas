@@ -1,6 +1,6 @@
 # M86 — Judas Learns to Weather
 
-Current Experimental implementation. Human acceptance is pending. This document
+Human-accepted M86 implementation; current platform qualification remains separate. This document
 describes the source contract; actual Linux measurements, focused results and
 the preserved unrelated regression failure are recorded in the
 [M86 evidence report](evidence/m86/REPORT.md). Windows M86 remains untested.

@@ -1,7 +1,7 @@
 {
   "schema": 1,
-  "scope": "Linux Pre-Alpha qualification after accepted 0aaef603; Experimental changes awaiting human acceptance. Windows/Android explicitly deferred. No M100.",
-  "input_commit": "0aaef603b0347a55350a81beff896cff21d914bf",
+  "scope": "Final bounded Linux qualification from human-accepted c76e92dc. Experimental external-kick correction awaits human acceptance. Windows/Android and operator game-building trial deferred. No M100.",
+  "input_commit": "c76e92dc20b5765f61d6077bf618a8b94ac22462",
   "assessment": "docs/evidence/prealpha-pass2/ORIGINAL_ASSESSMENT.md",
   "assessment_sha256": "7d306dc2756e771f931aa7be1cf82bf31aad942f49240f89ac0d71069a7ac6a5",
   "parent_register": "docs/evidence/prealpha-linux-readiness/ACCEPTED_FINDINGS_0aaef603.json",
@@ -176,8 +176,8 @@
       "original_quote": "The editor\u2019s current identity is inferred from milestone numbers in recent Git commit subjects, with an **M76 fallback** when suitable history is unavailable.",
       "status": "resolved",
       "scope": "final_prealpha_current_or_explicit_carried_scope",
-      "disposition": "Current provenance infrastructure retained; current c859 identities and matching relocated game export verified. No new channel changes or update-service qualification.",
-      "evidence": "docs/PREALPHA_FINAL_CORRECTIONS.md"
+      "disposition": "Fresh clean c76e92dc Ubuntu24 SDK: all 17 identities, ABI/loader checks, actual tool workflows and package-only relocated exports pass. Corrected runtime follow-up has its own recorded source identity. No release/channel change.",
+      "evidence": "docs/PREALPHA_FINAL_QUALIFICATION.md"
     },
     {
       "id": "C-02",
@@ -185,8 +185,8 @@
       "original_quote": "Unnumbered Pre-Alpha corrections cannot be identified reliably.",
       "status": "resolved",
       "scope": "final_prealpha_current_or_explicit_carried_scope",
-      "disposition": "Current provenance infrastructure retained; current c859 identities and matching relocated game export verified. No new channel changes or update-service qualification.",
-      "evidence": "docs/PREALPHA_FINAL_CORRECTIONS.md"
+      "disposition": "Fresh clean c76e92dc Ubuntu24 SDK: all 17 identities, ABI/loader checks, actual tool workflows and package-only relocated exports pass. Corrected runtime follow-up has its own recorded source identity. No release/channel change.",
+      "evidence": "docs/PREALPHA_FINAL_QUALIFICATION.md"
     },
     {
       "id": "C-03",
@@ -194,8 +194,8 @@
       "original_quote": "Source archives can acquire the fallback identity.",
       "status": "resolved",
       "scope": "final_prealpha_current_or_explicit_carried_scope",
-      "disposition": "Current provenance infrastructure retained; current c859 identities and matching relocated game export verified. No new channel changes or update-service qualification.",
-      "evidence": "docs/PREALPHA_FINAL_CORRECTIONS.md"
+      "disposition": "Fresh clean c76e92dc Ubuntu24 SDK: all 17 identities, ABI/loader checks, actual tool workflows and package-only relocated exports pass. Corrected runtime follow-up has its own recorded source identity. No release/channel change.",
+      "evidence": "docs/PREALPHA_FINAL_QUALIFICATION.md"
     },
     {
       "id": "C-04",
@@ -203,8 +203,8 @@
       "original_quote": "Reconfiguration watches `main` references but does not explicitly watch the Experimental branch reference.",
       "status": "resolved",
       "scope": "final_prealpha_current_or_explicit_carried_scope",
-      "disposition": "Current provenance infrastructure retained; current c859 identities and matching relocated game export verified. No new channel changes or update-service qualification.",
-      "evidence": "docs/PREALPHA_FINAL_CORRECTIONS.md"
+      "disposition": "Fresh clean c76e92dc Ubuntu24 SDK: all 17 identities, ABI/loader checks, actual tool workflows and package-only relocated exports pass. Corrected runtime follow-up has its own recorded source identity. No release/channel change.",
+      "evidence": "docs/PREALPHA_FINAL_QUALIFICATION.md"
     },
     {
       "id": "C-05",
@@ -212,8 +212,8 @@
       "original_quote": "Runtime `--build-info` identifies platform/configuration, not the exact engine build.",
       "status": "resolved",
       "scope": "final_prealpha_current_or_explicit_carried_scope",
-      "disposition": "Current provenance infrastructure retained; current c859 identities and matching relocated game export verified. No new channel changes or update-service qualification.",
-      "evidence": "docs/PREALPHA_FINAL_CORRECTIONS.md"
+      "disposition": "Fresh clean c76e92dc Ubuntu24 SDK: all 17 identities, ABI/loader checks, actual tool workflows and package-only relocated exports pass. Corrected runtime follow-up has its own recorded source identity. No release/channel change.",
+      "evidence": "docs/PREALPHA_FINAL_QUALIFICATION.md"
     },
     {
       "id": "C-06",
@@ -221,8 +221,8 @@
       "original_quote": "Export runtime probing cannot establish precise engine/tool compatibility.",
       "status": "resolved",
       "scope": "final_prealpha_current_or_explicit_carried_scope",
-      "disposition": "Current provenance infrastructure retained; current c859 identities and matching relocated game export verified. No new channel changes or update-service qualification.",
-      "evidence": "docs/PREALPHA_FINAL_CORRECTIONS.md"
+      "disposition": "Fresh clean c76e92dc Ubuntu24 SDK: all 17 identities, ABI/loader checks, actual tool workflows and package-only relocated exports pass. Corrected runtime follow-up has its own recorded source identity. No release/channel change.",
+      "evidence": "docs/PREALPHA_FINAL_QUALIFICATION.md"
     },
     {
       "id": "C-07",
@@ -230,8 +230,8 @@
       "original_quote": "Update notification compares milestone numbers from `main`, so newer unnumbered stabilization builds can remain invisible.",
       "status": "resolved",
       "scope": "final_prealpha_current_or_explicit_carried_scope",
-      "disposition": "Current provenance infrastructure retained; current c859 identities and matching relocated game export verified. No new channel changes or update-service qualification.",
-      "evidence": "docs/PREALPHA_FINAL_CORRECTIONS.md"
+      "disposition": "Fresh clean c76e92dc Ubuntu24 SDK: all 17 identities, ABI/loader checks, actual tool workflows and package-only relocated exports pass. Corrected runtime follow-up has its own recorded source identity. No release/channel change.",
+      "evidence": "docs/PREALPHA_FINAL_QUALIFICATION.md"
     },
     {
       "id": "D-01",
@@ -599,17 +599,17 @@
       "original_quote": "Unperformed hardware/platform validation.",
       "status": "improved",
       "scope": "linux_readiness_current_or_explicit_deferred",
-      "disposition": "Ubuntu 24.04 x86-64 SDK now builds and runs in its actual isolated userland: all 17 tools, GLIBC maximum 2.38, older-loader checks, editor workflow and source/SDK-absent moved export. Optional baseline helper preserves ordinary native builds. Other distributions and physical GPU/audio-device qualification are not inferred; Windows/Android deferred.",
-      "evidence": "docs/PREALPHA_ELASTIC_LINUX_BASELINE.md"
+      "disposition": "Fresh exact-c76 Ubuntu24 SDK, all 17 older-loader checks, actual editor/tools and SDK/source-absent moved games pass; highest GLIBC 2.38. Corrected source retains the same baseline workflow. Other distributions/hardware and Windows/Android remain unqualified.",
+      "evidence": "docs/PREALPHA_FINAL_QUALIFICATION.md"
     },
     {
       "id": "CAP-01",
       "workstream": "P2-03",
       "original_quote": "Historical compatibility controllers still exist and need their own regression coverage.",
-      "status": "open",
+      "status": "improved",
       "scope": "final_prealpha_current_or_explicit_carried_scope",
-      "disposition": "Legacy gameplay controller is not MK1. Existing games retain it; breadth not fully reexecuted.",
-      "evidence": "docs/PREALPHA_FINAL_CORRECTIONS.md"
+      "disposition": "Retained legacy player locomotion/swimming/input and spacecraft control/frame/release now exercised. Three stale fixed-world-omega SAS assertions replaced by independent angular-momentum checks at unchanged tolerance; originals retained. Modern JS adapter-off negative passes. Not every old project certified.",
+      "evidence": "docs/PREALPHA_FINAL_QUALIFICATION.md"
     },
     {
       "id": "CAP-02",
@@ -643,15 +643,29 @@
       "finding": "MK2-ELASTIC-CONFINEMENT",
       "evidence": "docs/PREALPHA_MK2_ROTATION_CORRECTION.md",
       "status": "resolved_tested_scope_human_pending"
+    },
+    {
+      "date": "2026-10-25",
+      "input_commit": "c76e92dc20b5765f61d6077bf618a8b94ac22462",
+      "finding": "CAP-01 / MK2-EXTERNAL-KICK-TIMING / Linux qualification",
+      "evidence": "docs/PREALPHA_FINAL_QUALIFICATION.md",
+      "status": "bounded_qualification_complete_clean_sdk_receipt_followup"
     }
   ],
   "new_findings": [
     {
       "id": "MK2-ELASTIC-CONFINEMENT",
-      "status": "resolved_tested_scope_human_pending",
+      "status": "resolved_tested_scope_human_accepted",
       "severity": "P1: elastic spinning impacts, including tested moderate gameplay rates",
       "evidence": "docs/PREALPHA_MK2_ROTATION_CORRECTION.md",
-      "disposition": "Consistent adaptive midpoint/Cayley trajectories, same-configuration relaxation and chronological arrival response repair the original two-second energy-gain cases. Original retained executable reproduces 31.845%; candidate peak gain 0.0000203%, zero holds. Independent rotation, impact timing, momentum, curved meshes, cold-process saves and consumer tests pass on Linux. No damping, energy clamp or cutoff retune. Long-run dissipation, extreme-spin phase error and bounded-arrival limits remain documented; Windows/Android and human acceptance are pending."
+      "disposition": "Consistent adaptive midpoint/Cayley trajectories, same-configuration relaxation and chronological arrival response repair the original two-second energy-gain cases. Original retained executable reproduces 31.845%; candidate peak gain 0.0000203%, zero holds. Independent rotation, impact timing, momentum, curved meshes, cold-process saves and consumer tests pass on Linux. No damping, energy clamp or cutoff retune. Long-run dissipation, extreme-spin phase error and bounded-arrival limits remain documented; Windows/Android and human acceptance are pending. Operator human accepted and promoted exact c76e92dc; this does not certify universal elasticity or future corrections."
+    },
+    {
+      "id": "MK2-EXTERNAL-KICK-TIMING",
+      "status": "resolved_linux_human_pending",
+      "severity": "P1: free-body external acceleration retimed relative to counter-impulses",
+      "evidence": "docs/PREALPHA_FINAL_QUALIFICATION.md",
+      "disposition": "Exact accepted SDK qualification reproduced wheel settling failures on GCC13/GCC15. Balanced public-kick negative controls expose unintended free flight. Preserve chronological CCD while restoring unconstrained pre-step kick timing; both original wheel checks and all 29 affected follow-up invocations pass. No damping or budget changes."
     }
   ]
 }
