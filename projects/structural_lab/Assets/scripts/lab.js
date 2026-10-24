@@ -8,16 +8,19 @@ export default class {
  owners(){return ['100','200','300','400',...this.state.spawned].map(id=>world.entity(id)).filter(e=>e?.valid&&e.fracture);}
  update(){if(this.hud?.modal)return;for(const a of ['load','release','adopt','push','spawn','region'])if(input.pressed(a))this.pending.push(a);
   if(input.pressed('flat'))scenes.load('Scenes/flat.judas');if(input.pressed('radial'))scenes.load('Scenes/radial.judas');if(input.pressed('restart'))scenes.reload();}
- fixedUpdate(){for(const a of this.pending){
+ // Take the queue first: one failed action must not stay queued and block later keys.
+ fixedUpdate(){const pending=this.pending;this.pending=[];for(const a of pending){
    if(a==='load')this.state.load=!this.state.load;
-   if(a==='release'){this.state.right=true;for(const id of ['501','511','521'])world.entity(id)?.destroy();for(const id of ['100','200','300'])world.entity(id)?.deformable?.release('right');this.message='Right support anchors removed. Physics alone decides remaining connection failure.';}
-   if(a==='adopt'){world.entity('300')?.deformable?.release('middle');world.entity('523')?.destroy();this.state.middle=true;}
+   if(a==='release'){this.state.right=true;for(const id of ['501','511','521'])this.remove(id);for(const id of ['100','200','300'])world.entity(id)?.deformable?.release('right');this.message='Right support anchors removed. Physics alone decides remaining connection failure.';}
+   if(a==='adopt'){world.entity('300')?.deformable?.release('middle');this.remove('523');this.state.middle=true;}
    if(a==='push'){const r=world.viewRay;if(r){const h=physics.raycast(r.origin,r.direction,60,{ignored:[world.entity('10')]});if(h?.entity?.mass>0){h.entity.applyImpulseAtPoint(mul(r.direction,500),h.point);this.message='500 N.s at the actual hit point.';}}}
    if(a==='spawn'&&this.state.spawned.length<4){const e=world.spawnPrefab('79797979797979797979797979790006',{position:{x:0,y:7,z:-7-this.state.spawned.length*3},rotation:{w:1,x:0,y:0,z:0},scale:{x:1,y:1,z:1}});this.state.spawned.push(e.id);}
    if(a==='region'){if(this.region){scenes.releaseRegion(this.region);this.region=0;this.state.region=false;}else{this.region=scenes.requestRegion('annex');this.state.region=true;}}
-  }this.pending=[];
+  }
   if(this.state.load)for(const id of ['100','200','300']){const e=world.entity(id);if(e?.fracture){const g=physics.gravity(e.transform.position);e.fracture.force(4,mul(g,2000));}}
  }
+ // Pressing R or H again finds the support already removed.
+ remove(id){const e=world.entity(id);if(e?.valid)e.destroy();}
  uiUpdate(){if(!this.hud)return;if(input.pressed('pause')){this.hud.modal=!this.hud.modal;this.hud.get('pause').visible=this.hud.modal;input.pointerCapture=!this.hud.modal;}
   if(input.pressed('save_game'))this.command('save');if(input.pressed('load_game'))this.command('load');
   if(this.request){const s=saves.status(this.request);if(s&&['completed','failed','cancelled'].includes(s.state)){this.message=s.state+(s.error?' — '+s.error:'');this.request=0;}}
