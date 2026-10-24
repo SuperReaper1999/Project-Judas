@@ -56,7 +56,7 @@ bool ReleaseRuntime(const fs::path& executable, nlohmann::json& identity, std::s
     identity = nlohmann::json::parse(text);
     return true;
 }
-void References(const Scene& scene, const AssetDatabase& assets, const ProjectClassification& categories,const ProjectNavigation& navigation) {
+void References(const Scene& scene, const AssetDatabase& assets, const ProjectClassification& categories,const ProjectNavigation& navigation,bool advancedFluids=true) {
     const auto checkUI=[&](const SceneObject& o){if(!o.ui)return;auto* r=assets.Find(o.ui->asset);UIDocument d;std::string error;Require(r&&!r->missing&&r->type==AssetType::UI,"Missing UI document "+o.ui->asset);Require(LoadUIDocument(r->path,d,error)&&ValidateUIAssets(d,assets,error),"UI: "+error);};
     const auto check = [&](const AssetId& id, AssetType type) {
         if (id.empty()) return;
@@ -93,8 +93,8 @@ void References(const Scene& scene, const AssetDatabase& assets, const ProjectCl
     for (const auto& object : flattened.Objects()) {
         if(object.body){if(!object.body->physicalMaterial.empty()){check(object.body->physicalMaterial,AssetType::PhysicalMaterial);PhysicalMaterial material;auto* record=assets.Find(object.body->physicalMaterial);Require(record&&LoadPhysicalMaterial(record->path,material,error),"Physical material: "+error);}std::vector<std::string> ids;if(!object.body->collisionAsset.empty())ids.push_back(object.body->collisionAsset);for(auto& c:object.body->compoundBoxes)if(!c.assetId.empty())ids.push_back(c.assetId);for(auto& id:ids){check(id,AssetType::Collision);auto* record=assets.Find(id);CollisionAsset cooked;Require(record&&LoadCollisionAsset(record->path,cooked,error),"Collision: "+error);if(!cooked.sourceAsset.empty()){check(cooked.sourceAsset,AssetType::Mesh);auto* source=assets.Find(cooked.sourceAsset);Require(source&&!CollisionAssetStale(cooked,source->path,error),"Stale collision source/settings; recook "+cooked.sourceAsset+": "+error);}}}
         if(object.deformable){check(object.deformable->asset,AssetType::Deformable);auto* record=assets.Find(object.deformable->asset);std::vector<uint8_t> bytes;DeformableAsset deform;Require(record&&ReadWholeFile(record->path,bytes,error)&&DecodeDeformableAsset(bytes,deform,error),"Deformable: "+error);Require(!deform.fracture||(!object.liquidBasin&&!object.liquidContainer&&!object.liquidConnection),"Liquid-bearing fracture owner is unsupported; conserved owner retained");if(!deform.sourceAsset.empty()){auto* source=assets.Find(deform.sourceAsset);std::string fingerprint;Require(source&&SceneFingerprintSha256File(source->path,fingerprint,error)&&fingerprint==deform.sourceFingerprint,"Stale deformable source: "+deform.sourceAsset+"; rebake");}}
-        if(object.liquidBasin){check(object.liquidBasin->geometry,AssetType::Liquid);check(object.liquidBasin->asset,AssetType::Liquid);auto* r=assets.Find(object.liquidBasin->asset);LiquidBasinData b;Require(r&&LoadLiquidBasin(r->path,b,error),"Liquid basin: "+error);Require(LiquidSourceFingerprint(flattened,object,assets,error)==b.fingerprint,"Stale liquid basin: "+error);}
-        if(object.liquidContainer){check(object.liquidContainer->geometry,AssetType::Liquid);auto* r=assets.Find(object.liquidContainer->geometry);LiquidGeometry g;Require(r&&LoadLiquidGeometry(r->path,g,error),"Container cavity: "+error);double capacity=0;for(auto& t:g.cells)capacity+=LiquidClip(t,{0,0,0,0},1).volume;Require(object.liquidContainer->initialVolume<=capacity,"Container initial volume exceeds capacity");}
+        if(advancedFluids&&object.liquidBasin){check(object.liquidBasin->geometry,AssetType::Liquid);check(object.liquidBasin->asset,AssetType::Liquid);auto* r=assets.Find(object.liquidBasin->asset);LiquidBasinData b;Require(r&&LoadLiquidBasin(r->path,b,error),"Liquid basin: "+error);Require(LiquidSourceFingerprint(flattened,object,assets,error)==b.fingerprint,"Stale liquid basin: "+error);}
+        if(advancedFluids&&object.liquidContainer){check(object.liquidContainer->geometry,AssetType::Liquid);auto* r=assets.Find(object.liquidContainer->geometry);LiquidGeometry g;Require(r&&LoadLiquidGeometry(r->path,g,error),"Container cavity: "+error);double capacity=0;for(auto& t:g.cells)capacity+=LiquidClip(t,{0,0,0,0},1).volume;Require(object.liquidContainer->initialVolume<=capacity,"Container initial volume exceeds capacity");}
         if(object.navigationSurface && object.navigationSurface->enabled){check(object.navigationSurface->asset,AssetType::Navigation);const auto* record=assets.Find(object.navigationSurface->asset);NavigationData data;NavigationGeometry geometry;Require(record&&LoadNavigation(record->path,data,error),"Navigation: "+error);Require(CollectNavigationGeometry(flattened,object,navigation,geometry,error,&assets)&&geometry.fingerprint==data.fingerprint,"Stale navigation bake: "+error);}
         checkUI(object);
         if(object.audioZone)check(object.audioZone->asset,AssetType::AudioEffect);
@@ -207,8 +207,8 @@ bool ExportProject(const Project& project, const ProjectExportOptions& options,
             Scene scene; std::string detail;
             const bool loaded = LoadSceneFromFile(path.string(), scene, detail);
             Require(loaded, "Invalid scene " + path.string() + ": " + detail);
-            References(scene, assets, project.Settings().classification,project.Settings().navigation);
-            std::set<AssetId> references;CollectSceneAssetReferences(scene,references);for(const auto& id:references)include(id,"scene "+path.lexically_relative(root).generic_string());
+            References(scene, assets, project.Settings().classification,project.Settings().navigation,project.Settings().advancedFluidDynamics);
+            std::set<AssetId> references;CollectSceneAssetReferences(scene,references,project.Settings().advancedFluidDynamics);for(const auto& id:references)include(id,"scene "+path.lexically_relative(root).generic_string());
         }
         if(!project.Settings().worldManifest.empty()){
             auto* record=assets.Find(project.Settings().worldManifest);WorldManifest manifest;std::string detail;
@@ -221,7 +221,7 @@ bool ExportProject(const Project& project, const ProjectExportOptions& options,
         // Visit each identity once, handle cycles/shared roots, and retain all
         // dependencies of dynamically requested prefabs just like scene content.
         std::set<AssetId> visited;
-        for(;;){auto next=std::find_if(included.begin(),included.end(),[&](const auto& entry){return !visited.count(entry.first);});if(next==included.end())break;auto id=next->first;visited.insert(id);std::set<AssetId> deps;std::string detail;const bool collected=CollectAssetDependencies(*assets.Find(id),deps,auxiliary,detail);Require(collected,"Dependency "+id+": "+detail);for(const auto& dep:deps)include(dep,"dependency of "+id);}
+        for(;;){auto next=std::find_if(included.begin(),included.end(),[&](const auto& entry){return !visited.count(entry.first);});if(next==included.end())break;auto id=next->first;visited.insert(id);std::set<AssetId> deps;std::string detail;const bool collected=CollectAssetDependencies(*assets.Find(id),deps,auxiliary,detail,project.Settings().advancedFluidDynamics);Require(collected,"Dependency "+id+": "+detail);for(const auto& dep:deps)include(dep,"dependency of "+id);}
         for(const auto& path:auxiliary){Require(fs::is_regular_file(path)&&Inside(fs::canonical(path),root),"Missing/unsafe model dependency: "+path);safeContentPath(fs::path(path).lexically_relative(root));}
         std::map<AssetId,std::string> hashes;
         for (const auto& [id, record] : assets.Records()) {
@@ -240,7 +240,7 @@ bool ExportProject(const Project& project, const ProjectExportOptions& options,
             if(record.type==AssetType::UI){UIDocument d;Require(LoadUIDocument(record.path,d,detail)&&ValidateUIAssets(d,assets,detail),"UI dependency: "+detail);}
             if (record.type == AssetType::Prefab) {
                 Scene prefab; Require(LoadSceneFromFile(record.path, prefab, detail), detail);
-                References(prefab, assets, project.Settings().classification,project.Settings().navigation);
+                References(prefab, assets, project.Settings().classification,project.Settings().navigation,project.Settings().advancedFluidDynamics);
             }
         }
         fs::create_directories(destination.parent_path());

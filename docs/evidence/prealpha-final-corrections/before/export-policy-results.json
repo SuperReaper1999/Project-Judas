@@ -1,0 +1,12 @@
+[
+  {
+    "case": "dormant-advanced",
+    "exit": 1,
+    "log": "export-policy-dormant-advanced.log"
+  },
+  {
+    "case": "no-advanced-component",
+    "exit": 0,
+    "log": "export-policy-no-advanced-component.log"
+  }
+]

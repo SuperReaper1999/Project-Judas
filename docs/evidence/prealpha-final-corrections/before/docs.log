@@ -1,0 +1,10 @@
+{
+  "documents": 90,
+  "local_links": 1999,
+  "tracked_destinations_required": true,
+  "errors": [
+    "docs/PREALPHA_EVENT_DEPENDENCIES.md:33: missing destination ../src/physics/ImpactEventSchedule.h",
+    "docs/PREALPHA_EVENT_DEPENDENCIES.md:41: missing destination ../src/physics/WorldImpactEvents.cpp"
+  ],
+  "pass": false
+}

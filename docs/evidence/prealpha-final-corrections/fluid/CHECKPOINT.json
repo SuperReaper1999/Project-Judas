@@ -1,0 +1,20 @@
+{
+  "base": "c859901cc9a52cf5b7104887f56b5e7ad4269b1d",
+  "scope": "F01/F02: disabled-fluid participant admission, region dependency/pin policy and export closure",
+  "checks": {
+    "project-fluid-policy": 26,
+    "basic-policy": 55,
+    "surface": 61,
+    "streaming": 35,
+    "MK2": "pass"
+  },
+  "binary_sha256": {
+    "judas": "7b79870e95c14935fe04e355f7e5ff58a046793db6434fec06a546d1003151ef",
+    "judas_project_fluid_policy_tests": "f1e8bed2fc6c9ffab54444b8decdf864e1d0f782e1ef05a0f4aef198a884365f",
+    "judas_project_water_tests": "96719f44e5fd97f0eb977697ed08d198e17ae4e59f0319881ce3e77fe592713c",
+    "judas_liquid_surface_tests": "34585fbba0ccf132b55d64dd08611a73863fd2bce38b5e91e41668899e24995f",
+    "judas_living_world_streaming_tests": "2c4635f9e80cae47c521d9236671ee6d364dfdd52f23234c4e3eb0d496ae6c11",
+    "judas_mk2_physics_tests": "c549b2e5f540addacb2688370f51d825926a5b442d6a29f3284e15d8dc2f8386"
+  },
+  "limitation": "No fluid algorithm/physics changes; no human acceptance of this correction; unrelated untracked input observations remain explicit in build identity."
+}

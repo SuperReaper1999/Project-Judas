@@ -1,0 +1,4 @@
+OWNER disabled correctly rejected: saved advanced liquid state requires Project Settings > Experimental > Advanced Fluid Dynamics
+ORIGINAL owners=0 parcels=1 total=1
+RESTORE enabled=1 accepted owners=0 parcels=1 total=1
+RESTORE enabled=0 accepted owners=0 parcels=1 total=1

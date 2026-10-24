@@ -1,3 +1,4 @@
+#include "AdvancedFluidPolicy.h"
 #include "PowertrainAuthoring.h"
 #include "modding/ModRuntime.h"
 #include "NamedAuthoring.h"
@@ -79,10 +80,10 @@ bool PrepareWorldRegion(const WorldRegion& region,const Project& project,const A
     result.fingerprint=canonical;result.bytes=text.size()+result.source.Objects().size()*sizeof(SceneObject)*3;
     for(auto& o:flat.Objects()){
         if(cancelled())return false;
-        if(o.playerStart||o.audioListener||o.ui||o.vehicle||o.door||o.lightSwitch||o.combustible||o.atmosphere||o.fluidVolume||o.celestial||(o.body&&(o.body->managed||o.body->shape==SceneShape::Terrain))){error="region "+region.id+": session-owned/unsupported component on "+std::to_string(o.id);return false;}
-        auto validate=o;validate.gravity.reset();if(!RuntimeWorld::ValidateEntityDefinition(validate,error))return false;
+        if(o.playerStart||o.audioListener||o.ui||o.vehicle||o.door||o.lightSwitch||o.combustible||o.atmosphere||(project.Settings().advancedFluidDynamics&&o.fluidVolume)||o.celestial||(o.body&&(o.body->managed||o.body->shape==SceneShape::Terrain))){error="region "+region.id+": session-owned/unsupported component on "+std::to_string(o.id);return false;}
+        auto validate=o;validate.gravity.reset();RemoveDormantFluidComponents(validate,project.Settings().advancedFluidDynamics);if(!RuntimeWorld::ValidateEntityDefinition(validate,error))return false;
         for(auto& [name,value]:ObjectProperties(o)){
-            if(value.empty())continue;
+            if(value.empty()||IsDormantFluidProperty(name,project.Settings().advancedFluidDynamics))continue;
             const auto* a=assets.Find(value);
             bool expected=name.find("asset")!=std::string::npos||name=="render.mesh"||name=="render.texture"||name=="liquid.basin.geometry"||name=="liquid.container.geometry";
             if(a){if(a->missing){error="missing region asset "+value;return false;}}else if(expected&&value.size()==32){error="unregistered region asset "+value;return false;}
@@ -98,9 +99,9 @@ bool PrepareWorldRegion(const WorldRegion& region,const Project& project,const A
         if(o.ragdoll||o.animation){if(!o.render||o.render->meshAsset.empty()||!assets.Find(o.render->meshAsset)||assets.Find(o.render->meshAsset)->type!=AssetType::Mesh){error="ragdoll region requires an imported skeletal mesh";return false;}result.requiredGeometry.push_back(o.render->meshAsset);}
         if(o.body){if(!o.body->collisionAsset.empty())result.requiredGeometry.push_back(o.body->collisionAsset);for(auto& c:o.body->compoundBoxes)if(!c.assetId.empty())result.requiredGeometry.push_back(c.assetId);}
         if(o.deformable)result.requiredGeometry.push_back(o.deformable->asset);
-        if(o.liquidBasin)for(auto id:{o.liquidBasin->geometry,o.liquidBasin->asset})result.requiredGeometry.push_back(id);
-        if(o.liquidContainer)result.requiredGeometry.push_back(o.liquidContainer->geometry);
-        if(o.liquidBasin&&o.liquidBasin->enabled){const auto* a=assets.Find(o.liquidBasin->asset);std::string bytes;LiquidResource resource;
+        if(project.Settings().advancedFluidDynamics&&o.liquidBasin)for(auto id:{o.liquidBasin->geometry,o.liquidBasin->asset})result.requiredGeometry.push_back(id);
+        if(project.Settings().advancedFluidDynamics&&o.liquidContainer)result.requiredGeometry.push_back(o.liquidContainer->geometry);
+        if(project.Settings().advancedFluidDynamics&&o.liquidBasin&&o.liquidBasin->enabled){const auto* a=assets.Find(o.liquidBasin->asset);std::string bytes;LiquidResource resource;
             if(!a||!read(a->path,bytes,error,128*1024*1024)||!DecodeLiquidResource({bytes.begin(),bytes.end()},resource,error)||!resource.basin||resource.basin->fingerprint!=LiquidSourceFingerprint(flat,o,assets,error)){error="stale/missing region liquid bake: "+error;return false;}
         }
     }
@@ -177,7 +178,7 @@ struct WorldStreaming::Impl {
             bool here=Owner(o.id)==id;
             if(o.deformable){std::string error;auto* deform=world.RuntimeDeformable(o.id,error);if(here&&deform&&deform->asset->fracture&&!deform->asset->fracture->HasMaterials())add("live fracture family: physical pieces retained; remove/adopt family before suspension");if(!here&&deform&&deform->asset->fracture&&deform->asset->fracture->rigid)for(unsigned p=0;p<deform->asset->fracture->parts.size();++p){auto child=world.FracturePartEntity(o.id,p,true);if(child&&Owner(child)==id){add("material piece owned by an external fracture family");break;}}const auto& settings=deform?deform->settings:*o.deformable;for(size_t i=0;i<settings.attachments.size();++i){const auto& a=settings.attachments[i];if(a.enabled&&(!deform||!deform->released[i])&&a.target&&Owner(a.target)==id&&Owner(o.id)!=id)add("external deformable attachment");}}
             if(here&&world.RuntimeTerrainBusy(o.id))add("runtime terrain publication pending");
-            if(here&&(o.liquidBasin||o.liquidContainer||o.liquidConnection))add("conserved liquid group: no lossless suspension");
+            if(world.AdvancedFluidsEnabled()&&here&&(o.liquidBasin||o.liquidContainer||o.liquidConnection))add("conserved liquid group: no lossless suspension");
             if(!here&&o.parent&&Owner(o.parent)==id)add("external hierarchy parent");
             if(!here&&o.gravitySelection&&o.gravitySelection->source&&Owner(o.gravitySelection->source)==id)add("external selected gravity field");
             if(!here&&o.socket&&Owner(o.socket->target)==id)add("external visual socket");

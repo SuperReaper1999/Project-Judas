@@ -162,7 +162,7 @@ runtime-spawn of a global component.
 Active PBF still has its existing separate legacy save contract; enabling the new
 switch does not create a modern cold-save particle participant. Conserved-liquid
 saves still require their exact supported geometry/topology and enabled project
-policy. Loading nonempty advanced-liquid state into a disabled world fails with
+policy. Loading any nonempty advanced owner, detached-parcel, ledger or connection state into a disabled world fails atomically with
 an actionable opt-in diagnostic; it must never silently discard that state.
 Switching policy is a fresh-world operation, not a live conversion of an existing
 ledger. Original save bytes are not rewritten merely by changing the setting.
@@ -192,3 +192,12 @@ Open `projects/basic_water_lab/basic_water_lab.judasproj` in this branch's edito
 
 Automation results, measurements and failure/follow-up records are maintained in
 `docs/evidence/prealpha-project-settings-water`. Human acceptance is pending.
+
+### Dormant authored content
+
+With Advanced Fluid Dynamics disabled, authored advanced components remain in
+scenes/prefabs/exports, but their liquid bakes are not required or loaded for
+regional admission and do not create conserved-liquid suspension pins. Export
+dependency closure omits these inactive references; conservative all-assets
+export still copies registered assets. Enabling the feature restores normal
+geometry/bake validation. Other active components keep their ordinary checks.

@@ -13,13 +13,26 @@ void LiquidSurface::Persist(SaveArchive& a){
  // Derived aperture/optical/mesh caches are rebuilt from immutable geometry.
 }
 bool LiquidSystem::PreparePersistence(RuntimeWorld& world,std::string& error){
- if(!world.AdvancedFluidsEnabled()){if(!m_states.empty()||!m_parcels.empty()){error="advanced fluid state requires Project Settings > Experimental > Advanced Fluid Dynamics";return false;}return true;}
+ if(!world.AdvancedFluidsEnabled()){if(!m_states.empty()||!m_parcels.empty()||!m_expected.empty()||!m_density.empty()||!m_connections.empty()){error="advanced fluid state requires Project Settings > Experimental > Advanced Fluid Dynamics";return false;}return true;}
  Synchronize(world);
  if(!m_errors.empty()){error="liquid participant: "+m_errors.begin()->second;return false;}
  for(const auto& o:world.ScriptObjects())if((o.liquidBasin||o.liquidContainer)&&!Handle(o.id).id){error="loading";return false;}
  return true;
 }
 void LiquidSystem::Persist(SaveArchive& a){
+ // Disabled instances accept only the exact empty participant. Decode into
+ // locals so rejection cannot publish a detached parcel or partial ledger.
+ if(!m_simulationAllowed){
+  const std::string disabled="saved advanced liquid state requires Project Settings > Experimental > Advanced Fluid Dynamics";
+  a.Require(m_states.empty()&&m_parcels.empty()&&m_expected.empty()&&m_density.empty()&&m_connections.empty(),disabled);
+  uint32_t owners=0,parcels=0;uint64_t nextParcel=1;
+  std::map<std::string,double> expected,density;std::map<SceneObjectId,bool> connections;
+  a(owners);a.Require(owners==0,disabled);
+  a(expected,density,nextParcel,connections,parcels);
+  a.Require(expected.empty()&&density.empty()&&connections.empty()&&parcels==0&&nextParcel==1,disabled);
+  return;
+ }
+
  uint32_t count=uint32_t(m_states.size());a(count);a.Require(m_simulationAllowed||count==0,"saved advanced liquid state requires Project Settings > Experimental > Advanced Fluid Dynamics");a.Require(count==m_states.size(),"saved liquid owner count mismatch");
  std::set<SceneObjectId> seen;
  for(uint32_t i=0;i<count;++i){SceneObjectId entity=0;LiquidState* state=nullptr;

@@ -1,0 +1,100 @@
+A: authored columns land symmetrically and sleep
+    SBBS lateral 0.000000 m, asleep 4/4
+  OK   SBBS column stays upright and sleeps
+    BBSB lateral 0.000000 m, asleep 4/4
+  OK   BBSB column stays upright and sleeps
+    BSBB lateral 0.000000 m, asleep 4/4
+  OK   BSBB column stays upright and sleeps
+B: rotated stacks stay aligned; tall stacks do not sink
+    5 boxes (rotated universe): lateral 0.000459 m, height error 0.00337 m, asleep 5
+  OK   rotated five-box stack stays aligned and sleeps
+    20 boxes: lateral 0.000000 m, height error 0.01357 m, asleep 20
+  OK   twenty-box stack sinks under 1 mm per contact and sleeps
+C: impacts conserve linear and angular momentum
+    linear error 4.77e-06, angular error 6.85e-07, struck sphere moving 1
+  OK   fast spinning impact conserves momentum
+    linear error 3.05e-06, angular error 2.45e-06, struck sphere moving 1
+  OK   fast spinning impact conserves momentum
+D: simultaneous collisions
+    e 0: left 0.000 mid -0.000 right -0.000, momentum 0, energy 9.000 -> 0.000 (peak 9.000)
+  OK   simultaneous impacts conserve momentum
+  OK   symmetric arrivals give a symmetric response
+  OK   no kinetic energy is created
+  OK   inelastic arrivals come to rest together
+    e 1: left -3.000 mid 0.000 right 3.000, momentum 0, energy 9.000 -> 9.000 (peak 9.000)
+  OK   simultaneous impacts conserve momentum
+  OK   symmetric arrivals give a symmetric response
+  OK   no kinetic energy is created
+  OK   elastic arrivals rebound with their approach speed
+E: fast and spinning primitives do not tunnel through a 2 cm wall
+    135 cases, 0 crossings
+  OK   no fast or spinning primitive crosses the wall
+F: deterministic replay
+  OK   two runs of a 30-body pile are bitwise identical
+G: impacts at their arrival instant match exact trajectories
+    bounce: worst endpoint error 1.98e-07 m, outgoing 0.500000 m/s
+  OK   a bounce leaves the floor at its arrival instant with e|v|
+    separated chain: worst position error 4.77e-07 m, velocity error 0 m/s
+  OK   a separated chain resolves its binary impacts in sequence
+    cradle: worst position error 1.91e-07 m, velocity error 0 m/s
+  OK   a struck cradle passes the speed to its far ball
+    rattle: worst position error 2.29e-06 m, speed error 0 m/s
+  OK   a rattling elastic ball keeps its speed and exact path
+    free spin: rotation error 5.96e-08 rad
+  OK   a free spin turns by its exact rotation
+H: undamped jointed chains neither gain nor lose swing energy
+    ball x1: swing 8.831e-04 J, drift 10->60 s -2.728e-05 J (-3.09%), asleep 0
+  OK   ball x1 keeps swinging (not put to sleep)
+  OK   ball x1 gains no energy
+  OK   ball x1 loses under 5% in 50 s
+    ball x2: swing 3.531e-03 J, drift 10->60 s -8.944e-05 J (-2.53%), asleep 0
+  OK   ball x2 keeps swinging (not put to sleep)
+  OK   ball x2 gains no energy
+  OK   ball x2 loses under 5% in 50 s
+    ball x3: swing 7.944e-03 J, drift 10->60 s -1.769e-04 J (-2.23%), asleep 0
+  OK   ball x3 keeps swinging (not put to sleep)
+  OK   ball x3 gains no energy
+  OK   ball x3 loses under 5% in 50 s
+    hinge x1: swing 8.831e-04 J, drift 10->60 s -2.728e-05 J (-3.09%), asleep 0
+  OK   hinge x1 keeps swinging (not put to sleep)
+  OK   hinge x1 gains no energy
+  OK   hinge x1 loses under 5% in 50 s
+    hinge x2: swing 3.531e-03 J, drift 10->60 s -8.945e-05 J (-2.53%), asleep 0
+  OK   hinge x2 keeps swinging (not put to sleep)
+  OK   hinge x2 gains no energy
+  OK   hinge x2 loses under 5% in 50 s
+    hinge x3: swing 7.944e-03 J, drift 10->60 s -1.770e-04 J (-2.23%), asleep 0
+  OK   hinge x3 keeps swinging (not put to sleep)
+  OK   hinge x3 gains no energy
+  OK   hinge x3 loses under 5% in 50 s
+I: a pendulum on a contact-supported body gains no energy
+    limits 0 floor 0: swing 8.823e-04 J, foot drift 10->60 s -2.791e-05 J (-3.16%), leg asleep 0
+  OK   supported pendulum gains no energy, limits off
+    limits 1 floor 0: swing 8.823e-04 J, foot drift 10->60 s -2.791e-05 J (-3.16%), leg asleep 0
+  OK   supported pendulum gains no energy, limits on
+    limits 1 floor 1: swing 8.823e-04 J, foot drift 10->60 s -2.791e-05 J (-3.16%), leg asleep 0
+  OK   supported pendulum gains no energy, limits on, floor below
+J: a weakly restored swing gains no energy
+    resting parent: peak rate 10-20 s 0.1169, 50-60 s 0.1161 rad/s, at -0.0351 rad
+  OK   weak swing keeps swinging and gains no energy, resting parent
+    static parent: peak rate 10-20 s 0.1167, 50-60 s 0.1166 rad/s, at -0.0127 rad
+  OK   weak swing keeps swinging and gains no energy, static parent
+    rolled arm: peak rate 10-20 s 0.1114, 50-60 s 0.1105 rad/s, at -0.0210 rad
+  OK   weak swing keeps swinging and gains no energy, rolled arm
+K: removed support, fast impact into a resting box, elastic departure
+    settled 1, fell 0.572 m in 20 steps, rests at 0.5000 m
+  OK   support and top body settle asleep before removal
+  OK   removed support: the top body wakes and falls under gravity
+  OK   no contact observation resolves to the destroyed support
+  OK   the fallen body comes to rest on the floor
+    e=0: target asleep 1, hit observed 1 at step 0, box 13.860 m/s, shot vx 13.081
+  OK   target box sleeps before the shot (inelastic)
+  OK   the 80 m/s shot never passes the target's centre (inelastic)
+  OK   the target's contact observation carries the shot's reaction (inelastic)
+  OK   inelastic shot gives up its approach speed
+    e=1: target asleep 1, hit observed 1 at step 0, box 30.577 m/s, shot vx -46.812
+  OK   target box sleeps before the shot (elastic)
+  OK   the 80 m/s shot never passes the target's centre (elastic)
+  OK   the target's contact observation carries the shot's reaction (elastic)
+  OK   elastic shot departs backward with real restitution
+MK2 physics tests: PASS (0 failures)
