@@ -1,0 +1,30 @@
+PASS create ordinary project
+PASS create, register and attach script in one workflow
+PASS ordinary project asset and metadata exist
+PASS selected object holds the actual script reference
+PASS new script compiles and links through public JudasJS API
+PASS Undo detaches without deleting authored source
+PASS Redo restores attachment
+PASS existing file is never overwritten
+PASS path traversal is rejected before writing
+PASS wrong source extension rejects
+PASS duplicate attachment is rejected
+PASS missing owner is rejected
+PASS missing asset is rejected
+PASS existing script attaches to another object without copying source
+PASS scene attachment saves normally
+PASS reload preserves actual shared asset references
+PASS ordinary runtime builds both attached scripts
+JS: My script is running.
+JS: My script is running.
+PASS new scripts execute independently without VM faults
+PASS ordinary unedited starter is present before player setup
+PASS player setup authors selected motor plus ordinary project script: 
+PASS only exact unedited starter camera is superseded
+PASS player setup and starter handoff undo together
+PASS generated player uses documented public APIs
+PASS generated player builds through normal runtime
+JS: Player: WASD move, mouse look, Space jump, V camera, Escape release/capture mouse. F5 stops editor Play.
+PASS real player motor settles on authored ground
+PASS logical WASD drives actual collision-aware motor displacement
+FAIL logical jump applies actual motor velocity

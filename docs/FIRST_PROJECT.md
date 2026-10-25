@@ -42,6 +42,14 @@ Keep the floor and light.
 
 ## 2. Attach the complete starter script
 
+For your own gameplay, the inspector now has **Create script & attach** and
+**Attach existing script**. You do not need to create an empty behaviour slot or
+manually track a file when using the create action. See the
+[editor scripting workflow](EDITOR_GUIDE.md#add-gameplay-to-an-object).
+For a playable character, use **Create → First-person player (JS + motor)** or
+**Third-person player (JS + motor)** instead of the legacy Player start marker;
+both include movement, jump and a switchable project-scripted camera.
+
 **Visible script starter users:** this step is already done for `Assets/game.js`;
 continue to step 3. The manual instructions below are for the Empty scene option.
 

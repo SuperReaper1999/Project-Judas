@@ -65,6 +65,62 @@ show full paths/IDs in tooltips and missing/unknown status below the selector.
 The hierarchy supports search, renaming, multiple selection, grouping and
 copy/paste through the existing authoring tools.
 
+### Add gameplay to an object
+
+Select one object. The inspector puts its name, script actions, **Add component**
+and Transform first. Component sections are collapsed until expanded; newly
+added components open automatically. **Object settings** holds parent, tags,
+render layer and visibility. Clipboard, prefab and runtime diagnostics stay in
+separate collapsed sections. Right-click a component heading to remove it.
+The Add component selector supports a name search and alphabetical results.
+
+1. Click **Create script & attach**, type a file name and choose **Create & edit**.
+   This writes `Assets/Scripts/<name>.js`, registers its normal metadata, attaches
+   it and opens the built-in source editor. Existing files are never overwritten.
+2. Write gameplay in the source window and press **Save source**. Close that
+   window when you want the player to capture the mouse.
+3. Save the scene to retain the attachment, then press **Play**. During Play,
+   use **Reload scripts** deliberately after saving source edits.
+4. For a registered script already in the project, use **Attach existing script**.
+   Each attached script has **Edit script** and its exposed inspector properties.
+
+Undoing an attachment leaves its source asset on disk. Undo is not file deletion.
+The empty behaviour-slot workflow remains under **Advanced script slots** for
+specialized authoring, but is not needed for ordinary scripting.
+
+### Make a controllable player
+
+Use hierarchy right-click or **Create → First-person player (JS + motor)** or
+**Third-person player (JS + motor)**. These author the same player with a different
+starting-view property: CharacterMotor, a capsule visual and editable project JS
+in `Assets/Scripts/Player*.js`. There is no native FPS controller.
+
+Save the scene and press Play: **WASD** moves, mouse looks, **Space** jumps,
+**V** switches first/third person and **Escape** releases/captures the mouse.
+Escape in this minimal template releases control; add the optional pause example
+below for a real paused world and Settings menu.
+The third-person camera sphere-casts against physical geometry to avoid walls.
+Movement/camera policy and speed/jump properties belong to the project script.
+The initial third-person visual is a capsule, not an animated character model.
+
+The template requires the named logical inputs in Project Settings → Input and
+explicitly rejects legacy gameplay. It disables only the exact unedited rotating
+box starter script that otherwise owns the camera. Other camera scripts are
+preserved; choose one main-camera owner yourself. Gravity and ground collision
+remain scene-authored; the template does not invent a ground or gravity field.
+
+### Capsules and cylinders
+
+**Create → Capsule / Cylinder** and the hierarchy menus generate reusable OBJ
+and cooked convex-collision assets under `Assets/Generated/Primitives`. They are
+ordinary meshes and convex bodies, not analytic runtime shape kinds. Defaults
+are static, one metre wide and two metres tall on local Y. Change Body → Motion
+to Dynamic when appropriate. The capsule's 98-vertex convex approximation fits
+the existing collision-cook limit; it is not a mathematically exact capsule.
+Repeated instances share assets. Edited generated files are never overwritten;
+use normal mesh/collision authoring for customized geometry. CharacterMotor's
+own analytical capsule is a separate movement primitive.
+
 New/Open/project changes and closing the editor prompt before discarding a dirty
 scene. Choose **Save and continue**, **Discard** or **Cancel**. A failed save
 keeps the action pending. This protects scene edits; project settings and external
@@ -79,9 +135,12 @@ The asset browser has three tabs:
   path, or request **Open file** in your configured application.
 - **Import & tools**: track existing files and use the current import/bake tools.
 
-Place `.js` files under the project's assets directory, rescan and track them,
-then attach their stable asset IDs through an entity's Scripts component. Edit
-game rules externally or use **View → JudasJS developer tools → Edit source**.
+Select an object and use **Create script & attach**, or **Attach existing
+script**. The first action creates and tracks a JavaScript file in
+`Assets/Scripts`; its **Create & edit** button opens the source editor. Attached
+scripts have an **Edit script** button. You can also import existing `.js` files
+through the asset browser and attach them through Scripts. Edit game rules
+externally or use **View → JudasJS developer tools → Edit source**.
 The built-in source editor saves explicitly and refuses to overwrite a file
 changed externally. **Check project scripts** checks registered modules in Edit
 mode. During Play, **Check sources** compiles/links and **Reload scripts** applies
@@ -237,6 +296,35 @@ The [original milestone-notice receipt](evidence/editor-milestone-notice/RESULTS
 describes its older `gh` implementation, not this current path.
 
 ## Project documents and first-project workflow
+
+### Optional pause menu and rebindable controls
+
+In Edit mode, use **Create → Pause menu + controls (JS + UI)**, or the same
+hierarchy right-click item. This adds an ordinary, editable UI asset and
+`PauseMenu.js`; it does not change existing scenes automatically. Save the scene
+and press Play. **Escape** opens Pause; **Settings** lists the current project's
+logical controls and their physical bindings.
+
+Select a binding, choose **Change selected binding**, find a keyboard, mouse or
+gamepad control, then choose **Apply selected control**. This example uses a
+searchable control list rather than a “press any key” capture dialog. **Restore
+project defaults** restores the map from Project Settings. UI navigation bindings
+are protected in the example to avoid making the menu inaccessible; edit the
+project script to change that policy. Keyboard navigation uses arrows and Enter.
+
+The generated first/third-person player cooperates with this menu. The menu's
+modal state pauses normal fixed-step gameplay while UI callbacks continue.
+Custom player/camera scripts should likewise respect the modal state rather than
+recapturing the mouse while a menu is open. Restart reloads the current scene;
+Quit exits the standalone game and ends Play when running inside the editor.
+
+Bindings are runtime preferences, not edits to the project file. This example
+keeps them in ordinary script save state when the game saves; it does not create
+an automatic preferences file on every exit. A production game should choose its
+own save/preferences policy. The example targets the main project input map;
+local-player-specific maps remain owned by their respective players. See
+[runtime rebinding](judasjs/input.md) and the editable
+[pause script](judasjs/examples/pause-menu.js).
 
 New project offers **Visible script starter** (an ordinary tracked `Assets/game.js`
 and render-only owner/camera) or **Empty scene**. Use Browse to choose a folder.

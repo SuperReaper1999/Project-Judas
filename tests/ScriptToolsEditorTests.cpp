@@ -58,6 +58,13 @@ int main(){
     {std::ofstream(source)<<"// externally edited\n";}
     Check(!tools.SaveSourceEdits(editable)&&tools.status.find("externally")!=std::string::npos,"editor rejects overwriting externally changed source");
     std::ifstream result(source);std::string bytes{std::istreambuf_iterator<char>(result),{}};Check(bytes=="// externally edited\n","external source bytes preserved on rejected edit");
+    tools.file.clear();tools.editing=false;
+    Check(tools.OpenForEditing(record.relativePath,editable)&&tools.visible&&tools.editing&&tools.loadedBytes==bytes,
+          "inspector Edit script opens actual current source directly for editing");
+    const std::string unsaved="// my unsaved work\n";tools.edit.assign(unsaved.begin(),unsaved.end());tools.edit.push_back(0);
+    const auto other=owned/"Assets/other.js";{std::ofstream(other)<<"export default class {}";}AssetRecord otherRecord;Check(editable.Track(other.string(),otherRecord,error),"second editable script fixture");
+    Check(!tools.OpenForEditing(otherRecord.relativePath,editable)&&tools.file==record.relativePath&&std::string(tools.edit.data())==unsaved,
+          "opening a different inspector script cannot discard unsaved source edits");
     world.Destroy();window.SetEventHook(nullptr);ImGui_ImplOpenGL3_Shutdown();ImGui_ImplSDL2_Shutdown();ImGui::DestroyContext();host.Shutdown();
     std::printf("M94_EDITOR %d checks %d failures\n",checks,failures);return failures?1:0;
 }

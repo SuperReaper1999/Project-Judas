@@ -1,0 +1,11 @@
+Shadow maps: on
+Graphics: 3.3.0 NVIDIA 580.178.04 / NVIDIA GeForce GTX 970/PCIe/SSE2
+Renderer fragment texture units: 32 (material path uses 12)
+World state: /home/conner/.local/share/judas/games/5c312d73aa9c121659abed9939383905dfd60a8c01030d4b0b4bb3d436de617a/Saves/main.judasstate (none saved)
+Project: Pause example (/tmp/judas-workflow-relocated/game.judasproj)
+Scene:  (/tmp/judas-workflow-relocated/Scenes/main.judas)
+World origin (m): 0.000, 0.000, 0.000
+[TestHarness] scene expectation failed main
+step,time,posX,posY,posZ,upX,upY,upZ,grounded,velX,velY,velZ,gravX,gravY,gravZ,controlled,frame,steps,paused,obj0PosX,obj0PosY,obj0PosZ,obj0VelX,obj0VelY,obj0VelZ
+JS: Player: WASD move, mouse look, Space jump, V camera, Escape release/capture mouse. F5 stops editor Play.
+JS: Player: WASD move, mouse look, Space jump, V camera, Escape release/capture mouse. F5 stops editor Play.

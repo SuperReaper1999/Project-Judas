@@ -901,6 +901,10 @@ declare module "judas" {
   export interface TouchContact { readonly id:number; readonly x:number; readonly y:number; readonly pressure:number; }
   export interface PointerSnapshot { readonly x:number; readonly y:number; readonly down:boolean; }
   export const input: {
+    /** Detached copy of the active main input map; local players use their own setInputMap. */
+    getBindings(): PlayerInputEntry[];
+    /** Rebind existing logical names/types at next input frame; null restores project defaults. */
+    setBindings(map: PlayerInputEntry[] | null): boolean;
     readonly touches: readonly TouchContact[];
     readonly pointer: PointerSnapshot;
     pointerCapture: boolean;

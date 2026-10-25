@@ -1,0 +1,74 @@
+{
+  "date": "2026-10-25",
+  "base": "5574c4f747b55d90c150f12f305350b5f40189f0",
+  "branch": "Experimental",
+  "status": "Linux automation passed; new human review pending. Main retains accepted hierarchy checkpoint.",
+  "implemented": [
+    "Inspector prioritizes Name, script actions, Add component and Transform; component settings collapse; advanced metadata, prefab, clipboard and batch controls are grouped.",
+    "Create script & attach creates a registered ordinary JS asset and attaches it in one undo operation; Create & edit and Edit script open the source editor. Existing script selection is available.",
+    "Capsule and cylinder creation generates ordinary reusable OBJ and cooked convex collision assets. No new runtime physics shape types.",
+    "First/third-person creation authors a CharacterMotor, visible capsule and ordinary editable player JS. Same entity switches views with V; collision-aware third-person camera uses sphere casts. Only an exact unmodified starter camera script is disabled.",
+    "Optional Pause menu + controls creates ordinary editable UI and JS assets. Pause/Settings tabs, modal pause, Resume/Restart/Quit, scrollable project controls, filtered physical control choices, explicit Apply and Restore defaults.",
+    "Generic input.getBindings and input.setBindings expose detached configuration and queue validated rebinding for the next BeginFrame. Names/types cannot change; null restores host defaults. No game-specific native pause logic."
+  ],
+  "checks": {
+    "editor-script-workflow": 61,
+    "hierarchy-creation-menu": 110,
+    "input-rebinding": 19,
+    "pause-runtime-application": 30,
+    "input": 40,
+    "logical-input": 41,
+    "paired-input-script": 21,
+    "ui-production": 88,
+    "script-tools-editor": 23,
+    "project-settings-editor": 29,
+    "failures": 0
+  },
+  "additional_validation": [
+    "Release editor, runtime, exporter and affected targets built with two jobs; no compiler warnings in captured final build logs.",
+    "API checker: 475 public symbols, 40 exports, 313 bridge operations, 53 typed examples; seven negative drift checks and live VM enumeration passed.",
+    "Current documentation links passed (94 documents, 1965 links before final prose-only amendment; final rerun retained separately).",
+    "Ordinary composed scene exported (5 assets, 1 scene), moved from /tmp/judas-workflow-export to /tmp/judas-workflow-relocated, launched from unrelated /tmp cwd. Real input pause/resume assertions and screenshots passed.",
+    "Relocated Restart button reloads actual Scenes/main.judas and the replacement menu can pause again. Settings tab pointer activation and screenshot inspected.",
+    "Fresh RuntimeWorld restores rebinding from captured ordinary script save JSON with no input callback during restore, then publishes on the next input boundary. This is fresh-world restoration, not a new cold-process save-format qualification."
+  ],
+  "limitations": [
+    "Linux qualification only; no Windows/Android/hardware controller qualification in this task.",
+    "Player visuals are capsules, not animated characters. Scene authors supply ground, gravity and one main-camera owner; no locomotion framework added.",
+    "Capsules/cylinders are polygonal convex meshes: capsule 98 vertices within unchanged 128-point cooking budget, cylinder 16 sides.",
+    "Pause example uses searchable control choices rather than physical press-to-bind capture. UI navigation controls are protected by example JS policy. Project maps may include unused legacy controls; remove those in Project Settings if unwanted.",
+    "Binding preferences persist with ordinary game script saves when the game saves. No automatic on-exit preferences file. Main input only; independent local players retain their own maps.",
+    "Creating assets intentionally retains source files and metadata after Undo; Undo affects scene attachment/entity. Existing files are not overwritten.",
+    "No production suite marathon, release qualification, M100 work or main promotion for these new changes."
+  ],
+  "development_failures": [
+    "Missing filesystem include in new test fixed.",
+    "Initial fixture had no startup scene; corrected test setup.",
+    "Flat test unintentionally used default Radial gravity; explicitly authored Uniform in fixture.",
+    "Initial generated capsule had 130 vertices and correctly failed existing convex 128-point budget; authored 98-vertex mesh instead without changing the engine budget.",
+    "Jump test omitted production BeginFixedStep input publication; corrected fixture ordering.",
+    "Synthetic ImGui activation could trigger disabled create actions; explicit editable checks added, then real creation flow passed.",
+    "Initial TypeScript module path was relative/unresolvable; absolute installed module used.",
+    "Older paired-input test default directory already held a project; preserved failure, reran unchanged test with a fresh output argument, 21 checks passed.",
+    "Restart smoke initially expected short scene name main; actual documented identity is Scenes/main.judas. Preserved incorrect-oracle failure and reran with exact project-relative identity.",
+    "Command typos: initial export used nonexistent Game.judasproj, corrected to actual Pause_example.judasproj; one rebuild requested reversed target name, corrected to judas_project_settings_editor_tests. Neither required production changes."
+  ],
+  "human_checklist": [
+    "Reopen updated editor with your project. Select an object: inspect the simplified layout and expand a component; right-click its header to remove it.",
+    "Create script & attach; choose a unique name; Create & edit; save source, save scene, Play and observe the console. Attach an existing script and use Edit script.",
+    "Create Capsule and Cylinder; change Body motion to Dynamic if desired; save and Play.",
+    "Create either player preset; ensure ground/gravity and one camera owner; WASD/mouse/Space and V toggle. Test third-person near a wall.",
+    "Create Pause menu + controls; save and Play. Escape, Settings, select the active move_y key binding, Change, choose K and Apply. Resume and verify K moves; reopen and Restore defaults.",
+    "Restart from Pause and verify the new scene/menu; Quit ends editor Play. In standalone Quit exits the game.",
+    "If preserving preferences across sessions, use your game save flow; confirm saved script state restores your chosen binding."
+  ],
+  "reproduction": [
+    "cmake --build build --target judas_editor judas judas_export judas_input_rebinding_tests judas_pause_example_application_tests judas_editor_script_workflow_tests judas_editor_creation_menu_tests -j 2",
+    "build/judas_input_rebinding_tests",
+    "SDL_AUDIODRIVER=dummy build/judas_pause_example_application_tests (prints an isolated ordinary project fixture path)",
+    "build/judas_editor_script_workflow_tests",
+    "build/judas_editor_creation_menu_tests",
+    "node scripts/check_judasjs_api.mjs --typescript /absolute/path/to/typescript.js --runtime /tmp/judas-workflow-surface/surface.json",
+    "build/judas_export <printed-fixture>/Pause_example.judasproj /tmp/new-package build/judas; move package, run its judas from unrelated cwd with JUDAS_TEST_SCRIPT pointing at copied smoke.txt (adjust screenshot destinations)."
+  ]
+}

@@ -1,0 +1,37 @@
+Shadow maps: on
+Graphics: 3.3.0 NVIDIA 580.178.04 / NVIDIA GeForce GTX 970/PCIe/SSE2
+Renderer fragment texture units: 32 (material path uses 12)
+PASS ordinary project created
+PASS native graphics host
+PASS ordinary script-owned player created: 
+PASS optional pause UI and script created: 
+PASS duplicate pause example rejects without changing scene
+PASS save the actual composed scene for export
+PASS normal runtime builds authored player, UI and physical probe
+PASS ordinary Play begins
+JS: Player: WASD move, mouse look, Space jump, V camera, Escape release/capture mouse. F5 stops editor Play.
+PASS example starts hidden without pausing gameplay
+PASS Escape opens real modal pause and releases mouse
+PASS physical world remains unchanged throughout pause
+PASS focus tab_settings
+PASS Settings tab reveals project control list
+PASS select the actual project's positive move_y binding
+PASS focus change
+PASS Change opens physical control choices
+PASS navigate control choices
+PASS focus apply
+PASS real UI applies the selected physical binding to main gameplay input
+PASS fresh world builds independently for script-state restoration
+PASS restore saved menu/player JSON without an input callback
+JS: Player: WASD move, mouse look, Space jump, V camera, Escape release/capture mouse. F5 stops editor Play.
+PASS restored controls publish to fresh input on the next real input boundary
+PASS rebinding while paused does not resume simulation
+PASS focus reset
+PASS Reset restores exact authored project controls
+PASS focus tab_pause
+PASS focus resume
+PASS Resume restores gameplay and player mouse ownership
+PASS actual physical probe continues after resume
+PASS composed player/menu scripts remain fault-free
+FIXTURE /tmp/judas-pause-example-45196009394309
+Pause example application: 30 checks, 0 failures

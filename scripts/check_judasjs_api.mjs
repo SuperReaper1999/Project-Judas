@@ -13,7 +13,7 @@ if(args.includes('--help')){
 const ts=loadTypeScript(option('--typescript'));
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
 const source=fs.readFileSync(path.join(root,'src/ScriptSystem.cpp'),'utf8');
-const nativeSource=source+'\n'+['src/ScriptLocalMultiplayer.inl','src/ScriptNetwork.inl','src/ScriptBindingsUI.cpp','src/ScriptBindingsJoint.cpp'].map(file=>fs.readFileSync(path.join(root,file),'utf8')).join('\n');
+const nativeSource=source+'\n'+['src/ScriptInputBindings.inl','src/ScriptLocalMultiplayer.inl','src/ScriptNetwork.inl','src/ScriptBindingsUI.cpp','src/ScriptBindingsJoint.cpp'].map(file=>fs.readFileSync(path.join(root,file),'utf8')).join('\n');
 const library=source.match(/const char\* library=R"JS\(([\s\S]*?)\)JS";/)?.[1];
 if(!library)throw Error('Cannot locate registered public module: review extractor');
 const parse=(name,text,kind)=>ts.createSourceFile(name,text,ts.ScriptTarget.ES2020,true,kind);
@@ -153,7 +153,7 @@ function checkCallables(declarations) {
  }
 }
 checkCallables(types);
-const schema={checkpoint:'Pre-Alpha current source; public module through M99',authority:'src/ScriptSystem.cpp::library + Impl::Native + ScriptBindingsUI.cpp + ScriptBindingsJoint.cpp + ScriptLocalMultiplayer.inl + ScriptNetwork.inl',resultShapes,callables,symbols:symbols.map(k=>{
+const schema={checkpoint:'Pre-Alpha current source; public module through M99',authority:'src/ScriptSystem.cpp::library + Impl::Native + ScriptBindingsUI.cpp + ScriptBindingsJoint.cpp + ScriptInputBindings.inl + ScriptLocalMultiplayer.inl + ScriptNetwork.inl',resultShapes,callables,symbols:symbols.map(k=>{
  const v=runtime.get(k);let native=v.native;
  if(['physics.raycastMany','physics.sphereCastMany','physics.capsuleCastMany'].includes(k))native=['castMany'];
  else if(k.startsWith('physics.')&&!['physics.joint','physics.closestPoint','physics.gravity','physics.createJoint'].includes(k))native=['cast'];

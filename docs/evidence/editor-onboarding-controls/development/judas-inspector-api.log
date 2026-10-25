@@ -1,0 +1,73 @@
+[96mdocs/judasjs/examples/first-person-player.js[0m:[93m5[0m:[93m14[0m - [91merror[0m[90m TS7006: [0mParameter 'a' implicitly has an 'any' type.
+
+[7m5[0m const add = (a, b) => ({x:a.x+b.x, y:a.y+b.y, z:a.z+b.z});
+[7m [0m [91m             ~[0m
+[96mdocs/judasjs/examples/first-person-player.js[0m:[93m5[0m:[93m17[0m - [91merror[0m[90m TS7006: [0mParameter 'b' implicitly has an 'any' type.
+
+[7m5[0m const add = (a, b) => ({x:a.x+b.x, y:a.y+b.y, z:a.z+b.z});
+[7m [0m [91m                ~[0m
+[96mdocs/judasjs/examples/first-person-player.js[0m:[93m6[0m:[93m14[0m - [91merror[0m[90m TS7006: [0mParameter 'v' implicitly has an 'any' type.
+
+[7m6[0m const mul = (v, s) => ({x:v.x*s, y:v.y*s, z:v.z*s});
+[7m [0m [91m             ~[0m
+[96mdocs/judasjs/examples/first-person-player.js[0m:[93m6[0m:[93m17[0m - [91merror[0m[90m TS7006: [0mParameter 's' implicitly has an 'any' type.
+
+[7m6[0m const mul = (v, s) => ({x:v.x*s, y:v.y*s, z:v.z*s});
+[7m [0m [91m                ~[0m
+[96mdocs/judasjs/examples/first-person-player.js[0m:[93m7[0m:[93m14[0m - [91merror[0m[90m TS7006: [0mParameter 'a' implicitly has an 'any' type.
+
+[7m7[0m const dot = (a, b) => a.x*b.x+a.y*b.y+a.z*b.z;
+[7m [0m [91m             ~[0m
+[96mdocs/judasjs/examples/first-person-player.js[0m:[93m7[0m:[93m17[0m - [91merror[0m[90m TS7006: [0mParameter 'b' implicitly has an 'any' type.
+
+[7m7[0m const dot = (a, b) => a.x*b.x+a.y*b.y+a.z*b.z;
+[7m [0m [91m                ~[0m
+[96mdocs/judasjs/examples/first-person-player.js[0m:[93m8[0m:[93m16[0m - [91merror[0m[90m TS7006: [0mParameter 'v' implicitly has an 'any' type.
+
+[7m8[0m const length = v => Math.sqrt(dot(v,v));
+[7m [0m [91m               ~[0m
+[96mdocs/judasjs/examples/first-person-player.js[0m:[93m9[0m:[93m16[0m - [91merror[0m[90m TS7006: [0mParameter 'v' implicitly has an 'any' type.
+
+[7m9[0m const normal = v => length(v)>1e-6 ? mul(v,1/length(v)) : {x:0,y:0,z:0};
+[7m [0m [91m               ~[0m
+[96mdocs/judasjs/examples/first-person-player.js[0m:[93m10[0m:[93m18[0m - [91merror[0m[90m TS7006: [0mParameter 'v' implicitly has an 'any' type.
+
+[7m10[0m const tangent = (v, up) => add(v,mul(up,-dot(v,up)));
+[7m  [0m [91m                 ~[0m
+[96mdocs/judasjs/examples/first-person-player.js[0m:[93m10[0m:[93m21[0m - [91merror[0m[90m TS7006: [0mParameter 'up' implicitly has an 'any' type.
+
+[7m10[0m const tangent = (v, up) => add(v,mul(up,-dot(v,up)));
+[7m  [0m [91m                    ~~[0m
+[96mdocs/judasjs/examples/first-person-player.js[0m:[93m11[0m:[93m13[0m - [91merror[0m[90m TS7006: [0mParameter 'a' implicitly has an 'any' type.
+
+[7m11[0m const qm = (a,b) => ({w:a.w*b.w-a.x*b.x-a.y*b.y-a.z*b.z,
+[7m  [0m [91m            ~[0m
+[96mdocs/judasjs/examples/first-person-player.js[0m:[93m11[0m:[93m15[0m - [91merror[0m[90m TS7006: [0mParameter 'b' implicitly has an 'any' type.
+
+[7m11[0m const qm = (a,b) => ({w:a.w*b.w-a.x*b.x-a.y*b.y-a.z*b.z,
+[7m  [0m [91m              ~[0m
+[96mdocs/judasjs/examples/first-person-player.js[0m:[93m14[0m:[93m15[0m - [91merror[0m[90m TS7006: [0mParameter 'a' implicitly has an 'any' type.
+
+[7m14[0m const axis = (a,t) => ({w:Math.cos(t/2),...mul(a,Math.sin(t/2))});
+[7m  [0m [91m              ~[0m
+[96mdocs/judasjs/examples/first-person-player.js[0m:[93m14[0m:[93m17[0m - [91merror[0m[90m TS7006: [0mParameter 't' implicitly has an 'any' type.
+
+[7m14[0m const axis = (a,t) => ({w:Math.cos(t/2),...mul(a,Math.sin(t/2))});
+[7m  [0m [91m                ~[0m
+[96mdocs/judasjs/examples/first-person-player.js[0m:[93m15[0m:[93m17[0m - [91merror[0m[90m TS7006: [0mParameter 'q' implicitly has an 'any' type.
+
+[7m15[0m const rotate = (q,v) => {const r=qm(qm(q,{w:0,...v}),{w:q.w,x:-q.x,y:-q.y,z:-q.z});return {x:r.x,y:r.y,z:r.z};};
+[7m  [0m [91m                ~[0m
+[96mdocs/judasjs/examples/first-person-player.js[0m:[93m15[0m:[93m19[0m - [91merror[0m[90m TS7006: [0mParameter 'v' implicitly has an 'any' type.
+
+[7m15[0m const rotate = (q,v) => {const r=qm(qm(q,{w:0,...v}),{w:q.w,x:-q.x,y:-q.y,z:-q.z});return {x:r.x,y:r.y,z:r.z};};
+[7m  [0m [91m                  ~[0m
+[96mdocs/judasjs/examples/first-person-player.js[0m:[93m33[0m:[93m10[0m - [91merror[0m[90m TS7006: [0mParameter 'dt' implicitly has an 'any' type.
+
+[7m33[0m   update(dt) {
+[7m  [0m [91m         ~~[0m
+[96mdocs/judasjs/examples/first-person-player.js[0m:[93m38[0m:[93m15[0m - [91merror[0m[90m TS7006: [0mParameter 'dt' implicitly has an 'any' type.
+
+[7m38[0m   fixedUpdate(dt) {
+[7m  [0m [91m              ~~[0m
+

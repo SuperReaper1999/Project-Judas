@@ -1,6 +1,6 @@
 {
   "checkpoint": "Pre-Alpha current source; public module through M99",
-  "authority": "src/ScriptSystem.cpp::library + Impl::Native + ScriptBindingsUI.cpp + ScriptBindingsJoint.cpp + ScriptLocalMultiplayer.inl + ScriptNetwork.inl",
+  "authority": "src/ScriptSystem.cpp::library + Impl::Native + ScriptBindingsUI.cpp + ScriptBindingsJoint.cpp + ScriptInputBindings.inl + ScriptLocalMultiplayer.inl + ScriptNetwork.inl",
   "resultShapes": [
     {
       "binding": "Entity.physicalMaterial",
@@ -1132,6 +1132,11 @@
       "maximum": 1
     },
     {
+      "symbol": "input.getBindings",
+      "minimum": 0,
+      "maximum": 0
+    },
+    {
       "symbol": "input.held",
       "minimum": 1,
       "maximum": 1
@@ -1143,6 +1148,11 @@
     },
     {
       "symbol": "input.released",
+      "minimum": 1,
+      "maximum": 1
+    },
+    {
+      "symbol": "input.setBindings",
       "minimum": 1,
       "maximum": 1
     },
@@ -5063,6 +5073,17 @@
       "reference": "docs/judasjs/input.md"
     },
     {
+      "symbol": "input.getBindings",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "inputBindings"
+      ],
+      "type": "docs/judas.d.ts:input.getBindings",
+      "reference": "docs/judasjs/input.md"
+    },
+    {
       "symbol": "input.held",
       "kinds": [
         "call"
@@ -5117,6 +5138,17 @@
         "released"
       ],
       "type": "docs/judas.d.ts:input.released",
+      "reference": "docs/judasjs/input.md"
+    },
+    {
+      "symbol": "input.setBindings",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "inputSetBindings"
+      ],
+      "type": "docs/judas.d.ts:input.setBindings",
       "reference": "docs/judasjs/input.md"
     },
     {
@@ -6732,6 +6764,8 @@
     "impulse",
     "impulseAtPoint",
     "inertiaWorld",
+    "inputBindings",
+    "inputSetBindings",
     "joint",
     "jointConfigure",
     "jointCreate",

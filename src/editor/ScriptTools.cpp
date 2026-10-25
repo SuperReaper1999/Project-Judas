@@ -49,6 +49,14 @@ void ScriptTools::OpenDiagnostic(const ScriptDiagnostic& diagnostic,const AssetD
     }
     if(selected){Open(selected->relativePath,assets);requestedLine=line;scrollToLine=true;}
 }
+bool ScriptTools::OpenForEditing(const std::string& path,const AssetDatabase& assets){
+    visible=true;
+    Open(path,assets);
+    if(file!=path||sourcePath.empty())return false;
+    const auto* record=assets.FindByRelativePath(path);
+    if(!record||record->missing||record->readOnly){status="Source is missing or read-only.";return false;}
+    editing=true;return true;
+}
 void ScriptTools::Attach(RuntimeWorld& world,EngineHost& host){
     if(!enabled){if(world.Scripts())world.Scripts()->SetDebugger({});return;}
     auto& scripts=world.PrepareScriptTools();
@@ -95,11 +103,13 @@ void ScriptTools::Source(const AssetDatabase& assets,int activeLine,const std::s
         if(editing&&!edit.empty()&&std::strcmp(edit.data(),loadedBytes.c_str())!=0)status="Save or discard source edits before closing the source editor.";
         else editing=!editing;
     }
+    if(enabled){
     ImGui::SameLine();ImGui::SetNextItemWidth(80);ImGui::InputInt("Line",&requestedLine);
     requestedLine=std::max(1,requestedLine);
     ImGui::SameLine();if(ImGui::Button("Toggle breakpoint")){
         auto it=std::find_if(points.begin(),points.end(),[&](const auto& p){return p.file==file&&p.line==requestedLine;});
         if(it==points.end()){if(points.size()<256)points.push_back({file,requestedLine,true});}else points.erase(it);
+    }
     }
     if(editing){
         ImGui::TextWrapped("Explicit disk save. Reload scripts separately. Unsaved text never executes.");
@@ -125,28 +135,41 @@ void ScriptTools::Panel(RuntimeWorld* world,const AssetDatabase& assets){
     if(!visible)return;
     ImGui::SetNextWindowSize(ImVec2(820,700),ImGuiCond_FirstUseEver);
     if(!ImGui::Begin("JudasJS developer tools",&visible)){ImGui::End();return;}
-    ImGui::Checkbox("Attach debugger (Play)",&enabled);ImGui::SameLine();ImGui::Checkbox("Keep JSON state",&preserve);
-    if(ImGui::Button("Check project scripts")){projectDiagnostics=ScriptSystem::CheckProjectSources(assets);status=projectDiagnostics.empty()?"All registered script modules compile/link. This does not execute constructors or validate game logic.":"Project source errors below; open the affected source.";}
-    for(const auto& d:projectDiagnostics){ImGui::PushID(&d);if(ImGui::SmallButton("Open source")){OpenDiagnostic(d,assets);}ImGui::SameLine();ImGui::TextWrapped("%s",d.message.c_str());ImGui::PopID();}
-    if(world){
-        auto& scripts=world->PrepareScriptTools();
-        if(ImGui::Button("Check sources")){std::string error;status=scripts.CheckSources(error)?"Compile/link passed; top-level code and constructors are checked during execution.":error;}
-        ImGui::SameLine();if(ImGui::Button("Reload scripts"))reloadRequested=true;
-        ImGui::SameLine();if(ImGui::Button("Break next")){enabled=true;pendingBreak=true;}
-        if(ImGui::CollapsingHeader("Runtime errors",ImGuiTreeNodeFlags_DefaultOpen)){
-            for(const auto& d:scripts.Diagnostics()){
-                ImGui::PushID(&d);if(ImGui::SmallButton("Open")){OpenDiagnostic(d,assets);}ImGui::SameLine();
-                ImGui::TextWrapped("Entity %llu / slot %llu / %s\n%s",(unsigned long long)d.entity,(unsigned long long)d.slot,d.callback.c_str(),d.message.c_str());ImGui::PopID();
-            }
-        }
-        if(ImGui::CollapsingHeader("Console (latest 256)"))for(const auto& text:scripts.ConsoleMessages())ImGui::TextWrapped("%s",text.c_str());
-    }else ImGui::TextWrapped("Choose a source and set breakpoints before Play. No debugger is attached to exported games.");
+    ImGui::TextWrapped("Edit source, Save source, then Play. During Play, save and Reload scripts deliberately.");
+    ImGui::SetNextItemWidth(-1);
     if(ImGui::BeginCombo("Project script",file.empty()?"Choose source":file.c_str())){
         for(const auto& [id,a]:assets.Records())if(a.type==AssetType::Script){(void)id;if(ImGui::Selectable(a.relativePath.c_str(),file==a.relativePath))Open(a.relativePath,assets);}
         ImGui::EndCombo();
     }
     Source(assets);
-    if(ImGui::CollapsingHeader("Breakpoints"))for(size_t i=0;i<points.size();++i){ImGui::PushID(int(i));ImGui::Checkbox("##enabled",&points[i].enabled);ImGui::SameLine();ImGui::Text("%s:%d",points[i].file.c_str(),points[i].line);ImGui::PopID();}
+    if(ImGui::Button("Check project scripts")){
+        projectDiagnostics=ScriptSystem::CheckProjectSources(assets);
+        status=projectDiagnostics.empty()?"Scripts compile and link. Press Play to test gameplay.":"Source errors below; open the affected file.";
+    }
+    ImGui::SameLine();ImGui::BeginDisabled(!world);
+    if(ImGui::Button("Reload scripts"))reloadRequested=true;
+    ImGui::EndDisabled();
+    for(const auto& d:projectDiagnostics){ImGui::PushID(&d);if(ImGui::SmallButton("Open source"))OpenDiagnostic(d,assets);ImGui::SameLine();ImGui::TextWrapped("%s",d.message.c_str());ImGui::PopID();}
+    if(world){
+        auto& scripts=world->PrepareScriptTools();
+        if(!scripts.Diagnostics().empty()&&ImGui::CollapsingHeader("Runtime errors",ImGuiTreeNodeFlags_DefaultOpen)){
+            for(const auto& d:scripts.Diagnostics()){
+                ImGui::PushID(&d);if(ImGui::SmallButton("Open"))OpenDiagnostic(d,assets);ImGui::SameLine();
+                ImGui::TextWrapped("Entity %llu / slot %llu / %s\n%s",(unsigned long long)d.entity,(unsigned long long)d.slot,d.callback.c_str(),d.message.c_str());ImGui::PopID();
+            }
+        }
+        if(ImGui::CollapsingHeader("Console (latest 256)"))for(const auto& text:scripts.ConsoleMessages())ImGui::TextWrapped("%s",text.c_str());
+    }
+    if(ImGui::CollapsingHeader("Debugger and reload options",enabled?ImGuiTreeNodeFlags_DefaultOpen:ImGuiTreeNodeFlags_None)){
+        ImGui::Checkbox("Attach debugger (Play)",&enabled);
+        ImGui::Checkbox("Keep JSON state",&preserve);
+        if(world){
+            auto& scripts=world->PrepareScriptTools();
+            if(ImGui::Button("Check sources")){std::string error;status=scripts.CheckSources(error)?"Compile/link passed; constructors execute during Play.":error;}
+            ImGui::SameLine();if(ImGui::Button("Break next")){enabled=true;pendingBreak=true;}
+        }
+        for(size_t i=0;i<points.size();++i){ImGui::PushID(int(i));ImGui::Checkbox("##enabled",&points[i].enabled);ImGui::SameLine();ImGui::Text("%s:%d",points[i].file.c_str(),points[i].line);ImGui::PopID();}
+    }
     ImGui::TextWrapped("%s",status.c_str());
     ImGui::End();
 }
@@ -158,7 +181,7 @@ ScriptDebugAction ScriptTools::Pause(const ScriptDebugStop& stop,EngineHost& hos
     ImGui::EndFrame();ScriptDebugAction action=ScriptDebugAction::Continue;bool done=false;selectedFrame=0;
     if(!stop.frames.empty()){Open(stop.frames.front().file,host.Assets());requestedLine=stop.frames.front().line;scrollToLine=true;}
     while(!done&&!window.ShouldClose()){
-        window.SetInputClaimed(true,true);window.PollEvents();
+        window.SetInputClaimed(true,true);window.SetHostTextInput(ImGui::GetIO().WantTextInput);window.PollEvents();
         ImGui_ImplOpenGL3_NewFrame();ImGui_ImplSDL2_NewFrame();ImGui::NewFrame();
         ImGui::SetNextWindowPos(ImVec2(0,0));ImGui::SetNextWindowSize(ImGui::GetIO().DisplaySize);
         ImGui::Begin("JudasJS stopped",nullptr,ImGuiWindowFlags_NoMove|ImGuiWindowFlags_NoResize|ImGuiWindowFlags_NoCollapse);

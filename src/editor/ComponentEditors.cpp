@@ -224,8 +224,9 @@ void DrawCharacter(EditorDocument& doc,SceneObject& object,EditorPanelState& sta
 void DrawScripts(EditorDocument& doc,SceneObject& o,EditorPanelState& state){
     size_t remove=o.scripts.size();
     for(size_t i=0;i<o.scripts.size();++i){auto& slot=o.scripts[i];ImGui::PushID(static_cast<int>(i));
-        ImGui::Text("Behaviour %zu (slot %llu)",i+1,static_cast<unsigned long long>(slot.id));
+        ImGui::Text("Script %zu",i+1);
         AssetField(doc,"Script asset",slot.asset,AssetType::Script,false,state);Checkbox(doc,"Enabled",slot.enabled);
+        if(!slot.asset.empty()&&ImGui::Button("Edit script"))state.editScriptAsset=slot.asset;
         if(state.assets&&!slot.asset.empty()){
             struct Metadata {std::filesystem::file_time_type time;std::string schema,error;};
             static std::map<std::string,Metadata> cache;
@@ -250,7 +251,10 @@ void DrawScripts(EditorDocument& doc,SceneObject& o,EditorPanelState& state){
         ImGui::PopID();
     }
     if(remove<o.scripts.size()){doc.BeginEdit();o.scripts.erase(o.scripts.begin()+remove);doc.CommitEdit();}
-    if(ImGui::Button("Add behaviour")){doc.BeginEdit();uint64_t id=1;for(const auto& slot:o.scripts)id=std::max(id,slot.id+1);o.scripts.push_back({id,"",true,"{}"});doc.CommitEdit();}
+    if(ImGui::TreeNode("Advanced script slots")){
+        if(ImGui::Button("Add empty slot")){doc.BeginEdit();uint64_t id=1;for(const auto& slot:o.scripts)id=std::max(id,slot.id+1);o.scripts.push_back({id,"",true,"{}"});doc.CommitEdit();}
+        ImGui::TreePop();
+    }
 }
 
 void DrawParticleEmitter(EditorDocument& doc,SceneObject& o,EditorPanelState& state){

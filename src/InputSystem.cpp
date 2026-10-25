@@ -75,7 +75,21 @@ InputMap InputMap::Defaults(){
     m.AddBinding("wheel_x",{"mouse:wheelX"});m.AddBinding("wheel_y",{"mouse:wheelY"});m.Add("throttle",true);m.AddBinding("throttle",{"stick:RightTrigger",1,.05f});return m;
 }
 InputSystem::InputSystem():m_map(InputMap::Defaults()){Evaluate();}
-bool InputSystem::SetMap(const InputMap& map,std::string& error){if(!map.Validate(error))return false;m_map=map;Reset();return true;}
+bool InputSystem::SetMap(const InputMap& map,std::string& error){if(!map.Validate(error))return false;m_map=map;m_requestedBindings.reset();m_defaultBindings.reset();Reset();return true;}
+bool InputSystem::RequestBindings(const InputMap* replacement,std::string& error) const {
+    error.clear();
+    if(m_logicalMode){error="Externally supplied logical input must be rebound by its device/player owner.";return false;}
+    const auto& candidate=replacement?*replacement:(m_defaultBindings?*m_defaultBindings:m_map);
+    if(!candidate.Validate(error))return false;
+    if(candidate.entries.size()!=m_map.entries.size()){error="Rebinding must retain the project's logical controls.";return false;}
+    for(const auto& entry:candidate.entries){
+        const auto* current=m_map.Find(entry.name);
+        if(!current||current->axis!=entry.axis||current->vector!=entry.vector){error="Rebinding cannot rename controls or change their types.";return false;}
+    }
+    if(!m_defaultBindings)m_defaultBindings=m_map;
+    m_requestedBindings=candidate;
+    return true;
+}
 void InputSystem::SetLogicalMode(bool enabled){if(m_logicalMode==enabled)return;m_logicalMode=enabled;Reset();}
 bool InputSystem::SubmitLogical(const std::map<std::string,float>& values,std::string& error){
     if(!m_logicalMode){error="input is not in logical source mode";return false;}
@@ -128,6 +142,7 @@ void InputSystem::Evaluate(){
     }
 }
 void InputSystem::BeginFrame(){
+    if(m_requestedBindings){m_map=std::move(*m_requestedBindings);m_requestedBindings.reset();Reset();}
     m_textEvents.clear();m_consumed.clear();for(int i=0;i<2;++i)m_stickFrameStart[i]={m_raw[StickControl(i,"X")],m_raw[StickControl(i,"Y")]};for(auto& p:m_actions){p.second.pressed=false;p.second.released=false;}for(const char* c:{"mouse:dx","mouse:dy","mouse:wheelX","mouse:wheelY"})m_raw[c]=0;Evaluate();}
 void InputSystem::SetPhysical(const std::string& c,float v){
     if(m_logicalMode||!std::isfinite(v))return;

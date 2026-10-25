@@ -2,6 +2,7 @@
 #include <map>
 #include <functional>
 #include <memory>
+#include <optional>
 class InputDeviceHub;
 #include <array>
 #include <chrono>
@@ -67,6 +68,9 @@ public:
     mutable std::weak_ptr<InputDeviceHub> localDevices;
     bool SetMap(const InputMap& map,std::string& error);
     const InputMap& Map() const {return m_map;}
+    // Rebind existing logical controls at the next render input boundary.
+    // Null restores the map configured by the project/host. No raw input access.
+    bool RequestBindings(const InputMap* replacement, std::string& error) const;
     // Optional external logical source (for example validated remote input).
     // Source changes neutralize input without inventing edges. Maps/reset keep
     // this mode but clear its state. The owner still calls BeginFrame and
@@ -123,6 +127,7 @@ private:
     bool StickConsumed(const std::string& side) const;
     std::vector<std::string> m_consumed;
     InputMap m_map;
+    mutable std::optional<InputMap> m_requestedBindings, m_defaultBindings;
     std::map<std::string,float> m_raw,m_axes,m_logical;
     bool m_logicalMode=false;
     std::map<std::string,InputVector> m_vectors;

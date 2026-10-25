@@ -1,0 +1,8 @@
+FRAMES 100
+LOG_EVERY 0
+ACTION pause 1 20 21
+EXPECT_PAUSED 1 25
+SCREENSHOT 30 /tmp/judas-workflow-pause.png
+ACTION pause 1 45 46
+EXPECT_PAUSED 0 50
+SCREENSHOT 65 /tmp/judas-workflow-play.png

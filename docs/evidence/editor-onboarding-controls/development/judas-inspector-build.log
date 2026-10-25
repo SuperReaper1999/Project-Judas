@@ -1,0 +1,42 @@
+[  0%] Building CXX object CMakeFiles/judas_build_identity.dir/src/BuildIdentity.cpp.o
+[ 14%] Built target freetype
+[ 14%] Built target judas_profiler
+[ 14%] Built target judas_jobs
+[ 21%] Built target judas_audio_backend
+[ 21%] Built target judas_app_icon
+[ 28%] Built target judas_meshoptimizer
+[ 28%] Built target judas_icu_build
+[ 28%] Built target judas_quickjs
+[ 28%] Built target judas_navigation_backend
+[ 28%] Built target judas_glad
+[ 28%] Built target harfbuzz
+[ 35%] Built target judas_imgui
+[ 35%] Built target judas_materials
+[ 35%] Built target judas_navigation_cook
+[ 35%] Linking CXX static library libjudas_build_identity.a
+[ 35%] Built target judas_build_identity
+[ 92%] Built target judas_engine
+[ 92%] Building CXX object CMakeFiles/judas_editor_script_workflow_tests.dir/tests/EditorScriptWorkflowTests.cpp.o
+[100%] Building CXX object CMakeFiles/judas_editor_script_workflow_tests.dir/src/editor/EditorScriptWorkflow.cpp.o
+[100%] Building CXX object CMakeFiles/judas_editor_script_workflow_tests.dir/src/editor/EditorHistory.cpp.o
+/home/conner/Documents/GitHub/Project-Judas/tests/EditorScriptWorkflowTests.cpp: In function ‘int main()’:
+/home/conner/Documents/GitHub/Project-Judas/tests/EditorScriptWorkflowTests.cpp:20:29: error: ‘temp_directory_path’ is not a member of ‘fs’
+   20 |         const auto root=fs::temp_directory_path()/("judas-script-workflow-"+std::to_string(std::chrono::steady_clock::now().time_since_epoch().count()));
+      |                             ^~~~~~~~~~~~~~~~~~~
+/home/conner/Documents/GitHub/Project-Judas/tests/EditorScriptWorkflowTests.cpp:27:102: error: ‘is_regular_file’ is not a member of ‘fs’
+   27 |         check(record.type==AssetType::Script&&record.relativePath=="Assets/Scripts/MyScript.js"&&fs::is_regular_file(record.path+".judasmeta"),"ordinary project asset and metadata exist");
+      |                                                                                                      ^~~~~~~~~~~~~~~
+/home/conner/Documents/GitHub/Project-Judas/tests/EditorScriptWorkflowTests.cpp:30:69: error: ‘exists’ is not a member of ‘fs’
+   30 |         doc.Undo();check(doc.SelectedObject()->scripts.empty()&&fs::exists(record.path),"Undo detaches without deleting authored source");
+      |                                                                     ^~~~~~
+/home/conner/Documents/GitHub/Project-Judas/tests/EditorScriptWorkflowTests.cpp:33:104: error: ‘exists’ is not a member of ‘fs’
+   33 |         check(!CreateAndAttachEditorScript(doc,owner,project,assets,"../escape.js",record,error)&&!fs::exists(root/"escape.js"),"path traversal is rejected before writing");
+      |                                                                                                        ^~~~~~
+/home/conner/Documents/GitHub/Project-Judas/tests/EditorScriptWorkflowTests.cpp:59:37: error: ‘remove_all’ is not a member of ‘fs’
+   59 |         ImGui::DestroyContext();fs::remove_all(root);
+      |                                     ^~~~~~~~~~
+gmake[3]: *** [CMakeFiles/judas_editor_script_workflow_tests.dir/build.make:79: CMakeFiles/judas_editor_script_workflow_tests.dir/tests/EditorScriptWorkflowTests.cpp.o] Error 1
+gmake[3]: *** Waiting for unfinished jobs....
+gmake[2]: *** [CMakeFiles/Makefile2:18118: CMakeFiles/judas_editor_script_workflow_tests.dir/all] Error 2
+gmake[1]: *** [CMakeFiles/Makefile2:18125: CMakeFiles/judas_editor_script_workflow_tests.dir/rule] Error 2
+gmake: *** [Makefile:5114: judas_editor_script_workflow_tests] Error 2

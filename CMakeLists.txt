@@ -412,6 +412,9 @@ add_executable(judas_editor
     src/editor/EditorHistory.cpp
     src/editor/EditorPanels.cpp
     src/editor/EditorCreationMenu.cpp
+    src/editor/EditorScriptWorkflow.cpp
+    src/editor/EditorPrimitiveAssets.cpp
+    src/editor/EditorPauseExample.cpp
     src/editor/ProjectSettingsPanel.cpp
     src/editor/FileBrowser.cpp
     src/editor/RenderPreview.cpp
@@ -1686,6 +1689,11 @@ judas_add_engine_test(judas_editor_file_browser_tests tests/EditorFileBrowserTes
     SOURCES src/editor/FileBrowser.cpp LIBRARIES judas_imgui)
 judas_add_engine_test(judas_editor_creation_menu_tests tests/EditorCreationMenuTests.cpp
     SOURCES src/editor/EditorCreationMenu.cpp src/editor/EditorHistory.cpp LIBRARIES judas_imgui)
+judas_add_engine_test(judas_editor_script_workflow_tests tests/EditorScriptWorkflowTests.cpp
+    SOURCES src/editor/EditorScriptWorkflow.cpp src/editor/EditorPrimitiveAssets.cpp src/editor/EditorHistory.cpp LIBRARIES judas_imgui)
+judas_add_engine_test(judas_input_rebinding_tests tests/InputRebindingTests.cpp)
+judas_add_engine_test(judas_pause_example_application_tests tests/PauseExampleApplicationTests.cpp
+    SOURCES src/editor/EditorPauseExample.cpp src/editor/EditorScriptWorkflow.cpp src/editor/EditorPrimitiveAssets.cpp src/editor/EditorHistory.cpp LIBRARIES judas_imgui)
 
 judas_add_engine_test(judas_mk2_diagnostics_tests tests/Mk2DiagnosticsTests.cpp)
 judas_add_engine_test(judas_mk2_rotation_tests tests/Mk2RotationTests.cpp)

@@ -2,15 +2,17 @@
 
 [API index](JUDASJS.md) · [Lifecycle](judasjs/lifecycle.md) · [State/lifetime](judasjs/scenes-state.md) · [Lab](../projects/developer_lab/README.md)
 
-Current repository tooling through M94. Judas remains JavaScript; neither a
+Current repository tooling, originally introduced in M94. Judas remains JavaScript; neither a
 TypeScript runtime nor an external debugger service is required.
 
 ## Start debugging
 
 1. Open any ordinary project in `judas_editor`.
-2. Choose **View → JudasJS developer tools**. Choose a registered project script.
-3. Set the one-based **Line**, then **Toggle breakpoint**. Enable **Attach debugger**
-   before Play to retain exact loaded source snapshots.
+2. Choose **View → JudasJS developer tools**, or select an object's **Edit script**.
+   The source pane comes first; ordinary editing does not require a debugger.
+3. Expand **Debugger and reload options** and enable **Attach debugger**. Set the
+   one-based **Line**, then **Toggle breakpoint**. Enable debugging before Play
+   to retain exact loaded source snapshots.
 4. Play. A source breakpoint suspends the current JS/C call stack and the world.
 5. Use **Continue (F5)**, **Step into (F11)**, **Step over (F10)**, **Step out**, or
    **Stop Play**. Select a stack frame to inspect its arguments, compiled locals,

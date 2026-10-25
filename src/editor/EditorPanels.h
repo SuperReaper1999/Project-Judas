@@ -161,6 +161,10 @@ struct EditorPanelState {
     glm::vec2 textPreviewPosition{0},textPreviewSize{0};
     std::string hierarchySearch;
     std::string status;
+    std::string revealComponent;
+    AssetId editScriptAsset;
+    SceneObjectId newScriptOwner = kInvalidSceneObjectId;
+    std::string newScriptName = "NewScript.js", scriptWorkflowMessage;
     std::string pathInput;  // Open / Save As text field
     std::vector<std::string> terrainSurfaces;
     glm::vec3 cameraFocus{0.0f};  // where "create" places new objects

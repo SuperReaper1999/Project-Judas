@@ -1,0 +1,20 @@
+PASS rebind queues without changing the current snapshot
+PASS next input frame publishes the real map
+PASS rebound physical key drives the existing logical action
+PASS previous binding no longer drives the action
+PASS rebind cannot remove project actions
+PASS rebind cannot change logical action type
+PASS invalid binding is rejected transactionally
+PASS restore project-default bindings queues
+PASS reset restores exact original map without replaying held inputs
+PASS external logical-source owner cannot be bypassed
+PASS ordinary project fixture
+PASS register actual public-API script
+PASS script builds through ordinary runtime
+PASS real JudasJS binding returns detached map and queues replacement
+PASS real native API rejects removed controls, undefined, added actions and changed types
+PASS invalid JS requests do not publish or cancel the valid pending map
+PASS native JS request publishes the intended physical binding
+PASS native JS null reset restores authored defaults
+PASS runtime rebinding never edits authored project settings
+Input rebinding: 19 checks, 0 failures

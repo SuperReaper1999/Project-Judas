@@ -19,6 +19,7 @@ struct ScriptTools {
     void Panel(RuntimeWorld*,const AssetDatabase&);
     void ApplyReload(RuntimeWorld&);
     bool SaveSourceEdits(const AssetDatabase&);
+    bool OpenForEditing(const std::string& relativePath, const AssetDatabase&);
     ScriptDebugAction Pause(const ScriptDebugStop&,EngineHost&,bool online=false);
 private:
     void Open(const std::string&,const AssetDatabase&);

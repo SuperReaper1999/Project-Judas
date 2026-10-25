@@ -51,6 +51,10 @@ int main() {
         };
         const struct { const char* label; const char* kind; } types[] = {
             {"Empty object", "empty"}, {"Static box", "box"},
+            {"First-person player (JS + motor)", "first-person-player"},
+            {"Third-person player (JS + motor)", "third-person-player"},
+            {"Pause menu + controls (JS + UI)", "pause-menu-example"},
+            {"Capsule", "capsule"}, {"Cylinder", "cylinder"},
             {"Static sphere", "sphere"}, {"Dynamic box", "dynamic-box"},
             {"Dynamic sphere", "dynamic-sphere"}, {"Mesh", "mesh"},
             {"Point light", "point-light"}, {"Spot light", "spot-light"},

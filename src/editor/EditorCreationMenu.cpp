@@ -12,8 +12,13 @@ void DrawEditorCreationItems(const EditorPanelState& state, EditorRequests& requ
         }
     };
     item("Empty object", "empty");
+    item("First-person player (JS + motor)", "first-person-player");
+    item("Third-person player (JS + motor)", "third-person-player");
+    item("Pause menu + controls (JS + UI)", "pause-menu-example");
     item("Static box", "box");
     item("Static sphere", "sphere");
+    item("Capsule", "capsule");
+    item("Cylinder", "cylinder");
     item("Dynamic box", "dynamic-box");
     item("Dynamic sphere", "dynamic-sphere");
     item("Mesh", "mesh");

@@ -44,6 +44,18 @@ formats, not APIs you import into the game VM.
 
 ## 2. Write, register and attach a script
 
+The direct editor route is: select an object → **Create script & attach** → name
+the file → **Create & edit**. Registration and attachment happen automatically.
+Use **Save source**, save the scene, then Play. **Attach existing script** reuses
+a registered script; **Edit script** reopens it. Source edits are not silently
+reloaded. The manual asset/behaviour route below is still available.
+
+For a ready-to-edit player, the hierarchy/Create menu offers first- and
+third-person player presets with CharacterMotor, capsule visual and ordinary
+project JavaScript. **V** switches views on the same player. See the
+[editor workflow](../EDITOR_GUIDE.md#make-a-controllable-player) for controls,
+input requirements and camera ownership.
+
 1. Save a UTF-8 `.js` file under your project's `Assets/scripts/` directory.
 2. Open **View → Asset Browser**, press **Rescan**, then **Track** the script in
    the untracked list. This creates its stable `.judasmeta` identity.

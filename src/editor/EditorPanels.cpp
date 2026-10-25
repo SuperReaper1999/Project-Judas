@@ -41,6 +41,7 @@
 #include "ComponentEditors.h"
 #include "EditorWidgets.h"
 #include "EditorCreationMenu.h"
+#include "EditorScriptWorkflow.h"
 #include "Project.h"
 #include "RuntimeWorld.h"
 
@@ -119,28 +120,41 @@ void CopyToBuffer(const std::string& s, char* buffer, std::size_t size) {
     buffer[size - 1] = '\0';
 }
 
-bool ComponentHeader(EditorDocument& doc, const ComponentEditor& editor, SceneObject& o) {
+bool ComponentHeader(EditorDocument& doc, const ComponentEditor& editor, SceneObject& o, EditorPanelState& state) {
     ImGui::PushID(editor.name);
-    bool open = ImGui::CollapsingHeader(editor.name, ImGuiTreeNodeFlags_DefaultOpen);
-    ImGui::SameLine(ImGui::GetContentRegionAvail().x - 60.0f);
-    if (ImGui::SmallButton("Remove")) {
-        doc.BeginEdit();
-        editor.remove(o);
-        doc.CommitEdit();
-        open = false;
+    if(state.revealComponent==editor.name){ImGui::SetNextItemOpen(true);state.revealComponent.clear();}
+    const bool common = std::string(editor.name)=="Scripts";
+    bool open = ImGui::CollapsingHeader(editor.name, common?ImGuiTreeNodeFlags_DefaultOpen:ImGuiTreeNodeFlags_None);
+    ImGui::SetItemTooltip("Expand to edit. Right-click for component actions.");
+    if(ImGui::BeginPopupContextItem("Component actions")){
+        if(ImGui::MenuItem("Remove component")){
+            doc.BeginEdit();editor.remove(o);doc.CommitEdit();open=false;
+        }
+        ImGui::EndPopup();
     }
     ImGui::PopID();
     return open && editor.has(o);
 }
 
-void DrawAddComponentMenu(EditorDocument& doc, SceneObject& o) {
+void DrawAddComponentMenu(EditorDocument& doc, SceneObject& o, EditorPanelState& state) {
+    ImGui::SetNextItemWidth(-1);
+    ImGui::SetNextWindowSizeConstraints({260,0},{600,420});
     if (!ImGui::BeginCombo("##add", "Add component...")) return;
-    for (const ComponentEditor& editor : ComponentEditorRegistry()) {
+    static ImGuiTextFilter filter;
+    if(ImGui::IsWindowAppearing()){filter.Clear();ImGui::SetKeyboardFocusHere();}
+    filter.Draw("Find component",-1);
+    std::vector<const ComponentEditor*> editors;
+    for(const auto& editor:ComponentEditorRegistry())editors.push_back(&editor);
+    std::sort(editors.begin(),editors.end(),[](const auto* a,const auto* b){return std::strcmp(a->name,b->name)<0;});
+    for (const auto* entry : editors) {
+        const auto& editor=*entry;
         if (editor.has(o)) continue;
+        if(!filter.PassFilter(editor.name))continue;
         if (ImGui::Selectable(editor.name)) {
             doc.BeginEdit();
             editor.add(o);
             doc.CommitEdit();
+            state.revealComponent=editor.name;
         }
     }
     ImGui::EndCombo();
@@ -238,6 +252,8 @@ void DrawEditorWorkspaceChrome(EditorDocument& doc, EditorPanelState& state, Edi
             ImGui::Spacing();
             ImGui::TextUnformatted("AUTHORING");
             ImGui::Separator();
+            ImGui::TextWrapped("Right-click hierarchy space to create an object, or a row to create a child. Player presets include an editable JavaScript controller and camera; V switches first/third person.");
+            ImGui::TextWrapped("Select an object, then use Create script & attach or Attach existing script in the Inspector. Edit script opens its source. Save source and scene before Play.");
             ImGui::TextWrapped("W / E / R: move / rotate / scale. X: local / world axes. Ctrl: snap. Left click selects; Ctrl adds; Shift selects a range in the hierarchy.");
             ImGui::Spacing();
             ImGui::TextWrapped("Ctrl+S: save. Ctrl+Z / Ctrl+Y: undo / redo. Ctrl+D: duplicate. F5: Play / Stop. Drag the dividers to resize this workspace.");
@@ -506,29 +522,19 @@ void DrawInspectorPanel(EditorDocument& doc, EditorPanelState& state) {
         ImGui::DragFloat3("Translation delta",&delta.x,.05f);ImGui::DragFloat3("Rotation delta degrees",&angles.x,1);ImGui::DragFloat3("Scale multiplier",&factor.x,.01f);
         if(ImGui::Button("Apply transform delta")){std::string error;if(!doc.BatchTransform(delta,glm::quat(glm::radians(angles)),factor,error,individual,worldAxes))state.status=error;else{delta=angles=glm::vec3(0);factor=glm::vec3(1);}}
         if(ImGui::BeginCombo("Parent all (keep world pose)","Choose parent")){if(ImGui::Selectable("None")){std::string error;if(!doc.ReparentSelection(0,error))state.status=error;}for(auto& p:doc.GetScene().Objects())if(!doc.IsSelected(p.id)&&ImGui::Selectable((p.name+" ##"+std::to_string(p.id)).c_str())){std::string error;if(!doc.ReparentSelection(p.id,error))state.status=error;}ImGui::EndCombo();}
+        if(ImGui::CollapsingHeader("Advanced batch properties")){
         auto common=ObjectProperties(*doc.SelectedObject());std::set<std::string> mixed;for(auto id:doc.Selection()){auto properties=ObjectProperties(*doc.GetScene().Find(id));for(auto it=common.begin();it!=common.end();){auto found=properties.find(it->first);if(found==properties.end())it=common.erase(it);else{if(found->second!=it->second)mixed.insert(it->first);++it;}}}
         ImGui::TextWrapped("Common authored fields: mixed values change only after Apply. Values use normal record notation.");
         static std::string field;static char value[2048]{};
         if(ImGui::BeginCombo("Common property",field.c_str())){for(auto& [key,v]:common)if(key!="_name"&&ImGui::Selectable((key+(mixed.count(key)?" (mixed)":"")).c_str(),field==key)){field=key;CopyToBuffer(mixed.count(key)?"":v,value,sizeof(value));}ImGui::EndCombo();}
         ImGui::InputText("New value",value,sizeof(value));if(ImGui::Button("Apply field")&&!field.empty()&&common.count(field)){std::string error;if(!doc.BatchProperties({{field,value}},error))state.status=error;}
-    }
-    if(state.mode==EditorMode::Edit&&doc.SelectedObject()){
-        static int component=0;const char* names[]={"render","body","animation","socket","motor","audio","particle","joint","ragdoll","scripts"};
-        ImGui::TextWrapped("Component clipboard");
-        ImGui::SetNextItemWidth(-1);
-        // Keep the original control identity while its visible label moves
-        // above the full-width selector in the narrow inspector rail.
-        ImGui::PushOverrideID(ImGui::GetID("Component clipboard"));
-        ImGui::Combo("",&component,names,10);
-        ImGui::PopID();
-        if(ImGui::Button("Copy component"))doc.CopyComponent(names[component]);
-        ImGui::SameLine();if(ImGui::Button("Paste to selection")){std::string error;if(!doc.PasteComponent(error))state.status=error;}
+        }
     }
     SceneObject* o = doc.SelectedObject();
     if (!o) {
         ImGui::Spacing();
         ImGui::TextUnformatted("Select an object");
-        ImGui::TextWrapped("Choose an object in the scene or hierarchy to inspect its transform and components.");
+        ImGui::TextWrapped("Right-click the hierarchy to create an object, then select it here. Use Add component for capabilities or Create script & attach for gameplay.");
         ImGui::Spacing();
         ImGui::BeginDisabled(state.mode != EditorMode::Edit);
         if (ImGui::Button("Scene settings")) state.showSceneSettings = true;
@@ -536,7 +542,7 @@ void DrawInspectorPanel(EditorDocument& doc, EditorPanelState& state) {
         ImGui::End();
         return;
     }
-    if(o->prefabRoot){
+    if(o->prefabRoot&&ImGui::CollapsingHeader("Prefab instance")){
         const auto* root=doc.GetScene().Find(o->prefabRoot);
         ImGui::Text("Prefab member %llu / instance %llu",(unsigned long long)o->prefabSource,(unsigned long long)o->prefabRoot);
         if(root)ImGui::TextWrapped("Source asset: %s",root->prefabAsset.c_str());
@@ -579,7 +585,45 @@ void DrawInspectorPanel(EditorDocument& doc, EditorPanelState& state) {
             }
         }
     }
-    if(state.mode==EditorMode::Edit&&state.project&&state.assets&&ImGui::Button("Create prefab from hierarchy")){
+    if(state.mode==EditorMode::Play)DrawRuntimeRenderPreview(doc,o->id,state);
+    if (state.mode == EditorMode::Play) {
+        ImGui::TextDisabled("Authored values are read-only while playing.");
+        ImGui::BeginDisabled();
+    }
+    TextField(doc, "Name", o->name);
+    DrawEditorScriptWorkflow(doc,*o,state);
+    DrawAddComponentMenu(doc, *o, state);
+    DrawTransformEditor(doc, *o);
+    if(ImGui::CollapsingHeader("Object settings")){
+    ImGui::TextDisabled("Object ID: %llu",static_cast<unsigned long long>(o->id));
+    Checkbox(doc,"Entity render visible",o->renderVisible);
+    if(!o->prefabRoot){
+        const auto* parent=doc.GetScene().Find(o->parent);
+        ImGui::TextWrapped("Parent (local transform)");
+        ImGui::SetNextItemWidth(-1);
+        ImGui::PushOverrideID(ImGui::GetID("Parent (local transform)"));
+        if(ImGui::BeginCombo("",parent?parent->name.c_str():"None")){
+            if(ImGui::Selectable("None",!o->parent)){doc.BeginEdit();o->parent=0;doc.CommitEdit();}
+            for(const auto& candidate:doc.GetScene().Objects())if(candidate.id!=o->id&&ImGui::Selectable(candidate.name.c_str(),candidate.id==o->parent)){
+                const auto old=o->parent;doc.BeginEdit();o->parent=candidate.id;std::string error;
+                if(!ValidateHierarchy(doc.GetScene(),error)){o->parent=old;state.status=error;}doc.CommitEdit();
+            }
+            ImGui::EndCombo();
+        }
+        ImGui::PopID();
+    }
+    if(state.project){const auto& c=state.project->Settings().classification;
+        DrawCategoryMask(doc,"Tags",o->tags,c.tags,false);
+        if(state.runtime)ImGui::Text("Runtime entities matching these tags: %zu",state.runtime->QueryEntities(o->tags).size());
+        DrawCategoryLayer(doc,"Render layer",o->renderLayer,c.render);
+    }
+    }
+    for (const ComponentEditor& editor : ComponentEditorRegistry()) {
+        if (!editor.has(*o)) continue;
+        if (ComponentHeader(doc, editor, *o,state)) editor.draw(doc, *o, state);
+    }
+    if(state.mode==EditorMode::Edit&&state.project&&state.assets&&ImGui::TreeNode("Prefab tools")){
+    if(ImGui::Button("Create prefab from hierarchy")){
         Scene source;std::string error;
         if(CreatePrefab(doc.GetScene(),o->id,source,error)){
             auto path=std::filesystem::path(state.project->AssetsDir())/"prefabs"/("prefab-"+MintAssetId()+".judasprefab");
@@ -591,9 +635,25 @@ void DrawInspectorPanel(EditorDocument& doc, EditorPanelState& state) {
         }
         if(!error.empty())state.status=error;
     }
+    ImGui::TreePop();
+    }
+    if(state.mode==EditorMode::Edit&&doc.SelectedObject()&&ImGui::CollapsingHeader("Component clipboard")){
+        static int component=0;const char* names[]={"render","body","animation","socket","motor","audio","particle","joint","ragdoll","scripts"};
+        ImGui::TextWrapped("Component clipboard");
+        ImGui::SetNextItemWidth(-1);
+        // Keep the original control identity while its visible label moves
+        // above the full-width selector in the narrow inspector rail.
+        ImGui::PushOverrideID(ImGui::GetID("Component clipboard"));
+        ImGui::Combo("",&component,names,10);
+        ImGui::PopID();
+        if(ImGui::Button("Copy component"))doc.CopyComponent(names[component]);
+        ImGui::SameLine();if(ImGui::Button("Paste to selection")){std::string error;if(!doc.PasteComponent(error))state.status=error;}
+    }
+    ImGui::Separator();
+    if (state.mode == EditorMode::Play) ImGui::EndDisabled();
     if (state.mode == EditorMode::Play && state.runtime) {
         // Milestone 29: the runtime entity behind the selected object.
-        if (ImGui::CollapsingHeader("Runtime entity (M29)", ImGuiTreeNodeFlags_DefaultOpen)) {
+        if (ImGui::CollapsingHeader("Runtime diagnostics")) {
             const EntityRecord* e = state.runtime->FindEntity(o->id);
             if (!e) {
                 ImGui::TextDisabled("Not a persistent entity (static content or no body).");
@@ -630,42 +690,6 @@ void DrawInspectorPanel(EditorDocument& doc, EditorPanelState& state) {
         }
         ImGui::Separator();
     }
-    if(state.mode==EditorMode::Play)DrawRuntimeRenderPreview(doc,o->id,state);
-    if (state.mode == EditorMode::Play) {
-        ImGui::TextDisabled("Authored values are read-only while playing.");
-        ImGui::BeginDisabled();
-    }
-    ImGui::Text("id %llu   components: %s", static_cast<unsigned long long>(o->id), ComponentIndicators(*o).c_str());
-    TextField(doc, "Name", o->name);
-    Checkbox(doc,"Entity render visible",o->renderVisible);
-    if(!o->prefabRoot){
-        const auto* parent=doc.GetScene().Find(o->parent);
-        ImGui::TextWrapped("Parent (local transform)");
-        ImGui::SetNextItemWidth(-1);
-        ImGui::PushOverrideID(ImGui::GetID("Parent (local transform)"));
-        if(ImGui::BeginCombo("",parent?parent->name.c_str():"None")){
-            if(ImGui::Selectable("None",!o->parent)){doc.BeginEdit();o->parent=0;doc.CommitEdit();}
-            for(const auto& candidate:doc.GetScene().Objects())if(candidate.id!=o->id&&ImGui::Selectable(candidate.name.c_str(),candidate.id==o->parent)){
-                const auto old=o->parent;doc.BeginEdit();o->parent=candidate.id;std::string error;
-                if(!ValidateHierarchy(doc.GetScene(),error)){o->parent=old;state.status=error;}doc.CommitEdit();
-            }
-            ImGui::EndCombo();
-        }
-        ImGui::PopID();
-    }
-    if(state.project){const auto& c=state.project->Settings().classification;
-        DrawCategoryMask(doc,"Tags",o->tags,c.tags,false);
-        if(state.runtime)ImGui::Text("Runtime entities matching these tags: %zu",state.runtime->QueryEntities(o->tags).size());
-        DrawCategoryLayer(doc,"Render layer",o->renderLayer,c.render);
-    }
-    DrawTransformEditor(doc, *o);
-    for (const ComponentEditor& editor : ComponentEditorRegistry()) {
-        if (!editor.has(*o)) continue;
-        if (ComponentHeader(doc, editor, *o)) editor.draw(doc, *o, state);
-    }
-    ImGui::Separator();
-    DrawAddComponentMenu(doc, *o);
-    if (state.mode == EditorMode::Play) ImGui::EndDisabled();
     ImGui::End();
 }
 

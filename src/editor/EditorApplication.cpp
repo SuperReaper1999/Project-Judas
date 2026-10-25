@@ -1,5 +1,8 @@
 #include "ScriptTools.h"
 #include "ProjectStarter.h"
+#include "EditorScriptWorkflow.h"
+#include "EditorPrimitiveAssets.h"
+#include "EditorPauseExample.h"
 #include "BuildIdentity.h"
 #include "Ragdoll.h"
 #include "ModelCook.h"
@@ -739,8 +742,24 @@ void EditorApplication::HandleRequests(EditorRequests& r) {
         for (const auto& [id, record] : m_host->Assets().Records()) {
             if (record.type == AssetType::Mesh && !record.missing) { defaultMesh = id; break; }
         }
-        const auto created = CreateObjectOfKind(m_document, r.createKind, r.createPosition, defaultMesh, nullptr, r.createParent);
-        m_panels.status = created ? "Created " + r.createKind : "Creation failed: parent no longer exists";
+        if(r.createKind=="first-person-player"||r.createKind=="third-person-player"){
+            std::string error;
+            const auto id=CreateEditorFirstPersonPlayer(m_document,m_project,m_host->Assets(),r.createPosition,r.createParent,error,r.createKind=="third-person-player");
+            m_panels.status=id?"Player created. Save scene, then Play: WASD / mouse / Space; V switches camera. Escape releases mouse. Unedited starter camera disabled.":error;
+            if(id)m_panels.revealComponent="Character motor";
+        }else if(r.createKind=="pause-menu-example"){
+            std::string error;
+            const auto id=CreateEditorPauseExample(m_document,m_project,m_host->Assets(),error,r.createParent);
+            m_panels.status=id?"Optional pause menu created. Save scene; Escape opens Pause / Settings / Controls during Play.":error;
+            if(id)m_panels.revealComponent="Scripts";
+        }else if(r.createKind=="capsule"||r.createKind=="cylinder"){
+            std::string error;
+            const auto id=CreateEditorPrimitive(m_document,m_project,m_host->Assets(),r.createKind,r.createPosition,r.createParent,error);
+            m_panels.status=id?"Created "+r.createKind+" with editable mesh and convex collision. Body > Motion selects static/dynamic.":error;
+        }else{
+            const auto created = CreateObjectOfKind(m_document, r.createKind, r.createPosition, defaultMesh, nullptr, r.createParent);
+            m_panels.status = created ? "Created " + r.createKind : "Creation failed: parent no longer exists";
+        }
     }
     if (!r.dropMeshAssetId.empty()) {
         std::optional<SceneAnimationComponent> animation;
@@ -1633,6 +1652,12 @@ int EditorApplication::Run(int argc, char** argv) {
         ProfileScope editorBuildScope(editorBuildLabel);
         DrawEditorMainMenu(m_document, m_panels, requests);
         if(!m_scriptTools)m_scriptTools=std::make_unique<ScriptTools>();
+        if(!m_panels.editScriptAsset.empty()){
+            const auto* script=host.Assets().Find(m_panels.editScriptAsset);
+            if(script&&m_scriptTools->OpenForEditing(script->relativePath,host.Assets()))m_panels.showScriptTools=true;
+            else {m_panels.showScriptTools=true;m_panels.status=m_scriptTools->status;}
+            m_panels.editScriptAsset.clear();
+        }
         m_scriptTools->visible=m_panels.showScriptTools;
         m_scriptTools->Panel(m_world.get(),host.Assets());
         m_panels.showScriptTools=m_scriptTools->visible;

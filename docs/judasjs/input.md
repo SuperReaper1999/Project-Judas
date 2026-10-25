@@ -1,5 +1,29 @@
 # Input, time and logging
 
+## Runtime rebinding
+
+`input.getBindings()` returns a detached array using the same `PlayerInputEntry`
+records as local-player maps. `input.setBindings(map)` requests new physical
+bindings for those **same logical names and types**; `null` restores the map
+configured by the project/host. Invalid bindings, added/removed controls and type
+changes throw. The request publishes at the next `InputSystem::BeginFrame`,
+neutralizing old input rather than replaying a held button into a new action.
+Callbacks keep their current input snapshot until that boundary. A rejected
+request preserves the active and previously queued maps.
+
+These methods configure the ordinary main input source. Device-scoped local
+players use `LocalPlayer.setInputMap`; externally supplied logical/network input
+must be rebound at its owning source. With no active input snapshot, the getter
+returns an empty array and the setter returns false; retry from `uiUpdate` when
+restoring saved project state. The API does not modify `.judasproj` files or
+silently write player preferences to disk. Persistence policy belongs to the game.
+
+The optional [pause-menu example](examples/pause-menu.js) uses these methods and
+keeps chosen bindings in its JSON state for normal game saves. Its Settings list
+uses the actual project controls. A searchable physical-control list and explicit
+Apply make the example usable without raw key polling. UI navigation bindings
+are read-only in this example so users retain a way back to the controls menu.
+
 [Index](../JUDASJS.md) · [Lifecycle](lifecycle.md) · [Character](character.md)
 
 ## input

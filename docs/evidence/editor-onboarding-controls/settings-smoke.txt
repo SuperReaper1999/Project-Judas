@@ -1,0 +1,7 @@
+FRAMES 60
+LOG_EVERY 0
+ACTION pause 1 10 11
+POINTER 610 220 20
+ACTION ui_click 1 22 23
+SCREENSHOT 35 /tmp/judas-workflow-settings.png
+EXPECT_PAUSED 1 40
