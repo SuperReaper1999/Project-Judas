@@ -63,9 +63,10 @@ struct EditorRequests {
     std::string moveAssetTo;        //   ... to this assets-relative path
     std::string removeAssetId;
     SceneObjectId duplicateId = kInvalidSceneObjectId;
-    // Object creation: kind + where (the application fills the position).
+// Object creation: roots use the scene-view position; children start at local origin.
     std::string createKind;
     glm::vec3 createPosition{0.0f};
+    SceneObjectId createParent = kInvalidSceneObjectId;
     // Asset Browser drag released over the viewport: create a mesh object.
     std::string dropMeshAssetId;
 };
@@ -209,9 +210,11 @@ void DrawStatusBar(EditorDocument& doc, EditorPanelState& state);
 // Creates an object of `kind` ("empty", "box", "sphere", "dynamic-box",
 // "dynamic-sphere", "point-light", "spot-light", "player-start", "mesh",
 // "door", "gravity-region") at `position`, recording one undo step.
-// Returns its id. `meshAssetId` is used by "mesh".
+// Returns its id (0 for a missing parent). Children start at their parent's local
+// origin. `meshAssetId` is used by "mesh"; creation selects the new object.
 SceneObjectId CreateObjectOfKind(EditorDocument& doc, const std::string& kind, const glm::vec3& position,
-                                 const std::string& meshAssetId, const SceneAnimationComponent* animation = nullptr);
+                                 const std::string& meshAssetId, const SceneAnimationComponent* animation = nullptr,
+                                 SceneObjectId parent = kInvalidSceneObjectId);
 
 // Duplicates an object under a new id (name suffixed " copy"), inserted
 // right after the original, recording one undo step. Returns the new id.

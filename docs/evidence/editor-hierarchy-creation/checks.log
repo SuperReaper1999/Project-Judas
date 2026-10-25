@@ -1,0 +1,86 @@
+PASS right-click opens hierarchy creation menu
+PASS Empty object
+PASS same creation placement as main Create menu
+PASS empty hierarchy creates at the root
+PASS creation command is emitted once
+PASS right-click opens hierarchy creation menu
+PASS Static box
+PASS same creation placement as main Create menu
+PASS empty hierarchy creates at the root
+PASS creation command is emitted once
+PASS right-click opens hierarchy creation menu
+PASS Static sphere
+PASS same creation placement as main Create menu
+PASS empty hierarchy creates at the root
+PASS creation command is emitted once
+PASS right-click opens hierarchy creation menu
+PASS Dynamic box
+PASS same creation placement as main Create menu
+PASS empty hierarchy creates at the root
+PASS creation command is emitted once
+PASS right-click opens hierarchy creation menu
+PASS Dynamic sphere
+PASS same creation placement as main Create menu
+PASS empty hierarchy creates at the root
+PASS creation command is emitted once
+PASS right-click opens hierarchy creation menu
+PASS Mesh
+PASS same creation placement as main Create menu
+PASS empty hierarchy creates at the root
+PASS creation command is emitted once
+PASS right-click opens hierarchy creation menu
+PASS Point light
+PASS same creation placement as main Create menu
+PASS empty hierarchy creates at the root
+PASS creation command is emitted once
+PASS right-click opens hierarchy creation menu
+PASS Spot light
+PASS same creation placement as main Create menu
+PASS empty hierarchy creates at the root
+PASS creation command is emitted once
+PASS right-click opens hierarchy creation menu
+PASS Door (legacy gameplay)
+PASS same creation placement as main Create menu
+PASS empty hierarchy creates at the root
+PASS creation command is emitted once
+PASS right-click opens hierarchy creation menu
+PASS Gravity region
+PASS same creation placement as main Create menu
+PASS empty hierarchy creates at the root
+PASS creation command is emitted once
+PASS right-click opens hierarchy creation menu
+PASS Basic water
+PASS same creation placement as main Create menu
+PASS empty hierarchy creates at the root
+PASS creation command is emitted once
+PASS right-click opens hierarchy creation menu
+PASS Player start (legacy gameplay)
+PASS same creation placement as main Create menu
+PASS empty hierarchy creates at the root
+PASS creation command is emitted once
+PASS right-click opens hierarchy creation menu
+PASS Render camera
+PASS same creation placement as main Create menu
+PASS empty hierarchy creates at the root
+PASS creation command is emitted once
+PASS right-click opens hierarchy creation menu
+PASS Audio emitter
+PASS same creation placement as main Create menu
+PASS empty hierarchy creates at the root
+PASS creation command is emitted once
+PASS right-click opens hierarchy creation menu
+PASS Audio listener
+PASS same creation placement as main Create menu
+PASS empty hierarchy creates at the root
+PASS creation command is emitted once
+PASS Escape dismisses menu without creating anything
+PASS row creation preserves the exact requested parent
+PASS right-click cannot create scene objects during Play
+PASS child has parent-local origin, identity rotation and unit scale
+PASS new child is immediately the sole selection
+PASS dynamic box retains ordinary render, collision, mass and interaction defaults
+PASS one Undo removes child without removing parent
+PASS Redo restores the same child and parent relationship
+PASS root object is selected at scene focus with static sphere defaults
+PASS stale parent fails without creating an orphan or leaving an edit open
+Editor creation menu: 85 checks, 0 failures

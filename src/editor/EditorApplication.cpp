@@ -739,8 +739,8 @@ void EditorApplication::HandleRequests(EditorRequests& r) {
         for (const auto& [id, record] : m_host->Assets().Records()) {
             if (record.type == AssetType::Mesh && !record.missing) { defaultMesh = id; break; }
         }
-        CreateObjectOfKind(m_document, r.createKind, r.createPosition, defaultMesh);
-        m_panels.status = "Created " + r.createKind;
+        const auto created = CreateObjectOfKind(m_document, r.createKind, r.createPosition, defaultMesh, nullptr, r.createParent);
+        m_panels.status = created ? "Created " + r.createKind : "Creation failed: parent no longer exists";
     }
     if (!r.dropMeshAssetId.empty()) {
         std::optional<SceneAnimationComponent> animation;

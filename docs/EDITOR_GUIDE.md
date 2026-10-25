@@ -52,6 +52,12 @@ authoring view; transparent texture holes are not tested. Mesh geometry is cache
 on the first click and refreshed when its source file changes.
 
 Use **Create** for ordinary geometry, lights and other starter components.
+You can also right-click empty space in the hierarchy and choose the object type
+directly, creating a root object at the scene-view focus. Right-click an existing
+row for its **Create child** submenu; children start at their parent's local origin
+with identity rotation and unit scale. Both select the new object immediately,
+use the ordinary component defaults and support Undo/Redo as one creation step.
+Scene creation is disabled in Play.
 Use the inspector's **Add component…** for scripts, motors, animation, bodies,
 UI and the other engine primitives. Common inspector fields have labels above
 their controls; some specialized controls retain side labels. Asset selections
