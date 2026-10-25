@@ -1,0 +1,154 @@
+{
+  "state": {
+    "bag": {
+      "maxWeight": 32,
+      "slots": [
+        {
+          "count": 1,
+          "item": "work_coat"
+        },
+        {
+          "count": 1,
+          "item": "empty_flask"
+        },
+        {
+          "count": 2,
+          "item": "rations"
+        },
+        {
+          "count": 12,
+          "item": "wood"
+        },
+        {
+          "count": 7,
+          "item": "stone"
+        },
+        {
+          "count": 3,
+          "item": "berries"
+        },
+        {
+          "count": 4,
+          "item": "fiber"
+        },
+        {
+          "count": 1,
+          "item": "stone_axe"
+        },
+        {
+          "count": 1,
+          "item": "stone_pickaxe"
+        },
+        {
+          "count": 1,
+          "item": "cooked_meal"
+        },
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ]
+    },
+    "drops": {},
+    "equipment": {},
+    "equipped": "water",
+    "harvest": {
+      "200": {
+        "depleted": true
+      },
+      "202": {
+        "depleted": true
+      },
+      "204": {
+        "depleted": true
+      },
+      "206": {
+        "depleted": true
+      },
+      "250": {
+        "depleted": true
+      },
+      "252": {
+        "depleted": true
+      },
+      "254": {
+        "depleted": true
+      },
+      "280": {
+        "depleted": true
+      },
+      "282": {
+        "depleted": true
+      },
+      "284": {
+        "depleted": true
+      },
+      "286": {
+        "depleted": true
+      },
+      "500": {
+        "felled": true,
+        "hits": 3,
+        "processed": 0
+      },
+      "502": {
+        "depleted": true,
+        "felled": true,
+        "hits": 3,
+        "processed": 3
+      },
+      "852": {
+        "depleted": true,
+        "felled": false,
+        "hits": 6,
+        "processed": 0
+      }
+    },
+    "hotbar": [
+      "hands",
+      "stone_axe",
+      "stone_pickaxe",
+      "berries",
+      "water",
+      "bandage"
+    ],
+    "introSeen": true,
+    "pitch": -0.30060675740242004,
+    "schema": 1,
+    "sensitivity": 0.0021,
+    "stats": {
+      "cooked": 1,
+      "crafted": 3,
+      "felled": 2,
+      "gathered": 30,
+      "mined": 6,
+      "timber": 12
+    },
+    "third": false,
+    "vitals": {
+      "breath": 19.749999882653356,
+      "elapsed": 24.30000126734376,
+      "health": 100,
+      "hunger": 74.56259997719411,
+      "injury": 0,
+      "stamina": 87.09999932721257,
+      "thirst": 99.83783332487758
+    },
+    "yaw": 0
+  },
+  "treePosition": [
+    46.513397216796875,
+    14.76965045928955,
+    -1.2610527276992798
+  ],
+  "treeRotation": [
+    0.4847474992275238,
+    -0.53055739402771,
+    0.5161318182945251,
+    -0.46597927808761597
+  ]
+}

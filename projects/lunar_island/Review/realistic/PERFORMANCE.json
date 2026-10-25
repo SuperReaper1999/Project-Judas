@@ -1,0 +1,26 @@
+{
+  "bodies": 231,
+  "controlledStep": 0.016666666666666666,
+  "frame": {
+    "meanMs": 2.760204299290975,
+    "medianMs": 2.4627270698547363,
+    "p95Ms": 4.940321922302246,
+    "worstMs": 7.813047409057617
+  },
+  "frames": 600,
+  "note": "Real rendered application frames, fixed 60-Hz clock, hidden window, dummy audio; not human displayed FPS",
+  "physics": {
+    "meanMs": 0.013274961666666666,
+    "medianMs": 0.012263,
+    "p95Ms": 0.017283,
+    "worstMs": 0.039133
+  },
+  "script": {
+    "frames": 120,
+    "meanMs": 0.322880475,
+    "medianMs": 0.311116,
+    "p95Ms": 0.39316,
+    "note": "Separate JavaScript phase inclusive scopes; nested asset scopes not counted again."
+  },
+  "processResidentBytes": 393453568
+}

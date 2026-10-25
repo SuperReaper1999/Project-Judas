@@ -1,0 +1,30 @@
+{
+  "prompt": "a realistic oak tree 9 metres tall",
+  "category": "tree",
+  "confidence": 1.0,
+  "params": {
+    "features": {},
+    "size": 1.0,
+    "style": "realistic",
+    "type": "oak",
+    "height": 9.0,
+    "count": 1
+  },
+  "understood": [],
+  "seed": 85322,
+  "style": "realistic",
+  "files": {
+    "glb": "/home/conner/Documents/GitHub/Project-Judas/projects/lunar_island/ArtSource/prompt3d/a-realistic-oak-tree-9-metres-tall-85322-realistic.glb"
+  },
+  "stats": {
+    "vertices": 3554,
+    "triangles": 4964,
+    "groups": 1
+  },
+  "dimensions_m": [
+    6.91,
+    11.87,
+    7.65
+  ],
+  "seconds": 0.02
+}

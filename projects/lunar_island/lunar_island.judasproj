@@ -1,0 +1,464 @@
+{
+  "kind": "project",
+  "schema": 1,
+  "data": {
+    "name": "Lunar Island",
+    "legacyGameplay": false,
+    "saveIdentity": "26df5ea6e850614b6e5e54a6d09ca852c39999c7087b1f474251dd2cdcc277f3",
+    "iconAsset": "",
+    "worldManifest": "",
+    "exportScenes": [],
+    "excludeScenes": [],
+    "startupScene": "Scenes/island.judas",
+    "assetsDir": "Assets",
+    "scenesDir": "Scenes",
+    "savesDir": "Saves",
+    "exportAssetPolicy": "closure",
+    "runtimeAssets": [
+      "7d59c542f393f30c48e7a434d9dcc9a7"
+    ],
+    "input": [
+      {
+        "name": "move_x",
+        "axis": true,
+        "bindings": [
+          {
+            "control": "key:A",
+            "scale": -1,
+            "deadzone": 0
+          },
+          {
+            "control": "key:D",
+            "scale": 1,
+            "deadzone": 0
+          },
+          {
+            "control": "stick:LeftX",
+            "scale": 1,
+            "deadzone": 0.15
+          }
+        ]
+      },
+      {
+        "name": "move_y",
+        "axis": true,
+        "bindings": [
+          {
+            "control": "key:W",
+            "scale": 1,
+            "deadzone": 0
+          },
+          {
+            "control": "key:S",
+            "scale": -1,
+            "deadzone": 0
+          },
+          {
+            "control": "stick:LeftY",
+            "scale": -1,
+            "deadzone": 0.15
+          }
+        ]
+      },
+      {
+        "name": "look_x",
+        "axis": true,
+        "bindings": [
+          {
+            "control": "mouse:dx",
+            "scale": 1,
+            "deadzone": 0
+          }
+        ]
+      },
+      {
+        "name": "look_y",
+        "axis": true,
+        "bindings": [
+          {
+            "control": "mouse:dy",
+            "scale": 1,
+            "deadzone": 0
+          }
+        ]
+      },
+      {
+        "name": "look_stick_x",
+        "axis": true,
+        "bindings": [
+          {
+            "control": "stick:RightX",
+            "scale": 1,
+            "deadzone": 0.15
+          }
+        ]
+      },
+      {
+        "name": "look_stick_y",
+        "axis": true,
+        "bindings": [
+          {
+            "control": "stick:RightY",
+            "scale": 1,
+            "deadzone": 0.15
+          }
+        ]
+      },
+      {
+        "name": "jump",
+        "axis": false,
+        "bindings": [
+          {
+            "control": "key:Space",
+            "scale": 1,
+            "deadzone": 0
+          }
+        ]
+      },
+      {
+        "name": "sprint",
+        "axis": false,
+        "bindings": [
+          {
+            "control": "key:Left Shift",
+            "scale": 1,
+            "deadzone": 0
+          }
+        ]
+      },
+      {
+        "name": "dive",
+        "axis": false,
+        "bindings": [
+          {
+            "control": "key:Left Ctrl",
+            "scale": 1,
+            "deadzone": 0
+          }
+        ]
+      },
+      {
+        "name": "interact",
+        "axis": false,
+        "bindings": [
+          {
+            "control": "key:E",
+            "scale": 1,
+            "deadzone": 0
+          }
+        ]
+      },
+      {
+        "name": "primary",
+        "axis": false,
+        "bindings": [
+          {
+            "control": "mouse:Left",
+            "scale": 1,
+            "deadzone": 0
+          }
+        ]
+      },
+      {
+        "name": "inventory",
+        "axis": false,
+        "bindings": [
+          {
+            "control": "key:Tab",
+            "scale": 1,
+            "deadzone": 0
+          }
+        ]
+      },
+      {
+        "name": "pause",
+        "axis": false,
+        "bindings": [
+          {
+            "control": "key:Escape",
+            "scale": 1,
+            "deadzone": 0
+          }
+        ]
+      },
+      {
+        "name": "save",
+        "axis": false,
+        "bindings": [
+          {
+            "control": "key:F6",
+            "scale": 1,
+            "deadzone": 0
+          }
+        ]
+      },
+      {
+        "name": "load",
+        "axis": false,
+        "bindings": [
+          {
+            "control": "key:F9",
+            "scale": 1,
+            "deadzone": 0
+          }
+        ]
+      },
+      {
+        "name": "camera_toggle",
+        "axis": false,
+        "bindings": [
+          {
+            "control": "key:V",
+            "scale": 1,
+            "deadzone": 0
+          }
+        ]
+      },
+      {
+        "name": "map",
+        "axis": false,
+        "bindings": [
+          {
+            "control": "key:M",
+            "scale": 1,
+            "deadzone": 0
+          }
+        ]
+      },
+      {
+        "name": "hotbar_1",
+        "axis": false,
+        "bindings": [
+          {
+            "control": "key:1",
+            "scale": 1,
+            "deadzone": 0
+          }
+        ]
+      },
+      {
+        "name": "hotbar_2",
+        "axis": false,
+        "bindings": [
+          {
+            "control": "key:2",
+            "scale": 1,
+            "deadzone": 0
+          }
+        ]
+      },
+      {
+        "name": "hotbar_3",
+        "axis": false,
+        "bindings": [
+          {
+            "control": "key:3",
+            "scale": 1,
+            "deadzone": 0
+          }
+        ]
+      },
+      {
+        "name": "hotbar_4",
+        "axis": false,
+        "bindings": [
+          {
+            "control": "key:4",
+            "scale": 1,
+            "deadzone": 0
+          }
+        ]
+      },
+      {
+        "name": "hotbar_5",
+        "axis": false,
+        "bindings": [
+          {
+            "control": "key:5",
+            "scale": 1,
+            "deadzone": 0
+          }
+        ]
+      },
+      {
+        "name": "hotbar_6",
+        "axis": false,
+        "bindings": [
+          {
+            "control": "key:6",
+            "scale": 1,
+            "deadzone": 0
+          }
+        ]
+      },
+      {
+        "name": "ui_click",
+        "axis": false,
+        "bindings": [
+          {
+            "control": "mouse:Left",
+            "scale": 1,
+            "deadzone": 0
+          }
+        ]
+      },
+      {
+        "name": "ui_activate",
+        "axis": false,
+        "bindings": [
+          {
+            "control": "key:Return",
+            "scale": 1,
+            "deadzone": 0
+          }
+        ]
+      },
+      {
+        "name": "ui_back",
+        "axis": false,
+        "bindings": [
+          {
+            "control": "key:Escape",
+            "scale": 1,
+            "deadzone": 0
+          }
+        ]
+      },
+      {
+        "name": "ui_up",
+        "axis": false,
+        "bindings": [
+          {
+            "control": "key:Up",
+            "scale": 1,
+            "deadzone": 0
+          }
+        ]
+      },
+      {
+        "name": "ui_down",
+        "axis": false,
+        "bindings": [
+          {
+            "control": "key:Down",
+            "scale": 1,
+            "deadzone": 0
+          }
+        ]
+      },
+      {
+        "name": "ui_left",
+        "axis": false,
+        "bindings": [
+          {
+            "control": "key:Left",
+            "scale": 1,
+            "deadzone": 0
+          }
+        ]
+      },
+      {
+        "name": "ui_right",
+        "axis": false,
+        "bindings": [
+          {
+            "control": "key:Right",
+            "scale": 1,
+            "deadzone": 0
+          }
+        ]
+      },
+      {
+        "name": "ui_next",
+        "axis": false,
+        "bindings": [
+          {
+            "control": "key:Tab",
+            "scale": 1,
+            "deadzone": 0
+          }
+        ]
+      }
+    ],
+    "classification": {
+      "tags": {
+        "nextId": 6,
+        "entries": [
+          {
+            "id": 0,
+            "name": "ground"
+          },
+          {
+            "id": 1,
+            "name": "tree"
+          },
+          {
+            "id": 2,
+            "name": "resource"
+          },
+          {
+            "id": 3,
+            "name": "loot"
+          },
+          {
+            "id": 4,
+            "name": "freshwater"
+          },
+          {
+            "id": 5,
+            "name": "campfire"
+          }
+        ]
+      },
+      "collision": {
+        "nextId": 1,
+        "entries": [
+          {
+            "id": 0,
+            "name": "Default"
+          }
+        ]
+      },
+      "render": {
+        "nextId": 1,
+        "entries": [
+          {
+            "id": 0,
+            "name": "Default"
+          }
+        ]
+      }
+    },
+    "navigation": {
+      "areas": {
+        "nextId": 1,
+        "entries": [
+          {
+            "id": 0,
+            "name": "Default"
+          }
+        ]
+      },
+      "nextProfile": 1,
+      "profiles": [
+        {
+          "id": 0,
+          "name": "Default",
+          "radius": 0.3,
+          "height": 1.8,
+          "slope": 50,
+          "climb": 0.35
+        }
+      ]
+    },
+    "localization": {
+      "defaultLocale": "en",
+      "fonts": [],
+      "locales": {}
+    },
+    "audio": {},
+    "advancedFluidDynamics": false,
+    "basicWater": true,
+    "waterSwimming": true
+  }
+}

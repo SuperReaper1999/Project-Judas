@@ -1,0 +1,29 @@
+{
+  "prompt": "a low poly fern",
+  "category": "plant",
+  "confidence": 1.0,
+  "params": {
+    "features": {},
+    "size": 1.0,
+    "style": "lowpoly",
+    "type": "fern",
+    "count": 1
+  },
+  "understood": [],
+  "seed": 85323,
+  "style": "lowpoly",
+  "files": {
+    "glb": "/home/conner/Documents/GitHub/Project-Judas/projects/lunar_island/ArtSource/prompt3d/a-low-poly-fern-85323-lowpoly.glb"
+  },
+  "stats": {
+    "vertices": 3537,
+    "triangles": 2080,
+    "groups": 1
+  },
+  "dimensions_m": [
+    0.67,
+    0.36,
+    0.67
+  ],
+  "seconds": 0.01
+}

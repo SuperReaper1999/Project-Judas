@@ -1,0 +1,30 @@
+{
+  "prompt": "a low poly oak tree 9 metres tall",
+  "category": "tree",
+  "confidence": 1.0,
+  "params": {
+    "features": {},
+    "size": 1.0,
+    "style": "lowpoly",
+    "type": "oak",
+    "height": 9.0,
+    "count": 1
+  },
+  "understood": [],
+  "seed": 85322,
+  "style": "lowpoly",
+  "files": {
+    "glb": "/home/conner/Documents/GitHub/Project-Judas/projects/lunar_island/ArtSource/prompt3d/a-low-poly-oak-tree-9-metres-tall-85322-lowpoly.glb"
+  },
+  "stats": {
+    "vertices": 2669,
+    "triangles": 3344,
+    "groups": 1
+  },
+  "dimensions_m": [
+    6.91,
+    11.87,
+    7.7
+  ],
+  "seconds": 0.01
+}

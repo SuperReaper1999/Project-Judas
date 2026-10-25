@@ -1,0 +1,30 @@
+{
+  "prompt": "a realistic birch tree 7 metres tall",
+  "category": "tree",
+  "confidence": 1.0,
+  "params": {
+    "features": {},
+    "size": 1.0,
+    "style": "realistic",
+    "type": "birch",
+    "height": 7.0,
+    "count": 1
+  },
+  "understood": [],
+  "seed": 85321,
+  "style": "realistic",
+  "files": {
+    "glb": "/home/conner/Documents/GitHub/Project-Judas/projects/lunar_island/ArtSource/prompt3d/a-realistic-birch-tree-7-metres-tall-85321-realistic.glb"
+  },
+  "stats": {
+    "vertices": 6194,
+    "triangles": 8348,
+    "groups": 1
+  },
+  "dimensions_m": [
+    4.73,
+    9.58,
+    5.11
+  ],
+  "seconds": 0.04
+}

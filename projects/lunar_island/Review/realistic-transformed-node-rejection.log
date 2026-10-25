@@ -1,0 +1,9 @@
+Traceback (most recent call last):
+  File "/home/conner/Documents/GitHub/Project-Judas/projects/lunar_island/tools/generate_assets.py", line 137, in <module>
+    main()
+    ~~~~^^
+  File "/home/conner/Documents/GitHub/Project-Judas/projects/lunar_island/tools/generate_assets.py", line 86, in main
+    finished = finish_static(path, G, to_glb)
+  File "/home/conner/Documents/GitHub/Project-Judas/projects/lunar_island/tools/material_finish.py", line 22, in finish_static
+    raise ValueError('static finishing requires already baked node transforms')
+ValueError: static finishing requires already baked node transforms

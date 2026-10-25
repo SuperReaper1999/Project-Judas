@@ -1,0 +1,9 @@
+FRAMES 180
+LOG_EVERY 0
+SCREENSHOT 20 projects/lunar_island/Review/welcome.png
+EXPECT_PAUSED 1 20
+ACTION pause 1 30 31
+AXIS move_y 1 50 110
+LOOK 100 -20 70
+SCREENSHOT 150 projects/lunar_island/Review/first-walk.png
+EXPECT_PAUSED 0 150

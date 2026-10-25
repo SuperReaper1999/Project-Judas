@@ -1,0 +1,2451 @@
+{
+  "kind": "ui",
+  "schema": 1,
+  "data": {
+    "reference": [
+      1280,
+      720
+    ],
+    "visible": true,
+    "enabled": true,
+    "modal": false,
+    "elements": [
+      {
+        "id": "canvas",
+        "parent": "",
+        "kind": 0,
+        "text": "",
+        "texture": "",
+        "font": "1d1cd0950b291b3e034b47e22e739be3",
+        "textKey": "",
+        "textLogicalAlign": -1,
+        "mirrorRow": false,
+        "focusColor": [
+          0.98,
+          0.78,
+          0.43,
+          1
+        ],
+        "placeholder": "",
+        "accessibleLabel": "",
+        "description": "",
+        "readOnly": false,
+        "maxBytes": 4096,
+        "visible": true,
+        "enabled": true,
+        "clip": false,
+        "wrap": false,
+        "fit": true,
+        "spacing": 8,
+        "fontSize": 18,
+        "value": 0,
+        "minimum": 0,
+        "maximum": 1,
+        "flow": 0,
+        "direction": 0,
+        "anchorMin": [
+          0,
+          0
+        ],
+        "anchorMax": [
+          1,
+          1
+        ],
+        "offset": [
+          0,
+          0
+        ],
+        "size": [
+          0,
+          0
+        ],
+        "relativeSize": [
+          0,
+          0
+        ],
+        "align": [
+          0,
+          0
+        ],
+        "textAlign": [
+          0,
+          0.5
+        ],
+        "margin": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "padding": [
+          10,
+          6,
+          10,
+          6
+        ],
+        "background": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "color": [
+          0.88,
+          0.91,
+          0.84,
+          1
+        ],
+        "rowHeight": 36
+      },
+      {
+        "id": "brand",
+        "parent": "canvas",
+        "kind": 2,
+        "text": "LUNAR ISLAND",
+        "texture": "",
+        "font": "1d1cd0950b291b3e034b47e22e739be3",
+        "textKey": "",
+        "textLogicalAlign": -1,
+        "mirrorRow": false,
+        "focusColor": [
+          0.98,
+          0.78,
+          0.43,
+          1
+        ],
+        "placeholder": "",
+        "accessibleLabel": "LUNAR ISLAND",
+        "description": "",
+        "readOnly": false,
+        "maxBytes": 4096,
+        "visible": true,
+        "enabled": true,
+        "clip": false,
+        "wrap": false,
+        "fit": true,
+        "spacing": 8,
+        "fontSize": 28,
+        "value": 0,
+        "minimum": 0,
+        "maximum": 1,
+        "flow": 0,
+        "direction": 0,
+        "anchorMin": [
+          0,
+          0
+        ],
+        "anchorMax": [
+          0,
+          0
+        ],
+        "offset": [
+          28,
+          20
+        ],
+        "size": [
+          380,
+          38
+        ],
+        "relativeSize": [
+          0,
+          0
+        ],
+        "align": [
+          0,
+          0
+        ],
+        "textAlign": [
+          0,
+          0.5
+        ],
+        "margin": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "padding": [
+          10,
+          6,
+          10,
+          6
+        ],
+        "background": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "color": [
+          0.88,
+          0.91,
+          0.84,
+          1
+        ],
+        "rowHeight": 36
+      },
+      {
+        "id": "chapter",
+        "parent": "canvas",
+        "kind": 2,
+        "text": "FOUNDATION / HOMESTEAD COAST",
+        "texture": "",
+        "font": "1d1cd0950b291b3e034b47e22e739be3",
+        "textKey": "",
+        "textLogicalAlign": -1,
+        "mirrorRow": false,
+        "focusColor": [
+          0.98,
+          0.78,
+          0.43,
+          1
+        ],
+        "placeholder": "",
+        "accessibleLabel": "FOUNDATION / HOMESTEAD COAST",
+        "description": "",
+        "readOnly": false,
+        "maxBytes": 4096,
+        "visible": true,
+        "enabled": true,
+        "clip": false,
+        "wrap": false,
+        "fit": true,
+        "spacing": 8,
+        "fontSize": 13,
+        "value": 0,
+        "minimum": 0,
+        "maximum": 1,
+        "flow": 0,
+        "direction": 0,
+        "anchorMin": [
+          0,
+          0
+        ],
+        "anchorMax": [
+          0,
+          0
+        ],
+        "offset": [
+          30,
+          59
+        ],
+        "size": [
+          400,
+          24
+        ],
+        "relativeSize": [
+          0,
+          0
+        ],
+        "align": [
+          0,
+          0
+        ],
+        "textAlign": [
+          0,
+          0.5
+        ],
+        "margin": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "padding": [
+          10,
+          6,
+          10,
+          6
+        ],
+        "background": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "color": [
+          0.53,
+          0.72,
+          0.62,
+          1
+        ],
+        "rowHeight": 36
+      },
+      {
+        "id": "vitals",
+        "parent": "canvas",
+        "kind": 2,
+        "text": "",
+        "texture": "",
+        "font": "1d1cd0950b291b3e034b47e22e739be3",
+        "textKey": "",
+        "textLogicalAlign": -1,
+        "mirrorRow": false,
+        "focusColor": [
+          0.98,
+          0.78,
+          0.43,
+          1
+        ],
+        "placeholder": "",
+        "accessibleLabel": "",
+        "description": "",
+        "readOnly": false,
+        "maxBytes": 4096,
+        "visible": true,
+        "enabled": true,
+        "clip": false,
+        "wrap": true,
+        "fit": true,
+        "spacing": 8,
+        "fontSize": 17,
+        "value": 0,
+        "minimum": 0,
+        "maximum": 1,
+        "flow": 0,
+        "direction": 0,
+        "anchorMin": [
+          1,
+          0
+        ],
+        "anchorMax": [
+          1,
+          0
+        ],
+        "offset": [
+          -28,
+          22
+        ],
+        "size": [
+          480,
+          70
+        ],
+        "relativeSize": [
+          0,
+          0
+        ],
+        "align": [
+          1,
+          0
+        ],
+        "textAlign": [
+          0,
+          0.5
+        ],
+        "margin": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "padding": [
+          10,
+          6,
+          10,
+          6
+        ],
+        "background": [
+          0.025,
+          0.055,
+          0.06,
+          0.97
+        ],
+        "color": [
+          0.88,
+          0.91,
+          0.84,
+          1
+        ],
+        "rowHeight": 36
+      },
+      {
+        "id": "journal",
+        "parent": "canvas",
+        "kind": 2,
+        "text": "",
+        "texture": "",
+        "font": "1d1cd0950b291b3e034b47e22e739be3",
+        "textKey": "",
+        "textLogicalAlign": -1,
+        "mirrorRow": false,
+        "focusColor": [
+          0.98,
+          0.78,
+          0.43,
+          1
+        ],
+        "placeholder": "",
+        "accessibleLabel": "",
+        "description": "",
+        "readOnly": false,
+        "maxBytes": 4096,
+        "visible": true,
+        "enabled": true,
+        "clip": false,
+        "wrap": true,
+        "fit": true,
+        "spacing": 8,
+        "fontSize": 17,
+        "value": 0,
+        "minimum": 0,
+        "maximum": 1,
+        "flow": 0,
+        "direction": 0,
+        "anchorMin": [
+          0,
+          0
+        ],
+        "anchorMax": [
+          0,
+          0
+        ],
+        "offset": [
+          28,
+          100
+        ],
+        "size": [
+          490,
+          66
+        ],
+        "relativeSize": [
+          0,
+          0
+        ],
+        "align": [
+          0,
+          0
+        ],
+        "textAlign": [
+          0,
+          0.5
+        ],
+        "margin": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "padding": [
+          10,
+          6,
+          10,
+          6
+        ],
+        "background": [
+          0.025,
+          0.055,
+          0.06,
+          0.97
+        ],
+        "color": [
+          0.88,
+          0.91,
+          0.84,
+          1
+        ],
+        "rowHeight": 36
+      },
+      {
+        "id": "reticle",
+        "parent": "canvas",
+        "kind": 2,
+        "text": "\u00b7",
+        "texture": "",
+        "font": "1d1cd0950b291b3e034b47e22e739be3",
+        "textKey": "",
+        "textLogicalAlign": -1,
+        "mirrorRow": false,
+        "focusColor": [
+          0.98,
+          0.78,
+          0.43,
+          1
+        ],
+        "placeholder": "",
+        "accessibleLabel": "\u00b7",
+        "description": "",
+        "readOnly": false,
+        "maxBytes": 4096,
+        "visible": true,
+        "enabled": true,
+        "clip": false,
+        "wrap": false,
+        "fit": true,
+        "spacing": 8,
+        "fontSize": 30,
+        "value": 0,
+        "minimum": 0,
+        "maximum": 1,
+        "flow": 0,
+        "direction": 0,
+        "anchorMin": [
+          0.5,
+          0.5
+        ],
+        "anchorMax": [
+          0.5,
+          0.5
+        ],
+        "offset": [
+          0,
+          0
+        ],
+        "size": [
+          24,
+          30
+        ],
+        "relativeSize": [
+          0,
+          0
+        ],
+        "align": [
+          0.5,
+          0.5
+        ],
+        "textAlign": [
+          0,
+          0.5
+        ],
+        "margin": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "padding": [
+          10,
+          6,
+          10,
+          6
+        ],
+        "background": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "color": [
+          0.88,
+          0.91,
+          0.84,
+          1
+        ],
+        "rowHeight": 36
+      },
+      {
+        "id": "context",
+        "parent": "canvas",
+        "kind": 2,
+        "text": "",
+        "texture": "",
+        "font": "1d1cd0950b291b3e034b47e22e739be3",
+        "textKey": "",
+        "textLogicalAlign": -1,
+        "mirrorRow": false,
+        "focusColor": [
+          0.98,
+          0.78,
+          0.43,
+          1
+        ],
+        "placeholder": "",
+        "accessibleLabel": "",
+        "description": "",
+        "readOnly": false,
+        "maxBytes": 4096,
+        "visible": true,
+        "enabled": true,
+        "clip": false,
+        "wrap": true,
+        "fit": true,
+        "spacing": 8,
+        "fontSize": 18,
+        "value": 0,
+        "minimum": 0,
+        "maximum": 1,
+        "flow": 0,
+        "direction": 0,
+        "anchorMin": [
+          0.5,
+          0.5
+        ],
+        "anchorMax": [
+          0.5,
+          0.5
+        ],
+        "offset": [
+          -240,
+          28
+        ],
+        "size": [
+          480,
+          55
+        ],
+        "relativeSize": [
+          0,
+          0
+        ],
+        "align": [
+          0.5,
+          0
+        ],
+        "textAlign": [
+          0,
+          0.5
+        ],
+        "margin": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "padding": [
+          10,
+          6,
+          10,
+          6
+        ],
+        "background": [
+          0.025,
+          0.055,
+          0.06,
+          0.6
+        ],
+        "color": [
+          0.88,
+          0.91,
+          0.84,
+          1
+        ],
+        "rowHeight": 36
+      },
+      {
+        "id": "notice",
+        "parent": "canvas",
+        "kind": 2,
+        "text": "",
+        "texture": "",
+        "font": "1d1cd0950b291b3e034b47e22e739be3",
+        "textKey": "",
+        "textLogicalAlign": -1,
+        "mirrorRow": false,
+        "focusColor": [
+          0.98,
+          0.78,
+          0.43,
+          1
+        ],
+        "placeholder": "",
+        "accessibleLabel": "",
+        "description": "",
+        "readOnly": false,
+        "maxBytes": 4096,
+        "visible": true,
+        "enabled": true,
+        "clip": false,
+        "wrap": true,
+        "fit": true,
+        "spacing": 8,
+        "fontSize": 18,
+        "value": 0,
+        "minimum": 0,
+        "maximum": 1,
+        "flow": 0,
+        "direction": 0,
+        "anchorMin": [
+          0.5,
+          1
+        ],
+        "anchorMax": [
+          0.5,
+          1
+        ],
+        "offset": [
+          0,
+          -140
+        ],
+        "size": [
+          950,
+          45
+        ],
+        "relativeSize": [
+          0,
+          0
+        ],
+        "align": [
+          0.5,
+          1
+        ],
+        "textAlign": [
+          0,
+          0.5
+        ],
+        "margin": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "padding": [
+          10,
+          6,
+          10,
+          6
+        ],
+        "background": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "color": [
+          0.99,
+          0.82,
+          0.53,
+          1
+        ],
+        "rowHeight": 36
+      },
+      {
+        "id": "hotbar",
+        "parent": "canvas",
+        "kind": 2,
+        "text": "",
+        "texture": "",
+        "font": "1d1cd0950b291b3e034b47e22e739be3",
+        "textKey": "",
+        "textLogicalAlign": -1,
+        "mirrorRow": false,
+        "focusColor": [
+          0.98,
+          0.78,
+          0.43,
+          1
+        ],
+        "placeholder": "",
+        "accessibleLabel": "",
+        "description": "",
+        "readOnly": false,
+        "maxBytes": 4096,
+        "visible": true,
+        "enabled": true,
+        "clip": false,
+        "wrap": true,
+        "fit": true,
+        "spacing": 8,
+        "fontSize": 17,
+        "value": 0,
+        "minimum": 0,
+        "maximum": 1,
+        "flow": 0,
+        "direction": 0,
+        "anchorMin": [
+          0.5,
+          1
+        ],
+        "anchorMax": [
+          0.5,
+          1
+        ],
+        "offset": [
+          0,
+          -70
+        ],
+        "size": [
+          1000,
+          60
+        ],
+        "relativeSize": [
+          0,
+          0
+        ],
+        "align": [
+          0.5,
+          1
+        ],
+        "textAlign": [
+          0,
+          0.5
+        ],
+        "margin": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "padding": [
+          10,
+          6,
+          10,
+          6
+        ],
+        "background": [
+          0.025,
+          0.055,
+          0.06,
+          0.97
+        ],
+        "color": [
+          0.88,
+          0.91,
+          0.84,
+          1
+        ],
+        "rowHeight": 36
+      },
+      {
+        "id": "hint",
+        "parent": "canvas",
+        "kind": 2,
+        "text": "WASD move \u00b7 Mouse look \u00b7 E gather / interact \u00b7 Click tool \u00b7 Tab backpack & crafting \u00b7 Esc pause",
+        "texture": "",
+        "font": "1d1cd0950b291b3e034b47e22e739be3",
+        "textKey": "",
+        "textLogicalAlign": -1,
+        "mirrorRow": false,
+        "focusColor": [
+          0.98,
+          0.78,
+          0.43,
+          1
+        ],
+        "placeholder": "",
+        "accessibleLabel": "WASD move \u00b7 Mouse look \u00b7 E gather / interact \u00b7 Click tool \u00b7 Tab backpack & crafting \u00b7 Esc pause",
+        "description": "",
+        "readOnly": false,
+        "maxBytes": 4096,
+        "visible": true,
+        "enabled": true,
+        "clip": false,
+        "wrap": false,
+        "fit": true,
+        "spacing": 8,
+        "fontSize": 14,
+        "value": 0,
+        "minimum": 0,
+        "maximum": 1,
+        "flow": 0,
+        "direction": 0,
+        "anchorMin": [
+          0.5,
+          1
+        ],
+        "anchorMax": [
+          0.5,
+          1
+        ],
+        "offset": [
+          0,
+          -18
+        ],
+        "size": [
+          1180,
+          32
+        ],
+        "relativeSize": [
+          0,
+          0
+        ],
+        "align": [
+          0.5,
+          1
+        ],
+        "textAlign": [
+          0,
+          0.5
+        ],
+        "margin": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "padding": [
+          10,
+          6,
+          10,
+          6
+        ],
+        "background": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "color": [
+          0.88,
+          0.91,
+          0.84,
+          1
+        ],
+        "rowHeight": 36
+      },
+      {
+        "id": "overlay",
+        "parent": "canvas",
+        "kind": 1,
+        "text": "",
+        "texture": "",
+        "font": "1d1cd0950b291b3e034b47e22e739be3",
+        "textKey": "",
+        "textLogicalAlign": -1,
+        "mirrorRow": false,
+        "focusColor": [
+          0.98,
+          0.78,
+          0.43,
+          1
+        ],
+        "placeholder": "",
+        "accessibleLabel": "",
+        "description": "",
+        "readOnly": false,
+        "maxBytes": 4096,
+        "visible": false,
+        "enabled": true,
+        "clip": false,
+        "wrap": false,
+        "fit": true,
+        "spacing": 8,
+        "fontSize": 18,
+        "value": 0,
+        "minimum": 0,
+        "maximum": 1,
+        "flow": 0,
+        "direction": 0,
+        "anchorMin": [
+          0,
+          0
+        ],
+        "anchorMax": [
+          1,
+          1
+        ],
+        "offset": [
+          0,
+          0
+        ],
+        "size": [
+          0,
+          0
+        ],
+        "relativeSize": [
+          0,
+          0
+        ],
+        "align": [
+          0,
+          0
+        ],
+        "textAlign": [
+          0,
+          0.5
+        ],
+        "margin": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "padding": [
+          10,
+          6,
+          10,
+          6
+        ],
+        "background": [
+          0.01,
+          0.025,
+          0.03,
+          0.9
+        ],
+        "color": [
+          0.88,
+          0.91,
+          0.84,
+          1
+        ],
+        "rowHeight": 36
+      },
+      {
+        "id": "panel",
+        "parent": "overlay",
+        "kind": 1,
+        "text": "",
+        "texture": "",
+        "font": "1d1cd0950b291b3e034b47e22e739be3",
+        "textKey": "",
+        "textLogicalAlign": -1,
+        "mirrorRow": false,
+        "focusColor": [
+          0.98,
+          0.78,
+          0.43,
+          1
+        ],
+        "placeholder": "",
+        "accessibleLabel": "",
+        "description": "",
+        "readOnly": false,
+        "maxBytes": 4096,
+        "visible": true,
+        "enabled": true,
+        "clip": false,
+        "wrap": false,
+        "fit": true,
+        "spacing": 8,
+        "fontSize": 18,
+        "value": 0,
+        "minimum": 0,
+        "maximum": 1,
+        "flow": 0,
+        "direction": 0,
+        "anchorMin": [
+          0.5,
+          0.5
+        ],
+        "anchorMax": [
+          0.5,
+          0.5
+        ],
+        "offset": [
+          0,
+          0
+        ],
+        "size": [
+          1100,
+          640
+        ],
+        "relativeSize": [
+          0,
+          0
+        ],
+        "align": [
+          0.5,
+          0.5
+        ],
+        "textAlign": [
+          0,
+          0.5
+        ],
+        "margin": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "padding": [
+          10,
+          6,
+          10,
+          6
+        ],
+        "background": [
+          0.025,
+          0.055,
+          0.06,
+          0.97
+        ],
+        "color": [
+          0.88,
+          0.91,
+          0.84,
+          1
+        ],
+        "rowHeight": 36
+      },
+      {
+        "id": "title",
+        "parent": "panel",
+        "kind": 2,
+        "text": "FIELD PACK",
+        "texture": "",
+        "font": "1d1cd0950b291b3e034b47e22e739be3",
+        "textKey": "",
+        "textLogicalAlign": -1,
+        "mirrorRow": false,
+        "focusColor": [
+          0.98,
+          0.78,
+          0.43,
+          1
+        ],
+        "placeholder": "",
+        "accessibleLabel": "FIELD PACK",
+        "description": "",
+        "readOnly": false,
+        "maxBytes": 4096,
+        "visible": true,
+        "enabled": true,
+        "clip": false,
+        "wrap": false,
+        "fit": true,
+        "spacing": 8,
+        "fontSize": 29,
+        "value": 0,
+        "minimum": 0,
+        "maximum": 1,
+        "flow": 0,
+        "direction": 0,
+        "anchorMin": [
+          0,
+          0
+        ],
+        "anchorMax": [
+          0,
+          0
+        ],
+        "offset": [
+          24,
+          16
+        ],
+        "size": [
+          850,
+          44
+        ],
+        "relativeSize": [
+          0,
+          0
+        ],
+        "align": [
+          0,
+          0
+        ],
+        "textAlign": [
+          0,
+          0.5
+        ],
+        "margin": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "padding": [
+          10,
+          6,
+          10,
+          6
+        ],
+        "background": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "color": [
+          0.88,
+          0.91,
+          0.84,
+          1
+        ],
+        "rowHeight": 36
+      },
+      {
+        "id": "tab_pack",
+        "parent": "panel",
+        "kind": 4,
+        "text": "Backpack",
+        "texture": "",
+        "font": "1d1cd0950b291b3e034b47e22e739be3",
+        "textKey": "",
+        "textLogicalAlign": -1,
+        "mirrorRow": false,
+        "focusColor": [
+          0.98,
+          0.78,
+          0.43,
+          1
+        ],
+        "placeholder": "",
+        "accessibleLabel": "Backpack",
+        "description": "",
+        "readOnly": false,
+        "maxBytes": 4096,
+        "visible": true,
+        "enabled": true,
+        "clip": false,
+        "wrap": false,
+        "fit": true,
+        "spacing": 8,
+        "fontSize": 18,
+        "value": 0,
+        "minimum": 0,
+        "maximum": 1,
+        "flow": 0,
+        "direction": 0,
+        "anchorMin": [
+          0,
+          0
+        ],
+        "anchorMax": [
+          0,
+          0
+        ],
+        "offset": [
+          24,
+          72
+        ],
+        "size": [
+          154,
+          40
+        ],
+        "relativeSize": [
+          0,
+          0
+        ],
+        "align": [
+          0,
+          0
+        ],
+        "textAlign": [
+          0,
+          0.5
+        ],
+        "margin": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "padding": [
+          10,
+          6,
+          10,
+          6
+        ],
+        "background": [
+          0.13,
+          0.25,
+          0.25,
+          1
+        ],
+        "color": [
+          0.88,
+          0.91,
+          0.84,
+          1
+        ],
+        "rowHeight": 36
+      },
+      {
+        "id": "tab_craft",
+        "parent": "panel",
+        "kind": 4,
+        "text": "Crafting",
+        "texture": "",
+        "font": "1d1cd0950b291b3e034b47e22e739be3",
+        "textKey": "",
+        "textLogicalAlign": -1,
+        "mirrorRow": false,
+        "focusColor": [
+          0.98,
+          0.78,
+          0.43,
+          1
+        ],
+        "placeholder": "",
+        "accessibleLabel": "Crafting",
+        "description": "",
+        "readOnly": false,
+        "maxBytes": 4096,
+        "visible": true,
+        "enabled": true,
+        "clip": false,
+        "wrap": false,
+        "fit": true,
+        "spacing": 8,
+        "fontSize": 18,
+        "value": 0,
+        "minimum": 0,
+        "maximum": 1,
+        "flow": 0,
+        "direction": 0,
+        "anchorMin": [
+          0,
+          0
+        ],
+        "anchorMax": [
+          0,
+          0
+        ],
+        "offset": [
+          190,
+          72
+        ],
+        "size": [
+          154,
+          40
+        ],
+        "relativeSize": [
+          0,
+          0
+        ],
+        "align": [
+          0,
+          0
+        ],
+        "textAlign": [
+          0,
+          0.5
+        ],
+        "margin": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "padding": [
+          10,
+          6,
+          10,
+          6
+        ],
+        "background": [
+          0.13,
+          0.25,
+          0.25,
+          1
+        ],
+        "color": [
+          0.88,
+          0.91,
+          0.84,
+          1
+        ],
+        "rowHeight": 36
+      },
+      {
+        "id": "tab_map",
+        "parent": "panel",
+        "kind": 4,
+        "text": "Field map",
+        "texture": "",
+        "font": "1d1cd0950b291b3e034b47e22e739be3",
+        "textKey": "",
+        "textLogicalAlign": -1,
+        "mirrorRow": false,
+        "focusColor": [
+          0.98,
+          0.78,
+          0.43,
+          1
+        ],
+        "placeholder": "",
+        "accessibleLabel": "Field map",
+        "description": "",
+        "readOnly": false,
+        "maxBytes": 4096,
+        "visible": true,
+        "enabled": true,
+        "clip": false,
+        "wrap": false,
+        "fit": true,
+        "spacing": 8,
+        "fontSize": 18,
+        "value": 0,
+        "minimum": 0,
+        "maximum": 1,
+        "flow": 0,
+        "direction": 0,
+        "anchorMin": [
+          0,
+          0
+        ],
+        "anchorMax": [
+          0,
+          0
+        ],
+        "offset": [
+          356,
+          72
+        ],
+        "size": [
+          154,
+          40
+        ],
+        "relativeSize": [
+          0,
+          0
+        ],
+        "align": [
+          0,
+          0
+        ],
+        "textAlign": [
+          0,
+          0.5
+        ],
+        "margin": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "padding": [
+          10,
+          6,
+          10,
+          6
+        ],
+        "background": [
+          0.13,
+          0.25,
+          0.25,
+          1
+        ],
+        "color": [
+          0.88,
+          0.91,
+          0.84,
+          1
+        ],
+        "rowHeight": 36
+      },
+      {
+        "id": "tab_help",
+        "parent": "panel",
+        "kind": 4,
+        "text": "Controls",
+        "texture": "",
+        "font": "1d1cd0950b291b3e034b47e22e739be3",
+        "textKey": "",
+        "textLogicalAlign": -1,
+        "mirrorRow": false,
+        "focusColor": [
+          0.98,
+          0.78,
+          0.43,
+          1
+        ],
+        "placeholder": "",
+        "accessibleLabel": "Controls",
+        "description": "",
+        "readOnly": false,
+        "maxBytes": 4096,
+        "visible": true,
+        "enabled": true,
+        "clip": false,
+        "wrap": false,
+        "fit": true,
+        "spacing": 8,
+        "fontSize": 18,
+        "value": 0,
+        "minimum": 0,
+        "maximum": 1,
+        "flow": 0,
+        "direction": 0,
+        "anchorMin": [
+          0,
+          0
+        ],
+        "anchorMax": [
+          0,
+          0
+        ],
+        "offset": [
+          522,
+          72
+        ],
+        "size": [
+          154,
+          40
+        ],
+        "relativeSize": [
+          0,
+          0
+        ],
+        "align": [
+          0,
+          0
+        ],
+        "textAlign": [
+          0,
+          0.5
+        ],
+        "margin": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "padding": [
+          10,
+          6,
+          10,
+          6
+        ],
+        "background": [
+          0.13,
+          0.25,
+          0.25,
+          1
+        ],
+        "color": [
+          0.88,
+          0.91,
+          0.84,
+          1
+        ],
+        "rowHeight": 36
+      },
+      {
+        "id": "close",
+        "parent": "panel",
+        "kind": 4,
+        "text": "Return to island",
+        "texture": "",
+        "font": "1d1cd0950b291b3e034b47e22e739be3",
+        "textKey": "",
+        "textLogicalAlign": -1,
+        "mirrorRow": false,
+        "focusColor": [
+          0.98,
+          0.78,
+          0.43,
+          1
+        ],
+        "placeholder": "",
+        "accessibleLabel": "Return to island",
+        "description": "",
+        "readOnly": false,
+        "maxBytes": 4096,
+        "visible": true,
+        "enabled": true,
+        "clip": false,
+        "wrap": false,
+        "fit": true,
+        "spacing": 8,
+        "fontSize": 18,
+        "value": 0,
+        "minimum": 0,
+        "maximum": 1,
+        "flow": 0,
+        "direction": 0,
+        "anchorMin": [
+          0,
+          0
+        ],
+        "anchorMax": [
+          0,
+          0
+        ],
+        "offset": [
+          870,
+          72
+        ],
+        "size": [
+          200,
+          40
+        ],
+        "relativeSize": [
+          0,
+          0
+        ],
+        "align": [
+          0,
+          0
+        ],
+        "textAlign": [
+          0,
+          0.5
+        ],
+        "margin": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "padding": [
+          10,
+          6,
+          10,
+          6
+        ],
+        "background": [
+          0.2,
+          0.38,
+          0.31,
+          1
+        ],
+        "color": [
+          0.88,
+          0.91,
+          0.84,
+          1
+        ],
+        "rowHeight": 36
+      },
+      {
+        "id": "entries",
+        "parent": "panel",
+        "kind": 9,
+        "text": "",
+        "texture": "",
+        "font": "1d1cd0950b291b3e034b47e22e739be3",
+        "textKey": "",
+        "textLogicalAlign": -1,
+        "mirrorRow": false,
+        "focusColor": [
+          0.98,
+          0.78,
+          0.43,
+          1
+        ],
+        "placeholder": "",
+        "accessibleLabel": "",
+        "description": "",
+        "readOnly": false,
+        "maxBytes": 4096,
+        "visible": true,
+        "enabled": true,
+        "clip": false,
+        "wrap": false,
+        "fit": true,
+        "spacing": 8,
+        "fontSize": 18,
+        "value": 0,
+        "minimum": 0,
+        "maximum": 1,
+        "flow": 0,
+        "direction": 0,
+        "anchorMin": [
+          0,
+          0
+        ],
+        "anchorMax": [
+          0,
+          0
+        ],
+        "offset": [
+          24,
+          132
+        ],
+        "size": [
+          520,
+          330
+        ],
+        "relativeSize": [
+          0,
+          0
+        ],
+        "align": [
+          0,
+          0
+        ],
+        "textAlign": [
+          0,
+          0.5
+        ],
+        "margin": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "padding": [
+          10,
+          6,
+          10,
+          6
+        ],
+        "background": [
+          0.05,
+          0.1,
+          0.11,
+          1
+        ],
+        "color": [
+          0.88,
+          0.91,
+          0.84,
+          1
+        ],
+        "rowHeight": 36
+      },
+      {
+        "id": "detail",
+        "parent": "panel",
+        "kind": 2,
+        "text": "",
+        "texture": "",
+        "font": "1d1cd0950b291b3e034b47e22e739be3",
+        "textKey": "",
+        "textLogicalAlign": -1,
+        "mirrorRow": false,
+        "focusColor": [
+          0.98,
+          0.78,
+          0.43,
+          1
+        ],
+        "placeholder": "",
+        "accessibleLabel": "",
+        "description": "",
+        "readOnly": false,
+        "maxBytes": 4096,
+        "visible": true,
+        "enabled": true,
+        "clip": false,
+        "wrap": true,
+        "fit": true,
+        "spacing": 8,
+        "fontSize": 18,
+        "value": 0,
+        "minimum": 0,
+        "maximum": 1,
+        "flow": 0,
+        "direction": 0,
+        "anchorMin": [
+          0,
+          0
+        ],
+        "anchorMax": [
+          0,
+          0
+        ],
+        "offset": [
+          568,
+          132
+        ],
+        "size": [
+          500,
+          252
+        ],
+        "relativeSize": [
+          0,
+          0
+        ],
+        "align": [
+          0,
+          0
+        ],
+        "textAlign": [
+          0,
+          0.5
+        ],
+        "margin": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "padding": [
+          10,
+          6,
+          10,
+          6
+        ],
+        "background": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "color": [
+          0.88,
+          0.91,
+          0.84,
+          1
+        ],
+        "rowHeight": 36
+      },
+      {
+        "id": "primary",
+        "parent": "panel",
+        "kind": 4,
+        "text": "Use / equip",
+        "texture": "",
+        "font": "1d1cd0950b291b3e034b47e22e739be3",
+        "textKey": "",
+        "textLogicalAlign": -1,
+        "mirrorRow": false,
+        "focusColor": [
+          0.98,
+          0.78,
+          0.43,
+          1
+        ],
+        "placeholder": "",
+        "accessibleLabel": "Use / equip",
+        "description": "",
+        "readOnly": false,
+        "maxBytes": 4096,
+        "visible": true,
+        "enabled": true,
+        "clip": false,
+        "wrap": false,
+        "fit": true,
+        "spacing": 8,
+        "fontSize": 18,
+        "value": 0,
+        "minimum": 0,
+        "maximum": 1,
+        "flow": 0,
+        "direction": 0,
+        "anchorMin": [
+          0,
+          0
+        ],
+        "anchorMax": [
+          0,
+          0
+        ],
+        "offset": [
+          568,
+          405
+        ],
+        "size": [
+          235,
+          46
+        ],
+        "relativeSize": [
+          0,
+          0
+        ],
+        "align": [
+          0,
+          0
+        ],
+        "textAlign": [
+          0,
+          0.5
+        ],
+        "margin": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "padding": [
+          10,
+          6,
+          10,
+          6
+        ],
+        "background": [
+          0.2,
+          0.38,
+          0.31,
+          1
+        ],
+        "color": [
+          0.88,
+          0.91,
+          0.84,
+          1
+        ],
+        "rowHeight": 36
+      },
+      {
+        "id": "drop",
+        "parent": "panel",
+        "kind": 4,
+        "text": "Drop one",
+        "texture": "",
+        "font": "1d1cd0950b291b3e034b47e22e739be3",
+        "textKey": "",
+        "textLogicalAlign": -1,
+        "mirrorRow": false,
+        "focusColor": [
+          0.98,
+          0.78,
+          0.43,
+          1
+        ],
+        "placeholder": "",
+        "accessibleLabel": "Drop one",
+        "description": "",
+        "readOnly": false,
+        "maxBytes": 4096,
+        "visible": true,
+        "enabled": true,
+        "clip": false,
+        "wrap": false,
+        "fit": true,
+        "spacing": 8,
+        "fontSize": 18,
+        "value": 0,
+        "minimum": 0,
+        "maximum": 1,
+        "flow": 0,
+        "direction": 0,
+        "anchorMin": [
+          0,
+          0
+        ],
+        "anchorMax": [
+          0,
+          0
+        ],
+        "offset": [
+          823,
+          405
+        ],
+        "size": [
+          235,
+          46
+        ],
+        "relativeSize": [
+          0,
+          0
+        ],
+        "align": [
+          0,
+          0
+        ],
+        "textAlign": [
+          0,
+          0.5
+        ],
+        "margin": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "padding": [
+          10,
+          6,
+          10,
+          6
+        ],
+        "background": [
+          0.22,
+          0.2,
+          0.18,
+          1
+        ],
+        "color": [
+          0.88,
+          0.91,
+          0.84,
+          1
+        ],
+        "rowHeight": 36
+      },
+      {
+        "id": "menu_status",
+        "parent": "panel",
+        "kind": 2,
+        "text": "",
+        "texture": "",
+        "font": "1d1cd0950b291b3e034b47e22e739be3",
+        "textKey": "",
+        "textLogicalAlign": -1,
+        "mirrorRow": false,
+        "focusColor": [
+          0.98,
+          0.78,
+          0.43,
+          1
+        ],
+        "placeholder": "",
+        "accessibleLabel": "",
+        "description": "",
+        "readOnly": false,
+        "maxBytes": 4096,
+        "visible": true,
+        "enabled": true,
+        "clip": false,
+        "wrap": true,
+        "fit": true,
+        "spacing": 8,
+        "fontSize": 18,
+        "value": 0,
+        "minimum": 0,
+        "maximum": 1,
+        "flow": 0,
+        "direction": 0,
+        "anchorMin": [
+          0,
+          0
+        ],
+        "anchorMax": [
+          0,
+          0
+        ],
+        "offset": [
+          24,
+          485
+        ],
+        "size": [
+          1030,
+          52
+        ],
+        "relativeSize": [
+          0,
+          0
+        ],
+        "align": [
+          0,
+          0
+        ],
+        "textAlign": [
+          0,
+          0.5
+        ],
+        "margin": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "padding": [
+          10,
+          6,
+          10,
+          6
+        ],
+        "background": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "color": [
+          0.53,
+          0.72,
+          0.62,
+          1
+        ],
+        "rowHeight": 36
+      },
+      {
+        "id": "save",
+        "parent": "panel",
+        "kind": 4,
+        "text": "Save world \u00b7 F6",
+        "texture": "",
+        "font": "1d1cd0950b291b3e034b47e22e739be3",
+        "textKey": "",
+        "textLogicalAlign": -1,
+        "mirrorRow": false,
+        "focusColor": [
+          0.98,
+          0.78,
+          0.43,
+          1
+        ],
+        "placeholder": "",
+        "accessibleLabel": "Save world \u00b7 F6",
+        "description": "",
+        "readOnly": false,
+        "maxBytes": 4096,
+        "visible": true,
+        "enabled": true,
+        "clip": false,
+        "wrap": false,
+        "fit": true,
+        "spacing": 8,
+        "fontSize": 18,
+        "value": 0,
+        "minimum": 0,
+        "maximum": 1,
+        "flow": 0,
+        "direction": 0,
+        "anchorMin": [
+          0,
+          0
+        ],
+        "anchorMax": [
+          0,
+          0
+        ],
+        "offset": [
+          24,
+          565
+        ],
+        "size": [
+          244,
+          45
+        ],
+        "relativeSize": [
+          0,
+          0
+        ],
+        "align": [
+          0,
+          0
+        ],
+        "textAlign": [
+          0,
+          0.5
+        ],
+        "margin": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "padding": [
+          10,
+          6,
+          10,
+          6
+        ],
+        "background": [
+          0.13,
+          0.25,
+          0.25,
+          1
+        ],
+        "color": [
+          0.88,
+          0.91,
+          0.84,
+          1
+        ],
+        "rowHeight": 36
+      },
+      {
+        "id": "load",
+        "parent": "panel",
+        "kind": 4,
+        "text": "Load save \u00b7 F9",
+        "texture": "",
+        "font": "1d1cd0950b291b3e034b47e22e739be3",
+        "textKey": "",
+        "textLogicalAlign": -1,
+        "mirrorRow": false,
+        "focusColor": [
+          0.98,
+          0.78,
+          0.43,
+          1
+        ],
+        "placeholder": "",
+        "accessibleLabel": "Load save \u00b7 F9",
+        "description": "",
+        "readOnly": false,
+        "maxBytes": 4096,
+        "visible": true,
+        "enabled": true,
+        "clip": false,
+        "wrap": false,
+        "fit": true,
+        "spacing": 8,
+        "fontSize": 18,
+        "value": 0,
+        "minimum": 0,
+        "maximum": 1,
+        "flow": 0,
+        "direction": 0,
+        "anchorMin": [
+          0,
+          0
+        ],
+        "anchorMax": [
+          0,
+          0
+        ],
+        "offset": [
+          290,
+          565
+        ],
+        "size": [
+          244,
+          45
+        ],
+        "relativeSize": [
+          0,
+          0
+        ],
+        "align": [
+          0,
+          0
+        ],
+        "textAlign": [
+          0,
+          0.5
+        ],
+        "margin": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "padding": [
+          10,
+          6,
+          10,
+          6
+        ],
+        "background": [
+          0.13,
+          0.25,
+          0.25,
+          1
+        ],
+        "color": [
+          0.88,
+          0.91,
+          0.84,
+          1
+        ],
+        "rowHeight": 36
+      },
+      {
+        "id": "quit",
+        "parent": "panel",
+        "kind": 4,
+        "text": "Save and quit",
+        "texture": "",
+        "font": "1d1cd0950b291b3e034b47e22e739be3",
+        "textKey": "",
+        "textLogicalAlign": -1,
+        "mirrorRow": false,
+        "focusColor": [
+          0.98,
+          0.78,
+          0.43,
+          1
+        ],
+        "placeholder": "",
+        "accessibleLabel": "Save and quit",
+        "description": "",
+        "readOnly": false,
+        "maxBytes": 4096,
+        "visible": true,
+        "enabled": true,
+        "clip": false,
+        "wrap": false,
+        "fit": true,
+        "spacing": 8,
+        "fontSize": 18,
+        "value": 0,
+        "minimum": 0,
+        "maximum": 1,
+        "flow": 0,
+        "direction": 0,
+        "anchorMin": [
+          0,
+          0
+        ],
+        "anchorMax": [
+          0,
+          0
+        ],
+        "offset": [
+          556,
+          565
+        ],
+        "size": [
+          244,
+          45
+        ],
+        "relativeSize": [
+          0,
+          0
+        ],
+        "align": [
+          0,
+          0
+        ],
+        "textAlign": [
+          0,
+          0.5
+        ],
+        "margin": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "padding": [
+          10,
+          6,
+          10,
+          6
+        ],
+        "background": [
+          0.13,
+          0.25,
+          0.25,
+          1
+        ],
+        "color": [
+          0.88,
+          0.91,
+          0.84,
+          1
+        ],
+        "rowHeight": 36
+      },
+      {
+        "id": "sensitivity",
+        "parent": "panel",
+        "kind": 5,
+        "text": "",
+        "texture": "",
+        "font": "1d1cd0950b291b3e034b47e22e739be3",
+        "textKey": "",
+        "textLogicalAlign": -1,
+        "mirrorRow": false,
+        "focusColor": [
+          0.98,
+          0.78,
+          0.43,
+          1
+        ],
+        "placeholder": "",
+        "accessibleLabel": "",
+        "description": "",
+        "readOnly": false,
+        "maxBytes": 4096,
+        "visible": false,
+        "enabled": true,
+        "clip": false,
+        "wrap": false,
+        "fit": true,
+        "spacing": 8,
+        "fontSize": 18,
+        "value": 0.5,
+        "minimum": 0,
+        "maximum": 1,
+        "flow": 0,
+        "direction": 0,
+        "anchorMin": [
+          0,
+          0
+        ],
+        "anchorMax": [
+          0,
+          0
+        ],
+        "offset": [
+          24,
+          435
+        ],
+        "size": [
+          480,
+          36
+        ],
+        "relativeSize": [
+          0,
+          0
+        ],
+        "align": [
+          0,
+          0
+        ],
+        "textAlign": [
+          0,
+          0.5
+        ],
+        "margin": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "padding": [
+          10,
+          6,
+          10,
+          6
+        ],
+        "background": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "color": [
+          0.88,
+          0.91,
+          0.84,
+          1
+        ],
+        "rowHeight": 36
+      },
+      {
+        "id": "map_image",
+        "parent": "panel",
+        "kind": 3,
+        "text": "",
+        "texture": "d4678900e03b26cd98c496fd09fa23f7",
+        "font": "1d1cd0950b291b3e034b47e22e739be3",
+        "textKey": "",
+        "textLogicalAlign": -1,
+        "mirrorRow": false,
+        "focusColor": [
+          0.98,
+          0.78,
+          0.43,
+          1
+        ],
+        "placeholder": "",
+        "accessibleLabel": "",
+        "description": "",
+        "readOnly": false,
+        "maxBytes": 4096,
+        "visible": false,
+        "enabled": true,
+        "clip": false,
+        "wrap": false,
+        "fit": true,
+        "spacing": 8,
+        "fontSize": 18,
+        "value": 0,
+        "minimum": 0,
+        "maximum": 1,
+        "flow": 0,
+        "direction": 0,
+        "anchorMin": [
+          0,
+          0
+        ],
+        "anchorMax": [
+          0,
+          0
+        ],
+        "offset": [
+          24,
+          128
+        ],
+        "size": [
+          620,
+          414
+        ],
+        "relativeSize": [
+          0,
+          0
+        ],
+        "align": [
+          0,
+          0
+        ],
+        "textAlign": [
+          0,
+          0.5
+        ],
+        "margin": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "padding": [
+          10,
+          6,
+          10,
+          6
+        ],
+        "background": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "color": [
+          0.88,
+          0.91,
+          0.84,
+          1
+        ],
+        "rowHeight": 36
+      }
+    ]
+  }
+}

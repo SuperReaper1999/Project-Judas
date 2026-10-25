@@ -1,0 +1,30 @@
+{
+  "prompt": "a low poly birch tree 7 metres tall",
+  "category": "tree",
+  "confidence": 1.0,
+  "params": {
+    "features": {},
+    "size": 1.0,
+    "style": "lowpoly",
+    "type": "birch",
+    "height": 7.0,
+    "count": 1
+  },
+  "understood": [],
+  "seed": 85321,
+  "style": "lowpoly",
+  "files": {
+    "glb": "/home/conner/Documents/GitHub/Project-Judas/projects/lunar_island/ArtSource/prompt3d/a-low-poly-birch-tree-7-metres-tall-85321-lowpoly.glb"
+  },
+  "stats": {
+    "vertices": 4955,
+    "triangles": 6080,
+    "groups": 1
+  },
+  "dimensions_m": [
+    4.75,
+    9.58,
+    5.13
+  ],
+  "seconds": 0.03
+}

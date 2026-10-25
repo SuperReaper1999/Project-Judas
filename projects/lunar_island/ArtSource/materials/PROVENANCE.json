@@ -1,0 +1,76 @@
+[
+  {
+    "kind": "bark",
+    "source": "https://ambientcg.com/a/Bark014",
+    "creator": "ambientCG",
+    "license": "CC0-1.0",
+    "attributionRequired": false,
+    "sha256": "c52ccc822fa5edd263e3cb59211879093ef7c1bd1517e2c8ddc3bf431b2f1369"
+  },
+  {
+    "kind": "ceramic",
+    "source": "Prompt3D original procedural texture",
+    "implementation": "prompt3d/textures.py"
+  },
+  {
+    "kind": "foliage",
+    "source": "Prompt3D original procedural texture",
+    "implementation": "prompt3d/textures.py"
+  },
+  {
+    "kind": "grass",
+    "source": "https://ambientcg.com/a/Grass004",
+    "creator": "ambientCG",
+    "license": "CC0-1.0",
+    "attributionRequired": false,
+    "sha256": "95ab19fa14a2b544835f97131d568119546a3e743f21049e26c59b6e612d49c1"
+  },
+  {
+    "kind": "metal",
+    "source": "https://ambientcg.com/a/Metal049A",
+    "creator": "ambientCG",
+    "license": "CC0-1.0",
+    "attributionRequired": false,
+    "sha256": "5d79a23c85c288ea7399339db4073ba9fb2b3d66a20388918e12ed6bfa9c1f54"
+  },
+  {
+    "kind": "plaster",
+    "source": "https://ambientcg.com/a/Plaster001",
+    "creator": "ambientCG",
+    "license": "CC0-1.0",
+    "attributionRequired": false,
+    "sha256": "74887238dbdea69e6cb77fb7969f7673617a48285b0a79f1aca4d97af165dff8"
+  },
+  {
+    "kind": "shingles",
+    "source": "https://ambientcg.com/a/RoofingTiles013A",
+    "creator": "ambientCG",
+    "license": "CC0-1.0",
+    "attributionRequired": false,
+    "sha256": "c34f8e2334741797bf9ca2e208ab59bf2e2f35a87ae987b82dfc0b3052cf656e"
+  },
+  {
+    "kind": "soil",
+    "source": "https://ambientcg.com/a/Ground048",
+    "creator": "ambientCG",
+    "license": "CC0-1.0",
+    "attributionRequired": false,
+    "sha256": "983df61e3eb0d1574d9cfad014a9456d10a15d2f8e88b6d2ed6219cb195f570f"
+  },
+  {
+    "kind": "stone",
+    "source": "https://ambientcg.com/a/Rock063",
+    "creator": "ambientCG",
+    "license": "CC0-1.0",
+    "attributionRequired": false,
+    "sha256": "04ff7d7349fd5cfcd10752459fe01b186c8b707f96b436ca7dc8f938ff74f256"
+  },
+  {
+    "kind": "wood",
+    "source": "https://ambientcg.com/a/Wood092",
+    "creator": "ambientCG",
+    "license": "CC0-1.0",
+    "attributionRequired": false,
+    "sha256": "8ba25a81f09fa4c3a30dc06906022ed5cd2acb4b9ecbf79b0b440182470baa95"
+  }
+]

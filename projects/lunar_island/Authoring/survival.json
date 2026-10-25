@@ -1,0 +1,1 @@
+{"slots":18,"maxWeight":32,"walkSpeed":4.5,"sprintSpeed":7,"jumpSpeed":5.3,"hungerPerSecond":0.018,"thirstPerSecond":0.035,"staminaSprintPerSecond":18,"staminaRecoveryPerSecond":14,"starvationDamagePerSecond":1.2,"dehydrationDamagePerSecond":2,"breathSeconds":22,"startingHealth":100,"startingHunger":75,"startingThirst":65}

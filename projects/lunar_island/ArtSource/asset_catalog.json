@@ -1,0 +1,180 @@
+{
+  "coastal_pine": {
+    "path": "Assets/models/coastal_pine.glb",
+    "bounds": [
+      [
+        -2.7199055045924174,
+        0.0,
+        -2.7199055045924174
+      ],
+      [
+        2.7199055045924174,
+        9.51957027997005,
+        2.7199055045924174
+      ]
+    ],
+    "style": "realistic",
+    "sha256": "fe3435f3d240dd3d23323bbf2e5c7b901dd63eb95273d206f7d605fe727c13cd",
+    "source": "Prompt3D prompt plus ground-root adaptation for fern"
+  },
+  "silver_birch": {
+    "path": "Assets/models/silver_birch.glb",
+    "bounds": [
+      [
+        -2.502998448966755,
+        -0.053633059187555676,
+        -2.8666162797724253
+      ],
+      [
+        2.2267624724533497,
+        9.529098505139814,
+        2.2413359243733773
+      ]
+    ],
+    "style": "realistic",
+    "sha256": "189e0de339b999277094ffa216bf56eb979f6c7f1313d3601a42238d6456bcd2",
+    "source": "Prompt3D prompt plus ground-root adaptation for fern"
+  },
+  "island_oak": {
+    "path": "Assets/models/island_oak.glb",
+    "bounds": [
+      [
+        -3.242513915964598,
+        -0.06786481971348116,
+        -3.9379542513013233
+      ],
+      [
+        3.6628179352830315,
+        11.804726489544224,
+        3.7121433763320697
+      ]
+    ],
+    "style": "realistic",
+    "sha256": "8bde3c2f5b966a8f8c552666359aaee5b515201c8cbe6beaeb954b93b718efdd",
+    "source": "Prompt3D prompt plus ground-root adaptation for fern"
+  },
+  "fern": {
+    "path": "Assets/models/fern.glb",
+    "bounds": [
+      [
+        -0.8457777679648683,
+        0.0,
+        -0.8491836619475417
+      ],
+      [
+        0.8351719133891061,
+        0.539535618467184,
+        0.823328328952837
+      ]
+    ],
+    "style": "realistic",
+    "sha256": "202b84357ab8311815561f5d6b815897a2581f3cffc9864e60f9682a578716d3",
+    "source": "Prompt3D prompt plus ground-root adaptation for fern"
+  },
+  "berry_bush": {
+    "path": "Assets/models/berry_bush.glb",
+    "bounds": [
+      [
+        -0.8457777679648683,
+        0.0,
+        -0.8491836619475417
+      ],
+      [
+        0.8351719133891061,
+        0.539535618467184,
+        0.823328328952837
+      ]
+    ],
+    "style": "realistic",
+    "sha256": "fa74ca27ac8250e650595f0ea989f8511d5f3b4de9faa204f66c0338555a5105",
+    "source": "Original ground-rooted fern derivative with berry clusters"
+  },
+  "axe": {
+    "path": "Assets/models/axe.glb",
+    "source": "Original operator-owned Hearthworld art",
+    "sourceSha256": "1964dba73c3da7d0c9a0e024960a88dc38a2818001af212144b730f0e361b222",
+    "finish": "Prompt3D PBR material finish; original geometry retained",
+    "sha256": "0fdf5acced615493a7635c7a0dac15d79b0b9d9fa4b490784452299db70b155b"
+  },
+  "pickaxe": {
+    "path": "Assets/models/pickaxe.glb",
+    "source": "Original operator-owned Hearthworld art",
+    "sourceSha256": "f71e23fe426b674e07d1c44ef83c7b3fb3ea5e2908fee3f159d889d711f65c18",
+    "finish": "Prompt3D PBR material finish; original geometry retained",
+    "sha256": "26dd8f5facc71f9a6506d21ac03abef4ca9bca5044b80ef103358eca0376b5e4"
+  },
+  "rock": {
+    "path": "Assets/models/rock.glb",
+    "source": "Original operator-owned Hearthworld art",
+    "sourceSha256": "d2eb7bc6d69621f7f9b624b5738422cd57b565c0cb5f9f5ed24e652edfb0f54c",
+    "finish": "Prompt3D PBR material finish; original geometry retained",
+    "sha256": "cc48210f9fb5d0d07ec1645335f9863b444910192c26c39566a95f76f7295afe"
+  },
+  "campfire": {
+    "path": "Assets/models/campfire.glb",
+    "source": "Original operator-owned Hearthworld art",
+    "sourceSha256": "3e34b462188204b50e0bd0ebe9064611e7490dfab27627c53defffa67b90030c",
+    "finish": "Prompt3D PBR material finish; original geometry retained",
+    "sha256": "d5b761e07e9a05257a5e94f0da3d397ffc4d5aeebdae888caa4c510234f4c79c"
+  },
+  "chopping_stump": {
+    "path": "Assets/models/chopping_stump.glb",
+    "source": "Original operator-owned Hearthworld art",
+    "sourceSha256": "9686ce85e20bdc7e591d1d419bee86d204a4788475737180edc4a5c058a65a97",
+    "finish": "Prompt3D PBR material finish; original geometry retained",
+    "sha256": "4464c775f70829e640a2f8265bb6072f0cdd4cf9d71d409dab17dc8ca81e6213"
+  },
+  "barrel": {
+    "path": "Assets/models/barrel.glb",
+    "source": "Original operator-owned Hearthworld art",
+    "sourceSha256": "0760725b49ef15b8dfaa6af4ec1a10602e178f725f26cd86f0918a5af816d5c8",
+    "finish": "Prompt3D PBR material finish; original geometry retained",
+    "sha256": "b7d25e8a28d7e911a616cc9f870a5950aff3b670227d94ce2583e8daeaf62982"
+  },
+  "character_adventurer": {
+    "path": "Assets/models/character_adventurer.glb",
+    "source": "Original operator-owned Hearthworld art",
+    "sourceSha256": "efdc1ed2f7986cc183b974d9c05574dd67993f6751584a6e3f90ee74cdedaef3",
+    "finish": "original",
+    "sha256": "efdc1ed2f7986cc183b974d9c05574dd67993f6751584a6e3f90ee74cdedaef3"
+  },
+  "log": {
+    "path": "Assets/models/log.glb",
+    "source": "Original operator-owned Hearthworld art",
+    "sourceSha256": "e403553ebd1854b3c5377ad9af8dcb7c27884b1294f929fb2af8d9f171b3e2a9",
+    "finish": "Prompt3D PBR material finish; original geometry retained",
+    "sha256": "3a04c0963dada23504965d023c70d4e8561412e8467bae61555841ea4d744a81"
+  },
+  "well": {
+    "path": "Assets/models/well.glb",
+    "source": "Original operator-owned Hearthworld art",
+    "sourceSha256": "8b8039c6fff796c43a9b00913e6e4e8f898b09721b67503bcc590d1a18cd1752",
+    "finish": "Prompt3D PBR material finish; original geometry retained",
+    "sha256": "90c7a9286b4467066c24a121708390956385baa6d3c0c8b98fe41f56373cde68"
+  },
+  "wood_crate": {
+    "path": "Assets/models/wood_crate.glb",
+    "source": "Original operator-owned Hearthworld art",
+    "sourceSha256": "b3b06e04b04d694e71c3c9f2274dd1500bb701d6f7c144dda61885efac059539",
+    "finish": "Prompt3D PBR material finish; original geometry retained",
+    "sha256": "65d6fc075c5b378148e33ef7b1a407cbb7882f7d50ffff88ad68a94773014e65"
+  },
+  "woodsign": {
+    "path": "Assets/models/woodsign.glb",
+    "bounds": [
+      [
+        -1.6,
+        0.0,
+        -0.08
+      ],
+      [
+        1.6,
+        1.8,
+        0.137
+      ]
+    ],
+    "style": "realistic",
+    "sha256": "4c76ccb06cbb912396dce2eb140bdd5ae44fa822dad81bcb493dd9d84b507159",
+    "source": "Original raised lettering and timber sign"
+  }
+}

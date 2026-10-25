@@ -1,0 +1,29 @@
+{
+  "prompt": "a realistic fern",
+  "category": "plant",
+  "confidence": 1.0,
+  "params": {
+    "features": {},
+    "size": 1.0,
+    "style": "realistic",
+    "type": "fern",
+    "count": 1
+  },
+  "understood": [],
+  "seed": 85323,
+  "style": "realistic",
+  "files": {
+    "glb": "/home/conner/Documents/GitHub/Project-Judas/projects/lunar_island/ArtSource/prompt3d/a-realistic-fern-85323-realistic.glb"
+  },
+  "stats": {
+    "vertices": 3749,
+    "triangles": 2436,
+    "groups": 1
+  },
+  "dimensions_m": [
+    0.67,
+    0.36,
+    0.67
+  ],
+  "seconds": 0.24
+}

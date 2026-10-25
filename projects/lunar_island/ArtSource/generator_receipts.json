@@ -1,0 +1,85 @@
+[
+  {
+    "prompt": "a realistic pine tree 8 metres tall",
+    "seed": 85320,
+    "category": "tree",
+    "params": {
+      "features": {},
+      "size": 1.0,
+      "style": "realistic",
+      "type": "pine",
+      "height": 8.0,
+      "count": 1
+    },
+    "finish": "realistic",
+    "sha256": "fe3435f3d240dd3d23323bbf2e5c7b901dd63eb95273d206f7d605fe727c13cd"
+  },
+  {
+    "prompt": "a realistic birch tree 7 metres tall",
+    "seed": 85321,
+    "category": "tree",
+    "params": {
+      "features": {},
+      "size": 1.0,
+      "style": "realistic",
+      "type": "birch",
+      "height": 7.0,
+      "count": 1
+    },
+    "finish": "realistic",
+    "sha256": "189e0de339b999277094ffa216bf56eb979f6c7f1313d3601a42238d6456bcd2"
+  },
+  {
+    "prompt": "a realistic oak tree 9 metres tall",
+    "seed": 85322,
+    "category": "tree",
+    "params": {
+      "features": {},
+      "size": 1.0,
+      "style": "realistic",
+      "type": "oak",
+      "height": 9.0,
+      "count": 1
+    },
+    "finish": "realistic",
+    "sha256": "8bde3c2f5b966a8f8c552666359aaee5b515201c8cbe6beaeb954b93b718efdd"
+  },
+  {
+    "prompt": "a realistic fern",
+    "seed": 85323,
+    "category": "plant",
+    "params": {
+      "features": {},
+      "size": 1.0,
+      "style": "realistic",
+      "type": "fern",
+      "count": 1
+    },
+    "finish": "realistic",
+    "sha256": "202b84357ab8311815561f5d6b815897a2581f3cffc9864e60f9682a578716d3"
+  },
+  {
+    "tool_source": "nlu.py",
+    "sha256": "e69079d3319237768d8ab8a83ed0f25aefa635df163ae6488bd434713349bc82"
+  },
+  {
+    "tool_source": "pipeline.py",
+    "sha256": "f6cec857283c5d317e42f1248622d70ade1778afeebef64be5b0f317bc3d42b6"
+  },
+  {
+    "tool_source": "geometry.py",
+    "sha256": "1e1a87761d8f1b18c03d1b276022382187a5a5d817d0c87501a6bec81d3ab500"
+  },
+  {
+    "tool_source": "export.py",
+    "sha256": "2cacbd07995d37ffbe41c0ab03012ec90f8a3d256da2fd34d62ad5ff480ad811"
+  },
+  {
+    "tool_source": "textures.py",
+    "sha256": "e18a9bf9caa9e8d59d57e5bc9f97b6bc41e872fcf1500b21f8b12fc58eeadff8"
+  },
+  {
+    "tool_source": "scans.py",
+    "sha256": "e2fb64b1f298b17a665d43764528c207971deff16c1cc7b78eb56c43ac47709a"
+  }
+]

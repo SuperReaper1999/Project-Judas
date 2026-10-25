@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/home/conner/Documents/GitHub/Project-Judas/projects/lunar_island/tools/generate_assets.py", line 70, in <module>
+    if __name__=='__main__':main()
+                            ~~~~^^
+  File "/home/conner/Documents/GitHub/Project-Judas/projects/lunar_island/tools/generate_assets.py", line 67, in main
+    p=a.prompt3d/'prompt3d'/file
+      ^^^^^^^^^^
+AttributeError: 'float' object has no attribute 'prompt3d'

@@ -1,0 +1,12 @@
+/home/conner/Documents/GitHub/Project-Judas/projects/lunar_island/lunar_island.judasproj: project/experimental: unknown property
+Traceback (most recent call last):
+  File "/home/conner/Documents/GitHub/Project-Judas/projects/lunar_island/tools/author_project.py", line 172, in <module>
+    if __name__=='__main__':main()
+                            ~~~~^^
+  File "/home/conner/Documents/GitHub/Project-Judas/projects/lunar_island/tools/author_project.py", line 170, in main
+    subprocess.run([str(REPO/'build/judas_terrain_author'),'cook',str(ROOT/'lunar_island.judasproj'),f'Authoring/{name}.judasterrain'],check=True)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.14/subprocess.py", line 578, in run
+    raise CalledProcessError(retcode, process.args,
+                             output=stdout, stderr=stderr)
+subprocess.CalledProcessError: Command '['/home/conner/Documents/GitHub/Project-Judas/build/judas_terrain_author', 'cook', '/home/conner/Documents/GitHub/Project-Judas/projects/lunar_island/lunar_island.judasproj', 'Authoring/coast_0.judasterrain']' returned non-zero exit status 1.

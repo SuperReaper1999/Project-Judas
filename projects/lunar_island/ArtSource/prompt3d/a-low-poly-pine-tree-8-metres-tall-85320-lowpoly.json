@@ -1,0 +1,30 @@
+{
+  "prompt": "a low poly pine tree 8 metres tall",
+  "category": "tree",
+  "confidence": 1.0,
+  "params": {
+    "features": {},
+    "size": 1.0,
+    "style": "lowpoly",
+    "type": "pine",
+    "height": 8.0,
+    "count": 1
+  },
+  "understood": [],
+  "seed": 85320,
+  "style": "lowpoly",
+  "files": {
+    "glb": "/home/conner/Documents/GitHub/Project-Judas/projects/lunar_island/ArtSource/prompt3d/a-low-poly-pine-tree-8-metres-tall-85320-lowpoly.glb"
+  },
+  "stats": {
+    "vertices": 369,
+    "triangles": 400,
+    "groups": 1
+  },
+  "dimensions_m": [
+    5.44,
+    9.52,
+    5.44
+  ],
+  "seconds": 0.53
+}

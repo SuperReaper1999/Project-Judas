@@ -1,0 +1,13 @@
+Shadow maps: on
+Graphics: 3.3.0 NVIDIA 580.178.04 / NVIDIA GeForce GTX 970/PCIe/SSE2
+Renderer fragment texture units: 32 (material path uses 12)
+[editor autotest] duplicate created id 2000: scene CHANGED; undo restores: IDENTICAL
+[editor autotest] wrote: /tmp/lunar-island-editor-final.edit.png
+[editor autotest] edit frame: 4 draw calls, 37376 triangles, 8644 debug lines
+[editor autotest] wrote: /tmp/lunar-island-editor-final.play.png
+[editor autotest] play frame: 0 steps, step 0.000 ms, 231 bodies, 0 contacts, 204 draw calls, 482492 triangles, 1 shadow passes, 0 lights, 401347 debug lines, 0 particles
+[editor autotest] resources: 18 meshes, 3 textures, 0 terrain meshes, hits 65841, misses 30, failed 0, uploads 26, resident 35685282 bytes
+[editor autotest] jobs: 11 workers, 32 completed, 0 failed, 0 cancelled
+[editor autotest] authored scene after play/stop is IDENTICAL
+[editor autotest] save ok
+JS: Lunar Island: WASD, mouse, E gather, click tool, Tab pack/crafting, Escape pause, F6 save, F9 load.

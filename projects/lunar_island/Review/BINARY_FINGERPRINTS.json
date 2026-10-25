@@ -1,0 +1,31 @@
+{
+  "recordedUTC": "2026-10-25T23:19:28.527916+00:00",
+  "engineRevision": "c2cdd376f1c20a9d6a8a75d8257f9ac44327ec09",
+  "artStyle": "realistic",
+  "files": {
+    "build/judas": {
+      "bytes": 55302232,
+      "sha256": "f3bb1edc005c94507e212c937d588cc7494f654834e4bba3d5d8feb25acc151b"
+    },
+    "build/judas_editor": {
+      "bytes": 60777400,
+      "sha256": "10328966f4fbbcdc40dc2e87e509dbdf8a6e9863645a19836ec79aea29f73b87"
+    },
+    "build/judas_export": {
+      "bytes": 55190456,
+      "sha256": "4d93a8a90ec02b73df545c97c1a6ce65af147e7b60f2a77e32867e4f0bb018be"
+    },
+    "/tmp/lunar-island-observer": {
+      "bytes": 55490016,
+      "sha256": "132a77fb0b24d698da67a7248c72f2f5b553cb9d6fd22d92d958bb2a9ede9e69"
+    },
+    ".cache/lunar-island-stage1/Lunar Island Realistic/judas": {
+      "bytes": 55302232,
+      "sha256": "f3bb1edc005c94507e212c937d588cc7494f654834e4bba3d5d8feb25acc151b"
+    },
+    ".cache/lunar-island-stage1/LunarIsland-Stage1-Linux.tar.gz": {
+      "bytes": 69980175,
+      "sha256": "6c366ce28edab9769d47d2a169a1c711ff470915456a5243c1a9955708b9330a"
+    }
+  }
+}

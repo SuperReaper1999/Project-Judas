@@ -1,0 +1,24 @@
+Textures from ambientCG (https://ambientcg.com), licensed CC0 1.0 Universal (public domain).
+{
+ "brick": "Bricks097",
+ "wood": "Wood092",
+ "planks": "WoodFloor043",
+ "asphalt": "Asphalt031",
+ "metal": "Metal049A",
+ "concrete": "Concrete034",
+ "plaster": "Plaster001",
+ "shingles": "RoofingTiles013A",
+ "grass": "Grass004",
+ "fabric": "Fabric081C",
+ "leather": "Leather037",
+ "tile": "Tiles139",
+ "bark": "Bark014",
+ "soil": "Ground048",
+ "snow": "Snow010A",
+ "paper": "Paper003",
+ "carpet": "Carpet016",
+ "stone": "Rock063",
+ "chainlink": "Fence006",
+ "diamond plate": "DiamondPlate008C",
+ "painted wood": "PaintedWood008C"
+}
