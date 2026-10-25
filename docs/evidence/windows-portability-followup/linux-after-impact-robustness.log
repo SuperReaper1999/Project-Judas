@@ -1,0 +1,65 @@
+spin-up drops onto a horizontal support
+  slab down 20 side 0 spin 0 maxSpin 0 centre below 0 corner below 5.58794e-09
+  slab down 20 side 0 spin 15 maxSpin 180.096 centre below 0 corner below 0.00136995
+  slab down 20 side 0 spin 45 maxSpin 55.0729 centre below 0 corner below 0.00498447
+  slab down 20 side 30 spin 0 maxSpin 104.314 centre below 0 corner below 0
+  slab down 20 side 30 spin 15 maxSpin 164.067 centre below 0 corner below 0
+  slab down 20 side 30 spin 45 maxSpin 150.078 centre below 0 corner below 0
+  slab down 40 side 0 spin 0 maxSpin 0 centre below 0 corner below 0
+  slab down 40 side 0 spin 15 maxSpin 976.271 centre below 0 corner below 0
+  slab down 40 side 0 spin 45 maxSpin 240.761 centre below 0 corner below 0.000402309
+  slab down 40 side 30 spin 0 maxSpin 1.0076 centre below 0 corner below 0.018454
+  slab down 40 side 30 spin 15 maxSpin 79.3333 centre below 0 corner below 0.01
+  slab down 40 side 30 spin 45 maxSpin 841.809 centre below 0 corner below 0
+  mesh down 20 side 0 spin 0 maxSpin 1.23928e-06 centre below 0 corner below 9.31323e-09
+  mesh down 20 side 0 spin 15 maxSpin 17.6751 centre below 0 corner below 0.000517195
+  mesh down 20 side 0 spin 45 maxSpin 55.0729 centre below 0 corner below 7.89315e-05
+  mesh down 20 side 30 spin 0 maxSpin 2.58163e-06 centre below 0 corner below 0
+  mesh down 20 side 30 spin 15 maxSpin 156.681 centre below 0 corner below 0
+  mesh down 20 side 30 spin 45 maxSpin 148.36 centre below 0 corner below 0
+  mesh down 40 side 0 spin 0 maxSpin 0.000236889 centre below 0 corner below 3.07336e-08
+  mesh down 40 side 0 spin 15 maxSpin 60.6151 centre below 0 corner below 0
+  mesh down 40 side 0 spin 45 maxSpin 52.7611 centre below 0 corner below 0.000182286
+  mesh down 40 side 30 spin 0 maxSpin 616.561 centre below 0 corner below 0.0025
+  mesh down 40 side 30 spin 15 maxSpin 975.527 centre below 0 corner below 0
+  mesh down 40 side 30 spin 45 maxSpin 1053.23 centre below 0 corner below 0
+tilted supports
+  slab tilt 0 speed 10 maxSpin 0 centre below 0 corner below 0
+  slab tilt 0 speed 20 maxSpin 0 centre below 0 corner below 5.58794e-09
+  slab tilt 0 speed 40 maxSpin 0 centre below 0 corner below 0
+  slab tilt 5 speed 10 maxSpin 0.00336239 centre below 0 corner below 0.000417123
+  slab tilt 5 speed 20 maxSpin 160.197 centre below 0 corner below 0.00140721
+  slab tilt 5 speed 40 maxSpin 176.383 centre below 0 corner below 0.000293992
+  slab tilt 15 speed 10 maxSpin 248.193 centre below 0 corner below 0.00481207
+  slab tilt 15 speed 20 maxSpin 60.973 centre below 0 corner below 0.000398077
+  slab tilt 15 speed 40 maxSpin 11.8874 centre below 0 corner below 0.00656378
+  slab tilt 30 speed 10 maxSpin 72.1509 centre below 0 corner below 0.00823063
+  slab tilt 30 speed 20 maxSpin 1.75891 centre below 0 corner below 0.00956687
+  slab tilt 30 speed 40 maxSpin 58.7216 centre below 0 corner below 0.00444281
+  slab tilt 45 speed 10 maxSpin 0.350936 centre below 0 corner below 0.00403178
+  slab tilt 45 speed 20 maxSpin 20.3811 centre below 0 corner below 0.00379908
+  slab tilt 45 speed 40 maxSpin 1.23988 centre below 0 corner below 5.96046e-08
+  mesh tilt 0 speed 10 maxSpin 6.68691e-07 centre below 0 corner below 0
+  mesh tilt 0 speed 20 maxSpin 1.23928e-06 centre below 0 corner below 9.31323e-09
+  mesh tilt 0 speed 40 maxSpin 0.000236889 centre below 0 corner below 3.07336e-08
+  mesh tilt 5 speed 10 maxSpin 1.91074 centre below 0 corner below 0.000422366
+  mesh tilt 5 speed 20 maxSpin 4.98854 centre below 0 corner below 0.000104632
+  mesh tilt 5 speed 40 maxSpin 112.679 centre below 0 corner below 0.000139738
+  mesh tilt 15 speed 10 maxSpin 36.2667 centre below 0 corner below 0.000497669
+  mesh tilt 15 speed 20 maxSpin 105.616 centre below 0 corner below 4.60297e-05
+  mesh tilt 15 speed 40 maxSpin 903.392 centre below 0 corner below 0.000141263
+  mesh tilt 30 speed 10 maxSpin 231.181 centre below 0 corner below 8.51154e-05
+  mesh tilt 30 speed 20 maxSpin 463.379 centre below 0 corner below 5.31375e-05
+  mesh tilt 30 speed 40 maxSpin 191.027 centre below 0 corner below 0
+  mesh tilt 45 speed 10 maxSpin 10.1053 centre below 0 corner below 0
+  mesh tilt 45 speed 20 maxSpin 83.6536 centre below 0 corner below 0
+  mesh tilt 45 speed 40 maxSpin 683.529 centre below 0 corner below 0
+gentle slides
+  slab slide 15 maxSpin 0.0236087 centre below 0 corner below 2.92398e-05
+  slab slide 30 maxSpin 3.60475 centre below 0 corner below 2.94577e-05
+  slab slide 45 maxSpin 1.9 centre below 0 corner below 8.35583e-06
+  mesh slide 15 maxSpin 0.015892 centre below 0 corner below 4.51356e-05
+  mesh slide 30 maxSpin 0.139567 centre below 0 corner below 5.91911e-05
+  mesh slide 45 maxSpin 2.33213 centre below 0 corner below 2.56523e-05
+deepest corner below any support 0.018454 m
+checks 4412 failures 0

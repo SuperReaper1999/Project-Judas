@@ -1,0 +1,71 @@
+PASS numeric loopback listener chooses and publishes its actual ephemeral port
+PASS active transport cannot silently replace a live listener
+PASS nonblocking loopback connect starts
+PASS both actual socket endpoints report one connection; client server handle is peer one
+PASS binary, empty and ordinary reliable frames enqueue
+PASS network endian framing preserves payload bytes and reliable FIFO boundaries
+PASS server addresses accepted connection identity
+PASS bidirectional socket delivery drains counted queued bytes
+PASS wire byte and complete-frame counters describe actual I/O
+PASS unknown peer send fails diagnostically
+PASS local and remote disconnects each publish once without a stale connection
+PASS disconnected generation cannot send to retired connection
+PASS Stop closes listener and clears transient observations
+PASS same transport can rebind and reconnect after Stop
+PASS server connection identifiers never alias a previously retired connection across restarts
+PASS invalid clock regression is reported without corrupting live sockets
+PASS each Poll replaces the previous event batch
+PASS blocking hostname resolution is not accepted
+PASS zero connect port is rejected
+PASS invalid capacity cannot create a transport
+PASS unbounded configuration rejects before opening sockets
+PASS raw framing fixture listens
+PASS independent raw TCP endpoint connects
+PASS actual raw endpoint admission is observed within bounded real time
+PASS write split frame header first half
+PASS partial header cannot become a message
+PASS write remaining header and partial body
+PASS partial body remains private and bounded
+PASS complete partial body
+PASS fragmented frame publishes only its complete exact payload
+PASS independent endpoint sends hostile oversized length
+PASS malformed length disconnects before allocation or phantom message
+PASS actual raw endpoint admission is observed within bounded real time
+PASS disconnect in mid-frame discards incomplete state without delivery
+PASS low-rate transport fixture listens
+PASS actual raw endpoint admission is observed within bounded real time
+PASS entirely unsent replaceable snapshots coalesce
+PASS partial-send fixture starts cleanly
+PASS actual raw endpoint admission is observed within bounded real time
+PASS old replaceable frame queues
+PASS token budget bounds even the first partial frame including its header
+PASS queue controls and updated snapshot behind partially sent frame
+PASS coalescing never edits partial wire frames or discards/reorders reliable control
+PASS bounded low-rate sender eventually completes queued frames
+PASS full reliable queue backpressures atomically rather than discarding control
+PASS outgoing oversize frame is rejected before queue allocation
+PASS inbound token fixture listens
+PASS actual raw endpoint admission is observed within bounded real time
+PASS raw endpoint can burst beyond receiver processing budget
+PASS inbound partial headers and bodies share the same byte rate budget
+PASS repeated zero-time Poll cannot bypass receiver rate limiting
+PASS token refill preserves and eventually completes a frame larger than the burst budget
+PASS inbound message-count fixture listens
+PASS actual raw endpoint admission is observed within bounded real time
+PASS independent endpoint writes many tiny frames in one burst
+PASS one peer cannot publish an unbounded callback flood per Poll
+PASS bounded message batches retain all reliable frames in FIFO order across Poll calls
+PASS single-peer timeout fixture listens
+PASS actual raw endpoint admission is observed within bounded real time
+PASS capacity control reaches the transport with two established sockets
+PASS accepted-peer capacity rejects excess connections without growing retained state
+PASS receive idle deadline closes a silent peer deterministically
+PASS tiny-frame queue fixture listens
+PASS actual raw endpoint admission is observed within bounded real time
+PASS empty reliable messages cannot evade the independent queued-frame capacity
+PASS outbound socket calls stay bounded even for a queue of empty frames
+PASS refused-connect fixture obtains an unused local port
+PASS real bind conflict names the endpoint and corrective action
+PASS asynchronous connection refusal has an explicit terminal diagnostic
+PASS connection refusal identifies endpoint and host-listener check without raw-code guessing
+SUMMARY checks=70 failures=0

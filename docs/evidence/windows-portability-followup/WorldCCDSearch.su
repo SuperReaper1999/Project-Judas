@@ -1,0 +1,41 @@
+/home/conner/Documents/GitHub/Project-Judas/src/ContactGeometryInternal.h:13:12:contact_geometry::ArithmeticFailure::~ArithmeticFailure()	8	static
+/home/conner/Documents/GitHub/Project-Judas/src/ContactGeometryInternal.h:13:12:virtual contact_geometry::ArithmeticFailure::~ArithmeticFailure()	32	static
+src/physics/WorldCCDSearch.cpp:473:29:PhysicsWorld::Impl::CCDQuery::ImpactTime(unsigned int, unsigned int, int, int, double, double, double, bool, const MeshFeatureBudget*)::<lambda(const Aabb&)>	8	static
+/home/conner/Documents/GitHub/Project-Judas/src/RigidMotionBounds.h:92:18:rigid_motion_bounds::TryDynamicRotationInterval(const RigidMotionSegment&, double, double)::<lambda(double)>	8	static
+src/physics/WorldImpactQueries.h:62:13:const Aabb& PhysicsWorld::Impl::CCDQuery::ActualImpactBound(unsigned int, const PhysicsWorld::Impl::ImpactPoseSample&)	320	static
+src/physics/WorldCCDSearch.cpp:323:25:PhysicsWorld::Impl::CCDQuery::MeshDepthGrowthSafe(unsigned int, unsigned int, int, int, double, double, const MeshFeatureBudget&)::<lambda(double)>	96	static
+/home/conner/Documents/GitHub/Project-Judas/src/ContactGeometryInternal.h:54:15:contact_geometry::Iv contact_geometry::operator+(Iv, Iv)	8	static
+/home/conner/Documents/GitHub/Project-Judas/src/ContactGeometryInternal.h:78:15:contact_geometry::Iv contact_geometry::operator*(Iv, Iv)	64	static
+/home/conner/Documents/GitHub/Project-Judas/src/ContactGeometryInternal.h:106:15:contact_geometry::Iv contact_geometry::operator/(Iv, Iv)	32	static
+/home/conner/Documents/GitHub/Project-Judas/src/ContactGeometryInternal.h:131:15:contact_geometry::Iv contact_geometry::Sqrt(Iv)	32	static
+/home/conner/Documents/GitHub/Project-Judas/src/RigidMotion.h:39:25:RigidMotionGeometry RigidMotionSegment::EvaluateGeometry(double) const	192	static
+/home/conner/Documents/GitHub/Project-Judas/src/RigidMotionBounds.h:19:13:bool rigid_motion_bounds::SameQuat(const glm::quat&, const glm::quat&)	8	static
+/home/conner/Documents/GitHub/Project-Judas/src/RigidMotionBounds.h:25:13:bool rigid_motion_bounds::FiniteBound(const Aabb&)	8	static
+/home/conner/Documents/GitHub/Project-Judas/src/RigidMotionBounds.h:81:11:contact_geometry::Iv rigid_motion_bounds::Square(contact_geometry::Iv)	48	static
+/home/conner/Documents/GitHub/Project-Judas/src/RigidMotionBounds.h:82:47:std::optional<std::array<std::array<contact_geometry::Iv, 3>, 3> > rigid_motion_bounds::TryDynamicRotationInterval(const RigidMotionSegment&, double, double)	784	static
+src/physics/WorldProfiling.h:29:5:JudasPhysicsDetail::PhysicsWorkTimer::~PhysicsWorkTimer()	32	static
+src/physics/WorldCCDSearch.cpp:53:6:glm::vec3 PhysicsWorld::Impl::DriftGenerator(unsigned int, double) const	8	static
+src/physics/WorldCCDSearch.cpp:160:6:bool PhysicsWorld::Impl::StaticMeshPolyPair(unsigned int, unsigned int, int, int) const	8	static
+/usr/include/c++/15/bits/shared_ptr_base.h:197:7:void std::_Sp_counted_base<_Lp>::_M_release_last_use_cold() [with __gnu_cxx::_Lock_policy _Lp = __gnu_cxx::_S_atomic]	16	static
+/home/conner/Documents/GitHub/Project-Judas/src/CollisionShapes.h:34:8:Shape::~Shape()	48	static
+src/physics/WorldCCDSearch.cpp:341:6:double PhysicsWorld::Impl::PrimitiveFeature(unsigned int, int) const	384	static
+src/physics/WorldCCDSearch.cpp:451:6:double PhysicsWorld::Impl::SpinPenetrationTarget(const std::array<unsigned int, 4>&) const	32	static
+/usr/include/glm/detail/func_vector_relational.inl:13:51:constexpr glm::vec<L, bool, Q> glm::lessThanEqual(const vec<L, T, Q>&, const vec<L, T, Q>&) [with int L = 3; T = float; qualifier Q = glm::packed_highp]	8	static
+/home/conner/Documents/GitHub/Project-Judas/src/RigidMotionBounds.h:31:28:std::optional<Aabb> rigid_motion_bounds::TryTranslationSweepBound(const Shape&, const RigidMotionSegment&, const RigidBody&, const RigidBody&, double, double)	224	static
+/home/conner/Documents/GitHub/Project-Judas/src/RigidMotionBounds.h:133:28:std::optional<Aabb> rigid_motion_bounds::TryDynamicBoxSweepBound(const Shape&, const RigidMotionSegment&, const RigidBody&, const RigidBody&, double, double)	336	static
+/usr/include/c++/15/bits/vector.tcc:813:5:void std::vector<_Tp, _Alloc>::_M_default_append(size_type) [with _Tp = PhysicsWorld::Impl::ImpactPoseSample; _Alloc = std::allocator<PhysicsWorld::Impl::ImpactPoseSample>]	96	static
+src/physics/WorldCCDSearch.cpp:5:6:const Aabb& PhysicsWorld::Impl::CCDQuery::RemainingImpactBound(unsigned int, double, double)	672	static
+src/physics/WorldCCDSearch.cpp:744:6:const Aabb& PhysicsWorld::Impl::RemainingImpactBound(unsigned int, double, double)	160	static
+src/physics/WorldImpactQueries.h:28:13:const PhysicsWorld::Impl::ImpactPoseSample& PhysicsWorld::Impl::CCDQuery::ImpactPoseAt(unsigned int, double)	240	static
+src/physics/WorldCCDSearch.cpp:74:20:PhysicsWorld::Impl::CCDQuery::PlaneDrift(unsigned int, unsigned int, int, int, double, const glm::dvec3&)::<lambda(unsigned int, int)>	832	static
+src/physics/WorldCCDSearch.cpp:63:6:double PhysicsWorld::Impl::CCDQuery::PlaneDrift(unsigned int, unsigned int, int, int, double, const glm::dvec3&)	14496	static
+src/physics/WorldCCDSearch.cpp:750:6:double PhysicsWorld::Impl::PlaneDrift(unsigned int, unsigned int, int, int, double, const glm::dvec3&)	160	static
+src/physics/WorldCCDSearch.cpp:173:6:bool PhysicsWorld::Impl::CCDQuery::MeshDepthGrowthSafe(unsigned int, unsigned int, int, int, double, double, const MeshFeatureBudget&)	2880	dynamic,bounded
+src/physics/WorldCCDSearch.cpp:756:6:bool PhysicsWorld::Impl::MeshDepthGrowthSafe(unsigned int, unsigned int, int, int, double, double, const MeshFeatureBudget&)	160	static
+src/physics/WorldImpactQueries.h:99:13:ContactManifold PhysicsWorld::Impl::CCDQuery::PairAt(unsigned int, unsigned int, int, int, double, float)	880	dynamic,bounded
+src/physics/WorldCCDSearch.cpp:368:6:bool PhysicsWorld::Impl::CCDQuery::SpinsThroughSupport(const std::array<unsigned int, 4>&, double, double, bool)	880	static
+src/physics/WorldCCDSearch.cpp:762:6:bool PhysicsWorld::Impl::SpinsThroughSupport(const std::array<unsigned int, 4>&, double, double, bool)	160	static
+src/physics/WorldImpactQueries.h:151:13:bool PhysicsWorld::Impl::CCDQuery::PairTouches(unsigned int, unsigned int, int, int, double)	1568	static
+src/physics/WorldCCDSearch.cpp:551:23:PhysicsWorld::Impl::CCDQuery::ImpactTime(unsigned int, unsigned int, int, int, double, double, double, bool, const MeshFeatureBudget*)::<lambda(double)>	1504	static
+src/physics/WorldCCDSearch.cpp:456:6:double PhysicsWorld::Impl::CCDQuery::ImpactTime(unsigned int, unsigned int, int, int, double, double, double, bool, const MeshFeatureBudget*)	2080	dynamic,bounded
+src/physics/WorldCCDSearch.cpp:767:6:double PhysicsWorld::Impl::ImpactTime(unsigned int, unsigned int, int, int, double, double, double)	176	dynamic,bounded

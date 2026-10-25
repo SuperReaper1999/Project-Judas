@@ -1,5 +1,12 @@
 # Windows editor and exported games
 
+## Current portability follow-up
+
+The [seven-finding Pre-Alpha follow-up](PREALPHA_WINDOWS_PORTABILITY_FOLLOWUP.md)
+records new Linux/Windows 10 VM reproductions and corrections based on the
+operator's Windows 11 handoff. Its scoped results do not replace physical
+Windows 11 graphics, input, audio or clean-machine acceptance.
+
 ## Building Windows games from Linux
 
 An optional [MinGW-w64 cross-build/export workflow](WINDOWS_CROSS_BUILD.md) now

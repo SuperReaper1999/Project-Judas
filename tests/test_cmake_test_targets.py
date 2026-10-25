@@ -43,10 +43,10 @@ class CMakeTestTargets(unittest.TestCase):
         with tempfile.TemporaryDirectory(prefix="judas-target-contract-") as folder:
             root = pathlib.Path(folder)
             (root / "tests").mkdir()
-            module = module if module is not None else (ROOT / "cmake/tests/MechanicalTests.cmake").read_text()
-            helper = helper if helper is not None else (ROOT / "cmake/JudasTestTargets.cmake").read_text()
-            (root / "tests/MechanicalTests.cmake").write_text(module)
-            (root / "JudasTestTargets.cmake").write_text(helper)
+            module = module if module is not None else (ROOT / "cmake/tests/MechanicalTests.cmake").read_text(encoding="utf-8")
+            helper = helper if helper is not None else (ROOT / "cmake/JudasTestTargets.cmake").read_text(encoding="utf-8")
+            (root / "tests/MechanicalTests.cmake").write_text(module, encoding="utf-8")
+            (root / "JudasTestTargets.cmake").write_text(helper, encoding="utf-8")
             trace = root / "calls.txt"
             script = root / "inspect.cmake"
             script.write_text('cmake_minimum_required(VERSION 3.20)\n'
@@ -59,15 +59,15 @@ class CMakeTestTargets(unittest.TestCase):
                 'function(judas_warnings target)\n'
                 ' file(APPEND "${trace}" "warnings|${target}|${ARGN}\\n")\nendfunction()\n'
                 f'include("{(root / "JudasTestTargets.cmake").as_posix()}")\n'
-                f'include("{(root / "tests/MechanicalTests.cmake").as_posix()}")\n')
+                f'include("{(root / "tests/MechanicalTests.cmake").as_posix()}")\n', encoding="utf-8")
             result = subprocess.run([shutil.which("cmake") or "cmake", "-P", str(script)],
-                                    text=True, capture_output=True, timeout=15)
+                                    text=True, encoding="utf-8", capture_output=True, timeout=15)
             if not succeeds:
                 self.assertNotEqual(result.returncode, 0)
                 return result.stderr
             self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
             records = {}
-            for line in trace.read_text().splitlines():
+            for line in trace.read_text(encoding="utf-8").splitlines():
                 kind, target, values = line.split("|", 2)
                 self.assertNotIn(kind, records.setdefault(target, {}), "duplicate target declaration")
                 records[target][kind] = values.split(";") if values else []
@@ -81,27 +81,27 @@ class CMakeTestTargets(unittest.TestCase):
                 "links": ["PRIVATE", "judas_engine"], "warnings": ["-Wpedantic"]}, target)
 
     def test_exact_sources_links_warnings_and_order(self):
-        self.assertIn("include(cmake/tests/MechanicalTests.cmake)", (ROOT / "CMakeLists.txt").read_text())
+        self.assertIn("include(cmake/tests/MechanicalTests.cmake)", (ROOT / "CMakeLists.txt").read_text(encoding="utf-8"))
         self.assert_contract(self.declarations())
 
     def test_missing_target_detected(self):
-        module = (ROOT / "cmake/tests/MechanicalTests.cmake").read_text()
+        module = (ROOT / "cmake/tests/MechanicalTests.cmake").read_text(encoding="utf-8")
         module = module.replace("judas_add_engine_test(judas_structural_tests tests/StructuralTests.cpp WARNINGS -Wpedantic)", "", 1)
         with self.assertRaises(AssertionError):
             self.assert_contract(self.declarations(module=module))
 
     def test_missing_application_sources_detected(self):
-        module = (ROOT / "cmake/tests/MechanicalTests.cmake").read_text().replace("APPLICATION WARNINGS", "WARNINGS", 1)
+        module = (ROOT / "cmake/tests/MechanicalTests.cmake").read_text(encoding="utf-8").replace("APPLICATION WARNINGS", "WARNINGS", 1)
         with self.assertRaises(AssertionError):
             self.assert_contract(self.declarations(module=module))
 
     def test_changed_warning_detected(self):
-        module = (ROOT / "cmake/tests/MechanicalTests.cmake").read_text().replace("WARNINGS -Wpedantic", "WARNINGS -Wextra", 1)
+        module = (ROOT / "cmake/tests/MechanicalTests.cmake").read_text(encoding="utf-8").replace("WARNINGS -Wpedantic", "WARNINGS -Wextra", 1)
         with self.assertRaises(AssertionError):
             self.assert_contract(self.declarations(module=module))
 
     def test_changed_link_owner_detected(self):
-        helper = (ROOT / "cmake/JudasTestTargets.cmake").read_text().replace("PRIVATE judas_engine", "PRIVATE wrong_owner", 1)
+        helper = (ROOT / "cmake/JudasTestTargets.cmake").read_text(encoding="utf-8").replace("PRIVATE judas_engine", "PRIVATE wrong_owner", 1)
         with self.assertRaises(AssertionError):
             self.assert_contract(self.declarations(helper=helper))
 
@@ -129,23 +129,23 @@ class SubsystemTargetContracts(unittest.TestCase):
     }
 
     def source(self):
-        return "\n".join((ROOT / "cmake/targets" / (name + ".cmake")).read_text()
+        return "\n".join((ROOT / "cmake/targets" / (name + ".cmake")).read_text(encoding="utf-8")
                          for name in self.MODULES)
 
     def expected(self, platform):
         import json
         fixture = ROOT / "tests/fixtures/cmake/PreAlphaSubsystemTargets.json"
-        return json.loads(fixture.read_text())["platforms"][platform]
+        return json.loads(fixture.read_text(encoding="utf-8"))["platforms"][platform]
 
     def declarations(self, platform="linux", source=None, helper=None):
         with tempfile.TemporaryDirectory(prefix="judas-subsystem-targets-") as folder:
             root = pathlib.Path(folder)
             trace = root / "calls.txt"
             module = root / "targets.cmake"
-            module.write_text(self.source() if source is None else source)
+            module.write_text(self.source() if source is None else source, encoding="utf-8")
             implementation = root / "helper.cmake"
-            implementation.write_text((ROOT / "cmake/JudasTestTargets.cmake").read_text()
-                                      if helper is None else helper)
+            implementation.write_text((ROOT / "cmake/JudasTestTargets.cmake").read_text(encoding="utf-8")
+                                      if helper is None else helper, encoding="utf-8")
             script = 'cmake_minimum_required(VERSION 3.20)\n'
             script += f'set(CMAKE_CURRENT_SOURCE_DIR "{ROOT.as_posix()}")\n'
             for name, enabled in self.PLATFORMS[platform].items():
@@ -157,12 +157,12 @@ class SubsystemTargetContracts(unittest.TestCase):
             script += f'include("{implementation.as_posix()}")\n'
             script += f'include("{module.as_posix()}")\n'
             entry = root / "inspect.cmake"
-            entry.write_text(script)
+            entry.write_text(script, encoding="utf-8")
             result = subprocess.run([shutil.which("cmake") or "cmake", "-P", str(entry)],
-                                    text=True, capture_output=True, timeout=15)
+                                    text=True, encoding="utf-8", capture_output=True, timeout=15)
             self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
             return [[line.split("|", 1)[0], line.split("|", 1)[1].split(";")]
-                    for line in trace.read_text().splitlines()]
+                    for line in trace.read_text(encoding="utf-8").splitlines()]
 
     @staticmethod
     def usage_requirements(args):
@@ -218,7 +218,7 @@ class SubsystemTargetContracts(unittest.TestCase):
                 # These are direct include requirements of the compiled sources,
                 # not another hand-maintained list of target/dependency names.
                 uses_imgui |= bool(re.search(r'^\s*#\s*include\s*[<"](?:backends/)?imgui[^>"]*[>"]',
-                                             path.read_text(), re.MULTILINE))
+                                             path.read_text(encoding="utf-8"), re.MULTILINE))
             if uses_imgui:
                 links = set().union(*(self.usage_requirements(call)
                                       for call in actual.get(("target_link_libraries", target), [])))
@@ -233,7 +233,7 @@ class SubsystemTargetContracts(unittest.TestCase):
         for platform in self.PLATFORMS:
             with self.subTest(platform=platform):
                 self.assert_contract(platform, self.declarations(platform))
-        root = (ROOT / "CMakeLists.txt").read_text()
+        root = (ROOT / "CMakeLists.txt").read_text(encoding="utf-8")
         for name in self.MODULES:
             self.assertIn(f"include(cmake/targets/{name}.cmake)", root)
 
@@ -274,7 +274,7 @@ class SubsystemTargetContracts(unittest.TestCase):
         self.assert_rejected(source=candidate)
 
     def test_changed_engine_link_is_detected(self):
-        helper = (ROOT / "cmake/JudasTestTargets.cmake").read_text()
+        helper = (ROOT / "cmake/JudasTestTargets.cmake").read_text(encoding="utf-8")
         helper = helper.replace("PRIVATE judas_engine", "PRIVATE wrong_owner", 1)
         self.assert_rejected(helper=helper)
 

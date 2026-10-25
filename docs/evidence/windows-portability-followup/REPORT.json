@@ -1,0 +1,396 @@
+{
+  "date_utc": "2026-10-25T17:13:03.653175+00:00",
+  "base": "c62cfc6c1f3ad4ddf772e02e7c2c574dc53bf3d6",
+  "branch": "Experimental",
+  "main_unchanged": true,
+  "scope": "Seven reported Windows failure categories; focused corrections, not full platform or release certification",
+  "external_handoff": {
+    "claimed_original_gate": "52/59",
+    "claimed_additional": "32/32",
+    "original_logs_available": false,
+    "independently_certified": false
+  },
+  "dispositions": [
+    {
+      "id": 1,
+      "finding": "liquid rotation",
+      "status": "reproduced and fixed on Linux precision probe and native MSVC",
+      "root_cause": "binary64 De Casteljau interpolation can overshoot a positive endpoint by one ULP",
+      "correction": "monotone C++17 lerp in Bernstein evaluation; no solver-result repair",
+      "before": "native fails after65 checks; binary64-intermediate Linux diagnostic also after65",
+      "after": "419/419 checks,37 orientations on both platforms"
+    },
+    {
+      "id": 2,
+      "finding": "liquid surface serialization",
+      "status": "reproduced and fixed natively",
+      "root_cause": "test hard-coded /tmp instead of native temporary directory",
+      "correction": "unique native temporary file and cleanup",
+      "before": "61 checks,2 failures",
+      "after": "61 checks,0 failures on both platforms"
+    },
+    {
+      "id": 3,
+      "finding": "transport capacity/refusal",
+      "status": "reproduced and corrected natively; test defects, no runtime transport change",
+      "root_cause": [
+        "one-Poll admission assumptions",
+        "two blocking connects can overflow Windows listen backlog before Judas accepts",
+        "synthetic refusal clock advanced .5 seconds per1ms sleep"
+      ],
+      "correction": "bounded real admission observation; first peer admitted before second connect; real monotonic refusal time; keep rate/idle numerical clocks and all original assertions",
+      "before": "9 failures here, not necessarily the same scheduling as external2 failures",
+      "after": "70/70 native checks,5/5 repeat runs;70/70 Linux"
+    },
+    {
+      "id": 4,
+      "finding": "MK2 rotation stack overflow",
+      "status": "reproduced and fixed on Linux1MiB and native default1MiB",
+      "root_cause": "one retained full CCD search frame per recursively searched trajectory suffix",
+      "correction": "chronological union-knot iteration, original targets and contact episode retained",
+      "before": "native -1073741571 / 0xC00000FD; Linux1MiB SIGSEGV with repeated ImpactTime frames",
+      "after": "31404 checks on native default1MiB and Linux1MiB; matched original CCD/final-harness observable output byte-identical"
+    },
+    {
+      "id": 5,
+      "finding": "preferences cleanup",
+      "status": "reproduced and fixed natively",
+      "root_cause": "backup input stream still open when removing its directory",
+      "correction": "close after reading before cleanup",
+      "before": "functional assertions pass then remove_all fails",
+      "after": "35 checks and successful cleanup/exit on both platforms"
+    },
+    {
+      "id": 6,
+      "finding": "build-organization encoding",
+      "status": "reproduced and fixed natively",
+      "root_cause": "implicit Windows text encoding when reading UTF8 source",
+      "correction": "explicit UTF8 file and captured text handling",
+      "before": "18 tests with12 encoding errors in this VM",
+      "after": "18 tests pass with PYTHONUTF8=0; all negative controls retained"
+    },
+    {
+      "id": 7,
+      "finding": "gate registration",
+      "status": "reproduced and fixed natively",
+      "root_cause": "multi-config CTest discovery omitted configuration; slash spelling compared as raw strings",
+      "correction": "Release discovery and path equality; explicit Ninja Multi-Config positive control",
+      "before": "4 tests,2 failures on default VS generator",
+      "after": "5/5 on Windows including Ninja Multi-Config; Linux4 pass plus Ninja control skipped because Ninja is absent"
+    }
+  ],
+  "linux": [
+    {
+      "name": "mk2-rotation-1m",
+      "command": [
+        "build/judas_mk2_rotation_tests"
+      ],
+      "returncode": 0,
+      "seconds": 8.335789378999834,
+      "binary_sha256": "fd7915baf2e9f7a9575c02f3e16c2f7f67a07afaa967ede5b982cf26fbe35034"
+    },
+    {
+      "name": "mk2-physics",
+      "command": [
+        "build/judas_mk2_physics_tests"
+      ],
+      "returncode": 0,
+      "seconds": 4.0699322529999336,
+      "binary_sha256": "39a8406d2435437bcf3a78da367a37ee50243ae7888b8cf7f9dbc3ff23690966"
+    },
+    {
+      "name": "joint",
+      "command": [
+        "build/judas_joint_tests"
+      ],
+      "returncode": 0,
+      "seconds": 0.16408407999983865,
+      "binary_sha256": "9a0a9bccdbbeb30625302f3bb329f46840973715b3ec006da7375103a3990354"
+    },
+    {
+      "name": "motion-bounds",
+      "command": [
+        "build/judas_rigid_motion_bounds_tests"
+      ],
+      "returncode": 0,
+      "seconds": 0.21417517800000496,
+      "binary_sha256": "d7370950673aea4cf2103e125f29740f39b882b63e3e61dae7b847b3b4b3fb60"
+    },
+    {
+      "name": "impact-mesh",
+      "command": [
+        "build/judas_impact_mesh_cost_tests"
+      ],
+      "returncode": 0,
+      "seconds": 48.03393476799988,
+      "binary_sha256": "6681ed0349dda4757c7befd5c6ae2a45d2c808eb24e74e63ff9756069bb51ff7"
+    },
+    {
+      "name": "impact-robustness",
+      "command": [
+        "build/judas_impact_robustness_tests"
+      ],
+      "returncode": 0,
+      "seconds": 6.173559309999973,
+      "binary_sha256": "fbc1eee71f5a1f9e798ec90cd1a035ff2ebe0e52fc11fb73cff8552dc88750a6"
+    },
+    {
+      "name": "liquid-rotation",
+      "command": [
+        "build/judas_liquid_rotation_tests"
+      ],
+      "returncode": 0,
+      "seconds": 0.2643247229998451,
+      "binary_sha256": "04802ccb55abc390af2c9221f69ec345067158e27facabc90acca02faf92212a"
+    },
+    {
+      "name": "liquid-surface",
+      "command": [
+        "build/judas_liquid_surface_tests"
+      ],
+      "returncode": 0,
+      "seconds": 1.8666393369999241,
+      "binary_sha256": "865b8c971749291d7e31f3e3e82811c43dbdd7046669b84107e0212e54113fb7"
+    },
+    {
+      "name": "liquid-reservoir",
+      "command": [
+        "build/judas_liquid_tests"
+      ],
+      "returncode": 0,
+      "seconds": 0.36444339400009085,
+      "binary_sha256": "e6ffbda3ea46544b1b273eed9f9ff5d0c0c076b74ec126230d18c8e0f1aa7ad4"
+    },
+    {
+      "name": "preferences",
+      "command": [
+        "build/judas_editor_preferences_tests"
+      ],
+      "returncode": 0,
+      "seconds": 0.11401591599997118,
+      "binary_sha256": "5bfe879105c3f1d273ff9d12bf430037fdaa732d07fc826ad82eb02a93816c91"
+    },
+    {
+      "name": "transport",
+      "command": [
+        "build/judas_network_transport_tests"
+      ],
+      "returncode": 0,
+      "seconds": 0.36442994799995176,
+      "binary_sha256": "c83d1c983a89ba994c55b8ac5b20278f13f3d7f3152277fb45f73f7ce3e813d0"
+    },
+    {
+      "name": "cold",
+      "command": [
+        "build/judas_mk2_rotation_cold_tests",
+        ".cache/windows-seven-followup/linux-cold-final"
+      ],
+      "returncode": 0,
+      "seconds": 0.6647701599999891,
+      "binary_sha256": "3dd1c80c0b9007c6d2c014456b019dd73e121f523b8336482c8791327b646692"
+    },
+    {
+      "name": "refill",
+      "command": [
+        "build/judas_liquid_surface_refill_tests"
+      ],
+      "returncode": 0,
+      "seconds": 12.082788326000127,
+      "binary_sha256": "5e9afc2e91a9f3c563351d9a3ab94f072344db7925f8f27983f90fe4a4bd51d9"
+    }
+  ],
+  "native_windows": {
+    "environment": {
+      "version": "10.0.19045",
+      "cmake": "cmake version 3.31.6-msvc6",
+      "cpu": "AMD Ryzen 5 5600 6-Core Processor              ",
+      "build": "19045",
+      "physicalKB": 6290924,
+      "os": "Microsoft Windows 10 Home",
+      "logicalCPUs": 4,
+      "python": "Python 3.13.16"
+    },
+    "compiler": "MSVC2022 v143 /14.44.35207 toolset; Release x64",
+    "results": {
+      "liquid_surface": {
+        "name": "liquid_surface",
+        "exit": 0,
+        "seconds": 2.5356198,
+        "sha256": "553A5E9C8AD92C9038F1BDCF7848F227A936D75806D2EF814381D9786B110B6E"
+      },
+      "liquid_rotation": {
+        "name": "liquid_rotation",
+        "exit": 0,
+        "seconds": 0.8350442,
+        "sha256": "DD32864C11E178EDAC0028B09B9982BD29EEE10B50140AFAD20C950E3F34674D"
+      },
+      "mk2_rotation_cold": {
+        "name": "mk2_rotation_cold",
+        "exit": 0,
+        "seconds": 0.28148429999999997,
+        "sha256": "3A9A3EBC556D99E18394C7057F9D0E33CAEFF70B6BA7A4E06EDDE292CB7B0CAE"
+      },
+      "editor_preferences": {
+        "name": "editor_preferences",
+        "exit": 0,
+        "seconds": 0.38359519999999997,
+        "sha256": "197D9C6F60FFBCF272E966DBC33F1CD669B0B9433E26E032DBC91846B08D4A24"
+      },
+      "mk2_rotation": {
+        "name": "mk2_rotation",
+        "exit": 0,
+        "seconds": 16.6649073,
+        "sha256": "60E9053796F162B7D9480243807EF9F4B985FC0D64776AD01D771DF515079F98"
+      },
+      "impact_mesh_cost": {
+        "name": "impact_mesh_cost",
+        "exit": 0,
+        "seconds": 69.2441303,
+        "sha256": "E86D5A46B98F6EFD5A3778CDE276C3559BFE9B1F733F7134F4DA6F6CA8CE37A3"
+      },
+      "mk2_physics": {
+        "name": "mk2_physics",
+        "exit": 0,
+        "seconds": 7.6791241999999995,
+        "sha256": "BD3D004197B1B214BBBF8425F1903EAB435A2EE3C375CDFC59E6B8DEAEDF8303"
+      }
+    },
+    "stack": {
+      "path": "P:\\JudasValidation\\WindowsSeven\\Build\\Release\\judas_mk2_rotation_tests.exe",
+      "stackReserve": 1048576,
+      "stackCommit": 4096,
+      "sha256": "60E9053796F162B7D9480243807EF9F4B985FC0D64776AD01D771DF515079F98"
+    },
+    "source_verification": [
+      {
+        "expected": "9372e182aea6b2f08ea8f8bea749afc8bec7986b41c5ac7aa7ab8e459d3bc9ac",
+        "matches": true,
+        "actual": "9372e182aea6b2f08ea8f8bea749afc8bec7986b41c5ac7aa7ab8e459d3bc9ac",
+        "file": "src/LiquidGeometry.cpp"
+      },
+      {
+        "expected": "46d12b137ec6ada3366e8762479fa8a91bc44ba4542cf7e981bc96a89975072e",
+        "matches": true,
+        "actual": "46d12b137ec6ada3366e8762479fa8a91bc44ba4542cf7e981bc96a89975072e",
+        "file": "src/physics/WorldCCDSearch.cpp"
+      },
+      {
+        "expected": "2ccf9072683d24903eaf4bf5ef1ecf321b81e191453b79780fabfc76b30e5204",
+        "matches": true,
+        "actual": "2ccf9072683d24903eaf4bf5ef1ecf321b81e191453b79780fabfc76b30e5204",
+        "file": "tests/EditorPreferencesTests.cpp"
+      },
+      {
+        "expected": "70bba6a808b431e39660c7bbf7912a9c77c4ce9140f5a483a5e23eb3a18b2938",
+        "matches": true,
+        "actual": "70bba6a808b431e39660c7bbf7912a9c77c4ce9140f5a483a5e23eb3a18b2938",
+        "file": "tests/LiquidSurfaceTests.cpp"
+      },
+      {
+        "expected": "10c01c4f286d62926a79b63af99588a14b27d35245feb4adbd5ef9606e3dd5b3",
+        "matches": true,
+        "actual": "10c01c4f286d62926a79b63af99588a14b27d35245feb4adbd5ef9606e3dd5b3",
+        "file": "tests/NetworkTransportTests.cpp"
+      },
+      {
+        "expected": "ecea8ee62b1ae874644999f498689678203aeacab92dd614053d6eccf11b608e",
+        "matches": true,
+        "actual": "ecea8ee62b1ae874644999f498689678203aeacab92dd614053d6eccf11b608e",
+        "file": "tests/test_cmake_test_targets.py"
+      },
+      {
+        "expected": "0c5dc8db21716dd13fee448c4aa00044396b6a25d900e695b1b933552aa11260",
+        "matches": true,
+        "actual": "0c5dc8db21716dd13fee448c4aa00044396b6a25d900e695b1b933552aa11260",
+        "file": "tests/test_validation_registration.py"
+      }
+    ],
+    "network_repeats": [
+      {
+        "exit": 0,
+        "run": 1
+      },
+      {
+        "exit": 0,
+        "run": 2
+      },
+      {
+        "exit": 0,
+        "run": 3
+      },
+      {
+        "exit": 0,
+        "run": 4
+      },
+      {
+        "exit": 0,
+        "run": 5
+      }
+    ],
+    "build_organization_tests": 18,
+    "gate_registration_tests": 5,
+    "python_utf8_environment": "0",
+    "hardware_graphics_audio_controllers_tested": false
+  },
+  "physical_comparison": {
+    "method": "same final test objects and engine archive; original preserved CCD object substituted before archive vs corrected CCD; normal-stack baseline versus 1 MiB corrected run",
+    "old_ccd_source_sha256": "d506b32b7090988d202ea3a65829f1fb71e520da939ff9268f914a42dfed9541",
+    "baseline_sha256": "35f8b8da664abde00ae6e2a7519c5af8a1b3ddad443dc60c895cc3fbcf70baf5",
+    "corrected_sha256": "35f8b8da664abde00ae6e2a7519c5af8a1b3ddad443dc60c895cc3fbcf70baf5",
+    "byte_identical": true
+  },
+  "validation_failures_preserved": [
+    "Original native liquid, surface, stack and cleanup failures",
+    "Original native network failures and Python gate failures",
+    "Linux small-stack backtrace and binary64-intermediate rotation failure",
+    "Isolated native prefix setup failure",
+    "Stale archive overlay reused old MSVC test objects; first candidate failures retained; forced recompilation then final tests pass",
+    "Intermediate network admission-only attempt retained as observed note; its raw log was overwritten by retry, not reconstructed"
+  ],
+  "validation_boundaries": [
+    "No full production-suite marathon",
+    "No Windows11 hardware or controller/audio/graphics acceptance",
+    "No complete SDK/export requalification claimed by these regression targets",
+    "VM timings are functional diagnostics, not performance acceptance data; no speedup claim",
+    "CMake no-Git snapshot reports unknown archive identity; exact archive and source hashes identify tested code",
+    "First temporary Linux logs were lost when host rebooted for SVM; available logs and subsequent reruns preserved"
+  ],
+  "original_archive_sha256": "62dd206b2a76dbafeb5982d41e4c576aeb9cce438f0cc13b8a571bee803268f4",
+  "remaining_issues": [
+    "External Windows11 results still require operator retest of this corrected checkpoint",
+    "FLU-001 and half-turn disturbed-surface origin query remain deferred and unchanged",
+    "Pre-existing MSVC warnings retained, not a warning-free Windows claim"
+  ],
+  "files": [
+    "docs/WINDOWS.md",
+    "src/LiquidGeometry.cpp",
+    "src/physics/WorldCCDSearch.cpp",
+    "tests/EditorPreferencesTests.cpp",
+    "tests/LiquidSurfaceTests.cpp",
+    "tests/NetworkTransportTests.cpp",
+    "tests/test_cmake_test_targets.py",
+    "tests/test_validation_registration.py",
+    "docs/PREALPHA_WINDOWS_PORTABILITY_FOLLOWUP.md"
+  ],
+  "reproduction": [
+    "See committed native PowerShell scripts and Linux driver; isolated Windows directory P:\\JudasValidation\\WindowsSeven",
+    "Use ordinary native MSVC Release build; preserve default1MiB executable stack",
+    "Run Python modules with PYTHONUTF8=0; VS CTest discovery uses -C Release; add Ninja to PATH for explicit multi-config control",
+    "For Linux small-stack check: (ulimit -s1024; ./build/judas_mk2_rotation_tests)",
+    "For precision isolation use reproduce_binary64.py --source-ref c62cfc6c then current source with separate output directories",
+    "When overlaying archives, force changed source timestamps or delete task-owned affected objects; verify actual recompilation as well as source/binary hashes"
+  ],
+  "human_checklist": [
+    "On Windows11 rebuild exact Experimental checkpoint with normal MSVC defaults",
+    "Run seven affected checks without larger-stack or UTF8-mode workarounds",
+    "Check editor theme/layout persistence, restart and normal cleanup",
+    "Play a representative game, cold-save/reload, check actual hardware rendering/input/audio",
+    "Report untested devices and remaining platform-specific failures separately"
+  ],
+  "reproducer_cli_verified": {
+    "baseline_exit": 1,
+    "candidate_exit": 0,
+    "before": "reproducer-before.log",
+    "after": "reproducer-after.log"
+  }
+}

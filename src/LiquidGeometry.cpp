@@ -28,6 +28,18 @@ LiquidMoment moment(const Poly& p){LiquidMoment r;V c(0);size_t count=0;for(auto
 bool affine(const LiquidTet& t,const std::array<double,4>& values,V& n,double& d){glm::dmat3 m(t[1]-t[0],t[2]-t[0],t[3]-t[0]);if(std::abs(glm::determinant(m))<1e-15)return false;n=glm::transpose(glm::inverse(m))*V(values[1]-values[0],values[2]-values[0],values[3]-values[0]);d=values[0]-glm::dot(n,t[0]);return true;}
 std::array<double,4> coords(const LiquidTet& t,const GravityEquilibrium& e){return {e.Coordinate(t[0]),e.Coordinate(t[1]),e.Coordinate(t[2]),e.Coordinate(t[3])};}
 
+// C++17 equivalent of the monotone std::lerp contract. a+t*(b-a) alone
+// can round past b near t=1 when long double has only binary64 precision
+// (MSVC). De Casteljau then overshoots its own right-hand capacity knot.
+// This bounds the interpolation rounding, not a solved liquid volume; endpoints
+// and the positive Bernstein storage/area representation remain unchanged.
+long double interpolate(long double a, long double b, long double t) {
+    if ((a <= 0 && b >= 0) || (a >= 0 && b <= 0)) return t*b + (1-t)*a;
+    if (t == 1) return b;
+    const auto value = a + t*(b-a);
+    return (t > 1) == (b > a) ? std::max(b, value) : std::min(b, value);
+}
+
 // Evaluate in the interval's bounded Bernstein coordinate. Extend intermediate
 // precision and round once; do not subtract nearly equal cumulative capacities.
 template<size_t N>
@@ -35,7 +47,7 @@ double bernstein(const std::array<double, N>& source, long double t) {
     std::array<long double, N> work{};
     for (size_t i = 0; i < N; ++i) work[i] = source[i];
     for (size_t degree = N - 1; degree > 0; --degree)
-        for (size_t i = 0; i < degree; ++i) work[i] += t * (work[i + 1] - work[i]);
+        for (size_t i = 0; i < degree; ++i) work[i] = interpolate(work[i], work[i + 1], t);
     return double(work[0]);
 }
 }
@@ -56,7 +68,7 @@ double LiquidCapacityPolynomial::Integral(long double fraction) const {
         primitive[i + 1] = primitive[i] + static_cast<long double>(volume[i]) / 4;
     for (size_t degree = 4; degree > 0; --degree)
         for (size_t i = 0; i < degree; ++i)
-            primitive[i] += fraction * (primitive[i + 1] - primitive[i]);
+            primitive[i] = interpolate(primitive[i], primitive[i + 1], fraction);
     return double(primitive[0]);
 }
 LiquidGeometry LiquidBox(V a,V b){std::array<V,8> p;for(int i=0;i<8;++i)p[i]=V(i&1?b.x:a.x,i&2?b.y:a.y,i&4?b.z:a.z);LiquidGeometry g;const int ids[6][4]={{0,1,3,7},{0,3,2,7},{0,2,6,7},{0,6,4,7},{0,4,5,7},{0,5,1,7}};for(auto& t:ids)g.cells.push_back({p[t[0]],p[t[1]],p[t[2]],p[t[3]]});return g;}

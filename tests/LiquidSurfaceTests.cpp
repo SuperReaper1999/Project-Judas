@@ -9,6 +9,7 @@
 #include <cmath>
 #include <chrono>
 #include <algorithm>
+#include <filesystem>
 #include <glm/gtc/matrix_transform.hpp>
 int main(){
  unsigned checks=0,failed=0;
@@ -72,10 +73,12 @@ int main(){
  check(maximum<=startEnergy+1e-7&&wave.Energy()<startEnergy,"disturbance energy is bounded and damped");
  std::printf("energy initial %.12g peak %.12g final %.12g\n",startEnergy,maximum,wave.Energy());
 
+ auto bakePath=std::filesystem::temp_directory_path()/("judas-surface-"+std::to_string(std::chrono::steady_clock::now().time_since_epoch().count())+".judasbasin");
  basin.dynamicSurface=data;
- check(SaveLiquidBasin("/tmp/m55-surface.judasbasin",basin,error),"surface geometry bake serializes through normal basin asset");
+ check(SaveLiquidBasin(bakePath.string(),basin,error),"surface geometry bake serializes through normal basin asset");
  LiquidBasinData reloaded;
- check(LoadLiquidBasin("/tmp/m55-surface.judasbasin",reloaded,error)&&reloaded.dynamicSurface&&reloaded.dynamicSurface->faces.size()==data->faces.size(),"baked surface cells/faces round trip");
+ check(LoadLiquidBasin(bakePath.string(),reloaded,error)&&reloaded.dynamicSurface&&reloaded.dynamicSurface->faces.size()==data->faces.size(),"baked surface cells/faces round trip");
+ std::filesystem::remove(bakePath);
  LiquidSystem system;LiquidBasinSettings authored;authored.initialVolume=1;
  auto source=system.AddBasin(1,authored,{},std::make_shared<LiquidBasinData>(basin),error);authored.initialVolume=0;
  SceneTransform placement;placement.position={20,0,0};auto staticBasin=std::make_shared<LiquidBasinData>(basin);staticBasin->dynamicSurface.reset();auto target=system.AddBasin(2,authored,placement,staticBasin,error);

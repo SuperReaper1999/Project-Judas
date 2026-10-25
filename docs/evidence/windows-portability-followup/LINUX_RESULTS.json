@@ -1,0 +1,120 @@
+[
+  {
+    "name": "mk2-rotation-1m",
+    "command": [
+      "build/judas_mk2_rotation_tests"
+    ],
+    "returncode": 0,
+    "seconds": 8.335789378999834,
+    "binary_sha256": "fd7915baf2e9f7a9575c02f3e16c2f7f67a07afaa967ede5b982cf26fbe35034"
+  },
+  {
+    "name": "mk2-physics",
+    "command": [
+      "build/judas_mk2_physics_tests"
+    ],
+    "returncode": 0,
+    "seconds": 4.0699322529999336,
+    "binary_sha256": "39a8406d2435437bcf3a78da367a37ee50243ae7888b8cf7f9dbc3ff23690966"
+  },
+  {
+    "name": "joint",
+    "command": [
+      "build/judas_joint_tests"
+    ],
+    "returncode": 0,
+    "seconds": 0.16408407999983865,
+    "binary_sha256": "9a0a9bccdbbeb30625302f3bb329f46840973715b3ec006da7375103a3990354"
+  },
+  {
+    "name": "motion-bounds",
+    "command": [
+      "build/judas_rigid_motion_bounds_tests"
+    ],
+    "returncode": 0,
+    "seconds": 0.21417517800000496,
+    "binary_sha256": "d7370950673aea4cf2103e125f29740f39b882b63e3e61dae7b847b3b4b3fb60"
+  },
+  {
+    "name": "impact-mesh",
+    "command": [
+      "build/judas_impact_mesh_cost_tests"
+    ],
+    "returncode": 0,
+    "seconds": 48.03393476799988,
+    "binary_sha256": "6681ed0349dda4757c7befd5c6ae2a45d2c808eb24e74e63ff9756069bb51ff7"
+  },
+  {
+    "name": "impact-robustness",
+    "command": [
+      "build/judas_impact_robustness_tests"
+    ],
+    "returncode": 0,
+    "seconds": 6.173559309999973,
+    "binary_sha256": "fbc1eee71f5a1f9e798ec90cd1a035ff2ebe0e52fc11fb73cff8552dc88750a6"
+  },
+  {
+    "name": "liquid-rotation",
+    "command": [
+      "build/judas_liquid_rotation_tests"
+    ],
+    "returncode": 0,
+    "seconds": 0.2643247229998451,
+    "binary_sha256": "04802ccb55abc390af2c9221f69ec345067158e27facabc90acca02faf92212a"
+  },
+  {
+    "name": "liquid-surface",
+    "command": [
+      "build/judas_liquid_surface_tests"
+    ],
+    "returncode": 0,
+    "seconds": 1.8666393369999241,
+    "binary_sha256": "865b8c971749291d7e31f3e3e82811c43dbdd7046669b84107e0212e54113fb7"
+  },
+  {
+    "name": "liquid-reservoir",
+    "command": [
+      "build/judas_liquid_tests"
+    ],
+    "returncode": 0,
+    "seconds": 0.36444339400009085,
+    "binary_sha256": "e6ffbda3ea46544b1b273eed9f9ff5d0c0c076b74ec126230d18c8e0f1aa7ad4"
+  },
+  {
+    "name": "preferences",
+    "command": [
+      "build/judas_editor_preferences_tests"
+    ],
+    "returncode": 0,
+    "seconds": 0.11401591599997118,
+    "binary_sha256": "5bfe879105c3f1d273ff9d12bf430037fdaa732d07fc826ad82eb02a93816c91"
+  },
+  {
+    "name": "transport",
+    "command": [
+      "build/judas_network_transport_tests"
+    ],
+    "returncode": 0,
+    "seconds": 0.36442994799995176,
+    "binary_sha256": "c83d1c983a89ba994c55b8ac5b20278f13f3d7f3152277fb45f73f7ce3e813d0"
+  },
+  {
+    "name": "cold",
+    "command": [
+      "build/judas_mk2_rotation_cold_tests",
+      ".cache/windows-seven-followup/linux-cold-final"
+    ],
+    "returncode": 0,
+    "seconds": 0.6647701599999891,
+    "binary_sha256": "3dd1c80c0b9007c6d2c014456b019dd73e121f523b8336482c8791327b646692"
+  },
+  {
+    "name": "refill",
+    "command": [
+      "build/judas_liquid_surface_refill_tests"
+    ],
+    "returncode": 0,
+    "seconds": 12.082788326000127,
+    "binary_sha256": "5e9afc2e91a9f3c563351d9a3ab94f072344db7925f8f27983f90fe4a4bd51d9"
+  }
+]

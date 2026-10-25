@@ -1,0 +1,11 @@
+{
+  "docs/WINDOWS.md": "878f5148159a01a0113c92645ef758c2015da1a1e75897175a4b1faf3c7e9319",
+  "src/LiquidGeometry.cpp": "9372e182aea6b2f08ea8f8bea749afc8bec7986b41c5ac7aa7ab8e459d3bc9ac",
+  "src/physics/WorldCCDSearch.cpp": "46d12b137ec6ada3366e8762479fa8a91bc44ba4542cf7e981bc96a89975072e",
+  "tests/EditorPreferencesTests.cpp": "2ccf9072683d24903eaf4bf5ef1ecf321b81e191453b79780fabfc76b30e5204",
+  "tests/LiquidSurfaceTests.cpp": "70bba6a808b431e39660c7bbf7912a9c77c4ce9140f5a483a5e23eb3a18b2938",
+  "tests/NetworkTransportTests.cpp": "10c01c4f286d62926a79b63af99588a14b27d35245feb4adbd5ef9606e3dd5b3",
+  "tests/test_cmake_test_targets.py": "ecea8ee62b1ae874644999f498689678203aeacab92dd614053d6eccf11b608e",
+  "tests/test_validation_registration.py": "0c5dc8db21716dd13fee448c4aa00044396b6a25d900e695b1b933552aa11260",
+  "docs/PREALPHA_WINDOWS_PORTABILITY_FOLLOWUP.md": "718c26452d52d7660d076a27d56519396161032b3059893434fa3fd74eab537d"
+}

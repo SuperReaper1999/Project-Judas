@@ -1,0 +1,73 @@
+PASS analytic nonlinear storage, physical derivative and energy primitive agree
+PASS physical small area is retained when cumulative volume increments round below one ULP
+PASS analytic oblique cut uses actual original box boundary
+PASS oblique analytic volume, first moments and wet-face area agree
+PASS collapsed face heights are dry below, wet exactly at and above full height
+PASS near-plane clipping never extrapolates beyond the original physical volume
+PASS complementary physical half-spaces partition volume without tolerance-band overlap
+PASS all-inside fast path does not retain a strictly outside thin tetrahedron
+PASS exact physical half-space classification is independent of world up
+PASS negative control detects rotating geometry without its gravity frame
+PASS negative control detects translating geometry without shifting plane head
+PASS physical cap normal detects a reversed surface orientation
+PASS near-plane aperture fixture bakes actual physical storage
+PASS near-plane aperture fixture uses normal physical surface faces
+PASS near-plane fixture has a real shared face
+PASS bounded physical solid publishes through SetSolids orientation 0
+SOLID_APERTURE orientation=0 intersecting=0 unblocked=0.50505050504540294 expected=0.50505050504540294 actual=0.50505050504540294 error=0
+PASS actual SetSolids aperture agrees with independent polygon intersection
+PASS independent nonintersecting solid cannot enlarge the wet aperture
+PASS removing the solid republishes the ordinary open face
+PASS solid removal invalidates derived aperture cache without changing physical faces
+PASS bounded physical solid publishes through SetSolids orientation 0
+SOLID_APERTURE orientation=0 intersecting=1 unblocked=0.50505050504922888 expected=0.25252525252461444 actual=0.25252525252461444 error=0
+PASS actual SetSolids aperture agrees with independent polygon intersection
+PASS independent intersecting solid genuinely blocks wet shared-face area
+PASS removing the solid republishes the ordinary open face
+PASS solid removal invalidates derived aperture cache without changing physical faces
+PASS bounded physical solid publishes through SetSolids orientation 1
+SOLID_APERTURE orientation=1 intersecting=0 unblocked=0.50505050504540294 expected=0.50505050504540294 actual=0.50505050504540294 error=0
+PASS actual SetSolids aperture agrees with independent polygon intersection
+PASS independent nonintersecting solid cannot enlarge the wet aperture
+PASS removing the solid republishes the ordinary open face
+PASS solid removal invalidates derived aperture cache without changing physical faces
+PASS bounded physical solid publishes through SetSolids orientation 1
+SOLID_APERTURE orientation=1 intersecting=1 unblocked=0.5050505050492291 expected=0.25252492647307506 actual=0.25252492647307512 error=5.5511151231257827e-17
+PASS actual SetSolids aperture agrees with independent polygon intersection
+PASS independent intersecting solid genuinely blocks wet shared-face area
+PASS removing the solid republishes the ordinary open face
+PASS solid removal invalidates derived aperture cache without changing physical faces
+PASS bounded physical solid publishes through SetSolids orientation 2
+SOLID_APERTURE orientation=2 intersecting=0 unblocked=0.50505050504540283 expected=0.50505050504540283 actual=0.50505050504540283 error=0
+PASS actual SetSolids aperture agrees with independent polygon intersection
+PASS independent nonintersecting solid cannot enlarge the wet aperture
+PASS removing the solid republishes the ordinary open face
+PASS solid removal invalidates derived aperture cache without changing physical faces
+PASS bounded physical solid publishes through SetSolids orientation 2
+SOLID_APERTURE orientation=2 intersecting=1 unblocked=0.50505050504922977 expected=0.25252440251234787 actual=0.25252440251234787 error=0
+PASS actual SetSolids aperture agrees with independent polygon intersection
+PASS independent intersecting solid genuinely blocks wet shared-face area
+PASS removing the solid republishes the ordinary open face
+PASS solid removal invalidates derived aperture cache without changing physical faces
+PASS rigid-frame volume, moments and clipped aperture covariance case 0
+PASS rotated cap normals follow gravity independently of world axes case 0
+PASS original physical tetrahedron face planes transform covariantly case 0
+PASS physical basin bake case 0: 
+PASS physical dynamic-surface bake case 0: 
+PASS strict serialized knots and sampled physical storage remain monotone case 0
+PASS cubic storage and inverse match independent geometric clipping case 0
+PASS aggregate physical storage is rotation invariant despite chart repartitioning case 0
+PASS normal Surface1 serialization case 0
+PASS strict Surface1 decoder accepts generated rotated storage case 0: 
+PASS negative decreasing capacity fixture serializes
+PASS strict decoder rejects decreasing capacity without publishing a surface
+PASS negative duplicate head fixture serializes
+PASS strict decoder rejects duplicate heads without publishing a surface
+PASS rigid-frame volume, moments and clipped aperture covariance case 1
+PASS rotated cap normals follow gravity independently of world axes case 1
+PASS original physical tetrahedron face planes transform covariantly case 1
+PASS physical basin bake case 1: 
+PASS physical dynamic-surface bake case 1: 
+DECREASE q=0 a=-5.5511151231257827e-17 b=0 previous=1.2142796644368102e-17 cached=1.2142796644368101e-17 capacity=0.47459891248583164 coefficients=0,0,3.9030417785468886e-18,1.2142796644368101e-17,
+FAIL liquid rotation after 65 checks: strict serialized knots and sampled physical storage remain monotone case 1
+ROTATION_ERRORS_SO_FAR volume=1.7763568394002505e-15 first_moment=9.2222050695124064e-15 aperture=1.9984014443252818e-15 cap_normal=2.6912545129924632e-08 storage=2.2204460492503131e-16 inverse=9.1593399531575415e-16 partition=8.8817841970012523e-16

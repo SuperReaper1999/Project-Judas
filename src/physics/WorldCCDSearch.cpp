@@ -529,15 +529,30 @@ auto PhysicsWorld::Impl::CCDQuery::ImpactTime(unsigned a, unsigned b, int pa, in
         return ImpactTime(a,b,pa,pb,start,finish,SpinPenetrationTarget({a,b,unsigned(pa),unsigned(pb)}));
     // Integrator knots are NOT new contact episodes. Carry the original
     // absolute penetration target and native mesh-face budget across them.
+    // Walk the union of both trajectories' knots in chronological order.
+    // Recursing on the entire remaining suffix kept one full CCD stack frame
+    // per leaf alive (hundreds for fast asymmetric rotation), overflowing the
+    // normal Windows stack. Each child below contains no interior knot, so
+    // stack depth no longer grows with trajectory resolution. Contact episodes,
+    // absolute targets, search arithmetic and earliest-hit ordering are retained.
+    std::vector<double> knots;
     for (auto slot : {a,b})
         if (bodies[slot].isKinematic || bodies[slot].isDynamic)
             for (const auto& segment : bodies[slot].motion.Segments())
-                if (segment.end > start && segment.end < finish) {
-                    const auto* anchor = meshAdvance ? &meshBudget : nullptr;
-                    const double first = ImpactTime(a,b,pa,pb,start,segment.end,target,true,anchor);
-                    return first <= segment.end ? first :
-                        ImpactTime(a,b,pa,pb,segment.end,finish,target,true,anchor);
-                }
+                if (segment.end > start && segment.end < finish) knots.push_back(segment.end);
+    if (!knots.empty()) {
+        knots.push_back(finish);
+        std::sort(knots.begin(), knots.end());
+        knots.erase(std::unique(knots.begin(), knots.end()), knots.end());
+        const auto* anchor = meshAdvance ? &meshBudget : nullptr;
+        double begin = start;
+        for (double end : knots) {
+            const double hit = ImpactTime(a,b,pa,pb,begin,end,target,true,anchor);
+            if (hit <= end) return hit;
+            begin = end;
+        }
+        return finish + 1;
+    }
     // Bisection still performs all 32 represented-time bracket updates.
     // Binary32 pose integration can map several of those times to exactly
     // the same pair of poses. Contact truth for that identical geometry is

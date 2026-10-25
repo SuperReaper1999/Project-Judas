@@ -58,6 +58,16 @@ void Tick(NetworkTransport& transport, double& now, Events& events, double step 
     Append(events, transport);
     std::this_thread::sleep_for(std::chrono::milliseconds(1));
 }
+// Wait for OS admission, not an assumed one-Poll TCP handshake. Keep the
+// simulated transport clock fixed so rate/idle assertions below stay exact.
+void AwaitAdmission(NetworkTransport& server, double& now, Events& events) {
+    const auto deadline = std::chrono::steady_clock::now() + std::chrono::seconds(5);
+    do { Tick(server, now, events, 0); }
+    while (!Count(events, NetworkTransport::Event::Connected) &&
+           std::chrono::steady_clock::now() < deadline);
+    Check(Count(events, NetworkTransport::Event::Connected) == 1,
+          "actual raw endpoint admission is observed within bounded real time");
+}
 void Pump(NetworkTransport& server, NetworkTransport& client, double& now,
           Events& serverEvents, Events& clientEvents, int ticks = 40) {
     for (int i = 0; i < ticks; ++i) {
@@ -177,7 +187,7 @@ int main() {
         Check(server.Listen("127.0.0.1", 0, settings, error), "raw framing fixture listens");
         RawSocket raw = RawConnect(server.BoundPort());
         Check(raw != BadSocket, "independent raw TCP endpoint connects");
-        Tick(server, now, events);
+        AwaitAdmission(server, now, events);
         Check(RawSend(raw, std::string("\0\0", 2)), "write split frame header first half");
         Tick(server, now, events);
         Check(Count(events, Type::Message) == 0, "partial header cannot become a message");
@@ -193,7 +203,7 @@ int main() {
               Count(events, Type::Message) == 1, "malformed length disconnects before allocation or phantom message");
         RawClose(raw);
         raw = RawConnect(server.BoundPort());
-        events.clear(); Tick(server, now, events);
+        events.clear(); AwaitAdmission(server, now, events);
         RawSend(raw, Frame("unfinished").substr(0, 7)); Tick(server, now, events);
         RawClose(raw);
         for (int i = 0; i < 10; ++i) Tick(server, now, events);
@@ -209,14 +219,14 @@ int main() {
         RawSocket raw = RawConnect(server.BoundPort());
         double now = 0;
         Events events;
-        Tick(server, now, events);
+        AwaitAdmission(server, now, events);
         const uint32_t peer = events.empty() ? 0 : events.front().peer;
         Check(server.Send(peer, "old", true, error) && server.Send(peer, "new", true, error) &&
               server.PendingBytes(peer) == 7 && server.GetStats().dropped == 1,
               "entirely unsent replaceable snapshots coalesce");
         server.Stop(); RawClose(raw);
         Check(server.Listen("127.0.0.1", 0, bounded, error), "partial-send fixture starts cleanly");
-        raw = RawConnect(server.BoundPort()); events.clear(); Tick(server, now, events);
+        raw = RawConnect(server.BoundPort()); events.clear(); AwaitAdmission(server, now, events);
         const uint32_t partialPeer = events.empty() ? 0 : events.front().peer;
         const std::string old(100, 'o');
         Check(server.Send(partialPeer, old, true, error), "old replaceable frame queues");
@@ -246,7 +256,7 @@ int main() {
         RawSocket raw = RawConnect(server.BoundPort());
         double now = 0;
         Events events;
-        Tick(server, now, events);
+        AwaitAdmission(server, now, events);
         const std::string payload(36, 'i');
         Check(RawSend(raw, Frame(payload)), "raw endpoint can burst beyond receiver processing budget");
         Tick(server, now, events, 0);
@@ -265,7 +275,7 @@ int main() {
         RawSocket raw = RawConnect(server.BoundPort());
         double now = 0;
         Events events;
-        Tick(server, now, events);
+        AwaitAdmission(server, now, events);
         std::string burst;
         for (int i = 0; i < 80; ++i) burst += Frame(std::to_string(i));
         Check(RawSend(raw, burst), "independent endpoint writes many tiny frames in one burst");
@@ -283,10 +293,21 @@ int main() {
         auto one = settings; one.maxPeers = 1; one.idleTimeoutMs = 100;
         Check(server.Listen("127.0.0.1", 0, one, error), "single-peer timeout fixture listens");
         RawSocket first = RawConnect(server.BoundPort());
-        RawSocket second = RawConnect(server.BoundPort());
         double now = 10;
         Events events;
-        Tick(server, now, events);
+        AwaitAdmission(server, now, events);
+        // Fill the transport's peer table, not the OS listen backlog. Two
+        // blocking connects before any accept can overflow Windows' backlog=1
+        // and reject the second client in the kernel, before Judas observes it.
+        RawSocket second = RawConnect(server.BoundPort());
+        Check(first != BadSocket && second != BadSocket,
+              "capacity control reaches the transport with two established sockets");
+        // A completed client connect need not be visible to the server's first
+        // nonblocking accept batch on every OS. Wait for the actual admission
+        // outcome without spending the fixture's simulated idle deadline.
+        const auto admissionDeadline = std::chrono::steady_clock::now() + std::chrono::seconds(5);
+        do { Tick(server, now, events, 0); }
+        while (server.GetStats().rejected == 0 && std::chrono::steady_clock::now() < admissionDeadline);
         Check(Count(events, Type::Connected) == 1 && server.GetStats().rejected == 1,
               "accepted-peer capacity rejects excess connections without growing retained state");
         Tick(server, now, events, .2);
@@ -299,7 +320,7 @@ int main() {
         RawSocket raw = RawConnect(server.BoundPort());
         double now = 0;
         Events events;
-        Tick(server, now, events);
+        AwaitAdmission(server, now, events);
         const uint32_t peer = events.empty() ? 0 : events.front().peer;
         bool queued = true;
         for (int i = 0; i < 1024; ++i) queued = server.Send(peer, "", false, error) && queued;
@@ -329,7 +350,16 @@ int main() {
         const bool started = client.Connect("127.0.0.1", port, settings, error);
         double now = 0;
         Events events;
-        if (started) for (int i = 0; i < 20; ++i) Tick(client, now, events, .5);
+        // Poll takes elapsed real monotonic seconds, not a simulated clock
+        // accelerated 500x ahead of the Windows TCP stack. Otherwise the test
+        // reports our artificial timeout before the OS can report refusal.
+        const auto begun = std::chrono::steady_clock::now();
+        if (started) do {
+            now = std::chrono::duration<double>(std::chrono::steady_clock::now() - begun).count();
+            client.Poll(now); Append(events, client);
+            if (Count(events, Type::Disconnected)) break;
+            std::this_thread::sleep_for(std::chrono::milliseconds(1));
+        } while (std::chrono::steady_clock::now() - begun < std::chrono::seconds(6));
         Check((!started && !error.empty()) || Count(events, Type::Disconnected) == 1,
               "asynchronous connection refusal has an explicit terminal diagnostic");
         std::string diagnostic = started && !events.empty() ? events.back().data : error;

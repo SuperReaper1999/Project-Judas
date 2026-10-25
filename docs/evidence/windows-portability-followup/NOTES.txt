@@ -1,0 +1,82 @@
+WINDOWS SEVEN-FINDING FOLLOWUP WORK LOG
+Baseline c62cfc6c1f3ad4ddf772e02e7c2c574dc53bf3d6, Experimental only.
+The user's Windows 11 52/59 + 32/32 handoff has no original logs available here.
+Our new reproductions use Linux and the existing Windows 10 VM, not Windows 11.
+
+Host reboot cleared the first /tmp/judas-windows-followup scratch logs.
+No implementation edits were lost. Logs after resuming are retained here.
+Original temporary observations before reboot: Linux rotation 419/0, surface61/0,
+network denied sockets in sandbox then 61/0 when run with loopback access.
+Do not treat sandbox-denied sockets as a transport bug.
+
+VM prerequisite failures: kvm_amd initially unloaded; operator enabled SVM and
+loaded it. Intel-specific Hyper-V evmcs then prevented QEMU startup on Ryzen.
+Original VM XML preserved; only evmcs removed, all disks/memory/other settings
+retained. VM boots and guest agent works. No physical graphics qualification.
+
+Liquid: binary64-intermediate diagnostic copy reproduced original rotation
+failure after exactly 65 checks. Recorded decrease at q=0, previous value
+1.2142796644368102e-17, endpoint 1.2142796644368101e-17. Positive cubic controls:
+0, 0, 3.9030417785468886e-18, 1.2142796644368101e-17. Interpolation arithmetic
+overshoots the endpoint by one ULP; not a conservation or storage-geometry error.
+Use monotone C++17 lerp arithmetic in De Casteljau and its energy primitive.
+Binary64-intermediate copy then passes all 419 checks / 37 orientations.
+The diagnostic copy changes only intermediate arithmetic; it is not a native
+MSVC qualification and does not change production precision or APIs.
+
+Surface fixture hard-codes /tmp/m55-surface.judasbasin. On Windows /tmp is not
+the process temporary directory and may not exist. Replaced with unique native
+temp_directory_path file and cleanup; numerical oracles remain unchanged.
+
+Stack: suspected profiler large buffers ruled out by native default-stack probe.
+Linux original binary passes 31398 checks on normal stack but faults with a
+1 MiB stack; gdb shows repeated CCDQuery::ImpactTime suffix recursion.
+GCC stack-use report: ImpactTime frame2080 bytes, PlaneDrift frame14496 bytes.
+Original code keeps one full ImpactTime invocation per remaining trajectory
+leaf. Replace suffix recursion with sorted union knot iteration, retaining
+absolute target/mesh contact episode and earliest-hit search. No stack-reserve,
+CCD-fidelity, sampling-budget or physical solver changes.
+
+Network: original Windows fixture produced nine failures in this VM, more than
+the two reported on the external Windows11 machine. Tests assume one Poll can
+accept a blocking raw connection. Await real admission without advancing the
+simulated idle/rate clock. Intermediate admission-only correction passed all
+but capacity: two blocking connects before any server Poll can overflow the
+Windows kernel listen backlog=1. First admit one peer, then connect the second
+and assert actual transport capacity rejection, not kernel backlog behaviour.
+Refusal test advanced synthetic time by .5 sec per 1 ms sleep, triggering the
+transport timeout before Windows completed refusal. Use elapsed monotonic real
+time for the OS-driven refusal test. All original payload, FIFO, queue/rate,
+peer-limit, idle timeout and diagnostic expectations retained; no runtime
+transport change. Corrected native test passes70 checks. Interim68-check trial
+had one capacity failure; its log was overwritten by the final retry, so only
+this actual observation and tool result remain, not an invented raw log.
+
+Windows build organization original18 tests had12 encoding errors, corrected18
+pass with PYTHONUTF8=0. All fixture/source/trace text now explicitly UTF-8.
+Gate original4 tests had2 failures: no config yielded no CTest tests. Corrected
+paths use Path equality and discovery explicitly Release. Corrected5 tests pass
+on Windows including Ninja Multi-Config; original known-failure guard negative
+control retained. Linux has no Ninja installed, so new explicit Ninja test skips
+there; Windows runs it.
+
+Isolated native setup initially supplied CMAKE_PREFIX_PATH without the matching
+VCPKG_INSTALLED_DIR. Compilation succeeded but runtime-license staging tried
+/x64-windows-static-md/... and failed. Original log retained. Configure with the
+actual existing installation prefix then resume, no dependency/version changes.
+New build in P:\JudasValidation\WindowsSeven, pinned dependencies reused from
+CleanDistribution. Source archive is accepted tracked code only; no Git history.
+CMake records unknown archive provenance (no fabricated frozen source manifest).
+Exact source archive/file hashes establish this test's source correspondence.
+
+Final combined tests and final fingerprints still need recording.
+
+Native combined first candidate run correctly passed rotation419, MK2 rotation,
+MK2 physics, curved mesh and cold saves, but preferences/surface still failed.
+Source fingerprints all matched. Inspection of actual compile log showed no
+EditorPreferencesTests.cpp or LiquidSurfaceTests.cpp compile: ZIP timestamps
+predated baseline object timestamps, so MSBuild reused old test objects and
+only relinked them. Retain complete first-candidate receipts as stale-overlay
+attempt. Touch changed native source timestamps (no byte changes), rebuild,
+then rerun before accepting these fixes. This is a build-validation correction;
+matching source hashes alone does not prove the current executable was rebuilt.

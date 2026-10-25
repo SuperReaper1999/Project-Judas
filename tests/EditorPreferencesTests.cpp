@@ -103,6 +103,7 @@ int main(int argc, char** argv) {
         original.close();
         check(prefs.SaveFile(file, state, error) && std::filesystem::exists(file + ".bak"), "subsequent save preserves a previous-file backup");
         std::ifstream backup(file + ".bak"); const std::string old{std::istreambuf_iterator<char>(backup), {}};
+        backup.close();
         check(before == old, "backup preserves exact prior bytes");
         prefs.appearance.scale = 1000;
         check(!prefs.SaveFile(file, state, error), "invalid in-memory settings cannot replace a valid preferences file");

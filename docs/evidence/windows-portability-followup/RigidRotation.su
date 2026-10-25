@@ -1,0 +1,10 @@
+src/RigidRotation.cpp:10:6:bool {anonymous}::Principal(const RigidBody&)	8	static
+src/RigidMotion.h:39:25:RigidMotionGeometry RigidMotionSegment::EvaluateGeometry(double) const	192	static
+/usr/include/c++/15/bits/vector.tcc:557:7:) [with _Args = {const RigidMotionSegment&}; _Tp = RigidMotionSegment; _Alloc = std::allocator<RigidMotionSegment>]	80	static
+src/RigidRotation.cpp:44:6:void {anonymous}::Append(std::vector<RigidMotionSegment>&, unsigned int, const RigidBody&, double, double, unsigned int&, unsigned int)	1056	static
+src/RigidRotation.cpp:44:6:void {anonymous}::Append(std::vector<RigidMotionSegment>&, unsigned int, const RigidBody&, double, double, unsigned int&, unsigned int)	1056	static
+src/RigidRotation.cpp:44:6:void {anonymous}::Append(std::vector<RigidMotionSegment>&, unsigned int, const RigidBody&, double, double, unsigned int&, unsigned int)	1056	static
+src/RigidRotation.cpp:44:6:void {anonymous}::Append(std::vector<RigidMotionSegment>&, unsigned int, const RigidBody&, double, double, unsigned int&, unsigned int)	1056	static
+src/RigidRotation.cpp:44:6:void {anonymous}::Append(std::vector<RigidMotionSegment>&, unsigned int, const RigidBody&, double, double, unsigned int&, unsigned int)	1056	static
+src/RigidRotation.cpp:44:6:void {anonymous}::Append(std::vector<RigidMotionSegment>&, unsigned int, const RigidBody&, double, double, unsigned int&, unsigned int)	1056	static
+src/RigidRotation.cpp:73:6:void AppendDynamicRigidMotion(std::vector<RigidMotionSegment>&, unsigned int, const RigidBody&, double, double)	64	static
