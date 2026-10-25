@@ -56,7 +56,8 @@
     {"name":"project-settings-editor","target":"judas_project_settings_editor_tests","groups":["onboarding","water"]},
     {"name":"basic-water-application","target":"judas_basic_water_application_tests","groups":["water","application"],"args":["--profile","{output}/water"]},
     {"name":"basic-water-cold","target":"judas_basic_water_application_tests","groups":["water","lifecycle","application"],"args":["--cold-cycle","{output}/cold"]},
-    {"name":"editor-file-browser","target":"judas_editor_file_browser_tests","groups":["onboarding"]}
+    {"name":"editor-file-browser","target":"judas_editor_file_browser_tests","groups":["onboarding"]},
+    {"name":"editor-preferences","target":"judas_editor_preferences_tests","groups":["onboarding"]}
   ],
   "known_findings": [
     {"id":"CCD-MESH-ARRIVAL","status":"resolved-first-arrival","scheduled":true,"reason":"Pass2 finite swept-SAT bounds correct the validated first-arrival contract; it now runs in the ordinary collision group. This does not close later curved-sheet continuation.","evidence":"docs/evidence/prealpha-pass2/physics"},

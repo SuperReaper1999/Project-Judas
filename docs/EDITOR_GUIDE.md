@@ -305,6 +305,37 @@ describes its older `gh` implementation, not this current path.
 
 ## Project documents and first-project workflow
 
+### Personal appearance and saved layouts
+
+Open **Edit → Editor preferences** (also available in **View**).
+
+- **Appearance:** choose Light or Dark, pick an accent preset or your own accent,
+  background and text colours, and adjust UI scale. Changes preview on the next
+  frame. Switching Light/Dark restores that theme's base colours while retaining
+  the scale; **Reset appearance** returns to the default dark palette.
+- **Layouts:** resize the hierarchy/inspector/asset rails, choose visible tools,
+  and move or resize floating tool windows. Enter a name and **Save as new
+  layout**. Choose a saved layout and **Apply selected**, **Update selected** or
+  **Delete selected**. Updating is explicit; saving a new name never overwrites
+  an existing one silently. Deletion asks for confirmation.
+- **Reset panel layout** restores default rail sizes and visible panels. It does
+  not erase saved layouts or reposition floating tools. Applying a saved layout
+  restores the tool positions included in that snapshot.
+
+The main hierarchy and inspector remain fixed rails; this is not free-form
+docking. Layouts store panel visibility, dimensions and floating-tool positions,
+not scene state, selection or the editor camera. Smaller windows clamp the rail
+sizes to keep the viewport usable.
+
+Named save/update/delete/apply actions save preferences automatically. For colour,
+scale and manual panel changes, use **Save preferences**, or close the editor
+normally. Preferences are personal, shared across projects, and stored in the
+platform's Judas/Editor user-data directory (`workspace.json` and `windows.ini`),
+never in a game project or export. Existing workspace preferences migrate when
+saved. Replacing `workspace.json` retains its previous bytes in `.bak`; failed
+saves report an error and preserve the current file. Invalid preferences fall
+back to defaults with a diagnostic in the preference window.
+
 The main **Create** menu and hierarchy creation menus have a search field.
 Search names or descriptions, for example `player`, `light` or `swimming`; hover
 an item for its purpose and defaults. Each opening starts with the full list.

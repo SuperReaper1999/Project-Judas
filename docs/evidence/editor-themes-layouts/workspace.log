@@ -1,0 +1,25 @@
+PASS workspace panels and dividers stay inside the resized window
+PASS scene, authoring panels, toolbar and status do not overlap
+PASS rail and asset resizing preserves a usable central scene
+PASS scene ownership accepts its center and excludes the inspector
+PASS workspace panels and dividers stay inside the resized window
+PASS scene, authoring panels, toolbar and status do not overlap
+PASS rail and asset resizing preserves a usable central scene
+PASS scene ownership accepts its center and excludes the inspector
+PASS workspace panels and dividers stay inside the resized window
+PASS scene, authoring panels, toolbar and status do not overlap
+PASS rail and asset resizing preserves a usable central scene
+PASS scene ownership accepts its center and excludes the inspector
+PASS workspace panels and dividers stay inside the resized window
+PASS scene, authoring panels, toolbar and status do not overlap
+PASS rail and asset resizing preserves a usable central scene
+PASS scene ownership accepts its center and excludes the inspector
+PASS workspace panels and dividers stay inside the resized window
+PASS scene, authoring panels, toolbar and status do not overlap
+PASS rail and asset resizing preserves a usable central scene
+PASS scene ownership accepts its center and excludes the inspector
+PASS hiding assets gives their height back to the scene and hierarchy
+PASS running Play collapses authoring rails and assets
+PASS collapsed workspace leaves the full window width available to Play
+PASS invalid saved dimensions restore bounded default layout values
+Editor workspace layout: 24 checks, 0 failures

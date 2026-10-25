@@ -20,7 +20,6 @@
 #include "ModAuthoring.h"
 #include "ModelArchive.h"
 #include "AsyncFile.h"
-#include "EditorTheme.h"
 #include "Prefab.h"
 
 #include <SDL2/SDL.h>
@@ -1306,37 +1305,22 @@ void EditorApplication::LoadEditorPreferences() {
     ImGui::GetIO().IniFilename = m_editorIniPath.c_str();
     std::ifstream file(m_editorPreferencesPath);
     if (!file) return;
-    auto saved = nlohmann::json::parse(file, nullptr, false);
-    if (!saved.is_object()) return;
-    const auto width = [&](const char* key, float& value, float minimum, float maximum) {
-        const auto found = saved.find(key);
-        if (found == saved.end() || !found->is_number()) return;
-        const auto candidate = found->get<double>();
-        if (std::isfinite(candidate) && candidate >= minimum && candidate <= maximum)
-            value = static_cast<float>(candidate);
-    };
-    width("hierarchyWidth", m_panels.hierarchyWidth, 150, 800);
-    width("inspectorWidth", m_panels.inspectorWidth, 220, 900);
-    width("assetBrowserHeight", m_panels.assetBrowserHeight, 80, 700);
-    if (saved.contains("showAssets") && saved["showAssets"].is_boolean())
-        m_panels.showAssetBrowser = saved["showAssets"].get<bool>();
+    // Bound user configuration before parsing. Invalid settings never prevent startup.
+    std::string text(4 * 1024 * 1024 + 1, '\0');
+    file.read(text.data(), static_cast<std::streamsize>(text.size()));
+    text.resize(static_cast<size_t>(file.gcount()));
+    std::string error;
+    if (!m_preferences.Load(text, m_panels, error))
+        m_preferences.status = "Preferences could not be loaded: " + error + ". Defaults are in use; the next save retains a .bak copy.";
 }
 
 void EditorApplication::SaveEditorPreferences() {
     if (m_editorPreferencesPath.empty()) return;
-    const nlohmann::json saved = {{"version", 1}, {"hierarchyWidth", m_panels.hierarchyWidth},
-        {"inspectorWidth", m_panels.inspectorWidth}, {"assetBrowserHeight", m_panels.assetBrowserHeight},
-        {"showAssets", m_panels.showAssetBrowser}};
-    const auto staged = m_editorPreferencesPath + ".tmp";
-    try {
-        std::ofstream file(staged, std::ios::trunc);
-        if (!file) return;
-        file << saved.dump(2) << '\n'; file.close();
-        if (!file) return;
-        ReplaceStagedFile(staged, m_editorPreferencesPath);
-    } catch (const std::exception& error) {
-        std::fprintf(stderr, "[editor] Layout preferences were not saved: %s\n", error.what());
-    }
+    std::string error;
+    if (!m_preferences.SaveFile(m_editorPreferencesPath, m_panels, error)) {
+        m_preferences.status = "Preferences were not saved: " + error;
+        std::fprintf(stderr, "[editor] %s\n", m_preferences.status.c_str());
+    } else m_preferences.status = "Editor preferences saved.";
 }
 
 int EditorApplication::Run(int argc, char** argv) {
@@ -1366,8 +1350,8 @@ int EditorApplication::Run(int argc, char** argv) {
     io.IniFilename = nullptr;
     const auto editorFont = ResolveEngineDataPath("assets/fonts/DejaVuSans.ttf");
     if (fs::is_regular_file(editorFont)) io.Fonts->AddFontFromFileTTF(editorFont.c_str(), 15.0f);
-    ApplyEditorTheme();
     LoadEditorPreferences();
+    m_preferences.ApplyPending(m_panels);
     if (!std::getenv("JUDAS_EDITOR_AUTOTEST")) m_milestoneNotice.Check();
     ImGui_ImplSDL2_InitForOpenGL(window.NativeWindow(), window.NativeGLContext());
     ImGui_ImplOpenGL3_Init("#version 330 core");
@@ -1575,6 +1559,7 @@ int EditorApplication::Run(int argc, char** argv) {
         previousCounter = currentCounter;
         renderer.ResetStats();
 
+        m_preferences.ApplyPending(m_panels);
         ImGui_ImplOpenGL3_NewFrame();
         ImGui_ImplSDL2_NewFrame();
         ImGui::NewFrame();
@@ -1654,6 +1639,8 @@ int EditorApplication::Run(int argc, char** argv) {
         static ProfileLabel editorBuildLabel("Editor UI build");
         ProfileScope editorBuildScope(editorBuildLabel);
         DrawEditorMainMenu(m_document, m_panels, requests);
+        m_preferences.Draw(m_panels);
+        if (m_preferences.ConsumeSaveRequest()) SaveEditorPreferences();
         if(!m_scriptTools)m_scriptTools=std::make_unique<ScriptTools>();
         if(!m_panels.editScriptAsset.empty()){
             const auto* script=host.Assets().Find(m_panels.editScriptAsset);

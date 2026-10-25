@@ -1,0 +1,2 @@
+372bbab22f7f2c95efaef64ee3e86aa36b5c5cd0bae29696f954d6d2d22efd7b  build/judas_editor
+592cf1b9005e3e4cfd0d77ad87c8475c4e2393f571e1717d5768fadf6cada79d  build/judas_editor_preferences_tests

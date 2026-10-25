@@ -1,0 +1,28 @@
+PASS legacy workspace preferences load
+PASS legacy custom dimensions including small asset rail survive migration
+PASS loading preferences does not request a disk rewrite
+PASS save named layout from real ImGui window settings
+PASS layout stores tool-window positions and sizes
+PASS new save cannot silently overwrite a name
+PASS explicit update modifies selected layout
+PASS empty-looking layout names reject
+PASS apply is queued rather than changing an active frame
+PASS named layout restores panel dimensions and visibility
+PASS named layout actually restores an existing tool's position
+PASS absent layout does not enqueue a replacement
+PASS light appearance changes actual editor style colours
+PASS custom accent and scaling reach ImGui
+PASS repeated theme application does not accumulate scale
+PASS v2 theme and named layouts deserialize in a fresh preferences owner
+PASS custom theme, saved layout and current panel visibility survive roundtrip
+PASS invalid theme rejects transactionally
+PASS invalid theme rejects transactionally
+PASS invalid theme rejects transactionally
+PASS unknown schema or duplicate layouts reject
+PASS unknown schema or duplicate layouts reject
+PASS unknown schema or duplicate layouts reject
+PASS malformed preference JSON is reported without throwing
+PASS preferences write atomically to a user-selected test file
+PASS subsequent save preserves a previous-file backup
+PASS backup preserves exact prior bytes
+FAIL unwritable destination reports failure

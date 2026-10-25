@@ -1,0 +1,67 @@
+{
+  "baseline": "0adc8cea71975f0d8a80c315604994c9cd9d2d7e",
+  "branch": "Experimental",
+  "status": "Linux automation passed; new human acceptance pending. Main remains at accepted editor checkpoint 64156080.",
+  "implemented": [
+    "Edit > Editor preferences and matching View entry; optional personal configuration independent of project and game/export UI.",
+    "Live Dark/Light presets, editable accent/background/text colours, teal/purple/blue/orange accent swatches, reset appearance and 0.85\u20131.5 UI scale. Palette/scale changes publish between frames and do not accumulate scaling.",
+    "Named layouts save/update/apply/delete; explicit overwrite action and deletion confirmation. Capture rail dimensions, visible tool panels and actual ImGui floating-window position/size state.",
+    "Current workspace, custom appearance and up to 32 named layouts persist in versioned user preferences; v1 workspace preferences migrate. No new project setting or runtime API.",
+    "Preference replacement is staged and retains previous bytes in .bak; validates before replacing, bounds file/window-state sizes, reports failures and handles invalid JSON/schema without blocking editor startup.",
+    "Headless preferences regression registered in normal prealpha onboarding CI gates."
+  ],
+  "validation": {
+    "headless_preferences": {
+      "checks": 35,
+      "failures": 0
+    },
+    "native_preferences": {
+      "checks": 42,
+      "failures": 0,
+      "note": "Includes the same 35 headless checks plus native rendering and mouse-driven tab/save interactions; do not add these counts together."
+    },
+    "workspace_regression": {
+      "checks": 24,
+      "failures": 0
+    },
+    "widget_edit_lifecycle": {
+      "checks": 15,
+      "failures": 0
+    },
+    "ctest": "editor-preferences, build-organization and gate-registration all passed (3 entries). Build-contract controls cover 18 tests, registration covers 4.",
+    "actual_editor": "Isolated XDG_DATA_HOME and disposable tiny_game copy. Custom light/purple appearance, dimensions and named Building layout survived independent processes; final binary completed Edit/Play/Stop/Save with authored scene IDENTICAL. Final saved JSON and previous-file backup verified.",
+    "visual": "Dark, light and Layouts native framebuffers inspected; custom light palette in full editor inspected. Actual mouse click selected the visible Layouts tab and Save as new layout created My layout plus persistence request.",
+    "build": "Release editor/test builds; no compiler warnings or errors in retained final build log. Earlier development failures retained separately.",
+    "documentation": "94 current documents / 1965 links passed with tracked destinations required.",
+    "earlier_CI_repair": "Unrelated preceding 0adc8cea repair completed successfully on GitHub run 40192754711 before this checkpoint."
+  },
+  "boundaries": [
+    "Fixed hierarchy/inspector rails remain; free-form docking and arbitrary rail rearrangement are not implemented.",
+    "Reset panel layout resets rail sizes/visibility; saved named layouts and existing floating positions are retained. Applying a named layout restores its included floating positions.",
+    "Layouts do not store scene data, selection, player/editor camera state, running physics or project settings. Appearance is one current personal colour scheme, independent of named layouts.",
+    "Preference limits: 32 named layouts, 1 MiB ImGui state per layout and 4 MiB total JSON. Size/colour/range validation rejects incompatible or oversized state.",
+    "Native Linux qualified. Windows and Android not qualified in this task; no runtime/export/physics changes and no claim of new platform acceptance.",
+    "Existing active user editor/project and unrelated assets/research were not closed or modified; all application qualification used disposable copies and an isolated user-data folder."
+  ],
+  "development_followups": [
+    "Initial include used the wrong nlohmann header search path; corrected to repository-owned relative header.",
+    "A negative SaveFile fixture assumed a missing directory was unwritable, but the established staging helper creates directories. Changed fixture to an actual invalid file-as-directory destination; no implementation weakening.",
+    "Test framebuffer capture initially treated void CaptureFrame as bool; corrected test signature.",
+    "Initial tab screenshot still displayed Appearance because the synthetic events had not fully trickled through. Visual inspection caught this; distinct movement/press/release frames and an assertion on the visible tab now precede screenshot and real layout-save-button checks. The capture-only log/image is not accepted as Layouts proof."
+  ],
+  "human_checklist": [
+    "Open Edit > Editor preferences. Switch Dark/Light, try purple accent and custom background/text, scale UI and Reset appearance.",
+    "Open Layouts; resize rails and tool windows, choose visible tools, enter a unique name and Save as new layout.",
+    "Change the workspace, choose your saved layout and Apply selected; verify dimensions, visibility and floating positions return.",
+    "Change the workspace and Update selected; switch away/back to verify the revised snapshot. Try duplicate-name save and delete/cancel confirmation.",
+    "Save preferences, quit normally and reopen another project; verify personal theme/layout choices persist without changing either project.",
+    "Use Reset panel layout and confirm default rails return while named layouts remain. Play/Stop and confirm theme does not affect game UI or physics."
+  ],
+  "reproduction": [
+    "cmake --build build --target judas_editor_preferences_tests judas_editor judas_editor_workspace_tests judas_editor_widget_tests -j2",
+    "build/judas_editor_preferences_tests",
+    "SDL_AUDIODRIVER=dummy build/judas_editor_preferences_tests /tmp/theme-visuals",
+    "ctest --test-dir build -R ^prealpha.(editor-preferences|build-organization|gate-registration)$ --output-on-failure",
+    "Actual editor automation: XDG_DATA_HOME=/tmp/<isolated-user-data> JUDAS_EDITOR_AUTOTEST=/tmp/<prefix> build/judas_editor <disposable-project>. Seed workspace.json v2 with custom appearance and a named layout; launch twice and inspect saved JSON and framebuffers."
+  ]
+}

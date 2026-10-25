@@ -1,0 +1,46 @@
+[  0%] Building CXX object CMakeFiles/judas_build_identity.dir/src/BuildIdentity.cpp.o
+[ 15%] Built target freetype
+[ 15%] Built target judas_app_icon
+[ 15%] Built target judas_meshoptimizer
+[ 23%] Built target judas_icu_build
+[ 23%] Built target judas_jobs
+[ 23%] Built target judas_audio_backend
+[ 23%] Built target judas_imgui
+[ 23%] Built target judas_quickjs
+[ 30%] Built target judas_navigation_backend
+[ 30%] Built target judas_glad
+[ 30%] Built target judas_profiler
+[ 30%] Built target harfbuzz
+[ 30%] Built target judas_navigation_cook
+[ 30%] Built target judas_materials
+[ 30%] Linking CXX static library libjudas_build_identity.a
+[ 30%] Built target judas_build_identity
+[100%] Built target judas_engine
+[100%] Building CXX object CMakeFiles/judas_editor_preferences_tests.dir/src/editor/EditorHistory.cpp.o
+[100%] Building CXX object CMakeFiles/judas_editor_preferences_tests.dir/src/editor/EditorPreferences.cpp.o
+[100%] Building CXX object CMakeFiles/judas_editor_preferences_tests.dir/tests/EditorPreferencesTests.cpp.o
+[100%] Building CXX object CMakeFiles/judas_editor_preferences_tests.dir/tests/ValidationMain.cpp.o
+[100%] Linking CXX executable judas_editor_preferences_tests
+[100%] Built target judas_editor_preferences_tests
+[  0%] Built target judas_build_identity
+[ 13%] Built target freetype
+[ 13%] Built target judas_app_icon
+[ 13%] Built target judas_meshoptimizer
+[ 20%] Built target judas_icu_build
+[ 20%] Built target judas_jobs
+[ 20%] Built target judas_audio_backend
+[ 20%] Built target judas_imgui
+[ 20%] Built target judas_quickjs
+[ 26%] Built target judas_navigation_backend
+[ 26%] Built target judas_glad
+[ 26%] Built target judas_profiler
+[ 26%] Built target harfbuzz
+[ 26%] Built target judas_ufbx
+[ 26%] Built target judas_navigation_cook
+[ 26%] Built target judas_materials
+[ 86%] Built target judas_engine
+[ 86%] Built target judas_navigation_baker
+[ 86%] Built target judas_model_import
+[ 86%] Built target judas_world_authoring
+[ 86%] Linking CXX executable judas_editor
+[100%] Built target judas_editor

@@ -1,0 +1,12 @@
+[
+  "CMakeLists.txt",
+  "docs/EDITOR_GUIDE.md",
+  "src/editor/EditorApplication.cpp",
+  "src/editor/EditorApplication.h",
+  "src/editor/EditorPanels.cpp",
+  "src/editor/EditorPanels.h",
+  "src/editor/EditorPreferences.cpp",
+  "src/editor/EditorPreferences.h",
+  "tests/EditorPreferencesTests.cpp",
+  "tools/validation/suites.json"
+]

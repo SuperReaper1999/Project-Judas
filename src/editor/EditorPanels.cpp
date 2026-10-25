@@ -303,6 +303,8 @@ void DrawEditorMainMenu(EditorDocument& doc, EditorPanelState& state, EditorRequ
             state.gizmoSpace = state.gizmoSpace == GizmoSpace::Local ? GizmoSpace::World : GizmoSpace::Local;
         }
         ImGui::MenuItem("Snap (hold Ctrl)", nullptr, &state.gizmoSnap);
+        ImGui::Separator();
+        ImGui::MenuItem("Editor preferences", nullptr, &state.showEditorPreferences);
         ImGui::EndMenu();
     }
     if (ImGui::BeginMenu("Create", editing)) {
@@ -310,6 +312,8 @@ void DrawEditorMainMenu(EditorDocument& doc, EditorPanelState& state, EditorRequ
         ImGui::EndMenu();
     }
     if (ImGui::BeginMenu("View")) {
+        ImGui::MenuItem("Editor preferences (appearance / layouts)", nullptr, &state.showEditorPreferences);
+        ImGui::Separator();
         ImGui::MenuItem("Animation retargeting", nullptr, &state.showRetarget);
         ImGui::MenuItem("Animation timeline", nullptr, &state.showAnimationTimeline);
         ImGui::MenuItem("Terrain sculpt / paint", nullptr, &state.showTerrain);

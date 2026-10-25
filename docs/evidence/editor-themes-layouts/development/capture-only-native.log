@@ -1,0 +1,43 @@
+Shadow maps: on
+Graphics: 3.3.0 NVIDIA 580.178.04 / NVIDIA GeForce GTX 970/PCIe/SSE2
+Renderer fragment texture units: 32 (material path uses 12)
+PASS legacy workspace preferences load
+PASS legacy custom dimensions including small asset rail survive migration
+PASS loading preferences does not request a disk rewrite
+PASS save named layout from real ImGui window settings
+PASS layout stores tool-window positions and sizes
+PASS new save cannot silently overwrite a name
+PASS explicit update modifies selected layout
+PASS empty-looking layout names reject
+PASS apply is queued rather than changing an active frame
+PASS named layout restores panel dimensions and visibility
+PASS named layout actually restores an existing tool's position
+PASS absent layout does not enqueue a replacement
+PASS light appearance changes actual editor style colours
+PASS custom accent and scaling reach ImGui
+PASS repeated theme application does not accumulate scale
+PASS v2 theme and named layouts deserialize in a fresh preferences owner
+PASS custom theme, saved layout and current panel visibility survive roundtrip
+PASS invalid theme rejects transactionally
+PASS invalid theme rejects transactionally
+PASS invalid theme rejects transactionally
+PASS unknown schema or duplicate layouts reject
+PASS unknown schema or duplicate layouts reject
+PASS unknown schema or duplicate layouts reject
+PASS malformed preference JSON is reported without throwing
+PASS invalid layout geometry rejects without publication
+PASS partial light preferences use readable light defaults
+PASS preferences write atomically to a user-selected test file
+PASS subsequent save preserves a previous-file backup
+PASS backup preserves exact prior bytes
+PASS invalid in-memory settings cannot replace a valid preferences file
+PASS invalid file-as-directory destination reports failure
+PASS explicit deletion removes only the requested layout
+PASS reset restores default workspace dimensions and panels
+PASS actual preference UI draws without changing scene/editor mode
+PASS preferences need no project and do not enter Play
+PASS native preference graphics host starts
+PASS actual theme controls render to native framebuffer
+PASS actual theme controls render to native framebuffer
+PASS layout controls render after actual mouse tab selection
+Editor preferences: 39 checks, 0 failures

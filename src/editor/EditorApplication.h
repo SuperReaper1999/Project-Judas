@@ -4,6 +4,7 @@
 #include <memory>
 #include <string>
 #include <vector>
+#include "EditorPreferences.h"
 
 #include "DebugDraw.h"
 #include "EditorCamera.h"
@@ -76,6 +77,7 @@ private:
     void ViewportRay(int x, int y, glm::vec3& origin, glm::vec3& direction) const;
     RenderTargetHandle m_sceneViewTarget;
     std::string m_editorPreferencesPath, m_editorIniPath;
+    EditorPreferences m_preferences;
     EditorRequests m_pendingDocumentAction;
     bool m_documentActionPending = false;
     bool m_documentActionApproved = false;
