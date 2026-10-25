@@ -1,11 +1,30 @@
 # Windows editor and exported games
 
-## Current portability follow-up
+## Windows 11 human acceptance — 25 October 2026
 
-The [seven-finding Pre-Alpha follow-up](PREALPHA_WINDOWS_PORTABILITY_FOLLOWUP.md)
-records new Linux/Windows 10 VM reproductions and corrections based on the
-operator's Windows 11 handoff. Its scoped results do not replace physical
-Windows 11 graphics, input, audio or clean-machine acceptance.
+The operator human-accepted Windows portability checkpoint
+`6941b3815f93d4f716fe64faffff69799c7637b0` on **actual Windows 11 hardware**.
+The trial covered creating a project, saving and reopening/loading it, running a
+small game, working audio, and functioning editor/gameplay on that machine.
+This is genuine operator acceptance, separate from automated or VM results.
+
+The supplied native receipts record **58/59 initially**, followed by an unchanged
+passing build-identity retest: **effective 59/59**, plus **33/33 additional checks**.
+The original failure remains preserved: the native identity test passed its 55
+assertions, but its wrapper compared null and empty tracked-status values.
+The corrected rotation executable retained its ordinary **1 MiB stack reserve**.
+The clean Git build identity, SDK verification/inspection and logs are archived
+with the [acceptance record](evidence/windows11-acceptance-20261025/OPERATOR_ACCEPTANCE.json). These receipts were inspected read-only
+from the operator's mounted HDD; no checks were rerun during this closeout.
+
+**Not claimed:** controller/gamepad hardware validation, clean-machine distribution
+certification, every GPU/configuration or complete API coverage. The recorded ICU
+build path-with-spaces workaround remains a limitation; see the original receipt.
+Earlier automated files correctly retain their pre-human-test boundary; this
+later operator statement supplies only the explicit hardware scope above.
+
+The [seven-finding correction report](PREALPHA_WINDOWS_PORTABILITY_FOLLOWUP.md)
+retains the original Linux/Windows 10 VM failures, fixes and regression evidence.
 
 ## Building Windows games from Linux
 
@@ -15,8 +34,9 @@ workflow below. These are separate toolchains, not interchangeable C++ libraries
 
 ## Current Pre-Alpha SDK packaging
 
-Native Windows remains a best-effort functional-validation platform. New packaging
-changes do not imply fresh Windows execution or physical GPU acceptance. The shared
+The checkpoint above has scoped native Windows 11 automation and operator
+hardware acceptance. New packaging changes or later source revisions do not
+automatically inherit that validation. The shared
 [SDK inventory](../packaging/sdk-inventory.json) now includes asset cooking, script
 checking, save recovery/migration, the dedicated server and all public authoring
 tools. Runtime DLL staging covers executables declared after M76 as well.
@@ -25,6 +45,7 @@ tools. Runtime DLL staging covers executables declared after M76 as well.
 
 | Recorded work | Actual scope | What it does not establish |
 |---|---|---|
+| [Windows 11 acceptance](evidence/windows11-acceptance-20261025/OPERATOR_ACCEPTANCE.json) | Effective 59/59 native gate, 33/33 extras and operator project/save/game/audio trial at `6941b381` | Controller hardware, clean-machine distribution, universal GPU/configuration coverage or later revisions |
 | [Pass 4](evidence/prealpha-pass4/windows/REPORT.md) | Complete 18-executable SDK, native physics/persistence, editor and relocated export in Windows 10 VM | Physical GPU/audio/controller acceptance or every later revision |
 | [Pass 5](evidence/prealpha-pass5/windows/REPORT.md) | 16 selected native build targets; engine, editor, runtime/export and M70/M77 cold restoration | A rebuilt all-tool SDK, hardware performance or a clean-machine install |
 | [Later CCD/dense follow-ups](PREALPHA.md) | See each current report's Linux results | No fresh Windows qualification is inferred from shared source or older VM passes |

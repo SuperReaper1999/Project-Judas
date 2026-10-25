@@ -6,6 +6,14 @@ qualification. The operator's Windows 11 summary (52/59 checks and a separate
 32/32) is an external handoff without its original logs. New reproductions here
 use Linux and the existing **Windows 10 VM**, not Windows 11 hardware.
 
+## Subsequent operator acceptance
+
+On 25 October 2026 the operator accepted this exact correction checkpoint on
+Windows 11 hardware. Native receipts and the explicitly tested project/save/game/
+audio scope are preserved in the [acceptance record](evidence/windows11-acceptance-20261025/OPERATOR_ACCEPTANCE.json). The original
+VM findings below remain historical evidence; controller and clean-machine
+certification are not inferred from that later acceptance.
+
 ## Corrections and causes
 
 | Reported finding | Mechanism and correction |

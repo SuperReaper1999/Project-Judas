@@ -2,10 +2,11 @@
 
 This describes the intended initial Alpha support boundary during **Pre-Alpha**.
 It is not an Alpha announcement, release certification or promise of universal
-component compatibility. Accepted engine source: `c76e92dc20b5765f61d6077bf618a8b94ac22462`.
-A bounded Experimental correction restores free-body external-kick timing; it
-awaits human acceptance. The [final qualification report](PREALPHA_FINAL_QUALIFICATION.md) records the exact
-SDK identity, selected checks and outstanding acceptance work.
+component compatibility. Accepted engine source: `6941b3815f93d4f716fe64faffff69799c7637b0`,
+including the accepted Windows portability corrections and preceding editor work.
+The [Windows 11 acceptance](WINDOWS.md) records the scoped hardware trial and native
+receipts. The [final qualification report](PREALPHA_FINAL_QUALIFICATION.md) retains
+its earlier exact SDK identity and checkpoint-time qualification scope.
 
 **Supported** means an intended developer workflow within the stated boundary.
 **Experimental** means explicit opt-in with unresolved limitations.
@@ -19,7 +20,8 @@ or an older successful platform run is not proof of current coverage.
 | Linux x86-64, Ubuntu 24.04 reference userland | Supported reference build | Complete older-userland SDK, ABI/loader checks, editor/project workflows and moved games; see final receipts. System graphics/audio libraries and drivers remain prerequisites. |
 | Newer Linux host-native builds | Supported build workflow | Binaries inherit the build host's ABI. They are not automatically compatible with Ubuntu 24.04. |
 | Other Linux distributions / Ubuntu 22.04 / non-x86-64 desktop | Unqualified | No inference from a glibc symbol check alone. |
-| Windows MSVC and Linux-to-Windows cross-build | Existing implementation; current qualification deferred | Historical tests remain valid only for their recorded versions. No new Windows result in this pass. |
+| Windows x64 MSVC / tested Windows 11 hardware | Human accepted at `6941b381` | Effective 59/59 native gate plus 33/33 extras; operator project creation, save/reopen, small game, audio and editor/gameplay trial. Controller hardware and clean-machine certification remain unqualified. [Evidence](WINDOWS.md). |
+| Linux-to-Windows MinGW cross-build | Existing separately qualified workflow | Native MSVC acceptance does not supply a new MinGW qualification; historical cross-build receipts keep their own scope. |
 | Android runtime, touch, APK workflow | Existing implementation; current qualification deferred | Earlier phone acceptance is retained; no current-device or emulator certification in this pass. |
 | macOS, iOS, consoles, browser runtime | Unsupported | No supported distribution pipeline promised. |
 | Docker/Podman Ubuntu baseline builder | Available, execution-unqualified here | Rootless bubblewrap is the exercised baseline backend. |
@@ -64,6 +66,7 @@ features. Remaining registry/module debt is maintainability work, not evidence
 that tested ownership is incorrect. No speculative rewrite is required merely
 to remove all deferred entries from this table.
 
-Still separate: the operator's own game-building trial and current Windows/Android
-qualification. A usability blocker found in that trial deserves correction even
-if automated tests pass.
+The operator's Windows 11 project/save/reopen/small-game/audio trial is accepted.
+Broader game-building coverage, controller hardware, clean-machine distribution
+and fresh Android qualification remain separate. A usability blocker still
+deserves correction even if automated tests pass.

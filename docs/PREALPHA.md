@@ -7,10 +7,12 @@ verified corrections awaiting their own human acceptance.
 ## Accepted baseline
 
 The current human-accepted engine checkpoint is
-`c76e92dc20b5765f61d6077bf618a8b94ac22462`, including the rotation/contact correction.
-MK2 is the sole production solver, including coupled work. Main and Experimental
-were aligned at that acceptance; subsequent qualification/documentation work is
-Experimental until separately accepted. See [the current contract](MK2_PHYSICS_ARCHITECTURE.md).
+`6941b3815f93d4f716fe64faffff69799c7637b0`, including the Windows portability
+corrections and preceding accepted editor work. Windows 11 native automation and
+the operator's project/save/game/audio hardware trial are recorded in
+[Windows qualification](WINDOWS.md). MK2 remains the sole production solver.
+Later development still requires its own acceptance before main promotion.
+See [the current contract](MK2_PHYSICS_ARCHITECTURE.md).
 
 ## Current correction work
 
@@ -25,8 +27,8 @@ The [final bounded qualification](PREALPHA_FINAL_QUALIFICATION.md) supersedes ol
 pending status, with the [intended Alpha support matrix](ALPHA_SUPPORT_MATRIX.md).
 Prior reports retain their checkpoint-time failures and platform claims.
 Final qualification found and corrected a free-body external-kick timing regression
-that disturbed wheel suspension. This new Experimental correction has automated
-Linux coverage and awaits human acceptance; it is not part of accepted main yet.
+that disturbed wheel suspension. That correction is included in the subsequently
+accepted lineage; the original report retains its checkpoint-time status.
 
 Start with [your first project](FIRST_PROJECT.md), [the editor guide](EDITOR_GUIDE.md),
 [Project Settings/water](PROJECT_SETTINGS_AND_WATER.md), [JudasJS](JUDASJS.md),
@@ -35,9 +37,10 @@ Start with [your first project](FIRST_PROJECT.md), [the editor guide](EDITOR_GUI
 ## Remaining readiness concerns
 
 - Selected Linux native/editor/game checks do not certify every engine feature.
-- Windows/Android qualification is explicitly deferred by the operator;
-  historical platform receipts apply to their recorded source. Windows VM timing
-  remains diagnostic, not a physical-host performance gate.
+- Windows 11 has scoped native and operator hardware acceptance at `6941b381`.
+  Controllers, clean-machine distribution and fresh Android qualification remain
+  separate. Historical receipts apply only to their recorded source; Windows VM
+  timing remains diagnostic, not a physical-host performance gate.
 - Advanced fluid dynamics remain default-off and experimental. FLU-001 and the
   retained half-turn sampling issue are not silently reclassified as passes.
 - Replication, physical charts, regional suspension, terrain edits and migrations

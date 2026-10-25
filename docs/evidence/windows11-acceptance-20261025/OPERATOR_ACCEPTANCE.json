@@ -1,0 +1,72 @@
+{
+  "date": "2026-10-25",
+  "status": "human accepted by operator",
+  "accepted_engine_checkpoint": "6941b3815f93d4f716fe64faffff69799c7637b0",
+  "operator": "Conner / SuperReaper1999",
+  "platform": "Physical Windows 11 hardware",
+  "human_evidence_source": "Direct operator statement in this chat after completing Windows testing",
+  "human_tested": [
+    "Creating a project",
+    "Saving and reopening/loading a project",
+    "Running a small game",
+    "Confirming audio works",
+    "Confirming editor and gameplay function on the actual machine"
+  ],
+  "automated_evidence": {
+    "source": "Operator-provided HDD receipts, inspected read-only during Kubuntu closeout; no validation rerun here",
+    "initial_gate": {
+      "passed": 58,
+      "total": 59,
+      "failure": "build-identity wrapper tracked-status null versus empty; native executable passed55 assertions"
+    },
+    "targeted_retest": "Unchanged prealpha.build-identity CTest retest passed; initial failure preserved",
+    "effective_gate": {
+      "passed": 59,
+      "total": 59
+    },
+    "additional": {
+      "passed": 33,
+      "total": 33
+    },
+    "build_identity": {
+      "architecture": "AMD64",
+      "build_id": "0.1.0-prealpha-Experimental-6941b38-clean-74f7a2402f48",
+      "channel": "Experimental",
+      "compiler": "MSVC",
+      "compiler_version": "19.44.35229.0",
+      "configuration": "Release",
+      "maturity": "pre-alpha",
+      "platform": "Windows",
+      "schema": 1,
+      "source_dirty": false,
+      "source_fingerprint": "74f7a2402f48d24dcecba4db7c0c1f54a59eb06bb3be24eeb15194827854d329",
+      "source_origin": "git",
+      "source_revision": "6941b3815f93d4f716fe64faffff69799c7637b0",
+      "source_tree": "0c2f6302faa4526b60afae2671cd624bb05d2588",
+      "source_untracked_count": 0,
+      "source_untracked_fingerprint": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "version": "0.1.0-prealpha"
+    },
+    "stack_reserve_bytes": 1048576,
+    "sdk_inspection_passed": true,
+    "receipt_archive": "native-windows11-receipts.zip",
+    "source_directory": "/run/media/conner/HDD/WINDOWS HDD DATA/Judas/Evidence/windows-hdd-6941b38-20261025-184556",
+    "notes": [
+      "Automated receipts predate the separate human acceptance and correctly retain their then-untested human-hardware boundary",
+      "No newly rerun checks, builds or benchmarks during this closeout"
+    ]
+  },
+  "not_claimed": [
+    "Controller/gamepad hardware support validation",
+    "Clean-machine distribution certification",
+    "Every GPU or Windows configuration",
+    "Universal subsystem/API coverage",
+    "Alpha/M100 or release publication"
+  ],
+  "preserved_limitations": [
+    "Initial build-identity wrapper failure retained with passing unchanged targeted retest",
+    "ICU build required a short junction path because generated makefile misquotes paths with spaces; setup workaround recorded in original receipts, not a source fix",
+    "Windows-managed SDK/tool/runtime components remain in supported system locations"
+  ],
+  "promotion_authorization": "Operator explicitly accepted Windows portability corrections and requested promotion plus documentation update; preserve newer work and fast-forward only"
+}
