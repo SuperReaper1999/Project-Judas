@@ -1,0 +1,65 @@
+test_changed_link_owner_detected (test_cmake_test_targets.CMakeTestTargets.test_changed_link_owner_detected) ... ok
+test_changed_warning_detected (test_cmake_test_targets.CMakeTestTargets.test_changed_warning_detected) ... ok
+test_exact_sources_links_warnings_and_order (test_cmake_test_targets.CMakeTestTargets.test_exact_sources_links_warnings_and_order) ... ok
+test_missing_application_sources_detected (test_cmake_test_targets.CMakeTestTargets.test_missing_application_sources_detected) ... ok
+test_missing_target_detected (test_cmake_test_targets.CMakeTestTargets.test_missing_target_detected) ... ok
+test_unknown_options_and_missing_source_fail (test_cmake_test_targets.CMakeTestTargets.test_unknown_options_and_missing_source_fail) ... ok
+test_changed_engine_link_is_detected (test_cmake_test_targets.SubsystemTargetContracts.test_changed_engine_link_is_detected) ... ok
+test_lost_application_sources_are_detected (test_cmake_test_targets.SubsystemTargetContracts.test_lost_application_sources_are_detected) ... ok
+test_lost_rendering_definition_is_detected (test_cmake_test_targets.SubsystemTargetContracts.test_lost_rendering_definition_is_detected) ... ok
+test_lost_windows_socket_link_is_detected (test_cmake_test_targets.SubsystemTargetContracts.test_lost_windows_socket_link_is_detected) ... ok
+test_subsystem_sources_links_options_properties_and_order (test_cmake_test_targets.SubsystemTargetContracts.test_subsystem_sources_links_options_properties_and_order) ... 
+  test_subsystem_sources_links_options_properties_and_order (test_cmake_test_targets.SubsystemTargetContracts.test_subsystem_sources_links_options_properties_and_order) (platform='linux') ... FAIL
+  test_subsystem_sources_links_options_properties_and_order (test_cmake_test_targets.SubsystemTargetContracts.test_subsystem_sources_links_options_properties_and_order) (platform='windows') ... FAIL
+  test_subsystem_sources_links_options_properties_and_order (test_cmake_test_targets.SubsystemTargetContracts.test_subsystem_sources_links_options_properties_and_order) (platform='android') ... FAIL
+test_wrong_platform_guard_is_detected (test_cmake_test_targets.SubsystemTargetContracts.test_wrong_platform_guard_is_detected) ... ok
+
+======================================================================
+FAIL: test_subsystem_sources_links_options_properties_and_order (test_cmake_test_targets.SubsystemTargetContracts.test_subsystem_sources_links_options_properties_and_order) (platform='linux')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/conner/Documents/GitHub/Project-Judas/tests/test_cmake_test_targets.py", line 168, in test_subsystem_sources_links_options_properties_and_order
+    self.assertEqual(self.expected(platform), self.declarations(platform))
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: [['ad[7791 chars]ring']], ['judas_warnings', ['judas_ui_product[3856 chars]s']]] != [['ad[7791 chars]ring', 'judas_imgui']], ['judas_warnings', ['j[3871 chars]s']]]
+
+First differing element 84:
+['tar[39 chars]ion_tests', 'PRIVATE', 'judas_world_authoring']]
+['tar[39 chars]ion_tests', 'PRIVATE', 'judas_world_authoring', 'judas_imgui']]
+
+Diff is 12910 characters long. Set self.maxDiff to None to see it.
+
+======================================================================
+FAIL: test_subsystem_sources_links_options_properties_and_order (test_cmake_test_targets.SubsystemTargetContracts.test_subsystem_sources_links_options_properties_and_order) (platform='windows')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/conner/Documents/GitHub/Project-Judas/tests/test_cmake_test_targets.py", line 168, in test_subsystem_sources_links_options_properties_and_order
+    self.assertEqual(self.expected(platform), self.declarations(platform))
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: [['ad[7098 chars]ring']], ['judas_warnings', ['judas_ui_product[3939 chars]s']]] != [['ad[7098 chars]ring', 'judas_imgui']], ['judas_warnings', ['j[3954 chars]s']]]
+
+First differing element 78:
+['tar[39 chars]ion_tests', 'PRIVATE', 'judas_world_authoring']]
+['tar[39 chars]ion_tests', 'PRIVATE', 'judas_world_authoring', 'judas_imgui']]
+
+Diff is 12223 characters long. Set self.maxDiff to None to see it.
+
+======================================================================
+FAIL: test_subsystem_sources_links_options_properties_and_order (test_cmake_test_targets.SubsystemTargetContracts.test_subsystem_sources_links_options_properties_and_order) (platform='android')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/conner/Documents/GitHub/Project-Judas/tests/test_cmake_test_targets.py", line 168, in test_subsystem_sources_links_options_properties_and_order
+    self.assertEqual(self.expected(platform), self.declarations(platform))
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: [['ad[7098 chars]ring']], ['judas_warnings', ['judas_ui_product[3856 chars]s']]] != [['ad[7098 chars]ring', 'judas_imgui']], ['judas_warnings', ['j[3871 chars]s']]]
+
+First differing element 78:
+['tar[39 chars]ion_tests', 'PRIVATE', 'judas_world_authoring']]
+['tar[39 chars]ion_tests', 'PRIVATE', 'judas_world_authoring', 'judas_imgui']]
+
+Diff is 12133 characters long. Set self.maxDiff to None to see it.
+
+----------------------------------------------------------------------
+Ran 12 tests in 0.201s
+
+FAILED (failures=3)

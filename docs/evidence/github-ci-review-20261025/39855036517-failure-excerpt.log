@@ -1,0 +1,12 @@
+2026-10-22T21:22:06.0038404Z       Start 23: prealpha.impact-mesh-continuation
+2026-10-22T21:22:10.8163798Z 23/55 Test #23: prealpha.impact-mesh-continuation .........***Failed    4.81 sec
+2026-10-22T21:22:10.8164590Z impact-mesh-continuation failed
+2026-10-22T21:22:10.8165404Z /home/runner/work/Project-Judas/Project-Judas/.cache/prealpha/validation/20261022T212206Z-74b49563/RESULTS.json
+2026-10-22T21:22:10.8165999Z 
+2026-10-22T21:22:10.8167619Z       Start 24: prealpha.liquid-rotation
+2026-10-22T21:22:37.1431287Z 
+2026-10-22T21:22:37.1431380Z The following tests FAILED:
+2026-10-22T21:22:37.1431710Z 	 23 - prealpha.impact-mesh-continuation (Failed)        collision prealpha
+2026-10-22T21:22:37.1432041Z Errors while running CTest
+2026-10-22T21:22:37.1471930Z ##[error]Process completed with exit code 8.
+2026-10-22T21:22:37.1556955Z ##[group]Run actions/upload-artifact@v7

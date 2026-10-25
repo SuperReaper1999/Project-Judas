@@ -1,0 +1,11 @@
+Test project /home/conner/Documents/GitHub/Project-Judas/build
+    Start 57: prealpha.build-organization
+1/1 Test #57: prealpha.build-organization ......   Passed    0.43 sec
+
+100% tests passed, 0 tests failed out of 1
+
+Label Time Summary:
+prealpha    =   0.43 sec*proc (1 test)
+tooling     =   0.43 sec*proc (1 test)
+
+Total Test time (real) =   0.43 sec

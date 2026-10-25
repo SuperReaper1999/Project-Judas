@@ -1,0 +1,45 @@
+2026-10-25T12:06:45.6084252Z       Start 57: prealpha.build-organization
+2026-10-25T12:06:45.7226133Z 57/58 Test #57: prealpha.build-organization ...............***Failed    0.11 sec
+2026-10-25T12:06:45.7226811Z test_changed_link_owner_detected (test_cmake_test_targets.CMakeTestTargets.test_changed_link_owner_detected) ... ok
+2026-10-25T12:06:45.7227319Z test_changed_warning_detected (test_cmake_test_targets.CMakeTestTargets.test_changed_warning_detected) ... ok
+2026-10-25T12:06:45.7227916Z test_exact_sources_links_warnings_and_order (test_cmake_test_targets.CMakeTestTargets.test_exact_sources_links_warnings_and_order) ... ok
+2026-10-25T12:06:45.7228461Z test_missing_application_sources_detected (test_cmake_test_targets.CMakeTestTargets.test_missing_application_sources_detected) ... ok
+2026-10-25T12:06:45.7236067Z ======================================================================
+2026-10-25T12:06:45.7236712Z FAIL: test_subsystem_sources_links_options_properties_and_order (test_cmake_test_targets.SubsystemTargetContracts.test_subsystem_sources_links_options_properties_and_order) (platform='linux')
+2026-10-25T12:06:45.7237218Z ----------------------------------------------------------------------
+2026-10-25T12:06:45.7237439Z Traceback (most recent call last):
+2026-10-25T12:06:45.7237839Z   File "/home/runner/work/Project-Judas/Project-Judas/tests/test_cmake_test_targets.py", line 168, in test_subsystem_sources_links_options_properties_and_order
+2026-10-25T12:06:45.7238279Z     self.assertEqual(self.expected(platform), self.declarations(platform))
+2026-10-25T12:06:45.7238820Z AssertionError: Lists differ: [['ad[7791 chars]ring']], ['judas_warnings', ['judas_ui_product[3856 chars]s']]] != [['ad[7791 chars]ring', 'judas_imgui']], ['judas_warnings', ['j[3871 chars]s']]]
+2026-10-25T12:06:45.7239136Z 
+2026-10-25T12:06:45.7239206Z First differing element 84:
+2026-10-25T12:06:45.7239413Z ['tar[39 chars]ion_tests', 'PRIVATE', 'judas_world_authoring']]
+2026-10-25T12:06:45.7239687Z ['tar[39 chars]ion_tests', 'PRIVATE', 'judas_world_authoring', 'judas_imgui']]
+2026-10-25T12:06:45.7240212Z ======================================================================
+2026-10-25T12:06:45.7240754Z FAIL: test_subsystem_sources_links_options_properties_and_order (test_cmake_test_targets.SubsystemTargetContracts.test_subsystem_sources_links_options_properties_and_order) (platform='windows')
+2026-10-25T12:06:45.7241249Z ----------------------------------------------------------------------
+2026-10-25T12:06:45.7241458Z Traceback (most recent call last):
+2026-10-25T12:06:45.7241846Z   File "/home/runner/work/Project-Judas/Project-Judas/tests/test_cmake_test_targets.py", line 168, in test_subsystem_sources_links_options_properties_and_order
+2026-10-25T12:06:45.7242276Z     self.assertEqual(self.expected(platform), self.declarations(platform))
+2026-10-25T12:06:45.7242807Z AssertionError: Lists differ: [['ad[7098 chars]ring']], ['judas_warnings', ['judas_ui_product[3939 chars]s']]] != [['ad[7098 chars]ring', 'judas_imgui']], ['judas_warnings', ['j[3954 chars]s']]]
+2026-10-25T12:06:45.7243127Z 
+2026-10-25T12:06:45.7243190Z First differing element 78:
+2026-10-25T12:06:45.7243391Z ['tar[39 chars]ion_tests', 'PRIVATE', 'judas_world_authoring']]
+2026-10-25T12:06:45.7243772Z ['tar[39 chars]ion_tests', 'PRIVATE', 'judas_world_authoring', 'judas_imgui']]
+2026-10-25T12:06:45.7244310Z ======================================================================
+2026-10-25T12:06:45.7244844Z FAIL: test_subsystem_sources_links_options_properties_and_order (test_cmake_test_targets.SubsystemTargetContracts.test_subsystem_sources_links_options_properties_and_order) (platform='android')
+2026-10-25T12:06:45.7245323Z ----------------------------------------------------------------------
+2026-10-25T12:06:45.7245531Z Traceback (most recent call last):
+2026-10-25T12:06:45.7246010Z   File "/home/runner/work/Project-Judas/Project-Judas/tests/test_cmake_test_targets.py", line 168, in test_subsystem_sources_links_options_properties_and_order
+2026-10-25T12:06:45.7246586Z     self.assertEqual(self.expected(platform), self.declarations(platform))
+2026-10-25T12:06:45.7247097Z AssertionError: Lists differ: [['ad[7098 chars]ring']], ['judas_warnings', ['judas_ui_product[3856 chars]s']]] != [['ad[7098 chars]ring', 'judas_imgui']], ['judas_warnings', ['j[3871 chars]s']]]
+2026-10-25T12:06:45.7247406Z 
+2026-10-25T12:06:45.7247466Z First differing element 78:
+2026-10-25T12:06:45.7247664Z ['tar[39 chars]ion_tests', 'PRIVATE', 'judas_world_authoring']]
+2026-10-25T12:06:45.7247933Z ['tar[39 chars]ion_tests', 'PRIVATE', 'judas_world_authoring', 'judas_imgui']]
+2026-10-25T12:06:46.5628432Z 
+2026-10-25T12:06:46.5628505Z The following tests FAILED:
+2026-10-25T12:06:46.5628847Z 	 57 - prealpha.build-organization (Failed)              prealpha tooling
+2026-10-25T12:06:46.5629096Z Errors while running CTest
+2026-10-25T12:06:46.5665908Z ##[error]Process completed with exit code 8.
+2026-10-25T12:06:46.5747307Z ##[group]Run actions/upload-artifact@v7

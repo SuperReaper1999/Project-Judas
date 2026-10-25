@@ -1,0 +1,6 @@
+2026-10-24T15:49:12.0610346Z   "tracked_destinations_required": true,
+2026-10-24T15:49:12.0610580Z   "errors": [
+2026-10-24T15:49:12.0610976Z     "docs/PREALPHA_EVENT_DEPENDENCIES.md:33: missing destination ../src/physics/ImpactEventSchedule.h",
+2026-10-24T15:49:12.0611592Z     "docs/PREALPHA_EVENT_DEPENDENCIES.md:41: missing destination ../src/physics/WorldImpactEvents.cpp"
+2026-10-24T15:49:12.0611995Z   ],
+2026-10-24T15:49:12.0612173Z   "pass": false

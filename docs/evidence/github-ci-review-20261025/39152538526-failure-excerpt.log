@@ -1,0 +1,11 @@
+2026-10-18T18:06:35.2739286Z ======================================================================
+2026-10-18T18:06:35.2740179Z FAIL: test_shared_inventory_contains_every_current_public_tool (__main__.PackagingChecks.test_shared_inventory_contains_every_current_public_tool)
+2026-10-18T18:06:35.2740989Z ----------------------------------------------------------------------
+2026-10-18T18:06:35.2741427Z Traceback (most recent call last):
+2026-10-18T18:06:35.2742221Z   File "/home/runner/work/Project-Judas/Project-Judas/scripts/prealpha_packaging_checks.py", line 68, in test_shared_inventory_contains_every_current_public_tool
+2026-10-18T18:06:35.2743068Z     self.assertFalse(set(spec["tools"] + spec["windows_tools"]) - targets)
+2026-10-18T18:06:35.2743877Z AssertionError: {'judas_server', 'judas_save', 'judas_cook', 'judas_script_check', 'judas_windows_readiness_tests'} is not false
+2026-10-18T18:06:35.2744342Z 
+2026-10-18T18:06:35.2744575Z ----------------------------------------------------------------------
+2026-10-18T18:06:35.2745117Z Ran 24 tests in 0.605s
+2026-10-18T18:06:35.2745273Z 

@@ -5,6 +5,7 @@ Negative controls deliberately remove/change mechanisms instead of counting name
 """
 
 import pathlib
+import re
 import shutil
 import subprocess
 import tempfile
@@ -112,8 +113,9 @@ class CMakeTestTargets(unittest.TestCase):
 class SubsystemTargetContracts(unittest.TestCase):
     """Execute the actual extracted declarations, including platform guards.
 
-    The fixture is the pre-extraction CMake command trace at f647d7f, not a new
-    hand-maintained engine registry. Native platform qualification is separate.
+    The archived pre-extraction trace supplies minimum retained requirements, not
+    an exact copy of the evolving build graph. Source-derived checks cover new
+    direct dependencies. Native compilation/platform qualification is separate.
     """
 
     MODULES = ("LocalViews", "RenderingAssets", "DeveloperWorkflow", "WorldLifecycle")
@@ -162,40 +164,149 @@ class SubsystemTargetContracts(unittest.TestCase):
             return [[line.split("|", 1)[0], line.split("|", 1)[1].split(";")]
                     for line in trace.read_text().splitlines()]
 
-    def test_subsystem_sources_links_options_properties_and_order(self):
+    @staticmethod
+    def usage_requirements(args):
+        """Normalize scoped CMake usage without depending on call/list order."""
+        scope = "UNSCOPED"
+        result = set()
+        for arg in args:
+            if arg in ("PUBLIC", "PRIVATE", "INTERFACE"):
+                scope = arg
+            else:
+                result.add((scope, arg))
+        return result
+
+    def assert_contract(self, platform, declarations):
+        # The archived trace is a minimum contract, not a duplicate current graph.
+        # New dependencies/sources/targets and harmless declaration reordering do
+        # not require edits to this fixture. Lost requirements still fail.
+        from collections import defaultdict
+        actual = defaultdict(list)
+        for command, args in declarations:
+            actual[(command, args[0])].append(args[1:])
+        baseline = self.expected(platform)
+        for command, args in baseline:
+            key = (command, args[0])
+            self.assertIn(key, actual, f"Missing {command} for {args[0]}")
+            values = [value for call in actual[key] for value in call]
+            if command in ("target_link_libraries", "target_include_directories", "target_compile_definitions"):
+                required = self.usage_requirements(args[1:])
+                supplied = set().union(*(self.usage_requirements(call) for call in actual[key]))
+            elif command == "set_target_properties":
+                required = set(zip(args[2::2], args[3::2]))
+                # CMake uses the final assignment when a property is set twice.
+                supplied = set(dict(pair for call in actual[key]
+                                    for pair in zip(call[1::2], call[2::2])).items())
+            else:
+                required, supplied = set(args[1:]), set(values)
+            self.assertFalse(required - supplied,
+                             f"{args[0]} lost {command} requirements: {sorted(required - supplied)}")
+
+        all_old_targets = {args[0] for name in self.PLATFORMS
+                           for command, args in self.expected(name) if command == "add_executable"}
+        required_targets = {args[0] for command, args in baseline if command == "add_executable"}
+        current_targets = {target for command, target in actual if command == "add_executable"}
+        self.assertEqual(all_old_targets & current_targets, required_targets,
+                         "A platform-specific target escaped its platform guard")
+        for target in current_targets:
+            self.assertEqual(len(actual[("add_executable", target)]), 1, f"Duplicate target {target}")
+            sources = actual[("add_executable", target)][0]
+            uses_imgui = False
+            for source in sources:
+                path = ROOT / source
+                self.assertTrue(path.is_file(), f"{target}: missing source {source}")
+                # These are direct include requirements of the compiled sources,
+                # not another hand-maintained list of target/dependency names.
+                uses_imgui |= bool(re.search(r'^\s*#\s*include\s*[<"](?:backends/)?imgui[^>"]*[>"]',
+                                             path.read_text(), re.MULTILINE))
+            if uses_imgui:
+                links = set().union(*(self.usage_requirements(call)
+                                      for call in actual.get(("target_link_libraries", target), [])))
+                self.assertTrue(any(scope != "INTERFACE" and value == "judas_imgui" for scope, value in links),
+                                f"{target}: source includes ImGui but has no implementation link to judas_imgui")
+
+    def assert_rejected(self, platform="linux", **changes):
+        with self.assertRaises(AssertionError):
+            self.assert_contract(platform, self.declarations(platform=platform, **changes))
+
+    def test_required_sources_links_properties_and_platforms(self):
         for platform in self.PLATFORMS:
             with self.subTest(platform=platform):
-                self.assertEqual(self.expected(platform), self.declarations(platform))
+                self.assert_contract(platform, self.declarations(platform))
         root = (ROOT / "CMakeLists.txt").read_text()
         for name in self.MODULES:
             self.assertIn(f"include(cmake/targets/{name}.cmake)", root)
 
+    def test_valid_additions_and_reordered_link_calls_are_allowed(self):
+        candidate = self.source() + "\njudas_add_engine_test(new_test tests/InputTests.cpp)\n"
+        candidate = candidate.replace("add_executable(judas_ui_production_tests tests/UIProductionTests.cpp)",
+            "add_executable(judas_ui_production_tests tests/UIProductionTests.cpp src/InputSystem.h)")
+        # Moving a dependency into another normal link call must not fail a
+        # historical list comparison. Additional required libraries are legal.
+        original = "target_link_libraries(judas_ui_production_tests PRIVATE judas_world_authoring judas_imgui)"
+        replacement = ("target_link_libraries(judas_ui_production_tests PRIVATE judas_imgui)\n"
+                       "target_link_libraries(judas_ui_production_tests PRIVATE judas_world_authoring)\n"
+                       "target_link_libraries(judas_ui_production_tests PRIVATE new_optional_dependency)")
+        self.assertIn(original, candidate)
+        candidate = candidate.replace(original, replacement)
+        for platform in self.PLATFORMS:
+            with self.subTest(platform=platform):
+                self.assert_contract(platform, self.declarations(platform=platform, source=candidate))
+
+    def test_missing_and_duplicate_targets_are_detected(self):
+        declarations = self.declarations()
+        self.assert_rejected(source=self.source().replace("judas_add_engine_test(judas_script_developer_tools_tests tests/ScriptDeveloperToolsTests.cpp)", "", 1))
+        declarations.append(next(row for row in declarations if row[0] == "add_executable"))
+        with self.assertRaises(AssertionError):
+            self.assert_contract("linux", declarations)
+
+    def test_new_target_missing_source_is_detected(self):
+        candidate = self.source() + "\nadd_executable(new_broken_test tests/does-not-exist.cpp)\n"
+        self.assert_rejected(source=candidate)
+
+    def test_changed_final_language_property_is_detected(self):
+        candidate = self.source() + "\nset_target_properties(judas_script_vm_benchmark PROPERTIES C_STANDARD 99)\n"
+        self.assert_rejected(source=candidate)
+
     def test_lost_application_sources_are_detected(self):
         candidate = self.source().replace(" APPLICATION", "", 1)
         self.assertNotEqual(candidate, self.source())
-        self.assertNotEqual(self.expected("linux"), self.declarations(source=candidate))
+        self.assert_rejected(source=candidate)
 
     def test_changed_engine_link_is_detected(self):
         helper = (ROOT / "cmake/JudasTestTargets.cmake").read_text()
         helper = helper.replace("PRIVATE judas_engine", "PRIVATE wrong_owner", 1)
-        self.assertNotEqual(self.expected("linux"), self.declarations(helper=helper))
+        self.assert_rejected(helper=helper)
+
+    def test_lost_native_editor_input_dependency_is_detected(self):
+        original = "target_link_libraries(judas_ui_production_tests PRIVATE judas_world_authoring judas_imgui)"
+        candidate = self.source().replace(original, original.replace(" judas_imgui", ""), 1)
+        self.assertNotEqual(candidate, self.source())
+        for platform in self.PLATFORMS:
+            with self.subTest(platform=platform):
+                self.assert_rejected(platform, source=candidate)
+
+    def test_interface_only_imgui_dependency_is_detected(self):
+        original = "target_link_libraries(judas_ui_production_tests PRIVATE judas_world_authoring judas_imgui)"
+        candidate = self.source().replace(original,
+            "target_link_libraries(judas_ui_production_tests PRIVATE judas_world_authoring INTERFACE judas_imgui)", 1)
+        self.assertNotEqual(candidate, self.source())
+        self.assert_rejected(source=candidate)
 
     def test_lost_rendering_definition_is_detected(self):
         candidate = self.source().replace("PRIVATE JUDAS_M92", "PRIVATE WRONG_DEFINITION", 1)
         self.assertNotEqual(candidate, self.source())
-        self.assertNotEqual(self.expected("linux"), self.declarations(source=candidate))
+        self.assert_rejected(source=candidate)
 
     def test_lost_windows_socket_link_is_detected(self):
         candidate = self.source().replace("if(WIN32)", "if(FALSE)", 1)
         self.assertNotEqual(candidate, self.source())
-        self.assertNotEqual(self.expected("windows"),
-                            self.declarations(platform="windows", source=candidate))
+        self.assert_rejected("windows", source=candidate)
 
     def test_wrong_platform_guard_is_detected(self):
         candidate = self.source().replace("if(UNIX AND NOT ANDROID)", "if(UNIX)", 1)
         self.assertNotEqual(candidate, self.source())
-        self.assertNotEqual(self.expected("android"),
-                            self.declarations(platform="android", source=candidate))
+        self.assert_rejected("android", source=candidate)
 
 
 if __name__ == "__main__":

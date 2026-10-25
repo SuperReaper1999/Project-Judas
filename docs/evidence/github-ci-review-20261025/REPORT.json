@@ -1,0 +1,52 @@
+{
+  "baseline": "64156080799864d39a417bc094753f28b092ac38",
+  "main_promotion": "Exact operator-accepted editor checkpoint fast-forwarded to main; subsequent CI repair stays Experimental.",
+  "scope": "18 recorded failed runs inspected, 2026-10-17 through initial inventory on 2026-10-25. A new main promotion run at this same broken baseline was still in progress at last status check; inventory is a snapshot, not a claim about future runs.",
+  "counts": {
+    "stale_current_dependency_expectation": 5,
+    "already_fixed_SDK_inventory": 8,
+    "already_fixed_current_doc_selection": 3,
+    "historical_MK1_collision_failure": 1,
+    "already_fixed_resource_fixture": 1
+  },
+  "current_root_cause": "bbd031bc added judas_imgui to judas_ui_production_tests to test native editor text input. The full-list comparison against the historical extraction fixture was not evolved with this legitimate dependency. Five runs reached the native gates and failed the same build-organization test, while the other 57 entries passed.",
+  "correction": "Historical fixture remains byte-unchanged. It now supplies minimum retained requirements. Scoped usage is normalized across calls, property checks honor final assignment, additional sources/libraries/targets are allowed, existing platform boundaries remain enforced, and directly included ImGui sources require an implementation link. Actual compilation/linking remains authoritative; this is not a general C++ dependency resolver.",
+  "positive_controls": [
+    "Current Linux/Windows/Android declaration branches satisfy minimum requirements.",
+    "Adding a source header, a target and a dependency succeeds.",
+    "Splitting/reordering normal link calls succeeds."
+  ],
+  "negative_controls": [
+    "Required target removed or declared twice.",
+    "New target names a missing source.",
+    "Application-loop sources lost.",
+    "Engine link owner changed.",
+    "Required rendering definition removed.",
+    "Windows socket link removed or platform guard leaks target onto Android.",
+    "ImGui implementation dependency removed or changed to INTERFACE-only.",
+    "Final language-standard property overwritten incompatibly."
+  ],
+  "validation": {
+    "build_contract_unittests": 18,
+    "packaging_controls": 28,
+    "documentation_controls": 10,
+    "ctest_build_organization": "Pass; executes the same 18 build-contract controls.",
+    "current_docs": "Pass with tracked destinations required.",
+    "runtime_build": "Not repeated: no native/runtime/build-target changes; the current GitHub failure logs already show all other 57 entries passing.",
+    "remote_after_fix": "Will be triggered by publishing this candidate; no remote success claimed in this report."
+  },
+  "preservation": [
+    "main remains at human-tested 64156080.",
+    "No workflows disabled, tests skipped, notifications suppressed or native assertions weakened.",
+    "Original extraction fixture and protected historical evidence unchanged.",
+    "No engine implementations, APIs, game assets, release channels or independent research changed."
+  ],
+  "reproduction": [
+    "python3 -m unittest discover -s tests -p test_cmake_test_targets.py -v",
+    "ctest --test-dir build -R ^prealpha.build-organization$ --output-on-failure",
+    "python3 scripts/prealpha_packaging_checks.py --output /tmp/packaging.json",
+    "python3 scripts/check_current_docs.py --require-tracked",
+    "Original zipped logs: gh api repos/SuperReaper1999/Project-Judas/actions/runs/<id>/logs > <id>.zip (download SHA-256 recorded per run)."
+  ],
+  "raw_local_archive": "/tmp/judas-gh-investigation (all 18 original archives, full logs, job metadata and two downloaded failure artifact packages). Retained excerpts and exact run URLs are committed here; existing historical repositories retain their prior failure evidence."
+}

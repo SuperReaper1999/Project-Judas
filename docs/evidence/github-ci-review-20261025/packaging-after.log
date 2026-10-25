@@ -1,0 +1,33 @@
+test_android_bad_options_fail_before_build (__main__.PackagingChecks.test_android_bad_options_fail_before_build) ... ok
+test_android_cross_abi_identity_excludes_architecture_but_not_source (__main__.PackagingChecks.test_android_cross_abi_identity_excludes_architecture_but_not_source) ... ok
+test_android_development_defaults_are_project_owned (__main__.PackagingChecks.test_android_development_defaults_are_project_owned) ... ok
+test_android_release_requires_explicit_version_and_signing (__main__.PackagingChecks.test_android_release_requires_explicit_version_and_signing) ... ok
+test_checksum_file_is_verified (__main__.PackagingChecks.test_checksum_file_is_verified) ... ok
+test_corrupt_missing_and_extra_payloads_detected (__main__.PackagingChecks.test_corrupt_missing_and_extra_payloads_detected) ... ok
+test_failed_replacement_preserves_previous_sdk (__main__.PackagingChecks.test_failed_replacement_preserves_previous_sdk) ... ok
+test_full_source_profile_is_explicit (__main__.PackagingChecks.test_full_source_profile_is_explicit) ... ok
+test_generated_zip_entries_have_stable_bytes_and_epoch (__main__.PackagingChecks.test_generated_zip_entries_have_stable_bytes_and_epoch) ... ok
+test_inventory_and_manifest_paths_reject_traversal (__main__.PackagingChecks.test_inventory_and_manifest_paths_reject_traversal) ... ok
+test_inventory_detects_removed_helper_target_and_unreachable_module (__main__.PackagingChecks.test_inventory_detects_removed_helper_target_and_unreachable_module) ... ok
+test_inventory_follows_includes_without_accepting_inert_text (__main__.PackagingChecks.test_inventory_follows_includes_without_accepting_inert_text) ... ok
+test_missing_required_tool_rejected (__main__.PackagingChecks.test_missing_required_tool_rejected) ... ok
+test_mixed_tool_identity_rejected (__main__.PackagingChecks.test_mixed_tool_identity_rejected) ... ok
+test_native_probe_output_and_time_are_bounded (__main__.PackagingChecks.test_native_probe_output_and_time_are_bounded) ... ok
+test_refuse_replacing_binary_directory_ancestor (__main__.PackagingChecks.test_refuse_replacing_binary_directory_ancestor) ... ok
+test_refuse_unowned_destination (__main__.PackagingChecks.test_refuse_unowned_destination) ... ok
+test_release_sdk_refuses_dirty_unknown_local_and_untracked_sources (__main__.PackagingChecks.test_release_sdk_refuses_dirty_unknown_local_and_untracked_sources) ... ok
+test_sdk_current_finding_data_survives_relocation_and_missing_data_fails (__main__.PackagingChecks.test_sdk_current_finding_data_survives_relocation_and_missing_data_fails) ... ok
+test_shared_inventory_contains_every_current_public_tool (__main__.PackagingChecks.test_shared_inventory_contains_every_current_public_tool) ... ok
+test_source_archive_exact_bytes_provenance_and_determinism (__main__.PackagingChecks.test_source_archive_exact_bytes_provenance_and_determinism) ... ok
+test_source_archive_keeps_current_machine_docs_and_excludes_history (__main__.PackagingChecks.test_source_archive_keeps_current_machine_docs_and_excludes_history) ... ok
+test_source_archive_refuses_checkout_output_and_unapproved_companion_overwrite (__main__.PackagingChecks.test_source_archive_refuses_checkout_output_and_unapproved_companion_overwrite) ... ok
+test_source_archive_refuses_dirty_or_unacknowledged_untracked_inputs (__main__.PackagingChecks.test_source_archive_refuses_dirty_or_unacknowledged_untracked_inputs) ... ok
+test_stage_verify_relocate_and_deterministic_manifest (__main__.PackagingChecks.test_stage_verify_relocate_and_deterministic_manifest) ... ok
+test_untracked_observations_require_complete_typed_identity (__main__.PackagingChecks.test_untracked_observations_require_complete_typed_identity) ... ok
+test_windows_dependency_inventory_and_missing_dll_negative_control (__main__.PackagingChecks.test_windows_dependency_inventory_and_missing_dll_negative_control) ... ok
+test_windows_drive_relative_manifest_paths_are_rejected_on_all_hosts (__main__.PackagingChecks.test_windows_drive_relative_manifest_paths_are_rejected_on_all_hosts) ... ok
+
+----------------------------------------------------------------------
+Ran 28 tests in 0.610s
+
+OK

@@ -1,0 +1,12 @@
+2026-10-17T22:21:20.9040878Z       Start 22: prealpha.resource-handoff
+2026-10-17T22:21:21.5419050Z 22/23 Test #22: prealpha.resource-handoff .........***Failed    0.64 sec
+2026-10-17T22:21:21.5419595Z resource-handoff failed
+2026-10-17T22:21:21.5420364Z /home/runner/work/Project-Judas/Project-Judas/.cache/prealpha/validation/20261017T222120Z-a8242315/RESULTS.json
+2026-10-17T22:21:21.5420889Z 
+2026-10-17T22:21:21.5421078Z       Start 23: prealpha.gate-negative-controls
+2026-10-17T22:21:21.7967479Z 
+2026-10-17T22:21:21.7967582Z The following tests FAILED:
+2026-10-17T22:21:21.7969296Z 	 22 - prealpha.resource-handoff (Failed)                application prealpha
+2026-10-17T22:21:21.7969879Z Errors while running CTest
+2026-10-17T22:21:21.8372843Z ##[error]Process completed with exit code 8.
+2026-10-17T22:21:21.8481463Z ##[group]Run actions/upload-artifact@v7

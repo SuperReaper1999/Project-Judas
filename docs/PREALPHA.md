@@ -75,6 +75,24 @@ Linux. The manifest's known-failure case is opt-in, not counted as a pass. Every
 run records provenance and fresh output; the gate never implicitly builds stale
 binaries. See `scripts/prealpha_validate.py --help` for selecting bounded cases.
 
+`prealpha.build-organization` checks required build relationships rather than
+requiring the current dependency graph to equal a historical snapshot. The
+preserved extraction fixture supplies minimum sources, owners, definitions and
+platform boundaries. Additional sources/libraries/targets and normal link-call
+reordering are allowed. Direct ImGui includes also require an implementation
+link to `judas_imgui`; this requirement is derived from the compiled sources.
+Negative controls deliberately break these contracts. Run this fast check after
+changing test/build wiring:
+
+```sh
+python3 -m unittest discover -s tests -p test_cmake_test_targets.py -v
+```
+
+This declaration check does not replace real configuration, compilation and
+linking. Its simulated Windows/Android guards are not native platform passes.
+Removing a retained requirement intentionally still needs a reviewed test change;
+do not regenerate historical fixtures merely to silence a difference.
+
 ## Ownership and integration contracts
 
 MK2 is the sole rigid solver. Public components own their physical representation;
