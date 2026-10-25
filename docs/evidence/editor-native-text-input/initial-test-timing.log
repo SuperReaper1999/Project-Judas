@@ -1,0 +1,88 @@
+Shadow maps: on
+Graphics: 3.3.0 NVIDIA 580.178.04 / NVIDIA GeForce GTX 970/PCIe/SSE2
+Renderer fragment texture units: 32 (material path uses 12)
+Text coverage missing for 2 clusters; primary-font .notdef shown
+Text coverage missing for 2 clusters; primary-font .notdef shown
+Text coverage missing for 2 clusters; primary-font .notdef shown
+Text coverage missing for 2 clusters; primary-font .notdef shown
+PASS v3 controls lossless archive roundtrip
+PASS named authoring preserves new controls and accessibility
+PASS shared editor document opens new controls
+PASS editor validated control edit becomes dirty
+PASS editor undo/redo preserves extended fields
+PASS explicit editor save reloads exact authored controls
+PASS external source conflict refuses overwrite
+PASS single-line input rejects newlines
+PASS zero input capacity rejects
+PASS combining sequence is one grapheme
+PASS ZWJ emoji and flag are indivisible graphemes
+PASS replace selection never splits emoji/UTF-8
+PASS invalid UTF-8 transaction rejects
+PASS capacity transaction rejects without truncation
+PASS explicit text focus requests native session
+PASS unknown focus target rejects
+PASS nonfocusable canvas rejects
+PASS Shift+Tab reverses modal focus across controls
+PASS committed Unicode input edits field
+PASS clipboard copy honors grapheme selection
+PASS cut removes whole selected grapheme
+PASS paste uses same bounded insertion path
+PASS undo restores text and selection
+PASS redo restores edit
+PASS retired field-session commit cannot alias a newly focused field
+PASS IME preedit is not committed text
+PASS IME commit inserted once
+PASS submit delivers detached final text exactly once
+PASS read-only blocks user edits
+PASS typing suppresses shared keyboard gameplay bindings
+PASS 10000 dynamic rows accepted without 10000 widgets
+PASS duplicate row keys reject transactionally
+PASS keyboard selection reveals distant virtual row
+PASS disabled rows cannot select
+PASS scroll accepts bounded offset
+PASS scroll clamps to actual child extent
+PASS focus may reveal clipped child
+PASS focus scrolls clipped control into view
+PASS focus last control
+PASS last focused control lies inside scroll viewport
+PASS logical wheel axis scrolls hovered container
+PASS scroll drag never activates release row
+PASS readable scale validated
+PASS scaling changes real layout geometry
+PASS UI state restores text/selection/list/scroll/scale/focus
+PASS malformed state preserves all live values atomically
+PASS hidden document snapshot restores without native focus
+PASS semantic snapshot exposes real control roles and labels
+PASS text-selection drag inside scroll container never pans its parent
+PASS player-addressed text never changes another document
+PASS text with other owner is ignored
+PASS leaving player releases native text target and handles
+PASS native GL host
+PASS SDL native text event reaches engine input adapter
+PASS native text input is off without a focused field
+PASS host text field activates native input despite claimed gameplay keyboard
+PASS runtime without a text target cannot disable host field input
+PASS claimed text reaches host event hook without leaking to game input
+PASS host native text stops on window focus loss
+PASS host field resumes native text after focus returns
+PASS leaving host field releases native text session
+FAIL focused editor field requests a real native text session
+PASS Optional new folder name
+PASS editor field typing never becomes gameplay text
+PASS focused editor field requests a real native text session
+PASS Project name
+PASS editor field typing never becomes gameplay text
+PASS focused editor field requests a real native text session
+PASS Save scene
+PASS editor field typing never becomes gameplay text
+PASS native SDL clipboard roundtrips Unicode
+PASS native SDL to hub to player to field respects composition owner
+PASS actual GL draw shapes only visible virtual rows
+PASS Unicode edit/list/focus pixels captured
+PASS virtual list uses actual ancestor clip, not its huge authored rectangle
+PERFORMANCE rows=10000 widgets=44 median_us=19.276 p95_us=20.499 worst_us=24.797 visible_rows=6 draws=6
+SCALING rows=100 median_us=18.726 p95_us=19.226 worst_us=24.456 visible_rows=6 payload_bytes=10380 draw_cpu_us=207.251
+SCALING rows=1000 median_us=18.886 p95_us=20.038 worst_us=24.075 visible_rows=6 payload_bytes=105780 draw_cpu_us=203.214
+SCALING rows=10000 median_us=19.196 p95_us=20.238 worst_us=24.346 visible_rows=6 payload_bytes=1077780 draw_cpu_us=93.836
+PASS unloaded handles fail safely
+SUMMARY 76 checks 1 failures

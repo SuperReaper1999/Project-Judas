@@ -37,6 +37,9 @@ public:
     Window& operator=(const Window&) = delete;
 
     void SetTextInput(bool enabled,std::uint64_t player=0,int x=0,int y=0,int w=1,int h=24,std::uint64_t token=0);
+    // Embedding tools can request native text independently of gameplay focus.
+    // The event hook receives it; claimed keyboard input stays out of gameplay.
+    void SetHostTextInput(bool enabled);
     bool Init(const char* title, int width, int height, bool visible = true);
     void Shutdown();
 
@@ -119,6 +122,8 @@ public:
     void RequestTestSasToggle();
 
 private:
+    void UpdateNativeTextInput();
+    bool m_hostTextInput=false;
     bool m_applicationActive=true,m_lifecycleClockReset=false;
     bool m_textActive=false;std::uint64_t m_textPlayer=0,m_textToken=0;
     InputSystem m_input;

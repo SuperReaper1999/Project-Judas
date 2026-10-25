@@ -7,6 +7,8 @@
 #include "Renderer.h"
 #include "ScreenshotWriter.h"
 #include "NamedAuthoring.h"
+#include "imgui.h"
+#include "backends/imgui_impl_sdl2.h"
 #include "AuthoringDocument.h"
 #include <fstream>
 #include <SDL2/SDL.h>
@@ -45,6 +47,44 @@ int main(int argc,char** argv){std::filesystem::path out=argc>1?argv[1]:".cache/
  auto other=ui.Add(doc,"player-two",0,error);ui.SetPlayer(other,42);ui.Focus(other,"name");InputSystem second;second.QueueText({"insert","P2",false,false,0,0,42});ui.Input(second,{-1,-1},false,1280,720,42);Check(ui.Element(other,"name")->text=="P2"&&ui.Element(h,"name")->text==savedText,"player-addressed text never changes another document");second.BeginFrame();second.QueueText({"insert","WRONG",false,false,0,0,0});ui.Input(second,{-1,-1},false,1280,720,42);Check(ui.Element(other,"name")->text=="P2","text with other owner is ignored");ui.RemovePlayer(42);Check(!ui.Document(other)&&!ui.TextTarget(),"leaving player releases native text target and handles");
  EngineHost host;Check(host.Init("M96 production UI",1280,720,false,error),"native GL host");if(failures){printf("ERROR %s\n",error.c_str());return 1;}
  auto& window=host.GetWindow();window.SetTextInput(true);SDL_Event event{};event.type=SDL_TEXTINPUT;SDL_strlcpy(event.text.text,"native",sizeof(event.text.text));SDL_PushEvent(&event);window.PollEvents();Check(std::any_of(window.Input().TextEvents().begin(),window.Input().TextEvents().end(),[](auto& e){return e.command=="insert"&&e.text=="native";}),"SDL native text event reaches engine input adapter");window.SetTextInput(false);
+ Check(!SDL_IsTextInputActive(),"native text input is off without a focused field");
+ window.SetInputClaimed(true,true);window.SetHostTextInput(true);
+ Check(SDL_IsTextInputActive(),"host text field activates native input despite claimed gameplay keyboard");
+ window.SetTextInput(false);
+ Check(SDL_IsTextInputActive(),"runtime without a text target cannot disable host field input");
+ bool hostReceived=false;window.SetEventHook([&](const SDL_Event& e){if(e.type==SDL_TEXTINPUT&&std::string(e.text.text)=="editor")hostReceived=true;});
+ event={};event.type=SDL_TEXTINPUT;SDL_strlcpy(event.text.text,"editor",sizeof(event.text.text));SDL_PushEvent(&event);window.PollEvents();
+ Check(hostReceived&&window.Input().TextEvents().empty()&&SDL_IsTextInputActive(),"claimed text reaches host event hook without leaking to game input");
+ event={};event.type=SDL_WINDOWEVENT;event.window.windowID=SDL_GetWindowID(window.NativeWindow());event.window.event=SDL_WINDOWEVENT_FOCUS_LOST;SDL_PushEvent(&event);window.PollEvents();
+ Check(!SDL_IsTextInputActive(),"host native text stops on window focus loss");
+ event.window.event=SDL_WINDOWEVENT_FOCUS_GAINED;SDL_PushEvent(&event);window.PollEvents();window.SetHostTextInput(true);
+ Check(SDL_IsTextInputActive(),"host field resumes native text after focus returns");
+ window.SetHostTextInput(false);window.SetEventHook({});window.SetInputClaimed(false,false);
+ Check(!SDL_IsTextInputActive(),"leaving host field releases native text session");
+ // Exercise the same native-event -> SDL backend -> ImGui path as editor fields.
+ ImGui::CreateContext();auto& editorIO=ImGui::GetIO();editorIO.IniFilename=nullptr;editorIO.LogFilename=nullptr;
+ unsigned char* fontPixels;int fontWidth,fontHeight;editorIO.Fonts->GetTexDataAsRGBA32(&fontPixels,&fontWidth,&fontHeight);
+ ImGui_ImplSDL2_InitForOpenGL(window.NativeWindow(),window.NativeGLContext());
+ window.SetEventHook([](const SDL_Event& e){ImGui_ImplSDL2_ProcessEvent(&e);});
+ char editorFields[3][128]{};const char* labels[]={"Optional new folder name","Project name","Save scene"};
+ int focusField=-1;
+ auto editorFrame=[&](){
+  window.SetInputClaimed(editorIO.WantCaptureKeyboard,false);window.SetHostTextInput(editorIO.WantTextInput);window.PollEvents();
+  ImGui_ImplSDL2_NewFrame();ImGui::NewFrame();ImGui::Begin("Editor text regression");
+  for(int i=0;i<3;++i){if(focusField==i)ImGui::SetKeyboardFocusHere();ImGui::InputText(labels[i],editorFields[i],sizeof(editorFields[i]));}
+  ImGui::End();ImGui::Render();focusField=-1;
+ };
+ editorFrame();editorFrame();editorFrame();
+ for(int field=0;field<3;++field){
+  // ImGui publishes the focus request before the following event-poll boundary.
+  focusField=field;editorFrame();editorFrame();editorFrame();editorFrame();
+  Check(SDL_IsTextInputActive(),"focused editor field requests a real native text session");
+  event={};event.type=SDL_TEXTINPUT;event.text.windowID=SDL_GetWindowID(window.NativeWindow());SDL_strlcpy(event.text.text,"My game é",sizeof(event.text.text));SDL_PushEvent(&event);
+  editorFrame();editorFrame();
+  Check(std::string(editorFields[field])=="My game é",labels[field]);
+  Check(window.Input().TextEvents().empty(),"editor field typing never becomes gameplay text");
+ }
+ window.SetHostTextInput(false);window.SetInputClaimed(false,false);window.SetEventHook({});ImGui_ImplSDL2_Shutdown();ImGui::DestroyContext();
  auto originalClipboard=window.Input().textPlatform->clipboardRead();window.Input().textPlatform->clipboardWrite("Judas café");Check(window.Input().textPlatform->clipboardRead()=="Judas café","native SDL clipboard roundtrips Unicode");window.Input().textPlatform->clipboardWrite(originalClipboard);
  LocalPlayers routed;auto hub=std::make_shared<InputDeviceHub>();routed.devices=hub;window.Input().localDevices=hub;auto p1=routed.Create("first",InputMap::Defaults(),error)->id,p2=routed.Create("second",InputMap::Defaults(),error)->id;routed.Assign(p2,*hub,{"keyboard",{}, {0,0,1,1}},error);window.PollEvents();routed.Route(*hub);auto firstUI=ui.Add(doc,"native-one",0,error),secondUI=ui.Add(doc,"native-two",0,error);ui.SetPlayer(firstUI,p1);ui.SetPlayer(secondUI,p2);ui.Focus(firstUI,"name");ui.Focus(secondUI,"name");window.SetTextInput(true,p2);event={};event.type=SDL_TEXTINPUT;SDL_strlcpy(event.text.text,"routed",sizeof(event.text.text));SDL_PushEvent(&event);window.PollEvents();routed.Route(*hub);ui.Input(routed.Find(p1)->input,{-1,-1},false,1280,720,p1);ui.Input(routed.Find(p2)->input,{-1,-1},false,1280,720,p2);Check(ui.Element(firstUI,"name")->text.empty()&&ui.Element(secondUI,"name")->text=="routed","native SDL to hub to player to field respects composition owner");ui.RemovePlayer(p1);ui.RemovePlayer(p2);window.SetTextInput(false);window.Input().localDevices.reset();
  ui.SetScale(h,1);ui.Focus(h,"name");ui.Select(h,"items",9999);auto& renderer=host.GetRenderer();renderer.BeginFrame(1280,720);renderer.EndFrame();renderer.BeginUIFrame(1280,720);ui.Draw(renderer,1280,720);renderer.EndUIFrame();Check(ui.Stats().listRows<=8&&ui.Stats().listRows>0,"actual GL draw shapes only visible virtual rows");std::vector<unsigned char> pixels;renderer.CaptureFrame(1280,720,pixels);Check(WriteRgbPng((out/"ui.png").string(),1280,720,pixels),"Unicode edit/list/focus pixels captured");

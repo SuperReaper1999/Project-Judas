@@ -177,11 +177,22 @@ void Window::RefreshLocalControllers(bool poll){
  }
 }
 void Window::SetTextInput(bool enabled,std::uint64_t player,int x,int y,int w,int h,std::uint64_t token){
- if(enabled&&m_textActive&&(m_textPlayer!=player||m_textToken!=token)){SDL_StopTextInput();m_textActive=false;}
- enabled=enabled&&m_inputFocused&&m_applicationActive&&!m_keyboardClaimed;
- if(enabled){SDL_Rect rect{x,y,std::max(1,w),std::max(1,h)};SDL_SetTextInputRect(&rect);if(!m_textActive)SDL_StartTextInput();}
- else if(m_textActive)SDL_StopTextInput();
+ if(enabled&&m_textActive&&(m_textPlayer!=player||m_textToken!=token)&&!m_hostTextInput)SDL_StopTextInput();
+ enabled=enabled&&m_inputFocused&&m_applicationActive&&!m_keyboardClaimed&&!m_hostTextInput;
+ if(enabled){SDL_Rect rect{x,y,std::max(1,w),std::max(1,h)};SDL_SetTextInputRect(&rect);}
  m_textActive=enabled;m_textPlayer=enabled?player:0;m_textToken=enabled?token:0;
+ UpdateNativeTextInput();
+}
+void Window::SetHostTextInput(bool enabled){
+ m_hostTextInput=enabled;
+ if(enabled){m_textActive=false;m_textPlayer=0;m_textToken=0;}
+ UpdateNativeTextInput();
+}
+void Window::UpdateNativeTextInput(){
+ const bool enabled=(m_hostTextInput||m_textActive)&&m_inputFocused&&m_applicationActive;
+ if(enabled!=(SDL_IsTextInputActive()==SDL_TRUE)){
+  if(enabled)SDL_StartTextInput();else SDL_StopTextInput();
+ }
 }
 void Window::PollEvents(){
     m_input.BeginFrame();m_consumed.clear();

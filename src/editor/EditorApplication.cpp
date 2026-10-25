@@ -1541,6 +1541,7 @@ int EditorApplication::Run(int argc, char** argv) {
         // reading is suppressed this frame (a text field must not walk the
         // player or fly the camera).
         window.SetInputClaimed(io.WantCaptureKeyboard, io.WantCaptureMouse && !window.IsMouseCaptured());
+        window.SetHostTextInput(io.WantTextInput);
         m_viewportMouseDeltaX = m_viewportMouseDeltaY = 0;
         { JUDAS_PROFILE_SCOPE("Input events"); window.PollEvents(); }
         const bool closeRequested = window.ShouldClose();

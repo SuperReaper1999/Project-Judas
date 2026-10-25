@@ -20,7 +20,7 @@ judas_add_engine_test(judas_animation_workflow_application_tests tests/Animation
 judas_add_engine_test(judas_animation_cold_save_tests tests/AnimationColdSaveTests.cpp)
 
 add_executable(judas_ui_production_tests tests/UIProductionTests.cpp)
-target_link_libraries(judas_ui_production_tests PRIVATE judas_world_authoring)
+target_link_libraries(judas_ui_production_tests PRIVATE judas_world_authoring judas_imgui)
 judas_warnings(judas_ui_production_tests)
 
 judas_add_engine_test(judas_ui_showcase_application_tests tests/UIShowcaseApplicationTests.cpp APPLICATION)
