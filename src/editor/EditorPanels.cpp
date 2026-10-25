@@ -49,6 +49,11 @@
 struct AssetCookPanelTask {std::atomic<bool> ready{false};std::string root,source,destination,recipe,error;std::vector<uint8_t> bytes;JobHandle job;};
 
 namespace {
+void NextActionOnRow(const char* nextLabel) {
+    const float right = ImGui::GetCursorScreenPos().x + ImGui::GetContentRegionAvail().x;
+    const float needed = ImGui::CalcTextSize(nextLabel).x + 2 * ImGui::GetStyle().FramePadding.x;
+    if (ImGui::GetItemRectMax().x + ImGui::GetStyle().ItemSpacing.x + needed <= right) ImGui::SameLine();
+}
 constexpr ImGuiWindowFlags kWorkspacePanelFlags = ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize |
     ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoSavedSettings;
 
@@ -165,72 +170,76 @@ void DrawAddComponentMenu(EditorDocument& doc, SceneObject& o, EditorPanelState&
 void UpdateEditorWorkspaceLayout(EditorPanelState& state, glm::vec2 displaySize) {
     const bool rails = state.mode == EditorMode::Edit || state.playPaused;
     state.workspace = CalculateEditorWorkspaceLayout(displaySize, state.hierarchyWidth, state.inspectorWidth,
-        state.assetBrowserHeight, state.showAssetBrowser && state.mode == EditorMode::Edit, rails);
+        state.assetBrowserHeight, state.showAssetBrowser && state.mode == EditorMode::Edit, rails, ImGui::GetIO().FontGlobalScale);
 }
 
 void DrawEditorWorkspaceChrome(EditorDocument& doc, EditorPanelState& state, EditorRequests& requests) {
     const bool editing = state.mode == EditorMode::Edit;
     const auto display = ImGui::GetIO().DisplaySize;
     PlaceWorkspacePanel(state.workspace.toolbar);
-    ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(10, 6));
+    const float uiScale = ImGui::GetIO().FontGlobalScale;
+    ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(10 * uiScale, 6 * uiScale));
     ImGui::Begin("##workspaceToolbar", nullptr, kWorkspacePanelFlags | ImGuiWindowFlags_NoTitleBar |
                  ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoScrollWithMouse);
-    if (ImGui::Button(editing ? "Play" : "Stop", {58, 26})) {
-        if (editing) requests.play = true;
-        else requests.stop = true;
+    if (ImGui::Button(editing ? "Play" : "Stop")) {
+        if (editing) requests.play = true; else requests.stop = true;
     }
-    ToolbarHint("F5: play this scene / restore authored scene");
+    ToolbarHint("F5: play this scene / restore the authored scene");
     ImGui::SameLine();
     ImGui::BeginDisabled(!editing);
-    if (ImGui::Button("Save", {48, 26})) requests.save = true;
-    ToolbarHint("Ctrl+S: save scene");
+    if (ImGui::Button("Save")) requests.save = true;
+    ToolbarHint("Ctrl+S: save the scene");
     ImGui::SameLine();
-    if (display.x >= 900.0f) {
+    if (ImGui::Button("Create...")) ImGui::OpenPopup("toolbarCreate");
+    ToolbarHint("Add objects, a first/third-person player, lights or a pause menu");
+    if (ImGui::BeginPopup("toolbarCreate")) { DrawEditorCreationItems(state, requests); ImGui::EndPopup(); }
+    const float logicalWidth = display.x / std::max(.85f, ImGui::GetIO().FontGlobalScale);
+    if (logicalWidth >= 800) {
+        ImGui::SameLine();
+        ImGui::BeginDisabled(!doc.CanUndo()); if (ImGui::Button("Undo")) requests.undo = true; ImGui::EndDisabled();
+        ToolbarHint("Ctrl+Z: undo the last scene edit");
+        ImGui::SameLine();
+        ImGui::BeginDisabled(!doc.CanRedo()); if (ImGui::Button("Redo")) requests.redo = true; ImGui::EndDisabled();
+        ToolbarHint("Ctrl+Y: redo the scene edit");
+    }
+    ImGui::SameLine();
+    if (logicalWidth >= 1000) {
         const auto tool = [&](const char* label, GizmoMode mode, const char* hint) {
             const bool selected = state.gizmoMode == mode;
             if (selected) ImGui::PushStyleColor(ImGuiCol_Button, ImGui::GetStyleColorVec4(ImGuiCol_ButtonActive));
-            if (ImGui::Button(label, {0, 26})) state.gizmoMode = mode;
+            if (ImGui::Button(label)) state.gizmoMode = mode;
             if (selected) ImGui::PopStyleColor();
-            ToolbarHint(hint);
-            ImGui::SameLine();
+            ToolbarHint(hint); ImGui::SameLine();
         };
         tool("Move", GizmoMode::Translate, "W: move selected objects");
         tool("Rotate", GizmoMode::Rotate, "E: rotate selected objects");
         tool("Scale", GizmoMode::Scale, "R: scale selected objects");
-        if (ImGui::Button(state.gizmoSpace == GizmoSpace::World ? "World" : "Local", {55, 26}))
-            state.gizmoSpace = state.gizmoSpace == GizmoSpace::World ? GizmoSpace::Local : GizmoSpace::World;
-        ToolbarHint("X: toggle world/local gizmo axes");
-        ImGui::SameLine();
-        ImGui::Checkbox("Snap", &state.gizmoSnap);
-        ToolbarHint("Ctrl temporarily enables snap");
-        ImGui::SameLine();
-    } else {
-        if (ImGui::Button("Tools", {55, 26})) ImGui::OpenPopup("##compactTools");
-        if (ImGui::BeginPopup("##compactTools")) {
-            if (ImGui::MenuItem("Move", "W", state.gizmoMode == GizmoMode::Translate)) state.gizmoMode = GizmoMode::Translate;
-            if (ImGui::MenuItem("Rotate", "E", state.gizmoMode == GizmoMode::Rotate)) state.gizmoMode = GizmoMode::Rotate;
-            if (ImGui::MenuItem("Scale", "R", state.gizmoMode == GizmoMode::Scale)) state.gizmoMode = GizmoMode::Scale;
-            if (ImGui::MenuItem("Local axes", "X", state.gizmoSpace == GizmoSpace::Local))
-                state.gizmoSpace = state.gizmoSpace == GizmoSpace::Local ? GizmoSpace::World : GizmoSpace::Local;
-            ImGui::MenuItem("Snap", "Ctrl", &state.gizmoSnap);
-            ImGui::EndPopup();
-        }
-        ImGui::SameLine();
     }
-    ImGui::EndDisabled();
-    if (display.x > 1100.0f) {
-        ImGui::TextDisabled("%s%s", doc.GetScene().Settings().name.c_str(), doc.IsDirty() ? " *" : "");
-        ImGui::SameLine();
+    if (ImGui::Button(logicalWidth >= 1000 ? "Options..." : "Transform...")) ImGui::OpenPopup("toolbarTransform");
+    ToolbarHint("Transform tools, world/local axes and snapping; W / E / R / X shortcuts remain available");
+    if (ImGui::BeginPopup("toolbarTransform")) {
+        if (ImGui::MenuItem("Move", "W", state.gizmoMode == GizmoMode::Translate)) state.gizmoMode = GizmoMode::Translate;
+        if (ImGui::MenuItem("Rotate", "E", state.gizmoMode == GizmoMode::Rotate)) state.gizmoMode = GizmoMode::Rotate;
+        if (ImGui::MenuItem("Scale", "R", state.gizmoMode == GizmoMode::Scale)) state.gizmoMode = GizmoMode::Scale;
+        ImGui::Separator();
+        if (ImGui::MenuItem("Local axes", "X", state.gizmoSpace == GizmoSpace::Local))
+            state.gizmoSpace = state.gizmoSpace == GizmoSpace::Local ? GizmoSpace::World : GizmoSpace::Local;
+        ImGui::MenuItem("Snap", "hold Ctrl", &state.gizmoSnap);
+        ImGui::EndPopup();
     }
-    const float controlsWidth = 151.0f;
-    if (ImGui::GetCursorPosX() < display.x - controlsWidth) ImGui::SetCursorPosX(display.x - controlsWidth);
-    ImGui::BeginDisabled(!editing);
-    if (ImGui::Button("Scene", {58, 26})) state.showSceneSettings = !state.showSceneSettings;
-    ToolbarHint("Scene settings: name, lighting, world origin and render layers");
     ImGui::EndDisabled();
     ImGui::SameLine();
-    if (ImGui::Button("Help", {58, 26})) state.showNavigationHelp = !state.showNavigationHelp;
-    ToolbarHint("Scene navigation and editor shortcuts");
+    if (ImGui::Button("View...")) ImGui::OpenPopup("toolbarView");
+    if (ImGui::BeginPopup("toolbarView")) {
+        ImGui::MenuItem("Scene settings", nullptr, &state.showSceneSettings, editing);
+        ImGui::MenuItem("Asset Browser", nullptr, &state.showAssetBrowser);
+        ImGui::MenuItem("Editor preferences / layouts", nullptr, &state.showEditorPreferences);
+        ImGui::MenuItem("Navigation and shortcuts", nullptr, &state.showNavigationHelp);
+        ImGui::EndPopup();
+    }
+    if (logicalWidth >= 1100) {
+        ImGui::SameLine(); ImGui::TextDisabled("%s%s", doc.GetScene().Settings().name.c_str(), doc.IsDirty() ? " *" : "");
+    }
     ImGui::End();
     ImGui::PopStyleVar();
 
@@ -314,16 +323,26 @@ void DrawEditorMainMenu(EditorDocument& doc, EditorPanelState& state, EditorRequ
     if (ImGui::BeginMenu("View")) {
         ImGui::MenuItem("Editor preferences (appearance / layouts)", nullptr, &state.showEditorPreferences);
         ImGui::Separator();
-        ImGui::MenuItem("Animation retargeting", nullptr, &state.showRetarget);
-        ImGui::MenuItem("Animation timeline", nullptr, &state.showAnimationTimeline);
-        ImGui::MenuItem("Terrain sculpt / paint", nullptr, &state.showTerrain);
-        ImGui::MenuItem("Volumetric terrain - dig / build", nullptr, &state.showVolumeTerrain);
-        ImGui::MenuItem("Local mods / game kits", nullptr, &state.showMods);
         ImGui::MenuItem("Asset Browser", nullptr, &state.showAssetBrowser);
         ImGui::MenuItem("Scene settings", nullptr, &state.showSceneSettings, editing);
-        ImGui::MenuItem("World building / named source", nullptr, &state.showWorldBuilding);
         ImGui::MenuItem("JudasJS developer tools", nullptr, &state.showScriptTools);
-        ImGui::MenuItem("Profiler", nullptr, &state.showProfiler);
+        if (ImGui::BeginMenu("Terrain and world tools")) {
+            ImGui::MenuItem("Terrain sculpt / paint", nullptr, &state.showTerrain);
+            ImGui::MenuItem("Volumetric terrain - dig / build", nullptr, &state.showVolumeTerrain);
+            ImGui::MenuItem("World building / named source", nullptr, &state.showWorldBuilding);
+            ImGui::EndMenu();
+        }
+        if (ImGui::BeginMenu("Animation tools")) {
+            ImGui::MenuItem("Animation timeline", nullptr, &state.showAnimationTimeline);
+            ImGui::MenuItem("Animation retargeting", nullptr, &state.showRetarget);
+            ImGui::EndMenu();
+        }
+        if (ImGui::BeginMenu("Diagnostics and extensions")) {
+            ImGui::MenuItem("Profiler", nullptr, &state.showProfiler);
+            ImGui::MenuItem("Local mods / game kits", nullptr, &state.showMods);
+            ImGui::EndMenu();
+        }
+        ImGui::Separator();
         ImGui::MenuItem("Navigation and shortcuts", nullptr, &state.showNavigationHelp);
         if (ImGui::MenuItem("Check this channel for updates")) requests.checkMilestones = true;
         if (ImGui::MenuItem("JudasJS reference")) requests.openJudasJS = true;
@@ -402,9 +421,14 @@ void DrawHierarchyPanel(EditorDocument& doc, EditorPanelState& state, EditorRequ
     ImGui::TextDisabled("%zu objects / %zu selected", scene.Objects().size(), doc.Selection().size());
     ImGui::Separator();
     SceneObjectId toDelete = kInvalidSceneObjectId;
+    SceneObjectId reparentTo = kInvalidSceneObjectId;
+    bool reparent = false;
     int move = 0;
     SceneObjectId moveId = kInvalidSceneObjectId;
-    ImGui::BeginChild("list", ImVec2(0.0f, -34.0f));
+    const float footerWidth = ImGui::CalcTextSize("Create...").x + ImGui::CalcTextSize("Actions").x +
+        4 * ImGui::GetStyle().FramePadding.x + ImGui::GetStyle().ItemSpacing.x;
+    const float footerRows = footerWidth > ImGui::GetContentRegionAvail().x ? 2.f : 1.f;
+    ImGui::BeginChild("list", ImVec2(0.0f, -footerRows * ImGui::GetFrameHeightWithSpacing()));
     auto visible=doc.Search(state.hierarchySearch);
     if(state.project&&!state.hierarchySearch.empty()){std::set<SceneObjectId> matches(visible.begin(),visible.end());for(auto& o:doc.GetScene().Objects())for(auto& [id,name]:state.project->Settings().classification.tags.names)if((o.tags&CategoryBit(id))&&name.find(state.hierarchySearch)!=std::string::npos){matches.insert(o.id);for(auto p=o.parent;p;){matches.insert(p);auto* parent=doc.GetScene().Find(p);p=parent?parent->parent:0;}}visible.assign(matches.begin(),matches.end());}
     for (const SceneObject& o : scene.Objects()) {
@@ -451,10 +475,10 @@ void DrawHierarchyPanel(EditorDocument& doc, EditorPanelState& state, EditorRequ
             if (!ancestor) break;
             parent = ancestor->parent;
         }
-        const float indentation = float(std::min(depth, 8u)) * 12.0f;
+        const float indentation = float(std::min(depth, 8u)) * 12.0f * ImGui::GetIO().FontGlobalScale;
         if (indentation > 0) ImGui::Indent(indentation);
         if (broken) ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(1.0f, 0.55f, 0.3f, 1.0f));
-        if (ImGui::Selectable(label.c_str(), selected, ImGuiSelectableFlags_AllowDoubleClick, {0, 22})) {
+        if (ImGui::Selectable(label.c_str(), selected, ImGuiSelectableFlags_AllowDoubleClick, {0, ImGui::GetTextLineHeightWithSpacing()})) {
             if(ImGui::GetIO().KeyShift)doc.SelectRange(o.id,visible,ImGui::GetIO().KeyCtrl);else doc.Select(o.id,ImGui::GetIO().KeyCtrl);
             if (editing && ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left)) {
                 state.renamingId = o.id;
@@ -484,6 +508,20 @@ void DrawHierarchyPanel(EditorDocument& doc, EditorPanelState& state, EditorRequ
             ImGui::Separator();
             if (ImGui::MenuItem("Rename", "F2", false, doc.Selection().size() == 1)) BeginEditorRename(doc, state);
             if (ImGui::MenuItem("Duplicate")) requests.duplicateId = o.id;
+            if (ImGui::BeginMenu("Set parent")) {
+                if (ImGui::MenuItem("Scene root")) { reparentTo = 0; reparent = true; }
+                ImGui::Separator();
+                static ImGuiTextFilter parentFilter;
+                if (ImGui::IsWindowAppearing()) parentFilter.Clear();
+                parentFilter.Draw("Find parent");
+                for (const auto& candidate : scene.Objects()) {
+                    if (doc.IsSelected(candidate.id) || !parentFilter.PassFilter(candidate.name.c_str())) continue;
+                    ImGui::PushID(static_cast<int>(candidate.id));
+                    if (ImGui::MenuItem(candidate.name.c_str())) { reparentTo = candidate.id; reparent = true; }
+                    ImGui::PopID();
+                }
+                ImGui::EndMenu();
+            }
             if (ImGui::MenuItem("Move up")) { move = -1; moveId = o.id; }
             if (ImGui::MenuItem("Move down")) { move = 1; moveId = o.id; }
             if (ImGui::MenuItem("Delete")) toDelete = o.id;
@@ -495,12 +533,14 @@ void DrawHierarchyPanel(EditorDocument& doc, EditorPanelState& state, EditorRequ
     DrawHierarchyCreationPopup(state, requests);
     ImGui::EndChild();
     if (editing) {
+        if (ImGui::Button("Create...")) ImGui::OpenPopup("hierarchyCreate");
+        if (ImGui::BeginPopup("hierarchyCreate")) { DrawEditorCreationItems(state, requests); ImGui::EndPopup(); }
+        NextActionOnRow("Actions");
         ImGui::BeginDisabled(doc.Selected() == kInvalidSceneObjectId);
-        if (ImGui::Button("Focus")) requests.focusSelection = true;
-        ImGui::SameLine();
         if (ImGui::Button("Actions")) ImGui::OpenPopup("##selectionActions");
         ToolbarHint("Duplicate, group or delete the selection");
         if (ImGui::BeginPopup("##selectionActions")) {
+            if (ImGui::MenuItem("Focus selection", "F")) requests.focusSelection = true;
             if (ImGui::MenuItem("Duplicate selection", "Ctrl+D")) { std::string error; if (!doc.DuplicateSelection(error)) state.status = error; }
             if (ImGui::MenuItem("Group in folder")) { std::string error; if (!doc.GroupSelection(error)) state.status = error; }
             if (ImGui::MenuItem("Delete selection", "Delete")) toDelete = doc.Selected();
@@ -509,6 +549,10 @@ void DrawHierarchyPanel(EditorDocument& doc, EditorPanelState& state, EditorRequ
         ImGui::EndDisabled();
     }
     DrawHierarchyCreationPopup(state, requests);
+    if (reparent) {
+        std::string error;
+        state.status = doc.ReparentSelection(reparentTo, error) ? "Parent changed; world placement preserved" : "Parent change rejected: " + error;
+    }
     if (toDelete != kInvalidSceneObjectId) {std::string error;if(!doc.DeleteSelection(error))state.status="Deletion rejected: "+error;else state.status="Deleted selected hierarchies";}
     if (move != 0) {
         doc.BeginEdit();
@@ -549,6 +593,75 @@ void DrawInspectorPanel(EditorDocument& doc, EditorPanelState& state) {
         ImGui::End();
         return;
     }
+    if(state.mode==EditorMode::Play)DrawRuntimeRenderPreview(doc,o->id,state);
+    if (state.mode == EditorMode::Play) {
+        ImGui::TextDisabled("Authored values are read-only while playing.");
+        ImGui::BeginDisabled();
+    }
+    TextField(doc, "Name", o->name);
+    DrawTransformEditor(doc, *o);
+    ImGui::SeparatorText("Components");
+    DrawAddComponentMenu(doc, *o, state);
+    for (const ComponentEditor& editor : ComponentEditorRegistry()) {
+        if (!editor.has(*o)) continue;
+        if (ComponentHeader(doc, editor, *o, state)) editor.draw(doc, *o, state);
+    }
+    if (ImGui::CollapsingHeader("Add gameplay script", o->scripts.empty() ? ImGuiTreeNodeFlags_DefaultOpen : ImGuiTreeNodeFlags_None))
+        DrawEditorScriptWorkflow(doc, *o, state);
+    ImGui::Spacing();
+    if(ImGui::CollapsingHeader("Object settings")){
+    ImGui::TextDisabled("Object ID: %llu",static_cast<unsigned long long>(o->id));
+    Checkbox(doc,"Entity render visible",o->renderVisible);
+    if(!o->prefabRoot){
+        const auto* parent=doc.GetScene().Find(o->parent);
+        ImGui::TextWrapped("Parent (local transform)");
+        ImGui::SetNextItemWidth(-1);
+        ImGui::PushOverrideID(ImGui::GetID("Parent (local transform)"));
+        if(ImGui::BeginCombo("",parent?parent->name.c_str():"None")){
+            if(ImGui::Selectable("None",!o->parent)){doc.BeginEdit();o->parent=0;doc.CommitEdit();}
+            for(const auto& candidate:doc.GetScene().Objects())if(candidate.id!=o->id&&ImGui::Selectable(candidate.name.c_str(),candidate.id==o->parent)){
+                const auto old=o->parent;doc.BeginEdit();o->parent=candidate.id;std::string error;
+                if(!ValidateHierarchy(doc.GetScene(),error)){o->parent=old;state.status=error;}doc.CommitEdit();
+            }
+            ImGui::EndCombo();
+        }
+        ImGui::PopID();
+    }
+    if(state.project){const auto& c=state.project->Settings().classification;
+        DrawCategoryMask(doc,"Tags",o->tags,c.tags,false);
+        if(state.runtime)ImGui::Text("Runtime entities matching these tags: %zu",state.runtime->QueryEntities(o->tags).size());
+        DrawCategoryLayer(doc,"Render layer",o->renderLayer,c.render);
+    }
+    }
+    if(state.mode==EditorMode::Edit&&state.project&&state.assets&&ImGui::TreeNode("Prefab tools")){
+    if(ImGui::Button("Create prefab from hierarchy")){
+        Scene source;std::string error;
+        if(CreatePrefab(doc.GetScene(),o->id,source,error)){
+            auto path=std::filesystem::path(state.project->AssetsDir())/"prefabs"/("prefab-"+MintAssetId()+".judasprefab");
+            std::filesystem::create_directories(path.parent_path());
+            if(SaveSceneToFile(source,path.string(),error)){
+                auto* db=const_cast<AssetDatabase*>(state.assets);AssetRecord record;
+                if(db->Track(path.string(),record,error))state.status="Created prefab asset "+record.id;
+            }
+        }
+        if(!error.empty())state.status=error;
+    }
+    ImGui::TreePop();
+    }
+    if(state.mode==EditorMode::Edit&&doc.SelectedObject()&&ImGui::CollapsingHeader("Component clipboard")){
+        static int component=0;const char* names[]={"render","body","animation","socket","motor","audio","particle","joint","ragdoll","scripts"};
+        ImGui::TextWrapped("Component clipboard");
+        ImGui::SetNextItemWidth(-1);
+        // Keep the original control identity while its visible label moves
+        // above the full-width selector in the narrow inspector rail.
+        ImGui::PushOverrideID(ImGui::GetID("Component clipboard"));
+        ImGui::Combo("",&component,names,10);
+        ImGui::PopID();
+        if(ImGui::Button("Copy component"))doc.CopyComponent(names[component]);
+        ImGui::SameLine();if(ImGui::Button("Paste to selection")){std::string error;if(!doc.PasteComponent(error))state.status=error;}
+    }
+    ImGui::Separator();
+    if (state.mode == EditorMode::Play) ImGui::EndDisabled();
     if(o->prefabRoot&&ImGui::CollapsingHeader("Prefab instance")){
         const auto* root=doc.GetScene().Find(o->prefabRoot);
         ImGui::Text("Prefab member %llu / instance %llu",(unsigned long long)o->prefabSource,(unsigned long long)o->prefabRoot);
@@ -592,72 +705,6 @@ void DrawInspectorPanel(EditorDocument& doc, EditorPanelState& state) {
             }
         }
     }
-    if(state.mode==EditorMode::Play)DrawRuntimeRenderPreview(doc,o->id,state);
-    if (state.mode == EditorMode::Play) {
-        ImGui::TextDisabled("Authored values are read-only while playing.");
-        ImGui::BeginDisabled();
-    }
-    TextField(doc, "Name", o->name);
-    DrawEditorScriptWorkflow(doc,*o,state);
-    DrawAddComponentMenu(doc, *o, state);
-    DrawTransformEditor(doc, *o);
-    if(ImGui::CollapsingHeader("Object settings")){
-    ImGui::TextDisabled("Object ID: %llu",static_cast<unsigned long long>(o->id));
-    Checkbox(doc,"Entity render visible",o->renderVisible);
-    if(!o->prefabRoot){
-        const auto* parent=doc.GetScene().Find(o->parent);
-        ImGui::TextWrapped("Parent (local transform)");
-        ImGui::SetNextItemWidth(-1);
-        ImGui::PushOverrideID(ImGui::GetID("Parent (local transform)"));
-        if(ImGui::BeginCombo("",parent?parent->name.c_str():"None")){
-            if(ImGui::Selectable("None",!o->parent)){doc.BeginEdit();o->parent=0;doc.CommitEdit();}
-            for(const auto& candidate:doc.GetScene().Objects())if(candidate.id!=o->id&&ImGui::Selectable(candidate.name.c_str(),candidate.id==o->parent)){
-                const auto old=o->parent;doc.BeginEdit();o->parent=candidate.id;std::string error;
-                if(!ValidateHierarchy(doc.GetScene(),error)){o->parent=old;state.status=error;}doc.CommitEdit();
-            }
-            ImGui::EndCombo();
-        }
-        ImGui::PopID();
-    }
-    if(state.project){const auto& c=state.project->Settings().classification;
-        DrawCategoryMask(doc,"Tags",o->tags,c.tags,false);
-        if(state.runtime)ImGui::Text("Runtime entities matching these tags: %zu",state.runtime->QueryEntities(o->tags).size());
-        DrawCategoryLayer(doc,"Render layer",o->renderLayer,c.render);
-    }
-    }
-    for (const ComponentEditor& editor : ComponentEditorRegistry()) {
-        if (!editor.has(*o)) continue;
-        if (ComponentHeader(doc, editor, *o,state)) editor.draw(doc, *o, state);
-    }
-    if(state.mode==EditorMode::Edit&&state.project&&state.assets&&ImGui::TreeNode("Prefab tools")){
-    if(ImGui::Button("Create prefab from hierarchy")){
-        Scene source;std::string error;
-        if(CreatePrefab(doc.GetScene(),o->id,source,error)){
-            auto path=std::filesystem::path(state.project->AssetsDir())/"prefabs"/("prefab-"+MintAssetId()+".judasprefab");
-            std::filesystem::create_directories(path.parent_path());
-            if(SaveSceneToFile(source,path.string(),error)){
-                auto* db=const_cast<AssetDatabase*>(state.assets);AssetRecord record;
-                if(db->Track(path.string(),record,error))state.status="Created prefab asset "+record.id;
-            }
-        }
-        if(!error.empty())state.status=error;
-    }
-    ImGui::TreePop();
-    }
-    if(state.mode==EditorMode::Edit&&doc.SelectedObject()&&ImGui::CollapsingHeader("Component clipboard")){
-        static int component=0;const char* names[]={"render","body","animation","socket","motor","audio","particle","joint","ragdoll","scripts"};
-        ImGui::TextWrapped("Component clipboard");
-        ImGui::SetNextItemWidth(-1);
-        // Keep the original control identity while its visible label moves
-        // above the full-width selector in the narrow inspector rail.
-        ImGui::PushOverrideID(ImGui::GetID("Component clipboard"));
-        ImGui::Combo("",&component,names,10);
-        ImGui::PopID();
-        if(ImGui::Button("Copy component"))doc.CopyComponent(names[component]);
-        ImGui::SameLine();if(ImGui::Button("Paste to selection")){std::string error;if(!doc.PasteComponent(error))state.status=error;}
-    }
-    ImGui::Separator();
-    if (state.mode == EditorMode::Play) ImGui::EndDisabled();
     if (state.mode == EditorMode::Play && state.runtime) {
         // Milestone 29: the runtime entity behind the selected object.
         if (ImGui::CollapsingHeader("Runtime diagnostics")) {
@@ -846,21 +893,39 @@ void DrawAssetBrowserPanel(EditorDocument& doc, EditorPanelState& state, EditorR
         if (ImGui::BeginTabItem("Assets")) {
     ImGui::BeginChild("assets", ImVec2(0.0f, 0.0f), ImGuiChildFlags_None);
     char assetSearch[256]; CopyToBuffer(state.assetSearch, assetSearch, sizeof(assetSearch));
-    const float browserWidth = ImGui::GetContentRegionAvail().x;
-    ImGui::SetNextItemWidth(std::max(60.0f, browserWidth - 290.0f));
-    if (ImGui::InputTextWithHint("##assetSearch", "Search assets, IDs or source...", assetSearch, sizeof(assetSearch)))
+    ImGui::SetNextItemWidth(-1);
+    if (ImGui::InputTextWithHint("##assetSearch", "Find assets by name, folder, ID or source...", assetSearch, sizeof(assetSearch)))
         state.assetSearch = assetSearch;
-    ImGui::SameLine();
+    ImGuiTextFilter searchFilter(assetSearch);
+    ImGui::BeginDisabled(state.mode != EditorMode::Edit);
+    if (ImGui::Button("Import assets...")) requests.browseImport = true;
+    ImGui::EndDisabled();
+    NextActionOnRow("Filters...");
+    if (ImGui::Button("Filters...")) ImGui::OpenPopup("assetFilters");
+    if (ImGui::BeginPopup("assetFilters")) {
     const char* assetTypes[]={"All types","Mesh","Texture","Font","Audio","Prefab","Script","UI","Navigation","Liquid","Material","Environment","Catalog","World","Audio effect","Deformable","Collision","Physical material"};
     int selectedType = state.assetTypeFilter + 1;
     ImGui::SetNextItemWidth(120.0f);
     if (ImGui::Combo("##assetType", &selectedType, assetTypes, 18)) state.assetTypeFilter = selectedType - 1;
-    ImGui::SameLine();
     ImGui::Checkbox("Missing", &state.assetMissingOnly);
-    ImGui::SameLine();
+        ImGui::EndPopup();
+    }
+    NextActionOnRow("Rescan");
     if (ImGui::SmallButton("Rescan")) requests.rescanAssets = true;
-    if (ImGui::IsItemHovered()) ImGui::SetTooltip("Refresh project assets\n%zu registered / %zu untracked / %zu problems",
-                                               db.Records().size(), db.Untracked().size(), db.Problems().size());
+    ToolbarHint("Refresh imported, missing and untracked project files");
+    if (const auto* selected = db.Find(state.browserSelection); selected && selected->type == AssetType::Script) {
+        ImGui::BeginDisabled(selected->missing || selected->readOnly);
+        if (ImGui::Button("Edit script")) RequestEditorScriptEdit(*selected, state);
+        ImGui::EndDisabled();
+        NextActionOnRow("Attach to selected object");
+        ImGui::BeginDisabled(state.mode != EditorMode::Edit || doc.Selection().size() != 1 || selected->missing);
+        if (ImGui::Button("Attach to selected object")) {
+            std::string error;
+            state.status = AttachEditorScript(doc, doc.Selected(), db, selected->id, error) ? "Script attached; save scene, then Play" : error;
+        }
+        ImGui::EndDisabled();
+        ToolbarHint("Select one scene object, then attach this script. This is a normal undoable scene edit.");
+    }
     if (ImGui::BeginTable("assetTable", 3, ImGuiTableFlags_RowBg | ImGuiTableFlags_BordersInnerV |
                          ImGuiTableFlags_Resizable | ImGuiTableFlags_ScrollY,
                          {0, std::max(35.0f, ImGui::GetContentRegionAvail().y)})) {
@@ -870,7 +935,8 @@ void DrawAssetBrowserPanel(EditorDocument& doc, EditorPanelState& state, EditorR
         ImGui::TableSetupScrollFreeze(0, 1);
         ImGui::TableHeadersRow();
         for (const auto& [id, record] : db.Records()) {
-            if(*assetSearch&&record.relativePath.find(assetSearch)==std::string::npos&&id.find(assetSearch)==std::string::npos&&record.source.find(assetSearch)==std::string::npos)continue;
+            const auto searchable = record.relativePath + " " + id + " " + record.source;
+            if (!searchFilter.PassFilter(searchable.c_str())) continue;
             if(state.assetTypeFilter>=0&&int(record.type)!=state.assetTypeFilter)continue;
             if(state.assetMissingOnly&&!record.missing)continue;
             ImGui::TableNextRow();
@@ -902,6 +968,11 @@ void DrawAssetBrowserPanel(EditorDocument& doc, EditorPanelState& state, EditorR
             if (ImGui::BeginPopupContextItem("##assetActions")) {
                 if (record.type == AssetType::Script && ImGui::MenuItem("Edit script", nullptr, false,
                     !record.missing && !record.readOnly)) RequestEditorScriptEdit(record, state);
+                if (record.type == AssetType::Script && ImGui::MenuItem("Attach to selected object", nullptr, false,
+                    state.mode == EditorMode::Edit && doc.Selection().size() == 1 && !record.missing)) {
+                    std::string error;
+                    state.status = AttachEditorScript(doc, doc.Selected(), db, id, error) ? "Script attached; save scene, then Play" : error;
+                }
                 if (ImGui::MenuItem("Inspect asset")) { selectAsset(); state.selectAssetDetails = true; }
                 if (ImGui::MenuItem("Open file externally", nullptr, false, !record.missing)) requests.openExternalPath = record.path;
                 if (ImGui::MenuItem("Copy file path")) ImGui::SetClipboardText(record.path.c_str());
@@ -952,7 +1023,7 @@ void DrawAssetBrowserPanel(EditorDocument& doc, EditorPanelState& state, EditorR
     if (!state.browserSelection.empty()) {
         if (const AssetRecord* record = db.Find(state.browserSelection)) {
             ImGui::Separator();
-            ImGui::Text("Selected: %s", record->relativePath.c_str());
+            ImGui::TextWrapped("Selected: %s", record->relativePath.c_str());
             ImGui::BeginDisabled(record->missing);
             if (ImGui::Button("Open file")) requests.openExternalPath = record->path;
             ImGui::EndDisabled();
@@ -1035,6 +1106,7 @@ void DrawAssetBrowserPanel(EditorDocument& doc, EditorPanelState& state, EditorR
                 }
                 state.status=error.empty()?"Placed linked prefab instance":error;
             }
+            if (ImGui::CollapsingHeader("Organize asset (rename / move / remove)")) {
             char moveTo[256];
             CopyToBuffer(state.moveAssetInput, moveTo, sizeof(moveTo));
             if (ImGui::InputText("Rename / move to (in assets)", moveTo, sizeof(moveTo))) state.moveAssetInput = moveTo;
@@ -1046,6 +1118,7 @@ void DrawAssetBrowserPanel(EditorDocument& doc, EditorPanelState& state, EditorR
             if (ImGui::Button("Remove asset")) requests.removeAssetId = state.browserSelection;
             ImGui::SameLine();
             ImGui::TextDisabled("Scene references use the id, so a move keeps them valid.");
+            }
         }
     }
             ImGui::EndChild();

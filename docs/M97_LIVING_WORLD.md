@@ -86,7 +86,7 @@ manifest's retained-byte budget. Limits are in the [Terrain API](judasjs/terrain
 The initial rock is an ordinary M84 source, model, collision and receipt. The startup
 `workshop.judas` is the small resident bootstrap. Stop Play, open `Scenes/quarry.judas`
 (or `quarry_rotated.judas`) as the content scene, select the rock and use
-View → Volumetric terrain to edit/cook as before. Return to `Scenes/workshop.judas`
+View → Terrain and world tools → Volumetric terrain to edit/cook as before. Return to `Scenes/workshop.judas`
 to play the complete composed project. After changing
 its source, refresh the gameplay module explicitly:
 

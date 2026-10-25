@@ -119,6 +119,7 @@ struct EditorPanelState {
     int assetTypeFilter = -1;
     bool assetMissingOnly = false;
     bool selectAssetDetails = false;
+    bool reviewAssetImport = false;
     std::shared_ptr<AssetCookPanelTask> assetCookTask;
     JobSystem* importJobs=nullptr;
     std::shared_ptr<ModelCookTask> importTask,importAccepted;

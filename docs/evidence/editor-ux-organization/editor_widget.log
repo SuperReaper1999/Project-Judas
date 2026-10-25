@@ -1,0 +1,16 @@
+PASS stacked rotation control preserves the original first-component widget ID
+PASS rotation components use the available width of a 340-pixel inspector
+PASS rotation press starts one pending edit without committing history
+PASS real pointer drag changes the authored quaternion
+PASS first changed drag frame keeps the complete original quaternion as baseline
+PASS rotation release commits exactly one valid scene edit
+PASS one Undo restores the exact quaternion from before the first drag change
+PASS rotation Redo restores the final drag result
+PASS stacked TextField preserves the original labelled input ID
+PASS TextField uses the available width of a 340-pixel inspector
+PASS real text input changes multiple characters in the shared TextField
+PASS successive text input frames remain one pending edit
+PASS leaving TextField commits all characters as one valid scene edit
+PASS one Undo restores the name before the entire typing gesture
+PASS text Redo restores the complete multi-character edit
+Editor widget lifecycle: 15 checks, 0 failures

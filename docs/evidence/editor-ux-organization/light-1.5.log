@@ -1,0 +1,13 @@
+Shadow maps: on
+Graphics: 3.3.0 NVIDIA 580.178.04 / NVIDIA GeForce GTX 970/PCIe/SSE2
+Renderer fragment texture units: 32 (material path uses 12)
+[editor autotest] duplicate created id 7: scene CHANGED; undo restores: IDENTICAL
+[editor autotest] wrote: /tmp/judas-ux-visual/light-1.5.edit.png
+[editor autotest] edit frame: 4 draw calls, 216 triangles, 30 debug lines
+[editor autotest] wrote: /tmp/judas-ux-visual/light-1.5.play.png
+[editor autotest] play frame: 0 steps, step 0.112 ms, 2 bodies, 0 contacts, 2 draw calls, 36 triangles, 1 shadow passes, 1 lights, 0 debug lines, 0 particles
+[editor autotest] resources: 1 meshes, 0 textures, 0 terrain meshes, hits 41, misses 1, failed 0, uploads 1, resident 34560 bytes
+[editor autotest] jobs: 11 workers, 1 completed, 0 failed, 0 cancelled
+[editor autotest] authored scene after play/stop is IDENTICAL
+[editor autotest] save ok
+JS: Player: WASD move, mouse look, Space jump, V camera, Escape release/capture mouse. F5 stops editor Play.

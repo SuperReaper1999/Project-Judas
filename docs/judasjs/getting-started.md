@@ -38,7 +38,7 @@ MyGame/
 ```
 
 Use the inspector and **Create** menu for scene content. The named source editor
-under **View → World building / named source** supports direct document editing;
+under **View → Terrain and world tools → World building / named source** supports direct document editing;
 see [formats, field names and CLI](../NAMED_AUTHORING.md). These are authoring
 formats, not APIs you import into the game VM.
 

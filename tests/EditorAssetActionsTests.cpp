@@ -1,6 +1,12 @@
 #include "editor/EditorAssetActions.h"
 #include "editor/EditorPanels.h"
 #include "imgui.h"
+#include "imgui_internal.h"
+#include "Project.h"
+#include "Prefab.h"
+#include <filesystem>
+#include <fstream>
+#include <chrono>
 #include <iostream>
 #include <stdexcept>
 
@@ -73,6 +79,53 @@ int main() {
         editingText = true; frame(); frame();
         io.AddKeyEvent(ImGuiKey_F2, true); frame();
         check(state.renamingId == 0, "text input owns F2 while a field is being edited");
+        editingText = false; io.AddKeyEvent(ImGuiKey_F2, false); frame();
+        state.mode = EditorMode::Edit;
+        state.importSourceInput = "/source/example.js";
+        state.importDestinationInput = "Scripts/example.js";
+        const auto review = [&] {
+            EditorRequests requests;
+            ImGui::NewFrame(); ImGui::Begin("Import review host");
+            DrawEditorImportReview(state, requests);
+            ImGui::End(); ImGui::Render(); return requests;
+        };
+        state.reviewAssetImport = true; review(); review();
+        auto* popup = ImGui::GetCurrentContext()->OpenPopupStack.back().Window;
+        ImGui::ActivateItemByID(popup->GetID("Import file"));
+        auto imported = review(); if (imported.importSource.empty()) imported = review();
+        check(imported.importSource == state.importSourceInput && imported.importDestination == state.importDestinationInput,
+              "actual import review emits the reviewed source and destination");
+        check(review().importSource.empty(), "import command is emitted only once");
+        state.mode = EditorMode::Play; state.reviewAssetImport = true; review(); review();
+        popup = ImGui::GetCurrentContext()->OpenPopupStack.back().Window;
+        ImGui::ActivateItemByID(popup->GetID("Import file"));
+        check(review().importSource.empty() && review().importSource.empty(), "import review cannot mutate assets during Play");
+        io.AddKeyEvent(ImGuiKey_Escape, true); review(); io.AddKeyEvent(ImGuiKey_Escape, false); review();
+        state.mode = EditorMode::Edit;
+
+        const auto root = std::filesystem::temp_directory_path() / ("judas-import-review-" + std::to_string(std::chrono::steady_clock::now().time_since_epoch().count()));
+        std::filesystem::create_directory(root);
+        const auto source = root / "example.js";
+        { std::ofstream file(source); file << "export default class { constructor(){this.state={ready:true};} }"; }
+        Project project; std::string error;
+        check(Project::CreateNew((root / "project").string(), "Import review", project, error), "isolated import project created");
+        AssetDatabase database; database.Scan(project.RootDir(), project.AssetsDir()); AssetRecord script;
+        check(database.Import(source.string(), imported.importDestination, script, error) && script.type == AssetType::Script,
+              "reviewed destination imports and registers a genuine script asset");
+        check(std::filesystem::exists(source) && std::filesystem::exists(script.path + ".judasmeta"),
+              "import preserves original source and creates ordinary asset metadata");
+        std::filesystem::remove_all(root);
+
+        doc.Select(first); doc.GetScene().Find(first)->transform.position = {3,4,5};
+        doc.GetScene().Find(second)->transform.position = {10,0,0};
+        check(doc.ReparentSelection(second, error), "hierarchy parent action uses normal validated reparenting");
+        Scene flattened;
+        check(FlattenHierarchy(doc.GetScene(), flattened, error) && flattened.Find(first)->transform.position == glm::vec3(3,4,5),
+              "parenting preserves actual world placement");
+        doc.Undo(); check(doc.GetScene().Find(first)->parent == 0, "parent change is one undoable edit");
+        doc.Redo(); doc.Select(second);
+        check(!doc.ReparentSelection(first, error) && doc.GetScene().Find(second)->parent == 0,
+              "cyclic parent choice rejects without changing the hierarchy");
         ImGui::DestroyContext();
         std::cout << "Editor asset actions: " << checks << " checks, 0 failures\n";
         return 0;

@@ -1111,11 +1111,11 @@ const std::vector<ComponentEditor>& ComponentEditorRegistry() {
 }
 
 void DrawTransformEditor(EditorDocument& doc, SceneObject& o) {
-    if (!ImGui::CollapsingHeader("Transform", ImGuiTreeNodeFlags_DefaultOpen)) return;
+    ImGui::SeparatorText("Transform");
     DragVec3(doc, "Position", o.transform.position);
     DragRotation(doc, "Rotation (deg)", o.transform.rotation);
     DragVec3(doc, "Scale", o.transform.scale, 0.01f);
-    ImGui::TextDisabled("Scale applies to mesh rendering only.");
+    if (ImGui::IsItemHovered()) ImGui::SetTooltip("Scale applies to mesh rendering only; physical shape dimensions are configured in their component.");
 }
 
 std::string ComponentIndicators(const SceneObject& object) {

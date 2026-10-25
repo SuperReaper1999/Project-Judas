@@ -124,7 +124,7 @@ runtime assets and validates supported transitive dependencies.
 
 ## Editor ↔ source
 
-Open **View → World building / named source**. Scene source and file-document
+Open **View → Terrain and world tools → World building / named source**. Scene source and file-document
 source retain separate dirty drafts; Apply validates a candidate before one undo
 transaction. Scene generation divergence requires explicit apply/discard, and
 external disk edits block Save. Scene **Review external semantic diff** and reload

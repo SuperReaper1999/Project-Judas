@@ -893,7 +893,7 @@ void EditorApplication::HandleRequests(EditorRequests& r) {
         if(!selected->path.empty())switch(selected->target){
         case EditorFileBrowser::Target::Document:m_panels.pathInput=selected->path;break;
         case EditorFileBrowser::Target::NewProject:m_newProjectDirectory=selected->path;break;
-        case EditorFileBrowser::Target::Import:m_panels.importSourceInput=selected->path;break;
+        case EditorFileBrowser::Target::Import:m_panels.importSourceInput=selected->path;m_panels.reviewAssetImport=true;break;
         case EditorFileBrowser::Target::Export:m_panels.exportDestination=selected->path;break;
         }
         if(!m_fileBrowserParent.empty()){ImGui::OpenPopup(m_fileBrowserParent.c_str());m_fileBrowserParent.clear();}
@@ -1417,6 +1417,7 @@ int EditorApplication::Run(int argc, char** argv) {
     const bool projectUnsavedAutotest=autotest&&std::getenv("JUDAS_EDITOR_AUTOTEST_PROJECT_UNSAVED");
     const bool polishAutotest = autotest && (std::getenv("JUDAS_EDITOR_AUTOTEST_POLISH")||projectUnsavedAutotest);
     const bool pickingAutotest = autotest && std::getenv("JUDAS_EDITOR_AUTOTEST_PICKING");
+    const bool workspaceAutotest = autotest && std::getenv("JUDAS_EDITOR_AUTOTEST_WORKSPACE");
     glm::vec3 dollyStartPosition{0}, dollyAnchor{0};
     float dollyStartDistance = 0;
     int navigationFailures = 0;
@@ -1639,6 +1640,7 @@ int EditorApplication::Run(int argc, char** argv) {
         static ProfileLabel editorBuildLabel("Editor UI build");
         ProfileScope editorBuildScope(editorBuildLabel);
         DrawEditorMainMenu(m_document, m_panels, requests);
+        DrawEditorImportReview(m_panels, requests);
         m_preferences.Draw(m_panels);
         if (m_preferences.ConsumeSaveRequest()) SaveEditorPreferences();
         if(!m_scriptTools)m_scriptTools=std::make_unique<ScriptTools>();
@@ -2082,8 +2084,8 @@ int EditorApplication::Run(int argc, char** argv) {
                 DebugViewOptions all;
                 all.collisionShapes = all.playerCapsule = all.contacts = all.gravity = all.frameAxes = all.lights =
                     all.interactionRanges = all.lifecycle = all.terrainNormals = all.fluidParticles = all.atmosphere = true;
-                m_panels.debug = terrainAutotest || volumeAutotest || polishAutotest || pickingAutotest ? DebugViewOptions{} : all;
-                m_panels.showProfiler = !std::getenv("JUDAS_EDITOR_AUTOTEST_AUTHORING") && !terrainAutotest && !volumeAutotest && !retargetAutotest && !polishAutotest && !pickingAutotest;
+                m_panels.debug = terrainAutotest || volumeAutotest || polishAutotest || pickingAutotest || workspaceAutotest ? DebugViewOptions{} : all;
+                m_panels.showProfiler = !std::getenv("JUDAS_EDITOR_AUTOTEST_AUTHORING") && !terrainAutotest && !volumeAutotest && !retargetAutotest && !polishAutotest && !pickingAutotest && !workspaceAutotest;
             } else if (autotestFrame == 10) {
                 // Duplicate + undo must leave the scene exactly as authored.
                 const SceneObjectId selected = m_document.Selected();

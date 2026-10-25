@@ -1,0 +1,119 @@
+{
+  "date_utc": "2026-10-25T13:14:37.709616+00:00",
+  "status": "Linux automated checks passed; human review pending",
+  "branch": "Experimental",
+  "base": "556c184aee462a42a5770a3bc78c631f5254a48e",
+  "main_untouched": "64156080799864d39a417bc094753f28b092ac38",
+  "scope": [
+    "Inspector name and always-visible Transform first; attached components and script workflow follow; metadata/prefabs/clipboard remain accessible below",
+    "Responsive toolbar: Play, Save, Create, Undo/Redo, transform actions and View; existing shortcuts retained",
+    "Hierarchy Create footer, searchable Set parent with world-placement preservation and cycle rejection",
+    "Asset import review, case-insensitive search, grouped filters and asset organization, direct script edit/attach",
+    "Specialist View menu groups; existing panel visibility/layout persistence retained; scaled chrome reserves text/control height"
+  ],
+  "checks": {
+    "asset_actions": 22,
+    "workspace_layout": 48,
+    "widget_lifecycle": 15,
+    "script_workflow": 61,
+    "creation_menu": 113,
+    "file_browser": 15,
+    "preferences_native_including_headless": 42,
+    "pause_rebind_native": 30,
+    "script_tools_native": 23,
+    "ctest_tooling_gates": 2
+  },
+  "build": {
+    "configuration": "Release (existing configured build)",
+    "targets": [
+      "judas_editor",
+      "judas_editor_asset_actions_tests",
+      "judas_editor_workspace_tests",
+      "judas_editor_widget_tests",
+      "judas_editor_script_workflow_tests",
+      "judas_editor_creation_menu_tests"
+    ],
+    "parallel_jobs": 2,
+    "warnings_errors_in_build_log": 0,
+    "binary": "build/judas_editor",
+    "binary_sha256": "e80733944431c6c73f9443b4539b90dc0c1c9a4dbdb862166980300185c98f3a"
+  },
+  "application": {
+    "project": "copied PreAlphaHandsOnTestGame.judasproj",
+    "original_project_modified": false,
+    "original_and_copy_file_hashes": {
+      "PreAlphaHandsOnTestGame.judasproj": "c934feb245d5240d8b77e60034ebadde895004f088d35c7b2ca6938bb20830c1",
+      "Assets/game.js.judasmeta": "a5d19109283f389a193c4f8deed5469ccafb7cc427406a8b137b8ff5e12af80a",
+      "Assets/game.js": "1beeedfd336e0378baf435d65cfa5c8e4d413f03dd85504908341144a4420c88",
+      "Scenes/main.judas": "2281e7665b8a52b4cc214cc7a0985df56caf84bb0f9516fdeb3921ed35c3a32c",
+      "Assets/Scripts/Player.js": "c57c1bbbb16f20f8452ad2c01a9e67b2b73c16ec8de0e4ca3df6528d0fff1928",
+      "Assets/Scripts/Player.js.judasmeta": "17b666126b509066f9d96abd2937a69f5eccffdfd54478303adf3206ac5e8d09",
+      "Assets/Generated/Primitives/capsule-v1.judascollision.judasmeta": "aedeb24f9d8de9e9e05c643ccd26fc9d715a7d8ec255605c2d0fda39fe3b0173",
+      "Assets/Generated/Primitives/capsule-v1.obj.judasmeta": "a5ebdb16db6f7eff8bd09f7d78df1eadebe6ae3504df9d3ff7377a5308718e30",
+      "Assets/Generated/Primitives/capsule-v1.obj": "25a6b4398a30fe930a7e3231aa33bd3be80f7a6b7bf5f43cf2436d15e0e41cf0",
+      "Assets/Generated/Primitives/capsule-v1.judascollision": "5023ed57e40675333e35f2c0d12ebb636248ad7383ca3cbe79f6f3a9f7f37401"
+    },
+    "themes": [
+      "dark",
+      "light with purple custom accent"
+    ],
+    "scales": [
+      1,
+      1.5
+    ],
+    "resolution": [
+      1280,
+      800
+    ],
+    "each_run": "normal edit, duplicate/undo, Play, Stop; authored serialization IDENTICAL; save to separate output path",
+    "visual_observations": [
+      "Name and Transform appear before component sections in both themes",
+      "At 150% toolbar uses compact Transform menu; hierarchy footer and inspector fields remain visible",
+      "At 150% saved 220px asset rail has less table space and scrolls; divider can enlarge it without changing saved sizes automatically"
+    ],
+    "capture_followup": "First dark-100% capture lacked rendered UI. Preserved its images and log; same-source repeat dark-1-recheck rendered full UI and repeated identical-scene Play/Stop. First capture is not counted as a successful visual inspection."
+  },
+  "reproduction": [
+    "cmake --build build --target judas_editor judas_editor_asset_actions_tests judas_editor_workspace_tests judas_editor_widget_tests judas_editor_script_workflow_tests judas_editor_creation_menu_tests -j 2",
+    "./build/judas_editor_asset_actions_tests (and corresponding target executables for focused checks)",
+    "SDL_AUDIODRIVER=dummy ./build/judas_editor_preferences_tests /tmp/preferences-visual",
+    "ctest --test-dir build -R prealpha.(build-organization|gate-registration) --output-on-failure",
+    "For four application captures: copy the project into /tmp, create isolated XDG_DATA_HOME/Judas/Editor/workspace.json schema 2 with dark/light mode, scale 1/1.5, panels [assets], hierarchyWidth 250, inspectorWidth 340, assetBrowserHeight 220; run SDL_AUDIODRIVER=dummy XDG_DATA_HOME=<isolated-dir> JUDAS_EDITOR_AUTOTEST=<output-prefix> JUDAS_EDITOR_AUTOTEST_WORKSPACE=1 ./build/judas_editor <copied-project>"
+  ],
+  "boundaries": [
+    "No engine/runtime/public JudasJS API or project gameplay changes",
+    "No new docking architecture or preference schema",
+    "No Windows/Android qualification or whole-production-suite run",
+    "Layout geometry checked at 640x480, 1280x800, 1920x1080 and scales .85,1,1.25,1.5; native screenshots cover 1280x800 at 1 and 1.5 only",
+    "Specialized component content remains unchanged; this is not per-widget certification of every advanced tool",
+    "Import review and actual asset copy/metadata tested; OS picker behaviour covered separately by existing file-browser tests"
+  ],
+  "human_checklist": [
+    "Select objects: name and Transform first; edit and Undo/Redo",
+    "Create root/child through right-click and toolbar; rename, Set parent and Scene root",
+    "Import a script, edit it, attach to selected object; Play/Stop",
+    "Find terrain, animation, profiler and developer tools from View; confirm panels restore from saved layouts",
+    "Try light/dark/custom accent and scale, resize rails, save/reload layout",
+    "Check your existing player and pause/settings controls"
+  ],
+  "changed_sources_docs_tests": [
+    "docs/EDITOR_GUIDE.md",
+    "docs/M84_VOLUMETRIC_TERRAIN.md",
+    "docs/M95_ANIMATION_WORKFLOW.md",
+    "docs/M97_LIVING_WORLD.md",
+    "docs/NAMED_AUTHORING.md",
+    "docs/PROFILER.md",
+    "docs/judasjs/getting-started.md",
+    "docs/judasjs/profiling.md",
+    "src/editor/ComponentEditors.cpp",
+    "src/editor/EditorApplication.cpp",
+    "src/editor/EditorAssetActions.cpp",
+    "src/editor/EditorAssetActions.h",
+    "src/editor/EditorPanels.cpp",
+    "src/editor/EditorPanels.h",
+    "src/editor/EditorWorkspaceLayout.h",
+    "tests/EditorAssetActionsTests.cpp",
+    "tests/EditorWorkspaceLayoutTests.cpp"
+  ],
+  "protected_unrelated_work": "Not staged or modified by this task"
+}

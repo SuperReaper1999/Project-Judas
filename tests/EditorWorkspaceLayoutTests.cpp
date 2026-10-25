@@ -59,6 +59,16 @@ int main() {
     Check(play.viewport.position.x == 0 && play.viewport.size.x == 1280,
           "collapsed workspace leaves the full window width available to Play");
     const float nan = std::numeric_limits<float>::quiet_NaN();
+    for (float scale : {.85f, 1.f, 1.25f, 1.5f}) {
+        for (auto display : {glm::vec2{640,480}, glm::vec2{1280,800}, glm::vec2{1920,1080}}) {
+            auto scaled = CalculateEditorWorkspaceLayout(display, 250, 340, 200, true, true, scale);
+            Check(Within(scaled.toolbar, display) && Within(scaled.viewport, display) && Within(scaled.inspector, display) &&
+                      Within(scaled.hierarchy, display) && Within(scaled.assets, display) && !Overlap(scaled.toolbar, scaled.viewport),
+                  "scaled workspace panels stay bounded and do not overlap the toolbar");
+            Check(scaled.toolbar.size.y >= 37 * scale && scaled.status.size.y >= 25 * scale,
+                  "toolbar and status reserve scaled control/text height");
+        }
+    }
     const auto invalid = CalculateEditorWorkspaceLayout({640, 480}, nan, nan, nan, true, true);
     Check(Within(invalid.viewport, {640, 480}) && invalid.viewport.size.x >= 223.998f && invalid.viewport.size.y >= 179.998f,
           "invalid saved dimensions restore bounded default layout values");

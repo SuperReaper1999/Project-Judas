@@ -7,7 +7,7 @@ physics, authored content or gameplay.
 
 ## Getting started
 
-Open a project in `judas_editor`, then **View → Profiler**. Toggle **Collect**;
+Open a project in `judas_editor`, then **View → Diagnostics and extensions → Profiler**. Toggle **Collect**;
 opening/closing the window does not enable/disable collection. **Freeze capture**
 stops recording while the game continues. Disable **Follow latest**, select a
 history frame or spike, inspect its hierarchy/counters/GPU passes, then resume.

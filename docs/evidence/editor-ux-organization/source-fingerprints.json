@@ -1,0 +1,70 @@
+{
+  "docs/EDITOR_GUIDE.md": {
+    "candidate": "93d60e5eaa69eca31a8aed459544dc575784284208d917b5154eb31ecc2d8092",
+    "before": "6439930148bee3be75982de9ceab4b0aa8aeccf831c312fc08a05e0e282a3801"
+  },
+  "docs/M84_VOLUMETRIC_TERRAIN.md": {
+    "candidate": "68ee1f76d930fffa1319edb88c6bb80565a911f4efde944a36c20f6eb392ba4a",
+    "before": "a8529ae5c30be11ad8888b3871a8ec960fbb85a6e8f1280c62c5cf13b4138136"
+  },
+  "docs/M95_ANIMATION_WORKFLOW.md": {
+    "candidate": "a534bc338697053f0de67f59fde1df85ea882c985b8c2d0e7a4c98a9a9bffbfd",
+    "before": "7be46c9ae9f9e05741f77fc089047b6af40de666fcdc5aa3fc27c988dd14c932"
+  },
+  "docs/M97_LIVING_WORLD.md": {
+    "candidate": "34c5dd13fa1e1583b0184bfedc5bbf03c306d8778f583b3d1f34ba09e11d6c78",
+    "before": "afcb500fa059a839070b2c45e9360fef5f593dc62157d7cbbc2565e737a5bc96"
+  },
+  "docs/NAMED_AUTHORING.md": {
+    "candidate": "77ba39b0923c82d2b27dab5a60c6e45f8a1fbff27c771e996e44dde69697839e",
+    "before": "6281c023bc803bcd93e9f1badacc334316610b44c4a9c35d61f4f2a1dd042593"
+  },
+  "docs/PROFILER.md": {
+    "candidate": "f081ed0177f4a15f297dfef7601c48969459c4fa23e07851104c5440e9042088",
+    "before": "73a5b6742b3a70d8c45b88d1fad7a3a4bcc2b9940db364998de43d45ae950204"
+  },
+  "docs/judasjs/getting-started.md": {
+    "candidate": "7f34d1f0c3012edbfe747e81837f9fa04a2b7b2edfb476d5a7907dd6cadaae5b",
+    "before": "8ed2e2f149bba42b21e9710c73c4f4c373c316b8712d75d6d64af2b813e654d7"
+  },
+  "docs/judasjs/profiling.md": {
+    "candidate": "523f58e8c96f59db873eb24d6530cf02cb28d62a1e0ea2a947edf704a0fba7fe",
+    "before": "42e8255e2537c23934f4eaa9f1b5e394db2ea0af2d8bde85853aaf427c81b7b4"
+  },
+  "src/editor/ComponentEditors.cpp": {
+    "candidate": "712efb6302c492d2ec1739f0d0c81c416df8dbeb1a75ec63561af7ebbbbdefe6",
+    "before": "e0a309a80e86685e3636bdc237516194b2fc225943483376df895205ac98885d"
+  },
+  "src/editor/EditorApplication.cpp": {
+    "candidate": "39691063b5deda18128b562d59fe7251e16ce0599ef319830d0ad385d7d328a1",
+    "before": "8a0485ea8f103fbab5852e08b98abc01f21ad9a0be9c0cf6148527085d0a2ea8"
+  },
+  "src/editor/EditorAssetActions.cpp": {
+    "candidate": "bdbbf734d5e9db756672dcd270f1618e029386d619582cddb6bdf2f9c123e7be",
+    "before": "d807eae2f3cf0bb65f4e8e0f9377ef2320eec29d68c5d10e06eae378541ca7a6"
+  },
+  "src/editor/EditorAssetActions.h": {
+    "candidate": "05d7c82940227b95ed9548e17bf7337c36a1945dca7e0968b56d903949c461dc",
+    "before": "3d114bde10f079b6027ec637dbff522266fa8ec8b2e043baa51629faade036f6"
+  },
+  "src/editor/EditorPanels.cpp": {
+    "candidate": "7c895cbb2ec91be9c121d58e4613f3df1060b7bee41ba9ae517204569e0e9d1b",
+    "before": "44c71200d3a74405dd2c45374d54dae45c22dc5366a3acfa83c44f443905b273"
+  },
+  "src/editor/EditorPanels.h": {
+    "candidate": "df06e16a13f7851d61603829523d551e9583057520024705d399136bec5fd161",
+    "before": "153e81b6a586610324f927a8c239a20c2abd1b3156f5a641e845aeaa33ad3017"
+  },
+  "src/editor/EditorWorkspaceLayout.h": {
+    "candidate": "a8e64d817a8e2a776e238f8cc841b7ee06b9e7fe5d8d5cd5f981bb16fbf94661",
+    "before": "d54917b0da6a665da0fe213dfbb33f6f384e681c8916163a1fd0e521de2b2ae1"
+  },
+  "tests/EditorAssetActionsTests.cpp": {
+    "candidate": "6245924adc606d46aef6ca5a276842c8f4878e848fe58c16b705c270b22fc87a",
+    "before": "f2e3a3e3118050eec09539b50e01ca0730e0f6dd5cccd8ff8b78296b1a29b3da"
+  },
+  "tests/EditorWorkspaceLayoutTests.cpp": {
+    "candidate": "e9baeacfa75f1be1f5b42e300022136d6cde8fa467f4b5095c49fed6ede81c1c",
+    "before": "c5cf31bcbb2baaa167719032f867dde8c93e2d75d0f7d8263903dc71aa8b0a7c"
+  }
+}

@@ -1,0 +1,23 @@
+PASS script activation requests the existing source editor
+PASS missing script gives actionable failure
+PASS mod/read-only source is protected
+PASS Play retains the existing deliberate source-edit/reload workflow
+PASS non-script activation retains the normal asset inspector route
+PASS no selection cannot start rename
+PASS rename begins on the exact selected entity with its existing name
+PASS starting rename does not change the authored scene or open a transaction
+PASS ambiguous multi-selection does not rename
+PASS rename is read-only during Play
+PASS actual F2 input works in a focused hierarchy window
+PASS text input owns F2 while a field is being edited
+PASS actual import review emits the reviewed source and destination
+PASS import command is emitted only once
+PASS import review cannot mutate assets during Play
+PASS isolated import project created
+PASS reviewed destination imports and registers a genuine script asset
+PASS import preserves original source and creates ordinary asset metadata
+PASS hierarchy parent action uses normal validated reparenting
+PASS parenting preserves actual world placement
+PASS parent change is one undoable edit
+PASS cyclic parent choice rejects without changing the hierarchy
+Editor asset actions: 22 checks, 0 failures

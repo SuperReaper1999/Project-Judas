@@ -24,15 +24,16 @@ struct EditorWorkspaceLayout {
 
 inline EditorWorkspaceLayout CalculateEditorWorkspaceLayout(glm::vec2 displaySize, float leftWidth,
                                                             float rightWidth, float bottomHeight,
-                                                            bool showAssets, bool showRails) {
+                                                            bool showAssets, bool showRails, float uiScale = 1.f) {
     const float width = std::isfinite(displaySize.x) ? std::max(displaySize.x, 0.0f) : 640.0f;
     const float height = std::isfinite(displaySize.y) ? std::max(displaySize.y, 0.0f) : 480.0f;
     if (!std::isfinite(leftWidth)) leftWidth = 250;
     if (!std::isfinite(rightWidth)) rightWidth = 340;
     if (!std::isfinite(bottomHeight)) bottomHeight = 200;
-    const float menuHeight = std::min(28.0f, height);
-    const float toolbarHeight = std::min(40.0f, std::max(0.0f, height - menuHeight));
-    const float statusHeight = std::min(26.0f, std::max(0.0f, height - menuHeight - toolbarHeight));
+    uiScale = std::isfinite(uiScale) ? std::clamp(uiScale, .85f, 1.5f) : 1.f;
+    const float menuHeight = std::min(28.0f * uiScale, height);
+    const float toolbarHeight = std::min(40.0f * uiScale, std::max(0.0f, height - menuHeight));
+    const float statusHeight = std::min(26.0f * uiScale, std::max(0.0f, height - menuHeight - toolbarHeight));
     const float top = menuHeight + toolbarHeight;
     const float contentHeight = std::max(0.0f, height - top - statusHeight);
     constexpr float splitter = 5.0f;

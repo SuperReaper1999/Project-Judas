@@ -8,7 +8,7 @@ validation and operator acceptance are separate. See [evidence](evidence/m95/REP
 1. Import a skinned glTF/GLB or supported FBX through the ordinary model importer.
 2. In Model import, populate clip selections. Choose trim, output name and the
    existing `preserve`, `inPlace` or `extract` root-motion policy.
-3. Open **View → Animation timeline**, choose the project's `.judasimport`, then
+3. Open **View → Animation tools → Animation timeline**, choose the project's `.judasimport`, then
    **Load / reimport selected recipe**. Normal asynchronous cooking, validation
    and Edit-only publication apply. Preview is independent of gameplay.
 4. Choose a clip. Play, scrub, orbit and inspect its skeleton/root path. The marker

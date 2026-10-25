@@ -38,7 +38,7 @@ Collection off skips label registration and event writing. Avoid generating
 entity/time-dependent labels; use constant names and counters.
 
 There is no script API to alter profiling cadence or read timings into gameplay.
-Use editor **View → Profiler** or opt-in runtime environment settings described in
+Use editor **View → Diagnostics and extensions → Profiler** or opt-in runtime environment settings described in
 [the native profiler guide](../PROFILER.md). These annotations are not save/session
 state. See [lifecycle](lifecycle.md), [practices](practices.md) and
 [executed profiling example](examples/profiling.js).

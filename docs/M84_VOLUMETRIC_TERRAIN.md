@@ -21,7 +21,7 @@ The annex has its own ordinary authored gravity region.
 ### Editing workflow
 
 1. Stop Play. Select **Editable volumetric rock** in the hierarchy or viewport.
-2. Open **View → Volumetric terrain - dig / build**.
+2. Open **View → Terrain and world tools → Volumetric terrain - dig / build**.
 3. Click **Edit selected volume**. This resolves the selected mesh's recorded source.
 4. Enable the viewport brush. Choose **Remove**, **Add** or **Smooth**; set radius and strength.
 5. Drag on the surface. A depth offset moves the brush centre along the view ray.

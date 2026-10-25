@@ -15,9 +15,11 @@ browser below. Drag the dividers to resize them. **View → Asset Browser** hide
 the bottom panel; **View → Reset workspace layout** restores the defaults.
 The layout adapts to smaller windows; the minimum window is 640 × 480.
 
-The toolbar has **Play**, **Save**, transform tools, world/local axes and snap.
-Smaller windows group transform choices under **Tools**. **Scene** opens global
-scene settings; **Help** shows navigation and shortcuts. The status bar reports
+The toolbar puts **Play**, **Save** and **Create…** first. Wider windows also
+show Undo/Redo and Move/Rotate/Scale. **Options…** (or **Transform…** in a smaller
+window) holds transform choices, world/local axes and snap. **View…** opens scene
+settings, assets, preferences/layouts and navigation help. These actions also
+remain in the main menus. Controls adapt to window width and UI scale. The status bar reports
 unsaved edits and operation results. Hover truncated names to see their full text.
 
 Panel sizes and auxiliary-window placement are saved in SDL's per-user
@@ -32,7 +34,7 @@ sharing requirement.
 | Pan | Middle-button drag inside the scene view. |
 | Zoom | Mouse wheel inside the scene view; wheel up moves closer, down moves away. F sets the focus depth. |
 | Look / fly | Right-button drag; hold WASD and Q/E, Shift for faster flight. |
-| Frame selection | F, hierarchy **Focus**, or right-click **Focus**. |
+| Frame selection | F, hierarchy **Actions → Focus selection**, or right-click **Focus**. |
 | Select | Left-click geometry or a hierarchy row; Ctrl adds, Shift selects a hierarchy range. |
 | Transform | W / E / R: move / rotate / scale; X changes world/local axes; Ctrl temporarily snaps. |
 | Undo / redo | Ctrl+Z / Ctrl+Y. Shared transform/text/field helpers group a gesture into one edit; some specialized controls still commit each change. |
@@ -63,18 +65,23 @@ UI and the other engine primitives. Common inspector fields have labels above
 their controls; some specialized controls retain side labels. Asset selections
 show full paths/IDs in tooltips and missing/unknown status below the selector.
 The hierarchy supports search, renaming, multiple selection, grouping and
-copy/paste through the existing authoring tools.
+copy/paste through the existing authoring tools. Its **Create…** footer offers
+root creation; right-click **Set parent** lets you search for a parent or choose
+Scene root. Reparenting preserves world placement, supports Undo/Redo and rejects
+cycles. The existing right-click child creation stays relative to its parent.
 
 ### Add gameplay to an object
 
-Select one object. The inspector puts its name, script actions, **Add component**
-and Transform first. Component sections are collapsed until expanded; newly
+Select one object. Its name and always-visible **Transform** come first, followed
+by **Components**, **Add component…** and attached components. **Add gameplay
+script** holds the script creation/attachment actions; it starts open for an
+object without scripts. Component sections are collapsed until expanded; newly
 added components open automatically. **Object settings** holds parent, tags,
 render layer and visibility. Clipboard, prefab and runtime diagnostics stay in
 separate collapsed sections. Right-click a component heading to remove it.
 The Add component selector supports a name search and alphabetical results.
 
-1. Click **Create script & attach**, type a file name and choose **Create & edit**.
+1. Expand **Add gameplay script** if needed. Click **Create script & attach**, type a file name and choose **Create & edit**.
    This writes `Assets/Scripts/<name>.js`, registers its normal metadata, attaches
    it and opens the built-in source editor. Existing files are never overwritten.
 2. Write gameplay in the source window and press **Save source**. Close that
@@ -136,10 +143,18 @@ During Play, source saving remains separate from deliberate script reloading;
 opening a file does not change the running code. Existing unsaved source edits
 remain protected when switching files.
 
+The asset browser puts **Import assets…** at the top of its **Assets** tab. Choose a source, then
+review its destination inside Assets and click **Import file**. The source is
+preserved. Use **Filters…** for type/missing filters; the search matches names,
+paths, IDs and sources without case sensitivity. A selected script exposes
+**Edit script** and **Attach to selected object** directly; attachment requires
+one selected object in Edit mode. These also appear on its right-click menu.
+
 The asset browser has three tabs:
 
 - **Assets**: search by name, ID or source; filter type/missing state; rescan.
-- **Selected asset**: inspect/edit the selected resource, move/remove it, copy its
+- **Selected asset**: inspect/edit the selected resource, expand **Organize asset** to
+  rename/move/remove it, copy its
   path, or request **Open file** in your configured application.
 - **Import & tools**: track existing files and use the current import/bake tools.
 
@@ -164,7 +179,7 @@ reference and [hand-authoring guide](judasjs/getting-started.md).
 
 ## Animation retargeting
 
-Open **View → Animation retargeting**, or the retargeting button in **Asset
+Open **View → Animation tools → Animation retargeting**, or the retargeting button in **Asset
 Browser → Import & tools**. This is an authoring workspace: it creates no game
 world, runs no scripts and does not mutate the open scene or Play state.
 
@@ -201,12 +216,12 @@ See [M74's transfer convention, bounds and limitations](M74.md) and
 [model import](MODEL_IMPORT.md) for the matching CLI and recipe format.
 
 For ordinary clip preview, scrubbing and event-track authoring, use
-**View → Animation timeline**; see the [animation workflow](M95_ANIMATION_WORKFLOW.md).
+**View → Animation tools → Animation timeline**; see the [animation workflow](M95_ANIMATION_WORKFLOW.md).
 Retargeting and the runtime animation timeline are separate tools.
 
 ## Terrain authoring and live edits
 
-**View → Terrain sculpt / paint** opens shared-source height/radial terrain editing.
+**View → Terrain and world tools → Terrain sculpt / paint** opens shared-source height/radial terrain editing.
 Select a terrain and open its source, or create/cook a new source and instance.
 Raise/lower/flatten/smooth/paint use the current draft triangles; Save source and
 Cook are separate. Draft graphics are not published collision. This authoring
@@ -388,3 +403,13 @@ with **Save all and continue / Use saved version / Cancel** when edits exist.
 Choosing the saved version does not discard the live edits. See
 [the first-project walkthrough](FIRST_PROJECT.md) and
 [current correction scope](PREALPHA_FINAL_CORRECTIONS.md).
+
+## Finding specialized tools
+
+Ordinary scene editing keeps specialist windows closed unless your saved layout
+opens them. **View → Terrain and world tools**, **Animation tools** and
+**Diagnostics and extensions** group the existing terrain, world, animation,
+profiler and mod tools. JudasJS developer tools remain directly under View.
+Use **Editor preferences → Layouts** to save layouts for different tasks,
+including panel visibility, rail sizes and floating-window placement. Themes,
+custom colours and UI scale apply to the common editing controls.
