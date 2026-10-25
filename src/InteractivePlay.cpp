@@ -239,7 +239,7 @@ float InteractivePlay::Frame(Window& window, Renderer& renderer, float frameDelt
 
     // Milestone 13: HUD + pause menu overlay, drawn last, on top.
     renderer.BeginUIFrame(window.Width(), window.Height());
-    if (drawHud && m_pauseMenu.IsHudVisible() && (!authoredUI||world.UI().debugOverlayVisible)) {
+    if (world.legacyGameplay && drawHud && m_pauseMenu.IsHudVisible() && (!authoredUI||world.UI().debugOverlayVisible)) {
         m_worldCoordinates=WorldCoordinates(m_session.World().Settings().worldOrigin);
         HUDViewData hud = BuildHudView(m_session, m_worldCoordinates, m_lastAerodynamicDrag);
         hud.worldStateInfo = m_worldStateStatus;
