@@ -3,34 +3,51 @@
 #include "imgui.h"
 
 void DrawEditorCreationItems(const EditorPanelState& state, EditorRequests& requests, SceneObjectId parent) {
+    struct CreationItem { const char* label; const char* kind; const char* description; };
+    static constexpr CreationItem items[] = {
+        {"Empty object", "empty", "A transform to organize children or attach your own components."},
+        {"First-person player (JS + motor)", "first-person-player", "Controllable capsule with CharacterMotor, editable movement/camera script and V view toggle."},
+        {"Third-person player (JS + motor)", "third-person-player", "The same script-owned player starting with a camera behind it."},
+        {"Pause menu + controls (JS + UI)", "pause-menu-example", "Optional editable pause and settings UI, including project control rebinding."},
+        {"Static box", "box", "Visible box with solid collision; useful for floors and walls."},
+        {"Static sphere", "sphere", "Visible sphere with solid collision."},
+        {"Capsule", "capsule", "Rounded mesh with convex collision; static by default, two metres tall."},
+        {"Cylinder", "cylinder", "Cylinder mesh with convex collision; static by default, two metres tall."},
+        {"Dynamic box", "dynamic-box", "A box that falls and responds to physical forces."},
+        {"Dynamic sphere", "dynamic-sphere", "A ball that falls and responds to physical forces."},
+        {"Mesh", "mesh", "An empty mesh renderer. Choose an imported mesh in the Render component."},
+        {"Point light", "point-light", "Light emitted in all directions around a point."},
+        {"Spot light", "spot-light", "A directional cone of light."},
+        {"Door (legacy gameplay)", "door", "Only interactive with legacy gameplay enabled; modern doors use project scripts."},
+        {"Gravity region", "gravity-region", "A bounded uniform gravity field; configure direction and strength in the inspector."},
+        {"Basic water", "basic-water", "Inexpensive visible water and swimming; does not require advanced fluid simulation."},
+        {"Player start (legacy gameplay)", "player-start", "A spawn marker for legacy gameplay, not a script-owned CharacterMotor player."},
+        {"Render camera", "render-camera", "An additional rendered view; script-owned main cameras use world.setCamera."},
+        {"Audio emitter", "audio-emitter", "A sound source. Choose an audio asset in the inspector."},
+        {"Audio listener", "audio-listener", "An authored listening position for scene audio."}
+    };
+    // Only one creation popup is active at a time; each opening starts unfiltered.
+    static ImGuiTextFilter filter;
+    if (ImGui::IsWindowAppearing()) { filter.Clear(); ImGui::SetKeyboardFocusHere(); }
+    ImGui::SetNextItemWidth(300);
+    if (ImGui::InputTextWithHint("##createSearch", "Find an object or capability...", filter.InputBuf, sizeof(filter.InputBuf))) filter.Build();
+    ImGui::Separator();
+    bool any = false;
     const bool editing = state.mode == EditorMode::Edit;
-    const auto item = [&](const char* label, const char* kind) {
-        if (ImGui::MenuItem(label, nullptr, false, editing)) {
-            requests.createKind = kind;
+    for (const auto& item : items) {
+        const std::string search = std::string(item.label) + " " + item.description;
+        if (!filter.PassFilter(search.c_str())) continue;
+        any = true;
+        if (ImGui::MenuItem(item.label, nullptr, false, editing) && editing) {
+            requests.createKind = item.kind;
             requests.createPosition = state.cameraFocus;
             requests.createParent = parent;
         }
-    };
-    item("Empty object", "empty");
-    item("First-person player (JS + motor)", "first-person-player");
-    item("Third-person player (JS + motor)", "third-person-player");
-    item("Pause menu + controls (JS + UI)", "pause-menu-example");
-    item("Static box", "box");
-    item("Static sphere", "sphere");
-    item("Capsule", "capsule");
-    item("Cylinder", "cylinder");
-    item("Dynamic box", "dynamic-box");
-    item("Dynamic sphere", "dynamic-sphere");
-    item("Mesh", "mesh");
-    item("Point light", "point-light");
-    item("Spot light", "spot-light");
-    item("Door (legacy gameplay)", "door");
-    item("Gravity region", "gravity-region");
-    item("Basic water", "basic-water");
-    item("Player start (legacy gameplay)", "player-start");
-    item("Render camera", "render-camera");
-    item("Audio emitter", "audio-emitter");
-    item("Audio listener", "audio-listener");
+        if (ImGui::IsItemHovered(ImGuiHoveredFlags_AllowWhenDisabled)) {
+            ImGui::SetTooltip("%s", item.description);
+        }
+    }
+    if (!any) ImGui::TextDisabled("No matching objects. Try a name such as light or player.");
 }
 
 void DrawHierarchyCreationPopup(const EditorPanelState& state, EditorRequests& requests) {

@@ -1,0 +1,13 @@
+PASS script activation requests the existing source editor
+PASS missing script gives actionable failure
+PASS mod/read-only source is protected
+PASS Play retains the existing deliberate source-edit/reload workflow
+PASS non-script activation retains the normal asset inspector route
+PASS no selection cannot start rename
+PASS rename begins on the exact selected entity with its existing name
+PASS starting rename does not change the authored scene or open a transaction
+PASS ambiguous multi-selection does not rename
+PASS rename is read-only during Play
+PASS actual F2 input works in a focused hierarchy window
+PASS text input owns F2 while a field is being edited
+Editor asset actions: 12 checks, 0 failures

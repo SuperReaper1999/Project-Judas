@@ -75,6 +75,20 @@ int main() {
             check(request.createParent == kInvalidSceneObjectId, "empty hierarchy creates at the root");
             check(frame().createKind.empty(), "creation command is emitted once");
         }
+        rightClick(); frame();
+        io.AddInputCharactersUTF8("cylinder"); frame(); frame();
+        auto* filtered = ImGui::GetCurrentContext()->OpenPopupStack.back().Window;
+        ImGui::ActivateItemByID(filtered->GetID("Static box"));
+        check(frame().createKind.empty(), "filtered-out objects cannot be activated");
+        ImGui::ActivateItemByID(filtered->GetID("Cylinder"));
+        auto filteredRequest = frame(); if (filteredRequest.createKind.empty()) filteredRequest = frame();
+        check(filteredRequest.createKind == "cylinder", "typing filters the actual popup and creates the matching object");
+        rightClick(); frame();
+        io.AddInputCharactersUTF8("swimming"); frame(); frame();
+        auto* described = ImGui::GetCurrentContext()->OpenPopupStack.back().Window;
+        ImGui::ActivateItemByID(described->GetID("Basic water"));
+        auto describedRequest = frame(); if (describedRequest.createKind.empty()) describedRequest = frame();
+        check(describedRequest.createKind == "basic-water", "search matches capability descriptions as well as names");
         rightClick();
         io.AddKeyEvent(ImGuiKey_Escape, true); frame();
         io.AddKeyEvent(ImGuiKey_Escape, false);

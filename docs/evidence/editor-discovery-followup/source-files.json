@@ -1,0 +1,11 @@
+[
+  "CMakeLists.txt",
+  "docs/EDITOR_GUIDE.md",
+  "src/editor/EditorApplication.cpp",
+  "src/editor/EditorAssetActions.cpp",
+  "src/editor/EditorAssetActions.h",
+  "src/editor/EditorCreationMenu.cpp",
+  "src/editor/EditorPanels.cpp",
+  "tests/EditorAssetActionsTests.cpp",
+  "tests/EditorCreationMenuTests.cpp"
+]

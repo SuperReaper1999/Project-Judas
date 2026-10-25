@@ -1,0 +1,47 @@
+{
+  "date": "2026-10-25",
+  "base": "8745b838d68d4554d681e68f59e4b75e2e9ec226",
+  "status": "Human-accepted base promoted exactly to main. New follow-up Linux-validated on Experimental; human review pending.",
+  "changes": [
+    "Search in shared Create menu, hierarchy root creation and child creation. Matches names and capability descriptions, resets on popup opening, explains defaults in hover tooltips.",
+    "Double-click script assets to open the existing source editor directly. Asset context menus offer Edit script and Open file externally; other asset double-clicks retain inspection.",
+    "F2 and Edit > Rename start the existing inline rename for one selected object. Text input, multi-selection and Play-mode ownership are respected.",
+    "Source editing during Play retains existing deliberate save/reload semantics; no automatic reload added. Missing/read-only scripts remain protected. Source-tool unsaved-edit protection is reused."
+  ],
+  "validation": {
+    "asset_actions": {
+      "checks": 12,
+      "failures": 0
+    },
+    "creation_menu": {
+      "checks": 113,
+      "failures": 0
+    },
+    "widget_lifecycle": {
+      "checks": 15,
+      "failures": 0
+    },
+    "actual_source_tools_and_debugger": {
+      "checks": 23,
+      "failures": 0
+    },
+    "editor_application": "Actual SDL/OpenGL Edit, duplicate/Undo, Play/Stop and Save in disposable tiny_game copy; authored scene IDENTICAL afterward. No resource failures.",
+    "build": "Release editor and affected test targets; no compiler warnings/errors in retained logs. Existing third-party CMake deprecation notices retained.",
+    "docs": "94 current documents, 1965 links, pass."
+  },
+  "coverage_limits": [
+    "Creation tests exercise typed ImGui search, filtered-out activation, exact matching creation, parent placement, undo/redo and Play rejection.",
+    "Asset activation tests exercise the shared request mechanism and negative controls. Browser mouse routing is source-reviewed; no separate full browser double-click automation is claimed. Existing actual source-editor tests exercise the destination and unsaved-file refusal.",
+    "F2 uses real ImGui key input with focused hierarchy and active text input negative control; rename commit itself reuses existing document/widget workflow.",
+    "No new runtime/public API, game, physics, save-format or export changes. No repeated production-suite or platform qualification. Windows/Android not tested.",
+    "Active user editor/project was not closed or modified. A disposable copy under /tmp was used for application checks. Existing untracked work and protected history are excluded."
+  ],
+  "human_checklist": [
+    "Reopen updated editor when convenient. Open Create or right-click hierarchy: type player/light/swimming and hover a result.",
+    "Create at root and as child; reopen popup and confirm all items return; Undo normal creations.",
+    "Double-click a script in Assets; edit and save. Try switching while unsaved text exists and confirm protection.",
+    "Right-click any asset to Inspect or Open file externally; try missing/read-only scripts and check their diagnostic.",
+    "Select one hierarchy object, press F2, Enter to commit or Escape to cancel. Type in another field and confirm F2 does not rename an unrelated object.",
+    "Play/Stop and deliberately reload scripts through the existing source tools; opening source alone must not reload gameplay."
+  ]
+}

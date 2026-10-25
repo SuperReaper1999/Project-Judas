@@ -17,6 +17,7 @@
 #include "Environment.h"
 #include "ResourceManager.h"
 #include "EditorPanels.h"
+#include "EditorAssetActions.h"
 #include "RenderPreview.h"
 #include "RetargetPanel.h"
 #include "Prefab.h"
@@ -292,6 +293,7 @@ void DrawEditorMainMenu(EditorDocument& doc, EditorPanelState& state, EditorRequ
         ImGui::Separator();
         const bool selected = doc.Selected() != kInvalidSceneObjectId;
         if (ImGui::MenuItem("Duplicate", "Ctrl+D", false, editing && selected)) requests.duplicateId = doc.Selected();
+        if (ImGui::MenuItem("Rename", "F2", false, editing && doc.Selection().size() == 1)) BeginEditorRename(doc, state);
         if (ImGui::MenuItem("Focus selection", "F", false, selected)) requests.focusSelection = true;
         ImGui::Separator();
         if (ImGui::MenuItem("Translate gizmo", "W", state.gizmoMode == GizmoMode::Translate)) state.gizmoMode = GizmoMode::Translate;
@@ -385,6 +387,7 @@ void DrawHierarchyPanel(EditorDocument& doc, EditorPanelState& state, EditorRequ
     if (!ImGui::Begin("Hierarchy", nullptr, kWorkspacePanelFlags)) { ImGui::End(); return; }
     const bool editing = state.mode == EditorMode::Edit;
     Scene& scene = doc.GetScene();
+    HandleHierarchyRenameShortcut(doc, state);
     char search[256]; CopyToBuffer(state.hierarchySearch, search, sizeof(search));
     ImGui::SetNextItemWidth(std::max(40.0f, ImGui::GetContentRegionAvail().x - 30.0f));
     if (ImGui::InputTextWithHint("##hierarchySearch", "Search names, tags, folders...", search, sizeof(search)))
@@ -475,7 +478,7 @@ void DrawHierarchyPanel(EditorDocument& doc, EditorPanelState& state, EditorRequ
             ImGui::Separator();
             if (ImGui::MenuItem("Focus", "F")) requests.focusSelection = true;
             ImGui::Separator();
-            if (ImGui::MenuItem("Rename")) { state.renamingId = o.id; state.renameBuffer = o.name; }
+            if (ImGui::MenuItem("Rename", "F2", false, doc.Selection().size() == 1)) BeginEditorRename(doc, state);
             if (ImGui::MenuItem("Duplicate")) requests.duplicateId = o.id;
             if (ImGui::MenuItem("Move up")) { move = -1; moveId = o.id; }
             if (ImGui::MenuItem("Move down")) { move = 1; moveId = o.id; }
@@ -879,7 +882,9 @@ void DrawAssetBrowserPanel(EditorDocument& doc, EditorPanelState& state, EditorR
             const auto name = std::filesystem::path(record.relativePath).filename().string();
             if (ImGui::Selectable(name.c_str(), selected, ImGuiSelectableFlags_SpanAllColumns | ImGuiSelectableFlags_AllowDoubleClick)) {
                 selectAsset();
-                if (ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left)) state.selectAssetDetails = true;
+                if (ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left)) {
+                    if (!RequestEditorScriptEdit(record, state)) state.selectAssetDetails = true;
+                }
             }
             if (!record.missing && ImGui::BeginDragDropSource()) {
                 ImGui::SetDragDropPayload(kAssetDragPayload, id.data(), id.size());
@@ -888,9 +893,13 @@ void DrawAssetBrowserPanel(EditorDocument& doc, EditorPanelState& state, EditorR
                                                                     : "Drop on a matching inspector field.");
                 ImGui::EndDragDropSource();
             }
-            if (ImGui::IsItemHovered()) ImGui::SetTooltip("%s\nID %s\nSource %s\nDouble-click to inspect; drag to a matching field.", record.path.c_str(), id.c_str(), record.source.c_str());
+            if (ImGui::IsItemHovered()) ImGui::SetTooltip("%s\nID %s\nSource %s\n%s", record.path.c_str(), id.c_str(), record.source.c_str(),
+                record.type == AssetType::Script ? "Double-click to edit script; right-click for details." : "Double-click to inspect; drag to a matching field.");
             if (ImGui::BeginPopupContextItem("##assetActions")) {
+                if (record.type == AssetType::Script && ImGui::MenuItem("Edit script", nullptr, false,
+                    !record.missing && !record.readOnly)) RequestEditorScriptEdit(record, state);
                 if (ImGui::MenuItem("Inspect asset")) { selectAsset(); state.selectAssetDetails = true; }
+                if (ImGui::MenuItem("Open file externally", nullptr, false, !record.missing)) requests.openExternalPath = record.path;
                 if (ImGui::MenuItem("Copy file path")) ImGui::SetClipboardText(record.path.c_str());
                 if (ImGui::MenuItem("Copy stable ID")) ImGui::SetClipboardText(id.c_str());
                 ImGui::EndPopup();

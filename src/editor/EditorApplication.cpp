@@ -13,6 +13,7 @@
 #include "PerformanceProfiler.h"
 #include "ComponentEditors.h"
 #include "EditorApplication.h"
+#include "EditorAssetActions.h"
 #include "TerrainTools.h"
 #include "VolumeTerrainTools.h"
 #include "ModTools.h"
@@ -1588,6 +1589,8 @@ int EditorApplication::Run(int argc, char** argv) {
             if (ctrl && ImGui::IsKeyPressed(ImGuiKey_Z)) requests.undo = true;
             if (ctrl && ImGui::IsKeyPressed(ImGuiKey_Y)) requests.redo = true;
             if (ctrl && ImGui::IsKeyPressed(ImGuiKey_D)) requests.duplicateId = m_document.Selected();
+            if (!ctrl && ImGui::IsKeyPressed(ImGuiKey_F2) && m_cameraGesture.Active() == EditorCameraGesture::None)
+                BeginEditorRename(m_document, m_panels);
             if (ImGui::IsKeyPressed(ImGuiKey_F5)) requests.play = true;
             if (ImGui::IsKeyPressed(ImGuiKey_Delete) && m_document.Selected() != kInvalidSceneObjectId) {
                 std::string error;

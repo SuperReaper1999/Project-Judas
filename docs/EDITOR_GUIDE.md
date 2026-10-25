@@ -128,6 +128,14 @@ script files use their own explicit save workflows. Export reads saved files.
 
 ## Assets and scripts
 
+Double-click a script in **Assets** to open it directly in the built-in source
+editor. Its right-click menu also offers **Edit script**, **Inspect asset** and
+**Open file externally**. Other asset types keep their double-click inspection
+behaviour. Missing/read-only script sources cannot open a writable editor.
+During Play, source saving remains separate from deliberate script reloading;
+opening a file does not change the running code. Existing unsaved source edits
+remain protected when switching files.
+
 The asset browser has three tabs:
 
 - **Assets**: search by name, ID or source; filter type/missing state; rescan.
@@ -296,6 +304,12 @@ The [original milestone-notice receipt](evidence/editor-milestone-notice/RESULTS
 describes its older `gh` implementation, not this current path.
 
 ## Project documents and first-project workflow
+
+The main **Create** menu and hierarchy creation menus have a search field.
+Search names or descriptions, for example `player`, `light` or `swimming`; hover
+an item for its purpose and defaults. Each opening starts with the full list.
+Select one object and press **F2**, or use **Edit → Rename**, to rename it in the
+hierarchy. Enter confirms; Escape cancels. Text fields retain keyboard ownership.
 
 ### Optional pause menu and rebindable controls
 
