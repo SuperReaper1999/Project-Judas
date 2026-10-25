@@ -67,26 +67,33 @@ std::optional<EditorFileBrowser::Selection> EditorFileBrowser::Draw() {
     ImGui::SetNextWindowSize({700,510},ImGuiCond_Appearing);
     if(!ImGui::BeginPopupModal("Choose a path",nullptr,ImGuiWindowFlags_NoSavedSettings))return {};
     std::optional<Selection> result;
+    auto navigate=[&](const fs::path& next){
+        std::error_code ec;
+        auto absolute=fs::absolute(next,ec).lexically_normal();
+        if(ec||!fs::is_directory(absolute,ec)){m_error="Directory unavailable.";return;}
+        m_directory=absolute;m_location=Text(m_directory);m_refresh=true;m_name.clear();m_error.clear();
+    };
     char location[4096];Buffer(m_location,location,sizeof(location));
-    ImGui::SetNextItemWidth(-70);if(ImGui::InputText("##location",location,sizeof(location)))m_location=location;ImGui::SameLine();
-    if(ImGui::Button("Go")){
-        std::error_code ec;auto next=fs::u8path(location);
-        if(fs::is_directory(next,ec)){m_directory=fs::absolute(next,ec);m_location=Text(m_directory);m_refresh=true;m_name.clear();m_error.clear();}
-        else m_error="Directory unavailable.";
-    }
+    ImGui::SetNextItemWidth(-70);
+    const bool go=ImGui::InputText("##location",location,sizeof(location),ImGuiInputTextFlags_EnterReturnsTrue);
+    m_location=location;ImGui::SameLine();
+    if(ImGui::Button("Go")||go)navigate(fs::u8path(m_location));
     if(ImGui::Button("Parent")&&m_directory.has_parent_path()){
-        m_directory=m_directory.parent_path();m_location=Text(m_directory);m_refresh=true;m_name.clear();m_error.clear();
+        navigate(m_directory.parent_path());
     }
     ImGui::SameLine();ImGui::TextDisabled("%s",m_extension.empty()?"All files":m_extension.c_str());
     ImGui::SameLine();if(ImGui::Button("Refresh"))m_refresh=true;
     if(m_refresh){m_entries=List(m_directory,m_extension,m_listingError);m_refresh=false;}
+    ImGui::TextDisabled("Double-click a folder to open it; Choose confirms your selection.");
     ImGui::BeginChild("Files",{0,-110},true);
     for(const auto& entry:m_entries){
         const auto label=(entry.directory?"[folder] ":"         ")+entry.name;
-        if(ImGui::Selectable(label.c_str(),m_name==entry.name,ImGuiSelectableFlags_AllowDoubleClick)){
+        if(ImGui::Selectable(label.c_str(),m_name==entry.name,
+            ImGuiSelectableFlags_AllowDoubleClick|ImGuiSelectableFlags_NoAutoClosePopups)){
             m_name=entry.name;
             if(entry.directory&&ImGui::IsMouseDoubleClicked(0)){
-                m_directory/=fs::u8path(entry.name);m_location=Text(m_directory);m_refresh=true;m_name.clear();m_error.clear();
+                navigate(m_directory/fs::u8path(entry.name));
+                break;
             }
         }
     }
@@ -95,6 +102,10 @@ std::optional<EditorFileBrowser::Selection> EditorFileBrowser::Draw() {
     ImGui::SetNextItemWidth(-1);if(ImGui::InputTextWithHint("##name",m_mode==Mode::Directory?"Optional new folder name":"File name",name,sizeof(name)))m_name=name;
     const auto message=m_error.empty()?m_listingError:m_error;
     if(!message.empty())ImGui::TextWrapped("%s",message.c_str());
+    if(std::any_of(m_entries.begin(),m_entries.end(),[&](const Entry& e){return e.directory&&e.name==m_name;})){
+        if(ImGui::Button("Open folder"))navigate(m_directory/fs::u8path(m_name));
+        ImGui::SameLine();
+    }
     if(ImGui::Button(m_mode==Mode::Directory?"Choose folder":"Choose file")){
         std::string path;if(Select(m_directory,m_name,m_mode,m_extension,path,m_error)){
             m_active=false;result=Selection{m_target,path};ImGui::CloseCurrentPopup();

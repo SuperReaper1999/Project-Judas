@@ -237,6 +237,10 @@ and render-only owner/camera) or **Empty scene**. Use Browse to choose a folder.
 Scene/project Open and Save As, asset source import and export destinations also
 have a bounded integrated file picker. It caches listings until navigation or
 Refresh; choosing a path does not create/overwrite content.
+Single-click selects an entry without closing the picker. Double-click a folder
+or select it and press **Open folder** to browse inside it. **Parent** goes up;
+enter a location and press Enter or **Go** to jump there. **Choose folder/file**
+confirms the selection; **Cancel** leaves the original path unchanged.
 
 Project Settings has its own dirty indicator and settings Undo/Redo. Scene undo
 still affects scenes. Closing/replacing a project offers Save/Discard/Cancel;
