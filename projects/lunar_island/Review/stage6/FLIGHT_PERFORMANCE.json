@@ -1,0 +1,38 @@
+{
+  "allRecordedFrames": {
+    "frames": 2700,
+    "meanMs": 5.104006885185185,
+    "medianMs": 5.259185,
+    "p95Ms": 8.23205,
+    "worstMs": 72.5534
+  },
+  "withoutTwoExplicitScreenshotReadbacks": {
+    "frames": 2698,
+    "meanMs": 5.064911931060045,
+    "medianMs": 5.25908,
+    "p95Ms": 8.22624,
+    "worstMs": 20.8804
+  },
+  "screenshotFrames": [
+    {
+      "frame": "1561",
+      "alpha": "0.333333",
+      "visual_error_m": "0",
+      "rotor_error_m": "3.8147e-06",
+      "speed_m_s": "4.37848",
+      "height_m": "41.9147",
+      "frame_ms": "72.5534"
+    },
+    {
+      "frame": "3361",
+      "alpha": "0.333333",
+      "visual_error_m": "0",
+      "rotor_error_m": "0",
+      "speed_m_s": "38.5465",
+      "height_m": "47.7473",
+      "frame_ms": "43.1328"
+    }
+  ],
+  "explanation": "Before-frame test jobs synchronously read back the GPU and write takeoff/cruise PNGs. Application measures real elapsed frame time after beforeFrame; first recorded frame and +1800 therefore include those explicit screenshot interventions. Raw trace and inclusive results are preserved. Other slow frames are not excluded.",
+  "conditions": "1024x768 hidden rendered application, vsync disabled, dummy audio, supplied 90-Hz render delta and unchanged 60-Hz physics; not human monitor FPS."
+}

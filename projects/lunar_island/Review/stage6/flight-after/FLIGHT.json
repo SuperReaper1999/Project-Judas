@@ -1,0 +1,51 @@
+{
+  "displacement": [
+    34.944358825683594,
+    5.210334777832031,
+    -554.431640625
+  ],
+  "durationSeconds": 20,
+  "fixedHz": 60,
+  "peakSpeed": 43.751075744628906,
+  "renderHz": 90,
+  "rotorOffsetErrorMaxM": 8.529922524758149e-06,
+  "state": {
+    "bag": {
+      "maxWeight": 280,
+      "slots": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ]
+    },
+    "burned": 4.778914591294944,
+    "damageEvents": 0,
+    "distance": 585.7689074956696,
+    "fuel": 85.221085408705,
+    "health": 100,
+    "rotorAngle": 3.3547142243122696
+  },
+  "velocity": [
+    3.2878077030181885,
+    0.021096155047416687,
+    -43.627357482910156
+  ],
+  "visualErrorMaxM": 0.0
+}

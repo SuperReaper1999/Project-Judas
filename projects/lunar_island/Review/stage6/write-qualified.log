@@ -1,0 +1,150 @@
+Shadow maps: on
+Graphics: 3.3.0 NVIDIA 580.178.04 / NVIDIA GeForce GTX 970/PCIe/SSE2
+Renderer fragment texture units: 32 (material path uses 12)
+World state: legacy .judasstate (F6/F7) saves disabled for additive compositions; save slots remain available
+Project: Lunar Island (/home/conner/Documents/GitHub/Project-Judas/projects/lunar_island/lunar_island.judasproj)
+Scene: Lunar Island / Homestead Coast (/home/conner/Documents/GitHub/Project-Judas/projects/lunar_island/Scenes/island.judas)
+World origin (m): 2900.000, 0.000, -1600.000
+asset 2eb74ecf72ef69112028dcf2c039cb36: Optional extension ignored: KHR_materials_clearcoat
+asset f4e24c58b44e48292bc35ad5a55d72f9: Optional extension ignored: KHR_materials_clearcoat
+asset d5563755c7887ca32886ad9518e56de8: Optional extension ignored: KHR_materials_clearcoat
+JS: Lunar Island: WASD, mouse, E gather, click tool, Tab pack/crafting, Escape pause, F6 save, F9 load.
+PASS welcome pauses actual world
+PASS authored world collision loaded
+PASS capture welcome.png
+PASS Escape begins real game
+PASS CharacterMotor moves via project input
+PASS same player toggles third person
+PASS pause menu stops gameplay
+PASS move/fire do not leak through modal
+PASS actual E depletes branch 200
+PASS actual E depletes branch 202
+PASS actual E depletes branch 204
+PASS actual E depletes branch 206
+PASS actual E depletes loose_stone 250
+PASS actual E depletes loose_stone 252
+PASS actual E depletes loose_stone 254
+PASS actual E depletes berries 280
+PASS actual E depletes fiber 282
+PASS actual E depletes berries 284
+PASS actual E depletes fiber 286
+PASS physical gathering credits exact inventory quantities
+PASS focus UI tab_craft
+PASS focus UI primary
+PASS native crafting makes axe and debits ingredients
+PASS focus UI primary
+PASS native crafting makes pickaxe
+PASS third real axe hit fells tree
+PASS felled trunk is actual dynamic body
+PASS tree physically tips under impulse/gravity
+PASS capture felled-tree.png
+PASS fallen timber processing produces exact building resource quantity
+PASS processed physical trunk removed only after successful credit
+PASS six real pickaxe hits yield six stone
+PASS depleted deposit removed from physical world
+PASS focus UI tab_craft
+PASS focus UI primary
+PASS campfire crafting consumes real gathered berries/wood
+PASS capture well-materials.png
+PASS well refills reusable flask through interaction
+PASS drinking returns reusable empty flask
+PASS consumable actually restores thirst
+PASS focus UI drop
+PASS drop creates real bundle and debits only on success
+PASS dropped supplies have dynamic physical collision
+PASS E recovers actual dropped bundle and returns its item exactly once
+DOOR physical 1 coordinate -1.48917 ledger {"entity:3061":{"anchorA":{"x":-0.65,"y":0,"z":-0.075},"anchorB":{"x":-0.65,"y":-0.15,"z":-0.075},"frame":"entity:3060","opened":true,"ref":"entity:3061"},"entity:3261":{"anchorA":{"x":-0.65,"y":0,"z":-0.075},"anchorB":{"x":-0.65,"y":-0.15,"z":-0.075},"frame":"entity:3260","opened":false,"ref":"entity:3261"}}
+PASS E drives actual hinge motion rather than only a door flag
+PASS focus UI primary
+PASS focus UI tertiary
+PASS focus UI tertiary
+PASS physical entrance crate yields its authored loot exactly once
+PASS focus UI secondary
+PASS furniture placement actually moves the existing collision body
+PASS moved furniture receives a real physical support connection
+PASS R rotates the actual moved furniture
+PASS door opens after the obstructing crate is cleared
+PASS actual CharacterMotor walks through the opened doorway into the cottage
+PASS capture entered-cottage.png
+PASS focus UI drop
+PASS dismantling non-empty storage refuses without losing its body
+PASS focus UI primary
+PASS focus UI tertiary
+PASS focus UI tertiary
+PASS focus UI tertiary
+PASS focus UI tertiary
+PASS native storage transfers main loot to the shared player inventory
+PASS capture storage.png
+PASS focus UI tab_pack
+PASS focus UI primary
+PASS focus UI primary
+PASS focus UI primary
+PASS storing an equipped tool removes its gameplay equipment state
+PASS focus UI secondary
+PASS taking the stored tool restores the exact item
+PASS focus UI primary
+PASS bed claims a persistent home reference
+PASS rest consumes actual survival supplies
+PASS focus UI primary
+PASS lamp interaction changes actual native illumination state
+PASS focus UI primary
+PASS focus UI primary
+JS: Optional audio feedback skipped: one-shot: 32 world one-shots already active
+PASS focus UI primary
+PASS workbench consumes six scrap to make two metal sheets
+PASS focus UI primary
+PASS barricade is an actual rigid body fixed to its opening
+PASS barricading consumes the authored plank cost
+PASS axe hit damages actual barricade's project integrity
+PASS focus UI primary
+PASS repair restores integrity and debits a plank
+PASS focus UI secondary
+PASS reinforcement replaces the physical board with a metal barrier
+PASS reinforcement raises actual game strength to 140
+PASS focus UI primary
+PASS reinforced repair consumes the last metal sheet
+PASS focus UI primary
+PASS destroyed barricade removes actual blocking collision
+PASS other reinforced opening remains independent
+PASS actual E depletes branch 208
+PASS actual E depletes branch 210
+PASS actual E depletes branch 212
+PASS actual E depletes branch 214
+PASS actual E depletes salvage 390
+PASS focus UI primary
+PASS self-overlapping placement refuses without spending resources
+PASS Escape cancels a preview without pausing or spawning a piece
+PASS focus UI primary
+CLEAR BUILD [2.0,14.0343656539917,38.0]
+BUILD FEEDBACK Placed Stone foundation. A real physical joint connects it to its support. ledger {"barricaded":2,"moved":1,"placed":1,"repaired":2,"transferred":8}
+PASS construction makes a real anchored foundation
+PASS foundation cost debits once after successful physical placement
+PASS focus UI primary
+PASS wall snaps and connects physically to the placed foundation
+PASS focus UI primary
+PASS roof fits from a wall face and creates an actual attachment
+PASS focus UI drop
+PASS dismantling removes the foundation's real collision
+PASS support loss releases the actual dependent joint
+PASS unsupported wall falls through actual gravity
+PASS capture support-loss.png
+PASS focus UI primary
+PASS constructed storage uses ordinary native prefab and support joint
+PASS focus UI primary
+PASS focus UI primary
+PASS real stone transfers into constructed persistent storage
+PASS capture constructed-storage.png
+PASS focus UI primary
+PASS newly constructed door instantiates its physical leaf and hinge
+PASS constructed door opens through actual physics
+PASS capture built-door.png
+SWIM endpoint [90.00173950195313,9.866886138916016,-98.0] sample 1
+PASS prescribed water enabled independently of advanced fluid solvers
+PASS basic-water swimming lifts real motor without advanced fluids
+PASS swimming remains survivable
+PASS submerged head consumes actual survival air supply
+PASS survival hunger progresses in actual fixed steps
+PASS independently observed actual save capture boundary
+PASS game-issued durable save completes: 
+PASS ordinary application exits cleanly
+133 checks, 0 failures

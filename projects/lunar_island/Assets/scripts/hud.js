@@ -139,6 +139,20 @@ export default class HUD {
                 : 'Reference map';
         }
         d.get('sensitivity').visible = page === 'help';
+        if (page === 'help')
+            d.get('sensitivity').value = Math.max(
+                0,
+                Math.min(1, (p.state.sensitivity - 0.0007) / 0.004),
+            );
+        if (['help', 'travel', 'welcome'].includes(page)) {
+            d.get('secondary').visible = true;
+            d.get('secondary').text =
+                page === 'help' ? 'Vehicles & travel' : 'On-foot controls';
+        }
+        if (page === 'map') {
+            d.get('tertiary').visible = !!p.state.exploration?.target;
+            d.get('tertiary').text = 'Stop tracking';
+        }
         d.get('title').text =
             {
                 loading: 'PREPARING THE HOMESTEAD',
@@ -148,7 +162,8 @@ export default class HUD {
                 object: 'WORLD OBJECT',
                 craft: 'CRAFTING',
                 map: 'LUNAR ISLAND / FIELD MAP',
-                help: 'CONTROLS & FIELD NOTES',
+                help: 'ON-FOOT CONTROLS',
+                travel: 'VEHICLES & TRAVEL',
                 pause: 'TAKE A BREATH',
                 welcome: 'WELCOME TO LUNAR ISLAND',
                 dead: 'RECOVER AT THE HOMESTEAD',
@@ -312,7 +327,10 @@ export default class HUD {
             d.get('primary').text = 'Track location';
         } else if (page === 'help')
             text =
-                'WASD move · mouse look\nSpace jump / swim up · Ctrl dive\nShift sprint · V first/third person\nE gather / refill / interact\nLeft click use tool / confirm placement\nB construction · R rotate preview / reload gun\nE furniture / storage / secure opening\nRight mouse aims · Tab equips firearms\n1–6 hotbar\nTab backpack · M field map\nEscape pause / return\nF6 save · F9 load last save\n\nMouse sensitivity (slider left).\nCrafting and item actions are in this menu.\n\nThe spring well refills a flask; seawater is not drinkable.\nFall injuries slow movement; use a field dressing.';
+                'MOVE  /  WASD + mouse · Shift sprint · Space jump · V first/third person\nWATER  /  Space swim up · Ctrl dive · refill your flask at the well\nINTERACT  /  E gathers loose resources, opens storage and speaks to people\nTOOLS & WEAPONS  /  Left click use/fire · right mouse aim · R reload\nEQUIPMENT  /  1–6 hotbar · Tab backpack, crafting and item actions\nBUILD  /  B catalogue · R rotates preview · click places · Escape cancels\nFURNISH  /  E on furniture opens move, storage, rest and dismantle actions\nTRAVEL  /  M locations and tracking · Vehicles & travel below explains driving\nSAVE  /  F6 save · F9 load · Escape pause\n\nMouse sensitivity: slider on the left. Field dressings treat fall injuries.';
+        else if (page === 'travel')
+            text =
+                'BOARD  /  E on a vehicle, then Drive/Pilot · Tab cargo while stopped\nSERVICE  /  Carry sealed fuel cans and repair kits; use the vehicle menu\nROAD & BOAT  /  W/S forward/reverse · A/D steer · Space brake on land\nHELICOPTER  /  W/S forward/back · A/D yaw · Space climb · Ctrl descend\nRelease movement controls to return toward hover. Allow time for rotor spin-up.\nPLANE  /  W/S adjusts throttle · A/D turn · Space climb · Ctrl descend\nHold W for takeoff speed, then Space. S cuts throttle; Shift wheel brake.\nEXIT  /  E at low speed. Land aircraft first; boats prefer a dry pier.\nNAVIGATE  /  M tracks destinations without teleporting. Stop tracking restores journal.\nSAVE  /  F6, quit fully, then F9 after reopening to resume your expedition.\n\nHomestead vehicles are south behind camp. The helicopter is west of the apron.';
         else if (page === 'loading')
             text = navigation.errors.length
                 ? 'The navigation bake is unavailable. Open the project in the editor and rebake Homestead / navigation. ' +
@@ -320,10 +338,10 @@ export default class HUD {
                 : 'Loading character art and preparing the island trails… Player actions and NPC routines begin after required navigation and character resources are ready.';
         else if (page === 'welcome')
             text =
-                'A quiet coast. An island worth coming home to.\n\nGather loose sticks, stones and fibre with E. Open Crafting to make an axe. Fell and process a tree, mine stone, cook at the campfire, and drink at the well.\n\nTwo enterable cottages now have real doors, loot, storage and functional furniture. E opens object actions. B opens construction. Mara and Ivo trade at camp. Ask Mara for a patrol job and sidearm; Ivo needs timber. Scavengers occupy the eastern trail; wolves roam west. Vehicles are south behind camp: pickup, hatchback and motorcycle beside the fuel locker. The helicopter is west; the bush plane is on the grass strip farther south. The skiff is at the spring pool. E opens vehicle controls; Tab opens cargo while stopped.\n\nSave with F6 before leaving.';
+                'A quiet coast. An island worth coming home to.\n\nSTART SMALL  /  E gathers sticks, stones and fibre near camp. Tab → Crafting makes an axe. Chop a tree, make a pickaxe, mine stone and cook beside the fire. Refill your flask at the well.\n\nMAKE A HOME  /  E opens furniture, storage and survivor conversations. B opens construction. Mara and Ivo trade and offer work.\n\nGO FURTHER  /  M lists seven destinations. Track one and follow the roads, or take a vehicle south behind camp. Detailed regions remember your changes.\n\nSAVE BEFORE LEAVING  /  F6 saves; F9 resumes. Controls above and On-foot controls below explain the next steps.';
         else if (page === 'dead')
             text =
-                'Your expedition has ended. Recover at the homestead with your pack intact.\n\nStage 1 keeps recovery forgiving; hunger, thirst, drowning and fall injuries are active.\n\nDeath penalties and progression will be balanced in later stages.';
+                'Your expedition has ended. Recover at the homestead with your pack intact.\n\nRecovery keeps your pack intact; hunger, thirst, drowning and fall injuries are active.\n\nClaim a bed to choose your recovery home.';
         else
             text =
                 'The world is paused. Your inventory, tools, harvested resources and physical state are included in a world save.\n\nSave before leaving. Loading replaces the current world with the last complete save.\n\nOpen Backpack, Crafting, Field map or Controls above.';
@@ -405,6 +423,9 @@ export default class HUD {
             : '';
         if (p.transport.driving)
             this.doc.get('hotbar').text = p.transport.status();
+        this.doc.get('hint').text = p.transport.driving
+            ? 'Mouse look · V change view · M field map · Escape pause · F6 save'
+            : 'WASD move · Mouse look · E interact · Click tool · Tab backpack & crafting · Escape pause';
         this.doc.get('context').text = this.modal ? '' : p.context();
         this.doc.get('notice').text = p.notice;
         const s = p.state.stats;
@@ -448,6 +469,13 @@ export default class HUD {
         if (e.type === 'change' && e.element === 'sensitivity')
             this.p.state.sensitivity = 0.0007 + e.value * 0.004;
         if (e.type !== 'click') return;
+        if (
+            e.element === 'secondary' &&
+            ['help', 'travel', 'welcome'].includes(this.page)
+        ) {
+            this.open(this.page === 'help' ? 'travel' : 'help');
+            return;
+        }
         if (e.element.startsWith('tab_')) {
             this.open(e.element.slice(4));
             return;
@@ -459,6 +487,14 @@ export default class HUD {
         const p = this.p;
         if (vehicleEvent(this, e) || socialEvent(this, e)) return;
         if (this.page === 'map') {
+            if (e.element === 'tertiary') {
+                p.state.exploration.target = null;
+                p.say(
+                    'Location tracking stopped. Your journal is visible again.',
+                );
+                this.refresh();
+                return;
+            }
             if (e.element === 'primary') {
                 p.state.exploration.target = this.selected;
                 p.say(

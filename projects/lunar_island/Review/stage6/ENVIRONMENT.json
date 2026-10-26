@@ -1,0 +1,12 @@
+{
+  "recordedUTC": "2026-10-26T18:08:49.611366+00:00",
+  "platform": "Linux-7.0.0-38-generic-x86_64-with-glibc2.43",
+  "machine": "x86_64",
+  "cpu": "Ryzen 5 5600",
+  "gpu": "NVIDIA GTX 970 4 GB",
+  "ram": "8 GB",
+  "engine": "Existing Release native binaries, unchanged from Stage 4; see final binary hashes and embedded package provenance.",
+  "renderTests": "1024x768, vsync off, hidden rendered window, dummy audio; controlled 60-Hz simulation or 90-Hz rendering for flight.",
+  "sharedGameLoad": "No other Judas game appeared in process inspection during final qualification; normal desktop apps remained running.",
+  "hardwareAcceptance": "Not a physical-controller, audio-listening, Windows/Android or clean-machine certification."
+}

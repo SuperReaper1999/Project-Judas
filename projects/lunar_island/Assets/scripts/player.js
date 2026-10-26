@@ -471,7 +471,7 @@ export default class Player {
         try {
             this.request = saves.save('island', {
                 name: 'Lunar Island / Homestead Coast',
-                metadata: { gathered: this.state.stats.gathered, stage: 3 },
+                metadata: { gathered: this.state.stats.gathered, stage: 6 },
             });
             this.operation = 'save';
             this.say('Saving your expedition…');

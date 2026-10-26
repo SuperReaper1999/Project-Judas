@@ -1,0 +1,16 @@
+{
+  "verified": true,
+  "counts": {
+    "FINAL_SOURCE_FINGERPRINTS.sha256": 493,
+    "FINAL_BINARY_FINGERPRINTS.sha256": 11,
+    "PACKAGE_FILES.sha256": 394,
+    "FINAL_EVIDENCE_FINGERPRINTS.sha256": 168
+  },
+  "exportPayloadCompared": 381,
+  "exportComparison": "Runtime payload bytes match; metadata IDs/types match with exporter-normalized source paths.",
+  "nativeBinariesMatchStage4": true,
+  "historicalEvidenceChanged": false,
+  "parent": "bda1c77c655479564e09c82892f8d5b708d72556",
+  "mainUntouched": "c2cdd376f1c20a9d6a8a75d8257f9ac44327ec09",
+  "humanStage6Acceptance": "pending"
+}

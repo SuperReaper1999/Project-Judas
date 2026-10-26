@@ -1,0 +1,77 @@
+{
+  "helicopter-cruise": {
+    "exit": 0,
+    "checks": 22,
+    "failures": 0
+  },
+  "onboarding": {
+    "exit": 0,
+    "checks": 30,
+    "failures": 0
+  },
+  "land-helicopter": {
+    "exit": 0,
+    "checks": 17,
+    "failures": 0
+  },
+  "land-plane": {
+    "exit": 0,
+    "checks": 17,
+    "failures": 0
+  },
+  "drive-plane": {
+    "exit": 0,
+    "checks": 19,
+    "failures": 0
+  },
+  "drive-car": {
+    "exit": 0,
+    "checks": 18,
+    "failures": 0
+  },
+  "worldwrite": {
+    "exit": 0,
+    "checks": 38,
+    "failures": 0
+  },
+  "worldread": {
+    "exit": 0,
+    "checks": 25,
+    "failures": 0
+  },
+  "write": {
+    "exit": 0,
+    "checks": 133,
+    "failures": 0
+  },
+  "read": {
+    "exit": 0,
+    "checks": 42,
+    "failures": 0
+  },
+  "cargo": {
+    "exit": 0,
+    "checks": 55,
+    "failures": 0
+  },
+  "cargoread": {
+    "exit": 0,
+    "checks": 44,
+    "failures": 0
+  },
+  "harvestwrite": {
+    "exit": 0,
+    "checks": 37,
+    "failures": 0
+  },
+  "harvestread": {
+    "exit": 0,
+    "checks": 17,
+    "failures": 0
+  },
+  "performance": {
+    "exit": 0,
+    "checks": 10,
+    "failures": 0
+  }
+}

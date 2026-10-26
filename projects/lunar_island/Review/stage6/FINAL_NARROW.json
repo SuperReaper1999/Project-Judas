@@ -1,0 +1,22 @@
+{
+  "flightwrite": {
+    "exit": 0,
+    "checks": 15,
+    "failures": 0
+  },
+  "flightread": {
+    "exit": 0,
+    "checks": 20,
+    "failures": 0
+  },
+  "onboarding": {
+    "exit": 0,
+    "checks": 30,
+    "failures": 0
+  },
+  "helicopter-cruise": {
+    "exit": 0,
+    "checks": 22,
+    "failures": 0
+  }
+}

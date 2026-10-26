@@ -119,7 +119,16 @@
     "tank": 120,
     "fuel": 90,
     "burn": 0.23,
-    "color": "#c1a450"
+    "color": "#c1a450",
+    "flight": {
+      "tilt": 0.48,
+      "linearDrag": 0.1,
+      "climbSpeed": 5,
+      "descentSpeed": 3,
+      "hoverInput": 0.523,
+      "cruiseSpeed": 45,
+      "horizontalResponse": 0.6
+    }
   },
   "plane": {
     "entity": 7500,

@@ -1,0 +1,12 @@
+job(5,[&](EngineHost&,RuntimeWorld&){press("pause");});click("tab_help");
+job(5,[&](EngineHost& h,RuntimeWorld& w){auto doc=w.UI().Find("lunar");Check(w.UI().Element(doc,"title")->text=="ON-FOOT CONTROLS","on-foot help has a clear dedicated page");Check(std::abs(w.UI().Element(doc,"sensitivity")->value-(State(w)["sensitivity"].get<float>()-.0007f)/.004f)<.001f,"sensitivity slider reflects actual saved setting");Screenshot(h,out/"on-foot-controls.png");w.UI().Focus(doc,"sensitivity");press("ui_right");});
+job(5,[&](EngineHost&,RuntimeWorld& w){Check(State(w)["sensitivity"].get<float>()>.0021f,"focused keyboard slider actually changes look sensitivity");});
+click("secondary");
+job(5,[&](EngineHost& h,RuntimeWorld& w){auto doc=w.UI().Find("lunar");Check(w.UI().Element(doc,"title")->text=="VEHICLES & TRAVEL","help switches to dedicated travel controls");Check(w.UI().Element(doc,"detail")->text.find("HELICOPTER")!=std::string::npos&&w.UI().Element(doc,"detail")->text.find("PLANE")!=std::string::npos,"travel page explains both aircraft and exit controls");Check(!w.UI().Element(doc,"sensitivity")->visible,"irrelevant on-foot slider is hidden in travel help");Screenshot(h,out/"travel-controls.png");});
+click("secondary");
+job(5,[&](EngineHost&,RuntimeWorld& w){Check(w.UI().Element(w.UI().Find("lunar"),"title")->text=="ON-FOOT CONTROLS","travel help returns to ordinary controls");});
+click("tab_map");select(0);click("primary");
+job(5,[&](EngineHost&,RuntimeWorld& w){Check(State(w)["exploration"]["target"]=="forest","native map tracks actual forest location");press("map");});
+click("tertiary");
+job(5,[&](EngineHost&,RuntimeWorld& w){Check(State(w)["exploration"]["target"].is_null(),"native Stop tracking clears the saved destination");Check(!w.UI().Element(w.UI().Find("lunar"),"tertiary")->visible,"Stop tracking disappears when no guide is active");press("pause");});
+job(5,[&](EngineHost& h,RuntimeWorld& w){Check(w.UI().Element(w.UI().Find("lunar"),"journal")->text.find("FIRST STEPS")!=std::string::npos,"untracking restores real progression journal");Check(!w.UI().Paused(),"help and map actions return to ordinary gameplay");Screenshot(h,out/"journal-restored.png");done=true;Quit();});

@@ -1,0 +1,92 @@
+{
+  "flight-before": {
+    "displacement": [
+      3.4109230041503906,
+      -0.09717178344726562,
+      -158.88693237304688
+    ],
+    "durationSeconds": 20,
+    "fixedHz": 60,
+    "peakSpeed": 11.304848670959473,
+    "renderHz": 90,
+    "rotorOffsetErrorMaxM": 0.12559182941913605,
+    "velocity": [
+      0.31566327810287476,
+      -0.18304955959320068,
+      -11.298958778381348
+    ],
+    "visualErrorMaxM": 0.12559182941913605
+  },
+  "flight-after": {
+    "displacement": [
+      34.944358825683594,
+      5.210334777832031,
+      -554.431640625
+    ],
+    "durationSeconds": 20,
+    "fixedHz": 60,
+    "peakSpeed": 43.751075744628906,
+    "renderHz": 90,
+    "rotorOffsetErrorMaxM": 8.529922524758149e-06,
+    "velocity": [
+      3.2878077030181885,
+      0.021096155047416687,
+      -43.627357482910156
+    ],
+    "visualErrorMaxM": 0.0
+  },
+  "flight-final": {
+    "displacement": [
+      37.1364860534668,
+      5.856742858886719,
+      -537.8056030273438
+    ],
+    "durationSeconds": 20,
+    "fixedHz": 60,
+    "peakSpeed": 38.546241760253906,
+    "renderHz": 90,
+    "rotorOffsetErrorMaxM": 3.0814160709269345e-05,
+    "velocity": [
+      2.259647846221924,
+      0.015677526593208313,
+      -38.479949951171875
+    ],
+    "visualErrorMaxM": 0.0
+  },
+  "qualified-flight": {
+    "displacement": [
+      36.287513732910156,
+      5.856746673583984,
+      -537.8632202148438
+    ],
+    "durationSeconds": 20,
+    "fixedHz": 60,
+    "peakSpeed": 38.546241760253906,
+    "renderHz": 90,
+    "rotorOffsetErrorMaxM": 3.0769853765377775e-05,
+    "velocity": [
+      2.1988894939422607,
+      0.015677079558372498,
+      -38.48347091674805
+    ],
+    "visualErrorMaxM": 0.0
+  },
+  "final-flight": {
+    "displacement": [
+      36.56114196777344,
+      5.856853485107422,
+      -537.8450317382812
+    ],
+    "durationSeconds": 20,
+    "fixedHz": 60,
+    "peakSpeed": 38.546234130859375,
+    "renderHz": 90,
+    "rotorOffsetErrorMaxM": 3.0814160709269345e-05,
+    "velocity": [
+      2.218475580215454,
+      0.015676528215408325,
+      -38.482337951660156
+    ],
+    "visualErrorMaxM": 0.0
+  }
+}

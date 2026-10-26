@@ -1,0 +1,16 @@
+Shadow maps: on
+Graphics: 3.3.0 NVIDIA 580.178.04 / NVIDIA GeForce GTX 970/PCIe/SSE2
+Renderer fragment texture units: 32 (material path uses 12)
+asset 2eb74ecf72ef69112028dcf2c039cb36: Optional extension ignored: KHR_materials_clearcoat
+asset f4e24c58b44e48292bc35ad5a55d72f9: Optional extension ignored: KHR_materials_clearcoat
+asset d5563755c7887ca32886ad9518e56de8: Optional extension ignored: KHR_materials_clearcoat
+World state: legacy .judasstate (F6/F7) saves disabled for additive compositions; save slots remain available
+Project: Lunar Island (/tmp/Lunar Island Stage6 Relocated/game.judasproj)
+Scene: Lunar Island / Homestead Coast (/tmp/Lunar Island Stage6 Relocated/Scenes/island.judas)
+World origin (m): 2900.000, 0.000, -1600.000
+step,time,posX,posY,posZ,upX,upY,upZ,grounded,velX,velY,velZ,gravX,gravY,gravZ,controlled,frame,steps,paused,obj0PosX,obj0PosY,obj0PosZ,obj0VelX,obj0VelY,obj0VelZ,obj1PosX,obj1PosY,obj1PosZ,obj1VelX,obj1VelY,obj1VelZ,obj2PosX,obj2PosY,obj2PosZ,obj2VelX,obj2VelY,obj2VelZ,obj3PosX,obj3PosY,obj3PosZ,obj3VelX,obj3VelY,obj3VelZ,obj4PosX,obj4PosY,obj4PosZ,obj4VelX,obj4VelY,obj4VelZ,obj5PosX,obj5PosY,obj5PosZ,obj5VelX,obj5VelY,obj5VelZ,obj6PosX,obj6PosY,obj6PosZ,obj6VelX,obj6VelY,obj6VelZ,obj7PosX,obj7PosY,obj7PosZ,obj7VelX,obj7VelY,obj7VelZ
+JS: Lunar Island: WASD, mouse, E gather, click tool, Tab pack/crafting, Escape pause, F6 save, F9 load.
+[TestHarness] service save ready after 0 wait frames at frame 30
+[TestHarness] service save ready after 313 wait frames at frame 45
+JS: Lunar Island: WASD, mouse, E gather, click tool, Tab pack/crafting, Escape pause, F6 save, F9 load.
+[TestHarness] Wrote screenshot: /home/conner/Documents/GitHub/Project-Judas/projects/lunar_island/Review/stage6/relocated-loaded.png

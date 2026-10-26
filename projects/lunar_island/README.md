@@ -1,9 +1,11 @@
-# Lunar Island — Stage 5: Reconnect the Coast
+# Lunar Island — Stage 6: Playable Handover
 
 Copyright (c) 2026 Conner / SuperReaper1999. Original project code/assets use the
 repository's MIT terms; cached ambientCG material scans use CC0-1.0. See `ArtSource/PROVENANCE.md` for font and asset origins.
 
-An ordinary Judas consumer game on Experimental. **Stage 5; operator review pending.** The operator reviewed Stages 1–3 and approved advancing from Stage 4 based on its screenshots and automated evidence. This does not claim a separate hands-on Stage 4 vehicle test. Gameplay lives in `Assets/scripts`. Two bounded native persistence corrections are documented in the Stage 2 report.
+An ordinary Judas consumer game on Experimental. **Stage 6; final operator review pending.** The operator reviewed Stage 5, reported slow/jittery helicopter movement, and authorized the final polish/handover stage. Stages 1–3 were reviewed; Stage 4 advancement was based on screenshots and automated evidence, not a separately claimed hands-on vehicle test. Gameplay lives in `Assets/scripts`. The two native persistence corrections belong to the historical Stage 2 checkpoint; Stage 6 changes no engine C++.
+
+Start with [PLAYER_GUIDE.md](PLAYER_GUIDE.md) for playing and [HANDOVER.md](HANDOVER.md) for continuing development.
 
 ## Play
 
@@ -151,8 +153,8 @@ SDL_AUDIODRIVER=dummy XDG_DATA_HOME=/tmp/lunar-island-validation /tmp/lunar-isla
   projects/lunar_island/lunar_island.judasproj write /tmp/lunar-island-build-proof
 SDL_AUDIODRIVER=dummy XDG_DATA_HOME=/tmp/lunar-island-validation /tmp/lunar-island-observer \
   projects/lunar_island/lunar_island.judasproj read /tmp/lunar-island-build-proof
-./build/judas_export projects/lunar_island/lunar_island.judasproj \
-  '/tmp/Lunar Island Stage 5' ./build/judas
+python3 projects/lunar_island/tools/package_game.py \
+  --output '/tmp/Lunar Island Stage 6'
 ```
 
 `write` creates a validation save in the game's `island` slot. Use a separate
@@ -165,13 +167,11 @@ Run the exported `judas` executable inside the package; no repository path is
 required. Linux is the tested platform for this stage. This is not Windows,
 Android, gamepad hardware, audio-listening or human gameplay acceptance.
 
-See `Review/STAGE5_REPORT.md` and `Review/stage5/HUMAN_CHECKLIST.md` for the current
+See `Review/STAGE6_REPORT.md` and `Review/stage6/HUMAN_CHECKLIST.md` for the current
 review boundary. Earlier stage evidence and fingerprints remain historical and unchanged.
-Stage 5 requires separate approval.
 
 Current Linux package (untracked, reproducible):
-`.cache/lunar-island-stage5-checkpoint/Lunar Island/`; run `judas` inside it.
-Archive: `.cache/lunar-island-stage2/LunarIsland-Stage2-Linux.tar.gz`.
+`.cache/lunar-island-stage6/Lunar Island/`; use `Run Lunar Island.sh`.
 The complete package must travel together.
 
 ## Occupy and improve a home
@@ -328,7 +328,7 @@ outside a window; observer mode `barrier` verifies unalerted/alerted behaviour,
 real supply acquisition, barricading and enemy destruction. It does not alter
 production gameplay modules or inject damage/items.
 
-Stage 4 transport is described below. Stage 5 regional population is described below. Stage 6 final polish/handover has **not begun**.
+Stage 4 transport is described below. Stage 5 regional population is described below. Stage 6 qualification and handover are described below.
 
 Animation priorities and a practical Blender handover are in
 `ArtSource/STAGE3_ANIMATION_HANDOFF.md`.
@@ -477,7 +477,7 @@ NPC navigation covers authored streets/courtyards, not the entire island. Distan
 regional AI clears its navigation intent before suspension. Driver-controlled
 vehicles still adopt to root ownership and remain resident after first use.
 
-A new Stage 5 save identity preserves the earlier stage slots unchanged. No
+The historical Stage 5 checkpoint introduced its own save identity. The delivered Stage 6 candidate uses a separate identity and preserves earlier stage slots unchanged. No
 migration from older stage content is claimed. Save normally with F6, quit fully,
 then F9 to test a fresh-process return. Native physical state and each region's own
 script state are saved; the player does not carry a duplicate world-wide furniture
@@ -526,3 +526,36 @@ road driving, the map, dock exit, home residency and existing gameplay. Test-onl
 fixtures move/aim the player to reach distant areas quickly; the road drive uses an
 ordinary car prefab and real input, with no body pose/velocity edits after spawning.
 See `Review/STAGE5_REPORT.md` for measured coverage and preserved failed attempts.
+
+
+## Stage 6: Usability, flight correction and handover
+
+The helicopter's shell already inherits its rigid parent's interpolated motion.
+Writing that same presented world pose back into a child applied interpolation
+again after the transform was converted relative to the authoritative parent. The
+rotor had the same duplicate offset. Stage 6 leaves shell inheritance alone and
+only animates the rotor in the authoritative parent frame, using the native
+presentation callback's interpolation fraction for blade rotation.
+
+Helicopter flight now has data-driven tilt, cruise, response, drag and climb/descent
+settings in `Authoring/vehicles.json` / `vehicle-data.js`. The pilot requests an
+attitude and native torque/lift move the body. Neutral input requests a braking
+attitude toward hover; velocity and pose are never reset to fake flight. Vertical
+lift compensates for bank angle within the existing powered rotor's limits. This
+is an assisted game model, not a blade-element flight simulator.
+
+The welcome page is shorter; Controls separates foot and vehicle instructions.
+The sensitivity slider reflects the saved value. Vehicle feedback no longer shows
+contradictory walking/braking hints. M → Stop tracking restores the progression
+journal. All original crafting, storage, furnishing, trading and save controls remain.
+
+`PLAYER_GUIDE.md` is shipped with the package. `HANDOVER.md` points to the authoritative
+content/configuration files and records extension/ownership boundaries. The existing
+animation handover remains applicable. `tools/package_game.py` wraps the normal
+exporter and adds help plus a path-safe launcher; it is not a separate game runtime.
+
+Stage 6 uses a fresh save identity because source-sensitive Pre-Alpha content changed;
+there is no claimed migration from Stage 5. Preserve the Stage 5 package for old
+expeditions. Native saves require matching runtime content within each candidate.
+The original long-term vision remains larger than this playable foundation; the
+handover lists the actual supported subset and unfinished content honestly.

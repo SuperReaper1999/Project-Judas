@@ -1,0 +1,118 @@
+{
+  "platform": "Linux",
+  "parentExperimental": "bda1c77c655479564e09c82892f8d5b708d72556",
+  "nativeEngineChanged": false,
+  "humanStage6Acceptance": "pending",
+  "scenarios": {
+    "helicopter-cruise": {
+      "exit": 0,
+      "checks": 22,
+      "failures": 0
+    },
+    "onboarding": {
+      "exit": 0,
+      "checks": 30,
+      "failures": 0
+    },
+    "land-helicopter": {
+      "exit": 0,
+      "checks": 17,
+      "failures": 0
+    },
+    "land-plane": {
+      "exit": 0,
+      "checks": 17,
+      "failures": 0
+    },
+    "drive-plane": {
+      "exit": 0,
+      "checks": 19,
+      "failures": 0
+    },
+    "drive-car": {
+      "exit": 0,
+      "checks": 18,
+      "failures": 0
+    },
+    "worldwrite": {
+      "exit": 0,
+      "checks": 38,
+      "failures": 0
+    },
+    "worldread": {
+      "exit": 0,
+      "checks": 25,
+      "failures": 0
+    },
+    "write": {
+      "exit": 0,
+      "checks": 133,
+      "failures": 0
+    },
+    "read": {
+      "exit": 0,
+      "checks": 42,
+      "failures": 0
+    },
+    "cargo": {
+      "exit": 0,
+      "checks": 55,
+      "failures": 0
+    },
+    "cargoread": {
+      "exit": 0,
+      "checks": 44,
+      "failures": 0
+    },
+    "harvestwrite": {
+      "exit": 0,
+      "checks": 37,
+      "failures": 0
+    },
+    "harvestread": {
+      "exit": 0,
+      "checks": 17,
+      "failures": 0
+    },
+    "performance": {
+      "exit": 0,
+      "checks": 10,
+      "failures": 0
+    },
+    "flightwrite": {
+      "exit": 0,
+      "checks": 15,
+      "failures": 0
+    },
+    "flightread": {
+      "exit": 0,
+      "checks": 20,
+      "failures": 0
+    }
+  },
+  "note": "Final narrow flight/onboarding rows supersede the earlier rows after contextual hint text was improved. Other combined regressions ran on final runtime content. Extra observer modes only add tests.",
+  "pureRules": {
+    "inventory": 83,
+    "encounters": 37,
+    "vehicles": 20
+  },
+  "scripts": {
+    "modules": 30,
+    "failures": 0
+  },
+  "editor": {
+    "authoredScene": "IDENTICAL",
+    "resourceFailures": 0,
+    "failedJobs": 0,
+    "exit": 0
+  },
+  "export": {
+    "assets": 176,
+    "scenes": 26,
+    "bytesBeforeGuideAndLauncher": 241608799,
+    "seconds": 7.984,
+    "relocatedLauncherExit": 0,
+    "modifiedWorldLoaded": true
+  },
+  "mainUnchanged": "c2cdd376f1c20a9d6a8a75d8257f9ac44327ec09"
+}

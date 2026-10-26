@@ -1,0 +1,9 @@
+FRAMES 240
+LOG_EVERY 0
+EXPECT_PAUSED 1 10
+ACTION pause 1 20 21
+WAIT_SERVICES save 60000 30
+ACTION load 1 40 41
+WAIT_SERVICES save 60000 45
+EXPECT_PAUSED 0 200
+SCREENSHOT 200 /home/conner/Documents/GitHub/Project-Judas/projects/lunar_island/Review/stage6/relocated-loaded.png

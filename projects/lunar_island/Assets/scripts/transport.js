@@ -119,7 +119,13 @@ export default class Transport {
                 p.state.yaw = 0;
                 p.state.pitch = -0.2;
                 p.say(
-                    'WASD drive / steer · Space brake or climb · Ctrl descend · E exit · Tab cargo',
+                    v.def.kind === 'helicopter'
+                        ? 'W/S fly · A/D yaw · Space climb · Ctrl descend · release to hover · E exit'
+                        : v.def.kind === 'plane'
+                          ? 'W/S throttle · A/D turn · Space climb · Ctrl descend · Shift brake · E exit'
+                          : v.def.kind === 'boat'
+                            ? 'W/S forward/reverse · A/D steer · E exit · Tab cargo'
+                            : 'W/S forward/reverse · A/D steer · Space brake · E exit · Tab cargo',
                 );
             } else p.say('Stop the vehicle and repair it before entering.');
         }

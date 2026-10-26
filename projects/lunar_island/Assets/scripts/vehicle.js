@@ -54,6 +54,8 @@ export default class Vehicle {
         this.reference = saves.reference(this.entity);
         vehicles.set(this.entity.id, this);
         this.previous = this.entity.transform.position;
+        this.previousRotorAngle = this.state.rotorAngle;
+        this.rotorStep = 0;
         this.visual = this.entity.children.find((e) =>
             e.hasTag('vehicle_visual'),
         );
@@ -212,11 +214,16 @@ export default class Vehicle {
                           0,
                           Math.min(
                               1,
-                              0.523 +
-                                  ((input.held('jump') ? 3 : 0) -
-                                      (input.held('dive') ? 2 : 0) -
+                              ((d.flight?.hoverInput || 0.523) * (g / 9.81) +
+                                  ((input.held('jump')
+                                      ? d.flight?.climbSpeed || 5
+                                      : 0) -
+                                      (input.held('dive')
+                                          ? d.flight?.descentSpeed || 3
+                                          : 0) -
                                       dot(v, referenceUp)) *
-                                      0.035,
+                                      0.035) /
+                                  Math.max(0.5, dot(up, referenceUp)),
                           ),
                       ) * healthFactor
                     : 0;
@@ -243,8 +250,9 @@ export default class Vehicle {
                     },
                 ],
             });
-            s.rotorAngle =
-                (s.rotorAngle + rotor.angularVelocity * dt) % (Math.PI * 2);
+            this.previousRotorAngle = s.rotorAngle;
+            this.rotorStep = rotor.angularVelocity * dt;
+            s.rotorAngle = (s.rotorAngle + this.rotorStep) % (Math.PI * 2);
             if (d.kind === 'boat')
                 this.float(
                     dt,
@@ -260,11 +268,42 @@ export default class Vehicle {
                 e.applyForce(
                     mul(up, (d.rotorLiftCoefficient || 0.502272) * spin * spin),
                 );
-                e.applyForce(mul(v, -e.mass * 0.15));
+                e.applyForce(mul(v, -e.mass * (d.flight?.linearDrag || 0.1)));
                 if (pilot) {
-                    const desired = norm(
-                        add(referenceUp, mul(forward, throttle * 0.18)),
-                    );
+                    // Assisted flight requests an attitude, never a velocity assignment.
+                    // Tilting against residual motion gives a physical return to hover.
+                    const horizontalVelocity = sub(
+                            v,
+                            mul(referenceUp, dot(v, referenceUp)),
+                        ),
+                        horizontalForward = norm(
+                            sub(
+                                forward,
+                                mul(referenceUp, dot(forward, referenceUp)),
+                            ),
+                        ),
+                        desiredAcceleration = mul(
+                            sub(
+                                mul(
+                                    horizontalForward,
+                                    throttle * (d.flight?.cruiseSpeed || 45),
+                                ),
+                                horizontalVelocity,
+                            ),
+                            d.flight?.horizontalResponse || 0.6,
+                        ),
+                        desired = norm(
+                            add(
+                                referenceUp,
+                                bounded(
+                                    mul(
+                                        desiredAcceleration,
+                                        1 / Math.max(g, 0.1),
+                                    ),
+                                    Math.tan(d.flight?.tilt || 0.48),
+                                ),
+                            ),
+                        );
                     this.stabilize(
                         up,
                         desired,
@@ -410,12 +449,14 @@ export default class Vehicle {
             if (!this.entity.audio.playing) this.entity.playAudio();
         } else if (this.entity.audio.playing) this.entity.stopAudio();
     }
-    presentationUpdate() {
-        if (this.visual?.valid)
-            this.visual.transform = this.entity.presentedTransform;
+    presentationUpdate(dt, alpha) {
+        // Body-free shell children already inherit the parent's interpolated pose.
+        // Writing an interpolated world pose here would convert it through the
+        // authoritative parent and then interpolate the parent a second time.
+        // Only animate the rotor's local rotation, via an authoritative world pose.
         if (!this.rotor?.valid) return;
         const rotor = this.rotor,
-            t = this.entity.presentedTransform;
+            t = this.entity.transform;
         rotor.transform = {
             position: add(
                 t.position,
@@ -430,7 +471,8 @@ export default class Vehicle {
                 t.rotation,
                 axis(
                     this.def.kind === 'helicopter' ? up0 : { x: 0, y: 0, z: 1 },
-                    this.state.rotorAngle,
+                    (this.previousRotorAngle ?? this.state.rotorAngle) +
+                        this.rotorStep * alpha,
                 ),
             ),
         };
