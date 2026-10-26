@@ -1,0 +1,303 @@
+{
+  "files": [
+    {
+      "file": "chop.wav",
+      "seconds": 0.3,
+      "sampleRate": 44100,
+      "channels": 1,
+      "peak": 0.116455078125,
+      "rms": 0.0049553780168547085,
+      "bytes": 26504
+    },
+    {
+      "file": "consume.wav",
+      "seconds": 0.36,
+      "sampleRate": 44100,
+      "channels": 1,
+      "peak": 0.056304931640625,
+      "rms": 0.019892618453692827,
+      "bytes": 31796
+    },
+    {
+      "file": "craft.wav",
+      "seconds": 0.18,
+      "sampleRate": 44100,
+      "channels": 1,
+      "peak": 0.1737060546875,
+      "rms": 0.024268936812944505,
+      "bytes": 15920
+    },
+    {
+      "file": "gather.wav",
+      "seconds": 0.25,
+      "sampleRate": 44100,
+      "channels": 1,
+      "peak": 0.07763671875,
+      "rms": 0.02984374618789526,
+      "bytes": 22094
+    },
+    {
+      "file": "gunshot.wav",
+      "seconds": 0.52,
+      "sampleRate": 44100,
+      "channels": 1,
+      "peak": 0.64996337890625,
+      "rms": 0.127717092724216,
+      "bytes": 45908
+    },
+    {
+      "file": "hurt.wav",
+      "seconds": 0.22,
+      "sampleRate": 44100,
+      "channels": 1,
+      "peak": 0.384765625,
+      "rms": 0.10481239009551833,
+      "bytes": 19448
+    },
+    {
+      "file": "reload.wav",
+      "seconds": 0.24,
+      "sampleRate": 44100,
+      "channels": 1,
+      "peak": 0.22064208984375,
+      "rms": 0.023918550208671556,
+      "bytes": 21212
+    },
+    {
+      "file": "step.wav",
+      "seconds": 0.16,
+      "sampleRate": 44100,
+      "channels": 1,
+      "peak": 0.20977783203125,
+      "rms": 0.06765988561329732,
+      "bytes": 14156
+    },
+    {
+      "file": "vehicle_engine.wav",
+      "seconds": 0.5,
+      "sampleRate": 22050,
+      "channels": 1,
+      "peak": 0.1541748046875,
+      "rms": 0.11379089230297729,
+      "bytes": 22094
+    },
+    {
+      "file": "voice_ivo_0.wav",
+      "seconds": 5.775,
+      "sampleRate": 24000,
+      "channels": 1,
+      "peak": 0.273193359375,
+      "rms": 0.05002923817122648,
+      "bytes": 277244
+    },
+    {
+      "file": "voice_ivo_1.wav",
+      "seconds": 5.225,
+      "sampleRate": 24000,
+      "channels": 1,
+      "peak": 0.322357177734375,
+      "rms": 0.05002941527143845,
+      "bytes": 250844
+    },
+    {
+      "file": "voice_ivo_2.wav",
+      "seconds": 4.8,
+      "sampleRate": 24000,
+      "channels": 1,
+      "peak": 0.30706787109375,
+      "rms": 0.049065759411538845,
+      "bytes": 230444
+    },
+    {
+      "file": "voice_mara_0.wav",
+      "seconds": 5.125,
+      "sampleRate": 24000,
+      "channels": 1,
+      "peak": 0.54595947265625,
+      "rms": 0.051650348766088476,
+      "bytes": 246044
+    },
+    {
+      "file": "voice_mara_1.wav",
+      "seconds": 4.375,
+      "sampleRate": 24000,
+      "channels": 1,
+      "peak": 0.344970703125,
+      "rms": 0.05219468837686364,
+      "bytes": 210044
+    },
+    {
+      "file": "voice_mara_2.wav",
+      "seconds": 4.8,
+      "sampleRate": 24000,
+      "channels": 1,
+      "peak": 0.430816650390625,
+      "rms": 0.05256392504793391,
+      "bytes": 230444
+    },
+    {
+      "file": "voice_region_city_0_0.wav",
+      "seconds": 8.025,
+      "sampleRate": 24000,
+      "channels": 1,
+      "peak": 0.480621337890625,
+      "rms": 0.05160586886107269,
+      "bytes": 385244
+    },
+    {
+      "file": "voice_region_city_0_1.wav",
+      "seconds": 5.175,
+      "sampleRate": 24000,
+      "channels": 1,
+      "peak": 0.39971923828125,
+      "rms": 0.05147983148752539,
+      "bytes": 248444
+    },
+    {
+      "file": "voice_region_city_0_2.wav",
+      "seconds": 4.95,
+      "sampleRate": 24000,
+      "channels": 1,
+      "peak": 0.41461181640625,
+      "rms": 0.05279535018192283,
+      "bytes": 237644
+    },
+    {
+      "file": "voice_region_coast_0_0.wav",
+      "seconds": 5.025,
+      "sampleRate": 24000,
+      "channels": 1,
+      "peak": 0.4193115234375,
+      "rms": 0.05166149630039386,
+      "bytes": 241244
+    },
+    {
+      "file": "voice_region_coast_0_1.wav",
+      "seconds": 5.175,
+      "sampleRate": 24000,
+      "channels": 1,
+      "peak": 0.380584716796875,
+      "rms": 0.05146817122706695,
+      "bytes": 248444
+    },
+    {
+      "file": "voice_region_coast_0_2.wav",
+      "seconds": 4.95,
+      "sampleRate": 24000,
+      "channels": 1,
+      "peak": 0.408721923828125,
+      "rms": 0.052812278180203814,
+      "bytes": 237644
+    },
+    {
+      "file": "voice_region_forest_0_0.wav",
+      "seconds": 7.225,
+      "sampleRate": 24000,
+      "channels": 1,
+      "peak": 0.315521240234375,
+      "rms": 0.04972349524168344,
+      "bytes": 346844
+    },
+    {
+      "file": "voice_region_forest_0_1.wav",
+      "seconds": 5.7,
+      "sampleRate": 24000,
+      "channels": 1,
+      "peak": 0.343231201171875,
+      "rms": 0.048498656972299624,
+      "bytes": 273644
+    },
+    {
+      "file": "voice_region_forest_0_2.wav",
+      "seconds": 5.25,
+      "sampleRate": 24000,
+      "channels": 1,
+      "peak": 0.29449462890625,
+      "rms": 0.0502626756832615,
+      "bytes": 252044
+    },
+    {
+      "file": "voice_region_harbour_0_0.wav",
+      "seconds": 7.75,
+      "sampleRate": 24000,
+      "channels": 1,
+      "peak": 0.30645751953125,
+      "rms": 0.0501667716600027,
+      "bytes": 372044
+    },
+    {
+      "file": "voice_region_harbour_0_1.wav",
+      "seconds": 5.7,
+      "sampleRate": 24000,
+      "channels": 1,
+      "peak": 0.344451904296875,
+      "rms": 0.04843444987394073,
+      "bytes": 273644
+    },
+    {
+      "file": "voice_region_harbour_0_2.wav",
+      "seconds": 5.25,
+      "sampleRate": 24000,
+      "channels": 1,
+      "peak": 0.30389404296875,
+      "rms": 0.0503074752107326,
+      "bytes": 252044
+    },
+    {
+      "file": "voice_region_islet_0_0.wav",
+      "seconds": 8.025,
+      "sampleRate": 24000,
+      "channels": 1,
+      "peak": 0.337921142578125,
+      "rms": 0.04932206217183648,
+      "bytes": 385244
+    },
+    {
+      "file": "voice_region_islet_0_1.wav",
+      "seconds": 5.7,
+      "sampleRate": 24000,
+      "channels": 1,
+      "peak": 0.34185791015625,
+      "rms": 0.04848854113037309,
+      "bytes": 273644
+    },
+    {
+      "file": "voice_region_islet_0_2.wav",
+      "seconds": 5.25,
+      "sampleRate": 24000,
+      "channels": 1,
+      "peak": 0.304901123046875,
+      "rms": 0.050298355977111006,
+      "bytes": 252044
+    },
+    {
+      "file": "voice_region_town_0_0.wav",
+      "seconds": 6.125,
+      "sampleRate": 24000,
+      "channels": 1,
+      "peak": 0.406097412109375,
+      "rms": 0.05256360999007317,
+      "bytes": 294044
+    },
+    {
+      "file": "voice_region_town_0_1.wav",
+      "seconds": 5.175,
+      "sampleRate": 24000,
+      "channels": 1,
+      "peak": 0.407684326171875,
+      "rms": 0.05144210633243257,
+      "bytes": 248444
+    },
+    {
+      "file": "voice_region_town_0_2.wav",
+      "seconds": 4.95,
+      "sampleRate": 24000,
+      "channels": 1,
+      "peak": 0.402679443359375,
+      "rms": 0.05278412812516762,
+      "bytes": 237644
+    }
+  ],
+  "totalBytes": 6724188,
+  "totalDialogueSeconds": 135.5
+}

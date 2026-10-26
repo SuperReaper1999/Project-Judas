@@ -1,0 +1,17 @@
+{
+  "path": "/home/conner/Documents/GitHub/SFX_TTS_Tool",
+  "head": "077c37fa2a5fb5c3929a0d29e266b659588cdb65",
+  "trackedStatus": [
+    " M README.md",
+    " M install-local-kokoro-tts.sh"
+  ],
+  "readOnly": true,
+  "files": {
+    "sine_sfx_designer.py": "839b90abc2e1f00eb1872b1ac73392c827015df865b093253f02e0e6a8851b28",
+    "dialogue_studio.py": "912b5c89cd0f87e3aeefd81f9560fbf9875df070048bc6608a185a2885706fdd",
+    "audio_playback.py": "05463b816705a6d40ed84621598c876f75863df884eea8d241ff75e58c06b71e",
+    "README.md": "f6e0cd95421d90e658d66d78de5c358e78af48ae7ffd000433190c9837e5da14",
+    "LICENSE": "3484005a37f12e79ac3e9c71dd81124aa08acfc854fa288d81b9a5f17f5b9109",
+    "THIRD_PARTY_NOTICES.md": "a6a27262c9911a8bffaf92cdf8e88dcd11170982cd4ecb10827cc4221b9ef5a7"
+  }
+}

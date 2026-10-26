@@ -1,0 +1,45 @@
+{
+  "toolCommit": "077c37fa2a5fb5c3929a0d29e266b659588cdb65",
+  "effects": [
+    {
+      "id": "gather",
+      "preset": "Pickup",
+      "sha256": "75287f35e13072e3e1c55089232188a384cfa00df7aca3ee3844dc67bbfef646"
+    },
+    {
+      "id": "chop",
+      "preset": "Melee Impact",
+      "sha256": "1167655f8cad0587dab9e55aca56e85b26ae34cdedd131d1330c6d670b3d5074"
+    },
+    {
+      "id": "craft",
+      "preset": "UI Click",
+      "sha256": "78df53808809a639104350fb6607a873ccb84069b3be4eab2d7ca87c3eff8e92"
+    },
+    {
+      "id": "consume",
+      "preset": "Pickup",
+      "sha256": "6e5e0133b1ea6bc50c993f24cbe5aaccb6b3d43ef1a40b77b246f668c376a85f"
+    },
+    {
+      "id": "step",
+      "preset": "Hit",
+      "sha256": "a058851723505724cf202f03653b6f0489f174fb39089da97884cdae5e032684"
+    },
+    {
+      "id": "gunshot",
+      "preset": "Rifle",
+      "sha256": "5308682e730ca9f31dd5a83fe464937a5d36b6dda1c759e725fe60a9af34f9e6"
+    },
+    {
+      "id": "reload",
+      "preset": "UI Click",
+      "sha256": "622a9cefdf14dddec06c439b083255769741d141a94b10a9a3a9c3e2d9523705"
+    },
+    {
+      "id": "hurt",
+      "preset": "Hit",
+      "sha256": "c72e7650b161c6e2e71ac223adc3014734e748fd14debbeb56d91dfff013118f"
+    }
+  ]
+}

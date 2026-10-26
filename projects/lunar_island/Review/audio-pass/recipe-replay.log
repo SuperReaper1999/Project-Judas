@@ -1,0 +1,9 @@
+PASS byte-identical recipe replay: chop.wav
+PASS byte-identical recipe replay: consume.wav
+PASS byte-identical recipe replay: craft.wav
+PASS byte-identical recipe replay: gather.wav
+PASS byte-identical recipe replay: gunshot.wav
+PASS byte-identical recipe replay: hurt.wav
+PASS byte-identical recipe replay: reload.wav
+PASS byte-identical recipe replay: step.wav
+8 recipes replayed without changing game assets

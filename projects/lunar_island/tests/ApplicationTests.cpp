@@ -26,6 +26,13 @@ void Check(bool ok,const std::string& text){++checks;failed+=!ok;std::cout<<(ok?
 void Quit(){SDL_Event e{};e.type=SDL_QUIT;SDL_PushEvent(&e);}
 Json Read(const std::filesystem::path& p){std::ifstream f(p);return Json::parse(f);}
 void Write(const std::filesystem::path& p,const Json& j){std::ofstream(p)<<j.dump(2)<<'\n';}
+std::optional<AudioVoiceSnapshot> VoiceSnapshot(EngineHost& h, RuntimeWorld& w, EntityId id) {
+ for (const auto& emitter : w.AudioEmitters()) if (emitter.id == id) {
+  AudioVoiceSnapshot snapshot;
+  if (h.Audio().Snapshot(emitter.voice, snapshot)) return snapshot;
+ }
+ return std::nullopt;
+}
 Json State(RuntimeWorld& w){for(auto& r:w.Scripts()->Capture())if(r.entity==100&&r.slot==1)return Json::parse(r.json);return Json::object();}
 Json PersonState(RuntimeWorld& w,EntityId id){for(auto& r:w.Scripts()->Capture())if(r.entity==id&&r.slot==1)return Json::parse(r.json);return Json::object();}
 Json DistrictState(RuntimeWorld& w,const std::string& region){auto* stream=w.SceneControl()->StreamingIfLoaded();for(auto& row:w.Scripts()->Capture())if(row.entity!=100&&stream->Owner(row.entity)==region){auto state=Json::parse(row.json);if(state.contains("housing"))return state;}return Json::object();}
@@ -63,6 +70,7 @@ int main(int argc,char** argv){
  bool flightProbe=false;unsigned flightFrames=0;double visualError=0,rotorError=0,flightPeakSpeed=0;glm::vec3 cruiseStart{};float flightAltitude=0;
  std::ofstream flightTrace;if(mode=="helicopter-cruise"){flightTrace.open(out/"flight.csv");flightTrace<<"frame,alpha,visual_error_m,rotor_error_m,speed_m_s,height_m,frame_ms\n";}
 
+ double audioMixedEnergy=0;
  Json stage5Expected;
  std::ofstream drivingTimes; if(mode=="roadtrip"){drivingTimes.open(out/"driving-timings.csv");drivingTimes<<"frame,frame_ms,physics_ms,bodies\n";}
  bool roadActive=false;EntityId roadVehicle=0;float roadMaxDeviation=0;
@@ -81,7 +89,30 @@ int main(int argc,char** argv){
  job(5,[&](EngineHost&,RuntimeWorld& w){Check(State(w)["third"].get<bool>(),"same player toggles third person");pauseStart=w.RuntimeDefinition(100)->transform.position;press("pause");});
  job(5,[&](EngineHost&,RuntimeWorld& w){Check(w.UI().Paused(),"pause menu stops gameplay");pauseStart=w.RuntimeDefinition(100)->transform.position;held={"move_y","primary"};});
  job(35,[&](EngineHost&,RuntimeWorld& w){held.clear();Check(glm::distance(pauseStart,w.RuntimeDefinition(100)->transform.position)<1e-5f,"move/fire do not leak through modal");press("pause");});
- if(mode=="flightwrite"||mode=="flightread"){
+ if(mode=="audioread"){
+  job(5,[&](EngineHost&,RuntimeWorld&){press("load");});
+  job(20,[&](EngineHost& h,RuntimeWorld& w){
+    decltype(w.SceneControl()->Saves(h.Resources())->Status(1)) status=nullptr;
+    for(uint64_t id=1;id<64;++id){auto* row=w.SceneControl()->Saves(h.Resources())->Status(id);if(row&&row->operation=="load")status=row;}
+    if(!status||status->state!="completed"){
+      if(status&&status->state=="failed")throw std::runtime_error(status->error);
+      --index;return;
+    }
+    Check(State(w)["bag"]==Read(out/"expected.json")["bag"],"fresh-process save retains exact player inventory");
+  });
+  job(15,[&](EngineHost& h,RuntimeWorld& w){
+    bool stopped=true;for(EntityId id=990000000;id<990000024;++id){auto s=VoiceSnapshot(h,w,id);stopped=stopped&&s&&s->state==AudioPlaybackState::Stopped;}
+    Check(stopped,"cold restore does not resume any discarded conversation voice");
+    AimEntityFixture(w,6000);press("interact");
+  });
+  job(10,[&](EngineHost& h,RuntimeWorld& w){
+    auto s=VoiceSnapshot(h,w,990000000);
+    Check(s&&s->state==AudioPlaybackState::Playing,"survivor dialogue still plays normally after cold load");
+    done=true;Quit();
+  });
+ }else if(mode=="audio"){
+#include "AudioScenario.inc"
+ }else if(mode=="flightwrite"||mode=="flightread"){
 #include "Stage6FlightSave.inc"
  }else if(mode=="helicopter-cruise"){
 #include "Stage6Flight.inc"
@@ -195,6 +226,7 @@ int main(int argc,char** argv){
  }catch(const std::exception& e){Check(false,e.what());done=true;Quit();}};
  control.afterFrame=[&](EngineHost& h,RuntimeWorld& w,InteractivePlay&){++frame;try{
    if(!Healthy(w))throw std::runtime_error("game script failure");
+   if(mode=="audio"||mode=="audioread"){float samples[1600]{};if(!h.Audio().ReadWithoutDevice(samples,800))throw std::runtime_error("device-free mixer failed");for(float sample:samples)audioMixedEnergy+=double(sample)*sample;}
    if(roadActive)drivingTimes<<frame<<','<<measured<<','<<w.Physics().LastStepStats().totalMilliseconds<<','<<w.Physics().AliveBodyCount()<<'\n';
    times<<frame<<','<<measured<<','<<w.Physics().LastStepStats().totalMilliseconds<<','<<w.Physics().AliveBodyCount()<<'\n';
    if(index==jobs.size()&&frame>due){

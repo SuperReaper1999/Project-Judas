@@ -85,3 +85,11 @@ scene save: Play/Stop restores authored content; F6/F9 preserves the player's wo
 - Linux launch problem: use `Run Lunar Island.sh` in the standalone folder. It
   handles spaces and the working directory. Read RUNTIME_REQUIREMENTS.txt for the
   actual native-library and graphics requirements; this is not a universal Linux binary.
+
+### Survivor voices
+
+Press E near a friendly survivor, then select a topic to hear their existing
+dialogue. Subtitles always remain visible. Selecting another topic, trading or
+closing the conversation stops the old line. Saving also silences the line so
+a cold load does not unexpectedly resume a conversation. Voices use the normal
+master volume; a separate speech slider and lip sync are not implemented.

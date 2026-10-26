@@ -1,0 +1,12 @@
+PASS does not claim resource readiness from entity existence
+PASS pending line begins after resource publication
+PASS per-frame dialogue rendering does not restart speech
+PASS saving silences speech without per-frame replay
+PASS new topic stops the previous line before starting
+PASS closing or leaving dialogue stops speech
+PASS reopening conversation may replay the selected line
+PASS unknown speaker keeps subtitles and stops former voice
+PASS failed optional audio emits one diagnostic
+PASS invalidated handles do not play
+PASS backend failures remain bounded and non-throwing
+11 checks, 0 failures

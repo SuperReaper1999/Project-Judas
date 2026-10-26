@@ -1,0 +1,19 @@
+{
+  "sourceFiles": 82,
+  "evidenceFiles": 34,
+  "intendedChangedFiles": 118,
+  "audioNativeChecks": 30,
+  "coldAudioChecks": 12,
+  "voicePolicyChecks": 11,
+  "inventoryChecks": 83,
+  "encounterChecks": 37,
+  "preflightModules": 32,
+  "failures": 0,
+  "wavFiles": 33,
+  "dialogueLines": 24,
+  "byteIdenticalSfxRecipes": 8,
+  "relocatedFromTmp": true,
+  "mainChanged": false,
+  "humanAudioAcceptance": "pending",
+  "WindowsAndroid": "not tested in this content pass"
+}

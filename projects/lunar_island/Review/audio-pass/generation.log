@@ -1,0 +1,31 @@
+/home/conner/Documents/GitHub/SFX_TTS_Tool/.local-tts/torch/nn/modules/rnn.py:1011: UserWarning: dropout option adds dropout after all but last recurrent layer, so non-zero dropout expects num_layers greater than 1, but got dropout=0.2 and num_layers=1
+  super().__init__("LSTM", *args, **kwargs)
+/home/conner/Documents/GitHub/SFX_TTS_Tool/.local-tts/torch/nn/utils/weight_norm.py:145: FutureWarning: `torch.nn.utils.weight_norm` is deprecated in favor of `torch.nn.utils.parametrizations.weight_norm`.
+  WeightNorm.apply(module, name, dim)
+/home/conner/Documents/GitHub/SFX_TTS_Tool/.local-tts/torch/jit/_script.py:1491: FutureWarning: `torch.jit.script` is deprecated. Please switch to `torch.compile` or `torch.export`.
+  warnings.warn(
+Rendered mara_0 5.12s
+Rendered mara_1 4.38s
+Rendered mara_2 4.80s
+Rendered ivo_0 5.78s
+Rendered ivo_1 5.22s
+Rendered ivo_2 4.80s
+Rendered region_forest_0_0 7.22s
+Rendered region_forest_0_1 5.70s
+Rendered region_forest_0_2 5.25s
+Rendered region_town_0_0 6.12s
+Rendered region_town_0_1 5.17s
+Rendered region_town_0_2 4.95s
+Rendered region_harbour_0_0 7.75s
+Rendered region_harbour_0_1 5.70s
+Rendered region_harbour_0_2 5.25s
+Rendered region_city_0_0 8.03s
+Rendered region_city_0_1 5.17s
+Rendered region_city_0_2 4.95s
+Rendered region_coast_0_0 5.03s
+Rendered region_coast_0_1 5.17s
+Rendered region_coast_0_2 4.95s
+Rendered region_islet_0_0 8.03s
+Rendered region_islet_0_1 5.70s
+Rendered region_islet_0_2 5.25s
+Completed: 8 effects and 24 dialogue lines

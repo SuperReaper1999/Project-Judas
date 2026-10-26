@@ -141,8 +141,8 @@ original alternate finish. Installed CC0 scans are an offline authoring dependen
 exact source arrays, origins and licences are retained in ArtSource/materials. Reused original Hearthworld assets are copied
 from that existing Judas project. These are **offline authoring dependencies**;
 playing, editing existing art and standalone export do not require Prompt3D.
-The external tool is neither changed nor retrained. SFX Designer awaits its
-separate Linux port; current short sound effects are original generated PCM.
+The external tool is neither changed nor retrained. Audio now uses the
+Linux-compatible SFX/TTS tool; see `ArtSource/audio/README.md` for the current generated effects and survivor voices.
 
 ### Build, validate and export
 
@@ -272,7 +272,7 @@ and currency share the ordinary inventory. Corpses are ordinary dynamic rigid
 proxies with collision and impulses, **not articulated ragdolls**. Human locomotion
 uses the original rig plus a small authored attack clip. Wolf leg animation,
 weapon-specific aim/reload/hit/death clips, and third-person held-weapon animation
-remain art/polish work. There is no voice dialogue yet.
+remain art/polish work. The audio pass adds local synthetic voices to all 24 authored friendly-survivor topic lines; subtitles remain available. Quest outcomes and trade feedback remain text.
 
 ### Author encounters, weapons and quests
 
@@ -559,3 +559,13 @@ there is no claimed migration from Stage 5. Preserve the Stage 5 package for old
 expeditions. Native saves require matching runtime content within each candidate.
 The original long-term vision remains larger than this playable foundation; the
 handover lists the actual supported subset and unfinished content honestly.
+
+### Generated audio pass
+
+The existing gameplay effects now use editable recipes from the operator-owned
+SFX/TTS tool. All eight friendly survivors have voiced conversation topics.
+Open a conversation with E and select a topic; speech stops when switching topics,
+opening trade or closing the conversation. No model, Python or tool installation
+is required to run/export the game. See `ArtSource/audio/README.md` for regeneration,
+licensing/provenance, voice choices and limitations, and `Review/audio-pass/REPORT.md`
+for verification. Audio-listening acceptance remains pending.

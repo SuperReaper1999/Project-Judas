@@ -468,6 +468,8 @@ export default class Player {
     requestSave() {
         this.builder?.cancel();
         if (this.request) return;
+        // Conversation is transient UI: never resume a spoken topic on cold load.
+        this.hud?.voice.silence();
         try {
             this.request = saves.save('island', {
                 name: 'Lunar Island / Homestead Coast',
@@ -520,6 +522,7 @@ export default class Player {
         this.hud?.event(e);
     }
     destroy() {
+        this.hud?.voice.stop();
         this.builder?.cancel();
         this.combat?.destroy();
         input.pointerCapture = false;

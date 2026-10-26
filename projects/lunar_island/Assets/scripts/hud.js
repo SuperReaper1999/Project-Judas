@@ -1,4 +1,5 @@
-import { ui, input, saves, navigation, world } from 'judas';
+import { ui, input, saves, navigation, world, console } from 'judas';
+import { DialogueVoice } from './dialogue-voice.js';
 import { ITEMS, RECIPES, CONFIG } from './definitions.js';
 import { WORLD } from './world-data.js';
 import { renderVehicle, vehicleEvent } from './vehicle-ui.js';
@@ -16,6 +17,7 @@ import {
 export default class HUD {
     constructor(p, restored = false) {
         this.p = p;
+        this.voice = new DialogueVoice(world, (message) => console.warn(message));
         this.doc = ui.get('lunar');
         if (!this.doc) throw new Error('Lunar Island UI component is missing.');
         ui.debugOverlayVisible = false;
@@ -30,6 +32,7 @@ export default class HUD {
     }
     open(page = 'pack') {
         this.p.builder?.cancel();
+        this.voice.stop();
         this.page = page;
         this.selected = '';
         this.lastRows = '';
@@ -39,6 +42,7 @@ export default class HUD {
         this.refresh();
     }
     close() {
+        this.voice.stop();
         this.page = '';
         this.doc.modal = false;
         input.pointerCapture = true;

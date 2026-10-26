@@ -1,0 +1,40 @@
+import assert from 'node:assert/strict';
+import { DialogueVoice } from '../Assets/scripts/dialogue-voice.js';
+import { VOICES } from '../Assets/scripts/voice-data.js';
+let checks = 0;
+const check = (ok, name) => { assert.ok(ok, name); checks++; console.log('PASS', name); };
+const emitters = new Map();
+for (const id of Object.values(VOICES).flat()) emitters.set(id, {
+    id, valid: true, audio: { ready: true }, played: 0, stopped: 0,
+    playAudio() { this.played++; return true; }, stopAudio() { this.stopped++; },
+});
+let warnings = [];
+const v = new DialogueVoice({ entity: id => emitters.get(id) }, s => warnings.push(s));
+const a = emitters.get(VOICES.mara[0]), b = emitters.get(VOICES.mara[1]);
+a.audio.ready = false;
+v.show('mara', 0);
+check(a.played === 0, 'does not claim resource readiness from entity existence');
+a.audio.ready = true; v.show('mara', 0);
+check(a.played === 1, 'pending line begins after resource publication');
+for (let i = 0; i < 100; i++) v.show('mara', 0);
+check(a.played === 1, 'per-frame dialogue rendering does not restart speech');
+v.silence(); v.show('mara', 0);
+check(a.stopped === 1 && a.played === 1, 'saving silences speech without per-frame replay');
+v.show('mara', 1);
+check(a.stopped === 1 && b.played === 1, 'new topic stops the previous line before starting');
+v.stop();
+check(b.stopped === 1, 'closing or leaving dialogue stops speech');
+v.show('mara', 1);
+check(b.played === 2, 'reopening conversation may replay the selected line');
+v.show('missing', 0);
+check(b.stopped === 2, 'unknown speaker keeps subtitles and stops former voice');
+a.audio = { ready: false, state: 'failed', error: 'missing clip' };
+for (let i = 0; i < 10; i++) v.show('mara', 0);
+check(warnings.length === 1, 'failed optional audio emits one diagnostic');
+a.valid = false; v.show('mara', 0);
+check(a.played === 1, 'invalidated handles do not play');
+a.valid = true; a.audio = { ready: true };
+a.playAudio = () => { throw new Error('audio device unavailable'); };
+v.show('mara', 0);
+check(warnings.length === 1, 'backend failures remain bounded and non-throwing');
+console.log(`${checks} checks, 0 failures`);

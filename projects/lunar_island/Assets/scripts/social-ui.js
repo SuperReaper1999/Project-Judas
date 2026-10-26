@@ -32,7 +32,10 @@ export function renderSocial(hud) {
     const a = speaker(hud),
         d = hud.doc,
         p = hud.p;
-    if (!a) return 'This person is no longer available.';
+    if (!a) {
+        hud.voice.stop();
+        return 'This person is no longer available.';
+    }
     d.get('drop').visible = false;
     d.get('tertiary').visible = false;
     d.get('primary').enabled = a.near;
@@ -56,6 +59,7 @@ export function renderSocial(hud) {
     }
     d.get('primary').text = 'Task / collect reward';
     d.get('secondary').text = 'Trade supplies';
+    hud.voice.show(a.key, Number(hud.selected) || 0);
     const q = PEOPLE.quests[a.def.quest],
         status = q ? p.state.combat.quests[q.id] || 'not accepted' : '';
     return (

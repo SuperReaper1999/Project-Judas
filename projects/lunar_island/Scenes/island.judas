@@ -32734,6 +32734,870 @@
           "body.compound-count": 0,
           "body.fluid-cavity-count": 0
         }
+      },
+      {
+        "id": 990000000,
+        "name": "Dialogue / mara_0",
+        "fields": {
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "audio-emitter": [],
+          "audio.asset": "eac978d91370564395625a5358d5742a",
+          "audio.enabled": true,
+          "audio.play-on-start": false,
+          "audio.loop": false,
+          "audio.spatial": false,
+          "audio.volume": 0.85,
+          "audio.pitch": 1,
+          "audio.reference-distance": 2,
+          "audio.maximum-distance": 30,
+          "audio.rolloff": 1,
+          "audio.attenuation": {
+            "symbol": "none"
+          }
+        }
+      },
+      {
+        "id": 990000001,
+        "name": "Dialogue / mara_1",
+        "fields": {
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "audio-emitter": [],
+          "audio.asset": "50afe9a7ef40b7720908363bb7509611",
+          "audio.enabled": true,
+          "audio.play-on-start": false,
+          "audio.loop": false,
+          "audio.spatial": false,
+          "audio.volume": 0.85,
+          "audio.pitch": 1,
+          "audio.reference-distance": 2,
+          "audio.maximum-distance": 30,
+          "audio.rolloff": 1,
+          "audio.attenuation": {
+            "symbol": "none"
+          }
+        }
+      },
+      {
+        "id": 990000002,
+        "name": "Dialogue / mara_2",
+        "fields": {
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "audio-emitter": [],
+          "audio.asset": "b8e85bb79b6933170852c72ea9b8c1b3",
+          "audio.enabled": true,
+          "audio.play-on-start": false,
+          "audio.loop": false,
+          "audio.spatial": false,
+          "audio.volume": 0.85,
+          "audio.pitch": 1,
+          "audio.reference-distance": 2,
+          "audio.maximum-distance": 30,
+          "audio.rolloff": 1,
+          "audio.attenuation": {
+            "symbol": "none"
+          }
+        }
+      },
+      {
+        "id": 990000003,
+        "name": "Dialogue / ivo_0",
+        "fields": {
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "audio-emitter": [],
+          "audio.asset": "6134c3bfa2ccbc8886d5f0da9a58bc38",
+          "audio.enabled": true,
+          "audio.play-on-start": false,
+          "audio.loop": false,
+          "audio.spatial": false,
+          "audio.volume": 0.85,
+          "audio.pitch": 1,
+          "audio.reference-distance": 2,
+          "audio.maximum-distance": 30,
+          "audio.rolloff": 1,
+          "audio.attenuation": {
+            "symbol": "none"
+          }
+        }
+      },
+      {
+        "id": 990000004,
+        "name": "Dialogue / ivo_1",
+        "fields": {
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "audio-emitter": [],
+          "audio.asset": "5b2f6806f5ed672b4faf7383f73efeb0",
+          "audio.enabled": true,
+          "audio.play-on-start": false,
+          "audio.loop": false,
+          "audio.spatial": false,
+          "audio.volume": 0.85,
+          "audio.pitch": 1,
+          "audio.reference-distance": 2,
+          "audio.maximum-distance": 30,
+          "audio.rolloff": 1,
+          "audio.attenuation": {
+            "symbol": "none"
+          }
+        }
+      },
+      {
+        "id": 990000005,
+        "name": "Dialogue / ivo_2",
+        "fields": {
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "audio-emitter": [],
+          "audio.asset": "e08518ec42db8b1dc672d474b227293a",
+          "audio.enabled": true,
+          "audio.play-on-start": false,
+          "audio.loop": false,
+          "audio.spatial": false,
+          "audio.volume": 0.85,
+          "audio.pitch": 1,
+          "audio.reference-distance": 2,
+          "audio.maximum-distance": 30,
+          "audio.rolloff": 1,
+          "audio.attenuation": {
+            "symbol": "none"
+          }
+        }
+      },
+      {
+        "id": 990000006,
+        "name": "Dialogue / region_forest_0_0",
+        "fields": {
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "audio-emitter": [],
+          "audio.asset": "a7c9ad5256777d5dc8cccd4bb9c2c521",
+          "audio.enabled": true,
+          "audio.play-on-start": false,
+          "audio.loop": false,
+          "audio.spatial": false,
+          "audio.volume": 0.85,
+          "audio.pitch": 1,
+          "audio.reference-distance": 2,
+          "audio.maximum-distance": 30,
+          "audio.rolloff": 1,
+          "audio.attenuation": {
+            "symbol": "none"
+          }
+        }
+      },
+      {
+        "id": 990000007,
+        "name": "Dialogue / region_forest_0_1",
+        "fields": {
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "audio-emitter": [],
+          "audio.asset": "016b893bf763485d1a266ecc19d2f7be",
+          "audio.enabled": true,
+          "audio.play-on-start": false,
+          "audio.loop": false,
+          "audio.spatial": false,
+          "audio.volume": 0.85,
+          "audio.pitch": 1,
+          "audio.reference-distance": 2,
+          "audio.maximum-distance": 30,
+          "audio.rolloff": 1,
+          "audio.attenuation": {
+            "symbol": "none"
+          }
+        }
+      },
+      {
+        "id": 990000008,
+        "name": "Dialogue / region_forest_0_2",
+        "fields": {
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "audio-emitter": [],
+          "audio.asset": "3c390f19afc7df0389a3b2f41ca79f8c",
+          "audio.enabled": true,
+          "audio.play-on-start": false,
+          "audio.loop": false,
+          "audio.spatial": false,
+          "audio.volume": 0.85,
+          "audio.pitch": 1,
+          "audio.reference-distance": 2,
+          "audio.maximum-distance": 30,
+          "audio.rolloff": 1,
+          "audio.attenuation": {
+            "symbol": "none"
+          }
+        }
+      },
+      {
+        "id": 990000009,
+        "name": "Dialogue / region_town_0_0",
+        "fields": {
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "audio-emitter": [],
+          "audio.asset": "b0a045e633ca58f32ffb09921b066f9f",
+          "audio.enabled": true,
+          "audio.play-on-start": false,
+          "audio.loop": false,
+          "audio.spatial": false,
+          "audio.volume": 0.85,
+          "audio.pitch": 1,
+          "audio.reference-distance": 2,
+          "audio.maximum-distance": 30,
+          "audio.rolloff": 1,
+          "audio.attenuation": {
+            "symbol": "none"
+          }
+        }
+      },
+      {
+        "id": 990000010,
+        "name": "Dialogue / region_town_0_1",
+        "fields": {
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "audio-emitter": [],
+          "audio.asset": "6eb01596d8c5e439f1bf02a5dbb77e9d",
+          "audio.enabled": true,
+          "audio.play-on-start": false,
+          "audio.loop": false,
+          "audio.spatial": false,
+          "audio.volume": 0.85,
+          "audio.pitch": 1,
+          "audio.reference-distance": 2,
+          "audio.maximum-distance": 30,
+          "audio.rolloff": 1,
+          "audio.attenuation": {
+            "symbol": "none"
+          }
+        }
+      },
+      {
+        "id": 990000011,
+        "name": "Dialogue / region_town_0_2",
+        "fields": {
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "audio-emitter": [],
+          "audio.asset": "43dc4cc6bb6b92c982471196627384fa",
+          "audio.enabled": true,
+          "audio.play-on-start": false,
+          "audio.loop": false,
+          "audio.spatial": false,
+          "audio.volume": 0.85,
+          "audio.pitch": 1,
+          "audio.reference-distance": 2,
+          "audio.maximum-distance": 30,
+          "audio.rolloff": 1,
+          "audio.attenuation": {
+            "symbol": "none"
+          }
+        }
+      },
+      {
+        "id": 990000012,
+        "name": "Dialogue / region_harbour_0_0",
+        "fields": {
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "audio-emitter": [],
+          "audio.asset": "a65c9611771d0d75a3f34b382132b460",
+          "audio.enabled": true,
+          "audio.play-on-start": false,
+          "audio.loop": false,
+          "audio.spatial": false,
+          "audio.volume": 0.85,
+          "audio.pitch": 1,
+          "audio.reference-distance": 2,
+          "audio.maximum-distance": 30,
+          "audio.rolloff": 1,
+          "audio.attenuation": {
+            "symbol": "none"
+          }
+        }
+      },
+      {
+        "id": 990000013,
+        "name": "Dialogue / region_harbour_0_1",
+        "fields": {
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "audio-emitter": [],
+          "audio.asset": "11e58acbbe0a67d524c15d9555113e2b",
+          "audio.enabled": true,
+          "audio.play-on-start": false,
+          "audio.loop": false,
+          "audio.spatial": false,
+          "audio.volume": 0.85,
+          "audio.pitch": 1,
+          "audio.reference-distance": 2,
+          "audio.maximum-distance": 30,
+          "audio.rolloff": 1,
+          "audio.attenuation": {
+            "symbol": "none"
+          }
+        }
+      },
+      {
+        "id": 990000014,
+        "name": "Dialogue / region_harbour_0_2",
+        "fields": {
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "audio-emitter": [],
+          "audio.asset": "b05f1d28abacaab52ab1fffaa80eee80",
+          "audio.enabled": true,
+          "audio.play-on-start": false,
+          "audio.loop": false,
+          "audio.spatial": false,
+          "audio.volume": 0.85,
+          "audio.pitch": 1,
+          "audio.reference-distance": 2,
+          "audio.maximum-distance": 30,
+          "audio.rolloff": 1,
+          "audio.attenuation": {
+            "symbol": "none"
+          }
+        }
+      },
+      {
+        "id": 990000015,
+        "name": "Dialogue / region_city_0_0",
+        "fields": {
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "audio-emitter": [],
+          "audio.asset": "e6619a8ed90f712fdd94b0c1c3b12c04",
+          "audio.enabled": true,
+          "audio.play-on-start": false,
+          "audio.loop": false,
+          "audio.spatial": false,
+          "audio.volume": 0.85,
+          "audio.pitch": 1,
+          "audio.reference-distance": 2,
+          "audio.maximum-distance": 30,
+          "audio.rolloff": 1,
+          "audio.attenuation": {
+            "symbol": "none"
+          }
+        }
+      },
+      {
+        "id": 990000016,
+        "name": "Dialogue / region_city_0_1",
+        "fields": {
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "audio-emitter": [],
+          "audio.asset": "4d13fb206ced698572a13ddcd32967b1",
+          "audio.enabled": true,
+          "audio.play-on-start": false,
+          "audio.loop": false,
+          "audio.spatial": false,
+          "audio.volume": 0.85,
+          "audio.pitch": 1,
+          "audio.reference-distance": 2,
+          "audio.maximum-distance": 30,
+          "audio.rolloff": 1,
+          "audio.attenuation": {
+            "symbol": "none"
+          }
+        }
+      },
+      {
+        "id": 990000017,
+        "name": "Dialogue / region_city_0_2",
+        "fields": {
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "audio-emitter": [],
+          "audio.asset": "03d345a9375761e76ed9e1bc0c8ca87d",
+          "audio.enabled": true,
+          "audio.play-on-start": false,
+          "audio.loop": false,
+          "audio.spatial": false,
+          "audio.volume": 0.85,
+          "audio.pitch": 1,
+          "audio.reference-distance": 2,
+          "audio.maximum-distance": 30,
+          "audio.rolloff": 1,
+          "audio.attenuation": {
+            "symbol": "none"
+          }
+        }
+      },
+      {
+        "id": 990000018,
+        "name": "Dialogue / region_coast_0_0",
+        "fields": {
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "audio-emitter": [],
+          "audio.asset": "0de3683ab52e1abe02aa8ba8278b5a0d",
+          "audio.enabled": true,
+          "audio.play-on-start": false,
+          "audio.loop": false,
+          "audio.spatial": false,
+          "audio.volume": 0.85,
+          "audio.pitch": 1,
+          "audio.reference-distance": 2,
+          "audio.maximum-distance": 30,
+          "audio.rolloff": 1,
+          "audio.attenuation": {
+            "symbol": "none"
+          }
+        }
+      },
+      {
+        "id": 990000019,
+        "name": "Dialogue / region_coast_0_1",
+        "fields": {
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "audio-emitter": [],
+          "audio.asset": "e8eb7f664c690ce1d13dd88f0fb43da7",
+          "audio.enabled": true,
+          "audio.play-on-start": false,
+          "audio.loop": false,
+          "audio.spatial": false,
+          "audio.volume": 0.85,
+          "audio.pitch": 1,
+          "audio.reference-distance": 2,
+          "audio.maximum-distance": 30,
+          "audio.rolloff": 1,
+          "audio.attenuation": {
+            "symbol": "none"
+          }
+        }
+      },
+      {
+        "id": 990000020,
+        "name": "Dialogue / region_coast_0_2",
+        "fields": {
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "audio-emitter": [],
+          "audio.asset": "7769343186d1da8e45956b419f9d3092",
+          "audio.enabled": true,
+          "audio.play-on-start": false,
+          "audio.loop": false,
+          "audio.spatial": false,
+          "audio.volume": 0.85,
+          "audio.pitch": 1,
+          "audio.reference-distance": 2,
+          "audio.maximum-distance": 30,
+          "audio.rolloff": 1,
+          "audio.attenuation": {
+            "symbol": "none"
+          }
+        }
+      },
+      {
+        "id": 990000021,
+        "name": "Dialogue / region_islet_0_0",
+        "fields": {
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "audio-emitter": [],
+          "audio.asset": "c012a028b1089d3831ec625cb69cff06",
+          "audio.enabled": true,
+          "audio.play-on-start": false,
+          "audio.loop": false,
+          "audio.spatial": false,
+          "audio.volume": 0.85,
+          "audio.pitch": 1,
+          "audio.reference-distance": 2,
+          "audio.maximum-distance": 30,
+          "audio.rolloff": 1,
+          "audio.attenuation": {
+            "symbol": "none"
+          }
+        }
+      },
+      {
+        "id": 990000022,
+        "name": "Dialogue / region_islet_0_1",
+        "fields": {
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "audio-emitter": [],
+          "audio.asset": "2a1f728432bb2449c1365147d28c6c9a",
+          "audio.enabled": true,
+          "audio.play-on-start": false,
+          "audio.loop": false,
+          "audio.spatial": false,
+          "audio.volume": 0.85,
+          "audio.pitch": 1,
+          "audio.reference-distance": 2,
+          "audio.maximum-distance": 30,
+          "audio.rolloff": 1,
+          "audio.attenuation": {
+            "symbol": "none"
+          }
+        }
+      },
+      {
+        "id": 990000023,
+        "name": "Dialogue / region_islet_0_2",
+        "fields": {
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "audio-emitter": [],
+          "audio.asset": "17e9a5c75fa381e6e926a73a604faf3b",
+          "audio.enabled": true,
+          "audio.play-on-start": false,
+          "audio.loop": false,
+          "audio.spatial": false,
+          "audio.volume": 0.85,
+          "audio.pitch": 1,
+          "audio.reference-distance": 2,
+          "audio.maximum-distance": 30,
+          "audio.rolloff": 1,
+          "audio.attenuation": {
+            "symbol": "none"
+          }
+        }
       }
     ]
   }

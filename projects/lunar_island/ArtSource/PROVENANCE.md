@@ -106,3 +106,12 @@ corpse visual-child offset without removing the rig or animation data. A native
 one-entity body/render prefab respects the current regional adoption contract.
 Furniture, houses, vegetation, props and material scans retain their earlier
 provenance/licences. No new external download, sound or voice was introduced.
+
+## Local SFX/TTS audio pass
+
+The eight short gameplay effects now use the operator's Linux-compatible
+`SFX_TTS_Tool`; the original stage authoring and historical evidence remain
+unchanged. All 24 friendly-survivor topic lines have local synthetic Kokoro voices.
+Editable recipes, exact text/voice/model/output hashes and source/licence notes
+are in `audio/`. Only generated PCM is shipped, with no model runtime dependency.
+The original vehicle engine loop remains unchanged.
