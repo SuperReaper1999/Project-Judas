@@ -152,9 +152,9 @@
         "name": "Birchside service pickup / authored body",
         "fields": {
           "position": [
-            35,
-            15.25555894244264,
-            49
+            0,
+            0,
+            0
           ],
           "rotation": [
             1,
@@ -199,9 +199,9 @@
         "name": "Birchside service pickup / wheel",
         "fields": {
           "position": [
-            34.13,
-            14.53555894244264,
-            47.2
+            -0.87,
+            -0.72,
+            -1.8
           ],
           "rotation": [
             1,
@@ -248,9 +248,9 @@
         "name": "Birchside service pickup / tyre visual",
         "fields": {
           "position": [
-            34.13,
-            14.53555894244264,
-            47.2
+            0,
+            0,
+            0
           ],
           "rotation": [
             1,
@@ -294,9 +294,9 @@
         "name": "Birchside service pickup / wheel",
         "fields": {
           "position": [
-            35.87,
-            14.53555894244264,
-            47.2
+            0.87,
+            -0.72,
+            -1.8
           ],
           "rotation": [
             1,
@@ -343,9 +343,9 @@
         "name": "Birchside service pickup / tyre visual",
         "fields": {
           "position": [
-            35.87,
-            14.53555894244264,
-            47.2
+            0,
+            0,
+            0
           ],
           "rotation": [
             1,
@@ -389,9 +389,9 @@
         "name": "Birchside service pickup / wheel",
         "fields": {
           "position": [
-            34.13,
-            14.53555894244264,
-            50.65
+            -0.87,
+            -0.72,
+            1.65
           ],
           "rotation": [
             1,
@@ -438,9 +438,9 @@
         "name": "Birchside service pickup / tyre visual",
         "fields": {
           "position": [
-            34.13,
-            14.53555894244264,
-            50.65
+            0,
+            0,
+            0
           ],
           "rotation": [
             1,
@@ -484,9 +484,9 @@
         "name": "Birchside service pickup / wheel",
         "fields": {
           "position": [
-            35.87,
-            14.53555894244264,
-            50.65
+            0.87,
+            -0.72,
+            1.65
           ],
           "rotation": [
             1,
@@ -533,9 +533,9 @@
         "name": "Birchside service pickup / tyre visual",
         "fields": {
           "position": [
-            35.87,
-            14.53555894244264,
-            50.65
+            0,
+            0,
+            0
           ],
           "rotation": [
             1,

@@ -1,0 +1,110 @@
+{
+  "parentExperimental": "456c26df78fe80b6712e7e557bb5f105f2919267",
+  "mainUnchanged": "c2cdd376f1c20a9d6a8a75d8257f9ac44327ec09",
+  "stage5OperatorReview": "pending",
+  "stage6Started": false,
+  "nativeEngineSourceChanged": false,
+  "platform": "Linux",
+  "checkpointCases": {
+    "cargo-checkpoint.log": {
+      "checks": 55,
+      "failures": 0
+    },
+    "cargoread-checkpoint.log": {
+      "checks": 44,
+      "failures": 0
+    },
+    "claimhome-checkpoint.log": {
+      "checks": 18,
+      "failures": 0
+    },
+    "encounter-checkpoint.log": {
+      "checks": 80,
+      "failures": 0
+    },
+    "encounterread-checkpoint.log": {
+      "checks": 33,
+      "failures": 0
+    },
+    "fieldmap-checkpoint.log": {
+      "checks": 20,
+      "failures": 0
+    },
+    "garageread-checkpoint.log": {
+      "checks": 48,
+      "failures": 0
+    },
+    "garagestream-checkpoint.log": {
+      "checks": 34,
+      "failures": 0
+    },
+    "harbourskiff-checkpoint.log": {
+      "checks": 17,
+      "failures": 0
+    },
+    "islandtour-checkpoint.log": {
+      "checks": 77,
+      "failures": 0
+    },
+    "performance-checkpoint.log": {
+      "checks": 10,
+      "failures": 0
+    },
+    "read-checkpoint.log": {
+      "checks": 42,
+      "failures": 0
+    },
+    "roadtrip-checkpoint.log": {
+      "checks": 18,
+      "failures": 0
+    },
+    "worldread-checkpoint.log": {
+      "checks": 25,
+      "failures": 0
+    },
+    "worldwrite-checkpoint.log": {
+      "checks": 38,
+      "failures": 0
+    },
+    "write-checkpoint.log": {
+      "checks": 133,
+      "failures": 0
+    },
+    "harvestwrite-checkpoint.log": {
+      "checks": 37,
+      "failures": 0
+    },
+    "harvestread-checkpoint.log": {
+      "checks": 17,
+      "failures": 0
+    }
+  },
+  "rules": {
+    "inventory": 83,
+    "encounters": 37,
+    "vehicles": 20
+  },
+  "scripts": {
+    "registeredModules": 30,
+    "compileLinkFailures": 0
+  },
+  "editor": {
+    "authoredScene": "IDENTICAL",
+    "resourceFailures": 0,
+    "failedJobs": 0
+  },
+  "export": {
+    "assets": 176,
+    "scenes": 26,
+    "bytes": 241603576,
+    "seconds": 7.438,
+    "relocated": true,
+    "savedWorldLoaded": true
+  },
+  "scopeNotes": [
+    "Native engine binaries unchanged; project scripts/assets authored.",
+    "Six vehicle and aircraft regression logs identify earlier combined candidates and affected exit reruns.",
+    "Windows, Android, controller hardware and listening checks not performed.",
+    "Initial navigation loading work is separated from active-driving timing."
+  ]
+}

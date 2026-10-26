@@ -1,0 +1,67 @@
+Shadow maps: on
+Graphics: 3.3.0 NVIDIA 580.178.04 / NVIDIA GeForce GTX 970/PCIe/SSE2
+Renderer fragment texture units: 32 (material path uses 12)
+World state: legacy .judasstate (F6/F7) saves disabled for additive compositions; save slots remain available
+Project: Lunar Island (/home/conner/Documents/GitHub/Project-Judas/projects/lunar_island/lunar_island.judasproj)
+Scene: Lunar Island / Homestead Coast (/home/conner/Documents/GitHub/Project-Judas/projects/lunar_island/Scenes/island.judas)
+World origin (m): 2900.000, 0.000, -1600.000
+asset 2eb74ecf72ef69112028dcf2c039cb36: Optional extension ignored: KHR_materials_clearcoat
+asset f4e24c58b44e48292bc35ad5a55d72f9: Optional extension ignored: KHR_materials_clearcoat
+asset d5563755c7887ca32886ad9518e56de8: Optional extension ignored: KHR_materials_clearcoat
+JS: Lunar Island: WASD, mouse, E gather, click tool, Tab pack/crafting, Escape pause, F6 save, F9 load.
+PASS welcome pauses actual world
+PASS authored world collision loaded
+PASS capture welcome.png
+PASS Escape begins real game
+PASS CharacterMotor moves via project input
+PASS same player toggles third person
+PASS pause menu stops gameplay
+PASS move/fire do not leak through modal
+PASS actual E depletes branch 200
+PASS actual E depletes branch 202
+PASS actual E depletes branch 204
+PASS actual E depletes loose_stone 250
+PASS actual E depletes loose_stone 252
+PASS focus UI primary
+PASS focus UI tab_pack
+PASS focus UI primary
+PASS cargo expedition earns and loads actual quest sidearm
+PASS focus UI secondary
+PASS focus UI tertiary
+PASS one finite four-can stack transfers through native cargo UI
+PASS focus UI tertiary
+PASS second overweight supply stack refuses without loss
+PASS focus UI secondary
+PASS finite repair kit transfers through native cargo UI
+PASS focus UI secondary
+PASS focus UI drop
+PASS all six genuinely harvested timber load into truck cargo
+PASS cargo modal blocks vehicle movement and firing
+PASS real firearm ray hits truck collider
+PASS actual hit changes project-owned vehicle condition
+PASS focus UI drop
+PASS focus UI tertiary
+PASS repair consumes real kit and restores condition
+PASS sealed fuel can adds exactly five litres
+PASS focus UI primary
+PASS control transfers to real truck while preserving player identity
+PASS loaded truck physically travels toward home
+PASS cargo survives actual movement
+PASS capture loaded-truck.png
+PASS Space applies real wheel brakes
+PASS safe exit restores actual motor and on-foot control
+PASS exit uses readable third-person camera
+PASS focus UI secondary
+PASS focus UI tertiary
+PASS unloading returns exact transported timber to player
+PASS focus UI primary
+PASS transported wood and gathered stone construct actual foundation with exact costs
+PASS capture cargo-built-foundation.png
+PASS focus UI secondary
+PASS focus UI drop
+PASS focus UI primary
+PASS remaining timber is aboard for cold-persistence proof
+PASS independently observed actual save capture boundary
+PASS game-issued durable save completes: 
+PASS ordinary application exits cleanly
+55 checks, 0 failures

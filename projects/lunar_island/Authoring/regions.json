@@ -1,0 +1,115 @@
+{
+  "forest": {
+    "name": "Whisperwood Forestry",
+    "center": [
+      -1400,
+      200
+    ],
+    "theme": "forest",
+    "houses": 2,
+    "description": "A forestry cabin, timber stands and iron outcrops. Rowan trades provisions for harvested wood.",
+    "stock": {
+      "wood": 12,
+      "rations": 4
+    },
+    "quest": "forestry",
+    "vegetationCount": 120,
+    "treeHeight": 8
+  },
+  "town": {
+    "name": "Moonbridge Town",
+    "center": [
+      -1800,
+      1300
+    ],
+    "theme": "town",
+    "houses": 5,
+    "description": "An occupied high street, clinic, grocer and abandoned homes. Asha needs medical dressings.",
+    "stock": {
+      "bandage": 4,
+      "rations": 6,
+      "fuel_can": 4
+    },
+    "quest": "clinic"
+  },
+  "harbour": {
+    "name": "Tidemark Harbour",
+    "center": [
+      -3900,
+      3200
+    ],
+    "theme": "harbour",
+    "houses": 2,
+    "description": "Working piers, a chandlery, cargo salvage and an ocean skiff. Ellis needs scrap to reopen the ferry route.",
+    "stock": {
+      "fuel_can": 8,
+      "scrap": 12,
+      "repair_kit": 4
+    },
+    "quest": "harbour"
+  },
+  "industry": {
+    "name": "Blackwater Works",
+    "center": [
+      -3700,
+      2850
+    ],
+    "theme": "industry",
+    "houses": 3,
+    "description": "A damaged industrial yard with bandits, ore and repair supplies. Search the machine shop carefully.",
+    "stock": {
+      "scrap": 16,
+      "iron_ore": 8,
+      "repair_kit": 4
+    },
+    "hostile": true
+  },
+  "city": {
+    "name": "Lunar City / Civic Quarter",
+    "center": [
+      -900,
+      2950
+    ],
+    "theme": "city",
+    "houses": 6,
+    "description": "A compact city quarter amid sealed towers. Recover radio components from the occupied office and help Nia restore contact.",
+    "stock": {
+      "radio_parts": 1,
+      "ammo_rifle": 30,
+      "rations": 4
+    },
+    "quest": "radio",
+    "hostile": true
+  },
+  "coast": {
+    "name": "Eastwatch Coast",
+    "center": [
+      2000,
+      1300
+    ],
+    "theme": "coast",
+    "houses": 2,
+    "description": "A coastguard refuge, beach path, landing ground and an ocean supply point.",
+    "stock": {
+      "fuel_can": 8,
+      "rations": 4,
+      "water": 4
+    }
+  },
+  "islet": {
+    "name": "Lantern Islet",
+    "center": [
+      2400,
+      3000
+    ],
+    "theme": "islet",
+    "houses": 1,
+    "description": "A separate offshore island with a lighthouse refuge, mineral deposits and a survivor. Reach it by boat or air.",
+    "stock": {
+      "iron_ore": 12,
+      "scrap": 8,
+      "fuel_can": 6
+    },
+    "quest": "islet"
+  }
+}

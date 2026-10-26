@@ -1,0 +1,30 @@
+{
+  "prompt": "a realistic pharmacy",
+  "category": "shop",
+  "confidence": 1.0,
+  "params": {
+    "features": {},
+    "size": 1.0,
+    "style": "realistic",
+    "type": "pharmacy",
+    "floors": null,
+    "count": 1
+  },
+  "understood": [],
+  "seed": 91558,
+  "style": "realistic",
+  "files": {
+    "glb": "/home/conner/Documents/GitHub/Project-Judas/projects/lunar_island/ArtSource/stage5-prompt3d/a-realistic-pharmacy-91558-realistic.glb"
+  },
+  "stats": {
+    "vertices": 10336,
+    "triangles": 6958,
+    "groups": 1
+  },
+  "dimensions_m": [
+    7.3,
+    9.47,
+    12.45
+  ],
+  "seconds": 0.07
+}

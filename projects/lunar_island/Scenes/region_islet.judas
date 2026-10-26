@@ -1,0 +1,6593 @@
+{
+  "kind": "scene",
+  "schema": 1,
+  "data": {
+    "settings": {
+      "name": "Lantern Islet",
+      "world-origin": [
+        5300,
+        8.12,
+        1400
+      ],
+      "sun-direction": [
+        0.45,
+        0.72,
+        0.3
+      ],
+      "sun-color": [
+        1,
+        0.94,
+        0.79
+      ],
+      "ambient": [
+        0.22,
+        0.25,
+        0.28
+      ],
+      "background-color": [
+        0.36,
+        0.56,
+        0.65
+      ],
+      "linear-rendering": true,
+      "exposure": 1,
+      "environment": "",
+      "environment-intensity": 1,
+      "environment-rotation": [
+        1,
+        0,
+        0,
+        0
+      ],
+      "environment-background": false,
+      "fluid-scale": 1,
+      "fluid-update-rate-hz": 30,
+      "fluid-hydrostatic-drag-rate": 2,
+      "fidelity-policy": {
+        "mode": {
+          "symbol": "none"
+        }
+      },
+      "next-id": 80000
+    },
+    "objects": [
+      {
+        "id": 70001,
+        "name": "Lantern Islet / retained street",
+        "fields": {
+          "tags": 1,
+          "position": [
+            0,
+            -0.3,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            64,
+            0.3,
+            58
+          ],
+          "render.radius": 64,
+          "render.color": [
+            0.35,
+            0.36,
+            0.34
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.collision-layer": 9,
+          "body.half-extents": [
+            64,
+            0.3,
+            58
+          ],
+          "body.radius": 64,
+          "body.terrain": "",
+          "body.mass": 1,
+          "body.friction": 0.8,
+          "body.restitution": 0.02,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": true,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0
+        }
+      },
+      {
+        "id": 70002,
+        "name": "Street approach",
+        "fields": {
+          "tags": 1,
+          "position": [
+            -84.5,
+            -17.978598,
+            0
+          ],
+          "rotation": [
+            0.66178346,
+            0.2490837,
+            -0.66178346,
+            0.2490837
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            3.5,
+            0.125,
+            27.26683
+          ],
+          "render.radius": 27.26683,
+          "render.color": [
+            0.4,
+            0.39,
+            0.35
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.collision-layer": 9,
+          "body.half-extents": [
+            3.5,
+            0.125,
+            27.26683
+          ],
+          "body.radius": 3.5,
+          "body.terrain": "",
+          "body.mass": 1,
+          "body.friction": 0.8,
+          "body.restitution": 0.02,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": true,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0
+        }
+      },
+      {
+        "id": 70003,
+        "name": "Street approach",
+        "fields": {
+          "tags": 1,
+          "position": [
+            0,
+            -31.25476,
+            -81.5
+          ],
+          "rotation": [
+            5.47843672e-17,
+            2.73509156e-17,
+            0.8946966,
+            -0.44667435
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            3.5,
+            0.125,
+            39.103836
+          ],
+          "render.radius": 39.103836,
+          "render.color": [
+            0.4,
+            0.39,
+            0.35
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.collision-layer": 9,
+          "body.half-extents": [
+            3.5,
+            0.125,
+            39.103836
+          ],
+          "body.radius": 3.5,
+          "body.terrain": "",
+          "body.mass": 1,
+          "body.friction": 0.8,
+          "body.restitution": 0.02,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": true,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0
+        }
+      },
+      {
+        "id": 70004,
+        "name": "Street approach",
+        "fields": {
+          "tags": 1,
+          "position": [
+            84.5,
+            -32.787247,
+            0
+          ],
+          "rotation": [
+            0.6184956,
+            0.34272906,
+            0.6184956,
+            -0.34272906
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            3.5,
+            0.125,
+            38.668507
+          ],
+          "render.radius": 38.668507,
+          "render.color": [
+            0.4,
+            0.39,
+            0.35
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.collision-layer": 9,
+          "body.half-extents": [
+            3.5,
+            0.125,
+            38.668507
+          ],
+          "body.radius": 3.5,
+          "body.terrain": "",
+          "body.mass": 1,
+          "body.friction": 0.8,
+          "body.restitution": 0.02,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": true,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0
+        }
+      },
+      {
+        "id": 70005,
+        "name": "Street approach",
+        "fields": {
+          "tags": 1,
+          "position": [
+            0,
+            -19.511084,
+            81.5
+          ],
+          "rotation": [
+            0.9405805,
+            0.3395708,
+            0,
+            -0.0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            3.5,
+            0.125,
+            30.543941
+          ],
+          "render.radius": 30.543941,
+          "render.color": [
+            0.4,
+            0.39,
+            0.35
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.collision-layer": 9,
+          "body.half-extents": [
+            3.5,
+            0.125,
+            30.543941
+          ],
+          "body.radius": 3.5,
+          "body.terrain": "",
+          "body.mass": 1,
+          "body.friction": 0.8,
+          "body.restitution": 0.02,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": true,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0
+        }
+      },
+      {
+        "id": 70006,
+        "name": "Editable Lantern Islet terrain",
+        "fields": {
+          "tags": 1,
+          "position": [
+            0,
+            -8.12,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "ffa2c82ff8699a94b50fa307d5d3b2f6",
+          "render.texture-asset": "8061c5efccf91cab72ab61e2a60e1017",
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "triangle-mesh"
+            }
+          },
+          "body.collision-layer": 9,
+          "body.half-extents": [
+            180,
+            60,
+            180
+          ],
+          "body.radius": 180,
+          "body.terrain": "",
+          "body.collision-asset": "4caa6906450239cfdbdaee3edda606a8",
+          "body.mass": 1,
+          "body.friction": 0.8,
+          "body.restitution": 0.02,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": true,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0
+        }
+      },
+      {
+        "id": 71000,
+        "name": "Lantern Islet / house 1 / collision floor",
+        "fields": {
+          "tags": 64,
+          "position": [
+            -32,
+            -0.08,
+            -32
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            4,
+            1,
+            3
+          ],
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "71ff221df82c01122be721c9635948b6",
+          "render.texture-asset": "",
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.collision-layer": 9,
+          "body.half-extents": [
+            6,
+            0.1,
+            4.5
+          ],
+          "body.radius": 6,
+          "body.terrain": "",
+          "body.mass": 1,
+          "body.friction": 0.8,
+          "body.restitution": 0.02,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": true,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0
+        }
+      },
+      {
+        "id": 71010,
+        "name": "Lantern Islet / house 1 / window_wall",
+        "fields": {
+          "tags": 64,
+          "position": [
+            -36.5,
+            1.370001,
+            -36.5
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "d38ade9ded58694eb62798061d31f017",
+          "render.texture-asset": "",
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "compound"
+            }
+          },
+          "body.collision-layer": 9,
+          "body.half-extents": [
+            1.5,
+            1.35,
+            0.12
+          ],
+          "body.radius": 1.5,
+          "body.terrain": "",
+          "body.mass": 65,
+          "body.friction": 0.8,
+          "body.restitution": 0.02,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": true,
+          "body.managed": false,
+          "body.compound-count": 4,
+          "body.compound-box": [
+            {
+              "center": [
+                -1.1,
+                0,
+                0
+              ],
+              "halfExtents": [
+                0.4,
+                1.35,
+                0.12
+              ]
+            },
+            {
+              "center": [
+                1.1,
+                0,
+                0
+              ],
+              "halfExtents": [
+                0.4,
+                1.35,
+                0.12
+              ]
+            },
+            {
+              "center": [
+                0,
+                -0.9,
+                0
+              ],
+              "halfExtents": [
+                0.7,
+                0.45,
+                0.12
+              ]
+            },
+            {
+              "center": [
+                0,
+                1.05,
+                0
+              ],
+              "halfExtents": [
+                0.7,
+                0.3,
+                0.12
+              ]
+            }
+          ],
+          "body.fluid-cavity-count": 0
+        }
+      },
+      {
+        "id": 71020,
+        "name": "Lantern Islet / house 1 / window_wall",
+        "fields": {
+          "tags": 64,
+          "position": [
+            -36.5,
+            1.370001,
+            -27.5
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "d38ade9ded58694eb62798061d31f017",
+          "render.texture-asset": "",
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "compound"
+            }
+          },
+          "body.collision-layer": 9,
+          "body.half-extents": [
+            1.5,
+            1.35,
+            0.12
+          ],
+          "body.radius": 1.5,
+          "body.terrain": "",
+          "body.mass": 65,
+          "body.friction": 0.8,
+          "body.restitution": 0.02,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": true,
+          "body.managed": false,
+          "body.compound-count": 4,
+          "body.compound-box": [
+            {
+              "center": [
+                -1.1,
+                0,
+                0
+              ],
+              "halfExtents": [
+                0.4,
+                1.35,
+                0.12
+              ]
+            },
+            {
+              "center": [
+                1.1,
+                0,
+                0
+              ],
+              "halfExtents": [
+                0.4,
+                1.35,
+                0.12
+              ]
+            },
+            {
+              "center": [
+                0,
+                -0.9,
+                0
+              ],
+              "halfExtents": [
+                0.7,
+                0.45,
+                0.12
+              ]
+            },
+            {
+              "center": [
+                0,
+                1.05,
+                0
+              ],
+              "halfExtents": [
+                0.7,
+                0.3,
+                0.12
+              ]
+            }
+          ],
+          "body.fluid-cavity-count": 0
+        }
+      },
+      {
+        "id": 71011,
+        "name": "Lantern Islet / house 1 / wall",
+        "fields": {
+          "tags": 64,
+          "position": [
+            -33.5,
+            1.370001,
+            -36.5
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "41a1d3f35e2bd97fc5992127aa24dbd6",
+          "render.texture-asset": "",
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.collision-layer": 9,
+          "body.half-extents": [
+            1.5,
+            1.35,
+            0.12
+          ],
+          "body.radius": 1.5,
+          "body.terrain": "",
+          "body.mass": 65,
+          "body.friction": 0.8,
+          "body.restitution": 0.02,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": true,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0
+        }
+      },
+      {
+        "id": 71012,
+        "name": "Lantern Islet / house 1 / wall",
+        "fields": {
+          "tags": 64,
+          "position": [
+            -30.5,
+            1.370001,
+            -36.5
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "41a1d3f35e2bd97fc5992127aa24dbd6",
+          "render.texture-asset": "",
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.collision-layer": 9,
+          "body.half-extents": [
+            1.5,
+            1.35,
+            0.12
+          ],
+          "body.radius": 1.5,
+          "body.terrain": "",
+          "body.mass": 65,
+          "body.friction": 0.8,
+          "body.restitution": 0.02,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": true,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0
+        }
+      },
+      {
+        "id": 71022,
+        "name": "Lantern Islet / house 1 / wall",
+        "fields": {
+          "tags": 64,
+          "position": [
+            -30.5,
+            1.370001,
+            -27.5
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "41a1d3f35e2bd97fc5992127aa24dbd6",
+          "render.texture-asset": "",
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.collision-layer": 9,
+          "body.half-extents": [
+            1.5,
+            1.35,
+            0.12
+          ],
+          "body.radius": 1.5,
+          "body.terrain": "",
+          "body.mass": 65,
+          "body.friction": 0.8,
+          "body.restitution": 0.02,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": true,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0
+        }
+      },
+      {
+        "id": 71013,
+        "name": "Lantern Islet / house 1 / window_wall",
+        "fields": {
+          "tags": 64,
+          "position": [
+            -27.5,
+            1.370001,
+            -36.5
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "d38ade9ded58694eb62798061d31f017",
+          "render.texture-asset": "",
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "compound"
+            }
+          },
+          "body.collision-layer": 9,
+          "body.half-extents": [
+            1.5,
+            1.35,
+            0.12
+          ],
+          "body.radius": 1.5,
+          "body.terrain": "",
+          "body.mass": 65,
+          "body.friction": 0.8,
+          "body.restitution": 0.02,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": true,
+          "body.managed": false,
+          "body.compound-count": 4,
+          "body.compound-box": [
+            {
+              "center": [
+                -1.1,
+                0,
+                0
+              ],
+              "halfExtents": [
+                0.4,
+                1.35,
+                0.12
+              ]
+            },
+            {
+              "center": [
+                1.1,
+                0,
+                0
+              ],
+              "halfExtents": [
+                0.4,
+                1.35,
+                0.12
+              ]
+            },
+            {
+              "center": [
+                0,
+                -0.9,
+                0
+              ],
+              "halfExtents": [
+                0.7,
+                0.45,
+                0.12
+              ]
+            },
+            {
+              "center": [
+                0,
+                1.05,
+                0
+              ],
+              "halfExtents": [
+                0.7,
+                0.3,
+                0.12
+              ]
+            }
+          ],
+          "body.fluid-cavity-count": 0
+        }
+      },
+      {
+        "id": 71023,
+        "name": "Lantern Islet / house 1 / window_wall",
+        "fields": {
+          "tags": 64,
+          "position": [
+            -27.5,
+            1.370001,
+            -27.5
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "d38ade9ded58694eb62798061d31f017",
+          "render.texture-asset": "",
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "compound"
+            }
+          },
+          "body.collision-layer": 9,
+          "body.half-extents": [
+            1.5,
+            1.35,
+            0.12
+          ],
+          "body.radius": 1.5,
+          "body.terrain": "",
+          "body.mass": 65,
+          "body.friction": 0.8,
+          "body.restitution": 0.02,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": true,
+          "body.managed": false,
+          "body.compound-count": 4,
+          "body.compound-box": [
+            {
+              "center": [
+                -1.1,
+                0,
+                0
+              ],
+              "halfExtents": [
+                0.4,
+                1.35,
+                0.12
+              ]
+            },
+            {
+              "center": [
+                1.1,
+                0,
+                0
+              ],
+              "halfExtents": [
+                0.4,
+                1.35,
+                0.12
+              ]
+            },
+            {
+              "center": [
+                0,
+                -0.9,
+                0
+              ],
+              "halfExtents": [
+                0.7,
+                0.45,
+                0.12
+              ]
+            },
+            {
+              "center": [
+                0,
+                1.05,
+                0
+              ],
+              "halfExtents": [
+                0.7,
+                0.3,
+                0.12
+              ]
+            }
+          ],
+          "body.fluid-cavity-count": 0
+        }
+      },
+      {
+        "id": 71040,
+        "name": "Lantern Islet / house 1 / side wall",
+        "fields": {
+          "tags": 64,
+          "position": [
+            -38,
+            1.370001,
+            -35
+          ],
+          "rotation": [
+            0.70710677,
+            0,
+            0.70710677,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "41a1d3f35e2bd97fc5992127aa24dbd6",
+          "render.texture-asset": "",
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.collision-layer": 9,
+          "body.half-extents": [
+            1.5,
+            1.35,
+            0.12
+          ],
+          "body.radius": 1.5,
+          "body.terrain": "",
+          "body.mass": 65,
+          "body.friction": 0.8,
+          "body.restitution": 0.02,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": true,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0
+        }
+      },
+      {
+        "id": 71041,
+        "name": "Lantern Islet / house 1 / side wall",
+        "fields": {
+          "tags": 64,
+          "position": [
+            -38,
+            1.370001,
+            -32
+          ],
+          "rotation": [
+            0.70710677,
+            0,
+            0.70710677,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "41a1d3f35e2bd97fc5992127aa24dbd6",
+          "render.texture-asset": "",
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.collision-layer": 9,
+          "body.half-extents": [
+            1.5,
+            1.35,
+            0.12
+          ],
+          "body.radius": 1.5,
+          "body.terrain": "",
+          "body.mass": 65,
+          "body.friction": 0.8,
+          "body.restitution": 0.02,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": true,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0
+        }
+      },
+      {
+        "id": 71042,
+        "name": "Lantern Islet / house 1 / side wall",
+        "fields": {
+          "tags": 64,
+          "position": [
+            -38,
+            1.370001,
+            -29
+          ],
+          "rotation": [
+            0.70710677,
+            0,
+            0.70710677,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "41a1d3f35e2bd97fc5992127aa24dbd6",
+          "render.texture-asset": "",
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.collision-layer": 9,
+          "body.half-extents": [
+            1.5,
+            1.35,
+            0.12
+          ],
+          "body.radius": 1.5,
+          "body.terrain": "",
+          "body.mass": 65,
+          "body.friction": 0.8,
+          "body.restitution": 0.02,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": true,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0
+        }
+      },
+      {
+        "id": 71050,
+        "name": "Lantern Islet / house 1 / side wall",
+        "fields": {
+          "tags": 64,
+          "position": [
+            -26,
+            1.370001,
+            -35
+          ],
+          "rotation": [
+            0.70710677,
+            0,
+            0.70710677,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "41a1d3f35e2bd97fc5992127aa24dbd6",
+          "render.texture-asset": "",
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.collision-layer": 9,
+          "body.half-extents": [
+            1.5,
+            1.35,
+            0.12
+          ],
+          "body.radius": 1.5,
+          "body.terrain": "",
+          "body.mass": 65,
+          "body.friction": 0.8,
+          "body.restitution": 0.02,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": true,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0
+        }
+      },
+      {
+        "id": 71051,
+        "name": "Lantern Islet / house 1 / side wall",
+        "fields": {
+          "tags": 64,
+          "position": [
+            -26,
+            1.370001,
+            -32
+          ],
+          "rotation": [
+            0.70710677,
+            0,
+            0.70710677,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "41a1d3f35e2bd97fc5992127aa24dbd6",
+          "render.texture-asset": "",
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.collision-layer": 9,
+          "body.half-extents": [
+            1.5,
+            1.35,
+            0.12
+          ],
+          "body.radius": 1.5,
+          "body.terrain": "",
+          "body.mass": 65,
+          "body.friction": 0.8,
+          "body.restitution": 0.02,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": true,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0
+        }
+      },
+      {
+        "id": 71052,
+        "name": "Lantern Islet / house 1 / side wall",
+        "fields": {
+          "tags": 64,
+          "position": [
+            -26,
+            1.370001,
+            -29
+          ],
+          "rotation": [
+            0.70710677,
+            0,
+            0.70710677,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "41a1d3f35e2bd97fc5992127aa24dbd6",
+          "render.texture-asset": "",
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.collision-layer": 9,
+          "body.half-extents": [
+            1.5,
+            1.35,
+            0.12
+          ],
+          "body.radius": 1.5,
+          "body.terrain": "",
+          "body.mass": 65,
+          "body.friction": 0.8,
+          "body.restitution": 0.02,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": true,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0
+        }
+      },
+      {
+        "id": 71060,
+        "name": "Lantern Islet / house 1 / doorway frame",
+        "fields": {
+          "tags": 64,
+          "position": [
+            -33.5,
+            1.370001,
+            -27.5
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "42e5a4b54ea7a44b4faf1508edbbde5f",
+          "render.texture-asset": "",
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "compound"
+            }
+          },
+          "body.collision-layer": 9,
+          "body.half-extents": [
+            0.85,
+            1.35,
+            0.14
+          ],
+          "body.radius": 0.85,
+          "body.terrain": "",
+          "body.mass": 65,
+          "body.friction": 0.8,
+          "body.restitution": 0.02,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": true,
+          "body.managed": false,
+          "body.compound-count": 3,
+          "body.compound-box": [
+            {
+              "center": [
+                -0.77,
+                -0.05,
+                0
+              ],
+              "halfExtents": [
+                0.08,
+                1.3,
+                0.14
+              ]
+            },
+            {
+              "center": [
+                0.77,
+                -0.05,
+                0
+              ],
+              "halfExtents": [
+                0.08,
+                1.3,
+                0.14
+              ]
+            },
+            {
+              "center": [
+                0,
+                1.27,
+                0
+              ],
+              "halfExtents": [
+                0.85,
+                0.08,
+                0.14
+              ]
+            }
+          ],
+          "body.fluid-cavity-count": 0
+        }
+      },
+      {
+        "id": 71062,
+        "name": "Lantern Islet / house 1 / door infill",
+        "fields": {
+          "tags": 64,
+          "position": [
+            -34.675,
+            1.370001,
+            -27.5
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            0.21666667,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "41a1d3f35e2bd97fc5992127aa24dbd6",
+          "render.texture-asset": "",
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.collision-layer": 9,
+          "body.half-extents": [
+            0.325,
+            1.35,
+            0.12
+          ],
+          "body.radius": 0.325,
+          "body.terrain": "",
+          "body.mass": 1,
+          "body.friction": 0.8,
+          "body.restitution": 0.02,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": true,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0
+        }
+      },
+      {
+        "id": 71063,
+        "name": "Lantern Islet / house 1 / door infill",
+        "fields": {
+          "tags": 64,
+          "position": [
+            -32.325,
+            1.370001,
+            -27.5
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            0.21666667,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "41a1d3f35e2bd97fc5992127aa24dbd6",
+          "render.texture-asset": "",
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.collision-layer": 9,
+          "body.half-extents": [
+            0.325,
+            1.35,
+            0.12
+          ],
+          "body.radius": 0.325,
+          "body.terrain": "",
+          "body.mass": 1,
+          "body.friction": 0.8,
+          "body.restitution": 0.02,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": true,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0
+        }
+      },
+      {
+        "id": 71061,
+        "name": "Lantern Islet / house 1 / physical hinged leaf",
+        "fields": {
+          "tags": 64,
+          "position": [
+            -33.5,
+            1.22,
+            -27.5
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "c1d761d76c4985e7d6e723e073253b7e",
+          "render.texture-asset": "",
+          "body": {
+            "motion": {
+              "symbol": "dynamic"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.collision-layer": 9,
+          "body.half-extents": [
+            0.65,
+            1.175,
+            0.055
+          ],
+          "body.radius": 0.65,
+          "body.terrain": "",
+          "body.mass": 18,
+          "body.friction": 0.8,
+          "body.restitution": 0.02,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": true,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0
+        }
+      },
+      {
+        "id": 71070,
+        "name": "Lantern Islet / house 1 / pitched roof",
+        "fields": {
+          "tags": 64,
+          "position": [
+            -32,
+            3.688934,
+            -34.25
+          ],
+          "rotation": [
+            0.9848077,
+            -0.17364818,
+            0,
+            0
+          ],
+          "scale": [
+            4,
+            1,
+            1.5962666
+          ],
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "69fb5fd50a3b1cf1ea299445c98f87e6",
+          "render.texture-asset": "",
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.collision-layer": 9,
+          "body.half-extents": [
+            6,
+            0.1,
+            2.3944
+          ],
+          "body.radius": 6,
+          "body.terrain": "",
+          "body.mass": 1,
+          "body.friction": 0.8,
+          "body.restitution": 0.02,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": true,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0
+        }
+      },
+      {
+        "id": 71071,
+        "name": "Lantern Islet / house 1 / pitched roof",
+        "fields": {
+          "tags": 64,
+          "position": [
+            -32,
+            3.688934,
+            -29.75
+          ],
+          "rotation": [
+            0.9848077,
+            0.17364818,
+            0,
+            0
+          ],
+          "scale": [
+            4,
+            1,
+            1.5962666
+          ],
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "69fb5fd50a3b1cf1ea299445c98f87e6",
+          "render.texture-asset": "",
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.collision-layer": 9,
+          "body.half-extents": [
+            6,
+            0.1,
+            2.3944
+          ],
+          "body.radius": 6,
+          "body.terrain": "",
+          "body.mass": 1,
+          "body.friction": 0.8,
+          "body.restitution": 0.02,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": true,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0
+        }
+      },
+      {
+        "id": 71170,
+        "name": "Lantern Islet / house 1 / timber gable",
+        "fields": {
+          "tags": 64,
+          "position": [
+            -38,
+            2.720001,
+            -32
+          ],
+          "rotation": [
+            0.70710677,
+            0,
+            0.70710677,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "6bbd8c6ab315676ace9ad9a61cda72d5",
+          "render.texture-asset": "",
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "compound"
+            }
+          },
+          "body.collision-layer": 9,
+          "body.half-extents": [
+            4.5,
+            1,
+            0.1
+          ],
+          "body.radius": 4.5,
+          "body.terrain": "",
+          "body.mass": 1,
+          "body.friction": 0.8,
+          "body.restitution": 0.02,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": true,
+          "body.managed": false,
+          "body.compound-count": 18,
+          "body.compound-box": [
+            {
+              "center": [
+                -4.25,
+                0.12049628,
+                0
+              ],
+              "halfExtents": [
+                0.25,
+                0.12049628,
+                0.1
+              ]
+            },
+            {
+              "center": [
+                -3.75,
+                0.21148884,
+                0
+              ],
+              "halfExtents": [
+                0.25,
+                0.21148884,
+                0.1
+              ]
+            },
+            {
+              "center": [
+                -3.25,
+                0.30248138,
+                0
+              ],
+              "halfExtents": [
+                0.25,
+                0.30248138,
+                0.1
+              ]
+            },
+            {
+              "center": [
+                -2.75,
+                0.39347395,
+                0
+              ],
+              "halfExtents": [
+                0.25,
+                0.39347395,
+                0.1
+              ]
+            },
+            {
+              "center": [
+                -2.25,
+                0.48446652,
+                0
+              ],
+              "halfExtents": [
+                0.25,
+                0.48446652,
+                0.1
+              ]
+            },
+            {
+              "center": [
+                -1.75,
+                0.57545906,
+                0
+              ],
+              "halfExtents": [
+                0.25,
+                0.57545906,
+                0.1
+              ]
+            },
+            {
+              "center": [
+                -1.25,
+                0.66645163,
+                0
+              ],
+              "halfExtents": [
+                0.25,
+                0.66645163,
+                0.1
+              ]
+            },
+            {
+              "center": [
+                -0.75,
+                0.7574442,
+                0
+              ],
+              "halfExtents": [
+                0.25,
+                0.7574442,
+                0.1
+              ]
+            },
+            {
+              "center": [
+                -0.25,
+                0.8484368,
+                0
+              ],
+              "halfExtents": [
+                0.25,
+                0.8484368,
+                0.1
+              ]
+            },
+            {
+              "center": [
+                0.25,
+                0.8484368,
+                0
+              ],
+              "halfExtents": [
+                0.25,
+                0.8484368,
+                0.1
+              ]
+            },
+            {
+              "center": [
+                0.75,
+                0.7574442,
+                0
+              ],
+              "halfExtents": [
+                0.25,
+                0.7574442,
+                0.1
+              ]
+            },
+            {
+              "center": [
+                1.25,
+                0.66645163,
+                0
+              ],
+              "halfExtents": [
+                0.25,
+                0.66645163,
+                0.1
+              ]
+            },
+            {
+              "center": [
+                1.75,
+                0.57545906,
+                0
+              ],
+              "halfExtents": [
+                0.25,
+                0.57545906,
+                0.1
+              ]
+            },
+            {
+              "center": [
+                2.25,
+                0.48446652,
+                0
+              ],
+              "halfExtents": [
+                0.25,
+                0.48446652,
+                0.1
+              ]
+            },
+            {
+              "center": [
+                2.75,
+                0.39347395,
+                0
+              ],
+              "halfExtents": [
+                0.25,
+                0.39347395,
+                0.1
+              ]
+            },
+            {
+              "center": [
+                3.25,
+                0.30248138,
+                0
+              ],
+              "halfExtents": [
+                0.25,
+                0.30248138,
+                0.1
+              ]
+            },
+            {
+              "center": [
+                3.75,
+                0.21148884,
+                0
+              ],
+              "halfExtents": [
+                0.25,
+                0.21148884,
+                0.1
+              ]
+            },
+            {
+              "center": [
+                4.25,
+                0.12049628,
+                0
+              ],
+              "halfExtents": [
+                0.25,
+                0.12049628,
+                0.1
+              ]
+            }
+          ],
+          "body.fluid-cavity-count": 0
+        }
+      },
+      {
+        "id": 71171,
+        "name": "Lantern Islet / house 1 / timber gable",
+        "fields": {
+          "tags": 64,
+          "position": [
+            -26,
+            2.720001,
+            -32
+          ],
+          "rotation": [
+            0.70710677,
+            0,
+            0.70710677,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "6bbd8c6ab315676ace9ad9a61cda72d5",
+          "render.texture-asset": "",
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "compound"
+            }
+          },
+          "body.collision-layer": 9,
+          "body.half-extents": [
+            4.5,
+            1,
+            0.1
+          ],
+          "body.radius": 4.5,
+          "body.terrain": "",
+          "body.mass": 1,
+          "body.friction": 0.8,
+          "body.restitution": 0.02,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": true,
+          "body.managed": false,
+          "body.compound-count": 18,
+          "body.compound-box": [
+            {
+              "center": [
+                -4.25,
+                0.12049628,
+                0
+              ],
+              "halfExtents": [
+                0.25,
+                0.12049628,
+                0.1
+              ]
+            },
+            {
+              "center": [
+                -3.75,
+                0.21148884,
+                0
+              ],
+              "halfExtents": [
+                0.25,
+                0.21148884,
+                0.1
+              ]
+            },
+            {
+              "center": [
+                -3.25,
+                0.30248138,
+                0
+              ],
+              "halfExtents": [
+                0.25,
+                0.30248138,
+                0.1
+              ]
+            },
+            {
+              "center": [
+                -2.75,
+                0.39347395,
+                0
+              ],
+              "halfExtents": [
+                0.25,
+                0.39347395,
+                0.1
+              ]
+            },
+            {
+              "center": [
+                -2.25,
+                0.48446652,
+                0
+              ],
+              "halfExtents": [
+                0.25,
+                0.48446652,
+                0.1
+              ]
+            },
+            {
+              "center": [
+                -1.75,
+                0.57545906,
+                0
+              ],
+              "halfExtents": [
+                0.25,
+                0.57545906,
+                0.1
+              ]
+            },
+            {
+              "center": [
+                -1.25,
+                0.66645163,
+                0
+              ],
+              "halfExtents": [
+                0.25,
+                0.66645163,
+                0.1
+              ]
+            },
+            {
+              "center": [
+                -0.75,
+                0.7574442,
+                0
+              ],
+              "halfExtents": [
+                0.25,
+                0.7574442,
+                0.1
+              ]
+            },
+            {
+              "center": [
+                -0.25,
+                0.8484368,
+                0
+              ],
+              "halfExtents": [
+                0.25,
+                0.8484368,
+                0.1
+              ]
+            },
+            {
+              "center": [
+                0.25,
+                0.8484368,
+                0
+              ],
+              "halfExtents": [
+                0.25,
+                0.8484368,
+                0.1
+              ]
+            },
+            {
+              "center": [
+                0.75,
+                0.7574442,
+                0
+              ],
+              "halfExtents": [
+                0.25,
+                0.7574442,
+                0.1
+              ]
+            },
+            {
+              "center": [
+                1.25,
+                0.66645163,
+                0
+              ],
+              "halfExtents": [
+                0.25,
+                0.66645163,
+                0.1
+              ]
+            },
+            {
+              "center": [
+                1.75,
+                0.57545906,
+                0
+              ],
+              "halfExtents": [
+                0.25,
+                0.57545906,
+                0.1
+              ]
+            },
+            {
+              "center": [
+                2.25,
+                0.48446652,
+                0
+              ],
+              "halfExtents": [
+                0.25,
+                0.48446652,
+                0.1
+              ]
+            },
+            {
+              "center": [
+                2.75,
+                0.39347395,
+                0
+              ],
+              "halfExtents": [
+                0.25,
+                0.39347395,
+                0.1
+              ]
+            },
+            {
+              "center": [
+                3.25,
+                0.30248138,
+                0
+              ],
+              "halfExtents": [
+                0.25,
+                0.30248138,
+                0.1
+              ]
+            },
+            {
+              "center": [
+                3.75,
+                0.21148884,
+                0
+              ],
+              "halfExtents": [
+                0.25,
+                0.21148884,
+                0.1
+              ]
+            },
+            {
+              "center": [
+                4.25,
+                0.12049628,
+                0
+              ],
+              "halfExtents": [
+                0.25,
+                0.12049628,
+                0.1
+              ]
+            }
+          ],
+          "body.fluid-cavity-count": 0
+        }
+      },
+      {
+        "id": 71100,
+        "name": "Lantern Islet / house 1 / claim home",
+        "fields": {
+          "tags": 64,
+          "position": [
+            -36,
+            0.335,
+            -34.7
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "91977a30f1212809c7e13a4379c9b0fe",
+          "render.texture-asset": "",
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.collision-layer": 2,
+          "body.half-extents": [
+            0.55,
+            0.3,
+            1
+          ],
+          "body.radius": 0.55,
+          "body.terrain": "",
+          "body.mass": 25,
+          "body.friction": 0.8,
+          "body.restitution": 0.02,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": true,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0
+        }
+      },
+      {
+        "id": 71101,
+        "name": "Lantern Islet / house 1 / Storage chest",
+        "fields": {
+          "tags": 64,
+          "position": [
+            -36,
+            0.435,
+            -29.5
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "562cdc0b7f3bbf6d263ebe61bfb5e57c",
+          "render.texture-asset": "",
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.collision-layer": 2,
+          "body.half-extents": [
+            0.6,
+            0.4,
+            0.4
+          ],
+          "body.radius": 0.6,
+          "body.terrain": "",
+          "body.mass": 25,
+          "body.friction": 0.8,
+          "body.restitution": 0.02,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": true,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0
+        }
+      },
+      {
+        "id": 71102,
+        "name": "Lantern Islet / house 1 / Workbench",
+        "fields": {
+          "tags": 64,
+          "position": [
+            -29,
+            0.5350005,
+            -34.6
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "1c9b43ea32fc42bae7a1caf3a2ecbd4a",
+          "render.texture-asset": "",
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.collision-layer": 2,
+          "body.half-extents": [
+            1,
+            0.5,
+            0.5
+          ],
+          "body.radius": 1,
+          "body.terrain": "",
+          "body.mass": 25,
+          "body.friction": 0.8,
+          "body.restitution": 0.02,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": true,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0
+        }
+      },
+      {
+        "id": 71103,
+        "name": "Lantern Islet / house 1 / Chair",
+        "fields": {
+          "tags": 64,
+          "position": [
+            -32.8,
+            0.5350005,
+            -31
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "da134bf8cc13fa113f4a2c61c26dec0a",
+          "render.texture-asset": "",
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.collision-layer": 2,
+          "body.half-extents": [
+            0.3,
+            0.5,
+            0.3
+          ],
+          "body.radius": 0.3,
+          "body.terrain": "",
+          "body.mass": 25,
+          "body.friction": 0.8,
+          "body.restitution": 0.02,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": true,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0
+        }
+      },
+      {
+        "id": 71104,
+        "name": "Lantern Islet / house 1 / Dining table",
+        "fields": {
+          "tags": 64,
+          "position": [
+            -31,
+            0.435,
+            -31.5
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "6a97ce58dc6c94600e8a8f26d5a0c590",
+          "render.texture-asset": "",
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.collision-layer": 2,
+          "body.half-extents": [
+            0.8,
+            0.4,
+            0.5
+          ],
+          "body.radius": 0.8,
+          "body.terrain": "",
+          "body.mass": 25,
+          "body.friction": 0.8,
+          "body.restitution": 0.02,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": true,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0
+        }
+      },
+      {
+        "id": 71105,
+        "name": "Lantern Islet / house 1 / Sofa",
+        "fields": {
+          "tags": 64,
+          "position": [
+            -29,
+            0.485,
+            -29.5
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "5014b1cb05b6f9d0dfe51497908f659b",
+          "render.texture-asset": "",
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.collision-layer": 2,
+          "body.half-extents": [
+            1,
+            0.45,
+            0.45
+          ],
+          "body.radius": 1,
+          "body.terrain": "",
+          "body.mass": 25,
+          "body.friction": 0.8,
+          "body.restitution": 0.02,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": true,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0
+        }
+      },
+      {
+        "id": 71106,
+        "name": "Lantern Islet / house 1 / Cupboard",
+        "fields": {
+          "tags": 64,
+          "position": [
+            -27.1,
+            0.935,
+            -32.7
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "75bf6cd1b23b9231c3f2c95073e10eca",
+          "render.texture-asset": "",
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.collision-layer": 2,
+          "body.half-extents": [
+            0.55,
+            0.9,
+            0.3
+          ],
+          "body.radius": 0.55,
+          "body.terrain": "",
+          "body.mass": 25,
+          "body.friction": 0.8,
+          "body.restitution": 0.02,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": true,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0
+        }
+      },
+      {
+        "id": 71107,
+        "name": "Lantern Islet / house 1 / Shelves",
+        "fields": {
+          "tags": 64,
+          "position": [
+            -37.1,
+            0.935,
+            -32.3
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "6013bb6f6228849de2fb47bd2790f09f",
+          "render.texture-asset": "",
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.collision-layer": 2,
+          "body.half-extents": [
+            0.55,
+            0.9,
+            0.22
+          ],
+          "body.radius": 0.55,
+          "body.terrain": "",
+          "body.mass": 25,
+          "body.friction": 0.8,
+          "body.restitution": 0.02,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": true,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0
+        }
+      },
+      {
+        "id": 71108,
+        "name": "Lantern Islet / house 1 / Warm lamp",
+        "fields": {
+          "tags": 64,
+          "position": [
+            -30,
+            0.435,
+            -33.1
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "f88cd9e865c2823cf959acb5febb787a",
+          "render.texture-asset": "",
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.collision-layer": 2,
+          "body.half-extents": [
+            0.2,
+            0.4,
+            0.2
+          ],
+          "body.radius": 0.2,
+          "body.terrain": "",
+          "body.mass": 25,
+          "body.friction": 0.8,
+          "body.restitution": 0.02,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": true,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0,
+          "light": {
+            "symbol": "point"
+          },
+          "light.color": [
+            1,
+            0.73,
+            0.4
+          ],
+          "light.intensity": 2,
+          "light.range": 6,
+          "light.cone": {
+            "innerDegrees": 20,
+            "outerDegrees": 35
+          }
+        }
+      },
+      {
+        "id": 71109,
+        "name": "Lantern Islet / house 1 / Woven rug",
+        "fields": {
+          "tags": 64,
+          "position": [
+            -32,
+            0.05,
+            -33.2
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "65b1727f35dd0f5e96fc601a2cca1837",
+          "render.texture-asset": "",
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.collision-layer": 2,
+          "body.half-extents": [
+            0.9,
+            0.015,
+            0.65
+          ],
+          "body.radius": 0.9,
+          "body.terrain": "",
+          "body.mass": 25,
+          "body.friction": 0.8,
+          "body.restitution": 0.02,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": true,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0
+        }
+      },
+      {
+        "id": 71110,
+        "name": "Lantern Islet / house 1 / Island landscape",
+        "fields": {
+          "tags": 64,
+          "position": [
+            -32,
+            1.620001,
+            -36.3
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "0837be40ca7c1a1180da0b12743392ba",
+          "render.texture-asset": "",
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.collision-layer": 2,
+          "body.half-extents": [
+            0.45,
+            0.32,
+            0.04
+          ],
+          "body.radius": 0.45,
+          "body.terrain": "",
+          "body.mass": 25,
+          "body.friction": 0.8,
+          "body.restitution": 0.02,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": true,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0
+        }
+      },
+      {
+        "id": 71120,
+        "name": "Lantern Islet / house 1 / clear the entrance",
+        "fields": {
+          "tags": 64,
+          "position": [
+            -33.5,
+            0.435,
+            -26.5
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "562cdc0b7f3bbf6d263ebe61bfb5e57c",
+          "render.texture-asset": "",
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.collision-layer": 2,
+          "body.half-extents": [
+            0.6,
+            0.4,
+            0.4
+          ],
+          "body.radius": 0.6,
+          "body.terrain": "",
+          "body.mass": 25,
+          "body.friction": 0.8,
+          "body.restitution": 0.02,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": true,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0
+        }
+      },
+      {
+        "id": 70007,
+        "name": "Lantern lighthouse / sealed tower",
+        "fields": {
+          "position": [
+            22,
+            0,
+            -30
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "25101812d8b45813ab796a5431dd32b7",
+          "render.texture-asset": "",
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "compound"
+            }
+          },
+          "body.collision-layer": 9,
+          "body.half-extents": [
+            2,
+            21.3125,
+            2
+          ],
+          "body.radius": 2,
+          "body.terrain": "",
+          "body.mass": 1,
+          "body.friction": 0.8,
+          "body.restitution": 0.02,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": true,
+          "body.managed": false,
+          "body.compound-count": 1,
+          "body.compound-box": [
+            {
+              "center": [
+                0,
+                21.3125,
+                0
+              ],
+              "halfExtents": [
+                2,
+                21.3125,
+                2
+              ]
+            }
+          ],
+          "body.fluid-cavity-count": 0
+        }
+      },
+      {
+        "id": 70008,
+        "name": "Harvestable ore",
+        "fields": {
+          "tags": 4,
+          "position": [
+            121.19054,
+            -21.821404,
+            -78.88489
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "427900d43843779e019a232e8f35e421",
+          "render.texture-asset": "",
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.collision-layer": 2,
+          "body.half-extents": [
+            0.85,
+            0.6,
+            0.75
+          ],
+          "body.radius": 0.85,
+          "body.terrain": "",
+          "body.mass": 160,
+          "body.friction": 0.8,
+          "body.restitution": 0.02,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": true,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0
+        }
+      },
+      {
+        "id": 70009,
+        "name": "Harvestable tree",
+        "fields": {
+          "tags": 2,
+          "position": [
+            -181.1421,
+            -41.08557,
+            46.160484
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.collision-layer": 2,
+          "body.half-extents": [
+            0.3,
+            2.5,
+            0.3
+          ],
+          "body.radius": 0.3,
+          "body.terrain": "",
+          "body.mass": 100,
+          "body.friction": 0.8,
+          "body.restitution": 0.02,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": true,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0
+        }
+      },
+      {
+        "id": 70010,
+        "name": "Tree canopy / follows physical trunk",
+        "fields": {
+          "parent": 70009,
+          "position": [
+            0,
+            -2.5,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            0.5252101,
+            0.5252101,
+            0.5252101
+          ],
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "eaa068b449b2f76bbf32166398e681a2",
+          "render.texture-asset": ""
+        }
+      },
+      {
+        "id": 70011,
+        "name": "Harvestable tree",
+        "fields": {
+          "tags": 2,
+          "position": [
+            77.30834,
+            -7.802875,
+            -92.25689
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.collision-layer": 2,
+          "body.half-extents": [
+            0.3,
+            2.5,
+            0.3
+          ],
+          "body.radius": 0.3,
+          "body.terrain": "",
+          "body.mass": 100,
+          "body.friction": 0.8,
+          "body.restitution": 0.02,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": true,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0
+        }
+      },
+      {
+        "id": 70012,
+        "name": "Tree canopy / follows physical trunk",
+        "fields": {
+          "parent": 70011,
+          "position": [
+            0,
+            -2.5,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            0.5252101,
+            0.5252101,
+            0.5252101
+          ],
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "eaa068b449b2f76bbf32166398e681a2",
+          "render.texture-asset": ""
+        }
+      },
+      {
+        "id": 70013,
+        "name": "Harvestable rock",
+        "fields": {
+          "tags": 4,
+          "position": [
+            92.68904,
+            -10.803724,
+            -80.19676
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "427900d43843779e019a232e8f35e421",
+          "render.texture-asset": "",
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.collision-layer": 2,
+          "body.half-extents": [
+            0.85,
+            0.6,
+            0.75
+          ],
+          "body.radius": 0.85,
+          "body.terrain": "",
+          "body.mass": 160,
+          "body.friction": 0.8,
+          "body.restitution": 0.02,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": true,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0
+        }
+      },
+      {
+        "id": 70014,
+        "name": "Harvestable tree",
+        "fields": {
+          "tags": 2,
+          "position": [
+            80.26308,
+            -34.44771,
+            -153.99365
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.collision-layer": 2,
+          "body.half-extents": [
+            0.3,
+            2.5,
+            0.3
+          ],
+          "body.radius": 0.3,
+          "body.terrain": "",
+          "body.mass": 100,
+          "body.friction": 0.8,
+          "body.restitution": 0.02,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": true,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0
+        }
+      },
+      {
+        "id": 70015,
+        "name": "Tree canopy / follows physical trunk",
+        "fields": {
+          "parent": 70014,
+          "position": [
+            0,
+            -2.5,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            0.5252101,
+            0.5252101,
+            0.5252101
+          ],
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "eaa068b449b2f76bbf32166398e681a2",
+          "render.texture-asset": ""
+        }
+      },
+      {
+        "id": 70016,
+        "name": "Harvestable tree",
+        "fields": {
+          "tags": 2,
+          "position": [
+            -70.620834,
+            -23.191702,
+            -133.63019
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.collision-layer": 2,
+          "body.half-extents": [
+            0.3,
+            2.5,
+            0.3
+          ],
+          "body.radius": 0.3,
+          "body.terrain": "",
+          "body.mass": 100,
+          "body.friction": 0.8,
+          "body.restitution": 0.02,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": true,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0
+        }
+      },
+      {
+        "id": 70017,
+        "name": "Tree canopy / follows physical trunk",
+        "fields": {
+          "parent": 70016,
+          "position": [
+            0,
+            -2.5,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            0.5252101,
+            0.5252101,
+            0.5252101
+          ],
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "eaa068b449b2f76bbf32166398e681a2",
+          "render.texture-asset": ""
+        }
+      },
+      {
+        "id": 70018,
+        "name": "Harvestable ore",
+        "fields": {
+          "tags": 4,
+          "position": [
+            144.06186,
+            -30.75602,
+            75.12221
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "427900d43843779e019a232e8f35e421",
+          "render.texture-asset": "",
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.collision-layer": 2,
+          "body.half-extents": [
+            0.85,
+            0.6,
+            0.75
+          ],
+          "body.radius": 0.85,
+          "body.terrain": "",
+          "body.mass": 160,
+          "body.friction": 0.8,
+          "body.restitution": 0.02,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": true,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0
+        }
+      },
+      {
+        "id": 70019,
+        "name": "Harvestable tree",
+        "fields": {
+          "tags": 2,
+          "position": [
+            93.14173,
+            -36.6106,
+            -151.66385
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.collision-layer": 2,
+          "body.half-extents": [
+            0.3,
+            2.5,
+            0.3
+          ],
+          "body.radius": 0.3,
+          "body.terrain": "",
+          "body.mass": 100,
+          "body.friction": 0.8,
+          "body.restitution": 0.02,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": true,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0
+        }
+      },
+      {
+        "id": 70020,
+        "name": "Tree canopy / follows physical trunk",
+        "fields": {
+          "parent": 70019,
+          "position": [
+            0,
+            -2.5,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            0.5252101,
+            0.5252101,
+            0.5252101
+          ],
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "eaa068b449b2f76bbf32166398e681a2",
+          "render.texture-asset": ""
+        }
+      },
+      {
+        "id": 70021,
+        "name": "Harvestable tree",
+        "fields": {
+          "tags": 2,
+          "position": [
+            -128.17047,
+            -11.713837,
+            -2.0999532
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.collision-layer": 2,
+          "body.half-extents": [
+            0.3,
+            2.5,
+            0.3
+          ],
+          "body.radius": 0.3,
+          "body.terrain": "",
+          "body.mass": 100,
+          "body.friction": 0.8,
+          "body.restitution": 0.02,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": true,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0
+        }
+      },
+      {
+        "id": 70022,
+        "name": "Tree canopy / follows physical trunk",
+        "fields": {
+          "parent": 70021,
+          "position": [
+            0,
+            -2.5,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            0.5252101,
+            0.5252101,
+            0.5252101
+          ],
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "eaa068b449b2f76bbf32166398e681a2",
+          "render.texture-asset": ""
+        }
+      },
+      {
+        "id": 70023,
+        "name": "Harvestable rock",
+        "fields": {
+          "tags": 4,
+          "position": [
+            -142.75725,
+            -31.61306,
+            -81.10148
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "427900d43843779e019a232e8f35e421",
+          "render.texture-asset": "",
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.collision-layer": 2,
+          "body.half-extents": [
+            0.85,
+            0.6,
+            0.75
+          ],
+          "body.radius": 0.85,
+          "body.terrain": "",
+          "body.mass": 160,
+          "body.friction": 0.8,
+          "body.restitution": 0.02,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": true,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0
+        }
+      },
+      {
+        "id": 70024,
+        "name": "Harvestable tree",
+        "fields": {
+          "tags": 2,
+          "position": [
+            -108.028244,
+            -12.784668,
+            -72.9084
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.collision-layer": 2,
+          "body.half-extents": [
+            0.3,
+            2.5,
+            0.3
+          ],
+          "body.radius": 0.3,
+          "body.terrain": "",
+          "body.mass": 100,
+          "body.friction": 0.8,
+          "body.restitution": 0.02,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": true,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0
+        }
+      },
+      {
+        "id": 70025,
+        "name": "Tree canopy / follows physical trunk",
+        "fields": {
+          "parent": 70024,
+          "position": [
+            0,
+            -2.5,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            0.5252101,
+            0.5252101,
+            0.5252101
+          ],
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "eaa068b449b2f76bbf32166398e681a2",
+          "render.texture-asset": ""
+        }
+      },
+      {
+        "id": 70026,
+        "name": "Harvestable tree",
+        "fields": {
+          "tags": 2,
+          "position": [
+            -66.100716,
+            -9.647093,
+            104.97684
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.collision-layer": 2,
+          "body.half-extents": [
+            0.3,
+            2.5,
+            0.3
+          ],
+          "body.radius": 0.3,
+          "body.terrain": "",
+          "body.mass": 100,
+          "body.friction": 0.8,
+          "body.restitution": 0.02,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": true,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0
+        }
+      },
+      {
+        "id": 70027,
+        "name": "Tree canopy / follows physical trunk",
+        "fields": {
+          "parent": 70026,
+          "position": [
+            0,
+            -2.5,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            0.5252101,
+            0.5252101,
+            0.5252101
+          ],
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "eaa068b449b2f76bbf32166398e681a2",
+          "render.texture-asset": ""
+        }
+      },
+      {
+        "id": 70028,
+        "name": "Harvestable ore",
+        "fields": {
+          "tags": 4,
+          "position": [
+            81.85469,
+            -38.925026,
+            -158.97435
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "427900d43843779e019a232e8f35e421",
+          "render.texture-asset": "",
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.collision-layer": 2,
+          "body.half-extents": [
+            0.85,
+            0.6,
+            0.75
+          ],
+          "body.radius": 0.85,
+          "body.terrain": "",
+          "body.mass": 160,
+          "body.friction": 0.8,
+          "body.restitution": 0.02,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": true,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0
+        }
+      },
+      {
+        "id": 70029,
+        "name": "Harvestable tree",
+        "fields": {
+          "tags": 2,
+          "position": [
+            182.2934,
+            -41.5815,
+            -45.65277
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.collision-layer": 2,
+          "body.half-extents": [
+            0.3,
+            2.5,
+            0.3
+          ],
+          "body.radius": 0.3,
+          "body.terrain": "",
+          "body.mass": 100,
+          "body.friction": 0.8,
+          "body.restitution": 0.02,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": true,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0
+        }
+      },
+      {
+        "id": 70030,
+        "name": "Tree canopy / follows physical trunk",
+        "fields": {
+          "parent": 70029,
+          "position": [
+            0,
+            -2.5,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            0.5252101,
+            0.5252101,
+            0.5252101
+          ],
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "eaa068b449b2f76bbf32166398e681a2",
+          "render.texture-asset": ""
+        }
+      },
+      {
+        "id": 70031,
+        "name": "Harvestable tree",
+        "fields": {
+          "tags": 2,
+          "position": [
+            -10.317692,
+            -42.01495,
+            188.50775
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.collision-layer": 2,
+          "body.half-extents": [
+            0.3,
+            2.5,
+            0.3
+          ],
+          "body.radius": 0.3,
+          "body.terrain": "",
+          "body.mass": 100,
+          "body.friction": 0.8,
+          "body.restitution": 0.02,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": true,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0
+        }
+      },
+      {
+        "id": 70032,
+        "name": "Tree canopy / follows physical trunk",
+        "fields": {
+          "parent": 70031,
+          "position": [
+            0,
+            -2.5,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            0.5252101,
+            0.5252101,
+            0.5252101
+          ],
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "eaa068b449b2f76bbf32166398e681a2",
+          "render.texture-asset": ""
+        }
+      },
+      {
+        "id": 70033,
+        "name": "Harvestable rock",
+        "fields": {
+          "tags": 4,
+          "position": [
+            101.10789,
+            -13.816633,
+            79.457054
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "427900d43843779e019a232e8f35e421",
+          "render.texture-asset": "",
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.collision-layer": 2,
+          "body.half-extents": [
+            0.85,
+            0.6,
+            0.75
+          ],
+          "body.radius": 0.85,
+          "body.terrain": "",
+          "body.mass": 160,
+          "body.friction": 0.8,
+          "body.restitution": 0.02,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": true,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0
+        }
+      },
+      {
+        "id": 70034,
+        "name": "Harvestable tree",
+        "fields": {
+          "tags": 2,
+          "position": [
+            -62.713394,
+            -15.152471,
+            119.62261
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.collision-layer": 2,
+          "body.half-extents": [
+            0.3,
+            2.5,
+            0.3
+          ],
+          "body.radius": 0.3,
+          "body.terrain": "",
+          "body.mass": 100,
+          "body.friction": 0.8,
+          "body.restitution": 0.02,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": true,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0
+        }
+      },
+      {
+        "id": 70035,
+        "name": "Tree canopy / follows physical trunk",
+        "fields": {
+          "parent": 70034,
+          "position": [
+            0,
+            -2.5,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            0.5252101,
+            0.5252101,
+            0.5252101
+          ],
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "eaa068b449b2f76bbf32166398e681a2",
+          "render.texture-asset": ""
+        }
+      },
+      {
+        "id": 70036,
+        "name": "Harvestable tree",
+        "fields": {
+          "tags": 2,
+          "position": [
+            -77.82148,
+            -13.479686,
+            -106.27234
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.collision-layer": 2,
+          "body.half-extents": [
+            0.3,
+            2.5,
+            0.3
+          ],
+          "body.radius": 0.3,
+          "body.terrain": "",
+          "body.mass": 100,
+          "body.friction": 0.8,
+          "body.restitution": 0.02,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": true,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0
+        }
+      },
+      {
+        "id": 70037,
+        "name": "Tree canopy / follows physical trunk",
+        "fields": {
+          "parent": 70036,
+          "position": [
+            0,
+            -2.5,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            0.5252101,
+            0.5252101,
+            0.5252101
+          ],
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "eaa068b449b2f76bbf32166398e681a2",
+          "render.texture-asset": ""
+        }
+      },
+      {
+        "id": 70038,
+        "name": "Harvestable ore",
+        "fields": {
+          "tags": 4,
+          "position": [
+            176.64662,
+            -39.89625,
+            -38.307144
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "427900d43843779e019a232e8f35e421",
+          "render.texture-asset": "",
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.collision-layer": 2,
+          "body.half-extents": [
+            0.85,
+            0.6,
+            0.75
+          ],
+          "body.radius": 0.85,
+          "body.terrain": "",
+          "body.mass": 160,
+          "body.friction": 0.8,
+          "body.restitution": 0.02,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": true,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0
+        }
+      },
+      {
+        "id": 70039,
+        "name": "Harvestable tree",
+        "fields": {
+          "tags": 2,
+          "position": [
+            94.75085,
+            -10.1500635,
+            81.622986
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.collision-layer": 2,
+          "body.half-extents": [
+            0.3,
+            2.5,
+            0.3
+          ],
+          "body.radius": 0.3,
+          "body.terrain": "",
+          "body.mass": 100,
+          "body.friction": 0.8,
+          "body.restitution": 0.02,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": true,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0
+        }
+      },
+      {
+        "id": 70040,
+        "name": "Tree canopy / follows physical trunk",
+        "fields": {
+          "parent": 70039,
+          "position": [
+            0,
+            -2.5,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            0.5252101,
+            0.5252101,
+            0.5252101
+          ],
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "eaa068b449b2f76bbf32166398e681a2",
+          "render.texture-asset": ""
+        }
+      },
+      {
+        "id": 70041,
+        "name": "Harvestable tree",
+        "fields": {
+          "tags": 2,
+          "position": [
+            2.9005344,
+            -5.7262745,
+            116.176346
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.collision-layer": 2,
+          "body.half-extents": [
+            0.3,
+            2.5,
+            0.3
+          ],
+          "body.radius": 0.3,
+          "body.terrain": "",
+          "body.mass": 100,
+          "body.friction": 0.8,
+          "body.restitution": 0.02,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": true,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0
+        }
+      },
+      {
+        "id": 70042,
+        "name": "Tree canopy / follows physical trunk",
+        "fields": {
+          "parent": 70041,
+          "position": [
+            0,
+            -2.5,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            0.5252101,
+            0.5252101,
+            0.5252101
+          ],
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "eaa068b449b2f76bbf32166398e681a2",
+          "render.texture-asset": ""
+        }
+      },
+      {
+        "id": 70043,
+        "name": "Harvestable rock",
+        "fields": {
+          "tags": 4,
+          "position": [
+            43.770557,
+            -7.212386,
+            106.76041
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "427900d43843779e019a232e8f35e421",
+          "render.texture-asset": "",
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.collision-layer": 2,
+          "body.half-extents": [
+            0.85,
+            0.6,
+            0.75
+          ],
+          "body.radius": 0.85,
+          "body.terrain": "",
+          "body.mass": 160,
+          "body.friction": 0.8,
+          "body.restitution": 0.02,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": true,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0
+        }
+      },
+      {
+        "id": 70044,
+        "name": "Harvestable tree",
+        "fields": {
+          "tags": 2,
+          "position": [
+            -136.9613,
+            -20.956131,
+            52.481937
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.collision-layer": 2,
+          "body.half-extents": [
+            0.3,
+            2.5,
+            0.3
+          ],
+          "body.radius": 0.3,
+          "body.terrain": "",
+          "body.mass": 100,
+          "body.friction": 0.8,
+          "body.restitution": 0.02,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": true,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0
+        }
+      },
+      {
+        "id": 70045,
+        "name": "Tree canopy / follows physical trunk",
+        "fields": {
+          "parent": 70044,
+          "position": [
+            0,
+            -2.5,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            0.5252101,
+            0.5252101,
+            0.5252101
+          ],
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "eaa068b449b2f76bbf32166398e681a2",
+          "render.texture-asset": ""
+        }
+      },
+      {
+        "id": 70046,
+        "name": "Harvestable tree",
+        "fields": {
+          "tags": 2,
+          "position": [
+            109.541794,
+            -15.1646,
+            79.05496
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.collision-layer": 2,
+          "body.half-extents": [
+            0.3,
+            2.5,
+            0.3
+          ],
+          "body.radius": 0.3,
+          "body.terrain": "",
+          "body.mass": 100,
+          "body.friction": 0.8,
+          "body.restitution": 0.02,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": true,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0
+        }
+      },
+      {
+        "id": 70047,
+        "name": "Tree canopy / follows physical trunk",
+        "fields": {
+          "parent": 70046,
+          "position": [
+            0,
+            -2.5,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            0.5252101,
+            0.5252101,
+            0.5252101
+          ],
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "eaa068b449b2f76bbf32166398e681a2",
+          "render.texture-asset": ""
+        }
+      },
+      {
+        "id": 70048,
+        "name": "Recoverable yard salvage",
+        "fields": {
+          "tags": 4,
+          "position": [
+            -9,
+            0.45,
+            24
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "25768c208812e4a3957d6e1741b6333d",
+          "render.texture-asset": "",
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.collision-layer": 2,
+          "body.half-extents": [
+            0.55,
+            0.45,
+            0.5
+          ],
+          "body.radius": 0.55,
+          "body.terrain": "",
+          "body.mass": 1,
+          "body.friction": 0.8,
+          "body.restitution": 0.02,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": true,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0
+        }
+      },
+      {
+        "id": 70049,
+        "name": "Recoverable yard salvage",
+        "fields": {
+          "tags": 4,
+          "position": [
+            -5,
+            0.45,
+            24
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "25768c208812e4a3957d6e1741b6333d",
+          "render.texture-asset": "",
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.collision-layer": 2,
+          "body.half-extents": [
+            0.55,
+            0.45,
+            0.5
+          ],
+          "body.radius": 0.55,
+          "body.terrain": "",
+          "body.mass": 1,
+          "body.friction": 0.8,
+          "body.restitution": 0.02,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": true,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0
+        }
+      },
+      {
+        "id": 70050,
+        "name": "Recoverable yard salvage",
+        "fields": {
+          "tags": 4,
+          "position": [
+            -1,
+            0.45,
+            24
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "25768c208812e4a3957d6e1741b6333d",
+          "render.texture-asset": "",
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.collision-layer": 2,
+          "body.half-extents": [
+            0.55,
+            0.45,
+            0.5
+          ],
+          "body.radius": 0.55,
+          "body.terrain": "",
+          "body.mass": 1,
+          "body.friction": 0.8,
+          "body.restitution": 0.02,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": true,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0
+        }
+      },
+      {
+        "id": 75000,
+        "name": "Mara / Quartermaster",
+        "fields": {
+          "nav.agent.areas": "18446744073709551615",
+          "nav.agent.arrival": "0.699999988",
+          "nav.agent.avoidance": "1",
+          "nav.agent.cornerDistance": "0.400000006",
+          "nav.agent.costs": "0 1 ",
+          "nav.agent.enabled": "1",
+          "nav.agent.profile": "0",
+          "nav.agent.repathSeconds": "0.600000024",
+          "nav.agent.speed": "1.10000002",
+          "motor.enabled": true,
+          "motor.radius": 0.3,
+          "motor.halfHeight": 0.6,
+          "motor.offset": [
+            0,
+            0.9,
+            0
+          ],
+          "motor.stepHeight": 0.45,
+          "motor.supportDistance": 0.2,
+          "motor.skin": 0.02,
+          "motor.maxSlopeDegrees": 50,
+          "motor.gravityScale": 1,
+          "motor.reorientationDegreesPerSecond": 160,
+          "motor.interactionMass": 80,
+          "motor.maxPushImpulse": 20,
+          "motor.collisionLayer": 0,
+          "motor.collisionMask": 18446744073709551615,
+          "motor.requiredTags": 0,
+          "motor.excludedTags": 0,
+          "scripts": 1,
+          "script.0.id": 1,
+          "script.0.asset": "13b54635578464e362ca87d0faec045f",
+          "script.0.enabled": true,
+          "script.0.properties": "{\"key\": \"region_islet_0\"}",
+          "tags": 384,
+          "position": [
+            -8,
+            0.06,
+            -12
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ]
+        }
+      },
+      {
+        "id": 75001,
+        "name": "Mara / Quartermaster / visual",
+        "fields": {
+          "parent": 75000,
+          "animation.enabled": true,
+          "animation.play-on-start": false,
+          "animation.loop": true,
+          "animation.clip": "Idle",
+          "animation.speed": 1,
+          "animation.time": 0,
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "be2a40f8deaefa94093af1f2fc7142df",
+          "render.texture-asset": ""
+        }
+      },
+      {
+        "id": 70051,
+        "name": "Working timber pier",
+        "fields": {
+          "tags": 1,
+          "position": [
+            0,
+            -7.37,
+            145
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            3,
+            0.15,
+            22
+          ],
+          "render.radius": 22,
+          "render.color": [
+            0.45,
+            0.35,
+            0.24
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.collision-layer": 9,
+          "body.half-extents": [
+            3,
+            0.15,
+            22
+          ],
+          "body.radius": 3,
+          "body.terrain": "",
+          "body.mass": 1,
+          "body.friction": 0.8,
+          "body.restitution": 0.02,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": true,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0
+        }
+      },
+      {
+        "id": 70052,
+        "name": "Harbour slipway",
+        "fields": {
+          "tags": 1,
+          "position": [
+            0,
+            -3.61,
+            90.5
+          ],
+          "rotation": [
+            0.9984707,
+            0.055283524,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            3,
+            0.15,
+            32.69988
+          ],
+          "render.radius": 32.69988,
+          "render.color": [
+            0.45,
+            0.39,
+            0.3
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.collision-layer": 9,
+          "body.half-extents": [
+            3,
+            0.15,
+            32.69988
+          ],
+          "body.radius": 3,
+          "body.terrain": "",
+          "body.mass": 1,
+          "body.friction": 0.8,
+          "body.restitution": 0.02,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": true,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0
+        }
+      },
+      {
+        "id": 76000,
+        "name": "Spring skiff",
+        "fields": {
+          "powertrain.graph": "{\"version\":1,\"enabled\":true,\"shafts\":[{\"name\":\"rotor\",\"kind\":\"internal\",\"inertia\":0.8,\"initialAngularVelocity\":0.0,\"viscousDrag\":0.02,\"target\":\"0\",\"bearing\":\"76000\",\"axis\":[0.0,0.0,-1.0]}],\"sources\":[{\"name\":\"engine\",\"shaft\":0,\"kind\":\"electric\",\"torqueCurve\":[],\"maxTorque\":180.0,\"maxPower\":40000.0,\"starterTorque\":0.0}],\"links\":[],\"brakes\":[{\"name\":\"load\",\"shaft\":0,\"maxTorque\":4000.0}]}",
+          "scripts": 1,
+          "script.0.id": 1,
+          "script.0.asset": "6acd80dd21388460940695e03942c5eb",
+          "script.0.enabled": true,
+          "script.0.properties": "{\"key\": \"region_islet_boat\"}",
+          "tags": 1024,
+          "position": [
+            4.2,
+            -8.07,
+            145
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "audio-emitter": [],
+          "audio.asset": "8d33afd69347af925b9f5b9ebd3b31b1",
+          "audio.enabled": true,
+          "audio.play-on-start": false,
+          "audio.loop": true,
+          "audio.spatial": true,
+          "audio.volume": 0.2,
+          "audio.pitch": 1,
+          "audio.reference-distance": 2,
+          "audio.maximum-distance": 120,
+          "audio.rolloff": 1,
+          "audio.attenuation": {
+            "symbol": "inverse"
+          },
+          "body": {
+            "motion": {
+              "symbol": "dynamic"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.collision-layer": 9,
+          "body.half-extents": [
+            0.8,
+            0.3,
+            2.2
+          ],
+          "body.radius": 0.8,
+          "body.terrain": "",
+          "body.mass": 650,
+          "body.friction": 0.8,
+          "body.restitution": 0.02,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": true,
+          "body.managed": false,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0
+        }
+      },
+      {
+        "id": 76001,
+        "name": "Spring skiff / authored body",
+        "fields": {
+          "parent": 76000,
+          "tags": 4096,
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "bb859efca6323a80c6388192d9e0d423",
+          "render.texture-asset": ""
+        }
+      },
+      {
+        "id": 79000,
+        "name": "Homestead / navigation",
+        "fields": {
+          "nav.surface.asset": "afc623c31ffaab1297addeb34ea0af8d",
+          "nav.surface.cellHeight": "0.150000006",
+          "nav.surface.cellSize": "0.5",
+          "nav.surface.enabled": "1",
+          "nav.surface.halfExtents": "115 60 115",
+          "nav.surface.includeDynamic": "0",
+          "nav.surface.minRegion": "2",
+          "nav.surface.profile": "0",
+          "nav.surface.simplification": "1.29999995",
+          "nav.surface.sources": "512",
+          "nav.surface.tileSize": "64",
+          "position": [
+            0,
+            10,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ]
+        }
+      },
+      {
+        "id": 70053,
+        "name": "Regional gameplay binding",
+        "fields": {
+          "scripts": 1,
+          "script.0.id": 1,
+          "script.0.asset": "5fb3455b278281f386de312fd1cc4006",
+          "script.0.enabled": true,
+          "script.0.properties": "{\"key\": \"islet\"}",
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ]
+        }
+      }
+    ]
+  }
+}

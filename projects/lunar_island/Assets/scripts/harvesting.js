@@ -1,12 +1,16 @@
 import { world } from 'judas';
 import { WORLD } from './world-data.js';
+import { regionalResources } from './region-session.js';
 import { add as insert } from './inventory.js';
 import { add, mul, norm } from './math.js';
 export function nodeFor(hit) {
     return hit?.entity
-        ? WORLD.resources.find((n) => n.id === hit.entity.id)
+        ? WORLD.resources.find((n) => n.id === hit.entity.id) ||
+              regionalResources.get(hit.entity.id)
         : null;
 }
+export const harvestStatus = (p, n) =>
+    (n.owner?.state.harvest || p.state.harvest)[n.id];
 export function collect(p, hit) {
     if (!hit?.entity?.valid) return false;
     const e = hit.entity,
@@ -39,7 +43,7 @@ export function collect(p, hit) {
         return true;
     }
     p.state.bag = r.bag;
-    p.state.harvest[n.id] = { depleted: true };
+    (n.owner?.state.harvest || p.state.harvest)[n.id] = { depleted: true };
     e.destroy();
     p.state.stats.gathered += n.amount;
     p.effect('gather', 'Gathered ' + n.amount + ' ' + item + '.');
@@ -54,8 +58,12 @@ export function useTool(p, hit) {
         return;
     }
     const r =
-        p.state.harvest[n.id] ||
-        (p.state.harvest[n.id] = { hits: 0, felled: false, processed: 0 });
+        (n.owner?.state.harvest || p.state.harvest)[n.id] ||
+        ((n.owner?.state.harvest || p.state.harvest)[n.id] = {
+            hits: 0,
+            felled: false,
+            processed: 0,
+        });
     if (r.depleted) return;
     const required =
         n.kind === 'tree'

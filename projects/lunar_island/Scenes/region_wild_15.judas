@@ -1,0 +1,2564 @@
+{
+  "kind": "scene",
+  "schema": 1,
+  "data": {
+    "settings": {
+      "name": "Roadside wilderness / 16",
+      "world-origin": [
+        3040.0,
+        17.177702907534275,
+        1050.0
+      ],
+      "sun-direction": [
+        0.45,
+        0.72,
+        0.3
+      ],
+      "sun-color": [
+        1,
+        0.94,
+        0.79
+      ],
+      "ambient": [
+        0.22,
+        0.25,
+        0.28
+      ],
+      "background-color": [
+        0.36,
+        0.56,
+        0.65
+      ],
+      "linear-rendering": true,
+      "exposure": 1,
+      "environment": "",
+      "environment-intensity": 1,
+      "environment-rotation": [
+        1,
+        0,
+        0,
+        0
+      ],
+      "environment-background": false,
+      "fluid-scale": 1,
+      "fluid-update-rate-hz": 30,
+      "fluid-hydrostatic-drag-rate": 2,
+      "fidelity-policy": {
+        "mode": {
+          "symbol": "none"
+        }
+      },
+      "next-id": 96000
+    },
+    "objects": [
+      {
+        "id": 95000,
+        "name": "Roadside rock",
+        "fields": {
+          "position": [
+            -44.53569570328594,
+            0.9149652470534129,
+            -2.559213076137439
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            0.8,
+            0.6,
+            0.7
+          ],
+          "body.radius": 0.8,
+          "body.mass": 100,
+          "body.friction": 0.8,
+          "body.restitution": 0.02,
+          "body.pickable": true,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0,
+          "body.terrain": "",
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.managed": false,
+          "tags": 4,
+          "body.collision-layer": 2,
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.mesh-asset": "427900d43843779e019a232e8f35e421",
+          "render.texture-asset": "",
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1
+        }
+      },
+      {
+        "id": 95002,
+        "name": "Roadside tree",
+        "fields": {
+          "position": [
+            30.372714237655686,
+            1.9456180304864539,
+            28.305791037223116
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            0.25,
+            2.5,
+            0.25
+          ],
+          "body.radius": 0.25,
+          "body.mass": 100,
+          "body.friction": 0.8,
+          "body.restitution": 0.02,
+          "body.pickable": true,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0,
+          "body.terrain": "",
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.managed": false,
+          "tags": 2,
+          "body.collision-layer": 2
+        }
+      },
+      {
+        "id": 95003,
+        "name": "Roadside canopy",
+        "fields": {
+          "position": [
+            0,
+            -2.5,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            0.5252100840336135,
+            0.5252100840336135,
+            0.5252100840336135
+          ],
+          "parent": 95002,
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.mesh-asset": "eaa068b449b2f76bbf32166398e681a2",
+          "render.texture-asset": "",
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1
+        }
+      },
+      {
+        "id": 95004,
+        "name": "Roadside tree",
+        "fields": {
+          "position": [
+            -77.89032456178649,
+            3.200010049460502,
+            -15.366339853562295
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            0.25,
+            2.5,
+            0.25
+          ],
+          "body.radius": 0.25,
+          "body.mass": 100,
+          "body.friction": 0.8,
+          "body.restitution": 0.02,
+          "body.pickable": true,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0,
+          "body.terrain": "",
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.managed": false,
+          "tags": 2,
+          "body.collision-layer": 2
+        }
+      },
+      {
+        "id": 95005,
+        "name": "Roadside canopy",
+        "fields": {
+          "position": [
+            0,
+            -2.5,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            0.5252100840336135,
+            0.5252100840336135,
+            0.5252100840336135
+          ],
+          "parent": 95004,
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.mesh-asset": "eaa068b449b2f76bbf32166398e681a2",
+          "render.texture-asset": "",
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1
+        }
+      },
+      {
+        "id": 95010,
+        "name": "Roadside tree",
+        "fields": {
+          "position": [
+            -3.784360824267196,
+            2.927607177119583,
+            -30.517540567385822
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            0.25,
+            2.5,
+            0.25
+          ],
+          "body.radius": 0.25,
+          "body.mass": 100,
+          "body.friction": 0.8,
+          "body.restitution": 0.02,
+          "body.pickable": true,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0,
+          "body.terrain": "",
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.managed": false,
+          "tags": 2,
+          "body.collision-layer": 2
+        }
+      },
+      {
+        "id": 95011,
+        "name": "Roadside canopy",
+        "fields": {
+          "position": [
+            0,
+            -2.5,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            0.5252100840336135,
+            0.5252100840336135,
+            0.5252100840336135
+          ],
+          "parent": 95010,
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.mesh-asset": "eaa068b449b2f76bbf32166398e681a2",
+          "render.texture-asset": "",
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1
+        }
+      },
+      {
+        "id": 95012,
+        "name": "Roadside tree",
+        "fields": {
+          "position": [
+            -37.85630828975772,
+            3.173995808280587,
+            -34.87402775159853
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            0.25,
+            2.5,
+            0.25
+          ],
+          "body.radius": 0.25,
+          "body.mass": 100,
+          "body.friction": 0.8,
+          "body.restitution": 0.02,
+          "body.pickable": true,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0,
+          "body.terrain": "",
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.managed": false,
+          "tags": 2,
+          "body.collision-layer": 2
+        }
+      },
+      {
+        "id": 95013,
+        "name": "Roadside canopy",
+        "fields": {
+          "position": [
+            0,
+            -2.5,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            0.5252100840336135,
+            0.5252100840336135,
+            0.5252100840336135
+          ],
+          "parent": 95012,
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.mesh-asset": "eaa068b449b2f76bbf32166398e681a2",
+          "render.texture-asset": "",
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1
+        }
+      },
+      {
+        "id": 95014,
+        "name": "Roadside tree",
+        "fields": {
+          "position": [
+            60.45812741450732,
+            3.1631913681370847,
+            -66.16308721556197
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            0.25,
+            2.5,
+            0.25
+          ],
+          "body.radius": 0.25,
+          "body.mass": 100,
+          "body.friction": 0.8,
+          "body.restitution": 0.02,
+          "body.pickable": true,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0,
+          "body.terrain": "",
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.managed": false,
+          "tags": 2,
+          "body.collision-layer": 2
+        }
+      },
+      {
+        "id": 95015,
+        "name": "Roadside canopy",
+        "fields": {
+          "position": [
+            0,
+            -2.5,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            0.5252100840336135,
+            0.5252100840336135,
+            0.5252100840336135
+          ],
+          "parent": 95014,
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.mesh-asset": "eaa068b449b2f76bbf32166398e681a2",
+          "render.texture-asset": "",
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1
+        }
+      },
+      {
+        "id": 95016,
+        "name": "Roadside rock",
+        "fields": {
+          "position": [
+            0.6512830987834946,
+            1.771490732984791,
+            -85.1572291866637
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            0.8,
+            0.6,
+            0.7
+          ],
+          "body.radius": 0.8,
+          "body.mass": 100,
+          "body.friction": 0.8,
+          "body.restitution": 0.02,
+          "body.pickable": true,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0,
+          "body.terrain": "",
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.managed": false,
+          "tags": 4,
+          "body.collision-layer": 2,
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.mesh-asset": "427900d43843779e019a232e8f35e421",
+          "render.texture-asset": "",
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1
+        }
+      },
+      {
+        "id": 95018,
+        "name": "Roadside tree",
+        "fields": {
+          "position": [
+            -22.636699229884627,
+            2.22355208934167,
+            32.4455010850329
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            0.25,
+            2.5,
+            0.25
+          ],
+          "body.radius": 0.25,
+          "body.mass": 100,
+          "body.friction": 0.8,
+          "body.restitution": 0.02,
+          "body.pickable": true,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0,
+          "body.terrain": "",
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.managed": false,
+          "tags": 2,
+          "body.collision-layer": 2
+        }
+      },
+      {
+        "id": 95019,
+        "name": "Roadside canopy",
+        "fields": {
+          "position": [
+            0,
+            -2.5,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            0.5252100840336135,
+            0.5252100840336135,
+            0.5252100840336135
+          ],
+          "parent": 95018,
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.mesh-asset": "eaa068b449b2f76bbf32166398e681a2",
+          "render.texture-asset": "",
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1
+        }
+      },
+      {
+        "id": 95020,
+        "name": "Roadside tree",
+        "fields": {
+          "position": [
+            44.30387943409974,
+            2.006961903758274,
+            18.218763669156942
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            0.25,
+            2.5,
+            0.25
+          ],
+          "body.radius": 0.25,
+          "body.mass": 100,
+          "body.friction": 0.8,
+          "body.restitution": 0.02,
+          "body.pickable": true,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0,
+          "body.terrain": "",
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.managed": false,
+          "tags": 2,
+          "body.collision-layer": 2
+        }
+      },
+      {
+        "id": 95021,
+        "name": "Roadside canopy",
+        "fields": {
+          "position": [
+            0,
+            -2.5,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            0.5252100840336135,
+            0.5252100840336135,
+            0.5252100840336135
+          ],
+          "parent": 95020,
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.mesh-asset": "eaa068b449b2f76bbf32166398e681a2",
+          "render.texture-asset": "",
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1
+        }
+      },
+      {
+        "id": 95022,
+        "name": "Roadside tree",
+        "fields": {
+          "position": [
+            42.84649071617946,
+            3.399901446118612,
+            -77.4197560410853
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            0.25,
+            2.5,
+            0.25
+          ],
+          "body.radius": 0.25,
+          "body.mass": 100,
+          "body.friction": 0.8,
+          "body.restitution": 0.02,
+          "body.pickable": true,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0,
+          "body.terrain": "",
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.managed": false,
+          "tags": 2,
+          "body.collision-layer": 2
+        }
+      },
+      {
+        "id": 95023,
+        "name": "Roadside canopy",
+        "fields": {
+          "position": [
+            0,
+            -2.5,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            0.5252100840336135,
+            0.5252100840336135,
+            0.5252100840336135
+          ],
+          "parent": 95022,
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.mesh-asset": "eaa068b449b2f76bbf32166398e681a2",
+          "render.texture-asset": "",
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1
+        }
+      },
+      {
+        "id": 95024,
+        "name": "Roadside rock",
+        "fields": {
+          "position": [
+            27.90267169034462,
+            0.3911636105944112,
+            3.6252446718226565
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            0.8,
+            0.6,
+            0.7
+          ],
+          "body.radius": 0.8,
+          "body.mass": 100,
+          "body.friction": 0.8,
+          "body.restitution": 0.02,
+          "body.pickable": true,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0,
+          "body.terrain": "",
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.managed": false,
+          "tags": 4,
+          "body.collision-layer": 2,
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.mesh-asset": "427900d43843779e019a232e8f35e421",
+          "render.texture-asset": "",
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1
+        }
+      },
+      {
+        "id": 95026,
+        "name": "Roadside tree",
+        "fields": {
+          "position": [
+            90.14770169793343,
+            1.8190236104660258,
+            16.840269728502335
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            0.25,
+            2.5,
+            0.25
+          ],
+          "body.radius": 0.25,
+          "body.mass": 100,
+          "body.friction": 0.8,
+          "body.restitution": 0.02,
+          "body.pickable": true,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0,
+          "body.terrain": "",
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.managed": false,
+          "tags": 2,
+          "body.collision-layer": 2
+        }
+      },
+      {
+        "id": 95027,
+        "name": "Roadside canopy",
+        "fields": {
+          "position": [
+            0,
+            -2.5,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            0.5252100840336135,
+            0.5252100840336135,
+            0.5252100840336135
+          ],
+          "parent": 95026,
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.mesh-asset": "eaa068b449b2f76bbf32166398e681a2",
+          "render.texture-asset": "",
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1
+        }
+      },
+      {
+        "id": 95028,
+        "name": "Roadside tree",
+        "fields": {
+          "position": [
+            48.85127022373749,
+            2.033286808681755,
+            14.441099972262236
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            0.25,
+            2.5,
+            0.25
+          ],
+          "body.radius": 0.25,
+          "body.mass": 100,
+          "body.friction": 0.8,
+          "body.restitution": 0.02,
+          "body.pickable": true,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0,
+          "body.terrain": "",
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.managed": false,
+          "tags": 2,
+          "body.collision-layer": 2
+        }
+      },
+      {
+        "id": 95029,
+        "name": "Roadside canopy",
+        "fields": {
+          "position": [
+            0,
+            -2.5,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            0.5252100840336135,
+            0.5252100840336135,
+            0.5252100840336135
+          ],
+          "parent": 95028,
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.mesh-asset": "eaa068b449b2f76bbf32166398e681a2",
+          "render.texture-asset": "",
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1
+        }
+      },
+      {
+        "id": 95030,
+        "name": "Roadside tree",
+        "fields": {
+          "position": [
+            -40.1115874690163,
+            3.049215482840239,
+            -23.389673233744816
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            0.25,
+            2.5,
+            0.25
+          ],
+          "body.radius": 0.25,
+          "body.mass": 100,
+          "body.friction": 0.8,
+          "body.restitution": 0.02,
+          "body.pickable": true,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0,
+          "body.terrain": "",
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.managed": false,
+          "tags": 2,
+          "body.collision-layer": 2
+        }
+      },
+      {
+        "id": 95031,
+        "name": "Roadside canopy",
+        "fields": {
+          "position": [
+            0,
+            -2.5,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            0.5252100840336135,
+            0.5252100840336135,
+            0.5252100840336135
+          ],
+          "parent": 95030,
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.mesh-asset": "eaa068b449b2f76bbf32166398e681a2",
+          "render.texture-asset": "",
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1
+        }
+      },
+      {
+        "id": 95034,
+        "name": "Roadside tree",
+        "fields": {
+          "position": [
+            90.2771322524165,
+            1.6533180531281921,
+            28.93410788545134
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            0.25,
+            2.5,
+            0.25
+          ],
+          "body.radius": 0.25,
+          "body.mass": 100,
+          "body.friction": 0.8,
+          "body.restitution": 0.02,
+          "body.pickable": true,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0,
+          "body.terrain": "",
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.managed": false,
+          "tags": 2,
+          "body.collision-layer": 2
+        }
+      },
+      {
+        "id": 95035,
+        "name": "Roadside canopy",
+        "fields": {
+          "position": [
+            0,
+            -2.5,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            0.5252100840336135,
+            0.5252100840336135,
+            0.5252100840336135
+          ],
+          "parent": 95034,
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.mesh-asset": "eaa068b449b2f76bbf32166398e681a2",
+          "render.texture-asset": "",
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1
+        }
+      },
+      {
+        "id": 95036,
+        "name": "Roadside tree",
+        "fields": {
+          "position": [
+            24.523314463554698,
+            3.27343371160541,
+            -64.72687450481453
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            0.25,
+            2.5,
+            0.25
+          ],
+          "body.radius": 0.25,
+          "body.mass": 100,
+          "body.friction": 0.8,
+          "body.restitution": 0.02,
+          "body.pickable": true,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0,
+          "body.terrain": "",
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.managed": false,
+          "tags": 2,
+          "body.collision-layer": 2
+        }
+      },
+      {
+        "id": 95037,
+        "name": "Roadside canopy",
+        "fields": {
+          "position": [
+            0,
+            -2.5,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            0.5252100840336135,
+            0.5252100840336135,
+            0.5252100840336135
+          ],
+          "parent": 95036,
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.mesh-asset": "eaa068b449b2f76bbf32166398e681a2",
+          "render.texture-asset": "",
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1
+        }
+      },
+      {
+        "id": 95038,
+        "name": "Roadside tree",
+        "fields": {
+          "position": [
+            -54.62746986512444,
+            3.1069532740331525,
+            -21.169288153983416
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            0.25,
+            2.5,
+            0.25
+          ],
+          "body.radius": 0.25,
+          "body.mass": 100,
+          "body.friction": 0.8,
+          "body.restitution": 0.02,
+          "body.pickable": true,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0,
+          "body.terrain": "",
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.managed": false,
+          "tags": 2,
+          "body.collision-layer": 2
+        }
+      },
+      {
+        "id": 95039,
+        "name": "Roadside canopy",
+        "fields": {
+          "position": [
+            0,
+            -2.5,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            0.5252100840336135,
+            0.5252100840336135,
+            0.5252100840336135
+          ],
+          "parent": 95038,
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.mesh-asset": "eaa068b449b2f76bbf32166398e681a2",
+          "render.texture-asset": "",
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1
+        }
+      },
+      {
+        "id": 95040,
+        "name": "Roadside rock",
+        "fields": {
+          "position": [
+            6.369336908195379,
+            -0.02506785679227974,
+            45.51822340438048
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            0.8,
+            0.6,
+            0.7
+          ],
+          "body.radius": 0.8,
+          "body.mass": 100,
+          "body.friction": 0.8,
+          "body.restitution": 0.02,
+          "body.pickable": true,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0,
+          "body.terrain": "",
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.managed": false,
+          "tags": 4,
+          "body.collision-layer": 2,
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.mesh-asset": "427900d43843779e019a232e8f35e421",
+          "render.texture-asset": "",
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1
+        }
+      },
+      {
+        "id": 95042,
+        "name": "Roadside tree",
+        "fields": {
+          "position": [
+            -10.048383098389877,
+            2.09942232128936,
+            36.139201447616415
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            0.25,
+            2.5,
+            0.25
+          ],
+          "body.radius": 0.25,
+          "body.mass": 100,
+          "body.friction": 0.8,
+          "body.restitution": 0.02,
+          "body.pickable": true,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0,
+          "body.terrain": "",
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.managed": false,
+          "tags": 2,
+          "body.collision-layer": 2
+        }
+      },
+      {
+        "id": 95043,
+        "name": "Roadside canopy",
+        "fields": {
+          "position": [
+            0,
+            -2.5,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            0.5252100840336135,
+            0.5252100840336135,
+            0.5252100840336135
+          ],
+          "parent": 95042,
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.mesh-asset": "eaa068b449b2f76bbf32166398e681a2",
+          "render.texture-asset": "",
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1
+        }
+      },
+      {
+        "id": 95044,
+        "name": "Roadside tree",
+        "fields": {
+          "position": [
+            25.044549319674786,
+            2.839141452223142,
+            -35.002894696913245
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            0.25,
+            2.5,
+            0.25
+          ],
+          "body.radius": 0.25,
+          "body.mass": 100,
+          "body.friction": 0.8,
+          "body.restitution": 0.02,
+          "body.pickable": true,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0,
+          "body.terrain": "",
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.managed": false,
+          "tags": 2,
+          "body.collision-layer": 2
+        }
+      },
+      {
+        "id": 95045,
+        "name": "Roadside canopy",
+        "fields": {
+          "position": [
+            0,
+            -2.5,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            0.5252100840336135,
+            0.5252100840336135,
+            0.5252100840336135
+          ],
+          "parent": 95044,
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.mesh-asset": "eaa068b449b2f76bbf32166398e681a2",
+          "render.texture-asset": "",
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1
+        }
+      },
+      {
+        "id": 95046,
+        "name": "Roadside tree",
+        "fields": {
+          "position": [
+            -67.52473351122141,
+            2.9975598500912497,
+            -5.365000320034596
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            0.25,
+            2.5,
+            0.25
+          ],
+          "body.radius": 0.25,
+          "body.mass": 100,
+          "body.friction": 0.8,
+          "body.restitution": 0.02,
+          "body.pickable": true,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0,
+          "body.terrain": "",
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.managed": false,
+          "tags": 2,
+          "body.collision-layer": 2
+        }
+      },
+      {
+        "id": 95047,
+        "name": "Roadside canopy",
+        "fields": {
+          "position": [
+            0,
+            -2.5,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            0.5252100840336135,
+            0.5252100840336135,
+            0.5252100840336135
+          ],
+          "parent": 95046,
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.mesh-asset": "eaa068b449b2f76bbf32166398e681a2",
+          "render.texture-asset": "",
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1
+        }
+      },
+      {
+        "id": 95048,
+        "name": "Roadside rock",
+        "fields": {
+          "position": [
+            44.50681762684462,
+            -0.3944233802827668,
+            55.86348630016164
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            0.8,
+            0.6,
+            0.7
+          ],
+          "body.radius": 0.8,
+          "body.mass": 100,
+          "body.friction": 0.8,
+          "body.restitution": 0.02,
+          "body.pickable": true,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0,
+          "body.terrain": "",
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.managed": false,
+          "tags": 4,
+          "body.collision-layer": 2,
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.mesh-asset": "427900d43843779e019a232e8f35e421",
+          "render.texture-asset": "",
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1
+        }
+      },
+      {
+        "id": 95050,
+        "name": "Roadside tree",
+        "fields": {
+          "position": [
+            -4.027070943734316,
+            3.0055521851297406,
+            -36.413480277604776
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            0.25,
+            2.5,
+            0.25
+          ],
+          "body.radius": 0.25,
+          "body.mass": 100,
+          "body.friction": 0.8,
+          "body.restitution": 0.02,
+          "body.pickable": true,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0,
+          "body.terrain": "",
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.managed": false,
+          "tags": 2,
+          "body.collision-layer": 2
+        }
+      },
+      {
+        "id": 95051,
+        "name": "Roadside canopy",
+        "fields": {
+          "position": [
+            0,
+            -2.5,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            0.5252100840336135,
+            0.5252100840336135,
+            0.5252100840336135
+          ],
+          "parent": 95050,
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.mesh-asset": "eaa068b449b2f76bbf32166398e681a2",
+          "render.texture-asset": "",
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1
+        }
+      },
+      {
+        "id": 95052,
+        "name": "Roadside tree",
+        "fields": {
+          "position": [
+            -87.15099078520412,
+            2.935254959826434,
+            12.868523113167157
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            0.25,
+            2.5,
+            0.25
+          ],
+          "body.radius": 0.25,
+          "body.mass": 100,
+          "body.friction": 0.8,
+          "body.restitution": 0.02,
+          "body.pickable": true,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0,
+          "body.terrain": "",
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.managed": false,
+          "tags": 2,
+          "body.collision-layer": 2
+        }
+      },
+      {
+        "id": 95053,
+        "name": "Roadside canopy",
+        "fields": {
+          "position": [
+            0,
+            -2.5,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            0.5252100840336135,
+            0.5252100840336135,
+            0.5252100840336135
+          ],
+          "parent": 95052,
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.mesh-asset": "eaa068b449b2f76bbf32166398e681a2",
+          "render.texture-asset": "",
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1
+        }
+      },
+      {
+        "id": 95054,
+        "name": "Roadside tree",
+        "fields": {
+          "position": [
+            -19.01058904241718,
+            2.1294767775952863,
+            38.12537569518054
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            0.25,
+            2.5,
+            0.25
+          ],
+          "body.radius": 0.25,
+          "body.mass": 100,
+          "body.friction": 0.8,
+          "body.restitution": 0.02,
+          "body.pickable": true,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0,
+          "body.terrain": "",
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.managed": false,
+          "tags": 2,
+          "body.collision-layer": 2
+        }
+      },
+      {
+        "id": 95055,
+        "name": "Roadside canopy",
+        "fields": {
+          "position": [
+            0,
+            -2.5,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            0.5252100840336135,
+            0.5252100840336135,
+            0.5252100840336135
+          ],
+          "parent": 95054,
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.mesh-asset": "eaa068b449b2f76bbf32166398e681a2",
+          "render.texture-asset": "",
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1
+        }
+      },
+      {
+        "id": 95056,
+        "name": "Roadside rock",
+        "fields": {
+          "position": [
+            61.58395359592515,
+            0.8014567131232724,
+            -35.96737050384627
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            0.8,
+            0.6,
+            0.7
+          ],
+          "body.radius": 0.8,
+          "body.mass": 100,
+          "body.friction": 0.8,
+          "body.restitution": 0.02,
+          "body.pickable": true,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0,
+          "body.terrain": "",
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.managed": false,
+          "tags": 4,
+          "body.collision-layer": 2,
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.mesh-asset": "427900d43843779e019a232e8f35e421",
+          "render.texture-asset": "",
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1
+        }
+      },
+      {
+        "id": 95058,
+        "name": "Roadside tree",
+        "fields": {
+          "position": [
+            86.00061612142588,
+            1.6339749686345328,
+            31.570548979646446
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            0.25,
+            2.5,
+            0.25
+          ],
+          "body.radius": 0.25,
+          "body.mass": 100,
+          "body.friction": 0.8,
+          "body.restitution": 0.02,
+          "body.pickable": true,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0,
+          "body.terrain": "",
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.managed": false,
+          "tags": 2,
+          "body.collision-layer": 2
+        }
+      },
+      {
+        "id": 95059,
+        "name": "Roadside canopy",
+        "fields": {
+          "position": [
+            0,
+            -2.5,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            0.5252100840336135,
+            0.5252100840336135,
+            0.5252100840336135
+          ],
+          "parent": 95058,
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.mesh-asset": "eaa068b449b2f76bbf32166398e681a2",
+          "render.texture-asset": "",
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1
+        }
+      },
+      {
+        "id": 95900,
+        "name": "Roadside binding",
+        "fields": {
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "scripts": 1,
+          "script.0.id": 1,
+          "script.0.asset": "5fb3455b278281f386de312fd1cc4006",
+          "script.0.enabled": true,
+          "script.0.properties": "{\"key\": \"wild_15\"}"
+        }
+      }
+    ]
+  }
+}

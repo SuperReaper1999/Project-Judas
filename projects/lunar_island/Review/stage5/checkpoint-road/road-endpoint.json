@@ -1,0 +1,37 @@
+{
+  "maxCrossTrack": 0.012469455599784851,
+  "position": [
+    -1382.036376953125,
+    34.79963302612305,
+    199.60166931152344
+  ],
+  "state": {
+    "bag": {
+      "maxWeight": 160,
+      "slots": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ]
+    },
+    "burned": 1.5316365066007964,
+    "damageEvents": 0,
+    "distance": 882.6509199654645,
+    "fuel": 26.46836349340026,
+    "health": 100,
+    "rotorAngle": 0
+  }
+}

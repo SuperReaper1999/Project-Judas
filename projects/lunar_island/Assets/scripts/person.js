@@ -1,6 +1,6 @@
 // NPC policy is project JavaScript. Navigation is advisory; CharacterMotor owns
 // collision-resolved locomotion. All durable quantities live in this.state.
-import { world, physics, saves, console } from 'judas';
+import { world, physics, saves, console, scenes } from 'judas';
 import { PEOPLE } from './encounter-data.js';
 import * as Bag from './inventory.js';
 import * as Rules from './encounter-rules.js';
@@ -106,9 +106,15 @@ export default class Person {
                 z: 0,
             });
             corpse = world.spawnPrefab(
-                this.def.animal ? PEOPLE.wolfCorpse : PEOPLE.humanCorpse,
+                this.def.animal
+                    ? PEOPLE.wolfCorpse
+                    : scenes.owner(this.entity) !== 'root'
+                      ? PEOPLE.regionHumanCorpse
+                      : PEOPLE.humanCorpse,
                 { position, rotation: axis({ x: 0, y: 0, z: 1 }, 0.5) },
             );
+            const owner = scenes.owner(this.entity);
+            if (owner !== 'root') scenes.adopt(corpse, owner);
             corpse.applyImpulseAtPoint(mul(direction, 18), position);
             this.state.corpse = saves.reference(corpse);
         } catch (error) {
@@ -128,6 +134,8 @@ export default class Person {
         const p = getPlayer();
         if (p) {
             p.state.combat[this.def.animal ? 'wolves' : 'kills']++;
+            if (['bandit_leader', 'bandit_guard'].includes(this.key))
+                p.state.combat.campKills = (p.state.combat.campKills || 0) + 1;
             p.say(
                 this.def.name +
                     ' defeated. E on the body to recover finite loot.',
@@ -155,6 +163,23 @@ export default class Person {
             m = this.entity.character,
             s = this.state;
         if (!p || !p.hud || s.dead) return;
+        if (this.key.startsWith('region_')) {
+            const near =
+                length(
+                    sub(
+                        p.entity.transform.position,
+                        this.entity.transform.position,
+                    ),
+                ) < 230;
+            if (!near) {
+                if (this.entity.navigation.enabled)
+                    this.entity.navigation.clear();
+                this.entity.navigation.enabled = false;
+                m.velocity = mul(m.up, dot(m.velocity, m.up));
+                return;
+            }
+            this.entity.navigation.enabled = true;
+        }
         if (p.hud.page === 'loading') {
             m.velocity = { x: 0, y: 0, z: 0 };
             return;

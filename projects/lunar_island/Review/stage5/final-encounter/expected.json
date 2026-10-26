@@ -1,0 +1,1053 @@
+{
+  "people": [
+    {
+      "entity": 6000,
+      "state": {
+        "alert": 0,
+        "attack": 0,
+        "bag": {
+          "maxWeight": 200,
+          "slots": [
+            {
+              "count": 201,
+              "item": "tokens"
+            },
+            {
+              "count": 6,
+              "item": "rations"
+            },
+            {
+              "count": 5,
+              "item": "bandage"
+            },
+            {
+              "count": 50,
+              "item": "ammo_pistol"
+            },
+            {
+              "count": 14,
+              "item": "ammo_shell"
+            },
+            {
+              "count": 39,
+              "item": "ammo_rifle"
+            },
+            null,
+            null,
+            {
+              "count": 1,
+              "item": "knife"
+            },
+            null,
+            {
+              "count": 1,
+              "item": "bat"
+            },
+            {
+              "count": 1,
+              "item": "bat"
+            },
+            {
+              "count": 4,
+              "item": "fuel_can"
+            },
+            {
+              "count": 4,
+              "item": "repair_kit"
+            },
+            null,
+            null,
+            null,
+            null
+          ]
+        },
+        "corpse": null,
+        "dead": false,
+        "dialogue": 0,
+        "health": 100,
+        "lastSeen": null,
+        "mode": "patrol",
+        "timer": 0.1499998513609171,
+        "waypoint": 6,
+        "windup": 0
+      }
+    },
+    {
+      "entity": 6100,
+      "state": {
+        "alert": 0,
+        "attack": 0,
+        "bag": {
+          "maxWeight": 200,
+          "slots": [
+            {
+              "count": 60,
+              "item": "tokens"
+            },
+            {
+              "count": 12,
+              "item": "berries"
+            },
+            {
+              "count": 4,
+              "item": "rations"
+            },
+            {
+              "count": 3,
+              "item": "bandage"
+            },
+            {
+              "count": 12,
+              "item": "fiber"
+            },
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ]
+        },
+        "corpse": null,
+        "dead": false,
+        "dialogue": 0,
+        "health": 85,
+        "lastSeen": null,
+        "mode": "patrol",
+        "timer": 0.833333220332861,
+        "waypoint": 8,
+        "windup": 0
+      }
+    },
+    {
+      "corpse": 4611686018427387916,
+      "entity": 6200,
+      "position": [
+        84.303466796875,
+        13.944568634033203,
+        66.38810729980469
+      ],
+      "state": {
+        "alert": 8,
+        "attack": 1.1333333037793636,
+        "bag": {
+          "maxWeight": 200,
+          "slots": [
+            null,
+            {
+              "count": 10,
+              "item": "ammo_rifle"
+            },
+            {
+              "count": 3,
+              "item": "scrap"
+            },
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ]
+        },
+        "corpse": "entity:4611686018427387916",
+        "dead": true,
+        "dialogue": 0,
+        "firing": true,
+        "health": 0,
+        "lastSeen": {
+          "x": 82.8150405883789,
+          "y": 13.627084732055664,
+          "z": 67.99466705322266
+        },
+        "mode": "dead",
+        "timer": -4.716667069122195,
+        "waypoint": 2,
+        "windup": 0
+      }
+    },
+    {
+      "corpse": 4611686018427387914,
+      "entity": 6210,
+      "position": [
+        72.472900390625,
+        14.100785255432129,
+        68.51566314697266
+      ],
+      "state": {
+        "alert": 8,
+        "attack": 0.4,
+        "bag": {
+          "maxWeight": 200,
+          "slots": [
+            {
+              "count": 8,
+              "item": "tokens"
+            },
+            {
+              "count": 12,
+              "item": "ammo_pistol"
+            },
+            {
+              "count": 1,
+              "item": "rations"
+            },
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ]
+        },
+        "corpse": "entity:4611686018427387914",
+        "dead": true,
+        "dialogue": 0,
+        "firing": false,
+        "health": 0,
+        "lastSeen": {
+          "x": 73.19161224365234,
+          "y": 13.690942764282227,
+          "z": 70.42503356933594
+        },
+        "mode": "dead",
+        "timer": -2.216666938737035,
+        "waypoint": 2,
+        "windup": 0
+      }
+    },
+    {
+      "corpse": 4611686018427387918,
+      "entity": 6300,
+      "position": [
+        -65.66827392578125,
+        13.200752258300781,
+        17.036434173583984
+      ],
+      "state": {
+        "alert": 8,
+        "attack": 0.6499999687075615,
+        "bag": {
+          "maxWeight": 200,
+          "slots": [
+            {
+              "count": 2,
+              "item": "raw_meat"
+            },
+            {
+              "count": 1,
+              "item": "hide"
+            },
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ]
+        },
+        "corpse": "entity:4611686018427387918",
+        "dead": true,
+        "dialogue": 0,
+        "firing": false,
+        "health": 0,
+        "lastSeen": {
+          "x": -65.87940216064453,
+          "y": 12.938180923461914,
+          "z": 18.242168426513672
+        },
+        "mode": "dead",
+        "timer": 0.5499998722225428,
+        "waypoint": 5,
+        "windup": 0
+      }
+    },
+    {
+      "corpse": 4611686018427387920,
+      "entity": 6310,
+      "position": [
+        -67.20091247558594,
+        13.124610900878906,
+        19.54864501953125
+      ],
+      "state": {
+        "alert": 8,
+        "attack": 0.4,
+        "bag": {
+          "maxWeight": 200,
+          "slots": [
+            {
+              "count": 2,
+              "item": "raw_meat"
+            },
+            {
+              "count": 1,
+              "item": "hide"
+            },
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ]
+        },
+        "corpse": "entity:4611686018427387920",
+        "dead": true,
+        "dialogue": 0,
+        "firing": false,
+        "health": 0,
+        "lastSeen": {
+          "x": -67.2973861694336,
+          "y": 12.86839771270752,
+          "z": 22.123340606689453
+        },
+        "mode": "dead",
+        "timer": -5.933333799242973,
+        "waypoint": 5,
+        "windup": 0
+      }
+    }
+  ],
+  "physical": [
+    {
+      "entity": 3120,
+      "joint": false,
+      "position": [
+        -18.5,
+        14.594962120056152,
+        -4.5
+      ],
+      "rotation": [
+        1.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    }
+  ],
+  "state": {
+    "bag": {
+      "maxWeight": 32,
+      "slots": [
+        {
+          "count": 1,
+          "item": "work_coat"
+        },
+        {
+          "count": 1,
+          "item": "empty_flask"
+        },
+        {
+          "count": 4,
+          "item": "rations"
+        },
+        {
+          "count": 1,
+          "item": "tokens"
+        },
+        {
+          "count": 1,
+          "item": "pistol"
+        },
+        {
+          "count": 24,
+          "item": "ammo_pistol"
+        },
+        {
+          "count": 1,
+          "item": "knife"
+        },
+        {
+          "count": 1,
+          "item": "bandage"
+        },
+        {
+          "count": 1,
+          "item": "shotgun"
+        },
+        null,
+        {
+          "count": 1,
+          "item": "rifle"
+        },
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ]
+    },
+    "combat": {
+      "campKills": 2,
+      "gift": false,
+      "kills": 2,
+      "lastTarget": "4611686018427387920",
+      "magazines": {
+        "pistol": 2,
+        "rifle": 0,
+        "shotgun": 1
+      },
+      "quests": {
+        "patrol": "done",
+        "timber": "done"
+      },
+      "reload": null,
+      "shots": 10,
+      "wolves": 2
+    },
+    "drops": {},
+    "equipment": {
+      "body": "work_coat",
+      "hand": "shotgun"
+    },
+    "equipped": "shotgun",
+    "exploration": {
+      "target": null,
+      "visited": {}
+    },
+    "harvest": {
+      "200": {
+        "depleted": true
+      },
+      "202": {
+        "depleted": true
+      },
+      "204": {
+        "depleted": true
+      }
+    },
+    "hotbar": [
+      "hands",
+      "stone_axe",
+      "stone_pickaxe",
+      "berries",
+      "water",
+      "bandage"
+    ],
+    "housing": {
+      "boards": {},
+      "containers": {
+        "entity:3101": {
+          "maxWeight": 100,
+          "slots": [
+            {
+              "count": 8,
+              "item": "planks"
+            },
+            {
+              "count": 8,
+              "item": "nails"
+            },
+            {
+              "count": 6,
+              "item": "scrap"
+            },
+            {
+              "count": 2,
+              "item": "rations"
+            },
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ]
+        },
+        "entity:3106": {
+          "maxWeight": 140,
+          "slots": [
+            {
+              "count": 8,
+              "item": "fiber"
+            },
+            {
+              "count": 2,
+              "item": "bandage"
+            },
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ]
+        },
+        "entity:3107": {
+          "maxWeight": 50,
+          "slots": [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ]
+        },
+        "entity:3120": {
+          "maxWeight": 100,
+          "slots": [
+            {
+              "count": 2,
+              "item": "planks"
+            },
+            {
+              "count": 2,
+              "item": "nails"
+            },
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ]
+        },
+        "entity:3301": {
+          "maxWeight": 100,
+          "slots": [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ]
+        },
+        "entity:3306": {
+          "maxWeight": 140,
+          "slots": [
+            {
+              "count": 8,
+              "item": "fiber"
+            },
+            {
+              "count": 2,
+              "item": "bandage"
+            },
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ]
+        },
+        "entity:3307": {
+          "maxWeight": 50,
+          "slots": [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ]
+        }
+      },
+      "doors": {
+        "entity:3061": {
+          "anchorA": {
+            "x": -0.65,
+            "y": 0,
+            "z": -0.075
+          },
+          "anchorB": {
+            "x": -0.65,
+            "y": -0.15,
+            "z": -0.075
+          },
+          "frame": "entity:3060",
+          "opened": false,
+          "ref": "entity:3061"
+        },
+        "entity:3261": {
+          "anchorA": {
+            "x": -0.65,
+            "y": 0,
+            "z": -0.075
+          },
+          "anchorB": {
+            "x": -0.65,
+            "y": -0.15,
+            "z": -0.075
+          },
+          "frame": "entity:3260",
+          "opened": false,
+          "ref": "entity:3261"
+        }
+      },
+      "home": null,
+      "objects": {
+        "entity:3100": {
+          "cost": {
+            "fiber": 6,
+            "wood": 5
+          },
+          "health": 60,
+          "kind": "bed",
+          "maxHealth": 60,
+          "movable": true,
+          "owned": false,
+          "ref": "entity:3100",
+          "support": "entity:3000"
+        },
+        "entity:3101": {
+          "cost": {
+            "wood": 4
+          },
+          "health": 70,
+          "kind": "chest",
+          "maxHealth": 70,
+          "movable": true,
+          "owned": false,
+          "ref": "entity:3101",
+          "support": "entity:3000"
+        },
+        "entity:3102": {
+          "cost": {
+            "stone": 2,
+            "wood": 6
+          },
+          "health": 90,
+          "kind": "workbench",
+          "maxHealth": 90,
+          "movable": true,
+          "owned": false,
+          "ref": "entity:3102",
+          "support": "entity:3000"
+        },
+        "entity:3103": {
+          "cost": {
+            "wood": 2
+          },
+          "health": 50,
+          "kind": "chair",
+          "maxHealth": 50,
+          "movable": true,
+          "owned": false,
+          "ref": "entity:3103",
+          "support": "entity:3000"
+        },
+        "entity:3104": {
+          "cost": {
+            "wood": 3
+          },
+          "health": 60,
+          "kind": "table",
+          "maxHealth": 60,
+          "movable": true,
+          "owned": false,
+          "ref": "entity:3104",
+          "support": "entity:3000"
+        },
+        "entity:3105": {
+          "cost": {
+            "fiber": 8,
+            "wood": 5
+          },
+          "health": 60,
+          "kind": "sofa",
+          "maxHealth": 60,
+          "movable": true,
+          "owned": false,
+          "ref": "entity:3105",
+          "support": "entity:3000"
+        },
+        "entity:3106": {
+          "cost": {
+            "wood": 5
+          },
+          "health": 70,
+          "kind": "cupboard",
+          "maxHealth": 70,
+          "movable": true,
+          "owned": false,
+          "ref": "entity:3106",
+          "support": "entity:3000"
+        },
+        "entity:3107": {
+          "cost": {
+            "wood": 3
+          },
+          "health": 50,
+          "kind": "shelf",
+          "maxHealth": 50,
+          "movable": true,
+          "owned": false,
+          "ref": "entity:3107",
+          "support": "entity:3000"
+        },
+        "entity:3108": {
+          "cost": {
+            "fiber": 1,
+            "scrap": 2
+          },
+          "health": 40,
+          "kind": "lamp",
+          "maxHealth": 40,
+          "movable": true,
+          "owned": false,
+          "ref": "entity:3108",
+          "support": "entity:3000"
+        },
+        "entity:3109": {
+          "cost": {
+            "fiber": 6
+          },
+          "health": 30,
+          "kind": "rug",
+          "maxHealth": 30,
+          "movable": true,
+          "owned": false,
+          "ref": "entity:3109",
+          "support": "entity:3000"
+        },
+        "entity:3110": {
+          "cost": {
+            "fiber": 2,
+            "wood": 1
+          },
+          "health": 30,
+          "kind": "painting",
+          "maxHealth": 30,
+          "movable": true,
+          "owned": false,
+          "ref": "entity:3110",
+          "support": "entity:3000"
+        },
+        "entity:3120": {
+          "cost": {
+            "wood": 4
+          },
+          "health": 70,
+          "kind": "chest",
+          "maxHealth": 70,
+          "movable": true,
+          "owned": false,
+          "ref": "entity:3120",
+          "support": "entity:3000"
+        },
+        "entity:3300": {
+          "cost": {
+            "fiber": 6,
+            "wood": 5
+          },
+          "health": 60,
+          "kind": "bed",
+          "maxHealth": 60,
+          "movable": true,
+          "owned": false,
+          "ref": "entity:3300",
+          "support": "entity:3200"
+        },
+        "entity:3301": {
+          "cost": {
+            "wood": 4
+          },
+          "health": 70,
+          "kind": "chest",
+          "maxHealth": 70,
+          "movable": true,
+          "owned": false,
+          "ref": "entity:3301",
+          "support": "entity:3200"
+        },
+        "entity:3302": {
+          "cost": {
+            "stone": 2,
+            "wood": 6
+          },
+          "health": 90,
+          "kind": "workbench",
+          "maxHealth": 90,
+          "movable": true,
+          "owned": false,
+          "ref": "entity:3302",
+          "support": "entity:3200"
+        },
+        "entity:3303": {
+          "cost": {
+            "wood": 2
+          },
+          "health": 50,
+          "kind": "chair",
+          "maxHealth": 50,
+          "movable": true,
+          "owned": false,
+          "ref": "entity:3303",
+          "support": "entity:3200"
+        },
+        "entity:3304": {
+          "cost": {
+            "wood": 3
+          },
+          "health": 60,
+          "kind": "table",
+          "maxHealth": 60,
+          "movable": true,
+          "owned": false,
+          "ref": "entity:3304",
+          "support": "entity:3200"
+        },
+        "entity:3305": {
+          "cost": {
+            "fiber": 8,
+            "wood": 5
+          },
+          "health": 60,
+          "kind": "sofa",
+          "maxHealth": 60,
+          "movable": true,
+          "owned": false,
+          "ref": "entity:3305",
+          "support": "entity:3200"
+        },
+        "entity:3306": {
+          "cost": {
+            "wood": 5
+          },
+          "health": 70,
+          "kind": "cupboard",
+          "maxHealth": 70,
+          "movable": true,
+          "owned": false,
+          "ref": "entity:3306",
+          "support": "entity:3200"
+        },
+        "entity:3307": {
+          "cost": {
+            "wood": 3
+          },
+          "health": 50,
+          "kind": "shelf",
+          "maxHealth": 50,
+          "movable": true,
+          "owned": false,
+          "ref": "entity:3307",
+          "support": "entity:3200"
+        },
+        "entity:3308": {
+          "cost": {
+            "fiber": 1,
+            "scrap": 2
+          },
+          "health": 40,
+          "kind": "lamp",
+          "maxHealth": 40,
+          "movable": true,
+          "owned": false,
+          "ref": "entity:3308",
+          "support": "entity:3200"
+        },
+        "entity:3309": {
+          "cost": {
+            "fiber": 6
+          },
+          "health": 30,
+          "kind": "rug",
+          "maxHealth": 30,
+          "movable": true,
+          "owned": false,
+          "ref": "entity:3309",
+          "support": "entity:3200"
+        },
+        "entity:3310": {
+          "cost": {
+            "fiber": 2,
+            "wood": 1
+          },
+          "health": 30,
+          "kind": "painting",
+          "maxHealth": 30,
+          "movable": true,
+          "owned": false,
+          "ref": "entity:3310",
+          "support": "entity:3200"
+        }
+      },
+      "schema": 2,
+      "stats": {
+        "barricaded": 0,
+        "moved": 0,
+        "placed": 0,
+        "repaired": 0,
+        "transferred": 0
+      }
+    },
+    "introSeen": true,
+    "pitch": -0.30060675740242004,
+    "schema": 1,
+    "sensitivity": 0.0021,
+    "stats": {
+      "cooked": 0,
+      "crafted": 0,
+      "felled": 0,
+      "gathered": 6,
+      "mined": 0,
+      "timber": 0
+    },
+    "third": false,
+    "transport": {
+      "driving": null,
+      "throttle": 0
+    },
+    "vitals": {
+      "breath": 22,
+      "elapsed": 23.183334542438388,
+      "health": 26.900000000000016,
+      "hunger": 74.58269997824212,
+      "injury": 0,
+      "stamina": 100,
+      "thirst": 64.18858329102414
+    },
+    "yaw": 0
+  },
+  "treePosition": [
+    46.86758041381836,
+    19.977705001831055,
+    4.887491703033447
+  ],
+  "treeRotation": [
+    1.0,
+    0.0,
+    0.0,
+    0.0
+  ]
+}

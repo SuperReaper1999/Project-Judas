@@ -3,6 +3,7 @@ import { ITEMS, RECIPES, CONFIG } from './definitions.js';
 import { WORLD } from './world-data.js';
 import { renderVehicle, vehicleEvent } from './vehicle-ui.js';
 import { VEHICLES } from './vehicle-data.js';
+import { destinationRows, destinationText, guidance } from './exploration.js';
 import { HOUSING } from './housing-data.js';
 import { entityFor } from './housing.js';
 import { count, weight } from './inventory.js';
@@ -57,6 +58,7 @@ export default class HUD {
         this.open('storage');
     }
     rows() {
+        if (this.page === 'map') return destinationRows(this.p);
         if (socialPage(this.page)) return socialRows(this);
         const bag = this.p.state.bag;
         if (this.page === 'pack' || this.page === 'storage')
@@ -97,6 +99,7 @@ export default class HUD {
             'dialogue',
             'trade',
             'corpse',
+            'map',
         ].includes(page);
         const storage = page === 'storage',
             object =
@@ -127,7 +130,14 @@ export default class HUD {
         d.get('entries').visible = list;
         d.get('primary').visible = list || object;
         d.get('drop').visible = page === 'pack' || storage || object;
-        d.get('map_image').visible = page === 'map';
+        d.get('map_image').visible = page === 'map' && !!this.referenceMap;
+        if (page === 'map') {
+            d.get('entries').visible = !this.referenceMap;
+            d.get('secondary').visible = true;
+            d.get('secondary').text = this.referenceMap
+                ? 'Location list'
+                : 'Reference map';
+        }
         d.get('sensitivity').visible = page === 'help';
         d.get('title').text =
             {
@@ -297,11 +307,10 @@ export default class HUD {
                   `\n\nStation: ${recipe.station === 'hand' ? 'Craft anywhere' : recipe.station === 'workbench' ? (p.housing.atStation('workbench') ? 'Workbench in reach' : 'Return to a workbench') : p.atFire() ? 'Campfire in reach' : 'Return to the campfire'}`
                 : 'Choose a recipe.';
             d.get('primary').text = 'Craft selected';
-        } else if (page === 'map')
-            text =
-                'STAGE 4 / HOMESTEAD COAST\n\nYou are in the north-eastern homestead clearing. The nearby spring pool, forest, Seabird Cottage and Birchside Cabin are playable.\n\nVehicle clearing: (0,43). Helicopter: (-40,42). Airstrip: (0,140). Skiff: (90,-100). Birchside service pickup: (35,49).\n\nThe complete coast is terrain, but the labelled settlements and other regions are reference plans for Stage 5.\n\n' +
-                `Absolute position\n${Math.round(worldPosition(p).x)} east / ${Math.round(worldPosition(p).z)} south`;
-        else if (page === 'help')
+        } else if (page === 'map') {
+            text = destinationText(p, this.selected);
+            d.get('primary').text = 'Track location';
+        } else if (page === 'help')
             text =
                 'WASD move · mouse look\nSpace jump / swim up · Ctrl dive\nShift sprint · V first/third person\nE gather / refill / interact\nLeft click use tool / confirm placement\nB construction · R rotate preview / reload gun\nE furniture / storage / secure opening\nRight mouse aims · Tab equips firearms\n1–6 hotbar\nTab backpack · M field map\nEscape pause / return\nF6 save · F9 load last save\n\nMouse sensitivity (slider left).\nCrafting and item actions are in this menu.\n\nThe spring well refills a flask; seawater is not drinkable.\nFall injuries slow movement; use a field dressing.';
         else if (page === 'loading')
@@ -414,11 +423,12 @@ export default class HUD {
         if (q?.patrol === 'active')
             this.doc.get('journal').text =
                 'SUPPLY ROUTE / Eastern camp · scavengers ' +
-                p.state.combat.kills +
+                (p.state.combat.campKills || 0) +
                 '/2. Return to Mara.';
         else if (q?.timber === 'active')
             this.doc.get('journal').text =
                 'FIREWOOD / Bring six timber to Ivo at the camp.';
+        if (guidance(p)) this.doc.get('journal').text = guidance(p);
         if (this.modal) this.refresh();
     }
     event(e) {
@@ -448,7 +458,17 @@ export default class HUD {
         }
         const p = this.p;
         if (vehicleEvent(this, e) || socialEvent(this, e)) return;
-        if (this.page === 'storage') {
+        if (this.page === 'map') {
+            if (e.element === 'primary') {
+                p.state.exploration.target = this.selected;
+                p.say(
+                    'Tracking location. Follow the roads or take an aircraft.',
+                );
+                this.close();
+            }
+            if (e.element === 'secondary')
+                this.referenceMap = !this.referenceMap;
+        } else if (this.page === 'storage') {
             if (e.element === 'primary' || e.element === 'drop')
                 (this.vehicleRef ? p.transport : p.housing).transfer(
                     this.containerRef,

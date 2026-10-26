@@ -1,0 +1,45 @@
+Shadow maps: on
+Graphics: 3.3.0 NVIDIA 580.178.04 / NVIDIA GeForce GTX 970/PCIe/SSE2
+Renderer fragment texture units: 32 (material path uses 12)
+World state: legacy .judasstate (F6/F7) saves disabled for additive compositions; save slots remain available
+Project: Lunar Island (/home/conner/Documents/GitHub/Project-Judas/projects/lunar_island/lunar_island.judasproj)
+Scene: Lunar Island / Homestead Coast (/home/conner/Documents/GitHub/Project-Judas/projects/lunar_island/Scenes/island.judas)
+World origin (m): 2900.000, 0.000, -1600.000
+asset 2eb74ecf72ef69112028dcf2c039cb36: Optional extension ignored: KHR_materials_clearcoat
+asset f4e24c58b44e48292bc35ad5a55d72f9: Optional extension ignored: KHR_materials_clearcoat
+asset d5563755c7887ca32886ad9518e56de8: Optional extension ignored: KHR_materials_clearcoat
+JS: Lunar Island: WASD, mouse, E gather, click tool, Tab pack/crafting, Escape pause, F6 save, F9 load.
+PASS welcome pauses actual world
+PASS authored world collision loaded
+PASS capture welcome.png
+PASS Escape begins real game
+PASS CharacterMotor moves via project input
+PASS same player toggles third person
+PASS pause menu stops gameplay
+PASS move/fire do not leak through modal
+PASS fresh process requests ordinary island save
+JS: Lunar Island: WASD, mouse, E gather, click tool, Tab pack/crafting, Escape pause, F6 save, F9 load.
+COLD ROOT expected {"maxWeight":32,"slots":[{"count":1,"item":"work_coat"},{"count":1,"item":"empty_flask"},{"count":2,"item":"rations"},{"count":20,"item":"tokens"},{"count":1,"item":"pistol"},{"count":14,"item":"ammo_pistol"},{"count":1,"item":"bandage"},{"count":4,"item":"planks"},{"count":5,"item":"nails"},{"count":4,"item":"scrap"},null,null,null,null,null,null,null,null]} actual {"maxWeight":32,"slots":[{"count":1,"item":"work_coat"},{"count":1,"item":"empty_flask"},{"count":2,"item":"rations"},{"count":20,"item":"tokens"},{"count":1,"item":"pistol"},{"count":14,"item":"ammo_pistol"},{"count":1,"item":"bandage"},{"count":4,"item":"planks"},{"count":5,"item":"nails"},{"count":4,"item":"scrap"},null,null,null,null,null,null,null,null]} discoveries {"target":null,"visited":{"forest":true,"industry":true,"town":true}}
+PASS cold island restores exact carried resources and loot
+PASS cold island restores discoveries and tracked location
+asset 5aa81023a515d05554329fab574af153: Optional extension ignored: KHR_materials_clearcoat
+asset 90614a6e4e7d51ea674ce7eb97c2e7e1: Optional extension ignored: KHR_materials_clearcoat
+asset c31b977445beba5f5f40c4b588153925: Optional extension ignored: KHR_materials_clearcoat
+PASS inactive town reconstructs exact depleted storage after cold load
+PASS cold regional door remains actually open, not just a saved flag
+PASS cold regional barricade retains actual body and support joint
+PASS capture cold-town.png
+PASS cold forest restores district-owned depletion ledger
+PASS cold reconstructed depleted salvage has no physical body
+asset 5aa81023a515d05554329fab574af153: Optional extension ignored: KHR_materials_clearcoat
+asset 90614a6e4e7d51ea674ce7eb97c2e7e1: Optional extension ignored: KHR_materials_clearcoat
+asset c31b977445beba5f5f40c4b588153925: Optional extension ignored: KHR_materials_clearcoat
+PASS cold regional actor remains dead with exact loot
+PASS cold world restores actual regional corpse collision
+PASS town truly suspends modified content: 
+PASS forest truly suspends modified content: 
+PASS industry truly suspends modified content: 
+PASS player save remains bounded independently of visited settlement contents
+PASS capture world-return.png
+PASS ordinary application exits cleanly
+25 checks, 0 failures

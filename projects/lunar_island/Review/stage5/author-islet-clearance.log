@@ -1,0 +1,13 @@
+/home/conner/Documents/GitHub/Project-Judas/projects/lunar_island/Assets/collision/road_0.judascollision: 2588 vertices 2580 triangles 1023 BVH nodes, volume 0 m3
+/home/conner/Documents/GitHub/Project-Judas/projects/lunar_island/Assets/collision/road_1.judascollision: 3498 vertices 3492 triangles 1023 BVH nodes, volume 0 m3
+/home/conner/Documents/GitHub/Project-Judas/projects/lunar_island/Assets/collision/road_2.judascollision: 3342 vertices 3336 triangles 1023 BVH nodes, volume 0 m3
+/home/conner/Documents/GitHub/Project-Judas/projects/lunar_island/Assets/collision/road_3.judascollision: 2494 vertices 2490 triangles 1023 BVH nodes, volume 0 m3
+/home/conner/Documents/GitHub/Project-Judas/projects/lunar_island/Assets/collision/road_4.judascollision: 6026 vertices 6018 triangles 2047 BVH nodes, volume 0 m3
+cook 28.7233 ms, 874 bytes; geometry 0, appearance 0
+forest 34.000742959206086 277
+town 60.60281826290872 225
+harbour 24.124788629105637 118
+industry 33.24709427797197 161
+city 29.900672081838128 268
+coast 17.157303223943998 119
+islet 8.12 92

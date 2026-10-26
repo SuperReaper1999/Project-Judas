@@ -1,0 +1,36 @@
+{
+  "checkpoint-road": {
+    "maxNavigationScopeMs": 543.972522,
+    "frame": 626
+  },
+  "checkpoint-performance": {
+    "maxNavigationScopeMs": 551.146287,
+    "frame": 567
+  },
+  "activeDriving": {
+    "samples": 3919,
+    "firstFrame": 826,
+    "lastFrame": 4744,
+    "frame_ms": {
+      "meanMs": 7.465634807348813,
+      "medianMs": 6.27073,
+      "p95Ms": 10.9194,
+      "worstMs": 19.3689
+    },
+    "physics_ms": {
+      "meanMs": 0.1635305743812197,
+      "medianMs": 0.158629,
+      "p95Ms": 0.206659,
+      "worstMs": 0.836638
+    }
+  },
+  "earlierThreeTerrainSources": {
+    "maxNavigationScopeMs": 839.884452,
+    "sourceMask": 3,
+    "note": "Initial loading gate, not active driving. Historical whole-run CSV includes loading; do not call that a gameplay frame percentile."
+  },
+  "currentLocalTerrainSources": {
+    "sourceMask": 1,
+    "note": "Only homestead terrain/buildings; far coast meshes cannot affect this bounded navigation surface. Collision geometry and physics are unchanged."
+  }
+}

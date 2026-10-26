@@ -1,0 +1,16 @@
+Scenes/island.judas
+surface 6900: 205 layers, 896 polygons, 1094.28 ms, source 74bdfc4528f3cd0b4d8018309531f48b1cbc6394824031ec629c14cb30ad8e28
+Scenes/region_forest.judas
+surface 19000: 31 layers, 79 polygons, 22.37 ms, source abe630ef77f982f1b93115fcfdc4b35b0187c971cfd5bda546d3041e519c5e94
+Scenes/region_town.judas
+surface 29000: 39 layers, 122 polygons, 30.61 ms, source ea8dd3e22955b5ee1e94366fd25b0a24e4ceceba4c87fcec74fb1c51ac67ab2d
+Scenes/region_harbour.judas
+surface 39000: 32 layers, 81 polygons, 21.97 ms, source 483caee4e6e4fffc17fe0115c43793d4a39c14cb5e479ff928ac92e685d0d7e3
+Scenes/region_industry.judas
+surface 49000: 37 layers, 98 polygons, 25.15 ms, source c050cbcd89997fb1c8f1857252a845014448aefe78e0606e12901bddcf2a2f85
+Scenes/region_city.judas
+surface 59000: 49 layers, 146 polygons, 35.46 ms, source f039b0e9e32c9a13779fe3bbca92e46cd1cdfbb4327ef4ed3e1948edc250b7a1
+Scenes/region_coast.judas
+surface 69000: 31 layers, 79 polygons, 23.62 ms, source 1c2b476a23b9f915bc35a63c6948ccdd3d8adfe9963dd01674f906301bbf4c9c
+Scenes/region_islet.judas
+surface 79000: 57 layers, 278 polygons, 78.39 ms, source 2fc392371f432c8b81a57ba6df49826f25000ef50d98490e18ae4985f4ebf5ad

@@ -1,0 +1,11 @@
+Assets/scripts/region-content.js: ReferenceError: unregistered script import: Assets/scripts/regional-housing.js
+
+Assets/scripts/hud.js: ReferenceError: unregistered script import: Assets/scripts/regional-housing.js
+
+Assets/scripts/construction.js: ReferenceError: unregistered script import: Assets/scripts/regional-housing.js
+
+Assets/scripts/housing.js: ReferenceError: unregistered script import: Assets/scripts/regional-housing.js
+
+Assets/scripts/player.js: ReferenceError: unregistered script import: Assets/scripts/regional-housing.js
+
+29 registered script modules; 5 compile/link failures (maximum 128 reported). No project code executed.

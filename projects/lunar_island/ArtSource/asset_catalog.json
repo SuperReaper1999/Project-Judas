@@ -717,5 +717,150 @@
     "source": "Original authored geometry, author_stage4.py; no generator claims for unsupported motorcycle/helicopter categories",
     "path": "Assets/models/vehicle_wheel.glb",
     "sha256": "6c5b396b936d6d82591e26f5cefa19ffe99eeed6389ffa8305850970400416c0"
+  },
+  "region_town_shop": {
+    "path": "Assets/models/region_town_shop.glb",
+    "bounds": [
+      [
+        -3.65,
+        0.0,
+        -6.2274999999995
+      ],
+      [
+        3.65,
+        9.47,
+        6.2274999999995
+      ]
+    ],
+    "prompt": "a realistic corner shop",
+    "seed": 91557,
+    "generator": "shop",
+    "parameters": {
+      "features": {},
+      "size": 1.0,
+      "style": "realistic",
+      "type": "corner shop",
+      "floors": null,
+      "count": 1,
+      "sign": "MOONBRIDGE"
+    },
+    "sha256": "0654cecc4de0c5a43b90471d9423bae238f80c19074ed4800b6dc960fed8d967"
+  },
+  "region_clinic": {
+    "path": "Assets/models/region_clinic.glb",
+    "bounds": [
+      [
+        -3.65,
+        0.0,
+        -6.2274999999995
+      ],
+      [
+        3.65,
+        9.47,
+        6.2274999999995
+      ]
+    ],
+    "prompt": "a realistic pharmacy",
+    "seed": 91558,
+    "generator": "shop",
+    "parameters": {
+      "features": {},
+      "size": 1.0,
+      "style": "realistic",
+      "type": "pharmacy",
+      "floors": null,
+      "count": 1,
+      "sign": "CLINIC"
+    },
+    "sha256": "59445c773650b67afa2cbb35184e67eec3932ab09c6567ed68498cf6d0793b23"
+  },
+  "region_city_tower": {
+    "path": "Assets/models/region_city_tower.glb",
+    "bounds": [
+      [
+        -14.299999999999,
+        0.0,
+        -14.299999999999
+      ],
+      [
+        14.299999999999,
+        38.899999999999004,
+        14.299999999999
+      ]
+    ],
+    "prompt": "a realistic concrete building",
+    "seed": 91559,
+    "generator": "building",
+    "parameters": {
+      "features": {},
+      "size": 0.45,
+      "style": "realistic",
+      "material": "concrete",
+      "floors": 5,
+      "height": null,
+      "count": 1,
+      "type": "stepped"
+    },
+    "sha256": "8703f63763b4e3720d7920b42ef7fe07b8eeb160bbae095d0c3850a16072048f"
+  },
+  "region_market": {
+    "path": "Assets/models/region_market.glb",
+    "bounds": [
+      [
+        -19.0,
+        0.0,
+        -25.1
+      ],
+      [
+        19.0,
+        7.074999999999,
+        25.1
+      ]
+    ],
+    "prompt": "a realistic supermarket",
+    "seed": 91560,
+    "generator": "shop",
+    "parameters": {
+      "features": {},
+      "size": 1.0,
+      "style": "realistic",
+      "type": "supermarket",
+      "floors": null,
+      "count": 1,
+      "sign": "LUNAR STORES"
+    },
+    "sha256": "062fb3cc62e7fce74be6906dbbab12977c29635d302f05a9e36953b11836a339"
+  },
+  "region_lighthouse": {
+    "path": "Assets/models/region_lighthouse.glb",
+    "bounds": [
+      [
+        -7.5,
+        0.0,
+        -7.5
+      ],
+      [
+        7.5,
+        42.62499999999999,
+        7.5
+      ]
+    ],
+    "prompt": "a realistic lighthouse",
+    "seed": 91561,
+    "generator": "prop",
+    "parameters": {
+      "features": {},
+      "size": 2.5,
+      "style": "realistic",
+      "type": "lighthouse",
+      "count": 1
+    },
+    "sha256": "058be13ff332872b485551bc4a8b2c5fd00ac62ad21214834159cb74ce8f218b"
+  },
+  "region_human_corpse": {
+    "path": "Assets/models/region_human_corpse.glb",
+    "source": "Original NPC bandit GLB; one glTF parent offsets the visual -0.8 m, matching the original corpse child. Source author_stage5.py.",
+    "sourceSha256": "be80bc93ff7bcb0d902d88df5c90b6f767017bc3bb1046c3fe6168809fe1282f",
+    "sha256": "70a3cc9c5af002fbef021042492a22d6eb07290fcaac71da61f41c97d79489b1"
   }
 }

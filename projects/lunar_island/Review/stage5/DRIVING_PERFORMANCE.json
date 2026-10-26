@@ -1,0 +1,48 @@
+{
+  "final-road": {
+    "samples": 4393,
+    "frame_ms": {
+      "mean": 7.638710068290462,
+      "median": 6.29482,
+      "p95": 10.5751,
+      "max": 847.962
+    },
+    "physics_ms": {
+      "mean": 0.15801102139767811,
+      "median": 0.15404,
+      "p95": 0.195539,
+      "max": 0.402509
+    }
+  },
+  "road-qualified": {
+    "samples": 4372,
+    "frame_ms": {
+      "mean": 7.55089437557182,
+      "median": 6.29523,
+      "p95": 10.3285,
+      "max": 898.628
+    },
+    "physics_ms": {
+      "mean": 0.15802042612076853,
+      "median": 0.153209,
+      "p95": 0.194016,
+      "max": 0.762699
+    }
+  },
+  "vehiclePresentationCorrection": {
+    "before": [
+      -1382.036376953125,
+      34.79963302612305,
+      199.60166931152344
+    ],
+    "after": [
+      -1382.036376953125,
+      34.79963302612305,
+      199.60166931152344
+    ],
+    "exactEndpointEqual": true,
+    "maxCrossTrackBefore": 0.012469455599784851,
+    "maxCrossTrackAfter": 0.012469455599784851,
+    "note": "One matched driven route. Source authoring changes corrected visual hierarchy offsets; physical wheel/mass/power settings were unchanged."
+  }
+}

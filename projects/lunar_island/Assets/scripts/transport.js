@@ -166,45 +166,51 @@ export default class Transport {
             { x: 0, y: 0.2, z: v.def.half[2] + 1.2 },
         ];
         if (v.def.kind === 'boat') candidates.unshift(candidates.pop());
-        for (const offset of candidates) {
-            let foot = add(t.position, rotate(t.rotation, offset));
-            const ground = physics.raycast(
-                add(foot, { x: 0, y: 2, z: 0 }),
-                { x: 0, y: -1, z: 0 },
-                6,
-                { ignored: [v.entity, p.entity] },
-            );
-            if (!ground && v.def.kind !== 'boat') {
-                p.say('Land before leaving the aircraft.');
-                continue;
-            }
-            if (ground)
-                foot = { x: foot.x, y: ground.point.y + 0.08, z: foot.z };
-            const clear = physics.capsuleCast(
-                {
-                    position: add(foot, { x: 0, y: 0.9, z: 0 }),
+        // Prefer solid dock/shore exits before falling back to open water.
+        for (const requireGround of v.def.kind === 'boat'
+            ? [true, false]
+            : [true]) {
+            for (const offset of candidates) {
+                let foot = add(t.position, rotate(t.rotation, offset));
+                const ground = physics.raycast(
+                    add(foot, { x: 0, y: 2, z: 0 }),
+                    { x: 0, y: -1, z: 0 },
+                    6,
+                    { ignored: [v.entity, p.entity] },
+                );
+                if (!ground && requireGround) {
+                    if (v.def.kind !== 'boat')
+                        p.say('Land before leaving the aircraft.');
+                    continue;
+                }
+                if (ground)
+                    foot = { x: foot.x, y: ground.point.y + 0.08, z: foot.z };
+                const clear = physics.capsuleCast(
+                    {
+                        position: add(foot, { x: 0, y: 0.9, z: 0 }),
+                        rotation: { w: 1, x: 0, y: 0, z: 0 },
+                    },
+                    0.3,
+                    0.6,
+                    { x: 0, y: 1, z: 0 },
+                    0,
+                    { ignored: [p.entity] },
+                );
+                if (clear) continue;
+                p.entity.transform = {
+                    position: foot,
                     rotation: { w: 1, x: 0, y: 0, z: 0 },
-                },
-                0.3,
-                0.6,
-                { x: 0, y: 1, z: 0 },
-                0,
-                { ignored: [p.entity] },
-            );
-            if (clear) continue;
-            p.entity.transform = {
-                position: foot,
-                rotation: { w: 1, x: 0, y: 0, z: 0 },
-            };
-            p.entity.character.enabled = true;
-            p.entity.character.velocity = v.entity.pointVelocity(foot);
-            p.state.transport.driving = null;
-            p.state.transport.throttle = 0;
-            p.state.yaw = 0;
-            p.state.pitch = -0.1;
-            p.state.third = true;
-            p.say('On foot. E opens vehicle controls and cargo.');
-            return true;
+                };
+                p.entity.character.enabled = true;
+                p.entity.character.velocity = v.entity.pointVelocity(foot);
+                p.state.transport.driving = null;
+                p.state.transport.throttle = 0;
+                p.state.yaw = 0;
+                p.state.pitch = -0.1;
+                p.state.third = true;
+                p.say('On foot. E opens vehicle controls and cargo.');
+                return true;
+            }
         }
         p.say('Exit blocked. Move to a clear, level stopping place.');
         return false;

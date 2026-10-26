@@ -1,9 +1,9 @@
-# Lunar Island — Stage 4: Roads, Water and Sky
+# Lunar Island — Stage 5: Reconnect the Coast
 
 Copyright (c) 2026 Conner / SuperReaper1999. Original project code/assets use the
 repository's MIT terms; cached ambientCG material scans use CC0-1.0. See `ArtSource/PROVENANCE.md` for font and asset origins.
 
-An ordinary Judas consumer game on Experimental. **Stage 4; human gameplay acceptance pending.** The operator reviewed Stages 1–3 and authorized this vehicle stage. Gameplay lives in `Assets/scripts`. Two bounded native persistence corrections are documented in the Stage 2 report.
+An ordinary Judas consumer game on Experimental. **Stage 5; operator review pending.** The operator reviewed Stages 1–3 and approved advancing from Stage 4 based on its screenshots and automated evidence. This does not claim a separate hands-on Stage 4 vehicle test. Gameplay lives in `Assets/scripts`. Two bounded native persistence corrections are documented in the Stage 2 report.
 
 ## Play
 
@@ -64,13 +64,11 @@ a normal Judas material. Native terrain painting continues to update its base ma
 Native paint layers and shoreline/path colours are editable.
 
 The populated area includes the camp, forest, resource trail, spring and two furnished cottages. Town,
-city, industrial district, harbour and other labelled reference locations
-are **future content**, not implemented destinations. Basic ocean water is visual
+city, industrial district and harbour now have playable bounded quarters; the entire illustrated cities are not built at commercial scale. Basic ocean water is visual
 and swimmable; no conserved liquid simulation is enabled. The spring well is the
 authored fresh-water interaction. Water remains a prescribed surface, not flow.
 
-The full terrain shell is currently resident. This stage does not demonstrate
-world-wide resource population or terrain excavation. Stage 4 adds six transport types and one small regional garage, not populated towns or a complete streamed island. Stage 3 adds six nearby NPCs, combat and quests. Collision for foliage uses
+The full terrain shell remains resident. Stage 5 adds seven authored destination districts and seventeen roadside wilderness patches, with streamed detail and persistent modifications. This is not dense population across every square kilometre, and terrain excavation is not implemented in this game. Stage 3 adds six homestead NPCs; Stage 4 supplies six transport types. Collision for foliage uses
 simple trunk/plant/stone proxies; branches and individual leaves are not simulated.
 Felled trees, dropped bundles, door leaves, barricades and constructed pieces use native rigid bodies. There is no resource respawn.
 
@@ -154,7 +152,7 @@ SDL_AUDIODRIVER=dummy XDG_DATA_HOME=/tmp/lunar-island-validation /tmp/lunar-isla
 SDL_AUDIODRIVER=dummy XDG_DATA_HOME=/tmp/lunar-island-validation /tmp/lunar-island-observer \
   projects/lunar_island/lunar_island.judasproj read /tmp/lunar-island-build-proof
 ./build/judas_export projects/lunar_island/lunar_island.judasproj \
-  '/tmp/Lunar Island Stage 4' ./build/judas
+  '/tmp/Lunar Island Stage 5' ./build/judas
 ```
 
 `write` creates a validation save in the game's `island` slot. Use a separate
@@ -167,12 +165,12 @@ Run the exported `judas` executable inside the package; no repository path is
 required. Linux is the tested platform for this stage. This is not Windows,
 Android, gamepad hardware, audio-listening or human gameplay acceptance.
 
-See `Review/STAGE4_REPORT.md` and `Review/stage4/HUMAN_CHECKLIST.md` for the current
+See `Review/STAGE5_REPORT.md` and `Review/stage5/HUMAN_CHECKLIST.md` for the current
 review boundary. Earlier stage evidence and fingerprints remain historical and unchanged.
-Stage 4 requires separate approval.
+Stage 5 requires separate approval.
 
 Current Linux package (untracked, reproducible):
-`.cache/lunar-island-stage4/Lunar Island/`; run `judas` inside it.
+`.cache/lunar-island-stage5-checkpoint/Lunar Island/`; run `judas` inside it.
 Archive: `.cache/lunar-island-stage2/LunarIsland-Stage2-Linux.tar.gz`.
 The complete package must travel together.
 
@@ -300,7 +298,7 @@ PYTHONDONTWRITEBYTECODE=1 python3 projects/lunar_island/tools/author_stage3.py
 This replaces IDs 6000–6999, encounter metadata, corpse prefabs and original PCM
 effects. Back up scene edits first. It does not require Prompt3D unless regenerating
 art with `--prompt3d /path/to/tool`; raw wolf settings and copied source receipts
-are retained. For a whole authored rebuild run Stage 1, Stage 2, Stage 3, Stage 4, then bake.
+are retained. For a whole authored rebuild run Stage 1, Stage 2, Stage 3, Stage 4, Stage 5, then bake.
 Existing art/gameplay/export do not require those offline tools.
 
 The homestead navigation surface is bounded to 220 × 220 m. It uses the detailed
@@ -330,7 +328,7 @@ outside a window; observer mode `barrier` verifies unalerted/alerted behaviour,
 real supply acquisition, barricading and enemy destruction. It does not alter
 production gameplay modules or inject damage/items.
 
-Stage 4 transport is described below. Stage 5 regional population has **not begun**.
+Stage 4 transport is described below. Stage 5 regional population is described below. Stage 6 final polish/handover has **not begun**.
 
 Animation priorities and a practical Blender handover are in
 `ArtSource/STAGE3_ANIMATION_HANDOFF.md`.
@@ -422,3 +420,109 @@ cargo/build gameplay, cold-process continuation, real region unload/reload,
 all six physical drive checks, aircraft landings, Stage 3 regression and profiling.
 The native observer only positions the player to reach authored fixtures; it does
 not inject vehicle movement, fuel, damage, loot or cargo.
+
+
+## Stage 5: Reconnect the Coast
+
+**M opens a location list.** Choose a destination and Track location. The HUD shows
+its distance and compass directions; this does not teleport you. The Reference map
+button preserves the original concept image. The location list gives the actual
+playable coordinates; the illustration is not a surveyed navigation chart. Locations discover themselves when you
+physically approach. Roads are real collision geometry, not map-only lines.
+
+| Destination | Local east / south | Gameplay |
+| --- | --- | --- |
+| Whisperwood Forestry | −1400 / 200 | Timber, ore, furnished cabins; Rowan's timber delivery |
+| Moonbridge Town | −1800 / 1300 | Five enterable houses, clinic/grocery façades, Asha's medical delivery |
+| Tidemark Harbour | −3900 / 3200 | Piers, slipway, ocean skiff, cargo salvage; Ellis's repair supplies |
+| Blackwater Works | −3700 / 2850 | Hostile yard, worker cottages/workshops, ore and repair parts |
+| Lunar City / Civic Quarter | −900 / 2950 | Six enterable buildings, sealed skyline, raiders and Nia's radio task |
+| Eastwatch Coast | 2000 / 1300 | Coastward refuge, fuel and provisions, clear helicopter landing area |
+| Lantern Islet | 2400 / 3000 | Actual separate island, lighthouse landmark, refuge, minerals and ocean skiff |
+
+The five road routes total about **17.9 km**. The forest road begins south of the
+homestead airstrip and heads west. Use the marker to choose branches. The offshore
+islet has no road bridge: use boat or air. Harbour piers are below the main courtyard,
+reached by a physical slipway. Boat exit prefers a solid pier/shore before open water.
+The lighthouse and skyline/shop exterior models are sealed; the furnished modular
+buildings are the usable interiors. The industrial quarter currently reuses modular
+worker cottages and shop/depot façades, rather than specialized factory interiors.
+
+Stage 5 adds **21 furnished enterable buildings** (23 including the homestead
+cottages), 11 regional NPCs, 5 delivery tasks, 2 ocean skiffs and **730 harvestable
+resources** in the new regions. The seven destination districts and seventeen
+roadside patches stream separately; the earlier garage is another region. There
+is deliberately empty/coarse countryside between authored patches. This is an
+expandable adventure footprint, not a completely populated 64 km² commercial world.
+
+Talk with regional survivors using E. Work is accepted and completed through the
+normal dialogue button; rewards and requested resources move atomically through
+your real inventory. Mara's homestead patrol now specifically counts the original
+two camp scavengers; unrelated island kills cannot complete it. Loot radio parts
+in the city and return to Nia. Cargo, trade, crafting, food and fuel retain their
+existing rules. Hostiles are genuinely shootable and leave physical lootable remains.
+
+### A home beyond camp
+
+Use E on local furniture and opening frames just as at the homestead. Regional
+storage, open doors, moved furniture, barricades and construction persist through
+regional unload/reload and cold saves. New fixed connections assign the constructed
+piece to its support's region. Fallen/processed resource state belongs to the
+region, so visiting the whole island does not fill the player's bounded save record.
+
+Resting in a regional bed pins that one home region for safe recovery. Claiming a
+different bed or dismantling it releases the old home pin. Other districts unload
+normally. Inactive districts do not continue simulating NPC raids or an economy.
+NPC navigation covers authored streets/courtyards, not the entire island. Distant
+regional AI clears its navigation intent before suspension. Driver-controlled
+vehicles still adopt to root ownership and remain resident after first use.
+
+A new Stage 5 save identity preserves the earlier stage slots unchanged. No
+migration from older stage content is claimed. Save normally with F6, quit fully,
+then F9 to test a fresh-process return. Native physical state and each region's own
+script state are saved; the player does not carry a duplicate world-wide furniture
+ledger. `regional-housing.js` provides a transient interaction view only; its Proxy
+is never serialized. Regional remains use a single-entity native body/render prefab,
+with the old visual offset baked into a normal glTF parent node, respecting the
+engine's runtime regional-adoption boundary.
+
+### Edit and expand the island
+
+- `Authoring/regions.json`: names, centres, themes, house counts, first-chest stock,
+  optional vegetation count/tree height, quests and descriptions.
+- `Authoring/routes.json`: road names and editable waypoint coordinates.
+- `tools/author_stage5.py`: readable district templates, skyline placement, actor
+  policy defaults, local-ID reservations, pier layout and deterministic scattering.
+- `Authoring/region_manifest.json`, `region-data.js`, the regional scenes and generated
+  encounter/vehicle data are outputs. Preserve manual variants before reauthoring.
+- `region-content.js`: binds local content through stable save references, owns the
+  district's durable housing/harvest state and clears transient registries on unload.
+- `exploration.js`: discovery, location rows and the HUD guide; no fast travel.
+
+A complete authored rebuild runs Stage 1, then 2, 3, 4, 5 and finally navigation
+baking. Stage 5 alone preserves existing homestead and Stage 4 assemblies, replacing
+its reserved road objects and generated regional scenes. A manually edited region
+can instead be retained as a separate ordinary `.judas` scene and registered in
+`Assets/worlds/transport.judasworld`. In the editor, edit district sources separately;
+Play/Run the root project for the complete player/game context.
+
+```sh
+PYTHONDONTWRITEBYTECODE=1 /path/to/ClaudesNewML-AI-Thing/.venv/bin/python \
+  projects/lunar_island/tools/author_stage5.py --prompt3d /path/to/ClaudesNewML-AI-Thing
+./build/judas_navigation_bake projects/lunar_island/lunar_island.judasproj Scenes/island.judas
+# Also bake each Scenes/region_<destination>.judas containing a navigation surface.
+```
+
+`--generate-art` additionally reproduces the included realistic-preset shop, tower
+and lighthouse GLBs through the verified generator. It is not required to play,
+edit existing scenes or export. The project-owned author replaces generated district
+files; avoid overwriting hand-authored variants. Keep local IDs distinct and add the
+new scene to the world manifest. Existing collision layers isolate each district's
+stable navigation sources from mutable props and other regions. Changing content
+requires deliberate save compatibility/migration policy, not forcing older slots.
+
+`Review/stage5/REPRODUCE.sh` exercises actual regional interactions, cold saves,
+road driving, the map, dock exit, home residency and existing gameplay. Test-only
+fixtures move/aim the player to reach distant areas quickly; the road drive uses an
+ordinary car prefab and real input, with no body pose/velocity edits after spawning.
+See `Review/STAGE5_REPORT.md` for measured coverage and preserved failed attempts.

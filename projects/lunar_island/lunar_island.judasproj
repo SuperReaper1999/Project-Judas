@@ -4,7 +4,7 @@
   "data": {
     "name": "Lunar Island",
     "legacyGameplay": false,
-    "saveIdentity": "59cfe9e05a0fa403173aedc7286d836aaddb3cdd26d3586366a246487ee281ed",
+    "saveIdentity": "c70473f6118cd46ad73250dd62ba3f7f0b2b8282c14335fc1dbadf13564b4f13",
     "iconAsset": "",
     "worldManifest": "0913a2e104c431b41795449fa088918a",
     "exportScenes": [],
@@ -46,7 +46,8 @@
       "0eb734663dfb5c234375266dfbb3ca3a",
       "5d575835a163c17024d628511ff31663",
       "12f63516a3b0b64079445a2ec9956c2c",
-      "87825edacaa85cf0c97bac366559e50b"
+      "87825edacaa85cf0c97bac366559e50b",
+      "76840e44235b0856f9993cd4c7035b78"
     ],
     "input": [
       {
@@ -514,7 +515,7 @@
         ]
       },
       "collision": {
-        "nextId": 2,
+        "nextId": 10,
         "entries": [
           {
             "id": 0,
@@ -523,6 +524,38 @@
           {
             "id": 1,
             "name": "Far island shell"
+          },
+          {
+            "id": 2,
+            "name": "Roads / mutable props"
+          },
+          {
+            "id": 3,
+            "name": "District / Whisperwood Forestry"
+          },
+          {
+            "id": 4,
+            "name": "District / Moonbridge Town"
+          },
+          {
+            "id": 5,
+            "name": "District / Tidemark Harbour"
+          },
+          {
+            "id": 6,
+            "name": "District / Blackwater Works"
+          },
+          {
+            "id": 7,
+            "name": "District / Lunar City / Civic Quarter"
+          },
+          {
+            "id": 8,
+            "name": "District / Eastwatch Coast"
+          },
+          {
+            "id": 9,
+            "name": "District / Lantern Islet"
           }
         ]
       },

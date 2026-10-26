@@ -1,0 +1,18 @@
+{
+  "bodies": 323,
+  "controlledStep": 0.016666666666666666,
+  "frame": {
+    "meanMs": 8.540725327332815,
+    "medianMs": 8.327286720275879,
+    "p95Ms": 9.998411178588867,
+    "worstMs": 16.02985382080078
+  },
+  "frames": 600,
+  "note": "Real rendered application frames, fixed 60-Hz clock, hidden window, dummy audio; not human displayed FPS",
+  "physics": {
+    "meanMs": 0.1482732950000001,
+    "medianMs": 0.140965,
+    "p95Ms": 0.17523,
+    "worstMs": 0.727061
+  }
+}

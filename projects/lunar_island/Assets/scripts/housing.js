@@ -1,6 +1,7 @@
 // Project-owned world interaction. Native entities, joints and save references
 // own physical identity; this ledger owns items, ownership and repair policy.
-import { world, physics, saves } from 'judas';
+import { world, physics, saves, scenes } from 'judas';
+import { housingView } from './regional-housing.js';
 import { HOUSING } from './housing-data.js';
 import * as Bag from './inventory.js';
 import { add, sub, mul, length, vec, qm, inverse, rotate } from './math.js';
@@ -9,18 +10,33 @@ const hingeFrame = { w: Math.SQRT1_2, x: 0, y: 0, z: Math.SQRT1_2 };
 export function connect(entity, support, point) {
     const a = entity.transform,
         b = support.transform;
-    const j = physics.createJoint(entity, {
-        type: 'fixed',
-        bodyA: entity,
-        bodyB: support,
-        anchorA: rotate(inverse(a.rotation), sub(point, a.position)),
-        anchorB: rotate(inverse(b.rotation), sub(point, b.position)),
-        frameA: identity,
-        frameB: qm(inverse(b.rotation), a.rotation),
-        enabled: true,
-    });
-    if (!j?.valid) throw new Error('Physical connection unavailable');
+    const previousOwner = scenes.owner(entity),
+        owner = scenes.owner(support);
+    if (previousOwner !== owner && !scenes.adopt(entity, owner))
+        throw new Error('Unable to assign construction to its support region');
+    let j;
+    try {
+        j = physics.createJoint(entity, {
+            type: 'fixed',
+            bodyA: entity,
+            bodyB: support,
+            anchorA: rotate(inverse(a.rotation), sub(point, a.position)),
+            anchorB: rotate(inverse(b.rotation), sub(point, b.position)),
+            frameA: identity,
+            frameB: qm(inverse(b.rotation), a.rotation),
+            enabled: true,
+        });
+        if (!j?.valid) throw new Error('Physical connection unavailable');
+    } catch (error) {
+        if (previousOwner !== owner) scenes.adopt(entity, previousOwner);
+        throw error;
+    }
     return j;
+}
+function resolveAuthored(id) {
+    return String(id).startsWith('region:')
+        ? saves.resolve(id)
+        : world.entity(id);
 }
 export function entityFor(ref) {
     return ref ? saves.resolve(ref) : null;
@@ -28,6 +44,7 @@ export function entityFor(ref) {
 export default class Housing {
     constructor(p) {
         this.p = p;
+        this.regionalSockets = new Map();
         if (!p.state.housing) {
             p.state.housing = {
                 schema: 2,
@@ -44,49 +61,62 @@ export default class Housing {
                     repaired: 0,
                 },
             };
-            for (const f of HOUSING.fixtures) {
-                const e = world.entity(f.entity);
-                const ref = saves.reference(e),
-                    d = HOUSING.catalog[f.kind];
-                this.state.objects[ref] = {
-                    ref,
-                    kind: f.kind,
-                    owned: f.owned,
-                    movable: f.movable,
-                    support: saves.reference(world.entity(f.support)),
-                    health: d.health,
-                    maxHealth: d.health,
-                    cost: d.cost,
-                };
-                if (d.storage) {
-                    let bag = Bag.createBag(...d.storage);
-                    for (const [id, n] of Object.entries(f.stock || {})) {
-                        const r = Bag.add(bag, id, n);
-                        if (!r.ok)
-                            throw new Error(
-                                'Invalid authored stock: ' + r.reason,
-                            );
-                        bag = r.bag;
-                    }
-                    this.state.containers[ref] = bag;
+            this.view = housingView(p.state.housing);
+            this.register(HOUSING.fixtures, HOUSING.doors);
+        }
+        this.view ||= housingView(p.state.housing);
+        for (const d of Object.values(this.state.doors)) this.ensureHinge(d);
+    }
+    register(fixtures, doors, sockets = []) {
+        for (const s of sockets) this.regionalSockets.set(s.entity, s);
+        for (const f of fixtures) {
+            const e = resolveAuthored(f.entity);
+            if (!e?.valid) continue;
+            const ref = saves.reference(e),
+                d = HOUSING.catalog[f.kind];
+            if (this.state.objects[ref]) continue;
+            this.state.objects[ref] = {
+                ref,
+                kind: f.kind,
+                owned: f.owned,
+                movable: f.movable,
+                support: saves.reference(resolveAuthored(f.support)),
+                health: d.health,
+                maxHealth: d.health,
+                cost: d.cost,
+            };
+            if (d.storage) {
+                let bag = Bag.createBag(...d.storage);
+                for (const [id, n] of Object.entries(f.stock || {})) {
+                    const r = Bag.add(bag, id, n);
+                    if (!r.ok)
+                        throw new Error('Invalid authored stock: ' + r.reason);
+                    bag = r.bag;
                 }
+                this.state.containers[ref] = bag;
             }
-            for (const d of HOUSING.doors) {
-                const leaf = world.entity(d.entity),
-                    ref = saves.reference(leaf);
-                this.state.doors[ref] = {
-                    ref,
-                    frame: saves.reference(world.entity(d.frame)),
-                    anchorA: vec(d.anchorA),
-                    anchorB: vec(d.anchorB),
-                    opened: false,
-                };
-            }
+        }
+        for (const d of doors) {
+            const leaf = resolveAuthored(d.entity);
+            if (!leaf?.valid) continue;
+            const ref = saves.reference(leaf);
+            if (this.state.doors[ref]) continue;
+            this.state.doors[ref] = {
+                ref,
+                frame: saves.reference(resolveAuthored(d.frame)),
+                anchorA: vec(d.anchorA),
+                anchorB: vec(d.anchorB),
+                opened: false,
+            };
         }
         for (const d of Object.values(this.state.doors)) this.ensureHinge(d);
     }
     get state() {
-        return this.p.state.housing;
+        if (this.rootState !== this.p.state.housing) {
+            this.rootState = this.p.state.housing;
+            this.view = housingView(this.rootState);
+        }
+        return this.view;
     }
     record(e) {
         const ref = e?.valid ? saves.reference(e) : null;
@@ -105,6 +135,10 @@ export default class Housing {
         const e = entityFor(d.ref),
             frame = entityFor(d.frame);
         if (!e?.valid || !frame?.valid) return null;
+        if (!physics.joint(e) && scenes.owner(e) !== scenes.owner(frame)) {
+            if (!scenes.adopt(e, scenes.owner(frame)))
+                throw new Error('Unable to assign door to its frame region');
+        }
         return (
             physics.joint(e) ||
             physics.createJoint(e, {
@@ -129,7 +163,9 @@ export default class Housing {
     socket(e) {
         if (!e?.valid) return null;
         const ref = saves.reference(e),
-            authored = HOUSING.sockets.find((s) => s.entity === e.id);
+            authored =
+                HOUSING.sockets.find((s) => s.entity === e.id) ||
+                this.regionalSockets.get(ref);
         if (authored)
             return {
                 ref,
@@ -142,7 +178,7 @@ export default class Housing {
                     z: authored.rotation[3],
                 },
                 door: authored.door
-                    ? saves.reference(world.entity(authored.door))
+                    ? saves.reference(resolveAuthored(authored.door))
                     : null,
                 name: authored.name,
             };
@@ -264,6 +300,11 @@ export default class Housing {
             v.thirst -= 5;
             v.stamina = 100;
             v.health = Math.min(100, v.health + 15);
+            if (this.state.homeRegion && this.state.homeRegion !== 'root')
+                scenes.pinRegion(this.state.homeRegion, 'player-home', false);
+            this.state.homeRegion = scenes.owner(e);
+            if (this.state.homeRegion !== 'root')
+                scenes.pinRegion(this.state.homeRegion, 'player-home', true);
             this.state.home = ref;
             this.p.say('Rested. This bed is now your recovery point.');
         } else if (HOUSING.catalog[r.kind]?.use === 'workbench') {
@@ -495,7 +536,12 @@ export default class Housing {
         delete this.state.objects[ref];
         delete this.state.containers[ref];
         if (r.socket) delete this.state.boards[r.socket];
-        if (this.state.home === ref) this.state.home = null;
+        if (this.state.home === ref) {
+            if (this.state.homeRegion && this.state.homeRegion !== 'root')
+                scenes.pinRegion(this.state.homeRegion, 'player-home', false);
+            this.state.home = null;
+            this.state.homeRegion = null;
+        }
         this.p.state.bag = next;
         this.p.say(
             refund

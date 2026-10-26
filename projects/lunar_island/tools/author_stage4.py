@@ -422,7 +422,7 @@ def author():
             obj(
                 i + 1,
                 d["name"] + " / authored body",
-                d["position"],
+                [0, 0, 0],
                 parent=i,
                 tags=4096,
                 **mesh("wood_crate" if kind == "depot" else "vehicle_" + kind),
@@ -487,13 +487,13 @@ def author():
             ]:
                 settings[k] = int(settings[k])
             fields.update({"wheel." + k: v for k, v in settings.items()})
-            center = [x + m[0], y + m[1] - (d["height"] + m[1] - d["radius"]), z + m[2]]
+            center = [m[0], m[1] - (d["height"] + m[1] - d["radius"]), m[2]]
             rows.append(obj(wid, d["name"] + " / wheel", center, **fields))
             rows.append(
                 obj(
                     i + 30 + n,
                     d["name"] + " / tyre visual",
-                    center,
+                    [0, 0, 0],
                     parent=wid,
                     **mesh("vehicle_wheel"),
                     scale=[d["radius"]] * 3,
@@ -506,7 +506,7 @@ def author():
                 obj(
                     rotor,
                     d["name"] + " / rotating rotor",
-                    [x,y+1.02,z] if kind=="helicopter" else [x,y,z-3],
+                    [0, 1.02, 0] if kind == "helicopter" else [0, 0, -3],
                     parent=i,
                     tags=2048,
                     **mesh(
@@ -616,7 +616,8 @@ def author():
             old = o["id"]
             o["id"] = mapping[old]
             f = o["fields"]
-            f["position"] = [a - b for a, b in zip(f["position"], d["position"])]
+            if "parent" not in f:
+                f["position"] = [a - b for a, b in zip(f["position"], d["position"])]
             if "parent" in f:
                 f["parent"] = mapping[f["parent"]]
             if "wheel.chassis" in f:

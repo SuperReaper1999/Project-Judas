@@ -1,0 +1,42 @@
+Shadow maps: on
+Graphics: 3.3.0 NVIDIA 580.178.04 / NVIDIA GeForce GTX 970/PCIe/SSE2
+Renderer fragment texture units: 32 (material path uses 12)
+World state: legacy .judasstate (F6/F7) saves disabled for additive compositions; save slots remain available
+Project: Lunar Island (/home/conner/Documents/GitHub/Project-Judas/projects/lunar_island/lunar_island.judasproj)
+Scene: Lunar Island / Homestead Coast (/home/conner/Documents/GitHub/Project-Judas/projects/lunar_island/Scenes/island.judas)
+World origin (m): 2900.000, 0.000, -1600.000
+asset 2eb74ecf72ef69112028dcf2c039cb36: Optional extension ignored: KHR_materials_clearcoat
+asset f4e24c58b44e48292bc35ad5a55d72f9: Optional extension ignored: KHR_materials_clearcoat
+asset d5563755c7887ca32886ad9518e56de8: Optional extension ignored: KHR_materials_clearcoat
+JS: Lunar Island: WASD, mouse, E gather, click tool, Tab pack/crafting, Escape pause, F6 save, F9 load.
+PASS welcome pauses actual world
+PASS authored world collision loaded
+PASS capture welcome.png
+PASS Escape begins real game
+PASS CharacterMotor moves via project input
+PASS same player toggles third person
+PASS pause menu stops gameplay
+PASS move/fire do not leak through modal
+PASS focus UI primary
+PASS ordinary E/menu enters selected vehicle
+PASS pilot's actual CharacterMotor is disabled
+VEHICLE START 7100 [-7.795623302459717,15.077921867370605,42.83749008178711] state {"bag":{"maxWeight":650,"slots":[null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null]},"burned":0.005400000281631947,"damageEvents":0,"distance":0.8219898259001699,"fuel":44.99459999971838,"health":100,"rotorAngle":0}
+PASS capture entered.png
+VEHICLE FIRST endpoint [-5.374138355255127,15.00423526763916,33.76760482788086] velocity [1.7641043663024902,-0.022250473499298096,-7.075253486633301]
+PASS actual physical vehicle changes position under controls
+PASS propulsion consumes persistent fuel
+PASS normal movement does not wreck vehicle
+PASS native powertrain endpoints remain available
+SHAFT 432.389 torque -84.5818
+SHAFT 96.0864 torque -13.4465
+SHAFT 96.0864 torque -13.4465
+SHAFT 27.4397 torque 636.985
+SHAFT 27.4668 torque 636.984
+WHEEL "7102" available 1 contact 1 overlap 0 length 0.299943 load 2862.53
+WHEEL "7103" available 1 contact 1 overlap 0 length 0.300933 load 2665.14
+WHEEL "7104" available 1 contact 1 overlap 0 length 0.24758 load 4168.99
+WHEEL "7105" available 1 contact 1 overlap 0 length 0.246239 load 4047.79
+VEHICLE FINAL [-5.254494667053223,15.002768516540527,33.289485931396484] up [-0.005209008231759071,0.999919056892395,0.011606493033468723] state {"bag":{"maxWeight":650,"slots":[null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null]},"burned":0.2769000144414594,"damageEvents":0,"distance":10.608091303918208,"fuel":44.7230999855586,"health":100,"rotorAngle":0}
+PASS capture driving.png
+PASS ordinary application exits cleanly
+18 checks, 0 failures

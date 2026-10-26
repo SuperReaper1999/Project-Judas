@@ -261,6 +261,533 @@
         "raw_meat": 2,
         "hide": 1
       }
+    },
+    "region_forest_0": {
+      "entity": 15000,
+      "name": "Rowan / Forester",
+      "friendly": true,
+      "health": 85,
+      "speed": 1.3,
+      "sight": 20,
+      "damage": 0,
+      "position": [
+        -1408,
+        34.06074295920609,
+        188
+      ],
+      "route": [
+        [
+          -1408,
+          34.06074295920609,
+          188
+        ],
+        [
+          -1393,
+          34.06074295920609,
+          188
+        ],
+        [
+          -1393,
+          34.06074295920609,
+          208
+        ]
+      ],
+      "stock": {
+        "tokens": 100,
+        "fuel_can": 4,
+        "rations": 4,
+        "bandage": 3,
+        "ammo_pistol": 20
+      },
+      "prices": {
+        "wood": 2,
+        "scrap": 3,
+        "iron_ore": 4,
+        "fuel_can": 8,
+        "rations": 4,
+        "bandage": 5,
+        "ammo_pistol": 1
+      },
+      "lines": [
+        "A forestry cabin, timber stands and iron outcrops. Rowan trades provisions for harvested wood.",
+        "Supplies are finite. You can turn any unoccupied house here into your own home.",
+        "Follow the surfaced roads. Ships and aircraft can reach the outlying coast."
+      ],
+      "quest": "forestry"
+    },
+    "region_town_0": {
+      "entity": 25000,
+      "name": "Asha / Medic",
+      "friendly": true,
+      "health": 85,
+      "speed": 1.3,
+      "sight": 20,
+      "damage": 0,
+      "position": [
+        -1808,
+        60.66281826290872,
+        1288
+      ],
+      "route": [
+        [
+          -1808,
+          60.66281826290872,
+          1288
+        ],
+        [
+          -1793,
+          60.66281826290872,
+          1288
+        ],
+        [
+          -1793,
+          60.66281826290872,
+          1308
+        ]
+      ],
+      "stock": {
+        "tokens": 100,
+        "fuel_can": 4,
+        "rations": 4,
+        "bandage": 3,
+        "ammo_pistol": 20
+      },
+      "prices": {
+        "wood": 2,
+        "scrap": 3,
+        "iron_ore": 4,
+        "fuel_can": 8,
+        "rations": 4,
+        "bandage": 5,
+        "ammo_pistol": 1
+      },
+      "lines": [
+        "An occupied high street, clinic, grocer and abandoned homes. Asha needs medical dressings.",
+        "Supplies are finite. You can turn any unoccupied house here into your own home.",
+        "Follow the surfaced roads. Ships and aircraft can reach the outlying coast."
+      ],
+      "quest": "clinic"
+    },
+    "region_harbour_0": {
+      "entity": 35000,
+      "name": "Ellis / Harbourmaster",
+      "friendly": true,
+      "health": 85,
+      "speed": 1.3,
+      "sight": 20,
+      "damage": 0,
+      "position": [
+        -3908,
+        24.184788629105636,
+        3188
+      ],
+      "route": [
+        [
+          -3908,
+          24.184788629105636,
+          3188
+        ],
+        [
+          -3893,
+          24.184788629105636,
+          3188
+        ],
+        [
+          -3893,
+          24.184788629105636,
+          3208
+        ]
+      ],
+      "stock": {
+        "tokens": 100,
+        "fuel_can": 4,
+        "rations": 4,
+        "bandage": 3,
+        "ammo_pistol": 20
+      },
+      "prices": {
+        "wood": 2,
+        "scrap": 3,
+        "iron_ore": 4,
+        "fuel_can": 8,
+        "rations": 4,
+        "bandage": 5,
+        "ammo_pistol": 1
+      },
+      "lines": [
+        "Working piers, a chandlery, cargo salvage and an ocean skiff. Ellis needs scrap to reopen the ferry route.",
+        "Supplies are finite. You can turn any unoccupied house here into your own home.",
+        "Follow the surfaced roads. Ships and aircraft can reach the outlying coast."
+      ],
+      "quest": "harbour"
+    },
+    "region_industry_0": {
+      "entity": 45000,
+      "name": "Works scavenger",
+      "friendly": false,
+      "health": 85,
+      "speed": 2.6,
+      "sight": 22,
+      "damage": 13,
+      "position": [
+        -3708,
+        33.30709427797197,
+        2838
+      ],
+      "route": [
+        [
+          -3708,
+          33.30709427797197,
+          2838
+        ],
+        [
+          -3693,
+          33.30709427797197,
+          2838
+        ],
+        [
+          -3693,
+          33.30709427797197,
+          2858
+        ]
+      ],
+      "stock": {
+        "scrap": 3,
+        "tokens": 8,
+        "ammo_rifle": 10
+      },
+      "prices": {},
+      "lines": [
+        "A damaged industrial yard with bandits, ore and repair supplies. Search the machine shop carefully.",
+        "Supplies are finite. You can turn any unoccupied house here into your own home.",
+        "Follow the surfaced roads. Ships and aircraft can reach the outlying coast."
+      ]
+    },
+    "region_industry_1": {
+      "entity": 45010,
+      "name": "Blackwater Works raider",
+      "friendly": false,
+      "health": 85,
+      "speed": 2.6,
+      "sight": 22,
+      "damage": 13,
+      "position": [
+        -3685,
+        33.30709427797197,
+        2865
+      ],
+      "route": [
+        [
+          -3708,
+          33.30709427797197,
+          2838
+        ],
+        [
+          -3693,
+          33.30709427797197,
+          2838
+        ],
+        [
+          -3693,
+          33.30709427797197,
+          2858
+        ]
+      ],
+      "stock": {
+        "scrap": 3,
+        "tokens": 8,
+        "ammo_rifle": 10
+      },
+      "prices": {},
+      "lines": [
+        "A damaged industrial yard with bandits, ore and repair supplies. Search the machine shop carefully.",
+        "Supplies are finite. You can turn any unoccupied house here into your own home.",
+        "Follow the surfaced roads. Ships and aircraft can reach the outlying coast."
+      ]
+    },
+    "region_industry_2": {
+      "entity": 45020,
+      "name": "Blackwater Works raider",
+      "friendly": false,
+      "health": 85,
+      "speed": 2.6,
+      "sight": 22,
+      "damage": 13,
+      "position": [
+        -3682,
+        33.30709427797197,
+        2865
+      ],
+      "route": [
+        [
+          -3708,
+          33.30709427797197,
+          2838
+        ],
+        [
+          -3693,
+          33.30709427797197,
+          2838
+        ],
+        [
+          -3693,
+          33.30709427797197,
+          2858
+        ]
+      ],
+      "stock": {
+        "scrap": 3,
+        "tokens": 8,
+        "ammo_rifle": 10
+      },
+      "prices": {},
+      "lines": [
+        "A damaged industrial yard with bandits, ore and repair supplies. Search the machine shop carefully.",
+        "Supplies are finite. You can turn any unoccupied house here into your own home.",
+        "Follow the surfaced roads. Ships and aircraft can reach the outlying coast."
+      ]
+    },
+    "region_city_0": {
+      "entity": 55000,
+      "name": "Nia / Radio Operator",
+      "friendly": true,
+      "health": 85,
+      "speed": 1.3,
+      "sight": 20,
+      "damage": 0,
+      "position": [
+        -908,
+        29.960672081838126,
+        2938
+      ],
+      "route": [
+        [
+          -908,
+          29.960672081838126,
+          2938
+        ],
+        [
+          -893,
+          29.960672081838126,
+          2938
+        ],
+        [
+          -893,
+          29.960672081838126,
+          2958
+        ]
+      ],
+      "stock": {
+        "tokens": 100,
+        "fuel_can": 4,
+        "rations": 4,
+        "bandage": 3,
+        "ammo_pistol": 20
+      },
+      "prices": {
+        "wood": 2,
+        "scrap": 3,
+        "iron_ore": 4,
+        "fuel_can": 8,
+        "rations": 4,
+        "bandage": 5,
+        "ammo_pistol": 1
+      },
+      "lines": [
+        "A compact city quarter amid sealed towers. Recover radio components from the occupied office and help Nia restore contact.",
+        "Supplies are finite. You can turn any unoccupied house here into your own home.",
+        "Follow the surfaced roads. Ships and aircraft can reach the outlying coast."
+      ],
+      "quest": "radio"
+    },
+    "region_city_1": {
+      "entity": 55010,
+      "name": "Lunar City / Civic Quarter raider",
+      "friendly": false,
+      "health": 85,
+      "speed": 2.6,
+      "sight": 22,
+      "damage": 13,
+      "position": [
+        -885,
+        29.960672081838126,
+        2965
+      ],
+      "route": [
+        [
+          -908,
+          29.960672081838126,
+          2938
+        ],
+        [
+          -893,
+          29.960672081838126,
+          2938
+        ],
+        [
+          -893,
+          29.960672081838126,
+          2958
+        ]
+      ],
+      "stock": {
+        "scrap": 3,
+        "tokens": 8,
+        "ammo_rifle": 10
+      },
+      "prices": {},
+      "lines": [
+        "A compact city quarter amid sealed towers. Recover radio components from the occupied office and help Nia restore contact.",
+        "Supplies are finite. You can turn any unoccupied house here into your own home.",
+        "Follow the surfaced roads. Ships and aircraft can reach the outlying coast."
+      ]
+    },
+    "region_city_2": {
+      "entity": 55020,
+      "name": "Lunar City / Civic Quarter raider",
+      "friendly": false,
+      "health": 85,
+      "speed": 2.6,
+      "sight": 22,
+      "damage": 13,
+      "position": [
+        -882,
+        29.960672081838126,
+        2965
+      ],
+      "route": [
+        [
+          -908,
+          29.960672081838126,
+          2938
+        ],
+        [
+          -893,
+          29.960672081838126,
+          2938
+        ],
+        [
+          -893,
+          29.960672081838126,
+          2958
+        ]
+      ],
+      "stock": {
+        "scrap": 3,
+        "tokens": 8,
+        "ammo_rifle": 10
+      },
+      "prices": {},
+      "lines": [
+        "A compact city quarter amid sealed towers. Recover radio components from the occupied office and help Nia restore contact.",
+        "Supplies are finite. You can turn any unoccupied house here into your own home.",
+        "Follow the surfaced roads. Ships and aircraft can reach the outlying coast."
+      ]
+    },
+    "region_coast_0": {
+      "entity": 65000,
+      "name": "Tess / Coastguard",
+      "friendly": true,
+      "health": 85,
+      "speed": 1.3,
+      "sight": 20,
+      "damage": 0,
+      "position": [
+        1992,
+        17.217303223943997,
+        1288
+      ],
+      "route": [
+        [
+          1992,
+          17.217303223943997,
+          1288
+        ],
+        [
+          2007,
+          17.217303223943997,
+          1288
+        ],
+        [
+          2007,
+          17.217303223943997,
+          1308
+        ]
+      ],
+      "stock": {
+        "tokens": 100,
+        "fuel_can": 4,
+        "rations": 4,
+        "bandage": 3,
+        "ammo_pistol": 20
+      },
+      "prices": {
+        "wood": 2,
+        "scrap": 3,
+        "iron_ore": 4,
+        "fuel_can": 8,
+        "rations": 4,
+        "bandage": 5,
+        "ammo_pistol": 1
+      },
+      "lines": [
+        "A coastguard refuge, beach path, landing ground and an ocean supply point.",
+        "Supplies are finite. You can turn any unoccupied house here into your own home.",
+        "Follow the surfaced roads. Ships and aircraft can reach the outlying coast."
+      ]
+    },
+    "region_islet_0": {
+      "entity": 75000,
+      "name": "Sol / Lighthouse Keeper",
+      "friendly": true,
+      "health": 85,
+      "speed": 1.3,
+      "sight": 20,
+      "damage": 0,
+      "position": [
+        2392,
+        8.18,
+        2988
+      ],
+      "route": [
+        [
+          2392,
+          8.18,
+          2988
+        ],
+        [
+          2407,
+          8.18,
+          2988
+        ],
+        [
+          2407,
+          8.18,
+          3008
+        ]
+      ],
+      "stock": {
+        "tokens": 100,
+        "fuel_can": 4,
+        "rations": 4,
+        "bandage": 3,
+        "ammo_pistol": 20
+      },
+      "prices": {
+        "wood": 2,
+        "scrap": 3,
+        "iron_ore": 4,
+        "fuel_can": 8,
+        "rations": 4,
+        "bandage": 5,
+        "ammo_pistol": 1
+      },
+      "lines": [
+        "A separate offshore island with a lighthouse refuge, mineral deposits and a survivor. Reach it by boat or air.",
+        "Supplies are finite. You can turn any unoccupied house here into your own home.",
+        "Follow the surfaced roads. Ships and aircraft can reach the outlying coast."
+      ],
+      "quest": "islet"
     }
   },
   "quests": {
@@ -269,7 +796,7 @@
       "name": "Reopen the supply route",
       "description": "Defeat both scavengers at the eastern camp and return to Mara.",
       "objective": {
-        "counter": "kills",
+        "counter": "campKills",
         "count": 2
       },
       "acceptItems": {
@@ -303,6 +830,101 @@
       "progress": "Ivo: Bring six timber from a fallen tree or loose branches. I will pay 15 tokens and two rations.",
       "completed": "Ivo: Good timber. We can keep the fire and repairs going. Your pay is in your pack.",
       "after": "Ivo: Watch the wolves on the western trail. We cannot afford another lost forager."
+    },
+    "forestry": {
+      "id": "forestry",
+      "name": "Timber beyond the homestead",
+      "description": "Bring 12 wood to this survivor.",
+      "objective": {
+        "items": {
+          "wood": 12
+        }
+      },
+      "acceptItems": {},
+      "rewards": {
+        "tokens": 25,
+        "fuel_can": 2
+      },
+      "accepted": "I need 12 wood. Search the island and return.",
+      "progress": "Bring the requested supplies; check your pack before returning.",
+      "completed": "Thank you. Your supplies make a real difference. Take these provisions for the journey.",
+      "after": "The work is done. Travel safely."
+    },
+    "clinic": {
+      "id": "clinic",
+      "name": "Dressings for Moonbridge",
+      "description": "Bring 3 bandage to this survivor.",
+      "objective": {
+        "items": {
+          "bandage": 3
+        }
+      },
+      "acceptItems": {},
+      "rewards": {
+        "tokens": 30,
+        "ammo_pistol": 20
+      },
+      "accepted": "I need 3 bandage. Search the island and return.",
+      "progress": "Bring the requested supplies; check your pack before returning.",
+      "completed": "Thank you. Your supplies make a real difference. Take these provisions for the journey.",
+      "after": "The work is done. Travel safely."
+    },
+    "harbour": {
+      "id": "harbour",
+      "name": "Repair the ferry stores",
+      "description": "Bring 12 scrap to this survivor.",
+      "objective": {
+        "items": {
+          "scrap": 12
+        }
+      },
+      "acceptItems": {},
+      "rewards": {
+        "tokens": 40,
+        "fuel_can": 3
+      },
+      "accepted": "I need 12 scrap. Search the island and return.",
+      "progress": "Bring the requested supplies; check your pack before returning.",
+      "completed": "Thank you. Your supplies make a real difference. Take these provisions for the journey.",
+      "after": "The work is done. Travel safely."
+    },
+    "radio": {
+      "id": "radio",
+      "name": "A voice across the water",
+      "description": "Bring 1 radio_parts to this survivor.",
+      "objective": {
+        "items": {
+          "radio_parts": 1
+        }
+      },
+      "acceptItems": {},
+      "rewards": {
+        "tokens": 80,
+        "repair_kit": 3
+      },
+      "accepted": "I need 1 radio_parts. Search the island and return.",
+      "progress": "Bring the requested supplies; check your pack before returning.",
+      "completed": "Thank you. Your supplies make a real difference. Take these provisions for the journey.",
+      "after": "The work is done. Travel safely."
+    },
+    "islet": {
+      "id": "islet",
+      "name": "The lantern mineral",
+      "description": "Bring 6 iron_ore to this survivor.",
+      "objective": {
+        "items": {
+          "iron_ore": 6
+        }
+      },
+      "acceptItems": {},
+      "rewards": {
+        "tokens": 50,
+        "rations": 4
+      },
+      "accepted": "I need 6 iron_ore. Search the island and return.",
+      "progress": "Bring the requested supplies; check your pack before returning.",
+      "completed": "Thank you. Your supplies make a real difference. Take these provisions for the journey.",
+      "after": "The work is done. Travel safely."
     }
   },
   "humanCorpse": "f97f76b1ea018c43d15ddcd6c56d0836",
@@ -319,5 +941,78 @@
     "gunshot": "6940",
     "reload": "6941",
     "hurt": "6942"
-  }
+  },
+  "weapons": {
+    "hands": {
+      "name": "Hands",
+      "damage": 8,
+      "range": 2,
+      "interval": 0.6,
+      "impulse": 8
+    },
+    "stone_axe": {
+      "name": "Stone axe",
+      "damage": 28,
+      "range": 2.4,
+      "interval": 0.7,
+      "impulse": 20
+    },
+    "stone_pickaxe": {
+      "name": "Stone pickaxe",
+      "damage": 23,
+      "range": 2.4,
+      "interval": 0.75,
+      "impulse": 16
+    },
+    "knife": {
+      "name": "Field knife",
+      "damage": 20,
+      "range": 2,
+      "interval": 0.36,
+      "impulse": 8
+    },
+    "bat": {
+      "name": "Hardwood bat",
+      "damage": 24,
+      "range": 2.7,
+      "interval": 0.65,
+      "impulse": 24
+    },
+    "pistol": {
+      "name": "Trail pistol",
+      "damage": 24,
+      "range": 65,
+      "interval": 0.3,
+      "impulse": 12,
+      "ammo": "ammo_pistol",
+      "capacity": 10,
+      "reload": 1.3,
+      "recoil": 0.045
+    },
+    "shotgun": {
+      "name": "Coach shotgun",
+      "damage": 13,
+      "range": 28,
+      "interval": 0.9,
+      "impulse": 8,
+      "ammo": "ammo_shell",
+      "capacity": 2,
+      "reload": 1.8,
+      "recoil": 0.12,
+      "pellets": 6
+    },
+    "rifle": {
+      "name": "Scavenger rifle",
+      "damage": 31,
+      "range": 100,
+      "interval": 0.18,
+      "impulse": 18,
+      "ammo": "ammo_rifle",
+      "capacity": 20,
+      "reload": 1.8,
+      "recoil": 0.035,
+      "automatic": true
+    }
+  },
+  "regionHumanCorpse": "76840e44235b0856f9993cd4c7035b78"
 }

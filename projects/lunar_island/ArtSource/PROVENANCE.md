@@ -90,3 +90,19 @@ and independent research remain unchanged.
 The engine loop is original deterministic synthesized PCM (22,050 Hz, mono,
 16-bit), composed of 70/140/280 Hz harmonics. Runtime pitch follows real shaft RPM.
 No downloaded vehicle sound, voice or other third-party asset was introduced.
+
+## Stage 5
+
+The real Prompt3D parser and installed shop/building/prop generators produced the
+corner shop, pharmacy, supermarket, stepped tower and lighthouse in the realistic
+preset, seeds 91557–91561. Raw receipts, parsed parameters and GLBs are retained in
+stage5-prompt3d; runtime models and hashes are recorded in asset_catalog.json. The
+source generator, its weights and independent research were not modified.
+
+Road strips/collision, placement/scattering and the native island terrain are
+original author_stage5.py content. The regional human-remains model is a derivative
+of the original NPC GLB: one scene-parent translation reproduces the existing
+corpse visual-child offset without removing the rig or animation data. A native
+one-entity body/render prefab respects the current regional adoption contract.
+Furniture, houses, vegetation, props and material scans retain their earlier
+provenance/licences. No new external download, sound or voice was introduced.

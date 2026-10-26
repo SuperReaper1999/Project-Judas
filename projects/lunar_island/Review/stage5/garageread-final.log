@@ -1,0 +1,62 @@
+Shadow maps: on
+Graphics: 3.3.0 NVIDIA 580.178.04 / NVIDIA GeForce GTX 970/PCIe/SSE2
+Renderer fragment texture units: 32 (material path uses 12)
+World state: legacy .judasstate (F6/F7) saves disabled for additive compositions; save slots remain available
+Project: Lunar Island (/home/conner/Documents/GitHub/Project-Judas/projects/lunar_island/lunar_island.judasproj)
+Scene: Lunar Island / Homestead Coast (/home/conner/Documents/GitHub/Project-Judas/projects/lunar_island/Scenes/island.judas)
+World origin (m): 2900.000, 0.000, -1600.000
+asset 2eb74ecf72ef69112028dcf2c039cb36: Optional extension ignored: KHR_materials_clearcoat
+asset f4e24c58b44e48292bc35ad5a55d72f9: Optional extension ignored: KHR_materials_clearcoat
+asset d5563755c7887ca32886ad9518e56de8: Optional extension ignored: KHR_materials_clearcoat
+JS: Lunar Island: WASD, mouse, E gather, click tool, Tab pack/crafting, Escape pause, F6 save, F9 load.
+PASS welcome pauses actual world
+PASS authored world collision loaded
+PASS capture welcome.png
+PASS Escape begins real game
+PASS CharacterMotor moves via project input
+PASS same player toggles third person
+PASS pause menu stops gameplay
+PASS move/fire do not leak through modal
+PASS fresh process requests ordinary save load: 
+JS: Lunar Island: WASD, mouse, E gather, click tool, Tab pack/crafting, Escape pause, F6 save, F9 load.
+PASS vehicle cold restore publishes: 
+PASS cold save restores exact personal inventory
+PASS cold restore retains actual disabled pilot motor and driver lease
+COLD PAUSED 0
+PASS exact cold cargo 7000
+PASS exact cold vehicle condition 7000
+PASS cold fuel within at most one resumed consumption step 7000
+PASS actual cold physical endpoint 7000
+PASS exact cold cargo 7100
+PASS exact cold vehicle condition 7100
+PASS cold fuel within at most one resumed consumption step 7100
+PASS actual cold physical endpoint 7100
+PASS exact cold cargo 7200
+PASS exact cold vehicle condition 7200
+PASS cold fuel within at most one resumed consumption step 7200
+PASS actual cold physical endpoint 7200
+PASS exact cold cargo 7300
+PASS exact cold vehicle condition 7300
+PASS cold fuel within at most one resumed consumption step 7300
+PASS actual cold physical endpoint 7300
+PASS exact cold cargo 7400
+PASS exact cold vehicle condition 7400
+PASS cold fuel within at most one resumed consumption step 7400
+PASS actual cold physical endpoint 7400
+PASS exact cold cargo 7500
+PASS exact cold vehicle condition 7500
+PASS cold fuel within at most one resumed consumption step 7500
+PASS actual cold physical endpoint 7500
+PASS exact cold cargo 7800
+PASS exact cold vehicle condition 7800
+PASS cold fuel within at most one resumed consumption step 7800
+PASS actual cold physical endpoint 7800
+PASS exact cold cargo 4611686018427387914
+PASS exact cold vehicle condition 4611686018427387914
+PASS cold fuel within at most one resumed consumption step 4611686018427387914
+PASS actual cold physical endpoint 4611686018427387914
+PASS capture cold-vehicles.png
+PASS restored native vehicle responds physically to real input
+PASS cargo persists through continued restored driving
+PASS ordinary application exits cleanly
+48 checks, 0 failures

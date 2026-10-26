@@ -1,0 +1,15 @@
+{
+  "path": "/home/conner/Documents/GitHub/ClaudesNewML-AI-Thing",
+  "gitHistoryAvailable": false,
+  "note": "No .git repository at this installed tool location. Source-file hashes identify inspected implementation; no claim of a fully frozen external-tool archive. Source tool was read-only.",
+  "sha256": {
+    "prompt3d/pipeline.py": "f6cec857283c5d317e42f1248622d70ade1778afeebef64be5b0f317bc3d42b6",
+    "prompt3d/geometry.py": "1e1a87761d8f1b18c03d1b276022382187a5a5d817d0c87501a6bec81d3ab500",
+    "prompt3d/export.py": "2cacbd07995d37ffbe41c0ab03012ec90f8a3d256da2fd34d62ad5ff480ad811",
+    "prompt3d/scans.py": "e2fb64b1f298b17a665d43764528c207971deff16c1cc7b78eb56c43ac47709a",
+    "prompt3d/generators/__init__.py": "9f07d0bceeda433bd76c1cd7cf74c26efe31b50fae9033bb78da5932fa10cb2f",
+    "prompt3d/generators/shop.py": "9c10e596d57df8a7562a61613bf32b5aab04ec0408f473c3106f8aed77edd7ea",
+    "prompt3d/generators/building.py": "4c44dcff1afd8ca101c226096692c52ae6b1e7140a1fffbe950b9eb3f1cd7712",
+    "prompt3d/generators/prop.py": "bdbc196fc0bfb7e8483ea0a5ce187539ad68ea91b792ff1c1fe944eb01c82e3e"
+  }
+}

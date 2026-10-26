@@ -1,0 +1,1034 @@
+{
+  "physical": [
+    {
+      "entity": 3120,
+      "joint": false,
+      "position": [
+        -18.5,
+        14.594962120056152,
+        -4.5
+      ],
+      "rotation": [
+        1.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    }
+  ],
+  "state": {
+    "bag": {
+      "maxWeight": 32,
+      "slots": [
+        {
+          "count": 1,
+          "item": "work_coat"
+        },
+        {
+          "count": 1,
+          "item": "empty_flask"
+        },
+        {
+          "count": 2,
+          "item": "rations"
+        },
+        {
+          "count": 20,
+          "item": "tokens"
+        },
+        null,
+        null,
+        {
+          "count": 1,
+          "item": "pistol"
+        },
+        {
+          "count": 14,
+          "item": "ammo_pistol"
+        },
+        {
+          "count": 3,
+          "item": "fuel_can"
+        },
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ]
+    },
+    "combat": {
+      "gift": false,
+      "kills": 0,
+      "lastTarget": "7100",
+      "magazines": {
+        "pistol": 9
+      },
+      "quests": {
+        "patrol": "active"
+      },
+      "reload": null,
+      "shots": 1,
+      "wolves": 0
+    },
+    "drops": {},
+    "equipment": {
+      "body": "work_coat",
+      "hand": "pistol"
+    },
+    "equipped": "pistol",
+    "exploration": {
+      "target": null,
+      "visited": {}
+    },
+    "harvest": {
+      "200": {
+        "depleted": true
+      },
+      "202": {
+        "depleted": true
+      },
+      "204": {
+        "depleted": true
+      },
+      "250": {
+        "depleted": true
+      },
+      "252": {
+        "depleted": true
+      }
+    },
+    "hotbar": [
+      "hands",
+      "stone_axe",
+      "stone_pickaxe",
+      "berries",
+      "water",
+      "bandage"
+    ],
+    "housing": {
+      "boards": {},
+      "containers": {
+        "entity:3101": {
+          "maxWeight": 100,
+          "slots": [
+            {
+              "count": 8,
+              "item": "planks"
+            },
+            {
+              "count": 8,
+              "item": "nails"
+            },
+            {
+              "count": 6,
+              "item": "scrap"
+            },
+            {
+              "count": 2,
+              "item": "rations"
+            },
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ]
+        },
+        "entity:3106": {
+          "maxWeight": 140,
+          "slots": [
+            {
+              "count": 8,
+              "item": "fiber"
+            },
+            {
+              "count": 2,
+              "item": "bandage"
+            },
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ]
+        },
+        "entity:3107": {
+          "maxWeight": 50,
+          "slots": [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ]
+        },
+        "entity:3120": {
+          "maxWeight": 100,
+          "slots": [
+            {
+              "count": 2,
+              "item": "planks"
+            },
+            {
+              "count": 2,
+              "item": "nails"
+            },
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ]
+        },
+        "entity:3301": {
+          "maxWeight": 100,
+          "slots": [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ]
+        },
+        "entity:3306": {
+          "maxWeight": 140,
+          "slots": [
+            {
+              "count": 8,
+              "item": "fiber"
+            },
+            {
+              "count": 2,
+              "item": "bandage"
+            },
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ]
+        },
+        "entity:3307": {
+          "maxWeight": 50,
+          "slots": [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ]
+        }
+      },
+      "doors": {
+        "entity:3061": {
+          "anchorA": {
+            "x": -0.65,
+            "y": 0,
+            "z": -0.075
+          },
+          "anchorB": {
+            "x": -0.65,
+            "y": -0.15,
+            "z": -0.075
+          },
+          "frame": "entity:3060",
+          "opened": false,
+          "ref": "entity:3061"
+        },
+        "entity:3261": {
+          "anchorA": {
+            "x": -0.65,
+            "y": 0,
+            "z": -0.075
+          },
+          "anchorB": {
+            "x": -0.65,
+            "y": -0.15,
+            "z": -0.075
+          },
+          "frame": "entity:3260",
+          "opened": false,
+          "ref": "entity:3261"
+        }
+      },
+      "home": null,
+      "objects": {
+        "entity:3100": {
+          "cost": {
+            "fiber": 6,
+            "wood": 5
+          },
+          "health": 60,
+          "kind": "bed",
+          "maxHealth": 60,
+          "movable": true,
+          "owned": false,
+          "ref": "entity:3100",
+          "support": "entity:3000"
+        },
+        "entity:3101": {
+          "cost": {
+            "wood": 4
+          },
+          "health": 70,
+          "kind": "chest",
+          "maxHealth": 70,
+          "movable": true,
+          "owned": false,
+          "ref": "entity:3101",
+          "support": "entity:3000"
+        },
+        "entity:3102": {
+          "cost": {
+            "stone": 2,
+            "wood": 6
+          },
+          "health": 90,
+          "kind": "workbench",
+          "maxHealth": 90,
+          "movable": true,
+          "owned": false,
+          "ref": "entity:3102",
+          "support": "entity:3000"
+        },
+        "entity:3103": {
+          "cost": {
+            "wood": 2
+          },
+          "health": 50,
+          "kind": "chair",
+          "maxHealth": 50,
+          "movable": true,
+          "owned": false,
+          "ref": "entity:3103",
+          "support": "entity:3000"
+        },
+        "entity:3104": {
+          "cost": {
+            "wood": 3
+          },
+          "health": 60,
+          "kind": "table",
+          "maxHealth": 60,
+          "movable": true,
+          "owned": false,
+          "ref": "entity:3104",
+          "support": "entity:3000"
+        },
+        "entity:3105": {
+          "cost": {
+            "fiber": 8,
+            "wood": 5
+          },
+          "health": 60,
+          "kind": "sofa",
+          "maxHealth": 60,
+          "movable": true,
+          "owned": false,
+          "ref": "entity:3105",
+          "support": "entity:3000"
+        },
+        "entity:3106": {
+          "cost": {
+            "wood": 5
+          },
+          "health": 70,
+          "kind": "cupboard",
+          "maxHealth": 70,
+          "movable": true,
+          "owned": false,
+          "ref": "entity:3106",
+          "support": "entity:3000"
+        },
+        "entity:3107": {
+          "cost": {
+            "wood": 3
+          },
+          "health": 50,
+          "kind": "shelf",
+          "maxHealth": 50,
+          "movable": true,
+          "owned": false,
+          "ref": "entity:3107",
+          "support": "entity:3000"
+        },
+        "entity:3108": {
+          "cost": {
+            "fiber": 1,
+            "scrap": 2
+          },
+          "health": 40,
+          "kind": "lamp",
+          "maxHealth": 40,
+          "movable": true,
+          "owned": false,
+          "ref": "entity:3108",
+          "support": "entity:3000"
+        },
+        "entity:3109": {
+          "cost": {
+            "fiber": 6
+          },
+          "health": 30,
+          "kind": "rug",
+          "maxHealth": 30,
+          "movable": true,
+          "owned": false,
+          "ref": "entity:3109",
+          "support": "entity:3000"
+        },
+        "entity:3110": {
+          "cost": {
+            "fiber": 2,
+            "wood": 1
+          },
+          "health": 30,
+          "kind": "painting",
+          "maxHealth": 30,
+          "movable": true,
+          "owned": false,
+          "ref": "entity:3110",
+          "support": "entity:3000"
+        },
+        "entity:3120": {
+          "cost": {
+            "wood": 4
+          },
+          "health": 70,
+          "kind": "chest",
+          "maxHealth": 70,
+          "movable": true,
+          "owned": false,
+          "ref": "entity:3120",
+          "support": "entity:3000"
+        },
+        "entity:3300": {
+          "cost": {
+            "fiber": 6,
+            "wood": 5
+          },
+          "health": 60,
+          "kind": "bed",
+          "maxHealth": 60,
+          "movable": true,
+          "owned": false,
+          "ref": "entity:3300",
+          "support": "entity:3200"
+        },
+        "entity:3301": {
+          "cost": {
+            "wood": 4
+          },
+          "health": 70,
+          "kind": "chest",
+          "maxHealth": 70,
+          "movable": true,
+          "owned": false,
+          "ref": "entity:3301",
+          "support": "entity:3200"
+        },
+        "entity:3302": {
+          "cost": {
+            "stone": 2,
+            "wood": 6
+          },
+          "health": 90,
+          "kind": "workbench",
+          "maxHealth": 90,
+          "movable": true,
+          "owned": false,
+          "ref": "entity:3302",
+          "support": "entity:3200"
+        },
+        "entity:3303": {
+          "cost": {
+            "wood": 2
+          },
+          "health": 50,
+          "kind": "chair",
+          "maxHealth": 50,
+          "movable": true,
+          "owned": false,
+          "ref": "entity:3303",
+          "support": "entity:3200"
+        },
+        "entity:3304": {
+          "cost": {
+            "wood": 3
+          },
+          "health": 60,
+          "kind": "table",
+          "maxHealth": 60,
+          "movable": true,
+          "owned": false,
+          "ref": "entity:3304",
+          "support": "entity:3200"
+        },
+        "entity:3305": {
+          "cost": {
+            "fiber": 8,
+            "wood": 5
+          },
+          "health": 60,
+          "kind": "sofa",
+          "maxHealth": 60,
+          "movable": true,
+          "owned": false,
+          "ref": "entity:3305",
+          "support": "entity:3200"
+        },
+        "entity:3306": {
+          "cost": {
+            "wood": 5
+          },
+          "health": 70,
+          "kind": "cupboard",
+          "maxHealth": 70,
+          "movable": true,
+          "owned": false,
+          "ref": "entity:3306",
+          "support": "entity:3200"
+        },
+        "entity:3307": {
+          "cost": {
+            "wood": 3
+          },
+          "health": 50,
+          "kind": "shelf",
+          "maxHealth": 50,
+          "movable": true,
+          "owned": false,
+          "ref": "entity:3307",
+          "support": "entity:3200"
+        },
+        "entity:3308": {
+          "cost": {
+            "fiber": 1,
+            "scrap": 2
+          },
+          "health": 40,
+          "kind": "lamp",
+          "maxHealth": 40,
+          "movable": true,
+          "owned": false,
+          "ref": "entity:3308",
+          "support": "entity:3200"
+        },
+        "entity:3309": {
+          "cost": {
+            "fiber": 6
+          },
+          "health": 30,
+          "kind": "rug",
+          "maxHealth": 30,
+          "movable": true,
+          "owned": false,
+          "ref": "entity:3309",
+          "support": "entity:3200"
+        },
+        "entity:3310": {
+          "cost": {
+            "fiber": 2,
+            "wood": 1
+          },
+          "health": 30,
+          "kind": "painting",
+          "maxHealth": 30,
+          "movable": true,
+          "owned": false,
+          "ref": "entity:3310",
+          "support": "entity:3200"
+        },
+        "entity:4611686018427387914": {
+          "cost": {
+            "stone": 4,
+            "wood": 4
+          },
+          "health": 180,
+          "kind": "foundation",
+          "maxHealth": 180,
+          "movable": false,
+          "owned": true,
+          "ref": "entity:4611686018427387914",
+          "support": "entity:3"
+        }
+      },
+      "schema": 2,
+      "stats": {
+        "barricaded": 0,
+        "moved": 0,
+        "placed": 1,
+        "repaired": 0,
+        "transferred": 0
+      }
+    },
+    "introSeen": true,
+    "pitch": -0.2,
+    "schema": 1,
+    "sensitivity": 0.0021,
+    "stats": {
+      "cooked": 0,
+      "crafted": 0,
+      "felled": 0,
+      "gathered": 10,
+      "mined": 0,
+      "timber": 0
+    },
+    "third": true,
+    "transport": {
+      "driving": "entity:7100",
+      "throttle": 0
+    },
+    "vitals": {
+      "breath": 22,
+      "elapsed": 12.383333979174495,
+      "health": 100,
+      "hunger": 74.77709998837807,
+      "injury": 0,
+      "stamina": 100,
+      "thirst": 64.56658331073396
+    },
+    "yaw": 0
+  },
+  "treePosition": [
+    46.86758041381836,
+    19.977705001831055,
+    4.887491703033447
+  ],
+  "treeRotation": [
+    1.0,
+    0.0,
+    0.0,
+    0.0
+  ],
+  "vehicles": [
+    {
+      "entity": 7000,
+      "position": [
+        11.997207641601563,
+        14.798730850219727,
+        44.19926452636719
+      ],
+      "rotation": [
+        0.9999807476997375,
+        0.004482711665332317,
+        0.0041031138971447945,
+        -0.0013223381247371435
+      ],
+      "state": {
+        "bag": {
+          "maxWeight": 160,
+          "slots": [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ]
+        },
+        "burned": 0,
+        "damageEvents": 0,
+        "distance": 1.3709835947445104,
+        "fuel": 28,
+        "health": 100,
+        "rotorAngle": 0
+      }
+    },
+    {
+      "entity": 7100,
+      "position": [
+        -3.9632039070129395,
+        15.01335620880127,
+        28.7581729888916
+      ],
+      "rotation": [
+        0.9921705722808838,
+        -0.0018186121014878154,
+        -0.12472043186426163,
+        0.006256427150219679
+      ],
+      "state": {
+        "bag": {
+          "maxWeight": 650,
+          "slots": [
+            {
+              "count": 2,
+              "item": "wood"
+            },
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ]
+        },
+        "burned": 0.3552611944446678,
+        "damageEvents": 1,
+        "distance": 17.293718864381468,
+        "fuel": 49.64473880555543,
+        "health": 100,
+        "rotorAngle": 0
+      }
+    },
+    {
+      "entity": 7200,
+      "position": [
+        21.821468353271484,
+        14.763967514038086,
+        44.77984619140625
+      ],
+      "rotation": [
+        0.9997718334197998,
+        0.0023107179440557957,
+        -0.02108238823711872,
+        0.0025368796195834875
+      ],
+      "state": {
+        "bag": {
+          "maxWeight": 40,
+          "slots": [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ]
+        },
+        "burned": 0,
+        "damageEvents": 0,
+        "distance": 1.9512294625937896,
+        "fuel": 10,
+        "health": 100,
+        "rotorAngle": 0
+      }
+    },
+    {
+      "entity": 7300,
+      "position": [
+        91.85997772216797,
+        9.991564750671387,
+        -97.9448013305664
+      ],
+      "rotation": [
+        1.0,
+        4.648164758691564e-05,
+        -0.0001249249471584335,
+        9.364685683976859e-05
+      ],
+      "state": {
+        "bag": {
+          "maxWeight": 220,
+          "slots": [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ]
+        },
+        "burned": 0,
+        "damageEvents": 0,
+        "distance": 1.9359616636858974,
+        "fuel": 22,
+        "health": 100,
+        "rotorAngle": -1.9797724667707654e-05
+      }
+    },
+    {
+      "entity": 7400,
+      "position": [
+        -40.021549224853516,
+        14.620365142822266,
+        41.978111267089844
+      ],
+      "rotation": [
+        0.9998542070388794,
+        -0.010370674543082714,
+        -0.0023952119518071413,
+        0.013356545940041542
+      ],
+      "state": {
+        "bag": {
+          "maxWeight": 280,
+          "slots": [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ]
+        },
+        "burned": 0,
+        "damageEvents": 0,
+        "distance": 0.32242839916835925,
+        "fuel": 90,
+        "health": 100,
+        "rotorAngle": 0.00398516371225897
+      }
+    },
+    {
+      "entity": 7500,
+      "position": [
+        -0.0009018655400723219,
+        15.997488975524902,
+        185.4398651123047
+      ],
+      "rotation": [
+        0.9999986886978149,
+        -0.0008386541157960892,
+        0.0012467416236177087,
+        -0.0005883260164409876
+      ],
+      "state": {
+        "bag": {
+          "maxWeight": 180,
+          "slots": [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ]
+        },
+        "burned": 0,
+        "damageEvents": 0,
+        "distance": 0.6240397726443719,
+        "fuel": 65,
+        "health": 100,
+        "rotorAngle": -0.0006914881602618905
+      }
+    },
+    {
+      "entity": 7800,
+      "position": [
+        3.0,
+        14.678792953491211,
+        43.0
+      ],
+      "rotation": [
+        1.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "state": {
+        "bag": {
+          "maxWeight": 200,
+          "slots": [
+            {
+              "count": 4,
+              "item": "fuel_can"
+            },
+            {
+              "count": 4,
+              "item": "fuel_can"
+            },
+            null,
+            {
+              "count": 4,
+              "item": "repair_kit"
+            },
+            {
+              "count": 3,
+              "item": "repair_kit"
+            },
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ]
+        },
+        "burned": 0,
+        "damageEvents": 0,
+        "distance": 0,
+        "fuel": 0,
+        "health": 100,
+        "rotorAngle": 0
+      }
+    }
+  ]
+}

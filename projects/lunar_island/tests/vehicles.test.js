@@ -77,8 +77,22 @@ check(
     'same-container cargo transfer cannot duplicate items',
 );
 check(
-    Object.keys(VEHICLES).filter((k) => VEHICLES[k].kind !== 'depot').length ===
-        7,
+    [
+        'car',
+        'truck',
+        'motorcycle',
+        'boat',
+        'helicopter',
+        'plane',
+        'garage_truck',
+    ].every((key) => VEHICLES[key]?.kind !== undefined),
     'six vehicle types plus a genuinely streamed service pickup are authored',
 );
 console.log(checks + ' vehicle checks passed');
+
+check(
+    VEHICLES.region_harbour_boat.region === 'harbour' &&
+        VEHICLES.region_islet_boat.region === 'islet',
+    'ocean skiffs are authored in their own persistent districts',
+);
+console.log(checks + ' total vehicle checks passed');

@@ -1,0 +1,6 @@
+job(5,[&](EngineHost&,RuntimeWorld& w){start=w.RuntimeDefinition(100)->transform.position;press("map");});
+job(5,[&](EngineHost&,RuntimeWorld& w){auto h=w.UI().Find("lunar");Check(w.UI().Paused()&&w.UI().Element(h,"entries")->visible,"field map exposes the actual native location list");w.UI().Select(h,"entries",-1);w.UI().Focus(h,"entries");press("ui_down");});
+click("secondary");
+job(5,[&](EngineHost& h,RuntimeWorld& w){auto doc=w.UI().Find("lunar");Check(w.UI().Element(doc,"map_image")->visible&&!w.UI().Element(doc,"entries")->visible,"reference map remains accessible without overlapping location rows");Screenshot(h,out/"reference-map.png");});
+click("secondary");click("primary");
+job(5,[&](EngineHost& h,RuntimeWorld& w){Check(State(w)["exploration"]["target"]=="forest","native UI selects and tracks the authored forest location");Check(!w.UI().Paused(),"tracking returns to normal gameplay");Check(glm::distance(start,w.RuntimeDefinition(100)->transform.position)<1,"selecting a destination does not teleport the player");Check(w.UI().Element(w.UI().Find("lunar"),"journal")->text.find("Whisperwood")!=std::string::npos,"actual HUD publishes the selected location guide");Screenshot(h,out/"tracking.png");done=true;Quit();});

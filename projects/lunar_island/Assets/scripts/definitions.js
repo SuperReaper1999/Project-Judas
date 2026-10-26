@@ -213,6 +213,12 @@ export const ITEMS = {
     "stack": 4,
     "weight": 1.2,
     "category": "supplies"
+  },
+  "radio_parts": {
+    "name": "Recovered radio components",
+    "stack": 4,
+    "weight": 1,
+    "category": "materials"
   }
 };
 export const RECIPES = [

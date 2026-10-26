@@ -1,307 +1,1018 @@
-// Generated from Authoring/encounters.json
 export const WEAPONS = {
-    hands: {
-        name: 'Hands',
-        damage: 8,
-        range: 2,
-        interval: 0.6,
-        impulse: 8,
-    },
-    stone_axe: {
-        name: 'Stone axe',
-        damage: 28,
-        range: 2.4,
-        interval: 0.7,
-        impulse: 20,
-    },
-    stone_pickaxe: {
-        name: 'Stone pickaxe',
-        damage: 23,
-        range: 2.4,
-        interval: 0.75,
-        impulse: 16,
-    },
-    knife: {
-        name: 'Field knife',
-        damage: 20,
-        range: 2,
-        interval: 0.36,
-        impulse: 8,
-    },
-    bat: {
-        name: 'Hardwood bat',
-        damage: 24,
-        range: 2.7,
-        interval: 0.65,
-        impulse: 24,
-    },
-    pistol: {
-        name: 'Trail pistol',
-        damage: 24,
-        range: 65,
-        interval: 0.3,
-        impulse: 12,
-        ammo: 'ammo_pistol',
-        capacity: 10,
-        reload: 1.3,
-        recoil: 0.045,
-    },
-    shotgun: {
-        name: 'Coach shotgun',
-        damage: 13,
-        range: 28,
-        interval: 0.9,
-        impulse: 8,
-        ammo: 'ammo_shell',
-        capacity: 2,
-        reload: 1.8,
-        recoil: 0.12,
-        pellets: 6,
-    },
-    rifle: {
-        name: 'Scavenger rifle',
-        damage: 31,
-        range: 100,
-        interval: 0.18,
-        impulse: 18,
-        ammo: 'ammo_rifle',
-        capacity: 20,
-        reload: 1.8,
-        recoil: 0.035,
-        automatic: true,
-    },
+  "hands": {
+    "name": "Hands",
+    "damage": 8,
+    "range": 2,
+    "interval": 0.6,
+    "impulse": 8
+  },
+  "stone_axe": {
+    "name": "Stone axe",
+    "damage": 28,
+    "range": 2.4,
+    "interval": 0.7,
+    "impulse": 20
+  },
+  "stone_pickaxe": {
+    "name": "Stone pickaxe",
+    "damage": 23,
+    "range": 2.4,
+    "interval": 0.75,
+    "impulse": 16
+  },
+  "knife": {
+    "name": "Field knife",
+    "damage": 20,
+    "range": 2,
+    "interval": 0.36,
+    "impulse": 8
+  },
+  "bat": {
+    "name": "Hardwood bat",
+    "damage": 24,
+    "range": 2.7,
+    "interval": 0.65,
+    "impulse": 24
+  },
+  "pistol": {
+    "name": "Trail pistol",
+    "damage": 24,
+    "range": 65,
+    "interval": 0.3,
+    "impulse": 12,
+    "ammo": "ammo_pistol",
+    "capacity": 10,
+    "reload": 1.3,
+    "recoil": 0.045
+  },
+  "shotgun": {
+    "name": "Coach shotgun",
+    "damage": 13,
+    "range": 28,
+    "interval": 0.9,
+    "impulse": 8,
+    "ammo": "ammo_shell",
+    "capacity": 2,
+    "reload": 1.8,
+    "recoil": 0.12,
+    "pellets": 6
+  },
+  "rifle": {
+    "name": "Scavenger rifle",
+    "damage": 31,
+    "range": 100,
+    "interval": 0.18,
+    "impulse": 18,
+    "ammo": "ammo_rifle",
+    "capacity": 20,
+    "reload": 1.8,
+    "recoil": 0.035,
+    "automatic": true
+  }
 };
 export const PEOPLE = {
-    actors: {
-        mara: {
-            entity: 6000,
-            name: 'Mara / Quartermaster',
-            friendly: true,
-            health: 100,
-            speed: 1.1,
-            sight: 20,
-            damage: 0,
-            position: [8, 14.03992978121472, 18],
-            route: [
-                [8, 14.03992978121472, 18],
-                [13, 14.039891365605666, 18],
-                [13, 14.039935293984358, 22],
-            ],
-            stock: {
-                tokens: 120,
-                rations: 6,
-                bandage: 5,
-                ammo_pistol: 60,
-                ammo_shell: 16,
-                ammo_rifle: 40,
-                shotgun: 1,
-                rifle: 1,
-                knife: 2,
-                bat: 2,
-                fuel_can: 4,
-                repair_kit: 4,
-            },
-            prices: {
-                rations: 4,
-                bandage: 5,
-                ammo_pistol: 1,
-                ammo_shell: 2,
-                ammo_rifle: 2,
-                shotgun: 24,
-                rifle: 35,
-                knife: 6,
-                bat: 5,
-                wood: 2,
-                scrap: 3,
-                fuel_can: 8,
-                repair_kit: 6,
-            },
-            lines: [
-                'Mara: The Fracture took the coast road, not our resolve. This little camp is still ours.',
-                'Mara: Keep a dry pack and a loaded magazine. We trade fairly here.',
-                'Mara: Barricade a cottage before you draw attention. Even a plank buys time.',
-            ],
-            quest: 'patrol',
-        },
-        ivo: {
-            entity: 6100,
-            name: 'Ivo / Forager',
-            friendly: true,
-            health: 85,
-            speed: 1.3,
-            sight: 18,
-            damage: 0,
-            position: [-8, 14.039982188476873, 16],
-            route: [
-                [-8, 14.039982188476873, 16],
-                [-12, 14.039990703892055, 18],
-                [-8, 14.0399899812947, 20],
-            ],
-            stock: {
-                tokens: 60,
-                berries: 12,
-                rations: 4,
-                bandage: 3,
-                fiber: 12,
-            },
-            prices: {
-                berries: 1,
-                rations: 4,
-                bandage: 5,
-                wood: 2,
-                fiber: 1,
-            },
-            lines: [
-                'Ivo: I used to chart the whole island. These days I count the people who make it home.',
-                'Ivo: Wolves hunt west of the spring trail. Give them distance or be ready.',
-                'Ivo: A tree on the ground is timber. A tree above your head is trouble.',
-            ],
-            quest: 'timber',
-        },
-        bandit_leader: {
-            entity: 6200,
-            name: 'Scavenger lookout',
-            friendly: false,
-            health: 75,
-            speed: 2.4,
-            sight: 24,
-            damage: 9,
-            ranged: true,
-            position: [78, 14.146362868045372, 63],
-            route: [
-                [78, 14.146362868045372, 63],
-                [83, 13.996053711649743, 63],
-                [83, 13.470185985147896, 70],
-            ],
-            stock: {
-                tokens: 12,
-                ammo_rifle: 14,
-                scrap: 3,
-            },
-        },
-        bandit_guard: {
-            entity: 6210,
-            name: 'Scavenger raider',
-            friendly: false,
-            health: 65,
-            speed: 3.1,
-            sight: 22,
-            damage: 13,
-            position: [72, 13.75153472804767, 70],
-            route: [
-                [72, 13.75153472804767, 70],
-                [69, 14.210495144817477, 65],
-                [74, 14.391605466463133, 61],
-            ],
-            stock: {
-                tokens: 8,
-                ammo_pistol: 12,
-                rations: 1,
-            },
-        },
-        wolf_one: {
-            entity: 6300,
-            name: 'Forest wolf',
-            friendly: false,
-            animal: true,
-            health: 55,
-            speed: 3.6,
-            sight: 17,
-            damage: 12,
-            position: [-63, 13.06501222639669, 8],
-            route: [
-                [-63, 13.06501222639669, 8],
-                [-69, 12.98394538893491, 13],
-                [-65, 12.919072540005027, 19],
-            ],
-            stock: {
-                raw_meat: 2,
-                hide: 1,
-            },
-        },
-        wolf_two: {
-            entity: 6310,
-            name: 'Coastal wolf',
-            friendly: false,
-            animal: true,
-            health: 55,
-            speed: 3.8,
-            sight: 18,
-            damage: 12,
-            position: [-75, 12.954773507025546, 22],
-            route: [
-                [-75, 12.954773507025546, 22],
-                [-79, 13.075678678678095, 15],
-                [-70, 12.991276494469972, 12],
-            ],
-            stock: {
-                raw_meat: 2,
-                hide: 1,
-            },
-        },
+  "actors": {
+    "mara": {
+      "entity": 6000,
+      "name": "Mara / Quartermaster",
+      "friendly": true,
+      "health": 100,
+      "speed": 1.1,
+      "sight": 20,
+      "damage": 0,
+      "position": [
+        8,
+        14.03992978121472,
+        18
+      ],
+      "route": [
+        [
+          8,
+          14.03992978121472,
+          18
+        ],
+        [
+          13,
+          14.039891365605666,
+          18
+        ],
+        [
+          13,
+          14.039935293984358,
+          22
+        ]
+      ],
+      "stock": {
+        "tokens": 120,
+        "rations": 6,
+        "bandage": 5,
+        "ammo_pistol": 60,
+        "ammo_shell": 16,
+        "ammo_rifle": 40,
+        "shotgun": 1,
+        "rifle": 1,
+        "knife": 2,
+        "bat": 2,
+        "fuel_can": 4,
+        "repair_kit": 4
+      },
+      "prices": {
+        "rations": 4,
+        "bandage": 5,
+        "ammo_pistol": 1,
+        "ammo_shell": 2,
+        "ammo_rifle": 2,
+        "shotgun": 24,
+        "rifle": 35,
+        "knife": 6,
+        "bat": 5,
+        "wood": 2,
+        "scrap": 3,
+        "fuel_can": 8,
+        "repair_kit": 6
+      },
+      "lines": [
+        "Mara: The Fracture took the coast road, not our resolve. This little camp is still ours.",
+        "Mara: Keep a dry pack and a loaded magazine. We trade fairly here.",
+        "Mara: Barricade a cottage before you draw attention. Even a plank buys time."
+      ],
+      "quest": "patrol"
     },
-    quests: {
-        patrol: {
-            id: 'patrol',
-            name: 'Reopen the supply route',
-            description:
-                'Defeat both scavengers at the eastern camp and return to Mara.',
-            objective: {
-                counter: 'kills',
-                count: 2,
-            },
-            acceptItems: {
-                pistol: 1,
-                ammo_pistol: 24,
-            },
-            rewards: {
-                tokens: 35,
-                bandage: 2,
-            },
-            accepted:
-                'Mara: Take this sidearm. Reload with R. Clear the two scavengers at the eastern camp, then return.',
-            progress:
-                'Mara: Two scavengers hold the camp east of Birchside. Approach behind the trees; use your cover.',
-            completed:
-                'Mara: The supply route is safe. Your reward is 35 tokens and two dressings.',
-            after: 'Mara: You earned your place here. Keep the homestead secure.',
-        },
-        timber: {
-            id: 'timber',
-            name: 'Firewood for the camp',
-            description:
-                'Bring six timber to Ivo. Fallen trees and loose branches both provide timber.',
-            objective: {
-                items: {
-                    wood: 6,
-                },
-            },
-            acceptItems: {},
-            rewards: {
-                tokens: 15,
-                rations: 2,
-            },
-            accepted: 'Ivo: We need six timber for fuel and repairs.',
-            progress:
-                'Ivo: Bring six timber from a fallen tree or loose branches. I will pay 15 tokens and two rations.',
-            completed:
-                'Ivo: Good timber. We can keep the fire and repairs going. Your pay is in your pack.',
-            after: 'Ivo: Watch the wolves on the western trail. We cannot afford another lost forager.',
-        },
+    "ivo": {
+      "entity": 6100,
+      "name": "Ivo / Forager",
+      "friendly": true,
+      "health": 85,
+      "speed": 1.3,
+      "sight": 18,
+      "damage": 0,
+      "position": [
+        -8,
+        14.039982188476873,
+        16
+      ],
+      "route": [
+        [
+          -8,
+          14.039982188476873,
+          16
+        ],
+        [
+          -12,
+          14.039990703892055,
+          18
+        ],
+        [
+          -8,
+          14.0399899812947,
+          20
+        ]
+      ],
+      "stock": {
+        "tokens": 60,
+        "berries": 12,
+        "rations": 4,
+        "bandage": 3,
+        "fiber": 12
+      },
+      "prices": {
+        "berries": 1,
+        "rations": 4,
+        "bandage": 5,
+        "wood": 2,
+        "fiber": 1
+      },
+      "lines": [
+        "Ivo: I used to chart the whole island. These days I count the people who make it home.",
+        "Ivo: Wolves hunt west of the spring trail. Give them distance or be ready.",
+        "Ivo: A tree on the ground is timber. A tree above your head is trouble."
+      ],
+      "quest": "timber"
     },
-    humanCorpse: 'f97f76b1ea018c43d15ddcd6c56d0836',
-    wolfCorpse: '509f974de92d1571fb0ec2b7f1d8782f',
-    impact: '6910',
-    viewmodels: {
-        pistol: '6920',
-        shotgun: '6921',
-        rifle: '6922',
-        knife: '6923',
-        bat: '6924',
+    "bandit_leader": {
+      "entity": 6200,
+      "name": "Scavenger lookout",
+      "friendly": false,
+      "health": 75,
+      "speed": 2.4,
+      "sight": 24,
+      "damage": 9,
+      "ranged": true,
+      "position": [
+        78,
+        14.146362868045372,
+        63
+      ],
+      "route": [
+        [
+          78,
+          14.146362868045372,
+          63
+        ],
+        [
+          83,
+          13.996053711649743,
+          63
+        ],
+        [
+          83,
+          13.470185985147896,
+          70
+        ]
+      ],
+      "stock": {
+        "tokens": 12,
+        "ammo_rifle": 14,
+        "scrap": 3
+      }
     },
-    sounds: {
-        gunshot: '6940',
-        reload: '6941',
-        hurt: '6942',
+    "bandit_guard": {
+      "entity": 6210,
+      "name": "Scavenger raider",
+      "friendly": false,
+      "health": 65,
+      "speed": 3.1,
+      "sight": 22,
+      "damage": 13,
+      "position": [
+        72,
+        13.75153472804767,
+        70
+      ],
+      "route": [
+        [
+          72,
+          13.75153472804767,
+          70
+        ],
+        [
+          69,
+          14.210495144817477,
+          65
+        ],
+        [
+          74,
+          14.391605466463133,
+          61
+        ]
+      ],
+      "stock": {
+        "tokens": 8,
+        "ammo_pistol": 12,
+        "rations": 1
+      }
     },
+    "wolf_one": {
+      "entity": 6300,
+      "name": "Forest wolf",
+      "friendly": false,
+      "animal": true,
+      "health": 55,
+      "speed": 3.6,
+      "sight": 17,
+      "damage": 12,
+      "position": [
+        -63,
+        13.06501222639669,
+        8
+      ],
+      "route": [
+        [
+          -63,
+          13.06501222639669,
+          8
+        ],
+        [
+          -69,
+          12.98394538893491,
+          13
+        ],
+        [
+          -65,
+          12.919072540005027,
+          19
+        ]
+      ],
+      "stock": {
+        "raw_meat": 2,
+        "hide": 1
+      }
+    },
+    "wolf_two": {
+      "entity": 6310,
+      "name": "Coastal wolf",
+      "friendly": false,
+      "animal": true,
+      "health": 55,
+      "speed": 3.8,
+      "sight": 18,
+      "damage": 12,
+      "position": [
+        -75,
+        12.954773507025546,
+        22
+      ],
+      "route": [
+        [
+          -75,
+          12.954773507025546,
+          22
+        ],
+        [
+          -79,
+          13.075678678678095,
+          15
+        ],
+        [
+          -70,
+          12.991276494469972,
+          12
+        ]
+      ],
+      "stock": {
+        "raw_meat": 2,
+        "hide": 1
+      }
+    },
+    "region_forest_0": {
+      "entity": 15000,
+      "name": "Rowan / Forester",
+      "friendly": true,
+      "health": 85,
+      "speed": 1.3,
+      "sight": 20,
+      "damage": 0,
+      "position": [
+        -1408,
+        34.06074295920609,
+        188
+      ],
+      "route": [
+        [
+          -1408,
+          34.06074295920609,
+          188
+        ],
+        [
+          -1393,
+          34.06074295920609,
+          188
+        ],
+        [
+          -1393,
+          34.06074295920609,
+          208
+        ]
+      ],
+      "stock": {
+        "tokens": 100,
+        "fuel_can": 4,
+        "rations": 4,
+        "bandage": 3,
+        "ammo_pistol": 20
+      },
+      "prices": {
+        "wood": 2,
+        "scrap": 3,
+        "iron_ore": 4,
+        "fuel_can": 8,
+        "rations": 4,
+        "bandage": 5,
+        "ammo_pistol": 1
+      },
+      "lines": [
+        "A forestry cabin, timber stands and iron outcrops. Rowan trades provisions for harvested wood.",
+        "Supplies are finite. You can turn any unoccupied house here into your own home.",
+        "Follow the surfaced roads. Ships and aircraft can reach the outlying coast."
+      ],
+      "quest": "forestry"
+    },
+    "region_town_0": {
+      "entity": 25000,
+      "name": "Asha / Medic",
+      "friendly": true,
+      "health": 85,
+      "speed": 1.3,
+      "sight": 20,
+      "damage": 0,
+      "position": [
+        -1808,
+        60.66281826290872,
+        1288
+      ],
+      "route": [
+        [
+          -1808,
+          60.66281826290872,
+          1288
+        ],
+        [
+          -1793,
+          60.66281826290872,
+          1288
+        ],
+        [
+          -1793,
+          60.66281826290872,
+          1308
+        ]
+      ],
+      "stock": {
+        "tokens": 100,
+        "fuel_can": 4,
+        "rations": 4,
+        "bandage": 3,
+        "ammo_pistol": 20
+      },
+      "prices": {
+        "wood": 2,
+        "scrap": 3,
+        "iron_ore": 4,
+        "fuel_can": 8,
+        "rations": 4,
+        "bandage": 5,
+        "ammo_pistol": 1
+      },
+      "lines": [
+        "An occupied high street, clinic, grocer and abandoned homes. Asha needs medical dressings.",
+        "Supplies are finite. You can turn any unoccupied house here into your own home.",
+        "Follow the surfaced roads. Ships and aircraft can reach the outlying coast."
+      ],
+      "quest": "clinic"
+    },
+    "region_harbour_0": {
+      "entity": 35000,
+      "name": "Ellis / Harbourmaster",
+      "friendly": true,
+      "health": 85,
+      "speed": 1.3,
+      "sight": 20,
+      "damage": 0,
+      "position": [
+        -3908,
+        24.184788629105636,
+        3188
+      ],
+      "route": [
+        [
+          -3908,
+          24.184788629105636,
+          3188
+        ],
+        [
+          -3893,
+          24.184788629105636,
+          3188
+        ],
+        [
+          -3893,
+          24.184788629105636,
+          3208
+        ]
+      ],
+      "stock": {
+        "tokens": 100,
+        "fuel_can": 4,
+        "rations": 4,
+        "bandage": 3,
+        "ammo_pistol": 20
+      },
+      "prices": {
+        "wood": 2,
+        "scrap": 3,
+        "iron_ore": 4,
+        "fuel_can": 8,
+        "rations": 4,
+        "bandage": 5,
+        "ammo_pistol": 1
+      },
+      "lines": [
+        "Working piers, a chandlery, cargo salvage and an ocean skiff. Ellis needs scrap to reopen the ferry route.",
+        "Supplies are finite. You can turn any unoccupied house here into your own home.",
+        "Follow the surfaced roads. Ships and aircraft can reach the outlying coast."
+      ],
+      "quest": "harbour"
+    },
+    "region_industry_0": {
+      "entity": 45000,
+      "name": "Works scavenger",
+      "friendly": false,
+      "health": 85,
+      "speed": 2.6,
+      "sight": 22,
+      "damage": 13,
+      "position": [
+        -3708,
+        33.30709427797197,
+        2838
+      ],
+      "route": [
+        [
+          -3708,
+          33.30709427797197,
+          2838
+        ],
+        [
+          -3693,
+          33.30709427797197,
+          2838
+        ],
+        [
+          -3693,
+          33.30709427797197,
+          2858
+        ]
+      ],
+      "stock": {
+        "scrap": 3,
+        "tokens": 8,
+        "ammo_rifle": 10
+      },
+      "prices": {},
+      "lines": [
+        "A damaged industrial yard with bandits, ore and repair supplies. Search the machine shop carefully.",
+        "Supplies are finite. You can turn any unoccupied house here into your own home.",
+        "Follow the surfaced roads. Ships and aircraft can reach the outlying coast."
+      ]
+    },
+    "region_industry_1": {
+      "entity": 45010,
+      "name": "Blackwater Works raider",
+      "friendly": false,
+      "health": 85,
+      "speed": 2.6,
+      "sight": 22,
+      "damage": 13,
+      "position": [
+        -3685,
+        33.30709427797197,
+        2865
+      ],
+      "route": [
+        [
+          -3708,
+          33.30709427797197,
+          2838
+        ],
+        [
+          -3693,
+          33.30709427797197,
+          2838
+        ],
+        [
+          -3693,
+          33.30709427797197,
+          2858
+        ]
+      ],
+      "stock": {
+        "scrap": 3,
+        "tokens": 8,
+        "ammo_rifle": 10
+      },
+      "prices": {},
+      "lines": [
+        "A damaged industrial yard with bandits, ore and repair supplies. Search the machine shop carefully.",
+        "Supplies are finite. You can turn any unoccupied house here into your own home.",
+        "Follow the surfaced roads. Ships and aircraft can reach the outlying coast."
+      ]
+    },
+    "region_industry_2": {
+      "entity": 45020,
+      "name": "Blackwater Works raider",
+      "friendly": false,
+      "health": 85,
+      "speed": 2.6,
+      "sight": 22,
+      "damage": 13,
+      "position": [
+        -3682,
+        33.30709427797197,
+        2865
+      ],
+      "route": [
+        [
+          -3708,
+          33.30709427797197,
+          2838
+        ],
+        [
+          -3693,
+          33.30709427797197,
+          2838
+        ],
+        [
+          -3693,
+          33.30709427797197,
+          2858
+        ]
+      ],
+      "stock": {
+        "scrap": 3,
+        "tokens": 8,
+        "ammo_rifle": 10
+      },
+      "prices": {},
+      "lines": [
+        "A damaged industrial yard with bandits, ore and repair supplies. Search the machine shop carefully.",
+        "Supplies are finite. You can turn any unoccupied house here into your own home.",
+        "Follow the surfaced roads. Ships and aircraft can reach the outlying coast."
+      ]
+    },
+    "region_city_0": {
+      "entity": 55000,
+      "name": "Nia / Radio Operator",
+      "friendly": true,
+      "health": 85,
+      "speed": 1.3,
+      "sight": 20,
+      "damage": 0,
+      "position": [
+        -908,
+        29.960672081838126,
+        2938
+      ],
+      "route": [
+        [
+          -908,
+          29.960672081838126,
+          2938
+        ],
+        [
+          -893,
+          29.960672081838126,
+          2938
+        ],
+        [
+          -893,
+          29.960672081838126,
+          2958
+        ]
+      ],
+      "stock": {
+        "tokens": 100,
+        "fuel_can": 4,
+        "rations": 4,
+        "bandage": 3,
+        "ammo_pistol": 20
+      },
+      "prices": {
+        "wood": 2,
+        "scrap": 3,
+        "iron_ore": 4,
+        "fuel_can": 8,
+        "rations": 4,
+        "bandage": 5,
+        "ammo_pistol": 1
+      },
+      "lines": [
+        "A compact city quarter amid sealed towers. Recover radio components from the occupied office and help Nia restore contact.",
+        "Supplies are finite. You can turn any unoccupied house here into your own home.",
+        "Follow the surfaced roads. Ships and aircraft can reach the outlying coast."
+      ],
+      "quest": "radio"
+    },
+    "region_city_1": {
+      "entity": 55010,
+      "name": "Lunar City / Civic Quarter raider",
+      "friendly": false,
+      "health": 85,
+      "speed": 2.6,
+      "sight": 22,
+      "damage": 13,
+      "position": [
+        -885,
+        29.960672081838126,
+        2965
+      ],
+      "route": [
+        [
+          -908,
+          29.960672081838126,
+          2938
+        ],
+        [
+          -893,
+          29.960672081838126,
+          2938
+        ],
+        [
+          -893,
+          29.960672081838126,
+          2958
+        ]
+      ],
+      "stock": {
+        "scrap": 3,
+        "tokens": 8,
+        "ammo_rifle": 10
+      },
+      "prices": {},
+      "lines": [
+        "A compact city quarter amid sealed towers. Recover radio components from the occupied office and help Nia restore contact.",
+        "Supplies are finite. You can turn any unoccupied house here into your own home.",
+        "Follow the surfaced roads. Ships and aircraft can reach the outlying coast."
+      ]
+    },
+    "region_city_2": {
+      "entity": 55020,
+      "name": "Lunar City / Civic Quarter raider",
+      "friendly": false,
+      "health": 85,
+      "speed": 2.6,
+      "sight": 22,
+      "damage": 13,
+      "position": [
+        -882,
+        29.960672081838126,
+        2965
+      ],
+      "route": [
+        [
+          -908,
+          29.960672081838126,
+          2938
+        ],
+        [
+          -893,
+          29.960672081838126,
+          2938
+        ],
+        [
+          -893,
+          29.960672081838126,
+          2958
+        ]
+      ],
+      "stock": {
+        "scrap": 3,
+        "tokens": 8,
+        "ammo_rifle": 10
+      },
+      "prices": {},
+      "lines": [
+        "A compact city quarter amid sealed towers. Recover radio components from the occupied office and help Nia restore contact.",
+        "Supplies are finite. You can turn any unoccupied house here into your own home.",
+        "Follow the surfaced roads. Ships and aircraft can reach the outlying coast."
+      ]
+    },
+    "region_coast_0": {
+      "entity": 65000,
+      "name": "Tess / Coastguard",
+      "friendly": true,
+      "health": 85,
+      "speed": 1.3,
+      "sight": 20,
+      "damage": 0,
+      "position": [
+        1992,
+        17.217303223943997,
+        1288
+      ],
+      "route": [
+        [
+          1992,
+          17.217303223943997,
+          1288
+        ],
+        [
+          2007,
+          17.217303223943997,
+          1288
+        ],
+        [
+          2007,
+          17.217303223943997,
+          1308
+        ]
+      ],
+      "stock": {
+        "tokens": 100,
+        "fuel_can": 4,
+        "rations": 4,
+        "bandage": 3,
+        "ammo_pistol": 20
+      },
+      "prices": {
+        "wood": 2,
+        "scrap": 3,
+        "iron_ore": 4,
+        "fuel_can": 8,
+        "rations": 4,
+        "bandage": 5,
+        "ammo_pistol": 1
+      },
+      "lines": [
+        "A coastguard refuge, beach path, landing ground and an ocean supply point.",
+        "Supplies are finite. You can turn any unoccupied house here into your own home.",
+        "Follow the surfaced roads. Ships and aircraft can reach the outlying coast."
+      ]
+    },
+    "region_islet_0": {
+      "entity": 75000,
+      "name": "Sol / Lighthouse Keeper",
+      "friendly": true,
+      "health": 85,
+      "speed": 1.3,
+      "sight": 20,
+      "damage": 0,
+      "position": [
+        2392,
+        8.18,
+        2988
+      ],
+      "route": [
+        [
+          2392,
+          8.18,
+          2988
+        ],
+        [
+          2407,
+          8.18,
+          2988
+        ],
+        [
+          2407,
+          8.18,
+          3008
+        ]
+      ],
+      "stock": {
+        "tokens": 100,
+        "fuel_can": 4,
+        "rations": 4,
+        "bandage": 3,
+        "ammo_pistol": 20
+      },
+      "prices": {
+        "wood": 2,
+        "scrap": 3,
+        "iron_ore": 4,
+        "fuel_can": 8,
+        "rations": 4,
+        "bandage": 5,
+        "ammo_pistol": 1
+      },
+      "lines": [
+        "A separate offshore island with a lighthouse refuge, mineral deposits and a survivor. Reach it by boat or air.",
+        "Supplies are finite. You can turn any unoccupied house here into your own home.",
+        "Follow the surfaced roads. Ships and aircraft can reach the outlying coast."
+      ],
+      "quest": "islet"
+    }
+  },
+  "quests": {
+    "patrol": {
+      "id": "patrol",
+      "name": "Reopen the supply route",
+      "description": "Defeat both scavengers at the eastern camp and return to Mara.",
+      "objective": {
+        "counter": "campKills",
+        "count": 2
+      },
+      "acceptItems": {
+        "pistol": 1,
+        "ammo_pistol": 24
+      },
+      "rewards": {
+        "tokens": 35,
+        "bandage": 2
+      },
+      "accepted": "Mara: Take this sidearm. Reload with R. Clear the two scavengers at the eastern camp, then return.",
+      "progress": "Mara: Two scavengers hold the camp east of Birchside. Approach behind the trees; use your cover.",
+      "completed": "Mara: The supply route is safe. Your reward is 35 tokens and two dressings.",
+      "after": "Mara: You earned your place here. Keep the homestead secure."
+    },
+    "timber": {
+      "id": "timber",
+      "name": "Firewood for the camp",
+      "description": "Bring six timber to Ivo. Fallen trees and loose branches both provide timber.",
+      "objective": {
+        "items": {
+          "wood": 6
+        }
+      },
+      "acceptItems": {},
+      "rewards": {
+        "tokens": 15,
+        "rations": 2
+      },
+      "accepted": "Ivo: We need six timber for fuel and repairs.",
+      "progress": "Ivo: Bring six timber from a fallen tree or loose branches. I will pay 15 tokens and two rations.",
+      "completed": "Ivo: Good timber. We can keep the fire and repairs going. Your pay is in your pack.",
+      "after": "Ivo: Watch the wolves on the western trail. We cannot afford another lost forager."
+    },
+    "forestry": {
+      "id": "forestry",
+      "name": "Timber beyond the homestead",
+      "description": "Bring 12 wood to this survivor.",
+      "objective": {
+        "items": {
+          "wood": 12
+        }
+      },
+      "acceptItems": {},
+      "rewards": {
+        "tokens": 25,
+        "fuel_can": 2
+      },
+      "accepted": "I need 12 wood. Search the island and return.",
+      "progress": "Bring the requested supplies; check your pack before returning.",
+      "completed": "Thank you. Your supplies make a real difference. Take these provisions for the journey.",
+      "after": "The work is done. Travel safely."
+    },
+    "clinic": {
+      "id": "clinic",
+      "name": "Dressings for Moonbridge",
+      "description": "Bring 3 bandage to this survivor.",
+      "objective": {
+        "items": {
+          "bandage": 3
+        }
+      },
+      "acceptItems": {},
+      "rewards": {
+        "tokens": 30,
+        "ammo_pistol": 20
+      },
+      "accepted": "I need 3 bandage. Search the island and return.",
+      "progress": "Bring the requested supplies; check your pack before returning.",
+      "completed": "Thank you. Your supplies make a real difference. Take these provisions for the journey.",
+      "after": "The work is done. Travel safely."
+    },
+    "harbour": {
+      "id": "harbour",
+      "name": "Repair the ferry stores",
+      "description": "Bring 12 scrap to this survivor.",
+      "objective": {
+        "items": {
+          "scrap": 12
+        }
+      },
+      "acceptItems": {},
+      "rewards": {
+        "tokens": 40,
+        "fuel_can": 3
+      },
+      "accepted": "I need 12 scrap. Search the island and return.",
+      "progress": "Bring the requested supplies; check your pack before returning.",
+      "completed": "Thank you. Your supplies make a real difference. Take these provisions for the journey.",
+      "after": "The work is done. Travel safely."
+    },
+    "radio": {
+      "id": "radio",
+      "name": "A voice across the water",
+      "description": "Bring 1 radio_parts to this survivor.",
+      "objective": {
+        "items": {
+          "radio_parts": 1
+        }
+      },
+      "acceptItems": {},
+      "rewards": {
+        "tokens": 80,
+        "repair_kit": 3
+      },
+      "accepted": "I need 1 radio_parts. Search the island and return.",
+      "progress": "Bring the requested supplies; check your pack before returning.",
+      "completed": "Thank you. Your supplies make a real difference. Take these provisions for the journey.",
+      "after": "The work is done. Travel safely."
+    },
+    "islet": {
+      "id": "islet",
+      "name": "The lantern mineral",
+      "description": "Bring 6 iron_ore to this survivor.",
+      "objective": {
+        "items": {
+          "iron_ore": 6
+        }
+      },
+      "acceptItems": {},
+      "rewards": {
+        "tokens": 50,
+        "rations": 4
+      },
+      "accepted": "I need 6 iron_ore. Search the island and return.",
+      "progress": "Bring the requested supplies; check your pack before returning.",
+      "completed": "Thank you. Your supplies make a real difference. Take these provisions for the journey.",
+      "after": "The work is done. Travel safely."
+    }
+  },
+  "humanCorpse": "f97f76b1ea018c43d15ddcd6c56d0836",
+  "wolfCorpse": "509f974de92d1571fb0ec2b7f1d8782f",
+  "impact": "6910",
+  "viewmodels": {
+    "pistol": "6920",
+    "shotgun": "6921",
+    "rifle": "6922",
+    "knife": "6923",
+    "bat": "6924"
+  },
+  "sounds": {
+    "gunshot": "6940",
+    "reload": "6941",
+    "hurt": "6942"
+  },
+  "regionHumanCorpse": "76840e44235b0856f9993cd4c7035b78"
 };

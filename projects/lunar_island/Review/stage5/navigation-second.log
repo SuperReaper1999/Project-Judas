@@ -1,0 +1,4 @@
+Scenes/island.judas
+surface 6900: 205 layers, 896 polygons, 1094.61 ms, source 74bdfc4528f3cd0b4d8018309531f48b1cbc6394824031ec629c14cb30ad8e28
+Scenes/region_forest.judas
+/home/conner/Documents/GitHub/Project-Judas/projects/lunar_island/Scenes/region_forest.judas: scene line 47: missing required key 'render.mesh-asset'

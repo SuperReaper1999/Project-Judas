@@ -1,0 +1,36 @@
+Shadow maps: on
+Graphics: 3.3.0 NVIDIA 580.178.04 / NVIDIA GeForce GTX 970/PCIe/SSE2
+Renderer fragment texture units: 32 (material path uses 12)
+World state: legacy .judasstate (F6/F7) saves disabled for additive compositions; save slots remain available
+Project: Lunar Island (/home/conner/Documents/GitHub/Project-Judas/projects/lunar_island/lunar_island.judasproj)
+Scene: Lunar Island / Homestead Coast (/home/conner/Documents/GitHub/Project-Judas/projects/lunar_island/Scenes/island.judas)
+World origin (m): 2900.000, 0.000, -1600.000
+asset 2eb74ecf72ef69112028dcf2c039cb36: Optional extension ignored: KHR_materials_clearcoat
+asset f4e24c58b44e48292bc35ad5a55d72f9: Optional extension ignored: KHR_materials_clearcoat
+asset d5563755c7887ca32886ad9518e56de8: Optional extension ignored: KHR_materials_clearcoat
+JS: Lunar Island: WASD, mouse, E gather, click tool, Tab pack/crafting, Escape pause, F6 save, F9 load.
+PASS welcome pauses actual world
+PASS authored world collision loaded
+PASS capture welcome.png
+PASS Escape begins real game
+PASS CharacterMotor moves via project input
+PASS same player toggles third person
+PASS pause menu stops gameplay
+PASS move/fire do not leak through modal
+PASS focus UI primary
+PASS ordinary E/menu enters selected vehicle
+PASS pilot's actual CharacterMotor is disabled
+VEHICLE START 7200 [21.921226501464844,14.773155212402344,43.84718322753906] state {"bag":{"maxWeight":40,"slots":[null,null,null,null,null,null,null,null]},"burned":0.0009375000488944353,"damageEvents":0,"distance":1.013253790054856,"fuel":9.999062499951112,"health":100,"rotorAngle":0}
+PASS capture entered.png
+VEHICLE FIRST endpoint [22.098798751831055,14.819758415222168,35.49837875366211] velocity [0.13783079385757446,0.013364285230636597,-5.637938976287842]
+PASS actual physical vehicle changes position under controls
+PASS propulsion consumes persistent fuel
+PASS normal movement does not wreck vehicle
+PASS native powertrain endpoints remain available
+SHAFT 16.6921 torque -0.334653
+WHEEL "7202" available 1 contact 1 overlap 0 length 0.204759 load 843.979
+WHEEL "7203" available 1 contact 1 overlap 0 length 0.176894 load 918.627
+VEHICLE FINAL [22.108015060424805,14.820527076721191,35.12272644042969] up [-0.009324989281594753,0.999843418598175,0.015039968304336071] state {"bag":{"maxWeight":40,"slots":[null,null,null,null,null,null,null,null]},"burned":0.07635417064884702,"damageEvents":0,"distance":9.64986377558846,"fuel":9.923645829351035,"health":100,"rotorAngle":0}
+PASS capture driving.png
+PASS ordinary application exits cleanly
+18 checks, 0 failures

@@ -1,0 +1,95 @@
+Shadow maps: on
+Graphics: 3.3.0 NVIDIA 580.178.04 / NVIDIA GeForce GTX 970/PCIe/SSE2
+Renderer fragment texture units: 32 (material path uses 12)
+World state: legacy .judasstate (F6/F7) saves disabled for additive compositions; save slots remain available
+Project: Lunar Island (/home/conner/Documents/GitHub/Project-Judas/projects/lunar_island/lunar_island.judasproj)
+Scene: Lunar Island / Homestead Coast (/home/conner/Documents/GitHub/Project-Judas/projects/lunar_island/Scenes/island.judas)
+World origin (m): 2900.000, 0.000, -1600.000
+asset 2eb74ecf72ef69112028dcf2c039cb36: Optional extension ignored: KHR_materials_clearcoat
+asset f4e24c58b44e48292bc35ad5a55d72f9: Optional extension ignored: KHR_materials_clearcoat
+asset d5563755c7887ca32886ad9518e56de8: Optional extension ignored: KHR_materials_clearcoat
+JS: Lunar Island: WASD, mouse, E gather, click tool, Tab pack/crafting, Escape pause, F6 save, F9 load.
+PASS welcome pauses actual world
+PASS authored world collision loaded
+PASS capture welcome.png
+PASS Escape begins real game
+PASS CharacterMotor moves via project input
+PASS same player toggles third person
+PASS pause menu stops gameplay
+PASS move/fire do not leak through modal
+PASS city publishes physical enterable-house cargo
+PASS city registers shared finite inventory
+PASS city discovers through physical proximity
+PASS city has genuinely usable native street navigation
+PASS city street is real physical geometry
+PASS capture city.png
+PASS coast publishes physical enterable-house cargo
+PASS coast registers shared finite inventory
+PASS coast discovers through physical proximity
+PASS coast has genuinely usable native street navigation
+PASS coast street is real physical geometry
+PASS capture coast.png
+PASS forest publishes physical enterable-house cargo
+PASS forest registers shared finite inventory
+PASS forest discovers through physical proximity
+PASS forest has genuinely usable native street navigation
+PASS forest street is real physical geometry
+PASS capture forest.png
+PASS harbour publishes physical enterable-house cargo
+PASS harbour registers shared finite inventory
+PASS harbour discovers through physical proximity
+PASS harbour has genuinely usable native street navigation
+PASS harbour street is real physical geometry
+PASS capture harbour.png
+PASS industry publishes physical enterable-house cargo
+PASS industry registers shared finite inventory
+asset 5aa81023a515d05554329fab574af153: Optional extension ignored: KHR_materials_clearcoat
+asset 90614a6e4e7d51ea674ce7eb97c2e7e1: Optional extension ignored: KHR_materials_clearcoat
+asset c31b977445beba5f5f40c4b588153925: Optional extension ignored: KHR_materials_clearcoat
+PASS industry discovers through physical proximity
+PASS industry has genuinely usable native street navigation
+PASS industry street is real physical geometry
+PASS capture industry.png
+PASS islet publishes physical enterable-house cargo
+PASS islet registers shared finite inventory
+PASS islet discovers through physical proximity
+PASS islet has genuinely usable native street navigation
+PASS islet street is real physical geometry
+PASS capture islet.png
+PASS town publishes physical enterable-house cargo
+PASS town registers shared finite inventory
+asset 5aa81023a515d05554329fab574af153: Optional extension ignored: KHR_materials_clearcoat
+asset 90614a6e4e7d51ea674ce7eb97c2e7e1: Optional extension ignored: KHR_materials_clearcoat
+asset c31b977445beba5f5f40c4b588153925: Optional extension ignored: KHR_materials_clearcoat
+PASS town discovers through physical proximity
+PASS town has genuinely usable native street navigation
+PASS town street is real physical geometry
+PASS capture town.png
+PASS city actually unloads after departure: unloaded 
+PASS coast actually unloads after departure: unloaded 
+PASS forest actually unloads after departure: unloaded 
+PASS harbour actually unloads after departure: unloaded 
+PASS industry actually unloads after departure: unloaded 
+PASS islet actually unloads after departure: unloaded 
+PASS town actually unloads after departure: unloaded 
+PASS wild_0 actually unloads after departure: unloaded 
+PASS wild_1 actually unloads after departure: unloaded 
+PASS wild_10 actually unloads after departure: unloaded 
+PASS wild_11 actually unloads after departure: unloaded 
+PASS wild_12 actually unloads after departure: unloaded 
+PASS wild_13 actually unloads after departure: unloaded 
+PASS wild_14 actually unloads after departure: unloaded 
+PASS wild_15 actually unloads after departure: unloaded 
+PASS wild_16 actually unloads after departure: unloaded 
+PASS wild_2 actually unloads after departure: unloaded 
+PASS wild_3 actually unloads after departure: unloaded 
+PASS wild_4 actually unloads after departure: unloaded 
+PASS wild_5 actually unloads after departure: unloaded 
+PASS wild_6 actually unloads after departure: unloaded 
+PASS wild_7 actually unloads after departure: unloaded 
+PASS wild_8 actually unloads after departure: unloaded 
+PASS wild_9 actually unloads after departure: unloaded 
+PASS inactive districts retain real state
+PASS capture returned-home.png
+PASS ordinary application exits cleanly
+77 checks, 0 failures

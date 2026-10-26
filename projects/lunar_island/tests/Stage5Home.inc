@@ -1,0 +1,11 @@
+const auto town=Read(project.parent_path()/"Authoring/region_manifest.json")["regions"]["town"];
+const auto centre=V(town["position"]);const auto bed=*std::find_if(town["fixtures"].begin(),town["fixtures"].end(),[](const Json& f){return f["kind"]=="bed";});const auto ref=bed["entity"].get<std::string>();
+job(5,[&,centre](EngineHost&,RuntimeWorld& w){Aim(w,centre+glm::vec3(0,1,0),centre.y);});
+job(1,[&,ref,centre](EngineHost&,RuntimeWorld& w){auto* stream=w.SceneControl()->StreamingIfLoaded();if(!DistrictState(w,"town").contains("housing")){--index;return;}auto id=stream->ResolvePersistentKey(ref);if(!id){--index;return;}Aim(w,w.Physics().GetTransform(w.RuntimeBody(id)).position,centre.y,1.3);press("interact");});click("primary");
+job(5,[&,ref](EngineHost&,RuntimeWorld& w){Check(State(w)["housing"]["home"]==ref&&State(w)["housing"]["homeRegion"]=="town","resting in an actual regional bed claims a persistent home");if(w.UI().Paused())press("pause");});
+job(5,[&](EngineHost&,RuntimeWorld& w){Aim(w,{0,15,28},14);});
+job(160,[&,ref](EngineHost&,RuntimeWorld& w){auto* stream=w.SceneControl()->StreamingIfLoaded();for(auto& row:stream->Regions())if(row.id=="town"){Check(row.state=="active","claimed home remains resident for safe recovery");bool pin=false;for(auto& reason:row.pins)pin|=reason.find("player-home")!=std::string::npos;Check(pin,"home residency has an explicit identifiable pin");}Check(stream->ResolvePersistentKey(ref)!=0,"claimed bed retains actual physical identity while away");});
+job(5,[&,ref,centre](EngineHost&,RuntimeWorld& w){auto id=w.SceneControl()->StreamingIfLoaded()->ResolvePersistentKey(ref);Aim(w,w.Physics().GetTransform(w.RuntimeBody(id)).position,centre.y,1.3);press("interact");});click("drop");
+job(10,[&](EngineHost&,RuntimeWorld& w){Check(State(w)["housing"]["home"].is_null(),"dismantling the bed clears its recovery claim");if(w.UI().Paused())press("pause");});
+job(5,[&](EngineHost&,RuntimeWorld& w){Aim(w,{0,15,28},14);});
+job(160,[&](EngineHost& h,RuntimeWorld& w){for(auto& row:w.SceneControl()->StreamingIfLoaded()->Regions())if(row.id=="town")Check(row.state=="unloaded","removing a claimed bed releases the residency pin");Screenshot(h,out/"home-released.png");done=true;Quit();});

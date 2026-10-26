@@ -1,0 +1,42 @@
+Shadow maps: on
+Graphics: 3.3.0 NVIDIA 580.178.04 / NVIDIA GeForce GTX 970/PCIe/SSE2
+Renderer fragment texture units: 32 (material path uses 12)
+World state: legacy .judasstate (F6/F7) saves disabled for additive compositions; save slots remain available
+Project: Lunar Island (/home/conner/Documents/GitHub/Project-Judas/projects/lunar_island/lunar_island.judasproj)
+Scene: Lunar Island / Homestead Coast (/home/conner/Documents/GitHub/Project-Judas/projects/lunar_island/Scenes/island.judas)
+World origin (m): 2900.000, 0.000, -1600.000
+asset 2eb74ecf72ef69112028dcf2c039cb36: Optional extension ignored: KHR_materials_clearcoat
+asset f4e24c58b44e48292bc35ad5a55d72f9: Optional extension ignored: KHR_materials_clearcoat
+asset d5563755c7887ca32886ad9518e56de8: Optional extension ignored: KHR_materials_clearcoat
+JS: Lunar Island: WASD, mouse, E gather, click tool, Tab pack/crafting, Escape pause, F6 save, F9 load.
+PASS welcome pauses actual world
+PASS authored world collision loaded
+PASS capture welcome.png
+PASS Escape begins real game
+PASS CharacterMotor moves via project input
+PASS same player toggles third person
+PASS pause menu stops gameplay
+PASS move/fire do not leak through modal
+PASS focus UI primary
+PASS ordinary E/menu enters selected vehicle
+PASS pilot's actual CharacterMotor is disabled
+VEHICLE START 7000 [11.997398376464844,14.8036470413208,43.60010528564453] state {"bag":{"maxWeight":160,"slots":[null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null]},"burned":0.0033000001721084126,"damageEvents":0,"distance":0.7719133393008143,"fuel":27.9966999998279,"health":100,"rotorAngle":0}
+PASS capture entered.png
+VEHICLE FIRST endpoint [11.914405822753906,14.79538631439209,29.580472946166992] velocity [-0.055172812193632126,-0.06928957998752594,-9.744867324829102]
+PASS actual physical vehicle changes position under controls
+PASS propulsion consumes persistent fuel
+PASS normal movement does not wreck vehicle
+PASS native powertrain endpoints remain available
+SHAFT 562.812 torque -44.898
+SHAFT 125.069 torque -7.15268
+SHAFT 125.069 torque -7.15268
+SHAFT 35.7258 torque 280.149
+SHAFT 35.7425 torque 280.149
+WHEEL "7002" available 1 contact 1 overlap 0 length 0.236362 load 2059.2
+WHEEL "7003" available 1 contact 1 overlap 0 length 0.236829 load 1914.56
+WHEEL "7004" available 1 contact 1 overlap 0 length 0.19247 load 2710.8
+WHEEL "7005" available 1 contact 1 overlap 0 length 0.187906 load 2713.01
+VEHICLE FINAL [11.910928726196289,14.790929794311523,28.924938201904297] up [-0.0014777531614527106,0.9999383091926575,0.011008055880665779] state {"bag":{"maxWeight":160,"slots":[null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null]},"burned":0.16921667549200298,"damageEvents":0,"distance":15.291946600928076,"fuel":27.830783324508108,"health":100,"rotorAngle":0}
+PASS capture driving.png
+PASS ordinary application exits cleanly
+18 checks, 0 failures

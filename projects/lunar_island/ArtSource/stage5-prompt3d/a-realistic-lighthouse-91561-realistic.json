@@ -1,0 +1,29 @@
+{
+  "prompt": "a realistic lighthouse",
+  "category": "prop",
+  "confidence": 1.0,
+  "params": {
+    "features": {},
+    "size": 1.0,
+    "style": "realistic",
+    "type": "lighthouse",
+    "count": 1
+  },
+  "understood": [],
+  "seed": 91561,
+  "style": "realistic",
+  "files": {
+    "glb": "/home/conner/Documents/GitHub/Project-Judas/projects/lunar_island/ArtSource/stage5-prompt3d/a-realistic-lighthouse-91561-realistic.glb"
+  },
+  "stats": {
+    "vertices": 1700,
+    "triangles": 2032,
+    "groups": 1
+  },
+  "dimensions_m": [
+    6.0,
+    17.05,
+    6.0
+  ],
+  "seconds": 0.21
+}

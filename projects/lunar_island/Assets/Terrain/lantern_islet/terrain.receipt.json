@@ -1,0 +1,13 @@
+{
+  "format": "JudasTerrainCook",
+  "inputs": {
+    "Authoring/lantern_islet.judasterrain": "19f9696c42022b398da56279941ca9624b6a7bda95aeee178f5690db4c8a6395"
+  },
+  "products": {
+    "Assets/Terrain/lantern_islet/terrain.judascollision": "0a1c6137c3f7bf34b6beda31ec64c7b4ec3d571a1e14cb2fe6933ddc9aaf95d1",
+    "Assets/Terrain/lantern_islet/terrain.judasmodel": "207ea8c235b8aa1042f9dcc22227d90ba4acbdfb70f51ac2b739ec14197ff2e7",
+    "Assets/Terrain/lantern_islet/terrain.tga": "0c0f4eea85fda38352dedc69399e291a24a3939dde00850531b606ce87fb88ea"
+  },
+  "revision": "M75-1",
+  "version": 1
+}

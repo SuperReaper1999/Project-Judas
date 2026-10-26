@@ -1,0 +1,37 @@
+{
+  "city": {
+    "bodies": 570,
+    "retainedBytes": 170004,
+    "streamActive": 1
+  },
+  "coast": {
+    "bodies": 422,
+    "retainedBytes": 4730612,
+    "streamActive": 1
+  },
+  "forest": {
+    "bodies": 517,
+    "retainedBytes": 6745561,
+    "streamActive": 1
+  },
+  "harbour": {
+    "bodies": 422,
+    "retainedBytes": 11397625,
+    "streamActive": 1
+  },
+  "industry": {
+    "bodies": 562,
+    "retainedBytes": 11397625,
+    "streamActive": 2
+  },
+  "islet": {
+    "bodies": 394,
+    "retainedBytes": 16132056,
+    "streamActive": 1
+  },
+  "town": {
+    "bodies": 528,
+    "retainedBytes": 17685687,
+    "streamActive": 1
+  }
+}

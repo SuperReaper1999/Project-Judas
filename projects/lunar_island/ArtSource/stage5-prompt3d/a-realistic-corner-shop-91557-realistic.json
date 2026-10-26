@@ -1,0 +1,30 @@
+{
+  "prompt": "a realistic corner shop",
+  "category": "shop",
+  "confidence": 1.0,
+  "params": {
+    "features": {},
+    "size": 1.0,
+    "style": "realistic",
+    "type": "corner shop",
+    "floors": null,
+    "count": 1
+  },
+  "understood": [],
+  "seed": 91557,
+  "style": "realistic",
+  "files": {
+    "glb": "/home/conner/Documents/GitHub/Project-Judas/projects/lunar_island/ArtSource/stage5-prompt3d/a-realistic-corner-shop-91557-realistic.glb"
+  },
+  "stats": {
+    "vertices": 11692,
+    "triangles": 8902,
+    "groups": 1
+  },
+  "dimensions_m": [
+    7.3,
+    9.47,
+    12.45
+  ],
+  "seconds": 4.72
+}

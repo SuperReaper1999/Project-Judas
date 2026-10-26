@@ -1,0 +1,31 @@
+{
+  "prompt": "a realistic concrete building",
+  "category": "building",
+  "confidence": 1.0,
+  "params": {
+    "features": {},
+    "size": 1.0,
+    "style": "realistic",
+    "material": "concrete",
+    "floors": null,
+    "height": null,
+    "count": 1
+  },
+  "understood": [],
+  "seed": 91559,
+  "style": "realistic",
+  "files": {
+    "glb": "/home/conner/Documents/GitHub/Project-Judas/projects/lunar_island/ArtSource/stage5-prompt3d/a-realistic-concrete-building-91559-realistic.glb"
+  },
+  "stats": {
+    "vertices": 11424,
+    "triangles": 12852,
+    "groups": 1
+  },
+  "dimensions_m": [
+    44.0,
+    102.3,
+    44.0
+  ],
+  "seconds": 0.1
+}

@@ -4,10 +4,11 @@ import { WORLD } from './world-data.js';
 import * as Bag from './inventory.js';
 import { initialVitals, consume } from './survival.js';
 import { move } from './movement.js';
-import { collect, useTool, nodeFor } from './harvesting.js';
+import { collect, useTool, nodeFor, harvestStatus } from './harvesting.js';
 import { add, mul, sub, length, dot, rotate, qm, axis } from './math.js';
 import Camera from './camera.js';
 import Transport from './transport.js';
+import { explore } from './exploration.js';
 import HUD from './hud.js';
 import Housing from './housing.js';
 import Construction from './construction.js';
@@ -68,6 +69,7 @@ export default class Player {
         this.bind(true);
     }
     bind(restored) {
+        this.state.exploration ||= { visited: {}, target: null };
         this.transport = new Transport(this);
         this.camera = new Camera(this);
         this.housing = new Housing(this);
@@ -282,6 +284,7 @@ export default class Player {
         if (this.hud.modal) return;
         this.cooldown = Math.max(0, this.cooldown - dt);
         this.swing = Math.max(0, this.swing - dt);
+        explore(this);
         if (this.transport.fixedUpdate(dt)) {
             if (this.state.vitals.health <= 0) this.hud.open('dead');
             return;
@@ -360,7 +363,7 @@ export default class Player {
                 ? 'Tab → Crafting · Cook beside the homestead fire'
                 : '';
         if (n.kind === 'tree')
-            return this.state.harvest[n.id]?.felled
+            return harvestStatus(this, n)?.felled
                 ? 'AXE · Process fallen timber'
                 : 'AXE · Fell this physical tree';
         return ['ore', 'rock'].includes(n.kind)

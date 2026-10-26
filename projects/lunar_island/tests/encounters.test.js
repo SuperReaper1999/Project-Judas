@@ -162,7 +162,7 @@ check(
 console.log(checks + ' encounter checks passed');
 
 const patrol = PEOPLE.quests.patrol;
-let q = Rules.quest(stocked({}), null, { kills: 0 }, patrol);
+let q = Rules.quest(stocked({}), null, { campKills: 0 }, patrol);
 check(
     q.ok &&
         q.stage === 'active' &&
@@ -170,12 +170,12 @@ check(
         Bag.count(q.bag, 'ammo_pistol') === 24,
     'accepting patrol grants its finite starter kit',
 );
-let again = Rules.quest(q.bag, q.stage, { kills: 0 }, patrol);
+let again = Rules.quest(q.bag, q.stage, { campKills: 0 }, patrol);
 check(
     again.ok && again.bag === q.bag && again.stage === 'active',
     'active patrol cannot repeat the starter gift',
 );
-let complete = Rules.quest(q.bag, q.stage, { kills: 2 }, patrol);
+let complete = Rules.quest(q.bag, q.stage, { campKills: 2 }, patrol);
 check(
     complete.ok &&
         complete.stage === 'done' &&
@@ -183,12 +183,12 @@ check(
     'actual objective counter unlocks authored reward',
 );
 check(
-    Rules.quest(complete.bag, 'done', { kills: 2 }, patrol).bag ===
+    Rules.quest(complete.bag, 'done', { campKills: 2 }, patrol).bag ===
         complete.bag,
     'completed quest does not repeat payment',
 );
 check(
-    !Rules.quest(Bag.createBag(1, 1), null, { kills: 0 }, patrol).ok,
+    !Rules.quest(Bag.createBag(1, 1), null, { campKills: 0 }, patrol).ok,
     'starter gift failure is atomic when pack cannot hold it',
 );
 const timber = PEOPLE.quests.timber;
@@ -205,3 +205,9 @@ check(
     'data-driven delivery exchanges exact physical resource quantities',
 );
 console.log(checks + ' total encounter checks passed');
+
+check(
+    Rules.quest(q.bag, 'active', { kills: 5, campKills: 0 }, patrol).stage ===
+        'active',
+    'unrelated regional kills cannot satisfy the specific homestead patrol',
+);
