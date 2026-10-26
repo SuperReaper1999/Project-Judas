@@ -1,0 +1,6 @@
+FRAMES 240
+LOG_EVERY 0
+EXPECT_PAUSED 1 30
+ACTION pause 1 40 41
+EXPECT_PAUSED 0 220
+SCREENSHOT 220 /home/conner/Documents/GitHub/Project-Judas/projects/lunar_island/Review/stage4/first-start.png

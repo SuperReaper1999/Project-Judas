@@ -4,9 +4,9 @@
   "data": {
     "name": "Lunar Island",
     "legacyGameplay": false,
-    "saveIdentity": "72e28eed64e9f521269eac269070e347ae341c91f8f1743f1fdaffe1741d2d6a",
+    "saveIdentity": "59cfe9e05a0fa403173aedc7286d836aaddb3cdd26d3586366a246487ee281ed",
     "iconAsset": "",
-    "worldManifest": "",
+    "worldManifest": "0913a2e104c431b41795449fa088918a",
     "exportScenes": [],
     "excludeScenes": [],
     "startupScene": "Scenes/island.judas",
@@ -38,7 +38,15 @@
       "6f6f079b97c01d7dfeef14fdf2d41ee6",
       "9ee7a0dfb01a8a65d93fd0fee7fc1b0b",
       "f97f76b1ea018c43d15ddcd6c56d0836",
-      "509f974de92d1571fb0ec2b7f1d8782f"
+      "509f974de92d1571fb0ec2b7f1d8782f",
+      "14af9982203bb6c9e15378daea6df542",
+      "c804fc46945c1334cd1a222ff2a0fee1",
+      "a34429ce9be0b939a73a765eefe29033",
+      "06361a283c195f4641b33891810a72c8",
+      "0eb734663dfb5c234375266dfbb3ca3a",
+      "5d575835a163c17024d628511ff31663",
+      "12f63516a3b0b64079445a2ec9956c2c",
+      "87825edacaa85cf0c97bac366559e50b"
     ],
     "input": [
       {
@@ -449,7 +457,7 @@
     ],
     "classification": {
       "tags": {
-        "nextId": 10,
+        "nextId": 13,
         "entries": [
           {
             "id": 0,
@@ -490,6 +498,18 @@
           {
             "id": 9,
             "name": "hostile"
+          },
+          {
+            "id": 10,
+            "name": "vehicle"
+          },
+          {
+            "id": 11,
+            "name": "vehicle_rotor"
+          },
+          {
+            "id": 12,
+            "name": "vehicle_visual"
           }
         ]
       },

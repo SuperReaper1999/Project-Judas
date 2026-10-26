@@ -1,0 +1,31 @@
+{
+  "prompt": "a realistic green hatchback",
+  "category": "car",
+  "confidence": 1.0,
+  "params": {
+    "features": {},
+    "size": 1.0,
+    "style": "realistic",
+    "color": "#2e8b57",
+    "type": "hatchback",
+    "doors": 4,
+    "count": 1
+  },
+  "understood": [],
+  "seed": 91400,
+  "style": "realistic",
+  "files": {
+    "glb": "/home/conner/Documents/GitHub/Project-Judas/projects/lunar_island/ArtSource/stage4-prompt3d/a-realistic-green-hatchback-91400-realistic.glb"
+  },
+  "stats": {
+    "vertices": 2530,
+    "triangles": 2356,
+    "groups": 1
+  },
+  "dimensions_m": [
+    4.1,
+    1.51,
+    1.95
+  ],
+  "seconds": 0.49
+}

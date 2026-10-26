@@ -1,0 +1,20 @@
+Traceback (most recent call last):
+  File "/home/conner/Documents/GitHub/Project-Judas/projects/lunar_island/tools/author_stage4.py", line 142, in <module>
+    if a.prompt3d:art(a.prompt3d)
+                  ~~~^^^^^^^^^^^^
+  File "/home/conner/Documents/GitHub/Project-Judas/projects/lunar_island/tools/author_stage4.py", line 42, in art
+    path=ROOT/f'Assets/models/vehicle_{key}.glb';to_glb(scene,str(path),textures=True,flat=False);meta(path,'mesh','model/vehicle_'+key)
+                                                 ~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/conner/Documents/GitHub/ClaudesNewML-AI-Thing/prompt3d/export.py", line 70, in to_glb
+    for group, parts in scene.merged():
+                        ~~~~~~~~~~~~^^
+  File "/home/conner/Documents/GitHub/ClaudesNewML-AI-Thing/prompt3d/geometry.py", line 291, in merged
+    return [(g, [(m, merge(ps)) for m, ps in mats.items()]) for g, mats in self.groups.items()]
+                     ~~~~~^^^^
+  File "/home/conner/Documents/GitHub/ClaudesNewML-AI-Thing/prompt3d/geometry.py", line 243, in merge
+    return Prim(np.vstack(V), np.vstack(N), np.vstack(F))
+                ~~~~~~~~~^^^
+  File "/home/conner/Documents/GitHub/ClaudesNewML-AI-Thing/.venv/lib/python3.14/site-packages/numpy/_core/shape_base.py", line 290, in vstack
+    return _nx.concatenate(arrs, 0, dtype=dtype, casting=casting)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: need at least one array to concatenate

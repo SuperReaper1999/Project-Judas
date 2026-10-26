@@ -613,5 +613,109 @@
     "source": "Original project mesh, author_stage3.py",
     "path": "Assets/models/bat.glb",
     "sha256": "ba62e4df395154a40e9d2552818ee1fd926608d6f0edcf3d752ecb149414e250"
+  },
+  "vehicle_car": {
+    "source": "Installed Prompt3D parser and procedural generator; explicit verified template selection",
+    "prompt": "a realistic green hatchback",
+    "rawCategory": "car",
+    "template": "car",
+    "params": {
+      "features": {
+        "gear": false
+      },
+      "size": 1,
+      "style": "realistic",
+      "color": "#457b72",
+      "type": "hatchback",
+      "doors": 4,
+      "count": 1
+    },
+    "seed": 91400,
+    "path": "Assets/models/vehicle_car.glb",
+    "sha256": "ba54af7f3236995da2247aea26bf7bf7965964b7193d75550d2545a4dcc0531f"
+  },
+  "vehicle_truck": {
+    "source": "Installed Prompt3D parser and procedural generator; explicit verified template selection",
+    "prompt": "a realistic red pickup truck",
+    "rawCategory": "car",
+    "template": "car",
+    "params": {
+      "features": {
+        "gear": false
+      },
+      "size": 1,
+      "style": "realistic",
+      "color": "#845046",
+      "type": "truck",
+      "doors": 4,
+      "count": 1
+    },
+    "seed": 91401,
+    "path": "Assets/models/vehicle_truck.glb",
+    "sha256": "51e90a9ff5ea0cf40f845ea13a0ef7b3b76ca031475643ba2ef580b24a5dda87"
+  },
+  "vehicle_boat": {
+    "source": "Installed Prompt3D parser and procedural generator; explicit verified template selection",
+    "prompt": "a realistic motor boat",
+    "rawCategory": "boat",
+    "template": "boat",
+    "params": {
+      "features": {
+        "gear": false
+      },
+      "size": 1,
+      "style": "realistic",
+      "type": "motor",
+      "count": 1,
+      "color": "#d0cec0"
+    },
+    "seed": 91402,
+    "path": "Assets/models/vehicle_boat.glb",
+    "sha256": "a57cc4739e0ccb16198b05d9eccf4302717970a9100bf5e84ee2e31a9c4d4982"
+  },
+  "vehicle_plane": {
+    "source": "Installed Prompt3D parser and procedural generator; explicit verified template selection",
+    "prompt": "a realistic light propeller plane",
+    "rawCategory": "plane",
+    "template": "plane",
+    "params": {
+      "features": {
+        "gear": false
+      },
+      "size": 1,
+      "style": "realistic",
+      "type": "prop",
+      "engines": null,
+      "count": 1,
+      "color": "#b65546"
+    },
+    "seed": 91403,
+    "path": "Assets/models/vehicle_plane.glb",
+    "sha256": "e5ef7e8c2bdba6db707aa3617a8dede9317fe629556de84fc13f40ecd13efb5c"
+  },
+  "vehicle_motorcycle": {
+    "source": "Original authored geometry, author_stage4.py; no generator claims for unsupported motorcycle/helicopter categories",
+    "path": "Assets/models/vehicle_motorcycle.glb",
+    "sha256": "2d6c2cc3d15beaadaeb4c550b2df6bcb0ec7d58832018c378a87616377543d6a"
+  },
+  "vehicle_helicopter": {
+    "source": "Original authored geometry, author_stage4.py; no generator claims for unsupported motorcycle/helicopter categories",
+    "path": "Assets/models/vehicle_helicopter.glb",
+    "sha256": "8f698bf2daca35c203192ba17acd841471e7bb878ea6481dd1b045683b85393c"
+  },
+  "vehicle_rotor": {
+    "source": "Original authored geometry, author_stage4.py; no generator claims for unsupported motorcycle/helicopter categories",
+    "path": "Assets/models/vehicle_rotor.glb",
+    "sha256": "513a4729d0d73226c3edfd387233e7e7529b561a1fb37237d3bc76e6d58ad1ff"
+  },
+  "vehicle_propeller": {
+    "source": "Original authored geometry, author_stage4.py; no generator claims for unsupported motorcycle/helicopter categories",
+    "path": "Assets/models/vehicle_propeller.glb",
+    "sha256": "69294f3140b33b03f7ec4cf2112711cacebf08f56516160c74d469df94a90582"
+  },
+  "vehicle_wheel": {
+    "source": "Original authored geometry, author_stage4.py; no generator claims for unsupported motorcycle/helicopter categories",
+    "path": "Assets/models/vehicle_wheel.glb",
+    "sha256": "6c5b396b936d6d82591e26f5cefa19ffe99eeed6389ffa8305850970400416c0"
   }
 }

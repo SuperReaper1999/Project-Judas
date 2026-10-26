@@ -1,6 +1,8 @@
 import { ui, input, saves, navigation, world } from 'judas';
 import { ITEMS, RECIPES, CONFIG } from './definitions.js';
 import { WORLD } from './world-data.js';
+import { renderVehicle, vehicleEvent } from './vehicle-ui.js';
+import { VEHICLES } from './vehicle-data.js';
 import { HOUSING } from './housing-data.js';
 import { entityFor } from './housing.js';
 import { count, weight } from './inventory.js';
@@ -47,7 +49,8 @@ export default class HUD {
         this.objectRef = ref;
         this.open('object');
     }
-    openStorage(ref) {
+    openStorage(ref, vehicle = false) {
+        this.vehicleRef = vehicle ? ref : null;
         this.containerRef = ref;
         this.containerSelected = '';
         this.containerSignature = '';
@@ -96,7 +99,8 @@ export default class HUD {
             'corpse',
         ].includes(page);
         const storage = page === 'storage',
-            object = page === 'object' || socialPage(page);
+            object =
+                page === 'object' || page === 'vehicle' || socialPage(page);
         d.get('entries2').visible = storage;
         d.get('secondary').visible = storage || object;
         d.get('tertiary').visible = storage || object;
@@ -157,9 +161,12 @@ export default class HUD {
                 this.selected = rows[0].id;
         }
         let text = '';
-        if (socialPage(page)) text = renderSocial(this);
+        if (page === 'vehicle') text = renderVehicle(this);
+        else if (socialPage(page)) text = renderSocial(this);
         else if (page === 'storage') {
-            const bag2 = p.housing.state.containers[this.containerRef];
+            const bag2 = this.vehicleRef
+                ? p.transport.cargo(this.vehicleRef)
+                : p.housing.state.containers[this.containerRef];
             const rows2 = bag2
                 ? bag2.slots.flatMap((slot, i) =>
                       slot
@@ -182,6 +189,9 @@ export default class HUD {
                 if (!rows2.some((x) => x.id === this.containerSelected))
                     this.containerSelected = rows2[0]?.id || '';
             }
+            if (this.vehicleRef)
+                d.get('title').text =
+                    'CARGO / ' + p.transport.cargoName(this.vehicleRef);
             text = bag2
                 ? 'BACKPACK ↔ STORAGE   /   ' +
                   weight(bag2).toFixed(1) +
@@ -271,7 +281,7 @@ export default class HUD {
         } else if (page === 'pack') {
             const slot = bag.slots[Number(this.selected)];
             text = slot
-                ? `${ITEMS[slot.item].name}\n\n${ITEMS[slot.item].category.toUpperCase()}\n${slot.count} carried / ${ITEMS[slot.item].stack} per stack\n\nSelect Use / equip to consume supplies or select a tool. Drop places one item in a physical bundle.\n\nEquipped: ${p.state.equipped === 'hands' ? 'Hands' : ITEMS[p.state.equipped].name}\nCoat: ${p.state.equipment.body ? ITEMS[p.state.equipment.body].name : 'None'}`
+                ? `${ITEMS[slot.item].name}\n\n${ITEMS[slot.item].category.toUpperCase()}\n${slot.count} carried / ${ITEMS[slot.item].stack} per stack\n\n${ITEMS[slot.item].category === 'supplies' ? 'Fuel cans and repair kits are used through E → Vehicle controls.' : 'Select Use / equip to consume supplies or select a tool.'} Drop places one item in a physical bundle.\n\nEquipped: ${p.state.equipped === 'hands' ? 'Hands' : ITEMS[p.state.equipped].name}\nCoat: ${p.state.equipment.body ? ITEMS[p.state.equipment.body].name : 'None'}`
                 : 'Your backpack is empty. Gather loose sticks, stones and plants with E.';
             d.get('primary').text = 'Use / equip';
         } else if (page === 'craft') {
@@ -289,7 +299,7 @@ export default class HUD {
             d.get('primary').text = 'Craft selected';
         } else if (page === 'map')
             text =
-                'STAGE 3 / HOMESTEAD COAST\n\nYou are in the north-eastern homestead clearing. The nearby spring pool, forest, Seabird Cottage and Birchside Cabin are playable.\n\nThe complete coast is terrain, but the labelled settlements and other regions are reference plans for Stage 5.\n\n' +
+                'STAGE 4 / HOMESTEAD COAST\n\nYou are in the north-eastern homestead clearing. The nearby spring pool, forest, Seabird Cottage and Birchside Cabin are playable.\n\nVehicle clearing: (0,43). Helicopter: (-40,42). Airstrip: (0,140). Skiff: (90,-100). Birchside service pickup: (35,49).\n\nThe complete coast is terrain, but the labelled settlements and other regions are reference plans for Stage 5.\n\n' +
                 `Absolute position\n${Math.round(worldPosition(p).x)} east / ${Math.round(worldPosition(p).z)} south`;
         else if (page === 'help')
             text =
@@ -301,7 +311,7 @@ export default class HUD {
                 : 'Loading character art and preparing the island trails… Player actions and NPC routines begin after required navigation and character resources are ready.';
         else if (page === 'welcome')
             text =
-                'A quiet coast. An island worth coming home to.\n\nGather loose sticks, stones and fibre with E. Open Crafting to make an axe. Fell and process a tree, mine stone, cook at the campfire, and drink at the well.\n\nTwo enterable cottages now have real doors, loot, storage and functional furniture. E opens object actions. B opens construction. Mara and Ivo trade at camp. Ask Mara for a patrol job and sidearm; Ivo needs timber. Scavengers occupy the eastern trail; wolves roam west. Vehicles remain a later stage.\n\nSave with F6 before leaving.';
+                'A quiet coast. An island worth coming home to.\n\nGather loose sticks, stones and fibre with E. Open Crafting to make an axe. Fell and process a tree, mine stone, cook at the campfire, and drink at the well.\n\nTwo enterable cottages now have real doors, loot, storage and functional furniture. E opens object actions. B opens construction. Mara and Ivo trade at camp. Ask Mara for a patrol job and sidearm; Ivo needs timber. Scavengers occupy the eastern trail; wolves roam west. Vehicles are south behind camp: pickup, hatchback and motorcycle beside the fuel locker. The helicopter is west; the bush plane is on the grass strip farther south. The skiff is at the spring pool. E opens vehicle controls; Tab opens cargo while stopped.\n\nSave with F6 before leaving.';
         else if (page === 'dead')
             text =
                 'Your expedition has ended. Recover at the homestead with your pack intact.\n\nStage 1 keeps recovery forgiving; hunger, thirst, drowning and fall injuries are active.\n\nDeath penalties and progression will be balanced in later stages.';
@@ -345,7 +355,10 @@ export default class HUD {
                 navigation.sample(this.p.entity.transform.position, 3) &&
                 world.entity('6001').animation?.info?.ready &&
                 world.entity('6201').animation?.info?.ready &&
-                world.entity('6301').modelParts !== null
+                world.entity('6301').modelParts !== null &&
+                Object.values(VEHICLES)
+                    .filter((v) => !v.region)
+                    .every((v) => world.entity(v.visual)?.modelParts !== null)
             )
                 this.open('welcome');
             this.refresh();
@@ -357,10 +370,14 @@ export default class HUD {
             p.say('Placement cancelled.');
         } else if (input.pressed('pause'))
             this.modal ? this.close() : this.open('pause');
-        else if (input.pressed('build_menu')) this.open('build');
-        else if (input.pressed('inventory'))
-            this.page === 'pack' ? this.close() : this.open('pack');
-        else if (input.pressed('map'))
+        else if (input.pressed('build_menu') && !p.transport.driving)
+            this.open('build');
+        else if (input.pressed('inventory')) {
+            if (p.transport.driving) {
+                if (this.page === 'storage') this.close();
+                else p.transport.openCargo(p.state.transport.driving);
+            } else this.page === 'pack' ? this.close() : this.open('pack');
+        } else if (input.pressed('map'))
             this.page === 'map' ? this.close() : this.open('map');
         if (input.pressed('save')) p.requestSave();
         if (input.pressed('load')) p.requestLoad();
@@ -377,6 +394,8 @@ export default class HUD {
         this.doc.get('hotbar').text += this.p.combat?.status()
             ? '\n' + this.p.combat.status()
             : '';
+        if (p.transport.driving)
+            this.doc.get('hotbar').text = p.transport.status();
         this.doc.get('context').text = this.modal ? '' : p.context();
         this.doc.get('notice').text = p.notice;
         const s = p.state.stats;
@@ -428,17 +447,17 @@ export default class HUD {
             this.close();
         }
         const p = this.p;
-        if (socialEvent(this, e)) return;
+        if (vehicleEvent(this, e) || socialEvent(this, e)) return;
         if (this.page === 'storage') {
             if (e.element === 'primary' || e.element === 'drop')
-                p.housing.transfer(
+                (this.vehicleRef ? p.transport : p.housing).transfer(
                     this.containerRef,
                     Number(this.selected),
                     true,
                     e.element === 'drop',
                 );
             if (e.element === 'secondary' || e.element === 'tertiary')
-                p.housing.transfer(
+                (this.vehicleRef ? p.transport : p.housing).transfer(
                     this.containerRef,
                     Number(this.containerSelected),
                     false,

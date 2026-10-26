@@ -1,0 +1,17 @@
+PASS sealed can transfers exactly 5 L and consumes one real inventory item
+PASS service is immutable before caller commits
+PASS insufficient tank space refuses without spilling part of a sealed can
+PASS no can means no fuel
+PASS repair consumes a kit and restores 35 condition
+PASS repair does not exceed healthy condition
+PASS healthy vehicle does not waste a kit
+PASS invalid tank state rejects -1
+PASS invalid tank state rejects NaN
+PASS invalid tank state rejects Infinity
+PASS invalid tank state rejects 71
+PASS repeated fuel burn stops at zero and preserves used+remaining quantity
+PASS vehicle and personal inventories use identical transfer rules
+PASS overweight cargo withdrawal refuses atomically
+PASS same-container cargo transfer cannot duplicate items
+PASS six vehicle types plus a genuinely streamed service pickup are authored
+19 vehicle checks passed

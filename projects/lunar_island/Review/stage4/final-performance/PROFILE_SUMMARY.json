@@ -1,0 +1,638 @@
+{
+  "JavaScript fixedUpdate": {
+    "meanMs": 1.1388493916666667,
+    "p95Ms": 1.178272,
+    "samples": 120
+  },
+  "JavaScript update": {
+    "meanMs": 0.04649028333333333,
+    "p95Ms": 0.06336,
+    "samples": 120
+  },
+  "JavaScript presentation": {
+    "meanMs": 0.38324271666666665,
+    "p95Ms": 0.401497,
+    "samples": 120
+  },
+  "Script lifecycle callback": {
+    "meanMs": 1.676407375,
+    "p95Ms": 1.721654,
+    "samples": 120
+  },
+  "memory": {
+    "profiler_reserved_estimate_bytes": 70787872,
+    "linux_resident_bytes": 565608448,
+    "linux_virtual_bytes": 1234567168
+  },
+  "lastCounters": [
+    {
+      "name": "Resource GPU payload bytes",
+      "value": 1039978520,
+      "mode": "frame_latest_observation"
+    },
+    {
+      "name": "Resource prepared CPU bytes",
+      "value": 0,
+      "mode": "frame_latest_observation"
+    },
+    {
+      "name": "Resource over budget bytes",
+      "value": 0,
+      "mode": "frame_latest_observation"
+    },
+    {
+      "name": "Resource resident byte estimate",
+      "value": 1051181854,
+      "mode": "frame_latest_observation"
+    },
+    {
+      "name": "Resource budget bytes",
+      "value": 1073741824,
+      "mode": "frame_latest_observation"
+    },
+    {
+      "name": "Resource in flight",
+      "value": 0,
+      "mode": "frame_latest_observation"
+    },
+    {
+      "name": "Resource uploads",
+      "value": 0,
+      "mode": "frame_sum"
+    },
+    {
+      "name": "Audio voices",
+      "value": 15,
+      "mode": "frame_latest_observation"
+    },
+    {
+      "name": "Audio stream PCM bytes",
+      "value": 0,
+      "mode": "frame_latest_observation"
+    },
+    {
+      "name": "Audio pending retirements",
+      "value": 0,
+      "mode": "frame_latest_observation"
+    },
+    {
+      "name": "Script instances",
+      "value": 15,
+      "mode": "frame_latest_observation"
+    },
+    {
+      "name": "Script callback calls",
+      "value": 40,
+      "mode": "frame_sum"
+    },
+    {
+      "name": "Physics query filter preparations",
+      "value": 7,
+      "mode": "frame_sum"
+    },
+    {
+      "name": "Physics query bridge calls",
+      "value": 7,
+      "mode": "frame_sum"
+    },
+    {
+      "name": "Physics geometric queries",
+      "value": 7,
+      "mode": "frame_sum"
+    },
+    {
+      "name": "Navigation agents",
+      "value": 6,
+      "mode": "frame_latest_observation"
+    },
+    {
+      "name": "Navigation obstacle batches",
+      "value": 1,
+      "mode": "frame_sum"
+    },
+    {
+      "name": "Character motor instances",
+      "value": 7,
+      "mode": "frame_latest_observation"
+    },
+    {
+      "name": "Physical animation participants",
+      "value": 0,
+      "mode": "frame_latest_observation"
+    },
+    {
+      "name": "Powertrain assemblies",
+      "value": 7,
+      "mode": "frame_latest_observation"
+    },
+    {
+      "name": "Wheel instances",
+      "value": 17,
+      "mode": "frame_latest_observation"
+    },
+    {
+      "name": "Physics overlap index bytes",
+      "value": 21032,
+      "mode": "frame_latest_observation"
+    },
+    {
+      "name": "Physics overlap index pairs",
+      "value": 49,
+      "mode": "frame_latest_observation"
+    },
+    {
+      "name": "Physics overlap index rebuilds",
+      "value": 1,
+      "mode": "frame_latest_observation"
+    },
+    {
+      "name": "Physics initial geometry worker lanes",
+      "value": 0,
+      "mode": "frame_latest_observation"
+    },
+    {
+      "name": "Physics parallel initial manifolds",
+      "value": 0,
+      "mode": "frame_latest_observation"
+    },
+    {
+      "name": "Physics initial worker completed manifolds",
+      "value": 0,
+      "mode": "frame_latest_observation"
+    },
+    {
+      "name": "Physics initial geometry scratch bytes",
+      "value": 0,
+      "mode": "frame_latest_observation"
+    },
+    {
+      "name": "Physics restitution frictionless retries",
+      "value": 0,
+      "mode": "frame_sum"
+    },
+    {
+      "name": "Physics restitution inelastic fallbacks",
+      "value": 0,
+      "mode": "frame_sum"
+    },
+    {
+      "name": "Physics restitution coupled fallbacks",
+      "value": 0,
+      "mode": "frame_sum"
+    },
+    {
+      "name": "Physics block normal solves",
+      "value": 0,
+      "mode": "frame_latest_observation"
+    },
+    {
+      "name": "Physics block normal fallbacks",
+      "value": 0,
+      "mode": "frame_latest_observation"
+    },
+    {
+      "name": "Sleeping physics bodies",
+      "value": 2,
+      "mode": "frame_latest_observation"
+    },
+    {
+      "name": "Awake physics bodies",
+      "value": 7,
+      "mode": "frame_latest_observation"
+    },
+    {
+      "name": "Physics bodies last step",
+      "value": 318,
+      "mode": "frame_latest_observation"
+    },
+    {
+      "name": "Physics candidate pairs last step",
+      "value": 49,
+      "mode": "frame_latest_observation"
+    },
+    {
+      "name": "Physics contacts last step",
+      "value": 8,
+      "mode": "frame_latest_observation"
+    },
+    {
+      "name": "Physics joints",
+      "value": 2,
+      "mode": "frame_latest_observation"
+    },
+    {
+      "name": "Physics impact events",
+      "value": 0,
+      "mode": "frame_latest_observation"
+    },
+    {
+      "name": "Physics impact queries",
+      "value": 0,
+      "mode": "frame_latest_observation"
+    },
+    {
+      "name": "Physics impact search iterations",
+      "value": 0,
+      "mode": "frame_latest_observation"
+    },
+    {
+      "name": "Physics impact sampling fallbacks",
+      "value": 0,
+      "mode": "frame_latest_observation"
+    },
+    {
+      "name": "Physics impact sampling tests",
+      "value": 0,
+      "mode": "frame_latest_observation"
+    },
+    {
+      "name": "Physics impact search limits",
+      "value": 0,
+      "mode": "frame_latest_observation"
+    },
+    {
+      "name": "Physics impact search stalls",
+      "value": 0,
+      "mode": "frame_latest_observation"
+    },
+    {
+      "name": "Physics impact sampling resolution caps",
+      "value": 0,
+      "mode": "frame_latest_observation"
+    },
+    {
+      "name": "Physics CCD path holds",
+      "value": 0,
+      "mode": "frame_latest_observation"
+    },
+    {
+      "name": "Physics CCD body limit holds",
+      "value": 0,
+      "mode": "frame_latest_observation"
+    },
+    {
+      "name": "Physics CCD step limit holds",
+      "value": 0,
+      "mode": "frame_latest_observation"
+    },
+    {
+      "name": "Physics CCD response holds",
+      "value": 0,
+      "mode": "frame_latest_observation"
+    },
+    {
+      "name": "Physics CCD response attempts",
+      "value": 0,
+      "mode": "frame_latest_observation"
+    },
+    {
+      "name": "Physics CCD responses applied",
+      "value": 0,
+      "mode": "frame_latest_observation"
+    },
+    {
+      "name": "Physics CCD missing manifolds",
+      "value": 0,
+      "mode": "frame_latest_observation"
+    },
+    {
+      "name": "Physics CCD energy rejections",
+      "value": 0,
+      "mode": "frame_latest_observation"
+    },
+    {
+      "name": "Physics CCD query scratch bytes",
+      "value": 0,
+      "mode": "frame_latest_observation"
+    },
+    {
+      "name": "Physics impact pose evaluations",
+      "value": 1763,
+      "mode": "frame_latest_observation"
+    },
+    {
+      "name": "Physics impact pose reuses",
+      "value": 2917,
+      "mode": "frame_latest_observation"
+    },
+    {
+      "name": "Physics impact orientation preparations",
+      "value": 735,
+      "mode": "frame_latest_observation"
+    },
+    {
+      "name": "Physics impact actual-contact requests",
+      "value": 1032,
+      "mode": "frame_latest_observation"
+    },
+    {
+      "name": "Physics impact actual-contact reuses",
+      "value": 138,
+      "mode": "frame_latest_observation"
+    },
+    {
+      "name": "Physics impact remaining-bound rejections",
+      "value": 0,
+      "mode": "frame_latest_observation"
+    },
+    {
+      "name": "Physics impact actual-bound rejections",
+      "value": 0,
+      "mode": "frame_latest_observation"
+    },
+    {
+      "name": "Physics broadphase passes",
+      "value": 1,
+      "mode": "frame_latest_observation"
+    },
+    {
+      "name": "Physics broadphase root queries",
+      "value": 0,
+      "mode": "frame_latest_observation"
+    },
+    {
+      "name": "Physics broadphase overlapping leaves",
+      "value": 98,
+      "mode": "frame_latest_observation"
+    },
+    {
+      "name": "Physics sleep graph edges",
+      "value": 9,
+      "mode": "frame_latest_observation"
+    },
+    {
+      "name": "Physics sleep islands",
+      "value": 9,
+      "mode": "frame_latest_observation"
+    },
+    {
+      "name": "Physics sleep scratch bytes",
+      "value": 10232,
+      "mode": "frame_latest_observation"
+    },
+    {
+      "name": "Physics persistent contact rows",
+      "value": 0,
+      "mode": "frame_latest_observation"
+    },
+    {
+      "name": "Physics joint rows",
+      "value": 0,
+      "mode": "frame_latest_observation"
+    },
+    {
+      "name": "Physics broadphase pair scratch bytes",
+      "value": 64,
+      "mode": "frame_latest_observation"
+    },
+    {
+      "name": "Physics CCD search inclusive ms",
+      "value": 0,
+      "mode": "frame_sum"
+    },
+    {
+      "name": "Physics CCD geometry inclusive ms",
+      "value": 0,
+      "mode": "frame_sum"
+    },
+    {
+      "name": "Physics CCD geometry calls",
+      "value": 0,
+      "mode": "frame_sum"
+    },
+    {
+      "name": "Physics impact solve ms",
+      "value": 0,
+      "mode": "frame_sum"
+    },
+    {
+      "name": "Physics impact solve calls",
+      "value": 0,
+      "mode": "frame_sum"
+    },
+    {
+      "name": "Physics joint preparation ms",
+      "value": 0.00018099999999999998,
+      "mode": "frame_sum"
+    },
+    {
+      "name": "Physics joint preparation calls",
+      "value": 4,
+      "mode": "frame_sum"
+    },
+    {
+      "name": "Physics cooked BVH nodes",
+      "value": 736,
+      "mode": "frame_sum"
+    },
+    {
+      "name": "Physics cooked triangles",
+      "value": 88,
+      "mode": "frame_sum"
+    },
+    {
+      "name": "Physics cooked convex tests",
+      "value": 83,
+      "mode": "frame_sum"
+    },
+    {
+      "name": "Physics geometry predicates",
+      "value": 30,
+      "mode": "frame_latest_observation"
+    },
+    {
+      "name": "Physics geometry exact fallbacks",
+      "value": 0,
+      "mode": "frame_latest_observation"
+    },
+    {
+      "name": "Physics geometry unresolved",
+      "value": 0,
+      "mode": "frame_latest_observation"
+    },
+    {
+      "name": "Physics geometry numeric gap fallbacks",
+      "value": 0,
+      "mode": "frame_latest_observation"
+    },
+    {
+      "name": "Audio occlusion queries",
+      "value": 0,
+      "mode": "frame_latest_observation"
+    },
+    {
+      "name": "Instanced draw submissions",
+      "value": 449,
+      "mode": "frame_sum"
+    },
+    {
+      "name": "Instances submitted",
+      "value": 812,
+      "mode": "frame_sum"
+    },
+    {
+      "name": "Light tile overflow",
+      "value": 0,
+      "mode": "frame_sum"
+    },
+    {
+      "name": "Light grid GPU bytes",
+      "value": 16384,
+      "mode": "frame_latest_observation"
+    },
+    {
+      "name": "Shadow GPU bytes",
+      "value": 4194304,
+      "mode": "frame_latest_observation"
+    },
+    {
+      "name": "Submitted draws all passes",
+      "value": 489,
+      "mode": "frame_sum"
+    },
+    {
+      "name": "Submitted triangles all passes",
+      "value": 419534,
+      "mode": "frame_sum"
+    },
+    {
+      "name": "Visible renderables all passes",
+      "value": 138,
+      "mode": "frame_sum"
+    },
+    {
+      "name": "Frustum rejected all passes",
+      "value": 567,
+      "mode": "frame_sum"
+    },
+    {
+      "name": "Layer rejected all passes",
+      "value": 0,
+      "mode": "frame_sum"
+    },
+    {
+      "name": "Particles submitted",
+      "value": 0,
+      "mode": "frame_sum"
+    },
+    {
+      "name": "Secondary passes",
+      "value": 0,
+      "mode": "frame_sum"
+    },
+    {
+      "name": "Text atlas bytes",
+      "value": 4194304,
+      "mode": "frame_latest_observation"
+    },
+    {
+      "name": "Text layout bytes",
+      "value": 73732,
+      "mode": "frame_latest_observation"
+    },
+    {
+      "name": "Text glyph raster total",
+      "value": 186,
+      "mode": "frame_latest_observation"
+    },
+    {
+      "name": "Runtime UI draws",
+      "value": 12,
+      "mode": "frame_latest_observation"
+    },
+    {
+      "name": "Streaming pending bytes",
+      "value": 0,
+      "mode": "frame_latest_observation"
+    },
+    {
+      "name": "Streaming live estimated bytes",
+      "value": 174592,
+      "mode": "frame_latest_observation"
+    },
+    {
+      "name": "Streaming retained bytes",
+      "value": 0,
+      "mode": "frame_latest_observation"
+    }
+  ],
+  "gpu": {
+    "available": true,
+    "status": "Asynchronous GL 3.3 timestamp pairs",
+    "passes": [
+      {
+        "token": 11452,
+        "source_frame": 1340,
+        "camera": 0,
+        "pass": "Main camera",
+        "pending": false,
+        "milliseconds": 1.321984
+      },
+      {
+        "token": 11453,
+        "source_frame": 1340,
+        "camera": 0,
+        "pass": "Shadow",
+        "pending": false,
+        "milliseconds": 0.329888
+      },
+      {
+        "token": 11454,
+        "source_frame": 1340,
+        "camera": 0,
+        "pass": "Opaque instances",
+        "pending": false,
+        "milliseconds": 0.261568
+      },
+      {
+        "token": 11455,
+        "source_frame": 1340,
+        "camera": 0,
+        "pass": "Opaque instances",
+        "pending": false,
+        "milliseconds": 0.819712
+      },
+      {
+        "token": 11456,
+        "source_frame": 1340,
+        "camera": 0,
+        "pass": "Material transparency",
+        "pending": false,
+        "milliseconds": 0.000736
+      },
+      {
+        "token": 11457,
+        "source_frame": 1340,
+        "camera": 0,
+        "pass": "Basic water surface",
+        "pending": false,
+        "milliseconds": 0.003904
+      },
+      {
+        "token": 11458,
+        "source_frame": 1340,
+        "camera": 0,
+        "pass": "Basic water surface",
+        "pending": false,
+        "milliseconds": 0.0048
+      },
+      {
+        "token": 11459,
+        "source_frame": 1340,
+        "camera": 0,
+        "pass": "Display resolve",
+        "pending": false,
+        "milliseconds": 0.077472
+      },
+      {
+        "token": 11460,
+        "source_frame": 1340,
+        "camera": 0,
+        "pass": "Runtime UI",
+        "pending": false,
+        "milliseconds": 0.015104
+      }
+    ]
+  },
+  "note": "Last 120 retained profiler frames; inclusive labels overlap and must not be summed across nesting. GPU is last delayed sample, not a full-run percentile."
+}

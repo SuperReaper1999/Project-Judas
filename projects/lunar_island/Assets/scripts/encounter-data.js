@@ -1,4 +1,4 @@
-// Generated from Authoring/encounters.json.
+// Generated from Authoring/encounters.json
 export const WEAPONS = {
     hands: {
         name: 'Hands',
@@ -98,6 +98,8 @@ export const PEOPLE = {
                 rifle: 1,
                 knife: 2,
                 bat: 2,
+                fuel_can: 4,
+                repair_kit: 4,
             },
             prices: {
                 rations: 4,
@@ -111,6 +113,8 @@ export const PEOPLE = {
                 bat: 5,
                 wood: 2,
                 scrap: 3,
+                fuel_can: 8,
+                repair_kit: 6,
             },
             lines: [
                 'Mara: The Fracture took the coast road, not our resolve. This little camp is still ours.',

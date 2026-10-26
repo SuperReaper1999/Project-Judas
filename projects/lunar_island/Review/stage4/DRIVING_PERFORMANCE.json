@@ -1,0 +1,92 @@
+{
+  "platform": "Linux-7.0.0-38-generic-x86_64-with-glibc2.43",
+  "timestampUtc": "2026-10-26T15:02:00.818661+00:00",
+  "configuration": "existing Release build; project JS/assets changed, native runtime unchanged",
+  "vehicleLast120Frames": {
+    "car": {
+      "frame_ms": {
+        "mean": 8.93425725,
+        "median": 8.642534999999999,
+        "p95": 11.0186,
+        "max": 13.9464
+      },
+      "physics_ms": {
+        "mean": 0.152012225,
+        "median": 0.14603549999999998,
+        "p95": 0.192543,
+        "max": 0.271913
+      }
+    },
+    "truck": {
+      "frame_ms": {
+        "mean": 8.801310333333333,
+        "median": 8.493025,
+        "p95": 10.1743,
+        "max": 13.006
+      },
+      "physics_ms": {
+        "mean": 0.15101488333333332,
+        "median": 0.14572,
+        "p95": 0.192774,
+        "max": 0.256213
+      }
+    },
+    "motorcycle": {
+      "frame_ms": {
+        "mean": 9.823608833333333,
+        "median": 9.092315,
+        "p95": 15.2833,
+        "max": 18.1809
+      },
+      "physics_ms": {
+        "mean": 0.16184041666666665,
+        "median": 0.14964699999999997,
+        "p95": 0.253849,
+        "max": 0.396218
+      }
+    },
+    "boat": {
+      "frame_ms": {
+        "mean": 5.985151166666666,
+        "median": 5.760095,
+        "p95": 7.41498,
+        "max": 10.1438
+      },
+      "physics_ms": {
+        "mean": 0.14525363333333333,
+        "median": 0.14004450000000002,
+        "p95": 0.188094,
+        "max": 0.239071
+      }
+    },
+    "helicopter": {
+      "frame_ms": {
+        "mean": 7.777138083333333,
+        "median": 7.686780000000001,
+        "p95": 8.44268,
+        "max": 12.7114
+      },
+      "physics_ms": {
+        "mean": 0.08831458333333334,
+        "median": 0.0867185,
+        "p95": 0.102623,
+        "max": 0.149422
+      }
+    },
+    "plane": {
+      "frame_ms": {
+        "mean": 8.571263,
+        "median": 8.464475,
+        "p95": 10.8603,
+        "max": 13.1444
+      },
+      "physics_ms": {
+        "mean": 0.18930983333333334,
+        "median": 0.17813600000000002,
+        "p95": 0.256644,
+        "max": 0.495124
+      }
+    }
+  },
+  "note": "Rendered hidden-window observer, fixed 60-Hz supplied simulation clock, vsync disabled, dummy audio. Last 120 actual driving frames per distinct route; not comparable scenarios or human displayed FPS."
+}

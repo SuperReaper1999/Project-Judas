@@ -1,0 +1,31 @@
+{
+  "prompt": "a realistic red pickup truck",
+  "category": "car",
+  "confidence": 1.0,
+  "params": {
+    "features": {},
+    "size": 1.0,
+    "style": "realistic",
+    "color": "#d62828",
+    "type": "truck",
+    "doors": 4,
+    "count": 1
+  },
+  "understood": [],
+  "seed": 91401,
+  "style": "realistic",
+  "files": {
+    "glb": "/home/conner/Documents/GitHub/Project-Judas/projects/lunar_island/ArtSource/stage4-prompt3d/a-realistic-red-pickup-truck-91401-realistic.glb"
+  },
+  "stats": {
+    "vertices": 3010,
+    "triangles": 2896,
+    "groups": 1
+  },
+  "dimensions_m": [
+    5.7,
+    1.94,
+    2.2
+  ],
+  "seconds": 0.02
+}

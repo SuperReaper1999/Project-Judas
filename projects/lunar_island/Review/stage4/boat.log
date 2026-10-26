@@ -1,0 +1,35 @@
+Shadow maps: on
+Graphics: 3.3.0 NVIDIA 580.178.04 / NVIDIA GeForce GTX 970/PCIe/SSE2
+Renderer fragment texture units: 32 (material path uses 12)
+World state: legacy .judasstate (F6/F7) saves disabled for additive compositions; save slots remain available
+Project: Lunar Island (/home/conner/Documents/GitHub/Project-Judas/projects/lunar_island/lunar_island.judasproj)
+Scene: Lunar Island / Homestead Coast (/home/conner/Documents/GitHub/Project-Judas/projects/lunar_island/Scenes/island.judas)
+World origin (m): 2900.000, 0.000, -1600.000
+asset 2eb74ecf72ef69112028dcf2c039cb36: Optional extension ignored: KHR_materials_clearcoat
+asset f4e24c58b44e48292bc35ad5a55d72f9: Optional extension ignored: KHR_materials_clearcoat
+asset d5563755c7887ca32886ad9518e56de8: Optional extension ignored: KHR_materials_clearcoat
+JS: Lunar Island: WASD, mouse, E gather, click tool, Tab pack/crafting, Escape pause, F6 save, F9 load.
+PASS welcome pauses actual world
+PASS authored world collision loaded
+PASS capture welcome.png
+PASS Escape begins real game
+PASS CharacterMotor moves via project input
+PASS same player toggles third person
+PASS pause menu stops gameplay
+PASS move/fire do not leak through modal
+PASS focus UI primary
+PASS ordinary E/menu enters selected vehicle
+PASS pilot's actual CharacterMotor is disabled
+VEHICLE START 7300 [90.87281799316406,9.991843223571777,-99.97368621826172] state {"bag":{"maxWeight":220,"slots":[null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null]},"burned":0.002437500127125532,"damageEvents":0,"distance":0.9477925703864025,"fuel":21.997562499872885,"health":100,"rotorAngle":-0.00016265790581268324}
+PASS capture entered.png
+VEHICLE FIRST endpoint [91.16981506347656,10.00596809387207,-111.41876983642578] velocity [0.12492440640926361,0.0014278590679168701,-9.037208557128906]
+PASS actual physical vehicle changes position under controls
+PASS propulsion consumes persistent fuel
+PASS normal movement does not wreck vehicle
+PASS prescribed-water flotation keeps actual boat afloat
+PASS native powertrain endpoints remain available
+SHAFT 254.856 torque -138.021
+VEHICLE FINAL [91.17809295654297,10.006522178649902,-112.00395965576172] up [-0.0018559745512902737,0.9996362924575806,-0.026903580874204636] state {"bag":{"maxWeight":220,"slots":[null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null]},"burned":0.19852084368700212,"damageEvents":0,"distance":12.880587364027091,"fuel":21.801479156313192,"health":100,"rotorAngle":5.6990446294566635}
+PASS capture driving.png
+PASS ordinary application exits cleanly
+19 checks, 0 failures

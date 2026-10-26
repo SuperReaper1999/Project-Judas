@@ -134,5 +134,17 @@
     "outputs": {
       "bat": 1
     }
+  },
+  {
+    "id": "vehicle_repair",
+    "name": "Assemble a vehicle repair kit",
+    "station": "workbench",
+    "ingredients": {
+      "scrap": 3,
+      "planks": 1
+    },
+    "outputs": {
+      "repair_kit": 1
+    }
   }
 ]

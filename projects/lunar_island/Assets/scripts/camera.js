@@ -5,6 +5,10 @@ export default class Camera {
         this.player = player;
     }
     pose(presented = false) {
+        const vehiclePose = this.player.transport?.driving
+            ? this.player.transport.pose(presented)
+            : null;
+        if (vehiclePose) return vehiclePose;
         const t = presented
                 ? this.player.entity.presentedTransform
                 : this.player.entity.transform,
@@ -63,7 +67,7 @@ export default class Camera {
         const p = this.pose(true);
         world.setView(p, this.player.combat?.aiming ? 52 : 74, {
             near: 0.055,
-            far: 650,
+            far: this.player.transport?.driving ? 3500 : 650,
         });
         return p;
     }

@@ -1,9 +1,9 @@
-# Lunar Island — Stage 3: People of the Fracture
+# Lunar Island — Stage 4: Roads, Water and Sky
 
 Copyright (c) 2026 Conner / SuperReaper1999. Original project code/assets use the
 repository's MIT terms; cached ambientCG material scans use CC0-1.0. See `ArtSource/PROVENANCE.md` for font and asset origins.
 
-An ordinary Judas consumer game on Experimental. **Stage 3; human gameplay acceptance pending.** Stages 2 and 3 were separately authorized by the operator. Gameplay lives in `Assets/scripts`. Two bounded native persistence corrections are documented in the Stage 2 report.
+An ordinary Judas consumer game on Experimental. **Stage 4; human gameplay acceptance pending.** The operator reviewed Stages 1–3 and authorized this vehicle stage. Gameplay lives in `Assets/scripts`. Two bounded native persistence corrections are documented in the Stage 2 report.
 
 ## Play
 
@@ -70,7 +70,7 @@ and swimmable; no conserved liquid simulation is enabled. The spring well is the
 authored fresh-water interaction. Water remains a prescribed surface, not flow.
 
 The full terrain shell is currently resident. This stage does not demonstrate
-regional unloading, world-wide resource population, terrain excavation or vehicles. Stage 3 adds six nearby NPCs, combat and quests. Collision for foliage uses
+world-wide resource population or terrain excavation. Stage 4 adds six transport types and one small regional garage, not populated towns or a complete streamed island. Stage 3 adds six nearby NPCs, combat and quests. Collision for foliage uses
 simple trunk/plant/stone proxies; branches and individual leaves are not simulated.
 Felled trees, dropped bundles, door leaves, barricades and constructed pieces use native rigid bodies. There is no resource respawn.
 
@@ -154,7 +154,7 @@ SDL_AUDIODRIVER=dummy XDG_DATA_HOME=/tmp/lunar-island-validation /tmp/lunar-isla
 SDL_AUDIODRIVER=dummy XDG_DATA_HOME=/tmp/lunar-island-validation /tmp/lunar-island-observer \
   projects/lunar_island/lunar_island.judasproj read /tmp/lunar-island-build-proof
 ./build/judas_export projects/lunar_island/lunar_island.judasproj \
-  '/tmp/Lunar Island Stage 3' ./build/judas
+  '/tmp/Lunar Island Stage 4' ./build/judas
 ```
 
 `write` creates a validation save in the game's `island` slot. Use a separate
@@ -167,12 +167,12 @@ Run the exported `judas` executable inside the package; no repository path is
 required. Linux is the tested platform for this stage. This is not Windows,
 Android, gamepad hardware, audio-listening or human gameplay acceptance.
 
-See `Review/STAGE3_REPORT.md` and `Review/stage3/HUMAN_CHECKLIST.md` for the current
-review boundary. Stage 1 evidence and fingerprints remain historical and unchanged.
-Stage 3 requires separate approval.
+See `Review/STAGE4_REPORT.md` and `Review/stage4/HUMAN_CHECKLIST.md` for the current
+review boundary. Earlier stage evidence and fingerprints remain historical and unchanged.
+Stage 4 requires separate approval.
 
 Current Linux package (untracked, reproducible):
-`.cache/lunar-island-stage2/Lunar Island/`; run `judas` inside it.
+`.cache/lunar-island-stage4/Lunar Island/`; run `judas` inside it.
 Archive: `.cache/lunar-island-stage2/LunarIsland-Stage2-Linux.tar.gz`.
 The complete package must travel together.
 
@@ -300,7 +300,7 @@ PYTHONDONTWRITEBYTECODE=1 python3 projects/lunar_island/tools/author_stage3.py
 This replaces IDs 6000–6999, encounter metadata, corpse prefabs and original PCM
 effects. Back up scene edits first. It does not require Prompt3D unless regenerating
 art with `--prompt3d /path/to/tool`; raw wolf settings and copied source receipts
-are retained. For a whole authored rebuild run Stage 1, Stage 2, Stage 3, then bake.
+are retained. For a whole authored rebuild run Stage 1, Stage 2, Stage 3, Stage 4, then bake.
 Existing art/gameplay/export do not require those offline tools.
 
 The homestead navigation surface is bounded to 220 × 220 m. It uses the detailed
@@ -330,7 +330,95 @@ outside a window; observer mode `barrier` verifies unalerted/alerted behaviour,
 real supply acquisition, barricading and enemy destruction. It does not alter
 production gameplay modules or inject damage/items.
 
-Stage 4 vehicles and Stage 5 regional expansion have **not begun**.
+Stage 4 transport is described below. Stage 5 regional population has **not begun**.
 
 Animation priorities and a practical Blender handover are in
 `ArtSource/STAGE3_ANIMATION_HANDOFF.md`.
+
+
+## Stage 4: Roads, Water and Sky
+
+From camp, walk south to the blue hatchback, green pickup and motorcycle.
+The supply locker sits beside them. The yellow helicopter is west of this apron;
+the plane is farther south on the short runway. The skiff is at the spring dock
+north-east of camp. M includes directions. The extra garage pickup east of the
+apron is region-owned until first driven.
+
+**E on a vehicle opens one menu:** Drive/Pilot, Cargo, Refuel, Repair. Cargo uses
+the same inventory rules as houses, loot and the personal backpack. Select a row
+and use Move one / Move stack; weight or slot failures preserve both inventories.
+The locker starts with fuel cans and repair kits; Mara also sells finite stock.
+A repair kit can be crafted at a workbench from three scrap and one plank.
+A sealed can adds 5 L, so leave enough tank space. A kit restores up to 35 condition.
+
+| While driving | Control |
+| --- | --- |
+| Car, pickup, motorcycle | W/S forward/reverse, A/D steer, Space brake |
+| Skiff | W/S propulsion/reverse, A/D rudder, Space water brake |
+| Helicopter | W/S tilt, A/D yaw, Space climb, Ctrl descend; release for assisted hover |
+| Plane | W/S increase/decrease throttle, A/D turn, Space pull up, Ctrl pitch down, Shift wheel brake |
+| All | Mouse orbit/look, V chase/bonnet view, E safe exit, Tab cargo when stopped |
+
+The same player is retained. Exit requires low speed and clear space, and aircraft
+need ground within reach. Stop the plane throttle with S, descend gently and brake
+on landing. Helicopter Ctrl commands descent; release near the ground or keep Ctrl
+to settle. Boats can be left into water; swimming, air and drowning still apply.
+Esc pauses, F6 saves, F9 loads. Save only replaces this stage's own expedition slot.
+
+Native wheels, suspension and powertrains move ground vehicles. Helicopter/plane
+lift and boat buoyancy are ordinary project-script forces driven by actual shaft
+speed and sampled basic water. No vehicle pose or velocity is scripted to fake
+travel. Flight and bike balance are deliberately assisted game models. Vehicles
+consume fuel; impact/firearm damage reduces condition and propulsion. Repairs
+restore condition, not visibly deformed body panels. Vehicle cargo does not change
+chassis mass/inertia; capacities are gameplay inventory limits. Collision uses
+simple physical compound proxies. Rotor blades are visual, not separate colliders.
+
+### Persistence and regional ownership
+
+Fuel, condition, cargo and driving lease use normal JudasJS save hooks; native
+wheel/powertrain/body state uses the existing engine save service. Stage 4 has a
+new content/save identity. Stages 1–3 saves remain untouched, with no claimed
+migration. Complete write/read pairs must use identical runtime content.
+
+The small `transport_garage` region unloads and reconstructs its undriven pickup,
+including depleted cargo and mechanics. On entry, `scenes.adopt` moves the entire
+assembly to persistent root ownership, retaining its stable regional reference.
+This prevents the driver's vehicle disappearing at its original garage boundary.
+Driven vehicles remain root-resident; automatic re-suspension/traffic is not claimed.
+The six initial vehicles and terrain shell are resident. Regional physical publication
+can precede asynchronous script binding; gameplay only exposes registered, restored
+vehicle scripts. Do not interpret `active` alone as an instantiated script state.
+
+### Add or change a vehicle
+
+Edit `Authoring/vehicles.json`: stable key/entity range, kind, position, mass,
+half-extents, fuel/tank, cargo slots/weight and initial cargo. Reserve ten IDs per
+assembly and avoid IDs in other authoring manifests. `tools/author_stage4.py`
+builds the native body, wheels, power graph, visual children, scripts and ordinary
+prefab. The game binding resolves remapped children by project tags and component
+presence; it does not assume original prefab IDs survive instantiation.
+
+```sh
+PYTHONDONTWRITEBYTECODE=1 python3 projects/lunar_island/tools/author_stage4.py
+./build/judas_navigation_bake projects/lunar_island/lunar_island.judasproj Scenes/island.judas
+```
+
+Authoring overwrites Stage 4's reserved scene objects, prefab outputs and generated
+`vehicle-data.js`; keep manual variants outside that range or update the author.
+To regenerate source art, add `--prompt3d /path/to/ClaudesNewML-AI-Thing` and run
+through that tool's Python environment. This offline dependency is unnecessary
+for editing, playing or exporting the included assets. See provenance for the
+three supported generator types and project-authored motorcycle/helicopter.
+
+`vehicle.js` owns each durable cargo/condition/fuel state and physical actuation.
+`transport.js` owns control transfer, camera, service transactions and safe exit.
+`vehicle-rules.js` contains pure supply rules; `vehicle-ui.js` uses the existing HUD.
+`vehicle-session.js` is a transient registry, rebuilt through normal lifecycle hooks.
+Vehicle inventories reuse `inventory.js`, not a second storage architecture.
+
+Run `Review/stage4/REPRODUCE.sh` with fresh output/user-data paths for connected
+cargo/build gameplay, cold-process continuation, real region unload/reload,
+all six physical drive checks, aircraft landings, Stage 3 regression and profiling.
+The native observer only positions the player to reach authored fixtures; it does
+not inject vehicle movement, fuel, damage, loot or cargo.

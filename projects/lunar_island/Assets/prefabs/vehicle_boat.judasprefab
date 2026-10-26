@@ -1,0 +1,173 @@
+{
+  "kind": "prefab",
+  "schema": 1,
+  "data": {
+    "settings": {
+      "name": "Birchside transport garage",
+      "world-origin": [
+        0,
+        0,
+        0
+      ],
+      "sun-direction": [
+        0.45,
+        0.72,
+        0.3
+      ],
+      "sun-color": [
+        1,
+        0.94,
+        0.79
+      ],
+      "ambient": [
+        0.22,
+        0.25,
+        0.28
+      ],
+      "background-color": [
+        0.36,
+        0.56,
+        0.65
+      ],
+      "linear-rendering": true,
+      "exposure": 1,
+      "environment": "",
+      "environment-intensity": 1,
+      "environment-rotation": [
+        1,
+        0,
+        0,
+        0
+      ],
+      "environment-background": false,
+      "fluid-scale": 1,
+      "fluid-update-rate-hz": 30,
+      "fluid-hydrostatic-drag-rate": 2,
+      "fidelity-policy": {
+        "mode": {
+          "symbol": "none"
+        }
+      },
+      "next-id": 8000
+    },
+    "objects": [
+      {
+        "id": 1,
+        "name": "Spring skiff",
+        "fields": {
+          "position": [
+            0,
+            0.0,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "body": {
+            "motion": {
+              "symbol": "dynamic"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            0.8,
+            0.3,
+            2.2
+          ],
+          "body.radius": 0.8,
+          "body.mass": 650,
+          "body.friction": 0.8,
+          "body.restitution": 0.02,
+          "body.pickable": true,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0,
+          "body.terrain": "",
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.managed": false,
+          "tags": 1024,
+          "scripts": 1,
+          "script.0.id": 1,
+          "script.0.asset": "6acd80dd21388460940695e03942c5eb",
+          "script.0.enabled": true,
+          "script.0.properties": "{\"key\": \"boat\"}",
+          "powertrain.graph": "{\"version\": 1, \"enabled\": true, \"shafts\": [{\"name\": \"rotor\", \"kind\": \"internal\", \"target\": \"0\", \"bearing\": \"1\", \"axis\": [0, 0, -1], \"inertia\": 0.8, \"initialAngularVelocity\": 0, \"viscousDrag\": 0.02}], \"sources\": [{\"name\": \"engine\", \"shaft\": 0, \"kind\": \"electric\", \"maxTorque\": 180, \"maxPower\": 40000, \"torqueCurve\": [], \"starterTorque\": 0}], \"links\": [], \"brakes\": [{\"name\": \"load\", \"shaft\": 0, \"maxTorque\": 4000}]}",
+          "audio-emitter": [],
+          "audio.asset": "8d33afd69347af925b9f5b9ebd3b31b1",
+          "audio.enabled": true,
+          "audio.play-on-start": false,
+          "audio.loop": true,
+          "audio.spatial": true,
+          "audio.volume": 0.2,
+          "audio.pitch": 1,
+          "audio.reference-distance": 2,
+          "audio.maximum-distance": 120,
+          "audio.rolloff": 1,
+          "audio.attenuation": {
+            "symbol": "inverse"
+          }
+        }
+      },
+      {
+        "id": 2,
+        "name": "Spring skiff / authored body",
+        "fields": {
+          "position": [
+            0,
+            0.0,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "parent": 1,
+          "tags": 4096,
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.mesh-asset": "bb859efca6323a80c6388192d9e0d423",
+          "render.texture-asset": "",
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/home/conner/Documents/GitHub/Project-Judas/projects/lunar_island/tools/author_stage4.py", line 143, in <module>
+    if not a.art_only:author()
+                      ~~~~~~^^
+  File "/home/conner/Documents/GitHub/Project-Judas/projects/lunar_island/tools/author_stage4.py", line 131, in author
+    value=int(shaftdata[field]);shaftdata[field]=str(mapping[value]) if value else '0'
+                                                     ~~~~~~~^^^^^^^
+KeyError: 7604

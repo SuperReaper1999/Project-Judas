@@ -1,0 +1,531 @@
+{
+  "kind": "prefab",
+  "schema": 1,
+  "data": {
+    "settings": {
+      "name": "Birchside transport garage",
+      "world-origin": [
+        0,
+        0,
+        0
+      ],
+      "sun-direction": [
+        0.45,
+        0.72,
+        0.3
+      ],
+      "sun-color": [
+        1,
+        0.94,
+        0.79
+      ],
+      "ambient": [
+        0.22,
+        0.25,
+        0.28
+      ],
+      "background-color": [
+        0.36,
+        0.56,
+        0.65
+      ],
+      "linear-rendering": true,
+      "exposure": 1,
+      "environment": "",
+      "environment-intensity": 1,
+      "environment-rotation": [
+        1,
+        0,
+        0,
+        0
+      ],
+      "environment-background": false,
+      "fluid-scale": 1,
+      "fluid-update-rate-hz": 30,
+      "fluid-hydrostatic-drag-rate": 2,
+      "fidelity-policy": {
+        "mode": {
+          "symbol": "none"
+        }
+      },
+      "next-id": 8000
+    },
+    "objects": [
+      {
+        "id": 1,
+        "name": "Island bush plane",
+        "fields": {
+          "position": [
+            0,
+            0.0,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "body": {
+            "motion": {
+              "symbol": "dynamic"
+            },
+            "shape": {
+              "symbol": "compound"
+            }
+          },
+          "body.half-extents": [
+            0.48,
+            0.38,
+            2.65
+          ],
+          "body.radius": 0.48,
+          "body.mass": 650,
+          "body.friction": 0.8,
+          "body.restitution": 0.02,
+          "body.pickable": true,
+          "body.compound-count": 2,
+          "body.fluid-cavity-count": 0,
+          "body.terrain": "",
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.managed": false,
+          "tags": 1024,
+          "scripts": 1,
+          "script.0.id": 1,
+          "script.0.asset": "6acd80dd21388460940695e03942c5eb",
+          "script.0.enabled": true,
+          "script.0.properties": "{\"key\": \"plane\"}",
+          "powertrain.graph": "{\"version\": 1, \"enabled\": true, \"shafts\": [{\"name\": \"rotor\", \"kind\": \"internal\", \"target\": \"0\", \"bearing\": \"1\", \"axis\": [0, 0, -1], \"inertia\": 0.8, \"initialAngularVelocity\": 0, \"viscousDrag\": 0.02}], \"sources\": [{\"name\": \"engine\", \"shaft\": 0, \"kind\": \"electric\", \"maxTorque\": 700, \"maxPower\": 180000, \"torqueCurve\": [], \"starterTorque\": 0}], \"links\": [], \"brakes\": [{\"name\": \"load\", \"shaft\": 0, \"maxTorque\": 4000}]}",
+          "audio-emitter": [],
+          "audio.asset": "8d33afd69347af925b9f5b9ebd3b31b1",
+          "audio.enabled": true,
+          "audio.play-on-start": false,
+          "audio.loop": true,
+          "audio.spatial": true,
+          "audio.volume": 0.2,
+          "audio.pitch": 1,
+          "audio.reference-distance": 2,
+          "audio.maximum-distance": 120,
+          "audio.rolloff": 1,
+          "audio.attenuation": {
+            "symbol": "inverse"
+          },
+          "body.compound-box": [
+            {
+              "center": [
+                0,
+                0,
+                0
+              ],
+              "halfExtents": [
+                0.48,
+                0.38,
+                2.65
+              ]
+            },
+            {
+              "center": [
+                0,
+                0.08,
+                0
+              ],
+              "halfExtents": [
+                3.35,
+                0.08,
+                0.55
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "id": 2,
+        "name": "Island bush plane / authored body",
+        "fields": {
+          "position": [
+            0,
+            0.0,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "parent": 1,
+          "tags": 4096,
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.mesh-asset": "d5563755c7887ca32886ad9518e56de8",
+          "render.texture-asset": "",
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1
+        }
+      },
+      {
+        "id": 3,
+        "name": "Island bush plane / wheel",
+        "fields": {
+          "position": [
+            0,
+            -0.6999999999999993,
+            -1.9000000000000057
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "parent": 1,
+          "wheel.enabled": true,
+          "wheel.chassis": 1,
+          "wheel.mount": [
+            0,
+            -0.2,
+            -1.9
+          ],
+          "wheel.orientation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "wheel.radius": 0.3,
+          "wheel.minLength": 0.08,
+          "wheel.restLength": 0.5,
+          "wheel.maxLength": 0.7,
+          "wheel.springStiffness": 17712.5,
+          "wheel.damping": 1733.3333333333333,
+          "wheel.spinInertia": 1.2,
+          "wheel.friction": 1.05,
+          "wheel.rollingResistance": 0.015,
+          "wheel.collisionLayer": 0,
+          "wheel.collisionMask": 18446744073709551615,
+          "wheel.requiredTags": 0,
+          "wheel.excludedTags": 0
+        }
+      },
+      {
+        "id": 4,
+        "name": "Island bush plane / tyre visual",
+        "fields": {
+          "position": [
+            0,
+            -0.6999999999999993,
+            -1.9000000000000057
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            0.3,
+            0.3,
+            0.3
+          ],
+          "parent": 3,
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.mesh-asset": "76dc6c750f6c9ed7e86ceffd740d0469",
+          "render.texture-asset": "",
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1
+        }
+      },
+      {
+        "id": 5,
+        "name": "Island bush plane / wheel",
+        "fields": {
+          "position": [
+            -1.25,
+            -0.6999999999999993,
+            1.0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "parent": 1,
+          "wheel.enabled": true,
+          "wheel.chassis": 1,
+          "wheel.mount": [
+            -1.25,
+            -0.2,
+            1.0
+          ],
+          "wheel.orientation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "wheel.radius": 0.3,
+          "wheel.minLength": 0.08,
+          "wheel.restLength": 0.5,
+          "wheel.maxLength": 0.7,
+          "wheel.springStiffness": 17712.5,
+          "wheel.damping": 1733.3333333333333,
+          "wheel.spinInertia": 1.2,
+          "wheel.friction": 1.05,
+          "wheel.rollingResistance": 0.015,
+          "wheel.collisionLayer": 0,
+          "wheel.collisionMask": 18446744073709551615,
+          "wheel.requiredTags": 0,
+          "wheel.excludedTags": 0
+        }
+      },
+      {
+        "id": 6,
+        "name": "Island bush plane / tyre visual",
+        "fields": {
+          "position": [
+            -1.25,
+            -0.6999999999999993,
+            1.0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            0.3,
+            0.3,
+            0.3
+          ],
+          "parent": 5,
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.mesh-asset": "76dc6c750f6c9ed7e86ceffd740d0469",
+          "render.texture-asset": "",
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1
+        }
+      },
+      {
+        "id": 7,
+        "name": "Island bush plane / wheel",
+        "fields": {
+          "position": [
+            1.25,
+            -0.6999999999999993,
+            1.0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "parent": 1,
+          "wheel.enabled": true,
+          "wheel.chassis": 1,
+          "wheel.mount": [
+            1.25,
+            -0.2,
+            1.0
+          ],
+          "wheel.orientation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "wheel.radius": 0.3,
+          "wheel.minLength": 0.08,
+          "wheel.restLength": 0.5,
+          "wheel.maxLength": 0.7,
+          "wheel.springStiffness": 17712.5,
+          "wheel.damping": 1733.3333333333333,
+          "wheel.spinInertia": 1.2,
+          "wheel.friction": 1.05,
+          "wheel.rollingResistance": 0.015,
+          "wheel.collisionLayer": 0,
+          "wheel.collisionMask": 18446744073709551615,
+          "wheel.requiredTags": 0,
+          "wheel.excludedTags": 0
+        }
+      },
+      {
+        "id": 8,
+        "name": "Island bush plane / tyre visual",
+        "fields": {
+          "position": [
+            1.25,
+            -0.6999999999999993,
+            1.0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            0.3,
+            0.3,
+            0.3
+          ],
+          "parent": 7,
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.mesh-asset": "76dc6c750f6c9ed7e86ceffd740d0469",
+          "render.texture-asset": "",
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1
+        }
+      },
+      {
+        "id": 9,
+        "name": "Island bush plane / rotating rotor",
+        "fields": {
+          "position": [
+            0,
+            0.0,
+            -3
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "parent": 1,
+          "tags": 2048,
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.mesh-asset": "4e028cf72e95c97e0ba27a40358bbc75",
+          "render.texture-asset": "",
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1
+        }
+      }
+    ]
+  }
+}

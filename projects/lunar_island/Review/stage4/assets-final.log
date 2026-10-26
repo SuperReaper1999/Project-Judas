@@ -1,0 +1,10 @@
+valid scene projects/lunar_island/Scenes/island.judas
+valid prefab projects/lunar_island/Assets/prefabs/vehicle_boat.judasprefab
+valid prefab projects/lunar_island/Assets/prefabs/vehicle_car.judasprefab
+valid prefab projects/lunar_island/Assets/prefabs/vehicle_depot.judasprefab
+valid prefab projects/lunar_island/Assets/prefabs/vehicle_garage_truck.judasprefab
+valid prefab projects/lunar_island/Assets/prefabs/vehicle_helicopter.judasprefab
+valid prefab projects/lunar_island/Assets/prefabs/vehicle_motorcycle.judasprefab
+valid prefab projects/lunar_island/Assets/prefabs/vehicle_plane.judasprefab
+valid prefab projects/lunar_island/Assets/prefabs/vehicle_truck.judasprefab
+valid scene projects/lunar_island/Scenes/transport_garage.judas

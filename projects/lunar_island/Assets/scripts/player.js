@@ -7,6 +7,7 @@ import { move } from './movement.js';
 import { collect, useTool, nodeFor } from './harvesting.js';
 import { add, mul, sub, length, dot, rotate, qm, axis } from './math.js';
 import Camera from './camera.js';
+import Transport from './transport.js';
 import HUD from './hud.js';
 import Housing from './housing.js';
 import Construction from './construction.js';
@@ -67,6 +68,7 @@ export default class Player {
         this.bind(true);
     }
     bind(restored) {
+        this.transport = new Transport(this);
         this.camera = new Camera(this);
         this.housing = new Housing(this);
         this.combat = new Combat(this);
@@ -171,7 +173,11 @@ export default class Player {
             return;
         }
         if (!def.use) {
-            this.say('Use this material in Crafting.');
+            this.say(
+                def.category === 'supplies'
+                    ? 'Carry this supply, then E on a vehicle → Refuel or Repair.'
+                    : 'Use this material in Crafting.',
+            );
             return;
         }
         const result = Bag.exchange(
@@ -222,6 +228,7 @@ export default class Player {
         );
     }
     interact(hit) {
+        if (this.transport.interact(hit)) return;
         if (this.combat.interact(hit)) return;
         if (this.housing.interact(hit)) return;
         if (hit?.entity?.id === WORLD.well) {
@@ -275,6 +282,10 @@ export default class Player {
         if (this.hud.modal) return;
         this.cooldown = Math.max(0, this.cooldown - dt);
         this.swing = Math.max(0, this.swing - dt);
+        if (this.transport.fixedUpdate(dt)) {
+            if (this.state.vitals.health <= 0) this.hud.open('dead');
+            return;
+        }
         this.combat.tick(dt);
         move(this, dt);
         if (this.state.vitals.health <= 0) {
@@ -327,7 +338,11 @@ export default class Player {
         }
     }
     context() {
+        if (this.transport.driving)
+            return 'E · Leave when stopped / Tab · Cargo';
         const hit = this.camera.hit(3.8);
+        const vehicleContext = this.transport.context(hit);
+        if (vehicleContext) return vehicleContext;
         const personContext = this.combat.context(hit);
         if (personContext) return personContext;
         const housingContext = this.housing.context(hit);
@@ -359,6 +374,9 @@ export default class Player {
                   }[n.kind] || n.kind);
     }
     recover() {
+        this.state.transport.driving = null;
+        this.state.transport.throttle = 0;
+        this.entity.character.enabled = true;
         this.entity.transform = {
             position: this.housing.homePosition() || {
                 x: WORLD.spawn[0],
@@ -377,7 +395,7 @@ export default class Player {
             t = this.entity.presentedTransform;
         const a = world.entity(WORLD.avatar);
         if (a?.valid) {
-            a.renderVisible = this.state.third;
+            a.renderVisible = this.state.third && !this.transport.driving;
             a.transform = {
                 position: t.position,
                 rotation: qm(
@@ -422,6 +440,7 @@ export default class Player {
         })) {
             const e = world.entity(entity);
             e.renderVisible =
+                !this.transport.driving &&
                 !this.state.third &&
                 !this.hud.modal &&
                 this.state.equipped === id;

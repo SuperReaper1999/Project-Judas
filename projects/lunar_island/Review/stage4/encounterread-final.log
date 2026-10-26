@@ -1,0 +1,46 @@
+Shadow maps: on
+Graphics: 3.3.0 NVIDIA 580.178.04 / NVIDIA GeForce GTX 970/PCIe/SSE2
+Renderer fragment texture units: 32 (material path uses 12)
+World state: legacy .judasstate (F6/F7) saves disabled for additive compositions; save slots remain available
+Project: Lunar Island (/home/conner/Documents/GitHub/Project-Judas/projects/lunar_island/lunar_island.judasproj)
+Scene: Lunar Island / Homestead Coast (/home/conner/Documents/GitHub/Project-Judas/projects/lunar_island/Scenes/island.judas)
+World origin (m): 2900.000, 0.000, -1600.000
+asset 2eb74ecf72ef69112028dcf2c039cb36: Optional extension ignored: KHR_materials_clearcoat
+asset f4e24c58b44e48292bc35ad5a55d72f9: Optional extension ignored: KHR_materials_clearcoat
+asset d5563755c7887ca32886ad9518e56de8: Optional extension ignored: KHR_materials_clearcoat
+JS: Lunar Island: WASD, mouse, E gather, click tool, Tab pack/crafting, Escape pause, F6 save, F9 load.
+PASS welcome pauses actual world
+PASS authored world collision loaded
+PASS capture welcome.png
+PASS Escape begins real game
+PASS CharacterMotor moves via project input
+PASS same player toggles third person
+PASS pause menu stops gameplay
+PASS move/fire do not leak through modal
+PASS fresh process requests ordinary save load: 
+JS: Lunar Island: WASD, mouse, E gather, click tool, Tab pack/crafting, Escape pause, F6 save, F9 load.
+PASS Stage 3 cold restore publishes: 
+PASS cold restore retains exact player loot, money and ammunition
+PASS cold restore retains magazines, quests and kill accounting
+PASS cold restore retains independent actor health/death/stock 6000
+PASS cold restore retains independent actor health/death/stock 6100
+PASS cold restore retains independent actor health/death/stock 6200
+PASS cold corpse is an actual dynamic body
+PASS cold corpse physical endpoint is preserved
+PASS cold restore retains independent actor health/death/stock 6210
+PASS cold corpse is an actual dynamic body
+PASS cold corpse physical endpoint is preserved
+PASS cold restore retains independent actor health/death/stock 6300
+PASS cold corpse is an actual dynamic body
+PASS cold corpse physical endpoint is preserved
+PASS cold restore retains independent actor health/death/stock 6310
+PASS cold corpse is an actual dynamic body
+PASS cold corpse physical endpoint is preserved
+PASS capture cold-restored.png
+PASS dead actors remain disabled after 120 continued steps
+PASS dead actors remain disabled after 120 continued steps
+PASS dead actors remain disabled after 120 continued steps
+PASS dead actors remain disabled after 120 continued steps
+PASS restored expedition remains playable
+PASS ordinary application exits cleanly
+33 checks, 0 failures

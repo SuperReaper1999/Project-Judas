@@ -1,0 +1,115 @@
+{
+  "nativeRuntimeChanged": false,
+  "humanStage4Acceptance": "pending",
+  "platform": "Linux",
+  "cases": {
+    "cargo-final.log": {
+      "checks": 55,
+      "failures": 0
+    },
+    "cargo-read-final.log": {
+      "checks": 44,
+      "failures": 0
+    },
+    "cargo-write-final.log": {
+      "checks": 55,
+      "failures": 0
+    },
+    "cargoread-final.log": {
+      "checks": 44,
+      "failures": 0
+    },
+    "drive-boat-final.log": {
+      "checks": 19,
+      "failures": 0
+    },
+    "drive-car-final.log": {
+      "checks": 18,
+      "failures": 0
+    },
+    "drive-helicopter-final.log": {
+      "checks": 19,
+      "failures": 0
+    },
+    "drive-motorcycle-final.log": {
+      "checks": 18,
+      "failures": 0
+    },
+    "drive-plane-final.log": {
+      "checks": 19,
+      "failures": 0
+    },
+    "drive-truck-final.log": {
+      "checks": 18,
+      "failures": 0
+    },
+    "encounter-final.log": {
+      "checks": 80,
+      "failures": 0
+    },
+    "encounterread-final.log": {
+      "checks": 33,
+      "failures": 0
+    },
+    "garageread-final.log": {
+      "checks": 48,
+      "failures": 0
+    },
+    "garagestream-final.log": {
+      "checks": 34,
+      "failures": 0
+    },
+    "land-helicopter-final.log": {
+      "checks": 17,
+      "failures": 0
+    },
+    "land-plane-final.log": {
+      "checks": 17,
+      "failures": 0
+    },
+    "performance-final.log": {
+      "checks": 10,
+      "failures": 0
+    },
+    "read-final.log": {
+      "checks": 42,
+      "failures": 0
+    },
+    "vehicleprefab-final.log": {
+      "checks": 19,
+      "failures": 0
+    },
+    "write-final.log": {
+      "checks": 133,
+      "failures": 0
+    }
+  },
+  "rules": {
+    "inventory": 83,
+    "encounters": 36,
+    "vehicles": 19
+  },
+  "scripts": {
+    "modules": 25,
+    "failures": 0
+  },
+  "editor": {
+    "authoredPlayStop": "IDENTICAL",
+    "resourceFailures": 0
+  },
+  "exports": {
+    "relocatedEncounterSave": true,
+    "relocatedArchivedRegionalSave": true
+  },
+  "preservedFailures": [
+    "primitive-field-authoring-failure.log",
+    "wheel-field-type-failure.log",
+    "wheel-scale-preflight-rejection.log",
+    "empty-tyre-material-export-failure.log",
+    "garage-template-reference-failure.log",
+    "observer-definition-lifetime-failure.log",
+    "rotor-spool-up-first-failure.log",
+    "service-stack-fixture-failure.log",
+    "region-publication-observation-failure.log"
+  ]
+}

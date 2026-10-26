@@ -1,0 +1,363 @@
+{
+  "kind": "prefab",
+  "schema": 1,
+  "data": {
+    "settings": {
+      "name": "Birchside transport garage",
+      "world-origin": [
+        0,
+        0,
+        0
+      ],
+      "sun-direction": [
+        0.45,
+        0.72,
+        0.3
+      ],
+      "sun-color": [
+        1,
+        0.94,
+        0.79
+      ],
+      "ambient": [
+        0.22,
+        0.25,
+        0.28
+      ],
+      "background-color": [
+        0.36,
+        0.56,
+        0.65
+      ],
+      "linear-rendering": true,
+      "exposure": 1,
+      "environment": "",
+      "environment-intensity": 1,
+      "environment-rotation": [
+        1,
+        0,
+        0,
+        0
+      ],
+      "environment-background": false,
+      "fluid-scale": 1,
+      "fluid-update-rate-hz": 30,
+      "fluid-hydrostatic-drag-rate": 2,
+      "fidelity-policy": {
+        "mode": {
+          "symbol": "none"
+        }
+      },
+      "next-id": 8000
+    },
+    "objects": [
+      {
+        "id": 1,
+        "name": "Trail motorcycle",
+        "fields": {
+          "position": [
+            0,
+            0.0,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "body": {
+            "motion": {
+              "symbol": "dynamic"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            0.22,
+            0.32,
+            0.95
+          ],
+          "body.radius": 0.22,
+          "body.mass": 180,
+          "body.friction": 0.8,
+          "body.restitution": 0.02,
+          "body.pickable": true,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0,
+          "body.terrain": "",
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.managed": false,
+          "tags": 1024,
+          "scripts": 1,
+          "script.0.id": 1,
+          "script.0.asset": "6acd80dd21388460940695e03942c5eb",
+          "script.0.enabled": true,
+          "script.0.properties": "{\"key\": \"motorcycle\"}",
+          "powertrain.graph": "{\"version\": 1, \"enabled\": true, \"shafts\": [{\"name\": \"rear\", \"kind\": \"wheel\", \"target\": \"5\", \"bearing\": \"0\", \"axis\": [1, 0, 0], \"inertia\": 0.2, \"initialAngularVelocity\": 0, \"viscousDrag\": 0.02}], \"sources\": [{\"name\": \"engine\", \"shaft\": 0, \"kind\": \"electric\", \"maxTorque\": 140, \"maxPower\": 9000, \"torqueCurve\": [], \"starterTorque\": 0}], \"links\": [], \"brakes\": [{\"name\": \"rear\", \"shaft\": 0, \"maxTorque\": 400}]}",
+          "audio-emitter": [],
+          "audio.asset": "8d33afd69347af925b9f5b9ebd3b31b1",
+          "audio.enabled": true,
+          "audio.play-on-start": false,
+          "audio.loop": true,
+          "audio.spatial": true,
+          "audio.volume": 0.2,
+          "audio.pitch": 1,
+          "audio.reference-distance": 2,
+          "audio.maximum-distance": 120,
+          "audio.rolloff": 1,
+          "audio.attenuation": {
+            "symbol": "inverse"
+          }
+        }
+      },
+      {
+        "id": 2,
+        "name": "Trail motorcycle / authored body",
+        "fields": {
+          "position": [
+            0,
+            0.0,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "parent": 1,
+          "tags": 4096,
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.mesh-asset": "4bd8a10817ed4874d0c1063f0320e4c9",
+          "render.texture-asset": "",
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1
+        }
+      },
+      {
+        "id": 3,
+        "name": "Trail motorcycle / wheel",
+        "fields": {
+          "position": [
+            0,
+            -0.5199999999999996,
+            -0.8500000000000014
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "parent": 1,
+          "wheel.enabled": true,
+          "wheel.chassis": 1,
+          "wheel.mount": [
+            0,
+            -0.2,
+            -0.85
+          ],
+          "wheel.orientation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "wheel.radius": 0.33,
+          "wheel.minLength": 0.08,
+          "wheel.restLength": 0.3199999999999999,
+          "wheel.maxLength": 0.5199999999999999,
+          "wheel.springStiffness": 7357.500000000001,
+          "wheel.damping": 720.0,
+          "wheel.spinInertia": 1.2,
+          "wheel.friction": 1.05,
+          "wheel.rollingResistance": 0.015,
+          "wheel.collisionLayer": 0,
+          "wheel.collisionMask": 18446744073709551615,
+          "wheel.requiredTags": 0,
+          "wheel.excludedTags": 0
+        }
+      },
+      {
+        "id": 4,
+        "name": "Trail motorcycle / tyre visual",
+        "fields": {
+          "position": [
+            0,
+            -0.5199999999999996,
+            -0.8500000000000014
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            0.33,
+            0.33,
+            0.33
+          ],
+          "parent": 3,
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.mesh-asset": "76dc6c750f6c9ed7e86ceffd740d0469",
+          "render.texture-asset": "",
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1
+        }
+      },
+      {
+        "id": 5,
+        "name": "Trail motorcycle / wheel",
+        "fields": {
+          "position": [
+            0,
+            -0.5199999999999996,
+            0.8500000000000014
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "parent": 1,
+          "wheel.enabled": true,
+          "wheel.chassis": 1,
+          "wheel.mount": [
+            0,
+            -0.2,
+            0.85
+          ],
+          "wheel.orientation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "wheel.radius": 0.33,
+          "wheel.minLength": 0.08,
+          "wheel.restLength": 0.3199999999999999,
+          "wheel.maxLength": 0.5199999999999999,
+          "wheel.springStiffness": 7357.500000000001,
+          "wheel.damping": 720.0,
+          "wheel.spinInertia": 1.2,
+          "wheel.friction": 1.05,
+          "wheel.rollingResistance": 0.015,
+          "wheel.collisionLayer": 0,
+          "wheel.collisionMask": 18446744073709551615,
+          "wheel.requiredTags": 0,
+          "wheel.excludedTags": 0
+        }
+      },
+      {
+        "id": 6,
+        "name": "Trail motorcycle / tyre visual",
+        "fields": {
+          "position": [
+            0,
+            -0.5199999999999996,
+            0.8500000000000014
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            0.33,
+            0.33,
+            0.33
+          ],
+          "parent": 5,
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.mesh-asset": "76dc6c750f6c9ed7e86ceffd740d0469",
+          "render.texture-asset": "",
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "prompt": "a realistic light propeller plane",
+  "category": "plane",
+  "confidence": 1.0,
+  "params": {
+    "features": {},
+    "size": 1.0,
+    "style": "realistic",
+    "type": "prop",
+    "engines": null,
+    "count": 1
+  },
+  "understood": [],
+  "seed": 91403,
+  "style": "realistic",
+  "files": {
+    "glb": "/home/conner/Documents/GitHub/Project-Judas/projects/lunar_island/ArtSource/stage4-prompt3d/a-realistic-light-propeller-plane-91403-realistic.glb"
+  },
+  "stats": {
+    "vertices": 2054,
+    "triangles": 2684,
+    "groups": 1
+  },
+  "dimensions_m": [
+    9.2,
+    3.8,
+    11.0
+  ],
+  "seconds": 0.02
+}

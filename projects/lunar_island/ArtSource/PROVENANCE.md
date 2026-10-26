@@ -69,3 +69,24 @@ No external generator file was changed. No downloaded model or voice was used.
 Gunshot, reload and hurt WAVs are original deterministic synthesized PCM (22,050 Hz,
 mono, 16-bit), with source/envelopes/seeds in author_stage3.py. No recorded weapon
 or voice clip was copied. The unavailable SFX/TTS tool remains deferred.
+
+
+## Stage 4
+
+The installed Prompt3D generator actually supports car, boat and plane templates.
+`tools/author_stage4.py` records trained-parser results and explicit template
+parameters under `stage4-prompt3d/`; car/pickup/skiff/plane seeds are 91400–91403.
+This uses the real parser and procedural geometry builders, not an invented
+arbitrary-model service. Runtime car/pickup geometry omits static wheel cylinders;
+separate visual wheel children follow native wheel suspension/spin. Empty material
+groups are removed before export. Original raw GLBs/settings remain preserved.
+
+Motorcycle, helicopter, wheel, rotor and propeller geometry is original project
+procedural authoring in the same script, with existing CC0 material finishing.
+The generator has no motorcycle/helicopter template; no support is claimed for it.
+All source/output hashes are in asset_catalog.json. Generator files, source assets
+and independent research remain unchanged.
+
+The engine loop is original deterministic synthesized PCM (22,050 Hz, mono,
+16-bit), composed of 70/140/280 Hz harmonics. Runtime pitch follows real shaft RPM.
+No downloaded vehicle sound, voice or other third-party asset was introduced.

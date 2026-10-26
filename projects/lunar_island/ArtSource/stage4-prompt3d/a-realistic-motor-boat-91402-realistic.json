@@ -1,0 +1,29 @@
+{
+  "prompt": "a realistic motor boat",
+  "category": "boat",
+  "confidence": 1.0,
+  "params": {
+    "features": {},
+    "size": 1.0,
+    "style": "realistic",
+    "type": "motor",
+    "count": 1
+  },
+  "understood": [],
+  "seed": 91402,
+  "style": "realistic",
+  "files": {
+    "glb": "/home/conner/Documents/GitHub/Project-Judas/projects/lunar_island/ArtSource/stage4-prompt3d/a-realistic-motor-boat-91402-realistic.glb"
+  },
+  "stats": {
+    "vertices": 1185,
+    "triangles": 1586,
+    "groups": 2
+  },
+  "dimensions_m": [
+    13.3,
+    2.9,
+    13.3
+  ],
+  "seconds": 2.6
+}

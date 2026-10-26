@@ -1,0 +1,35 @@
+Shadow maps: on
+Graphics: 3.3.0 NVIDIA 580.178.04 / NVIDIA GeForce GTX 970/PCIe/SSE2
+Renderer fragment texture units: 32 (material path uses 12)
+World state: legacy .judasstate (F6/F7) saves disabled for additive compositions; save slots remain available
+Project: Lunar Island (/home/conner/Documents/GitHub/Project-Judas/projects/lunar_island/lunar_island.judasproj)
+Scene: Lunar Island / Homestead Coast (/home/conner/Documents/GitHub/Project-Judas/projects/lunar_island/Scenes/island.judas)
+World origin (m): 2900.000, 0.000, -1600.000
+asset 2eb74ecf72ef69112028dcf2c039cb36: Optional extension ignored: KHR_materials_clearcoat
+asset f4e24c58b44e48292bc35ad5a55d72f9: Optional extension ignored: KHR_materials_clearcoat
+asset d5563755c7887ca32886ad9518e56de8: Optional extension ignored: KHR_materials_clearcoat
+JS: Lunar Island: WASD, mouse, E gather, click tool, Tab pack/crafting, Escape pause, F6 save, F9 load.
+PASS welcome pauses actual world
+PASS authored world collision loaded
+PASS capture welcome.png
+PASS Escape begins real game
+PASS CharacterMotor moves via project input
+PASS same player toggles third person
+PASS pause menu stops gameplay
+PASS move/fire do not leak through modal
+PASS focus UI primary
+PASS ordinary E/menu enters selected vehicle
+PASS pilot's actual CharacterMotor is disabled
+VEHICLE START 7400 [-40.02152633666992,14.620346069335938,41.97810745239258] state {"bag":{"maxWeight":280,"slots":[null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null]},"burned":0.022597501828731166,"damageEvents":0,"distance":0.32246717256604285,"fuel":89.97740249817127,"health":100,"rotorAngle":0.206524673007214}
+PASS capture entered.png
+VEHICLE FIRST endpoint [-40.12383270263672,14.6185884475708,41.949825286865234] velocity [-0.05566440150141716,-0.052591122686862946,-0.02053234912455082]
+FAIL actual physical vehicle changes position under controls
+PASS propulsion consumes persistent fuel
+PASS normal movement does not wreck vehicle
+FAIL physical lift raises aircraft above starting ground
+PASS native powertrain endpoints remain available
+SHAFT 123.405 torque 18.2246
+VEHICLE FINAL [-40.12807846069336,14.618651390075684,41.947998046875] up [-0.02522154152393341,0.9994693994522095,-0.02061062678694725] state {"bag":{"maxWeight":280,"slots":[null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null]},"burned":1.3835826400438132,"damageEvents":0,"distance":0.44485179658217094,"fuel":88.61641735995632,"health":100,"rotorAngle":6.114731227494666}
+PASS capture driving.png
+PASS ordinary application exits cleanly
+19 checks, 2 failures

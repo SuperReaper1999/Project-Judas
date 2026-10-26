@@ -1,0 +1,579 @@
+{
+  "kind": "prefab",
+  "schema": 1,
+  "data": {
+    "settings": {
+      "name": "Birchside transport garage",
+      "world-origin": [
+        0,
+        0,
+        0
+      ],
+      "sun-direction": [
+        0.45,
+        0.72,
+        0.3
+      ],
+      "sun-color": [
+        1,
+        0.94,
+        0.79
+      ],
+      "ambient": [
+        0.22,
+        0.25,
+        0.28
+      ],
+      "background-color": [
+        0.36,
+        0.56,
+        0.65
+      ],
+      "linear-rendering": true,
+      "exposure": 1,
+      "environment": "",
+      "environment-intensity": 1,
+      "environment-rotation": [
+        1,
+        0,
+        0,
+        0
+      ],
+      "environment-background": false,
+      "fluid-scale": 1,
+      "fluid-update-rate-hz": 30,
+      "fluid-hydrostatic-drag-rate": 2,
+      "fidelity-policy": {
+        "mode": {
+          "symbol": "none"
+        }
+      },
+      "next-id": 8000
+    },
+    "objects": [
+      {
+        "id": 1,
+        "name": "Homestead pickup",
+        "fields": {
+          "position": [
+            0,
+            0.0,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "body": {
+            "motion": {
+              "symbol": "dynamic"
+            },
+            "shape": {
+              "symbol": "compound"
+            }
+          },
+          "body.half-extents": [
+            0.9,
+            0.34,
+            2.65
+          ],
+          "body.radius": 0.9,
+          "body.mass": 1400,
+          "body.friction": 0.8,
+          "body.restitution": 0.02,
+          "body.pickable": true,
+          "body.compound-count": 2,
+          "body.fluid-cavity-count": 0,
+          "body.terrain": "",
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.managed": false,
+          "tags": 1024,
+          "scripts": 1,
+          "script.0.id": 1,
+          "script.0.asset": "6acd80dd21388460940695e03942c5eb",
+          "script.0.enabled": true,
+          "script.0.properties": "{\"key\": \"truck\"}",
+          "powertrain.graph": "{\"version\": 1, \"enabled\": true, \"shafts\": [{\"name\": \"crank\", \"kind\": \"internal\", \"target\": \"0\", \"bearing\": \"1\", \"axis\": [1, 0, 0], \"inertia\": 0.28, \"initialAngularVelocity\": 100, \"viscousDrag\": 0.02}, {\"name\": \"gearbox\", \"kind\": \"internal\", \"target\": \"0\", \"bearing\": \"1\", \"axis\": [1, 0, 0], \"inertia\": 0.2, \"initialAngularVelocity\": 0, \"viscousDrag\": 0.02}, {\"name\": \"carrier\", \"kind\": \"internal\", \"target\": \"0\", \"bearing\": \"1\", \"axis\": [1, 0, 0], \"inertia\": 0.2, \"initialAngularVelocity\": 0, \"viscousDrag\": 0.02}, {\"name\": \"left\", \"kind\": \"wheel\", \"target\": \"7\", \"bearing\": \"0\", \"axis\": [1, 0, 0], \"inertia\": 0.2, \"initialAngularVelocity\": 0, \"viscousDrag\": 0.02}, {\"name\": \"right\", \"kind\": \"wheel\", \"target\": \"9\", \"bearing\": \"0\", \"axis\": [1, 0, 0], \"inertia\": 0.2, \"initialAngularVelocity\": 0, \"viscousDrag\": 0.02}], \"sources\": [{\"name\": \"engine\", \"shaft\": 0, \"kind\": \"combustion\", \"maxTorque\": 200, \"maxPower\": 100000, \"torqueCurve\": [[0, 0], [600, 0], [900, 95], [1800, 145], [3200, 160], [4800, 125], [6200, 40], [6800, 0]], \"starterTorque\": 42}], \"links\": [{\"name\": \"gearbox\", \"kind\": \"gear\", \"input\": 0, \"output\": 1, \"outputB\": 0, \"ratio\": 0.2222222222222222, \"maxTorque\": 500}, {\"name\": \"clutch\", \"kind\": \"clutch\", \"input\": 1, \"output\": 2, \"outputB\": 0, \"ratio\": 1, \"maxTorque\": 1000}, {\"name\": \"differential\", \"kind\": \"differential\", \"input\": 2, \"output\": 3, \"outputB\": 4, \"ratio\": 0.2857142857142857, \"maxTorque\": 700}], \"brakes\": [{\"name\": \"left\", \"shaft\": 3, \"maxTorque\": 1100}, {\"name\": \"right\", \"shaft\": 4, \"maxTorque\": 1100}]}",
+          "audio-emitter": [],
+          "audio.asset": "8d33afd69347af925b9f5b9ebd3b31b1",
+          "audio.enabled": true,
+          "audio.play-on-start": false,
+          "audio.loop": true,
+          "audio.spatial": true,
+          "audio.volume": 0.2,
+          "audio.pitch": 1,
+          "audio.reference-distance": 2,
+          "audio.maximum-distance": 120,
+          "audio.rolloff": 1,
+          "audio.attenuation": {
+            "symbol": "inverse"
+          },
+          "body.compound-box": [
+            {
+              "center": [
+                0,
+                -0.23,
+                0
+              ],
+              "halfExtents": [
+                0.9,
+                0.34,
+                2.65
+              ]
+            },
+            {
+              "center": [
+                0,
+                0.4,
+                -0.45
+              ],
+              "halfExtents": [
+                0.7200000000000001,
+                0.4,
+                1
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "id": 2,
+        "name": "Homestead pickup / authored body",
+        "fields": {
+          "position": [
+            0,
+            0.0,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "parent": 1,
+          "tags": 4096,
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.mesh-asset": "f4e24c58b44e48292bc35ad5a55d72f9",
+          "render.texture-asset": "",
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1
+        }
+      },
+      {
+        "id": 3,
+        "name": "Homestead pickup / wheel",
+        "fields": {
+          "position": [
+            -0.8699999999999992,
+            -0.7200000000000006,
+            -1.7999999999999972
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "parent": 1,
+          "wheel.enabled": true,
+          "wheel.chassis": 1,
+          "wheel.mount": [
+            -0.87,
+            -0.32,
+            -1.8
+          ],
+          "wheel.orientation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "wheel.radius": 0.4,
+          "wheel.minLength": 0.08,
+          "wheel.restLength": 0.4,
+          "wheel.maxLength": 0.6000000000000001,
+          "wheel.springStiffness": 28612.5,
+          "wheel.damping": 2800.0,
+          "wheel.spinInertia": 1.2,
+          "wheel.friction": 1.05,
+          "wheel.rollingResistance": 0.015,
+          "wheel.collisionLayer": 0,
+          "wheel.collisionMask": 18446744073709551615,
+          "wheel.requiredTags": 0,
+          "wheel.excludedTags": 0
+        }
+      },
+      {
+        "id": 4,
+        "name": "Homestead pickup / tyre visual",
+        "fields": {
+          "position": [
+            -0.8699999999999992,
+            -0.7200000000000006,
+            -1.7999999999999972
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            0.4,
+            0.4,
+            0.4
+          ],
+          "parent": 3,
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.mesh-asset": "76dc6c750f6c9ed7e86ceffd740d0469",
+          "render.texture-asset": "",
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1
+        }
+      },
+      {
+        "id": 5,
+        "name": "Homestead pickup / wheel",
+        "fields": {
+          "position": [
+            0.8700000000000001,
+            -0.7200000000000006,
+            -1.7999999999999972
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "parent": 1,
+          "wheel.enabled": true,
+          "wheel.chassis": 1,
+          "wheel.mount": [
+            0.87,
+            -0.32,
+            -1.8
+          ],
+          "wheel.orientation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "wheel.radius": 0.4,
+          "wheel.minLength": 0.08,
+          "wheel.restLength": 0.4,
+          "wheel.maxLength": 0.6000000000000001,
+          "wheel.springStiffness": 28612.5,
+          "wheel.damping": 2800.0,
+          "wheel.spinInertia": 1.2,
+          "wheel.friction": 1.05,
+          "wheel.rollingResistance": 0.015,
+          "wheel.collisionLayer": 0,
+          "wheel.collisionMask": 18446744073709551615,
+          "wheel.requiredTags": 0,
+          "wheel.excludedTags": 0
+        }
+      },
+      {
+        "id": 6,
+        "name": "Homestead pickup / tyre visual",
+        "fields": {
+          "position": [
+            0.8700000000000001,
+            -0.7200000000000006,
+            -1.7999999999999972
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            0.4,
+            0.4,
+            0.4
+          ],
+          "parent": 5,
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.mesh-asset": "76dc6c750f6c9ed7e86ceffd740d0469",
+          "render.texture-asset": "",
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1
+        }
+      },
+      {
+        "id": 7,
+        "name": "Homestead pickup / wheel",
+        "fields": {
+          "position": [
+            -0.8699999999999992,
+            -0.7200000000000006,
+            1.6499999999999986
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "parent": 1,
+          "wheel.enabled": true,
+          "wheel.chassis": 1,
+          "wheel.mount": [
+            -0.87,
+            -0.32,
+            1.65
+          ],
+          "wheel.orientation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "wheel.radius": 0.4,
+          "wheel.minLength": 0.08,
+          "wheel.restLength": 0.4,
+          "wheel.maxLength": 0.6000000000000001,
+          "wheel.springStiffness": 28612.5,
+          "wheel.damping": 2800.0,
+          "wheel.spinInertia": 1.2,
+          "wheel.friction": 1.05,
+          "wheel.rollingResistance": 0.015,
+          "wheel.collisionLayer": 0,
+          "wheel.collisionMask": 18446744073709551615,
+          "wheel.requiredTags": 0,
+          "wheel.excludedTags": 0
+        }
+      },
+      {
+        "id": 8,
+        "name": "Homestead pickup / tyre visual",
+        "fields": {
+          "position": [
+            -0.8699999999999992,
+            -0.7200000000000006,
+            1.6499999999999986
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            0.4,
+            0.4,
+            0.4
+          ],
+          "parent": 7,
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.mesh-asset": "76dc6c750f6c9ed7e86ceffd740d0469",
+          "render.texture-asset": "",
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1
+        }
+      },
+      {
+        "id": 9,
+        "name": "Homestead pickup / wheel",
+        "fields": {
+          "position": [
+            0.8700000000000001,
+            -0.7200000000000006,
+            1.6499999999999986
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "parent": 1,
+          "wheel.enabled": true,
+          "wheel.chassis": 1,
+          "wheel.mount": [
+            0.87,
+            -0.32,
+            1.65
+          ],
+          "wheel.orientation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "wheel.radius": 0.4,
+          "wheel.minLength": 0.08,
+          "wheel.restLength": 0.4,
+          "wheel.maxLength": 0.6000000000000001,
+          "wheel.springStiffness": 28612.5,
+          "wheel.damping": 2800.0,
+          "wheel.spinInertia": 1.2,
+          "wheel.friction": 1.05,
+          "wheel.rollingResistance": 0.015,
+          "wheel.collisionLayer": 0,
+          "wheel.collisionMask": 18446744073709551615,
+          "wheel.requiredTags": 0,
+          "wheel.excludedTags": 0
+        }
+      },
+      {
+        "id": 10,
+        "name": "Homestead pickup / tyre visual",
+        "fields": {
+          "position": [
+            0.8700000000000001,
+            -0.7200000000000006,
+            1.6499999999999986
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            0.4,
+            0.4,
+            0.4
+          ],
+          "parent": 9,
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.mesh-asset": "76dc6c750f6c9ed7e86ceffd740d0469",
+          "render.texture-asset": "",
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1
+        }
+      }
+    ]
+  }
+}

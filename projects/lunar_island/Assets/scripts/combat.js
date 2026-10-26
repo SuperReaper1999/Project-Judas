@@ -1,6 +1,7 @@
 // Gameplay-owned hitscan, magazines and melee. The engine only supplies queries,
 // body impulses, motor movement, audio and particles.
 import { world, physics, input } from 'judas';
+import { vehicleFor } from './vehicle-session.js';
 import { WEAPONS, PEOPLE } from './encounter-data.js';
 import * as Bag from './inventory.js';
 import * as Rules from './encounter-rules.js';
@@ -146,11 +147,13 @@ export default class Combat {
                     this.hitTime = 0.16;
                     hitAny = true;
                 }
-            } else if (hit.entity.motionType === 'dynamic')
+            } else if (hit.entity.motionType === 'dynamic') {
+                vehicleFor(hit.entity)?.damage(w.damage * 0.4);
                 hit.entity.applyImpulseAtPoint(
                     mul(dir, w.impulse || 12),
                     hit.point,
                 );
+            }
             const fx = world.entity(PEOPLE.impact);
             if (fx?.valid) {
                 fx.transform = { position: hit.point };
