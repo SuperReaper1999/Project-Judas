@@ -109,6 +109,24 @@ export const ITEMS = {
         category: 'clothing',
         slot: 'body',
     },
+    planks: {
+        name: 'Sawn planks',
+        stack: 30,
+        weight: 0.25,
+        category: 'material',
+    },
+    nails: {
+        name: 'Handmade nails',
+        stack: 50,
+        weight: 0.02,
+        category: 'material',
+    },
+    metal_sheet: {
+        name: 'Metal sheet',
+        stack: 10,
+        weight: 1,
+        category: 'material',
+    },
 };
 export const RECIPES = [
     {
@@ -175,6 +193,42 @@ export const RECIPES = [
         },
         station: 'hand',
         description: 'Strip salvage into useful binding material.',
+    },
+    {
+        id: 'planks',
+        name: 'Saw planks',
+        ingredients: {
+            wood: 1,
+        },
+        outputs: {
+            planks: 4,
+        },
+        station: 'hand',
+        description: 'Boards for barricading openings.',
+    },
+    {
+        id: 'nails',
+        name: 'Forge nails',
+        ingredients: {
+            scrap: 1,
+        },
+        outputs: {
+            nails: 6,
+        },
+        station: 'workbench',
+        description: 'Work scrap into reusable fixings.',
+    },
+    {
+        id: 'metal_sheet',
+        name: 'Flatten metal sheet',
+        ingredients: {
+            scrap: 3,
+        },
+        outputs: {
+            metal_sheet: 1,
+        },
+        station: 'workbench',
+        description: 'Reinforce a door or window barricade.',
     },
 ];
 export const CONFIG = {

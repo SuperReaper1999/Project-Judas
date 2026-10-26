@@ -43,5 +43,10 @@ int main(int argc,char** argv){if(argc!=2)return 2;std::string error,report;Game
  check(storage.Write("legacy",output,error),"normal overwrite retains legacy previous generation");std::ifstream previous(std::filesystem::path(argv[1])/"legacy.previous",std::ios::binary);std::string preserved((std::istreambuf_iterator<char>(previous)),{});check(preserved==legacy.bytes,"previous generation keeps exact original container bytes");check(storage.ReadPrevious("legacy",decoded,error)&&decoded.contentVersion==0,"explicit previous-good read independent of current generation");
  header[0]=99;SaveArchive future;future(magic,header,payload);{std::ofstream raw(std::filesystem::path(argv[1])/"future.save",std::ios::binary);raw<<future.bytes;}
  check(!storage.Write("future",output,error)&&error.find("newer save")!=std::string::npos,"newer container cannot be overwritten by an older writer");std::ifstream newer(std::filesystem::path(argv[1])/"future.save",std::ios::binary);std::string futureBytes((std::istreambuf_iterator<char>(newer)),{});check(futureBytes==future.bytes,"unsupported future bytes preserved exactly");
+ auto v2=old;v2.participants["entities"].version=2;
+ check(EvolveSave(p.dump(),h('b'),"",v2,true,output,report,error),"entity participant v2 supports the existing authorized migration workflow");
+ check(output.participants.at("entities").version==2&&output.participants.at("entities").data.find("opaque native entity tail")!=std::string::npos,"migration preserves v2 native physical tail and version exactly");
+ auto futureEntities=old;futureEntities.participants["entities"].version=99;
+ check(!EvolveSave(p.dump(),h('b'),"",futureEntities,true,output,report,error),"unknown entity participant version still fails closed");
  std::printf("Migration ms=%.6f bytes=%zu checks=%d failures=%d\n",elapsed,original.size(),checks,failures);return failures?1:0;
 }

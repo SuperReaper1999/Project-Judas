@@ -1,0 +1,43 @@
+Shadow maps: on
+Graphics: 3.3.0 NVIDIA 580.178.04 / NVIDIA GeForce GTX 970/PCIe/SSE2
+Renderer fragment texture units: 32 (material path uses 12)
+World state: /home/conner/Documents/GitHub/Project-Judas/projects/lunar_island/Saves/island.judasstate (none saved)
+Project: Lunar Island (/home/conner/Documents/GitHub/Project-Judas/projects/lunar_island/lunar_island.judasproj)
+Scene: Lunar Island / Homestead Coast (/home/conner/Documents/GitHub/Project-Judas/projects/lunar_island/Scenes/island.judas)
+World origin (m): 2900.000, 0.000, -1600.000
+JS: Lunar Island: WASD, mouse, E gather, click tool, Tab pack/crafting, Escape pause, F6 save, F9 load.
+PASS welcome pauses actual world
+PASS authored world collision loaded
+PASS capture welcome.png
+PASS Escape begins real game
+PASS CharacterMotor moves via project input
+PASS same player toggles third person
+PASS pause menu stops gameplay
+PASS move/fire do not leak through modal
+PASS fresh process requests ordinary save load: 
+CONTEXT joint 4 bodyA 243 bodyB 2 sizes 618 618
+Runtime outer services: joint continuation physical context differs
+FAIL fresh process restores save: joint continuation physical context differs
+FAIL cold save restores exact inventory
+FAIL cold save restores exact depletion/felling state
+FAIL cold save restores actual fallen tree endpoint
+FAIL cold save restores actual fallen trunk orientation
+FAIL cold restored depleted resource stays absent
+FAIL restored fallen tree remains dynamic
+FAIL cold save restores exact storage, ownership, integrity, home and door ledgers
+PASS cold restore retains actual Stage 2 body 3120
+FAIL cold restore physical endpoint 3120
+FAIL cold restore actual attachment state 3120
+FAIL cold restore retains actual Stage 2 body 4611686018427387909
+FAIL cold restore retains actual Stage 2 body 4611686018427387911
+FAIL cold restore retains actual Stage 2 body 4611686018427387910
+FAIL cold restore retains actual Stage 2 body 4611686018427387913
+FAIL cold restore retains actual Stage 2 body 4611686018427387906
+FAIL cold save restores actual native lamp-off state
+PASS capture cold-restored.png
+FAIL cold restored open hinge remains physically open after 120 steps 3061
+FAIL cold restored open hinge remains physically open after 120 steps 4611686018427387913
+PASS restored world actually advances outside modal pause
+PASS capture cold-continued.png
+PASS ordinary application exits cleanly
+32 checks, 18 failures

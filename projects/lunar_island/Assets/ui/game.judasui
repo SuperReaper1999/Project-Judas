@@ -188,7 +188,7 @@
         "id": "chapter",
         "parent": "canvas",
         "kind": 2,
-        "text": "FOUNDATION / HOMESTEAD COAST",
+        "text": "HOMESTEAD / MAKE A HOUSE YOUR HOME",
         "texture": "",
         "font": "1d1cd0950b291b3e034b47e22e739be3",
         "textKey": "",
@@ -1187,7 +1187,7 @@
           72
         ],
         "size": [
-          154,
+          132,
           40
         ],
         "relativeSize": [
@@ -1270,11 +1270,11 @@
           0
         ],
         "offset": [
-          190,
+          168,
           72
         ],
         "size": [
-          154,
+          132,
           40
         ],
         "relativeSize": [
@@ -1357,11 +1357,11 @@
           0
         ],
         "offset": [
-          356,
+          456,
           72
         ],
         "size": [
-          154,
+          132,
           40
         ],
         "relativeSize": [
@@ -1444,11 +1444,11 @@
           0
         ],
         "offset": [
-          522,
+          600,
           72
         ],
         "size": [
-          154,
+          132,
           40
         ],
         "relativeSize": [
@@ -2437,6 +2437,354 @@
           0,
           0,
           0
+        ],
+        "color": [
+          0.88,
+          0.91,
+          0.84,
+          1
+        ],
+        "rowHeight": 36
+      },
+      {
+        "id": "entries2",
+        "parent": "panel",
+        "kind": 9,
+        "text": "",
+        "texture": "",
+        "font": "1d1cd0950b291b3e034b47e22e739be3",
+        "textKey": "",
+        "textLogicalAlign": -1,
+        "mirrorRow": false,
+        "focusColor": [
+          0.98,
+          0.78,
+          0.43,
+          1
+        ],
+        "placeholder": "",
+        "accessibleLabel": "",
+        "description": "",
+        "readOnly": false,
+        "maxBytes": 4096,
+        "visible": false,
+        "enabled": true,
+        "clip": false,
+        "wrap": false,
+        "fit": true,
+        "spacing": 8,
+        "fontSize": 18,
+        "value": 0,
+        "minimum": 0,
+        "maximum": 1,
+        "flow": 0,
+        "direction": 0,
+        "anchorMin": [
+          0,
+          0
+        ],
+        "anchorMax": [
+          0,
+          0
+        ],
+        "offset": [
+          568,
+          160
+        ],
+        "size": [
+          500,
+          220
+        ],
+        "relativeSize": [
+          0,
+          0
+        ],
+        "align": [
+          0,
+          0
+        ],
+        "textAlign": [
+          0,
+          0.5
+        ],
+        "margin": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "padding": [
+          10,
+          6,
+          10,
+          6
+        ],
+        "background": [
+          0.05,
+          0.1,
+          0.11,
+          1
+        ],
+        "color": [
+          0.88,
+          0.91,
+          0.84,
+          1
+        ],
+        "rowHeight": 36
+      },
+      {
+        "id": "secondary",
+        "parent": "panel",
+        "kind": 4,
+        "text": "Take one",
+        "texture": "",
+        "font": "1d1cd0950b291b3e034b47e22e739be3",
+        "textKey": "",
+        "textLogicalAlign": -1,
+        "mirrorRow": false,
+        "focusColor": [
+          0.98,
+          0.78,
+          0.43,
+          1
+        ],
+        "placeholder": "",
+        "accessibleLabel": "Use / equip",
+        "description": "",
+        "readOnly": false,
+        "maxBytes": 4096,
+        "visible": false,
+        "enabled": true,
+        "clip": false,
+        "wrap": false,
+        "fit": true,
+        "spacing": 8,
+        "fontSize": 18,
+        "value": 0,
+        "minimum": 0,
+        "maximum": 1,
+        "flow": 0,
+        "direction": 0,
+        "anchorMin": [
+          0,
+          0
+        ],
+        "anchorMax": [
+          0,
+          0
+        ],
+        "offset": [
+          568,
+          405
+        ],
+        "size": [
+          235,
+          46
+        ],
+        "relativeSize": [
+          0,
+          0
+        ],
+        "align": [
+          0,
+          0
+        ],
+        "textAlign": [
+          0,
+          0.5
+        ],
+        "margin": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "padding": [
+          10,
+          6,
+          10,
+          6
+        ],
+        "background": [
+          0.2,
+          0.38,
+          0.31,
+          1
+        ],
+        "color": [
+          0.88,
+          0.91,
+          0.84,
+          1
+        ],
+        "rowHeight": 36
+      },
+      {
+        "id": "tertiary",
+        "parent": "panel",
+        "kind": 4,
+        "text": "Take stack",
+        "texture": "",
+        "font": "1d1cd0950b291b3e034b47e22e739be3",
+        "textKey": "",
+        "textLogicalAlign": -1,
+        "mirrorRow": false,
+        "focusColor": [
+          0.98,
+          0.78,
+          0.43,
+          1
+        ],
+        "placeholder": "",
+        "accessibleLabel": "Drop one",
+        "description": "",
+        "readOnly": false,
+        "maxBytes": 4096,
+        "visible": false,
+        "enabled": true,
+        "clip": false,
+        "wrap": false,
+        "fit": true,
+        "spacing": 8,
+        "fontSize": 18,
+        "value": 0,
+        "minimum": 0,
+        "maximum": 1,
+        "flow": 0,
+        "direction": 0,
+        "anchorMin": [
+          0,
+          0
+        ],
+        "anchorMax": [
+          0,
+          0
+        ],
+        "offset": [
+          823,
+          405
+        ],
+        "size": [
+          235,
+          46
+        ],
+        "relativeSize": [
+          0,
+          0
+        ],
+        "align": [
+          0,
+          0
+        ],
+        "textAlign": [
+          0,
+          0.5
+        ],
+        "margin": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "padding": [
+          10,
+          6,
+          10,
+          6
+        ],
+        "background": [
+          0.22,
+          0.2,
+          0.18,
+          1
+        ],
+        "color": [
+          0.88,
+          0.91,
+          0.84,
+          1
+        ],
+        "rowHeight": 36
+      },
+      {
+        "id": "tab_build",
+        "parent": "panel",
+        "kind": 4,
+        "text": "Build / furnish",
+        "texture": "",
+        "font": "1d1cd0950b291b3e034b47e22e739be3",
+        "textKey": "",
+        "textLogicalAlign": -1,
+        "mirrorRow": false,
+        "focusColor": [
+          0.98,
+          0.78,
+          0.43,
+          1
+        ],
+        "placeholder": "",
+        "accessibleLabel": "Crafting",
+        "description": "",
+        "readOnly": false,
+        "maxBytes": 4096,
+        "visible": true,
+        "enabled": true,
+        "clip": false,
+        "wrap": false,
+        "fit": true,
+        "spacing": 8,
+        "fontSize": 18,
+        "value": 0,
+        "minimum": 0,
+        "maximum": 1,
+        "flow": 0,
+        "direction": 0,
+        "anchorMin": [
+          0,
+          0
+        ],
+        "anchorMax": [
+          0,
+          0
+        ],
+        "offset": [
+          312,
+          72
+        ],
+        "size": [
+          132,
+          40
+        ],
+        "relativeSize": [
+          0,
+          0
+        ],
+        "align": [
+          0,
+          0
+        ],
+        "textAlign": [
+          0,
+          0.5
+        ],
+        "margin": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "padding": [
+          10,
+          6,
+          10,
+          6
+        ],
+        "background": [
+          0.13,
+          0.25,
+          0.25,
+          1
         ],
         "color": [
           0.88,

@@ -226,8 +226,8 @@ struct PhysicsWorld::Impl {
         float previousCoordinate = 0, restoredContinuationDt = 0;
     };
     void InvalidateRestoredContinuation(unsigned slot);
-    std::string ContinuationBodyContext(const Body &body) const;
-    std::string ContinuationJointContext(const JointRecord &joint) const;
+    std::string ContinuationBodyContext(const Body &body, SaveArchive *comparison = nullptr) const;
+    std::string ContinuationJointContext(const JointRecord &joint, SaveArchive *comparison = nullptr) const;
     std::vector<JointRecord> joints;
     std::set<std::pair<unsigned, unsigned>> suppressedPairs;
     JointSolver jointSolver, mk2JointProjection;

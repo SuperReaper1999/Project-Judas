@@ -176,5 +176,389 @@
     "style": "realistic",
     "sha256": "4c76ccb06cbb912396dce2eb140bdd5ae44fa822dad81bcb493dd9d84b507159",
     "source": "Original raised lettering and timber sign"
+  },
+  "build_foundation": {
+    "path": "Assets/models/build_foundation.glb",
+    "bounds": [
+      [
+        -1.5,
+        -0.2,
+        -1.5
+      ],
+      [
+        1.5,
+        0.2,
+        1.5
+      ]
+    ],
+    "source": "Original Stage 2 mesh/PBR finish; source author_stage2.py"
+  },
+  "build_floor": {
+    "path": "Assets/models/build_floor.glb",
+    "bounds": [
+      [
+        -1.5,
+        -0.1,
+        -1.5
+      ],
+      [
+        1.5,
+        0.10500000000000001,
+        1.5
+      ]
+    ],
+    "source": "Original Stage 2 mesh/PBR finish; source author_stage2.py"
+  },
+  "build_wall": {
+    "path": "Assets/models/build_wall.glb",
+    "bounds": [
+      [
+        -1.5,
+        -1.35,
+        -0.12
+      ],
+      [
+        1.5,
+        1.35,
+        0.125
+      ]
+    ],
+    "source": "Original Stage 2 mesh/PBR finish; source author_stage2.py"
+  },
+  "build_window_wall": {
+    "path": "Assets/models/build_window_wall.glb",
+    "bounds": [
+      [
+        -1.5,
+        -1.35,
+        -0.12
+      ],
+      [
+        1.5,
+        1.35,
+        0.18000000000000002
+      ]
+    ],
+    "source": "Original Stage 2 mesh/PBR finish; source author_stage2.py"
+  },
+  "build_door": {
+    "path": "Assets/models/build_door.glb",
+    "bounds": [
+      [
+        -0.85,
+        -1.35,
+        -0.14
+      ],
+      [
+        0.85,
+        1.35,
+        0.14
+      ]
+    ],
+    "source": "Original Stage 2 mesh/PBR finish; source author_stage2.py"
+  },
+  "build_roof": {
+    "path": "Assets/models/build_roof.glb",
+    "bounds": [
+      [
+        -1.5,
+        -0.1,
+        -1.5
+      ],
+      [
+        1.5,
+        0.1,
+        1.5
+      ]
+    ],
+    "source": "Original Stage 2 mesh/PBR finish; source author_stage2.py"
+  },
+  "build_fence": {
+    "path": "Assets/models/build_fence.glb",
+    "bounds": [
+      [
+        -1.5,
+        -0.6,
+        -0.09
+      ],
+      [
+        1.5,
+        0.6,
+        0.07
+      ]
+    ],
+    "source": "Original Stage 2 mesh/PBR finish; source author_stage2.py"
+  },
+  "build_gate": {
+    "path": "Assets/models/build_gate.glb",
+    "bounds": [
+      [
+        -0.85,
+        -0.65,
+        -0.14
+      ],
+      [
+        0.85,
+        0.65,
+        0.14
+      ]
+    ],
+    "source": "Original Stage 2 mesh/PBR finish; source author_stage2.py"
+  },
+  "build_rug": {
+    "path": "Assets/models/build_rug.glb",
+    "bounds": [
+      [
+        -0.9,
+        -0.015,
+        -0.65
+      ],
+      [
+        0.9,
+        0.015,
+        0.65
+      ]
+    ],
+    "source": "Original Stage 2 mesh/PBR finish; source author_stage2.py"
+  },
+  "build_painting": {
+    "path": "Assets/models/build_painting.glb",
+    "bounds": [
+      [
+        -0.465,
+        -0.34,
+        -0.04
+      ],
+      [
+        0.465,
+        0.34,
+        0.11230810839623345
+      ]
+    ],
+    "source": "Original Stage 2 mesh/PBR finish; source author_stage2.py"
+  },
+  "build_door_leaf": {
+    "path": "Assets/models/build_door_leaf.glb",
+    "bounds": [
+      [
+        -0.65,
+        -1.175,
+        -0.055
+      ],
+      [
+        0.65,
+        1.175,
+        0.135
+      ]
+    ],
+    "source": "Original Stage 2 mesh/PBR finish; source author_stage2.py"
+  },
+  "build_gate_leaf": {
+    "path": "Assets/models/build_gate_leaf.glb",
+    "bounds": [
+      [
+        -0.65,
+        -0.475,
+        -0.055
+      ],
+      [
+        0.65,
+        0.475,
+        0.135
+      ]
+    ],
+    "source": "Original Stage 2 mesh/PBR finish; source author_stage2.py"
+  },
+  "build_chest": {
+    "path": "Assets/models/build_chest.glb",
+    "bounds": [
+      [
+        -0.6,
+        -0.4,
+        -0.4000000000000001
+      ],
+      [
+        0.6,
+        0.4,
+        0.4
+      ]
+    ],
+    "source": "Original Stage 2 mesh/PBR finish; source author_stage2.py"
+  },
+  "build_bed": {
+    "path": "Assets/models/build_bed.glb",
+    "bounds": [
+      [
+        -0.55,
+        -0.3,
+        -1.0
+      ],
+      [
+        0.55,
+        0.3,
+        1.0
+      ]
+    ],
+    "source": "Original Stage 2 mesh/PBR finish; source author_stage2.py"
+  },
+  "build_chair": {
+    "path": "Assets/models/build_chair.glb",
+    "bounds": [
+      [
+        -0.3,
+        -0.5,
+        -0.29999999999999993
+      ],
+      [
+        0.3,
+        0.4999999999999999,
+        0.3
+      ]
+    ],
+    "source": "Original Stage 2 mesh/PBR finish; source author_stage2.py"
+  },
+  "build_table": {
+    "path": "Assets/models/build_table.glb",
+    "bounds": [
+      [
+        -0.8,
+        -0.4,
+        -0.5
+      ],
+      [
+        0.8,
+        0.40000000000000013,
+        0.5
+      ]
+    ],
+    "source": "Original Stage 2 mesh/PBR finish; source author_stage2.py"
+  },
+  "build_sofa": {
+    "path": "Assets/models/build_sofa.glb",
+    "bounds": [
+      [
+        -0.9999999999999999,
+        -0.45,
+        -0.45
+      ],
+      [
+        0.9999999999999999,
+        0.4499999999999999,
+        0.45
+      ]
+    ],
+    "source": "Original Stage 2 mesh/PBR finish; source author_stage2.py"
+  },
+  "build_cupboard": {
+    "path": "Assets/models/build_cupboard.glb",
+    "bounds": [
+      [
+        -0.55,
+        -0.8999999999999999,
+        -0.29999999999999993
+      ],
+      [
+        0.55,
+        0.8999999999999999,
+        0.3
+      ]
+    ],
+    "source": "Original Stage 2 mesh/PBR finish; source author_stage2.py"
+  },
+  "build_shelf": {
+    "path": "Assets/models/build_shelf.glb",
+    "bounds": [
+      [
+        -0.55,
+        -0.9,
+        -0.21999999999999997
+      ],
+      [
+        0.55,
+        0.9,
+        0.21999999999999997
+      ]
+    ],
+    "source": "Original Stage 2 mesh/PBR finish; source author_stage2.py"
+  },
+  "build_workbench": {
+    "path": "Assets/models/build_workbench.glb",
+    "bounds": [
+      [
+        -1.0,
+        -0.5,
+        -0.5
+      ],
+      [
+        1.0,
+        0.5,
+        0.5000000000000001
+      ]
+    ],
+    "source": "Original Stage 2 mesh/PBR finish; source author_stage2.py"
+  },
+  "build_lamp": {
+    "path": "Assets/models/build_lamp.glb",
+    "bounds": [
+      [
+        -0.2,
+        -0.4,
+        -0.2
+      ],
+      [
+        0.2,
+        0.4,
+        0.2
+      ]
+    ],
+    "source": "Original Stage 2 mesh/PBR finish; source author_stage2.py"
+  },
+  "barricade_wood": {
+    "path": "Assets/models/barricade_wood.glb",
+    "bounds": [
+      [
+        -0.8,
+        -0.54,
+        -0.06
+      ],
+      [
+        0.8,
+        0.54,
+        0.082
+      ]
+    ],
+    "source": "Original Stage 2 mesh/PBR finish; source author_stage2.py"
+  },
+  "barricade_metal": {
+    "path": "Assets/models/barricade_metal.glb",
+    "bounds": [
+      [
+        -0.8,
+        -0.55,
+        -0.08
+      ],
+      [
+        0.8,
+        0.55,
+        0.08
+      ]
+    ],
+    "source": "Original Stage 2 mesh/PBR finish; source author_stage2.py"
+  },
+  "build_gable": {
+    "path": "Assets/models/build_gable.glb",
+    "bounds": [
+      [
+        -4.5,
+        0.0,
+        -0.1
+      ],
+      [
+        4.5,
+        1.6968734956313598,
+        0.1
+      ]
+    ],
+    "source": "Original Stage 2 mesh/PBR finish; source author_stage2.py"
   }
 }

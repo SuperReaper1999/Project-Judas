@@ -69,6 +69,111 @@ void JointContinuation(){
   JointState state;guard.world.GetJoint(guard.joint,state);Check(state.angularDrive.impulses==glm::vec3(0)&&state.angularDrive.enabled,"changed reconstructed context invalidates guesses while retaining actuator intent");
  }
 }
+// Numeric context equality must distinguish real changes from IEEE zero signs.
+// Mutate the serialized fixture, never the restored physical state or tolerances.
+void SignedZeroContinuation() {
+    Articulation source;
+    for (int i = 0; i < 5; ++i) source.world.Step(dt);
+    const auto saved = source.Save();
+    SaveArchive record(saved);
+    uint32_t version = 0;
+    std::string context;
+    record(version, context);
+    const auto historyOffset = record.position;
+    SaveArchive fields(context);
+    JointSettings settings;
+    fields(settings.type, settings.anchorA, settings.anchorB, settings.frameA, settings.frameB,
+           settings.enabled, settings.limits, settings.motor, settings.spring, settings.lower,
+           settings.upper, settings.speed, settings.maxForce, settings.rest, settings.stiffness,
+           settings.damping, settings.rotationalResistance);
+    const auto bodiesOffset = fields.position;
+    std::string first, second;
+    fields(first, second);
+    fields.Finish();
+    SaveArchive body(first);
+    glm::vec3 position, linear, angular;
+    glm::quat rotation;
+    float inverseMass = 0;
+    glm::mat3 inertia;
+    body(position, rotation, linear, angular, inverseMass);
+    const auto inertiaOffset = body.position;
+    body(inertia);
+    unsigned flipped = 0;
+    for (int column = 0; column < 3; ++column)
+        for (int row = 0; row < 3; ++row)
+            if (inertia[column][row] == 0) {
+                Word(first, inertiaOffset + (column * 3 + row) * 4,
+                     std::signbit(inertia[column][row]) ? 0 : 0x80000000u);
+                ++flipped;
+            }
+    SaveArchive bodies;
+    bodies(first, second);
+    auto signedContext = context.substr(0, bodiesOffset) + bodies.bytes;
+    SaveArchive header;
+    header(version, signedContext);
+    const auto changed = header.bytes + saved.substr(historyOffset);
+    Check(flipped >= 6 && changed != saved, "fixture genuinely changes inertia zero signs");
+    Articulation restored;
+    restored.MatchMotion(source);
+    const auto pose = restored.world.GetTransform(restored.a);
+    const auto velocity = restored.world.GetLinearVelocity(restored.a);
+    Check(!Throws([&] { restored.Restore(changed); }),
+          "signed-zero inertia continuation accepts numerically identical state");
+    Check(restored.world.GetTransform(restored.a).position == pose.position &&
+              restored.world.GetTransform(restored.a).rotation == pose.rotation &&
+              restored.world.GetLinearVelocity(restored.a) == velocity,
+          "signed-zero comparison performs no physical repair");
+    source.world.Step(dt);
+    restored.world.Step(dt);
+    Check(source.world.GetTransform(source.a).position == restored.world.GetTransform(restored.a).position &&
+              source.world.GetAngularVelocity(source.b) == restored.world.GetAngularVelocity(restored.b),
+          "signed-zero history continues to the exact uninterrupted endpoint");
+    // Force the typed fallback, then independently alter one real field. Even a
+    // one-ULP difference must remain a rejection: there is no fuzzy comparison.
+    for (int mutation = 0; mutation < 5; ++mutation) {
+        auto altered = signedContext;
+        if (mutation == 0) {
+            // First body's position X, after the joint prefix and string length.
+            Word(altered, bodiesOffset + 4, 0x3f800000u);
+        } else if (mutation == 1) {
+            const auto next = std::nextafter(inertia[0][0], std::numeric_limits<float>::infinity());
+            uint32_t bits;
+            std::memcpy(&bits, &next, 4);
+            Word(altered, bodiesOffset + 4 + inertiaOffset, bits);
+        } else if (mutation == 2) {
+            // Joint type: valid enum, different mechanical constraint.
+            Word(altered, 0, uint32_t(JointType::Fixed));
+        } else if (mutation == 3) {
+            // Linear velocity X follows position and orientation in body context.
+            Word(altered, bodiesOffset + 4 + 12 + 16, 0x3f800000u);
+        } else {
+            altered.push_back('x');
+        }
+        SaveArchive badHeader;
+        badHeader(version, altered);
+        const auto bad = badHeader.bytes + saved.substr(historyOffset);
+        Articulation rejected;
+        // Match the original capture, not the subsequently advanced source.
+        rejected.world.ResetBody(rejected.a, pose.position, pose.rotation);
+        // Restore all original motion using the context bytes directly.
+        SaveArchive originalFirst(context.substr(bodiesOffset));
+        std::string aBytes, bBytes;
+        originalFirst(aBytes, bBytes);
+        auto apply = [&](const std::string &bytes, BodyHandle handle) {
+            SaveArchive physical(bytes);
+            glm::vec3 p, v, w;
+            glm::quat q;
+            physical(p, q, v, w);
+            rejected.world.ResetBody(handle, p, q);
+            rejected.world.SetLinearVelocity(handle, v);
+            rejected.world.SetAngularVelocity(handle, w);
+        };
+        apply(aBytes, rejected.a);
+        apply(bBytes, rejected.b);
+        Check(Throws([&] { rejected.Restore(bad); }),
+              "typed zero fallback still rejects changed physical fields or trailing context");
+    }
+}
 struct Contacts {
  PhysicsWorld world;BodyHandle floor,body;
  explicit Contacts(bool reverse=false){world.Init();auto createFloor=[&]{floor=world.CreateShape(Shape::Box({3,.5f,3}),{{0,-.5f,0},glm::quat(1,0,0,0)},false,0,.8f,0);};
@@ -156,6 +261,69 @@ void WorldParticipant(){
  auto newer=chunks;newer["contacts"].version=99;RuntimeWorld rejectVersion;rejectVersion.Build(loaded,nullptr,error,nullptr,nullptr,true);WorldPersistence::Prepare(rejectVersion,error);Check(!WorldPersistence::Restore(rejectVersion,newer,error),"unsupported newer publication version rejects");
  auto missing=chunks;missing.erase("contacts");RuntimeWorld rejectMissing;rejectMissing.Build(loaded,nullptr,error,nullptr,nullptr,true);WorldPersistence::Prepare(rejectMissing,error);Check(!WorldPersistence::Restore(rejectMissing,missing,error),"new articulated context cannot silently lose its completed publication");
 }
+void MassFieldValidation() {
+    PhysicsWorld world;
+    world.Init();
+    const auto body = world.CreateDynamicBox({0, 0, 0}, {.3f, .4f, .5f}, 3, .6f, 0);
+    SaveArchive saved;
+    world.PersistBodyMass(saved, body);
+    for (int mutation = 0; mutation < 5; ++mutation) {
+        auto bytes = saved.bytes;
+        if (mutation == 0) Word(bytes, 0, 0); // zero inverse mass on a dynamic body
+        if (mutation == 1) Word(bytes, 4, 0xbf800000u); // negative inertia
+        if (mutation == 2) Word(bytes, 8, 0x3f800000u); // asymmetric tensor
+        if (mutation == 3) Word(bytes, 4, 0x7fc00000u); // NaN
+        if (mutation == 4) bytes.pop_back();
+        const auto before = world.GetMass(body);
+        Check(Throws([&] { SaveArchive input(bytes); world.PersistBodyMass(input, body); }),
+              "invalid/truncated physical mass record rejects");
+        Check(world.GetMass(body) == before, "failed mass decoding cannot mutate live mass");
+    }
+    const auto anchor = world.CreateStaticBox({0, 0, 0}, {1, 1, 1}, .6f, 0);
+    Check(Throws([&] { SaveArchive input(saved.bytes); world.PersistBodyMass(input, anchor); }),
+          "dynamic mass record cannot change static authority");
+}
+void DurableMassProperties() {
+    Scene scene;
+    const auto bodyId = scene.CreateObject("custom physical mass body").id;
+    auto *definition = scene.Find(bodyId);
+    definition->body = SceneBodyComponent{};
+    definition->body->managed = true;
+    definition->body->motion = SceneBodyMotion::Dynamic;
+    definition->body->mass = 2;
+    definition->transform.position = {0, 2, 0};
+    SceneJointComponent joint;
+    joint.bodyA = bodyId;
+    joint.settings.type = JointType::Ball;
+    joint.settings.anchorB = {0, 2, 0};
+    scene.Find(scene.CreateObject("physical joint owner").id)->joint = joint;
+    RuntimeWorld source, restored;
+    std::string error;
+    Check(source.Build(scene, nullptr, error), "mass fixture builds");
+    const auto body = source.RuntimeBody(bodyId);
+    glm::mat3 inertia(.31f);
+    inertia[0][1] = inertia[1][0] = .025f;
+    Check(source.Physics().SetMassDistribution(body, 2.125f, inertia),
+          "fixture authors actual mass/inertia independent of shape defaults");
+    source.Physics().SetAngularVelocity(body, {.1f, .2f, .3f});
+    source.Physics().Step(dt);
+    std::map<std::string, SaveChunk> chunks;
+    Scene loaded;
+    const bool captured = WorldPersistence::Capture(source, chunks, error);
+    Check(captured, "mass fixture captures ordinary save participants");
+    const bool ready = captured && WorldPersistence::SceneFrom(chunks, loaded, error) &&
+        restored.Build(loaded, nullptr, error, nullptr, nullptr, true) &&
+        WorldPersistence::Prepare(restored, error) && WorldPersistence::Restore(restored, chunks, error);
+    Check(ready, "actual mass/inertia survives native cold reconstruction");
+    if (!ready) { std::printf("MASS ERROR %s\n", error.c_str()); return; }
+    Check(source.Physics().GetMass(body) == restored.Physics().GetMass(restored.RuntimeBody(bodyId)),
+          "actual mass is restored rather than recomputed from original authoring");
+    source.Physics().Step(dt);
+    restored.Physics().Step(dt);
+    Check(source.Physics().GetTransform(body).position == restored.Physics().GetTransform(restored.RuntimeBody(bodyId)).position &&
+              source.Physics().GetAngularVelocity(body) == restored.Physics().GetAngularVelocity(restored.RuntimeBody(bodyId)),
+          "custom mass tensor retains exact first continued physical endpoint");
+}
 void PhysicalEntityPersistence(){
  Scene scene;auto id=scene.CreateObject("ordinary static prescribed body").id;auto* o=scene.Find(id);o->body=SceneBodyComponent{};o->body->motion=SceneBodyMotion::Static;o->body->managed=false;o->body->shape=SceneShape::Box;
  RuntimeWorld source,restored;std::string error;Check(source.Build(scene,nullptr,error),"static body builds");Check(WorldPersistence::Prepare(source,error),"normal persistence preparation materializes static entity record");auto body=source.RuntimeBody(id);auto* record=source.FindEntity(id);
@@ -215,4 +383,4 @@ void PhysicalEntityPersistence(){
  }
 }
 }
-int main(){try{JointContinuation();CompletedPublication();IndependentQueryPublication();WorldParticipant();PhysicalEntityPersistence();}catch(const std::exception& e){Check(false,e.what());}std::printf("SUMMARY %d checks %d failures\n",checks,failures);return failures?1:0;}
+int main(){try{JointContinuation();SignedZeroContinuation();CompletedPublication();IndependentQueryPublication();WorldParticipant();MassFieldValidation();DurableMassProperties();PhysicalEntityPersistence();}catch(const std::exception& e){Check(false,e.what());}std::printf("SUMMARY %d checks %d failures\n",checks,failures);return failures?1:0;}

@@ -226,6 +226,8 @@ public:
     void FinishQueryTouches();
     void PersistTouches(class SaveArchive&,const std::function<uint64_t(BodyHandle)>&,const std::function<BodyHandle(uint64_t)>&,const std::function<bool(BodyHandle)>& include = {});
     void PersistBodyForces(class SaveArchive&,BodyHandle);
+    // Durable physical properties; independent of disposable solver history.
+    void PersistBodyMass(class SaveArchive&,BodyHandle);
     bool SetBodySensor(BodyHandle handle,bool sensor);
     bool IsBodySensor(BodyHandle handle) const;
     // Internal articulation boundaries drive joints without appearing in casts.

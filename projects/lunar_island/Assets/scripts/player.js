@@ -8,6 +8,9 @@ import { collect, useTool, nodeFor } from './harvesting.js';
 import { add, mul, sub, length, dot, rotate, qm, axis } from './math.js';
 import Camera from './camera.js';
 import HUD from './hud.js';
+import Housing from './housing.js';
+import Construction from './construction.js';
+import { RECIPES } from './definitions.js';
 export default class Player {
     constructor({ entity }) {
         this.entity = entity;
@@ -61,7 +64,9 @@ export default class Player {
     }
     bind(restored) {
         this.camera = new Camera(this);
+        this.housing = new Housing(this);
         this.hud = new HUD(this, restored);
+        this.builder = new Construction(this);
         this.request = null;
         this.quitAfterSave = false;
         this.refreshToken = saves.refresh();
@@ -80,7 +85,16 @@ export default class Player {
         const e = world.entity(WORLD.sounds[sound]);
         if (e?.valid && e.audio?.ready) {
             e.transform = { position: this.entity.transform.position };
-            e.playAudioOneShot();
+            try {
+                e.playAudioOneShot();
+            } catch (error) {
+                if (!this.audioWarning) {
+                    this.audioWarning = String(error);
+                    console.log(
+                        'Optional audio feedback skipped: ' + error.message,
+                    );
+                }
+            }
         }
     }
     atFire() {
@@ -98,7 +112,13 @@ export default class Player {
         const result = Bag.craft(
             this.state.bag,
             id,
-            this.atFire() ? 'campfire' : 'hand',
+            RECIPES.find((r) => r.id === id)?.station === 'workbench'
+                ? this.housing.atStation('workbench')
+                    ? 'workbench'
+                    : 'hand'
+                : this.atFire()
+                  ? 'campfire'
+                  : 'hand',
         );
         if (!result.ok) {
             this.say(result.reason);
@@ -110,6 +130,16 @@ export default class Player {
         if (ITEMS[id]?.tool) this.state.equipped = id;
         this.effect('craft', 'Crafted ' + (ITEMS[id]?.name || id) + '.');
         return true;
+    }
+    reconcileEquipment() {
+        for (const key of Object.keys(this.state.equipment))
+            if (!Bag.count(this.state.bag, this.state.equipment[key]))
+                delete this.state.equipment[key];
+        if (
+            this.state.equipped !== 'hands' &&
+            !Bag.count(this.state.bag, this.state.equipped)
+        )
+            this.state.equipped = 'hands';
     }
     useSlot(index) {
         const slot = this.state.bag.slots[index];
@@ -136,6 +166,7 @@ export default class Player {
         }
         this.state.bag = result.bag;
         this.state.vitals = consume(this.state.vitals, def.use);
+        this.reconcileEquipment();
         this.effect('consume', 'Used ' + def.name + '.');
     }
     dropSlot(index) {
@@ -171,6 +202,7 @@ export default class Player {
         );
     }
     interact(hit) {
+        if (this.housing.interact(hit)) return;
         if (hit?.entity?.id === WORLD.well) {
             const has = Bag.count(this.state.bag, 'empty_flask');
             if (has) {
@@ -240,7 +272,12 @@ export default class Player {
                 this.blocked = false;
             return;
         }
+        this.builder.tick();
         const hit = this.camera.hit(3.8);
+        if (this.builder.active) {
+            if (input.pressed('primary')) this.builder.confirm();
+            return;
+        }
         if (input.pressed('interact')) this.interact(hit);
         if (input.pressed('primary') && this.cooldown === 0) {
             this.cooldown = 0.45;
@@ -250,11 +287,13 @@ export default class Player {
                     (s) => s?.item === this.state.equipped,
                 );
                 this.useSlot(slot);
-            } else useTool(this, hit);
+            } else if (!this.housing.damage(hit)) useTool(this, hit);
         }
     }
     context() {
         const hit = this.camera.hit(3.8);
+        const housingContext = this.housing.context(hit);
+        if (housingContext) return housingContext;
         if (hit?.entity?.id === WORLD.well)
             return 'E · Refill flask / drink fresh spring water';
         if (hit?.entity && this.state.drops[hit.entity.id])
@@ -283,7 +322,7 @@ export default class Player {
     }
     recover() {
         this.entity.transform = {
-            position: {
+            position: this.housing.homePosition() || {
                 x: WORLD.spawn[0],
                 y: WORLD.spawn[1],
                 z: WORLD.spawn[2],
@@ -338,6 +377,7 @@ export default class Player {
                 this.clip = clip;
             }
         }
+        this.builder?.present();
         for (const [id, entity] of Object.entries(WORLD.viewmodels)) {
             const e = world.entity(entity);
             e.renderVisible =
@@ -363,6 +403,7 @@ export default class Player {
         }
     }
     requestSave() {
+        this.builder?.cancel();
         if (this.request) return;
         try {
             this.request = saves.save('island', {
@@ -416,6 +457,7 @@ export default class Player {
         this.hud?.event(e);
     }
     destroy() {
+        this.builder?.cancel();
         input.pointerCapture = false;
         world.clearView();
     }

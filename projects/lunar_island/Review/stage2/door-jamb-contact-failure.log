@@ -1,0 +1,28 @@
+Shadow maps: on
+Graphics: 3.3.0 NVIDIA 580.178.04 / NVIDIA GeForce GTX 970/PCIe/SSE2
+Renderer fragment texture units: 32 (material path uses 12)
+World state: /home/conner/Documents/GitHub/Project-Judas/projects/lunar_island/Saves/island.judasstate (none saved)
+Project: Lunar Island (/home/conner/Documents/GitHub/Project-Judas/projects/lunar_island/lunar_island.judasproj)
+Scene: Lunar Island / Homestead Coast (/home/conner/Documents/GitHub/Project-Judas/projects/lunar_island/Scenes/island.judas)
+World origin (m): 2900.000, 0.000, -1600.000
+JS: Lunar Island: WASD, mouse, E gather, click tool, Tab pack/crafting, Escape pause, F6 save, F9 load.
+PASS welcome pauses actual world
+PASS authored world collision loaded
+PASS capture welcome.png
+PASS Escape begins real game
+PASS CharacterMotor moves via project input
+PASS same player toggles third person
+PASS pause menu stops gameplay
+PASS move/fire do not leak through modal
+DOOR DETAIL valid 1 active 1 rest -1.5 coordinate 3.76598e-07 stiffness 350 limits -1.65 0 velocity [-0.00014981252024881542,0.005299978423863649,-1.6129681171150878e-05] pose [-18.499998092651367,15.379966735839844,-5.497752666473389]
+DOOR CONTACT entity 3060 point [-19.190004348754883,14.179966926574707,-5.442684650421143] normal [1.0,0.0,0.0] separation -9.38201e-06
+DOOR CONTACT entity 3060 point [-19.190004348754883,16.579967498779297,-5.442658424377441] normal [1.0,0.0,0.0] separation -7.77227e-06
+DOOR CONTACT entity 3060 point [-19.18999481201172,14.179967880249023,-5.552684307098389] normal [1.0,0.0,0.0] separation 1.15822e-05
+DOOR CONTACT entity 3060 point [-19.189992904663086,16.579967498779297,-5.552658557891846] normal [1.0,0.0,0.0] separation 1.3192e-05
+DOOR CONTACT entity 3060 point [-17.81000518798828,14.17996597290039,-5.4424214363098145] normal [-1.0,-0.0,-0.0] separation 9.37727e-06
+DOOR CONTACT entity 3060 point [-17.81000328063965,16.579965591430664,-5.4423956871032715] normal [-1.0,-0.0,-0.0] separation 7.76753e-06
+DOOR CONTACT entity 3060 point [-17.809993743896484,16.579967498779297,-5.552395343780518] normal [-1.0,-0.0,-0.0] separation -1.31967e-05
+PASS capture door.png
+FAIL actual opened door reaches intended inward angle
+PASS ordinary application exits cleanly
+11 checks, 1 failures

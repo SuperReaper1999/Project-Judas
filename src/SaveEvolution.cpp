@@ -22,7 +22,7 @@ std::string modDifference(const std::string& old,const std::string& now){
  std::string message="mod loadout/contract mismatch; saved requirements: "+(old.empty()?"unmodded":old)+"; current: "+(now.empty()?"unmodded":now);return message;
 }
 void patch(J& value,const J& ops,bool projectJson=true){need(ops.is_array()&&ops.size()<=128,"JSON patch bound");for(auto& op:ops){keys(op,{"op","path","from","value"});auto path=op.at("path").get<std::string>();need(path.size()<=1024&&std::count(path.begin(),path.end(),'/')<=32,"JSON pointer bound");if(op.contains("from")){auto from=op.at("from").get<std::string>();need(from.size()<=1024&&std::count(from.begin(),from.end(),'/')<=32,"JSON source pointer bound");}auto kind=op.at("op").get<std::string>();need(kind=="test"||kind=="add"||kind=="replace"||kind=="remove"||kind=="move"||kind=="copy","unsupported JSON patch operation");}value=value.patch(ops);if(projectJson){std::string e;need(ScriptSystem::ValidateJson(value.dump(),e,false),"patched JSON: "+e);}else parse(value.dump());}
-SaveChunk& chunk(GameSnapshot& s,const std::string& name){auto i=s.participants.find(name);need(i!=s.participants.end()&&i->second.version==1,"required version-1 participant: "+name);return i->second;}
+SaveChunk& chunk(GameSnapshot& s,const std::string& name){auto i=s.participants.find(name);need(i!=s.participants.end()&&(i->second.version==1||(name=="entities"&&i->second.version==2)),"required supported participant: "+name);return i->second;}
 void operation(GameSnapshot& s,const J& op){
  auto kind=op.at("kind").get<std::string>();
  if(kind=="script"){

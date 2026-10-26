@@ -31,7 +31,7 @@
       ],
       "linear-rendering": true,
       "exposure": 1,
-      "next-id": 2000,
+      "next-id": 6000,
       "fluid-scale": 1,
       "fidelity-policy": {
         "mode": {
@@ -20925,6 +20925,7220 @@
           },
           "audio.reference-distance": 2,
           "audio.maximum-distance": 30
+        }
+      },
+      {
+        "id": 3000,
+        "name": "Seabird Cottage / collision floor",
+        "fields": {
+          "position": [
+            -17,
+            14.079962161520005,
+            -10
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            4,
+            1,
+            3
+          ],
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.mesh-asset": "71ff221df82c01122be721c9635948b6",
+          "render.texture-asset": "",
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            6,
+            0.1,
+            4.5
+          ],
+          "body.radius": 6,
+          "body.mass": 1,
+          "body.friction": 0.8,
+          "body.restitution": 0.02,
+          "body.pickable": true,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0,
+          "body.terrain": "",
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.managed": false,
+          "tags": 64
+        }
+      },
+      {
+        "id": 3010,
+        "name": "Seabird Cottage / window_wall",
+        "fields": {
+          "position": [
+            -21.5,
+            15.529962161520004,
+            -14.5
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.mesh-asset": "d38ade9ded58694eb62798061d31f017",
+          "render.texture-asset": "",
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "compound"
+            }
+          },
+          "body.half-extents": [
+            1.5,
+            1.35,
+            0.12
+          ],
+          "body.radius": 1.5,
+          "body.mass": 65,
+          "body.friction": 0.8,
+          "body.restitution": 0.02,
+          "body.pickable": true,
+          "body.compound-count": 4,
+          "body.fluid-cavity-count": 0,
+          "body.terrain": "",
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.managed": false,
+          "body.compound-box": [
+            {
+              "center": [
+                -1.1,
+                0,
+                0
+              ],
+              "halfExtents": [
+                0.4,
+                1.35,
+                0.12
+              ]
+            },
+            {
+              "center": [
+                1.1,
+                0,
+                0
+              ],
+              "halfExtents": [
+                0.4,
+                1.35,
+                0.12
+              ]
+            },
+            {
+              "center": [
+                0,
+                -0.9,
+                0
+              ],
+              "halfExtents": [
+                0.7,
+                0.45,
+                0.12
+              ]
+            },
+            {
+              "center": [
+                0,
+                1.05,
+                0
+              ],
+              "halfExtents": [
+                0.7,
+                0.3,
+                0.12
+              ]
+            }
+          ],
+          "tags": 64
+        }
+      },
+      {
+        "id": 3020,
+        "name": "Seabird Cottage / window_wall",
+        "fields": {
+          "position": [
+            -21.5,
+            15.529962161520004,
+            -5.5
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.mesh-asset": "d38ade9ded58694eb62798061d31f017",
+          "render.texture-asset": "",
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "compound"
+            }
+          },
+          "body.half-extents": [
+            1.5,
+            1.35,
+            0.12
+          ],
+          "body.radius": 1.5,
+          "body.mass": 65,
+          "body.friction": 0.8,
+          "body.restitution": 0.02,
+          "body.pickable": true,
+          "body.compound-count": 4,
+          "body.fluid-cavity-count": 0,
+          "body.terrain": "",
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.managed": false,
+          "body.compound-box": [
+            {
+              "center": [
+                -1.1,
+                0,
+                0
+              ],
+              "halfExtents": [
+                0.4,
+                1.35,
+                0.12
+              ]
+            },
+            {
+              "center": [
+                1.1,
+                0,
+                0
+              ],
+              "halfExtents": [
+                0.4,
+                1.35,
+                0.12
+              ]
+            },
+            {
+              "center": [
+                0,
+                -0.9,
+                0
+              ],
+              "halfExtents": [
+                0.7,
+                0.45,
+                0.12
+              ]
+            },
+            {
+              "center": [
+                0,
+                1.05,
+                0
+              ],
+              "halfExtents": [
+                0.7,
+                0.3,
+                0.12
+              ]
+            }
+          ],
+          "tags": 64
+        }
+      },
+      {
+        "id": 3011,
+        "name": "Seabird Cottage / wall",
+        "fields": {
+          "position": [
+            -18.5,
+            15.529962161520004,
+            -14.5
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.mesh-asset": "41a1d3f35e2bd97fc5992127aa24dbd6",
+          "render.texture-asset": "",
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            1.5,
+            1.35,
+            0.12
+          ],
+          "body.radius": 1.5,
+          "body.mass": 65,
+          "body.friction": 0.8,
+          "body.restitution": 0.02,
+          "body.pickable": true,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0,
+          "body.terrain": "",
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.managed": false,
+          "tags": 64
+        }
+      },
+      {
+        "id": 3012,
+        "name": "Seabird Cottage / wall",
+        "fields": {
+          "position": [
+            -15.5,
+            15.529962161520004,
+            -14.5
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.mesh-asset": "41a1d3f35e2bd97fc5992127aa24dbd6",
+          "render.texture-asset": "",
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            1.5,
+            1.35,
+            0.12
+          ],
+          "body.radius": 1.5,
+          "body.mass": 65,
+          "body.friction": 0.8,
+          "body.restitution": 0.02,
+          "body.pickable": true,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0,
+          "body.terrain": "",
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.managed": false,
+          "tags": 64
+        }
+      },
+      {
+        "id": 3022,
+        "name": "Seabird Cottage / wall",
+        "fields": {
+          "position": [
+            -15.5,
+            15.529962161520004,
+            -5.5
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.mesh-asset": "41a1d3f35e2bd97fc5992127aa24dbd6",
+          "render.texture-asset": "",
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            1.5,
+            1.35,
+            0.12
+          ],
+          "body.radius": 1.5,
+          "body.mass": 65,
+          "body.friction": 0.8,
+          "body.restitution": 0.02,
+          "body.pickable": true,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0,
+          "body.terrain": "",
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.managed": false,
+          "tags": 64
+        }
+      },
+      {
+        "id": 3013,
+        "name": "Seabird Cottage / window_wall",
+        "fields": {
+          "position": [
+            -12.5,
+            15.529962161520004,
+            -14.5
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.mesh-asset": "d38ade9ded58694eb62798061d31f017",
+          "render.texture-asset": "",
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "compound"
+            }
+          },
+          "body.half-extents": [
+            1.5,
+            1.35,
+            0.12
+          ],
+          "body.radius": 1.5,
+          "body.mass": 65,
+          "body.friction": 0.8,
+          "body.restitution": 0.02,
+          "body.pickable": true,
+          "body.compound-count": 4,
+          "body.fluid-cavity-count": 0,
+          "body.terrain": "",
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.managed": false,
+          "body.compound-box": [
+            {
+              "center": [
+                -1.1,
+                0,
+                0
+              ],
+              "halfExtents": [
+                0.4,
+                1.35,
+                0.12
+              ]
+            },
+            {
+              "center": [
+                1.1,
+                0,
+                0
+              ],
+              "halfExtents": [
+                0.4,
+                1.35,
+                0.12
+              ]
+            },
+            {
+              "center": [
+                0,
+                -0.9,
+                0
+              ],
+              "halfExtents": [
+                0.7,
+                0.45,
+                0.12
+              ]
+            },
+            {
+              "center": [
+                0,
+                1.05,
+                0
+              ],
+              "halfExtents": [
+                0.7,
+                0.3,
+                0.12
+              ]
+            }
+          ],
+          "tags": 64
+        }
+      },
+      {
+        "id": 3023,
+        "name": "Seabird Cottage / window_wall",
+        "fields": {
+          "position": [
+            -12.5,
+            15.529962161520004,
+            -5.5
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.mesh-asset": "d38ade9ded58694eb62798061d31f017",
+          "render.texture-asset": "",
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "compound"
+            }
+          },
+          "body.half-extents": [
+            1.5,
+            1.35,
+            0.12
+          ],
+          "body.radius": 1.5,
+          "body.mass": 65,
+          "body.friction": 0.8,
+          "body.restitution": 0.02,
+          "body.pickable": true,
+          "body.compound-count": 4,
+          "body.fluid-cavity-count": 0,
+          "body.terrain": "",
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.managed": false,
+          "body.compound-box": [
+            {
+              "center": [
+                -1.1,
+                0,
+                0
+              ],
+              "halfExtents": [
+                0.4,
+                1.35,
+                0.12
+              ]
+            },
+            {
+              "center": [
+                1.1,
+                0,
+                0
+              ],
+              "halfExtents": [
+                0.4,
+                1.35,
+                0.12
+              ]
+            },
+            {
+              "center": [
+                0,
+                -0.9,
+                0
+              ],
+              "halfExtents": [
+                0.7,
+                0.45,
+                0.12
+              ]
+            },
+            {
+              "center": [
+                0,
+                1.05,
+                0
+              ],
+              "halfExtents": [
+                0.7,
+                0.3,
+                0.12
+              ]
+            }
+          ],
+          "tags": 64
+        }
+      },
+      {
+        "id": 3040,
+        "name": "Seabird Cottage / side wall",
+        "fields": {
+          "position": [
+            -23,
+            15.529962161520004,
+            -13
+          ],
+          "rotation": [
+            0.7071067811865476,
+            0,
+            0.7071067811865476,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.mesh-asset": "41a1d3f35e2bd97fc5992127aa24dbd6",
+          "render.texture-asset": "",
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            1.5,
+            1.35,
+            0.12
+          ],
+          "body.radius": 1.5,
+          "body.mass": 65,
+          "body.friction": 0.8,
+          "body.restitution": 0.02,
+          "body.pickable": true,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0,
+          "body.terrain": "",
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.managed": false,
+          "tags": 64
+        }
+      },
+      {
+        "id": 3041,
+        "name": "Seabird Cottage / side wall",
+        "fields": {
+          "position": [
+            -23,
+            15.529962161520004,
+            -10
+          ],
+          "rotation": [
+            0.7071067811865476,
+            0,
+            0.7071067811865476,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.mesh-asset": "41a1d3f35e2bd97fc5992127aa24dbd6",
+          "render.texture-asset": "",
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            1.5,
+            1.35,
+            0.12
+          ],
+          "body.radius": 1.5,
+          "body.mass": 65,
+          "body.friction": 0.8,
+          "body.restitution": 0.02,
+          "body.pickable": true,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0,
+          "body.terrain": "",
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.managed": false,
+          "tags": 64
+        }
+      },
+      {
+        "id": 3042,
+        "name": "Seabird Cottage / side wall",
+        "fields": {
+          "position": [
+            -23,
+            15.529962161520004,
+            -7
+          ],
+          "rotation": [
+            0.7071067811865476,
+            0,
+            0.7071067811865476,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.mesh-asset": "41a1d3f35e2bd97fc5992127aa24dbd6",
+          "render.texture-asset": "",
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            1.5,
+            1.35,
+            0.12
+          ],
+          "body.radius": 1.5,
+          "body.mass": 65,
+          "body.friction": 0.8,
+          "body.restitution": 0.02,
+          "body.pickable": true,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0,
+          "body.terrain": "",
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.managed": false,
+          "tags": 64
+        }
+      },
+      {
+        "id": 3050,
+        "name": "Seabird Cottage / side wall",
+        "fields": {
+          "position": [
+            -11,
+            15.529962161520004,
+            -13
+          ],
+          "rotation": [
+            0.7071067811865476,
+            0,
+            0.7071067811865476,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.mesh-asset": "41a1d3f35e2bd97fc5992127aa24dbd6",
+          "render.texture-asset": "",
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            1.5,
+            1.35,
+            0.12
+          ],
+          "body.radius": 1.5,
+          "body.mass": 65,
+          "body.friction": 0.8,
+          "body.restitution": 0.02,
+          "body.pickable": true,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0,
+          "body.terrain": "",
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.managed": false,
+          "tags": 64
+        }
+      },
+      {
+        "id": 3051,
+        "name": "Seabird Cottage / side wall",
+        "fields": {
+          "position": [
+            -11,
+            15.529962161520004,
+            -10
+          ],
+          "rotation": [
+            0.7071067811865476,
+            0,
+            0.7071067811865476,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.mesh-asset": "41a1d3f35e2bd97fc5992127aa24dbd6",
+          "render.texture-asset": "",
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            1.5,
+            1.35,
+            0.12
+          ],
+          "body.radius": 1.5,
+          "body.mass": 65,
+          "body.friction": 0.8,
+          "body.restitution": 0.02,
+          "body.pickable": true,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0,
+          "body.terrain": "",
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.managed": false,
+          "tags": 64
+        }
+      },
+      {
+        "id": 3052,
+        "name": "Seabird Cottage / side wall",
+        "fields": {
+          "position": [
+            -11,
+            15.529962161520004,
+            -7
+          ],
+          "rotation": [
+            0.7071067811865476,
+            0,
+            0.7071067811865476,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.mesh-asset": "41a1d3f35e2bd97fc5992127aa24dbd6",
+          "render.texture-asset": "",
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            1.5,
+            1.35,
+            0.12
+          ],
+          "body.radius": 1.5,
+          "body.mass": 65,
+          "body.friction": 0.8,
+          "body.restitution": 0.02,
+          "body.pickable": true,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0,
+          "body.terrain": "",
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.managed": false,
+          "tags": 64
+        }
+      },
+      {
+        "id": 3060,
+        "name": "Seabird Cottage / doorway frame",
+        "fields": {
+          "position": [
+            -18.5,
+            15.529962161520004,
+            -5.5
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.mesh-asset": "42e5a4b54ea7a44b4faf1508edbbde5f",
+          "render.texture-asset": "",
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "compound"
+            }
+          },
+          "body.half-extents": [
+            0.85,
+            1.35,
+            0.14
+          ],
+          "body.radius": 0.85,
+          "body.mass": 65,
+          "body.friction": 0.8,
+          "body.restitution": 0.02,
+          "body.pickable": true,
+          "body.compound-count": 3,
+          "body.fluid-cavity-count": 0,
+          "body.terrain": "",
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.managed": false,
+          "body.compound-box": [
+            {
+              "center": [
+                -0.77,
+                -0.05,
+                0
+              ],
+              "halfExtents": [
+                0.08,
+                1.3,
+                0.14
+              ]
+            },
+            {
+              "center": [
+                0.77,
+                -0.05,
+                0
+              ],
+              "halfExtents": [
+                0.08,
+                1.3,
+                0.14
+              ]
+            },
+            {
+              "center": [
+                0,
+                1.27,
+                0
+              ],
+              "halfExtents": [
+                0.85,
+                0.08,
+                0.14
+              ]
+            }
+          ],
+          "tags": 64
+        }
+      },
+      {
+        "id": 3062,
+        "name": "Seabird Cottage / door infill",
+        "fields": {
+          "position": [
+            -19.675,
+            15.529962161520004,
+            -5.5
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            0.21666666666666667,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.mesh-asset": "41a1d3f35e2bd97fc5992127aa24dbd6",
+          "render.texture-asset": "",
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            0.325,
+            1.35,
+            0.12
+          ],
+          "body.radius": 0.325,
+          "body.mass": 1,
+          "body.friction": 0.8,
+          "body.restitution": 0.02,
+          "body.pickable": true,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0,
+          "body.terrain": "",
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.managed": false,
+          "tags": 64
+        }
+      },
+      {
+        "id": 3063,
+        "name": "Seabird Cottage / door infill",
+        "fields": {
+          "position": [
+            -17.325,
+            15.529962161520004,
+            -5.5
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            0.21666666666666667,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.mesh-asset": "41a1d3f35e2bd97fc5992127aa24dbd6",
+          "render.texture-asset": "",
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            0.325,
+            1.35,
+            0.12
+          ],
+          "body.radius": 0.325,
+          "body.mass": 1,
+          "body.friction": 0.8,
+          "body.restitution": 0.02,
+          "body.pickable": true,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0,
+          "body.terrain": "",
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.managed": false,
+          "tags": 64
+        }
+      },
+      {
+        "id": 3061,
+        "name": "Seabird Cottage / physical hinged leaf",
+        "fields": {
+          "position": [
+            -18.5,
+            15.379962161520004,
+            -5.5
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.mesh-asset": "c1d761d76c4985e7d6e723e073253b7e",
+          "render.texture-asset": "",
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "body": {
+            "motion": {
+              "symbol": "dynamic"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            0.65,
+            1.175,
+            0.055
+          ],
+          "body.radius": 0.65,
+          "body.mass": 18,
+          "body.friction": 0.8,
+          "body.restitution": 0.02,
+          "body.pickable": true,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0,
+          "body.terrain": "",
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.managed": false,
+          "tags": 64
+        }
+      },
+      {
+        "id": 3070,
+        "name": "Seabird Cottage / pitched roof",
+        "fields": {
+          "position": [
+            -17,
+            17.848895188618958,
+            -12.25
+          ],
+          "rotation": [
+            0.984807753012208,
+            -0.17364817766693033,
+            0,
+            0
+          ],
+          "scale": [
+            4,
+            1,
+            1.596266658713868
+          ],
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.mesh-asset": "69fb5fd50a3b1cf1ea299445c98f87e6",
+          "render.texture-asset": "",
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            6,
+            0.1,
+            2.394399988070802
+          ],
+          "body.radius": 6,
+          "body.mass": 1,
+          "body.friction": 0.8,
+          "body.restitution": 0.02,
+          "body.pickable": true,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0,
+          "body.terrain": "",
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.managed": false,
+          "tags": 64
+        }
+      },
+      {
+        "id": 3071,
+        "name": "Seabird Cottage / pitched roof",
+        "fields": {
+          "position": [
+            -17,
+            17.848895188618958,
+            -7.75
+          ],
+          "rotation": [
+            0.984807753012208,
+            0.17364817766693033,
+            0,
+            0
+          ],
+          "scale": [
+            4,
+            1,
+            1.596266658713868
+          ],
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.mesh-asset": "69fb5fd50a3b1cf1ea299445c98f87e6",
+          "render.texture-asset": "",
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            6,
+            0.1,
+            2.394399988070802
+          ],
+          "body.radius": 6,
+          "body.mass": 1,
+          "body.friction": 0.8,
+          "body.restitution": 0.02,
+          "body.pickable": true,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0,
+          "body.terrain": "",
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.managed": false,
+          "tags": 64
+        }
+      },
+      {
+        "id": 3170,
+        "name": "Seabird Cottage / timber gable",
+        "fields": {
+          "position": [
+            -23,
+            16.879962161520005,
+            -10
+          ],
+          "rotation": [
+            0.7071067811865476,
+            0,
+            0.7071067811865476,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.mesh-asset": "6bbd8c6ab315676ace9ad9a61cda72d5",
+          "render.texture-asset": "",
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "compound"
+            }
+          },
+          "body.half-extents": [
+            4.5,
+            1,
+            0.1
+          ],
+          "body.radius": 4.5,
+          "body.mass": 1,
+          "body.friction": 0.8,
+          "body.restitution": 0.02,
+          "body.pickable": true,
+          "body.compound-count": 18,
+          "body.fluid-cavity-count": 0,
+          "body.terrain": "",
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.managed": false,
+          "body.compound-box": [
+            {
+              "center": [
+                -4.25,
+                0.12049627928327529,
+                0
+              ],
+              "halfExtents": [
+                0.25,
+                0.12049627928327529,
+                0.1
+              ]
+            },
+            {
+              "center": [
+                -3.75,
+                0.21148883784982586,
+                0
+              ],
+              "halfExtents": [
+                0.25,
+                0.21148883784982586,
+                0.1
+              ]
+            },
+            {
+              "center": [
+                -3.25,
+                0.30248139641637645,
+                0
+              ],
+              "halfExtents": [
+                0.25,
+                0.30248139641637645,
+                0.1
+              ]
+            },
+            {
+              "center": [
+                -2.75,
+                0.3934739549829271,
+                0
+              ],
+              "halfExtents": [
+                0.25,
+                0.3934739549829271,
+                0.1
+              ]
+            },
+            {
+              "center": [
+                -2.25,
+                0.4844665135494776,
+                0
+              ],
+              "halfExtents": [
+                0.25,
+                0.4844665135494776,
+                0.1
+              ]
+            },
+            {
+              "center": [
+                -1.75,
+                0.5754590721160282,
+                0
+              ],
+              "halfExtents": [
+                0.25,
+                0.5754590721160282,
+                0.1
+              ]
+            },
+            {
+              "center": [
+                -1.25,
+                0.6664516306825787,
+                0
+              ],
+              "halfExtents": [
+                0.25,
+                0.6664516306825787,
+                0.1
+              ]
+            },
+            {
+              "center": [
+                -0.75,
+                0.7574441892491294,
+                0
+              ],
+              "halfExtents": [
+                0.25,
+                0.7574441892491294,
+                0.1
+              ]
+            },
+            {
+              "center": [
+                -0.25,
+                0.8484367478156799,
+                0
+              ],
+              "halfExtents": [
+                0.25,
+                0.8484367478156799,
+                0.1
+              ]
+            },
+            {
+              "center": [
+                0.25,
+                0.8484367478156799,
+                0
+              ],
+              "halfExtents": [
+                0.25,
+                0.8484367478156799,
+                0.1
+              ]
+            },
+            {
+              "center": [
+                0.75,
+                0.7574441892491294,
+                0
+              ],
+              "halfExtents": [
+                0.25,
+                0.7574441892491294,
+                0.1
+              ]
+            },
+            {
+              "center": [
+                1.25,
+                0.6664516306825787,
+                0
+              ],
+              "halfExtents": [
+                0.25,
+                0.6664516306825787,
+                0.1
+              ]
+            },
+            {
+              "center": [
+                1.75,
+                0.5754590721160282,
+                0
+              ],
+              "halfExtents": [
+                0.25,
+                0.5754590721160282,
+                0.1
+              ]
+            },
+            {
+              "center": [
+                2.25,
+                0.4844665135494776,
+                0
+              ],
+              "halfExtents": [
+                0.25,
+                0.4844665135494776,
+                0.1
+              ]
+            },
+            {
+              "center": [
+                2.75,
+                0.3934739549829271,
+                0
+              ],
+              "halfExtents": [
+                0.25,
+                0.3934739549829271,
+                0.1
+              ]
+            },
+            {
+              "center": [
+                3.25,
+                0.30248139641637645,
+                0
+              ],
+              "halfExtents": [
+                0.25,
+                0.30248139641637645,
+                0.1
+              ]
+            },
+            {
+              "center": [
+                3.75,
+                0.21148883784982586,
+                0
+              ],
+              "halfExtents": [
+                0.25,
+                0.21148883784982586,
+                0.1
+              ]
+            },
+            {
+              "center": [
+                4.25,
+                0.12049627928327529,
+                0
+              ],
+              "halfExtents": [
+                0.25,
+                0.12049627928327529,
+                0.1
+              ]
+            }
+          ],
+          "tags": 64
+        }
+      },
+      {
+        "id": 3171,
+        "name": "Seabird Cottage / timber gable",
+        "fields": {
+          "position": [
+            -11,
+            16.879962161520005,
+            -10
+          ],
+          "rotation": [
+            0.7071067811865476,
+            0,
+            0.7071067811865476,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.mesh-asset": "6bbd8c6ab315676ace9ad9a61cda72d5",
+          "render.texture-asset": "",
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "compound"
+            }
+          },
+          "body.half-extents": [
+            4.5,
+            1,
+            0.1
+          ],
+          "body.radius": 4.5,
+          "body.mass": 1,
+          "body.friction": 0.8,
+          "body.restitution": 0.02,
+          "body.pickable": true,
+          "body.compound-count": 18,
+          "body.fluid-cavity-count": 0,
+          "body.terrain": "",
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.managed": false,
+          "body.compound-box": [
+            {
+              "center": [
+                -4.25,
+                0.12049627928327529,
+                0
+              ],
+              "halfExtents": [
+                0.25,
+                0.12049627928327529,
+                0.1
+              ]
+            },
+            {
+              "center": [
+                -3.75,
+                0.21148883784982586,
+                0
+              ],
+              "halfExtents": [
+                0.25,
+                0.21148883784982586,
+                0.1
+              ]
+            },
+            {
+              "center": [
+                -3.25,
+                0.30248139641637645,
+                0
+              ],
+              "halfExtents": [
+                0.25,
+                0.30248139641637645,
+                0.1
+              ]
+            },
+            {
+              "center": [
+                -2.75,
+                0.3934739549829271,
+                0
+              ],
+              "halfExtents": [
+                0.25,
+                0.3934739549829271,
+                0.1
+              ]
+            },
+            {
+              "center": [
+                -2.25,
+                0.4844665135494776,
+                0
+              ],
+              "halfExtents": [
+                0.25,
+                0.4844665135494776,
+                0.1
+              ]
+            },
+            {
+              "center": [
+                -1.75,
+                0.5754590721160282,
+                0
+              ],
+              "halfExtents": [
+                0.25,
+                0.5754590721160282,
+                0.1
+              ]
+            },
+            {
+              "center": [
+                -1.25,
+                0.6664516306825787,
+                0
+              ],
+              "halfExtents": [
+                0.25,
+                0.6664516306825787,
+                0.1
+              ]
+            },
+            {
+              "center": [
+                -0.75,
+                0.7574441892491294,
+                0
+              ],
+              "halfExtents": [
+                0.25,
+                0.7574441892491294,
+                0.1
+              ]
+            },
+            {
+              "center": [
+                -0.25,
+                0.8484367478156799,
+                0
+              ],
+              "halfExtents": [
+                0.25,
+                0.8484367478156799,
+                0.1
+              ]
+            },
+            {
+              "center": [
+                0.25,
+                0.8484367478156799,
+                0
+              ],
+              "halfExtents": [
+                0.25,
+                0.8484367478156799,
+                0.1
+              ]
+            },
+            {
+              "center": [
+                0.75,
+                0.7574441892491294,
+                0
+              ],
+              "halfExtents": [
+                0.25,
+                0.7574441892491294,
+                0.1
+              ]
+            },
+            {
+              "center": [
+                1.25,
+                0.6664516306825787,
+                0
+              ],
+              "halfExtents": [
+                0.25,
+                0.6664516306825787,
+                0.1
+              ]
+            },
+            {
+              "center": [
+                1.75,
+                0.5754590721160282,
+                0
+              ],
+              "halfExtents": [
+                0.25,
+                0.5754590721160282,
+                0.1
+              ]
+            },
+            {
+              "center": [
+                2.25,
+                0.4844665135494776,
+                0
+              ],
+              "halfExtents": [
+                0.25,
+                0.4844665135494776,
+                0.1
+              ]
+            },
+            {
+              "center": [
+                2.75,
+                0.3934739549829271,
+                0
+              ],
+              "halfExtents": [
+                0.25,
+                0.3934739549829271,
+                0.1
+              ]
+            },
+            {
+              "center": [
+                3.25,
+                0.30248139641637645,
+                0
+              ],
+              "halfExtents": [
+                0.25,
+                0.30248139641637645,
+                0.1
+              ]
+            },
+            {
+              "center": [
+                3.75,
+                0.21148883784982586,
+                0
+              ],
+              "halfExtents": [
+                0.25,
+                0.21148883784982586,
+                0.1
+              ]
+            },
+            {
+              "center": [
+                4.25,
+                0.12049627928327529,
+                0
+              ],
+              "halfExtents": [
+                0.25,
+                0.12049627928327529,
+                0.1
+              ]
+            }
+          ],
+          "tags": 64
+        }
+      },
+      {
+        "id": 3100,
+        "name": "Seabird Cottage / Bed / claim home",
+        "fields": {
+          "position": [
+            -21,
+            14.494962161520004,
+            -12.7
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.mesh-asset": "91977a30f1212809c7e13a4379c9b0fe",
+          "render.texture-asset": "",
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            0.55,
+            0.3,
+            1
+          ],
+          "body.radius": 0.55,
+          "body.mass": 25,
+          "body.friction": 0.8,
+          "body.restitution": 0.02,
+          "body.pickable": true,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0,
+          "body.terrain": "",
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.managed": false,
+          "tags": 64
+        }
+      },
+      {
+        "id": 3101,
+        "name": "Seabird Cottage / Storage chest",
+        "fields": {
+          "position": [
+            -21,
+            14.594962161520005,
+            -7.5
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.mesh-asset": "562cdc0b7f3bbf6d263ebe61bfb5e57c",
+          "render.texture-asset": "",
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            0.6,
+            0.4,
+            0.4
+          ],
+          "body.radius": 0.6,
+          "body.mass": 25,
+          "body.friction": 0.8,
+          "body.restitution": 0.02,
+          "body.pickable": true,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0,
+          "body.terrain": "",
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.managed": false,
+          "tags": 64
+        }
+      },
+      {
+        "id": 3102,
+        "name": "Seabird Cottage / Workbench",
+        "fields": {
+          "position": [
+            -14,
+            14.694962161520005,
+            -12.6
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.mesh-asset": "1c9b43ea32fc42bae7a1caf3a2ecbd4a",
+          "render.texture-asset": "",
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            1,
+            0.5,
+            0.5
+          ],
+          "body.radius": 1,
+          "body.mass": 25,
+          "body.friction": 0.8,
+          "body.restitution": 0.02,
+          "body.pickable": true,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0,
+          "body.terrain": "",
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.managed": false,
+          "tags": 64
+        }
+      },
+      {
+        "id": 3103,
+        "name": "Seabird Cottage / Chair",
+        "fields": {
+          "position": [
+            -17.8,
+            14.694962161520005,
+            -9
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.mesh-asset": "da134bf8cc13fa113f4a2c61c26dec0a",
+          "render.texture-asset": "",
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            0.3,
+            0.5,
+            0.3
+          ],
+          "body.radius": 0.3,
+          "body.mass": 25,
+          "body.friction": 0.8,
+          "body.restitution": 0.02,
+          "body.pickable": true,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0,
+          "body.terrain": "",
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.managed": false,
+          "tags": 64
+        }
+      },
+      {
+        "id": 3104,
+        "name": "Seabird Cottage / Dining table",
+        "fields": {
+          "position": [
+            -16,
+            14.594962161520005,
+            -9.5
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.mesh-asset": "6a97ce58dc6c94600e8a8f26d5a0c590",
+          "render.texture-asset": "",
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            0.8,
+            0.4,
+            0.5
+          ],
+          "body.radius": 0.8,
+          "body.mass": 25,
+          "body.friction": 0.8,
+          "body.restitution": 0.02,
+          "body.pickable": true,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0,
+          "body.terrain": "",
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.managed": false,
+          "tags": 64
+        }
+      },
+      {
+        "id": 3105,
+        "name": "Seabird Cottage / Sofa",
+        "fields": {
+          "position": [
+            -14,
+            14.644962161520004,
+            -7.5
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.mesh-asset": "5014b1cb05b6f9d0dfe51497908f659b",
+          "render.texture-asset": "",
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            1,
+            0.45,
+            0.45
+          ],
+          "body.radius": 1,
+          "body.mass": 25,
+          "body.friction": 0.8,
+          "body.restitution": 0.02,
+          "body.pickable": true,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0,
+          "body.terrain": "",
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.managed": false,
+          "tags": 64
+        }
+      },
+      {
+        "id": 3106,
+        "name": "Seabird Cottage / Cupboard",
+        "fields": {
+          "position": [
+            -12.1,
+            15.094962161520005,
+            -10.7
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.mesh-asset": "75bf6cd1b23b9231c3f2c95073e10eca",
+          "render.texture-asset": "",
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            0.55,
+            0.9,
+            0.3
+          ],
+          "body.radius": 0.55,
+          "body.mass": 25,
+          "body.friction": 0.8,
+          "body.restitution": 0.02,
+          "body.pickable": true,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0,
+          "body.terrain": "",
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.managed": false,
+          "tags": 64
+        }
+      },
+      {
+        "id": 3107,
+        "name": "Seabird Cottage / Shelves",
+        "fields": {
+          "position": [
+            -22.1,
+            15.094962161520005,
+            -10.3
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.mesh-asset": "6013bb6f6228849de2fb47bd2790f09f",
+          "render.texture-asset": "",
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            0.55,
+            0.9,
+            0.22
+          ],
+          "body.radius": 0.55,
+          "body.mass": 25,
+          "body.friction": 0.8,
+          "body.restitution": 0.02,
+          "body.pickable": true,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0,
+          "body.terrain": "",
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.managed": false,
+          "tags": 64
+        }
+      },
+      {
+        "id": 3108,
+        "name": "Seabird Cottage / Warm lamp",
+        "fields": {
+          "position": [
+            -15,
+            14.594962161520005,
+            -11.1
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.mesh-asset": "f88cd9e865c2823cf959acb5febb787a",
+          "render.texture-asset": "",
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            0.2,
+            0.4,
+            0.2
+          ],
+          "body.radius": 0.2,
+          "body.mass": 25,
+          "body.friction": 0.8,
+          "body.restitution": 0.02,
+          "body.pickable": true,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0,
+          "body.terrain": "",
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.managed": false,
+          "tags": 64,
+          "light": {
+            "symbol": "point"
+          },
+          "light.color": [
+            1,
+            0.73,
+            0.4
+          ],
+          "light.range": 6,
+          "light.intensity": 2,
+          "light.cone": [
+            20,
+            35
+          ]
+        }
+      },
+      {
+        "id": 3109,
+        "name": "Seabird Cottage / Woven rug",
+        "fields": {
+          "position": [
+            -17,
+            14.209962161520004,
+            -11.2
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.mesh-asset": "65b1727f35dd0f5e96fc601a2cca1837",
+          "render.texture-asset": "",
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            0.9,
+            0.015,
+            0.65
+          ],
+          "body.radius": 0.9,
+          "body.mass": 25,
+          "body.friction": 0.8,
+          "body.restitution": 0.02,
+          "body.pickable": true,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0,
+          "body.terrain": "",
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.managed": false,
+          "tags": 64
+        }
+      },
+      {
+        "id": 3110,
+        "name": "Seabird Cottage / Island landscape",
+        "fields": {
+          "position": [
+            -17,
+            15.779962161520004,
+            -14.3
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.mesh-asset": "0837be40ca7c1a1180da0b12743392ba",
+          "render.texture-asset": "",
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            0.45,
+            0.32,
+            0.04
+          ],
+          "body.radius": 0.45,
+          "body.mass": 25,
+          "body.friction": 0.8,
+          "body.restitution": 0.02,
+          "body.pickable": true,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0,
+          "body.terrain": "",
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.managed": false,
+          "tags": 64
+        }
+      },
+      {
+        "id": 3120,
+        "name": "Packing crate / clear the entrance",
+        "fields": {
+          "position": [
+            -18.5,
+            14.594962161520003,
+            -4.5
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.mesh-asset": "562cdc0b7f3bbf6d263ebe61bfb5e57c",
+          "render.texture-asset": "",
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            0.6,
+            0.4,
+            0.4
+          ],
+          "body.radius": 0.6,
+          "body.mass": 25,
+          "body.friction": 0.8,
+          "body.restitution": 0.02,
+          "body.pickable": true,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0,
+          "body.terrain": "",
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.managed": false,
+          "tags": 64
+        }
+      },
+      {
+        "id": 3200,
+        "name": "Birchside Cabin / collision floor",
+        "fields": {
+          "position": [
+            58,
+            15.017814538455783,
+            42
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            4,
+            1,
+            3
+          ],
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.mesh-asset": "71ff221df82c01122be721c9635948b6",
+          "render.texture-asset": "",
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            6,
+            0.1,
+            4.5
+          ],
+          "body.radius": 6,
+          "body.mass": 1,
+          "body.friction": 0.8,
+          "body.restitution": 0.02,
+          "body.pickable": true,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0,
+          "body.terrain": "",
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.managed": false,
+          "tags": 64
+        }
+      },
+      {
+        "id": 3210,
+        "name": "Birchside Cabin / window_wall",
+        "fields": {
+          "position": [
+            53.5,
+            16.467814538455784,
+            37.5
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.mesh-asset": "d38ade9ded58694eb62798061d31f017",
+          "render.texture-asset": "",
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "compound"
+            }
+          },
+          "body.half-extents": [
+            1.5,
+            1.35,
+            0.12
+          ],
+          "body.radius": 1.5,
+          "body.mass": 65,
+          "body.friction": 0.8,
+          "body.restitution": 0.02,
+          "body.pickable": true,
+          "body.compound-count": 4,
+          "body.fluid-cavity-count": 0,
+          "body.terrain": "",
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.managed": false,
+          "body.compound-box": [
+            {
+              "center": [
+                -1.1,
+                0,
+                0
+              ],
+              "halfExtents": [
+                0.4,
+                1.35,
+                0.12
+              ]
+            },
+            {
+              "center": [
+                1.1,
+                0,
+                0
+              ],
+              "halfExtents": [
+                0.4,
+                1.35,
+                0.12
+              ]
+            },
+            {
+              "center": [
+                0,
+                -0.9,
+                0
+              ],
+              "halfExtents": [
+                0.7,
+                0.45,
+                0.12
+              ]
+            },
+            {
+              "center": [
+                0,
+                1.05,
+                0
+              ],
+              "halfExtents": [
+                0.7,
+                0.3,
+                0.12
+              ]
+            }
+          ],
+          "tags": 64
+        }
+      },
+      {
+        "id": 3220,
+        "name": "Birchside Cabin / window_wall",
+        "fields": {
+          "position": [
+            53.5,
+            16.467814538455784,
+            46.5
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.mesh-asset": "d38ade9ded58694eb62798061d31f017",
+          "render.texture-asset": "",
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "compound"
+            }
+          },
+          "body.half-extents": [
+            1.5,
+            1.35,
+            0.12
+          ],
+          "body.radius": 1.5,
+          "body.mass": 65,
+          "body.friction": 0.8,
+          "body.restitution": 0.02,
+          "body.pickable": true,
+          "body.compound-count": 4,
+          "body.fluid-cavity-count": 0,
+          "body.terrain": "",
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.managed": false,
+          "body.compound-box": [
+            {
+              "center": [
+                -1.1,
+                0,
+                0
+              ],
+              "halfExtents": [
+                0.4,
+                1.35,
+                0.12
+              ]
+            },
+            {
+              "center": [
+                1.1,
+                0,
+                0
+              ],
+              "halfExtents": [
+                0.4,
+                1.35,
+                0.12
+              ]
+            },
+            {
+              "center": [
+                0,
+                -0.9,
+                0
+              ],
+              "halfExtents": [
+                0.7,
+                0.45,
+                0.12
+              ]
+            },
+            {
+              "center": [
+                0,
+                1.05,
+                0
+              ],
+              "halfExtents": [
+                0.7,
+                0.3,
+                0.12
+              ]
+            }
+          ],
+          "tags": 64
+        }
+      },
+      {
+        "id": 3211,
+        "name": "Birchside Cabin / wall",
+        "fields": {
+          "position": [
+            56.5,
+            16.467814538455784,
+            37.5
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.mesh-asset": "41a1d3f35e2bd97fc5992127aa24dbd6",
+          "render.texture-asset": "",
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            1.5,
+            1.35,
+            0.12
+          ],
+          "body.radius": 1.5,
+          "body.mass": 65,
+          "body.friction": 0.8,
+          "body.restitution": 0.02,
+          "body.pickable": true,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0,
+          "body.terrain": "",
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.managed": false,
+          "tags": 64
+        }
+      },
+      {
+        "id": 3212,
+        "name": "Birchside Cabin / wall",
+        "fields": {
+          "position": [
+            59.5,
+            16.467814538455784,
+            37.5
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.mesh-asset": "41a1d3f35e2bd97fc5992127aa24dbd6",
+          "render.texture-asset": "",
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            1.5,
+            1.35,
+            0.12
+          ],
+          "body.radius": 1.5,
+          "body.mass": 65,
+          "body.friction": 0.8,
+          "body.restitution": 0.02,
+          "body.pickable": true,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0,
+          "body.terrain": "",
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.managed": false,
+          "tags": 64
+        }
+      },
+      {
+        "id": 3222,
+        "name": "Birchside Cabin / wall",
+        "fields": {
+          "position": [
+            59.5,
+            16.467814538455784,
+            46.5
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.mesh-asset": "41a1d3f35e2bd97fc5992127aa24dbd6",
+          "render.texture-asset": "",
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            1.5,
+            1.35,
+            0.12
+          ],
+          "body.radius": 1.5,
+          "body.mass": 65,
+          "body.friction": 0.8,
+          "body.restitution": 0.02,
+          "body.pickable": true,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0,
+          "body.terrain": "",
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.managed": false,
+          "tags": 64
+        }
+      },
+      {
+        "id": 3213,
+        "name": "Birchside Cabin / window_wall",
+        "fields": {
+          "position": [
+            62.5,
+            16.467814538455784,
+            37.5
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.mesh-asset": "d38ade9ded58694eb62798061d31f017",
+          "render.texture-asset": "",
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "compound"
+            }
+          },
+          "body.half-extents": [
+            1.5,
+            1.35,
+            0.12
+          ],
+          "body.radius": 1.5,
+          "body.mass": 65,
+          "body.friction": 0.8,
+          "body.restitution": 0.02,
+          "body.pickable": true,
+          "body.compound-count": 4,
+          "body.fluid-cavity-count": 0,
+          "body.terrain": "",
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.managed": false,
+          "body.compound-box": [
+            {
+              "center": [
+                -1.1,
+                0,
+                0
+              ],
+              "halfExtents": [
+                0.4,
+                1.35,
+                0.12
+              ]
+            },
+            {
+              "center": [
+                1.1,
+                0,
+                0
+              ],
+              "halfExtents": [
+                0.4,
+                1.35,
+                0.12
+              ]
+            },
+            {
+              "center": [
+                0,
+                -0.9,
+                0
+              ],
+              "halfExtents": [
+                0.7,
+                0.45,
+                0.12
+              ]
+            },
+            {
+              "center": [
+                0,
+                1.05,
+                0
+              ],
+              "halfExtents": [
+                0.7,
+                0.3,
+                0.12
+              ]
+            }
+          ],
+          "tags": 64
+        }
+      },
+      {
+        "id": 3223,
+        "name": "Birchside Cabin / window_wall",
+        "fields": {
+          "position": [
+            62.5,
+            16.467814538455784,
+            46.5
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.mesh-asset": "d38ade9ded58694eb62798061d31f017",
+          "render.texture-asset": "",
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "compound"
+            }
+          },
+          "body.half-extents": [
+            1.5,
+            1.35,
+            0.12
+          ],
+          "body.radius": 1.5,
+          "body.mass": 65,
+          "body.friction": 0.8,
+          "body.restitution": 0.02,
+          "body.pickable": true,
+          "body.compound-count": 4,
+          "body.fluid-cavity-count": 0,
+          "body.terrain": "",
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.managed": false,
+          "body.compound-box": [
+            {
+              "center": [
+                -1.1,
+                0,
+                0
+              ],
+              "halfExtents": [
+                0.4,
+                1.35,
+                0.12
+              ]
+            },
+            {
+              "center": [
+                1.1,
+                0,
+                0
+              ],
+              "halfExtents": [
+                0.4,
+                1.35,
+                0.12
+              ]
+            },
+            {
+              "center": [
+                0,
+                -0.9,
+                0
+              ],
+              "halfExtents": [
+                0.7,
+                0.45,
+                0.12
+              ]
+            },
+            {
+              "center": [
+                0,
+                1.05,
+                0
+              ],
+              "halfExtents": [
+                0.7,
+                0.3,
+                0.12
+              ]
+            }
+          ],
+          "tags": 64
+        }
+      },
+      {
+        "id": 3240,
+        "name": "Birchside Cabin / side wall",
+        "fields": {
+          "position": [
+            52,
+            16.467814538455784,
+            39
+          ],
+          "rotation": [
+            0.7071067811865476,
+            0,
+            0.7071067811865476,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.mesh-asset": "41a1d3f35e2bd97fc5992127aa24dbd6",
+          "render.texture-asset": "",
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            1.5,
+            1.35,
+            0.12
+          ],
+          "body.radius": 1.5,
+          "body.mass": 65,
+          "body.friction": 0.8,
+          "body.restitution": 0.02,
+          "body.pickable": true,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0,
+          "body.terrain": "",
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.managed": false,
+          "tags": 64
+        }
+      },
+      {
+        "id": 3241,
+        "name": "Birchside Cabin / side wall",
+        "fields": {
+          "position": [
+            52,
+            16.467814538455784,
+            42
+          ],
+          "rotation": [
+            0.7071067811865476,
+            0,
+            0.7071067811865476,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.mesh-asset": "41a1d3f35e2bd97fc5992127aa24dbd6",
+          "render.texture-asset": "",
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            1.5,
+            1.35,
+            0.12
+          ],
+          "body.radius": 1.5,
+          "body.mass": 65,
+          "body.friction": 0.8,
+          "body.restitution": 0.02,
+          "body.pickable": true,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0,
+          "body.terrain": "",
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.managed": false,
+          "tags": 64
+        }
+      },
+      {
+        "id": 3242,
+        "name": "Birchside Cabin / side wall",
+        "fields": {
+          "position": [
+            52,
+            16.467814538455784,
+            45
+          ],
+          "rotation": [
+            0.7071067811865476,
+            0,
+            0.7071067811865476,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.mesh-asset": "41a1d3f35e2bd97fc5992127aa24dbd6",
+          "render.texture-asset": "",
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            1.5,
+            1.35,
+            0.12
+          ],
+          "body.radius": 1.5,
+          "body.mass": 65,
+          "body.friction": 0.8,
+          "body.restitution": 0.02,
+          "body.pickable": true,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0,
+          "body.terrain": "",
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.managed": false,
+          "tags": 64
+        }
+      },
+      {
+        "id": 3250,
+        "name": "Birchside Cabin / side wall",
+        "fields": {
+          "position": [
+            64,
+            16.467814538455784,
+            39
+          ],
+          "rotation": [
+            0.7071067811865476,
+            0,
+            0.7071067811865476,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.mesh-asset": "41a1d3f35e2bd97fc5992127aa24dbd6",
+          "render.texture-asset": "",
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            1.5,
+            1.35,
+            0.12
+          ],
+          "body.radius": 1.5,
+          "body.mass": 65,
+          "body.friction": 0.8,
+          "body.restitution": 0.02,
+          "body.pickable": true,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0,
+          "body.terrain": "",
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.managed": false,
+          "tags": 64
+        }
+      },
+      {
+        "id": 3251,
+        "name": "Birchside Cabin / side wall",
+        "fields": {
+          "position": [
+            64,
+            16.467814538455784,
+            42
+          ],
+          "rotation": [
+            0.7071067811865476,
+            0,
+            0.7071067811865476,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.mesh-asset": "41a1d3f35e2bd97fc5992127aa24dbd6",
+          "render.texture-asset": "",
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            1.5,
+            1.35,
+            0.12
+          ],
+          "body.radius": 1.5,
+          "body.mass": 65,
+          "body.friction": 0.8,
+          "body.restitution": 0.02,
+          "body.pickable": true,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0,
+          "body.terrain": "",
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.managed": false,
+          "tags": 64
+        }
+      },
+      {
+        "id": 3252,
+        "name": "Birchside Cabin / side wall",
+        "fields": {
+          "position": [
+            64,
+            16.467814538455784,
+            45
+          ],
+          "rotation": [
+            0.7071067811865476,
+            0,
+            0.7071067811865476,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.mesh-asset": "41a1d3f35e2bd97fc5992127aa24dbd6",
+          "render.texture-asset": "",
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            1.5,
+            1.35,
+            0.12
+          ],
+          "body.radius": 1.5,
+          "body.mass": 65,
+          "body.friction": 0.8,
+          "body.restitution": 0.02,
+          "body.pickable": true,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0,
+          "body.terrain": "",
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.managed": false,
+          "tags": 64
+        }
+      },
+      {
+        "id": 3260,
+        "name": "Birchside Cabin / doorway frame",
+        "fields": {
+          "position": [
+            56.5,
+            16.467814538455784,
+            46.5
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.mesh-asset": "42e5a4b54ea7a44b4faf1508edbbde5f",
+          "render.texture-asset": "",
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "compound"
+            }
+          },
+          "body.half-extents": [
+            0.85,
+            1.35,
+            0.14
+          ],
+          "body.radius": 0.85,
+          "body.mass": 65,
+          "body.friction": 0.8,
+          "body.restitution": 0.02,
+          "body.pickable": true,
+          "body.compound-count": 3,
+          "body.fluid-cavity-count": 0,
+          "body.terrain": "",
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.managed": false,
+          "body.compound-box": [
+            {
+              "center": [
+                -0.77,
+                -0.05,
+                0
+              ],
+              "halfExtents": [
+                0.08,
+                1.3,
+                0.14
+              ]
+            },
+            {
+              "center": [
+                0.77,
+                -0.05,
+                0
+              ],
+              "halfExtents": [
+                0.08,
+                1.3,
+                0.14
+              ]
+            },
+            {
+              "center": [
+                0,
+                1.27,
+                0
+              ],
+              "halfExtents": [
+                0.85,
+                0.08,
+                0.14
+              ]
+            }
+          ],
+          "tags": 64
+        }
+      },
+      {
+        "id": 3262,
+        "name": "Birchside Cabin / door infill",
+        "fields": {
+          "position": [
+            55.325,
+            16.467814538455784,
+            46.5
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            0.21666666666666667,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.mesh-asset": "41a1d3f35e2bd97fc5992127aa24dbd6",
+          "render.texture-asset": "",
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            0.325,
+            1.35,
+            0.12
+          ],
+          "body.radius": 0.325,
+          "body.mass": 1,
+          "body.friction": 0.8,
+          "body.restitution": 0.02,
+          "body.pickable": true,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0,
+          "body.terrain": "",
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.managed": false,
+          "tags": 64
+        }
+      },
+      {
+        "id": 3263,
+        "name": "Birchside Cabin / door infill",
+        "fields": {
+          "position": [
+            57.675,
+            16.467814538455784,
+            46.5
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            0.21666666666666667,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.mesh-asset": "41a1d3f35e2bd97fc5992127aa24dbd6",
+          "render.texture-asset": "",
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            0.325,
+            1.35,
+            0.12
+          ],
+          "body.radius": 0.325,
+          "body.mass": 1,
+          "body.friction": 0.8,
+          "body.restitution": 0.02,
+          "body.pickable": true,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0,
+          "body.terrain": "",
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.managed": false,
+          "tags": 64
+        }
+      },
+      {
+        "id": 3261,
+        "name": "Birchside Cabin / physical hinged leaf",
+        "fields": {
+          "position": [
+            56.5,
+            16.31781453845578,
+            46.5
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.mesh-asset": "c1d761d76c4985e7d6e723e073253b7e",
+          "render.texture-asset": "",
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "body": {
+            "motion": {
+              "symbol": "dynamic"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            0.65,
+            1.175,
+            0.055
+          ],
+          "body.radius": 0.65,
+          "body.mass": 18,
+          "body.friction": 0.8,
+          "body.restitution": 0.02,
+          "body.pickable": true,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0,
+          "body.terrain": "",
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.managed": false,
+          "tags": 64
+        }
+      },
+      {
+        "id": 3270,
+        "name": "Birchside Cabin / pitched roof",
+        "fields": {
+          "position": [
+            58,
+            18.786747565554737,
+            39.75
+          ],
+          "rotation": [
+            0.984807753012208,
+            -0.17364817766693033,
+            0,
+            0
+          ],
+          "scale": [
+            4,
+            1,
+            1.596266658713868
+          ],
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.mesh-asset": "69fb5fd50a3b1cf1ea299445c98f87e6",
+          "render.texture-asset": "",
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            6,
+            0.1,
+            2.394399988070802
+          ],
+          "body.radius": 6,
+          "body.mass": 1,
+          "body.friction": 0.8,
+          "body.restitution": 0.02,
+          "body.pickable": true,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0,
+          "body.terrain": "",
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.managed": false,
+          "tags": 64
+        }
+      },
+      {
+        "id": 3271,
+        "name": "Birchside Cabin / pitched roof",
+        "fields": {
+          "position": [
+            58,
+            18.786747565554737,
+            44.25
+          ],
+          "rotation": [
+            0.984807753012208,
+            0.17364817766693033,
+            0,
+            0
+          ],
+          "scale": [
+            4,
+            1,
+            1.596266658713868
+          ],
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.mesh-asset": "69fb5fd50a3b1cf1ea299445c98f87e6",
+          "render.texture-asset": "",
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            6,
+            0.1,
+            2.394399988070802
+          ],
+          "body.radius": 6,
+          "body.mass": 1,
+          "body.friction": 0.8,
+          "body.restitution": 0.02,
+          "body.pickable": true,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0,
+          "body.terrain": "",
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.managed": false,
+          "tags": 64
+        }
+      },
+      {
+        "id": 3370,
+        "name": "Birchside Cabin / timber gable",
+        "fields": {
+          "position": [
+            52,
+            17.81781453845578,
+            42
+          ],
+          "rotation": [
+            0.7071067811865476,
+            0,
+            0.7071067811865476,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.mesh-asset": "6bbd8c6ab315676ace9ad9a61cda72d5",
+          "render.texture-asset": "",
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "compound"
+            }
+          },
+          "body.half-extents": [
+            4.5,
+            1,
+            0.1
+          ],
+          "body.radius": 4.5,
+          "body.mass": 1,
+          "body.friction": 0.8,
+          "body.restitution": 0.02,
+          "body.pickable": true,
+          "body.compound-count": 18,
+          "body.fluid-cavity-count": 0,
+          "body.terrain": "",
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.managed": false,
+          "body.compound-box": [
+            {
+              "center": [
+                -4.25,
+                0.12049627928327529,
+                0
+              ],
+              "halfExtents": [
+                0.25,
+                0.12049627928327529,
+                0.1
+              ]
+            },
+            {
+              "center": [
+                -3.75,
+                0.21148883784982586,
+                0
+              ],
+              "halfExtents": [
+                0.25,
+                0.21148883784982586,
+                0.1
+              ]
+            },
+            {
+              "center": [
+                -3.25,
+                0.30248139641637645,
+                0
+              ],
+              "halfExtents": [
+                0.25,
+                0.30248139641637645,
+                0.1
+              ]
+            },
+            {
+              "center": [
+                -2.75,
+                0.3934739549829271,
+                0
+              ],
+              "halfExtents": [
+                0.25,
+                0.3934739549829271,
+                0.1
+              ]
+            },
+            {
+              "center": [
+                -2.25,
+                0.4844665135494776,
+                0
+              ],
+              "halfExtents": [
+                0.25,
+                0.4844665135494776,
+                0.1
+              ]
+            },
+            {
+              "center": [
+                -1.75,
+                0.5754590721160282,
+                0
+              ],
+              "halfExtents": [
+                0.25,
+                0.5754590721160282,
+                0.1
+              ]
+            },
+            {
+              "center": [
+                -1.25,
+                0.6664516306825787,
+                0
+              ],
+              "halfExtents": [
+                0.25,
+                0.6664516306825787,
+                0.1
+              ]
+            },
+            {
+              "center": [
+                -0.75,
+                0.7574441892491294,
+                0
+              ],
+              "halfExtents": [
+                0.25,
+                0.7574441892491294,
+                0.1
+              ]
+            },
+            {
+              "center": [
+                -0.25,
+                0.8484367478156799,
+                0
+              ],
+              "halfExtents": [
+                0.25,
+                0.8484367478156799,
+                0.1
+              ]
+            },
+            {
+              "center": [
+                0.25,
+                0.8484367478156799,
+                0
+              ],
+              "halfExtents": [
+                0.25,
+                0.8484367478156799,
+                0.1
+              ]
+            },
+            {
+              "center": [
+                0.75,
+                0.7574441892491294,
+                0
+              ],
+              "halfExtents": [
+                0.25,
+                0.7574441892491294,
+                0.1
+              ]
+            },
+            {
+              "center": [
+                1.25,
+                0.6664516306825787,
+                0
+              ],
+              "halfExtents": [
+                0.25,
+                0.6664516306825787,
+                0.1
+              ]
+            },
+            {
+              "center": [
+                1.75,
+                0.5754590721160282,
+                0
+              ],
+              "halfExtents": [
+                0.25,
+                0.5754590721160282,
+                0.1
+              ]
+            },
+            {
+              "center": [
+                2.25,
+                0.4844665135494776,
+                0
+              ],
+              "halfExtents": [
+                0.25,
+                0.4844665135494776,
+                0.1
+              ]
+            },
+            {
+              "center": [
+                2.75,
+                0.3934739549829271,
+                0
+              ],
+              "halfExtents": [
+                0.25,
+                0.3934739549829271,
+                0.1
+              ]
+            },
+            {
+              "center": [
+                3.25,
+                0.30248139641637645,
+                0
+              ],
+              "halfExtents": [
+                0.25,
+                0.30248139641637645,
+                0.1
+              ]
+            },
+            {
+              "center": [
+                3.75,
+                0.21148883784982586,
+                0
+              ],
+              "halfExtents": [
+                0.25,
+                0.21148883784982586,
+                0.1
+              ]
+            },
+            {
+              "center": [
+                4.25,
+                0.12049627928327529,
+                0
+              ],
+              "halfExtents": [
+                0.25,
+                0.12049627928327529,
+                0.1
+              ]
+            }
+          ],
+          "tags": 64
+        }
+      },
+      {
+        "id": 3371,
+        "name": "Birchside Cabin / timber gable",
+        "fields": {
+          "position": [
+            64,
+            17.81781453845578,
+            42
+          ],
+          "rotation": [
+            0.7071067811865476,
+            0,
+            0.7071067811865476,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.mesh-asset": "6bbd8c6ab315676ace9ad9a61cda72d5",
+          "render.texture-asset": "",
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "compound"
+            }
+          },
+          "body.half-extents": [
+            4.5,
+            1,
+            0.1
+          ],
+          "body.radius": 4.5,
+          "body.mass": 1,
+          "body.friction": 0.8,
+          "body.restitution": 0.02,
+          "body.pickable": true,
+          "body.compound-count": 18,
+          "body.fluid-cavity-count": 0,
+          "body.terrain": "",
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.managed": false,
+          "body.compound-box": [
+            {
+              "center": [
+                -4.25,
+                0.12049627928327529,
+                0
+              ],
+              "halfExtents": [
+                0.25,
+                0.12049627928327529,
+                0.1
+              ]
+            },
+            {
+              "center": [
+                -3.75,
+                0.21148883784982586,
+                0
+              ],
+              "halfExtents": [
+                0.25,
+                0.21148883784982586,
+                0.1
+              ]
+            },
+            {
+              "center": [
+                -3.25,
+                0.30248139641637645,
+                0
+              ],
+              "halfExtents": [
+                0.25,
+                0.30248139641637645,
+                0.1
+              ]
+            },
+            {
+              "center": [
+                -2.75,
+                0.3934739549829271,
+                0
+              ],
+              "halfExtents": [
+                0.25,
+                0.3934739549829271,
+                0.1
+              ]
+            },
+            {
+              "center": [
+                -2.25,
+                0.4844665135494776,
+                0
+              ],
+              "halfExtents": [
+                0.25,
+                0.4844665135494776,
+                0.1
+              ]
+            },
+            {
+              "center": [
+                -1.75,
+                0.5754590721160282,
+                0
+              ],
+              "halfExtents": [
+                0.25,
+                0.5754590721160282,
+                0.1
+              ]
+            },
+            {
+              "center": [
+                -1.25,
+                0.6664516306825787,
+                0
+              ],
+              "halfExtents": [
+                0.25,
+                0.6664516306825787,
+                0.1
+              ]
+            },
+            {
+              "center": [
+                -0.75,
+                0.7574441892491294,
+                0
+              ],
+              "halfExtents": [
+                0.25,
+                0.7574441892491294,
+                0.1
+              ]
+            },
+            {
+              "center": [
+                -0.25,
+                0.8484367478156799,
+                0
+              ],
+              "halfExtents": [
+                0.25,
+                0.8484367478156799,
+                0.1
+              ]
+            },
+            {
+              "center": [
+                0.25,
+                0.8484367478156799,
+                0
+              ],
+              "halfExtents": [
+                0.25,
+                0.8484367478156799,
+                0.1
+              ]
+            },
+            {
+              "center": [
+                0.75,
+                0.7574441892491294,
+                0
+              ],
+              "halfExtents": [
+                0.25,
+                0.7574441892491294,
+                0.1
+              ]
+            },
+            {
+              "center": [
+                1.25,
+                0.6664516306825787,
+                0
+              ],
+              "halfExtents": [
+                0.25,
+                0.6664516306825787,
+                0.1
+              ]
+            },
+            {
+              "center": [
+                1.75,
+                0.5754590721160282,
+                0
+              ],
+              "halfExtents": [
+                0.25,
+                0.5754590721160282,
+                0.1
+              ]
+            },
+            {
+              "center": [
+                2.25,
+                0.4844665135494776,
+                0
+              ],
+              "halfExtents": [
+                0.25,
+                0.4844665135494776,
+                0.1
+              ]
+            },
+            {
+              "center": [
+                2.75,
+                0.3934739549829271,
+                0
+              ],
+              "halfExtents": [
+                0.25,
+                0.3934739549829271,
+                0.1
+              ]
+            },
+            {
+              "center": [
+                3.25,
+                0.30248139641637645,
+                0
+              ],
+              "halfExtents": [
+                0.25,
+                0.30248139641637645,
+                0.1
+              ]
+            },
+            {
+              "center": [
+                3.75,
+                0.21148883784982586,
+                0
+              ],
+              "halfExtents": [
+                0.25,
+                0.21148883784982586,
+                0.1
+              ]
+            },
+            {
+              "center": [
+                4.25,
+                0.12049627928327529,
+                0
+              ],
+              "halfExtents": [
+                0.25,
+                0.12049627928327529,
+                0.1
+              ]
+            }
+          ],
+          "tags": 64
+        }
+      },
+      {
+        "id": 3300,
+        "name": "Birchside Cabin / Bed / claim home",
+        "fields": {
+          "position": [
+            54,
+            15.432814538455782,
+            39.3
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.mesh-asset": "91977a30f1212809c7e13a4379c9b0fe",
+          "render.texture-asset": "",
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            0.55,
+            0.3,
+            1
+          ],
+          "body.radius": 0.55,
+          "body.mass": 25,
+          "body.friction": 0.8,
+          "body.restitution": 0.02,
+          "body.pickable": true,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0,
+          "body.terrain": "",
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.managed": false,
+          "tags": 64
+        }
+      },
+      {
+        "id": 3301,
+        "name": "Birchside Cabin / Storage chest",
+        "fields": {
+          "position": [
+            54,
+            15.532814538455781,
+            44.5
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.mesh-asset": "562cdc0b7f3bbf6d263ebe61bfb5e57c",
+          "render.texture-asset": "",
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            0.6,
+            0.4,
+            0.4
+          ],
+          "body.radius": 0.6,
+          "body.mass": 25,
+          "body.friction": 0.8,
+          "body.restitution": 0.02,
+          "body.pickable": true,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0,
+          "body.terrain": "",
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.managed": false,
+          "tags": 64
+        }
+      },
+      {
+        "id": 3302,
+        "name": "Birchside Cabin / Workbench",
+        "fields": {
+          "position": [
+            61,
+            15.632814538455783,
+            39.4
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.mesh-asset": "1c9b43ea32fc42bae7a1caf3a2ecbd4a",
+          "render.texture-asset": "",
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            1,
+            0.5,
+            0.5
+          ],
+          "body.radius": 1,
+          "body.mass": 25,
+          "body.friction": 0.8,
+          "body.restitution": 0.02,
+          "body.pickable": true,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0,
+          "body.terrain": "",
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.managed": false,
+          "tags": 64
+        }
+      },
+      {
+        "id": 3303,
+        "name": "Birchside Cabin / Chair",
+        "fields": {
+          "position": [
+            57.2,
+            15.632814538455783,
+            43
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.mesh-asset": "da134bf8cc13fa113f4a2c61c26dec0a",
+          "render.texture-asset": "",
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            0.3,
+            0.5,
+            0.3
+          ],
+          "body.radius": 0.3,
+          "body.mass": 25,
+          "body.friction": 0.8,
+          "body.restitution": 0.02,
+          "body.pickable": true,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0,
+          "body.terrain": "",
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.managed": false,
+          "tags": 64
+        }
+      },
+      {
+        "id": 3304,
+        "name": "Birchside Cabin / Dining table",
+        "fields": {
+          "position": [
+            59,
+            15.532814538455781,
+            42.5
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.mesh-asset": "6a97ce58dc6c94600e8a8f26d5a0c590",
+          "render.texture-asset": "",
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            0.8,
+            0.4,
+            0.5
+          ],
+          "body.radius": 0.8,
+          "body.mass": 25,
+          "body.friction": 0.8,
+          "body.restitution": 0.02,
+          "body.pickable": true,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0,
+          "body.terrain": "",
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.managed": false,
+          "tags": 64
+        }
+      },
+      {
+        "id": 3305,
+        "name": "Birchside Cabin / Sofa",
+        "fields": {
+          "position": [
+            61,
+            15.582814538455782,
+            44.5
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.mesh-asset": "5014b1cb05b6f9d0dfe51497908f659b",
+          "render.texture-asset": "",
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            1,
+            0.45,
+            0.45
+          ],
+          "body.radius": 1,
+          "body.mass": 25,
+          "body.friction": 0.8,
+          "body.restitution": 0.02,
+          "body.pickable": true,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0,
+          "body.terrain": "",
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.managed": false,
+          "tags": 64
+        }
+      },
+      {
+        "id": 3306,
+        "name": "Birchside Cabin / Cupboard",
+        "fields": {
+          "position": [
+            62.9,
+            16.03281453845578,
+            41.3
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.mesh-asset": "75bf6cd1b23b9231c3f2c95073e10eca",
+          "render.texture-asset": "",
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            0.55,
+            0.9,
+            0.3
+          ],
+          "body.radius": 0.55,
+          "body.mass": 25,
+          "body.friction": 0.8,
+          "body.restitution": 0.02,
+          "body.pickable": true,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0,
+          "body.terrain": "",
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.managed": false,
+          "tags": 64
+        }
+      },
+      {
+        "id": 3307,
+        "name": "Birchside Cabin / Shelves",
+        "fields": {
+          "position": [
+            52.9,
+            16.03281453845578,
+            41.7
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.mesh-asset": "6013bb6f6228849de2fb47bd2790f09f",
+          "render.texture-asset": "",
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            0.55,
+            0.9,
+            0.22
+          ],
+          "body.radius": 0.55,
+          "body.mass": 25,
+          "body.friction": 0.8,
+          "body.restitution": 0.02,
+          "body.pickable": true,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0,
+          "body.terrain": "",
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.managed": false,
+          "tags": 64
+        }
+      },
+      {
+        "id": 3308,
+        "name": "Birchside Cabin / Warm lamp",
+        "fields": {
+          "position": [
+            60,
+            15.532814538455781,
+            40.9
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.mesh-asset": "f88cd9e865c2823cf959acb5febb787a",
+          "render.texture-asset": "",
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            0.2,
+            0.4,
+            0.2
+          ],
+          "body.radius": 0.2,
+          "body.mass": 25,
+          "body.friction": 0.8,
+          "body.restitution": 0.02,
+          "body.pickable": true,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0,
+          "body.terrain": "",
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.managed": false,
+          "tags": 64,
+          "light": {
+            "symbol": "point"
+          },
+          "light.color": [
+            1,
+            0.73,
+            0.4
+          ],
+          "light.range": 6,
+          "light.intensity": 2,
+          "light.cone": [
+            20,
+            35
+          ]
+        }
+      },
+      {
+        "id": 3309,
+        "name": "Birchside Cabin / Woven rug",
+        "fields": {
+          "position": [
+            58,
+            15.147814538455782,
+            40.8
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.mesh-asset": "65b1727f35dd0f5e96fc601a2cca1837",
+          "render.texture-asset": "",
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            0.9,
+            0.015,
+            0.65
+          ],
+          "body.radius": 0.9,
+          "body.mass": 25,
+          "body.friction": 0.8,
+          "body.restitution": 0.02,
+          "body.pickable": true,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0,
+          "body.terrain": "",
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.managed": false,
+          "tags": 64
+        }
+      },
+      {
+        "id": 3310,
+        "name": "Birchside Cabin / Island landscape",
+        "fields": {
+          "position": [
+            58,
+            16.717814538455784,
+            37.7
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.mesh-asset": "0837be40ca7c1a1180da0b12743392ba",
+          "render.texture-asset": "",
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            0.45,
+            0.32,
+            0.04
+          ],
+          "body.radius": 0.45,
+          "body.mass": 25,
+          "body.friction": 0.8,
+          "body.restitution": 0.02,
+          "body.pickable": true,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0,
+          "body.terrain": "",
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.managed": false,
+          "tags": 64
+        }
+      },
+      {
+        "id": 3330,
+        "name": "Birchside Cabin / entrance step",
+        "fields": {
+          "position": [
+            56.5,
+            14.790116887150365,
+            46.78
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            0.6,
+            1.0769765130541753,
+            0.15333333333333335
+          ],
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.mesh-asset": "71ff221df82c01122be721c9635948b6",
+          "render.texture-asset": "",
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            0.9,
+            0.10769765130541753,
+            0.23
+          ],
+          "body.radius": 0.9,
+          "body.mass": 1,
+          "body.friction": 0.8,
+          "body.restitution": 0.02,
+          "body.pickable": true,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0,
+          "body.terrain": "",
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.managed": false,
+          "tags": 64
+        }
+      },
+      {
+        "id": 5000,
+        "name": "Placement preview / Stone foundation",
+        "fields": {
+          "position": [
+            0,
+            -200,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.mesh-asset": "e9d016d9c1d769eadb59b8d9abc5c27f",
+          "render.texture-asset": "",
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 0.45,
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render-visible": false
+        }
+      },
+      {
+        "id": 5001,
+        "name": "Placement preview / Timber floor",
+        "fields": {
+          "position": [
+            0,
+            -200,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.mesh-asset": "71ff221df82c01122be721c9635948b6",
+          "render.texture-asset": "",
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 0.45,
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render-visible": false
+        }
+      },
+      {
+        "id": 5002,
+        "name": "Placement preview / Timber wall",
+        "fields": {
+          "position": [
+            0,
+            -200,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.mesh-asset": "41a1d3f35e2bd97fc5992127aa24dbd6",
+          "render.texture-asset": "",
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 0.45,
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render-visible": false
+        }
+      },
+      {
+        "id": 5003,
+        "name": "Placement preview / Wall with opening",
+        "fields": {
+          "position": [
+            0,
+            -200,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.mesh-asset": "d38ade9ded58694eb62798061d31f017",
+          "render.texture-asset": "",
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 0.45,
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render-visible": false
+        }
+      },
+      {
+        "id": 5004,
+        "name": "Placement preview / Hinged door and frame",
+        "fields": {
+          "position": [
+            0,
+            -200,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.mesh-asset": "42e5a4b54ea7a44b4faf1508edbbde5f",
+          "render.texture-asset": "",
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 0.45,
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render-visible": false
+        }
+      },
+      {
+        "id": 5005,
+        "name": "Placement preview / Roof panel",
+        "fields": {
+          "position": [
+            0,
+            -200,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.mesh-asset": "69fb5fd50a3b1cf1ea299445c98f87e6",
+          "render.texture-asset": "",
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 0.45,
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render-visible": false
+        }
+      },
+      {
+        "id": 5006,
+        "name": "Placement preview / Picket fence",
+        "fields": {
+          "position": [
+            0,
+            -200,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.mesh-asset": "5882595f64562ba44bf4ea7813e96516",
+          "render.texture-asset": "",
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 0.45,
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render-visible": false
+        }
+      },
+      {
+        "id": 5007,
+        "name": "Placement preview / Hinged garden gate",
+        "fields": {
+          "position": [
+            0,
+            -200,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.mesh-asset": "d87fbc3b897ef83cd5aca832b5b6da1c",
+          "render.texture-asset": "",
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 0.45,
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render-visible": false
+        }
+      },
+      {
+        "id": 5008,
+        "name": "Placement preview / Storage chest",
+        "fields": {
+          "position": [
+            0,
+            -200,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.mesh-asset": "562cdc0b7f3bbf6d263ebe61bfb5e57c",
+          "render.texture-asset": "",
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 0.45,
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render-visible": false
+        }
+      },
+      {
+        "id": 5009,
+        "name": "Placement preview / Bed / claim home",
+        "fields": {
+          "position": [
+            0,
+            -200,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.mesh-asset": "91977a30f1212809c7e13a4379c9b0fe",
+          "render.texture-asset": "",
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 0.45,
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render-visible": false
+        }
+      },
+      {
+        "id": 5010,
+        "name": "Placement preview / Chair",
+        "fields": {
+          "position": [
+            0,
+            -200,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.mesh-asset": "da134bf8cc13fa113f4a2c61c26dec0a",
+          "render.texture-asset": "",
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 0.45,
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render-visible": false
+        }
+      },
+      {
+        "id": 5011,
+        "name": "Placement preview / Dining table",
+        "fields": {
+          "position": [
+            0,
+            -200,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.mesh-asset": "6a97ce58dc6c94600e8a8f26d5a0c590",
+          "render.texture-asset": "",
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 0.45,
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render-visible": false
+        }
+      },
+      {
+        "id": 5012,
+        "name": "Placement preview / Sofa",
+        "fields": {
+          "position": [
+            0,
+            -200,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.mesh-asset": "5014b1cb05b6f9d0dfe51497908f659b",
+          "render.texture-asset": "",
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 0.45,
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render-visible": false
+        }
+      },
+      {
+        "id": 5013,
+        "name": "Placement preview / Cupboard",
+        "fields": {
+          "position": [
+            0,
+            -200,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.mesh-asset": "75bf6cd1b23b9231c3f2c95073e10eca",
+          "render.texture-asset": "",
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 0.45,
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render-visible": false
+        }
+      },
+      {
+        "id": 5014,
+        "name": "Placement preview / Shelves",
+        "fields": {
+          "position": [
+            0,
+            -200,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.mesh-asset": "6013bb6f6228849de2fb47bd2790f09f",
+          "render.texture-asset": "",
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 0.45,
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render-visible": false
+        }
+      },
+      {
+        "id": 5015,
+        "name": "Placement preview / Workbench",
+        "fields": {
+          "position": [
+            0,
+            -200,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.mesh-asset": "1c9b43ea32fc42bae7a1caf3a2ecbd4a",
+          "render.texture-asset": "",
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 0.45,
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render-visible": false
+        }
+      },
+      {
+        "id": 5016,
+        "name": "Placement preview / Warm lamp",
+        "fields": {
+          "position": [
+            0,
+            -200,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.mesh-asset": "f88cd9e865c2823cf959acb5febb787a",
+          "render.texture-asset": "",
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 0.45,
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render-visible": false
+        }
+      },
+      {
+        "id": 5017,
+        "name": "Placement preview / Woven rug",
+        "fields": {
+          "position": [
+            0,
+            -200,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.mesh-asset": "65b1727f35dd0f5e96fc601a2cca1837",
+          "render.texture-asset": "",
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 0.45,
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render-visible": false
+        }
+      },
+      {
+        "id": 5018,
+        "name": "Placement preview / Island landscape",
+        "fields": {
+          "position": [
+            0,
+            -200,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.mesh-asset": "0837be40ca7c1a1180da0b12743392ba",
+          "render.texture-asset": "",
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 0.45,
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render-visible": false
         }
       }
     ]

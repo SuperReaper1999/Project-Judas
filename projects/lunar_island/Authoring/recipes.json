@@ -1,7 +1,103 @@
 [
- {"id":"stone_axe","name":"Stone axe","ingredients":{"wood":3,"stone":2,"fiber":2},"outputs":{"stone_axe":1},"station":"hand","description":"Fell trees, then process the fallen trunk into timber."},
- {"id":"stone_pickaxe","name":"Stone pickaxe","ingredients":{"wood":4,"stone":3,"fiber":2},"outputs":{"stone_pickaxe":1},"station":"hand","description":"Extract stone and iron from the island's deposits."},
- {"id":"bandage","name":"Field dressing","ingredients":{"fiber":3},"outputs":{"bandage":1},"station":"hand","description":"Heal wounds and treat one fall injury."},
- {"id":"cooked_meal","name":"Berry porridge","ingredients":{"berries":5,"wood":1},"outputs":{"cooked_meal":1},"station":"campfire","description":"Prepare a warming meal at the homestead fire."},
- {"id":"fiber","name":"Salvage lashings","ingredients":{"scrap":1},"outputs":{"fiber":2},"station":"hand","description":"Strip salvage into useful binding material."}
+  {
+    "id": "stone_axe",
+    "name": "Stone axe",
+    "ingredients": {
+      "wood": 3,
+      "stone": 2,
+      "fiber": 2
+    },
+    "outputs": {
+      "stone_axe": 1
+    },
+    "station": "hand",
+    "description": "Fell trees, then process the fallen trunk into timber."
+  },
+  {
+    "id": "stone_pickaxe",
+    "name": "Stone pickaxe",
+    "ingredients": {
+      "wood": 4,
+      "stone": 3,
+      "fiber": 2
+    },
+    "outputs": {
+      "stone_pickaxe": 1
+    },
+    "station": "hand",
+    "description": "Extract stone and iron from the island's deposits."
+  },
+  {
+    "id": "bandage",
+    "name": "Field dressing",
+    "ingredients": {
+      "fiber": 3
+    },
+    "outputs": {
+      "bandage": 1
+    },
+    "station": "hand",
+    "description": "Heal wounds and treat one fall injury."
+  },
+  {
+    "id": "cooked_meal",
+    "name": "Berry porridge",
+    "ingredients": {
+      "berries": 5,
+      "wood": 1
+    },
+    "outputs": {
+      "cooked_meal": 1
+    },
+    "station": "campfire",
+    "description": "Prepare a warming meal at the homestead fire."
+  },
+  {
+    "id": "fiber",
+    "name": "Salvage lashings",
+    "ingredients": {
+      "scrap": 1
+    },
+    "outputs": {
+      "fiber": 2
+    },
+    "station": "hand",
+    "description": "Strip salvage into useful binding material."
+  },
+  {
+    "id": "planks",
+    "name": "Saw planks",
+    "ingredients": {
+      "wood": 1
+    },
+    "outputs": {
+      "planks": 4
+    },
+    "station": "hand",
+    "description": "Boards for barricading openings."
+  },
+  {
+    "id": "nails",
+    "name": "Forge nails",
+    "ingredients": {
+      "scrap": 1
+    },
+    "outputs": {
+      "nails": 6
+    },
+    "station": "workbench",
+    "description": "Work scrap into reusable fixings."
+  },
+  {
+    "id": "metal_sheet",
+    "name": "Flatten metal sheet",
+    "ingredients": {
+      "scrap": 3
+    },
+    "outputs": {
+      "metal_sheet": 1
+    },
+    "station": "workbench",
+    "description": "Reinforce a door or window barricade."
+  }
 ]

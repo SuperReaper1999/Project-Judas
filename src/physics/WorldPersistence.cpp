@@ -2,6 +2,31 @@
 
 using namespace JudasPhysicsDetail;
 
+namespace {
+// Contexts retain their existing binary format. Exact typed comparison admits
+// IEEE signed zeros as the same physical value; no epsilon or state repair is
+// involved. Strings, counts and all nonzero numeric fields still compare exactly.
+class ContinuationFields {
+public:
+    explicit ContinuationFields(SaveArchive *comparison) : m_comparison(comparison) {}
+
+    template <class... T> void operator()(T &...values) { (Field(values), ...); }
+    void Require(bool condition, const std::string &error) { output.Require(condition, error); }
+    SaveArchive output;
+
+private:
+    template <class T> void Field(T value) {
+        output(value);
+        if (m_comparison) {
+            T saved = value;
+            (*m_comparison)(saved);
+            m_comparison->Require(saved == value, "continuation physical context differs");
+        }
+    }
+    SaveArchive *m_comparison;
+};
+} // namespace
+
 auto PhysicsWorld::Impl::InvalidateRestoredContinuation(unsigned slot) -> void {
     // Live-world cache policy remains unchanged. Newly restored seeds may
     // only continue the exact reconstructed physical context.
@@ -24,8 +49,8 @@ auto PhysicsWorld::Impl::InvalidateRestoredContinuation(unsigned slot) -> void {
         restoredCompletedObservations = false;
 }
 
-auto PhysicsWorld::Impl::ContinuationBodyContext(const Body &body) const -> std::string {
-    SaveArchive a;
+auto PhysicsWorld::Impl::ContinuationBodyContext(const Body &body, SaveArchive *comparison) const -> std::string {
+    ContinuationFields a(comparison);
     auto field = [&](auto value) { a(value); };
     field(body.rigidBody.position);
     field(body.rigidBody.orientation);
@@ -74,11 +99,11 @@ auto PhysicsWorld::Impl::ContinuationBodyContext(const Body &body) const -> std:
         a(id);
         fingerprint(child.asset);
     }
-    return a.bytes;
+    return a.output.bytes;
 }
 
-auto PhysicsWorld::Impl::ContinuationJointContext(const JointRecord &joint) const -> std::string {
-    SaveArchive a;
+auto PhysicsWorld::Impl::ContinuationJointContext(const JointRecord &joint, SaveArchive *comparison) const -> std::string {
+    ContinuationFields a(comparison);
     auto s = joint.state.settings;
     // Handles are validated/remapped by the world owner; never archive slots.
     a(s.type, s.anchorA, s.anchorB, s.frameA, s.frameB, s.enabled, s.limits, s.motor, s.spring,
@@ -89,8 +114,22 @@ auto PhysicsWorld::Impl::ContinuationJointContext(const JointRecord &joint) cons
     a.Require(bodyA && (!s.bodyB.IsValid() || bodyB), "stale joint continuation body");
     auto first = ContinuationBodyContext(*bodyA),
          second = bodyB ? ContinuationBodyContext(*bodyB) : std::string{};
-    a(first, second);
-    return a.bytes;
+    a.output(first, second);
+    if (comparison) {
+        std::string savedFirst, savedSecond;
+        (*comparison)(savedFirst, savedSecond);
+        SaveArchive firstFields(savedFirst);
+        ContinuationBodyContext(*bodyA, &firstFields);
+        firstFields.Finish();
+        if (bodyB) {
+            SaveArchive secondFields(savedSecond);
+            ContinuationBodyContext(*bodyB, &secondFields);
+            secondFields.Finish();
+        } else {
+            comparison->Require(savedSecond.empty(), "joint continuation world anchor differs");
+        }
+    }
+    return a.output.bytes;
 }
 
 void PhysicsWorld::PersistTouches(SaveArchive &a,
@@ -141,6 +180,33 @@ void PhysicsWorld::PersistBodyForces(SaveArchive &archive, BodyHandle handle) {
     auto *body = m_impl->Get(handle);
     archive.Require(body != nullptr, "saved force body unavailable");
     archive(body->rigidBody.forceAccumulator, body->rigidBody.torqueAccumulator);
+}
+
+void PhysicsWorld::PersistBodyMass(SaveArchive &archive, BodyHandle handle) {
+    auto *body = m_impl->Get(handle);
+    archive.Require(body != nullptr, "saved mass body unavailable");
+    auto inverseMass = body->rigidBody.inverseMass;
+    auto inverseInertia = body->rigidBody.inverseInertiaLocal;
+    archive(inverseMass, inverseInertia);
+    bool valid = false;
+    if (body->isDynamic) {
+        const glm::dmat3 tensor(inverseInertia);
+        valid = inverseMass > 0 && tensor[0][0] > 0 &&
+                tensor[0][0] * tensor[1][1] - tensor[0][1] * tensor[1][0] > 0 &&
+                glm::determinant(tensor) > 0;
+        for (int column = 0; column < 3; ++column)
+            for (int row = 0; row < 3; ++row)
+                valid &= std::abs(tensor[column][row] - tensor[row][column]) <=
+                         1e-5 * std::max(1.0, std::abs(tensor[column][row]));
+    } else {
+        valid = inverseMass == 0 && inverseInertia == glm::mat3(0);
+    }
+    archive.Require(valid, "invalid saved mass/inertia for body authority");
+    if (archive.reading) {
+        m_impl->InvalidateRestoredContinuation(handle.id & Impl::kSlotMask);
+        body->rigidBody.inverseMass = inverseMass;
+        body->rigidBody.inverseInertiaLocal = inverseInertia;
+    }
 }
 
 void PhysicsWorld::PersistKinematic(SaveArchive &archive, BodyHandle handle,
@@ -201,7 +267,11 @@ void PhysicsWorld::PersistJointContinuation(SaveArchive &a, JointHandle handle) 
     auto drive = joint.state.angularDrive;
     a(version, context, dt);
     a.Require(version == 1 || version == 2, "newer joint continuation format");
-    a.Require(context == expectedContext, "joint continuation physical context differs");
+    if (context != expectedContext) {
+        SaveArchive comparison(context);
+        m_impl->ContinuationJointContext(joint, &comparison);
+        comparison.Finish();
+    }
     a.Require(dt >= 0 && dt <= .1f, "invalid joint continuation interval");
     // Warm impulses are per solve interval: version 2 records MK2's substep
     // length; version 1 (MK1) solved joints once per step.
@@ -330,9 +400,16 @@ void PhysicsWorld::PersistCompletedContactObservations(
                           !bodyB->sensor && !bodyA->queryOnly && !bodyB->queryOnly,
                       "completed-observation body unavailable");
             auto sa = ha.id & Impl::kSlotMask, sb = hb.id & Impl::kSlotMask;
-            a.Require(contextA == w.ContinuationBodyContext(*bodyA) &&
-                          contextB == w.ContinuationBodyContext(*bodyB),
-                      "completed-observation physical context differs");
+            if (contextA != w.ContinuationBodyContext(*bodyA)) {
+                SaveArchive comparison(contextA);
+                w.ContinuationBodyContext(*bodyA, &comparison);
+                comparison.Finish();
+            }
+            if (contextB != w.ContinuationBodyContext(*bodyB)) {
+                SaveArchive comparison(contextB);
+                w.ContinuationBodyContext(*bodyB, &comparison);
+                comparison.Finish();
+            }
             a.Require(w.CanCollide(sa, sb) && partA >= 0 && partA < PrimitiveCount(bodyA->shape) &&
                           partB >= 0 && partB < PrimitiveCount(bodyB->shape),
                       "completed-observation filter/primitive differs");

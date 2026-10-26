@@ -1,0 +1,24 @@
+{
+  "bodies": 299,
+  "controlledStep": 0.016666666666666666,
+  "frame": {
+    "meanMs": 5.325728192329406,
+    "medianMs": 5.33181619644165,
+    "p95Ms": 7.108957767486572,
+    "worstMs": 9.799301147460938
+  },
+  "frames": 600,
+  "note": "Real rendered application frames, fixed 60-Hz clock, hidden window, dummy audio; not human displayed FPS",
+  "physics": {
+    "meanMs": 0.020359928333333322,
+    "medianMs": 0.019156,
+    "p95Ms": 0.029456,
+    "worstMs": 0.086864
+  },
+  "script": {
+    "frames": 120,
+    "meanMs": 0.37170570833333333,
+    "p95Ms": 0.381852
+  },
+  "processResidentBytes": 546516992
+}

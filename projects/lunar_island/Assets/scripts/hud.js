@@ -1,6 +1,8 @@
 import { ui, input, saves } from 'judas';
 import { ITEMS, RECIPES, CONFIG } from './definitions.js';
 import { WORLD } from './world-data.js';
+import { HOUSING } from './housing-data.js';
+import { entityFor } from './housing.js';
 import { count, weight } from './inventory.js';
 export default class HUD {
     constructor(p, restored = false) {
@@ -18,6 +20,7 @@ export default class HUD {
         return !!this.page;
     }
     open(page = 'pack') {
+        this.p.builder?.cancel();
         this.page = page;
         this.selected = '';
         this.lastRows = '';
@@ -34,9 +37,19 @@ export default class HUD {
         this.doc.get('overlay').visible = false;
         this.p.state.introSeen = true;
     }
+    inspect(ref) {
+        this.objectRef = ref;
+        this.open('object');
+    }
+    openStorage(ref) {
+        this.containerRef = ref;
+        this.containerSelected = '';
+        this.containerSignature = '';
+        this.open('storage');
+    }
     rows() {
         const bag = this.p.state.bag;
-        if (this.page === 'pack')
+        if (this.page === 'pack' || this.page === 'storage')
             return bag.slots.flatMap((s, i) =>
                 s
                     ? [
@@ -52,6 +65,11 @@ export default class HUD {
                 id: r.id,
                 text: r.name + '  /  ' + r.station,
             }));
+        if (this.page === 'build')
+            return Object.entries(HOUSING.catalog).map(([id, d]) => ({
+                id,
+                text: d.category + ' / ' + d.name,
+            }));
         return [];
     }
     refresh() {
@@ -61,15 +79,43 @@ export default class HUD {
             page = this.page;
         d.get('overlay').visible = !!page;
         if (!page) return;
-        const list = page === 'pack' || page === 'craft';
+        const list = ['pack', 'craft', 'build', 'storage'].includes(page);
+        const storage = page === 'storage',
+            object = page === 'object';
+        d.get('entries2').visible = storage;
+        d.get('secondary').visible = storage || object;
+        d.get('tertiary').visible = storage || object;
+        d.get('primary').visible = list || object;
+        d.get('drop').visible = page === 'pack' || storage || object;
+        d.get('primary').enabled = true;
+        d.get('secondary').enabled = true;
+        d.get('drop').enabled = true;
+        d.get('tertiary').enabled = true;
+        d.get('entries').setLayout({
+            offset: { x: 24, y: storage ? 160 : 132 },
+            size: { x: 520, y: storage ? 220 : 330 },
+        });
+        d.get('primary').setLayout({
+            offset: { x: storage ? 24 : 568, y: 405 },
+        });
+        d.get('drop').setLayout({ offset: { x: storage ? 281 : 823, y: 405 } });
+        d.get('secondary').setLayout({
+            offset: { x: storage ? 568 : 568, y: storage ? 405 : 455 },
+        });
+        d.get('tertiary').setLayout({
+            offset: { x: 823, y: storage ? 405 : 455 },
+        });
         d.get('entries').visible = list;
-        d.get('primary').visible = list;
-        d.get('drop').visible = page === 'pack';
+        d.get('primary').visible = list || object;
+        d.get('drop').visible = page === 'pack' || storage || object;
         d.get('map_image').visible = page === 'map';
         d.get('sensitivity').visible = page === 'help';
         d.get('title').text =
             {
                 pack: 'FIELD PACK',
+                build: 'CONSTRUCTION & FURNISHING',
+                storage: 'STORAGE / LOOT',
+                object: 'WORLD OBJECT',
                 craft: 'CRAFTING',
                 map: 'LUNAR ISLAND / FIELD MAP',
                 help: 'CONTROLS & FIELD NOTES',
@@ -95,7 +141,117 @@ export default class HUD {
                 this.selected = rows[0].id;
         }
         let text = '';
-        if (page === 'pack') {
+        if (page === 'storage') {
+            const bag2 = p.housing.state.containers[this.containerRef];
+            const rows2 = bag2
+                ? bag2.slots.flatMap((slot, i) =>
+                      slot
+                          ? [
+                                {
+                                    id: String(i),
+                                    text:
+                                        ITEMS[slot.item].name +
+                                        ' ×' +
+                                        slot.count,
+                                },
+                            ]
+                          : [],
+                  )
+                : [];
+            const signature2 = JSON.stringify(rows2);
+            if (signature2 !== this.containerSignature) {
+                d.get('entries2').setItems(rows2);
+                this.containerSignature = signature2;
+                if (!rows2.some((x) => x.id === this.containerSelected))
+                    this.containerSelected = rows2[0]?.id || '';
+            }
+            text = bag2
+                ? 'BACKPACK ↔ STORAGE   /   ' +
+                  weight(bag2).toFixed(1) +
+                  ' / ' +
+                  bag2.maxWeight +
+                  ' kg in storage'
+                : 'Storage unavailable';
+            d.get('primary').text = 'Store one';
+            d.get('drop').text = 'Store stack';
+            d.get('secondary').text = 'Take one';
+            d.get('tertiary').text = 'Take stack';
+        } else if (page === 'build') {
+            const def = HOUSING.catalog[this.selected];
+            text = def
+                ? def.name +
+                  '\n\n' +
+                  Object.entries(def.cost)
+                      .map(
+                          ([id, n]) =>
+                              ITEMS[id].name +
+                              '  ' +
+                              count(bag, id) +
+                              ' / ' +
+                              n,
+                      )
+                      .join('\n') +
+                  '\n\nA physical piece connects to the support you aim at. Clear space is required. R rotates; click confirms. Paintings need a wall.'
+                : 'Choose a construction or furniture piece.';
+            d.get('primary').text = 'Start placement';
+        } else if (page === 'object') {
+            const e = entityFor(this.objectRef),
+                r = e?.valid ? p.housing.record(e) : null,
+                socket = e?.valid ? p.housing.socket(e) : null,
+                def = r && HOUSING.catalog[r.kind];
+            text = r
+                ? (def?.name || 'Barricade') +
+                  '\n\nIntegrity ' +
+                  r.health +
+                  ' / ' +
+                  r.maxHealth +
+                  '\n\n' +
+                  (p.housing.state.containers[this.objectRef]
+                      ? 'Contents remain with this object when moved. Empty it before dismantling.'
+                      : r.kind === 'bed'
+                        ? 'Rest costs 5 food/water, restores stamina and some health, and claims this bed as your recovery point.'
+                        : r.kind === 'workbench'
+                          ? 'Craft nails and sheets within 3 metres.'
+                          : r.barricade
+                            ? 'Axe/pick impacts damage this real collision barrier. Repair or reinforce it before it breaks.'
+                            : 'Move/rotate through the placement preview. Escape cancels without changing the original object.')
+                : socket
+                  ? 'SECURE AN OPENING\n\nWood: 2 planks + 1 nail\nMetal: 1 sheet + 2 nails\n\nClose a door before barricading. The barrier has real collision and a fixed physical connection.'
+                  : 'Object no longer available.';
+            d.get('primary').text = r?.barricade
+                ? 'Repair'
+                : r && p.housing.state.containers[this.objectRef]
+                  ? 'Open storage'
+                  : r?.kind === 'bed'
+                    ? 'Rest / claim home'
+                    : r?.kind === 'lamp'
+                      ? 'Toggle lamp'
+                      : r?.kind === 'workbench'
+                        ? 'Workbench crafting'
+                        : socket
+                          ? 'Wood barricade'
+                          : 'Inspect';
+            d.get('primary').enabled = !!(
+                socket ||
+                r?.barricade ||
+                def?.use ||
+                p.housing.state.containers[this.objectRef]
+            );
+            d.get('drop').text = 'Dismantle';
+            d.get('drop').enabled = !!r;
+            d.get('secondary').text = r?.barricade
+                ? 'Reinforce with metal'
+                : r
+                  ? 'Move / rotate'
+                  : 'Metal barricade';
+            d.get('secondary').enabled = r?.barricade
+                ? !r.reinforced
+                : r
+                  ? !!r.movable
+                  : !!socket;
+            d.get('tertiary').text = 'Repair';
+            d.get('tertiary').enabled = !!r && r.health < r.maxHealth;
+        } else if (page === 'pack') {
             const slot = bag.slots[Number(this.selected)];
             text = slot
                 ? `${ITEMS[slot.item].name}\n\n${ITEMS[slot.item].category.toUpperCase()}\n${slot.count} carried / ${ITEMS[slot.item].stack} per stack\n\nSelect Use / equip to consume supplies or select a tool. Drop places one item in a physical bundle.\n\nEquipped: ${p.state.equipped === 'hands' ? 'Hands' : ITEMS[p.state.equipped].name}\nCoat: ${p.state.equipment.body ? ITEMS[p.state.equipment.body].name : 'None'}`
@@ -111,19 +267,19 @@ export default class HUD {
                               `${ITEMS[id].name}  ${count(bag, id)} / ${n}`,
                       )
                       .join('\n') +
-                  `\n\nStation: ${recipe.station === 'hand' ? 'Craft anywhere' : p.atFire() ? 'Campfire in reach' : 'Return to the campfire'}`
+                  `\n\nStation: ${recipe.station === 'hand' ? 'Craft anywhere' : recipe.station === 'workbench' ? (p.housing.atStation('workbench') ? 'Workbench in reach' : 'Return to a workbench') : p.atFire() ? 'Campfire in reach' : 'Return to the campfire'}`
                 : 'Choose a recipe.';
             d.get('primary').text = 'Craft selected';
         } else if (page === 'map')
             text =
-                'STAGE 1 / HOMESTEAD COAST\n\nYou are in the north-eastern homestead clearing. The nearby spring pool, forest and stone trail are playable.\n\nThe complete coast is terrain, but the labelled settlements and other regions are reference plans for Stage 5.\n\n' +
+                'STAGE 2 / HOMESTEAD COAST\n\nYou are in the north-eastern homestead clearing. The nearby spring pool, forest, Seabird Cottage and Birchside Cabin are playable.\n\nThe complete coast is terrain, but the labelled settlements and other regions are reference plans for Stage 5.\n\n' +
                 `Absolute position\n${Math.round(worldPosition(p).x)} east / ${Math.round(worldPosition(p).z)} south`;
         else if (page === 'help')
             text =
-                'WASD move · mouse look\nSpace jump / swim up · Ctrl dive\nShift sprint · V first/third person\nE gather / refill / interact\nLeft click use equipped tool\n1–6 hotbar\nTab backpack · M field map\nEscape pause / return\nF6 save · F9 load last save\n\nMouse sensitivity (slider left).\nCrafting and item actions are in this menu.\n\nThe spring well refills a flask; seawater is not drinkable.\nFall injuries slow movement; use a field dressing.';
+                'WASD move · mouse look\nSpace jump / swim up · Ctrl dive\nShift sprint · V first/third person\nE gather / refill / interact\nLeft click use tool / confirm placement\nB construction · R rotate preview\nE furniture / storage / secure opening\n1–6 hotbar\nTab backpack · M field map\nEscape pause / return\nF6 save · F9 load last save\n\nMouse sensitivity (slider left).\nCrafting and item actions are in this menu.\n\nThe spring well refills a flask; seawater is not drinkable.\nFall injuries slow movement; use a field dressing.';
         else if (page === 'welcome')
             text =
-                'A quiet coast. An island worth coming home to.\n\nGather loose sticks, stones and fibre with E. Open Crafting to make an axe. Fell and process a tree, mine stone, cook at the campfire, and drink at the well.\n\nThis is the first playable foundation. Buildings, NPCs, combat and vehicles come in later authorised stages.\n\nSave with F6 before leaving.';
+                'A quiet coast. An island worth coming home to.\n\nGather loose sticks, stones and fibre with E. Open Crafting to make an axe. Fell and process a tree, mine stone, cook at the campfire, and drink at the well.\n\nTwo enterable cottages now have real doors, loot, storage and functional furniture. E opens object actions. B opens construction. NPCs, combat and vehicles remain later stages.\n\nSave with F6 before leaving.';
         else if (page === 'dead')
             text =
                 'Your expedition has ended. Recover at the homestead with your pack intact.\n\nStage 1 keeps recovery forgiving; hunger, thirst, drowning and fall injuries are active.\n\nDeath penalties and progression will be balanced in later stages.';
@@ -132,16 +288,20 @@ export default class HUD {
                 'The world is paused. Your inventory, tools, harvested resources and physical state are included in a world save.\n\nSave before leaving. Loading replaces the current world with the last complete save.\n\nOpen Backpack, Crafting, Field map or Controls above.';
         d.get('detail').text = text;
         d.get('detail').setLayout({
-            offset: list
-                ? { x: 568, y: 132 }
-                : page === 'map'
-                  ? { x: 668, y: 132 }
-                  : { x: 24, y: 132 },
-            size: list
-                ? { x: 500, y: 252 }
-                : page === 'map'
-                  ? { x: 400, y: 350 }
-                  : { x: 1030, y: 280 },
+            offset: storage
+                ? { x: 24, y: 130 }
+                : list
+                  ? { x: 568, y: 132 }
+                  : page === 'map'
+                    ? { x: 668, y: 132 }
+                    : { x: 24, y: 132 },
+            size: storage
+                ? { x: 1030, y: 28 }
+                : list
+                  ? { x: 500, y: 252 }
+                  : page === 'map'
+                    ? { x: 400, y: 350 }
+                    : { x: 1030, y: 280 },
         });
         d.get('load').enabled = !p.refreshToken && saves.exists('island');
         d.get('save').enabled = !p.request;
@@ -149,8 +309,12 @@ export default class HUD {
     }
     update() {
         const p = this.p;
-        if (input.pressed('pause'))
+        if (input.pressed('pause') && p.builder?.active) {
+            p.builder.cancel();
+            p.say('Placement cancelled.');
+        } else if (input.pressed('pause'))
             this.modal ? this.close() : this.open('pause');
+        else if (input.pressed('build_menu')) this.open('build');
         else if (input.pressed('inventory'))
             this.page === 'pack' ? this.close() : this.open('pack');
         else if (input.pressed('map'))
@@ -178,7 +342,9 @@ export default class HUD {
                 ? 'FIELDWORK / Craft a pickaxe and mine stone or iron.'
                 : !s.cooked
                   ? 'A WARM MEAL / Gather berries and cook beside the fire.'
-                  : 'A HOME TO RETURN TO / Explore the coast, manage supplies, and save your expedition.';
+                  : p.housing.state.home
+                    ? 'HOME SWEET HOME / Store supplies, secure openings and improve your shelter.'
+                    : 'CLAIM A HOME / Enter Seabird Cottage behind the trail sign. E on furniture opens its actions.';
         if (this.modal) this.refresh();
     }
     event(e) {
@@ -188,6 +354,10 @@ export default class HUD {
         }
         if (e.type === 'change' && e.element === 'entries') {
             this.selected = e.item;
+            this.refresh();
+        }
+        if (e.type === 'change' && e.element === 'entries2') {
+            this.containerSelected = e.item;
             this.refresh();
         }
         if (e.type === 'change' && e.element === 'sensitivity')
@@ -201,11 +371,44 @@ export default class HUD {
             if (this.page === 'dead') this.p.recover();
             this.close();
         }
-        if (e.element === 'primary') {
-            if (this.page === 'craft') this.p.craft(this.selected);
-            else this.p.useSlot(Number(this.selected));
-        }
-        if (e.element === 'drop') this.p.dropSlot(Number(this.selected));
+        const p = this.p;
+        if (this.page === 'storage') {
+            if (e.element === 'primary' || e.element === 'drop')
+                p.housing.transfer(
+                    this.containerRef,
+                    Number(this.selected),
+                    true,
+                    e.element === 'drop',
+                );
+            if (e.element === 'secondary' || e.element === 'tertiary')
+                p.housing.transfer(
+                    this.containerRef,
+                    Number(this.containerSelected),
+                    false,
+                    e.element === 'tertiary',
+                );
+        } else if (this.page === 'object') {
+            const r = p.housing.state.objects[this.objectRef];
+            if (e.element === 'primary') {
+                if (r?.barricade) p.housing.repair(this.objectRef);
+                else if (r) p.housing.use(this.objectRef);
+                else if (p.housing.barricade(this.objectRef, false))
+                    this.close();
+            }
+            if (e.element === 'secondary') {
+                if (r?.barricade) p.housing.reinforce(this.objectRef);
+                else if (r) p.builder.move(this.objectRef);
+                else if (p.housing.barricade(this.objectRef, true))
+                    this.close();
+            }
+            if (e.element === 'drop' && p.housing.remove(this.objectRef, true))
+                this.close();
+            if (e.element === 'tertiary') p.housing.repair(this.objectRef);
+        } else if (e.element === 'primary') {
+            if (this.page === 'build') p.builder.begin(this.selected);
+            else if (this.page === 'craft') p.craft(this.selected);
+            else p.useSlot(Number(this.selected));
+        } else if (e.element === 'drop') p.dropSlot(Number(this.selected));
         if (e.element === 'save') this.p.requestSave();
         if (e.element === 'load') this.p.requestLoad();
         if (e.element === 'quit') {

@@ -1,0 +1,8 @@
+FRAMES 160
+LOG_EVERY 0
+EXPECT_PAUSED 1 10
+ACTION pause 1 20 21
+AXIS move_y 1 25 35
+ACTION build_menu 1 60 61
+EXPECT_PAUSED 1 100
+SCREENSHOT 100 /home/conner/Documents/GitHub/Project-Judas/projects/lunar_island/Review/stage2/relocated-build.png

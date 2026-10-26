@@ -1,0 +1,1 @@
+Original island.save, expected.json and both context binaries still match FIRST_CAPTURE_FINGERPRINTS.sha256. Later diagnostic reads reused screenshot/timing paths here; those auxiliary images/timings are later diagnostic captures, not promised byte-identical first-run artifacts. Original read.log remains preserved.

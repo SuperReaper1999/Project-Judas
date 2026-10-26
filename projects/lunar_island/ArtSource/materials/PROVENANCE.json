@@ -72,5 +72,21 @@
     "license": "CC0-1.0",
     "attributionRequired": false,
     "sha256": "8ba25a81f09fa4c3a30dc06906022ed5cd2acb4b9ecbf79b0b440182470baa95"
+  },
+  {
+    "kind": "fabric",
+    "source": "https://ambientcg.com/a/Fabric081C",
+    "creator": "ambientCG",
+    "license": "CC0-1.0",
+    "attributionRequired": false,
+    "sha256": "b23821cd5c523760a1a6719a9ad3905c6d6b41fb90dac0c8f829c87b24657bd2"
+  },
+  {
+    "kind": "leather",
+    "source": "https://ambientcg.com/a/Leather037",
+    "creator": "ambientCG",
+    "license": "CC0-1.0",
+    "attributionRequired": false,
+    "sha256": "3f51a107b377a67b5f4884c298db6777e07497dd54ae712b26c5da5aaa76d9b9"
   }
 ]

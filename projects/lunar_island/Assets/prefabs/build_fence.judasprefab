@@ -1,0 +1,118 @@
+{
+  "kind": "prefab",
+  "schema": 1,
+  "data": {
+    "settings": {
+      "name": "Lunar Island / Homestead Coast",
+      "world-origin": [
+        0,
+        0,
+        0
+      ],
+      "sun-direction": [
+        0.45,
+        0.72,
+        0.3
+      ],
+      "sun-color": [
+        1,
+        0.94,
+        0.79
+      ],
+      "ambient": [
+        0.22,
+        0.25,
+        0.28
+      ],
+      "background-color": [
+        0.36,
+        0.56,
+        0.65
+      ],
+      "linear-rendering": true,
+      "exposure": 1,
+      "next-id": 3,
+      "fluid-scale": 1,
+      "fidelity-policy": {
+        "mode": {
+          "symbol": "none"
+        }
+      }
+    },
+    "objects": [
+      {
+        "id": 1,
+        "name": "Picket fence",
+        "fields": {
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "mesh"
+          },
+          "render.mesh-asset": "5882595f64562ba44bf4ea7813e96516",
+          "render.texture-asset": "",
+          "render.color": [
+            1,
+            1,
+            1
+          ],
+          "render.alpha": 1,
+          "render.half-extents": [
+            1,
+            1,
+            1
+          ],
+          "render.radius": 1,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "body": {
+            "motion": {
+              "symbol": "dynamic"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            1.5,
+            0.6,
+            0.1
+          ],
+          "body.radius": 1.5,
+          "body.mass": 65,
+          "body.friction": 0.8,
+          "body.restitution": 0.02,
+          "body.pickable": true,
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0,
+          "body.terrain": "",
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.managed": false,
+          "tags": 64
+        }
+      }
+    ]
+  }
+}

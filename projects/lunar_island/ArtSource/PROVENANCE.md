@@ -1,4 +1,4 @@
-# Lunar Island Stage 1 asset provenance
+# Lunar Island asset provenance
 
 - Island reference image: supplied by Conner, copied unchanged into ArtSource.
   Used as geographical inspiration and the in-game field map; labels deliberately
@@ -37,3 +37,15 @@ the pot removed from the fern, remain under `prompt3d/`.
  The optional Unity SFX Designer
 was not installed or used; the operator will arrange its Linux port separately.
 External Prompt3D and independent research directories were kept read-only.
+
+## Stage 2
+
+House modules, pitched roofs/gables, steps, opening frames, barricades and building
+panels are original author_stage2.py geometry. Furniture reuses Conner's original
+LowPolyAssets starter pack exports (treasure chest, bed, chair, table, sofa,
+cabinet, bookshelf, smith workbench and desk lamp), with source model paths and
+hashes in asset_catalog.json. Geometry is flattened, UV-mapped and normalized by
+the retained project tools, with PBR surfaces from the installed Prompt3D material
+library. Source fabric/leather CC0 arrays and receipts were copied alongside the
+other scans. The generator and original starter pack were not modified.
+These are offline authoring inputs; the game package is self-contained.

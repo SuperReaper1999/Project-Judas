@@ -1,0 +1,4 @@
+FAIL signed-zero inertia continuation accepts numerically identical state
+FAIL signed-zero history continues to the exact uninterrupted endpoint
+SUMMARY 131 checks 2 failures
+PASS negative control: unchanged original validator is detected by current regression

@@ -84,11 +84,16 @@ export function craft(bag, recipeId, station = 'hand') {
     if (recipe.station !== 'hand' && station !== recipe.station)
         return {
             ok: false,
-            reason: 'Stand beside a homestead campfire to cook.',
+            reason:
+                recipe.station === 'workbench'
+                    ? 'Stand beside a workbench.'
+                    : 'Stand beside a homestead campfire to cook.',
         };
     return exchange(bag, recipe.ingredients, recipe.outputs);
 }
 export function transfer(from, to, id, amount) {
+    if (from === to)
+        return { ok: false, reason: 'Choose a different container.' };
     const debit = remove(from, id, amount);
     if (!debit.ok) return debit;
     const credit = add(to, id, amount);

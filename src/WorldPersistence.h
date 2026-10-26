@@ -27,6 +27,7 @@ private:
  static bool IncludesEntity(const RuntimeWorld&,uint64_t);
  static bool CapturePrepared(RuntimeWorld&,std::map<std::string,SaveChunk>&,std::string&);
  static void Entities(RuntimeWorld&,SaveArchive&);
+ static void EntitiesExtended(RuntimeWorld&,SaveArchive&,unsigned);
  static void Motors(RuntimeWorld&,SaveArchive&);
  static void Wheels(RuntimeWorld&,SaveArchive&);
  static void Powertrains(RuntimeWorld&,SaveArchive&);

@@ -111,7 +111,7 @@ check(
 );
 for (const recipe of RECIPES) {
     check(
-        recipe.station === 'hand' || recipe.station === 'campfire',
+        ['hand', 'campfire', 'workbench'].includes(recipe.station),
         'station has authored meaning',
     );
     for (const id of [
@@ -157,4 +157,20 @@ check(
     saved.bag.slots[0].item === 'empty_flask' && saved.vitals.breath === 0,
     'foundation state is plain cold-save JSON',
 );
-console.log('Lunar Island pure gameplay:', checks, 'checks passed');
+
+let work = Bag.createBag();
+work = Bag.add(work, 'scrap', 6).bag;
+check(
+    !Bag.craft(work, 'metal_sheet', 'hand').ok,
+    'metal sheet cannot be crafted away from a workbench',
+);
+check(
+    Bag.craft(work, 'metal_sheet', 'workbench').ok,
+    'workbench sheet recipe accepts the actual station',
+);
+check(
+    !Bag.transfer(work, work, 'scrap', 1).ok,
+    'same-container transfer rejects rather than duplicating items',
+);
+
+console.log(`Lunar Island pure gameplay: ${checks} checks passed`);

@@ -4,7 +4,7 @@
   "data": {
     "name": "Lunar Island",
     "legacyGameplay": false,
-    "saveIdentity": "26df5ea6e850614b6e5e54a6d09ca852c39999c7087b1f474251dd2cdcc277f3",
+    "saveIdentity": "9ac05e8350116f67dc3ba285539ad502e32f9ae780c0afc00264bb5ba6806e29",
     "iconAsset": "",
     "worldManifest": "",
     "exportScenes": [],
@@ -15,7 +15,28 @@
     "savesDir": "Saves",
     "exportAssetPolicy": "closure",
     "runtimeAssets": [
-      "7d59c542f393f30c48e7a434d9dcc9a7"
+      "7d59c542f393f30c48e7a434d9dcc9a7",
+      "a1c861bf9e08e38366bdee8bf1837aaa",
+      "fbb8cd9b49dff1530d180faf0a912745",
+      "579eb7b8c98b0398f9afd1bbe1f1eba4",
+      "5e35c01ead7be4e54913957ed84aedb6",
+      "da2374f707af2b2e31650ca8dcc915b0",
+      "665bb186144ee1f5193fba4c1f9ec8d5",
+      "4195ddc5c8d5c85ffe10b63d7c522d5d",
+      "6eb19ee336001ddab41982a7e4dc6ff8",
+      "49ec8e512305cb6ebbdae62592c71601",
+      "885b36597be5182db132663f2bf9447b",
+      "180f6f892d4c2516845fa0c406b24efd",
+      "725b6c136a06683d945c6c2fb674876c",
+      "263309777a36f976a84aded4e7f58626",
+      "d459c5f53f84fcd61cde794a0b98a322",
+      "f44e621e27267103d581c8adbbdc8177",
+      "bc656a16cf14ec5caf87ee80b73da621",
+      "6ee2cbb61cf7b453ca4e3305f4d213de",
+      "4a15ff643bd4983a966380e19b16cfbb",
+      "fcd81446eae613d0a8e532dd73b597ee",
+      "6f6f079b97c01d7dfeef14fdf2d41ee6",
+      "9ee7a0dfb01a8a65d93fd0fee7fc1b0b"
     ],
     "input": [
       {
@@ -378,11 +399,33 @@
             "deadzone": 0
           }
         ]
+      },
+      {
+        "name": "build_menu",
+        "axis": false,
+        "bindings": [
+          {
+            "control": "key:B",
+            "scale": 1,
+            "deadzone": 0
+          }
+        ]
+      },
+      {
+        "name": "build_rotate",
+        "axis": false,
+        "bindings": [
+          {
+            "control": "key:R",
+            "scale": 1,
+            "deadzone": 0
+          }
+        ]
       }
     ],
     "classification": {
       "tags": {
-        "nextId": 6,
+        "nextId": 7,
         "entries": [
           {
             "id": 0,
@@ -407,6 +450,10 @@
           {
             "id": 5,
             "name": "campfire"
+          },
+          {
+            "id": 6,
+            "name": "buildable"
           }
         ]
       },

@@ -1,0 +1,10 @@
+{
+  "bytes": 618,
+  "differingOffsets": [
+    163,
+    171,
+    179,
+    187
+  ],
+  "interpretation": "four IEEE float32 signed-zero entries in local inverse inertia; no nonzero differences"
+}

@@ -1,0 +1,9 @@
+FRAMES 180
+LOG_EVERY 0
+SCREENSHOT 20 /home/conner/Documents/GitHub/Project-Judas/projects/lunar_island/Review/stage2/welcome.png
+EXPECT_PAUSED 1 20
+ACTION pause 1 30 31
+AXIS move_x -1 50 100
+ACTION build_menu 1 120 121
+EXPECT_PAUSED 1 140
+SCREENSHOT 140 /home/conner/Documents/GitHub/Project-Judas/projects/lunar_island/Review/stage2/build-menu.png

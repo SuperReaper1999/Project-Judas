@@ -1,0 +1,273 @@
+{
+  "foundation": {
+    "name": "Stone foundation",
+    "half": [
+      1.5,
+      0.2,
+      1.5
+    ],
+    "cost": {
+      "wood": 4,
+      "stone": 4
+    },
+    "category": "Structure",
+    "health": 180
+  },
+  "floor": {
+    "name": "Timber floor",
+    "half": [
+      1.5,
+      0.1,
+      1.5
+    ],
+    "cost": {
+      "wood": 3
+    },
+    "category": "Structure",
+    "health": 100
+  },
+  "wall": {
+    "name": "Timber wall",
+    "half": [
+      1.5,
+      1.35,
+      0.12
+    ],
+    "cost": {
+      "wood": 4
+    },
+    "category": "Structure",
+    "health": 100
+  },
+  "window_wall": {
+    "name": "Wall with opening",
+    "half": [
+      1.5,
+      1.35,
+      0.12
+    ],
+    "cost": {
+      "wood": 4
+    },
+    "category": "Structure",
+    "health": 90
+  },
+  "door": {
+    "name": "Hinged door and frame",
+    "half": [
+      0.85,
+      1.35,
+      0.14
+    ],
+    "cost": {
+      "wood": 5,
+      "scrap": 1
+    },
+    "category": "Structure",
+    "health": 90
+  },
+  "roof": {
+    "name": "Roof panel",
+    "half": [
+      1.5,
+      0.1,
+      1.5
+    ],
+    "cost": {
+      "wood": 3,
+      "fiber": 2
+    },
+    "category": "Structure",
+    "health": 90
+  },
+  "fence": {
+    "name": "Picket fence",
+    "half": [
+      1.5,
+      0.6,
+      0.1
+    ],
+    "cost": {
+      "wood": 2
+    },
+    "category": "Garden",
+    "health": 70
+  },
+  "gate": {
+    "name": "Hinged garden gate",
+    "half": [
+      0.85,
+      0.65,
+      0.14
+    ],
+    "cost": {
+      "wood": 3
+    },
+    "category": "Garden",
+    "health": 70
+  },
+  "chest": {
+    "name": "Storage chest",
+    "half": [
+      0.6,
+      0.4,
+      0.4
+    ],
+    "cost": {
+      "wood": 4
+    },
+    "category": "Furniture",
+    "health": 70,
+    "storage": [
+      20,
+      100
+    ]
+  },
+  "bed": {
+    "name": "Bed / claim home",
+    "half": [
+      0.55,
+      0.3,
+      1
+    ],
+    "cost": {
+      "wood": 5,
+      "fiber": 6
+    },
+    "category": "Furniture",
+    "health": 60,
+    "use": "bed"
+  },
+  "chair": {
+    "name": "Chair",
+    "half": [
+      0.3,
+      0.5,
+      0.3
+    ],
+    "cost": {
+      "wood": 2
+    },
+    "category": "Furniture",
+    "health": 50
+  },
+  "table": {
+    "name": "Dining table",
+    "half": [
+      0.8,
+      0.4,
+      0.5
+    ],
+    "cost": {
+      "wood": 3
+    },
+    "category": "Furniture",
+    "health": 60
+  },
+  "sofa": {
+    "name": "Sofa",
+    "half": [
+      1,
+      0.45,
+      0.45
+    ],
+    "cost": {
+      "wood": 5,
+      "fiber": 8
+    },
+    "category": "Furniture",
+    "health": 60
+  },
+  "cupboard": {
+    "name": "Cupboard",
+    "half": [
+      0.55,
+      0.9,
+      0.3
+    ],
+    "cost": {
+      "wood": 5
+    },
+    "category": "Furniture",
+    "health": 70,
+    "storage": [
+      28,
+      140
+    ]
+  },
+  "shelf": {
+    "name": "Shelves",
+    "half": [
+      0.55,
+      0.9,
+      0.22
+    ],
+    "cost": {
+      "wood": 3
+    },
+    "category": "Furniture",
+    "health": 50,
+    "storage": [
+      12,
+      50
+    ]
+  },
+  "workbench": {
+    "name": "Workbench",
+    "half": [
+      1,
+      0.5,
+      0.5
+    ],
+    "cost": {
+      "wood": 6,
+      "stone": 2
+    },
+    "category": "Furniture",
+    "health": 90,
+    "use": "workbench"
+  },
+  "lamp": {
+    "name": "Warm lamp",
+    "half": [
+      0.2,
+      0.4,
+      0.2
+    ],
+    "cost": {
+      "scrap": 2,
+      "fiber": 1
+    },
+    "category": "Decoration",
+    "health": 40,
+    "use": "lamp"
+  },
+  "rug": {
+    "name": "Woven rug",
+    "half": [
+      0.9,
+      0.015,
+      0.65
+    ],
+    "cost": {
+      "fiber": 6
+    },
+    "category": "Decoration",
+    "health": 30
+  },
+  "painting": {
+    "name": "Island landscape",
+    "half": [
+      0.45,
+      0.32,
+      0.04
+    ],
+    "cost": {
+      "wood": 1,
+      "fiber": 2
+    },
+    "category": "Decoration",
+    "health": 30,
+    "surface": "wall"
+  }
+}
