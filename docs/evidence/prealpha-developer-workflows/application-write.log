@@ -1,0 +1,14 @@
+Shadow maps: on
+Graphics: 3.3.0 NVIDIA 580.178.04 / NVIDIA GeForce GTX 970/PCIe/SSE2
+Renderer fragment texture units: 32 (material path uses 12)
+World state: legacy .judasstate (F6/F7) saves disabled for additive compositions; save slots remain available
+Project: Developer Workflows (/home/conner/Documents/GitHub/Project-Judas/docs/judasjs/examples/developer_workflows/developer_workflows.judasproj)
+Scene: Developer Workflows / four small lessons (/home/conner/Documents/GitHub/Project-Judas/docs/judasjs/examples/developer_workflows/Scenes/lessons.judas)
+World origin (m): 0.000, 0.000, 0.000
+PASS ordinary root physical crate published
+PASS lesson motor responds to actual WASD input
+PASS actual ray interaction increments project-owned root counter
+PASS ordinary pause blocks physical gameplay
+FAIL bounded lesson test timed out at phase 5
+PASS ordinary application exits cleanly
+6 checks, 1 failures

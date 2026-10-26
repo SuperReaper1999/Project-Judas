@@ -1,0 +1,10 @@
+test_absent_manifest_target_fails_configuration (test_validation_registration.ValidationRegistrationTests.test_absent_manifest_target_fails_configuration) ... ok
+test_explicit_failure_registration_preserves_original_case (test_validation_registration.ValidationRegistrationTests.test_explicit_failure_registration_preserves_original_case) ... ok
+test_multi_configuration_discovery (test_validation_registration.ValidationRegistrationTests.test_multi_configuration_discovery) ... skipped 'Ninja needed for explicit multi-config control'
+test_ordinary_registration_omits_only_explicit_manual_failures (test_validation_registration.ValidationRegistrationTests.test_ordinary_registration_omits_only_explicit_manual_failures) ... ok
+test_removed_manual_guard_is_detected (test_validation_registration.ValidationRegistrationTests.test_removed_manual_guard_is_detected) ... ok
+
+----------------------------------------------------------------------
+Ran 5 tests in 1.078s
+
+OK (skipped=1)

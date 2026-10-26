@@ -1,0 +1,220 @@
+{
+  "kind": "project",
+  "schema": 1,
+  "data": {
+    "name": "Developer Workflows",
+    "legacyGameplay": false,
+    "saveIdentity": "ff4776c876172dd33613f22309d853f05d6f6d039a81158fe7555beca3ad7df1",
+    "iconAsset": "",
+    "worldManifest": "68543e4d3ced9f926db7e54dc40ea1ae",
+    "exportScenes": [
+      "Scenes/lessons.judas",
+      "Scenes/yard.judas"
+    ],
+    "excludeScenes": [],
+    "startupScene": "Scenes/lessons.judas",
+    "assetsDir": "Assets",
+    "scenesDir": "Scenes",
+    "savesDir": "Saves",
+    "exportAssetPolicy": "closure",
+    "runtimeAssets": [],
+    "input": [
+      {
+        "name": "move_x",
+        "axis": true,
+        "bindings": [
+          {
+            "control": "key:A",
+            "scale": -1,
+            "deadzone": 0
+          },
+          {
+            "control": "key:D",
+            "scale": 1,
+            "deadzone": 0
+          },
+          {
+            "control": "stick:LeftX",
+            "scale": 1,
+            "deadzone": 0.15
+          }
+        ]
+      },
+      {
+        "name": "move_y",
+        "axis": true,
+        "bindings": [
+          {
+            "control": "key:W",
+            "scale": 1,
+            "deadzone": 0
+          },
+          {
+            "control": "key:S",
+            "scale": -1,
+            "deadzone": 0
+          },
+          {
+            "control": "stick:LeftY",
+            "scale": -1,
+            "deadzone": 0.15
+          }
+        ]
+      },
+      {
+        "name": "look_x",
+        "axis": true,
+        "bindings": [
+          {
+            "control": "mouse:dx",
+            "scale": 1,
+            "deadzone": 0
+          }
+        ]
+      },
+      {
+        "name": "look_y",
+        "axis": true,
+        "bindings": [
+          {
+            "control": "mouse:dy",
+            "scale": 1,
+            "deadzone": 0
+          }
+        ]
+      },
+      {
+        "name": "jump",
+        "axis": false,
+        "bindings": [
+          {
+            "control": "key:Space",
+            "scale": 1,
+            "deadzone": 0
+          }
+        ]
+      },
+      {
+        "name": "interact",
+        "axis": false,
+        "bindings": [
+          {
+            "control": "key:E",
+            "scale": 1,
+            "deadzone": 0
+          }
+        ]
+      },
+      {
+        "name": "pause",
+        "axis": false,
+        "bindings": [
+          {
+            "control": "key:Escape",
+            "scale": 1,
+            "deadzone": 0
+          }
+        ]
+      },
+      {
+        "name": "save",
+        "axis": false,
+        "bindings": [
+          {
+            "control": "key:F6",
+            "scale": 1,
+            "deadzone": 0
+          }
+        ]
+      },
+      {
+        "name": "load",
+        "axis": false,
+        "bindings": [
+          {
+            "control": "key:F9",
+            "scale": 1,
+            "deadzone": 0
+          }
+        ]
+      },
+      {
+        "name": "camera_toggle",
+        "axis": false,
+        "bindings": [
+          {
+            "control": "key:V",
+            "scale": 1,
+            "deadzone": 0
+          }
+        ]
+      },
+      {
+        "name": "region",
+        "axis": false,
+        "bindings": [
+          {
+            "control": "key:R",
+            "scale": 1,
+            "deadzone": 0
+          }
+        ]
+      }
+    ],
+    "classification": {
+      "tags": {
+        "nextId": 0,
+        "entries": []
+      },
+      "collision": {
+        "nextId": 1,
+        "entries": [
+          {
+            "id": 0,
+            "name": "Default"
+          }
+        ]
+      },
+      "render": {
+        "nextId": 1,
+        "entries": [
+          {
+            "id": 0,
+            "name": "Default"
+          }
+        ]
+      }
+    },
+    "navigation": {
+      "areas": {
+        "nextId": 1,
+        "entries": [
+          {
+            "id": 0,
+            "name": "Default"
+          }
+        ]
+      },
+      "nextProfile": 1,
+      "profiles": [
+        {
+          "id": 0,
+          "name": "Default",
+          "radius": 0.3,
+          "height": 1.8,
+          "slope": 50,
+          "climb": 0.35
+        }
+      ]
+    },
+    "localization": {
+      "defaultLocale": "en",
+      "fonts": [],
+      "locales": {}
+    },
+    "audio": {},
+    "advancedFluidDynamics": false,
+    "basicWater": false,
+    "waterSwimming": false
+  }
+}

@@ -10,6 +10,7 @@ import json
 import os
 from pathlib import Path
 import re
+import shutil
 import sys
 import subprocess
 import tarfile
@@ -173,6 +174,22 @@ add_executable(${target} ${sources})
         result = package_sdk.verify(moved)
         self.assertEqual(result["build"], BUILD)
         self.assertEqual(result["tools"], ["judas"])
+
+    def test_editable_workflow_project_and_metadata_survive_sdk_staging(self):
+        relative = Path("docs/judasjs/examples/developer_workflows")
+        shutil.copytree(ROOT / relative, self.source / relative)
+        package_sdk.stage(self.args)
+        package_sdk.verify(self.output)
+        for original in (ROOT / relative).rglob("*"):
+            if not original.is_file():
+                continue
+            name = original.relative_to(ROOT)
+            self.assertTrue(package_source.selected(name.as_posix(), "engine"))
+            self.assertEqual((self.output / name).read_bytes(), original.read_bytes())
+        metadata = self.output / relative / "Assets/scripts/crate.js.judasmeta"
+        metadata.unlink()
+        with self.assertRaises(ValueError):
+            package_sdk.verify(self.output)
 
     def test_missing_required_tool_rejected(self):
         (self.binaries / "judas").unlink()

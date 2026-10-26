@@ -1,5 +1,7 @@
 # Making a Judas game by hand
 
+[Ownership, readiness, presentation and saves](../DEVELOPER_WORKFLOWS.md)
+
 For a first visible result with no input/controller setup, start with
 [Your first visible project](../FIRST_PROJECT.md), then return here for the
 complete authoring and subsystem workflow.

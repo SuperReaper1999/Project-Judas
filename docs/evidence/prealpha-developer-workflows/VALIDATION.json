@@ -1,0 +1,45 @@
+{
+  "script": {
+    "log": "final-script-tests.log",
+    "summary": "SUMMARY 39 checks 0 failures"
+  },
+  "evolution": {
+    "log": "final-save-evolution.log",
+    "summary": "Migration ms=1.196557 bytes=1598 checks=48 failures=0"
+  },
+  "streaming": {
+    "log": "final-streaming.log",
+    "summary": "M59 85 checks 0 failures"
+  },
+  "preferences": {
+    "log": "preferences-tests-corrected.log",
+    "summary": "Editor preferences: 42 checks, 0 failures"
+  },
+  "workflowGate": true,
+  "packaging": {
+    "schema": 1,
+    "suite": "prealpha-packaging",
+    "tests": 29,
+    "failures": 0,
+    "errors": 0,
+    "passed": true,
+    "skipped": 0,
+    "executed": 29,
+    "scope": "Python fixture staging/negative controls; not native Windows or Android execution"
+  },
+  "mainUnchanged": "c2cdd376f1c20a9d6a8a75d8257f9ac44327ec09",
+  "humanValidation": "pending",
+  "platform": "Linux; no native Windows/Android qualification",
+  "export": {
+    "assets": 7,
+    "scenes": 2,
+    "bytes": 57518783,
+    "seconds": 0.245,
+    "relocatedExit": 0,
+    "path": ".cache/developer-workflows/Checkpoint Learning Project"
+  },
+  "layoutControl": {
+    "positiveVisibleHUD": true,
+    "intentionalOffscreenFailureDetected": true
+  }
+}

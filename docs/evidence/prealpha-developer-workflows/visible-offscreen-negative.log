@@ -1,0 +1,22 @@
+Shadow maps: on
+Graphics: 3.3.0 NVIDIA 580.178.04 / NVIDIA GeForce GTX 970/PCIe/SSE2
+Renderer fragment texture units: 32 (material path uses 12)
+World state: legacy .judasstate (F6/F7) saves disabled for additive compositions; save slots remain available
+Project: Developer Workflows (/tmp/workflow-deliberate-offscreen/developer_workflows.judasproj)
+Scene: Developer Workflows / four small lessons (/tmp/workflow-deliberate-offscreen/Scenes/lessons.judas)
+World origin (m): 0.000, 0.000, 0.000
+FAIL lesson HUD actually lies inside the viewport
+PASS ordinary root physical crate published
+PASS lesson motor responds to actual WASD input
+PASS actual ray interaction increments project-owned root counter
+PASS ordinary pause blocks physical gameplay
+PASS paused preparation is not mistaken for published collision
+PASS requested regional collision genuinely publishes
+PASS project registration is visible independently of native state
+PASS actual regional ray interaction reaches registered script
+PASS regional crate actually unloads
+PASS native wheels and powertrain move vehicle under project input
+PASS save captures paused physical boundary
+PASS ordinary native save commits complete lesson
+PASS ordinary application exits cleanly
+14 checks, 1 failures

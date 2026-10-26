@@ -1,0 +1,255 @@
+JudasScene 3
+settings
+  name "Developer Workflows / four small lessons"
+  world-origin 0 0 0
+  sun-direction 0.45 0.72 0.3
+  sun-color 1 0.94 0.79
+  ambient 0.22 0.25 0.28
+  background-color 0.18 0.24 0.3
+  linear-rendering true
+  exposure 1
+  environment ""
+  environment-intensity 1
+  environment-rotation 1 0 0 0
+  environment-background false
+  fluid-scale 1
+  fluid-update-rate-hz 30
+  fluid-hydrostatic-drag-rate 2
+  fidelity-policy none
+  next-id 10000
+end
+
+object 1 "Ground"
+  position 0 -0.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 40 0.5 40
+  render.radius 1
+  render.color 0.18 0.25 0.22
+  render.alpha 1
+  render.secondary-color 0.18 0.25 0.22
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body static box
+  body.half-extents 40 0.5 40
+  body.radius 1
+  body.terrain ""
+  body.mass 0
+  body.friction 0.7
+  body.restitution 0.1
+  body.initial-velocity 0 0 0
+  body.pickable true
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 2 "Uniform island gravity"
+  position 0 0 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  gravity uniform 9.81
+  gravity.region box 100 100 100
+end
+
+object 100 "Player / read player.js"
+  motor.enabled true
+  motor.radius 0.3
+  motor.halfHeight 0.6
+  motor.offset 0 0.9 0
+  motor.stepHeight 0.45
+  motor.supportDistance 0.2
+  motor.skin 0.02
+  motor.maxSlopeDegrees 50
+  motor.gravityScale 1
+  motor.reorientationDegreesPerSecond 160
+  motor.interactionMass 80
+  motor.maxPushImpulse 20
+  motor.collisionLayer 0
+  motor.collisionMask 18446744073709551615
+  motor.requiredTags 0
+  motor.excludedTags 0
+  ui.asset "f5bf1d25668ea1de0c5de0b7b57f4535"
+  ui.name "lesson"
+  ui.enabled true
+  scripts 1
+  script.0.id 1
+  script.0.asset "6028d032e5b6b0cbc6eb49b679902626"
+  script.0.enabled true
+  script.0.properties "{}"
+  position 0 0.05 8
+  rotation 1 0 0 0
+  scale 1 1 1
+end
+
+object 200 "Persistent root crate / E pushes and counts"
+  scripts 1
+  script.0.id 1
+  script.0.asset "d7d54258eced64b097eea5383af06a35"
+  script.0.enabled true
+  script.0.properties "{}"
+  position 0 0.7 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.6 0.6 0.6
+  render.radius 1
+  render.color 0.9 0.5 0.16
+  render.alpha 1
+  render.secondary-color 0.9 0.5 0.16
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body dynamic box
+  body.half-extents 0.6 0.6 0.6
+  body.radius 1
+  body.terrain ""
+  body.mass 15
+  body.friction 0.7
+  body.restitution 0.1
+  body.initial-velocity 0 0 0
+  body.pickable true
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 7000 "Four-wheel vehicle / read vehicle.js"
+  powertrain.graph "{\"version\":1,\"enabled\":true,\"shafts\":[{\"name\":\"crank\",\"kind\":\"internal\",\"inertia\":0.28,\"initialAngularVelocity\":100.0,\"viscousDrag\":0.02,\"target\":\"0\",\"bearing\":\"7000\",\"axis\":[1.0,0.0,0.0]},{\"name\":\"gearbox\",\"kind\":\"internal\",\"inertia\":0.2,\"initialAngularVelocity\":0.0,\"viscousDrag\":0.02,\"target\":\"0\",\"bearing\":\"7000\",\"axis\":[1.0,0.0,0.0]},{\"name\":\"carrier\",\"kind\":\"internal\",\"inertia\":0.2,\"initialAngularVelocity\":0.0,\"viscousDrag\":0.02,\"target\":\"0\",\"bearing\":\"7000\",\"axis\":[1.0,0.0,0.0]},{\"name\":\"left\",\"kind\":\"wheel\",\"inertia\":0.2,\"initialAngularVelocity\":0.0,\"viscousDrag\":0.02,\"target\":\"7004\",\"bearing\":\"0\",\"axis\":[1.0,0.0,0.0]},{\"name\":\"right\",\"kind\":\"wheel\",\"inertia\":0.2,\"initialAngularVelocity\":0.0,\"viscousDrag\":0.02,\"target\":\"7005\",\"bearing\":\"0\",\"axis\":[1.0,0.0,0.0]}],\"sources\":[{\"name\":\"engine\",\"shaft\":0,\"kind\":\"combustion\",\"torqueCurve\":[[0.0,0.0],[600.0,0.0],[900.0,95.0],[1800.0,145.0],[3200.0,160.0],[4800.0,125.0],[6200.0,40.0],[6800.0,0.0]],\"maxTorque\":200.0,\"maxPower\":100000.0,\"starterTorque\":42.0}],\"links\":[{\"name\":\"gearbox\",\"kind\":\"gear\",\"input\":0,\"output\":1,\"outputB\":0,\"ratio\":0.2222222222222222,\"maxTorque\":500.0},{\"name\":\"clutch\",\"kind\":\"clutch\",\"input\":1,\"output\":2,\"outputB\":0,\"ratio\":1.0,\"maxTorque\":1000.0},{\"name\":\"differential\",\"kind\":\"differential\",\"input\":2,\"output\":3,\"outputB\":4,\"ratio\":0.2857142857142857,\"maxTorque\":700.0}],\"brakes\":[{\"name\":\"left\",\"shaft\":3,\"maxTorque\":1100.0},{\"name\":\"right\",\"shaft\":4,\"maxTorque\":1100.0}]}"
+  scripts 1
+  script.0.id 1
+  script.0.asset "661befdafd5d6ae3d95b37683c09830e"
+  script.0.enabled true
+  script.0.properties "{}"
+  position 4 1.3 4
+  rotation 1 0 0 0
+  scale 1 1 1
+  body dynamic compound
+  body.half-extents 0.78 0.3 1.9
+  body.radius 0.78
+  body.terrain ""
+  body.mass 950
+  body.friction 0.8
+  body.restitution 0.02
+  body.initial-velocity 0 0 0
+  body.pickable true
+  body.managed false
+  body.compound-count 2
+  body.compound-box 0 -0.23 0 0.78 0.3 1.9
+  body.compound-box 0 0.3 0.45 0.624 0.3 1.4
+  body.fluid-cavity-count 0
+end
+
+object 7001 "Body-free visual: inherits interpolation"
+  parent 7000
+  position 0 0 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.78 0.45 1.9
+  render.radius 1
+  render.color 0.1 0.55 0.7
+  render.alpha 1
+  render.secondary-color 0.1 0.55 0.7
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+end
+
+object 7002 "Birchside hatchback / wheel"
+  parent 7000
+  wheel.enabled true
+  wheel.chassis 7000
+  wheel.mount -0.75 -0.25 -1.3
+  wheel.orientation 1 0 0 0
+  wheel.radius 0.31
+  wheel.minLength 0.08
+  wheel.restLength 0.34
+  wheel.maxLength 0.54
+  wheel.springStiffness 19415.625
+  wheel.damping 1900
+  wheel.spinInertia 1.2
+  wheel.friction 1.05
+  wheel.rollingResistance 0.015
+  wheel.collisionLayer 0
+  wheel.collisionMask 18446744073709551615
+  wheel.requiredTags 0
+  wheel.excludedTags 0
+  position -0.75 -0.59 -1.3
+  rotation 1 0 0 0
+  scale 1 1 1
+end
+
+object 7003 "Birchside hatchback / wheel"
+  parent 7000
+  wheel.enabled true
+  wheel.chassis 7000
+  wheel.mount 0.75 -0.25 -1.3
+  wheel.orientation 1 0 0 0
+  wheel.radius 0.31
+  wheel.minLength 0.08
+  wheel.restLength 0.34
+  wheel.maxLength 0.54
+  wheel.springStiffness 19415.625
+  wheel.damping 1900
+  wheel.spinInertia 1.2
+  wheel.friction 1.05
+  wheel.rollingResistance 0.015
+  wheel.collisionLayer 0
+  wheel.collisionMask 18446744073709551615
+  wheel.requiredTags 0
+  wheel.excludedTags 0
+  position 0.75 -0.59 -1.3
+  rotation 1 0 0 0
+  scale 1 1 1
+end
+
+object 7004 "Birchside hatchback / wheel"
+  parent 7000
+  wheel.enabled true
+  wheel.chassis 7000
+  wheel.mount -0.75 -0.25 1.25
+  wheel.orientation 1 0 0 0
+  wheel.radius 0.31
+  wheel.minLength 0.08
+  wheel.restLength 0.34
+  wheel.maxLength 0.54
+  wheel.springStiffness 19415.625
+  wheel.damping 1900
+  wheel.spinInertia 1.2
+  wheel.friction 1.05
+  wheel.rollingResistance 0.015
+  wheel.collisionLayer 0
+  wheel.collisionMask 18446744073709551615
+  wheel.requiredTags 0
+  wheel.excludedTags 0
+  position -0.75 -0.59 1.25
+  rotation 1 0 0 0
+  scale 1 1 1
+end
+
+object 7005 "Birchside hatchback / wheel"
+  parent 7000
+  wheel.enabled true
+  wheel.chassis 7000
+  wheel.mount 0.75 -0.25 1.25
+  wheel.orientation 1 0 0 0
+  wheel.radius 0.31
+  wheel.minLength 0.08
+  wheel.restLength 0.34
+  wheel.maxLength 0.54
+  wheel.springStiffness 19415.625
+  wheel.damping 1900
+  wheel.spinInertia 1.2
+  wheel.friction 1.05
+  wheel.rollingResistance 0.015
+  wheel.collisionLayer 0
+  wheel.collisionMask 18446744073709551615
+  wheel.requiredTags 0
+  wheel.excludedTags 0
+  position 0.75 -0.59 1.25
+  rotation 1 0 0 0
+  scale 1 1 1
+end

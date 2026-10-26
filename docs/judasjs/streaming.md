@@ -1,5 +1,7 @@
 # Additive regions — `scenes`
 
+[Ownership/readiness walkthrough and editable example](../DEVELOPER_WORKFLOWS.md)
+
 M59 describes one played world, physics world and script VM. A region is an
 ownership group. `scenes.current`, `scenes.load()` and `scenes.reload()` retain
 M43 whole-world semantics. Additive operations do not change the root identity,

@@ -1,0 +1,6 @@
+FRAMES 200
+LOG_EVERY 0
+ACTION load 1 10 11
+WAIT_SERVICES save 60000 20
+EXPECT_PAUSED 0 120
+SCREENSHOT 140 /home/conner/Documents/GitHub/Project-Judas/docs/evidence/prealpha-developer-workflows/relocated.png

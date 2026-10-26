@@ -1,0 +1,19 @@
+{
+  "checkpoint": "fa0a9d21b145325b54fc340780828ca6f6ebac21",
+  "sizeofSceneObject": 5328,
+  "observedEmptyRetainedRecordBytes": 16508,
+  "originalFixtureBudgetBytes": 16384,
+  "originalFailures": 2,
+  "diagnosticOnlyBudgetBytes": 65536,
+  "diagnosticChanges": "Isolated /tmp copy skips the initial over-budget assertion to measure empty retention; not counted as a regression pass.",
+  "productionFilesUnchanged": {
+    "src/Scene.h": {
+      "HEAD": "6a1c389208e05b235ddc940bf3bf20c74fcb75c3",
+      "current": "6a1c389208e05b235ddc940bf3bf20c74fcb75c3"
+    },
+    "src/WorldStreaming.cpp": {
+      "HEAD": "f58ba37197546588909517627970d947b74c79e0",
+      "current": "f58ba37197546588909517627970d947b74c79e0"
+    }
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "results": {
+    "incompatible": {
+      "exit": 0,
+      "checks": 5,
+      "failures": 0
+    },
+    "missing-script": {
+      "exit": 0,
+      "checks": 10,
+      "failures": 0
+    }
+  },
+  "originalSaveUnchanged": true,
+  "saveSha256": "b0fd249d79001833aea17d5456a2bc73b33a257ec6789a2d82ff9edba54a6cab"
+}

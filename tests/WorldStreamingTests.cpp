@@ -1,4 +1,5 @@
 #include "WorldStreaming.h"
+#include "editor/RegionRequests.h"
 #include "RuntimeWorld.h"
 #include "ResourceManager.h"
 #include "SceneSession.h"
@@ -29,6 +30,13 @@ int main(){namespace fs=std::filesystem;fs::path root="build/m59-unit-project";f
  check(ValidateWorldManifest(manifest,p,error),"registered scene sources");WorldStreaming stream(world,resources,p,manifest);
  auto first=stream.Request("a",false,error),duplicate=stream.Request("a",false,error),other=stream.Request("b",false,error);
  check(pump(stream,[&]{auto x=stream.Status(first),y=stream.Status(other);return x&&y&&x->state=="active"&&y->state=="active";}),"asynchronous parse/staged activation");
+ EditorRegionRequests editor;
+ auto editorLease=editor.Request(stream,"a",error);
+ check(editorLease&&editor.Request(stream,"a",error)==editorLease,"repeated editor Request cannot leak another demand");
+ auto independent=stream.Request("a",false,error);
+ check(editor.Release(stream,"a")&&!stream.Status(editorLease)&&stream.Status(independent),"editor Release preserves independent gameplay demand");
+ stream.Release(independent);
+ check(!editor.Owns(stream,"a")&&!editor.Request(stream,"missing",error),"released or invalid editor lease is not retained");
  auto one=stream.Resolve("a",2),two=stream.Resolve("b",2);check(one&&two&&one!=two,"colliding source IDs remapped independently");check(world.Physics().AliveBodyCount()==4,"both groups inhabit same physics inventory");
  EntityPhysicalState pos;world.GetEntityState(two,pos);check(std::abs(pos.position.x-8)<1e-6,"double origin subtracted before float narrowing");
  auto stale=world.RuntimeBody(one);stream.Release(first);stream.Unload("a");check(stream.Status(duplicate)->state=="active","independent duplicate demand retained");
@@ -51,7 +59,10 @@ int main(){namespace fs=std::filesystem;fs::path root="build/m59-unit-project";f
  std::ofstream(root/"Assets/retention.js")<<R"JS(export default class {constructor({entity}){this.entity=entity;this.state={payload:'x'.repeat(8192),marker:17};}fixedUpdate(){if(this.entity.transform.position.x>0)this.state.payload='';}})JS";
  AssetRecord retentionScript;check(db.Track((root/"Assets/retention.js").string(),retentionScript,error),"retention script registered");
  Scene retainedScene;retainedScene.CreateObject("retained actor").scripts={{1,retentionScript.id,true,"{}"}};check(SaveSceneToFile(retainedScene,(root/"Scenes/retention.judas").string(),error),"retention scene saved");
- RuntimeWorld retainedWorld;check(retainedWorld.Build(Scene{},&resources,error),"retention world builds");WorldManifest retainedManifest;retainedManifest.retainedBytes=16*1024;WorldRegion retainedRegion;retainedRegion.id="state";retainedRegion.scene="Scenes/retention.judas";retainedManifest.regions.emplace("state",retainedRegion);WorldStreaming retainedStream(retainedWorld,resources,p,retainedManifest);
+ RuntimeWorld retainedWorld;check(retainedWorld.Build(Scene{},&resources,error),"retention world builds");WorldManifest retainedManifest;// Native component records grew beyond the old fixed 16 KiB fixture.
+ // Leave 4 KiB above the three SceneObject copies: empty state fits, while the
+ // unchanged 8 KiB payload must still exceed the budget on each platform.
+ retainedManifest.retainedBytes=sizeof(SceneObject)*3+4096;WorldRegion retainedRegion;retainedRegion.id="state";retainedRegion.scene="Scenes/retention.judas";retainedManifest.regions.emplace("state",retainedRegion);WorldStreaming retainedStream(retainedWorld,resources,p,retainedManifest);
  auto retainedToken=retainedStream.Request("state",false,error);check(pump(retainedStream,[&]{auto status=retainedStream.Status(retainedToken);return status&&status->state=="active";}),"oversized state source active");retainedWorld.FixedScripts(nullptr,1.f/60);auto retainedEntity=retainedStream.Resolve("state",1);retainedStream.Release(retainedToken);
  check(pump(retainedStream,[&]{auto rows=retainedStream.Regions();return std::find(rows[0].pins.begin(),rows[0].pins.end(),"retained session byte budget")!=rows[0].pins.end();}),"over-budget pin reports exact retention reason");auto records=retainedWorld.Scripts()->Capture();check(records.size()==1&&records[0].json.find(std::string(8192,'x'))!=std::string::npos,"pinned actor retains complete oversized state");
  auto reducedTransform=retainedWorld.RuntimeDefinition(retainedEntity)->transform;reducedTransform.position.x=1;check(retainedWorld.SetRuntimeTransform(retainedEntity,reducedTransform),"ordinary state change removes consumer retention condition");retainedWorld.FixedScripts(nullptr,1.f/60);

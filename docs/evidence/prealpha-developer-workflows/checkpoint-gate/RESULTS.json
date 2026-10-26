@@ -1,0 +1,133 @@
+{
+  "format": 1,
+  "startedUtc": "2026-10-26T19:57:16.525261+00:00",
+  "sourceRevision": "fa0a9d21b145325b54fc340780828ca6f6ebac21",
+  "trackedWorktreeStatus": "M CMakeLists.txt\n M docs/ARCHITECTURE.md\n M docs/EDITOR_GUIDE.md\n M docs/FIRST_PROJECT.md\n M docs/JUDASJS.md\n M docs/judasjs/getting-started.md\n M docs/judasjs/lifecycle.md\n M docs/judasjs/saves.md\n M docs/judasjs/streaming.md\n M scripts/prealpha_packaging_checks.py\n M src/SaveEvolution.cpp\n M src/SaveEvolution.h\n M src/SaveService.cpp\n M src/SceneSession.h\n M src/ScriptSystem.cpp\n M src/ScriptSystem.h\n M src/editor/EditorApplication.cpp\n M src/editor/EditorPanels.cpp\n M src/editor/EditorPanels.h\n M src/editor/EditorPreferences.cpp\n M tests/EditorPreferencesTests.cpp\n M tests/SaveEvolutionTests.cpp\n M tests/ScriptTests.cpp\n M tests/WorldStreamingTests.cpp\n M tools/package_sdk.py\n M tools/validation/suites.json",
+  "manifestSha256": "503e40b86b1f9ac7d6a0ce57323b84b9222bfe548cab24956cad25bf63baec43",
+  "trackedDiffSha256": "352b644a4ba253bcf4da1a0907ba97b9cdcdb54667d251a4380c149b27677e80",
+  "platform": "Linux-7.0.0-38-generic-x86_64-with-glibc2.43",
+  "machine": "x86_64",
+  "cpuCount": 12,
+  "groups": [],
+  "tests": [
+    {
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_workflow_application_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/docs/judasjs/examples/developer_workflows/developer_workflows.judasproj",
+        "cycle",
+        "/home/conner/Documents/GitHub/Project-Judas/docs/evidence/prealpha-developer-workflows/checkpoint-gate/workflow"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas",
+      "timeoutSeconds": 120,
+      "binarySha256": "bed03f2a25ca767952484cb5f143ea03a189f1a7d909d34e86070e1cd41ecec9",
+      "exit": 0,
+      "status": "passed",
+      "binarySha256After": "bed03f2a25ca767952484cb5f143ea03a189f1a7d909d34e86070e1cd41ecec9",
+      "seconds": 1.0777045430004364,
+      "buildIdentity": {
+        "architecture": "x86_64",
+        "build_id": "0.1.0-prealpha-Experimental-fa0a9d2-dirty-cc33376465d8-u7509495f2d01",
+        "channel": "Experimental",
+        "compiler": "GNU",
+        "compiler_version": "15.2.0",
+        "configuration": "Release",
+        "maturity": "pre-alpha",
+        "platform": "Linux",
+        "schema": 1,
+        "source_dirty": true,
+        "source_fingerprint": "cc33376465d8417a87c7f7e1540de6dfd3a2f87966a94c20f2ce39f4d642664b",
+        "source_origin": "git",
+        "source_revision": "fa0a9d21b145325b54fc340780828ca6f6ebac21",
+        "source_tree": "0fcf8008d4f59996aab2d9748cdf3bd57cf78810",
+        "source_untracked_count": 20,
+        "source_untracked_fingerprint": "7509495f2d01bc3039787b9815427980184041a19588dfcf7596bc713610006d",
+        "version": "0.1.0-prealpha"
+      },
+      "name": "developer-workflow"
+    }
+  ],
+  "knownFindings": [
+    {
+      "id": "CCD-MESH-ARRIVAL",
+      "status": "resolved-first-arrival",
+      "scheduled": true,
+      "reason": "Pass2 finite swept-SAT bounds correct the validated first-arrival contract; it now runs in the ordinary collision group. This does not close later curved-sheet continuation.",
+      "evidence": "docs/evidence/prealpha-pass2/physics"
+    },
+    {
+      "id": "CCD-MESH-CONTINUATION",
+      "status": "resolved-original-fixtures-bounded-ccd",
+      "scheduled": true,
+      "reason": "Original unchanged mesh arrival/continuation fixtures pass with authoritative MK2. Bounded CCD, sidedness and deep initial-overlap limits remain; MK1 event scheduling has been removed.",
+      "evidence": "docs/evidence/prealpha-ccd-continuation-20261019"
+    },
+    {
+      "id": "FLU-001",
+      "status": "deferred-failing",
+      "scheduled": false,
+      "reason": "Legacy PBF settling contract retained unchanged; separate fluid review required.",
+      "evidence": "docs/evidence/m78-completion/FINDINGS_FINAL.json"
+    },
+    {
+      "id": "LEGACY-CONTINUATION",
+      "status": "documented-incompatible-history",
+      "scheduled": false,
+      "reason": "Original a106 snapshot lacks historical continuation data. New-format passes do not certify that snapshot.",
+      "evidence": "docs/evidence/m78-cold-boundary"
+    },
+    {
+      "id": "DENSE-CCD-TAIL",
+      "status": "open-performance-limit",
+      "scheduled": false,
+      "reason": "Original MK1 global event cascade is retired. Current MK2 measurements have their own workload scope; focused correctness gates do not certify universal dense-pile latency.",
+      "evidence": "docs/MK2_PHYSICS_ARCHITECTURE.md"
+    },
+    {
+      "id": "LIQUID-BAKE-ROTATION",
+      "status": "resolved-baking",
+      "scheduled": true,
+      "reason": "Baker and runtime use the same normalized owner/field frames and oriented gravity volumes; both original bake-only runtime-publication cases pass unchanged equivalence tolerances. Original full integration exposes separate retained exact-total comparison failure.",
+      "evidence": "docs/evidence/prealpha-liquid-rotation/REPORT.md"
+    },
+    {
+      "id": "LIQUID-BAKE-KNOTS",
+      "status": "resolved-baking",
+      "scheduled": true,
+      "reason": "Positive tetrahedral density is integrated into one monotone cumulative curve, including shared endpoints; unchanged strict Surface1 decoder accepts both original rotated bakes. A later origin sampling limitation remains separately failed.",
+      "evidence": "docs/evidence/prealpha-liquid-rotation/REPORT.md"
+    },
+    {
+      "id": "LIQUID-ORIGIN-GRID-QUERY",
+      "status": "open-query-continuity-failing",
+      "scheduled": false,
+      "reason": "The original half-turn fixture now bakes and publishes, then fails its unchanged post-512m-origin query comparison: float translation crosses a discontinuous disturbed-surface cell boundary. Conserved quantities and wave bytes remain unchanged. This full integration failure is preserved, not counted as a baking pass.",
+      "evidence": "docs/evidence/prealpha-liquid-rotation/REPORT.md"
+    },
+    {
+      "id": "LIQUID-ORIGIN-TOTAL-IDENTITY",
+      "status": "resolved-oracle-causal-baseline",
+      "scheduled": true,
+      "reason": "Pass3 preserves the original failed test and demonstrates its causal-baseline error. Current atomicity compares the immediate pre-request total with the same exact equality and every physical participant byte; earlier legitimate paired-flow conservation tolerance and liquid runtime are unchanged.",
+      "evidence": "docs/evidence/prealpha-pass3/integration/REPORT.md"
+    }
+  ],
+  "humanAcceptance": "not-established",
+  "scope": "explicit manifest subset",
+  "expectedSourceIdentity": {
+    "source_revision": "fa0a9d21b145325b54fc340780828ca6f6ebac21",
+    "source_fingerprint": "cc33376465d8417a87c7f7e1540de6dfd3a2f87966a94c20f2ce39f4d642664b",
+    "source_dirty": true,
+    "source_untracked_fingerprint": "7509495f2d01bc3039787b9815427980184041a19588dfcf7596bc713610006d"
+  },
+  "passed": true,
+  "finishedUtc": "2026-10-26T19:57:17.867212+00:00",
+  "sourceRevisionAfter": "fa0a9d21b145325b54fc340780828ca6f6ebac21",
+  "trackedWorktreeStatusAfter": "M CMakeLists.txt\n M docs/ARCHITECTURE.md\n M docs/EDITOR_GUIDE.md\n M docs/FIRST_PROJECT.md\n M docs/JUDASJS.md\n M docs/judasjs/getting-started.md\n M docs/judasjs/lifecycle.md\n M docs/judasjs/saves.md\n M docs/judasjs/streaming.md\n M scripts/prealpha_packaging_checks.py\n M src/SaveEvolution.cpp\n M src/SaveEvolution.h\n M src/SaveService.cpp\n M src/SceneSession.h\n M src/ScriptSystem.cpp\n M src/ScriptSystem.h\n M src/editor/EditorApplication.cpp\n M src/editor/EditorPanels.cpp\n M src/editor/EditorPanels.h\n M src/editor/EditorPreferences.cpp\n M tests/EditorPreferencesTests.cpp\n M tests/SaveEvolutionTests.cpp\n M tests/ScriptTests.cpp\n M tests/WorldStreamingTests.cpp\n M tools/package_sdk.py\n M tools/validation/suites.json",
+  "trackedDiffSha256After": "352b644a4ba253bcf4da1a0907ba97b9cdcdb54667d251a4380c149b27677e80",
+  "expectedSourceIdentityAfter": {
+    "source_revision": "fa0a9d21b145325b54fc340780828ca6f6ebac21",
+    "source_fingerprint": "cc33376465d8417a87c7f7e1540de6dfd3a2f87966a94c20f2ce39f4d642664b",
+    "source_dirty": true,
+    "source_untracked_fingerprint": "7509495f2d01bc3039787b9815427980184041a19588dfcf7596bc713610006d"
+  }
+}

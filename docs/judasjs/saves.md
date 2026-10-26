@@ -1,5 +1,7 @@
 # `saves` — project-owned save policy
 
+[Save identity diagnostics and recovery walkthrough](../DEVELOPER_WORKFLOWS.md)
+
 Judas captures/reconstructs engine state. Projects decide when to save and what
 score, inventory or other game data belongs in script `state`/`session`.
 See [participation and storage contract](../M61_SAVES.md),

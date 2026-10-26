@@ -1,0 +1,16 @@
+Shadow maps: on
+Graphics: 3.3.0 NVIDIA 580.178.04 / NVIDIA GeForce GTX 970/PCIe/SSE2
+Renderer fragment texture units: 32 (material path uses 12)
+World state: legacy .judasstate (F6/F7) saves disabled for additive compositions; save slots remain available
+Project: Developer Workflows (/home/conner/Documents/GitHub/Project-Judas/docs/judasjs/examples/developer_workflows/developer_workflows.judasproj)
+Scene: Developer Workflows / four small lessons (/home/conner/Documents/GitHub/Project-Judas/docs/judasjs/examples/developer_workflows/Scenes/lessons.judas)
+World origin (m): 0.000, 0.000, 0.000
+PASS fresh process requests ordinary saved lesson
+PASS cold root crate counter restored exactly
+PASS cold physical vehicle endpoint restored
+PASS cold driver lease disables actual motor
+PASS cold restored vehicle drives physically again
+PASS cold regional snapshot preserves exact project counter
+PASS cold regional crate regains actual collision
+PASS ordinary application exits cleanly
+8 checks, 0 failures

@@ -1,0 +1,14 @@
+{
+  "verified": true,
+  "counts": {
+    "source": 57,
+    "binaries": 9,
+    "package": 29,
+    "evidence": 161
+  },
+  "changedFiles": 214,
+  "parentExperimental": "fa0a9d21b145325b54fc340780828ca6f6ebac21",
+  "mainUnchanged": "c2cdd376f1c20a9d6a8a75d8257f9ac44327ec09",
+  "humanValidation": "pending",
+  "sourceBoundaryNote": "Modified files plus six unchanged production/API boundaries. Native package assets/scenes match the editable lesson byte-for-byte."
+}

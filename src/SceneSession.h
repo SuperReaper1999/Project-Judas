@@ -35,6 +35,7 @@ public:
     bool Apply(std::unique_ptr<RuntimeWorld>& world,InteractivePlay& play,
                ResourceManager& resources,std::string& error);
     SaveService* Saves(ResourceManager&);
+    SaveService* SavesIfLoaded() const { return m_saveService.get(); }
     void AdvanceSaves(std::unique_ptr<RuntimeWorld>&,InteractivePlay&,ResourceManager&,std::string&);
     // Shared shipping/harness outer boundary, after all frame callbacks return.
     bool AdvanceOuter(std::unique_ptr<RuntimeWorld>&,InteractivePlay&,ResourceManager&,InputSystem&,std::string&);

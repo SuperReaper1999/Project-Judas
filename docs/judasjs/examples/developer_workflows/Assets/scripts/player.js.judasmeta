@@ -1,0 +1,4 @@
+JudasAssetMeta 1
+id "6028d032e5b6b0cbc6eb49b679902626"
+type script
+source "Assets/scripts/player.js"

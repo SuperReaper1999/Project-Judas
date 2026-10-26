@@ -1,0 +1,26 @@
+PASS lesson HUD actually lies inside the viewport
+PASS ordinary root physical crate published
+PASS lesson motor responds to actual WASD input
+PASS actual ray interaction increments project-owned root counter
+PASS ordinary pause blocks physical gameplay
+PASS paused preparation is not mistaken for published collision
+PASS requested regional collision genuinely publishes
+PASS project registration is visible independently of native state
+PASS actual regional ray interaction reaches registered script
+PASS regional crate actually unloads
+PASS native wheels and powertrain move vehicle under project input
+PASS save captures paused physical boundary
+PASS ordinary native save commits complete lesson
+PASS ordinary application exits cleanly
+14 checks, 0 failures
+PASS lesson HUD actually lies inside the viewport
+PASS fresh process requests ordinary saved lesson
+PASS cold root crate counter restored exactly
+PASS cold physical vehicle endpoint restored
+PASS cold driver lease disables actual motor
+PASS cold restored vehicle drives physically again
+PASS cold regional snapshot preserves exact project counter
+PASS cold regional crate regains actual collision
+PASS ordinary application exits cleanly
+9 checks, 0 failures
+PASS fresh-process lesson cycle preserves source save bytes

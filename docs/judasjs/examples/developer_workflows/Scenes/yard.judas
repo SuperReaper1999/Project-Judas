@@ -1,0 +1,133 @@
+{
+  "kind": "scene",
+  "schema": 1,
+  "data": {
+    "settings": {
+      "name": "Yard / independently editable region",
+      "world-origin": [
+        0,
+        0,
+        0
+      ],
+      "sun-direction": [
+        0.45,
+        0.72,
+        0.3
+      ],
+      "sun-color": [
+        1,
+        0.94,
+        0.79
+      ],
+      "ambient": [
+        0.22,
+        0.25,
+        0.28
+      ],
+      "background-color": [
+        0.18,
+        0.24,
+        0.3
+      ],
+      "linear-rendering": true,
+      "exposure": 1,
+      "environment": "",
+      "environment-intensity": 1,
+      "environment-rotation": [
+        1,
+        0,
+        0,
+        0
+      ],
+      "environment-background": false,
+      "fluid-scale": 1,
+      "fluid-update-rate-hz": 30,
+      "fluid-hydrostatic-drag-rate": 2,
+      "fidelity-policy": {
+        "mode": {
+          "symbol": "none"
+        }
+      },
+      "next-id": 10000
+    },
+    "objects": [
+      {
+        "id": 10,
+        "name": "Streamed crate / restored registration",
+        "fields": {
+          "position": [
+            0,
+            0.7,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            0.6,
+            0.6,
+            0.6
+          ],
+          "render.radius": 1,
+          "render.color": [
+            0.2,
+            0.5,
+            1
+          ],
+          "render.alpha": 1,
+          "render.secondary-color": [
+            0.9,
+            0.5,
+            0.16
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "body": {
+            "motion": {
+              "symbol": "dynamic"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            0.6,
+            0.6,
+            0.6
+          ],
+          "body.radius": 1,
+          "body.terrain": "",
+          "body.mass": 15,
+          "body.friction": 0.7,
+          "body.restitution": 0.1,
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.pickable": true,
+          "body.managed": false,
+          "scripts": 1,
+          "script.0.id": 1,
+          "script.0.asset": "d7d54258eced64b097eea5383af06a35",
+          "script.0.enabled": true,
+          "script.0.properties": "{}",
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0
+        }
+      }
+    ]
+  }
+}

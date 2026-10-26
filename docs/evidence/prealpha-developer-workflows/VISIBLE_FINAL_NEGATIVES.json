@@ -1,0 +1,24 @@
+{
+  "results": {
+    "missing-script": {
+      "exit": 0,
+      "checks": 11,
+      "failures": 0,
+      "expectedExit": 0
+    },
+    "incompatible": {
+      "exit": 0,
+      "checks": 6,
+      "failures": 0,
+      "expectedExit": 0
+    },
+    "offscreen-negative": {
+      "exit": 1,
+      "checks": 14,
+      "failures": 1,
+      "expectedExit": 1
+    }
+  },
+  "originalSaveUnchanged": true,
+  "saveSha256": "f7eaf67aaa4ca7431a99b89bcd98eb31bf93c97f9f082851337a336dda1b4a22"
+}

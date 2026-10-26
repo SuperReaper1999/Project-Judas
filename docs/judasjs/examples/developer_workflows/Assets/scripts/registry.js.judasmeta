@@ -1,0 +1,4 @@
+JudasAssetMeta 1
+id "0c59b1e16865838716a99df3418e5dc1"
+type script
+source "Assets/scripts/registry.js"

@@ -1,0 +1,26 @@
+[  5%] Built target freetype
+[  5%] Building CXX object CMakeFiles/judas_build_identity.dir/src/BuildIdentity.cpp.o
+[  5%] Linking CXX static library libjudas_build_identity.a
+[  5%] Built target judas_build_identity
+[  5%] Built target judas_app_icon
+[ 11%] Built target judas_jobs
+[ 11%] Built target judas_audio_backend
+[ 17%] Built target judas_meshoptimizer
+[ 23%] Built target judas_icu_build
+[ 23%] Built target judas_quickjs
+[ 29%] Built target judas_navigation_backend
+[ 29%] Built target judas_navigation_cook
+[ 29%] Built target judas_glad
+[ 35%] Built target judas_profiler
+[ 41%] Built target judas_materials
+[ 47%] Built target harfbuzz
+[100%] Built target judas_engine
+[100%] Building CXX object CMakeFiles/judas_workflow_application_tests.dir/tests/DeveloperWorkflowApplicationTests.cpp.o
+/home/conner/Documents/GitHub/Project-Judas/tests/DeveloperWorkflowApplicationTests.cpp:10:10: fatal error: json.hpp: No such file or directory
+   10 | #include "json.hpp"
+      |          ^~~~~~~~~~
+compilation terminated.
+gmake[3]: *** [CMakeFiles/judas_workflow_application_tests.dir/build.make:79: CMakeFiles/judas_workflow_application_tests.dir/tests/DeveloperWorkflowApplicationTests.cpp.o] Error 1
+gmake[2]: *** [CMakeFiles/Makefile2:18634: CMakeFiles/judas_workflow_application_tests.dir/all] Error 2
+gmake[1]: *** [CMakeFiles/Makefile2:18641: CMakeFiles/judas_workflow_application_tests.dir/rule] Error 2
+gmake: *** [Makefile:5231: judas_workflow_application_tests] Error 2

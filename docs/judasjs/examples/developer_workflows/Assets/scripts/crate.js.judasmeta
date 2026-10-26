@@ -1,0 +1,4 @@
+JudasAssetMeta 1
+id "d7d54258eced64b097eea5383af06a35"
+type script
+source "Assets/scripts/crate.js"

@@ -1,0 +1,6 @@
+FRAMES 180
+LOG_EVERY 0
+ACTION load 1 10 11
+WAIT_SERVICES save 60000 20
+EXPECT_PAUSED 0 120
+SCREENSHOT 130 /home/conner/Documents/GitHub/Project-Judas/docs/evidence/prealpha-developer-workflows/checkpoint-package.png

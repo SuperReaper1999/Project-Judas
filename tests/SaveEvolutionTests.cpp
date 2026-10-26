@@ -12,6 +12,14 @@
 using J=nlohmann::json;
 namespace {int checks=0,failures=0;void check(bool b,const char* s){++checks;failures+=!b;std::printf("%s %s\n",b?"PASS":"FAIL",s);}std::string h(char c){return std::string(64,c);}}
 int main(int argc,char** argv){if(argc!=2)return 2;std::string error,report;GameSnapshot old;old.project=h('1');old.scene="Scenes/old.judas";old.content=h('a');old.metadata="{}";
+ auto exact=DescribeSaveCompatibility(old,old.content,{},"");
+ check(exact.empty(),"matching identities have no mismatch diagnosis");
+ auto changed=DescribeSaveCompatibility(old,h('b'),{"new-game",3},"");
+ check(changed.find(old.content)!=std::string::npos&&changed.find(h('b'))!=std::string::npos,"diagnosis exposes both saved and installed content fingerprints");
+ check(changed.find("Content version changed: saved 0; installed 3")!=std::string::npos&&changed.find("Compatibility identity changed")!=std::string::npos,"diagnosis distinguishes version and compatibility changes");
+ check(changed.find("before world replacement")!=std::string::npos&&changed.find("matching game build")!=std::string::npos,"refusal explains safe recovery without migrating or replacing world");
+ auto malformed=old;malformed.modContext="not json";
+ check(!DescribeSaveCompatibility(malformed,old.content,{},"").empty(),"malformed mod metadata is diagnosed without throwing from listing");
  SaveArchive scripts;uint32_t n=1;uint64_t entity=10,slot=1;std::string state="{\"coins\":7,\"unknown\":{\"keep\":true}}";scripts(n,entity,slot,state);old.participants["scripts"]={1,scripts.bytes};
  SaveArchive session;std::map<std::string,std::string> values{{"quest","{\"stage\":3}"}};std::string locale="en";session(values,locale);old.participants["session"]={1,session.bytes};
  Scene scene;SceneObject object;object.id=10;object.name="Old display";object.prefabAsset=std::string(32,'a');object.prefabRoot=10;object.prefabSource=1;object.prefabIds[1]=10;object.scripts.push_back({1,std::string(32,'b'),true,"{}"});object.body=SceneBodyComponent{};object.render=SceneRenderComponent{};scene.Objects().push_back(object);std::string text;SaveSceneToString(scene,text);SaveArchive entities;entities(text);entities.bytes+="opaque native entity tail";old.participants["entities"]={1,entities.bytes};old.participants["native-unknown"]={77,"exact opaque bytes"};

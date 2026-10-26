@@ -411,6 +411,7 @@ add_executable(judas_editor
     src/editor/EditorPicking.cpp
     src/editor/EditorHistory.cpp
     src/editor/EditorPanels.cpp
+    src/editor/RuntimeInspector.cpp
     src/editor/EditorCreationMenu.cpp
     src/editor/EditorScriptWorkflow.cpp
     src/editor/EditorAssetActions.cpp
@@ -1704,6 +1705,10 @@ judas_add_engine_test(judas_pause_example_application_tests tests/PauseExampleAp
 judas_add_engine_test(judas_mk2_diagnostics_tests tests/Mk2DiagnosticsTests.cpp)
 judas_add_engine_test(judas_mk2_rotation_tests tests/Mk2RotationTests.cpp)
 judas_add_engine_test(judas_mk2_rotation_cold_tests tests/Mk2RotationColdTests.cpp)
+
+
+# Read-only runtime diagnostics and the shipped public-API learning project.
+judas_add_engine_test(judas_workflow_application_tests tests/DeveloperWorkflowApplicationTests.cpp APPLICATION)
 
 # Finalize after every native test has declared its authoritative entry point.
 include(cmake/JudasValidation.cmake)

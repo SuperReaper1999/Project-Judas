@@ -129,8 +129,10 @@ void SaveService::Advance(std::unique_ptr<RuntimeWorld>& world,InteractivePlay& 
   SaveEvolutionIdentity identity;std::string identityError;SaveEvolutionCurrent(m_session.m_project.Settings().saveEvolution,identity,identityError);
   const auto currentMods=ModSaveContext(m_session.m_project);
   for(auto& slot:m_slots)if(slot.status!="corrupt"&&slot.content.size()==64){
-   const bool matches=slot.content==m_content&&slot.compatibility==identity.compatibility&&slot.contentVersion==identity.version&&slot.modContext==currentMods;
-   if(!matches){slot.status="incompatible";slot.error="content/compatibility/mod identity differs; explicit project-approved migration required";}
+   GameSnapshot saved;saved.content=slot.content;saved.compatibility=slot.compatibility;
+   saved.contentVersion=slot.contentVersion;saved.modContext=slot.modContext;
+   auto diagnosis=DescribeSaveCompatibility(saved,m_content,identity,currentMods);
+   if(!diagnosis.empty()){slot.status="incompatible";slot.error=std::move(diagnosis);}
   }
 
   if(!m_product->error.empty()){error=m_product->error;Finish(error);return;}

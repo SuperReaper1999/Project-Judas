@@ -42,18 +42,18 @@ int main(int argc, char** argv) {
             ImGui::Render();
         };
         windowFrame(); windowFrame();
-        state.showScriptTools = true; state.showAssetBrowser = true;
+        state.showScriptTools = true; state.showAssetBrowser = true; state.showRuntimeInspector = true;
         check(prefs.SaveLayout("Scripting", state, false, error), "save named layout from real ImGui window settings");
         check(prefs.layouts[0].windows.find("Saved tool") != std::string::npos, "layout stores tool-window positions and sizes");
         check(!prefs.SaveLayout("Scripting", state, false, error) && prefs.layouts.size() == 1, "new save cannot silently overwrite a name");
         state.inspectorWidth = 500;
         check(prefs.SaveLayout("Scripting", state, true, error) && prefs.layouts[0].inspector == 500, "explicit update modifies selected layout");
         check(!prefs.SaveLayout("  ", state, false, error), "empty-looking layout names reject");
-        state.inspectorWidth = 260; state.showScriptTools = false;
+        state.inspectorWidth = 260; state.showScriptTools = false; state.showRuntimeInspector = false;
         check(prefs.QueueLayout("Scripting") && state.inspectorWidth == 260, "apply is queued rather than changing an active frame");
         ImGui::SetWindowPos("Saved tool", {600, 500});
         prefs.ApplyPending(state);
-        check(state.inspectorWidth == 500 && state.showScriptTools, "named layout restores panel dimensions and visibility");
+        check(state.inspectorWidth == 500 && state.showScriptTools && state.showRuntimeInspector, "named layout restores panel dimensions and visibility");
         ImGui::NewFrame(); ImGui::Begin("Saved tool");
         check(ImGui::GetWindowPos().x == 45 && ImGui::GetWindowPos().y == 75, "named layout actually restores an existing tool's position");
         ImGui::End(); ImGui::Render();
@@ -164,7 +164,8 @@ int main(int argc, char** argv) {
             check(WriteRgbPng((output / "layouts.png").string(), window.Width(), window.Height(), layoutPixels),
                   "layout controls render after actual mouse tab selection");
             prefs.ConsumeSaveRequest();
-            click({140, 582});
+            // The additional Runtime Inspector panel adds one visible table row.
+            click({140, 609});
             check(prefs.layouts.size() == 1 && prefs.layouts[0].name == "My layout",
                   "actual Save as new layout button captures the current workspace");
             check(prefs.ConsumeSaveRequest(), "UI layout save requests persistent storage");

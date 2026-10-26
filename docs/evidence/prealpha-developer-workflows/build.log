@@ -1,0 +1,133 @@
+-- GLOB mismatch!
+The following files were added:
+  +/home/conner/Documents/GitHub/Project-Judas/src/editor/RuntimeInspector.cpp
+  +/home/conner/Documents/GitHub/Project-Judas/src/editor/RuntimeInspector.h
+WARNHarfBuzz has a Meson port and tries to migrate all the other build systems to it, please consider using it as we might remove our cmake port soon.
+-- Found Python3: /usr/bin/python3 (found version "3.14.4") found components: Interpreter
+CMake Deprecation Warning at build/_deps/judas_freetype-src/CMakeLists.txt:113 (cmake_minimum_required):
+  Compatibility with CMake < 3.10 will be removed from a future version of
+  CMake.
+
+  Update the VERSION argument <min> value.  Or, use the <min>...<max> syntax
+  to tell CMake that the project requires at least <min> but has been updated
+  to work with policies introduced by <max> or earlier.
+
+
+-- Found Python3: /usr/bin/python3 (found suitable version "3.14.4", minimum required is "3.11") found components: Interpreter
+-- Configuring done (1.4s)
+-- Generating done (1.6s)
+-- Build files have been written to: /home/conner/Documents/GitHub/Project-Judas/build
+[ 13%] Built target freetype
+[ 13%] Built target judas_quickjs
+[ 20%] Built target judas_navigation_backend
+[ 20%] Built target judas_navigation_cook
+[ 20%] Built target judas_glad
+[ 20%] Built target judas_app_icon
+[ 20%] Built target judas_meshoptimizer
+[ 26%] Built target judas_icu_build
+[ 26%] Building CXX object CMakeFiles/judas_build_identity.dir/src/BuildIdentity.cpp.o
+[ 26%] Linking CXX static library libjudas_build_identity.a
+[ 26%] Built target judas_build_identity
+[ 26%] Built target judas_audio_backend
+[ 26%] Built target judas_profiler
+[ 26%] Built target judas_materials
+[ 26%] Built target judas_jobs
+[ 26%] Built target harfbuzz
+[ 26%] Building CXX object CMakeFiles/judas_engine.dir/src/NetworkSession.cpp.o
+[ 33%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldWheels.cpp.o
+[ 33%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldPowertrains.cpp.o
+[ 33%] Building CXX object CMakeFiles/judas_engine.dir/src/modding/ModContent.cpp.o
+[ 33%] Building CXX object CMakeFiles/judas_engine.dir/src/modding/ModRuntime.cpp.o
+[ 33%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldFracture.cpp.o
+[ 33%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldDeformables.cpp.o
+[ 40%] Building CXX object CMakeFiles/judas_engine.dir/src/LiquidSystem.cpp.o
+[ 40%] Building CXX object CMakeFiles/judas_engine.dir/src/RuntimeTerrain.cpp.o
+[ 40%] Building CXX object CMakeFiles/judas_engine.dir/src/NavigationSystem.cpp.o
+[ 40%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldPhysicalBalance.cpp.o
+[ 40%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldAnimation.cpp.o
+[ 40%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldRagdoll.cpp.o
+[ 40%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldCharacter.cpp.o
+[ 40%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldGravity.cpp.o
+[ 40%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldStreaming.cpp.o
+[ 40%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldRegions.cpp.o
+[ 40%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldScripts.cpp.o
+[ 40%] Building CXX object CMakeFiles/judas_engine.dir/src/ScriptSystem.cpp.o
+[ 40%] Building CXX object CMakeFiles/judas_engine.dir/src/ScriptBindingsUI.cpp.o
+[ 40%] Building CXX object CMakeFiles/judas_engine.dir/src/ScriptBindingsJoint.cpp.o
+[ 40%] Building CXX object CMakeFiles/judas_engine.dir/src/ProjectExporter.cpp.o
+[ 40%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldAudio.cpp.o
+[ 40%] Building CXX object CMakeFiles/judas_engine.dir/src/ProductionFluidCoupling.cpp.o
+[ 46%] Building CXX object CMakeFiles/judas_engine.dir/src/Prefab.cpp.o
+[ 46%] Building CXX object CMakeFiles/judas_engine.dir/src/SceneFingerprint.cpp.o
+[ 46%] Building CXX object CMakeFiles/judas_engine.dir/src/Project.cpp.o
+[ 46%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldDebugView.cpp.o
+[ 46%] Building CXX object CMakeFiles/judas_engine.dir/src/SceneSession.cpp.o
+[ 46%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldPlanets.cpp.o
+[ 46%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldWeather.cpp.o
+[ 46%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldOrigin.cpp.o
+[ 46%] Building CXX object CMakeFiles/judas_engine.dir/src/RuntimeWorld.cpp.o
+[ 53%] Building CXX object CMakeFiles/judas_engine.dir/src/GameSession.cpp.o
+[ 53%] Building CXX object CMakeFiles/judas_engine.dir/src/Simulation.cpp.o
+[ 53%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldWater.cpp.o
+[ 53%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldPresentation.cpp.o
+[ 53%] Building CXX object CMakeFiles/judas_engine.dir/src/GameplayHud.cpp.o
+[ 53%] Building CXX object CMakeFiles/judas_engine.dir/src/InteractivePlay.cpp.o
+[ 53%] Building CXX object CMakeFiles/judas_engine.dir/src/CoarseSimulation.cpp.o
+[ 53%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldState.cpp.o
+[ 53%] Building CXX object CMakeFiles/judas_engine.dir/src/SaveStorage.cpp.o
+[ 53%] Building CXX object CMakeFiles/judas_engine.dir/src/SaveEvolution.cpp.o
+[ 53%] Building CXX object CMakeFiles/judas_engine.dir/src/SaveService.cpp.o
+[ 53%] Building CXX object CMakeFiles/judas_engine.dir/src/LiquidPersistence.cpp.o
+[ 53%] Building CXX object CMakeFiles/judas_engine.dir/src/WorldPersistence.cpp.o
+[ 53%] Linking CXX static library libjudas_engine.a
+[ 86%] Built target judas_engine
+[ 86%] Built target judas_navigation_baker
+[ 86%] Built target judas_imgui
+[ 86%] Built target judas_ufbx
+[ 86%] Built target judas_model_import
+[ 86%] Building CXX object CMakeFiles/judas_world_authoring.dir/src/authoring/NavigationDependencies.cpp.o
+[ 86%] Building CXX object CMakeFiles/judas_world_authoring.dir/src/authoring/WorldBuilder.cpp.o
+[ 86%] Building CXX object CMakeFiles/judas_world_authoring.dir/src/authoring/ModAuthoring.cpp.o
+[ 86%] Linking CXX static library libjudas_world_authoring.a
+[ 86%] Built target judas_world_authoring
+[ 86%] Building CXX object CMakeFiles/judas_editor.dir/src/editor/AnimationTimeline.cpp.o
+[ 86%] Building CXX object CMakeFiles/judas_editor.dir/src/editor/ComponentEditors.cpp.o
+[ 93%] Building CXX object CMakeFiles/judas_editor.dir/src/editor/EditorApplication.cpp.o
+[ 93%] Building CXX object CMakeFiles/judas_editor.dir/src/editor/EditorAssetActions.cpp.o
+[ 93%] Building CXX object CMakeFiles/judas_editor.dir/src/editor/EditorCreationMenu.cpp.o
+[ 93%] Building CXX object CMakeFiles/judas_editor.dir/src/editor/EditorHistory.cpp.o
+[ 93%] Building CXX object CMakeFiles/judas_editor.dir/src/editor/EditorMain.cpp.o
+[ 93%] Building CXX object CMakeFiles/judas_editor.dir/src/editor/EditorPanels.cpp.o
+[ 93%] Building CXX object CMakeFiles/judas_editor.dir/src/editor/EditorPreferences.cpp.o
+[ 93%] Building CXX object CMakeFiles/judas_editor.dir/src/editor/EditorScriptWorkflow.cpp.o
+[100%] Building CXX object CMakeFiles/judas_editor.dir/src/editor/ModTools.cpp.o
+[100%] Building CXX object CMakeFiles/judas_editor.dir/src/editor/ProjectSettingsPanel.cpp.o
+[100%] Building CXX object CMakeFiles/judas_editor.dir/src/editor/RenderPreview.cpp.o
+[100%] Building CXX object CMakeFiles/judas_editor.dir/src/editor/RetargetPanel.cpp.o
+[100%] Building CXX object CMakeFiles/judas_editor.dir/src/editor/ScriptTools.cpp.o
+[100%] Building CXX object CMakeFiles/judas_editor.dir/src/editor/TerrainTools.cpp.o
+[100%] Building CXX object CMakeFiles/judas_editor.dir/src/editor/VolumeTerrainTools.cpp.o
+[100%] Building CXX object CMakeFiles/judas_editor.dir/src/editor/WorldTools.cpp.o
+[100%] Building CXX object CMakeFiles/judas_editor.dir/src/editor/RuntimeInspector.cpp.o
+/home/conner/Documents/GitHub/Project-Judas/src/editor/RuntimeInspector.cpp: In function ‘void DrawRuntimeEntity(RuntimeWorld&, SceneObjectId)’:
+/home/conner/Documents/GitHub/Project-Judas/src/editor/RuntimeInspector.cpp:37:37: error: unable to deduce ‘auto*’ from ‘(& world)->RuntimeWorld::SceneControl()’
+   37 |     auto* scene = world.SceneControl();
+      |                   ~~~~~~~~~~~~~~~~~~^~
+/home/conner/Documents/GitHub/Project-Judas/src/editor/RuntimeInspector.cpp:37:38: note:   mismatched types ‘auto*’ and ‘std::shared_ptr<SceneSession>’
+   37 |     auto* scene = world.SceneControl();
+      |                                      ^
+/home/conner/Documents/GitHub/Project-Judas/src/editor/RuntimeInspector.cpp: In function ‘void DrawRuntimeInspector(EditorPanelState&, EditorRequests&)’:
+/home/conner/Documents/GitHub/Project-Judas/src/editor/RuntimeInspector.cpp:98:42: error: unable to deduce ‘auto*’ from ‘world->RuntimeWorld::SceneControl()’
+   98 |         auto* scene = world->SceneControl();
+      |                       ~~~~~~~~~~~~~~~~~~~^~
+/home/conner/Documents/GitHub/Project-Judas/src/editor/RuntimeInspector.cpp:98:43: note:   mismatched types ‘auto*’ and ‘std::shared_ptr<SceneSession>’
+   98 |         auto* scene = world->SceneControl();
+      |                                           ^
+/home/conner/Documents/GitHub/Project-Judas/src/editor/RuntimeInspector.cpp: At global scope:
+/home/conner/Documents/GitHub/Project-Judas/src/editor/RuntimeInspector.cpp:23:6: warning: ‘void {anonymous}::Copyable(const char*, const std::string&)’ defined but not used [-Wunused-function]
+   23 | void Copyable(const char* label, const std::string& value) {
+      |      ^~~~~~~~
+gmake[3]: *** [CMakeFiles/judas_editor.dir/build.make:191: CMakeFiles/judas_editor.dir/src/editor/RuntimeInspector.cpp.o] Error 1
+gmake[2]: *** [CMakeFiles/Makefile2:1891: CMakeFiles/judas_editor.dir/all] Error 2
+gmake[1]: *** [CMakeFiles/Makefile2:1898: CMakeFiles/judas_editor.dir/rule] Error 2
+gmake: *** [Makefile:421: judas_editor] Error 2

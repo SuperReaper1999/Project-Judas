@@ -1,0 +1,50 @@
+PASS matching identities have no mismatch diagnosis
+PASS diagnosis exposes both saved and installed content fingerprints
+PASS diagnosis distinguishes version and compatibility changes
+PASS refusal explains safe recovery without migrating or replacing world
+PASS malformed mod metadata is diagnosed without throwing from listing
+PASS migration requires explicit opt-in
+PASS failure preserves input and output
+PASS ordered guarded two-step upgrade
+PASS ordered identity and scene path upgrade
+PASS script patch preserves unknown state
+PASS scene migration retains complete native entity tail
+PASS unknown native state retained byte-exact for normal loader to accept or reject
+PASS version4 roundtrip
+PASS identity header corruption rejected
+PASS legacy container read unchanged
+PASS current version reload needs no migration
+PASS prefab instances selected by asset identity
+PASS stable entity selector evolves allowed component appearance
+PASS asset-selected runtime script instances migrate together
+PASS per-instance progress remains independent under a shared migration
+SCENE_BOUNDARY legacy_bytes=170065
+PASS scene document budget is independent of 64 KiB script JSON budget
+PASS guard failure atomic
+PASS missing edge rejected
+PASS unapproved content rejected
+PASS compatibility identity mismatch rejected
+PASS physical continuation cannot be retuned through scene patch
+PASS unknown operation fails closed
+PASS unknown policy field rejected
+PASS nonconsecutive or branching edge rejected
+PASS missing mod diagnosis includes saved dependency identity
+PASS changed mod version not silently substituted
+PASS exact author-approved mod transition allowed
+PASS same version different package bytes rejected
+PASS project policy legacy serialization
+PASS project policy named serialization
+PASS original fixture stored
+PASS source fixture bytes exact
+PASS migration publishes separate destination
+PASS source save never rewritten
+PASS new-slot publication refuses existing destination under storage lock
+PASS normal overwrite retains legacy previous generation
+PASS previous generation keeps exact original container bytes
+PASS explicit previous-good read independent of current generation
+PASS newer container cannot be overwritten by an older writer
+PASS unsupported future bytes preserved exactly
+PASS entity participant v2 supports the existing authorized migration workflow
+PASS migration preserves v2 native physical tail and version exactly
+PASS unknown entity participant version still fails closed
+Migration ms=0.828613 bytes=1598 checks=48 failures=0

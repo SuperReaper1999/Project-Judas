@@ -1,0 +1,189 @@
+{
+  "kind": "ui",
+  "schema": 1,
+  "data": {
+    "reference": [
+      1280,
+      720
+    ],
+    "visible": true,
+    "enabled": true,
+    "modal": false,
+    "elements": [
+      {
+        "id": "canvas",
+        "parent": "",
+        "kind": 0,
+        "text": "",
+        "texture": "",
+        "font": "f57949f524253a1a26214069c1825540",
+        "textKey": "",
+        "textLogicalAlign": -1,
+        "mirrorRow": false,
+        "focusColor": [
+          0.98,
+          0.78,
+          0.43,
+          1
+        ],
+        "placeholder": "",
+        "accessibleLabel": "",
+        "description": "",
+        "readOnly": false,
+        "maxBytes": 4096,
+        "visible": true,
+        "enabled": true,
+        "clip": false,
+        "wrap": false,
+        "fit": true,
+        "spacing": 8,
+        "fontSize": 18,
+        "value": 0,
+        "minimum": 0,
+        "maximum": 1,
+        "flow": 0,
+        "direction": 0,
+        "anchorMin": [
+          0,
+          0
+        ],
+        "anchorMax": [
+          1,
+          1
+        ],
+        "offset": [
+          0,
+          0
+        ],
+        "size": [
+          0,
+          0
+        ],
+        "relativeSize": [
+          0,
+          0
+        ],
+        "align": [
+          0,
+          0
+        ],
+        "textAlign": [
+          0,
+          0.5
+        ],
+        "margin": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "padding": [
+          10,
+          6,
+          10,
+          6
+        ],
+        "background": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "color": [
+          0.88,
+          0.91,
+          0.84,
+          1
+        ],
+        "rowHeight": 36
+      },
+      {
+        "id": "lesson",
+        "parent": "canvas",
+        "kind": 2,
+        "text": "Developer workflows",
+        "texture": "",
+        "font": "f57949f524253a1a26214069c1825540",
+        "textKey": "",
+        "textLogicalAlign": -1,
+        "mirrorRow": false,
+        "focusColor": [
+          0.98,
+          0.78,
+          0.43,
+          1
+        ],
+        "placeholder": "",
+        "accessibleLabel": "WASD move \u00b7 Mouse look \u00b7 E gather / interact \u00b7 Click tool \u00b7 Tab backpack & crafting \u00b7 Esc pause",
+        "description": "",
+        "readOnly": false,
+        "maxBytes": 4096,
+        "visible": true,
+        "enabled": true,
+        "clip": false,
+        "wrap": true,
+        "fit": true,
+        "spacing": 8,
+        "fontSize": 20,
+        "value": 0,
+        "minimum": 0,
+        "maximum": 1,
+        "flow": 0,
+        "direction": 0,
+        "anchorMin": [
+          0,
+          0
+        ],
+        "anchorMax": [
+          0,
+          0
+        ],
+        "offset": [
+          24,
+          24
+        ],
+        "size": [
+          940,
+          300
+        ],
+        "relativeSize": [
+          0,
+          0
+        ],
+        "align": [
+          0,
+          0
+        ],
+        "textAlign": [
+          0,
+          0
+        ],
+        "margin": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "padding": [
+          10,
+          6,
+          10,
+          6
+        ],
+        "background": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "color": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "rowHeight": 36
+      }
+    ]
+  }
+}

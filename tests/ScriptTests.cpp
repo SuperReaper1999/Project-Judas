@@ -31,8 +31,11 @@ export default class {
     auto& b=scene.CreateObject("B");b.scripts.push_back({2,script.id,true,"{}"});auto id2=b.id;
     std::string text;Scene copy;SaveSceneToString(scene,text);Check(LoadSceneFromString(text,copy,error)&&ScenesEqual(scene,copy),"script slots scene round-trip");
     ResourceManager resources(nullptr,&db);RuntimeWorld world;Check(world.Build(scene,&resources,error),"ordinary runtime constructs scripted world");
+    Check(!world.Scripts()||world.Scripts()->InspectPhase(id,4)!=ScriptInstancePhase::Running,"inspection does not start callbacks");
     InputSystem input;input.SetPhysical("key:E",1);world.UpdateScripts(&input,.02f);world.FixedScripts(&input,1.f/60);world.FixedScripts(&input,1.f/60);
     Check(world.Scripts()&&world.Scripts()->Diagnostics().empty(),"real VM runs callbacks without faults");
+    Check(world.Scripts()->InspectPhase(id,999)==ScriptInstancePhase::Absent,"missing slot is not ready");
+    Check(world.Scripts()->InspectPhase(id,4)==ScriptInstancePhase::Running,"completed lifecycle callback is observable without JSON capture");
     auto states=world.Scripts()->Capture();for(const auto& state:states)std::printf("STATE %llu/%llu %s\n",(unsigned long long)state.entity,(unsigned long long)state.slot,state.json.c_str());
     Check(states.size()==2&&states[0].json.find("\"frames\":2")!=std::string::npos&&states[0].json.find("\"steps\":2")!=std::string::npos,"frame/fixed callbacks have separate cadence");
     Check(states.size()==2&&states[0].json.find("\"speed\":7")!=std::string::npos&&states[1].json.find("\"speed\":3")!=std::string::npos,"independent instances and authored overrides");
@@ -80,6 +83,7 @@ fixedUpdate(){this.entity.applyImpulse({x:1,y:0,z:0});this.entity.applyForce({x:
     AssetRecord fault,loop;db.Track(fs::absolute(root/"Assets/fault.js").string(),fault,error);db.Track(fs::absolute(root/"Assets/loop.js").string(),loop,error);
     scene.Find(id)->scripts.push_back({5,fault.id,true,"{}"});scene.Find(id2)->scripts.push_back({3,loop.id,true,"{}"});
     RuntimeWorld hostile;Check(hostile.Build(scene,&resources,error),"hostile fixture builds on normal path");hostile.UpdateScripts(&input,.01f);hostile.UpdateScripts(&input,.01f);
+    Check(hostile.Scripts()->InspectPhase(id,5)==ScriptInstancePhase::Faulted,"faulted callback cannot be mistaken for readiness");
     Check(hostile.Scripts()->Diagnostics().size()==2&&hostile.Scripts()->Capture().size()==2,"throw/infinite loop fault only offending instances once");
     Check(hostile.DestroyEntity(id)&&!hostile.RuntimeDefinition(id),"ordinary entity destruction invalidates native script handle");hostile.UpdateScripts(&input,.01f);
     std::ofstream(root/"Assets/syntax.js")<<"export default class { invalid ! }";

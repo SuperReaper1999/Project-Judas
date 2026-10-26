@@ -222,3 +222,15 @@ solver or physical balance policy is redesigned by this separation.
 
 See [Project Settings and water](PROJECT_SETTINGS_AND_WATER.md) for exact defaults,
 intentional Pre-Alpha compatibility changes, supported ownership and limitations.
+
+
+### Developer observation boundaries
+
+`src/editor/RuntimeInspector.cpp` is optional editor-only UI over current ownership,
+region retention, native body/motor publication, `ScriptSystem::InspectPhase` and
+already-initialized save-slot metadata. It does not serialize VM state, start a
+save service, request regions or invoke callbacks. Its native lifecycle observation
+is deliberately not a new JudasJS readiness promise. `SaveEvolution` supplies the
+same identity mismatch description to rejected loads and save listings; migration
+policy and native participant validation remain unchanged. Current operating
+instructions and the shipped small SDK example are in `docs/DEVELOPER_WORKFLOWS.md`.

@@ -1,0 +1,15 @@
+Shadow maps: on
+Graphics: 3.3.0 NVIDIA 580.178.04 / NVIDIA GeForce GTX 970/PCIe/SSE2
+Renderer fragment texture units: 32 (material path uses 12)
+World state: legacy .judasstate (F6/F7) saves disabled for additive compositions; save slots remain available
+Project: Developer Workflows (/tmp/workflow-qualified-update/developer_workflows.judasproj)
+Scene: Developer Workflows / four small lessons (/tmp/workflow-qualified-update/Scenes/lessons.judas)
+World origin (m): 0.000, 0.000, 0.000
+PASS incompatible load is handled as an ordinary asynchronous request
+Runtime outer services: save evolution: Content fingerprint changed: saved ae3125c7426ac507e9a3d4570eb7aa671b6aa05935e869a637ed9edc558c08c6; installed 0705e699b6f5144fd2b65da0162f50def5a452539a94159b1f82c75e224921b6.
+Load refused before world replacement. Keep the original save and a matching game build, or use an explicit project-approved migration. A scene save is not an expedition migration.
+PASS actual refused load names changed content fingerprint
+PASS actual refused load offers safe recovery
+PASS refused load leaves the original current gameplay world intact
+PASS ordinary application exits cleanly
+5 checks, 0 failures

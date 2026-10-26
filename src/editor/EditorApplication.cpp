@@ -9,6 +9,7 @@
 #include "RetargetPanel.h"
 #include <glm/gtc/matrix_transform.hpp>
 #include "WorldStreaming.h"
+#include "RuntimeInspector.h"
 #include "Prefab.h"
 #include "PerformanceProfiler.h"
 #include "ComponentEditors.h"
@@ -637,6 +638,7 @@ void EditorApplication::HandleRequests(EditorRequests& r) {
     }
     if (r.openJudasJS || r.openQuickStart)
         r.openExternalPath = ResolveEngineDataPath(r.openQuickStart ? "docs/judasjs/getting-started.md" : "docs/JUDASJS.md");
+    if (r.openWorkflowGuide) r.openExternalPath = ResolveEngineDataPath("docs/DEVELOPER_WORKFLOWS.md");
     if (!r.openExternalPath.empty()) {
         std::error_code ec;
         const auto path = fs::absolute(r.openExternalPath, ec);
@@ -1682,6 +1684,7 @@ int EditorApplication::Run(int argc, char** argv) {
         if (m_panels.mode == EditorMode::Edit || m_panels.playPaused)
             DrawInspectorPanel(m_document, m_panels);
         DrawStreamingPanel(m_document,m_panels,requests);
+        DrawRuntimeInspector(m_panels,requests);
         { JUDAS_PROFILE_SCOPE("Profiler UI"); DrawProfilerPanel(m_panels); }
         DrawStatusBar(m_document, m_panels);
         m_milestoneNotice.Draw(m_panels.status);
@@ -1785,6 +1788,11 @@ int EditorApplication::Run(int argc, char** argv) {
         }
 
         if (autotest) {
+            if (autotestFrame == 30 && std::getenv("JUDAS_EDITOR_AUTOTEST_RUNTIME_INSPECTOR") && m_world) {
+                m_panels.showRuntimeInspector = true;
+                const auto keys = m_world->ScriptKeys();
+                if (!keys.empty()) m_panels.runtimeInspectEntity = keys.front().first;
+            }
             bool waiting=importRecipe&&(!m_panels.modelPreviewToken||(animationTimelineAutotest&&m_panels.importTask!=m_panels.importAccepted));
             if(waiting&&((m_panels.importTask->done&&!m_panels.importTask->success)||++importWaitFrames>4000)){std::fprintf(stderr,"[editor autotest] import FAIL: %s\n",m_panels.importTask->error.c_str());m_quit=true;}
             if(retargetAutotest){std::string error;int status=RetargetAutotestStatus(m_panels,error);if(status<0||(status==0&&++retargetWaitFrames>4000)){std::fprintf(stderr,"[M74 editor retarget] FAIL: %s\n",error.c_str());m_quit=true;}waiting=waiting||status==0;}

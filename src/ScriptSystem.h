@@ -13,6 +13,7 @@ class InputSystem;
 struct ScriptStateRecord { SceneObjectId entity=0;std::uint64_t slot=0;std::string json="{}"; };
 struct ScriptProperty {std::string name,type,text;double number=0;bool boolean=false;};
 struct ScriptMetadataStats {uint64_t parserConstructions=0,referenceInspections=0;};
+enum class ScriptInstancePhase { Absent, AwaitingStart, AwaitingRestore, Running, Faulted };
 struct ScriptDiagnostic {SceneObjectId entity=0;std::uint64_t slot=0;std::string asset,callback,message;};
 // Developer tools, not a project/native-dispatch API. All snapshots own strings;
 // no VM handles escape a stopped instruction.
@@ -46,6 +47,9 @@ public:
     std::vector<ScriptStateRecord> Capture(bool required=false,const std::vector<SceneObjectId>* only=nullptr) const;
     bool Restore(const std::vector<ScriptStateRecord>& records,std::string& error,bool resume=false);
     const std::vector<ScriptDiagnostic>& Diagnostics() const;
+    // Read-only developer observation; Running means the callback completed,
+    // not that project-specific asynchronous resources are ready.
+    ScriptInstancePhase InspectPhase(SceneObjectId entity, uint64_t slot) const;
     void SetBudget(unsigned interruptPolls);
     void SetDebugger(ScriptDebugHandler handler);
     void SetBreakpoints(std::vector<ScriptBreakpoint> points);

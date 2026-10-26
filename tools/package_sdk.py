@@ -2,7 +2,8 @@
 """Stage/verify a native Judas SDK without Git, network access or third-party Python packages.
 
 The inventory is shared with CMake. Build artifacts, current developer docs and
-required native DLLs are copied; projects and historical research are not SDK payloads.
+required native DLLs are copied. Full game projects and historical research are not
+SDK payloads; developer docs include a small editable learning project.
 Manifests detect accidental omissions/corruption, not malicious replacement.
 """
 

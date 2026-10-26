@@ -168,3 +168,14 @@ run script input/presentation without a duplicate authoritative physics step.
 Close the session before scene/save operations or deliberate script reload.
 After an offline script reload, Stop/Play establishes a fresh content baseline
 before hosting/joining. Session teardown releases peer input players and HUDs.
+
+
+## Observe readiness without assuming it
+
+[The ownership/readiness walkthrough](../DEVELOPER_WORKFLOWS.md) includes a small
+editable SDK project. A published entity or active region does not guarantee that
+its project-owned registration has occurred. Register transient services in both
+start and restore, remove them in destroy, and keep only durable data in state.
+UI/presentation can invoke initialization while the physical simulation is paused.
+The editor Runtime Inspector observes native script phases without capturing JSON
+or calling gameplay methods; callbacks-started is not a universal resource-ready flag.

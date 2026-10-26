@@ -413,3 +413,15 @@ profiler and mod tools. JudasJS developer tools remain directly under View.
 Use **Editor preferences → Layouts** to save layouts for different tasks,
 including panel visibility, rail sizes and floating-window placement. Themes,
 custom colours and UI scale apply to the common editing controls.
+
+
+## Inspect runtime ownership, readiness and saves
+
+During Play use **View → Diagnostics and extensions → Runtime Inspector**, or a
+selected object's **Ownership & readiness → Open Runtime Inspector**. The optional
+floating tool includes streamed entities, actual region demand/retention reasons,
+script lifecycle phases, physical publication and existing save identity diagnostics.
+It is read-only and its visibility participates in saved layouts. Start/restore
+completion does not imply all project-specific resources are ready. Follow the
+[editable workflow lessons](DEVELOPER_WORKFLOWS.md) before treating those observations
+as gameplay contracts. Save loading/migration stays under project control.

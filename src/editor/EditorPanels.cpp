@@ -19,6 +19,8 @@
 #include "EditorPanels.h"
 #include "EditorAssetActions.h"
 #include "RenderPreview.h"
+#include "RuntimeInspector.h"
+#include "RegionRequests.h"
 #include "RetargetPanel.h"
 #include "Prefab.h"
 #include "RuntimeUI.h"
@@ -271,6 +273,7 @@ void DrawEditorWorkspaceChrome(EditorDocument& doc, EditorPanelState& state, Edi
             if (ImGui::Button("JudasJS reference")) requests.openJudasJS = true;
             ImGui::SameLine();
             if (ImGui::Button("First project guide")) requests.openQuickStart = true;
+            if (ImGui::Button("Ownership, readiness and saves")) requests.openWorkflowGuide = true;
         }
         ImGui::End();
     }
@@ -339,6 +342,7 @@ void DrawEditorMainMenu(EditorDocument& doc, EditorPanelState& state, EditorRequ
         }
         if (ImGui::BeginMenu("Diagnostics and extensions")) {
             ImGui::MenuItem("Profiler", nullptr, &state.showProfiler);
+            ImGui::MenuItem("Runtime Inspector (ownership / readiness / saves)", nullptr, &state.showRuntimeInspector);
             ImGui::MenuItem("Local mods / game kits", nullptr, &state.showMods);
             ImGui::EndMenu();
         }
@@ -347,6 +351,7 @@ void DrawEditorMainMenu(EditorDocument& doc, EditorPanelState& state, EditorRequ
         if (ImGui::MenuItem("Check this channel for updates")) requests.checkMilestones = true;
         if (ImGui::MenuItem("JudasJS reference")) requests.openJudasJS = true;
         if (ImGui::MenuItem("Making your first project")) requests.openQuickStart = true;
+        if (ImGui::MenuItem("Ownership, readiness and saves guide")) requests.openWorkflowGuide = true;
         if (ImGui::MenuItem("Reset workspace layout")) {
             state.hierarchyWidth = 250; state.inspectorWidth = 340; state.assetBrowserHeight = 200;
             state.showAssetBrowser = true;
@@ -600,6 +605,16 @@ void DrawInspectorPanel(EditorDocument& doc, EditorPanelState& state) {
     }
     TextField(doc, "Name", o->name);
     DrawTransformEditor(doc, *o);
+    if (state.mode == EditorMode::Play && state.runtime) {
+        ImGui::EndDisabled();
+        if (ImGui::CollapsingHeader("Ownership & readiness")) {
+            DrawRuntimeEntity(*state.runtime, o->id);
+            if (ImGui::SmallButton("Open Runtime Inspector")) {
+                state.runtimeInspectEntity=o->id;state.showRuntimeInspector=true;
+            }
+        }
+        ImGui::BeginDisabled();
+    }
     ImGui::SeparatorText("Components");
     DrawAddComponentMenu(doc, *o, state);
     for (const ComponentEditor& editor : ComponentEditorRegistry()) {
@@ -1390,7 +1405,7 @@ void DrawStreamingPanel(EditorDocument& doc,EditorPanelState& state,EditorReques
     }else if(state.runtime&&state.runtime->SceneControl()){
         auto* stream=state.runtime->SceneControl()->Streaming(*state.runtime,error);
         if(stream){auto stats=stream->Stats();ImGui::Text("%zu active / %zu preparing",stats.active,stats.pending);ImGui::Text("pending %zu / live estimate %zu / retained %zu bytes",stats.pendingBytes,stats.liveBytes,stats.retainedBytes);ImGui::Text("cache %zu / %zu bytes; boundary %.3f ms; largest unit %.3f ms",stats.resourceResidentBytes,stats.resourceCacheBudget,stats.integrationMs,stats.largestUnitMs);
-            static std::map<std::string,uint64_t> demand;for(auto& r:stream->Regions()){ImGui::PushID(r.id.c_str());ImGui::Text("%s: %s (%zu/%zu)",r.id.c_str(),r.state.c_str(),r.installed,r.entities);if(ImGui::Button("Request"))demand[r.id]=stream->Request(r.id,false,error);ImGui::SameLine();if(ImGui::Button("Release")){if(demand.count(r.id))stream->Release(demand[r.id]);demand.erase(r.id);stream->Unload(r.id);}for(auto& pin:r.pins)ImGui::BulletText("Pinned: %s",pin.c_str());if(!r.error.empty())ImGui::TextWrapped("%s",r.error.c_str());ImGui::PopID();}}
+            static EditorRegionRequests demand;for(auto& r:stream->Regions()){ImGui::PushID(r.id.c_str());ImGui::Text("%s: %s (%zu/%zu)",r.id.c_str(),r.state.c_str(),r.installed,r.entities);ImGui::BeginDisabled(demand.Owns(*stream,r.id));if(ImGui::Button("Request"))demand.Request(*stream,r.id,error);ImGui::EndDisabled();ImGui::SameLine();if(ImGui::Button("Release")){demand.Release(*stream,r.id);stream->Unload(r.id);}for(auto& pin:r.pins)ImGui::BulletText("Pinned: %s",pin.c_str());if(!r.error.empty())ImGui::TextWrapped("%s",r.error.c_str());ImGui::PopID();}}
         if(!error.empty())ImGui::TextWrapped("%s",error.c_str());
     }
     (void)doc;ImGui::End();

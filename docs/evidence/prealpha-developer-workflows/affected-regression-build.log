@@ -1,0 +1,40 @@
+[  5%] Built target freetype
+[  5%] Built target judas_glad
+[ 11%] Built target judas_profiler
+[ 17%] Built target judas_materials
+[ 23%] Built target judas_jobs
+[ 23%] Built target judas_audio_backend
+[ 23%] Built target judas_quickjs
+[ 29%] Built target judas_navigation_backend
+[ 29%] Built target judas_navigation_cook
+[ 29%] Built target judas_build_identity
+[ 29%] Built target judas_app_icon
+[ 35%] Built target judas_meshoptimizer
+[ 41%] Built target judas_icu_build
+[ 47%] Built target harfbuzz
+[100%] Built target judas_engine
+[100%] Building CXX object CMakeFiles/judas_streaming_tests.dir/tests/WorldStreamingTests.cpp.o
+[100%] Linking CXX executable judas_streaming_tests
+[100%] Built target judas_streaming_tests
+[  5%] Built target freetype
+[  5%] Built target judas_glad
+[ 11%] Built target judas_profiler
+[ 16%] Built target judas_materials
+[ 22%] Built target judas_jobs
+[ 22%] Built target judas_audio_backend
+[ 22%] Built target judas_quickjs
+[ 27%] Built target judas_navigation_backend
+[ 27%] Built target judas_navigation_cook
+[ 27%] Built target judas_build_identity
+[ 27%] Built target judas_app_icon
+[ 33%] Built target judas_meshoptimizer
+[ 38%] Built target judas_icu_build
+[ 44%] Built target harfbuzz
+[ 94%] Built target judas_engine
+[ 94%] Building CXX object CMakeFiles/judas_save_application_tests.dir/src/Application.cpp.o
+[100%] Building CXX object CMakeFiles/judas_save_application_tests.dir/src/RuntimeDiagnostics.cpp.o
+[100%] Building CXX object CMakeFiles/judas_save_application_tests.dir/src/RuntimeOptions.cpp.o
+[100%] Building CXX object CMakeFiles/judas_save_application_tests.dir/src/TestHarness.cpp.o
+[100%] Building CXX object CMakeFiles/judas_save_application_tests.dir/tests/SaveApplicationTests.cpp.o
+[100%] Linking CXX executable judas_save_application_tests
+[100%] Built target judas_save_application_tests

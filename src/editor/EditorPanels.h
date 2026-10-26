@@ -53,6 +53,7 @@ struct EditorRequests {
     bool rescanAssets = false;
     bool openJudasJS = false;
     bool openQuickStart = false;
+    bool openWorkflowGuide = false;
     bool checkMilestones = false;
     std::string openExternalPath;
     std::string openSceneRelative;  // open this project-relative scene
@@ -115,6 +116,8 @@ struct EditorPanelState {
     bool showMods = false;
     std::shared_ptr<RetargetPanelState> retarget;
     bool showNavigationHelp = false;
+    bool showRuntimeInspector = false;
+    SceneObjectId runtimeInspectEntity = 0;
     std::string assetSearch;
     int assetTypeFilter = -1;
     bool assetMissingOnly = false;

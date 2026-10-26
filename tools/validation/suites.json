@@ -57,6 +57,7 @@
     {"name":"basic-water-application","target":"judas_basic_water_application_tests","groups":["water","application"],"args":["--profile","{output}/water"]},
     {"name":"basic-water-cold","target":"judas_basic_water_application_tests","groups":["water","lifecycle","application"],"args":["--cold-cycle","{output}/cold"]},
     {"name":"editor-file-browser","target":"judas_editor_file_browser_tests","groups":["onboarding"]},
+    {"name":"developer-workflow","target":"judas_workflow_application_tests","groups":["onboarding","application","lifecycle"],"args":["{root}/docs/judasjs/examples/developer_workflows/developer_workflows.judasproj","cycle","{output}/workflow"]},
     {"name":"editor-preferences","target":"judas_editor_preferences_tests","groups":["onboarding"]}
   ],
   "known_findings": [

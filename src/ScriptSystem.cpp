@@ -2636,3 +2636,13 @@ void ScriptSystem::DrainSignals(const InputSystem *input, float dt, bool ui) {
 }
 
 #include "ScriptDeveloperToolsMethods.inc"
+
+ScriptInstancePhase ScriptSystem::InspectPhase(SceneObjectId entity, uint64_t slot) const {
+    m->CheckThread();
+    const auto found = m->instances.find({entity, slot});
+    if (found == m->instances.end()) return ScriptInstancePhase::Absent;
+    const auto& instance = found->second;
+    if (instance.fault) return ScriptInstancePhase::Faulted;
+    if (instance.started) return ScriptInstancePhase::Running;
+    return instance.loaded ? ScriptInstancePhase::AwaitingRestore : ScriptInstancePhase::AwaitingStart;
+}

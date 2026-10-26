@@ -25,6 +25,7 @@ EditorAppearance ThemeDefaults(bool light) {
 struct Panel { const char* name; const char* label; bool EditorPanelState::*flag; };
 constexpr Panel panels[] = {
     {"assets", "Asset browser", &EditorPanelState::showAssetBrowser}, {"scripts", "JudasJS tools", &EditorPanelState::showScriptTools},
+    {"runtimeInspector", "Runtime Inspector", &EditorPanelState::showRuntimeInspector},
     {"profiler", "Profiler", &EditorPanelState::showProfiler}, {"scene", "Scene settings", &EditorPanelState::showSceneSettings},
     {"project", "Project settings", &EditorPanelState::showProjectSettings}, {"terrain", "Terrain tools", &EditorPanelState::showTerrain},
     {"volume", "Volumetric terrain", &EditorPanelState::showVolumeTerrain}, {"animation", "Animation timeline", &EditorPanelState::showAnimationTimeline},

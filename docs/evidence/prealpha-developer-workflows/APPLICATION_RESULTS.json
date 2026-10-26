@@ -1,0 +1,22 @@
+{
+  "write": {
+    "exit": 0,
+    "checks": 13,
+    "failures": 0
+  },
+  "read": {
+    "exit": 0,
+    "checks": 8,
+    "failures": 0
+  },
+  "incompatible": {
+    "exit": 0,
+    "checks": 5,
+    "failures": 0
+  },
+  "missing-script": {
+    "exit": 0,
+    "checks": 10,
+    "failures": 0
+  }
+}

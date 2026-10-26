@@ -59,14 +59,35 @@ void operation(GameSnapshot& s,const J& op){
 }
 bool ValidateSaveEvolution(const std::string& p,std::string& e){try{if(!p.empty())policy(p);e.clear();return true;}catch(const std::exception& x){e=x.what();return false;}}
 bool SaveEvolutionCurrent(const std::string& p,SaveEvolutionIdentity& id,std::string& e){try{id={};if(!p.empty()){auto j=policy(p);id={j.at("compatibility").get<std::string>(),version(j.at("version"))};}e.clear();return true;}catch(const std::exception& x){e=x.what();return false;}}
+std::string DescribeSaveCompatibility(const GameSnapshot& saved,
+ const std::string& content,const SaveEvolutionIdentity& current,const std::string& currentMods) {
+    std::string result;
+    auto add = [&](const std::string& reason) {
+        if (!result.empty()) result += "\n";
+        result += reason;
+    };
+    if (saved.content != content)
+        add("Content fingerprint changed: saved " + saved.content + "; installed " + content + ".");
+    if (saved.compatibility != current.compatibility)
+        add("Compatibility identity changed: saved '" + saved.compatibility + "'; installed '" + current.compatibility + "'.");
+    if (saved.contentVersion != current.version)
+        add("Content version changed: saved " + std::to_string(saved.contentVersion) + "; installed " + std::to_string(current.version) + ".");
+    try {
+        if (mods(saved.modContext) != mods(currentMods)) add(modDifference(saved.modContext, currentMods));
+    } catch (const std::exception& exception) {
+        add("Cannot compare saved/installed mod metadata: " + std::string(exception.what()));
+    }
+    if (!result.empty())
+        result += "\nLoad refused before world replacement. Keep the original save and a matching game build, or use an explicit project-approved migration. A scene save is not an expedition migration.";
+    return result;
+}
 bool EvolveSave(const std::string& text,const std::string& content,const std::string& currentMods,const GameSnapshot& input,bool allow,GameSnapshot& output,std::string& report,std::string& error){
  try{
   SaveEvolutionIdentity current;need(SaveEvolutionCurrent(text,current,error),error);need(input.gameVersion==1,"unsupported engine snapshot schema (not project data)");
   const bool sameMods=mods(input.modContext)==mods(currentMods);
   const bool sameIdentity=input.compatibility==current.compatibility&&input.contentVersion==current.version;
   if(input.content==content&&sameIdentity&&sameMods){output=input;report="exact";error.clear();return true;}
-  if(!sameMods&&!allow)throw std::runtime_error(modDifference(input.modContext,currentMods));
-  need(allow,"save differs from installed content/compatibility/mods; explicit migration required");need(!text.empty(),"project has no save evolution policy");auto p=policy(text);
+  need(allow,DescribeSaveCompatibility(input,content,current,currentMods));need(!text.empty(),"project has no save evolution policy");auto p=policy(text);
   need(std::any_of(p["sources"].begin(),p["sources"].end(),[&](const auto& s){return s["content"]==input.content&&s["compatibility"]==input.compatibility&&version(s["version"])==input.contentVersion;}),"source content/compatibility/version not explicitly approved");
   if(!sameMods){bool approved=false;if(p.contains("modTransitions"))for(auto& m:p["modTransitions"])approved|=m["from"]==mods(input.modContext)&&m["to"]==mods(currentMods);need(approved,modDifference(input.modContext,currentMods));}
   auto candidate=input;auto v=input.contentVersion;J applied=J::array();unsigned count=0;

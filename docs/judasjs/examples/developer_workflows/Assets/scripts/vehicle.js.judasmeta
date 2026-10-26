@@ -1,0 +1,4 @@
+JudasAssetMeta 1
+id "661befdafd5d6ae3d95b37683c09830e"
+type script
+source "Assets/scripts/vehicle.js"

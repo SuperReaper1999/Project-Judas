@@ -1,0 +1,18 @@
+Shadow maps: on
+Graphics: 3.3.0 NVIDIA 580.178.04 / NVIDIA GeForce GTX 970/PCIe/SSE2
+Renderer fragment texture units: 32 (material path uses 12)
+World state: legacy .judasstate (F6/F7) saves disabled for additive compositions; save slots remain available
+Project: Developer Workflows (/tmp/judas-workflow-final-no-script/developer_workflows.judasproj)
+Scene: Developer Workflows / four small lessons (/tmp/judas-workflow-final-no-script/Scenes/lessons.judas)
+World origin (m): 0.000, 0.000, 0.000
+PASS ordinary root physical crate published
+PASS lesson motor responds to actual WASD input
+PASS actual ray interaction increments project-owned root counter
+PASS ordinary pause blocks physical gameplay
+PASS paused preparation is not mistaken for published collision
+PASS requested regional collision genuinely publishes
+PASS disabled script has no gameplay instance despite native body
+PASS runtime diagnostic distinguishes missing instance
+PASS lesson does not mistake active region for project registration
+PASS ordinary application exits cleanly
+10 checks, 0 failures

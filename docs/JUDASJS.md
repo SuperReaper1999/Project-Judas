@@ -1,5 +1,7 @@
 # JudasJS — current Pre-Alpha API reference
 
+[Practical ownership, readiness, presentation and save lessons](DEVELOPER_WORKFLOWS.md)
+
 Judas provides engine primitives. Project JavaScript supplies game behaviour.
 This reference describes the current repository implementation, including the public
 module developed through M99 and subsequent Pre-Alpha corrections. It is not an
