@@ -560,5 +560,58 @@
       ]
     ],
     "source": "Original Stage 2 mesh/PBR finish; source author_stage2.py"
+  },
+  "npc_survivor": {
+    "source": "Original Hearthworld adventurer rig; project-authored palette and Attack clip",
+    "path": "Assets/models/npc_survivor.glb",
+    "sha256": "88e6ebd939924d9ab7627c46c9c17390820572c11b8f516e1385f49d01fa1708"
+  },
+  "npc_bandit": {
+    "source": "Original Hearthworld adventurer rig; project-authored palette and Attack clip",
+    "path": "Assets/models/npc_bandit.glb",
+    "sha256": "be80bc93ff7bcb0d902d88df5c90b6f767017bc3bb1046c3fe6168809fe1282f"
+  },
+  "island_wolf": {
+    "source": "Prompt3D real trained prompt parser/procedural animal generator",
+    "prompt": "a realistic gray wolf",
+    "seed": 91303,
+    "params": {
+      "features": {},
+      "size": 1.0,
+      "style": "realistic",
+      "color": "#808080",
+      "type": "wolf",
+      "count": 1,
+      "pose": null
+    },
+    "path": "Assets/models/island_wolf.glb",
+    "sha256": "0daf7df2d187ec52fb63d0674821fd04cf4e7b0ce4db22f32066632c59e78a59"
+  },
+  "pistol": {
+    "source": "LowPolyAssets/low_poly_starter/Exports/weapon_stylized_pistol.glb",
+    "sourceSha256": "a0048e119f553972fc1de6539dd39c6395fa557d73f779d0aabd6f1b0dfcefca",
+    "path": "Assets/models/pistol.glb",
+    "sha256": "1135ed0b3844de091e04ef54ae48e1a5b69c903e492548f1011591a7343e497f"
+  },
+  "rifle": {
+    "source": "LowPolyAssets/low_poly_starter/Exports/weapon_compact_rifle.glb",
+    "sourceSha256": "bb4f2855009ea83ea28a8a5e9e35c81d03c8bfb96fea9bdb343f5feb0f7b7357",
+    "path": "Assets/models/rifle.glb",
+    "sha256": "bcd0dcb2fd9c550ccb061164defbe4980a4f7ca940a85537e3cff2bd81ef9fc1"
+  },
+  "shotgun": {
+    "source": "Original project mesh, author_stage3.py",
+    "path": "Assets/models/shotgun.glb",
+    "sha256": "6b1bb9fc6f32a667b0b0176d1ef163247a3af067ac0c2bc741fa6c0185dd6295"
+  },
+  "knife": {
+    "source": "Original project mesh, author_stage3.py",
+    "path": "Assets/models/knife.glb",
+    "sha256": "8958ccf9a683f41b07801d3c7e558dafdc826158c46269f832ad7237963ca80e"
+  },
+  "bat": {
+    "source": "Original project mesh, author_stage3.py",
+    "path": "Assets/models/bat.glb",
+    "sha256": "ba62e4df395154a40e9d2552818ee1fd926608d6f0edcf3d752ecb149414e250"
   }
 }

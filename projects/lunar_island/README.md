@@ -1,9 +1,9 @@
-# Lunar Island — Stage 2: A Place to Call Home
+# Lunar Island — Stage 3: People of the Fracture
 
 Copyright (c) 2026 Conner / SuperReaper1999. Original project code/assets use the
 repository's MIT terms; cached ambientCG material scans use CC0-1.0. See `ArtSource/PROVENANCE.md` for font and asset origins.
 
-An ordinary Judas consumer game on Experimental. **Stage 2; human gameplay acceptance pending.** Stage 2 was authorized after the operator reviewed Stage 1 screenshots. Gameplay lives in `Assets/scripts`. Two bounded native persistence corrections are documented in the Stage 2 report.
+An ordinary Judas consumer game on Experimental. **Stage 3; human gameplay acceptance pending.** Stages 2 and 3 were separately authorized by the operator. Gameplay lives in `Assets/scripts`. Two bounded native persistence corrections are documented in the Stage 2 report.
 
 ## Play
 
@@ -25,9 +25,9 @@ separate from editor scene saves and survive moving an exported package.
 | Shift / Space | Sprint / jump; Space swims upward |
 | Left Ctrl | Dive while swimming |
 | V | Switch first/third person, same character |
-| E | Gather, recover bundles, refill at well; interact with doors, openings and furnishings |
-| Left click | Use tool/consumable; confirm a placement preview |
-| B / R | Build catalogue / rotate placement by 90 degrees |
+| E | Gather, refill, interact with homes; speak to survivors and loot bodies |
+| Left click / right mouse | Use tool, melee or fire / aim a firearm |
+| B / R | Build catalogue / rotate an active placement, otherwise reload a firearm |
 | 1–6 | Hands, axe, pickaxe, berries, flask, dressing |
 | Tab | Backpack; Crafting and other tabs across the top |
 | M / Escape | Map / pause or return |
@@ -70,7 +70,7 @@ and swimmable; no conserved liquid simulation is enabled. The spring well is the
 authored fresh-water interaction. Water remains a prescribed surface, not flow.
 
 The full terrain shell is currently resident. This stage does not demonstrate
-regional unloading, world-wide resource population, terrain excavation, NPCs, combat or vehicles. Collision for foliage uses
+regional unloading, world-wide resource population, terrain excavation or vehicles. Stage 3 adds six nearby NPCs, combat and quests. Collision for foliage uses
 simple trunk/plant/stone proxies; branches and individual leaves are not simulated.
 Felled trees, dropped bundles, door leaves, barricades and constructed pieces use native rigid bodies. There is no resource respawn.
 
@@ -150,11 +150,11 @@ separate Linux port; current short sound effects are original generated PCM.
 cmake --build build --target judas judas_editor judas_export -j1
 python3 projects/lunar_island/tests/build_observer.py --build build
 SDL_AUDIODRIVER=dummy XDG_DATA_HOME=/tmp/lunar-island-validation /tmp/lunar-island-observer \
-  projects/lunar_island/lunar_island.judasproj write projects/lunar_island/Review/stage2/native
+  projects/lunar_island/lunar_island.judasproj write /tmp/lunar-island-build-proof
 SDL_AUDIODRIVER=dummy XDG_DATA_HOME=/tmp/lunar-island-validation /tmp/lunar-island-observer \
-  projects/lunar_island/lunar_island.judasproj read projects/lunar_island/Review/stage2/native
+  projects/lunar_island/lunar_island.judasproj read /tmp/lunar-island-build-proof
 ./build/judas_export projects/lunar_island/lunar_island.judasproj \
-  '/tmp/Lunar Island Stage 2' ./build/judas
+  '/tmp/Lunar Island Stage 3' ./build/judas
 ```
 
 `write` creates a validation save in the game's `island` slot. Use a separate
@@ -167,7 +167,7 @@ Run the exported `judas` executable inside the package; no repository path is
 required. Linux is the tested platform for this stage. This is not Windows,
 Android, gamepad hardware, audio-listening or human gameplay acceptance.
 
-See `Review/STAGE2_REPORT.md` and `Review/stage2/HUMAN_CHECKLIST.md` for the current
+See `Review/STAGE3_REPORT.md` and `Review/stage3/HUMAN_CHECKLIST.md` for the current
 review boundary. Stage 1 evidence and fingerprints remain historical and unchanged.
 Stage 3 requires separate approval.
 
@@ -236,8 +236,101 @@ editor save operation. Existing art, gameplay and export require no generator.
 New catalogue keys need a corresponding generated model/prefab/preview; a JSON key
 alone does not invent a shape. Use existing examples when adding storage or props.
 
-Stage 2 intentionally uses a new project save identity. Stage 1 saves remain
+Stage 2 introduced a separate project save identity (superseded by the separate Stage 3 identity below). Stage 1 saves remain
 untouched, but are not automatically migrated. Native cold saves preserve moved
 fixtures, spawned entities/joints, lamps, ownership, containers, home and integrity
 alongside resources/survival. Editor Stop restores the original authored world;
 F6/F9 are the persistent game workflow.
+
+
+## Stage 3: People of the Fracture
+
+Mara patrols near the camp at (8,18), Ivo near (-8,16). E opens dialogue;
+**Ask about work** starts or turns in a job, **Trade supplies** opens finite stock.
+The field map/journal includes the objectives. Mara gives a pistol and 24 rounds
+once, then rewards clearing the two scavengers at the eastern camp (about 75,66).
+Ivo exchanges six actual timber for 15 tokens and two rations. Talk again to turn
+in completed work; rewards and gifts cannot be repeated. Tokens can also be earned
+by selling materials. Trader money, stock and pack capacity are real constraints.
+
+Open Tab → Backpack, select a weapon and **Use / equip**. R loads compatible
+reserve ammunition into its finite magazine; a reload takes time. Right mouse
+narrows the field of view, left mouse fires. The rifle supports held fire;
+pistol/shotgun require separate clicks. Reloading and firing are blocked by menus.
+Knife/bat/axe/pickaxe use the same physical query against enemies. Friendly survivors
+are protected from damage. Guns recoil and have original sound/impact feedback.
+
+Two scavengers patrol the eastern camp: a ranged lookout and a melee raider. They
+use sight/occlusion and hearing, pursue using navigation guidance plus CharacterMotor,
+attack with a windup, and retreat at low health. Wolves patrol the western trail
+around (-63,8) and (-75,22). Give them space until equipped. Enemies can strike
+actual nearby barricades when alerted. This is bounded NPC policy, not a universal
+house-breaching or squad-tactics system. Runtime building changes physically block
+motors/rays, but do not trigger automatic navmesh rebaking.
+
+E on a defeated enemy opens its finite loot container. Ammo expended by the lookout
+is removed from his loot. Meat can be cooked at the fire; hide, scrap, ammunition
+and currency share the ordinary inventory. Corpses are ordinary dynamic rigid
+proxies with collision and impulses, **not articulated ragdolls**. Human locomotion
+uses the original rig plus a small authored attack clip. Wolf leg animation,
+weapon-specific aim/reload/hit/death clips, and third-person held-weapon animation
+remain art/polish work. There is no voice dialogue yet.
+
+### Author encounters, weapons and quests
+
+`Authoring/encounters.json` owns weapon values, actor profiles/routes/stock/prices,
+dialogue and quest definitions. `person.js` owns NPC decisions; `combat.js` owns
+weapons; `social-ui.js` renders dialogue/trade/loot; `encounter-rules.js` implements
+atomic transactions. No game-specific native code or hidden dispatch is used.
+
+Actor IDs occupy 6000–6399 in steps of ten. The authoring tool creates the motor,
+visual child and optional held weapon. Choose friendly/hostile/animal, health,
+speed, sight, damage, route points and finite stock. Add a quest with an item-delivery
+objective or a supported `kills`/`wolves` counter, rewards and dialogue; assign
+its key to a friendly actor. Weapon profiles reference existing inventory items,
+with damage/range/interval, optional ammo/capacity/reload/recoil and six-pellet
+shotgun spread. Adding an entirely new combat or objective type requires JS work.
+There is one magazine per weapon type, not per individual item instance.
+
+```sh
+PYTHONDONTWRITEBYTECODE=1 python3 projects/lunar_island/tools/author_stage3.py
+./build/judas_navigation_bake projects/lunar_island/lunar_island.judasproj Scenes/island.judas
+```
+
+This replaces IDs 6000–6999, encounter metadata, corpse prefabs and original PCM
+effects. Back up scene edits first. It does not require Prompt3D unless regenerating
+art with `--prompt3d /path/to/tool`; raw wolf settings and copied source receipts
+are retained. For a whole authored rebuild run Stage 1, Stage 2, Stage 3, then bake.
+Existing art/gameplay/export do not require those offline tools.
+
+The homestead navigation surface is bounded to 220 × 220 m. It uses the detailed
+homestead collision, excluding the duplicate coarse far-island shell with a source
+layer filter (physical collision masks stay unchanged). Startup shows a readiness
+screen until the baked navigation and encounter models are available; it does not
+spawn an active expedition before required services publish.
+
+Stage 3 uses its own save identity; Stage 1/2 saves are preserved but not migrated.
+F6/F9 retain health, NPC stock/death, loot, magazines and quests alongside existing
+harvesting/housing state. Changing runtime content can require explicit save
+migration; development saves are not silently forced into changed scripts.
+
+```sh
+node projects/lunar_island/tests/inventory.test.js
+node projects/lunar_island/tests/encounters.test.js
+python3 projects/lunar_island/tests/build_observer.py --output /tmp/lunar-stage3-observer
+SDL_AUDIODRIVER=dummy XDG_DATA_HOME=/tmp/lunar-stage3-check /tmp/lunar-stage3-observer \
+  projects/lunar_island/lunar_island.judasproj encounter /tmp/lunar-stage3-proof
+SDL_AUDIODRIVER=dummy XDG_DATA_HOME=/tmp/lunar-stage3-check /tmp/lunar-stage3-observer \
+  projects/lunar_island/lunar_island.judasproj encounterread /tmp/lunar-stage3-proof
+```
+
+Use a separate user-data directory and unchanged source for a write/read pair.
+`tests/make_barrier_fixture.py /tmp/NewBarrierFixture` authors an isolated guard
+outside a window; observer mode `barrier` verifies unalerted/alerted behaviour,
+real supply acquisition, barricading and enemy destruction. It does not alter
+production gameplay modules or inject damage/items.
+
+Stage 4 vehicles and Stage 5 regional expansion have **not begun**.
+
+Animation priorities and a practical Blender handover are in
+`ArtSource/STAGE3_ANIMATION_HANDOFF.md`.

@@ -445,10 +445,24 @@ export default class Housing {
             return false;
         }
     }
-    remove(ref, refund = true) {
+    damageFromActor(hit, attacker, amount) {
+        const r = this.record(hit?.entity);
+        if (
+            !r?.barricade ||
+            !attacker?.valid ||
+            length(sub(attacker.transform.position, hit.point)) > 2.3 ||
+            !Number.isFinite(amount) ||
+            amount <= 0
+        )
+            return false;
+        r.health = Math.max(0, r.health - amount);
+        if (r.health === 0) this.remove(r.ref, false, false);
+        return true;
+    }
+    remove(ref, refund = true, requireNear = true) {
         const r = this.state.objects[ref],
-            e = this.near(ref);
-        if (!r || !e) return false;
+            e = requireNear ? this.near(ref) : entityFor(ref);
+        if (!r || !e?.valid) return false;
         if (this.state.containers[ref]?.slots.some(Boolean)) {
             this.p.say('Empty this storage before dismantling it.');
             return false;

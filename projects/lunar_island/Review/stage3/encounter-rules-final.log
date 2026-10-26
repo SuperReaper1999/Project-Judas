@@ -1,0 +1,38 @@
+PASS purchase conserves stock and currency across two bags
+PASS trade never mutates either input
+PASS sale reverses goods with authored resale price
+PASS invalid offer refuses 0
+PASS invalid offer refuses -1
+PASS invalid offer refuses NaN
+PASS invalid offer refuses Infinity
+PASS invalid offer refuses 1.5
+PASS insufficient player money refuses
+PASS out of stock refuses
+PASS vendor cannot spend absent money
+PASS currency cannot be traded for itself
+PASS destination capacity rejects a purchase atomically
+PASS failed offers leave both original ledgers intact
+PASS reload transfers reserve rounds into finite magazine
+PASS reload does not mutate source
+PASS partial reload uses only existing rounds
+PASS full magazine does not spend ammo
+PASS wrong ammunition never reloads
+PASS overcapacity state is not repaired by reload
+PASS quest transaction consumes real supplies and grants authored reward
+PASS incomplete quest cannot spend or grant
+PASS every weapon has bounded positive gameplay values
+PASS firearm capacities and reload times are explicit
+PASS same container cannot trade with itself
+PASS negative magazine state rejects
+PASS bulk trade conserves ten goods and complete price
+PASS insufficient bulk stock refuses atomically
+PASS invalid batch quantity rejects
+29 encounter checks passed
+PASS accepting patrol grants its finite starter kit
+PASS active patrol cannot repeat the starter gift
+PASS actual objective counter unlocks authored reward
+PASS completed quest does not repeat payment
+PASS starter gift failure is atomic when pack cannot hold it
+PASS delivery quest remains active without required supplies
+PASS data-driven delivery exchanges exact physical resource quantities
+36 total encounter checks passed

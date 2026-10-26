@@ -1,0 +1,84 @@
+Shadow maps: on
+Graphics: 3.3.0 NVIDIA 580.178.04 / NVIDIA GeForce GTX 970/PCIe/SSE2
+Renderer fragment texture units: 32 (material path uses 12)
+World state: /home/conner/Documents/GitHub/Project-Judas/projects/lunar_island/Saves/island.judasstate (none saved)
+Project: Lunar Island (/home/conner/Documents/GitHub/Project-Judas/projects/lunar_island/lunar_island.judasproj)
+Scene: Lunar Island / Homestead Coast (/home/conner/Documents/GitHub/Project-Judas/projects/lunar_island/Scenes/island.judas)
+World origin (m): 2900.000, 0.000, -1600.000
+JS: Lunar Island: WASD, mouse, E gather, click tool, Tab pack/crafting, Escape pause, F6 save, F9 load.
+PASS welcome pauses actual world
+PASS authored world collision loaded
+PASS capture welcome.png
+PASS Escape begins real game
+PASS CharacterMotor moves via project input
+PASS same player toggles third person
+PASS pause menu stops gameplay
+PASS move/fire do not leak through modal
+PASS Stage 3 ordinary scene is instantiated
+PASS authored navigation loads without stale/missing source diagnostics
+PASS focus UI primary
+PASS Mara gives one real sidearm and ammunition with the accepted patrol quest
+PASS capture mara-dialogue.png
+PASS focus UI primary
+PASS repeating quest dialogue cannot duplicate the gift
+PASS focus UI tab_pack
+PASS focus UI primary
+PASS actual backpack equips pistol
+PASS R reload transfers exactly ten reserve rounds into the actual magazine
+PASS friendly fire consumes a shot without damaging a protected survivor
+PASS focus UI secondary
+PASS focus UI primary
+PASS unaffordable rifle leaves player money unchanged
+PASS focus UI primary
+PASS native trade purchases finite knife stock with exact tokens
+PASS capture trading.png
+PASS fire does not leak through the trade modal
+PASS actual E depletes branch 200
+PASS actual E depletes branch 202
+PASS actual E depletes branch 204
+PASS focus UI primary
+PASS Ivo consumes six genuinely gathered timber and pays once
+PASS focus UI primary
+PASS completed timber dialogue does not repeat reward
+PURSUIT actual [73.18693542480469,13.95455551147461,66.87088012695313] start [73.27119445800781,14.318290710449219,61.94871520996094] velocity [-0.01794247142970562,-0.4041895866394043,3.112589120864868] nav 2 steer [-0.021717535331845284,0.0,3.099923849105835] target [73.14347839355469,13.696495056152344,70.01762390136719]
+PASS hostile follows an actual path through its CharacterMotor
+PASS physical line of sight activates pursuit or attack
+PASS capture pursuit.png
+PASS three actual pistol hits defeat the raider
+PASS both independent camp enemies are defeated exactly once
+PASS actual enemy attacks affect player health
+PASS capture camp-cleared.png
+FAIL focus UI primary
+FAIL corpse loot transfers its exact finite token stack once
+FAIL focus UI primary
+FAIL patrol completion pays the authored reward after actual kills
+PASS focus UI primary
+FAIL patrol reward cannot be collected twice
+FAIL focus UI secondary
+PASS focus UI primary
+PASS focus UI primary
+PASS focus UI primary
+PASS focus UI primary
+PASS focus UI primary
+FAIL quest and loot income buys both firearm types and compatible ammunition
+PASS focus UI tab_pack
+PASS focus UI primary
+PASS actual backpack equips knife
+PASS three real knife strikes defeat the first wolf
+PASS focus UI tab_pack
+PASS focus UI primary
+FAIL actual backpack equips rifle
+FAIL rifle partial reload consumes only the purchased round
+FAIL rifle hitscan applies its distinct physical-query damage
+PASS focus UI tab_pack
+PASS focus UI primary
+FAIL actual backpack equips shotgun
+FAIL shotgun pellets defeat the second wolf in third person
+PASS third-person shot keeps the same player and actual camera mode
+FAIL shotgun fires exactly one shell for the pellet pattern
+FAIL full combat expedition remains survivable
+PASS capture hunt.png
+PASS independently observed actual save capture boundary
+PASS game-issued durable save completes: 
+PASS ordinary application exits cleanly
+74 checks, 14 failures

@@ -1951,7 +1951,7 @@
         "wrap": true,
         "fit": true,
         "spacing": 8,
-        "fontSize": 18,
+        "fontSize": 17,
         "value": 0,
         "minimum": 0,
         "maximum": 1,
@@ -1967,11 +1967,11 @@
         ],
         "offset": [
           24,
-          485
+          505
         ],
         "size": [
           1030,
-          52
+          55
         ],
         "relativeSize": [
           0,

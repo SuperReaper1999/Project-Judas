@@ -1,0 +1,20 @@
+In file included from /home/conner/Documents/GitHub/Project-Judas/projects/lunar_island/tests/ApplicationTests.cpp:72:
+/home/conner/Documents/GitHub/Project-Judas/projects/lunar_island/tests/Stage3Barrier.inc: In lambda function:
+/home/conner/Documents/GitHub/Project-Judas/projects/lunar_island/tests/Stage3Barrier.inc:6:349: error: ‘w’ was not declared in this scope
+    6 |   job(4,[&](EngineHost&,RuntimeWorld& w){auto state=State(w);int row=0;for(auto& slot:state["bag"]["slots"]){if(slot.is_null())continue;if(slot["item"]=="pistol")break;++row;}auto h=w.UI().Find("lunar");w.UI().Select(h,"entries",row-1);w.UI().Focus(h,"entries");press("ui_down");});click("primary");job(5,[&](EngineHost&,RuntimeWorld&){Check(State(w)["equipped"]=="pistol","fixture actually equips the quest pistol");press("pause");});
+      |                                                                                                                                                                                                                                                                                                                                                             ^
+Traceback (most recent call last):
+  File "/home/conner/Documents/GitHub/Project-Judas/projects/lunar_island/tests/build_observer.py", line 21, in <module>
+    subprocess.run(
+    ~~~~~~~~~~~~~~^
+        [
+        ^
+    ...<10 lines>...
+        check=True,
+        ^^^^^^^^^^^
+    )
+    ^
+  File "/usr/lib/python3.14/subprocess.py", line 578, in run
+    raise CalledProcessError(retcode, process.args,
+                             output=stdout, stderr=stderr)
+subprocess.CalledProcessError: Command '['/usr/bin/c++', '-DDT_VIRTUAL_QUERYFILTER', '-DJUDAS_RUNTIME_BUILD_CONFIG="Release"', '-DMA_NO_ENCODING', '-DMA_NO_GENERATION', '-DMA_NO_RESOURCE_MANAGER', '-I/home/conner/Documents/GitHub/Project-Judas/src', '-I/home/conner/Documents/GitHub/Project-Judas/third_party/glad/include', '-I/home/conner/Documents/GitHub/Project-Judas/third_party/miniaudio', '-I/home/conner/Documents/GitHub/Project-Judas/third_party/verblib', '-I/home/conner/Documents/GitHub/Project-Judas/third_party/meshoptimizer/src', '-I/home/conner/Documents/GitHub/Project-Judas/build/_deps/judas_freetype-build/include', '-I/home/conner/Documents/GitHub/Project-Judas/build/_deps/judas_freetype-src/include', '-I/home/conner/Documents/GitHub/Project-Judas/build/_deps/judas_harfbuzz-src/src', '-isystem', '/home/conner/Documents/GitHub/Project-Judas/third_party/quickhull', '-isystem', '/usr/include/SDL2', '-isystem', '/home/conner/Documents/GitHub/Project-Judas/third_party/recastnavigation/Detour/Include', '-isystem', '/home/conner/Documents/GitHub/Project-Judas/third_party/recastnavigation/DetourTileCache/Include', '-isystem', '/home/conner/Documents/GitHub/Project-Judas/third_party/recastnavigation/DetourCrowd/Include', '-isystem', '/home/conner/Documents/GitHub/Project-Judas/third_party/quickjs', '-isystem', '/home/conner/Documents/GitHub/Project-Judas/build/unicode/icu/include', '-O3', '-DNDEBUG', '-std=gnu++17', '-Wall', '-Wextra', '-I/home/conner/Documents/GitHub/Project-Judas/third_party/nlohmann', '-c', '/home/conner/Documents/GitHub/Project-Judas/projects/lunar_island/tests/ApplicationTests.cpp', '-o', '/tmp/lunar-stage3-observer.o']' returned non-zero exit status 1.

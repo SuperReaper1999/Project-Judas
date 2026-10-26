@@ -1,0 +1,30 @@
+{
+  "JavaScript fixedUpdate": {
+    "meanMs": 0.47717004166666666,
+    "p95Ms": 0.589111
+  },
+  "JavaScript update": {
+    "meanMs": 0.010222866666666667,
+    "p95Ms": 0.015229
+  },
+  "JavaScript presentation": {
+    "meanMs": 0.2916184,
+    "p95Ms": 0.437204
+  },
+  "JavaScript UI update": {
+    "meanMs": 0.12279076666666666,
+    "p95Ms": 0.135235
+  },
+  "Navigation update": {
+    "meanMs": 0.41418085,
+    "p95Ms": 0.672669
+  },
+  "GPU Main camera": {
+    "meanMs": 1.603728,
+    "p95Ms": 2.934656
+  },
+  "residentBytes": 488562688,
+  "frames": 120,
+  "rawProfileSha256": "f795a8639cae0511467ae2342c57a7c5f847ded59f219e21167df57109353fea",
+  "rawProfileBytes": 6447514
+}

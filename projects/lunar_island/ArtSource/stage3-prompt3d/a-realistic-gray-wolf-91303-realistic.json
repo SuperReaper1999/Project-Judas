@@ -1,0 +1,31 @@
+{
+  "prompt": "a realistic gray wolf",
+  "category": "animal",
+  "confidence": 1.0,
+  "params": {
+    "features": {},
+    "size": 1.0,
+    "style": "realistic",
+    "color": "#808080",
+    "type": "wolf",
+    "count": 1,
+    "pose": null
+  },
+  "understood": [],
+  "seed": 91303,
+  "style": "realistic",
+  "files": {
+    "glb": "/home/conner/Documents/GitHub/Project-Judas/projects/lunar_island/ArtSource/stage3-prompt3d/a-realistic-gray-wolf-91303-realistic.glb"
+  },
+  "stats": {
+    "vertices": 5722,
+    "triangles": 9872,
+    "groups": 1
+  },
+  "dimensions_m": [
+    0.31,
+    1.09,
+    1.9
+  ],
+  "seconds": 0.81
+}

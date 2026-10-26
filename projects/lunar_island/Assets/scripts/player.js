@@ -10,6 +10,9 @@ import Camera from './camera.js';
 import HUD from './hud.js';
 import Housing from './housing.js';
 import Construction from './construction.js';
+import Combat from './combat.js';
+import { PEOPLE, WEAPONS } from './encounter-data.js';
+import { actorFor } from './people-session.js';
 import { RECIPES } from './definitions.js';
 export default class Player {
     constructor({ entity }) {
@@ -19,6 +22,7 @@ export default class Player {
             work_coat: 1,
             empty_flask: 1,
             rations: 2,
+            tokens: 20,
         }))
             bag = Bag.add(bag, id, n).bag;
         this.state = {
@@ -65,6 +69,7 @@ export default class Player {
     bind(restored) {
         this.camera = new Camera(this);
         this.housing = new Housing(this);
+        this.combat = new Combat(this);
         this.hud = new HUD(this, restored);
         this.builder = new Construction(this);
         this.request = null;
@@ -82,7 +87,7 @@ export default class Player {
     effect(sound, text) {
         this.say(text);
         this.swing = 0.3;
-        const e = world.entity(WORLD.sounds[sound]);
+        const e = world.entity(WORLD.sounds[sound] || PEOPLE.sounds[sound]);
         if (e?.valid && e.audio?.ready) {
             e.transform = { position: this.entity.transform.position };
             try {
@@ -132,6 +137,20 @@ export default class Player {
         return true;
     }
     reconcileEquipment() {
+        // Magazines are per carried weapon type in this stage. Automatically
+        // unload the last weapon when it leaves the pack, retaining its rounds.
+        if (this.state.combat)
+            for (const [id, rounds] of Object.entries(
+                this.state.combat.magazines,
+            )) {
+                if (rounds > 0 && !Bag.count(this.state.bag, id)) {
+                    const r = Bag.add(this.state.bag, WEAPONS[id].ammo, rounds);
+                    if (r.ok) {
+                        this.state.bag = r.bag;
+                        this.state.combat.magazines[id] = 0;
+                    }
+                }
+            }
         for (const key of Object.keys(this.state.equipment))
             if (!Bag.count(this.state.bag, this.state.equipment[key]))
                 delete this.state.equipment[key];
@@ -187,6 +206,7 @@ export default class Player {
             return;
         }
         this.state.bag = debit.bag;
+        this.reconcileEquipment();
         this.state.drops[e.id] = { item: slot.item, count: 1 };
         if (!Bag.count(this.state.bag, slot.item)) {
             for (const key of Object.keys(this.state.equipment))
@@ -202,6 +222,7 @@ export default class Player {
         );
     }
     interact(hit) {
+        if (this.combat.interact(hit)) return;
         if (this.housing.interact(hit)) return;
         if (hit?.entity?.id === WORLD.well) {
             const has = Bag.count(this.state.bag, 'empty_flask');
@@ -247,9 +268,14 @@ export default class Player {
             this.state.third = !this.state.third;
     }
     fixedUpdate(dt) {
+        if (this.hud.page === 'loading') {
+            this.entity.character.velocity = { x: 0, y: 0, z: 0 };
+            return;
+        }
         if (this.hud.modal) return;
         this.cooldown = Math.max(0, this.cooldown - dt);
         this.swing = Math.max(0, this.swing - dt);
+        this.combat.tick(dt);
         move(this, dt);
         if (this.state.vitals.health <= 0) {
             this.hud.open('dead');
@@ -279,7 +305,11 @@ export default class Player {
             return;
         }
         if (input.pressed('interact')) this.interact(hit);
-        if (input.pressed('primary') && this.cooldown === 0) {
+        if (
+            (input.pressed('primary') ||
+                (this.combat.weapon?.automatic && input.held('primary'))) &&
+            this.cooldown === 0
+        ) {
             this.cooldown = 0.45;
             this.swing = 0.3;
             if (ITEMS[this.state.equipped]?.use) {
@@ -287,11 +317,19 @@ export default class Player {
                     (s) => s?.item === this.state.equipped,
                 );
                 this.useSlot(slot);
-            } else if (!this.housing.damage(hit)) useTool(this, hit);
+            } else if (
+                this.combat.weapon?.ammo ||
+                ['hands', 'knife', 'bat'].includes(this.state.equipped) ||
+                actorFor(hit?.entity)
+            )
+                this.combat.fire();
+            else if (!this.housing.damage(hit)) useTool(this, hit);
         }
     }
     context() {
         const hit = this.camera.hit(3.8);
+        const personContext = this.combat.context(hit);
+        if (personContext) return personContext;
         const housingContext = this.housing.context(hit);
         if (housingContext) return housingContext;
         if (hit?.entity?.id === WORLD.well)
@@ -378,7 +416,10 @@ export default class Player {
             }
         }
         this.builder?.present();
-        for (const [id, entity] of Object.entries(WORLD.viewmodels)) {
+        for (const [id, entity] of Object.entries({
+            ...WORLD.viewmodels,
+            ...PEOPLE.viewmodels,
+        })) {
             const e = world.entity(entity);
             e.renderVisible =
                 !this.state.third &&
@@ -408,7 +449,7 @@ export default class Player {
         try {
             this.request = saves.save('island', {
                 name: 'Lunar Island / Homestead Coast',
-                metadata: { gathered: this.state.stats.gathered, stage: 1 },
+                metadata: { gathered: this.state.stats.gathered, stage: 3 },
             });
             this.operation = 'save';
             this.say('Saving your expedition…');
@@ -458,6 +499,7 @@ export default class Player {
     }
     destroy() {
         this.builder?.cancel();
+        this.combat?.destroy();
         input.pointerCapture = false;
         world.clearView();
     }

@@ -1,0 +1,6 @@
+FRAMES 220
+LOG_EVERY 0
+EXPECT_PAUSED 1 20
+ACTION pause 1 25 26
+EXPECT_PAUSED 0 200
+SCREENSHOT 200 /home/conner/Documents/GitHub/Project-Judas/projects/lunar_island/Review/stage3/first-play.png

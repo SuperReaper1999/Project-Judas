@@ -1,0 +1,42 @@
+Shadow maps: on
+Graphics: 3.3.0 NVIDIA 580.178.04 / NVIDIA GeForce GTX 970/PCIe/SSE2
+Renderer fragment texture units: 32 (material path uses 12)
+World state: /tmp/Lunar Stage3 Barrier Final/Saves/island.judasstate (none saved)
+Project: Lunar Island (/tmp/Lunar Stage3 Barrier Final/lunar_island.judasproj)
+Scene: Lunar Island / Homestead Coast (/tmp/Lunar Stage3 Barrier Final/Scenes/island.judas)
+World origin (m): 2900.000, 0.000, -1600.000
+JS: Lunar Island: WASD, mouse, E gather, click tool, Tab pack/crafting, Escape pause, F6 save, F9 load.
+PASS welcome pauses actual world
+PASS authored world collision loaded
+PASS capture welcome.png
+PASS Escape begins real game
+PASS CharacterMotor moves via project input
+PASS same player toggles third person
+PASS pause menu stops gameplay
+PASS move/fire do not leak through modal
+PASS focus UI primary
+PASS focus UI tab_pack
+PASS focus UI primary
+PASS fixture actually equips the quest pistol
+PASS fixture earns and loads real quest pistol
+PASS focus UI primary
+PASS focus UI tertiary
+PASS focus UI tertiary
+PASS fixture loots exact real barricade supplies
+PASS focus UI primary
+PASS actual window receives a physical board and joint
+PASS successful barricading returns to active gameplay
+PASS unalerted enemy does not damage an unheard unseen barricade
+PASS guard health is unchanged before real shot
+PASS actual shot spends ammunition and alerts nearby enemy
+PASS miss does not damage enemy through the wall
+BARRIER RAY height 1 npc [-12.482304573059082,14.017160415649414,-4.248454570770264] player [-12.5,14.197237968444824,-8.0] hit 3023 point [-12.487642288208008,15.071475982666016,-5.380000114440918]
+BARRIER RAY height 1.4 npc [-12.482304573059082,14.017160415649414,-4.248454570770264] player [-12.5,14.197237968444824,-8.0] hit 4611686018427387904 point [-12.486928939819336,15.464216232299805,-5.2287821769714355]
+BARRIER EARLY health 47 npc {"alert":7.333333298563957,"attack":0.5999999660998583,"bag":{"maxWeight":200,"slots":[{"count":8,"item":"tokens"},{"count":12,"item":"ammo_pistol"},{"count":1,"item":"rations"},null,null,null,null,null,null,null,null,null,null,null,null,null,null,null]},"corpse":null,"dead":false,"dialogue":0,"health":65,"lastSeen":{"x":-12.5,"y":14.197237968444824,"z":-8},"mode":"pursuit","timer":1.1166665684431791,"waypoint":2,"windup":0}
+PASS hearing-driven enemy damages a physically reached barricade
+BARRIER FINAL {"entity:3100":{"cost":{"fiber":6,"wood":5},"health":60,"kind":"bed","maxHealth":60,"movable":true,"owned":false,"ref":"entity:3100","support":"entity:3000"},"entity:3101":{"cost":{"wood":4},"health":70,"kind":"chest","maxHealth":70,"movable":true,"owned":false,"ref":"entity:3101","support":"entity:3000"},"entity:3102":{"cost":{"stone":2,"wood":6},"health":90,"kind":"workbench","maxHealth":90,"movable":true,"owned":false,"ref":"entity:3102","support":"entity:3000"},"entity:3103":{"cost":{"wood":2},"health":50,"kind":"chair","maxHealth":50,"movable":true,"owned":false,"ref":"entity:3103","support":"entity:3000"},"entity:3104":{"cost":{"wood":3},"health":60,"kind":"table","maxHealth":60,"movable":true,"owned":false,"ref":"entity:3104","support":"entity:3000"},"entity:3105":{"cost":{"fiber":8,"wood":5},"health":60,"kind":"sofa","maxHealth":60,"movable":true,"owned":false,"ref":"entity:3105","support":"entity:3000"},"entity:3106":{"cost":{"wood":5},"health":70,"kind":"cupboard","maxHealth":70,"movable":true,"owned":false,"ref":"entity:3106","support":"entity:3000"},"entity:3107":{"cost":{"wood":3},"health":50,"kind":"shelf","maxHealth":50,"movable":true,"owned":false,"ref":"entity:3107","support":"entity:3000"},"entity:3108":{"cost":{"fiber":1,"scrap":2},"health":40,"kind":"lamp","maxHealth":40,"movable":true,"owned":false,"ref":"entity:3108","support":"entity:3000"},"entity:3109":{"cost":{"fiber":6},"health":30,"kind":"rug","maxHealth":30,"movable":true,"owned":false,"ref":"entity:3109","support":"entity:3000"},"entity:3110":{"cost":{"fiber":2,"wood":1},"health":30,"kind":"painting","maxHealth":30,"movable":true,"owned":false,"ref":"entity:3110","support":"entity:3000"},"entity:3120":{"cost":{"wood":4},"health":70,"kind":"chest","maxHealth":70,"movable":true,"owned":false,"ref":"entity:3120","support":"entity:3000"},"entity:3300":{"cost":{"fiber":6,"wood":5},"health":60,"kind":"bed","maxHealth":60,"movable":true,"owned":false,"ref":"entity:3300","support":"entity:3200"},"entity:3301":{"cost":{"wood":4},"health":70,"kind":"chest","maxHealth":70,"movable":true,"owned":false,"ref":"entity:3301","support":"entity:3200"},"entity:3302":{"cost":{"stone":2,"wood":6},"health":90,"kind":"workbench","maxHealth":90,"movable":true,"owned":false,"ref":"entity:3302","support":"entity:3200"},"entity:3303":{"cost":{"wood":2},"health":50,"kind":"chair","maxHealth":50,"movable":true,"owned":false,"ref":"entity:3303","support":"entity:3200"},"entity:3304":{"cost":{"wood":3},"health":60,"kind":"table","maxHealth":60,"movable":true,"owned":false,"ref":"entity:3304","support":"entity:3200"},"entity:3305":{"cost":{"fiber":8,"wood":5},"health":60,"kind":"sofa","maxHealth":60,"movable":true,"owned":false,"ref":"entity:3305","support":"entity:3200"},"entity:3306":{"cost":{"wood":5},"health":70,"kind":"cupboard","maxHealth":70,"movable":true,"owned":false,"ref":"entity:3306","support":"entity:3200"},"entity:3307":{"cost":{"wood":3},"health":50,"kind":"shelf","maxHealth":50,"movable":true,"owned":false,"ref":"entity:3307","support":"entity:3200"},"entity:3308":{"cost":{"fiber":1,"scrap":2},"health":40,"kind":"lamp","maxHealth":40,"movable":true,"owned":false,"ref":"entity:3308","support":"entity:3200"},"entity:3309":{"cost":{"fiber":6},"health":30,"kind":"rug","maxHealth":30,"movable":true,"owned":false,"ref":"entity:3309","support":"entity:3200"},"entity:3310":{"cost":{"fiber":2,"wood":1},"health":30,"kind":"painting","maxHealth":30,"movable":true,"owned":false,"ref":"entity:3310","support":"entity:3200"}} npc {"alert":0,"attack":0,"bag":{"maxWeight":200,"slots":[{"count":8,"item":"tokens"},{"count":12,"item":"ammo_pistol"},{"count":1,"item":"rations"},null,null,null,null,null,null,null,null,null,null,null,null,null,null,null]},"corpse":null,"dead":false,"dialogue":0,"health":65,"lastSeen":{"x":-12.5,"y":14.197237968444824,"z":-8},"mode":"patrol","timer":2.333333298563957,"waypoint":3,"windup":0}
+PASS repeated real enemy attacks remove the blocking physical board
+PASS enemy destruction does not refund construction materials
+PASS capture barricade-breach.png
+PASS ordinary application exits cleanly
+29 checks, 0 failures

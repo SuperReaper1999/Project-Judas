@@ -1,0 +1,28 @@
+Shadow maps: on
+Graphics: 3.3.0 NVIDIA 580.178.04 / NVIDIA GeForce GTX 970/PCIe/SSE2
+Renderer fragment texture units: 32 (material path uses 12)
+World state: /home/conner/Documents/GitHub/Project-Judas/projects/lunar_island/Saves/island.judasstate (none saved)
+Project: Lunar Island (/home/conner/Documents/GitHub/Project-Judas/projects/lunar_island/lunar_island.judasproj)
+Scene: Lunar Island / Homestead Coast (/home/conner/Documents/GitHub/Project-Judas/projects/lunar_island/Scenes/island.judas)
+World origin (m): 2900.000, 0.000, -1600.000
+JS: Lunar Island: WASD, mouse, E gather, click tool, Tab pack/crafting, Escape pause, F6 save, F9 load.
+PASS welcome pauses actual world
+PASS authored world collision loaded
+PASS capture welcome.png
+PASS Escape begins real game
+PASS CharacterMotor moves via project input
+PASS same player toggles third person
+PASS pause menu stops gameplay
+PASS move/fire do not leak through modal
+SURFACE DEFINITION 1 enabled 1 asset ff1587209d9ba999852876529f4189ef
+NAV STATS surfaces 0 tiles 0 polygons 0
+FAR SAMPLE none
+NAV SAMPLE 2 start none end none
+NAV SAMPLE 10 start none end none
+PURSUIT motor [72.0128173828125,13.726387977600098,70.03799438476563] definition [72.0128173828125,13.726387977600098,70.03799438476563] start [72.00518798828125,13.728558540344238,70.01504516601563] velocity [0.004575017839670181,-0.16488374769687653,0.014328580349683762] status 0 steering [0.0,0.0,0.0] target [72.00971984863281,13.01970100402832,78.03216552734375] state {"alert":5,"attack":0,"bag":{"maxWeight":200,"slots":[{"count":8,"item":"tokens"},{"count":12,"item":"ammo_pistol"},{"count":1,"item":"rations"},null,null,null,null,null,null,null,null,null,null,null,null,null,null,null]},"corpse":null,"dead":false,"dialogue":0,"health":65,"lastSeen":{"x":72.01077270507813,"y":13.01929759979248,"z":78.03707885742188},"mode":"pursuit","timer":0.1999998539686203,"waypoint":1,"windup":0}
+PASS capture pursuit.png
+FAIL real motor pursuit advances
+NAV RESOURCE 0 error loading
+DIRECT UPDATE surfaces 0
+PASS ordinary application exits cleanly
+11 checks, 1 failures

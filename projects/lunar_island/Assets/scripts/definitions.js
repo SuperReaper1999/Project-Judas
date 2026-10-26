@@ -127,6 +127,81 @@ export const ITEMS = {
         weight: 1,
         category: 'material',
     },
+    tokens: {
+        name: 'Trade tokens',
+        stack: 9999,
+        weight: 0,
+        category: 'currency',
+    },
+    pistol: {
+        name: 'Trail pistol',
+        stack: 1,
+        weight: 1.1,
+        category: 'weapon',
+        slot: 'hand',
+    },
+    shotgun: {
+        name: 'Coach shotgun',
+        stack: 1,
+        weight: 2.8,
+        category: 'weapon',
+        slot: 'hand',
+    },
+    rifle: {
+        name: 'Scavenger rifle',
+        stack: 1,
+        weight: 3.1,
+        category: 'weapon',
+        slot: 'hand',
+    },
+    knife: {
+        name: 'Field knife',
+        stack: 1,
+        weight: 0.4,
+        category: 'weapon',
+        slot: 'hand',
+    },
+    bat: {
+        name: 'Hardwood bat',
+        stack: 1,
+        weight: 1.2,
+        category: 'weapon',
+        slot: 'hand',
+    },
+    ammo_pistol: {
+        name: 'Pistol rounds',
+        stack: 60,
+        weight: 0.012,
+        category: 'ammunition',
+    },
+    ammo_shell: {
+        name: 'Shotgun shells',
+        stack: 24,
+        weight: 0.035,
+        category: 'ammunition',
+    },
+    ammo_rifle: {
+        name: 'Rifle rounds',
+        stack: 60,
+        weight: 0.018,
+        category: 'ammunition',
+    },
+    raw_meat: {
+        name: 'Raw game meat',
+        stack: 8,
+        weight: 0.3,
+        category: 'food',
+        use: {
+            hunger: 5,
+            health: -4,
+        },
+    },
+    hide: {
+        name: 'Wolf hide',
+        stack: 8,
+        weight: 0.45,
+        category: 'material',
+    },
 };
 export const RECIPES = [
     {
@@ -229,6 +304,41 @@ export const RECIPES = [
         },
         station: 'workbench',
         description: 'Reinforce a door or window barricade.',
+    },
+    {
+        id: 'roast_game',
+        name: 'Roast game meat',
+        station: 'campfire',
+        ingredients: {
+            raw_meat: 1,
+            wood: 1,
+        },
+        outputs: {
+            rations: 1,
+        },
+    },
+    {
+        id: 'field_knife',
+        name: 'Make a field knife',
+        station: 'workbench',
+        ingredients: {
+            scrap: 3,
+            wood: 1,
+        },
+        outputs: {
+            knife: 1,
+        },
+    },
+    {
+        id: 'hardwood_bat',
+        name: 'Make a hardwood bat',
+        station: 'hand',
+        ingredients: {
+            wood: 3,
+        },
+        outputs: {
+            bat: 1,
+        },
     },
 ];
 export const CONFIG = {

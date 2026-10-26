@@ -11,7 +11,10 @@ export default class Camera {
             s = this.player.state;
         const rotation = qm(
             qm(t.rotation, axis({ x: 0, y: 1, z: 0 }, s.yaw)),
-            axis({ x: 1, y: 0, z: 0 }, s.pitch),
+            axis(
+                { x: 1, y: 0, z: 0 },
+                s.pitch + (this.player.combat?.recoil || 0),
+            ),
         );
         const eye = add(t.position, rotate(t.rotation, { x: 0, y: 1.6, z: 0 })),
             direction = rotate(rotation, { x: 0, y: 0, z: -1 });
@@ -39,10 +42,16 @@ export default class Camera {
             return physics.raycast(p.eye, p.direction, distance, filter);
         // The offset camera chooses the intention; the player's eye must still have
         // an unobstructed physical ray to it. A nearby wall cannot be bypassed.
-        const sight = physics.raycast(p.position, p.direction, 30, filter),
+        const aimDistance = Math.max(30, distance),
+            sight = physics.raycast(
+                p.position,
+                p.direction,
+                aimDistance,
+                filter,
+            ),
             target = sight
                 ? sight.point
-                : add(p.position, mul(p.direction, 30));
+                : add(p.position, mul(p.direction, aimDistance));
         return physics.raycast(
             p.eye,
             norm(sub(target, p.eye)),
@@ -52,7 +61,10 @@ export default class Camera {
     }
     publish() {
         const p = this.pose(true);
-        world.setView(p, 74, { near: 0.055, far: 650 });
+        world.setView(p, this.player.combat?.aiming ? 52 : 74, {
+            near: 0.055,
+            far: 650,
+        });
         return p;
     }
 }

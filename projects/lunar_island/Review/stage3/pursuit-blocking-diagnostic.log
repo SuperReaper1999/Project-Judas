@@ -1,0 +1,28 @@
+Shadow maps: on
+Graphics: 3.3.0 NVIDIA 580.178.04 / NVIDIA GeForce GTX 970/PCIe/SSE2
+Renderer fragment texture units: 32 (material path uses 12)
+World state: /home/conner/Documents/GitHub/Project-Judas/projects/lunar_island/Saves/island.judasstate (none saved)
+Project: Lunar Island (/home/conner/Documents/GitHub/Project-Judas/projects/lunar_island/lunar_island.judasproj)
+Scene: Lunar Island / Homestead Coast (/home/conner/Documents/GitHub/Project-Judas/projects/lunar_island/Scenes/island.judas)
+World origin (m): 2900.000, 0.000, -1600.000
+JS: Lunar Island: WASD, mouse, E gather, click tool, Tab pack/crafting, Escape pause, F6 save, F9 load.
+PASS welcome pauses actual world
+PASS authored world collision loaded
+PASS capture welcome.png
+PASS Escape begins real game
+PASS CharacterMotor moves via project input
+PASS same player toggles third person
+PASS pause menu stops gameplay
+PASS move/fire do not leak through modal
+SURFACE DEFINITION 1 enabled 1 asset ff1587209d9ba999852876529f4189ef
+NAV STATS surfaces 1 tiles 104 polygons 782
+FAR SAMPLE [70.17781829833984,13.695225715637207,71.75333404541016]
+NAV SAMPLE 2 start [70.17781829833984,13.695225715637207,71.75333404541016] end [70.2325668334961,13.403347969055176,75.07011413574219]
+NAV SAMPLE 10 start [70.17781829833984,13.695225715637207,71.75333404541016] end [70.2325668334961,13.403347969055176,75.07011413574219]
+PURSUIT motor [70.17781829833984,13.627408027648926,71.75333404541016] definition [70.17781829833984,13.627408027648926,71.75333404541016] start [70.22501373291016,14.009380340576172,67.04594421386719] velocity [0.054180409759283066,-0.43791037797927856,3.113931894302368] status 2 steering [0.0496053472161293,0.0,3.0996031761169434] target [70.2307357788086,13.33586597442627,75.06425476074219] state {"alert":5,"attack":0,"bag":{"maxWeight":200,"slots":[{"count":8,"item":"tokens"},{"count":12,"item":"ammo_pistol"},{"count":1,"item":"rations"},null,null,null,null,null,null,null,null,null,null,null,null,null,null,null]},"corpse":null,"dead":false,"dialogue":0,"health":65,"lastSeen":{"x":70.23249053955078,"y":13.335310935974121,"z":75.06986999511719},"mode":"pursuit","timer":0.1999998539686203,"waypoint":1,"windup":0}
+PASS capture pursuit.png
+PASS real motor pursuit advances
+NAV RESOURCE 1 error 
+DIRECT UPDATE surfaces 1
+PASS ordinary application exits cleanly
+11 checks, 0 failures

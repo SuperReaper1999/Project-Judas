@@ -1,9 +1,15 @@
-import { ui, input, saves } from 'judas';
+import { ui, input, saves, navigation, world } from 'judas';
 import { ITEMS, RECIPES, CONFIG } from './definitions.js';
 import { WORLD } from './world-data.js';
 import { HOUSING } from './housing-data.js';
 import { entityFor } from './housing.js';
 import { count, weight } from './inventory.js';
+import {
+    socialPage,
+    socialRows,
+    renderSocial,
+    socialEvent,
+} from './social-ui.js';
 export default class HUD {
     constructor(p, restored = false) {
         this.p = p;
@@ -14,7 +20,7 @@ export default class HUD {
         this.selected = '';
         this.lastRows = '';
         if (restored || p.state.introSeen) this.close();
-        else this.open('welcome');
+        else this.open('loading');
     }
     get modal() {
         return !!this.page;
@@ -24,7 +30,7 @@ export default class HUD {
         this.page = page;
         this.selected = '';
         this.lastRows = '';
-        this.doc.modal = true;
+        this.doc.modal = page !== 'loading';
         input.pointerCapture = false;
         this.p.blocked = true;
         this.refresh();
@@ -48,6 +54,7 @@ export default class HUD {
         this.open('storage');
     }
     rows() {
+        if (socialPage(this.page)) return socialRows(this);
         const bag = this.p.state.bag;
         if (this.page === 'pack' || this.page === 'storage')
             return bag.slots.flatMap((s, i) =>
@@ -79,9 +86,17 @@ export default class HUD {
             page = this.page;
         d.get('overlay').visible = !!page;
         if (!page) return;
-        const list = ['pack', 'craft', 'build', 'storage'].includes(page);
+        const list = [
+            'pack',
+            'craft',
+            'build',
+            'storage',
+            'dialogue',
+            'trade',
+            'corpse',
+        ].includes(page);
         const storage = page === 'storage',
-            object = page === 'object';
+            object = page === 'object' || socialPage(page);
         d.get('entries2').visible = storage;
         d.get('secondary').visible = storage || object;
         d.get('tertiary').visible = storage || object;
@@ -112,6 +127,7 @@ export default class HUD {
         d.get('sensitivity').visible = page === 'help';
         d.get('title').text =
             {
+                loading: 'PREPARING THE HOMESTEAD',
                 pack: 'FIELD PACK',
                 build: 'CONSTRUCTION & FURNISHING',
                 storage: 'STORAGE / LOOT',
@@ -141,7 +157,8 @@ export default class HUD {
                 this.selected = rows[0].id;
         }
         let text = '';
-        if (page === 'storage') {
+        if (socialPage(page)) text = renderSocial(this);
+        else if (page === 'storage') {
             const bag2 = p.housing.state.containers[this.containerRef];
             const rows2 = bag2
                 ? bag2.slots.flatMap((slot, i) =>
@@ -260,7 +277,7 @@ export default class HUD {
         } else if (page === 'craft') {
             const recipe = RECIPES.find((r) => r.id === this.selected);
             text = recipe
-                ? `${recipe.name}\n\n${recipe.description}\n\n` +
+                ? `${recipe.name}\n\n${recipe.description || 'Project-authored survival recipe.'}\n\n` +
                   Object.entries(recipe.ingredients)
                       .map(
                           ([id, n]) =>
@@ -272,14 +289,19 @@ export default class HUD {
             d.get('primary').text = 'Craft selected';
         } else if (page === 'map')
             text =
-                'STAGE 2 / HOMESTEAD COAST\n\nYou are in the north-eastern homestead clearing. The nearby spring pool, forest, Seabird Cottage and Birchside Cabin are playable.\n\nThe complete coast is terrain, but the labelled settlements and other regions are reference plans for Stage 5.\n\n' +
+                'STAGE 3 / HOMESTEAD COAST\n\nYou are in the north-eastern homestead clearing. The nearby spring pool, forest, Seabird Cottage and Birchside Cabin are playable.\n\nThe complete coast is terrain, but the labelled settlements and other regions are reference plans for Stage 5.\n\n' +
                 `Absolute position\n${Math.round(worldPosition(p).x)} east / ${Math.round(worldPosition(p).z)} south`;
         else if (page === 'help')
             text =
-                'WASD move · mouse look\nSpace jump / swim up · Ctrl dive\nShift sprint · V first/third person\nE gather / refill / interact\nLeft click use tool / confirm placement\nB construction · R rotate preview\nE furniture / storage / secure opening\n1–6 hotbar\nTab backpack · M field map\nEscape pause / return\nF6 save · F9 load last save\n\nMouse sensitivity (slider left).\nCrafting and item actions are in this menu.\n\nThe spring well refills a flask; seawater is not drinkable.\nFall injuries slow movement; use a field dressing.';
+                'WASD move · mouse look\nSpace jump / swim up · Ctrl dive\nShift sprint · V first/third person\nE gather / refill / interact\nLeft click use tool / confirm placement\nB construction · R rotate preview / reload gun\nE furniture / storage / secure opening\nRight mouse aims · Tab equips firearms\n1–6 hotbar\nTab backpack · M field map\nEscape pause / return\nF6 save · F9 load last save\n\nMouse sensitivity (slider left).\nCrafting and item actions are in this menu.\n\nThe spring well refills a flask; seawater is not drinkable.\nFall injuries slow movement; use a field dressing.';
+        else if (page === 'loading')
+            text = navigation.errors.length
+                ? 'The navigation bake is unavailable. Open the project in the editor and rebake Homestead / navigation. ' +
+                  navigation.errors.map((e) => e.message).join(' / ')
+                : 'Loading character art and preparing the island trails… Player actions and NPC routines begin after required navigation and character resources are ready.';
         else if (page === 'welcome')
             text =
-                'A quiet coast. An island worth coming home to.\n\nGather loose sticks, stones and fibre with E. Open Crafting to make an axe. Fell and process a tree, mine stone, cook at the campfire, and drink at the well.\n\nTwo enterable cottages now have real doors, loot, storage and functional furniture. E opens object actions. B opens construction. NPCs, combat and vehicles remain later stages.\n\nSave with F6 before leaving.';
+                'A quiet coast. An island worth coming home to.\n\nGather loose sticks, stones and fibre with E. Open Crafting to make an axe. Fell and process a tree, mine stone, cook at the campfire, and drink at the well.\n\nTwo enterable cottages now have real doors, loot, storage and functional furniture. E opens object actions. B opens construction. Mara and Ivo trade at camp. Ask Mara for a patrol job and sidearm; Ivo needs timber. Scavengers occupy the eastern trail; wolves roam west. Vehicles remain a later stage.\n\nSave with F6 before leaving.';
         else if (page === 'dead')
             text =
                 'Your expedition has ended. Recover at the homestead with your pack intact.\n\nStage 1 keeps recovery forgiving; hunger, thirst, drowning and fall injuries are active.\n\nDeath penalties and progression will be balanced in later stages.';
@@ -303,11 +325,32 @@ export default class HUD {
                     ? { x: 400, y: 350 }
                     : { x: 1030, y: 280 },
         });
-        d.get('load').enabled = !p.refreshToken && saves.exists('island');
-        d.get('save').enabled = !p.request;
-        d.get('quit').enabled = !p.request;
+        for (const id of [
+            'close',
+            'tab_pack',
+            'tab_craft',
+            'tab_build',
+            'tab_map',
+            'tab_help',
+        ])
+            d.get(id).enabled = page !== 'loading';
+        d.get('load').enabled =
+            page !== 'loading' && !p.refreshToken && saves.exists('island');
+        d.get('save').enabled = page !== 'loading' && !p.request;
+        d.get('quit').enabled = page !== 'loading' && !p.request;
     }
     update() {
+        if (this.page === 'loading') {
+            if (
+                navigation.sample(this.p.entity.transform.position, 3) &&
+                world.entity('6001').animation?.info?.ready &&
+                world.entity('6201').animation?.info?.ready &&
+                world.entity('6301').modelParts !== null
+            )
+                this.open('welcome');
+            this.refresh();
+            return;
+        }
         const p = this.p;
         if (input.pressed('pause') && p.builder?.active) {
             p.builder.cancel();
@@ -331,6 +374,9 @@ export default class HUD {
                     `${i + 1} ${id === p.state.equipped ? '[' : ''}${id === 'hands' ? 'HANDS' : { stone_axe: 'AXE', stone_pickaxe: 'PICK', berries: 'BERRIES', water: 'FLASK', bandage: 'DRESSING' }[id] || ITEMS[id].name.toUpperCase()}${id === p.state.equipped ? ']' : ''}${id === 'hands' ? '' : ' ×' + count(p.state.bag, id)}`,
             )
             .join('   ');
+        this.doc.get('hotbar').text += this.p.combat?.status()
+            ? '\n' + this.p.combat.status()
+            : '';
         this.doc.get('context').text = this.modal ? '' : p.context();
         this.doc.get('notice').text = p.notice;
         const s = p.state.stats;
@@ -345,9 +391,19 @@ export default class HUD {
                   : p.housing.state.home
                     ? 'HOME SWEET HOME / Store supplies, secure openings and improve your shelter.'
                     : 'CLAIM A HOME / Enter Seabird Cottage behind the trail sign. E on furniture opens its actions.';
+        const q = p.state.combat?.quests;
+        if (q?.patrol === 'active')
+            this.doc.get('journal').text =
+                'SUPPLY ROUTE / Eastern camp · scavengers ' +
+                p.state.combat.kills +
+                '/2. Return to Mara.';
+        else if (q?.timber === 'active')
+            this.doc.get('journal').text =
+                'FIREWOOD / Bring six timber to Ivo at the camp.';
         if (this.modal) this.refresh();
     }
     event(e) {
+        if (this.page === 'loading') return;
         if (e.type === 'back') {
             this.close();
             return;
@@ -372,6 +428,7 @@ export default class HUD {
             this.close();
         }
         const p = this.p;
+        if (socialEvent(this, e)) return;
         if (this.page === 'storage') {
             if (e.element === 'primary' || e.element === 'drop')
                 p.housing.transfer(

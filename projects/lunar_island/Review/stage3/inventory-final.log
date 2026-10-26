@@ -1,0 +1,80 @@
+PASS stacking splits at the authored limit
+PASS successful operations return a new bag
+PASS weight and quantity agree with actual stacks
+PASS invalid insertion quantity rejects: 0
+PASS invalid withdrawal quantity rejects: 0
+PASS invalid insertion quantity rejects: -1
+PASS invalid withdrawal quantity rejects: -1
+PASS invalid insertion quantity rejects: 1.5
+PASS invalid withdrawal quantity rejects: 1.5
+PASS invalid insertion quantity rejects: NaN
+PASS invalid withdrawal quantity rejects: NaN
+PASS invalid insertion quantity rejects: Infinity
+PASS invalid withdrawal quantity rejects: Infinity
+PASS invalid insertion quantity rejects: 9007199254740992
+PASS invalid withdrawal quantity rejects: 9007199254740992
+PASS full-slot failure is atomic
+PASS insufficient quantity is atomic
+PASS unknown item rejects
+PASS weight limit is enforced independently of slots
+PASS actual axe recipe consumes exact ingredients and creates one tool
+PASS crafting does not mutate its input
+PASS cooking refuses the wrong station
+PASS cooking succeeds beside the proper station
+PASS missing ingredients refuse crafting
+PASS failed output insertion leaves every original item intact
+PASS failed transfer never debits the source
+PASS shared container transfer preserves quantity
+PASS consumable container returns in the freed slot
+PASS station has authored meaning
+PASS recipe references registered item wood
+PASS recipe references registered item stone
+PASS recipe references registered item fiber
+PASS recipe references registered item stone_axe
+PASS station has authored meaning
+PASS recipe references registered item wood
+PASS recipe references registered item stone
+PASS recipe references registered item fiber
+PASS recipe references registered item stone_pickaxe
+PASS station has authored meaning
+PASS recipe references registered item fiber
+PASS recipe references registered item bandage
+PASS station has authored meaning
+PASS recipe references registered item berries
+PASS recipe references registered item wood
+PASS recipe references registered item cooked_meal
+PASS station has authored meaning
+PASS recipe references registered item scrap
+PASS recipe references registered item fiber
+PASS station has authored meaning
+PASS recipe references registered item wood
+PASS recipe references registered item planks
+PASS station has authored meaning
+PASS recipe references registered item scrap
+PASS recipe references registered item nails
+PASS station has authored meaning
+PASS recipe references registered item scrap
+PASS recipe references registered item metal_sheet
+PASS station has authored meaning
+PASS recipe references registered item raw_meat
+PASS recipe references registered item wood
+PASS recipe references registered item rations
+PASS station has authored meaning
+PASS recipe references registered item scrap
+PASS recipe references registered item wood
+PASS recipe references registered item knife
+PASS station has authored meaning
+PASS recipe references registered item wood
+PASS recipe references registered item bat
+PASS sprint and survival needs advance through actual rates
+PASS rest restores bounded stamina
+PASS field dressing heals and treats an injury without mutating input
+PASS ordinary landing does no damage
+PASS hard landing applies injury and health damage
+PASS unmet needs cause real health loss
+PASS submersion exhausts breath and causes damage
+PASS foundation state is plain cold-save JSON
+PASS metal sheet cannot be crafted away from a workbench
+PASS workbench sheet recipe accepts the actual station
+PASS same-container transfer rejects rather than duplicating items
+Lunar Island pure gameplay: 79 checks passed

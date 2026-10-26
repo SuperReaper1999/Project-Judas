@@ -1,0 +1,42 @@
+Shadow maps: on
+Graphics: 3.3.0 NVIDIA 580.178.04 / NVIDIA GeForce GTX 970/PCIe/SSE2
+Renderer fragment texture units: 32 (material path uses 12)
+World state: /home/conner/Documents/GitHub/Project-Judas/projects/lunar_island/Saves/island.judasstate (none saved)
+Project: Lunar Island (/home/conner/Documents/GitHub/Project-Judas/projects/lunar_island/lunar_island.judasproj)
+Scene: Lunar Island / Homestead Coast (/home/conner/Documents/GitHub/Project-Judas/projects/lunar_island/Scenes/island.judas)
+World origin (m): 2900.000, 0.000, -1600.000
+script asset=f676c1bcc4fd132517198a169d9450dc entity=100 slot=1 start: ReferenceError: navigation is not defined
+    at refresh (Assets/scripts/hud.js:298:20)
+    at open (Assets/scripts/hud.js:36:14)
+    at HUD (Assets/scripts/hud.js:23:19)
+    at bind (Assets/scripts/player.js:73:34)
+    at start (Assets/scripts/player.js:64:19)
+
+script asset=13b54635578464e362ca87d0faec045f entity=6000 slot=1 fixedUpdate: TypeError: cannot read property 'page' of undefined
+    at fixedUpdate (Assets/scripts/person.js:157:29)
+
+script asset=13b54635578464e362ca87d0faec045f entity=6100 slot=1 fixedUpdate: TypeError: cannot read property 'page' of undefined
+    at fixedUpdate (Assets/scripts/person.js:157:29)
+
+script asset=13b54635578464e362ca87d0faec045f entity=6200 slot=1 fixedUpdate: TypeError: cannot read property 'page' of undefined
+    at fixedUpdate (Assets/scripts/person.js:157:29)
+
+script asset=13b54635578464e362ca87d0faec045f entity=6210 slot=1 fixedUpdate: TypeError: cannot read property 'page' of undefined
+    at fixedUpdate (Assets/scripts/person.js:157:29)
+
+script asset=13b54635578464e362ca87d0faec045f entity=6300 slot=1 fixedUpdate: TypeError: cannot read property 'page' of undefined
+    at fixedUpdate (Assets/scripts/person.js:157:29)
+
+script asset=13b54635578464e362ca87d0faec045f entity=6310 slot=1 fixedUpdate: TypeError: cannot read property 'page' of undefined
+    at fixedUpdate (Assets/scripts/person.js:157:29)
+
+SCRIPT start ReferenceError: navigation is not defined
+    at refresh (Assets/scripts/hud.js:298:20)
+    at open (Assets/scripts/hud.js:36:14)
+    at HUD (Assets/scripts/hud.js:23:19)
+    at bind (Assets/scripts/player.js:73:34)
+    at start (Assets/scripts/player.js:64:19)
+
+FAIL game script failure
+PASS ordinary application exits cleanly
+2 checks, 1 failures

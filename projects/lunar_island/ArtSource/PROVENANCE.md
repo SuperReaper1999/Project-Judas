@@ -49,3 +49,23 @@ the retained project tools, with PBR surfaces from the installed Prompt3D materi
 library. Source fabric/leather CC0 arrays and receipts were copied alongside the
 other scans. The generator and original starter pack were not modified.
 These are offline authoring inputs; the game package is self-contained.
+
+
+## Stage 3
+
+Survivor/bandit meshes reuse the original Hearthworld adventurer rig already in
+this project. Palette variants and the short Attack clip are project-authored in
+`tools/author_stage3.py`; the original player model is unchanged. Pistol/rifle
+geometry comes from Conner's original LowPolyAssets starter pack, with source and
+output SHA-256 in asset_catalog.json. Shotgun, knife and bat are original authored
+geometry in the same script. Existing CC0 PBR finishing is reused.
+
+The wolf uses the actual installed Prompt3D trained parser and procedural animal
+builder, prompt `a realistic gray wolf`, seed 91303, realistic preset; original
+params/output are under `stage3-prompt3d`. This is not a claimed text-to-arbitrary-
+mesh diffusion service. The output is static and has no skeletal gait animation.
+No external generator file was changed. No downloaded model or voice was used.
+
+Gunshot, reload and hurt WAVs are original deterministic synthesized PCM (22,050 Hz,
+mono, 16-bit), with source/envelopes/seeds in author_stage3.py. No recorded weapon
+or voice clip was copied. The unavailable SFX/TTS tool remains deferred.

@@ -1,0 +1,46 @@
+// End-to-end Stage 3. No health, inventory, NPC pose or quest grants.
+// Fixture operations place/aim only the player; actions use real input and UI.
+  auto aimPerson=[&](EntityId id,float distance=2){job(6,[&,id,distance](EngineHost&,RuntimeWorld& w){if(distance==2)AimEntityFixture(w,id);else{auto b=w.RuntimeBody(id);auto point=w.Physics().GetTransform(b).position;Aim(w,point,14,distance);}});};
+  auto talk=[&](EntityId id){aimPerson(id);job(5,[&](EngineHost&,RuntimeWorld&){press("interact");});};
+  auto equip=[&](std::string item){job(5,[&](EngineHost&,RuntimeWorld&){press("inventory");});click("tab_pack");job(4,[&,item](EngineHost&,RuntimeWorld& w){int row=0;auto state=State(w);for(auto& slot:state["bag"]["slots"]){if(slot.is_null())continue;if(slot["item"]==item)break;++row;}auto h=w.UI().Find("lunar");w.UI().Select(h,"entries",row-1);w.UI().Focus(h,"entries");press("ui_down");});click("primary");job(5,[&,item](EngineHost&,RuntimeWorld& w){Check(State(w)["equipped"]==item,"actual backpack equips "+item);press("pause");});};
+  auto shot=[&](EntityId id,float distance=2,bool third=false){job(30,[&,id,distance,third](EngineHost&,RuntimeWorld& w){Aim(w,w.Physics().GetTransform(w.RuntimeBody(id)).position,14,distance);if(third){press("camera_toggle");held={"aim"};}else press("primary");});if(third){for(int i=0;i<5;++i)job(3,[&,id](EngineHost&,RuntimeWorld& w){auto view=w.view->pose;auto target=w.Physics().GetTransform(w.RuntimeBody(id)).position;auto local=glm::inverse(view.rotation)*(target-view.position);auto sensitivity=State(w)["sensitivity"].get<float>();logicalLookX=int(std::round(std::atan2(local.x,-local.z)/sensitivity));logicalLookY=int(std::round(-std::atan2(local.y,std::sqrt(local.x*local.x+local.z*local.z))/sensitivity));});job(2,[&,id](EngineHost&,RuntimeWorld& w){PhysicsQueryFilter f;f.ignoredBodies.push_back(w.RuntimeBody(100));auto view=w.view->pose;auto hit=w.Physics().Raycast(view.position,view.rotation*glm::vec3(0,0,-1),100,f);Check(hit.hit&&w.EntityIdOfBody(hit.body)==id,"third-person active-camera reticle actually covers the target");Check(std::abs(w.view->fov-52)<.01f,"right mouse aim changes the actual active camera FOV");press("primary");held.clear();});}};
+  job(5,[&](EngineHost&,RuntimeWorld& w){Check(w.ScriptObjects().size()>300,"Stage 3 ordinary scene is instantiated");Check(w.Navigation().Errors().empty(),"authored navigation loads without stale/missing source diagnostics");});
+  talk(6000);click("primary");
+  job(5,[&](EngineHost& h,RuntimeWorld& w){Check(Count(State(w),"pistol")==1&&Count(State(w),"ammo_pistol")==24&&State(w)["combat"]["quests"]["patrol"]=="active","Mara gives one real sidearm and ammunition with the accepted patrol quest");Screenshot(h,out/"mara-dialogue.png");});click("primary");
+  job(5,[&](EngineHost&,RuntimeWorld& w){Check(Count(State(w),"pistol")==1&&Count(State(w),"ammo_pistol")==24,"repeating quest dialogue cannot duplicate the gift");press("pause");});
+  equip("pistol");job(5,[&](EngineHost&,RuntimeWorld&){press("reload");});
+  job(95,[&](EngineHost&,RuntimeWorld& w){Check(State(w)["combat"]["magazines"]["pistol"]==10&&Count(State(w),"ammo_pistol")==14,"R reload transfers exactly ten reserve rounds into the actual magazine");});
+  shot(6000,55,true);
+  job(5,[&](EngineHost&,RuntimeWorld& w){Check(PersonState(w,6000)["health"]==100&&State(w)["combat"]["lastTarget"]=="6000"&&State(w)["combat"]["magazines"]["pistol"]==9,"friendly fire consumes a shot without damaging a protected survivor");});
+  talk(6000);click("secondary");select(6);click("primary");
+  job(5,[&](EngineHost&,RuntimeWorld& w){Check(Count(State(w),"tokens")==20&&Count(State(w),"rifle")==0&&Count(PersonState(w,6000),"rifle")==1,"unaffordable rifle leaves player money unchanged");});
+  select(7);click("primary");
+  job(5,[&](EngineHost& h,RuntimeWorld& w){Check(Count(State(w),"knife")==1&&Count(State(w),"tokens")==14,"native trade purchases finite knife stock with exact tokens");Screenshot(h,out/"trading.png");held={"primary","move_y"};});
+  job(35,[&](EngineHost&,RuntimeWorld& w){held.clear();Check(State(w)["combat"]["magazines"]["pistol"]==9,"fire does not leak through the trade modal");press("pause");});
+  for(auto& r:resources)if(r["id"]=="200"||r["id"]=="202"||r["id"]=="204")gather(r);
+  talk(6100);click("primary");
+  job(5,[&](EngineHost&,RuntimeWorld& w){Check(State(w)["combat"]["quests"]["timber"]=="done"&&Count(State(w),"wood")==0&&Count(State(w),"tokens")==29,"Ivo consumes six genuinely gathered timber and pays once");});click("primary");
+  job(5,[&](EngineHost&,RuntimeWorld& w){Check(Count(State(w),"tokens")==29,"completed timber dialogue does not repeat reward");press("pause");});
+  // Real navigation/motor pursuit and attack before defeating the raider.
+  aimPerson(6210,8);job(6,[&](EngineHost&,RuntimeWorld& w){pauseStart=w.RuntimeDefinition(6210)->transform.position;});
+  job(95,[&](EngineHost& h,RuntimeWorld& w){auto a=w.Navigation().Agent(6210);std::cout<<"PURSUIT actual "<<J(w.RuntimeDefinition(6210)->transform.position).dump()<<" start "<<J(pauseStart).dump()<<" velocity "<<J(w.RuntimeCharacter(6210)->velocity).dump()<<" nav "<<(a?int(a->path.status):-1)<<" steer "<<(a?J(a->steering).dump():"none")<<" target "<<(a?J(a->destination).dump():"none")<<std::endl;Check(glm::distance(pauseStart,w.RuntimeDefinition(6210)->transform.position)>.5f,"hostile follows an actual path through its CharacterMotor");Check(PersonState(w,6210)["mode"]!="patrol","physical line of sight activates pursuit or attack");Screenshot(h,out/"pursuit.png");});
+  for(int i=0;i<3;++i)shot(6210);
+  job(30,[&](EngineHost&,RuntimeWorld& w){Check(PersonState(w,6210)["dead"]==true,"three actual pistol hits defeat the raider");});
+  for(int i=0;i<4;++i)shot(6200);
+  job(65,[&](EngineHost& h,RuntimeWorld& w){Check(PersonState(w,6200)["dead"]==true&&State(w)["combat"]["kills"]==2,"both independent camp enemies are defeated exactly once");std::cout<<"POST CAMP HEALTH "<<State(w)["vitals"]["health"].dump()<<std::endl;Check(State(w)["vitals"]["health"].get<float>()<100,"actual enemy attacks affect player health");Screenshot(h,out/"camp-cleared.png");});
+  // Native corpse loot removes an actual stack once.
+  job(5,[&](EngineHost&,RuntimeWorld& w){auto state=PersonState(w,6200);auto corpse=std::stoull(state["corpse"].get<std::string>().substr(7));AimEntityFixture(w,corpse);});job(5,[&](EngineHost&,RuntimeWorld&){press("interact");});select(0);click("primary");
+  job(5,[&](EngineHost&,RuntimeWorld& w){auto npc=PersonState(w,6200);Check(Count(State(w),"tokens")==41&&Count(npc,"tokens")==0,"corpse loot transfers its exact finite token stack once");press("pause");});
+  talk(6000);click("primary");
+  job(5,[&](EngineHost&,RuntimeWorld& w){Check(State(w)["combat"]["quests"]["patrol"]=="done"&&Count(State(w),"tokens")==76&&Count(State(w),"bandage")==2,"patrol completion pays the authored reward after actual kills");});click("primary");
+  job(5,[&](EngineHost&,RuntimeWorld& w){Check(Count(State(w),"tokens")==76,"patrol reward cannot be collected twice");});click("secondary");select(5);click("primary");select(3);click("primary");click("primary");select(6);click("primary");select(4);click("primary");
+  job(5,[&](EngineHost&,RuntimeWorld& w){Check(Count(State(w),"shotgun")==1&&Count(State(w),"rifle")==1&&Count(State(w),"ammo_shell")==2&&Count(State(w),"ammo_rifle")==1,"quest and loot income buys both firearm types and compatible ammunition");});select(2);click("tertiary");job(5,[&](EngineHost&,RuntimeWorld& w){Check(Count(State(w),"ammo_pistol")==24&&Count(State(w),"tokens")==1,"native bulk-ammunition purchase transfers ten rounds atomically");press("pause");});
+  // Heal with the legitimately earned dressing before hunting.
+  job(6,[&](EngineHost&,RuntimeWorld&){press("hotbar_6");});job(35,[&](EngineHost&,RuntimeWorld&){press("primary");});
+  equip("knife");for(int i=0;i<3;++i)shot(6300,1.2f);
+  job(35,[&](EngineHost&,RuntimeWorld& w){Check(PersonState(w,6300)["dead"]==true,"three real knife strikes defeat the first wolf");});
+  equip("rifle");job(6,[&](EngineHost&,RuntimeWorld&){press("reload");});job(125,[&](EngineHost&,RuntimeWorld& w){Check(State(w)["combat"]["magazines"]["rifle"]==1&&Count(State(w),"ammo_rifle")==0,"rifle partial reload consumes only the purchased round");});shot(6310,4);
+  job(5,[&](EngineHost&,RuntimeWorld& w){Check(PersonState(w,6310)["health"].get<int>()==24,"rifle hitscan applies its distinct physical-query damage");});
+  equip("shotgun");job(6,[&](EngineHost&,RuntimeWorld&){press("reload");});job(125,[&](EngineHost&,RuntimeWorld&){});shot(6310,3,true);
+  job(50,[&](EngineHost& h,RuntimeWorld& w){Check(PersonState(w,6310)["dead"]==true&&State(w)["combat"]["wolves"]==2,"shotgun pellets defeat the second wolf in third person");Check(State(w)["third"]==true,"third-person shot keeps the same player and actual camera mode");Check(State(w)["combat"]["magazines"]["shotgun"]==1,"shotgun fires exactly one shell for the pellet pattern");Check(State(w)["vitals"]["health"].get<float>()>0,"full combat expedition remains survivable");Screenshot(h,out/"hunt.png");});
+  job(6,[&](EngineHost&,RuntimeWorld& w){Aim(w,V(data["spawn"])+glm::vec3(0,1,0),data["spawn"][1].get<float>());press("save");});job(30,[&](EngineHost&,RuntimeWorld&){});

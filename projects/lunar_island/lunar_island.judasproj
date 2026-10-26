@@ -4,7 +4,7 @@
   "data": {
     "name": "Lunar Island",
     "legacyGameplay": false,
-    "saveIdentity": "9ac05e8350116f67dc3ba285539ad502e32f9ae780c0afc00264bb5ba6806e29",
+    "saveIdentity": "72e28eed64e9f521269eac269070e347ae341c91f8f1743f1fdaffe1741d2d6a",
     "iconAsset": "",
     "worldManifest": "",
     "exportScenes": [],
@@ -36,7 +36,9 @@
       "4a15ff643bd4983a966380e19b16cfbb",
       "fcd81446eae613d0a8e532dd73b597ee",
       "6f6f079b97c01d7dfeef14fdf2d41ee6",
-      "9ee7a0dfb01a8a65d93fd0fee7fc1b0b"
+      "9ee7a0dfb01a8a65d93fd0fee7fc1b0b",
+      "f97f76b1ea018c43d15ddcd6c56d0836",
+      "509f974de92d1571fb0ec2b7f1d8782f"
     ],
     "input": [
       {
@@ -421,11 +423,33 @@
             "deadzone": 0
           }
         ]
+      },
+      {
+        "name": "reload",
+        "axis": false,
+        "bindings": [
+          {
+            "control": "key:R",
+            "scale": 1,
+            "deadzone": 0
+          }
+        ]
+      },
+      {
+        "name": "aim",
+        "axis": false,
+        "bindings": [
+          {
+            "control": "mouse:Right",
+            "scale": 1,
+            "deadzone": 0
+          }
+        ]
       }
     ],
     "classification": {
       "tags": {
-        "nextId": 7,
+        "nextId": 10,
         "entries": [
           {
             "id": 0,
@@ -454,15 +478,31 @@
           {
             "id": 6,
             "name": "buildable"
+          },
+          {
+            "id": 7,
+            "name": "person"
+          },
+          {
+            "id": 8,
+            "name": "friendly"
+          },
+          {
+            "id": 9,
+            "name": "hostile"
           }
         ]
       },
       "collision": {
-        "nextId": 1,
+        "nextId": 2,
         "entries": [
           {
             "id": 0,
             "name": "Default"
+          },
+          {
+            "id": 1,
+            "name": "Far island shell"
           }
         ]
       },

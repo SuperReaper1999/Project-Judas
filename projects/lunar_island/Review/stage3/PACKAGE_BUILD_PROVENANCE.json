@@ -1,0 +1,42 @@
+{
+  "exporter": {
+    "architecture": "x86_64",
+    "build_id": "0.1.0-prealpha-Experimental-5424d85-dirty-ca2ffb0d76e6-u84f47c24fcd0",
+    "channel": "Experimental",
+    "compiler": "GNU",
+    "compiler_version": "15.2.0",
+    "configuration": "Release",
+    "maturity": "pre-alpha",
+    "platform": "Linux",
+    "schema": 1,
+    "source_dirty": true,
+    "source_fingerprint": "ca2ffb0d76e6104cbb381e37f70090259c11a97c555ff41a33efa299f34b19bb",
+    "source_origin": "git",
+    "source_revision": "5424d85dbcdc8f8a603ea115d7d52d9048520b12",
+    "source_tree": "2bc8b21cbdff420e2ed379b0a23a2fa7ca62204a",
+    "source_untracked_count": 16,
+    "source_untracked_fingerprint": "84f47c24fcd098f88732ceab246b2e0e19eca31f56acdd72f89f8bfa1621daf2",
+    "version": "0.1.0-prealpha"
+  },
+  "runtime": {
+    "architecture": "x86_64",
+    "build_id": "0.1.0-prealpha-Experimental-5424d85-dirty-ca2ffb0d76e6-u84f47c24fcd0",
+    "channel": "Experimental",
+    "compiler": "GNU",
+    "compiler_version": "15.2.0",
+    "configuration": "Release",
+    "maturity": "pre-alpha",
+    "platform": "Linux",
+    "schema": 1,
+    "source_dirty": true,
+    "source_fingerprint": "ca2ffb0d76e6104cbb381e37f70090259c11a97c555ff41a33efa299f34b19bb",
+    "source_origin": "git",
+    "source_revision": "5424d85dbcdc8f8a603ea115d7d52d9048520b12",
+    "source_tree": "2bc8b21cbdff420e2ed379b0a23a2fa7ca62204a",
+    "source_untracked_count": 16,
+    "source_untracked_fingerprint": "84f47c24fcd098f88732ceab246b2e0e19eca31f56acdd72f89f8bfa1621daf2",
+    "version": "0.1.0-prealpha"
+  },
+  "runtime_sha256": "407b3ebe16e5aa9752b969b7d71c779346a816f96e85d92dc7cd4bb689062528",
+  "schema": 1
+}
