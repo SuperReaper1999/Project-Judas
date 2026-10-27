@@ -5,6 +5,7 @@ import hashlib
 import json
 import pathlib
 import shutil
+import sys
 import subprocess
 import tarfile
 import tempfile
@@ -50,12 +51,19 @@ def main():
             "cmake_minimum_required(VERSION 3.20)\nproject(IdentityFixture LANGUAGES NONE)\n"
             'include("${CMAKE_CURRENT_SOURCE_DIR}/cmake/JudasBuildIdentity.cmake")\n'
             'judas_build_identity("${CMAKE_CURRENT_SOURCE_DIR}" "${CMAKE_CURRENT_BINARY_DIR}/generated")\n'
-            'file(GENERATE OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/identity.json" INPUT "${CMAKE_CURRENT_BINARY_DIR}/generated/judas-build-info.json.in")\n')
+            'file(GENERATE OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/identity-$<CONFIG>.json" INPUT "${CMAKE_CURRENT_BINARY_DIR}/generated/judas-build-info.json.in")\n')
 
         def configure(label, directory, *options, succeeds=True):
             build = root / label
-            run(label, ["cmake", "-S", str(directory), "-B", str(build), *options], succeeds)
-            return json.loads((build / "identity.json").read_text()) if succeeds else None
+            run(label, ["cmake", "-S", str(directory), "-B", str(build), "-DCMAKE_BUILD_TYPE=Release", *options], succeeds)
+            if not succeeds:
+                return None
+            # Every Visual Studio configuration gets its own identity. Also
+            # check single-config Release rather than depending on an empty type.
+            for identity_file in build.glob("identity-*.json"):
+                identity = json.loads(identity_file.read_text())
+                assert identity["configuration"] == identity_file.stem[len("identity-"):]
+            return json.loads((build / "identity-Release.json").read_text())
 
         unknown = configure("unknown-source", fixture)
         assert unknown["source_origin"] == "unknown" and unknown["source_revision"] == "unknown"
@@ -114,7 +122,7 @@ def main():
             assert clean["source_origin"] == "git" and clean["source_dirty"] is False
             assert clean["channel"] == "Experimental" and len(clean["source_revision"]) == 40
             archive_path = root / "tracked-source.tar.gz"
-            run("tracked-source-archive", ["python3", str(source / "tools/package_source.py"),
+            run("tracked-source-archive", [sys.executable, str(source / "tools/package_source.py"),
                 "--source", str(fixture), "--output", str(archive_path), "--channel", "Experimental"])
             extracted = root / "extracted"
             extracted.mkdir()
@@ -138,7 +146,7 @@ def main():
             dirty = configure("git-dirty", fixture)
             assert dirty["source_dirty"] and dirty["source_fingerprint"] != clean["source_fingerprint"]
             run("version-refresh-same-build", ["cmake", "-S", str(fixture), "-B", str(root / "git-clean")])
-            refreshed = json.loads((root / "git-clean/identity.json").read_text())
+            refreshed = json.loads((root / "git-clean/identity-Release.json").read_text())
             assert refreshed["version"] == "1.0.1-alpha.1", "default version refreshes in an existing build cache"
             new_input = fixture / "src/new.cpp"
             new_input.parent.mkdir()

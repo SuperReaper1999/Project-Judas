@@ -1,0 +1,28 @@
+{
+  "passed": true,
+  "build": {
+    "architecture": "AMD64",
+    "build_id": "1.0.0-alpha.1-Alpha-2108f08-clean-b4b403518b8e",
+    "channel": "Alpha",
+    "compiler": "MSVC",
+    "compiler_version": "19.44.35229.0",
+    "configuration": "Release",
+    "maturity": "alpha",
+    "platform": "Windows",
+    "release_name": "Judas Engine Alpha v1.0.0",
+    "schema": 1,
+    "source_dirty": false,
+    "source_fingerprint": "b4b403518b8e50f06566e3fb1d2033d6246e3e6986a24b2643b55e0525c329a9",
+    "source_origin": "archive",
+    "source_revision": "2108f0850d70f2b0e9dfc1245372313fd59ef0ec",
+    "source_tree": "34f316c3f99adaec14e94582ec2aae579e80098a",
+    "source_untracked_count": 0,
+    "source_untracked_fingerprint": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "version": "1.0.0-alpha.1"
+  },
+  "sourceOnlyMounted": false,
+  "packageOnlyNamespaces": false,
+  "softwareGraphics": true,
+  "hardwareAcceptance": false,
+  "operations": 8
+}

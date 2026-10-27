@@ -1,0 +1,23 @@
+{
+  "schema": 1,
+  "checks": 1,
+  "complete": false,
+  "passed": false,
+  "failures": 1,
+  "results": [
+    {
+      "name": "unknown-source",
+      "passed": false,
+      "command": [
+        "cmake",
+        "-S",
+        "P:\\JudasValidation\\M100-2108f085\\Temp\\judas-identity-7usrrsln\\source",
+        "-B",
+        "P:\\JudasValidation\\M100-2108f085\\Temp\\judas-identity-7usrrsln\\unknown-source"
+      ],
+      "returncode": 1,
+      "stdout": "-- Building for: Visual Studio 17 2022\n-- Selecting Windows SDK version 10.0.22621.0 to target Windows 10.0.19045.\n-- Configuring done (0.8s)\n-- Generating done (0.0s)\n",
+      "stderr": "CMake Warning at cmake/JudasBuildIdentity.cmake:278 (message):\n  No Git or JUDAS_SOURCE_INFO.json: source provenance is unknown; local\n  builds work but release packaging must reject this identity\nCall Stack (most recent call first):\n  CMakeLists.txt:4 (judas_build_identity)\n\n\nCMake Error in CMakeLists.txt:\n  Evaluation file to be written multiple times with different content.  This\n  is generally caused by the content evaluating the configuration type,\n  language, or location of object files:\n\n   P:/JudasValidation/M100-2108f085/Temp/judas-identity-7usrrsln/unknown-source/identity.json\n\n\nCMake Error in CMakeLists.txt:\n  Evaluation file to be written multiple times with different content.  This\n  is generally caused by the content evaluating the configuration type,\n  language, or location of object files:\n\n   P:/JudasValidation/M100-2108f085/Temp/judas-identity-7usrrsln/unknown-source/identity.json\n\n\nCMake Error in CMakeLists.txt:\n  Evaluation file to be written multiple times with different content.  This\n  is generally caused by the content evaluating the configuration type,\n  language, or location of object files:\n\n   P:/JudasValidation/M100-2108f085/Temp/judas-identity-7usrrsln/unknown-source/identity.json\n\n\nCMake Generate step failed.  Build files cannot be regenerated correctly.\n"
+    }
+  ]
+}

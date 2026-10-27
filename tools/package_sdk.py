@@ -108,8 +108,10 @@ def probe_identity(executable, timeout=10, limit=16384):
 
 
 def relative_path(value):
+    if not isinstance(value, str):
+        raise ValueError("Inventory/manifest paths must be strings")
     path = Path(value)
-    if not value or path.is_absolute() or ".." in path.parts or "\\" in value or ":" in value:
+    if not value or value.startswith("/") or path.is_absolute() or ".." in path.parts or "\\" in value or ":" in value:
         raise ValueError(f"Unsafe inventory/manifest path: {value!r}")
     return path
 

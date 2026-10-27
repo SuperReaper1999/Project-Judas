@@ -1,0 +1,424 @@
+{
+  "schema": 1,
+  "checks": 27,
+  "complete": true,
+  "passed": true,
+  "failures": 0,
+  "results": [
+    {
+      "name": "unknown-source",
+      "passed": true,
+      "command": [
+        "cmake",
+        "-S",
+        "P:\\JudasValidation\\M100-2108f085\\Temp\\judas-identity-l_wd2epp\\source",
+        "-B",
+        "P:\\JudasValidation\\M100-2108f085\\Temp\\judas-identity-l_wd2epp\\unknown-source",
+        "-DCMAKE_BUILD_TYPE=Release"
+      ],
+      "returncode": 0,
+      "stdout": "-- Building for: Visual Studio 17 2022\n-- Selecting Windows SDK version 10.0.22621.0 to target Windows 10.0.19045.\n-- Configuring done (0.6s)\n-- Generating done (0.0s)\n-- Build files have been written to: P:/JudasValidation/M100-2108f085/Temp/judas-identity-l_wd2epp/unknown-source\n",
+      "stderr": "CMake Warning at cmake/JudasBuildIdentity.cmake:278 (message):\n  No Git or JUDAS_SOURCE_INFO.json: source provenance is unknown; local\n  builds work but release packaging must reject this identity\nCall Stack (most recent call first):\n  CMakeLists.txt:4 (judas_build_identity)\n\n\nCMake Warning:\n  Manually-specified variables were not used by the project:\n\n    CMAKE_BUILD_TYPE\n\n\n"
+    },
+    {
+      "name": "invalid-channel",
+      "passed": true,
+      "command": [
+        "cmake",
+        "-S",
+        "P:\\JudasValidation\\M100-2108f085\\Temp\\judas-identity-l_wd2epp\\source",
+        "-B",
+        "P:\\JudasValidation\\M100-2108f085\\Temp\\judas-identity-l_wd2epp\\invalid-channel",
+        "-DCMAKE_BUILD_TYPE=Release",
+        "-DJUDAS_BUILD_CHANNEL=Unknown"
+      ],
+      "returncode": 1,
+      "stdout": "-- Building for: Visual Studio 17 2022\n-- Selecting Windows SDK version 10.0.22621.0 to target Windows 10.0.19045.\n-- Configuring incomplete, errors occurred!\n",
+      "stderr": "CMake Error at cmake/JudasBuildIdentity.cmake:270 (message):\n  JUDAS_BUILD_CHANNEL must be Alpha, Beta, Experimental, Stable or Local\nCall Stack (most recent call first):\n  CMakeLists.txt:4 (judas_build_identity)\n\n\n"
+    },
+    {
+      "name": "invalid-version",
+      "passed": true,
+      "command": [
+        "cmake",
+        "-S",
+        "P:\\JudasValidation\\M100-2108f085\\Temp\\judas-identity-l_wd2epp\\source",
+        "-B",
+        "P:\\JudasValidation\\M100-2108f085\\Temp\\judas-identity-l_wd2epp\\invalid-version",
+        "-DCMAKE_BUILD_TYPE=Release",
+        "-DJUDAS_ENGINE_VERSION=misleading-version"
+      ],
+      "returncode": 1,
+      "stdout": "-- Building for: Visual Studio 17 2022\n-- Selecting Windows SDK version 10.0.22621.0 to target Windows 10.0.19045.\n-- Configuring incomplete, errors occurred!\n",
+      "stderr": "CMake Error at cmake/JudasBuildIdentity.cmake:28 (message):\n  Engine version/maturity contains an invalid or unsupported identity\nCall Stack (most recent call first):\n  CMakeLists.txt:4 (judas_build_identity)\n\n\n"
+    },
+    {
+      "name": "source-archive",
+      "passed": true,
+      "command": [
+        "cmake",
+        "-S",
+        "P:\\JudasValidation\\M100-2108f085\\Temp\\judas-identity-l_wd2epp\\source",
+        "-B",
+        "P:\\JudasValidation\\M100-2108f085\\Temp\\judas-identity-l_wd2epp\\source-archive",
+        "-DCMAKE_BUILD_TYPE=Release"
+      ],
+      "returncode": 0,
+      "stdout": "-- Building for: Visual Studio 17 2022\n-- Selecting Windows SDK version 10.0.22621.0 to target Windows 10.0.19045.\n-- Configuring done (0.4s)\n-- Generating done (0.0s)\n-- Build files have been written to: P:/JudasValidation/M100-2108f085/Temp/judas-identity-l_wd2epp/source-archive\n",
+      "stderr": "CMake Warning:\n  Manually-specified variables were not used by the project:\n\n    CMAKE_BUILD_TYPE\n\n\n"
+    },
+    {
+      "name": "replacement-archive-cannot-reuse-old-objects",
+      "passed": true,
+      "command": [
+        "cmake",
+        "-S",
+        "P:\\JudasValidation\\M100-2108f085\\Temp\\judas-identity-l_wd2epp\\source",
+        "-B",
+        "P:\\JudasValidation\\M100-2108f085\\Temp\\judas-identity-l_wd2epp\\source-archive"
+      ],
+      "returncode": 1,
+      "stdout": "-- Selecting Windows SDK version 10.0.22621.0 to target Windows 10.0.19045.\n-- Configuring incomplete, errors occurred!\n",
+      "stderr": "CMake Error at cmake/JudasBuildIdentity.cmake:325 (message):\n  A different source archive cannot reuse this identified build tree:\n  deterministic timestamps may retain stale objects.  Use a fresh build\n  directory (pinned dependency downloads may be reused separately).\nCall Stack (most recent call first):\n  CMakeLists.txt:4 (judas_build_identity)\n\n\n"
+    },
+    {
+      "name": "invalid-numeric-prerelease",
+      "passed": true,
+      "command": [
+        "cmake",
+        "-S",
+        "P:\\JudasValidation\\M100-2108f085\\Temp\\judas-identity-l_wd2epp\\source",
+        "-B",
+        "P:\\JudasValidation\\M100-2108f085\\Temp\\judas-identity-l_wd2epp\\invalid-numeric-prerelease",
+        "-DCMAKE_BUILD_TYPE=Release",
+        "-DJUDAS_ENGINE_VERSION=1.0.0-alpha.01"
+      ],
+      "returncode": 1,
+      "stdout": "-- Building for: Visual Studio 17 2022\n-- Selecting Windows SDK version 10.0.22621.0 to target Windows 10.0.19045.\n-- Configuring incomplete, errors occurred!\n",
+      "stderr": "CMake Error at cmake/JudasBuildIdentity.cmake:42 (message):\n  Numeric SemVer prerelease identifiers cannot have leading zeros\nCall Stack (most recent call first):\n  CMakeLists.txt:4 (judas_build_identity)\n\n\n"
+    },
+    {
+      "name": "alpha-cannot-be-stable",
+      "passed": true,
+      "command": [
+        "cmake",
+        "-S",
+        "P:\\JudasValidation\\M100-2108f085\\Temp\\judas-identity-l_wd2epp\\source",
+        "-B",
+        "P:\\JudasValidation\\M100-2108f085\\Temp\\judas-identity-l_wd2epp\\alpha-cannot-be-stable",
+        "-DCMAKE_BUILD_TYPE=Release",
+        "-DJUDAS_BUILD_CHANNEL=Stable"
+      ],
+      "returncode": 1,
+      "stdout": "-- Building for: Visual Studio 17 2022\n-- Selecting Windows SDK version 10.0.22621.0 to target Windows 10.0.19045.\n-- Configuring incomplete, errors occurred!\n",
+      "stderr": "CMake Error at cmake/JudasBuildIdentity.cmake:275 (message):\n  Release channel and engine maturity disagree; Alpha is not Stable\nCall Stack (most recent call first):\n  CMakeLists.txt:4 (judas_build_identity)\n\n\n"
+    },
+    {
+      "name": "archive-without-git-tool",
+      "passed": true,
+      "command": [
+        "cmake",
+        "-S",
+        "P:\\JudasValidation\\M100-2108f085\\Temp\\judas-identity-l_wd2epp\\source",
+        "-B",
+        "P:\\JudasValidation\\M100-2108f085\\Temp\\judas-identity-l_wd2epp\\archive-without-git-tool",
+        "-DCMAKE_BUILD_TYPE=Release",
+        "-Djudas_git=/not-an-installed-git"
+      ],
+      "returncode": 0,
+      "stdout": "-- Building for: Visual Studio 17 2022\n-- Selecting Windows SDK version 10.0.22621.0 to target Windows 10.0.19045.\n-- Configuring done (0.3s)\n-- Generating done (0.0s)\n-- Build files have been written to: P:/JudasValidation/M100-2108f085/Temp/judas-identity-l_wd2epp/archive-without-git-tool\n",
+      "stderr": "CMake Warning:\n  Manually-specified variables were not used by the project:\n\n    CMAKE_BUILD_TYPE\n\n\n"
+    },
+    {
+      "name": "independent-main",
+      "passed": true,
+      "command": [
+        "cmake",
+        "-S",
+        "P:\\JudasValidation\\M100-2108f085\\Temp\\judas-identity-l_wd2epp\\source",
+        "-B",
+        "P:\\JudasValidation\\M100-2108f085\\Temp\\judas-identity-l_wd2epp\\independent-main",
+        "-DCMAKE_BUILD_TYPE=Release",
+        "-DJUDAS_BUILD_CHANNEL=Alpha"
+      ],
+      "returncode": 0,
+      "stdout": "-- Building for: Visual Studio 17 2022\n-- Selecting Windows SDK version 10.0.22621.0 to target Windows 10.0.19045.\n-- Configuring done (0.4s)\n-- Generating done (0.0s)\n-- Build files have been written to: P:/JudasValidation/M100-2108f085/Temp/judas-identity-l_wd2epp/independent-main\n",
+      "stderr": "CMake Warning:\n  Manually-specified variables were not used by the project:\n\n    CMAKE_BUILD_TYPE\n\n\n"
+    },
+    {
+      "name": "archive-repeat",
+      "passed": true,
+      "command": [
+        "cmake",
+        "-S",
+        "P:\\JudasValidation\\M100-2108f085\\Temp\\judas-identity-l_wd2epp\\source",
+        "-B",
+        "P:\\JudasValidation\\M100-2108f085\\Temp\\judas-identity-l_wd2epp\\archive-repeat",
+        "-DCMAKE_BUILD_TYPE=Release"
+      ],
+      "returncode": 0,
+      "stdout": "-- Building for: Visual Studio 17 2022\n-- Selecting Windows SDK version 10.0.22621.0 to target Windows 10.0.19045.\n-- Configuring done (0.4s)\n-- Generating done (0.0s)\n-- Build files have been written to: P:/JudasValidation/M100-2108f085/Temp/judas-identity-l_wd2epp/archive-repeat\n",
+      "stderr": "CMake Warning:\n  Manually-specified variables were not used by the project:\n\n    CMAKE_BUILD_TYPE\n\n\n"
+    },
+    {
+      "name": "archive-edited",
+      "passed": true,
+      "command": [
+        "cmake",
+        "-S",
+        "P:\\JudasValidation\\M100-2108f085\\Temp\\judas-identity-l_wd2epp\\source",
+        "-B",
+        "P:\\JudasValidation\\M100-2108f085\\Temp\\judas-identity-l_wd2epp\\archive-edited",
+        "-DCMAKE_BUILD_TYPE=Release"
+      ],
+      "returncode": 0,
+      "stdout": "-- Building for: Visual Studio 17 2022\n-- Selecting Windows SDK version 10.0.22621.0 to target Windows 10.0.19045.\n-- Configuring done (0.4s)\n-- Generating done (0.0s)\n-- Build files have been written to: P:/JudasValidation/M100-2108f085/Temp/judas-identity-l_wd2epp/archive-edited\n",
+      "stderr": "CMake Warning:\n  Manually-specified variables were not used by the project:\n\n    CMAKE_BUILD_TYPE\n\n\n"
+    },
+    {
+      "name": "archive-added-dependency",
+      "passed": true,
+      "command": [
+        "cmake",
+        "-S",
+        "P:\\JudasValidation\\M100-2108f085\\Temp\\judas-identity-l_wd2epp\\source",
+        "-B",
+        "P:\\JudasValidation\\M100-2108f085\\Temp\\judas-identity-l_wd2epp\\archive-added-dependency",
+        "-DCMAKE_BUILD_TYPE=Release"
+      ],
+      "returncode": 0,
+      "stdout": "-- Building for: Visual Studio 17 2022\n-- Selecting Windows SDK version 10.0.22621.0 to target Windows 10.0.19045.\n-- Configuring done (0.4s)\n-- Generating done (0.0s)\n-- Build files have been written to: P:/JudasValidation/M100-2108f085/Temp/judas-identity-l_wd2epp/archive-added-dependency\n",
+      "stderr": "CMake Warning:\n  Manually-specified variables were not used by the project:\n\n    CMAKE_BUILD_TYPE\n\n\n"
+    },
+    {
+      "name": "archive-manifest-tampered",
+      "passed": true,
+      "command": [
+        "cmake",
+        "-S",
+        "P:\\JudasValidation\\M100-2108f085\\Temp\\judas-identity-l_wd2epp\\source",
+        "-B",
+        "P:\\JudasValidation\\M100-2108f085\\Temp\\judas-identity-l_wd2epp\\archive-manifest-tampered",
+        "-DCMAKE_BUILD_TYPE=Release"
+      ],
+      "returncode": 1,
+      "stdout": "-- Building for: Visual Studio 17 2022\n-- Selecting Windows SDK version 10.0.22621.0 to target Windows 10.0.19045.\n-- Configuring incomplete, errors occurred!\n",
+      "stderr": "CMake Error at cmake/JudasBuildIdentity.cmake:175 (message):\n  Source archive file manifest hash disagrees with frozen provenance\nCall Stack (most recent call first):\n  CMakeLists.txt:4 (judas_build_identity)\n\n\n"
+    },
+    {
+      "name": "malformed-archive",
+      "passed": true,
+      "command": [
+        "cmake",
+        "-S",
+        "P:\\JudasValidation\\M100-2108f085\\Temp\\judas-identity-l_wd2epp\\source",
+        "-B",
+        "P:\\JudasValidation\\M100-2108f085\\Temp\\judas-identity-l_wd2epp\\malformed-archive",
+        "-DCMAKE_BUILD_TYPE=Release"
+      ],
+      "returncode": 1,
+      "stdout": "-- Building for: Visual Studio 17 2022\n-- Selecting Windows SDK version 10.0.22621.0 to target Windows 10.0.19045.\n-- Configuring incomplete, errors occurred!\n",
+      "stderr": "CMake Error at cmake/JudasBuildIdentity.cmake:152 (message):\n  Malformed frozen source archive provenance\nCall Stack (most recent call first):\n  CMakeLists.txt:4 (judas_build_identity)\n\n\n"
+    },
+    {
+      "name": "git-init",
+      "passed": true,
+      "command": [
+        "git",
+        "-C",
+        "P:\\JudasValidation\\M100-2108f085\\Temp\\judas-identity-l_wd2epp\\source",
+        "init",
+        "-b",
+        "Experimental"
+      ],
+      "returncode": 0,
+      "stdout": "Initialized empty Git repository in P:/JudasValidation/M100-2108f085/Temp/judas-identity-l_wd2epp/source/.git/\n",
+      "stderr": ""
+    },
+    {
+      "name": "git-add",
+      "passed": true,
+      "command": [
+        "git",
+        "-C",
+        "P:\\JudasValidation\\M100-2108f085\\Temp\\judas-identity-l_wd2epp\\source",
+        "add",
+        "."
+      ],
+      "returncode": 0,
+      "stdout": "",
+      "stderr": "warning: in the working copy of 'JUDAS_SOURCE_FILES.json', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'cmake/JudasBuildIdentity.cmake', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'cmake/JudasBuildIdentity.h.in', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'cmake/JudasBuildIdentity.json.in', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'cmake/JudasSourceInfo.json.in', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'engine-version.json', LF will be replaced by CRLF the next time Git touches it\n"
+    },
+    {
+      "name": "git-commit",
+      "passed": true,
+      "command": [
+        "git",
+        "-C",
+        "P:\\JudasValidation\\M100-2108f085\\Temp\\judas-identity-l_wd2epp\\source",
+        "-c",
+        "user.name=Identity Fixture",
+        "-c",
+        "user.email=fixture@invalid.example",
+        "commit",
+        "-m",
+        "fixture"
+      ],
+      "returncode": 0,
+      "stdout": "[Experimental (root-commit) 037a9ce] fixture\n 7 files changed, 409 insertions(+)\n create mode 100644 CMakeLists.txt\n create mode 100644 JUDAS_SOURCE_FILES.json\n create mode 100644 cmake/JudasBuildIdentity.cmake\n create mode 100644 cmake/JudasBuildIdentity.h.in\n create mode 100644 cmake/JudasBuildIdentity.json.in\n create mode 100644 cmake/JudasSourceInfo.json.in\n create mode 100644 engine-version.json\n",
+      "stderr": ""
+    },
+    {
+      "name": "git-clean",
+      "passed": true,
+      "command": [
+        "cmake",
+        "-S",
+        "P:\\JudasValidation\\M100-2108f085\\Temp\\judas-identity-l_wd2epp\\source",
+        "-B",
+        "P:\\JudasValidation\\M100-2108f085\\Temp\\judas-identity-l_wd2epp\\git-clean",
+        "-DCMAKE_BUILD_TYPE=Release"
+      ],
+      "returncode": 0,
+      "stdout": "-- Building for: Visual Studio 17 2022\n-- Selecting Windows SDK version 10.0.22621.0 to target Windows 10.0.19045.\n-- Configuring done (0.7s)\n-- Generating done (0.0s)\n-- Build files have been written to: P:/JudasValidation/M100-2108f085/Temp/judas-identity-l_wd2epp/git-clean\n",
+      "stderr": "CMake Warning:\n  Manually-specified variables were not used by the project:\n\n    CMAKE_BUILD_TYPE\n\n\n"
+    },
+    {
+      "name": "tracked-source-archive",
+      "passed": true,
+      "command": [
+        "C:\\JudasValidation\\Python\\python.exe",
+        "P:\\JudasValidation\\M100-2108f085\\PreflightSource\\tools\\package_source.py",
+        "--source",
+        "P:\\JudasValidation\\M100-2108f085\\Temp\\judas-identity-l_wd2epp\\source",
+        "--output",
+        "P:\\JudasValidation\\M100-2108f085\\Temp\\judas-identity-l_wd2epp\\tracked-source.tar.gz",
+        "--channel",
+        "Experimental"
+      ],
+      "returncode": 0,
+      "stdout": "{\"bytes\": 6352, \"file\": \"tracked-source.tar.gz\", \"files\": 6, \"kind\": \"judas-source-archive\", \"schema\": 1, \"scope\": \"engine build/source and current docs\", \"sha256\": \"efae1092e3c3a325f47a3a5d5cb097418985fbc290c26f9129ca34ae15ab6679\", \"source\": {\"channel\": \"Experimental\", \"revision\": \"037a9ced41a60728efe8ed455540f52708b40bee\", \"schema\": 1, \"selection\": \"engine\", \"source_dirty\": false, \"source_files_sha256\": \"1dd622a442a267e1a234481aae51cc8e7275af8c88d3b6f58566f364a6ea23f6\", \"source_fingerprint\": \"13133f69b09085b8b30da6a4f4ee9fb3693264132286292328c938fa67d3e83b\", \"tree\": \"c633b5cf272a11b2d486ff95e6dabf4dd3592e96\"}, \"untrackedExcluded\": 0}\n",
+      "stderr": ""
+    },
+    {
+      "name": "portable-source-round-trip",
+      "passed": true,
+      "command": [
+        "cmake",
+        "-S",
+        "P:\\JudasValidation\\M100-2108f085\\Temp\\judas-identity-l_wd2epp\\extracted",
+        "-B",
+        "P:\\JudasValidation\\M100-2108f085\\Temp\\judas-identity-l_wd2epp\\portable-source-round-trip",
+        "-DCMAKE_BUILD_TYPE=Release",
+        "-Djudas_git=/not-an-installed-git"
+      ],
+      "returncode": 0,
+      "stdout": "-- Building for: Visual Studio 17 2022\n-- Selecting Windows SDK version 10.0.22621.0 to target Windows 10.0.19045.\n-- Configuring done (0.4s)\n-- Generating done (0.0s)\n-- Build files have been written to: P:/JudasValidation/M100-2108f085/Temp/judas-identity-l_wd2epp/portable-source-round-trip\n",
+      "stderr": "CMake Warning:\n  Manually-specified variables were not used by the project:\n\n    CMAKE_BUILD_TYPE\n\n\n"
+    },
+    {
+      "name": "archive-extra-input",
+      "passed": true,
+      "command": [
+        "cmake",
+        "-S",
+        "P:\\JudasValidation\\M100-2108f085\\Temp\\judas-identity-l_wd2epp\\extracted",
+        "-B",
+        "P:\\JudasValidation\\M100-2108f085\\Temp\\judas-identity-l_wd2epp\\archive-extra-input",
+        "-DCMAKE_BUILD_TYPE=Release"
+      ],
+      "returncode": 0,
+      "stdout": "-- Building for: Visual Studio 17 2022\n-- Selecting Windows SDK version 10.0.22621.0 to target Windows 10.0.19045.\n-- Configuring done (0.4s)\n-- Generating done (0.0s)\n-- Build files have been written to: P:/JudasValidation/M100-2108f085/Temp/judas-identity-l_wd2epp/archive-extra-input\n",
+      "stderr": "CMake Warning:\n  Manually-specified variables were not used by the project:\n\n    CMAKE_BUILD_TYPE\n\n\n"
+    },
+    {
+      "name": "git-clean-untracked-input",
+      "passed": true,
+      "command": [
+        "cmake",
+        "-S",
+        "P:\\JudasValidation\\M100-2108f085\\Temp\\judas-identity-l_wd2epp\\source",
+        "-B",
+        "P:\\JudasValidation\\M100-2108f085\\Temp\\judas-identity-l_wd2epp\\git-clean-untracked-input",
+        "-DCMAKE_BUILD_TYPE=Release"
+      ],
+      "returncode": 0,
+      "stdout": "-- Building for: Visual Studio 17 2022\n-- Selecting Windows SDK version 10.0.22621.0 to target Windows 10.0.19045.\n-- Configuring done (0.7s)\n-- Generating done (0.0s)\n-- Build files have been written to: P:/JudasValidation/M100-2108f085/Temp/judas-identity-l_wd2epp/git-clean-untracked-input\n",
+      "stderr": "CMake Warning:\n  Manually-specified variables were not used by the project:\n\n    CMAKE_BUILD_TYPE\n\n\n"
+    },
+    {
+      "name": "git-dirty",
+      "passed": true,
+      "command": [
+        "cmake",
+        "-S",
+        "P:\\JudasValidation\\M100-2108f085\\Temp\\judas-identity-l_wd2epp\\source",
+        "-B",
+        "P:\\JudasValidation\\M100-2108f085\\Temp\\judas-identity-l_wd2epp\\git-dirty",
+        "-DCMAKE_BUILD_TYPE=Release"
+      ],
+      "returncode": 0,
+      "stdout": "-- Building for: Visual Studio 17 2022\n-- Selecting Windows SDK version 10.0.22621.0 to target Windows 10.0.19045.\n-- Configuring done (0.7s)\n-- Generating done (0.0s)\n-- Build files have been written to: P:/JudasValidation/M100-2108f085/Temp/judas-identity-l_wd2epp/git-dirty\n",
+      "stderr": "CMake Warning:\n  Manually-specified variables were not used by the project:\n\n    CMAKE_BUILD_TYPE\n\n\n"
+    },
+    {
+      "name": "version-refresh-same-build",
+      "passed": true,
+      "command": [
+        "cmake",
+        "-S",
+        "P:\\JudasValidation\\M100-2108f085\\Temp\\judas-identity-l_wd2epp\\source",
+        "-B",
+        "P:\\JudasValidation\\M100-2108f085\\Temp\\judas-identity-l_wd2epp\\git-clean"
+      ],
+      "returncode": 0,
+      "stdout": "-- Selecting Windows SDK version 10.0.22621.0 to target Windows 10.0.19045.\n-- Configuring done (0.4s)\n-- Generating done (0.1s)\n-- Build files have been written to: P:/JudasValidation/M100-2108f085/Temp/judas-identity-l_wd2epp/git-clean\n",
+      "stderr": ""
+    },
+    {
+      "name": "git-new-input",
+      "passed": true,
+      "command": [
+        "cmake",
+        "-S",
+        "P:\\JudasValidation\\M100-2108f085\\Temp\\judas-identity-l_wd2epp\\source",
+        "-B",
+        "P:\\JudasValidation\\M100-2108f085\\Temp\\judas-identity-l_wd2epp\\git-new-input",
+        "-DCMAKE_BUILD_TYPE=Release"
+      ],
+      "returncode": 0,
+      "stdout": "-- Building for: Visual Studio 17 2022\n-- Selecting Windows SDK version 10.0.22621.0 to target Windows 10.0.19045.\n-- Configuring done (0.7s)\n-- Generating done (0.0s)\n-- Build files have been written to: P:/JudasValidation/M100-2108f085/Temp/judas-identity-l_wd2epp/git-new-input\n",
+      "stderr": "CMake Warning:\n  Manually-specified variables were not used by the project:\n\n    CMAKE_BUILD_TYPE\n\n\n"
+    },
+    {
+      "name": "git-main",
+      "passed": true,
+      "command": [
+        "git",
+        "-C",
+        "P:\\JudasValidation\\M100-2108f085\\Temp\\judas-identity-l_wd2epp\\source",
+        "switch",
+        "-c",
+        "main"
+      ],
+      "returncode": 0,
+      "stdout": "",
+      "stderr": "Switched to a new branch 'main'\n"
+    },
+    {
+      "name": "git-main-channel",
+      "passed": true,
+      "command": [
+        "cmake",
+        "-S",
+        "P:\\JudasValidation\\M100-2108f085\\Temp\\judas-identity-l_wd2epp\\source",
+        "-B",
+        "P:\\JudasValidation\\M100-2108f085\\Temp\\judas-identity-l_wd2epp\\git-main-channel",
+        "-DCMAKE_BUILD_TYPE=Release"
+      ],
+      "returncode": 0,
+      "stdout": "-- Building for: Visual Studio 17 2022\n-- Selecting Windows SDK version 10.0.22621.0 to target Windows 10.0.19045.\n-- Configuring done (0.7s)\n-- Generating done (0.0s)\n-- Build files have been written to: P:/JudasValidation/M100-2108f085/Temp/judas-identity-l_wd2epp/git-main-channel\n",
+      "stderr": "CMake Warning:\n  Manually-specified variables were not used by the project:\n\n    CMAKE_BUILD_TYPE\n\n\n"
+    }
+  ]
+}

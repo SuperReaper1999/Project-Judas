@@ -8,7 +8,7 @@ import hashlib
 import io
 import json
 import os
-from pathlib import Path
+from pathlib import Path, PureWindowsPath
 import re
 import shutil
 import sys
@@ -326,9 +326,17 @@ add_executable(${target} ${sources})
             package_sdk.verify(self.output)
 
     def test_inventory_and_manifest_paths_reject_traversal(self):
-        for name in ("../secret", "/etc/passwd", "a\\b"):
+        for name in ("../secret", "/etc/passwd", "//server/share/file", "a\\b"):
             with self.assertRaises(ValueError):
                 package_sdk.relative_path(name)
+        # Python 3.13+ correctly distinguishes drive-less rooted Windows paths
+        # from fully absolute ones. Portable inventories must reject both.
+        with patch.object(package_sdk, "Path", PureWindowsPath):
+            for name in ("/etc/passwd", "//server/share/file", "../secret"):
+                with self.assertRaises(ValueError):
+                    package_sdk.relative_path(name)
+            self.assertEqual(package_sdk.relative_path("docs/current.md").parts,
+                             ("docs", "current.md"))
         bad = copy.deepcopy(self.spec)
         bad["tools"].append("judas")
         self.inventory.write_text(json.dumps(bad))
@@ -438,7 +446,8 @@ add_executable(${target} ${sources})
             self.assertTrue(required <= names)
             self.assertFalse(excluded & names)
             for name in required:
-                self.assertEqual(archive.extractfile(name).read(), (self.source / name).read_bytes())
+                self.assertEqual(archive.extractfile(name).read(), subprocess.check_output(
+                    ["git", "-C", str(self.source), "show", "HEAD:" + name]))
         # Removing machine-readable documentation must break this exact archive
         # contract, even though the remaining source/build payload is still valid.
         selected = package_source.selected

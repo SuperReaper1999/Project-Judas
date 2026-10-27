@@ -1,0 +1,6 @@
+{
+  "old_source": "2108f0850d70f2b0e9dfc1245372313fd59ef0ec",
+  "input": "/etc/passwd",
+  "old_accepted": "\\etc\\passwd",
+  "mechanism": "Python 3.13 Windows rooted paths are not necessarily absolute; portable paths must reject either"
+}
