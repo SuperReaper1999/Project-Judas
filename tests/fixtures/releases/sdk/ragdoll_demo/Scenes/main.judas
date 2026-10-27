@@ -1,0 +1,256 @@
+JudasScene 3
+settings
+  name "M47 + M48 pose composition and ragdolls"
+  world-origin 0 0 0
+  sun-direction 0.4 0.7 0.35
+  sun-color 1 0.98 0.92
+  ambient 0.5 0.5 0.5
+  fluid-scale 1
+  fluid-update-rate-hz 30
+  fluid-hydrostatic-drag-rate 2
+  fidelity-policy none
+  next-id 100
+end
+
+object 1 "Floor"
+  position 0 -0.3 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 25 0.3 25
+  render.radius 0.5
+  render.color 0.8 0.8 0.8
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body static box
+  body.half-extents 25 0.3 25
+  body.radius 0.5
+  body.terrain ""
+  body.mass 1
+  body.friction 0.6
+  body.restitution 0.1
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+object 2 "Player start"
+  position 0 1 8
+  rotation 1 0 0 0
+  scale 1 1 1
+  player-start first-person
+  player-start.yaw 0
+  player-start.density 950
+  player-start.fluid-drag 2
+  player-start.swim-acceleration 4
+end
+object 3 "Uniform gravity"
+  position 0 0 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  gravity uniform 9.81
+  gravity.region box 50 50 50
+end
+object 90 "Animation HUD and spawner"
+  position 0 0 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  ui.asset "41414141414141414141414141414101"
+  ui.name "game_ui"
+  ui.enabled true
+  scripts 1
+  script.0.id 1
+  script.0.asset "46464646464646464646464646464602"
+  script.0.enabled true
+  script.0.properties "{}"
+end
+object 10 "Wave bar"
+  position -2 3 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render mesh
+  render.half-extents .35 1.5 .25
+  render.radius .5
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset "46464646464646464646464646464601"
+  render.texture-asset ""
+  render.color 0.95 0.35 0.12
+  render.alpha 1
+  animation.enabled true
+  animation.play-on-start true
+  animation.loop true
+  animation.clip "Wave"
+  animation.speed 1
+  animation.time 0
+  ragdoll.enabled true
+  ragdoll.play-on-start false
+  ragdoll.self-collision true
+  ragdoll.bones 3
+  ragdoll.bone.0.joint "Root"
+  ragdoll.bone.0.parent ""
+  ragdoll.bone.0.shape 0
+  ragdoll.bone.0.offset 0 .5 0
+  ragdoll.bone.0.orientation 1 0 0 0
+  ragdoll.bone.0.half-extents .18 .46 .18
+  ragdoll.bone.0.radius .2
+  ragdoll.bone.0.mass 2
+  ragdoll.bone.0.friction .6
+  ragdoll.bone.0.restitution 0
+  ragdoll.bone.0.layer 0
+  ragdoll.bone.0.mask 18446744073709551615
+  ragdoll.bone.0.suppress-parent true
+  ragdoll.bone.0.auto-anchors true
+  ragdoll.bone.0.constraint 1
+  ragdoll.bone.0.enabled true
+  ragdoll.bone.0.anchor-a 0 -.5 0
+  ragdoll.bone.0.anchor-b 0 .5 0
+  ragdoll.bone.0.frame-a .70710678 0 -.70710678 0
+  ragdoll.bone.0.frame-b .70710678 0 -.70710678 0
+  ragdoll.bone.0.limits true
+  ragdoll.bone.0.lower -1.2
+  ragdoll.bone.0.upper 1.2
+  ragdoll.bone.1.joint "Root/Elbow"
+  ragdoll.bone.1.parent "Root"
+  ragdoll.bone.1.shape 0
+  ragdoll.bone.1.offset 0 .5 0
+  ragdoll.bone.1.orientation 1 0 0 0
+  ragdoll.bone.1.half-extents .18 .46 .18
+  ragdoll.bone.1.radius .2
+  ragdoll.bone.1.mass 2
+  ragdoll.bone.1.friction .6
+  ragdoll.bone.1.restitution 0
+  ragdoll.bone.1.layer 0
+  ragdoll.bone.1.mask 18446744073709551615
+  ragdoll.bone.1.suppress-parent true
+  ragdoll.bone.1.auto-anchors true
+  ragdoll.bone.1.constraint 1
+  ragdoll.bone.1.enabled true
+  ragdoll.bone.1.anchor-a 0 -.5 0
+  ragdoll.bone.1.anchor-b 0 .5 0
+  ragdoll.bone.1.frame-a .70710678 0 -.70710678 0
+  ragdoll.bone.1.frame-b .70710678 0 -.70710678 0
+  ragdoll.bone.1.limits true
+  ragdoll.bone.1.lower -1.2
+  ragdoll.bone.1.upper 1.2
+  ragdoll.bone.2.joint "Root/Elbow/Tip"
+  ragdoll.bone.2.parent "Root/Elbow"
+  ragdoll.bone.2.shape 0
+  ragdoll.bone.2.offset 0 .5 0
+  ragdoll.bone.2.orientation 1 0 0 0
+  ragdoll.bone.2.half-extents .18 .46 .18
+  ragdoll.bone.2.radius .2
+  ragdoll.bone.2.mass 2
+  ragdoll.bone.2.friction .6
+  ragdoll.bone.2.restitution 0
+  ragdoll.bone.2.layer 0
+  ragdoll.bone.2.mask 18446744073709551615
+  ragdoll.bone.2.suppress-parent true
+  ragdoll.bone.2.auto-anchors true
+  ragdoll.bone.2.constraint 1
+  ragdoll.bone.2.enabled true
+  ragdoll.bone.2.anchor-a 0 -.5 0
+  ragdoll.bone.2.anchor-b 0 .5 0
+  ragdoll.bone.2.frame-a .70710678 0 -.70710678 0
+  ragdoll.bone.2.frame-b .70710678 0 -.70710678 0
+  ragdoll.bone.2.limits true
+  ragdoll.bone.2.lower -1.2
+  ragdoll.bone.2.upper 1.2
+end
+object 11 "Rotated Stretch bar"
+  position 2 4 0
+  rotation 0.9238795 0 0 0.3826834
+  scale 1 1 1
+  render mesh
+  render.half-extents .35 1.5 .25
+  render.radius .5
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset "46464646464646464646464646464601"
+  render.texture-asset ""
+  render.color 0.2 0.65 1
+  render.alpha 1
+  animation.enabled true
+  animation.play-on-start true
+  animation.loop true
+  animation.clip "Stretch"
+  animation.speed 1
+  animation.time 0
+  ragdoll.enabled true
+  ragdoll.play-on-start false
+  ragdoll.self-collision true
+  ragdoll.bones 3
+  ragdoll.bone.0.joint "Root"
+  ragdoll.bone.0.parent ""
+  ragdoll.bone.0.shape 0
+  ragdoll.bone.0.offset 0 .5 0
+  ragdoll.bone.0.orientation 1 0 0 0
+  ragdoll.bone.0.half-extents .18 .46 .18
+  ragdoll.bone.0.radius .2
+  ragdoll.bone.0.mass 2
+  ragdoll.bone.0.friction .6
+  ragdoll.bone.0.restitution 0
+  ragdoll.bone.0.layer 0
+  ragdoll.bone.0.mask 18446744073709551615
+  ragdoll.bone.0.suppress-parent true
+  ragdoll.bone.0.auto-anchors true
+  ragdoll.bone.0.constraint 1
+  ragdoll.bone.0.enabled true
+  ragdoll.bone.0.anchor-a 0 -.5 0
+  ragdoll.bone.0.anchor-b 0 .5 0
+  ragdoll.bone.0.frame-a .70710678 0 -.70710678 0
+  ragdoll.bone.0.frame-b .70710678 0 -.70710678 0
+  ragdoll.bone.0.limits true
+  ragdoll.bone.0.lower -1.2
+  ragdoll.bone.0.upper 1.2
+  ragdoll.bone.1.joint "Root/Elbow"
+  ragdoll.bone.1.parent "Root"
+  ragdoll.bone.1.shape 0
+  ragdoll.bone.1.offset 0 .5 0
+  ragdoll.bone.1.orientation 1 0 0 0
+  ragdoll.bone.1.half-extents .18 .46 .18
+  ragdoll.bone.1.radius .2
+  ragdoll.bone.1.mass 2
+  ragdoll.bone.1.friction .6
+  ragdoll.bone.1.restitution 0
+  ragdoll.bone.1.layer 0
+  ragdoll.bone.1.mask 18446744073709551615
+  ragdoll.bone.1.suppress-parent true
+  ragdoll.bone.1.auto-anchors true
+  ragdoll.bone.1.constraint 1
+  ragdoll.bone.1.enabled true
+  ragdoll.bone.1.anchor-a 0 -.5 0
+  ragdoll.bone.1.anchor-b 0 .5 0
+  ragdoll.bone.1.frame-a .70710678 0 -.70710678 0
+  ragdoll.bone.1.frame-b .70710678 0 -.70710678 0
+  ragdoll.bone.1.limits true
+  ragdoll.bone.1.lower -1.2
+  ragdoll.bone.1.upper 1.2
+  ragdoll.bone.2.joint "Root/Elbow/Tip"
+  ragdoll.bone.2.parent "Root/Elbow"
+  ragdoll.bone.2.shape 0
+  ragdoll.bone.2.offset 0 .5 0
+  ragdoll.bone.2.orientation 1 0 0 0
+  ragdoll.bone.2.half-extents .18 .46 .18
+  ragdoll.bone.2.radius .2
+  ragdoll.bone.2.mass 2
+  ragdoll.bone.2.friction .6
+  ragdoll.bone.2.restitution 0
+  ragdoll.bone.2.layer 0
+  ragdoll.bone.2.mask 18446744073709551615
+  ragdoll.bone.2.suppress-parent true
+  ragdoll.bone.2.auto-anchors true
+  ragdoll.bone.2.constraint 1
+  ragdoll.bone.2.enabled true
+  ragdoll.bone.2.anchor-a 0 -.5 0
+  ragdoll.bone.2.anchor-b 0 .5 0
+  ragdoll.bone.2.frame-a .70710678 0 -.70710678 0
+  ragdoll.bone.2.frame-b .70710678 0 -.70710678 0
+  ragdoll.bone.2.limits true
+  ragdoll.bone.2.lower -1.2
+  ragdoll.bone.2.upper 1.2
+end

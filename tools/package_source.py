@@ -73,7 +73,9 @@ def archive(args):
     if untracked and not args.allow_untracked:
         raise ValueError("Untracked files exist; commit intended inputs or explicitly --allow-untracked to exclude them")
     branch = git(source, "rev-parse", "--abbrev-ref", "HEAD").decode().strip()
-    channel = args.channel or ({"main": "Alpha", "Experimental": "Experimental"}.get(branch, "Local"))
+    maturity = json.loads(git(source, "show", "HEAD:engine-version.json"))["maturity"]
+    release_channel = {"alpha": "Alpha", "beta": "Beta", "stable": "Stable"}.get(maturity, "Experimental")
+    channel = args.channel or ({"main": release_channel, "Experimental": "Experimental"}.get(branch, "Local"))
     entries = git(source, "ls-tree", "-r", "-z", "HEAD").split(b"\0")
     blobs = {}
     for entry in entries:

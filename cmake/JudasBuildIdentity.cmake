@@ -27,6 +27,22 @@ function(judas_build_identity source_root output_directory)
        OR NOT maturity MATCHES "^(pre-alpha|alpha|beta|rc|stable)$")
         message(FATAL_ERROR "Engine version/maturity contains an invalid or unsupported identity")
     endif()
+    if((maturity STREQUAL "stable" AND version MATCHES "-") OR
+       (maturity STREQUAL "alpha" AND NOT version MATCHES "-alpha([.]|[+]|$)") OR
+       (maturity STREQUAL "beta" AND NOT version MATCHES "-beta([.]|[+]|$)") OR
+       (maturity STREQUAL "rc" AND NOT version MATCHES "-rc([.]|[+]|$)"))
+        message(FATAL_ERROR "Authoritative version prerelease and maturity disagree")
+    endif()
+    string(REGEX REPLACE "[+].*$" "" version_without_metadata "${effective_version}")
+    if(version_without_metadata MATCHES "-")
+        string(REGEX REPLACE "^[^-]*-" "" prerelease "${version_without_metadata}")
+        string(REPLACE "." ";" identifiers "${prerelease}")
+        foreach(identifier IN LISTS identifiers)
+            if(identifier MATCHES "^0[0-9]+$")
+                message(FATAL_ERROR "Numeric SemVer prerelease identifiers cannot have leading zeros")
+            endif()
+        endforeach()
+    endif()
     if(NOT effective_version STREQUAL version)
         set(release_name "Judas Engine custom ${effective_version}")
     endif()
@@ -60,7 +76,15 @@ function(judas_build_identity source_root output_directory)
             if(branch STREQUAL "Experimental")
                 set(default_channel Experimental)
             elseif(branch STREQUAL "main")
-                set(default_channel Alpha)
+                if(maturity STREQUAL "alpha")
+                    set(default_channel Alpha)
+                elseif(maturity STREQUAL "beta")
+                    set(default_channel Beta)
+                elseif(maturity STREQUAL "stable")
+                    set(default_channel Stable)
+                else()
+                    set(default_channel Experimental)
+                endif()
             endif()
             # Tracked provenance and observed untracked files are separate. An
             # unrelated research source must not make every clean release dirty.
@@ -284,6 +308,23 @@ function(judas_build_identity source_root output_directory)
     endforeach()
     set(JUDAS_ID_version "${effective_version}")
     set(JUDAS_ID_version "${effective_version}" PARENT_SCOPE)
+    # Deterministic archives can have timestamps older than existing objects.
+    # Refuse a different clean archive in an already identified build tree:
+    # Ninja/Make cannot infer content changes from an old timestamp alone.
+    # Normal Git iteration and dirty edits within one archive remain available.
+    set(previous_identity "${output_directory}/judas-build-info.json.in")
+    if(origin STREQUAL "archive" AND NOT source_dirty AND EXISTS "${previous_identity}" AND
+       EXISTS "${CMAKE_BINARY_DIR}/CMakeCache.txt")
+        file(READ "${previous_identity}" previous_document)
+        string(JSON previous_revision ERROR_VARIABLE previous_error GET "${previous_document}" source_revision)
+        string(JSON previous_fingerprint ERROR_VARIABLE previous_hash_error GET "${previous_document}" source_fingerprint)
+        string(JSON previous_untracked ERROR_VARIABLE previous_count_error GET "${previous_document}" source_untracked_count)
+        if(previous_error OR previous_hash_error OR previous_count_error OR
+           NOT previous_revision STREQUAL revision OR NOT previous_fingerprint STREQUAL source_fingerprint OR
+           NOT previous_untracked EQUAL 0)
+            message(FATAL_ERROR "A different source archive cannot reuse this identified build tree: deterministic timestamps may retain stale objects. Use a fresh build directory (pinned dependency downloads may be reused separately).")
+        endif()
+    endif()
     file(MAKE_DIRECTORY "${output_directory}")
     configure_file("${CMAKE_CURRENT_FUNCTION_LIST_DIR}/JudasBuildIdentity.h.in" "${output_directory}/JudasBuildIdentity.h" @ONLY)
     configure_file("${CMAKE_CURRENT_FUNCTION_LIST_DIR}/JudasBuildIdentity.json.in" "${output_directory}/judas-build-info.json.in" @ONLY)

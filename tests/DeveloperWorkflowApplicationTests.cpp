@@ -42,15 +42,29 @@ int main(int argc,char** argv){
   std::cout<<"PASS fresh-process lesson cycle preserves source save bytes\n";return 0;
  }
  std::filesystem::create_directories(proof);
- unsigned frame=0,phase=0,wait=0;uint64_t request=0;bool done=false,aimApplied=false,layoutChecked=false;EntityId lastBlue=0;glm::vec3 start{};Json expected;std::vector<std::string> pulse,held;
+ unsigned frame=0,phase=0,wait=0;uint64_t request=0;bool done=false,aimApplied=false,layoutChecked=false,restoreBoundaryObserved=false;EntityId lastBlue=0;glm::vec3 start{};Json expected;std::vector<std::string> pulse,held;
  ApplicationControl control;control.hidden=true;
  control.hostReady=[](EngineHost& host){host.GetWindow().SetTestInputMode(true);SDL_GL_SetSwapInterval(0);std::string error;host.Audio().Init(error,true);};
  control.frameSeconds=[](float){return 1.f/90;};
  control.beforeFrame=[&](EngineHost& host,RuntimeWorld& world,InteractivePlay&){
   for(auto& entry:host.GetWindow().Input().Map().entries)for(auto& binding:entry.bindings){float value=0;if(binding.scale>0&&(std::find(pulse.begin(),pulse.end(),entry.name)!=pulse.end()||std::find(held.begin(),held.end(),entry.name)!=held.end()))value=1;host.GetWindow().QueueTestPhysical(binding.control,value);}
   pulse.clear();
+  // AdvanceOuter publishes at the preceding frame's end. Observe restored
+  // physics now, before UI callbacks or any resumed fixed step can move the car.
+  if(mode=="read"&&phase==1&&!restoreBoundaryObserved){
+   auto* service=world.SceneControl()->SavesIfLoaded();auto* status=service?service->Status(request):nullptr;
+   if(status&&status->state=="completed"){
+    std::ifstream(proof/"expected.json")>>expected;
+    const auto actual=world.Physics().GetTransform(world.RuntimeBody(7000)).position;
+    const auto positionError=glm::distance(actual,Vector(expected["carPosition"]));
+    std::cout<<"RESTORE_BOUNDARY position_error_m="<<positionError<<" actual="<<Vector(actual).dump()<<" expected="<<expected["carPosition"].dump()<<std::endl;
+    Check(positionError<.03f,"cold physical vehicle endpoint restored");
+    if(expected.contains("carVelocity"))Check(glm::distance(world.Physics().GetLinearVelocity(world.RuntimeBody(7000)),Vector(expected["carVelocity"]))<.00001f,"cold physical vehicle velocity restored at the same boundary");
+    restoreBoundaryObserved=true;
+   }
+  }
   if(phase==2&&!aimApplied){host.GetWindow().QueueTestPhysical("mouse:dy",90);aimApplied=true;}
-  if(mode=="write"&&phase==12){auto* service=world.SceneControl()->SavesIfLoaded();if(service)for(uint64_t id=1;id<10;++id){auto* status=service->Status(id);if(status&&status->operation=="save"&&(status->state=="writing"||status->state=="completed")){request=id;expected={{"root",State(world,200)},{"carPosition",Vector(world.Physics().GetTransform(world.RuntimeBody(7000)).position)},{"carState",State(world,7000)}};std::ofstream(proof/"expected.json")<<expected.dump(2);phase=13;break;}}}
+  if(mode=="write"&&phase==12){auto* service=world.SceneControl()->SavesIfLoaded();if(service)for(uint64_t id=1;id<10;++id){auto* status=service->Status(id);if(status&&status->operation=="save"&&(status->state=="writing"||status->state=="completed")){request=id;expected={{"root",State(world,200)},{"carPosition",Vector(world.Physics().GetTransform(world.RuntimeBody(7000)).position)},{"carVelocity",Vector(world.Physics().GetLinearVelocity(world.RuntimeBody(7000)))},{"carState",State(world,7000)}};std::ofstream(proof/"expected.json")<<expected.dump(2);phase=13;break;}}}
  };
  control.afterFrame=[&](EngineHost& host,RuntimeWorld& world,InteractivePlay&){++frame;try{
   if(world.Scripts()&&!world.Scripts()->Diagnostics().empty())throw std::runtime_error(world.Scripts()->Diagnostics().front().message);
@@ -70,7 +84,7 @@ int main(int argc,char** argv){
    else if(phase==1){auto* status=world.SceneControl()->SavesIfLoaded()->Status(request);if(status->state=="failed"){Check(status->error.find("Content fingerprint changed")!=std::string::npos,"actual refused load names changed content fingerprint");Check(status->error.find("matching game build")!=std::string::npos,"actual refused load offers safe recovery");Check(State(world,200).value("pushes",0)==0&&!State(world,100).value("driving",false),"refused load leaves the original current gameplay world intact");done=true;Quit();}else if(status->state=="completed")throw std::runtime_error("incompatible save incorrectly loaded");}
   }else if(mode=="read"){
    if(phase==0&&State(world,100).contains("driving")){std::string error;request=world.SceneControl()->Saves(*world.Resources())->Request("load","lesson","","{}",error);Check(request!=0,"fresh process requests ordinary saved lesson");next(1);}
-   else if(phase==1){auto* status=world.SceneControl()->SavesIfLoaded()->Status(request);if(status->state=="failed")throw std::runtime_error(status->error);if(status->state=="completed"&&State(world,100).value("driving",false)){std::ifstream(proof/"expected.json")>>expected;Check(State(world,200)==expected["root"],"cold root crate counter restored exactly");Check(glm::distance(world.Physics().GetTransform(world.RuntimeBody(7000)).position,Vector(expected["carPosition"]))<.03f,"cold physical vehicle endpoint restored");Check(!world.RuntimeCharacter(100)->settings.enabled,"cold driver lease disables actual motor");start=world.Physics().GetTransform(world.RuntimeBody(7000)).position;held={"move_y"};if(world.UI().Paused())pulse={"pause"};next(2);}}
+   else if(phase==1){auto* status=world.SceneControl()->SavesIfLoaded()->Status(request);if(status->state=="failed")throw std::runtime_error(status->error);if(status->state=="completed"&&State(world,100).value("driving",false)){std::ifstream(proof/"expected.json")>>expected;Check(State(world,200)==expected["root"],"cold root crate counter restored exactly");Check(restoreBoundaryObserved,"physical endpoint was checked before resumed simulation");std::cout<<"LATER_UI_SAMPLE position_delta_m="<<glm::distance(world.Physics().GetTransform(world.RuntimeBody(7000)).position,Vector(expected["carPosition"]))<<std::endl;Check(!world.RuntimeCharacter(100)->settings.enabled,"cold driver lease disables actual motor");start=world.Physics().GetTransform(world.RuntimeBody(7000)).position;held={"move_y"};if(world.UI().Paused())pulse={"pause"};next(2);}}
    else if(phase==2&&wait>180){held.clear();Check(glm::distance(start,world.Physics().GetTransform(world.RuntimeBody(7000)).position)>1,"cold restored vehicle drives physically again");pulse={"region"};next(3);}
    else if(phase==3&&blue&&State(world,blue).contains("pushes")){Check(State(world,blue)["pushes"]==1,"cold regional snapshot preserves exact project counter");Check(world.RuntimeBody(blue).IsValid(),"cold regional crate regains actual collision");done=true;Quit();}
   }else{

@@ -2,6 +2,8 @@ import argparse
 import copy
 import hashlib
 import json
+import io
+import tarfile
 from pathlib import Path
 import sys
 import tempfile
@@ -34,7 +36,13 @@ class Packaging(unittest.TestCase):
     def setUp(self):
         self.tmp=tempfile.TemporaryDirectory();self.addCleanup(self.tmp.cleanup);self.root=Path(self.tmp.name)
         sdk(self.root/'linux','Linux');sdk(self.root/'windows','Windows')
-        source=self.root/'source.tar.gz';source.write_bytes(b'fixture source archive')
+        source=self.root/'source.tar.gz'
+        payload=b'fixture source file'
+        inventory=json.dumps({'schema':1,'files':[{'path':'engine-version.json','sha256':hashlib.sha256(payload).hexdigest()}]}).encode()
+        info=json.dumps({'source_dirty':False,'revision':'a'*40,'tree':'b'*40,'source_fingerprint':'c'*64,'source_files_sha256':hashlib.sha256(inventory).hexdigest()}).encode()
+        with tarfile.open(source,'w:gz') as tar:
+            for name,data in [('engine-version.json',payload),('JUDAS_SOURCE_FILES.json',inventory),('JUDAS_SOURCE_INFO.json',info)]:
+                entry=tarfile.TarInfo(name);entry.size=len(data);tar.addfile(entry,io.BytesIO(data))
         source.with_name(source.name+'.build.json').write_text(json.dumps({'source':{'revision':'a'*40},'sha256':prepare_release.sha(source)}))
         notes=self.root/'notes.md';notes.write_text('Fixture release only, not published.')
         qualification=self.root/'qualification.json';qualification.write_text(json.dumps({'source_revision':'a'*40,'passed':True,'scope':'synthetic packaging fixture, not an engine qualification'}))
@@ -60,6 +68,11 @@ class Packaging(unittest.TestCase):
         (self.root/'windows/judas.exe').unlink()
         with self.assertRaises(ValueError):prepare_release.prepare(self.args)
         self.assertFalse(self.args.output.exists())
+
+    def test_invalid_source_archive_is_rejected(self):
+        self.args.source_archive.write_bytes(b'not an archive')
+        self.args.source_archive.with_name(self.args.source_archive.name+'.build.json').write_text(json.dumps({'source':{'revision':'a'*40},'sha256':prepare_release.sha(self.args.source_archive)}))
+        with self.assertRaises(tarfile.TarError):prepare_release.prepare(self.args)
 
     def test_unapproved_cli_cannot_reach_github(self):
         prepare_release.prepare(self.args)

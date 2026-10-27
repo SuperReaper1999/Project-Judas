@@ -97,6 +97,9 @@ class ReleaseTests(unittest.TestCase):
             p.unlink()
             with self.assertRaises(ValueError):release.verify_download(doc,p)
 
+    def test_excessive_nesting_is_a_controlled_failure(self):
+        with self.assertRaises(ValueError):release.decode('['*2000+'0'+']'*2000)
+
     def test_offline_is_a_controlled_failure(self):
         with patch.object(release.urllib.request,'urlopen',side_effect=OSError('offline')):
             with patch.object(sys,'argv',['release_manifest.py','check','--installed','1.0.0-alpha.1','--platform','Linux']):

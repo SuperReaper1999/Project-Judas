@@ -94,7 +94,10 @@ ReleaseUpdateResult ParseReleaseUpdate(const std::string& response, const std::s
     result.diagnostic = "Release metadata is invalid or incompatible; no update offered";
     if (response.size() > 262144 || !Channel(channel) || !ValidSemanticVersion(installed)) return result;
     try {
-        const auto j = nlohmann::json::parse(response);
+        const auto j = nlohmann::json::parse(response, [](int depth, nlohmann::json::parse_event_t, nlohmann::json&) {
+            if (depth > 16) throw std::invalid_argument("Release metadata nesting exceeds protocol limit");
+            return true;
+        });
         if (!j.is_object() || !j.at("schema").is_number_integer() || j.at("schema") != 1 || j.at("channel") != channel) return result;
         const auto version = j.at("version").get<std::string>();
         Version parsed, local;

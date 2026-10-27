@@ -1,3 +1,4 @@
+#include "TestProjectPath.h"
 #include "EngineHost.h"
 #include "RuntimeWorld.h"
 #include "GameSession.h"
@@ -11,8 +12,8 @@
 namespace {unsigned checks=0,failures=0;void Check(bool ok,const char* label){++checks;failures+=!ok;std::printf("%s %s\n",ok?"PASS":"FAIL",label);}}
 int main(){
  std::string error;EngineHost host;Check(host.Init("M90 participant continuity",480,320,false,error),"native hidden GL/resource host starts");if(failures){std::puts(error.c_str());return 1;}
- host.OpenProjectAssets(std::filesystem::absolute("projects/ragdoll_demo").string(),std::filesystem::absolute("projects/ragdoll_demo/Assets").string());auto& resources=host.Resources();resources.GetMesh("46464646464646464646464646464601",error);resources.WaitForAll();
- Scene scene;Check(LoadSceneFromFile("projects/ragdoll_demo/Scenes/main.judas",scene,error),"original ordinary skeletal fixture loads");if(failures)return 1;
+ host.OpenProjectAssets(TestProjectPath("ragdoll_demo").string(),(TestProjectPath("ragdoll_demo")/"Assets").string());auto& resources=host.Resources();resources.GetMesh("46464646464646464646464646464601",error);resources.WaitForAll();
+ Scene scene;Check(LoadSceneFromFile((TestProjectPath("ragdoll_demo")/"Scenes/main.judas").string(),scene,error),"original ordinary skeletal fixture loads");if(failures)return 1;
  for(auto& o:scene.Objects()){o.scripts.clear();o.ui.reset();}
  auto& socket=scene.CreateObject("visual socket");const auto socketId=socket.id;socket.socket=SceneSocketComponent{11,"Root/Elbow/Tip",{},true};socket.render=SceneRenderComponent{};
  RuntimeWorld world;world.legacyGameplay=false;Check(world.Build(scene,&resources,error),"skeletal world builds with script-owned execution");if(failures){std::puts(error.c_str());return 1;}world.UpdateAnimations(0);world.UpdateSockets();

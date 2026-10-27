@@ -1,0 +1,26 @@
+PASS fresh fixture directory preserves original evidence
+PASS ordinary JS fixture registered: 
+PASS fixture scene writes: 
+PASS project loads: 
+PASS ordinary asset registration has no problems
+PASS scene loads: 
+PASS headless world builds through ordinary resource path: 
+PASS authoritative session starts: 
+PASS actual public JS opts in and rejects unsupported replication
+PASS default null and nonobject plain JSON replication state match the public contract
+PASS public host binding reaches real listener
+PASS active network rejects script-VM replacement before lifecycle mutation
+PASS headless world builds through ordinary resource path: 
+PASS authoritative session starts: 
+PASS public join binding completes content-checked handshake
+PASS actual JS observes replicated JSON and controlled ownership
+PASS client cannot publish host state, ownership or undeclared channels
+PASS custom project channel reaches raw network intent and existing PlayerInput equally
+PASS remote custom action is seen once by authoritative fixed input
+PASS host JS applies real force to physical body from remote intent
+PASS neutral logical snapshot stops remote intent
+PASS actual JS close invalidates previous replica handles
+PASS host observes ordinary client close
+FAIL project loads: 
+FAIL project loads: 
+SUMMARY checks=24 failures=1

@@ -109,11 +109,33 @@ def validate(document, channel=None):
     return document
 
 
+def decode(raw):
+    try:
+        text = raw.decode('utf-8') if isinstance(raw, bytes) else raw
+        depth = 0
+        quoted = escaped = False
+        for char in text:
+            if quoted:
+                if escaped: escaped = False
+                elif char == '\\': escaped = True
+                elif char == '"': quoted = False
+            elif char == '"': quoted = True
+            elif char in '[{':
+                depth += 1
+                if depth > 16: raise ValueError('Release metadata nesting exceeds protocol limit')
+            elif char in ']}': depth -= 1
+        def nonfinite(value):
+            raise ValueError('Non-finite value in release JSON')
+        return json.loads(text, parse_constant=nonfinite)
+    except (RecursionError, UnicodeDecodeError) as error:
+        raise ValueError('Malformed or excessively nested release metadata') from error
+
+
 def read_manifest(path, channel=None):
     raw = Path(path).read_bytes()
     if len(raw) > LIMIT:
         raise ValueError('Release manifest exceeds size limit')
-    return validate(json.loads(raw), channel)
+    return validate(decode(raw), channel)
 
 
 def fetch(channel):
@@ -125,7 +147,7 @@ def fetch(channel):
         raw = response.read(LIMIT + 1)
     if len(raw) > LIMIT:
         raise ValueError('Release response exceeds size limit')
-    return validate(json.loads(raw), channel)
+    return validate(decode(raw), channel)
 
 
 def result(document, installed, platform, architecture):

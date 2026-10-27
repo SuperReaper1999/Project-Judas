@@ -1,0 +1,10 @@
+JudasProject 1
+name "Stillwater - Basic Water Lab"
+startup-scene "Scenes/stillwater.judas"
+assets-dir "Assets"
+scenes-dir "Scenes"
+saves-dir "Saves"
+legacy-gameplay "false"
+basic-water "true"
+water-swimming "true"
+advanced-fluid-dynamics "false"

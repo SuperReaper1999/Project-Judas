@@ -1,0 +1,1444 @@
+JudasScene 3
+settings
+ name "Stillwater / basic water, advanced OFF"
+ world-origin 0 0 0
+ sun-direction -0.3 0.8 0.5
+ sun-color 1 0.94 0.82
+ ambient 0.35 0.4 0.43
+ background-color 0.48 0.66 0.76
+ fluid-scale 1
+ fidelity-policy none
+ next-id 999
+end
+object 1 "Faithful gravity"
+ position 0 0 0
+ rotation 1 0 0 0
+ scale 1 1 1
+ gravity uniform 9.81
+ gravity.region sphere 10000
+end
+
+object 2 "Stillwater pool"
+ position 0 0 0
+ rotation 1 0 0 0
+ scale 1 1 1
+ water.basic "{\"version\":1,\"enabled\":true,\"halfExtents\":[7,3.2,6],\"color\":[0.018,0.28,0.32],\"flow\":[0.12,0,0],\"waveAmplitude\":0.07,\"wavelength\":3.5,\"waveSpeed\":1.2,\"opacity\":0.78,\"density\":1000}"
+end
+
+object 3 "Pool bottom"
+ position 0 -3.4 0
+ rotation 1 0 0 0
+ scale 1 1 1
+ render box
+ render.half-extents 8 0.2 7
+ render.radius 0.5
+ render.color 0.14 0.3 0.29
+ render.alpha 1
+ render.secondary-color 0.8 0.8 0.8
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+ body static box
+ body.half-extents 8 0.2 7
+ body.radius 0.5
+ body.terrain ""
+ body.mass 1
+ body.friction 0.8
+ body.restitution 0.05
+ body.initial-velocity 0 0 0
+ body.pickable false
+ body.managed false
+ body.compound-count 0
+end
+
+object 4 "South bank"
+ position 0 -0.3 10
+ rotation 1 0 0 0
+ scale 1 1 1
+ render box
+ render.half-extents 14 0.3 4
+ render.radius 0.5
+ render.color 0.25 0.36 0.29
+ render.alpha 1
+ render.secondary-color 0.8 0.8 0.8
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+ body static box
+ body.half-extents 14 0.3 4
+ body.radius 0.5
+ body.terrain ""
+ body.mass 1
+ body.friction 0.8
+ body.restitution 0.05
+ body.initial-velocity 0 0 0
+ body.pickable false
+ body.managed false
+ body.compound-count 0
+end
+
+object 5 "North bank"
+ position 0 -0.3 -10
+ rotation 1 0 0 0
+ scale 1 1 1
+ render box
+ render.half-extents 14 0.3 4
+ render.radius 0.5
+ render.color 0.25 0.36 0.29
+ render.alpha 1
+ render.secondary-color 0.8 0.8 0.8
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+ body static box
+ body.half-extents 14 0.3 4
+ body.radius 0.5
+ body.terrain ""
+ body.mass 1
+ body.friction 0.8
+ body.restitution 0.05
+ body.initial-velocity 0 0 0
+ body.pickable false
+ body.managed false
+ body.compound-count 0
+end
+
+object 6 "West bank"
+ position -11 -0.3 0
+ rotation 1 0 0 0
+ scale 1 1 1
+ render box
+ render.half-extents 4 0.3 6
+ render.radius 0.5
+ render.color 0.25 0.36 0.29
+ render.alpha 1
+ render.secondary-color 0.8 0.8 0.8
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+ body static box
+ body.half-extents 4 0.3 6
+ body.radius 0.5
+ body.terrain ""
+ body.mass 1
+ body.friction 0.8
+ body.restitution 0.05
+ body.initial-velocity 0 0 0
+ body.pickable false
+ body.managed false
+ body.compound-count 0
+end
+
+object 7 "East bank"
+ position 11 -0.3 0
+ rotation 1 0 0 0
+ scale 1 1 1
+ render box
+ render.half-extents 4 0.3 6
+ render.radius 0.5
+ render.color 0.25 0.36 0.29
+ render.alpha 1
+ render.secondary-color 0.8 0.8 0.8
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+ body static box
+ body.half-extents 4 0.3 6
+ body.radius 0.5
+ body.terrain ""
+ body.mass 1
+ body.friction 0.8
+ body.restitution 0.05
+ body.initial-velocity 0 0 0
+ body.pickable false
+ body.managed false
+ body.compound-count 0
+end
+
+object 8 "Pool stone retaining wall"
+ position -7.2 -1.7 0
+ rotation 1 0 0 0
+ scale 1 1 1
+ render box
+ render.half-extents 0.2 1.7 6.2
+ render.radius 0.5
+ render.color 0.34 0.42 0.42
+ render.alpha 1
+ render.secondary-color 0.8 0.8 0.8
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+ body static box
+ body.half-extents 0.2 1.7 6.2
+ body.radius 0.5
+ body.terrain ""
+ body.mass 1
+ body.friction 0.8
+ body.restitution 0.05
+ body.initial-velocity 0 0 0
+ body.pickable false
+ body.managed false
+ body.compound-count 0
+end
+
+object 9 "Pool stone retaining wall"
+ position 7.2 -1.7 0
+ rotation 1 0 0 0
+ scale 1 1 1
+ render box
+ render.half-extents 0.2 1.7 6.2
+ render.radius 0.5
+ render.color 0.34 0.42 0.42
+ render.alpha 1
+ render.secondary-color 0.8 0.8 0.8
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+ body static box
+ body.half-extents 0.2 1.7 6.2
+ body.radius 0.5
+ body.terrain ""
+ body.mass 1
+ body.friction 0.8
+ body.restitution 0.05
+ body.initial-velocity 0 0 0
+ body.pickable false
+ body.managed false
+ body.compound-count 0
+end
+
+object 10 "Pool stone retaining wall"
+ position 0 -1.7 -6.2
+ rotation 1 0 0 0
+ scale 1 1 1
+ render box
+ render.half-extents 7.4 1.7 0.2
+ render.radius 0.5
+ render.color 0.34 0.42 0.42
+ render.alpha 1
+ render.secondary-color 0.8 0.8 0.8
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+ body static box
+ body.half-extents 7.4 1.7 0.2
+ body.radius 0.5
+ body.terrain ""
+ body.mass 1
+ body.friction 0.8
+ body.restitution 0.05
+ body.initial-velocity 0 0 0
+ body.pickable false
+ body.managed false
+ body.compound-count 0
+end
+
+object 11 "Pool stone retaining wall"
+ position 0 -1.7 6.2
+ rotation 1 0 0 0
+ scale 1 1 1
+ render box
+ render.half-extents 7.4 1.7 0.2
+ render.radius 0.5
+ render.color 0.34 0.42 0.42
+ render.alpha 1
+ render.secondary-color 0.8 0.8 0.8
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+ body static box
+ body.half-extents 7.4 1.7 0.2
+ body.radius 0.5
+ body.terrain ""
+ body.mass 1
+ body.friction 0.8
+ body.restitution 0.05
+ body.initial-velocity 0 0 0
+ body.pickable false
+ body.managed false
+ body.compound-count 0
+end
+
+object 12 "Walkable pool step"
+ position 5.9 -0.25 3.8
+ rotation 1 0 0 0
+ scale 1 1 1
+ render box
+ render.half-extents 0.4 0.25 1.2
+ render.radius 0.5
+ render.color 0.46 0.5 0.46
+ render.alpha 1
+ render.secondary-color 0.8 0.8 0.8
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+ body static box
+ body.half-extents 0.4 0.25 1.2
+ body.radius 0.5
+ body.terrain ""
+ body.mass 1
+ body.friction 0.8
+ body.restitution 0.05
+ body.initial-velocity 0 0 0
+ body.pickable false
+ body.managed false
+ body.compound-count 0
+end
+
+object 13 "Walkable pool step"
+ position 5.15 -0.75 3.8
+ rotation 1 0 0 0
+ scale 1 1 1
+ render box
+ render.half-extents 0.4 0.25 1.2
+ render.radius 0.5
+ render.color 0.46 0.5 0.46
+ render.alpha 1
+ render.secondary-color 0.8 0.8 0.8
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+ body static box
+ body.half-extents 0.4 0.25 1.2
+ body.radius 0.5
+ body.terrain ""
+ body.mass 1
+ body.friction 0.8
+ body.restitution 0.05
+ body.initial-velocity 0 0 0
+ body.pickable false
+ body.managed false
+ body.compound-count 0
+end
+
+object 14 "Walkable pool step"
+ position 4.4 -1.25 3.8
+ rotation 1 0 0 0
+ scale 1 1 1
+ render box
+ render.half-extents 0.4 0.25 1.2
+ render.radius 0.5
+ render.color 0.46 0.5 0.46
+ render.alpha 1
+ render.secondary-color 0.8 0.8 0.8
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+ body static box
+ body.half-extents 0.4 0.25 1.2
+ body.radius 0.5
+ body.terrain ""
+ body.mass 1
+ body.friction 0.8
+ body.restitution 0.05
+ body.initial-velocity 0 0 0
+ body.pickable false
+ body.managed false
+ body.compound-count 0
+end
+
+object 15 "Walkable pool step"
+ position 3.6500000000000004 -1.75 3.8
+ rotation 1 0 0 0
+ scale 1 1 1
+ render box
+ render.half-extents 0.4 0.25 1.2
+ render.radius 0.5
+ render.color 0.46 0.5 0.46
+ render.alpha 1
+ render.secondary-color 0.8 0.8 0.8
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+ body static box
+ body.half-extents 0.4 0.25 1.2
+ body.radius 0.5
+ body.terrain ""
+ body.mass 1
+ body.friction 0.8
+ body.restitution 0.05
+ body.initial-velocity 0 0 0
+ body.pickable false
+ body.managed false
+ body.compound-count 0
+end
+
+object 16 "Walkable pool step"
+ position 2.9000000000000004 -2.25 3.8
+ rotation 1 0 0 0
+ scale 1 1 1
+ render box
+ render.half-extents 0.4 0.25 1.2
+ render.radius 0.5
+ render.color 0.46 0.5 0.46
+ render.alpha 1
+ render.secondary-color 0.8 0.8 0.8
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+ body static box
+ body.half-extents 0.4 0.25 1.2
+ body.radius 0.5
+ body.terrain ""
+ body.mass 1
+ body.friction 0.8
+ body.restitution 0.05
+ body.initial-velocity 0 0 0
+ body.pickable false
+ body.managed false
+ body.compound-count 0
+end
+
+object 17 "Walkable pool step"
+ position 2.1500000000000004 -2.75 3.8
+ rotation 1 0 0 0
+ scale 1 1 1
+ render box
+ render.half-extents 0.4 0.25 1.2
+ render.radius 0.5
+ render.color 0.46 0.5 0.46
+ render.alpha 1
+ render.secondary-color 0.8 0.8 0.8
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+ body static box
+ body.half-extents 0.4 0.25 1.2
+ body.radius 0.5
+ body.terrain ""
+ body.mass 1
+ body.friction 0.8
+ body.restitution 0.05
+ body.initial-velocity 0 0 0
+ body.pickable false
+ body.managed false
+ body.compound-count 0
+end
+
+object 18 "Wooden jetty"
+ position 0 0.12 6.0
+ rotation 1 0 0 0
+ scale 1 1 1
+ render box
+ render.half-extents 1.2 0.12 0.21
+ render.radius 0.5
+ render.color 0.42 0.29 0.17
+ render.alpha 1
+ render.secondary-color 0.8 0.8 0.8
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+ body static box
+ body.half-extents 1.2 0.12 0.21
+ body.radius 0.5
+ body.terrain ""
+ body.mass 1
+ body.friction 0.8
+ body.restitution 0.05
+ body.initial-velocity 0 0 0
+ body.pickable false
+ body.managed false
+ body.compound-count 0
+end
+
+object 19 "Wooden jetty"
+ position 0 0.12 5.52
+ rotation 1 0 0 0
+ scale 1 1 1
+ render box
+ render.half-extents 1.2 0.12 0.21
+ render.radius 0.5
+ render.color 0.42 0.29 0.17
+ render.alpha 1
+ render.secondary-color 0.8 0.8 0.8
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+ body static box
+ body.half-extents 1.2 0.12 0.21
+ body.radius 0.5
+ body.terrain ""
+ body.mass 1
+ body.friction 0.8
+ body.restitution 0.05
+ body.initial-velocity 0 0 0
+ body.pickable false
+ body.managed false
+ body.compound-count 0
+end
+
+object 20 "Wooden jetty"
+ position 0 0.12 5.04
+ rotation 1 0 0 0
+ scale 1 1 1
+ render box
+ render.half-extents 1.2 0.12 0.21
+ render.radius 0.5
+ render.color 0.42 0.29 0.17
+ render.alpha 1
+ render.secondary-color 0.8 0.8 0.8
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+ body static box
+ body.half-extents 1.2 0.12 0.21
+ body.radius 0.5
+ body.terrain ""
+ body.mass 1
+ body.friction 0.8
+ body.restitution 0.05
+ body.initial-velocity 0 0 0
+ body.pickable false
+ body.managed false
+ body.compound-count 0
+end
+
+object 21 "Wooden jetty"
+ position 0 0.12 4.5600000000000005
+ rotation 1 0 0 0
+ scale 1 1 1
+ render box
+ render.half-extents 1.2 0.12 0.21
+ render.radius 0.5
+ render.color 0.42 0.29 0.17
+ render.alpha 1
+ render.secondary-color 0.8 0.8 0.8
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+ body static box
+ body.half-extents 1.2 0.12 0.21
+ body.radius 0.5
+ body.terrain ""
+ body.mass 1
+ body.friction 0.8
+ body.restitution 0.05
+ body.initial-velocity 0 0 0
+ body.pickable false
+ body.managed false
+ body.compound-count 0
+end
+
+object 22 "Wooden jetty"
+ position 0 0.12 4.08
+ rotation 1 0 0 0
+ scale 1 1 1
+ render box
+ render.half-extents 1.2 0.12 0.21
+ render.radius 0.5
+ render.color 0.42 0.29 0.17
+ render.alpha 1
+ render.secondary-color 0.8 0.8 0.8
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+ body static box
+ body.half-extents 1.2 0.12 0.21
+ body.radius 0.5
+ body.terrain ""
+ body.mass 1
+ body.friction 0.8
+ body.restitution 0.05
+ body.initial-velocity 0 0 0
+ body.pickable false
+ body.managed false
+ body.compound-count 0
+end
+
+object 23 "Wooden jetty"
+ position 0 0.12 3.6
+ rotation 1 0 0 0
+ scale 1 1 1
+ render box
+ render.half-extents 1.2 0.12 0.21
+ render.radius 0.5
+ render.color 0.42 0.29 0.17
+ render.alpha 1
+ render.secondary-color 0.8 0.8 0.8
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+ body static box
+ body.half-extents 1.2 0.12 0.21
+ body.radius 0.5
+ body.terrain ""
+ body.mass 1
+ body.friction 0.8
+ body.restitution 0.05
+ body.initial-velocity 0 0 0
+ body.pickable false
+ body.managed false
+ body.compound-count 0
+end
+
+object 24 "Wooden jetty"
+ position 0 0.12 3.12
+ rotation 1 0 0 0
+ scale 1 1 1
+ render box
+ render.half-extents 1.2 0.12 0.21
+ render.radius 0.5
+ render.color 0.42 0.29 0.17
+ render.alpha 1
+ render.secondary-color 0.8 0.8 0.8
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+ body static box
+ body.half-extents 1.2 0.12 0.21
+ body.radius 0.5
+ body.terrain ""
+ body.mass 1
+ body.friction 0.8
+ body.restitution 0.05
+ body.initial-velocity 0 0 0
+ body.pickable false
+ body.managed false
+ body.compound-count 0
+end
+
+object 25 "Jetty post"
+ position -1.1 -0.35 3.2
+ rotation 1 0 0 0
+ scale 1 1 1
+ render box
+ render.half-extents 0.09 0.7 0.09
+ render.radius 0.5
+ render.color 0.29 0.19 0.11
+ render.alpha 1
+ render.secondary-color 0.8 0.8 0.8
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+ body static box
+ body.half-extents 0.09 0.7 0.09
+ body.radius 0.5
+ body.terrain ""
+ body.mass 1
+ body.friction 0.8
+ body.restitution 0.05
+ body.initial-velocity 0 0 0
+ body.pickable false
+ body.managed false
+ body.compound-count 0
+end
+
+object 26 "Jetty post"
+ position 1.1 -0.35 3.2
+ rotation 1 0 0 0
+ scale 1 1 1
+ render box
+ render.half-extents 0.09 0.7 0.09
+ render.radius 0.5
+ render.color 0.29 0.19 0.11
+ render.alpha 1
+ render.secondary-color 0.8 0.8 0.8
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+ body static box
+ body.half-extents 0.09 0.7 0.09
+ body.radius 0.5
+ body.terrain ""
+ body.mass 1
+ body.friction 0.8
+ body.restitution 0.05
+ body.initial-velocity 0 0 0
+ body.pickable false
+ body.managed false
+ body.compound-count 0
+end
+
+object 27 "Cedar trunk"
+ position -10 1 -5
+ rotation 1 0 0 0
+ scale 1 1 1
+ render box
+ render.half-extents 0.22 1 0.22
+ render.radius 0.5
+ render.color 0.27 0.17 0.1
+ render.alpha 1
+ render.secondary-color 0.8 0.8 0.8
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+ body static box
+ body.half-extents 0.22 1 0.22
+ body.radius 0.5
+ body.terrain ""
+ body.mass 1
+ body.friction 0.8
+ body.restitution 0.05
+ body.initial-velocity 0 0 0
+ body.pickable false
+ body.managed false
+ body.compound-count 0
+end
+
+object 28 "Sculpted cedar canopy"
+ position -10 2.2 -5
+ rotation 1 0 0 0
+ scale 1 1 1
+ render box
+ render.half-extents 1.2 0.45 1.2
+ render.radius 0.5
+ render.color 0.14 0.3 0.2
+ render.alpha 1
+ render.secondary-color 0.8 0.8 0.8
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+end
+
+object 29 "Sculpted cedar canopy"
+ position -10 2.8000000000000003 -5
+ rotation 1 0 0 0
+ scale 1 1 1
+ render box
+ render.half-extents 0.96 0.45 0.96
+ render.radius 0.5
+ render.color 0.165 0.325 0.21500000000000002
+ render.alpha 1
+ render.secondary-color 0.8 0.8 0.8
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+end
+
+object 30 "Sculpted cedar canopy"
+ position -10 3.4000000000000004 -5
+ rotation 1 0 0 0
+ scale 1 1 1
+ render box
+ render.half-extents 0.72 0.45 0.72
+ render.radius 0.5
+ render.color 0.19 0.35 0.23
+ render.alpha 1
+ render.secondary-color 0.8 0.8 0.8
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+end
+
+object 31 "Cedar trunk"
+ position 10 1 -7
+ rotation 1 0 0 0
+ scale 1 1 1
+ render box
+ render.half-extents 0.22 1 0.22
+ render.radius 0.5
+ render.color 0.27 0.17 0.1
+ render.alpha 1
+ render.secondary-color 0.8 0.8 0.8
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+ body static box
+ body.half-extents 0.22 1 0.22
+ body.radius 0.5
+ body.terrain ""
+ body.mass 1
+ body.friction 0.8
+ body.restitution 0.05
+ body.initial-velocity 0 0 0
+ body.pickable false
+ body.managed false
+ body.compound-count 0
+end
+
+object 32 "Sculpted cedar canopy"
+ position 10 2.2 -7
+ rotation 1 0 0 0
+ scale 1 1 1
+ render box
+ render.half-extents 1.2 0.45 1.2
+ render.radius 0.5
+ render.color 0.14 0.3 0.2
+ render.alpha 1
+ render.secondary-color 0.8 0.8 0.8
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+end
+
+object 33 "Sculpted cedar canopy"
+ position 10 2.8000000000000003 -7
+ rotation 1 0 0 0
+ scale 1 1 1
+ render box
+ render.half-extents 0.96 0.45 0.96
+ render.radius 0.5
+ render.color 0.165 0.325 0.21500000000000002
+ render.alpha 1
+ render.secondary-color 0.8 0.8 0.8
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+end
+
+object 34 "Sculpted cedar canopy"
+ position 10 3.4000000000000004 -7
+ rotation 1 0 0 0
+ scale 1 1 1
+ render box
+ render.half-extents 0.72 0.45 0.72
+ render.radius 0.5
+ render.color 0.19 0.35 0.23
+ render.alpha 1
+ render.secondary-color 0.8 0.8 0.8
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+end
+
+object 35 "Cedar trunk"
+ position -9 1 9
+ rotation 1 0 0 0
+ scale 1 1 1
+ render box
+ render.half-extents 0.22 1 0.22
+ render.radius 0.5
+ render.color 0.27 0.17 0.1
+ render.alpha 1
+ render.secondary-color 0.8 0.8 0.8
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+ body static box
+ body.half-extents 0.22 1 0.22
+ body.radius 0.5
+ body.terrain ""
+ body.mass 1
+ body.friction 0.8
+ body.restitution 0.05
+ body.initial-velocity 0 0 0
+ body.pickable false
+ body.managed false
+ body.compound-count 0
+end
+
+object 36 "Sculpted cedar canopy"
+ position -9 2.2 9
+ rotation 1 0 0 0
+ scale 1 1 1
+ render box
+ render.half-extents 1.2 0.45 1.2
+ render.radius 0.5
+ render.color 0.14 0.3 0.2
+ render.alpha 1
+ render.secondary-color 0.8 0.8 0.8
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+end
+
+object 37 "Sculpted cedar canopy"
+ position -9 2.8000000000000003 9
+ rotation 1 0 0 0
+ scale 1 1 1
+ render box
+ render.half-extents 0.96 0.45 0.96
+ render.radius 0.5
+ render.color 0.165 0.325 0.21500000000000002
+ render.alpha 1
+ render.secondary-color 0.8 0.8 0.8
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+end
+
+object 38 "Sculpted cedar canopy"
+ position -9 3.4000000000000004 9
+ rotation 1 0 0 0
+ scale 1 1 1
+ render box
+ render.half-extents 0.72 0.45 0.72
+ render.radius 0.5
+ render.color 0.19 0.35 0.23
+ render.alpha 1
+ render.secondary-color 0.8 0.8 0.8
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+end
+
+object 39 "Cedar trunk"
+ position 12 1 5
+ rotation 1 0 0 0
+ scale 1 1 1
+ render box
+ render.half-extents 0.22 1 0.22
+ render.radius 0.5
+ render.color 0.27 0.17 0.1
+ render.alpha 1
+ render.secondary-color 0.8 0.8 0.8
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+ body static box
+ body.half-extents 0.22 1 0.22
+ body.radius 0.5
+ body.terrain ""
+ body.mass 1
+ body.friction 0.8
+ body.restitution 0.05
+ body.initial-velocity 0 0 0
+ body.pickable false
+ body.managed false
+ body.compound-count 0
+end
+
+object 40 "Sculpted cedar canopy"
+ position 12 2.2 5
+ rotation 1 0 0 0
+ scale 1 1 1
+ render box
+ render.half-extents 1.2 0.45 1.2
+ render.radius 0.5
+ render.color 0.14 0.3 0.2
+ render.alpha 1
+ render.secondary-color 0.8 0.8 0.8
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+end
+
+object 41 "Sculpted cedar canopy"
+ position 12 2.8000000000000003 5
+ rotation 1 0 0 0
+ scale 1 1 1
+ render box
+ render.half-extents 0.96 0.45 0.96
+ render.radius 0.5
+ render.color 0.165 0.325 0.21500000000000002
+ render.alpha 1
+ render.secondary-color 0.8 0.8 0.8
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+end
+
+object 42 "Sculpted cedar canopy"
+ position 12 3.4000000000000004 5
+ rotation 1 0 0 0
+ scale 1 1 1
+ render box
+ render.half-extents 0.72 0.45 0.72
+ render.radius 0.5
+ render.color 0.19 0.35 0.23
+ render.alpha 1
+ render.secondary-color 0.8 0.8 0.8
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+end
+
+object 43 "Cedar trunk"
+ position -5 1 -11
+ rotation 1 0 0 0
+ scale 1 1 1
+ render box
+ render.half-extents 0.22 1 0.22
+ render.radius 0.5
+ render.color 0.27 0.17 0.1
+ render.alpha 1
+ render.secondary-color 0.8 0.8 0.8
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+ body static box
+ body.half-extents 0.22 1 0.22
+ body.radius 0.5
+ body.terrain ""
+ body.mass 1
+ body.friction 0.8
+ body.restitution 0.05
+ body.initial-velocity 0 0 0
+ body.pickable false
+ body.managed false
+ body.compound-count 0
+end
+
+object 44 "Sculpted cedar canopy"
+ position -5 2.2 -11
+ rotation 1 0 0 0
+ scale 1 1 1
+ render box
+ render.half-extents 1.2 0.45 1.2
+ render.radius 0.5
+ render.color 0.14 0.3 0.2
+ render.alpha 1
+ render.secondary-color 0.8 0.8 0.8
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+end
+
+object 45 "Sculpted cedar canopy"
+ position -5 2.8000000000000003 -11
+ rotation 1 0 0 0
+ scale 1 1 1
+ render box
+ render.half-extents 0.96 0.45 0.96
+ render.radius 0.5
+ render.color 0.165 0.325 0.21500000000000002
+ render.alpha 1
+ render.secondary-color 0.8 0.8 0.8
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+end
+
+object 46 "Sculpted cedar canopy"
+ position -5 3.4000000000000004 -11
+ rotation 1 0 0 0
+ scale 1 1 1
+ render box
+ render.half-extents 0.72 0.45 0.72
+ render.radius 0.5
+ render.color 0.19 0.35 0.23
+ render.alpha 1
+ render.secondary-color 0.8 0.8 0.8
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+end
+
+object 47 "Cedar trunk"
+ position 6 1 12
+ rotation 1 0 0 0
+ scale 1 1 1
+ render box
+ render.half-extents 0.22 1 0.22
+ render.radius 0.5
+ render.color 0.27 0.17 0.1
+ render.alpha 1
+ render.secondary-color 0.8 0.8 0.8
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+ body static box
+ body.half-extents 0.22 1 0.22
+ body.radius 0.5
+ body.terrain ""
+ body.mass 1
+ body.friction 0.8
+ body.restitution 0.05
+ body.initial-velocity 0 0 0
+ body.pickable false
+ body.managed false
+ body.compound-count 0
+end
+
+object 48 "Sculpted cedar canopy"
+ position 6 2.2 12
+ rotation 1 0 0 0
+ scale 1 1 1
+ render box
+ render.half-extents 1.2 0.45 1.2
+ render.radius 0.5
+ render.color 0.14 0.3 0.2
+ render.alpha 1
+ render.secondary-color 0.8 0.8 0.8
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+end
+
+object 49 "Sculpted cedar canopy"
+ position 6 2.8000000000000003 12
+ rotation 1 0 0 0
+ scale 1 1 1
+ render box
+ render.half-extents 0.96 0.45 0.96
+ render.radius 0.5
+ render.color 0.165 0.325 0.21500000000000002
+ render.alpha 1
+ render.secondary-color 0.8 0.8 0.8
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+end
+
+object 50 "Sculpted cedar canopy"
+ position 6 3.4000000000000004 12
+ rotation 1 0 0 0
+ scale 1 1 1
+ render box
+ render.half-extents 0.72 0.45 0.72
+ render.radius 0.5
+ render.color 0.19 0.35 0.23
+ render.alpha 1
+ render.secondary-color 0.8 0.8 0.8
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+end
+
+object 51 "Paving stone"
+ position -5.0 0.04 8
+ rotation 1 0 0 0
+ scale 1 1 1
+ render box
+ render.half-extents 0.48 0.04 0.55
+ render.radius 0.5
+ render.color 0.45 0.47 0.43
+ render.alpha 1
+ render.secondary-color 0.8 0.8 0.8
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+ body static box
+ body.half-extents 0.48 0.04 0.55
+ body.radius 0.5
+ body.terrain ""
+ body.mass 1
+ body.friction 0.8
+ body.restitution 0.05
+ body.initial-velocity 0 0 0
+ body.pickable false
+ body.managed false
+ body.compound-count 0
+end
+
+object 52 "Paving stone"
+ position -3.8 0.04 8
+ rotation 1 0 0 0
+ scale 1 1 1
+ render box
+ render.half-extents 0.48 0.04 0.55
+ render.radius 0.5
+ render.color 0.45 0.47 0.43
+ render.alpha 1
+ render.secondary-color 0.8 0.8 0.8
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+ body static box
+ body.half-extents 0.48 0.04 0.55
+ body.radius 0.5
+ body.terrain ""
+ body.mass 1
+ body.friction 0.8
+ body.restitution 0.05
+ body.initial-velocity 0 0 0
+ body.pickable false
+ body.managed false
+ body.compound-count 0
+end
+
+object 53 "Paving stone"
+ position -2.6 0.04 8
+ rotation 1 0 0 0
+ scale 1 1 1
+ render box
+ render.half-extents 0.48 0.04 0.55
+ render.radius 0.5
+ render.color 0.45 0.47 0.43
+ render.alpha 1
+ render.secondary-color 0.8 0.8 0.8
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+ body static box
+ body.half-extents 0.48 0.04 0.55
+ body.radius 0.5
+ body.terrain ""
+ body.mass 1
+ body.friction 0.8
+ body.restitution 0.05
+ body.initial-velocity 0 0 0
+ body.pickable false
+ body.managed false
+ body.compound-count 0
+end
+
+object 54 "Paving stone"
+ position -1.4000000000000004 0.04 8
+ rotation 1 0 0 0
+ scale 1 1 1
+ render box
+ render.half-extents 0.48 0.04 0.55
+ render.radius 0.5
+ render.color 0.45 0.47 0.43
+ render.alpha 1
+ render.secondary-color 0.8 0.8 0.8
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+ body static box
+ body.half-extents 0.48 0.04 0.55
+ body.radius 0.5
+ body.terrain ""
+ body.mass 1
+ body.friction 0.8
+ body.restitution 0.05
+ body.initial-velocity 0 0 0
+ body.pickable false
+ body.managed false
+ body.compound-count 0
+end
+
+object 55 "Paving stone"
+ position -0.20000000000000018 0.04 8
+ rotation 1 0 0 0
+ scale 1 1 1
+ render box
+ render.half-extents 0.48 0.04 0.55
+ render.radius 0.5
+ render.color 0.45 0.47 0.43
+ render.alpha 1
+ render.secondary-color 0.8 0.8 0.8
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+ body static box
+ body.half-extents 0.48 0.04 0.55
+ body.radius 0.5
+ body.terrain ""
+ body.mass 1
+ body.friction 0.8
+ body.restitution 0.05
+ body.initial-velocity 0 0 0
+ body.pickable false
+ body.managed false
+ body.compound-count 0
+end
+
+object 56 "Paving stone"
+ position 1.0 0.04 8
+ rotation 1 0 0 0
+ scale 1 1 1
+ render box
+ render.half-extents 0.48 0.04 0.55
+ render.radius 0.5
+ render.color 0.45 0.47 0.43
+ render.alpha 1
+ render.secondary-color 0.8 0.8 0.8
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+ body static box
+ body.half-extents 0.48 0.04 0.55
+ body.radius 0.5
+ body.terrain ""
+ body.mass 1
+ body.friction 0.8
+ body.restitution 0.05
+ body.initial-velocity 0 0 0
+ body.pickable false
+ body.managed false
+ body.compound-count 0
+end
+
+object 57 "Paving stone"
+ position 2.1999999999999993 0.04 8
+ rotation 1 0 0 0
+ scale 1 1 1
+ render box
+ render.half-extents 0.48 0.04 0.55
+ render.radius 0.5
+ render.color 0.45 0.47 0.43
+ render.alpha 1
+ render.secondary-color 0.8 0.8 0.8
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+ body static box
+ body.half-extents 0.48 0.04 0.55
+ body.radius 0.5
+ body.terrain ""
+ body.mass 1
+ body.friction 0.8
+ body.restitution 0.05
+ body.initial-velocity 0 0 0
+ body.pickable false
+ body.managed false
+ body.compound-count 0
+end
+
+object 58 "Paving stone"
+ position 3.4000000000000004 0.04 8
+ rotation 1 0 0 0
+ scale 1 1 1
+ render box
+ render.half-extents 0.48 0.04 0.55
+ render.radius 0.5
+ render.color 0.45 0.47 0.43
+ render.alpha 1
+ render.secondary-color 0.8 0.8 0.8
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+ body static box
+ body.half-extents 0.48 0.04 0.55
+ body.radius 0.5
+ body.terrain ""
+ body.mass 1
+ body.friction 0.8
+ body.restitution 0.05
+ body.initial-velocity 0 0 0
+ body.pickable false
+ body.managed false
+ body.compound-count 0
+end
+
+object 59 "Paving stone"
+ position 4.6 0.04 8
+ rotation 1 0 0 0
+ scale 1 1 1
+ render box
+ render.half-extents 0.48 0.04 0.55
+ render.radius 0.5
+ render.color 0.45 0.47 0.43
+ render.alpha 1
+ render.secondary-color 0.8 0.8 0.8
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+ body static box
+ body.half-extents 0.48 0.04 0.55
+ body.radius 0.5
+ body.terrain ""
+ body.mass 1
+ body.friction 0.8
+ body.restitution 0.05
+ body.initial-velocity 0 0 0
+ body.pickable false
+ body.managed false
+ body.compound-count 0
+end
+
+object 60 "Garden rock"
+ position -8 0.25 4
+ rotation 1 0 0 0
+ scale 1 1 1
+ render box
+ render.half-extents 0.7 0.35 0.55
+ render.radius 0.5
+ render.color 0.39 0.43 0.42
+ render.alpha 1
+ render.secondary-color 0.8 0.8 0.8
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+ body static box
+ body.half-extents 0.7 0.35 0.55
+ body.radius 0.5
+ body.terrain ""
+ body.mass 1
+ body.friction 0.8
+ body.restitution 0.05
+ body.initial-velocity 0 0 0
+ body.pickable false
+ body.managed false
+ body.compound-count 0
+end
+
+object 61 "Garden rock"
+ position -7 0.25 -8
+ rotation 1 0 0 0
+ scale 1 1 1
+ render box
+ render.half-extents 0.7 0.35 0.55
+ render.radius 0.5
+ render.color 0.39 0.43 0.42
+ render.alpha 1
+ render.secondary-color 0.8 0.8 0.8
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+ body static box
+ body.half-extents 0.7 0.35 0.55
+ body.radius 0.5
+ body.terrain ""
+ body.mass 1
+ body.friction 0.8
+ body.restitution 0.05
+ body.initial-velocity 0 0 0
+ body.pickable false
+ body.managed false
+ body.compound-count 0
+end
+
+object 62 "Garden rock"
+ position 8 0.25 -5
+ rotation 1 0 0 0
+ scale 1 1 1
+ render box
+ render.half-extents 0.7 0.35 0.55
+ render.radius 0.5
+ render.color 0.39 0.43 0.42
+ render.alpha 1
+ render.secondary-color 0.8 0.8 0.8
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+ body static box
+ body.half-extents 0.7 0.35 0.55
+ body.radius 0.5
+ body.terrain ""
+ body.mass 1
+ body.friction 0.8
+ body.restitution 0.05
+ body.initial-velocity 0 0 0
+ body.pickable false
+ body.managed false
+ body.compound-count 0
+end
+
+object 63 "Garden rock"
+ position 5 0.25 -9
+ rotation 1 0 0 0
+ scale 1 1 1
+ render box
+ render.half-extents 0.7 0.35 0.55
+ render.radius 0.5
+ render.color 0.39 0.43 0.42
+ render.alpha 1
+ render.secondary-color 0.8 0.8 0.8
+ render.secondary-alpha 1
+ render.mesh-asset ""
+ render.texture-asset ""
+ body static box
+ body.half-extents 0.7 0.35 0.55
+ body.radius 0.5
+ body.terrain ""
+ body.mass 1
+ body.friction 0.8
+ body.restitution 0.05
+ body.initial-velocity 0 0 0
+ body.pickable false
+ body.managed false
+ body.compound-count 0
+end
+
+object 64 "Swimmer"
+ position 0 1.05 9
+ rotation 1 0 0 0
+ scale 1 1 1
+ motor.enabled true
+ motor.radius 0.3
+ motor.halfHeight 0.6
+ motor.offset 0 0 0
+ motor.stepHeight 0.55
+ motor.supportDistance 0.15
+ motor.skin 0.02
+ motor.maxSlopeDegrees 50
+ motor.gravityScale 1
+ motor.reorientationDegreesPerSecond 120
+ motor.interactionMass 80
+ motor.maxPushImpulse 20
+ motor.collisionLayer 0
+ motor.collisionMask 18446744073709551615
+ motor.requiredTags 0
+ motor.excludedTags 0
+ scripts 1
+ script.0.id 1
+ script.0.asset "c28ff4911a81df1950aa5391a138ca7c"
+ script.0.enabled true
+ script.0.properties "{}"
+ ui.asset "bd7a9cddb5b85ee03930a88f173acc8b"
+ ui.name "game_ui"
+ ui.enabled true
+end

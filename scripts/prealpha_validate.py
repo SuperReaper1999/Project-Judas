@@ -261,7 +261,7 @@ def main():
               (now.strftime('%Y%m%dT%H%M%SZ') + '-' + uuid.uuid4().hex[:8])).resolve()
     output.mkdir(parents=True, exist_ok=False)
     environment = {k: v for k, v in os.environ.items() if not k.startswith('JUDAS_')}
-    environment.update(SDL_AUDIODRIVER='dummy', JUDAS_WORLD_STATE='none',
+    environment.update(SDL_AUDIODRIVER='dummy', JUDAS_WORLD_STATE='none', JUDAS_ENGINE_ROOT=str(ROOT),
                        XDG_DATA_HOME=str(output / 'user-data'))
     revision = git('rev-parse', 'HEAD')
     tracked = git('status', '--porcelain', '--untracked-files=no')
@@ -288,12 +288,13 @@ def main():
         publish()
         print('Source provenance unavailable:', error)
         return 1
+    (output / "build").mkdir(exist_ok=True)
     extension = '.exe' if os.name == 'nt' else ''
     for entry in selected:
         command = [str(args.build_dir.resolve() / (entry['target'] + extension))]
         command += [a.format(output=output, root=ROOT) for a in entry.get('args', [])]
         try:
-            result = run_verified_case(command, output / (entry['name'] + '.log'), ROOT,
+            result = run_verified_case(command, output / (entry['name'] + '.log'), output,
                                        environment, args.timeout, expected_source)
         except (OSError, ValueError, subprocess.SubprocessError) as error:
             result = dict(status='unavailable', exit=None, argv=command, error=str(error))

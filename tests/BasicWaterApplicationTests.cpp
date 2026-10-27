@@ -1,3 +1,4 @@
+#include "TestProjectPath.h"
 #include "EngineHost.h"
 #include "InteractivePlay.h"
 #include "RuntimeWorld.h"
@@ -34,7 +35,7 @@ int main(int argc,char** argv){
         std::cout<<"PASS actual fresh-process water continuation and unchanged source save\n";return 0;
     }
 
-    std::string error;Project project;Check(project.Load("projects/basic_water_lab/basic_water_lab.judasproj",error),"load ordinary basic-water project: "+error);
+    std::string error;Project project;Check(project.Load((TestProjectPath("basic_water_lab")/"basic_water_lab.judasproj").string(),error),"load ordinary basic-water project: "+error);
     EngineHost host;if(!host.Init("Basic water workflow",960,540,false,error)){std::cerr<<error<<'\n';return 1;}
     std::cout<<"GL "<<glGetString(GL_RENDERER)<<" | "<<glGetString(GL_VERSION)<<'\n';
     host.OpenProjectAssets(project.RootDir(),project.AssetsDir());host.Resources().SetBlockingMode(true);

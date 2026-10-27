@@ -17,7 +17,10 @@ packaging. Clean tracked files do not excuse untracked compilation inputs.
 `tools/package_source.py` creates deterministic tracked engine-source archives,
 excluding games, protected evidence and unrelated untracked work. Source archives
 carry `JUDAS_SOURCE_INFO.json` plus a hashed per-file inventory; no Git history is
-required to build them. Changed/missing/added inputs are detected. Use
+required to build them. Changed/missing/added inputs are detected. A different clean source archive must use a fresh build directory:
+deterministic old timestamps can otherwise retain stale compiled objects. CMake
+rejects that cache reuse; unchanged-source repeats and ordinary Git iteration
+remain supported. Use
 `--allow-untracked` only when explicitly excluding unrelated local experiments;
 those inputs are counted in the source-packaging receipt, not silently included.
 

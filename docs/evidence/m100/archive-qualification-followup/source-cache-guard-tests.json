@@ -1,0 +1,404 @@
+{
+  "schema": 1,
+  "checks": 27,
+  "complete": true,
+  "passed": true,
+  "failures": 0,
+  "results": [
+    {
+      "name": "unknown-source",
+      "passed": true,
+      "command": [
+        "cmake",
+        "-S",
+        "/tmp/judas-identity-cyy0m6vr/source",
+        "-B",
+        "/tmp/judas-identity-cyy0m6vr/unknown-source"
+      ],
+      "returncode": 0,
+      "stdout": "-- Configuring done (0.0s)\n-- Generating done (0.0s)\n-- Build files have been written to: /tmp/judas-identity-cyy0m6vr/unknown-source\n",
+      "stderr": "CMake Warning at cmake/JudasBuildIdentity.cmake:278 (message):\n  No Git or JUDAS_SOURCE_INFO.json: source provenance is unknown; local\n  builds work but release packaging must reject this identity\nCall Stack (most recent call first):\n  CMakeLists.txt:4 (judas_build_identity)\n\n\n"
+    },
+    {
+      "name": "invalid-channel",
+      "passed": true,
+      "command": [
+        "cmake",
+        "-S",
+        "/tmp/judas-identity-cyy0m6vr/source",
+        "-B",
+        "/tmp/judas-identity-cyy0m6vr/invalid-channel",
+        "-DJUDAS_BUILD_CHANNEL=Unknown"
+      ],
+      "returncode": 1,
+      "stdout": "-- Configuring incomplete, errors occurred!\n",
+      "stderr": "CMake Error at cmake/JudasBuildIdentity.cmake:270 (message):\n  JUDAS_BUILD_CHANNEL must be Alpha, Beta, Experimental, Stable or Local\nCall Stack (most recent call first):\n  CMakeLists.txt:4 (judas_build_identity)\n\n\n"
+    },
+    {
+      "name": "invalid-version",
+      "passed": true,
+      "command": [
+        "cmake",
+        "-S",
+        "/tmp/judas-identity-cyy0m6vr/source",
+        "-B",
+        "/tmp/judas-identity-cyy0m6vr/invalid-version",
+        "-DJUDAS_ENGINE_VERSION=misleading-version"
+      ],
+      "returncode": 1,
+      "stdout": "-- Configuring incomplete, errors occurred!\n",
+      "stderr": "CMake Error at cmake/JudasBuildIdentity.cmake:28 (message):\n  Engine version/maturity contains an invalid or unsupported identity\nCall Stack (most recent call first):\n  CMakeLists.txt:4 (judas_build_identity)\n\n\n"
+    },
+    {
+      "name": "source-archive",
+      "passed": true,
+      "command": [
+        "cmake",
+        "-S",
+        "/tmp/judas-identity-cyy0m6vr/source",
+        "-B",
+        "/tmp/judas-identity-cyy0m6vr/source-archive"
+      ],
+      "returncode": 0,
+      "stdout": "-- Configuring done (0.0s)\n-- Generating done (0.0s)\n-- Build files have been written to: /tmp/judas-identity-cyy0m6vr/source-archive\n",
+      "stderr": ""
+    },
+    {
+      "name": "replacement-archive-cannot-reuse-old-objects",
+      "passed": true,
+      "command": [
+        "cmake",
+        "-S",
+        "/tmp/judas-identity-cyy0m6vr/source",
+        "-B",
+        "/tmp/judas-identity-cyy0m6vr/source-archive"
+      ],
+      "returncode": 1,
+      "stdout": "-- Configuring incomplete, errors occurred!\n",
+      "stderr": "CMake Error at cmake/JudasBuildIdentity.cmake:325 (message):\n  A different source archive cannot reuse this identified build tree:\n  deterministic timestamps may retain stale objects.  Use a fresh build\n  directory (pinned dependency downloads may be reused separately).\nCall Stack (most recent call first):\n  CMakeLists.txt:4 (judas_build_identity)\n\n\n"
+    },
+    {
+      "name": "invalid-numeric-prerelease",
+      "passed": true,
+      "command": [
+        "cmake",
+        "-S",
+        "/tmp/judas-identity-cyy0m6vr/source",
+        "-B",
+        "/tmp/judas-identity-cyy0m6vr/invalid-numeric-prerelease",
+        "-DJUDAS_ENGINE_VERSION=1.0.0-alpha.01"
+      ],
+      "returncode": 1,
+      "stdout": "-- Configuring incomplete, errors occurred!\n",
+      "stderr": "CMake Error at cmake/JudasBuildIdentity.cmake:42 (message):\n  Numeric SemVer prerelease identifiers cannot have leading zeros\nCall Stack (most recent call first):\n  CMakeLists.txt:4 (judas_build_identity)\n\n\n"
+    },
+    {
+      "name": "alpha-cannot-be-stable",
+      "passed": true,
+      "command": [
+        "cmake",
+        "-S",
+        "/tmp/judas-identity-cyy0m6vr/source",
+        "-B",
+        "/tmp/judas-identity-cyy0m6vr/alpha-cannot-be-stable",
+        "-DJUDAS_BUILD_CHANNEL=Stable"
+      ],
+      "returncode": 1,
+      "stdout": "-- Configuring incomplete, errors occurred!\n",
+      "stderr": "CMake Error at cmake/JudasBuildIdentity.cmake:275 (message):\n  Release channel and engine maturity disagree; Alpha is not Stable\nCall Stack (most recent call first):\n  CMakeLists.txt:4 (judas_build_identity)\n\n\n"
+    },
+    {
+      "name": "archive-without-git-tool",
+      "passed": true,
+      "command": [
+        "cmake",
+        "-S",
+        "/tmp/judas-identity-cyy0m6vr/source",
+        "-B",
+        "/tmp/judas-identity-cyy0m6vr/archive-without-git-tool",
+        "-Djudas_git=/not-an-installed-git"
+      ],
+      "returncode": 0,
+      "stdout": "-- Configuring done (0.0s)\n-- Generating done (0.0s)\n-- Build files have been written to: /tmp/judas-identity-cyy0m6vr/archive-without-git-tool\n",
+      "stderr": ""
+    },
+    {
+      "name": "independent-main",
+      "passed": true,
+      "command": [
+        "cmake",
+        "-S",
+        "/tmp/judas-identity-cyy0m6vr/source",
+        "-B",
+        "/tmp/judas-identity-cyy0m6vr/independent-main",
+        "-DJUDAS_BUILD_CHANNEL=Alpha"
+      ],
+      "returncode": 0,
+      "stdout": "-- Configuring done (0.0s)\n-- Generating done (0.0s)\n-- Build files have been written to: /tmp/judas-identity-cyy0m6vr/independent-main\n",
+      "stderr": ""
+    },
+    {
+      "name": "archive-repeat",
+      "passed": true,
+      "command": [
+        "cmake",
+        "-S",
+        "/tmp/judas-identity-cyy0m6vr/source",
+        "-B",
+        "/tmp/judas-identity-cyy0m6vr/archive-repeat"
+      ],
+      "returncode": 0,
+      "stdout": "-- Configuring done (0.0s)\n-- Generating done (0.0s)\n-- Build files have been written to: /tmp/judas-identity-cyy0m6vr/archive-repeat\n",
+      "stderr": ""
+    },
+    {
+      "name": "archive-edited",
+      "passed": true,
+      "command": [
+        "cmake",
+        "-S",
+        "/tmp/judas-identity-cyy0m6vr/source",
+        "-B",
+        "/tmp/judas-identity-cyy0m6vr/archive-edited"
+      ],
+      "returncode": 0,
+      "stdout": "-- Configuring done (0.0s)\n-- Generating done (0.0s)\n-- Build files have been written to: /tmp/judas-identity-cyy0m6vr/archive-edited\n",
+      "stderr": ""
+    },
+    {
+      "name": "archive-added-dependency",
+      "passed": true,
+      "command": [
+        "cmake",
+        "-S",
+        "/tmp/judas-identity-cyy0m6vr/source",
+        "-B",
+        "/tmp/judas-identity-cyy0m6vr/archive-added-dependency"
+      ],
+      "returncode": 0,
+      "stdout": "-- Configuring done (0.0s)\n-- Generating done (0.0s)\n-- Build files have been written to: /tmp/judas-identity-cyy0m6vr/archive-added-dependency\n",
+      "stderr": ""
+    },
+    {
+      "name": "archive-manifest-tampered",
+      "passed": true,
+      "command": [
+        "cmake",
+        "-S",
+        "/tmp/judas-identity-cyy0m6vr/source",
+        "-B",
+        "/tmp/judas-identity-cyy0m6vr/archive-manifest-tampered"
+      ],
+      "returncode": 1,
+      "stdout": "-- Configuring incomplete, errors occurred!\n",
+      "stderr": "CMake Error at cmake/JudasBuildIdentity.cmake:175 (message):\n  Source archive file manifest hash disagrees with frozen provenance\nCall Stack (most recent call first):\n  CMakeLists.txt:4 (judas_build_identity)\n\n\n"
+    },
+    {
+      "name": "malformed-archive",
+      "passed": true,
+      "command": [
+        "cmake",
+        "-S",
+        "/tmp/judas-identity-cyy0m6vr/source",
+        "-B",
+        "/tmp/judas-identity-cyy0m6vr/malformed-archive"
+      ],
+      "returncode": 1,
+      "stdout": "-- Configuring incomplete, errors occurred!\n",
+      "stderr": "CMake Error at cmake/JudasBuildIdentity.cmake:152 (message):\n  Malformed frozen source archive provenance\nCall Stack (most recent call first):\n  CMakeLists.txt:4 (judas_build_identity)\n\n\n"
+    },
+    {
+      "name": "git-init",
+      "passed": true,
+      "command": [
+        "git",
+        "-C",
+        "/tmp/judas-identity-cyy0m6vr/source",
+        "init",
+        "-b",
+        "Experimental"
+      ],
+      "returncode": 0,
+      "stdout": "Initialized empty Git repository in /tmp/judas-identity-cyy0m6vr/source/.git/\n",
+      "stderr": ""
+    },
+    {
+      "name": "git-add",
+      "passed": true,
+      "command": [
+        "git",
+        "-C",
+        "/tmp/judas-identity-cyy0m6vr/source",
+        "add",
+        "."
+      ],
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "name": "git-commit",
+      "passed": true,
+      "command": [
+        "git",
+        "-C",
+        "/tmp/judas-identity-cyy0m6vr/source",
+        "-c",
+        "user.name=Identity Fixture",
+        "-c",
+        "user.email=fixture@invalid.example",
+        "commit",
+        "-m",
+        "fixture"
+      ],
+      "returncode": 0,
+      "stdout": "[Experimental (root-commit) a5b6c15] fixture\n 7 files changed, 409 insertions(+)\n create mode 100644 CMakeLists.txt\n create mode 100644 JUDAS_SOURCE_FILES.json\n create mode 100644 cmake/JudasBuildIdentity.cmake\n create mode 100644 cmake/JudasBuildIdentity.h.in\n create mode 100644 cmake/JudasBuildIdentity.json.in\n create mode 100644 cmake/JudasSourceInfo.json.in\n create mode 100644 engine-version.json\n",
+      "stderr": ""
+    },
+    {
+      "name": "git-clean",
+      "passed": true,
+      "command": [
+        "cmake",
+        "-S",
+        "/tmp/judas-identity-cyy0m6vr/source",
+        "-B",
+        "/tmp/judas-identity-cyy0m6vr/git-clean"
+      ],
+      "returncode": 0,
+      "stdout": "-- Configuring done (0.0s)\n-- Generating done (0.0s)\n-- Build files have been written to: /tmp/judas-identity-cyy0m6vr/git-clean\n",
+      "stderr": ""
+    },
+    {
+      "name": "tracked-source-archive",
+      "passed": true,
+      "command": [
+        "python3",
+        "/home/conner/Documents/GitHub/Project-Judas/tools/package_source.py",
+        "--source",
+        "/tmp/judas-identity-cyy0m6vr/source",
+        "--output",
+        "/tmp/judas-identity-cyy0m6vr/tracked-source.tar.gz",
+        "--channel",
+        "Experimental"
+      ],
+      "returncode": 0,
+      "stdout": "{\"bytes\": 6346, \"file\": \"tracked-source.tar.gz\", \"files\": 6, \"kind\": \"judas-source-archive\", \"schema\": 1, \"scope\": \"engine build/source and current docs\", \"sha256\": \"1c82b1db8ec825b97c076618d373f08f2be4ce07d26e8e42c8e30a4a52f85e8a\", \"source\": {\"channel\": \"Experimental\", \"revision\": \"a5b6c15e1cc36d322c235403aba4e5842006f434\", \"schema\": 1, \"selection\": \"engine\", \"source_dirty\": false, \"source_files_sha256\": \"80ed3175ff7c62ae8aa66e7c3ea0ac25183cc27e7354b637c202d5a2a9805d12\", \"source_fingerprint\": \"3be279a4f08481f8ec4876a37086cd6eaef325b39cab0f30b5bf791fc020081a\", \"tree\": \"5dc5397257d72f9581bb3c61c5b5a1aaa063a565\"}, \"untrackedExcluded\": 0}\n",
+      "stderr": ""
+    },
+    {
+      "name": "portable-source-round-trip",
+      "passed": true,
+      "command": [
+        "cmake",
+        "-S",
+        "/tmp/judas-identity-cyy0m6vr/extracted",
+        "-B",
+        "/tmp/judas-identity-cyy0m6vr/portable-source-round-trip",
+        "-Djudas_git=/not-an-installed-git"
+      ],
+      "returncode": 0,
+      "stdout": "-- Configuring done (0.0s)\n-- Generating done (0.0s)\n-- Build files have been written to: /tmp/judas-identity-cyy0m6vr/portable-source-round-trip\n",
+      "stderr": ""
+    },
+    {
+      "name": "archive-extra-input",
+      "passed": true,
+      "command": [
+        "cmake",
+        "-S",
+        "/tmp/judas-identity-cyy0m6vr/extracted",
+        "-B",
+        "/tmp/judas-identity-cyy0m6vr/archive-extra-input"
+      ],
+      "returncode": 0,
+      "stdout": "-- Configuring done (0.0s)\n-- Generating done (0.0s)\n-- Build files have been written to: /tmp/judas-identity-cyy0m6vr/archive-extra-input\n",
+      "stderr": ""
+    },
+    {
+      "name": "git-clean-untracked-input",
+      "passed": true,
+      "command": [
+        "cmake",
+        "-S",
+        "/tmp/judas-identity-cyy0m6vr/source",
+        "-B",
+        "/tmp/judas-identity-cyy0m6vr/git-clean-untracked-input"
+      ],
+      "returncode": 0,
+      "stdout": "-- Configuring done (0.0s)\n-- Generating done (0.0s)\n-- Build files have been written to: /tmp/judas-identity-cyy0m6vr/git-clean-untracked-input\n",
+      "stderr": ""
+    },
+    {
+      "name": "git-dirty",
+      "passed": true,
+      "command": [
+        "cmake",
+        "-S",
+        "/tmp/judas-identity-cyy0m6vr/source",
+        "-B",
+        "/tmp/judas-identity-cyy0m6vr/git-dirty"
+      ],
+      "returncode": 0,
+      "stdout": "-- Configuring done (0.0s)\n-- Generating done (0.0s)\n-- Build files have been written to: /tmp/judas-identity-cyy0m6vr/git-dirty\n",
+      "stderr": ""
+    },
+    {
+      "name": "version-refresh-same-build",
+      "passed": true,
+      "command": [
+        "cmake",
+        "-S",
+        "/tmp/judas-identity-cyy0m6vr/source",
+        "-B",
+        "/tmp/judas-identity-cyy0m6vr/git-clean"
+      ],
+      "returncode": 0,
+      "stdout": "-- Configuring done (0.0s)\n-- Generating done (0.0s)\n-- Build files have been written to: /tmp/judas-identity-cyy0m6vr/git-clean\n",
+      "stderr": ""
+    },
+    {
+      "name": "git-new-input",
+      "passed": true,
+      "command": [
+        "cmake",
+        "-S",
+        "/tmp/judas-identity-cyy0m6vr/source",
+        "-B",
+        "/tmp/judas-identity-cyy0m6vr/git-new-input"
+      ],
+      "returncode": 0,
+      "stdout": "-- Configuring done (0.0s)\n-- Generating done (0.0s)\n-- Build files have been written to: /tmp/judas-identity-cyy0m6vr/git-new-input\n",
+      "stderr": ""
+    },
+    {
+      "name": "git-main",
+      "passed": true,
+      "command": [
+        "git",
+        "-C",
+        "/tmp/judas-identity-cyy0m6vr/source",
+        "switch",
+        "-c",
+        "main"
+      ],
+      "returncode": 0,
+      "stdout": "",
+      "stderr": "Switched to a new branch 'main'\n"
+    },
+    {
+      "name": "git-main-channel",
+      "passed": true,
+      "command": [
+        "cmake",
+        "-S",
+        "/tmp/judas-identity-cyy0m6vr/source",
+        "-B",
+        "/tmp/judas-identity-cyy0m6vr/git-main-channel"
+      ],
+      "returncode": 0,
+      "stdout": "-- Configuring done (0.0s)\n-- Generating done (0.0s)\n-- Build files have been written to: /tmp/judas-identity-cyy0m6vr/git-main-channel\n",
+      "stderr": ""
+    }
+  ]
+}

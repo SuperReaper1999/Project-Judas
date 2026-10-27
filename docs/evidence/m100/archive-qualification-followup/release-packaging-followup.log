@@ -1,0 +1,12 @@
+....Explicit final operator approval phrase required
+..
+----------------------------------------------------------------------
+Ran 6 tests in 0.049s
+
+OK
+{
+  "action": "dry-run only",
+  "version": "1.0.0-alpha.1",
+  "commit": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "publication": false
+}

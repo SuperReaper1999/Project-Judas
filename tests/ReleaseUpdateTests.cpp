@@ -31,6 +31,8 @@ int main(int argc, char** argv) {
         check(!ValidSemanticVersion(bad), "Invalid SemVer refused");
     check(!ParseReleaseUpdate("not JSON", "1.0.0", "Alpha", "Linux", "x86_64").valid, "Malformed/offline response");
     check(!ParseReleaseUpdate(std::string(262145, 'x'), "1.0.0", "Alpha", "Linux", "x86_64").valid, "Bounded response");
+    std::string nested(2000, '['); nested += '0'; nested += std::string(2000, ']');
+    check(!ParseReleaseUpdate(nested, "1.0.0", "Alpha", "Linux", "x86_64").valid, "Excessive nesting cannot overflow the native stack");
     check(ReleaseManifestEndpoint("main").empty(), "Git branch is not a release channel");
     std::cout << checks << " checks, " << failures << " failures\n";
     return failures ? 1 : 0;

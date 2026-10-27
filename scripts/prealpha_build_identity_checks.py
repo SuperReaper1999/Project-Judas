@@ -74,6 +74,13 @@ def main():
         restored = configure("source-archive", fixture)
         assert restored["source_origin"] == "archive" and restored["source_revision"] == archive["revision"]
         assert restored["source_dirty"] is False and restored["channel"] == "Experimental"
+        original_info = (fixture / "JUDAS_SOURCE_INFO.json").read_bytes()
+        replaced_info = dict(archive, revision="d" * 40, source_fingerprint="e" * 64)
+        (fixture / "JUDAS_SOURCE_INFO.json").write_text(json.dumps(replaced_info))
+        run("replacement-archive-cannot-reuse-old-objects", ["cmake", "-S", str(fixture), "-B", str(root / "source-archive")], succeeds=False)
+        (fixture / "JUDAS_SOURCE_INFO.json").write_bytes(original_info)
+        configure("invalid-numeric-prerelease", fixture, "-DJUDAS_ENGINE_VERSION=1.0.0-alpha.01", succeeds=False)
+        configure("alpha-cannot-be-stable", fixture, "-DJUDAS_BUILD_CHANNEL=Stable", succeeds=False)
         absent_git = configure("archive-without-git-tool", fixture, "-Djudas_git=/not-an-installed-git")
         assert absent_git["source_origin"] == "archive" and absent_git["source_dirty"] is False
         main_channel = configure("independent-main", fixture, "-DJUDAS_BUILD_CHANNEL=Alpha")

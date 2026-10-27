@@ -1,3 +1,4 @@
+#include "TestProjectPath.h"
 #include "AssetDatabase.h"
 #include "GameSession.h"
 #include "InputSystem.h"
@@ -105,7 +106,7 @@ int Bindings(const fs::path& root){
 }
 
 void DiagonalIntent(){
- Content content(fs::absolute("projects/connected_workshop/connected_workshop.judasproj"));
+ Content content(TestProjectPath("connected_workshop")/"connected_workshop.judasproj");
  Instance host(content,content.scene);host.world.Network().SetLaunch("host","127.0.0.1",0,true);
  Scene peerScene=content.scene;peerScene.Find(1)->scripts.clear();Instance client(content,peerScene);
  double now=200;auto pump=[&](unsigned count){for(unsigned i=0;i<count;++i){now+=1./60;content.resources.Pump();client.Frame(now);host.Frame(now);std::this_thread::sleep_for(std::chrono::milliseconds(1));}};

@@ -31,7 +31,7 @@ EditorMilestoneNotice::Result EditorMilestoneNotice::Query(const std::atomic<boo
         "--max-time", "6", "--max-filesize", "262144", "--header", "Accept: application/vnd.github+json",
         "--header", "User-Agent: Project-Judas-Update-Notice", endpoint}, response, error,
         std::chrono::milliseconds(7000), 262144)) {
-        result.diagnostic = "Update check unavailable (offline, service limit, or HTTPS utility unavailable)";
+        result.diagnostic = "Update check unavailable (channel not published yet, offline, service limit, or HTTPS utility unavailable)";
         return result;
     }
     if (cancelled) return result;

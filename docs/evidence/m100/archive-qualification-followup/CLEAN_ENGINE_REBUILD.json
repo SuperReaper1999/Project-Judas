@@ -1,0 +1,6 @@
+{
+  "removedObjects": 478,
+  "scope": "Only copied M100 scratch engine/tool/test objects; previous qualification unchanged",
+  "cause": "Deterministic archive timestamp zero made changed source older than copied objects",
+  "dependencies": "Pinned external dependency build outputs retained; not a full no-cache dependency rebuild"
+}

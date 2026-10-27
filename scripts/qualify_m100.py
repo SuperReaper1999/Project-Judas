@@ -22,7 +22,8 @@ def main():
     targets=sorted({t['target'] for t in tests}|set(EXTRA));records=[]
     def run(name,cmd):
         with (output/(name+'.log')).open('w',encoding='utf-8') as f:
-            child=subprocess.run(list(map(str,cmd)),cwd=ROOT,stdout=f,stderr=subprocess.STDOUT)
+            environment=dict(os.environ, JUDAS_ENGINE_ROOT=str(ROOT))
+            child=subprocess.run(list(map(str,cmd)),cwd=(output if name.startswith("judas_") else ROOT),env=environment,stdout=f,stderr=subprocess.STDOUT)
         records.append({'name':name,'command':list(map(str,cmd)),'exit':child.returncode})
         (output/'RESULTS.json').write_text(json.dumps({'passed':all(r['exit']==0 for r in records),'checks':records,'knownFindings':manifest['known_findings'],'humanAcceptance':False},indent=2)+'\n')
         if child.returncode:raise RuntimeError(name+' failed: '+str(output/(name+'.log')))

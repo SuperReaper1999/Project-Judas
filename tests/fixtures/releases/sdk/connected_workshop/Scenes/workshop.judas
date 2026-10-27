@@ -1,0 +1,2742 @@
+{
+  "kind": "scene",
+  "schema": 1,
+  "data": {
+    "settings": {
+      "name": "Connected Workshop / shared cargo yard",
+      "world-origin": [
+        0,
+        0,
+        0
+      ],
+      "sun-direction": [
+        0.35,
+        0.8,
+        0.45
+      ],
+      "sun-color": [
+        1,
+        0.92,
+        0.78
+      ],
+      "ambient": [
+        0.29,
+        0.34,
+        0.39
+      ],
+      "fluid-scale": 1,
+      "fluid-update-rate-hz": 30,
+      "fluid-hydrostatic-drag-rate": 2,
+      "fidelity-policy": {
+        "mode": {
+          "symbol": "none"
+        }
+      },
+      "next-id": 1000
+    },
+    "objects": [
+      {
+        "id": 1,
+        "name": "Session / game rules",
+        "fields": {
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "tags": 0,
+          "scripts": 1,
+          "script.0.id": 1,
+          "script.0.asset": "d66a456573cbcd3f56b2f3a8884e1a20",
+          "script.0.enabled": true,
+          "script.0.properties": "{}",
+          "ui.asset": "577e55fa7ff06e11c66c6e6c9286072f",
+          "ui.name": "connected",
+          "ui.enabled": true
+        }
+      },
+      {
+        "id": 2,
+        "name": "Ordinary uniform gravity",
+        "fields": {
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "tags": 0,
+          "gravity": {
+            "kind": {
+              "symbol": "uniform"
+            },
+            "magnitude": 9.81
+          },
+          "gravity.region": {
+            "shape": {
+              "symbol": "box"
+            },
+            "halfExtents": [
+              1000,
+              1000,
+              1000
+            ]
+          }
+        }
+      },
+      {
+        "id": 10,
+        "name": "Concrete loading yard",
+        "fields": {
+          "position": [
+            0,
+            -0.35,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "tags": 0,
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            14,
+            0.35,
+            10
+          ],
+          "render.color": [
+            0.21,
+            0.27,
+            0.3
+          ],
+          "render.alpha": 1,
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            14,
+            0.35,
+            10
+          ],
+          "body.mass": 6,
+          "body.friction": 0.65,
+          "body.restitution": 0.05,
+          "body.pickable": false,
+          "body.managed": false,
+          "render.radius": 0.5,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "body.radius": 0.5,
+          "body.terrain": "",
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0
+        }
+      },
+      {
+        "id": 11,
+        "name": "Safety perimeter",
+        "fields": {
+          "position": [
+            0,
+            0.7,
+            -10
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "tags": 0,
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            14,
+            0.7,
+            0.25
+          ],
+          "render.color": [
+            0.09,
+            0.15,
+            0.19
+          ],
+          "render.alpha": 1,
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            14,
+            0.7,
+            0.25
+          ],
+          "body.mass": 6,
+          "body.friction": 0.65,
+          "body.restitution": 0.05,
+          "body.pickable": false,
+          "body.managed": false,
+          "render.radius": 0.5,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "body.radius": 0.5,
+          "body.terrain": "",
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0
+        }
+      },
+      {
+        "id": 12,
+        "name": "Safety perimeter",
+        "fields": {
+          "position": [
+            0,
+            0.7,
+            10
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "tags": 0,
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            14,
+            0.7,
+            0.25
+          ],
+          "render.color": [
+            0.09,
+            0.15,
+            0.19
+          ],
+          "render.alpha": 1,
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            14,
+            0.7,
+            0.25
+          ],
+          "body.mass": 6,
+          "body.friction": 0.65,
+          "body.restitution": 0.05,
+          "body.pickable": false,
+          "body.managed": false,
+          "render.radius": 0.5,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "body.radius": 0.5,
+          "body.terrain": "",
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0
+        }
+      },
+      {
+        "id": 13,
+        "name": "Safety perimeter",
+        "fields": {
+          "position": [
+            -14,
+            0.7,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "tags": 0,
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            0.25,
+            0.7,
+            10
+          ],
+          "render.color": [
+            0.09,
+            0.15,
+            0.19
+          ],
+          "render.alpha": 1,
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            0.25,
+            0.7,
+            10
+          ],
+          "body.mass": 6,
+          "body.friction": 0.65,
+          "body.restitution": 0.05,
+          "body.pickable": false,
+          "body.managed": false,
+          "render.radius": 0.5,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "body.radius": 0.5,
+          "body.terrain": "",
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0
+        }
+      },
+      {
+        "id": 14,
+        "name": "Safety perimeter",
+        "fields": {
+          "position": [
+            14,
+            0.7,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "tags": 0,
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            0.25,
+            0.7,
+            10
+          ],
+          "render.color": [
+            0.09,
+            0.15,
+            0.19
+          ],
+          "render.alpha": 1,
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            0.25,
+            0.7,
+            10
+          ],
+          "body.mass": 6,
+          "body.friction": 0.65,
+          "body.restitution": 0.05,
+          "body.pickable": false,
+          "body.managed": false,
+          "render.radius": 0.5,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "body.radius": 0.5,
+          "body.terrain": "",
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0
+        }
+      },
+      {
+        "id": 20,
+        "name": "Blue delivery bay",
+        "fields": {
+          "position": [
+            -10.6,
+            0.015,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "tags": 0,
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            2.5,
+            0.015,
+            3.6
+          ],
+          "render.color": [
+            0.13,
+            0.5,
+            0.65
+          ],
+          "render.alpha": 1,
+          "render.radius": 0.5,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": ""
+        }
+      },
+      {
+        "id": 21,
+        "name": "Amber delivery bay",
+        "fields": {
+          "position": [
+            10.6,
+            0.015,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "tags": 0,
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            2.5,
+            0.015,
+            3.6
+          ],
+          "render.color": [
+            0.88,
+            0.57,
+            0.17
+          ],
+          "render.alpha": 1,
+          "render.radius": 0.5,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": ""
+        }
+      },
+      {
+        "id": 30,
+        "name": "Bay edge / visible stripe",
+        "fields": {
+          "position": [
+            -13,
+            0.035,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "tags": 0,
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            0.045,
+            0.015,
+            3.6
+          ],
+          "render.color": [
+            0.9,
+            0.87,
+            0.68
+          ],
+          "render.alpha": 1,
+          "render.radius": 0.5,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": ""
+        }
+      },
+      {
+        "id": 31,
+        "name": "Bay edge / visible stripe",
+        "fields": {
+          "position": [
+            -8.1,
+            0.035,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "tags": 0,
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            0.045,
+            0.015,
+            3.6
+          ],
+          "render.color": [
+            0.9,
+            0.87,
+            0.68
+          ],
+          "render.alpha": 1,
+          "render.radius": 0.5,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": ""
+        }
+      },
+      {
+        "id": 32,
+        "name": "Bay edge / visible stripe",
+        "fields": {
+          "position": [
+            8.1,
+            0.035,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "tags": 0,
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            0.045,
+            0.015,
+            3.6
+          ],
+          "render.color": [
+            0.9,
+            0.87,
+            0.68
+          ],
+          "render.alpha": 1,
+          "render.radius": 0.5,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": ""
+        }
+      },
+      {
+        "id": 33,
+        "name": "Bay edge / visible stripe",
+        "fields": {
+          "position": [
+            13,
+            0.035,
+            0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "tags": 0,
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            0.045,
+            0.015,
+            3.6
+          ],
+          "render.color": [
+            0.9,
+            0.87,
+            0.68
+          ],
+          "render.alpha": 1,
+          "render.radius": 0.5,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": ""
+        }
+      },
+      {
+        "id": 40,
+        "name": "Floor strip",
+        "fields": {
+          "position": [
+            0,
+            0.02,
+            -8
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "tags": 0,
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            6,
+            0.015,
+            0.04
+          ],
+          "render.color": [
+            0.35,
+            0.43,
+            0.46
+          ],
+          "render.alpha": 1,
+          "render.radius": 0.5,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": ""
+        }
+      },
+      {
+        "id": 41,
+        "name": "Floor strip",
+        "fields": {
+          "position": [
+            0,
+            0.02,
+            -4
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "tags": 0,
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            6,
+            0.015,
+            0.04
+          ],
+          "render.color": [
+            0.35,
+            0.43,
+            0.46
+          ],
+          "render.alpha": 1,
+          "render.radius": 0.5,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": ""
+        }
+      },
+      {
+        "id": 42,
+        "name": "Floor strip",
+        "fields": {
+          "position": [
+            0,
+            0.02,
+            4
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "tags": 0,
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            6,
+            0.015,
+            0.04
+          ],
+          "render.color": [
+            0.35,
+            0.43,
+            0.46
+          ],
+          "render.alpha": 1,
+          "render.radius": 0.5,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": ""
+        }
+      },
+      {
+        "id": 43,
+        "name": "Floor strip",
+        "fields": {
+          "position": [
+            0,
+            0.02,
+            8
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "tags": 0,
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            6,
+            0.015,
+            0.04
+          ],
+          "render.color": [
+            0.35,
+            0.43,
+            0.46
+          ],
+          "render.alpha": 1,
+          "render.radius": 0.5,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": ""
+        }
+      },
+      {
+        "id": 50,
+        "name": "Workshop rear buttress",
+        "fields": {
+          "position": [
+            -9,
+            2.1,
+            -9.6
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "tags": 0,
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            0.28,
+            2.1,
+            0.38
+          ],
+          "render.color": [
+            0.12,
+            0.22,
+            0.27
+          ],
+          "render.alpha": 1,
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            0.28,
+            2.1,
+            0.38
+          ],
+          "body.mass": 6,
+          "body.friction": 0.65,
+          "body.restitution": 0.05,
+          "body.pickable": false,
+          "body.managed": false,
+          "render.radius": 0.5,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "body.radius": 0.5,
+          "body.terrain": "",
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0
+        }
+      },
+      {
+        "id": 60,
+        "name": "Workshop roof beam",
+        "fields": {
+          "position": [
+            -9,
+            4.3,
+            -8.9
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "tags": 0,
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            2.5,
+            0.18,
+            1.1
+          ],
+          "render.color": [
+            0.62,
+            0.69,
+            0.68
+          ],
+          "render.alpha": 1,
+          "render.radius": 0.5,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": ""
+        }
+      },
+      {
+        "id": 70,
+        "name": "Loading bench",
+        "fields": {
+          "position": [
+            -9,
+            0.75,
+            -7.9
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "tags": 0,
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            1.4,
+            0.15,
+            0.5
+          ],
+          "render.color": [
+            0.42,
+            0.28,
+            0.18
+          ],
+          "render.alpha": 1,
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            1.4,
+            0.15,
+            0.5
+          ],
+          "body.mass": 6,
+          "body.friction": 0.65,
+          "body.restitution": 0.05,
+          "body.pickable": false,
+          "body.managed": false,
+          "render.radius": 0.5,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "body.radius": 0.5,
+          "body.terrain": "",
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0
+        }
+      },
+      {
+        "id": 51,
+        "name": "Workshop rear buttress",
+        "fields": {
+          "position": [
+            -3,
+            2.1,
+            -9.6
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "tags": 0,
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            0.28,
+            2.1,
+            0.38
+          ],
+          "render.color": [
+            0.12,
+            0.22,
+            0.27
+          ],
+          "render.alpha": 1,
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            0.28,
+            2.1,
+            0.38
+          ],
+          "body.mass": 6,
+          "body.friction": 0.65,
+          "body.restitution": 0.05,
+          "body.pickable": false,
+          "body.managed": false,
+          "render.radius": 0.5,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "body.radius": 0.5,
+          "body.terrain": "",
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0
+        }
+      },
+      {
+        "id": 61,
+        "name": "Workshop roof beam",
+        "fields": {
+          "position": [
+            -3,
+            4.3,
+            -8.9
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "tags": 0,
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            2.5,
+            0.18,
+            1.1
+          ],
+          "render.color": [
+            0.62,
+            0.69,
+            0.68
+          ],
+          "render.alpha": 1,
+          "render.radius": 0.5,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": ""
+        }
+      },
+      {
+        "id": 71,
+        "name": "Loading bench",
+        "fields": {
+          "position": [
+            -3,
+            0.75,
+            -7.9
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "tags": 0,
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            1.4,
+            0.15,
+            0.5
+          ],
+          "render.color": [
+            0.42,
+            0.28,
+            0.18
+          ],
+          "render.alpha": 1,
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            1.4,
+            0.15,
+            0.5
+          ],
+          "body.mass": 6,
+          "body.friction": 0.65,
+          "body.restitution": 0.05,
+          "body.pickable": false,
+          "body.managed": false,
+          "render.radius": 0.5,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "body.radius": 0.5,
+          "body.terrain": "",
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0
+        }
+      },
+      {
+        "id": 52,
+        "name": "Workshop rear buttress",
+        "fields": {
+          "position": [
+            3,
+            2.1,
+            -9.6
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "tags": 0,
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            0.28,
+            2.1,
+            0.38
+          ],
+          "render.color": [
+            0.12,
+            0.22,
+            0.27
+          ],
+          "render.alpha": 1,
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            0.28,
+            2.1,
+            0.38
+          ],
+          "body.mass": 6,
+          "body.friction": 0.65,
+          "body.restitution": 0.05,
+          "body.pickable": false,
+          "body.managed": false,
+          "render.radius": 0.5,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "body.radius": 0.5,
+          "body.terrain": "",
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0
+        }
+      },
+      {
+        "id": 62,
+        "name": "Workshop roof beam",
+        "fields": {
+          "position": [
+            3,
+            4.3,
+            -8.9
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "tags": 0,
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            2.5,
+            0.18,
+            1.1
+          ],
+          "render.color": [
+            0.62,
+            0.69,
+            0.68
+          ],
+          "render.alpha": 1,
+          "render.radius": 0.5,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": ""
+        }
+      },
+      {
+        "id": 72,
+        "name": "Loading bench",
+        "fields": {
+          "position": [
+            3,
+            0.75,
+            -7.9
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "tags": 0,
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            1.4,
+            0.15,
+            0.5
+          ],
+          "render.color": [
+            0.42,
+            0.28,
+            0.18
+          ],
+          "render.alpha": 1,
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            1.4,
+            0.15,
+            0.5
+          ],
+          "body.mass": 6,
+          "body.friction": 0.65,
+          "body.restitution": 0.05,
+          "body.pickable": false,
+          "body.managed": false,
+          "render.radius": 0.5,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "body.radius": 0.5,
+          "body.terrain": "",
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0
+        }
+      },
+      {
+        "id": 53,
+        "name": "Workshop rear buttress",
+        "fields": {
+          "position": [
+            9,
+            2.1,
+            -9.6
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "tags": 0,
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            0.28,
+            2.1,
+            0.38
+          ],
+          "render.color": [
+            0.12,
+            0.22,
+            0.27
+          ],
+          "render.alpha": 1,
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            0.28,
+            2.1,
+            0.38
+          ],
+          "body.mass": 6,
+          "body.friction": 0.65,
+          "body.restitution": 0.05,
+          "body.pickable": false,
+          "body.managed": false,
+          "render.radius": 0.5,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "body.radius": 0.5,
+          "body.terrain": "",
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0
+        }
+      },
+      {
+        "id": 63,
+        "name": "Workshop roof beam",
+        "fields": {
+          "position": [
+            9,
+            4.3,
+            -8.9
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "tags": 0,
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            2.5,
+            0.18,
+            1.1
+          ],
+          "render.color": [
+            0.62,
+            0.69,
+            0.68
+          ],
+          "render.alpha": 1,
+          "render.radius": 0.5,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": ""
+        }
+      },
+      {
+        "id": 73,
+        "name": "Loading bench",
+        "fields": {
+          "position": [
+            9,
+            0.75,
+            -7.9
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "tags": 0,
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            1.4,
+            0.15,
+            0.5
+          ],
+          "render.color": [
+            0.42,
+            0.28,
+            0.18
+          ],
+          "render.alpha": 1,
+          "body": {
+            "motion": {
+              "symbol": "static"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            1.4,
+            0.15,
+            0.5
+          ],
+          "body.mass": 6,
+          "body.friction": 0.65,
+          "body.restitution": 0.05,
+          "body.pickable": false,
+          "body.managed": false,
+          "render.radius": 0.5,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "body.radius": 0.5,
+          "body.terrain": "",
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0
+        }
+      },
+      {
+        "id": 100,
+        "name": "Blue operator",
+        "fields": {
+          "position": [
+            -4,
+            1.05,
+            6
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "tags": 2,
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            0.38,
+            0.85,
+            0.38
+          ],
+          "render.color": [
+            0.14,
+            0.68,
+            0.86
+          ],
+          "render.alpha": 1,
+          "motor.enabled": true,
+          "motor.radius": 0.34,
+          "motor.halfHeight": 0.5,
+          "motor.offset": [
+            0,
+            0,
+            0
+          ],
+          "motor.stepHeight": 0.55,
+          "motor.supportDistance": 0.15,
+          "motor.skin": 0.02,
+          "motor.maxSlopeDegrees": 50,
+          "motor.gravityScale": 1,
+          "motor.reorientationDegreesPerSecond": 120,
+          "motor.interactionMass": 85,
+          "motor.maxPushImpulse": 20,
+          "motor.collisionLayer": 0,
+          "motor.collisionMask": 18446744073709551615,
+          "motor.requiredTags": 0,
+          "motor.excludedTags": 0,
+          "render.radius": 0.5,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": ""
+        }
+      },
+      {
+        "id": 101,
+        "name": "Amber operator",
+        "fields": {
+          "position": [
+            4,
+            1.05,
+            6
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "tags": 2,
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            0.38,
+            0.85,
+            0.38
+          ],
+          "render.color": [
+            1,
+            0.65,
+            0.18
+          ],
+          "render.alpha": 1,
+          "motor.enabled": true,
+          "motor.radius": 0.34,
+          "motor.halfHeight": 0.5,
+          "motor.offset": [
+            0,
+            0,
+            0
+          ],
+          "motor.stepHeight": 0.55,
+          "motor.supportDistance": 0.15,
+          "motor.skin": 0.02,
+          "motor.maxSlopeDegrees": 50,
+          "motor.gravityScale": 1,
+          "motor.reorientationDegreesPerSecond": 120,
+          "motor.interactionMass": 85,
+          "motor.maxPushImpulse": 20,
+          "motor.collisionLayer": 0,
+          "motor.collisionMask": 18446744073709551615,
+          "motor.requiredTags": 0,
+          "motor.excludedTags": 0,
+          "render.radius": 0.5,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": ""
+        }
+      },
+      {
+        "id": 200,
+        "name": "Freight 01",
+        "fields": {
+          "position": [
+            -2.325,
+            0.7,
+            -1.6
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "tags": 1,
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            0.55,
+            0.55,
+            0.55
+          ],
+          "render.color": [
+            0.68,
+            0.72,
+            0.67
+          ],
+          "render.alpha": 1,
+          "body": {
+            "motion": {
+              "symbol": "dynamic"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            0.55,
+            0.55,
+            0.55
+          ],
+          "body.mass": 6,
+          "body.friction": 0.65,
+          "body.restitution": 0.05,
+          "body.pickable": false,
+          "body.managed": false,
+          "render.radius": 0.5,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "body.radius": 0.5,
+          "body.terrain": "",
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0
+        }
+      },
+      {
+        "id": 201,
+        "name": "Freight 02",
+        "fields": {
+          "position": [
+            -0.775,
+            0.7,
+            -1.6
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "tags": 1,
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            0.55,
+            0.55,
+            0.55
+          ],
+          "render.color": [
+            0.66,
+            0.48,
+            0.27
+          ],
+          "render.alpha": 1,
+          "body": {
+            "motion": {
+              "symbol": "dynamic"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            0.55,
+            0.55,
+            0.55
+          ],
+          "body.mass": 6,
+          "body.friction": 0.65,
+          "body.restitution": 0.05,
+          "body.pickable": false,
+          "body.managed": false,
+          "render.radius": 0.5,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "body.radius": 0.5,
+          "body.terrain": "",
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0
+        }
+      },
+      {
+        "id": 202,
+        "name": "Freight 03",
+        "fields": {
+          "position": [
+            0.775,
+            0.7,
+            -1.6
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "tags": 1,
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            0.55,
+            0.55,
+            0.55
+          ],
+          "render.color": [
+            0.68,
+            0.72,
+            0.67
+          ],
+          "render.alpha": 1,
+          "body": {
+            "motion": {
+              "symbol": "dynamic"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            0.55,
+            0.55,
+            0.55
+          ],
+          "body.mass": 6,
+          "body.friction": 0.65,
+          "body.restitution": 0.05,
+          "body.pickable": false,
+          "body.managed": false,
+          "render.radius": 0.5,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "body.radius": 0.5,
+          "body.terrain": "",
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0
+        }
+      },
+      {
+        "id": 203,
+        "name": "Freight 04",
+        "fields": {
+          "position": [
+            2.325,
+            0.7,
+            -1.6
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "tags": 1,
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            0.55,
+            0.55,
+            0.55
+          ],
+          "render.color": [
+            0.66,
+            0.48,
+            0.27
+          ],
+          "render.alpha": 1,
+          "body": {
+            "motion": {
+              "symbol": "dynamic"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            0.55,
+            0.55,
+            0.55
+          ],
+          "body.mass": 6,
+          "body.friction": 0.65,
+          "body.restitution": 0.05,
+          "body.pickable": false,
+          "body.managed": false,
+          "render.radius": 0.5,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "body.radius": 0.5,
+          "body.terrain": "",
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0
+        }
+      },
+      {
+        "id": 204,
+        "name": "Freight 05",
+        "fields": {
+          "position": [
+            -2.325,
+            0.7,
+            0.0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "tags": 1,
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            0.55,
+            0.55,
+            0.55
+          ],
+          "render.color": [
+            0.68,
+            0.72,
+            0.67
+          ],
+          "render.alpha": 1,
+          "body": {
+            "motion": {
+              "symbol": "dynamic"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            0.55,
+            0.55,
+            0.55
+          ],
+          "body.mass": 6,
+          "body.friction": 0.65,
+          "body.restitution": 0.05,
+          "body.pickable": false,
+          "body.managed": false,
+          "render.radius": 0.5,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "body.radius": 0.5,
+          "body.terrain": "",
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0
+        }
+      },
+      {
+        "id": 205,
+        "name": "Freight 06",
+        "fields": {
+          "position": [
+            -0.775,
+            0.7,
+            0.0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "tags": 1,
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            0.55,
+            0.55,
+            0.55
+          ],
+          "render.color": [
+            0.66,
+            0.48,
+            0.27
+          ],
+          "render.alpha": 1,
+          "body": {
+            "motion": {
+              "symbol": "dynamic"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            0.55,
+            0.55,
+            0.55
+          ],
+          "body.mass": 6,
+          "body.friction": 0.65,
+          "body.restitution": 0.05,
+          "body.pickable": false,
+          "body.managed": false,
+          "render.radius": 0.5,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "body.radius": 0.5,
+          "body.terrain": "",
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0
+        }
+      },
+      {
+        "id": 206,
+        "name": "Freight 07",
+        "fields": {
+          "position": [
+            0.775,
+            0.7,
+            0.0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "tags": 1,
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            0.55,
+            0.55,
+            0.55
+          ],
+          "render.color": [
+            0.68,
+            0.72,
+            0.67
+          ],
+          "render.alpha": 1,
+          "body": {
+            "motion": {
+              "symbol": "dynamic"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            0.55,
+            0.55,
+            0.55
+          ],
+          "body.mass": 6,
+          "body.friction": 0.65,
+          "body.restitution": 0.05,
+          "body.pickable": false,
+          "body.managed": false,
+          "render.radius": 0.5,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "body.radius": 0.5,
+          "body.terrain": "",
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0
+        }
+      },
+      {
+        "id": 207,
+        "name": "Freight 08",
+        "fields": {
+          "position": [
+            2.325,
+            0.7,
+            0.0
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "tags": 1,
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            0.55,
+            0.55,
+            0.55
+          ],
+          "render.color": [
+            0.66,
+            0.48,
+            0.27
+          ],
+          "render.alpha": 1,
+          "body": {
+            "motion": {
+              "symbol": "dynamic"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            0.55,
+            0.55,
+            0.55
+          ],
+          "body.mass": 6,
+          "body.friction": 0.65,
+          "body.restitution": 0.05,
+          "body.pickable": false,
+          "body.managed": false,
+          "render.radius": 0.5,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "body.radius": 0.5,
+          "body.terrain": "",
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0
+        }
+      },
+      {
+        "id": 208,
+        "name": "Freight 09",
+        "fields": {
+          "position": [
+            -2.325,
+            0.7,
+            1.6
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "tags": 1,
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            0.55,
+            0.55,
+            0.55
+          ],
+          "render.color": [
+            0.68,
+            0.72,
+            0.67
+          ],
+          "render.alpha": 1,
+          "body": {
+            "motion": {
+              "symbol": "dynamic"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            0.55,
+            0.55,
+            0.55
+          ],
+          "body.mass": 6,
+          "body.friction": 0.65,
+          "body.restitution": 0.05,
+          "body.pickable": false,
+          "body.managed": false,
+          "render.radius": 0.5,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "body.radius": 0.5,
+          "body.terrain": "",
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0
+        }
+      },
+      {
+        "id": 209,
+        "name": "Freight 10",
+        "fields": {
+          "position": [
+            -0.775,
+            0.7,
+            1.6
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "tags": 1,
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            0.55,
+            0.55,
+            0.55
+          ],
+          "render.color": [
+            0.66,
+            0.48,
+            0.27
+          ],
+          "render.alpha": 1,
+          "body": {
+            "motion": {
+              "symbol": "dynamic"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            0.55,
+            0.55,
+            0.55
+          ],
+          "body.mass": 6,
+          "body.friction": 0.65,
+          "body.restitution": 0.05,
+          "body.pickable": false,
+          "body.managed": false,
+          "render.radius": 0.5,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "body.radius": 0.5,
+          "body.terrain": "",
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0
+        }
+      },
+      {
+        "id": 210,
+        "name": "Freight 11",
+        "fields": {
+          "position": [
+            0.775,
+            0.7,
+            1.6
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "tags": 1,
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            0.55,
+            0.55,
+            0.55
+          ],
+          "render.color": [
+            0.68,
+            0.72,
+            0.67
+          ],
+          "render.alpha": 1,
+          "body": {
+            "motion": {
+              "symbol": "dynamic"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            0.55,
+            0.55,
+            0.55
+          ],
+          "body.mass": 6,
+          "body.friction": 0.65,
+          "body.restitution": 0.05,
+          "body.pickable": false,
+          "body.managed": false,
+          "render.radius": 0.5,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "body.radius": 0.5,
+          "body.terrain": "",
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0
+        }
+      },
+      {
+        "id": 211,
+        "name": "Freight 12",
+        "fields": {
+          "position": [
+            2.325,
+            0.7,
+            1.6
+          ],
+          "rotation": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "tags": 1,
+          "render": {
+            "symbol": "box"
+          },
+          "render.half-extents": [
+            0.55,
+            0.55,
+            0.55
+          ],
+          "render.color": [
+            0.66,
+            0.48,
+            0.27
+          ],
+          "render.alpha": 1,
+          "body": {
+            "motion": {
+              "symbol": "dynamic"
+            },
+            "shape": {
+              "symbol": "box"
+            }
+          },
+          "body.half-extents": [
+            0.55,
+            0.55,
+            0.55
+          ],
+          "body.mass": 6,
+          "body.friction": 0.65,
+          "body.restitution": 0.05,
+          "body.pickable": false,
+          "body.managed": false,
+          "render.radius": 0.5,
+          "render.secondary-color": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "render.secondary-alpha": 1,
+          "render.mesh-asset": "",
+          "render.texture-asset": "",
+          "body.radius": 0.5,
+          "body.terrain": "",
+          "body.initial-velocity": [
+            0,
+            0,
+            0
+          ],
+          "body.compound-count": 0,
+          "body.fluid-cavity-count": 0
+        }
+      },
+      {
+        "id": 90,
+        "name": "Overview camera",
+        "fields": {
+          "position": [
+            0,
+            20,
+            24
+          ],
+          "rotation": [
+            0.9402715776831116,
+            -0.3404252637530183,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "tags": 0,
+          "render-camera": [],
+          "camera.enabled": false,
+          "camera.width": 640,
+          "camera.height": 360,
+          "camera.cadence": 15,
+          "camera.fov": 57,
+          "camera.near": 0.1,
+          "camera.far": 120
+        }
+      }
+    ]
+  }
+}

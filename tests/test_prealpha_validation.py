@@ -178,6 +178,35 @@ class GateTests(unittest.TestCase):
             self.assertEqual(result['status'], 'unavailable')
             self.assertIn('after its identity probe', result['error'])
 
+    def test_gate_uses_writable_output_and_explicit_engine_assets(self):
+        # Execute a real child requiring both the legacy relative build scratch
+        # directory and an explicit asset root, without writing to source.
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            output = root / 'results'
+            manifest = root / 'manifest.json'
+            manifest.write_text(json.dumps(dict(format=1, tests=[dict(
+                name='scratch', target='judas_scratch_tests', groups=['core'])])))
+            code = ("import os,pathlib; "
+                    "assert pathlib.Path.cwd()!=pathlib.Path(os.environ['JUDAS_ENGINE_ROOT']); "
+                    "assert (pathlib.Path(os.environ['JUDAS_ENGINE_ROOT'])/'engine-version.json').is_file(); "
+                    "pathlib.Path('build/actual-child-output').write_text('ok')")
+            def execute(command, log, cwd, environment, timeout, expected):
+                return gate.run_case([sys.executable, '-c', code], log, cwd, environment, timeout)
+            argv = ['gate', '--manifest', str(manifest), '--output', str(output)]
+            with mock.patch.object(sys, 'argv', argv), \
+                 mock.patch.object(gate, 'source_identity', return_value={}), \
+                 mock.patch.object(gate, 'git', return_value=None), \
+                 mock.patch.object(gate, 'run_verified_case', side_effect=execute):
+                self.assertEqual(gate.main(), 0)
+            self.assertEqual((output / 'build/actual-child-output').read_text(), 'ok')
+            # The same child detects the missing mechanism: no scratch build.
+            negative = root / 'negative'
+            negative.mkdir()
+            result = gate.run_case([sys.executable, '-c', code], negative / 'log', negative,
+                                   dict(os.environ, JUDAS_ENGINE_ROOT=str(ROOT)), 5)
+            self.assertEqual(result['status'], 'failed')
+
     def test_archive_added_input_cannot_certify_an_old_binary(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
