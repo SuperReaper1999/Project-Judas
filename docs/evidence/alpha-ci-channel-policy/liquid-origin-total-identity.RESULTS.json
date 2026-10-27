@@ -1,0 +1,137 @@
+{
+  "format": 1,
+  "startedUtc": "2026-10-27T20:58:34.217538+00:00",
+  "sourceRevision": "636eec475b9955dcfd7d6d943d00c05d911135ad",
+  "trackedWorktreeStatus": "",
+  "manifestSha256": "fc73b9824c81cebca621d9c8fcb09ef16bbbda7d508a1d107843d9c6febf6c75",
+  "trackedDiffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "platform": "Linux-6.17.0-1022-azure-x86_64-with-glibc2.39",
+  "machine": "x86_64",
+  "cpuCount": 4,
+  "groups": [],
+  "tests": [
+    {
+      "argv": [
+        "/home/runner/work/Project-Judas/Project-Judas/build/judas_origin_environment_tests",
+        "--bake-regression",
+        "normalization",
+        "/home/runner/work/Project-Judas/Project-Judas/.cache/prealpha/validation/20261027T205834Z-6c3b2aee/bake-orientation"
+      ],
+      "cwd": "/home/runner/work/Project-Judas/Project-Judas/.cache/prealpha/validation/20261027T205834Z-6c3b2aee",
+      "timeoutSeconds": 120,
+      "binarySha256": "70bf68f7bc67fd6e3e4d079088c133f94bc47a97b40ec11e074aebcfe96bd367",
+      "exit": 1,
+      "status": "failed",
+      "binarySha256After": "70bf68f7bc67fd6e3e4d079088c133f94bc47a97b40ec11e074aebcfe96bd367",
+      "seconds": 0.09395032399993397,
+      "buildIdentity": {
+        "architecture": "x86_64",
+        "build_id": "1.0.0-alpha.1-Alpha-636eec4-clean-0f474a812e71",
+        "channel": "Alpha",
+        "compiler": "GNU",
+        "compiler_version": "13.3.0",
+        "configuration": "Release",
+        "maturity": "alpha",
+        "platform": "Linux",
+        "release_name": "Judas Engine Alpha v1.0.0",
+        "schema": 1,
+        "source_dirty": false,
+        "source_fingerprint": "0f474a812e717e7bed64f4d50e26d4fa45072d4e32dcb6f7a985d44de15c95ce",
+        "source_origin": "git",
+        "source_revision": "636eec475b9955dcfd7d6d943d00c05d911135ad",
+        "source_tree": "a223bb4394a60112a4a0eb71be72ceb6a5ad4f67",
+        "source_untracked_count": 0,
+        "source_untracked_fingerprint": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "version": "1.0.0-alpha.1"
+      },
+      "name": "liquid-origin-total-identity",
+      "finding": "LIQUID-ORIGIN-TOTAL-IDENTITY",
+      "findingStatus": "resolved-oracle-causal-baseline",
+      "classification": "resolved-oracle-causal-baseline; observed result remains authoritative"
+    }
+  ],
+  "knownFindings": [
+    {
+      "id": "CCD-MESH-ARRIVAL",
+      "status": "resolved-first-arrival",
+      "scheduled": true,
+      "reason": "Pass2 finite swept-SAT bounds correct the validated first-arrival contract; it now runs in the ordinary collision group. This does not close later curved-sheet continuation.",
+      "evidence": "docs/evidence/prealpha-pass2/physics"
+    },
+    {
+      "id": "CCD-MESH-CONTINUATION",
+      "status": "resolved-original-fixtures-bounded-ccd",
+      "scheduled": true,
+      "reason": "Original unchanged mesh arrival/continuation fixtures pass with authoritative MK2. Bounded CCD, sidedness and deep initial-overlap limits remain; MK1 event scheduling has been removed.",
+      "evidence": "docs/evidence/prealpha-ccd-continuation-20261019"
+    },
+    {
+      "id": "FLU-001",
+      "status": "deferred-failing",
+      "scheduled": false,
+      "reason": "Legacy PBF settling contract retained unchanged; separate fluid review required.",
+      "evidence": "docs/evidence/m78-completion/FINDINGS_FINAL.json"
+    },
+    {
+      "id": "LEGACY-CONTINUATION",
+      "status": "documented-incompatible-history",
+      "scheduled": false,
+      "reason": "Original a106 snapshot lacks historical continuation data. New-format passes do not certify that snapshot.",
+      "evidence": "docs/evidence/m78-cold-boundary"
+    },
+    {
+      "id": "DENSE-CCD-TAIL",
+      "status": "open-performance-limit",
+      "scheduled": false,
+      "reason": "Original MK1 global event cascade is retired. Current MK2 measurements have their own workload scope; focused correctness gates do not certify universal dense-pile latency.",
+      "evidence": "docs/MK2_PHYSICS_ARCHITECTURE.md"
+    },
+    {
+      "id": "LIQUID-BAKE-ROTATION",
+      "status": "resolved-baking",
+      "scheduled": true,
+      "reason": "Baker and runtime use the same normalized owner/field frames and oriented gravity volumes; both original bake-only runtime-publication cases pass unchanged equivalence tolerances. Original full integration exposes separate retained exact-total comparison failure.",
+      "evidence": "docs/evidence/prealpha-liquid-rotation/REPORT.md"
+    },
+    {
+      "id": "LIQUID-BAKE-KNOTS",
+      "status": "resolved-baking",
+      "scheduled": true,
+      "reason": "Positive tetrahedral density is integrated into one monotone cumulative curve, including shared endpoints; unchanged strict Surface1 decoder accepts both original rotated bakes. A later origin sampling limitation remains separately failed.",
+      "evidence": "docs/evidence/prealpha-liquid-rotation/REPORT.md"
+    },
+    {
+      "id": "LIQUID-ORIGIN-GRID-QUERY",
+      "status": "open-query-continuity-failing",
+      "scheduled": false,
+      "reason": "The original half-turn fixture now bakes and publishes, then fails its unchanged post-512m-origin query comparison: float translation crosses a discontinuous disturbed-surface cell boundary. Conserved quantities and wave bytes remain unchanged. This full integration failure is preserved, not counted as a baking pass.",
+      "evidence": "docs/evidence/prealpha-liquid-rotation/REPORT.md"
+    },
+    {
+      "id": "LIQUID-ORIGIN-TOTAL-IDENTITY",
+      "status": "resolved-oracle-causal-baseline",
+      "scheduled": true,
+      "reason": "Pass3 preserves the original failed test and demonstrates its causal-baseline error. Current atomicity compares the immediate pre-request total with the same exact equality and every physical participant byte; earlier legitimate paired-flow conservation tolerance and liquid runtime are unchanged.",
+      "evidence": "docs/evidence/prealpha-pass3/integration/REPORT.md"
+    }
+  ],
+  "humanAcceptance": "not-established",
+  "scope": "explicit manifest subset",
+  "expectedSourceIdentity": {
+    "source_revision": "636eec475b9955dcfd7d6d943d00c05d911135ad",
+    "source_fingerprint": "0f474a812e717e7bed64f4d50e26d4fa45072d4e32dcb6f7a985d44de15c95ce",
+    "source_dirty": false,
+    "source_untracked_fingerprint": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "passed": false,
+  "finishedUtc": "2026-10-27T20:58:34.633551+00:00",
+  "sourceRevisionAfter": "636eec475b9955dcfd7d6d943d00c05d911135ad",
+  "trackedWorktreeStatusAfter": "",
+  "trackedDiffSha256After": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "expectedSourceIdentityAfter": {
+    "source_revision": "636eec475b9955dcfd7d6d943d00c05d911135ad",
+    "source_fingerprint": "0f474a812e717e7bed64f4d50e26d4fa45072d4e32dcb6f7a985d44de15c95ce",
+    "source_dirty": false,
+    "source_untracked_fingerprint": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  }
+}

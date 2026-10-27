@@ -26,6 +26,27 @@ sys.path.insert(0, str(ROOT / 'tools'))
 from package_sdk import probe_identity  # Same bounded tool probe as distribution verification.
 
 
+# RuntimeWorld-owned advanced simulation is unavailable in Alpha. Keep the
+# original tests and direct geometry/storage coverage; unavailability is never
+# a numerical pass. CTest and release qualification consume this same policy.
+ADVANCED_RUNTIME_TARGETS = {'judas_origin_environment_tests', 'judas_liquid_surface_tests'}
+CHANNELS = ('Alpha', 'Beta', 'Experimental', 'Stable', 'Local')
+
+
+def partition_channel_tests(tests, channel):
+    if channel not in CHANNELS:
+        raise ValueError('unknown validation channel: ' + str(channel))
+    selected, unavailable = [], []
+    for test in tests:
+        if channel == 'Alpha' and test['target'] in ADVANCED_RUNTIME_TARGETS:
+            unavailable.append({'name': test['name'], 'target': test['target'],
+                                'status': 'not-exercised',
+                                'reason': 'Advanced Fluid Dynamics disabled in Alpha for contact stability issues'})
+        else:
+            selected.append(test)
+    return selected, unavailable
+
+
 def digest(path):
     result = hashlib.sha256()
     with path.open('rb') as stream:
@@ -199,12 +220,22 @@ def run_case(command, log_path, cwd, environment, timeout, expected_sha256=None)
     return record
 
 
-def run_verified_case(command, log_path, cwd, environment, timeout, expected_source):
+def run_verified_case(command, log_path, cwd, environment, timeout, expected_source,
+                      entry=None, expected_channel=None):
     executable = Path(command[0])
     before = digest(executable)
     identity = validate_provenance(probe_identity(executable, timeout=5), expected_source)
     if digest(executable) != before:
         raise ValueError('test binary changed during its identity probe; rebuild and retry')
+    if expected_channel is not None and identity.get('channel') != expected_channel:
+        raise ValueError('test binary channel differs from configured CTest channel')
+    if entry is not None:
+        _, unavailable = partition_channel_tests([entry], identity.get('channel'))
+        if unavailable:
+            result = dict(unavailable[0], exit=None, buildIdentity=identity,
+                          argv=list(map(str, command)), binarySha256=before)
+            log_path.write_text(result['reason'] + '\n', encoding='utf-8')
+            return result
     result = run_case(command, log_path, cwd, environment, timeout, expected_sha256=before)
     result['buildIdentity'] = identity
     return result
@@ -232,6 +263,12 @@ def main():
     parser.add_argument('--list', action='store_true')
     parser.add_argument('--check-manifest', action='store_true',
                         help='Validate gate declarations without configuring or executing native tests')
+    parser.add_argument('--registration-plan', action='store_true',
+                        help='Describe channel eligibility for CTest configuration; executes no tests')
+    parser.add_argument('--channel', choices=CHANNELS,
+                        help='Channel for --registration-plan only; real runs probe the executable')
+    parser.add_argument('--expected-channel', choices=CHANNELS,
+                        help='Reject binaries that disagree with the configured CTest channel')
     args = parser.parse_args()
     if not math.isfinite(args.timeout) or args.timeout <= 0:
         parser.error('timeout must be finite and positive')
@@ -239,6 +276,15 @@ def main():
         manifest = load_manifest(args.manifest)
     except (OSError, ValueError) as error:
         parser.error(str(error))
+    if args.registration_plan:
+        if not args.channel:
+            parser.error('--registration-plan requires --channel')
+        selected, unavailable = partition_channel_tests(manifest['tests'], args.channel)
+        print(json.dumps({'channel': args.channel, 'eligibleTests': selected,
+                          'unavailableTests': unavailable}, indent=2))
+        return 0
+    if args.channel:
+        parser.error('--channel is only valid with --registration-plan; execution uses embedded identity')
     if args.check_manifest:
         print(json.dumps({'format': 1, 'tests': len(manifest['tests']),
                           'nativeTargets': len({entry['target'] for entry in manifest['tests']}),
@@ -295,7 +341,8 @@ def main():
         command += [a.format(output=output, root=ROOT) for a in entry.get('args', [])]
         try:
             result = run_verified_case(command, output / (entry['name'] + '.log'), output,
-                                       environment, args.timeout, expected_source)
+                                       environment, args.timeout, expected_source,
+                                       entry=entry, expected_channel=args.expected_channel)
         except (OSError, ValueError, subprocess.SubprocessError) as error:
             result = dict(status='unavailable', exit=None, argv=command, error=str(error))
             (output / (entry['name'] + '.log')).write_text(str(error) + '\n')
@@ -321,6 +368,12 @@ def main():
         report['sourceChangedDuringRun'] = True
     publish()
     print(str(result_path))
+    # CTest recognizes 77 only for cases declared unavailable by the same policy.
+    # The receipt remains passed=false: skipped physics is not certified physics.
+    if (not report.get('sourceChangedDuringRun') and
+            any(row['status'] == 'not-exercised' for row in report['tests']) and
+            all(row['status'] in ('passed', 'not-exercised') for row in report['tests'])):
+        return 77
     return 0 if report['passed'] else 1
 
 

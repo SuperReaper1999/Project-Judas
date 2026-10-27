@@ -46,3 +46,32 @@ Publication uses separately approved immutable artifacts, not an untested rebuil
 The editor checks published version manifests, not Git ancestry. See
 [update preferences, trust and integrity](VERSIONING.md#updates). Manual and
 startup checks never install anything or overwrite a project.
+
+## Channel-aware CI qualification
+
+The hosted focused gate builds **both Experimental and Alpha** on either branch.
+This catches channel-dependent behaviour before promotion rather than discovering
+it only when main selects Alpha. Both configurations retain SDK qualification.
+
+CTest and release qualification share the policy in
+[scripts/prealpha_validate.py](../scripts/prealpha_validate.py). Original native
+fixtures and assertions are unchanged. Experimental executes all scheduled fluid
+tests. Alpha retains direct liquid geometry/storage tests, Basic Water/swimming
+and explicit refusal/ownership/export controls. The two native targets requiring
+RuntimeWorld advanced fluids are unavailable in Alpha for the published contact
+stability restriction.
+
+Those cases remain visible in CTest. The runner checks the binary's source and
+configured channel before returning **77 / not-exercised**; CTest reports them as
+skipped, never passed. Their individual JSON receipts retain `passed: false`. A
+wrong/stale binary, a native failure (including native exit 77), or an unrelated
+failing test remains a failure. Group runs containing unavailable cases return
+77 rather than claiming complete coverage. `--channel` is accepted only for a
+configure-time registration plan; execution uses the embedded binary identity.
+
+`judas-validation-channel-plan.json`, per-case results and CTest logs are retained
+in each channel's separate CI artifact. Known historical manual failures retain
+their existing admission rules. The original six Alpha CI failures are preserved
+in [the investigation record](evidence/alpha-ci-channel-policy/ORIGINAL_FAILURE.json);
+this repairs test selection, not the experimental fluid solver. No published tag
+or package is replaced by this correction.

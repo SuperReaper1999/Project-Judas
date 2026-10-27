@@ -18,7 +18,8 @@ MANIFEST = json.loads((ROOT / 'tools/validation/suites.json').read_text(encoding
 
 
 class ValidationRegistrationTests(unittest.TestCase):
-    def configure(self, include_known=False, omit_target=None, module=None, generator=None):
+    def configure(self, include_known=False, omit_target=None, module=None, generator=None,
+                  channel='Experimental'):
         with tempfile.TemporaryDirectory(prefix='judas-ctest-contract-') as directory:
             source = Path(directory)
             build = source / 'build'
@@ -39,6 +40,7 @@ class ValidationRegistrationTests(unittest.TestCase):
                 'add_executable(judas IMPORTED)',
                 'set_property(TARGET judas PROPERTY IMPORTED_LOCATION "${CMAKE_BINARY_DIR}/judas")',
                 'set(JUDAS_ENABLE_VALIDATION ON CACHE BOOL "" FORCE)',
+                f'set(JUDAS_ID_channel "{channel}")',
                 'set(JUDAS_INCLUDE_KNOWN_FAILURES ' + ('ON' if include_known else 'OFF') +
                     ' CACHE BOOL "" FORCE)',
                 *declarations,
@@ -59,7 +61,7 @@ class ValidationRegistrationTests(unittest.TestCase):
             self.assertEqual(listed.returncode, 0, listed.stdout + listed.stderr)
             return {entry['name']: entry for entry in json.loads(listed.stdout)['tests']}
 
-    def assert_contract(self, tests, include_known=False):
+    def assert_contract(self, tests, include_known=False, channel='Experimental'):
         entries = [entry for entry in MANIFEST['tests']
                    if include_known or not entry.get('manual', False)]
         tooling = {'prealpha.gate-negative-controls', 'prealpha.build-organization',
@@ -69,9 +71,19 @@ class ValidationRegistrationTests(unittest.TestCase):
             case = tests['prealpha.' + entry['name']]
             self.assertEqual(Path(case['command'][1]).resolve(), (ROOT / 'scripts/prealpha_validate.py').resolve())
             self.assertEqual(case['command'][2:],
-                             ['--build-dir', case['command'][3], '--test', entry['name']])
+                             ['--build-dir', case['command'][3], '--test', entry['name'],
+                              '--expected-channel', channel])
             properties = {item['name']: item['value'] for item in case['properties']}
-            self.assertEqual(properties['LABELS'], sorted(['prealpha', *entry['groups']]))
+            unavailable = channel == 'Alpha' and entry['target'] in {
+                'judas_origin_environment_tests', 'judas_liquid_surface_tests'}
+            labels = ['prealpha', *entry['groups']]
+            if unavailable:
+                labels.append('unavailable-in-channel')
+                self.assertIn('SKIP_RETURN_CODE', properties)
+                self.assertEqual(properties['SKIP_RETURN_CODE'], 77)
+            else:
+                self.assertNotIn('SKIP_RETURN_CODE', properties)
+            self.assertEqual(properties['LABELS'], sorted(labels))
             self.assertTrue(properties['RUN_SERIAL'])
             self.assertEqual(properties['TIMEOUT'], 150.0)
         for name in tooling:
@@ -80,6 +92,22 @@ class ValidationRegistrationTests(unittest.TestCase):
 
     def test_ordinary_registration_omits_only_explicit_manual_failures(self):
         self.assert_contract(self.configure())
+
+    def test_alpha_marks_only_advanced_runtime_unavailable(self):
+        self.assert_contract(self.configure(channel='Alpha'), channel='Alpha')
+
+    def test_alpha_multi_configuration_discovery(self):
+        if not shutil.which('ninja'):
+            self.skipTest('Ninja needed for explicit multi-config control')
+        self.assert_contract(self.configure(channel='Alpha', generator='Ninja Multi-Config'),
+                             channel='Alpha')
+
+    def test_removed_channel_guard_is_detected(self):
+        module = MODULE.read_text(encoding='utf-8').replace(
+            'if(name IN_LIST judas_channel_unavailable)', 'if(FALSE)', 1)
+        self.assertNotEqual(module, MODULE.read_text(encoding='utf-8'))
+        with self.assertRaises(AssertionError):
+            self.assert_contract(self.configure(channel='Alpha', module=module), channel='Alpha')
 
     @unittest.skipUnless(shutil.which('ninja'), 'Ninja needed for explicit multi-config control')
     def test_multi_configuration_discovery(self):

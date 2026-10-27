@@ -1,0 +1,8 @@
+PASS fresh failed-reproduction output required
+PASS normal cavity file and stable asset metadata
+PASS normal cavity file and stable asset metadata
+PASS ordinary authored capacity and dynamic-surface bake: 
+PASS baked data uses normal resource sidecars
+PASS ordinary authored capacity and dynamic-surface bake: 
+PASS baked data uses normal resource sidecars
+FAIL authored world validates original baked fingerprint: Advanced Fluid Dynamics is disabled in Alpha due to contact stability issues. Disable it in Project Settings > Experimental before Play or export. Basic Water and swimming remain available. Re-enabling advanced fluids is deferred to a validated patch. after 8 checks

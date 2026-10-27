@@ -6,30 +6,11 @@ import os
 from pathlib import Path
 import subprocess
 import sys
+from prealpha_validate import partition_channel_tests
 
 ROOT=Path(__file__).resolve().parents[1]
 GROUPS=['core','mk2','water','network','lifecycle','onboarding','application','liquid']
 EXTRA=['judas_joint_tests','judas_wheel_tests','judas_wheel_lifecycle_tests','judas_powertrain_tests','judas_powertrain_lifecycle_tests','judas_gravity_selection_tests','judas_player_swimming_tests']
-
-
-# These targets exercise RuntimeWorld-owned advanced simulation. Direct geometry,
-# storage and rotation tests remain eligible in Alpha. Keep the original runtime
-# tests intact and exercise them in Experimental; never report their exclusion as
-# a passed numerical or persistence contract.
-ADVANCED_RUNTIME_TARGETS = {'judas_origin_environment_tests', 'judas_liquid_surface_tests'}
-
-
-def partition_channel_tests(tests, channel):
-    unavailable = []
-    selected = []
-    for test in tests:
-        if channel == 'Alpha' and test['target'] in ADVANCED_RUNTIME_TARGETS:
-            unavailable.append({'name': test['name'], 'target': test['target'],
-                                'status': 'not-exercised',
-                                'reason': 'Advanced Fluid Dynamics disabled in Alpha for contact stability issues'})
-        else:
-            selected.append(test)
-    return selected, unavailable
 
 
 def main():

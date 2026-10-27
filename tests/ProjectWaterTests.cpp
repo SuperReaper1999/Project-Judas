@@ -1,4 +1,5 @@
 #include "ProjectFeaturePolicy.h"
+#include "BuildIdentity.h"
 #include "BasicWater.h"
 #include "Project.h"
 #include "RuntimeWorld.h"
@@ -32,6 +33,11 @@ Scene WaterScene(bool advancedComponents=false){
 }
 int main(){
     std::string error;
+    // The expected contract comes from the compiled channel, not the policy
+    // function under test: accidentally unlocking Alpha must fail this suite.
+    const bool alphaChannel = std::string(GetBuildIdentity().channel) == "Alpha";
+    Check((AdvancedFluidDynamicsRestriction() != nullptr) == alphaChannel,
+          "advanced-fluid restriction agrees with independently observed build channel");
     ProjectSettings defaults;defaults.name="Water policy";defaults.startupScene="Scenes/main.judas";defaults.legacyGameplay=false;
     Check(defaults.basicWater&&defaults.waterSwimming&&!defaults.advancedFluidDynamics,"basic water/swimming on, advanced off by default");
     auto text=Project::SerializeToString(defaults);ProjectSettings parsed;

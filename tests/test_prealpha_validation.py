@@ -191,7 +191,7 @@ class GateTests(unittest.TestCase):
                     "assert pathlib.Path.cwd()!=pathlib.Path(os.environ['JUDAS_ENGINE_ROOT']); "
                     "assert (pathlib.Path(os.environ['JUDAS_ENGINE_ROOT'])/'engine-version.json').is_file(); "
                     "pathlib.Path('build/actual-child-output').write_text('ok')")
-            def execute(command, log, cwd, environment, timeout, expected):
+            def execute(command, log, cwd, environment, timeout, expected, **kwargs):
                 return gate.run_case([sys.executable, '-c', code], log, cwd, environment, timeout)
             argv = ['gate', '--manifest', str(manifest), '--output', str(output)]
             with mock.patch.object(sys, 'argv', argv), \
@@ -206,6 +206,49 @@ class GateTests(unittest.TestCase):
             result = gate.run_case([sys.executable, '-c', code], negative / 'log', negative,
                                    dict(os.environ, JUDAS_ENGINE_ROOT=str(ROOT)), 5)
             self.assertEqual(result['status'], 'failed')
+
+    def test_channel_policy_uses_verified_binary_and_never_hides_failure(self):
+        entry = dict(name='surface', target='judas_liquid_surface_tests')
+        expected = dict(source_revision='a' * 40)
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            for channel in ('Alpha', 'Experimental'):
+                identity = dict(schema=1, channel=channel, **expected)
+                with mock.patch.object(gate, 'probe_identity', return_value=identity):
+                    result = gate.run_verified_case(
+                        [sys.executable, '-c', 'raise SystemExit(7)'], root / 'log', root,
+                        os.environ.copy(), 5, expected, entry=entry, expected_channel=channel)
+                self.assertEqual(result['status'], 'not-exercised' if channel == 'Alpha' else 'failed')
+                self.assertEqual(result['exit'], None if channel == 'Alpha' else 7)
+            # Neither stale provenance nor the wrong compiled channel may skip.
+            for identity, error in [
+                (dict(schema=1, channel='Alpha', source_revision='b' * 40), 'stale'),
+                (dict(schema=1, channel='Experimental', **expected), 'channel differs')]:
+                with mock.patch.object(gate, 'probe_identity', return_value=identity):
+                    with self.assertRaisesRegex(ValueError, error):
+                        gate.run_verified_case([sys.executable], root / 'log', root,
+                            os.environ.copy(), 5, expected, entry=entry, expected_channel='Alpha')
+
+    def test_unavailable_main_receipt_is_not_a_pass(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            output = root / 'results'
+            argv = ['gate', '--test', 'liquid-surface', '--output', str(output)]
+            with mock.patch.object(sys, 'argv', argv), \
+                 mock.patch.object(gate, 'source_identity', return_value={}), \
+                 mock.patch.object(gate, 'git', return_value=None), \
+                 mock.patch.object(gate, 'run_verified_case', return_value={
+                     'status': 'not-exercised', 'exit': None, 'reason': 'fixture unavailable'}):
+                self.assertEqual(gate.main(), 77)
+            receipt = json.loads((output / 'RESULTS.json').read_text())
+            self.assertFalse(receipt['passed'])
+            self.assertEqual(receipt['tests'][0]['status'], 'not-exercised')
+
+    def test_channel_override_cannot_hide_real_execution(self):
+        with mock.patch.object(sys, 'argv', ['gate', '--channel', 'Alpha', '--test', 'liquid-surface']):
+            with self.assertRaises(SystemExit) as error:
+                gate.main()
+            self.assertEqual(error.exception.code, 2)
 
     def test_archive_added_input_cannot_certify_an_old_binary(self):
         with tempfile.TemporaryDirectory() as directory:

@@ -17,6 +17,11 @@ concurrency:
 
 jobs:
   linux:
+    name: linux (${{ matrix.channel }})
+    strategy:
+      fail-fast: false
+      matrix:
+        channel: [Experimental, Alpha]
     runs-on: ubuntu-24.04
     timeout-minutes: 45
     env:
@@ -45,7 +50,7 @@ jobs:
           node scripts/check_judasjs_api.mjs
       - name: Configure an explicitly identified build
         env:
-          CHANNEL: ${{ github.ref_name == 'main' && 'Alpha' || github.ref_name == 'Experimental' && 'Experimental' || 'Local' }}
+          CHANNEL: ${{ matrix.channel }}
         run: cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release -DJUDAS_BUILD_CHANNEL="$CHANNEL" -DJUDAS_ENABLE_VALIDATION=ON
       - name: Build focused dependencies and public SDK
         run: cmake --build build --target judas_prealpha_tests judas_linux_sdk -j2
@@ -60,11 +65,12 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v7
         with:
-          name: prealpha-linux-${{ github.sha }}
+          name: prealpha-linux-${{ matrix.channel }}-${{ github.sha }}
           path: |
             .cache/prealpha/validation/
             .cache/prealpha/ci/
             build/judas-build-info-Release.json
+            build/judas-validation-channel-plan.json
             build/Testing/Temporary/
             build/linux-sdk/SDK_MANIFEST.json
             build/linux-sdk/BUILD_INFO.json

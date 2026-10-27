@@ -1,0 +1,32 @@
+{
+  "source_revision": "636eec475b9955dcfd7d6d943d00c05d911135ad",
+  "channel": "Alpha",
+  "run_url": "https://github.com/SuperReaper1999/Project-Judas/actions/runs/40580042224",
+  "passed": 56,
+  "failed": 6,
+  "failed_tests": [
+    "liquid-bake-normalization-only",
+    "liquid-origin-total-identity",
+    "liquid-origin-query-controls",
+    "liquid-surface",
+    "origin-environment",
+    "liquid-bake-knots-only"
+  ],
+  "cause": "Generic CTest registration ran RuntimeWorld advanced-fluid tests despite compiled Alpha unavailability. Release qualification already partitioned these targets.",
+  "original_binary_and_fixture_changes": false,
+  "files": {
+    "liquid-bake-knots-only.RESULTS.json": "81fd1027ffa34d261219b59392931079ffeb37df949b0f59102c8daf6d2bbf25",
+    "liquid-bake-knots-only.log": "a83d1105e0267201ab2bfabece2af0eadc7b5cb3829f9a1e929712825fa5fdcb",
+    "liquid-bake-normalization-only.RESULTS.json": "8084488760fedc7b3cd3461fbf9ea9f65b2f455c8c70e46dca1cd03fb4a4b903",
+    "liquid-bake-normalization-only.log": "a83d1105e0267201ab2bfabece2af0eadc7b5cb3829f9a1e929712825fa5fdcb",
+    "liquid-origin-query-controls.RESULTS.json": "9da60496dd242f05a4134c57eba43b6c2bd48151ca7cb1e00dc074ada1495868",
+    "liquid-origin-query-controls.log": "a83d1105e0267201ab2bfabece2af0eadc7b5cb3829f9a1e929712825fa5fdcb",
+    "liquid-origin-total-identity.RESULTS.json": "d8cecb321be20e5ce255c136dce73f367918f0fbb456000aaca1aa34df695957",
+    "liquid-origin-total-identity.log": "a83d1105e0267201ab2bfabece2af0eadc7b5cb3829f9a1e929712825fa5fdcb",
+    "liquid-surface.RESULTS.json": "087295ecf7d3e8de4b6d602b88cdd0d14675bf85260f8b4949efcc5759f5adf1",
+    "liquid-surface.log": "5ab690118c7c846140dc569863dd4ea0338cf2f32c16f027d52644b81f58310a",
+    "origin-environment.RESULTS.json": "25fbd580e925312a9a1e99f8c174cdab4a302942af6cf389ec08333c7d712459",
+    "origin-environment.log": "143f74f4972153215063b522e1129b952273a0a2a674a9df8bc3215777e405f4",
+    "original-ctest-failure.log": "167200a2e203f37346486c4f9d8d807c1853f33b7c312adcf6cf861d684ffbb4"
+  }
+}

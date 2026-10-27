@@ -12,6 +12,24 @@ if(JUDAS_ENABLE_VALIDATION)
     if(NOT judas_manifest_status STREQUAL "0")
         message(FATAL_ERROR "Invalid focused validation manifest: ${judas_manifest_error}")
     endif()
+    execute_process(COMMAND "${Python3_EXECUTABLE}"
+        "${CMAKE_SOURCE_DIR}/scripts/prealpha_validate.py"
+        --registration-plan --channel "${JUDAS_ID_channel}"
+        RESULT_VARIABLE judas_channel_status OUTPUT_VARIABLE judas_channel_plan
+        ERROR_VARIABLE judas_channel_error TIMEOUT 20)
+    if(NOT judas_channel_status STREQUAL "0")
+        message(FATAL_ERROR "Invalid validation channel plan: ${judas_channel_error}")
+    endif()
+    file(WRITE "${CMAKE_BINARY_DIR}/judas-validation-channel-plan.json" "${judas_channel_plan}")
+    string(JSON unavailable_count LENGTH "${judas_channel_plan}" unavailableTests)
+    set(judas_channel_unavailable "")
+    if(unavailable_count GREATER 0)
+        math(EXPR unavailable_last "${unavailable_count} - 1")
+        foreach(index RANGE ${unavailable_last})
+            string(JSON name GET "${judas_channel_plan}" unavailableTests ${index} name)
+            list(APPEND judas_channel_unavailable "${name}")
+        endforeach()
+    endif()
     enable_testing()
     file(READ "${CMAKE_SOURCE_DIR}/tools/validation/suites.json" judas_suites)
     string(JSON judas_suite_count LENGTH "${judas_suites}" tests)
@@ -54,7 +72,12 @@ if(JUDAS_ENABLE_VALIDATION)
         endforeach()
         add_test(NAME prealpha.${name}
             COMMAND ${Python3_EXECUTABLE} "${CMAKE_SOURCE_DIR}/scripts/prealpha_validate.py"
-                --build-dir "$<TARGET_FILE_DIR:judas>" --test ${name})
+                --build-dir "$<TARGET_FILE_DIR:judas>" --test ${name}
+                --expected-channel "${JUDAS_ID_channel}")
+        if(name IN_LIST judas_channel_unavailable)
+            list(APPEND labels unavailable-in-channel)
+            set_tests_properties(prealpha.${name} PROPERTIES SKIP_RETURN_CODE 77)
+        endif()
         set_tests_properties(prealpha.${name} PROPERTIES
             LABELS "${labels}" RUN_SERIAL TRUE TIMEOUT 150)
     endforeach()
