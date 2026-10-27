@@ -1,8 +1,8 @@
 # Judas architecture
 
-Current implementation map through Experimental checkpoint
-`be1b7d634c674dca34f3a36299da510492ca2aea` and this documentation cleanup.
-This describes ownership and integration boundaries, not Alpha certification.
+Implementation map for published Alpha v1.0.0 at
+`636eec475b9955dcfd7d6d943d00c05d911135ad`.
+This describes ownership and integration boundaries, not universal certification.
 See [current status](PREALPHA.md), [documentation index](README.md), and
 [JudasJS](JUDASJS.md). The former 10,248-line milestone chronology is preserved
 verbatim after the archive banner in [Architecture history](ARCHITECTURE_HISTORY.md).

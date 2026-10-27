@@ -3,8 +3,8 @@
 Distribution channels are **Alpha**, future **Beta**, **Experimental** and
 **Stable** (GA only). `Local` is development provenance. Git branches remain main
 and Experimental; they are separate from distribution maturity. Selecting a build
-channel does not publish, promote or certify it. Alpha v1.0.0 remains a candidate
-until final approval. See [versioning](VERSIONING.md) and [publication](RELEASING.md).
+channel does not publish, promote or certify it. [Alpha v1.0.0](https://github.com/SuperReaper1999/Project-Judas/releases/tag/v1.0.0-alpha.1)
+was published after final approval on 27 October 2026. See [versioning](VERSIONING.md) and [publication](RELEASING.md).
 
 ## Native SDK
 

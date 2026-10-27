@@ -1,4 +1,4 @@
-# JudasJS — Alpha v1.0.0 candidate API reference
+# JudasJS — Alpha v1.0.0 API reference
 
 [Practical ownership, readiness, presentation and save lessons](DEVELOPER_WORKFLOWS.md)
 

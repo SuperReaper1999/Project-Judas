@@ -1,6 +1,11 @@
 # Native Android games
 
-This guide describes the current optional APK workflow. Platform acceptance is
+This guide describes the current optional APK workflow. On 27 October 2026 the
+operator additionally confirmed making and playing multiple Judas Android games:
+Android support is human-verified working. Exact revisions/devices were not
+specified for that report; no fresh APK or emulator/device qualification was
+performed for the desktop Alpha package refresh. Controller and broad-device
+certification are not inferred. See [the Alpha support matrix](ALPHA_SUPPORT_MATRIX.md). Platform acceptance is
 build- and device-specific: M88 Breakwater and M99 phone-to-Linux networking
 have recorded phone reviews. M89 local multiplayer was accepted on desktop;
 Android multiplayer hardware testing was not inferred. These reviews do not

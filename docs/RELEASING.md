@@ -5,17 +5,23 @@
 
 ## Current boundary
 
-M100 prepares an **unpublished Alpha v1.0.0 candidate**. No final tag, public
-channel manifest, GitHub release, main promotion or final human acceptance is
-created by compilation, staging, qualification or candidate preparation.
+**[Alpha v1.0.0 is published](https://github.com/SuperReaper1999/Project-Judas/releases/tag/v1.0.0-alpha.1)** after final operator approval on
+27 October 2026. Tag `v1.0.0-alpha.1` and accepted main point to exact source
+`636eec475b9955dcfd7d6d943d00c05d911135ad`. The verified Linux, Windows and source
+packages and Alpha update manifest are live. These publication steps remain the
+procedure for future releases; compilation, staging and preparation alone never
+grant approval. Do not republish or replace the existing Alpha tag/assets.
 
 The Git branches remain `Experimental` and operator-accepted `main`. Distribution
 channels are Alpha, optional future Beta/Experimental, and eventual GA Stable.
 Do not create a duplicate Stable branch. Do not publish Alpha as latest Stable.
 
-The original `0dab8e5d` candidate archives predate the advanced-fluid restriction
-and are superseded. Do not publish them. Build and qualify new exact-source Alpha
-artifacts after the restriction checkpoint, including both platform packages.
+The `0dab8e5d` candidate predates the advanced-fluid restriction; `31205c6a`
+predates the accepted Basic Water editor-preview correction. Both are superseded.
+The final published packages use `636eec47`; do not distribute older candidates
+as the final Alpha. Sealed preparation receipts retain their original pending
+approval wording as historical evidence; the public release records the later
+operator approval. See [the release record](ALPHA_V1_0_0_NOTES.md#release-record).
 
 ## 1. Freeze a source candidate
 

@@ -2,8 +2,9 @@
 
 The authoritative source is [`engine-version.json`](../engine-version.json).
 The first release title is **Judas Engine Alpha v1.0.0**; its machine version is
-**`1.0.0-alpha.1`**. It remains an unpublished candidate until final operator
-approval. Build configuration is not release approval.
+**`1.0.0-alpha.1`**, [published after final operator approval](https://github.com/SuperReaper1999/Project-Judas/releases/tag/v1.0.0-alpha.1)
+on 27 October 2026 from `636eec475b9955dcfd7d6d943d00c05d911135ad`.
+Build configuration alone is not approval for any subsequent release.
 
 Judas follows semantic version precedence: `1.0.0-alpha.1` < `1.0.0-alpha.2` <
 `1.0.0-beta.1` < `1.0.0-rc.1` < `1.0.0`. Numeric prerelease components sort
@@ -55,7 +56,9 @@ responses produce diagnostics, not application failure.
 The authoritative endpoint is the corresponding `Alpha.json`, `Beta.json`,
 `Experimental.json` or `Stable.json` asset on this repository's `update-manifests`
 GitHub release. Nothing is hosted/published there by merely building this source.
-It is provisioned after approval using [the publication process](RELEASING.md).
+The [Alpha manifest](https://github.com/SuperReaper1999/Project-Judas/releases/download/update-manifests/Alpha.json)
+is live for this release; Beta, Experimental and Stable manifests have not been
+published. Future publication follows [the release process](RELEASING.md).
 
 Metadata requires its exact channel, valid SemVer, source commit, protocol/major
 compatibility, bounded notes, repository-owned versioned URLs, artifact sizes and

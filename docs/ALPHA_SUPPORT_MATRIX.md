@@ -1,8 +1,9 @@
 # Alpha scope and qualification matrix
 
-This is the Alpha v1.0.0 candidate support boundary. Final release approval is
-pending. Exact M100 artifact receipts distinguish current qualification from the
-accepted Pre-Alpha baseline and historical platform evidence. See
+This is the support boundary for [published Alpha v1.0.0](https://github.com/SuperReaper1999/Project-Judas/releases/tag/v1.0.0-alpha.1),
+human accepted on 27 October 2026 at `636eec475b9955dcfd7d6d943d00c05d911135ad`.
+Exact M100 artifact receipts distinguish release qualification from the accepted
+Pre-Alpha baseline and historical platform evidence. See
 [release notes](ALPHA_V1_0_0_NOTES.md) and [release process](RELEASING.md).
 No claim of universal component composition or clean-machine certification is made.
 
@@ -15,7 +16,7 @@ No claim of universal component composition or clean-machine certification is ma
 | Other Linux distributions / Ubuntu 22.04 / non-x86-64 desktop | Unqualified | No inference from a glibc symbol check alone. |
 | Windows x64 MSVC / tested Windows 11 hardware | Human accepted at `6941b381` | Effective 59/59 native gate plus 33/33 extras; operator project creation, save/reopen, small game, audio and editor/gameplay trial. Controller hardware and clean-machine certification remain unqualified. [Evidence](WINDOWS.md). |
 | Linux-to-Windows MinGW cross-build | Existing separately qualified workflow | Native MSVC acceptance does not supply a new MinGW qualification; historical cross-build receipts keep their own scope. |
-| Android runtime, touch, APK workflow | Existing implementation; current qualification deferred | Earlier phone acceptance is retained; no current-device or emulator certification in this pass. |
+| Android runtime, touch, APK workflow | Human-verified working through real games | Operator confirms making and playing multiple Judas Android games, alongside earlier scoped phone acceptance. Exact revisions/devices were not supplied for the additional report; no fresh APK/device/emulator qualification accompanied the desktop Alpha refresh. |
 | macOS, iOS, consoles, browser runtime | Unsupported | No supported distribution pipeline promised. |
 | Docker/Podman Ubuntu baseline builder | Available, execution-unqualified here | Rootless bubblewrap is the exercised baseline backend. |
 
@@ -61,5 +62,5 @@ to remove all deferred entries from this table.
 
 The operator's Windows 11 project/save/reopen/small-game/audio trial is accepted.
 Broader game-building coverage, controller hardware, clean-machine distribution
-and fresh Android qualification remain separate. A usability blocker still
+and fresh qualification of a particular Android build remain separate. A usability blocker still
 deserves correction even if automated tests pass.

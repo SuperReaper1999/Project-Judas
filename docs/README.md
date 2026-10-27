@@ -1,8 +1,9 @@
 # Judas documentation
 
-Start here for the Alpha v1.0.0 candidate. [Repository overview](../README.md),
+Start here for [published Alpha v1.0.0](https://github.com/SuperReaper1999/Project-Judas/releases/tag/v1.0.0-alpha.1). [Repository overview](../README.md),
 [current status and limits](PREALPHA.md), [architecture](ARCHITECTURE.md).
-Publication and final acceptance remain explicit; this documentation is not a universal compatibility promise.
+The first Alpha received final operator approval on 27 October 2026; future
+publication and acceptance remain explicit. This is not a universal compatibility promise.
 See [release notes](ALPHA_V1_0_0_NOTES.md), [versioning](VERSIONING.md) and [publication](RELEASING.md).
 
 ## Start a project

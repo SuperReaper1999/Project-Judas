@@ -9,9 +9,11 @@ arbitrary gravity, terrain, liquids, weather, deformables and seamless world
 transitions. Ordinary game policy lives in project JavaScript; the engine
 provides the reusable systems and runtime.
 
-This source prepares **Alpha v1.0.0** (`1.0.0-alpha.1`). It remains a release
-candidate until final operator approval and publication. Alpha is not Stable/GA;
-advanced and experimental capabilities retain their documented limits.
+**[Judas Engine Alpha v1.0.0](https://github.com/SuperReaper1999/Project-Judas/releases/tag/v1.0.0-alpha.1)**
+(`1.0.0-alpha.1`) was human accepted and published on 27 October 2026 from
+`636eec475b9955dcfd7d6d943d00c05d911135ad`. Download the Linux or Windows SDK,
+source archive and checksums from that release. Alpha is not Stable/GA; advanced
+and experimental capabilities retain their documented limits.
 
 **Advanced Fluid Dynamics is disabled in Alpha due to contact stability issues.**
 Basic Water and swimming remain available. See the
@@ -60,8 +62,10 @@ and [original validation evidence](docs/evidence/m90/REPORT.md).
 
 Native Linux, Windows and Android runtimes and optional local multiplayer remain
 available. Linux is the current acceptance platform; Windows VM checks are native
-functional evidence, and Android acceptance is specific to the recorded builds
-and devices. Android targets Android 16 with OpenGL ES 3, ARM64 phones/tablets and
+functional evidence. The operator also confirms making and playing multiple
+Android games; exact revisions/devices were not specified in that additional
+confirmation, and no fresh APK was built for the desktop Alpha refresh. Android
+targets Android 16 with OpenGL ES 3, ARM64 phones/tablets and
 x86_64 emulators. Broader hardware and physical-controller coverage remains
 outstanding. See [Windows](docs/WINDOWS.md), [Android](docs/ANDROID.md),
 [local multiplayer](docs/M89_LOCAL_MULTIPLAYER.md) and its
@@ -127,8 +131,9 @@ The SDK target builds the public tools and stages a self-contained engine SDK
 inventory with checksums; it does not build every historical test executable.
 Linux system-library requirements remain documented in the distribution guide.
 For only the editor/runtime, build targets `judas_editor judas` instead.
-Use a separate build directory with `-DJUDAS_BUILD_CHANNEL=main` for accepted
-release builds. See [distribution and relocation checks](docs/DISTRIBUTION.md).
+Use a separate build directory with `-DJUDAS_BUILD_CHANNEL=Alpha` for Alpha
+builds. Channel selection alone does not qualify or publish a build. See
+[distribution and relocation checks](docs/DISTRIBUTION.md).
 
 From an unpacked SDK, start `./judas_editor` on Linux or
 `.\judas_editor.exe` on Windows. Follow [your first visible project](docs/FIRST_PROJECT.md)

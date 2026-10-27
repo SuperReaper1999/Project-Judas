@@ -1,20 +1,22 @@
-# Current Pre-Alpha status
+# Alpha status and Pre-Alpha qualification history
 
-Judas remains in unnumbered Pre-Alpha stabilization. **M100 and Alpha release work
-have not begun.** Main is the human-accepted release line; Experimental may contain
-verified corrections awaiting their own human acceptance.
+Judas Engine Alpha v1.0.0 (`1.0.0-alpha.1`) was human accepted and
+[published](https://github.com/SuperReaper1999/Project-Judas/releases/tag/v1.0.0-alpha.1)
+on 27 October 2026. This page retains Pre-Alpha qualification context; it is no
+longer a statement that M100 has not begun. Start with the
+[release record](ALPHA_V1_0_0_NOTES.md#release-record) and [support matrix](ALPHA_SUPPORT_MATRIX.md).
 
-## Accepted baseline
+## Accepted release baseline
 
-The current human-accepted engine checkpoint is
-`6941b3815f93d4f716fe64faffff69799c7637b0`, including the Windows portability
-corrections and preceding accepted editor work. Windows 11 native automation and
-the operator's project/save/game/audio hardware trial are recorded in
-[Windows qualification](WINDOWS.md). MK2 remains the sole production solver.
-Later development still requires its own acceptance before main promotion.
-See [the current contract](MK2_PHYSICS_ARCHITECTURE.md).
+The published engine checkpoint is `636eec475b9955dcfd7d6d943d00c05d911135ad`.
+`main` contains human-accepted source; subsequent Experimental work requires its
+own acceptance before promotion. The older Windows 11 native/hardware acceptance
+at `6941b381` retains its own scope in [Windows qualification](WINDOWS.md).
+Fresh Alpha Linux and Windows VM package workflows are recorded separately;
+Android also has operator verification through multiple real games. MK2 remains
+the sole production solver. See [the current contract](MK2_PHYSICS_ARCHITECTURE.md).
 
-## Current correction work
+## Retained Pre-Alpha correction history
 
 The [final Pre-Alpha corrections](PREALPHA_FINAL_CORRECTIONS.md) address disabled-
 fluid admission, streaming/export consistency, project-document protection,
@@ -38,11 +40,14 @@ Start with [your first project](FIRST_PROJECT.md), [the editor guide](EDITOR_GUI
 
 - Selected Linux native/editor/game checks do not certify every engine feature.
 - Windows 11 has scoped native and operator hardware acceptance at `6941b381`.
-  Controllers, clean-machine distribution and fresh Android qualification remain
-  separate. Historical receipts apply only to their recorded source; Windows VM
+  Controllers, clean-machine distribution and qualification of a specific new
+  Android build remain separate. Historical receipts apply only to their recorded
+  source; Windows VM
   timing remains diagnostic, not a physical-host performance gate.
-- Advanced fluid dynamics remain default-off and experimental. FLU-001 and the
-  retained half-turn sampling issue are not silently reclassified as passes.
+- Advanced Fluid Dynamics is compiled unavailable in Alpha because of contact
+  stability issues. Basic Water/swimming remain available. Experimental/local
+  implementations retain opt-in support for investigation; FLU-001 and half-turn
+  sampling remain deferred.
 - Replication, physical charts, regional suspension, terrain edits and migrations
   retain explicit supported subsets. No universal compatibility promise is made.
 - The reproduced elastic energy-gain defect is corrected and human accepted.
