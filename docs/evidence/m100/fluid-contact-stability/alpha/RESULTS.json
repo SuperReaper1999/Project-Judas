@@ -1,0 +1,22 @@
+[
+  {
+    "target": "judas_project_water_tests",
+    "exit": 0
+  },
+  {
+    "target": "judas_project_settings_editor_tests",
+    "exit": 0
+  },
+  {
+    "target": "judas_project_fluid_policy_tests",
+    "exit": 0
+  },
+  {
+    "target": "judas_player_swimming_tests",
+    "exit": 0
+  },
+  {
+    "target": "Alpha policy with spoofed environment flags",
+    "exit": 0
+  }
+]

@@ -1,10 +1,12 @@
 #include "RuntimeWorld.h"
 #include "Project.h"
+#include "ProjectFeaturePolicy.h"
 #include <stdexcept>
 
 void RuntimeWorld::ConfigureProject(const ProjectSettings& project) {
     if (IsBuilt()) throw std::logic_error("Project settings require a fresh world; restart Play");
-    m_advancedFluids=project.advancedFluidDynamics;
+    m_advancedFluidsRequested=project.advancedFluidDynamics;
+    m_advancedFluids=project.advancedFluidDynamics && !AdvancedFluidDynamicsRestriction();
     m_basicWaterEnabled=project.basicWater;
     m_waterSwimming=project.waterSwimming;
     legacyGameplay=project.legacyGameplay;

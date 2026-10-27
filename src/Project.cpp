@@ -1,6 +1,8 @@
+#include "ProjectFeaturePolicy.h"
 #include <iomanip>
 #include <set>
 #include "Project.h"
+#include "BuildIdentity.h"
 #include "SaveEvolution.h"
 #include "AuthoringJSON.h"
 #include "modding/ModRuntime.h"
@@ -12,8 +14,27 @@
 #include <map>
 #include <sstream>
 #include <vector>
+#include <cstring>
 
 namespace fs = std::filesystem;
+
+const char* AdvancedFluidDynamicsRestriction() {
+    if (std::strcmp(GetBuildIdentity().channel, "Alpha") != 0) return nullptr;
+    return "Advanced Fluid Dynamics is disabled in Alpha due to contact stability issues. "
+           "Disable it in Project Settings > Experimental before Play or export. "
+           "Basic Water and swimming remain available. Re-enabling advanced fluids "
+           "is deferred to a validated patch.";
+}
+
+bool ValidateAdvancedFluidDynamicsRequest(bool requested, std::string& error) {
+    if (requested) {
+        if (const char* restriction = AdvancedFluidDynamicsRestriction()) {
+            error = restriction;
+            return false;
+        }
+    }
+    return true;
+}
 
 namespace {
 std::string Quote(const std::string& s) {

@@ -42,9 +42,12 @@ editor distribution. macOS, iOS, consoles and a browser runtime are unsupported.
 
 ## Known Alpha limitations
 
-- Advanced fluid dynamics remains experimental and **off by default**. Basic water
-  and swimming are independent. FLU-001 and half-turn disturbed-surface query
-  limitations remain disclosed; independent fluid research is not production code.
+- **Advanced Fluid Dynamics is disabled in Alpha due to contact stability issues.**
+  Alpha blocks activation, Play and export of projects requesting it. Basic Water
+  and swimming remain available independently. The implementation is retained in
+  Experimental/local builds for a future validated patch; this is not a numerical
+  repair. FLU-001 and half-turn sampling remain deferred. See the
+  [investigation and restriction](M100_FLUID_CONTACT_STABILITY.md).
 - Physics has bounded CCD/fallback behaviour and content-dependent performance.
   No universal dense-pile frame-budget or industrial deformation guarantee.
 - Streaming, origin shifts, regional suspension, saves/mod migrations and online

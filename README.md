@@ -13,6 +13,10 @@ This source prepares **Alpha v1.0.0** (`1.0.0-alpha.1`). It remains a release
 candidate until final operator approval and publication. Alpha is not Stable/GA;
 advanced and experimental capabilities retain their documented limits.
 
+**Advanced Fluid Dynamics is disabled in Alpha due to contact stability issues.**
+Basic Water and swimming remain available. See the
+[restriction and investigation](docs/M100_FLUID_CONTACT_STABILITY.md).
+
 ## Current status
 
 `main` contains operator-accepted source; `Experimental` is ongoing development.

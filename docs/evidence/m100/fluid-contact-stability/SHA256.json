@@ -1,0 +1,181 @@
+{
+  "schema": 1,
+  "self_excluded": true,
+  "files": [
+    {
+      "path": "FIXTURE.json",
+      "bytes": 256,
+      "sha256": "9652d3ff8bffff3315f1832a62073b779e38c2bd96ea683c70b072add7d66fa6"
+    },
+    {
+      "path": "FullLoopReproduction.cpp",
+      "bytes": 3391,
+      "sha256": "43b3280fd79a1a15f75d8440eaa46d74642461d9cf6a2cc3630dc5781c6e0141"
+    },
+    {
+      "path": "README.md",
+      "bytes": 3149,
+      "sha256": "bcce53a5f4d7a626418260654c38d6a4ac50e9eabe41800833974d90393037bb"
+    },
+    {
+      "path": "alpha/BUILD_INFO.json",
+      "bytes": 754,
+      "sha256": "a7a3216db38c15a677ea99b94bf6dae414977cb0aa9f4ab1862abd7fea3dcf21"
+    },
+    {
+      "path": "alpha/RESULTS.json",
+      "bytes": 370,
+      "sha256": "250354a9373ac8ba75b78d4571b8b032c009b8dbe61a212f6df7b9a873bb6f65"
+    },
+    {
+      "path": "alpha/basic-water-application.log",
+      "bytes": 3381,
+      "sha256": "ba1ed06dd39631ead208ca73a525d83f806dfbe94a955c2f3c128837427a9fdf"
+    },
+    {
+      "path": "alpha/basic-water-cold.log",
+      "bytes": 2410,
+      "sha256": "eedf95c9115c2778a700b83a78936c4807bfd7db76d9398b3d015746077f20d9"
+    },
+    {
+      "path": "alpha/basic-water-export.log",
+      "bytes": 97,
+      "sha256": "6cb7f25f2cd9dd704ad9ea2ff2f38f0894b2f4c38d7fb00f11cdaf889810dad1"
+    },
+    {
+      "path": "alpha/environment-bypass-rejected.log",
+      "bytes": 3392,
+      "sha256": "9f0b3c8f1ac33ad097c9d1e7b0ee0270b273d821f0a91e133bd7db54060406b1"
+    },
+    {
+      "path": "alpha/judas_player_swimming_tests.log",
+      "bytes": 4362,
+      "sha256": "7fbd2314645640a66d4083a9fda4d601e0f88c53341e77b7b689b71bb00cfbc9"
+    },
+    {
+      "path": "alpha/judas_project_fluid_policy_tests.log",
+      "bytes": 1826,
+      "sha256": "7747e18ca9b74c5e13cd8259fdce8c4715e127c82d33b1ea653fc8b55a4bedfe"
+    },
+    {
+      "path": "alpha/judas_project_settings_editor_tests.log",
+      "bytes": 1316,
+      "sha256": "1daeb35ef63cec672f25a38d34b9b3e2ac7126367396b429d5166ce01b5aea2d"
+    },
+    {
+      "path": "alpha/judas_project_water_tests.log",
+      "bytes": 3392,
+      "sha256": "9f0b3c8f1ac33ad097c9d1e7b0ee0270b273d821f0a91e133bd7db54060406b1"
+    },
+    {
+      "path": "alpha/legacy-runtime-rejected.log",
+      "bytes": 504,
+      "sha256": "c9847662c3852a46934fbf63bf53107e41dc03bf8c1f9c1a006f1508df967bea"
+    },
+    {
+      "path": "alpha/relocated-standalone.log",
+      "bytes": 957,
+      "sha256": "91c2ce4a95bdd0ec64b23c44408ada00e95f3720c4a7e5c5a149f02d4dedad67"
+    },
+    {
+      "path": "baseline-hydro.log",
+      "bytes": 869,
+      "sha256": "964be42fb9355e61172f5748536a9788da94265ada1f77ad92598bb371f56177"
+    },
+    {
+      "path": "current-docs.log",
+      "bytes": 119,
+      "sha256": "02cdc390e3c034b00e88a4a4c48adc4ba16ad47608fe7962d30600884d264dd4"
+    },
+    {
+      "path": "experimental/BUILD_INFO.json",
+      "bytes": 768,
+      "sha256": "69df49c6504ef8a7fd135a30f4b485ce8b0487bcc738e910399a6246b7bdf189"
+    },
+    {
+      "path": "experimental/RESULTS.json",
+      "bytes": 286,
+      "sha256": "ac58582f108b122bec16e9d25644cae7831bc00f6ce829fe7d2d671667e73163"
+    },
+    {
+      "path": "experimental/judas_player_swimming_tests.log",
+      "bytes": 4361,
+      "sha256": "b58a00d4608cac8cd8bffe6b221762d924d72ac01458a2111fbc41b8cc6e85c8"
+    },
+    {
+      "path": "experimental/judas_project_fluid_policy_tests.log",
+      "bytes": 1481,
+      "sha256": "36a5b2fb7da990c32dd7f3d410fcc187d115390286676ae99642ab92adafc9bc"
+    },
+    {
+      "path": "experimental/judas_project_settings_editor_tests.log",
+      "bytes": 1449,
+      "sha256": "39ea8a156ed08b9ace85b4eb3fd97403f827826bad02bc6608b2667024185180"
+    },
+    {
+      "path": "experimental/judas_project_water_tests.log",
+      "bytes": 3061,
+      "sha256": "803adf6cfaa0fcfbf1812a62e9f35d921fc3b0a03c6bc169bc366907679184e5"
+    },
+    {
+      "path": "full_loop_reproduction.py",
+      "bytes": 1416,
+      "sha256": "19cbcf287451e00608c2b67dc35b6fcd86da2a066dd47c3b8dd2e46bbb855c07"
+    },
+    {
+      "path": "original-finding.txt",
+      "bytes": 4133,
+      "sha256": "0a4db2f03d77509a831842dcbd4f20dd1cc4e965ccddf4b9d1179bfa0a8a0855"
+    },
+    {
+      "path": "original-full-loop.log",
+      "bytes": 13397,
+      "sha256": "10a05e642fe3147752990c332fb0d31187d3439746b56848e28f0cd1c9a7eec6"
+    },
+    {
+      "path": "original-lift3-loop.log",
+      "bytes": 13518,
+      "sha256": "5b341397c86ce1aa5cd5a9aa27845ef6d9c8d03c871ad4e27bd0f9f52e595e45"
+    },
+    {
+      "path": "packaging.log",
+      "bytes": 295,
+      "sha256": "2bf1c68686989dea3f06da074d8d7cfbd1f5ac764ddff7649b73d9f68525d836"
+    },
+    {
+      "path": "prototype_full_reproduction.py",
+      "bytes": 1517,
+      "sha256": "d9ea33cafa59b264ceb11bf4dc4c7731f1b05477361cb9524e81777370852b21"
+    },
+    {
+      "path": "prototype_reproduction.py",
+      "bytes": 1911,
+      "sha256": "05379b40060559a1f4d77cce9afacff96dd58e1311dfa84ba45470adb7c2db83"
+    },
+    {
+      "path": "rejected-LocalFootprint.cpp",
+      "bytes": 23272,
+      "sha256": "03506f10929c0d20376f888796c421d61695a3e4221850f58b434ff5d6adb748"
+    },
+    {
+      "path": "rejected-local-footprint-full-loop.log",
+      "bytes": 13356,
+      "sha256": "b6c0662577f1edd16f858a77cf4fb901d26baf87fd33943a55220b5c44f3e9ed"
+    },
+    {
+      "path": "rejected-local-footprint-hydro.log",
+      "bytes": 1360,
+      "sha256": "b126ef3a0ff310b41be3b5dc73e4805ceb791595dc77bd090140af23e23f437c"
+    },
+    {
+      "path": "rigid-controls.log",
+      "bytes": 8652,
+      "sha256": "0238855bef15082eb185a0f17080d5d9b47a7e669076d30387d9e753fd4d932d"
+    },
+    {
+      "path": "superseded-archive-checksums.log",
+      "bytes": 244,
+      "sha256": "98e1dd3290bb2667cb010ed7d78be14f00bfe3a479f2b3e2d813210d77bae90d"
+    }
+  ]
+}

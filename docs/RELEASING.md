@@ -13,6 +13,10 @@ The Git branches remain `Experimental` and operator-accepted `main`. Distributio
 channels are Alpha, optional future Beta/Experimental, and eventual GA Stable.
 Do not create a duplicate Stable branch. Do not publish Alpha as latest Stable.
 
+The original `0dab8e5d` candidate archives predate the advanced-fluid restriction
+and are superseded. Do not publish them. Build and qualify new exact-source Alpha
+artifacts after the restriction checkpoint, including both platform packages.
+
 ## 1. Freeze a source candidate
 
 Update `engine-version.json` once, then update curated release notes and support
@@ -40,7 +44,13 @@ Configure `JUDAS_ENABLE_VALIDATION=ON` and `JUDAS_SDK_RELEASE=ON` in the baselin
 namespace, then use `scripts/qualify_m100.py` for one coordinated authoritative
 pass. This runs the registered native gates plus joints, vehicles, gravity and
 swimming. It preserves known-failure classification; it does not silently waive
-new failures. Run relevant API/type and tooling controls too.
+new failures. Alpha deliberately excludes the advanced-fluid RuntimeWorld tests:
+the feature is unavailable, and `unavailableTests` records those cases as
+**not-exercised**, not passed. Original tests remain intact for Experimental;
+Alpha instead exercises refusal, inactive ownership, Basic Water and swimming.
+Direct geometry/storage checks remain in scope. See
+[the restriction](M100_FLUID_CONTACT_STABILITY.md). Run relevant API/type and
+tooling controls too.
 
 Run `scripts/qualify_sdk.py --sdk SDK --work FRESH_WORK --rootfs
 PREPARED_UBUNTU24_ROOT`. It mounts only the SDK for project/editor/tool work and

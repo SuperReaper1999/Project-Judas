@@ -1,3 +1,4 @@
+#include "ProjectFeaturePolicy.h"
 #include "WorldStreaming.h"
 #include "Material.h"
 #include "ModelArchive.h"
@@ -117,6 +118,8 @@ bool ExportProject(const Project& project, const ProjectExportOptions& options,
         ProjectSettings validated; std::string validationError;
         const bool settingsValid = Project::ParseFromString(Project::SerializeToString(project.Settings()), validated, validationError);
         Require(settingsValid, "Invalid project settings: " + validationError);
+        const bool featuresValid = ValidateAdvancedFluidDynamicsRequest(validated.advancedFluidDynamics, validationError);
+        Require(featuresValid, validationError);
         Require(!options.destination.empty(), "Choose a package destination directory");
         const auto root = fs::canonical(project.RootDir());
         const auto destination = fs::weakly_canonical(fs::absolute(options.destination));

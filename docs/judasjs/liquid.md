@@ -1,5 +1,13 @@
 # `liquid` and `Entity.liquid` — conserved liquid (M54–M55)
 
+> **Alpha restriction:** Advanced Fluid Dynamics is disabled in Alpha builds due
+> to contact stability issues. The APIs below remain defined, but advanced world
+> activation and export are rejected even for hand-edited project opt-ins. Basic
+> Water and `world.fluidSample` swimming queries remain available. Experimental/
+> local builds retain the implementation for repair and regression work. See
+> [the investigation](../M100_FLUID_CONTACT_STABILITY.md).
+
+
 Judas owns quantities, geometry and transfers. JS owns why a game drains, scoops
 or displays water. This API requires **Project Settings → Experimental → Advanced
 Fluid Dynamics**, disabled by default. It is separate from basic-water swimming

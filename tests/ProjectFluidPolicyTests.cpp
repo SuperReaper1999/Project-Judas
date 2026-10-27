@@ -1,3 +1,4 @@
+#include "ProjectFeaturePolicy.h"
 #include "LiquidSystem.h"
 #include "LiquidGeometry.h"
 #include "SaveArchive.h"
@@ -67,6 +68,17 @@ int main(){try{
  Project packaged;Check(packaged.Load((std::filesystem::path(result.packageDirectory)/"game.judasproj").string(),error)&&!packaged.Settings().advancedFluidDynamics,"export preserves disabled project policy");
  Scene exported;Check(LoadSceneFromFile(packaged.StartupScenePath(),exported,error)&&exported.Find(object.id)->liquidBasin.has_value(),"export retains inert authored component");
  project.Settings().advancedFluidDynamics=true;options.destination+="-enabled";
- Check(!ExportProject(project,options,result,error),"enabled export refuses missing advanced assets");
+ Check(!ExportProject(project,options,result,error),"enabled export refuses unavailable feature or missing advanced assets");
+ if(AdvancedFluidDynamicsRestriction()) {
+  Check(error.find("contact stability")!=std::string::npos,"Alpha exporter reports the actual feature restriction before dependency errors");
+  Check(!std::filesystem::exists(options.destination),"rejected Alpha export leaves no misleading package");
+  Check(project.Settings().advancedFluidDynamics,"export preflight never silently rewrites project policy");
+  RuntimeWorld blocked;blocked.ConfigureProject(project.Settings());
+  Check(!blocked.Build(Scene{},nullptr,error)&&error.find("contact stability")!=std::string::npos,
+        "public runtime construction rejects a hand-authored Alpha opt-in");
+  project.Settings().advancedFluidDynamics=false;blocked.ConfigureProject(project.Settings());
+  Check(blocked.Build(Scene{},nullptr,error),"correcting policy allows ordinary world construction after rejection");
+ }
+
  std::cout<<"Project fluid policy: "<<checks<<" checks, 0 failures\n";return 0;
 }catch(const std::exception& e){std::cerr<<"FAIL "<<e.what()<<'\n';return 1;}}

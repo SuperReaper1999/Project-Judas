@@ -8,6 +8,22 @@ persistence and editing workflows without changing fluid numerical methods or
 the MK2/balance solvers. Those corrections and the later rotation repair are
 in the human-accepted `c76e92dc` baseline.
 
+## Alpha availability
+
+**Advanced Fluid Dynamics is disabled in Alpha builds due to contact stability
+issues.** The Experimental page explains the restriction and cannot enable it.
+Projects with an existing `advanced-fluid-dynamics "true"` request can still be
+opened and edited, but Play, cold-world construction and export fail before
+advanced simulation starts. Use **Disable advanced fluids for this project**, then
+save. Components and assets are preserved; advanced saves are not converted into
+basic water. Basic Water rendering and swimming remain available independently.
+The restriction is compiled build-channel policy, not a project/environment toggle.
+
+The opt-in workflow below describes **Experimental/local builds only**, retained
+for investigation. It does not imply Alpha support. Re-enabling Alpha is deferred
+to a validated patch; no date or completed repair is promised. See
+[contact-stability investigation](M100_FLUID_CONTACT_STABILITY.md).
+
 ## Configure a project
 
 Open **Project Settings** from the editor's File menu. The category list groups
@@ -25,7 +41,7 @@ existing project controls rather than adding global switches for every component
 | Localization | Existing locale/catalog selection and font fallbacks |
 | Water | Basic water and swimming-query switches; ordinary water component creation |
 | Networking | Explains existing explicit JS-owned session policy; no automatic listener or invented network configuration |
-| Experimental | **Advanced Fluid Dynamics**, explicit confirmation warning; legacy gameplay compatibility |
+| Experimental | Advanced Fluid Dynamics availability/restriction; explicit opt-in warning only in Experimental/local builds; legacy gameplay compatibility |
 | Export | Existing scene inclusion/exclusion, asset closure/runtime roots and package destination |
 
 **Save project** persists configuration and resets its independent dirty indicator.
@@ -99,7 +115,7 @@ These are deliberate approximations:
   wavelengths appropriate to the bounded grid, rather than tiny waves on one
   enormous tile.
 - This system supplies no rigid-body buoyancy, water pressure, flow, flooding,
-  scooping or transfer. Opt into advanced fluids if those capabilities are needed.
+  scooping or transfer. These require advanced fluids, which are unavailable in Alpha.
 
 ### Swimming
 
@@ -123,7 +139,7 @@ See the complete ordinary project at `projects/basic_water_lab`. Its script uses
 public logical input, CharacterMotor, presented camera poses, runtime UI and the
 existing query. No private native dispatch is used.
 
-## Experimental Advanced Fluid Dynamics
+## Experimental Advanced Fluid Dynamics (non-Alpha builds)
 
 **Project Settings → Experimental → Advanced Fluid Dynamics** is off by default.
 Checking it opens a warning; **Cancel** does not enable it. Confirmation explains

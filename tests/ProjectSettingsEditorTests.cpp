@@ -1,3 +1,4 @@
+#include "ProjectFeaturePolicy.h"
 #include "editor/EditorPanels.h"
 #include "editor/EditorDocument.h"
 #include "Project.h"
@@ -25,6 +26,15 @@ int main(){
     frame();frame();
     activate(child("Categories"),"Experimental");
     Check(!project.Settings().advancedFluidDynamics,"fresh project leaves advanced fluids disabled");
+    if (AdvancedFluidDynamicsRestriction()) {
+        activate(child("Settings"),"Advanced Fluid Dynamics");
+        Check(!project.Settings().advancedFluidDynamics&&!ImGui::IsPopupOpen("Enable experimental fluid physics?",ImGuiPopupFlags_AnyPopupId),
+              "Alpha cannot enable fluids or open the old opt-in warning");
+        // Simulate a real pre-existing project request; editing must preserve it
+        // until the operator explicitly disables it, without offering activation.
+        project.Settings().advancedFluidDynamics=true;frame();
+        Check(project.Settings().advancedFluidDynamics,"Alpha does not silently rewrite existing authored requests");
+    } else {
     activate(child("Settings"),"Advanced Fluid Dynamics");
     Check(!project.Settings().advancedFluidDynamics&&ImGui::IsPopupOpen("Enable experimental fluid physics?",ImGuiPopupFlags_AnyPopupId),"checkbox opens explicit warning without enabling the solver");
     activate(ImGui::FindWindowByName("Enable experimental fluid physics?"),"Cancel");
@@ -32,6 +42,7 @@ int main(){
     activate(child("Settings"),"Advanced Fluid Dynamics");
     activate(ImGui::FindWindowByName("Enable experimental fluid physics?"),"Enable experimental fluids");
     Check(project.Settings().advancedFluidDynamics,"warning confirmation explicitly opts in");
+    }
     Check(project.IsDirty()&&!doc.IsDirty(),"project dirty state is independent of clean scene ownership");
     activate(ImGui::FindWindowByName("Project Settings"),"Save project");
     // Queue once more and inspect that exact frame's ordinary editor request.
@@ -40,7 +51,7 @@ int main(){
     Check(project.Save(error)&&!project.IsDirty(),"ordinary project save resets its own dirty baseline");Project reopened;
     Check(reopened.Load(project.ProjectFile(),error)&&reopened.Settings().advancedFluidDynamics,"fresh editor session retains explicit opt-in in named project data");
     state.mode=EditorMode::Play;activate(child("Settings"),"Advanced Fluid Dynamics");Check(project.Settings().advancedFluidDynamics,"running world settings cannot be changed through disabled controls");
-    state.mode=EditorMode::Edit;activate(child("Settings"),"Advanced Fluid Dynamics");Check(!project.Settings().advancedFluidDynamics,"explicit opt-out applies to next world");
+    state.mode=EditorMode::Edit;activate(child("Settings"),AdvancedFluidDynamicsRestriction()?"Disable advanced fluids for this project":"Advanced Fluid Dynamics");Check(!project.Settings().advancedFluidDynamics,"explicit opt-out applies to next world");
     activate(child("Categories"),"Water");Check(project.Settings().basicWater&&project.Settings().waterSwimming,"basic water and swimming remain independent of opt-out");
     activate(child("Settings"),"Create basic water");
     ImGui::ActivateItemByID(child("Settings")->GetID("Create basic water"));frame();

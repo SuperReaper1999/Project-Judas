@@ -1,0 +1,68 @@
+POST-CANDIDATE HUMAN REVIEW: LEGACY TERRAIN FLUID LAUNCH
+
+Candidate: 0dab8e5db6e2ff1dc94283091247a097de610eb5 (unchanged).
+Project: judas_tech_demo.judasproj; scene: assets/scenes/terrain.judas.
+The initial editor launch from a nested SDK directory found this ancestor project.
+This legacy project explicitly enables Advanced Fluid Dynamics. It is not the
+new-project default and is not included as the SDK's startup project.
+
+Confirmed current experimental-fluid coupling defect, not merely an observation
+of render jitter. Matched first-step tests use the unchanged Alpha engine,
+authored poses/masses, 1/60 s timestep, the full ordinary simulation path and no
+player input. No solver/cadence/quality/geometry/source settings were retuned.
+
+Controls:
+- Rigid-body-only authored terrain and bodies have no initial terrain penetration;
+  all five dynamic bodies settle. The spacecraft speed after 120 steps is tiny.
+- Full scene with only advanced fluids disabled also settles normally.
+- Full scene with advanced fluids enabled accelerates the spacecraft to
+  17.17 m/s on step 2 and 25.4241886 m/s on step 3, throwing nearby props.
+
+Mechanism witness before the first erroneous load:
+- Minimum particle-to-ship clearance including particle radius: 1.77590406 m.
+- Hydrostatic reconstruction classifies fraction=0.16711047 of ship volume wet.
+- Buoyancy-force estimate: (14909.855,25487.676,-79932.25) N, approximately 85 kN.
+- Drag force is only (-74.503319,-134.63582,408.68658) N; it is not the dominant kick.
+- Maximum particle speed after first liquid step: 2.2781103 m/s.
+
+FluidHydrostatics.cpp passes the whole body's bound radius to the local column
+query for every volume sample. Its documented shoreline extrapolation admits
+nearby water outside the actual solid's wet support. The resulting false immersed
+volume is loaded with the reconstructed liquid material acceleration via
+F=-rho*V*(g-a_liquid), producing this large, wrongly directed force.
+ProductionFluidCoupling::PrepareRigidStep applies that force before the next rigid
+solve. The full physics path then correctly responds to the supplied force.
+This establishes the coupling path; it does not certify every legacy fluid case.
+
+No production fix has been applied. Disabling advanced fluids was an independent
+control, NOT a claimed fix. Basic water and swimming use a separate path.
+A proper repair must constrain wet-support/extrapolation at shorelines while
+retaining legitimate reconstruction around displaced solids, with dry-gap,
+submerged-body and accelerating-liquid regressions. Do not hide it using damping,
+force clamps, reduced cadence or changing the historical scene alone.
+
+Evidence and reproductions:
+  .cache/m100/legacy-startup.log
+  .cache/m100/legacy-full-startup.log
+  .cache/m100/legacy_startup.py
+  .cache/m100/legacy_full_startup.py
+  .cache/m100/alpha-linux/legacy-startup/observe.cpp
+  .cache/m100/alpha-linux/legacy-startup/full.cpp
+All diagnostic edits/outputs are isolated in ignored task scratch space. Existing
+scene/project, experimental-fluid implementation, research, sealed artifacts and
+main remain unchanged. The review editor was reopened explicitly with this scene.
+
+Release review must include this newly reproduced experimental-fluid limitation;
+the earlier scoped gate passes do not establish that this scene behaves correctly.
+
+Raised-lake control following operator observation:
+Same full-loop diagnostic, same source and settings, only fluid-volume Y moved.
+At +10 m the first force above the diagnostic reporting threshold of 8000 N
+moves from step 1 (0.0333333351 s, 85212.0312 N) to step 81
+(1.36666667 s, 150066.125 N). Initial ship wet fraction is zero and initial
+particle/ship clearance is 7.69203091 m. This corroborates delayed onset when
+water falls toward the planet; it does not alone time the exact first terrain
+contact. A prior +3 m control still exceeded the reporting threshold at step 1,
+though reduced to 9823.39941 N; retain legacy-full-startup-lift3.log.
+The 8000 N threshold is logging only, not a solver change or acceptance gate.
+No correction or successful regression validation is claimed.

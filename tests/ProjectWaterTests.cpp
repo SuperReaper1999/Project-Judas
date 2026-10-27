@@ -1,3 +1,4 @@
+#include "ProjectFeaturePolicy.h"
 #include "BasicWater.h"
 #include "Project.h"
 #include "RuntimeWorld.h"
@@ -94,10 +95,24 @@ int main(){
     Check(world.SampleWater({-512,-1,0},{0,1,0},.3f,.2f).immersion==1,"water frame follows shifted world");
     world.Destroy();Check(world.Build(scene,nullptr,error)&&!world.HasFluid()&&world.BasicWaters().size()==1,"Play/Stop reconstruction retains immutable project policy");
     auto optin=defaults;optin.advancedFluidDynamics=true;RuntimeWorld advanced;advanced.ConfigureProject(optin);
+    if (AdvancedFluidDynamicsRestriction()) {
+        Check(!advanced.AdvancedFluidsEnabled(),"Alpha denies effective activation even before Build");
+        Check(!advanced.Build(scene,nullptr,error)&&error.find("contact stability")!=std::string::npos,
+              "Alpha rejects explicit opt-in before constructing the world");
+        Check(!advanced.IsBuilt(),"rejected Alpha world is not published");
+        bool noField=false;try{advanced.Fluid();}catch(const std::logic_error&){noField=true;}
+        Check(noField,"rejected Alpha opt-in allocates no particle field");
+        Check(advanced.Liquids().States().empty()&&advanced.Liquids().Parcels().empty(),
+              "rejected Alpha opt-in creates no advanced liquid owners");
+        Check(!advanced.Build(Scene{},nullptr,error),"even an empty scene cannot bypass Alpha project policy");
+        Check(!advanced.Build(scene,nullptr,error,nullptr,nullptr,true),"cold snapshot construction cannot bypass Alpha policy");
+        Check(!advanced.EmitFluidParticle(),"rejected Alpha project cannot emit particles");
+    } else {
     Check(advanced.Build(scene,nullptr,error)&&advanced.HasFluid()&&advanced.Fluid().Particles().size()==8,"explicit opt-in creates existing PBF field");
     GameSession advancedGame;Check(advancedGame.Begin(advanced,error),"opt-in session begins");for(unsigned i=0;i<4;++i){input.BeginFixedStep();StepAuthoritativeWorld(advancedGame,input,1.f/60);}
     Check(advanced.FluidCoupling().Measurements().executedSteps>0&&advanced.HasFluid(),"opt-in existing particle path executes");
     advancedGame.End();
+    }
     auto off=defaults;off.basicWater=false;RuntimeWorld noWater;noWater.ConfigureProject(off);Check(noWater.Build(WaterScene(),nullptr,error)&&noWater.BasicWaters().empty()&&noWater.SampleWater({0,-1,0},{0,1,0},.3f,.2f).immersion==0,"basic-water project switch controls rendering volumes and queries");
     auto noSwim=defaults;noSwim.waterSwimming=false;RuntimeWorld visualOnly;visualOnly.ConfigureProject(noSwim);Check(visualOnly.Build(WaterScene(),nullptr,error)&&visualOnly.BasicWaters().size()==1&&visualOnly.SampleWater({0,-1,0},{0,1,0},.3f,.2f).immersion==0,"swimming can be disabled independently of water surfaces");
     std::cout<<"ProjectWaterTests: "<<checks<<" checks, "<<failures<<" failures\n";return failures?1:0;

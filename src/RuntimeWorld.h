@@ -646,6 +646,7 @@ private:
     std::unique_ptr<NavigationSystem> m_navigation;
     std::unique_ptr<LiquidSystem> m_liquid=std::make_unique<LiquidSystem>(false);
     bool m_hasLiquid=false;
+    bool m_advancedFluidsRequested=false;
     bool m_advancedFluids=false, m_basicWaterEnabled=true, m_waterSwimming=true;
     std::set<EntityId> m_basicWaterOwners;
     std::map<EntityId,EntityCategories> m_entityCategories;

@@ -216,7 +216,10 @@ and export settings rather than introducing a parallel configuration service.
 `BasicWater` is a prescribed oriented volume with GPU visual waves and cheap
 swimming/optical queries. It does not own conserved quantity or rigid-body forces.
 RuntimeWorld indexes authored/streamed owners; `WorldWater.cpp` samples their
-existing entity poses. Advanced FluidWorld/LiquidSystem updates and allocations
+existing entity poses. Alpha distributions reject advanced-fluid project activation before world construction
+and export due to contact-stability issues; Experimental/local builds retain the
+opt-in implementation for repair. See [restriction](M100_FLUID_CONTACT_STABILITY.md).
+Advanced FluidWorld/LiquidSystem updates and allocations
 are gated by explicit project opt-in. No fluid numerical solver, MK2 contact
 solver or physical balance policy is redesigned by this separation.
 

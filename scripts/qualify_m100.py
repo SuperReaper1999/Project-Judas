@@ -12,6 +12,26 @@ GROUPS=['core','mk2','water','network','lifecycle','onboarding','application','l
 EXTRA=['judas_joint_tests','judas_wheel_tests','judas_wheel_lifecycle_tests','judas_powertrain_tests','judas_powertrain_lifecycle_tests','judas_gravity_selection_tests','judas_player_swimming_tests']
 
 
+# These targets exercise RuntimeWorld-owned advanced simulation. Direct geometry,
+# storage and rotation tests remain eligible in Alpha. Keep the original runtime
+# tests intact and exercise them in Experimental; never report their exclusion as
+# a passed numerical or persistence contract.
+ADVANCED_RUNTIME_TARGETS = {'judas_origin_environment_tests', 'judas_liquid_surface_tests'}
+
+
+def partition_channel_tests(tests, channel):
+    unavailable = []
+    selected = []
+    for test in tests:
+        if channel == 'Alpha' and test['target'] in ADVANCED_RUNTIME_TARGETS:
+            unavailable.append({'name': test['name'], 'target': test['target'],
+                                'status': 'not-exercised',
+                                'reason': 'Advanced Fluid Dynamics disabled in Alpha for contact stability issues'})
+        else:
+            selected.append(test)
+    return selected, unavailable
+
+
 def main():
     p=argparse.ArgumentParser(description=__doc__)
     p.add_argument('--build',type=Path,required=True);p.add_argument('--output',type=Path,required=True)
@@ -19,18 +39,20 @@ def main():
     a=p.parse_args();output=a.output.resolve();output.mkdir(parents=True,exist_ok=False)
     manifest=json.loads((ROOT/'tools/validation/suites.json').read_text())
     tests=[t for t in manifest['tests'] if set(GROUPS)&set(t['groups']) and not t.get('manual')]
-    targets=sorted({t['target'] for t in tests}|set(EXTRA));records=[]
+    targets=sorted({t['target'] for t in tests}|set(EXTRA));records=[];unavailable=[]
     def run(name,cmd):
         with (output/(name+'.log')).open('w',encoding='utf-8') as f:
             environment=dict(os.environ, JUDAS_ENGINE_ROOT=str(ROOT))
             child=subprocess.run(list(map(str,cmd)),cwd=(output if name.startswith("judas_") else ROOT),env=environment,stdout=f,stderr=subprocess.STDOUT)
         records.append({'name':name,'command':list(map(str,cmd)),'exit':child.returncode})
-        (output/'RESULTS.json').write_text(json.dumps({'passed':all(r['exit']==0 for r in records),'checks':records,'knownFindings':manifest['known_findings'],'humanAcceptance':False},indent=2)+'\n')
+        (output/'RESULTS.json').write_text(json.dumps({'passed':all(r['exit']==0 for r in records),'checks':records,'knownFindings':manifest['known_findings'],'humanAcceptance':False,'unavailableTests':unavailable},indent=2)+'\n')
         if child.returncode:raise RuntimeError(name+' failed: '+str(output/(name+'.log')))
-    run('build',['cmake','--build',a.build,'--config',a.configuration,'--parallel',str(a.jobs),'--target',*targets])
+    run('build',['cmake','--build',a.build,'--config',a.configuration,'--parallel',str(a.jobs),'--target','judas',*targets])
     build=a.build/a.configuration if os.name=='nt' and (a.build/a.configuration).is_dir() else a.build
+    identity=json.loads(subprocess.check_output([str(build/('judas.exe' if os.name=='nt' else 'judas')), '--build-info-json'],text=True))
+    tests,unavailable=partition_channel_tests(tests,identity['channel'])
     native=[sys.executable,ROOT/'scripts/prealpha_validate.py','--build-dir',build,'--output',output/'gates','--timeout','180']
-    for group in GROUPS:native+=['--group',group]
+    for test in tests:native+=['--test',test['name']]
     run('native-gates',native)
     for target in EXTRA:run(target,[build/(target+('.exe' if os.name=='nt' else ''))])
     run('release-python',[sys.executable,ROOT/'tests/test_release_manifest.py'])

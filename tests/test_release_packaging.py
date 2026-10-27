@@ -14,6 +14,8 @@ sys.path.insert(0,str(ROOT/'tools'))
 import package_sdk
 import prepare_release
 import publish_release
+sys.path.insert(0,str(ROOT/'scripts'))
+import qualify_m100
 
 
 def sdk(path,platform):
@@ -30,6 +32,23 @@ def sdk(path,platform):
     manifest=dict(schema=1,kind='judas-native-sdk',build=build,tools=['judas.exe' if platform=='Windows' else 'judas'],files=records,preset='release')
     (path/package_sdk.MANIFEST).write_text(json.dumps(manifest))
     (path/package_sdk.CHECKSUMS).write_text(''.join(r['sha256']+'  '+r['path']+'\n' for r in records)+package_sdk.digest(path/package_sdk.MANIFEST)+'  '+package_sdk.MANIFEST+'\n')
+
+
+class QualificationScope(unittest.TestCase):
+    def test_alpha_preserves_but_does_not_certify_unavailable_runtime(self):
+        tests=[{'name':'rotation','target':'judas_liquid_rotation_tests'},
+               {'name':'surface','target':'judas_liquid_surface_tests'},
+               {'name':'origin','target':'judas_origin_environment_tests'},
+               {'name':'water-policy','target':'judas_project_water_tests'}]
+        original=copy.deepcopy(tests)
+        selected,unavailable=qualify_m100.partition_channel_tests(tests,'Alpha')
+        self.assertEqual([t['name'] for t in selected],['rotation','water-policy'])
+        self.assertEqual([t['name'] for t in unavailable],['surface','origin'])
+        self.assertTrue(all(t['status']=='not-exercised' for t in unavailable))
+        self.assertEqual(tests,original)
+        selected,unavailable=qualify_m100.partition_channel_tests(tests,'Experimental')
+        self.assertEqual(selected,original)
+        self.assertEqual(unavailable,[])
 
 
 class Packaging(unittest.TestCase):
