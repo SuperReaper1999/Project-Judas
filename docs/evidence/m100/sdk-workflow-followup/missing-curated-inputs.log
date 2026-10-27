@@ -1,0 +1,11 @@
+Traceback (most recent call last):
+  File "/build/tool-workflows.py", line 69, in <module>
+    if __name__=='__main__':main()
+                            ^^^^^^
+  File "/build/tool-workflows.py", line 59, in main
+    run('judas_mod','kit',mod,out/'kit',sdk/'docs')
+  File "/build/tool-workflows.py", line 27, in run
+    if child.returncode!=expected:raise RuntimeError(tool+': '+child.stdout+child.stderr)
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: judas_mod: kit export: input parent contains link/inaccessible component
+

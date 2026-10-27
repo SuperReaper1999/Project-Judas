@@ -54,7 +54,8 @@ def main():
     run('judas_terrain_author','cook',project,'Assets/ground.judasterrain')
     run('judas_collision_cook','mesh',obj,out/'triangle.judascollision','00000000000000000000000000000001',0)
     run('judas_collision_cook','mesh',obj,out/'bad.judascollision','00000000000000000000000000000001',0,0,1,1,expected=1)
-    run('judas_environment_bake',root/'fixtures/studio.hdr',out/'studio.judasenv',8,8)
+    run('judas_environment_bake',root/'fixtures/studio.hdr',out/'invalid.judasenv',8,8,expected=1)
+    run('judas_environment_bake',root/'fixtures/studio.hdr',out/'studio.judasenv',16,32)
     mod=root/'fixtures/modding_lab/modding_lab.judasproj'
     run('judas_mod','kit',mod,out/'kit',sdk/'docs')
     run('judas_mod','new',out/'kit',out/'new-mod','qualification-mod')
