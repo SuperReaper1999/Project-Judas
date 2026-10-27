@@ -51,7 +51,7 @@ int main(int argc, char** argv) {
               "ordinary new project creates project/assets/scenes/save directories: " + error);
         check(!project.Settings().legacyGameplay && !project.Settings().saveIdentity.empty(),
               "modern project has explicit identity and no implicit gameplay controller");
-        const auto source = Read("docs/judasjs/examples/first-project.js");
+        const auto source = Read(fs::path(__FILE__).parent_path().parent_path() / "docs/judasjs/examples/first-project.js");
         Scene starter;
         check(PopulateVisibleProjectStarter(project,starter,error),"visible template creates ordinary tracked game.js and scene owner: "+error);
         check(starter.Objects().size()==1&&!starter.Objects()[0].body&&starter.Objects()[0].scripts.size()==1,"visible starter has a render-only script owner, no hidden controller");

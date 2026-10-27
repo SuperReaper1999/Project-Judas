@@ -27,3 +27,8 @@ already identified build directory; validates maturity/SemVer agreement; bounds
 untrusted JSON nesting; and verifies embedded source-archive inventory bytes in
 addition to an outer receipt. Synthetic metadata/package tests are not native
 platform qualification. Final combined-candidate qualification remains separate.
+
+A preflight scan also found the first-project test reading its documented example
+relative to the working directory. It now resolves that read-only input relative
+to its own source file, like the frozen fixtures; its behavioural assertions remain
+unchanged. This avoids teaching the gate an exception for one test.
