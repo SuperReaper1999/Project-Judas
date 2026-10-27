@@ -1,5 +1,6 @@
 {
   "schema": 1,
+  "release_name": "@JUDAS_ID_release_name@",
   "version": "@JUDAS_ID_version@",
   "maturity": "@JUDAS_ID_maturity@",
   "channel": "@JUDAS_ID_channel@",

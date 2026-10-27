@@ -14,3 +14,5 @@
 #define JUDAS_ID_ARCHITECTURE "@JUDAS_ID_architecture@"
 #define JUDAS_ID_COMPILER "@JUDAS_ID_compiler@"
 #define JUDAS_ID_COMPILER_VERSION "@JUDAS_ID_compiler_version@"
+
+#define JUDAS_ID_RELEASE_NAME "@JUDAS_ID_release_name@"

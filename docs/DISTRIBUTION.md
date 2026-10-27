@@ -1,9 +1,10 @@
-# Pre-Alpha distributions and package verification
+# Distributions and package verification
 
-The two engine channels are **main** (operator-accepted release lineage) and
-**Experimental** (automated development checkpoints). `Local` identifies explicitly
-local builds. Selecting a channel is build metadata; it does not promote a branch
-or certify human acceptance. No Alpha release is implied.
+Distribution channels are **Alpha**, future **Beta**, **Experimental** and
+**Stable** (GA only). `Local` is development provenance. Git branches remain main
+and Experimental; they are separate from distribution maturity. Selecting a build
+channel does not publish, promote or certify it. Alpha v1.0.0 remains a candidate
+until final approval. See [versioning](VERSIONING.md) and [publication](RELEASING.md).
 
 ## Native SDK
 
@@ -87,7 +88,8 @@ package concurrently into one SDK destination or replace one while a tool runs.
 SDK staging defaults to a clearly recorded `development` preset so an uncommitted
 candidate can be tested. `-DJUDAS_SDK_RELEASE=ON` (or the packager's `--release`)
 requires clean known Git/archive provenance, no observed untracked build inputs,
-Release configuration and a main or Experimental channel. Dirty, unknown, Local
+Release configuration and a supported Alpha/Beta/Experimental/Stable channel,
+with matching engine maturity. Dirty, unknown, Local
 and untracked-input identities are refused. An isolated verified source archive
 can explicitly exclude unrelated untracked files without deleting them. This does
 not replace main's separate human-acceptance requirement. Identity probes are

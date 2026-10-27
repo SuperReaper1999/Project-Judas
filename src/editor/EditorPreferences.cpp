@@ -149,6 +149,14 @@ bool EditorPreferences::Load(const std::string& text, EditorPanelState& state, s
                 next.layouts.push_back(std::move(l));
             }
         }
+        if (j.contains("updates")) {
+            const auto& updates = j.at("updates");
+            next.automaticUpdates = updates.at("automaticAtStartup").get<bool>();
+            next.updateChannel = updates.at("channel").get<std::string>();
+            if (!next.updateChannel.empty() && next.updateChannel != "Alpha" && next.updateChannel != "Beta" &&
+                next.updateChannel != "Stable" && next.updateChannel != "Experimental")
+                throw std::runtime_error("Unknown update channel");
+        }
         ApplyLayout(current, state);
         // Current windows.ini remains the normal window store. Named layouts
         // carry their own snapshots and are restored only when explicitly chosen.
@@ -164,6 +172,7 @@ std::string EditorPreferences::Serialize(const EditorPanelState& state) const {
     return Json{{"version", 2}, {"current", LayoutJson(Capture("Current", state))},
                 {"appearance", {{"mode", appearance.light ? "light" : "dark"}, {"accent", appearance.accent},
                                 {"background", appearance.background}, {"text", appearance.text}, {"scale", appearance.scale}}},
+                {"updates", {{"automaticAtStartup", automaticUpdates}, {"channel", updateChannel}}},
                 {"layouts", saved}}.dump(2) + "\n";
 }
 
@@ -285,6 +294,16 @@ void EditorPreferences::Draw(EditorPanelState& state) {
                 if (ImGui::InputText("New layout name", name, sizeof(name))) m_newName = name;
                 if (ImGui::Button("Save as new layout")) SaveLayout(m_newName, state, false, status);
                 if (ImGui::Button("Reset panel layout")) ResetLayout();
+                ImGui::EndTabItem();
+            }
+            if (ImGui::BeginTabItem("Updates")) {
+                ImGui::Checkbox("Check for updates at startup", &automaticUpdates);
+                const char* names[] = {"Installed build channel", "Alpha", "Beta", "Stable (GA only)", "Experimental (opt in)"};
+                const char* values[] = {"", "Alpha", "Beta", "Stable", "Experimental"};
+                int selected = 0;
+                for (int i = 1; i < 5; ++i) if (updateChannel == values[i]) selected = i;
+                if (ImGui::Combo("Update channel", &selected, names, 5)) updateChannel = values[selected];
+                ImGui::TextWrapped("Notification only. No automatic installation or project changes. Manual checks are in Help. Stable is reserved for GA; Alpha is not stable.");
                 ImGui::EndTabItem();
             }
             ImGui::EndTabBar();

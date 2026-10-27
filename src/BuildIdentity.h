@@ -21,6 +21,7 @@ struct BuildIdentity {
     const char* configuration;
     const char* compiler;
     const char* compilerVersion;
+    const char* releaseName;
 };
 
 const BuildIdentity& GetBuildIdentity();

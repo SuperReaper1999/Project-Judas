@@ -584,7 +584,7 @@ void EditorApplication::StopPlay() {
 }
 
 void EditorApplication::HandleRequests(EditorRequests& r) {
-    if (r.checkMilestones) { m_milestoneNotice.Check(true); m_panels.status = "Checking this build channel for updates..."; }
+    if (r.checkMilestones) { m_milestoneNotice.Check(true, m_preferences.updateChannel); m_panels.status = "Checking this build channel for updates..."; }
     std::string error;
     bool approvedDocumentAction = false;
     if (m_documentActionApproved) {
@@ -1334,7 +1334,7 @@ int EditorApplication::Run(int argc, char** argv) {
     }
     std::string error;
     EngineHost host;
-    const auto editorTitle = std::string("Project Judas Editor — ") + GetBuildIdentity().version +
+    const auto editorTitle = std::string(GetBuildIdentity().releaseName) + " — Editor " + GetBuildIdentity().version +
         " [" + GetBuildIdentity().channel + "] " + GetBuildIdentity().buildId;
     if (!host.Init(editorTitle.c_str(), kWindowWidth, kWindowHeight, true, error)) {
         std::fprintf(stderr, "%s\n", error.c_str());
@@ -1354,7 +1354,7 @@ int EditorApplication::Run(int argc, char** argv) {
     if (fs::is_regular_file(editorFont)) io.Fonts->AddFontFromFileTTF(editorFont.c_str(), 15.0f);
     LoadEditorPreferences();
     m_preferences.ApplyPending(m_panels);
-    if (!std::getenv("JUDAS_EDITOR_AUTOTEST")) m_milestoneNotice.Check();
+    if (m_preferences.automaticUpdates && !std::getenv("JUDAS_EDITOR_AUTOTEST")) m_milestoneNotice.Check(false, m_preferences.updateChannel);
     ImGui_ImplSDL2_InitForOpenGL(window.NativeWindow(), window.NativeGLContext());
     ImGui_ImplOpenGL3_Init("#version 330 core");
     window.SetEventHook([this, editorWindowId = SDL_GetWindowID(window.NativeWindow())](const SDL_Event& event) {
@@ -1687,7 +1687,7 @@ int EditorApplication::Run(int argc, char** argv) {
         DrawRuntimeInspector(m_panels,requests);
         { JUDAS_PROFILE_SCOPE("Profiler UI"); DrawProfilerPanel(m_panels); }
         DrawStatusBar(m_document, m_panels);
-        m_milestoneNotice.Draw(m_panels.status);
+        m_milestoneNotice.Draw(m_panels.status, m_preferences.updateChannel);
 
         // Requests raised by the automation hook on the previous frame,
         // after that frame's UI had already been rendered.

@@ -1,5 +1,5 @@
 {
-  "checkpoint": "Pre-Alpha current source; public module through M99",
+  "checkpoint": "Alpha v1.0.0 candidate; public module through M100",
   "authority": "src/ScriptSystem.cpp::library + Impl::Native + ScriptBindingsUI.cpp + ScriptBindingsJoint.cpp + ScriptInputBindings.inl + ScriptLocalMultiplayer.inl + ScriptNetwork.inl",
   "resultShapes": [
     {
@@ -5044,6 +5044,26 @@
       "reference": "docs/judasjs/input.md"
     },
     {
+      "symbol": "engine",
+      "kinds": [
+        "namespace"
+      ],
+      "native": [],
+      "type": "docs/judas.d.ts:engine",
+      "reference": "docs/judasjs/engine.md"
+    },
+    {
+      "symbol": "engine.buildInfo",
+      "kinds": [
+        "get"
+      ],
+      "native": [
+        "engineBuildInfo"
+      ],
+      "type": "docs/judas.d.ts:engine.buildInfo",
+      "reference": "docs/judasjs/engine.md"
+    },
+    {
       "symbol": "entity",
       "kinds": [
         "function"
@@ -6744,6 +6764,7 @@
     "delta",
     "destroy",
     "elapsed",
+    "engineBuildInfo",
     "entityGravityClear",
     "entityGravitySelect",
     "entityGravityState",

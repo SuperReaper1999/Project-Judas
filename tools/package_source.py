@@ -19,7 +19,7 @@ import tempfile
 
 ROOT = Path(__file__).resolve().parents[1]
 METADATA = {"JUDAS_SOURCE_INFO.json", "JUDAS_SOURCE_FILES.json"}
-ENGINE_ROOTS = {"cmake", "src", "tests", "tools", "scripts", "platform", "packaging", "third_party", "assets"}
+ENGINE_ROOTS = {"cmake", "src", "tests", "tools", "scripts", "platform", "packaging", "third_party", "assets", "releases", ".github"}
 ENGINE_FILES = {"AGENTS.md", "CMakeLists.txt", "CMakePresets.json", "CTestConfig.cmake", "README.md", "LICENSE", "engine-version.json", ".gitignore", ".gitattributes"}
 EXCLUDED_GUIDES = {"docs/DontReadMe_Final.md", "docs/FTFT.md"}
 
@@ -73,7 +73,7 @@ def archive(args):
     if untracked and not args.allow_untracked:
         raise ValueError("Untracked files exist; commit intended inputs or explicitly --allow-untracked to exclude them")
     branch = git(source, "rev-parse", "--abbrev-ref", "HEAD").decode().strip()
-    channel = args.channel or (branch if branch in ("main", "Experimental") else "Local")
+    channel = args.channel or ({"main": "Alpha", "Experimental": "Experimental"}.get(branch, "Local"))
     entries = git(source, "ls-tree", "-r", "-z", "HEAD").split(b"\0")
     blobs = {}
     for entry in entries:
@@ -162,7 +162,7 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--source", type=Path, default=ROOT)
     parser.add_argument("--output", type=Path, required=True)
-    parser.add_argument("--channel", choices=["main", "Experimental", "Local"])
+    parser.add_argument("--channel", choices=["Alpha", "Beta", "Experimental", "Stable", "Local"])
     parser.add_argument("--profile", choices=["engine", "full"], default="engine")
     parser.add_argument("--allow-untracked", action="store_true")
     parser.add_argument("--replace", action="store_true")

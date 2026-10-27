@@ -302,21 +302,21 @@ requires explicit exact-payload script trust, selects versions and launches an
 installed game with or without mods. Selection changes apply next session/launch.
 See [full contracts, limits and CLI commands](MODDING.md).
 
-## Build-channel update notifications
+## Published release updates
 
-The optional background check compares this build's exact revision with its
-`main` or `Experimental` GitHub channel. **New Judas build available** reports
-newer commits, including unnumbered fixes. Use **View → Check this channel for
-updates** to retry, and **View changes** to open the comparison in your browser.
-An older or diverged remote history is not reported as an update.
+Use **Help → Check this channel for updates** for a manual check. **Editor
+preferences → Updates** controls automatic checking at startup and the selected
+channel. Alpha follows Alpha by default; Experimental is an explicit opt-in.
+The notice distinguishes installed and available versions, includes release notes
+and a browser download link, and provides the expected SHA-256. Nothing is
+installed automatically. Verify downloaded bytes with the packaged release tool
+before extraction; see [versioning and integrity](VERSIONING.md#updates).
 
-The check uses a bounded read-only HTTPS request through optional system `curl`;
-GitHub CLI and sign-in are not required. Missing utility, offline access, service
-limits or unknown/Local provenance leave the editor usable and report an
-unavailable manual check. No update is installed and no repository is written.
-See [build identity and channels](BUILD_RELEASES.md#update-notification).
+HTTPS requests are bounded and use optional system curl, without GitHub CLI or
+sign-in. Missing utilities, offline access, absent initial publication and malformed
+metadata are nonfatal. Public Git ancestry is no longer the update authority.
 The [original milestone-notice receipt](evidence/editor-milestone-notice/RESULTS.md)
-describes its older `gh` implementation, not this current path.
+remains historical and does not describe this implementation.
 
 ## Project documents and first-project workflow
 

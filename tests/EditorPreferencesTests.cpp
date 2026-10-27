@@ -68,12 +68,18 @@ int main(int argc, char** argv) {
         const auto padding = ImGui::GetStyle().WindowPadding.x;
         prefs.RefreshAppearance(); prefs.ApplyPending(state);
         check(ImGui::GetStyle().WindowPadding.x == padding, "repeated theme application does not accumulate scale");
+        prefs.automaticUpdates = false; prefs.updateChannel = "Alpha";
         const auto serialized = prefs.Serialize(state);
         EditorPreferences fresh; EditorPanelState restored;
         check(fresh.Load(serialized, restored, error), "v2 theme and named layouts deserialize in a fresh preferences owner");
         fresh.ApplyPending(restored);
         check(fresh.appearance.light && fresh.appearance.accent == prefs.appearance.accent && fresh.layouts.size() == 1 && restored.showScriptTools,
               "custom theme, saved layout and current panel visibility survive roundtrip");
+        check(!fresh.automaticUpdates && fresh.updateChannel == "Alpha", "update startup policy and explicit channel persist independently of project settings");
+        auto invalidUpdate = nlohmann::json::parse(serialized);
+        invalidUpdate["updates"]["channel"] = "main";
+        check(!fresh.Load(invalidUpdate.dump(), restored, error) && fresh.updateChannel == "Alpha" && !fresh.automaticUpdates,
+              "unknown update channel rejects transactionally without opting into Experimental");
         const auto current = nlohmann::json::parse(serialized);
         for (const char* field : {"scale", "accent", "mode"}) {
             auto broken = current;

@@ -97,6 +97,7 @@ const referenceOverrides = {
  'Entity.preparePlanetCollision': 'planetary-terrain.md', 'Entity.clearPlanetCollision': 'planetary-terrain.md'
 };
 function referencePage(symbol) {
+ if (symbol === 'engine' || symbol.startsWith('engine.')) return 'engine.md';
  if (referenceOverrides[symbol]) return referenceOverrides[symbol];
  if (symbol.startsWith('Entity.') && (symbol.includes('Audio') || symbol === 'Entity.audio')) return 'audio.md';
  if (symbol.startsWith('scenes.') && !['scenes.current', 'scenes.registered', 'scenes.load', 'scenes.reload'].includes(symbol)) return 'streaming.md';
@@ -153,7 +154,7 @@ function checkCallables(declarations) {
  }
 }
 checkCallables(types);
-const schema={checkpoint:'Pre-Alpha current source; public module through M99',authority:'src/ScriptSystem.cpp::library + Impl::Native + ScriptBindingsUI.cpp + ScriptBindingsJoint.cpp + ScriptInputBindings.inl + ScriptLocalMultiplayer.inl + ScriptNetwork.inl',resultShapes,callables,symbols:symbols.map(k=>{
+const schema={checkpoint:'Alpha v1.0.0 candidate; public module through M100',authority:'src/ScriptSystem.cpp::library + Impl::Native + ScriptBindingsUI.cpp + ScriptBindingsJoint.cpp + ScriptInputBindings.inl + ScriptLocalMultiplayer.inl + ScriptNetwork.inl',resultShapes,callables,symbols:symbols.map(k=>{
  const v=runtime.get(k);let native=v.native;
  if(['physics.raycastMany','physics.sphereCastMany','physics.capsuleCastMany'].includes(k))native=['castMany'];
  else if(k.startsWith('physics.')&&!['physics.joint','physics.closestPoint','physics.gravity','physics.createJoint'].includes(k))native=['cast'];

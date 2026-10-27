@@ -1,0 +1,119 @@
+name: Prepare release candidate (never publishes)
+on:
+  workflow_dispatch:
+    inputs:
+      candidate:
+        description: Exact 40-character Experimental candidate commit
+        required: true
+        type: string
+      channel:
+        description: Private candidate channel (not a publication)
+        required: true
+        type: choice
+        options: [Alpha, Experimental, Beta, Stable]
+        default: Alpha
+permissions:
+  contents: read
+concurrency:
+  group: prepare-judas-${{ inputs.candidate }}-${{ inputs.channel }}
+  cancel-in-progress: false
+jobs:
+  linux:
+    if: github.actor == github.repository_owner
+    runs-on: ubuntu-24.04
+    timeout-minutes: 90
+    env:
+      CANDIDATE: ${{ inputs.candidate }}
+      CHANNEL: ${{ inputs.channel }}
+      SDL_AUDIODRIVER: dummy
+      LIBGL_ALWAYS_SOFTWARE: '1'
+    steps:
+      - name: Validate literal commit input
+        run: python3 -c 'import os,re; assert re.fullmatch("[0-9a-f]{40}",os.environ["CANDIDATE"])'
+      - uses: actions/checkout@v7
+        with:
+          ref: ${{ inputs.candidate }}
+          persist-credentials: false
+      - uses: actions/setup-node@v7
+        with:
+          node-version: '22'
+          package-manager-cache: false
+      - run: |
+          sudo apt-get update
+          sudo apt-get install -y cmake ninja-build g++ libsdl2-dev libglm-dev xvfb xauth libgl1-mesa-dri
+          npm ci --ignore-scripts --prefix tools/verification
+          cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release -DJUDAS_BUILD_CHANNEL="$CHANNEL" -DJUDAS_ENABLE_VALIDATION=ON -DJUDAS_SDK_RELEASE=ON
+          cmake --build build --target judas_linux_sdk -j2
+          xvfb-run -a python3 scripts/qualify_m100.py --build build --output .cache/release-qualification --jobs 2
+          xvfb-run -a python3 scripts/qualify_sdk.py --sdk build/linux-sdk --work .cache/release-sdk-work
+          node scripts/check_judasjs_api.mjs
+          python3 tools/inspect_sdk.py build/linux-sdk --host-check --max-glibc 2.39 --require-os ubuntu:24.04 --output .cache/release-sdk-platform.json
+      - name: Pack qualified SDK and tracked source as immutable CI artifacts
+        run: |
+          mkdir -p "$RUNNER_TEMP/prepared"
+          tar -C build -czf "$RUNNER_TEMP/prepared/linux-sdk.tar.gz" linux-sdk
+          python3 tools/package_source.py --output "$RUNNER_TEMP/prepared/source.tar.gz" --channel "$CHANNEL"
+      - uses: actions/upload-artifact@v7
+        with:
+          name: candidate-Linux-${{ inputs.candidate }}-${{ inputs.channel }}
+          path: |
+            ${{ runner.temp }}/prepared/
+            .cache/release-qualification/
+            .cache/release-sdk-work/RESULTS.json
+            .cache/release-sdk-work/COMPLETE.json
+            .cache/release-sdk-platform.json
+          include-hidden-files: true
+          if-no-files-found: error
+      - uses: actions/upload-artifact@v7
+        if: failure()
+        with:
+          name: candidate-Linux-failure-${{ inputs.candidate }}
+          path: |
+            .cache/release-qualification/
+            .cache/release-sdk-work/
+            build/Testing/Temporary/
+          include-hidden-files: true
+  windows:
+    if: github.actor == github.repository_owner
+    runs-on: windows-2025
+    timeout-minutes: 120
+    env:
+      CANDIDATE: ${{ inputs.candidate }}
+      CHANNEL: ${{ inputs.channel }}
+      PYTHONUTF8: '1'
+    steps:
+      - name: Validate literal commit input
+        shell: pwsh
+        run: if ($env:CANDIDATE -notmatch '^[0-9a-f]{40}$') { throw 'Exact commit required' }
+      - uses: actions/checkout@v7
+        with:
+          ref: ${{ inputs.candidate }}
+          persist-credentials: false
+      - name: Build complete native MSVC SDK
+        shell: pwsh
+        run: |
+          ./packaging/windows/Build-Windows.ps1 -Channel $env:CHANNEL -Jobs 2 -ReleasePackage
+          if ($LASTEXITCODE) { exit $LASTEXITCODE }
+          $build = "build/windows-$env:CHANNEL"
+          cmake --build $build --config Release --target judas_build_identity_tests judas_release_update_tests judas_mk2_rotation_tests judas_network_transport_tests --parallel 2
+          if ($LASTEXITCODE) { exit $LASTEXITCODE }
+          & "$build/Release/judas_build_identity_tests.exe"
+          if ($LASTEXITCODE) { exit $LASTEXITCODE }
+          & "$build/Release/judas_release_update_tests.exe" tests/fixtures/releases/update-cases.json
+          if ($LASTEXITCODE) { exit $LASTEXITCODE }
+          & "$build/Release/judas_mk2_rotation_tests.exe"
+          if ($LASTEXITCODE) { exit $LASTEXITCODE }
+          & "$build/Release/judas_network_transport_tests.exe"
+          if ($LASTEXITCODE) { exit $LASTEXITCODE }
+          python tools/inspect_sdk.py "$build/windows-sdk" --host-check --system-directory C:/Windows/System32 --output windows-sdk-qualification.json
+          if ($LASTEXITCODE) { exit $LASTEXITCODE }
+          'Windows hosted CI qualifies native tools and selected contracts; editor/GL/export behaviour requires the documented native desktop/VM qualification. No hardware claim.' | Set-Content windows-ci-scope.txt
+          tar -C $build -czf windows-sdk.tar.gz windows-sdk
+      - uses: actions/upload-artifact@v7
+        with:
+          name: candidate-Windows-${{ inputs.candidate }}-${{ inputs.channel }}
+          path: |
+            windows-sdk.tar.gz
+            windows-sdk-qualification.json
+            windows-ci-scope.txt
+          if-no-files-found: error

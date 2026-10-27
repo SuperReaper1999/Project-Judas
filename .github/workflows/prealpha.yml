@@ -1,4 +1,4 @@
-name: Pre-Alpha focused gates
+name: Engine focused gates
 
 on:
   push:
@@ -45,7 +45,7 @@ jobs:
           node scripts/check_judasjs_api.mjs
       - name: Configure an explicitly identified build
         env:
-          CHANNEL: ${{ github.ref_name == 'main' && 'main' || github.ref_name == 'Experimental' && 'Experimental' || 'Local' }}
+          CHANNEL: ${{ github.ref_name == 'main' && 'Alpha' || github.ref_name == 'Experimental' && 'Experimental' || 'Local' }}
         run: cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release -DJUDAS_BUILD_CHANNEL="$CHANNEL" -DJUDAS_ENABLE_VALIDATION=ON
       - name: Build focused dependencies and public SDK
         run: cmake --build build --target judas_prealpha_tests judas_linux_sdk -j2

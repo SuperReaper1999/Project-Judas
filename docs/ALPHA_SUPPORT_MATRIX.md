@@ -1,17 +1,10 @@
 # Alpha scope and qualification matrix
 
-This describes the intended initial Alpha support boundary during **Pre-Alpha**.
-It is not an Alpha announcement, release certification or promise of universal
-component compatibility. Accepted engine source: `6941b3815f93d4f716fe64faffff69799c7637b0`,
-including the accepted Windows portability corrections and preceding editor work.
-The [Windows 11 acceptance](WINDOWS.md) records the scoped hardware trial and native
-receipts. The [final qualification report](PREALPHA_FINAL_QUALIFICATION.md) retains
-its earlier exact SDK identity and checkpoint-time qualification scope.
-
-**Supported** means an intended developer workflow within the stated boundary.
-**Experimental** means explicit opt-in with unresolved limitations.
-**Unsupported/deferred** means no current qualification promise. Existing source
-or an older successful platform run is not proof of current coverage.
+This is the Alpha v1.0.0 candidate support boundary. Final release approval is
+pending. Exact M100 artifact receipts distinguish current qualification from the
+accepted Pre-Alpha baseline and historical platform evidence. See
+[release notes](ALPHA_V1_0_0_NOTES.md) and [release process](RELEASING.md).
+No claim of universal component composition or clean-machine certification is made.
 
 ## Platforms and distribution
 
@@ -26,8 +19,8 @@ or an older successful platform run is not proof of current coverage.
 | macOS, iOS, consoles, browser runtime | Unsupported | No supported distribution pipeline promised. |
 | Docker/Podman Ubuntu baseline builder | Available, execution-unqualified here | Rootless bubblewrap is the exercised baseline backend. |
 
-No release channel, engine version, signing preset or publication policy changes
-are made by this qualification. Main remains operator controlled. Use
+M100 defines Alpha/Experimental and reserves Stable for GA; preparing a candidate
+does not publish or promote it. Main remains operator controlled. Use
 `--build-info-json`, `BUILD_INFO.json` and package checksums for exact provenance.
 
 ## Runtime systems

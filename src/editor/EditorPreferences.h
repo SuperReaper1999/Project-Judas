@@ -24,6 +24,8 @@ struct EditorLayoutPreset {
 class EditorPreferences {
 public:
     EditorAppearance appearance;
+    bool automaticUpdates = true;
+    std::string updateChannel; // Empty: installed build channel, never an implicit Experimental opt-in.
     std::vector<EditorLayoutPreset> layouts;
     bool Load(const std::string& json, EditorPanelState&, std::string& error);
     std::string Serialize(const EditorPanelState&) const;

@@ -1,0 +1,9 @@
+JudasProject 1
+advanced-fluid-dynamics "true"
+name "Conserved Liquid Lab"
+startup-scene "Scenes/lab.judas"
+assets-dir "Assets"
+scenes-dir "Scenes"
+saves-dir "Saves"
+input-map "1 24 \"jump\" 0 1 \"key:Space\" 1 0 \"interact\" 0 1 \"key:G\" 1 0 \"throw\" 0 1 \"key:T\" 1 0 \"tilt\" 0 1 \"key:P\" 1 0 \"drain\" 0 1 \"key:Q\" 1 0 \"refill\" 0 1 \"key:E\" 1 0 \"fill_graph\" 0 1 \"key:F\" 1 0 \"drain_graph\" 0 1 \"key:H\" 1 0 \"lab_scene\" 0 1 \"key:1\" 1 0 \"radial_scene\" 0 1 \"key:2\" 1 0 \"restart\" 0 1 \"key:R\" 1 0 \"pause\" 0 1 \"key:Escape\" 1 0 \"ui_up\" 0 1 \"key:Up\" 1 0 \"ui_down\" 0 1 \"key:Down\" 1 0 \"ui_activate\" 0 1 \"key:Return\" 1 0 \"ui_click\" 0 1 \"mouse:Left\" 1 0 \"spawn\" 0 1 \"key:N\" 1 0 \"move_x\" 1 3 \"key:A\" -1 0 \"key:D\" 1 0 \"stick:LeftX\" 1 0.15 \"move_y\" 1 3 \"key:S\" -1 0 \"key:W\" 1 0 \"stick:LeftY\" -1 0.15 \"look_x\" 1 1 \"mouse:dx\" 1 0 \"look_y\" 1 1 \"mouse:dy\" 1 0 \"look_stick_x\" 1 1 \"stick:RightX\" 1 0.15 \"look_stick_y\" 1 1 \"stick:RightY\" 1 0.15 \"wheel_y\" 1 1 \"mouse:wheelY\" 1 0"
+classification "JudasClassification 1 1 1 0 \"pickup\" 1 1 0 \"Default\" 1 1 0 \"Default\""

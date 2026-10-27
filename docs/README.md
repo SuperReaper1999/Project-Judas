@@ -1,8 +1,9 @@
 # Judas documentation
 
-Start here for the current Pre-Alpha engine. [Repository overview](../README.md),
+Start here for the Alpha v1.0.0 candidate. [Repository overview](../README.md),
 [current status and limits](PREALPHA.md), [architecture](ARCHITECTURE.md).
-This is development documentation, not an Alpha release or a compatibility promise.
+Publication and final acceptance remain explicit; this documentation is not a universal compatibility promise.
+See [release notes](ALPHA_V1_0_0_NOTES.md), [versioning](VERSIONING.md) and [publication](RELEASING.md).
 
 ## Start a project
 

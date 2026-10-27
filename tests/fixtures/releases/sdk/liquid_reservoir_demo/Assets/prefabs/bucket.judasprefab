@@ -1,0 +1,53 @@
+JudasScene 3
+settings
+  name "Conserved liquid bucket"
+  world-origin 1000000000000 -2000000000000 3000000000000
+  sun-direction -.3 .8 .5
+  sun-color 1 .94 .85
+  ambient .4 .42 .5
+  fluid-scale 13
+  fidelity-policy none
+  next-id 2000
+end
+
+object 1 "Bucket"
+  position 0 0 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render compound
+  render.half-extents 0.18 0.18 0.18
+  render.radius .5
+  render.color 0.8 0.6 0.2
+  render.alpha 1
+  render.secondary-color .3 .55 .65
+  render.secondary-alpha .25
+  render.mesh-asset ""
+  render.texture-asset ""
+  body dynamic compound
+  body.half-extents 0.18 0.18 0.18
+  body.radius .5
+  body.terrain ""
+  body.mass 2
+  body.friction .6
+  body.restitution .05
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 5
+  body.compound-box 0 -0.18 0 0.18 0.02 0.18
+  body.compound-box -0.16 0 0 0.02 0.16 0.18
+  body.compound-box 0.16 0 0 0.02 0.16 0.18
+  body.compound-box 0 0 -0.16 0.14 0.16 0.02
+  body.compound-box 0 0 0.16 0.14 0.16 0.02
+  body.fluid-cavity-count 0
+  tags 1
+  liquid.container.enabled "1"
+  liquid.container.geometry "54545454545454545454545454540003"
+  liquid.container.initialVolume "0"
+  liquid.container.material.id "water"
+  liquid.container.material.density "1000"
+  liquid.container.openingArea "0.025"
+  liquid.container.discharge "0.6"
+  liquid.container.opening "4 -.14 .16 -.14 .14 .16 -.14 .14 .16 .14 -.14 .16 .14"
+end
+

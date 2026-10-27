@@ -1,6 +1,6 @@
 # Current public JudasJS inventory
 
-Current public surface identity: `Pre-Alpha current source; public module through M99`. Includes optional network sessions and NetworkEntity handles; see [networking](network.md). Human/platform acceptance is recorded separately in [the current documentation](../JUDASJS.md), not inferred from API coverage.
+Current public surface identity: `Alpha v1.0.0 candidate; public module through M100`. Includes optional network sessions and NetworkEntity handles; see [networking](network.md). Human/platform acceptance is recorded separately in [the current documentation](../JUDASJS.md), not inferred from API coverage.
 Each row is a runtime export/member (constructors and plain handle fields included).
 Native dispatcher operations are implementation details, not additional JS APIs.
 
@@ -330,6 +330,8 @@ Native dispatcher operations are implementation details, not additional JS APIs.
 | `audio.setGroup` | `audioGroupSet` | [declaration](../judas.d.ts) | [reference](audio.md) |
 | `console` | JS wrapper/data | [declaration](../judas.d.ts) | [reference](input.md) |
 | `console.log` | `log` | [declaration](../judas.d.ts) | [reference](input.md) |
+| `engine` | JS wrapper/data | [declaration](../judas.d.ts) | [reference](engine.md) |
+| `engine.buildInfo` | `engineBuildInfo` | [declaration](../judas.d.ts) | [reference](engine.md) |
 | `entity` | JS wrapper/data | [declaration](../judas.d.ts) | [reference](entities.md) |
 | `input` | JS wrapper/data | [declaration](../judas.d.ts) | [reference](input.md) |
 | `input.axis` | `axis` | [declaration](../judas.d.ts) | [reference](input.md) |

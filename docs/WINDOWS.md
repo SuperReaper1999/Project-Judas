@@ -55,8 +55,8 @@ Later Linux corrections do not rewrite those historical Windows results. Linux
 is the current acceptance/performance platform; Windows VM timing is diagnostic
 and nonblocking. Use [Pre-Alpha status](PREALPHA.md) for current finding dispositions.
 
-`Build-Windows.ps1` defaults to `build\windows-Experimental`; use `-Channel main`,
-`Experimental` or `Local` and an optional `-BuildDirectory` to keep independent
+`Build-Windows.ps1` defaults to `build\windows-Experimental`; use `-Channel Alpha`,
+`Beta`, `Experimental`, `Stable` (GA only) or `Local` and an optional `-BuildDirectory` to keep independent
 outputs. Channel selection does not grant human acceptance or promote a branch.
 SDK staging requires Python 3.11+. Existing generated SDKs without the new manifest
 are not overwritten: use a fresh build directory or move the old SDK aside.

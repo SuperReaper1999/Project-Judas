@@ -56,6 +56,7 @@ def main():
     backend.add_argument('--rootfs', type=Path, help='Prepared Ubuntu 24.04 root for rootless bubblewrap')
     backend.add_argument('--engine', choices=['docker', 'podman'], help='Default: first installed Podman/Docker')
     parser.add_argument('--image', default='judas-build-ubuntu24', help='Explicitly prepared local image; never pulled by this command')
+    parser.add_argument('--channel', choices=['Alpha','Beta','Experimental','Stable'], default='Experimental')
     parser.add_argument('--jobs', type=int, default=2)
     parser.add_argument('--extra-target', action='append', default=[], help='Additional focused native target')
     parser.add_argument('--verify-only', action='store_true', help='Recheck a previously built SDK inside the baseline environment')
@@ -95,7 +96,7 @@ def main():
             'python3 --version; dpkg-query -W'])
         if not args.verify_only:
             run('configure', ['cmake', '-S', '/source', '-B', '/build', '-G', 'Ninja',
-                             '-DCMAKE_BUILD_TYPE=Release', '-DJUDAS_BUILD_CHANNEL=Experimental'])
+                             '-DCMAKE_BUILD_TYPE=Release', '-DJUDAS_BUILD_CHANNEL=' + args.channel])
             run('build', ['cmake', '--build', '/build', '--parallel', str(args.jobs),
                           '--target', 'judas_linux_sdk', *args.extra_target])
         relative = logs.relative_to(build).as_posix()

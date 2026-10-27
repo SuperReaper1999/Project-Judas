@@ -1,5 +1,6 @@
 {
   "schema": 1,
-  "version": "0.1.0-prealpha",
-  "maturity": "pre-alpha"
+  "version": "1.0.0-alpha.1",
+  "maturity": "alpha",
+  "release_name": "Judas Engine Alpha v1.0.0"
 }

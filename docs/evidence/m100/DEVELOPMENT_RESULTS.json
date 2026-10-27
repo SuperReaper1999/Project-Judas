@@ -1,0 +1,10 @@
+{
+  "status": "development controls; final exact-checkpoint builds pending",
+  "nativeIdentity": 56,
+  "nativeReleaseManifest": 95,
+  "nativeScripts": 42,
+  "preferenceStateChecks": 37,
+  "apiDrift": "passed",
+  "finalHumanAcceptance": false,
+  "published": false
+}

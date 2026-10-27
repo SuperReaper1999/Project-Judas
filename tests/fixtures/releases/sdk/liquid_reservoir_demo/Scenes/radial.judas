@@ -1,0 +1,415 @@
+JudasScene 3
+settings
+  name "Radial Reservoir"
+  world-origin 1000000000000 -2000000000000 3000000000000
+  sun-direction -.3 .8 .5
+  sun-color 1 .94 .85
+  ambient .4 .42 .5
+  fluid-scale 13
+  fidelity-policy none
+  next-id 2000
+end
+
+object 1 "Actual Judas radial gravity"
+  position 0 0 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  gravity radial 9.81
+  gravity.region sphere 1000
+end
+
+object 2 "Planet"
+  position 0 0 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sphere
+  render.half-extents 20 20 20
+  render.radius 20
+  render.color 0.22 0.32 0.25
+  render.alpha 1
+  render.secondary-color .3 .55 .65
+  render.secondary-alpha .25
+  render.mesh-asset ""
+  render.texture-asset ""
+  body static sphere
+  body.half-extents 20 20 20
+  body.radius 20
+  body.terrain ""
+  body.mass 1
+  body.friction .6
+  body.restitution .05
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 10 "Script character"
+  position -16.4498651 13.0538093 1.8
+  rotation 0.900447102 0 0 0.434965534
+  scale 1 1 1
+  motor.enabled true
+  motor.radius 0.3
+  motor.halfHeight 0.6
+  motor.offset 0 0 0
+  motor.stepHeight 0.4
+  motor.supportDistance 0.15
+  motor.skin 0.02
+  motor.maxSlopeDegrees 50
+  motor.gravityScale 1
+  motor.reorientationDegreesPerSecond 120
+  motor.interactionMass 80
+  motor.maxPushImpulse 20
+  motor.collisionLayer 0
+  motor.collisionMask 18446744073709551615
+  motor.requiredTags 0
+  motor.excludedTags 0
+  scripts 1
+  script.0.id 1
+  script.0.asset "54545454545454545454545454540005"
+  script.0.enabled true
+  script.0.properties "{}"
+end
+
+object 11 "Liquid lab UI"
+  position 0 0 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  ui.enabled true
+  ui.asset "54545454545454545454545454540007"
+  ui.name "lab"
+  scripts 1
+  script.0.id 1
+  script.0.asset "54545454545454545454545454540006"
+  script.0.enabled true
+  script.0.properties "{\"radial\":true}"
+end
+
+object 120 "Radial lake"
+  position -15.6665382 12.4321994 0
+  rotation 0.900447102 0 0 0.434965534
+  scale 1 1 1
+  liquid.basin.enabled "1"
+  liquid.basin.geometry "54545454545454545454545454540004"
+  liquid.basin.asset "d80df476d11c2320833ea259d4cd9b1c"
+  liquid.basin.initialVolume "2"
+  liquid.basin.volumeTolerance "1e-05"
+  liquid.basin.heightTolerance "0.025"
+  liquid.basin.material.id "water"
+  liquid.basin.material.density "1000"
+end
+
+object 121 "Radial storage"
+  position -13.1800983 15.565507 0
+  rotation 0.900447102 0 0 0.434965534
+  scale 1 1 1
+  liquid.basin.enabled "1"
+  liquid.basin.geometry "54545454545454545454545454540002"
+  liquid.basin.asset "e90fea4fd4bdbda479af3431e6a6ced2"
+  liquid.basin.initialVolume "0"
+  liquid.basin.volumeTolerance "1e-05"
+  liquid.basin.heightTolerance "0.04"
+  liquid.basin.material.id "water"
+  liquid.basin.material.density "1000"
+end
+
+object 140 "Physical basin wall"
+  position -15.6195386 12.3949028 0
+  rotation 0.900447102 0 0 0.434965534
+  scale 1 1 1
+  render box
+  render.half-extents 1 0.06 1
+  render.radius .5
+  render.color 0.33 0.4 0.46
+  render.alpha 1
+  render.secondary-color .3 .55 .65
+  render.secondary-alpha .25
+  render.mesh-asset ""
+  render.texture-asset ""
+  body static box
+  body.half-extents 1 0.06 1
+  body.radius .5
+  body.terrain ""
+  body.mass 1
+  body.friction .6
+  body.restitution .05
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 141 "Physical basin wall"
+  position -15.3992951 13.5733309 0
+  rotation 0.900447102 0 0 0.434965534
+  scale 1 1 1
+  render box
+  render.half-extents 0.06 0.5 1.12
+  render.radius .5
+  render.color 0.33 0.4 0.46
+  render.alpha 0.4
+  render.secondary-color .3 .55 .65
+  render.secondary-alpha .25
+  render.mesh-asset ""
+  render.texture-asset ""
+  body static box
+  body.half-extents 0.06 0.5 1.12
+  body.radius .5
+  body.terrain ""
+  body.mass 1
+  body.friction .6
+  body.restitution .05
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 142 "Physical basin wall"
+  position -16.7171082 11.9126778 0
+  rotation 0.900447102 0 0 0.434965534
+  scale 1 1 1
+  render box
+  render.half-extents 0.06 0.5 1.12
+  render.radius .5
+  render.color 0.33 0.4 0.46
+  render.alpha 0.4
+  render.secondary-color .3 .55 .65
+  render.secondary-alpha .25
+  render.mesh-asset ""
+  render.texture-asset ""
+  body static box
+  body.half-extents 0.06 0.5 1.12
+  body.radius .5
+  body.terrain ""
+  body.mass 1
+  body.friction .6
+  body.restitution .05
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 143 "Physical basin wall"
+  position -16.0582016 12.7430043 1.06
+  rotation 0.900447102 0 0 0.434965534
+  scale 1 1 1
+  render box
+  render.half-extents 1 0.5 0.06
+  render.radius .5
+  render.color 0.33 0.4 0.46
+  render.alpha 0.4
+  render.secondary-color .3 .55 .65
+  render.secondary-alpha .25
+  render.mesh-asset ""
+  render.texture-asset ""
+  body static box
+  body.half-extents 1 0.5 0.06
+  body.radius .5
+  body.terrain ""
+  body.mass 1
+  body.friction .6
+  body.restitution .05
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 144 "Physical basin wall"
+  position -16.0582016 12.7430043 -1.06
+  rotation 0.900447102 0 0 0.434965534
+  scale 1 1 1
+  render box
+  render.half-extents 1 0.5 0.06
+  render.radius .5
+  render.color 0.33 0.4 0.46
+  render.alpha 0.4
+  render.secondary-color .3 .55 .65
+  render.secondary-alpha .25
+  render.mesh-asset ""
+  render.texture-asset ""
+  body static box
+  body.half-extents 1 0.5 0.06
+  body.radius .5
+  body.terrain ""
+  body.mass 1
+  body.friction .6
+  body.restitution .05
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 150 "Physical basin wall"
+  position -13.1330987 15.5282104 0
+  rotation 0.900447102 0 0 0.434965534
+  scale 1 1 1
+  render box
+  render.half-extents 0.6 0.06 0.6
+  render.radius .5
+  render.color 0.33 0.4 0.46
+  render.alpha 1
+  render.secondary-color .3 .55 .65
+  render.secondary-alpha .25
+  render.mesh-asset ""
+  render.texture-asset ""
+  body static box
+  body.half-extents 0.6 0.06 0.6
+  body.radius .5
+  body.terrain ""
+  body.mass 1
+  body.friction .6
+  body.restitution .05
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 151 "Physical basin wall"
+  position -13.2398319 16.4554687 0
+  rotation 0.900447102 0 0 0.434965534
+  scale 1 1 1
+  render box
+  render.half-extents 0.06 0.6 0.72
+  render.radius .5
+  render.color 0.33 0.4 0.46
+  render.alpha 0.4
+  render.secondary-color .3 .55 .65
+  render.secondary-alpha .25
+  render.mesh-asset ""
+  render.texture-asset ""
+  body static box
+  body.half-extents 0.06 0.6 0.72
+  body.radius .5
+  body.terrain ""
+  body.mass 1
+  body.friction .6
+  body.restitution .05
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 152 "Physical basin wall"
+  position -14.060357 15.4214772 0
+  rotation 0.900447102 0 0 0.434965534
+  scale 1 1 1
+  render box
+  render.half-extents 0.06 0.6 0.72
+  render.radius .5
+  render.color 0.33 0.4 0.46
+  render.alpha 0.4
+  render.secondary-color .3 .55 .65
+  render.secondary-alpha .25
+  render.mesh-asset ""
+  render.texture-asset ""
+  body static box
+  body.half-extents 0.06 0.6 0.72
+  body.radius .5
+  body.terrain ""
+  body.mass 1
+  body.friction .6
+  body.restitution .05
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 153 "Physical basin wall"
+  position -13.6500945 15.938473 0.66
+  rotation 0.900447102 0 0 0.434965534
+  scale 1 1 1
+  render box
+  render.half-extents 0.6 0.6 0.06
+  render.radius .5
+  render.color 0.33 0.4 0.46
+  render.alpha 0.4
+  render.secondary-color .3 .55 .65
+  render.secondary-alpha .25
+  render.mesh-asset ""
+  render.texture-asset ""
+  body static box
+  body.half-extents 0.6 0.6 0.06
+  body.radius .5
+  body.terrain ""
+  body.mass 1
+  body.friction .6
+  body.restitution .05
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 154 "Physical basin wall"
+  position -13.6500945 15.938473 -0.66
+  rotation 0.900447102 0 0 0.434965534
+  scale 1 1 1
+  render box
+  render.half-extents 0.6 0.6 0.06
+  render.radius .5
+  render.color 0.33 0.4 0.46
+  render.alpha 0.4
+  render.secondary-color .3 .55 .65
+  render.secondary-alpha .25
+  render.mesh-asset ""
+  render.texture-asset ""
+  body static box
+  body.half-extents 0.6 0.6 0.06
+  body.radius .5
+  body.terrain ""
+  body.mass 1
+  body.friction .6
+  body.restitution .05
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 201 "Radial buoyant box"
+  position -16.2931997 12.9294873 0
+  rotation 0.900447102 0 0 0.434965534
+  scale 1 1 1
+  render box
+  render.half-extents 0.15 0.15 0.15
+  render.radius .5
+  render.color 0.9 0.25 0.15
+  render.alpha 1
+  render.secondary-color .3 .55 .65
+  render.secondary-alpha .25
+  render.mesh-asset ""
+  render.texture-asset ""
+  body dynamic box
+  body.half-extents 0.15 0.15 0.15
+  body.radius .5
+  body.terrain ""
+  body.mass 8
+  body.friction .6
+  body.restitution .05
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+  liquid.interaction.enabled "1"
+  liquid.interaction.drag "2"
+end
+

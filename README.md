@@ -1,6 +1,6 @@
 Copyright (c) 2026 Conner / SuperReaper1999 · [MIT License](LICENSE).
 
-# Project Judas
+# Judas Engine Alpha v1.0.0
 
 Judas is a general-purpose, C++ game engine for building physical, scriptable
 worlds. Its capabilities are optional: use the parts you need, from a small
@@ -9,19 +9,21 @@ arbitrary gravity, terrain, liquids, weather, deformables and seamless world
 transitions. Ordinary game policy lives in project JavaScript; the engine
 provides the reusable systems and runtime.
 
-Judas is a **Pre-Alpha project**. The engine is actively developed,
-platform coverage is uneven, and some advanced systems remain experimental.
-Read the documented scope and validation evidence before treating any feature
-or performance result as a guarantee.
+This source prepares **Alpha v1.0.0** (`1.0.0-alpha.1`). It remains a release
+candidate until final operator approval and publication. Alpha is not Stable/GA;
+advanced and experimental capabilities retain their documented limits.
 
 ## Current status
 
-`main` contains operator-accepted checkpoints; `Experimental` is the development
-channel and may contain newer work awaiting review. The current source includes
-M98 save evolution, M99 optional online multiplayer, Pre-Alpha corrections,
-Hearthworld and optional Linux-to-Windows game export. This is not an Alpha
-release or universal platform certification. Earlier milestone acceptance retains
-its original [platform scope](docs/evidence/m99/HUMAN_VALIDATION.md).
+`main` contains operator-accepted source; `Experimental` is ongoing development.
+Published Alpha versions, future Beta and eventual Stable/GA are separate
+[distribution channels](docs/VERSIONING.md), not extra development branches.
+No update checker silently installs anything or overwrites your projects.
+
+[Alpha release notes](docs/ALPHA_V1_0_0_NOTES.md) ·
+[Supported platforms and limits](docs/ALPHA_SUPPORT_MATRIX.md) ·
+[Installation and verification](docs/DISTRIBUTION.md) ·
+[First project](docs/FIRST_PROJECT.md) · [Release process](docs/RELEASING.md)
 
 For an exact checkout identity use `git rev-parse HEAD`; for a built tool use
 `judas_editor --build-info-json` or its packaged `BUILD_INFO.json`. These identify

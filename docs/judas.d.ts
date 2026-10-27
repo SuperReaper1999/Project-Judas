@@ -6,6 +6,29 @@
  * Ordinary returned objects are detached snapshots.
  */
 declare module "judas" {
+  /** Embedded executable provenance; not game-save/content compatibility. */
+  export interface EngineBuildInfo {
+    readonly schema: 1;
+    readonly version: string;
+    readonly release_name: string;
+    readonly maturity: string;
+    readonly channel: string;
+    readonly build_id: string;
+    readonly source_revision: string;
+    readonly source_tree: string;
+    readonly source_dirty: boolean;
+    readonly source_fingerprint: string;
+    readonly source_origin: string;
+    readonly source_untracked_count: number;
+    readonly source_untracked_fingerprint: string;
+    readonly platform: string;
+    readonly architecture: string;
+    readonly configuration: string;
+    readonly compiler: string;
+    readonly compiler_version: string;
+  }
+  export const engine: {readonly buildInfo: Readonly<EngineBuildInfo>};
+
   export type SignalPhase = 'fixed' | 'ui';
   /** Disposable world/slot-generation token. Never save for reuse after restore. */
   export type SignalSubscription = string;

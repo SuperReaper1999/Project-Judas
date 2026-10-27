@@ -1,4 +1,5 @@
 #include "NetworkSession.h"
+#include "BuildIdentity.h"
 #include "PlanetTiles.h"
 #include "CameraProjection.h"
 #include "WorldStreaming.h"
@@ -217,6 +218,7 @@ export class Entity {
  setCameraEnabled(enabled){return call('camera',this.id,enabled)}
  setCameraProjection(range){return call('cameraProjection',this.id,range)}
 }
+export const engine={get buildInfo(){return Object.freeze(call('engineBuildInfo'))}};
 export const audio={group:name=>call('audioGroup',name),setGroup:(name,settings,fadeSeconds=0)=>call('audioGroupSet',name,settings,fadeSeconds),get diagnostics(){return call('audioDiagnostics')}};
 export const entity=id=>id&&id!=='0'?new Entity(id):null;
 export const world={entity,get origin(){return call("worldOrigin")},get originState(){return call("worldOriginState")},toAbsolute:point=>call("worldAbsolute",point),toLocal:point=>call("worldLocal",point),requestOrigin:point=>call("worldOriginRequest",point),get appearance(){return call('appearanceInfo')},setAppearance:settings=>call('appearanceSet',settings),resetAppearance:()=>call('appearanceReset'),setView:(pose,fov=70,range={})=>call("setView",pose,fov,range),project:point=>call("projectViewport",point),get viewport(){return call("viewportSize")},clearView:()=>call("clearView"),fluidSample:(point,up,halfHeight,radius,tangent)=>call("fluidSample",point,up,halfHeight,radius,tangent),get viewRay(){return call('viewRay')},queryTags:(required=[],excluded=[])=>call('queryTags',required,excluded).map(entity),
@@ -736,6 +738,7 @@ JSValue ScriptSystem::Impl::Native(JSContext* c,JSValueConst,int argc,JSValueCon
         double duration=1;if(!JS_IsNumber(arg(3))||JS_ToFloat64(c,&duration,arg(3))!=0||!std::isfinite(duration))return JS_ThrowTypeError(c,"finite weather transition duration required");
         try{field->Transition(profile,duration);}catch(const std::exception& e){return JS_ThrowTypeError(c,"%s",e.what());}return JS_TRUE;
     }
+    if(op=="engineBuildInfo"){const auto info=BuildIdentityJson();return JS_ParseJSON(c,info.data(),info.size(),"engine build identity");}
     if(op=="worldOrigin")return preciseVector(world.Settings().worldOrigin);
     if(op=="worldOriginState"){auto o=JS_NewObject(c);JS_SetPropertyStr(c,o,"pending",JS_NewBool(c,world.OriginPending()));JS_SetPropertyStr(c,o,"revision",JS_NewFloat64(c,double(world.OriginRevision())));JS_SetPropertyStr(c,o,"error",JS_NewString(c,world.OriginError().c_str()));return o;}
     if(op=="worldAbsolute"||op=="worldLocal"||op=="worldOriginRequest"){glm::dvec3 p;if(!doubleVector(arg(1),p))return JS_ThrowTypeError(c,"finite double position required");if(op=="worldOriginRequest"){std::string error;if(!world.RequestOrigin(p,error))return JS_ThrowTypeError(c,"%s",error.c_str());return JS_TRUE;}return preciseVector(op=="worldAbsolute"?world.Settings().worldOrigin+p:p-world.Settings().worldOrigin);}

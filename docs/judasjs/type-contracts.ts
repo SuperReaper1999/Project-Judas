@@ -2,7 +2,7 @@
  * Positive calls must remain accepted; @ts-expect-error calls must remain errors.
  * Actual execution/value validation is covered by native tests and the cookbook.
  */
-import {world, physics, Entity, LocalPlayer} from 'judas';
+import {world, physics, Entity, LocalPlayer, engine} from 'judas';
 
 declare const owner: Entity;
 declare const player: LocalPlayer;
@@ -46,3 +46,7 @@ if (material) {
 // @ts-expect-error Missing-body material reads must be checked for null.
 const uncheckedFriction: number = owner.physicalMaterial.friction;
 void uncheckedFriction;
+
+const installedVersion: string = engine.buildInfo.version;
+// @ts-expect-error build identity is immutable
+engine.buildInfo.version = "invented";

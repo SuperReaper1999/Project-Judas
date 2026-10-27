@@ -1,9 +1,11 @@
 param(
     [string]$VcpkgRoot = "$env:LOCALAPPDATA\JudasBuildTools\vcpkg",
     [string]$PkgConfig = "",
-    [ValidateSet('main', 'Experimental', 'Local')][string]$Channel = 'Experimental',
+    [ValidateSet('Alpha', 'Beta', 'Experimental', 'Stable', 'Local')][string]$Channel = 'Experimental',
     [string]$BuildDirectory = "",
-    [string]$EngineVersion = ""
+    [string]$EngineVersion = "",
+    [ValidateRange(1,32)][int]$Jobs = 2,
+    [switch]$ReleasePackage
 )
 $ErrorActionPreference = 'Stop'
 $repo = (Resolve-Path "$PSScriptRoot\..\..").Path
@@ -29,9 +31,10 @@ if (!(Test-Path "$VcpkgRoot\.git")) {
 Run-Native "$VcpkgRoot\bootstrap-vcpkg.bat" @('-disableMetrics')
 $build = if ($BuildDirectory) { [IO.Path]::GetFullPath($BuildDirectory) } else { "$repo\build\windows-$Channel" }
 $configure = @('-S', $repo, '-B', $build, '-G', 'Visual Studio 17 2022', '-A', 'x64', "-DCMAKE_TOOLCHAIN_FILE=$VcpkgRoot/scripts/buildsystems/vcpkg.cmake", '-DVCPKG_TARGET_TRIPLET=x64-windows-static-md', "-DVCPKG_MANIFEST_DIR=$repo/packaging/windows", "-DVCPKG_INSTALLED_DIR=$build/vcpkg_installed", "-DJUDAS_BUILD_CHANNEL=$Channel")
+if ($ReleasePackage) { $configure += "-DJUDAS_SDK_RELEASE=ON" }
 if ($EngineVersion) { $configure += "-DJUDAS_ENGINE_VERSION=$EngineVersion" }
 Run-Native cmake $configure
-Run-Native cmake @('--build', $build, '--config', 'Release', '--target', 'judas_windows_sdk', '--parallel', '6')
+Run-Native cmake @('--build', $build, '--config', 'Release', '--target', 'judas_windows_sdk', '--parallel', $Jobs)
 Run-Native "$build\windows-sdk\judas_windows_readiness_tests.exe" @()
-Write-Host "UNVALIDATED Windows SDK ready: $build\windows-sdk"
+Write-Host "Windows SDK staged (native qualification still required): $build\windows-sdk"
 Write-Host "Open docs/WINDOWS.md and perform the native editor/export checks. This script cannot supply human acceptance."

@@ -98,7 +98,7 @@ def parse_args(argv=None):
     p.add_argument('--sdk',type=Path,default=Path(os.environ.get('ANDROID_HOME',Path.home()/'Android/Sdk')))
     p.add_argument('--cache',type=Path,help='Isolated native/staging cache; default .cache/android/<channel>')
     p.add_argument('--preset',choices=['development','release'],default='development',help='Release requires explicit app version and private signing credentials')
-    p.add_argument('--channel',choices=['main','Experimental','Local'],default='Experimental',help='Engine build channel, independent of Android app version/signing')
+    p.add_argument('--channel',choices=['Alpha','Beta','Experimental','Stable','Local'],default='Experimental',help='Engine build channel, independent of Android app version/signing')
     p.add_argument('--engine-version',help='Override checked-in engine version; does not change the game save/content identity')
     p.add_argument('--abis',default='arm64-v8a,x86_64')
     p.add_argument('--shadows',choices=['off','on'],default='off',help='Mobile graphics profile; physics is unchanged')

@@ -1,0 +1,57 @@
+name: Publish explicitly accepted release
+on:
+  workflow_dispatch:
+    inputs:
+      accepted_commit:
+        description: Exact human-tested source commit, already promoted to main
+        required: true
+        type: string
+      artifact_run:
+        description: Successful candidate-preparation workflow run for this commit
+        required: true
+        type: string
+      approval:
+        description: Type PUBLISH followed by the exact version tag
+        required: true
+        type: string
+permissions:
+  contents: read
+  actions: read
+concurrency:
+  group: judas-publication
+  cancel-in-progress: false
+jobs:
+  publish:
+    if: github.actor == github.repository_owner
+    environment: judas-publication
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: write
+      actions: read
+    env:
+      GH_TOKEN: ${{ github.token }}
+      ACCEPTED_COMMIT: ${{ inputs.accepted_commit }}
+      ARTIFACT_RUN: ${{ inputs.artifact_run }}
+      APPROVAL: ${{ inputs.approval }}
+    steps:
+      - name: Validate acceptance and trusted preparation run
+        run: |
+          python3 - <<'PY'
+          import json,os,re,subprocess
+          sha=os.environ['ACCEPTED_COMMIT'];run=os.environ['ARTIFACT_RUN']
+          assert re.fullmatch('[0-9a-f]{40}',sha) and re.fullmatch('[0-9]+',run)
+          r=json.loads(subprocess.check_output(['gh','api','repos/'+os.environ['GITHUB_REPOSITORY']+'/actions/runs/'+run]))
+          assert r['conclusion']=='success' and r['head_sha']==sha
+          assert r['path']=='.github/workflows/release-candidate.yml' and r['event']=='workflow_dispatch'
+          assert r['head_repository']['full_name']==os.environ['GITHUB_REPOSITORY']
+          PY
+      - uses: actions/checkout@v7
+        with:
+          ref: ${{ inputs.accepted_commit }}
+          persist-credentials: false
+      - name: Download already-qualified candidate artifacts
+        run: gh run download "$ARTIFACT_RUN" --repo "$GITHUB_REPOSITORY" --dir "$RUNNER_TEMP/candidate-inputs"
+      - name: Assemble and publish only after protected environment approval
+        run: |
+          python3 tools/assemble_release_run.py --inputs "$RUNNER_TEMP/candidate-inputs" --output "$RUNNER_TEMP/release" --accepted-commit "$ACCEPTED_COMMIT"
+          python3 tools/publish_release.py "$RUNNER_TEMP/release" --accepted-commit "$ACCEPTED_COMMIT" --human-approval "$APPROVAL" --publish

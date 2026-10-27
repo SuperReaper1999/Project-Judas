@@ -1,10 +1,10 @@
-# JudasJS — current Pre-Alpha API reference
+# JudasJS — Alpha v1.0.0 candidate API reference
 
 [Practical ownership, readiness, presentation and save lessons](DEVELOPER_WORKFLOWS.md)
 
 Judas provides engine primitives. Project JavaScript supplies game behaviour.
 This reference describes the current repository implementation, including the public
-module developed through M99 and subsequent Pre-Alpha corrections. It is not an
+module developed through M100 and the preceding accepted Pre-Alpha corrections. It is not an
 eternal compatibility promise or an Alpha release announcement.
 
 **Start here:** [Your first visible project](FIRST_PROJECT.md) →
@@ -127,3 +127,5 @@ and outstanding qualification are tracked in [building/onboarding](FIRST_PROJECT
 6. Confirm arbitrary gravity and the engine/gameplay boundary remain clear.
 
 Project-wide water policy and basic/experimental water ownership: [Project Settings and water](PROJECT_SETTINGS_AND_WATER.md).
+
+Engine/version provenance is available through the read-only [`engine.buildInfo`](judasjs/engine.md) API. It does not grant save or network compatibility.

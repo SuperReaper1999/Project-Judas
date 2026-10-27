@@ -9,11 +9,11 @@
 class EditorMilestoneNotice {
 public:
     ~EditorMilestoneNotice();
-    void Check(bool manual = false);
-    void Draw(std::string& status);
+    void Check(bool manual = false, const std::string& channel = {});
+    void Draw(std::string& status, const std::string& channel = {});
 private:
-    using Result = BuildUpdateResult;
-    static Result Query(const std::atomic<bool>& cancelled);
+    using Result = ReleaseUpdateResult;
+    static Result Query(const std::atomic<bool>& cancelled, const std::string& channel);
     std::atomic<bool> m_cancelled{false};
     std::future<Result> m_pending;
     Result m_result;

@@ -1,0 +1,1035 @@
+JudasScene 3
+settings
+  name "Reservoir Lab"
+  world-origin 1000000000000 -2000000000000 3000000000000
+  sun-direction -.3 .8 .5
+  sun-color 1 .94 .85
+  ambient .4 .42 .5
+  fluid-scale 13
+  fidelity-policy none
+  next-id 2000
+end
+
+object 1 "Uniform gravity region"
+  position 0 0 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  gravity uniform 9.81
+  gravity.region sphere 1000
+end
+
+object 2 "Lab floor"
+  position 0 -0.2 -4
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 12 0.2 10
+  render.radius .5
+  render.color 0.12 0.2 0.25
+  render.alpha 1
+  render.secondary-color .3 .55 .65
+  render.secondary-alpha .25
+  render.mesh-asset ""
+  render.texture-asset ""
+  body static box
+  body.half-extents 12 0.2 10
+  body.radius .5
+  body.terrain ""
+  body.mass 1
+  body.friction .6
+  body.restitution .05
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 10 "Script character"
+  position -3 1.2 -1.8
+  rotation 1 0 0 0
+  scale 1 1 1
+  motor.enabled true
+  motor.radius 0.3
+  motor.halfHeight 0.6
+  motor.offset 0 0 0
+  motor.stepHeight 0.4
+  motor.supportDistance 0.15
+  motor.skin 0.02
+  motor.maxSlopeDegrees 50
+  motor.gravityScale 1
+  motor.reorientationDegreesPerSecond 120
+  motor.interactionMass 80
+  motor.maxPushImpulse 20
+  motor.collisionLayer 0
+  motor.collisionMask 18446744073709551615
+  motor.requiredTags 0
+  motor.excludedTags 0
+  scripts 1
+  script.0.id 1
+  script.0.asset "54545454545454545454545454540005"
+  script.0.enabled true
+  script.0.properties "{}"
+end
+
+object 11 "Liquid lab UI"
+  position 0 0 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  ui.enabled true
+  ui.asset "54545454545454545454545454540007"
+  ui.name "lab"
+  scripts 1
+  script.0.id 1
+  script.0.asset "54545454545454545454545454540006"
+  script.0.enabled true
+  script.0.properties "{}"
+end
+
+object 20 "MAIN / initially 1000 L"
+  position -3 0 -3
+  rotation 1 0 0 0
+  scale 1 1 1
+  liquid.basin.enabled "1"
+  liquid.basin.geometry "54545454545454545454545454540001"
+  liquid.basin.asset "f92c0a7debd9e25c2993b4b92b029e2f"
+  liquid.basin.initialVolume "1"
+  liquid.basin.volumeTolerance "1e-05"
+  liquid.basin.heightTolerance "0.002"
+  liquid.basin.material.id "water"
+  liquid.basin.material.density "1000"
+end
+
+object 21 "STORAGE / 800 L transfer"
+  position -0.5 0 -5
+  rotation 1 0 0 0
+  scale 1 1 1
+  liquid.basin.enabled "1"
+  liquid.basin.geometry "54545454545454545454545454540002"
+  liquid.basin.asset "e2edbe24182ebf863a966ff6b97f5e12"
+  liquid.basin.initialVolume "0"
+  liquid.basin.volumeTolerance "1e-05"
+  liquid.basin.heightTolerance "0.002"
+  liquid.basin.material.id "water"
+  liquid.basin.material.density "1000"
+end
+
+object 22 "RECEIVER / pour here"
+  position 1.5 0 -3
+  rotation 1 0 0 0
+  scale 1 1 1
+  liquid.basin.enabled "1"
+  liquid.basin.geometry "54545454545454545454545454540002"
+  liquid.basin.asset "6df4b93cf6029fbf1ff3bd3ac8e2f536"
+  liquid.basin.initialVolume "0"
+  liquid.basin.volumeTolerance "1e-05"
+  liquid.basin.heightTolerance "0.002"
+  liquid.basin.material.id "water"
+  liquid.basin.material.density "1000"
+end
+
+object 30 "Spill depression A"
+  position 4 0 -6
+  rotation 1 0 0 0
+  scale 1 1 1
+  liquid.basin.enabled "1"
+  liquid.basin.geometry "54545454545454545454545454540002"
+  liquid.basin.asset "01ce8d6e81284d75aa0d8acb4e6c710e"
+  liquid.basin.initialVolume "0.1"
+  liquid.basin.volumeTolerance "1e-05"
+  liquid.basin.heightTolerance "0.002"
+  liquid.basin.material.id "graph-water"
+  liquid.basin.material.density "1000"
+end
+
+object 31 "Spill depression B"
+  position 5.5 0 -6
+  rotation 1 0 0 0
+  scale 1 1 1
+  liquid.basin.enabled "1"
+  liquid.basin.geometry "54545454545454545454545454540002"
+  liquid.basin.asset "e21c5ba6af1d2eb3ef22cd6236eb2c8f"
+  liquid.basin.initialVolume "0.1"
+  liquid.basin.volumeTolerance "1e-05"
+  liquid.basin.heightTolerance "0.002"
+  liquid.basin.material.id "graph-water"
+  liquid.basin.material.density "1000"
+end
+
+object 32 "Spill experiment storage"
+  position 8 0 -6
+  rotation 1 0 0 0
+  scale 1 1 1
+  liquid.basin.enabled "1"
+  liquid.basin.geometry "54545454545454545454545454540002"
+  liquid.basin.asset "e67f8ddea427ae5c074a4d13ec074dd1"
+  liquid.basin.initialVolume "1.6"
+  liquid.basin.volumeTolerance "1e-05"
+  liquid.basin.heightTolerance "0.002"
+  liquid.basin.material.id "graph-water"
+  liquid.basin.material.density "1000"
+end
+
+object 33 "Saddle connection"
+  position 4.75 0.4 -6
+  rotation 1 0 0 0
+  scale 1 1 1
+  liquid.connection.enabled "1"
+  liquid.connection.bidirectional "1"
+  liquid.connection.source "30"
+  liquid.connection.destination "31"
+  liquid.connection.openingArea "0.06"
+  liquid.connection.discharge "0.6"
+end
+
+object 40 "Tapered basin floor"
+  position -3 -0.06 -3
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.8 0.06 0.6
+  render.radius .5
+  render.color 0.33 0.4 0.46
+  render.alpha 1
+  render.secondary-color .3 .55 .65
+  render.secondary-alpha .25
+  render.mesh-asset ""
+  render.texture-asset ""
+  body static box
+  body.half-extents 0.8 0.06 0.6
+  body.radius .5
+  body.terrain ""
+  body.mass 1
+  body.friction .6
+  body.restitution .05
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 41 "Tapered basin wall"
+  position -1.962 0.588 -3
+  rotation 0.987087458 0 0 -0.160182243
+  scale 1 1 1
+  render box
+  render.half-extents 0.04 0.633 0.8
+  render.radius .5
+  render.color 0.33 0.4 0.46
+  render.alpha 1
+  render.secondary-color .3 .55 .65
+  render.secondary-alpha .25
+  render.mesh-asset ""
+  render.texture-asset ""
+  body static box
+  body.half-extents 0.04 0.633 0.8
+  body.radius .5
+  body.terrain ""
+  body.mass 1
+  body.friction .6
+  body.restitution .05
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 42 "Tapered basin wall"
+  position -4.038 0.588 -3
+  rotation 0.987087458 0 0 0.160182243
+  scale 1 1 1
+  render box
+  render.half-extents 0.04 0.633 0.8
+  render.radius .5
+  render.color 0.33 0.4 0.46
+  render.alpha 1
+  render.secondary-color .3 .55 .65
+  render.secondary-alpha .25
+  render.mesh-asset ""
+  render.texture-asset ""
+  body static box
+  body.half-extents 0.04 0.633 0.8
+  body.radius .5
+  body.terrain ""
+  body.mass 1
+  body.friction .6
+  body.restitution .05
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 43 "Tapered basin wall"
+  position -3 0.593 -2.261
+  rotation 0.996592676 0.0824805315 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.8 0.609 0.04
+  render.radius .5
+  render.color 0.33 0.4 0.46
+  render.alpha 1
+  render.secondary-color .3 .55 .65
+  render.secondary-alpha .25
+  render.mesh-asset ""
+  render.texture-asset ""
+  body static box
+  body.half-extents 0.8 0.609 0.04
+  body.radius .5
+  body.terrain ""
+  body.mass 1
+  body.friction .6
+  body.restitution .05
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 44 "Tapered basin wall"
+  position -3 0.593 -3.739
+  rotation 0.996592676 -0.0824805315 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.8 0.609 0.04
+  render.radius .5
+  render.color 0.33 0.4 0.46
+  render.alpha 1
+  render.secondary-color .3 .55 .65
+  render.secondary-alpha .25
+  render.mesh-asset ""
+  render.texture-asset ""
+  body static box
+  body.half-extents 0.8 0.609 0.04
+  body.radius .5
+  body.terrain ""
+  body.mass 1
+  body.friction .6
+  body.restitution .05
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 50 "Physical basin wall"
+  position -0.5 -0.06 -5
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.6 0.06 0.6
+  render.radius .5
+  render.color 0.33 0.4 0.46
+  render.alpha 1
+  render.secondary-color .3 .55 .65
+  render.secondary-alpha .25
+  render.mesh-asset ""
+  render.texture-asset ""
+  body static box
+  body.half-extents 0.6 0.06 0.6
+  body.radius .5
+  body.terrain ""
+  body.mass 1
+  body.friction .6
+  body.restitution .05
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 51 "Physical basin wall"
+  position 0.16 0.6 -5
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.06 0.6 0.72
+  render.radius .5
+  render.color 0.33 0.4 0.46
+  render.alpha 0.4
+  render.secondary-color .3 .55 .65
+  render.secondary-alpha .25
+  render.mesh-asset ""
+  render.texture-asset ""
+  body static box
+  body.half-extents 0.06 0.6 0.72
+  body.radius .5
+  body.terrain ""
+  body.mass 1
+  body.friction .6
+  body.restitution .05
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 52 "Physical basin wall"
+  position -1.16 0.6 -5
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.06 0.6 0.72
+  render.radius .5
+  render.color 0.33 0.4 0.46
+  render.alpha 0.4
+  render.secondary-color .3 .55 .65
+  render.secondary-alpha .25
+  render.mesh-asset ""
+  render.texture-asset ""
+  body static box
+  body.half-extents 0.06 0.6 0.72
+  body.radius .5
+  body.terrain ""
+  body.mass 1
+  body.friction .6
+  body.restitution .05
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 53 "Physical basin wall"
+  position -0.5 0.6 -4.34
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.6 0.6 0.06
+  render.radius .5
+  render.color 0.33 0.4 0.46
+  render.alpha 0.4
+  render.secondary-color .3 .55 .65
+  render.secondary-alpha .25
+  render.mesh-asset ""
+  render.texture-asset ""
+  body static box
+  body.half-extents 0.6 0.6 0.06
+  body.radius .5
+  body.terrain ""
+  body.mass 1
+  body.friction .6
+  body.restitution .05
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 54 "Physical basin wall"
+  position -0.5 0.6 -5.66
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.6 0.6 0.06
+  render.radius .5
+  render.color 0.33 0.4 0.46
+  render.alpha 0.4
+  render.secondary-color .3 .55 .65
+  render.secondary-alpha .25
+  render.mesh-asset ""
+  render.texture-asset ""
+  body static box
+  body.half-extents 0.6 0.6 0.06
+  body.radius .5
+  body.terrain ""
+  body.mass 1
+  body.friction .6
+  body.restitution .05
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 60 "Physical basin wall"
+  position 1.5 -0.06 -3
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.6 0.06 0.6
+  render.radius .5
+  render.color 0.33 0.4 0.46
+  render.alpha 1
+  render.secondary-color .3 .55 .65
+  render.secondary-alpha .25
+  render.mesh-asset ""
+  render.texture-asset ""
+  body static box
+  body.half-extents 0.6 0.06 0.6
+  body.radius .5
+  body.terrain ""
+  body.mass 1
+  body.friction .6
+  body.restitution .05
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 61 "Physical basin wall"
+  position 2.16 0.6 -3
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.06 0.6 0.72
+  render.radius .5
+  render.color 0.33 0.4 0.46
+  render.alpha 0.4
+  render.secondary-color .3 .55 .65
+  render.secondary-alpha .25
+  render.mesh-asset ""
+  render.texture-asset ""
+  body static box
+  body.half-extents 0.06 0.6 0.72
+  body.radius .5
+  body.terrain ""
+  body.mass 1
+  body.friction .6
+  body.restitution .05
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 62 "Physical basin wall"
+  position 0.84 0.6 -3
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.06 0.6 0.72
+  render.radius .5
+  render.color 0.33 0.4 0.46
+  render.alpha 0.4
+  render.secondary-color .3 .55 .65
+  render.secondary-alpha .25
+  render.mesh-asset ""
+  render.texture-asset ""
+  body static box
+  body.half-extents 0.06 0.6 0.72
+  body.radius .5
+  body.terrain ""
+  body.mass 1
+  body.friction .6
+  body.restitution .05
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 63 "Physical basin wall"
+  position 1.5 0.6 -2.34
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.6 0.6 0.06
+  render.radius .5
+  render.color 0.33 0.4 0.46
+  render.alpha 0.4
+  render.secondary-color .3 .55 .65
+  render.secondary-alpha .25
+  render.mesh-asset ""
+  render.texture-asset ""
+  body static box
+  body.half-extents 0.6 0.6 0.06
+  body.radius .5
+  body.terrain ""
+  body.mass 1
+  body.friction .6
+  body.restitution .05
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 64 "Physical basin wall"
+  position 1.5 0.6 -3.66
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.6 0.6 0.06
+  render.radius .5
+  render.color 0.33 0.4 0.46
+  render.alpha 0.4
+  render.secondary-color .3 .55 .65
+  render.secondary-alpha .25
+  render.mesh-asset ""
+  render.texture-asset ""
+  body static box
+  body.half-extents 0.6 0.6 0.06
+  body.radius .5
+  body.terrain ""
+  body.mass 1
+  body.friction .6
+  body.restitution .05
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 70 "Physical basin wall"
+  position 4 -0.06 -6
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.6 0.06 0.6
+  render.radius .5
+  render.color 0.33 0.4 0.46
+  render.alpha 1
+  render.secondary-color .3 .55 .65
+  render.secondary-alpha .25
+  render.mesh-asset ""
+  render.texture-asset ""
+  body static box
+  body.half-extents 0.6 0.06 0.6
+  body.radius .5
+  body.terrain ""
+  body.mass 1
+  body.friction .6
+  body.restitution .05
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 71 "Physical basin wall"
+  position 4.66 0.6 -6
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.06 0.6 0.72
+  render.radius .5
+  render.color 0.33 0.4 0.46
+  render.alpha 0.4
+  render.secondary-color .3 .55 .65
+  render.secondary-alpha .25
+  render.mesh-asset ""
+  render.texture-asset ""
+  body static box
+  body.half-extents 0.06 0.6 0.72
+  body.radius .5
+  body.terrain ""
+  body.mass 1
+  body.friction .6
+  body.restitution .05
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 72 "Physical basin wall"
+  position 3.34 0.6 -6
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.06 0.6 0.72
+  render.radius .5
+  render.color 0.33 0.4 0.46
+  render.alpha 0.4
+  render.secondary-color .3 .55 .65
+  render.secondary-alpha .25
+  render.mesh-asset ""
+  render.texture-asset ""
+  body static box
+  body.half-extents 0.06 0.6 0.72
+  body.radius .5
+  body.terrain ""
+  body.mass 1
+  body.friction .6
+  body.restitution .05
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 73 "Physical basin wall"
+  position 4 0.6 -5.34
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.6 0.6 0.06
+  render.radius .5
+  render.color 0.33 0.4 0.46
+  render.alpha 0.4
+  render.secondary-color .3 .55 .65
+  render.secondary-alpha .25
+  render.mesh-asset ""
+  render.texture-asset ""
+  body static box
+  body.half-extents 0.6 0.6 0.06
+  body.radius .5
+  body.terrain ""
+  body.mass 1
+  body.friction .6
+  body.restitution .05
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 74 "Physical basin wall"
+  position 4 0.6 -6.66
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.6 0.6 0.06
+  render.radius .5
+  render.color 0.33 0.4 0.46
+  render.alpha 0.4
+  render.secondary-color .3 .55 .65
+  render.secondary-alpha .25
+  render.mesh-asset ""
+  render.texture-asset ""
+  body static box
+  body.half-extents 0.6 0.6 0.06
+  body.radius .5
+  body.terrain ""
+  body.mass 1
+  body.friction .6
+  body.restitution .05
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 80 "Physical basin wall"
+  position 5.5 -0.06 -6
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.6 0.06 0.6
+  render.radius .5
+  render.color 0.33 0.4 0.46
+  render.alpha 1
+  render.secondary-color .3 .55 .65
+  render.secondary-alpha .25
+  render.mesh-asset ""
+  render.texture-asset ""
+  body static box
+  body.half-extents 0.6 0.06 0.6
+  body.radius .5
+  body.terrain ""
+  body.mass 1
+  body.friction .6
+  body.restitution .05
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 81 "Physical basin wall"
+  position 6.16 0.6 -6
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.06 0.6 0.72
+  render.radius .5
+  render.color 0.33 0.4 0.46
+  render.alpha 0.4
+  render.secondary-color .3 .55 .65
+  render.secondary-alpha .25
+  render.mesh-asset ""
+  render.texture-asset ""
+  body static box
+  body.half-extents 0.06 0.6 0.72
+  body.radius .5
+  body.terrain ""
+  body.mass 1
+  body.friction .6
+  body.restitution .05
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 82 "Physical basin wall"
+  position 4.84 0.6 -6
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.06 0.6 0.72
+  render.radius .5
+  render.color 0.33 0.4 0.46
+  render.alpha 0.4
+  render.secondary-color .3 .55 .65
+  render.secondary-alpha .25
+  render.mesh-asset ""
+  render.texture-asset ""
+  body static box
+  body.half-extents 0.06 0.6 0.72
+  body.radius .5
+  body.terrain ""
+  body.mass 1
+  body.friction .6
+  body.restitution .05
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 83 "Physical basin wall"
+  position 5.5 0.6 -5.34
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.6 0.6 0.06
+  render.radius .5
+  render.color 0.33 0.4 0.46
+  render.alpha 0.4
+  render.secondary-color .3 .55 .65
+  render.secondary-alpha .25
+  render.mesh-asset ""
+  render.texture-asset ""
+  body static box
+  body.half-extents 0.6 0.6 0.06
+  body.radius .5
+  body.terrain ""
+  body.mass 1
+  body.friction .6
+  body.restitution .05
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 84 "Physical basin wall"
+  position 5.5 0.6 -6.66
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.6 0.6 0.06
+  render.radius .5
+  render.color 0.33 0.4 0.46
+  render.alpha 0.4
+  render.secondary-color .3 .55 .65
+  render.secondary-alpha .25
+  render.mesh-asset ""
+  render.texture-asset ""
+  body static box
+  body.half-extents 0.6 0.6 0.06
+  body.radius .5
+  body.terrain ""
+  body.mass 1
+  body.friction .6
+  body.restitution .05
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 90 "Physical basin wall"
+  position 8 -0.06 -6
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.6 0.06 0.6
+  render.radius .5
+  render.color 0.33 0.4 0.46
+  render.alpha 1
+  render.secondary-color .3 .55 .65
+  render.secondary-alpha .25
+  render.mesh-asset ""
+  render.texture-asset ""
+  body static box
+  body.half-extents 0.6 0.06 0.6
+  body.radius .5
+  body.terrain ""
+  body.mass 1
+  body.friction .6
+  body.restitution .05
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 91 "Physical basin wall"
+  position 8.66 0.6 -6
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.06 0.6 0.72
+  render.radius .5
+  render.color 0.33 0.4 0.46
+  render.alpha 0.4
+  render.secondary-color .3 .55 .65
+  render.secondary-alpha .25
+  render.mesh-asset ""
+  render.texture-asset ""
+  body static box
+  body.half-extents 0.06 0.6 0.72
+  body.radius .5
+  body.terrain ""
+  body.mass 1
+  body.friction .6
+  body.restitution .05
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 92 "Physical basin wall"
+  position 7.34 0.6 -6
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.06 0.6 0.72
+  render.radius .5
+  render.color 0.33 0.4 0.46
+  render.alpha 0.4
+  render.secondary-color .3 .55 .65
+  render.secondary-alpha .25
+  render.mesh-asset ""
+  render.texture-asset ""
+  body static box
+  body.half-extents 0.06 0.6 0.72
+  body.radius .5
+  body.terrain ""
+  body.mass 1
+  body.friction .6
+  body.restitution .05
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 93 "Physical basin wall"
+  position 8 0.6 -5.34
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.6 0.6 0.06
+  render.radius .5
+  render.color 0.33 0.4 0.46
+  render.alpha 0.4
+  render.secondary-color .3 .55 .65
+  render.secondary-alpha .25
+  render.mesh-asset ""
+  render.texture-asset ""
+  body static box
+  body.half-extents 0.6 0.6 0.06
+  body.radius .5
+  body.terrain ""
+  body.mass 1
+  body.friction .6
+  body.restitution .05
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 94 "Physical basin wall"
+  position 8 0.6 -6.66
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.6 0.6 0.06
+  render.radius .5
+  render.color 0.33 0.4 0.46
+  render.alpha 0.4
+  render.secondary-color .3 .55 .65
+  render.secondary-alpha .25
+  render.mesh-asset ""
+  render.texture-asset ""
+  body static box
+  body.half-extents 0.6 0.6 0.06
+  body.radius .5
+  body.terrain ""
+  body.mass 1
+  body.friction .6
+  body.restitution .05
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 200 "Physical conserved bucket"
+  position -1 0.6 -1
+  rotation 1 0 0 0
+  scale 1 1 1
+  prefab.root 200
+  prefab.source 1
+  prefab.asset "54545454545454545454545454540008"
+  prefab.ids "1 \"1\" \"200\" "
+  prefab.overrides "0 "
+end
+
+object 201 "Floating physical box"
+  position -3 1.5 -3
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.18 0.18 0.18
+  render.radius .5
+  render.color 0.9 0.25 0.15
+  render.alpha 1
+  render.secondary-color .3 .55 .65
+  render.secondary-alpha .25
+  render.mesh-asset ""
+  render.texture-asset ""
+  body dynamic box
+  body.half-extents 0.18 0.18 0.18
+  body.radius .5
+  body.terrain ""
+  body.mass 12
+  body.friction .6
+  body.restitution .05
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+  tags 1
+  liquid.interaction.enabled "1"
+  liquid.interaction.drag "2"
+end
+

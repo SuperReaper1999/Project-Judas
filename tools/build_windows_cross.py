@@ -27,7 +27,7 @@ def main():
     parser.add_argument('--host-build', type=Path, default=ROOT / 'build/linux-cross-host-Experimental')
     parser.add_argument('--mingw-root', type=Path, help='Optional relocated prefix with bin/ and x86_64-w64-mingw32/')
     parser.add_argument('--icu-host-build', type=Path, help='Reuse an existing ICU 76.1 native build/config/icucross.mk')
-    parser.add_argument('--channel', choices=['main', 'Experimental', 'Local'], default='Experimental')
+    parser.add_argument('--channel', choices=['Alpha', 'Beta', 'Experimental', 'Stable', 'Local'], default='Experimental')
     parser.add_argument('--jobs', type=int, default=4)
     parser.add_argument('--project', type=Path)
     parser.add_argument('--output', type=Path)

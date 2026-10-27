@@ -1,6 +1,6 @@
 # Build Windows games on Linux
 
-Current Pre-Alpha support: **optional Windows x64 Release games built with
+Current optional support: **optional Windows x64 Release games built with
 MinGW-w64 GCC on Linux**. The native MSVC editor/SDK workflow remains available.
 This is a command-line game export workflow; the editor's Export command still
 builds for its native platform. It does not produce an Android package or a
@@ -38,7 +38,7 @@ python3 tools/build_windows_cross.py \
 
 Choose **new** bundle/package destinations. Existing content is never replaced.
 Omit `--project` and `--output` to build only the checked target runtime bundle.
-Use `--channel main|Experimental|Local` for provenance, not branch promotion.
+Use `--channel Alpha|Beta|Experimental|Stable|Local` for provenance, not branch promotion.
 A relocated toolchain prefix can be supplied with `--mingw-root PREFIX`; it
 must contain `bin/` and `x86_64-w64-mingw32/`, including redistribution notices.
 The helper records commands, elapsed times and outcomes in its evidence directory.

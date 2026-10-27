@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.20)
 file(READ "${CMAKE_CURRENT_SOURCE_DIR}/engine-version.json" judas_version_document)
 string(JSON judas_project_version GET "${judas_version_document}" version)
-string(REGEX REPLACE "-.*$" "" judas_project_version "${judas_project_version}")
+string(REGEX REPLACE "[-+].*$" "" judas_project_version "${judas_project_version}")
 project(ProjectJudas VERSION "${judas_project_version}" LANGUAGES C CXX)
 
 if(WIN32)
@@ -49,6 +49,9 @@ target_compile_definitions(judas_build_identity PRIVATE JUDAS_BUILD_CONFIGURATIO
 judas_warnings(judas_build_identity)
 add_executable(judas_build_identity_tests tests/BuildIdentityTests.cpp)
 target_link_libraries(judas_build_identity_tests PRIVATE judas_build_identity)
+add_executable(judas_release_update_tests tests/ReleaseUpdateTests.cpp)
+target_link_libraries(judas_release_update_tests PRIVATE judas_build_identity)
+judas_warnings(judas_release_update_tests)
 judas_warnings(judas_build_identity_tests)
 option(JUDAS_BUILD_IDENTITY_ONLY "Configure only dependency-light build provenance checks" OFF)
 if(JUDAS_BUILD_IDENTITY_ONLY)

@@ -1,0 +1,1214 @@
+[
+  {
+    "name": "newer same-channel compatible",
+    "manifest": {
+      "schema": 1,
+      "channel": "Alpha",
+      "version": "1.0.1-alpha.1",
+      "tag": "v1.0.1-alpha.1",
+      "source_revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "compatibility": {
+        "update_protocol": 1,
+        "engine_major": 1
+      },
+      "notes": "Test fixture only. Not a published release.",
+      "notes_url": "https://github.com/SuperReaper1999/Project-Judas/releases/tag/v1.0.1-alpha.1",
+      "artifacts": [
+        {
+          "name": "Judas-1.0.1-alpha.1-Linux-x86_64.tar.gz",
+          "platform": "Linux",
+          "architecture": "x86_64",
+          "bytes": 4,
+          "sha256": "9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08",
+          "url": "https://github.com/SuperReaper1999/Project-Judas/releases/download/v1.0.1-alpha.1/Judas-1.0.1-alpha.1-Linux-x86_64.tar.gz"
+        }
+      ]
+    },
+    "valid": true,
+    "offer": true
+  },
+  {
+    "name": "same version",
+    "manifest": {
+      "schema": 1,
+      "channel": "Alpha",
+      "version": "1.0.0-alpha.1",
+      "tag": "v1.0.0-alpha.1",
+      "source_revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "compatibility": {
+        "update_protocol": 1,
+        "engine_major": 1
+      },
+      "notes": "Test fixture only. Not a published release.",
+      "notes_url": "https://github.com/SuperReaper1999/Project-Judas/releases/tag/v1.0.0-alpha.1",
+      "artifacts": [
+        {
+          "name": "Judas-1.0.0-alpha.1-Linux-x86_64.tar.gz",
+          "platform": "Linux",
+          "architecture": "x86_64",
+          "bytes": 4,
+          "sha256": "9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08",
+          "url": "https://github.com/SuperReaper1999/Project-Judas/releases/download/v1.0.0-alpha.1/Judas-1.0.0-alpha.1-Linux-x86_64.tar.gz"
+        }
+      ]
+    },
+    "valid": true,
+    "offer": false
+  },
+  {
+    "name": "older version",
+    "manifest": {
+      "schema": 1,
+      "channel": "Alpha",
+      "version": "0.9.0-alpha.1",
+      "tag": "v0.9.0-alpha.1",
+      "source_revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "compatibility": {
+        "update_protocol": 1,
+        "engine_major": 1
+      },
+      "notes": "Test fixture only. Not a published release.",
+      "notes_url": "https://github.com/SuperReaper1999/Project-Judas/releases/tag/v0.9.0-alpha.1",
+      "artifacts": [
+        {
+          "name": "Judas-0.9.0-alpha.1-Linux-x86_64.tar.gz",
+          "platform": "Linux",
+          "architecture": "x86_64",
+          "bytes": 4,
+          "sha256": "9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08",
+          "url": "https://github.com/SuperReaper1999/Project-Judas/releases/download/v0.9.0-alpha.1/Judas-0.9.0-alpha.1-Linux-x86_64.tar.gz"
+        }
+      ]
+    },
+    "valid": false,
+    "offer": false
+  },
+  {
+    "name": "no target platform",
+    "manifest": {
+      "schema": 1,
+      "channel": "Alpha",
+      "version": "1.0.1-alpha.1",
+      "tag": "v1.0.1-alpha.1",
+      "source_revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "compatibility": {
+        "update_protocol": 1,
+        "engine_major": 1
+      },
+      "notes": "Test fixture only. Not a published release.",
+      "notes_url": "https://github.com/SuperReaper1999/Project-Judas/releases/tag/v1.0.1-alpha.1",
+      "artifacts": [
+        {
+          "name": "Judas-1.0.1-alpha.1-Linux-x86_64.tar.gz",
+          "platform": "Linux",
+          "architecture": "x86_64",
+          "bytes": 4,
+          "sha256": "9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08",
+          "url": "https://github.com/SuperReaper1999/Project-Judas/releases/download/v1.0.1-alpha.1/Judas-1.0.1-alpha.1-Linux-x86_64.tar.gz"
+        }
+      ]
+    },
+    "platform": "Windows",
+    "valid": true,
+    "offer": false
+  },
+  {
+    "name": "explicit Experimental opt in",
+    "manifest": {
+      "schema": 1,
+      "channel": "Experimental",
+      "version": "1.0.1-alpha.1",
+      "tag": "v1.0.1-alpha.1",
+      "source_revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "compatibility": {
+        "update_protocol": 1,
+        "engine_major": 1
+      },
+      "notes": "Test fixture only. Not a published release.",
+      "notes_url": "https://github.com/SuperReaper1999/Project-Judas/releases/tag/v1.0.1-alpha.1",
+      "artifacts": [
+        {
+          "name": "Judas-1.0.1-alpha.1-Linux-x86_64.tar.gz",
+          "platform": "Linux",
+          "architecture": "x86_64",
+          "bytes": 4,
+          "sha256": "9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08",
+          "url": "https://github.com/SuperReaper1999/Project-Judas/releases/download/v1.0.1-alpha.1/Judas-1.0.1-alpha.1-Linux-x86_64.tar.gz"
+        }
+      ]
+    },
+    "channel": "Experimental",
+    "valid": true,
+    "offer": true
+  },
+  {
+    "name": "different engine major is not an offered update",
+    "manifest": {
+      "schema": 1,
+      "channel": "Alpha",
+      "version": "2.0.0-alpha.1",
+      "tag": "v2.0.0-alpha.1",
+      "source_revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "compatibility": {
+        "update_protocol": 1,
+        "engine_major": 2
+      },
+      "notes": "Test fixture only. Not a published release.",
+      "notes_url": "https://github.com/SuperReaper1999/Project-Judas/releases/tag/v2.0.0-alpha.1",
+      "artifacts": [
+        {
+          "name": "Judas-2.0.0-alpha.1-Linux-x86_64.tar.gz",
+          "platform": "Linux",
+          "architecture": "x86_64",
+          "bytes": 4,
+          "sha256": "9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08",
+          "url": "https://github.com/SuperReaper1999/Project-Judas/releases/download/v2.0.0-alpha.1/Judas-2.0.0-alpha.1-Linux-x86_64.tar.gz"
+        }
+      ]
+    },
+    "valid": true,
+    "offer": false
+  },
+  {
+    "name": "wrong channel",
+    "manifest": {
+      "schema": 1,
+      "channel": "Experimental",
+      "version": "1.0.1-alpha.1",
+      "tag": "v1.0.1-alpha.1",
+      "source_revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "compatibility": {
+        "update_protocol": 1,
+        "engine_major": 1
+      },
+      "notes": "Test fixture only. Not a published release.",
+      "notes_url": "https://github.com/SuperReaper1999/Project-Judas/releases/tag/v1.0.1-alpha.1",
+      "artifacts": [
+        {
+          "name": "Judas-1.0.1-alpha.1-Linux-x86_64.tar.gz",
+          "platform": "Linux",
+          "architecture": "x86_64",
+          "bytes": 4,
+          "sha256": "9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08",
+          "url": "https://github.com/SuperReaper1999/Project-Judas/releases/download/v1.0.1-alpha.1/Judas-1.0.1-alpha.1-Linux-x86_64.tar.gz"
+        }
+      ]
+    },
+    "valid": false,
+    "offer": false
+  },
+  {
+    "name": "wrong schema",
+    "manifest": {
+      "schema": 2,
+      "channel": "Alpha",
+      "version": "1.0.1-alpha.1",
+      "tag": "v1.0.1-alpha.1",
+      "source_revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "compatibility": {
+        "update_protocol": 1,
+        "engine_major": 1
+      },
+      "notes": "Test fixture only. Not a published release.",
+      "notes_url": "https://github.com/SuperReaper1999/Project-Judas/releases/tag/v1.0.1-alpha.1",
+      "artifacts": [
+        {
+          "name": "Judas-1.0.1-alpha.1-Linux-x86_64.tar.gz",
+          "platform": "Linux",
+          "architecture": "x86_64",
+          "bytes": 4,
+          "sha256": "9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08",
+          "url": "https://github.com/SuperReaper1999/Project-Judas/releases/download/v1.0.1-alpha.1/Judas-1.0.1-alpha.1-Linux-x86_64.tar.gz"
+        }
+      ]
+    },
+    "valid": false,
+    "offer": false
+  },
+  {
+    "name": "boolean schema",
+    "manifest": {
+      "schema": true,
+      "channel": "Alpha",
+      "version": "1.0.1-alpha.1",
+      "tag": "v1.0.1-alpha.1",
+      "source_revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "compatibility": {
+        "update_protocol": 1,
+        "engine_major": 1
+      },
+      "notes": "Test fixture only. Not a published release.",
+      "notes_url": "https://github.com/SuperReaper1999/Project-Judas/releases/tag/v1.0.1-alpha.1",
+      "artifacts": [
+        {
+          "name": "Judas-1.0.1-alpha.1-Linux-x86_64.tar.gz",
+          "platform": "Linux",
+          "architecture": "x86_64",
+          "bytes": 4,
+          "sha256": "9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08",
+          "url": "https://github.com/SuperReaper1999/Project-Judas/releases/download/v1.0.1-alpha.1/Judas-1.0.1-alpha.1-Linux-x86_64.tar.gz"
+        }
+      ]
+    },
+    "valid": false,
+    "offer": false
+  },
+  {
+    "name": "invalid version",
+    "manifest": {
+      "schema": 1,
+      "channel": "Alpha",
+      "version": "01.0.1-alpha.1",
+      "tag": "v1.0.1-alpha.1",
+      "source_revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "compatibility": {
+        "update_protocol": 1,
+        "engine_major": 1
+      },
+      "notes": "Test fixture only. Not a published release.",
+      "notes_url": "https://github.com/SuperReaper1999/Project-Judas/releases/tag/v1.0.1-alpha.1",
+      "artifacts": [
+        {
+          "name": "Judas-1.0.1-alpha.1-Linux-x86_64.tar.gz",
+          "platform": "Linux",
+          "architecture": "x86_64",
+          "bytes": 4,
+          "sha256": "9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08",
+          "url": "https://github.com/SuperReaper1999/Project-Judas/releases/download/v1.0.1-alpha.1/Judas-1.0.1-alpha.1-Linux-x86_64.tar.gz"
+        }
+      ]
+    },
+    "valid": false,
+    "offer": false
+  },
+  {
+    "name": "wrong tag",
+    "manifest": {
+      "schema": 1,
+      "channel": "Alpha",
+      "version": "1.0.1-alpha.1",
+      "tag": "main",
+      "source_revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "compatibility": {
+        "update_protocol": 1,
+        "engine_major": 1
+      },
+      "notes": "Test fixture only. Not a published release.",
+      "notes_url": "https://github.com/SuperReaper1999/Project-Judas/releases/tag/v1.0.1-alpha.1",
+      "artifacts": [
+        {
+          "name": "Judas-1.0.1-alpha.1-Linux-x86_64.tar.gz",
+          "platform": "Linux",
+          "architecture": "x86_64",
+          "bytes": 4,
+          "sha256": "9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08",
+          "url": "https://github.com/SuperReaper1999/Project-Judas/releases/download/v1.0.1-alpha.1/Judas-1.0.1-alpha.1-Linux-x86_64.tar.gz"
+        }
+      ]
+    },
+    "valid": false,
+    "offer": false
+  },
+  {
+    "name": "missing provenance",
+    "manifest": {
+      "schema": 1,
+      "channel": "Alpha",
+      "version": "1.0.1-alpha.1",
+      "tag": "v1.0.1-alpha.1",
+      "compatibility": {
+        "update_protocol": 1,
+        "engine_major": 1
+      },
+      "notes": "Test fixture only. Not a published release.",
+      "notes_url": "https://github.com/SuperReaper1999/Project-Judas/releases/tag/v1.0.1-alpha.1",
+      "artifacts": [
+        {
+          "name": "Judas-1.0.1-alpha.1-Linux-x86_64.tar.gz",
+          "platform": "Linux",
+          "architecture": "x86_64",
+          "bytes": 4,
+          "sha256": "9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08",
+          "url": "https://github.com/SuperReaper1999/Project-Judas/releases/download/v1.0.1-alpha.1/Judas-1.0.1-alpha.1-Linux-x86_64.tar.gz"
+        }
+      ]
+    },
+    "valid": false,
+    "offer": false
+  },
+  {
+    "name": "invalid commit",
+    "manifest": {
+      "schema": 1,
+      "channel": "Alpha",
+      "version": "1.0.1-alpha.1",
+      "tag": "v1.0.1-alpha.1",
+      "source_revision": "dirty",
+      "compatibility": {
+        "update_protocol": 1,
+        "engine_major": 1
+      },
+      "notes": "Test fixture only. Not a published release.",
+      "notes_url": "https://github.com/SuperReaper1999/Project-Judas/releases/tag/v1.0.1-alpha.1",
+      "artifacts": [
+        {
+          "name": "Judas-1.0.1-alpha.1-Linux-x86_64.tar.gz",
+          "platform": "Linux",
+          "architecture": "x86_64",
+          "bytes": 4,
+          "sha256": "9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08",
+          "url": "https://github.com/SuperReaper1999/Project-Judas/releases/download/v1.0.1-alpha.1/Judas-1.0.1-alpha.1-Linux-x86_64.tar.gz"
+        }
+      ]
+    },
+    "valid": false,
+    "offer": false
+  },
+  {
+    "name": "unsupported protocol",
+    "manifest": {
+      "schema": 1,
+      "channel": "Alpha",
+      "version": "1.0.1-alpha.1",
+      "tag": "v1.0.1-alpha.1",
+      "source_revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "compatibility": {
+        "update_protocol": 2,
+        "engine_major": 1
+      },
+      "notes": "Test fixture only. Not a published release.",
+      "notes_url": "https://github.com/SuperReaper1999/Project-Judas/releases/tag/v1.0.1-alpha.1",
+      "artifacts": [
+        {
+          "name": "Judas-1.0.1-alpha.1-Linux-x86_64.tar.gz",
+          "platform": "Linux",
+          "architecture": "x86_64",
+          "bytes": 4,
+          "sha256": "9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08",
+          "url": "https://github.com/SuperReaper1999/Project-Judas/releases/download/v1.0.1-alpha.1/Judas-1.0.1-alpha.1-Linux-x86_64.tar.gz"
+        }
+      ]
+    },
+    "valid": false,
+    "offer": false
+  },
+  {
+    "name": "major mismatch",
+    "manifest": {
+      "schema": 1,
+      "channel": "Alpha",
+      "version": "1.0.1-alpha.1",
+      "tag": "v1.0.1-alpha.1",
+      "source_revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "compatibility": {
+        "update_protocol": 1,
+        "engine_major": 2
+      },
+      "notes": "Test fixture only. Not a published release.",
+      "notes_url": "https://github.com/SuperReaper1999/Project-Judas/releases/tag/v1.0.1-alpha.1",
+      "artifacts": [
+        {
+          "name": "Judas-1.0.1-alpha.1-Linux-x86_64.tar.gz",
+          "platform": "Linux",
+          "architecture": "x86_64",
+          "bytes": 4,
+          "sha256": "9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08",
+          "url": "https://github.com/SuperReaper1999/Project-Judas/releases/download/v1.0.1-alpha.1/Judas-1.0.1-alpha.1-Linux-x86_64.tar.gz"
+        }
+      ]
+    },
+    "valid": false,
+    "offer": false
+  },
+  {
+    "name": "untrusted notes",
+    "manifest": {
+      "schema": 1,
+      "channel": "Alpha",
+      "version": "1.0.1-alpha.1",
+      "tag": "v1.0.1-alpha.1",
+      "source_revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "compatibility": {
+        "update_protocol": 1,
+        "engine_major": 1
+      },
+      "notes": "Test fixture only. Not a published release.",
+      "notes_url": "https://evil.invalid/",
+      "artifacts": [
+        {
+          "name": "Judas-1.0.1-alpha.1-Linux-x86_64.tar.gz",
+          "platform": "Linux",
+          "architecture": "x86_64",
+          "bytes": 4,
+          "sha256": "9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08",
+          "url": "https://github.com/SuperReaper1999/Project-Judas/releases/download/v1.0.1-alpha.1/Judas-1.0.1-alpha.1-Linux-x86_64.tar.gz"
+        }
+      ]
+    },
+    "valid": false,
+    "offer": false
+  },
+  {
+    "name": "empty notes",
+    "manifest": {
+      "schema": 1,
+      "channel": "Alpha",
+      "version": "1.0.1-alpha.1",
+      "tag": "v1.0.1-alpha.1",
+      "source_revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "compatibility": {
+        "update_protocol": 1,
+        "engine_major": 1
+      },
+      "notes": "",
+      "notes_url": "https://github.com/SuperReaper1999/Project-Judas/releases/tag/v1.0.1-alpha.1",
+      "artifacts": [
+        {
+          "name": "Judas-1.0.1-alpha.1-Linux-x86_64.tar.gz",
+          "platform": "Linux",
+          "architecture": "x86_64",
+          "bytes": 4,
+          "sha256": "9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08",
+          "url": "https://github.com/SuperReaper1999/Project-Judas/releases/download/v1.0.1-alpha.1/Judas-1.0.1-alpha.1-Linux-x86_64.tar.gz"
+        }
+      ]
+    },
+    "valid": false,
+    "offer": false
+  },
+  {
+    "name": "unbounded notes",
+    "manifest": {
+      "schema": 1,
+      "channel": "Alpha",
+      "version": "1.0.1-alpha.1",
+      "tag": "v1.0.1-alpha.1",
+      "source_revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "compatibility": {
+        "update_protocol": 1,
+        "engine_major": 1
+      },
+      "notes": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+      "notes_url": "https://github.com/SuperReaper1999/Project-Judas/releases/tag/v1.0.1-alpha.1",
+      "artifacts": [
+        {
+          "name": "Judas-1.0.1-alpha.1-Linux-x86_64.tar.gz",
+          "platform": "Linux",
+          "architecture": "x86_64",
+          "bytes": 4,
+          "sha256": "9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08",
+          "url": "https://github.com/SuperReaper1999/Project-Judas/releases/download/v1.0.1-alpha.1/Judas-1.0.1-alpha.1-Linux-x86_64.tar.gz"
+        }
+      ]
+    },
+    "valid": false,
+    "offer": false
+  },
+  {
+    "name": "no artifacts",
+    "manifest": {
+      "schema": 1,
+      "channel": "Alpha",
+      "version": "1.0.1-alpha.1",
+      "tag": "v1.0.1-alpha.1",
+      "source_revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "compatibility": {
+        "update_protocol": 1,
+        "engine_major": 1
+      },
+      "notes": "Test fixture only. Not a published release.",
+      "notes_url": "https://github.com/SuperReaper1999/Project-Judas/releases/tag/v1.0.1-alpha.1",
+      "artifacts": []
+    },
+    "valid": false,
+    "offer": false
+  },
+  {
+    "name": "too many artifacts",
+    "manifest": {
+      "schema": 1,
+      "channel": "Alpha",
+      "version": "1.0.1-alpha.1",
+      "tag": "v1.0.1-alpha.1",
+      "source_revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "compatibility": {
+        "update_protocol": 1,
+        "engine_major": 1
+      },
+      "notes": "Test fixture only. Not a published release.",
+      "notes_url": "https://github.com/SuperReaper1999/Project-Judas/releases/tag/v1.0.1-alpha.1",
+      "artifacts": [
+        {
+          "name": "Judas-1.0.1-alpha.1-Linux-x86_64.tar.gz",
+          "platform": "Linux",
+          "architecture": "x86_64",
+          "bytes": 4,
+          "sha256": "9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08",
+          "url": "https://github.com/SuperReaper1999/Project-Judas/releases/download/v1.0.1-alpha.1/Judas-1.0.1-alpha.1-Linux-x86_64.tar.gz"
+        },
+        {
+          "name": "Judas-1.0.1-alpha.1-Linux-x86_64.tar.gz",
+          "platform": "Linux",
+          "architecture": "x86_64",
+          "bytes": 4,
+          "sha256": "9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08",
+          "url": "https://github.com/SuperReaper1999/Project-Judas/releases/download/v1.0.1-alpha.1/Judas-1.0.1-alpha.1-Linux-x86_64.tar.gz"
+        },
+        {
+          "name": "Judas-1.0.1-alpha.1-Linux-x86_64.tar.gz",
+          "platform": "Linux",
+          "architecture": "x86_64",
+          "bytes": 4,
+          "sha256": "9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08",
+          "url": "https://github.com/SuperReaper1999/Project-Judas/releases/download/v1.0.1-alpha.1/Judas-1.0.1-alpha.1-Linux-x86_64.tar.gz"
+        },
+        {
+          "name": "Judas-1.0.1-alpha.1-Linux-x86_64.tar.gz",
+          "platform": "Linux",
+          "architecture": "x86_64",
+          "bytes": 4,
+          "sha256": "9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08",
+          "url": "https://github.com/SuperReaper1999/Project-Judas/releases/download/v1.0.1-alpha.1/Judas-1.0.1-alpha.1-Linux-x86_64.tar.gz"
+        },
+        {
+          "name": "Judas-1.0.1-alpha.1-Linux-x86_64.tar.gz",
+          "platform": "Linux",
+          "architecture": "x86_64",
+          "bytes": 4,
+          "sha256": "9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08",
+          "url": "https://github.com/SuperReaper1999/Project-Judas/releases/download/v1.0.1-alpha.1/Judas-1.0.1-alpha.1-Linux-x86_64.tar.gz"
+        },
+        {
+          "name": "Judas-1.0.1-alpha.1-Linux-x86_64.tar.gz",
+          "platform": "Linux",
+          "architecture": "x86_64",
+          "bytes": 4,
+          "sha256": "9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08",
+          "url": "https://github.com/SuperReaper1999/Project-Judas/releases/download/v1.0.1-alpha.1/Judas-1.0.1-alpha.1-Linux-x86_64.tar.gz"
+        },
+        {
+          "name": "Judas-1.0.1-alpha.1-Linux-x86_64.tar.gz",
+          "platform": "Linux",
+          "architecture": "x86_64",
+          "bytes": 4,
+          "sha256": "9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08",
+          "url": "https://github.com/SuperReaper1999/Project-Judas/releases/download/v1.0.1-alpha.1/Judas-1.0.1-alpha.1-Linux-x86_64.tar.gz"
+        },
+        {
+          "name": "Judas-1.0.1-alpha.1-Linux-x86_64.tar.gz",
+          "platform": "Linux",
+          "architecture": "x86_64",
+          "bytes": 4,
+          "sha256": "9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08",
+          "url": "https://github.com/SuperReaper1999/Project-Judas/releases/download/v1.0.1-alpha.1/Judas-1.0.1-alpha.1-Linux-x86_64.tar.gz"
+        },
+        {
+          "name": "Judas-1.0.1-alpha.1-Linux-x86_64.tar.gz",
+          "platform": "Linux",
+          "architecture": "x86_64",
+          "bytes": 4,
+          "sha256": "9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08",
+          "url": "https://github.com/SuperReaper1999/Project-Judas/releases/download/v1.0.1-alpha.1/Judas-1.0.1-alpha.1-Linux-x86_64.tar.gz"
+        },
+        {
+          "name": "Judas-1.0.1-alpha.1-Linux-x86_64.tar.gz",
+          "platform": "Linux",
+          "architecture": "x86_64",
+          "bytes": 4,
+          "sha256": "9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08",
+          "url": "https://github.com/SuperReaper1999/Project-Judas/releases/download/v1.0.1-alpha.1/Judas-1.0.1-alpha.1-Linux-x86_64.tar.gz"
+        },
+        {
+          "name": "Judas-1.0.1-alpha.1-Linux-x86_64.tar.gz",
+          "platform": "Linux",
+          "architecture": "x86_64",
+          "bytes": 4,
+          "sha256": "9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08",
+          "url": "https://github.com/SuperReaper1999/Project-Judas/releases/download/v1.0.1-alpha.1/Judas-1.0.1-alpha.1-Linux-x86_64.tar.gz"
+        },
+        {
+          "name": "Judas-1.0.1-alpha.1-Linux-x86_64.tar.gz",
+          "platform": "Linux",
+          "architecture": "x86_64",
+          "bytes": 4,
+          "sha256": "9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08",
+          "url": "https://github.com/SuperReaper1999/Project-Judas/releases/download/v1.0.1-alpha.1/Judas-1.0.1-alpha.1-Linux-x86_64.tar.gz"
+        },
+        {
+          "name": "Judas-1.0.1-alpha.1-Linux-x86_64.tar.gz",
+          "platform": "Linux",
+          "architecture": "x86_64",
+          "bytes": 4,
+          "sha256": "9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08",
+          "url": "https://github.com/SuperReaper1999/Project-Judas/releases/download/v1.0.1-alpha.1/Judas-1.0.1-alpha.1-Linux-x86_64.tar.gz"
+        },
+        {
+          "name": "Judas-1.0.1-alpha.1-Linux-x86_64.tar.gz",
+          "platform": "Linux",
+          "architecture": "x86_64",
+          "bytes": 4,
+          "sha256": "9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08",
+          "url": "https://github.com/SuperReaper1999/Project-Judas/releases/download/v1.0.1-alpha.1/Judas-1.0.1-alpha.1-Linux-x86_64.tar.gz"
+        },
+        {
+          "name": "Judas-1.0.1-alpha.1-Linux-x86_64.tar.gz",
+          "platform": "Linux",
+          "architecture": "x86_64",
+          "bytes": 4,
+          "sha256": "9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08",
+          "url": "https://github.com/SuperReaper1999/Project-Judas/releases/download/v1.0.1-alpha.1/Judas-1.0.1-alpha.1-Linux-x86_64.tar.gz"
+        },
+        {
+          "name": "Judas-1.0.1-alpha.1-Linux-x86_64.tar.gz",
+          "platform": "Linux",
+          "architecture": "x86_64",
+          "bytes": 4,
+          "sha256": "9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08",
+          "url": "https://github.com/SuperReaper1999/Project-Judas/releases/download/v1.0.1-alpha.1/Judas-1.0.1-alpha.1-Linux-x86_64.tar.gz"
+        },
+        {
+          "name": "Judas-1.0.1-alpha.1-Linux-x86_64.tar.gz",
+          "platform": "Linux",
+          "architecture": "x86_64",
+          "bytes": 4,
+          "sha256": "9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08",
+          "url": "https://github.com/SuperReaper1999/Project-Judas/releases/download/v1.0.1-alpha.1/Judas-1.0.1-alpha.1-Linux-x86_64.tar.gz"
+        },
+        {
+          "name": "Judas-1.0.1-alpha.1-Linux-x86_64.tar.gz",
+          "platform": "Linux",
+          "architecture": "x86_64",
+          "bytes": 4,
+          "sha256": "9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08",
+          "url": "https://github.com/SuperReaper1999/Project-Judas/releases/download/v1.0.1-alpha.1/Judas-1.0.1-alpha.1-Linux-x86_64.tar.gz"
+        },
+        {
+          "name": "Judas-1.0.1-alpha.1-Linux-x86_64.tar.gz",
+          "platform": "Linux",
+          "architecture": "x86_64",
+          "bytes": 4,
+          "sha256": "9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08",
+          "url": "https://github.com/SuperReaper1999/Project-Judas/releases/download/v1.0.1-alpha.1/Judas-1.0.1-alpha.1-Linux-x86_64.tar.gz"
+        },
+        {
+          "name": "Judas-1.0.1-alpha.1-Linux-x86_64.tar.gz",
+          "platform": "Linux",
+          "architecture": "x86_64",
+          "bytes": 4,
+          "sha256": "9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08",
+          "url": "https://github.com/SuperReaper1999/Project-Judas/releases/download/v1.0.1-alpha.1/Judas-1.0.1-alpha.1-Linux-x86_64.tar.gz"
+        },
+        {
+          "name": "Judas-1.0.1-alpha.1-Linux-x86_64.tar.gz",
+          "platform": "Linux",
+          "architecture": "x86_64",
+          "bytes": 4,
+          "sha256": "9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08",
+          "url": "https://github.com/SuperReaper1999/Project-Judas/releases/download/v1.0.1-alpha.1/Judas-1.0.1-alpha.1-Linux-x86_64.tar.gz"
+        },
+        {
+          "name": "Judas-1.0.1-alpha.1-Linux-x86_64.tar.gz",
+          "platform": "Linux",
+          "architecture": "x86_64",
+          "bytes": 4,
+          "sha256": "9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08",
+          "url": "https://github.com/SuperReaper1999/Project-Judas/releases/download/v1.0.1-alpha.1/Judas-1.0.1-alpha.1-Linux-x86_64.tar.gz"
+        },
+        {
+          "name": "Judas-1.0.1-alpha.1-Linux-x86_64.tar.gz",
+          "platform": "Linux",
+          "architecture": "x86_64",
+          "bytes": 4,
+          "sha256": "9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08",
+          "url": "https://github.com/SuperReaper1999/Project-Judas/releases/download/v1.0.1-alpha.1/Judas-1.0.1-alpha.1-Linux-x86_64.tar.gz"
+        },
+        {
+          "name": "Judas-1.0.1-alpha.1-Linux-x86_64.tar.gz",
+          "platform": "Linux",
+          "architecture": "x86_64",
+          "bytes": 4,
+          "sha256": "9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08",
+          "url": "https://github.com/SuperReaper1999/Project-Judas/releases/download/v1.0.1-alpha.1/Judas-1.0.1-alpha.1-Linux-x86_64.tar.gz"
+        },
+        {
+          "name": "Judas-1.0.1-alpha.1-Linux-x86_64.tar.gz",
+          "platform": "Linux",
+          "architecture": "x86_64",
+          "bytes": 4,
+          "sha256": "9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08",
+          "url": "https://github.com/SuperReaper1999/Project-Judas/releases/download/v1.0.1-alpha.1/Judas-1.0.1-alpha.1-Linux-x86_64.tar.gz"
+        },
+        {
+          "name": "Judas-1.0.1-alpha.1-Linux-x86_64.tar.gz",
+          "platform": "Linux",
+          "architecture": "x86_64",
+          "bytes": 4,
+          "sha256": "9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08",
+          "url": "https://github.com/SuperReaper1999/Project-Judas/releases/download/v1.0.1-alpha.1/Judas-1.0.1-alpha.1-Linux-x86_64.tar.gz"
+        },
+        {
+          "name": "Judas-1.0.1-alpha.1-Linux-x86_64.tar.gz",
+          "platform": "Linux",
+          "architecture": "x86_64",
+          "bytes": 4,
+          "sha256": "9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08",
+          "url": "https://github.com/SuperReaper1999/Project-Judas/releases/download/v1.0.1-alpha.1/Judas-1.0.1-alpha.1-Linux-x86_64.tar.gz"
+        },
+        {
+          "name": "Judas-1.0.1-alpha.1-Linux-x86_64.tar.gz",
+          "platform": "Linux",
+          "architecture": "x86_64",
+          "bytes": 4,
+          "sha256": "9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08",
+          "url": "https://github.com/SuperReaper1999/Project-Judas/releases/download/v1.0.1-alpha.1/Judas-1.0.1-alpha.1-Linux-x86_64.tar.gz"
+        },
+        {
+          "name": "Judas-1.0.1-alpha.1-Linux-x86_64.tar.gz",
+          "platform": "Linux",
+          "architecture": "x86_64",
+          "bytes": 4,
+          "sha256": "9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08",
+          "url": "https://github.com/SuperReaper1999/Project-Judas/releases/download/v1.0.1-alpha.1/Judas-1.0.1-alpha.1-Linux-x86_64.tar.gz"
+        },
+        {
+          "name": "Judas-1.0.1-alpha.1-Linux-x86_64.tar.gz",
+          "platform": "Linux",
+          "architecture": "x86_64",
+          "bytes": 4,
+          "sha256": "9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08",
+          "url": "https://github.com/SuperReaper1999/Project-Judas/releases/download/v1.0.1-alpha.1/Judas-1.0.1-alpha.1-Linux-x86_64.tar.gz"
+        },
+        {
+          "name": "Judas-1.0.1-alpha.1-Linux-x86_64.tar.gz",
+          "platform": "Linux",
+          "architecture": "x86_64",
+          "bytes": 4,
+          "sha256": "9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08",
+          "url": "https://github.com/SuperReaper1999/Project-Judas/releases/download/v1.0.1-alpha.1/Judas-1.0.1-alpha.1-Linux-x86_64.tar.gz"
+        },
+        {
+          "name": "Judas-1.0.1-alpha.1-Linux-x86_64.tar.gz",
+          "platform": "Linux",
+          "architecture": "x86_64",
+          "bytes": 4,
+          "sha256": "9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08",
+          "url": "https://github.com/SuperReaper1999/Project-Judas/releases/download/v1.0.1-alpha.1/Judas-1.0.1-alpha.1-Linux-x86_64.tar.gz"
+        },
+        {
+          "name": "Judas-1.0.1-alpha.1-Linux-x86_64.tar.gz",
+          "platform": "Linux",
+          "architecture": "x86_64",
+          "bytes": 4,
+          "sha256": "9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08",
+          "url": "https://github.com/SuperReaper1999/Project-Judas/releases/download/v1.0.1-alpha.1/Judas-1.0.1-alpha.1-Linux-x86_64.tar.gz"
+        }
+      ]
+    },
+    "valid": false,
+    "offer": false
+  },
+  {
+    "name": "duplicate artifact",
+    "manifest": {
+      "schema": 1,
+      "channel": "Alpha",
+      "version": "1.0.1-alpha.1",
+      "tag": "v1.0.1-alpha.1",
+      "source_revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "compatibility": {
+        "update_protocol": 1,
+        "engine_major": 1
+      },
+      "notes": "Test fixture only. Not a published release.",
+      "notes_url": "https://github.com/SuperReaper1999/Project-Judas/releases/tag/v1.0.1-alpha.1",
+      "artifacts": [
+        {
+          "name": "Judas-1.0.1-alpha.1-Linux-x86_64.tar.gz",
+          "platform": "Linux",
+          "architecture": "x86_64",
+          "bytes": 4,
+          "sha256": "9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08",
+          "url": "https://github.com/SuperReaper1999/Project-Judas/releases/download/v1.0.1-alpha.1/Judas-1.0.1-alpha.1-Linux-x86_64.tar.gz"
+        },
+        {
+          "name": "Judas-1.0.1-alpha.1-Linux-x86_64.tar.gz",
+          "platform": "Linux",
+          "architecture": "x86_64",
+          "bytes": 4,
+          "sha256": "9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08",
+          "url": "https://github.com/SuperReaper1999/Project-Judas/releases/download/v1.0.1-alpha.1/Judas-1.0.1-alpha.1-Linux-x86_64.tar.gz"
+        }
+      ]
+    },
+    "valid": false,
+    "offer": false
+  },
+  {
+    "name": "untrusted download",
+    "manifest": {
+      "schema": 1,
+      "channel": "Alpha",
+      "version": "1.0.1-alpha.1",
+      "tag": "v1.0.1-alpha.1",
+      "source_revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "compatibility": {
+        "update_protocol": 1,
+        "engine_major": 1
+      },
+      "notes": "Test fixture only. Not a published release.",
+      "notes_url": "https://github.com/SuperReaper1999/Project-Judas/releases/tag/v1.0.1-alpha.1",
+      "artifacts": [
+        {
+          "name": "Judas-1.0.1-alpha.1-Linux-x86_64.tar.gz",
+          "platform": "Linux",
+          "architecture": "x86_64",
+          "bytes": 4,
+          "sha256": "9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08",
+          "url": "file:///tmp/bad"
+        }
+      ]
+    },
+    "valid": false,
+    "offer": false
+  },
+  {
+    "name": "traversal filename",
+    "manifest": {
+      "schema": 1,
+      "channel": "Alpha",
+      "version": "1.0.1-alpha.1",
+      "tag": "v1.0.1-alpha.1",
+      "source_revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "compatibility": {
+        "update_protocol": 1,
+        "engine_major": 1
+      },
+      "notes": "Test fixture only. Not a published release.",
+      "notes_url": "https://github.com/SuperReaper1999/Project-Judas/releases/tag/v1.0.1-alpha.1",
+      "artifacts": [
+        {
+          "name": "../bad",
+          "platform": "Linux",
+          "architecture": "x86_64",
+          "bytes": 4,
+          "sha256": "9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08",
+          "url": "https://github.com/SuperReaper1999/Project-Judas/releases/download/v1.0.1-alpha.1/Judas-1.0.1-alpha.1-Linux-x86_64.tar.gz"
+        }
+      ]
+    },
+    "valid": false,
+    "offer": false
+  },
+  {
+    "name": "bad checksum",
+    "manifest": {
+      "schema": 1,
+      "channel": "Alpha",
+      "version": "1.0.1-alpha.1",
+      "tag": "v1.0.1-alpha.1",
+      "source_revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "compatibility": {
+        "update_protocol": 1,
+        "engine_major": 1
+      },
+      "notes": "Test fixture only. Not a published release.",
+      "notes_url": "https://github.com/SuperReaper1999/Project-Judas/releases/tag/v1.0.1-alpha.1",
+      "artifacts": [
+        {
+          "name": "Judas-1.0.1-alpha.1-Linux-x86_64.tar.gz",
+          "platform": "Linux",
+          "architecture": "x86_64",
+          "bytes": 4,
+          "sha256": "0",
+          "url": "https://github.com/SuperReaper1999/Project-Judas/releases/download/v1.0.1-alpha.1/Judas-1.0.1-alpha.1-Linux-x86_64.tar.gz"
+        }
+      ]
+    },
+    "valid": false,
+    "offer": false
+  },
+  {
+    "name": "zero size",
+    "manifest": {
+      "schema": 1,
+      "channel": "Alpha",
+      "version": "1.0.1-alpha.1",
+      "tag": "v1.0.1-alpha.1",
+      "source_revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "compatibility": {
+        "update_protocol": 1,
+        "engine_major": 1
+      },
+      "notes": "Test fixture only. Not a published release.",
+      "notes_url": "https://github.com/SuperReaper1999/Project-Judas/releases/tag/v1.0.1-alpha.1",
+      "artifacts": [
+        {
+          "name": "Judas-1.0.1-alpha.1-Linux-x86_64.tar.gz",
+          "platform": "Linux",
+          "architecture": "x86_64",
+          "bytes": 0,
+          "sha256": "9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08",
+          "url": "https://github.com/SuperReaper1999/Project-Judas/releases/download/v1.0.1-alpha.1/Judas-1.0.1-alpha.1-Linux-x86_64.tar.gz"
+        }
+      ]
+    },
+    "valid": false,
+    "offer": false
+  },
+  {
+    "name": "negative size",
+    "manifest": {
+      "schema": 1,
+      "channel": "Alpha",
+      "version": "1.0.1-alpha.1",
+      "tag": "v1.0.1-alpha.1",
+      "source_revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "compatibility": {
+        "update_protocol": 1,
+        "engine_major": 1
+      },
+      "notes": "Test fixture only. Not a published release.",
+      "notes_url": "https://github.com/SuperReaper1999/Project-Judas/releases/tag/v1.0.1-alpha.1",
+      "artifacts": [
+        {
+          "name": "Judas-1.0.1-alpha.1-Linux-x86_64.tar.gz",
+          "platform": "Linux",
+          "architecture": "x86_64",
+          "bytes": -1,
+          "sha256": "9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08",
+          "url": "https://github.com/SuperReaper1999/Project-Judas/releases/download/v1.0.1-alpha.1/Judas-1.0.1-alpha.1-Linux-x86_64.tar.gz"
+        }
+      ]
+    },
+    "valid": false,
+    "offer": false
+  },
+  {
+    "name": "boolean size",
+    "manifest": {
+      "schema": 1,
+      "channel": "Alpha",
+      "version": "1.0.1-alpha.1",
+      "tag": "v1.0.1-alpha.1",
+      "source_revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "compatibility": {
+        "update_protocol": 1,
+        "engine_major": 1
+      },
+      "notes": "Test fixture only. Not a published release.",
+      "notes_url": "https://github.com/SuperReaper1999/Project-Judas/releases/tag/v1.0.1-alpha.1",
+      "artifacts": [
+        {
+          "name": "Judas-1.0.1-alpha.1-Linux-x86_64.tar.gz",
+          "platform": "Linux",
+          "architecture": "x86_64",
+          "bytes": true,
+          "sha256": "9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08",
+          "url": "https://github.com/SuperReaper1999/Project-Judas/releases/download/v1.0.1-alpha.1/Judas-1.0.1-alpha.1-Linux-x86_64.tar.gz"
+        }
+      ]
+    },
+    "valid": false,
+    "offer": false
+  },
+  {
+    "name": "excessive size",
+    "manifest": {
+      "schema": 1,
+      "channel": "Alpha",
+      "version": "1.0.1-alpha.1",
+      "tag": "v1.0.1-alpha.1",
+      "source_revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "compatibility": {
+        "update_protocol": 1,
+        "engine_major": 1
+      },
+      "notes": "Test fixture only. Not a published release.",
+      "notes_url": "https://github.com/SuperReaper1999/Project-Judas/releases/tag/v1.0.1-alpha.1",
+      "artifacts": [
+        {
+          "name": "Judas-1.0.1-alpha.1-Linux-x86_64.tar.gz",
+          "platform": "Linux",
+          "architecture": "x86_64",
+          "bytes": 107374182401,
+          "sha256": "9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08",
+          "url": "https://github.com/SuperReaper1999/Project-Judas/releases/download/v1.0.1-alpha.1/Judas-1.0.1-alpha.1-Linux-x86_64.tar.gz"
+        }
+      ]
+    },
+    "valid": false,
+    "offer": false
+  },
+  {
+    "name": "unknown platform",
+    "manifest": {
+      "schema": 1,
+      "channel": "Alpha",
+      "version": "1.0.1-alpha.1",
+      "tag": "v1.0.1-alpha.1",
+      "source_revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "compatibility": {
+        "update_protocol": 1,
+        "engine_major": 1
+      },
+      "notes": "Test fixture only. Not a published release.",
+      "notes_url": "https://github.com/SuperReaper1999/Project-Judas/releases/tag/v1.0.1-alpha.1",
+      "artifacts": [
+        {
+          "name": "Judas-1.0.1-alpha.1-Linux-x86_64.tar.gz",
+          "platform": "Android",
+          "architecture": "x86_64",
+          "bytes": 4,
+          "sha256": "9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08",
+          "url": "https://github.com/SuperReaper1999/Project-Judas/releases/download/v1.0.1-alpha.1/Judas-1.0.1-alpha.1-Linux-x86_64.tar.gz"
+        }
+      ]
+    },
+    "valid": false,
+    "offer": false
+  },
+  {
+    "name": "wrong architecture",
+    "manifest": {
+      "schema": 1,
+      "channel": "Alpha",
+      "version": "1.0.1-alpha.1",
+      "tag": "v1.0.1-alpha.1",
+      "source_revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "compatibility": {
+        "update_protocol": 1,
+        "engine_major": 1
+      },
+      "notes": "Test fixture only. Not a published release.",
+      "notes_url": "https://github.com/SuperReaper1999/Project-Judas/releases/tag/v1.0.1-alpha.1",
+      "artifacts": [
+        {
+          "name": "Judas-1.0.1-alpha.1-Linux-x86_64.tar.gz",
+          "platform": "Linux",
+          "architecture": "unknown",
+          "bytes": 4,
+          "sha256": "9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08",
+          "url": "https://github.com/SuperReaper1999/Project-Judas/releases/download/v1.0.1-alpha.1/Judas-1.0.1-alpha.1-Linux-x86_64.tar.gz"
+        }
+      ]
+    },
+    "valid": false,
+    "offer": false
+  },
+  {
+    "name": "Stable maturity 1.0.1",
+    "manifest": {
+      "schema": 1,
+      "channel": "Stable",
+      "version": "1.0.1",
+      "tag": "v1.0.1",
+      "source_revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "compatibility": {
+        "update_protocol": 1,
+        "engine_major": 1
+      },
+      "notes": "Test fixture only. Not a published release.",
+      "notes_url": "https://github.com/SuperReaper1999/Project-Judas/releases/tag/v1.0.1",
+      "artifacts": [
+        {
+          "name": "Judas-1.0.1-Linux-x86_64.tar.gz",
+          "platform": "Linux",
+          "architecture": "x86_64",
+          "bytes": 4,
+          "sha256": "9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08",
+          "url": "https://github.com/SuperReaper1999/Project-Judas/releases/download/v1.0.1/Judas-1.0.1-Linux-x86_64.tar.gz"
+        }
+      ]
+    },
+    "channel": "Stable",
+    "valid": true,
+    "offer": true
+  },
+  {
+    "name": "Stable maturity 1.0.1-alpha.1",
+    "manifest": {
+      "schema": 1,
+      "channel": "Stable",
+      "version": "1.0.1-alpha.1",
+      "tag": "v1.0.1-alpha.1",
+      "source_revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "compatibility": {
+        "update_protocol": 1,
+        "engine_major": 1
+      },
+      "notes": "Test fixture only. Not a published release.",
+      "notes_url": "https://github.com/SuperReaper1999/Project-Judas/releases/tag/v1.0.1-alpha.1",
+      "artifacts": [
+        {
+          "name": "Judas-1.0.1-alpha.1-Linux-x86_64.tar.gz",
+          "platform": "Linux",
+          "architecture": "x86_64",
+          "bytes": 4,
+          "sha256": "9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08",
+          "url": "https://github.com/SuperReaper1999/Project-Judas/releases/download/v1.0.1-alpha.1/Judas-1.0.1-alpha.1-Linux-x86_64.tar.gz"
+        }
+      ]
+    },
+    "channel": "Stable",
+    "valid": false,
+    "offer": false
+  },
+  {
+    "name": "Beta maturity 1.0.1-beta.1",
+    "manifest": {
+      "schema": 1,
+      "channel": "Beta",
+      "version": "1.0.1-beta.1",
+      "tag": "v1.0.1-beta.1",
+      "source_revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "compatibility": {
+        "update_protocol": 1,
+        "engine_major": 1
+      },
+      "notes": "Test fixture only. Not a published release.",
+      "notes_url": "https://github.com/SuperReaper1999/Project-Judas/releases/tag/v1.0.1-beta.1",
+      "artifacts": [
+        {
+          "name": "Judas-1.0.1-beta.1-Linux-x86_64.tar.gz",
+          "platform": "Linux",
+          "architecture": "x86_64",
+          "bytes": 4,
+          "sha256": "9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08",
+          "url": "https://github.com/SuperReaper1999/Project-Judas/releases/download/v1.0.1-beta.1/Judas-1.0.1-beta.1-Linux-x86_64.tar.gz"
+        }
+      ]
+    },
+    "channel": "Beta",
+    "valid": true,
+    "offer": true
+  },
+  {
+    "name": "Beta maturity 1.0.1-alpha.1",
+    "manifest": {
+      "schema": 1,
+      "channel": "Beta",
+      "version": "1.0.1-alpha.1",
+      "tag": "v1.0.1-alpha.1",
+      "source_revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "compatibility": {
+        "update_protocol": 1,
+        "engine_major": 1
+      },
+      "notes": "Test fixture only. Not a published release.",
+      "notes_url": "https://github.com/SuperReaper1999/Project-Judas/releases/tag/v1.0.1-alpha.1",
+      "artifacts": [
+        {
+          "name": "Judas-1.0.1-alpha.1-Linux-x86_64.tar.gz",
+          "platform": "Linux",
+          "architecture": "x86_64",
+          "bytes": 4,
+          "sha256": "9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08",
+          "url": "https://github.com/SuperReaper1999/Project-Judas/releases/download/v1.0.1-alpha.1/Judas-1.0.1-alpha.1-Linux-x86_64.tar.gz"
+        }
+      ]
+    },
+    "channel": "Beta",
+    "valid": false,
+    "offer": false
+  }
+]

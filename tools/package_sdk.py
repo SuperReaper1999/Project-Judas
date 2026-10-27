@@ -50,7 +50,7 @@ def validate_identity(value, release=False, origin="build identity"):
         raise ValueError(f"Invalid build identity {origin}; missing {sorted(missing)}")
     if any(not isinstance(value[field], str) for field in IDENTITY_FIELDS if field not in ("schema", "source_dirty", "source_untracked_count")):
         raise ValueError("Build identity fields must use their declared string/Boolean types")
-    if value["channel"] not in ("main", "Experimental", "Local"):
+    if value["channel"] not in ("Alpha", "Beta", "Experimental", "Stable", "Local"):
         raise ValueError("Unknown build channel")
     if not isinstance(value["source_dirty"], bool):
         raise ValueError("Build identity source_dirty must be Boolean")
@@ -64,7 +64,9 @@ def validate_identity(value, release=False, origin="build identity"):
                     not re.fullmatch(r"[0-9a-f]{40}", value["source_revision"]) or
                     not re.fullmatch(r"[0-9a-f]{40}", value["source_tree"]) or
                     not re.fullmatch(r"[0-9a-f]{64}", value["source_fingerprint"])):
-        raise ValueError("Release SDK requires clean Git/archive provenance with no untracked build inputs, Release configuration and main/Experimental channel; checkpoint inputs or build a verified source archive")
+        raise ValueError("Release SDK requires clean Git/archive provenance with no untracked build inputs, Release configuration and Alpha/Beta/Experimental/Stable channel; checkpoint inputs or build a verified source archive")
+    if release and value["channel"] in ("Alpha", "Beta", "Stable") and value["maturity"] != value["channel"].lower():
+        raise ValueError("Build maturity disagrees with release channel; Alpha is not Stable")
     return value
 
 

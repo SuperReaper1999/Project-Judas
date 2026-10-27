@@ -1,4 +1,5 @@
 #include "ScriptSystem.h"
+#include "BuildIdentity.h"
 #include "RuntimeWorld.h"
 #include "ResourceManager.h"
 #include "SceneSerialization.h"
@@ -103,6 +104,14 @@ fixedUpdate(){this.entity.applyImpulse({x:1,y:0,z:0});this.entity.applyForce({x:
     RuntimeWorld orderWorld;orderWorld.Build(orderScene,&resources,error);orderWorld.UpdateScripts(&input,.01f);auto orderedStates=orderWorld.Scripts()->Capture();
     Check(orderedStates[0].slot==1&&orderedStates[0].json.find("\"order\":2")!=std::string::npos&&orderedStates[1].json.find("\"order\":1")!=std::string::npos,"authored slot order and shared session module caching");orderWorld.Destroy();
     Check(ScriptSystem::Inspect(db,ordered.id,schema,error),"no-world inspector reads code without constructing gameplay instances");
+    std::ofstream(root/"Assets/version.js") << "import {engine} from 'judas';export default class {constructor(){const info=engine.buildInfo;let frozen=false;try{info.version='wrong'}catch{frozen=true}this.state={version:info.version,revision:info.source_revision,frozen,unchanged:engine.buildInfo.version===info.version};}}";
+    AssetRecord versionRecord;db.Track(fs::absolute(root/"Assets/version.js").string(),versionRecord,error);
+    Scene versionScene;versionScene.CreateObject("version reader").scripts={{1,versionRecord.id,true,"{}"}};
+    RuntimeWorld versionWorld;Check(versionWorld.Build(versionScene,&resources,error),"build version API consumer");
+    versionWorld.UpdateScripts(&input,.01f);auto versionStates=versionWorld.Scripts()->Capture();
+    Check(versionStates.size()==1&&versionStates[0].json.find(GetBuildIdentity().version)!=std::string::npos&&versionStates[0].json.find(GetBuildIdentity().sourceRevision)!=std::string::npos,"JudasJS reads actual embedded version and exact source revision");
+    Check(versionStates.size()==1&&versionStates[0].json.find("\"frozen\":true")!=std::string::npos&&versionStates[0].json.find("\"unchanged\":true")!=std::string::npos,"script cannot mutate engine build provenance");
+    versionWorld.Destroy();
     hostile.Destroy();world.Destroy();restored.Destroy();changed.Destroy();resources.Shutdown();
     std::printf("SUMMARY %d checks %d failures\n",checks,failures);return failures?1:0;
 }

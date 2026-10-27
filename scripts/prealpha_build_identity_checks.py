@@ -60,7 +60,7 @@ def main():
         unknown = configure("unknown-source", fixture)
         assert unknown["source_origin"] == "unknown" and unknown["source_revision"] == "unknown"
         assert unknown["channel"] == "Local" and unknown["source_dirty"] is True
-        configure("invalid-channel", fixture, "-DJUDAS_BUILD_CHANNEL=Alpha", succeeds=False)
+        configure("invalid-channel", fixture, "-DJUDAS_BUILD_CHANNEL=Unknown", succeeds=False)
         configure("invalid-version", fixture, "-DJUDAS_ENGINE_VERSION=misleading-version", succeeds=False)
         archive = {"schema": 1, "revision": "a" * 40, "tree": "b" * 40,
                    "source_fingerprint": "c" * 64, "source_dirty": False, "channel": "Experimental"}
@@ -76,8 +76,8 @@ def main():
         assert restored["source_dirty"] is False and restored["channel"] == "Experimental"
         absent_git = configure("archive-without-git-tool", fixture, "-Djudas_git=/not-an-installed-git")
         assert absent_git["source_origin"] == "archive" and absent_git["source_dirty"] is False
-        main_channel = configure("independent-main", fixture, "-DJUDAS_BUILD_CHANNEL=main")
-        assert main_channel["channel"] == "main" and main_channel["source_revision"] == restored["source_revision"]
+        main_channel = configure("independent-main", fixture, "-DJUDAS_BUILD_CHANNEL=Alpha")
+        assert main_channel["channel"] == "Alpha" and main_channel["source_revision"] == restored["source_revision"]
         assert main_channel["build_id"] != restored["build_id"]
         repeated = configure("archive-repeat", fixture)
         assert repeated == restored, "same archive has reproducible metadata without timestamps/build paths"
@@ -127,12 +127,12 @@ def main():
             assert observed["source_untracked_count"] == clean["source_untracked_count"] + 1
             assert observed["build_id"] != clean["build_id"], "clean tracked metadata must still identify observed untracked inputs"
             clean_extra.unlink()
-            (fixture / "engine-version.json").write_text(json.dumps({"schema": 1, "version": "0.1.1-prealpha", "maturity": "pre-alpha"}))
+            (fixture / "engine-version.json").write_text(json.dumps({"schema": 1, "version": "1.0.1-alpha.1", "maturity": "alpha", "release_name": "Judas Engine Alpha v1.0.1"}))
             dirty = configure("git-dirty", fixture)
             assert dirty["source_dirty"] and dirty["source_fingerprint"] != clean["source_fingerprint"]
             run("version-refresh-same-build", ["cmake", "-S", str(fixture), "-B", str(root / "git-clean")])
             refreshed = json.loads((root / "git-clean/identity.json").read_text())
-            assert refreshed["version"] == "0.1.1-prealpha", "default version refreshes in an existing build cache"
+            assert refreshed["version"] == "1.0.1-alpha.1", "default version refreshes in an existing build cache"
             new_input = fixture / "src/new.cpp"
             new_input.parent.mkdir()
             new_input.write_text("// new input\n")
@@ -143,7 +143,7 @@ def main():
             assert new_source["build_id"] != dirty["build_id"], "new dirty development inputs alter the build identity"
             run("git-main", ["git", "-C", str(fixture), "switch", "-c", "main"])
             main_source = configure("git-main-channel", fixture)
-            assert main_source["channel"] == "main" and main_source["source_revision"] == clean["source_revision"]
+            assert main_source["channel"] == "Alpha" and main_source["source_revision"] == clean["source_revision"]
     publish(complete=True)
     print(f"Build provenance configuration: {len(records)} controls passed")
 

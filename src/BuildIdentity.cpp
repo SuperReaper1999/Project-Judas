@@ -12,14 +12,14 @@ const BuildIdentity& GetBuildIdentity() {
         JUDAS_ID_SOURCE_FINGERPRINT, JUDAS_ID_SOURCE_UNTRACKED_COUNT,
         JUDAS_ID_SOURCE_UNTRACKED_FINGERPRINT, JUDAS_ID_SOURCE_ORIGIN,
         JUDAS_ID_PLATFORM, JUDAS_ID_ARCHITECTURE, JUDAS_BUILD_CONFIGURATION,
-        JUDAS_ID_COMPILER, JUDAS_ID_COMPILER_VERSION};
+        JUDAS_ID_COMPILER, JUDAS_ID_COMPILER_VERSION, JUDAS_ID_RELEASE_NAME};
     return identity;
 }
 
 std::string BuildIdentityJson() {
     const auto& i = GetBuildIdentity();
     return nlohmann::json{{"schema", 1}, {"version", i.version}, {"maturity", i.maturity},
-        {"channel", i.channel}, {"build_id", i.buildId}, {"source_revision", i.sourceRevision},
+        {"release_name", i.releaseName}, {"channel", i.channel}, {"build_id", i.buildId}, {"source_revision", i.sourceRevision},
         {"source_tree", i.sourceTree}, {"source_dirty", i.sourceDirty},
         {"source_fingerprint", i.sourceFingerprint}, {"source_origin", i.sourceOrigin},
         {"source_untracked_count", i.sourceUntrackedCount},
@@ -31,7 +31,7 @@ std::string BuildIdentityJson() {
 
 std::string BuildIdentitySummary(const char* product) {
     const auto& i = GetBuildIdentity();
-    return std::string("Judas ") + product + " " + i.version + " [" + i.channel + "] " +
+    return std::string(i.releaseName) + " / " + product + " (" + i.version + ")" + " [" + i.channel + "] " +
         i.sourceRevision + (i.sourceDirty ? " dirty" : " clean") + " " +
         i.platform + "/" + i.architecture + " " + i.configuration;
 }
@@ -75,12 +75,18 @@ bool BuildIdentityReleaseEligible(const BuildIdentity& i, std::string& reason) {
         return false;
     }
     if (std::strcmp(i.channel, "Local") == 0) {
-        reason = "Release packaging requires an explicit main or Experimental channel";
+        reason = "Release packaging requires an explicit Alpha/Beta/Experimental/Stable channel";
         return false;
     }
-    if ((std::strcmp(i.channel, "main") != 0 && std::strcmp(i.channel, "Experimental") != 0) ||
+    if ((std::strcmp(i.channel, "Alpha") != 0 && std::strcmp(i.channel, "Beta") != 0 && std::strcmp(i.channel, "Stable") != 0 && std::strcmp(i.channel, "Experimental") != 0) ||
         std::strcmp(i.configuration, "Release") != 0) {
         reason = "Release packaging requires a supported channel and Release configuration";
+        return false;
+    }
+    if ((std::strcmp(i.channel, "Stable") == 0 && std::strcmp(i.maturity, "stable") != 0) ||
+        (std::strcmp(i.channel, "Alpha") == 0 && std::strcmp(i.maturity, "alpha") != 0) ||
+        (std::strcmp(i.channel, "Beta") == 0 && std::strcmp(i.maturity, "beta") != 0)) {
+        reason = "Build maturity does not match the selected release channel";
         return false;
     }
     reason.clear();

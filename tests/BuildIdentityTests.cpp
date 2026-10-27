@@ -37,8 +37,8 @@ int main(int argc, char** argv) {
     check(json["source_dirty"].is_boolean(), "dirty provenance is a boolean");
     check(json["version"] == identity.version && json["channel"] == identity.channel,
           "native and generated version/channel contract");
-    check(std::string(identity.version).find("prealpha") != std::string::npos,
-          "not an Alpha release");
+    check(ValidSemanticVersion(identity.version),
+          "authoritative engine identity is semantic versioned");
     check(!BuildIdentitySummary("runtime").empty(), "human-readable identity");
     auto candidate = identity;
     std::string reason;
@@ -54,8 +54,11 @@ int main(int argc, char** argv) {
     check(!BuildIdentityReleaseEligible(candidate, reason), "Local channel rejected for release");
     candidate.channel = "Experimental";
     check(BuildIdentityReleaseEligible(candidate, reason) && reason.empty(), "clean known Experimental release accepted");
-    candidate.channel = "main";
-    check(BuildIdentityReleaseEligible(candidate, reason), "clean known main release accepted without inferring human status");
+    candidate.channel = "Alpha";
+    check(BuildIdentityReleaseEligible(candidate, reason), "clean known Alpha package eligible without inferring human status");
+    candidate.channel = "Stable";
+    check(!BuildIdentityReleaseEligible(candidate, reason), "Alpha maturity cannot masquerade as GA Stable");
+    candidate.channel = "Alpha";
     candidate.sourceUntrackedCount = 1;
     check(!BuildIdentityReleaseEligible(candidate, reason), "clean tracked source with untracked build input rejected for release");
     candidate.sourceUntrackedCount = 0; candidate.sourceOrigin = "archive";
