@@ -63,6 +63,9 @@ void UpdateFluidSurface(Renderer& renderer, const RuntimeWorld& world, float pre
 // Meshes/terrains resolve through `resources`; unresolvable ones are skipped.
 void DrawAuthoredScene(Renderer& renderer, const Scene& scene, ResourceManager& resources);
 void DrawAuthoredScene(Renderer& renderer, const Scene& scene, ResourceManager& resources, bool basicWater);
+// For composed editor views: submit all scenes with basicWater=false, then draw
+// their water surfaces after all opaque terrain/region geometry is complete.
+void DrawAuthoredWaterSurfaces(Renderer& renderer, const Scene& scene, ResourceManager& resources);
 std::vector<DynamicLight> BuildAuthoredLights(const Scene& scene);
 
 struct WeatherSample;

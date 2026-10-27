@@ -1687,6 +1687,7 @@ judas_add_engine_test(judas_project_water_tests tests/ProjectWaterTests.cpp)
 judas_add_engine_test(judas_project_settings_editor_tests tests/ProjectSettingsEditorTests.cpp
     SOURCES src/editor/ProjectSettingsPanel.cpp LIBRARIES judas_imgui)
 judas_add_engine_test(judas_basic_water_application_tests tests/BasicWaterApplicationTests.cpp)
+judas_add_engine_test(judas_basic_water_preview_tests tests/BasicWaterPreviewTests.cpp)
 
 judas_add_engine_test(judas_project_fluid_policy_tests tests/ProjectFluidPolicyTests.cpp)
 add_dependencies(judas_project_fluid_policy_tests judas)

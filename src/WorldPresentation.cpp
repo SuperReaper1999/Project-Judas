@@ -6,6 +6,7 @@
 #include <glm/gtc/quaternion.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <cstdio>
+#include <algorithm>
 
 #include "CelestialGravity.h"
 #include "FirePresentation.h"
@@ -622,6 +623,42 @@ void RenderWorldFrame(Renderer& renderer, int width, int height, const RuntimeWo
     JUDAS_PROFILE_COUNTER("Secondary passes",stats.offscreenPasses-beforeStats.offscreenPasses,ProfileCounterMode::Sum);
 }
 
+namespace {
+void SetAuthoredSceneAppearance(Renderer& r, const Scene& scene, ResourceManager& assets) {
+    const auto& settings = scene.Settings();
+    assets.RequestEnvironment(settings.environmentAsset);
+    r.SetLighting(settings.sunDirection,
+        settings.sunEnabled ? settings.sunColor * settings.sunIntensity : glm::vec3(0),
+        settings.ambientColor);
+    r.SetSceneAppearance(settings.linearRendering, settings.exposure,
+        assets.TryGetEnvironment(settings.environmentAsset), settings.environmentIntensity,
+        settings.environmentRotation, settings.environmentBackground, settings.backgroundColor);
+    r.SetRenderMask(settings.mainCameraRenderMask);
+}
+}
+
+void DrawAuthoredWaterSurfaces(Renderer& r, const Scene& scene, ResourceManager& assets) {
+    if (r.IsShadowPass()) return;
+    const bool hasWater = std::any_of(scene.Objects().begin(), scene.Objects().end(),
+        [](const SceneObject& o) { return o.renderVisible && o.basicWater && o.basicWater->enabled; });
+    if (!hasWater) return;
+    // All opaque geometry, including neighbouring regions, must be submitted
+    // before this pass. Transparent water deliberately does not write depth.
+    r.EndMeshBatch();
+    r.FlushMaterialBlends();
+    SetAuthoredSceneAppearance(r, scene, assets);
+    r.SetMaterialBindings({});
+    r.BeginTransparentPass();
+    for (const auto& o : scene.Objects()) {
+        if (!o.renderVisible || !o.basicWater) continue;
+        r.SetRenderLayer(o.renderLayer);
+        r.DrawBasicWater(*o.basicWater, o.transform.position,
+                        glm::normalize(o.transform.rotation), 0);
+    }
+    r.SetRenderLayer(0);
+    r.EndTransparentPass();
+}
+
 void DrawAuthoredScene(Renderer& r,const Scene& scene,ResourceManager& assets){
     DrawAuthoredScene(r,scene,assets,true);
 }
@@ -631,10 +668,7 @@ void DrawAuthoredScene(Renderer& r, const Scene& scene, ResourceManager& assets,
     // maps generated for a previous runtime camera or Play session.
     for(int slot=0;slot<kShadowMapCount;++slot)r.InvalidateShadowSlot(slot);
     r.BeginMeshBatch();
-    const auto settings=scene.Settings();assets.RequestEnvironment(settings.environmentAsset);
-    r.SetLighting(settings.sunDirection,settings.sunEnabled?settings.sunColor*settings.sunIntensity:glm::vec3(0),settings.ambientColor);
-    r.SetSceneAppearance(settings.linearRendering,settings.exposure,assets.TryGetEnvironment(settings.environmentAsset),settings.environmentIntensity,settings.environmentRotation,settings.environmentBackground,settings.backgroundColor);
-    r.SetRenderMask(scene.Settings().mainCameraRenderMask);
+    SetAuthoredSceneAppearance(r, scene, assets);
     for (const SceneObject& o : scene.Objects()) {
         if(!o.renderVisible)continue;
         r.SetRenderLayer(o.renderLayer);
@@ -673,11 +707,6 @@ void DrawAuthoredScene(Renderer& r, const Scene& scene, ResourceManager& assets,
                 DrawRenderable(r, &assets, render, position, rotation, o.transform.scale, 1.0f);
             }
         }
-        if(basicWater&&o.basicWater&&!r.IsShadowPass()){
-            r.EndMeshBatch();r.SetMaterialBindings({});r.BeginTransparentPass();
-            r.DrawBasicWater(*o.basicWater,position,rotation,0);
-            r.EndTransparentPass();r.BeginMeshBatch();
-        }
         // Authored liquid is shown as its particle lattice bounds.
         if (o.fluidVolume && !r.IsShadowPass()) {
             r.SetMaterialBindings({});
@@ -692,6 +721,7 @@ void DrawAuthoredScene(Renderer& r, const Scene& scene, ResourceManager& assets,
     r.SetRenderLayer(0);
     r.SetMaterialBindings({});
     r.EndMeshBatch();
+    if (basicWater) DrawAuthoredWaterSurfaces(r, scene, assets);
 }
 
 std::vector<DynamicLight> BuildAuthoredLights(const Scene& scene) {

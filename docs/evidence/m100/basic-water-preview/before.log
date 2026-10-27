@@ -1,0 +1,18 @@
+Shadow maps: on
+Graphics: 3.3.0 NVIDIA 580.178.04 / NVIDIA GeForce GTX 970/PCIe/SSE2
+Renderer fragment texture units: 32 (material path uses 12)
+FAIL authored object order cannot hide water behind submerged ground
+orientation=0 order_difference=87.573891 water_difference=0.000000
+FAIL water is visible over real submerged geometry
+PASS nearer above-water geometry still occludes water
+PASS preview restores ordinary depth-write and blend state
+PASS hidden water does not draw
+PASS save actual preview reproduction
+FAIL authored object order cannot hide water behind submerged ground
+orientation=1 order_difference=87.573891 water_difference=0.000000
+FAIL water is visible over real submerged geometry
+PASS nearer above-water geometry still occludes water
+PASS preview restores ordinary depth-write and blend state
+PASS hidden water does not draw
+PASS save actual preview reproduction
+BasicWaterPreviewTests: 12 checks, 4 failures

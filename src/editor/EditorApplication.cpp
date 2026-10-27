@@ -1167,7 +1167,7 @@ void EditorApplication::FrameEditMode(float deltaSeconds) {
             p.second->Prepare(renderer,eye,scene.Settings().worldOrigin,2*std::atan(1./double(renderer.ProjectionMatrix()[1][1])),900,1./60);p.second->Draw(renderer,scene.Settings().worldOrigin);}
         for(auto it=m_planetPreview.begin();it!=m_planetPreview.end();)if(!keep.count(it->first))it=m_planetPreview.erase(it);else ++it;
     }
-    DrawAuthoredScene(renderer, scene, m_host->Resources(),m_project.Settings().basicWater);
+    DrawAuthoredScene(renderer, scene, m_host->Resources(),false);
     if(m_panels.worldPreview&&!m_project.Settings().worldManifest.empty()){
         auto key=m_project.ProjectFile()+m_document.Path()+std::to_string(m_panels.worldPreviewRevision);
         if(key!=m_regionPreviewKey){m_regionPreviewKey=key;m_regionPreview.clear();
@@ -1183,8 +1183,13 @@ void EditorApplication::FrameEditMode(float deltaSeconds) {
                 }
             }
         }
-        for(auto& region:m_regionPreview)DrawAuthoredScene(renderer,region,m_host->Resources(),m_project.Settings().basicWater);
+        for(auto& region:m_regionPreview)DrawAuthoredScene(renderer,region,m_host->Resources(),false);
     }else {m_regionPreview.clear();m_regionPreviewKey.clear();}
+    if (m_project.Settings().basicWater) {
+        DrawAuthoredWaterSurfaces(renderer, scene, m_host->Resources());
+        for (const auto& region : m_regionPreview)
+            DrawAuthoredWaterSurfaces(renderer, region, m_host->Resources());
+    }
     renderer.DrawWeather();
     DrawEditOverlay(renderer, scene);
     if(m_terrain)renderer.DrawDebugLines(m_terrain->footprint.Lines(),true);

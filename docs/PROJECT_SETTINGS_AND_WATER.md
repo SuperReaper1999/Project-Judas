@@ -95,6 +95,10 @@ GPU vertex shader. Analytic slope normals feed approximate Fresnel sky reflectio
 and directional sun glints. Transparent surfaces are double-sided and depth-tested.
 No per-frame CPU remeshing, particle reconstruction, pressure solve or flow field
 is required. The grid is reused by all volumes; absent water does not allocate it.
+Editor previews draw water after opaque terrain and props, including neighbouring
+world regions, so authoring order cannot hide it. Normal depth testing still
+occludes water behind nearer geometry. See the
+[preview correction and evidence](M100_BASIC_WATER_PREVIEW.md).
 
 The existing underwater optical shader receives inexpensive ray/box intervals.
 Opaque geometry is attenuated by water depth. Each view recomputes its own paths;

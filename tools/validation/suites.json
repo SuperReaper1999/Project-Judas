@@ -51,6 +51,7 @@
     {"name":"mk2-rotation","target":"judas_mk2_rotation_tests","groups":["core","collision","mk2"]},
     {"name":"mk2-rotation-cold","target":"judas_mk2_rotation_cold_tests","groups":["core","mk2","lifecycle"],"args":["{output}/rotation-cold"]},
     {"name":"balance-controller","target":"judas_physical_balance_controller_tests","groups":["mk2","lifecycle"]},
+    {"name":"basic-water-preview","target":"judas_basic_water_preview_tests","groups":["water","onboarding"],"args":["{output}/water-preview"]},
     {"name":"project-water-policy","target":"judas_project_water_tests","groups":["core","water"]},
     {"name":"project-fluid-policy","target":"judas_project_fluid_policy_tests","groups":["water","lifecycle"]},
     {"name":"project-settings-editor","target":"judas_project_settings_editor_tests","groups":["onboarding","water"]},

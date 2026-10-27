@@ -1,0 +1,37 @@
+{
+  "files": [
+    {
+      "path": "after/water-first-0.png",
+      "sha256": "8dc4bc49047db29b2cff84cf5040d01c49258016d399a6c1defd85b29e2f129d"
+    },
+    {
+      "path": "after/water-first-1.png",
+      "sha256": "8dc4bc49047db29b2cff84cf5040d01c49258016d399a6c1defd85b29e2f129d"
+    },
+    {
+      "path": "after.log",
+      "sha256": "c899e43abc58b0fe11c77bb080aa1bf1b383d4d55d493311c700c87db32c42ec"
+    },
+    {
+      "path": "before/water-first-0.png",
+      "sha256": "c6e88a61cb2f20bdcf842e760a27f3048bacb0e5470ca5d9dd51b957e7ef649e"
+    },
+    {
+      "path": "before/water-first-1.png",
+      "sha256": "c6e88a61cb2f20bdcf842e760a27f3048bacb0e5470ca5d9dd51b957e7ef649e"
+    },
+    {
+      "path": "before.log",
+      "sha256": "9af341aa3aa00cc808c669653cd4b8b0e0ea7221fa8de1dc1f791cfa096dc586"
+    },
+    {
+      "path": "render-regression.log",
+      "sha256": "79f009653fd7bf734ebd860c9b9225ae8e31c4fa416750d2f3b16cff2cc7548f"
+    },
+    {
+      "path": "runtime.log",
+      "sha256": "7e1e013ce34e6b0283bb6d542c6e921dbd09fafabd384e8ce7be9e6146036468"
+    }
+  ],
+  "self_excluded": true
+}
