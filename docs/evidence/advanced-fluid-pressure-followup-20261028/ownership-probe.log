@@ -1,0 +1,3 @@
+OWNERSHIP_PROBE angle=0 tetrahedra=834 volume=2.074816 paired=1098 unmatched=1140 internal_unmatched=612 internal_unmatched_area=12.8074 nonmanifold=0
+OWNERSHIP_PROBE angle=0.37 tetrahedra=931 volume=2.074816 paired=1094 unmatched=1536 internal_unmatched=930 internal_unmatched_area=15.9755 nonmanifold=0
+Diagnostic exact-coordinate ownership only. Plane tolerance labels apparent boundary locations; it DOES NOT publish connections or merge any vertices.

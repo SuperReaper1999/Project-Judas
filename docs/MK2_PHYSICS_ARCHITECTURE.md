@@ -44,6 +44,27 @@ are redistributed only for actual constraints/velocity couplings; free flight
 retains its public pre-step impulse timing. The [qualification follow-up](PREALPHA_FINAL_QUALIFICATION.md)
 records the suspension regression and balanced-kick proof for this correction.
 
+Native participants that need a solve at every chronological boundary can use
+`VelocityCoupling::ForEachSubstep(iterationsPerSubstep, callback)`. Its context
+distinguishes the outer `stepDeltaTime`, current substep `deltaTime`, relative
+`beginTime`, substep index/count, and local iteration index/count. The adapter
+uses MK2's own substep count; consumers should not hard-code four. `begin` and
+`finish` retain their whole-Step convention, as do existing `solve(dt, round)`
+callbacks. Requesting one legacy solve does not mean one solve per substep:
+later acceleration increments and pose advances still occur. The adapter changes
+neither native substeps nor contact/joint iteration budgets. It schedules a
+participant; it does not by itself guarantee convergence of a coupled material
+or register that material's boundaries with CCD.
+An optional completed callback observes each actual substep endpoint after CCD
+and pose advance, before the next acceleration increment. It may publish the
+participant's corresponding state; outer-Step contact/motion observations are
+not yet complete. This is a participant-state boundary, not an entity creation,
+destruction or scene-transition hook. Participants retain responsibility for
+their own failure handling; the adapter does not roll back the complete native
+world if a material solve fails. In that callback `iteration == iterations`. Native clients
+must rebuild against the updated `VelocityCoupling` structure; this is not a
+binary-compatible change for independently compiled native participants.
+
 ## Contacts, persistence and determinism
 
 Contact geometry, warm impulses, completed contact observations and sleep state

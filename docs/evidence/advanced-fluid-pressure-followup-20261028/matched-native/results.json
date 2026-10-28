@@ -1,0 +1,80 @@
+[
+  {
+    "label": "before",
+    "trial": 0,
+    "returncode": 0,
+    "binarySha256": "6f7ad9754af3b1e0726209542be7ec3d1734b1614f21609a0ca1be77256f55fa",
+    "wall_seconds": 8.125808021000921,
+    "measurements": [
+      "NATIVE_TETRA angle=0 solves=480 completed=480 valid=1 displacement=0 speed=7.45058059692e-09 max_speed=7.45058059692e-09 load=306.562515914 expected=306.562515988 residual=2.22545e-12 rebuilds=1 warm_hits=0 total_ms=4099.420687",
+      "NATIVE_STEP_SUMMARY angle=0 median_ms=33.946574 p95_ms=34.038557 maximum_ms=60.779019",
+      "NATIVE_TETRA angle=1.13 solves=480 completed=480 valid=1 displacement=0 speed=5.99771738052e-07 max_speed=5.99771738052e-07 load=306.562511128 expected=306.562515988 residual=2.22545e-12 rebuilds=1 warm_hits=0 total_ms=4020.640497",
+      "NATIVE_STEP_SUMMARY angle=1.13 median_ms=33.360208 p95_ms=33.45169 maximum_ms=51.643541"
+    ]
+  },
+  {
+    "label": "after",
+    "trial": 0,
+    "returncode": 0,
+    "binarySha256": "6c9be0830de1eed9f9b20b781efcf431eec6e7e13a1712d263ac3448deb6cd7a",
+    "wall_seconds": 1.538370311000108,
+    "measurements": [
+      "NATIVE_TETRA angle=0 solves=480 completed=480 valid=1 displacement=0 speed=7.45058059692e-09 max_speed=7.45058059692e-09 load=306.562515914 expected=306.562515988 residual=6.60824e-15 rebuilds=1 warm_hits=0 direct_hits=480 rejected=0 total_ms=770.052416",
+      "NATIVE_STEP_SUMMARY angle=0 median_ms=6.191367 p95_ms=6.24574 maximum_ms=33.2079",
+      "NATIVE_TETRA angle=1.13 solves=480 completed=480 valid=1 displacement=0 speed=5.99771738052e-07 max_speed=5.99771738052e-07 load=306.562511128 expected=306.562515988 residual=7.91099e-15 rebuilds=1 warm_hits=0 direct_hits=480 rejected=0 total_ms=762.738893",
+      "NATIVE_STEP_SUMMARY angle=1.13 median_ms=6.196386 p95_ms=6.236953 maximum_ms=25.032482"
+    ]
+  },
+  {
+    "label": "before",
+    "trial": 1,
+    "returncode": 0,
+    "binarySha256": "6f7ad9754af3b1e0726209542be7ec3d1734b1614f21609a0ca1be77256f55fa",
+    "wall_seconds": 8.111694803999853,
+    "measurements": [
+      "NATIVE_TETRA angle=0 solves=480 completed=480 valid=1 displacement=0 speed=7.45058059692e-09 max_speed=7.45058059692e-09 load=306.562515914 expected=306.562515988 residual=2.22545e-12 rebuilds=1 warm_hits=0 total_ms=4111.009413",
+      "NATIVE_STEP_SUMMARY angle=0 median_ms=33.987981 p95_ms=34.714933 maximum_ms=60.448647",
+      "NATIVE_TETRA angle=1.13 solves=480 completed=480 valid=1 displacement=0 speed=5.99771738052e-07 max_speed=5.99771738052e-07 load=306.562511128 expected=306.562515988 residual=2.22545e-12 rebuilds=1 warm_hits=0 total_ms=3994.567742",
+      "NATIVE_STEP_SUMMARY angle=1.13 median_ms=33.145453 p95_ms=33.235112 maximum_ms=51.329728"
+    ]
+  },
+  {
+    "label": "after",
+    "trial": 1,
+    "returncode": 0,
+    "binarySha256": "6c9be0830de1eed9f9b20b781efcf431eec6e7e13a1712d263ac3448deb6cd7a",
+    "wall_seconds": 1.5323367720011447,
+    "measurements": [
+      "NATIVE_TETRA angle=0 solves=480 completed=480 valid=1 displacement=0 speed=7.45058059692e-09 max_speed=7.45058059692e-09 load=306.562515914 expected=306.562515988 residual=6.60824e-15 rebuilds=1 warm_hits=0 direct_hits=480 rejected=0 total_ms=766.637656",
+      "NATIVE_STEP_SUMMARY angle=0 median_ms=6.156822 p95_ms=6.200385 maximum_ms=34.198919",
+      "NATIVE_TETRA angle=1.13 solves=480 completed=480 valid=1 displacement=0 speed=5.99771738052e-07 max_speed=5.99771738052e-07 load=306.562511128 expected=306.562515988 residual=7.91099e-15 rebuilds=1 warm_hits=0 direct_hits=480 rejected=0 total_ms=759.640760",
+      "NATIVE_STEP_SUMMARY angle=1.13 median_ms=6.171119 p95_ms=6.214631 maximum_ms=24.956678"
+    ]
+  },
+  {
+    "label": "before",
+    "trial": 2,
+    "returncode": 0,
+    "binarySha256": "6f7ad9754af3b1e0726209542be7ec3d1734b1614f21609a0ca1be77256f55fa",
+    "wall_seconds": 8.08021635499972,
+    "measurements": [
+      "NATIVE_TETRA angle=0 solves=480 completed=480 valid=1 displacement=0 speed=7.45058059692e-09 max_speed=7.45058059692e-09 load=306.562515914 expected=306.562515988 residual=2.22545e-12 rebuilds=1 warm_hits=0 total_ms=4080.426082",
+      "NATIVE_STEP_SUMMARY angle=0 median_ms=33.773437 p95_ms=33.882082 maximum_ms=61.419348",
+      "NATIVE_TETRA angle=1.13 solves=480 completed=480 valid=1 displacement=0 speed=5.99771738052e-07 max_speed=5.99771738052e-07 load=306.562511128 expected=306.562515988 residual=2.22545e-12 rebuilds=1 warm_hits=0 total_ms=3994.128043",
+      "NATIVE_STEP_SUMMARY angle=1.13 median_ms=33.143088 p95_ms=33.254138 maximum_ms=51.31459"
+    ]
+  },
+  {
+    "label": "after",
+    "trial": 2,
+    "returncode": 0,
+    "binarySha256": "6c9be0830de1eed9f9b20b781efcf431eec6e7e13a1712d263ac3448deb6cd7a",
+    "wall_seconds": 1.52677814800154,
+    "measurements": [
+      "NATIVE_TETRA angle=0 solves=480 completed=480 valid=1 displacement=0 speed=7.45058059692e-09 max_speed=7.45058059692e-09 load=306.562515914 expected=306.562515988 residual=6.60824e-15 rebuilds=1 warm_hits=0 direct_hits=480 rejected=0 total_ms=764.305707",
+      "NATIVE_STEP_SUMMARY angle=0 median_ms=6.134549 p95_ms=6.178292 maximum_ms=34.202706",
+      "NATIVE_TETRA angle=1.13 solves=480 completed=480 valid=1 displacement=0 speed=5.99771738052e-07 max_speed=5.99771738052e-07 load=306.562511128 expected=306.562515988 residual=7.91099e-15 rebuilds=1 warm_hits=0 direct_hits=480 rejected=0 total_ms=756.506047",
+      "NATIVE_STEP_SUMMARY angle=1.13 median_ms=6.145931 p95_ms=6.195104 maximum_ms=25.033192"
+    ]
+  }
+]

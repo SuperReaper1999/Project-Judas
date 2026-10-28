@@ -1707,6 +1707,7 @@ judas_add_engine_test(judas_pause_example_application_tests tests/PauseExampleAp
     SOURCES src/editor/EditorPauseExample.cpp src/editor/EditorScriptWorkflow.cpp src/editor/EditorPrimitiveAssets.cpp src/editor/EditorHistory.cpp LIBRARIES judas_imgui)
 
 judas_add_engine_test(judas_mk2_diagnostics_tests tests/Mk2DiagnosticsTests.cpp)
+judas_add_engine_test(judas_velocity_coupling_substep_tests tests/VelocityCouplingSubstepTests.cpp)
 judas_add_engine_test(judas_mk2_rotation_tests tests/Mk2RotationTests.cpp)
 judas_add_engine_test(judas_mk2_rotation_cold_tests tests/Mk2RotationColdTests.cpp)
 

@@ -1,0 +1,49 @@
+SPARSE_TIMING symbolic_ms=31.944900 factors_ms=24.588695
+HYDRO angle=0 ratio=0.5 iterations=6 residual=1.20386e-09 vy=0.011109
+SPARSE_TIMING symbolic_ms=30.915218 factors_ms=23.155983
+HYDRO angle=0 ratio=1 iterations=6 residual=1.21494e-09 vy=6.00554e-11
+SPARSE_TIMING symbolic_ms=30.883718 factors_ms=23.080430
+HYDRO angle=0 ratio=2 iterations=6 residual=1.28016e-09 vy=-0.0170155
+SPARSE_TIMING symbolic_ms=34.617300 factors_ms=41.547680
+HYDRO angle=0.37 ratio=0.5 iterations=10 residual=1.18104e-09 vy=0.00543472
+SPARSE_TIMING symbolic_ms=34.179685 factors_ms=37.465112
+HYDRO angle=0.37 ratio=1 iterations=9 residual=3.06532e-10 vy=1.44774e-10
+SPARSE_TIMING symbolic_ms=34.348844 factors_ms=41.940484
+HYDRO angle=0.37 ratio=2 iterations=10 residual=6.57224e-09 vy=-0.00945512
+SPARSE_TIMING symbolic_ms=30.883137 factors_ms=20.778931
+FAIL uniform submerged body no hydro torque
+ARCHIMEDES angle=0 y=9.28505606912 expected=9.285056 torque=0.0124239
+SPARSE_TIMING symbolic_ms=34.159497 factors_ms=30.038684
+FAIL hydro no sideways load
+FAIL uniform submerged body no hydro torque
+ARCHIMEDES angle=0.37 y=9.28505625347 expected=9.285056 torque=3.79456
+INTERIOR iteration=0 error=3.35528 mu=1
+PHYSICAL_KKT 4.34342870868
+INTERIOR iteration=1 error=0.283781 mu=0.220459
+PHYSICAL_KKT 0.547100539399
+INTERIOR iteration=2 error=0.102591 mu=0.0552855
+PHYSICAL_KKT 0.110933314422
+INTERIOR iteration=3 error=0.0213878 mu=0.00764311
+PHYSICAL_KKT 0.00924055159694
+INTERIOR iteration=4 error=0.00746694 mu=0.00151728
+PHYSICAL_KKT 0.00188157990984
+INTERIOR iteration=5 error=0.00623123 mu=0.000553644
+PHYSICAL_KKT 0.00161312879518
+INTERIOR iteration=6 error=0.00138663 mu=8.67541e-05
+PHYSICAL_KKT 0.000163231807256
+INTERIOR iteration=7 error=0.000663567 mu=4.24308e-05
+PHYSICAL_KKT 0.000169756862949
+INTERIOR iteration=8 error=0.000177075 mu=1.45912e-05
+PHYSICAL_KKT 2.29378316929e-05
+INTERIOR iteration=9 error=5.19474e-06 mu=3.30658e-07
+PHYSICAL_KKT 2.35971296928e-07
+INTERIOR iteration=10 error=2.60293e-08 mu=1.65571e-09
+PHYSICAL_KKT 1.18136203209e-09
+SPARSE_TIMING symbolic_ms=34.211925 factors_ms=42.526078
+REFERENCE_DIFFERENCE 1.51799380658e-11
+SPARSE_TIMING symbolic_ms=34.231713 factors_ms=42.510488
+ROTATION_DIFFERENCE 2.68818791549e-13
+SPARSE_TIMING symbolic_ms=36.487618 factors_ms=95.350326
+MOMENTUM seed=17 dP=1.1484e-11 dL=1.20674e-12 dE=-107.969 residual=7.81598e-09
+ERROR nonpositive sparse physical pivot
+AFFINE_VALIDATION checks=3277 failures=4

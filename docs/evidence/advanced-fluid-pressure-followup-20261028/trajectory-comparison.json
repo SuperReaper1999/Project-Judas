@@ -1,0 +1,20 @@
+[
+  {
+    "test": "mk2-diagnostics",
+    "identicalOutput": true,
+    "baselineSha256": "08d514157ea2c7f8e70a9ee786a558da497641a4d5e2f026d1f67cbce8c184fa",
+    "candidateSha256": "08d514157ea2c7f8e70a9ee786a558da497641a4d5e2f026d1f67cbce8c184fa"
+  },
+  {
+    "test": "mk2-rotation",
+    "identicalOutput": true,
+    "baselineSha256": "35f8b8da664abde00ae6e2a7519c5af8a1b3ddad443dc60c895cc3fbcf70baf5",
+    "candidateSha256": "35f8b8da664abde00ae6e2a7519c5af8a1b3ddad443dc60c895cc3fbcf70baf5"
+  },
+  {
+    "test": "physics-continuation",
+    "identicalOutput": true,
+    "baselineSha256": "11a77d440c85ed9bb56971bfa1d37c37ceb4f2bec5ba319f825c975d3dca25ae",
+    "candidateSha256": "11a77d440c85ed9bb56971bfa1d37c37ceb4f2bec5ba319f825c975d3dca25ae"
+  }
+]

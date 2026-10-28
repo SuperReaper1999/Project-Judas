@@ -1,0 +1,264 @@
+{
+  "format": 1,
+  "startedUtc": "2026-10-28T13:48:21.918148+00:00",
+  "sourceRevision": "eae1e5175c37d030f1bfce649453707a37647c01",
+  "trackedWorktreeStatus": "M CMakeLists.txt\n M docs/MK2_PHYSICS_ARCHITECTURE.md\n M src/PhysicsWorld.h\n M src/physics/WorldMk2Solver.cpp\n M tools/validation/suites.json",
+  "manifestSha256": "cd3a6ca7267fb7626bc59ac4286e451f397373218da86bcd7a324f0a80a1dc4b",
+  "trackedDiffSha256": "ded3eb43cd2b317a2e837eda05f9d659b7d2d0ed82e829458d72a222ff0e1984",
+  "platform": "Linux-7.0.0-38-generic-x86_64-with-glibc2.43",
+  "machine": "x86_64",
+  "cpuCount": 12,
+  "groups": [],
+  "tests": [
+    {
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_physics_continuation_tests"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/fluid-domain-redesign/qualification",
+      "timeoutSeconds": 120,
+      "binarySha256": "1c5421a05c2a75a09c5e9f0ada63443b7eedbc6aaebbe69519de661acb051bd3",
+      "exit": 0,
+      "status": "passed",
+      "binarySha256After": "1c5421a05c2a75a09c5e9f0ada63443b7eedbc6aaebbe69519de661acb051bd3",
+      "seconds": 0.07498727999973198,
+      "buildIdentity": {
+        "architecture": "x86_64",
+        "build_id": "1.0.0-alpha.1-Experimental-eae1e51-dirty-9afa0a79be37-u2ff755d1229a",
+        "channel": "Experimental",
+        "compiler": "GNU",
+        "compiler_version": "15.2.0",
+        "configuration": "Release",
+        "maturity": "alpha",
+        "platform": "Linux",
+        "release_name": "Judas Engine Alpha v1.0.0",
+        "schema": 1,
+        "source_dirty": true,
+        "source_fingerprint": "9afa0a79be37c4ebacccf55ae1becaf4ea29c9b95e9a9ce83a5629c3b4d6d67e",
+        "source_origin": "git",
+        "source_revision": "eae1e5175c37d030f1bfce649453707a37647c01",
+        "source_tree": "20a36430d9caace71db485db31bc2959d9a3c3e3",
+        "source_untracked_count": 17,
+        "source_untracked_fingerprint": "2ff755d1229a1ee76316466e3f64902cc58e9e320dd30bb959faf6453bc3f270",
+        "version": "1.0.0-alpha.1"
+      },
+      "name": "physics-continuation"
+    },
+    {
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_mk2_diagnostics_tests"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/fluid-domain-redesign/qualification",
+      "timeoutSeconds": 120,
+      "binarySha256": "e8186b9edbb1fdc003d2cca46b2ecd5e457b18e1b5ce39d80187ebb8023614b5",
+      "exit": 0,
+      "status": "passed",
+      "binarySha256After": "e8186b9edbb1fdc003d2cca46b2ecd5e457b18e1b5ce39d80187ebb8023614b5",
+      "seconds": 0.217364672000258,
+      "buildIdentity": {
+        "architecture": "x86_64",
+        "build_id": "1.0.0-alpha.1-Experimental-eae1e51-dirty-9afa0a79be37-u2ff755d1229a",
+        "channel": "Experimental",
+        "compiler": "GNU",
+        "compiler_version": "15.2.0",
+        "configuration": "Release",
+        "maturity": "alpha",
+        "platform": "Linux",
+        "release_name": "Judas Engine Alpha v1.0.0",
+        "schema": 1,
+        "source_dirty": true,
+        "source_fingerprint": "9afa0a79be37c4ebacccf55ae1becaf4ea29c9b95e9a9ce83a5629c3b4d6d67e",
+        "source_origin": "git",
+        "source_revision": "eae1e5175c37d030f1bfce649453707a37647c01",
+        "source_tree": "20a36430d9caace71db485db31bc2959d9a3c3e3",
+        "source_untracked_count": 17,
+        "source_untracked_fingerprint": "2ff755d1229a1ee76316466e3f64902cc58e9e320dd30bb959faf6453bc3f270",
+        "version": "1.0.0-alpha.1"
+      },
+      "name": "mk2-diagnostics"
+    },
+    {
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_velocity_coupling_substep_tests"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/fluid-domain-redesign/qualification",
+      "timeoutSeconds": 120,
+      "binarySha256": "1153b41fe01acfae31f1f3314bf92d3d2362576ec01cc7e5cbdf63386b207742",
+      "exit": 0,
+      "status": "passed",
+      "binarySha256After": "1153b41fe01acfae31f1f3314bf92d3d2362576ec01cc7e5cbdf63386b207742",
+      "seconds": 0.01891044600006353,
+      "buildIdentity": {
+        "architecture": "x86_64",
+        "build_id": "1.0.0-alpha.1-Experimental-eae1e51-dirty-9afa0a79be37-u2ff755d1229a",
+        "channel": "Experimental",
+        "compiler": "GNU",
+        "compiler_version": "15.2.0",
+        "configuration": "Release",
+        "maturity": "alpha",
+        "platform": "Linux",
+        "release_name": "Judas Engine Alpha v1.0.0",
+        "schema": 1,
+        "source_dirty": true,
+        "source_fingerprint": "9afa0a79be37c4ebacccf55ae1becaf4ea29c9b95e9a9ce83a5629c3b4d6d67e",
+        "source_origin": "git",
+        "source_revision": "eae1e5175c37d030f1bfce649453707a37647c01",
+        "source_tree": "20a36430d9caace71db485db31bc2959d9a3c3e3",
+        "source_untracked_count": 17,
+        "source_untracked_fingerprint": "2ff755d1229a1ee76316466e3f64902cc58e9e320dd30bb959faf6453bc3f270",
+        "version": "1.0.0-alpha.1"
+      },
+      "name": "velocity-coupling-substeps"
+    },
+    {
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_mk2_rotation_tests"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/fluid-domain-redesign/qualification",
+      "timeoutSeconds": 120,
+      "binarySha256": "c9d604021fe2280a2d8225a1f68a36fed57d773abb5a0307ac5ede3f68b4ec61",
+      "exit": 0,
+      "status": "passed",
+      "binarySha256After": "c9d604021fe2280a2d8225a1f68a36fed57d773abb5a0307ac5ede3f68b4ec61",
+      "seconds": 7.827728129999741,
+      "buildIdentity": {
+        "architecture": "x86_64",
+        "build_id": "1.0.0-alpha.1-Experimental-eae1e51-dirty-9afa0a79be37-u2ff755d1229a",
+        "channel": "Experimental",
+        "compiler": "GNU",
+        "compiler_version": "15.2.0",
+        "configuration": "Release",
+        "maturity": "alpha",
+        "platform": "Linux",
+        "release_name": "Judas Engine Alpha v1.0.0",
+        "schema": 1,
+        "source_dirty": true,
+        "source_fingerprint": "9afa0a79be37c4ebacccf55ae1becaf4ea29c9b95e9a9ce83a5629c3b4d6d67e",
+        "source_origin": "git",
+        "source_revision": "eae1e5175c37d030f1bfce649453707a37647c01",
+        "source_tree": "20a36430d9caace71db485db31bc2959d9a3c3e3",
+        "source_untracked_count": 17,
+        "source_untracked_fingerprint": "2ff755d1229a1ee76316466e3f64902cc58e9e320dd30bb959faf6453bc3f270",
+        "version": "1.0.0-alpha.1"
+      },
+      "name": "mk2-rotation"
+    },
+    {
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_mk2_rotation_cold_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/fluid-domain-redesign/qualification/rotation-cold"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/fluid-domain-redesign/qualification",
+      "timeoutSeconds": 120,
+      "binarySha256": "1b5befbe84358db003c3f0df9e710f36b91c2c24076e8d2540231fa2a6a112b6",
+      "exit": 0,
+      "status": "passed",
+      "binarySha256After": "1b5befbe84358db003c3f0df9e710f36b91c2c24076e8d2540231fa2a6a112b6",
+      "seconds": 0.17366893999997046,
+      "buildIdentity": {
+        "architecture": "x86_64",
+        "build_id": "1.0.0-alpha.1-Experimental-eae1e51-dirty-9afa0a79be37-u2ff755d1229a",
+        "channel": "Experimental",
+        "compiler": "GNU",
+        "compiler_version": "15.2.0",
+        "configuration": "Release",
+        "maturity": "alpha",
+        "platform": "Linux",
+        "release_name": "Judas Engine Alpha v1.0.0",
+        "schema": 1,
+        "source_dirty": true,
+        "source_fingerprint": "9afa0a79be37c4ebacccf55ae1becaf4ea29c9b95e9a9ce83a5629c3b4d6d67e",
+        "source_origin": "git",
+        "source_revision": "eae1e5175c37d030f1bfce649453707a37647c01",
+        "source_tree": "20a36430d9caace71db485db31bc2959d9a3c3e3",
+        "source_untracked_count": 17,
+        "source_untracked_fingerprint": "2ff755d1229a1ee76316466e3f64902cc58e9e320dd30bb959faf6453bc3f270",
+        "version": "1.0.0-alpha.1"
+      },
+      "name": "mk2-rotation-cold"
+    }
+  ],
+  "knownFindings": [
+    {
+      "id": "CCD-MESH-ARRIVAL",
+      "status": "resolved-first-arrival",
+      "scheduled": true,
+      "reason": "Pass2 finite swept-SAT bounds correct the validated first-arrival contract; it now runs in the ordinary collision group. This does not close later curved-sheet continuation.",
+      "evidence": "docs/evidence/prealpha-pass2/physics"
+    },
+    {
+      "id": "CCD-MESH-CONTINUATION",
+      "status": "resolved-original-fixtures-bounded-ccd",
+      "scheduled": true,
+      "reason": "Original unchanged mesh arrival/continuation fixtures pass with authoritative MK2. Bounded CCD, sidedness and deep initial-overlap limits remain; MK1 event scheduling has been removed.",
+      "evidence": "docs/evidence/prealpha-ccd-continuation-20261019"
+    },
+    {
+      "id": "FLU-001",
+      "status": "deferred-failing",
+      "scheduled": false,
+      "reason": "Legacy PBF settling contract retained unchanged; separate fluid review required.",
+      "evidence": "docs/evidence/m78-completion/FINDINGS_FINAL.json"
+    },
+    {
+      "id": "LEGACY-CONTINUATION",
+      "status": "documented-incompatible-history",
+      "scheduled": false,
+      "reason": "Original a106 snapshot lacks historical continuation data. New-format passes do not certify that snapshot.",
+      "evidence": "docs/evidence/m78-cold-boundary"
+    },
+    {
+      "id": "DENSE-CCD-TAIL",
+      "status": "open-performance-limit",
+      "scheduled": false,
+      "reason": "Original MK1 global event cascade is retired. Current MK2 measurements have their own workload scope; focused correctness gates do not certify universal dense-pile latency.",
+      "evidence": "docs/MK2_PHYSICS_ARCHITECTURE.md"
+    },
+    {
+      "id": "LIQUID-BAKE-ROTATION",
+      "status": "resolved-baking",
+      "scheduled": true,
+      "reason": "Baker and runtime use the same normalized owner/field frames and oriented gravity volumes; both original bake-only runtime-publication cases pass unchanged equivalence tolerances. Original full integration exposes separate retained exact-total comparison failure.",
+      "evidence": "docs/evidence/prealpha-liquid-rotation/REPORT.md"
+    },
+    {
+      "id": "LIQUID-BAKE-KNOTS",
+      "status": "resolved-baking",
+      "scheduled": true,
+      "reason": "Positive tetrahedral density is integrated into one monotone cumulative curve, including shared endpoints; unchanged strict Surface1 decoder accepts both original rotated bakes. A later origin sampling limitation remains separately failed.",
+      "evidence": "docs/evidence/prealpha-liquid-rotation/REPORT.md"
+    },
+    {
+      "id": "LIQUID-ORIGIN-GRID-QUERY",
+      "status": "open-query-continuity-failing",
+      "scheduled": false,
+      "reason": "The original half-turn fixture now bakes and publishes, then fails its unchanged post-512m-origin query comparison: float translation crosses a discontinuous disturbed-surface cell boundary. Conserved quantities and wave bytes remain unchanged. This full integration failure is preserved, not counted as a baking pass.",
+      "evidence": "docs/evidence/prealpha-liquid-rotation/REPORT.md"
+    },
+    {
+      "id": "LIQUID-ORIGIN-TOTAL-IDENTITY",
+      "status": "resolved-oracle-causal-baseline",
+      "scheduled": true,
+      "reason": "Pass3 preserves the original failed test and demonstrates its causal-baseline error. Current atomicity compares the immediate pre-request total with the same exact equality and every physical participant byte; earlier legitimate paired-flow conservation tolerance and liquid runtime are unchanged.",
+      "evidence": "docs/evidence/prealpha-pass3/integration/REPORT.md"
+    }
+  ],
+  "humanAcceptance": "not-established",
+  "scope": "explicit manifest subset",
+  "expectedSourceIdentity": {
+    "source_revision": "eae1e5175c37d030f1bfce649453707a37647c01",
+    "source_fingerprint": "9afa0a79be37c4ebacccf55ae1becaf4ea29c9b95e9a9ce83a5629c3b4d6d67e",
+    "source_dirty": true,
+    "source_untracked_fingerprint": "2ff755d1229a1ee76316466e3f64902cc58e9e320dd30bb959faf6453bc3f270"
+  },
+  "passed": true,
+  "finishedUtc": "2026-10-28T13:48:30.596905+00:00",
+  "sourceRevisionAfter": "eae1e5175c37d030f1bfce649453707a37647c01",
+  "trackedWorktreeStatusAfter": "M CMakeLists.txt\n M docs/MK2_PHYSICS_ARCHITECTURE.md\n M src/PhysicsWorld.h\n M src/physics/WorldMk2Solver.cpp\n M tools/validation/suites.json",
+  "trackedDiffSha256After": "ded3eb43cd2b317a2e837eda05f9d659b7d2d0ed82e829458d72a222ff0e1984",
+  "expectedSourceIdentityAfter": {
+    "source_revision": "eae1e5175c37d030f1bfce649453707a37647c01",
+    "source_fingerprint": "9afa0a79be37c4ebacccf55ae1becaf4ea29c9b95e9a9ce83a5629c3b4d6d67e",
+    "source_dirty": true,
+    "source_untracked_fingerprint": "2ff755d1229a1ee76316466e3f64902cc58e9e320dd30bb959faf6453bc3f270"
+  }
+}

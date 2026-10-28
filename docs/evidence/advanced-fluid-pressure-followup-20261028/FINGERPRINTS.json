@@ -1,0 +1,67 @@
+{
+  "format": 1,
+  "createdUtc": "2026-10-28T16:05:58.569168+00:00",
+  "baseRevision": "eae1e5175c37d030f1bfce649453707a37647c01",
+  "branch": "Experimental",
+  "platform": "Linux-7.0.0-38-generic-x86_64-with-glibc2.43",
+  "implementationFiles": [
+    {
+      "path": "src/PhysicsWorld.h",
+      "sha256": "0b9c2e0b7f3f2c67b9ebd76c56ff464802d9e911daa1e437ad740e0849fe8120",
+      "bytes": 36298
+    },
+    {
+      "path": "src/physics/WorldMk2Solver.cpp",
+      "sha256": "9a3d5a3f236509e819d8d4981b509ffe325736807896b12249295e0fdcdc6945",
+      "bytes": 110794
+    },
+    {
+      "path": "tests/VelocityCouplingSubstepTests.cpp",
+      "sha256": "06274aeffa29195f4d658afebfb996c29bace3ae6478e3df1de794d4cd018751",
+      "bytes": 8142
+    },
+    {
+      "path": "CMakeLists.txt",
+      "sha256": "66b640d846afb63833842adc70a02fadee74c0df70f613a26cf3869aff03cc59",
+      "bytes": 85501
+    },
+    {
+      "path": "tools/validation/suites.json",
+      "sha256": "cd3a6ca7267fb7626bc59ac4286e451f397373218da86bcd7a324f0a80a1dc4b",
+      "bytes": 10751
+    },
+    {
+      "path": "docs/MK2_PHYSICS_ARCHITECTURE.md",
+      "sha256": "415b189209ba4d551fad58c87dffd1fa03f50ca2f7cc5f4cee46b3abf16f842e",
+      "bytes": 8947
+    }
+  ],
+  "binaries": [
+    {
+      "path": "build/judas_velocity_coupling_substep_tests",
+      "sha256": "dd8abaa885410b78dac003155dc7f7b4b772044c630d770b0ce45443823e62df",
+      "bytes": 1646864
+    },
+    {
+      "path": "build/judas_mk2_rotation_tests",
+      "sha256": "c9d604021fe2280a2d8225a1f68a36fed57d773abb5a0307ac5ede3f68b4ec61",
+      "bytes": 1740848
+    },
+    {
+      "path": "build/judas_physics_continuation_tests",
+      "sha256": "1c5421a05c2a75a09c5e9f0ada63443b7eedbc6aaebbe69519de661acb051bd3",
+      "bytes": 54571608
+    },
+    {
+      "path": ".cache/fluid-contact-repair/native-tetra-pressure-tests",
+      "sha256": "6c9be0830de1eed9f9b20b781efcf431eec6e7e13a1712d263ac3448deb6cd7a",
+      "bytes": 1958728
+    },
+    {
+      "path": ".cache/fluid-contact-repair/before-native-tetra-pressure-tests",
+      "sha256": "6f7ad9754af3b1e0726209542be7ec3d1734b1614f21609a0ca1be77256f55fa",
+      "bytes": 1940432
+    }
+  ],
+  "scope": "Native timing adapter qualified. Numerical pressure prototypes remain cache-only and are not a production fluid repair. Alpha advanced-fluid lockout unchanged."
+}

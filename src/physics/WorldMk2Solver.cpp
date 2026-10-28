@@ -1,6 +1,8 @@
 #include "WorldInternal.h"
 
 #include <queue>
+#include <limits>
+#include <stdexcept>
 #include <tuple>
 #include <unordered_map>
 
@@ -499,6 +501,31 @@ void SolveBlocks(std::vector<SolverBody> &bodies, std::vector<Row> &rows,
         SolveBlock(bodies, rows, blocks[index], inverseH, useBias, impact);
 }
 } // namespace
+
+PhysicsWorld::VelocityCoupling PhysicsWorld::VelocityCoupling::ForEachSubstep(
+    unsigned iterationsPerSubstep, std::function<void(const Substep&)> callback,
+    std::function<void(const Substep&)> completed) {
+    if (!callback || iterationsPerSubstep == 0 ||
+        iterationsPerSubstep > unsigned(std::numeric_limits<int>::max()) / kMk2Substeps)
+        throw std::invalid_argument("invalid per-substep velocity coupling");
+
+    VelocityCoupling coupling;
+    coupling.iterations = iterationsPerSubstep * unsigned(kMk2Substeps);
+    coupling.afterSubstep = std::move(completed);
+    coupling.solve = [iterationsPerSubstep, callback = std::move(callback)](
+                         float dt, unsigned round) {
+        Substep context;
+        context.stepDeltaTime = dt;
+        context.deltaTime = dt / float(kMk2Substeps);
+        context.index = round / iterationsPerSubstep;
+        context.count = unsigned(kMk2Substeps);
+        context.beginTime = float(context.index) * context.deltaTime;
+        context.iteration = round % iterationsPerSubstep;
+        context.iterations = iterationsPerSubstep;
+        callback(context);
+    };
+    return coupling;
+}
 
 void PhysicsWorld::Impl::Mk2Solve(float dt, const PhysicsWorld::VelocityCoupling *coupling) {
     // A velocity-coupled participant keeps its per-step contract: begin(dt)
@@ -1433,6 +1460,16 @@ void PhysicsWorld::Impl::Mk2Solve(float dt, const PhysicsWorld::VelocityCoupling
             // a ragdoll leg resting on such rows rocked without friction.
             if (row.steadyNormal == 0)
                 row.steadyNormal = row.normalImpulse;
+        }
+        if (coupling && coupling->afterSubstep) {
+            PhysicsWorld::VelocityCoupling::Substep context;
+            context.stepDeltaTime = dt;
+            context.deltaTime = h;
+            context.beginTime = float(begin);
+            context.index = unsigned(step);
+            context.count = unsigned(substeps);
+            context.iteration = context.iterations = unsigned(share);
+            coupling->afterSubstep(context);
         }
         if (coupling && coupling->finish && step + 1 == substeps)
             coupling->finish(dt);

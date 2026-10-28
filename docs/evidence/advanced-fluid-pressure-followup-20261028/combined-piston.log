@@ -1,0 +1,5 @@
+NATIVE_CLOSED_PISTON angle=0 calls=480 displacement=0 speed=0 reaction=1569.60010529 expected=1569.60008186 volume=0.750000023842
+NATIVE_CLOSED_PISTON angle=0.37 calls=480 displacement=0 speed=3.83994125386e-09 reaction=1569.60010529 expected=1569.60008186 volume=0.750000023842
+NATIVE_CLOSED_PISTON angle=1.31 calls=480 displacement=0 speed=6.04778392699e-07 reaction=1569.60018325 expected=1569.60008186 volume=0.750000083447
+SUMMARY checks=33 failures=0
+Scope: native closed-piston pressure timing/load only. This is not a free-surface buoyancy or open-flow runtime qualification.

@@ -506,6 +506,26 @@ public:
         std::function<void(float)> begin;
         std::function<void(float,unsigned)> solve;
         std::function<void(float)> finish;
+
+        struct Substep {
+            float stepDeltaTime = 0;
+            float deltaTime = 0;
+            float beginTime = 0;
+            unsigned index = 0, count = 0;
+            unsigned iteration = 0, iterations = 0;
+        };
+        // Optional completed-boundary observation, after this substep's CCD and
+        // pose advance, before the next acceleration increment. Step-total
+        // contacts/motion publication still occurs at the outer boundary.
+        // iteration == iterations here; the requested solves are complete.
+        std::function<void(const Substep&)> afterSubstep;
+        // Opt-in adapter for participants that advance physical state or form
+        // time-dependent constraints at every native chronological interval.
+        // The ordinary callbacks retain their existing whole-Step convention.
+        // This does not change MK2's substeps or its contact/joint budgets.
+        static VelocityCoupling ForEachSubstep(unsigned iterationsPerSubstep,
+            std::function<void(const Substep&)> solve,
+            std::function<void(const Substep&)> completed = {});
     };
     void Step(float fixedDeltaTime,const VelocityCoupling*);
     // Optional coupled material integration. Scripts and event publication stay

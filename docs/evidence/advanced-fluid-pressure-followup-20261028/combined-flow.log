@@ -1,0 +1,3 @@
+COUPLED_PISTON vy=-0.0566037735849 expected=-0.0566037735849 flow=0.0754716981132 residual=1.31838984174e-16 iterations=1
+SUMMARY checks=25 failures=0
+Scope: pressure/flux assembly; resolved moving-body publication and full free-surface advection remain unqualified.

@@ -1,0 +1,9 @@
+SPARSE_TIMING symbolic_ms=0.179378 factors_ms=0.012494 rebuilt=1
+TETRA_SIDE angle=0 impact=0 tets=6 volume=0.015625 d_vertical_v=0 dE=-0.01248304562 residual=3.30682e-16 iterations=1
+SPARSE_TIMING symbolic_ms=0.150755 factors_ms=0.011422 rebuilt=1
+TETRA_SIDE angle=0 impact=-0.1 tets=6 volume=0.015625 d_vertical_v=0 dE=-0.0836313382295 residual=1.18677e-15 iterations=1
+SPARSE_TIMING symbolic_ms=0.163749 factors_ms=0.015850 rebuilt=1
+TETRA_SIDE angle=1.13 impact=0 tets=6 volume=0.015625 d_vertical_v=5.93939502615e-18 dE=-0.01248304562 residual=3.10207e-16 iterations=1
+SPARSE_TIMING symbolic_ms=0.153460 factors_ms=0.015589 rebuilt=1
+TETRA_SIDE angle=1.13 impact=-0.1 tets=6 volume=0.015625 d_vertical_v=-7.14218181125e-18 dE=-0.0836313382295 residual=8.87203e-16 iterations=1
+TETRA_SIDE checks=16 failures=0

@@ -1,0 +1,53 @@
+Native timing adapter (ordinary supported build):
+  cmake --build build --target judas_velocity_coupling_substep_tests -j2
+  build/judas_velocity_coupling_substep_tests
+The suite is also registered as velocity-coupling-substeps in prealpha_validate.
+
+Numerical prototypes (Linux investigation, NOT enabled production features):
+Use a SEPARATE fresh working copy at this checkpoint. Do not extract over active
+.cache experiments. prototype-sources.tar.gz preserves the tested sources,
+rejected variants, build helpers and continuation notes; its manifest records
+all member hashes. It contains no binaries, third-party research or assets.
+
+  cmake -S . -B build -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Release \
+    -DJUDAS_BUILD_CHANNEL=Experimental -DJUDAS_ENABLE_VALIDATION=ON
+  cmake --build build --target judas_script_tests -j2
+  tar -xzf docs/evidence/advanced-fluid-pressure-followup-20261028/prototype-sources.tar.gz
+
+The helpers reuse that target's generated compiler/link flags and current engine
+library, without replacing native MK2 symbols. Run from the repository root:
+  python3 .cache/fluid-domain-redesign/build_tests.py
+  .cache/fluid-contact-repair/volume-domain-tests
+  python3 .cache/fluid-domain-redesign/build_oracle.py
+  .cache/fluid-contact-repair/wet-tetra-oracle-tests
+  python3 .cache/fluid-domain-redesign/build_flow.py
+  .cache/fluid-contact-repair/face-pressure-tests
+  python3 .cache/fluid-domain-redesign/build_native.py
+  .cache/fluid-contact-repair/native-volume-piston-tests
+  python3 .cache/fluid-domain-redesign/build_open.py
+  .cache/fluid-contact-repair/native-open-flow-tests
+  python3 .cache/fluid-domain-redesign/build_tetra.py
+  .cache/fluid-contact-repair/tetra-pressure-tests
+  python3 .cache/fluid-domain-redesign/build_side.py
+  .cache/fluid-contact-repair/tetra-side-tests
+  python3 .cache/fluid-domain-redesign/build_native_tetra.py
+  .cache/fluid-contact-repair/native-tetra-pressure-tests
+
+Expected latest counts:671 geometric,216 independent oracle,25 hydraulic,
+33 closed-native,480 open-native intervals,44 tetra,16 side,12 native-tetra.
+These scopes are distinct; counts do not certify a complete runtime backend.
+No graphics/display, advanced-fluid re-enablement or release-channel changes.
+
+Matched timing reference:
+  python3 .cache/fluid-domain-before-direct/build.py
+  .cache/fluid-contact-repair/before-native-tetra-pressure-tests
+Run before/after SEQUENTIALLY without builds in flight. Existing raw samples in
+matched-native are three clean sequential process pairs, with binary hashes.
+The 120 native steps include four pressure intervals each, dt1/60,156 tetrahedra.
+This is not the renderer, a whole-game benchmark or a moving/free-surface proof.
+
+Old DenseMixedReference/AffineSchwarz/AffineFluidTests are rejected/reference
+experiments using system LAPACK. They are not needed by the tetra/native tests,
+are not engine/SDK dependencies, and their exit status does not certify all
+printed hydrostatic controls. The explicitly failed polyhedral validation log
+is preserved; don't substitute those simpler checks for the stronger tetra suite.

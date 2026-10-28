@@ -1,0 +1,2 @@
+SUMMARY checks=671 failures=0 milliseconds=45.640700
+Scope: geometric quantity/flux transactions only; pressure velocities, moving-body force, advection flux construction and runtime integration are NOT proved by this test.

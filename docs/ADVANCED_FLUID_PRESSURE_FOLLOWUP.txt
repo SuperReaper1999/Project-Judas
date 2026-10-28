@@ -1,0 +1,154 @@
+ADVANCED FLUID PRESSURE FOLLOW-UP — 2026-10-28
+Status: IN PROGRESS. This is not a qualified replacement fluid backend.
+
+Boundary
+--------
+Experimental development starts at eae1e5175c37d030f1bfce649453707a37647c01.
+Published Alpha, main, Basic Water, M54/M55 and independent fluid research are
+unchanged. The Alpha compiled advanced-fluid lockout remains in place. Nothing
+in this checkpoint re-enables advanced fluids, changes fluid cadence or changes
+MK2 contact/joint budgets.
+
+Qualified native change
+-----------------------
+PhysicsWorld::VelocityCoupling::ForEachSubstep supplies the existing native
+chronological interval, local solve iteration and an optional completed-boundary
+observation. Existing whole-Step callbacks retain their convention. A legacy
+single solve only addresses the first acceleration increment, not all four
+chronological intervals; a new participant must not guess these timings.
+
+The helper changes no integration/collision algorithm. It is not a scene mutation
+hook, a universal coupled-solver convergence guarantee, CCD boundary registration
+or full-world failure rollback. Independently compiled native clients must rebuild
+because VelocityCoupling's layout changes. No JudasJS API was added.
+
+Exact implementation inventory:
+  src/PhysicsWorld.h
+  src/physics/WorldMk2Solver.cpp
+  tests/VelocityCouplingSubstepTests.cpp
+  CMakeLists.txt
+  tools/validation/suites.json
+  docs/MK2_PHYSICS_ARCHITECTURE.md
+This report and docs/evidence/advanced-fluid-pressure-followup-20261028 are the
+corresponding documentation/evidence, not new production fluid implementation.
+
+Native qualification
+--------------------
+Release build (-j2), no compiler warnings. Focused manifest gate:
+  python3 scripts/prealpha_validate.py --build-dir build \
+    --test velocity-coupling-substeps --test mk2-diagnostics \
+    --test mk2-rotation --test mk2-rotation-cold --test physics-continuation \
+    --output .cache/fluid-domain-redesign/qualification \
+    --expected-channel Experimental
+All five passed. New timing test subsequently extended with empty-world timing:
+477 final checks pass. Rotation 31,404; cold rotation write 5/read 3,139.
+Physics scaling 130 passes separately. Build-organization 18 checks pass;
+validation manifest check passes. Existing diagnostics/rotation/continuation and
+scaling output was byte-identical before/after the runtime change. This is not
+universal trajectory certification. No full-suite marathon or platform run.
+Raw gate records retain the original base revision/dirty status at execution;
+final implementation fingerprints explicitly include the newly added test.
+Later documentation clarification did not change executable behaviour.
+
+Numerical work — not merged into FluidWorld
+------------------------------------------
+Sources, build scripts and failures are in .cache/fluid-domain-redesign; a local
+source/evidence archive preserves them. A committed prototype-source archive
+and reproduction instructions are included with the evidence as well. Probe executables use the actual Release
+engine library. None replaces FluidWorld or ProductionFluidCoupling yet.
+
+* Explicit geometric quantity/transaction domain: 671 checks pass. It rejects
+  negative/overcapacity quantity and illegal dry connectivity, preserves paired
+  transfers, and represents thin wet gaps without changing M54 geometry code.
+  A separate analytic tetrahedron-CDF oracle passes 216 checks across scales and
+  oblique directions. It does not reuse the clipping algorithm as its oracle.
+* Reduced hydraulic face-pressure model: 25 checks pass. Native closed piston:
+  33 checks pass across three gravity orientations, 480 solves/120 steps, zero
+  displacement, <=6.05e-7 m/s speed and supported-load impulse within .00011 Ns.
+* Reduced open hydraulic case: 480 native intervals/2 s, actual piston moves
+  .750000023842 -> .644523346424 m; left/right quantities .644523346424 and
+  .855476701260 m3 preserve total 1.5000000476837159 m3 exactly. These reduced
+  models are not full free-surface Navier-Stokes or universal buoyancy proof.
+* Coarse polyhedral affine velocity model REJECTED: float/sink and neutral-body
+  tests passed, but independent fixed-body hydrostatic tests found incorrect
+  torque (3.79456 Ns m for the oblique box) and sideways reaction. Do not ship it
+  or claim that solver convergence alone proves physical pressure correctness.
+  Disturbed seed101 also broke the sparse factorization. Raw failure retained.
+* Tetrahedral affine H(div)-style trial instead: true geometric mass/covariance,
+  trace-free local velocity, normal continuity on owned triangular faces, and
+  non-pulling solid contact. It passes independent Archimedes force, zero torque,
+  calm endpoints, disturbed energy/momentum, exact failure rollback, rigid fields,
+  symbolic-cache invalidation and repeated-pressure tests (44 focused checks).
+  This is a prototype, not a general stability theorem or a production backend.
+* A 15.625 kg water / 80 kg side-contact body trial passes 16 checks: vertical
+  pressure-induced COM velocity is zero aligned and <=7.2e-18 m/s after whole-
+  frame rotation. The original upward launch cannot occur in this instantaneous
+  correctly oriented pressure operator. This is NOT the original half-second
+  runtime reproduction passing. The first mass-oracle failure was naive summation
+  of rounded tetra masses; compensated summation restores the unchanged exact
+  15.625 kg expectation. Both outputs are retained.
+* Actual MK2 tetra pressure: 480 native intervals over2 s in each of two gravity
+  orientations, 12 checks pass. No measured body displacement; final speeds
+  7.45e-9 / 5.998e-7 m/s; reaction306.562511..516 Ns vs306.562515988 expected.
+  An independently simulated body without pressure falls. The fixture is neutral
+  and its mesh stays fixed: moving solids/free surfaces are NOT qualified.
+
+Solver evidence and performance scope
+-------------------------------------
+Dense rank-aware reference passes buoyancy controls but costs400-550 ms per tiny
+solve. A unilateral projected iteration capped256 and is rejected. Increasing a
+reference-only budget exposed an equilibrium, not a production-budget solution.
+
+The sparse trial keeps body motion as an exact low-rank update rather than a dense
+pressure-row clique; precomputes fill indices; invalidates changed topology; and
+reuses a factor only when its complete numeric source is identical. An equality
+candidate is accepted only after EVERY non-pulling multiplier and the complete
+current physical KKT residual pass. Otherwise it falls back to the bounded
+inequality solver. No fictitious compliance, energy clamp, damping or regularizing
+physical diagonal is added. A singular candidate is rejected explicitly. The
+barrier solver remains available for disturbed/separating configurations.
+
+Three clean sequential matched process pairs, same156 tetrahedra, native120 ticks,
+4 pressure intervals/tick, dt1/60 and acceptance thresholds. Median across the
+three runs' per-step summaries (ms), BEFORE -> AFTER:
+  aligned: median33.947 ->6.157, p9534.039 ->6.200, maximum60.779 ->34.199
+  rotated: median33.145 ->6.171, p9533.254 ->6.215, maximum51.330 ->25.032
+Whole2 s simulated rotated case costs about4.0 s ->.76 s host time. This includes
+first-use symbolic preparation and bounded diagnostic output, excludes rendering,
+and is NOT a measured game FPS or a large-lake performance claim. Both versions
+pass native acceptance; printed body endpoints match. Raw per-step samples and
+binary hashes are in matched-native/results.json and associated logs.
+An earlier exploratory pair overlapped a local compile; it is excluded from these
+final comparisons and remains in the local cache.
+
+Remaining engineering / honest failures
+---------------------------------------
+1. Pressure mesh compilation must preserve genuine native geometry ownership.
+   Exact-coordinate hashing of existing cut/wet tetrahedra leaves612/930 apparent
+   internal unmatched faces in aligned/oblique834/931-tetra partitions. This is
+   a topology-construction diagnostic, NOT proof those physical volumes contain
+   cracks. Different triangulations/rounding cannot be converted into adjacency
+   by an arbitrary epsilon that also bridges real dry gaps. The tetra trial uses
+   authored, shared face identities; arbitrary native cuts still need a qualified
+   compiler or equivalent interface construction.
+2. Conservative full3D momentum/volume transport, changing wet topology, moving
+   solid capacities/free surfaces, and arbitrary solids/terrain remain unfinished.
+3. Compose pressure with actual solid contacts, joints, CCD, emission/draining,
+   original terrain/raised-lake fixtures, ownership exclusions and runtime
+   failure/publication policy. A failed material solve must not silently publish
+   partial state; current trial rollback covers its input state, not the world.
+4. Qualify production FluidWorld/script/render integration and practical scaling.
+5. Preserve original production matrix:8,021 checks with two original speed
+   failures (.5072435 and rotated .5497119 versus unchanged .5). FLU-001 is not
+   fixed or relabelled passed here. Legacy PBF cold-save restriction unchanged.
+6. No new human acceptance, Windows/Android validation, patch release or advanced-
+   fluid re-enablement is claimed.
+
+Evidence
+--------
+docs/evidence/advanced-fluid-pressure-followup-20261028/FINGERPRINTS.json
+records final helper implementation and selected binary hashes. Original gate
+records and failures are preserved. Local archive path and continuation notes:
+.cache/fluid-domain-redesign/PROGRESS.txt
+local-archives/fluid-pressure-progress-20261028/
+The separate overnight archive fluid-pressure-paused-20261028 remains untouched.

@@ -1,0 +1,332 @@
+{
+  "archive": "prototype-sources.tar.gz",
+  "archiveSha256": "34d46a2011adaeec947baf6b8ca82090b8fe9b10cf3c90747a28c60fcf07f804",
+  "scope": "Experimental numerical source snapshots. Not linked into the engine and not a qualified fluid backend.",
+  "files": [
+    {
+      "path": ".cache/fluid-contact-repair/setup_probes.py",
+      "sha256": "192fea9fc3920924ea5921e4752beca119b5fc03b96aa13af78467cfa33d5d4a",
+      "bytes": 1218
+    },
+    {
+      "path": ".cache/fluid-domain-before-direct/AffineModel.h",
+      "sha256": "1ea189251afc1988d23692ab8329c789486e8cd94277486c58bc648cf7db0630",
+      "bytes": 10054
+    },
+    {
+      "path": ".cache/fluid-domain-before-direct/MixedProjection.h",
+      "sha256": "5962a2e00f2a0d77e9c63562f8bef642b1b2ad5a1ff6aade663b52865e2874fd",
+      "bytes": 7499
+    },
+    {
+      "path": ".cache/fluid-domain-before-direct/NativeTetraPressureTests.cpp",
+      "sha256": "0b5bd84d3d93e13b5b5c47b308bb027c5934f99c187adecbde38035593a974ce",
+      "bytes": 4424
+    },
+    {
+      "path": ".cache/fluid-domain-before-direct/SparseInterior.h",
+      "sha256": "615f78fd50ea75558abd14b84d3765a672c2f588ef99c92b4a303dd9fabb574c",
+      "bytes": 12788
+    },
+    {
+      "path": ".cache/fluid-domain-before-direct/TetraPressureTests.cpp",
+      "sha256": "1b7429e98afbfabee790feb622cd9eae97b6b29523605a66a039263e49337aa1",
+      "bytes": 10651
+    },
+    {
+      "path": ".cache/fluid-domain-before-direct/VolumeDomain.h",
+      "sha256": "812554fc0bc3216722ed530ab1eb89d10c2b21422cba3e78a3aa53e0ef08dfa3",
+      "bytes": 2356
+    },
+    {
+      "path": ".cache/fluid-domain-before-direct/build.py",
+      "sha256": "190a184e12762fa26355ba0c8c67081e8571808f3e7222f7e751fcf2e541f3fc",
+      "bytes": 415
+    },
+    {
+      "path": ".cache/fluid-domain-redesign/AffineFluidTests-before-condensation.cpp",
+      "sha256": "723df6d20ad4d7e03f2ae224b1334b826ae0e87d246614505b063f9ac6b4df6d",
+      "bytes": 11713
+    },
+    {
+      "path": ".cache/fluid-domain-redesign/AffineFluidTests-first-unilateral.cpp",
+      "sha256": "c8792432edd0b412c675e359eab541ed7bc8d6c31df6e2f296d2bbd7efd71cc2",
+      "bytes": 9900
+    },
+    {
+      "path": ".cache/fluid-domain-redesign/AffineFluidTests.cpp",
+      "sha256": "f3a3535239582f017b38a21cc66a43faf829c3780666887313d7e31f75aec523",
+      "bytes": 14958
+    },
+    {
+      "path": ".cache/fluid-domain-redesign/AffineFluidTests.dense-reference.cpp",
+      "sha256": "8ddc3f7cc5f10972705c6900151f9239d882991aba2101a6c9c879e72a2464c0",
+      "bytes": 14934
+    },
+    {
+      "path": ".cache/fluid-domain-redesign/AffineFluidTests.schwarz-failed.cpp",
+      "sha256": "233e00f4c0f1932df1ab25b5b7d9c99e8853aa77bd99dfc7b9c21004f7d4fe94",
+      "bytes": 14155
+    },
+    {
+      "path": ".cache/fluid-domain-redesign/AffineModel.h",
+      "sha256": "1ea189251afc1988d23692ab8329c789486e8cd94277486c58bc648cf7db0630",
+      "bytes": 10054
+    },
+    {
+      "path": ".cache/fluid-domain-redesign/AffineSchwarz.h",
+      "sha256": "eb205551560b8a2d7492b110fe335b2c8a58bc8e86231f0bb1b6c9584757499e",
+      "bytes": 2989
+    },
+    {
+      "path": ".cache/fluid-domain-redesign/AffineValidation.cpp",
+      "sha256": "bf1b37c8e2a572b18db6d4288ae5aaea0abce18812a59ecad51e3c52bc38d4a5",
+      "bytes": 6577
+    },
+    {
+      "path": ".cache/fluid-domain-redesign/DenseMixedReference.h",
+      "sha256": "36420cf1f118feeebcc3c62230275239fe6ba90f360eeec3dba04322ef6e6d12",
+      "bytes": 6163
+    },
+    {
+      "path": ".cache/fluid-domain-redesign/FaceOwnershipProbe.cpp",
+      "sha256": "83e24ddf2155a61b09dd27c2ff6d3749de5a2297ff960f7f2eef35f0608c64d0",
+      "bytes": 2178
+    },
+    {
+      "path": ".cache/fluid-domain-redesign/FacePressure-before-upwind.cpp",
+      "sha256": "f9e0d7bc2c10b3dd6e8a5da1b921f16e99c4d9e7944fefe10bbbed4282eba841",
+      "bytes": 4704
+    },
+    {
+      "path": ".cache/fluid-domain-redesign/FacePressure.cpp",
+      "sha256": "65a0101d150e3f253d721573ba7162d1631da7749b9893b9c3328ba68a6876ed",
+      "bytes": 6050
+    },
+    {
+      "path": ".cache/fluid-domain-redesign/FacePressure.h",
+      "sha256": "33a331de9ae4b422f9cda180509efce9a4200819ae29111b956a69f486893240",
+      "bytes": 1242
+    },
+    {
+      "path": ".cache/fluid-domain-redesign/FacePressureTests.cpp",
+      "sha256": "2dc2fa2f5de8a412ea02ab785b2bc51d48c1e82ed5de0e77b011cb8d04d2b267",
+      "bytes": 4383
+    },
+    {
+      "path": ".cache/fluid-domain-redesign/GeometricFlux.cpp",
+      "sha256": "13ae2b898526b697f708a23333303a232ae6e942b80aa981f7be2a082cc1f102",
+      "bytes": 4042
+    },
+    {
+      "path": ".cache/fluid-domain-redesign/GeometricFlux.h",
+      "sha256": "2a45fee6a2905ff4dd82ac5b8f029752e08585a531d2daf1e5fd4c856f38f4d9",
+      "bytes": 717
+    },
+    {
+      "path": ".cache/fluid-domain-redesign/MixedProjection-before-preconditioning.h",
+      "sha256": "cdfe8a81922f5651112248ab5249071555fe0516868209c501ee8c26170d0c36",
+      "bytes": 6992
+    },
+    {
+      "path": ".cache/fluid-domain-redesign/MixedProjection-before-warm-sweep.h",
+      "sha256": "bf27b41e309b1f06bd8f2cb9b09f0b06d3930d0679aff43f92b9bae7ba42f039",
+      "bytes": 6031
+    },
+    {
+      "path": ".cache/fluid-domain-redesign/MixedProjection.h",
+      "sha256": "5962a2e00f2a0d77e9c63562f8bef642b1b2ad5a1ff6aade663b52865e2874fd",
+      "bytes": 7499
+    },
+    {
+      "path": ".cache/fluid-domain-redesign/NativeOpenFlowTests-basic-invariants.cpp",
+      "sha256": "d4937c9d137723fc5b69d9045bccb5fa920c77410d87eac0f51ca573f748adfb",
+      "bytes": 2491
+    },
+    {
+      "path": ".cache/fluid-domain-redesign/NativeOpenFlowTests-before-geometric-flux.cpp",
+      "sha256": "15a8c431a1a9e04f2e7793ea28becc81f6d67e6c01f3f6f024f15ebc670884aa",
+      "bytes": 3820
+    },
+    {
+      "path": ".cache/fluid-domain-redesign/NativeOpenFlowTests.cpp",
+      "sha256": "1284a39b32f2cb9ab7e71cc4b527ec7624998205c1047435335ae352a6195464",
+      "bytes": 4233
+    },
+    {
+      "path": ".cache/fluid-domain-redesign/NativeTetraPressureTests.cpp",
+      "sha256": "223eff5146e9e3c69a40c4ee21e963d1d73d916b16fc2994caada9364d070303",
+      "bytes": 4497
+    },
+    {
+      "path": ".cache/fluid-domain-redesign/NativeVolumePistonTests-before-domain-pressure.cpp",
+      "sha256": "c3ff00e9f3817783e264dbbdd0266dc4e9a3c16514d01d216d82dc3f3e3f7137",
+      "bytes": 4591
+    },
+    {
+      "path": ".cache/fluid-domain-redesign/NativeVolumePistonTests-before-substep-adapter.cpp",
+      "sha256": "a298816d8bc16da5cd5a6de2c9f1570b87a4b10984861deb2208b697af610dcf",
+      "bytes": 4456
+    },
+    {
+      "path": ".cache/fluid-domain-redesign/NativeVolumePistonTests.cpp",
+      "sha256": "1eb7f268de1097ca19d505acac2153d1ce03ab12b144814e74e521e643c6e23c",
+      "bytes": 4893
+    },
+    {
+      "path": ".cache/fluid-domain-redesign/PROGRESS.txt",
+      "sha256": "5520a6ed61423456f4733a10ebebc40c2d8c45c23cb133809490174048219218",
+      "bytes": 11915
+    },
+    {
+      "path": ".cache/fluid-domain-redesign/SparseInterior.first-correct-slow.h",
+      "sha256": "b45a7b043ba0258d028b6e16858c3caf10648ea497ac02ce8002e90a2ad51423",
+      "bytes": 7465
+    },
+    {
+      "path": ".cache/fluid-domain-redesign/SparseInterior.full-body-gram-slow.h",
+      "sha256": "8a673001b6cf568d51c2a9cd77d3924c80f9439782d952563ad08b4814b888c1",
+      "bytes": 8185
+    },
+    {
+      "path": ".cache/fluid-domain-redesign/SparseInterior.h",
+      "sha256": "c819a86b837f5f11c45c5da2cf5aa67171471eb5c62d71f4de1a46c3716d7268",
+      "bytes": 14384
+    },
+    {
+      "path": ".cache/fluid-domain-redesign/SparseInterior.indexed-symbolic-correct.h",
+      "sha256": "e716c7ecb27d222d1a0ba9ab70cf03f79f2d5e8986283b3add2286507f1c4304",
+      "bytes": 12002
+    },
+    {
+      "path": ".cache/fluid-domain-redesign/SparseInterior.lowrank-correct.h",
+      "sha256": "66ca18eae5ee8b13737ad982c69387c970ec2c1bc6c61034516bdd19e43cc487",
+      "bytes": 10591
+    },
+    {
+      "path": ".cache/fluid-domain-redesign/SparseInterior.warm-kkt-qualified.h",
+      "sha256": "615f78fd50ea75558abd14b84d3765a672c2f588ef99c92b4a303dd9fabb574c",
+      "bytes": 12788
+    },
+    {
+      "path": ".cache/fluid-domain-redesign/TetraPressureTests.before-cache-tests.cpp",
+      "sha256": "b45a78810636595fc5b0f4f0f6b898bb113347fea111a75a8bba2b561ed2fab2",
+      "bytes": 8230
+    },
+    {
+      "path": ".cache/fluid-domain-redesign/TetraPressureTests.before-side.cpp",
+      "sha256": "49c69908eaf2b33de4ab1c862c84f047b23fc8cd607eaaded841b8bb809f941b",
+      "bytes": 10672
+    },
+    {
+      "path": ".cache/fluid-domain-redesign/TetraPressureTests.cpp",
+      "sha256": "5ad2c6e152a9bb4a676ea1e63f2ddb0ae5383cfec57b6b5393ead5524470051d",
+      "bytes": 10863
+    },
+    {
+      "path": ".cache/fluid-domain-redesign/TetraSideTests.cpp",
+      "sha256": "5d8c333cb20835efc65e9248aa218c075c1778fc836b6d294d61f6b0f1dbe4d0",
+      "bytes": 1738
+    },
+    {
+      "path": ".cache/fluid-domain-redesign/VolumeDomain-before-compensated-volume.cpp",
+      "sha256": "2e619a7ec538a0c9c7656bb338f92c95005fb5ffaa2ee65e8b623fe4b760aa69",
+      "bytes": 17027
+    },
+    {
+      "path": ".cache/fluid-domain-redesign/VolumeDomain-before-face-provenance.cpp",
+      "sha256": "4ce6e8985f5810cee14bb5a2a1b8a388fdd23f38f6e39952d34c8ba735a8e315",
+      "bytes": 15924
+    },
+    {
+      "path": ".cache/fluid-domain-redesign/VolumeDomain-before-scale-normalization.cpp",
+      "sha256": "5ab50b6b55030ad1d252ca2e5c3c01d739ab1052d87ad5e5e1796fb7fc3133ae",
+      "bytes": 15143
+    },
+    {
+      "path": ".cache/fluid-domain-redesign/VolumeDomain-before-wet-tetra-clipping.cpp",
+      "sha256": "9d09fed0d4e2d8a38265153919d7102223289714a3d6509769d52da50a6434a3",
+      "bytes": 18012
+    },
+    {
+      "path": ".cache/fluid-domain-redesign/VolumeDomain.cpp",
+      "sha256": "1d68918b1108bb2edf4b6b13ae5c9ec5ca62ffd4fef7ac21044f26b76d3632cf",
+      "bytes": 22567
+    },
+    {
+      "path": ".cache/fluid-domain-redesign/VolumeDomain.h",
+      "sha256": "812554fc0bc3216722ed530ab1eb89d10c2b21422cba3e78a3aa53e0ef08dfa3",
+      "bytes": 2356
+    },
+    {
+      "path": ".cache/fluid-domain-redesign/VolumeDomainTests-initial.cpp",
+      "sha256": "6e29ea6f256e57140222c0ed929285b8347173ddb9ea71bbaa45ca198f805944",
+      "bytes": 7517
+    },
+    {
+      "path": ".cache/fluid-domain-redesign/VolumeDomainTests.cpp",
+      "sha256": "cfc3d3ee7ee879043e7bb70c4b1cced491409d33c9d746a1e2264cf6c348cc7d",
+      "bytes": 11196
+    },
+    {
+      "path": ".cache/fluid-domain-redesign/WetTetraOracleTests.cpp",
+      "sha256": "c878846ba81653a7796b8a4566f4911117cbe3b39acb166e74dc197ade36750e",
+      "bytes": 2026
+    },
+    {
+      "path": ".cache/fluid-domain-redesign/build_affine.py",
+      "sha256": "a9dbba7032513da668b594672be4ee3d6e756f752430ee50759359437edeafd2",
+      "bytes": 398
+    },
+    {
+      "path": ".cache/fluid-domain-redesign/build_affine_validation.py",
+      "sha256": "aaf61f033e060a79d42ae2db8c0d753d952f7767b33c60fff02a3c6aa893ac0f",
+      "bytes": 396
+    },
+    {
+      "path": ".cache/fluid-domain-redesign/build_flow.py",
+      "sha256": "840a14b4709b08650572558f1b6a4d3f89fb6eb0cd82e8116c07b788a6a4cb39",
+      "bytes": 524
+    },
+    {
+      "path": ".cache/fluid-domain-redesign/build_native.py",
+      "sha256": "95f625f3f69cbc34cb0d3cca2f6f99806140a39bbe3cd99a1563b2237fe58c47",
+      "bytes": 577
+    },
+    {
+      "path": ".cache/fluid-domain-redesign/build_native_tetra.py",
+      "sha256": "2eee169a624833d10afa472ff959047e64a4092986b6490388f24bf512cc1e2b",
+      "bytes": 366
+    },
+    {
+      "path": ".cache/fluid-domain-redesign/build_open.py",
+      "sha256": "4faa7ac6cd4ad624d83adaa0417c247e893d98e611a83ad0a80bf90be7161f6b",
+      "bytes": 607
+    },
+    {
+      "path": ".cache/fluid-domain-redesign/build_oracle.py",
+      "sha256": "1cda904b7a7485d12fb6bc3f5f510ce2ea57a9ac2106598aacad70ecec86c5ca",
+      "bytes": 384
+    },
+    {
+      "path": ".cache/fluid-domain-redesign/build_ownership.py",
+      "sha256": "50f6e992f2dbdd5bebd5f9f770ddefaed5d77a2c27fe8a2174b8fa274b6b849b",
+      "bytes": 346
+    },
+    {
+      "path": ".cache/fluid-domain-redesign/build_side.py",
+      "sha256": "9603aeb60a2c629a6e5da8f90acd61d1c27f444439afc6ae2bb7d777a0f575a7",
+      "bytes": 334
+    },
+    {
+      "path": ".cache/fluid-domain-redesign/build_tests.py",
+      "sha256": "148c12cbfb6c3e5d70d1a74291c0f50f043d60da8142b74b1375bf6919e472a3",
+      "bytes": 376
+    },
+    {
+      "path": ".cache/fluid-domain-redesign/build_tetra.py",
+      "sha256": "22f91c52f77ecff5183df69e7d5ef84e524b6d452e4019edda718bcd037db3ef",
+      "bytes": 346
+    }
+  ]
+}
