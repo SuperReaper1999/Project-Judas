@@ -93,12 +93,16 @@ jobs:
         shell: pwsh
         run: |
           # Avoid the pinned vcpkg helper's expired MSYS2 runtime download.
-          $installer = "$env:RUNNER_TEMP/pkgconf.msi"
+          $installer = Join-Path $env:RUNNER_TEMP 'pkgconf.msi'
           Invoke-WebRequest 'https://github.com/pkgconf/pkgconf/releases/download/pkgconf-3.0.8/pkgconf-x64-3.0.8.msi' -OutFile $installer
           if ((Get-FileHash $installer -Algorithm SHA256).Hash -ne 'A236479BBE403B202816745BEF19AFE2D6240606F28AB1F008BA0F33FBFAE43E') { throw 'pkgconf installer checksum mismatch' }
-          $destination = "$env:RUNNER_TEMP/pkgconf"
-          $extract = Start-Process msiexec.exe -ArgumentList @('/a', "`"$installer`"", '/qn', "TARGETDIR=`"$destination`"") -Wait -PassThru
-          if ($extract.ExitCode -ne 0) { throw "pkgconf extraction failed: $($extract.ExitCode)" }
+          $destination = Join-Path $env:RUNNER_TEMP 'pkgconf'
+          $installLog = Join-Path $env:RUNNER_TEMP 'pkgconf-install.log'
+          $extract = Start-Process msiexec.exe -ArgumentList @('/a', "`"$installer`"", '/qn', '/L*V', "`"$installLog`"", "TARGETDIR=`"$destination`"") -Wait -PassThru
+          if ($extract.ExitCode -ne 0) {
+            Get-Content $installLog -Tail 60 -ErrorAction SilentlyContinue
+            throw "pkgconf extraction failed: $($extract.ExitCode)"
+          }
           $pkgconf = Get-ChildItem $destination -Recurse -Filter pkgconf.exe | Select-Object -First 1
           if (!$pkgconf) { throw 'Native pkgconf executable missing after extraction' }
           & $pkgconf.FullName --version

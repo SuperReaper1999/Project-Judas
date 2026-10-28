@@ -1,0 +1,359 @@
+﻿2026-10-28T23:18:45.0897322Z Current runner version: '2.338.0'
+2026-10-28T23:18:45.0923249Z ##[group]Runner Image Provisioner
+2026-10-28T23:18:45.0924398Z Hosted Compute Agent
+2026-10-28T23:18:45.0925323Z Version: 20261021.618
+2026-10-28T23:18:45.0925923Z Commit: 21505ad2541d5be6135ed84fc33697146cf75b8e
+2026-10-28T23:18:45.0926634Z Build Date: 2026-10-21T00:45:21Z
+2026-10-28T23:18:45.0927281Z Worker ID: {0ba9b456-9e08-4f78-9ced-09e69969c9b4}
+2026-10-28T23:18:45.0927941Z Region: westus
+2026-10-28T23:18:45.0928473Z Cloud: Azure
+2026-10-28T23:18:45.0928982Z ##[endgroup]
+2026-10-28T23:18:45.0930714Z ##[group]Operating System
+2026-10-28T23:18:45.0931372Z Microsoft Windows Server 2025
+2026-10-28T23:18:45.0931947Z 10.0.26100
+2026-10-28T23:18:45.0932458Z Datacenter
+2026-10-28T23:18:45.0932953Z ##[endgroup]
+2026-10-28T23:18:45.0933471Z ##[group]Runner Image
+2026-10-28T23:18:45.0934052Z Image: windows-2025-vs2026
+2026-10-28T23:18:45.0934631Z Version: 20261021.278.1
+2026-10-28T23:18:45.0936070Z Included Software: https://github.com/actions/runner-images/blob/win25-vs2026/20261021.278/images/windows/Windows2025-VS2026-Readme.md
+2026-10-28T23:18:45.0937704Z Image Release: https://github.com/actions/runner-images/releases/tag/win25-vs2026%2F20261021.278
+2026-10-28T23:18:45.0938693Z ##[endgroup]
+2026-10-28T23:18:45.0939780Z ##[group]GITHUB_TOKEN Permissions
+2026-10-28T23:18:45.0941786Z Contents: read
+2026-10-28T23:18:45.0942370Z Metadata: read
+2026-10-28T23:18:45.0942960Z ##[endgroup]
+2026-10-28T23:18:45.0945373Z Secret source: Actions
+2026-10-28T23:18:45.0946272Z Cache mode: write
+2026-10-28T23:18:45.0946961Z Prepare workflow directory
+2026-10-28T23:18:45.1549473Z Prepare all required actions
+2026-10-28T23:18:45.1600469Z Getting action download info
+2026-10-28T23:18:45.5202131Z Download action repository 'actions/checkout@v7' (SHA:3d3c42e5aac5ba805825da76410c181273ba90b1)
+2026-10-28T23:18:45.6499899Z Download action repository 'actions/upload-artifact@v7' (SHA:cf430e030ddbb5b0abf93d22962f4752f3646cd9)
+2026-10-28T23:18:45.8599542Z Complete job name: windows
+2026-10-28T23:18:46.0010226Z ##[group]Run if ($env:CANDIDATE -notmatch '^[0-9a-f]{40}$') { throw 'Exact commit required' }
+2026-10-28T23:18:46.0011961Z [36;1mif ($env:CANDIDATE -notmatch '^[0-9a-f]{40}$') { throw 'Exact commit required' }[0m
+2026-10-28T23:18:46.0639498Z shell: C:\Program Files\PowerShell\7\pwsh.EXE -command ". '{0}'"
+2026-10-28T23:18:46.0641677Z env:
+2026-10-28T23:18:46.0642481Z   CANDIDATE: 4b59adbb65e0eb3f9e708f555596d3c75ad0c202
+2026-10-28T23:18:46.0643473Z   CHANNEL: Alpha
+2026-10-28T23:18:46.0644140Z   PYTHONUTF8: 1
+2026-10-28T23:18:46.0644800Z ##[endgroup]
+2026-10-28T23:18:46.5775517Z ##[group]Run actions/checkout@v7
+2026-10-28T23:18:46.5776542Z with:
+2026-10-28T23:18:46.5777337Z   ref: 4b59adbb65e0eb3f9e708f555596d3c75ad0c202
+2026-10-28T23:18:46.5778384Z   persist-credentials: false
+2026-10-28T23:18:46.5779313Z   repository: SuperReaper1999/Project-Judas
+2026-10-28T23:18:46.5786994Z   token: ***
+2026-10-28T23:18:46.5787635Z   ssh-strict: true
+2026-10-28T23:18:46.5788273Z   ssh-user: git
+2026-10-28T23:18:46.5788759Z   clean: true
+2026-10-28T23:18:46.5789274Z   sparse-checkout-cone-mode: true
+2026-10-28T23:18:46.5789900Z   fetch-depth: 1
+2026-10-28T23:18:46.5790401Z   fetch-tags: false
+2026-10-28T23:18:46.5790909Z   show-progress: true
+2026-10-28T23:18:46.5791427Z   lfs: false
+2026-10-28T23:18:46.5791903Z   submodules: false
+2026-10-28T23:18:46.5792431Z   set-safe-directory: true
+2026-10-28T23:18:46.5793467Z   allow-unsafe-pr-checkout: false
+2026-10-28T23:18:46.5794113Z env:
+2026-10-28T23:18:46.5794708Z   CANDIDATE: 4b59adbb65e0eb3f9e708f555596d3c75ad0c202
+2026-10-28T23:18:46.5795464Z   CHANNEL: Alpha
+2026-10-28T23:18:46.5795954Z   PYTHONUTF8: 1
+2026-10-28T23:18:46.5796443Z ##[endgroup]
+2026-10-28T23:18:46.7234867Z Syncing repository: SuperReaper1999/Project-Judas
+2026-10-28T23:18:46.7236815Z ##[group]Getting Git version info
+2026-10-28T23:18:46.7237554Z Working directory is 'D:\a\Project-Judas\Project-Judas'
+2026-10-28T23:18:46.8131731Z [command]"C:\Program Files\Git\bin\git.exe" version
+2026-10-28T23:18:47.1956610Z git version 2.56.0.windows.2
+2026-10-28T23:18:47.2010438Z ##[endgroup]
+2026-10-28T23:18:47.2028361Z Temporarily overriding HOME='D:\a\_temp\1dd0ac3f-08dc-4ad2-b871-05ce5848ea86' before making global git config changes
+2026-10-28T23:18:47.2030144Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-28T23:18:47.2038061Z [command]"C:\Program Files\Git\bin\git.exe" config --global --add safe.directory D:\a\Project-Judas\Project-Judas
+2026-10-28T23:18:47.2654124Z Deleting the contents of 'D:\a\Project-Judas\Project-Judas'
+2026-10-28T23:18:47.2658678Z ##[group]Determining repository object format
+2026-10-28T23:18:47.2660486Z ##[endgroup]
+2026-10-28T23:18:47.2662067Z ##[group]Initializing the repository
+2026-10-28T23:18:47.2670275Z [command]"C:\Program Files\Git\bin\git.exe" init D:\a\Project-Judas\Project-Judas
+2026-10-28T23:18:47.3621846Z Initialized empty Git repository in D:/a/Project-Judas/Project-Judas/.git/
+2026-10-28T23:18:47.3669219Z [command]"C:\Program Files\Git\bin\git.exe" remote add origin https://github.com/SuperReaper1999/Project-Judas
+2026-10-28T23:18:47.4310069Z ##[endgroup]
+2026-10-28T23:18:47.4311899Z ##[group]Disabling automatic garbage collection
+2026-10-28T23:18:47.4319398Z [command]"C:\Program Files\Git\bin\git.exe" config --local gc.auto 0
+2026-10-28T23:18:47.4689695Z ##[endgroup]
+2026-10-28T23:18:47.4691490Z ##[group]Setting up auth
+2026-10-28T23:18:47.4692786Z Removing SSH command configuration
+2026-10-28T23:18:47.4699206Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp core\.sshCommand
+2026-10-28T23:18:47.5074373Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :\""
+2026-10-28T23:18:48.9132776Z Removing HTTP extra header
+2026-10-28T23:18:48.9142919Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-28T23:18:48.9527251Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :\""
+2026-10-28T23:18:49.5094583Z Removing includeIf entries pointing to credentials config files
+2026-10-28T23:18:49.5108664Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-28T23:18:49.5482163Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "git config --local --show-origin --name-only --get-regexp remote.origin.url"
+2026-10-28T23:18:50.1565127Z [command]"C:\Program Files\Git\bin\git.exe" config --file D:\a\_temp\git-credentials-e0b7ffcf-fa5f-4e4d-b388-07a8a138641c.config http.https://github.com/.extraheader "AUTHORIZATION: basic ***"
+2026-10-28T23:18:50.2100119Z [command]"C:\Program Files\Git\bin\git.exe" config --local includeIf.gitdir:D:/a/Project-Judas/Project-Judas/.git.path D:\a\_temp\git-credentials-e0b7ffcf-fa5f-4e4d-b388-07a8a138641c.config
+2026-10-28T23:18:50.2527419Z [command]"C:\Program Files\Git\bin\git.exe" config --local includeIf.gitdir:D:/a/Project-Judas/Project-Judas/.git/worktrees/*.path D:\a\_temp\git-credentials-e0b7ffcf-fa5f-4e4d-b388-07a8a138641c.config
+2026-10-28T23:18:50.3358473Z [command]"C:\Program Files\Git\bin\git.exe" config --local includeIf.gitdir:/github/workspace/.git.path /github/runner_temp/git-credentials-e0b7ffcf-fa5f-4e4d-b388-07a8a138641c.config
+2026-10-28T23:18:50.3911079Z [command]"C:\Program Files\Git\bin\git.exe" config --local includeIf.gitdir:/github/workspace/.git/worktrees/*.path /github/runner_temp/git-credentials-e0b7ffcf-fa5f-4e4d-b388-07a8a138641c.config
+2026-10-28T23:18:50.4342459Z ##[endgroup]
+2026-10-28T23:18:50.4343419Z ##[group]Fetching the repository
+2026-10-28T23:18:50.4359215Z [command]"C:\Program Files\Git\bin\git.exe" -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin 4b59adbb65e0eb3f9e708f555596d3c75ad0c202
+2026-10-28T23:19:31.1499685Z From https://github.com/SuperReaper1999/Project-Judas
+2026-10-28T23:19:31.1500584Z  * branch              4b59adbb65e0eb3f9e708f555596d3c75ad0c202 -> FETCH_HEAD
+2026-10-28T23:19:31.1566970Z [command]"C:\Program Files\Git\bin\git.exe" rev-parse --verify --quiet 4b59adbb65e0eb3f9e708f555596d3c75ad0c202^{object}
+2026-10-28T23:19:31.2013518Z 4b59adbb65e0eb3f9e708f555596d3c75ad0c202
+2026-10-28T23:19:31.2056738Z ##[endgroup]
+2026-10-28T23:19:31.2057351Z ##[group]Determining the checkout info
+2026-10-28T23:19:31.2058126Z ##[endgroup]
+2026-10-28T23:19:31.2070293Z [command]"C:\Program Files\Git\bin\git.exe" sparse-checkout disable
+2026-10-28T23:19:31.2595087Z [command]"C:\Program Files\Git\bin\git.exe" config --local --unset-all extensions.worktreeConfig
+2026-10-28T23:19:31.3018800Z ##[group]Checking out the ref
+2026-10-28T23:19:31.3028884Z [command]"C:\Program Files\Git\bin\git.exe" checkout --progress --force 4b59adbb65e0eb3f9e708f555596d3c75ad0c202
+2026-10-28T23:19:32.5407116Z Updating files:   4% (2724/62599)
+2026-10-28T23:19:32.7779137Z Updating files:   5% (3130/62599)
+2026-10-28T23:19:32.9500008Z Updating files:   6% (3756/62599)
+2026-10-28T23:19:33.1769326Z Updating files:   7% (4382/62599)
+2026-10-28T23:19:33.4811723Z Updating files:   8% (5008/62599)
+2026-10-28T23:19:33.6380221Z Updating files:   8% (5210/62599)
+2026-10-28T23:19:33.8372108Z Updating files:   9% (5634/62599)
+2026-10-28T23:19:34.0495540Z Updating files:  10% (6260/62599)
+2026-10-28T23:19:34.2765427Z Updating files:  11% (6886/62599)
+2026-10-28T23:19:34.4480529Z Updating files:  12% (7512/62599)
+2026-10-28T23:19:34.4788455Z Updating files:  12% (7999/62599)
+2026-10-28T23:19:34.8423516Z Updating files:  13% (8138/62599)
+2026-10-28T23:19:35.0558190Z Updating files:  14% (8764/62599)
+2026-10-28T23:19:35.2885531Z Updating files:  15% (9390/62599)
+2026-10-28T23:19:35.4489171Z Updating files:  16% (10016/62599)
+2026-10-28T23:19:35.5194237Z Updating files:  16% (10501/62599)
+2026-10-28T23:19:35.7335764Z Updating files:  17% (10642/62599)
+2026-10-28T23:19:35.9686414Z Updating files:  18% (11268/62599)
+2026-10-28T23:19:36.3575935Z Updating files:  19% (11894/62599)
+2026-10-28T23:19:36.4498776Z Updating files:  20% (12520/62599)
+2026-10-28T23:19:36.6263210Z Updating files:  20% (12744/62599)
+2026-10-28T23:19:36.8751459Z Updating files:  21% (13146/62599)
+2026-10-28T23:19:37.1161208Z Updating files:  22% (13772/62599)
+2026-10-28T23:19:37.3188259Z Updating files:  23% (14398/62599)
+2026-10-28T23:19:37.4764225Z Updating files:  24% (15024/62599)
+2026-10-28T23:19:37.6937645Z Updating files:  24% (15228/62599)
+2026-10-28T23:19:37.9229054Z Updating files:  25% (15650/62599)
+2026-10-28T23:19:38.1525872Z Updating files:  26% (16276/62599)
+2026-10-28T23:19:38.4567959Z Updating files:  27% (16902/62599)
+2026-10-28T23:19:38.6454355Z Updating files:  27% (17287/62599)
+2026-10-28T23:19:39.3216188Z Updating files:  28% (17528/62599)
+2026-10-28T23:19:39.4697125Z Updating files:  29% (18154/62599)
+2026-10-28T23:19:39.7818992Z Updating files:  29% (18502/62599)
+2026-10-28T23:19:40.0595677Z Updating files:  30% (18780/62599)
+2026-10-28T23:19:40.4715828Z Updating files:  31% (19406/62599)
+2026-10-28T23:19:40.5138189Z Updating files:  31% (19915/62599)
+2026-10-28T23:19:40.8548208Z Updating files:  32% (20032/62599)
+2026-10-28T23:19:41.1543071Z Updating files:  33% (20658/62599)
+2026-10-28T23:19:41.4751724Z Updating files:  34% (21284/62599)
+2026-10-28T23:19:41.4906838Z Updating files:  34% (21860/62599)
+2026-10-28T23:19:41.7975638Z Updating files:  35% (21910/62599)
+2026-10-28T23:19:42.1899951Z Updating files:  36% (22536/62599)
+2026-10-28T23:19:42.4808577Z Updating files:  37% (23162/62599)
+2026-10-28T23:19:42.4882712Z Updating files:  38% (23788/62599)
+2026-10-28T23:19:42.7567398Z Updating files:  38% (23821/62599)
+2026-10-28T23:19:43.2023667Z Updating files:  39% (24414/62599)
+2026-10-28T23:19:43.5440611Z Updating files:  40% (25040/62599)
+2026-10-28T23:19:43.9229104Z Updating files:  40% (25371/62599)
+2026-10-28T23:19:44.3667686Z Updating files:  41% (25666/62599)
+2026-10-28T23:19:44.4914884Z Updating files:  42% (26292/62599)
+2026-10-28T23:19:44.7585264Z Updating files:  42% (26474/62599)
+2026-10-28T23:19:45.1847931Z Updating files:  43% (26918/62599)
+2026-10-28T23:19:45.3954353Z Updating files:  44% (27544/62599)
+2026-10-28T23:19:45.4980679Z Updating files:  45% (28170/62599)
+2026-10-28T23:19:45.6531830Z Updating files:  45% (28348/62599)
+2026-10-28T23:19:45.9719119Z Updating files:  46% (28796/62599)
+2026-10-28T23:19:46.1947387Z Updating files:  47% (29422/62599)
+2026-10-28T23:19:46.3677013Z Updating files:  48% (30048/62599)
+2026-10-28T23:19:46.5117228Z Updating files:  49% (30674/62599)
+2026-10-28T23:19:46.5549897Z Updating files:  49% (31152/62599)
+2026-10-28T23:19:46.7498634Z Updating files:  50% (31300/62599)
+2026-10-28T23:19:46.9195192Z Updating files:  51% (31926/62599)
+2026-10-28T23:19:47.0981758Z Updating files:  52% (32552/62599)
+2026-10-28T23:19:47.3177869Z Updating files:  53% (33178/62599)
+2026-10-28T23:19:47.5256410Z Updating files:  54% (33804/62599)
+2026-10-28T23:19:47.7132174Z Updating files:  54% (34206/62599)
+2026-10-28T23:19:48.4652001Z Updating files:  55% (34430/62599)
+2026-10-28T23:19:48.5268729Z Updating files:  56% (35056/62599)
+2026-10-28T23:19:48.7989320Z Updating files:  56% (35113/62599)
+2026-10-28T23:19:49.1542206Z Updating files:  57% (35682/62599)
+2026-10-28T23:19:49.4180352Z Updating files:  58% (36308/62599)
+2026-10-28T23:19:49.5282594Z Updating files:  59% (36934/62599)
+2026-10-28T23:19:49.6681080Z Updating files:  59% (37147/62599)
+2026-10-28T23:19:50.5303523Z Updating files:  60% (37560/62599)
+2026-10-28T23:19:50.6238663Z Updating files:  60% (38138/62599)
+2026-10-28T23:19:51.0798438Z Updating files:  61% (38186/62599)
+2026-10-28T23:19:51.5312909Z Updating files:  62% (38812/62599)
+2026-10-28T23:19:51.5384714Z Updating files:  62% (39405/62599)
+2026-10-28T23:19:52.0890120Z Updating files:  63% (39438/62599)
+2026-10-28T23:19:52.3556472Z Updating files:  64% (40064/62599)
+2026-10-28T23:19:52.5326702Z Updating files:  65% (40690/62599)
+2026-10-28T23:19:52.5545783Z Updating files:  65% (41230/62599)
+2026-10-28T23:19:52.8516792Z Updating files:  66% (41316/62599)
+2026-10-28T23:19:53.0717045Z Updating files:  67% (41942/62599)
+2026-10-28T23:19:53.2890989Z Updating files:  68% (42568/62599)
+2026-10-28T23:19:53.5132016Z Updating files:  69% (43194/62599)
+2026-10-28T23:19:53.5680612Z Updating files:  70% (43820/62599)
+2026-10-28T23:19:53.8115445Z Updating files:  70% (43856/62599)
+2026-10-28T23:19:54.0258749Z Updating files:  71% (44446/62599)
+2026-10-28T23:19:54.2804358Z Updating files:  72% (45072/62599)
+2026-10-28T23:19:54.4975867Z Updating files:  73% (45698/62599)
+2026-10-28T23:19:54.5398746Z Updating files:  74% (46324/62599)
+2026-10-28T23:19:54.6752283Z Updating files:  74% (46470/62599)
+2026-10-28T23:19:54.8947823Z Updating files:  75% (46950/62599)
+2026-10-28T23:19:55.1159190Z Updating files:  76% (47576/62599)
+2026-10-28T23:19:55.3170204Z Updating files:  77% (48202/62599)
+2026-10-28T23:19:55.5106127Z Updating files:  78% (48828/62599)
+2026-10-28T23:19:55.5414151Z Updating files:  79% (49454/62599)
+2026-10-28T23:19:55.7669517Z Updating files:  79% (49499/62599)
+2026-10-28T23:19:55.9782368Z Updating files:  80% (50080/62599)
+2026-10-28T23:19:56.1412338Z Updating files:  81% (50706/62599)
+2026-10-28T23:19:56.3082045Z Updating files:  82% (51332/62599)
+2026-10-28T23:19:56.4842045Z Updating files:  83% (51958/62599)
+2026-10-28T23:19:56.5421213Z Updating files:  84% (52584/62599)
+2026-10-28T23:19:56.7277136Z Updating files:  84% (52727/62599)
+2026-10-28T23:19:57.0123381Z Updating files:  85% (53210/62599)
+2026-10-28T23:19:57.2598498Z Updating files:  86% (53836/62599)
+2026-10-28T23:19:57.4537686Z Updating files:  87% (54462/62599)
+2026-10-28T23:19:57.5471692Z Updating files:  88% (55088/62599)
+2026-10-28T23:19:57.9149101Z Updating files:  88% (55376/62599)
+2026-10-28T23:19:58.2676947Z Updating files:  89% (55714/62599)
+2026-10-28T23:19:58.5610911Z Updating files:  90% (56340/62599)
+2026-10-28T23:19:58.9077099Z Updating files:  90% (56698/62599)
+2026-10-28T23:19:59.5668277Z Updating files:  91% (56966/62599)
+2026-10-28T23:20:00.0321540Z Updating files:  91% (57162/62599)
+2026-10-28T23:20:00.5688557Z Updating files:  92% (57592/62599)
+2026-10-28T23:20:01.0033938Z Updating files:  92% (57934/62599)
+2026-10-28T23:20:01.5644114Z Updating files:  93% (58218/62599)
+2026-10-28T23:20:01.8499421Z Updating files:  93% (58584/62599)
+2026-10-28T23:20:02.5703977Z Updating files:  94% (58844/62599)
+2026-10-28T23:20:02.6796679Z Updating files:  94% (59365/62599)
+2026-10-28T23:20:03.1535841Z Updating files:  95% (59470/62599)
+2026-10-28T23:20:03.5655824Z Updating files:  96% (60096/62599)
+2026-10-28T23:20:03.6210066Z Updating files:  96% (60691/62599)
+2026-10-28T23:20:03.9034712Z Updating files:  97% (60722/62599)
+2026-10-28T23:20:04.1982787Z Updating files:  98% (61348/62599)
+2026-10-28T23:20:04.7085871Z Updating files:  99% (61974/62599)
+2026-10-28T23:20:04.7406798Z Updating files:  99% (62516/62599)
+2026-10-28T23:20:04.7407350Z Updating files: 100% (62599/62599)
+2026-10-28T23:20:04.7407791Z Updating files: 100% (62599/62599), done.
+2026-10-28T23:20:04.8345854Z Note: switching to '4b59adbb65e0eb3f9e708f555596d3c75ad0c202'.
+2026-10-28T23:20:04.8346422Z 
+2026-10-28T23:20:04.8346852Z You are in 'detached HEAD' state. You can look around, make experimental
+2026-10-28T23:20:04.8347741Z changes and commit them, and you can discard any commits you make in this
+2026-10-28T23:20:04.8348516Z state without impacting any branches by switching back to a branch.
+2026-10-28T23:20:04.8349070Z 
+2026-10-28T23:20:04.8349702Z If you want to create a new branch to retain commits you create, you may
+2026-10-28T23:20:04.8350429Z do so (now or later) by using -c with the switch command. Example:
+2026-10-28T23:20:04.8350888Z 
+2026-10-28T23:20:04.8351094Z   git switch -c <new-branch-name>
+2026-10-28T23:20:04.8351430Z 
+2026-10-28T23:20:04.8351601Z Or undo this operation with:
+2026-10-28T23:20:04.8351916Z 
+2026-10-28T23:20:04.8352063Z   git switch -
+2026-10-28T23:20:04.8352286Z 
+2026-10-28T23:20:04.8352708Z Turn off this advice by setting config variable advice.detachedHead to false
+2026-10-28T23:20:04.8353298Z 
+2026-10-28T23:20:04.8353632Z HEAD is now at 4b59adbb Repair Windows release build prerequisites
+2026-10-28T23:20:04.9666396Z ##[endgroup]
+2026-10-28T23:20:05.0104969Z [command]"C:\Program Files\Git\bin\git.exe" log -1 --format=%H
+2026-10-28T23:20:05.0522352Z 4b59adbb65e0eb3f9e708f555596d3c75ad0c202
+2026-10-28T23:20:05.0579739Z ##[group]Removing auth
+2026-10-28T23:20:05.0580212Z Removing SSH command configuration
+2026-10-28T23:20:05.0593397Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp core\.sshCommand
+2026-10-28T23:20:05.1013193Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :\""
+2026-10-28T23:20:05.6971420Z Removing HTTP extra header
+2026-10-28T23:20:05.6981874Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-28T23:20:05.7365624Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :\""
+2026-10-28T23:20:06.3010866Z Removing includeIf entries pointing to credentials config files
+2026-10-28T23:20:06.3019409Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-28T23:20:06.3367582Z includeif.gitdir:D:/a/Project-Judas/Project-Judas/.git.path
+2026-10-28T23:20:06.3370186Z includeif.gitdir:D:/a/Project-Judas/Project-Judas/.git/worktrees/*.path
+2026-10-28T23:20:06.3370897Z includeif.gitdir:/github/workspace/.git.path
+2026-10-28T23:20:06.3371484Z includeif.gitdir:/github/workspace/.git/worktrees/*.path
+2026-10-28T23:20:06.3412186Z [command]"C:\Program Files\Git\bin\git.exe" config --local --get-all includeif.gitdir:D:/a/Project-Judas/Project-Judas/.git.path
+2026-10-28T23:20:06.3754622Z D:\a\_temp\git-credentials-e0b7ffcf-fa5f-4e4d-b388-07a8a138641c.config
+2026-10-28T23:20:06.3809655Z [command]"C:\Program Files\Git\bin\git.exe" config --local --unset includeif.gitdir:D:/a/Project-Judas/Project-Judas/.git.path D\:\\a\\_temp\\git\-credentials\-e0b7ffcf\-fa5f\-4e4d\-b388\-07a8a138641c\.config
+2026-10-28T23:20:06.4210204Z [command]"C:\Program Files\Git\bin\git.exe" config --local --get-all includeif.gitdir:D:/a/Project-Judas/Project-Judas/.git/worktrees/*.path
+2026-10-28T23:20:06.4556781Z D:\a\_temp\git-credentials-e0b7ffcf-fa5f-4e4d-b388-07a8a138641c.config
+2026-10-28T23:20:06.4598094Z [command]"C:\Program Files\Git\bin\git.exe" config --local --unset includeif.gitdir:D:/a/Project-Judas/Project-Judas/.git/worktrees/*.path D\:\\a\\_temp\\git\-credentials\-e0b7ffcf\-fa5f\-4e4d\-b388\-07a8a138641c\.config
+2026-10-28T23:20:06.4976495Z [command]"C:\Program Files\Git\bin\git.exe" config --local --get-all includeif.gitdir:/github/workspace/.git.path
+2026-10-28T23:20:06.5313031Z /github/runner_temp/git-credentials-e0b7ffcf-fa5f-4e4d-b388-07a8a138641c.config
+2026-10-28T23:20:06.5354561Z [command]"C:\Program Files\Git\bin\git.exe" config --local --unset includeif.gitdir:/github/workspace/.git.path \/github\/runner_temp\/git\-credentials\-e0b7ffcf\-fa5f\-4e4d\-b388\-07a8a138641c\.config
+2026-10-28T23:20:06.5729218Z [command]"C:\Program Files\Git\bin\git.exe" config --local --get-all includeif.gitdir:/github/workspace/.git/worktrees/*.path
+2026-10-28T23:20:06.6056466Z /github/runner_temp/git-credentials-e0b7ffcf-fa5f-4e4d-b388-07a8a138641c.config
+2026-10-28T23:20:06.6098222Z [command]"C:\Program Files\Git\bin\git.exe" config --local --unset includeif.gitdir:/github/workspace/.git/worktrees/*.path \/github\/runner_temp\/git\-credentials\-e0b7ffcf\-fa5f\-4e4d\-b388\-07a8a138641c\.config
+2026-10-28T23:20:06.6477202Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "git config --local --show-origin --name-only --get-regexp remote.origin.url"
+2026-10-28T23:20:07.2430256Z Removing credentials config 'D:\a\_temp\git-credentials-e0b7ffcf-fa5f-4e4d-b388-07a8a138641c.config'
+2026-10-28T23:20:07.2445224Z ##[endgroup]
+2026-10-28T23:20:07.2759809Z ##[group]Run # Avoid the pinned vcpkg helper's expired MSYS2 runtime download.
+2026-10-28T23:20:07.2760520Z [36;1m# Avoid the pinned vcpkg helper's expired MSYS2 runtime download.[0m
+2026-10-28T23:20:07.2760969Z [36;1m$installer = "$env:RUNNER_TEMP/pkgconf.msi"[0m
+2026-10-28T23:20:07.2761667Z [36;1mInvoke-WebRequest 'https://github.com/pkgconf/pkgconf/releases/download/pkgconf-3.0.8/pkgconf-x64-3.0.8.msi' -OutFile $installer[0m
+2026-10-28T23:20:07.2763241Z [36;1mif ((Get-FileHash $installer -Algorithm SHA256).Hash -ne 'A236479BBE403B202816745BEF19AFE2D6240606F28AB1F008BA0F33FBFAE43E') { throw 'pkgconf installer checksum mismatch' }[0m
+2026-10-28T23:20:07.2764043Z [36;1m$destination = "$env:RUNNER_TEMP/pkgconf"[0m
+2026-10-28T23:20:07.2764634Z [36;1m$extract = Start-Process msiexec.exe -ArgumentList @('/a', "`"$installer`"", '/qn', "TARGETDIR=`"$destination`"") -Wait -PassThru[0m
+2026-10-28T23:20:07.2765415Z [36;1mif ($extract.ExitCode -ne 0) { throw "pkgconf extraction failed: $($extract.ExitCode)" }[0m
+2026-10-28T23:20:07.2766059Z [36;1m$pkgconf = Get-ChildItem $destination -Recurse -Filter pkgconf.exe | Select-Object -First 1[0m
+2026-10-28T23:20:07.2766662Z [36;1mif (!$pkgconf) { throw 'Native pkgconf executable missing after extraction' }[0m
+2026-10-28T23:20:07.2767097Z [36;1m& $pkgconf.FullName --version[0m
+2026-10-28T23:20:07.2767617Z [36;1mif ($LASTEXITCODE) { exit $LASTEXITCODE }[0m
+2026-10-28T23:20:07.2768025Z [36;1m# Hosted windows-2025 now supplies VS 2026; retain VS 2022 locally.[0m
+2026-10-28T23:20:07.2768567Z [36;1m$vswhere = "${env:ProgramFiles(x86)}/Microsoft Visual Studio/Installer/vswhere.exe"[0m
+2026-10-28T23:20:07.2769374Z [36;1m$vsVersion = & $vswhere -latest -products '*' -requires Microsoft.VisualStudio.Component.VC.Tools.x86.x64 -property installationVersion[0m
+2026-10-28T23:20:07.2770137Z [36;1mif ($LASTEXITCODE -or !$vsVersion) { throw 'MSVC installation not found' }[0m
+2026-10-28T23:20:07.2770605Z [36;1m$generator = switch (([version]$vsVersion).Major) {[0m
+2026-10-28T23:20:07.2770930Z [36;1m  17 { 'Visual Studio 17 2022' }[0m
+2026-10-28T23:20:07.2771197Z [36;1m  18 { 'Visual Studio 18 2026' }[0m
+2026-10-28T23:20:07.2771597Z [36;1m  default { throw "Unqualified Visual Studio installation: $vsVersion" }[0m
+2026-10-28T23:20:07.2771976Z [36;1m}[0m
+2026-10-28T23:20:07.2772516Z [36;1m./packaging/windows/Build-Windows.ps1 -Channel $env:CHANNEL -Jobs 2 -ReleasePackage -PkgConfig $pkgconf.FullName -Generator $generator[0m
+2026-10-28T23:20:07.2773169Z [36;1mif ($LASTEXITCODE) { exit $LASTEXITCODE }[0m
+2026-10-28T23:20:07.2773483Z [36;1m$build = "build/windows-$env:CHANNEL"[0m
+2026-10-28T23:20:07.2774316Z [36;1mcmake --build $build --config Release --target judas_build_identity_tests judas_release_update_tests judas_mk2_rotation_tests judas_network_transport_tests judas_consumer_pointer_tests --parallel 2[0m
+2026-10-28T23:20:07.2775165Z [36;1mif ($LASTEXITCODE) { exit $LASTEXITCODE }[0m
+2026-10-28T23:20:07.2775514Z [36;1m& "$build/Release/judas_build_identity_tests.exe"[0m
+2026-10-28T23:20:07.2775861Z [36;1mif ($LASTEXITCODE) { exit $LASTEXITCODE }[0m
+2026-10-28T23:20:07.2776344Z [36;1m& "$build/Release/judas_release_update_tests.exe" tests/fixtures/releases/update-cases.json[0m
+2026-10-28T23:20:07.2776837Z [36;1mif ($LASTEXITCODE) { exit $LASTEXITCODE }[0m
+2026-10-28T23:20:07.2777170Z [36;1m& "$build/Release/judas_mk2_rotation_tests.exe"[0m
+2026-10-28T23:20:07.2777557Z [36;1mif ($LASTEXITCODE) { exit $LASTEXITCODE }[0m
+2026-10-28T23:20:07.2777922Z [36;1m& "$build/Release/judas_network_transport_tests.exe"[0m
+2026-10-28T23:20:07.2778288Z [36;1mif ($LASTEXITCODE) { exit $LASTEXITCODE }[0m
+2026-10-28T23:20:07.2778920Z [36;1m& "$build/Release/judas_consumer_pointer_tests.exe" "$env:RUNNER_TEMP/consumer-pointer" "$env:GITHUB_WORKSPACE/tests/fixtures/pointer-taps"[0m
+2026-10-28T23:20:07.2779567Z [36;1mif ($LASTEXITCODE) { exit $LASTEXITCODE }[0m
+2026-10-28T23:20:07.2781804Z [36;1mpython tools/inspect_sdk.py "$build/windows-sdk" --host-check --system-directory C:/Windows/System32 --output windows-sdk-qualification.json[0m
+2026-10-28T23:20:07.2782961Z [36;1mif ($LASTEXITCODE) { exit $LASTEXITCODE }[0m
+2026-10-28T23:20:07.2783875Z [36;1m'Windows hosted CI qualifies native tools and selected contracts; editor/GL/export behaviour requires the documented native desktop/VM qualification. No hardware claim.' | Set-Content windows-ci-scope.txt[0m
+2026-10-28T23:20:07.2784814Z [36;1mtar -C $build -czf windows-sdk.tar.gz windows-sdk[0m
+2026-10-28T23:20:07.2859788Z shell: C:\Program Files\PowerShell\7\pwsh.EXE -command ". '{0}'"
+2026-10-28T23:20:07.2860154Z env:
+2026-10-28T23:20:07.2860391Z   CANDIDATE: 4b59adbb65e0eb3f9e708f555596d3c75ad0c202
+2026-10-28T23:20:07.2860696Z   CHANNEL: Alpha
+2026-10-28T23:20:07.2860895Z   PYTHONUTF8: 1
+2026-10-28T23:20:07.2861089Z ##[endgroup]
+2026-10-28T23:20:08.6519816Z [31;1mException: [0mD:\a\_temp\1fc6ebbf-bfc3-401c-b6dd-646c20cbe64b.ps1:8[0m
+2026-10-28T23:20:08.6520661Z [31;1m[0m[36;1mLine |[0m
+2026-10-28T23:20:08.6521661Z [31;1m[0m[36;1m[36;1m   8 | [0m … de -ne 0) { [36;1mthrow "pkgconf extraction failed: $($extract.ExitCode)"[0m } …[0m
+2026-10-28T23:20:08.6522935Z [31;1m[0m[36;1m[36;1m[0m[36;1m[0m[36;1m     | [31;1m               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+2026-10-28T23:20:08.6524500Z [31;1m[0m[36;1m[36;1m[0m[36;1m[0m[36;1m[31;1m[31;1m[36;1m     | [31;1mpkgconf extraction failed: 1619[0m
+2026-10-28T23:20:08.7183897Z ##[error]Process completed with exit code 1.
+2026-10-28T23:20:08.7450928Z Post job cleanup.
+2026-10-28T23:20:08.9474653Z [command]"C:\Program Files\Git\bin\git.exe" version
+2026-10-28T23:20:08.9833779Z git version 2.56.0.windows.2
+2026-10-28T23:20:08.9896691Z Temporarily overriding HOME='D:\a\_temp\13d34447-6229-4907-a5cb-33c2513d87ce' before making global git config changes
+2026-10-28T23:20:08.9898517Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-28T23:20:08.9911657Z [command]"C:\Program Files\Git\bin\git.exe" config --global --add safe.directory D:\a\Project-Judas\Project-Judas
+2026-10-28T23:20:09.0290974Z Removing SSH command configuration
+2026-10-28T23:20:09.0302040Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp core\.sshCommand
+2026-10-28T23:20:09.0696844Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :\""
+2026-10-28T23:20:09.6922867Z Removing HTTP extra header
+2026-10-28T23:20:09.6933111Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-28T23:20:09.7313622Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :\""
+2026-10-28T23:20:10.2991001Z Removing includeIf entries pointing to credentials config files
+2026-10-28T23:20:10.3003228Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-28T23:20:10.3388905Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "git config --local --show-origin --name-only --get-regexp remote.origin.url"
+2026-10-28T23:20:10.9335853Z Cleaning up orphan processes
