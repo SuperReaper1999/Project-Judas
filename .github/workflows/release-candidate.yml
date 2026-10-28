@@ -95,7 +95,7 @@ jobs:
           ./packaging/windows/Build-Windows.ps1 -Channel $env:CHANNEL -Jobs 2 -ReleasePackage
           if ($LASTEXITCODE) { exit $LASTEXITCODE }
           $build = "build/windows-$env:CHANNEL"
-          cmake --build $build --config Release --target judas_build_identity_tests judas_release_update_tests judas_mk2_rotation_tests judas_network_transport_tests --parallel 2
+          cmake --build $build --config Release --target judas_build_identity_tests judas_release_update_tests judas_mk2_rotation_tests judas_network_transport_tests judas_consumer_pointer_tests --parallel 2
           if ($LASTEXITCODE) { exit $LASTEXITCODE }
           & "$build/Release/judas_build_identity_tests.exe"
           if ($LASTEXITCODE) { exit $LASTEXITCODE }
@@ -104,6 +104,8 @@ jobs:
           & "$build/Release/judas_mk2_rotation_tests.exe"
           if ($LASTEXITCODE) { exit $LASTEXITCODE }
           & "$build/Release/judas_network_transport_tests.exe"
+          if ($LASTEXITCODE) { exit $LASTEXITCODE }
+          & "$build/Release/judas_consumer_pointer_tests.exe" "$env:RUNNER_TEMP/consumer-pointer" "$env:GITHUB_WORKSPACE/tests/fixtures/pointer-taps"
           if ($LASTEXITCODE) { exit $LASTEXITCODE }
           python tools/inspect_sdk.py "$build/windows-sdk" --host-check --system-directory C:/Windows/System32 --output windows-sdk-qualification.json
           if ($LASTEXITCODE) { exit $LASTEXITCODE }

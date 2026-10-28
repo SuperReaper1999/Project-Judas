@@ -14,6 +14,7 @@ sys.path.insert(0,str(ROOT/'tools'))
 import package_sdk
 import prepare_release
 import publish_release
+import assemble_release_run
 sys.path.insert(0,str(ROOT/'scripts'))
 import qualify_m100
 
@@ -32,6 +33,18 @@ def sdk(path,platform):
     manifest=dict(schema=1,kind='judas-native-sdk',build=build,tools=['judas.exe' if platform=='Windows' else 'judas'],files=records,preset='release')
     (path/package_sdk.MANIFEST).write_text(json.dumps(manifest))
     (path/package_sdk.CHECKSUMS).write_text(''.join(r['sha256']+'  '+r['path']+'\n' for r in records)+package_sdk.digest(path/package_sdk.MANIFEST)+'  '+package_sdk.MANIFEST+'\n')
+
+
+class ReleaseNotes(unittest.TestCase):
+    def test_patch_uses_its_own_curated_notes(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root=Path(temporary);(root/'docs').mkdir()
+            first=root/'docs/ALPHA_V1_0_0_NOTES.md';first.write_text('First release')
+            patch_notes=root/'docs/ALPHA_V1_0_1_NOTES.md';patch_notes.write_text('Patch release')
+            self.assertEqual(assemble_release_run.release_notes(root,{'version':'1.0.1-alpha.1','channel':'Alpha'}),patch_notes)
+            self.assertEqual(assemble_release_run.release_notes(root,{'version':'1.0.0-alpha.1','channel':'Alpha'}),first)
+            with self.assertRaises(ValueError):
+                assemble_release_run.release_notes(root,{'version':'1.0.2-alpha.1','channel':'Alpha'})
 
 
 class QualificationScope(unittest.TestCase):

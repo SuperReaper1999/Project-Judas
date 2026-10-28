@@ -10,7 +10,9 @@ SHA-256 values. The updater accepts only the engine repository's versioned GitHu
 release URLs. `tests/fixtures/releases/update-cases.json` is deliberately synthetic
 positive/negative test data and must never be uploaded as a real channel manifest.
 
-The `update-manifests` GitHub release is the future authoritative metadata host.
+The `update-manifests` GitHub release is the authoritative metadata host.
 It has one channel JSON asset per deliberately published channel. Stable remains
-absent until a genuine GA release exists. Initial provisioning and all publishing
-are withheld pending explicit final operator approval.
+absent until a genuine GA release exists. Alpha was provisioned for the first published release; do not provision it
+again or overwrite immutable versioned packages. Each subsequent publication
+requires explicit operator approval and updates Alpha.json only after integrity
+verification.

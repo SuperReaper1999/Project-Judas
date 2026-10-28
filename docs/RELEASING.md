@@ -1,12 +1,12 @@
 # Prepare, qualify and publish Judas
 
-[Identity/channels](VERSIONING.md) · [Alpha notes](ALPHA_V1_0_0_NOTES.md) ·
+[Identity/channels](VERSIONING.md) · [Patch notes](ALPHA_V1_0_1_NOTES.md) ·
 [Support matrix](ALPHA_SUPPORT_MATRIX.md) · [Linux baseline](LINUX_BASELINE_BUILD.md)
 
 ## Current boundary
 
 **[Alpha v1.0.0 is published](https://github.com/SuperReaper1999/Project-Judas/releases/tag/v1.0.0-alpha.1)** after final operator approval on
-27 October 2026. Tag `v1.0.0-alpha.1` and accepted main point to exact source
+27 October 2026. Tag `v1.0.0-alpha.1` identifies exact historical source
 `636eec475b9955dcfd7d6d943d00c05d911135ad`. The verified Linux, Windows and source
 packages and Alpha update manifest are live. These publication steps remain the
 procedure for future releases; compilation, staging and preparation alone never
@@ -22,6 +22,10 @@ The final published packages use `636eec47`; do not distribute older candidates
 as the final Alpha. Sealed preparation receipts retain their original pending
 approval wording as historical evidence; the public release records the later
 operator approval. See [the release record](ALPHA_V1_0_0_NOTES.md#release-record).
+
+The operator-authorized Alpha v1.0.1 patch is being prepared from the accepted
+weather/input corrections. Assembly chooses the curated notes matching the
+authoritative version and channel; it does not reuse initial-release notes.
 
 ## 1. Freeze a source candidate
 
@@ -93,7 +97,7 @@ version/channel, a matching tracked source archive, notes and a successful
 exact-source qualification receipt. Example:
 
 ```sh
-python3 tools/prepare_release.py --linux-sdk LINUX_SDK --windows-sdk WINDOWS_SDK --source-archive source.tar.gz --notes docs/ALPHA_V1_0_0_NOTES.md --qualification QUALIFICATION.json --epoch SOURCE_COMMIT_EPOCH --output NEW_CANDIDATE_DIRECTORY
+python3 tools/prepare_release.py --linux-sdk LINUX_SDK --windows-sdk WINDOWS_SDK --source-archive source.tar.gz --notes docs/ALPHA_V1_0_1_NOTES.md --qualification QUALIFICATION.json --epoch SOURCE_COMMIT_EPOCH --output NEW_CANDIDATE_DIRECTORY
 ```
 
 This creates versioned Linux `.tar.gz`, Windows `.zip` and source `.tar.gz`,

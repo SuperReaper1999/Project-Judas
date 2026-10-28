@@ -1,6 +1,6 @@
 Copyright (c) 2026 Conner / SuperReaper1999 · [MIT License](LICENSE).
 
-# Judas Engine Alpha v1.0.0
+# Judas Engine Alpha
 
 Judas is a general-purpose, C++ game engine for building physical, scriptable
 worlds. Its capabilities are optional: use the parts you need, from a small
@@ -19,6 +19,10 @@ and experimental capabilities retain their documented limits.
 Basic Water and swimming remain available. See the
 [restriction and investigation](docs/M100_FLUID_CONTACT_STABILITY.md).
 
+The accepted **Alpha v1.0.1** weather/input patch (`1.0.1-alpha.1`) is being
+prepared for publication. See [patch notes](docs/ALPHA_V1_0_1_NOTES.md). The
+versioned source identity is authoritative in [engine-version.json](engine-version.json).
+
 ## Current status
 
 `main` contains operator-accepted source; `Experimental` is ongoing development.
@@ -26,7 +30,8 @@ Published Alpha versions, future Beta and eventual Stable/GA are separate
 [distribution channels](docs/VERSIONING.md), not extra development branches.
 No update checker silently installs anything or overwrites your projects.
 
-[Alpha release notes](docs/ALPHA_V1_0_0_NOTES.md) ·
+[Alpha v1.0.1 patch notes](docs/ALPHA_V1_0_1_NOTES.md) ·
+[Original Alpha notes](docs/ALPHA_V1_0_0_NOTES.md) ·
 [Supported platforms and limits](docs/ALPHA_SUPPORT_MATRIX.md) ·
 [Installation and verification](docs/DISTRIBUTION.md) ·
 [First project](docs/FIRST_PROJECT.md) · [Release process](docs/RELEASING.md)

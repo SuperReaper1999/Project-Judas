@@ -29,6 +29,15 @@ def extract(path, destination):
             target.chmod(0o755 if item.mode&0o111 else 0o644)
 
 
+def release_notes(root, identity):
+    # Curated notes follow the authoritative version, never the initial release.
+    version=identity['version'].split('-',1)[0].split('+',1)[0]
+    name=identity['channel'].upper()+'_V'+version.replace('.','_')+'_NOTES.md'
+    notes=root/'docs'/name
+    if not notes.is_file():raise ValueError('Missing curated release notes: '+name)
+    return notes
+
+
 def main():
     p=argparse.ArgumentParser(description=__doc__)
     p.add_argument('--inputs',type=Path,required=True);p.add_argument('--output',type=Path,required=True)
@@ -50,7 +59,7 @@ def main():
             'Windows':'CI MSVC SDK/tool/selected native contracts; desktop/GPU qualification is a separate final operator requirement',
             'humanAcceptance':'Required separately by protected publication environment and exact main source approval'},indent=2)+'\n')
         prepare_release.prepare(SimpleNamespace(linux_sdk=sdk,windows_sdk=root/'windows-sdk',source_archive=source,
-            notes=Path(__file__).resolve().parents[1]/'docs/ALPHA_V1_0_0_NOTES.md',qualification=q,
+            notes=release_notes(Path(__file__).resolve().parents[1],identity),qualification=q,
             channel=identity['channel'],epoch=epoch,output=a.output))
 
 if __name__=='__main__':main()

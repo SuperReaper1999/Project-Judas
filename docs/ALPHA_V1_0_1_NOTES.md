@@ -1,0 +1,64 @@
+# Judas Engine Alpha v1.0.1
+
+Machine version: **`1.0.1-alpha.1`**. This is an Alpha patch, not Stable/GA.
+The operator accepted and authorized publication of the weather/input fixes on
+28 October 2026. Exact source and package identities are carried by the release
+manifest, `BUILD_INFO.json` and checksums. Publication is complete only when the
+versioned GitHub release and verified Alpha channel manifest are live.
+
+## Corrections
+
+- Weather skies now respond to scene lighting and authored colours at dusk/night,
+  including weak moon lighting. Clouds, fog, precipitation and tornado lighting
+  follow scene illumination; lightning remains independently emissive. Existing
+  daylight scenes, weather-off rendering, arbitrary-up frames, clipping and
+  bounded secondary-view behaviour retain focused regression coverage.
+- The application test harness now synchronizes its UI cursor and gameplay pointer
+  state. New pointer press/release, touch lifecycle and explicit expectation
+  commands support meaningful gameplay-input testing.
+- BlockSmasherV2 exposed a game-side missed-click defect: polling only the held
+  pointer snapshot could miss a complete click between fixed updates. Its supplied
+  patch uses existing logical input edges while preserving drag/hold behaviour.
+  Minimal original/fixed consumer regressions are included. The game itself is
+  not bundled into the SDK; source patches are in the repository evidence.
+- Release preparation now chooses curated notes for the actual version rather
+  than always packaging the initial Alpha notes. Release qualification includes
+  the new input and weather-lighting regression groups.
+
+The general logical input edge path was not found to lose the tested short clicks;
+that mechanism is unchanged. No new JudasJS bindings or declaration changes were
+required. The input and weather references describe the corrected contracts.
+
+## Qualification and support
+
+The accepted implementation passed ten focused Linux suites, actual before/after
+BlockSmasher application controls, editor Play/Stop and relocated standalone tests.
+Graphics evidence used software OpenGL; it is not GPU performance certification.
+The prepared release records fresh Ubuntu 24.04 SDK/workflow qualification and
+hosted native Windows build/tool checks separately from historical human Windows
+11 acceptance. New patch-specific Windows hardware, touch/controller/audio and
+clean-machine certification are not claimed. See the
+[support matrix](ALPHA_SUPPORT_MATRIX.md) and package qualification receipts.
+
+Pointer/touch APIs remain current snapshots rather than an ordered contact-event
+history. Very short touch lifetimes between observations and physical compositor
+capture require separate consideration; synthetic testing does not certify them.
+
+**Advanced Fluid Dynamics remains unavailable and locked off in Alpha.** This
+patch does not integrate the pressure-backend research or lift its contact-stability
+restriction. Basic Water and swimming remain supported. Earlier Experimental
+chronological-coupling callback plumbing adds no enabled fluid solver or physics
+quality/cadence change. Native SDK users should rebuild against the shipped
+headers/libraries; binary ABI compatibility across Alpha SDKs is not promised.
+
+## Downloads and updates
+
+Linux x86-64 SDK, Windows x86-64 SDK, tracked engine-source archive, release
+manifest and SHA-256 checksums are published together under
+[`v1.0.1-alpha.1`](https://github.com/SuperReaper1999/Project-Judas/releases/tag/v1.0.1-alpha.1).
+Verify downloads before extraction. Existing Alpha editors can check the Alpha
+channel for this newer version; nothing installs automatically or overwrites a
+project. Original `v1.0.0-alpha.1` artifacts remain immutable.
+
+See [the implementation report](https://github.com/SuperReaper1999/Project-Judas/blob/Experimental/docs/ISSUES_18_19_FIXES.txt),
+[publication procedure](RELEASING.md) and [versioning](VERSIONING.md).
