@@ -24,6 +24,9 @@ versioned GitHub release and verified Alpha channel manifest are live.
 - Release preparation now chooses curated notes for the actual version rather
   than always packaging the initial Alpha notes. Release qualification includes
   the new input and weather-lighting regression groups.
+- Windows release preparation explicitly supplies a checksum-verified native
+  pkgconf and selects the installed supported Visual Studio generator, avoiding
+  expired upstream MSYS2 helper downloads and the hosted runner's toolchain change.
 
 The general logical input edge path was not found to lose the tested short clicks;
 that mechanism is unchanged. No new JudasJS bindings or declaration changes were

@@ -1,0 +1,678 @@
+﻿2026-10-28T23:09:16.6194783Z Current runner version: '2.338.0'
+2026-10-28T23:09:16.6221270Z ##[group]Runner Image Provisioner
+2026-10-28T23:09:16.6222166Z Hosted Compute Agent
+2026-10-28T23:09:16.6222745Z Version: 20261021.618
+2026-10-28T23:09:16.6223339Z Commit: 21505ad2541d5be6135ed84fc33697146cf75b8e
+2026-10-28T23:09:16.6224032Z Build Date: 2026-10-21T00:45:21Z
+2026-10-28T23:09:16.6224679Z Worker ID: {95cee92f-76c0-41df-84a2-b34c2e8750de}
+2026-10-28T23:09:16.6225561Z Region: eastus2
+2026-10-28T23:09:16.6226100Z Cloud: Azure
+2026-10-28T23:09:16.6226606Z ##[endgroup]
+2026-10-28T23:09:16.6228300Z ##[group]Operating System
+2026-10-28T23:09:16.6228998Z Microsoft Windows Server 2025
+2026-10-28T23:09:16.6229636Z 10.0.26100
+2026-10-28T23:09:16.6230132Z Datacenter
+2026-10-28T23:09:16.6230651Z ##[endgroup]
+2026-10-28T23:09:16.6231168Z ##[group]Runner Image
+2026-10-28T23:09:16.6231745Z Image: windows-2025-vs2026
+2026-10-28T23:09:16.6232320Z Version: 20261021.278.1
+2026-10-28T23:09:16.6233908Z Included Software: https://github.com/actions/runner-images/blob/win25-vs2026/20261021.278/images/windows/Windows2025-VS2026-Readme.md
+2026-10-28T23:09:16.6235649Z Image Release: https://github.com/actions/runner-images/releases/tag/win25-vs2026%2F20261021.278
+2026-10-28T23:09:16.6236608Z ##[endgroup]
+2026-10-28T23:09:16.6237690Z ##[group]GITHUB_TOKEN Permissions
+2026-10-28T23:09:16.6239506Z Contents: read
+2026-10-28T23:09:16.6240149Z Metadata: read
+2026-10-28T23:09:16.6240663Z ##[endgroup]
+2026-10-28T23:09:16.6242759Z Secret source: Actions
+2026-10-28T23:09:16.6243698Z Cache mode: write
+2026-10-28T23:09:16.6244355Z Prepare workflow directory
+2026-10-28T23:09:16.6860179Z Prepare all required actions
+2026-10-28T23:09:16.6916851Z Getting action download info
+2026-10-28T23:09:16.8537928Z Download action repository 'actions/checkout@v7' (SHA:3d3c42e5aac5ba805825da76410c181273ba90b1)
+2026-10-28T23:09:16.9886497Z Download action repository 'actions/upload-artifact@v7' (SHA:cf430e030ddbb5b0abf93d22962f4752f3646cd9)
+2026-10-28T23:09:17.1987734Z Complete job name: windows
+2026-10-28T23:09:17.3342600Z ##[group]Run if ($env:CANDIDATE -notmatch '^[0-9a-f]{40}$') { throw 'Exact commit required' }
+2026-10-28T23:09:17.3343857Z [36;1mif ($env:CANDIDATE -notmatch '^[0-9a-f]{40}$') { throw 'Exact commit required' }[0m
+2026-10-28T23:09:17.4440130Z shell: C:\Program Files\PowerShell\7\pwsh.EXE -command ". '{0}'"
+2026-10-28T23:09:17.4441311Z env:
+2026-10-28T23:09:17.4441922Z   CANDIDATE: a3992df8a8acbe9857586eee0fa7a86e73f3f0de
+2026-10-28T23:09:17.4442718Z   CHANNEL: Alpha
+2026-10-28T23:09:17.4443246Z   PYTHONUTF8: 1
+2026-10-28T23:09:17.4444190Z ##[endgroup]
+2026-10-28T23:09:17.9568670Z ##[group]Run actions/checkout@v7
+2026-10-28T23:09:17.9569403Z with:
+2026-10-28T23:09:17.9569889Z   ref: a3992df8a8acbe9857586eee0fa7a86e73f3f0de
+2026-10-28T23:09:17.9570526Z   persist-credentials: false
+2026-10-28T23:09:17.9571086Z   repository: SuperReaper1999/Project-Judas
+2026-10-28T23:09:17.9576633Z   token: ***
+2026-10-28T23:09:17.9577232Z   ssh-strict: true
+2026-10-28T23:09:17.9577801Z   ssh-user: git
+2026-10-28T23:09:17.9578312Z   clean: true
+2026-10-28T23:09:17.9578863Z   sparse-checkout-cone-mode: true
+2026-10-28T23:09:17.9579524Z   fetch-depth: 1
+2026-10-28T23:09:17.9580058Z   fetch-tags: false
+2026-10-28T23:09:17.9580603Z   show-progress: true
+2026-10-28T23:09:17.9581150Z   lfs: false
+2026-10-28T23:09:17.9581660Z   submodules: false
+2026-10-28T23:09:17.9582228Z   set-safe-directory: true
+2026-10-28T23:09:17.9582869Z   allow-unsafe-pr-checkout: false
+2026-10-28T23:09:17.9583557Z env:
+2026-10-28T23:09:17.9584177Z   CANDIDATE: a3992df8a8acbe9857586eee0fa7a86e73f3f0de
+2026-10-28T23:09:17.9584967Z   CHANNEL: Alpha
+2026-10-28T23:09:17.9585491Z   PYTHONUTF8: 1
+2026-10-28T23:09:17.9586011Z ##[endgroup]
+2026-10-28T23:09:18.1104167Z Syncing repository: SuperReaper1999/Project-Judas
+2026-10-28T23:09:18.1106228Z ##[group]Getting Git version info
+2026-10-28T23:09:18.1106977Z Working directory is 'D:\a\Project-Judas\Project-Judas'
+2026-10-28T23:09:18.2006244Z [command]"C:\Program Files\Git\bin\git.exe" version
+2026-10-28T23:09:18.6343882Z git version 2.56.0.windows.2
+2026-10-28T23:09:18.6392215Z ##[endgroup]
+2026-10-28T23:09:18.6407621Z Temporarily overriding HOME='D:\a\_temp\eab812ef-f29d-4a08-b7a2-7d37b13a9c58' before making global git config changes
+2026-10-28T23:09:18.6409529Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-28T23:09:18.6420609Z [command]"C:\Program Files\Git\bin\git.exe" config --global --add safe.directory D:\a\Project-Judas\Project-Judas
+2026-10-28T23:09:18.7066694Z Deleting the contents of 'D:\a\Project-Judas\Project-Judas'
+2026-10-28T23:09:18.7071998Z ##[group]Determining repository object format
+2026-10-28T23:09:18.7073958Z ##[endgroup]
+2026-10-28T23:09:18.7076656Z ##[group]Initializing the repository
+2026-10-28T23:09:18.7084681Z [command]"C:\Program Files\Git\bin\git.exe" init D:\a\Project-Judas\Project-Judas
+2026-10-28T23:09:18.8151080Z Initialized empty Git repository in D:/a/Project-Judas/Project-Judas/.git/
+2026-10-28T23:09:18.8197690Z [command]"C:\Program Files\Git\bin\git.exe" remote add origin https://github.com/SuperReaper1999/Project-Judas
+2026-10-28T23:09:18.8943697Z ##[endgroup]
+2026-10-28T23:09:18.8945518Z ##[group]Disabling automatic garbage collection
+2026-10-28T23:09:18.8952999Z [command]"C:\Program Files\Git\bin\git.exe" config --local gc.auto 0
+2026-10-28T23:09:18.9319213Z ##[endgroup]
+2026-10-28T23:09:18.9320949Z ##[group]Setting up auth
+2026-10-28T23:09:18.9322247Z Removing SSH command configuration
+2026-10-28T23:09:18.9330423Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp core\.sshCommand
+2026-10-28T23:09:18.9707242Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :\""
+2026-10-28T23:09:20.5471861Z Removing HTTP extra header
+2026-10-28T23:09:20.5486184Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-28T23:09:20.6018308Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :\""
+2026-10-28T23:09:21.1440801Z Removing includeIf entries pointing to credentials config files
+2026-10-28T23:09:21.1456234Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-28T23:09:21.1840680Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "git config --local --show-origin --name-only --get-regexp remote.origin.url"
+2026-10-28T23:09:21.7516355Z [command]"C:\Program Files\Git\bin\git.exe" config --file D:\a\_temp\git-credentials-622075a7-d20e-48ce-ac23-4b49bfbaaad3.config http.https://github.com/.extraheader "AUTHORIZATION: basic ***"
+2026-10-28T23:09:21.7896185Z [command]"C:\Program Files\Git\bin\git.exe" config --local includeIf.gitdir:D:/a/Project-Judas/Project-Judas/.git.path D:\a\_temp\git-credentials-622075a7-d20e-48ce-ac23-4b49bfbaaad3.config
+2026-10-28T23:09:21.8262828Z [command]"C:\Program Files\Git\bin\git.exe" config --local includeIf.gitdir:D:/a/Project-Judas/Project-Judas/.git/worktrees/*.path D:\a\_temp\git-credentials-622075a7-d20e-48ce-ac23-4b49bfbaaad3.config
+2026-10-28T23:09:21.8677335Z [command]"C:\Program Files\Git\bin\git.exe" config --local includeIf.gitdir:/github/workspace/.git.path /github/runner_temp/git-credentials-622075a7-d20e-48ce-ac23-4b49bfbaaad3.config
+2026-10-28T23:09:21.9063578Z [command]"C:\Program Files\Git\bin\git.exe" config --local includeIf.gitdir:/github/workspace/.git/worktrees/*.path /github/runner_temp/git-credentials-622075a7-d20e-48ce-ac23-4b49bfbaaad3.config
+2026-10-28T23:09:21.9510205Z ##[endgroup]
+2026-10-28T23:09:21.9510634Z ##[group]Fetching the repository
+2026-10-28T23:09:21.9523901Z [command]"C:\Program Files\Git\bin\git.exe" -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin a3992df8a8acbe9857586eee0fa7a86e73f3f0de
+2026-10-28T23:09:52.6540670Z From https://github.com/SuperReaper1999/Project-Judas
+2026-10-28T23:09:52.6542674Z  * branch              a3992df8a8acbe9857586eee0fa7a86e73f3f0de -> FETCH_HEAD
+2026-10-28T23:09:52.6600020Z [command]"C:\Program Files\Git\bin\git.exe" rev-parse --verify --quiet a3992df8a8acbe9857586eee0fa7a86e73f3f0de^{object}
+2026-10-28T23:09:52.7057610Z a3992df8a8acbe9857586eee0fa7a86e73f3f0de
+2026-10-28T23:09:52.7095200Z ##[endgroup]
+2026-10-28T23:09:52.7095786Z ##[group]Determining the checkout info
+2026-10-28T23:09:52.7096511Z ##[endgroup]
+2026-10-28T23:09:52.7106482Z [command]"C:\Program Files\Git\bin\git.exe" sparse-checkout disable
+2026-10-28T23:09:52.7663462Z [command]"C:\Program Files\Git\bin\git.exe" config --local --unset-all extensions.worktreeConfig
+2026-10-28T23:09:52.8030288Z ##[group]Checking out the ref
+2026-10-28T23:09:52.8039322Z [command]"C:\Program Files\Git\bin\git.exe" checkout --progress --force a3992df8a8acbe9857586eee0fa7a86e73f3f0de
+2026-10-28T23:09:53.9909060Z Updating files:   4% (2921/62598)
+2026-10-28T23:09:54.2289038Z Updating files:   5% (3130/62598)
+2026-10-28T23:09:54.6046163Z Updating files:   6% (3756/62598)
+2026-10-28T23:09:54.8233112Z Updating files:   7% (4382/62598)
+2026-10-28T23:09:54.9326790Z Updating files:   8% (5008/62598)
+2026-10-28T23:09:55.0434543Z Updating files:   8% (5307/62598)
+2026-10-28T23:09:55.2479643Z Updating files:   9% (5634/62598)
+2026-10-28T23:09:55.4669519Z Updating files:  10% (6260/62598)
+2026-10-28T23:09:55.8216141Z Updating files:  11% (6886/62598)
+2026-10-28T23:09:55.9415173Z Updating files:  12% (7512/62598)
+2026-10-28T23:09:56.0178538Z Updating files:  12% (7909/62598)
+2026-10-28T23:09:56.2157979Z Updating files:  13% (8138/62598)
+2026-10-28T23:09:56.4175491Z Updating files:  14% (8764/62598)
+2026-10-28T23:09:56.6396779Z Updating files:  15% (9390/62598)
+2026-10-28T23:09:56.8586880Z Updating files:  16% (10016/62598)
+2026-10-28T23:09:56.9423532Z Updating files:  17% (10642/62598)
+2026-10-28T23:09:57.2276448Z Updating files:  17% (10974/62598)
+2026-10-28T23:09:57.4550654Z Updating files:  18% (11268/62598)
+2026-10-28T23:09:57.6750305Z Updating files:  19% (11894/62598)
+2026-10-28T23:09:57.9134694Z Updating files:  20% (12520/62598)
+2026-10-28T23:09:57.9514807Z Updating files:  21% (13146/62598)
+2026-10-28T23:09:58.1544185Z Updating files:  21% (13291/62598)
+2026-10-28T23:09:58.5397359Z Updating files:  22% (13772/62598)
+2026-10-28T23:09:58.7450632Z Updating files:  23% (14398/62598)
+2026-10-28T23:09:58.9638884Z Updating files:  24% (15024/62598)
+2026-10-28T23:09:58.9647072Z Updating files:  25% (15650/62598)
+2026-10-28T23:09:59.1954069Z Updating files:  25% (15653/62598)
+2026-10-28T23:09:59.4237556Z Updating files:  26% (16276/62598)
+2026-10-28T23:10:00.0723006Z Updating files:  27% (16902/62598)
+2026-10-28T23:10:00.0745341Z Updating files:  27% (17521/62598)
+2026-10-28T23:10:00.6307076Z Updating files:  28% (17528/62598)
+2026-10-28T23:10:00.9971436Z Updating files:  29% (18154/62598)
+2026-10-28T23:10:01.0932869Z Updating files:  29% (18583/62598)
+2026-10-28T23:10:01.3895088Z Updating files:  30% (18780/62598)
+2026-10-28T23:10:01.8019813Z Updating files:  31% (19406/62598)
+2026-10-28T23:10:01.9834698Z Updating files:  32% (20032/62598)
+2026-10-28T23:10:02.1623065Z Updating files:  32% (20308/62598)
+2026-10-28T23:10:02.4557163Z Updating files:  33% (20658/62598)
+2026-10-28T23:10:02.7934033Z Updating files:  34% (21284/62598)
+2026-10-28T23:10:02.9897143Z Updating files:  35% (21910/62598)
+2026-10-28T23:10:03.1134673Z Updating files:  35% (22197/62598)
+2026-10-28T23:10:03.4901125Z Updating files:  36% (22536/62598)
+2026-10-28T23:10:03.7923110Z Updating files:  37% (23162/62598)
+2026-10-28T23:10:03.9911828Z Updating files:  38% (23788/62598)
+2026-10-28T23:10:04.0616378Z Updating files:  38% (24260/62598)
+2026-10-28T23:10:04.5123205Z Updating files:  39% (24414/62598)
+2026-10-28T23:10:05.0402725Z Updating files:  40% (25040/62598)
+2026-10-28T23:10:05.2231124Z Updating files:  40% (25527/62598)
+2026-10-28T23:10:05.6350583Z Updating files:  41% (25666/62598)
+2026-10-28T23:10:06.0047413Z Updating files:  42% (26292/62598)
+2026-10-28T23:10:06.0610747Z Updating files:  42% (26867/62598)
+2026-10-28T23:10:06.4848715Z Updating files:  43% (26918/62598)
+2026-10-28T23:10:06.6928166Z Updating files:  44% (27544/62598)
+2026-10-28T23:10:06.9462662Z Updating files:  45% (28170/62598)
+2026-10-28T23:10:07.0349731Z Updating files:  46% (28796/62598)
+2026-10-28T23:10:07.2816479Z Updating files:  46% (28984/62598)
+2026-10-28T23:10:07.5016418Z Updating files:  47% (29422/62598)
+2026-10-28T23:10:07.6777197Z Updating files:  48% (30048/62598)
+2026-10-28T23:10:07.8637428Z Updating files:  49% (30674/62598)
+2026-10-28T23:10:08.0285110Z Updating files:  50% (31299/62598)
+2026-10-28T23:10:08.0598852Z Updating files:  50% (31792/62598)
+2026-10-28T23:10:08.2325437Z Updating files:  51% (31925/62598)
+2026-10-28T23:10:08.4463373Z Updating files:  52% (32551/62598)
+2026-10-28T23:10:08.6703852Z Updating files:  53% (33177/62598)
+2026-10-28T23:10:09.0329511Z Updating files:  54% (33803/62598)
+2026-10-28T23:10:09.0415509Z Updating files:  55% (34429/62598)
+2026-10-28T23:10:09.8013843Z Updating files:  55% (34443/62598)
+2026-10-28T23:10:10.0555077Z Updating files:  56% (35055/62598)
+2026-10-28T23:10:10.1092094Z Updating files:  56% (35525/62598)
+2026-10-28T23:10:10.4686468Z Updating files:  57% (35681/62598)
+2026-10-28T23:10:10.7254055Z Updating files:  58% (36307/62598)
+2026-10-28T23:10:10.9800956Z Updating files:  59% (36933/62598)
+2026-10-28T23:10:11.0681652Z Updating files:  60% (37559/62598)
+2026-10-28T23:10:11.8974334Z Updating files:  60% (37815/62598)
+2026-10-28T23:10:12.0817702Z Updating files:  61% (38185/62598)
+2026-10-28T23:10:12.3571521Z Updating files:  61% (38324/62598)
+2026-10-28T23:10:12.8107502Z Updating files:  62% (38811/62598)
+2026-10-28T23:10:13.0966751Z Updating files:  63% (39437/62598)
+2026-10-28T23:10:13.3647649Z Updating files:  63% (39546/62598)
+2026-10-28T23:10:13.6322733Z Updating files:  64% (40063/62598)
+2026-10-28T23:10:13.8313372Z Updating files:  65% (40689/62598)
+2026-10-28T23:10:14.0942885Z Updating files:  66% (41315/62598)
+2026-10-28T23:10:14.1312417Z Updating files:  66% (41852/62598)
+2026-10-28T23:10:14.3620101Z Updating files:  67% (41941/62598)
+2026-10-28T23:10:14.5796773Z Updating files:  68% (42567/62598)
+2026-10-28T23:10:14.8052127Z Updating files:  69% (43193/62598)
+2026-10-28T23:10:15.0810714Z Updating files:  70% (43819/62598)
+2026-10-28T23:10:15.1142039Z Updating files:  71% (44445/62598)
+2026-10-28T23:10:15.3447345Z Updating files:  71% (44489/62598)
+2026-10-28T23:10:15.5518284Z Updating files:  72% (45071/62598)
+2026-10-28T23:10:15.7759952Z Updating files:  73% (45697/62598)
+2026-10-28T23:10:15.9563246Z Updating files:  74% (46323/62598)
+2026-10-28T23:10:16.1044426Z Updating files:  75% (46949/62598)
+2026-10-28T23:10:16.1761313Z Updating files:  75% (47352/62598)
+2026-10-28T23:10:16.3956552Z Updating files:  76% (47575/62598)
+2026-10-28T23:10:16.6422616Z Updating files:  77% (48201/62598)
+2026-10-28T23:10:16.8281206Z Updating files:  78% (48827/62598)
+2026-10-28T23:10:17.0690331Z Updating files:  79% (49453/62598)
+2026-10-28T23:10:17.1154720Z Updating files:  80% (50079/62598)
+2026-10-28T23:10:17.2826111Z Updating files:  80% (50178/62598)
+2026-10-28T23:10:17.4439212Z Updating files:  81% (50705/62598)
+2026-10-28T23:10:17.6103254Z Updating files:  82% (51331/62598)
+2026-10-28T23:10:17.7890836Z Updating files:  83% (51957/62598)
+2026-10-28T23:10:18.0564351Z Updating files:  84% (52583/62598)
+2026-10-28T23:10:18.1260992Z Updating files:  85% (53209/62598)
+2026-10-28T23:10:18.3099832Z Updating files:  85% (53443/62598)
+2026-10-28T23:10:18.5496824Z Updating files:  86% (53835/62598)
+2026-10-28T23:10:18.7413318Z Updating files:  87% (54461/62598)
+2026-10-28T23:10:19.1816564Z Updating files:  88% (55087/62598)
+2026-10-28T23:10:19.1982221Z Updating files:  88% (55676/62598)
+2026-10-28T23:10:19.5682884Z Updating files:  89% (55713/62598)
+2026-10-28T23:10:20.1375684Z Updating files:  90% (56339/62598)
+2026-10-28T23:10:20.1794296Z Updating files:  90% (56953/62598)
+2026-10-28T23:10:21.1355491Z Updating files:  91% (56965/62598)
+2026-10-28T23:10:21.2438048Z Updating files:  91% (57459/62598)
+2026-10-28T23:10:22.1445318Z Updating files:  92% (57591/62598)
+2026-10-28T23:10:22.1994364Z Updating files:  92% (58179/62598)
+2026-10-28T23:10:22.9651092Z Updating files:  93% (58217/62598)
+2026-10-28T23:10:23.1568973Z Updating files:  94% (58843/62598)
+2026-10-28T23:10:23.7582333Z Updating files:  94% (59054/62598)
+2026-10-28T23:10:24.1703846Z Updating files:  95% (59469/62598)
+2026-10-28T23:10:24.2185027Z Updating files:  95% (60049/62598)
+2026-10-28T23:10:24.6786313Z Updating files:  96% (60095/62598)
+2026-10-28T23:10:25.0696323Z Updating files:  97% (60721/62598)
+2026-10-28T23:10:25.1847888Z Updating files:  98% (61347/62598)
+2026-10-28T23:10:25.2420655Z Updating files:  98% (61787/62598)
+2026-10-28T23:10:25.8131679Z Updating files:  99% (61973/62598)
+2026-10-28T23:10:25.8132265Z Updating files: 100% (62598/62598)
+2026-10-28T23:10:25.8132828Z Updating files: 100% (62598/62598), done.
+2026-10-28T23:10:25.9068471Z Note: switching to 'a3992df8a8acbe9857586eee0fa7a86e73f3f0de'.
+2026-10-28T23:10:25.9069032Z 
+2026-10-28T23:10:25.9069384Z You are in 'detached HEAD' state. You can look around, make experimental
+2026-10-28T23:10:25.9070295Z changes and commit them, and you can discard any commits you make in this
+2026-10-28T23:10:25.9071139Z state without impacting any branches by switching back to a branch.
+2026-10-28T23:10:25.9071651Z 
+2026-10-28T23:10:25.9071959Z If you want to create a new branch to retain commits you create, you may
+2026-10-28T23:10:25.9072759Z do so (now or later) by using -c with the switch command. Example:
+2026-10-28T23:10:25.9073240Z 
+2026-10-28T23:10:25.9073477Z   git switch -c <new-branch-name>
+2026-10-28T23:10:25.9073788Z 
+2026-10-28T23:10:25.9073954Z Or undo this operation with:
+2026-10-28T23:10:25.9074214Z 
+2026-10-28T23:10:25.9074351Z   git switch -
+2026-10-28T23:10:25.9074539Z 
+2026-10-28T23:10:25.9074913Z Turn off this advice by setting config variable advice.detachedHead to false
+2026-10-28T23:10:25.9075452Z 
+2026-10-28T23:10:25.9075808Z HEAD is now at a3992df8 Prepare Alpha v1.0.1 weather and input patch release
+2026-10-28T23:10:26.0407927Z ##[endgroup]
+2026-10-28T23:10:26.0824346Z [command]"C:\Program Files\Git\bin\git.exe" log -1 --format=%H
+2026-10-28T23:10:26.1177338Z a3992df8a8acbe9857586eee0fa7a86e73f3f0de
+2026-10-28T23:10:26.1223118Z ##[group]Removing auth
+2026-10-28T23:10:26.1223435Z Removing SSH command configuration
+2026-10-28T23:10:26.1233356Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp core\.sshCommand
+2026-10-28T23:10:26.1622667Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :\""
+2026-10-28T23:10:26.7495585Z Removing HTTP extra header
+2026-10-28T23:10:26.7507138Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-28T23:10:26.7898996Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :\""
+2026-10-28T23:10:27.3568980Z Removing includeIf entries pointing to credentials config files
+2026-10-28T23:10:27.3578339Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-28T23:10:27.3921686Z includeif.gitdir:D:/a/Project-Judas/Project-Judas/.git.path
+2026-10-28T23:10:27.3924947Z includeif.gitdir:D:/a/Project-Judas/Project-Judas/.git/worktrees/*.path
+2026-10-28T23:10:27.3925685Z includeif.gitdir:/github/workspace/.git.path
+2026-10-28T23:10:27.3926287Z includeif.gitdir:/github/workspace/.git/worktrees/*.path
+2026-10-28T23:10:27.3964478Z [command]"C:\Program Files\Git\bin\git.exe" config --local --get-all includeif.gitdir:D:/a/Project-Judas/Project-Judas/.git.path
+2026-10-28T23:10:27.4299178Z D:\a\_temp\git-credentials-622075a7-d20e-48ce-ac23-4b49bfbaaad3.config
+2026-10-28T23:10:27.4355690Z [command]"C:\Program Files\Git\bin\git.exe" config --local --unset includeif.gitdir:D:/a/Project-Judas/Project-Judas/.git.path D\:\\a\\_temp\\git\-credentials\-622075a7\-d20e\-48ce\-ac23\-4b49bfbaaad3\.config
+2026-10-28T23:10:27.4764232Z [command]"C:\Program Files\Git\bin\git.exe" config --local --get-all includeif.gitdir:D:/a/Project-Judas/Project-Judas/.git/worktrees/*.path
+2026-10-28T23:10:27.5138403Z D:\a\_temp\git-credentials-622075a7-d20e-48ce-ac23-4b49bfbaaad3.config
+2026-10-28T23:10:27.5184314Z [command]"C:\Program Files\Git\bin\git.exe" config --local --unset includeif.gitdir:D:/a/Project-Judas/Project-Judas/.git/worktrees/*.path D\:\\a\\_temp\\git\-credentials\-622075a7\-d20e\-48ce\-ac23\-4b49bfbaaad3\.config
+2026-10-28T23:10:27.5556866Z [command]"C:\Program Files\Git\bin\git.exe" config --local --get-all includeif.gitdir:/github/workspace/.git.path
+2026-10-28T23:10:27.5886297Z /github/runner_temp/git-credentials-622075a7-d20e-48ce-ac23-4b49bfbaaad3.config
+2026-10-28T23:10:27.5924777Z [command]"C:\Program Files\Git\bin\git.exe" config --local --unset includeif.gitdir:/github/workspace/.git.path \/github\/runner_temp\/git\-credentials\-622075a7\-d20e\-48ce\-ac23\-4b49bfbaaad3\.config
+2026-10-28T23:10:27.6558567Z [command]"C:\Program Files\Git\bin\git.exe" config --local --get-all includeif.gitdir:/github/workspace/.git/worktrees/*.path
+2026-10-28T23:10:27.6885028Z /github/runner_temp/git-credentials-622075a7-d20e-48ce-ac23-4b49bfbaaad3.config
+2026-10-28T23:10:27.6927557Z [command]"C:\Program Files\Git\bin\git.exe" config --local --unset includeif.gitdir:/github/workspace/.git/worktrees/*.path \/github\/runner_temp\/git\-credentials\-622075a7\-d20e\-48ce\-ac23\-4b49bfbaaad3\.config
+2026-10-28T23:10:27.7302388Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "git config --local --show-origin --name-only --get-regexp remote.origin.url"
+2026-10-28T23:10:28.3063210Z Removing credentials config 'D:\a\_temp\git-credentials-622075a7-d20e-48ce-ac23-4b49bfbaaad3.config'
+2026-10-28T23:10:28.3081553Z ##[endgroup]
+2026-10-28T23:10:28.3418710Z ##[group]Run ./packaging/windows/Build-Windows.ps1 -Channel $env:CHANNEL -Jobs 2 -ReleasePackage
+2026-10-28T23:10:28.3419594Z [36;1m./packaging/windows/Build-Windows.ps1 -Channel $env:CHANNEL -Jobs 2 -ReleasePackage[0m
+2026-10-28T23:10:28.3420139Z [36;1mif ($LASTEXITCODE) { exit $LASTEXITCODE }[0m
+2026-10-28T23:10:28.3420468Z [36;1m$build = "build/windows-$env:CHANNEL"[0m
+2026-10-28T23:10:28.3421377Z [36;1mcmake --build $build --config Release --target judas_build_identity_tests judas_release_update_tests judas_mk2_rotation_tests judas_network_transport_tests judas_consumer_pointer_tests --parallel 2[0m
+2026-10-28T23:10:28.3422347Z [36;1mif ($LASTEXITCODE) { exit $LASTEXITCODE }[0m
+2026-10-28T23:10:28.3422710Z [36;1m& "$build/Release/judas_build_identity_tests.exe"[0m
+2026-10-28T23:10:28.3423062Z [36;1mif ($LASTEXITCODE) { exit $LASTEXITCODE }[0m
+2026-10-28T23:10:28.3423669Z [36;1m& "$build/Release/judas_release_update_tests.exe" tests/fixtures/releases/update-cases.json[0m
+2026-10-28T23:10:28.3424203Z [36;1mif ($LASTEXITCODE) { exit $LASTEXITCODE }[0m
+2026-10-28T23:10:28.3424540Z [36;1m& "$build/Release/judas_mk2_rotation_tests.exe"[0m
+2026-10-28T23:10:28.3424873Z [36;1mif ($LASTEXITCODE) { exit $LASTEXITCODE }[0m
+2026-10-28T23:10:28.3425222Z [36;1m& "$build/Release/judas_network_transport_tests.exe"[0m
+2026-10-28T23:10:28.3425575Z [36;1mif ($LASTEXITCODE) { exit $LASTEXITCODE }[0m
+2026-10-28T23:10:28.3426466Z [36;1m& "$build/Release/judas_consumer_pointer_tests.exe" "$env:RUNNER_TEMP/consumer-pointer" "$env:GITHUB_WORKSPACE/tests/fixtures/pointer-taps"[0m
+2026-10-28T23:10:28.3427162Z [36;1mif ($LASTEXITCODE) { exit $LASTEXITCODE }[0m
+2026-10-28T23:10:28.3427866Z [36;1mpython tools/inspect_sdk.py "$build/windows-sdk" --host-check --system-directory C:/Windows/System32 --output windows-sdk-qualification.json[0m
+2026-10-28T23:10:28.3428583Z [36;1mif ($LASTEXITCODE) { exit $LASTEXITCODE }[0m
+2026-10-28T23:10:28.3429524Z [36;1m'Windows hosted CI qualifies native tools and selected contracts; editor/GL/export behaviour requires the documented native desktop/VM qualification. No hardware claim.' | Set-Content windows-ci-scope.txt[0m
+2026-10-28T23:10:28.3430504Z [36;1mtar -C $build -czf windows-sdk.tar.gz windows-sdk[0m
+2026-10-28T23:10:28.3504998Z shell: C:\Program Files\PowerShell\7\pwsh.EXE -command ". '{0}'"
+2026-10-28T23:10:28.3505337Z env:
+2026-10-28T23:10:28.3505569Z   CANDIDATE: a3992df8a8acbe9857586eee0fa7a86e73f3f0de
+2026-10-28T23:10:28.3505868Z   CHANNEL: Alpha
+2026-10-28T23:10:28.3506070Z   PYTHONUTF8: 1
+2026-10-28T23:10:28.3506249Z ##[endgroup]
+2026-10-28T23:10:28.8214031Z Cloning into 'C:\Users\runneradmin\AppData\Local\JudasBuildTools\vcpkg'...
+2026-10-28T23:10:43.9983585Z Updating files:   6% (983/14428)
+2026-10-28T23:10:44.1424171Z Updating files:   7% (1010/14428)
+2026-10-28T23:10:44.5359133Z Updating files:   8% (1155/14428)
+2026-10-28T23:10:44.6823300Z Updating files:   9% (1299/14428)
+2026-10-28T23:10:44.8295161Z Updating files:  10% (1443/14428)
+2026-10-28T23:10:44.9687401Z Updating files:  11% (1588/14428)
+2026-10-28T23:10:44.9751167Z Updating files:  12% (1732/14428)
+2026-10-28T23:10:45.1271849Z Updating files:  12% (1734/14428)
+2026-10-28T23:10:45.3632541Z Updating files:  13% (1876/14428)
+2026-10-28T23:10:46.0674405Z Updating files:  14% (2020/14428)
+2026-10-28T23:10:46.5640559Z Updating files:  14% (2075/14428)
+2026-10-28T23:10:46.9829959Z Updating files:  15% (2165/14428)
+2026-10-28T23:10:47.2129106Z Updating files:  15% (2266/14428)
+2026-10-28T23:10:47.9519107Z Updating files:  16% (2309/14428)
+2026-10-28T23:10:47.9811368Z Updating files:  17% (2453/14428)
+2026-10-28T23:10:48.2560363Z Updating files:  17% (2459/14428)
+2026-10-28T23:10:48.5605911Z Updating files:  18% (2598/14428)
+2026-10-28T23:10:48.7141018Z Updating files:  19% (2742/14428)
+2026-10-28T23:10:48.8723172Z Updating files:  20% (2886/14428)
+2026-10-28T23:10:48.9917211Z Updating files:  21% (3030/14428)
+2026-10-28T23:10:49.0126634Z Updating files:  21% (3155/14428)
+2026-10-28T23:10:49.1894059Z Updating files:  22% (3175/14428)
+2026-10-28T23:10:49.3292125Z Updating files:  23% (3319/14428)
+2026-10-28T23:10:50.5656893Z Updating files:  24% (3463/14428)
+2026-10-28T23:10:50.7685084Z Updating files:  24% (3520/14428)
+2026-10-28T23:10:50.9134900Z Updating files:  25% (3607/14428)
+2026-10-28T23:10:51.0034656Z Updating files:  26% (3752/14428)
+2026-10-28T23:10:51.0623147Z Updating files:  26% (3842/14428)
+2026-10-28T23:10:51.1927680Z Updating files:  27% (3896/14428)
+2026-10-28T23:10:51.4477010Z Updating files:  28% (4040/14428)
+2026-10-28T23:10:51.5600693Z Updating files:  29% (4185/14428)
+2026-10-28T23:10:51.6702419Z Updating files:  30% (4329/14428)
+2026-10-28T23:10:51.7825111Z Updating files:  31% (4473/14428)
+2026-10-28T23:10:51.9094523Z Updating files:  32% (4617/14428)
+2026-10-28T23:10:52.0044959Z Updating files:  33% (4762/14428)
+2026-10-28T23:10:52.0351101Z Updating files:  33% (4866/14428)
+2026-10-28T23:10:52.1484109Z Updating files:  34% (4906/14428)
+2026-10-28T23:10:52.2624687Z Updating files:  35% (5050/14428)
+2026-10-28T23:10:52.6254130Z Updating files:  36% (5195/14428)
+2026-10-28T23:10:52.9455581Z Updating files:  37% (5339/14428)
+2026-10-28T23:10:53.0127970Z Updating files:  38% (5483/14428)
+2026-10-28T23:10:53.0607732Z Updating files:  38% (5561/14428)
+2026-10-28T23:10:53.1669922Z Updating files:  39% (5627/14428)
+2026-10-28T23:10:53.2606025Z Updating files:  40% (5772/14428)
+2026-10-28T23:10:53.3861507Z Updating files:  41% (5916/14428)
+2026-10-28T23:10:53.4880331Z Updating files:  42% (6060/14428)
+2026-10-28T23:10:53.5788482Z Updating files:  43% (6205/14428)
+2026-10-28T23:10:53.6750887Z Updating files:  44% (6349/14428)
+2026-10-28T23:10:53.7829236Z Updating files:  45% (6493/14428)
+2026-10-28T23:10:53.8850653Z Updating files:  46% (6637/14428)
+2026-10-28T23:10:54.0006964Z Updating files:  47% (6782/14428)
+2026-10-28T23:10:54.0300367Z Updating files:  48% (6926/14428)
+2026-10-28T23:10:54.5151894Z Updating files:  48% (6961/14428)
+2026-10-28T23:10:54.6231672Z Updating files:  49% (7070/14428)
+2026-10-28T23:10:54.7353263Z Updating files:  50% (7214/14428)
+2026-10-28T23:10:54.8282026Z Updating files:  51% (7359/14428)
+2026-10-28T23:10:54.9237553Z Updating files:  52% (7503/14428)
+2026-10-28T23:10:55.0286979Z Updating files:  53% (7647/14428)
+2026-10-28T23:10:55.0304573Z Updating files:  53% (7788/14428)
+2026-10-28T23:10:55.1368542Z Updating files:  54% (7792/14428)
+2026-10-28T23:10:55.2451262Z Updating files:  55% (7936/14428)
+2026-10-28T23:10:55.3545856Z Updating files:  56% (8080/14428)
+2026-10-28T23:10:55.7426525Z Updating files:  57% (8224/14428)
+2026-10-28T23:10:55.8509543Z Updating files:  58% (8369/14428)
+2026-10-28T23:10:55.9579928Z Updating files:  59% (8513/14428)
+2026-10-28T23:10:56.0292096Z Updating files:  60% (8657/14428)
+2026-10-28T23:10:56.0789279Z Updating files:  60% (8752/14428)
+2026-10-28T23:10:56.1850628Z Updating files:  61% (8802/14428)
+2026-10-28T23:10:56.2997109Z Updating files:  62% (8946/14428)
+2026-10-28T23:10:56.7370188Z Updating files:  63% (9090/14428)
+2026-10-28T23:10:57.0004371Z Updating files:  64% (9234/14428)
+2026-10-28T23:10:57.0310806Z Updating files:  65% (9379/14428)
+2026-10-28T23:10:57.1057144Z Updating files:  65% (9422/14428)
+2026-10-28T23:10:57.2187654Z Updating files:  66% (9523/14428)
+2026-10-28T23:10:57.3253384Z Updating files:  67% (9667/14428)
+2026-10-28T23:10:57.4285451Z Updating files:  68% (9812/14428)
+2026-10-28T23:10:57.5537230Z Updating files:  69% (9956/14428)
+2026-10-28T23:10:57.6660103Z Updating files:  70% (10100/14428)
+2026-10-28T23:10:57.7820929Z Updating files:  71% (10244/14428)
+2026-10-28T23:10:57.8671030Z Updating files:  72% (10389/14428)
+2026-10-28T23:10:57.9621810Z Updating files:  73% (10533/14428)
+2026-10-28T23:10:58.0334300Z Updating files:  74% (10677/14428)
+2026-10-28T23:10:58.1006235Z Updating files:  74% (10720/14428)
+2026-10-28T23:10:58.1903476Z Updating files:  75% (10821/14428)
+2026-10-28T23:10:58.5925174Z Updating files:  76% (10966/14428)
+2026-10-28T23:10:58.6800661Z Updating files:  77% (11110/14428)
+2026-10-28T23:10:58.7722279Z Updating files:  78% (11254/14428)
+2026-10-28T23:10:58.8612298Z Updating files:  79% (11399/14428)
+2026-10-28T23:10:58.9404169Z Updating files:  80% (11543/14428)
+2026-10-28T23:10:59.0168606Z Updating files:  81% (11687/14428)
+2026-10-28T23:10:59.0458814Z Updating files:  82% (11831/14428)
+2026-10-28T23:10:59.1018701Z Updating files:  82% (11882/14428)
+2026-10-28T23:10:59.1916491Z Updating files:  83% (11976/14428)
+2026-10-28T23:10:59.2818825Z Updating files:  84% (12120/14428)
+2026-10-28T23:10:59.3701092Z Updating files:  85% (12264/14428)
+2026-10-28T23:10:59.4682885Z Updating files:  86% (12409/14428)
+2026-10-28T23:10:59.5543552Z Updating files:  87% (12553/14428)
+2026-10-28T23:11:00.0221386Z Updating files:  88% (12697/14428)
+2026-10-28T23:11:00.0587620Z Updating files:  89% (12841/14428)
+2026-10-28T23:11:00.0904788Z Updating files:  89% (12916/14428)
+2026-10-28T23:11:00.1672307Z Updating files:  90% (12986/14428)
+2026-10-28T23:11:00.2481236Z Updating files:  91% (13130/14428)
+2026-10-28T23:11:00.3376908Z Updating files:  92% (13274/14428)
+2026-10-28T23:11:00.4133453Z Updating files:  93% (13419/14428)
+2026-10-28T23:11:00.5171508Z Updating files:  94% (13563/14428)
+2026-10-28T23:11:00.6011176Z Updating files:  95% (13707/14428)
+2026-10-28T23:11:00.6694865Z Updating files:  96% (13851/14428)
+2026-10-28T23:11:00.7518594Z Updating files:  97% (13996/14428)
+2026-10-28T23:11:00.8425377Z Updating files:  98% (14140/14428)
+2026-10-28T23:11:00.9369470Z Updating files:  99% (14284/14428)
+2026-10-28T23:11:00.9370179Z Updating files: 100% (14428/14428)
+2026-10-28T23:11:00.9370720Z Updating files: 100% (14428/14428), done.
+2026-10-28T23:11:11.6772276Z HEAD is now at d5ec528843 Promote x64-windows-release out of community (#43555)
+2026-10-28T23:11:16.2624512Z Downloading https://github.com/microsoft/vcpkg-tool/releases/download/2025-02-11/vcpkg.exe -> C:\Users\runneradmin\AppData\Local\JudasBuildTools\vcpkg\vcpkg.exe... done.
+2026-10-28T23:11:16.5309716Z Validating signature... done.
+2026-10-28T23:11:16.5455374Z 
+2026-10-28T23:11:16.6780886Z vcpkg package management program version 2025-02-11-bec4296bf5289dc9ce83b4f5095943e44162f9c2
+2026-10-28T23:11:16.6781355Z 
+2026-10-28T23:11:16.6781478Z See LICENSE.txt for license information.
+2026-10-28T23:11:17.4529799Z -- Running vcpkg install
+2026-10-28T23:11:18.4428928Z Detecting compiler hash for triplet x64-windows...
+2026-10-28T23:11:27.3962087Z Compiler found: C:/Program Files/Microsoft Visual Studio/18/Enterprise/VC/Tools/MSVC/14.44.35207/bin/HostX64/x64/cl.exe
+2026-10-28T23:11:27.4092512Z Detecting compiler hash for triplet x64-windows-static-md...
+2026-10-28T23:11:28.0504357Z Compiler found: C:/Program Files/Microsoft Visual Studio/18/Enterprise/VC/Tools/MSVC/14.44.35207/bin/HostX64/x64/cl.exe
+2026-10-28T23:11:28.0541311Z The following packages will be built and installed:
+2026-10-28T23:11:28.0542347Z     glm:x64-windows-static-md@1.0.1#3 -- C:\Users\runneradmin\AppData\Local\JudasBuildTools\vcpkg\buildtrees\versioning_\versions\glm\f8b09027afe97c717e95bd81d1d4f37c057d1c78
+2026-10-28T23:11:28.0543917Z     sdl2:x64-windows-static-md@2.30.12 -- C:\Users\runneradmin\AppData\Local\JudasBuildTools\vcpkg\buildtrees\versioning_\versions\sdl2\519decfc6f5bcc4be3b919c10e0792798f7c006f
+2026-10-28T23:11:28.0545181Z   * vcpkg-cmake:x64-windows@2024-04-23 -- C:\Users\runneradmin\AppData\Local\JudasBuildTools\vcpkg\buildtrees\versioning_\versions\vcpkg-cmake\e74aa1e8f93278a8e71372f1fa08c3df420eb840
+2026-10-28T23:11:28.0546535Z   * vcpkg-cmake-config:x64-windows@2024-05-23 -- C:\Users\runneradmin\AppData\Local\JudasBuildTools\vcpkg\buildtrees\versioning_\versions\vcpkg-cmake-config\97a63e4bc1a17422ffe4eff71da53b4b561a7841
+2026-10-28T23:11:28.0547481Z Additional packages (*) will be modified to complete this operation.
+2026-10-28T23:11:28.1809129Z Restored 0 package(s) from C:\Users\runneradmin\AppData\Local\vcpkg\archives in 261 us. Use --debug to see more details.
+2026-10-28T23:11:28.1809897Z Installing 1/4 vcpkg-cmake-config:x64-windows@2024-05-23...
+2026-10-28T23:11:28.1810324Z Building vcpkg-cmake-config:x64-windows@2024-05-23...
+2026-10-28T23:11:28.1811241Z C:\Users\runneradmin\AppData\Local\JudasBuildTools\vcpkg\buildtrees\versioning_\versions\vcpkg-cmake-config\97a63e4bc1a17422ffe4eff71da53b4b561a7841: info: installing overlay port from here
+2026-10-28T23:11:28.2203859Z -- Installing: C:/Users/runneradmin/AppData/Local/JudasBuildTools/vcpkg/packages/vcpkg-cmake-config_x64-windows/share/vcpkg-cmake-config/vcpkg_cmake_config_fixup.cmake
+2026-10-28T23:11:28.2218488Z -- Installing: C:/Users/runneradmin/AppData/Local/JudasBuildTools/vcpkg/packages/vcpkg-cmake-config_x64-windows/share/vcpkg-cmake-config/vcpkg-port-config.cmake
+2026-10-28T23:11:28.2230692Z -- Installing: C:/Users/runneradmin/AppData/Local/JudasBuildTools/vcpkg/packages/vcpkg-cmake-config_x64-windows/share/vcpkg-cmake-config/copyright
+2026-10-28T23:11:28.2337556Z -- Skipping post-build validation due to VCPKG_POLICY_EMPTY_PACKAGE
+2026-10-28T23:11:28.2419920Z Starting submission of vcpkg-cmake-config:x64-windows to 1 binary cache(s) in the background
+2026-10-28T23:11:28.2421743Z Elapsed time to handle vcpkg-cmake-config:x64-windows: 61.2 ms
+2026-10-28T23:11:28.2422984Z vcpkg-cmake-config:x64-windows package ABI: d3624926b5d899411fd5648e43f995aa54727effb206c16723a852aae02234c3
+2026-10-28T23:11:28.2425337Z Installing 2/4 vcpkg-cmake:x64-windows@2024-04-23...
+2026-10-28T23:11:28.2426030Z Building vcpkg-cmake:x64-windows@2024-04-23...
+2026-10-28T23:11:28.2427635Z C:\Users\runneradmin\AppData\Local\JudasBuildTools\vcpkg\buildtrees\versioning_\versions\vcpkg-cmake\e74aa1e8f93278a8e71372f1fa08c3df420eb840: info: installing overlay port from here
+2026-10-28T23:11:28.2895101Z -- Installing: C:/Users/runneradmin/AppData/Local/JudasBuildTools/vcpkg/packages/vcpkg-cmake_x64-windows/share/vcpkg-cmake/vcpkg_cmake_configure.cmake
+2026-10-28T23:11:28.2906804Z -- Installing: C:/Users/runneradmin/AppData/Local/JudasBuildTools/vcpkg/packages/vcpkg-cmake_x64-windows/share/vcpkg-cmake/vcpkg_cmake_build.cmake
+2026-10-28T23:11:28.2918545Z -- Installing: C:/Users/runneradmin/AppData/Local/JudasBuildTools/vcpkg/packages/vcpkg-cmake_x64-windows/share/vcpkg-cmake/vcpkg_cmake_install.cmake
+2026-10-28T23:11:28.2966827Z -- Installing: C:/Users/runneradmin/AppData/Local/JudasBuildTools/vcpkg/packages/vcpkg-cmake_x64-windows/share/vcpkg-cmake/vcpkg-port-config.cmake
+2026-10-28T23:11:28.2995869Z -- Installing: C:/Users/runneradmin/AppData/Local/JudasBuildTools/vcpkg/packages/vcpkg-cmake_x64-windows/share/vcpkg-cmake/copyright
+2026-10-28T23:11:28.3038892Z -- Performing post-build validation
+2026-10-28T23:11:28.3137471Z Starting submission of vcpkg-cmake:x64-windows to 1 binary cache(s) in the background
+2026-10-28T23:11:28.3138670Z Elapsed time to handle vcpkg-cmake:x64-windows: 71.7 ms
+2026-10-28T23:11:28.3139312Z vcpkg-cmake:x64-windows package ABI: b90f0830638ba4519fe8faf66c09fc5c6c20c08bf9ece2f12027a0b261bb5fca
+2026-10-28T23:11:28.3139934Z Installing 3/4 glm:x64-windows-static-md@1.0.1#3...
+2026-10-28T23:11:28.3140307Z Building glm:x64-windows-static-md@1.0.1#3...
+2026-10-28T23:11:28.3141305Z C:\Users\runneradmin\AppData\Local\JudasBuildTools\vcpkg\buildtrees\versioning_\versions\glm\f8b09027afe97c717e95bd81d1d4f37c057d1c78: info: installing overlay port from here
+2026-10-28T23:11:28.3679956Z Downloading https://github.com/g-truc/glm/archive/1.0.1.tar.gz -> g-truc-glm-1.0.1.tar.gz
+2026-10-28T23:11:28.6299613Z Successfully downloaded g-truc-glm-1.0.1.tar.gz
+2026-10-28T23:11:28.6594391Z -- Extracting source C:/Users/runneradmin/AppData/Local/JudasBuildTools/vcpkg/downloads/g-truc-glm-1.0.1.tar.gz
+2026-10-28T23:11:29.8295367Z -- Applying patch fix-clang.patch
+2026-10-28T23:11:29.8690526Z -- Using source at C:/Users/runneradmin/AppData/Local/JudasBuildTools/vcpkg/buildtrees/glm/src/1.0.1-cf6930f99d.clean
+2026-10-28T23:11:29.8797048Z -- Found external ninja('1.13.2').
+2026-10-28T23:11:29.8855247Z -- Configuring x64-windows-static-md
+2026-10-28T23:11:32.7804177Z -- Building x64-windows-static-md-dbg
+2026-10-28T23:11:35.4797423Z -- Building x64-windows-static-md-rel
+2026-10-28T23:11:38.2772466Z -- Installing: C:/Users/runneradmin/AppData/Local/JudasBuildTools/vcpkg/packages/glm_x64-windows-static-md/share/glm/copyright
+2026-10-28T23:11:38.2784875Z -- Installing: C:/Users/runneradmin/AppData/Local/JudasBuildTools/vcpkg/packages/glm_x64-windows-static-md/share/glm/usage
+2026-10-28T23:11:38.2873179Z -- Performing post-build validation
+2026-10-28T23:11:38.5101041Z Starting submission of glm:x64-windows-static-md to 1 binary cache(s) in the background
+2026-10-28T23:11:38.5102140Z Elapsed time to handle glm:x64-windows-static-md: 10 s
+2026-10-28T23:11:38.5102930Z glm:x64-windows-static-md package ABI: 31c42b7bd481b5441341aef3b8d319b0ebce58453ead0ff15cec413efe7915b5
+2026-10-28T23:11:38.5103878Z Completed submission of vcpkg-cmake-config:x64-windows to 1 binary cache(s) in 236 ms
+2026-10-28T23:11:38.5104610Z Completed submission of vcpkg-cmake:x64-windows to 1 binary cache(s) in 59.5 ms
+2026-10-28T23:11:38.5105552Z Installing 4/4 sdl2:x64-windows-static-md@2.30.12...
+2026-10-28T23:11:38.5106027Z Building sdl2:x64-windows-static-md@2.30.12...
+2026-10-28T23:11:38.5107358Z C:\Users\runneradmin\AppData\Local\JudasBuildTools\vcpkg\buildtrees\versioning_\versions\sdl2\519decfc6f5bcc4be3b919c10e0792798f7c006f: info: installing overlay port from here
+2026-10-28T23:11:38.5730688Z Downloading https://github.com/libsdl-org/SDL/archive/release-2.30.12.tar.gz -> libsdl-org-SDL-release-2.30.12.tar.gz
+2026-10-28T23:11:40.2858926Z Successfully downloaded libsdl-org-SDL-release-2.30.12.tar.gz
+2026-10-28T23:11:40.3194893Z -- Extracting source C:/Users/runneradmin/AppData/Local/JudasBuildTools/vcpkg/downloads/libsdl-org-SDL-release-2.30.12.tar.gz
+2026-10-28T23:11:41.7749521Z -- Applying patch deps.patch
+2026-10-28T23:11:41.9285447Z -- Applying patch alsa-dep-fix.patch
+2026-10-28T23:11:42.0046032Z -- Applying patch cxx-linkage-pkgconfig.diff
+2026-10-28T23:11:42.0482698Z -- Using source at C:/Users/runneradmin/AppData/Local/JudasBuildTools/vcpkg/buildtrees/sdl2/src/se-2.30.12-377bb68937.clean
+2026-10-28T23:11:42.0634019Z -- Found external ninja('1.13.2').
+2026-10-28T23:11:42.5801736Z -- Configuring x64-windows-static-md
+2026-10-28T23:12:08.4640678Z -- Building x64-windows-static-md-dbg
+2026-10-28T23:12:24.6565792Z -- Building x64-windows-static-md-rel
+2026-10-28T23:12:49.2657101Z -- Fixing pkgconfig file: C:/Users/runneradmin/AppData/Local/JudasBuildTools/vcpkg/packages/sdl2_x64-windows-static-md/lib/pkgconfig/sdl2.pc
+2026-10-28T23:12:49.2917850Z Downloading msys2-mingw-w64-x86_64-pkgconf-1~2.3.0-1-any.pkg.tar.zst, trying https://mirror.msys2.org/mingw/mingw64/mingw-w64-x86_64-pkgconf-1~2.3.0-1-any.pkg.tar.zst
+2026-10-28T23:12:49.9429747Z Successfully downloaded msys2-mingw-w64-x86_64-pkgconf-1~2.3.0-1-any.pkg.tar.zst
+2026-10-28T23:12:49.9602370Z Downloading msys2-msys2-runtime-3.5.4-2-x86_64.pkg.tar.zst, trying https://mirror.msys2.org/msys/x86_64/msys2-runtime-3.5.4-2-x86_64.pkg.tar.zst
+2026-10-28T23:12:50.3718788Z Trying https://repo.msys2.org/msys/x86_64/msys2-runtime-3.5.4-2-x86_64.pkg.tar.zst
+2026-10-28T23:12:50.8142706Z Trying https://mirror.yandex.ru/mirrors/msys2/msys/x86_64/msys2-runtime-3.5.4-2-x86_64.pkg.tar.zst
+2026-10-28T23:12:51.5161758Z Trying https://mirrors.tuna.tsinghua.edu.cn/msys2/msys/x86_64/msys2-runtime-3.5.4-2-x86_64.pkg.tar.zst
+2026-10-28T23:12:52.6057843Z Trying https://mirrors.ustc.edu.cn/msys2/msys/x86_64/msys2-runtime-3.5.4-2-x86_64.pkg.tar.zst
+2026-10-28T23:12:53.7141596Z Trying https://mirror.selfnet.de/msys2/msys/x86_64/msys2-runtime-3.5.4-2-x86_64.pkg.tar.zst
+2026-10-28T23:12:54.3663755Z error: https://mirror.msys2.org/msys/x86_64/msys2-runtime-3.5.4-2-x86_64.pkg.tar.zst: failed: status code 404
+2026-10-28T23:12:54.3666278Z error: https://repo.msys2.org/msys/x86_64/msys2-runtime-3.5.4-2-x86_64.pkg.tar.zst: failed: status code 404
+2026-10-28T23:12:54.3669272Z error: https://mirror.yandex.ru/mirrors/msys2/msys/x86_64/msys2-runtime-3.5.4-2-x86_64.pkg.tar.zst: failed: status code 404
+2026-10-28T23:12:54.3670343Z error: https://mirrors.tuna.tsinghua.edu.cn/msys2/msys/x86_64/msys2-runtime-3.5.4-2-x86_64.pkg.tar.zst: failed: status code 404
+2026-10-28T23:12:54.3671303Z error: https://mirrors.ustc.edu.cn/msys2/msys/x86_64/msys2-runtime-3.5.4-2-x86_64.pkg.tar.zst: failed: status code 404
+2026-10-28T23:12:54.3672350Z error: https://mirror.selfnet.de/msys2/msys/x86_64/msys2-runtime-3.5.4-2-x86_64.pkg.tar.zst: failed: status code 404
+2026-10-28T23:12:54.3673276Z note: If you are using a proxy, please ensure your proxy settings are correct.
+2026-10-28T23:12:54.3673702Z Possible causes are:
+2026-10-28T23:12:54.3674367Z 1. You are actually using an HTTP proxy, but setting HTTPS_PROXY variable to `https//address:port`.
+2026-10-28T23:12:54.3675727Z This is not correct, because `https://` prefix claims the proxy is an HTTPS proxy, while your proxy (v2ray, shadowsocksr, etc...) is an HTTP proxy.
+2026-10-28T23:12:54.3678193Z Try setting `http://address:port` to both HTTP_PROXY and HTTPS_PROXY instead.
+2026-10-28T23:12:54.3679944Z 2. If you are using Windows, vcpkg will automatically use your Windows IE Proxy Settings set by your proxy software. See: https://github.com/microsoft/vcpkg-tool/pull/77
+2026-10-28T23:12:54.3681610Z The value set by your proxy might be wrong, or have same `https://` prefix issue.
+2026-10-28T23:12:54.3682657Z 3. Your proxy's remote server is our of service.
+2026-10-28T23:12:54.3684135Z If you believe this is not a temporary download server failure and vcpkg needs to be changed to download this file from a different location, please submit an issue to https://github.com/Microsoft/vcpkg/issues
+2026-10-28T23:12:54.3706191Z CMake Error at scripts/cmake/vcpkg_download_distfile.cmake:124 (message):
+2026-10-28T23:12:54.3706844Z   Download failed, halting portfile.
+2026-10-28T23:12:54.3707270Z Call Stack (most recent call first):
+2026-10-28T23:12:54.3707846Z   scripts/cmake/vcpkg_acquire_msys.cmake:25 (vcpkg_download_distfile)
+2026-10-28T23:12:54.3708664Z   scripts/cmake/vcpkg_acquire_msys.cmake:124 (z_vcpkg_acquire_msys_download_package)
+2026-10-28T23:12:54.3709529Z   scripts/cmake/vcpkg_acquire_msys.cmake:212 (z_vcpkg_acquire_msys_download_packages)
+2026-10-28T23:12:54.3710396Z   scripts/cmake/vcpkg_find_acquire_program(PKGCONFIG).cmake:52 (vcpkg_acquire_msys)
+2026-10-28T23:12:54.3711126Z   scripts/cmake/vcpkg_find_acquire_program.cmake:121 (include)
+2026-10-28T23:12:54.3711849Z   scripts/cmake/vcpkg_fixup_pkgconfig.cmake:193 (vcpkg_find_acquire_program)
+2026-10-28T23:12:54.3712941Z   buildtrees/versioning_/versions/sdl2/519decfc6f5bcc4be3b919c10e0792798f7c006f/portfile.cmake:131 (vcpkg_fixup_pkgconfig)
+2026-10-28T23:12:54.3713855Z   scripts/ports.cmake:196 (include)
+2026-10-28T23:12:54.3714124Z 
+2026-10-28T23:12:54.3714129Z 
+2026-10-28T23:12:54.3785261Z error: building sdl2:x64-windows-static-md failed with: BUILD_FAILED
+2026-10-28T23:12:54.3786180Z See https://learn.microsoft.com/vcpkg/troubleshoot/build-failures?WT.mc_id=vcpkg_inproduct_cli for more information.
+2026-10-28T23:12:54.3786819Z Elapsed time to handle sdl2:x64-windows-static-md: 1.3 min
+2026-10-28T23:12:54.4177099Z Please ensure you're using the latest port files with `git pull` and `vcpkg update`.
+2026-10-28T23:12:54.4177973Z Then check for known issues at:
+2026-10-28T23:12:54.4179058Z   https://github.com/microsoft/vcpkg/issues?q=is%3Aissue+is%3Aopen+in%3Atitle+sdl2
+2026-10-28T23:12:54.4179798Z You can submit a new issue at:
+2026-10-28T23:12:54.4180948Z   https://github.com/microsoft/vcpkg/issues/new?title=[sdl2]+Build+error+on+x64-windows-static-md&body=Copy%20issue%20body%20from%20collapsed%20section%20%22issue_body.md%22%20in%20the%20ci%20log%20output
+2026-10-28T23:12:54.4182161Z ##[group]issue_body.md
+2026-10-28T23:12:54.4182492Z Package: sdl2:x64-windows-static-md@2.30.12
+2026-10-28T23:12:54.4182876Z 
+2026-10-28T23:12:54.4183026Z **Host Environment**
+2026-10-28T23:12:54.4183749Z 
+2026-10-28T23:12:54.4183852Z - Host: x64-windows
+2026-10-28T23:12:54.4184064Z - Compiler: MSVC 19.44.35229.0
+2026-10-28T23:12:54.4184561Z -    vcpkg-tool version: 2025-02-11-bec4296bf5289dc9ce83b4f5095943e44162f9c2
+2026-10-28T23:12:54.4185394Z     vcpkg-scripts version: d5ec528843 2025-02-14 (1 year, 8 months ago)
+2026-10-28T23:12:54.4186316Z 
+2026-10-28T23:12:54.4186442Z **To Reproduce**
+2026-10-28T23:12:54.4186660Z 
+2026-10-28T23:12:54.4186769Z `vcpkg install `
+2026-10-28T23:12:54.4186935Z 
+2026-10-28T23:12:54.4187036Z **Failure logs**
+2026-10-28T23:12:54.4187232Z 
+2026-10-28T23:12:54.4187341Z ```
+2026-10-28T23:12:54.4188405Z Downloading https://github.com/libsdl-org/SDL/archive/release-2.30.12.tar.gz -> libsdl-org-SDL-release-2.30.12.tar.gz
+2026-10-28T23:12:54.4190306Z Successfully downloaded libsdl-org-SDL-release-2.30.12.tar.gz
+2026-10-28T23:12:54.4191917Z -- Extracting source C:/Users/runneradmin/AppData/Local/JudasBuildTools/vcpkg/downloads/libsdl-org-SDL-release-2.30.12.tar.gz
+2026-10-28T23:12:54.4193029Z -- Applying patch deps.patch
+2026-10-28T23:12:54.4193497Z -- Applying patch alsa-dep-fix.patch
+2026-10-28T23:12:54.4194007Z -- Applying patch cxx-linkage-pkgconfig.diff
+2026-10-28T23:12:54.4195442Z -- Using source at C:/Users/runneradmin/AppData/Local/JudasBuildTools/vcpkg/buildtrees/sdl2/src/se-2.30.12-377bb68937.clean
+2026-10-28T23:12:54.4197060Z -- Found external ninja('1.13.2').
+2026-10-28T23:12:54.4198344Z -- Configuring x64-windows-static-md
+2026-10-28T23:12:54.4199151Z -- Building x64-windows-static-md-dbg
+2026-10-28T23:12:54.4199687Z -- Building x64-windows-static-md-rel
+2026-10-28T23:12:54.4200901Z -- Fixing pkgconfig file: C:/Users/runneradmin/AppData/Local/JudasBuildTools/vcpkg/packages/sdl2_x64-windows-static-md/lib/pkgconfig/sdl2.pc
+2026-10-28T23:12:54.4202846Z Downloading msys2-mingw-w64-x86_64-pkgconf-1~2.3.0-1-any.pkg.tar.zst, trying https://mirror.msys2.org/mingw/mingw64/mingw-w64-x86_64-pkgconf-1~2.3.0-1-any.pkg.tar.zst
+2026-10-28T23:12:54.4204473Z Successfully downloaded msys2-mingw-w64-x86_64-pkgconf-1~2.3.0-1-any.pkg.tar.zst
+2026-10-28T23:12:54.4205808Z Downloading msys2-msys2-runtime-3.5.4-2-x86_64.pkg.tar.zst, trying https://mirror.msys2.org/msys/x86_64/msys2-runtime-3.5.4-2-x86_64.pkg.tar.zst
+2026-10-28T23:12:54.4207118Z Trying https://repo.msys2.org/msys/x86_64/msys2-runtime-3.5.4-2-x86_64.pkg.tar.zst
+2026-10-28T23:12:54.4208145Z Trying https://mirror.yandex.ru/mirrors/msys2/msys/x86_64/msys2-runtime-3.5.4-2-x86_64.pkg.tar.zst
+2026-10-28T23:12:54.4209350Z Trying https://mirrors.tuna.tsinghua.edu.cn/msys2/msys/x86_64/msys2-runtime-3.5.4-2-x86_64.pkg.tar.zst
+2026-10-28T23:12:54.4210901Z Trying https://mirrors.ustc.edu.cn/msys2/msys/x86_64/msys2-runtime-3.5.4-2-x86_64.pkg.tar.zst
+2026-10-28T23:12:54.4212118Z Trying https://mirror.selfnet.de/msys2/msys/x86_64/msys2-runtime-3.5.4-2-x86_64.pkg.tar.zst
+2026-10-28T23:12:54.4213331Z error: https://mirror.msys2.org/msys/x86_64/msys2-runtime-3.5.4-2-x86_64.pkg.tar.zst: failed: status code 404
+2026-10-28T23:12:54.4214117Z error: https://repo.msys2.org/msys/x86_64/msys2-runtime-3.5.4-2-x86_64.pkg.tar.zst: failed: status code 404
+2026-10-28T23:12:54.4214875Z error: https://mirror.yandex.ru/mirrors/msys2/msys/x86_64/msys2-runtime-3.5.4-2-x86_64.pkg.tar.zst: failed: status code 404
+2026-10-28T23:12:54.4216151Z error: https://mirrors.tuna.tsinghua.edu.cn/msys2/msys/x86_64/msys2-runtime-3.5.4-2-x86_64.pkg.tar.zst: failed: status code 404
+2026-10-28T23:12:54.4218397Z error: https://mirrors.ustc.edu.cn/msys2/msys/x86_64/msys2-runtime-3.5.4-2-x86_64.pkg.tar.zst: failed: status code 404
+2026-10-28T23:12:54.4219743Z error: https://mirror.selfnet.de/msys2/msys/x86_64/msys2-runtime-3.5.4-2-x86_64.pkg.tar.zst: failed: status code 404
+2026-10-28T23:12:54.4221150Z note: If you are using a proxy, please ensure your proxy settings are correct.
+2026-10-28T23:12:54.4221791Z Possible causes are:
+2026-10-28T23:12:54.4222746Z 1. You are actually using an HTTP proxy, but setting HTTPS_PROXY variable to `https//address:port`.
+2026-10-28T23:12:54.4224116Z This is not correct, because `https://` prefix claims the proxy is an HTTPS proxy, while your proxy (v2ray, shadowsocksr, etc...) is an HTTP proxy.
+2026-10-28T23:12:54.4225245Z Try setting `http://address:port` to both HTTP_PROXY and HTTPS_PROXY instead.
+2026-10-28T23:12:54.4226063Z 2. If you are using Windows, vcpkg will automatically use your Windows IE Proxy Settings set by your proxy software. See: https://github.com/microsoft/vcpkg-tool/pull/77
+2026-10-28T23:12:54.4227353Z The value set by your proxy might be wrong, or have same `https://` prefix issue.
+2026-10-28T23:12:54.4228067Z 3. Your proxy's remote server is our of service.
+2026-10-28T23:12:54.4229757Z If you believe this is not a temporary download server failure and vcpkg needs to be changed to download this file from a different location, please submit an issue to https://github.com/Microsoft/vcpkg/issues
+2026-10-28T23:12:54.4231754Z CMake Error at scripts/cmake/vcpkg_download_distfile.cmake:124 (message):
+2026-10-28T23:12:54.4232208Z   Download failed, halting portfile.
+2026-10-28T23:12:54.4232525Z Call Stack (most recent call first):
+2026-10-28T23:12:54.4232992Z   scripts/cmake/vcpkg_acquire_msys.cmake:25 (vcpkg_download_distfile)
+2026-10-28T23:12:54.4233497Z   scripts/cmake/vcpkg_acquire_msys.cmake:124 (z_vcpkg_acquire_msys_download_package)
+2026-10-28T23:12:54.4234039Z   scripts/cmake/vcpkg_acquire_msys.cmake:212 (z_vcpkg_acquire_msys_download_packages)
+2026-10-28T23:12:54.4235089Z   scripts/cmake/vcpkg_find_acquire_program(PKGCONFIG).cmake:52 (vcpkg_acquire_msys)
+2026-10-28T23:12:54.4235580Z   scripts/cmake/vcpkg_find_acquire_program.cmake:121 (include)
+2026-10-28T23:12:54.4236011Z   scripts/cmake/vcpkg_fixup_pkgconfig.cmake:193 (vcpkg_find_acquire_program)
+2026-10-28T23:12:54.4236680Z   buildtrees/versioning_/versions/sdl2/519decfc6f5bcc4be3b919c10e0792798f7c006f/portfile.cmake:131 (vcpkg_fixup_pkgconfig)
+2026-10-28T23:12:54.4237241Z   scripts/ports.cmake:196 (include)
+2026-10-28T23:12:54.4237418Z 
+2026-10-28T23:12:54.4237423Z 
+2026-10-28T23:12:54.4237426Z 
+2026-10-28T23:12:54.4237489Z ```
+2026-10-28T23:12:54.4237583Z 
+2026-10-28T23:12:54.4237656Z **Additional context**
+2026-10-28T23:12:54.4237787Z 
+2026-10-28T23:12:54.4237895Z <details><summary>vcpkg.json</summary>
+2026-10-28T23:12:54.4238189Z 
+2026-10-28T23:12:54.4238302Z ```
+2026-10-28T23:12:54.4238459Z {
+2026-10-28T23:12:54.4238643Z   "name": "judas-windows-dependencies",
+2026-10-28T23:12:54.4238922Z   "version-string": "unvalidated-v1",
+2026-10-28T23:12:54.4239245Z   "builtin-baseline": "d5ec528843d29e3a52d745a64b469f810b2cedbf",
+2026-10-28T23:12:54.4239567Z   "dependencies": [
+2026-10-28T23:12:54.4239749Z     "sdl2",
+2026-10-28T23:12:54.4239912Z     "glm"
+2026-10-28T23:12:54.4240064Z   ]
+2026-10-28T23:12:54.4240211Z }
+2026-10-28T23:12:54.4240297Z 
+2026-10-28T23:12:54.4240355Z ```
+2026-10-28T23:12:54.4240593Z </details>
+2026-10-28T23:12:54.4241427Z ##[endgroup]
+2026-10-28T23:12:54.4241696Z 
+2026-10-28T23:12:54.4264798Z Completed submission of glm:x64-windows-static-md to 1 binary cache(s) in 433 ms
+2026-10-28T23:12:54.4266482Z CMake Error at C:/Users/runneradmin/AppData/Local/JudasBuildTools/vcpkg/scripts/buildsystems/vcpkg.cmake:904 (message):
+2026-10-28T23:12:54.4267616Z   vcpkg install failed.  See logs for more information:
+2026-10-28T23:12:54.4268399Z   D:\a\Project-Judas\Project-Judas\build\windows-Alpha\vcpkg-manifest-install.log
+2026-10-28T23:12:54.4269134Z Call Stack (most recent call first):
+2026-10-28T23:12:54.4269846Z   C:/Program Files/CMake/share/cmake-4.4/Modules/CMakeDetermineSystem.cmake:152 (include)
+2026-10-28T23:12:54.4270596Z   CMakeLists.txt:5 (project)
+2026-10-28T23:12:54.4270852Z 
+2026-10-28T23:12:54.4270857Z 
+2026-10-28T23:12:54.4271017Z -- Running vcpkg install - failed
+2026-10-28T23:12:54.4346718Z CMake Error at CMakeLists.txt:5 (project):
+2026-10-28T23:12:54.4347272Z   Generator
+2026-10-28T23:12:54.4347411Z 
+2026-10-28T23:12:54.4347517Z     Visual Studio 17 2022
+2026-10-28T23:12:54.4347969Z 
+2026-10-28T23:12:54.4348124Z   could not find any instance of Visual Studio.
+2026-10-28T23:12:54.4348392Z 
+2026-10-28T23:12:54.4348397Z 
+2026-10-28T23:12:54.4348401Z 
+2026-10-28T23:12:54.4351461Z -- Configuring incomplete, errors occurred!
+2026-10-28T23:12:54.6199708Z [31;1mException: [0mD:\a\Project-Judas\Project-Judas\packaging\windows\Build-Windows.ps1:15[0m
+2026-10-28T23:12:54.6200778Z [31;1m[0m[36;1mLine |[0m
+2026-10-28T23:12:54.6202055Z [31;1m[0m[36;1m[36;1m  15 | [0m … STEXITCODE -ne 0) { [36;1mthrow "$Program failed with exit $LASTEXITCODE"[0m }[0m
+2026-10-28T23:12:54.6203424Z [31;1m[0m[36;1m[36;1m[0m[36;1m[0m[36;1m     | [31;1m                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+2026-10-28T23:12:54.6204510Z [31;1m[0m[36;1m[36;1m[0m[36;1m[0m[36;1m[31;1m[31;1m[36;1m     | [31;1mcmake failed with exit 1[0m
+2026-10-28T23:12:54.6404855Z ##[error]Process completed with exit code 1.
+2026-10-28T23:12:54.6682547Z Post job cleanup.
+2026-10-28T23:12:54.8699370Z [command]"C:\Program Files\Git\bin\git.exe" version
+2026-10-28T23:12:54.9075669Z git version 2.56.0.windows.2
+2026-10-28T23:12:54.9147917Z Temporarily overriding HOME='D:\a\_temp\6eca77e8-aa22-4a7a-9106-f406bc34d131' before making global git config changes
+2026-10-28T23:12:54.9149221Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-28T23:12:54.9160708Z [command]"C:\Program Files\Git\bin\git.exe" config --global --add safe.directory D:\a\Project-Judas\Project-Judas
+2026-10-28T23:12:54.9579083Z Removing SSH command configuration
+2026-10-28T23:12:54.9590772Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp core\.sshCommand
+2026-10-28T23:12:54.9992951Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :\""
+2026-10-28T23:12:55.5617047Z Removing HTTP extra header
+2026-10-28T23:12:55.5627040Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-28T23:12:55.6007094Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :\""
+2026-10-28T23:12:56.1885377Z Removing includeIf entries pointing to credentials config files
+2026-10-28T23:12:56.1896976Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-28T23:12:56.2290923Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "git config --local --show-origin --name-only --get-regexp remote.origin.url"
+2026-10-28T23:12:56.8437271Z Cleaning up orphan processes

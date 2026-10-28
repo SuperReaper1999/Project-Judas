@@ -58,6 +58,11 @@ and nonblocking. Use [Pre-Alpha status](PREALPHA.md) for current finding disposi
 `Build-Windows.ps1` defaults to `build\windows-Experimental`; use `-Channel Alpha`,
 `Beta`, `Experimental`, `Stable` (GA only) or `Local` and an optional `-BuildDirectory` to keep independent
 outputs. Channel selection does not grant human acceptance or promote a branch.
+The script preserves Visual Studio 2022 as its default; use
+`-Generator 'Visual Studio 18 2026'` with that installed toolchain and a compatible
+CMake. Release CI detects the installed supported MSVC generation and supplies a
+checksum-pinned native pkgconf, avoiding expired MSYS2 helper downloads in the
+pinned vcpkg revision. These are build prerequisites, not changes to game input or rendering.
 SDK staging requires Python 3.11+. Existing generated SDKs without the new manifest
 are not overwritten: use a fresh build directory or move the old SDK aside.
 

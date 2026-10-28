@@ -92,7 +92,27 @@ jobs:
       - name: Build complete native MSVC SDK
         shell: pwsh
         run: |
-          ./packaging/windows/Build-Windows.ps1 -Channel $env:CHANNEL -Jobs 2 -ReleasePackage
+          # Avoid the pinned vcpkg helper's expired MSYS2 runtime download.
+          $installer = "$env:RUNNER_TEMP/pkgconf.msi"
+          Invoke-WebRequest 'https://github.com/pkgconf/pkgconf/releases/download/pkgconf-3.0.8/pkgconf-x64-3.0.8.msi' -OutFile $installer
+          if ((Get-FileHash $installer -Algorithm SHA256).Hash -ne 'A236479BBE403B202816745BEF19AFE2D6240606F28AB1F008BA0F33FBFAE43E') { throw 'pkgconf installer checksum mismatch' }
+          $destination = "$env:RUNNER_TEMP/pkgconf"
+          $extract = Start-Process msiexec.exe -ArgumentList @('/a', "`"$installer`"", '/qn', "TARGETDIR=`"$destination`"") -Wait -PassThru
+          if ($extract.ExitCode -ne 0) { throw "pkgconf extraction failed: $($extract.ExitCode)" }
+          $pkgconf = Get-ChildItem $destination -Recurse -Filter pkgconf.exe | Select-Object -First 1
+          if (!$pkgconf) { throw 'Native pkgconf executable missing after extraction' }
+          & $pkgconf.FullName --version
+          if ($LASTEXITCODE) { exit $LASTEXITCODE }
+          # Hosted windows-2025 now supplies VS 2026; retain VS 2022 locally.
+          $vswhere = "${env:ProgramFiles(x86)}/Microsoft Visual Studio/Installer/vswhere.exe"
+          $vsVersion = & $vswhere -latest -products '*' -requires Microsoft.VisualStudio.Component.VC.Tools.x86.x64 -property installationVersion
+          if ($LASTEXITCODE -or !$vsVersion) { throw 'MSVC installation not found' }
+          $generator = switch (([version]$vsVersion).Major) {
+            17 { 'Visual Studio 17 2022' }
+            18 { 'Visual Studio 18 2026' }
+            default { throw "Unqualified Visual Studio installation: $vsVersion" }
+          }
+          ./packaging/windows/Build-Windows.ps1 -Channel $env:CHANNEL -Jobs 2 -ReleasePackage -PkgConfig $pkgconf.FullName -Generator $generator
           if ($LASTEXITCODE) { exit $LASTEXITCODE }
           $build = "build/windows-$env:CHANNEL"
           cmake --build $build --config Release --target judas_build_identity_tests judas_release_update_tests judas_mk2_rotation_tests judas_network_transport_tests judas_consumer_pointer_tests --parallel 2
