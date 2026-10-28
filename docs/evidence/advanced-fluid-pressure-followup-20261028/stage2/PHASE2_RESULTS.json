@@ -1,0 +1,126 @@
+{
+  "updatedUtc": "2026-10-28T18:59:13.960878+00:00",
+  "baseRevision": "0f78c76a5a5113d5b59586596dccb076bce910f2",
+  "scope": "Local numerical prototypes; not a production fluid backend",
+  "tests": [
+    {
+      "test": "cut-mesh-tests",
+      "build_exit": 0,
+      "binarySha256": "c1196bf41f9bfc5c1a184f0ad296b0d103dbbfe708a0d36e6dcb9ae2de9e1ab1",
+      "exit": 0,
+      "secondsIncludingBuild": 4.019666958996822
+    },
+    {
+      "test": "cut-mesh-adversarial",
+      "build_exit": 0,
+      "binarySha256": "7d9df58c0022b31b957a78d0bb94a7ebfd638b9fca33aafadda38fdf84b2fb98",
+      "exit": 0,
+      "secondsIncludingBuild": 4.048153842999454
+    },
+    {
+      "test": "moving-cut-mesh-tests",
+      "build_exit": 0,
+      "binarySha256": "d0089f1af77704eb0e3825be55fb763ec12b43dd998662ed9769cc8639e10b94",
+      "exit": 0,
+      "secondsIncludingBuild": 4.498099452001043
+    },
+    {
+      "test": "wet-cut-mesh-tests",
+      "build_exit": 0,
+      "binarySha256": "138414021f3929f55c4a2bf9236da28b1d89793c234a6f396ebca241eda26834",
+      "exit": 0,
+      "secondsIncludingBuild": 4.015451087998372
+    },
+    {
+      "test": "owned-capacity-tests",
+      "build_exit": 0,
+      "binarySha256": "96e530c48a5d540e43f019bbbeb34568c1b3b5862b2dc7807dda1c4aa5a3d61c",
+      "exit": 0,
+      "secondsIncludingBuild": 4.8337473229985335
+    },
+    {
+      "test": "pressure-complementarity-tests",
+      "build_exit": 0,
+      "binarySha256": "8d8dc319bcbc2dff3d29df232e35c8e440a7de3e0ac2c9e6ca9f4dbc191ff6e7",
+      "exit": 0,
+      "secondsIncludingBuild": 4.071740555998986
+    },
+    {
+      "test": "pressure-mass-scale-tests",
+      "build_exit": 0,
+      "binarySha256": "4ed463f47c99274c32e04123a0c2aea48837fdae77eec24ded52cde16da87f29",
+      "exit": 0,
+      "secondsIncludingBuild": 7.125612215000729
+    },
+    {
+      "test": "fluid-projection-tests",
+      "build_exit": 0,
+      "binarySha256": "57b6700daa37b471d875ad225f42416a213328f9091417ce0be2ebaffd69531a",
+      "exit": 0,
+      "secondsIncludingBuild": 6.258751811001275
+    },
+    {
+      "test": "tetra-pressure-tests",
+      "build_exit": 0,
+      "binarySha256": "b1183006f35003b36b2ea23cd40dfb9a86cb6bc4d38a230f316e26ae6d77392d",
+      "exit": 0,
+      "secondsIncludingBuild": 6.316943427998922
+    },
+    {
+      "test": "tetra-side-tests",
+      "build_exit": 0,
+      "binarySha256": "20107d216a4b8ebee2af2da76004ce6bea033ad9250ff39a0b6f4c455007b8ba",
+      "exit": 0,
+      "secondsIncludingBuild": 6.041482724998787
+    },
+    {
+      "test": "compiled-pressure-tests",
+      "build_exit": 0,
+      "binarySha256": "383d8b4de811e8d67166d3121426e396b84d6298603fb96dc105022d97c343c7",
+      "exit": 0,
+      "secondsIncludingBuild": 7.707978731999901
+    },
+    {
+      "test": "native-compiled-pressure-tests",
+      "build_exit": 0,
+      "binarySha256": "add1f79f06f942d7f8287b7bc7adcb6111f3381b00315e6217c8d875778017de",
+      "exit": 0,
+      "secondsIncludingBuild": 8.253559964003216
+    },
+    {
+      "test": "dg-advection-tests",
+      "build_exit": 0,
+      "binarySha256": "30618401d1bd572b6aa9816fd08431e6690f99add8388fcdf52635d3b1a1e237",
+      "exit": 0,
+      "secondsIncludingBuild": 7.223313695001707
+    },
+    {
+      "test": "wet-flux-tests",
+      "build_exit": 0,
+      "binarySha256": "98797b0b3f8bd6389e1b38d0a201844c0d60b26250f9060be67a04b7a33ffbf1",
+      "exit": 0,
+      "secondsIncludingBuild": 2.2358123819976754
+    },
+    {
+      "test": "moment-interface-tests",
+      "build_exit": 0,
+      "binarySha256": "e6d55be189bebe16580d5ed9a50978f381873e7bfbe3e919f1913dcfe73567e4",
+      "exit": 0,
+      "secondsIncludingBuild": 2.923103599001479
+    },
+    {
+      "test": "incoming-wet-state-tests",
+      "build_exit": 0,
+      "binarySha256": "0aa995992954740d8bffcb2d74bcbb6c3c54f313b891a98a984edc9e89aed40c",
+      "exit": 0,
+      "secondsIncludingBuild": 3.077137879001384
+    },
+    {
+      "test": "pressure-volume-step-tests",
+      "build_exit": 0,
+      "binarySha256": "809c2e377b23f7b4cc006b62eb6d061deabe45bfd49e2dfcab31a45100f22a8a",
+      "exit": 0,
+      "secondsIncludingBuild": 7.166897737999534
+    }
+  ]
+}

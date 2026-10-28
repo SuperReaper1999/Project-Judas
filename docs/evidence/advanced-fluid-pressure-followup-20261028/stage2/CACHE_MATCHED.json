@@ -1,0 +1,91 @@
+{
+  "timeUtc": "2026-10-28T18:57:44.108015+00:00",
+  "machine": "Linux-7.0.0-38-generic-x86_64-with-glibc2.43",
+  "scope": "Identical 409-tet two-second native neutral-body workload; prototype only",
+  "records": [
+    {
+      "trial": 0,
+      "variant": "before",
+      "exit": 0,
+      "binarySha256": "e5730b3948a795a4395d4c2152fb3d09ef292b3d86e938496882d0e14c653591",
+      "profiles": [
+        "ASSEMBLY_PROFILE calls=480 assembly_ms=667.989466000 body_ms=6.426267000 total_ms=1361.339581000",
+        "ASSEMBLY_PROFILE calls=480 assembly_ms=664.212033000 body_ms=6.067901000 total_ms=2057.242249000"
+      ],
+      "physicalEndpoints": [
+        "NATIVE_COMPILED angle=0 tets=409 calls=480 valid=1 displacement=0 speed=3.38383210341e-11 max_speed=3.4227141954e-11 load=919.687548005 expected=919.687547965 residual=9.41614e-12 rebuilds=1 direct=24 rejected=0 ms=1361.339581",
+        "NATIVE_COMPILED angle=1.13 tets=409 calls=480 valid=1 displacement=0 speed=4.81668394059e-09 max_speed=4.81668394059e-09 load=919.687548036 expected=919.687547965 residual=1.0832e-11 rebuilds=1 direct=303 rejected=0 ms=2057.242249"
+      ]
+    },
+    {
+      "trial": 0,
+      "variant": "after",
+      "exit": 0,
+      "binarySha256": "add1f79f06f942d7f8287b7bc7adcb6111f3381b00315e6217c8d875778017de",
+      "profiles": [
+        "ASSEMBLY_PROFILE calls=480 assembly_ms=16.399442000 body_ms=5.977931000 total_ms=377.096280000",
+        "ASSEMBLY_PROFILE calls=480 assembly_ms=16.003969000 body_ms=6.090652000 total_ms=1059.556366000"
+      ],
+      "physicalEndpoints": [
+        "NATIVE_COMPILED angle=0 tets=409 calls=480 valid=1 displacement=0 speed=3.38383210341e-11 max_speed=3.4227141954e-11 load=919.687548005 expected=919.687547965 residual=9.41614e-12 rebuilds=1 direct=24 rejected=0 ms=377.096280",
+        "NATIVE_COMPILED angle=1.13 tets=409 calls=480 valid=1 displacement=0 speed=4.81668394059e-09 max_speed=4.81668394059e-09 load=919.687548036 expected=919.687547965 residual=1.0832e-11 rebuilds=1 direct=303 rejected=0 ms=1059.556366"
+      ]
+    },
+    {
+      "trial": 1,
+      "variant": "after",
+      "exit": 0,
+      "binarySha256": "add1f79f06f942d7f8287b7bc7adcb6111f3381b00315e6217c8d875778017de",
+      "profiles": [
+        "ASSEMBLY_PROFILE calls=480 assembly_ms=16.355744000 body_ms=5.890910000 total_ms=378.939085000",
+        "ASSEMBLY_PROFILE calls=480 assembly_ms=16.063564000 body_ms=6.126395000 total_ms=1062.203640000"
+      ],
+      "physicalEndpoints": [
+        "NATIVE_COMPILED angle=0 tets=409 calls=480 valid=1 displacement=0 speed=3.38383210341e-11 max_speed=3.4227141954e-11 load=919.687548005 expected=919.687547965 residual=9.41614e-12 rebuilds=1 direct=24 rejected=0 ms=378.939085",
+        "NATIVE_COMPILED angle=1.13 tets=409 calls=480 valid=1 displacement=0 speed=4.81668394059e-09 max_speed=4.81668394059e-09 load=919.687548036 expected=919.687547965 residual=1.0832e-11 rebuilds=1 direct=303 rejected=0 ms=1062.203640"
+      ]
+    },
+    {
+      "trial": 1,
+      "variant": "before",
+      "exit": 0,
+      "binarySha256": "e5730b3948a795a4395d4c2152fb3d09ef292b3d86e938496882d0e14c653591",
+      "profiles": [
+        "ASSEMBLY_PROFILE calls=480 assembly_ms=663.440820000 body_ms=6.075300000 total_ms=1345.816475000",
+        "ASSEMBLY_PROFILE calls=480 assembly_ms=663.595050000 body_ms=6.071446000 total_ms=2050.015661000"
+      ],
+      "physicalEndpoints": [
+        "NATIVE_COMPILED angle=0 tets=409 calls=480 valid=1 displacement=0 speed=3.38383210341e-11 max_speed=3.4227141954e-11 load=919.687548005 expected=919.687547965 residual=9.41614e-12 rebuilds=1 direct=24 rejected=0 ms=1345.816475",
+        "NATIVE_COMPILED angle=1.13 tets=409 calls=480 valid=1 displacement=0 speed=4.81668394059e-09 max_speed=4.81668394059e-09 load=919.687548036 expected=919.687547965 residual=1.0832e-11 rebuilds=1 direct=303 rejected=0 ms=2050.015661"
+      ]
+    },
+    {
+      "trial": 2,
+      "variant": "before",
+      "exit": 0,
+      "binarySha256": "e5730b3948a795a4395d4c2152fb3d09ef292b3d86e938496882d0e14c653591",
+      "profiles": [
+        "ASSEMBLY_PROFILE calls=480 assembly_ms=660.542108000 body_ms=6.071114000 total_ms=1342.028622000",
+        "ASSEMBLY_PROFILE calls=480 assembly_ms=669.286691000 body_ms=6.107119000 total_ms=2058.510341000"
+      ],
+      "physicalEndpoints": [
+        "NATIVE_COMPILED angle=0 tets=409 calls=480 valid=1 displacement=0 speed=3.38383210341e-11 max_speed=3.4227141954e-11 load=919.687548005 expected=919.687547965 residual=9.41614e-12 rebuilds=1 direct=24 rejected=0 ms=1342.028622",
+        "NATIVE_COMPILED angle=1.13 tets=409 calls=480 valid=1 displacement=0 speed=4.81668394059e-09 max_speed=4.81668394059e-09 load=919.687548036 expected=919.687547965 residual=1.0832e-11 rebuilds=1 direct=303 rejected=0 ms=2058.510341"
+      ]
+    },
+    {
+      "trial": 2,
+      "variant": "after",
+      "exit": 0,
+      "binarySha256": "add1f79f06f942d7f8287b7bc7adcb6111f3381b00315e6217c8d875778017de",
+      "profiles": [
+        "ASSEMBLY_PROFILE calls=480 assembly_ms=16.857611000 body_ms=6.086676000 total_ms=382.614156000",
+        "ASSEMBLY_PROFILE calls=480 assembly_ms=16.044264000 body_ms=6.151874000 total_ms=1063.171895000"
+      ],
+      "physicalEndpoints": [
+        "NATIVE_COMPILED angle=0 tets=409 calls=480 valid=1 displacement=0 speed=3.38383210341e-11 max_speed=3.4227141954e-11 load=919.687548005 expected=919.687547965 residual=9.41614e-12 rebuilds=1 direct=24 rejected=0 ms=382.614156",
+        "NATIVE_COMPILED angle=1.13 tets=409 calls=480 valid=1 displacement=0 speed=4.81668394059e-09 max_speed=4.81668394059e-09 load=919.687548036 expected=919.687547965 residual=1.0832e-11 rebuilds=1 direct=303 rejected=0 ms=1063.171895"
+      ]
+    }
+  ]
+}

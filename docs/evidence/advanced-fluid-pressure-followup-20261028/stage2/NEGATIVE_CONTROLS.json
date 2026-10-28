@@ -1,0 +1,16 @@
+[
+  {
+    "name": "field-divergence-probe",
+    "exit": 1,
+    "expectedExit": 1,
+    "classification": "preserved failing numerical negative control",
+    "binarySha256": "bd31e1d75bd3ab5aa303968638a672045ade99dee31074150778fa3670c5b05e"
+  },
+  {
+    "name": "original-mass-scale-reproducer",
+    "exit": 1,
+    "expectedExit": 1,
+    "classification": "preserved failing numerical negative control",
+    "binarySha256": "93d0366767ed97f23cba6c316d7ad49f00df3ba9f73619e1270ae9e7c9101cf0"
+  }
+]

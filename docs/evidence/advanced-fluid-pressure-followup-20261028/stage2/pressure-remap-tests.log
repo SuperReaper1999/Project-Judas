@@ -1,0 +1,7 @@
+SPARSE_TIMING symbolic_ms=0.201560 factors_ms=0.054262 rebuilt=1
+PRESSURE_REMAP height=1 old_tets=6 new_tets=24 pieces=24 remap_ok=1 pressure_ok=1 residual=1.4988e-15 vertex_error=2.58061e-15 dP=2.14638e-14 dL=1.12347e-14 dE=1.06581e-14 error=
+SPARSE_TIMING symbolic_ms=0.328500 factors_ms=0.094248 rebuilt=1
+PRESSURE_REMAP height=0.5 old_tets=14 new_tets=56 pieces=56 remap_ok=1 pressure_ok=1 residual=9.62772e-15 vertex_error=1.76226e-14 dP=7.5886e-15 dL=1.93892e-15 dE=-7.10543e-15 error=
+SPARSE_TIMING symbolic_ms=0.311717 factors_ms=0.102253 rebuilt=1
+PRESSURE_REMAP height=0.05 old_tets=14 new_tets=56 pieces=112 remap_ok=1 pressure_ok=1 residual=8.88178e-15 vertex_error=1.42909e-14 dP=7.02167e-16 dL=6.37775e-16 dE=-2.22045e-16 error=
+PRESSURE_REMAP checks=157 failures=0

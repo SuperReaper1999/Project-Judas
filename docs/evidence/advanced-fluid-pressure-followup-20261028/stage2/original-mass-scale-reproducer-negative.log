@@ -1,0 +1,7 @@
+SPARSE_TIMING symbolic_ms=152.834767 factors_ms=4.208557 rebuilt=1
+MASS_SCALE factor=1 converged=1 iterations=1 residual=1.69648e-13 body_speed=8.39107e-15 fluid_speed=3.08451e-13 accepted=1
+SPARSE_TIMING symbolic_ms=186.670489 factors_ms=307.469706 rebuilt=1
+MASS_SCALE factor=1e+06 converged=0 iterations=64 residual=inf body_speed=0.109 fluid_speed=0.109 accepted=0
+SPARSE_TIMING symbolic_ms=140.395747 factors_ms=4.092699 rebuilt=1
+MASS_SCALE factor=1e-06 converged=1 iterations=1 residual=1.58278e-13 body_speed=7.08445e-15 fluid_speed=3.25401e-13 accepted=1
+MASS_SCALE failures=1

@@ -1,0 +1,2 @@
+SPARSE_TIMING symbolic_ms=20.631820 factors_ms=9.328965 rebuilt=1
+RAW_CONDENSED converged=1 reported_velocity_residual=9.1786e-12 actual_divergence_velocity_before=0.30879 after=0.30879

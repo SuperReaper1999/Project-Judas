@@ -1,0 +1,16 @@
+[
+  {
+    "name": "operator-cache-tests",
+    "checks": 47,
+    "failures": 0,
+    "binarySha256": "78e31874d921dff6264c742f03c05d06bf72dad3aa36175e3d450c156e5025ba",
+    "logSha256": "0f85820e5bc17e3b463a2bb7f6aba1413b0861f2c594c95f7fccdbd095309136"
+  },
+  {
+    "name": "material-moments-tests",
+    "checks": 412,
+    "failures": 0,
+    "binarySha256": "6e21eec0cb16ea09ed1d805cd4d0969373a07045c5d88d73f2cd9810b112cea7",
+    "logSha256": "1518e28dfe54ef6b06845349ae06df90f029cd9a6329c5cbd7b9e53ab1c50f67"
+  }
+]

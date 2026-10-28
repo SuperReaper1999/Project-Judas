@@ -1,0 +1,4 @@
+MATERIAL angle=0 cycles=100 initial_L=1000 retained_L=200 velocity_error=5.72196e-17 mixed_energy_change=-27.5796
+MATERIAL angle=1.13 cycles=100 initial_L=1000 retained_L=200 velocity_error=5.59432e-17 mixed_energy_change=-27.5796
+MATERIAL_MOMENTS checks=412 failures=0
+Scope: exact prepared fragments and affine field restriction/projection; no geometry transport, topology inference or pressure evolution claimed.

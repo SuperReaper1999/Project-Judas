@@ -1,0 +1,34 @@
+Numerical prototype reproduction, Linux only. NOT an integrated fluid replacement.
+Use Judas Experimental 0f78c76a5a5113d5b59586596dccb076bce910f2 or the subsequent evidence-only checkpoint. Existing engine qualification build is required; these sources link its unchanged native MK2 implementation. Do not mix with unrelated engine source revisions.
+1. Configure/build once:
+ cmake -S . -B build -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Release -DJUDAS_BUILD_CHANNEL=Experimental -DJUDAS_ENABLE_VALIDATION=ON
+ cmake --build build --target judas_script_tests -j2
+2. Extract stage2-sources-and-evidence.tar.gz in that checkout. It writes ONLY .cache paths, no engine sources.
+3. Reproduce the 17 numerical programs sequentially:
+ python3 .cache/fluid-domain-redesign/run_phase2.py
+4. Additional focused programs:
+ python3 .cache/fluid-domain-redesign/build_operator_cache.py
+ .cache/fluid-contact-repair/operator-cache-tests
+ python3 .cache/fluid-domain-redesign/build_material_moments.py
+ .cache/fluid-contact-repair/material-moments-tests
+Expected final:47 cache checks;412 material-moment checks. The latter is exact prepared geometry restriction/projection with state fed through100 cycles per frame, NOT a long pressure/wave/refill runtime test.
+No LAPACK/Boost required for these current programs. Old rejected dense/Schwarz comparison sources in the archive are historical prototype controls and have additional LAPACK requirements.
+Do not run match_operator_cache.py without the intentionally unarchived baseline executable; measurements are preserved as raw logs and hashes. Baseline binary is local .cache/fluid-domain-redesign/native-profile-before-cache.bin. Its source is SparseInterior.profiled-before-cache.h plus NativeCompiledPressureTests.cpp.stage2-baseline with the ASSEMBLY_PROFILE print added; the immutable stage2 local archive predates cache changes. Do not substitute another engine or physical fixture and claim identical before/after measurements.
+Known failure: original unowned raw VolumeDomain oblique geometry has9 strict-connectivity failures (geometry-exact.log); OwnedCapacityTests passes same intended physical cases using compiler-owned geometry. Old PBF matrix failures and FLU-001 remain unchanged. Tests do not establish final runtime stability.
+Source archive corrects missing relative dependency closure in the earlier prototype archive, whose bytes remain preserved. PressureProjection.h and TransactionalProjection.h are explicitly included now.
+
+Later transport supplement:
+ Extract stage2-transport-sources.tar.gz at the same checkout root after the initial source archive.
+ python3 .cache/fluid-domain-redesign/build_material_remap.py
+ .cache/fluid-contact-repair/material-remap-tests
+ python3 .cache/fluid-domain-redesign/build_pressure_remap.py
+ .cache/fluid-contact-repair/pressure-remap-tests
+ Expected41/157 passing checks. The latter verifies unchanged wet-domain refinement, NOT moving solid/free-surface advection.
+Preserved negative controls:
+ Extract old-mass-negative-control-sources.tar.gz at the same root.
+ python3 .cache/fluid-domain-mass-original/build.py
+ .cache/fluid-contact-repair/original-mass-scale-reproducer
+ Expected exit1 (mass1e6 bounded failure) with old solver, unchanged physical inputs.
+ python3 .cache/fluid-domain-redesign/build_field_probe.py
+ .cache/fluid-contact-repair/field-divergence-probe
+ Expected exit1: low-level condensed solve passes its row residual while unprojected physical divergence remains0.30879. The qualified wrapper, not this deliberately incomplete low-level call, performs the required local projection.

@@ -1,0 +1,48 @@
+SPARSE_TIMING symbolic_ms=20.629275 factors_ms=0.754734 rebuilt=1
+SPARSE_TIMING symbolic_ms=0.000040 factors_ms=0.000000 rebuilt=0
+SPARSE_TIMING symbolic_ms=0.000020 factors_ms=0.000000 rebuilt=0
+SPARSE_TIMING symbolic_ms=20.507716 factors_ms=0.746979 rebuilt=1
+CACHE_CASE scenario=0 changed=0 converged=1 fresh=1 endpoint_error=0 builds=1 hits=2
+SPARSE_TIMING symbolic_ms=0.000020 factors_ms=0.000000 rebuilt=0
+SPARSE_TIMING symbolic_ms=21.245688 factors_ms=0.788126 rebuilt=1
+SPARSE_TIMING symbolic_ms=21.048957 factors_ms=0.814155 rebuilt=1
+CACHE_CASE scenario=1 changed=1 converged=1 fresh=1 endpoint_error=0 builds=2 hits=3
+SPARSE_TIMING symbolic_ms=19.117284 factors_ms=0.759211 rebuilt=1
+SPARSE_TIMING symbolic_ms=0.293984 factors_ms=0.753381 rebuilt=0
+SPARSE_TIMING symbolic_ms=19.769044 factors_ms=0.759563 rebuilt=1
+CACHE_CASE scenario=2 changed=1 converged=1 fresh=1 endpoint_error=0 builds=4 hits=3
+SPARSE_TIMING symbolic_ms=0.298352 factors_ms=0.757208 rebuilt=0
+SPARSE_TIMING symbolic_ms=0.287453 factors_ms=0.386840 rebuilt=0
+SPARSE_TIMING symbolic_ms=19.692439 factors_ms=0.759432 rebuilt=1
+CACHE_CASE scenario=3 changed=0 converged=1 fresh=1 endpoint_error=0 builds=5 hits=4
+SPARSE_TIMING symbolic_ms=0.297350 factors_ms=0.387702 rebuilt=0
+SPARSE_TIMING symbolic_ms=0.282122 factors_ms=0.378444 rebuilt=0
+SPARSE_TIMING symbolic_ms=19.758944 factors_ms=0.778468 rebuilt=1
+CACHE_CASE scenario=4 changed=0 converged=1 fresh=1 endpoint_error=0 builds=5 hits=6
+SPARSE_TIMING symbolic_ms=0.295898 factors_ms=0.381199 rebuilt=0
+SPARSE_TIMING symbolic_ms=0.290348 factors_ms=0.378133 rebuilt=0
+SPARSE_TIMING symbolic_ms=19.763372 factors_ms=0.786564 rebuilt=1
+CACHE_CASE scenario=5 changed=0 converged=1 fresh=1 endpoint_error=0 builds=5 hits=8
+SPARSE_TIMING symbolic_ms=0.300617 factors_ms=0.384275 rebuilt=0
+SPARSE_TIMING symbolic_ms=0.281872 factors_ms=0.771415 rebuilt=0
+SPARSE_TIMING symbolic_ms=19.832663 factors_ms=0.770824 rebuilt=1
+CACHE_CASE scenario=6 changed=1 converged=1 fresh=1 endpoint_error=0 builds=6 hits=9
+SPARSE_TIMING symbolic_ms=0.301679 factors_ms=0.766406 rebuilt=0
+SPARSE_TIMING symbolic_ms=0.286912 factors_ms=0.407548 rebuilt=0
+SPARSE_TIMING symbolic_ms=19.687188 factors_ms=0.766285 rebuilt=1
+CACHE_CASE scenario=7 changed=0 converged=1 fresh=1 endpoint_error=0 builds=7 hits=10
+SPARSE_TIMING symbolic_ms=0.294455 factors_ms=0.382261 rebuilt=0
+SPARSE_TIMING symbolic_ms=0.000040 factors_ms=0.000000 rebuilt=0
+SPARSE_TIMING symbolic_ms=19.774012 factors_ms=0.790691 rebuilt=1
+CACHE_CASE scenario=8 changed=0 converged=1 fresh=1 endpoint_error=0 builds=7 hits=12
+SPARSE_TIMING symbolic_ms=0.000020 factors_ms=0.000000 rebuilt=0
+SPARSE_TIMING symbolic_ms=0.000020 factors_ms=0.000000 rebuilt=0
+SPARSE_TIMING symbolic_ms=19.728787 factors_ms=0.765173 rebuilt=1
+CACHE_CASE scenario=9 changed=1 converged=1 fresh=1 endpoint_error=0 builds=8 hits=13
+SPARSE_TIMING symbolic_ms=0.000021 factors_ms=0.000000 rebuilt=0
+SPARSE_TIMING symbolic_ms=19.845107 factors_ms=0.780031 rebuilt=1
+SPARSE_TIMING symbolic_ms=19.231269 factors_ms=0.794338 rebuilt=1
+CACHE_CASE scenario=10 changed=1 converged=1 fresh=1 endpoint_error=0 builds=10 hits=13
+SPARSE_TIMING symbolic_ms=19.169242 factors_ms=0.763891 rebuilt=1
+SPARSE_TIMING symbolic_ms=19.853522 factors_ms=0.803265 rebuilt=1
+OPERATOR_CACHE checks=47 failures=0

@@ -152,3 +152,169 @@ records and failures are preserved. Local archive path and continuation notes:
 .cache/fluid-domain-redesign/PROGRESS.txt
 local-archives/fluid-pressure-progress-20261028/
 The separate overnight archive fluid-pressure-paused-20261028 remains untouched.
+
+Stage 2: owned geometry, actual incompressibility and material state
+===================================================================
+This section supersedes the earlier CURRENT prototype description, not its
+historical measurements. Runtime integration remains incomplete. Native helper
+checkpoint:0f78c76a5a5113d5b59586596dccb076bce910f2. Alpha remains locked off.
+No Basic Water, M54/M55 engine implementation, production PBF or independent
+research changes are included in Stage2. No playable fix is claimed.
+
+Demonstrated numerical corrections
+---------------------------------
+* A raw condensed pressure solve reported convergence while the actual affine
+  field retained0.30879 m/s-equivalent divergence. Condensation projected the
+  constraint gradients but not the predicted field. The new FluidPressure
+  wrapper applies the exact mass-orthogonal local divergence projection before
+  the global pressure solve, verifies actual final divergence and rolls back the
+  local correction too if the global solve fails. It preserves local linear and
+  angular momentum; energy reduction is the constrained projection, not damping.
+  FluidProjectionTests:14 checks, actual divergence about1e-16, momentum errors
+  about1e-14, nonzero disturbance retained and exact failed-solve rollback.
+* The old residual mixed energy-dimensional complementarity work with a velocity
+  tolerance. Consistent1e6 mass scaling capped64 iterations while other scales
+  passed the same physical case. Retained old source reproduces that failure.
+  Now use the natural complementarity residual in m/s plus separately normalized
+  maximum complementarity work. The unchanged64 work budget and1e-10 physical
+  velocity gate pass all1e-6,1,1e6 mass scales. No compliance/energy clamp added.
+  PressureMassScaleTests and18 complementarity checks cover physical endpoints,
+  departing contacts, scaling and zero-budget rollback. Failed intermediate
+  sum-work experiment remains preserved; it was not accepted as a correction.
+* Apply accumulated physical impulses once per degree of freedom, preserving
+  operator consistency rather than repeatedly subtracting rounded row updates.
+
+Geometry ownership
+------------------
+The bounded convex-box compiler carries exact plane/vertex ownership and uses a
+common pulling tetrahedralization. Exact binary64 expansion predicates reject
+actual1e-14 dry gaps rather than epsilon-connecting them. Near-full/near-parallel
+fixtures and240 independent rational oracle cases are preserved. Fast-math is
+explicitly rejected for this predicate implementation. No production dependency
+was introduced.
+
+Aligned and oblique compiled cases produce156/2413 tetrahedra, correct volume and
+boundary areas, and zero unmatched internal faces. Additional checks cover real
+gaps, a separating slab, per-voxel differing wet levels, same-topology motion,
+full rebuild agreement, and changed-topology/alias-split rejection with rollback.
+The moving compiler's logged total includes fresh rebuild controls and must not
+be advertised as pure update cost. Scope remains ONE box and a bounded grid;
+this global plane arrangement is not yet a scalable arbitrary-geometry adapter.
+
+IMPORTANT preserved failure: exact raw-coordinate connectivity rejects9 cases in
+the old unowned oblique VolumeDomain fixture. Their intended common boundaries
+cannot safely be inferred from rounded coordinates alone. geometry-exact.log is
+retained, not replaced by an epsilon. The27 OwnedCapacity checks use the same
+physical box inputs through explicit owned preparation and pass. Earlier671/671
+results refer to the earlier prototype version, not the current strict raw-input
+path. Production M54/M55 geometry functions were NOT modified.
+
+Actual native coupling proof and cost
+------------------------------------
+CompiledPressureTests:32 checks; exact displaced-volume weight, no spurious side
+force/torque, actual calm velocity fields, cubic/noncubic bodies and rotations.
+NativeCompiledPressureTests:8 checks; true MK2 noncubic46.875kg body and409 fluid
+tetrahedra,120 ticks/480 native intervals in each of two gravity frames. Actual
+body displacement is0; speeds below5e-9 m/s; integrated supported load919.687548
+versus919.687547965 Ns. Mesh remains fixed in this neutral fixture.
+
+Profiling found about664 ms spent repeatedly assembling the SAME fluid mass/
+Jacobian matrix per480 intervals. Cache reuse now requires exact comparison of
+all fluid inverse masses, point identities and Jacobian values. Body gradients,
+inertia, velocities, constraint limits and unilateral policy remain fresh; every
+accepted warm pressure still passes the complete current physical KKT test.
+47 independent cache checks compare against fresh solves after changed masses,
+geometry, same-sized replacement, body state, constraint limits, policies, rows
+and point counts. Physical endpoints agree in those tests.
+
+Three matched, sequential process pairs, identical workload and native engine,
+median TOTAL host time in ms per2 s simulated case:
+  aligned:1345.816 ->378.939; assembly663.441 ->16.399
+  rotated:2057.242 ->1062.204; assembly664.212 ->16.044
+Each builds once and verifies479 reuse opportunities. Printed physical endpoints
+match before/after. These costs include first-use preparation/diagnostic output;
+no rendering, large lake, full-game FPS or general scaling claim is implied.
+Raw samples, binary hashes and exact baseline solver source are retained.
+
+Transport progress and scope
+----------------------------
+DG1 advection on an immutable fully filled mesh passes13 checks, including
+independent P/L/energy integration and third-order time refinement. Positive
+wet-face flux integrates sign-changing affine velocity rather than dropping
+outflow merely because net flux is negative (46 checks). Incoming wet-state
+initialization preserves actual donor momentum/angular momentum/energy for its
+qualified constant-flow cases (16 checks).
+
+Moment reconstruction preserves the authoritative volume and minimizes the
+centroid defect; it refuses a translated detached slab that no single cut can
+represent. Splitting the spatial representation fixes that specific geometric
+case. It is NOT a general adaptive refinement implementation. Primary mathematical
+reference: V.Dyadechko/M.Shashkov, Moment-of-fluid interface reconstruction,
+LA-UR-05-7571, https://cnls.lanl.gov/~shashkov/papers/main.pdf.
+Only the reconstruction principle is investigated; no paper repair algorithm
+or independent Solbert solver was imported.
+
+One pressure-to-quantity interval passes80 checks: calm, height-difference flow,
+dry-neighbour rewetting and a truly blocking slab, with unchanged ledger totals
+and nonnegative cells. Long pressure-wave/free-surface evolution is NOT proved.
+
+MaterialMoments adds exact affine-field integration over prepared fragments and
+an L2 projection onto their unchanged union.412 checks cover actual1000->200 L
+restriction and100 successive state-fed refill/projection cycles per gravity
+frame, retaining represented affine modes to about6e-17 m/s. Incoming material
+carries its own velocity; a different incoming field changes momentum and may
+lose energy through the measured affine projection. No energy repair is applied.
+This is NOT a100-cycle dynamic-pressure refill test: geometry fragments are
+prepared independently, no motion/topology inference is claimed, and disconnected
+components must be submitted separately. General remapping/advection still needs
+qualification before production integration.
+
+Combined verification, reproduction and remaining work
+------------------------------------------------------
+All17 programs in PHASE2_RESULTS.json passed after the operator correction;
+47 cache and412 material checks pass additionally. These are numerical prototype
+checks, not a release gate or proof that the original runtime failures are fixed.
+Original side-water upward launch, terrain/raised-lake failure, production8,021-
+check matrix's two speed failures, FLU-001 and cold-save limitation stay recorded.
+
+Evidence in stage2/ includes sources, logs, binary/source hashes, matched timing
+samples and STAGE2_REPRODUCE.txt. New source archive includes recursive local
+include dependencies. The earlier prototype-sources.tar.gz omitted the relative
+PressureProjection.h and TransactionalProjection.h; its reproduction instructions
+were incomplete. Its bytes and original manifest are preserved, not overwritten.
+
+Still required: moving/changing-wet-domain state transport without global reset,
+practical topology/refinement and native geometry adapters, solid contact/CCD and
+failure-publication integration, original runtime reproductions, ownership guards,
+persistence/rendering/script integration, larger-workload measurements and human
+acceptance. The pressure runtime remains unmerged and Alpha remains disabled.
+
+Stage2 transport continuation (same native checkpoint)
+-----------------------------------------------------
+MaterialRemap intersects actual donor tetrahedra with a new prepared disjoint
+receiver partition, using exact orientation signs and binary64 coordinates. It
+retains each overlap fragment and donor affine field; it does not fill uncovered
+capacity or merge disconnected water. Conservation is independently measured,
+not repaired. Incomplete receiver coverage and fragment-budget exhaustion return
+no publishable receiver state. Source/receiver disjointness remains an explicit
+geometry-preparation precondition, not something this local reference certifies.
+The reference is bounded and not yet a scalable general remesher.
+
+41 checks pass: different tetrahedralizations, independently known rotated box
+overlap volume/centroid at scales.001,1,10; no1e-14 dry-gap transfer; translated
+free slab retains its true centroid and incoming momentum; missing coverage and
+bounded-preparation failure reject transactionally. Represented P/L/energy errors
+in the cube tests are roughly1e-14; no arbitrary mass or energy correction.
+
+PressureRemap adds157 checks joining actual pressure and remapping, not merely
+fitting a fabricated calm state. A random disturbed field is projected by the
+current pressure solver; its mesh is refined while retaining material state;
+then the new pressure operator checks the actual remapped field. Full, half-full
+and.05-high wet regions pass;6/14 old tetrahedra become24/56. Vertex velocity
+errors stay below2e-14 m/s; P/L/energy changes about1e-14 or less. This is nested
+refinement of an unchanged physical wet domain, not moving-solid/free-surface
+advection. It does not close the original runtime failure.
+
+Supplement stage2-transport-sources.tar.gz preserves this later source closure;
+its logs/hashes and isolated-source reproduction are recorded alongside the
+initial Stage2 archive. Earlier source archives remain immutable.
