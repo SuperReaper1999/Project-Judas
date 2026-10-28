@@ -318,3 +318,50 @@ advection. It does not close the original runtime failure.
 Supplement stage2-transport-sources.tar.gz preserves this later source closure;
 its logs/hashes and isolated-source reproduction are recorded alongside the
 initial Stage2 archive. Earlier source archives remain immutable.
+
+Stage3: moving wet state and explicit multiple interfaces
+--------------------------------------------------------
+Current combined numerical sources pass23 sequential build/test programs in
+PHASE3_RESULTS.json. Earlier Stage2 source archives/hashes are historical snapshots
+and remain unchanged; Stage3 records the new final-source/binary identities.
+
+MovingWetState:1,682 checks.120 intervals at the native1/240-second-sized interval
+in each of two velocity/constraint frames. A free, uniformly translating800 L
+patch in zero external gravity physically supplies a previously dry neighbouring
+cell. Every interval reconstructs its actual material centroid/wet geometry,
+uses the3D pressure/incompressibility operator, and updates paired volume,
+spatial/momentum/angular/mixed/energy moments. Total-volume error0 measured;
+P error<=1.14e-13, energy error<=5.69e-14 J, centroid error<=3.12e-15 m;
+pressure residual<=4.45e-16. About.93 s host time per.5 s simulated case, including
+fresh owned geometry preparation and checks. This is NOT native-body dynamics,
+nonlinear transport, a full wave/refill solver, or whole-game performance.
+The initial source initializer compile typo is preserved as a development log;
+it is not classified as a numerical failure.
+
+The compiler now accepts a union of explicit convex wet regions per voxel. This
+removes the one-PLIC-plane representation restriction for prepared geometry:
+a detached slab retains both interfaces, and two wet regions separated by a
+real1e-14 dry gap remain two actual mesh components.340 wet-region checks cover
+positive volume, independently known capacities/centroid, shared ownership,
+no internal cracks, full and dry cases. Bounds remain explicit:8 convex regions
+per voxel,12 planes per region,128 arrangement pieces per seed. No merging,
+feature-size deletion, global equilibrium reset or production API is introduced.
+This is a bounded exact-ownership reference, not a scalable final mesher.
+
+The old one-plane Build entry uses that same implementation through a wrapper.
+All affected old cut, wet, pressure and actual native coupling checks pass in
+the23-program combined run. Native physical endpoint printouts match exactly
+before/after the wrapper change. No native engine implementation changed here.
+
+Additional wet-motion probe:24 oblique-box moves compared against independently
+freshly compiled wet geometry. All were correctly rejected for changed topology;
+no invalid reuse was reproduced. Do NOT claim an established topology-invalidation
+bug from speculation. Full preparation on those moves is a remaining practical
+integration/performance boundary. The earlier same-topology controls still pass.
+
+This is another numerical foundation checkpoint, NOT a repaired runtime or patch
+candidate. The original launch and production failures remain unclosed. Next
+required work remains genuinely changing solid/wet geometry and momentum transport
+with practical preparation cost, native contact/CCD publication, original scene
+reproductions and production integration. Alpha stays compiled off; main/published
+release, Basic Water, M54/M55 and independent research remain untouched.

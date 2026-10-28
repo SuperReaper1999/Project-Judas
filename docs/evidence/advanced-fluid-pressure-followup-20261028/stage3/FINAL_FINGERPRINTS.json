@@ -1,0 +1,42 @@
+{
+  "createdUtc": "2026-10-28T19:28:01.220665+00:00",
+  "unchangedNativeEngine": [
+    {
+      "path": "src/PhysicsWorld.h",
+      "sha256": "0b9c2e0b7f3f2c67b9ebd76c56ff464802d9e911daa1e437ad740e0849fe8120",
+      "unchanged": true
+    },
+    {
+      "path": "src/physics/WorldMk2Solver.cpp",
+      "sha256": "9a3d5a3f236509e819d8d4981b509ffe325736807896b12249295e0fdcdc6945",
+      "unchanged": true
+    },
+    {
+      "path": "src/FluidWorld.cpp",
+      "sha256": "e7943c00356ba06e484c25c0deb02dc3c2970dd75997731b7e4a4d03b7e3a0c5",
+      "unchanged": true
+    },
+    {
+      "path": "src/ProductionFluidCoupling.cpp",
+      "sha256": "f265454784ec2e2f9f152dc4a6246892921daafe76c361e383f23737f9f4c260",
+      "unchanged": true
+    },
+    {
+      "path": "src/BasicWater.cpp",
+      "sha256": "3badfe5f85d30a499a99ae2918cf965113a751ee38f3a75644f489a5b49ec129",
+      "unchanged": true
+    },
+    {
+      "path": "src/LiquidSystem.cpp",
+      "sha256": "d704a54dacc603984201f8e6620f9c5cdd12d2c504a064cefd2a3bc1c7b537e8",
+      "unchanged": true
+    },
+    {
+      "path": "src/LiquidSurface.cpp",
+      "sha256": "8d46203484875a90f1583e35bde5603cf1f47b15a73d629205451c007f61b625",
+      "unchanged": true
+    }
+  ],
+  "reportSha256": "3fe31bb8565bda74f22fd709aba473c4c8b43618a4d7566398bd7f973ba6b374",
+  "nativeLibrarySha256": "a476b02b193bb5bec3484d5a971616be11d99da7c64bcf334ddc85dd9494823b"
+}

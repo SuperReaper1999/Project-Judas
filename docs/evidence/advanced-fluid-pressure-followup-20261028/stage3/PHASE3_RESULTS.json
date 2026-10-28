@@ -1,0 +1,168 @@
+{
+  "updatedUtc": "2026-10-28T19:24:45.806158+00:00",
+  "baseRevision": "8310ca0add80ad03fc68d3c605d4d343ab818289",
+  "scope": "Local numerical prototypes; not a production fluid backend",
+  "tests": [
+    {
+      "test": "cut-mesh-tests",
+      "build_exit": 0,
+      "binarySha256": "0093190c5946065cdd29df1f2e6c9bec9e4f61d817a46682118c04b2da2d72c7",
+      "exit": 0,
+      "secondsIncludingBuild": 4.206974380002066
+    },
+    {
+      "test": "cut-mesh-adversarial",
+      "build_exit": 0,
+      "binarySha256": "0e1e9c2a3f872dc75a96ce1a7c498ef2781cfa94d4292c0a7ac3b76c288487f4",
+      "exit": 0,
+      "secondsIncludingBuild": 4.22637585999837
+    },
+    {
+      "test": "moving-cut-mesh-tests",
+      "build_exit": 0,
+      "binarySha256": "385d490ad132cfb4cbd876a9c1f5e2da6e96413c99e70b1b0586c304ec6f7bf9",
+      "exit": 0,
+      "secondsIncludingBuild": 4.680748522001522
+    },
+    {
+      "test": "wet-cut-mesh-tests",
+      "build_exit": 0,
+      "binarySha256": "278e490349aedc36b664d3262be913498abbc95e5bd130c044c0409d3b1458a2",
+      "exit": 0,
+      "secondsIncludingBuild": 4.186996962998819
+    },
+    {
+      "test": "owned-capacity-tests",
+      "build_exit": 0,
+      "binarySha256": "db08c31ddb448de52c9504b64a00022dea6ee388c5f3564583a381260bdbbbe6",
+      "exit": 0,
+      "secondsIncludingBuild": 5.028880136000225
+    },
+    {
+      "test": "pressure-complementarity-tests",
+      "build_exit": 0,
+      "binarySha256": "8d8dc319bcbc2dff3d29df232e35c8e440a7de3e0ac2c9e6ca9f4dbc191ff6e7",
+      "exit": 0,
+      "secondsIncludingBuild": 4.003273656999227
+    },
+    {
+      "test": "pressure-mass-scale-tests",
+      "build_exit": 0,
+      "binarySha256": "3cc378760cb1e23c3588c3d74a6368382819fd398ad512b81d406fcbd3fef28b",
+      "exit": 0,
+      "secondsIncludingBuild": 7.280928673000744
+    },
+    {
+      "test": "fluid-projection-tests",
+      "build_exit": 0,
+      "binarySha256": "57b6700daa37b471d875ad225f42416a213328f9091417ce0be2ebaffd69531a",
+      "exit": 0,
+      "secondsIncludingBuild": 6.209154863998265
+    },
+    {
+      "test": "tetra-pressure-tests",
+      "build_exit": 0,
+      "binarySha256": "b1183006f35003b36b2ea23cd40dfb9a86cb6bc4d38a230f316e26ae6d77392d",
+      "exit": 0,
+      "secondsIncludingBuild": 6.315541365001991
+    },
+    {
+      "test": "tetra-side-tests",
+      "build_exit": 0,
+      "binarySha256": "20107d216a4b8ebee2af2da76004ce6bea033ad9250ff39a0b6f4c455007b8ba",
+      "exit": 0,
+      "secondsIncludingBuild": 6.087945347000641
+    },
+    {
+      "test": "compiled-pressure-tests",
+      "build_exit": 0,
+      "binarySha256": "d371f2b15c3ff1300da848b97102d4b524d6a3e67722fe1d8c1f066d07290ec0",
+      "exit": 0,
+      "secondsIncludingBuild": 7.982579221999913
+    },
+    {
+      "test": "native-compiled-pressure-tests",
+      "build_exit": 0,
+      "binarySha256": "60de33a797b6479488c0273e0208b525ce6db9eab44a47c202a0d5b471337ce1",
+      "exit": 0,
+      "secondsIncludingBuild": 8.466747275000671
+    },
+    {
+      "test": "dg-advection-tests",
+      "build_exit": 0,
+      "binarySha256": "e9dc159347333acc9391312cb3169a7e7e1899df269bf07a37716c6baeb78ead",
+      "exit": 0,
+      "secondsIncludingBuild": 7.594585789000121
+    },
+    {
+      "test": "wet-flux-tests",
+      "build_exit": 0,
+      "binarySha256": "98797b0b3f8bd6389e1b38d0a201844c0d60b26250f9060be67a04b7a33ffbf1",
+      "exit": 0,
+      "secondsIncludingBuild": 2.2182557550004276
+    },
+    {
+      "test": "moment-interface-tests",
+      "build_exit": 0,
+      "binarySha256": "e6d55be189bebe16580d5ed9a50978f381873e7bfbe3e919f1913dcfe73567e4",
+      "exit": 0,
+      "secondsIncludingBuild": 2.927419944000576
+    },
+    {
+      "test": "incoming-wet-state-tests",
+      "build_exit": 0,
+      "binarySha256": "0aa995992954740d8bffcb2d74bcbb6c3c54f313b891a98a984edc9e89aed40c",
+      "exit": 0,
+      "secondsIncludingBuild": 3.0776681060015108
+    },
+    {
+      "test": "pressure-volume-step-tests",
+      "build_exit": 0,
+      "binarySha256": "a60bb4c6d580b8aefa3d3ba5a7fa3feff33cb1b62d2af0c5e74235faca5858a4",
+      "exit": 0,
+      "secondsIncludingBuild": 7.552476933997241
+    },
+    {
+      "test": "operator-cache-tests",
+      "build_exit": 0,
+      "binarySha256": "78e31874d921dff6264c742f03c05d06bf72dad3aa36175e3d450c156e5025ba",
+      "exit": 0,
+      "secondsIncludingBuild": 6.519644947999041
+    },
+    {
+      "test": "material-moments-tests",
+      "build_exit": 0,
+      "binarySha256": "6e21eec0cb16ea09ed1d805cd4d0969373a07045c5d88d73f2cd9810b112cea7",
+      "exit": 0,
+      "secondsIncludingBuild": 1.01654215400049
+    },
+    {
+      "test": "material-remap-tests",
+      "build_exit": 0,
+      "binarySha256": "259b135e489a9468467648ac3e80fa8db9de8b08edcea08eebe0c16c437beff7",
+      "exit": 0,
+      "secondsIncludingBuild": 1.7111888930012356
+    },
+    {
+      "test": "pressure-remap-tests",
+      "build_exit": 0,
+      "binarySha256": "1dd60cd67bb35ba94fee21bfb3515f83ae527a3b48ee879c389b36f1a7ad51b6",
+      "exit": 0,
+      "secondsIncludingBuild": 7.70869060699988
+    },
+    {
+      "test": "moving-wet-state-tests",
+      "build_exit": 0,
+      "binarySha256": "9db90c91cb9f7badfcd1150fa16b8131b7e64d397dcb07aa0569ba3ef5d4a255",
+      "exit": 0,
+      "secondsIncludingBuild": 9.73116115800076
+    },
+    {
+      "test": "wet-region-tests",
+      "build_exit": 0,
+      "binarySha256": "b1818a6de9e52a1378b80360ae8abfadcb020c4bea9bf4699c7e8433b762b758",
+      "exit": 0,
+      "secondsIncludingBuild": 2.5880878349998966
+    }
+  ]
+}

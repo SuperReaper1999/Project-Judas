@@ -1,0 +1,25 @@
+WET_MOTION height=0.35 dy=-0.2 accepted=0 old=239 moved=239 fresh=246 dV=0.0324706 mismatch=0 error=cut topology changed; full preparation required
+WET_MOTION height=0.35 dy=-0.1 accepted=0 old=239 moved=239 fresh=236 dV=0.0162353 mismatch=0 error=cut topology changed; full preparation required
+WET_MOTION height=0.35 dy=-0.05 accepted=0 old=239 moved=239 fresh=241 dV=0.00811764 mismatch=0 error=cut topology changed; full preparation required
+WET_MOTION height=0.35 dy=-0.01 accepted=0 old=239 moved=239 fresh=235 dV=0.00162353 mismatch=0 error=cut topology changed; full preparation required
+WET_MOTION height=0.35 dy=0.01 accepted=0 old=239 moved=239 fresh=229 dV=0.0016235 mismatch=0 error=cut topology changed; full preparation required
+WET_MOTION height=0.35 dy=0.05 accepted=0 old=239 moved=239 fresh=207 dV=0.00649892 mismatch=0 error=cut topology changed; full preparation required
+WET_MOTION height=0.35 dy=0.1 accepted=0 old=239 moved=239 fresh=171 dV=0.00764708 mismatch=0 error=cut topology changed; full preparation required
+WET_MOTION height=0.35 dy=0.2 accepted=0 old=239 moved=239 fresh=148 dV=0.00764708 mismatch=0 error=cut topology changed; full preparation required
+WET_MOTION height=0.55 dy=-0.2 accepted=0 old=251 moved=251 fresh=386 dV=0.0238824 mismatch=0 error=cut topology changed; full preparation required
+WET_MOTION height=0.55 dy=-0.1 accepted=0 old=251 moved=251 fresh=281 dV=0.0162353 mismatch=0 error=cut topology changed; full preparation required
+WET_MOTION height=0.55 dy=-0.05 accepted=0 old=251 moved=251 fresh=266 dV=0.00811764 mismatch=0 error=cut topology changed; full preparation required
+WET_MOTION height=0.55 dy=-0.01 accepted=0 old=251 moved=251 fresh=251 dV=0.00162353 mismatch=0 error=cut topology changed; full preparation required
+WET_MOTION height=0.55 dy=0.01 accepted=0 old=251 moved=251 fresh=254 dV=0.00162353 mismatch=0 error=cut topology changed; full preparation required
+WET_MOTION height=0.55 dy=0.05 accepted=0 old=251 moved=251 fresh=260 dV=0.00811764 mismatch=0 error=cut topology changed; full preparation required
+WET_MOTION height=0.55 dy=0.1 accepted=0 old=251 moved=251 fresh=257 dV=0.0162353 mismatch=0 error=cut topology changed; full preparation required
+WET_MOTION height=0.55 dy=0.2 accepted=0 old=251 moved=251 fresh=253 dV=0.0324706 mismatch=0 error=cut topology changed; full preparation required
+WET_MOTION height=0.7 dy=-0.2 accepted=0 old=366 moved=366 fresh=412 dV=0.00114816 mismatch=0 error=cut topology changed; full preparation required
+WET_MOTION height=0.7 dy=-0.1 accepted=0 old=366 moved=366 fresh=400 dV=0.00114816 mismatch=0 error=cut topology changed; full preparation required
+WET_MOTION height=0.7 dy=-0.05 accepted=0 old=366 moved=366 fresh=403 dV=0.00114816 mismatch=0 error=cut topology changed; full preparation required
+WET_MOTION height=0.7 dy=-0.01 accepted=0 old=366 moved=366 fresh=366 dV=0.000621238 mismatch=0 error=cut topology changed; full preparation required
+WET_MOTION height=0.7 dy=0.01 accepted=0 old=366 moved=366 fresh=360 dV=0.00086246 mismatch=0 error=cut topology changed; full preparation required
+WET_MOTION height=0.7 dy=0.05 accepted=0 old=366 moved=366 fresh=309 dV=0.00649892 mismatch=0 error=cut topology changed; full preparation required
+WET_MOTION height=0.7 dy=0.1 accepted=0 old=366 moved=366 fresh=286 dV=0.0146166 mismatch=0 error=cut topology changed; full preparation required
+WET_MOTION height=0.7 dy=0.2 accepted=0 old=366 moved=366 fresh=274 dV=0.0308518 mismatch=0 error=cut topology changed; full preparation required
+WET_MOTION invalid_acceptances=0

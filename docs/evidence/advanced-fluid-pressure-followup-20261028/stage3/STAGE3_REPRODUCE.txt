@@ -1,0 +1,11 @@
+Stage3 numerical prototypes, NOT a production fluid backend.
+Base native checkpoint:0f78c76a5a5113d5b59586596dccb076bce910f2; later evidence-only checkpoint8310ca0add80ad03fc68d3c605d4d343ab818289.
+Use the same qualified Linux Release engine build described in Stage2. Extract stage3-sources-and-evidence.tar.gz at the checkout root; only .cache source/evidence paths are written.
+Run all current23 programs sequentially:
+ python3 .cache/fluid-domain-redesign/run_phase3.py
+Independent wet-motion diagnostic:
+ python3 .cache/fluid-domain-redesign/build_wet_motion_probe.py
+ .cache/fluid-contact-repair/wet-motion-probe
+The24 tested motions must reject changed topology;0 invalid acceptances expected. This does NOT prove all possible motions are covered.
+Expected new programs: MovingWetState1682 and WetRegion340 passing checks. MovingWetState covers a uniform free patch, zero external gravity,120 intervals per frame and actual local wet-state reconstruction. It does NOT cover nonlinear wave transport or moving native solids. Earlier pressure-remapping157 covers nested refinement of unchanged wet support.
+Preserve original raw-geometry9 failures and original runtime PBF failures; they are not converted to passes by this numerical checkpoint. Alpha remains compiled off. No Windows, Android, full game or patch acceptance is claimed.

@@ -1,0 +1,6 @@
+WET_REGION mode=0 tets=24 volume=0.4 components=1 unowned=0
+WET_REGION mode=1 tets=28 volume=0.8 components=2 unowned=0
+WET_REGION mode=2 tets=28 volume=0.99999999999999 components=2 unowned=0
+WET_REGION mode=3 tets=6 volume=1 components=1 unowned=0
+WET_REGION mode=4 tets=0 volume=0 components=0 unowned=0
+WET_REGION checks=340 failures=0

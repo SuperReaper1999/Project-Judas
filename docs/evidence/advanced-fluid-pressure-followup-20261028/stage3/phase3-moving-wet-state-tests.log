@@ -1,0 +1,4 @@
+MOVING_WET angle=0 intervals=120 volume=0.8 dry_receiver=0.500000026077032 max_dV=0 max_dP=1.13687e-13 max_dE=5.68434e-14 centroid_error=3.11259e-15 pressure_residual=4.44089e-16 ms=931.026635
+MOVING_WET angle=1.13 intervals=120 volume=0.8 dry_receiver=0.500000026077032 max_dV=0 max_dP=1.13687e-13 max_dE=5.68434e-14 centroid_error=3.11259e-15 pressure_residual=4.44089e-16 ms=929.061258
+MOVING_WET checks=1682 failures=0
+Scope: free translating uniform patch, zero external gravity, actual3D pressure and wet geometry reconstruction. Not general nonlinear transport or moving-solid qualification.

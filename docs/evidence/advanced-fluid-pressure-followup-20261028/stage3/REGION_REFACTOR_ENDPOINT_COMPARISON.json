@@ -1,0 +1,9 @@
+{
+  "identical": true,
+  "before": "phase2-native-compiled-pressure-tests.log",
+  "after": "phase3-native-compiled-pressure-tests.log",
+  "fields": [
+    "NATIVE_COMPILED angle=0 tets=409 calls=480 valid=1 displacement=0 speed=3.38383210341e-11 max_speed=3.4227141954e-11 load=919.687548005 expected=919.687547965 residual=9.41614e-12 rebuilds=1 direct=24 rejected=0",
+    "NATIVE_COMPILED angle=1.13 tets=409 calls=480 valid=1 displacement=0 speed=4.81668394059e-09 max_speed=4.81668394059e-09 load=919.687548036 expected=919.687547965 residual=1.0832e-11 rebuilds=1 direct=303 rejected=0"
+  ]
+}

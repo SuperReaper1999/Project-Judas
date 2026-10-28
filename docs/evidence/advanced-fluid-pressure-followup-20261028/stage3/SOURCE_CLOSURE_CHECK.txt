@@ -1,0 +1,1 @@
+Stage3 sources extracted into an otherwise separate /tmp directory. Wet-region program compiled from extracted .cache sources and passed340 checks. Existing unchanged native build was symlinked for engine headers/library/flags. This verifies source dependency closure, NOT clean SDK qualification or production fluid integration.
