@@ -17,7 +17,7 @@ def main():
     p=argparse.ArgumentParser(description=__doc__)
     p.add_argument('--build',type=Path,required=True);p.add_argument('--output',type=Path,required=True)
     p.add_argument('--jobs',type=int,default=1);p.add_argument('--configuration',default='Release')
-    a=p.parse_args();output=a.output.resolve();output.mkdir(parents=True,exist_ok=False)
+    a=p.parse_args();a.build=a.build.resolve();output=a.output.resolve();output.mkdir(parents=True,exist_ok=False)
     manifest=json.loads((ROOT/'tools/validation/suites.json').read_text())
     tests=[t for t in manifest['tests'] if set(GROUPS)&set(t['groups']) and not t.get('manual')]
     targets=sorted({t['target'] for t in tests}|set(EXTRA));records=[];unavailable=[]

@@ -3,6 +3,7 @@ import copy
 import hashlib
 import json
 import io
+import os
 import tarfile
 from pathlib import Path
 import sys
@@ -48,6 +49,26 @@ class ReleaseNotes(unittest.TestCase):
 
 
 class QualificationScope(unittest.TestCase):
+    def test_relative_build_path_survives_isolated_regression_directory(self):
+        # The extra native checks deliberately run outside the source checkout.
+        # A relative executable must be resolved before changing child cwd.
+        with tempfile.TemporaryDirectory(dir=ROOT) as temporary:
+            temporary=Path(temporary)
+            build=temporary/'build'
+            relative=Path(os.path.relpath(build,Path.cwd()))
+            output=temporary/'qualification'
+            with patch.object(sys,'argv',['qualify_m100.py','--build',str(relative),'--output',str(output)]), \
+                 patch.object(qualify_m100,'GROUPS',[]), \
+                 patch.object(qualify_m100,'EXTRA',['judas_joint_tests']), \
+                 patch.object(qualify_m100.subprocess,'check_output',return_value='{"channel":"Alpha"}'), \
+                 patch.object(qualify_m100.subprocess,'run',return_value=argparse.Namespace(returncode=0)) as launch:
+                qualify_m100.main()
+            executable='judas_joint_tests.exe' if os.name=='nt' else 'judas_joint_tests'
+            checks=[c for c in launch.call_args_list if Path(c.args[0][0]).name==executable]
+            self.assertEqual(len(checks),1)
+            self.assertEqual(Path(checks[0].args[0][0]),build.resolve()/executable)
+            self.assertEqual(checks[0].kwargs['cwd'],output.resolve())
+
     def test_alpha_preserves_but_does_not_certify_unavailable_runtime(self):
         tests=[{'name':'rotation','target':'judas_liquid_rotation_tests'},
                {'name':'surface','target':'judas_liquid_surface_tests'},

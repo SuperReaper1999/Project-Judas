@@ -27,6 +27,9 @@ versioned GitHub release and verified Alpha channel manifest are live.
 - Windows release preparation explicitly supplies a checksum-verified native
   pkgconf and selects the installed supported Visual Studio generator, avoiding
   expired upstream MSYS2 helper downloads and the hosted runner's toolchain change.
+- Coordinated qualification resolves relative build directories before launching
+  extra native checks from an isolated working directory. A negative control
+  reproduces the old launcher failure without weakening any engine assertion.
 
 The general logical input edge path was not found to lose the tested short clicks;
 that mechanism is unchanged. No new JudasJS bindings or declaration changes were

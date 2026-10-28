@@ -1,0 +1,13 @@
+....Explicit final operator approval phrase required
+.....
+----------------------------------------------------------------------
+Ran 9 tests in 0.059s
+
+OK
+{
+  "action": "dry-run only",
+  "version": "1.0.1-alpha.1",
+  "commit": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "publication": false
+}
+M100 coordinated qualification passed; known limitations remain classified separately

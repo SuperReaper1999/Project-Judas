@@ -1,0 +1,1364 @@
+﻿2026-10-28T23:22:00.2262817Z Current runner version: '2.338.0'
+2026-10-28T23:22:00.2288481Z ##[group]Runner Image Provisioner
+2026-10-28T23:22:00.2289431Z Hosted Compute Agent
+2026-10-28T23:22:00.2290150Z Version: 20261021.618
+2026-10-28T23:22:00.2290827Z Commit: 21505ad2541d5be6135ed84fc33697146cf75b8e
+2026-10-28T23:22:00.2291625Z Build Date: 2026-10-21T00:45:21Z
+2026-10-28T23:22:00.2292648Z Worker ID: {6ba8487c-b1c1-4780-83dc-1f41072691bf}
+2026-10-28T23:22:00.2293474Z Region: westus
+2026-10-28T23:22:00.2294051Z Cloud: Azure
+2026-10-28T23:22:00.2294638Z ##[endgroup]
+2026-10-28T23:22:00.2296229Z ##[group]Operating System
+2026-10-28T23:22:00.2296880Z Ubuntu
+2026-10-28T23:22:00.2297394Z 24.04.5
+2026-10-28T23:22:00.2297975Z LTS
+2026-10-28T23:22:00.2298531Z ##[endgroup]
+2026-10-28T23:22:00.2299117Z ##[group]Runner Image
+2026-10-28T23:22:00.2299740Z Image: ubuntu-24.04
+2026-10-28T23:22:00.2300321Z Version: 20261025.353.1
+2026-10-28T23:22:00.2301665Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20261025.353/images/ubuntu/Ubuntu2404-Readme.md
+2026-10-28T23:22:00.2303772Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20261025.353
+2026-10-28T23:22:00.2304772Z ##[endgroup]
+2026-10-28T23:22:00.2305927Z ##[group]GITHUB_TOKEN Permissions
+2026-10-28T23:22:00.2307912Z Contents: read
+2026-10-28T23:22:00.2308485Z Metadata: read
+2026-10-28T23:22:00.2309595Z ##[endgroup]
+2026-10-28T23:22:00.2311827Z Secret source: Actions
+2026-10-28T23:22:00.2313111Z Cache mode: write
+2026-10-28T23:22:00.2313906Z Prepare workflow directory
+2026-10-28T23:22:00.2910030Z Prepare all required actions
+2026-10-28T23:22:00.2958237Z Getting action download info
+2026-10-28T23:22:00.6330796Z Download action repository 'actions/checkout@v7' (SHA:3d3c42e5aac5ba805825da76410c181273ba90b1)
+2026-10-28T23:22:01.7079100Z Download action repository 'actions/setup-node@v7' (SHA:949feb2413d6458794dcd2491c4babbbce0c15c1)
+2026-10-28T23:22:01.9069443Z Download action repository 'actions/upload-artifact@v7' (SHA:cf430e030ddbb5b0abf93d22962f4752f3646cd9)
+2026-10-28T23:22:02.2175648Z Complete job name: linux
+2026-10-28T23:22:02.3041731Z ##[group]Run python3 -c 'import os,re; assert re.fullmatch("[0-9a-f]{40}",os.environ["CANDIDATE"])'
+2026-10-28T23:22:02.3044789Z [36;1mpython3 -c 'import os,re; assert re.fullmatch("[0-9a-f]{40}",os.environ["CANDIDATE"])'[0m
+2026-10-28T23:22:02.3070938Z shell: /usr/bin/bash -e {0}
+2026-10-28T23:22:02.3072540Z env:
+2026-10-28T23:22:02.3073611Z   CANDIDATE: 0c1531ae86073f616a9d7b20425cb26ec65810c9
+2026-10-28T23:22:02.3074920Z   CHANNEL: Alpha
+2026-10-28T23:22:02.3075859Z   SDL_AUDIODRIVER: dummy
+2026-10-28T23:22:02.3076876Z   LIBGL_ALWAYS_SOFTWARE: 1
+2026-10-28T23:22:02.3077941Z ##[endgroup]
+2026-10-28T23:22:02.3750924Z ##[group]Run actions/checkout@v7
+2026-10-28T23:22:02.3752331Z with:
+2026-10-28T23:22:02.3753312Z   ref: 0c1531ae86073f616a9d7b20425cb26ec65810c9
+2026-10-28T23:22:02.3754603Z   persist-credentials: false
+2026-10-28T23:22:02.3755740Z   repository: SuperReaper1999/Project-Judas
+2026-10-28T23:22:02.3764803Z   token: ***
+2026-10-28T23:22:02.3765688Z   ssh-strict: true
+2026-10-28T23:22:02.3766581Z   ssh-user: git
+2026-10-28T23:22:02.3767461Z   clean: true
+2026-10-28T23:22:02.3768418Z   sparse-checkout-cone-mode: true
+2026-10-28T23:22:02.3769513Z   fetch-depth: 1
+2026-10-28T23:22:02.3770425Z   fetch-tags: false
+2026-10-28T23:22:02.3771359Z   show-progress: true
+2026-10-28T23:22:02.3772420Z   lfs: false
+2026-10-28T23:22:02.3773287Z   submodules: false
+2026-10-28T23:22:02.3774237Z   set-safe-directory: true
+2026-10-28T23:22:02.3775302Z   allow-unsafe-pr-checkout: false
+2026-10-28T23:22:02.3776681Z env:
+2026-10-28T23:22:02.3777672Z   CANDIDATE: 0c1531ae86073f616a9d7b20425cb26ec65810c9
+2026-10-28T23:22:02.3779238Z   CHANNEL: Alpha
+2026-10-28T23:22:02.3780169Z   SDL_AUDIODRIVER: dummy
+2026-10-28T23:22:02.3781167Z   LIBGL_ALWAYS_SOFTWARE: 1
+2026-10-28T23:22:02.3782262Z ##[endgroup]
+2026-10-28T23:22:05.6873925Z Syncing repository: SuperReaper1999/Project-Judas
+2026-10-28T23:22:05.6875512Z ##[group]Getting Git version info
+2026-10-28T23:22:05.6876584Z Working directory is '/home/runner/work/Project-Judas/Project-Judas'
+2026-10-28T23:22:05.6877410Z [command]/usr/bin/git version
+2026-10-28T23:22:05.8808541Z git version 2.56.0
+2026-10-28T23:22:05.8832705Z ##[endgroup]
+2026-10-28T23:22:05.8845266Z Temporarily overriding HOME='/home/runner/work/_temp/2cbfe520-80a3-4cc5-9f8f-fd8ceea78136' before making global git config changes
+2026-10-28T23:22:05.8846684Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-28T23:22:05.8851563Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/Project-Judas/Project-Judas
+2026-10-28T23:22:05.9115297Z Deleting the contents of '/home/runner/work/Project-Judas/Project-Judas'
+2026-10-28T23:22:05.9119191Z ##[group]Determining repository object format
+2026-10-28T23:22:05.9121375Z ##[endgroup]
+2026-10-28T23:22:05.9122327Z ##[group]Initializing the repository
+2026-10-28T23:22:05.9126735Z [command]/usr/bin/git init /home/runner/work/Project-Judas/Project-Judas
+2026-10-28T23:22:06.0210291Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-10-28T23:22:06.0212574Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-10-28T23:22:06.0213690Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-10-28T23:22:06.0214501Z hint: call:
+2026-10-28T23:22:06.0214920Z hint:
+2026-10-28T23:22:06.0215544Z hint: 	git config --global init.defaultBranch <name>
+2026-10-28T23:22:06.0216198Z hint:
+2026-10-28T23:22:06.0216827Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-10-28T23:22:06.0217904Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-10-28T23:22:06.0218693Z hint:
+2026-10-28T23:22:06.0219134Z hint: 	git branch -m <name>
+2026-10-28T23:22:06.0219632Z hint:
+2026-10-28T23:22:06.0220331Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-10-28T23:22:06.0329098Z Initialized empty Git repository in /home/runner/work/Project-Judas/Project-Judas/.git/
+2026-10-28T23:22:06.0344302Z [command]/usr/bin/git remote add origin https://github.com/SuperReaper1999/Project-Judas
+2026-10-28T23:22:06.1130297Z ##[endgroup]
+2026-10-28T23:22:06.1131240Z ##[group]Disabling automatic garbage collection
+2026-10-28T23:22:06.1135849Z [command]/usr/bin/git config --local gc.auto 0
+2026-10-28T23:22:06.1192458Z ##[endgroup]
+2026-10-28T23:22:06.1193437Z ##[group]Setting up auth
+2026-10-28T23:22:06.1193972Z Removing SSH command configuration
+2026-10-28T23:22:06.1199692Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-28T23:22:06.1254299Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-28T23:22:06.6011799Z Removing HTTP extra header
+2026-10-28T23:22:06.6023682Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-28T23:22:06.6068358Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-28T23:22:06.6317826Z Removing includeIf entries pointing to credentials config files
+2026-10-28T23:22:06.6325152Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-28T23:22:06.6381132Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-28T23:22:06.6639812Z [command]/usr/bin/git config --file /home/runner/work/_temp/git-credentials-3360bb0b-334c-498c-98f8-503f32526a38.config http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-10-28T23:22:06.6698324Z [command]/usr/bin/git config --local includeIf.gitdir:/home/runner/work/Project-Judas/Project-Judas/.git.path /home/runner/work/_temp/git-credentials-3360bb0b-334c-498c-98f8-503f32526a38.config
+2026-10-28T23:22:06.6747583Z [command]/usr/bin/git config --local includeIf.gitdir:/home/runner/work/Project-Judas/Project-Judas/.git/worktrees/*.path /home/runner/work/_temp/git-credentials-3360bb0b-334c-498c-98f8-503f32526a38.config
+2026-10-28T23:22:06.6797588Z [command]/usr/bin/git config --local includeIf.gitdir:/github/workspace/.git.path /github/runner_temp/git-credentials-3360bb0b-334c-498c-98f8-503f32526a38.config
+2026-10-28T23:22:06.6845095Z [command]/usr/bin/git config --local includeIf.gitdir:/github/workspace/.git/worktrees/*.path /github/runner_temp/git-credentials-3360bb0b-334c-498c-98f8-503f32526a38.config
+2026-10-28T23:22:06.6912483Z ##[endgroup]
+2026-10-28T23:22:06.6913259Z ##[group]Fetching the repository
+2026-10-28T23:22:06.6921070Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin 0c1531ae86073f616a9d7b20425cb26ec65810c9
+2026-10-28T23:23:13.7034141Z From https://github.com/SuperReaper1999/Project-Judas
+2026-10-28T23:23:13.7035420Z  * branch              0c1531ae86073f616a9d7b20425cb26ec65810c9 -> FETCH_HEAD
+2026-10-28T23:23:13.7055500Z [command]/usr/bin/git rev-parse --verify --quiet 0c1531ae86073f616a9d7b20425cb26ec65810c9^{object}
+2026-10-28T23:23:13.7138342Z 0c1531ae86073f616a9d7b20425cb26ec65810c9
+2026-10-28T23:23:13.7141691Z ##[endgroup]
+2026-10-28T23:23:13.7142395Z ##[group]Determining the checkout info
+2026-10-28T23:23:13.7143258Z ##[endgroup]
+2026-10-28T23:23:13.7144295Z [command]/usr/bin/git sparse-checkout disable
+2026-10-28T23:23:13.7521834Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-10-28T23:23:13.7571589Z ##[group]Checking out the ref
+2026-10-28T23:23:13.7577018Z [command]/usr/bin/git checkout --progress --force 0c1531ae86073f616a9d7b20425cb26ec65810c9
+2026-10-28T23:23:14.9197839Z Updating files:  16% (10072/62600)
+2026-10-28T23:23:14.9814969Z Updating files:  17% (10642/62600)
+2026-10-28T23:23:15.0523605Z Updating files:  18% (11268/62600)
+2026-10-28T23:23:15.1199363Z Updating files:  19% (11894/62600)
+2026-10-28T23:23:15.1947065Z Updating files:  20% (12520/62600)
+2026-10-28T23:23:15.2773284Z Updating files:  21% (13146/62600)
+2026-10-28T23:23:15.3560157Z Updating files:  22% (13772/62600)
+2026-10-28T23:23:15.4117228Z Updating files:  23% (14398/62600)
+2026-10-28T23:23:15.4788457Z Updating files:  24% (15024/62600)
+2026-10-28T23:23:15.5515744Z Updating files:  25% (15650/62600)
+2026-10-28T23:23:15.6223543Z Updating files:  26% (16276/62600)
+2026-10-28T23:23:15.8624623Z Updating files:  27% (16902/62600)
+2026-10-28T23:23:15.8708920Z Updating files:  27% (17379/62600)
+2026-10-28T23:23:16.1563738Z Updating files:  28% (17528/62600)
+2026-10-28T23:23:16.3570031Z Updating files:  29% (18154/62600)
+2026-10-28T23:23:16.4479985Z Updating files:  30% (18780/62600)
+2026-10-28T23:23:16.6269758Z Updating files:  31% (19406/62600)
+2026-10-28T23:23:16.7620181Z Updating files:  32% (20032/62600)
+2026-10-28T23:23:16.8692644Z Updating files:  33% (20658/62600)
+2026-10-28T23:23:16.8696945Z Updating files:  33% (21273/62600)
+2026-10-28T23:23:17.0026886Z Updating files:  34% (21284/62600)
+2026-10-28T23:23:17.1185148Z Updating files:  35% (21910/62600)
+2026-10-28T23:23:17.2817330Z Updating files:  36% (22536/62600)
+2026-10-28T23:23:17.3890146Z Updating files:  37% (23162/62600)
+2026-10-28T23:23:17.4888797Z Updating files:  38% (23788/62600)
+2026-10-28T23:23:17.6839244Z Updating files:  39% (24414/62600)
+2026-10-28T23:23:17.8807863Z Updating files:  40% (25040/62600)
+2026-10-28T23:23:18.0676379Z Updating files:  40% (25373/62600)
+2026-10-28T23:23:18.2441909Z Updating files:  41% (25666/62600)
+2026-10-28T23:23:18.4017662Z Updating files:  42% (26292/62600)
+2026-10-28T23:23:18.6096633Z Updating files:  43% (26918/62600)
+2026-10-28T23:23:18.6721942Z Updating files:  44% (27544/62600)
+2026-10-28T23:23:18.7733289Z Updating files:  45% (28170/62600)
+2026-10-28T23:23:18.8671194Z Updating files:  46% (28796/62600)
+2026-10-28T23:23:18.9095248Z Updating files:  46% (29333/62600)
+2026-10-28T23:23:18.9946563Z Updating files:  47% (29422/62600)
+2026-10-28T23:23:19.0384127Z Updating files:  48% (30048/62600)
+2026-10-28T23:23:19.0976514Z Updating files:  49% (30674/62600)
+2026-10-28T23:23:19.1650640Z Updating files:  50% (31300/62600)
+2026-10-28T23:23:19.2069599Z Updating files:  51% (31926/62600)
+2026-10-28T23:23:19.2507811Z Updating files:  52% (32552/62600)
+2026-10-28T23:23:19.3348964Z Updating files:  53% (33178/62600)
+2026-10-28T23:23:19.4526620Z Updating files:  54% (33804/62600)
+2026-10-28T23:23:19.8145500Z Updating files:  55% (34430/62600)
+2026-10-28T23:23:19.8647188Z Updating files:  56% (35056/62600)
+2026-10-28T23:23:19.9266643Z Updating files:  56% (35305/62600)
+2026-10-28T23:23:20.0774225Z Updating files:  57% (35682/62600)
+2026-10-28T23:23:20.1538979Z Updating files:  58% (36308/62600)
+2026-10-28T23:23:20.2358849Z Updating files:  59% (36934/62600)
+2026-10-28T23:23:20.6818323Z Updating files:  60% (37560/62600)
+2026-10-28T23:23:20.8630350Z Updating files:  61% (38186/62600)
+2026-10-28T23:23:20.8902705Z Updating files:  61% (38706/62600)
+2026-10-28T23:23:21.0858898Z Updating files:  62% (38812/62600)
+2026-10-28T23:23:21.3266449Z Updating files:  63% (39438/62600)
+2026-10-28T23:23:21.4159792Z Updating files:  64% (40064/62600)
+2026-10-28T23:23:21.4707076Z Updating files:  65% (40690/62600)
+2026-10-28T23:23:21.5433080Z Updating files:  66% (41316/62600)
+2026-10-28T23:23:21.5949477Z Updating files:  67% (41942/62600)
+2026-10-28T23:23:21.6482579Z Updating files:  68% (42568/62600)
+2026-10-28T23:23:21.6971462Z Updating files:  69% (43194/62600)
+2026-10-28T23:23:21.7767356Z Updating files:  70% (43820/62600)
+2026-10-28T23:23:21.8390078Z Updating files:  71% (44446/62600)
+2026-10-28T23:23:21.8624746Z Updating files:  72% (45072/62600)
+2026-10-28T23:23:21.9041393Z Updating files:  72% (45297/62600)
+2026-10-28T23:23:21.9906497Z Updating files:  73% (45698/62600)
+2026-10-28T23:23:22.0412606Z Updating files:  74% (46324/62600)
+2026-10-28T23:23:22.1254831Z Updating files:  75% (46950/62600)
+2026-10-28T23:23:22.1899591Z Updating files:  76% (47576/62600)
+2026-10-28T23:23:22.2365223Z Updating files:  77% (48202/62600)
+2026-10-28T23:23:22.2829042Z Updating files:  78% (48828/62600)
+2026-10-28T23:23:22.3705205Z Updating files:  79% (49454/62600)
+2026-10-28T23:23:22.4262613Z Updating files:  80% (50080/62600)
+2026-10-28T23:23:22.4584387Z Updating files:  81% (50706/62600)
+2026-10-28T23:23:22.4904845Z Updating files:  82% (51332/62600)
+2026-10-28T23:23:22.5311264Z Updating files:  83% (51958/62600)
+2026-10-28T23:23:22.6176881Z Updating files:  84% (52584/62600)
+2026-10-28T23:23:22.7108216Z Updating files:  85% (53210/62600)
+2026-10-28T23:23:22.7935323Z Updating files:  86% (53836/62600)
+2026-10-28T23:23:22.8406755Z Updating files:  87% (54462/62600)
+2026-10-28T23:23:22.8631316Z Updating files:  88% (55088/62600)
+2026-10-28T23:23:22.9783621Z Updating files:  88% (55301/62600)
+2026-10-28T23:23:23.1068395Z Updating files:  89% (55714/62600)
+2026-10-28T23:23:23.3597084Z Updating files:  90% (56340/62600)
+2026-10-28T23:23:23.6636583Z Updating files:  91% (56966/62600)
+2026-10-28T23:23:23.8627824Z Updating files:  92% (57592/62600)
+2026-10-28T23:23:24.1197968Z Updating files:  92% (57898/62600)
+2026-10-28T23:23:24.4718078Z Updating files:  93% (58218/62600)
+2026-10-28T23:23:24.7919112Z Updating files:  94% (58844/62600)
+2026-10-28T23:23:24.8623896Z Updating files:  95% (59470/62600)
+2026-10-28T23:23:24.9736755Z Updating files:  95% (59774/62600)
+2026-10-28T23:23:25.1796851Z Updating files:  96% (60096/62600)
+2026-10-28T23:23:25.2616876Z Updating files:  97% (60722/62600)
+2026-10-28T23:23:25.3080867Z Updating files:  98% (61348/62600)
+2026-10-28T23:23:25.5197935Z Updating files:  99% (61974/62600)
+2026-10-28T23:23:25.5198808Z Updating files: 100% (62600/62600)
+2026-10-28T23:23:25.5199497Z Updating files: 100% (62600/62600), done.
+2026-10-28T23:23:25.6034157Z Note: switching to '0c1531ae86073f616a9d7b20425cb26ec65810c9'.
+2026-10-28T23:23:25.6035366Z 
+2026-10-28T23:23:25.6036156Z You are in 'detached HEAD' state. You can look around, make experimental
+2026-10-28T23:23:25.6038257Z changes and commit them, and you can discard any commits you make in this
+2026-10-28T23:23:25.6039929Z state without impacting any branches by switching back to a branch.
+2026-10-28T23:23:25.6041019Z 
+2026-10-28T23:23:25.6041699Z If you want to create a new branch to retain commits you create, you may
+2026-10-28T23:23:25.6043504Z do so (now or later) by using -c with the switch command. Example:
+2026-10-28T23:23:25.6044392Z 
+2026-10-28T23:23:25.6044727Z   git switch -c <new-branch-name>
+2026-10-28T23:23:25.6045288Z 
+2026-10-28T23:23:25.6045604Z Or undo this operation with:
+2026-10-28T23:23:25.6046115Z 
+2026-10-28T23:23:25.6046406Z   git switch -
+2026-10-28T23:23:25.6046782Z 
+2026-10-28T23:23:25.6047479Z Turn off this advice by setting config variable advice.detachedHead to false
+2026-10-28T23:23:25.6048523Z 
+2026-10-28T23:23:25.6049281Z HEAD is now at 0c1531ae Use native Windows installer paths during release preparation
+2026-10-28T23:23:25.6400058Z ##[endgroup]
+2026-10-28T23:23:25.6461618Z [command]/usr/bin/git log -1 --format=%H
+2026-10-28T23:23:25.6513305Z 0c1531ae86073f616a9d7b20425cb26ec65810c9
+2026-10-28T23:23:25.6517437Z ##[group]Removing auth
+2026-10-28T23:23:25.6517938Z Removing SSH command configuration
+2026-10-28T23:23:25.6523435Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-28T23:23:25.6577774Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-28T23:23:25.6940353Z Removing HTTP extra header
+2026-10-28T23:23:25.6944968Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-28T23:23:25.7008951Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-28T23:23:25.7392361Z Removing includeIf entries pointing to credentials config files
+2026-10-28T23:23:25.7397299Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-28T23:23:25.7440196Z includeif.gitdir:/home/runner/work/Project-Judas/Project-Judas/.git.path
+2026-10-28T23:23:25.7441649Z includeif.gitdir:/home/runner/work/Project-Judas/Project-Judas/.git/worktrees/*.path
+2026-10-28T23:23:25.7444875Z includeif.gitdir:/github/workspace/.git.path
+2026-10-28T23:23:25.7462726Z includeif.gitdir:/github/workspace/.git/worktrees/*.path
+2026-10-28T23:23:25.7484963Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/home/runner/work/Project-Judas/Project-Judas/.git.path
+2026-10-28T23:23:25.7512590Z /home/runner/work/_temp/git-credentials-3360bb0b-334c-498c-98f8-503f32526a38.config
+2026-10-28T23:23:25.7527525Z [command]/usr/bin/git config --local --unset includeif.gitdir:/home/runner/work/Project-Judas/Project-Judas/.git.path \/home\/runner\/work\/_temp\/git\-credentials\-3360bb0b\-334c\-498c\-98f8\-503f32526a38\.config
+2026-10-28T23:23:25.8615392Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/home/runner/work/Project-Judas/Project-Judas/.git/worktrees/*.path
+2026-10-28T23:23:25.8660328Z /home/runner/work/_temp/git-credentials-3360bb0b-334c-498c-98f8-503f32526a38.config
+2026-10-28T23:23:25.8684196Z [command]/usr/bin/git config --local --unset includeif.gitdir:/home/runner/work/Project-Judas/Project-Judas/.git/worktrees/*.path \/home\/runner\/work\/_temp\/git\-credentials\-3360bb0b\-334c\-498c\-98f8\-503f32526a38\.config
+2026-10-28T23:23:25.9083174Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/github/workspace/.git.path
+2026-10-28T23:23:25.9132505Z /github/runner_temp/git-credentials-3360bb0b-334c-498c-98f8-503f32526a38.config
+2026-10-28T23:23:25.9154336Z [command]/usr/bin/git config --local --unset includeif.gitdir:/github/workspace/.git.path \/github\/runner_temp\/git\-credentials\-3360bb0b\-334c\-498c\-98f8\-503f32526a38\.config
+2026-10-28T23:23:25.9195098Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/github/workspace/.git/worktrees/*.path
+2026-10-28T23:23:25.9234298Z /github/runner_temp/git-credentials-3360bb0b-334c-498c-98f8-503f32526a38.config
+2026-10-28T23:23:25.9242526Z [command]/usr/bin/git config --local --unset includeif.gitdir:/github/workspace/.git/worktrees/*.path \/github\/runner_temp\/git\-credentials\-3360bb0b\-334c\-498c\-98f8\-503f32526a38\.config
+2026-10-28T23:23:25.9531713Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-28T23:23:25.9913163Z Removing credentials config '/home/runner/work/_temp/git-credentials-3360bb0b-334c-498c-98f8-503f32526a38.config'
+2026-10-28T23:23:25.9923425Z ##[endgroup]
+2026-10-28T23:23:26.0504895Z ##[group]Run actions/setup-node@v7
+2026-10-28T23:23:26.0505380Z with:
+2026-10-28T23:23:26.0505709Z   node-version: 22
+2026-10-28T23:23:26.0506095Z   package-manager-cache: false
+2026-10-28T23:23:26.0506539Z   check-latest: false
+2026-10-28T23:23:26.0509157Z   token: ***
+2026-10-28T23:23:26.0509360Z env:
+2026-10-28T23:23:26.0509595Z   CANDIDATE: 0c1531ae86073f616a9d7b20425cb26ec65810c9
+2026-10-28T23:23:26.0509895Z   CHANNEL: Alpha
+2026-10-28T23:23:26.0510103Z   SDL_AUDIODRIVER: dummy
+2026-10-28T23:23:26.0510334Z   LIBGL_ALWAYS_SOFTWARE: 1
+2026-10-28T23:23:26.0510558Z ##[endgroup]
+2026-10-28T23:23:26.4098574Z Found in cache @ /opt/hostedtoolcache/node/22.23.4/x64
+2026-10-28T23:23:28.6038330Z ##[group]Environment details
+2026-10-28T23:23:31.1583026Z node: v22.23.4
+2026-10-28T23:23:31.1583771Z npm: 10.9.9
+2026-10-28T23:23:31.1584357Z yarn: 1.22.22
+2026-10-28T23:23:31.1585132Z ##[endgroup]
+2026-10-28T23:23:31.1724360Z ##[group]Run sudo apt-get update
+2026-10-28T23:23:31.1724748Z [36;1msudo apt-get update[0m
+2026-10-28T23:23:31.1725308Z [36;1msudo apt-get install -y cmake ninja-build g++ libsdl2-dev libglm-dev xvfb xauth libgl1-mesa-dri[0m
+2026-10-28T23:23:31.1725985Z [36;1mnpm ci --ignore-scripts --prefix tools/verification[0m
+2026-10-28T23:23:31.1726810Z [36;1mcmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release -DJUDAS_BUILD_CHANNEL="$CHANNEL" -DJUDAS_ENABLE_VALIDATION=ON -DJUDAS_SDK_RELEASE=ON[0m
+2026-10-28T23:23:31.1727629Z [36;1mcmake --build build --target judas_linux_sdk -j2[0m
+2026-10-28T23:23:31.1728302Z [36;1mxvfb-run -a python3 scripts/qualify_m100.py --build build --output .cache/release-qualification --jobs 2[0m
+2026-10-28T23:23:31.1729174Z [36;1mxvfb-run -a python3 scripts/qualify_sdk.py --sdk build/linux-sdk --work .cache/release-sdk-work[0m
+2026-10-28T23:23:31.1729775Z [36;1mnode scripts/check_judasjs_api.mjs[0m
+2026-10-28T23:23:31.1730606Z [36;1mpython3 tools/inspect_sdk.py build/linux-sdk --host-check --max-glibc 2.39 --require-os ubuntu:24.04 --output .cache/release-sdk-platform.json[0m
+2026-10-28T23:23:31.1760513Z shell: /usr/bin/bash -e {0}
+2026-10-28T23:23:31.1760786Z env:
+2026-10-28T23:23:31.1761047Z   CANDIDATE: 0c1531ae86073f616a9d7b20425cb26ec65810c9
+2026-10-28T23:23:31.1761409Z   CHANNEL: Alpha
+2026-10-28T23:23:31.1761638Z   SDL_AUDIODRIVER: dummy
+2026-10-28T23:23:31.1761892Z   LIBGL_ALWAYS_SOFTWARE: 1
+2026-10-28T23:23:31.1762402Z ##[endgroup]
+2026-10-28T23:23:31.3126029Z Get:1 file:/etc/apt/apt-mirrors.txt Mirrorlist [144 B]
+2026-10-28T23:23:31.3556178Z Hit:2 http://azure.archive.ubuntu.com/ubuntu noble InRelease
+2026-10-28T23:23:31.3557776Z Get:6 https://packages.microsoft.com/ubuntu/24.04/prod noble InRelease [3600 B]
+2026-10-28T23:23:31.3981915Z Get:3 http://azure.archive.ubuntu.com/ubuntu noble-updates InRelease [126 kB]
+2026-10-28T23:23:31.4228508Z Get:4 http://azure.archive.ubuntu.com/ubuntu noble-backports InRelease [126 kB]
+2026-10-28T23:23:31.4305936Z Get:5 http://azure.archive.ubuntu.com/ubuntu noble-security InRelease [126 kB]
+2026-10-28T23:23:31.6549563Z Get:7 https://packages.microsoft.com/ubuntu/24.04/prod noble/main amd64 Packages [669 kB]
+2026-10-28T23:23:31.6716270Z Get:8 https://packages.microsoft.com/ubuntu/24.04/prod noble/main arm64 Packages [605 kB]
+2026-10-28T23:23:31.7215301Z Get:9 http://azure.archive.ubuntu.com/ubuntu noble-updates/main amd64 Packages [1406 kB]
+2026-10-28T23:23:31.7284206Z Get:10 http://azure.archive.ubuntu.com/ubuntu noble-updates/main Translation-en [310 kB]
+2026-10-28T23:23:31.7308130Z Get:11 http://azure.archive.ubuntu.com/ubuntu noble-updates/universe amd64 Packages [1707 kB]
+2026-10-28T23:23:31.7398651Z Get:12 http://azure.archive.ubuntu.com/ubuntu noble-updates/universe Translation-en [343 kB]
+2026-10-28T23:23:31.7420834Z Get:13 http://azure.archive.ubuntu.com/ubuntu noble-updates/restricted amd64 Packages [1809 kB]
+2026-10-28T23:23:31.7508963Z Get:14 http://azure.archive.ubuntu.com/ubuntu noble-updates/restricted Translation-en [411 kB]
+2026-10-28T23:23:31.7533080Z Get:15 http://azure.archive.ubuntu.com/ubuntu noble-updates/multiverse Translation-en [14.3 kB]
+2026-10-28T23:23:31.8281628Z Get:16 http://azure.archive.ubuntu.com/ubuntu noble-security/main amd64 Packages [1146 kB]
+2026-10-28T23:23:31.8340401Z Get:17 http://azure.archive.ubuntu.com/ubuntu noble-security/main Translation-en [231 kB]
+2026-10-28T23:23:31.8359990Z Get:18 http://azure.archive.ubuntu.com/ubuntu noble-security/universe amd64 Packages [1223 kB]
+2026-10-28T23:23:31.8853574Z Get:19 http://azure.archive.ubuntu.com/ubuntu noble-security/universe Translation-en [246 kB]
+2026-10-28T23:23:39.4149297Z Fetched 10.5 MB in 1s (8276 kB/s)
+2026-10-28T23:23:40.5602634Z Reading package lists...
+2026-10-28T23:23:40.6007161Z Reading package lists...
+2026-10-28T23:23:40.8469897Z Building dependency tree...
+2026-10-28T23:23:40.8477541Z Reading state information...
+2026-10-28T23:23:41.0365992Z g++ is already the newest version (4:13.2.0-7ubuntu1).
+2026-10-28T23:23:41.0368421Z xvfb is already the newest version (2:21.1.12-1ubuntu1.9).
+2026-10-28T23:23:41.0370190Z xauth is already the newest version (1:1.1.2-1build1).
+2026-10-28T23:23:41.0371306Z xauth set to manually installed.
+2026-10-28T23:23:41.0372906Z libgl1-mesa-dri is already the newest version (25.2.8-0ubuntu0.24.04.4).
+2026-10-28T23:23:41.0374333Z libgl1-mesa-dri set to manually installed.
+2026-10-28T23:23:41.0375517Z The following additional packages will be installed:
+2026-10-28T23:23:41.0376894Z   cmake-data gir1.2-ibus-1.0 libasound2-dev libasyncns0 libblkid-dev
+2026-10-28T23:23:41.0378625Z   libdbus-1-dev libdecor-0-0 libdecor-0-dev libdecor-0-plugin-1-gtk libdrm-dev
+2026-10-28T23:23:41.0380295Z   libdrm-nouveau2 libdrm-radeon1 libegl-dev libegl-mesa0 libegl1 libflac12t64
+2026-10-28T23:23:41.0381456Z   libgbm-dev libgirepository-2.0-0 libgl-dev libgles-dev libgles1 libgles2
+2026-10-28T23:23:41.0382896Z   libglib2.0-dev libglib2.0-dev-bin libglx-dev libibus-1.0-5 libibus-1.0-dev
+2026-10-28T23:23:41.0384062Z   libice-dev libjsoncpp25 libmount-dev libmp3lame0 libmpg123-0t64 libopus0
+2026-10-28T23:23:41.0385131Z   libpciaccess-dev libpthread-stubs0-dev libpulse-dev libpulse-mainloop-glib0
+2026-10-28T23:23:41.0386310Z   libpulse0 librhash0 libsamplerate0 libsamplerate0-dev libsdl2-2.0-0
+2026-10-28T23:23:41.0387461Z   libselinux1-dev libsepol-dev libsm-dev libsndfile1 libsndio-dev libsndio7.0
+2026-10-28T23:23:41.0388653Z   libudev-dev libvorbisenc2 libwayland-bin libwayland-dev libwayland-server0
+2026-10-28T23:23:41.0389707Z   libx11-dev libxau-dev libxcb1-dev libxcursor-dev libxdmcp-dev libxext-dev
+2026-10-28T23:23:41.0390366Z   libxfixes-dev libxi-dev libxinerama-dev libxkbcommon-dev libxrandr-dev
+2026-10-28T23:23:41.0390964Z   libxrender-dev libxss-dev libxt-dev libxv-dev libxv1 libxxf86vm-dev uuid-dev
+2026-10-28T23:23:41.0391451Z   x11proto-dev xorg-sgml-doctools xtrans-dev
+2026-10-28T23:23:41.0391782Z Suggested packages:
+2026-10-28T23:23:41.0392477Z   cmake-doc cmake-format elpa-cmake-mode libasound2-doc gir1.2-glib-2.0-dev
+2026-10-28T23:23:41.0393085Z   libglib2.0-doc libgdk-pixbuf2.0-bin libxml2-utils libice-doc opus-tools
+2026-10-28T23:23:41.0393673Z   pulseaudio libsm-doc sndiod libwayland-doc libx11-doc libxcb-doc libxext-doc
+2026-10-28T23:23:41.0394087Z   libxt-doc
+2026-10-28T23:23:41.1025991Z The following NEW packages will be installed:
+2026-10-28T23:23:41.1027598Z   cmake cmake-data gir1.2-ibus-1.0 libasound2-dev libasyncns0 libblkid-dev
+2026-10-28T23:23:41.1029504Z   libdbus-1-dev libdecor-0-0 libdecor-0-dev libdecor-0-plugin-1-gtk libdrm-dev
+2026-10-28T23:23:41.1031518Z   libdrm-nouveau2 libdrm-radeon1 libegl-dev libegl-mesa0 libegl1 libflac12t64
+2026-10-28T23:23:41.1033424Z   libgbm-dev libgirepository-2.0-0 libgl-dev libgles-dev libgles1 libgles2
+2026-10-28T23:23:41.1034427Z   libglib2.0-dev libglib2.0-dev-bin libglm-dev libglx-dev libibus-1.0-5
+2026-10-28T23:23:41.1035338Z   libibus-1.0-dev libice-dev libjsoncpp25 libmount-dev libmp3lame0
+2026-10-28T23:23:41.1036346Z   libmpg123-0t64 libopus0 libpciaccess-dev libpthread-stubs0-dev libpulse-dev
+2026-10-28T23:23:41.1037746Z   libpulse-mainloop-glib0 libpulse0 librhash0 libsamplerate0
+2026-10-28T23:23:41.1039489Z   libsamplerate0-dev libsdl2-2.0-0 libsdl2-dev libselinux1-dev libsepol-dev
+2026-10-28T23:23:41.1041263Z   libsm-dev libsndfile1 libsndio-dev libsndio7.0 libudev-dev libvorbisenc2
+2026-10-28T23:23:41.1042732Z   libwayland-bin libwayland-dev libwayland-server0 libx11-dev libxau-dev
+2026-10-28T23:23:41.1044032Z   libxcb1-dev libxcursor-dev libxdmcp-dev libxext-dev libxfixes-dev libxi-dev
+2026-10-28T23:23:41.1044866Z   libxinerama-dev libxkbcommon-dev libxrandr-dev libxrender-dev libxss-dev
+2026-10-28T23:23:41.1045627Z   libxt-dev libxv-dev libxv1 libxxf86vm-dev ninja-build uuid-dev x11proto-dev
+2026-10-28T23:23:41.1046177Z   xorg-sgml-doctools xtrans-dev
+2026-10-28T23:23:41.1311553Z 0 upgraded, 78 newly installed, 0 to remove and 5 not upgraded.
+2026-10-28T23:23:41.1312918Z Need to get 25.6 MB of archives.
+2026-10-28T23:23:41.1314402Z After this operation, 103 MB of additional disk space will be used.
+2026-10-28T23:23:41.1315081Z Get:1 file:/etc/apt/apt-mirrors.txt Mirrorlist [144 B]
+2026-10-28T23:23:41.2237520Z Get:2 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 libjsoncpp25 amd64 1.9.5-6build1 [82.8 kB]
+2026-10-28T23:23:41.2987667Z Get:3 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 librhash0 amd64 1.4.3-3build1 [129 kB]
+2026-10-28T23:23:41.3804604Z Get:4 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 cmake-data all 3.28.3-1build7 [2155 kB]
+2026-10-28T23:23:43.0067254Z Get:5 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 cmake amd64 3.28.3-1build7 [11.2 MB]
+2026-10-28T23:23:51.6436554Z Get:6 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 libibus-1.0-5 amd64 1.5.29-2 [181 kB]
+2026-10-28T23:23:51.7809381Z Get:7 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 gir1.2-ibus-1.0 amd64 1.5.29-2 [86.3 kB]
+2026-10-28T23:23:51.8569794Z Get:8 http://azure.archive.ubuntu.com/ubuntu noble-updates/main amd64 libasound2-dev amd64 1.2.11-1ubuntu0.3 [115 kB]
+2026-10-28T23:23:51.9348860Z Get:9 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 libasyncns0 amd64 0.8-6build4 [11.3 kB]
+2026-10-28T23:23:51.9959854Z Get:10 http://azure.archive.ubuntu.com/ubuntu noble-updates/main amd64 libdbus-1-dev amd64 1.14.10-4ubuntu4.1 [190 kB]
+2026-10-28T23:23:52.1349459Z Get:11 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 libdecor-0-0 amd64 0.2.2-1build2 [16.5 kB]
+2026-10-28T23:23:52.1965555Z Get:12 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 libwayland-server0 amd64 1.22.0-2.1build1 [33.9 kB]
+2026-10-28T23:23:52.2616849Z Get:13 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 libwayland-bin amd64 1.22.0-2.1build1 [20.6 kB]
+2026-10-28T23:23:52.3244649Z Get:14 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 libwayland-dev amd64 1.22.0-2.1build1 [71.3 kB]
+2026-10-28T23:23:52.3954219Z Get:15 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 libdecor-0-dev amd64 0.2.2-1build2 [5726 B]
+2026-10-28T23:23:52.4556026Z Get:16 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 libdecor-0-plugin-1-gtk amd64 0.2.2-1build2 [22.2 kB]
+2026-10-28T23:23:52.5182614Z Get:17 http://azure.archive.ubuntu.com/ubuntu noble-updates/main amd64 libdrm-radeon1 amd64 2.4.125-1ubuntu0.1~24.04.2 [20.8 kB]
+2026-10-28T23:23:52.5867983Z Get:18 http://azure.archive.ubuntu.com/ubuntu noble-updates/main amd64 libdrm-nouveau2 amd64 2.4.125-1ubuntu0.1~24.04.2 [17.6 kB]
+2026-10-28T23:23:52.6491107Z Get:19 http://azure.archive.ubuntu.com/ubuntu noble-updates/main amd64 libpciaccess-dev amd64 0.17-3ubuntu0.24.04.3 [22.0 kB]
+2026-10-28T23:23:52.7137352Z Get:20 http://azure.archive.ubuntu.com/ubuntu noble-updates/main amd64 libdrm-dev amd64 2.4.125-1ubuntu0.1~24.04.2 [314 kB]
+2026-10-28T23:23:52.9640921Z Get:21 http://azure.archive.ubuntu.com/ubuntu noble-updates/main amd64 libegl-mesa0 amd64 25.2.8-0ubuntu0.24.04.4 [117 kB]
+2026-10-28T23:23:53.0438775Z Get:22 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 libegl1 amd64 1.7.0-1build1 [28.7 kB]
+2026-10-28T23:23:53.1082931Z Get:23 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 xorg-sgml-doctools all 1:1.11-1.1 [10.9 kB]
+2026-10-28T23:23:53.1690718Z Get:24 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 x11proto-dev all 2023.2-1 [602 kB]
+2026-10-28T23:23:53.6054671Z Get:25 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 libxau-dev amd64 1:1.0.9-1build6 [9570 B]
+2026-10-28T23:23:53.6657428Z Get:26 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 libxdmcp-dev amd64 1:1.1.3-0ubuntu6 [26.5 kB]
+2026-10-28T23:23:53.7290497Z Get:27 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 xtrans-dev all 1.4.0-1 [68.9 kB]
+2026-10-28T23:23:53.8045511Z Get:28 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 libpthread-stubs0-dev amd64 0.4-1build3 [4746 B]
+2026-10-28T23:23:53.8645010Z Get:29 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 libxcb1-dev amd64 1.15-1ubuntu2 [85.8 kB]
+2026-10-28T23:23:53.9374949Z Get:30 http://azure.archive.ubuntu.com/ubuntu noble-updates/main amd64 libx11-dev amd64 2:1.8.7-1ubuntu0.1 [732 kB]
+2026-10-28T23:23:54.4893847Z Get:31 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 libglx-dev amd64 1.7.0-1build1 [14.2 kB]
+2026-10-28T23:23:54.5507539Z Get:32 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 libgl-dev amd64 1.7.0-1build1 [102 kB]
+2026-10-28T23:23:54.6274694Z Get:33 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 libegl-dev amd64 1.7.0-1build1 [18.2 kB]
+2026-10-28T23:23:54.6893138Z Get:34 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 libflac12t64 amd64 1.4.3+ds-2.1ubuntu2 [197 kB]
+2026-10-28T23:23:54.8278528Z Get:35 http://azure.archive.ubuntu.com/ubuntu noble-updates/main amd64 libgbm-dev amd64 25.2.8-0ubuntu0.24.04.4 [12.7 kB]
+2026-10-28T23:23:54.8894002Z Get:36 http://azure.archive.ubuntu.com/ubuntu noble-updates/main amd64 libgirepository-2.0-0 amd64 2.80.0-6ubuntu3.10 [73.5 kB]
+2026-10-28T23:23:54.9607471Z Get:37 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 libgles1 amd64 1.7.0-1build1 [11.6 kB]
+2026-10-28T23:23:55.0219404Z Get:38 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 libgles2 amd64 1.7.0-1build1 [17.1 kB]
+2026-10-28T23:23:55.0842455Z Get:39 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 libgles-dev amd64 1.7.0-1build1 [50.5 kB]
+2026-10-28T23:23:55.1519945Z Get:40 http://azure.archive.ubuntu.com/ubuntu noble-updates/main amd64 libglib2.0-dev-bin amd64 2.80.0-6ubuntu3.10 [138 kB]
+2026-10-28T23:23:55.2341553Z Get:41 http://azure.archive.ubuntu.com/ubuntu noble-updates/main amd64 uuid-dev amd64 2.39.3-9ubuntu6.6 [33.5 kB]
+2026-10-28T23:23:55.3044492Z Get:42 http://azure.archive.ubuntu.com/ubuntu noble-updates/main amd64 libblkid-dev amd64 2.39.3-9ubuntu6.6 [205 kB]
+2026-10-28T23:23:55.4391912Z Get:43 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 libsepol-dev amd64 3.5-2build1 [384 kB]
+2026-10-28T23:23:55.7015167Z Get:44 http://azure.archive.ubuntu.com/ubuntu noble-updates/main amd64 libselinux1-dev amd64 3.5-2ubuntu2.1 [164 kB]
+2026-10-28T23:23:55.8346821Z Get:45 http://azure.archive.ubuntu.com/ubuntu noble-updates/main amd64 libmount-dev amd64 2.39.3-9ubuntu6.6 [14.9 kB]
+2026-10-28T23:23:55.8951547Z Get:46 http://azure.archive.ubuntu.com/ubuntu noble-updates/main amd64 libglib2.0-dev amd64 2.80.0-6ubuntu3.10 [1861 kB]
+2026-10-28T23:23:57.2833369Z Get:47 http://azure.archive.ubuntu.com/ubuntu noble/universe amd64 libibus-1.0-dev amd64 1.5.29-2 [187 kB]
+2026-10-28T23:23:57.4207182Z Get:48 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 libice-dev amd64 2:1.0.10-1build3 [51.0 kB]
+2026-10-28T23:23:57.4887309Z Get:49 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 libmp3lame0 amd64 3.100-6build1 [142 kB]
+2026-10-28T23:23:57.5725476Z Get:50 http://azure.archive.ubuntu.com/ubuntu noble-updates/main amd64 libmpg123-0t64 amd64 1.32.5-1ubuntu1.1 [169 kB]
+2026-10-28T23:23:57.7069144Z Get:51 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 libopus0 amd64 1.4-1build1 [208 kB]
+2026-10-28T23:23:57.8481865Z Get:52 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 libvorbisenc2 amd64 1.3.7-1build3 [80.8 kB]
+2026-10-28T23:23:57.9211160Z Get:53 http://azure.archive.ubuntu.com/ubuntu noble-updates/main amd64 libsndfile1 amd64 1.2.2-1ubuntu5.24.04.1 [209 kB]
+2026-10-28T23:23:58.0669443Z Get:54 http://azure.archive.ubuntu.com/ubuntu noble-updates/main amd64 libpulse0 amd64 1:16.1+dfsg1-2ubuntu10.1 [292 kB]
+2026-10-28T23:23:58.3037603Z Get:55 http://azure.archive.ubuntu.com/ubuntu noble-updates/main amd64 libpulse-mainloop-glib0 amd64 1:16.1+dfsg1-2ubuntu10.1 [12.2 kB]
+2026-10-28T23:23:58.3660743Z Get:56 http://azure.archive.ubuntu.com/ubuntu noble-updates/universe amd64 libpulse-dev amd64 1:16.1+dfsg1-2ubuntu10.1 [75.6 kB]
+2026-10-28T23:23:58.4568336Z Get:57 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 libsamplerate0 amd64 0.2.2-4build1 [1344 kB]
+2026-10-28T23:23:59.5988779Z Get:58 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 libsamplerate0-dev amd64 0.2.2-4build1 [61.5 kB]
+2026-10-28T23:23:59.6630080Z Get:59 http://azure.archive.ubuntu.com/ubuntu noble-updates/main amd64 libsdl2-2.0-0 amd64 2.30.0+dfsg-1ubuntu3.1 [686 kB]
+2026-10-28T23:24:00.2026377Z Get:60 http://azure.archive.ubuntu.com/ubuntu noble/universe amd64 libsndio7.0 amd64 1.9.0-0.3build3 [29.6 kB]
+2026-10-28T23:24:00.2666397Z Get:61 http://azure.archive.ubuntu.com/ubuntu noble/universe amd64 libsndio-dev amd64 1.9.0-0.3build3 [17.7 kB]
+2026-10-28T23:24:00.3290119Z Get:62 http://azure.archive.ubuntu.com/ubuntu noble-updates/main amd64 libudev-dev amd64 255.4-1ubuntu8.18 [22.0 kB]
+2026-10-28T23:24:00.3922888Z Get:63 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 libxrender-dev amd64 1:0.9.10-1.1build1 [26.3 kB]
+2026-10-28T23:24:00.4558643Z Get:64 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 libxfixes-dev amd64 1:6.0.0-2build1 [12.1 kB]
+2026-10-28T23:24:00.5170359Z Get:65 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 libxcursor-dev amd64 1:1.2.1-1build1 [31.8 kB]
+2026-10-28T23:24:00.5818217Z Get:66 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 libxext-dev amd64 2:1.3.4-1build2 [83.5 kB]
+2026-10-28T23:24:00.6567919Z Get:67 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 libxi-dev amd64 2:1.8.1-1build1 [194 kB]
+2026-10-28T23:24:00.7969550Z Get:68 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 libxinerama-dev amd64 2:1.1.4-3build1 [7988 B]
+2026-10-28T23:24:00.8573111Z Get:69 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 libxkbcommon-dev amd64 1.6.0-1build1 [56.3 kB]
+2026-10-28T23:24:00.9268327Z Get:70 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 libxrandr-dev amd64 2:1.5.2-2build1 [26.4 kB]
+2026-10-28T23:24:00.9910016Z Get:71 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 libxss-dev amd64 1:1.2.3-1build3 [12.1 kB]
+2026-10-28T23:24:01.0518868Z Get:72 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 libsm-dev amd64 2:1.2.3-1build3 [17.8 kB]
+2026-10-28T23:24:01.1144534Z Get:73 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 libxt-dev amd64 1:1.2.1-1.2build1 [394 kB]
+2026-10-28T23:24:01.4252936Z Get:74 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 libxv1 amd64 2:1.0.11-1.1build1 [10.7 kB]
+2026-10-28T23:24:01.4860211Z Get:75 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 libxv-dev amd64 2:1.0.11-1.1build1 [33.3 kB]
+2026-10-28T23:24:01.5508803Z Get:76 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 libxxf86vm-dev amd64 1:1.1.4-1build4 [13.8 kB]
+2026-10-28T23:24:01.6126390Z Get:77 http://azure.archive.ubuntu.com/ubuntu noble-updates/universe amd64 libsdl2-dev amd64 2.30.0+dfsg-1ubuntu3.1 [1141 kB]
+2026-10-28T23:24:02.4635156Z Get:78 http://azure.archive.ubuntu.com/ubuntu noble/universe amd64 ninja-build amd64 1.11.1-2 [129 kB]
+2026-10-28T23:24:02.5464351Z Get:79 http://azure.archive.ubuntu.com/ubuntu noble/universe amd64 libglm-dev all 0.9.9.8+ds-7 [189 kB]
+2026-10-28T23:24:03.0168136Z Fetched 25.6 MB in 22s (1192 kB/s)
+2026-10-28T23:24:03.0683605Z Selecting previously unselected package libjsoncpp25:amd64.
+2026-10-28T23:24:03.1613721Z (Reading database ... 
+2026-10-28T23:24:03.1614163Z (Reading database ... 5%
+2026-10-28T23:24:03.1614530Z (Reading database ... 10%
+2026-10-28T23:24:03.1614882Z (Reading database ... 15%
+2026-10-28T23:24:03.1615223Z (Reading database ... 20%
+2026-10-28T23:24:03.1615568Z (Reading database ... 25%
+2026-10-28T23:24:03.1615915Z (Reading database ... 30%
+2026-10-28T23:24:03.1616260Z (Reading database ... 35%
+2026-10-28T23:24:03.1616599Z (Reading database ... 40%
+2026-10-28T23:24:03.1616936Z (Reading database ... 45%
+2026-10-28T23:24:03.1617272Z (Reading database ... 50%
+2026-10-28T23:24:03.3037418Z (Reading database ... 55%
+2026-10-28T23:24:03.9025224Z (Reading database ... 60%
+2026-10-28T23:24:04.2805035Z (Reading database ... 65%
+2026-10-28T23:24:04.5796688Z (Reading database ... 70%
+2026-10-28T23:24:04.8826237Z (Reading database ... 75%
+2026-10-28T23:24:05.9353954Z (Reading database ... 80%
+2026-10-28T23:24:07.2883997Z (Reading database ... 85%
+2026-10-28T23:24:09.0889006Z (Reading database ... 90%
+2026-10-28T23:24:10.7716260Z (Reading database ... 95%
+2026-10-28T23:24:10.7717492Z (Reading database ... 100%
+2026-10-28T23:24:10.7719333Z (Reading database ... 215504 files and directories currently installed.)
+2026-10-28T23:24:10.7769269Z Preparing to unpack .../00-libjsoncpp25_1.9.5-6build1_amd64.deb ...
+2026-10-28T23:24:10.7804747Z Unpacking libjsoncpp25:amd64 (1.9.5-6build1) ...
+2026-10-28T23:24:10.8075205Z Selecting previously unselected package librhash0:amd64.
+2026-10-28T23:24:10.8220859Z Preparing to unpack .../01-librhash0_1.4.3-3build1_amd64.deb ...
+2026-10-28T23:24:10.8230316Z Unpacking librhash0:amd64 (1.4.3-3build1) ...
+2026-10-28T23:24:10.8547734Z Selecting previously unselected package cmake-data.
+2026-10-28T23:24:10.8709581Z Preparing to unpack .../02-cmake-data_3.28.3-1build7_all.deb ...
+2026-10-28T23:24:10.8812985Z Unpacking cmake-data (3.28.3-1build7) ...
+2026-10-28T23:24:11.5707338Z Selecting previously unselected package cmake.
+2026-10-28T23:24:11.5866924Z Preparing to unpack .../03-cmake_3.28.3-1build7_amd64.deb ...
+2026-10-28T23:24:11.5873128Z Unpacking cmake (3.28.3-1build7) ...
+2026-10-28T23:24:11.7939788Z Selecting previously unselected package libibus-1.0-5:amd64.
+2026-10-28T23:24:11.8091088Z Preparing to unpack .../04-libibus-1.0-5_1.5.29-2_amd64.deb ...
+2026-10-28T23:24:11.8098607Z Unpacking libibus-1.0-5:amd64 (1.5.29-2) ...
+2026-10-28T23:24:11.8347357Z Selecting previously unselected package gir1.2-ibus-1.0:amd64.
+2026-10-28T23:24:11.8498274Z Preparing to unpack .../05-gir1.2-ibus-1.0_1.5.29-2_amd64.deb ...
+2026-10-28T23:24:11.8506506Z Unpacking gir1.2-ibus-1.0:amd64 (1.5.29-2) ...
+2026-10-28T23:24:11.8885569Z Selecting previously unselected package libasound2-dev:amd64.
+2026-10-28T23:24:11.9050053Z Preparing to unpack .../06-libasound2-dev_1.2.11-1ubuntu0.3_amd64.deb ...
+2026-10-28T23:24:11.9097421Z Unpacking libasound2-dev:amd64 (1.2.11-1ubuntu0.3) ...
+2026-10-28T23:24:11.9691863Z Selecting previously unselected package libasyncns0:amd64.
+2026-10-28T23:24:11.9846595Z Preparing to unpack .../07-libasyncns0_0.8-6build4_amd64.deb ...
+2026-10-28T23:24:11.9855417Z Unpacking libasyncns0:amd64 (0.8-6build4) ...
+2026-10-28T23:24:12.0108064Z Selecting previously unselected package libdbus-1-dev:amd64.
+2026-10-28T23:24:12.0257879Z Preparing to unpack .../08-libdbus-1-dev_1.14.10-4ubuntu4.1_amd64.deb ...
+2026-10-28T23:24:12.0264682Z Unpacking libdbus-1-dev:amd64 (1.14.10-4ubuntu4.1) ...
+2026-10-28T23:24:12.0603293Z Selecting previously unselected package libdecor-0-0:amd64.
+2026-10-28T23:24:12.0762935Z Preparing to unpack .../09-libdecor-0-0_0.2.2-1build2_amd64.deb ...
+2026-10-28T23:24:12.0770849Z Unpacking libdecor-0-0:amd64 (0.2.2-1build2) ...
+2026-10-28T23:24:12.1041223Z Selecting previously unselected package libwayland-server0:amd64.
+2026-10-28T23:24:12.1205237Z Preparing to unpack .../10-libwayland-server0_1.22.0-2.1build1_amd64.deb ...
+2026-10-28T23:24:12.1216073Z Unpacking libwayland-server0:amd64 (1.22.0-2.1build1) ...
+2026-10-28T23:24:12.1472971Z Selecting previously unselected package libwayland-bin.
+2026-10-28T23:24:12.1630467Z Preparing to unpack .../11-libwayland-bin_1.22.0-2.1build1_amd64.deb ...
+2026-10-28T23:24:12.1640779Z Unpacking libwayland-bin (1.22.0-2.1build1) ...
+2026-10-28T23:24:12.1927107Z Selecting previously unselected package libwayland-dev:amd64.
+2026-10-28T23:24:12.2089228Z Preparing to unpack .../12-libwayland-dev_1.22.0-2.1build1_amd64.deb ...
+2026-10-28T23:24:12.2097360Z Unpacking libwayland-dev:amd64 (1.22.0-2.1build1) ...
+2026-10-28T23:24:12.2426699Z Selecting previously unselected package libdecor-0-dev:amd64.
+2026-10-28T23:24:12.2589133Z Preparing to unpack .../13-libdecor-0-dev_0.2.2-1build2_amd64.deb ...
+2026-10-28T23:24:12.2598077Z Unpacking libdecor-0-dev:amd64 (0.2.2-1build2) ...
+2026-10-28T23:24:12.2848484Z Selecting previously unselected package libdecor-0-plugin-1-gtk:amd64.
+2026-10-28T23:24:12.3000584Z Preparing to unpack .../14-libdecor-0-plugin-1-gtk_0.2.2-1build2_amd64.deb ...
+2026-10-28T23:24:12.3008328Z Unpacking libdecor-0-plugin-1-gtk:amd64 (0.2.2-1build2) ...
+2026-10-28T23:24:12.3265801Z Selecting previously unselected package libdrm-radeon1:amd64.
+2026-10-28T23:24:12.3422445Z Preparing to unpack .../15-libdrm-radeon1_2.4.125-1ubuntu0.1~24.04.2_amd64.deb ...
+2026-10-28T23:24:12.3430086Z Unpacking libdrm-radeon1:amd64 (2.4.125-1ubuntu0.1~24.04.2) ...
+2026-10-28T23:24:12.3688623Z Selecting previously unselected package libdrm-nouveau2:amd64.
+2026-10-28T23:24:12.3836556Z Preparing to unpack .../16-libdrm-nouveau2_2.4.125-1ubuntu0.1~24.04.2_amd64.deb ...
+2026-10-28T23:24:12.3843600Z Unpacking libdrm-nouveau2:amd64 (2.4.125-1ubuntu0.1~24.04.2) ...
+2026-10-28T23:24:12.4081017Z Selecting previously unselected package libpciaccess-dev:amd64.
+2026-10-28T23:24:12.4231136Z Preparing to unpack .../17-libpciaccess-dev_0.17-3ubuntu0.24.04.3_amd64.deb ...
+2026-10-28T23:24:12.4239829Z Unpacking libpciaccess-dev:amd64 (0.17-3ubuntu0.24.04.3) ...
+2026-10-28T23:24:12.4489426Z Selecting previously unselected package libdrm-dev:amd64.
+2026-10-28T23:24:12.4639011Z Preparing to unpack .../18-libdrm-dev_2.4.125-1ubuntu0.1~24.04.2_amd64.deb ...
+2026-10-28T23:24:12.4645727Z Unpacking libdrm-dev:amd64 (2.4.125-1ubuntu0.1~24.04.2) ...
+2026-10-28T23:24:12.5048735Z Selecting previously unselected package libegl-mesa0:amd64.
+2026-10-28T23:24:12.5200363Z Preparing to unpack .../19-libegl-mesa0_25.2.8-0ubuntu0.24.04.4_amd64.deb ...
+2026-10-28T23:24:12.5207325Z Unpacking libegl-mesa0:amd64 (25.2.8-0ubuntu0.24.04.4) ...
+2026-10-28T23:24:12.5489439Z Selecting previously unselected package libegl1:amd64.
+2026-10-28T23:24:12.5637594Z Preparing to unpack .../20-libegl1_1.7.0-1build1_amd64.deb ...
+2026-10-28T23:24:12.5644374Z Unpacking libegl1:amd64 (1.7.0-1build1) ...
+2026-10-28T23:24:12.5893586Z Selecting previously unselected package xorg-sgml-doctools.
+2026-10-28T23:24:12.6048988Z Preparing to unpack .../21-xorg-sgml-doctools_1%3a1.11-1.1_all.deb ...
+2026-10-28T23:24:12.6056302Z Unpacking xorg-sgml-doctools (1:1.11-1.1) ...
+2026-10-28T23:24:12.6575071Z Selecting previously unselected package x11proto-dev.
+2026-10-28T23:24:12.6725397Z Preparing to unpack .../22-x11proto-dev_2023.2-1_all.deb ...
+2026-10-28T23:24:12.6732928Z Unpacking x11proto-dev (2023.2-1) ...
+2026-10-28T23:24:12.7542680Z Selecting previously unselected package libxau-dev:amd64.
+2026-10-28T23:24:12.7694426Z Preparing to unpack .../23-libxau-dev_1%3a1.0.9-1build6_amd64.deb ...
+2026-10-28T23:24:12.7701558Z Unpacking libxau-dev:amd64 (1:1.0.9-1build6) ...
+2026-10-28T23:24:12.7988900Z Selecting previously unselected package libxdmcp-dev:amd64.
+2026-10-28T23:24:12.8159007Z Preparing to unpack .../24-libxdmcp-dev_1%3a1.1.3-0ubuntu6_amd64.deb ...
+2026-10-28T23:24:12.8166903Z Unpacking libxdmcp-dev:amd64 (1:1.1.3-0ubuntu6) ...
+2026-10-28T23:24:12.8417743Z Selecting previously unselected package xtrans-dev.
+2026-10-28T23:24:12.8569437Z Preparing to unpack .../25-xtrans-dev_1.4.0-1_all.deb ...
+2026-10-28T23:24:12.8576873Z Unpacking xtrans-dev (1.4.0-1) ...
+2026-10-28T23:24:12.8858771Z Selecting previously unselected package libpthread-stubs0-dev:amd64.
+2026-10-28T23:24:12.9010192Z Preparing to unpack .../26-libpthread-stubs0-dev_0.4-1build3_amd64.deb ...
+2026-10-28T23:24:12.9018044Z Unpacking libpthread-stubs0-dev:amd64 (0.4-1build3) ...
+2026-10-28T23:24:12.9261938Z Selecting previously unselected package libxcb1-dev:amd64.
+2026-10-28T23:24:12.9409275Z Preparing to unpack .../27-libxcb1-dev_1.15-1ubuntu2_amd64.deb ...
+2026-10-28T23:24:12.9418838Z Unpacking libxcb1-dev:amd64 (1.15-1ubuntu2) ...
+2026-10-28T23:24:12.9700981Z Selecting previously unselected package libx11-dev:amd64.
+2026-10-28T23:24:12.9850328Z Preparing to unpack .../28-libx11-dev_2%3a1.8.7-1ubuntu0.1_amd64.deb ...
+2026-10-28T23:24:12.9858286Z Unpacking libx11-dev:amd64 (2:1.8.7-1ubuntu0.1) ...
+2026-10-28T23:24:13.0216390Z Selecting previously unselected package libglx-dev:amd64.
+2026-10-28T23:24:13.0364797Z Preparing to unpack .../29-libglx-dev_1.7.0-1build1_amd64.deb ...
+2026-10-28T23:24:13.0372323Z Unpacking libglx-dev:amd64 (1.7.0-1build1) ...
+2026-10-28T23:24:13.0621327Z Selecting previously unselected package libgl-dev:amd64.
+2026-10-28T23:24:13.0769657Z Preparing to unpack .../30-libgl-dev_1.7.0-1build1_amd64.deb ...
+2026-10-28T23:24:13.0776768Z Unpacking libgl-dev:amd64 (1.7.0-1build1) ...
+2026-10-28T23:24:13.1055144Z Selecting previously unselected package libegl-dev:amd64.
+2026-10-28T23:24:13.1207349Z Preparing to unpack .../31-libegl-dev_1.7.0-1build1_amd64.deb ...
+2026-10-28T23:24:13.1214565Z Unpacking libegl-dev:amd64 (1.7.0-1build1) ...
+2026-10-28T23:24:13.1477756Z Selecting previously unselected package libflac12t64:amd64.
+2026-10-28T23:24:13.1626837Z Preparing to unpack .../32-libflac12t64_1.4.3+ds-2.1ubuntu2_amd64.deb ...
+2026-10-28T23:24:13.1634957Z Unpacking libflac12t64:amd64 (1.4.3+ds-2.1ubuntu2) ...
+2026-10-28T23:24:13.1890336Z Selecting previously unselected package libgbm-dev:amd64.
+2026-10-28T23:24:13.2039477Z Preparing to unpack .../33-libgbm-dev_25.2.8-0ubuntu0.24.04.4_amd64.deb ...
+2026-10-28T23:24:13.2047791Z Unpacking libgbm-dev:amd64 (25.2.8-0ubuntu0.24.04.4) ...
+2026-10-28T23:24:13.2300551Z Selecting previously unselected package libgirepository-2.0-0:amd64.
+2026-10-28T23:24:13.2451295Z Preparing to unpack .../34-libgirepository-2.0-0_2.80.0-6ubuntu3.10_amd64.deb ...
+2026-10-28T23:24:13.2459593Z Unpacking libgirepository-2.0-0:amd64 (2.80.0-6ubuntu3.10) ...
+2026-10-28T23:24:13.2737693Z Selecting previously unselected package libgles1:amd64.
+2026-10-28T23:24:13.2887184Z Preparing to unpack .../35-libgles1_1.7.0-1build1_amd64.deb ...
+2026-10-28T23:24:13.2894800Z Unpacking libgles1:amd64 (1.7.0-1build1) ...
+2026-10-28T23:24:13.3218420Z Selecting previously unselected package libgles2:amd64.
+2026-10-28T23:24:13.3366034Z Preparing to unpack .../36-libgles2_1.7.0-1build1_amd64.deb ...
+2026-10-28T23:24:13.3374219Z Unpacking libgles2:amd64 (1.7.0-1build1) ...
+2026-10-28T23:24:13.3633981Z Selecting previously unselected package libgles-dev:amd64.
+2026-10-28T23:24:13.3783276Z Preparing to unpack .../37-libgles-dev_1.7.0-1build1_amd64.deb ...
+2026-10-28T23:24:13.3790569Z Unpacking libgles-dev:amd64 (1.7.0-1build1) ...
+2026-10-28T23:24:13.4090369Z Selecting previously unselected package libglib2.0-dev-bin.
+2026-10-28T23:24:13.4241930Z Preparing to unpack .../38-libglib2.0-dev-bin_2.80.0-6ubuntu3.10_amd64.deb ...
+2026-10-28T23:24:13.4248946Z Unpacking libglib2.0-dev-bin (2.80.0-6ubuntu3.10) ...
+2026-10-28T23:24:13.4948661Z Selecting previously unselected package uuid-dev:amd64.
+2026-10-28T23:24:13.5098081Z Preparing to unpack .../39-uuid-dev_2.39.3-9ubuntu6.6_amd64.deb ...
+2026-10-28T23:24:13.5105278Z Unpacking uuid-dev:amd64 (2.39.3-9ubuntu6.6) ...
+2026-10-28T23:24:13.5396794Z Selecting previously unselected package libblkid-dev:amd64.
+2026-10-28T23:24:13.5543311Z Preparing to unpack .../40-libblkid-dev_2.39.3-9ubuntu6.6_amd64.deb ...
+2026-10-28T23:24:13.5558122Z Unpacking libblkid-dev:amd64 (2.39.3-9ubuntu6.6) ...
+2026-10-28T23:24:13.5845275Z Selecting previously unselected package libsepol-dev:amd64.
+2026-10-28T23:24:13.5991485Z Preparing to unpack .../41-libsepol-dev_3.5-2build1_amd64.deb ...
+2026-10-28T23:24:13.5997903Z Unpacking libsepol-dev:amd64 (3.5-2build1) ...
+2026-10-28T23:24:13.6364709Z Selecting previously unselected package libselinux1-dev:amd64.
+2026-10-28T23:24:13.6510467Z Preparing to unpack .../42-libselinux1-dev_3.5-2ubuntu2.1_amd64.deb ...
+2026-10-28T23:24:13.6523580Z Unpacking libselinux1-dev:amd64 (3.5-2ubuntu2.1) ...
+2026-10-28T23:24:13.7004674Z Selecting previously unselected package libmount-dev:amd64.
+2026-10-28T23:24:13.7154270Z Preparing to unpack .../43-libmount-dev_2.39.3-9ubuntu6.6_amd64.deb ...
+2026-10-28T23:24:13.7160631Z Unpacking libmount-dev:amd64 (2.39.3-9ubuntu6.6) ...
+2026-10-28T23:24:13.7391080Z Selecting previously unselected package libglib2.0-dev:amd64.
+2026-10-28T23:24:13.7541402Z Preparing to unpack .../44-libglib2.0-dev_2.80.0-6ubuntu3.10_amd64.deb ...
+2026-10-28T23:24:13.7548516Z Unpacking libglib2.0-dev:amd64 (2.80.0-6ubuntu3.10) ...
+2026-10-28T23:24:13.8655258Z Selecting previously unselected package libibus-1.0-dev:amd64.
+2026-10-28T23:24:13.8805706Z Preparing to unpack .../45-libibus-1.0-dev_1.5.29-2_amd64.deb ...
+2026-10-28T23:24:13.8813194Z Unpacking libibus-1.0-dev:amd64 (1.5.29-2) ...
+2026-10-28T23:24:13.9222824Z Selecting previously unselected package libice-dev:amd64.
+2026-10-28T23:24:13.9372780Z Preparing to unpack .../46-libice-dev_2%3a1.0.10-1build3_amd64.deb ...
+2026-10-28T23:24:13.9380254Z Unpacking libice-dev:amd64 (2:1.0.10-1build3) ...
+2026-10-28T23:24:13.9661481Z Selecting previously unselected package libmp3lame0:amd64.
+2026-10-28T23:24:13.9812851Z Preparing to unpack .../47-libmp3lame0_3.100-6build1_amd64.deb ...
+2026-10-28T23:24:13.9821339Z Unpacking libmp3lame0:amd64 (3.100-6build1) ...
+2026-10-28T23:24:14.0117424Z Selecting previously unselected package libmpg123-0t64:amd64.
+2026-10-28T23:24:14.0267993Z Preparing to unpack .../48-libmpg123-0t64_1.32.5-1ubuntu1.1_amd64.deb ...
+2026-10-28T23:24:14.0277458Z Unpacking libmpg123-0t64:amd64 (1.32.5-1ubuntu1.1) ...
+2026-10-28T23:24:14.0583337Z Selecting previously unselected package libopus0:amd64.
+2026-10-28T23:24:14.0731473Z Preparing to unpack .../49-libopus0_1.4-1build1_amd64.deb ...
+2026-10-28T23:24:14.0740428Z Unpacking libopus0:amd64 (1.4-1build1) ...
+2026-10-28T23:24:14.1009141Z Selecting previously unselected package libvorbisenc2:amd64.
+2026-10-28T23:24:14.1159342Z Preparing to unpack .../50-libvorbisenc2_1.3.7-1build3_amd64.deb ...
+2026-10-28T23:24:14.1167250Z Unpacking libvorbisenc2:amd64 (1.3.7-1build3) ...
+2026-10-28T23:24:14.1443620Z Selecting previously unselected package libsndfile1:amd64.
+2026-10-28T23:24:14.1590919Z Preparing to unpack .../51-libsndfile1_1.2.2-1ubuntu5.24.04.1_amd64.deb ...
+2026-10-28T23:24:14.1598315Z Unpacking libsndfile1:amd64 (1.2.2-1ubuntu5.24.04.1) ...
+2026-10-28T23:24:14.1884175Z Selecting previously unselected package libpulse0:amd64.
+2026-10-28T23:24:14.2033710Z Preparing to unpack .../52-libpulse0_1%3a16.1+dfsg1-2ubuntu10.1_amd64.deb ...
+2026-10-28T23:24:14.2116039Z Unpacking libpulse0:amd64 (1:16.1+dfsg1-2ubuntu10.1) ...
+2026-10-28T23:24:14.2424755Z Selecting previously unselected package libpulse-mainloop-glib0:amd64.
+2026-10-28T23:24:14.2577984Z Preparing to unpack .../53-libpulse-mainloop-glib0_1%3a16.1+dfsg1-2ubuntu10.1_amd64.deb ...
+2026-10-28T23:24:14.2586752Z Unpacking libpulse-mainloop-glib0:amd64 (1:16.1+dfsg1-2ubuntu10.1) ...
+2026-10-28T23:24:14.2834563Z Selecting previously unselected package libpulse-dev:amd64.
+2026-10-28T23:24:14.2987226Z Preparing to unpack .../54-libpulse-dev_1%3a16.1+dfsg1-2ubuntu10.1_amd64.deb ...
+2026-10-28T23:24:14.2995547Z Unpacking libpulse-dev:amd64 (1:16.1+dfsg1-2ubuntu10.1) ...
+2026-10-28T23:24:14.3342342Z Selecting previously unselected package libsamplerate0:amd64.
+2026-10-28T23:24:14.3498460Z Preparing to unpack .../55-libsamplerate0_0.2.2-4build1_amd64.deb ...
+2026-10-28T23:24:14.3507333Z Unpacking libsamplerate0:amd64 (0.2.2-4build1) ...
+2026-10-28T23:24:14.3813071Z Selecting previously unselected package libsamplerate0-dev:amd64.
+2026-10-28T23:24:14.3963618Z Preparing to unpack .../56-libsamplerate0-dev_0.2.2-4build1_amd64.deb ...
+2026-10-28T23:24:14.3971427Z Unpacking libsamplerate0-dev:amd64 (0.2.2-4build1) ...
+2026-10-28T23:24:14.4253688Z Selecting previously unselected package libsdl2-2.0-0:amd64.
+2026-10-28T23:24:14.4405817Z Preparing to unpack .../57-libsdl2-2.0-0_2.30.0+dfsg-1ubuntu3.1_amd64.deb ...
+2026-10-28T23:24:14.4414520Z Unpacking libsdl2-2.0-0:amd64 (2.30.0+dfsg-1ubuntu3.1) ...
+2026-10-28T23:24:14.4784349Z Selecting previously unselected package libsndio7.0:amd64.
+2026-10-28T23:24:14.4937928Z Preparing to unpack .../58-libsndio7.0_1.9.0-0.3build3_amd64.deb ...
+2026-10-28T23:24:14.4946032Z Unpacking libsndio7.0:amd64 (1.9.0-0.3build3) ...
+2026-10-28T23:24:14.5197141Z Selecting previously unselected package libsndio-dev:amd64.
+2026-10-28T23:24:14.5348340Z Preparing to unpack .../59-libsndio-dev_1.9.0-0.3build3_amd64.deb ...
+2026-10-28T23:24:14.5356477Z Unpacking libsndio-dev:amd64 (1.9.0-0.3build3) ...
+2026-10-28T23:24:14.5645815Z Selecting previously unselected package libudev-dev:amd64.
+2026-10-28T23:24:14.5803279Z Preparing to unpack .../60-libudev-dev_255.4-1ubuntu8.18_amd64.deb ...
+2026-10-28T23:24:14.5811347Z Unpacking libudev-dev:amd64 (255.4-1ubuntu8.18) ...
+2026-10-28T23:24:14.6136942Z Selecting previously unselected package libxrender-dev:amd64.
+2026-10-28T23:24:14.6289701Z Preparing to unpack .../61-libxrender-dev_1%3a0.9.10-1.1build1_amd64.deb ...
+2026-10-28T23:24:14.6299094Z Unpacking libxrender-dev:amd64 (1:0.9.10-1.1build1) ...
+2026-10-28T23:24:14.6556145Z Selecting previously unselected package libxfixes-dev:amd64.
+2026-10-28T23:24:14.6704500Z Preparing to unpack .../62-libxfixes-dev_1%3a6.0.0-2build1_amd64.deb ...
+2026-10-28T23:24:14.6712356Z Unpacking libxfixes-dev:amd64 (1:6.0.0-2build1) ...
+2026-10-28T23:24:14.6960953Z Selecting previously unselected package libxcursor-dev:amd64.
+2026-10-28T23:24:14.7110507Z Preparing to unpack .../63-libxcursor-dev_1%3a1.2.1-1build1_amd64.deb ...
+2026-10-28T23:24:14.7118845Z Unpacking libxcursor-dev:amd64 (1:1.2.1-1build1) ...
+2026-10-28T23:24:14.7428625Z Selecting previously unselected package libxext-dev:amd64.
+2026-10-28T23:24:14.7579739Z Preparing to unpack .../64-libxext-dev_2%3a1.3.4-1build2_amd64.deb ...
+2026-10-28T23:24:14.7603256Z Unpacking libxext-dev:amd64 (2:1.3.4-1build2) ...
+2026-10-28T23:24:14.7959519Z Selecting previously unselected package libxi-dev:amd64.
+2026-10-28T23:24:14.8108882Z Preparing to unpack .../65-libxi-dev_2%3a1.8.1-1build1_amd64.deb ...
+2026-10-28T23:24:14.8116443Z Unpacking libxi-dev:amd64 (2:1.8.1-1build1) ...
+2026-10-28T23:24:14.8478951Z Selecting previously unselected package libxinerama-dev:amd64.
+2026-10-28T23:24:14.8631492Z Preparing to unpack .../66-libxinerama-dev_2%3a1.1.4-3build1_amd64.deb ...
+2026-10-28T23:24:14.8639268Z Unpacking libxinerama-dev:amd64 (2:1.1.4-3build1) ...
+2026-10-28T23:24:14.8907125Z Selecting previously unselected package libxkbcommon-dev:amd64.
+2026-10-28T23:24:14.9060100Z Preparing to unpack .../67-libxkbcommon-dev_1.6.0-1build1_amd64.deb ...
+2026-10-28T23:24:14.9066706Z Unpacking libxkbcommon-dev:amd64 (1.6.0-1build1) ...
+2026-10-28T23:24:14.9724252Z Selecting previously unselected package libxrandr-dev:amd64.
+2026-10-28T23:24:14.9878886Z Preparing to unpack .../68-libxrandr-dev_2%3a1.5.2-2build1_amd64.deb ...
+2026-10-28T23:24:14.9887232Z Unpacking libxrandr-dev:amd64 (2:1.5.2-2build1) ...
+2026-10-28T23:24:15.0160046Z Selecting previously unselected package libxss-dev:amd64.
+2026-10-28T23:24:15.0311872Z Preparing to unpack .../69-libxss-dev_1%3a1.2.3-1build3_amd64.deb ...
+2026-10-28T23:24:15.0319634Z Unpacking libxss-dev:amd64 (1:1.2.3-1build3) ...
+2026-10-28T23:24:15.0589789Z Selecting previously unselected package libsm-dev:amd64.
+2026-10-28T23:24:15.0742017Z Preparing to unpack .../70-libsm-dev_2%3a1.2.3-1build3_amd64.deb ...
+2026-10-28T23:24:15.0777811Z Unpacking libsm-dev:amd64 (2:1.2.3-1build3) ...
+2026-10-28T23:24:15.1052403Z Selecting previously unselected package libxt-dev:amd64.
+2026-10-28T23:24:15.1201213Z Preparing to unpack .../71-libxt-dev_1%3a1.2.1-1.2build1_amd64.deb ...
+2026-10-28T23:24:15.1209679Z Unpacking libxt-dev:amd64 (1:1.2.1-1.2build1) ...
+2026-10-28T23:24:15.1842687Z Selecting previously unselected package libxv1:amd64.
+2026-10-28T23:24:15.1993158Z Preparing to unpack .../72-libxv1_2%3a1.0.11-1.1build1_amd64.deb ...
+2026-10-28T23:24:15.2014210Z Unpacking libxv1:amd64 (2:1.0.11-1.1build1) ...
+2026-10-28T23:24:15.2246915Z Selecting previously unselected package libxv-dev:amd64.
+2026-10-28T23:24:15.2396665Z Preparing to unpack .../73-libxv-dev_2%3a1.0.11-1.1build1_amd64.deb ...
+2026-10-28T23:24:15.2405010Z Unpacking libxv-dev:amd64 (2:1.0.11-1.1build1) ...
+2026-10-28T23:24:15.2684984Z Selecting previously unselected package libxxf86vm-dev:amd64.
+2026-10-28T23:24:15.2834732Z Preparing to unpack .../74-libxxf86vm-dev_1%3a1.1.4-1build4_amd64.deb ...
+2026-10-28T23:24:15.2841585Z Unpacking libxxf86vm-dev:amd64 (1:1.1.4-1build4) ...
+2026-10-28T23:24:15.3135101Z Selecting previously unselected package libsdl2-dev:amd64.
+2026-10-28T23:24:15.3285133Z Preparing to unpack .../75-libsdl2-dev_2.30.0+dfsg-1ubuntu3.1_amd64.deb ...
+2026-10-28T23:24:15.3291142Z Unpacking libsdl2-dev:amd64 (2.30.0+dfsg-1ubuntu3.1) ...
+2026-10-28T23:24:15.3957741Z Selecting previously unselected package ninja-build.
+2026-10-28T23:24:15.4110521Z Preparing to unpack .../76-ninja-build_1.11.1-2_amd64.deb ...
+2026-10-28T23:24:15.4117785Z Unpacking ninja-build (1.11.1-2) ...
+2026-10-28T23:24:15.4638752Z Selecting previously unselected package libglm-dev.
+2026-10-28T23:24:15.4795366Z Preparing to unpack .../77-libglm-dev_0.9.9.8+ds-7_all.deb ...
+2026-10-28T23:24:15.4803940Z Unpacking libglm-dev (0.9.9.8+ds-7) ...
+2026-10-28T23:24:15.5993130Z Setting up libglib2.0-dev-bin (2.80.0-6ubuntu3.10) ...
+2026-10-28T23:24:15.8054911Z Setting up libglm-dev (0.9.9.8+ds-7) ...
+2026-10-28T23:24:15.8073152Z Setting up libwayland-server0:amd64 (1.22.0-2.1build1) ...
+2026-10-28T23:24:15.8093141Z Setting up libdrm-nouveau2:amd64 (2.4.125-1ubuntu0.1~24.04.2) ...
+2026-10-28T23:24:15.8110388Z Setting up libpciaccess-dev:amd64 (0.17-3ubuntu0.24.04.3) ...
+2026-10-28T23:24:15.8136545Z Setting up libgirepository-2.0-0:amd64 (2.80.0-6ubuntu3.10) ...
+2026-10-28T23:24:15.8157050Z Setting up libdrm-radeon1:amd64 (2.4.125-1ubuntu0.1~24.04.2) ...
+2026-10-28T23:24:15.8174940Z Setting up libxkbcommon-dev:amd64 (1.6.0-1build1) ...
+2026-10-28T23:24:15.8191156Z Setting up libibus-1.0-5:amd64 (1.5.29-2) ...
+2026-10-28T23:24:15.8208198Z Setting up libmpg123-0t64:amd64 (1.32.5-1ubuntu1.1) ...
+2026-10-28T23:24:15.8224548Z Setting up libpthread-stubs0-dev:amd64 (0.4-1build3) ...
+2026-10-28T23:24:15.8240679Z Setting up libgbm-dev:amd64 (25.2.8-0ubuntu0.24.04.4) ...
+2026-10-28T23:24:15.8291541Z Setting up ninja-build (1.11.1-2) ...
+2026-10-28T23:24:15.8310732Z Setting up xtrans-dev (1.4.0-1) ...
+2026-10-28T23:24:15.8327845Z Setting up libwayland-bin (1.22.0-2.1build1) ...
+2026-10-28T23:24:15.8345125Z Setting up libegl-mesa0:amd64 (25.2.8-0ubuntu0.24.04.4) ...
+2026-10-28T23:24:15.8361117Z Setting up libgles2:amd64 (1.7.0-1build1) ...
+2026-10-28T23:24:15.8385385Z Setting up libdbus-1-dev:amd64 (1.14.10-4ubuntu4.1) ...
+2026-10-28T23:24:16.0194619Z Setting up uuid-dev:amd64 (2.39.3-9ubuntu6.6) ...
+2026-10-28T23:24:16.0234481Z Setting up libgles1:amd64 (1.7.0-1build1) ...
+2026-10-28T23:24:16.0252409Z Setting up libopus0:amd64 (1.4-1build1) ...
+2026-10-28T23:24:16.0276550Z Setting up libxv1:amd64 (2:1.0.11-1.1build1) ...
+2026-10-28T23:24:16.0296808Z Setting up libjsoncpp25:amd64 (1.9.5-6build1) ...
+2026-10-28T23:24:16.0316380Z Setting up libudev-dev:amd64 (255.4-1ubuntu8.18) ...
+2026-10-28T23:24:16.0334507Z Setting up libsepol-dev:amd64 (3.5-2build1) ...
+2026-10-28T23:24:16.0351979Z Setting up libsndio7.0:amd64 (1.9.0-0.3build3) ...
+2026-10-28T23:24:16.0374814Z Setting up libasyncns0:amd64 (0.8-6build4) ...
+2026-10-28T23:24:16.0393158Z Setting up librhash0:amd64 (1.4.3-3build1) ...
+2026-10-28T23:24:16.0415864Z Setting up libegl1:amd64 (1.7.0-1build1) ...
+2026-10-28T23:24:16.0433237Z Setting up libdecor-0-0:amd64 (0.2.2-1build2) ...
+2026-10-28T23:24:16.0451054Z Setting up xorg-sgml-doctools (1:1.11-1.1) ...
+2026-10-28T23:24:16.0473378Z Setting up cmake-data (3.28.3-1build7) ...
+2026-10-28T23:24:16.0546999Z Setting up libflac12t64:amd64 (1.4.3+ds-2.1ubuntu2) ...
+2026-10-28T23:24:16.0573350Z Setting up libasound2-dev:amd64 (1.2.11-1ubuntu0.3) ...
+2026-10-28T23:24:16.0594981Z Setting up libsamplerate0:amd64 (0.2.2-4build1) ...
+2026-10-28T23:24:16.0620917Z Setting up gir1.2-ibus-1.0:amd64 (1.5.29-2) ...
+2026-10-28T23:24:16.0641163Z Setting up libdecor-0-plugin-1-gtk:amd64 (0.2.2-1build2) ...
+2026-10-28T23:24:16.0664205Z Setting up libmp3lame0:amd64 (3.100-6build1) ...
+2026-10-28T23:24:16.0684679Z Setting up libvorbisenc2:amd64 (1.3.7-1build3) ...
+2026-10-28T23:24:16.0705353Z Setting up libblkid-dev:amd64 (2.39.3-9ubuntu6.6) ...
+2026-10-28T23:24:16.0736728Z Setting up libdrm-dev:amd64 (2.4.125-1ubuntu0.1~24.04.2) ...
+2026-10-28T23:24:16.0757612Z Setting up libsndio-dev:amd64 (1.9.0-0.3build3) ...
+2026-10-28T23:24:16.0783185Z Setting up libselinux1-dev:amd64 (3.5-2ubuntu2.1) ...
+2026-10-28T23:24:16.0802571Z Setting up libsamplerate0-dev:amd64 (0.2.2-4build1) ...
+2026-10-28T23:24:16.0839020Z Setting up libwayland-dev:amd64 (1.22.0-2.1build1) ...
+2026-10-28T23:24:16.0857397Z Setting up libdecor-0-dev:amd64 (0.2.2-1build2) ...
+2026-10-28T23:24:16.0875926Z Setting up cmake (3.28.3-1build7) ...
+2026-10-28T23:24:16.0899657Z Setting up libsndfile1:amd64 (1.2.2-1ubuntu5.24.04.1) ...
+2026-10-28T23:24:16.0924686Z Setting up libmount-dev:amd64 (2.39.3-9ubuntu6.6) ...
+2026-10-28T23:24:16.0950287Z Setting up libpulse0:amd64 (1:16.1+dfsg1-2ubuntu10.1) ...
+2026-10-28T23:24:16.1039165Z Setting up libglib2.0-dev:amd64 (2.80.0-6ubuntu3.10) ...
+2026-10-28T23:24:16.1060462Z Setting up libpulse-mainloop-glib0:amd64 (1:16.1+dfsg1-2ubuntu10.1) ...
+2026-10-28T23:24:16.1079927Z Setting up libsdl2-2.0-0:amd64 (2.30.0+dfsg-1ubuntu3.1) ...
+2026-10-28T23:24:16.1264690Z Processing triggers for libc-bin (2.39-0ubuntu8.9) ...
+2026-10-28T23:24:16.4313590Z Processing triggers for man-db (2.12.0-4build2) ...
+2026-10-28T23:24:16.4337240Z Not building database; man-db/auto-update is not 'true'.
+2026-10-28T23:24:16.4361610Z Processing triggers for libglib2.0-0t64:amd64 (2.80.0-6ubuntu3.10) ...
+2026-10-28T23:24:16.4761285Z Setting up libpulse-dev:amd64 (1:16.1+dfsg1-2ubuntu10.1) ...
+2026-10-28T23:24:16.4794173Z Processing triggers for sgml-base (1.31) ...
+2026-10-28T23:24:16.5447036Z Setting up x11proto-dev (2023.2-1) ...
+2026-10-28T23:24:16.5469932Z Setting up libxau-dev:amd64 (1:1.0.9-1build6) ...
+2026-10-28T23:24:16.5506254Z Setting up libice-dev:amd64 (2:1.0.10-1build3) ...
+2026-10-28T23:24:16.5533439Z Setting up libsm-dev:amd64 (2:1.2.3-1build3) ...
+2026-10-28T23:24:16.5566445Z Setting up libibus-1.0-dev:amd64 (1.5.29-2) ...
+2026-10-28T23:24:16.5597818Z Setting up libxdmcp-dev:amd64 (1:1.1.3-0ubuntu6) ...
+2026-10-28T23:24:16.5640479Z Setting up libxcb1-dev:amd64 (1.15-1ubuntu2) ...
+2026-10-28T23:24:16.5686560Z Setting up libx11-dev:amd64 (2:1.8.7-1ubuntu0.1) ...
+2026-10-28T23:24:16.5711551Z Setting up libxfixes-dev:amd64 (1:6.0.0-2build1) ...
+2026-10-28T23:24:16.5736240Z Setting up libxt-dev:amd64 (1:1.2.1-1.2build1) ...
+2026-10-28T23:24:16.5758818Z Setting up libxext-dev:amd64 (2:1.3.4-1build2) ...
+2026-10-28T23:24:16.5782270Z Setting up libglx-dev:amd64 (1.7.0-1build1) ...
+2026-10-28T23:24:16.5809872Z Setting up libxi-dev:amd64 (2:1.8.1-1build1) ...
+2026-10-28T23:24:16.5838371Z Setting up libxrender-dev:amd64 (1:0.9.10-1.1build1) ...
+2026-10-28T23:24:16.5860881Z Setting up libgl-dev:amd64 (1.7.0-1build1) ...
+2026-10-28T23:24:16.5898192Z Setting up libegl-dev:amd64 (1.7.0-1build1) ...
+2026-10-28T23:24:16.5923097Z Setting up libxcursor-dev:amd64 (1:1.2.1-1build1) ...
+2026-10-28T23:24:16.5946890Z Setting up libxxf86vm-dev:amd64 (1:1.1.4-1build4) ...
+2026-10-28T23:24:16.5974664Z Setting up libxss-dev:amd64 (1:1.2.3-1build3) ...
+2026-10-28T23:24:16.6000944Z Setting up libxv-dev:amd64 (2:1.0.11-1.1build1) ...
+2026-10-28T23:24:16.6024164Z Setting up libxrandr-dev:amd64 (2:1.5.2-2build1) ...
+2026-10-28T23:24:16.6044690Z Setting up libxinerama-dev:amd64 (2:1.1.4-3build1) ...
+2026-10-28T23:24:16.6069612Z Setting up libgles-dev:amd64 (1.7.0-1build1) ...
+2026-10-28T23:24:16.6098896Z Setting up libsdl2-dev:amd64 (2.30.0+dfsg-1ubuntu3.1) ...
+2026-10-28T23:24:18.2066108Z 
+2026-10-28T23:24:18.2066861Z Running kernel seems to be up-to-date.
+2026-10-28T23:24:18.2067295Z 
+2026-10-28T23:24:18.2067579Z No services need to be restarted.
+2026-10-28T23:24:18.2067889Z 
+2026-10-28T23:24:18.2068168Z No containers need to be restarted.
+2026-10-28T23:24:18.2068505Z 
+2026-10-28T23:24:18.2068858Z No user sessions are running outdated binaries.
+2026-10-28T23:24:18.2069269Z 
+2026-10-28T23:24:18.2069814Z No VM guests are running outdated hypervisor (qemu) binaries on this host.
+2026-10-28T23:24:22.4261150Z 
+2026-10-28T23:24:22.4261840Z added 1 package, and audited 2 packages in 3s
+2026-10-28T23:24:22.4269264Z 
+2026-10-28T23:24:22.4269542Z found 0 vulnerabilities
+2026-10-28T23:24:25.2052617Z -- The C compiler identification is GNU 13.3.0
+2026-10-28T23:24:26.3731709Z -- The CXX compiler identification is GNU 13.3.0
+2026-10-28T23:24:26.5191080Z -- Detecting C compiler ABI info
+2026-10-28T23:24:26.7583668Z -- Detecting C compiler ABI info - done
+2026-10-28T23:24:26.7758368Z -- Check for working C compiler: /usr/bin/cc - skipped
+2026-10-28T23:24:26.7817196Z -- Detecting C compile features
+2026-10-28T23:24:26.7825650Z -- Detecting C compile features - done
+2026-10-28T23:24:26.8195147Z -- Detecting CXX compiler ABI info
+2026-10-28T23:24:26.9344792Z -- Detecting CXX compiler ABI info - done
+2026-10-28T23:24:26.9525602Z -- Check for working CXX compiler: /usr/bin/c++ - skipped
+2026-10-28T23:24:26.9528919Z -- Detecting CXX compile features
+2026-10-28T23:24:26.9536434Z -- Detecting CXX compile features - done
+2026-10-28T23:24:28.1205562Z -- Performing Test CMAKE_HAVE_LIBC_PTHREAD
+2026-10-28T23:24:28.4491686Z -- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Success
+2026-10-28T23:24:28.4597278Z -- Found Threads: TRUE
+2026-10-28T23:24:30.7973282Z WARNHarfBuzz has a Meson port and tries to migrate all the other build systems to it, please consider using it as we might remove our cmake port soon.
+2026-10-28T23:24:31.3681252Z -- Found Python3: /usr/bin/python3.12 (found version "3.12.3") found components: Interpreter
+2026-10-28T23:24:31.3756422Z -- Looking for atexit
+2026-10-28T23:24:31.4478358Z -- Looking for atexit - found
+2026-10-28T23:24:31.4478999Z -- Looking for mprotect
+2026-10-28T23:24:31.5103347Z -- Looking for mprotect - found
+2026-10-28T23:24:31.5103969Z -- Looking for sysconf
+2026-10-28T23:24:31.5724380Z -- Looking for sysconf - found
+2026-10-28T23:24:31.5724974Z -- Looking for getpagesize
+2026-10-28T23:24:31.6345415Z -- Looking for getpagesize - found
+2026-10-28T23:24:31.6346020Z -- Looking for mmap
+2026-10-28T23:24:31.6950906Z -- Looking for mmap - found
+2026-10-28T23:24:31.6951465Z -- Looking for isatty
+2026-10-28T23:24:31.7559425Z -- Looking for isatty - found
+2026-10-28T23:24:31.7563476Z -- Looking for unistd.h
+2026-10-28T23:24:31.8262335Z -- Looking for unistd.h - found
+2026-10-28T23:24:31.8263146Z -- Looking for sys/mman.h
+2026-10-28T23:24:31.8951836Z -- Looking for sys/mman.h - found
+2026-10-28T23:24:31.8952704Z -- Looking for stdbool.h
+2026-10-28T23:24:31.9869020Z -- Looking for stdbool.h - found
+2026-10-28T23:24:32.0025231Z -- Performing Test CXX_SUPPORTS_FLAG_BSYMB_FUNCS
+2026-10-28T23:24:32.0714872Z -- Performing Test CXX_SUPPORTS_FLAG_BSYMB_FUNCS - Success
+2026-10-28T23:24:32.0723503Z -- Performing Test COMPILER_SUPPORTS_CXX11
+2026-10-28T23:24:32.1400105Z -- Performing Test COMPILER_SUPPORTS_CXX11 - Success
+2026-10-28T23:24:32.3635623Z CMake Deprecation Warning at build/_deps/judas_freetype-src/CMakeLists.txt:113 (cmake_minimum_required):
+2026-10-28T23:24:32.3636623Z   Compatibility with CMake < 3.10 will be removed from a future version of
+2026-10-28T23:24:32.3637136Z   CMake.
+2026-10-28T23:24:32.3637279Z 
+2026-10-28T23:24:32.3637619Z   Update the VERSION argument <min> value.  Or, use the <min>...<max> syntax
+2026-10-28T23:24:32.3638372Z   to tell CMake that the project requires at least <min> but has been updated
+2026-10-28T23:24:32.3638991Z   to work with policies introduced by <max> or earlier.
+2026-10-28T23:24:32.3639373Z 
+2026-10-28T23:24:32.3639382Z 
+2026-10-28T23:24:32.4786948Z -- Found PkgConfig: /usr/bin/pkg-config (found version "1.8.1")
+2026-10-28T23:24:32.4791441Z -- Looking for fcntl.h
+2026-10-28T23:24:32.5410794Z -- Looking for fcntl.h - found
+2026-10-28T23:24:32.9384494Z -- Found Python3: /usr/bin/python3.12 (found suitable version "3.12.3", minimum required is "3.11") found components: Interpreter
+2026-10-28T23:24:33.1542836Z -- Configuring done (10.0s)
+2026-10-28T23:24:33.8170766Z -- Generating done (0.7s)
+2026-10-28T23:24:33.8177095Z -- Build files have been written to: /home/runner/work/Project-Judas/Project-Judas/build
+2026-10-28T23:24:33.8867696Z [0/2] Re-checking globbed directories...
+2026-10-28T23:24:33.9022937Z -- GLOB mismatch!
+2026-10-28T23:24:33.9033643Z [1/2] Re-running CMake...
+2026-10-28T23:24:35.7021915Z WARNHarfBuzz has a Meson port and tries to migrate all the other build systems to it, please consider using it as we might remove our cmake port soon.
+2026-10-28T23:24:36.2548228Z -- Found Python3: /usr/bin/python3.12 (found version "3.12.3") found components: Interpreter
+2026-10-28T23:24:36.3062855Z CMake Deprecation Warning at build/_deps/judas_freetype-src/CMakeLists.txt:113 (cmake_minimum_required):
+2026-10-28T23:24:36.3064669Z   Compatibility with CMake < 3.10 will be removed from a future version of
+2026-10-28T23:24:36.3065525Z   CMake.
+2026-10-28T23:24:36.3065752Z 
+2026-10-28T23:24:36.3066413Z   Update the VERSION argument <min> value.  Or, use the <min>...<max> syntax
+2026-10-28T23:24:36.3067894Z   to tell CMake that the project requires at least <min> but has been updated
+2026-10-28T23:24:36.3069167Z   to work with policies introduced by <max> or earlier.
+2026-10-28T23:24:36.3069679Z 
+2026-10-28T23:24:36.3069689Z 
+2026-10-28T23:24:36.7009065Z -- Found Python3: /usr/bin/python3.12 (found suitable version "3.12.3", minimum required is "3.11") found components: Interpreter
+2026-10-28T23:24:36.8830684Z -- Configuring done (3.0s)
+2026-10-28T23:24:37.3927707Z -- Generating done (0.5s)
+2026-10-28T23:24:37.3933955Z -- Build files have been written to: /home/runner/work/Project-Judas/Project-Judas/build
+2026-10-28T23:24:37.4489380Z [0/4] Re-checking globbed directories...
+2026-10-28T23:24:37.4761863Z [1/402] Creating directories for 'judas_icu_build'
+2026-10-28T23:24:37.9201566Z [2/402] Building CXX object CMakeFiles/judas_navigation_backend.dir/third_party/recastnavigation/Detour/Source/DetourAlloc.cpp.o
+2026-10-28T23:24:37.9325392Z [3/402] Building CXX object CMakeFiles/judas_navigation_backend.dir/third_party/recastnavigation/Detour/Source/DetourAssert.cpp.o
+2026-10-28T23:24:37.9644718Z [4/402] Performing download step (verify and extract) for 'judas_icu_build'
+2026-10-28T23:24:37.9645427Z -- verifying file...
+2026-10-28T23:24:37.9646049Z      file='/home/runner/work/Project-Judas/Project-Judas/third_party/text/icu4c-76_1-src.tgz'
+2026-10-28T23:24:37.9646717Z -- verifying file... done
+2026-10-28T23:24:37.9647057Z -- extracting...
+2026-10-28T23:24:37.9647628Z      src='/home/runner/work/Project-Judas/Project-Judas/third_party/text/icu4c-76_1-src.tgz'
+2026-10-28T23:24:37.9648527Z      dst='/home/runner/work/Project-Judas/Project-Judas/build/unicode/build/src/judas_icu_build'
+2026-10-28T23:24:37.9649452Z -- extracting... [tar xfz]
+2026-10-28T23:24:37.9649784Z -- extracting... [analysis]
+2026-10-28T23:24:37.9650117Z -- extracting... [rename]
+2026-10-28T23:24:37.9650445Z -- extracting... [clean up]
+2026-10-28T23:24:37.9650764Z -- extracting... done
+2026-10-28T23:24:37.9687700Z [5/402] No update step for 'judas_icu_build'
+2026-10-28T23:24:37.9728426Z [6/402] No patch step for 'judas_icu_build'
+2026-10-28T23:24:38.8904702Z [7/402] Building CXX object CMakeFiles/judas_navigation_backend.dir/third_party/recastnavigation/Detour/Source/DetourCommon.cpp.o
+2026-10-28T23:24:39.6668589Z [8/402] Building CXX object CMakeFiles/judas_navigation_backend.dir/third_party/recastnavigation/Detour/Source/DetourNavMesh.cpp.o
+2026-10-28T23:24:40.1530528Z [9/402] Building CXX object CMakeFiles/judas_navigation_backend.dir/third_party/recastnavigation/Detour/Source/DetourNavMeshBuilder.cpp.o
+2026-10-28T23:24:41.5177042Z [10/402] Building CXX object CMakeFiles/judas_navigation_backend.dir/third_party/recastnavigation/Detour/Source/DetourNavMeshQuery.cpp.o
+2026-10-28T23:24:41.7665346Z [11/402] Building CXX object CMakeFiles/judas_navigation_backend.dir/third_party/recastnavigation/Detour/Source/DetourNode.cpp.o
+2026-10-28T23:24:42.4053574Z [12/402] Performing configure step for 'judas_icu_build'
+2026-10-28T23:24:42.4536194Z [13/402] Building CXX object CMakeFiles/judas_navigation_backend.dir/third_party/recastnavigation/DetourCrowd/Source/DetourCrowd.cpp.o
+2026-10-28T23:24:42.6568890Z [14/402] Building CXX object CMakeFiles/judas_navigation_backend.dir/third_party/recastnavigation/DetourCrowd/Source/DetourLocalBoundary.cpp.o
+2026-10-28T23:24:43.0774700Z [15/402] Building CXX object CMakeFiles/judas_navigation_backend.dir/third_party/recastnavigation/DetourCrowd/Source/DetourObstacleAvoidance.cpp.o
+2026-10-28T23:24:43.3584772Z [16/402] Building CXX object CMakeFiles/judas_navigation_backend.dir/third_party/recastnavigation/DetourCrowd/Source/DetourPathCorridor.cpp.o
+2026-10-28T23:24:43.5662947Z [17/402] Building CXX object CMakeFiles/judas_navigation_backend.dir/third_party/recastnavigation/DetourCrowd/Source/DetourPathQueue.cpp.o
+2026-10-28T23:24:43.7742980Z [18/402] Building CXX object CMakeFiles/judas_navigation_backend.dir/third_party/recastnavigation/DetourCrowd/Source/DetourProximityGrid.cpp.o
+2026-10-28T23:24:44.1667990Z [19/402] Building CXX object CMakeFiles/judas_navigation_backend.dir/third_party/recastnavigation/DetourTileCache/Source/DetourTileCache.cpp.o
+2026-10-28T23:24:45.2749411Z [20/402] Building CXX object CMakeFiles/judas_navigation_backend.dir/third_party/recastnavigation/DetourTileCache/Source/DetourTileCacheBuilder.cpp.o
+2026-10-28T23:24:47.9744947Z [21/402] Building CXX object CMakeFiles/judas_profiler.dir/src/PerformanceProfiler.cpp.o
+2026-10-28T23:24:52.3603743Z [22/402] Building CXX object CMakeFiles/judas_build_identity.dir/src/BuildIdentity.cpp.o
+2026-10-28T23:25:05.2545717Z [23/402] Building CXX object CMakeFiles/judas_build_identity.dir/src/BuildUpdate.cpp.o
+2026-10-28T23:25:06.9481460Z [24/402] Building CXX object CMakeFiles/judas_build_identity.dir/src/ToolProcess.cpp.o
+2026-10-28T23:25:11.0153756Z [25/402] Building CXX object CMakeFiles/judas_app_icon.dir/src/AppIcon.cpp.o
+2026-10-28T23:25:19.8726431Z [26/402] Building CXX object CMakeFiles/judas_app_icon.dir/src/TextureLoader.cpp.o
+2026-10-28T23:25:21.6139970Z [27/402] Building CXX object CMakeFiles/judas_app_icon.dir/src/CookedTexture.cpp.o
+2026-10-28T23:25:21.6813943Z [28/402] Building CXX object CMakeFiles/judas_meshoptimizer.dir/third_party/meshoptimizer/src/allocator.cpp.o
+2026-10-28T23:25:23.8179035Z [29/402] Building CXX object CMakeFiles/judas_meshoptimizer.dir/third_party/meshoptimizer/src/clusterizer.cpp.o
+2026-10-28T23:25:24.0204323Z [30/402] Building CXX object CMakeFiles/judas_meshoptimizer.dir/third_party/meshoptimizer/src/indexanalyzer.cpp.o
+2026-10-28T23:25:24.4644348Z [31/402] Building CXX object CMakeFiles/judas_meshoptimizer.dir/third_party/meshoptimizer/src/indexcodec.cpp.o
+2026-10-28T23:25:24.9924383Z [32/402] Building CXX object CMakeFiles/judas_meshoptimizer.dir/third_party/meshoptimizer/src/indexgenerator.cpp.o
+2026-10-28T23:25:25.6214303Z [33/402] Building CXX object CMakeFiles/judas_meshoptimizer.dir/third_party/meshoptimizer/src/overdrawoptimizer.cpp.o
+2026-10-28T23:25:26.2873994Z [34/402] Building CXX object CMakeFiles/judas_meshoptimizer.dir/third_party/meshoptimizer/src/partition.cpp.o
+2026-10-28T23:25:26.3384034Z [35/402] Building CXX object CMakeFiles/judas_meshoptimizer.dir/third_party/meshoptimizer/src/quantization.cpp.o
+2026-10-28T23:25:26.5394117Z [36/402] Building CXX object CMakeFiles/judas_meshoptimizer.dir/third_party/meshoptimizer/src/rasterizer.cpp.o
+2026-10-28T23:25:29.7900661Z [37/402] Building CXX object CMakeFiles/judas_meshoptimizer.dir/third_party/meshoptimizer/src/simplifier.cpp.o
+2026-10-28T23:25:30.3153982Z [38/402] Building CXX object CMakeFiles/judas_meshoptimizer.dir/third_party/meshoptimizer/src/spatialorder.cpp.o
+2026-10-28T23:25:30.5334246Z [39/402] Building CXX object CMakeFiles/judas_meshoptimizer.dir/third_party/meshoptimizer/src/stripifier.cpp.o
+2026-10-28T23:25:30.7898828Z [40/402] Building CXX object CMakeFiles/judas_meshoptimizer.dir/third_party/meshoptimizer/src/vcacheoptimizer.cpp.o
+2026-10-28T23:25:32.6863960Z [41/402] Building CXX object CMakeFiles/judas_meshoptimizer.dir/third_party/meshoptimizer/src/vertexcodec.cpp.o
+2026-10-28T23:25:33.7314174Z [42/402] Building CXX object CMakeFiles/judas_meshoptimizer.dir/third_party/meshoptimizer/src/vertexfilter.cpp.o
+2026-10-28T23:25:33.8574059Z [43/402] Building CXX object CMakeFiles/judas_meshoptimizer.dir/third_party/meshoptimizer/src/vfetchoptimizer.cpp.o
+2026-10-28T23:26:23.6374482Z [44/402] Building C object CMakeFiles/judas_quickjs.dir/third_party/quickjs/quickjs.c.o
+2026-10-28T23:26:24.7203697Z [45/402] Building C object CMakeFiles/judas_quickjs.dir/third_party/quickjs/dtoa.c.o
+2026-10-28T23:26:27.7773928Z [46/402] Building C object CMakeFiles/judas_quickjs.dir/third_party/quickjs/libregexp.c.o
+2026-10-28T23:26:29.3863713Z [47/402] Building C object CMakeFiles/judas_quickjs.dir/third_party/quickjs/libunicode.c.o
+2026-10-28T23:26:29.5303711Z [48/402] Linking CXX static library libjudas_navigation_backend.a
+2026-10-28T23:26:32.8886283Z [49/402] Building CXX object CMakeFiles/judas_navigation_cook.dir/src/NavigationGeometryBake.cpp.o
+2026-10-28T23:26:33.6054258Z [50/402] Building CXX object CMakeFiles/judas_navigation_cook.dir/third_party/recastnavigation/Recast/Source/Recast.cpp.o
+2026-10-28T23:26:33.6715693Z [51/402] Building CXX object CMakeFiles/judas_navigation_cook.dir/third_party/recastnavigation/Recast/Source/RecastAlloc.cpp.o
+2026-10-28T23:26:34.7964373Z [52/402] Building CXX object CMakeFiles/judas_navigation_cook.dir/third_party/recastnavigation/Recast/Source/RecastArea.cpp.o
+2026-10-28T23:26:34.8324191Z [53/402] Building CXX object CMakeFiles/judas_navigation_cook.dir/third_party/recastnavigation/Recast/Source/RecastAssert.cpp.o
+2026-10-28T23:26:36.7147857Z [54/402] Building CXX object CMakeFiles/judas_navigation_cook.dir/third_party/recastnavigation/Recast/Source/RecastContour.cpp.o
+2026-10-28T23:26:36.9669385Z [55/402] Building CXX object CMakeFiles/judas_navigation_cook.dir/third_party/recastnavigation/Recast/Source/RecastFilter.cpp.o
+2026-10-28T23:26:37.9124262Z [56/402] Building CXX object CMakeFiles/judas_navigation_cook.dir/third_party/recastnavigation/Recast/Source/RecastLayers.cpp.o
+2026-10-28T23:26:39.8199902Z [57/402] Building CXX object CMakeFiles/judas_navigation_cook.dir/third_party/recastnavigation/Recast/Source/RecastMesh.cpp.o
+2026-10-28T23:26:42.0407089Z [58/402] Building CXX object CMakeFiles/judas_navigation_cook.dir/third_party/recastnavigation/Recast/Source/RecastMeshDetail.cpp.o
+2026-10-28T23:26:42.5284075Z [59/402] Building CXX object CMakeFiles/judas_navigation_cook.dir/third_party/recastnavigation/Recast/Source/RecastRasterization.cpp.o
+2026-10-28T23:26:45.3164167Z [60/402] Building CXX object CMakeFiles/judas_navigation_cook.dir/third_party/recastnavigation/Recast/Source/RecastRegion.cpp.o
+2026-10-28T23:26:45.8736022Z [61/402] Building C object CMakeFiles/judas_glad.dir/third_party/glad/src/gl.c.o
+2026-10-28T23:26:46.0823464Z [62/402] Linking CXX static library libjudas_profiler.a
+2026-10-28T23:26:47.9037324Z [63/402] Building C object CMakeFiles/judas_materials.dir/third_party/mikktspace/mikktspace.c.o
+2026-10-28T23:26:51.4043806Z [64/402] Building CXX object CMakeFiles/judas_jobs.dir/src/JobSystem.cpp.o
+2026-10-28T23:27:17.1850316Z [65/402] Building C object CMakeFiles/judas_audio_backend.dir/src/AudioBackend.c.o
+2026-10-28T23:27:17.5762483Z [66/402] Building C object CMakeFiles/judas_audio_backend.dir/src/ReverbBackend.c.o
+2026-10-28T23:27:24.8972939Z [67/402] Performing build step for 'judas_icu_build'
+2026-10-28T23:27:25.9667822Z [68/402] Performing install step for 'judas_icu_build'
+2026-10-28T23:27:25.9723238Z [69/402] Completed 'judas_icu_build'
+2026-10-28T23:27:27.4164960Z [70/402] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/autofit/autofit.c.o
+2026-10-28T23:27:29.1986052Z [71/402] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/base/ftbase.c.o
+2026-10-28T23:27:29.2779955Z [72/402] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/base/ftbbox.c.o
+2026-10-28T23:27:29.3211396Z [73/402] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/base/ftbdf.c.o
+2026-10-28T23:27:29.6601286Z [74/402] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/base/ftbitmap.c.o
+2026-10-28T23:27:29.7074148Z [75/402] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/base/ftcid.c.o
+2026-10-28T23:27:29.7475059Z [76/402] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/base/ftfstype.c.o
+2026-10-28T23:27:29.7884846Z [77/402] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/base/ftgasp.c.o
+2026-10-28T23:27:29.9361445Z [78/402] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/base/ftglyph.c.o
+2026-10-28T23:27:29.9933739Z [79/402] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/base/ftgxval.c.o
+2026-10-28T23:27:30.0513149Z [80/402] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/base/ftinit.c.o
+2026-10-28T23:27:30.1857704Z [81/402] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/base/ftmm.c.o
+2026-10-28T23:27:30.2263502Z [82/402] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/base/ftotval.c.o
+2026-10-28T23:27:30.2625005Z [83/402] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/base/ftpatent.c.o
+2026-10-28T23:27:30.3128796Z [84/402] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/base/ftpfr.c.o
+2026-10-28T23:27:30.6910007Z [85/402] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/base/ftstroke.c.o
+2026-10-28T23:27:30.7494032Z [86/402] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/base/ftsynth.c.o
+2026-10-28T23:27:30.7968188Z [87/402] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/base/fttype1.c.o
+2026-10-28T23:27:30.8364391Z [88/402] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/base/ftwinfnt.c.o
+2026-10-28T23:27:31.3910864Z [89/402] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/bdf/bdf.c.o
+2026-10-28T23:27:31.4293738Z [90/402] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/bzip2/ftbzip2.c.o
+2026-10-28T23:27:31.8970353Z [91/402] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/cache/ftcache.c.o
+2026-10-28T23:27:32.9245046Z [92/402] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/cff/cff.c.o
+2026-10-28T23:27:33.2328941Z [93/402] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/cid/type1cid.c.o
+2026-10-28T23:27:34.0364650Z [94/402] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/gzip/ftgzip.c.o
+2026-10-28T23:27:34.1680784Z [95/402] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/lzw/ftlzw.c.o
+2026-10-28T23:27:34.5438336Z [96/402] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/pcf/pcf.c.o
+2026-10-28T23:27:35.0644992Z [97/402] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/pfr/pfr.c.o
+2026-10-28T23:27:37.1101725Z [98/402] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/psaux/psaux.c.o
+2026-10-28T23:27:37.7998912Z [99/402] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/pshinter/pshinter.c.o
+2026-10-28T23:27:37.9785321Z [100/402] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/psnames/psnames.c.o
+2026-10-28T23:27:38.3656183Z [101/402] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/raster/raster.c.o
+2026-10-28T23:27:39.0083046Z [102/402] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/sdf/sdf.c.o
+2026-10-28T23:27:40.8855161Z [103/402] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/sfnt/sfnt.c.o
+2026-10-28T23:27:41.1937899Z [104/402] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/smooth/smooth.c.o
+2026-10-28T23:27:41.2568030Z [105/402] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/svg/svg.c.o
+2026-10-28T23:27:43.4324679Z [106/402] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/truetype/truetype.c.o
+2026-10-28T23:27:44.1727798Z [107/402] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/type1/type1.c.o
+2026-10-28T23:27:44.4454180Z [108/402] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/type42/type42.c.o
+2026-10-28T23:27:44.6070950Z [109/402] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/winfonts/winfnt.c.o
+2026-10-28T23:27:44.6693770Z [110/402] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/builds/unix/ftsystem.c.o
+2026-10-28T23:27:44.7082802Z [111/402] Building C object _deps/judas_freetype-build/CMakeFiles/freetype.dir/src/base/ftdebug.c.o
+2026-10-28T23:27:44.8030999Z [112/402] Linking CXX static library libjudas_build_identity.a
+2026-10-28T23:27:44.8958014Z [113/402] Linking CXX static library libjudas_app_icon.a
+2026-10-28T23:27:44.9975970Z [114/402] Linking CXX static library libjudas_meshoptimizer.a
+2026-10-28T23:27:45.0959308Z [115/402] Linking C static library libjudas_quickjs.a
+2026-10-28T23:27:45.1921495Z [116/402] Linking CXX static library libjudas_navigation_cook.a
+2026-10-28T23:27:45.2801549Z [117/402] Linking C static library libjudas_glad.a
+2026-10-28T23:27:45.3676509Z [118/402] Linking CXX static library libjudas_materials.a
+2026-10-28T23:27:45.4569107Z [119/402] Linking CXX static library libjudas_jobs.a
+2026-10-28T23:27:45.5491411Z [120/402] Linking C static library libjudas_audio_backend.a
+2026-10-28T23:27:56.0006911Z [121/402] Building CXX object CMakeFiles/judas_engine.dir/src/NetworkSession.cpp.o
+2026-10-28T23:27:57.8010976Z [122/402] Building CXX object _deps/judas_harfbuzz-build/CMakeFiles/harfbuzz.dir/src/harfbuzz.cc.o
+2026-10-28T23:27:57.8086865Z [123/402] Building CXX object CMakeFiles/judas_engine.dir/src/NetworkTransport.cpp.o
+2026-10-28T23:27:58.8553883Z [124/402] Building CXX object CMakeFiles/judas_engine.dir/src/Wheel.cpp.o
+2026-10-28T23:28:00.2891211Z [125/402] Building CXX object CMakeFiles/judas_engine.dir/src/WorldWheels.cpp.o
+2026-10-28T23:28:01.5457414Z [126/402] Building CXX object CMakeFiles/judas_engine.dir/src/Powertrain.cpp.o
+2026-10-28T23:28:05.4129648Z [127/402] Building CXX object CMakeFiles/judas_engine.dir/src/WorldPowertrains.cpp.o
+2026-10-28T23:28:07.2403926Z [128/402] Building CXX object CMakeFiles/judas_engine.dir/src/PowertrainAuthoring.cpp.o
+2026-10-28T23:28:09.7490836Z [129/402] Building CXX object CMakeFiles/judas_engine.dir/src/modding/ContentStorage.cpp.o
+2026-10-28T23:28:16.0772899Z [130/402] Building CXX object CMakeFiles/judas_engine.dir/src/modding/ModStore.cpp.o
+2026-10-28T23:28:17.1167488Z [131/402] Building CXX object CMakeFiles/judas_engine.dir/src/modding/ModContent.cpp.o
+2026-10-28T23:28:23.0717034Z [132/402] Building CXX object CMakeFiles/judas_engine.dir/src/WorldFracture.cpp.o
+2026-10-28T23:28:24.1212980Z [133/402] Building CXX object CMakeFiles/judas_engine.dir/src/modding/ModRuntime.cpp.o
+2026-10-28T23:28:27.0239096Z [134/402] Building CXX object CMakeFiles/judas_engine.dir/src/Fracture.cpp.o
+2026-10-28T23:28:30.3791134Z [135/402] Building CXX object CMakeFiles/judas_engine.dir/src/DeformableAsset.cpp.o
+2026-10-28T23:28:31.7975727Z [136/402] Building CXX object CMakeFiles/judas_engine.dir/src/Deformable.cpp.o
+2026-10-28T23:28:33.8958832Z [137/402] Building CXX object CMakeFiles/judas_engine.dir/src/TextLayout.cpp.o
+2026-10-28T23:28:33.9841057Z [138/402] Building CXX object CMakeFiles/judas_engine.dir/src/WorldDeformables.cpp.o
+2026-10-28T23:28:34.3041956Z [139/402] Building CXX object CMakeFiles/judas_engine.dir/src/TextEditing.cpp.o
+2026-10-28T23:28:38.1941240Z [140/402] Building CXX object CMakeFiles/judas_engine.dir/src/Localization.cpp.o
+2026-10-28T23:28:39.7289249Z [141/402] Building CXX object CMakeFiles/judas_engine.dir/src/Environment.cpp.o
+2026-10-28T23:28:40.5174268Z [142/402] Building CXX object CMakeFiles/judas_engine.dir/src/Tangents.cpp.o
+2026-10-28T23:28:40.9958679Z [143/402] Building CXX object CMakeFiles/judas_engine.dir/src/Material.cpp.o
+2026-10-28T23:28:43.9420991Z [144/402] Building CXX object CMakeFiles/judas_engine.dir/src/LiquidTypes.cpp.o
+2026-10-28T23:28:44.2848320Z [145/402] Building CXX object CMakeFiles/judas_engine.dir/src/LiquidGeometry.cpp.o
+2026-10-28T23:28:49.8254133Z [146/402] Building CXX object CMakeFiles/judas_engine.dir/src/LiquidSurface.cpp.o
+2026-10-28T23:28:51.2443821Z [147/402] Building CXX object CMakeFiles/judas_engine.dir/src/LiquidSystem.cpp.o
+2026-10-28T23:28:55.1345221Z [148/402] Building CXX object CMakeFiles/judas_engine.dir/src/RuntimeTerrain.cpp.o
+2026-10-28T23:28:56.1731882Z [149/402] Building CXX object CMakeFiles/judas_engine.dir/src/VolumeTerrainGeometry.cpp.o
+2026-10-28T23:28:59.0963713Z [150/402] Building CXX object CMakeFiles/judas_engine.dir/src/NavigationTypes.cpp.o
+2026-10-28T23:29:02.7896609Z [151/402] Building CXX object CMakeFiles/judas_engine.dir/src/NavigationSystem.cpp.o
+2026-10-28T23:29:04.6978925Z [152/402] Building CXX object CMakeFiles/judas_engine.dir/src/NavigationAsset.cpp.o
+2026-10-28T23:29:09.8925912Z [153/402] Building CXX object CMakeFiles/judas_engine.dir/src/PhysicalAnimation.cpp.o
+2026-10-28T23:29:11.5620081Z [154/402] Building CXX object CMakeFiles/judas_engine.dir/src/FullBodyIK.cpp.o
+2026-10-28T23:29:13.4954622Z [155/402] Building CXX object CMakeFiles/judas_engine.dir/src/PhysicalBalanceCapture.cpp.o
+2026-10-28T23:29:14.2249825Z [156/402] Building CXX object CMakeFiles/judas_engine.dir/src/PhysicalBalanceGetUp.cpp.o
+2026-10-28T23:29:17.3118710Z [157/402] Building CXX object CMakeFiles/judas_engine.dir/src/PhysicalBalance.cpp.o
+2026-10-28T23:29:17.3245747Z [158/402] Building CXX object CMakeFiles/judas_engine.dir/src/WorldPhysicalBalance.cpp.o
+2026-10-28T23:29:18.8731437Z [159/402] Building CXX object CMakeFiles/judas_engine.dir/src/PoseComposition.cpp.o
+2026-10-28T23:29:22.8969268Z [160/402] Building CXX object CMakeFiles/judas_engine.dir/src/WorldAnimation.cpp.o
+2026-10-28T23:29:24.8825920Z [161/402] Building CXX object CMakeFiles/judas_engine.dir/src/WorldRagdoll.cpp.o
+2026-10-28T23:29:27.4962474Z [162/402] Building CXX object CMakeFiles/judas_engine.dir/src/WorldCharacter.cpp.o
+2026-10-28T23:29:29.2767973Z [163/402] Building CXX object CMakeFiles/judas_engine.dir/src/GltfLoader.cpp.o
+2026-10-28T23:29:29.7814849Z [164/402] Building CXX object CMakeFiles/judas_engine.dir/src/WorldGravity.cpp.o
+2026-10-28T23:29:39.1768540Z [165/402] Building CXX object CMakeFiles/judas_engine.dir/src/WorldRegions.cpp.o
+2026-10-28T23:29:45.6539962Z [166/402] Building CXX object CMakeFiles/judas_engine.dir/src/WorldStreaming.cpp.o
+2026-10-28T23:29:47.4469531Z [167/402] Building CXX object CMakeFiles/judas_engine.dir/src/WorldScripts.cpp.o
+2026-10-28T23:29:50.7506520Z [168/402] Building CXX object CMakeFiles/judas_engine.dir/src/RuntimeUI.cpp.o
+2026-10-28T23:29:54.5161269Z [169/402] Building CXX object CMakeFiles/judas_engine.dir/src/RuntimeUIControls.cpp.o
+2026-10-28T23:30:02.7393335Z [170/402] Building CXX object CMakeFiles/judas_engine.dir/src/ScriptBindingsUI.cpp.o
+2026-10-28T23:30:05.6813252Z [171/402] Building CXX object CMakeFiles/judas_engine.dir/src/ScriptBindingsJoint.cpp.o
+2026-10-28T23:30:07.5695544Z [172/402] Building CXX object CMakeFiles/judas_engine.dir/src/Classification.cpp.o
+2026-10-28T23:30:08.3544130Z [173/402] Building CXX object CMakeFiles/judas_engine.dir/src/GamePackage.cpp.o
+2026-10-28T23:30:19.2854893Z [174/402] Building CXX object CMakeFiles/judas_engine.dir/src/ProjectExporter.cpp.o
+2026-10-28T23:30:24.4845178Z [175/402] Building CXX object CMakeFiles/judas_engine.dir/src/ScriptSystem.cpp.o
+2026-10-28T23:30:24.5654206Z [176/402] Building CXX object CMakeFiles/judas_engine.dir/src/AssetDependencies.cpp.o
+2026-10-28T23:30:25.5326092Z [177/402] Building CXX object CMakeFiles/judas_engine.dir/src/AudioEnvironment.cpp.o
+2026-10-28T23:30:25.6970586Z [178/402] Building CXX object CMakeFiles/judas_engine.dir/src/AudioStream.cpp.o
+2026-10-28T23:30:26.2815521Z [179/402] Building CXX object CMakeFiles/judas_engine.dir/src/AudioData.cpp.o
+2026-10-28T23:30:28.1209232Z [180/402] Building CXX object CMakeFiles/judas_engine.dir/src/AudioSystem.cpp.o
+2026-10-28T23:30:30.1747990Z [181/402] Building CXX object CMakeFiles/judas_engine.dir/src/WorldAudio.cpp.o
+2026-10-28T23:30:30.8415558Z [182/402] Building CXX object CMakeFiles/judas_engine.dir/src/Window.cpp.o
+2026-10-28T23:30:31.4950774Z [183/402] Building CXX object CMakeFiles/judas_engine.dir/src/InputDeviceHub.cpp.o
+2026-10-28T23:30:33.9906780Z [184/402] Building CXX object CMakeFiles/judas_engine.dir/src/LocalMultiplayer.cpp.o
+2026-10-28T23:30:37.7349099Z [185/402] Building CXX object CMakeFiles/judas_engine.dir/src/InputSystem.cpp.o
+2026-10-28T23:30:39.1116695Z [186/402] Building CXX object CMakeFiles/judas_engine.dir/src/RenderLightGrid.cpp.o
+2026-10-28T23:30:41.2822824Z [187/402] Building CXX object CMakeFiles/judas_engine.dir/src/SkeletalAnimation.cpp.o
+2026-10-28T23:30:41.5896398Z [188/402] Building CXX object CMakeFiles/judas_engine.dir/src/Renderer.cpp.o
+2026-10-28T23:30:42.3338118Z [189/402] Building CXX object CMakeFiles/judas_engine.dir/src/CharacterMotor.cpp.o
+2026-10-28T23:30:42.6639773Z [190/402] Building CXX object CMakeFiles/judas_engine.dir/src/PlayerView.cpp.o
+2026-10-28T23:30:43.2183179Z [191/402] Building CXX object CMakeFiles/judas_engine.dir/src/PlayerController.cpp.o
+2026-10-28T23:30:43.3871546Z [192/402] Building CXX object CMakeFiles/judas_engine.dir/src/StepClimb.cpp.o
+2026-10-28T23:30:43.9520877Z [193/402] Building CXX object CMakeFiles/judas_engine.dir/src/DynamicBody.cpp.o
+2026-10-28T23:30:44.6448100Z [194/402] Building CXX object CMakeFiles/judas_engine.dir/src/PilotAttachment.cpp.o
+2026-10-28T23:30:44.8073053Z [195/402] Building CXX object CMakeFiles/judas_engine.dir/src/FlyingPrimitiveControl.cpp.o
+2026-10-28T23:30:45.1718693Z [196/402] Building CXX object CMakeFiles/judas_engine.dir/src/ReferenceFrame.cpp.o
+2026-10-28T23:30:45.3139772Z [197/402] Building CXX object CMakeFiles/judas_engine.dir/src/PilotControl.cpp.o
+2026-10-28T23:30:46.7999155Z [198/402] Building CXX object CMakeFiles/judas_engine.dir/src/CollisionAuthoring.cpp.o
+2026-10-28T23:30:47.4781278Z [199/402] Building CXX object CMakeFiles/judas_engine.dir/src/CollisionSource.cpp.o
+2026-10-28T23:30:57.0536071Z [200/402] Building CXX object CMakeFiles/judas_engine.dir/src/ModelLoader.cpp.o
+2026-10-28T23:30:59.1926906Z [201/402] Building CXX object CMakeFiles/judas_engine.dir/src/ModelArchive.cpp.o
+2026-10-28T23:31:01.3661074Z [202/402] Building CXX object CMakeFiles/judas_engine.dir/src/FontLoader.cpp.o
+2026-10-28T23:31:02.2793860Z [203/402] Building CXX object CMakeFiles/judas_engine.dir/src/UIWidgets.cpp.o
+2026-10-28T23:31:03.3175686Z [204/402] Building CXX object CMakeFiles/judas_engine.dir/src/PauseMenu.cpp.o
+2026-10-28T23:31:04.2755796Z [205/402] Building CXX object CMakeFiles/judas_engine.dir/src/HUD.cpp.o
+2026-10-28T23:31:04.6029701Z [206/402] Building CXX object CMakeFiles/judas_engine.dir/src/LightTransforms.cpp.o
+2026-10-28T23:31:04.7929370Z [207/402] Building CXX object CMakeFiles/judas_engine.dir/src/LightAttenuation.cpp.o
+2026-10-28T23:31:05.2045287Z [208/402] Building CXX object CMakeFiles/judas_engine.dir/src/ShadowTransforms.cpp.o
+2026-10-28T23:31:05.5245079Z [209/402] Building CXX object CMakeFiles/judas_engine.dir/src/HingeTransform.cpp.o
+2026-10-28T23:31:05.9790391Z [210/402] Building CXX object CMakeFiles/judas_engine.dir/src/InteractionSystem.cpp.o
+2026-10-28T23:31:06.8062706Z [211/402] Building CXX object CMakeFiles/judas_engine.dir/src/ObjectManipulation.cpp.o
+2026-10-28T23:31:07.7178744Z [212/402] Building CXX object CMakeFiles/judas_engine.dir/src/AssetCook.cpp.o
+2026-10-28T23:31:09.9805594Z [213/402] Building CXX object CMakeFiles/judas_engine.dir/src/FluidWorld.cpp.o
+2026-10-28T23:31:11.7891898Z [214/402] Building CXX object CMakeFiles/judas_engine.dir/src/ProductionFluidCoupling.cpp.o
+2026-10-28T23:31:12.2738233Z [215/402] Building CXX object CMakeFiles/judas_engine.dir/src/FluidHydrostatics.cpp.o
+2026-10-28T23:31:12.8024469Z [216/402] Building CXX object CMakeFiles/judas_engine.dir/src/FluidSurface.cpp.o
+2026-10-28T23:31:13.2894956Z [217/402] Building CXX object CMakeFiles/judas_engine.dir/src/FirePresentation.cpp.o
+2026-10-28T23:31:13.3714598Z [218/402] Building CXX object CMakeFiles/judas_engine.dir/src/CombustionWorld.cpp.o
+2026-10-28T23:31:14.0079036Z [219/402] Building CXX object CMakeFiles/judas_engine.dir/src/TerrainDemo.cpp.o
+2026-10-28T23:31:14.0632616Z [220/402] Building CXX object CMakeFiles/judas_engine.dir/src/TerrainLibrary.cpp.o
+2026-10-28T23:31:14.9329289Z [221/402] Building CXX object CMakeFiles/judas_engine.dir/src/Door.cpp.o
+2026-10-28T23:31:14.9479271Z [222/402] Building CXX object CMakeFiles/judas_engine.dir/src/LightSwitch.cpp.o
+2026-10-28T23:31:15.2174057Z [223/402] Building CXX object CMakeFiles/judas_engine.dir/src/FaithfulGravity.cpp.o
+2026-10-28T23:31:15.2376129Z [224/402] Building CXX object CMakeFiles/judas_engine.dir/src/RadicalGravity.cpp.o
+2026-10-28T23:31:15.5047225Z [225/402] Building CXX object CMakeFiles/judas_engine.dir/src/SphericalVolume.cpp.o
+2026-10-28T23:31:15.5224277Z [226/402] Building CXX object CMakeFiles/judas_engine.dir/src/BoxVolume.cpp.o
+2026-10-28T23:31:15.9071924Z [227/402] Building CXX object CMakeFiles/judas_engine.dir/src/GravityContextMap.cpp.o
+2026-10-28T23:31:16.2189221Z [228/402] Building CXX object CMakeFiles/judas_engine.dir/src/CelestialGravity.cpp.o
+2026-10-28T23:31:16.5890446Z [229/402] Building CXX object CMakeFiles/judas_engine.dir/src/AtmosphereField.cpp.o
+2026-10-28T23:31:16.9204544Z [230/402] Building CXX object CMakeFiles/judas_engine.dir/src/AerodynamicDrag.cpp.o
+2026-10-28T23:31:17.4227851Z [231/402] Building CXX object CMakeFiles/judas_engine.dir/src/VisualParticles.cpp.o
+2026-10-28T23:31:21.6523107Z [232/402] Building CXX object CMakeFiles/judas_engine.dir/src/Scene.cpp.o
+2026-10-28T23:31:22.6043338Z [233/402] Building CXX object CMakeFiles/judas_engine.dir/src/Ragdoll.cpp.o
+2026-10-28T23:31:24.3461877Z [234/402] Building CXX object CMakeFiles/judas_engine.dir/src/Prefab.cpp.o
+2026-10-28T23:31:35.5485852Z [235/402] Building CXX object CMakeFiles/judas_engine.dir/src/NamedAuthoring.cpp.o
+2026-10-28T23:31:40.5985878Z [236/402] Building CXX object CMakeFiles/judas_engine.dir/src/SceneSerialization.cpp.o
+2026-10-28T23:31:42.9262902Z [237/402] Building CXX object CMakeFiles/judas_engine.dir/src/SceneFingerprint.cpp.o
+2026-10-28T23:31:45.0547768Z [238/402] Building CXX object CMakeFiles/judas_engine.dir/src/ProjectStarter.cpp.o
+2026-10-28T23:31:46.6517747Z [239/402] Building CXX object CMakeFiles/judas_engine.dir/src/Project.cpp.o
+2026-10-28T23:31:47.5734400Z [240/402] Building CXX object CMakeFiles/judas_engine.dir/src/AsyncFile.cpp.o
+2026-10-28T23:31:51.7982555Z [241/402] Building CXX object CMakeFiles/judas_engine.dir/src/AssetDatabase.cpp.o
+2026-10-28T23:31:52.1817296Z [242/402] Building CXX object CMakeFiles/judas_engine.dir/src/ResourceManager.cpp.o
+2026-10-28T23:31:52.6295476Z [243/402] Building CXX object CMakeFiles/judas_engine.dir/src/EnginePaths.cpp.o
+2026-10-28T23:31:52.8023831Z [244/402] Building CXX object CMakeFiles/judas_engine.dir/src/DebugDraw.cpp.o
+2026-10-28T23:31:55.7727080Z [245/402] Building CXX object CMakeFiles/judas_engine.dir/src/WorldDebugView.cpp.o
+2026-10-28T23:31:58.6776969Z [246/402] Building CXX object CMakeFiles/judas_engine.dir/src/SceneSession.cpp.o
+2026-10-28T23:32:01.5620133Z [247/402] Building CXX object CMakeFiles/judas_engine.dir/src/PlanetTiles.cpp.o
+2026-10-28T23:32:02.4499720Z [248/402] Building CXX object CMakeFiles/judas_engine.dir/src/PlanetTerrain.cpp.o
+2026-10-28T23:32:03.8984956Z [249/402] Building CXX object CMakeFiles/judas_engine.dir/src/WorldPlanets.cpp.o
+2026-10-28T23:32:08.5798811Z [250/402] Building CXX object CMakeFiles/judas_engine.dir/src/Weather.cpp.o
+2026-10-28T23:32:11.5135269Z [251/402] Building CXX object CMakeFiles/judas_engine.dir/src/WorldOrigin.cpp.o
+2026-10-28T23:32:12.6278757Z [252/402] Building CXX object CMakeFiles/judas_engine.dir/src/WorldWeather.cpp.o
+2026-10-28T23:32:16.5835208Z [253/402] Building CXX object CMakeFiles/judas_engine.dir/src/GameSession.cpp.o
+2026-10-28T23:32:20.1888705Z [254/402] Building CXX object CMakeFiles/judas_engine.dir/src/Simulation.cpp.o
+2026-10-28T23:32:24.9915187Z [255/402] Building CXX object CMakeFiles/judas_engine.dir/src/BasicWater.cpp.o
+2026-10-28T23:32:26.7307096Z [256/402] Building CXX object CMakeFiles/judas_engine.dir/src/RuntimeWorld.cpp.o
+2026-10-28T23:32:27.3969775Z [257/402] Building CXX object CMakeFiles/judas_engine.dir/src/WorldWater.cpp.o
+2026-10-28T23:32:29.8308804Z [258/402] Building CXX object CMakeFiles/judas_engine.dir/src/GameplayHud.cpp.o
+2026-10-28T23:32:31.6230500Z [259/402] Building CXX object CMakeFiles/judas_engine.dir/src/WorldPresentation.cpp.o
+2026-10-28T23:32:32.9029022Z [260/402] Building CXX object CMakeFiles/judas_engine.dir/src/EngineHost.cpp.o
+2026-10-28T23:32:35.2197787Z [261/402] Building CXX object CMakeFiles/judas_engine.dir/src/InteractivePlay.cpp.o
+2026-10-28T23:32:35.7520497Z [262/402] Building CXX object CMakeFiles/judas_engine.dir/src/ScreenshotWriter.cpp.o
+2026-10-28T23:32:36.3118224Z [263/402] Building CXX object CMakeFiles/judas_engine.dir/src/FidelityPolicy.cpp.o
+2026-10-28T23:32:37.9783509Z [264/402] Building CXX object CMakeFiles/judas_engine.dir/src/CoarseSimulation.cpp.o
+2026-10-28T23:32:41.1129405Z [265/402] Building CXX object CMakeFiles/judas_engine.dir/src/SaveStorage.cpp.o
+2026-10-28T23:32:41.1239164Z [266/402] Building CXX object CMakeFiles/judas_engine.dir/src/SaveStorageWindows.cpp.o
+2026-10-28T23:32:41.9941377Z [267/402] Building CXX object CMakeFiles/judas_engine.dir/src/PlatformServices.cpp.o
+2026-10-28T23:32:44.8862001Z [268/402] Building CXX object CMakeFiles/judas_engine.dir/src/WorldState.cpp.o
+2026-10-28T23:32:50.8580547Z [269/402] Building CXX object CMakeFiles/judas_engine.dir/src/SaveEvolution.cpp.o
+2026-10-28T23:32:51.6522793Z [270/402] Building CXX object CMakeFiles/judas_engine.dir/src/MotorPersistence.cpp.o
+2026-10-28T23:32:54.4463552Z [271/402] Building CXX object CMakeFiles/judas_engine.dir/src/SaveService.cpp.o
+2026-10-28T23:32:55.7683602Z [272/402] Building CXX object CMakeFiles/judas_engine.dir/src/LiquidPersistence.cpp.o
+2026-10-28T23:32:59.8093809Z [273/402] Building CXX object CMakeFiles/judas_engine.dir/src/CollisionAsset.cpp.o
+2026-10-28T23:33:04.2389932Z [274/402] Building CXX object CMakeFiles/judas_engine.dir/src/CollisionGeometry.cpp.o
+2026-10-28T23:33:06.9441029Z [275/402] Building CXX object CMakeFiles/judas_engine.dir/src/WorldPersistence.cpp.o
+2026-10-28T23:33:06.9505684Z [276/402] Building CXX object CMakeFiles/judas_engine.dir/third_party/quickhull/QuickHull.cpp.o
+2026-10-28T23:33:08.0211850Z [277/402] Building CXX object CMakeFiles/judas_engine.dir/src/JointSolver.cpp.o
+2026-10-28T23:33:08.5042922Z [278/402] Building CXX object CMakeFiles/judas_engine.dir/src/PhysicsCastGeometry.cpp.o
+2026-10-28T23:33:09.1247492Z [279/402] Building CXX object CMakeFiles/judas_engine.dir/src/ImpactSolver.cpp.o
+2026-10-28T23:33:09.3249827Z [280/402] Building CXX object CMakeFiles/judas_engine.dir/src/RigidBody.cpp.o
+2026-10-28T23:33:09.6460030Z [281/402] Building CXX object CMakeFiles/judas_engine.dir/src/RigidBodyGravity.cpp.o
+2026-10-28T23:33:10.0039751Z [282/402] Building CXX object CMakeFiles/judas_engine.dir/src/RigidRotation.cpp.o
+2026-10-28T23:33:11.7168137Z [283/402] Building CXX object CMakeFiles/judas_engine.dir/src/ContactSolver.cpp.o
+2026-10-28T23:33:12.6769552Z [284/402] Building CXX object CMakeFiles/judas_engine.dir/src/Contacts.cpp.o
+2026-10-28T23:33:12.7048425Z [285/402] Building CXX object CMakeFiles/judas_engine.dir/src/RadialTerrain.cpp.o
+2026-10-28T23:33:13.3331199Z [286/402] Building CXX object CMakeFiles/judas_engine.dir/src/Broadphase.cpp.o
+2026-10-28T23:33:15.8087611Z [287/402] Building CXX object CMakeFiles/judas_engine.dir/src/Narrowphase.cpp.o
+2026-10-28T23:33:16.8621098Z [288/402] Building CXX object CMakeFiles/judas_engine.dir/src/PhysicsWorld.cpp.o
+2026-10-28T23:33:19.1904574Z [289/402] Building CXX object CMakeFiles/judas_engine.dir/src/physics/WorldBounds.cpp.o
+2026-10-28T23:33:19.3795023Z [290/402] Building CXX object CMakeFiles/judas_engine.dir/src/physics/WorldBodies.cpp.o
+2026-10-28T23:33:21.5727407Z [291/402] Building CXX object CMakeFiles/judas_engine.dir/src/physics/WorldContacts.cpp.o
+2026-10-28T23:33:22.7098995Z [292/402] Building CXX object CMakeFiles/judas_engine.dir/src/physics/WorldCCDSearch.cpp.o
+2026-10-28T23:33:24.4840431Z [293/402] Building CXX object CMakeFiles/judas_engine.dir/src/physics/WorldJoints.cpp.o
+2026-10-28T23:33:27.7148963Z [294/402] Building CXX object CMakeFiles/judas_engine.dir/src/physics/WorldParticles.cpp.o
+2026-10-28T23:33:28.9706493Z [295/402] Building CXX object CMakeFiles/judas_engine.dir/src/physics/WorldMk2Solver.cpp.o
+2026-10-28T23:33:31.2679856Z [296/402] Building CXX object CMakeFiles/judas_engine.dir/src/physics/WorldPersistence.cpp.o
+2026-10-28T23:33:31.9043130Z [297/402] Building CXX object CMakeFiles/judas_engine.dir/src/physics/WorldQueries.cpp.o
+2026-10-28T23:33:32.0038984Z [298/402] Linking C static library _deps/judas_harfbuzz-build/libharfbuzz.a
+2026-10-28T23:33:32.1242719Z [299/402] Linking C static library _deps/judas_freetype-build/libfreetype.a
+2026-10-28T23:33:33.2813334Z [300/402] Building CXX object CMakeFiles/judas_navigation_baker.dir/src/NavigationBake.cpp.o
+2026-10-28T23:33:33.4917546Z [301/402] Building CXX object CMakeFiles/judas_engine.dir/src/physics/WorldSleep.cpp.o
+2026-10-28T23:33:33.8484163Z [302/402] Linking CXX static library libjudas_engine.a
+2026-10-28T23:33:33.9355482Z [303/402] Linking CXX static library libjudas_navigation_baker.a
+2026-10-28T23:33:42.0992673Z [304/402] Building CXX object CMakeFiles/judas_imgui.dir/third_party/imgui/imgui.cpp.o
+2026-10-28T23:33:43.2117808Z [305/402] Building C object CMakeFiles/judas_ufbx.dir/third_party/ufbx/ufbx.c.o
+2026-10-28T23:33:45.5601490Z [306/402] Building CXX object CMakeFiles/judas_imgui.dir/third_party/imgui/imgui_tables.cpp.o
+2026-10-28T23:33:46.3019122Z [307/402] Building CXX object CMakeFiles/judas_imgui.dir/third_party/imgui/imgui_draw.cpp.o
+2026-10-28T23:33:47.2016244Z [308/402] Building CXX object CMakeFiles/judas_imgui.dir/third_party/imgui/backends/imgui_impl_sdl2.cpp.o
+2026-10-28T23:33:47.4252704Z [309/402] Building CXX object CMakeFiles/judas_imgui.dir/third_party/imgui/backends/imgui_impl_opengl3.cpp.o
+2026-10-28T23:33:47.5157411Z [310/402] Linking C static library libjudas_ufbx.a
+2026-10-28T23:33:51.2116644Z [311/402] Building CXX object CMakeFiles/judas_imgui.dir/third_party/imgui/imgui_widgets.cpp.o
+2026-10-28T23:33:52.7582952Z [312/402] Building CXX object CMakeFiles/judas_model_import.dir/src/FbxImport.cpp.o
+2026-10-28T23:33:54.5555525Z [313/402] Building CXX object CMakeFiles/judas_model_import.dir/src/ObjImport.cpp.o
+2026-10-28T23:34:00.4250673Z [314/402] Building CXX object CMakeFiles/judas_model_import.dir/src/ModelCollision.cpp.o
+2026-10-28T23:34:07.0280703Z [315/402] Building CXX object CMakeFiles/judas_model_import.dir/src/ModelCook.cpp.o
+2026-10-28T23:34:08.5677588Z [316/402] Building CXX object CMakeFiles/judas_model_import.dir/src/AnimationRetarget.cpp.o
+2026-10-28T23:34:12.3140476Z [317/402] Building CXX object CMakeFiles/judas_model_import.dir/src/authoring/AnimationEventAuthoring.cpp.o
+2026-10-28T23:34:14.7752834Z [318/402] Building CXX object CMakeFiles/judas_world_authoring.dir/src/authoring/NavigationDependencies.cpp.o
+2026-10-28T23:34:14.9645381Z [319/402] Building CXX object CMakeFiles/judas_world_authoring.dir/src/authoring/ContentReferences.cpp.o
+2026-10-28T23:34:19.8177051Z [320/402] Building CXX object CMakeFiles/judas_world_authoring.dir/src/authoring/AuthoringDocument.cpp.o
+2026-10-28T23:34:21.3515350Z [321/402] Building CXX object CMakeFiles/judas_world_authoring.dir/src/authoring/SkeletonAuthoring.cpp.o
+2026-10-28T23:34:25.9529374Z [322/402] Building CXX object CMakeFiles/judas_world_authoring.dir/src/authoring/RecipePreview.cpp.o
+2026-10-28T23:34:26.6219862Z [323/402] Building CXX object CMakeFiles/judas_world_authoring.dir/src/authoring/WorldBuilder.cpp.o
+2026-10-28T23:34:30.9954921Z [324/402] Building CXX object CMakeFiles/judas_world_authoring.dir/src/authoring/VolumeTerrain.cpp.o
+2026-10-28T23:34:34.4907002Z [325/402] Building CXX object CMakeFiles/judas_world_authoring.dir/src/authoring/TerrainAuthoring.cpp.o
+2026-10-28T23:34:35.0790519Z [326/402] Building CXX object CMakeFiles/judas.dir/src/main.cpp.o
+2026-10-28T23:34:41.6295064Z [327/402] Building CXX object CMakeFiles/judas.dir/src/Application.cpp.o
+2026-10-28T23:34:42.4778244Z [328/402] Building CXX object CMakeFiles/judas_world_authoring.dir/src/authoring/ModAuthoring.cpp.o
+2026-10-28T23:34:44.0015362Z [329/402] Building CXX object CMakeFiles/judas.dir/src/RuntimeOptions.cpp.o
+2026-10-28T23:34:44.8135180Z [330/402] Building CXX object CMakeFiles/judas.dir/src/RuntimeDiagnostics.cpp.o
+2026-10-28T23:34:44.9136734Z [331/402] Linking CXX static library libjudas_imgui.a
+2026-10-28T23:34:47.0973532Z [332/402] Building CXX object CMakeFiles/judas_editor.dir/src/editor/EditorMain.cpp.o
+2026-10-28T23:34:48.3899716Z [333/402] Building CXX object CMakeFiles/judas.dir/src/TestHarness.cpp.o
+2026-10-28T23:34:49.2861788Z [334/402] Building CXX object CMakeFiles/judas_editor.dir/src/editor/EditorMilestoneNotice.cpp.o
+2026-10-28T23:34:53.3445885Z [335/402] Building CXX object CMakeFiles/judas_editor.dir/src/editor/ScriptTools.cpp.o
+2026-10-28T23:34:54.7174985Z [336/402] Building CXX object CMakeFiles/judas_editor.dir/src/editor/EditorCamera.cpp.o
+2026-10-28T23:34:58.4644673Z [337/402] Building CXX object CMakeFiles/judas_editor.dir/src/editor/EditorPicking.cpp.o
+2026-10-28T23:35:06.8654554Z [338/402] Building CXX object CMakeFiles/judas_editor.dir/src/editor/EditorHistory.cpp.o
+2026-10-28T23:35:09.5405589Z [339/402] Building CXX object CMakeFiles/judas_editor.dir/src/editor/EditorApplication.cpp.o
+2026-10-28T23:35:12.3039552Z [340/402] Building CXX object CMakeFiles/judas_editor.dir/src/editor/RuntimeInspector.cpp.o
+2026-10-28T23:35:15.3819033Z [341/402] Building CXX object CMakeFiles/judas_editor.dir/src/editor/EditorCreationMenu.cpp.o
+2026-10-28T23:35:19.5989304Z [342/402] Building CXX object CMakeFiles/judas_editor.dir/src/editor/EditorScriptWorkflow.cpp.o
+2026-10-28T23:35:21.2198462Z [343/402] Building CXX object CMakeFiles/judas_editor.dir/src/editor/EditorAssetActions.cpp.o
+2026-10-28T23:35:24.6454378Z [344/402] Building CXX object CMakeFiles/judas_editor.dir/src/editor/EditorPanels.cpp.o
+2026-10-28T23:35:27.1231231Z [345/402] Building CXX object CMakeFiles/judas_editor.dir/src/editor/EditorPrimitiveAssets.cpp.o
+2026-10-28T23:35:28.3463838Z [346/402] Building CXX object CMakeFiles/judas_editor.dir/src/editor/EditorPreferences.cpp.o
+2026-10-28T23:35:29.4770455Z [347/402] Building CXX object CMakeFiles/judas_editor.dir/src/editor/EditorPauseExample.cpp.o
+2026-10-28T23:35:31.0818805Z [348/402] Building CXX object CMakeFiles/judas_editor.dir/src/editor/FileBrowser.cpp.o
+2026-10-28T23:35:32.9669085Z [349/402] Building CXX object CMakeFiles/judas_editor.dir/src/editor/ProjectSettingsPanel.cpp.o
+2026-10-28T23:35:35.8213397Z [350/402] Building CXX object CMakeFiles/judas_editor.dir/src/editor/RenderPreview.cpp.o
+2026-10-28T23:35:39.2475709Z [351/402] Building CXX object CMakeFiles/judas_editor.dir/src/editor/AnimationTimeline.cpp.o
+2026-10-28T23:35:43.7647822Z [352/402] Building CXX object CMakeFiles/judas_editor.dir/src/editor/RetargetPanel.cpp.o
+2026-10-28T23:35:48.6064332Z [353/402] Building CXX object CMakeFiles/judas_editor.dir/src/editor/WorldTools.cpp.o
+2026-10-28T23:35:51.0733368Z [354/402] Building CXX object CMakeFiles/judas_editor.dir/src/editor/TerrainTools.cpp.o
+2026-10-28T23:35:55.7230991Z [355/402] Building CXX object CMakeFiles/judas_editor.dir/src/editor/ModTools.cpp.o
+2026-10-28T23:35:55.9397994Z [356/402] Building CXX object CMakeFiles/judas_editor.dir/src/editor/VolumeTerrainTools.cpp.o
+2026-10-28T23:35:56.8960511Z [357/402] Building CXX object CMakeFiles/judas_editor.dir/src/editor/ProfilerView.cpp.o
+2026-10-28T23:35:57.7507184Z [358/402] Building CXX object CMakeFiles/judas_editor.dir/src/editor/EditorWidgets.cpp.o
+2026-10-28T23:35:59.0354395Z [359/402] Building CXX object CMakeFiles/judas_editor.dir/src/editor/GizmoMath.cpp.o
+2026-10-28T23:36:02.6054030Z [360/402] Building CXX object CMakeFiles/judas_scene_author.dir/tools/SceneAuthor.cpp.o
+2026-10-28T23:36:06.8418546Z [361/402] Building CXX object CMakeFiles/judas_scene_author.dir/tools/StructuredAuthor.cpp.o
+2026-10-28T23:36:09.9601119Z [362/402] Building CXX object CMakeFiles/judas_editor.dir/src/editor/ComponentEditors.cpp.o
+2026-10-28T23:36:13.9508150Z [363/402] Building CXX object CMakeFiles/judas_scene_author.dir/tools/RecipeCLI.cpp.o
+2026-10-28T23:36:15.6195543Z [364/402] Building CXX object CMakeFiles/judas_scene_author.dir/tools/AuthoringCLI.cpp.o
+2026-10-28T23:36:16.8347935Z [365/402] Building CXX object CMakeFiles/judas_export.dir/src/ExportMain.cpp.o
+2026-10-28T23:36:18.7928416Z [366/402] Building CXX object CMakeFiles/judas_scene_author.dir/tools/ContentServicesCLI.cpp.o
+2026-10-28T23:36:20.6740447Z [367/402] Building CXX object CMakeFiles/judas_navigation_bake.dir/tools/NavigationBake.cpp.o
+2026-10-28T23:36:21.2038624Z [368/402] Building CXX object CMakeFiles/judas_environment_bake.dir/tools/EnvironmentBake.cpp.o
+2026-10-28T23:36:21.3851510Z [369/402] Building CXX object CMakeFiles/judas_liquid_bake.dir/tools/LiquidBake.cpp.o
+2026-10-28T23:36:22.0614126Z [370/402] Building CXX object CMakeFiles/judas_collision_cook.dir/tools/CollisionCook.cpp.o
+2026-10-28T23:36:22.1706434Z [371/402] Linking CXX static library libjudas_model_import.a
+2026-10-28T23:36:22.8234129Z [372/402] Building CXX object CMakeFiles/judas_deformable_bake.dir/tools/DeformableBake.cpp.o
+2026-10-28T23:36:22.9368102Z [373/402] Linking CXX static library libjudas_world_authoring.a
+2026-10-28T23:36:25.9428865Z [374/402] Building CXX object CMakeFiles/judas_terrain_author.dir/tools/TerrainAuthor.cpp.o
+2026-10-28T23:36:29.8814262Z [375/402] Building CXX object CMakeFiles/judas_model_import_cli.dir/tools/ModelImportCli.cpp.o
+2026-10-28T23:36:29.9834361Z [376/402] Building CXX object CMakeFiles/judas_mod.dir/tools/ModTool.cpp.o
+2026-10-28T23:36:30.6237354Z [377/402] Building CXX object CMakeFiles/judas_cook.dir/src/AssetCookMain.cpp.o
+2026-10-28T23:36:32.4301606Z [378/402] Building CXX object CMakeFiles/judas_script_check.dir/tools/ScriptCheck.cpp.o
+2026-10-28T23:36:32.7997542Z [379/402] Building CXX object CMakeFiles/judas_volume_author.dir/tools/VolumeTerrainAuthor.cpp.o
+2026-10-28T23:36:36.3103736Z [380/402] Building CXX object CMakeFiles/judas_save.dir/tools/SaveEvolutionMain.cpp.o
+2026-10-28T23:36:36.5268685Z [381/402] Building CXX object CMakeFiles/judas_server.dir/src/DedicatedMain.cpp.o
+2026-10-28T23:36:37.2288128Z [382/402] Linking CXX executable judas
+2026-10-28T23:36:37.2939878Z [383/402] Linking CXX executable judas_editor
+2026-10-28T23:36:37.9198050Z [384/402] Linking CXX executable judas_scene_author
+2026-10-28T23:36:37.9623931Z [385/402] Linking CXX executable judas_export
+2026-10-28T23:36:38.5883681Z [386/402] Linking CXX executable judas_navigation_bake
+2026-10-28T23:36:38.6206665Z [387/402] Linking CXX executable judas_liquid_bake
+2026-10-28T23:36:39.2373166Z [388/402] Linking CXX executable judas_environment_bake
+2026-10-28T23:36:39.2873162Z [389/402] Linking CXX executable judas_deformable_bake
+2026-10-28T23:36:39.8664691Z [390/402] Linking CXX executable judas_collision_cook
+2026-10-28T23:36:39.9575259Z [391/402] Linking CXX executable judas_model_import_cli
+2026-10-28T23:36:40.5343578Z [392/402] Linking CXX executable judas_terrain_author
+2026-10-28T23:36:40.6311217Z [393/402] Linking CXX executable judas_mod
+2026-10-28T23:36:41.1998342Z [394/402] Linking CXX executable judas_volume_author
+2026-10-28T23:36:41.2892028Z [395/402] Linking CXX executable judas_cook
+2026-10-28T23:36:41.8369075Z [396/402] Linking CXX executable judas_script_check
+2026-10-28T23:36:41.9328670Z [397/402] Linking CXX executable judas_save
+2026-10-28T23:36:42.4633121Z [398/402] Linking CXX executable judas_server
+2026-10-28T23:36:44.4348384Z [399/402] cd /home/runner/work/Project-Judas/Project-Judas/build && /usr/bin/python3.12 /home/runner/work/Project-Judas/Project-Judas/tools/package_sdk.py stage --source /home/runner/work/Project-Judas/Project-Judas --bin-dir /home/runner/work/Project-Judas/Project-Judas/build --build-info /home/runner/work/Project-Judas/Project-Judas/build/judas-build-info-Release.json --output /home/runner/work/Project-Judas/Project-Judas/build/linux-sdk --replace --probe-tools --release
+2026-10-28T23:36:44.4357057Z {"build": {"architecture": "x86_64", "build_id": "1.0.1-alpha.1-Alpha-0c1531a-clean-8f60b0035527", "channel": "Alpha", "compiler": "GNU", "compiler_version": "13.3.0", "configuration": "Release", "maturity": "alpha", "platform": "Linux", "release_name": "Judas Engine Alpha v1.0.1", "schema": 1, "source_dirty": false, "source_fingerprint": "8f60b00355272b6bafbd745094b44998ba15f567911120ed992cc2a79bff5b39", "source_origin": "git", "source_revision": "0c1531ae86073f616a9d7b20425cb26ec65810c9", "source_tree": "28a5a89a0deef015e3a458283cb744a61f7858d6", "source_untracked_count": 0, "source_untracked_fingerprint": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855", "version": "1.0.1-alpha.1"}, "files": 271, "ok": true, "tools": 17}
+2026-10-28T23:42:32.5685032Z Traceback (most recent call last):
+2026-10-28T23:42:32.5686050Z   File "/home/runner/work/Project-Judas/Project-Judas/scripts/qualify_m100.py", line 45, in <module>
+2026-10-28T23:42:32.5687010Z     if __name__=='__main__':main()
+2026-10-28T23:42:32.5687442Z                             ^^^^^^
+2026-10-28T23:42:32.5688352Z   File "/home/runner/work/Project-Judas/Project-Judas/scripts/qualify_m100.py", line 38, in main
+2026-10-28T23:42:32.5689301Z     for target in EXTRA:run(target,[build/(target+('.exe' if os.name=='nt' else ''))])
+2026-10-28T23:42:32.5690305Z                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-10-28T23:42:32.5691126Z   File "/home/runner/work/Project-Judas/Project-Judas/scripts/qualify_m100.py", line 27, in run
+2026-10-28T23:42:32.5692913Z     child=subprocess.run(list(map(str,cmd)),cwd=(output if name.startswith("judas_") else ROOT),env=environment,stdout=f,stderr=subprocess.STDOUT)
+2026-10-28T23:42:32.5694118Z           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-10-28T23:42:32.5694831Z   File "/usr/lib/python3.12/subprocess.py", line 548, in run
+2026-10-28T23:42:32.5695466Z     with Popen(*popenargs, **kwargs) as process:
+2026-10-28T23:42:32.5696109Z          ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-10-28T23:42:32.5696642Z   File "/usr/lib/python3.12/subprocess.py", line 1026, in __init__
+2026-10-28T23:42:32.5697308Z     self._execute_child(args, executable, preexec_fn, close_fds,
+2026-10-28T23:42:32.5697984Z   File "/usr/lib/python3.12/subprocess.py", line 1955, in _execute_child
+2026-10-28T23:42:32.5699000Z     raise child_exception_type(errno_num, err_msg, err_filename)
+2026-10-28T23:42:32.5699823Z FileNotFoundError: [Errno 2] No such file or directory: 'build/judas_joint_tests'
+2026-10-28T23:42:32.5921947Z ##[error]Process completed with exit code 1.
+2026-10-28T23:42:32.6034738Z ##[group]Run actions/upload-artifact@v7
+2026-10-28T23:42:32.6035051Z with:
+2026-10-28T23:42:32.6035371Z   name: candidate-Linux-failure-0c1531ae86073f616a9d7b20425cb26ec65810c9
+2026-10-28T23:42:32.6035951Z   path: .cache/release-qualification/
+.cache/release-sdk-work/
+build/Testing/Temporary/
+
+2026-10-28T23:42:32.6036415Z   include-hidden-files: true
+2026-10-28T23:42:32.6036667Z   if-no-files-found: warn
+2026-10-28T23:42:32.6036899Z   compression-level: 6
+2026-10-28T23:42:32.6037118Z   overwrite: false
+2026-10-28T23:42:32.6037314Z   archive: true
+2026-10-28T23:42:32.6037507Z env:
+2026-10-28T23:42:32.6037740Z   CANDIDATE: 0c1531ae86073f616a9d7b20425cb26ec65810c9
+2026-10-28T23:42:32.6038049Z   CHANNEL: Alpha
+2026-10-28T23:42:32.6038252Z   SDL_AUDIODRIVER: dummy
+2026-10-28T23:42:32.6038474Z   LIBGL_ALWAYS_SOFTWARE: 1
+2026-10-28T23:42:32.6038689Z ##[endgroup]
+2026-10-28T23:42:33.0991233Z Multiple search paths detected. Calculating the least common ancestor of all paths
+2026-10-28T23:42:33.0994859Z The least common ancestor is /home/runner/work/Project-Judas/Project-Judas. This will be the root directory of the artifact
+2026-10-28T23:42:33.0996139Z With the provided path, there will be 147 files uploaded
+2026-10-28T23:42:33.1001040Z Artifact name is valid!
+2026-10-28T23:42:33.1001600Z Root directory input is valid!
+2026-10-28T23:42:33.5868840Z Uploading artifact: candidate-Linux-failure-0c1531ae86073f616a9d7b20425cb26ec65810c9.zip
+2026-10-28T23:42:33.5908183Z Beginning upload of artifact content to blob storage
+2026-10-28T23:42:35.1049427Z Uploaded bytes 8388608
+2026-10-28T23:42:35.5116122Z Uploaded bytes 16777216
+2026-10-28T23:42:35.6125214Z Uploaded bytes 18505823
+2026-10-28T23:42:35.6814318Z Finished uploading artifact content to blob storage!
+2026-10-28T23:42:35.7230464Z SHA256 digest of uploaded artifact is e2766d3d964c711927c9f638de2381204a0d3f19488e435ed95f7a0f1d897dcf
+2026-10-28T23:42:35.7232623Z Finalizing artifact upload
+2026-10-28T23:42:36.3410435Z Artifact candidate-Linux-failure-0c1531ae86073f616a9d7b20425cb26ec65810c9 successfully finalized. Artifact ID 12861320247
+2026-10-28T23:42:36.3413315Z Artifact candidate-Linux-failure-0c1531ae86073f616a9d7b20425cb26ec65810c9 has been successfully uploaded! Final size is 18505823 bytes. Artifact ID is 12861320247
+2026-10-28T23:42:36.3417023Z Artifact download URL: https://github.com/SuperReaper1999/Project-Judas/actions/runs/40786834338/artifacts/12861320247
+2026-10-28T23:42:36.3694517Z Post job cleanup.
+2026-10-28T23:42:36.4635872Z [command]/usr/bin/git version
+2026-10-28T23:42:36.4699530Z git version 2.56.0
+2026-10-28T23:42:36.4744092Z Temporarily overriding HOME='/home/runner/work/_temp/281e3d84-efe9-4f83-a553-c9cdf8f92ba3' before making global git config changes
+2026-10-28T23:42:36.4745547Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-28T23:42:36.4750516Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/Project-Judas/Project-Judas
+2026-10-28T23:42:36.4791783Z Removing SSH command configuration
+2026-10-28T23:42:36.4799455Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-28T23:42:36.4843387Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-28T23:42:36.5224465Z Removing HTTP extra header
+2026-10-28T23:42:36.5232933Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-28T23:42:36.5282698Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-28T23:42:36.5716200Z Removing includeIf entries pointing to credentials config files
+2026-10-28T23:42:36.5724334Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-28T23:42:36.5779404Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-28T23:42:36.6308994Z Cleaning up orphan processes

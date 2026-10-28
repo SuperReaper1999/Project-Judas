@@ -1,0 +1,16 @@
+test_relative_build_path_survives_isolated_regression_directory (packaging_regression.QualificationScope.test_relative_build_path_survives_isolated_regression_directory) ... M100 coordinated qualification passed; known limitations remain classified separately
+FAIL
+
+======================================================================
+FAIL: test_relative_build_path_survives_isolated_regression_directory (packaging_regression.QualificationScope.test_relative_build_path_survives_isolated_regression_directory)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/conner/Documents/GitHub/Project-Judas/tests/test_release_packaging.py", line 69, in test_relative_build_path_survives_isolated_regression_directory
+    self.assertEqual(Path(checks[0].args[0][0]),build.resolve()/executable)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: PosixPath('tmpwow6_dlt/build/judas_joint_tests') != PosixPath('/home/conner/Documents/GitHub/Project-Jud[35 chars]sts')
+
+----------------------------------------------------------------------
+Ran 1 test in 0.005s
+
+FAILED (failures=1)
