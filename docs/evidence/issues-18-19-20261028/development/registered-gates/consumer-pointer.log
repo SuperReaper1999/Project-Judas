@@ -1,0 +1,2 @@
+terminate called after throwing an instance of 'std::filesystem::__cxx11::filesystem_error'
+  what():  filesystem error: cannot copy file: No such file or directory [tests/fixtures/pointer-taps/original.js] [/home/conner/Documents/GitHub/Project-Judas/.cache/issues-18-19-investigation/registered-gates/consumer-pointer/Assets/original.js]

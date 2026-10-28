@@ -1,0 +1,77 @@
+PASS real consumer script fixture registered
+PASS ordinary script runtime builds
+PASS project-owned pointer action installed
+PASS consumer callback remains healthy
+PASS native logical edges preserve short taps while drag/hold/HUD/UI-consumed inputs do not fire
+CONSUMER_POINTER version=original scenario=0 taps=0 expected=0
+PASS ordinary script runtime builds
+PASS project-owned pointer action installed
+PASS consumer callback remains healthy
+PASS native logical edges preserve short taps while drag/hold/HUD/UI-consumed inputs do not fire
+CONSUMER_POINTER version=original scenario=1 taps=0 expected=0
+PASS ordinary script runtime builds
+PASS project-owned pointer action installed
+PASS consumer callback remains healthy
+PASS native logical edges preserve short taps while drag/hold/HUD/UI-consumed inputs do not fire
+CONSUMER_POINTER version=original scenario=2 taps=1 expected=1
+PASS ordinary script runtime builds
+PASS project-owned pointer action installed
+PASS consumer callback remains healthy
+PASS native logical edges preserve short taps while drag/hold/HUD/UI-consumed inputs do not fire
+PASS negative control actually exercises aiming/long-press path
+CONSUMER_POINTER version=original scenario=3 taps=0 expected=0
+PASS ordinary script runtime builds
+PASS project-owned pointer action installed
+PASS consumer callback remains healthy
+PASS native logical edges preserve short taps while drag/hold/HUD/UI-consumed inputs do not fire
+PASS negative control actually exercises aiming/long-press path
+CONSUMER_POINTER version=original scenario=4 taps=0 expected=0
+PASS ordinary script runtime builds
+PASS project-owned pointer action installed
+PASS consumer callback remains healthy
+PASS native logical edges preserve short taps while drag/hold/HUD/UI-consumed inputs do not fire
+CONSUMER_POINTER version=original scenario=5 taps=0 expected=0
+PASS ordinary script runtime builds
+PASS project-owned pointer action installed
+PASS consumer callback remains healthy
+PASS native logical edges preserve short taps while drag/hold/HUD/UI-consumed inputs do not fire
+CONSUMER_POINTER version=original scenario=6 taps=0 expected=0
+PASS real consumer script fixture registered
+PASS ordinary script runtime builds
+PASS project-owned pointer action installed
+PASS consumer callback remains healthy
+PASS native logical edges preserve short taps while drag/hold/HUD/UI-consumed inputs do not fire
+CONSUMER_POINTER version=fixed scenario=0 taps=1 expected=1
+PASS ordinary script runtime builds
+PASS project-owned pointer action installed
+PASS consumer callback remains healthy
+PASS native logical edges preserve short taps while drag/hold/HUD/UI-consumed inputs do not fire
+CONSUMER_POINTER version=fixed scenario=1 taps=1 expected=1
+PASS ordinary script runtime builds
+PASS project-owned pointer action installed
+PASS consumer callback remains healthy
+PASS native logical edges preserve short taps while drag/hold/HUD/UI-consumed inputs do not fire
+CONSUMER_POINTER version=fixed scenario=2 taps=1 expected=1
+PASS ordinary script runtime builds
+PASS project-owned pointer action installed
+PASS consumer callback remains healthy
+PASS native logical edges preserve short taps while drag/hold/HUD/UI-consumed inputs do not fire
+PASS negative control actually exercises aiming/long-press path
+CONSUMER_POINTER version=fixed scenario=3 taps=0 expected=0
+PASS ordinary script runtime builds
+PASS project-owned pointer action installed
+PASS consumer callback remains healthy
+PASS native logical edges preserve short taps while drag/hold/HUD/UI-consumed inputs do not fire
+PASS negative control actually exercises aiming/long-press path
+CONSUMER_POINTER version=fixed scenario=4 taps=0 expected=0
+PASS ordinary script runtime builds
+PASS project-owned pointer action installed
+PASS consumer callback remains healthy
+PASS native logical edges preserve short taps while drag/hold/HUD/UI-consumed inputs do not fire
+CONSUMER_POINTER version=fixed scenario=5 taps=0 expected=0
+PASS ordinary script runtime builds
+PASS project-owned pointer action installed
+PASS consumer callback remains healthy
+PASS native logical edges preserve short taps while drag/hold/HUD/UI-consumed inputs do not fire
+CONSUMER_POINTER version=fixed scenario=6 taps=0 expected=0
+CONSUMER_POINTER checks=62 failures=0

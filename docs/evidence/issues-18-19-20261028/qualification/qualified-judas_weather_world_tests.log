@@ -1,0 +1,52 @@
+PASS ordinary optional weather and opted-in bodies build headlessly
+PASS required global weather ownership cannot be excluded from the save scene
+PASS public world query resolves the authored wind in world axes
+PASS existing force accumulator integrates actual prescribed wind drag
+PASS negative control: ordinary bodies without opt-in receive no weather force
+PASS ordinary upstream collision geometry shelters opted-in wind response
+PASS graphics quality off/high cannot change physical weather or forces
+PASS wind work counts actual bounded response queries and forces
+PASS filtered wind fixture builds
+PASS wind shelter obeys normal collision-layer query filtering
+PASS still-air relative drag fixture builds
+PASS moving bodies feel relative-air drag even when authored wind is zero
+PASS disabled opt-in fixture builds
+PASS disabled response is an actual no-force negative control
+PASS arbitrary-orientation weather scene builds
+PASS rotated wind and windbreak produce the same physical response
+PASS Earth-size absolute weather frame builds without float placement
+PASS radial wind samples a local tangent and meaningful double altitude
+PASS orbit retains cloud-frame presentation while physical air fades to zero
+PASS overlapping weather fields build
+PASS priority feather blends the region once without squaring physical fade
+PASS outside the regional feather only the lower field remains
+PASS weather event and pending propagation queue capture
+PASS ordinary wind props permit the existing checked M85 origin transaction
+PASS absolute weather frame, wind and strike remain anchored through origin shift
+PASS weather can be owned by an ordinary moving body
+PASS weather region tracks actual physical owner motion rather than stale authoring transform
+PASS rebased weather continuation captures
+PASS malformed pending thunder rejects atomically without mutating live weather
+PASS missing continuation cannot silently reset an active field
+PASS normal full save contains explicit weather participant
+PASS saved authored state reconstructs its current chart
+PASS fresh-process equivalent restoration reconstructs weather before simulation resumes
+PASS cold weather has exact transition, absolute strike, clock and tornado travel
+PASS actual restored wind-driven body endpoint follows uninterrupted physical control
+PASS weather-bearing save rejects a missing participant
+PASS scene serialization preserves weather profiles and response authoring
+PASS normal prefab property roundtrip preserves complete weather configuration
+PASS wind response destruction retires the actual physical body
+PASS destroyed region and stale ID cannot keep providing weather
+PASS body slot reuse cannot resurrect the retired weather owner
+PASS authored reset reconstructs weather and clears runtime transitions/events
+BUILD object 2 "ordinary prop": weather response needs an ordinary dynamic body
+PASS negative authoring control rejects wind response without dynamic body ownership
+PASS unscripted weather-only owner builds through normal identity path
+PASS invalid weather scale rejects atomically before fixed simulation
+PASS fresh bounded weather control builds
+PASS valid bounded weather transform remains scriptable
+PASS moving bounded owner changes actual field location
+PASS authored reset restores field location before another fixed callback
+PASS out-of-contract absolute weather placement cannot publish partial state
+M86 WORLD 50 checks 0 failures

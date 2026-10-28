@@ -1,0 +1,10 @@
+{
+  "sourceCommit": "f88ed2e6810cd69c2b4f12241ccabb5ac58ad6c1",
+  "branch": "Experimental",
+  "archivePath": "/home/conner/Documents/SkyhavenFlight_flight_sim.zip",
+  "archiveSha256": "13ab0053362bf9a4820225ce9dbe8dccac5f0668f3a8f631c0852aaf9fa6f196",
+  "probeSha256": "89d11c538286c599ecf9240a5b038edc6f40ffc0f83daa46d7860795541a0a87",
+  "nativeLibrarySha256": "a476b02b193bb5bec3484d5a971616be11d99da7c64bcf334ddc85dd9494823b",
+  "renderer": "Mesa llvmpipe software OpenGL; functional rendering evidence, not GPU/performance qualification",
+  "extractedProject": "/tmp/judas-issues18-19-flight-review/projects/flight_sim"
+}

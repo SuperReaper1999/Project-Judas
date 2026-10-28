@@ -1,0 +1,10 @@
+Shadow maps: on
+Graphics: 4.5 (Core Profile) Mesa 26.0.8-1ubuntu0.3 / llvmpipe (LLVM 21.1.8, 256 bits)
+Renderer fragment texture units: 32 (material path uses 12)
+World state: /tmp/judas-issues18-19-blocksmasher/projects/blocksmasher_v2/Saves/arcade.judasstate (none saved)
+Project: BlockSmasherV2 (/tmp/judas-issues18-19-blocksmasher/projects/blocksmasher_v2/blocksmasher_v2.judasproj)
+Scene: BlockSmasherV2 (/tmp/judas-issues18-19-blocksmasher/projects/blocksmasher_v2/Scenes/arcade.judas)
+World origin (m): 0.000, 0.000, 0.000
+READY title
+READY gameplay phase=aim balls=10
+GAME_POINTER mode=held phase=flight before=10 after=9 native_balls=1 max_speed=17.65

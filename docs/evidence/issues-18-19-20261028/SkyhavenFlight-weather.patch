@@ -1,0 +1,29 @@
+--- a/Assets/scripts/career.js
++++ b/Assets/scripts/career.js
+@@ -5,8 +5,8 @@
+ // Weather conditions. `profile` is a Judas weather-region profile patch
+ // (world-space wind in m/s); `light` multiplies/overrides the scene appearance;
+ // `lamps` switches runway, pad and landing lights on. `region: false` turns the
+-// weather region off (calm air): its renderer draws a fixed daylight sky, so
+-// dusk and night use the scene's own background colour instead.
++// weather region off (calm air). Dusk and night keep weather enabled: the
++// renderer now uses the scene lighting and authored sky colour.
+ export const WEATHER = [
+     {
+         id: 'clear', name: 'Clear morning', bonus: 1.0,
+@@ -17,7 +17,6 @@
+     {
+         id: 'dusk', name: 'Golden dusk', bonus: 1.15,
+         about: 'Low orange sun and long shadows. Calm air; the runway lights come on.',
+-        region: false,
+         profile: { cloudCoverage: 0.3, cloudDensity: 0.7, rain: 0, snow: 0, fog: 0.05, wind: { x: 2, y: 0, z: -1 }, gust: 1, lightningRate: 0 },
+         light: { sun: 0.8, sunColor: [1, 0.55, 0.3], sunDirection: [0.85, 0.14, -0.3], ambient: [0.24, 0.17, 0.19], sky: [0.86, 0.52, 0.38], exposure: 1.1 },
+         lamps: true,
+@@ -52,7 +51,6 @@
+     {
+         id: 'night', name: 'Clear night', bonus: 1.6,
+         about: 'Moonlight only and calm air. Runway, pad and landing lights show the way.',
+-        region: false,
+         profile: { cloudCoverage: 0.1, cloudDensity: 0.5, rain: 0, snow: 0, fog: 0, wind: { x: 2, y: 0, z: 0 }, gust: 1, lightningRate: 0 },
+         light: { sun: 0.12, sunColor: [0.55, 0.65, 0.95], sunDirection: [-0.3, 0.6, 0.2], ambient: [0.035, 0.045, 0.08], sky: [0.012, 0.018, 0.04], exposure: 1.35 },
+         lamps: true,

@@ -1,0 +1,83 @@
+JUDAS OPEN ISSUE INVESTIGATION — #18 AND #19
+Read-only engine investigation. Fluid work remains paused.
+Experimental f88ed2e6810cd69c2b4f12241ccabb5ac58ad6c1.
+No engine/project source edits, commits, pushes or GitHub issue changes.
+
+Located project
+/home/conner/Documents/SkyhavenFlight_flight_sim.zip
+284 archive entries,171898274 uncompressed bytes. Review extraction:
+/tmp/judas-issues18-19-flight-review/projects/flight_sim
+Archive identity and probe/native-library fingerprints: IDENTITY.json.
+
+#19 Weather sky at dusk/night: CONFIRMED CURRENT RENDERER DEFECT
+src/RendererWeather.inl:186-201 always builds the weather sky from fixed daytime
+zenith/horizon colours. Sun direction affects a halo/disc, not ambient day/night
+sky illumination. Cloud ambient and fog colours also have fixed daytime terms.
+src/Renderer.cpp:1464-1466 and1595-1597 disables environment-background drawing
+while weather is enabled; the compositor writes opaque weather sky at background
+pixels. Scene background colour is therefore superseded, not respected by the
+weather sky. SetLighting sends sun colour but not scene ambient into that shader.
+
+Native renderer evidence: same view, no terrain/clouds/rain/fog, actual GL output.
+Day-weather mean RGB:191.584310,216.179991,238.167648.
+Night-weather mean RGB:191.584310,216.179991,238.167648 (identical).
+Sun below horizon, zero sunlight/ambient: same daylight RGB.
+Night with weather off:3,5,10, matching authored dark background.
+All four frames reported GL error0. Mesa llvmpipe software GL was used; this is
+functional shader-output proof, NOT hardware performance qualification.
+
+Flight source agrees: Assets/scripts/career.js:7-9 explains its workaround;
+dusk and night explicitly use region:false, and game.js:522-539 disables that
+weather region while setting scene lighting/background. README:85-87 records it.
+Thus archived flight night already avoids the visual problem, at the cost of
+turning off its weather/wind; the underlying engine defect still exists.
+
+Correction boundary: reconcile weather sky/cloud/fog illumination with authored
+scene lighting/background rather than unconditionally substituting daylight.
+Do not use sun elevation alone: this game's night preset deliberately uses a
+weak blue light ABOVE the horizon. Preserve arbitrary-up/radial behaviour,
+lightning and environment backgrounds, and qualify dusk/night with weather on.
+No correction implemented in this investigation.
+
+#18 Fast gameplay clicks: GENERAL LOSS NOT REPRODUCED; HARNESS GAP CONFIRMED
+Window::PollEvents feeds both mouse down/up events into InputSystem::SetPhysical.
+InputSystem::SetAction accumulates pressed/released flags independently of held.
+A press and release pushed into the same actual SDL poll yielded:
+  held0,pressed1,released1,fixed_pressed1,fixed_released1.
+The pointer snapshot's down=false after release is CORRECT current-state
+semantics, not evidence the press edge was lost. Gameplay needing a click edge
+should use the bound action's pressed/released observations, not down-only polling.
+
+The real flight hangar.judasui template was loaded into RuntimeUI, shown as its
+script does, laid out, and its actual FLY button clicked. Same-frame down/up:
+1 click event. Two-frame press/release control:1 click event. The initial hidden-
+document probe produced0/0; its failed positive control was corrected by setting
+the document visible, and that original output is retained in probe.log.
+This is actual native UI/template behaviour, not a full flight/career play-through.
+
+Confirmed harness limitation:
+Window.h:110 SetTestPointer only sets legacy UI pixel coordinates, not
+InputSystem::SetPointer. TestHarness.cpp:81 calls that method; CONTROL mouse:Left
+updates logical action bindings but not the public pointer snapshot. Native probe:
+  legacy UI position160,90; public pointer0,0; down0; ui_click held1.
+So a harness run can click UI yet leave JudasJS input.pointer at stale coordinates
+and down state. No harness touch press/move/release directives exist; raw CONTROL
+values cannot create/update InputSystem touch contacts. Real touch snapshots are
+also current active contacts, not a retained pointer-event history.
+
+Correction boundary: synchronize explicit harness pointer move/press/release with
+both public gameplay pointer and logical button input; add real touch-contact
+commands. Cover dragging, short clicks, cancellation/focus and UI consumption.
+Do NOT latch pointer.down after release or rewrite already-passing action edges.
+The broad short-click report remains unresolved: xdotool is unavailable here,
+so its exact external/compositor delivery and original failing gameplay path
+were not reproduced. Focus/capture, event positions, script down-only sampling or
+an older build remain possibilities, NOT established root causes.
+
+Reproduction
+python3 /tmp/judas-issues18-19-flight-review/build_probe.py
+/tmp/judas-issues18-19-flight-review/issue-probe
+The builder uses matching existing native Release flags/library. No fresh build,
+full-suite, hardware input, Windows or Android qualification was performed.
+Probe sources, original/final outputs, four screenshots and hashes are preserved
+alongside this report. Existing project archive and original project are unchanged.

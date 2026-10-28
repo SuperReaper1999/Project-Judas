@@ -50,7 +50,7 @@ EnvironmentHandle Renderer::CreateEnvironment(const EnvironmentData& data){
  glBindTexture(GL_TEXTURE_2D,GLuint(previous));EnvironmentHandle handle{unsigned(m_environments.size())};m_environments.push_back(e);return handle;
 }
 void Renderer::DestroyEnvironment(EnvironmentHandle handle){if(!handle.IsValid()||handle.id>=m_environments.size())return;auto& e=m_environments[handle.id];if(!e.alive)return;glDeleteTextures(1,&e.specular);glDeleteTextures(1,&e.diffuse);glDeleteTextures(1,&e.brdf);e={};}
-void Renderer::SetSceneAppearance(bool linear,float exposure,EnvironmentHandle environment,float intensity,const glm::quat& rotation,bool background,const glm::vec3& colour){glClearColor(colour.x,colour.y,colour.z,1);m_linearRendering=linear;m_exposure=exposure;m_environment=environment;m_environmentIntensity=intensity;m_environmentRotation=glm::normalize(rotation);m_environmentBackground=background;}
+void Renderer::SetSceneAppearance(bool linear,float exposure,EnvironmentHandle environment,float intensity,const glm::quat& rotation,bool background,const glm::vec3& colour){glClearColor(colour.x,colour.y,colour.z,1);m_weatherBackground=colour;m_linearRendering=linear;m_exposure=exposure;m_environment=environment;m_environmentIntensity=intensity;m_environmentRotation=glm::normalize(rotation);m_environmentBackground=background;}
 void Renderer::BindMaterial(const GpuMaterial* gpu,const MaterialBinding& binding,TextureHandle generated,const glm::vec3&,float alpha,bool shadow){
  MaterialDefinition legacy;legacy.model=MaterialModel::Legacy;
  auto m=ApplyMaterialOverride(gpu?gpu->definition:legacy,binding.overrides);

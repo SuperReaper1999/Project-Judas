@@ -406,6 +406,7 @@ private:
         std::array<float,256> shelterHeights{};
     } m_weather;
     glm::vec3 m_weatherSun{.3f,.8f,.2f},m_weatherSunColour{1};
+    glm::vec3 m_weatherAmbient{.25f,.28f,.32f},m_weatherBackground{.08f,.09f,.11f};
     bool InitWeather();
     bool ResizeWeather(int width,int height,int cloudWidth,int cloudHeight);
     void WeatherUniforms(GLuint program);

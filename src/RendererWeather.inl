@@ -12,6 +12,7 @@ uniform sampler2D sceneDepth;
 uniform sampler3D noiseVolume;
 uniform mat4 inverseProjection,inverseView;
 uniform vec3 eye,up,north,east,wind,noisePhase,sun,sunColour,tornado,tornadoUp;
+uniform vec3 sceneAmbient,sceneBackground;
 uniform vec4 layer,amounts; // base, thickness, camera altitude, planet radius; coverage,density,rain,snow
 uniform vec3 funnel; // strength, radius, height
 uniform float fog,flash,time;
@@ -144,8 +145,8 @@ void main(){
    float direct=exp(-shadow*1.35);
    float phase=.55+.45*pow(max(dot(ray,sun),0.0),10.0);
    float storm=clamp(amounts.z*.65+funnel.x*.2,0.0,.8);
-   vec3 illumination=mix(vec3(.38,.46,.57),vec3(.1,.13,.18),storm);
-   illumination+=sunColour*(.35+phase*.9)*direct;
+   vec3 illumination=max(sceneAmbient,vec3(0))*1.6*mix(1.0,.3,storm);
+   illumination+=sunColour*(.35+phase*.9)*direct*smoothstep(-.12,.02,dot(sun,up));
    illumination+=vec3(.9,1.05,1.3)*flash;
    float opacity=1.0-exp(-d*stride*.0038);
    colour+=transmission*opacity*illumination;transmission*=1.0-opacity;
@@ -157,7 +158,7 @@ void main(){
    if(end>a){vec3 fc=vec3(0);float ft=1.0;int count=int(clamp(ceil((end-a)/max(1.0,funnel.y*.07)),24.0,64.0));float dt=(end-a)/float(count);
     for(int i=0;i<64;++i){if(i>=count)break;vec3 p=ray*(a+(float(i)+.5)*dt);float d=funnelDensity(p);float opacity=1.0-exp(-d*dt*.3);
      vec3 normal=(p-centre)/max(.001,length(p-centre));
-     vec3 lit=vec3(.085,.10,.12)+vec3(.10,.095,.08)*max(dot(normal,sun),0.0)+flash*vec3(.8,.9,1.0);
+     vec3 lit=max(sceneAmbient,vec3(0))*.35+sunColour*.1*max(dot(normal,sun),0.0)+flash*vec3(.8,.9,1.0);
      fc+=ft*opacity*lit;ft*=1.0-opacity;if(ft<.015)break;
     }
     // The funnel is below its cloud layer, therefore in front of that layer.
@@ -173,6 +174,7 @@ in vec2 uv;out vec4 result;
 uniform sampler2D clouds,sceneDepth;
 uniform mat4 inverseProjection,inverseView;
 uniform vec3 up,north,east,sun,sunColour,tornado,tornadoUp,lightning;
+uniform vec3 sceneAmbient,sceneBackground;
 uniform vec4 layer,amounts;
 uniform float fog,flash,time;
 uniform bool radial,modern;
@@ -185,12 +187,26 @@ vec2 raySegment(vec3 ray,vec3 a,vec3 b){
 }
 vec3 sky(vec3 ray){
  float elevation=dot(ray,up),storm=clamp(amounts.z*.8+amounts.x*amounts.y*.35,0.0,.9);
- vec3 zenith=mix(vec3(.09,.32,.68),vec3(.08,.11,.17),storm);
- vec3 horizon=mix(vec3(.64,.78,.9),vec3(.27,.31,.36),storm);
+ // Weather shapes the authored sky; it must not replace night with daylight.
+ vec3 backdrop=max(sceneBackground,vec3(0));
+ if(!modern)backdrop=pow(backdrop,vec3(2.2));
+ vec3 zenith=backdrop*mix(vec3(.18,.45,.76),vec3(.15,.16,.19),storm);
+ vec3 horizon=backdrop*mix(vec3(1.23,1.083,1.0),vec3(.52,.43,.4),storm);
+ // Keep the procedural daylight appearance for existing scenes, but derive
+ // its contribution from real illumination, not the presence of a region.
+ float sunLevel=max(max(sunColour.r,sunColour.g),sunColour.b);
+ float sunVisibility=smoothstep(-.12,.02,dot(sun,up));
+ float ambientLevel=max(max(sceneAmbient.r,sceneAmbient.g),sceneAmbient.b);
+ float daylight=smoothstep(.1,.8,max(sunLevel*sunVisibility,ambientLevel*1.5));
+ vec3 tint=mix(vec3(1),sunColour/max(sunLevel,.000001),.65*sunVisibility*clamp(sunLevel,0.0,1.0));
+ float backdropLevel=max(max(backdrop.r,backdrop.g),backdrop.b);
+ tint*=mix(vec3(1),backdrop/max(backdropLevel,.000001),.65);
+ zenith=mix(zenith,mix(vec3(.09,.32,.68),vec3(.08,.11,.17),storm)*tint,daylight);
+ horizon=mix(horizon,mix(vec3(.64,.78,.9),vec3(.27,.31,.36),storm)*tint,daylight);
  vec3 s=mix(horizon,zenith,smoothstep(-.05,.75,elevation));
  float mu=max(0.0,dot(ray,sun));
- s+=vec3(1.0,.8,.47)*pow(mu,160.0)*(.65-storm*.45);
- s+=sunColour*smoothstep(.9997,.99994,mu)*4.0*(1.0-storm*.9);
+ s+=sunColour*pow(mu,160.0)*(.65-storm*.45)*smoothstep(-.12,.02,dot(sun,up));
+ s+=sunColour*smoothstep(.9997,.99994,mu)*4.0*(1.0-storm*.9)*smoothstep(-.12,.02,dot(sun,up));
  if(radial){
   float radius=layer.w+layer.z,b=dot(up,ray)*radius;
   float closest=sqrt(max(0.0,radius*radius-b*b))-layer.w;
@@ -211,7 +227,7 @@ void main(){
  float density=fog*.026+amounts.z*.0008+amounts.w*.003;
  if(radial)density*=exp(-max(layer.z,0.0)/10000.0);
  float fogOpacity=background?0.0:1.0-exp(-min(dist,30000.0)*density);
- vec3 fogColour=mix(vec3(.56,.65,.72),vec3(.24,.28,.34),amounts.z*.7)+flash*vec3(.5,.55,.65);
+ vec3 fogColour=max(sceneAmbient,vec3(0))*1.8*mix(1.0,.5,amounts.z*.7)+flash*vec3(.5,.55,.65);
  vec3 colour=cloud.rgb+fogColour*fogOpacity*(1.0-cloud.a);
  float opacity=cloud.a+fogOpacity*(1.0-cloud.a);
  if(background){colour=cloud.rgb+atmosphere*(1.0-cloud.a);opacity=1.0;}
@@ -234,6 +250,7 @@ void main(){
 const char* kWeatherPrecipitationVertex=R"GLSL(#version 330 core
 uniform mat4 view,projection;
 uniform vec3 eye,up,north,east,wind,particlePhase,tornado,tornadoUp;
+uniform vec3 sceneAmbient,sceneBackground;
 uniform vec4 layer,amounts;
 uniform vec3 funnel;
 uniform float time;
@@ -283,6 +300,7 @@ in vec2 texcoord;in vec3 relativePosition;in float intensity;out vec4 result;
 uniform sampler2D shelterMap,sceneDepth;
 uniform vec3 shelterCenter,shelterUp,shelterRight,shelterForward;
 uniform vec2 viewport;
+uniform vec3 sceneAmbient,sunColour;
 uniform float shelterExtent,flash;
 uniform bool sheltered,modern;
 uniform int mode;
@@ -298,6 +316,7 @@ void main(){
  float depth=texture(sceneDepth,gl_FragCoord.xy/viewport).r;
  if(gl_FragCoord.z>depth+.0000005)discard;
  vec3 colour=mode==3?vec3(.21,.17,.12):(mode==2?vec3(.85,.9,.98):vec3(.48,.65,.8));
+ colour*=max(sceneAmbient,vec3(0))*1.6+sunColour*.25;
  colour+=flash*.5;if(!modern)colour=pow(colour,vec3(1.0/2.2));
  result=vec4(colour,intensity*shape);
 }
@@ -378,7 +397,7 @@ void Renderer::WeatherUniforms(GLuint program){
  auto vec=[&](const char* n,glm::vec3 v){glUniform3fv(loc(n),1,glm::value_ptr(v));};
  glm::mat4 ip=glm::inverse(m_projection),iv=glm::inverse(m_view);
  glUniformMatrix4fv(loc("inverseProjection"),1,GL_FALSE,glm::value_ptr(ip));glUniformMatrix4fv(loc("inverseView"),1,GL_FALSE,glm::value_ptr(iv));glUniformMatrix4fv(loc("view"),1,GL_FALSE,glm::value_ptr(m_view));glUniformMatrix4fv(loc("projection"),1,GL_FALSE,glm::value_ptr(m_projection));
- vec("eye",w.eye);vec("up",w.up);vec("north",w.north);vec("east",w.east);vec("noisePhase",w.noisePhase);vec("particlePhase",w.particlePhase);vec("sun",m_weatherSun);vec("sunColour",m_weatherSunColour);vec("tornado",w.tornado);vec("tornadoUp",w.tornadoUp);vec("lightning",w.lightning);
+ vec("eye",w.eye);vec("up",w.up);vec("north",w.north);vec("east",w.east);vec("noisePhase",w.noisePhase);vec("particlePhase",w.particlePhase);vec("sun",m_weatherSun);vec("sunColour",m_weatherSunColour);vec("sceneAmbient",m_weatherAmbient);vec("sceneBackground",m_weatherBackground);vec("tornado",w.tornado);vec("tornadoUp",w.tornadoUp);vec("lightning",w.lightning);
  // Precipitation wind is expressed in its tangent basis; cloud noise remains in
  // world axes. This projection works identically on a wall or radial surface.
  vec("wind",glm::vec3(glm::dot(w.wind,w.east),glm::dot(w.wind,w.up),glm::dot(w.wind,w.north)));

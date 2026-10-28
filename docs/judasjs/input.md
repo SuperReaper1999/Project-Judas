@@ -32,9 +32,9 @@ are read-only in this example so users retain a way back to the controls menu.
 `held(name)`, `pressed(name)`, `released(name)` return booleans; `axis(name)`
 returns a number. Unknown names/no attached input return false/zero. `vector(name)`
 returns a copied `{x,y}` for a named paired binding, or neutral for an unknown name.
-Paired controller reads are described below; there is still no raw key/mouse,
-binding-edit or consumption API exposed to JS. Project/editor/C++ own binding
-authoring; scripts consume the logical surface.
+Paired controller reads are described below; there is still no raw key/mouse polling or
+input-consumption API exposed to JS. Project/editor/C++ own logical-map authoring;
+scripts may rebind existing controls through the methods above.
 
 Frame action edges live for one logical frame. Fixed callbacks use a latched
 snapshot: a short press across zero-step frames survives to the next fixed step,
@@ -201,7 +201,11 @@ steps can observe the same contact. No historical touch-edge queue is implied.
 
 `input.pointer` is a copied `{x,y,down}` normalized primary mouse/pointer snapshot.
 Desktop projects can implement the same drag policy without raw keyboard/mouse
-polling. Android's primary touch also drives ordinary UI clicks through SDL;
+polling. A complete press/release between callbacks leaves `down: false`.
+For mouse taps, add a project action bound to `mouse:Left` and retain its
+`pressed`/`released` edges alongside the held snapshot. This also preserves a
+short click across render frames with no fixed step. Do not infer all button
+edges solely from changes in `pointer.down`; it is not an event queue. Android's primary touch also drives ordinary UI clicks through SDL;
 additional fingers remain independently visible through `touches`. Coordinate
 mapping is project policy: use `world.project`/`world.viewport` for a physical board
 or camera. Modal menus must gate a game's touch behaviour just as other input.

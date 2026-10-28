@@ -1,0 +1,2 @@
+Original pointerInput method extracted verbatim from owner-provided BlockSmasherV2.zip, Assets/scripts/game.js. Fixed variant applies the accompanying two-line logical-edge correction. The wrapper only supplies minimal gesture state and records outputs; this is an actual consumer-method regression, not a complete game play-through.
+Original game.js SHA256 2b15ea6efb713cabee6912eff29545a5251142a9206954cf86006fab8eab9ee4

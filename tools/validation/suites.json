@@ -1,6 +1,9 @@
 {
   "format": 1,
   "tests": [
+    {"name":"consumer-pointer","target":"judas_consumer_pointer_tests","groups":["input"],"args":["{output}/consumer-pointer","{root}/tests/fixtures/pointer-taps"]},
+    {"name":"weather-lighting","target":"judas_weather_lighting_tests","groups":["rendering"],"args":["{output}/weather-lighting"]},
+    {"name":"pointer-harness","target":"judas_pointer_harness_tests","groups":["input"],"args":["{output}/pointer-harness"]},
     {"name":"build-identity","target":"judas_build_identity_tests","groups":["core"]},
     {"name":"collision-geometry","target":"judas_collision_geometry_tests","groups":["core","collision"]},
     {"name":"collision-witness","target":"judas_collision_witness_tests","groups":["collision"]},

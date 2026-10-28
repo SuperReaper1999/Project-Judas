@@ -17,10 +17,11 @@
 #include <sstream>
 #include <cstdio>
 #include <map>
+#include <limits>
 #include <stdexcept>
 #include <vector>
 namespace {
-struct Command {std::string kind,name,path;int begin=0,end=0;float value=0,other=0;};
+struct Command {std::string kind,name,path;int begin=0,end=0;float value=0,other=0,pressure=0;std::int64_t finger=0;int down=0;};
 struct Script {int frames=600,logEvery=1;float seconds=SimulationTiming::kFixedTimestep;bool realtime=false;std::string entity;std::vector<Command> commands;};
 void Require(bool ok,const std::string& error){if(!ok)throw std::runtime_error(error);}
 Script Load(const std::string& path,const InputMap& map){
@@ -37,7 +38,11 @@ Script Load(const std::string& path,const InputMap& map){
   else if(op=="ACTION"||op=="AXIS"){in>>c.name>>c.value>>c.begin>>c.end;auto* entry=map.Find(c.name);Require(entry&&!entry->bindings.empty(),"unknown/unbound input "+c.name);Require(entry->axis==(op=="AXIS"),"input kind mismatch "+c.name);auto b=entry->bindings.front();Require(b.scale!=0,"zero binding scale");if(op=="AXIS"&&b.deadzone>0){const float v=c.value/b.scale;c.value=v==0?0:std::copysign(b.deadzone+std::abs(v)*(1-b.deadzone),v);}else c.value/=b.scale;c.name=b.control;}
   else if(op=="CONTROL")in>>c.name>>c.value>>c.begin>>c.end;
   else if(op=="LOOK")in>>c.value>>c.other>>c.begin;
-  else if(op=="POINTER")in>>c.value>>c.other>>c.begin;
+  else if(op=="POINTER"||op=="POINTER_DOWN"||op=="POINTER_UP")in>>c.value>>c.other>>c.begin;
+  else if(op=="TOUCH_DOWN"||op=="TOUCH_MOVE")in>>c.finger>>c.value>>c.other>>c.pressure>>c.begin;
+  else if(op=="TOUCH_UP")in>>c.finger>>c.value>>c.other>>c.begin;
+  else if(op=="EXPECT_POINTER")in>>c.value>>c.other>>c.down>>c.begin;
+  else if(op=="EXPECT_TOUCHES")in>>c.value>>c.begin;
   else if(op=="SAMPLE_GRAVITY"){glm::vec3 p;in>>p.x>>p.y>>p.z;c.path=std::to_string(p.x)+" "+std::to_string(p.y)+" "+std::to_string(p.z);}
   else if(op=="EXPECT_AXIS"||op=="EXPECT_HELD"){
    in>>c.name>>c.value>>c.begin;auto* entry=map.Find(c.name);
@@ -54,8 +59,14 @@ Script Load(const std::string& path,const InputMap& map){
   s.commands.push_back(c);
  }
  Require(s.frames>0&&s.frames<=1000000&&s.logEvery>=0&&std::isfinite(s.seconds)&&s.seconds>=0&&s.seconds<=.25f,"invalid frame count/clock");
- for(const auto& c:s.commands)if(c.kind=="SCREENSHOT"||c.kind=="LOOK"||c.kind=="POINTER"||c.kind.rfind("EXPECT_",0)==0||c.kind=="WAIT_SERVICES")Require(c.begin>=0&&c.begin<s.frames&&std::isfinite(c.value)&&std::isfinite(c.other),"invalid command frame/value");
+ for(const auto& c:s.commands)if(c.kind=="SCREENSHOT"||c.kind=="LOOK"||(c.kind.rfind("POINTER",0)==0)||(c.kind.rfind("TOUCH_",0)==0)||c.kind.rfind("EXPECT_",0)==0||c.kind=="WAIT_SERVICES")Require(c.begin>=0&&c.begin<s.frames&&std::isfinite(c.value)&&std::isfinite(c.other),"invalid command frame/value");
  for(const auto& c:s.commands)if(c.kind=="ACTION"||c.kind=="AXIS"||c.kind=="HOLD"||c.kind=="TAP"||c.kind=="CONTROL")Require(c.begin>=0&&c.end>c.begin&&c.end<=s.frames&&std::isfinite(c.value),"invalid input interval");
+ for(const auto& c:s.commands){
+  if(c.kind.rfind("POINTER",0)==0)Require(double(c.value)>=std::numeric_limits<int>::min()&&double(c.value)<=std::numeric_limits<int>::max()&&double(c.other)>=std::numeric_limits<int>::min()&&double(c.other)<=std::numeric_limits<int>::max(),"pointer pixels exceed integer range");
+  if(c.kind=="EXPECT_POINTER")Require((c.down==0||c.down==1)&&c.value>=0&&c.value<=1&&c.other>=0&&c.other<=1,"invalid pointer expectation");
+  if(c.kind=="EXPECT_TOUCHES")Require(c.value>=0&&c.value<=10&&std::floor(c.value)==c.value,"invalid touch count expectation");
+  if(c.kind.rfind("TOUCH_",0)==0)Require(c.finger>=0&&c.value>=0&&c.value<=1&&c.other>=0&&c.other<=1&&std::isfinite(c.pressure)&&c.pressure>=0&&c.pressure<=1,"invalid normalized touch contact");
+ }
  return s;
 }
 }
@@ -74,11 +85,12 @@ int RunTestHarness(Window& window,Renderer& renderer,InteractivePlay& play,const
    window.BeginTestFrame();
    for(const auto& c:script.commands){
     if(c.kind=="HOLD"||c.kind=="TAP"||c.kind=="ACTION"||c.kind=="AXIS"||c.kind=="CONTROL"){
-     if(frame==c.begin)window.Input().SetPhysical(c.name,c.value);
-     if(frame==c.end)window.Input().SetPhysical(c.name,0);
+     if(frame==c.begin)window.ApplyTestPhysical(c.name,c.value);
+     if(frame==c.end)window.ApplyTestPhysical(c.name,0);
     }
     if(frame==c.begin&&c.kind=="LOOK"){window.Input().AddDelta("mouse:dx",c.value);window.Input().AddDelta("mouse:dy",c.other);window.QueueTestMouseDelta(int(c.value),int(c.other));}
-    if(frame==c.begin&&c.kind=="POINTER")window.SetTestPointer(int(c.value),int(c.other));
+    if(frame==c.begin&&c.kind.rfind("POINTER",0)==0){window.SetTestPointer(int(c.value),int(c.other));if(c.kind!="POINTER")window.ApplyTestPhysical("mouse:Left",c.kind=="POINTER_DOWN"?1.f:0.f);}
+    if(frame==c.begin&&c.kind.rfind("TOUCH_",0)==0){const bool active=window.Input().TouchId(0,c.finger)!=0;Require(c.kind=="TOUCH_DOWN"?!active:active,"touch transition requires matching contact lifetime");window.SetTestTouch(c.finger,c.value,c.other,c.pressure,c.kind!="TOUCH_UP");}
     if(frame==c.begin&&c.kind=="TAP"){if(c.name=="key:Space")window.RequestTestJump();if(c.name=="key:R")window.RequestTestReset();if(c.name=="key:F")window.RequestTestControlToggle();}
     if(c.kind=="HOLD"){const std::map<std::string,Action> actions={{"key:W",Action::MoveForward},{"key:S",Action::MoveBackward},{"key:A",Action::StrafeLeft},{"key:D",Action::StrafeRight},{"key:Q",Action::MoveDown},{"key:E",Action::MoveUp},{"key:I",Action::PitchUp},{"key:K",Action::PitchDown},{"key:J",Action::YawLeft},{"key:L",Action::YawRight},{"key:U",Action::RollLeft},{"key:O",Action::RollRight}};auto it=actions.find(c.name);Require(it!=actions.end(),"unknown HOLD key "+c.name);window.SetTestActionState(it->second,frame>=c.begin&&frame<c.end);}
    }
@@ -88,6 +100,8 @@ int RunTestHarness(Window& window,Renderer& renderer,InteractivePlay& play,const
    if(auto* scripts=play.Session().World().Scripts();scripts&&!scripts->Diagnostics().empty())throw std::runtime_error("script callback failed: "+scripts->Diagnostics().front().message);
    for(const auto& c:script.commands)if(c.begin==frame){
     if(c.kind=="SCREENSHOT"){std::filesystem::path output(c.path);if(output.has_parent_path())std::filesystem::create_directories(output.parent_path());std::vector<unsigned char> pixels;renderer.CaptureFrame(window.Width(),window.Height(),pixels);Require(WriteRgbPng(c.path,window.Width(),window.Height(),pixels),"capture failed "+c.path);std::printf("[TestHarness] Wrote screenshot: %s\n",c.path.c_str());}
+    if(c.kind=="EXPECT_POINTER"){const auto p=window.Input().Pointer();Require(std::abs(p.x-c.value)<1e-5f&&std::abs(p.y-c.other)<1e-5f&&p.down==(c.down!=0),"gameplay pointer expectation failed");}
+    if(c.kind=="EXPECT_TOUCHES")Require(window.Input().Touches().size()==std::size_t(c.value),"gameplay touch count expectation failed");
     if(c.kind=="EXPECT_AXIS")Require(std::abs(window.Input().Axis(c.name)-c.value)<1e-5f,"axis expectation failed "+c.name);
     if(c.kind=="EXPECT_HELD")Require(window.Input().Action(c.name).held==(c.value!=0),"held expectation failed "+c.name);
     if(c.kind=="EXPECT_SCENE")Require(play.Session().World().SceneControl()&&play.Session().World().SceneControl()->Current()==c.name,"scene expectation failed "+c.name);

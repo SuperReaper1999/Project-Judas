@@ -1,0 +1,14 @@
+#include "Application.h"
+#include "EngineHost.h"
+#include "InteractivePlay.h"
+#include "RuntimeWorld.h"
+#include "SceneSession.h"
+#include "../../third_party/nlohmann/json.hpp"
+#include <cstdio>
+#include <string>
+using J=nlohmann::json;
+J State(RuntimeWorld& w){if(w.Scripts())for(const auto& r:w.Scripts()->Capture()){auto j=J::parse(r.json);if(j.contains("runSeed")&&j.contains("balls"))return j;}return J::object();}
+int main(int argc,char** argv){if(argc<3)return 2;const bool held=std::string(argv[2])=="held";unsigned frame=0,phase=0,quiet=0;int before=0;bool observed=false;ApplicationControl c;c.hidden=true;c.frameSeconds=[](float){return 1.f/60;};c.hostReady=[](EngineHost& h){h.GetWindow().SetTestInputMode(true);SDL_GL_SetSwapInterval(0);std::string e;h.Audio().Init(e,true);};
+ c.beforeFrame=[&](EngineHost& host,RuntimeWorld& w,InteractivePlay&){auto& window=host.GetWindow();if(phase==1){auto doc=w.UI().Find("blocksmasher");w.UI().Layout(window.Width(),window.Height());auto* l=w.UI().LayoutOf(doc,"b0");if(!l||!l->visible)return;auto p=l->rect.position+l->rect.size*.5f;window.SetTestPointer(int(p.x),int(p.y));window.QueueTestPhysical("mouse:Left",1);window.QueueTestPhysical("mouse:Left",0);phase=2;}else if(phase==3&&++quiet>4&&(!w.SceneControl()||!w.SceneControl()->OperationInProgress())){window.SetTestPointer(window.Width()/2,window.Height()/2);window.QueueTestPhysical("mouse:Left",1);if(!held)window.QueueTestPhysical("mouse:Left",0);phase=held?4:5;}else if(phase==4){window.QueueTestPhysical("mouse:Left",0);phase=5;}};
+ c.afterFrame=[&](EngineHost&,RuntimeWorld& w,InteractivePlay&){++frame;if(w.Scripts()&&!w.Scripts()->Diagnostics().empty()){for(const auto& e:w.Scripts()->Diagnostics())std::printf("SCRIPT_ERROR %s %s\n",e.callback.c_str(),e.message.c_str());w.UI().RequestQuit();return;}auto s=State(w);if(phase==0&&frame>10&&!s.empty()&&w.UI().Find("blocksmasher")){phase=1;std::puts("READY title");}else if(phase==2&&!s.empty()&&s.value("menu","x").empty()){phase=3;before=s.value("balls",0);std::printf("READY gameplay phase=%s balls=%d\n",s.value("phase","").c_str(),before);}else if(phase==5&&!s.empty()){int tag=w.Categories().tags.Find("ball");auto balls=tag>=0?w.QueryEntities(CategoryBit(unsigned(tag))):std::vector<EntityId>{};double speed=0;for(auto id:balls)speed=std::max(speed,double(glm::length(w.Physics().GetLinearVelocity(w.RuntimeBody(id)))));std::printf("GAME_POINTER mode=%s phase=%s before=%d after=%d native_balls=%zu max_speed=%g\n",held?"held":"instant",s.value("phase","").c_str(),before,s.value("balls",0),balls.size(),speed);observed=true;w.UI().RequestQuit();}if(frame>300){std::printf("TIMEOUT phase=%u state=%s\n",phase,s.dump().c_str());w.UI().RequestQuit();}};
+ Application app;char executable[]="judas";char* args[]={executable,argv[1]};int result=app.Run(2,args,&c);return result?result:observed?0:1;}

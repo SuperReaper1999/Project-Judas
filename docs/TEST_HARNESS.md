@@ -28,8 +28,51 @@ Actions/axes inject the **first actual binding's physical control**, including s
 and deadzone conversion. InputSystem produces normal edges/fixed-step consumption;
 no script-private intent mutation. `CONTROL token value begin end` selects an explicit
 physical binding; `LOOK dx dy frame` supplies relative mouse motion, `POINTER x y frame`
-supplies pointer position. `EXPECT_AXIS name value frame`, `EXPECT_HELD name 0|1 frame`,
+supplies both the legacy UI pixel position and the normalized gameplay pointer
+position, retaining its current held state. `EXPECT_AXIS name value frame`, `EXPECT_HELD name 0|1 frame`,
 `EXPECT_PAUSED 0|1 frame` examine post-frame state (consumed UI actions may read zero).
+
+### Gameplay pointer and touch injection
+
+`POINTER_DOWN x y frame` and `POINTER_UP x y frame` move the pointer in window
+pixels and press/release its primary button. The public `input.pointer` snapshot
+and all logical actions bound to `mouse:Left` observe the same injected state.
+`CONTROL mouse:Left ...` and mouse-bound `ACTION` commands also synchronize the
+primary held state. A down/up pair on the same frame retains both logical edges;
+its final pointer snapshot correctly has `down: false`. UI ownership can consume
+the logical bindings without inventing a held gameplay pointer.
+
+`TOUCH_DOWN id x y pressure frame`, `TOUCH_MOVE id x y pressure frame` and
+`TOUCH_UP id x y frame` drive independent gameplay contacts. Positions/pressure
+are normalized [0,1]; the caller's nonnegative ID identifies one synthetic native
+finger, while public contact IDs remain engine-generated. Move/up require an
+active matching contact; repeated down and malformed values fail. Touch commands
+do not synthesize another mouse: use pointer commands when testing UI mouse input.
+This is the main-input harness, not a per-player hardware assignment driver.
+
+`EXPECT_POINTER x y down frame` checks normalized gameplay coordinates/held state;
+`EXPECT_TOUCHES count frame` checks active contact count after the frame.
+
+```text
+FRAMES 8
+POINTER_DOWN 80 60 0
+POINTER 160 120 1
+POINTER_UP 160 120 2
+TOUCH_DOWN 7 .2 .3 .8 3
+TOUCH_MOVE 7 .4 .5 .6 4
+TOUCH_DOWN 8 .7 .5 1 4
+EXPECT_TOUCHES 2 4
+TOUCH_UP 7 .4 .5 5
+TOUCH_UP 8 .7 .5 6
+EXPECT_TOUCHES 0 6
+```
+
+Pointer/touch snapshots expose current state, not an ordered event history.
+A complete touch lifetime between observations is therefore absent from the
+snapshot. Keep a contact across an observed frame when exercising snapshot-based
+gesture code. For short mouse taps, bind a logical mouse action and use its
+`pressed`/`released` edges alongside the current position; polling only `down` can
+miss a complete press/release between fixed updates.
 
 `FRAMES` and legacy `STEPS` count application frames. Frame seconds defaults to 1/60;
 0–0.25 supports paused UI clocks / several fixed steps. `REALTIME n` runs **n
@@ -66,7 +109,7 @@ for harness scripts/captures, or use a different application's structured driver
 Frame count is 1–1,000,000 and frame seconds are finite 0–0.25.
 
 Deterministic input injection deliberately does not poll desktop devices. It
-cannot validate physical pointer confinement, IME, controller hardware, touch or
+cannot validate physical pointer confinement, IME, controller/touch hardware or
 multi-player device assignment. A successful exit also does not prove every
 physical endpoint: add an explicit oracle for the behaviour under investigation.
 Any script diagnostic fails the normal harness run; output alone is not a pass.

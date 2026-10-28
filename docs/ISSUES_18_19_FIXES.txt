@@ -1,0 +1,125 @@
+JUDAS — WEATHER LIGHTING AND POINTER/GESTURE FOLLOW-UP
+Experimental development from f88ed2e6810cd69c2b4f12241ccabb5ac58ad6c1.
+Human acceptance and main promotion remain pending. No release/tag/channel change.
+Fluid development remains paused; its source/evidence/checkpoints are unchanged.
+
+#19 — confirmed renderer defect, corrected
+The previous weather compositor substituted fixed daylight colours for the scene
+background. Cloud, fog, funnel and precipitation illumination also contained
+fixed daylight terms. Rendering the flight game's night settings produced the
+same sky as daytime; a zero-light below-horizon control did too.
+
+The renderer now forwards scene ambient/background alongside its existing sun
+colour/direction to weather programs. A continuous artistic lighting response
+blends dim authored sky with the procedural daylight gradient. Background/sun
+chromaticity tints that gradient; weak moon lighting does not activate daylight.
+Legacy background colours are decoded before compositing; linear/HDR follows its
+existing path. Clouds/fog/precipitation/funnels use actual scene illumination;
+lightning remains independently emissive. Weather-off output, quality bounds,
+origin anchoring, depth clipping and authoritative CPU wind/forces are preserved.
+This is prescribed artistic weather, not a physical atmosphere/day-night clock.
+Custom environment-image sky compositing remains outside the weather sky path.
+
+Initial background-only approach broke the original sunny-weather check for
+scenes using default backgrounds. Its failure is retained. The final light-driven
+blend passes that original threshold/fixture unchanged. An early new cloud test
+used a screen-brightness ratio despite nonlinear encoding; it was replaced with
+strong independent zero-light/emission and ambient-only controls. The original
+failure and subsequent dusk-colour regression outputs are preserved honestly.
+
+#18 — two distinct confirmed problems
+1. Harness pointer position previously changed only legacy UI coordinates.
+   Gameplay input.pointer could remain(0,0,false) while ui_click was held.
+   Window's test adapter now synchronizes position/primary held state with the
+   ordinary logical bindings. It is gated to explicit test mode. Queued inputs
+   use the same adapter; UI/editor ownership clears injected held state.
+   The application harness adds POINTER_DOWN/UP, TOUCH_DOWN/MOVE/UP,
+   EXPECT_POINTER and EXPECT_TOUCHES. Contact lifetime and malformed input fail
+   with diagnostics. Existing POINTER/CONTROL/ACTION commands remain supported.
+2. BlockSmasherV2's game-side pointerInput sampled only pointer.down in fixed
+   callbacks. A completed click between callbacks was absent from that snapshot.
+   The engine DID retain pressed/released edges; no general logical-edge defect
+   was established. A project-owned pointer_press action bound to mouse:Left
+   supplies those edges to the game's existing tap/drag detector. Two JS lines
+   plus one binding fix short mouse taps without firing on press during a drag.
+   No game-specific engine system, pointer-down latch or new JudasJS API added.
+
+Actual complete-game reproduction (not just an extracted method test):
+  Original, instantaneous click: aim; balls10->10; zero native balls.
+  Original, longer control click: flight; balls10->9; one moving native ball.
+  Corrected, instantaneous click: flight; balls10->9; one moving native ball.
+  Corrected, longer control click: flight; balls10->9; one moving native ball.
+The corrected ball's measured speed is approximately17.65m/s after native stepping.
+Both source archives were read-only inputs; test copies and save roots are isolated.
+
+Consumer deliverables
+- local-archives/issues-18-19-input-fixes/BlockSmasherV2-short-click-fixed.zip:
+  the original113 archive entries with ONLY game.js and the project input map
+  replaced. No generated saves/caches or engine binary are inserted.
+- .cache/issues-18-19-investigation/BlockSmasherV2: corrected editable review copy.
+- docs/evidence/issues-18-19-20261028/BlockSmasherV2-short-click.patch:
+  portable patch against the original game's project root.
+- SkyhavenFlight-weather.patch removes its dusk/night region:false workaround
+  in the review copy, allowing wind/clouds to remain enabled. Scripts compile;
+  complete-flight human visual/gameplay acceptance remains pending.
+The large consumer projects are not silently imported into the engine's tracked
+project collection. Minimal original/fixed detector fixtures in tests/fixtures
+are extracted from the real supplied game and self-contained for CI.
+
+Validation
+- Release runtime/editor/tools build; no compiler warnings in the recorded logs.
+- Focused native suites: weather lighting45; existing weather rendering27
+  correctness checks; pointer harness14; native-JS consumer detector62;
+  input40; physical touch/contact events26; runtime UI22; weather67;
+  weather world50; weather scripting30. All pass.
+- Registered weather-lighting/pointer-harness/consumer-pointer gates verify
+  embedded build/source identity and pass from isolated working directories.
+- Consumer original/fixed tests exercise actual QuickJS input and preserve the
+  original missed-tap observation. Drag, long press, HUD exclusion, UI consumption
+  and zero-fixed-step-frame controls pass.
+- Runtime UI application16 checks pass, including relocated export interaction.
+- Corrected BlockSmasher exported46 assets/one scene,59121028 bytes. Moved package
+  launches from / and passes pointer/touch directives with an isolated save root.
+- Editor Weather Lab copy: duplicate/undo and Play/Stop restore authored scene
+  identically; save succeeds. Original projects/preferences were not modified.
+- Script checker: corrected BlockSmasher4 modules; Skyhaven7; zero failures.
+- JudasJS AST/type/inventory check passes. No public JS bindings/types added.
+- Validation manifest check passes; new regression targets are registered.
+- Numerical/render images and measurements used Mesa llvmpipe software OpenGL.
+  They prove functional rendering, not GPU performance or human visual acceptance.
+- WeatherRenderTests --correctness-only skips only the six timing measurements;
+  full default measurement mode remains unchanged. No full production marathon.
+
+Preserved development failures/limits
+A new consumer test initially reused existing asset metadata and dereferenced a
+failed setup; setup guards and per-version tracked assets corrected the fixture.
+Its first isolated-gate execution then exposed a current-directory assumption:
+fixture root is now an explicit manifest argument, so the same gate passes from
+its unrelated output directory. Original logs are retained; neither was claimed
+as an engine defect. Early app probes could not write the default user save root
+inside the execution environment; final controls use supported XDG_DATA_HOME
+isolation and have no outer-service save errors.
+
+Raw xdotool/compositor input timing is not re-tested: xdotool is unavailable.
+The SDL backend used for qualification reports no relative mouse mode; physical
+cursor confinement is NOT certified by the editor smoke. No Windows/Android or
+hardware controller/touchscreen/audio validation is claimed for this checkpoint.
+Touch and pointer APIs intentionally remain current snapshots. A complete touch
+lifetime between observations is not retained as historical per-contact events;
+synthetic contact support does not imply such an API or full multi-player device
+assignment. The BlockSmasher correction specifically addresses mouse taps.
+
+Human checklist
+1. In Skyhaven with the supplied patch, select day, dusk and night. Check cloud
+   and fog illumination, sky colour and retained weather/wind at dusk/night.
+2. In corrected BlockSmasher, start a game and click quickly on the board. One
+   click should fire one ball. Space/longer click should still work.
+3. Drag to aim and hold longer than.3s; release must not fire. HUD/menu clicks
+   should not count as board taps. Test on the real desktop, not just automation.
+4. Pause/resume, change scenes and try the moved standalone. Report any physical
+   capture or touch-specific issue separately; those are not hardware-qualified.
+
+Reproduction/results/source/binary fingerprints:
+  docs/evidence/issues-18-19-20261028/
+Detailed transient probes and corrected projects:
+  .cache/issues-18-19-investigation/

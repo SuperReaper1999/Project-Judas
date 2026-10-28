@@ -1,0 +1,7 @@
+From the repository root, configure Release Experimental and build the three new targets.
+python3 scripts/prealpha_validate.py --build-dir build --test weather-lighting --test pointer-harness --test consumer-pointer --output .cache/issue-fix-rerun --expected-channel Experimental
+Consumer fixture root is passed explicitly by the manifest; it does not depend on test working directory.
+Existing weather render correctness: build/judas_weather_render_tests OUTPUT --correctness-only (default mode additionally measures six workloads).
+Other exact regression commands/arguments are in qualification/FINAL_RESULTS.json.
+External full-game probes require the owner archives, extracted editable copies, a matching local Unix Makefiles Release build and the provided BlockGameProbe.cpp/build_game_probe.py copied into .cache/issues-18-19-investigation/. Use separate supported XDG_DATA_HOME roots for each process. Those private probes are not SDK tools or CI prerequisites.
+Apply the consumer patches from each extracted game project root. Original archives remain unchanged. No hardware/Windows/Android acceptance is implied.

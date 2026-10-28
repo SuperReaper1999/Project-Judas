@@ -70,10 +70,11 @@ Measurement Measure(EngineHost& host,WeatherSample sample,unsigned quality,const
 }
 int main(int argc,char** argv){
  std::setvbuf(stdout,nullptr,_IOLBF,0);std::filesystem::path out=argc>1?argv[1]:"/tmp/judas-m86-render";std::filesystem::create_directories(out);
+ const bool correctnessOnly=argc>2&&std::string(argv[2])=="--correctness-only";
  EngineHost host;std::string error;Check(host.Init("M86 weather rendering",Width,Height,false,error),"native GL3.3 weather renderer starts");if(failures){std::printf("%s\n",error.c_str());return 1;}
  SDL_GL_SetSwapInterval(0);auto& r=host.GetRenderer();View view;auto sunny=Sample("sunny");sunny.profile.cloudCoverage=0;sunny.profile.rain=sunny.profile.snow=sunny.profile.fog=sunny.profile.tornado=0;
  Frame(r,sunny,0,view);auto off=Capture(r);Check(!r.WeatherStats().enabled&&r.WeatherStats().bytes==0,"weather-off has no weather GPU allocation or pass");
- const auto baseline=Measure(host,sunny,0,out,"off");
+ const auto baseline=correctnessOnly?Measurement{}:Measure(host,sunny,0,out,"off");
  Frame(r,sunny,1,view);auto clear=Capture(r);Image(r,out,"sunny.png");Check(r.WeatherStats().ready&&r.WeatherStats().error.empty(),"all lazy weather shaders compile and link");Check(Difference(off,clear,0,240)>12,"sunny weather actually draws a lit sky");
  auto clouds=sunny;clouds.profile.cloudCoverage=1;clouds.profile.cloudDensity=1.5;
  Frame(r,clouds,1,view);auto cloudy=Capture(r);Image(r,out,"clouds.png");Check(Difference(clear,cloudy,0,240)>5,"three-dimensional cloud density changes actual sky output");
@@ -123,9 +124,9 @@ int main(int argc,char** argv){
  for(int i=0;i<8;++i){Frame(r,clouds,1,view);small();}
  Check(r.WeatherStats().allocations==allocations&&r.WeatherStats().cachedTargets==2,"alternating secondary/main sizes reuse a bounded two-slot cache without frame allocations");r.DestroyRenderTarget(target);
  Frame(r,sunny,0,view);Check(Difference(off,Capture(r))<.01,"disabling weather restores the original renderer output");Check(glGetError()==GL_NO_ERROR,"weather depth copies, GL state, HDR and shader samplers produce no GL errors");
- std::ofstream measurements(out/"measurements.json");measurements<<"{\"width\":"<<Width<<",\"height\":"<<Height<<",\"boxes\":61,\"scenarios\":[";
+ std::ofstream measurements(out/"measurements.json");measurements<<"{\"correctness_only\":"<<(correctnessOnly?"true":"false")<<",\"width\":"<<Width<<",\"height\":"<<Height<<",\"boxes\":61,\"scenarios\":[";
  const char* labels[]={"off","sunny","cloudy","thunderstorm","tornado","blizzard"};bool comma=false;
- for(int i=0;i<6;++i){auto sample=Sample(i==0?"sunny":labels[i]);if(i==2)sample=clouds;if(i==4){sample=Sample("tornado");sample.tornadoPosition={25,0,-90};sample.profile.tornadoHeight=150;sample.profile.tornadoRadius=12;sample.profile.cloudBase=130;}
+ for(int i=0;!correctnessOnly&&i<6;++i){auto sample=Sample(i==0?"sunny":labels[i]);if(i==2)sample=clouds;if(i==4){sample=Sample("tornado");sample.tornadoPosition={25,0,-90};sample.profile.tornadoHeight=150;sample.profile.tornadoRadius=12;sample.profile.cloudBase=130;}
   auto m=i==0?baseline:Measure(host,sample,1,out,labels[i]);if(comma)measurements<<',';comma=true;measurements<<"{\"name\":\""<<labels[i]<<"\",\"cpu_median_ms\":"<<m.cpuMedian<<",\"cpu_p95_ms\":"<<m.cpuP95<<",\"gpu_median_ms\":"<<m.gpuMedian<<",\"gpu_p95_ms\":"<<m.gpuP95<<",\"cloud_gpu_median_ms\":"<<m.cloud<<",\"fog_gpu_median_ms\":"<<m.fog<<",\"precipitation_gpu_median_ms\":"<<m.precipitation<<",\"weather_cached_bytes\":"<<m.bytes<<'}';}
  measurements<<"]}\n";r.ClearWeather();host.Shutdown();std::printf("M86 RENDER %u checks %u failures\n",checks,failures);return failures?1:0;
 }

@@ -3,6 +3,7 @@
 #include "AppIcon.h"
 
 #include <cstdio>
+#include <cmath>
 
 bool Window::Init(const char* title, int width, int height, bool visible) {
 #ifdef _WIN32
@@ -203,10 +204,10 @@ void Window::PollEvents(){
     // Select one controller before events, but do not overwrite the previous
     // pair with its final poll: each delivered axis event must remain observable.
     if(!m_testInputMode)RefreshController(false);
-    for(const auto& [control,value]:m_testPhysical){m_input.SetPhysical(control,value);}
+    for(const auto& [control,value]:m_testPhysical){ApplyTestPhysical(control,value);}
     m_testPhysical.clear();
     if(m_keyboardClaimed)m_input.ClearDevice("key:");
-    if(m_mouseClaimed){m_input.ClearDevice("mouse:");m_input.ClearDevice("touch:");}
+    if(m_mouseClaimed){m_input.ClearDevice("mouse:");m_input.ClearDevice("touch:");if(m_testInputMode){auto p=m_input.Pointer();m_input.SetPointer(p.x,p.y,false);}}
     if(m_keyboardClaimed)SetTextInput(false);
     if(hub)hub->textPlatform=m_input.textPlatform;
     auto textEvent=[&](TextInputEvent value){value.player=m_textPlayer;value.token=m_textToken;m_input.QueueText(value);if(hub&&hub->textEvents.size()<128)hub->textEvents.push_back(std::move(value));};
@@ -422,6 +423,25 @@ void Window::SetTestInputMode(bool enabled) {
 }
 
 void Window::BeginTestFrame() { m_input.BeginFrame();m_consumed.clear(); }
+
+void Window::SetTestPointer(int x,int y) {
+    if(!m_testInputMode)return;
+    m_uiClickX=x;m_uiClickY=y;
+    m_input.SetPointer(float(x)/std::max(1,m_width),float(y)/std::max(1,m_height),m_input.Pointer().down);
+}
+
+void Window::ApplyTestPhysical(const std::string& control,float value) {
+    if(!m_testInputMode||!std::isfinite(value))return;
+    m_input.SetPhysical(control,value);
+    if(control=="mouse:Left"){
+        const auto p=m_input.Pointer();m_input.SetPointer(p.x,p.y,value>.5f);
+    }
+}
+
+void Window::SetTestTouch(std::int64_t finger,float x,float y,float pressure,bool down) {
+    if(m_testInputMode)m_input.SetTouch(0,finger,x,y,pressure,down);
+}
+
 
 void Window::SetTestActionState(Action action, bool active) {
     m_testActionState[static_cast<int>(action)] = active;

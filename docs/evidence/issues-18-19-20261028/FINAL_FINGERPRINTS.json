@@ -1,0 +1,255 @@
+{
+  "baseCommit": "f88ed2e6810cd69c2b4f12241ccabb5ac58ad6c1",
+  "createdUtc": "2026-10-28T22:56:49.295365+00:00",
+  "scope": "Qualified Experimental fixes; no human acceptance or main/release promotion",
+  "sourceFiles": {
+    "CMakeLists.txt": "6f869418dce09913f7a94509d26f1816766f7031d54fb3505436631af7b737ea",
+    "docs/ISSUES_18_19_FIXES.txt": "479cda172033e197f60cc8d75be1504d83b319bd56197d8d48caa795b11b3cd3",
+    "docs/TEST_HARNESS.md": "aedbeda27072ae36fcc68b0b2c290320546a56524d917ac435e01296ce7dca69",
+    "docs/judasjs/input.md": "993513f932628dc85583cb2ecedbb8b87b73cc3eabe80e96653e3ad37e08be27",
+    "docs/judasjs/weather.md": "d46f315ae499062918a73dd45e6c2da2ba9e090cfbde29ea732961150dc47680",
+    "src/Renderer.cpp": "9533a706b1eb3db8d9dce52fbcd8af049e414ba7774b8390a52411e7aa873c85",
+    "src/Renderer.h": "0f9bf13e8d26e71cc90b2e6490546697f8023cb47d3656a4d83dbc5042c8d675",
+    "src/RendererMaterials.inl": "6d672e58a11e1ff02d3d5daf38080666f8aaf7e69a98747456db57fa281e3828",
+    "src/RendererWeather.inl": "86d07b3b5515fc1f7bb3d1d5324bad34f8b937f6adfaf686c26e40d8d745e035",
+    "src/TestHarness.cpp": "2907de22b617cd66e3f078c875a7905bf979adb614c6de7a268e066111c35486",
+    "src/Window.cpp": "dca88d90dde1235004b75f43afb46c4ce41371a01aa268413e2052ee072df6ff",
+    "src/Window.h": "6beaf9bb2b36da3e89ab745d7c9ae84dbef1e51e0642aa6e7f5558489e3621f8",
+    "tests/ConsumerPointerTests.cpp": "d85598bb5c2e50d04abdb66dc84d91372a8fce51abfdd4d486af8192baca972f",
+    "tests/PointerHarnessTests.cpp": "4cddd18c7c509e0bad895b26863646283198b6e1dbe4f592bdea88ce4687ebe2",
+    "tests/WeatherLightingTests.cpp": "87ea194903e856e7beea8a6c8b178c197f464c17db14881b159426c270fe4a37",
+    "tests/WeatherRenderTests.cpp": "e0e8258016c3bf7bf519d343233e6935f57b4822de8c70f7b8a2de331231cc70",
+    "tests/fixtures/pointer-taps/PROVENANCE.txt": "576068fc451d32ab99c5504ce72f3ee62147967318371426c7bddd36683ef765",
+    "tests/fixtures/pointer-taps/fixed.js": "3af146ab3f19c8033d02f8bbe1646a439069fecd2da2286400764c4e58a20605",
+    "tests/fixtures/pointer-taps/original.js": "6618ef24a7612204db6d30bc4fa9986f962ae0b1c81f66050d6804572c4d2896",
+    "tools/validation/suites.json": "88524c094ac4f27c71a69ce945716667407a93547c77de53f01bc583948528ef"
+  },
+  "binaries": {
+    "judas": {
+      "sha256": "5035706e618685b44a802cede5c76eefb8504a248d1185788fd373027cde90a0",
+      "identity": {
+        "architecture": "x86_64",
+        "build_id": "1.0.0-alpha.1-Experimental-f88ed2e-dirty-341f566e44af-u6901bb415741",
+        "channel": "Experimental",
+        "compiler": "GNU",
+        "compiler_version": "15.2.0",
+        "configuration": "Release",
+        "maturity": "alpha",
+        "platform": "Linux",
+        "release_name": "Judas Engine Alpha v1.0.0",
+        "schema": 1,
+        "source_dirty": true,
+        "source_fingerprint": "341f566e44af0681e83fef4bdb367114f7286f6442fbbe66d87a99b4d6b3a01c",
+        "source_origin": "git",
+        "source_revision": "f88ed2e6810cd69c2b4f12241ccabb5ac58ad6c1",
+        "source_tree": "5a3ba617338de2539a41a432044760411e5ce339",
+        "source_untracked_count": 22,
+        "source_untracked_fingerprint": "6901bb4157419a1f9fc2a13c9db7454d401aba67d0ec47e4f6e2296cf9ba256b",
+        "version": "1.0.0-alpha.1"
+      }
+    },
+    "judas_editor": {
+      "sha256": "55a3eb2a57f78292aec39a09727b689e334668ebc007ca782c79983243d28d5d",
+      "identity": {
+        "architecture": "x86_64",
+        "build_id": "1.0.0-alpha.1-Experimental-f88ed2e-dirty-341f566e44af-u6901bb415741",
+        "channel": "Experimental",
+        "compiler": "GNU",
+        "compiler_version": "15.2.0",
+        "configuration": "Release",
+        "maturity": "alpha",
+        "platform": "Linux",
+        "release_name": "Judas Engine Alpha v1.0.0",
+        "schema": 1,
+        "source_dirty": true,
+        "source_fingerprint": "341f566e44af0681e83fef4bdb367114f7286f6442fbbe66d87a99b4d6b3a01c",
+        "source_origin": "git",
+        "source_revision": "f88ed2e6810cd69c2b4f12241ccabb5ac58ad6c1",
+        "source_tree": "5a3ba617338de2539a41a432044760411e5ce339",
+        "source_untracked_count": 22,
+        "source_untracked_fingerprint": "6901bb4157419a1f9fc2a13c9db7454d401aba67d0ec47e4f6e2296cf9ba256b",
+        "version": "1.0.0-alpha.1"
+      }
+    },
+    "judas_export": {
+      "sha256": "44f4cde3276377fc92290a0547afb0325839669d3522bffdeed87b930cb285ad",
+      "identity": {
+        "architecture": "x86_64",
+        "build_id": "1.0.0-alpha.1-Experimental-f88ed2e-dirty-341f566e44af-u6901bb415741",
+        "channel": "Experimental",
+        "compiler": "GNU",
+        "compiler_version": "15.2.0",
+        "configuration": "Release",
+        "maturity": "alpha",
+        "platform": "Linux",
+        "release_name": "Judas Engine Alpha v1.0.0",
+        "schema": 1,
+        "source_dirty": true,
+        "source_fingerprint": "341f566e44af0681e83fef4bdb367114f7286f6442fbbe66d87a99b4d6b3a01c",
+        "source_origin": "git",
+        "source_revision": "f88ed2e6810cd69c2b4f12241ccabb5ac58ad6c1",
+        "source_tree": "5a3ba617338de2539a41a432044760411e5ce339",
+        "source_untracked_count": 22,
+        "source_untracked_fingerprint": "6901bb4157419a1f9fc2a13c9db7454d401aba67d0ec47e4f6e2296cf9ba256b",
+        "version": "1.0.0-alpha.1"
+      }
+    },
+    "judas_script_check": {
+      "sha256": "cc7659da71c24b9b25d87c1c0650bab359f4fc6db004fc60252acbf74da6c1ea",
+      "identity": {
+        "architecture": "x86_64",
+        "build_id": "1.0.0-alpha.1-Experimental-f88ed2e-dirty-341f566e44af-u6901bb415741",
+        "channel": "Experimental",
+        "compiler": "GNU",
+        "compiler_version": "15.2.0",
+        "configuration": "Release",
+        "maturity": "alpha",
+        "platform": "Linux",
+        "release_name": "Judas Engine Alpha v1.0.0",
+        "schema": 1,
+        "source_dirty": true,
+        "source_fingerprint": "341f566e44af0681e83fef4bdb367114f7286f6442fbbe66d87a99b4d6b3a01c",
+        "source_origin": "git",
+        "source_revision": "f88ed2e6810cd69c2b4f12241ccabb5ac58ad6c1",
+        "source_tree": "5a3ba617338de2539a41a432044760411e5ce339",
+        "source_untracked_count": 22,
+        "source_untracked_fingerprint": "6901bb4157419a1f9fc2a13c9db7454d401aba67d0ec47e4f6e2296cf9ba256b",
+        "version": "1.0.0-alpha.1"
+      }
+    },
+    "judas_weather_lighting_tests": {
+      "sha256": "91651721c6198fd193a6fed08db4e155cb642efcdf184ec84b3df64a23d1d6a5",
+      "identity": {
+        "architecture": "x86_64",
+        "build_id": "1.0.0-alpha.1-Experimental-f88ed2e-dirty-de5d2d937c8c-u6901bb415741",
+        "channel": "Experimental",
+        "compiler": "GNU",
+        "compiler_version": "15.2.0",
+        "configuration": "Release",
+        "maturity": "alpha",
+        "platform": "Linux",
+        "release_name": "Judas Engine Alpha v1.0.0",
+        "schema": 1,
+        "source_dirty": true,
+        "source_fingerprint": "de5d2d937c8c1eaa928b5b744c1687aea81459a15e511685123de96a268c108d",
+        "source_origin": "git",
+        "source_revision": "f88ed2e6810cd69c2b4f12241ccabb5ac58ad6c1",
+        "source_tree": "5a3ba617338de2539a41a432044760411e5ce339",
+        "source_untracked_count": 22,
+        "source_untracked_fingerprint": "6901bb4157419a1f9fc2a13c9db7454d401aba67d0ec47e4f6e2296cf9ba256b",
+        "version": "1.0.0-alpha.1"
+      }
+    },
+    "judas_pointer_harness_tests": {
+      "sha256": "46c47e2c3c16c1447f4a6e6b6755454eb7466e7e5b7da285c424cd77a39676b9",
+      "identity": {
+        "architecture": "x86_64",
+        "build_id": "1.0.0-alpha.1-Experimental-f88ed2e-dirty-de5d2d937c8c-u6901bb415741",
+        "channel": "Experimental",
+        "compiler": "GNU",
+        "compiler_version": "15.2.0",
+        "configuration": "Release",
+        "maturity": "alpha",
+        "platform": "Linux",
+        "release_name": "Judas Engine Alpha v1.0.0",
+        "schema": 1,
+        "source_dirty": true,
+        "source_fingerprint": "de5d2d937c8c1eaa928b5b744c1687aea81459a15e511685123de96a268c108d",
+        "source_origin": "git",
+        "source_revision": "f88ed2e6810cd69c2b4f12241ccabb5ac58ad6c1",
+        "source_tree": "5a3ba617338de2539a41a432044760411e5ce339",
+        "source_untracked_count": 22,
+        "source_untracked_fingerprint": "6901bb4157419a1f9fc2a13c9db7454d401aba67d0ec47e4f6e2296cf9ba256b",
+        "version": "1.0.0-alpha.1"
+      }
+    },
+    "judas_consumer_pointer_tests": {
+      "sha256": "75228921b7cea31897d171cad067a69e31a76644ee27f3cf8e444a4180a7f692",
+      "identity": {
+        "architecture": "x86_64",
+        "build_id": "1.0.0-alpha.1-Experimental-f88ed2e-dirty-de5d2d937c8c-u6901bb415741",
+        "channel": "Experimental",
+        "compiler": "GNU",
+        "compiler_version": "15.2.0",
+        "configuration": "Release",
+        "maturity": "alpha",
+        "platform": "Linux",
+        "release_name": "Judas Engine Alpha v1.0.0",
+        "schema": 1,
+        "source_dirty": true,
+        "source_fingerprint": "de5d2d937c8c1eaa928b5b744c1687aea81459a15e511685123de96a268c108d",
+        "source_origin": "git",
+        "source_revision": "f88ed2e6810cd69c2b4f12241ccabb5ac58ad6c1",
+        "source_tree": "5a3ba617338de2539a41a432044760411e5ce339",
+        "source_untracked_count": 22,
+        "source_untracked_fingerprint": "6901bb4157419a1f9fc2a13c9db7454d401aba67d0ec47e4f6e2296cf9ba256b",
+        "version": "1.0.0-alpha.1"
+      }
+    },
+    "judas_weather_render_tests": {
+      "sha256": "d9bfe76cc71a2bc408bf2c829b1ccf06f74234c6ff043f8264fe8b8bfc4b5145",
+      "identity": {
+        "notProbed": "legacy test executable is not registered for this metadata flag"
+      }
+    },
+    "judas_runtime_ui_application_tests": {
+      "sha256": "795edff1f93646090e105cfbec015c535dd07e3126c9e0501638e4077e70dc69",
+      "identity": {
+        "notProbed": "legacy test executable is not registered for this metadata flag"
+      }
+    },
+    "judas_input_tests": {
+      "sha256": "fab51fef9124d630365b2bec9e2be4e918073dbe6536fe7ecb60c6190749c5bf",
+      "identity": {
+        "notProbed": "legacy test executable is not registered for this metadata flag"
+      }
+    },
+    "judas_touch_event_tests": {
+      "sha256": "f5ac3e66bb84b75d303beb339e752d2e2feddedeaa517f428d9dffd94d772290",
+      "identity": {
+        "notProbed": "legacy test executable is not registered for this metadata flag"
+      }
+    },
+    "judas_runtime_ui_tests": {
+      "sha256": "4b21931ffa1af65b850174420fa87b40f3957534f25f5c2b2541dd27c24f71ad",
+      "identity": {
+        "notProbed": "legacy test executable is not registered for this metadata flag"
+      }
+    },
+    "judas_weather_tests": {
+      "sha256": "88d3dd10f0d020a134acd8ac8c5bc0f2f086bc52954a5283a3e1d85d80ef5928",
+      "identity": {
+        "notProbed": "legacy test executable is not registered for this metadata flag"
+      }
+    },
+    "judas_weather_world_tests": {
+      "sha256": "4c6e6d161e136cbc1873d7459b8be1ff6e7c3d99244c82e2c9e0cdbdfaa20b28",
+      "identity": {
+        "notProbed": "legacy test executable is not registered for this metadata flag"
+      }
+    },
+    "judas_weather_script_tests": {
+      "sha256": "0093898b52d42a3769a36413f59c87d822f906c56a3b491007828a63a5366d7c",
+      "identity": {
+        "notProbed": "legacy test executable is not registered for this metadata flag"
+      }
+    }
+  },
+  "unchangedProtectedSources": {
+    "src/PhysicsWorld.h": "0b9c2e0b7f3f2c67b9ebd76c56ff464802d9e911daa1e437ad740e0849fe8120",
+    "src/physics/WorldMk2Solver.cpp": "9a3d5a3f236509e819d8d4981b509ffe325736807896b12249295e0fdcdc6945",
+    "src/FluidWorld.cpp": "e7943c00356ba06e484c25c0deb02dc3c2970dd75997731b7e4a4d03b7e3a0c5",
+    "src/ProductionFluidCoupling.cpp": "f265454784ec2e2f9f152dc4a6246892921daafe76c361e383f23737f9f4c260",
+    "src/AdvancedFluidPolicy.h": "ed05d87327f574710fdbbe2be8af97d033468e0ef8e7648ee4312d92c0ae7169",
+    "src/LiquidSystem.cpp": "d704a54dacc603984201f8e6620f9c5cdd12d2c504a064cefd2a3bc1c7b537e8",
+    "src/LiquidSurface.cpp": "8d46203484875a90f1583e35bde5603cf1f47b15a73d629205451c007f61b625",
+    "src/BasicWater.cpp": "3badfe5f85d30a499a99ae2918cf965113a751ee38f3a75644f489a5b49ec129",
+    "engine-version.json": "001d325a9db6707d882d9af73a9744497ce42d6d678b6fd16f96031dc317dd13"
+  },
+  "consumerArchives": {
+    "/home/conner/Documents/BlockSmasherV2.zip": "4b3152c2583bac24ea6a6c7c394e05093930d3f509a0742c0615541fe5409a34",
+    "/home/conner/Documents/SkyhavenFlight_flight_sim.zip": "13ab0053362bf9a4820225ce9dbe8dccac5f0668f3a8f631c0852aaf9fa6f196",
+    "/home/conner/Documents/GitHub/Project-Judas/local-archives/issues-18-19-input-fixes/BlockSmasherV2-short-click-fixed.zip": "0ffeda5df4eefa9e70879547c14cd5a9a469f1575669d23cafe5feee1bca4de6"
+  },
+  "binaryIdentityNote": "Binaries embed their actual pre-checkpoint dirty-tree identities. Exact runtime source hashes identify the qualified implementation; later documentation/evidence staging and commit do not rewrite historical build identities."
+}

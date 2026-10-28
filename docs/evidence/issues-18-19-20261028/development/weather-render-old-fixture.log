@@ -1,0 +1,32 @@
+Shadow maps: on
+Graphics: 4.5 (Core Profile) Mesa 26.0.8-1ubuntu0.3 / llvmpipe (LLVM 21.1.8, 256 bits)
+Renderer fragment texture units: 32 (material path uses 12)
+PASS native GL3.3 weather renderer starts
+PASS weather-off has no weather GPU allocation or pass
+PASS all lazy weather shaders compile and link
+FAIL sunny weather actually draws a lit sky
+PASS three-dimensional cloud density changes actual sky output
+PASS negative control: zero density removes the cloud volume
+PASS all noise octaves remain continuous across absolute modulo boundaries
+PASS opaque geometry rejects the cloud volume behind it
+PASS overhead roof grid suppresses actual local GPU rain
+PASS negative control: open-sky shelter samples do not hide rain
+PASS snow uses bounded analytic GPU flakes
+PASS moving funnel volume and debris contribute visible depth
+PASS funnel volume remains visible without debris, rain, cloud lighting or global darkening
+PASS lightning changes cloud illumination and visible lightning output
+PASS rotating weather, scene and view preserves arbitrary-up rendering
+PASS origin shift preserves camera-relative cloud and precipitation presentation
+PASS Earth-scale spherical cloud shell is visible from above
+PASS orbital pixel-footprint filtering keeps a subpixel view change stable at four million metres
+DIAGNOSTIC distant smooth depth image difference=0.056971
+PASS distant opaque geometry does not zebra-clip a thin foreground cloud layer
+PASS negative control: the distant opaque depth fixture draws real geometry
+PASS secondary cameras use a bounded history-free coarse pass
+PASS off-axis/oblique projection renders without temporal camera history
+PASS high quality remains within the declared scratch memory bound
+PASS ordinary secondary target allocates
+PASS alternating secondary/main sizes reuse a bounded two-slot cache without frame allocations
+PASS disabling weather restores the original renderer output
+PASS weather depth copies, GL state, HDR and shader samplers produce no GL errors
+M86 RENDER 27 checks 1 failures

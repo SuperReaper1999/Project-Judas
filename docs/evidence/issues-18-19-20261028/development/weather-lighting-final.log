@@ -1,0 +1,51 @@
+Shadow maps: on
+Graphics: 4.5 (Core Profile) Mesa 26.0.8-1ubuntu0.3 / llvmpipe (LLVM 21.1.8, 256 bits)
+Renderer fragment texture units: 32 (material path uses 12)
+PASS native renderer starts
+PASS weather lighting has no GL error
+PASS capture actual weather output
+PASS weather lighting has no GL error
+PASS capture actual weather output
+PASS night weather respects authored darkness even with an above-horizon moon light
+PASS weather lighting has no GL error
+PASS capture actual weather output
+FAIL dusk retains authored warm sky rather than fixed daylight blue
+LIGHTING linear=0 day=193.819 night=13.6713
+PASS weather lighting has no GL error
+PASS capture actual weather output
+PASS weather lighting has no GL error
+PASS capture actual weather output
+PASS night weather respects authored darkness even with an above-horizon moon light
+PASS weather lighting has no GL error
+PASS capture actual weather output
+FAIL dusk retains authored warm sky rather than fixed daylight blue
+LIGHTING linear=1 day=159.587 night=37.2615
+PASS weather lighting has no GL error
+PASS capture actual weather output
+PASS weather off stays disabled
+PASS disabled weather preserves the ordinary dark background
+PASS weather lighting has no GL error
+PASS capture actual weather output
+PASS weather lighting has no GL error
+PASS capture actual weather output
+PASS cloud ambient/direct illumination follows scene night lighting
+PASS weather lighting has no GL error
+PASS capture actual weather output
+PASS weather lighting has no GL error
+PASS capture actual weather output
+PASS negative control: unlit clouds do not emit fixed daylight
+PASS clouds receive actual scene ambient illumination
+PASS weather lighting has no GL error
+PASS capture actual weather output
+PASS lightning still illuminates a night storm
+PASS weather lighting has no GL error
+PASS capture actual weather output
+PASS weather lighting has no GL error
+PASS capture actual weather output
+PASS fog illumination follows scene ambient without a fixed daylight term
+PASS weather lighting has no GL error
+PASS capture actual weather output
+PASS weather lighting has no GL error
+PASS capture actual weather output
+PASS lighting is covariant under arbitrary-up rotation
+WEATHER_LIGHTING checks=45 failures=2

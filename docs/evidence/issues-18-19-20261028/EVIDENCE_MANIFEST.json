@@ -1,0 +1,344 @@
+{
+  "files": [
+    {
+      "path": "BlockSmasherV2-short-click.patch",
+      "size": 1549,
+      "sha256": "d3975a325e3f1e5850f4a9ce20575da50878d36e808df7ed177eb20197857403"
+    },
+    {
+      "path": "FINAL_FINGERPRINTS.json",
+      "size": 12957,
+      "sha256": "68fa98f8bc3959312654a7fe5296e563719a93c7428955035b7a824b8baaff9a"
+    },
+    {
+      "path": "REPRODUCE.txt",
+      "size": 1122,
+      "sha256": "8bacf45f8869833cc72aab8806e71c9fe5800c849cc15c48bf1f6e610986b2b2"
+    },
+    {
+      "path": "SkyhavenFlight-weather.patch",
+      "size": 1741,
+      "sha256": "acf1a1c075682137937e5524d3fb2eebb8c677e5dc19faa4ebea958bbbba38aa"
+    },
+    {
+      "path": "baseline/IDENTITY.json",
+      "size": 626,
+      "sha256": "6aa32285fe19dc27555c97699f831430aa4a70cd674bbe9ada7f5092246d8c86"
+    },
+    {
+      "path": "baseline/IssueProbe.cpp",
+      "size": 4092,
+      "sha256": "d9d141d4aafc6697b1a0247c397f77d5b499ac658b3c9146ab579dc44281bd4d"
+    },
+    {
+      "path": "baseline/REPORT.txt",
+      "size": 5241,
+      "sha256": "40f9d242ca1b0ae0b68e1193542b2f06a7217a5fb49fcb447e645bcfcdd2f0e3"
+    },
+    {
+      "path": "baseline/build_probe.py",
+      "size": 843,
+      "sha256": "f61c8f2f5e9936dcba848e8dc90e1400d5815f0d168e08bdb3928966ca89b4ed"
+    },
+    {
+      "path": "baseline/day-weather.png",
+      "size": 31654,
+      "sha256": "846785e91bb807345e8dddb524d8c4f1f268806200eb99438bd2fe294335c342"
+    },
+    {
+      "path": "baseline/night-no-weather.png",
+      "size": 7241,
+      "sha256": "768b8c135834c21eaf3ae2ea1299cd80e68e6a20579306c8d4becb19b41f9da4"
+    },
+    {
+      "path": "baseline/night-weather.png",
+      "size": 31654,
+      "sha256": "846785e91bb807345e8dddb524d8c4f1f268806200eb99438bd2fe294335c342"
+    },
+    {
+      "path": "baseline/probe-ui-visible.log",
+      "size": 748,
+      "sha256": "7775428a45f20a702a89cf45048b38abfea08b559c31b4c6794596970985c2e5"
+    },
+    {
+      "path": "development/block-fixed-instant.log",
+      "size": 898,
+      "sha256": "0007675d3809589d241597c5dd88c24f510a61d85b162126678d28d142ba480f"
+    },
+    {
+      "path": "development/block-original-instant.log",
+      "size": 796,
+      "sha256": "81e5f9b155a7c618859487f8c731c244633ddf06fd5eaa1fd7266a300b049636"
+    },
+    {
+      "path": "development/consumer-first-linebuffered.log",
+      "size": 125,
+      "sha256": "4245f197fd603d1092f9b920efda8fd8aa908c0a1bcab2676694b6c66ab0955a"
+    },
+    {
+      "path": "development/consumer-setup.log",
+      "size": 197,
+      "sha256": "d29fb1afc916c86b81c24231ef3acd02b000e0e14e1c177e662da7b01abfcaed"
+    },
+    {
+      "path": "development/registered-gates/RESULTS.json",
+      "size": 10574,
+      "sha256": "d36f6dd95ffcc5d4cf6998aeea589481ff6775eefb514a0cec45965f8875a0a4"
+    },
+    {
+      "path": "development/registered-gates/consumer-pointer.log",
+      "size": 340,
+      "sha256": "f3cc28a1f60a5672fc6f3c720d19b475af065b5cea3bc15cfde608491c47b615"
+    },
+    {
+      "path": "development/registered-gates/pointer-harness.log",
+      "size": 1479,
+      "sha256": "967ede0953c9e80e3a97f4a10dd7ac064baa5f37da88a1711396032abc75b1eb"
+    },
+    {
+      "path": "development/registered-gates/weather-lighting.log",
+      "size": 2243,
+      "sha256": "003fa5c86172c24d9a7c427b260e520d158e8ee5efce6f6efcedfd252c2ccd75"
+    },
+    {
+      "path": "development/registered-gates-qualified/RESULTS.json",
+      "size": 7222,
+      "sha256": "94c62dbd23e9285027613d477d67bade17131cf74cfda52d56ca702d495d6b73"
+    },
+    {
+      "path": "development/registered-gates-qualified/consumer-pointer.log",
+      "size": 87,
+      "sha256": "5dbf710da54c0f544bcb4bb5acb396ede8499c6bbdd4dca418683da20c52ba1c"
+    },
+    {
+      "path": "development/registered-gates-qualified/pointer-harness.log",
+      "size": 87,
+      "sha256": "5dbf710da54c0f544bcb4bb5acb396ede8499c6bbdd4dca418683da20c52ba1c"
+    },
+    {
+      "path": "development/registered-gates-qualified/weather-lighting.log",
+      "size": 87,
+      "sha256": "5dbf710da54c0f544bcb4bb5acb396ede8499c6bbdd4dca418683da20c52ba1c"
+    },
+    {
+      "path": "development/weather-lighting-final.log",
+      "size": 2243,
+      "sha256": "054263cedd82c0dc5c95ba30c4c967d1bdc87f3e6520152cbbec9e5f6e17e3c9"
+    },
+    {
+      "path": "development/weather-lighting-first.log",
+      "size": 1980,
+      "sha256": "08bd8c7f0b66604d002d728b6d7b3b01410d986edb7f08b79b6585a1d46019bb"
+    },
+    {
+      "path": "development/weather-render-old-fixture.log",
+      "size": 2033,
+      "sha256": "dea3183732c9cd80bf27c812b9342d379830b4f6260607e7b7670f0b762899a9"
+    },
+    {
+      "path": "images/day.png",
+      "size": 17950,
+      "sha256": "37b34b53eb11cde09210032f09165a746aaa908ff90e09cdec902a8420ac6e6b"
+    },
+    {
+      "path": "images/dusk.png",
+      "size": 17453,
+      "sha256": "7bae396245aceb0f077b0ad490d50a46c0ca0486721c15055d372f4751137a06"
+    },
+    {
+      "path": "images/night-cloud.png",
+      "size": 6018,
+      "sha256": "71b8e510a70e8a1e06cc72cabda19aba0b76b1eaa8463342049ea68cc07b3bca"
+    },
+    {
+      "path": "images/night-flash.png",
+      "size": 4362,
+      "sha256": "ad1b9a5015b7f2737fbcdc2c32ea6e5f5dc0ba91afc4297df8827c11d7ef3798"
+    },
+    {
+      "path": "images/night.png",
+      "size": 3654,
+      "sha256": "3b56d19344ecb3d081fde11feded03687732f21713cc5315e572ece14a55903c"
+    },
+    {
+      "path": "qualification/BlockGameProbe.cpp",
+      "size": 2869,
+      "sha256": "7536a686f81c80e0c335ea4d4c56eee03989bba3d78dc9781dd84c1f17ee7225"
+    },
+    {
+      "path": "qualification/EDITOR_RESULT.json",
+      "size": 70,
+      "sha256": "85f705db3c887ff8680abce6c90706138fd34557304fd1ac90924434f6040357"
+    },
+    {
+      "path": "qualification/FINAL_GAME_RESULTS.json",
+      "size": 1163,
+      "sha256": "fc8705c962ff4c7d4c97e91d09f756a3cccf4b7d894a356ae44f7f9e97fbfa0a"
+    },
+    {
+      "path": "qualification/FINAL_RESULTS.json",
+      "size": 1661,
+      "sha256": "9fd801d0931aebd49778d56c2614e069c5cf6084e4f147fdcf016115827a57ed"
+    },
+    {
+      "path": "qualification/RELOCATED_RESULT.json",
+      "size": 82,
+      "sha256": "a3617b9ab21ddcd7de73bcb60d968fc4157ea06eb9e655dde94ca6171b20c94c"
+    },
+    {
+      "path": "qualification/api-drift.log",
+      "size": 309,
+      "sha256": "83a5b0a4b21c2de9821e6228a72e5df8ec5450dd7011fb77e008c7046a5e8541"
+    },
+    {
+      "path": "qualification/block-script-check.log",
+      "size": 103,
+      "sha256": "e3f88a7d3e920f0b56b6a59d4db1de840c2e6798848abcbe8c7d946c551c0267"
+    },
+    {
+      "path": "qualification/build-closure.log",
+      "size": 3058,
+      "sha256": "0cda0d7b5a5b1c0e3414c2ecf7d1e11c1cbc8e70b62630cfc48d5eee5819ff7c"
+    },
+    {
+      "path": "qualification/build-final-qualified.log",
+      "size": 7723,
+      "sha256": "8ff99161faf68fc43c9fe8077a976940e04553f77b2ee35c132d06ad9d1e56f7"
+    },
+    {
+      "path": "qualification/build-identity-final.log",
+      "size": 2080,
+      "sha256": "13ead41090428f6edeaea759db250a289c87c0487ffdad09d156feb6e39506e1"
+    },
+    {
+      "path": "qualification/build_game_probe.py",
+      "size": 824,
+      "sha256": "4893515b04dd4d74c5e8985bbc4676da036a4ad327d8f6ef4b671cb6da4dce5c"
+    },
+    {
+      "path": "qualification/editor-smoke.log",
+      "size": 8724,
+      "sha256": "a7e38643d4ea8f9cf822defb50d7f6dc2b2c4d330711f171c4cf8d20e2714e54"
+    },
+    {
+      "path": "qualification/export.log",
+      "size": 152,
+      "sha256": "198d36d2df3faac4410b14084173fe91f4d7d1bbd28f961e213a069979ae9ee2"
+    },
+    {
+      "path": "qualification/final-game-fixed-held.log",
+      "size": 757,
+      "sha256": "008ee58c1307b9ecc11fa1b921c7bcd67ae57679165350b0913ae22f7edac063"
+    },
+    {
+      "path": "qualification/final-game-fixed-instant.log",
+      "size": 760,
+      "sha256": "735ed6171582edf260a15e190678b00d66852c3be0fa86aa838709aead3ea364"
+    },
+    {
+      "path": "qualification/final-game-original-held.log",
+      "size": 661,
+      "sha256": "ba7fb71d089c7ca57b1e86a18b69467e14d14ebda8d45cfa874e25949e595820"
+    },
+    {
+      "path": "qualification/final-game-original-instant.log",
+      "size": 658,
+      "sha256": "54416f7626afbf6f2ee53816faa331faaff91e527f6bfe9c6a3b119438adaffc"
+    },
+    {
+      "path": "qualification/flight-script-check.log",
+      "size": 103,
+      "sha256": "7debcfb0e5a21f6c563f11a7794ec4d1c95a6120d03b7fc01d9d38327f7da130"
+    },
+    {
+      "path": "qualification/manifest-check.log",
+      "size": 81,
+      "sha256": "b5bbc4b73f77ec6eeacc017108838958e29bfb4ffd0ad15bce79794904154d4f"
+    },
+    {
+      "path": "qualification/qualified-judas_consumer_pointer_tests.log",
+      "size": 4269,
+      "sha256": "ec4163cd01f6b58ccc948fd8194bfdf8682590df69a1afbe860e7d88716cc398"
+    },
+    {
+      "path": "qualification/qualified-judas_input_tests.log",
+      "size": 1985,
+      "sha256": "f5ec3867d7c2850c8a12f7d16bccb5b2cb3439a271bad1bec3b9725ce65c0fa9"
+    },
+    {
+      "path": "qualification/qualified-judas_pointer_harness_tests.log",
+      "size": 1479,
+      "sha256": "967ede0953c9e80e3a97f4a10dd7ac064baa5f37da88a1711396032abc75b1eb"
+    },
+    {
+      "path": "qualification/qualified-judas_runtime_ui_tests.log",
+      "size": 1112,
+      "sha256": "8cd4414f6cce35d1937b4b2572f3f029d8a481fc4d250a7038675e8d538174cc"
+    },
+    {
+      "path": "qualification/qualified-judas_touch_event_tests.log",
+      "size": 1272,
+      "sha256": "ab6d53692a4f4f17a493d8ac0331682515515e9f0c35842cd6c78984c4663d09"
+    },
+    {
+      "path": "qualification/qualified-judas_weather_lighting_tests.log",
+      "size": 2243,
+      "sha256": "003fa5c86172c24d9a7c427b260e520d158e8ee5efce6f6efcedfd252c2ccd75"
+    },
+    {
+      "path": "qualification/qualified-judas_weather_render_tests.log",
+      "size": 2033,
+      "sha256": "92789ae1d3a38b5bcbdfa412a02a842eae8137bd8d5c05d2d304bd83265e5200"
+    },
+    {
+      "path": "qualification/qualified-judas_weather_script_tests.log",
+      "size": 1277,
+      "sha256": "a5cfe0bf57b82c68764018ad3baf8fe393799ff738abe02ceb8fc0d127eb241f"
+    },
+    {
+      "path": "qualification/qualified-judas_weather_tests.log",
+      "size": 3402,
+      "sha256": "b9de038b38d6372344ee4441cf368b6a15566b501498328efae99d46f630f842"
+    },
+    {
+      "path": "qualification/qualified-judas_weather_world_tests.log",
+      "size": 3443,
+      "sha256": "8e134087a4f5daf3b8515ab30a2af13fc40fc5477bfe77e72d0950417c241cfc"
+    },
+    {
+      "path": "qualification/registered-gates-complete/RESULTS.json",
+      "size": 10711,
+      "sha256": "8cd60cc61b3125c4b944978fe20d7444c5536f5954bb3b83bff394adf6aff019"
+    },
+    {
+      "path": "qualification/registered-gates-complete/consumer-pointer.log",
+      "size": 4269,
+      "sha256": "ec4163cd01f6b58ccc948fd8194bfdf8682590df69a1afbe860e7d88716cc398"
+    },
+    {
+      "path": "qualification/registered-gates-complete/pointer-harness.log",
+      "size": 1479,
+      "sha256": "967ede0953c9e80e3a97f4a10dd7ac064baa5f37da88a1711396032abc75b1eb"
+    },
+    {
+      "path": "qualification/registered-gates-complete/weather-lighting.log",
+      "size": 2243,
+      "sha256": "003fa5c86172c24d9a7c427b260e520d158e8ee5efce6f6efcedfd252c2ccd75"
+    },
+    {
+      "path": "qualification/relocated-input.txt",
+      "size": 270,
+      "sha256": "67e9db9f79dd13455d667e685f1db36c26bb236a147cdfabaa040cf4fd74c250"
+    },
+    {
+      "path": "qualification/relocated-launch.log",
+      "size": 3581,
+      "sha256": "28aeb040af135c0713ae973044276faf935e5bdbcca9a131380e29cb8b5c8b4c"
+    },
+    {
+      "path": "qualification/ui-application.log",
+      "size": 3062,
+      "sha256": "7bfab9b6fb1c237cbd43515c256ad7b3567113ed4a9a69b48dd0e453fa734b7c"
+    }
+  ]
+}

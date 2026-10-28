@@ -1,0 +1,11 @@
+Shadow maps: on
+Graphics: 4.5 (Core Profile) Mesa 26.0.8-1ubuntu0.3 / llvmpipe (LLVM 21.1.8, 256 bits)
+Renderer fragment texture units: 32 (material path uses 12)
+SKY day-weather enabled=1 mean_rgb=191.584310,216.179991,238.167648 gl_error=0
+SKY night-weather enabled=1 mean_rgb=191.584310,216.179991,238.167648 gl_error=0
+SKY night-no-weather enabled=0 mean_rgb=3.000000,5.000000,10.000000 gl_error=0
+SKY sun-below-horizon enabled=1 mean_rgb=191.584310,216.179991,238.167648 gl_error=0
+SDL_SAME_POLL held=0 pressed=1 released=1 fixed_pressed=1 fixed_released=1 pointer_down=0
+ACTUAL_FLIGHT_UI same-frame click_events=1
+ACTUAL_FLIGHT_UI two-frame-control click_events=1
+HARNESS pointer_legacy=160,90 public_pointer=0.000,0.000 down=0 action_held=1

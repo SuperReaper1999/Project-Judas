@@ -1,0 +1,200 @@
+{
+  "format": 1,
+  "startedUtc": "2026-10-28T22:47:38.868972+00:00",
+  "sourceRevision": "f88ed2e6810cd69c2b4f12241ccabb5ac58ad6c1",
+  "trackedWorktreeStatus": "M CMakeLists.txt\n M docs/TEST_HARNESS.md\n M docs/judasjs/input.md\n M docs/judasjs/weather.md\n M src/Renderer.cpp\n M src/Renderer.h\n M src/RendererMaterials.inl\n M src/RendererWeather.inl\n M src/TestHarness.cpp\n M src/Window.cpp\n M src/Window.h\n M tests/WeatherRenderTests.cpp\n M tools/validation/suites.json",
+  "manifestSha256": "391796b155a677b9a38cf1181cc693282319776171c2de6493b9ab3be211364c",
+  "trackedDiffSha256": "b1806e9c38761610be9060d083f9b6d2cf754520595a0119cac753b24bbe6802",
+  "platform": "Linux-7.0.0-38-generic-x86_64-with-glibc2.43",
+  "machine": "x86_64",
+  "cpuCount": 12,
+  "groups": [],
+  "tests": [
+    {
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_consumer_pointer_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/issues-18-19-investigation/registered-gates/consumer-pointer"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/issues-18-19-investigation/registered-gates",
+      "timeoutSeconds": 120,
+      "binarySha256": "90dab6f73688633bee20706f514f89b5d4c2f84991ebd73da80c71d0069e079f",
+      "exit": -6,
+      "status": "failed",
+      "binarySha256After": "90dab6f73688633bee20706f514f89b5d4c2f84991ebd73da80c71d0069e079f",
+      "seconds": 0.2758765160033363,
+      "buildIdentity": {
+        "architecture": "x86_64",
+        "build_id": "1.0.0-alpha.1-Experimental-f88ed2e-dirty-872c09835d34-u7b097870954e",
+        "channel": "Experimental",
+        "compiler": "GNU",
+        "compiler_version": "15.2.0",
+        "configuration": "Release",
+        "maturity": "alpha",
+        "platform": "Linux",
+        "release_name": "Judas Engine Alpha v1.0.0",
+        "schema": 1,
+        "source_dirty": true,
+        "source_fingerprint": "872c09835d34d45a4db53d91f0220c33042b53cc08f4a9bf833a4db11b5fa0ac",
+        "source_origin": "git",
+        "source_revision": "f88ed2e6810cd69c2b4f12241ccabb5ac58ad6c1",
+        "source_tree": "5a3ba617338de2539a41a432044760411e5ce339",
+        "source_untracked_count": 22,
+        "source_untracked_fingerprint": "7b097870954e50a35dfcb6e4d76bb7035f484ea57863218cbd9cd92ef9b50222",
+        "version": "1.0.0-alpha.1"
+      },
+      "name": "consumer-pointer"
+    },
+    {
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_weather_lighting_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/issues-18-19-investigation/registered-gates/weather-lighting"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/issues-18-19-investigation/registered-gates",
+      "timeoutSeconds": 120,
+      "binarySha256": "8b4e0a97f56134bc7bacd91712bccdeb327f5e9dde9aacb99a4a37ff82c0b733",
+      "exit": 0,
+      "status": "passed",
+      "binarySha256After": "8b4e0a97f56134bc7bacd91712bccdeb327f5e9dde9aacb99a4a37ff82c0b733",
+      "seconds": 1.47683565600164,
+      "buildIdentity": {
+        "architecture": "x86_64",
+        "build_id": "1.0.0-alpha.1-Experimental-f88ed2e-dirty-872c09835d34-u7b097870954e",
+        "channel": "Experimental",
+        "compiler": "GNU",
+        "compiler_version": "15.2.0",
+        "configuration": "Release",
+        "maturity": "alpha",
+        "platform": "Linux",
+        "release_name": "Judas Engine Alpha v1.0.0",
+        "schema": 1,
+        "source_dirty": true,
+        "source_fingerprint": "872c09835d34d45a4db53d91f0220c33042b53cc08f4a9bf833a4db11b5fa0ac",
+        "source_origin": "git",
+        "source_revision": "f88ed2e6810cd69c2b4f12241ccabb5ac58ad6c1",
+        "source_tree": "5a3ba617338de2539a41a432044760411e5ce339",
+        "source_untracked_count": 22,
+        "source_untracked_fingerprint": "7b097870954e50a35dfcb6e4d76bb7035f484ea57863218cbd9cd92ef9b50222",
+        "version": "1.0.0-alpha.1"
+      },
+      "name": "weather-lighting"
+    },
+    {
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_pointer_harness_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/issues-18-19-investigation/registered-gates/pointer-harness"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/issues-18-19-investigation/registered-gates",
+      "timeoutSeconds": 120,
+      "binarySha256": "3fb334477a25b98cdbdb0c389e3951c2c4318bfaf524b282fbc27972f6e19c62",
+      "exit": 0,
+      "status": "passed",
+      "binarySha256After": "3fb334477a25b98cdbdb0c389e3951c2c4318bfaf524b282fbc27972f6e19c62",
+      "seconds": 0.22404031099722488,
+      "buildIdentity": {
+        "architecture": "x86_64",
+        "build_id": "1.0.0-alpha.1-Experimental-f88ed2e-dirty-872c09835d34-u7b097870954e",
+        "channel": "Experimental",
+        "compiler": "GNU",
+        "compiler_version": "15.2.0",
+        "configuration": "Release",
+        "maturity": "alpha",
+        "platform": "Linux",
+        "release_name": "Judas Engine Alpha v1.0.0",
+        "schema": 1,
+        "source_dirty": true,
+        "source_fingerprint": "872c09835d34d45a4db53d91f0220c33042b53cc08f4a9bf833a4db11b5fa0ac",
+        "source_origin": "git",
+        "source_revision": "f88ed2e6810cd69c2b4f12241ccabb5ac58ad6c1",
+        "source_tree": "5a3ba617338de2539a41a432044760411e5ce339",
+        "source_untracked_count": 22,
+        "source_untracked_fingerprint": "7b097870954e50a35dfcb6e4d76bb7035f484ea57863218cbd9cd92ef9b50222",
+        "version": "1.0.0-alpha.1"
+      },
+      "name": "pointer-harness"
+    }
+  ],
+  "knownFindings": [
+    {
+      "id": "CCD-MESH-ARRIVAL",
+      "status": "resolved-first-arrival",
+      "scheduled": true,
+      "reason": "Pass2 finite swept-SAT bounds correct the validated first-arrival contract; it now runs in the ordinary collision group. This does not close later curved-sheet continuation.",
+      "evidence": "docs/evidence/prealpha-pass2/physics"
+    },
+    {
+      "id": "CCD-MESH-CONTINUATION",
+      "status": "resolved-original-fixtures-bounded-ccd",
+      "scheduled": true,
+      "reason": "Original unchanged mesh arrival/continuation fixtures pass with authoritative MK2. Bounded CCD, sidedness and deep initial-overlap limits remain; MK1 event scheduling has been removed.",
+      "evidence": "docs/evidence/prealpha-ccd-continuation-20261019"
+    },
+    {
+      "id": "FLU-001",
+      "status": "deferred-failing",
+      "scheduled": false,
+      "reason": "Legacy PBF settling contract retained unchanged; separate fluid review required.",
+      "evidence": "docs/evidence/m78-completion/FINDINGS_FINAL.json"
+    },
+    {
+      "id": "LEGACY-CONTINUATION",
+      "status": "documented-incompatible-history",
+      "scheduled": false,
+      "reason": "Original a106 snapshot lacks historical continuation data. New-format passes do not certify that snapshot.",
+      "evidence": "docs/evidence/m78-cold-boundary"
+    },
+    {
+      "id": "DENSE-CCD-TAIL",
+      "status": "open-performance-limit",
+      "scheduled": false,
+      "reason": "Original MK1 global event cascade is retired. Current MK2 measurements have their own workload scope; focused correctness gates do not certify universal dense-pile latency.",
+      "evidence": "docs/MK2_PHYSICS_ARCHITECTURE.md"
+    },
+    {
+      "id": "LIQUID-BAKE-ROTATION",
+      "status": "resolved-baking",
+      "scheduled": true,
+      "reason": "Baker and runtime use the same normalized owner/field frames and oriented gravity volumes; both original bake-only runtime-publication cases pass unchanged equivalence tolerances. Original full integration exposes separate retained exact-total comparison failure.",
+      "evidence": "docs/evidence/prealpha-liquid-rotation/REPORT.md"
+    },
+    {
+      "id": "LIQUID-BAKE-KNOTS",
+      "status": "resolved-baking",
+      "scheduled": true,
+      "reason": "Positive tetrahedral density is integrated into one monotone cumulative curve, including shared endpoints; unchanged strict Surface1 decoder accepts both original rotated bakes. A later origin sampling limitation remains separately failed.",
+      "evidence": "docs/evidence/prealpha-liquid-rotation/REPORT.md"
+    },
+    {
+      "id": "LIQUID-ORIGIN-GRID-QUERY",
+      "status": "open-query-continuity-failing",
+      "scheduled": false,
+      "reason": "The original half-turn fixture now bakes and publishes, then fails its unchanged post-512m-origin query comparison: float translation crosses a discontinuous disturbed-surface cell boundary. Conserved quantities and wave bytes remain unchanged. This full integration failure is preserved, not counted as a baking pass.",
+      "evidence": "docs/evidence/prealpha-liquid-rotation/REPORT.md"
+    },
+    {
+      "id": "LIQUID-ORIGIN-TOTAL-IDENTITY",
+      "status": "resolved-oracle-causal-baseline",
+      "scheduled": true,
+      "reason": "Pass3 preserves the original failed test and demonstrates its causal-baseline error. Current atomicity compares the immediate pre-request total with the same exact equality and every physical participant byte; earlier legitimate paired-flow conservation tolerance and liquid runtime are unchanged.",
+      "evidence": "docs/evidence/prealpha-pass3/integration/REPORT.md"
+    }
+  ],
+  "humanAcceptance": "not-established",
+  "scope": "explicit manifest subset",
+  "expectedSourceIdentity": {
+    "source_revision": "f88ed2e6810cd69c2b4f12241ccabb5ac58ad6c1",
+    "source_fingerprint": "872c09835d34d45a4db53d91f0220c33042b53cc08f4a9bf833a4db11b5fa0ac",
+    "source_dirty": true,
+    "source_untracked_fingerprint": "7b097870954e50a35dfcb6e4d76bb7035f484ea57863218cbd9cd92ef9b50222"
+  },
+  "passed": false,
+  "finishedUtc": "2026-10-28T22:47:41.635754+00:00",
+  "sourceRevisionAfter": "f88ed2e6810cd69c2b4f12241ccabb5ac58ad6c1",
+  "trackedWorktreeStatusAfter": "M CMakeLists.txt\n M docs/TEST_HARNESS.md\n M docs/judasjs/input.md\n M docs/judasjs/weather.md\n M src/Renderer.cpp\n M src/Renderer.h\n M src/RendererMaterials.inl\n M src/RendererWeather.inl\n M src/TestHarness.cpp\n M src/Window.cpp\n M src/Window.h\n M tests/WeatherRenderTests.cpp\n M tools/validation/suites.json",
+  "trackedDiffSha256After": "b1806e9c38761610be9060d083f9b6d2cf754520595a0119cac753b24bbe6802",
+  "expectedSourceIdentityAfter": {
+    "source_revision": "f88ed2e6810cd69c2b4f12241ccabb5ac58ad6c1",
+    "source_fingerprint": "872c09835d34d45a4db53d91f0220c33042b53cc08f4a9bf833a4db11b5fa0ac",
+    "source_dirty": true,
+    "source_untracked_fingerprint": "7b097870954e50a35dfcb6e4d76bb7035f484ea57863218cbd9cd92ef9b50222"
+  }
+}

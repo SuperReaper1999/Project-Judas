@@ -107,7 +107,9 @@ public:
     void BeginTestFrame();
     void QueueTestPhysical(std::string control,float value);
     void QueueTestDevice(std::string device,std::string control,float value){m_testDevices.emplace_back(std::move(device),std::move(control),value);}
-    void SetTestPointer(int x,int y) { m_uiClickX=x;m_uiClickY=y; }
+    void SetTestPointer(int x,int y);
+    void ApplyTestPhysical(const std::string& control,float value);
+    void SetTestTouch(std::int64_t finger,float x,float y,float pressure,bool down);
     void SetTestActionState(Action action, bool active);
     void QueueTestMouseDelta(int deltaX, int deltaY);
     void RequestTestJump();

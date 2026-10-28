@@ -995,6 +995,7 @@ void Renderer::SetLighting(const glm::vec3& direction, const glm::vec3& lightCol
                             const glm::vec3& ambientColor) {
     m_weatherSun=glm::length(direction)>1.e-6f?glm::normalize(direction):glm::vec3(0,1,0);
     m_weatherSunColour=lightColor;
+    m_weatherAmbient=ambientColor;
     glUseProgram(m_shaderProgram);
     const glm::vec3 normalizedDirection =
         glm::length(direction) > 1.0e-6f ? glm::normalize(direction) : glm::vec3(0.0f, 1.0f, 0.0f);

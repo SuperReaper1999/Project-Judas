@@ -1108,6 +1108,8 @@ judas_add_engine_test(judas_portal_camera_tests tests/PortalCameraTests.cpp)
 judas_add_engine_test(judas_audio_tests tests/AudioTests.cpp SOURCES src/editor/EditorHistory.cpp)
 
 judas_add_engine_test(judas_input_tests tests/InputTests.cpp)
+judas_add_engine_test(judas_pointer_harness_tests tests/PointerHarnessTests.cpp SOURCES src/TestHarness.cpp)
+judas_add_engine_test(judas_consumer_pointer_tests tests/ConsumerPointerTests.cpp)
 
 judas_add_engine_test(judas_prefab_tests tests/PrefabTests.cpp SOURCES src/editor/EditorHistory.cpp)
 
@@ -1591,6 +1593,7 @@ target_compile_definitions(judas_weather_tests PRIVATE GLM_ENABLE_EXPERIMENTAL)
 judas_warnings(judas_weather_tests)
 judas_add_engine_test(judas_weather_authoring_tests tests/WeatherAuthoringTests.cpp SOURCES src/editor/EditorHistory.cpp)
 judas_add_engine_test(judas_weather_render_tests tests/WeatherRenderTests.cpp)
+judas_add_engine_test(judas_weather_lighting_tests tests/WeatherLightingTests.cpp)
 
 judas_add_engine_test(judas_weather_world_tests tests/WeatherWorldTests.cpp)
 judas_add_engine_test(judas_weather_streaming_tests tests/WeatherStreamingTests.cpp)

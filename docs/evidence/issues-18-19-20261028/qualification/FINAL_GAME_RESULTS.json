@@ -1,0 +1,38 @@
+[
+  {
+    "version": "original",
+    "mode": "instant",
+    "exit": 0,
+    "expected_observation": "phase=aim before=10 after=10 native_balls=0",
+    "verified": true,
+    "probeSha256": "00034d300dde29e8c74f3f5fad43313cf66200e58a5c94a47354ae9826c6baf0",
+    "seconds": 2.681854922993807
+  },
+  {
+    "version": "original",
+    "mode": "held",
+    "exit": 0,
+    "expected_observation": "phase=flight before=10 after=9 native_balls=1",
+    "verified": true,
+    "probeSha256": "00034d300dde29e8c74f3f5fad43313cf66200e58a5c94a47354ae9826c6baf0",
+    "seconds": 2.5814334810056607
+  },
+  {
+    "version": "fixed",
+    "mode": "instant",
+    "exit": 0,
+    "expected_observation": "phase=flight before=10 after=9 native_balls=1",
+    "verified": true,
+    "probeSha256": "00034d300dde29e8c74f3f5fad43313cf66200e58a5c94a47354ae9826c6baf0",
+    "seconds": 2.337991902997601
+  },
+  {
+    "version": "fixed",
+    "mode": "held",
+    "exit": 0,
+    "expected_observation": "phase=flight before=10 after=9 native_balls=1",
+    "verified": true,
+    "probeSha256": "00034d300dde29e8c74f3f5fad43313cf66200e58a5c94a47354ae9826c6baf0",
+    "seconds": 2.3823966539930552
+  }
+]

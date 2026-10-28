@@ -1,0 +1,77 @@
+[
+  {
+    "target": "judas_weather_lighting_tests",
+    "args": [
+      ".cache/issues-18-19-investigation/qualified-weather-lighting"
+    ],
+    "exit": 0,
+    "seconds": 1.4661380820034537
+  },
+  {
+    "target": "judas_weather_render_tests",
+    "args": [
+      ".cache/issues-18-19-investigation/qualified-weather-render",
+      "--correctness-only"
+    ],
+    "exit": 0,
+    "seconds": 3.9800606570061063
+  },
+  {
+    "target": "judas_pointer_harness_tests",
+    "args": [
+      ".cache/issues-18-19-investigation/qualified-pointer-harness"
+    ],
+    "exit": 0,
+    "seconds": 0.21414287500374485
+  },
+  {
+    "target": "judas_consumer_pointer_tests",
+    "args": [
+      ".cache/issues-18-19-investigation/qualified-consumer-pointer"
+    ],
+    "exit": 0,
+    "seconds": 0.11389719499857165
+  },
+  {
+    "target": "judas_input_tests",
+    "args": [],
+    "exit": 0,
+    "seconds": 0.31424389299354516
+  },
+  {
+    "target": "judas_touch_event_tests",
+    "args": [
+      "--output",
+      ".cache/issues-18-19-investigation/qualified-touch"
+    ],
+    "exit": 0,
+    "seconds": 0.032261250002193265
+  },
+  {
+    "target": "judas_runtime_ui_tests",
+    "args": [
+      "--output",
+      ".cache/issues-18-19-investigation/qualified-runtime-ui"
+    ],
+    "exit": 0,
+    "seconds": 0.36441589999594726
+  },
+  {
+    "target": "judas_weather_tests",
+    "args": [],
+    "exit": 0,
+    "seconds": 0.03222664500208339
+  },
+  {
+    "target": "judas_weather_world_tests",
+    "args": [],
+    "exit": 0,
+    "seconds": 0.03171872700477252
+  },
+  {
+    "target": "judas_weather_script_tests",
+    "args": [],
+    "exit": 0,
+    "seconds": 0.03172404799988726
+  }
+]

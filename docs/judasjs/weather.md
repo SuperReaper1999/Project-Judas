@@ -175,3 +175,20 @@ appearance. Turning visuals off stops draws but retains the bounded two-size
 renderer cache until shutdown. Estimated noise payload is 299,593 bytes; scratch
 storage depends on camera resolution and quality and is separate from scene HDR
 targets and driver overhead.
+
+## Scene lighting and dusk/night
+
+Weather's procedural sky blends its daylight gradient according to the current
+scene sun/ambient illumination, using the authored background colour in dim
+conditions. Cloud, fog, funnel and precipitation lighting also follow scene
+lighting. A weak above-horizon moon light therefore does not force a daylight
+sky. Set scene background, ambient colour and sun colour/intensity together with
+`world.setAppearance` when authoring dusk/night; weather is not an automatic
+astronomical day/night clock. Lightning remains a transient illumination source.
+
+Legacy and linear/HDR colour paths, arbitrary-up frames and secondary views use
+the same lighting inputs. With weather disabled, ordinary scene rendering is
+unchanged. The active weather sky remains procedural rather than compositing a
+custom environment background image; environment lighting of objects is separate.
+Do not disable the weather region merely to darken the sky: disabling it also
+removes its gameplay wind/query contribution.

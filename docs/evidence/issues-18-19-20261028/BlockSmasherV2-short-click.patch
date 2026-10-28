@@ -1,0 +1,40 @@
+--- a/Assets/scripts/game.js
++++ b/Assets/scripts/game.js
+@@ -168,7 +168,7 @@
+     pointerInput() {
+         const s = this.state, live = input.touches.map((t) => ({ id: 't' + t.id, x: t.x, y: t.y }));
+         if (live.length) this.touchMode = true;
+-        if (!this.touchMode && input.pointer.down) live.push({ id: 'mouse', x: input.pointer.x, y: input.pointer.y });
++        if (!this.touchMode && (input.pointer.down || input.pressed('pointer_press'))) live.push({ id: 'mouse', x: input.pointer.x, y: input.pointer.y });
+         // The finger/click that closed a menu must lift before it counts.
+         if (this.waitRelease && !live.length) this.waitRelease = false;
+         const vp = world.viewport, short = Math.max(1, Math.min(vp.width, vp.height)), seen = new Set();
+@@ -191,7 +191,7 @@
+             }
+         }
+         for (const [id, press] of this.presses) {
+-            if (seen.has(id)) continue;
++            if (seen.has(id) && !(id === 'mouse' && !input.pointer.down && input.released('pointer_press'))) continue;
+             this.presses.delete(id);
+             if (!press.ignore && !press.drag) taps++;
+         }
+--- a/blocksmasher_v2.judasproj
++++ b/blocksmasher_v2.judasproj
+@@ -155,6 +155,17 @@
+             "deadzone": 0
+           }
+         ]
++      },
++      {
++        "name": "pointer_press",
++        "axis": false,
++        "bindings": [
++          {
++            "control": "mouse:Left",
++            "scale": 1,
++            "deadzone": 0
++          }
++        ]
+       }
+     ],
+     "classification": {
