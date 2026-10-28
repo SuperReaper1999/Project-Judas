@@ -1,0 +1,6 @@
+{"test": "finite-front-tests", "arguments": [], "exit": 0, "binarySha256": "d7de6ea15be55a6c2c8dd0c6cb70a8142023417302d54e283a393f125e4486ee", "log": "final4-finite-front-tests-0.log", "seconds": 0.008456286999717122}
+{"test": "conforming-wind-tests", "arguments": [], "exit": 0, "binarySha256": "aeea85ab2b89b06fca7bafb97ef749b46aefc2a911424dc01896c05fbcb83f34", "log": "final4-conforming-wind-tests-0.log", "seconds": 0.03266228500069701}
+{"test": "reference-ale-tests", "arguments": [], "exit": 0, "binarySha256": "e8940652411b9d5d625cebd98678b712de54e559ce16de5d9122fc73a994ba30", "log": "final4-reference-ale-tests-0.log", "seconds": 0.004392554001242388}
+{"test": "native-ale-piston-tests", "arguments": ["120"], "exit": 0, "binarySha256": "6b2fe4d091e2bec911c8a9caccb639c3628a2824db8af4829cad0d593a8eb1f2", "log": "final4-native-ale-piston-tests-0.log", "seconds": 1.5687283459992614}
+{"test": "native-ale-piston-tests", "arguments": ["240", "--incoming-current"], "exit": 0, "binarySha256": "6b2fe4d091e2bec911c8a9caccb639c3628a2824db8af4829cad0d593a8eb1f2", "log": "final4-native-ale-piston-tests-1.log", "seconds": 4.022840792000352}
+{"test": "wind-comparison", "arguments": [], "exit": 0, "binarySha256": "c28717153e55605105dbba374d2c3179f98b9fbae3031f055a4822f771e67e07", "log": "final4-wind-comparison-0.log", "seconds": 0.06437694300257135}

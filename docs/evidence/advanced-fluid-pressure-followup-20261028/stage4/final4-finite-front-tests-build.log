@@ -1,0 +1,8 @@
+In file included from /home/conner/Documents/GitHub/Project-Judas/.cache/fluid-domain-redesign/FiniteFrontTests.cpp:5:
+/home/conner/Documents/GitHub/Project-Judas/.cache/fluid-domain-redesign/FiniteFrontGeometry.h: In function ‘fluid_front::Prepared fluid_front::Prepare(const Motion&)’:
+/home/conner/Documents/GitHub/Project-Judas/.cache/fluid-domain-redesign/FiniteFrontGeometry.h:28:2: warning: this ‘if’ clause does not guard... [-Wmisleading-indentation]
+   28 |  if(!(input.dt>0))throw std::invalid_argument("invalid front interval");auto motion=std::make_shared<const Motion>(input);Prepared result;std::map<std::array<unsigned,3>,unsigned> owned;
+      |  ^~
+/home/conner/Documents/GitHub/Project-Judas/.cache/fluid-domain-redesign/FiniteFrontGeometry.h:28:73: note: ...this statement, but the latter is misleadingly indented as if it were guarded by the ‘if’
+   28 |  if(!(input.dt>0))throw std::invalid_argument("invalid front interval");auto motion=std::make_shared<const Motion>(input);Prepared result;std::map<std::array<unsigned,3>,unsigned> owned;
+      |                                                                         ^~~~

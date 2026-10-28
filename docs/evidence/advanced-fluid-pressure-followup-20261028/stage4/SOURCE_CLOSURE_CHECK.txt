@@ -1,0 +1,1 @@
+Stage4 archive extracted into a separate /tmp directory. FiniteFrontTests84 and ReferenceAleTests27 compiled from extracted private sources and passed. Existing unchanged native Release build was symlinked for engine headers/library/flags. This proves private include closure, NOT clean-checkout/SDK qualification, production fluid integration or Alpha re-enablement.

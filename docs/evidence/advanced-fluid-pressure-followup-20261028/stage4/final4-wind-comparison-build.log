@@ -1,0 +1,8 @@
+In file included from /home/conner/Documents/GitHub/Project-Judas/.cache/fluid-domain-redesign/WindComparison.cpp:8:
+/home/conner/Documents/GitHub/Project-Judas/.cache/fluid-domain-redesign/EqualityProjectionQR.full-coordinate.h: In function ‘FullEqualityQrResult ProjectEqualityQRFull({anonymous}::Model&, double)’:
+/home/conner/Documents/GitHub/Project-Judas/.cache/fluid-domain-redesign/EqualityProjectionQR.full-coordinate.h:20:3: warning: this ‘if’ clause does not guard... [-Wmisleading-indentation]
+   20 |   if(result.residual>tolerance||result.divergence>tolerance)throw std::runtime_error("QR physical residual verification failed");model.points=std::move(points);result.accepted=true;
+      |   ^~
+/home/conner/Documents/GitHub/Project-Judas/.cache/fluid-domain-redesign/EqualityProjectionQR.full-coordinate.h:20:130: note: ...this statement, but the latter is misleadingly indented as if it were guarded by the ‘if’
+   20 |   if(result.residual>tolerance||result.divergence>tolerance)throw std::runtime_error("QR physical residual verification failed");model.points=std::move(points);result.accepted=true;
+      |                                                                                                                                  ^~~~~

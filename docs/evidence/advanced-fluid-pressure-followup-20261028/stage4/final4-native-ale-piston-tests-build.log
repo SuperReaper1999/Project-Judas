@@ -1,0 +1,21 @@
+In file included from /home/conner/Documents/GitHub/Project-Judas/.cache/fluid-domain-redesign/NativeAlePistonTests.cpp:6:
+/home/conner/Documents/GitHub/Project-Judas/.cache/fluid-domain-redesign/FiniteFrontGeometry.h: In function ‘fluid_front::Prepared fluid_front::Prepare(const Motion&)’:
+/home/conner/Documents/GitHub/Project-Judas/.cache/fluid-domain-redesign/FiniteFrontGeometry.h:28:2: warning: this ‘if’ clause does not guard... [-Wmisleading-indentation]
+   28 |  if(!(input.dt>0))throw std::invalid_argument("invalid front interval");auto motion=std::make_shared<const Motion>(input);Prepared result;std::map<std::array<unsigned,3>,unsigned> owned;
+      |  ^~
+/home/conner/Documents/GitHub/Project-Judas/.cache/fluid-domain-redesign/FiniteFrontGeometry.h:28:73: note: ...this statement, but the latter is misleadingly indented as if it were guarded by the ‘if’
+   28 |  if(!(input.dt>0))throw std::invalid_argument("invalid front interval");auto motion=std::make_shared<const Motion>(input);Prepared result;std::map<std::array<unsigned,3>,unsigned> owned;
+      |                                                                         ^~~~
+/home/conner/Documents/GitHub/Project-Judas/.cache/fluid-domain-redesign/NativeAlePistonTests.cpp: In member function ‘void {anonymous}::Trial::TransportPart(double, double, double, fluid_domain::VolumeDomain&, std::vector<fluid_material::Field>&, fluid_front::State&)’:
+/home/conner/Documents/GitHub/Project-Judas/.cache/fluid-domain-redesign/NativeAlePistonTests.cpp:101:3: warning: this ‘if’ clause does not guard... [-Wmisleading-indentation]
+  101 |   if(qLower>0)transfers.push_back({lower,right,qLower});if(qLower<0)transfers.push_back({right,lower,-qLower});
+      |   ^~
+/home/conner/Documents/GitHub/Project-Judas/.cache/fluid-domain-redesign/NativeAlePistonTests.cpp:101:57: note: ...this statement, but the latter is misleadingly indented as if it were guarded by the ‘if’
+  101 |   if(qLower>0)transfers.push_back({lower,right,qLower});if(qLower<0)transfers.push_back({right,lower,-qLower});
+      |                                                         ^~
+/home/conner/Documents/GitHub/Project-Judas/.cache/fluid-domain-redesign/NativeAlePistonTests.cpp:102:3: warning: this ‘if’ clause does not guard... [-Wmisleading-indentation]
+  102 |   if(qUpper>0)transfers.push_back({right,upper,qUpper});if(qUpper<0)transfers.push_back({upper,right,-qUpper});
+      |   ^~
+/home/conner/Documents/GitHub/Project-Judas/.cache/fluid-domain-redesign/NativeAlePistonTests.cpp:102:57: note: ...this statement, but the latter is misleadingly indented as if it were guarded by the ‘if’
+  102 |   if(qUpper>0)transfers.push_back({right,upper,qUpper});if(qUpper<0)transfers.push_back({upper,right,-qUpper});
+      |                                                         ^~

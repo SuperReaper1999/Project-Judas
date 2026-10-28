@@ -1,0 +1,68 @@
+{
+  "createdUtc": "2026-10-28T21:57:57.298867+00:00",
+  "unchangedNativeEngine": [
+    {
+      "path": "src/PhysicsWorld.h",
+      "sha256": "0b9c2e0b7f3f2c67b9ebd76c56ff464802d9e911daa1e437ad740e0849fe8120",
+      "unchanged": true
+    },
+    {
+      "path": "src/physics/WorldMk2Solver.cpp",
+      "sha256": "9a3d5a3f236509e819d8d4981b509ffe325736807896b12249295e0fdcdc6945",
+      "unchanged": true
+    },
+    {
+      "path": "src/FluidWorld.cpp",
+      "sha256": "e7943c00356ba06e484c25c0deb02dc3c2970dd75997731b7e4a4d03b7e3a0c5",
+      "unchanged": true
+    },
+    {
+      "path": "src/ProductionFluidCoupling.cpp",
+      "sha256": "f265454784ec2e2f9f152dc4a6246892921daafe76c361e383f23737f9f4c260",
+      "unchanged": true
+    },
+    {
+      "path": "src/BasicWater.cpp",
+      "sha256": "3badfe5f85d30a499a99ae2918cf965113a751ee38f3a75644f489a5b49ec129",
+      "unchanged": true
+    },
+    {
+      "path": "src/LiquidSystem.cpp",
+      "sha256": "d704a54dacc603984201f8e6620f9c5cdd12d2c504a064cefd2a3bc1c7b537e8",
+      "unchanged": true
+    },
+    {
+      "path": "src/LiquidSurface.cpp",
+      "sha256": "8d46203484875a90f1583e35bde5603cf1f47b15a73d629205451c007f61b625",
+      "unchanged": true
+    },
+    {
+      "path": "src/AdvancedFluidPolicy.h",
+      "sha256": "ed05d87327f574710fdbbe2be8af97d033468e0ef8e7648ee4312d92c0ae7169",
+      "unchanged": true
+    },
+    {
+      "path": "src/BasicWater.h",
+      "sha256": "8602aec25ccff2d46c663f560d03ec5728007d950a5338550cacdd3a9fa4fbbe",
+      "unchanged": true
+    },
+    {
+      "path": "src/LiquidGeometry.cpp",
+      "sha256": "9372e182aea6b2f08ea8f8bea749afc8bec7986b41c5ac7aa7ab8e459d3bc9ac",
+      "unchanged": true
+    },
+    {
+      "path": "src/LiquidPersistence.cpp",
+      "sha256": "39b010954e73258f1613443b2fdfb9f75b32d14cc13444a81c78060890275be2",
+      "unchanged": true
+    },
+    {
+      "path": "src/LiquidTypes.cpp",
+      "sha256": "441fe10fc6abc9ce2e85f6480bbe1755acb2e1cc949af518193825f2c8e37f2a",
+      "unchanged": true
+    }
+  ],
+  "nativeLibrarySha256": "a476b02b193bb5bec3484d5a971616be11d99da7c64bcf334ddc85dd9494823b",
+  "reportSha256": "d6971fbbed76fa09f77f6234e2f4aff5d6289eb0e5516ee3153cdd14ef850202",
+  "archiveSha256": "fe1ab8fe3945ea1d288cff3d55cd63117a101c8cd792a8b4bc4b2995ff49fe98"
+}

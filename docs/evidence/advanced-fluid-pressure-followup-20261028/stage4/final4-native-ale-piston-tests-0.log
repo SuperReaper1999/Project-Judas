@@ -1,0 +1,2 @@
+NATIVE_ALE_INPUT incoming_current=0 initial_energy=40
+NATIVE_ALE intervals=480 healthy=1 failures=0 born=12 events=1 initial_height=0.750000022351742 final_height=0.64231988042593 lower=0.64231988042593 right=0.857680164277554 upper=0 owned=1.50000004470348 max_owned_error=0 max_energy=40 pressure_residual=8.18789e-16 gcl=3.2196e-16 energy_identity=2.54376e-15 body_error=1.20459e-07 pressure_ms=1254.19 wind_ms=25.3785 transport_ms=39.5209 total_ms=1517.3 error=

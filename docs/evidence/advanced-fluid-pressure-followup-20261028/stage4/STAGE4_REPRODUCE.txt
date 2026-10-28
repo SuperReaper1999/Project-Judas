@@ -1,0 +1,60 @@
+STAGE 4: MOVING MATERIAL / FINITE FRONT REFERENCES — NOT A RUNTIME PATCH
+Base Experimental 66e6f75ed0da7b0c27c9de2629a34c2c6096899a.
+Extract the source archive at a matching Judas checkout root. It includes private
+relative-include dependencies and setup_probes.py, NOT a prebuilt engine.
+Requires a matching Release build/libjudas_engine.a and the existing script-test
+link/flags files. This is NOT a clean-checkout or SDK qualification claim.
+
+Run sequentially (one compiler/test at a time):
+  python3 .cache/fluid-domain-redesign/run_phase4.py
+  python3 .cache/fluid-domain-redesign/run_stage4_final.py
+The first runner rebuilds 33 bounded prototype programs and records exact binary hashes
+in PHASE4_RESULTS.json. Its local output logs are phase4-*.log. It stops on failure.
+The final runner rebuilds five affected programs (six executions), including the
+additional reference-ALE program, and records STAGE4_FINAL_RESULTS.json.
+No engine production suite or platform qualification is implied.
+
+Focused commands, after each corresponding build_*.py:
+  .cache/fluid-contact-repair/finite-front-tests
+  .cache/fluid-contact-repair/conforming-wind-tests
+  .cache/fluid-contact-repair/reference-ale-tests
+  .cache/fluid-contact-repair/subcell-ownership-tests
+  .cache/fluid-contact-repair/native-ale-piston-tests 120
+  .cache/fluid-contact-repair/native-ale-piston-tests 240 --incoming-current
+  .cache/fluid-contact-repair/native-piston3d
+  .cache/fluid-contact-repair/wind-comparison
+Native tests use real MK2 and an ordinary world-supported M45 vertical slider.
+The guide mobility is analytically condensed into pressure; this is not generic
+constraint-reaction integration. Original dt=1.f/60.f, four native intervals,
+80 kg plate, half dimensions(.5,.1,.5), initial velocity(0,-1,0) retained.
+The no-gravity native ALE run can remain upper-dry; do NOT claim it demonstrates
+a gravity-driven spill. Actual finite-front incoming material is covered by the
+independent finite-front tests (including the exact rejected native thin geometry).
+
+Preserved rejected alternatives:
+- NativePistonPressureTrial.before-endpoint-transport.cpp: instantaneous velocity
+  integration differs from real float native endpoint displacement.
+- NativePistonPressureTrial.before-stage-energy-check.cpp / corresponding logs:
+  boundary policy not appropriate to the fully flooded guided fixture.
+- NativePistonPressureTrial.full-reaction-preparation-failure.cpp: minute guide
+  angular residual creates unrepresentable sliver, not fixed by zeroing motion.
+- NativeAlePistonTests.before-overflow.cpp: original three-brick overflow reject.
+- NativeAlePistonTests.whole-plate-rejected.cpp: instantaneous whole-plate wetting.
+- NativeAlePistonTests.reduced-QR-thin-failure.cpp and
+  FiniteFrontTests.reduced-QR-thin-failure.cpp: small point-normal residuals are
+  insufficient when amplified by a newly wet thin element's inverse length.
+- EqualityProjectionQR.full-coordinate.h and AleWindProjection.schur-reference.h:
+  prior raw/normal-equation references, used in WindComparison against exact
+  native-first-moving-pressure-local-recapture.txt and native-overflow-moving-pressure.txt.
+- AleTransport.before-divergence-units.h: inappropriate absolute derivative gate;
+  full matrix GCL/constant/energy checks remain unchanged in current reference.
+These are retained source snapshots; copying an isolated snapshot over the current
+headers is NOT guaranteed to reproduce old measurements. Stage archives preserve
+exact historical include closures where available. Raw old logs are not reruns.
+
+Evidence-handling incident: an old locally built probe treated the extra current
+flag as its legacy capture flag and replaced the unarchived first geometry
+capture. Original reduced-operator CSV/logs remain, exact first capture bytes
+are unavailable. The newly labelled local-frame recapture is NOT the original.
+The original overflow geometry capture is intact. Current capture is explicit
+--capture, uses a separate filename and refuses overwriting an existing input.

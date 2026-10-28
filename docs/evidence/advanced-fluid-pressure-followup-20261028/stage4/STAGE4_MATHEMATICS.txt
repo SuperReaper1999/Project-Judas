@@ -1,0 +1,117 @@
+MOVING WET GEOMETRY — BOUNDED NUMERICAL REFERENCE
+
+Scope
+-----
+This is independent engine-side numerical development, not imported Solbert
+research, a replacement FluidWorld, or an Alpha-enabled feature. Production PBF,
+M54/M55 and BasicWater sources are unchanged. Original PBF launch/conservation
+failures remain preserved and uncorrected in runtime.
+
+1. Geometric quantity and material momentum are different unknowns.
+An integrated volume flux comes from actual swept geometry. Incoming momentum
+is the integral of the donor physical velocity over that material; do not scale
+velocity to repair a quantity discrepancy. Native single-precision pose endpoints
+and instantaneous projected velocity differ slightly. The quantity owner follows
+the real swept endpoint, never teleports the body or patches water volume.
+
+2. Finite-front storage, not instantaneous levelling.
+Let H be below-plate depth, T its top, R right free-surface height, w finite
+incoming width and G front gap. The extruded incoming trapezoid has
+  Vjet = (w/2) * (G + R - T),
+  H + R + Vjet = Vowned,
+  R-T = [Vowned - 2H - thickness - wG/2] / (1+w/2).
+With w(t)=w0+U*t, the storage height is rational in time. Endpoint interpolation
+alone is not the same geometry. Use analytic trajectory and derivative callbacks.
+Filling a whole 1 m width immediately through an opening of O(dt) requires
+velocities O(1/dt), independently of the true donor velocity. The rejected whole-
+plate fixture reached ~3547 m/s transport wind with source speeds below .2 m/s.
+That is a model error, NOT evidence of physical fluid motion or a pressure fix.
+A finite front advances only with the represented physical front/donor velocity.
+Its current convex-prism representation explicitly rejects retreat/detachment/
+solid contact needing new topology preparation. It is not a general free-surface
+reconstruction algorithm.
+
+3. Moving DG transport reference.
+Use an affine spatial field on each tetrahedron, constant in time over an
+interval. Physical-coordinate basis functions are fixed within the interval;
+normalization uses both endpoint geometries so zero-old-mass cells need no fake
+old velocity. The conservative weak operator satisfies
+  Mnew - Mold + A + A^T - J = 0,
+where J is the nonnegative upwind jump form. Backward-in-time material transport
+therefore has the independently checked energy identity
+  Enew - Eold + temporal_jump_loss + upwind_loss = 0.
+This is specified discretization loss, not added damping or an energy clamp.
+Mass-matrix GCL, constant-state conservation, material momentum, equation residual
+and energy identity are checked before publishing fields. No skew-symmetrizing or
+post-solve volume repair is used. A prescribed advector w different from carried
+physical velocity u adds the measured angular term integral(w cross u); do NOT
+claim exact Euler angular conservation for that approximation.
+
+4. Thin cells need compatible representations.
+Direct rectangular QR improves on pressure normal equations, and an explicit
+11-coordinate divergence-free fluid nullspace avoids leaking tiny trace errors
+through thin-cell conditioning. But approximate continuity between independently
+solved point velocities is still amplified by dt/thickness. The captured first
+finite-front geometry has w=1.33881e-8 m and Vjet=7.58791e-12 m3. A QR normal
+residual around 8.15e-11 can coexist with a 1.08e-4 matrix-GCL error.
+ConformingAleWind instead owns one integrated relative flow per shared face.
+RT0 basis on tetrahedron K, opposite vertex x_i:
+  r_i(x) = (x-x_i)/(3 |K|),
+whose outward integral flux on face i is one and on the other faces is zero.
+  w = mesh_velocity + sum_i q_i r_i,
+  sum_i q_i = -d|K|/dt.
+A maximum-area spanning tree eliminates continuity with one independently checked
+gauge per connected component. Remaining cycle flows minimize physical L2 distance
+to the supplied velocity predictor. There is no tunable iteration increase,
+regularization, artificial damping or change to carried physical velocity.
+This lower-order transport-wind approximation is NOT a generic high-order Euler
+solver: RT0 relative flow has fewer modes than full affine BDM1. Vortical/advection
+accuracy, scalable sparse solution and coupled general-moving boundaries remain
+qualification requirements before choosing a production discretization.
+The exact same thin case passes full GCL at ~1.26e-12. Reducing width to
+4.16667e-13 m still passes unchanged matrix/energy checks; no minimum-width clamp.
+
+5. Ownership and failure boundaries.
+Independent subcells have distinct IDs within one voxel. Direct same-voxel flow
+is forbidden; legal water reaches the upper pocket only through a genuinely wet
+neighbour face. Capacity ownership must be proven disjoint. This bounded reference
+currently accepts axis-separated subcell bounds and explicitly rejects unproven
+interlocking capacities rather than double-counting them. Transaction failure
+preserves old owner/field/front state. Native world advancement itself is NOT
+rolled back by these prototypes; an after-substep failure can leave rigid state
+advanced. A safe production prepare/publication/failure policy is still required.
+
+Primary background (no external code imported)
+----------------------------------------------
+Batty/Bertails/Bridson 2007, variational fluid/solid coupling:
+https://www.cs.ubc.ca/labs/imager/tr/2007/Batty_VariationalFluids/
+Bridson fluid notes, no-penetration and pressure boundary conditions:
+https://www.cs.ubc.ca/~rbridson/fluidsimulation/fluids_notes.pdf
+Mavriplis/Nastase 2011, moving DG geometric-conservation treatment:
+https://www.sciencedirect.com/science/article/abs/pii/S0021999111000477
+These inform the modelling contracts; the present code and numerical evidence
+are local bounded references and are not claims made by those papers.
+
+6. Second cancellation mechanism and reference-coordinate correction.
+The smaller-gap native front (gap4.21703e-6, width3.59419e-7m) still failed the
+physical-coordinate material matrix at1.04616e-9. Factoring endpoint quadrature
+with QR instead of covariance Cholesky gave1.16352e-9. Five-point temporal Gauss
+integration gave2.54164e-9. These do NOT support a conditioning-factor or
+under-integration fix; both experiments are rejected and retained.
+ReferenceAleTransport assembles directly on each simplex with barycentric basis
+lambda_i. The consistent endpoint mass is rho*V*(1+delta_ij)/20. For an integrated
+outward relative face flux q_f and opposite reference vertex xi_f,
+  V * J^-1 * (w-grid) = sum_f (q_f/3)*(xi-xi_f).
+Thus weak volume and face terms use the SAME owned face fluxes with no inverse
+thin physical Jacobian applied to a nearly cancelling velocity subtraction.
+Velocity retains all four vector nodal values, not a cell/bay constant.
+Nonnegative upwind and temporal losses give the same checked physical energy
+identity. The formerly failing case passes GCL5.32455e-16, constant residual
+3.10599e-16 and energy identity4.44089e-16. Newborn-old-mass poisoning yields
+bit-identical reconstructed fields. Analytic cube P/L/E and translated affine
+physical fields are checked independently in two frames. Arbitrary prescribed-
+advector angular conservation is NOT asserted by this reference.
+This is a different, explicit time/space representation; do NOT promise identical
+finite-step trajectories to the previous physical-coordinate trial. It does not
+repair a failed matrix, impose an energy cap, change physical cadence or expand
+the solver iteration budget.

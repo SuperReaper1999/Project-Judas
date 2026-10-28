@@ -365,3 +365,127 @@ required work remains genuinely changing solid/wet geometry and momentum transpo
 with practical preparation cost, native contact/CCD publication, original scene
 reproductions and production integration. Alpha stays compiled off; main/published
 release, Basic Water, M54/M55 and independent research remain untouched.
+
+Stage 4 — moving material and finite incoming fronts (2026-10-28)
+----------------------------------------------------------------
+Status remains IN PROGRESS. This checkpoint extends bounded numerical references;
+it does NOT replace ProductionFluidCoupling/FluidWorld or enable Alpha fluids.
+All new numerical sources are preserved with their private include closure in
+stage4/stage4-sources-and-evidence.tar.gz. No new runtime implementation, public
+binding, M54/M55, Basic Water or protected research change is made in Stage 4.
+
+Demonstrated mechanisms and rejected approaches:
+* Real native float pose displacement differs from integrated instantaneous
+  velocity flux by1.073236e-8m3 in the original moving-piston trial. Geometric
+  swept volume and physical donor momentum must be handled as distinct inputs.
+  Neither body pose nor authoritative owned volume is repaired to hide that.
+* A fully flooded guided fixture needs impermeability at its wetted solid
+  boundaries. The earlier unilateral fixture did not demonstrate its requested
+  local pressure energy property. This does not invalidate unilateral separation
+  in models which actually support detachment/cavitation.
+* Tiny native joint angular residuals can still produce nonrepresentable cut
+  slivers. The bounded piston reference condenses its authored slider mobility
+  analytically; it is not generic joint-reaction or free-six-DOF integration.
+* Instantaneously filling the entire 1m above-plate bay is REJECTED. As the donor
+  opening first appears, its height is O(dt); whole-width levelling demands
+  O(1/dt) velocities. The rejected input produced ~3547m/s transport wind while
+  physical source speeds were below.2m/s. A finite incoming front instead grows
+  with the actual represented front/donor velocity. Its rational storage geometry
+  is evaluated throughout the interval, not merely interpolated at endpoints.
+* Direct rectangular QR with an explicit11-dimensional trace-free cell space
+  avoids normal-equation conditioning and trace leakage, but small point-normal
+  residuals still do not guarantee transport accuracy in newborn thin cells.
+  A1.33881e-8m-wide front failed matrix GCL at1.08e-4 despite normal residuals near
+  8e-11. Shared face-flow ownership in a conforming RT0 kinematic wind removes
+  this mismatch by construction, with independent connected-component gauges.
+* A second, sheared native front failed physical-coordinate transport at1.05e-9
+  GCL. Direct QR basis normalization did NOT fix it (1.16e-9); five-point temporal
+  quadrature did NOT fix it (2.54e-9). Both rejected experiments are retained.
+  ReferenceAleTransport instead assembles the conservative weak operator directly
+  from shared integrated face fluxes and reference-simplex basis functions. It
+  avoids inverse thin-geometry/world-velocity cancellation without altering the
+  original1e-10 conservation/energy gates, inserting damping or repairing volume.
+  That same case passes GCL at5.32e-16. Full affine physical velocity is carried;
+  it is not reduced to a per-bay mean or reset to equilibrium.
+
+Focused results and scope:
+* The combined33-program pass reran the earlier23-program corpus and added
+  moving-material work.32 programs passed; the old unowned raw oblique geometry
+  program retains its9 failures (653 checks), explicitly NOT classified PASS.
+  Its27 explicitly owned equivalents pass. PHASE4_RESULTS.json records this.
+* Final narrow rebuilds cover the changed conforming/reference transport sources,
+  finite fronts, native coupling and solver comparison. Exact final results and
+  executable hashes are in STAGE4_FINAL_RESULTS.json; prior corpus outputs remain
+  valid for unchanged implementations. No full production-suite rerun is claimed.
+* FiniteFrontTests84 checks, ConformingAleWindTests16, SubcellOwnershipTests14,
+  ReferenceAleTests27 pass. Earlier material ALE58 and geometric transport25
+  checks also pass. Tests include independent analytic cube P/L/E, full affine
+  velocity retention, frame rotation, disconnected material components, poisoned
+  dry-cell velocity, illegal incoming flux and failed publication.
+* Subcells cannot exchange across intervening solids or claim overlapping
+  capacities. This bounded owner certifies axis-separated same-voxel capacities;
+  unproven interlocking ownership explicitly rejects, rather than double-counting.
+* Native guided piston retains the original80kg body, half(.5,.1,.5), initial
+  velocity(0,-1,0),1.f/60 timestep and four native chronological intervals.
+  The original480-interval run and an independent960-interval incoming-current
+  run pass. The latter adds a documented physical initial current(-.1,0,0) in
+  the right bay; it does NOT alter the original fixture or introduce a prescribed
+  front speed. Upper wet material is initialized by real incoming transport.
+  Exact final numerical endpoints/timings are retained in the final logs.
+  The earlier zero-gravity480 run stayed upper-dry and must not be called spill
+  proof. The960-interval run has positive upper material after actual overflow.
+
+Physical/discretization qualifications:
+The conservative DG1-space/DG0-time scheme has a measured energy identity with
+nonnegative temporal/upwind losses; these are specified numerical dissipation,
+not an arbitrary energy clamp. RT0 relative wind is a lower-order kinematic
+approximation, distinct from the full affine carried velocity. General vortical
+advection accuracy and a scalable higher-order production operator remain open.
+The original physical-coordinate ALE reference is retained, not silently edited
+into a passing operator. Shared fluxes, material energy and full GCL are checked
+before publishing. No global-wave reset is used.
+
+Remaining production blockers:
+- General moving wet topology, free-body/joint reaction coupling and robust small-
+  cut geometry; the current finite-front prism rejects unsupported detachment,
+  retreat or new solid contact requiring topology preparation.
+- Bounded dense references are NOT a scalable runtime backend. Static/neutral
+  pressure proofs are not a universal Navier-Stokes stability result.
+- Native rigid advancement is not globally rolled back after participant failure.
+  Owner/field/front staging is transactional, but that is NOT whole-world rollback.
+- FluidWorld/runtime/rendering integration, cold saves, actual original ship/side-
+  contact launch reproductions and practical consumer scenes remain unqualified.
+- Original production PBF/FLU-001 failures stay failed; no Alpha re-enable, release
+  change, main promotion, Windows/Android qualification or research modification.
+
+Evidence-handling limitation:
+A stale locally built probe interpreted an extra argument as its old capture
+flag, overwriting the unarchived first-moving geometry capture with a new local-
+frame capture. Its original reduced operator CSV and original comparison/failure
+logs were preserved; the exact original geometry-capture bytes are unavailable.
+The new input is explicitly named native-first-moving-pressure-local-recapture.txt,
+not represented as the original. The original overflow capture remains intact.
+Capture flags are now explicit and refuse to overwrite an existing capture.
+Do not claim byte-exact replay of the lost first input; new comparisons use the
+clearly labelled recapture. Earlier committed archives remain unchanged.
+
+Mathematical derivation, reproduction commands, limitations and artifact hashes:
+  docs/evidence/advanced-fluid-pressure-followup-20261028/stage4/
+
+Final Stage4 native measurements (single local Release reference run; not gameFPS):
+  Original480 intervals/2s: body bottom .750000022351742 -> .642319880425930m;
+  total1.50000004470348m3, max owner error0, GCL3.2196e-16,
+  energy identity2.54376e-15J; pressure1254.19ms, wind25.38ms,
+  transport39.52ms, total1517.30ms.
+  Independent incoming-current960 intervals/4s: bottom .629813753068447m;
+  lower .629813753068447, right .870029624922688, upper .000156666712347951m3;
+  max owner error6.66134e-16m3, GCL6.71627e-16, energy identity1.78785e-15J;
+  initial/max including initial kinetic energy43.750000111758709J;
+  pressure3424.86ms, wind60.50ms, transport101.14ms, total4000.87ms.
+These are one-body bounded-reference costs, not representative runtime scalability
+or a matched speedup claim. The reference-coordinate discretization changes
+finite-step trajectories; full affine transport and physical energy/momentum
+checks qualify the reported properties, not identity to the rejected algorithm.
+With the added ReferenceAle program there are34 distinct prototype programs in
+this qualification:33 passing and the one explicitly preserved raw-geometry
+failure. Final affected-source rebuilds are separate from the earlier corpus.

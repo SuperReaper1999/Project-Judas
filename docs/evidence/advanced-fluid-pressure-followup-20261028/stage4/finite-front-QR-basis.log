@@ -1,0 +1,26 @@
+FRONT_WIND u=0.02 t=0.112702 accepted=1 residual=6.93889e-18 divergence=0 gauge=0 error=
+FRONT_WIND u=0.02 t=0.5 accepted=1 residual=1.73472e-17 divergence=0 gauge=0 error=
+FRONT_WIND u=0.02 t=0.887298 accepted=1 residual=2.08167e-17 divergence=0 gauge=0 error=
+FINITE_FRONT u=0.02 width=8.33333e-05 packet=1.83326e-07 accepted=1 gcl=1.51832e-11 c0=3.84946e-12 energy=1.11022e-15 error=
+FRONT_WIND u=0.2 t=0.112702 accepted=1 residual=8.67362e-18 divergence=0 gauge=0 error=
+FRONT_WIND u=0.2 t=0.5 accepted=1 residual=4.33681e-17 divergence=0 gauge=0 error=
+FRONT_WIND u=0.2 t=0.887298 accepted=1 residual=7.58942e-18 divergence=0 gauge=0 error=
+FINITE_FRONT u=0.2 width=0.000833333 packet=1.83257e-06 accepted=1 gcl=1.10543e-12 c0=4.64082e-13 energy=6.15812e-29 error=
+FRONT_WIND u=3.21314e-06 t=0.112702 accepted=1 residual=1.56125e-17 divergence=0 gauge=0 error=
+FRONT_WIND u=3.21314e-06 t=0.5 accepted=1 residual=3.65853e-18 divergence=0 gauge=0 error=
+FRONT_WIND u=3.21314e-06 t=0.887298 accepted=1 residual=1.38778e-17 divergence=0 gauge=0 error=
+FINITE_FRONT u=3.21314e-06 width=1.33881e-08 packet=7.58791e-12 accepted=1 gcl=1.26101e-12 c0=9.36115e-14 energy=8.70271e-32 error=
+FRONT_WIND u=1e-08 t=0.112702 accepted=1 residual=5.20417e-18 divergence=0 gauge=0 error=
+FRONT_WIND u=1e-08 t=0.5 accepted=1 residual=7.46351e-18 divergence=0 gauge=0 error=
+FRONT_WIND u=1e-08 t=0.887298 accepted=1 residual=1.9082e-17 divergence=0 gauge=0 error=
+FINITE_FRONT u=1e-08 width=4.16667e-11 packet=2.36152e-14 accepted=1 gcl=1.25006e-12 c0=9.3448e-14 energy=6.66134e-16 error=
+FRONT_WIND u=1e-10 t=0.112702 accepted=1 residual=3.96475e-18 divergence=0 gauge=0 error=
+FRONT_WIND u=1e-10 t=0.5 accepted=1 residual=8.67362e-18 divergence=0 gauge=0 error=
+FRONT_WIND u=1e-10 t=0.887298 accepted=1 residual=4.15046e-18 divergence=0 gauge=0 error=
+FINITE_FRONT u=1e-10 width=4.16667e-13 packet=2.36152e-16 accepted=1 gcl=1.25226e-12 c0=9.22685e-14 energy=2.22045e-16 error=
+FRONT_WIND u=8.62605e-05 t=0.112702 accepted=1 residual=5.20417e-18 divergence=0 gauge=0 error=
+FRONT_WIND u=8.62605e-05 t=0.5 accepted=1 residual=1.9082e-17 divergence=0 gauge=0 error=
+FRONT_WIND u=8.62605e-05 t=0.887298 accepted=1 residual=3.46945e-18 divergence=0 gauge=0 error=
+FAIL finite-front birth satisfies full GCL and physical transport energy identity
+FINITE_FRONT u=8.62605e-05 width=3.59419e-07 packet=4.21551e-11 accepted=0 gcl=1.16352e-09 c0=2.5934e-12 energy=0 error=ALE matrix geometric-conservation identity failed
+FINITE_FRONT checks=84 failures=1

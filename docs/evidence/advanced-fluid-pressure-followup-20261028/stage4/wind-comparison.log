@@ -1,0 +1,5 @@
+SPARSE_TIMING symbolic_ms=0.545659 factors_ms=0.859018 rebuilt=1
+WIND_COMPARISON case=native-first-moving-pressure qr11=1 residual=3.51877e-15 divergence=9.73696e-18 qr12=1 residual=3.58252e-15 divergence=4.68089e-13 schur=0 residual=inf divergence=0 source_max=0.196485 wind_max=0.258806 rows=149 dofs=204 qr_error=
+SPARSE_TIMING symbolic_ms=0.918692 factors_ms=1.464567 rebuilt=1
+WIND_COMPARISON case=native-overflow-moving-pressure qr11=1 residual=3.78236e-12 divergence=5.22495e-13 qr12=0 residual=3.36797e-12 divergence=9.76655e-08 schur=0 residual=inf divergence=0 source_max=0.174238 wind_max=3547.14 rows=245 dofs=336 qr_error=
+WIND_COMPARISON failures=0

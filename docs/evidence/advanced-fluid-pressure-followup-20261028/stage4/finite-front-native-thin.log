@@ -1,0 +1,14 @@
+FRONT_WIND u=0.02 t=0.112702 accepted=1 residual=7.17147e-13 divergence=5.11457e-18 gauge=5.18778e-16 error=
+FRONT_WIND u=0.02 t=0.5 accepted=1 residual=1.6412e-13 divergence=5.47402e-18 gauge=2.52911e-15 error=
+FRONT_WIND u=0.02 t=0.887298 accepted=1 residual=2.3842e-13 divergence=7.16527e-18 gauge=4.40114e-15 error=
+FINITE_FRONT u=0.02 width=8.33333e-05 packet=1.83326e-07 accepted=1 gcl=5.35782e-11 c0=1.57593e-11 energy=6.66134e-16 error=
+FRONT_WIND u=0.2 t=0.112702 accepted=1 residual=1.67463e-13 divergence=1.73603e-17 gauge=3.64041e-15 error=
+FRONT_WIND u=0.2 t=0.5 accepted=1 residual=1.2847e-13 divergence=1.63004e-17 gauge=8.83182e-16 error=
+FRONT_WIND u=0.2 t=0.887298 accepted=1 residual=4.87492e-14 divergence=1.4283e-17 gauge=5.18984e-15 error=
+FINITE_FRONT u=0.2 width=0.000833333 packet=1.83257e-06 accepted=1 gcl=3.49096e-12 c0=1.07141e-12 energy=2.22045e-16 error=
+FRONT_WIND u=3.21314e-06 t=0.112702 accepted=1 residual=8.14643e-11 divergence=5.57737e-18 gauge=3.43338e-15 error=
+FRONT_WIND u=3.21314e-06 t=0.5 accepted=1 residual=4.95062e-11 divergence=5.44579e-18 gauge=2.64333e-15 error=
+FRONT_WIND u=3.21314e-06 t=0.887298 accepted=1 residual=1.96892e-11 divergence=5.44544e-18 gauge=3.7424e-14 error=
+FAIL finite-front birth satisfies full GCL and physical transport energy identity
+FINITE_FRONT u=3.21314e-06 width=1.33881e-08 packet=7.58791e-12 accepted=0 gcl=0.000108107 c0=2.39245e-05 energy=0 error=ALE matrix geometric-conservation identity failed
+FINITE_FRONT checks=42 failures=1
