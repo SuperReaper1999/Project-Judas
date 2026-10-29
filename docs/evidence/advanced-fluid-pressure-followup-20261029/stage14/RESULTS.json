@@ -1,0 +1,1823 @@
+{
+  "schema": 1,
+  "finalClosureAssertions": 483,
+  "finalClosure": [
+    {
+      "name": "ComponentOwnershipTests",
+      "path": ".cache/fluid-localized-pressure-stage14-20261029/isolation-final-qualification/ComponentOwnershipTests.log",
+      "sha256": "eeaf1bb212087dd359e7ef63046249f7144ef6b3147b4540aede0051f98f599f",
+      "summary": {
+        "checks": "5",
+        "failures": "0"
+      },
+      "COMPONENTS": [
+        {
+          "unsupported_update_rejected": "1",
+          "prior_state_exact": "1",
+          "left_energy": "0.129916",
+          "isolated_right_energy": "0",
+          "guarded_thin_trace_error": "6.82017e-15"
+        }
+      ],
+      "ISOLATION_DIAGNOSTIC": [
+        {
+          "left_energy": "0.12991569666122413",
+          "right_energy": "0"
+        }
+      ]
+    },
+    {
+      "name": "SparseCacheTests",
+      "path": ".cache/fluid-localized-pressure-stage14-20261029/isolation-final-qualification/SparseCacheTests.log",
+      "sha256": "f90ede1c86082f93987ea4425022d043196dab2856f416176771fc76a8867b29",
+      "summary": {
+        "checks": "320",
+        "failures": "0",
+        "peak_rss_kib": "434040"
+      },
+      "CACHE": [
+        {
+          "step": "1",
+          "rebuilt": "6",
+          "reused": "42",
+          "total": "48",
+          "update_ms": "1084.98",
+          "fresh_ms": "1082.05",
+          "warm_solve_ms": "15.8619",
+          "balance": "3.72694e-20",
+          "reaction_error": "1.82509e-16",
+          "physical_bits_equal": "1",
+          "geom_ms": "90.1074",
+          "field_ms": "264.547",
+          "reduction_ms": "57.0008",
+          "local_qr_ms": "488.859",
+          "sampler_cache_ms": "11.1954",
+          "matrix_ms": "0.693789",
+          "global_qr_ms": "170.916"
+        },
+        {
+          "step": "2",
+          "rebuilt": "6",
+          "reused": "42",
+          "total": "48",
+          "update_ms": "1029.42",
+          "fresh_ms": "1021.44",
+          "warm_solve_ms": "15.3956",
+          "balance": "4.74338e-20",
+          "reaction_error": "1.33931e-16",
+          "physical_bits_equal": "1",
+          "geom_ms": "86.3453",
+          "field_ms": "261.59",
+          "reduction_ms": "45.2618",
+          "local_qr_ms": "483.575",
+          "sampler_cache_ms": "11.1894",
+          "matrix_ms": "0.686084",
+          "global_qr_ms": "139.37"
+        },
+        {
+          "step": "3",
+          "rebuilt": "12",
+          "reused": "36",
+          "total": "48",
+          "update_ms": "1082.44",
+          "fresh_ms": "1085.83",
+          "warm_solve_ms": "18.0018",
+          "balance": "5.0822e-20",
+          "reaction_error": "5.02149e-16",
+          "physical_bits_equal": "1",
+          "geom_ms": "110.027",
+          "field_ms": "342.258",
+          "reduction_ms": "33.5981",
+          "local_qr_ms": "399.035",
+          "sampler_cache_ms": "13.5509",
+          "matrix_ms": "0.919494",
+          "global_qr_ms": "181.824"
+        },
+        {
+          "step": "4",
+          "rebuilt": "12",
+          "reused": "36",
+          "total": "48",
+          "update_ms": "1121.11",
+          "fresh_ms": "1121.33",
+          "warm_solve_ms": "18.6719",
+          "balance": "3.72694e-20",
+          "reaction_error": "3.55641e-16",
+          "physical_bits_equal": "1",
+          "geom_ms": "107.248",
+          "field_ms": "343.372",
+          "reduction_ms": "33.089",
+          "local_qr_ms": "383.559",
+          "sampler_cache_ms": "14.0421",
+          "matrix_ms": "1.12027",
+          "global_qr_ms": "237.178"
+        },
+        {
+          "step": "5",
+          "rebuilt": "12",
+          "reused": "36",
+          "total": "48",
+          "update_ms": "1205.28",
+          "fresh_ms": "1218.36",
+          "warm_solve_ms": "20.1693",
+          "balance": "4.06576e-20",
+          "reaction_error": "1.09702e-15",
+          "physical_bits_equal": "1",
+          "geom_ms": "104.694",
+          "field_ms": "348.648",
+          "reduction_ms": "36.3089",
+          "local_qr_ms": "453.364",
+          "sampler_cache_ms": "14.3377",
+          "matrix_ms": "1.04779",
+          "global_qr_ms": "245.511"
+        },
+        {
+          "step": "6",
+          "rebuilt": "12",
+          "reused": "36",
+          "total": "48",
+          "update_ms": "1214.55",
+          "fresh_ms": "1213.16",
+          "warm_solve_ms": "20.0195",
+          "balance": "3.21873e-20",
+          "reaction_error": "6.97723e-16",
+          "physical_bits_equal": "1",
+          "geom_ms": "102.105",
+          "field_ms": "346.311",
+          "reduction_ms": "35.879",
+          "local_qr_ms": "452.147",
+          "sampler_cache_ms": "14.5099",
+          "matrix_ms": "1.81639",
+          "global_qr_ms": "260.263"
+        }
+      ],
+      "TIMING": [
+        {
+          "name": "updated_epoch",
+          "count": "6",
+          "median_ms": "1121.11",
+          "p95_ms": "1214.55",
+          "worst_ms": "1214.55"
+        },
+        {
+          "name": "fresh_epoch",
+          "count": "6",
+          "median_ms": "1121.33",
+          "p95_ms": "1218.36",
+          "worst_ms": "1218.36"
+        },
+        {
+          "name": "warm_solve",
+          "count": "6",
+          "median_ms": "18.6719",
+          "p95_ms": "20.1693",
+          "worst_ms": "20.1693"
+        }
+      ]
+    },
+    {
+      "name": "SparseThinAccuracyTests",
+      "path": ".cache/fluid-localized-pressure-stage14-20261029/isolation-final-qualification/SparseThinAccuracyTests.log",
+      "sha256": "e60f5bf0d77606a3af8dab24ba088419012f051b768899d0bba06f96e5f7b2fa",
+      "summary": {
+        "checks": "75",
+        "failures": "0"
+      },
+      "ACCURACY": [
+        {
+          "angle": "0",
+          "trial": "0",
+          "max_physical_flux_error": "3.48914e-20",
+          "balance": "3.33519e-21",
+          "reaction_error": "8.32366e-17",
+          "solve_ms": "2.18578"
+        },
+        {
+          "angle": "0",
+          "trial": "1",
+          "max_physical_flux_error": "9.97704e-20",
+          "balance": "5.92923e-21",
+          "reaction_error": "5.79248e-16",
+          "solve_ms": "2.2631"
+        },
+        {
+          "angle": "0",
+          "trial": "2",
+          "max_physical_flux_error": "0",
+          "balance": "0",
+          "reaction_error": "0",
+          "solve_ms": "1.93127"
+        },
+        {
+          "angle": "3.2137858346770187e-11",
+          "trial": "0",
+          "max_physical_flux_error": "2.58127e-20",
+          "balance": "2.15729e-21",
+          "reaction_error": "6.00656e-14",
+          "solve_ms": "12.3831"
+        },
+        {
+          "angle": "3.2137858346770187e-11",
+          "trial": "1",
+          "max_physical_flux_error": "1.16421e-19",
+          "balance": "6.77626e-21",
+          "reaction_error": "3.302e-13",
+          "solve_ms": "12.4338"
+        },
+        {
+          "angle": "3.2137858346770187e-11",
+          "trial": "2",
+          "max_physical_flux_error": "0",
+          "balance": "0",
+          "reaction_error": "0",
+          "solve_ms": "10.0244"
+        },
+        {
+          "angle": "0.17000000000000001",
+          "trial": "0",
+          "max_physical_flux_error": "2.20517e-20",
+          "balance": "2.28964e-21",
+          "reaction_error": "9.56917e-17",
+          "solve_ms": "11.9175"
+        },
+        {
+          "angle": "0.17000000000000001",
+          "trial": "1",
+          "max_physical_flux_error": "1.05385e-19",
+          "balance": "4.23516e-21",
+          "reaction_error": "6.73914e-16",
+          "solve_ms": "11.9142"
+        },
+        {
+          "angle": "0.17000000000000001",
+          "trial": "2",
+          "max_physical_flux_error": "0",
+          "balance": "0",
+          "reaction_error": "0",
+          "solve_ms": "9.5175"
+        }
+      ]
+    },
+    {
+      "name": "SparsePressureTests",
+      "path": ".cache/fluid-localized-pressure-stage14-20261029/isolation-final-qualification/SparsePressureTests.log",
+      "sha256": "d587a1ee8b8ab4d5f8848ae8516b3d2e5bf4beedc45930687a345eaa174bd343",
+      "summary": {
+        "checks": "35",
+        "failures": "0"
+      },
+      "PRESSURE": [
+        {
+          "angle": "0",
+          "trial": "0",
+          "fine_flux_error": "4.5488e-20",
+          "reaction_error": "4.57833e-17",
+          "energy_error": "1.61022e-36",
+          "balance": "5.91535e-38",
+          "energy": "3.78217e-36",
+          "solve_ms": "2.16305"
+        },
+        {
+          "angle": "0",
+          "trial": "1",
+          "fine_flux_error": "4.05472e-20",
+          "reaction_error": "8.56358e-17",
+          "energy_error": "0",
+          "balance": "3.33519e-21",
+          "energy": "0.134565",
+          "solve_ms": "2.30219"
+        },
+        {
+          "angle": "0",
+          "trial": "2",
+          "fine_flux_error": "0",
+          "reaction_error": "0",
+          "energy_error": "0",
+          "balance": "0",
+          "energy": "0",
+          "solve_ms": "1.9488"
+        },
+        {
+          "angle": "0",
+          "trial": "3",
+          "fine_flux_error": "2.50193e-19",
+          "reaction_error": "1.2242e-15",
+          "energy_error": "0",
+          "balance": "5.0822e-21",
+          "energy": "0.155635",
+          "solve_ms": "2.3123"
+        },
+        {
+          "angle": "0.17",
+          "trial": "0",
+          "fine_flux_error": "1.13545e-19",
+          "reaction_error": "6.58177e-17",
+          "energy_error": "1.36818e-36",
+          "balance": "2.53466e-38",
+          "energy": "3.94276e-36",
+          "solve_ms": "11.9087"
+        },
+        {
+          "angle": "0.17",
+          "trial": "1",
+          "fine_flux_error": "8.91007e-20",
+          "reaction_error": "1.2701e-16",
+          "energy_error": "0",
+          "balance": "2.28964e-21",
+          "energy": "0.153034",
+          "solve_ms": "12.1789"
+        },
+        {
+          "angle": "0.17",
+          "trial": "2",
+          "fine_flux_error": "0",
+          "reaction_error": "0",
+          "energy_error": "0",
+          "balance": "0",
+          "energy": "0",
+          "solve_ms": "9.68374"
+        },
+        {
+          "angle": "0.17",
+          "trial": "3",
+          "fine_flux_error": "2.8543e-19",
+          "reaction_error": "2.49696e-16",
+          "energy_error": "0",
+          "balance": "5.0822e-21",
+          "energy": "0.169032",
+          "solve_ms": "12.0901"
+        }
+      ]
+    },
+    {
+      "name": "SparseWarmBenchmark",
+      "path": ".cache/fluid-localized-pressure-stage14-20261029/isolation-final-qualification/SparseWarmBenchmark.log",
+      "sha256": "990390349e9b7473e28e911a37830a32a9204757bb7274d4a3461d875dbddd98",
+      "summary": {
+        "checks": "48",
+        "failures": "0",
+        "max_flux_difference": "0",
+        "max_reaction_difference": "0",
+        "max_energy_difference": "0",
+        "peak_rss_kib": "94996"
+      },
+      "TIMING": [
+        {
+          "name": "before_response_reuse",
+          "count": "24",
+          "median_ms": "15.5692",
+          "p95_ms": "15.7072",
+          "worst_ms": "15.8042"
+        },
+        {
+          "name": "prepared_response_reuse",
+          "count": "24",
+          "median_ms": "11.5431",
+          "p95_ms": "11.6072",
+          "worst_ms": "11.631"
+        }
+      ],
+      "WARM": [
+        {
+          "n": "0",
+          "old_ms": "15.8042",
+          "new_ms": "11.5686",
+          "flux_difference": "0",
+          "reaction_difference": "0",
+          "energy_difference": "0"
+        },
+        {
+          "n": "1",
+          "old_ms": "15.5309",
+          "new_ms": "11.5442",
+          "flux_difference": "0",
+          "reaction_difference": "0",
+          "energy_difference": "0"
+        },
+        {
+          "n": "2",
+          "old_ms": "15.6108",
+          "new_ms": "11.5803",
+          "flux_difference": "0",
+          "reaction_difference": "0",
+          "energy_difference": "0"
+        },
+        {
+          "n": "3",
+          "old_ms": "15.6294",
+          "new_ms": "11.5145",
+          "flux_difference": "0",
+          "reaction_difference": "0",
+          "energy_difference": "0"
+        },
+        {
+          "n": "4",
+          "old_ms": "15.5004",
+          "new_ms": "11.6072",
+          "flux_difference": "0",
+          "reaction_difference": "0",
+          "energy_difference": "0"
+        },
+        {
+          "n": "5",
+          "old_ms": "15.509",
+          "new_ms": "11.4951",
+          "flux_difference": "0",
+          "reaction_difference": "0",
+          "energy_difference": "0"
+        },
+        {
+          "n": "6",
+          "old_ms": "15.6049",
+          "new_ms": "11.5431",
+          "flux_difference": "0",
+          "reaction_difference": "0",
+          "energy_difference": "0"
+        },
+        {
+          "n": "7",
+          "old_ms": "15.5486",
+          "new_ms": "11.5968",
+          "flux_difference": "0",
+          "reaction_difference": "0",
+          "energy_difference": "0"
+        },
+        {
+          "n": "8",
+          "old_ms": "15.5981",
+          "new_ms": "11.5307",
+          "flux_difference": "0",
+          "reaction_difference": "0",
+          "energy_difference": "0"
+        },
+        {
+          "n": "9",
+          "old_ms": "15.5111",
+          "new_ms": "11.5057",
+          "flux_difference": "0",
+          "reaction_difference": "0",
+          "energy_difference": "0"
+        },
+        {
+          "n": "10",
+          "old_ms": "15.5151",
+          "new_ms": "11.631",
+          "flux_difference": "0",
+          "reaction_difference": "0",
+          "energy_difference": "0"
+        },
+        {
+          "n": "11",
+          "old_ms": "15.5682",
+          "new_ms": "11.5381",
+          "flux_difference": "0",
+          "reaction_difference": "0",
+          "energy_difference": "0"
+        },
+        {
+          "n": "12",
+          "old_ms": "15.6259",
+          "new_ms": "11.5597",
+          "flux_difference": "0",
+          "reaction_difference": "0",
+          "energy_difference": "0"
+        },
+        {
+          "n": "13",
+          "old_ms": "15.7072",
+          "new_ms": "11.5454",
+          "flux_difference": "0",
+          "reaction_difference": "0",
+          "energy_difference": "0"
+        },
+        {
+          "n": "14",
+          "old_ms": "15.6902",
+          "new_ms": "11.5803",
+          "flux_difference": "0",
+          "reaction_difference": "0",
+          "energy_difference": "0"
+        },
+        {
+          "n": "15",
+          "old_ms": "15.579",
+          "new_ms": "11.4936",
+          "flux_difference": "0",
+          "reaction_difference": "0",
+          "energy_difference": "0"
+        },
+        {
+          "n": "16",
+          "old_ms": "15.5123",
+          "new_ms": "11.565",
+          "flux_difference": "0",
+          "reaction_difference": "0",
+          "energy_difference": "0"
+        },
+        {
+          "n": "17",
+          "old_ms": "15.5198",
+          "new_ms": "11.4994",
+          "flux_difference": "0",
+          "reaction_difference": "0",
+          "energy_difference": "0"
+        },
+        {
+          "n": "18",
+          "old_ms": "15.5969",
+          "new_ms": "11.523",
+          "flux_difference": "0",
+          "reaction_difference": "0",
+          "energy_difference": "0"
+        },
+        {
+          "n": "19",
+          "old_ms": "15.5389",
+          "new_ms": "11.5218",
+          "flux_difference": "0",
+          "reaction_difference": "0",
+          "energy_difference": "0"
+        },
+        {
+          "n": "20",
+          "old_ms": "15.5745",
+          "new_ms": "11.559",
+          "flux_difference": "0",
+          "reaction_difference": "0",
+          "energy_difference": "0"
+        },
+        {
+          "n": "21",
+          "old_ms": "15.5692",
+          "new_ms": "11.4804",
+          "flux_difference": "0",
+          "reaction_difference": "0",
+          "energy_difference": "0"
+        },
+        {
+          "n": "22",
+          "old_ms": "15.5642",
+          "new_ms": "11.5199",
+          "flux_difference": "0",
+          "reaction_difference": "0",
+          "energy_difference": "0"
+        },
+        {
+          "n": "23",
+          "old_ms": "15.5168",
+          "new_ms": "11.5413",
+          "flux_difference": "0",
+          "reaction_difference": "0",
+          "energy_difference": "0"
+        }
+      ]
+    }
+  ],
+  "retainedComparisonRuns": [
+    {
+      "name": "PressureTests",
+      "path": ".cache/fluid-localized-pressure-stage14-20261029/final-qualification/PressureTests.log",
+      "sha256": "3e0ba50ce812c42d86bd16d893381c627eeb7200df38508fec80279f499292ff",
+      "summary": {
+        "checks": "35",
+        "failures": "0"
+      },
+      "PRESSURE": [
+        {
+          "angle": "0",
+          "trial": "0",
+          "fine_flux_error": "4.28576e-20",
+          "reaction_error": "3.7865e-17",
+          "energy_error": "1.77746e-36",
+          "balance": "1.14611e-37",
+          "energy": "7.16984e-36",
+          "solve_ms": "3.05598"
+        },
+        {
+          "angle": "0",
+          "trial": "1",
+          "fine_flux_error": "4.71991e-20",
+          "reaction_error": "1.56819e-16",
+          "energy_error": "0",
+          "balance": "5.04249e-21",
+          "energy": "0.134565",
+          "solve_ms": "3.23401"
+        },
+        {
+          "angle": "0",
+          "trial": "2",
+          "fine_flux_error": "0",
+          "reaction_error": "0",
+          "energy_error": "0",
+          "balance": "0",
+          "energy": "0",
+          "solve_ms": "3.10802"
+        },
+        {
+          "angle": "0",
+          "trial": "3",
+          "fine_flux_error": "2.50193e-19",
+          "reaction_error": "4.18129e-16",
+          "energy_error": "0",
+          "balance": "3.44107e-21",
+          "energy": "0.155635",
+          "solve_ms": "3.20892"
+        },
+        {
+          "angle": "0.17",
+          "trial": "0",
+          "fine_flux_error": "1.45026e-19",
+          "reaction_error": "9.02778e-17",
+          "energy_error": "1.43956e-36",
+          "balance": "7.27337e-38",
+          "energy": "3.87138e-36",
+          "solve_ms": "17.7933"
+        },
+        {
+          "angle": "0.17",
+          "trial": "1",
+          "fine_flux_error": "7.49873e-20",
+          "reaction_error": "1.64779e-16",
+          "energy_error": "0",
+          "balance": "2.79256e-21",
+          "energy": "0.153034",
+          "solve_ms": "18.0099"
+        },
+        {
+          "angle": "0.17",
+          "trial": "2",
+          "fine_flux_error": "0",
+          "reaction_error": "0",
+          "energy_error": "0",
+          "balance": "0",
+          "energy": "0",
+          "solve_ms": "17.5689"
+        },
+        {
+          "angle": "0.17",
+          "trial": "3",
+          "fine_flux_error": "2.75818e-19",
+          "reaction_error": "1.03596e-15",
+          "energy_error": "0",
+          "balance": "5.0822e-21",
+          "energy": "0.169032",
+          "solve_ms": "17.9615"
+        }
+      ]
+    },
+    {
+      "name": "ThinAccuracyTests",
+      "path": ".cache/fluid-localized-pressure-stage14-20261029/final-qualification/ThinAccuracyTests.log",
+      "sha256": "cdf3d0c0ac615efa7a902ce10598b819bfdc87209c8985a73c433b0bd6482ed4",
+      "summary": {
+        "checks": "75",
+        "failures": "0"
+      },
+      "ACCURACY": [
+        {
+          "angle": "0",
+          "trial": "0",
+          "max_physical_flux_error": "2.53449e-20",
+          "balance": "5.04249e-21",
+          "reaction_error": "1.40406e-16",
+          "solve_ms": "3.10131"
+        },
+        {
+          "angle": "0",
+          "trial": "1",
+          "max_physical_flux_error": "8.66703e-20",
+          "balance": "6.77626e-21",
+          "reaction_error": "8.48545e-16",
+          "solve_ms": "3.09122"
+        },
+        {
+          "angle": "0",
+          "trial": "2",
+          "max_physical_flux_error": "0",
+          "balance": "0",
+          "reaction_error": "0",
+          "solve_ms": "2.98063"
+        },
+        {
+          "angle": "3.2137858346770187e-11",
+          "trial": "0",
+          "max_physical_flux_error": "2.34552e-20",
+          "balance": "2.17714e-21",
+          "reaction_error": "2.05877e-14",
+          "solve_ms": "18.339"
+        },
+        {
+          "angle": "3.2137858346770187e-11",
+          "trial": "1",
+          "max_physical_flux_error": "7.67911e-20",
+          "balance": "8.47033e-21",
+          "reaction_error": "6.08479e-14",
+          "solve_ms": "18.476"
+        },
+        {
+          "angle": "3.2137858346770187e-11",
+          "trial": "2",
+          "max_physical_flux_error": "0",
+          "balance": "0",
+          "reaction_error": "0",
+          "solve_ms": "17.9177"
+        },
+        {
+          "angle": "0.17000000000000001",
+          "trial": "0",
+          "max_physical_flux_error": "3.32498e-20",
+          "balance": "2.79256e-21",
+          "reaction_error": "2.0076e-16",
+          "solve_ms": "17.8575"
+        },
+        {
+          "angle": "0.17000000000000001",
+          "trial": "1",
+          "max_physical_flux_error": "3.89549e-20",
+          "balance": "4.23516e-21",
+          "reaction_error": "4.17797e-16",
+          "solve_ms": "17.9483"
+        },
+        {
+          "angle": "0.17000000000000001",
+          "trial": "2",
+          "max_physical_flux_error": "0",
+          "balance": "0",
+          "reaction_error": "0",
+          "solve_ms": "17.4085"
+        }
+      ]
+    },
+    {
+      "name": "CacheTests",
+      "path": ".cache/fluid-localized-pressure-stage14-20261029/final-qualification/CacheTests.log",
+      "sha256": "b9095f07624b5191c68e6bda2d9355452202d6b7810d696410d2ac44a98ef0db",
+      "summary": {
+        "checks": "320",
+        "failures": "0",
+        "peak_rss_kib": "414004"
+      },
+      "CACHE": [
+        {
+          "step": "1",
+          "rebuilt": "6",
+          "reused": "42",
+          "total": "48",
+          "update_ms": "1741.34",
+          "fresh_ms": "1745.77",
+          "warm_solve_ms": "20.765",
+          "balance": "3.55754e-20",
+          "reaction_error": "2.49909e-16",
+          "physical_bits_equal": "1",
+          "geom_ms": "86.4863",
+          "field_ms": "257.646",
+          "reduction_ms": "61.781",
+          "local_qr_ms": "1153.85",
+          "sampler_cache_ms": "11.0071",
+          "matrix_ms": "0.664703",
+          "global_qr_ms": "168.241"
+        },
+        {
+          "step": "2",
+          "rebuilt": "6",
+          "reused": "42",
+          "total": "48",
+          "update_ms": "1697.82",
+          "fresh_ms": "1699.84",
+          "warm_solve_ms": "20.3789",
+          "balance": "3.89635e-20",
+          "reaction_error": "1.70883e-16",
+          "physical_bits_equal": "1",
+          "geom_ms": "85.3294",
+          "field_ms": "256.319",
+          "reduction_ms": "50.374",
+          "local_qr_ms": "1151.64",
+          "sampler_cache_ms": "11.011",
+          "matrix_ms": "0.755825",
+          "global_qr_ms": "140.99"
+        },
+        {
+          "step": "3",
+          "rebuilt": "12",
+          "reused": "36",
+          "total": "48",
+          "update_ms": "1585.86",
+          "fresh_ms": "1606.29",
+          "warm_solve_ms": "23.0917",
+          "balance": "3.38813e-20",
+          "reaction_error": "2.49257e-16",
+          "physical_bits_equal": "1",
+          "geom_ms": "107.493",
+          "field_ms": "326.738",
+          "reduction_ms": "33.1179",
+          "local_qr_ms": "922.485",
+          "sampler_cache_ms": "13.1468",
+          "matrix_ms": "1.08611",
+          "global_qr_ms": "180.606"
+        },
+        {
+          "step": "4",
+          "rebuilt": "12",
+          "reused": "36",
+          "total": "48",
+          "update_ms": "1592.93",
+          "fresh_ms": "1595.71",
+          "warm_solve_ms": "23.5158",
+          "balance": "8.47033e-20",
+          "reaction_error": "3.88113e-16",
+          "physical_bits_equal": "1",
+          "geom_ms": "105.746",
+          "field_ms": "336.445",
+          "reduction_ms": "32.7991",
+          "local_qr_ms": "866.224",
+          "sampler_cache_ms": "13.8762",
+          "matrix_ms": "1.0368",
+          "global_qr_ms": "235.295"
+        },
+        {
+          "step": "5",
+          "rebuilt": "12",
+          "reused": "36",
+          "total": "48",
+          "update_ms": "1765.68",
+          "fresh_ms": "1777.39",
+          "warm_solve_ms": "25.2997",
+          "balance": "4.40457e-20",
+          "reaction_error": "9.57505e-16",
+          "physical_bits_equal": "1",
+          "geom_ms": "103.471",
+          "field_ms": "341.304",
+          "reduction_ms": "36.2919",
+          "local_qr_ms": "1023.71",
+          "sampler_cache_ms": "14.1794",
+          "matrix_ms": "1.23119",
+          "global_qr_ms": "244.157"
+        },
+        {
+          "step": "6",
+          "rebuilt": "12",
+          "reused": "36",
+          "total": "48",
+          "update_ms": "1777.46",
+          "fresh_ms": "1780.86",
+          "warm_solve_ms": "25.3483",
+          "balance": "3.55754e-20",
+          "reaction_error": "9.55424e-16",
+          "physical_bits_equal": "1",
+          "geom_ms": "100.528",
+          "field_ms": "338.475",
+          "reduction_ms": "35.8985",
+          "local_qr_ms": "1026.32",
+          "sampler_cache_ms": "14.2077",
+          "matrix_ms": "1.08054",
+          "global_qr_ms": "259.46"
+        }
+      ],
+      "TIMING": [
+        {
+          "name": "updated_epoch",
+          "count": "6",
+          "median_ms": "1741.34",
+          "p95_ms": "1777.46",
+          "worst_ms": "1777.46"
+        },
+        {
+          "name": "fresh_epoch",
+          "count": "6",
+          "median_ms": "1745.77",
+          "p95_ms": "1780.86",
+          "worst_ms": "1780.86"
+        },
+        {
+          "name": "warm_solve",
+          "count": "6",
+          "median_ms": "23.5158",
+          "p95_ms": "25.3483",
+          "worst_ms": "25.3483"
+        }
+      ]
+    },
+    {
+      "name": "DisconnectedControlTests",
+      "path": ".cache/fluid-localized-pressure-stage14-20261029/final-qualification/DisconnectedControlTests.log",
+      "sha256": "318529075083a145eb75a05ab6953d2cc2f4c8f57a0966f2425d27668e6c31f6",
+      "summary": {
+        "checks": "5",
+        "failures": "0"
+      },
+      "DISCONNECTED": [
+        {
+          "good_trace_jump_squared": "0",
+          "broken_trace_jump_squared": "0.00226555",
+          "good_force": "2.616",
+          "expected_force": "2.616",
+          "broken_force": "-0.733531",
+          "force_error": "3.34953",
+          "broken_local_balance": "3.5668e-21",
+          "absence_detected": "1"
+        }
+      ]
+    },
+    {
+      "name": "WarmBenchmark",
+      "path": ".cache/fluid-localized-pressure-stage14-20261029/final-qualification/WarmBenchmark.log",
+      "sha256": "fe12fd786eb40b93aeeb6fe77bb1435eecceaea4d29fdf7e261a00f13149a628",
+      "summary": {
+        "checks": "48",
+        "failures": "0",
+        "max_flux_difference": "0",
+        "max_reaction_difference": "0",
+        "max_energy_difference": "0",
+        "peak_rss_kib": "93368"
+      },
+      "TIMING": [
+        {
+          "name": "before_response_reuse",
+          "count": "24",
+          "median_ms": "26.4637",
+          "p95_ms": "26.7309",
+          "worst_ms": "27.2982"
+        },
+        {
+          "name": "prepared_response_reuse",
+          "count": "24",
+          "median_ms": "17.4567",
+          "p95_ms": "17.6659",
+          "worst_ms": "17.9417"
+        }
+      ],
+      "WARM": [
+        {
+          "n": "0",
+          "old_ms": "26.6589",
+          "new_ms": "17.4074",
+          "flux_difference": "0",
+          "reaction_difference": "0",
+          "energy_difference": "0"
+        },
+        {
+          "n": "1",
+          "old_ms": "26.4637",
+          "new_ms": "17.5233",
+          "flux_difference": "0",
+          "reaction_difference": "0",
+          "energy_difference": "0"
+        },
+        {
+          "n": "2",
+          "old_ms": "26.5025",
+          "new_ms": "17.4174",
+          "flux_difference": "0",
+          "reaction_difference": "0",
+          "energy_difference": "0"
+        },
+        {
+          "n": "3",
+          "old_ms": "26.4339",
+          "new_ms": "17.41",
+          "flux_difference": "0",
+          "reaction_difference": "0",
+          "energy_difference": "0"
+        },
+        {
+          "n": "4",
+          "old_ms": "26.7293",
+          "new_ms": "17.523",
+          "flux_difference": "0",
+          "reaction_difference": "0",
+          "energy_difference": "0"
+        },
+        {
+          "n": "5",
+          "old_ms": "26.4671",
+          "new_ms": "17.3981",
+          "flux_difference": "0",
+          "reaction_difference": "0",
+          "energy_difference": "0"
+        },
+        {
+          "n": "6",
+          "old_ms": "26.4429",
+          "new_ms": "17.4801",
+          "flux_difference": "0",
+          "reaction_difference": "0",
+          "energy_difference": "0"
+        },
+        {
+          "n": "7",
+          "old_ms": "26.4151",
+          "new_ms": "17.4175",
+          "flux_difference": "0",
+          "reaction_difference": "0",
+          "energy_difference": "0"
+        },
+        {
+          "n": "8",
+          "old_ms": "26.4099",
+          "new_ms": "17.4858",
+          "flux_difference": "0",
+          "reaction_difference": "0",
+          "energy_difference": "0"
+        },
+        {
+          "n": "9",
+          "old_ms": "26.3475",
+          "new_ms": "17.4567",
+          "flux_difference": "0",
+          "reaction_difference": "0",
+          "energy_difference": "0"
+        },
+        {
+          "n": "10",
+          "old_ms": "26.4542",
+          "new_ms": "17.5226",
+          "flux_difference": "0",
+          "reaction_difference": "0",
+          "energy_difference": "0"
+        },
+        {
+          "n": "11",
+          "old_ms": "26.4829",
+          "new_ms": "17.3815",
+          "flux_difference": "0",
+          "reaction_difference": "0",
+          "energy_difference": "0"
+        },
+        {
+          "n": "12",
+          "old_ms": "26.4048",
+          "new_ms": "17.4508",
+          "flux_difference": "0",
+          "reaction_difference": "0",
+          "energy_difference": "0"
+        },
+        {
+          "n": "13",
+          "old_ms": "26.5556",
+          "new_ms": "17.4614",
+          "flux_difference": "0",
+          "reaction_difference": "0",
+          "energy_difference": "0"
+        },
+        {
+          "n": "14",
+          "old_ms": "27.2982",
+          "new_ms": "17.9417",
+          "flux_difference": "0",
+          "reaction_difference": "0",
+          "energy_difference": "0"
+        },
+        {
+          "n": "15",
+          "old_ms": "26.7309",
+          "new_ms": "17.6659",
+          "flux_difference": "0",
+          "reaction_difference": "0",
+          "energy_difference": "0"
+        },
+        {
+          "n": "16",
+          "old_ms": "26.5916",
+          "new_ms": "17.4506",
+          "flux_difference": "0",
+          "reaction_difference": "0",
+          "energy_difference": "0"
+        },
+        {
+          "n": "17",
+          "old_ms": "26.5725",
+          "new_ms": "17.3908",
+          "flux_difference": "0",
+          "reaction_difference": "0",
+          "energy_difference": "0"
+        },
+        {
+          "n": "18",
+          "old_ms": "26.5957",
+          "new_ms": "17.4334",
+          "flux_difference": "0",
+          "reaction_difference": "0",
+          "energy_difference": "0"
+        },
+        {
+          "n": "19",
+          "old_ms": "26.4145",
+          "new_ms": "17.4653",
+          "flux_difference": "0",
+          "reaction_difference": "0",
+          "energy_difference": "0"
+        },
+        {
+          "n": "20",
+          "old_ms": "26.4557",
+          "new_ms": "17.4959",
+          "flux_difference": "0",
+          "reaction_difference": "0",
+          "energy_difference": "0"
+        },
+        {
+          "n": "21",
+          "old_ms": "26.4509",
+          "new_ms": "17.3765",
+          "flux_difference": "0",
+          "reaction_difference": "0",
+          "energy_difference": "0"
+        },
+        {
+          "n": "22",
+          "old_ms": "26.4351",
+          "new_ms": "17.4825",
+          "flux_difference": "0",
+          "reaction_difference": "0",
+          "energy_difference": "0"
+        },
+        {
+          "n": "23",
+          "old_ms": "26.3922",
+          "new_ms": "17.3929",
+          "flux_difference": "0",
+          "reaction_difference": "0",
+          "energy_difference": "0"
+        }
+      ]
+    },
+    {
+      "name": "OraclePrecisionTests",
+      "path": ".cache/fluid-localized-pressure-stage14-20261029/final-qualification/OraclePrecisionTests.log",
+      "sha256": "bbd1e29a606a31bf437a2138ff2ede44920648cb1f0e3fdcde3a1d072362308a",
+      "summary": {
+        "checks": "1",
+        "failures": "0"
+      },
+      "ORACLE_PRECISION": [
+        {
+          "trace_difference": "6.6579e-38",
+          "reaction_difference": "3.52943e-37",
+          "energy_difference": "8.79573e-39",
+          "bits_a": "160",
+          "bits_b": "256"
+        }
+      ]
+    },
+    {
+      "name": "SparsePressureTests",
+      "path": ".cache/fluid-localized-pressure-stage14-20261029/sparse-final-qualification/SparsePressureTests.log",
+      "sha256": "95630fac245da0afd9a41b77afc97389af0fbabbfef3351b29c0d54cfd7d2326",
+      "summary": {
+        "checks": "35",
+        "failures": "0"
+      },
+      "PRESSURE": [
+        {
+          "angle": "0",
+          "trial": "0",
+          "fine_flux_error": "4.5488e-20",
+          "reaction_error": "4.57833e-17",
+          "energy_error": "1.61022e-36",
+          "balance": "5.91535e-38",
+          "energy": "3.78217e-36",
+          "solve_ms": "2.15449"
+        },
+        {
+          "angle": "0",
+          "trial": "1",
+          "fine_flux_error": "4.05472e-20",
+          "reaction_error": "8.56358e-17",
+          "energy_error": "0",
+          "balance": "3.33519e-21",
+          "energy": "0.134565",
+          "solve_ms": "2.32318"
+        },
+        {
+          "angle": "0",
+          "trial": "2",
+          "fine_flux_error": "0",
+          "reaction_error": "0",
+          "energy_error": "0",
+          "balance": "0",
+          "energy": "0",
+          "solve_ms": "1.96194"
+        },
+        {
+          "angle": "0",
+          "trial": "3",
+          "fine_flux_error": "2.50193e-19",
+          "reaction_error": "1.2242e-15",
+          "energy_error": "0",
+          "balance": "5.0822e-21",
+          "energy": "0.155635",
+          "solve_ms": "2.31134"
+        },
+        {
+          "angle": "0.17",
+          "trial": "0",
+          "fine_flux_error": "1.13545e-19",
+          "reaction_error": "6.58177e-17",
+          "energy_error": "1.36818e-36",
+          "balance": "2.53466e-38",
+          "energy": "3.94276e-36",
+          "solve_ms": "11.8642"
+        },
+        {
+          "angle": "0.17",
+          "trial": "1",
+          "fine_flux_error": "8.91007e-20",
+          "reaction_error": "1.2701e-16",
+          "energy_error": "0",
+          "balance": "2.28964e-21",
+          "energy": "0.153034",
+          "solve_ms": "12.0976"
+        },
+        {
+          "angle": "0.17",
+          "trial": "2",
+          "fine_flux_error": "0",
+          "reaction_error": "0",
+          "energy_error": "0",
+          "balance": "0",
+          "energy": "0",
+          "solve_ms": "9.70556"
+        },
+        {
+          "angle": "0.17",
+          "trial": "3",
+          "fine_flux_error": "2.8543e-19",
+          "reaction_error": "2.49696e-16",
+          "energy_error": "0",
+          "balance": "5.0822e-21",
+          "energy": "0.169032",
+          "solve_ms": "12.1223"
+        }
+      ]
+    },
+    {
+      "name": "SparseThinAccuracyTests",
+      "path": ".cache/fluid-localized-pressure-stage14-20261029/sparse-final-qualification/SparseThinAccuracyTests.log",
+      "sha256": "c2ea705e0fd0f4d1a476231791748a8e16f64430c39fd80e8b2826592d705f88",
+      "summary": {
+        "checks": "75",
+        "failures": "0"
+      },
+      "ACCURACY": [
+        {
+          "angle": "0",
+          "trial": "0",
+          "max_physical_flux_error": "3.48914e-20",
+          "balance": "3.33519e-21",
+          "reaction_error": "8.32366e-17",
+          "solve_ms": "2.18882"
+        },
+        {
+          "angle": "0",
+          "trial": "1",
+          "max_physical_flux_error": "9.97704e-20",
+          "balance": "5.92923e-21",
+          "reaction_error": "5.79248e-16",
+          "solve_ms": "2.23642"
+        },
+        {
+          "angle": "0",
+          "trial": "2",
+          "max_physical_flux_error": "0",
+          "balance": "0",
+          "reaction_error": "0",
+          "solve_ms": "1.92732"
+        },
+        {
+          "angle": "3.2137858346770187e-11",
+          "trial": "0",
+          "max_physical_flux_error": "2.58127e-20",
+          "balance": "2.15729e-21",
+          "reaction_error": "6.00656e-14",
+          "solve_ms": "12.4682"
+        },
+        {
+          "angle": "3.2137858346770187e-11",
+          "trial": "1",
+          "max_physical_flux_error": "1.16421e-19",
+          "balance": "6.77626e-21",
+          "reaction_error": "3.302e-13",
+          "solve_ms": "12.4489"
+        },
+        {
+          "angle": "3.2137858346770187e-11",
+          "trial": "2",
+          "max_physical_flux_error": "0",
+          "balance": "0",
+          "reaction_error": "0",
+          "solve_ms": "10.12"
+        },
+        {
+          "angle": "0.17000000000000001",
+          "trial": "0",
+          "max_physical_flux_error": "2.20517e-20",
+          "balance": "2.28964e-21",
+          "reaction_error": "9.56917e-17",
+          "solve_ms": "11.8961"
+        },
+        {
+          "angle": "0.17000000000000001",
+          "trial": "1",
+          "max_physical_flux_error": "1.05385e-19",
+          "balance": "4.23516e-21",
+          "reaction_error": "6.73914e-16",
+          "solve_ms": "11.9106"
+        },
+        {
+          "angle": "0.17000000000000001",
+          "trial": "2",
+          "max_physical_flux_error": "0",
+          "balance": "0",
+          "reaction_error": "0",
+          "solve_ms": "9.60106"
+        }
+      ]
+    },
+    {
+      "name": "SparseCacheTests",
+      "path": ".cache/fluid-localized-pressure-stage14-20261029/sparse-final-qualification/SparseCacheTests.log",
+      "sha256": "96f564a9cc785bb43bd3cd92e3d23ae9028aed7ee0ff86fa2f69ae73ce9cfbef",
+      "summary": {
+        "checks": "320",
+        "failures": "0",
+        "peak_rss_kib": "435964"
+      },
+      "CACHE": [
+        {
+          "step": "1",
+          "rebuilt": "6",
+          "reused": "42",
+          "total": "48",
+          "update_ms": "1074.89",
+          "fresh_ms": "1075.25",
+          "warm_solve_ms": "15.8493",
+          "balance": "3.72694e-20",
+          "reaction_error": "1.82509e-16",
+          "physical_bits_equal": "1",
+          "geom_ms": "90.373",
+          "field_ms": "263.205",
+          "reduction_ms": "57.2056",
+          "local_qr_ms": "484.576",
+          "sampler_cache_ms": "11.1502",
+          "matrix_ms": "0.72589",
+          "global_qr_ms": "165.981"
+        },
+        {
+          "step": "2",
+          "rebuilt": "6",
+          "reused": "42",
+          "total": "48",
+          "update_ms": "1031.06",
+          "fresh_ms": "1021.16",
+          "warm_solve_ms": "15.4367",
+          "balance": "4.74338e-20",
+          "reaction_error": "1.33931e-16",
+          "physical_bits_equal": "1",
+          "geom_ms": "88.9012",
+          "field_ms": "262.226",
+          "reduction_ms": "45.4916",
+          "local_qr_ms": "483.128",
+          "sampler_cache_ms": "11.1287",
+          "matrix_ms": "0.705721",
+          "global_qr_ms": "138.032"
+        },
+        {
+          "step": "3",
+          "rebuilt": "12",
+          "reused": "36",
+          "total": "48",
+          "update_ms": "1089.23",
+          "fresh_ms": "1089.27",
+          "warm_solve_ms": "18.1846",
+          "balance": "5.0822e-20",
+          "reaction_error": "5.02149e-16",
+          "physical_bits_equal": "1",
+          "geom_ms": "112.831",
+          "field_ms": "341.278",
+          "reduction_ms": "34.4959",
+          "local_qr_ms": "403.899",
+          "sampler_cache_ms": "13.9412",
+          "matrix_ms": "1.19009",
+          "global_qr_ms": "180.28"
+        },
+        {
+          "step": "4",
+          "rebuilt": "12",
+          "reused": "36",
+          "total": "48",
+          "update_ms": "1123.68",
+          "fresh_ms": "1124.02",
+          "warm_solve_ms": "19.1492",
+          "balance": "3.72694e-20",
+          "reaction_error": "3.55641e-16",
+          "physical_bits_equal": "1",
+          "geom_ms": "110.956",
+          "field_ms": "344.485",
+          "reduction_ms": "32.9315",
+          "local_qr_ms": "382.255",
+          "sampler_cache_ms": "14.0681",
+          "matrix_ms": "0.987012",
+          "global_qr_ms": "236.549"
+        },
+        {
+          "step": "5",
+          "rebuilt": "12",
+          "reused": "36",
+          "total": "48",
+          "update_ms": "1210.15",
+          "fresh_ms": "1217.55",
+          "warm_solve_ms": "20.0248",
+          "balance": "4.06576e-20",
+          "reaction_error": "1.09702e-15",
+          "physical_bits_equal": "1",
+          "geom_ms": "108.461",
+          "field_ms": "349.473",
+          "reduction_ms": "36.5895",
+          "local_qr_ms": "451.943",
+          "sampler_cache_ms": "14.3344",
+          "matrix_ms": "1.20088",
+          "global_qr_ms": "246.73"
+        },
+        {
+          "step": "6",
+          "rebuilt": "12",
+          "reused": "36",
+          "total": "48",
+          "update_ms": "1215.02",
+          "fresh_ms": "1216.56",
+          "warm_solve_ms": "19.9989",
+          "balance": "3.21873e-20",
+          "reaction_error": "6.97723e-16",
+          "physical_bits_equal": "1",
+          "geom_ms": "105.573",
+          "field_ms": "348.122",
+          "reduction_ms": "35.5622",
+          "local_qr_ms": "449.889",
+          "sampler_cache_ms": "14.5359",
+          "matrix_ms": "1.05194",
+          "global_qr_ms": "258.803"
+        }
+      ],
+      "TIMING": [
+        {
+          "name": "updated_epoch",
+          "count": "6",
+          "median_ms": "1123.68",
+          "p95_ms": "1215.02",
+          "worst_ms": "1215.02"
+        },
+        {
+          "name": "fresh_epoch",
+          "count": "6",
+          "median_ms": "1124.02",
+          "p95_ms": "1217.55",
+          "worst_ms": "1217.55"
+        },
+        {
+          "name": "warm_solve",
+          "count": "6",
+          "median_ms": "19.1492",
+          "p95_ms": "20.0248",
+          "worst_ms": "20.0248"
+        }
+      ]
+    },
+    {
+      "name": "SparseDisconnectedControlTests",
+      "path": ".cache/fluid-localized-pressure-stage14-20261029/sparse-final-qualification/SparseDisconnectedControlTests.log",
+      "sha256": "79ddb5c3673fa82a2f6576aa19408041278e679f43718226a8e4393f9e580bcb",
+      "summary": {
+        "checks": "5",
+        "failures": "0"
+      },
+      "DISCONNECTED": [
+        {
+          "good_trace_jump_squared": "0",
+          "broken_trace_jump_squared": "0.00226555",
+          "good_force": "2.616",
+          "expected_force": "2.616",
+          "broken_force": "-0.733531",
+          "force_error": "3.34953",
+          "broken_local_balance": "3.79841e-21",
+          "absence_detected": "1"
+        }
+      ]
+    },
+    {
+      "name": "SparseWarmBenchmark",
+      "path": ".cache/fluid-localized-pressure-stage14-20261029/sparse-final-qualification/SparseWarmBenchmark.log",
+      "sha256": "f6f35ccd3225cf3f85995e261a001a13026a0a4fa218a53767e2fd85c6295678",
+      "summary": {
+        "checks": "48",
+        "failures": "0",
+        "max_flux_difference": "0",
+        "max_reaction_difference": "0",
+        "max_energy_difference": "0",
+        "peak_rss_kib": "95168"
+      },
+      "TIMING": [
+        {
+          "name": "before_response_reuse",
+          "count": "24",
+          "median_ms": "15.5526",
+          "p95_ms": "15.7874",
+          "worst_ms": "15.8125"
+        },
+        {
+          "name": "prepared_response_reuse",
+          "count": "24",
+          "median_ms": "11.5493",
+          "p95_ms": "11.6597",
+          "worst_ms": "11.7262"
+        }
+      ],
+      "WARM": [
+        {
+          "n": "0",
+          "old_ms": "15.8125",
+          "new_ms": "11.5745",
+          "flux_difference": "0",
+          "reaction_difference": "0",
+          "energy_difference": "0"
+        },
+        {
+          "n": "1",
+          "old_ms": "15.5681",
+          "new_ms": "11.5067",
+          "flux_difference": "0",
+          "reaction_difference": "0",
+          "energy_difference": "0"
+        },
+        {
+          "n": "2",
+          "old_ms": "15.6591",
+          "new_ms": "11.6597",
+          "flux_difference": "0",
+          "reaction_difference": "0",
+          "energy_difference": "0"
+        },
+        {
+          "n": "3",
+          "old_ms": "15.536",
+          "new_ms": "11.5304",
+          "flux_difference": "0",
+          "reaction_difference": "0",
+          "energy_difference": "0"
+        },
+        {
+          "n": "4",
+          "old_ms": "15.4844",
+          "new_ms": "11.4975",
+          "flux_difference": "0",
+          "reaction_difference": "0",
+          "energy_difference": "0"
+        },
+        {
+          "n": "5",
+          "old_ms": "15.518",
+          "new_ms": "11.5675",
+          "flux_difference": "0",
+          "reaction_difference": "0",
+          "energy_difference": "0"
+        },
+        {
+          "n": "6",
+          "old_ms": "15.6399",
+          "new_ms": "11.581",
+          "flux_difference": "0",
+          "reaction_difference": "0",
+          "energy_difference": "0"
+        },
+        {
+          "n": "7",
+          "old_ms": "15.7874",
+          "new_ms": "11.566",
+          "flux_difference": "0",
+          "reaction_difference": "0",
+          "energy_difference": "0"
+        },
+        {
+          "n": "8",
+          "old_ms": "15.5478",
+          "new_ms": "11.5554",
+          "flux_difference": "0",
+          "reaction_difference": "0",
+          "energy_difference": "0"
+        },
+        {
+          "n": "9",
+          "old_ms": "15.628",
+          "new_ms": "11.514",
+          "flux_difference": "0",
+          "reaction_difference": "0",
+          "energy_difference": "0"
+        },
+        {
+          "n": "10",
+          "old_ms": "15.6427",
+          "new_ms": "11.5415",
+          "flux_difference": "0",
+          "reaction_difference": "0",
+          "energy_difference": "0"
+        },
+        {
+          "n": "11",
+          "old_ms": "15.5268",
+          "new_ms": "11.615",
+          "flux_difference": "0",
+          "reaction_difference": "0",
+          "energy_difference": "0"
+        },
+        {
+          "n": "12",
+          "old_ms": "15.5451",
+          "new_ms": "11.7262",
+          "flux_difference": "0",
+          "reaction_difference": "0",
+          "energy_difference": "0"
+        },
+        {
+          "n": "13",
+          "old_ms": "15.5781",
+          "new_ms": "11.5949",
+          "flux_difference": "0",
+          "reaction_difference": "0",
+          "energy_difference": "0"
+        },
+        {
+          "n": "14",
+          "old_ms": "15.4822",
+          "new_ms": "11.5639",
+          "flux_difference": "0",
+          "reaction_difference": "0",
+          "energy_difference": "0"
+        },
+        {
+          "n": "15",
+          "old_ms": "15.4812",
+          "new_ms": "11.5056",
+          "flux_difference": "0",
+          "reaction_difference": "0",
+          "energy_difference": "0"
+        },
+        {
+          "n": "16",
+          "old_ms": "15.5888",
+          "new_ms": "11.5224",
+          "flux_difference": "0",
+          "reaction_difference": "0",
+          "energy_difference": "0"
+        },
+        {
+          "n": "17",
+          "old_ms": "15.4945",
+          "new_ms": "11.5391",
+          "flux_difference": "0",
+          "reaction_difference": "0",
+          "energy_difference": "0"
+        },
+        {
+          "n": "18",
+          "old_ms": "15.5126",
+          "new_ms": "11.5661",
+          "flux_difference": "0",
+          "reaction_difference": "0",
+          "energy_difference": "0"
+        },
+        {
+          "n": "19",
+          "old_ms": "15.5103",
+          "new_ms": "11.5008",
+          "flux_difference": "0",
+          "reaction_difference": "0",
+          "energy_difference": "0"
+        },
+        {
+          "n": "20",
+          "old_ms": "15.5526",
+          "new_ms": "11.514",
+          "flux_difference": "0",
+          "reaction_difference": "0",
+          "energy_difference": "0"
+        },
+        {
+          "n": "21",
+          "old_ms": "15.465",
+          "new_ms": "11.5493",
+          "flux_difference": "0",
+          "reaction_difference": "0",
+          "energy_difference": "0"
+        },
+        {
+          "n": "22",
+          "old_ms": "15.5701",
+          "new_ms": "11.5158",
+          "flux_difference": "0",
+          "reaction_difference": "0",
+          "energy_difference": "0"
+        },
+        {
+          "n": "23",
+          "old_ms": "15.6265",
+          "new_ms": "11.5051",
+          "flux_difference": "0",
+          "reaction_difference": "0",
+          "energy_difference": "0"
+        }
+      ]
+    },
+    {
+      "name": "SparseOraclePrecisionTests",
+      "path": ".cache/fluid-localized-pressure-stage14-20261029/sparse-final-qualification/SparseOraclePrecisionTests.log",
+      "sha256": "50602af4050fff2fc07efda799b677a06e95bdf6f867c7b71100131e03f44882",
+      "summary": {
+        "checks": "1",
+        "failures": "0"
+      },
+      "ORACLE_PRECISION": [
+        {
+          "trace_difference": "6.6579e-38",
+          "reaction_difference": "3.52943e-37",
+          "energy_difference": "8.79573e-39",
+          "bits_a": "160",
+          "bits_b": "256"
+        }
+      ]
+    },
+    {
+      "name": "ProjectedOracleTests",
+      "path": ".cache/fluid-localized-pressure-stage14-20261029/final-qualification/ProjectedOracleTests.log",
+      "sha256": "6e15f6c040318d142854e5fa86dd21b2dfc5d1b8cecff6d1ba3546ed2a4b99eb",
+      "summary": {
+        "checks": "2",
+        "failures": "0"
+      },
+      "PROJECTED_ORACLE": [
+        {
+          "angle": "0.17000000000000001",
+          "trace_error": "8.19383e-19",
+          "reaction_error": "9.33225e-17",
+          "energy_error": "1.33072e-17",
+          "oracle_ms": "5103.98"
+        },
+        {
+          "angle": "3.2137858346770187e-11",
+          "trace_error": "1.06693e-15",
+          "reaction_error": "2.13636e-14",
+          "energy_error": "1.03874e-16",
+          "oracle_ms": "5342.83"
+        }
+      ]
+    },
+    {
+      "name": "SparseProjectedOracleTests",
+      "path": ".cache/fluid-localized-pressure-stage14-20261029/sparse-projected-first.log",
+      "sha256": "f546a71d728295c4e3206d206764d58cf2c05ec83685c7f6bddc537bd71dacc3",
+      "summary": {
+        "checks": "2",
+        "failures": "0"
+      },
+      "PROJECTED_ORACLE": [
+        {
+          "angle": "0.17000000000000001",
+          "trace_error": "9.23358e-19",
+          "reaction_error": "6.91628e-17",
+          "energy_error": "1.33072e-17",
+          "oracle_ms": "5054.16"
+        },
+        {
+          "angle": "3.2137858346770187e-11",
+          "trace_error": "6.82017e-15",
+          "reaction_error": "3.86053e-14",
+          "energy_error": "1.45926e-16",
+          "oracle_ms": "5474.23"
+        }
+      ]
+    }
+  ],
+  "retainedFailures": {
+    "emptyInteriorBlock": "private Eigen FullPivLU SIGSEGV, explicit empty-block handling correction",
+    "missingFrameHelper": "compile failure corrected by cohesive ReferenceFrame helper",
+    "doubleQr": "fails unchanged inner refinement; outer trace error3.22266e-12 above1e-12, rejected",
+    "isolatedZeroRegion": "4.646764659e-36J roundoff response before component factorization, original exact-zero failure retained"
+  },
+  "historicalEvidenceUnchanged": true,
+  "historicalActiveFileExceptions": [
+    {
+      "stage": 6,
+      "path": "tools/verification/current-docs.json",
+      "recordedSha256": "7f0747a0d158b44a619b38aebeb20ac7c906a073a938e7dc2bf8507cc5333629",
+      "currentSha256": "9d4fc4632ee434d240b28818b93755ed36607803e9e48f45cbc0d18e4399af79",
+      "reason": "Legitimate active document inventory evolution; historical evidence remains unchanged."
+    }
+  ],
+  "productionChanged": false,
+  "advancedFluidsUnlocked": false,
+  "knownBlockers": [
+    "Moving preparation remains about1.12s per pose",
+    "No swept-wall/GCL, owned-water or momentum evolution",
+    "Multiple disconnected components within one seed and trace-free isolated blocks explicitly unsupported",
+    "No native contacts/CCD or application persistence/export integration",
+    "No Windows/MSVC precision qualification"
+  ]
+}

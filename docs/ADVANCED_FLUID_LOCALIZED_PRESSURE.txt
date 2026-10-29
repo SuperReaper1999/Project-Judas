@@ -1,0 +1,191 @@
+ADVANCED FLUID FOLLOW-UP — LOCALIZED CONSERVATIVE PRESSURE ASSEMBLY
+29 October 2026 | Experimental | Parent 5deef83b80736cda50a203e5c74cdf2afb9fa40e
+PRIVATE NUMERICAL CANDIDATE — NOT A PRODUCTION BACKEND OR ALPHA UNLOCK
+
+WHAT NOW WORKS
+The localized geometry is connected to an actual conservative variational
+pressure solve, not merely a geometric overlap report. Shared affine normal
+traces join nonmatching background faces; local kinetic coordinates are condensed
+and reconstructed, and physical continuity, work, force and energy are checked.
+Unchanged local geometry/factors are reused after prescribed pose changes, with
+bit-identical cached-versus-fresh matrices and physical results in the measured
+fixtures. Correctness is independently checked rather than inferred from reuse.
+
+The qualified private entry is QualifiedPressure.h / QualifiedEpoch. It uses
+SparsePressureEpoch.h and the SAME long-double coefficients and numerical bounds
+as the dense reference. The dense path remains preserved as an independent
+implementation/performance reference. The faster double-QR experiment is rejected.
+No tracked engine/API/build wiring, project assets, Basic Water, M54/M55, FLU-001
+or release policy changed. Alpha's compiled fluid lock remains intact. Independent
+research and all previous frozen evidence are untouched.
+
+DISCRETIZATION / INTERFACES
+Mass/kinetic integration and four macro continuity moments(1,x,y,z) retain the
+Stage9–12 affine H(div)/normal-flux formulation. Fine tetrahedra supply velocity
+reconstruction and integration; this is NOT a new claim of pointwise zero
+divergence in every fine tetrahedron or proven continuum convergence.
+
+Each open background triangle has one shared affine RELATIVE normal trace,
+used on both sides despite different micro-triangulations. This is the same
+coarse trace-space restriction as the earlier macro approach; it does not promise
+arbitrary independent piecewise traces. Prior exact common-refinement moments
+validate geometry/trace coverage. The new disconnected-interface control evaluates
+actual squared flux jumps using those degree2 aperture moments.
+
+For a pressure-bearing seed, local plane arrangement is made conforming INSIDE
+that seed. This is important: Stage13's minimal outside-piece subtraction can
+also have nonmatching internal faces and cannot simply be passed into the old
+matching-face finite-element table. Only seeds overlapping the exact conservative
+solid bounds receive that local arrangement; distant seeds stay uncut. Touching
+seeds are included so blocked boundary footprints have proper local ownership.
+There is no geometric epsilon, tiny-cell pruning, coordinate welding or dropped
+kinetic mode. The new interior discretization is deliberately declared.
+
+OWNERSHIP / FRAME / PUBLICATION
+Immutable local factors hold geometry-dependent kinetic, constraint and trace
+operators and prepared source/trace/body responses. Epoch updates stage affected
+geometry, factors, interface numbering and global preparation before replacing
+old data. Source evaluation is separate and read-only. Invalid geometry, NaN,
+finite kinetic overflow, unsupported rounding and unsupported domains reject
+without mutating the prior epoch. Empty fluid seeds are explicitly handled;
+fully displaced domains currently reject with a useful diagnostic.
+
+The rigid-velocity lifting uses a FIXED reference at local coordinate0, rather
+than the moving COM. Otherwise a COM change would spuriously invalidate distant
+body-lift blocks. Helpers explicitly map v_origin=v_COM-omega cross COM and
+ torque_COM=torque_origin-COM cross force.
+A non-axis power identity is tested. Native callers must perform those transforms;
+this is not a new JudasJS/native public binding or claimed native integration.
+
+CORE CORRECTNESS EVIDENCE
+- PressureTests: uncondensed monolithic conservation/kinetic projection versus
+  localized condensation, axis-aligned and .17rad geometry, calm gravity input,
+  nonlinear flow, zero input and prescribed translation/rotation. Fine physical
+  flux, force and energy agree within the unchanged bounds. Independent displaced-
+  volume buoyancy gives2.616N*s for the supported64kg displaced-water fixture at
+  dt1/240s; hydrostatic water remains calm and nonlinear circulation stays nonzero.
+- ThinAccuracyTests:0,3.2137858346770188e-11,.17rad; nonlinear/changed/zero inputs,
+  moving-body terms, ALL six patches.160-bit solves verify both free and dependent
+  physical flows against1e-12. Zero source clears exactly; continuity and work
+  retain the old1e-10/1e-8 checks.
+- An independent oracle eliminates local kinetic coordinates at160 bits BEFORE
+  assembling the global pressure saddle system. It uses frozen J/Y/constraint
+  coefficients, NOT runtime Q or its condensed K. Sparse runtime trace differences
+  are9.234e-19(ordinary) and6.821e-15(thin), below1e-12. Corresponding force errors
+  are6.917e-17 and3.861e-14; energy errors below1.460e-16.
+-160/256-bit independent elimination agrees within6.658e-38 in trace,
+  3.530e-37 in force and8.796e-39 in energy. This is a finite-operator oracle,
+  not independent exact geometry/continuum validation.
+- DisconnectedControlTests deliberately replace shared interface coordinates
+  with independent per-owner copies. Every cell still passes local continuity
+  (3.567e-21), but squared interface jump is .00226555 and buoyancy changes from
+  correct +2.616 to -0.733531N*s. Independent force and interface tests DETECT
+  the absent coupling. A zero local-divergence report alone would miss the defect.
+- CacheTests crosses a cell boundary through six prescribed poses.36–42 of48
+  factors retain identity. Cached and fresh matrices, pressure solutions, fine
+  fields, energy and forces are BIT-IDENTICAL for the same backend. Zero, failed
+  source/geometry, empty seeds, total displacement and unchanged-pose paths are
+  exercised. These are prescribed-geometry tests, NOT water remapping/time steps.
+
+COMPONENT ISOLATION CORRECTION
+The final topology check exposed4.646764659e-36J of response in an unforced region
+separated by a sealed barrier. This is numerical roundoff, not a visible launch
+or demonstrated production defect. Its exact original failure is preserved.
+The global QR mixed independent blocks numerically despite zero operator links.
+
+Pressure factors are now partitioned by ACTUAL shared trace ownership and local
+connected owners before factorization. Kinetic/continuity matrices are checked
+for any coefficient crossing that partition; nothing is discarded by tolerance.
+Independent components solve separately for the prescribed body twist, with
+energy/force/pressure assembled consistently. A single component retains the
+original direct solve path. This preserves the exact zero test instead of
+clamping a tiny output or loosening the expectation.
+
+The corrected barrier case leaves the isolated right region at EXACTLY zero
+energy while retaining .1299156967J of left-region motion. Opening the reference
+geometry recomputes one connected pressure graph. That is a geometry-only topology
+check, NOT actual displaced-water transport or newly wetted volume publication.
+
+QualifiedEpoch explicitly rejects MULTIPLE disconnected fluid components inside
+ONE background seed: they need separate trace ownership before support can be
+claimed. The attempted update leaves old factors/physical results intact. Multiple
+global pressure islands are supported when each seed has one connected owner.
+Trace-free isolated pressure blocks remain explicitly unsupported. This guard
+prevents an unqualified coarse basis from pretending to support every wet topology.
+Body twist is prescribed here; future free-body coupling must still assemble
+shared mechanical DOFs correctly across islands, not independently move one body.
+
+MEASURED PERFORMANCE / REJECTED EXPERIMENT
+Linux Ryzen5 5600,8GB, GNU15.2 Release/O3, one CPU-heavy process at a time. Raw
+samples, settings, source/build identities and memory measurements are archived.
+All pressure fidelity, object geometry, source and acceptance bounds are retained.
+
+1. Correct reuse alone did NOT fix moving preparation. Dense updates remained
+   about1.74s, virtually identical to a fresh build. Bounded phase instrumentation
+   found .91–1.14s in LOCAL QR, .26–.34s field assembly and .14–.26s global QR.
+   This failed performance approach is retained; owner counts are not a speedup.
+2. Double QR reduced local QR to about71ms but failed unchanged thin-cut refinement.
+   Independent diagnosis also finds3.223e-12 error in the OUTER pressure trace,
+   above1e-12. More inner refinement iterations cannot repair a different outer
+   projector. No limit increase, damping, energy clamp or precision downgrade was
+   adopted. The rejected sources and exact failure remain archived.
+3. Sparse QR uses EXACTLY the same long-double J coefficients, excluding exact
+   zeros only, with no numerical pruning. It passes the independent pressure
+   checks. Local preparation falls to about .44–.45s in the measured changed
+   patches, and complete updates improve substantially, but remain too expensive.
+4. Warm source transformation was duplicated in reconstruction. Prepared response
+   algebra reuses that transformation, followed by the independently checked
+   accurate-gradient refinement. This skips redundant work rather than changing
+   the physical solve.
+
+Matched24-sample warm benchmark, nonlinear .17rad fixture, alternating order:
+                         median ms      p95 ms       worst ms
+Dense before responses   26.4637        26.7309       27.2982
+Dense with responses     17.4567        17.6659       17.9417
+Sparse before responses  15.5692        15.7072       15.8042
+Sparse with responses    11.5431        11.6072       11.6310
+Within each pair the physical outputs are bit-identical in all24 samples.
+Dense/sparse comparisons use separate matched runs; different QR ordering is
+verified numerically, not claimed trajectory-bit-identical across algorithms.
+
+Six-pose moving-operator workload, same geometry/inputs before and after:
+Dense update median1.741s; sparse update about1.12s. Independent/fresh assembly
+still costs nearly the same as reused assembly: expensive changed cut-cell
+factors dominate. Warm solves in the larger48-owner fixture are roughly19ms.
+These are private pressure timings, not a whole-fluid/frame/game performance
+claim. Cold seconds per move BLOCK practical continuous simulation. Source-only
+samples do not include GCL, advection, native contacts, rendering or save/stream.
+Process peaks around434MiB include multiple live reference/cached epochs;
+no isolated before/after memory reduction is claimed.
+
+PRESERVED FAILURES / FINAL STATUS
+Preserved: uncut-cell zero-dimensional FullPivLU segfault/backtrace, fixed by an
+explicit empty-block path; missing frame-helper compile failure; failed double
+QR; negligible benefit from reuse alone; original exact-isolation failure.
+The retained dense reference and pre-isolation sparse qualification passed486
+assertions EACH; those comparison runs are NOT added to the final closure count.
+The final island/ownership correction passes483 final-source assertions: component5,
+cache320, thin-oracle75, monolithic-pressure35 and warm48. Independent projection/
+precision and missing-interface controls remain separately identified evidence.
+RESULTS.json separates these runs rather than inflating the final coverage count.
+No prior fixture/threshold or protected evidence was changed.
+
+Report, exact source/archive manifest, binary/source fingerprints, raw successes
+and failures, measured phases, selected entry and reproduction commands:
+ docs/evidence/advanced-fluid-pressure-followup-20261029/stage14/
+This checkpoint uses the honestly identified existing native reference archive;
+it is not a fresh Alpha SDK/build. No full production suite/editor/export or
+Windows/Android qualification is claimed for private-reference-only changes.
+MSVC double-width long double remains unqualified; the rejected double experiment
+is evidence against assuming equivalent numerical support from compilation.
+
+REMAINING BOUNDARIES / NEXT WORK
+The pressure/operator connection is now exercised. It still does NOT update owned
+water through a moving solid, integrate swept-wall GCL, evolve momentum or free
+surfaces/wet/dry, solve native contact/CCD interactions or survive application
+saves/streaming/export. M54 remains authoritative for quantity; new capacity is
+not water. Local cut-factor preparation remains a major performance blocker,
+requiring a sound representation/factor-update strategy, not another reuse count.
+Continue with connected, conservative swept transport and a practical local
+operator strategy; preserve these independent oracles while doing so. The original
+Terrain planet contact failure is NOT declared fixed and Alpha fluids stay locked.

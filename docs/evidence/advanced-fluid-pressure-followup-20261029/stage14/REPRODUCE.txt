@@ -1,0 +1,88 @@
+PRIVATE LOCALIZED PRESSURE CANDIDATE — NOT AN ALPHA FLUID UNLOCK
+
+Read docs/ADVANCED_FLUID_LOCALIZED_PRESSURE.txt and RESULTS.json first.
+Selected entry: QualifiedPressure.h / QualifiedEpoch -> SparsePressureEpoch.h.
+The numerical Epoch internals remain research fixtures, not a public SDK API.
+
+1. python3 <this-directory>/verify_evidence.py
+   Verifies archived source/evidence bytes without extraction/execution.
+   FINAL_FINGERPRINTS.json seals report/evidence except itself. Frozen Stage5-13
+   evidence is unchanged. The historical Stage6 current-doc inventory exception
+   is recorded explicitly; no old expected hash is regenerated.
+
+2. Verify/extract the Stage13/12 REPRODUCE.txt dependency chain into an isolated
+   scratch checkout. Extract Stage14 LAST, never over an active investigation.
+   It restores .cache/fluid-localized-pressure-stage14-20261029/. Sources include
+   qualified sparse/dense comparison variants and REJECTED fast-double experiments;
+   do not select an experiment because its filename says Fast.
+
+3. Inherit the established Linux Release/Makefile native probe prerequisites:
+   judas_script_tests flags.make/link.txt, libjudas_engine.a, setup_probes.py,
+   Stage5 exact-volume-domain object, locally extracted Boost1.90/Eigen3.4 headers.
+   These remain private proof dependencies, not new production requirements.
+
+   export BOOST_INCLUDE_DIR=<headers>/usr/include
+   export EIGEN_INCLUDE_DIR=<headers>/usr/include/eigen3
+   python3 .cache/fluid-localized-pressure-stage14-20261029/run_qualified.py
+
+   Serial execution writes a NEW reproduction-results folder or refuses to
+   overwrite one. Original final/failure receipts remain untouched.
+   The complete reproduction recipe runs:
+    SparsePressureTests              35 checks
+    SparseThinAccuracyTests          75 checks
+    SparseProjectedOracleTests        2 checks
+    SparseOraclePrecisionTests        1 check
+    SparseDisconnectedControlTests    5 checks
+    SparseCacheTests                 320 checks
+    SparseWarmBenchmark              48 checks
+    ComponentOwnershipTests           5 checks
+   Total491 for that full recipe. The CURRENT final-source late-isolation closure
+   reran five affected programs (component/cache/thin/monolithic/warm),483 checks.
+   Earlier independent projection/precision/disconnected gates are retained and
+   identified separately. Do not add all repeated checks as independent coverage.
+
+4. Individual builds/runs:
+   python3 .cache/fluid-localized-pressure-stage14-20261029/run_probe.py NAME
+
+   Pressure: shared affine normal traces, integrated macro continuity, actual
+   mass/kinetic minimization, body motion, independent buoyancy/wrench/power.
+   Compare full fine flux with monolithic uncondensed solve, not just solver status.
+   Thin: independently solve every local free/dependent reconstruction at160 bits.
+   Projected oracle: eliminate LOCAL coordinates independently BEFORE global
+   pressure assembly, not from runtime Q/K.160/256-bit precision check converges.
+   Disconnected control: deliberately remove shared coordinates; local balance
+   still passes but actual interface jump and wrong buoyancy expose the missing
+   mechanism. This control is expected to DETECT failure, then exit0.
+   Cache: six poses, alternating reused/fresh order, same sources/settings, exact
+   matrices/physical results per backend, atomic rejection and empty-block paths.
+   Warm:24 alternating samples on identical immutable operators; baseline repeats
+   the original QR source work, candidate reuses response algebra. Median is upper-
+   middle, p95 nearest rank. Peaks include reference/candidate data, not isolated
+   process memory comparisons. No physical thresholds are loosened.
+   Component: unsupported in-seed disconnection is rejected before publication;
+   valid separate global islands preserve exact zero, and opening geometry rebuilds
+   connectivity. This is NOT owned-water/GCL time evolution.
+
+5. Preserved investigations (NOT accepted paths):
+   FastProjectedOracleTests -> fails the original thin reconstruction bound.
+   FastProjectionDiagnostic -> prints outer trace accuracy_pass=0; extra inner
+   iterations cannot repair its independently incorrect outer projector.
+   Pre-isolation component logs retain4.646764659e-36J unwanted zero-input response.
+   Empty-block segfault/backtrace and missing-helper compile failure are preserved.
+   Old failed native binaries were overwritten by later local builds; exact saved
+   source snapshots/logs/backtrace are retained, not fabricated binary fingerprints.
+
+6. Archive PROVENANCE.json records actual final-source native binary/library and
+   geometry-object hashes, compiler/flags, parent checkpoint, private sources and
+   all prior source archives. Native archive has its historical dirty build identity;
+   this is NOT a fresh current Alpha SDK. Rebuilds get new provenance; never replace
+   accepted receipts. No downloaded headers/native binaries/SDK packages included.
+
+Bounds: full-wet bounded local grid, one connected owner per background seed,
+prescribed body twist at a fixed reference, affine shared normal traces, four
+integrated macro divergence moments. Multiple global islands are supported in
+that subset. Fully displaced domains and trace-free isolated blocks reject.
+Moving preparation still costs about1.12s; no practical continuous-fluid claim.
+No swept-wall GCL, owned-water/momentum advection, general free surfaces/wet-dry,
+native contacts/CCD, saves, streaming or standalone integration yet. No Windows/
+MSVC precision or Android qualification. Basic Water/Alpha fluid lock unchanged.

@@ -1,0 +1,8 @@
+docs/ADVANCED_FLUID_LOCALIZED_PRESSURE.txt
+docs/evidence/advanced-fluid-pressure-followup-20261029/stage14/CHANGED_FILES.txt
+docs/evidence/advanced-fluid-pressure-followup-20261029/stage14/FINAL_FINGERPRINTS.json
+docs/evidence/advanced-fluid-pressure-followup-20261029/stage14/REPRODUCE.txt
+docs/evidence/advanced-fluid-pressure-followup-20261029/stage14/RESULTS.json
+docs/evidence/advanced-fluid-pressure-followup-20261029/stage14/SOURCE_MANIFEST.json
+docs/evidence/advanced-fluid-pressure-followup-20261029/stage14/stage14-localized-pressure-reference.tar.gz
+docs/evidence/advanced-fluid-pressure-followup-20261029/stage14/verify_evidence.py

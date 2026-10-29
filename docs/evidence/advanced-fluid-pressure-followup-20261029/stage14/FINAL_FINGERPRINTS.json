@@ -1,0 +1,15 @@
+{
+  "schema": 1,
+  "parentRevision": "5deef83b80736cda50a203e5c74cdf2afb9fa40e",
+  "scope": "Private localized conservative pressure, sparse factor reuse and independent-island isolation; no production/API/fluid-policy change.",
+  "selfHashExcluded": true,
+  "files": {
+    "docs/ADVANCED_FLUID_LOCALIZED_PRESSURE.txt": "02f8c895c50bffd7d445c579b97ef0d8ed1a1fc3ddc3ef04433bcb662154ee2d",
+    "docs/evidence/advanced-fluid-pressure-followup-20261029/stage14/CHANGED_FILES.txt": "6355df8b88a81088f3fa6f8f6ba76c69b1441c4b62a5a58a07645a9bd306ed8e",
+    "docs/evidence/advanced-fluid-pressure-followup-20261029/stage14/REPRODUCE.txt": "d2a35a4fe18f64cd0702e98edd88093dd7b31effdee4bc32c44b552c47def860",
+    "docs/evidence/advanced-fluid-pressure-followup-20261029/stage14/RESULTS.json": "62317802830964bbfdb10ad0179731ccf6fda2ebc97010781413b5799547c20a",
+    "docs/evidence/advanced-fluid-pressure-followup-20261029/stage14/SOURCE_MANIFEST.json": "34c7669b66cf9454bdd1859118139acab5b0277f1dc05c6165b4c2b7cda9ff30",
+    "docs/evidence/advanced-fluid-pressure-followup-20261029/stage14/stage14-localized-pressure-reference.tar.gz": "494d9abafa563af1217ddd9e98e0132fe64d488ba2abce5b6eabfb734f7c073e",
+    "docs/evidence/advanced-fluid-pressure-followup-20261029/stage14/verify_evidence.py": "a39461e0e085deaf75c556669f5fe10b27dfda18595c380aa27aa8e36d39bfbb"
+  }
+}
