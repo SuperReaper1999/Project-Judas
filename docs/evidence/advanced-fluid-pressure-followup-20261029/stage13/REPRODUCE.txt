@@ -1,0 +1,68 @@
+PRIVATE MOVING-GEOMETRY FOUNDATION — NOT AN ALPHA FLUID UNLOCK
+
+Read docs/ADVANCED_FLUID_MOVING_GEOMETRY.txt and RESULTS.json first.
+
+1. python3 <this-directory>/verify_evidence.py
+   Verifies exact source/evidence archive bytes without extraction or execution.
+   FINAL_FINGERPRINTS.json seals all evidence and report files except itself.
+   Earlier Stage5-12 archives/frozen evidence are unchanged. The known Stage6
+   active current-document inventory exception is explicitly recorded.
+
+2. Follow Stage12/11 REPRODUCE.txt to verify/extract dependencies into an isolated
+   scratch checkout. Extract Stage13 LAST, never over an active investigation.
+   The archive restores .cache/fluid-moving-geometry-stage13-20261029/. It includes
+   exact sources, initial diagnostic revisions/logs, final logs and provenance.
+   No downloaded third-party headers, native binaries, SDKs or build outputs.
+
+3. Use the same established Linux Release/Makefile native probe setup:
+   judas_script_tests flags.make/link.txt, native libjudas_engine.a,
+   setup_probes.py and Stage5 exact-volume-domain object. The inherited private
+   harness checks locally extracted Boost1.90/Eigen3.4 headers; these are NOT
+   new production requirements. Prior reproduction files record acquisition.
+
+   export BOOST_INCLUDE_DIR=<headers>/usr/include
+   export EIGEN_INCLUDE_DIR=<headers>/usr/include/eigen3
+   python3 .cache/fluid-moving-geometry-stage13-20261029/run_final.py
+
+   Serial builds/runs write a NEW reproduction-results directory and refuse to
+   overwrite it. Archived final receipts remain untouched. Final expected checks:
+    GeometryMotionTests      26
+    ExchangeTests            49
+    LocalizedMotionTests   4694
+    MortarTests              10
+   Total4779, mostly per-seed exact geometry comparisons, NOT4779 solved fluid
+   scenarios. Commands, return codes, logs and elapsed times are recorded.
+
+4. Individual programs:
+   python3 .cache/fluid-moving-geometry-stage13-20261029/run_probe.py NAME
+
+   GeometryMotionTests retains global six-plane arrangement and shows why it
+   invalidates all48 seeds. Final timings include rational moments on both paths;
+   initial unmatched compiler-only full timings are retained but not compared.
+
+   ExchangeTests verifies exact endpoint common/lost/gained partitions, analytic
+   box moments, hydrostatic-potential work and affine-carrier moment bookkeeping.
+   It deliberately exposes overlap-only mass loss and out-and-back path loss.
+   It is NOT time-integrated swept motion or a fluid transfer step.
+
+   LocalizedMotionTests compares12 poses in the384-seed domain, using conservative
+   exact endpoint bounds, immutable slice reuse and a staged publication. Compare
+   SAME representation/full work,11 nonzero alternating-order samples. Median
+   upper-middle; p95 nearest rank. Capacity/first moments match independent box
+   formulas exactly. It does not reuse pressure factors or carry fluid waves yet.
+
+   MortarTests verifies projected interface moments through degree2, including
+   truly nonmatching subdivisions, exact cell-face contact, blocked quarter-area
+   aperture and an injected missing trace. It assembles GEOMETRIC overlap only,
+   not pressure/velocity/mass exchange. Do not feed its unmatched triangles into
+   the old matching-face pressure table without proper mortar assembly.
+
+5. Archive PROVENANCE.json records parent source, compiler/flags, actual existing
+   local native archive/build identity and geometry object, final binary/source
+   hashes and all prior dependency archives. This is not a fresh Alpha SDK build.
+   Rebuilt binaries get new provenance and must not overwrite old receipts.
+
+No production systems/policy changed. No full engine suite/editor/export or new
+Windows/Android qualification claimed. Alpha fluids remain compiled-locked.
+Next: pressure assembly/factor reuse on the localized traces, then swept-path
+GCL with genuine connected conservative transport. No quantity repair/clamping.

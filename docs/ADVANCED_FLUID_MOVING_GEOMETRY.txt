@@ -1,0 +1,154 @@
+ADVANCED FLUID FOLLOW-UP — LOCALIZED MOVING GEOMETRY FOUNDATION
+29 October 2026 | Experimental | Parent df5d74d1c2389cda64ca11b718a5beb840090949
+
+OUTCOME AND SCOPE
+Implemented exact endpoint displacement references, a dependency-aware geometry
+cache and a viable localized subtraction representation with exact nonmatching
+interface proofs. All final4779 assertions pass. These are private numerical
+sources archived with reproduction/evidence, NOT a production fluid backend.
+No tracked engine implementation/API, Basic Water, M54/M55 or Alpha lock changes.
+Main, published packages, protected history and independent research are untouched.
+
+This advances the geometry part of the authorized moving-solid investigation.
+It does NOT complete a time-integrated swept-wall GCL algorithm, route water or
+momentum, connect the new interfaces to pressure, or reuse pressure factors yet.
+Those omissions are explicit; neither endpoint overlap nor a geometry cache is
+presented as an evolving fluid simulation.
+
+1. THE ACTUAL LOCALITY PROBLEM
+The existing conforming cut compiler applies all six solid planes throughout
+the background arrangement, including far outside the physical body. Its output
+is mathematically valid, but moving a small solid changes artificial distant
+subdivisions and therefore the local kinetic bases/factorizations built on them.
+A cache wrapped around that representation cannot provide genuine locality.
+
+GeometryMotionTests uses the SAME conforming plane arrangement, a canonical
+exact-coordinate pulling order and selected-seed recompilation. It matches a
+fresh full rebuild TETRAHEDRON FOR TETRAHEDRON and in exact volume/first moments.
+But every nonzero translation/rotation in the two-cell-wide fixture dirties all
+48 seeds. Matched geometry+moment costs include update229.28ms versus full274.92ms
+for the tiny-angle case, and update170.18ms versus full199.63ms at .07rad.
+These slight implementation gains do not fix the global dependency. The unchanged
+pose correctly performs zero rebuilding. This avenue is retained as an unsuitable
+locality strategy, not quietly substituted into a benchmark with a smaller body.
+The initial log timed full geometry without its rational-moment integration;
+that unmatched timing is preserved but excluded. Final logs measure both workloads.
+
+2. LOCALIZED PHYSICAL SUBTRACTION
+The alternative clips only the remaining interior of each background seed
+against the six box planes, accumulating its outside pieces. An EXACT empty
+intersection returns the original uncut seed. Far fluid is no longer partitioned
+by infinitely extended solid faces. No tolerance, occupancy voxel approximation,
+feature-size pruning, tiny-cell merging or geometric coordinate weld is used.
+
+A deterministic exact-coordinate pulling order provides reproducible local
+triangulations. Bounds derive from rational intersections of the finite six
+planes. An update stages only seeds overlapping the OLD or NEW solid bounds,
+then atomically publishes immutable shared slice ownership. Unaffected slice
+objects remain identical. Invalid/degenerate input is rejected without replacing
+old owners; an unchanged pose performs no work. Bounds are conservative, so
+unnecessary candidates are allowed, but no physically affected endpoint seed
+may be skipped. Continuous swept-path discovery is a SEPARATE future requirement.
+
+LocalizedMotionTests:4694 assertions, mostly per-seed geometry comparisons.
+A four-cell-wide domain has384 seeds. Twelve prescribed poses translate/rotate a
+box across cell boundaries. Every update matches a fresh localized rebuild in
+canonical exact tetrahedra, volume and first moments; independent six-plane box
+formulas verify actual physical capacity and first moments. Nonzero updates
+rebuild6–24 seeds, retaining360–378 of384 geometry owners. This is geometry
+ownership preservation, NOT a claim that existing waves were evolved/preserved.
+
+Matched final timings, same new representation and geometry+exact moment work,
+11 NONZERO updates, alternating full/incremental order, Ryzen5 5600/8GB Linux:
+                        median          nearest-rank p95 / worst
+full local rebuild      45.0603ms        48.1265ms
+incremental update      19.2786ms        23.3424ms
+Process peak RSS12,712KiB includes both copies. Bounds/preparation are included;
+comparison/digest checks are excluded symmetrically. This is about57% less median
+GEOMETRY preparation work. It is not a whole-fluid speedup, pressure-factor reuse,
+a comparison with Stage12's different workload, or a practical60Hz claim.
+
+The new geometry is an exact partition of the same physical fluid space; its
+internal discretization intentionally differs from the old global arrangement.
+It cannot be plugged into the old matching-triangle face table unchanged.
+
+3. NONMATCHING INTERFACES — VERIFIED, NOT IGNORED
+MortarGeometry constructs actual open traces on shared background triangles.
+It subtracts the exact solid footprint even when a solid merely touches a face;
+a zero-volume seed/body intersection must not accidentally open a blocked passage.
+Each pair of nonmatching face subdivisions receives an exact rational2D common
+refinement. On BOTH sides, summed overlap moments equal the owner moments exactly
+through degree2: integral(1,u,v,u*u,u*v,v*v). These moments are the geometric basis
+for conservative affine flux/pressure interface integration. Physical projected-
+area/vector-normal conversion remains an assembly responsibility.
+
+MortarTests:10 assertions across four poses/configurations,270 interfaces each:
+- Axis-aligned and ordinary oblique body; truly nonmatching subdivisions.
+- Solid cap exactly at a cell face: its quarter-area footprint is blocked and
+  the remaining aperture is exactly3/4. No zero-volume-touch leakage.
+- A tiny solid wholly inside a seed still creates nonmatching exterior traces;
+  the test explicitly requires such a case, not merely equal tessellations.
+-8–16 nonmatching interfaces and538–719 positive overlap patches per fixture.
+- Dropping one actual trace triangle is rejected in every fixture.
+This validates geometric interface coverage/moments, NOT pressure/mass-flow
+publication or flow across interfaces. No unconnected triangle is treated as a
+wall and no water is teleported to bridge unmatched geometry.
+
+4. DISPLACEMENT / WORK / MOMENTUM REFERENCE
+ExchangeTests:49 assertions. A separate12-plane Boolean common refinement of the
+OLD and NEW body partitions fluid into common capacity, lost capacity (newly
+occupied by solid), gained capacity (newly vacated by solid), and common solid.
+For translation, cell crossing, rotation and return, exact rational sums recover
+both endpoint volumes AND first moments, with nonnegative lost/gained capacity.
+Closed-form parallelepiped moments derived independently from the six planes
+verify physical capacity. All finite plane coefficients are taken exactly; tiny
+rounding-induced differences from an ideal orthonormal box are not repaired.
+
+For uniform gravity(1.25,-9.81,.375), the linear hydrostatic-potential work identity
+ rho*g dot delta(M_fluid) = -rho*g dot delta(M_solid)
+holds exactly. Prescribed affine-carrier momentum integrated over the gained and
+lost capacity likewise equals its endpoint moment difference exactly. This is a
+geometric work/carrier-momentum reference under prescribed motion, NOT a solved
+body trajectory, dynamic energy test or conservative momentum-advection scheme.
+M54 quantity ownership is not modified by newly available CAPACITY.
+
+Two important negative controls:
+- Copying only the common overlap loses .0117–.0375m^3 in these moves, even though
+  a correct transport must retain owned water and find physical outflow/inflow.
+- Out-and-back motion has ZERO net endpoint difference but nonzero leg exchanges
+  (sum of lost capacities .079288m^3). Endpoints cannot replace wall-path/swept
+  information. The reference intentionally exposes this rather than claiming GCL.
+
+5. FINAL SOURCE / REPRODUCTION
+Final-source programs ran serially:26 geometry-dependency assertions,49 exchange,
+4694 localized comparisons and10 mortar checks; total4779. Initial diagnostic
+versions/logs are archived separately and not added to the final count.
+No assertions failed in the final candidate. The global-dependency approach is
+rejected on measured architecture/performance grounds, not a ceremonial failure.
+
+Exact sources, raw logs, final binary/library hashes, source provenance, archive
+manifest, final fingerprints and commands:
+ docs/evidence/advanced-fluid-pressure-followup-20261029/stage13/
+All frozen Stage5-12 archives and report fingerprints remain unchanged. Stage6's
+historical hash of the ACTIVE current-doc inventory has legitimately advanced;
+that known exception is recorded instead of rewriting its expected hash.
+No full production suite or platform/editor/export run is claimed for private
+geometry-only source changes. The existing native Release archive is identified
+honestly; it is not a freshly rebuilt Alpha SDK. No new external dependency is
+added to Judas. The reproduction harness reuses local Boost/Eigen/header inputs
+from preceding stages.
+
+NEXT ENGINEERING BOUNDARY
+Use the common-refinement moments to assemble the SAME conservative variational
+pressure mechanism on localized interfaces. Cache geometry-dependent local
+kinetic/constraint factors by stable background owner and topology epoch, updating
+only dirty owners and incident interfaces; update rigid-frame mappings explicitly.
+Verify against a full fresh assembly and the independent pressure oracles before
+claiming pressure reuse. The global pressure solution must still respond to
+changed loads: locality does not mean freezing distant pressure.
+
+Then implement time-integrated wall motion and geometric conservation with
+actual displaced-water transport along valid wet connectivity. Add conservative
+momentum evolution, free surfaces/wet-dry, native contacts and whole-application
+persistence/performance. Until those pass, the original Terrain planet failure
+is not declared repaired and Advanced Fluids remains unavailable in Alpha.

@@ -1,0 +1,114 @@
+{
+  "schema": 1,
+  "archiveSha256": "e80f6a1c08f5b85089e0730b8ab74342833958bbc1e9fce221de6a33d75eb554",
+  "files": {
+    ".cache/fluid-moving-geometry-stage13-20261029/EndpointExchange.h": {
+      "bytes": 4055,
+      "sha256": "fe1b0e4a3da4be45dac92cdf29670e20ea76b17dd30da2a16b10231a8a9b9553"
+    },
+    ".cache/fluid-moving-geometry-stage13-20261029/ExchangeTests-before-momentum.cpp": {
+      "bytes": 2840,
+      "sha256": "dfb6562d384e5ee11bd72f60387842132613e9accca9899a7bd86c26dbc4def4"
+    },
+    ".cache/fluid-moving-geometry-stage13-20261029/ExchangeTests.cpp": {
+      "bytes": 3468,
+      "sha256": "ec743e8c066ff92af3e397f69b1f3e657fcfc123b2ddb3b1242281f862e8dcd1"
+    },
+    ".cache/fluid-moving-geometry-stage13-20261029/GeometryMotionTests-initial-timing.cpp": {
+      "bytes": 2458,
+      "sha256": "4bd8eecda2d9e51625d42e9f1f3543f3015e56a21a05275a3c781f8c23aefc6a"
+    },
+    ".cache/fluid-moving-geometry-stage13-20261029/GeometryMotionTests.cpp": {
+      "bytes": 2469,
+      "sha256": "61ba313cb65d5002617981344bf14a9f69fdcf14da5df82d316cb133aa4c9416"
+    },
+    ".cache/fluid-moving-geometry-stage13-20261029/LocalGeometry.h": {
+      "bytes": 3922,
+      "sha256": "648dcc8b1265c1afc11ab57fb36d8ebee8ba33993004214733c2d657eab35e21"
+    },
+    ".cache/fluid-moving-geometry-stage13-20261029/LocalizedGeometry.h": {
+      "bytes": 1925,
+      "sha256": "bb7e37a358e20b854847d01e9a09d1c49f12a79cb328e5d67c8af03bc3984bbc"
+    },
+    ".cache/fluid-moving-geometry-stage13-20261029/LocalizedMotionTests.cpp": {
+      "bytes": 3306,
+      "sha256": "88257a28a6de9ef0aea47a348e7dac97a988b17a1a7511eb473b2e31709f417d"
+    },
+    ".cache/fluid-moving-geometry-stage13-20261029/MortarGeometry-area-only.h": {
+      "bytes": 5100,
+      "sha256": "39609a3e2cd1a57fafac5666db93da46602befa1cc51fb69b79dc08b977f6f87"
+    },
+    ".cache/fluid-moving-geometry-stage13-20261029/MortarGeometry.h": {
+      "bytes": 5745,
+      "sha256": "bbb5cfeb383e59b64aa774ce7d50ab43a47fe655122b98dd434d9053a7490ff6"
+    },
+    ".cache/fluid-moving-geometry-stage13-20261029/MortarTests-initial.cpp": {
+      "bytes": 1328,
+      "sha256": "b779a32057d7a0e7095a878b2e16dd5533da1b36b9a0a012e49e821a4bd34721"
+    },
+    ".cache/fluid-moving-geometry-stage13-20261029/MortarTests-quadratic-before-cap.cpp": {
+      "bytes": 1475,
+      "sha256": "bc106eacdafd638b7f2c91a5fb494de5d66195d4157249db406025a00eedcd9c"
+    },
+    ".cache/fluid-moving-geometry-stage13-20261029/MortarTests.cpp": {
+      "bytes": 1835,
+      "sha256": "56d7099904f915e0d0c287509d40c5937f6d06d934c821ab4cae510f29616fc3"
+    },
+    ".cache/fluid-moving-geometry-stage13-20261029/MotionCompiler.h": {
+      "bytes": 19461,
+      "sha256": "5413de236dc3c80079e3819a3181a1ddd7485cea1ed8198af0082d011a21d09a"
+    },
+    ".cache/fluid-moving-geometry-stage13-20261029/PROVENANCE.json": {
+      "bytes": 6512,
+      "sha256": "42f50129c5fa15924e2161f4174fa75b8ed54ecbb54b19569f40dfc41f81034b"
+    },
+    ".cache/fluid-moving-geometry-stage13-20261029/exchange-first.log": {
+      "bytes": 2758,
+      "sha256": "37a471e89cf8cf186b00f5d69bdf6eead5809e752fbe0e007adfd9f2f40f457c"
+    },
+    ".cache/fluid-moving-geometry-stage13-20261029/final/ExchangeTests.log": {
+      "bytes": 2758,
+      "sha256": "3bee7c32b9a7755f462cb0a61d3b79b8049af737faaff8a31f8dce6ddc317243"
+    },
+    ".cache/fluid-moving-geometry-stage13-20261029/final/GeometryMotionTests.log": {
+      "bytes": 2040,
+      "sha256": "821c85111eef8d69f83369d8edcb9f4a17ca3dbd0c9e73b227cb28ee57adcd98"
+    },
+    ".cache/fluid-moving-geometry-stage13-20261029/final/LocalizedMotionTests.log": {
+      "bytes": 3937,
+      "sha256": "be200778c4df5d931036b3d8c72cd45cb78b951faadba2622d290911c07db2f7"
+    },
+    ".cache/fluid-moving-geometry-stage13-20261029/final/MortarTests.log": {
+      "bytes": 3730,
+      "sha256": "ed81e348d2cabd7b7e7018184333c69f9c70410f284041a8fad64305e7626b63"
+    },
+    ".cache/fluid-moving-geometry-stage13-20261029/final/RUNS.json": {
+      "bytes": 919,
+      "sha256": "8e66371414d08f5f2f6fed24ca4b1dc83dd0d35048af4a845c890c4b034b6970"
+    },
+    ".cache/fluid-moving-geometry-stage13-20261029/geometry-first.log": {
+      "bytes": 2036,
+      "sha256": "f80d50f9bca0a1f9d74fe0f7cbc9e6441c15829f0b9563600cc2a0235e51f9d5"
+    },
+    ".cache/fluid-moving-geometry-stage13-20261029/localized-first.log": {
+      "bytes": 3935,
+      "sha256": "72b8d373fc5606c14d0faa2b69cfd722f43edea42c1ee398645eef5e80c384a2"
+    },
+    ".cache/fluid-moving-geometry-stage13-20261029/mortar-first.log": {
+      "bytes": 3618,
+      "sha256": "73c6f5cfb0ac1ccdeb96be49db3d60e78a967dfdf894f89b095efd9effa90df2"
+    },
+    ".cache/fluid-moving-geometry-stage13-20261029/mortar-quadratic.log": {
+      "bytes": 3729,
+      "sha256": "819ecd045da9025b3254f15bc6cda23015d12381b524158d1a3f48d375fa0d4b"
+    },
+    ".cache/fluid-moving-geometry-stage13-20261029/run_final.py": {
+      "bytes": 718,
+      "sha256": "7f67f6de521b9e1709bfd010c8bfae8df8526e6fb0e5e72cc5b4fa6897dcfc77"
+    },
+    ".cache/fluid-moving-geometry-stage13-20261029/run_probe.py": {
+      "bytes": 1030,
+      "sha256": "724c2111b9340575021e458a739510a3b849f78b3d54ae886817ef54e083345f"
+    }
+  }
+}

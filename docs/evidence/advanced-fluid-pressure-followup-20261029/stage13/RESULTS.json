@@ -1,0 +1,360 @@
+{
+  "schema": 1,
+  "finalAssertions": 4779,
+  "runs": [
+    {
+      "name": "GeometryMotionTests",
+      "finalLog": ".cache/fluid-moving-geometry-stage13-20261029/final/GeometryMotionTests.log",
+      "logSha256": "821c85111eef8d69f83369d8edcb9f4a17ca3dbd0c9e73b227cb28ee57adcd98",
+      "summary": {
+        "checks": "26",
+        "failures": "0"
+      },
+      "MOTION": [
+        {
+          "step": "0",
+          "angle": "0",
+          "changed": "0",
+          "reused": "48",
+          "total": "48",
+          "update_ms": "0.00015",
+          "full_ms": "27.3898",
+          "tets": "789",
+          "exact_moments_equal": "1",
+          "exact_mesh_equal": "1",
+          "capacity_error": "7.8396e-17"
+        },
+        {
+          "step": "1",
+          "angle": "0",
+          "changed": "48",
+          "reused": "0",
+          "total": "48",
+          "update_ms": "35.2245",
+          "full_ms": "35.1343",
+          "tets": "1008",
+          "exact_moments_equal": "1",
+          "exact_mesh_equal": "1",
+          "capacity_error": "-1.89484e-17"
+        },
+        {
+          "step": "2",
+          "angle": "3.2137858346770187e-11",
+          "changed": "48",
+          "reused": "0",
+          "total": "48",
+          "update_ms": "229.279",
+          "full_ms": "274.916",
+          "tets": "1003",
+          "exact_moments_equal": "1",
+          "exact_mesh_equal": "1",
+          "capacity_error": "5.56143e-17"
+        },
+        {
+          "step": "3",
+          "angle": "0.070000000000000007",
+          "changed": "48",
+          "reused": "0",
+          "total": "48",
+          "update_ms": "170.175",
+          "full_ms": "199.634",
+          "tets": "1063",
+          "exact_moments_equal": "1",
+          "exact_mesh_equal": "1",
+          "capacity_error": "8.05746e-17"
+        },
+        {
+          "step": "4",
+          "angle": "0.14000000000000001",
+          "changed": "48",
+          "reused": "0",
+          "total": "48",
+          "update_ms": "180.792",
+          "full_ms": "217.134",
+          "tets": "1136",
+          "exact_moments_equal": "1",
+          "exact_mesh_equal": "1",
+          "capacity_error": "6.15375e-17"
+        },
+        {
+          "step": "5",
+          "angle": "0.21000000000000002",
+          "changed": "48",
+          "reused": "0",
+          "total": "48",
+          "update_ms": "187.756",
+          "full_ms": "215.031",
+          "tets": "1192",
+          "exact_moments_equal": "1",
+          "exact_mesh_equal": "1",
+          "capacity_error": "7.30319e-17"
+        }
+      ]
+    },
+    {
+      "name": "ExchangeTests",
+      "finalLog": ".cache/fluid-moving-geometry-stage13-20261029/final/ExchangeTests.log",
+      "logSha256": "3bee7c32b9a7755f462cb0a61d3b79b8049af737faaff8a31f8dce6ddc317243",
+      "summary": {
+        "checks": "49",
+        "failures": "0"
+      },
+      "EXCHANGE": [
+        {
+          "step": "0",
+          "lost": "0.01611328125",
+          "gained": "0.01611328125",
+          "naive_overlap_water_loss": "0.01611328125",
+          "work": "7.0458984375000009",
+          "exact_partitions": "1",
+          "exact_work": "1"
+        },
+        {
+          "step": "1",
+          "lost": "0.01171875",
+          "gained": "0.01171875",
+          "naive_overlap_water_loss": "0.01171875",
+          "work": "-7.32421875",
+          "exact_partitions": "1",
+          "exact_work": "1"
+        },
+        {
+          "step": "2",
+          "lost": "0.013964097147739532",
+          "gained": "0.013964097147739543",
+          "naive_overlap_water_loss": "0.013964097147739532",
+          "work": "-7.3242187500000293",
+          "exact_partitions": "1",
+          "exact_work": "1"
+        },
+        {
+          "step": "3",
+          "lost": "0.037491823981743333",
+          "gained": "0.037491823981743326",
+          "naive_overlap_water_loss": "0.037491823981743333",
+          "work": "7.6025390625000293",
+          "exact_partitions": "1",
+          "exact_work": "1"
+        }
+      ],
+      "CYCLIC": [
+        {
+          "endpoint_loss": "0",
+          "traversed_leg_loss": "0.079288",
+          "path_information_required": "1"
+        }
+      ]
+    },
+    {
+      "name": "LocalizedMotionTests",
+      "finalLog": ".cache/fluid-moving-geometry-stage13-20261029/final/LocalizedMotionTests.log",
+      "logSha256": "be200778c4df5d931036b3d8c72cd45cb78b951faadba2622d290911c07db2f7",
+      "summary": {
+        "checks": "4694",
+        "failures": "0",
+        "total_changed": "150",
+        "peak_rss_kib": "12712",
+        "no_pressure_backend": "1"
+      },
+      "LOCAL": [
+        {
+          "step": "0",
+          "changed": "0",
+          "reused": "384",
+          "total": "384",
+          "update_ms": "0.002494",
+          "full_ms": "26.6228",
+          "exact_geometry_equal": "1",
+          "exact_moments_equal": "1"
+        },
+        {
+          "step": "1",
+          "changed": "6",
+          "reused": "378",
+          "total": "384",
+          "update_ms": "17.9506",
+          "full_ms": "46.822",
+          "exact_geometry_equal": "1",
+          "exact_moments_equal": "1"
+        },
+        {
+          "step": "2",
+          "changed": "6",
+          "reused": "378",
+          "total": "384",
+          "update_ms": "16.7351",
+          "full_ms": "43.4812",
+          "exact_geometry_equal": "1",
+          "exact_moments_equal": "1"
+        },
+        {
+          "step": "3",
+          "changed": "6",
+          "reused": "378",
+          "total": "384",
+          "update_ms": "19.3693",
+          "full_ms": "44.7006",
+          "exact_geometry_equal": "1",
+          "exact_moments_equal": "1"
+        },
+        {
+          "step": "4",
+          "changed": "12",
+          "reused": "372",
+          "total": "384",
+          "update_ms": "19.9352",
+          "full_ms": "46.4104",
+          "exact_geometry_equal": "1",
+          "exact_moments_equal": "1"
+        },
+        {
+          "step": "5",
+          "changed": "12",
+          "reused": "372",
+          "total": "384",
+          "update_ms": "19.2786",
+          "full_ms": "46.1398",
+          "exact_geometry_equal": "1",
+          "exact_moments_equal": "1"
+        },
+        {
+          "step": "6",
+          "changed": "12",
+          "reused": "372",
+          "total": "384",
+          "update_ms": "17.3793",
+          "full_ms": "43.1319",
+          "exact_geometry_equal": "1",
+          "exact_moments_equal": "1"
+        },
+        {
+          "step": "7",
+          "changed": "12",
+          "reused": "372",
+          "total": "384",
+          "update_ms": "16.4481",
+          "full_ms": "42.191",
+          "exact_geometry_equal": "1",
+          "exact_moments_equal": "1"
+        },
+        {
+          "step": "8",
+          "changed": "12",
+          "reused": "372",
+          "total": "384",
+          "update_ms": "17.3215",
+          "full_ms": "43.8705",
+          "exact_geometry_equal": "1",
+          "exact_moments_equal": "1"
+        },
+        {
+          "step": "9",
+          "changed": "24",
+          "reused": "360",
+          "total": "384",
+          "update_ms": "22.2441",
+          "full_ms": "46.4363",
+          "exact_geometry_equal": "1",
+          "exact_moments_equal": "1"
+        },
+        {
+          "step": "10",
+          "changed": "24",
+          "reused": "360",
+          "total": "384",
+          "update_ms": "21.9198",
+          "full_ms": "45.0603",
+          "exact_geometry_equal": "1",
+          "exact_moments_equal": "1"
+        },
+        {
+          "step": "11",
+          "changed": "24",
+          "reused": "360",
+          "total": "384",
+          "update_ms": "23.3424",
+          "full_ms": "48.1265",
+          "exact_geometry_equal": "1",
+          "exact_moments_equal": "1"
+        }
+      ],
+      "TIMING": [
+        {
+          "name": "incremental_geometry_and_moments",
+          "count": "11",
+          "median_ms": "19.2786",
+          "p95_ms": "23.3424",
+          "worst_ms": "23.3424"
+        },
+        {
+          "name": "full_geometry_and_moments",
+          "count": "11",
+          "median_ms": "45.0603",
+          "p95_ms": "48.1265",
+          "worst_ms": "48.1265"
+        }
+      ]
+    },
+    {
+      "name": "MortarTests",
+      "finalLog": ".cache/fluid-moving-geometry-stage13-20261029/final/MortarTests.log",
+      "logSha256": "ed81e348d2cabd7b7e7018184333c69f9c70410f284041a8fad64305e7626b63",
+      "summary": {
+        "checks": "10",
+        "failures": "0"
+      },
+      "MORTAR": [
+        {
+          "trial": "0",
+          "interfaces": "270",
+          "overlap_patches": "673",
+          "nonmatching_interfaces": "16",
+          "exact_coverage": "1",
+          "missing_trace_rejected": "1"
+        },
+        {
+          "trial": "1",
+          "interfaces": "270",
+          "overlap_patches": "538",
+          "nonmatching_interfaces": "13",
+          "exact_coverage": "1",
+          "missing_trace_rejected": "1"
+        },
+        {
+          "trial": "2",
+          "interfaces": "270",
+          "overlap_patches": "719",
+          "nonmatching_interfaces": "13",
+          "exact_coverage": "1",
+          "missing_trace_rejected": "1"
+        },
+        {
+          "trial": "3",
+          "interfaces": "270",
+          "overlap_patches": "634",
+          "nonmatching_interfaces": "8",
+          "exact_coverage": "1",
+          "missing_trace_rejected": "1"
+        }
+      ]
+    }
+  ],
+  "historicalEvidenceUnchanged": true,
+  "historicalActiveFileExceptions": [
+    {
+      "stage": 6,
+      "path": "tools/verification/current-docs.json",
+      "recordedSha256": "7f0747a0d158b44a619b38aebeb20ac7c906a073a938e7dc2bf8507cc5333629",
+      "currentSha256": "9d4fc4632ee434d240b28818b93755ed36607803e9e48f45cbc0d18e4399af79",
+      "reason": "Active current-document inventory has legitimately evolved since Stage6; historical evidence unchanged."
+    }
+  ],
+  "productionChanged": false,
+  "advancedFluidsUnlocked": false,
+  "limitations": [
+    "Endpoint common refinement is not integrated swept/GCL motion",
+    "Carrier momentum identity is not a physical momentum time step",
+    "Nonmatching interface geometry is not assembled into pressure yet",
+    "No pressure factor reuse or whole-fluid speedup claim"
+  ]
+}

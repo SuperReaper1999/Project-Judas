@@ -1,0 +1,15 @@
+{
+  "schema": 1,
+  "parentRevision": "df5d74d1c2389cda64ca11b718a5beb840090949",
+  "scope": "Private exact moving-geometry and nonmatching-interface foundation; no pressure/GCL/production integration or Alpha unlock.",
+  "selfHashExcluded": true,
+  "files": {
+    "docs/ADVANCED_FLUID_MOVING_GEOMETRY.txt": "1fb2c08614a6fe425e6c35c72f7e72167166c41188629b66cba661f8528cffe0",
+    "docs/evidence/advanced-fluid-pressure-followup-20261029/stage13/CHANGED_FILES.txt": "88d469fbaa899cffee60b16b7ad0cce3742d9c65e3622a87afeb1b5129499851",
+    "docs/evidence/advanced-fluid-pressure-followup-20261029/stage13/REPRODUCE.txt": "5f85d8a40760571137155c929c44d4daf69f1dc901acd6659ffe794d05931d75",
+    "docs/evidence/advanced-fluid-pressure-followup-20261029/stage13/RESULTS.json": "fa8fc36da98902dbd1b3031048090bc56d5a98c19af6eb5310444504066315ad",
+    "docs/evidence/advanced-fluid-pressure-followup-20261029/stage13/SOURCE_MANIFEST.json": "deb78a6ab9ef4b9fc00698234750c4d72d39091cf518c097f77b890c041f37ea",
+    "docs/evidence/advanced-fluid-pressure-followup-20261029/stage13/stage13-moving-geometry-reference.tar.gz": "e80f6a1c08f5b85089e0730b8ab74342833958bbc1e9fce221de6a33d75eb554",
+    "docs/evidence/advanced-fluid-pressure-followup-20261029/stage13/verify_evidence.py": "c9794821f84c5166780baf20e3f5aa846048ceb87d8772953b69f7dda9fea671"
+  }
+}
