@@ -1,0 +1,15 @@
+{
+  "schema": 1,
+  "parentRevision": "d848814021b24113252d9ab5670902aaeecd6ce8",
+  "scope": "Private pressure/native proofs and preserved flux gap; no production implementation changes",
+  "selfHashExcluded": true,
+  "files": {
+    "docs/ADVANCED_FLUID_PRESSURE_SPACE.txt": "6a7efd95f8885cb47dfcb95de2b2ec441be5bb7d14cf6d7de2c561059efa6ec9",
+    "docs/evidence/advanced-fluid-pressure-followup-20261029/stage8/CHANGED_FILES.txt": "d3a3720f6f4114a8cc15772306698e7d69ecf85ca76c89aee8225b7e18eda3b0",
+    "docs/evidence/advanced-fluid-pressure-followup-20261029/stage8/REPRODUCE.txt": "46c21e3a4552437894dfc5df99138b021fdfb36b7f00155dc78c79c902fe626f",
+    "docs/evidence/advanced-fluid-pressure-followup-20261029/stage8/RESULTS.json": "9a2b184e178040a5485b20f41cb0009d8056e4558693f6da2ca8729872fe0e9b",
+    "docs/evidence/advanced-fluid-pressure-followup-20261029/stage8/SOURCE_MANIFEST.json": "0fb465f291358a6deeb1f7033be36d0f4f3bb9ac86796bc7efca7d23639154e1",
+    "docs/evidence/advanced-fluid-pressure-followup-20261029/stage8/stage8-pressure-space-reference.tar.gz": "b25f097671cdb903c8be4dccc64dd1b5c9f1a522e67b601c9a04ac49be643506",
+    "docs/evidence/advanced-fluid-pressure-followup-20261029/stage8/verify_evidence.py": "694d083afed4b464dd3c841e8a1d2860aafbfeb39b9199cdd1abf420e2ac9220"
+  }
+}

@@ -1,0 +1,63 @@
+BOUNDED PRIVATE PRESSURE SPACE REFERENCES — NOT RUNTIME FLUID QUALIFICATION
+
+Use an isolated checkout of this Experimental checkpoint. Read
+ docs/ADVANCED_FLUID_PRESSURE_SPACE.txt
+for the supported boundary model, exact equations and unresolved flux failure.
+
+1. Verify the Stage5/6/7/8 archives using their verify_evidence.py tools before
+   extracting. Extract the source archives into the isolated checkout in order.
+   Do not overwrite active ignored experiments. Stage5 provides retained native
+   reduction/numerical headers; Stage6 provides the probe linker helper; Stage7
+   documents the geometry baseline; Stage8 contains the new reference copies.
+
+2. Configure native Linux Release/Experimental using repository prerequisites,
+   then build judas_script_tests with -j2 to produce actual compiler/link flags
+   and libjudas_engine.a. The private helper currently requires Makefiles.
+   Rebuild the unchanged private quantity object as in Stage6 REPRODUCE.txt.
+   No private Mk2 override is linked in the Stage8 native tests.
+
+3. Locally extract reference-only headers (no system installation required):
+   apt-get download libboost1.90-dev libeigen3-dev
+   dpkg-deb -x <boost.deb> <scratch-boost>
+   dpkg-deb -x <eigen.deb> <scratch-eigen>
+   Set BOOST_INCLUDE_DIR to the Boost extracted usr/include and EIGEN_INCLUDE_DIR
+   to Eigen extracted usr/include/eigen3. Exact recorded package versions/hashes
+   are in RESULTS.json. Neither library is added to Judas production/SDK wiring
+   or redistributed in this archive. Default scratch paths are recorded in the
+   run_probe.py helper. Existing Linux compiler/GLM/engine prerequisites remain.
+
+4. Final-source bounded qualification, one compiler process at a time:
+ python3 .cache/fluid-pressure-space-stage8-20261029/qualify.py
+   Expect128 positive checks across CutPotentialTests, CutDynamicsTests and
+   NativeCutPressureTests; one EXPLICITLY FAILED FluxBoundaryGap; a successful
+   300-execution pressure-only timing/control run. The runner checks outcomes
+   and markers; expected failure is NOT successful fluid qualification.
+
+5. Individual references:
+ python3 .cache/fluid-pressure-space-stage8-20261029/run_probe.py CutPotentialTests
+ python3 .cache/fluid-pressure-space-stage8-20261029/run_probe.py CutDynamicsTests
+ python3 .cache/fluid-pressure-space-stage8-20261029/run_probe.py NativeCutPressureTests
+ python3 .cache/fluid-pressure-space-stage8-20261029/run_probe.py FluxBoundaryGap
+ python3 .cache/fluid-pressure-space-stage8-20261029/run_probe.py CutBenchmark
+
+6. Rejected approaches (not part of final qualification):
+ SparseQRTests 0 /3.2137858346770188e-11 — expensive factorization; tiny case fails.
+ WeakPolynomialTests — static proofs only; WeakDisturbanceTests fails wall flux.
+ StrongSeedTests /CoefficientTests — tiny rotation fails actual force/calm test.
+ MassConditionProbe — rules out small physical component mass in these trials.
+ Use run_probe.py with the program name and optional argument. Initial failed
+ source variants and raw logs remain. Some intermediate files were overwritten;
+ available snapshots are preserved without claiming recovery of every dependency
+ at every historical command. The unsorted-R mistake is explicitly retained.
+
+The final native archive is the unchanged Stage6 Release build, with embedded
+61a1a94 dirty identity and recorded exact hash. Current production source hashes
+still match Stage6; this is not a new distribution qualification. Building afresh
+from this checkpoint is supported but will naturally produce different binary
+provenance/hashes. No production tests or expectations were weakened.
+
+Cell averages must NOT be used directly as face/material transport velocities.
+That fails at .166375 m/s against the preserved1e-8 check. Fixed disconnected
+capacities prove pressure-identity isolation, not evolving free-surface dynamics.
+The original piston/side-wall failures, fluid lock and independent research are
+untouched. No live application backend or enable switch is provided.

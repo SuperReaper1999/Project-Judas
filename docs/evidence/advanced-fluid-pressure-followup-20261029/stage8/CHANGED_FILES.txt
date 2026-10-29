@@ -1,0 +1,8 @@
+docs/ADVANCED_FLUID_PRESSURE_SPACE.txt
+docs/evidence/advanced-fluid-pressure-followup-20261029/stage8/CHANGED_FILES.txt
+docs/evidence/advanced-fluid-pressure-followup-20261029/stage8/FINAL_FINGERPRINTS.json
+docs/evidence/advanced-fluid-pressure-followup-20261029/stage8/REPRODUCE.txt
+docs/evidence/advanced-fluid-pressure-followup-20261029/stage8/RESULTS.json
+docs/evidence/advanced-fluid-pressure-followup-20261029/stage8/SOURCE_MANIFEST.json
+docs/evidence/advanced-fluid-pressure-followup-20261029/stage8/stage8-pressure-space-reference.tar.gz
+docs/evidence/advanced-fluid-pressure-followup-20261029/stage8/verify_evidence.py

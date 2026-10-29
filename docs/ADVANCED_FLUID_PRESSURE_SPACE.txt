@@ -1,0 +1,141 @@
+ADVANCED FLUID PRESSURE SPACE CHECKPOINT — 2026-10-29
+
+Parent: d848814021b24113252d9ab5670902aaeecd6ce8 (Experimental).
+This is a PRIVATE numerical/native reference checkpoint, not an enabled fluid
+backend, production application fix or released patch. Main remains unchanged.
+No production implementation, Basic Water, M54/M55, FLU-001, game project or
+independent research was modified. The published Alpha fluid lock stays intact.
+
+INVESTIGATION AND REJECTED APPROACHES
+------------------------------------
+1. Avoiding the squared condition number by sparse QR is insufficient by itself.
+   After correcting a reference-code mistake (random coefficient access to Eigen's
+   unsorted sparse R), the aligned per-tetra pressure case gives the right force,
+   torque and calm endpoint. Cold factorization costs about13.9 seconds. The tiny
+   rotation still fails the unchanged physical residual check:6.73, despite a force
+   error around6e-8 Ns. It is rejected. No increased tolerance or iteration budget.
+2. Quadratic velocity enrichment with only linear face-pressure moments removes
+   the earlier coarse-cell hydrostatic force defect. All static rotations and
+   reversed row orders pass, around2 ms per small solve. A disturbance nevertheless
+   produces .0258493 m/s local solid-normal leakage. That representation is rejected.
+3. Matching the complete quadratic trace on connected background-seed cells also
+   fails the tiny-rotation force/calm contract. Both face-moment and direct
+   coefficient versions are retained. The latter avoids cancellation in tiny-face
+   quadrature but still fails, so quadrature cancellation alone is not the cause.
+   Min physical cell volume remains .14417 and min mass reciprocal condition about
+   9.2e-5 in both aligned/tiny-rotation cases; this is NOT tiny cell mass in that
+   coarsened model. Newly appearing tiny physical patches change the trace
+   constraint space and introduce difficult dependencies. We did not hide them
+   with area deletion, rank-budget tuning or altered impulse thresholds.
+
+NEW BOUNDED PRESSURE REFERENCE
+-------------------------------
+CutPotential.h changes the discrete pressure representation rather than trying
+another tolerance on the same tiny-fragment constraint system.
+
+- Continuous P1 pressure lives on a bounded 2x2x2 background tetrahedral mesh.
+- Actual connected wet pieces, actual exact cut geometry and actual body planes
+  supply the volume and solid-boundary integrals. No scalar water level replaces
+  this geometry, and no fake particles represent the body.
+- Pressure identities are separated by actual wet-component connectivity.
+- Fluid velocities here are CELL AVERAGES. This is an incompressible weak-pressure
+  reference, NOT a conservative material/face-flux reconstruction.
+- Density is1000 kg/m3 in this reference. Open top has explicit zero pressure;
+  closed-container gauge handling is explicitly rejected, not silently invented.
+- Existing rank-aware native joint reduction supplies actual constrained body
+  mobility, rather than assigning infinite mass because an object looks supported.
+
+MATHEMATICAL CONTRACT
+----------------------
+p is the time-integrated pressure, and phi_i is a pressure basis function.
+For each actual wet cell c:
+  D_f(i,c) = integral_Omega_c grad(phi_i) dV
+For the actual fluid-outward solid normal n and lever arm r:
+  D_r(i) = -integral_Gamma_solid phi_i [n, r cross n] dA
+With physical fluid/rigid mass matrices M_f and M_r:
+  A = D_f M_f^-1 D_f^T + D_r M_r^-1 D_r^T
+  A p = D_f u* + D_r V*
+  u = u* - M_f^-1 D_f^T p
+  V = V* - M_r^-1 D_r^T p
+The SAME boundary operator supplies both pressure response and rigid impulse.
+For native bilateral joints, substitute the established mass-whitened projected
+mobility and constrained predictor, then recover the joint reactions from that
+same simultaneous solution. Native still owns rigid integration/history.
+
+The projection work identity is verified independently:
+  E_before - E_after = .5 (D u*)^T p
+No energy damping, pressure repair, volume clamp or force correction is applied.
+Pressure is not constrained nonnegative here; cavitation and moving free surfaces
+are not qualified by this single-phase reference.
+
+POSITIVE PROOFS
+----------------
+CutPotentialTests:12 checks. Six solid rotations, including3.213785834677e-11 rad.
+Independent hydrostatic target is(0,8.175,0) Ns for the .2 m3 submerged solid over
+1/240 s. Loads agree around1e-14 Ns; torque is around1e-15; actual cell velocities
+remain around1e-16. This does not retroactively repair the different Stage6
+side-wall oblique-force fixture, whose original failure remains unchanged.
+
+CutDynamicsTests:20 checks. Two actual disturbances, finite translational and
+rotational body mobility, work/energy identity, and independent integration of
+outer-boundary pressure forces and torque. Representative momentum-balance error
+1.42e-12 and angular-balance error6.82e-13. Disturbance energy remains nonzero;
+the spinning-field case retains about311.819 J from315.710 J. A dry separation
+leaves the untouched component's velocity exactlyzero while the disturbed side
+remains active. This is operator isolation on fixed component capacities; it does
+NOT qualify pressure conditions on evolving dry/free interfaces. Only the flat
+upper pressure-free boundary is implemented in this reference. Missing solid coupling is detected by the independent force
+oracle even if the scalar pressure solve succeeds. Nonfinite inputs and negative
+inverse mass are rejected. Geometry quantity is not mutated by pressure.
+
+NativeCutPressureTests:96 checks. The ordinary public native batch API receives
+material pressure impulses and recovered REAL joint reactions. Actual completed
+native velocities are checked, not a cached solver status. Fixed supports pass
+in aligned and oblique body orientations and a1.13-radian rotated global gravity
+frame. Four native phases publish once each; total hydrostatic impulse is
+32.7000017054 Ns, consistent with the actual float timestep. Endpoint error is
+about5.9e-9. A free body receives one deliberately finite interaction; first
+native endpoint error is about9.3e-10. Later native phases deliberately use their
+ordinary path: this is NOT a continuously advancing moving fluid. Omitting the
+joint reaction fails specifically at native joint validation, with zero material
+publications. No private Mk2 dispatch override or body-velocity write is used.
+
+THE MATERIAL-FLUX GAP IS STILL A FAILURE
+-----------------------------------------
+FluxBoundaryGap explicitly demonstrates why this is NOT ready for the runtime.
+Using the resulting cell averages directly as solid-face transport velocity gives
+.166375 m/s normal error versus the unchanged1e-8 check, despite pressure residual
+1.249e-16. The test remains FAILED. We did not weaken it, relabel the cell averages
+as boundary velocities or claim no penetration from a weak residual.
+
+The next task is a compatible, conservative material-flux/velocity representation
+that honors actual solid motion, wet topology and quantity ownership. It must be
+coupled through the same mass/work equations; bolting on a flux/volume repair
+would invalidate this checkpoint's conservation proof. Actual moving-boundary
+transport, re-wetting, original guarded piston runs, cavitation, native contacts,
+closed gauges, resource bounds and application saves/export remain unqualified.
+
+PERFORMANCE SCOPE
+-------------------
+The reference uses48 fluid-average cells and18 pressure nodes. Across100 identical
+solves, typical pressure median is .0028 ms, p95 .0029 ms and worst below .01 ms.
+That excludes geometry preparation. Exact cut geometry costs roughly20–130 ms,
+and operator geometry assembly roughly8–100 ms in the recorded cases. These are
+small oracle workloads using arbitrary-rational geometry, not production FPS or
+a scalable-backend speedup claim. Comparing these numbers with the expensive
+per-tet QR is a method comparison with different unknowns, NOT equivalent runtime
+feature certification. Geometry caching/scaling and transport still need work.
+
+QUALIFICATION/PROVENANCE
+------------------------
+Raw originals, compile errors, overwritten-source snapshots where retained,
+rejected attempts, final source/binary hashes and reproduction commands are in
+ docs/evidence/advanced-fluid-pressure-followup-20261029/stage8/
+Eigen3.4 and Boost1.90 headers were extracted locally under /tmp for references;
+no system installation, production dependency or redistribution was introduced.
+The probes link the unchanged Stage6 Release native archive. Its embedded build
+identity is61a1a94 dirty; current production/native source matches the recorded
+Stage6 fingerprints, subsequently checkpointed in8a48538b. This is not a fresh
+SDK/release build from the Stage8 documentation checkpoint. No full-suite rerun,
+Windows/Android qualification, visual gameplay or new human acceptance is claimed.
+Historical evidence and Solbert's independent research remain untouched.

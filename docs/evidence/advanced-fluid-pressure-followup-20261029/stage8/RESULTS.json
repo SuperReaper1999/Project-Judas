@@ -1,0 +1,105 @@
+{
+  "schema": 1,
+  "parentRevision": "d848814021b24113252d9ab5670902aaeecd6ce8",
+  "scope": "Private bounded pressure/native proofs; no production fluid implementation or unlock",
+  "positiveChecks": 128,
+  "remainingFluxFailure": true,
+  "originalPistonAndObliqueCases": "unchanged and still failing",
+  "cases": [
+    {
+      "name": "CutPotentialTests",
+      "exit": 0,
+      "expectedExit": 0,
+      "marker": "SUMMARY checks=12 failures=0",
+      "expectationMet": true,
+      "binarySha256": "68929b02aff48643dafa2807c6ee110854d10ad18d9656a082df05f272edf134",
+      "sourceSha256": "4d2aceba8a5ccb5cfd2481f79267a67247142991ae04a400cfdb782a4769ed38",
+      "logSha256": "005d738f45239a011fd9873e5e2beee99cc77728c8fe4e94118378d66d3a606d"
+    },
+    {
+      "name": "CutDynamicsTests",
+      "exit": 0,
+      "expectedExit": 0,
+      "marker": "SUMMARY checks=20 failures=0",
+      "expectationMet": true,
+      "binarySha256": "a8cd3e2579ad253392e027e6e1e6c4e7a73df6254e9f5358e8991853a297bee7",
+      "sourceSha256": "0c3575e6a2dcfae028042f713506a5d72411b6de60404086e60b03c225c4d8bd",
+      "logSha256": "3a973da46134512613f5252621c89921736b5bf0e63c696ea2b2617266fa9271"
+    },
+    {
+      "name": "NativeCutPressureTests",
+      "exit": 0,
+      "expectedExit": 0,
+      "marker": "SUMMARY checks=96 failures=0",
+      "expectationMet": true,
+      "binarySha256": "44c1923bebc666e0da05df36e6e09def58e275035d688c5c096d6628b28a2b71",
+      "sourceSha256": "64be5ce5c9bf7d8fcbdc1ce6c11ffdea6733bc7620ba7d7d81ad45948a8586b3",
+      "logSha256": "5a21a2edaa8774ed5943b80f6b3c257bbb09dc89cbbce8bf51e226e74690271e"
+    },
+    {
+      "name": "FluxBoundaryGap",
+      "exit": 1,
+      "expectedExit": 1,
+      "marker": "PRESERVED_FAILURE: cell averages cannot be published as impermeable material face fluxes",
+      "expectationMet": true,
+      "binarySha256": "1dab8861ad98d407bcf523937fafa762eb6b60fc9b454f21b2ddd50f4d62ac6e",
+      "sourceSha256": "d41db186e3791e4596a059d05eacaced6f86d4529ffc72c032a8c6cdf0160016",
+      "logSha256": "c7e167c9dd9f12e51af58d4981662c706a742d918e0425118ca5eaded5174b90"
+    },
+    {
+      "name": "CutBenchmark",
+      "exit": 0,
+      "expectedExit": 0,
+      "marker": "iterations=100",
+      "expectationMet": true,
+      "binarySha256": "04945b9fb49494c01c86d6f91962d50d60413c94e3480f33f6303133d24d0228",
+      "sourceSha256": "b35a26487b420ab0e34df04a9e64b9b53171e2aeaa690abfcec53b8eec1e7732",
+      "logSha256": "e6ab9d01e7eb1cfbe42c9150a2705a0105683b4822e2ecae787a080ca939bb62"
+    }
+  ],
+  "engineSha256": "5722108b94f15414584979689eac3aafe5faac3004722d17929bc58ade44244d",
+  "engineIdentity": {
+    "schema": 1,
+    "release_name": "Judas Engine Alpha v1.0.1",
+    "version": "1.0.1-alpha.1",
+    "maturity": "alpha",
+    "channel": "Experimental",
+    "build_id": "1.0.1-alpha.1-Experimental-61a1a94-dirty-33901722dfa2-u84f47c24fcd0",
+    "source_revision": "61a1a94aa6f40392fc54b6e8d50eeeaed46358be",
+    "source_tree": "a9a6d544f71ba58d25f4699ba2a90811173c9896",
+    "source_dirty": true,
+    "source_fingerprint": "33901722dfa238091f2a548fc9b6eeacd317a74e3546be56c2397d80f705d33a",
+    "source_untracked_count": 16,
+    "source_untracked_fingerprint": "84f47c24fcd098f88732ceab246b2e0e19eca31f56acdd72f89f8bfa1621daf2",
+    "source_origin": "git",
+    "platform": "Linux",
+    "architecture": "x86_64",
+    "configuration": "Release",
+    "compiler": "GNU",
+    "compiler_version": "15.2.0"
+  },
+  "privateReferenceDependencies": [
+    {
+      "package": "libboost1.90-dev_1.90.0-6ubuntu1_amd64.deb",
+      "sha256": "7b89698c907fd5d33ccd439674fa53803139923822181c87b910579827aca379",
+      "systemInstalled": false,
+      "productionDependency": false,
+      "redistributed": false
+    },
+    {
+      "package": "libeigen3-dev_3.4.0-5_all.deb",
+      "sha256": "22060e67427b1acf85465fd5784caf7eecc8c967c662fb2ec774b84ba6174ad9",
+      "systemInstalled": false,
+      "productionDependency": false,
+      "redistributed": false
+    }
+  ],
+  "nativeBodyCoverage": "fixed four-phase coupling, free one-shot interaction, rotated global frame, strict missing-joint-reaction negative control",
+  "unqualified": [
+    "conservative face-flux reconstruction",
+    "moving wet/dry/free-surface transport and cavitation",
+    "general gauges and native contacts",
+    "application state/persistence/export",
+    "production resource scaling and geometry performance"
+  ]
+}
