@@ -1,0 +1,39 @@
+Private orthogonal-constraint experiment; not the selected runtime/backend.
+Read docs/ADVANCED_FLUID_MOVING_COST_REASSESSMENT.txt and RESULTS.json.
+
+Verify bytes:
+ python3 <this-directory>/verify_evidence.py
+
+In a scratch checkout, verify/extract the Stage14 dependency chain, then extract
+stage15-orthogonal-constraints-reference.tar.gz LAST. Do not overwrite an active
+investigation. Existing Linux Release Makefile probe prerequisites, Boost1.90,
+Eigen3.4 and Stage5 exact-volume-domain object remain as described by Stage14.
+No third-party headers, native binaries or SDK packages are redistributed.
+
+Independent pressure oracle:
+ python3 .cache/fluid-orthogonal-constraints-stage15-20261029/run_probe.py ProjectedTests
+Expected2 checks; runtime Q/K is not used by the independent local elimination.
+
+Full regressions:
+The archived run_final.py originally creates 'final'. To preserve archived final
+receipts, copy it in the scratch checkout and change ONLY its output directory
+to a new unused reproduction-results directory before executing it.
+ python3 <scratch-copy-of-run_final.py>
+Expected PressureTests35, ThinTests75, CacheTests320; total430 plus oracle2.
+It runs serially and refuses to overwrite the output directory.
+
+Individual programs can also use run_probe.py NAME, directing logs to NEW files.
+The paired moving tests alternate full/reused construction order across the same
+six poses. Median upper-middle, p95 nearest rank. Retained/fresh physical fields
+must match exactly. Do not reinterpret432 assertions as432 independent scenarios.
+
+The changed QR constraint coordinates are mathematically equivalent but do NOT
+provide a practical performance fix. Warm solves regress and moving preparation
+still costs seconds. Preserve that result; do not select this path merely because
+correctness gates pass. Stage14 remains the selected private candidate.
+
+Archive PROVENANCE.json gives actual native library/build identity and final
+binary/source hashes. It is not a fresh current Alpha SDK. Earlier frozen evidence
+is unchanged; the known Stage6 active current-doc inventory exception remains
+explicit. No production, native gameplay, editor/export, Windows/Android or fluid
+unlock claim. No swept-water/GCL or momentum time evolution was implemented here.

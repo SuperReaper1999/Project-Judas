@@ -1,0 +1,79 @@
+{
+  "finalAssertions": 432,
+  "runs": [
+    {
+      "name": "ProjectedTests",
+      "checks": 2,
+      "passed": true,
+      "log": ".cache/fluid-orthogonal-constraints-stage15-20261029/projected-first.log",
+      "logSha256": "74d76d774008e7a44e1da1852fc6c67f24a94f3764c50ef0b5638c6f5e96d2b3",
+      "observations": [
+        "ORTHOGONAL_PREPARATION angle=0.17000000000000001 total_ms=733.574 local_qr_ms=289.437",
+        "PROJECTED_ORACLE angle=0.17000000000000001 trace_error=8.25098e-19 reaction_error=6.29163e-17 energy_error=1.33072e-17 oracle_ms=5176.52",
+        "ORTHOGONAL_PREPARATION angle=3.2137858346770187e-11 total_ms=849.061 local_qr_ms=283.984",
+        "PROJECTED_ORACLE angle=3.2137858346770187e-11 trace_error=2.13698e-15 reaction_error=3.20984e-14 energy_error=2.98163e-16 oracle_ms=5892.16",
+        "SUMMARY checks=2 failures=0"
+      ]
+    },
+    {
+      "name": "PressureTests",
+      "checks": 35,
+      "passed": true,
+      "log": ".cache/fluid-orthogonal-constraints-stage15-20261029/final/PressureTests.log",
+      "logSha256": "08b6eb3a23548b51c150cc0c447b15d94173f8491e74fa5d625ca48ad29b4897",
+      "observations": [
+        "PRESSURE angle=0 trial=0 fine_flux_error=3.97863e-20 reaction_error=4.87444e-17 energy_error=5.23699e-37 balance=8.06775e-38 energy=4.86868e-36 solve_ms=2.77043",
+        "PRESSURE angle=0 trial=1 fine_flux_error=3.68471e-20 reaction_error=7.84441e-17 energy_error=0 balance=3.77194e-21 energy=0.134565 solve_ms=2.89831",
+        "PRESSURE angle=0 trial=2 fine_flux_error=0 reaction_error=0 energy_error=0 balance=0 energy=0 solve_ms=2.30022",
+        "PRESSURE angle=0 trial=3 fine_flux_error=3.20014e-19 reaction_error=1.17893e-15 energy_error=0 balance=5.0822e-21 energy=0.155635 solve_ms=3.21633",
+        "PRESSURE angle=0.17 trial=0 fine_flux_error=1.49625e-19 reaction_error=3.42569e-17 energy_error=2.47403e-36 balance=5.98767e-38 energy=2.83691e-36 solve_ms=15.4258",
+        "PRESSURE angle=0.17 trial=1 fine_flux_error=8.03916e-20 reaction_error=1.16823e-16 energy_error=0 balance=2.23008e-21 energy=0.153034 solve_ms=16.1025",
+        "PRESSURE angle=0.17 trial=2 fine_flux_error=0 reaction_error=0 energy_error=0 balance=0 energy=0 solve_ms=11.5385",
+        "PRESSURE angle=0.17 trial=3 fine_flux_error=2.8247e-19 reaction_error=8.06396e-16 energy_error=0 balance=4.23516e-21 energy=0.169032 solve_ms=16.4468",
+        "SUMMARY checks=35 failures=0"
+      ]
+    },
+    {
+      "name": "ThinTests",
+      "checks": 75,
+      "passed": true,
+      "log": ".cache/fluid-orthogonal-constraints-stage15-20261029/final/ThinTests.log",
+      "logSha256": "d6fe88faf6f74bf6c5a3e626f85859e1c02d1e3e059db50c41207ea51d057f1e",
+      "observations": [
+        "ACCURACY angle=0 trial=0 max_physical_flux_error=1.80921e-20 balance=3.77194e-21 reaction_error=8.98013e-17 solve_ms=2.78369",
+        "ACCURACY angle=0 trial=1 max_physical_flux_error=6.9361e-20 balance=1.01644e-20 reaction_error=5.48241e-16 solve_ms=2.8306",
+        "ACCURACY angle=0 trial=2 max_physical_flux_error=0 balance=0 reaction_error=0 solve_ms=2.29391",
+        "ACCURACY angle=3.2137858346770187e-11 trial=0 max_physical_flux_error=2.20263e-20 balance=1.69407e-21 reaction_error=5.24897e-14 solve_ms=15.721",
+        "ACCURACY angle=3.2137858346770187e-11 trial=1 max_physical_flux_error=5.99572e-20 balance=6.35275e-21 reaction_error=1.79114e-13 solve_ms=16.0523",
+        "ACCURACY angle=3.2137858346770187e-11 trial=2 max_physical_flux_error=0 balance=0 reaction_error=0 solve_ms=12.3807",
+        "ACCURACY angle=0.17000000000000001 trial=0 max_physical_flux_error=2.96948e-20 balance=2.23008e-21 reaction_error=1.33803e-16 solve_ms=15.2031",
+        "ACCURACY angle=0.17000000000000001 trial=1 max_physical_flux_error=6.84875e-20 balance=5.92923e-21 reaction_error=3.14579e-16 solve_ms=15.2674",
+        "ACCURACY angle=0.17000000000000001 trial=2 max_physical_flux_error=0 balance=0 reaction_error=0 solve_ms=11.5193",
+        "SUMMARY checks=75 failures=0"
+      ]
+    },
+    {
+      "name": "CacheTests",
+      "checks": 320,
+      "passed": true,
+      "log": ".cache/fluid-orthogonal-constraints-stage15-20261029/final/CacheTests.log",
+      "logSha256": "1b9ff059ee27093d9a4778cff6cce9a2013da17673d5b0c58efd8eb9977c7865",
+      "observations": [
+        "CACHE step=1 rebuilt=6 reused=42 total=48 update_ms=987.485 fresh_ms=983.654 warm_solve_ms=20.5072 balance=3.21873e-20 reaction_error=3.21902e-16 physical_bits_equal=1 geom_ms=97.6678 field_ms=303.754 reduction_ms=68.4323 local_qr_ms=335.14 sampler_cache_ms=12.6422 matrix_ms=0.697606 global_qr_ms=167.131",
+        "CACHE step=2 rebuilt=6 reused=42 total=48 update_ms=933.4 fresh_ms=889.1 warm_solve_ms=21.5198 balance=4.74338e-20 reaction_error=1.07656e-16 physical_bits_equal=1 geom_ms=94.6795 field_ms=290.035 reduction_ms=48.2223 local_qr_ms=323.594 sampler_cache_ms=12.0376 matrix_ms=0.824806 global_qr_ms=162.265",
+        "CACHE step=3 rebuilt=12 reused=36 total=48 update_ms=1017.25 fresh_ms=1070.81 warm_solve_ms=23.9476 balance=5.1669e-20 reaction_error=1.394e-15 physical_bits_equal=1 geom_ms=120.947 field_ms=362.194 reduction_ms=37.203 local_qr_ms=279.563 sampler_cache_ms=14.1007 matrix_ms=1.0045 global_qr_ms=200.625",
+        "CACHE step=4 rebuilt=12 reused=36 total=48 update_ms=1074.01 fresh_ms=1069.48 warm_solve_ms=26.6558 balance=2.71051e-20 reaction_error=1.2238e-15 physical_bits_equal=1 geom_ms=117.198 field_ms=374.89 reduction_ms=36.9488 local_qr_ms=281.566 sampler_cache_ms=15.4272 matrix_ms=1.04023 global_qr_ms=245.288",
+        "CACHE step=5 rebuilt=12 reused=36 total=48 update_ms=1180.95 fresh_ms=1075.24 warm_solve_ms=24.7537 balance=6.09864e-20 reaction_error=1.20142e-15 physical_bits_equal=1 geom_ms=115.334 field_ms=394.045 reduction_ms=44.528 local_qr_ms=356.622 sampler_cache_ms=17.3513 matrix_ms=1.34836 global_qr_ms=249.997",
+        "CACHE step=6 rebuilt=12 reused=36 total=48 update_ms=1060.78 fresh_ms=1060.89 warm_solve_ms=24.6144 balance=4.06576e-20 reaction_error=1.40727e-15 physical_bits_equal=1 geom_ms=101.542 field_ms=345.976 reduction_ms=34.9023 local_qr_ms=301.467 sampler_cache_ms=14.4318 matrix_ms=0.899246 global_qr_ms=260.214",
+        "TIMING name=updated_epoch count=6 median_ms=1060.78 p95_ms=1180.95 worst_ms=1180.95",
+        "TIMING name=fresh_epoch count=6 median_ms=1069.48 p95_ms=1075.24 worst_ms=1075.24",
+        "TIMING name=warm_solve count=6 median_ms=24.6144 p95_ms=26.6558 worst_ms=26.6558",
+        "SUMMARY checks=320 failures=0 peak_rss_kib=407868"
+      ]
+    }
+  ],
+  "decision": "Retain as mathematical reference; not a practical moving-performance correction; Stage14 remains selected private path",
+  "priorFrozenEvidenceUnchanged": true,
+  "historicalException": "Stage6 active current-doc inventory legitimately advanced; frozen evidence unchanged",
+  "advancedFluidsUnlocked": false
+}

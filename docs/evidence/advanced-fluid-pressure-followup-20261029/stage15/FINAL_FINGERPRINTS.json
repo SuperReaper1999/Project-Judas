@@ -1,0 +1,14 @@
+{
+  "parentRevision": "9c17b7dc10a6813ee1c26326a07f8b534bb27eb8",
+  "scope": "Numerically passing orthogonal-constraint experiment; not adopted due performance; no production change.",
+  "selfHashExcluded": true,
+  "files": {
+    "docs/ADVANCED_FLUID_MOVING_COST_REASSESSMENT.txt": "30dea678a3d34550adf3393c4f764c6a8b1c150695b335ab6cc59f178033b9ee",
+    "docs/evidence/advanced-fluid-pressure-followup-20261029/stage15/CHANGED_FILES.txt": "410b132277a5bd0df0d8ac7e0f261652f655b954c430f24f845517ca4457dae3",
+    "docs/evidence/advanced-fluid-pressure-followup-20261029/stage15/REPRODUCE.txt": "43ed3f6e995e6eb6d8f639686a734d4f8a3fc62f5f46da9a9957ea787de87907",
+    "docs/evidence/advanced-fluid-pressure-followup-20261029/stage15/RESULTS.json": "9b86287ed6b051b2c93332e0d70748fcb1f5fafc4e384a5af8228a3bea75d61d",
+    "docs/evidence/advanced-fluid-pressure-followup-20261029/stage15/SOURCE_MANIFEST.json": "ec8dca33d65d1cfb7d683236085f4696cb8b3b07da44fb7571a82d0ecb2bd49f",
+    "docs/evidence/advanced-fluid-pressure-followup-20261029/stage15/stage15-orthogonal-constraints-reference.tar.gz": "aaf6e396a66b6bc8c24752478cd09c80fe666cc2ac00150256492d12cfeac8d8",
+    "docs/evidence/advanced-fluid-pressure-followup-20261029/stage15/verify_evidence.py": "87205cae51032af7cedb42d50e0a5a70b67ecb72f28467c6db28bb4628b20d1c"
+  }
+}

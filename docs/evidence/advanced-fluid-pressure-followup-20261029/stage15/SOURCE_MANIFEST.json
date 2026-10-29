@@ -1,0 +1,69 @@
+{
+  "archiveSha256": "aaf6e396a66b6bc8c24752478cd09c80fe666cc2ac00150256492d12cfeac8d8",
+  "files": {
+    ".cache/fluid-orthogonal-constraints-stage15-20261029/CacheTests.cpp": {
+      "sha256": "658adea6ae59405959e3fc2258012324750506a96b444208785fd36ed43eb5b4",
+      "bytes": 5786
+    },
+    ".cache/fluid-orthogonal-constraints-stage15-20261029/LocalFactor.h": {
+      "sha256": "4056cad9a78171b894b1bd64749a5d447c48adecbdee4500bbc766b978fb30f9",
+      "bytes": 9441
+    },
+    ".cache/fluid-orthogonal-constraints-stage15-20261029/Monolithic.h": {
+      "sha256": "643cc00923f193a8966e679407a6b91243e3714cd8258e0ae12dc24777a35d2e",
+      "bytes": 2191
+    },
+    ".cache/fluid-orthogonal-constraints-stage15-20261029/PROVENANCE.json": {
+      "sha256": "a1d7c24e332b8797b9632432bec8d26ccbac4243ae77dab08129c595321fe835",
+      "bytes": 4649
+    },
+    ".cache/fluid-orthogonal-constraints-stage15-20261029/PressureEpoch.h": {
+      "sha256": "965e4b8c384dac376b687c15c35087dd1c60e06a5e1af59b0713ebb81680523d",
+      "bytes": 12110
+    },
+    ".cache/fluid-orthogonal-constraints-stage15-20261029/PressureTests.cpp": {
+      "sha256": "1899326aeecb7ec00bb4339a2997abe059162d1a373346da78b707f9908552cc",
+      "bytes": 3393
+    },
+    ".cache/fluid-orthogonal-constraints-stage15-20261029/ProjectedOracle.h": {
+      "sha256": "419536019f11028028370be41385d998f1749ccd5fd78e3af9acb6dfe5dc8c38",
+      "bytes": 5781
+    },
+    ".cache/fluid-orthogonal-constraints-stage15-20261029/ProjectedTests.cpp": {
+      "sha256": "cdf53d7b2359ec80e425e4ebdc03c8bbc46c6087168329013b2c069969887bc1",
+      "bytes": 1966
+    },
+    ".cache/fluid-orthogonal-constraints-stage15-20261029/ThinTests.cpp": {
+      "sha256": "b929ebfc33be46c8fb8df949bbdc3f8e5afd01a84f58a8c710325847876089e4",
+      "bytes": 2743
+    },
+    ".cache/fluid-orthogonal-constraints-stage15-20261029/final/CacheTests.log": {
+      "sha256": "1b9ff059ee27093d9a4778cff6cce9a2013da17673d5b0c58efd8eb9977c7865",
+      "bytes": 35879
+    },
+    ".cache/fluid-orthogonal-constraints-stage15-20261029/final/PressureTests.log": {
+      "sha256": "08b6eb3a23548b51c150cc0c447b15d94173f8491e74fa5d625ca48ad29b4897",
+      "bytes": 40956
+    },
+    ".cache/fluid-orthogonal-constraints-stage15-20261029/final/RUNS.json": {
+      "sha256": "b08655ba21d88dde5a7ae903ca58fc30d785132c9f1b1a3253a3bfb85ca65aaa",
+      "bytes": 679
+    },
+    ".cache/fluid-orthogonal-constraints-stage15-20261029/final/ThinTests.log": {
+      "sha256": "d6fe88faf6f74bf6c5a3e626f85859e1c02d1e3e059db50c41207ea51d057f1e",
+      "bytes": 41874
+    },
+    ".cache/fluid-orthogonal-constraints-stage15-20261029/projected-first.log": {
+      "sha256": "74d76d774008e7a44e1da1852fc6c67f24a94f3764c50ef0b5638c6f5e96d2b3",
+      "bytes": 38820
+    },
+    ".cache/fluid-orthogonal-constraints-stage15-20261029/run_final.py": {
+      "sha256": "78d418bf4fd9a7f86317d81f2d5db79ea50413b8e46c9836fd6c03e65d6a3cfe",
+      "bytes": 684
+    },
+    ".cache/fluid-orthogonal-constraints-stage15-20261029/run_probe.py": {
+      "sha256": "0706196150eb8bdd703e15731cf91fb61d3a9a58a5d4dd971858fe58b570c84b",
+      "bytes": 1037
+    }
+  }
+}

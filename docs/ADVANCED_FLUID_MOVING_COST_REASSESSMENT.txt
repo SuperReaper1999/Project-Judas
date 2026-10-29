@@ -1,0 +1,105 @@
+MOVING FLUID OPERATORS — ORTHOGONAL CONSTRAINT EXPERIMENT
+29 October 2026 | Parent 9c17b7dc10a6813ee1c26326a07f8b534bb27eb8
+
+DECISION
+Do not replace the qualified Stage14 implementation with this experiment.
+The reformulation is numerically correct in the tested cases, but DOES NOT make
+moving fluids practical. Its complete measured moving update remains1.06s median,
+and warm solves are slower. Alpha remains locked. This is a preserved research
+checkpoint, not a ready runtime fluid feature or a claimed performance fix.
+
+ACTUAL IMPLEMENTATION
+Stage14 first eliminates the independent local continuity equations by a pivot
+coordinate parameterization, then QR-factorizes the reduced kinetic matrix J.
+That parameterization introduces dense coupling into otherwise sparse columns.
+The experiment instead factors the ORIGINAL sparse internal kinetic matrix Ai
+and keeps the few independent continuity constraints separate and orthogonal.
+All coefficients remain long double; only exact zeros are omitted.
+
+For Ai P=Q R, define W=D_i P R^-1 and factor W^T=U T with orthonormal U.
+For raw source residual r and required internal divergence g, the minimum kinetic
+residual is
+ ||Q_tail^T r||^2 + ||U^T Q_head^T r - T^-T g||^2.
+This supplies the condensed boundary/body/source operators without eliminating
+continuity through kinetic coordinates. Full internal motion is reconstructed
+by projecting Q_head^T r onto W y=g and triangular-solving R.
+
+The same two accurate-gradient refinement steps remain. Their preconditioner
+uses R^-1 (I-U U^T) R^-T with the correct permutation, then extracts the original
+free coordinates. Dependent coordinates still reconstruct from actual continuity
+equations. No damping, energy clamp, added diagonal, dropped cell/mode, shortened
+physics cadence or acceptance-budget increase was introduced.
+
+The implementation is archived under fluid-orthogonal-constraints-stage15-20261029.
+It reuses preceding geometry, field assembly, independent oracles and native probe
+infrastructure. It has NOT been wired into Judas or substituted for Stage14.
+
+CORRECTNESS RESULTS
+- ProjectedTests:2 checks, .17rad and3.2137858346770188e-11rad. The independent
+  160-bit oracle eliminates internal coordinates before global assembly and does
+  not use the runtime Q/K. Trace errors8.251e-19 and2.137e-15, force errors below
+  3.210e-14, energy errors below2.982e-16. Unchanged bounds pass.
+- PressureTests:35 checks. Axis/oblique, calm gravity, nonlinear flow, zero source,
+  prescribed body translation/rotation; uncondensed monolithic physical flows,
+  force, energy, independent buoyancy and wrench-reference power identity pass.
+- ThinTests:75 checks. All local free/dependent flows against independent160-bit
+  solves across axis/tiny/oblique orientations and changing/zero/body-motion inputs.
+- CacheTests:320 checks. Six prescribed moving poses, cell crossing, exact cached
+  versus fresh operator/physical results, source/geometry refusal and empty-block
+  paths.36–42 of48 factors remain owned unchanged.
+Total432 checks across four programs, all passed. This is not432 independent
+physical scenarios or a claim of dynamic water/momentum evolution.
+
+MEASURED COST AND WHY THIS IS NOT THE FIX
+Same preserved six-pose48-owner fixture, GNU15.2 Release/O3, Ryzen5 5600/8GB,
+serial CPU-heavy work; current/fresh ordering alternates. Full source, raw rows,
+physical comparisons, phase costs and process memory are preserved.
+
+                     Stage14 sparse       orthogonal experiment
+moving update median 1121.11ms             1060.78ms
+p95 / worst          1214.55ms             1180.95ms
+fresh-build median   1121.33ms             1069.48ms
+warm solve median      18.6719ms             24.6144ms
+warm p95 / worst       20.1693ms             26.6558ms
+
+These are separate matched-workload runs, not interleaved backend measurements;
+the small moving improvement is not promoted as a robust speedup. Warm cost is
+clearly worse. No whole-game performance claim is made.
+
+At the last pose, preparation is about1061ms:
+ geometry101.5ms; field assembly346.0ms; local reduction34.9ms;
+ local QR/constraint preparation301.5ms; source cache14.4ms;
+ global matrix .9ms; global factorization260.2ms.
+Even entirely removing local QR would leave hundreds of milliseconds. Reusing
+unaffected owners is correct but those owners are cheap; changed fine cut-cell
+operators consume the work. This is NOT a conclusion that physical fluids or
+all possible finite-element algorithms cannot run in real time. It is evidence
+that this per-pose fine-operator construction is not a practical runtime path.
+Peak RSS407,868KiB includes simultaneous cached/fresh reference objects.
+
+BOUNDED NEXT ENGINEERING DIRECTION
+Stop treating another QR micro-optimization as the route to readiness. Preserve
+this variational/high-precision implementation as a correctness reference.
+Investigate a bounded runtime cut-cell representation whose unknown count and
+operator construction do not scale with every transient triangulation fragment.
+Evaluate it against independent hydrostatic/buoyancy, work, momentum and exact
+conservation contracts, and matched moving workloads BEFORE production adoption.
+Explicitly distinguish discretization error from algebraic solver error; do not
+silently weaken existing fixtures or pretend a new approximation is bit-equivalent.
+The previous aggregate/low-precision failures must inform that design.
+
+In parallel the actual time-dependent contract remains unsolved: swept wall/GCL,
+connected displaced-water transport, conservative momentum, evolving wet/dry and
+free surfaces, native contact/CCD, M54 ownership and application persistence/export.
+Endpoint geometry updates and fresh velocity callbacks are NOT an evolving fluid.
+The original Terrain planet failure is not declared fixed. No Alpha unlock.
+
+ISOLATION / EVIDENCE
+No tracked production source, API/types, CMake, settings, release identity,
+Basic Water, M54/M55, FLU-001, existing projects or independent research changed.
+Stage14 remains the selected private reference. No main promotion or release.
+No full production suite, editor/export, native Windows/Android claim is warranted
+by these private numerical changes. The actual existing native archive/build
+identity is recorded honestly; this is not a freshly rebuilt Alpha SDK.
+Exact sources, results, reproduction, binary/source hashes and archive verification:
+ docs/evidence/advanced-fluid-pressure-followup-20261029/stage15/
