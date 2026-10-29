@@ -1,0 +1,155 @@
+ADVANCED FLUIDS — FIXED-GEOMETRY RUNTIME VIABILITY, 2026-10-29
+
+Parent: c5b33a8a156a42b6aab780504f57453a8df90d48 (Experimental).
+This checkpoint archives PRIVATE numerical implementations and evidence, not a
+production backend. Main, published Alpha, Basic Water, M54/M55, existing games,
+protected history and independent research remain unchanged. Advanced Fluids
+remain compiled-locked. No human acceptance or platform qualification is claimed.
+
+QUALIFIED RESULT
+----------------
+The qualified entry points are PredictorSampler::Sample, RefreshPredictor,
+ProjectStable and ReconstructStable. They retain the original coarse QR and
+original dense local reconstruction order. Only divergence VALIDATION is sparse;
+physical-field construction is unchanged. The prepared physical source sampler
+caches geometry-derived weights and coordinates, never old source velocities.
+
+On the Ryzen 5 5600 Linux host, 24 interleaved matched samples give:
+                                                 median      p95     worst, ms
+ original complete projection/reconstruction      29.6061   29.8361   29.8910
+ original-order reconstruction + sparse check     26.6175   26.9236   26.9603
+ original source refresh + projection             36.5305   36.7882   36.8113
+ qualified source refresh + projection            33.5316   33.9195   33.9274
+ qualified sampling + refresh + projection        33.6060   33.9945   34.0025
+
+Physical source generation itself falls from42.6351ms median to0.074711ms by
+preparing unchanged rational-volume-derived weights and vertex coordinates.
+It produces BIT-IDENTICAL predictors to the independent original sampler.
+The combined original naive sampling/refresh/solve costs79.1841ms median,
+versus33.6060ms for the qualified version. The sampler is shared infrastructure
+and can also feed the original solver. Do NOT describe this roughly2.35x
+reference-pipeline improvement as a pressure-solve speedup or game FPS result.
+
+Each sample compares identical geometry, physical sources and rigid velocities.
+Solver order alternates. Fine flux, reaction and energy differences are ALL ZERO
+in the final benchmark. Actual balance residual is at most4.659e-20. Tolerances
+are unchanged: original/new comparison1e-12, balance1e-10, work1e-8 and
+reconstruction energy agreement1e-9. No clamp, damping, geometry deletion,
+small-force threshold, timestep or iteration-budget change is used.
+
+The final pipeline still misses a4.1667ms budget for a source refreshed at240Hz.
+It is not ready for production. Cold times and RSS are recorded in RESULTS.json;
+preparation still costs seconds. Peak RSS251816KiB includes the baseline and
+cached reference in one process, not an isolated production memory comparison.
+
+INVESTIGATION AND REJECTED FASTER PATHS
+--------------------------------------
+Profiling the original gives approximately30.94ms total:7.76ms coarse solve,
+19.03ms local reconstruction and3.49ms raw validation. Stored exact zeros and
+repeated fixed-operator work account for substantial costs.
+
+Available experiments, all archived:
+1. RuntimeOperators additionally stores exact sparse trace/local maps. ONLY
+   EXACT ZEROS are excluded, without epsilon or thin-cell pruning.
+2. LocalResponses prepares local kinetic responses to boundary traces and rigid
+   velocities. It explicitly refreshes source modes and retained-mode energy.
+3. LoadSolver prepares a small evaluation of the SAME conservation-first
+   kinetic problem, using the QR factors/permutation and projected source loads.
+4. Source staging shares each local Q^T source between coarse and local modes.
+   All computations/checks precede nonthrowing publication; invalid sources
+   cannot partly publish field, loads or energy.
+
+The initially matched large tank runs in about8.7ms with prepared local responses,
+and1.9ms with the load-space variant. Including changing sources gives about9.8ms
+for that fastest variant. Native/transport tests also initially pass. THESE ARE
+NOT THE QUALIFIED TIMINGS: new nonlinear tiny-rotation tests reveal a comparison
+failure that the original hydrostatic/affine-source cases did not exercise.
+
+The first load-space version omitted SparseQR's column permutation. Its exact
+header and failure after two checks are retained. The corrected load-space
+version passes the initial comparisons but fails the nonlinear thin-cut case
+after13 checks. Replacing its reconstructed source projection with an explicit
+orthogonal source basis still fails that same test. Those variants are rejected
+for adoption, not silently promoted because their initial benchmarks look good.
+
+ThinSourceDiagnostic isolates the stage involved:
+- Newly condensed and cached coarse sources are bit-identical; retained energy
+  is also identical. Cached original solve/reconstruction equals fresh exactly.
+- Sparse-only local arithmetic changes maximum fine flux by2.36668e-12.
+- Prepared local responses change it by6.82667e-11, with energy difference
+  3.26073e-13 and zero measured reaction difference in this fixture.
+- Explicit orthogonal source projection still gives6.82667e-11 flux difference.
+Thus local arithmetic sensitivity is present independently of the load-space
+solver. The diagnostic establishes where the comparison diverges; it does NOT
+provide an exact analytic solution proving which approximation is more accurate.
+Thin-cut conditioning is the next numerical investigation, not a claimed cure.
+No tolerance was enlarged to accept these variants. The final qualified path
+retains original local arithmetic and passes the unchanged nonlinear check.
+
+EQUATIONS / NUMERICAL BOUNDARY
+------------------------------
+The unchanged reference problem remains
+ min_q 1/2||Aq+BV-b||^2,  Dq+E V=0.
+Conservation is eliminated BEFORE kinetic minimization, not repaired afterward.
+The physical field, volume flux and native reaction derive from the same
+wet-volume kinetic functional. The final path uses Stage9's original prepared
+QR implementation and field reconstruction.
+
+For clarity, the UNQUALIFIED load-space experiment parameterizes
+ q_p=T V-C q_f, Z=A_f-A_p C, Z P=Q R, U=B+A_p T.
+Its first attempted source head was R^(-T)P^T(g_f-C^T g_p), where g=A^T b;
+the later attempt explicitly stores Q_head and computes Q_head^T b instead.
+Neither repairs the separately observed local reconstruction sensitivity.
+No squared Gram matrix is explicitly formed; that is NOT proof that load-space
+projection cannot amplify roundoff. Linux extended precision remains required;
+binary64/MSVC portability remains unresolved.
+
+All prepared data is value-owned per FIXED geometry/material/constraint epoch.
+Changed geometry, density, topology or constraints require full preparation.
+No moving-solid invalidation/GCL algorithm is implemented here. Sparse and
+prepared-response helpers remain in the private archive as unqualified research,
+not new public APIs, importer paths or production alternatives.
+
+FINAL-SOURCE VALIDATION
+------------------------
+RESULTS.json and STABLE_FINAL_RUNS.json identify the final five programs:
+- StableAdversarialTests:30 checks; nonlinear sources, three orientations,
+  nonzero rigid motion and zero-source recovery. Flux/force/energy agree exactly
+  with independently fresh condensation, including the newly failing thin case.
+- StableRefreshTests:9 checks; sampler/source independence, dimensions, NaN and
+  finite-but-overflowing kinetic inputs. Rejection preserves previous source,
+  coarse modes and evaluated physical state.
+- NativeStableTests:93 checks; actual native supported and heavy/light bodies,
+  completed physical endpoint and kinetic bounds. Missing joint reaction is
+  rejected without material publication. ONE finite interaction only.
+- MaterialStableTests:1927 checks;240 steps at1/240s,33120 paired transfers,
+  exact global water/tracer totals, no negative owners, capacity error7.10e-21
+  or less. Pressure is fixed during this PASSIVE transport proof; these are NOT
+  240 evolving pressure/free-surface/momentum solves.
+- StableBenchmarkTests:72 checks;24 matched changing-source comparisons.
+Total2131 final assertions. Earlier compiler errors and initially passing faster
+runs remain historical evidence; they are not substituted for final coverage.
+
+Native probes link the existing qualified Linux Release archive, SHA256
+5722108b94f15414584979689eac3aafe5faac3004722d17929bc58ade44244d.
+It embeds a dirty61a1a94 identity; runtime inputs were qualified in Stage6 and
+remain unchanged. This is not a freshly rebuilt SDK from this documentation HEAD.
+Retained reference/Eigen compiler warnings are in raw logs. No full production
+suite, editor/export smoke or Windows/Android claim is warranted by this
+private-reference-only checkpoint.
+
+NEXT STEPS / HANDOFF
+---------------------
+First establish a high-precision thin-cut oracle and a stable practical local
+representation before adopting the fast response algebra. Then moving-solid
+geometric conservation/local invalidation and actual displaced-volume transport;
+conservative momentum advection and free-surface/wet-dry evolution; native
+contact/friction/impact coupling, M54 ownership integration, precision portability
+and whole-application save/stream/export qualification. The original Terrain
+planet failure still needs end-to-end proof before any Alpha unlock.
+
+Archive/fingerprints/reproduction:
+ docs/evidence/advanced-fluid-pressure-followup-20261029/stage10/
+All earlier Stage6-9 final fingerprints remain unchanged. No independent
+research directory was modified. This checkpoint is progress and an explicit
+new numerical limitation, not a claim that Advanced Fluids are ready.

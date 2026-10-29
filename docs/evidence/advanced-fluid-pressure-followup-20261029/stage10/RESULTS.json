@@ -1,0 +1,221 @@
+{
+  "schema": 1,
+  "parentRevision": "c5b33a8a156a42b6aab780504f57453a8df90d48",
+  "scope": "Private fixed-geometry source-sampling and original-order reconstruction qualification. Faster algebraic variants FAIL the new unchanged field comparison and remain unqualified. No production backend/unlock.",
+  "qualifiedEntryPoints": [
+    "PredictorSampler::Sample",
+    "RefreshPredictor",
+    "ProjectStable",
+    "ReconstructStable"
+  ],
+  "positiveAssertions": 2131,
+  "cases": [
+    {
+      "name": "StableAdversarialTests",
+      "sourceSha256": "9be9eac5e90e30cb923f371828bed943944fb9da18d8c6fa0998fe069d71ddd1",
+      "returncode": 0,
+      "wallSeconds": 29.252350091934204,
+      "log": "StableAdversarialTests-final.log",
+      "logSha256": "a706eef8131a23eef292339fe5f4d5519ca2f4f4cdca1bb95e2bc7a25bc198d5",
+      "assertions": 30,
+      "binarySha256": "0bb8d21ae9e140570cf49ce8da27f8ecab0f8bcd45ed2f0a0ace37f30fe72bed"
+    },
+    {
+      "name": "StableRefreshTests",
+      "sourceSha256": "7196a8ac7c920b0659e3e9843d002b08128bdde9e3eedab34672b013a2516677",
+      "returncode": 0,
+      "wallSeconds": 22.377856254577637,
+      "log": "StableRefreshTests-final.log",
+      "logSha256": "337414307e2353f06418867099ee4697eca7b1a22bb355164a59b6de582a6592",
+      "assertions": 9,
+      "binarySha256": "a300f242551c43224b3e558158d2cb07c095dd90be516e4ece42344b0c697609"
+    },
+    {
+      "name": "NativeStableTests",
+      "sourceSha256": "545efadb38ef02f2a5de0ded2b409933fd076a86a77317a71e1e1e5deb7ddf96",
+      "returncode": 0,
+      "wallSeconds": 24.294179677963257,
+      "log": "NativeStableTests-final.log",
+      "logSha256": "f2acf15bee81e50bbc7b04743ea72f0bbf05aa9c495138295e6e40f1b502ac7e",
+      "assertions": 93,
+      "binarySha256": "c991b65eae1906146bf6900369fce74d72f29eab7db2abf12fd0368257f72ac0"
+    },
+    {
+      "name": "MaterialStableTests",
+      "sourceSha256": "ab3280f7797dd207f3a64274246b844a65f30caa0e2833b791414674d4c40659",
+      "returncode": 0,
+      "wallSeconds": 22.75539255142212,
+      "log": "MaterialStableTests-final.log",
+      "logSha256": "bea0f8bf47779e72249c3ef60ecbf8f1f2978c0822a3078b0e05a4fd8f2e562b",
+      "assertions": 1927,
+      "binarySha256": "b9389916d84475e53539a405732a3999d9d57ee5de5f46c809fd00e144b39524"
+    },
+    {
+      "name": "StableBenchmarkTests",
+      "sourceSha256": "8a692e71014562458902b0029513241cab2c59f04e31bd5e2abdc71b85f13d8e",
+      "returncode": 0,
+      "wallSeconds": 24.36677074432373,
+      "log": "StableBenchmarkTests-final.log",
+      "logSha256": "fb0f992594a16f8e9ebb94f2ccd41554a742addc97ad2f21a0e84140765e8427",
+      "assertions": 72,
+      "binarySha256": "925734485064760179399768c85a758ca7735a606026f5bc4e7fe0482def76c1"
+    }
+  ],
+  "benchmark": {
+    "prepared_source_sampling": {
+      "count": 24.0,
+      "median_ms": 0.074711,
+      "p95_ms": 0.075482,
+      "worst_ms": 0.075522
+    },
+    "all_changed_source_costs": {
+      "count": 24.0,
+      "median_ms": 33.606046,
+      "p95_ms": 33.994539,
+      "worst_ms": 34.002503
+    },
+    "original_all_changed_source_costs": {
+      "count": 24.0,
+      "median_ms": 79.184121,
+      "p95_ms": 79.576491,
+      "worst_ms": 79.675838
+    },
+    "reference_projection": {
+      "count": 24.0,
+      "median_ms": 29.60608,
+      "p95_ms": 29.836115,
+      "worst_ms": 29.890988
+    },
+    "response_projection": {
+      "count": 24.0,
+      "median_ms": 26.617483,
+      "p95_ms": 26.923581,
+      "worst_ms": 26.96034
+    },
+    "physical_source_generation": {
+      "count": 24.0,
+      "median_ms": 42.635125,
+      "p95_ms": 42.894925,
+      "worst_ms": 43.145297
+    },
+    "response_source_refresh": {
+      "count": 24.0,
+      "median_ms": 6.908431,
+      "p95_ms": 7.020241,
+      "worst_ms": 7.053914
+    },
+    "response_refresh_plus_projection": {
+      "count": 24.0,
+      "median_ms": 33.531575,
+      "p95_ms": 33.919517,
+      "worst_ms": 33.927431
+    },
+    "reference_refresh_plus_projection": {
+      "count": 24.0,
+      "median_ms": 36.530541,
+      "p95_ms": 36.788157,
+      "worst_ms": 36.81129
+    }
+  },
+  "coldMeasurements": [
+    "COLD geometry_ms=134.38 field_ms=714.311 condensation_ms=2275.71 sparse_ms=7.88991 response_ms=0 total_ms=3156.34 tets=980 fine_variables=5436 coarse_variables=240",
+    "COLD_EXTRA load_preparation_ms=0 sampler_preparation_ms=23.2425"
+  ],
+  "benchmarkSummary": "SUMMARY checks=72 failures=0 max_flux_error=0 max_reaction_error=0 max_energy_error=0 max_balance=4.65868e-20 process_peak_rss_kib=251816",
+  "host": {
+    "utc": "2026-10-29T17:15:24.863721+00:00",
+    "platform": "Linux-7.0.0-42-generic-x86_64-with-glibc2.43",
+    "cpu": "AMD Ryzen 5 5600 6-Core Processor",
+    "memoryKiB": "MemTotal:        8045200 kB",
+    "parent": "c5b33a8a156a42b6aab780504f57453a8df90d48",
+    "nativeArchiveSha256": "5722108b94f15414584979689eac3aafe5faac3004722d17929bc58ade44244d",
+    "compiler": "c++ (Ubuntu 15.2.0-16ubuntu1) 15.2.0",
+    "precision": "long double, not a Windows portability claim",
+    "build": "existing Linux Release archive, embedded dirty61a1a94; runtime inputs matched Stage6; no new SDK build"
+  },
+  "buildInputs": {
+    "compileFlags": [
+      "-DDT_VIRTUAL_QUERYFILTER",
+      "-DMA_NO_ENCODING",
+      "-DMA_NO_GENERATION",
+      "-DMA_NO_RESOURCE_MANAGER",
+      "-I/home/conner/Documents/GitHub/Project-Judas/src",
+      "-I/home/conner/Documents/GitHub/Project-Judas/third_party/glad/include",
+      "-I/home/conner/Documents/GitHub/Project-Judas/third_party/miniaudio",
+      "-I/home/conner/Documents/GitHub/Project-Judas/third_party/verblib",
+      "-I/home/conner/Documents/GitHub/Project-Judas/third_party/meshoptimizer/src",
+      "-I/home/conner/Documents/GitHub/Project-Judas/build/_deps/judas_freetype-build/include",
+      "-I/home/conner/Documents/GitHub/Project-Judas/build/_deps/judas_freetype-src/include",
+      "-I/home/conner/Documents/GitHub/Project-Judas/build/_deps/judas_harfbuzz-src/src",
+      "-isystem",
+      "/home/conner/Documents/GitHub/Project-Judas/third_party/quickhull",
+      "-isystem",
+      "/usr/include/SDL2",
+      "-isystem",
+      "/home/conner/Documents/GitHub/Project-Judas/third_party/recastnavigation/Detour/Include",
+      "-isystem",
+      "/home/conner/Documents/GitHub/Project-Judas/third_party/recastnavigation/DetourTileCache/Include",
+      "-isystem",
+      "/home/conner/Documents/GitHub/Project-Judas/third_party/recastnavigation/DetourCrowd/Include",
+      "-isystem",
+      "/home/conner/Documents/GitHub/Project-Judas/third_party/quickjs",
+      "-isystem",
+      "/home/conner/Documents/GitHub/Project-Judas/build/unicode/icu/include",
+      "-O3",
+      "-DNDEBUG",
+      "-std=gnu++17",
+      "-Wall",
+      "-Wextra"
+    ],
+    "linkArguments": [
+      "/usr/bin/c++",
+      "-O3",
+      "-DNDEBUG",
+      "CMakeFiles/judas_script_tests.dir/tests/ScriptTests.cpp.o",
+      "-o",
+      "judas_script_tests",
+      "libjudas_engine.a",
+      "libjudas_profiler.a",
+      "libjudas_build_identity.a",
+      "libjudas_app_icon.a",
+      "libjudas_materials.a",
+      "libjudas_profiler.a",
+      "/usr/lib/x86_64-linux-gnu/libSDL2.so",
+      "libjudas_glad.a",
+      "libjudas_audio_backend.a",
+      "libjudas_meshoptimizer.a",
+      "libjudas_navigation_cook.a",
+      "libjudas_navigation_backend.a",
+      "libjudas_quickjs.a",
+      "-lm",
+      "_deps/judas_freetype-build/libfreetype.a",
+      "_deps/judas_harfbuzz-build/libharfbuzz.a",
+      "unicode/icu/lib/libicui18n.a",
+      "unicode/icu/lib/libicuuc.a",
+      "unicode/icu/lib/libicudata.a",
+      "-ldl",
+      "libjudas_jobs.a"
+    ],
+    "quantityObjectSha256": "d1b929fbb971b05b44c7fef07a08fcedcffdbc6069eb99aa0dc1b030bbc106a5",
+    "helperSha256": "192fea9fc3920924ea5921e4752beca119b5fc03b96aa13af78467cfa33d5d4a"
+  },
+  "nativeRuntimeSha256": "5722108b94f15414584979689eac3aafe5faac3004722d17929bc58ade44244d",
+  "nativeRuntimeProvenance": "Existing Linux Release archive, embedded dirty61a1a94, runtime files qualified in Stage6; not a freshly rebuilt SDK from this documentation commit.",
+  "unqualifiedExperiments": {
+    "missingPermutation": "load-solver-v1.log: unchanged comparison fails after2 checks. Exact failed header retained.",
+    "loadCompression": "adversarial-load-space-v1.log: unchanged nonlinear thin-cut comparison fails after13 checks.",
+    "explicitOrthogonalSource": "adversarial-orthogonal-v2.log: still fails after13 checks.",
+    "localArithmeticDiagnostic": "thin-source-diagnostic.log: source equality=1 and retained energy identical; cached original flux difference0; sparse2.36668e-12; prepared response6.82667e-11; explicit orthogonal load6.82667e-11. These establish arithmetic sensitivity/comparison failure, not an exact analytic error oracle."
+  },
+  "remaining": [
+    "moving geometry/GCL and epoch invalidation",
+    "source-refresh cost above240Hz budget",
+    "conservative momentum advection",
+    "free surface/wet-dry evolution",
+    "M54 ownership integration",
+    "precision portability",
+    "application/save/stream/export qualification",
+    "general native contact/impact coupling"
+  ],
+  "historicalEvidence": "Earlier positive runs/compiler errors are preserved; only STABLE_FINAL_RUNS describes final accepted entry points. No exhaustive recovery of all intermediate environments is claimed."
+}

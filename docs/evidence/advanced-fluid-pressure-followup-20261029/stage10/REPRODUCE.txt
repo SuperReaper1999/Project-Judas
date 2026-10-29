@@ -1,0 +1,51 @@
+PRIVATE FIXED-GEOMETRY REFERENCES, NOT AN ALPHA UNLOCK
+
+Read docs/ADVANCED_FLUID_RUNTIME_VIABILITY.txt first. The qualified path retains
+original local arithmetic. Fast prepared-response/load variants are NOT qualified.
+
+Use an isolated checkout. Verify Stage5-9 source archives using their existing
+verify_evidence.py programs, then extract them in order, as documented by Stage9
+REPRODUCE.txt. Do not overwrite active ignored investigations or independent
+research. Verify/extract Stage10 last.
+
+Prerequisites are the unchanged Stage6-9 Linux Release/Makefile native probe
+build: judas_script_tests, its flags.make/link.txt, the actual libjudas_engine.a
+and the Stage5 exact-volume-domain object. Rebuild these in your checkout; the
+recorded native binary identity/hash describes the actual existing archive used
+for these runs, not a fresh distribution from this docs-only checkpoint.
+
+Locally extracted Boost1.90 and Eigen3.4 headers are used by the private proofs:
+ BOOST_INCLUDE_DIR=<scratch-boost>/usr/include
+ EIGEN_INCLUDE_DIR=<scratch-eigen>/usr/include/eigen3
+See Stage9 REPRODUCE.txt for acquisition and predecessor dependency hashes.
+No reference dependency is added to production/SDK wiring or redistributed here.
+
+Run one CPU-heavy process at a time:
+ python3 .cache/fluid-runtime-viability-stage10-20261029/run_stable_final.py
+Expected five successes,2131 assertions. This compiles native probes, runs real
+native endpoints and exact packet transport, and records STABLE_FINAL_RUNS.json.
+The standalone benchmark prints all24 samples, nearest-rank p95, median
+(upper middle observation), worst and process peak RSS. Its original/new timing
+order alternates; sources, geometry, rigid velocities and acceptance bounds match.
+
+Individual qualified programs via run_probe.py:
+ StableAdversarialTests
+ StableRefreshTests
+ NativeStableTests
+ MaterialStableTests
+ StableBenchmarkTests
+
+For investigation only:
+ run_probe.py AdversarialSourcesTests -> current explicit orthogonal-load variant
+ should fail its unchanged nonlinear thin-cut comparison after13 checks.
+ run_probe.py ThinSourceDiagnostic -> isolate cached/original/sparse/response/load
+ differences without claiming an exact analytic error oracle.
+
+Historical load-space and missing-permutation failures have separate frozen
+headers and raw logs; current LoadSolver.h is the failed explicit orthogonal
+variant, not the earlier compressed-load header. Earlier positive logs describe
+those historical revisions. Do not reinterpret them as final qualification.
+
+verify_evidence.py checks archive bytes without extraction/execution. Stage10
+archive includes source, scripts, logs and provenance only; no downloaded third-
+party headers, binaries, object files, caches or SDK packages are redistributed.

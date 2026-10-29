@@ -1,0 +1,8 @@
+docs/ADVANCED_FLUID_RUNTIME_VIABILITY.txt
+docs/evidence/advanced-fluid-pressure-followup-20261029/stage10/CHANGED_FILES.txt
+docs/evidence/advanced-fluid-pressure-followup-20261029/stage10/FINAL_FINGERPRINTS.json
+docs/evidence/advanced-fluid-pressure-followup-20261029/stage10/REPRODUCE.txt
+docs/evidence/advanced-fluid-pressure-followup-20261029/stage10/RESULTS.json
+docs/evidence/advanced-fluid-pressure-followup-20261029/stage10/SOURCE_MANIFEST.json
+docs/evidence/advanced-fluid-pressure-followup-20261029/stage10/stage10-runtime-viability-reference.tar.gz
+docs/evidence/advanced-fluid-pressure-followup-20261029/stage10/verify_evidence.py

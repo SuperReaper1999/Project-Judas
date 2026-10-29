@@ -1,0 +1,15 @@
+{
+  "schema": 1,
+  "parentRevision": "c5b33a8a156a42b6aab780504f57453a8df90d48",
+  "scope": "Private fixed-geometry runtime/source proofs; failed fast variants retained and NOT qualified; no production or release changes.",
+  "selfHashExcluded": true,
+  "files": {
+    "docs/ADVANCED_FLUID_RUNTIME_VIABILITY.txt": "039ef2cc8b31344010ba9d4f9c983a53af29df94742575930fc1d2c2c1a23cf2",
+    "docs/evidence/advanced-fluid-pressure-followup-20261029/stage10/CHANGED_FILES.txt": "81ddd675e83d859a29459277d6f9861e1d5693ccf1195fac21e44e17d87641ad",
+    "docs/evidence/advanced-fluid-pressure-followup-20261029/stage10/REPRODUCE.txt": "10eb4da2fa084b8884a2a0506fb8df95dad720be409801740dd853b3f6a658bb",
+    "docs/evidence/advanced-fluid-pressure-followup-20261029/stage10/RESULTS.json": "bd0d76f625a2424cfc12aefbcdcc3af792b3c556ea7f9ac6495bbd8d61ee9fea",
+    "docs/evidence/advanced-fluid-pressure-followup-20261029/stage10/SOURCE_MANIFEST.json": "1589551d4987362f007a325bc150bfddf60e03e3a0c5d36edf19dc7b18a1e362",
+    "docs/evidence/advanced-fluid-pressure-followup-20261029/stage10/stage10-runtime-viability-reference.tar.gz": "9d5c88f246b2a9577c0462b56d058572e2fa73b4050806326ab1d5d9b7235a96",
+    "docs/evidence/advanced-fluid-pressure-followup-20261029/stage10/verify_evidence.py": "3b06c9b7fc05b84cc273bd3925a98e13ec6727838ee2b7dc95d50ee9813b52fc"
+  }
+}
