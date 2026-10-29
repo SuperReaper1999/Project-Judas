@@ -1072,10 +1072,14 @@ bool ParseObject(Reader& reader, const std::vector<Token>& header, const Block& 
         else return reader.Fail("light kind must be point or spot");
         if (!p.Vec3("light.color", l.color)) return false;
         if (!p.Float("light.range", l.range)) return false;
-        const std::vector<Token>* cone = p.Header("light.cone", 2, 2);
-        if (!cone) return false;
-        if (!ParseFloat((*cone)[0], l.innerConeDegrees) || !ParseFloat((*cone)[1], l.outerConeDegrees)) {
-            return reader.Fail("light.cone expects two finite numbers");
+        // A point light has no cone. Keep its ordinary component defaults
+        // when omitted, but continue validating an explicitly authored value.
+        if (l.kind == SceneLightKind::Spot || p.Has("light.cone")) {
+            const std::vector<Token>* cone = p.Header("light.cone", 2, 2);
+            if (!cone) return false;
+            if (!ParseFloat((*cone)[0], l.innerConeDegrees) || !ParseFloat((*cone)[1], l.outerConeDegrees)) {
+                return reader.Fail("light.cone expects two finite numbers");
+            }
         }
         if(p.Has("light.enabled")&&!p.Bool("light.enabled",l.enabled))return false;
         if(p.Has("light.shadows")&&!p.Bool("light.shadows",l.castsShadow))return false;

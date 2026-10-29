@@ -164,3 +164,9 @@ location and destination/hash list. Keep that directory and restore reviewed
 filesystem-wide or crash atomicity, fsync durability or an automatic crash-recovery
 service. Normal single-file named saves use a unique adjacent stage and baseline
 check too. Worker code does no raw GL or live RuntimeWorld mutation.
+
+Point lights may omit `light.cone`; the ordinary 15°/25° component defaults are
+retained for canonical round-trips, and the cone does not affect point lighting.
+Spot lights require `light.cone` (inner/outer degrees). Explicit cone values on
+either kind must remain finite and satisfy `0 <= inner <= outer < 90`, with a
+positive outer angle. The same rule applies to named and line-oriented scenes.

@@ -1,0 +1,29 @@
+{
+  "parent": "4e0257418d1d19826db2b534a14818cf548dff4e",
+  "pointBaselineExit": 1,
+  "pointCorrectedExit": 0,
+  "fullSceneRegressionExit": 0,
+  "androidPythonTests": 7,
+  "androidNativeBuildPerformed": false,
+  "humanValidationClaimed": false,
+  "sourceAndEvidence": {
+    "docs/ISSUES_21_22_FOLLOWUP.txt": "c3f6b8fbaf9676fe3b876998887b8707f5f03bf155ed104227821a70c53c3f13",
+    "docs/ANDROID.md": "eeaaa1eda42e108d1f26b64f32551c5c714215bfb9a41706ad1c9ab41c962a87",
+    "docs/NAMED_AUTHORING.md": "3f0c0b334f034e24793504bd37e53953882f1bdbc6feb8a888c9e674f7ce5f2f",
+    "src/SceneSerialization.cpp": "b2ede7a8dd27043999f46c998d04192a39cd7917e8dc70183623f17ff6cf308d",
+    "src/SceneSerialization.h": "a6450554128b4f5394e926fef0acf813ded45f1ab89f3b3ffd36c5a70ee570a8",
+    "tests/SceneTests.cpp": "2a42e013d17a5d1a2174b06c54cf25f9e52ebba43afc2ee3adefd72d91b26d37",
+    "tests/test_android_build_identity.py": "6fb071215d46d5c5f0bb103ae5d8b4fb3e4652cc6cfd67f8b24836006da2756e",
+    "tools/build_android.py": "805dd76c411bc104467165faf5dbea823f1699b2805797b37003172bba0ea911",
+    "docs/evidence/issues-21-22-20261029/android-tests.log": "c67e7f92b9fae95d1e3e5b86db7ace9994e1e5307c3419503a30d1c8629608bc",
+    "docs/evidence/issues-21-22-20261029/point-baseline.log": "10edfa0901642f2bb673cf30befefaad0493b12de22b5cd93aa30bb387267421",
+    "docs/evidence/issues-21-22-20261029/point-fixed.log": "448ffb0cae0acb74964803fcfd2dd0c17c7f8b685eb36916f97ca1036d4491bb",
+    "docs/evidence/issues-21-22-20261029/scene-regression.log": "e2a13851b84b638373e4123bb4bcb3eb6877db89e64937e73c5bdf7f4c9d9d97"
+  },
+  "nativeInputsAndBinaries": {
+    "build/libjudas_engine.a": "427bc3b2d34b765861d98756a8c700d1b9cd529a40eeee89dff962e51d301821",
+    ".cache/gh-issues-21-22-20261029/scene-light-baseline": "2dc40d81a8a9dc029e3482010a6da683dc8dbc5dd0fb63c0d838ec90ab261fe7",
+    ".cache/gh-issues-21-22-20261029/scene-light-tests": "eaacaf77ed282ec1a3370d5549ccf69f26b018b4701f1c70c265450a2930f28c",
+    ".cache/gh-issues-21-22-20261029/scene-serialization-fixed.o": "120a6422b0b1ce953c8328ca82607400dfdd4aaa4e7eb990cf19d7c18432fe11"
+  }
+}

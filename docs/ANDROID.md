@@ -98,7 +98,7 @@ are not implemented by this workflow.
 
 ### Build identity and reproducibility
 
-The engine channel (`--channel main|Experimental|Local`) is independent of the game
+The engine channel (`--channel Alpha|Beta|Experimental|Stable|Local`) is independent of the game
 version and signing preset. The default is Experimental. The checked-in engine
 version is used unless `--engine-version` is explicit. Default caches are separated
 under `.cache/android/<channel>`; `--cache` can reuse an existing native cache.
@@ -292,3 +292,10 @@ bytes on an ordinary publication error. The three renames are not power-loss ato
 verify the checksum pair and do not read or publish one output concurrently.
 Outputs must be ordinary `.apk` files with ordinary receipt/checksum companions.
 No keys, passwords or phone installations are part of artifact verification.
+
+When using downloaded or locally built Alpha desktop tools, pass `--channel Alpha`
+to `build_android.py`. The default remains `Experimental`; it does not infer or
+switch release channels from an executable. A channel-only mismatch now shows
+both values and suggests the matching flag, rather than advising an ineffective
+rebuild. Other provenance differences remain strict errors and list the fields
+that differ. `Stable` is reserved for GA, not an Alpha release.

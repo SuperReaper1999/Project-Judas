@@ -1,0 +1,14 @@
+Section light cones: optional only for point lights
+  FAIL point light without cone loads through ordinary loader
+  FAIL omitted point cone retains ordinary component defaults
+  FAIL optional point cone is equivalent to ordinary authored component
+  OK   point cone omission survives canonical save/load
+  FAIL optional cone converts to named document
+  FAIL point light without cone loads through ordinary loader
+  FAIL omitted point cone retains ordinary component defaults
+  FAIL optional point cone is equivalent to ordinary authored component
+  OK   point cone omission survives canonical save/load
+  OK   spot light still requires its meaningful cone
+  OK   failed spot load leaves previous scene untouched
+  OK   explicit malformed point cone is not silently discarded
+  OK   explicit invalid cone range retains validation

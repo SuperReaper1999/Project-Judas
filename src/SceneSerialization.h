@@ -28,7 +28,8 @@ struct SceneObject;
 // field, malformed number, non-finite number, duplicate id, or component
 // whose prerequisites are absent fails with a message naming the line —
 // the Scene is left untouched rather than partially filled. Nothing is
-// defaulted silently: every field the writer emits, the reader requires.
+// defaulted silently for required fields. Optional properties use component
+// defaults; for example, point lights may omit the unused light.cone.
 bool SaveSceneToString(const Scene& scene, std::string& outText);
 bool SaveSceneToFile(const Scene& scene, const std::string& path, std::string& outError);
 

@@ -1,4 +1,5 @@
 #include "Project.h"
+#include "NamedAuthoring.h"
 // Milestone 28: scene data, serialization, stable identity, mutation,
 // runtime instantiation and the authored/runtime boundary — headless (a
 // RuntimeWorld built without a ResourceManager creates no GPU state), no
@@ -106,6 +107,47 @@ void SectionSerialization() {
     Check(text.find("object 2 \"Crate\"") != std::string::npos, "object ids and names are written explicitly");
     Check(text.find("9.81") != std::string::npos && text.find("9.81000") == std::string::npos,
           "floats use the shortest exact decimal");
+}
+
+void SectionLightCones() {
+    std::printf("Section light cones: optional only for point lights\n");
+    Scene authored;
+    auto& lamp = authored.CreateObject("Point lamp");
+    lamp.light = SceneLightComponent{};
+    const auto id = lamp.id;
+    std::string full, error;
+    SaveSceneToString(authored, full);
+    auto omitted = full;
+    const auto begin = omitted.find("light.cone");
+    omitted.erase(begin, omitted.find('\n', begin) - begin + 1);
+    for (bool named : {false, true}) {
+        std::string source = omitted;
+        if (named) Check(LegacyToNamed(omitted, "scene", source, error), "optional cone converts to named document");
+        Scene loaded;
+        Check(LoadSceneFromString(source, loaded, error), "point light without cone loads through ordinary loader");
+        const auto* object = loaded.Find(id);
+        Check(object && object->light && object->light->innerConeDegrees == 15.0f &&
+              object->light->outerConeDegrees == 25.0f, "omitted point cone retains ordinary component defaults");
+        Check(ScenesEqual(authored, loaded), "optional point cone is equivalent to ordinary authored component");
+        std::string roundtrip;
+        SaveSceneToString(loaded, roundtrip);
+        Scene again;
+        Check(LoadSceneFromString(roundtrip, again, error) && ScenesEqual(loaded, again), "point cone omission survives canonical save/load");
+    }
+    auto spot = omitted;
+    spot.replace(spot.find("light point"), 11, "light spot");
+    Scene sentinel = authored;
+    Check(!LoadSceneFromString(spot, sentinel, error) && error.find("light.cone") != std::string::npos,
+          "spot light still requires its meaningful cone");
+    Check(ScenesEqual(sentinel, authored), "failed spot load leaves previous scene untouched");
+    auto malformed = full;
+    const auto value = malformed.find("light.cone");
+    malformed.replace(value, malformed.find('\n', value) - value, "light.cone bad 25");
+    Check(!LoadSceneFromString(malformed, sentinel, error), "explicit malformed point cone is not silently discarded");
+    auto invalid = full;
+    const auto at = invalid.find("light.cone");
+    invalid.replace(at, invalid.find('\n', at) - at, "light.cone 30 10");
+    Check(!LoadSceneFromString(invalid, sentinel, error), "explicit invalid cone range retains validation");
 }
 
 void SectionIdentity() {
@@ -327,7 +369,9 @@ void SectionInstantiationErrors() {
 }
 }  // namespace
 
-int main() {
+int main(int argc, char** argv) {
+    SectionLightCones();
+    if (argc == 2 && std::string(argv[1]) == "--light-cones") return g_failures == 0 ? 0 : 1;
     SectionSerialization();
     SectionIdentity();
     SectionMutation();

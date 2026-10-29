@@ -1,0 +1,53 @@
+GITHUB #21 / #22 — 2026-10-29 EXPERIMENTAL FOLLOWUP
+Parent:4e0257418d1d19826db2b534a14818cf548dff4e
+
+#21 https://github.com/SuperReaper1999/Project-Judas/issues/21
+Confirmed: scene serialization required light.cone for both point and spot,
+although point lighting does not use it. Point omission now retains ordinary
+15/25 degree defaults. Spot omission remains an error; explicitly authored
+point/spot cones still undergo the existing finite/range validation. Named and
+line-oriented loaders share the correction. Failed loads remain transactional.
+No renderer, light API or physics changes.
+
+Added regression section to the existing SceneTests suite. The baseline engine
+archive fails the SAME new omission checks (exit1); linking the corrected native
+serialization implementation passes (exit0). The FULL corrected scene suite also
+passes with zero failures. Fixtures cover named conversion, both loaders,
+canonical roundtrip/equivalence, spot-required cone, invalid/malformed explicit
+cone and unchanged previous scene on failure.
+
+#22 https://github.com/SuperReaper1999/Project-Judas/issues/22
+Confirmed misleading Android identity failure and retired channel docs. Identity
+comparison is still strict for all previous fields, including git untracked
+inputs and archive origin. Errors now list differing/missing fields and both
+values. A channel-only mismatch suggests the actual --channel Alpha (or the
+corresponding desktop channel); it no longer only recommends an ineffective
+rebuild. Missing metadata also diagnoses without a KeyError.
+Default remains deliberately Experimental. It does not silently switch channels
+based on an executable. ANDROID.md now lists Alpha|Beta|Experimental|Stable|Local
+and explicitly documents --channel Alpha for Alpha tools. Stable remains GA.
+
+Seven Python unit tests pass. The actual build_apk entry path is exercised using
+mocked tool identity/configuration and temporary SDK-file stubs: one configure
+request, exit2 with correct advice, no native build, no APK publication. This is
+NOT Android-native compilation/device qualification. Other tests cover unchanged
+identity, each missing required field in either input, multiple differences,
+archive identities, explicit/default channel and cache selection.
+
+REPRODUCE
+ python3 -m unittest discover -s tests -p test_android_build_identity.py -v
+ build/judas_scene_tests --light-cones
+ build/judas_scene_tests
+The recorded scene binaries were linked using the established native Makefile
+flags/library, substituting ONLY a freshly compiled SceneSerialization.cpp. The
+baseline binary uses that unchanged archive. Their hashes are recorded. No fresh
+SDK, editor/export smoke, full production sweep or new platform acceptance is
+claimed for this bounded parser/diagnostic correction. Existing project assets,
+protected history and all fluid implementations remain untouched.
+
+Raw failures, corrected results and source/native fingerprints:
+ docs/evidence/issues-21-22-20261029/
+Main, published packages and tags remain unchanged. No GitHub issue is closed or
+release published by this Experimental checkpoint; human promotion remains the
+operator's decision. The independent fluid work is saved at4e025741 and remains
+unqualified/locked as detailed in ADVANCED_FLUID_CONVEX_PORTS.txt.

@@ -1,0 +1,12 @@
+test_all_required_fields_still_checked (test_android_build_identity.AndroidIdentityTests.test_all_required_fields_still_checked) ... ok
+test_channel_only_advice (test_android_build_identity.AndroidIdentityTests.test_channel_only_advice) ... ok
+test_combined_mismatch_not_hidden_by_channel (test_android_build_identity.AndroidIdentityTests.test_combined_mismatch_not_hidden_by_channel) ... ok
+test_explicit_alpha_and_default_are_deliberate (test_android_build_identity.AndroidIdentityTests.test_explicit_alpha_and_default_are_deliberate) ... ok
+test_real_builder_stops_before_native_build_with_actionable_advice (test_android_build_identity.AndroidIdentityTests.test_real_builder_stops_before_native_build_with_actionable_advice) ... ok
+test_source_archive_contract (test_android_build_identity.AndroidIdentityTests.test_source_archive_contract) ... ok
+test_unchanged_candidate (test_android_build_identity.AndroidIdentityTests.test_unchanged_candidate) ... ok
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.003s
+
+OK

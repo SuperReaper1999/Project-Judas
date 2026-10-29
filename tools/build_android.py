@@ -37,11 +37,34 @@ def zip_file(archive,path,name,compress_type=zipfile.ZIP_DEFLATED):
     entry.create_system=3;entry.external_attr=0o100644<<16;entry.compress_type=compress_type
     archive.writestr(entry,path.read_bytes())
 
-def matching_identity(info,reference):
-    fields=('version','channel','source_revision','source_tree','source_dirty','source_fingerprint','source_origin')
-    if info.get('source_origin')=='git' and reference.get('source_origin')=='git':
-        fields+=('source_untracked_count','source_untracked_fingerprint')
-    return all(field in info and field in reference and info[field]==reference[field] for field in fields)
+def identity_differences(info, reference):
+    fields = ('version', 'channel', 'source_revision', 'source_tree', 'source_dirty',
+              'source_fingerprint', 'source_origin')
+    if info.get('source_origin') == 'git' and reference.get('source_origin') == 'git':
+        fields += ('source_untracked_count', 'source_untracked_fingerprint')
+    return [field for field in fields
+            if field not in info or field not in reference or info[field] != reference[field]]
+
+
+def matching_identity(info, reference):
+    return not identity_differences(info, reference)
+
+
+def identity_mismatch_message(name, info, reference):
+    differences = identity_differences(info, reference)
+    details = '; '.join(f'{field}: desktop={info.get(field, "<missing>")!r}, '
+                        f'Android={reference.get(field, "<missing>")!r}' for field in differences)
+    message = f'{name} does not match configured Android identity ({details}). '
+    channels = {'Alpha', 'Beta', 'Experimental', 'Stable', 'Local'}
+    if differences == ['channel'] and info.get('channel') in channels and reference.get('channel') in channels:
+        message += (f'Rerun with --channel {info["channel"]} to match these desktop tools, '
+                    'or deliberately build desktop tools for the requested Android channel.')
+    else:
+        if 'channel' in differences and info.get('channel') in channels:
+            message += f'Use --channel {info.get("channel")} to match the desktop channel. '
+        message += 'Use desktop and Android builds from one unchanged source/version candidate; rebuild mismatched tools.'
+    return message
+
 
 def jdk_tools(environment=None):
     """Use one complete JDK; never mix a JRE's java with a different javac."""
@@ -173,7 +196,7 @@ def build_apk(a,p,jdk,jdk_version,sdk,cache):
              f'-DJUDAS_BUILD_CHANNEL={a.channel}']+version+cross_host)
         build_identities[abi]=identity(b/'judas-build-info-Release.json',release=a.preset=='release')
         for name,info in desktop_info.items():
-            if not matching_identity(info,build_identities[abi]):p.error(f'{name} does not match configured Android source/version/channel; rebuild desktop tools before compiling native ABIs')
+            if not matching_identity(info,build_identities[abi]):p.error(identity_mismatch_message(name, info, build_identities[abi]))
         run(['cmake','--build',b,'--target','main','-j',a.jobs]);native[abi]=b
         completed=identity(b/'judas-build-info-Release.json',release=a.preset=='release')
         if completed!=build_identities[abi]:p.error(f'{abi} identity changed during native compilation; freeze one candidate and rebuild desktop/native tools before packaging')
