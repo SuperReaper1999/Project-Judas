@@ -1,0 +1,186 @@
+ADVANCED FLUIDS — COMPATIBLE FACE TRANSPORT CHECKPOINT, 2026-10-29
+
+Parent: afab4c957306a04d84e40b57d701f1bb5228a149 (Experimental).
+This checkpoint contains PRIVATE numerical/native references and their evidence.
+It does not replace FluidWorld or enable Advanced Fluids. Main, Alpha packages,
+Basic Water, M54/M55, existing games and independent research remain unchanged.
+
+WHAT CHANGED
+-------------
+The new reference represents affine normal fluxes on actual owned triangular
+faces. There are three normal-trace degrees of freedom per triangle, shared by
+both neighboring integration cells. An affine physical velocity field is
+reconstructed inside each tetrahedron through its reference-coordinate Piola
+map. The physical kinetic metric integrates that SAME field over the actual wet
+volume. Solid boundaries prescribe zero RELATIVE normal flux using the actual
+rigid translation/rotation; fixed capacity walls prescribe zero absolute flux.
+There is no after-the-fact normal overwrite or quantity repair.
+
+This resolves the earlier cell-average-as-face-flux gap within this NEW field
+representation. It does not retroactively repair the old Stage8 cell-average
+representation or the production PBF backend.
+
+Independent rational Cramer reconstruction checks arbitrary nonzero face fluxes
+and nonzero rigid motion: 5346 exact identities across solid walls, fixed walls
+and both owners of shared faces. The reconstructed normal trace equals its
+primary face value EXACTLY. Solid-relative and fixed-wall normal errors are zero.
+
+CONSERVATION AND KINETIC EQUATIONS
+-----------------------------------
+Let q denote relative face flux coordinates, V the physical rigid velocity,
+Aq + BV the wet-fluid mass-root velocity, and b its mass-root predictor.
+The reference minimizes
+  1/2 ||Aq + BV - b||^2
+subject to
+  Dq + Eb V = 0.
+D integrates divergence against (1,x,y,z) over each exactly connected wet piece
+of an original background tetrahedron. The constant moment is the actual material
+volume balance; the other moments permit the hydrostatic potential and preserve
+compatibility with the reconstructed field.
+
+The coupled native variant additionally includes the actual native rigid mass
+and inertia in the kinetic functional and the actual prepared bilateral joint
+rows as constraints. Rigid mass is included ONCE. The fluid reaction is the
+variation of the same fluid kinetic/constraint functional with respect to V:
+  I_fluid = B^T (b - Aq - BV) - Eb^T lambda.
+The native solver receives this material impulse plus the recovered native joint
+impulses. It retains integration, CCD, contact history and physical ownership.
+No private native dispatch, direct body-velocity publication, fake boundary
+particles, diagonal compliance, arbitrary damping or volume clamping is used.
+
+WHY THE FIRST SOLVERS WERE REJECTED
+------------------------------------
+The double-precision kinetic factor loses rank in the tiny-rotation case.
+Linux extended precision recovers rank, but explicitly forming an inverse-mass
+pressure Schur system still leaves a 0.00148005 material-balance residual. That
+candidate remains FAILED. Raising solver budgets or discarding the lost modes was
+not accepted. Double precision still fails after conservation elimination; the
+failure remains preserved rather than lowering the numerical rank threshold.
+
+The passing reference PARAMETERIZES the conservation equations BEFORE kinetic
+minimization, then performs least squares only in that admissible coordinate
+space. It checks the original conservation equations and kinetic stationarity
+again afterward. This is constrained coordinate elimination, not a volume repair.
+
+LOCAL CONDENSATION AND PREPARATION
+-----------------------------------
+A global fine-field solve was correct but very expensive (about21 seconds for a
+unit-tank cold extended-precision reference). The reference now chooses linear
+normal traces on physical macro interfaces and eliminates internal integration-
+face velocities LOCALLY in the same kinetic metric. Internal solenoidal predictor
+modes are retained; their energy is explicitly included during reconstruction.
+Fine integration geometry and all material volume remain present.
+
+This is a declared spatial trace discretization, not bitwise-equivalent trajectory
+optimization of the unrestricted per-triangle prototype. Hydrostatic loads and
+physical invariants are checked independently. PDE convergence and detailed-wave
+accuracy remain to be qualified.
+
+The unit tank reduces2190 fine flux coordinates to24 interface coordinates; the
+matched Stage8 tank reduces5436 to240. Full field reconstruction is still tested
+against ORIGINAL equations, energy and rigid reactions. No volume or thin feature
+is deleted to obtain those reductions.
+
+Immutable operator preparation avoids rebuilding geometry-dependent factors on
+every solve. Three changed predictor/boundary inputs produce BIT-IDENTICAL flux,
+pressure and reaction arrays from cached versus freshly prepared solvers.
+A rejected nonfinite predictor does not contaminate the prepared operator.
+Changing geometry, mass or constraints requires NEW preparation; the reference
+has no live-world cache invalidation implementation or permission to reuse stale
+poses. Only fixed-operator reuse is qualified.
+
+PAIRED MATERIAL TRANSPORT
+--------------------------
+Internal macro-boundary packets use the actual shared geometric face and affine
+normal trace. Positive and negative portions are integrated separately and exactly
+in the rational reference. This matters when a face has counterflow: zero NET
+volume does not mean no material exchange.
+
+For the (1,-1,0) face-density control, net volume iszero but each direction carries
+1/12 volume per second. Two paired packets move dye while owner quantities remain
+unchanged. A net-flux-only implementation would fail this control.
+
+A closed fixed-geometry vortex runs240 transport steps at the unchanged1/240 s
+cadence. In the recorded run it makes33120 directed transfers, preserves total
+water and tracer quantities EXACTLY, never produces negative quantities and
+keeps owner-capacity drift around7.1e-21 m3. Kinetic energy after the initial
+pressure projection remains about1.61867 J from1.71898 J; circulation is retained,
+not globally reset. This is PASSIVE tracer/quantity transport in a held velocity
+field, not a complete momentum-advection or moving-surface simulation.
+
+Water packets and global totals use exact rational accounting in this reference.
+The passive concentration is sampled to binary64 before forming paired tracer
+packets, a documented first-order upwind approximation. Both paired packets share
+the same amount; no conservation error is repaired afterward. Oversized outflow
+fails the donor-availability check without changing the old state; no hidden
+cadence reduction or quantity clamp is performed.
+
+Disconnected fixed capacities maintain independent owner identities. No tracer
+crosses a real dry gap. An invented ownership bridge is specifically rejected
+before publication. These are fixed-capacity tests, not evolving free interfaces.
+
+These quantities are INTERNAL TEST accounting. Production M54 remains the
+external quantity authority and is neither replaced nor integrated by this
+checkpoint. Connecting the new field to M54 owner transfers is still required.
+
+NATIVE PHYSICAL PROOFS
+----------------------
+The public PhysicalConstraintBatch interface receives a finite coupled interaction
+with actual native mass, inertia and joints. Completed native velocities and total
+kinetic bounds are checked, not just cached model status. Fixed supports receive
+the independently expected buoyancy impulse. With the same geometry and gravity
+predictor, an80 kg body moves downward and a20 kg body upward after coupling.
+This is a one-interaction density-response proof, not steady flotation acceptance.
+
+Omitting the required joint reaction is rejected specifically by native joint
+validation with ZERO material-state publications. Each successful fixture publishes
+one face state; later native phases deliberately run their ordinary path. No
+continuous moving-fluid or remapping claim follows from that finite interaction.
+
+PERFORMANCE AND PORTABILITY LIMITS
+-----------------------------------
+The matched larger tiny-rotation tank currently costs about29 ms for a FULL warm
+projection plus fine reconstruction/verification. Cold clipping, kinetic assembly
+and condensation take seconds. At four native boundaries per60 Hz frame, this
+reference cost is plainly unsuitable for release. Do not port its expensive QR/
+arbitrary-rational implementation into the runtime wholesale or claim60 Hz from
+a small interface-only timing. Raw cold/warm/full-scope measurements are retained.
+
+Fixed-operator caching is a verified improvement for the SAME numerical operator:
+in the unit case fresh preparation/solve about3.35 ms versus .46 ms cached gives
+identical physics coefficients. That narrow timing excludes fine reconstruction
+and is not a whole-fluid frame-rate claim.
+
+The reference relies on extended-precision long double on this Linux host;
+ordinary binary64 fails a retained numerical case. Platforms where long double
+has binary64 precision need a separately verified path. No Windows/Android
+qualification is claimed. Boost/Eigen headers are reference-only local extracts;
+no production or SDK dependency is added.
+
+REMAINING BLOCKERS BEFORE APPLICATION/ALPHA ENABLEMENT
+-------------------------------------------------------
+- Practical, precision-portable runtime preparation/projection and bounded memory.
+- Live geometry invalidation and incremental updates at actual native poses.
+- Conservative momentum/velocity advection; current transport is passive only.
+- Moving-solid geometric conservation and old/new-capacity ownership mapping.
+- Evolving wet/dry/free surfaces, re-wetting, cavitation and external owner flows.
+- Production M54 transfer integration, persistence, lifecycle and export paths.
+- General contact/friction/impact coupling beyond tested bilateral-joint fixtures.
+- Original guarded piston runs, oblique side-wall oracle and Terrain planet
+  application reproduction against a REAL integrated backend.
+
+The historical failures are unchanged. This is substantial compatibility evidence,
+not authorization to unlock Advanced Fluids. Main and the compiled Alpha lock
+remain untouched.
+
+EVIDENCE AND PROVENANCE
+------------------------
+ docs/evidence/advanced-fluid-pressure-followup-20261029/stage9/
+contains exact source/log archives, final binary fingerprints, reproduction and
+verification scripts. All Phase5–8 archive bytes and recorded fingerprints remain
+unchanged. Solbert's independent research is untouched.
+The probes link the unchanged Stage6 Release native archive, whose embedded
+identity is61a1a94 dirty and whose runtime source was checkpointed in8a48538b.
+This is not a fresh SDK or release build from the Stage9 documentation commit.
+No full-suite marathon, editor/export smoke, platform release or human acceptance
+is claimed for this private reference checkpoint.

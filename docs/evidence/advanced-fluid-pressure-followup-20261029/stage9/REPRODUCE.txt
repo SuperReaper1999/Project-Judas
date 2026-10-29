@@ -1,0 +1,77 @@
+COMPATIBLE FACE-TRANSPORT REFERENCES — NOT A PRODUCTION FLUID ENABLE SWITCH
+
+Use an isolated checkout of this Experimental checkpoint. Read
+ docs/ADVANCED_FLUID_COMPATIBLE_TRANSPORT.txt
+for the exact physical equations, fixed-geometry boundary and remaining blockers.
+
+1. Verify Stage5–9 archives using each stage's verify_evidence.py, then extract
+   their source archives into the isolated checkout in order. Do not overwrite
+   active ignored investigations. Stage5 supplies retained numerical support;
+   Stage6 provides the native probe linker helper; Stage7–8 preserve prior
+   geometry/pressure evidence; Stage9 contains the current private copies.
+
+2. Configure/build native Linux Release/Experimental prerequisites, then build
+   judas_script_tests with -j2. The helper currently derives actual compiler/link
+   inputs from its Makefile files. Rebuild the unchanged quantity object as in
+   Stage6 REPRODUCE.txt. Stage9 does not override any private Mk2 translation unit.
+
+3. Use locally extracted reference headers:
+   apt-get download libboost1.90-dev libeigen3-dev
+   dpkg-deb -x <boost.deb> <scratch-boost>
+   dpkg-deb -x <eigen.deb> <scratch-eigen>
+   Set BOOST_INCLUDE_DIR=<scratch-boost>/usr/include and
+   EIGEN_INCLUDE_DIR=<scratch-eigen>/usr/include/eigen3.
+   Exact recorded versions/hashes are in RESULTS.json. Neither dependency is
+   installed system-wide or added to Judas production/SDK wiring. No downloaded
+   third-party headers/binaries are redistributed in this archive.
+
+4. Final-source qualification, one process at a time:
+ python3 .cache/fluid-compatible-flux-stage9-20261029/qualify.py
+   Eight programs must succeed, with exact expected diagnostic markers. 7892
+   positive assertions include many independent exact trace identities; this
+   is NOT comprehensive engine/fluid certification. Raw first final run records
+   six successes and a native-fixture compile error. qualify_narrow.py records
+   the corrected native test and the benchmark without rerunning unrelated gates.
+
+5. Individual proofs:
+ run_probe.py MatchedTankTests       — actual Stage8 tank geometry,3 rotations
+ run_probe.py TraceIdentityTests     — nonzero arbitrary flux AND rigid motion
+ run_probe.py CounterflowTests       — zero-net face still exchanges tracer
+ run_probe.py MaterialTransportTests —240 steps at1/240 s, exact paired accounting
+ run_probe.py PreparedSolverTests    — bit-identical fresh/cached coefficients
+ run_probe.py DryOwnershipTests      — real dry gap and malformed-owner rejection
+ run_probe.py NativeMacroTests       — actual native endpoints, buoyancy, density
+ run_probe.py WarmBenchmark          — complete fixed-operator projection/rebuild
+   Prefix each with:
+ python3 .cache/fluid-compatible-flux-stage9-20261029/
+   The programs link the current native engine library normally through the helper.
+   Native fixtures model one finite physical interaction, not a live fluid loop.
+
+6. Rejected/full-reference variants (expensive, not final release gates):
+ CompatibleFluxTests       — binary64 kinetic rank failure at tiny rotation
+ CompatibleExtendedTests   — Schur material-balance failure despite recovered rank
+ ConservativeTests         — passing unconstrained-interface fine reference,
+                             but about21 s cold solve in two unit cases
+ ConservativeDoubleTests   — rank failure retained; threshold never lowered
+ MacroTests                — unit geometry and condensed-force controls
+   All raw logs, available failed source snapshots and compile errors are retained.
+   Some overwritten intermediates are not recoverable; no byte-perfect recovery
+   of every historical dependency set is claimed. The active final inputs ARE
+   archived with exact hashes.
+
+The matched tank keeps actual cut geometry; interface flow is a declared linear
+macro trace discretization. Exact internal condensation is relative to that chosen
+trace space, not a claim of identical fine-interface trajectories. Material tests
+use closed fixed capacities and passive tracers; free surfaces, moving-body GCL,
+momentum advection and production M54 transfers remain unimplemented here.
+
+Do not reuse prepared matrices after geometry/mass/constraints change. The current
+private operators are immutable snapshots, not a live-world invalidation cache.
+Ordinary binary64 fails a retained case; native Windows portability is unqualified.
+The current full warm reference is far too expensive at four native boundaries
+per60Hz frame. Its exact-data proofs are an oracle for further engineering, not
+code to enable in Alpha unchanged.
+
+No M54/M55, Basic Water, independent research, historical failure, protected project,
+release package or Alpha lock is modified. No new application/SDK or human
+acceptance is implied by these references.

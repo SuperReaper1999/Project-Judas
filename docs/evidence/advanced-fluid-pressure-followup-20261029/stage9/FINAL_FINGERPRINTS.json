@@ -1,0 +1,15 @@
+{
+  "schema": 1,
+  "parentRevision": "afab4c957306a04d84e40b57d701f1bb5228a149",
+  "scope": "Private compatible transport/native proofs. No production runtime or Alpha enable changes.",
+  "selfHashExcluded": true,
+  "files": {
+    "docs/ADVANCED_FLUID_COMPATIBLE_TRANSPORT.txt": "fc5e58e8428260d96a4624a5a1fb1880e1b7349df00bdc8bc7a26765ee6b40bf",
+    "docs/evidence/advanced-fluid-pressure-followup-20261029/stage9/CHANGED_FILES.txt": "953291ac653309b9b0a5769a1d6fa4a724e3e8e568045eaed913d8d222479ff9",
+    "docs/evidence/advanced-fluid-pressure-followup-20261029/stage9/REPRODUCE.txt": "cb18390f21c38ad0bccffecbb0493b00894095929542002efc90b3eb22530bc5",
+    "docs/evidence/advanced-fluid-pressure-followup-20261029/stage9/RESULTS.json": "0d5ee8278f7ac8fdb3656ccbbd646322054876d749887b61604cf25d41c8a314",
+    "docs/evidence/advanced-fluid-pressure-followup-20261029/stage9/SOURCE_MANIFEST.json": "e55667c69b087b3e3b2e391a653ea88851226d01d7afc8df076f168e318bf542",
+    "docs/evidence/advanced-fluid-pressure-followup-20261029/stage9/stage9-compatible-transport-reference.tar.gz": "b4ed4bafed5e2b54e07af0d3a387b3e9bf8ad7369673d6920d98dc44a40a5ffd",
+    "docs/evidence/advanced-fluid-pressure-followup-20261029/stage9/verify_evidence.py": "d58c92804f073dc68cfc0cf1723cde5006cb69b0b14a01a00eb6636f105df71e"
+  }
+}

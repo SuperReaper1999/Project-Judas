@@ -1,0 +1,834 @@
+{
+  "schema": 1,
+  "archiveSha256": "b4ed4bafed5e2b54e07af0d3a387b3e9bf8ad7369673d6920d98dc44a40a5ffd",
+  "files": {
+    ".cache/fluid-compatible-flux-stage9-20261029/CompatibleExtendedTests.cpp": {
+      "bytes": 1389,
+      "sha256": "af76d001f8561b4038d34bb5b7fb07ec5e53bf0ab89fab49b140db4b56c1d7bb"
+    },
+    ".cache/fluid-compatible-flux-stage9-20261029/CompatibleFlux-double-rank-failure.h": {
+      "bytes": 11298,
+      "sha256": "d6f2cf81870931497437f8a7e099efa326f131d6e0d0fd99e8d35dbba9d60db9"
+    },
+    ".cache/fluid-compatible-flux-stage9-20261029/CompatibleFlux.h": {
+      "bytes": 11319,
+      "sha256": "3787c5910780a52f1020a256443f9540e63cbe817650c0aeee593f159da0294a"
+    },
+    ".cache/fluid-compatible-flux-stage9-20261029/CompatibleFluxExtended.h": {
+      "bytes": 11406,
+      "sha256": "6c0383d3eefd7b06bbaea1dc0f427c60325ce12139c21791676ec713516e4619"
+    },
+    ".cache/fluid-compatible-flux-stage9-20261029/CompatibleFluxTests.cpp": {
+      "bytes": 1307,
+      "sha256": "d4cc63f9084ec7d0613dd39755a131e97134912a68dd9715032cf71eebf6c28b"
+    },
+    ".cache/fluid-compatible-flux-stage9-20261029/ConservativeDouble.h": {
+      "bytes": 4177,
+      "sha256": "681c1d4da45a41a5ad2c3ecdb2085bb7801fc4449b9d13bd630b73bbe12aa3ee"
+    },
+    ".cache/fluid-compatible-flux-stage9-20261029/ConservativeDoubleTests.cpp": {
+      "bytes": 1323,
+      "sha256": "b2405b39bd299e8c583fccfb1feefece722685cfc2ccaff6f9ff25bc1ee6b4be"
+    },
+    ".cache/fluid-compatible-flux-stage9-20261029/ConservativeElimination-before-closed.h": {
+      "bytes": 4175,
+      "sha256": "fba3857a118269f6d91587bb8e3069ee3540cdad6259289ab0b288965b29410c"
+    },
+    ".cache/fluid-compatible-flux-stage9-20261029/ConservativeElimination-before-preparation.h": {
+      "bytes": 4175,
+      "sha256": "fba3857a118269f6d91587bb8e3069ee3540cdad6259289ab0b288965b29410c"
+    },
+    ".cache/fluid-compatible-flux-stage9-20261029/ConservativeElimination.h": {
+      "bytes": 4175,
+      "sha256": "fba3857a118269f6d91587bb8e3069ee3540cdad6259289ab0b288965b29410c"
+    },
+    ".cache/fluid-compatible-flux-stage9-20261029/ConservativeTests.cpp": {
+      "bytes": 1402,
+      "sha256": "fc1f0a88b0bc2d59445cf0fd8b18f10bec7348344f7f7038dd789ff48a34616a"
+    },
+    ".cache/fluid-compatible-flux-stage9-20261029/CounterflowTests-before-topology-validation.cpp": {
+      "bytes": 1519,
+      "sha256": "024409936ae7086a2a4e3ac411bda1d0eb6196fb8376e7b8bc4652f5f5403557"
+    },
+    ".cache/fluid-compatible-flux-stage9-20261029/CounterflowTests.cpp": {
+      "bytes": 1622,
+      "sha256": "11a379372f51720b0ce0845c7f6ca25c49546e462d36fdf3f93dd3d6949ef446"
+    },
+    ".cache/fluid-compatible-flux-stage9-20261029/DryOwnershipTests.cpp": {
+      "bytes": 2532,
+      "sha256": "e079bc8cdecba39dc0892017ee1b553abd9e05d421c046ca357d0627afe22072"
+    },
+    ".cache/fluid-compatible-flux-stage9-20261029/FINAL_RESULTS.json": {
+      "bytes": 4307,
+      "sha256": "74b8bb9ba68a9d89e0717fe0dce1f65b118c8860163293ec0ed96595217af3d9"
+    },
+    ".cache/fluid-compatible-flux-stage9-20261029/HOST.json": {
+      "bytes": 382,
+      "sha256": "a78f54200ad18c66b96f1936809e752d4548ae4a02c0f515abdccece72571a96"
+    },
+    ".cache/fluid-compatible-flux-stage9-20261029/MacroCondensation-before-native.h": {
+      "bytes": 9759,
+      "sha256": "aee566cb4393587151f93aea51c658d624f5334f076f7e51d8dd19c11ee69fd6"
+    },
+    ".cache/fluid-compatible-flux-stage9-20261029/MacroCondensation.h": {
+      "bytes": 10289,
+      "sha256": "3d89b8f4c86fdf384d871afcdd3ae30456179b2d44498c7b929e573946a088dc"
+    },
+    ".cache/fluid-compatible-flux-stage9-20261029/MacroTests.cpp": {
+      "bytes": 1534,
+      "sha256": "2f76d8d49c68ea6cc3a2045503cc67a3ce7002646c541170061137e59bba4265"
+    },
+    ".cache/fluid-compatible-flux-stage9-20261029/MatchedTankTests.cpp": {
+      "bytes": 1529,
+      "sha256": "33bf96ec0b2d00dabb0ac10e45fc5b7963a2a673870e3e11b1c8687756e97f9c"
+    },
+    ".cache/fluid-compatible-flux-stage9-20261029/MaterialFlux-net-only.h": {
+      "bytes": 5483,
+      "sha256": "7e1a9a7484272a817571c24be5993cd272c1527666cdc5df0baeded87ab528c9"
+    },
+    ".cache/fluid-compatible-flux-stage9-20261029/MaterialFlux.h": {
+      "bytes": 7073,
+      "sha256": "1555633ee36cdfeeb00777241d4a40a41e0b9b2bae8de5569a2e3fa9fc232cf7"
+    },
+    ".cache/fluid-compatible-flux-stage9-20261029/MaterialTransportTests.cpp": {
+      "bytes": 3870,
+      "sha256": "a82c6a81138b0ceff78762106b95884ffcab99af0806b7d1f2e47f4acba76504"
+    },
+    ".cache/fluid-compatible-flux-stage9-20261029/NARROW_RESULTS.json": {
+      "bytes": 2121,
+      "sha256": "108cf4a89a34fbdba6a6e9919828092ae4a6416c55524383462f69563bab6ba8"
+    },
+    ".cache/fluid-compatible-flux-stage9-20261029/NativeMacroTests-missing-inertia-alias.cpp": {
+      "bytes": 8516,
+      "sha256": "cedfe42840d6a0cfd630fa2584706b94ea845a68c309ddab305e6de922bd2927"
+    },
+    ".cache/fluid-compatible-flux-stage9-20261029/NativeMacroTests.cpp": {
+      "bytes": 8525,
+      "sha256": "7ac08d158d53ea6e80bcf767ee2ee4360dcafafd12618304843b5dbeb62ecbbe"
+    },
+    ".cache/fluid-compatible-flux-stage9-20261029/OwnedCutGeometry.h": {
+      "bytes": 4119,
+      "sha256": "983920a49efeba46bf5e6a33a2fcfca226f70fce266bf76894e23f4dbed47d2f"
+    },
+    ".cache/fluid-compatible-flux-stage9-20261029/PreparedConservative.h": {
+      "bytes": 4608,
+      "sha256": "0ad2fb7182b5c0dec745deee82f6abc113c9ab1d21216b16b72df5a39f5c3bba"
+    },
+    ".cache/fluid-compatible-flux-stage9-20261029/PreparedSolverTests.cpp": {
+      "bytes": 1701,
+      "sha256": "be5792a6fc7216c63ba1feb080940400ef3c02f3ae04fc9eea08d8f284d95cfb"
+    },
+    ".cache/fluid-compatible-flux-stage9-20261029/TraceIdentityTests.cpp": {
+      "bytes": 2069,
+      "sha256": "09a9e8689d290a7f6ea5c1d9d2ce711dd3c3da3688be5ac11a8a9108648b1dd9"
+    },
+    ".cache/fluid-compatible-flux-stage9-20261029/WarmBenchmark.cpp": {
+      "bytes": 1523,
+      "sha256": "3ea5b121639ad647330d2d78b4a23ebd6d04dcf2cceae64b7dbfb295258b226b"
+    },
+    ".cache/fluid-compatible-flux-stage9-20261029/compatible-extended-v1.log": {
+      "bytes": 4398,
+      "sha256": "b3580019e839e161393ce2dd02abcefc8ada88529581a393731c447a7b7492ef"
+    },
+    ".cache/fluid-compatible-flux-stage9-20261029/compatible-v1.log": {
+      "bytes": 7387,
+      "sha256": "c5a65ac8ef5affd5abeba41747f97d9e3615a6a849ae6fa9e5167644cc7e46dd"
+    },
+    ".cache/fluid-compatible-flux-stage9-20261029/compatible-v2.log": {
+      "bytes": 4162,
+      "sha256": "2357382ec28ab4e8bbfd1df1e780f262201f760b7e498b0dbf87243998b17a8a"
+    },
+    ".cache/fluid-compatible-flux-stage9-20261029/conservative-double-v1.log": {
+      "bytes": 5470,
+      "sha256": "af00d8bd480cbf75c733ccecb9bd3d321ceaec7c34eb60a512ad5c376ca98215"
+    },
+    ".cache/fluid-compatible-flux-stage9-20261029/conservative-elimination-v1.log": {
+      "bytes": 8281,
+      "sha256": "ca6a03e28dca8b0aaf179b54c1f1435c8bda4727a9aa30799881ef8a00d51cd2"
+    },
+    ".cache/fluid-compatible-flux-stage9-20261029/conservative-elimination-v2.log": {
+      "bytes": 5899,
+      "sha256": "f85a8c4f876b96e9b898fd94f7a734400b663629b847f480632e2180dc290c5d"
+    },
+    ".cache/fluid-compatible-flux-stage9-20261029/counterflow-v1.log": {
+      "bytes": 6821,
+      "sha256": "38e2635498b182dc60407eb49f5aa4720ce906627f715de0448e01f326450661"
+    },
+    ".cache/fluid-compatible-flux-stage9-20261029/dry-ownership-v1.log": {
+      "bytes": 6806,
+      "sha256": "0237012d0833d992985c8392e494b8427718e75ef70d95db9986763a288a009c"
+    },
+    ".cache/fluid-compatible-flux-stage9-20261029/final/CounterflowTests.log": {
+      "bytes": 6821,
+      "sha256": "c25ee0f8a85e7b9c255e4fe40b1387d26474226d9586a8b5b5691c2a97396f73"
+    },
+    ".cache/fluid-compatible-flux-stage9-20261029/final/DryOwnershipTests.log": {
+      "bytes": 6806,
+      "sha256": "0237012d0833d992985c8392e494b8427718e75ef70d95db9986763a288a009c"
+    },
+    ".cache/fluid-compatible-flux-stage9-20261029/final/MatchedTankTests.log": {
+      "bytes": 16188,
+      "sha256": "3dcfd2326dfd56250059afb993130da62336a1d5fe1ed3877fed96b4d1db1b64"
+    },
+    ".cache/fluid-compatible-flux-stage9-20261029/final/MaterialTransportTests.log": {
+      "bytes": 13634,
+      "sha256": "fac01490f891e2bebfe9e539e0eb769f13125ff0eb110ae9cdf75880766b6479"
+    },
+    ".cache/fluid-compatible-flux-stage9-20261029/final/NativeMacroTests.log": {
+      "bytes": 13466,
+      "sha256": "cbd34914a5b2c735f6b9add0575af187ba613178763e0f441c658e839b47ff4a"
+    },
+    ".cache/fluid-compatible-flux-stage9-20261029/final/PreparedSolverTests.log": {
+      "bytes": 13592,
+      "sha256": "6a42b3c40daa126b00eded5a48fc64d727f555ae120f080551406176bd6de4e3"
+    },
+    ".cache/fluid-compatible-flux-stage9-20261029/final/TraceIdentityTests.log": {
+      "bytes": 6854,
+      "sha256": "6fcae29ee32310541e352fb9155f09044d23b5b7a86830072f658d72d0196390"
+    },
+    ".cache/fluid-compatible-flux-stage9-20261029/final-narrow/NativeMacroTests.log": {
+      "bytes": 14364,
+      "sha256": "f719305c2353c4c0c6ebd8f3c0f89bf8af59c6064f5a15f5b467bae0208fbd00"
+    },
+    ".cache/fluid-compatible-flux-stage9-20261029/final-narrow/WarmBenchmark.log": {
+      "bytes": 13663,
+      "sha256": "16283681e829dd7a4fa272ed8d4ec5826329e767e51d752d14a454101a7a4100"
+    },
+    ".cache/fluid-compatible-flux-stage9-20261029/final-narrow-qualification.log": {
+      "bytes": 870,
+      "sha256": "57d57e7107cf3f1f14409037d3ba9573ff06a65992be71f6ac6482ea006e27e7"
+    },
+    ".cache/fluid-compatible-flux-stage9-20261029/final-qualification.log": {
+      "bytes": 2991,
+      "sha256": "97771b8d19ff318d10e3871a8ff63db12679c1b4b668cb5b45896c5a3cae0a0f"
+    },
+    ".cache/fluid-compatible-flux-stage9-20261029/macro-v1.log": {
+      "bytes": 13040,
+      "sha256": "bb010b2650e59d597263be4331eafbecde03d03dfc86c66a1df6ce3c763831b8"
+    },
+    ".cache/fluid-compatible-flux-stage9-20261029/matched-tank-v1.log": {
+      "bytes": 14346,
+      "sha256": "b553da7bef38f6d9b0ec9a4e8acd384788705757d827eb599e8d07296b468e4e"
+    },
+    ".cache/fluid-compatible-flux-stage9-20261029/material-transport-v1.log": {
+      "bytes": 11760,
+      "sha256": "679c77119751519cac6d6eda941ef00d4ad08bc827a33b455a1acb73dad9f113"
+    },
+    ".cache/fluid-compatible-flux-stage9-20261029/native-macro-v1.log": {
+      "bytes": 12150,
+      "sha256": "20043488da769c81a2f99f8988e8b681c57fb2eb3091b79f0a4790f17672cf61"
+    },
+    ".cache/fluid-compatible-flux-stage9-20261029/native-macro-v2-density.log": {
+      "bytes": 12361,
+      "sha256": "0f847fcf760547115ac872e66fb40ec539e313508ad808fc8bb63f8c0b2becde"
+    },
+    ".cache/fluid-compatible-flux-stage9-20261029/prepared-v1.log": {
+      "bytes": 15852,
+      "sha256": "6f7a350cbbbf96e8a442d630b8a34bd4f40eb11ced1804f512fb3513d15cf43a"
+    },
+    ".cache/fluid-compatible-flux-stage9-20261029/prepared-v2.log": {
+      "bytes": 13592,
+      "sha256": "84623d7e0b35812524f4f5f862d30a6b398854d1d595f92d60624ba580f4ca6f"
+    },
+    ".cache/fluid-compatible-flux-stage9-20261029/qualify.py": {
+      "bytes": 1990,
+      "sha256": "10a2d3953f635facde8deb64b565175f6eaa23730df43a485c652fb74a1cf936"
+    },
+    ".cache/fluid-compatible-flux-stage9-20261029/qualify_narrow.py": {
+      "bytes": 1672,
+      "sha256": "5ac835a69db82011dc00c7a2fcd0e8cef70b259aa8503ffde29e1168f0637dac"
+    },
+    ".cache/fluid-compatible-flux-stage9-20261029/run_probe.py": {
+      "bytes": 1026,
+      "sha256": "608de5a5e0a07c013f0bfa0cd3d5dce8fa41148fdda91ed8be399ecf9b047fab"
+    },
+    ".cache/fluid-compatible-flux-stage9-20261029/trace-identities-v1.log": {
+      "bytes": 5617,
+      "sha256": "8d0a422a2deb7fe68b90dd857ca5c32b03cd88c5e67f94cdf1e6c275608dee20"
+    },
+    ".cache/fluid-compatible-flux-stage9-20261029/warm-benchmark-v1.log": {
+      "bytes": 13636,
+      "sha256": "5cf6a39980afdbe1e1f28323d2ccde7fccd6a34ab725023a79ae51cd9d208719"
+    },
+    ".cache/fluid-compatible-flux-stage9-kernel/AffineFluidTests-before-condensation.cpp": {
+      "bytes": 11713,
+      "sha256": "723df6d20ad4d7e03f2ae224b1334b826ae0e87d246614505b063f9ac6b4df6d"
+    },
+    ".cache/fluid-compatible-flux-stage9-kernel/AffineFluidTests-first-unilateral.cpp": {
+      "bytes": 9900,
+      "sha256": "c8792432edd0b412c675e359eab541ed7bc8d6c31df6e2f296d2bbd7efd71cc2"
+    },
+    ".cache/fluid-compatible-flux-stage9-kernel/AffineFluidTests.cpp": {
+      "bytes": 14958,
+      "sha256": "f3a3535239582f017b38a21cc66a43faf829c3780666887313d7e31f75aec523"
+    },
+    ".cache/fluid-compatible-flux-stage9-kernel/AffineFluidTests.dense-reference.cpp": {
+      "bytes": 14934,
+      "sha256": "8ddc3f7cc5f10972705c6900151f9239d882991aba2101a6c9c879e72a2464c0"
+    },
+    ".cache/fluid-compatible-flux-stage9-kernel/AffineFluidTests.schwarz-failed.cpp": {
+      "bytes": 14155,
+      "sha256": "233e00f4c0f1932df1ab25b5b7d9c99e8853aa77bd99dfc7b9c21004f7d4fe94"
+    },
+    ".cache/fluid-compatible-flux-stage9-kernel/AffineModel.before-trace-metadata.h": {
+      "bytes": 10054,
+      "sha256": "1ea189251afc1988d23692ab8329c789486e8cd94277486c58bc648cf7db0630"
+    },
+    ".cache/fluid-compatible-flux-stage9-kernel/AffineModel.h": {
+      "bytes": 10072,
+      "sha256": "c846a64afac547748a029a7c5cbb7bc4c7d597a3adf69d53fdba4b0731a8c212"
+    },
+    ".cache/fluid-compatible-flux-stage9-kernel/AffineSchwarz.h": {
+      "bytes": 2989,
+      "sha256": "eb205551560b8a2d7492b110fe335b2c8a58bc8e86231f0bb1b6c9584757499e"
+    },
+    ".cache/fluid-compatible-flux-stage9-kernel/AffineValidation.cpp": {
+      "bytes": 6577,
+      "sha256": "bf1b37c8e2a572b18db6d4288ae5aaea0abce18812a59ecad51e3c52bc38d4a5"
+    },
+    ".cache/fluid-compatible-flux-stage9-kernel/AlePressureMesh.h": {
+      "bytes": 1121,
+      "sha256": "c0605329794dc4f8c303a7d93e49445192cc631e6983eb5f1c1eeac31f174c6f"
+    },
+    ".cache/fluid-compatible-flux-stage9-kernel/AleTransport.QR-basis-rejected.h": {
+      "bytes": 13366,
+      "sha256": "c9a3882f4c77be35aa24e907a3dc5ea8a0e8360382debf53099f6519dc5b9598"
+    },
+    ".cache/fluid-compatible-flux-stage9-kernel/AleTransport.before-divergence-units.h": {
+      "bytes": 11941,
+      "sha256": "08e3c2eb44e868641d5de3e9d64e59d8d12224a2d28e9543722af341d5a6b33d"
+    },
+    ".cache/fluid-compatible-flux-stage9-kernel/AleTransport.before-trajectories.h": {
+      "bytes": 12431,
+      "sha256": "1b66872f2f5e880a848f873c81faed465ea2ce38646ee3373e7bc53965761d3a"
+    },
+    ".cache/fluid-compatible-flux-stage9-kernel/AleTransport.covariance-reference.h": {
+      "bytes": 12587,
+      "sha256": "fa29acb4a55d5cbd52403e116b4be06876c9dda19394f1b4a1041ff417b6c0c0"
+    },
+    ".cache/fluid-compatible-flux-stage9-kernel/AleTransport.gauss5-rejected.h": {
+      "bytes": 13015,
+      "sha256": "300056e2df098468ec763831e6345362299d91ca21fc197a00e7d9dee8314788"
+    },
+    ".cache/fluid-compatible-flux-stage9-kernel/AleTransport.h": {
+      "bytes": 12587,
+      "sha256": "fa29acb4a55d5cbd52403e116b4be06876c9dda19394f1b4a1041ff417b6c0c0"
+    },
+    ".cache/fluid-compatible-flux-stage9-kernel/AleTransportTests.cpp": {
+      "bytes": 3674,
+      "sha256": "a19c85ec8f47764fd4fa2b59a90f5968a7038de3b03977b34ed9ceb61c544773"
+    },
+    ".cache/fluid-compatible-flux-stage9-kernel/AleWindProjection.h": {
+      "bytes": 3377,
+      "sha256": "af3fd5169e12d63b024c02e31c23830deeab26db9bd5636c670663458b4ee506"
+    },
+    ".cache/fluid-compatible-flux-stage9-kernel/AleWindProjection.schur-reference.h": {
+      "bytes": 3319,
+      "sha256": "01e739d50d23b0ea9421b9b844a499a2be50bc7a176e06740bff4fa881f2c575"
+    },
+    ".cache/fluid-compatible-flux-stage9-kernel/AleWindTests.cpp": {
+      "bytes": 1837,
+      "sha256": "fbe7d1527deba763d2212d1ebe169fb599ac3ef3e5a6cd0ac461dae2041f2b03"
+    },
+    ".cache/fluid-compatible-flux-stage9-kernel/CapacityGapProbe.cpp": {
+      "bytes": 595,
+      "sha256": "d74c9c51707c823d51fe7936a4ba5598992dee70e3aab04ea5a0b458b23ac3af"
+    },
+    ".cache/fluid-compatible-flux-stage9-kernel/CompiledPressureTests-covariance-cholesky.cpp": {
+      "bytes": 5764,
+      "sha256": "9c1870b48724662a3ef93d789b837db3460e51c608350e84392d71d1a03e88f3"
+    },
+    ".cache/fluid-compatible-flux-stage9-kernel/CompiledPressureTests-world-evaluation.cpp.snapshot": {
+      "bytes": 6504,
+      "sha256": "dbd48c93ce2327e97e2cbe203f8f0547902a606291cadb5189d0d39aff22c3c3"
+    },
+    ".cache/fluid-compatible-flux-stage9-kernel/CompiledPressureTests.before-rectangular-wall.cpp": {
+      "bytes": 5570,
+      "sha256": "a0f90aac66fdd0ba43a4b94bf89b86d9760f908cced1eb70bc2ef07efafeef7e"
+    },
+    ".cache/fluid-compatible-flux-stage9-kernel/CompiledPressureTests.cpp": {
+      "bytes": 7539,
+      "sha256": "47a39a6397c86d9edc4674b14b6b0ea0dcf057fe337d8030c43ab8bb8879c1c9"
+    },
+    ".cache/fluid-compatible-flux-stage9-kernel/CompiledPressureTests.cube-proof.cpp": {
+      "bytes": 4938,
+      "sha256": "e67d5735345d6872d2e0cba6d3e8040d1c1cb4cbdc22956193df9725e43f5623"
+    },
+    ".cache/fluid-compatible-flux-stage9-kernel/ConformingAleWind.h": {
+      "bytes": 6855,
+      "sha256": "49ecd789e3441e7a338b906ff1e2c9d3f42d1f5ca55e27c2c5f750b0bcd81ae2"
+    },
+    ".cache/fluid-compatible-flux-stage9-kernel/ConformingAleWindTests.cpp": {
+      "bytes": 2967,
+      "sha256": "3cc3c386f2f78a562255ff0b321286196871a8e5061fa1ec58061a640d539aac"
+    },
+    ".cache/fluid-compatible-flux-stage9-kernel/ConformingCutMesh-before-seed.h": {
+      "bytes": 15824,
+      "sha256": "ad1dde3bce76f252bb1f034fc8cba0ee8bad66e5668d8443226b40c5c08d784a"
+    },
+    ".cache/fluid-compatible-flux-stage9-kernel/ConformingCutMesh-rounded-volume.cpp.snapshot": {
+      "bytes": 15765,
+      "sha256": "4e66ae20c2edc978c3e779be11716b678dacadae248951f146048a184e6b748c"
+    },
+    ".cache/fluid-compatible-flux-stage9-kernel/ConformingCutMesh.before-regions.h": {
+      "bytes": 13298,
+      "sha256": "6b82eab9d45a092512e2f1fd47618afa117b5a12b4a75ae9da7c676454feef3f"
+    },
+    ".cache/fluid-compatible-flux-stage9-kernel/ConformingCutMesh.box-moving-verified.h": {
+      "bytes": 12561,
+      "sha256": "731ea06104adb7e03488327069868edc76dc5ddf6e6de26165bb61abc5583f10"
+    },
+    ".cache/fluid-compatible-flux-stage9-kernel/ConformingCutMesh.center-fan.h": {
+      "bytes": 10153,
+      "sha256": "ded0becbd837c2ab06a4086eba2447e36e5fc66981ed1886e3455bc1bad356f0"
+    },
+    ".cache/fluid-compatible-flux-stage9-kernel/ConformingCutMesh.h": {
+      "bytes": 15930,
+      "sha256": "6378785e6bcb39d64a005c30965d89d93ce578041e3b70a650df1332e35cf4d2"
+    },
+    ".cache/fluid-compatible-flux-stage9-kernel/ConformingCutMesh.pulling-closed.h": {
+      "bytes": 10246,
+      "sha256": "9c42d1d3ea8472026a7c5d23168d9c1b8759dd060b998b14d130aabd546701ed"
+    },
+    ".cache/fluid-compatible-flux-stage9-kernel/CutMeshAdversarial.cpp": {
+      "bytes": 3366,
+      "sha256": "795e419c20313386c5152ce23353ced19ef5da80aecb7e2c97bdef0004ea7746"
+    },
+    ".cache/fluid-compatible-flux-stage9-kernel/CutMeshTests.cpp": {
+      "bytes": 3039,
+      "sha256": "dbe345b20f9d19a6fcc492ed2c9b64239dfc0f37b7699bf703771de2aa31950d"
+    },
+    ".cache/fluid-compatible-flux-stage9-kernel/DenseMixedReference.h": {
+      "bytes": 6163,
+      "sha256": "36420cf1f118feeebcc3c62230275239fe6ba90f360eeec3dba04322ef6e6d12"
+    },
+    ".cache/fluid-compatible-flux-stage9-kernel/DgAdvection.constant-verified.h": {
+      "bytes": 4100,
+      "sha256": "864d49ff910e16709614a27ab02992638fabcf89261eec3fb494e7dc26e60634"
+    },
+    ".cache/fluid-compatible-flux-stage9-kernel/DgAdvection.h": {
+      "bytes": 5373,
+      "sha256": "fb159b168438fc47f201928fe097725809ce55aa6bfa5e04e7758d985f821e98"
+    },
+    ".cache/fluid-compatible-flux-stage9-kernel/DgAdvectionTests.constant-verified.cpp": {
+      "bytes": 3724,
+      "sha256": "f3c7aa947ef1e862e91e9ba21678f2fdbe88ce9b4eedb8dc2269514bf16c4566"
+    },
+    ".cache/fluid-compatible-flux-stage9-kernel/DgAdvectionTests.cpp": {
+      "bytes": 6311,
+      "sha256": "aa1343dec2161eb161144641159a1b8277e60addd8b64704b61c7338bdfc9288"
+    },
+    ".cache/fluid-compatible-flux-stage9-kernel/EqualityProjectionQR.full-coordinate.h": {
+      "bytes": 3860,
+      "sha256": "c184387f44ef1f51d618e6966c5a5023487b509c7db6d4776990732b69bc734d"
+    },
+    ".cache/fluid-compatible-flux-stage9-kernel/EqualityProjectionQR.h": {
+      "bytes": 8003,
+      "sha256": "c7a2ac4312b75d54822a79e677bcb88e11e8e173b17966872c8a04a7eee4e650"
+    },
+    ".cache/fluid-compatible-flux-stage9-kernel/ExactPlaneCases.h": {
+      "bytes": 87382,
+      "sha256": "c9931f94f8c47d86c75a4e13e6f2253af99a935c7ceb6a1f0b8fdf10b3b8a5a1"
+    },
+    ".cache/fluid-compatible-flux-stage9-kernel/ExactPlanePredicateTests.cpp": {
+      "bytes": 1272,
+      "sha256": "b466fc6a3682d2931164db315fea6c88b86a00634888921a5f68466881a05534"
+    },
+    ".cache/fluid-compatible-flux-stage9-kernel/ExactPlanePredicates.h": {
+      "bytes": 3837,
+      "sha256": "1ff1db56d26a8ece23f7d5a59460c2064775eb30ad12fa549ad84a214d369882"
+    },
+    ".cache/fluid-compatible-flux-stage9-kernel/FaceOwnershipProbe.cpp": {
+      "bytes": 2178,
+      "sha256": "83e24ddf2155a61b09dd27c2ff6d3749de5a2297ff960f7f2eef35f0608c64d0"
+    },
+    ".cache/fluid-compatible-flux-stage9-kernel/FacePressure-before-upwind.cpp": {
+      "bytes": 4704,
+      "sha256": "f9e0d7bc2c10b3dd6e8a5da1b921f16e99c4d9e7944fefe10bbbed4282eba841"
+    },
+    ".cache/fluid-compatible-flux-stage9-kernel/FacePressure.cpp": {
+      "bytes": 6050,
+      "sha256": "65a0101d150e3f253d721573ba7162d1631da7749b9893b9c3328ba68a6876ed"
+    },
+    ".cache/fluid-compatible-flux-stage9-kernel/FacePressure.h": {
+      "bytes": 1242,
+      "sha256": "33a331de9ae4b422f9cda180509efce9a4200819ae29111b956a69f486893240"
+    },
+    ".cache/fluid-compatible-flux-stage9-kernel/FacePressureTests.cpp": {
+      "bytes": 4383,
+      "sha256": "2dc2fa2f5de8a412ea02ab785b2bc51d48c1e82ed5de0e77b011cb8d04d2b267"
+    },
+    ".cache/fluid-compatible-flux-stage9-kernel/FieldDivergenceProbe.cpp": {
+      "bytes": 1062,
+      "sha256": "1eddb657facce75e889203c59b9cc41bf3410da9b3ade62243256dabd4da235a"
+    },
+    ".cache/fluid-compatible-flux-stage9-kernel/FiniteFrontGeometry.before-local-frame.h": {
+      "bytes": 3485,
+      "sha256": "5e5d781efd0f9fee0ed99c4a7e1553e3e62a2ca3b5d051c82718804390773e2e"
+    },
+    ".cache/fluid-compatible-flux-stage9-kernel/FiniteFrontGeometry.h": {
+      "bytes": 3685,
+      "sha256": "965c7e893b1b99da87e38cc58f66c8a145659305d691fb34738f0062b82ed096"
+    },
+    ".cache/fluid-compatible-flux-stage9-kernel/FiniteFrontTests.before-native-thin-case.cpp": {
+      "bytes": 2509,
+      "sha256": "8c42a73c3af0dea08b19ffbbc05bc1ca67f890ea587b8c218fe8282ce2a3723b"
+    },
+    ".cache/fluid-compatible-flux-stage9-kernel/FiniteFrontTests.cpp": {
+      "bytes": 3138,
+      "sha256": "7118afc3db2d31055f023c16aa503d12aaae01ab4e648abfa7ce59b40535bf71"
+    },
+    ".cache/fluid-compatible-flux-stage9-kernel/FiniteFrontTests.gauss5-rejected.cpp": {
+      "bytes": 3239,
+      "sha256": "55fb8f99ac61066785fe0d932d68980c109e4493b3cff5334fdd80eeb09b5377"
+    },
+    ".cache/fluid-compatible-flux-stage9-kernel/FiniteFrontTests.reduced-QR-thin-failure.cpp": {
+      "bytes": 2795,
+      "sha256": "15d5c2fab55a4b84a50a25af8bcd3b9432adb523cbd04797c65da5857b90c4e0"
+    },
+    ".cache/fluid-compatible-flux-stage9-kernel/FluidPressure.h": {
+      "bytes": 2651,
+      "sha256": "803972e9901991329882157432c6265e5eb570b3c3d138af2d4214f88990381a"
+    },
+    ".cache/fluid-compatible-flux-stage9-kernel/FluidProjectionTests.cpp": {
+      "bytes": 3357,
+      "sha256": "3f1dfe31aafeb072e633322f6b609e761594c2567f55630817fa853ab6aaba55"
+    },
+    ".cache/fluid-compatible-flux-stage9-kernel/GeometricContinuity.h": {
+      "bytes": 3598,
+      "sha256": "3d88256eea14f6d7c495c2578c8d27eb9cf856d0341fc070238bb5a7680ea993"
+    },
+    ".cache/fluid-compatible-flux-stage9-kernel/GeometricFlux.cpp": {
+      "bytes": 4042,
+      "sha256": "13ae2b898526b697f708a23333303a232ae6e942b80aa981f7be2a082cc1f102"
+    },
+    ".cache/fluid-compatible-flux-stage9-kernel/GeometricFlux.h": {
+      "bytes": 717,
+      "sha256": "2a45fee6a2905ff4dd82ac5b8f029752e08585a531d2daf1e5fd4c856f38f4d9"
+    },
+    ".cache/fluid-compatible-flux-stage9-kernel/GeometricTransportTests.cpp": {
+      "bytes": 3365,
+      "sha256": "c55474317147f4b3feb2dcc9fa5c814c557199bc36e99b536b6be365c043a3b6"
+    },
+    ".cache/fluid-compatible-flux-stage9-kernel/IncomingWetState.h": {
+      "bytes": 4238,
+      "sha256": "4dee7bd534176ab876957acc350560c85fabff7a1228609fd92bf68af3d7cd90"
+    },
+    ".cache/fluid-compatible-flux-stage9-kernel/IncomingWetStateTests.cpp": {
+      "bytes": 2609,
+      "sha256": "d4e86cbd351ecd7ea198a2316d94cc74261621b8d806228723404b7569bc3c5e"
+    },
+    ".cache/fluid-compatible-flux-stage9-kernel/MaterialMoments.h": {
+      "bytes": 3383,
+      "sha256": "ef57611b6a6ccd1fc634e1e2097d3c8f453617597a9349d96b9db023288badd8"
+    },
+    ".cache/fluid-compatible-flux-stage9-kernel/MaterialMomentsTests.cpp": {
+      "bytes": 3724,
+      "sha256": "6e8d3ff093fec1f501065b0089e0f7932bcd97149f6fd780a671f711150b7d3a"
+    },
+    ".cache/fluid-compatible-flux-stage9-kernel/MaterialRemap.h": {
+      "bytes": 5145,
+      "sha256": "bb9213ff4f5b0bc5f5d4a74ff6bfe8c160e194e9c3ce1f8440043ff43ca04986"
+    },
+    ".cache/fluid-compatible-flux-stage9-kernel/MaterialRemapTests.cpp": {
+      "bytes": 4619,
+      "sha256": "220bc05b56123c7ab23eebafc362445066f0b4cdd8d9dbb9911ba306d677b045"
+    },
+    ".cache/fluid-compatible-flux-stage9-kernel/MixedProjection-before-preconditioning.h": {
+      "bytes": 6992,
+      "sha256": "cdfe8a81922f5651112248ab5249071555fe0516868209c501ee8c26170d0c36"
+    },
+    ".cache/fluid-compatible-flux-stage9-kernel/MixedProjection-before-warm-sweep.h": {
+      "bytes": 6031,
+      "sha256": "bf27b41e309b1f06bd8f2cb9b09f0b06d3930d0679aff43f92b9bae7ba42f039"
+    },
+    ".cache/fluid-compatible-flux-stage9-kernel/MixedProjection.h": {
+      "bytes": 7499,
+      "sha256": "5962a2e00f2a0d77e9c63562f8bef642b1b2ad5a1ff6aade663b52865e2874fd"
+    },
+    ".cache/fluid-compatible-flux-stage9-kernel/MomentInterface.h": {
+      "bytes": 5166,
+      "sha256": "f202b7d04f9384a2d1d5bf23d7a8a85c4ed334219213e8b86bdd8b30e3503348"
+    },
+    ".cache/fluid-compatible-flux-stage9-kernel/MomentInterfaceTests.cpp": {
+      "bytes": 2964,
+      "sha256": "bc7b696664d9a0b9d3b74649c304082790ad8292d610c02282e30e031f8bc6a4"
+    },
+    ".cache/fluid-compatible-flux-stage9-kernel/MovingCutMeshTests.before-fresh-controls.cpp": {
+      "bytes": 2651,
+      "sha256": "f977dd1ae17bb9f07edfdc19f6307d3973e0b7b7266e943c86d2d02602f93bc7"
+    },
+    ".cache/fluid-compatible-flux-stage9-kernel/MovingCutMeshTests.cpp": {
+      "bytes": 3190,
+      "sha256": "7eb76676181ea2bfd099d1d4049626eccdc4a2569720d6713903221313fdde61"
+    },
+    ".cache/fluid-compatible-flux-stage9-kernel/MovingWetStateTests.cpp": {
+      "bytes": 5782,
+      "sha256": "5de3bd206e1871ead5e18b0ffcfe42c6a09d072446b684f746fa173573a6d2cd"
+    },
+    ".cache/fluid-compatible-flux-stage9-kernel/NativeAlePistonTests.before-incoming-control.cpp": {
+      "bytes": 15416,
+      "sha256": "9780e6948826e61d66dbaabf5d2d131b8a349266d3671bcab8e185ff87b8aea4"
+    },
+    ".cache/fluid-compatible-flux-stage9-kernel/NativeAlePistonTests.before-overflow.cpp": {
+      "bytes": 9488,
+      "sha256": "0acbbf5b997a210bf4d796ef65d00a0ad8acb31b5c3dfff086be77ba7f565465"
+    },
+    ".cache/fluid-compatible-flux-stage9-kernel/NativeAlePistonTests.cpp": {
+      "bytes": 16014,
+      "sha256": "1f24932c64ce966df4623171b5048587748bd366701333c05eb1bd6661966d1c"
+    },
+    ".cache/fluid-compatible-flux-stage9-kernel/NativeAlePistonTests.physical-operator-rejected.cpp": {
+      "bytes": 15965,
+      "sha256": "2267a39acdc8a73cb68077278669846e7d046e1adf5b2056946c106f4b499d98"
+    },
+    ".cache/fluid-compatible-flux-stage9-kernel/NativeAlePistonTests.reduced-QR-thin-failure.cpp": {
+      "bytes": 15417,
+      "sha256": "4b36dc4f1884153c3acfedb652119dcca434fe287127e82ea981ae0e6aba5d38"
+    },
+    ".cache/fluid-compatible-flux-stage9-kernel/NativeAlePistonTests.whole-plate-rejected.cpp": {
+      "bytes": 12979,
+      "sha256": "c3d2c60087c0b0da4fc29d51301e55d417527393298521bed974649fa40ab9f1"
+    },
+    ".cache/fluid-compatible-flux-stage9-kernel/NativeCompiledPressureTests.cpp": {
+      "bytes": 4080,
+      "sha256": "ae1b9b31c5f5df4fd915983de72e1179f5a2cd7416fee6ad9756f22b023a4b78"
+    },
+    ".cache/fluid-compatible-flux-stage9-kernel/NativeOpenFlowTests-basic-invariants.cpp": {
+      "bytes": 2491,
+      "sha256": "d4937c9d137723fc5b69d9045bccb5fa920c77410d87eac0f51ca573f748adfb"
+    },
+    ".cache/fluid-compatible-flux-stage9-kernel/NativeOpenFlowTests-before-geometric-flux.cpp": {
+      "bytes": 3820,
+      "sha256": "15a8c431a1a9e04f2e7793ea28becc81f6d67e6c01f3f6f024f15ebc670884aa"
+    },
+    ".cache/fluid-compatible-flux-stage9-kernel/NativeOpenFlowTests.cpp": {
+      "bytes": 4233,
+      "sha256": "1284a39b32f2cb9ab7e71cc4b527ec7624998205c1047435335ae352a6195464"
+    },
+    ".cache/fluid-compatible-flux-stage9-kernel/NativePistonPressureTrial.before-endpoint-transport.cpp": {
+      "bytes": 10803,
+      "sha256": "955c950151ae7a352201e0ae8f4d7d7b1c46d7b170c9925c6f8f29c0bb105948"
+    },
+    ".cache/fluid-compatible-flux-stage9-kernel/NativePistonPressureTrial.before-stage-energy-check.cpp": {
+      "bytes": 12030,
+      "sha256": "3f0010a188457f2f4c44edf1c44b91aa6072d44b86a492b7520e2b8dd2f6b862"
+    },
+    ".cache/fluid-compatible-flux-stage9-kernel/NativePistonPressureTrial.cpp": {
+      "bytes": 14189,
+      "sha256": "bb1986cf0a1c4eacb20c1043d54de38b77ae92ebf4f7c9eb8323ee66e6b26590"
+    },
+    ".cache/fluid-compatible-flux-stage9-kernel/NativePistonPressureTrial.full-reaction-preparation-failure.cpp": {
+      "bytes": 13851,
+      "sha256": "74d450ef731e84d1a5681b1cc21fc4149848f59c20400d2fb802bb2123bf5220"
+    },
+    ".cache/fluid-compatible-flux-stage9-kernel/NativePistonPressureTrial.impermeable48.cpp": {
+      "bytes": 12690,
+      "sha256": "2d42f2a83e1d3944673fb0b99ef3b201706c382fa380d665fcdfbe7552da3e52"
+    },
+    ".cache/fluid-compatible-flux-stage9-kernel/NativePistonPressureTrial.unilateral-energy-gate.cpp": {
+      "bytes": 12391,
+      "sha256": "867b9e3c1a31f6d5d9c5b4f56e017c8dc08faadde80d5a518fb2471940cf2e08"
+    },
+    ".cache/fluid-compatible-flux-stage9-kernel/NativeTetraPressureTests.cpp": {
+      "bytes": 4489,
+      "sha256": "f5c44ec65dab355359f9d2955eca10f32faed01a141fd18eb07604b36cd4c977"
+    },
+    ".cache/fluid-compatible-flux-stage9-kernel/NativeVolumePistonTests-before-domain-pressure.cpp": {
+      "bytes": 4591,
+      "sha256": "c3ff00e9f3817783e264dbbdd0266dc4e9a3c16514d01d216d82dc3f3e3f7137"
+    },
+    ".cache/fluid-compatible-flux-stage9-kernel/NativeVolumePistonTests-before-substep-adapter.cpp": {
+      "bytes": 4456,
+      "sha256": "a298816d8bc16da5cd5a6de2c9f1570b87a4b10984861deb2208b697af610dcf"
+    },
+    ".cache/fluid-compatible-flux-stage9-kernel/NativeVolumePistonTests.cpp": {
+      "bytes": 4893,
+      "sha256": "1eb7f268de1097ca19d505acac2153d1ce03ab12b144814e74e521e643c6e23c"
+    },
+    ".cache/fluid-compatible-flux-stage9-kernel/OperatorCacheTests.cpp": {
+      "bytes": 3718,
+      "sha256": "347be54f92fb3692e4de5b91420605f936654a56ddb4d330626bed8f8c39b53e"
+    },
+    ".cache/fluid-compatible-flux-stage9-kernel/OwnedCapacityTests.cpp": {
+      "bytes": 1604,
+      "sha256": "cfbfad5ebd0dd1c5b4bb62db64299509ede1a46cac703828b6c5a469e27fade4"
+    },
+    ".cache/fluid-compatible-flux-stage9-kernel/OwnedMetrics-expansion-underflow.h": {
+      "bytes": 1786,
+      "sha256": "11689fdc42372c22dc4cf1ffbb5cde7c8033d038288a174dd029914bfac7c2fe"
+    },
+    ".cache/fluid-compatible-flux-stage9-kernel/OwnedMetrics.h": {
+      "bytes": 2298,
+      "sha256": "4aa00fe6decb3ca70fadeae5611dd129d48c989c1ee3385a060cb9957d9157cb"
+    },
+    ".cache/fluid-compatible-flux-stage9-kernel/PistonSpaceTimeMesh.h": {
+      "bytes": 3069,
+      "sha256": "1b67bd7fd76be6577574d9fefb0cb55ec8d053e121141363f3bf9f75e8651fc0"
+    },
+    ".cache/fluid-compatible-flux-stage9-kernel/PressureComplementarityTests.cpp": {
+      "bytes": 1616,
+      "sha256": "55cde1edc65b09fdd201827d942d4d10aede83ff93203ed596b476847dc942b1"
+    },
+    ".cache/fluid-compatible-flux-stage9-kernel/PressureMassScaleTests.cpp": {
+      "bytes": 1340,
+      "sha256": "89e0ce2b083514bad66a747fa7a98d1bd4c0d4464e8547801f6c49ec3dd2578b"
+    },
+    ".cache/fluid-compatible-flux-stage9-kernel/PressureRemapTests.cpp": {
+      "bytes": 4737,
+      "sha256": "f38d95208ea5c56de2a1df1eb8ca4467f16996633a46b4791ba138d9c5841a6f"
+    },
+    ".cache/fluid-compatible-flux-stage9-kernel/PressureVolumeStepTests.cpp": {
+      "bytes": 5929,
+      "sha256": "16e6646590805c48895b47a9a51afc6b400d62aa7d1518b7e4f1a3efef2f62f5"
+    },
+    ".cache/fluid-compatible-flux-stage9-kernel/PressureVolumeStepTests.net-only-incomplete.cpp": {
+      "bytes": 5418,
+      "sha256": "a1f8a81ad9aedbf9a3151f6bb7d2d662bba42006394474073f69f733d5e1c939"
+    },
+    ".cache/fluid-compatible-flux-stage9-kernel/RankEqualityQR.h": {
+      "bytes": 8372,
+      "sha256": "057317267cfeeea7e47a5443e3c55ea4e2c52897e1131943367d34b49c5b31ad"
+    },
+    ".cache/fluid-compatible-flux-stage9-kernel/ReferenceAleTests.cpp": {
+      "bytes": 5034,
+      "sha256": "11a5a0600c8fb6e57fcde6c35ad700b399c1f8e4b2d724206c71e739b93443a4"
+    },
+    ".cache/fluid-compatible-flux-stage9-kernel/ReferenceAleTransport.h": {
+      "bytes": 8386,
+      "sha256": "38b0075d4e24fea77e917168cf1c692fd7753f51ccd790f28711ad7b18030fe4"
+    },
+    ".cache/fluid-compatible-flux-stage9-kernel/SparseInterior.before-dimensional-residual-fix.h": {
+      "bytes": 14384,
+      "sha256": "c819a86b837f5f11c45c5da2cf5aa67171471eb5c62d71f4de1a46c3716d7268"
+    },
+    ".cache/fluid-compatible-flux-stage9-kernel/SparseInterior.first-correct-slow.h": {
+      "bytes": 7465,
+      "sha256": "b45a7b043ba0258d028b6e16858c3caf10648ea497ac02ce8002e90a2ad51423"
+    },
+    ".cache/fluid-compatible-flux-stage9-kernel/SparseInterior.full-body-gram-slow.h": {
+      "bytes": 8185,
+      "sha256": "8a673001b6cf568d51c2a9cd77d3924c80f9439782d952563ad08b4814b888c1"
+    },
+    ".cache/fluid-compatible-flux-stage9-kernel/SparseInterior.h": {
+      "bytes": 18607,
+      "sha256": "cf295e6cc5e64b27830d68f0a5607a6066e4a7ff0e5d85dd8163a08fdbf33497"
+    },
+    ".cache/fluid-compatible-flux-stage9-kernel/SparseInterior.indexed-symbolic-correct.h": {
+      "bytes": 12002,
+      "sha256": "e716c7ecb27d222d1a0ba9ab70cf03f79f2d5e8986283b3add2286507f1c4304"
+    },
+    ".cache/fluid-compatible-flux-stage9-kernel/SparseInterior.lowrank-correct.h": {
+      "bytes": 10591,
+      "sha256": "66ca18eae5ee8b13737ad982c69387c970ec2c1bc6c61034516bdd19e43cc487"
+    },
+    ".cache/fluid-compatible-flux-stage9-kernel/SparseInterior.profiled-before-cache.h": {
+      "bytes": 16761,
+      "sha256": "48ccc95b6b2a5215768e2d56ae71988db735f2462d8ea49b248786d16cb9d548"
+    },
+    ".cache/fluid-compatible-flux-stage9-kernel/SparseInterior.sum-work-row-apply-rejected.h": {
+      "bytes": 15767,
+      "sha256": "5a37121690c26a453eed24705c5e751ed033cb2a33f07b9dfaf54759235b2e08"
+    },
+    ".cache/fluid-compatible-flux-stage9-kernel/SparseInterior.warm-kkt-qualified.h": {
+      "bytes": 12788,
+      "sha256": "615f78fd50ea75558abd14b84d3765a672c2f588ef99c92b4a303dd9fabb574c"
+    },
+    ".cache/fluid-compatible-flux-stage9-kernel/SubcellOwnershipTests.cpp": {
+      "bytes": 1882,
+      "sha256": "2870d1d37547ad6af10efaefe6fa6250ea755d6fe843709f7252b4bacd13597e"
+    },
+    ".cache/fluid-compatible-flux-stage9-kernel/SweptFaceTransport.h": {
+      "bytes": 2533,
+      "sha256": "d9832f7a03375705894a79f9beb4e23220676ba6232f273b8f6c3d87efb81a24"
+    },
+    ".cache/fluid-compatible-flux-stage9-kernel/TetraPressureTests.before-cache-tests.cpp": {
+      "bytes": 8230,
+      "sha256": "b45a78810636595fc5b0f4f0f6b898bb113347fea111a75a8bba2b561ed2fab2"
+    },
+    ".cache/fluid-compatible-flux-stage9-kernel/TetraPressureTests.before-side.cpp": {
+      "bytes": 10672,
+      "sha256": "49c69908eaf2b33de4ab1c862c84f047b23fc8cd607eaaded841b8bb809f941b"
+    },
+    ".cache/fluid-compatible-flux-stage9-kernel/TetraPressureTests.cpp": {
+      "bytes": 10634,
+      "sha256": "d5397c9d0380d6233bffaa4c3806200b31ef2c9e530597adbd51dfcc6c05c677"
+    },
+    ".cache/fluid-compatible-flux-stage9-kernel/TetraSideTests.cpp": {
+      "bytes": 1723,
+      "sha256": "9ff66af30b6bec23b1ba151f9cc82552489e76ec3065a5ae2e494ca7dac3430a"
+    },
+    ".cache/fluid-compatible-flux-stage9-kernel/VolumeDomain-before-compensated-volume.cpp": {
+      "bytes": 17027,
+      "sha256": "2e619a7ec538a0c9c7656bb338f92c95005fb5ffaa2ee65e8b623fe4b760aa69"
+    },
+    ".cache/fluid-compatible-flux-stage9-kernel/VolumeDomain-before-face-provenance.cpp": {
+      "bytes": 15924,
+      "sha256": "4ce6e8985f5810cee14bb5a2a1b8a388fdd23f38f6e39952d34c8ba735a8e315"
+    },
+    ".cache/fluid-compatible-flux-stage9-kernel/VolumeDomain-before-scale-normalization.cpp": {
+      "bytes": 15143,
+      "sha256": "5ab50b6b55030ad1d252ca2e5c3c01d739ab1052d87ad5e5e1796fb7fc3133ae"
+    },
+    ".cache/fluid-compatible-flux-stage9-kernel/VolumeDomain-before-wet-tetra-clipping.cpp": {
+      "bytes": 18012,
+      "sha256": "9d09fed0d4e2d8a38265153919d7102223289714a3d6509769d52da50a6434a3"
+    },
+    ".cache/fluid-compatible-flux-stage9-kernel/VolumeDomain.before-exact-connectivity.cpp": {
+      "bytes": 22567,
+      "sha256": "1d68918b1108bb2edf4b6b13ae5c9ec5ca62ffd4fef7ac21044f26b76d3632cf"
+    },
+    ".cache/fluid-compatible-flux-stage9-kernel/VolumeDomain.before-subcells.h": {
+      "bytes": 2356,
+      "sha256": "812554fc0bc3216722ed530ab1eb89d10c2b21422cba3e78a3aa53e0ef08dfa3"
+    },
+    ".cache/fluid-compatible-flux-stage9-kernel/VolumeDomain.cpp": {
+      "bytes": 26200,
+      "sha256": "f96adfcc4dd2f0626ba42639b6b6ecc369d69d3cf1528c43329592102e780c52"
+    },
+    ".cache/fluid-compatible-flux-stage9-kernel/VolumeDomain.h": {
+      "bytes": 2881,
+      "sha256": "b1ece0fcc698360b52c9754036bfd3718a325525f6433d8b6321d4b0686cef7d"
+    },
+    ".cache/fluid-compatible-flux-stage9-kernel/VolumeDomainTests-initial.cpp": {
+      "bytes": 7517,
+      "sha256": "6e29ea6f256e57140222c0ed929285b8347173ddb9ea71bbaa45ca198f805944"
+    },
+    ".cache/fluid-compatible-flux-stage9-kernel/VolumeDomainTests.cpp": {
+      "bytes": 11196,
+      "sha256": "cfc3d3ee7ee879043e7bb70c4b1cced491409d33c9d746a1e2264cf6c348cc7d"
+    },
+    ".cache/fluid-compatible-flux-stage9-kernel/WetCutMeshTests.cpp": {
+      "bytes": 3362,
+      "sha256": "fd28ae526d50496ce163d389b945b390c5666e47f5f871373b7d0442a5d48937"
+    },
+    ".cache/fluid-compatible-flux-stage9-kernel/WetFluxIntegration.h": {
+      "bytes": 1311,
+      "sha256": "c67b3779771d2c03d4929143cd7842f3f82271fa8f46104e33cdcac888f4e57f"
+    },
+    ".cache/fluid-compatible-flux-stage9-kernel/WetFluxTests.cpp": {
+      "bytes": 957,
+      "sha256": "b7419a44f16b0bf73bcd9211e06e48206a501939655c1c705aef9caabfa9338f"
+    },
+    ".cache/fluid-compatible-flux-stage9-kernel/WetMotionProbe.cpp": {
+      "bytes": 1419,
+      "sha256": "eb466aaae00ba735b4fd57462d260b31aa976ace9b88721c95d3ccef4a4c6172"
+    },
+    ".cache/fluid-compatible-flux-stage9-kernel/WetRegionTests.cpp": {
+      "bytes": 3226,
+      "sha256": "08d5a828b3d19483e342c8e089ced238c64cc1b0cc8ba323270445df046db49a"
+    },
+    ".cache/fluid-compatible-flux-stage9-kernel/WetTetraOracleTests.cpp": {
+      "bytes": 2026,
+      "sha256": "c878846ba81653a7796b8a4566f4911117cbe3b39acb166e74dc197ade36750e"
+    },
+    ".cache/fluid-compatible-flux-stage9-kernel/WindCaseReader.h": {
+      "bytes": 1045,
+      "sha256": "0cc89b64780ec90fb0a4cd1e91817406942f4a327b404dfabf43f5b87abccc32"
+    },
+    ".cache/fluid-compatible-flux-stage9-kernel/WindComparison.cpp": {
+      "bytes": 2509,
+      "sha256": "5d8f35e0390f114872aee6124bf4e7e41a2659cc0d3157b2511f789f00492e34"
+    }
+  }
+}

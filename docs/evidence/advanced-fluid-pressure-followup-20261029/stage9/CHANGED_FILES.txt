@@ -1,0 +1,8 @@
+docs/ADVANCED_FLUID_COMPATIBLE_TRANSPORT.txt
+docs/evidence/advanced-fluid-pressure-followup-20261029/stage9/CHANGED_FILES.txt
+docs/evidence/advanced-fluid-pressure-followup-20261029/stage9/FINAL_FINGERPRINTS.json
+docs/evidence/advanced-fluid-pressure-followup-20261029/stage9/REPRODUCE.txt
+docs/evidence/advanced-fluid-pressure-followup-20261029/stage9/RESULTS.json
+docs/evidence/advanced-fluid-pressure-followup-20261029/stage9/SOURCE_MANIFEST.json
+docs/evidence/advanced-fluid-pressure-followup-20261029/stage9/stage9-compatible-transport-reference.tar.gz
+docs/evidence/advanced-fluid-pressure-followup-20261029/stage9/verify_evidence.py

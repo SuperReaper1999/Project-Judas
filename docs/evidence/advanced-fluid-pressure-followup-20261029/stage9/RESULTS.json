@@ -1,0 +1,149 @@
+{
+  "schema": 1,
+  "parentRevision": "afab4c957306a04d84e40b57d701f1bb5228a149",
+  "scope": "Private compatible face-field, fixed-geometry packet transport, finite native interaction and prepared-operator proofs. NOT production backend or Alpha unlock.",
+  "positiveAssertions": 7892,
+  "cases": [
+    {
+      "name": "MatchedTankTests",
+      "exit": 0,
+      "expectedExit": 0,
+      "marker": "SUMMARY checks=6 failures=0",
+      "expectationMet": true,
+      "sourceSha256": "33bf96ec0b2d00dabb0ac10e45fc5b7963a2a673870e3e11b1c8687756e97f9c",
+      "binarySha256": "b2e7342bfec438aa836a7add36102fcfd0589e9b8ef0c83e80100a5640dea959",
+      "logSha256": "3dcfd2326dfd56250059afb993130da62336a1d5fe1ed3877fed96b4d1db1b64"
+    },
+    {
+      "name": "TraceIdentityTests",
+      "exit": 0,
+      "expectedExit": 0,
+      "marker": "SUMMARY checks=5346 failures=0",
+      "expectationMet": true,
+      "sourceSha256": "09a9e8689d290a7f6ea5c1d9d2ce711dd3c3da3688be5ac11a8a9108648b1dd9",
+      "binarySha256": "a3b22ab29a50ae5441d27f26afcafa6a022c3222a5c429369162614d732bff6e",
+      "logSha256": "6fcae29ee32310541e352fb9155f09044d23b5b7a86830072f658d72d0196390"
+    },
+    {
+      "name": "CounterflowTests",
+      "exit": 0,
+      "expectedExit": 0,
+      "marker": "SUMMARY checks=7 failures=0",
+      "expectationMet": true,
+      "sourceSha256": "11a379372f51720b0ce0845c7f6ca25c49546e462d36fdf3f93dd3d6949ef446",
+      "binarySha256": "fb61379dc499ce97200eaefb1ace2ae424673826b2a4d43a54e48b450322aac3",
+      "logSha256": "c25ee0f8a85e7b9c255e4fe40b1387d26474226d9586a8b5b5691c2a97396f73"
+    },
+    {
+      "name": "MaterialTransportTests",
+      "exit": 0,
+      "expectedExit": 0,
+      "marker": "SUMMARY checks=1927 failures=0",
+      "expectationMet": true,
+      "sourceSha256": "a82c6a81138b0ceff78762106b95884ffcab99af0806b7d1f2e47f4acba76504",
+      "binarySha256": "084dd11ac02c920d6c752657d1cc071bdf0d0ed7fe00595f53361bdbd8364b99",
+      "logSha256": "fac01490f891e2bebfe9e539e0eb769f13125ff0eb110ae9cdf75880766b6479"
+    },
+    {
+      "name": "PreparedSolverTests",
+      "exit": 0,
+      "expectedExit": 0,
+      "marker": "SUMMARY checks=8 failures=0",
+      "expectationMet": true,
+      "sourceSha256": "be5792a6fc7216c63ba1feb080940400ef3c02f3ae04fc9eea08d8f284d95cfb",
+      "binarySha256": "e7f0172865a39f28f1ee6f8ec5373d6b06fa7cfcd30234b9f4cc236160e61691",
+      "logSha256": "6a42b3c40daa126b00eded5a48fc64d727f555ae120f080551406176bd6de4e3"
+    },
+    {
+      "name": "DryOwnershipTests",
+      "exit": 0,
+      "expectedExit": 0,
+      "marker": "SUMMARY checks=505 failures=0",
+      "expectationMet": true,
+      "sourceSha256": "e079bc8cdecba39dc0892017ee1b553abd9e05d421c046ca357d0627afe22072",
+      "binarySha256": "bd8a182e1a00a15352396c2ab35a4c0cf255fa0c85c2b3013fb66e7801d722e9",
+      "logSha256": "0237012d0833d992985c8392e494b8427718e75ef70d95db9986763a288a009c"
+    },
+    {
+      "name": "NativeMacroTests",
+      "exit": 0,
+      "expectedExit": 0,
+      "marker": "SUMMARY checks=93 failures=0",
+      "expectationMet": true,
+      "sourceSha256": "7ac08d158d53ea6e80bcf767ee2ee4360dcafafd12618304843b5dbeb62ecbbe",
+      "binarySha256": "12f2049aa00dd125d136422ec6b300633aa5cc5e89b7995efbc6282bc2e3dadc",
+      "logSha256": "f719305c2353c4c0c6ebd8f3c0f89bf8af59c6064f5a15f5b467bae0208fbd00"
+    },
+    {
+      "name": "WarmBenchmark",
+      "exit": 0,
+      "expectedExit": 0,
+      "marker": "immutable_geometry_only=1",
+      "expectationMet": true,
+      "sourceSha256": "3ea5b121639ad647330d2d78b4a23ebd6d04dcf2cceae64b7dbfb295258b226b",
+      "binarySha256": "8938ac7d2b1a1d4d01764e60509d8d42a6d613bd897864be331827ac5aeb28b8",
+      "logSha256": "16283681e829dd7a4fa272ed8d4ec5826329e767e51d752d14a454101a7a4100"
+    }
+  ],
+  "engineSha256": "5722108b94f15414584979689eac3aafe5faac3004722d17929bc58ade44244d",
+  "engineIdentity": {
+    "schema": 1,
+    "release_name": "Judas Engine Alpha v1.0.1",
+    "version": "1.0.1-alpha.1",
+    "maturity": "alpha",
+    "channel": "Experimental",
+    "build_id": "1.0.1-alpha.1-Experimental-61a1a94-dirty-33901722dfa2-u84f47c24fcd0",
+    "source_revision": "61a1a94aa6f40392fc54b6e8d50eeeaed46358be",
+    "source_tree": "a9a6d544f71ba58d25f4699ba2a90811173c9896",
+    "source_dirty": true,
+    "source_fingerprint": "33901722dfa238091f2a548fc9b6eeacd317a74e3546be56c2397d80f705d33a",
+    "source_untracked_count": 16,
+    "source_untracked_fingerprint": "84f47c24fcd098f88732ceab246b2e0e19eca31f56acdd72f89f8bfa1621daf2",
+    "source_origin": "git",
+    "platform": "Linux",
+    "architecture": "x86_64",
+    "configuration": "Release",
+    "compiler": "GNU",
+    "compiler_version": "15.2.0"
+  },
+  "referenceDependencies": [
+    {
+      "package": "libboost1.90-dev_1.90.0-6ubuntu1_amd64.deb",
+      "sha256": "7b89698c907fd5d33ccd439674fa53803139923822181c87b910579827aca379",
+      "systemInstalled": false,
+      "productionDependencyAdded": false,
+      "redistributed": false
+    },
+    {
+      "package": "libeigen3-dev_3.4.0-5_all.deb",
+      "sha256": "22060e67427b1acf85465fd5784caf7eecc8c967c662fb2ec774b84ba6174ad9",
+      "systemInstalled": false,
+      "productionDependencyAdded": false,
+      "redistributed": false
+    }
+  ],
+  "finalRunFollowup": "Six programs passed; a late native energy-observation compile error (missing local inertia alias) was corrected. Native and benchmark were narrowly rebuilt/rerun. Raw failed log is preserved; no fabricated all-green original run.",
+  "preservedFailures": [
+    "double kinetic rank loss",
+    "extended-precision inverse-mass Schur balance failure",
+    "double constrained kinetic rank loss"
+  ],
+  "remaining": [
+    "moving geometry/GCL",
+    "momentum advection",
+    "evolving wet/dry/free interfaces/cavitation",
+    "M54 owner transfers",
+    "precision-portable practical runtime",
+    "application/persistence/export",
+    "general native contact/impact coupling"
+  ],
+  "performance": "Matched tank full warm median about29.5ms, p95 about29.9ms, worst about31.6ms. Cold preparation seconds. Not runtime-ready.",
+  "host": {
+    "cpu": "AMD Ryzen 5 5600 6-Core Processor",
+    "memory": "MemTotal:        8045200 kB",
+    "platform": "Linux-7.0.0-42-generic-x86_64-with-glibc2.43",
+    "compiler": "c++ (Ubuntu 15.2.0-16ubuntu1) 15.2.0",
+    "configuration": "Release -O3, native Linux, one compiler/test process at a time",
+    "note": "No Windows, Android, renderer, full application, or clean SDK qualification"
+  }
+}
