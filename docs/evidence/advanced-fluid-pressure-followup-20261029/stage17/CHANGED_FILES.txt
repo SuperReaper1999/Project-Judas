@@ -1,0 +1,9 @@
+docs/ADVANCED_FLUID_CONVEX_PORTS.txt
+docs/evidence/advanced-fluid-pressure-followup-20261029/stage17/CHANGED_FILES.txt
+docs/evidence/advanced-fluid-pressure-followup-20261029/stage17/FINAL_FINGERPRINTS.json
+docs/evidence/advanced-fluid-pressure-followup-20261029/stage17/PROVENANCE.json
+docs/evidence/advanced-fluid-pressure-followup-20261029/stage17/REPRODUCE.txt
+docs/evidence/advanced-fluid-pressure-followup-20261029/stage17/RESULTS.json
+docs/evidence/advanced-fluid-pressure-followup-20261029/stage17/SOURCE_MANIFEST.json
+docs/evidence/advanced-fluid-pressure-followup-20261029/stage17/stage17-convex-port-reference.tar.gz
+docs/evidence/advanced-fluid-pressure-followup-20261029/stage17/verify_evidence.py

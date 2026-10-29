@@ -1,0 +1,15 @@
+{
+  "schema": 1,
+  "parent": "69813a96d6f21f33ca1aed525af7ef18f130bb68",
+  "scope": "This fingerprint file excluded from itself; source archive manifest fingerprints private experiments, failures and dependency closure.",
+  "files": {
+    "docs/ADVANCED_FLUID_CONVEX_PORTS.txt": "6ecb8bc6fee807ad5b3fa298325c95320eb3fe9967e39fda0c2fec7e8e588cba",
+    "docs/evidence/advanced-fluid-pressure-followup-20261029/stage17/CHANGED_FILES.txt": "e0882d6f833ebba297dfe7f4b678638a789097e34370bbbf012ecac2a201a099",
+    "docs/evidence/advanced-fluid-pressure-followup-20261029/stage17/PROVENANCE.json": "4c092e7c671b5608f96d28895ec116cdf102acb072709e124ad403cba92a2f6c",
+    "docs/evidence/advanced-fluid-pressure-followup-20261029/stage17/REPRODUCE.txt": "db54f181c83659497dfa2c4614a4b2f6916c21b9bbe2cb737cc049b611d21ead",
+    "docs/evidence/advanced-fluid-pressure-followup-20261029/stage17/RESULTS.json": "f69fc71785751b41c10a73227f0b5450061f94947548cf9f8b3d5586e972e18a",
+    "docs/evidence/advanced-fluid-pressure-followup-20261029/stage17/SOURCE_MANIFEST.json": "67fa632dc650a2a0bb56cf9a63638e96adeaf0965228cd47244a593bbf6d5fef",
+    "docs/evidence/advanced-fluid-pressure-followup-20261029/stage17/stage17-convex-port-reference.tar.gz": "a49e12319d517a82e108c44c588e1755cf17889ab33631f9bc1929f22d48ab4b",
+    "docs/evidence/advanced-fluid-pressure-followup-20261029/stage17/verify_evidence.py": "57a6c6acff29c350a373ac4adcf201d905c2d956e80018430788cc452fa2a15f"
+  }
+}

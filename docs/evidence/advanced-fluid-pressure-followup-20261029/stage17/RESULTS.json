@@ -1,0 +1,151 @@
+{
+  "schema": 1,
+  "parent": "69813a96d6f21f33ca1aed525af7ef18f130bb68",
+  "branch": "Experimental",
+  "productionBackendChanged": false,
+  "alphaAdvancedFluidUnlocked": false,
+  "humanValidationClaimed": false,
+  "selectedFinalPrograms": [
+    {
+      "program": "PreparedMechanicalTests",
+      "checks": 42,
+      "status": "PASS_SCOPED",
+      "log": ".cache/fluid-convex-ports-stage17-20261029/logs/prepared-mechanical-final.log",
+      "logSha256": "c7efefd806f8612661a2e7db53d57173a727f6b90f33a3745c380af02d841890",
+      "binarySha256": "1a7c5650b30227d5ddc427d1c4b65be3846eedadd6e2d5e7600112a9a072feed"
+    },
+    {
+      "program": "VoxelPhysicalContracts",
+      "checks": 97,
+      "status": "PASS_SCOPED",
+      "log": ".cache/fluid-convex-ports-stage17-20261029/logs/voxel-physical-contracts-v3.log",
+      "logSha256": "7924ec8d08ecb9961e3783a2f49941fb97d7d1925d4c3fb4b10c6f25bc2e89b8",
+      "binarySha256": "c2cf1578caf92f3a74deff64e8694ce68b14b8c406351063ff484f025c032dbe"
+    },
+    {
+      "program": "VoxelCondensationTests",
+      "checks": 377,
+      "status": "PASS_SCOPED",
+      "log": ".cache/fluid-convex-ports-stage17-20261029/logs/voxel-condensation-final.log",
+      "logSha256": "b4df946042d58538c22be739c768a064b271bb6d33e3d8c3646c1abd91a6e6d0",
+      "binarySha256": "e184984978ee0f36011ccb72a2cb3ecc0be46f18511e1bf56a884a7add04a7de"
+    },
+    {
+      "program": "SymmetricVoxelPortsTests",
+      "checks": 706,
+      "status": "PASS_SCOPED",
+      "log": ".cache/fluid-convex-ports-stage17-20261029/logs/symmetric-v1.log",
+      "logSha256": "6561207de81c8b3a1f7b2508f2d5ef814faa416df0d8aa043ce9c28572944853",
+      "binarySha256": "cbf0118be3e16cee282060456ea38e2647d6f5e85ef9826c8f895d3fa40730c8"
+    },
+    {
+      "program": "SymmetricVoxelPortGeometryTests",
+      "checks": 136907,
+      "status": "PASS_SCOPED",
+      "log": ".cache/fluid-convex-ports-stage17-20261029/logs/symmetric-voxel-port-geometry-v1.log",
+      "logSha256": "671d76422c16364f702c454defb44c74ac94db09ab682aa7e4739432fb662a61",
+      "binarySha256": "c20f3df4f1924024d88b579d90897616704f8c7615a68aa4d457f44f059baabe"
+    },
+    {
+      "program": "TranslatedSolidSweepTests",
+      "checks": 320,
+      "status": "PASS_SCOPED",
+      "log": ".cache/fluid-convex-ports-stage17-20261029/logs/translated-sweep-final-v2.log",
+      "logSha256": "ec9d1e8757548dc9902918f726a238696de2486acb42ab79e06595e69f7c9728",
+      "binarySha256": "fc098e77680e6cecc959c42f01cd6ae7899c87ed2ca46b5ce868c2a3c255cd3a"
+    },
+    {
+      "program": "PortMomentumTransportTests",
+      "checks": 995,
+      "status": "PASS_SCOPED",
+      "log": ".cache/fluid-convex-ports-stage17-20261029/logs/momentum-transport-final-v2.log",
+      "logSha256": "5afae51fc7d05909bef58a94061bdab7f97c23276ac163785c909f2ab96497c3",
+      "binarySha256": "b6f7d543973e548cad792aa8d7f5daad2f7519fecdaf5515c6ec569c4038ebab"
+    },
+    {
+      "program": "SymmetricPreparedNativePressureTests",
+      "checks": 338,
+      "status": "PASS_ONE_NATIVE_BOUNDARY_ONLY",
+      "log": ".cache/fluid-convex-ports-stage17-20261029/logs/symmetric-native-final.log",
+      "logSha256": "b2459e761e546c32e50215945167bb6b5c325bd983af5ecc6baf102a055527f9",
+      "binarySha256": "69a6e02be9a3ad01e0746336bcee2827fa2f594898e42953510dd3a66614ea2d"
+    }
+  ],
+  "resolution": {
+    "physicalTankExtentM": 1,
+    "wetVolumeM3": 0.936,
+    "symmetricEnergyJ": [
+      0.210469,
+      0.146808,
+      0.103476,
+      0.0831204
+    ],
+    "firstExclusionEnergyJ": [
+      0.249841,
+      0.155422,
+      0.107155,
+      0.0896236
+    ],
+    "notContinuumCertification": true
+  },
+  "preservedFailures": [
+    {
+      "case": "true_voxel_corner",
+      "status": "FAIL_PHYSICAL_CALM_AND_FORCE",
+      "localRmsMps": 3.24e-05,
+      "unchangedLocalMpsLimit": 1e-08
+    },
+    {
+      "case": "first_exclusion_any_convex_agglomeration",
+      "status": "FAIL_PHYSICAL_CALM_AND_FORCE",
+      "localRmsMps": 3.41e-07,
+      "forceError": 1.1e-09,
+      "unchangedForceLimit": 1e-10
+    },
+    {
+      "case": "symmetric_true_voxel_corner",
+      "status": "FAIL",
+      "checks": 13,
+      "failures": 8,
+      "hydroLocalRmsMps": 0.761
+    },
+    {
+      "case": "symmetric_thin_wall_gap_prescribed_squeeze",
+      "status": "FAIL_ABSOLUTE_NUMERICAL_GATES",
+      "checks": 15,
+      "failures": 4,
+      "hydroCalmPass": true,
+      "largeSqueezeEnergyNotByItselfDefect": true
+    },
+    {
+      "case": "symmetric_convex_agglomeration",
+      "status": "REJECT_NONPOSITIVE_ROUNDED_FREE_KINETIC_GRAM_BEFORE_PUBLICATION",
+      "geometryChecksBeforeRejection": 9479,
+      "cellsBefore": 32,
+      "cellsAfter": 12,
+      "firstNumericalLossUnmeasured": true
+    }
+  ],
+  "linearMomentumCycle": {
+    "steps": 240,
+    "dtSeconds": 0.004166666666666667,
+    "directedPackets": 5760,
+    "initialEnergyJ": 1.85827,
+    "finalEnergyJ": 1.7864,
+    "retainedFraction": 0.961322,
+    "maximumLinearMomentumError": 1.2623e-18,
+    "measuredOneStepAngularChange": 0.00263155,
+    "angularMomentumConserved": false,
+    "scope": "fixed closed geometry, first-order mean linear momentum only; fluctuations retained locally"
+  },
+  "remaining": [
+    "thin-port kinetic conditioning",
+    "angular/first-moment transport",
+    "moving-body GCL/transport coupling",
+    "free surface and wet/dry",
+    "multiple native solids and planetary collision geometry",
+    "M54 quantity integration",
+    "actual application/lifecycle/save/export",
+    "runtime cost and platform qualification"
+  ]
+}

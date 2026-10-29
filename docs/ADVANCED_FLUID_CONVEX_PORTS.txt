@@ -1,0 +1,201 @@
+ADVANCED FLUIDS — CONVEX PORTS, PHYSICAL ACCURACY AND CONTINUATION
+2026-10-29 | Experimental | parent 69813a96d6f21f33ca1aed525af7ef18f130bb68
+
+STATUS
+This is a PRIVATE numerical/native engineering checkpoint, not a replacement
+FluidWorld or permission to unlock Alpha. It preserves successful mechanisms AND
+rejected candidates. Basic Water, M54/M55, production engine implementations,
+main, published packages, existing games and independent research are unchanged.
+The original Terrain planet instability is NOT declared repaired.
+
+1. PHYSICAL CELLS AND ACTUAL PORTS
+Stage16's compact merged pressure cell showed excessive dynamic resistance. The
+new prototype keeps convex physical fluid pieces and actual pairwise apertures,
+with positive integration tetrahedra serving integration only. Every actual wet
+component, native solid face and shared fluid opening has an explicit owner.
+Exact rational physical geometry is checked independently against the frozen
+six-tet reference, including true solid apertures and normals, background quad
+apertures, volume/first/P2 moments and disconnected components. Missing-face
+negative controls fail. No tiny volume is removed or repaired.
+
+Treating integration tetrahedra as physical cells created artificial cells down
+to ~1.8e-34 m3 for an ordinary .4 m box at a tiny rotation. Using the original
+voxel as the background physical cell removes THAT artificial-diagonal problem:
+central-box hydrostatic velocity ~6e-21 m/s, minimum piece volume .048 m3, proper
+2.56 N s buoyancy. This does NOT remove real voxel-boundary slivers.
+
+Sequential first-exclusion cuts also bias a coarse cubic physical response:
+299.354/216.549/117.595 kg along the three axes in the measured fixture (44.3%
+normalized directional bias). A separate symmetric partition uses
+  f_i(x) = n_i dot x - d_i
+  P_i = voxel intersect {f_i >= 0} intersect all_j {f_i >= f_j}.
+Exact differences of original plane coefficients are essential; rounding those
+differences can destroy transitivity. Six convex regions partition the SAME
+physical exterior. Exact tie ownership handles dominance/grid-plane coincidence.
+Changing the order of native face pairs leaves the response tensor unchanged to
+4.6e-17; the axis fixture gives 143.34 kg in all three directions. This removes
+ordering bias in the PROTOTYPE. It is not continuum added-mass certification.
+
+Independent symmetric geometry: 136907 exact checks, ten fixtures, 187 paired
+ports, including the genuine tiny-angle voxel corner. Own symmetric tests: 706
+checks. Separate physical work tests: 97 checks, actual body+wall+fluid impulse
+balance <=8.89e-18, work derivative error <=1.25e-16. Related ordering and
+covariance checks are not counted as dynamic-resolution accuracy.
+
+2. PRESSURE, SOURCES AND CONSERVATIVE COORDINATES
+Face-normal P1 traces are primary. The same physical kinetic/source functional
+supplies both fluid pressure and the material reaction on a rigid owner. Local
+internal velocities and pressures can be eliminated without changing that chosen
+metric; eliminated source constants and reconstructed physical fields remain.
+Exact graph coordinates parameterize local mean balances BEFORE minimization.
+Authoritative mean transport remains exact rational cochain state; a rounded
+kinetic reconstruction is not substituted as an exact quantity ledger.
+
+The voxel adapter reuses that existing generic machinery: final377 checks,
+exact paired/global mean cancellation, physical point divergence <=9.32e-20 /s
+in the admitted n1/n2 fixtures. It also rejects actual displacement into a sealed
+disconnected water component and preserves state after rejection.
+
+A private compatibility guard falsely rejected an ordinary oblique closed solid
+because it compared a small rounded closure sum against itself times epsilon.
+The correction derives the six rigid-flux coefficients from EXACT oriented solid
+triangles and their global centroids, then checks exact closed-component flux.
+No tolerance is increased. Original source/logs and the false rejection remain
+archived. The real incompatible slab still rejects. Production code unchanged.
+
+3. DIRECT NATIVE MECHANICAL RESPONSE
+For the SAME prepared pressure saddle K and native coupling C, use
+  addedMass = Hbb - C^T K^-1 C
+  sourceLoad = bodyLoad - C^T K^-1 r.
+This replaces six separately reconstructed unit-motion solves with a multi-RHS
+algebraic response, not an empirical acceleration curve or an extra rigid mass.
+The complete final physical field is reconstructed once after the actual native
+solution. Source constants, native joints and their reactions remain included.
+Prepared responses reject a replaced geometry/factor generation and nonfinite
+sources. One source rejection cannot poison later valid solves.
+
+Final42 checks match full probes: mass error <=6.2e-17, body/source work errors
+~1e-19. Matched final measured response preparation: full six probes2.85-9.00ms
+versus direct .128-1.569ms (geometry EXCLUDED). Earlier lower timings predated
+exact compatibility checks; they are preserved but not substituted here.
+
+Actual PhysicsConstraintBatch proof338 checks: fixed support, oblique/tiny box,
+20/80kg float/sink direction, off-centre hinge, native endpoint agreement ~1e-9
+and zero publication when the required joint reaction is omitted. This is ONE
+accepted native boundary, not steady flotation or continuous moving-water proof.
+The reused native archive is fingerprinted; its physics source is unchanged
+from its embedded9be9e7a source identity (the later renderer-rain change is not
+in this archive). This is not a freshly rebuilt release SDK/platform gate.
+
+4. FIXED-GEOMETRY LINEAR-MOMENTUM EVOLUTION
+New first-order finite-volume transport integrates both signs of the actual P1
+normal trace over each physical port. An exact projected-face Gram supplies its
+flux density. Zero NET flux can still carry two opposite material streams.
+Independent closed-form integration and the square trace x (rates exactly1/1)
+check absolute counterflow. A separate one-step mean-update oracle requires a
+real state change; a no-op cannot pass. Malformed inner arrays, moving prescribed
+boundaries and oversized donor outflow reject before publication. No clamp or
+hidden timestep change is used.
+
+Packets carry donor CELL-MEAN LINEAR momentum. Equal/opposite transfers preserve
+material impulse. Constant physical velocity increments retain local fluctuation
+kinetic modes, and pressure acts afterward in the same kinetic metric. A closed
+fixed-geometry vortex runs240 steps at1/240s with5760 directed exchanges:
+  initial/final kinetic energy: 1.85827 / 1.78640 J (96.1322% retained)
+  largest linear-momentum rounding error: 1.2623e-18
+  maximum actual point divergence: 2.0147e-19 /s
+  fluctuation energy mismatch: 4.3368e-19 J
+  final995 checks passed; oversize/no-op/malformed/counterflow controls included.
+Runtime about1492ms for that ONE simulated second, including rational packet
+work, full pressure reconstruction and diagnostic checks. Not a60Hz claim.
+
+IMPORTANT LIMITATION: this mean-only advection DOES NOT conserve general angular
+momentum. One-step measured angular change is .00263155 in the fixture, matching
+  sum_cells centroid_cell cross deltaP_cell
+independently to1.67e-18. Complete physical momentum evolution requires directed
+packet-position moments and appropriate local first-moment transport; that is
+NOT implemented here. This prototype must not be adopted as a finished fluid
+integrator merely because linear conservation and energy tests pass. It also
+does not advect all higher-order velocity modes, evolve a free surface or move
+M54 ownership. Its successful cycle is deliberately classified narrowly.
+
+5. ACTUAL TIME-INTEGRATED TRANSLATIONAL WALL GEOMETRY
+Endpoint overlap alone misses out-and-back motion. The new exact reference finds
+combinatorial events of fixed-normal affine translating native planes in each
+voxel. Between events vertices are affine in time; oriented surface areas are
+quadratic and their first-position moments cubic. Exact interior quadrature
+integrates native wall volume AND first-moment flux over the actual path.
+It verifies, per voxel,
+  integral wallVelocity dot n_solid dA dt = Vsolid(new)-Vsolid(old)
+  integral x (wallVelocity dot n_solid) dA dt = Msolid(new)-Msolid(old).
+The second identity verifies arbitrary-uniform-gravity potential work. An actual
+exact reversed path cancels each voxel's exchanges while retaining both legs;
+ignoring events demonstrably misses swept volume.320 final checks pass.
+
+Exact halfspace certificates discard inactive four-plane events, preserving the
+same identities. Oblique example348->80 intervals, time3559->~944ms; tiny corner
+192->28,2250->~574ms. These are offline exact-reference timings, not runtime fluid
+speedups. Rotating normals, solved trajectories, displaced-water routing and a
+coupled GCL/momentum time integrator are NOT implemented by this geometry proof.
+
+6. RESOLUTION AND CONSTRUCTION COST
+Same physical1m tank, .4m oblique body, OpenTop, fixed source/motion, density and
+physical wet volume .936m3 at every resolution. Mixed translation/rotation energy:
+  grid         1          2          3          4
+  first-cut    .249841    .155422    .107155    .089624 J
+  symmetric    .210469    .146808    .103476    .083120 J
+The finer tetrahedral reference at grid4 gave .074955J under the same scenario;
+that is a discretized reference, not an exact continuum answer. Reduction is
+real h-refinement, not damping or source retuning. Coarse accuracy remains poor.
+Symmetric final cold builds60/120/243/606ms, warm full solves.59/1.44/3.63/9.43ms,
+process peakRSS45028KiB. Cold work is unsuitable at each native substep. Advanced
+fluids remain unqualified for runtime. No whole-engine speedup is claimed.
+
+7. PRESERVED FAILURES / CURRENT NUMERICAL BLOCKER
+- Original tetra-diagonal tiny cells: physical patch/continuity failures remain.
+- Plain affine/contravariant framing improved energy but failed actual point and
+  cross-work tests; not adopted.
+- Resolved physical-polynomial coordinates pass local physical patches but their
+  raw global constraint KKT fails actual tiny-cell divergence despite a small
+  algebraic residual. Aggregate residuals cannot certify local physical quality.
+- Pressure-Schur Krylov variants reduce preparation but worsen warm solve cost;
+  rejected as runtime choices, without raising iteration limits.
+- True voxel corner: unchanged pressure/calming gates FAIL. First-cut local RMS
+  ~3.24e-5m/s; same-cut/any-convex agglomeration improves it to~3.4e-7 but still
+  exceeds1e-8 and hydro force exceeds1e-10. No acceptance threshold changed.
+- Symmetric layout alone: true corner creates~8.89e-37m3 regions; hydro local speed
+  1.331m/s/RMS.761m/s and point-divergence failures. Symmetry is not stability.
+- Exact convex agglomeration of symmetric regions regularizes shapes32->12cells,
+  min dimensionless compactness4.74e-45->.003215; all9479 geometric checks pass.
+  Conservative free kinetic LLT then REJECTS before any physical publication.
+  Geometry is regular but tiny retained ports/graph congruences still condition
+  the materialized kinetic Gram. No diagonal shift or rank deletion was added.
+- A real2^-40m wall gap is hydrostatically calm, but prescribed squeezing fails
+  absolute numerical gates. Large squeeze energy itself is physically expected;
+  coupled contact/pressure admission, not arbitrary damping, is the next test.
+
+Confirmed source path: raw kinetic Gram -> subtractive angular Schur -> graph
+congruence -> scaling AFTER Gram construction. Small physical modes can be lost
+in large correlated terms. The precise FIRST loss remains UNMEASURED; do not
+claim LLT alone or tetrahedra alone are the universal root cause. A comparison
+using kinetic roots/orthogonal constrained elimination BEFORE forming a poorly
+conditioned Gram is justified next. Do not blindly retry LLT, raise budgets,
+prune cells, reset waves or clamp energy.
+
+8. CHECKPOINT / REPRODUCTION / NEXT WORK
+Source archive, include-dependency closure, all original logs and rejected source
+snapshots, machine-readable results, commands, exact file/binary hashes and a
+read-only archive verifier:
+ docs/evidence/advanced-fluid-pressure-followup-20261029/stage17/
+The authoritative final acceptance rows are explicitly listed in RESULTS.json;
+archiving an experiment does not claim it passed or was run against final headers.
+Stage16's82-file archive and seven final fingerprints were reverified unchanged.
+No full production suite, new editor/export run or platform qualification was
+warranted or claimed for these private-only sources.
+
+Next: measure where the positive kinetic space is first lost, compare a rooted
+orthogonal formulation under the SAME physical gates, then integrate directed
+angular-momentum transport and actual swept-wall/GCL continuation. Multiple native
+solids/planet geometry, free surface/wet-dry, M54 quantity frontend and actual
+application/lifecycle/save/export remain pending. No Alpha unlock or patch follows
+from this checkpoint. Main and all published release artifacts stay unchanged.

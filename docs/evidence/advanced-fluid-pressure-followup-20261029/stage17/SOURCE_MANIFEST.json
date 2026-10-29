@@ -1,0 +1,854 @@
+{
+  "schema": 1,
+  "parent": "69813a96d6f21f33ca1aed525af7ef18f130bb68",
+  "archiveSha256": "a49e12319d517a82e108c44c588e1755cf17889ab33631f9bc1929f22d48ab4b",
+  "archiveBytes": 324594,
+  "frozenDependencyMatches": 7,
+  "scope": "Private source, failure snapshots, raw evidence and quote-include dependency closure; excludes executables, objects, native archive, external Boost/Eigen headers.",
+  "files": {
+    ".cache/fluid-compatible-flux-stage9-20261029/OwnedCutGeometry.h": {
+      "bytes": 4119,
+      "sha256": "983920a49efeba46bf5e6a33a2fcfca226f70fce266bf76894e23f4dbed47d2f"
+    },
+    ".cache/fluid-compatible-flux-stage9-kernel/ConformingCutMesh.h": {
+      "bytes": 15930,
+      "sha256": "6378785e6bcb39d64a005c30965d89d93ce578041e3b70a650df1332e35cf4d2"
+    },
+    ".cache/fluid-compatible-flux-stage9-kernel/ExactPlanePredicates.h": {
+      "bytes": 3837,
+      "sha256": "1ff1db56d26a8ece23f7d5a59460c2064775eb30ad12fa549ad84a214d369882"
+    },
+    ".cache/fluid-compatible-flux-stage9-kernel/OwnedMetrics.h": {
+      "bytes": 2298,
+      "sha256": "4aa00fe6decb3ca70fadeae5611dd129d48c989c1ee3385a060cb9957d9157cb"
+    },
+    ".cache/fluid-contact-repair/setup_probes.py": {
+      "bytes": 1218,
+      "sha256": "192fea9fc3920924ea5921e4752beca119b5fc03b96aa13af78467cfa33d5d4a"
+    },
+    ".cache/fluid-convex-ports-stage17-20261029/CONTINUATION.txt": {
+      "bytes": 14065,
+      "sha256": "803f39588283ab5464c0339ac2358329689aeca979cf9581aa3701ca5327cb8e"
+    },
+    ".cache/fluid-convex-ports-stage17-20261029/CondensedResolutionProbe.cpp": {
+      "bytes": 1639,
+      "sha256": "a0d7d6da26751bce226bdc32aac403f6c4c3e44549d469ddd3cc57031e00fbc2"
+    },
+    ".cache/fluid-convex-ports-stage17-20261029/ConservativeCondensedNetwork.h": {
+      "bytes": 11567,
+      "sha256": "f504ccdcab529885879fc02ca7c9f3dc8636680355ae9522ac39bdcf2cc32df6"
+    },
+    ".cache/fluid-convex-ports-stage17-20261029/ConservativeCondensedNetworkTests.cpp": {
+      "bytes": 5332,
+      "sha256": "4a990e9779c7f012647f85a147fc647487936ad2684f764160a56aa0f27097ef"
+    },
+    ".cache/fluid-convex-ports-stage17-20261029/ConservativeInternalCoordinates.h": {
+      "bytes": 16718,
+      "sha256": "47b9ddc5b2dd8e101e47eb3e3ad08cfbad93cbdabc2055c8b0606da003ae2f8b"
+    },
+    ".cache/fluid-convex-ports-stage17-20261029/ConservativeInternalCoordinatesTests.cpp": {
+      "bytes": 13496,
+      "sha256": "e222fccfea2d100edcaa06815d23dbf28cea46974980bfc827957d08e4a20b2c"
+    },
+    ".cache/fluid-convex-ports-stage17-20261029/ConservativeNativePressure.h": {
+      "bytes": 6678,
+      "sha256": "a70551f0f14e9eb3bb76ff3e098e77d21be9a1dbf79d0e2324dd16e721461368"
+    },
+    ".cache/fluid-convex-ports-stage17-20261029/ConservativeNativePressureTests.cpp": {
+      "bytes": 9068,
+      "sha256": "409b83acfc367e0aebb783367dccb9c8dcac0dd2c93bb099d3d324decc9d1ece"
+    },
+    ".cache/fluid-convex-ports-stage17-20261029/ConvexAgglomeration.h": {
+      "bytes": 10022,
+      "sha256": "f8337d6ca7a764b61a315548e3b4f1d2ed9ab9e639294bfd2653cfff567e197c"
+    },
+    ".cache/fluid-convex-ports-stage17-20261029/ConvexAgglomerationTests.cpp": {
+      "bytes": 10490,
+      "sha256": "76a84dcfb6f887180f192bbe95b28313508ff3e68fa0967c8e6dba409c6155ae"
+    },
+    ".cache/fluid-convex-ports-stage17-20261029/ConvexPorts.h": {
+      "bytes": 12804,
+      "sha256": "35b32e7821303709e729f37637e8be8c6455279965b623ad361f25e38126bf23"
+    },
+    ".cache/fluid-convex-ports-stage17-20261029/ConvexPortsTests.cpp": {
+      "bytes": 4582,
+      "sha256": "e512c6b39a49505cbd2cf19991fe33bba2185c4460b1fd7eca9476b83a88661b"
+    },
+    ".cache/fluid-convex-ports-stage17-20261029/ExactConvexClip.h": {
+      "bytes": 5592,
+      "sha256": "c7079d49f0a6d97806e632b4440d14c4f4908df832b71b11ca1f976b3035c8b7"
+    },
+    ".cache/fluid-convex-ports-stage17-20261029/ExactInternalFluxProbe.cpp": {
+      "bytes": 10058,
+      "sha256": "936bd9c00dd492db3e6476dbaf428cf6b2768a9e72b9f41b971a421f43138305"
+    },
+    ".cache/fluid-convex-ports-stage17-20261029/ExactKernelBasis.h": {
+      "bytes": 7230,
+      "sha256": "593f67894226a44703df3c752f71565f64033d04f4f3bce4e16be66373394195"
+    },
+    ".cache/fluid-convex-ports-stage17-20261029/ExactKernelBasisTests.cpp": {
+      "bytes": 8322,
+      "sha256": "74b3c2d5b99e5f8270e85fe6404af19eb29e3a0f6d30be595c033e704dd79374"
+    },
+    ".cache/fluid-convex-ports-stage17-20261029/FramedCell.h": {
+      "bytes": 14659,
+      "sha256": "553792363c961e6059215817030b9be3489c04e83f6be4714515222cfb5d87ec"
+    },
+    ".cache/fluid-convex-ports-stage17-20261029/FramedCellTests.cpp": {
+      "bytes": 4205,
+      "sha256": "0102c7bc5eab4b11ea661c6ca855fbfae691627a189f6def2c7a20a9092eca0f"
+    },
+    ".cache/fluid-convex-ports-stage17-20261029/FramedTinyPhysicalPatchTests.cpp": {
+      "bytes": 10983,
+      "sha256": "98cbbc56e2ee2f9bd3f112b325952c0f203a438faea3f37196f20aa021f7d216"
+    },
+    ".cache/fluid-convex-ports-stage17-20261029/INDEPENDENT_PHYSICAL_CONTRACTS.md": {
+      "bytes": 4046,
+      "sha256": "8a6ba4f3691a3564316caa2843b95310535bcba6ef1232f70282fbc3fff58052"
+    },
+    ".cache/fluid-convex-ports-stage17-20261029/KrylovCondensedNetwork.h": {
+      "bytes": 34130,
+      "sha256": "9aeb832c287ccc10831381e115254f19e13e298c4b3e0bdedba2052df08dcada"
+    },
+    ".cache/fluid-convex-ports-stage17-20261029/KrylovCondensedNetworkTests.cpp": {
+      "bytes": 5281,
+      "sha256": "293db04e4627fcb5937e5b8574c3687df078ce1020d70992f451124e3cfcb914"
+    },
+    ".cache/fluid-convex-ports-stage17-20261029/LocalCondensedNetwork.h": {
+      "bytes": 28205,
+      "sha256": "8d13db471e702e48c03c5346fdbc0b413dc679c63427c5cb1684761d3d01db95"
+    },
+    ".cache/fluid-convex-ports-stage17-20261029/LocalCondensedNetworkTests.cpp": {
+      "bytes": 6335,
+      "sha256": "531f2ce77638dd02ecd2e59dbac625c8f7c0316fa0851b1ce6c3c14782b0a0a5"
+    },
+    ".cache/fluid-convex-ports-stage17-20261029/LocalContinuityProbe.cpp": {
+      "bytes": 1507,
+      "sha256": "713575227e78cc4ef773db9fb7b86c5239cd5648daa83a52341a8f73e3e99f51"
+    },
+    ".cache/fluid-convex-ports-stage17-20261029/NativePressure.h": {
+      "bytes": 6544,
+      "sha256": "43a7ebfe3942565282c645bb6dd31cb0c8de67c55cf05b9c36f01f7f40fdd87e"
+    },
+    ".cache/fluid-convex-ports-stage17-20261029/NativePressureTests.cpp": {
+      "bytes": 8811,
+      "sha256": "5c7d503192613ec4b29186498672abab7bc61d14c3d84d0fc95feccdd1ba5957"
+    },
+    ".cache/fluid-convex-ports-stage17-20261029/Network.h": {
+      "bytes": 25888,
+      "sha256": "588a9bccd5b3c9d307f04e724032b01de26b97de1fb2d05bbbecda7779f6ccd2"
+    },
+    ".cache/fluid-convex-ports-stage17-20261029/NetworkTests.cpp": {
+      "bytes": 7729,
+      "sha256": "3d91f9b069b5e604ca6056df11f6879c7b4c09e4d095c5b04f9fbc62654e75ac"
+    },
+    ".cache/fluid-convex-ports-stage17-20261029/PhysicalComparison.cpp": {
+      "bytes": 1595,
+      "sha256": "10e3aff57775a043a2e5680692e46b77334ae316c5ed73024ac233bac6fb9c4b"
+    },
+    ".cache/fluid-convex-ports-stage17-20261029/PortGeometryTests.cpp": {
+      "bytes": 20785,
+      "sha256": "afa9b2bfd0a8249a2b9704cbb4bfb549d1cc57a1389e602a056f3173096a9d60"
+    },
+    ".cache/fluid-convex-ports-stage17-20261029/PortMomentumTransport.h": {
+      "bytes": 8307,
+      "sha256": "ed098e4315b071b04f5318709345ad11be47c23ee0a46fdee5139ed2531a3cd1"
+    },
+    ".cache/fluid-convex-ports-stage17-20261029/PortMomentumTransportTests.cpp": {
+      "bytes": 10073,
+      "sha256": "b645ae86c86ee4fe774b4a0f44f84ed6bfbaf38725c837bb9f51ff4fac8c3db5"
+    },
+    ".cache/fluid-convex-ports-stage17-20261029/PreparedMechanicalSchur.h": {
+      "bytes": 4164,
+      "sha256": "aaf52677f07720539690e93417dae58bf72916b4fa168e62b14a9e508f9e6d95"
+    },
+    ".cache/fluid-convex-ports-stage17-20261029/PreparedMechanicalTests.cpp": {
+      "bytes": 2933,
+      "sha256": "6d0005d3be2f7fb1fcb64233b7a1ba271a0dcf9f3864fbaf521f85c0c4cee0fc"
+    },
+    ".cache/fluid-convex-ports-stage17-20261029/ResolutionProbe.cpp": {
+      "bytes": 1593,
+      "sha256": "0cba3e2f5e3512bfb45194264d22ee310a28058f5493d3ca9b7f9eae7cfc9cdd"
+    },
+    ".cache/fluid-convex-ports-stage17-20261029/ResolvedCell.h": {
+      "bytes": 9574,
+      "sha256": "9f9ea164ccd88db9c2d163695e04e01bddd017dfb1fb62e0635c3465627ae156"
+    },
+    ".cache/fluid-convex-ports-stage17-20261029/ResolvedCellTests.cpp": {
+      "bytes": 5969,
+      "sha256": "f60ddd76d3ec618b1a850c9c90d6e20bbf086b4840d1d77f931c558a73d6bf29"
+    },
+    ".cache/fluid-convex-ports-stage17-20261029/ResolvedNetwork.h": {
+      "bytes": 13470,
+      "sha256": "a6ff948b477555d8cc8b3c5dc6c604febf196a3897e6c27ede190d7ec2e21be0"
+    },
+    ".cache/fluid-convex-ports-stage17-20261029/ResolvedNetworkTests.cpp": {
+      "bytes": 4117,
+      "sha256": "dbd5bf12b9691845cda5c6c11fe610d406eb21fb9bb8be2b75227d391ef3f9a0"
+    },
+    ".cache/fluid-convex-ports-stage17-20261029/ResolvedTinyPhysicalPatchTests.cpp": {
+      "bytes": 12428,
+      "sha256": "b7161a8b5f11416348f1e86f54526f49028fa1b4ac23fad1ebbd92928e347f4c"
+    },
+    ".cache/fluid-convex-ports-stage17-20261029/Stage17IndependentNetworkTests.cpp": {
+      "bytes": 9819,
+      "sha256": "4e8d7fce377511e374881cafed601e11e457f58b1bd4b3e299e69e97a2b97dd1"
+    },
+    ".cache/fluid-convex-ports-stage17-20261029/Stage17TinyPhysicalPatchTests.cpp": {
+      "bytes": 12440,
+      "sha256": "cf056b6d830bdace4178d79d5dacdc6ae1b516f0ed676ef6676e612dfb5f9b22"
+    },
+    ".cache/fluid-convex-ports-stage17-20261029/SymmetricAgglomerationTests.cpp": {
+      "bytes": 7571,
+      "sha256": "8630a4b21c8d8fcaea485fe3a33891081cc6fa973c03cce86282f3fb8d171987"
+    },
+    ".cache/fluid-convex-ports-stage17-20261029/SymmetricPreparedNativePressure.h": {
+      "bytes": 6512,
+      "sha256": "763dfad78eb9946bb3a047b707cbc3b42e7c909d0f2eb6da7d25ecda58a187b8"
+    },
+    ".cache/fluid-convex-ports-stage17-20261029/SymmetricPreparedNativePressureTests.cpp": {
+      "bytes": 8921,
+      "sha256": "011b76f87d23c7b03c5d6390eef7681da598753b46ef94e0824ca7514037e54f"
+    },
+    ".cache/fluid-convex-ports-stage17-20261029/SymmetricThinAdmissionTests.cpp": {
+      "bytes": 7737,
+      "sha256": "ff5f09b898809ba67a02ad7e77836c197e975a5bbfe97a769d2eac16d55c1735"
+    },
+    ".cache/fluid-convex-ports-stage17-20261029/SymmetricVoxelNetwork.h": {
+      "bytes": 697,
+      "sha256": "6b03ca5de67bab72801d52f5c6d8ae65a3068a58971ca95d9755cb8228b421e1"
+    },
+    ".cache/fluid-convex-ports-stage17-20261029/SymmetricVoxelPortGeometryTests.cpp": {
+      "bytes": 23202,
+      "sha256": "2c90e5cece3bbb6c3596ca50479e61f1006e74e0e331cc96923bbeb2365546c9"
+    },
+    ".cache/fluid-convex-ports-stage17-20261029/SymmetricVoxelPorts.h": {
+      "bytes": 7294,
+      "sha256": "17ceb197657c6c188644ad6e11bb2666f59f383e3cc8105e30fa094c63636eb6"
+    },
+    ".cache/fluid-convex-ports-stage17-20261029/SymmetricVoxelPortsTests.cpp": {
+      "bytes": 6154,
+      "sha256": "a80f451c6dc085f0674219cd9fcd54517dd2a3f18b362f9c481c0c93d0f35234"
+    },
+    ".cache/fluid-convex-ports-stage17-20261029/SymmetricVoxelResolutionProbe.cpp": {
+      "bytes": 1641,
+      "sha256": "5842ee858aca3fcf493014e7a9a2a7aa373b9b2060e966c4e433f1c332a0be88"
+    },
+    ".cache/fluid-convex-ports-stage17-20261029/TinyNetworkPhysicalProbe.cpp": {
+      "bytes": 3791,
+      "sha256": "c08098047f567dfc3a4ba81fc28adc1d081732da4bb90a0e58a5757b9413018e"
+    },
+    ".cache/fluid-convex-ports-stage17-20261029/TinyNetworkTests.cpp": {
+      "bytes": 3422,
+      "sha256": "9a42942d63aca1cc3fa463033762db31f1aec62b2a9bbfc25285b90b9c93b87f"
+    },
+    ".cache/fluid-convex-ports-stage17-20261029/TranslatedSolidSweep.h": {
+      "bytes": 7671,
+      "sha256": "c3c5472d078fecafddecf85b5849067002c00102ca17da6b9077186e6f0da6a5"
+    },
+    ".cache/fluid-convex-ports-stage17-20261029/TranslatedSolidSweepTests.cpp": {
+      "bytes": 5936,
+      "sha256": "87bd453dd38b9ec0cdc5e5a6f2d72e441a4d1a664777c290ebf94eff331ba410"
+    },
+    ".cache/fluid-convex-ports-stage17-20261029/VoxelBoundaryAudit.cpp": {
+      "bytes": 3151,
+      "sha256": "0e1cb867b67fec767374643ef0ff1ba4a4a54f9f1f79a9fb718600d3ab3347a0"
+    },
+    ".cache/fluid-convex-ports-stage17-20261029/VoxelCondensationTests.cpp": {
+      "bytes": 9259,
+      "sha256": "dc832214477c87c3ffa1bb20eb06bf85589b726d3c93ad5bc0a5fcc3a7dc0dd1"
+    },
+    ".cache/fluid-convex-ports-stage17-20261029/VoxelConservativeNetwork.h": {
+      "bytes": 1345,
+      "sha256": "f3d36e1a36cabec4a4ab3fe805f726891950eb5dbd5247d83a2f002f4ab7b775"
+    },
+    ".cache/fluid-convex-ports-stage17-20261029/VoxelNativePressure.h": {
+      "bytes": 6595,
+      "sha256": "d987b4c8228e3fe4914782c4bb76fd2665fd916e420037034a39988f38cd4b67"
+    },
+    ".cache/fluid-convex-ports-stage17-20261029/VoxelNativePressureTests.cpp": {
+      "bytes": 8883,
+      "sha256": "055fd5826a5f967533ff2b14c8d933401a33de1c3ad609bd3f09c006e8133e97"
+    },
+    ".cache/fluid-convex-ports-stage17-20261029/VoxelNetwork.h": {
+      "bytes": 638,
+      "sha256": "01f1a60805ed090ffb4812f5b36c1fabb7f8c7bbe7110c5e609d8248927a9360"
+    },
+    ".cache/fluid-convex-ports-stage17-20261029/VoxelPhysicalContracts.cpp": {
+      "bytes": 13671,
+      "sha256": "64f4b6c5c81745910ae1d4168025c28ef18f78dfb271aa023115da981b0724ce"
+    },
+    ".cache/fluid-convex-ports-stage17-20261029/VoxelPortGeometryTests.cpp": {
+      "bytes": 22337,
+      "sha256": "3e58338570e00d258aa82bd8c37cf31a5cf271a87b79b8dd58c73772744d4769"
+    },
+    ".cache/fluid-convex-ports-stage17-20261029/VoxelPorts.h": {
+      "bytes": 6056,
+      "sha256": "241c7d854a3a731b4483e847a2878b3e38df9343e7f02581e8cfb32e3ec59e7a"
+    },
+    ".cache/fluid-convex-ports-stage17-20261029/VoxelPortsTests.cpp": {
+      "bytes": 4887,
+      "sha256": "9a726b7b7e7e9f0446b0cb5a7a182b9c6b1de71e966afd93740a2c9acf3e756f"
+    },
+    ".cache/fluid-convex-ports-stage17-20261029/VoxelPreparedNativePressure.h": {
+      "bytes": 6485,
+      "sha256": "fcd9fdd26a1b23ed301bff16dcdbb0477f8d384833b786b33f7ee97f883154b4"
+    },
+    ".cache/fluid-convex-ports-stage17-20261029/VoxelPreparedNativePressureTests.cpp": {
+      "bytes": 8909,
+      "sha256": "bca3fcb4d2e954e7f40c4a7319e02ea4e96f8c10b2839b8106d39891cd5efe57"
+    },
+    ".cache/fluid-convex-ports-stage17-20261029/VoxelResolutionProbe.cpp": {
+      "bytes": 1612,
+      "sha256": "332c48e2adb2d6a5b552b433ebc72c6ec6ef1529e868097fc29236e8ef90e9c7"
+    },
+    ".cache/fluid-convex-ports-stage17-20261029/acceptance/ExactKernelMoments.h": {
+      "bytes": 12102,
+      "sha256": "cdfc2864d1d131759a815419a67a1709d05b0c95bf39baa6fe30d619fec0f923"
+    },
+    ".cache/fluid-convex-ports-stage17-20261029/acceptance/ExactPatchOracle.h": {
+      "bytes": 5151,
+      "sha256": "7c87da4d835dda20c802e5eb040acc0523d9b287bc80f6ca7f120018a323f8f8"
+    },
+    ".cache/fluid-convex-ports-stage17-20261029/archive_current.py": {
+      "bytes": 2573,
+      "sha256": "bffda876fd5bc846415aeb47bfee4ef72f915f56f804f5d238b814ca3fa995a2"
+    },
+    ".cache/fluid-convex-ports-stage17-20261029/builder-compile-v1.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    ".cache/fluid-convex-ports-stage17-20261029/builder-v1.log": {
+      "bytes": 591,
+      "sha256": "f0f7c0f0589b2420ef6b74d304fe8d19a97c7e9949672e7c9934b955430279a5"
+    },
+    ".cache/fluid-convex-ports-stage17-20261029/current-batch-results.json": {
+      "bytes": 2724,
+      "sha256": "6dbff13df7f6433d95d278b92ad658a898191711b1e6d1b1f50ed1152bda1081"
+    },
+    ".cache/fluid-convex-ports-stage17-20261029/current-docs-check.log": {
+      "bytes": 120,
+      "sha256": "b2b47e8a80b6196542b4d045d30ca4bba63338d91fd90bb6609ac7aa7c41522b"
+    },
+    ".cache/fluid-convex-ports-stage17-20261029/experiments/AGGLOMERATION_DISPOSITION.txt": {
+      "bytes": 3359,
+      "sha256": "7ad5a23c36c5280619919ae3514a3cdc3b37f3626adc61d4c56edb5d3009c569"
+    },
+    ".cache/fluid-convex-ports-stage17-20261029/experiments/CONSERVATIVE_GRAM_CONDITIONING_DIAGNOSIS.txt": {
+      "bytes": 5191,
+      "sha256": "f67f177610a1b0e8e007d474d3b60fdf9282aebe93db51361befbda3e778c224"
+    },
+    ".cache/fluid-convex-ports-stage17-20261029/experiments/ConservativeInternalCoordinatesTests-gradient-v1.cpp": {
+      "bytes": 7885,
+      "sha256": "e0c30338e080e81b926f38877121fce7647287913af1c913b57bb768b440f606"
+    },
+    ".cache/fluid-convex-ports-stage17-20261029/experiments/ConservativeInternalCoordinatesTests-gradient-v3.cpp": {
+      "bytes": 9848,
+      "sha256": "5e0ac3681735a6700fd974b6330bd39c3729e742efe688edd277c2bc76e0c228"
+    },
+    ".cache/fluid-convex-ports-stage17-20261029/experiments/ConservativeInternalCoordinatesTests-gradient-v4.cpp": {
+      "bytes": 10129,
+      "sha256": "455b1e877229a939f4e0fb9290ef0f6e1e408ea522e35fbbef2f66080012b462"
+    },
+    ".cache/fluid-convex-ports-stage17-20261029/experiments/ConservativeInternalCoordinatesTests-negative-v5.cpp": {
+      "bytes": 13329,
+      "sha256": "a5e9769042ee249ad8e48f60d6d47e57d1c50d4559c3e86342e978c74ff99235"
+    },
+    ".cache/fluid-convex-ports-stage17-20261029/experiments/ConservativeInternalCoordinatesTests-stationarity-v2.cpp": {
+      "bytes": 8693,
+      "sha256": "efae7cd1e38c054a019f408b9326c027566fb5f0772eea11358ffe0670984c1a"
+    },
+    ".cache/fluid-convex-ports-stage17-20261029/experiments/ConvexAgglomeration-pre-symmetric-adapter.h": {
+      "bytes": 10020,
+      "sha256": "3c58859d1b6966a452cd26b14746152847d615f55dc36f3b078f0bef3f87b1c1"
+    },
+    ".cache/fluid-convex-ports-stage17-20261029/experiments/ConvexAgglomeration-same-exclusion-v1.h": {
+      "bytes": 9936,
+      "sha256": "78fd21737baf901e11b1684b9d8f3c18159db5e7ac5001a5900ba229befd3208"
+    },
+    ".cache/fluid-convex-ports-stage17-20261029/experiments/ConvexAgglomerationTests-same-exclusion-v1.cpp": {
+      "bytes": 8960,
+      "sha256": "e55e3116ed220d8853bac5131555f602d154b86844bca29f76d99c5ee1226d8a"
+    },
+    ".cache/fluid-convex-ports-stage17-20261029/experiments/FirstExclusionAnisotropy.txt": {
+      "bytes": 3018,
+      "sha256": "4c3130d325b21d3e96c1c871fc877dd12a1d4ab3e4685fe7a41279cb4325e376"
+    },
+    ".cache/fluid-convex-ports-stage17-20261029/experiments/KRYLOV_DISPOSITION.txt": {
+      "bytes": 2769,
+      "sha256": "6f8b38049205f67daaebaa4bf6e09742171573890d52fc6d5ee5519c43bc94cc"
+    },
+    ".cache/fluid-convex-ports-stage17-20261029/experiments/KrylovCondensedNetwork-diagonal-v1.h": {
+      "bytes": 32654,
+      "sha256": "7c26855e890438801047bf432075c89f817b1885c2d716ae7654414908b5bfba"
+    },
+    ".cache/fluid-convex-ports-stage17-20261029/experiments/KrylovCondensedNetworkTests-diagonal-v1.cpp": {
+      "bytes": 5012,
+      "sha256": "903afbbe9ca97204a6c5c9d6446d8ed79f5b9d0dd0c9304d42e25eedaa037ae6"
+    },
+    ".cache/fluid-convex-ports-stage17-20261029/experiments/SYMMETRIC_AGGLOMERATION_DISPOSITION.txt": {
+      "bytes": 2133,
+      "sha256": "d24635e4855caa9c34269f51289471665b82fc9b96d84c7d7f12ae49132119dd"
+    },
+    ".cache/fluid-convex-ports-stage17-20261029/experiments/VoxelCondensationTests-baseline-guard-v1.cpp": {
+      "bytes": 7946,
+      "sha256": "0d7c454bec122d68b32446f4c3270584736c61a16c584896f2f7ea92f6dadafa"
+    },
+    ".cache/fluid-convex-ports-stage17-20261029/experiments/VoxelCondensationTests-corner-v2.cpp": {
+      "bytes": 8583,
+      "sha256": "bd0d58a66faffbe94c99bedeae12b1345df5a1da3066541a98869d5f11217e1b"
+    },
+    ".cache/fluid-convex-ports-stage17-20261029/experiments/momentum-before-independent-oracle/PortMomentumTransport.h": {
+      "bytes": 8171,
+      "sha256": "175b0f4c9297e7d516ee647efd2431a1b7950c8d74e28ec1fa139898d5d69279"
+    },
+    ".cache/fluid-convex-ports-stage17-20261029/experiments/momentum-before-independent-oracle/PortMomentumTransportTests.cpp": {
+      "bytes": 4721,
+      "sha256": "cb48eb8b8d8da268634b253993184dc728988363eef44a702d4c5d512c2e490e"
+    },
+    ".cache/fluid-convex-ports-stage17-20261029/experiments/pre-exact-compatibility/LocalCondensedNetwork.h": {
+      "bytes": 28211,
+      "sha256": "9ba59c658349d5061143ea89e9cdfd3ecd75398969f37ce5866f4b129d58809a"
+    },
+    ".cache/fluid-convex-ports-stage17-20261029/experiments/pre-exact-compatibility/Network.h": {
+      "bytes": 25240,
+      "sha256": "a696e07dffeac7a3846c41f4260f57f3acf2f5025cb99fcbbfb491ccf93c4cd6"
+    },
+    ".cache/fluid-convex-ports-stage17-20261029/experiments/sweep-all-events-v1/TranslatedSolidSweep.h": {
+      "bytes": 6594,
+      "sha256": "2dd485c6624a9024e7fb725f4c17805815583daddb5f746273984cbd697d61a0"
+    },
+    ".cache/fluid-convex-ports-stage17-20261029/final-review-reruns.json": {
+      "bytes": 517,
+      "sha256": "8061deecd89bd202692a4465e53625905f44aacafc4e3d8a291c5fd296dad99a"
+    },
+    ".cache/fluid-convex-ports-stage17-20261029/logs/agglomeration-any-convex-v1.log": {
+      "bytes": 747,
+      "sha256": "d24efb6903ad949ab89850171b1970a894860d255508048e76895afbdca9e177"
+    },
+    ".cache/fluid-convex-ports-stage17-20261029/logs/agglomeration-v1.log": {
+      "bytes": 2839,
+      "sha256": "889e389a0445d659badd7695c9c5daa1a462b3f9b727fd7144e262b95b70e21a"
+    },
+    ".cache/fluid-convex-ports-stage17-20261029/logs/condensed-resolution-v1.log": {
+      "bytes": 1009,
+      "sha256": "dc2fe1ce9e6319ac112d6acacf995b59c4222575b480a68306af76fe4176a353"
+    },
+    ".cache/fluid-convex-ports-stage17-20261029/logs/conservative-coordinates-v1.log": {
+      "bytes": 84,
+      "sha256": "670d9527aa1bbeb279a7b7c8d92afb97d6c3a5e4b55405cf5e28bfe1aac9afe5"
+    },
+    ".cache/fluid-convex-ports-stage17-20261029/logs/conservative-coordinates-v2.log": {
+      "bytes": 2751,
+      "sha256": "f05c2ba8f131de274293a1fde85f07b120cb0731722c8dbe1b6054af67871480"
+    },
+    ".cache/fluid-convex-ports-stage17-20261029/logs/conservative-coordinates-v3.log": {
+      "bytes": 3851,
+      "sha256": "2a5d85271653b670751a340e2cfa907dd762d5a7dcbe27e3e11a00491f3bf5a0"
+    },
+    ".cache/fluid-convex-ports-stage17-20261029/logs/conservative-coordinates-v4.log": {
+      "bytes": 5462,
+      "sha256": "959adb99d7f1838791f4b5465c59acfa4fada75b9462ccbe5023981b8b2fe784"
+    },
+    ".cache/fluid-convex-ports-stage17-20261029/logs/conservative-coordinates-v5.log": {
+      "bytes": 6628,
+      "sha256": "09a22f9278d5bb1d0179e256fb4afe14f5c79cba956e625996cc8d958838e025"
+    },
+    ".cache/fluid-convex-ports-stage17-20261029/logs/conservative-coordinates-v6.log": {
+      "bytes": 8859,
+      "sha256": "d7c0ad28de96af312b82a446af148e6d12d7e8c5c733331cd3eda8b05448dad3"
+    },
+    ".cache/fluid-convex-ports-stage17-20261029/logs/conservative-native-v1.log": {
+      "bytes": 4094,
+      "sha256": "0315edc4aa7ff8a36a88ca04d4d4eafa416eb85112451150103e3b0ae6448a4a"
+    },
+    ".cache/fluid-convex-ports-stage17-20261029/logs/conservative-network-v1.log": {
+      "bytes": 2402,
+      "sha256": "2c03fd005190257f32213481b199e114252cc206da52bfc74e386ef899e1a741"
+    },
+    ".cache/fluid-convex-ports-stage17-20261029/logs/current-batch-runner.log": {
+      "bytes": 599,
+      "sha256": "1d2c42e02b06276afff36de84851a19a78e1b897bc2904cb998a1fce2e96b132"
+    },
+    ".cache/fluid-convex-ports-stage17-20261029/logs/exact-internal-flux-certificate-v1.txt": {
+      "bytes": 37051,
+      "sha256": "7104b16d0044f50101bdcd1ce73d5f010f75f13025741ee84b834078fcd4d549"
+    },
+    ".cache/fluid-convex-ports-stage17-20261029/logs/exact-internal-flux-v1.log": {
+      "bytes": 1242,
+      "sha256": "d4d22ee8e00860f19a9bef7989be7f90d5ace059ee4e5ed77b0816f7fbabe240"
+    },
+    ".cache/fluid-convex-ports-stage17-20261029/logs/exact-kernel-basis-axis-control-v2.log": {
+      "bytes": 1209,
+      "sha256": "613fc3a4c75254c7d3de61317095e530447a4b197ec321917fcf07feb3fa9c08"
+    },
+    ".cache/fluid-convex-ports-stage17-20261029/logs/exact-kernel-basis-v1.log": {
+      "bytes": 1545,
+      "sha256": "a1329a8c1ef30808706657357eec4043cfff4edf0c2da30ae7076dec9284ede9"
+    },
+    ".cache/fluid-convex-ports-stage17-20261029/logs/exact-kernel-basis-v2.log": {
+      "bytes": 1231,
+      "sha256": "94d423a91904a8b3274909c4182b67ba8babf1a32915bdacdf1369fd0d312cbd"
+    },
+    ".cache/fluid-convex-ports-stage17-20261029/logs/exact-kernel-basis-worst-energy-v2.log": {
+      "bytes": 1238,
+      "sha256": "7a12cf4c8c629af8e5a1edde432d9ce9feae66a0beffe59483bfe84d4b8130cb"
+    },
+    ".cache/fluid-convex-ports-stage17-20261029/logs/framed-compile-v1.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    ".cache/fluid-convex-ports-stage17-20261029/logs/framed-independent-axis-control-v1.log": {
+      "bytes": 5434,
+      "sha256": "d8e784cf6019d4b8d909c70169bb4ae8778b219f308c4fea35d5940ce6cdd898"
+    },
+    ".cache/fluid-convex-ports-stage17-20261029/logs/framed-independent-oblique-control-v1.log": {
+      "bytes": 7439,
+      "sha256": "5c37a99da714253f35605dde1c529cc5388c811e06693ffc62ca7d3f1179d679"
+    },
+    ".cache/fluid-convex-ports-stage17-20261029/logs/framed-independent-physical-v1.log": {
+      "bytes": 7366,
+      "sha256": "8fd27937e0eafab5ccf21f7689c2316f6652a71457f5dc3869ec393e34d74563"
+    },
+    ".cache/fluid-convex-ports-stage17-20261029/logs/framed-v1.log": {
+      "bytes": 6257,
+      "sha256": "ca4f63d79ca53e42774d47be706c0098d41777e46f39d714639ea8b639490603"
+    },
+    ".cache/fluid-convex-ports-stage17-20261029/logs/krylov-condensed-block-v1.log": {
+      "bytes": 1692,
+      "sha256": "3c903a5977b1f0e43c6698660612fe34ffea99c91826d67815b92b89fc662ba7"
+    },
+    ".cache/fluid-convex-ports-stage17-20261029/logs/krylov-condensed-v1.log": {
+      "bytes": 4751,
+      "sha256": "e9cd18b887f1fadd3b07a9ea8b184d78f355d990a0d24caff50907784045e245"
+    },
+    ".cache/fluid-convex-ports-stage17-20261029/logs/local-condensed-v1.log": {
+      "bytes": 2959,
+      "sha256": "3862183e90def50bbdb79bc75ef9f7270d6ffdecbaa6afa68b9505010e34b581"
+    },
+    ".cache/fluid-convex-ports-stage17-20261029/logs/local-continuity-v1.log": {
+      "bytes": 505,
+      "sha256": "8d5acbbe4ca98b7511736ae84b6113a0b2a350fd698c496531d0fad30af25cc3"
+    },
+    ".cache/fluid-convex-ports-stage17-20261029/logs/momentum-transport-final-v2.log": {
+      "bytes": 1145,
+      "sha256": "5afae51fc7d05909bef58a94061bdab7f97c23276ac163785c909f2ab96497c3"
+    },
+    ".cache/fluid-convex-ports-stage17-20261029/logs/momentum-transport-final.log": {
+      "bytes": 1145,
+      "sha256": "9c420af76035a5dbce6175901f756ef2db810d6167681e508f65edb2c628c024"
+    },
+    ".cache/fluid-convex-ports-stage17-20261029/logs/momentum-transport-v1.log": {
+      "bytes": 894,
+      "sha256": "1c649f299664914212c9f0343d413f1af093128921b4a8accccdff8dd01d4141"
+    },
+    ".cache/fluid-convex-ports-stage17-20261029/logs/native-v1.log": {
+      "bytes": 4054,
+      "sha256": "e923c768ac0a9e0a81c312e2aedba388d3af894c627e0150be41b38325331ad5"
+    },
+    ".cache/fluid-convex-ports-stage17-20261029/logs/physical-v1.log": {
+      "bytes": 1481,
+      "sha256": "8bb03f866e5e834759b65d4b501e273a86dbc3a809ca080e6dc9e7b974baadd3"
+    },
+    ".cache/fluid-convex-ports-stage17-20261029/logs/port-geometry-v1.log": {
+      "bytes": 1523,
+      "sha256": "87e1c488fe6a2025bd0b98fcc24742a75bcfbd9aeffb631ea9f90ec2cfc6a999"
+    },
+    ".cache/fluid-convex-ports-stage17-20261029/logs/prepared-mechanical-final.log": {
+      "bytes": 1169,
+      "sha256": "c7efefd806f8612661a2e7db53d57173a727f6b90f33a3745c380af02d841890"
+    },
+    ".cache/fluid-convex-ports-stage17-20261029/logs/prepared-mechanical-v1.log": {
+      "bytes": 1173,
+      "sha256": "d91fbfbfbccf99ef6e36f36c1979cce715d8bb6c79eadd43aa11a1ecf9961360"
+    },
+    ".cache/fluid-convex-ports-stage17-20261029/logs/resolution-v1.log": {
+      "bytes": 989,
+      "sha256": "f583f6981a84b9e92a101f6f806efa7b6dfe852253fd77ca220d2ed2c1cc7f61"
+    },
+    ".cache/fluid-convex-ports-stage17-20261029/logs/resolved-compile-v1.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    ".cache/fluid-convex-ports-stage17-20261029/logs/resolved-independent-axis-control-v1.log": {
+      "bytes": 31540,
+      "sha256": "2a84e3f572e5d44efb80f31d4786b95e4fbd5b6ebf12a19d1b33bc97ed34e7db"
+    },
+    ".cache/fluid-convex-ports-stage17-20261029/logs/resolved-independent-oblique-control-v1.log": {
+      "bytes": 43299,
+      "sha256": "67938df11b988e0c977e2fd8d08ea6e0ff61f509eab204fb454d34ad205b770a"
+    },
+    ".cache/fluid-convex-ports-stage17-20261029/logs/resolved-independent-physical-v1.log": {
+      "bytes": 43092,
+      "sha256": "bf3c4c9902310bca87a3415e79dcad237e2cb33f3a67e4b6ce9c1671dbad4331"
+    },
+    ".cache/fluid-convex-ports-stage17-20261029/logs/resolved-network-compile-v1.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    ".cache/fluid-convex-ports-stage17-20261029/logs/resolved-network-v1.log": {
+      "bytes": 3802,
+      "sha256": "0f1dca2812d79ab23a50bfd9ed2de2f70abec7ec5143275a983c2894b90f207e"
+    },
+    ".cache/fluid-convex-ports-stage17-20261029/logs/resolved-v1.log": {
+      "bytes": 941,
+      "sha256": "e7688072509cf251d384249eb06d1c8d2a9ceec33147ab9df1063403058df8df"
+    },
+    ".cache/fluid-convex-ports-stage17-20261029/logs/symmetric-agglomeration-v1.log": {
+      "bytes": 245,
+      "sha256": "ff7b013f67b378a11592230dc13adb0779830c1aaa2a47f1c8e1a6e12b90c5ce"
+    },
+    ".cache/fluid-convex-ports-stage17-20261029/logs/symmetric-compile-v1.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    ".cache/fluid-convex-ports-stage17-20261029/logs/symmetric-native-final.log": {
+      "bytes": 6985,
+      "sha256": "b2459e761e546c32e50215945167bb6b5c325bd983af5ecc6baf102a055527f9"
+    },
+    ".cache/fluid-convex-ports-stage17-20261029/logs/symmetric-resolution-final.log": {
+      "bytes": 1014,
+      "sha256": "e21e5b97e6e92d9ff3cf6ffc26ed97a335e317a5259dc34c093e7165ade57dc6"
+    },
+    ".cache/fluid-convex-ports-stage17-20261029/logs/symmetric-thin-compile-v1.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    ".cache/fluid-convex-ports-stage17-20261029/logs/symmetric-thin-corner-v1.log": {
+      "bytes": 1638,
+      "sha256": "a839f67336f39b1c541f2c8f96a922e9e43223177512c486dc4f8f913d15e7f1"
+    },
+    ".cache/fluid-convex-ports-stage17-20261029/logs/symmetric-thin-gap-v1.log": {
+      "bytes": 1505,
+      "sha256": "c719eba03e018e64a3182c8b786b368e2b2dcb50dfd421b8d00fef53fe42dc48"
+    },
+    ".cache/fluid-convex-ports-stage17-20261029/logs/symmetric-v1.log": {
+      "bytes": 2368,
+      "sha256": "6561207de81c8b3a1f7b2508f2d5ef814faa416df0d8aa043ce9c28572944853"
+    },
+    ".cache/fluid-convex-ports-stage17-20261029/logs/symmetric-voxel-port-geometry-v1.log": {
+      "bytes": 2279,
+      "sha256": "671d76422c16364f702c454defb44c74ac94db09ab682aa7e4739432fb662a61"
+    },
+    ".cache/fluid-convex-ports-stage17-20261029/logs/tiny-physical-patch-axis-control-v1.log": {
+      "bytes": 7989,
+      "sha256": "11dc887d7865a8cfb7e000d50564bd6df4f531fa234ceae62c676e3e91bfc13c"
+    },
+    ".cache/fluid-convex-ports-stage17-20261029/logs/tiny-physical-patch-oblique-control-v1.log": {
+      "bytes": 10920,
+      "sha256": "33d0007f727fb9a3be4561e20209bebac40cfe62094d28fc31a9509db53afdb9"
+    },
+    ".cache/fluid-convex-ports-stage17-20261029/logs/tiny-physical-patch-v1.log": {
+      "bytes": 10723,
+      "sha256": "12ce02663befe3c91fba58f863b506b433fe72709cbc4077a4eb3b5376c19d71"
+    },
+    ".cache/fluid-convex-ports-stage17-20261029/logs/translated-sweep-final-v2.log": {
+      "bytes": 1166,
+      "sha256": "ec9d1e8757548dc9902918f726a238696de2486acb42ab79e06595e69f7c9728"
+    },
+    ".cache/fluid-convex-ports-stage17-20261029/logs/translated-sweep-final.log": {
+      "bytes": 1165,
+      "sha256": "9589391e42ae134278ca999eefeaaad8249e5981a223307a9fa41281a3c6caec"
+    },
+    ".cache/fluid-convex-ports-stage17-20261029/logs/translated-sweep-v1.log": {
+      "bytes": 1170,
+      "sha256": "7ec57e8789a5475e8cea8b6f30262fcb629f01b68a4eb1d2be115f2358ed5a24"
+    },
+    ".cache/fluid-convex-ports-stage17-20261029/logs/voxel-compile-v1.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    ".cache/fluid-convex-ports-stage17-20261029/logs/voxel-condensation-corner-v1.log": {
+      "bytes": 94,
+      "sha256": "e2f5d8d7627961ce921b66f9c8e2e767ed0aa95dc6038d5bde3effc041233911"
+    },
+    ".cache/fluid-convex-ports-stage17-20261029/logs/voxel-condensation-corner-v2.log": {
+      "bytes": 452,
+      "sha256": "8449ed4d6d02649ee14511eb0976c95ce846ac7d41cd8fa64d101ce312b4069f"
+    },
+    ".cache/fluid-convex-ports-stage17-20261029/logs/voxel-condensation-final.log": {
+      "bytes": 8318,
+      "sha256": "b4df946042d58538c22be739c768a064b271bb6d33e3d8c3646c1abd91a6e6d0"
+    },
+    ".cache/fluid-convex-ports-stage17-20261029/logs/voxel-condensation-v1.log": {
+      "bytes": 1476,
+      "sha256": "bb317c00d133f40b8ef98aa2aaa8887e3ab769a49cfd4acc60074aabd59cf837"
+    },
+    ".cache/fluid-convex-ports-stage17-20261029/logs/voxel-condensation-v2.log": {
+      "bytes": 4624,
+      "sha256": "6e45915bda60ee96a3845c9caf4966fa9899c94bc831f442f97c9f2abbeacbb4"
+    },
+    ".cache/fluid-convex-ports-stage17-20261029/logs/voxel-native-v1.log": {
+      "bytes": 4343,
+      "sha256": "2d8e152449a54125b9cf8a253c6a6f70dcc1dccd1e19c82c8b730978aa223b4b"
+    },
+    ".cache/fluid-convex-ports-stage17-20261029/logs/voxel-physical-contracts-v1.log": {
+      "bytes": 2722,
+      "sha256": "2c1ba7928aa82ac487aecef3e5ee961a9fdb43e2fc1195bc9e74a576c9c325f5"
+    },
+    ".cache/fluid-convex-ports-stage17-20261029/logs/voxel-physical-contracts-v2.log": {
+      "bytes": 838,
+      "sha256": "3863328634b146167f53b1520deb6290312bca5523b5d95d158544ee76f867e0"
+    },
+    ".cache/fluid-convex-ports-stage17-20261029/logs/voxel-physical-contracts-v3.log": {
+      "bytes": 1276,
+      "sha256": "7924ec8d08ecb9961e3783a2f49941fb97d7d1925d4c3fb4b10c6f25bc2e89b8"
+    },
+    ".cache/fluid-convex-ports-stage17-20261029/logs/voxel-port-geometry-v1.log": {
+      "bytes": 1861,
+      "sha256": "60a77e51c066e8e953efa487a0b0411fa1cf99bfc6fbbb921eaa163a0b15e1e6"
+    },
+    ".cache/fluid-convex-ports-stage17-20261029/logs/voxel-resolution-v1.log": {
+      "bytes": 976,
+      "sha256": "bf072623c08313d6410b485c38b79996733974ee071dcd4c594a6a8b4d402e59"
+    },
+    ".cache/fluid-convex-ports-stage17-20261029/logs/voxel-v1.log": {
+      "bytes": 2302,
+      "sha256": "8739cfe9959995a1712b9b83077accc08056822408c56590ad9dcffe7472246f"
+    },
+    ".cache/fluid-convex-ports-stage17-20261029/network-v1.log": {
+      "bytes": 1018,
+      "sha256": "b82fd927a8f1dd26507dd8d3b3d727adc16e6e8fade5b7ba0f8febea804d27aa"
+    },
+    ".cache/fluid-convex-ports-stage17-20261029/network-v2.log": {
+      "bytes": 769,
+      "sha256": "83c6aaa94781072d93c8be4be8a6ea5cfe9071ca15129fe48dd9c80e7896899f"
+    },
+    ".cache/fluid-convex-ports-stage17-20261029/run_conservative_native.py": {
+      "bytes": 697,
+      "sha256": "09a23c01952e5ab73debd5e10010c20540ddd508ca14600336a97ccbcded751b"
+    },
+    ".cache/fluid-convex-ports-stage17-20261029/run_current_batch.py": {
+      "bytes": 1687,
+      "sha256": "6ca8285dc90d1ca1ec9af08fbd46d3b54156d21e2032dfb3f3f3cfbe22671230"
+    },
+    ".cache/fluid-convex-ports-stage17-20261029/run_native.py": {
+      "bytes": 649,
+      "sha256": "1e134817cf860e5f28f96ea6e135af06a8525baeecedf6ee4adff9d77494b4b0"
+    },
+    ".cache/fluid-convex-ports-stage17-20261029/run_probe.py": {
+      "bytes": 570,
+      "sha256": "8bec208765fc83d5b10fa2daeaa1092896d6bd0e50f35adcef382adcd0a66342"
+    },
+    ".cache/fluid-convex-ports-stage17-20261029/run_symmetric_prepared_native.py": {
+      "bytes": 717,
+      "sha256": "d15887cb0a18ded176db53c40fb96e5c046ee3883e6f15d16d93fefb9d1cf4f9"
+    },
+    ".cache/fluid-convex-ports-stage17-20261029/run_voxel_native.py": {
+      "bytes": 669,
+      "sha256": "9a4d2f90ad9e3af5b6b07de5a8a55d47a886a2495a11927d11a3ccddfbd27dae"
+    },
+    ".cache/fluid-convex-ports-stage17-20261029/run_voxel_prepared_native.py": {
+      "bytes": 701,
+      "sha256": "e834a3118394a0eb3958fb40ff9da13190688f5c64485991d9a34ffb898fd03f"
+    },
+    ".cache/fluid-convex-ports-stage17-20261029/tiny-network-physical-v1.log": {
+      "bytes": 1731,
+      "sha256": "6e9cf5224a8542c537e6e045fee9a57b8e1e897b8d68f2280a79c967a10e82ec"
+    },
+    ".cache/fluid-convex-ports-stage17-20261029/tiny-network-v1.log": {
+      "bytes": 416,
+      "sha256": "5d5d2210a8e3867a674896fbda7936998bd6c52773393bb3ea3ec37c60fa1603"
+    },
+    ".cache/fluid-coupling-stage5-kernel/ExactPlanePredicates.h": {
+      "bytes": 3837,
+      "sha256": "1ff1db56d26a8ece23f7d5a59460c2064775eb30ad12fa549ad84a214d369882"
+    },
+    ".cache/fluid-coupling-stage5-kernel/VolumeDomain.cpp": {
+      "bytes": 26200,
+      "sha256": "f96adfcc4dd2f0626ba42639b6b6ecc369d69d3cf1528c43329592102e780c52"
+    },
+    ".cache/fluid-coupling-stage5-kernel/VolumeDomain.h": {
+      "bytes": 2881,
+      "sha256": "b1ece0fcc698360b52c9754036bfd3718a325525f6433d8b6321d4b0686cef7d"
+    },
+    ".cache/fluid-moving-geometry-stage13-20261029/EndpointExchange.h": {
+      "bytes": 4055,
+      "sha256": "fe1b0e4a3da4be45dac92cdf29670e20ea76b17dd30da2a16b10231a8a9b9553"
+    },
+    ".cache/fluid-moving-geometry-stage13-20261029/LocalGeometry.h": {
+      "bytes": 3922,
+      "sha256": "648dcc8b1265c1afc11ab57fb36d8ebee8ba33993004214733c2d657eab35e21"
+    },
+    ".cache/fluid-moving-geometry-stage13-20261029/LocalizedGeometry.h": {
+      "bytes": 1925,
+      "sha256": "bb7e37a358e20b854847d01e9a09d1c49f12a79cb328e5d67c8af03bc3984bbc"
+    },
+    ".cache/fluid-moving-geometry-stage13-20261029/MotionCompiler.h": {
+      "bytes": 19461,
+      "sha256": "5413de236dc3c80079e3819a3181a1ddd7485cea1ed8198af0082d011a21d09a"
+    },
+    ".cache/fluid-runtime-candidates-stage16-20261029/geometry/BoundaryCompiler.h": {
+      "bytes": 13209,
+      "sha256": "ef788fabf9eb44605515b6b6ef1cd18bf06252bb4bd5a30310fcd5557d7582b8"
+    },
+    ".cache/fluid-runtime-candidates-stage16-20261029/geometry/FactoredFaceMetrics.h": {
+      "bytes": 10477,
+      "sha256": "4deebc473f9e927df3180b2982ceefa6b7a37fa34217809ae13a6c0b40200bc5"
+    },
+    ".cache/fluid-runtime-candidates-stage16-20261029/geometry/FastPolyhedralMoments.h": {
+      "bytes": 13962,
+      "sha256": "60248b8fbcbacda210efee8390b6a245e46215ac07a8f655024657537416a22d"
+    },
+    ".cache/fluid-runtime-candidates-stage16-20261029/geometry/PolyhedralMoments.h": {
+      "bytes": 8683,
+      "sha256": "43ac18fe0aff50418fe26dc0684c1b15df830d780a583bd38662923d9148760f"
+    },
+    ".cache/fluid-runtime-candidates-stage16-20261029/runtime/FaceEpoch.h": {
+      "bytes": 16494,
+      "sha256": "c8a1e9daed80eb88dad62d85f1b052b81d2683bf87a118003c288a51658752e0"
+    },
+    ".cache/fluid-runtime-candidates-stage16-20261029/vem/CondensedCell.h": {
+      "bytes": 4761,
+      "sha256": "391d6e12ea5a6da8b055ecc05cf3320a8130ff246e6d33170b9279ca25509b59"
+    },
+    ".cache/fluid-runtime-candidates-stage16-20261029/vem/VemLocal.h": {
+      "bytes": 13478,
+      "sha256": "fd94cbc565e3ec4958f180ebfd4185bf4346bef1ffac116d4d63e315177667bc"
+    },
+    "src/Classification.h": {
+      "bytes": 1442,
+      "sha256": "0f52e7b6ce06b2ec220d65b56e1f103e052b4f2c3fe8afc839f64981459a160e"
+    },
+    "src/CollisionShapes.h": {
+      "bytes": 2983,
+      "sha256": "0f7d625998b5cd037412b2b64ef3aa452bfd9eee86086b570f2350e87ac24cf2"
+    },
+    "src/GravityField.h": {
+      "bytes": 2205,
+      "sha256": "40cdb1655c59509dba047ead9f53c797d5cb461075eaa0beb7c79f1768c17ff6"
+    },
+    "src/JointTypes.h": {
+      "bytes": 3750,
+      "sha256": "392d773a0d9de9a77d32b712836bac84094eb53efd2006d928473816edbe590e"
+    },
+    "src/LiquidGeometry.h": {
+      "bytes": 4580,
+      "sha256": "9f889a91e79adf93d35b7946024e1159675593adf5519dbf9ff5cb5094d8cee5"
+    },
+    "src/Material.h": {
+      "bytes": 2920,
+      "sha256": "792972f72366e267f20e1265ce06b87997d30bcbfad86d1312a4d7eadd03a2cd"
+    },
+    "src/MeshData.h": {
+      "bytes": 2983,
+      "sha256": "9e597eed6ac3abb67d7c8d3f0645a700c6716a6f43972b7e6b0dc9ba244eee0e"
+    },
+    "src/PhysicsConstraintBatch.h": {
+      "bytes": 2913,
+      "sha256": "3fc4ae23493d120414ef5a288fecda48f1411e6bb127e37f18337e63f0867cae"
+    },
+    "src/PhysicsHandles.h": {
+      "bytes": 452,
+      "sha256": "9fa13d0cbcfae6d61a5b3d5716aa35c523b8327d47144ec8c1413b679808966f"
+    },
+    "src/PhysicsWorld.h": {
+      "bytes": 36562,
+      "sha256": "fed5104a4c62d5f656952c9e39b2e7cbc66b5591cf6167ec406169ce9f102fcb"
+    },
+    "src/TextureData.h": {
+      "bytes": 1089,
+      "sha256": "6645f4d1e3543a5127994a99ac4ceed326f1c23bae111e991d015208b0db2efe"
+    }
+  }
+}

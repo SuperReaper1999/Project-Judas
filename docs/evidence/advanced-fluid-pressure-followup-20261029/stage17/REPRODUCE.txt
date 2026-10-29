@@ -1,0 +1,61 @@
+Read docs/ADVANCED_FLUID_CONVEX_PORTS.txt and RESULTS.json first. This is PRIVATE
+numerical/native research, not a new fluid runtime or released fix.
+
+VERIFY WITHOUT EXTRACTION/EXECUTION
+ python3 docs/evidence/advanced-fluid-pressure-followup-20261029/stage17/verify_evidence.py
+
+RESTORE IN A SCRATCH COPY ONLY
+The archive contains Stage17 source, experiment/failure snapshots, original raw
+logs and the recursive local quote-include dependency closure. It does not
+contain binaries, external headers or independent research. Extract at a scratch
+repository root, never over the active investigation. GLM development headers,
+Boost1.90 headers and Eigen3.4 headers are required for plain probes. Set
+BOOST_INCLUDE_DIR and EIGEN_INCLUDE_DIR if they are not at the original extracted
+/tmp paths. GNU15.2/O3/C++17 is the recorded host configuration. No engine
+external dependency has been added by these private references.
+
+FINAL PLAIN PROGRAMS (RUN SERIALLY)
+Let P=.cache/fluid-convex-ports-stage17-20261029; substitute its literal path below:
+ python3 $P/run_probe.py PreparedMechanicalTests.cpp
+ python3 $P/run_probe.py VoxelPhysicalContracts.cpp
+ python3 $P/run_probe.py VoxelCondensationTests.cpp
+ python3 $P/run_probe.py SymmetricVoxelPortsTests.cpp
+ python3 $P/run_probe.py SymmetricVoxelPortGeometryTests.cpp
+ python3 $P/run_probe.py SymmetricVoxelResolutionProbe.cpp
+ python3 $P/run_probe.py TranslatedSolidSweepTests.cpp
+ python3 $P/run_probe.py PortMomentumTransportTests.cpp
+Logs and receipts distinguish older attempts from final-source runs. A log with
+zero failures qualifies only its explicitly stated scope. The momentum program
+measures/documentedly FAILS to conserve angular momentum; it is not a finished
+physical momentum integrator. Its 995 passing assertions certify linear packets,
+mean update, energy bounds, fluctuation retention, rollback/rejection and that
+angular diagnostic, not a zero-angular-error claim.
+
+NATIVE PROGRAM
+ python3 $P/run_symmetric_prepared_native.py
+Uses build/ Makefile probe flags/link interface, build/libjudas_engine.a, and
+.cache/fluid-contact-repair/stage5-exact-volume-domain.o. The helper source and
+Stage5 VolumeDomain.cpp dependency are archived. In a separate prepared Release
+build, reconstruct that override with setup_probes.compile using the recorded
+Stage5 source, then run this helper. The existing archive was reused unchanged;
+its physics source is identical to current, while its embedded build identity is
+older. Do not call it a fresh SDK or copy unrelated old artifacts into a release.
+Actual source/library/object/tool hashes and build inputs are in PROVENANCE.json.
+
+PRESERVED FAILURES (EXPECTED NONZERO; DO NOT WEAKEN THEIR GATES)
+ python3 $P/run_probe.py VoxelCondensationTests.cpp corner
+ python3 $P/run_probe.py SymmetricThinAdmissionTests.cpp corner
+ python3 $P/run_probe.py SymmetricThinAdmissionTests.cpp gap
+ python3 $P/run_probe.py ConvexAgglomerationTests.cpp
+ python3 $P/run_probe.py SymmetricAgglomerationTests.cpp
+Consult each program's argv and logs before reproducing an earlier variant.
+Exact original source snapshots are under experiments/. The pre-exact-compatibility
+Network/LocalCondensed snapshots reproduce the formerly false closed-body guard;
+restore both ONLY in another disposable copy of the private source hierarchy.
+Other source experiments (framed/resolved/Krylov) remain archived with their own
+failed logs. They are not all claimed rerun against the final private headers.
+
+Numerical source plus exact compiler flags are preserved; preliminary executables
+were overwritten during iteration and are not claimed bit-reproducible artifacts.
+Frozen Stage14/15/16 fingerprints were reverified unchanged. No new Windows,
+Android, editor or exported-package result is claimed for this private batch.

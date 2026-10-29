@@ -1,0 +1,145 @@
+{
+  "schema": 1,
+  "recordedUtc": "2026-10-29T23:40:36.801034+00:00",
+  "parent": "69813a96d6f21f33ca1aed525af7ef18f130bb68",
+  "mainUnchanged": "57f4c7a5e6cc51099f8112a0dd0e49bf0f827909",
+  "compiler": "g++ (Ubuntu 15.2.0-16ubuntu1) 15.2.0",
+  "cpu": "AMD Ryzen 5 5600, 6 cores / 12 logical CPUs",
+  "ramKiB": "MemTotal:        8045200 kB",
+  "plainBuildFlags": [
+    "-std=c++17",
+    "-O3",
+    "-g0",
+    "-DNDEBUG"
+  ],
+  "externalHeaderInputs": [
+    "GLM development headers",
+    "Boost1.90 (BOOST_INCLUDE_DIR override)",
+    "Eigen3.4 (EIGEN_INCLUDE_DIR override)"
+  ],
+  "nativeArchiveBuildIdentity": "Historical Experimental9be9e7a-dirty; physics source unchanged; renderer-rain later source differs only RendererWeather.inl",
+  "inputs": {
+    "build/libjudas_engine.a": {
+      "bytes": 31267348,
+      "sha256": "427bc3b2d34b765861d98756a8c700d1b9cd529a40eeee89dff962e51d301821"
+    },
+    ".cache/fluid-contact-repair/stage5-exact-volume-domain.o": {
+      "bytes": 138136,
+      "sha256": "d1b929fbb971b05b44c7fef07a08fcedcffdbc6069eb99aa0dc1b030bbc106a5"
+    },
+    ".cache/fluid-contact-repair/setup_probes.py": {
+      "bytes": 1218,
+      "sha256": "192fea9fc3920924ea5921e4752beca119b5fc03b96aa13af78467cfa33d5d4a"
+    },
+    "build/CMakeFiles/judas_script_tests.dir/flags.make": {
+      "bytes": 1444,
+      "sha256": "c75ed1380bb87c1e538c43741ea0d873f9e62309613f1ce2ebabe78198d43a70"
+    },
+    "build/CMakeFiles/judas_script_tests.dir/link.txt": {
+      "bytes": 666,
+      "sha256": "b5c82df30277db633e329ea563040d629a7f85da5994c474ddf392feb8cf25f8"
+    }
+  },
+  "actualBatchReceipts": [
+    [
+      {
+        "name": "prepared-mechanical-final",
+        "command": [
+          "python3",
+          ".cache/fluid-convex-ports-stage17-20261029/run_probe.py",
+          "PreparedMechanicalTests.cpp"
+        ],
+        "returncode": 0,
+        "startedUnix": 1793316683.9407446,
+        "elapsedSeconds": 22.45801544189453,
+        "log": ".cache/fluid-convex-ports-stage17-20261029/logs/prepared-mechanical-final.log",
+        "binarySha256": "1a7c5650b30227d5ddc427d1c4b65be3846eedadd6e2d5e7600112a9a072feed"
+      },
+      {
+        "name": "symmetric-resolution-final",
+        "command": [
+          "python3",
+          ".cache/fluid-convex-ports-stage17-20261029/run_probe.py",
+          "SymmetricVoxelResolutionProbe.cpp"
+        ],
+        "returncode": 0,
+        "startedUnix": 1793316706.3998857,
+        "elapsedSeconds": 20.914240837097168,
+        "log": ".cache/fluid-convex-ports-stage17-20261029/logs/symmetric-resolution-final.log",
+        "binarySha256": "381b2f9e5f846d33377c4f9d57c3288efe013984a394fdae69fbb5eac00f0c5c"
+      },
+      {
+        "name": "translated-sweep-final",
+        "command": [
+          "python3",
+          ".cache/fluid-convex-ports-stage17-20261029/run_probe.py",
+          "TranslatedSolidSweepTests.cpp"
+        ],
+        "returncode": 0,
+        "startedUnix": 1793316727.315057,
+        "elapsedSeconds": 11.373673677444458,
+        "log": ".cache/fluid-convex-ports-stage17-20261029/logs/translated-sweep-final.log",
+        "binarySha256": "fc098e77680e6cecc959c42f01cd6ae7899c87ed2ca46b5ce868c2a3c255cd3a"
+      },
+      {
+        "name": "momentum-transport-v1",
+        "command": [
+          "python3",
+          ".cache/fluid-convex-ports-stage17-20261029/run_probe.py",
+          "PortMomentumTransportTests.cpp"
+        ],
+        "returncode": 0,
+        "startedUnix": 1793316738.6892228,
+        "elapsedSeconds": 26.847367525100708,
+        "log": ".cache/fluid-convex-ports-stage17-20261029/logs/momentum-transport-v1.log",
+        "binarySha256": "b84ed1bdf607c8b7485fd77869b41ecf0980bf936c593e765b639a8ca5a901b5"
+      },
+      {
+        "name": "symmetric-native-final",
+        "command": [
+          "python3",
+          ".cache/fluid-convex-ports-stage17-20261029/run_symmetric_prepared_native.py"
+        ],
+        "returncode": 0,
+        "startedUnix": 1793316765.5379415,
+        "elapsedSeconds": 24.965461492538452,
+        "log": ".cache/fluid-convex-ports-stage17-20261029/logs/symmetric-native-final.log"
+      },
+      {
+        "name": "voxel-condensation-final",
+        "command": [
+          "python3",
+          ".cache/fluid-convex-ports-stage17-20261029/run_probe.py",
+          "VoxelCondensationTests.cpp"
+        ],
+        "returncode": 0,
+        "startedUnix": 1793316790.5036602,
+        "elapsedSeconds": 25.944196462631226,
+        "log": ".cache/fluid-convex-ports-stage17-20261029/logs/voxel-condensation-final.log",
+        "binarySha256": "e184984978ee0f36011ccb72a2cb3ecc0be46f18511e1bf56a884a7add04a7de"
+      }
+    ],
+    [
+      {
+        "name": "momentum-transport-final-v2",
+        "command": [
+          "python3",
+          ".cache/fluid-convex-ports-stage17-20261029/run_probe.py",
+          "PortMomentumTransportTests.cpp"
+        ],
+        "returncode": 0,
+        "elapsedSeconds": 27.41261601448059
+      },
+      {
+        "name": "translated-sweep-final-v2",
+        "command": [
+          "python3",
+          ".cache/fluid-convex-ports-stage17-20261029/run_probe.py",
+          "TranslatedSolidSweepTests.cpp"
+        ],
+        "returncode": 0,
+        "elapsedSeconds": 11.428369998931885
+      }
+    ]
+  ]
+}
