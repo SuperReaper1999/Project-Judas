@@ -1,0 +1,72 @@
+{
+  "schema": 1,
+  "publishedSource": "24ae686f5918105dd84c2b00f98f5354bad13ef8",
+  "tag": "v1.0.2-alpha.1",
+  "releaseUrl": "https://github.com/SuperReaper1999/Project-Judas/releases/tag/v1.0.2-alpha.1",
+  "publishedAt": "2026-10-29T19:04:05Z",
+  "preparationRun": 40929238961,
+  "publicationRun": 40935654514,
+  "publicationPassed": true,
+  "firstPublicationAttempt": {
+    "run": 40935112585,
+    "result": "Rejected before steps: Experimental is not an allowed protected publication branch; successful retry from main; protection unchanged"
+  },
+  "artifacts": [
+    {
+      "name": "CANDIDATE.json",
+      "bytes": 1888,
+      "digest": "sha256:eb15962a4d4526b48b84c9e2a529c29749485872078b1f0b4c9dbf8db476c924",
+      "url": "https://github.com/SuperReaper1999/Project-Judas/releases/download/v1.0.2-alpha.1/CANDIDATE.json"
+    },
+    {
+      "name": "JudasEngine-1.0.2-alpha.1-Alpha-Linux-x86_64.tar.gz",
+      "bytes": 386171906,
+      "digest": "sha256:41a742df85318ec4b129028372e1fa0c1a0956766f75e2f944ed1aef62e23f99",
+      "url": "https://github.com/SuperReaper1999/Project-Judas/releases/download/v1.0.2-alpha.1/JudasEngine-1.0.2-alpha.1-Alpha-Linux-x86_64.tar.gz"
+    },
+    {
+      "name": "JudasEngine-1.0.2-alpha.1-Alpha-Windows-x86_64.zip",
+      "bytes": 104071704,
+      "digest": "sha256:50b266880727fe555cc211da0516d06e9a2e177df361ea226a9dcb5da5639bb2",
+      "url": "https://github.com/SuperReaper1999/Project-Judas/releases/download/v1.0.2-alpha.1/JudasEngine-1.0.2-alpha.1-Alpha-Windows-x86_64.zip"
+    },
+    {
+      "name": "JudasEngine-1.0.2-alpha.1-Source.tar.gz",
+      "bytes": 70617713,
+      "digest": "sha256:751f75fb3bd50da0b0b4dcc54d95aff6f34b1cc15e74127c29f4fe812c23fd66",
+      "url": "https://github.com/SuperReaper1999/Project-Judas/releases/download/v1.0.2-alpha.1/JudasEngine-1.0.2-alpha.1-Source.tar.gz"
+    },
+    {
+      "name": "QUALIFICATION.json",
+      "bytes": 394,
+      "digest": "sha256:18daa8ec0c0d4efe4f54de8e3ab72fe56ca708ed9161edd7e5d50b4b407176ed",
+      "url": "https://github.com/SuperReaper1999/Project-Judas/releases/download/v1.0.2-alpha.1/QUALIFICATION.json"
+    },
+    {
+      "name": "release-manifest.json",
+      "bytes": 4979,
+      "digest": "sha256:69930bb8ff4172a2cf4546526ad87a096653f5cbf8542c17d56fe07a7dbd82e8",
+      "url": "https://github.com/SuperReaper1999/Project-Judas/releases/download/v1.0.2-alpha.1/release-manifest.json"
+    },
+    {
+      "name": "RELEASE_NOTES.md",
+      "bytes": 3381,
+      "digest": "sha256:0bc6e2507392be154060d131624019f82f14d4daf125e1ab3f4d1155ba67e1cb",
+      "url": "https://github.com/SuperReaper1999/Project-Judas/releases/download/v1.0.2-alpha.1/RELEASE_NOTES.md"
+    },
+    {
+      "name": "SHA256SUMS",
+      "bytes": 678,
+      "digest": "sha256:1d0fb4f04d0e6bd102d9df46366568896c775e3194e209eb900eec50ce7f7b00",
+      "url": "https://github.com/SuperReaper1999/Project-Judas/releases/download/v1.0.2-alpha.1/SHA256SUMS"
+    }
+  ],
+  "verification": {
+    "publisherDownloadedAndHashedAllPayloads": true,
+    "liveAlphaManifestMatchesPublishedManifest": true,
+    "originalAndPreviousUpdaterOffers": true,
+    "previousReleasesUnchanged": true,
+    "issue20Closed": true
+  },
+  "scope": "Hosted Linux SDK/editor/export and native Windows MSVC SDK/tool/contracts; no new Windows hardware or Android acceptance; advanced fluids locked"
+}

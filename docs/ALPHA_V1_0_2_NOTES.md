@@ -56,3 +56,30 @@ source, release manifest and SHA-256 checksums under
 Verify downloads before extraction. Alpha-channel editors can notify about the
 newer version; nothing installs automatically or overwrites a project. Android
 retains its documented qualification; no new Android package trial is claimed.
+
+## Release record
+
+Published on 29 October 2026 with the operator's explicit acceptance and publication
+instruction. Tag `v1.0.2-alpha.1` identifies exact source
+`24ae686f5918105dd84c2b00f98f5354bad13ef8`.
+
+- [Preparation](https://github.com/SuperReaper1999/Project-Judas/actions/runs/40929238961):
+  successful Ubuntu 24.04 Linux SDK/editor/export and native Windows MSVC
+  SDK/tool/selected-contract qualification. All 17 common SDK tools are present;
+  Windows additionally includes its readiness test tool.
+- [Publication](https://github.com/SuperReaper1999/Project-Judas/actions/runs/40935654514):
+  protected environment approval, exact prepared artifacts, downloaded payload
+  hash verification and live Alpha manifest update succeeded.
+- The first publication dispatch used Experimental and was rejected by the
+  existing protected-branch environment policy before any publication step.
+  Retrying from accepted main succeeded; no guard was bypassed or relaxed.
+- Both the original Alpha v1.0.0 updater and the previous-version update path
+  recognize the live compatible v1.0.2 offer. Notification installs nothing.
+- Issue [#20](https://github.com/SuperReaper1999/Project-Judas/issues/20) is closed.
+  Previous Alpha release tags and artifact identities remain unchanged.
+
+[Publication receipt](evidence/alpha-v1.0.2-20261029/PUBLICATION.json) records exact
+asset hashes and verification scope. Sealed package preparation records retain
+historical pending-approval wording; this record documents the later approval.
+No fresh Windows hardware, controller, audio or Android acceptance is inferred.
+Advanced fluids remain compiled-locked; Basic Water is unchanged.

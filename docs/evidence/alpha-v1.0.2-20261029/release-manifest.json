@@ -1,0 +1,39 @@
+{
+  "schema": 1,
+  "channel": "Alpha",
+  "version": "1.0.2-alpha.1",
+  "tag": "v1.0.2-alpha.1",
+  "source_revision": "24ae686f5918105dd84c2b00f98f5354bad13ef8",
+  "compatibility": {
+    "update_protocol": 1,
+    "engine_major": 1
+  },
+  "notes": "# Judas Engine Alpha v1.0.2\n\nMachine version: **`1.0.2-alpha.1`**. This is an Alpha patch, not Stable/GA.\nThe operator accepted the rain correction and authorized promotion/publication\non 29 October 2026. Exact source and artifact identities are recorded in the\nrelease manifest, SDK `BUILD_INFO.json` and checksums. Preparation is not\npublication: the release and Alpha channel manifest must both be live.\n\n## Corrections\n\n- Rain streaks and splashes remain visible against dim overcast/storm skies.\n  Lit highlights add light instead of replacing the sky with similarly coloured\n  opaque albedo. There is no emissive floor or whole-scene brightness increase.\n- Rain preserves HDR target alpha. Snow and tornado debris retain normal alpha\n  coverage. Depth/shelter rejection, bounded particle counts, wind, arbitrary-up\n  behaviour, dusk/night sky lighting and lightning remain in place.\n- Native SDKs include the optional physical-constraint participant interface\n  developed on Experimental for future material coupling. It validates proposed\n  impulses against native constraints before publication; it is not an enabled\n  fluid backend, new gameplay controller or JudasJS binding. Existing projects\n  have no participant unless explicitly supplied by native code. Rebuild native\n  integrations against matching headers/libraries; Alpha binary ABI compatibility\n  across SDKs is not promised.\n\n## Evidence and support boundaries\n\nThe rain correction passed **280 focused Linux checks** across lighting,\nrendering, weather, world ownership and scripting/persistence. The original\nsix-check visibility failure and a three-check intermediate HDR-alpha failure\nare retained. No original threshold was relaxed.\n\nThe supplied original and v1.0.1 Skyhaven Flight projects run without game edits.\nTests use real hangar input for squalls/storm/night, actual editor Play/Stop,\nand an exported package moved to an unrelated `/tmp` working directory. Its\ncaptures match the development build exactly. Rendering evidence used Mesa\nllvmpipe software OpenGL; this is not new physical-GPU/controller/audio or\nWindows hardware certification. Exact-source release preparation records its\nadditional Linux SDK/workflow and hosted Windows MSVC checks separately.\n\nSee [the correction and evidence](ISSUE_20_RAIN_CONTRAST.txt),\n[platform/support matrix](ALPHA_SUPPORT_MATRIX.md),\n[release procedure](RELEASING.md) and [version policy](VERSIONING.md).\n\n**Advanced Fluid Dynamics remains compiled-locked and unavailable in Alpha.**\nBasic Water and swimming remain independent. Private numerical fluid research\nand its archived experiments are not a production backend or a fluid enable\nswitch. Moving geometry, free surfaces, wet/dry evolution, practical conditioning\nand end-to-end qualification remain outstanding. This patch does not unlock it.\nPrevious published Alpha tags and artifacts are unchanged.\n\n## Downloads and updates\n\nThe publication delivers Linux x86-64 SDK, Windows x86-64 SDK, tracked engine\nsource, release manifest and SHA-256 checksums under\n[`v1.0.2-alpha.1`](https://github.com/SuperReaper1999/Project-Judas/releases/tag/v1.0.2-alpha.1).\nVerify downloads before extraction. Alpha-channel editors can notify about the\nnewer version; nothing installs automatically or overwrites a project. Android\nretains its documented qualification; no new Android package trial is claimed.\n",
+  "notes_url": "https://github.com/SuperReaper1999/Project-Judas/releases/tag/v1.0.2-alpha.1",
+  "artifacts": [
+    {
+      "name": "JudasEngine-1.0.2-alpha.1-Alpha-Linux-x86_64.tar.gz",
+      "platform": "Linux",
+      "architecture": "x86_64",
+      "bytes": 386171906,
+      "sha256": "41a742df85318ec4b129028372e1fa0c1a0956766f75e2f944ed1aef62e23f99",
+      "url": "https://github.com/SuperReaper1999/Project-Judas/releases/download/v1.0.2-alpha.1/JudasEngine-1.0.2-alpha.1-Alpha-Linux-x86_64.tar.gz"
+    },
+    {
+      "name": "JudasEngine-1.0.2-alpha.1-Alpha-Windows-x86_64.zip",
+      "platform": "Windows",
+      "architecture": "x86_64",
+      "bytes": 104071704,
+      "sha256": "50b266880727fe555cc211da0516d06e9a2e177df361ea226a9dcb5da5639bb2",
+      "url": "https://github.com/SuperReaper1999/Project-Judas/releases/download/v1.0.2-alpha.1/JudasEngine-1.0.2-alpha.1-Alpha-Windows-x86_64.zip"
+    },
+    {
+      "name": "JudasEngine-1.0.2-alpha.1-Source.tar.gz",
+      "platform": "Source",
+      "architecture": "any",
+      "bytes": 70617713,
+      "sha256": "751f75fb3bd50da0b0b4dcc54d95aff6f34b1cc15e74127c29f4fe812c23fd66",
+      "url": "https://github.com/SuperReaper1999/Project-Judas/releases/download/v1.0.2-alpha.1/JudasEngine-1.0.2-alpha.1-Source.tar.gz"
+    }
+  ]
+}

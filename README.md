@@ -10,10 +10,9 @@ transitions. Ordinary game policy lives in project JavaScript; the engine
 provides the reusable systems and runtime.
 
 **[Judas Engine Alpha v1.0.2](https://github.com/SuperReaper1999/Project-Judas/releases/tag/v1.0.2-alpha.1)**
-(`1.0.2-alpha.1`) is the current source release identity. The operator accepted
-and authorized this rain-contrast patch on 29 October 2026. Publication is complete
-only when its verified Linux/Windows SDKs, source archive and checksums are live
-on that release page. Alpha is not Stable/GA; documented limits still apply.
+(`1.0.2-alpha.1`) was published on 29 October 2026 after operator acceptance.
+Verified Linux/Windows SDKs, source archive and checksums are available on that
+release page. Alpha is not Stable/GA; documented limits still apply.
 
 **Advanced Fluid Dynamics is disabled in Alpha due to contact stability issues.**
 Basic Water and swimming remain available. See the

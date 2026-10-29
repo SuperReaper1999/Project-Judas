@@ -5,10 +5,11 @@
 
 ## Current boundary
 
-Alpha v1.0.2 (`1.0.2-alpha.1`) is the operator-authorized rain-contrast patch.
-Its exact-source packages are being prepared and qualified; publication is not
-complete until the verified release and Alpha channel manifest are live. See
-[the patch notes](ALPHA_V1_0_2_NOTES.md). Prior releases below remain immutable.
+**[Alpha v1.0.2 is published](https://github.com/SuperReaper1999/Project-Judas/releases/tag/v1.0.2-alpha.1)**
+on 29 October 2026 from `24ae686f5918105dd84c2b00f98f5354bad13ef8`.
+The verified Linux/Windows SDKs, source, checksums and Alpha update manifest are
+live. See [the release record](ALPHA_V1_0_2_NOTES.md#release-record).
+Prior releases below remain immutable.
 
 **[Alpha v1.0.1 is published](https://github.com/SuperReaper1999/Project-Judas/releases/tag/v1.0.1-alpha.1)** on
 29 October 2026 from `13b032080c6300c50af8bf44536c2dd8da5814d2`, with operator authorization.
@@ -138,8 +139,11 @@ known limits and human checklist. Stop for final approval.
    files, downloads and verifies every artifact, then publishes. It never
    overwrites final release artifacts. It updates Alpha.json **after** verification.
 6. Alternatively, use **Publish explicitly accepted release** for the exact
-   successfully prepared CI run, then approve its protected environment. That
-   workflow validates run origin, exact SHA and preparation-workflow identity.
+   successfully prepared CI run, then approve its protected environment. Dispatch
+   the publication workflow from accepted `main` (`gh workflow run ... --ref main`)
+   when the environment permits protected branches only; an Experimental dispatch
+   is rejected before the publication job starts. Do not relax that protection.
+   The workflow validates run origin, exact SHA and preparation-workflow identity.
    Its artifacts must themselves have received final approval; do not substitute
    them for different locally approved binaries.
 7. Recheck immutable downloads and the live trusted channel manifest, then test a
