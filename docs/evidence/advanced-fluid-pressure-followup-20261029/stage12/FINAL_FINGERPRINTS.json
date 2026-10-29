@@ -1,0 +1,15 @@
+{
+  "schema": 1,
+  "parentRevision": "d68742fb5b72e41557aff69d59009641ff58a170",
+  "scope": "Complete private fixed-geometry refined reconstruction and finite native contacts; no production/API/Alpha policy change.",
+  "selfHashExcluded": true,
+  "files": {
+    "docs/ADVANCED_FLUID_REFINED_RECONSTRUCTION.txt": "c1a39b80f47c5a7b0333dda1446d0d0e9f65205c497fcd3f766f7df15981adb9",
+    "docs/evidence/advanced-fluid-pressure-followup-20261029/stage12/CHANGED_FILES.txt": "f7699cb3fa414d592c64a0f8dc6c49342584ce785bb521c74c0ef63882e1fb13",
+    "docs/evidence/advanced-fluid-pressure-followup-20261029/stage12/REPRODUCE.txt": "b5ed9bab064fc5141857ab4ce5592f052b0392c4e39c4afc2d395c2318ccbcf0",
+    "docs/evidence/advanced-fluid-pressure-followup-20261029/stage12/RESULTS.json": "6aa248c72e1894d2af2e99465d91c6fa397a229e6f48bf39907994710d00a78b",
+    "docs/evidence/advanced-fluid-pressure-followup-20261029/stage12/SOURCE_MANIFEST.json": "36a159f8df120beb17c34701e5b38311fb23e77e4433c454c993d143601aa002",
+    "docs/evidence/advanced-fluid-pressure-followup-20261029/stage12/stage12-refined-reconstruction-reference.tar.gz": "78c98774b7332cfdc474f4056375548be8161a681eafcea633f803bd09b623ea",
+    "docs/evidence/advanced-fluid-pressure-followup-20261029/stage12/verify_evidence.py": "411d6cb2b5d481496846dac0721572fbfdbb76b6e3a09cb38ccf26990b0008ba"
+  }
+}

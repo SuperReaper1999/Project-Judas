@@ -1,0 +1,161 @@
+ADVANCED FLUID FOLLOW-UP — COMPLETE REFINED RECONSTRUCTION
+29 October 2026 | Experimental | Fixed-geometry private numerical checkpoint
+Parent: d68742fb5b72e41557aff69d59009641ff58a170
+
+IMPLEMENTED
+Stage11 established an independent oracle for the worst local thin-cut problem.
+Stage12 applies that correction to EVERY local patch and reconstructs dependent
+as well as free-face flows. Geometry, mass, constraints, source definitions,
+physical timestep and acceptance tolerances are unchanged. No cell is removed,
+no fluid is clamped, no damping is added and no native physics budget changes.
+
+The private RefinedRuntime owns original fixed-geometry response operators,
+value-owned compensated sparse gradient coefficients, local triangular factors
+and physical flux scales. It evaluates g=J^T(r-Jx) with paired-binary64 arithmetic
+and applies two corrections through the existing QR factors. Dependent flows
+are then rebuilt from the actual continuity equations, not repaired afterward.
+Unsupported arithmetic and nonconverged final correction are explicit failures.
+The existing final continuity(1e-10), reaction(1e-8), kinetic-work(1e-9) checks
+remain. The last correction must be finite and below1e-12 in physical free flux.
+This correction-size check is a runtime refusal criterion, not a universal
+forward-error certificate; the independent accuracy tests remain essential.
+
+No tracked production implementation/API, Basic Water, M54/M55 or experimental
+policy changes. Alpha remains compiled-locked. Independent fluid research is
+untouched. These sources are reproducible archived prototypes, not a new runtime
+backend hidden behind an enabled project flag.
+
+INDEPENDENT NUMERICAL VALIDATION
+FullReconstructionTests:78 assertions.
+- Three orientations:0,3.2137858346770188e-11,.37rad about normalize(1,2,-.3).
+- Each receives a nonlinear source, a changed source plus nonzero prescribed
+  translation/rotation, then a zero source. All six patches are checked per case.
+- Independent160-bit local least-squares solves compare EVERY free coordinate.
+  Dependent coordinates are separately recomposed at160 bits using stored
+  continuity coefficients, coarse flows and prescribed rigid motion.
+- Maximum full free/dependent physical flux error:1.129e-19. Zero input gives
+  exactly zero flux, reaction and kinetic energy, without retained stale state.
+- A separate160-bit dense saddle solve checks the outer coarse system directly,
+  rather than its runtime conservation-elimination/SparseQR path. It checks ALL
+  original conservation rows, not only its selected independent rows. Maximum
+  coarse flux difference below1e-18; the deliberately corrupted output is rejected
+  in every orientation. Raw residuals and per-case errors are preserved.
+
+Oracle boundary: the local checks hold the coarse solution fixed. The outer
+oracle uses stored finite condensed operators. It does not independently derive
+exact geometry, replace the macro trace model or prove equivalence to an
+unrestricted fine-grid continuum solution. The Stage11 independent Decimal QR
+already verifies the difficult local oracle with another decomposition/arithmetic;
+its frozen source and fixture remain unchanged.
+
+SOURCE / FAILURE CONTROLS
+RefreshRefinedTests:13 assertions.
+- Physical source sampling agrees exactly with original assembly.
+- Refreshed source equals independently fresh condensation on ordinary oblique
+  geometry; physical field/reaction/energy remain within unchanged bounds.
+- Invalid dimensions, NaN and finite-but-overflowing kinetic source are rejected
+  before source publication. Previous flux and source remain bit-identical.
+- Invalid local input, deliberately broken triangular preconditioner and changed
+  floating-point rounding mode are rejected. Restoring the valid configuration
+  reproduces the prior physical result exactly. No silent fallback to bad flow.
+
+NATIVE PHYSICS
+NativeRefinedTests:128 assertions across seven scenarios.
+Actual MK2 PhysicsConstraintBatch snapshots supply body identity, mass, rotated
+inertia and bilateral joint constraints. The solve includes actual body degrees
+of freedom; bodies are not turned static by policy. Supported and free fixtures,
+heavy/light bodies and tiny/ordinary rotations use the refined complete flow.
+Completed native endpoints and combined fluid/body kinetic energy are checked,
+not only model status. Maximum positive endpoint discrepancy is below3e-7, the
+existing bound. Supported load agrees with independent displaced-volume buoyancy.
+Omitting joint reactions is rejected with no material publication.
+
+NativeGroundRefinedTests:50 assertions.
+Actual native four-point frictionless floor contact, no substitute joint:
+-160kg box, half-extents(.25,.25,.25), displaced water125kg: floor supports it;
+  pressure impulse5.10937527N*s, remaining normal impulse1.43062N*s;
+  completed endpoint error9.01e-19; no kinetic-energy increase.
+-20kg box lifts off; floor impulse is exactly zero rather than tensile/clamped;
+  completed endpoint discrepancy5.81e-10.
+- Omitting the required normal reactions is rejected by native complementarity
+  validation before any foreign/material state publication.
+The FOUR-contact proof enumerates the16 possible active subsets and accepts only
+nonnegative reactions and valid inequalities. This is a bounded fixture oracle,
+not a general production contact/friction/impact active-set implementation. Its
+initial exact-touch contacts have homogeneous normal-speed targets. Nonzero
+speculative targets, friction, arrivals and general stacks are not qualified.
+
+Both native programs publish ONE finite coupled interaction. Later phases use
+ordinary native response. They do not claim repeated moving-geometry/remapping,
+full-Step rollback, continuous buoyancy during motion or the original Terrain
+planet application's acceptance. Snapshot handles are not retained in caches.
+
+MATERIAL CONSERVATION
+MaterialRefinedTests:1927 assertions.
+Closed oblique geometry, existing nonzero vortex, six macro owners,240 transport
+steps at1/240s and33120 paired transfers. Global water and tracer quantities are
+EXACTLY conserved, with no negative quantities or tracer exceeding its owner.
+Maximum owner-capacity discrepancy7.099e-21. Projected circulation remains nonzero;
+energy falls from1.71898 to1.61867 through the physical projection. An oversized
+donor transfer is rejected without mutating existing material state.
+This is passive transport with a FIXED projected flow, NOT240 evolving pressure,
+momentum, free-surface or wet/dry solves. Do not mislabel the assertion count.
+
+MATCHED COMPLETE-PATH COST
+Linux Ryzen5 5600,8GB RAM, existing GNU15.2 Release/O3, no fast-math. One CPU-heavy
+job at a time. Each fixture has24 alternating-order samples, identical source,
+body velocity, geometry, cadence and physical acceptance conditions. Sampling,
+source refresh, global pressure, local reconstruction and final checks are timed.
+Values in ms; median is upper-middle, p95 is nearest rank.
+
+                           baseline             refined
+six-patch nonlinear thin
+ median                    20.3547              18.7421
+ p95                       20.9047              19.2165
+ worst                     21.8555              19.5856
+48-patch affine/rigid
+ median                    33.9357              34.6968
+ p95                       34.1280              34.8527
+ worst                     34.3256              34.9193
+
+The difficult thin-case primary flow changes by as much as1.123e-7 against the
+old inaccurate QR result. That is an intentional numerical correction, NOT
+trajectory equivalence. The independent accuracy proof uses the fixed original
+1e-12 flux bound; the old-reference comparison is not weakened or relabelled.
+The wider fixture's flow difference is7.082e-14. Maximum reconstructed balance
+is3.643e-20 there and1.292e-20 in the thin benchmark; maximum reaction discrepancy
+is6.397e-12 and4.365e-10 respectively. No unforced kinetic-energy gain occurred.
+
+The larger case pays about.76ms extra median for accurate reconstruction; no
+whole-backend speedup is claimed. Both warm costs remain expensive for a fluid
+substep. Cold preparation is1.86s/3.30s for402/980 tetrahedra and2190/5436 fine
+variables. Thus rebuilding geometry/operators every moving-solid step would be
+unacceptable. Process peak RSS is94,656/252,300KiB; baseline and candidate coexist
+in the same process, so this is NOT a before/after isolated memory comparison.
+Profiles, every sample, cold phases and numerical deltas are archived.
+
+FINAL SOURCE / EVIDENCE
+2276 final assertions across seven runs from six programs, including two matched fixture
+runs from the same benchmark binary. Preliminary66/75-assertion full proofs and
+initial timing logs are retained as history, not added to the final total.
+No full production suite, editor/standalone smoke or Windows/Android claims are
+appropriate for these private-reference-only changes. Existing native archive
+and final probe SHA256s/build header are recorded; they are not described as a
+freshly rebuilt published Alpha SDK. All Stage5-11 archived evidence is unchanged.
+Stage6's ACTIVE current-doc manifest has legitimately advanced since its historic
+hash; that known exception is recorded, never hidden by regenerating old hashes.
+
+Exact source, raw logs, results, fingerprints and reproduction instructions:
+ docs/evidence/advanced-fluid-pressure-followup-20261029/stage12/
+
+WHAT STILL BLOCKS AN ALPHA UNLOCK
+- Moving-solid geometry epochs, incremental invalidation and geometric conservation
+  with real displaced-volume transport, without per-step cold reconstruction.
+- Conservative momentum advection and genuinely evolving free surfaces/wet-dry.
+- General native contacts/friction/impacts and constraints beyond bounded proofs.
+- Full pressure-model/trace approximation accuracy and broader conditioning/rank
+  coverage. Two refinement steps are not a proof for arbitrary future geometry.
+- Practical total runtime/memory, native precision portability and M54 ownership.
+- Whole-application persistence, streaming/export and the original Terrain planet
+  failure, including repeated physical contact without launches.
+This checkpoint closes the all-local reconstruction question, not those systems.

@@ -1,0 +1,69 @@
+COMPLETE REFINED RECONSTRUCTION — PRIVATE FIXED-GEOMETRY REFERENCE
+
+Read docs/ADVANCED_FLUID_REFINED_RECONSTRUCTION.txt first. Advanced fluids remain
+compiled-locked; no production implementation or project policy is changed.
+
+1. python3 <this-directory>/verify_evidence.py
+   Verifies the exact archive/source/evidence bytes without extraction or
+   executing tests. FINAL_FINGERPRINTS.json seals the report and evidence files
+   except itself. Verify Stage5-11 separately; no historical hash was refreshed.
+   The known Stage6 current-doc inventory exception is active-document evolution,
+   not a modified historical artifact; RESULTS.json records both hashes.
+
+2. Use a scratch Judas checkout and the Stage11/Stage10 REPRODUCE.txt chain to
+   verify and extract Stage5-11 dependencies in order. Extract Stage12 LAST, only
+   into an empty/isolated scratch checkout, not over an active ignored experiment.
+   The archive restores .cache/fluid-refined-reconstruction-stage12-20261029/.
+
+3. Prerequisites remain the existing native Linux Release Makefile test build:
+   judas_script_tests flags.make/link.txt, libjudas_engine.a, Stage5's exact-volume-
+   domain object and setup_probes.py. Boost1.90 and Eigen3.4 headers are locally
+   extracted reference dependencies, not new production/SDK requirements.
+
+   export BOOST_INCLUDE_DIR=<headers>/usr/include
+   export EIGEN_INCLUDE_DIR=<headers>/usr/include/eigen3
+   python3 .cache/fluid-refined-reconstruction-stage12-20261029/run_final.py
+
+   This runs ONE CPU-heavy compile/test at a time. It creates a NEW
+   reproduction-results directory or refuses to overwrite it. It records exact
+   commands, logs, elapsed times and return codes. Original logs remain immutable.
+
+   Expected final summaries:
+    FullReconstructionTests   78 checks
+    RefreshRefinedTests       13 checks
+    NativeRefinedTests       128 checks
+    NativeGroundRefinedTests  50 checks
+    MaterialRefinedTests    1927 checks
+    BenchmarkWide             40 checks
+    BenchmarkThin             40 checks
+   Total2276, not a claim of2276 independent physical scenarios.
+
+   Benchmark grid2 is the preserved48-patch affine/rigid workload; grid1 is the
+   six-patch nonlinear thin-cut workload. Both use24 alternating-order samples.
+   The SAME final compiled RefinedBenchmark binary runs both fixtures. Median
+   is upper-middle; p95 nearest rank; process peak RSS includes both operators.
+   Numerical deltas versus the inaccurate old result are REPORTED, not hidden
+   behind a relaxed equivalence assertion. The independent oracle tests provide
+   the original1e-12 accuracy requirement separately.
+
+4. Individual programs:
+   python3 .cache/fluid-refined-reconstruction-stage12-20261029/run_probe.py NAME
+   For the benchmark add2 (wide) or1 (thin) as the final argument. Native-ground
+   uses a bounded exhaustive FOUR-contact oracle with homogeneous exact-touch
+   targets; it is not a general unilateral-contact solver. Missing support is
+   rejected by the actual native validator before material publication.
+
+5. PROVENANCE.json inside the archive identifies compiler/flags, parent source,
+   actual native library and geometry-object hashes, final native binaries and
+   ALL private source hashes. The native archive embeds its historical dirty
+   local build identity. It is not a fresh build of the published Alpha SDK.
+   New builds get new provenance; do not overwrite original accepted receipts.
+
+   Retained original-QR, response and local-oracle sources are dependency inputs;
+   they are not modified to make the new tests pass. Earlier Stage12 source/log
+   snapshots are historical preliminary proofs, not added to the final count.
+
+Scope: finite stored operators, fixed geometry, conditional local/coarse solves,
+passive conservative transport, and ONE finite native interaction per scenario.
+No continuous moving-solid/GCL, momentum/free-surface/wet-dry, general friction/
+impacts, save/stream/export or Windows/Android claim. No Alpha fluid unlock.

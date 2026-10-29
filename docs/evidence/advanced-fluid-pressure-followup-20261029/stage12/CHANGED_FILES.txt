@@ -1,0 +1,8 @@
+docs/ADVANCED_FLUID_REFINED_RECONSTRUCTION.txt
+docs/evidence/advanced-fluid-pressure-followup-20261029/stage12/CHANGED_FILES.txt
+docs/evidence/advanced-fluid-pressure-followup-20261029/stage12/FINAL_FINGERPRINTS.json
+docs/evidence/advanced-fluid-pressure-followup-20261029/stage12/REPRODUCE.txt
+docs/evidence/advanced-fluid-pressure-followup-20261029/stage12/RESULTS.json
+docs/evidence/advanced-fluid-pressure-followup-20261029/stage12/SOURCE_MANIFEST.json
+docs/evidence/advanced-fluid-pressure-followup-20261029/stage12/stage12-refined-reconstruction-reference.tar.gz
+docs/evidence/advanced-fluid-pressure-followup-20261029/stage12/verify_evidence.py
