@@ -3,20 +3,45 @@ name: Engine focused gates
 on:
   push:
     branches: [Experimental, main]
-    paths-ignore: ['docs/evidence/**', 'docs/**/*.md', '*.md']
+    paths-ignore: [
+      'docs/evidence/**', 'docs/**/*.md', 'docs/*.txt', '*.md', '.github/workflows/**', '.gitignore',
+      'scripts/check_ci_promotion.py', 'scripts/check_current_docs.py',
+      'scripts/qualify_m100.py', 'scripts/qualify_sdk.py', 'scripts/qualify_sdk_workflows.py',
+      'tests/test_ci_workflows.py', 'tests/test_release_packaging.py', 'tests/test_release_manifest.py',
+      'tools/assemble_release_run.py', 'tools/prepare_release.py', 'tools/publish_release.py',
+      'tools/release_manifest.py', 'tools/package_source.py', 'tools/generate_changelog.py', 'tools/verification/current-docs.json'
+    ]
   pull_request:
     branches: [Experimental, main]
   workflow_dispatch:
 
 permissions:
   contents: read
+  actions: read
 
 concurrency:
   group: prealpha-${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
+  promotion:
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+          fetch-depth: 1
+          sparse-checkout: scripts/check_ci_promotion.py
+          sparse-checkout-cone-mode: false
+      - name: Verify exact completed Experimental qualification
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PYTHONDONTWRITEBYTECODE: '1'
+        run: python3 scripts/check_ci_promotion.py
   linux:
+    if: github.event_name != 'push' || github.ref != 'refs/heads/main'
     name: linux (${{ matrix.channel }})
     strategy:
       fail-fast: false
@@ -27,6 +52,7 @@ jobs:
     env:
       SDL_AUDIODRIVER: dummy
       LIBGL_ALWAYS_SOFTWARE: '1'
+      PYTHONDONTWRITEBYTECODE: '1'
     steps:
       - uses: actions/checkout@v7
         with:
@@ -77,4 +103,4 @@ jobs:
             build/linux-sdk/SHA256SUMS
           include-hidden-files: true
           if-no-files-found: warn
-          retention-days: 14
+          retention-days: ${{ failure() && 14 || 3 }}

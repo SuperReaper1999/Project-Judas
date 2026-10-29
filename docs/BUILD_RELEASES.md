@@ -49,9 +49,26 @@ startup checks never install anything or overwrite a project.
 
 ## Channel-aware CI qualification
 
-The hosted focused gate builds **both Experimental and Alpha** on either branch.
+The hosted focused gate builds **both Experimental and Alpha** for native changes
+on Experimental, for pull requests and for explicit manual runs on either branch.
 This catches channel-dependent behaviour before promotion rather than discovering
 it only when main selects Alpha. Both configurations retain SDK qualification.
+
+A main push verifies completed native qualification for the **exact same commit**
+on Experimental, rather than compiling both channels again. It accepts either
+both focused native channel jobs or the complete Linux/Windows release-preparation
+jobs. Wrong commits, other repositories, incomplete/skipped jobs and tooling-only
+passes do not qualify. Missing proof fails with instructions to finish Experimental
+CI or explicitly run the full gate on main; no automatic pass is substituted.
+This machine check does not establish operator acceptance.
+
+Release/CI tooling-only pushes run [lightweight controls](../.github/workflows/ci-tooling.yml)
+for release archives, updates, routing and promotion proof. The narrow native
+exclusions are checked against the lightweight workflow by
+[positive/negative controls](../tests/test_ci_workflows.py). Native sources,
+fixtures, API declarations, SDK implementation and unknown paths retain full
+validation. Documentation has its own link/checker workflow. A manual focused
+gate still forces the full native matrix, regardless of changed paths.
 
 CTest and release qualification share the policy in
 [scripts/prealpha_validate.py](../scripts/prealpha_validate.py). Original native
@@ -75,3 +92,18 @@ their existing admission rules. The original six Alpha CI failures are preserved
 in [the investigation record](evidence/alpha-ci-channel-policy/ORIGINAL_FAILURE.json);
 this repairs test selection, not the experimental fluid solver. No published tag
 or package is replaced by this correction.
+
+Successful routine diagnostic artifacts expire after three days; failure
+diagnostics and release-preparation artifacts retain fourteen days. This changes
+future retention, not existing evidence or published release assets. Original
+regression fixtures and preserved historical evidence are not removed.
+Actions artifacts are separate from Git LFS; reducing CI storage is not a claim
+to reduce account LFS usage.
+
+Qualification disables Python bytecode generation, and ordinary local bytecode
+caches are ignored. Tracked-source packaging still rejects dirty tracked files
+and unexpected untracked authored inputs. It archives exact committed blobs;
+generated caches are never silently inserted into the source distribution.
+Release preparation freezes that clean source archive before running qualification
+and checks tracked source again before packing the successful SDK. Test-generated
+outputs cannot accidentally become release inputs.

@@ -1,0 +1,40 @@
+name: CI and release tooling checks
+on:
+  push:
+    branches: [Experimental, main]
+    paths: [
+      '.github/workflows/**', '.gitignore',
+      'scripts/check_ci_promotion.py', 'scripts/check_current_docs.py',
+      'scripts/qualify_m100.py', 'scripts/qualify_sdk.py', 'scripts/qualify_sdk_workflows.py',
+      'tests/test_ci_workflows.py', 'tests/test_release_packaging.py', 'tests/test_release_manifest.py',
+      'tools/assemble_release_run.py', 'tools/prepare_release.py', 'tools/publish_release.py',
+      'tools/release_manifest.py', 'tools/package_source.py', 'tools/generate_changelog.py', 'tools/verification/current-docs.json'
+    ]
+  pull_request:
+    branches: [Experimental, main]
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: ci-tooling-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  tooling:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    env:
+      PYTHONDONTWRITEBYTECODE: '1'
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+          fetch-depth: 1
+      - name: Promotion proof and CI routing positive/negative controls
+        run: python3 -m unittest discover -s tests -p test_ci_workflows.py -v
+      - name: Release packaging and update controls
+        run: |
+          python3 tests/test_release_packaging.py
+          python3 tests/test_release_manifest.py
+          python3 scripts/prealpha_packaging_checks.py --output .cache/ci-tooling/packaging.json
+      - name: Current documentation controls
+        run: python3 -m unittest discover -s tests -p test_current_docs.py -v

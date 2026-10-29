@@ -27,6 +27,7 @@ jobs:
       CHANNEL: ${{ inputs.channel }}
       SDL_AUDIODRIVER: dummy
       LIBGL_ALWAYS_SOFTWARE: '1'
+      PYTHONDONTWRITEBYTECODE: '1'
     steps:
       - name: Validate literal commit input
         run: python3 -c 'import os,re; assert re.fullmatch("[0-9a-f]{40}",os.environ["CANDIDATE"])'
@@ -34,6 +35,10 @@ jobs:
         with:
           ref: ${{ inputs.candidate }}
           persist-credentials: false
+      - name: Snapshot exact tracked source before qualification
+        run: |
+          mkdir -p "$RUNNER_TEMP/prepared"
+          python3 tools/package_source.py --output "$RUNNER_TEMP/prepared/source.tar.gz" --channel "$CHANNEL"
       - uses: actions/setup-node@v7
         with:
           node-version: '22'
@@ -50,9 +55,8 @@ jobs:
           python3 tools/inspect_sdk.py build/linux-sdk --host-check --max-glibc 2.39 --require-os ubuntu:24.04 --output .cache/release-sdk-platform.json
       - name: Pack qualified SDK and tracked source as immutable CI artifacts
         run: |
-          mkdir -p "$RUNNER_TEMP/prepared"
+          git diff --exit-code HEAD
           tar -C build -czf "$RUNNER_TEMP/prepared/linux-sdk.tar.gz" linux-sdk
-          python3 tools/package_source.py --output "$RUNNER_TEMP/prepared/source.tar.gz" --channel "$CHANNEL"
       - uses: actions/upload-artifact@v7
         with:
           name: candidate-Linux-${{ inputs.candidate }}-${{ inputs.channel }}
@@ -64,6 +68,7 @@ jobs:
             .cache/release-sdk-platform.json
           include-hidden-files: true
           if-no-files-found: error
+          retention-days: 14
       - uses: actions/upload-artifact@v7
         if: failure()
         with:
@@ -73,6 +78,7 @@ jobs:
             .cache/release-sdk-work/
             build/Testing/Temporary/
           include-hidden-files: true
+          retention-days: 14
   windows:
     if: github.actor == github.repository_owner
     runs-on: windows-2025
@@ -81,6 +87,7 @@ jobs:
       CANDIDATE: ${{ inputs.candidate }}
       CHANNEL: ${{ inputs.channel }}
       PYTHONUTF8: '1'
+      PYTHONDONTWRITEBYTECODE: '1'
     steps:
       - name: Validate literal commit input
         shell: pwsh
@@ -143,3 +150,4 @@ jobs:
             windows-sdk-qualification.json
             windows-ci-scope.txt
           if-no-files-found: error
+          retention-days: 14

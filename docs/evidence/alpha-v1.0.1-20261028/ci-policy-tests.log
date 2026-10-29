@@ -1,0 +1,12 @@
+test_missing_skipped_failed_or_incomplete_channels_are_not_proof (test_ci_workflows.Promotion.test_missing_skipped_failed_or_incomplete_channels_are_not_proof) ... ok
+test_other_source_repository_event_branch_or_workflow_is_rejected (test_ci_workflows.Promotion.test_other_source_repository_event_branch_or_workflow_is_rejected) ... ok
+test_release_requires_both_platform_jobs_and_dispatch (test_ci_workflows.Promotion.test_release_requires_both_platform_jobs_and_dispatch) ... ok
+test_same_source_both_native_channels_are_reusable (test_ci_workflows.Promotion.test_same_source_both_native_channels_are_reusable) ... ok
+test_native_and_unknown_inputs_still_require_full_gates (test_ci_workflows.Routing.test_native_and_unknown_inputs_still_require_full_gates) ... ok
+test_release_freezes_strict_source_before_running_qualification (test_ci_workflows.Routing.test_release_freezes_strict_source_before_running_qualification) ... ok
+test_tooling_exclusions_have_a_lightweight_validation_route (test_ci_workflows.Routing.test_tooling_exclusions_have_a_lightweight_validation_route) ... ok
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.002s
+
+OK

@@ -71,7 +71,8 @@ def archive(args):
         raise ValueError("Tracked source is dirty; checkpoint the intended candidate before archiving")
     untracked = [name for name in git(source, "ls-files", "--others", "--exclude-standard", "-z").split(b"\0") if name]
     if untracked and not args.allow_untracked:
-        raise ValueError("Untracked files exist; commit intended inputs or explicitly --allow-untracked to exclude them")
+        names = ', '.join(os.fsdecode(name) for name in untracked[:10])
+        raise ValueError("Untracked files exist; commit intended inputs or explicitly --allow-untracked to exclude them: " + names)
     branch = git(source, "rev-parse", "--abbrev-ref", "HEAD").decode().strip()
     maturity = json.loads(git(source, "show", "HEAD:engine-version.json"))["maturity"]
     release_channel = {"alpha": "Alpha", "beta": "Beta", "stable": "Stable"}.get(maturity, "Experimental")

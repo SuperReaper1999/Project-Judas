@@ -8,6 +8,9 @@ build/
 !assets/**/*.obj
 compile_commands.json
 .cache/
+__pycache__/
+*.pyc
+*.pyo
 
 # Internal session-continuity notes (not part of the public deliverable) —
 # see the file itself for what it's for.
