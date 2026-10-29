@@ -1,0 +1,14 @@
+{
+  "schema": 1,
+  "parent": "9e0a18c0eff855c1eec2956a1a2d67aacfcfa9a7",
+  "scope": "Final report/archive/receipts; self excluded. Archive manifest fingerprints every private source/log.",
+  "files": {
+    "docs/ADVANCED_FLUID_BOUNDED_OPERATOR.txt": "9f559cd8d4fbf7ae67629ca008d09ede4ffdf6d16d358e21ed317598aeb17b6d",
+    "docs/evidence/advanced-fluid-pressure-followup-20261029/stage16/CHANGED_FILES.txt": "48fa120e96d08e3d18a2dd5a01f02e3a7244e7bcdd16491b2fbaa2d6888abaaa",
+    "docs/evidence/advanced-fluid-pressure-followup-20261029/stage16/REPRODUCE.txt": "b2e19781747675cf9476cd0aa1cdb962490a60cad6aba1dda3f05cc07e9888b1",
+    "docs/evidence/advanced-fluid-pressure-followup-20261029/stage16/RESULTS.json": "d5caf5962d037cac02d55da7695b4d3ca472a28118865aa34d85041a0e9f9aa3",
+    "docs/evidence/advanced-fluid-pressure-followup-20261029/stage16/SOURCE_MANIFEST.json": "c9d48fe311cd9222a437bef4557eb234aabd2658190949b53224725f6938c432",
+    "docs/evidence/advanced-fluid-pressure-followup-20261029/stage16/stage16-bounded-operator-reference.tar.gz": "7d1c3d4713bf55082dde86202e18c837b0c60c07f19e9e90c0346e64275530ec",
+    "docs/evidence/advanced-fluid-pressure-followup-20261029/stage16/verify_evidence.py": "4e05ff718828e6883019f175a2b749734cd0587d31d50f3b1a573246a60cf19a"
+  }
+}

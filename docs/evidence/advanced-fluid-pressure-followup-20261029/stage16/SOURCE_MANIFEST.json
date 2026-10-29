@@ -1,0 +1,335 @@
+{
+  "schema": 1,
+  "parent": "9e0a18c0eff855c1eec2956a1a2d67aacfcfa9a7",
+  "files": {
+    ".cache/fluid-runtime-candidates-stage16-20261029/PROVENANCE.json": {
+      "bytes": 12683,
+      "sha256": "35541c6d6da88a2a633adc44ba3377c88b4bedb122d6dd27c9fa54ef944204c8"
+    },
+    ".cache/fluid-runtime-candidates-stage16-20261029/acceptance/ACCEPTANCE.txt": {
+      "bytes": 5328,
+      "sha256": "88136fe0b4a49c65acdb446340916d5137109c7d4536a2fd5a3d81b4b8ddfa78"
+    },
+    ".cache/fluid-runtime-candidates-stage16-20261029/acceptance/CurlTrialBound.cpp": {
+      "bytes": 11037,
+      "sha256": "0b012e550712f116823532e27803390ba9af037f8f591f9f24bd87df72fe642b"
+    },
+    ".cache/fluid-runtime-candidates-stage16-20261029/acceptance/PolynomialOracleTests.cpp": {
+      "bytes": 6436,
+      "sha256": "3f0b326877628501e206345aac91a0896e5cbee62cf891c8f9c2d6b96e91446c"
+    },
+    ".cache/fluid-runtime-candidates-stage16-20261029/acceptance/PolynomialOracles.h": {
+      "bytes": 13612,
+      "sha256": "7d802abc6ed225d6beb5c667bb4982ee1b8e353abc05bf30c4f8abc0c1e8505b"
+    },
+    ".cache/fluid-runtime-candidates-stage16-20261029/acceptance/VemPatchAcceptance.h": {
+      "bytes": 12738,
+      "sha256": "18759d333304de246cd3121dd13e7637d81298f6686bab2e8a70393b3e253d01"
+    },
+    ".cache/fluid-runtime-candidates-stage16-20261029/final/Basis.log": {
+      "bytes": 1546,
+      "sha256": "9c9ab4313cb8c0663952ea44b064dc5663f53e1584085ba75756c775e2c5824d"
+    },
+    ".cache/fluid-runtime-candidates-stage16-20261029/final/Boundary.log": {
+      "bytes": 632,
+      "sha256": "a8d8fc29dbaeaac2a09d662ccc81396e91aa27ceee8db013710ebd0038ab1177"
+    },
+    ".cache/fluid-runtime-candidates-stage16-20261029/final/BoundaryTouch.log": {
+      "bytes": 697,
+      "sha256": "79590901b6a33db4bd9ae8185d4d04d8533fa5b9df431314916d9c4f8ff4922b"
+    },
+    ".cache/fluid-runtime-candidates-stage16-20261029/final/Condensed.log": {
+      "bytes": 134,
+      "sha256": "604a08b725abaa0d6eefe6835e4d4deb6d1e78f40b0430f8824c42977900aa8a"
+    },
+    ".cache/fluid-runtime-candidates-stage16-20261029/final/Epoch.log": {
+      "bytes": 886,
+      "sha256": "1e25d9cef5a5c14d19069a6e0aebc8ea5b2df470a61493e640a88a75096f988b"
+    },
+    ".cache/fluid-runtime-candidates-stage16-20261029/final/Factored.log": {
+      "bytes": 637,
+      "sha256": "3f252803ab065d6a0dcd61eb75f4d00bc0899158871e847451463658b7630656"
+    },
+    ".cache/fluid-runtime-candidates-stage16-20261029/final/Independent.log": {
+      "bytes": 1314,
+      "sha256": "ca902d9cb8b79847630fb6e54b28c8c37e0dbf0237e5c69a160dcc08c1775375"
+    },
+    ".cache/fluid-runtime-candidates-stage16-20261029/final/Local.log": {
+      "bytes": 552,
+      "sha256": "9c9885b10f1bad12145f6116fecf7d2af244aba1a17fd59b991defae4bd36edd"
+    },
+    ".cache/fluid-runtime-candidates-stage16-20261029/final/Moving.log": {
+      "bytes": 1697,
+      "sha256": "569fb340de34e472c98271a99c297cc089044bf9d009d7ec73480e5dd72324a6"
+    },
+    ".cache/fluid-runtime-candidates-stage16-20261029/final/Native.log": {
+      "bytes": 4386,
+      "sha256": "d921238e8ade6e3335349b86a31ee93e960b1d90c456876c2e4cf74f61c3c7ae"
+    },
+    ".cache/fluid-runtime-candidates-stage16-20261029/final/RESULTS.json": {
+      "bytes": 4109,
+      "sha256": "b6f3f0a6c26d5b44ffa0b860844ab58ba02065295c1527d29e1a176cd8250bee"
+    },
+    ".cache/fluid-runtime-candidates-stage16-20261029/geometry/BoundaryCompiler.h": {
+      "bytes": 13209,
+      "sha256": "ef788fabf9eb44605515b6b6ef1cd18bf06252bb4bd5a30310fcd5557d7582b8"
+    },
+    ".cache/fluid-runtime-candidates-stage16-20261029/geometry/BoundaryCompilerTests.cpp": {
+      "bytes": 6524,
+      "sha256": "8368607e200204b342a3541e93b2b7d543076ba0600fdaa912075e19f02ae2e0"
+    },
+    ".cache/fluid-runtime-candidates-stage16-20261029/geometry/FactoredFaceMetrics.h": {
+      "bytes": 10477,
+      "sha256": "4deebc473f9e927df3180b2982ceefa6b7a37fa34217809ae13a6c0b40200bc5"
+    },
+    ".cache/fluid-runtime-candidates-stage16-20261029/geometry/FactoredFaceMetrics.txt": {
+      "bytes": 6526,
+      "sha256": "5846e7bc30b62ceea10b6c6876a43acd1b8a2d0228d6071f619f0723e88ad683"
+    },
+    ".cache/fluid-runtime-candidates-stage16-20261029/geometry/FactoredFaceMetricsTests.cpp": {
+      "bytes": 14323,
+      "sha256": "f4a7b663a3b8e6efe872cb04d0c4d3539614c23bf21db1bde0c7010977529ba5"
+    },
+    ".cache/fluid-runtime-candidates-stage16-20261029/geometry/FastGeometryTests.cpp": {
+      "bytes": 18072,
+      "sha256": "319e7c699badf74124b8a0b40206fca22f36e46df923be94712cefe5b6a2afff"
+    },
+    ".cache/fluid-runtime-candidates-stage16-20261029/geometry/FastPolyhedralMoments.h": {
+      "bytes": 13962,
+      "sha256": "60248b8fbcbacda210efee8390b6a245e46215ac07a8f655024657537416a22d"
+    },
+    ".cache/fluid-runtime-candidates-stage16-20261029/geometry/GeometryTests.cpp": {
+      "bytes": 3197,
+      "sha256": "37e8d6e7e144cb06105efc8bfca4127d0e252bd6f08312f9e8125b1202cab56a"
+    },
+    ".cache/fluid-runtime-candidates-stage16-20261029/geometry/PolyhedralMoments.h": {
+      "bytes": 8683,
+      "sha256": "43ac18fe0aff50418fe26dc0684c1b15df830d780a583bd38662923d9148760f"
+    },
+    ".cache/fluid-runtime-candidates-stage16-20261029/logs/baseline-stage14-rerun.log": {
+      "bytes": 2129,
+      "sha256": "f3ed15bf48e6da7b956bfe3edb4b67ac53f5cfddc16219586a392210d8c57f64"
+    },
+    ".cache/fluid-runtime-candidates-stage16-20261029/logs/basis-v1.log": {
+      "bytes": 1546,
+      "sha256": "9c9ab4313cb8c0663952ea44b064dc5663f53e1584085ba75756c775e2c5824d"
+    },
+    ".cache/fluid-runtime-candidates-stage16-20261029/logs/boundary-regression-after-touch.log": {
+      "bytes": 632,
+      "sha256": "a8d8fc29dbaeaac2a09d662ccc81396e91aa27ceee8db013710ebd0038ab1177"
+    },
+    ".cache/fluid-runtime-candidates-stage16-20261029/logs/boundary-touch-after-v1.log": {
+      "bytes": 106,
+      "sha256": "db8d88def9eba8f5169c59070e3e1fedf5c386ed9a5a75e1a442dfa791df05e9"
+    },
+    ".cache/fluid-runtime-candidates-stage16-20261029/logs/boundary-touch-after-v2.log": {
+      "bytes": 555,
+      "sha256": "a8a4c971f07afeef3fe31f606cd849b2026ed15ea4fd897bf81ecfdb75f6e6c7"
+    },
+    ".cache/fluid-runtime-candidates-stage16-20261029/logs/boundary-touch-after-v3.log": {
+      "bytes": 697,
+      "sha256": "79590901b6a33db4bd9ae8185d4d04d8533fa5b9df431314916d9c4f8ff4922b"
+    },
+    ".cache/fluid-runtime-candidates-stage16-20261029/logs/boundary-touch-before.log": {
+      "bytes": 51,
+      "sha256": "56a91cbbf9db93c73c90d16c3569f77771a0faf8207a21f781a704bba6e12548"
+    },
+    ".cache/fluid-runtime-candidates-stage16-20261029/logs/boundary-v1.log": {
+      "bytes": 632,
+      "sha256": "b465653f9d61c694924d7486a0b7594ee489af689e283124577a98cb6ec69c13"
+    },
+    ".cache/fluid-runtime-candidates-stage16-20261029/logs/compact-resolution-v1.log": {
+      "bytes": 508,
+      "sha256": "0a9f5cad54307e1ec0bd076f9ceac2fb40b8cab25bfd8abf43051bb5e2e0ad8b"
+    },
+    ".cache/fluid-runtime-candidates-stage16-20261029/logs/curl-trial-v1.log": {
+      "bytes": 1598,
+      "sha256": "d49aed786190dfc5eefc7c47f797cfc773fae36df3bf19d227686ca45b1467cf"
+    },
+    ".cache/fluid-runtime-candidates-stage16-20261029/logs/epoch-prepared-v1.log": {
+      "bytes": 886,
+      "sha256": "3032f5bffb068fe996f1afc9a75d9a895c7d733543a575d243c328f591cb4491"
+    },
+    ".cache/fluid-runtime-candidates-stage16-20261029/logs/epoch-v1.log": {
+      "bytes": 899,
+      "sha256": "651c54cd36909e13e175b40281abe37ffc53638d3930d599e50572e768f0148a"
+    },
+    ".cache/fluid-runtime-candidates-stage16-20261029/logs/factored-face-metrics-first-run.txt": {
+      "bytes": 637,
+      "sha256": "b5d7a9c77d77f75ffdd5720bb8b1d8c7a65182922b3a45af6817f8c4ebb15a1a"
+    },
+    ".cache/fluid-runtime-candidates-stage16-20261029/logs/fast-direct-metrics-run.txt": {
+      "bytes": 657,
+      "sha256": "03734b149cf5e39974db5d6f0f60f7094c51ad4582e99ee00b5991b1aabb622d"
+    },
+    ".cache/fluid-runtime-candidates-stage16-20261029/logs/fast-rounded-tiny-preserved.log": {
+      "bytes": 610,
+      "sha256": "ab3c04e7ad72038b71308a8aa2a489aca28287fe9fe7c66e471aa36fce3f2f13"
+    },
+    ".cache/fluid-runtime-candidates-stage16-20261029/logs/final-run-driver.log": {
+      "bytes": 163,
+      "sha256": "fea02cca836df446cd19568f755dce3517b8705f8a6c94125d98db6ef3beb3c3"
+    },
+    ".cache/fluid-runtime-candidates-stage16-20261029/logs/fine-comparison-v1.log": {
+      "bytes": 1506,
+      "sha256": "61af095d181795150e5915c517186f74196b08503f38c9110165d32efd173319"
+    },
+    ".cache/fluid-runtime-candidates-stage16-20261029/logs/geometry-v1.log": {
+      "bytes": 6975,
+      "sha256": "e2cf40103fec857dafa2e4f87c746166bdccfa1e308459e19b36d5feadc03d6d"
+    },
+    ".cache/fluid-runtime-candidates-stage16-20261029/logs/geometry-v2.log": {
+      "bytes": 3099,
+      "sha256": "f0dca079a2c3331ffaec4e1c5584ae1804f57841a88eaadc217fa4aede6cc3fa"
+    },
+    ".cache/fluid-runtime-candidates-stage16-20261029/logs/independent-v1.log": {
+      "bytes": 2144,
+      "sha256": "1bfec07e288f7315cef286973a469854139433737d274917edfd96787273252c"
+    },
+    ".cache/fluid-runtime-candidates-stage16-20261029/logs/moving-factored-v1.log": {
+      "bytes": 3547,
+      "sha256": "dde22c3b407ccb901cf5e9d09211d9b5e2da0df1e5a1af5330079705871f311a"
+    },
+    ".cache/fluid-runtime-candidates-stage16-20261029/logs/moving-factored-v2.log": {
+      "bytes": 1694,
+      "sha256": "a290de858fdda5d01e32d31063a47829362e174e490d422d33d6f4f6c7d37c45"
+    },
+    ".cache/fluid-runtime-candidates-stage16-20261029/logs/moving-v1.log": {
+      "bytes": 1723,
+      "sha256": "3d80885cb7bf82dae861b45db088ba593f057dc4d466432e71786ce10b4c3087"
+    },
+    ".cache/fluid-runtime-candidates-stage16-20261029/logs/native-v1.log": {
+      "bytes": 10850,
+      "sha256": "43e5642f9bc81ec88bddb3c82425003d8099300d84da084694df7fd62b164718"
+    },
+    ".cache/fluid-runtime-candidates-stage16-20261029/logs/public-fluid-policy-qualified.log": {
+      "bytes": 1481,
+      "sha256": "36a5b2fb7da990c32dd7f3d410fcc187d115390286676ae99642ab92adafc9bc"
+    },
+    ".cache/fluid-runtime-candidates-stage16-20261029/logs/public-fluid-policy-relinked.log": {
+      "bytes": 1271,
+      "sha256": "74f26d4b135f7f2081391dfd2ba6cb1ba1fa272f8fd742292fa2db4a8f239be1"
+    },
+    ".cache/fluid-runtime-candidates-stage16-20261029/logs/public-fluid-policy.log": {
+      "bytes": 1271,
+      "sha256": "74f26d4b135f7f2081391dfd2ba6cb1ba1fa272f8fd742292fa2db4a8f239be1"
+    },
+    ".cache/fluid-runtime-candidates-stage16-20261029/logs/refinement-matched-v2.log": {
+      "bytes": 562,
+      "sha256": "b4b284241ffd905461afa518dc4c9bed1013e1f92e47a95c6880f730848cbb08"
+    },
+    ".cache/fluid-runtime-candidates-stage16-20261029/logs/refinement-v1.log": {
+      "bytes": 562,
+      "sha256": "1edeeee8adbf9cfee9a970899ce3782b28996b0df5ac3de1d72d856e6e3dc4cf"
+    },
+    ".cache/fluid-runtime-candidates-stage16-20261029/logs/strict-reference-v1.log": {
+      "bytes": 2775,
+      "sha256": "fd5c1c753f6d83d7c50c2af827868aeac78e4d85199a4b9b00cf23615c630129"
+    },
+    ".cache/fluid-runtime-candidates-stage16-20261029/package_evidence.py": {
+      "bytes": 4931,
+      "sha256": "b07e74ba73112481bd26470c536a54b6d6d6f8abac3dc179ce4a053343bc3da4"
+    },
+    ".cache/fluid-runtime-candidates-stage16-20261029/run_final.py": {
+      "bytes": 1218,
+      "sha256": "e9217dbf24712e9ef2f1250772f2d1424ff22896c965cc10c6f709e7ccf6feca"
+    },
+    ".cache/fluid-runtime-candidates-stage16-20261029/run_native.py": {
+      "bytes": 663,
+      "sha256": "64ff8b4581eb3ca44b5eef1637d460d5df4a0330aab8780a1af6b48e0b788855"
+    },
+    ".cache/fluid-runtime-candidates-stage16-20261029/run_probe.py": {
+      "bytes": 576,
+      "sha256": "14a56b2b6034f6f755768ee91c782e9666e93e8bf4cf9dd127e0cd3380ce15ed"
+    },
+    ".cache/fluid-runtime-candidates-stage16-20261029/runtime/BasisComparisonTests.cpp": {
+      "bytes": 2382,
+      "sha256": "23c4fea29496a61bd44c8d7e14ab337b5dc8c0c193dcdb75de4bd0d987b7cc76"
+    },
+    ".cache/fluid-runtime-candidates-stage16-20261029/runtime/BoundaryTouchTests.cpp": {
+      "bytes": 2901,
+      "sha256": "07bbb8e94e4a66f5afe08495ac953413b69bea73646f70fcd78342ca87f5b3ab"
+    },
+    ".cache/fluid-runtime-candidates-stage16-20261029/runtime/CompactResolutionProbe.cpp": {
+      "bytes": 1616,
+      "sha256": "2d2fe51809ac8ab9288b83ac9b02833413498d9bbbb3aea02d897005b4070952"
+    },
+    ".cache/fluid-runtime-candidates-stage16-20261029/runtime/EpochTests.cpp": {
+      "bytes": 3561,
+      "sha256": "03438fa0fa949272a91a19ba33ce6d01fac8901da4506ff9613835b95d4bb65e"
+    },
+    ".cache/fluid-runtime-candidates-stage16-20261029/runtime/ExactP2EpochBeforeTraits.h": {
+      "bytes": 12318,
+      "sha256": "2eed593630dd1721d70f1e3c4c1c061f71d03b7274be22c9b8728be421827933"
+    },
+    ".cache/fluid-runtime-candidates-stage16-20261029/runtime/FaceEpoch.h": {
+      "bytes": 16494,
+      "sha256": "c8a1e9daed80eb88dad62d85f1b052b81d2683bf87a118003c288a51658752e0"
+    },
+    ".cache/fluid-runtime-candidates-stage16-20261029/runtime/FineReferenceComparison.cpp": {
+      "bytes": 1510,
+      "sha256": "a478649ba07c1950e31a56467c076428ca580b1084b83d9f3403740756417b02"
+    },
+    ".cache/fluid-runtime-candidates-stage16-20261029/runtime/IndependentEpochTests.cpp": {
+      "bytes": 9748,
+      "sha256": "b348a7e2bcfaff7b609492d2bccc6a44047c10abc509a473f401fb4c092d8524"
+    },
+    ".cache/fluid-runtime-candidates-stage16-20261029/runtime/MovingTests.cpp": {
+      "bytes": 4423,
+      "sha256": "43fdfaad84d257f92aed429408330d084350826c8508c6a8b7d61a3e8204f10d"
+    },
+    ".cache/fluid-runtime-candidates-stage16-20261029/runtime/NativePressure.h": {
+      "bytes": 6380,
+      "sha256": "704eb1450f00a36284cb7170438f7c73b872e9de031b9adb9e07bc89ade94ec5"
+    },
+    ".cache/fluid-runtime-candidates-stage16-20261029/runtime/NativePressureTests.cpp": {
+      "bytes": 8814,
+      "sha256": "ed99439c24118a7c8b90f193e30cb6b49beb28f9bac287e47db3883825cc8124"
+    },
+    ".cache/fluid-runtime-candidates-stage16-20261029/runtime/RefinementComparison.cpp": {
+      "bytes": 1637,
+      "sha256": "e264d583b16083b606c904af4636f9d09c3304d08a0af71ccaeaf464ca61dc14"
+    },
+    ".cache/fluid-runtime-candidates-stage16-20261029/runtime/StrictIncompressibleReference.h": {
+      "bytes": 6149,
+      "sha256": "ba65d9d97da3ff9a7a9660c48fa6f339bdc791928d18e652d0a2e964e68e38da"
+    },
+    ".cache/fluid-runtime-candidates-stage16-20261029/runtime/StrictIncompressibleReferenceTests.cpp": {
+      "bytes": 4554,
+      "sha256": "21b43725300c9d4f05f118e72dba2b74ddcd6b126ddbbf96089d364f3515841e"
+    },
+    ".cache/fluid-runtime-candidates-stage16-20261029/vem/CondensedCell.h": {
+      "bytes": 4761,
+      "sha256": "391d6e12ea5a6da8b055ecc05cf3320a8130ff246e6d33170b9279ca25509b59"
+    },
+    ".cache/fluid-runtime-candidates-stage16-20261029/vem/CondensedCellTests.cpp": {
+      "bytes": 6070,
+      "sha256": "b2ca1716b4532fdf8f84891386df75b859359642c347b046398e4c1752558e97"
+    },
+    ".cache/fluid-runtime-candidates-stage16-20261029/vem/VemLocal.h": {
+      "bytes": 13478,
+      "sha256": "fd94cbc565e3ec4958f180ebfd4185bf4346bef1ffac116d4d63e315177667bc"
+    },
+    ".cache/fluid-runtime-candidates-stage16-20261029/vem/VemLocalTests.cpp": {
+      "bytes": 9185,
+      "sha256": "5b124ceadd0ee3bac2be36559ff43a0b1e8cac0dcd12b3dbc254ef6b1889880f"
+    },
+    ".cache/fluid-runtime-candidates-stage16-20261029/vem/algebra-v1.log": {
+      "bytes": 552,
+      "sha256": "6ac9c086cfa8f62ba52eeb790831e7e451904480457bc14ce37b17ec34182058"
+    },
+    ".cache/fluid-runtime-candidates-stage16-20261029/vem/build.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    ".cache/fluid-runtime-candidates-stage16-20261029/vem/condensed-build.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    ".cache/fluid-runtime-candidates-stage16-20261029/vem/condensed-v1.log": {
+      "bytes": 134,
+      "sha256": "2143ae712b0504400ed84935fcc0a86773e722009bee4bfe5908fcfa39e8b932"
+    }
+  },
+  "archiveSha256": "7d1c3d4713bf55082dde86202e18c837b0c60c07f19e9e90c0346e64275530ec"
+}

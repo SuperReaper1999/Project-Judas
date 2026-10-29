@@ -1,0 +1,9 @@
+Tracked checkpoint files (private source/probes are preserved INSIDE the archive):
+docs/ADVANCED_FLUID_BOUNDED_OPERATOR.txt
+docs/evidence/advanced-fluid-pressure-followup-20261029/stage16/CHANGED_FILES.txt
+docs/evidence/advanced-fluid-pressure-followup-20261029/stage16/REPRODUCE.txt
+docs/evidence/advanced-fluid-pressure-followup-20261029/stage16/RESULTS.json
+docs/evidence/advanced-fluid-pressure-followup-20261029/stage16/SOURCE_MANIFEST.json
+docs/evidence/advanced-fluid-pressure-followup-20261029/stage16/stage16-bounded-operator-reference.tar.gz
+docs/evidence/advanced-fluid-pressure-followup-20261029/stage16/verify_evidence.py
+docs/evidence/advanced-fluid-pressure-followup-20261029/stage16/FINAL_FINGERPRINTS.json

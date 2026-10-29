@@ -1,0 +1,230 @@
+{
+  "scope": "Private bounded operator research, not production fluid qualification or unlock",
+  "finalSelectedModelRuns": [
+    {
+      "name": "Local",
+      "command": [
+        "/usr/bin/python3",
+        ".cache/fluid-runtime-candidates-stage16-20261029/run_probe.py",
+        "vem/VemLocalTests.cpp"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 7.300294428001507,
+      "log": ".cache/fluid-runtime-candidates-stage16-20261029/final/Local.log",
+      "sha256": "9c9885b10f1bad12145f6116fecf7d2af244aba1a17fd59b991defae4bd36edd",
+      "assertions": 1550,
+      "summaries": [
+        "VEM_LOCAL_SUMMARY checks=1550 failures=0 projection=4.1714801e-17 mass_relative=1.0534227e-18 trace=1.517883e-17 divergence=5.6843419e-14 work=1.284059e-17"
+      ]
+    },
+    {
+      "name": "Condensed",
+      "command": [
+        "/usr/bin/python3",
+        ".cache/fluid-runtime-candidates-stage16-20261029/run_probe.py",
+        "vem/CondensedCellTests.cpp"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 10.456960270996206,
+      "log": ".cache/fluid-runtime-candidates-stage16-20261029/final/Condensed.log",
+      "sha256": "604a08b725abaa0d6eefe6835e4d4deb6d1e78f40b0430f8824c42977900aa8a",
+      "assertions": 153,
+      "summaries": [
+        "VEM_CONDENSED_SUMMARY checks=153 failures=0 kkt=1.7411319e-19 objective=2.4542474e-19 gradient=2.2395909e-19 divergence=7.3013521e-16"
+      ]
+    },
+    {
+      "name": "Boundary",
+      "command": [
+        "/usr/bin/python3",
+        ".cache/fluid-runtime-candidates-stage16-20261029/run_probe.py",
+        "geometry/BoundaryCompilerTests.cpp"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 8.387138678001065,
+      "log": ".cache/fluid-runtime-candidates-stage16-20261029/final/Boundary.log",
+      "sha256": "a8d8fc29dbaeaac2a09d662ccc81396e91aa27ceee8db013710ebd0038ab1177",
+      "assertions": 1907,
+      "summaries": [
+        "BOUNDARY_COMPILER_SUMMARY checks=1907 failures=0"
+      ]
+    },
+    {
+      "name": "BoundaryTouch",
+      "command": [
+        "/usr/bin/python3",
+        ".cache/fluid-runtime-candidates-stage16-20261029/run_probe.py",
+        "runtime/BoundaryTouchTests.cpp"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 17.85237900500215,
+      "log": ".cache/fluid-runtime-candidates-stage16-20261029/final/BoundaryTouch.log",
+      "sha256": "79590901b6a33db4bd9ae8185d4d04d8533fa5b9df431314916d9c4f8ff4922b",
+      "assertions": null,
+      "summaries": [
+        "TOUCH_SUMMARY cases=5 failures=0"
+      ]
+    },
+    {
+      "name": "Factored",
+      "command": [
+        "/usr/bin/python3",
+        ".cache/fluid-runtime-candidates-stage16-20261029/run_probe.py",
+        "geometry/FactoredFaceMetricsTests.cpp"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 39.04151557300065,
+      "log": ".cache/fluid-runtime-candidates-stage16-20261029/final/Factored.log",
+      "sha256": "3f252803ab065d6a0dcd61eb75f4d00bc0899158871e847451463658b7630656",
+      "assertions": 31619,
+      "summaries": [
+        "SUMMARY checks=31619 failures=0 shared_faces=30 subdivision_faces=202 max_scaled_metric_error=1.95156e-17 max_scaled_physical_error=6.06028e-18"
+      ]
+    },
+    {
+      "name": "Epoch",
+      "command": [
+        "/usr/bin/python3",
+        ".cache/fluid-runtime-candidates-stage16-20261029/run_probe.py",
+        "runtime/EpochTests.cpp"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 17.983490266000445,
+      "log": ".cache/fluid-runtime-candidates-stage16-20261029/final/Epoch.log",
+      "sha256": "1e25d9cef5a5c14d19069a6e0aebc8ea5b2df470a61493e640a88a75096f988b",
+      "assertions": 74,
+      "summaries": [
+        "SUMMARY checks=74 failures=0"
+      ]
+    },
+    {
+      "name": "Basis",
+      "command": [
+        "/usr/bin/python3",
+        ".cache/fluid-runtime-candidates-stage16-20261029/run_probe.py",
+        "runtime/BasisComparisonTests.cpp"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 19.23783632899722,
+      "log": ".cache/fluid-runtime-candidates-stage16-20261029/final/Basis.log",
+      "sha256": "9c9ab4313cb8c0663952ea44b064dc5663f53e1584085ba75756c775e2c5824d",
+      "assertions": 84,
+      "summaries": [
+        "SUMMARY checks=84 failures=0 max_flux=1.70748e-20 max_wrench=2.81545e-17 max_energy=6.50521e-19 max_moments=2.31463e-20"
+      ]
+    },
+    {
+      "name": "Independent",
+      "command": [
+        "/usr/bin/python3",
+        ".cache/fluid-runtime-candidates-stage16-20261029/run_probe.py",
+        "runtime/IndependentEpochTests.cpp"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 19.657670947999577,
+      "log": ".cache/fluid-runtime-candidates-stage16-20261029/final/Independent.log",
+      "sha256": "ca902d9cb8b79847630fb6e54b28c8c37e0dbf0237e5c69a160dcc08c1775375",
+      "assertions": 28,
+      "summaries": [
+        "INDEPENDENT_EPOCH_SUMMARY checks=28 failures=0 max_kinetic_endpoint=1.40555e-18 max_energy=4.87891e-19 max_wrench=1.95358e-18 max_equation_residual=1.8389e-18"
+      ]
+    },
+    {
+      "name": "Moving",
+      "command": [
+        "/usr/bin/python3",
+        ".cache/fluid-runtime-candidates-stage16-20261029/run_probe.py",
+        "runtime/MovingTests.cpp"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 19.144512036997185,
+      "log": ".cache/fluid-runtime-candidates-stage16-20261029/final/Moving.log",
+      "sha256": "569fb340de34e472c98271a99c297cc089044bf9d009d7ec73480e5dd72324a6",
+      "assertions": 38,
+      "summaries": [
+        "TIMING name=updated_epoch count=6 median_ms=31.5463 p95_ms=37.4478 worst_ms=37.4478",
+        "TIMING name=fresh_epoch count=6 median_ms=48.0754 p95_ms=48.9807 worst_ms=48.9807",
+        "TIMING name=warm_solve count=6 median_ms=1.34348 p95_ms=1.36564 worst_ms=1.36564",
+        "SUMMARY checks=38 failures=0 peak_rss_kib=17164"
+      ]
+    },
+    {
+      "name": "Native",
+      "command": [
+        "/usr/bin/python3",
+        ".cache/fluid-runtime-candidates-stage16-20261029/run_native.py"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 21.725200480002968,
+      "log": ".cache/fluid-runtime-candidates-stage16-20261029/final/Native.log",
+      "sha256": "d921238e8ade6e3335349b86a31ee93e960b1d90c456876c2e4cf74f61c3c7ae",
+      "assertions": 613,
+      "summaries": [
+        "SUMMARY checks=613 failures=0"
+      ]
+    }
+  ],
+  "totalKnownFinalAssertions": 36066,
+  "touchCases": 5,
+  "independentPhysics": {
+    "strictReference": {
+      "checks": 36,
+      "passed": true,
+      "log": ".cache/fluid-runtime-candidates-stage16-20261029/logs/strict-reference-v1.log",
+      "classification": "pointwise incompressible finite-space comparison; different trace resolution, not continuum certification"
+    },
+    "curlTrial": {
+      "checks": 613,
+      "integrationPassed": true,
+      "coarseAccuracyQualified": false,
+      "log": ".cache/fluid-runtime-candidates-stage16-20261029/logs/curl-trial-v1.log",
+      "translationTrialEnergy": 0.15135313741496598,
+      "compactTranslationEnergy": 0.15942310985939023,
+      "excessPercent": 5.3318
+    },
+    "matchedRefinement": {
+      "exitCode": 1,
+      "classification": "two resolutions run; later disconnected geometry unsupported; no convergence certification",
+      "log": ".cache/fluid-runtime-candidates-stage16-20261029/logs/refinement-matched-v2.log"
+    },
+    "resolutionProbe": {
+      "exitCode": 1,
+      "classification": "h=1/3 explicit unsupported, h=1/4 also unsupported and exits",
+      "log": ".cache/fluid-runtime-candidates-stage16-20261029/logs/compact-resolution-v1.log"
+    }
+  },
+  "preservedFailures": [
+    {
+      "log": "logs/fine-comparison-v1.log",
+      "classification": "initially confounded by sealed/open boundary; not accuracy evidence alone"
+    },
+    {
+      "log": "logs/boundary-touch-before.log",
+      "classification": "genuine candidate geometry defect; corrected and final positive/negative controls pass"
+    },
+    {
+      "log": "logs/boundary-touch-after-v2.log",
+      "classification": "unsupported disconnected whole-world fixture; local zero-area edge contact tested separately without merging"
+    },
+    {
+      "source": "geometry/FastGeometryTests.cpp mode4",
+      "classification": "unchanged rounded-input tiny-angle oracle fails both exact and fast collectors; independent factored-coordinate oracle passes unchanged bound"
+    },
+    {
+      "log": "logs/public-fluid-policy.log",
+      "classification": "stale public test61a1a94 vs runtime9be9e7a; export identity prerequisite fails"
+    },
+    {
+      "log": "logs/public-fluid-policy-relinked.log",
+      "classification": "matching binary initially outside runtime directory; export prerequisite fails"
+    }
+  ],
+  "publicPolicy": {
+    "log": "logs/public-fluid-policy-qualified.log",
+    "passed": true,
+    "method": "unmodified test relinked against existing archive and placed beside matching runtime; not a fresh SDK"
+  },
+  "noMainPromotion": true,
+  "noFluidUnlock": true,
+  "noHumanAcceptanceClaim": true
+}

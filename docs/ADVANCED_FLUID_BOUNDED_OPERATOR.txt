@@ -1,0 +1,175 @@
+BOUNDED FLUID OPERATORS — CONSTRUCTION, PHYSICAL CHECKS AND LIMITS
+29 October 2026 | Parent 9e0a18c0eff855c1eec2956a1a2d67aacfcfa9a7
+
+DECISION
+This is a substantial PRIVATE numerical prototype, not an Alpha fluid unlock.
+The fine, per-pose cut-tetrahedron velocity construction has been replaced in
+this experiment by bounded polyhedral face-flux operators. Construction is much
+faster and the named algebra, hydrostatic, native-joint and work checks pass.
+However, independent physical comparisons expose substantial coarse added-mass
+error, and disconnected pieces within a background seed remain unsupported.
+Do not select this as a production fluid backend on the strength of its passing
+algebra or timing. Stage14 remains the preserved private reference; neither it
+nor this experiment is a completed time-dependent incompressible fluid system.
+
+WHAT WAS ACTUALLY IMPLEMENTED
+The archived Stage16 sources contain:
+- H(div)-inspired k=1 polyhedral kinetic operators: three primary normal-flux
+  moments per actual face, plus three interior velocity and three angular
+  moments. Dimension is 3F+6, independent of integration triangulation count.
+- Explicit polynomial projection and a positive complementary kinetic metric.
+  For affine-velocity DOF map N, L2 projection L, polynomial Gram G and positive
+  complementary metric S, M=rho L^T G L+(I-NL)^T S(I-NL). The metric is affine
+  consistent, not an assertion of exact continuum unresolved-flow energy.
+- Four weak continuity equations determine div(v) in P1. Enforcing these makes
+  this represented divergence zero. The three linear equations eliminate mean
+  velocity moments; the remaining integrated face-flux equation stays explicit.
+  Interior angular variables are eliminated by an exact 3x3 Schur complement,
+  retaining the eliminated source-energy constant and reaction derivatives.
+- Shared primary P1 face fluxes, a sparse positive kinetic factor and a pressure
+  Schur factor. Closed components have one pressure gauge removed only after
+  verifying compatible prescribed volume flux; open-top components retain full
+  pressure rank. Unsupported or nonrepresentable results fail before publication.
+- Sequential exact solid subtraction with at most six exterior convex pieces
+  per background tetrahedron. Integration cones remain geometric integration
+  only. No velocity unknown is allocated per cone or transient tetrahedron.
+  Exact inherited-cap adjacency detects separate wet pieces; the current merged
+  operator refuses those cases rather than joining disconnected water.
+- Stable shared face coordinates selected from exact geometric extrema. Exact
+  local differences and dot products precede long-double conversion. Full face
+  Gram/mixed integrals use positive simplex integration. Convex hulls select
+  coordinates only; actual apertures, including concavity, are integrated.
+- Atomic geometry-epoch updates reuse unaffected owned factors. Invalid source,
+  geometry, rounding, incompatible sealed flow and unsupported topology paths
+  retain the previously published epoch. This is not swept-water evolution.
+- A genuine positive-area boundary-touch defect in this prototype was reproduced
+  and corrected: an otherwise empty solid/seed intersection still needs its
+  wetted boundary footprint. Exact owned-plane polygon clipping preserves the
+  background remainder and assigns the solid patch correctly. Five full-epoch
+  axis/oblique cases and zero-area edge controls pass; the initial failure stays
+  archived. This is a private geometry correction, not a claimed PBF repair.
+
+Primary flux is authoritative for normal transport. The cell's affine velocity
+projection is NOT substituted for its boundary trace. q0 is the integrated
+normal flux by definition; it is not recomputed through a rounded Gram inverse.
+There is no diagonal regularization, damping, dropped small face, volume repair,
+iteration-budget increase, reduced cadence or fitted load-response coefficient.
+
+INDEPENDENT VALIDATION
+Final receipts and exact counts are in stage16/RESULTS.json. Assertions include:
+The ten final-source programs passed 36,066 assertions plus five touch cases;
+these are NOT that many independent physical scenarios.
+- Independent polynomial/simplex geometry, physical mass and affine cross-work,
+  divergence, rigid rotation and primary-flux reintegration on axis, oblique,
+  thin and tiny-angle cuts. Shared-frame and subdivision tests check actual
+  opposite owners rather than approximate coordinate welding.
+- Independent uncondensed GLOBAL raw KKT, using all local DOFs and independently
+  constructed boundary/interface/divergence rows, compared with the condensed
+  solve. This checks algebra/assembly of the chosen metric, not continuum truth.
+  Removing a shared tangential moment causes a measurable endpoint difference.
+- Buoyancy FORCE AND TORQUE under ordinary/rotated gravity, calm preservation,
+  arbitrary affine disturbance, body translation/rotation and kinetic work.
+- Actual native fixed joints, an off-centre hinge and free heavy/light bodies.
+  The coupled native/fluid solve uses real native mass/inertia and joint rows.
+  Actual completed native velocities are checked. Omitting the native joint
+  reaction is rejected BEFORE fluid publication. This proof covers one coupling
+  boundary, not subsequent moving water or an unrepresented floor/planet solid.
+- Fresh and reused geometry/operators/endpoints agree bitwise over the six
+  preserved moving poses; invalid transactions retain ownership and state.
+
+REFERENCE CHECKS THAT PREVENT A FALSE ACCEPTANCE
+1. The original rounded-vertex tiny-face oracle fails thirteen checks for BOTH
+   the exact and fast collectors, identically at about 1.0571e-8 against 1e-8.
+   Preserve that failure. The original tool output was not saved as a raw file;
+   the archive includes a final-source reproduction of the unchanged fixture.
+   A separate independent factored-coordinate oracle
+   computes area vectors and centred coordinates before rounding and reintegrates
+   primary flux to about 2.6e-19 without changing the original threshold. This
+   does NOT make the rounded-point EvaluateFaceNormal API magically precise.
+2. The initial fine comparison mixed a sealed compact tank with Stage14's open
+   top. Those initial rows are diagnostic/noncomparable, preserved as such.
+   Matching the open-top boundary does NOT remove the large coarse discrepancy.
+3. Stage14's fine affine field imposes FOUR MACRO divergence moments, not one
+   equation per fine tetrahedron. A new exact per-tetrahedron diagnostic aggregates
+   back to the original equations to roundoff, then measures the distinction.
+   At oblique prescribed motion, the weak field's maximum local divergence reaches
+   208.52/s, while its original macro-volume residual remains tiny. This is a
+   weak-Galerkin discretization distinction, not proof that its historical
+   conservation tests were wrong or that all weak incompressibility is invalid.
+   It is NOT a converged pointwise-incompressible reference by itself.
+4. On the SAME fine geometry and boundary conditions, imposing each tetrahedron's
+   integrated divergence raises oblique combined-motion energy from .0284251 J
+   to .0759415 J; strict maximum divergence is below 6.2e-16/s. The compact
+   open-top coarsest model gives .316079 J. The strict finite space has richer
+   background subface traces and is an admissible incompressible comparison,
+   not an exact continuum answer or an identical-DOF accuracy oracle.
+5. An independent continuum-admissible closed-tank trial is constructed as
+     u = curl(chi A),
+     A = .5 U_COM cross r - .5 |r|^2 omega.
+   The separable C1 cubic cutoff chi equals one throughout the body and has value
+   AND gradient zero at tank walls. Polynomial-exact quadrature in exact arithmetic,
+   evaluated in long double, and
+   an independent rational translation formula agree. Translation trial energy
+   is .151353137415 J, while the coarsest compact result is .159423109859 J,
+   5.33% ABOVE this admissible upper bound. This establishes approximation error
+   independently of either numerical pressure reference. The mixed-motion trial
+   is looser and inconclusive; it is not counted as physical acceptance.
+6. Fixed PHYSICAL domain/body refinement (not simply enlarging the tank) reduces
+   compact open-top combined-motion energy from .316079 J at h=1 to .127560 J at
+   h=.5. Complementary-metric energy falls from .257591 to .051953 J. Further
+   h=1/3 and h=1/4 geometries encounter disconnected-within-seed rejection.
+   Two successful resolutions do NOT establish asymptotic convergence. Original
+   unsuccessful probes and their exit codes remain evidence, not green tests.
+
+PERFORMANCE — CONSTRUCTION IS FASTER, ACCURACY IS NOT YET QUALIFIED
+Same Ryzen5 5600/8GB host, GNU15.2 O3, serial heavy jobs, exact source/binary
+provenance and raw rows archived. Stage14 was rerun in this investigation.
+The six moving geometry poses and ownership reuse workload are preserved.
+The methods have different discretizations; the compact benchmark uses affine
+sources while Stage14 uses sampled nonlinear sources. Compare PREPARATION costs;
+do not present warm-solve numbers as an identical-physics/game FPS speedup.
+
+Stage14 rerun: updated epoch median1122.53ms, p95/worst1221.79ms;
+              warm solve median18.6073ms; peak RSS434012KiB.
+Compact preliminary factored run: updated median31.817ms, p95/worst36.5612ms;
+              warm solve median1.3057ms; peak RSS17280KiB.
+Final-source compact measurements and platform details are in RESULTS/PROVENANCE.
+The final run measured updated median31.5463ms, p95/worst37.4478ms, warm
+median1.34348ms and peak RSS17164KiB.
+This is NOT a claim of practical 60Hz evolving fluids or scalable world-wide
+pressure solving. The current global pressure Schur is dense and the tested
+moving fixture has only48 background owners and one native box.
+
+WHAT REMAINS / NEXT TECHNICAL BOUNDARY
+Do not tune S to manufacture agreement. The merged seed may be nonconvex/holed;
+its complementary kinetic response has no demonstrated uniform accuracy bound
+on these cuts. A justified next comparison is to retain the already bounded
+convex exterior pieces as physical cells, partition their artificial cap faces
+into actual fluid-fluid and fluid-solid ports, then condense their internal
+ports. A single normal polynomial across a mixed solid/fluid cap would incorrectly
+lock independent ports; explicit common-aperture ownership is required. A true
+local div/curl/Neumann energy operator is another principled but larger option.
+Neither alternative is implemented or claimed qualified by this checkpoint.
+
+Also outstanding: swept wall geometry/GCL, real displaced-water and momentum
+transport, wet/dry/free-surface evolution, multiple solid ownership including
+actual floor/planet collision geometry, long-running native contact/CCD, M54
+quantity ownership, application persistence/lifecycle and export. Endpoint-only
+geometry plus new source callbacks is not a time-dependent fluid simulation.
+The original Terrain planet failure is NOT declared fixed.
+
+ISOLATION
+No tracked engine implementation, public binding/type, project configuration,
+release identity, Basic Water, M54/M55, FLU-001, game project, protected historical
+record or independent Solbert research is modified. Alpha stays compiled-locked.
+No main promotion, tag, publication, Windows/Android or new SDK claim.
+The linked native archive is the existing recorded build, not a newly built Alpha
+SDK; provenance records its actual bytes and embedded historical build identity.
+An unchanged public policy test was relinked against that matching Experimental
+archive/runtime and passed26 checks, including default-off streaming/export.
+Earlier stale-binary and misplaced-executable export failures are preserved as
+prerequisite failures. This Experimental build does not execute the Alpha-only
+compiled-lock assertions; Alpha's restriction source and published packages are
+unchanged. Do not claim a fresh Alpha or distribution qualification from this run.
+Exact source archive, classifications, reproduction and fingerprints:
+ docs/evidence/advanced-fluid-pressure-followup-20261029/stage16/

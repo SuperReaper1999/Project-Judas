@@ -1,0 +1,58 @@
+PRIVATE BOUNDED FLUID OPERATOR INVESTIGATION — NOT A PRODUCTION BACKEND
+Read docs/ADVANCED_FLUID_BOUNDED_OPERATOR.txt and RESULTS.json first.
+
+VERIFY BYTES WITHOUT EXECUTION
+ python3 <this-directory>/verify_evidence.py
+
+RESTORE IN A SCRATCH CHECKOUT ONLY
+Verify/extract the preceding Stage14/15 dependency chain as documented there.
+Then extract stage16-bounded-operator-reference.tar.gz LAST. Do not overwrite an
+active investigation or independent research. No third-party headers, native
+binaries or SDK packages are redistributed here.
+
+PLAIN NUMERICAL TEST PREREQUISITES
+Linux GNU15.2 C++17/O3; GLM development headers and the repository src headers.
+Set BOOST_INCLUDE_DIR to Boost1.90 headers and EIGEN_INCLUDE_DIR to Eigen3.4
+headers if they are not at the original locally extracted /tmp paths in
+run_probe.py. Their version/prerequisite does not add an engine dependency.
+The plain probes do not link the engine or need a graphics context.
+
+FINAL SELECTED-MODEL TESTS
+The archived run_final.py creates 'final' and refuses to overwrite it. In a
+scratch copy change ONLY that output directory to a new unused directory.
+Run serially, not alongside other builds/benchmarks on the 8GB machine:
+ python3 .cache/fluid-runtime-candidates-stage16-20261029/run_final.py
+NativePressureTests uses the existing Linux Release Makefile probe infrastructure
+and exact-volume override documented by Stage14, plus the recorded native engine
+archive. It is NOT a freshly rebuilt Alpha SDK. The raw link/build identity and
+all binary/source hashes are in PROVENANCE.json.
+
+INDEPENDENT PHYSICAL INVESTIGATIONS (DISTINCT FROM GREEN ALGEBRA)
+ python3 .cache/fluid-runtime-candidates-stage16-20261029/run_probe.py runtime/StrictIncompressibleReferenceTests.cpp
+ python3 .cache/fluid-runtime-candidates-stage16-20261029/run_probe.py acceptance/CurlTrialBound.cpp
+ python3 .cache/fluid-runtime-candidates-stage16-20261029/run_probe.py runtime/RefinementComparison.cpp
+ python3 .cache/fluid-runtime-candidates-stage16-20261029/run_probe.py runtime/CompactResolutionProbe.cpp
+The strict reference takes around two minutes, including separate weak/strict
+solves. It changes only the diagnostic continuity space in a private copy.
+The refinement probes currently EXIT NONZERO at unsupported disconnected-within-
+seed geometry. Preserve this outcome. Do not merge components or omit failures.
+The curl trial passes its independent integration checks while reporting that
+coarse translation resistance is ABOVE a valid continuum trial upper bound.
+That is an unresolved physical-accuracy finding, not a qualified runtime result.
+
+PRESERVED ROUNDED-INPUT ORACLE FAILURE
+ python3 .cache/fluid-runtime-candidates-stage16-20261029/run_probe.py geometry/FastGeometryTests.cpp 4
+Expected: original rounded tiny-angle physical patch checks fail for BOTH exact
+and fast paths at the unchanged 1e-8 tolerance. Factored exact-coordinate tests
+are separate; they do not alter that fixture or make rounded inputs more precise.
+To run the factored direct collector's separate five-fixture proof:
+ python3 .cache/fluid-runtime-candidates-stage16-20261029/run_probe.py geometry/FastGeometryTests.cpp direct
+
+MEASUREMENTS AND LIMITS
+Archive includes original runs, corrected follows, final receipts and commands.
+Source artifacts are the final reproducible sources; preliminary binary builds
+were overwritten during iteration and are not claimed bit-reproducible artifacts.
+A before/after construction comparison is NOT an identical-discretization
+accuracy or whole-game FPS claim. Different initial sources and boundaries in
+preliminary comparisons are classified in the report. No Alpha unlock, public
+API/game change, moving-water/GCL completion, Windows/Android or export claim.
