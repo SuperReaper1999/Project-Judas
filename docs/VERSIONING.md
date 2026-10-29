@@ -6,7 +6,8 @@ The first release title is **Judas Engine Alpha v1.0.0**; its machine version is
 on 27 October 2026 from `636eec475b9955dcfd7d6d943d00c05d911135ad`.
 Build configuration alone is not approval for any subsequent release.
 The accepted weather/input patch advances the source identity to
-`1.0.1-alpha.1`; its Alpha publication is in preparation. Patch numbers and
+`1.0.1-alpha.1`, [published on 29 October 2026](https://github.com/SuperReaper1999/Project-Judas/releases/tag/v1.0.1-alpha.1)
+from `13b032080c6300c50af8bf44536c2dd8da5814d2`. The original Alpha remains immutable. Patch numbers and
 prerelease sequence numbers are separate SemVer components.
 
 Judas follows semantic version precedence: `1.0.0-alpha.1` < `1.0.0-alpha.2` <

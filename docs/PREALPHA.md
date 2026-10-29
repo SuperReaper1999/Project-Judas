@@ -8,7 +8,10 @@ longer a statement that M100 has not begun. Start with the
 
 ## Accepted release baseline
 
-The published engine checkpoint is `636eec475b9955dcfd7d6d943d00c05d911135ad`.
+The latest published patch is Alpha v1.0.1 at
+`13b032080c6300c50af8bf44536c2dd8da5814d2`, published 29 October 2026.
+See [its release record](ALPHA_V1_0_1_NOTES.md#release-record). The original
+Alpha v1.0.0 checkpoint remains `636eec475b9955dcfd7d6d943d00c05d911135ad`.
 `main` contains human-accepted source; subsequent Experimental work requires its
 own acceptance before promotion. The older Windows 11 native/hardware acceptance
 at `6941b381` retains its own scope in [Windows qualification](WINDOWS.md).

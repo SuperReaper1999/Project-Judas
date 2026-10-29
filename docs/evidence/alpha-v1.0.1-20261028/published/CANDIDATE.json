@@ -1,0 +1,50 @@
+{
+  "schema": 1,
+  "state": "awaiting-operator-approval",
+  "source_revision": "13b032080c6300c50af8bf44536c2dd8da5814d2",
+  "version": "1.0.1-alpha.1",
+  "channel": "Alpha",
+  "publication_authorized": false,
+  "sdk_identities": [
+    {
+      "architecture": "x86_64",
+      "build_id": "1.0.1-alpha.1-Alpha-13b0320-clean-79791074fb06",
+      "channel": "Alpha",
+      "compiler": "GNU",
+      "compiler_version": "13.3.0",
+      "configuration": "Release",
+      "maturity": "alpha",
+      "platform": "Linux",
+      "release_name": "Judas Engine Alpha v1.0.1",
+      "schema": 1,
+      "source_dirty": false,
+      "source_fingerprint": "79791074fb06acff4cd3d73746f78599714fa7fc7844dc86d73403d507fba643",
+      "source_origin": "git",
+      "source_revision": "13b032080c6300c50af8bf44536c2dd8da5814d2",
+      "source_tree": "8c186d67d48217021d40c52d43054f2a77f2287d",
+      "source_untracked_count": 0,
+      "source_untracked_fingerprint": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "version": "1.0.1-alpha.1"
+    },
+    {
+      "architecture": "AMD64",
+      "build_id": "1.0.1-alpha.1-Alpha-13b0320-clean-79791074fb06",
+      "channel": "Alpha",
+      "compiler": "MSVC",
+      "compiler_version": "19.51.36260.0",
+      "configuration": "Release",
+      "maturity": "alpha",
+      "platform": "Windows",
+      "release_name": "Judas Engine Alpha v1.0.1",
+      "schema": 1,
+      "source_dirty": false,
+      "source_fingerprint": "79791074fb06acff4cd3d73746f78599714fa7fc7844dc86d73403d507fba643",
+      "source_origin": "git",
+      "source_revision": "13b032080c6300c50af8bf44536c2dd8da5814d2",
+      "source_tree": "8c186d67d48217021d40c52d43054f2a77f2287d",
+      "source_untracked_count": 0,
+      "source_untracked_fingerprint": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "version": "1.0.1-alpha.1"
+    }
+  ]
+}

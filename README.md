@@ -9,9 +9,9 @@ arbitrary gravity, terrain, liquids, weather, deformables and seamless world
 transitions. Ordinary game policy lives in project JavaScript; the engine
 provides the reusable systems and runtime.
 
-**[Judas Engine Alpha v1.0.0](https://github.com/SuperReaper1999/Project-Judas/releases/tag/v1.0.0-alpha.1)**
-(`1.0.0-alpha.1`) was human accepted and published on 27 October 2026 from
-`636eec475b9955dcfd7d6d943d00c05d911135ad`. Download the Linux or Windows SDK,
+**[Judas Engine Alpha v1.0.1](https://github.com/SuperReaper1999/Project-Judas/releases/tag/v1.0.1-alpha.1)**
+(`1.0.1-alpha.1`) was published with operator authorization on 29 October 2026 from
+`13b032080c6300c50af8bf44536c2dd8da5814d2`. Download the Linux or Windows SDK,
 source archive and checksums from that release. Alpha is not Stable/GA; advanced
 and experimental capabilities retain their documented limits.
 
@@ -19,8 +19,8 @@ and experimental capabilities retain their documented limits.
 Basic Water and swimming remain available. See the
 [restriction and investigation](docs/M100_FLUID_CONTACT_STABILITY.md).
 
-The accepted **Alpha v1.0.1** weather/input patch (`1.0.1-alpha.1`) is being
-prepared for publication. See [patch notes](docs/ALPHA_V1_0_1_NOTES.md). The
+The weather/input patch also repairs release preparation and avoids redundant
+CI builds. See [patch notes](docs/ALPHA_V1_0_1_NOTES.md). The
 versioned source identity is authoritative in [engine-version.json](engine-version.json).
 
 ## Current status

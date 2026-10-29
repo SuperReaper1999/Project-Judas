@@ -1,10 +1,14 @@
 # Alpha scope and qualification matrix
 
-This is the support boundary for [published Alpha v1.0.0](https://github.com/SuperReaper1999/Project-Judas/releases/tag/v1.0.0-alpha.1),
-human accepted on 27 October 2026 at `636eec475b9955dcfd7d6d943d00c05d911135ad`.
+This is the support boundary for [published Alpha v1.0.1](https://github.com/SuperReaper1999/Project-Judas/releases/tag/v1.0.1-alpha.1),
+published on 29 October 2026 at `13b032080c6300c50af8bf44536c2dd8da5814d2`.
+The original Alpha v1.0.0 was human accepted on 27 October at `636eec47`.
+The patch adds fresh Ubuntu 24.04 SDK/editor/export qualification and hosted
+native Windows SDK/tool/selected-contract checks. It does not create new Windows
+GPU, audio, controller, clean-machine or Android hardware acceptance.
 Exact M100 artifact receipts distinguish release qualification from the accepted
 Pre-Alpha baseline and historical platform evidence. See
-[release notes](ALPHA_V1_0_0_NOTES.md) and [release process](RELEASING.md).
+[patch notes](ALPHA_V1_0_1_NOTES.md) and [release process](RELEASING.md).
 No claim of universal component composition or clean-machine certification is made.
 
 ## Platforms and distribution

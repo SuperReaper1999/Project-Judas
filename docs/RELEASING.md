@@ -5,7 +5,12 @@
 
 ## Current boundary
 
-**[Alpha v1.0.0 is published](https://github.com/SuperReaper1999/Project-Judas/releases/tag/v1.0.0-alpha.1)** after final operator approval on
+**[Alpha v1.0.1 is published](https://github.com/SuperReaper1999/Project-Judas/releases/tag/v1.0.1-alpha.1)** on
+29 October 2026 from `13b032080c6300c50af8bf44536c2dd8da5814d2`, with operator authorization.
+Linux and native Windows preparation, guarded publication and old-updater
+compatibility passed. See [the patch release record](ALPHA_V1_0_1_NOTES.md#release-record).
+
+The original [Alpha v1.0.0](https://github.com/SuperReaper1999/Project-Judas/releases/tag/v1.0.0-alpha.1) was published after final operator approval on
 27 October 2026. Tag `v1.0.0-alpha.1` identifies exact historical source
 `636eec475b9955dcfd7d6d943d00c05d911135ad`. The verified Linux, Windows and source
 packages and Alpha update manifest are live. These publication steps remain the
@@ -18,13 +23,13 @@ Do not create a duplicate Stable branch. Do not publish Alpha as latest Stable.
 
 The `0dab8e5d` candidate predates the advanced-fluid restriction; `31205c6a`
 predates the accepted Basic Water editor-preview correction. Both are superseded.
-The final published packages use `636eec47`; do not distribute older candidates
-as the final Alpha. Sealed preparation receipts retain their original pending
+The original Alpha v1.0.0 packages use `636eec47`; do not distribute older candidates
+as that accepted release. Sealed preparation receipts retain their original pending
 approval wording as historical evidence; the public release records the later
 operator approval. See [the release record](ALPHA_V1_0_0_NOTES.md#release-record).
 
-The operator-authorized Alpha v1.0.1 patch is being prepared from the accepted
-weather/input corrections. Assembly chooses the curated notes matching the
+The operator-authorized Alpha v1.0.1 patch includes the accepted weather/input
+corrections and qualified release/CI repairs. Assembly chooses curated notes matching the
 authoritative version and channel; it does not reuse initial-release notes.
 
 ## 1. Freeze a source candidate

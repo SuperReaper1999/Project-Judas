@@ -1,0 +1,310 @@
+{
+  "schema": 1,
+  "recordedUtc": "2026-10-29T00:46:14.925058+00:00",
+  "state": "published",
+  "version": "1.0.1-alpha.1",
+  "channel": "Alpha",
+  "tag": "v1.0.1-alpha.1",
+  "sourceRevision": "13b032080c6300c50af8bf44536c2dd8da5814d2",
+  "sourceTree": "8c186d67d48217021d40c52d43054f2a77f2287d",
+  "sourceFingerprint": "79791074fb06acff4cd3d73746f78599714fa7fc7844dc86d73403d507fba643",
+  "publishedAt": "2026-10-29T00:38:51Z",
+  "url": "https://github.com/SuperReaper1999/Project-Judas/releases/tag/v1.0.1-alpha.1",
+  "prerelease": true,
+  "operatorAuthorization": "Explicit operator request to promote accepted weather/input fixes, publish a new patch and close issues 18 and 19. No new hardware validation is inferred.",
+  "preparationRun": {
+    "conclusion": "success",
+    "headSha": "13b032080c6300c50af8bf44536c2dd8da5814d2",
+    "jobs": [
+      {
+        "completedAt": "2026-10-29T00:33:41Z",
+        "conclusion": "success",
+        "databaseId": 123182388180,
+        "name": "windows",
+        "startedAt": "2026-10-29T00:16:23Z",
+        "status": "completed",
+        "steps": [
+          {
+            "conclusion": "success",
+            "name": "Set up job",
+            "number": 1,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Validate literal commit input",
+            "number": 2,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run actions/checkout@v7",
+            "number": 3,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Build complete native MSVC SDK",
+            "number": 4,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run actions/upload-artifact@v7",
+            "number": 5,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Post Run actions/checkout@v7",
+            "number": 10,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Complete job",
+            "number": 11,
+            "status": "completed"
+          }
+        ],
+        "url": "https://github.com/SuperReaper1999/Project-Judas/actions/runs/40792954393/job/123182388180"
+      },
+      {
+        "completedAt": "2026-10-29T00:32:56Z",
+        "conclusion": "success",
+        "databaseId": 123182388341,
+        "name": "linux",
+        "startedAt": "2026-10-29T00:16:22Z",
+        "status": "completed",
+        "steps": [
+          {
+            "conclusion": "success",
+            "name": "Set up job",
+            "number": 1,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Validate literal commit input",
+            "number": 2,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run actions/checkout@v7",
+            "number": 3,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Snapshot exact tracked source before qualification",
+            "number": 4,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run actions/setup-node@v7",
+            "number": 5,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run sudo apt-get update",
+            "number": 6,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Pack qualified SDK and tracked source as immutable CI artifacts",
+            "number": 7,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run actions/upload-artifact@v7",
+            "number": 8,
+            "status": "completed"
+          },
+          {
+            "conclusion": "skipped",
+            "name": "Run actions/upload-artifact@v7",
+            "number": 9,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Post Run actions/setup-node@v7",
+            "number": 17,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Post Run actions/checkout@v7",
+            "number": 18,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Complete job",
+            "number": 19,
+            "status": "completed"
+          }
+        ],
+        "url": "https://github.com/SuperReaper1999/Project-Judas/actions/runs/40792954393/job/123182388341"
+      }
+    ],
+    "status": "completed",
+    "url": "https://github.com/SuperReaper1999/Project-Judas/actions/runs/40792954393"
+  },
+  "publicationRun": {
+    "conclusion": "success",
+    "headSha": "13b032080c6300c50af8bf44536c2dd8da5814d2",
+    "status": "completed",
+    "url": "https://github.com/SuperReaper1999/Project-Judas/actions/runs/40795021301"
+  },
+  "mainPromotionCI": {
+    "passed": true,
+    "run": "https://github.com/SuperReaper1999/Project-Judas/actions/runs/40795021647",
+    "scope": "Exact-source native qualification reused; duplicate native builds skipped."
+  },
+  "sdkIdentities": [
+    {
+      "architecture": "x86_64",
+      "build_id": "1.0.1-alpha.1-Alpha-13b0320-clean-79791074fb06",
+      "channel": "Alpha",
+      "compiler": "GNU",
+      "compiler_version": "13.3.0",
+      "configuration": "Release",
+      "maturity": "alpha",
+      "platform": "Linux",
+      "release_name": "Judas Engine Alpha v1.0.1",
+      "schema": 1,
+      "source_dirty": false,
+      "source_fingerprint": "79791074fb06acff4cd3d73746f78599714fa7fc7844dc86d73403d507fba643",
+      "source_origin": "git",
+      "source_revision": "13b032080c6300c50af8bf44536c2dd8da5814d2",
+      "source_tree": "8c186d67d48217021d40c52d43054f2a77f2287d",
+      "source_untracked_count": 0,
+      "source_untracked_fingerprint": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "version": "1.0.1-alpha.1"
+    },
+    {
+      "architecture": "AMD64",
+      "build_id": "1.0.1-alpha.1-Alpha-13b0320-clean-79791074fb06",
+      "channel": "Alpha",
+      "compiler": "MSVC",
+      "compiler_version": "19.51.36260.0",
+      "configuration": "Release",
+      "maturity": "alpha",
+      "platform": "Windows",
+      "release_name": "Judas Engine Alpha v1.0.1",
+      "schema": 1,
+      "source_dirty": false,
+      "source_fingerprint": "79791074fb06acff4cd3d73746f78599714fa7fc7844dc86d73403d507fba643",
+      "source_origin": "git",
+      "source_revision": "13b032080c6300c50af8bf44536c2dd8da5814d2",
+      "source_tree": "8c186d67d48217021d40c52d43054f2a77f2287d",
+      "source_untracked_count": 0,
+      "source_untracked_fingerprint": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "version": "1.0.1-alpha.1"
+    }
+  ],
+  "artifacts": [
+    {
+      "name": "JudasEngine-1.0.1-alpha.1-Alpha-Linux-x86_64.tar.gz",
+      "platform": "Linux",
+      "architecture": "x86_64",
+      "bytes": 385814412,
+      "sha256": "1a07eda89685ca3548260338a593886584044c57dd5ef92acc622d3b3ba3dcae",
+      "url": "https://github.com/SuperReaper1999/Project-Judas/releases/download/v1.0.1-alpha.1/JudasEngine-1.0.1-alpha.1-Alpha-Linux-x86_64.tar.gz"
+    },
+    {
+      "name": "JudasEngine-1.0.1-alpha.1-Alpha-Windows-x86_64.zip",
+      "platform": "Windows",
+      "architecture": "x86_64",
+      "bytes": 104023088,
+      "sha256": "109e60f1f06b8a3d961111c942a4bd3fa174af39783362642a5d5df0b1d6b0a8",
+      "url": "https://github.com/SuperReaper1999/Project-Judas/releases/download/v1.0.1-alpha.1/JudasEngine-1.0.1-alpha.1-Alpha-Windows-x86_64.zip"
+    },
+    {
+      "name": "JudasEngine-1.0.1-alpha.1-Source.tar.gz",
+      "platform": "Source",
+      "architecture": "any",
+      "bytes": 70602759,
+      "sha256": "f0a3dbf7dfb9551a583b025f7d9d2898fcb496b194b29d3a61657b9a342630c3",
+      "url": "https://github.com/SuperReaper1999/Project-Judas/releases/download/v1.0.1-alpha.1/JudasEngine-1.0.1-alpha.1-Source.tar.gz"
+    }
+  ],
+  "integrity": {
+    "publisherDownloadedAndVerifiedAllThreePayloadsBeforePublishing": true,
+    "githubAssetDigestsAndSizesMatchManifest": true,
+    "downloadedMetadataDigestsMatch": true
+  },
+  "oldUpdater": {
+    "before": {
+      "installed": "1.0.0-alpha.1",
+      "available": "1.0.0-alpha.1",
+      "channel": "Alpha",
+      "newer": false,
+      "compatible": true,
+      "offer": false
+    },
+    "after": {
+      "installed": "1.0.0-alpha.1",
+      "available": "1.0.1-alpha.1",
+      "channel": "Alpha",
+      "newer": true,
+      "compatible": true,
+      "offer": true
+    }
+  },
+  "acceptedImplementationFingerprintReceipt": "docs/evidence/issues-18-19-20261028/FINAL_FINGERPRINTS.json",
+  "acceptedImplementationFilesUnchanged": {
+    "CMakeLists.txt": true,
+    "docs/ISSUES_18_19_FIXES.txt": true,
+    "docs/TEST_HARNESS.md": true,
+    "docs/judasjs/input.md": true,
+    "docs/judasjs/weather.md": true,
+    "src/Renderer.cpp": true,
+    "src/Renderer.h": true,
+    "src/RendererMaterials.inl": true,
+    "src/RendererWeather.inl": true,
+    "src/TestHarness.cpp": true,
+    "src/Window.cpp": true,
+    "src/Window.h": true,
+    "tests/ConsumerPointerTests.cpp": true,
+    "tests/PointerHarnessTests.cpp": true,
+    "tests/WeatherLightingTests.cpp": true,
+    "tests/WeatherRenderTests.cpp": true,
+    "tests/fixtures/pointer-taps/PROVENANCE.txt": true,
+    "tests/fixtures/pointer-taps/fixed.js": true,
+    "tests/fixtures/pointer-taps/original.js": true,
+    "tools/validation/suites.json": true
+  },
+  "issueClosure": [
+    {
+      "closedAt": "2026-10-29T00:41:31Z",
+      "number": 18,
+      "state": "CLOSED",
+      "url": "https://github.com/SuperReaper1999/Project-Judas/issues/18"
+    },
+    {
+      "closedAt": "2026-10-29T00:41:32Z",
+      "number": 19,
+      "state": "CLOSED",
+      "url": "https://github.com/SuperReaper1999/Project-Judas/issues/19"
+    }
+  ],
+  "originalRelease": {
+    "tag": "v1.0.0-alpha.1",
+    "tagObjectUnchanged": true,
+    "checksumInventoryUnchanged": true
+  },
+  "scope": {
+    "Linux": "Ubuntu 24.04 native gates, 17-tool SDK, editor and relocated exports; software graphics, not GPU performance certification.",
+    "Windows": "Hosted native MSVC SDK/tools and selected CPU contracts; no fresh hardware/editor-GL/controller/audio certification.",
+    "Android": "No new APK or device qualification.",
+    "AdvancedFluidDynamics": "Remains compiled unavailable in Alpha. No replacement backend integrated.",
+    "CI": "Native coverage retained for native work. Tooling-only routing and exact-source promotion proof avoid duplicate builds. Not a claim to repair LFS quota."
+  }
+}

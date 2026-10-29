@@ -73,3 +73,25 @@ project. Original `v1.0.0-alpha.1` artifacts remain immutable.
 
 See [the implementation report](https://github.com/SuperReaper1999/Project-Judas/blob/Experimental/docs/ISSUES_18_19_FIXES.txt),
 [publication procedure](RELEASING.md) and [versioning](VERSIONING.md).
+
+## Release record
+
+Published **29 October 2026** as `v1.0.1-alpha.1` from exact source
+`13b032080c6300c50af8bf44536c2dd8da5814d2`, following the operator's explicit
+authorization. [Linux/Windows preparation](https://github.com/SuperReaper1999/Project-Judas/actions/runs/40792954393)
+and [protected publication](https://github.com/SuperReaper1999/Project-Judas/actions/runs/40795021301)
+passed. The publisher downloaded and verified the three artifact payloads before
+publishing; GitHub's asset digests also match the manifest. The unmodified
+original Alpha updater changes from `offer: false` to `offer: true` for this patch.
+
+Issues [#18](https://github.com/SuperReaper1999/Project-Judas/issues/18) and
+[#19](https://github.com/SuperReaper1999/Project-Judas/issues/19) were closed with
+release-linked explanations. The advanced-fluid issue remains open and Alpha's
+compiled restriction remains intact. No fresh hardware acceptance is inferred.
+
+[Machine-readable publication evidence](evidence/alpha-v1.0.1-20261028/PUBLICATION.json)
+records source/package identities and unchanged implementation fingerprints.
+Sealed `CANDIDATE.json` receipts intentionally retain their preparation-time
+pending-approval fields; the protected deployment and published release record
+the later authorization. Original Alpha tags/assets and this patch's published
+artifacts remain immutable. Current documentation may advance afterward.
