@@ -1,0 +1,11 @@
+docs/ISSUE_20_RAIN_CONTRAST.txt
+docs/M86_WEATHER.md
+docs/evidence/issue20-rain-contrast-20261029/CHANGED_FILES.txt
+docs/evidence/issue20-rain-contrast-20261029/FINAL_FINGERPRINTS.json
+docs/evidence/issue20-rain-contrast-20261029/REPRODUCE.txt
+docs/evidence/issue20-rain-contrast-20261029/RESULTS.json
+docs/evidence/issue20-rain-contrast-20261029/SOURCE_MANIFEST.json
+docs/evidence/issue20-rain-contrast-20261029/rain-contrast-evidence.tar.gz
+docs/evidence/issue20-rain-contrast-20261029/verify_evidence.py
+src/RendererWeather.inl
+tests/WeatherLightingTests.cpp

@@ -428,6 +428,13 @@ void Renderer::DrawWeather(bool secondary){
  if(!secondary&&(w.rain>.001f||w.snow>.001f||w.tornadoStrength>.001f)&&w.altitude<15000){
   RendererProfileScope gpu(*this,"Weather precipitation");WeatherUniforms(w.precipitation);glEnable(GL_DEPTH_TEST);glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
   auto particles=[&](int mode,unsigned count){
+   // Thin rain streaks/splashes are lit scattering highlights, not opaque blue
+   // surfaces. Alpha-over cancels their contrast when albedo matches the sky.
+   // Add only their lit contribution; zero illumination still contributes zero.
+   // Snow and solid tornado debris retain ordinary coverage/occlusion blending.
+   const bool highlight=mode==1||mode==4;
+   glBlendFuncSeparate(GL_SRC_ALPHA,highlight?GL_ONE:GL_ONE_MINUS_SRC_ALPHA,
+                      highlight?GL_ZERO:GL_SRC_ALPHA,highlight?GL_ONE:GL_ONE_MINUS_SRC_ALPHA);
    const double extent=mode==2?44.:40.,height=mode==2?22.:32.,speed=mode==2?2.6:22.;
    glm::vec3 phase(float(-std::fmod(glm::dot(w.absoluteEye,glm::dvec3(w.east)),extent)),float(std::fmod(-glm::dot(w.absoluteEye,glm::dvec3(w.up))-speed*w.absoluteTime,height)),float(-std::fmod(glm::dot(w.absoluteEye,glm::dvec3(w.north)),extent)));
    glUniform3fv(glGetUniformLocation(w.precipitation,"particlePhase"),1,glm::value_ptr(phase));glUniform1i(glGetUniformLocation(w.precipitation,"mode"),mode);glDrawArraysInstanced(GL_TRIANGLES,0,6,GLsizei(count));w.particles+=count;++m_stats.drawCalls;m_stats.triangles+=count*2;

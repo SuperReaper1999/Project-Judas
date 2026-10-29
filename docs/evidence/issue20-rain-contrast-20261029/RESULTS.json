@@ -1,0 +1,288 @@
+{
+  "schema": 1,
+  "parent": "9be9e7a75e3bc0a121ac93bfde4e2cc2460684e9",
+  "issue": 20,
+  "branch": "Experimental",
+  "scope": "Rain/splash lit-highlight composition only; no fluid, gameplay, API or release changes.",
+  "nativeChecks": 280,
+  "originalNegativeControl": "six failures of103 weather-lighting checks, with previous45 checks still passing",
+  "intermediateNegativeControl": "first additive blend changed HDR alpha, caught by three failures of106 checks; intermediate source/log retained",
+  "regressions": [
+    {
+      "target": "judas_weather_lighting_tests",
+      "args": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/issue20-rain-contrast/final-lighting"
+      ],
+      "exit": 0,
+      "seconds": 1.8165459632873535,
+      "binarySha256": "c0b32e4b06efac4ff61e6030c133dfd22d6157c5251499ab2fd1a7cea2f177aa"
+    },
+    {
+      "target": "judas_weather_render_tests",
+      "args": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/issue20-rain-contrast/final-render",
+        "--correctness-only"
+      ],
+      "exit": 0,
+      "seconds": 4.029014587402344,
+      "binarySha256": "f7c52f6d35bb97f085513c9f040a9c026ba34cac74d8b9fe9a0b834e7303fde9"
+    },
+    {
+      "target": "judas_weather_tests",
+      "args": [],
+      "exit": 0,
+      "seconds": 0.03179144859313965,
+      "binarySha256": "88d3dd10f0d020a134acd8ac8c5bc0f2f086bc52954a5283a3e1d85d80ef5928"
+    },
+    {
+      "target": "judas_weather_world_tests",
+      "args": [],
+      "exit": 0,
+      "seconds": 0.031726837158203125,
+      "binarySha256": "0fa954744202218c140e6aa42cf4b9c35cba5e01f09d3ae0db47bd3c143bb2b2"
+    },
+    {
+      "target": "judas_weather_script_tests",
+      "args": [],
+      "exit": 0,
+      "seconds": 0.03180050849914551,
+      "binarySha256": "e310d2d7a3cc9573bf67162358c1d35f686230c97b1ef147836d90d49d61e242"
+    }
+  ],
+  "games": [
+    {
+      "label": "before-storm",
+      "exit": 0,
+      "seconds": 5.427698612213135,
+      "binarySha256": "caa5b99a34f3df8094009d8f651257089e4026c6bfd369975394c87645951c6e",
+      "images": {
+        "game-rain-71.png": "630d5978052bbc839b3edf4293cbdd270a4327875ce7bac7b6439a6b8d9584ff",
+        "game-menu.png": "ce6a2d9788727bba3e88f7ebdf4e6a6c6aad3bc39b3b27e5f58f946f4ded4b16",
+        "game-rain-72.png": "45b8025f98fb2afc289ef3458fc0def95161c958b3aee164b8bcd0b629ea6218",
+        "game-rain-70.png": "bd12431ec5b8e947d295fbc70f7cc0c68ad3826662d685b172a0e95616586721"
+      }
+    },
+    {
+      "label": "after-rain",
+      "exit": 0,
+      "seconds": 5.475159645080566,
+      "binarySha256": "349aea0b6b74b1381398e6a7c9549e5c086ca142fd7b174cc937df1cbce432be",
+      "images": {
+        "game-rain-71.png": "9a22151f8805df526f82259deec297f6010a24161dd88c7a2ca23615216f6c63",
+        "game-menu.png": "ce6a2d9788727bba3e88f7ebdf4e6a6c6aad3bc39b3b27e5f58f946f4ded4b16",
+        "game-rain-72.png": "0ec0e70faabfb4e21ae5e54b1641c62b24d7d035bce94565daf50eaf0f6bf27c",
+        "game-rain-70.png": "a761f6f96f84a76eebb3f1a889cef994a4ad1da3fb0069c3df4a5094b0c1dd5a"
+      }
+    },
+    {
+      "label": "after-storm",
+      "exit": 0,
+      "seconds": 5.53077244758606,
+      "binarySha256": "349aea0b6b74b1381398e6a7c9549e5c086ca142fd7b174cc937df1cbce432be",
+      "images": {
+        "game-rain-71.png": "7eaaab748ace89d4bf7b5835c8192b2e0f75ea3f446175a6ebb463a118f0585d",
+        "game-menu.png": "ce6a2d9788727bba3e88f7ebdf4e6a6c6aad3bc39b3b27e5f58f946f4ded4b16",
+        "game-rain-72.png": "918d8eb23a3cd8d18b57d827d5fc0fcd9817e4c8f6c1ffee6a39b9c8e12850f8",
+        "game-rain-70.png": "167c7c7329f3600f06f8564be29ff9f18cc70fed6e6e98593a1a5c3d389e95cb"
+      }
+    },
+    {
+      "label": "after-night",
+      "exit": 0,
+      "seconds": 5.224845886230469,
+      "binarySha256": "349aea0b6b74b1381398e6a7c9549e5c086ca142fd7b174cc937df1cbce432be",
+      "images": {
+        "game-rain-71.png": "4485cd9de261bcb639969f2e61dbf4d81a2386d7d8046f54e2dcef9256bea7c2",
+        "game-menu.png": "ce6a2d9788727bba3e88f7ebdf4e6a6c6aad3bc39b3b27e5f58f946f4ded4b16",
+        "game-rain-72.png": "0673f6d42cc2ed17d09129e6a5f13487cfd8386111d2ce35cc6c2c7145cffc09",
+        "game-rain-70.png": "5104c26a571b5f850ce41506d370cf2eabe598448ba0f45ff4cdeb505b3c02d8"
+      }
+    },
+    {
+      "label": "original-rain",
+      "exit": 0,
+      "seconds": 5.425074338912964,
+      "binarySha256": "349aea0b6b74b1381398e6a7c9549e5c086ca142fd7b174cc937df1cbce432be",
+      "images": {
+        "game-rain-71.png": "9a22151f8805df526f82259deec297f6010a24161dd88c7a2ca23615216f6c63",
+        "game-menu.png": "ce6a2d9788727bba3e88f7ebdf4e6a6c6aad3bc39b3b27e5f58f946f4ded4b16",
+        "game-rain-72.png": "0ec0e70faabfb4e21ae5e54b1641c62b24d7d035bce94565daf50eaf0f6bf27c",
+        "game-rain-70.png": "a761f6f96f84a76eebb3f1a889cef994a4ad1da3fb0069c3df4a5094b0c1dd5a"
+      }
+    }
+  ],
+  "gameSky": {
+    "game-before-rain": {
+      "roi": "full-width top100 rows, open sky without HUD/terrain; differs from issue ROI",
+      "frames": [
+        70,
+        71,
+        72
+      ],
+      "meanTemporalGreyChange": 0.013315429687500002,
+      "meanSkyGrey": 142.28135091145833
+    },
+    "before-storm": {
+      "roi": "full-width top100 rows, open sky without HUD/terrain; differs from issue ROI",
+      "frames": [
+        70,
+        71,
+        72
+      ],
+      "meanTemporalGreyChange": 0.0601123046875,
+      "meanSkyGrey": 108.03551432291667
+    },
+    "after-rain": {
+      "roi": "full-width top100 rows, open sky without HUD/terrain; differs from issue ROI",
+      "frames": [
+        70,
+        71,
+        72
+      ],
+      "meanTemporalGreyChange": 0.109248046875,
+      "meanSkyGrey": 142.330810546875
+    },
+    "after-storm": {
+      "roi": "full-width top100 rows, open sky without HUD/terrain; differs from issue ROI",
+      "frames": [
+        70,
+        71,
+        72
+      ],
+      "meanTemporalGreyChange": 0.239072265625,
+      "meanSkyGrey": 108.124912109375
+    },
+    "after-night": {
+      "roi": "full-width top100 rows, open sky without HUD/terrain; differs from issue ROI",
+      "frames": [
+        70,
+        71,
+        72
+      ],
+      "meanTemporalGreyChange": 0.0018994140624999998,
+      "meanSkyGrey": 37.67564127604167
+    }
+  },
+  "editor": {
+    "exit": 0,
+    "undoRestores": true,
+    "authoredRestored": true,
+    "savedCopy": true,
+    "modalHangarPhysicsPaused": true
+  },
+  "relocated": {
+    "package": "/tmp/judas-issue20-final-dmzdu49w/SkyhavenFlight",
+    "workingDirectory": "/tmp",
+    "exit": 0,
+    "seconds": 5.52514386177063,
+    "runtimeSha256": "349aea0b6b74b1381398e6a7c9549e5c086ca142fd7b174cc937df1cbce432be",
+    "images": {
+      "game-rain-71.png": "9a22151f8805df526f82259deec297f6010a24161dd88c7a2ca23615216f6c63",
+      "game-menu.png": "ce6a2d9788727bba3e88f7ebdf4e6a6c6aad3bc39b3b27e5f58f946f4ded4b16",
+      "game-rain-72.png": "0ec0e70faabfb4e21ae5e54b1641c62b24d7d035bce94565daf50eaf0f6bf27c",
+      "game-rain-70.png": "a761f6f96f84a76eebb3f1a889cef994a4ad1da3fb0069c3df4a5094b0c1dd5a"
+    }
+  },
+  "builds": {
+    "before": {
+      "sha256": "caa5b99a34f3df8094009d8f651257089e4026c6bfd369975394c87645951c6e",
+      "identity": {
+        "architecture": "x86_64",
+        "build_id": "1.0.1-alpha.1-Experimental-61a1a94-dirty-e57ac0c5649f-u84f47c24fcd0",
+        "channel": "Experimental",
+        "compiler": "GNU",
+        "compiler_version": "15.2.0",
+        "configuration": "Release",
+        "maturity": "alpha",
+        "platform": "Linux",
+        "release_name": "Judas Engine Alpha v1.0.1",
+        "schema": 1,
+        "source_dirty": true,
+        "source_fingerprint": "e57ac0c5649f7df142ff236befc612c9b2946ae6169fa53a74f2972aabd52e70",
+        "source_origin": "git",
+        "source_revision": "61a1a94aa6f40392fc54b6e8d50eeeaed46358be",
+        "source_tree": "a9a6d544f71ba58d25f4699ba2a90811173c9896",
+        "source_untracked_count": 16,
+        "source_untracked_fingerprint": "84f47c24fcd098f88732ceab246b2e0e19eca31f56acdd72f89f8bfa1621daf2",
+        "version": "1.0.1-alpha.1"
+      }
+    },
+    "runtime": {
+      "sha256": "349aea0b6b74b1381398e6a7c9549e5c086ca142fd7b174cc937df1cbce432be",
+      "identity": {
+        "architecture": "x86_64",
+        "build_id": "1.0.1-alpha.1-Experimental-9be9e7a-dirty-05dd5bf61106-u84f47c24fcd0",
+        "channel": "Experimental",
+        "compiler": "GNU",
+        "compiler_version": "15.2.0",
+        "configuration": "Release",
+        "maturity": "alpha",
+        "platform": "Linux",
+        "release_name": "Judas Engine Alpha v1.0.1",
+        "schema": 1,
+        "source_dirty": true,
+        "source_fingerprint": "05dd5bf611064972c5e5bac809d3d5f77ea36b90da235e6edc3c6620dd181605",
+        "source_origin": "git",
+        "source_revision": "9be9e7a75e3bc0a121ac93bfde4e2cc2460684e9",
+        "source_tree": "557bd6f50fde0403ca2b85e5892a91b2d2bd4101",
+        "source_untracked_count": 16,
+        "source_untracked_fingerprint": "84f47c24fcd098f88732ceab246b2e0e19eca31f56acdd72f89f8bfa1621daf2",
+        "version": "1.0.1-alpha.1"
+      }
+    },
+    "editor": {
+      "sha256": "01750a6d9a622845a53ec0cf1ce57ce29e4af38d4c4aaa48ce2aa43186bd3f65",
+      "identity": {
+        "architecture": "x86_64",
+        "build_id": "1.0.1-alpha.1-Experimental-9be9e7a-dirty-05dd5bf61106-u84f47c24fcd0",
+        "channel": "Experimental",
+        "compiler": "GNU",
+        "compiler_version": "15.2.0",
+        "configuration": "Release",
+        "maturity": "alpha",
+        "platform": "Linux",
+        "release_name": "Judas Engine Alpha v1.0.1",
+        "schema": 1,
+        "source_dirty": true,
+        "source_fingerprint": "05dd5bf611064972c5e5bac809d3d5f77ea36b90da235e6edc3c6620dd181605",
+        "source_origin": "git",
+        "source_revision": "9be9e7a75e3bc0a121ac93bfde4e2cc2460684e9",
+        "source_tree": "557bd6f50fde0403ca2b85e5892a91b2d2bd4101",
+        "source_untracked_count": 16,
+        "source_untracked_fingerprint": "84f47c24fcd098f88732ceab246b2e0e19eca31f56acdd72f89f8bfa1621daf2",
+        "version": "1.0.1-alpha.1"
+      }
+    },
+    "exporter": {
+      "sha256": "583d822027e523809bc2289947653bc58a30714ccd020ae37fc446ab7ffae08c",
+      "identity": {
+        "architecture": "x86_64",
+        "build_id": "1.0.1-alpha.1-Experimental-9be9e7a-dirty-05dd5bf61106-u84f47c24fcd0",
+        "channel": "Experimental",
+        "compiler": "GNU",
+        "compiler_version": "15.2.0",
+        "configuration": "Release",
+        "maturity": "alpha",
+        "platform": "Linux",
+        "release_name": "Judas Engine Alpha v1.0.1",
+        "schema": 1,
+        "source_dirty": true,
+        "source_fingerprint": "05dd5bf611064972c5e5bac809d3d5f77ea36b90da235e6edc3c6620dd181605",
+        "source_origin": "git",
+        "source_revision": "9be9e7a75e3bc0a121ac93bfde4e2cc2460684e9",
+        "source_tree": "557bd6f50fde0403ca2b85e5892a91b2d2bd4101",
+        "source_untracked_count": 16,
+        "source_untracked_fingerprint": "84f47c24fcd098f88732ceab246b2e0e19eca31f56acdd72f89f8bfa1621daf2",
+        "version": "1.0.1-alpha.1"
+      }
+    }
+  },
+  "sourceSha256": {
+    "src/RendererWeather.inl": "8c002fd922bd0a36297da8254f1f8366d05622308af476c2eec63271e8a1f3b8",
+    "tests/WeatherLightingTests.cpp": "bceeb5bf47141f8388c8684fc822fb82182003a00a14c820b92b235ae10771ac"
+  },
+  "qualification": "Native Linux Release with Mesa llvmpipe4.5 offscreen. Not physical GPU/controller/audio/Windows/Android or clean-machine certification. Builds embed parent+dirty identity with exact implementation hashes; no release artifacts produced.",
+  "humanAcceptance": false,
+  "mainChanged": false,
+  "fluidWorkChanged": false
+}

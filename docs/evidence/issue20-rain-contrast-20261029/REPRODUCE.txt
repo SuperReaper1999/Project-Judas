@@ -1,0 +1,37 @@
+From a Linux Release Experimental checkout, build with the ordinary toolchain:
+ cmake --build build --target judas_weather_lighting_tests judas_weather_render_tests judas_weather_tests judas_weather_world_tests judas_weather_script_tests judas judas_editor judas_export -j1
+
+For headless software renderer checks set SDL_VIDEODRIVER=offscreen and
+LIBGL_ALWAYS_SOFTWARE=1. This is not hardware qualification.
+ build/judas_weather_lighting_tests NEW_OUTPUT
+ build/judas_weather_render_tests NEW_OUTPUT --correctness-only
+ build/judas_weather_tests
+ build/judas_weather_world_tests
+ build/judas_weather_script_tests
+Expected280 assertions across those five programs. The weather-lighting test
+contains the standalone regression; owner-provided full games are NOT a test
+prerequisite. New assertions must fail against the original renderer from parent
+9be9e7a7 (the retained initial fixture gives six failures of103 checks); no test threshold
+or expectation needs changing. The final fixture additionally checks HDR target
+alpha: the first additive intermediate failed3/106 checks, also preserved.
+
+The evidence archive preserves actual before/after logs and four HDR images,
+input scripts, archive hashes, screenshot hashes, project comparison and exact
+native binary/source provenance. No binaries or full consumer assets are included.
+verify_evidence.py checks bytes without extraction or execution.
+
+Optional actual-game runs require the two owner archives in Documents. Extract
+fresh editable copies inside a caller-owned scratch directory. The archived
+run_game_checks.py shows ordinary UI input for 1024x768: weather row selection,
+Fly, pause assertion and captures. Set separate XDG_DATA_HOME directories to
+protect existing user careers. Do not overwrite the owner's games or archives.
+
+Editor: set JUDAS_EDITOR_AUTOTEST to a new output prefix, then pass the project
+file to build/judas_editor. The actual authored-restored/undo/save observations
+are required, not only exit0. A modal hangar pauses physics in that editor smoke.
+
+Export the latest project using build/judas_export PROJECT NEW_PACKAGE build/judas.
+Move that NEW package to another path, launch its judas from an unrelated working
+directory with the same input script, and compare all captures to the development
+run. The actual run's package location/hashes are preserved in RELOCATED.json.
+Do not reuse/delete unrelated packages. No SDK/release or clean-machine claim.

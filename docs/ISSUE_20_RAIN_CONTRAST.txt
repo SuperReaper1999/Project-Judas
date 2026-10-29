@@ -1,0 +1,119 @@
+ISSUE #20 — RAIN CONTRAST IN DIM DAYTIME WEATHER, 2026-10-29
+
+Parent:9be9e7a75e3bc0a121ac93bfde4e2cc2460684e9, Experimental.
+https://github.com/SuperReaper1999/Project-Judas/issues/20
+No main promotion, patch publication, release/tag/channel change or fluid change.
+
+CONFIRMED CAUSE / CORRECTION
+----------------------------
+The v1.0.1 lighting correction correctly removed fixed daylight illumination.
+Rain then used its lit blue colour as opaque-surface alpha coverage:
+  C_out = alpha*C_rain + (1-alpha)*C_sky.
+When C_rain approximately equals C_sky, the visible contribution tends to zero.
+Some channels even darkened. This reproduced with the supplied squall/storm
+profiles in both linear/HDR and legacy rendering. The previous45 lighting
+assertions passed while six newly added precipitation assertions failed.
+This is an engine presentation regression, not a faulty Flight Sim input/profile.
+
+The small correction uses alpha-weighted additive LIT highlights for thin rain
+streaks and splashes:
+  C_out = C_sky + alpha*C_rain.
+Rain retains the existing actual ambient/sun/flash illumination, depth and shelter
+rejection, bounded counts, shape, wind and arbitrary-up motion. No emissive
+minimum or whole-scene brightness adjustment is added. Snow and tornado debris
+explicitly keep normal alpha coverage, including when mixed with rain. Target
+alpha is preserved for rain highlights; snow/debris keep the previous alpha
+equation. End-of-pass blend-state restoration remains in place. No new public
+APIs, project settings, game-side workaround or physics/quantity change.
+
+This is a deliberate inexpensive scattering-highlight approximation: real
+droplet refraction/extinction and multiple scattering are not simulated. It does
+not undo the dusk/night fix or reintroduce a fixed daylight sky.
+
+SUPPLIED GAMES / REPRODUCTION
+------------------------------
+Both Documents archives were found and left unchanged:
+ SkyhavenFlight_flight_sim.zip
+ SkyhavenFlight_flight_sim_v1.0.1.zip
+Their exact hashes and member comparison are in the evidence archive. Only
+career.js and README.md differ; the newer career presets enable dusk/night
+weather instead of disabling the region. The game's storm/rain profiles are
+otherwise the reported ones. No game source correction is necessary.
+
+The committed test uses those actual profiles, exposure and wind at70m, freezing
+the same sky/time and comparing exposed precipitation with a high shelter mask.
+Setting rain=0 would also alter storm darkening and is deliberately NOT used as
+this contrast oracle. Three phases are sampled. Both HDR and legacy paths must
+retain visible contrast; a completely unlit control must contribute zero light.
+The mask is a renderer control, not a claim of actual physical roof-query coverage;
+the existing weather-render regression separately covers shelter/depth behaviour.
+
+Mean absolute paired pixel difference, 0–255 RGB at320x180:
+                    Before       After
+ HDR squalls        .038659      .141055
+ HDR storm          .049682      .171221
+ Legacy squalls     .062901      .454468
+ Legacy storm       .086296      .401318
+ Completely unlit  0             0 (both paths)
+Final rain highlights produce minimum per-channel delta0 in these pairs.
+The predeclared .08 contrast threshold and all original expectations remain
+unchanged. Original day/night/dusk, cloud, fog and arbitrary-up assertions pass.
+The first additive intermediate also changed HDR target alpha: the new alpha
+readback check exposed3/106 failures. Separate RGB/alpha blend factors correct
+this; its exact intermediate source and failed run remain preserved.
+
+Actual unmodified Flight Sim runs use the public application input harness:
+choose squalls/storm in the real hangar, click Fly, require the modal pause to
+end and capture frames70/71/72. The latest game is compared on the previous
+runtime and corrected runtime. Corrected night and original-game rain also launch.
+These are short grounded/trainer gameplay runs, not full flight/career validation.
+Open-sky temporal grayscale change over the full-width top100 rows:
+ Squalls: .013315 -> .109248; mean sky142.281 ->142.331.
+ Storm:   .060112 -> .239072; mean sky108.036 ->108.125.
+The sky itself is effectively unchanged; rain contributes the new contrast.
+These are OUR matched frames/ROI, not the issue author's1300-frame/300x210
+measurement. They must not be presented as a rerun of those exact captures.
+
+VALIDATION
+-----------
+Native Linux Release, Mesa llvmpipe4.5 offscreen software GL:
+ weather-lighting:106 checks,0 failures (original failure retained:6/103).
+ weather-render correctness:27 checks,0 failures.
+ weather field:67 checks,0 failures.
+ weather world/ownership:50 checks,0 failures.
+ weather scripting/persistence:30 checks,0 failures.
+Total280 checks across five focused suites. No full production-suite repeat.
+
+Fresh build of affected runtime/editor/exporter/tests completed successfully.
+Editor actual Play/Stop restores the authored Flight Sim scene identically; undo
+also restores the edit baseline, and its saved-copy operation succeeds. The
+hangar is modal at startup, so that editor smoke has zero running physics steps;
+active gameplay input is exercised separately by the application harness above.
+
+Export:95 assets,1 scene,208331462 bytes. Moved the complete package to the
+unrelated /tmp path recorded in RELOCATED.json and launched from /tmp using the
+same ordinary input. All four screenshots match the development run BIT-FOR-BIT.
+No development-tree package location or absolute game asset path is required.
+
+Software GL is genuine native renderer execution, not physical-GPU visual or
+performance acceptance. Offscreen mode lacks desktop relative-mouse capture;
+ALSA/JACK device warnings are retained, and audio/controller qualification is NOT
+claimed. No Windows/Android rerun or human acceptance is claimed.
+
+HANDOFF
+--------
+Working updated game: .cache/issue20-rain-contrast/latest/projects/flight_sim/
+Moved playable package: see RELOCATED.json in the evidence; path also remains in
+.cache/issue20-rain-contrast/RELOCATED.json. Native executable is the rebuilt
+build/judas; build/judas_editor opens the same unmodified project.
+
+Human check: choose Rain squalls and Thunderstorm in the hangar, Fly, and inspect
+rain against sky and terrain. Confirm dusk/night remain dark; check shelter and
+lightning if desired. Original archives and user saves are preserved. No issue
+closure or published patch is performed by this checkpoint.
+
+Exact changed files, source/binary fingerprints, raw runs, image pairs and
+reproduction steps:
+ docs/evidence/issue20-rain-contrast-20261029/
+Advanced Fluids remain locked; private fluid work and independent research are
+untouched. Experimental only; main still requires operator acceptance.

@@ -1,0 +1,17 @@
+{
+  "schema": 1,
+  "parent": "9be9e7a75e3bc0a121ac93bfde4e2cc2460684e9",
+  "selfHashExcluded": true,
+  "files": {
+    "docs/ISSUE_20_RAIN_CONTRAST.txt": "d35f11b1c964f1d0f276e13dea0ded98d364493a416f1ebcab4def47bf6effcd",
+    "docs/M86_WEATHER.md": "1d83fb667b9b4181421f6334fc8fe87a35a97cc3d98472992db04517adb425e4",
+    "docs/evidence/issue20-rain-contrast-20261029/CHANGED_FILES.txt": "6ec4b63faa2c5c486d52107722e36b0307cb9f45c0c2f1ae0587717608cbfa7e",
+    "docs/evidence/issue20-rain-contrast-20261029/REPRODUCE.txt": "d1b7ad301e51faef74068f25e240fc0e22840a7556315a0e032f9677d3adfb39",
+    "docs/evidence/issue20-rain-contrast-20261029/RESULTS.json": "0e5db6002ff4f4b38e238bff9ba02c0555dc8e2047687152e5cf08b0ef7b33a9",
+    "docs/evidence/issue20-rain-contrast-20261029/SOURCE_MANIFEST.json": "15287bdf6c2a534135a65a8451350c3325f573611dc9bb4ba164c1e172006863",
+    "docs/evidence/issue20-rain-contrast-20261029/rain-contrast-evidence.tar.gz": "20b7d9ddfc1cafb3b18691da0df0227cf7c6f2e53b74dc8767429152b9fdb1ab",
+    "docs/evidence/issue20-rain-contrast-20261029/verify_evidence.py": "b68f674b140aef19d594b0b31944b969a810d50071a0c06f5098254deae3fdf1",
+    "src/RendererWeather.inl": "8c002fd922bd0a36297da8254f1f8366d05622308af476c2eec63271e8a1f3b8",
+    "tests/WeatherLightingTests.cpp": "bceeb5bf47141f8388c8684fc822fb82182003a00a14c820b92b235ae10771ac"
+  }
+}

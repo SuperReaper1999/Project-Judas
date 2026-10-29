@@ -1,0 +1,142 @@
+{
+  "schema": 1,
+  "archiveSha256": "20b7d9ddfc1cafb3b18691da0df0227cf7c6f2e53b74dc8767429152b9fdb1ab",
+  "files": {
+    "ARCHIVES.json": {
+      "bytes": 378,
+      "sha256": "8aec2ab653c84834f866f2af38864303e458f711f751ec79293014e8622d5514"
+    },
+    "BUILD_IDENTITIES.json": {
+      "bytes": 3850,
+      "sha256": "acfd8c4fb237e9716f44ee03ce33b7a1633c83f98b57f3617c79039b8b443499"
+    },
+    "GAME_COMPARISON.json": {
+      "bytes": 533,
+      "sha256": "a957ea8ba5134ecc1b4629fa3b1eb05a04ab9e251e5fabac114be64cdc80a672"
+    },
+    "GAME_RESULTS.json": {
+      "bytes": 2844,
+      "sha256": "8afeb9c3c471f883bb1bee96c5617735b3afdbdd618f64ebf0a298c1e705c37c"
+    },
+    "GAME_SKY_MEASUREMENTS.json": {
+      "bytes": 1272,
+      "sha256": "dbc4d94d3c2814851e7c8bae1e49ae3b886d94caf4d7685d9da3be07c9094e76"
+    },
+    "ISSUE.json": {
+      "bytes": 4472,
+      "sha256": "6681db4ab2b87dabd8b5b12f41871ec687e0f88c0e7fb71e4d667d470fefa53c"
+    },
+    "REGRESSIONS.json": {
+      "bytes": 1258,
+      "sha256": "1499929a7e4f101b61808901aec34a920f2e8296e3a797299f020560f192b16e"
+    },
+    "RELOCATED.json": {
+      "bytes": 612,
+      "sha256": "4060e8c6d8502c94ff5e8b9da27dc403cdca9167679226b6ef574e309394c199"
+    },
+    "RendererWeather-additive-alpha-intermediate.inl": {
+      "bytes": 33965,
+      "sha256": "132011a69fc4dbd8de166b47d533ac42e7add285cdc317c63379a8b9fe53770a"
+    },
+    "after/squalls-hdr-rain.png": {
+      "bytes": 15345,
+      "sha256": "72f8421106d88ad5fb84c8c4002367f566e62bdd8fe491e231d3779fd2a7cdb3"
+    },
+    "after/storm-hdr-rain.png": {
+      "bytes": 11391,
+      "sha256": "5c7f62296cbbe1dbe2eb83bf8ea3f074c58befcfbbff215c8c3e55a18389c771"
+    },
+    "after.log": {
+      "bytes": 5655,
+      "sha256": "eb488e681b021cd0ed688f3092a30e7b0ccc76289314e320523ca6ddc8e064a6"
+    },
+    "alpha-control.log": {
+      "bytes": 5832,
+      "sha256": "3663cc0b223ea90a3f056f42f900e3e11809dbc69366a9f7f31cf20f7b986f21"
+    },
+    "baseline-existing.log": {
+      "bytes": 2346,
+      "sha256": "dae7b6121e82515f518881110e8c488ec38cab519f9a653b64ec4e28e56e924d"
+    },
+    "before/squalls-hdr-rain.png": {
+      "bytes": 13865,
+      "sha256": "2dfbbb32eef12c859cdd72aaef4fe3fa9800d2adc9b2a0bf3b0ebc07f9f51879"
+    },
+    "before/storm-hdr-rain.png": {
+      "bytes": 9946,
+      "sha256": "64b861c22f86f326c851bd04af51ba24225828d9251d2a34cfeb567b20a735ec"
+    },
+    "before.log": {
+      "bytes": 5659,
+      "sha256": "13d9fad5621d86511c08df9ad57aaee74dfe145cdc36d15c1e1feae8c24b8bdd"
+    },
+    "build-baseline-test.log": {
+      "bytes": 1807,
+      "sha256": "bf6cc05f1314d58f3ba22a3b2d41477b1be999d2c86d9927d0c1a22c284b79d9"
+    },
+    "build-final-alpha.log": {
+      "bytes": 5795,
+      "sha256": "7e625b4ecd339d66f309fc01f83b2433baed5726bed22053767b83bf44dc8ceb"
+    },
+    "build-fix.log": {
+      "bytes": 9523,
+      "sha256": "5a30262b2923c244ba5c5f6fcfb137b07f3aa9eef4e8d89a9adbf25e8ada8402"
+    },
+    "editor-smoke.log": {
+      "bytes": 4035,
+      "sha256": "a4e7be1860bda09488f0102768017cf380a2477243f1228acab404f9fd39d6f9"
+    },
+    "export.log": {
+      "bytes": 142,
+      "sha256": "b6d7877c46ae254842c082f106a8fe39ff087f8a3194291135df3f58438c5dad"
+    },
+    "game-before.log": {
+      "bytes": 4284,
+      "sha256": "ddb708e79b60826464efcc045247dc691a558a423ac1ac823e8f7e8a6e6cd9b6"
+    },
+    "game-rain.txt": {
+      "bytes": 577,
+      "sha256": "4e84c4b604650466cb023dd77829f380c1b0608ef537effc98c7fd81c022b38a"
+    },
+    "judas_weather_lighting_tests.log": {
+      "bytes": 5832,
+      "sha256": "03a63b3e5b65f5fb49e564aaca45f5657a3749f5c954eb01caca1682ab73b19e"
+    },
+    "judas_weather_render_tests.log": {
+      "bytes": 2136,
+      "sha256": "d7f38bf38d58c5a5c63e0f92521d45a36732b94d7faeff6f28635bf0f0ac342d"
+    },
+    "judas_weather_script_tests.log": {
+      "bytes": 1277,
+      "sha256": "a5cfe0bf57b82c68764018ad3baf8fe393799ff738abe02ceb8fc0d127eb241f"
+    },
+    "judas_weather_tests.log": {
+      "bytes": 3402,
+      "sha256": "f44ef7d40430b8659c8776d9f95677ca95f39acf80efaa7d17083dbc985533c2"
+    },
+    "judas_weather_world_tests.log": {
+      "bytes": 3443,
+      "sha256": "8e134087a4f5daf3b8515ab30a2af13fc40fc5477bfe77e72d0950417c241cfc"
+    },
+    "qualify_final.py": {
+      "bytes": 2931,
+      "sha256": "8689b0f93344361d8371bf8c5fd8b57e0b915d71b231f387aaf6be123d795452"
+    },
+    "run_game_checks.py": {
+      "bytes": 1513,
+      "sha256": "f74d884f6cbd217fca4100eafe5cb49217393742ac8144d8ca288cc6e3e6beee"
+    },
+    "source/RendererWeather-before.inl": {
+      "bytes": 33565,
+      "sha256": "86d07b3b5515fc1f7bb3d1d5324bad34f8b937f6adfaf686c26e40d8d745e035"
+    },
+    "source/src/RendererWeather.inl": {
+      "bytes": 34100,
+      "sha256": "8c002fd922bd0a36297da8254f1f8366d05622308af476c2eec63271e8a1f3b8"
+    },
+    "source/tests/WeatherLightingTests.cpp": {
+      "bytes": 8573,
+      "sha256": "bceeb5bf47141f8388c8684fc822fb82182003a00a14c820b92b235ae10771ac"
+    }
+  }
+}

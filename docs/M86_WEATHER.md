@@ -184,6 +184,14 @@ the mostly empty span of a tall bounding sphere. Its condensation canopy blends
 above the configured core height, and a low dust skirt surrounds the base;
 these visual envelopes do not extend the physical vortex's core height.
 Splashes use the shelter/surface samples rather than droplet impacts.
+Rain streaks and splashes use additive, alpha-weighted **lit highlights**: they
+add scattered light instead of replacing a similar-coloured sky with opaque
+blue albedo. This keeps overcast rain visible without brightening the entire
+scene or adding an emissive minimum. With no ambient, sun or lightning they
+contribute no light. Rain preserves render-target alpha; snow and tornado debris
+retain ordinary alpha coverage.
+This inexpensive rain approximation omits droplet refraction and extinction;
+shelter/depth rejection, bounded counts and scene-lighting control still apply.
 
 ### Shelter and camera/resource limits
 
