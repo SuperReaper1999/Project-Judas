@@ -1,0 +1,20 @@
+FAIL native oblique solid/wet geometry
+NATIVE_CUT_ERROR disconnected geometry requires independent fluid subcells
+FAIL native oblique solid/wet geometry
+NATIVE_CUT_ERROR disconnected geometry requires independent fluid subcells
+FAIL native oblique solid/wet geometry
+NATIVE_CUT_ERROR disconnected geometry requires independent fluid subcells
+FAIL native oblique solid/wet geometry
+NATIVE_CUT_ERROR disconnected geometry requires independent fluid subcells
+FAIL native oblique solid/wet geometry
+NATIVE_CUT_ERROR disconnected geometry requires independent fluid subcells
+FAIL native oblique solid/wet geometry
+NATIVE_CUT_ERROR disconnected geometry requires independent fluid subcells
+FAIL native oblique solid/wet geometry
+NATIVE_CUT_ERROR disconnected geometry requires independent fluid subcells
+FAIL native oblique solid/wet geometry
+NATIVE_CUT_ERROR disconnected geometry requires independent fluid subcells
+FAIL native oblique solid/wet geometry
+NATIVE_CUT_ERROR disconnected geometry requires independent fluid subcells
+SUMMARY checks=653 failures=9 milliseconds=232.301508
+Scope: geometric quantity/flux transactions only; pressure velocities, moving-body force, advection flux construction and runtime integration are NOT proved by this test.

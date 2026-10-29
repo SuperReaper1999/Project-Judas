@@ -1,0 +1,1842 @@
+{
+  "schema": 1,
+  "scope": "exact private prototype sources, controls and raw evidence; no production fluid integration",
+  "files": {
+    ".cache/fluid-contact-repair/setup_probes.py": {
+      "bytes": 1218,
+      "sha256": "192fea9fc3920924ea5921e4752beca119b5fc03b96aa13af78467cfa33d5d4a"
+    },
+    ".cache/fluid-coupling-stage5-20261029/ExactTransferTests.cpp": {
+      "bytes": 3967,
+      "sha256": "c058fab13e2920a9d85619e754f0a627a4c84ac839803cfd0696f6a828f33214"
+    },
+    ".cache/fluid-coupling-stage5-20261029/FINAL_RESULTS-before-minimum-norm.json": {
+      "bytes": 60480,
+      "sha256": "01042d6111c6d2826e14bb17f9bb877d439165cf2bcf6b8bb1a3f636866621d3"
+    },
+    ".cache/fluid-coupling-stage5-20261029/FINAL_RESULTS.json": {
+      "bytes": 73036,
+      "sha256": "686336fba0358fdfa6a9d54c3ef4d214cc51d2b4017508828c349adc5b643ab3"
+    },
+    ".cache/fluid-coupling-stage5-20261029/NativeAleBatch-v1.cpp": {
+      "bytes": 17887,
+      "sha256": "a9096886e79334c84b452ab1063c2de053db7a29bc2a8688671e8be97e87241e"
+    },
+    ".cache/fluid-coupling-stage5-20261029/NativeAleBatch-v2.cpp": {
+      "bytes": 18149,
+      "sha256": "6b36ff00081c26be65a0caa5352c49273aa42b981e6f56dc6509423c56e18bfa"
+    },
+    ".cache/fluid-coupling-stage5-20261029/NativeAleBatch-v3.cpp": {
+      "bytes": 19299,
+      "sha256": "8280aca640ba0ca704f4b3da7d7e1637811892fc8c84bf9e7ea076305f0ba319"
+    },
+    ".cache/fluid-coupling-stage5-20261029/NativeAleBatch.cpp": {
+      "bytes": 19601,
+      "sha256": "a5d3e21bcb0f1508be34aef08d61967d37eb83fde24e4df1d574208cc83dad9b"
+    },
+    ".cache/fluid-coupling-stage5-20261029/NativeBatchProjection-v1.cpp": {
+      "bytes": 6408,
+      "sha256": "3db39212c888a8fff2fb43ec3bd252fd1e08947ffca3dd24ae4102398dc64dcd"
+    },
+    ".cache/fluid-coupling-stage5-20261029/NativeBatchProjection.cpp": {
+      "bytes": 8029,
+      "sha256": "085e1cd9a3a5963362b59e4565a24f03d25b573fb313a84c9beed938e4001a3e"
+    },
+    ".cache/fluid-coupling-stage5-20261029/NativeConstraintReduction.h": {
+      "bytes": 3084,
+      "sha256": "2096049a189c8e4db4b8e3e12156f13a1e60a1338a16d591a1192bd72d433e7a"
+    },
+    ".cache/fluid-coupling-stage5-20261029/NativeDisabledTrajectory.cpp": {
+      "bytes": 1802,
+      "sha256": "5953f69db779047cba25b53b6e85990f61bdf22861586f1f33a743e25d739835"
+    },
+    ".cache/fluid-coupling-stage5-20261029/NativeJointProjection-v1.cpp": {
+      "bytes": 6980,
+      "sha256": "0a8af4a0f64f375d8bd4438b1e5ee8f41a61f9d807c9facda4675b1baf280e46"
+    },
+    ".cache/fluid-coupling-stage5-20261029/NativeJointProjection-v3.cpp": {
+      "bytes": 6874,
+      "sha256": "c5d8213a109ca6db2f7b8d1ea8fd05c81e47f737d6206cd018336cf1f8de24ee"
+    },
+    ".cache/fluid-coupling-stage5-20261029/NativeJointProjection.cpp": {
+      "bytes": 6874,
+      "sha256": "c5d8213a109ca6db2f7b8d1ea8fd05c81e47f737d6206cd018336cf1f8de24ee"
+    },
+    ".cache/fluid-coupling-stage5-20261029/NativeNormalBridge-v1.h": {
+      "bytes": 440,
+      "sha256": "29a5d309b4bdffb11f5d616704aa39689d11b3c73a7f40ed94b0c494e068bda0"
+    },
+    ".cache/fluid-coupling-stage5-20261029/NativeNormalBridge.h": {
+      "bytes": 627,
+      "sha256": "7f28eec0db169d8f311ffa82d68b8589f6ad4f542d0c5d68c92987d22da7f870"
+    },
+    ".cache/fluid-coupling-stage5-20261029/NativeSupportDualProbe.cpp": {
+      "bytes": 5441,
+      "sha256": "56b0c1e9b6798759f400cd38aa31c226f0eaffbdf414a30042cd94330f1b995b"
+    },
+    ".cache/fluid-coupling-stage5-20261029/NativeSupportProbe.cpp": {
+      "bytes": 5696,
+      "sha256": "5155555937fd55b8736201b45fddb0ce5522d9d2fa4eb39886e5eb6c3b2d517e"
+    },
+    ".cache/fluid-coupling-stage5-20261029/NativeSupportTrace.cpp": {
+      "bytes": 2281,
+      "sha256": "4fda1874a9162ee509b132476492edbfffd76d3ba3fbd9b6fc1bfa51b1690cb7"
+    },
+    ".cache/fluid-coupling-stage5-20261029/NativeTetraBatch-v1.cpp": {
+      "bytes": 7516,
+      "sha256": "b0a4796729e38ec52fe5f30c118281b31cadbb19e98f4559ec9159a1a4b0f349"
+    },
+    ".cache/fluid-coupling-stage5-20261029/NativeTetraBatch-v2.cpp": {
+      "bytes": 7845,
+      "sha256": "04ae06dc22627a48d005cd4d65e373661d3c80712a062302ce328d325af3e2c1"
+    },
+    ".cache/fluid-coupling-stage5-20261029/NativeTetraBatch-v3.cpp": {
+      "bytes": 9252,
+      "sha256": "e75d4c1e43ccd2006a08f49def442625903b90e8aab69dfeba5223a1d7bd3484"
+    },
+    ".cache/fluid-coupling-stage5-20261029/NativeTetraBatch.cpp": {
+      "bytes": 7948,
+      "sha256": "deb0c4444de080ad9113ac6295759f6e831ca09195b0b7cac0c801043ba39e97"
+    },
+    ".cache/fluid-coupling-stage5-20261029/NativeTetraContactBatch.cpp": {
+      "bytes": 6752,
+      "sha256": "198c4f2d6ba19ae841d361181d12857134ddec4747280715be4f0599e96722f5"
+    },
+    ".cache/fluid-coupling-stage5-20261029/PORTABILITY_CHECKS.json": {
+      "bytes": 190,
+      "sha256": "bb5ee15c9eef3841c75dcfda44fd453233007875cdc634fdb9c6882bbd5b6f79"
+    },
+    ".cache/fluid-coupling-stage5-20261029/RESTART_HANDOFF.txt": {
+      "bytes": 1302,
+      "sha256": "b550bb75117dc7d688f4a7354f3220571a81cab6713bf0a2cba7d992e30f9c0e"
+    },
+    ".cache/fluid-coupling-stage5-20261029/RigidEqualitySpace-before-minimum-norm.h": {
+      "bytes": 5083,
+      "sha256": "627632f2c2991490b9bffbea680979f60c2bd35bac0a26ae4649752145878b84"
+    },
+    ".cache/fluid-coupling-stage5-20261029/RigidEqualitySpace.h": {
+      "bytes": 5915,
+      "sha256": "a5beb0db11231313616d5129c72b67040b6e616009f344e956b51e5f4bdcc165"
+    },
+    ".cache/fluid-coupling-stage5-20261029/RigidEqualitySpaceTests.cpp": {
+      "bytes": 4460,
+      "sha256": "748e102841df48a9ac7c9df9ef6622d082248e35efcb2e9d4d32719658d4c38e"
+    },
+    ".cache/fluid-coupling-stage5-20261029/VOLUME_RESULTS.json": {
+      "bytes": 235,
+      "sha256": "867063f4af29c341b24a4a182fdb96fa11cbcda5137d8dbe61386f5859738fcb"
+    },
+    ".cache/fluid-coupling-stage5-20261029/WorldMk2Batch-v1.cpp": {
+      "bytes": 111785,
+      "sha256": "e39b630a578fbb2e3ef2fc0525bda2ecb0536b4f2b8fa8cf451b96a4fd3655b2"
+    },
+    ".cache/fluid-coupling-stage5-20261029/WorldMk2Batch.cpp": {
+      "bytes": 113858,
+      "sha256": "b2b07d2ba0a65db4c5cbc4d2ebe521da67ab67b3e6be4e41ab34031c8f89dd40"
+    },
+    ".cache/fluid-coupling-stage5-20261029/WorldMk2Predictor.cpp": {
+      "bytes": 110973,
+      "sha256": "600b31733a0daf7ced610d839959b4e3d8ffc542c73df559241fb76e30d66610"
+    },
+    ".cache/fluid-coupling-stage5-20261029/build-ale-batch-v1.log": {
+      "bytes": 2977,
+      "sha256": "37f817d607d0f0e14a3b117b4e70d9cc5770b2497a7a035be987b79effb1bd5b"
+    },
+    ".cache/fluid-coupling-stage5-20261029/build-ale-batch-v2.log": {
+      "bytes": 2977,
+      "sha256": "37f817d607d0f0e14a3b117b4e70d9cc5770b2497a7a035be987b79effb1bd5b"
+    },
+    ".cache/fluid-coupling-stage5-20261029/build-ale-batch-v3.log": {
+      "bytes": 2977,
+      "sha256": "37f817d607d0f0e14a3b117b4e70d9cc5770b2497a7a035be987b79effb1bd5b"
+    },
+    ".cache/fluid-coupling-stage5-20261029/build-ale-batch-v4.log": {
+      "bytes": 1290,
+      "sha256": "b2b0475528cfa0b31abbef23d988ca415551b49516b1a26116a1fa8adabfc1ad"
+    },
+    ".cache/fluid-coupling-stage5-20261029/build-batch-v1.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    ".cache/fluid-coupling-stage5-20261029/build-batch-v2.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    ".cache/fluid-coupling-stage5-20261029/build-dual.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    ".cache/fluid-coupling-stage5-20261029/build-joint-projection-v2.log": {
+      "bytes": 3850,
+      "sha256": "e89e5db34a047bc69a4a56e6aa517871a127c611e32926405550bf4ecdc23a90"
+    },
+    ".cache/fluid-coupling-stage5-20261029/build-joint-projection-v3.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    ".cache/fluid-coupling-stage5-20261029/build-joint-projection.log": {
+      "bytes": 4866,
+      "sha256": "646320e357599837a3170fccf61d3195df03f6923a2289b667425e92713f0f7f"
+    },
+    ".cache/fluid-coupling-stage5-20261029/build-rigid-space.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    ".cache/fluid-coupling-stage5-20261029/build-tetra-batch-v1.log": {
+      "bytes": 2719,
+      "sha256": "a2e0d495ebd729fc51f0547d13da4900e4834ac62e9a254eb8dd5945aeca6bc4"
+    },
+    ".cache/fluid-coupling-stage5-20261029/build-tetra-batch-v2.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    ".cache/fluid-coupling-stage5-20261029/build-tetra-batch-v3.log": {
+      "bytes": 3250,
+      "sha256": "44e4edf580fc78bfcc490f5d68b4ab70bce59e43f1e2491e6622be5b870360e3"
+    },
+    ".cache/fluid-coupling-stage5-20261029/build-tetra-batch-v4.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    ".cache/fluid-coupling-stage5-20261029/build-tetra-contact.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    ".cache/fluid-coupling-stage5-20261029/build-trace.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    ".cache/fluid-coupling-stage5-20261029/build.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    ".cache/fluid-coupling-stage5-20261029/final/baseline-raw-geometry-compile.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    ".cache/fluid-coupling-stage5-20261029/final/baseline-raw-geometry-link.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    ".cache/fluid-coupling-stage5-20261029/final/baseline-raw-geometry.log": {
+      "bytes": 1251,
+      "sha256": "ccae66a4e186266b7386eef97b4ddf27a370eeb1e17370cc2fd476b572a6a713"
+    },
+    ".cache/fluid-coupling-stage5-20261029/final/baseline-volume-compile.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    ".cache/fluid-coupling-stage5-20261029/final/candidate-raw-geometry-compile.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    ".cache/fluid-coupling-stage5-20261029/final/candidate-raw-geometry-link.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    ".cache/fluid-coupling-stage5-20261029/final/candidate-raw-geometry.log": {
+      "bytes": 1251,
+      "sha256": "dbe7b03f38db5aacc22affe7328d4caf55921463c029eb44b0a130a76eba61a6"
+    },
+    ".cache/fluid-coupling-stage5-20261029/final/conforming-wind-compile.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    ".cache/fluid-coupling-stage5-20261029/final/conforming-wind-link.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    ".cache/fluid-coupling-stage5-20261029/final/conforming-wind.log": {
+      "bytes": 41,
+      "sha256": "63e346c75545d32d9aaed9bbc176a5e323f84cf0bd382ccd73504dbc6af83198"
+    },
+    ".cache/fluid-coupling-stage5-20261029/final/disabled-native-trajectory-compile.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    ".cache/fluid-coupling-stage5-20261029/final/disabled-native-trajectory-link.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    ".cache/fluid-coupling-stage5-20261029/final/disabled-native-trajectory.log": {
+      "bytes": 432,
+      "sha256": "c523746d457c7b1a3c832b09f06fae41ba3edf897e1fb638eb294f4c792ba72f"
+    },
+    ".cache/fluid-coupling-stage5-20261029/final/exact-transfers-compile.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    ".cache/fluid-coupling-stage5-20261029/final/exact-transfers-link.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    ".cache/fluid-coupling-stage5-20261029/final/exact-transfers.log": {
+      "bytes": 87,
+      "sha256": "77337f08501898d96298231ac34923687c3f9d245ae21fe3eea17dcbfc4d27f1"
+    },
+    ".cache/fluid-coupling-stage5-20261029/final/exact-volume-compile.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    ".cache/fluid-coupling-stage5-20261029/final/finite-front-compile.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    ".cache/fluid-coupling-stage5-20261029/final/finite-front-link.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    ".cache/fluid-coupling-stage5-20261029/final/finite-front.log": {
+      "bytes": 2414,
+      "sha256": "13a705ea30f7c9aa95ba963c4ca449679b4b9b318ec8b600081884f2548db817"
+    },
+    ".cache/fluid-coupling-stage5-20261029/final/native-ale-480.log": {
+      "bytes": 467,
+      "sha256": "1eeb2382af1ac564a2baa0485545df9f2dea88f666395af9800c5e2131a19247"
+    },
+    ".cache/fluid-coupling-stage5-20261029/final/native-ale-batch-compile.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    ".cache/fluid-coupling-stage5-20261029/final/native-ale-batch-link.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    ".cache/fluid-coupling-stage5-20261029/final/native-ale-incoming-960.log": {
+      "bytes": 506,
+      "sha256": "8dadabe245f05f6e9ee7ada8bd6e74345a2ec89a45769f6c5d6f31a85bdb8188"
+    },
+    ".cache/fluid-coupling-stage5-20261029/final/native-batch-compile.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    ".cache/fluid-coupling-stage5-20261029/final/native-batch-reference-compile.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    ".cache/fluid-coupling-stage5-20261029/final/native-batch-reference-link.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    ".cache/fluid-coupling-stage5-20261029/final/native-batch-reference.log": {
+      "bytes": 5779,
+      "sha256": "bb7ec5212c99d6cf27a2e94fdb86b3ef9ce75c0722be83a866f09b02121d8d23"
+    },
+    ".cache/fluid-coupling-stage5-20261029/final/ordinary-native-trajectory-compile.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    ".cache/fluid-coupling-stage5-20261029/final/ordinary-native-trajectory-link.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    ".cache/fluid-coupling-stage5-20261029/final/ordinary-native-trajectory.log": {
+      "bytes": 432,
+      "sha256": "c523746d457c7b1a3c832b09f06fae41ba3edf897e1fb638eb294f4c792ba72f"
+    },
+    ".cache/fluid-coupling-stage5-20261029/final/owned-capacity-compile.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    ".cache/fluid-coupling-stage5-20261029/final/owned-capacity-link.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    ".cache/fluid-coupling-stage5-20261029/final/owned-capacity.log": {
+      "bytes": 795,
+      "sha256": "7577f7159773ff7ef3cf9581ea4ab57e15c9e8596b01eb27e5129c5703351c31"
+    },
+    ".cache/fluid-coupling-stage5-20261029/final/reference-ale-compile.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    ".cache/fluid-coupling-stage5-20261029/final/reference-ale-link.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    ".cache/fluid-coupling-stage5-20261029/final/reference-ale.log": {
+      "bytes": 35,
+      "sha256": "50cdb24db4726525beb70c53f79b468b9bf76cad47b5e6dc77aa161223c22c3f"
+    },
+    ".cache/fluid-coupling-stage5-20261029/final/rigid-space-compile.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    ".cache/fluid-coupling-stage5-20261029/final/rigid-space-link.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    ".cache/fluid-coupling-stage5-20261029/final/rigid-space.log": {
+      "bytes": 71,
+      "sha256": "53558fa7bec9d97764e886e1a0e38bdcd11eaf0f077ad80f53f9215a354b9747"
+    },
+    ".cache/fluid-coupling-stage5-20261029/final/subcell-ownership-compile.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    ".cache/fluid-coupling-stage5-20261029/final/subcell-ownership-link.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    ".cache/fluid-coupling-stage5-20261029/final/subcell-ownership.log": {
+      "bytes": 39,
+      "sha256": "967d4acda33cebc8e753f63e9997af5831fbf5f2e479b6aff6840c2b700be549"
+    },
+    ".cache/fluid-coupling-stage5-20261029/final/tetra-batch-compile.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    ".cache/fluid-coupling-stage5-20261029/final/tetra-batch-link.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    ".cache/fluid-coupling-stage5-20261029/final/tetra-batch.log": {
+      "bytes": 128284,
+      "sha256": "db22e40cd2ff08bcc9bfd33c7c42238f2d496db65eee4a7fb98e2b883f89cd88"
+    },
+    ".cache/fluid-coupling-stage5-20261029/final/tetra-contact-compile.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    ".cache/fluid-coupling-stage5-20261029/final/tetra-contact-link.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    ".cache/fluid-coupling-stage5-20261029/final/tetra-contact.log": {
+      "bytes": 31803,
+      "sha256": "34c860cea61d22af1237fce548b9bd7bc1c0b2e2e9a910e0b7ef8b6959374166"
+    },
+    ".cache/fluid-coupling-stage5-20261029/final-combined-run.log": {
+      "bytes": 5893,
+      "sha256": "f6dd66659a6a4b2db5fed3f9525e3e2549c5b78aa6366348cb929da716c746a2"
+    },
+    ".cache/fluid-coupling-stage5-20261029/final-run.log": {
+      "bytes": 4788,
+      "sha256": "d763df3d71ccba854bd6c6fa1bef620d307d045a0e5bbe1da3ce6375b9c39b51"
+    },
+    ".cache/fluid-coupling-stage5-20261029/native-ale-batch-incoming-v1.log": {
+      "bytes": 531,
+      "sha256": "737fcfe4134e07877c5e992a9df8deca8297974c3b245856ea79191df2aeb55a"
+    },
+    ".cache/fluid-coupling-stage5-20261029/native-ale-batch-incoming-v2.log": {
+      "bytes": 558,
+      "sha256": "790d073aabd085ea4dcd18b218bb65c89427e105b666061c733baefa9ada1de7"
+    },
+    ".cache/fluid-coupling-stage5-20261029/native-ale-batch-incoming-v3.log": {
+      "bytes": 1021,
+      "sha256": "40228e99bf64863e0288a3a71c91bf33f405215e105d39b890ffe34e9c1ec936"
+    },
+    ".cache/fluid-coupling-stage5-20261029/native-ale-batch-incoming-v4.log": {
+      "bytes": 506,
+      "sha256": "e3b0699695bbba0912dddced2588ee5b9495ed70baa3e2f5a1f35eb0c81fb093"
+    },
+    ".cache/fluid-coupling-stage5-20261029/native-ale-batch-v1.log": {
+      "bytes": 467,
+      "sha256": "ec7b2ba3bd049eabb6b3972cedaabff70e85ca69c21b7d05484d47d84f49614a"
+    },
+    ".cache/fluid-coupling-stage5-20261029/native-batch-v1.jsonl": {
+      "bytes": 4463,
+      "sha256": "74b195bab7a3d882145c4af8fa0569b57efa35e9b997d5a0010c2f70d36f3a55"
+    },
+    ".cache/fluid-coupling-stage5-20261029/native-batch-v1.stderr": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    ".cache/fluid-coupling-stage5-20261029/native-batch-v2.jsonl": {
+      "bytes": 5782,
+      "sha256": "f11fa9dbba5c934bedc384ded78588f7ffd862b4eebd3fb8b37ae7602f7b64e7"
+    },
+    ".cache/fluid-coupling-stage5-20261029/native-batch-v2.stderr": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    ".cache/fluid-coupling-stage5-20261029/native-joint-projection-v1.jsonl": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    ".cache/fluid-coupling-stage5-20261029/native-joint-projection-v1.stderr": {
+      "bytes": 100,
+      "sha256": "b81221a1ff55bc4c6b67b62005825a594ac9808ba53cb0e2d9dabd1ecdd681b5"
+    },
+    ".cache/fluid-coupling-stage5-20261029/native-joint-projection-v2.jsonl": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    ".cache/fluid-coupling-stage5-20261029/native-joint-projection-v2.stderr": {
+      "bytes": 99,
+      "sha256": "3a504a4d9823f0020cd135921c711e157f257023923eb7adc024306f1e42f975"
+    },
+    ".cache/fluid-coupling-stage5-20261029/native-joint-projection-v3.jsonl": {
+      "bytes": 3039,
+      "sha256": "2c8552d0c97a8734c267b38c61830ef17dff6466353ce9e7115189ac2e75ded3"
+    },
+    ".cache/fluid-coupling-stage5-20261029/native-joint-projection-v3.stderr": {
+      "bytes": 70,
+      "sha256": "3cb7dbd313ba8631f5625b76dad56f4d5a5fc6d62d8e72bfbceaba366175bda0"
+    },
+    ".cache/fluid-coupling-stage5-20261029/native-support-dual-v1.jsonl": {
+      "bytes": 10547,
+      "sha256": "b1339021122bf82d80e6ec90da0b6a295bb1ee87229d7c82d177677afd73c373"
+    },
+    ".cache/fluid-coupling-stage5-20261029/native-support-dual-v1.stderr": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    ".cache/fluid-coupling-stage5-20261029/native-support-trace.jsonl": {
+      "bytes": 4868,
+      "sha256": "3d25424ffdb5fc2f9d86d81500d243744576e39ae14fbdf825a7c4aa80630627"
+    },
+    ".cache/fluid-coupling-stage5-20261029/native-support-v1.jsonl": {
+      "bytes": 9790,
+      "sha256": "f1528e65e8d2f8f111679fe51fff9d40eb663157c082bddda5a8d252fc1c364c"
+    },
+    ".cache/fluid-coupling-stage5-20261029/native-support-v1.stderr": {
+      "bytes": 76,
+      "sha256": "b3de52f84cb6c57791e8e7ef06347f1c4d806d7076c6fcbfe150f98f4f927285"
+    },
+    ".cache/fluid-coupling-stage5-20261029/native-tetra-batch-v1.jsonl": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    ".cache/fluid-coupling-stage5-20261029/native-tetra-batch-v1.stderr": {
+      "bytes": 94,
+      "sha256": "064966f64999096aec2f526f924bb5c8eff2ddeb386ef0425eb9cb5feacd8022"
+    },
+    ".cache/fluid-coupling-stage5-20261029/native-tetra-batch-v2.jsonl": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    ".cache/fluid-coupling-stage5-20261029/native-tetra-batch-v2.stderr": {
+      "bytes": 58,
+      "sha256": "889bafee4964e60196bf00a14e843e390b7a113c3f79585433548a74a999acc4"
+    },
+    ".cache/fluid-coupling-stage5-20261029/native-tetra-batch-v3.jsonl": {
+      "bytes": 128265,
+      "sha256": "653756a183fbac6f1d5c6f94bc0130b76a5aae0c875791b88f6de14d22c3e971"
+    },
+    ".cache/fluid-coupling-stage5-20261029/native-tetra-batch-v3.stderr": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    ".cache/fluid-coupling-stage5-20261029/native-tetra-batch-v4.jsonl": {
+      "bytes": 128286,
+      "sha256": "298c2b37ecd903f2caf1643dd3e3f8c0e8caf47d60219899f68388e2f348bea8"
+    },
+    ".cache/fluid-coupling-stage5-20261029/native-tetra-batch-v4.stderr": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    ".cache/fluid-coupling-stage5-20261029/native-tetra-contact-v1.log": {
+      "bytes": 31779,
+      "sha256": "a56554cfc53538f335026133b6c216611066b1becb158d443d2ece23e60c5375"
+    },
+    ".cache/fluid-coupling-stage5-20261029/portable-mixed-recompile.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    ".cache/fluid-coupling-stage5-20261029/portable-native-recompile.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    ".cache/fluid-coupling-stage5-20261029/qualify_stage5.py": {
+      "bytes": 5103,
+      "sha256": "1f9d3563747f71b10b983bba1a675bb76299180583a25a616496945c8a12257e"
+    },
+    ".cache/fluid-coupling-stage5-20261029/rigid-space-tests.log": {
+      "bytes": 71,
+      "sha256": "0484c8162399555fade586487594cacc91da500736ef03ad77635bd4683d880a"
+    },
+    ".cache/fluid-coupling-stage5-20261029/run_volume_checks.py": {
+      "bytes": 1105,
+      "sha256": "0dabc2b3487e7719a24e960fe8aea4f97bb1d51301db02a955711808a9feb6dd"
+    },
+    ".cache/fluid-coupling-stage5-20261029/stage5-exact-transfer-build.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    ".cache/fluid-coupling-stage5-20261029/stage5-exact-transfer.log": {
+      "bytes": 87,
+      "sha256": "77337f08501898d96298231ac34923687c3f9d245ae21fe3eea17dcbfc4d27f1"
+    },
+    ".cache/fluid-coupling-stage5-20261029/stage5-owned-capacity-build.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    ".cache/fluid-coupling-stage5-20261029/stage5-owned-capacity.log": {
+      "bytes": 795,
+      "sha256": "31ab5bf322b89b1805976e14098d5d5f0e33b2c0d861ddeafd60cec4cace2bef"
+    },
+    ".cache/fluid-coupling-stage5-20261029/stage5-subcells-build.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    ".cache/fluid-coupling-stage5-20261029/stage5-subcells.log": {
+      "bytes": 39,
+      "sha256": "967d4acda33cebc8e753f63e9997af5831fbf5f2e479b6aff6840c2b700be549"
+    },
+    ".cache/fluid-coupling-stage5-20261029/stage5-volume-tests-build.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    ".cache/fluid-coupling-stage5-20261029/stage5-volume-tests.log": {
+      "bytes": 1251,
+      "sha256": "f481b51fab6aeb155254cba17b12cbe6bca9d159921e087080235cffd40b261c"
+    },
+    ".cache/fluid-coupling-stage5-20261029/volume-checks-final-run.log": {
+      "bytes": 172,
+      "sha256": "764e080668cbdbb76b8064d8b09277e912a89f925d3c035bf85963c722d0d609"
+    },
+    ".cache/fluid-coupling-stage5-20261029/volume-checks-run.log": {
+      "bytes": 7470,
+      "sha256": "3c08deeb6fdaa8dc8eb8259314dc01021bae73012687905f3e2e238dfff8691f"
+    },
+    ".cache/fluid-coupling-stage5-baseline-kernel/ExactPlanePredicates.h": {
+      "bytes": 3837,
+      "sha256": "1ff1db56d26a8ece23f7d5a59460c2064775eb30ad12fa549ad84a214d369882"
+    },
+    ".cache/fluid-coupling-stage5-baseline-kernel/VolumeDomain.cpp": {
+      "bytes": 25030,
+      "sha256": "cb2468aa1b73ad9c6201e58b5d5e3a699c310402a9c0280cb1141303d4f90805"
+    },
+    ".cache/fluid-coupling-stage5-baseline-kernel/VolumeDomain.h": {
+      "bytes": 2487,
+      "sha256": "8daa3583e471c5070078d1ed5b3f8d3a7bda1e839f6ccac6f8a7e5a86d5ba2db"
+    },
+    ".cache/fluid-coupling-stage5-baseline-kernel/VolumeDomainTests.cpp": {
+      "bytes": 11196,
+      "sha256": "cfc3d3ee7ee879043e7bb70c4b1cced491409d33c9d746a1e2264cf6c348cc7d"
+    },
+    ".cache/fluid-coupling-stage5-kernel/AffineFluidTests-before-condensation.cpp": {
+      "bytes": 11713,
+      "sha256": "723df6d20ad4d7e03f2ae224b1334b826ae0e87d246614505b063f9ac6b4df6d"
+    },
+    ".cache/fluid-coupling-stage5-kernel/AffineFluidTests-first-unilateral.cpp": {
+      "bytes": 9900,
+      "sha256": "c8792432edd0b412c675e359eab541ed7bc8d6c31df6e2f296d2bbd7efd71cc2"
+    },
+    ".cache/fluid-coupling-stage5-kernel/AffineFluidTests.cpp": {
+      "bytes": 14958,
+      "sha256": "f3a3535239582f017b38a21cc66a43faf829c3780666887313d7e31f75aec523"
+    },
+    ".cache/fluid-coupling-stage5-kernel/AffineFluidTests.dense-reference.cpp": {
+      "bytes": 14934,
+      "sha256": "8ddc3f7cc5f10972705c6900151f9239d882991aba2101a6c9c879e72a2464c0"
+    },
+    ".cache/fluid-coupling-stage5-kernel/AffineFluidTests.schwarz-failed.cpp": {
+      "bytes": 14155,
+      "sha256": "233e00f4c0f1932df1ab25b5b7d9c99e8853aa77bd99dfc7b9c21004f7d4fe94"
+    },
+    ".cache/fluid-coupling-stage5-kernel/AffineModel.before-trace-metadata.h": {
+      "bytes": 10054,
+      "sha256": "1ea189251afc1988d23692ab8329c789486e8cd94277486c58bc648cf7db0630"
+    },
+    ".cache/fluid-coupling-stage5-kernel/AffineModel.h": {
+      "bytes": 10072,
+      "sha256": "c846a64afac547748a029a7c5cbb7bc4c7d597a3adf69d53fdba4b0731a8c212"
+    },
+    ".cache/fluid-coupling-stage5-kernel/AffineSchwarz.h": {
+      "bytes": 2989,
+      "sha256": "eb205551560b8a2d7492b110fe335b2c8a58bc8e86231f0bb1b6c9584757499e"
+    },
+    ".cache/fluid-coupling-stage5-kernel/AffineValidation.cpp": {
+      "bytes": 6577,
+      "sha256": "bf1b37c8e2a572b18db6d4288ae5aaea0abce18812a59ecad51e3c52bc38d4a5"
+    },
+    ".cache/fluid-coupling-stage5-kernel/AlePressureMesh.h": {
+      "bytes": 1121,
+      "sha256": "c0605329794dc4f8c303a7d93e49445192cc631e6983eb5f1c1eeac31f174c6f"
+    },
+    ".cache/fluid-coupling-stage5-kernel/AleTransport.QR-basis-rejected.h": {
+      "bytes": 13366,
+      "sha256": "c9a3882f4c77be35aa24e907a3dc5ea8a0e8360382debf53099f6519dc5b9598"
+    },
+    ".cache/fluid-coupling-stage5-kernel/AleTransport.before-divergence-units.h": {
+      "bytes": 11941,
+      "sha256": "08e3c2eb44e868641d5de3e9d64e59d8d12224a2d28e9543722af341d5a6b33d"
+    },
+    ".cache/fluid-coupling-stage5-kernel/AleTransport.before-trajectories.h": {
+      "bytes": 12431,
+      "sha256": "1b66872f2f5e880a848f873c81faed465ea2ce38646ee3373e7bc53965761d3a"
+    },
+    ".cache/fluid-coupling-stage5-kernel/AleTransport.covariance-reference.h": {
+      "bytes": 12587,
+      "sha256": "fa29acb4a55d5cbd52403e116b4be06876c9dda19394f1b4a1041ff417b6c0c0"
+    },
+    ".cache/fluid-coupling-stage5-kernel/AleTransport.gauss5-rejected.h": {
+      "bytes": 13015,
+      "sha256": "300056e2df098468ec763831e6345362299d91ca21fc197a00e7d9dee8314788"
+    },
+    ".cache/fluid-coupling-stage5-kernel/AleTransport.h": {
+      "bytes": 12587,
+      "sha256": "fa29acb4a55d5cbd52403e116b4be06876c9dda19394f1b4a1041ff417b6c0c0"
+    },
+    ".cache/fluid-coupling-stage5-kernel/AleTransportTests.cpp": {
+      "bytes": 3674,
+      "sha256": "a19c85ec8f47764fd4fa2b59a90f5968a7038de3b03977b34ed9ceb61c544773"
+    },
+    ".cache/fluid-coupling-stage5-kernel/AleWindProjection.h": {
+      "bytes": 3377,
+      "sha256": "af3fd5169e12d63b024c02e31c23830deeab26db9bd5636c670663458b4ee506"
+    },
+    ".cache/fluid-coupling-stage5-kernel/AleWindProjection.schur-reference.h": {
+      "bytes": 3319,
+      "sha256": "01e739d50d23b0ea9421b9b844a499a2be50bc7a176e06740bff4fa881f2c575"
+    },
+    ".cache/fluid-coupling-stage5-kernel/AleWindTests.cpp": {
+      "bytes": 1837,
+      "sha256": "fbe7d1527deba763d2212d1ebe169fb599ac3ef3e5a6cd0ac461dae2041f2b03"
+    },
+    ".cache/fluid-coupling-stage5-kernel/BASELINE_SOURCE_HASHES.json": {
+      "bytes": 14231,
+      "sha256": "5914460cfcf8f1b72b9c90366d42c36e1da7193dc6a0042888b7923144092506"
+    },
+    ".cache/fluid-coupling-stage5-kernel/CapacityGapProbe.cpp": {
+      "bytes": 595,
+      "sha256": "d74c9c51707c823d51fe7936a4ba5598992dee70e3aab04ea5a0b458b23ac3af"
+    },
+    ".cache/fluid-coupling-stage5-kernel/CompiledPressureTests.before-rectangular-wall.cpp": {
+      "bytes": 5570,
+      "sha256": "a0f90aac66fdd0ba43a4b94bf89b86d9760f908cced1eb70bc2ef07efafeef7e"
+    },
+    ".cache/fluid-coupling-stage5-kernel/CompiledPressureTests.cpp": {
+      "bytes": 5764,
+      "sha256": "9c1870b48724662a3ef93d789b837db3460e51c608350e84392d71d1a03e88f3"
+    },
+    ".cache/fluid-coupling-stage5-kernel/CompiledPressureTests.cube-proof.cpp": {
+      "bytes": 4938,
+      "sha256": "e67d5735345d6872d2e0cba6d3e8040d1c1cb4cbdc22956193df9725e43f5623"
+    },
+    ".cache/fluid-coupling-stage5-kernel/ConformingAleWind.h": {
+      "bytes": 6855,
+      "sha256": "49ecd789e3441e7a338b906ff1e2c9d3f42d1f5ca55e27c2c5f750b0bcd81ae2"
+    },
+    ".cache/fluid-coupling-stage5-kernel/ConformingAleWindTests.cpp": {
+      "bytes": 2967,
+      "sha256": "3cc3c386f2f78a562255ff0b321286196871a8e5061fa1ec58061a640d539aac"
+    },
+    ".cache/fluid-coupling-stage5-kernel/ConformingCutMesh.before-regions.h": {
+      "bytes": 13298,
+      "sha256": "6b82eab9d45a092512e2f1fd47618afa117b5a12b4a75ae9da7c676454feef3f"
+    },
+    ".cache/fluid-coupling-stage5-kernel/ConformingCutMesh.box-moving-verified.h": {
+      "bytes": 12561,
+      "sha256": "731ea06104adb7e03488327069868edc76dc5ddf6e6de26165bb61abc5583f10"
+    },
+    ".cache/fluid-coupling-stage5-kernel/ConformingCutMesh.center-fan.h": {
+      "bytes": 10153,
+      "sha256": "ded0becbd837c2ab06a4086eba2447e36e5fc66981ed1886e3455bc1bad356f0"
+    },
+    ".cache/fluid-coupling-stage5-kernel/ConformingCutMesh.h": {
+      "bytes": 15765,
+      "sha256": "4e66ae20c2edc978c3e779be11716b678dacadae248951f146048a184e6b748c"
+    },
+    ".cache/fluid-coupling-stage5-kernel/ConformingCutMesh.pulling-closed.h": {
+      "bytes": 10246,
+      "sha256": "9c42d1d3ea8472026a7c5d23168d9c1b8759dd060b998b14d130aabd546701ed"
+    },
+    ".cache/fluid-coupling-stage5-kernel/CutMeshAdversarial.cpp": {
+      "bytes": 3366,
+      "sha256": "795e419c20313386c5152ce23353ced19ef5da80aecb7e2c97bdef0004ea7746"
+    },
+    ".cache/fluid-coupling-stage5-kernel/CutMeshTests.cpp": {
+      "bytes": 3039,
+      "sha256": "dbe345b20f9d19a6fcc492ed2c9b64239dfc0f37b7699bf703771de2aa31950d"
+    },
+    ".cache/fluid-coupling-stage5-kernel/DenseMixedReference.h": {
+      "bytes": 6163,
+      "sha256": "36420cf1f118feeebcc3c62230275239fe6ba90f360eeec3dba04322ef6e6d12"
+    },
+    ".cache/fluid-coupling-stage5-kernel/DgAdvection.constant-verified.h": {
+      "bytes": 4100,
+      "sha256": "864d49ff910e16709614a27ab02992638fabcf89261eec3fb494e7dc26e60634"
+    },
+    ".cache/fluid-coupling-stage5-kernel/DgAdvection.h": {
+      "bytes": 5373,
+      "sha256": "fb159b168438fc47f201928fe097725809ce55aa6bfa5e04e7758d985f821e98"
+    },
+    ".cache/fluid-coupling-stage5-kernel/DgAdvectionTests.constant-verified.cpp": {
+      "bytes": 3724,
+      "sha256": "f3c7aa947ef1e862e91e9ba21678f2fdbe88ce9b4eedb8dc2269514bf16c4566"
+    },
+    ".cache/fluid-coupling-stage5-kernel/DgAdvectionTests.cpp": {
+      "bytes": 6311,
+      "sha256": "aa1343dec2161eb161144641159a1b8277e60addd8b64704b61c7338bdfc9288"
+    },
+    ".cache/fluid-coupling-stage5-kernel/EqualityProjectionQR.full-coordinate.h": {
+      "bytes": 3860,
+      "sha256": "c184387f44ef1f51d618e6966c5a5023487b509c7db6d4776990732b69bc734d"
+    },
+    ".cache/fluid-coupling-stage5-kernel/EqualityProjectionQR.h": {
+      "bytes": 8003,
+      "sha256": "c7a2ac4312b75d54822a79e677bcb88e11e8e173b17966872c8a04a7eee4e650"
+    },
+    ".cache/fluid-coupling-stage5-kernel/ExactPlaneCases.h": {
+      "bytes": 87382,
+      "sha256": "c9931f94f8c47d86c75a4e13e6f2253af99a935c7ceb6a1f0b8fdf10b3b8a5a1"
+    },
+    ".cache/fluid-coupling-stage5-kernel/ExactPlanePredicateTests.cpp": {
+      "bytes": 1272,
+      "sha256": "b466fc6a3682d2931164db315fea6c88b86a00634888921a5f68466881a05534"
+    },
+    ".cache/fluid-coupling-stage5-kernel/ExactPlanePredicates.h": {
+      "bytes": 3837,
+      "sha256": "1ff1db56d26a8ece23f7d5a59460c2064775eb30ad12fa549ad84a214d369882"
+    },
+    ".cache/fluid-coupling-stage5-kernel/FaceOwnershipProbe.cpp": {
+      "bytes": 2178,
+      "sha256": "83e24ddf2155a61b09dd27c2ff6d3749de5a2297ff960f7f2eef35f0608c64d0"
+    },
+    ".cache/fluid-coupling-stage5-kernel/FacePressure-before-upwind.cpp": {
+      "bytes": 4704,
+      "sha256": "f9e0d7bc2c10b3dd6e8a5da1b921f16e99c4d9e7944fefe10bbbed4282eba841"
+    },
+    ".cache/fluid-coupling-stage5-kernel/FacePressure.cpp": {
+      "bytes": 6050,
+      "sha256": "65a0101d150e3f253d721573ba7162d1631da7749b9893b9c3328ba68a6876ed"
+    },
+    ".cache/fluid-coupling-stage5-kernel/FacePressure.h": {
+      "bytes": 1242,
+      "sha256": "33a331de9ae4b422f9cda180509efce9a4200819ae29111b956a69f486893240"
+    },
+    ".cache/fluid-coupling-stage5-kernel/FacePressureTests.cpp": {
+      "bytes": 4383,
+      "sha256": "2dc2fa2f5de8a412ea02ab785b2bc51d48c1e82ed5de0e77b011cb8d04d2b267"
+    },
+    ".cache/fluid-coupling-stage5-kernel/FieldDivergenceProbe.cpp": {
+      "bytes": 1062,
+      "sha256": "1eddb657facce75e889203c59b9cc41bf3410da9b3ade62243256dabd4da235a"
+    },
+    ".cache/fluid-coupling-stage5-kernel/FiniteFrontGeometry.before-local-frame.h": {
+      "bytes": 3485,
+      "sha256": "5e5d781efd0f9fee0ed99c4a7e1553e3e62a2ca3b5d051c82718804390773e2e"
+    },
+    ".cache/fluid-coupling-stage5-kernel/FiniteFrontGeometry.h": {
+      "bytes": 3685,
+      "sha256": "965c7e893b1b99da87e38cc58f66c8a145659305d691fb34738f0062b82ed096"
+    },
+    ".cache/fluid-coupling-stage5-kernel/FiniteFrontTests.before-native-thin-case.cpp": {
+      "bytes": 2509,
+      "sha256": "8c42a73c3af0dea08b19ffbbc05bc1ca67f890ea587b8c218fe8282ce2a3723b"
+    },
+    ".cache/fluid-coupling-stage5-kernel/FiniteFrontTests.cpp": {
+      "bytes": 3138,
+      "sha256": "7118afc3db2d31055f023c16aa503d12aaae01ab4e648abfa7ce59b40535bf71"
+    },
+    ".cache/fluid-coupling-stage5-kernel/FiniteFrontTests.gauss5-rejected.cpp": {
+      "bytes": 3239,
+      "sha256": "55fb8f99ac61066785fe0d932d68980c109e4493b3cff5334fdd80eeb09b5377"
+    },
+    ".cache/fluid-coupling-stage5-kernel/FiniteFrontTests.reduced-QR-thin-failure.cpp": {
+      "bytes": 2795,
+      "sha256": "15d5c2fab55a4b84a50a25af8bcd3b9432adb523cbd04797c65da5857b90c4e0"
+    },
+    ".cache/fluid-coupling-stage5-kernel/FluidPressure.h": {
+      "bytes": 2651,
+      "sha256": "803972e9901991329882157432c6265e5eb570b3c3d138af2d4214f88990381a"
+    },
+    ".cache/fluid-coupling-stage5-kernel/FluidProjectionTests.cpp": {
+      "bytes": 3357,
+      "sha256": "3f1dfe31aafeb072e633322f6b609e761594c2567f55630817fa853ab6aaba55"
+    },
+    ".cache/fluid-coupling-stage5-kernel/GeometricContinuity.h": {
+      "bytes": 3598,
+      "sha256": "3d88256eea14f6d7c495c2578c8d27eb9cf856d0341fc070238bb5a7680ea993"
+    },
+    ".cache/fluid-coupling-stage5-kernel/GeometricFlux.cpp": {
+      "bytes": 4042,
+      "sha256": "13ae2b898526b697f708a23333303a232ae6e942b80aa981f7be2a082cc1f102"
+    },
+    ".cache/fluid-coupling-stage5-kernel/GeometricFlux.h": {
+      "bytes": 717,
+      "sha256": "2a45fee6a2905ff4dd82ac5b8f029752e08585a531d2daf1e5fd4c856f38f4d9"
+    },
+    ".cache/fluid-coupling-stage5-kernel/GeometricTransportTests.cpp": {
+      "bytes": 3365,
+      "sha256": "c55474317147f4b3feb2dcc9fa5c814c557199bc36e99b536b6be365c043a3b6"
+    },
+    ".cache/fluid-coupling-stage5-kernel/IncomingWetState.h": {
+      "bytes": 4238,
+      "sha256": "4dee7bd534176ab876957acc350560c85fabff7a1228609fd92bf68af3d7cd90"
+    },
+    ".cache/fluid-coupling-stage5-kernel/IncomingWetStateTests.cpp": {
+      "bytes": 2609,
+      "sha256": "d4e86cbd351ecd7ea198a2316d94cc74261621b8d806228723404b7569bc3c5e"
+    },
+    ".cache/fluid-coupling-stage5-kernel/MaterialMoments.h": {
+      "bytes": 3383,
+      "sha256": "ef57611b6a6ccd1fc634e1e2097d3c8f453617597a9349d96b9db023288badd8"
+    },
+    ".cache/fluid-coupling-stage5-kernel/MaterialMomentsTests.cpp": {
+      "bytes": 3724,
+      "sha256": "6e8d3ff093fec1f501065b0089e0f7932bcd97149f6fd780a671f711150b7d3a"
+    },
+    ".cache/fluid-coupling-stage5-kernel/MaterialRemap.h": {
+      "bytes": 5145,
+      "sha256": "bb9213ff4f5b0bc5f5d4a74ff6bfe8c160e194e9c3ce1f8440043ff43ca04986"
+    },
+    ".cache/fluid-coupling-stage5-kernel/MaterialRemapTests.cpp": {
+      "bytes": 4619,
+      "sha256": "220bc05b56123c7ab23eebafc362445066f0b4cdd8d9dbb9911ba306d677b045"
+    },
+    ".cache/fluid-coupling-stage5-kernel/MixedProjection-before-preconditioning.h": {
+      "bytes": 6992,
+      "sha256": "cdfe8a81922f5651112248ab5249071555fe0516868209c501ee8c26170d0c36"
+    },
+    ".cache/fluid-coupling-stage5-kernel/MixedProjection-before-warm-sweep.h": {
+      "bytes": 6031,
+      "sha256": "bf27b41e309b1f06bd8f2cb9b09f0b06d3930d0679aff43f92b9bae7ba42f039"
+    },
+    ".cache/fluid-coupling-stage5-kernel/MixedProjection.h": {
+      "bytes": 7499,
+      "sha256": "5962a2e00f2a0d77e9c63562f8bef642b1b2ad5a1ff6aade663b52865e2874fd"
+    },
+    ".cache/fluid-coupling-stage5-kernel/MomentInterface.h": {
+      "bytes": 5166,
+      "sha256": "f202b7d04f9384a2d1d5bf23d7a8a85c4ed334219213e8b86bdd8b30e3503348"
+    },
+    ".cache/fluid-coupling-stage5-kernel/MomentInterfaceTests.cpp": {
+      "bytes": 2964,
+      "sha256": "bc7b696664d9a0b9d3b74649c304082790ad8292d610c02282e30e031f8bc6a4"
+    },
+    ".cache/fluid-coupling-stage5-kernel/MovingCutMeshTests.before-fresh-controls.cpp": {
+      "bytes": 2651,
+      "sha256": "f977dd1ae17bb9f07edfdc19f6307d3973e0b7b7266e943c86d2d02602f93bc7"
+    },
+    ".cache/fluid-coupling-stage5-kernel/MovingCutMeshTests.cpp": {
+      "bytes": 3190,
+      "sha256": "7eb76676181ea2bfd099d1d4049626eccdc4a2569720d6713903221313fdde61"
+    },
+    ".cache/fluid-coupling-stage5-kernel/MovingWetStateTests.cpp": {
+      "bytes": 5782,
+      "sha256": "5de3bd206e1871ead5e18b0ffcfe42c6a09d072446b684f746fa173573a6d2cd"
+    },
+    ".cache/fluid-coupling-stage5-kernel/NativeAlePistonTests.before-incoming-control.cpp": {
+      "bytes": 15416,
+      "sha256": "9780e6948826e61d66dbaabf5d2d131b8a349266d3671bcab8e185ff87b8aea4"
+    },
+    ".cache/fluid-coupling-stage5-kernel/NativeAlePistonTests.before-overflow.cpp": {
+      "bytes": 9488,
+      "sha256": "0acbbf5b997a210bf4d796ef65d00a0ad8acb31b5c3dfff086be77ba7f565465"
+    },
+    ".cache/fluid-coupling-stage5-kernel/NativeAlePistonTests.cpp": {
+      "bytes": 16014,
+      "sha256": "1f24932c64ce966df4623171b5048587748bd366701333c05eb1bd6661966d1c"
+    },
+    ".cache/fluid-coupling-stage5-kernel/NativeAlePistonTests.physical-operator-rejected.cpp": {
+      "bytes": 15965,
+      "sha256": "2267a39acdc8a73cb68077278669846e7d046e1adf5b2056946c106f4b499d98"
+    },
+    ".cache/fluid-coupling-stage5-kernel/NativeAlePistonTests.reduced-QR-thin-failure.cpp": {
+      "bytes": 15417,
+      "sha256": "4b36dc4f1884153c3acfedb652119dcca434fe287127e82ea981ae0e6aba5d38"
+    },
+    ".cache/fluid-coupling-stage5-kernel/NativeAlePistonTests.whole-plate-rejected.cpp": {
+      "bytes": 12979,
+      "sha256": "c3d2c60087c0b0da4fc29d51301e55d417527393298521bed974649fa40ab9f1"
+    },
+    ".cache/fluid-coupling-stage5-kernel/NativeCompiledPressureTests.cpp": {
+      "bytes": 4080,
+      "sha256": "ae1b9b31c5f5df4fd915983de72e1179f5a2cd7416fee6ad9756f22b023a4b78"
+    },
+    ".cache/fluid-coupling-stage5-kernel/NativeOpenFlowTests-basic-invariants.cpp": {
+      "bytes": 2491,
+      "sha256": "d4937c9d137723fc5b69d9045bccb5fa920c77410d87eac0f51ca573f748adfb"
+    },
+    ".cache/fluid-coupling-stage5-kernel/NativeOpenFlowTests-before-geometric-flux.cpp": {
+      "bytes": 3820,
+      "sha256": "15a8c431a1a9e04f2e7793ea28becc81f6d67e6c01f3f6f024f15ebc670884aa"
+    },
+    ".cache/fluid-coupling-stage5-kernel/NativeOpenFlowTests.cpp": {
+      "bytes": 4233,
+      "sha256": "1284a39b32f2cb9ab7e71cc4b527ec7624998205c1047435335ae352a6195464"
+    },
+    ".cache/fluid-coupling-stage5-kernel/NativePistonPressureTrial.before-endpoint-transport.cpp": {
+      "bytes": 10803,
+      "sha256": "955c950151ae7a352201e0ae8f4d7d7b1c46d7b170c9925c6f8f29c0bb105948"
+    },
+    ".cache/fluid-coupling-stage5-kernel/NativePistonPressureTrial.before-stage-energy-check.cpp": {
+      "bytes": 12030,
+      "sha256": "3f0010a188457f2f4c44edf1c44b91aa6072d44b86a492b7520e2b8dd2f6b862"
+    },
+    ".cache/fluid-coupling-stage5-kernel/NativePistonPressureTrial.cpp": {
+      "bytes": 14189,
+      "sha256": "bb1986cf0a1c4eacb20c1043d54de38b77ae92ebf4f7c9eb8323ee66e6b26590"
+    },
+    ".cache/fluid-coupling-stage5-kernel/NativePistonPressureTrial.full-reaction-preparation-failure.cpp": {
+      "bytes": 13851,
+      "sha256": "74d450ef731e84d1a5681b1cc21fc4149848f59c20400d2fb802bb2123bf5220"
+    },
+    ".cache/fluid-coupling-stage5-kernel/NativePistonPressureTrial.impermeable48.cpp": {
+      "bytes": 12690,
+      "sha256": "2d42f2a83e1d3944673fb0b99ef3b201706c382fa380d665fcdfbe7552da3e52"
+    },
+    ".cache/fluid-coupling-stage5-kernel/NativePistonPressureTrial.unilateral-energy-gate.cpp": {
+      "bytes": 12391,
+      "sha256": "867b9e3c1a31f6d5d9c5b4f56e017c8dc08faadde80d5a518fb2471940cf2e08"
+    },
+    ".cache/fluid-coupling-stage5-kernel/NativeTetraPressureTests.cpp": {
+      "bytes": 4489,
+      "sha256": "f5c44ec65dab355359f9d2955eca10f32faed01a141fd18eb07604b36cd4c977"
+    },
+    ".cache/fluid-coupling-stage5-kernel/NativeVolumePistonTests-before-domain-pressure.cpp": {
+      "bytes": 4591,
+      "sha256": "c3ff00e9f3817783e264dbbdd0266dc4e9a3c16514d01d216d82dc3f3e3f7137"
+    },
+    ".cache/fluid-coupling-stage5-kernel/NativeVolumePistonTests-before-substep-adapter.cpp": {
+      "bytes": 4456,
+      "sha256": "a298816d8bc16da5cd5a6de2c9f1570b87a4b10984861deb2208b697af610dcf"
+    },
+    ".cache/fluid-coupling-stage5-kernel/NativeVolumePistonTests.cpp": {
+      "bytes": 4893,
+      "sha256": "1eb7f268de1097ca19d505acac2153d1ce03ab12b144814e74e521e643c6e23c"
+    },
+    ".cache/fluid-coupling-stage5-kernel/OperatorCacheTests.cpp": {
+      "bytes": 3718,
+      "sha256": "347be54f92fb3692e4de5b91420605f936654a56ddb4d330626bed8f8c39b53e"
+    },
+    ".cache/fluid-coupling-stage5-kernel/OwnedCapacityTests.cpp": {
+      "bytes": 1604,
+      "sha256": "cfbfad5ebd0dd1c5b4bb62db64299509ede1a46cac703828b6c5a469e27fade4"
+    },
+    ".cache/fluid-coupling-stage5-kernel/PistonSpaceTimeMesh.h": {
+      "bytes": 3069,
+      "sha256": "1b67bd7fd76be6577574d9fefb0cb55ec8d053e121141363f3bf9f75e8651fc0"
+    },
+    ".cache/fluid-coupling-stage5-kernel/PressureComplementarityTests.cpp": {
+      "bytes": 1616,
+      "sha256": "55cde1edc65b09fdd201827d942d4d10aede83ff93203ed596b476847dc942b1"
+    },
+    ".cache/fluid-coupling-stage5-kernel/PressureMassScaleTests.cpp": {
+      "bytes": 1340,
+      "sha256": "89e0ce2b083514bad66a747fa7a98d1bd4c0d4464e8547801f6c49ec3dd2578b"
+    },
+    ".cache/fluid-coupling-stage5-kernel/PressureRemapTests.cpp": {
+      "bytes": 4737,
+      "sha256": "f38d95208ea5c56de2a1df1eb8ca4467f16996633a46b4791ba138d9c5841a6f"
+    },
+    ".cache/fluid-coupling-stage5-kernel/PressureVolumeStepTests.cpp": {
+      "bytes": 5929,
+      "sha256": "16e6646590805c48895b47a9a51afc6b400d62aa7d1518b7e4f1a3efef2f62f5"
+    },
+    ".cache/fluid-coupling-stage5-kernel/PressureVolumeStepTests.net-only-incomplete.cpp": {
+      "bytes": 5418,
+      "sha256": "a1f8a81ad9aedbf9a3151f6bb7d2d662bba42006394474073f69f733d5e1c939"
+    },
+    ".cache/fluid-coupling-stage5-kernel/ReferenceAleTests.cpp": {
+      "bytes": 5034,
+      "sha256": "11a5a0600c8fb6e57fcde6c35ad700b399c1f8e4b2d724206c71e739b93443a4"
+    },
+    ".cache/fluid-coupling-stage5-kernel/ReferenceAleTransport.h": {
+      "bytes": 8386,
+      "sha256": "38b0075d4e24fea77e917168cf1c692fd7753f51ccd790f28711ad7b18030fe4"
+    },
+    ".cache/fluid-coupling-stage5-kernel/SparseInterior.before-dimensional-residual-fix.h": {
+      "bytes": 14384,
+      "sha256": "c819a86b837f5f11c45c5da2cf5aa67171471eb5c62d71f4de1a46c3716d7268"
+    },
+    ".cache/fluid-coupling-stage5-kernel/SparseInterior.first-correct-slow.h": {
+      "bytes": 7465,
+      "sha256": "b45a7b043ba0258d028b6e16858c3caf10648ea497ac02ce8002e90a2ad51423"
+    },
+    ".cache/fluid-coupling-stage5-kernel/SparseInterior.full-body-gram-slow.h": {
+      "bytes": 8185,
+      "sha256": "8a673001b6cf568d51c2a9cd77d3924c80f9439782d952563ad08b4814b888c1"
+    },
+    ".cache/fluid-coupling-stage5-kernel/SparseInterior.h": {
+      "bytes": 18476,
+      "sha256": "336670b721c1382379432d46bf19272a0b2f4b7b61b1f82c3435e81acaa16e86"
+    },
+    ".cache/fluid-coupling-stage5-kernel/SparseInterior.indexed-symbolic-correct.h": {
+      "bytes": 12002,
+      "sha256": "e716c7ecb27d222d1a0ba9ab70cf03f79f2d5e8986283b3add2286507f1c4304"
+    },
+    ".cache/fluid-coupling-stage5-kernel/SparseInterior.lowrank-correct.h": {
+      "bytes": 10591,
+      "sha256": "66ca18eae5ee8b13737ad982c69387c970ec2c1bc6c61034516bdd19e43cc487"
+    },
+    ".cache/fluid-coupling-stage5-kernel/SparseInterior.profiled-before-cache.h": {
+      "bytes": 16761,
+      "sha256": "48ccc95b6b2a5215768e2d56ae71988db735f2462d8ea49b248786d16cb9d548"
+    },
+    ".cache/fluid-coupling-stage5-kernel/SparseInterior.sum-work-row-apply-rejected.h": {
+      "bytes": 15767,
+      "sha256": "5a37121690c26a453eed24705c5e751ed033cb2a33f07b9dfaf54759235b2e08"
+    },
+    ".cache/fluid-coupling-stage5-kernel/SparseInterior.warm-kkt-qualified.h": {
+      "bytes": 12788,
+      "sha256": "615f78fd50ea75558abd14b84d3765a672c2f588ef99c92b4a303dd9fabb574c"
+    },
+    ".cache/fluid-coupling-stage5-kernel/SubcellOwnershipTests.cpp": {
+      "bytes": 1882,
+      "sha256": "2870d1d37547ad6af10efaefe6fa6250ea755d6fe843709f7252b4bacd13597e"
+    },
+    ".cache/fluid-coupling-stage5-kernel/SweptFaceTransport.h": {
+      "bytes": 2533,
+      "sha256": "d9832f7a03375705894a79f9beb4e23220676ba6232f273b8f6c3d87efb81a24"
+    },
+    ".cache/fluid-coupling-stage5-kernel/TetraPressureTests.before-cache-tests.cpp": {
+      "bytes": 8230,
+      "sha256": "b45a78810636595fc5b0f4f0f6b898bb113347fea111a75a8bba2b561ed2fab2"
+    },
+    ".cache/fluid-coupling-stage5-kernel/TetraPressureTests.before-side.cpp": {
+      "bytes": 10672,
+      "sha256": "49c69908eaf2b33de4ab1c862c84f047b23fc8cd607eaaded841b8bb809f941b"
+    },
+    ".cache/fluid-coupling-stage5-kernel/TetraPressureTests.cpp": {
+      "bytes": 10634,
+      "sha256": "d5397c9d0380d6233bffaa4c3806200b31ef2c9e530597adbd51dfcc6c05c677"
+    },
+    ".cache/fluid-coupling-stage5-kernel/TetraSideTests.cpp": {
+      "bytes": 1723,
+      "sha256": "9ff66af30b6bec23b1ba151f9cc82552489e76ec3065a5ae2e494ca7dac3430a"
+    },
+    ".cache/fluid-coupling-stage5-kernel/VolumeDomain-before-compensated-volume.cpp": {
+      "bytes": 17027,
+      "sha256": "2e619a7ec538a0c9c7656bb338f92c95005fb5ffaa2ee65e8b623fe4b760aa69"
+    },
+    ".cache/fluid-coupling-stage5-kernel/VolumeDomain-before-face-provenance.cpp": {
+      "bytes": 15924,
+      "sha256": "4ce6e8985f5810cee14bb5a2a1b8a388fdd23f38f6e39952d34c8ba735a8e315"
+    },
+    ".cache/fluid-coupling-stage5-kernel/VolumeDomain-before-scale-normalization.cpp": {
+      "bytes": 15143,
+      "sha256": "5ab50b6b55030ad1d252ca2e5c3c01d739ab1052d87ad5e5e1796fb7fc3133ae"
+    },
+    ".cache/fluid-coupling-stage5-kernel/VolumeDomain-before-wet-tetra-clipping.cpp": {
+      "bytes": 18012,
+      "sha256": "9d09fed0d4e2d8a38265153919d7102223289714a3d6509769d52da50a6434a3"
+    },
+    ".cache/fluid-coupling-stage5-kernel/VolumeDomain.before-exact-connectivity.cpp": {
+      "bytes": 22567,
+      "sha256": "1d68918b1108bb2edf4b6b13ae5c9ec5ca62ffd4fef7ac21044f26b76d3632cf"
+    },
+    ".cache/fluid-coupling-stage5-kernel/VolumeDomain.before-subcells.h": {
+      "bytes": 2356,
+      "sha256": "812554fc0bc3216722ed530ab1eb89d10c2b21422cba3e78a3aa53e0ef08dfa3"
+    },
+    ".cache/fluid-coupling-stage5-kernel/VolumeDomain.cpp": {
+      "bytes": 26200,
+      "sha256": "f96adfcc4dd2f0626ba42639b6b6ecc369d69d3cf1528c43329592102e780c52"
+    },
+    ".cache/fluid-coupling-stage5-kernel/VolumeDomain.h": {
+      "bytes": 2881,
+      "sha256": "b1ece0fcc698360b52c9754036bfd3718a325525f6433d8b6321d4b0686cef7d"
+    },
+    ".cache/fluid-coupling-stage5-kernel/VolumeDomainTests-initial.cpp": {
+      "bytes": 7517,
+      "sha256": "6e29ea6f256e57140222c0ed929285b8347173ddb9ea71bbaa45ca198f805944"
+    },
+    ".cache/fluid-coupling-stage5-kernel/VolumeDomainTests.cpp": {
+      "bytes": 11196,
+      "sha256": "cfc3d3ee7ee879043e7bb70c4b1cced491409d33c9d746a1e2264cf6c348cc7d"
+    },
+    ".cache/fluid-coupling-stage5-kernel/WetCutMeshTests.cpp": {
+      "bytes": 3362,
+      "sha256": "fd28ae526d50496ce163d389b945b390c5666e47f5f871373b7d0442a5d48937"
+    },
+    ".cache/fluid-coupling-stage5-kernel/WetFluxIntegration.h": {
+      "bytes": 1311,
+      "sha256": "c67b3779771d2c03d4929143cd7842f3f82271fa8f46104e33cdcac888f4e57f"
+    },
+    ".cache/fluid-coupling-stage5-kernel/WetFluxTests.cpp": {
+      "bytes": 957,
+      "sha256": "b7419a44f16b0bf73bcd9211e06e48206a501939655c1c705aef9caabfa9338f"
+    },
+    ".cache/fluid-coupling-stage5-kernel/WetMotionProbe.cpp": {
+      "bytes": 1419,
+      "sha256": "eb466aaae00ba735b4fd57462d260b31aa976ace9b88721c95d3ccef4a4c6172"
+    },
+    ".cache/fluid-coupling-stage5-kernel/WetRegionTests.cpp": {
+      "bytes": 3226,
+      "sha256": "08d5a828b3d19483e342c8e089ced238c64cc1b0cc8ba323270445df046db49a"
+    },
+    ".cache/fluid-coupling-stage5-kernel/WetTetraOracleTests.cpp": {
+      "bytes": 2026,
+      "sha256": "c878846ba81653a7796b8a4566f4911117cbe3b39acb166e74dc197ade36750e"
+    },
+    ".cache/fluid-coupling-stage5-kernel/WindCaseReader.h": {
+      "bytes": 1045,
+      "sha256": "0cc89b64780ec90fb0a4cd1e91817406942f4a327b404dfabf43f5b87abccc32"
+    },
+    ".cache/fluid-coupling-stage5-kernel/WindComparison.cpp": {
+      "bytes": 2509,
+      "sha256": "5d8f35e0390f114872aee6124bf4e7e41a2659cc0d3157b2511f789f00492e34"
+    },
+    ".cache/fluid-domain-redesign/AffineFluidTests-before-condensation.cpp": {
+      "bytes": 11713,
+      "sha256": "723df6d20ad4d7e03f2ae224b1334b826ae0e87d246614505b063f9ac6b4df6d"
+    },
+    ".cache/fluid-domain-redesign/AffineFluidTests-first-unilateral.cpp": {
+      "bytes": 9900,
+      "sha256": "c8792432edd0b412c675e359eab541ed7bc8d6c31df6e2f296d2bbd7efd71cc2"
+    },
+    ".cache/fluid-domain-redesign/AffineFluidTests.cpp": {
+      "bytes": 14958,
+      "sha256": "f3a3535239582f017b38a21cc66a43faf829c3780666887313d7e31f75aec523"
+    },
+    ".cache/fluid-domain-redesign/AffineFluidTests.dense-reference.cpp": {
+      "bytes": 14934,
+      "sha256": "8ddc3f7cc5f10972705c6900151f9239d882991aba2101a6c9c879e72a2464c0"
+    },
+    ".cache/fluid-domain-redesign/AffineFluidTests.schwarz-failed.cpp": {
+      "bytes": 14155,
+      "sha256": "233e00f4c0f1932df1ab25b5b7d9c99e8853aa77bd99dfc7b9c21004f7d4fe94"
+    },
+    ".cache/fluid-domain-redesign/AffineModel.before-trace-metadata.h": {
+      "bytes": 10054,
+      "sha256": "1ea189251afc1988d23692ab8329c789486e8cd94277486c58bc648cf7db0630"
+    },
+    ".cache/fluid-domain-redesign/AffineModel.h": {
+      "bytes": 10072,
+      "sha256": "c846a64afac547748a029a7c5cbb7bc4c7d597a3adf69d53fdba4b0731a8c212"
+    },
+    ".cache/fluid-domain-redesign/AffineSchwarz.h": {
+      "bytes": 2989,
+      "sha256": "eb205551560b8a2d7492b110fe335b2c8a58bc8e86231f0bb1b6c9584757499e"
+    },
+    ".cache/fluid-domain-redesign/AffineValidation.cpp": {
+      "bytes": 6577,
+      "sha256": "bf1b37c8e2a572b18db6d4288ae5aaea0abce18812a59ecad51e3c52bc38d4a5"
+    },
+    ".cache/fluid-domain-redesign/AlePressureMesh.h": {
+      "bytes": 1121,
+      "sha256": "c0605329794dc4f8c303a7d93e49445192cc631e6983eb5f1c1eeac31f174c6f"
+    },
+    ".cache/fluid-domain-redesign/AleTransport.QR-basis-rejected.h": {
+      "bytes": 13366,
+      "sha256": "c9a3882f4c77be35aa24e907a3dc5ea8a0e8360382debf53099f6519dc5b9598"
+    },
+    ".cache/fluid-domain-redesign/AleTransport.before-divergence-units.h": {
+      "bytes": 11941,
+      "sha256": "08e3c2eb44e868641d5de3e9d64e59d8d12224a2d28e9543722af341d5a6b33d"
+    },
+    ".cache/fluid-domain-redesign/AleTransport.before-trajectories.h": {
+      "bytes": 12431,
+      "sha256": "1b66872f2f5e880a848f873c81faed465ea2ce38646ee3373e7bc53965761d3a"
+    },
+    ".cache/fluid-domain-redesign/AleTransport.covariance-reference.h": {
+      "bytes": 12587,
+      "sha256": "fa29acb4a55d5cbd52403e116b4be06876c9dda19394f1b4a1041ff417b6c0c0"
+    },
+    ".cache/fluid-domain-redesign/AleTransport.gauss5-rejected.h": {
+      "bytes": 13015,
+      "sha256": "300056e2df098468ec763831e6345362299d91ca21fc197a00e7d9dee8314788"
+    },
+    ".cache/fluid-domain-redesign/AleTransport.h": {
+      "bytes": 12587,
+      "sha256": "fa29acb4a55d5cbd52403e116b4be06876c9dda19394f1b4a1041ff417b6c0c0"
+    },
+    ".cache/fluid-domain-redesign/AleTransportTests.cpp": {
+      "bytes": 3674,
+      "sha256": "a19c85ec8f47764fd4fa2b59a90f5968a7038de3b03977b34ed9ceb61c544773"
+    },
+    ".cache/fluid-domain-redesign/AleWindProjection.h": {
+      "bytes": 3377,
+      "sha256": "af3fd5169e12d63b024c02e31c23830deeab26db9bd5636c670663458b4ee506"
+    },
+    ".cache/fluid-domain-redesign/AleWindProjection.schur-reference.h": {
+      "bytes": 3319,
+      "sha256": "01e739d50d23b0ea9421b9b844a499a2be50bc7a176e06740bff4fa881f2c575"
+    },
+    ".cache/fluid-domain-redesign/AleWindTests.cpp": {
+      "bytes": 1837,
+      "sha256": "fbe7d1527deba763d2212d1ebe169fb599ac3ef3e5a6cd0ac461dae2041f2b03"
+    },
+    ".cache/fluid-domain-redesign/CapacityGapProbe.cpp": {
+      "bytes": 595,
+      "sha256": "d74c9c51707c823d51fe7936a4ba5598992dee70e3aab04ea5a0b458b23ac3af"
+    },
+    ".cache/fluid-domain-redesign/CompiledPressureTests.before-rectangular-wall.cpp": {
+      "bytes": 5570,
+      "sha256": "a0f90aac66fdd0ba43a4b94bf89b86d9760f908cced1eb70bc2ef07efafeef7e"
+    },
+    ".cache/fluid-domain-redesign/CompiledPressureTests.cpp": {
+      "bytes": 5764,
+      "sha256": "9c1870b48724662a3ef93d789b837db3460e51c608350e84392d71d1a03e88f3"
+    },
+    ".cache/fluid-domain-redesign/CompiledPressureTests.cube-proof.cpp": {
+      "bytes": 4938,
+      "sha256": "e67d5735345d6872d2e0cba6d3e8040d1c1cb4cbdc22956193df9725e43f5623"
+    },
+    ".cache/fluid-domain-redesign/ConformingAleWind.h": {
+      "bytes": 6855,
+      "sha256": "49ecd789e3441e7a338b906ff1e2c9d3f42d1f5ca55e27c2c5f750b0bcd81ae2"
+    },
+    ".cache/fluid-domain-redesign/ConformingAleWindTests.cpp": {
+      "bytes": 2967,
+      "sha256": "3cc3c386f2f78a562255ff0b321286196871a8e5061fa1ec58061a640d539aac"
+    },
+    ".cache/fluid-domain-redesign/ConformingCutMesh.before-regions.h": {
+      "bytes": 13298,
+      "sha256": "6b82eab9d45a092512e2f1fd47618afa117b5a12b4a75ae9da7c676454feef3f"
+    },
+    ".cache/fluid-domain-redesign/ConformingCutMesh.box-moving-verified.h": {
+      "bytes": 12561,
+      "sha256": "731ea06104adb7e03488327069868edc76dc5ddf6e6de26165bb61abc5583f10"
+    },
+    ".cache/fluid-domain-redesign/ConformingCutMesh.center-fan.h": {
+      "bytes": 10153,
+      "sha256": "ded0becbd837c2ab06a4086eba2447e36e5fc66981ed1886e3455bc1bad356f0"
+    },
+    ".cache/fluid-domain-redesign/ConformingCutMesh.h": {
+      "bytes": 15765,
+      "sha256": "4e66ae20c2edc978c3e779be11716b678dacadae248951f146048a184e6b748c"
+    },
+    ".cache/fluid-domain-redesign/ConformingCutMesh.pulling-closed.h": {
+      "bytes": 10246,
+      "sha256": "9c42d1d3ea8472026a7c5d23168d9c1b8759dd060b998b14d130aabd546701ed"
+    },
+    ".cache/fluid-domain-redesign/CutMeshAdversarial.cpp": {
+      "bytes": 3366,
+      "sha256": "795e419c20313386c5152ce23353ced19ef5da80aecb7e2c97bdef0004ea7746"
+    },
+    ".cache/fluid-domain-redesign/CutMeshTests.cpp": {
+      "bytes": 3039,
+      "sha256": "dbe345b20f9d19a6fcc492ed2c9b64239dfc0f37b7699bf703771de2aa31950d"
+    },
+    ".cache/fluid-domain-redesign/DenseMixedReference.h": {
+      "bytes": 6163,
+      "sha256": "36420cf1f118feeebcc3c62230275239fe6ba90f360eeec3dba04322ef6e6d12"
+    },
+    ".cache/fluid-domain-redesign/DgAdvection.constant-verified.h": {
+      "bytes": 4100,
+      "sha256": "864d49ff910e16709614a27ab02992638fabcf89261eec3fb494e7dc26e60634"
+    },
+    ".cache/fluid-domain-redesign/DgAdvection.h": {
+      "bytes": 5373,
+      "sha256": "fb159b168438fc47f201928fe097725809ce55aa6bfa5e04e7758d985f821e98"
+    },
+    ".cache/fluid-domain-redesign/DgAdvectionTests.constant-verified.cpp": {
+      "bytes": 3724,
+      "sha256": "f3c7aa947ef1e862e91e9ba21678f2fdbe88ce9b4eedb8dc2269514bf16c4566"
+    },
+    ".cache/fluid-domain-redesign/DgAdvectionTests.cpp": {
+      "bytes": 6311,
+      "sha256": "aa1343dec2161eb161144641159a1b8277e60addd8b64704b61c7338bdfc9288"
+    },
+    ".cache/fluid-domain-redesign/EqualityProjectionQR.full-coordinate.h": {
+      "bytes": 3860,
+      "sha256": "c184387f44ef1f51d618e6966c5a5023487b509c7db6d4776990732b69bc734d"
+    },
+    ".cache/fluid-domain-redesign/EqualityProjectionQR.h": {
+      "bytes": 8003,
+      "sha256": "c7a2ac4312b75d54822a79e677bcb88e11e8e173b17966872c8a04a7eee4e650"
+    },
+    ".cache/fluid-domain-redesign/ExactPlaneCases.h": {
+      "bytes": 87382,
+      "sha256": "c9931f94f8c47d86c75a4e13e6f2253af99a935c7ceb6a1f0b8fdf10b3b8a5a1"
+    },
+    ".cache/fluid-domain-redesign/ExactPlanePredicateTests.cpp": {
+      "bytes": 1272,
+      "sha256": "b466fc6a3682d2931164db315fea6c88b86a00634888921a5f68466881a05534"
+    },
+    ".cache/fluid-domain-redesign/ExactPlanePredicates.h": {
+      "bytes": 3837,
+      "sha256": "1ff1db56d26a8ece23f7d5a59460c2064775eb30ad12fa549ad84a214d369882"
+    },
+    ".cache/fluid-domain-redesign/FaceOwnershipProbe.cpp": {
+      "bytes": 2178,
+      "sha256": "83e24ddf2155a61b09dd27c2ff6d3749de5a2297ff960f7f2eef35f0608c64d0"
+    },
+    ".cache/fluid-domain-redesign/FacePressure-before-upwind.cpp": {
+      "bytes": 4704,
+      "sha256": "f9e0d7bc2c10b3dd6e8a5da1b921f16e99c4d9e7944fefe10bbbed4282eba841"
+    },
+    ".cache/fluid-domain-redesign/FacePressure.cpp": {
+      "bytes": 6050,
+      "sha256": "65a0101d150e3f253d721573ba7162d1631da7749b9893b9c3328ba68a6876ed"
+    },
+    ".cache/fluid-domain-redesign/FacePressure.h": {
+      "bytes": 1242,
+      "sha256": "33a331de9ae4b422f9cda180509efce9a4200819ae29111b956a69f486893240"
+    },
+    ".cache/fluid-domain-redesign/FacePressureTests.cpp": {
+      "bytes": 4383,
+      "sha256": "2dc2fa2f5de8a412ea02ab785b2bc51d48c1e82ed5de0e77b011cb8d04d2b267"
+    },
+    ".cache/fluid-domain-redesign/FieldDivergenceProbe.cpp": {
+      "bytes": 1062,
+      "sha256": "1eddb657facce75e889203c59b9cc41bf3410da9b3ade62243256dabd4da235a"
+    },
+    ".cache/fluid-domain-redesign/FiniteFrontGeometry.before-local-frame.h": {
+      "bytes": 3485,
+      "sha256": "5e5d781efd0f9fee0ed99c4a7e1553e3e62a2ca3b5d051c82718804390773e2e"
+    },
+    ".cache/fluid-domain-redesign/FiniteFrontGeometry.h": {
+      "bytes": 3683,
+      "sha256": "71261bd8c17ba121b874d962c90f624465b5c961791bb96e5d56a9336772656c"
+    },
+    ".cache/fluid-domain-redesign/FiniteFrontTests.before-native-thin-case.cpp": {
+      "bytes": 2509,
+      "sha256": "8c42a73c3af0dea08b19ffbbc05bc1ca67f890ea587b8c218fe8282ce2a3723b"
+    },
+    ".cache/fluid-domain-redesign/FiniteFrontTests.cpp": {
+      "bytes": 3138,
+      "sha256": "7118afc3db2d31055f023c16aa503d12aaae01ab4e648abfa7ce59b40535bf71"
+    },
+    ".cache/fluid-domain-redesign/FiniteFrontTests.gauss5-rejected.cpp": {
+      "bytes": 3239,
+      "sha256": "55fb8f99ac61066785fe0d932d68980c109e4493b3cff5334fdd80eeb09b5377"
+    },
+    ".cache/fluid-domain-redesign/FiniteFrontTests.reduced-QR-thin-failure.cpp": {
+      "bytes": 2795,
+      "sha256": "15d5c2fab55a4b84a50a25af8bcd3b9432adb523cbd04797c65da5857b90c4e0"
+    },
+    ".cache/fluid-domain-redesign/FluidPressure.h": {
+      "bytes": 2651,
+      "sha256": "803972e9901991329882157432c6265e5eb570b3c3d138af2d4214f88990381a"
+    },
+    ".cache/fluid-domain-redesign/FluidProjectionTests.cpp": {
+      "bytes": 3357,
+      "sha256": "3f1dfe31aafeb072e633322f6b609e761594c2567f55630817fa853ab6aaba55"
+    },
+    ".cache/fluid-domain-redesign/GeometricContinuity.h": {
+      "bytes": 3598,
+      "sha256": "3d88256eea14f6d7c495c2578c8d27eb9cf856d0341fc070238bb5a7680ea993"
+    },
+    ".cache/fluid-domain-redesign/GeometricFlux.cpp": {
+      "bytes": 4042,
+      "sha256": "13ae2b898526b697f708a23333303a232ae6e942b80aa981f7be2a082cc1f102"
+    },
+    ".cache/fluid-domain-redesign/GeometricFlux.h": {
+      "bytes": 717,
+      "sha256": "2a45fee6a2905ff4dd82ac5b8f029752e08585a531d2daf1e5fd4c856f38f4d9"
+    },
+    ".cache/fluid-domain-redesign/GeometricTransportTests.cpp": {
+      "bytes": 3365,
+      "sha256": "c55474317147f4b3feb2dcc9fa5c814c557199bc36e99b536b6be365c043a3b6"
+    },
+    ".cache/fluid-domain-redesign/IncomingWetState.h": {
+      "bytes": 4238,
+      "sha256": "4dee7bd534176ab876957acc350560c85fabff7a1228609fd92bf68af3d7cd90"
+    },
+    ".cache/fluid-domain-redesign/IncomingWetStateTests.cpp": {
+      "bytes": 2609,
+      "sha256": "d4e86cbd351ecd7ea198a2316d94cc74261621b8d806228723404b7569bc3c5e"
+    },
+    ".cache/fluid-domain-redesign/MaterialMoments.h": {
+      "bytes": 3383,
+      "sha256": "ef57611b6a6ccd1fc634e1e2097d3c8f453617597a9349d96b9db023288badd8"
+    },
+    ".cache/fluid-domain-redesign/MaterialMomentsTests.cpp": {
+      "bytes": 3724,
+      "sha256": "6e8d3ff093fec1f501065b0089e0f7932bcd97149f6fd780a671f711150b7d3a"
+    },
+    ".cache/fluid-domain-redesign/MaterialRemap.h": {
+      "bytes": 5145,
+      "sha256": "bb9213ff4f5b0bc5f5d4a74ff6bfe8c160e194e9c3ce1f8440043ff43ca04986"
+    },
+    ".cache/fluid-domain-redesign/MaterialRemapTests.cpp": {
+      "bytes": 4619,
+      "sha256": "220bc05b56123c7ab23eebafc362445066f0b4cdd8d9dbb9911ba306d677b045"
+    },
+    ".cache/fluid-domain-redesign/MixedProjection-before-preconditioning.h": {
+      "bytes": 6992,
+      "sha256": "cdfe8a81922f5651112248ab5249071555fe0516868209c501ee8c26170d0c36"
+    },
+    ".cache/fluid-domain-redesign/MixedProjection-before-warm-sweep.h": {
+      "bytes": 6031,
+      "sha256": "bf27b41e309b1f06bd8f2cb9b09f0b06d3930d0679aff43f92b9bae7ba42f039"
+    },
+    ".cache/fluid-domain-redesign/MixedProjection.h": {
+      "bytes": 7499,
+      "sha256": "5962a2e00f2a0d77e9c63562f8bef642b1b2ad5a1ff6aade663b52865e2874fd"
+    },
+    ".cache/fluid-domain-redesign/MomentInterface.h": {
+      "bytes": 5166,
+      "sha256": "f202b7d04f9384a2d1d5bf23d7a8a85c4ed334219213e8b86bdd8b30e3503348"
+    },
+    ".cache/fluid-domain-redesign/MomentInterfaceTests.cpp": {
+      "bytes": 2964,
+      "sha256": "bc7b696664d9a0b9d3b74649c304082790ad8292d610c02282e30e031f8bc6a4"
+    },
+    ".cache/fluid-domain-redesign/MovingCutMeshTests.before-fresh-controls.cpp": {
+      "bytes": 2651,
+      "sha256": "f977dd1ae17bb9f07edfdc19f6307d3973e0b7b7266e943c86d2d02602f93bc7"
+    },
+    ".cache/fluid-domain-redesign/MovingCutMeshTests.cpp": {
+      "bytes": 3190,
+      "sha256": "7eb76676181ea2bfd099d1d4049626eccdc4a2569720d6713903221313fdde61"
+    },
+    ".cache/fluid-domain-redesign/MovingWetStateTests.cpp": {
+      "bytes": 5782,
+      "sha256": "5de3bd206e1871ead5e18b0ffcfe42c6a09d072446b684f746fa173573a6d2cd"
+    },
+    ".cache/fluid-domain-redesign/NativeAlePistonTests.before-incoming-control.cpp": {
+      "bytes": 15416,
+      "sha256": "9780e6948826e61d66dbaabf5d2d131b8a349266d3671bcab8e185ff87b8aea4"
+    },
+    ".cache/fluid-domain-redesign/NativeAlePistonTests.before-overflow.cpp": {
+      "bytes": 9488,
+      "sha256": "0acbbf5b997a210bf4d796ef65d00a0ad8acb31b5c3dfff086be77ba7f565465"
+    },
+    ".cache/fluid-domain-redesign/NativeAlePistonTests.cpp": {
+      "bytes": 16014,
+      "sha256": "1f24932c64ce966df4623171b5048587748bd366701333c05eb1bd6661966d1c"
+    },
+    ".cache/fluid-domain-redesign/NativeAlePistonTests.physical-operator-rejected.cpp": {
+      "bytes": 15965,
+      "sha256": "2267a39acdc8a73cb68077278669846e7d046e1adf5b2056946c106f4b499d98"
+    },
+    ".cache/fluid-domain-redesign/NativeAlePistonTests.reduced-QR-thin-failure.cpp": {
+      "bytes": 15417,
+      "sha256": "4b36dc4f1884153c3acfedb652119dcca434fe287127e82ea981ae0e6aba5d38"
+    },
+    ".cache/fluid-domain-redesign/NativeAlePistonTests.whole-plate-rejected.cpp": {
+      "bytes": 12979,
+      "sha256": "c3d2c60087c0b0da4fc29d51301e55d417527393298521bed974649fa40ab9f1"
+    },
+    ".cache/fluid-domain-redesign/NativeCompiledPressureTests.cpp": {
+      "bytes": 4080,
+      "sha256": "ae1b9b31c5f5df4fd915983de72e1179f5a2cd7416fee6ad9756f22b023a4b78"
+    },
+    ".cache/fluid-domain-redesign/NativeOpenFlowTests-basic-invariants.cpp": {
+      "bytes": 2491,
+      "sha256": "d4937c9d137723fc5b69d9045bccb5fa920c77410d87eac0f51ca573f748adfb"
+    },
+    ".cache/fluid-domain-redesign/NativeOpenFlowTests-before-geometric-flux.cpp": {
+      "bytes": 3820,
+      "sha256": "15a8c431a1a9e04f2e7793ea28becc81f6d67e6c01f3f6f024f15ebc670884aa"
+    },
+    ".cache/fluid-domain-redesign/NativeOpenFlowTests.cpp": {
+      "bytes": 4233,
+      "sha256": "1284a39b32f2cb9ab7e71cc4b527ec7624998205c1047435335ae352a6195464"
+    },
+    ".cache/fluid-domain-redesign/NativePistonPressureTrial.before-endpoint-transport.cpp": {
+      "bytes": 10803,
+      "sha256": "955c950151ae7a352201e0ae8f4d7d7b1c46d7b170c9925c6f8f29c0bb105948"
+    },
+    ".cache/fluid-domain-redesign/NativePistonPressureTrial.before-stage-energy-check.cpp": {
+      "bytes": 12030,
+      "sha256": "3f0010a188457f2f4c44edf1c44b91aa6072d44b86a492b7520e2b8dd2f6b862"
+    },
+    ".cache/fluid-domain-redesign/NativePistonPressureTrial.cpp": {
+      "bytes": 14189,
+      "sha256": "bb1986cf0a1c4eacb20c1043d54de38b77ae92ebf4f7c9eb8323ee66e6b26590"
+    },
+    ".cache/fluid-domain-redesign/NativePistonPressureTrial.full-reaction-preparation-failure.cpp": {
+      "bytes": 13851,
+      "sha256": "74d450ef731e84d1a5681b1cc21fc4149848f59c20400d2fb802bb2123bf5220"
+    },
+    ".cache/fluid-domain-redesign/NativePistonPressureTrial.impermeable48.cpp": {
+      "bytes": 12690,
+      "sha256": "2d42f2a83e1d3944673fb0b99ef3b201706c382fa380d665fcdfbe7552da3e52"
+    },
+    ".cache/fluid-domain-redesign/NativePistonPressureTrial.unilateral-energy-gate.cpp": {
+      "bytes": 12391,
+      "sha256": "867b9e3c1a31f6d5d9c5b4f56e017c8dc08faadde80d5a518fb2471940cf2e08"
+    },
+    ".cache/fluid-domain-redesign/NativeTetraPressureTests.cpp": {
+      "bytes": 4489,
+      "sha256": "f5c44ec65dab355359f9d2955eca10f32faed01a141fd18eb07604b36cd4c977"
+    },
+    ".cache/fluid-domain-redesign/NativeVolumePistonTests-before-domain-pressure.cpp": {
+      "bytes": 4591,
+      "sha256": "c3ff00e9f3817783e264dbbdd0266dc4e9a3c16514d01d216d82dc3f3e3f7137"
+    },
+    ".cache/fluid-domain-redesign/NativeVolumePistonTests-before-substep-adapter.cpp": {
+      "bytes": 4456,
+      "sha256": "a298816d8bc16da5cd5a6de2c9f1570b87a4b10984861deb2208b697af610dcf"
+    },
+    ".cache/fluid-domain-redesign/NativeVolumePistonTests.cpp": {
+      "bytes": 4893,
+      "sha256": "1eb7f268de1097ca19d505acac2153d1ce03ab12b144814e74e521e643c6e23c"
+    },
+    ".cache/fluid-domain-redesign/OperatorCacheTests.cpp": {
+      "bytes": 3718,
+      "sha256": "347be54f92fb3692e4de5b91420605f936654a56ddb4d330626bed8f8c39b53e"
+    },
+    ".cache/fluid-domain-redesign/OwnedCapacityTests.cpp": {
+      "bytes": 1604,
+      "sha256": "cfbfad5ebd0dd1c5b4bb62db64299509ede1a46cac703828b6c5a469e27fade4"
+    },
+    ".cache/fluid-domain-redesign/PistonSpaceTimeMesh.h": {
+      "bytes": 3069,
+      "sha256": "1b67bd7fd76be6577574d9fefb0cb55ec8d053e121141363f3bf9f75e8651fc0"
+    },
+    ".cache/fluid-domain-redesign/PressureComplementarityTests.cpp": {
+      "bytes": 1616,
+      "sha256": "55cde1edc65b09fdd201827d942d4d10aede83ff93203ed596b476847dc942b1"
+    },
+    ".cache/fluid-domain-redesign/PressureMassScaleTests.cpp": {
+      "bytes": 1340,
+      "sha256": "89e0ce2b083514bad66a747fa7a98d1bd4c0d4464e8547801f6c49ec3dd2578b"
+    },
+    ".cache/fluid-domain-redesign/PressureRemapTests.cpp": {
+      "bytes": 4737,
+      "sha256": "f38d95208ea5c56de2a1df1eb8ca4467f16996633a46b4791ba138d9c5841a6f"
+    },
+    ".cache/fluid-domain-redesign/PressureVolumeStepTests.cpp": {
+      "bytes": 5929,
+      "sha256": "16e6646590805c48895b47a9a51afc6b400d62aa7d1518b7e4f1a3efef2f62f5"
+    },
+    ".cache/fluid-domain-redesign/PressureVolumeStepTests.net-only-incomplete.cpp": {
+      "bytes": 5418,
+      "sha256": "a1f8a81ad9aedbf9a3151f6bb7d2d662bba42006394474073f69f733d5e1c939"
+    },
+    ".cache/fluid-domain-redesign/ReferenceAleTests.cpp": {
+      "bytes": 5034,
+      "sha256": "11a5a0600c8fb6e57fcde6c35ad700b399c1f8e4b2d724206c71e739b93443a4"
+    },
+    ".cache/fluid-domain-redesign/ReferenceAleTransport.h": {
+      "bytes": 8386,
+      "sha256": "38b0075d4e24fea77e917168cf1c692fd7753f51ccd790f28711ad7b18030fe4"
+    },
+    ".cache/fluid-domain-redesign/SparseInterior.before-dimensional-residual-fix.h": {
+      "bytes": 14384,
+      "sha256": "c819a86b837f5f11c45c5da2cf5aa67171471eb5c62d71f4de1a46c3716d7268"
+    },
+    ".cache/fluid-domain-redesign/SparseInterior.first-correct-slow.h": {
+      "bytes": 7465,
+      "sha256": "b45a7b043ba0258d028b6e16858c3caf10648ea497ac02ce8002e90a2ad51423"
+    },
+    ".cache/fluid-domain-redesign/SparseInterior.full-body-gram-slow.h": {
+      "bytes": 8185,
+      "sha256": "8a673001b6cf568d51c2a9cd77d3924c80f9439782d952563ad08b4814b888c1"
+    },
+    ".cache/fluid-domain-redesign/SparseInterior.h": {
+      "bytes": 18476,
+      "sha256": "336670b721c1382379432d46bf19272a0b2f4b7b61b1f82c3435e81acaa16e86"
+    },
+    ".cache/fluid-domain-redesign/SparseInterior.indexed-symbolic-correct.h": {
+      "bytes": 12002,
+      "sha256": "e716c7ecb27d222d1a0ba9ab70cf03f79f2d5e8986283b3add2286507f1c4304"
+    },
+    ".cache/fluid-domain-redesign/SparseInterior.lowrank-correct.h": {
+      "bytes": 10591,
+      "sha256": "66ca18eae5ee8b13737ad982c69387c970ec2c1bc6c61034516bdd19e43cc487"
+    },
+    ".cache/fluid-domain-redesign/SparseInterior.profiled-before-cache.h": {
+      "bytes": 16761,
+      "sha256": "48ccc95b6b2a5215768e2d56ae71988db735f2462d8ea49b248786d16cb9d548"
+    },
+    ".cache/fluid-domain-redesign/SparseInterior.sum-work-row-apply-rejected.h": {
+      "bytes": 15767,
+      "sha256": "5a37121690c26a453eed24705c5e751ed033cb2a33f07b9dfaf54759235b2e08"
+    },
+    ".cache/fluid-domain-redesign/SparseInterior.warm-kkt-qualified.h": {
+      "bytes": 12788,
+      "sha256": "615f78fd50ea75558abd14b84d3765a672c2f588ef99c92b4a303dd9fabb574c"
+    },
+    ".cache/fluid-domain-redesign/SubcellOwnershipTests.cpp": {
+      "bytes": 1882,
+      "sha256": "2870d1d37547ad6af10efaefe6fa6250ea755d6fe843709f7252b4bacd13597e"
+    },
+    ".cache/fluid-domain-redesign/SweptFaceTransport.h": {
+      "bytes": 2533,
+      "sha256": "d9832f7a03375705894a79f9beb4e23220676ba6232f273b8f6c3d87efb81a24"
+    },
+    ".cache/fluid-domain-redesign/TetraPressureTests.before-cache-tests.cpp": {
+      "bytes": 8230,
+      "sha256": "b45a78810636595fc5b0f4f0f6b898bb113347fea111a75a8bba2b561ed2fab2"
+    },
+    ".cache/fluid-domain-redesign/TetraPressureTests.before-side.cpp": {
+      "bytes": 10672,
+      "sha256": "49c69908eaf2b33de4ab1c862c84f047b23fc8cd607eaaded841b8bb809f941b"
+    },
+    ".cache/fluid-domain-redesign/TetraPressureTests.cpp": {
+      "bytes": 10634,
+      "sha256": "d5397c9d0380d6233bffaa4c3806200b31ef2c9e530597adbd51dfcc6c05c677"
+    },
+    ".cache/fluid-domain-redesign/TetraSideTests.cpp": {
+      "bytes": 1723,
+      "sha256": "9ff66af30b6bec23b1ba151f9cc82552489e76ec3065a5ae2e494ca7dac3430a"
+    },
+    ".cache/fluid-domain-redesign/VolumeDomain-before-compensated-volume.cpp": {
+      "bytes": 17027,
+      "sha256": "2e619a7ec538a0c9c7656bb338f92c95005fb5ffaa2ee65e8b623fe4b760aa69"
+    },
+    ".cache/fluid-domain-redesign/VolumeDomain-before-face-provenance.cpp": {
+      "bytes": 15924,
+      "sha256": "4ce6e8985f5810cee14bb5a2a1b8a388fdd23f38f6e39952d34c8ba735a8e315"
+    },
+    ".cache/fluid-domain-redesign/VolumeDomain-before-scale-normalization.cpp": {
+      "bytes": 15143,
+      "sha256": "5ab50b6b55030ad1d252ca2e5c3c01d739ab1052d87ad5e5e1796fb7fc3133ae"
+    },
+    ".cache/fluid-domain-redesign/VolumeDomain-before-wet-tetra-clipping.cpp": {
+      "bytes": 18012,
+      "sha256": "9d09fed0d4e2d8a38265153919d7102223289714a3d6509769d52da50a6434a3"
+    },
+    ".cache/fluid-domain-redesign/VolumeDomain.before-exact-connectivity.cpp": {
+      "bytes": 22567,
+      "sha256": "1d68918b1108bb2edf4b6b13ae5c9ec5ca62ffd4fef7ac21044f26b76d3632cf"
+    },
+    ".cache/fluid-domain-redesign/VolumeDomain.before-subcells.h": {
+      "bytes": 2356,
+      "sha256": "812554fc0bc3216722ed530ab1eb89d10c2b21422cba3e78a3aa53e0ef08dfa3"
+    },
+    ".cache/fluid-domain-redesign/VolumeDomain.cpp": {
+      "bytes": 25030,
+      "sha256": "cb2468aa1b73ad9c6201e58b5d5e3a699c310402a9c0280cb1141303d4f90805"
+    },
+    ".cache/fluid-domain-redesign/VolumeDomain.h": {
+      "bytes": 2487,
+      "sha256": "8daa3583e471c5070078d1ed5b3f8d3a7bda1e839f6ccac6f8a7e5a86d5ba2db"
+    },
+    ".cache/fluid-domain-redesign/VolumeDomainTests-initial.cpp": {
+      "bytes": 7517,
+      "sha256": "6e29ea6f256e57140222c0ed929285b8347173ddb9ea71bbaa45ca198f805944"
+    },
+    ".cache/fluid-domain-redesign/VolumeDomainTests.cpp": {
+      "bytes": 11196,
+      "sha256": "cfc3d3ee7ee879043e7bb70c4b1cced491409d33c9d746a1e2264cf6c348cc7d"
+    },
+    ".cache/fluid-domain-redesign/WetCutMeshTests.cpp": {
+      "bytes": 3362,
+      "sha256": "fd28ae526d50496ce163d389b945b390c5666e47f5f871373b7d0442a5d48937"
+    },
+    ".cache/fluid-domain-redesign/WetFluxIntegration.h": {
+      "bytes": 1311,
+      "sha256": "c67b3779771d2c03d4929143cd7842f3f82271fa8f46104e33cdcac888f4e57f"
+    },
+    ".cache/fluid-domain-redesign/WetFluxTests.cpp": {
+      "bytes": 957,
+      "sha256": "b7419a44f16b0bf73bcd9211e06e48206a501939655c1c705aef9caabfa9338f"
+    },
+    ".cache/fluid-domain-redesign/WetMotionProbe.cpp": {
+      "bytes": 1419,
+      "sha256": "eb466aaae00ba735b4fd57462d260b31aa976ace9b88721c95d3ccef4a4c6172"
+    },
+    ".cache/fluid-domain-redesign/WetRegionTests.cpp": {
+      "bytes": 3226,
+      "sha256": "08d5a828b3d19483e342c8e089ced238c64cc1b0cc8ba323270445df046db49a"
+    },
+    ".cache/fluid-domain-redesign/WetTetraOracleTests.cpp": {
+      "bytes": 2026,
+      "sha256": "c878846ba81653a7796b8a4566f4911117cbe3b39acb166e74dc197ade36750e"
+    },
+    ".cache/fluid-domain-redesign/WindCaseReader.h": {
+      "bytes": 1045,
+      "sha256": "0cc89b64780ec90fb0a4cd1e91817406942f4a327b404dfabf43f5b87abccc32"
+    },
+    ".cache/fluid-domain-redesign/WindComparison.cpp": {
+      "bytes": 2509,
+      "sha256": "5d8f35e0390f114872aee6124bf4e7e41a2659cc0d3157b2511f789f00492e34"
+    },
+    ".cache/fluid-pressure-coupling/BoundaryDensityTests.cpp": {
+      "bytes": 2678,
+      "sha256": "3b3c9d8403be820c522f5e296385dfa9ad71fa1bf96c7ecc460d2b35f53ff7ad"
+    },
+    ".cache/fluid-pressure-coupling/BoxQuadrature.h": {
+      "bytes": 2425,
+      "sha256": "eee9971958d705fbcbac9a11458b876c47cc27af02a58342ec313327f3b385bc"
+    },
+    ".cache/fluid-pressure-coupling/ConservationTests.cpp": {
+      "bytes": 1648,
+      "sha256": "dbe8e3d7087ef5319e391fe06ff60335cf3e65717f04e4f39b37598b6c4732df"
+    },
+    ".cache/fluid-pressure-coupling/DensityRows-density-predictor-v10.h": {
+      "bytes": 3866,
+      "sha256": "8fb86dff701dc80891e87192e6177cd600ba0deaf16e1c4e8bdf1debe3d6caa1"
+    },
+    ".cache/fluid-pressure-coupling/DensityRows-divergence-v11.h": {
+      "bytes": 4121,
+      "sha256": "fd4cc2992a741f0509628567f13a93c1289a1951fd5d09979dee3648b61c23c0"
+    },
+    ".cache/fluid-pressure-coupling/DensityRows-v1.h": {
+      "bytes": 3723,
+      "sha256": "27c0b34d6f5116846884d83e3dc656406a9460ad472101c72edfdf9757791756"
+    },
+    ".cache/fluid-pressure-coupling/DensityRows.h": {
+      "bytes": 6161,
+      "sha256": "3cd3fb1bd1370b7591951d79d3212a76ebaa9df910c0b2e5de054477515ab2e6"
+    },
+    ".cache/fluid-pressure-coupling/DensityTests.cpp": {
+      "bytes": 2635,
+      "sha256": "68bcf652a52598bef70ba1efd92a379e4cb75b0cd155fa87349d05ab92d3b1be"
+    },
+    ".cache/fluid-pressure-coupling/FrozenBenchmark.cpp": {
+      "bytes": 1879,
+      "sha256": "1be53eb6d75410f21617f409a41155559a1f0a54723ee58b53492671291447ec"
+    },
+    ".cache/fluid-pressure-coupling/HydrostaticAccelerationProbe.cpp": {
+      "bytes": 2554,
+      "sha256": "fdd7ab3903dc67359173702a95d2715c5c90317eefc114c02389717edb443e2f"
+    },
+    ".cache/fluid-pressure-coupling/LateProductionCoupling.cpp": {
+      "bytes": 20359,
+      "sha256": "63454b30e70438ed0cf7a4f53d10bb5d96de4222aa4b2688552183c279f88e41"
+    },
+    ".cache/fluid-pressure-coupling/LateProjection.cpp": {
+      "bytes": 5242,
+      "sha256": "035351d3ea744614b4f578801793ecfb82085f0a1d568f4f44665c01bab51844"
+    },
+    ".cache/fluid-pressure-coupling/MLSDirectionTests.cpp": {
+      "bytes": 1477,
+      "sha256": "e881eab7107e68f12de9af016355a7d39f112d63c8212f9db15bf0c696fe701a"
+    },
+    ".cache/fluid-pressure-coupling/MLSLoadProbe.cpp": {
+      "bytes": 1380,
+      "sha256": "26780ce1ec669b5103fc35a41fb5ecb3edad49096f50690c603eb6547c07b346"
+    },
+    ".cache/fluid-pressure-coupling/MLSPatchTests.cpp": {
+      "bytes": 1691,
+      "sha256": "21139c0b237bea945a8f1435478e5cef339ad5ca8836497c15b2908b7a6dc6cb"
+    },
+    ".cache/fluid-pressure-coupling/MobilityProbe.cpp": {
+      "bytes": 2183,
+      "sha256": "96a04f54cf38b8134a1d0fefe46c451feab514f72fd417d5b82797f7174b905d"
+    },
+    ".cache/fluid-pressure-coupling/PressureFluidWorld.cpp": {
+      "bytes": 66188,
+      "sha256": "c0910bf779fb035afede4f4b02d63bfd1c8a767e81d33bd470ccc59e76fb4e24"
+    },
+    ".cache/fluid-pressure-coupling/PressureForceTests.cpp": {
+      "bytes": 1051,
+      "sha256": "341fd6d8e7c8d0d64853490f6b4b5eeabb5851ed614e6e1cae3734c5747d6523"
+    },
+    ".cache/fluid-pressure-coupling/PressureProductionCoupling.cpp": {
+      "bytes": 20415,
+      "sha256": "5fcd092febbe7783643b86047d7c8a5a1676ddbc1e8e82dad5f8368e7552faf3"
+    },
+    ".cache/fluid-pressure-coupling/PressureProjection-accelerated-v4.h": {
+      "bytes": 7476,
+      "sha256": "e14045b679cc3fb9de90dc0f0d2dd771087328492d104805dde8d894f27dd8bf"
+    },
+    ".cache/fluid-pressure-coupling/PressureProjection-fraction-pivot-v5.h": {
+      "bytes": 7830,
+      "sha256": "aba92ca4438890f93965e213fab34e3477b5a52583a94fb0819390fef06cf3d5"
+    },
+    ".cache/fluid-pressure-coupling/PressureProjection-pgs.h": {
+      "bytes": 3377,
+      "sha256": "c3b4cefe2e9f5100253a5555818cb79bf54cabc0d8078e0892059d725d78f10e"
+    },
+    ".cache/fluid-pressure-coupling/PressureProjection-projected-cg-v7.h": {
+      "bytes": 6155,
+      "sha256": "004b51c933c7de89d8ae5a9425e0993e3c3894001e40075da0d09f8818f56ddf"
+    },
+    ".cache/fluid-pressure-coupling/PressureProjection-projected-newton-v6.h": {
+      "bytes": 8122,
+      "sha256": "40bcc821a89a9767c52fc5a22e1ec7adaaf9b968c4f6ab8f0fa43830c0f58633"
+    },
+    ".cache/fluid-pressure-coupling/PressureProjection.h": {
+      "bytes": 6885,
+      "sha256": "ba8d63d210f9a453bc2238c55bc98bad279a1a8300424f4598fc703269a3c7e8"
+    },
+    ".cache/fluid-pressure-coupling/ProjectionTests.cpp": {
+      "bytes": 2790,
+      "sha256": "ff0c1bf47626b3d16dfb08e84a460447fa7f7925ee293f6c361ed9c4bed784b8"
+    },
+    ".cache/fluid-pressure-coupling/RuntimeBridge.cpp": {
+      "bytes": 101,
+      "sha256": "ffca82a712af4451bfd1efe9fb7ec0a51b7652228d23d70a915d84995787c9f8"
+    },
+    ".cache/fluid-pressure-coupling/RuntimeBridge.h": {
+      "bytes": 800,
+      "sha256": "df275e778def1e60a45b4229ead7ead58b9989438e67fdb358330518e3bd9f2a"
+    },
+    ".cache/fluid-pressure-coupling/VariationalGridProof-world-aggregation.cpp": {
+      "bytes": 5594,
+      "sha256": "d06d83c69e65085b6a68892866dc20ee801cab75881654583016bce7638686d2"
+    },
+    ".cache/fluid-pressure-coupling/VariationalGridProof.cpp": {
+      "bytes": 5665,
+      "sha256": "37438863a4f46c794ba2d046aca3a9b16828434559c4103e8306d39dbc0e2f8d"
+    },
+    ".cache/fluid-pressure-coupling/VectorMLSRows.h": {
+      "bytes": 4777,
+      "sha256": "f7cc698fc424a074720b6bd34e3c58c4070f19973f3c031460359619bff308bc"
+    }
+  }
+}

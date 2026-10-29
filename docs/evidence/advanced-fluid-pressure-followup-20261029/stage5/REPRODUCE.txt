@@ -1,0 +1,57 @@
+STAGE5 REPRODUCTION — PRIVATE REFERENCE, NOT A RUNTIME FLUID ENABLE SWITCH
+
+Read docs/ADVANCED_FLUID_CONSTRAINT_COUPLING.txt before interpreting results.
+Use an isolated checkout of parent 50d1e417c167c1bfc742859e51a47cda31b2bc57.
+Preserve unrelated working trees. This source package writes only ignored .cache
+experiments and compiler outputs. It never imports Solbert's research.
+
+1. Follow current Linux build prerequisites. Configure/build native Release:
+   cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DJUDAS_BUILD_CHANNEL=Experimental
+   cmake --build build --target judas_script_tests -j2
+   This builds the engine/library and gives the probe builder its actual native
+   flags/link command. The recorded run instead reused the explicitly identified
+   earlier f88ed2e dirty Release archive; do not expect matching binary hashes
+   from another compiler/build or call this a clean 50d1e417 engine qualification.
+
+2. Verify the source/evidence archive before extracting:
+   python3 docs/evidence/advanced-fluid-pressure-followup-20261029/stage5/verify_evidence.py
+   tar -xzf docs/evidence/advanced-fluid-pressure-followup-20261029/stage5/stage5-sources-and-evidence.tar.gz
+   Extract ONLY into your isolated checkout: .cache source paths are intentional.
+   Do not overwrite another investigator's active ignored experiments.
+
+3. Run the final bounded reference qualification (one compiler process at a time):
+   python3 .cache/fluid-coupling-stage5-20261029/qualify_stage5.py --build-dir build
+   Results/logs/binary hashes:
+     .cache/fluid-coupling-stage5-20261029/FINAL_RESULTS.json
+     .cache/fluid-coupling-stage5-20261029/final/
+   Expect 16 executions: 14 successful exits, two unchanged raw-geometry programs
+   each with exit 1 / nine preserved failures. The runner verifies this explicitly;
+   it does NOT erase/skip those failures or call them repaired.
+
+4. Inspect positive/negative controls independently in final binaries:
+   native-batch-reference  — free, supported, lift-off and missing-contact control
+   tetra-batch             — actual fixed-joint load and deliberately omitted joint
+   tetra-contact           — native four-point support/pressure wrench observations
+   exact-transfers         — exact total, repeated endpoints, original scalar failure
+   native-ale-batch 120
+   native-ale-batch 240 --incoming-current
+   rigid-space             — independent analytic mobility and momentum checks
+   ordinary-native-trajectory / disabled-native-trajectory — matching exact outputs
+
+5. Preserved failed sources/logs include incremental-only pressure, pressure-only
+   publication, empty rigid-only pressure rows, missing sleeping owner, scalar
+   capacity rejection and original raw geometry. Historical source snapshots may
+   require their corresponding bridge/header snapshot. They are not the current
+   final builder input. The archive retains the original unchanged Stage4 closure
+   as well as a separate Stage5 kernel copy, so failures are not retroactively
+   rewritten. There is no claim of byte-exact recovery of Stage4's previously
+   disclosed lost first geometry capture.
+
+Research boundary
+-----------------
+Private WorldMk2Batch.cpp exposes prepared rows ONLY to prove the solver contract.
+It includes test-only access to JointSolver internals and local fixture owner
+selection; neither is a supported/public engine API. Only the explicit enabled
+participant uses the private batch. Ordinary/no-participant trajectories match.
+No FluidWorld backend, editor toggle, save/export implementation, GPU water,
+production M54/M55 or published Alpha code is changed by this archive.

@@ -1,0 +1,2 @@
+NATIVE_ALE_INPUT incoming_current=1 initial_energy=43.750000111758709
+NATIVE_ALE intervals=628 healthy=0 failures=1 born=6 events=0 initial_height=0.750000022351742 final_height=0.667211972177029 lower=0.667211972177029 right=0.832788072526455 upper=0 owned=1.50000004470348 max_owned_error=0 max_energy=43.75 pressure_residual=8.88178e-16 gcl=2.08547e-16 energy_identity=1.4717e-15 body_error=1.8554e-09 pressure_ms=1551.2 wind_ms=33.7916 transport_ms=49.5118 total_ms=1895.09 error=moving piston missing at native batch boundary

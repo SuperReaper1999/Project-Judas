@@ -1,0 +1,2 @@
+NATIVE_ALE_INPUT incoming_current=1 initial_energy=43.750000111758709
+NATIVE_ALE intervals=780 healthy=0 failures=1 born=18 events=1 initial_height=0.750000022351742 final_height=0.649659417569637 lower=0.649772427976131 right=0.850227608820629 upper=7.90672331571293e-09 owned=1.50000004470348 max_owned_error=0 max_energy=43.75 pressure_residual=8.88178e-16 gcl=5.38475e-16 energy_identity=1.4717e-15 body_error=1.8554e-09 pressure_ms=1948.5 wind_ms=43.4566 transport_ms=63.4421 total_ms=2376.39 error=fluid volume is negative or exceeds physical capacity

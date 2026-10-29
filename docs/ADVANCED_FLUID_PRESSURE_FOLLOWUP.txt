@@ -489,3 +489,14 @@ checks qualify the reported properties, not identity to the rejected algorithm.
 With the added ReferenceAle program there are34 distinct prototype programs in
 this qualification:33 passing and the one explicitly preserved raw-geometry
 failure. Final affected-source rebuilds are separate from the earlier corpus.
+
+Stage 5 — native constraint-aware pressure coupling (2026-10-29)
+---------------------------------------------------------------
+See docs/ADVANCED_FLUID_CONSTRAINT_COUPLING.txt and the separate 20261029/stage5
+source/evidence package. Actual native contact/joint coupling, warm-start impulse
+ownership, full 3D buoyancy/support observations and moving-piston pressure are
+now exercised together in private references. An isolated numerical ownership
+copy fixes an exactly reproduced rounded-flux/capacity transaction failure using
+exact paired quantities, without relaxing bounds. The long incoming-material
+case passes. Original raw-geometry failures remain failures. This is not runtime
+FluidWorld integration or an Alpha unlock; the production boundary remains open.

@@ -1,0 +1,181 @@
+ADVANCED FLUID PRESSURE: CONSTRAINT COUPLING CHECKPOINT — 2026-10-29
+
+Status: validated PRIVATE numerical/native integration references, not a released
+fluid fix, a production backend, or authorization to re-enable Advanced Fluids.
+Parent engine/source checkpoint: 50d1e417c167c1bfc742859e51a47cda31b2bc57.
+Main and published Alpha remain unchanged by this work. Issue #17 remains open.
+
+What was established
+--------------------
+1. A foreign pressure calculation must distinguish physical velocity from a
+   native constraint warm-start iterate. The retained incremental-only trial
+   reads +100 m/s of temporary support warm-start motion as genuine wall motion
+   and raises a 4,000 J reduced fluid/body system to 40,000,000 J. Matching
+   two-sided accumulated pressure impulses removes that artificial work.
+   This is a demonstrated NEW-backend integration hazard, not proof that this
+   exact path caused the original production PBF failure.
+2. Correct dual bookkeeping alone is insufficient: free-body inverse mass is
+   not the response of a body constrained by contacts/joints. With 8,000 kg of
+   reduced fluid against an 80 kg supported body, the old two-round composition
+   retains an actual interface residual of 0.980296 m/s.
+3. A pressure solve using contact geometry but publishing only pressure is also
+   rejected. Its two-body support chain reaches 12,500 J from 4,000 J. Native
+   contact velocities and their accumulated impulses must agree with the coupled
+   solution. Increasing native iteration budgets was not the correction.
+4. The private batch instead solves and publishes pressure, native contact
+   reactions and prepared joint reactions together from the physical predictor,
+   before ordinary warm-start application. It retains native CCD, integration,
+   geometric correction, contact/joint budgets and final observations.
+
+Mathematical correction
+-----------------------
+The reference projects predicted fluid/rigid velocity in the physical mass
+metric subject to incompressibility, solid non-penetration, normal continuity
+and the participating native joint constraints. Native contact impulses remain
+nonnegative. A known-supported body is never assigned infinite mass by policy.
+
+For bilateral rigid constraints J v + b = 0, let B B^T = M_r^-1 and A = J B.
+Derive q0 = -A^T (A A^T)^dagger (J v* + b), and P = I - A^dagger A.
+Then v_bar = v* + B q0, and the pressure response is -B P B^T G_r^T p.
+The implementation uses a rank-aware, reorthogonalized mass-whitened row basis;
+no artificial stiffness or regularization is inserted. All participating bodies
+share this response, including cross-body translation/rotation coupling.
+Joint reactions are recovered from the same Jacobians. Dependent rows receive
+a minimum-norm reaction distribution, checked against the full physical wrench.
+
+Generalized rigid coordinates remain rigid coordinates; they are not fluid
+particles, independent wall samples or new integration owners. This also avoids
+an invalid earlier trial that appended rigid-only rows to a pressure factor whose
+base factorization requires nonempty fluid rows. That rejection is preserved.
+
+Scope of contact handling: the small mixed reference exercises unilateral
+contact/lift-off. The 3D side-wall reference accepts its derived four-point active
+set only after all contact impulses are proven nonnegative. It is NOT a general
+3D friction/active-set implementation or support for all joint types/drives.
+
+Actual native proofs
+--------------------
+* Independent constrained-mobility tests: 207 checks, including analytic single
+  off-center constraints, unequal masses/inertias, rotated frames, reciprocity,
+  idempotence, internal linear/angular momentum, duplicate rows, minimum-norm
+  reaction recovery, inconsistent constraints and unsupported unilateral input.
+* Reduced native batch: 3,395 checks. Fluid masses 15.625/1,500/8,000 kg; free,
+  floor-supported, lift-off, two/four-body chains, rotated support and ordinary
+  fixed/slider examples. Missing-contact control reproduces the interface error.
+* Full 3D pressure/native-joint reference: 5,809 checks. 156 tetrahedra; light
+  1 kg and heavy 80 kg submerged bodies; 480 native intervals in each of two
+  gravity frames. Physical endpoints remain calm. Over two seconds the measured
+  buoyancy impulse is about 306.562516 Ns, agreeing with displaced-volume weight.
+  Actual native joint observations carry the remaining support load. Omitting
+  joint participation leaves about 0.0324 m/s of actual fluid boundary violation
+  even though the native joint keeps the body stationary.
+* Full 3D side-contact reference: 3,367 checks. Real native box/wall manifold,
+  four contact points, six wet tetrahedra, 480 native intervals. Expected pressure
+  impulse 153.281257994240 Ns sideways; measured agreement to roundoff; upward
+  pressure impulse zero. Native published contact loads balance the pressure
+  force/torque; completed physical speed and projection energy increase are zero.
+* Coupling-disabled trajectory comparison: eight ordinary free/contact/jointed
+  workloads, with/without the existing timing observer, are byte-identical to
+  the unmodified native library (960 outer steps, all sampled physical poses and
+  velocities hashed). This is bounded reference evidence, not universal physics
+  certification. No production physics implementation was changed.
+
+Moving material and the preserved transaction failure
+----------------------------------------------------
+The existing moving piston now consumes actual prepared native slider rows,
+including its full force/torque reaction; it no longer manually zeros transverse
+and angular pressure gradients to assume a vertical infinite-strength guide.
+The original mass, initial velocity, fixed timestep and native cadence remain.
+
+480-interval baseline passes. The 960-interval incoming-current run exposed:
+* At interval 628, a sleeping owner was absent from the pre-warm batch. The old
+  impulse callback could wake an owner later. The new reference declares its live
+  pressure participant awake BEFORE batch construction; no velocity is assigned.
+  Production participant registration/wake ownership still needs a real adapter.
+* At interval 780, old upper volume 7.9067233157129281e-9 m3 and new capacity
+  2.4588887613113886e-8 m3 yield a rounded scalar transfer of
+  1.668216429740096e-8 m3. Rounded old+transfer exceeds capacity by
+  3.308722450212111e-24 m3. The strict rejection is correct and remains preserved.
+
+An ISOLATED COPY of the numerical ownership prototype retains exact binary64
+expansions for quantity and paired fluxes. Compute the transfer from the exact
+new-target minus old-owned quantity; use the SAME expansion for donor/receiver.
+Negative quantity, true sub-ulp overflow and dry-aperture checks remain strict.
+No post-solve clamp, tolerance increase or volume repair is performed.
+5,016 checks pass, including the original rounded-flux rejection, 1,000 forward/
+reverse target transactions, exact total preservation, hidden overflow, malformed
+expansions, nonfinite input and atomic failure. Existing owned-capacity 27 and
+subcell 14 checks pass. The original nine raw/unowned oblique-geometry failures
+remain nine failures in BOTH old and new ownership implementations (653 checks
+per run); they have not been removed or reclassified as passing.
+
+With this representation correction the incoming-current run passes all 960
+native intervals, with genuinely positive above-plate material:
+  owned total:             1.50000004470348 m3
+  upper material:          0.000156666732482894 m3
+  maximum owned-total err: 0 in this rounded total observation
+  full matrix GCL error:   5.38475e-16
+  ALE energy identity err: 1.5155e-15
+  body endpoint error:     1.8554e-9 m/s
+The exact-ledger tests separately verify the expansion total, not just this
+rounded total. Finite-front 84, conforming-wind 16, reference-ALE 27 checks pass.
+The old manual-guide trajectory is NOT forced to match: the new response uses
+native mass/Jacobians, and the small upper-material difference is recorded.
+
+Measurements and provenance
+---------------------------
+Single-host Release reference measurements, not runtime game FPS:
+  480-interval moving case: about 1.56 s wall elapsed for 2 s simulation.
+  960-interval incoming:   about 4.06 s for 4 s simulation.
+3D hydrostatic pressure projection costs and first-factorization spikes are in
+raw JSON/logs. Do not infer production scalability or a speedup from these tiny
+cases, changed coupling, cache reuse, or historical timing differences.
+
+The pre-existing engine archive has SHA256
+6d555aafd01a1851a5cbd813bbce5bd010020cb40088c3bf009a497525c89729.
+Its embedded identity is an earlier dirty f88ed2e Experimental Release build,
+NOT the published Alpha SDK or a clean final-source rebuild. The tested native
+batch is compiled from the current source with PRIVATE instrumentation and linked
+before that archive. PhysicsWorld/physics/JointSolver sources are unchanged
+between f88ed2e and parent 50d1e417. Exact compiler, library, prototype binary,
+source and output hashes are retained. Do not promote this to a claim of full
+current-engine/platform release qualification.
+
+Evidence and reproduction
+-------------------------
+  docs/evidence/advanced-fluid-pressure-followup-20261029/stage5/
+    FINAL_RESULTS.json, PORTABILITY_CHECKS.json, SOURCE_MANIFEST.json
+    stage5-sources-and-evidence.tar.gz, final/, preserved-failures/
+    FINAL_FINGERPRINTS.json, verify_evidence.py
+The archive contains actual sources, private native instrumentation, both old
+and corrected ownership kernels, raw failed trials and build commands. It omits
+executables, object files, secrets and unrelated assets. Rebuild instructions are
+in REPRODUCE.txt there. 16 final executions: 14 exit successfully; two retain the
+same nine expected raw-geometry failures. Meeting those recorded expectations
+is not a claim that all fluid tests pass.
+
+Remaining work / release boundary
+---------------------------------
+This is an independently reproducible coupling RESEARCH CHECKPOINT. The pressure
+backend is not wired into FluidWorld/ProductionFluidCoupling or a playable demo.
+The private bridge accesses solver rows only to establish the required numerical
+contract; it is not a proposed supported raw-pointer API and must not be shipped.
+
+Production work still requires:
+* A bounded native participant/constraint interface with real owner identities,
+  wake/island registration, supported friction/limits/motors and correct cache/
+  reaction publication. Never select owners by position as the private fixture
+  does, or process every world body indiscriminately.
+* General moving geometry, finite wet/dry topology and fluid momentum transport
+  beyond the bounded piston/side-wall fixtures; safe publication at native CCD
+  and changing-contact boundaries, with an explicit fail-closed policy.
+* Integrating authoritative M54 ownership and persistence/export without a second
+  runtime quantity ledger; qualifying failure atomicity rather than pretending
+  that a failed material solve rolls back the already advancing whole world.
+* Actual original Terrain-planet failure, float/sink/waves/transfer/application
+  regressions, practical memory/performance and a human gameplay re-test.
+
+Alpha lock, Basic Water/swimming, production PBF, M54/M55, original FLU-001,
+independent Solbert research, existing games and published releases are unchanged.
+No Windows/Android validation, runtime patch release, main promotion or human
+acceptance is claimed. All earlier failures and Stage4 source bytes are retained.

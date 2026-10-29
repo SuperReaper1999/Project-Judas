@@ -1,0 +1,10 @@
+OWNED_CAPACITY angle=0.17 quantity=0.1 tets=411 accepted=1 ms=71.318520 diagnostic=
+OWNED_CAPACITY angle=0.17 quantity=0.4 tets=411 accepted=1 ms=94.748287 diagnostic=
+OWNED_CAPACITY angle=0.17 quantity=0.8 tets=411 accepted=1 ms=121.923386 diagnostic=
+OWNED_CAPACITY angle=0.71 quantity=0.1 tets=402 accepted=1 ms=75.918625 diagnostic=
+OWNED_CAPACITY angle=0.71 quantity=0.4 tets=402 accepted=1 ms=93.002915 diagnostic=
+OWNED_CAPACITY angle=0.71 quantity=0.8 tets=402 accepted=1 ms=121.530114 diagnostic=
+OWNED_CAPACITY angle=1.39 quantity=0.1 tets=407 accepted=1 ms=86.475474 diagnostic=
+OWNED_CAPACITY angle=1.39 quantity=0.4 tets=407 accepted=1 ms=99.958092 diagnostic=
+OWNED_CAPACITY angle=1.39 quantity=0.8 tets=407 accepted=1 ms=124.546132 diagnostic=
+OWNED_CAPACITY checks=27 failures=0
