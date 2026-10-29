@@ -1,0 +1,84 @@
+{
+  "schema": 1,
+  "parentRevision": "8a48538b1e8c81ffe6adb6fa5beaffc494e55dd2",
+  "scope": "Private geometry proofs; NO production fluid correction or unlock",
+  "cases": [
+    {
+      "name": "OwnedGeometryTests",
+      "exit": 0,
+      "expectedExit": 0,
+      "marker": "SUMMARY checks=2559 failures=0",
+      "expectationMet": true,
+      "sourceSha256": "2c8b3e1c37d4e27f982e58897da066e0fd1dea639236bef0482dead0c1a4cf4d",
+      "binarySha256": "0a9a68603b4f2572038d28a9f28a70d6c9d77c6ae4da83522b3378894cc0d6fc",
+      "logSha256": "df1ef9059b93ba713feb765cb1dd91e6c5bf91237f7fe697c710d3caf77bb34a"
+    },
+    {
+      "name": "MotionOwnershipTests",
+      "exit": 0,
+      "expectedExit": 0,
+      "marker": "SUMMARY checks=4417 failures=0",
+      "expectationMet": true,
+      "sourceSha256": "ad3485d0fea624853d58bf376e0451392f8dd15f7e87b8254cff11bac2af170f",
+      "binarySha256": "be6d3f466a64e3b205d1422851135ebeb03a5e9b2d93753662c0eee7e39501f5",
+      "logSha256": "1c2d42637dfc3d2669935ee17a5d76990e64418faf03f7f4da207e947e05d80e"
+    },
+    {
+      "name": "TopologyRemeshTests",
+      "exit": 0,
+      "expectedExit": 0,
+      "marker": "SUMMARY checks=10 failures=0",
+      "expectationMet": true,
+      "sourceSha256": "f782ff0b47a555f87f1d92190a24718cd39655b4d5803c31c41f2294d27b1b9f",
+      "binarySha256": "7a2e000bba9ea4c92aa01dfab39171ab0efb96f8ee7cc4817bbc82c816f20699",
+      "logSha256": "757f492dde5f3eeb3964d64a50640040823596b9029fc30098719ec6eef90de3"
+    },
+    {
+      "name": "OwnedPressureTests",
+      "exit": 1,
+      "expectedExit": 1,
+      "marker": "nonpositive sparse physical pivot",
+      "expectationMet": true,
+      "sourceSha256": "e3ba2f4a7e473aa1760843c66b48a639974e825061a258e79a601a9e037e281d",
+      "binarySha256": "d8a30670eb5db8ecb24513f41f3f029b9e57ba22b6f775207a3efc0be8df32d5",
+      "logSha256": "888bc35eacc970a50065fb1da75f59b32eca4e72e4c2ce4acc44ef103c02ebce"
+    },
+    {
+      "name": "AggregatePressureTests",
+      "exit": 1,
+      "expectedExit": 1,
+      "marker": "independent aggregate hydrostatic force/calm contract",
+      "expectationMet": true,
+      "sourceSha256": "a4188db6d18b7b0ff159fb6dfa3d5f9f64484e39e7da4aec1f51d3059f5727b9",
+      "binarySha256": "f8cd24ce8e1c3b2489e9eba6f2d6c74845597845212275c7f1d3eb5ad5bb54ee",
+      "logSha256": "c9a3d3de760994669095055307dcf1118825474ae9f9f9b2b4d532465c990dcb"
+    },
+    {
+      "name": "AggregateReactionOracle",
+      "exit": 0,
+      "expectedExit": 0,
+      "marker": "aggregate pressure model is rejected",
+      "expectationMet": true,
+      "sourceSha256": "803847172edfdb944b7d1bd3137beb5b325477305a45c50450558e4e5b74aecc",
+      "binarySha256": "3d5fb2da06ad79f303f369c13828ae6152341bf32d5657f1f13a5775f092fded",
+      "logSha256": "628ff648179d212eee1a861b9e8df1e1957b043a7dfebd44d2e2e680829c4dac"
+    }
+  ],
+  "nativeEngineSha256": "5722108b94f15414584979689eac3aafe5faac3004722d17929bc58ade44244d",
+  "boostReferenceDependency": {
+    "package": "libboost1.90-dev_1.90.0-6ubuntu1_amd64.deb",
+    "sha256": "7b89698c907fd5d33ccd439674fa53803139923822181c87b910579827aca379",
+    "systemInstalled": false,
+    "productionDependencyAdded": false
+  },
+  "preservedFailures": [
+    "raw covariance loses positivity",
+    "rounded triangle evaluation yields invalid pressure constraint",
+    "exact expansion intermediate underflow",
+    "corrected per-tet pressure Gram loses positive pivot",
+    "coarsened affine pressure gives wrong solid force/torque",
+    "first diagnostic omitted torque comparison"
+  ],
+  "movingPistonLongRuns": "Stage6 failures unchanged; moving transport not implemented",
+  "mainUntouched": true
+}

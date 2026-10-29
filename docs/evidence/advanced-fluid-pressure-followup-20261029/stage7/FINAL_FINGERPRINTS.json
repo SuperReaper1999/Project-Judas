@@ -1,0 +1,15 @@
+{
+  "schema": 1,
+  "parentRevision": "8a48538b1e8c81ffe6adb6fa5beaffc494e55dd2",
+  "scope": "Private owned moving geometry investigation and exact failed pressure references; no production runtime changes",
+  "selfHashExcluded": true,
+  "files": {
+    "docs/ADVANCED_FLUID_OWNED_GEOMETRY.txt": "1f81ee4c8258a6664695237d0aa34e5ba26848f70d14c48d413a4711b8c2c74b",
+    "docs/evidence/advanced-fluid-pressure-followup-20261029/stage7/CHANGED_FILES.txt": "84c971632b41dd26e0dbdf2e81823b599f3870d571851eaa0d1f11371f097441",
+    "docs/evidence/advanced-fluid-pressure-followup-20261029/stage7/REPRODUCE.txt": "75bf82b0a37bf662c8eee7224f85c567a72c78c60fdcabee4f5385b51533ffad",
+    "docs/evidence/advanced-fluid-pressure-followup-20261029/stage7/RESULTS.json": "020d33222dece7b9ba6fe1e993647870ac27c83c8091de9623da62b106517531",
+    "docs/evidence/advanced-fluid-pressure-followup-20261029/stage7/SOURCE_MANIFEST.json": "fc193971b8379fce2afdba3312026718db850d904f02ff75ca8a0d2fdd13ee8e",
+    "docs/evidence/advanced-fluid-pressure-followup-20261029/stage7/stage7-owned-geometry-reference.tar.gz": "52e6061c3b7112ba25b4bb808daadb1104d9fe4fa4ecf9f3969a19a1c972433b",
+    "docs/evidence/advanced-fluid-pressure-followup-20261029/stage7/verify_evidence.py": "a5a20d05439045e94be2e73874d572ab8e39c96a361d8df55cdd96d23329e67d"
+  }
+}

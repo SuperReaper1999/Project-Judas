@@ -1,0 +1,112 @@
+ADVANCED FLUID PRESSURE — OWNED MOVING GEOMETRY INVESTIGATION, 2026-10-29
+
+Parent: 8a48538b1e8c81ffe6adb6fa5beaffc494e55dd2, Experimental.
+Scope: private geometric/numerical references. No production fluid solver, native
+physics, Basic Water, M54/M55, lock policy or release package is changed here.
+Main remains unchanged. Advanced Fluids remain unavailable in published Alpha.
+
+WHAT WAS CORRECTED IN THE REFERENCE
+-----------------------------------
+The previous translating-piston ALE compiler created axis-aligned vertices and
+then searched for exact coplanarity with the ACTUAL body. A native quaternion
+with z=1.6068929173385094e-11 left zero body rows. This cannot be corrected by
+snapping the body, matching planes approximately or ignoring the missing rows.
+
+The new private OwnedCutGeometry prepares the actual solid's six planes, clips
+the owned wet regions against them and retains exact homogeneous vertex ancestry.
+It subtracts real solid geometry, rather than applying a normal to an unchanged
+mesh. Solid normals come from their owning planes. Exact-coordinate differences
+are formed before rounding local edges. Physical faces stay attached under the
+exact previously failing native quaternion (57 solid-owned faces in this test).
+
+Two further representability issues were reproduced:
+1. Cholesky of an explicitly assembled world covariance loses positive pivots in
+   valid thin tetrahedra. The equivalent reference-simplex factorization E L_ref
+   avoids covariance cancellation; inverse and reference-corner evaluations must
+   likewise avoid subtracting rounded nearly coincident world points.
+2. Exact expansion products used for the deeper metric calculations can underflow
+   even though the final local geometric volume is representable. An independent
+   arbitrary-rational metric reference avoids intermediate exponent exhaustion.
+   No real cut fragment, mass or thickness is discarded. The private reference
+   uses locally extracted Boost 1.90 headers for rational arithmetic. This is NOT
+   a new Judas runtime, SDK or distributed dependency, nor a proposed final fast
+   implementation. Exact topology remains distinct from rounded physical metrics.
+
+PROOFS
+-------
+OwnedGeometryTests: 2559 checks. Aligned, tiny (3.21e-11 rad), 1e-8, .001, .37 and
+1.13-radian rotations; equivalent contained capacity, actual solid surface area,
+balanced normals, divergence-theorem solid volume and exact face-plane ownership.
+The partially clipped case asserts ownership, not an invented full-body area.
+
+MotionOwnershipTests: 4417 checks. Sixteen native moving/rotating box snapshots
+are compared with an independently stepped native world. Actual poses and linear/
+angular velocities remain byte-equal. Capacity remains 7.8 m3 to within 2e-12.
+The exact Stage6 first-divergent quaternion is an additional explicit regression.
+This observes actual motion; it does NOT yet couple pressure or advect material.
+
+TopologyRemeshTests: 10 checks. Real dry gap gives two connected wet components;
+only actual added bridge geometry reconnects them. Preparing that state does not
+mutate the old topology. An unchanged affine field is restricted onto a genuinely
+different same-time partition (1172 versus1454 tets): quantity error8.88e-16 m3,
+momentum error4.73e-12, angular error1.46e-12 and energy error0 in the recorded run.
+This is exact field restriction, not moving-boundary flow or arbitrary donor
+transfer. It does not prove that uncovered cells can be initialized arbitrarily.
+
+PRESSURE APPROACHES THAT WERE REJECTED
+-------------------------------------
+Merely repairing geometry and cell metrics does not finish the pressure backend.
+With one independent affine fluid state per cut tetrahedron, a nominally tiny
+solid rotation creates extremely thin physical/arrangement elements. Correct
+metrics remove earlier covariance/NaN failures, but the mass-Gram pressure solve
+still fails its unchanged positive-pivot requirement. No diagonal regularization,
+additional solver iterations or minimum fragment size was introduced.
+
+A trial groups only exactly connected fragments within each background voxel,
+retaining the real surface geometry and all volume. It reduces roughly1000
+integration fragments to8 physical cells. Duplicate affine patch equalities are
+reduced using three exactly noncollinear owned vertices on each plane. A bounded
+column-pivoted QR handles dependent equality rows and independently verifies ALL
+physical residuals. It uses a standard machine-epsilon-scaled numerical rank
+criterion, not a material cut-off. This is only an equality reference, not a
+unilateral-contact, cavitation or production pressure solver.
+
+That trial is ALSO REJECTED: an aligned hydrostatic case reports zero endpoint
+speed and residual1.37e-16, yet body impulse is(-.005109375,8.575234375,-8.077921875)
+Ns instead of(0,8.175,0). Reversing equivalent constraints retains a calm endpoint
+but changes the torque norm from16.5741 to26.8426. Constraint rank88 versus168
+rows exposes redundant reactions; the solid wrench is not a trustworthy physical
+pressure result. This is a discrete pressure/velocity compatibility defect in
+this attempted coarsening, not a new MK2 defect or a permissible force ambiguity.
+Do not publish it, repair its force afterward or accept velocity residual alone.
+The first diagnostic compared only linear reaction differences and failed to
+recognize the torque difference; both that mistake and the corrected wrench
+control are retained. Existing hydrostatic or force tolerances were not weakened.
+
+PERFORMANCE AND STATUS
+-----------------------
+The rational reference rebuild averages about92 ms for roughly992 tets per
+moving snapshot on the recorded host. It establishes geometric truth, not a
+real-time production geometry implementation. The aligned per-tet pressure case
+costs about464 ms including cold symbolic preparation; the coarsened QR trial
+costs about7 ms but is physically WRONG and earns no performance acceptance.
+Raw logs retain the exact timings and rejected/failed builds, including a missing
+Boost header and an invalid diagnostic member name. No broad production suite,
+Windows/Android run, new game scene or visual acceptance is claimed here.
+
+NEXT CORRECTION BOUNDARY
+-------------------------
+Use this owned geometry as an independent oracle while developing a compatible
+pressure/velocity representation. It must avoid artificial thin-fragment degrees
+of freedom WITHOUT admitting spurious pressure reactions or joining disconnected
+material. Verify pressure loads, torque, momentum, work and actual native endpoints
+independently. Complete conservative moving-boundary transport/topology events
+before replacing the original guarded piston fixture or claiming its long runs
+pass. The original oblique-force failure and Stage6 guarded piston failures are
+unchanged. Alpha remains locked until the actual application path qualifies.
+
+EVIDENCE
+---------
+docs/evidence/advanced-fluid-pressure-followup-20261029/stage7/ contains exact
+source/log archive, manifests, verification and reproduction instructions.
+The Stage5/Stage6 evidence and independent research remain unchanged.

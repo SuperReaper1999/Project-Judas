@@ -1,0 +1,62 @@
+PRIVATE OWNED-GEOMETRY REFERENCES — NOT A PRODUCTION FLUID ENABLE SWITCH
+
+Use an isolated checkout of this Experimental checkpoint. Read
+ docs/ADVANCED_FLUID_OWNED_GEOMETRY.txt
+before interpreting successful checks or expected-failure records.
+
+1. Verify Stage5, Stage6 and Stage7 archive manifests with their verify_evidence.py
+   tools. Extract their source archives into this isolated checkout only, in that
+   order. Do not overwrite any active ignored investigation. The archives retain
+   .cache paths deliberately. Stage5 provides unchanged supporting numerical
+   headers; Stage6 provides the compiler/link helper and native interface context.
+
+2. Follow Linux build prerequisites, configure Release/Experimental, then build
+   judas_script_tests with -j2. That target supplies actual native flags, library
+   and linker inputs to the private probe helper (Makefiles generator required).
+   Rebuild the unchanged quantity object, as in Stage6 REPRODUCE.txt:
+ python3 - <<'PY'
+import sys
+from pathlib import Path
+sys.path.insert(0,'.cache/fluid-contact-repair')
+import setup_probes as b
+b.compile(Path('.cache/fluid-coupling-stage5-kernel/VolumeDomain.cpp').resolve(),'stage5-exact-volume-domain')
+PY
+
+3. Obtain Boost headers for the PRIVATE arbitrary-rational oracle. Recorded:
+   libboost1.90-dev_1.90.0-6ubuntu1_amd64.deb, Ubuntu package repository. Its exact
+   hash is in RESULTS.json. It was downloaded and extracted only under /tmp:
+   apt-get download libboost1.90-dev
+   dpkg-deb -x <downloaded.deb> <scratch-extraction-directory>
+   Set BOOST_INCLUDE_DIR to the extracted usr/include directory. Do not install
+   or add this oracle dependency to Judas production/SDK builds. Boost uses the
+   Boost Software License1.0. No downloaded Boost code is redistributed here.
+   The recorded helper defaults to /tmp/judas-fluid-reference-boost/extracted/usr/include.
+
+4. Sequential final qualification (no overlapping compiler processes):
+ python3 .cache/fluid-owned-motion-stage7-20261029/qualify.py
+   Three geometry proofs succeed; two pressure approaches FAIL deliberately;
+   one diagnostic succeeds by establishing wrong/ambiguous reactions. The runner
+   checks exact outcomes. None of these expected failures is fluid acceptance.
+   Original final log is retained. A separate qualify_narrow.py reruns just the
+   rejected aggregation references after whitespace-only source corrections;
+   NARROW_RESULTS.json supersedes their initial source/binary hashes.
+
+5. Individual meaningful cases:
+ python3 .cache/fluid-owned-motion-stage7-20261029/run_probe.py OwnedGeometryTests
+ python3 .cache/fluid-owned-motion-stage7-20261029/run_probe.py MotionOwnershipTests
+ python3 .cache/fluid-owned-motion-stage7-20261029/run_probe.py TopologyRemeshTests
+ python3 .cache/fluid-owned-motion-stage7-20261029/run_probe.py OwnedPressureTests
+ python3 .cache/fluid-owned-motion-stage7-20261029/run_probe.py AggregatePressureTests
+ python3 .cache/fluid-owned-motion-stage7-20261029/run_probe.py AggregateReactionOracle
+
+Expect2559 /4417 /10 checks on the positive geometry references. The per-tet
+pressure reference fails at the normal sparse positive-pivot check. The aggregate
+reference fails independent hydrostatic force/calm acceptance. The diagnostic
+shows a changed torque under equivalent row order despite a calm endpoint.
+Do not fix these by changing residual budgets, native physics or force thresholds.
+
+Geometry observation does not advect material or repair the original moving
+piston. Same-time affine restriction is not moving-topology remap. Historical
+failed variants may need their contemporary supporting headers; raw logs and
+available exact source snapshots are preserved, without claiming every overwritten
+intermediate file was recovered. No Solbert research files are required or touched.
