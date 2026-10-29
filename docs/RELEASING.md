@@ -1,9 +1,14 @@
 # Prepare, qualify and publish Judas
 
-[Identity/channels](VERSIONING.md) · [Patch notes](ALPHA_V1_0_1_NOTES.md) ·
+[Identity/channels](VERSIONING.md) · [Patch notes](ALPHA_V1_0_2_NOTES.md) ·
 [Support matrix](ALPHA_SUPPORT_MATRIX.md) · [Linux baseline](LINUX_BASELINE_BUILD.md)
 
 ## Current boundary
+
+Alpha v1.0.2 (`1.0.2-alpha.1`) is the operator-authorized rain-contrast patch.
+Its exact-source packages are being prepared and qualified; publication is not
+complete until the verified release and Alpha channel manifest are live. See
+[the patch notes](ALPHA_V1_0_2_NOTES.md). Prior releases below remain immutable.
 
 **[Alpha v1.0.1 is published](https://github.com/SuperReaper1999/Project-Judas/releases/tag/v1.0.1-alpha.1)** on
 29 October 2026 from `13b032080c6300c50af8bf44536c2dd8da5814d2`, with operator authorization.
@@ -102,7 +107,7 @@ version/channel, a matching tracked source archive, notes and a successful
 exact-source qualification receipt. Example:
 
 ```sh
-python3 tools/prepare_release.py --linux-sdk LINUX_SDK --windows-sdk WINDOWS_SDK --source-archive source.tar.gz --notes docs/ALPHA_V1_0_1_NOTES.md --qualification QUALIFICATION.json --epoch SOURCE_COMMIT_EPOCH --output NEW_CANDIDATE_DIRECTORY
+python3 tools/prepare_release.py --linux-sdk LINUX_SDK --windows-sdk WINDOWS_SDK --source-archive source.tar.gz --notes docs/ALPHA_V1_0_2_NOTES.md --qualification QUALIFICATION.json --epoch SOURCE_COMMIT_EPOCH --output NEW_CANDIDATE_DIRECTORY
 ```
 
 This creates versioned Linux `.tar.gz`, Windows `.zip` and source `.tar.gz`,

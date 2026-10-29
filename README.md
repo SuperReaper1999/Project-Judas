@@ -9,18 +9,18 @@ arbitrary gravity, terrain, liquids, weather, deformables and seamless world
 transitions. Ordinary game policy lives in project JavaScript; the engine
 provides the reusable systems and runtime.
 
-**[Judas Engine Alpha v1.0.1](https://github.com/SuperReaper1999/Project-Judas/releases/tag/v1.0.1-alpha.1)**
-(`1.0.1-alpha.1`) was published with operator authorization on 29 October 2026 from
-`13b032080c6300c50af8bf44536c2dd8da5814d2`. Download the Linux or Windows SDK,
-source archive and checksums from that release. Alpha is not Stable/GA; advanced
-and experimental capabilities retain their documented limits.
+**[Judas Engine Alpha v1.0.2](https://github.com/SuperReaper1999/Project-Judas/releases/tag/v1.0.2-alpha.1)**
+(`1.0.2-alpha.1`) is the current source release identity. The operator accepted
+and authorized this rain-contrast patch on 29 October 2026. Publication is complete
+only when its verified Linux/Windows SDKs, source archive and checksums are live
+on that release page. Alpha is not Stable/GA; documented limits still apply.
 
 **Advanced Fluid Dynamics is disabled in Alpha due to contact stability issues.**
 Basic Water and swimming remain available. See the
 [restriction and investigation](docs/M100_FLUID_CONTACT_STABILITY.md).
 
-The weather/input patch also repairs release preparation and avoids redundant
-CI builds. See [patch notes](docs/ALPHA_V1_0_1_NOTES.md). The
+The rain patch restores dim-weather visibility without undoing dusk/night
+lighting. See [patch notes](docs/ALPHA_V1_0_2_NOTES.md). The
 versioned source identity is authoritative in [engine-version.json](engine-version.json).
 
 ## Current status
@@ -30,7 +30,8 @@ Published Alpha versions, future Beta and eventual Stable/GA are separate
 [distribution channels](docs/VERSIONING.md), not extra development branches.
 No update checker silently installs anything or overwrites your projects.
 
-[Alpha v1.0.1 patch notes](docs/ALPHA_V1_0_1_NOTES.md) ·
+[Alpha v1.0.2 patch notes](docs/ALPHA_V1_0_2_NOTES.md) ·
+[Previous patch](docs/ALPHA_V1_0_1_NOTES.md) ·
 [Original Alpha notes](docs/ALPHA_V1_0_0_NOTES.md) ·
 [Supported platforms and limits](docs/ALPHA_SUPPORT_MATRIX.md) ·
 [Installation and verification](docs/DISTRIBUTION.md) ·

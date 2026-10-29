@@ -1,0 +1,17 @@
+{
+  "schema": 1,
+  "operatorInstruction": "Perfect thanks mate 💜 push the rain fix to main and publish the patch for it please, then crack back on with the fluid work ❤️",
+  "acceptedRainCommit": "e13dad588fa316e4430613b585eac619fe5d71e1",
+  "version": "1.0.2-alpha.1",
+  "tag": "v1.0.2-alpha.1",
+  "date": "2026-10-29",
+  "implementationFingerprints": {
+    "src/RendererWeather.inl": "8c002fd922bd0a36297da8254f1f8366d05622308af476c2eec63271e8a1f3b8",
+    "tests/WeatherLightingTests.cpp": "bceeb5bf47141f8388c8684fc822fb82182003a00a14c820b92b235ae10771ac",
+    "src/PhysicsConstraintBatch.h": "3fc4ae23493d120414ef5a288fecda48f1411e6bb127e37f18337e63f0867cae",
+    "src/physics/WorldConstraintBatch.cpp": "f985495b449ba2910251371e3bdc25a1a06c89e3476488572ac9e41a3e4fdb0d",
+    "src/physics/WorldMk2Solver.cpp": "58911ff187ffcd1541381e8907ffde8f0e03893cd7fa31a180893cc36b391713",
+    "src/JointSolver.cpp": "e2791c799d49f66165d886fe2f59a9906e22fab2f7611032543d098d77ea17e4"
+  },
+  "scope": "Publish the accepted rain correction and required version/package metadata. Advanced Fluids stay locked. No existing release artifacts replaced."
+}
