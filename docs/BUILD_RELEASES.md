@@ -63,7 +63,9 @@ CI or explicitly run the full gate on main; no automatic pass is substituted.
 This machine check does not establish operator acceptance.
 
 Release/CI tooling-only pushes run [lightweight controls](../.github/workflows/ci-tooling.yml)
-for release archives, updates, routing and promotion proof. The narrow native
+for release archives, updates, routing and promotion proof. A checksum-pinned
+actionlint validates GitHub workflow schemas and expressions; shellcheck/pyflakes
+are not part of that structural check. The narrow native
 exclusions are checked against the lightweight workflow by
 [positive/negative controls](../tests/test_ci_workflows.py). Native sources,
 fixtures, API declarations, SDK implementation and unknown paths retain full

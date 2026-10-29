@@ -1,0 +1,4 @@
+.cache/alpha-v1.0.1-release/actionlint-invalid-control.yml:106:31: calling function "failure" is not allowed here. "failure" is only available in "jobs.<job_id>.if", "jobs.<job_id>.steps.if". see https://docs.github.com/en/actions/learn-github-actions/contexts#context-availability for more details [expression]
+    |
+106 |           retention-days: ${{ failure() && 14 || 3 }}
+    |                               ^~~~~~~~~

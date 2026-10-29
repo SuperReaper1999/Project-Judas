@@ -103,4 +103,4 @@ jobs:
             build/linux-sdk/SHA256SUMS
           include-hidden-files: true
           if-no-files-found: warn
-          retention-days: ${{ failure() && 14 || 3 }}
+          retention-days: ${{ job.status == 'success' && 3 || 14 }}
