@@ -1,0 +1,62 @@
+PRIVATE NUMERICAL REPLAY — NO ALPHA FLUID UNLOCK
+
+Read docs/ADVANCED_FLUID_THIN_CUT_CONDITIONING.txt and RESULTS.json.
+No tracked production implementation is changed by this checkpoint.
+
+1. Run python3 <this-directory>/verify_evidence.py to verify archive bytes without
+   extraction or execution. FINAL_FINGERPRINTS.json seals the public report and
+   all evidence except itself. Earlier Stage5-10 archives verify independently.
+   Stage6's historical fingerprint of the ACTIVE tools/verification/current-docs.json
+   differs because that inventory legitimately advanced with later documents.
+   All frozen historical evidence files still match. RESULTS.json records this
+   exception explicitly; no expected historical hash was regenerated.
+
+2. Minimal independent numerical replay (Python standard library only): extract
+   stage11-thin-cut-oracle-reference.tar.gz in an EMPTY scratch directory. It
+   restores .cache/fluid-local-oracle-stage11-20261029/. Never overwrite an active
+   ignored investigation. From that scratch root run:
+
+   python3 .cache/fluid-local-oracle-stage11-20261029/replay_decimal_qr.py \
+     .cache/fluid-local-oracle-stage11-20261029/checked-frozen-thin.txt \
+     --output /tmp/independent-local-qr-result.json
+
+   Expected816x294, weighted flux difference about1.249e-59, stationarity
+   about7.220e-92. Runtime about19s on the recorded Ryzen5 5600 host, not a
+   production runtime target. This replays frozen finite coefficients; it does
+   not validate geometry construction, a global solve or real application water.
+
+3. Full native-linked numerical reconstruction: follow Stage10 REPRODUCE.txt
+   to verify/extract Stage5-10 dependencies in an isolated Judas checkout. Then
+   extract Stage11 last. Keep all production and independent research untouched.
+   Prerequisites: existing Release Makefile flags/link inputs for judas_script_tests,
+   native libjudas_engine.a, Stage5 exact-volume-domain object, setup_probes.py,
+   locally extracted Boost1.90 and Eigen3.4 headers. Stage9 records acquisition.
+
+   BOOST_INCLUDE_DIR=<headers>/usr/include
+   EIGEN_INCLUDE_DIR=<headers>/usr/include/eigen3
+   export BOOST_INCLUDE_DIR EIGEN_INCLUDE_DIR
+   python3 .cache/fluid-local-oracle-stage11-20261029/run_probe.py LocalOracle \
+     3.2137858346770188e-11 /tmp/new-thin-fixture.txt
+
+   Then use that SAME binary for matched controls (one heavy process at a time):
+   .cache/fluid-contact-repair/stage11-LocalOracle 0 /tmp/new-axis-fixture.txt
+   .cache/fluid-contact-repair/stage11-LocalOracle .37 /tmp/new-oblique-fixture.txt
+
+   Each should exit0 with frozen_matrix_replay_exact=1,
+   precision_agreement_pass=1 and production_claim=0. Each probes both original
+   and prepared starting values, high-precision and compensated gradients, and
+   rejects deliberately missing kinetic coupling. The thin LEGACY_COMPARISON
+   explicitly remains pass=0 at the unchanged1e-12 bound. Do not interpret exit0
+   as old-reference equivalence, production-fluid acceptance or a platform pass.
+
+4. Archive PROVENANCE.json records actual final source/native binary/library
+   hashes and embedded build header. Existing local native inputs were used;
+   this was not a fresh rebuild of the published Alpha SDK. Rebuilding at a new
+   source/toolchain produces new provenance and must not overwrite old receipts.
+   Observed retained dependency compiler warnings and genuine failed compile
+   attempts are included in raw logs/snapshots. No fast-math settings were added.
+
+Next qualify ALL local patches, dependent modes, changing inputs and complete
+pressure/transport/native coupling before selecting a production reconstruction.
+The two-step experiment and these three frozen problems do not prove general
+robustness, moving geometry/GCL, free surfaces, wet/dry, Windows or gameplay.

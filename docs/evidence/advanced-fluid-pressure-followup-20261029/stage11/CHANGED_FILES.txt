@@ -1,0 +1,8 @@
+docs/ADVANCED_FLUID_THIN_CUT_CONDITIONING.txt
+docs/evidence/advanced-fluid-pressure-followup-20261029/stage11/CHANGED_FILES.txt
+docs/evidence/advanced-fluid-pressure-followup-20261029/stage11/FINAL_FINGERPRINTS.json
+docs/evidence/advanced-fluid-pressure-followup-20261029/stage11/REPRODUCE.txt
+docs/evidence/advanced-fluid-pressure-followup-20261029/stage11/RESULTS.json
+docs/evidence/advanced-fluid-pressure-followup-20261029/stage11/SOURCE_MANIFEST.json
+docs/evidence/advanced-fluid-pressure-followup-20261029/stage11/stage11-thin-cut-oracle-reference.tar.gz
+docs/evidence/advanced-fluid-pressure-followup-20261029/stage11/verify_evidence.py

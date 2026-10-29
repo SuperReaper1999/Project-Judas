@@ -1,0 +1,15 @@
+{
+  "schema": 1,
+  "parentRevision": "57f4c7a5e6cc51099f8112a0dd0e49bf0f827909",
+  "scope": "Private frozen-coefficient thin-cut numerical proof; no production/API/fluid policy change.",
+  "selfHashExcluded": true,
+  "files": {
+    "docs/ADVANCED_FLUID_THIN_CUT_CONDITIONING.txt": "594d21c87da5d7e88aa9c8196d54590a3c6d94dafb59ad0dc5e3ed0a7ffa2ed8",
+    "docs/evidence/advanced-fluid-pressure-followup-20261029/stage11/CHANGED_FILES.txt": "104a153cf99f400cb3f1f2c43045cfd4733d527e5b13341007b11fb8683ac7c0",
+    "docs/evidence/advanced-fluid-pressure-followup-20261029/stage11/REPRODUCE.txt": "805697f7b09e5313eb95b27a50ba9bdab257548273ca21b5d7314c9764aa8dad",
+    "docs/evidence/advanced-fluid-pressure-followup-20261029/stage11/RESULTS.json": "f93e2fa14b19b4cb82e27f5969e548b0ee9fa8fefc3f31669fb0bde9be99f3f1",
+    "docs/evidence/advanced-fluid-pressure-followup-20261029/stage11/SOURCE_MANIFEST.json": "6056f0742d0af77ccf7563fd0797d86430101f0c21d85cd1d54ff2d198e18bbc",
+    "docs/evidence/advanced-fluid-pressure-followup-20261029/stage11/stage11-thin-cut-oracle-reference.tar.gz": "e5f215e96ca683183546d5eaa7a302dfb9b7cd81e32467b4a51769218cf4f708",
+    "docs/evidence/advanced-fluid-pressure-followup-20261029/stage11/verify_evidence.py": "54bb36a529075bdd81d88655130af81275e0f305b0b9fd8624954879423b6fbf"
+  }
+}

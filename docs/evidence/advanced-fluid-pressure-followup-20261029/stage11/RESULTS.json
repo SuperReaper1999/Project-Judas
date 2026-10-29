@@ -1,0 +1,373 @@
+{
+  "schema": 1,
+  "scope": "Three selected frozen local problems; not full nonlinear/global/native fluid validation",
+  "cases": {
+    "thin": {
+      "comparison": {
+        "local": "1",
+        "original_free_flux_error": "2.8249956065591943e-08",
+        "prepared_free_flux_error": "2.8231635068429337e-08",
+        "precision_agreement": "4.0933748626304954e-31",
+        "oracle_ms": "1677.16"
+      },
+      "physical": {
+        "frozen_coefficients": "1",
+        "original_max_free_normal_error": "0.206404",
+        "prepared_max_free_normal_error": "0.206406",
+        "original_mass_root_field_error": "4.34776e-11",
+        "prepared_mass_root_field_error": "1.54564e-10",
+        "original_objective_excess": "1.8903e-21",
+        "prepared_objective_excess": "2.38901e-20"
+      },
+      "condition": {
+        "frozen_operator_2norm_condition_lower_bound": "3.38528e+10"
+      },
+      "refinements": [
+        {
+          "arithmetic": "boost160",
+          "initial": "original",
+          "step": "1",
+          "free_flux_error": "1.05378e-16",
+          "max_free_normal_error": "2.22057e-10",
+          "gradient_and_correction_ms": "47.9829"
+        },
+        {
+          "arithmetic": "boost160",
+          "initial": "original",
+          "step": "2",
+          "free_flux_error": "1.95107e-22",
+          "max_free_normal_error": "8.20628e-14",
+          "gradient_and_correction_ms": "47.7226"
+        },
+        {
+          "arithmetic": "boost160",
+          "initial": "prepared",
+          "step": "1",
+          "free_flux_error": "1.05383e-16",
+          "max_free_normal_error": "2.6178e-10",
+          "gradient_and_correction_ms": "47.6009"
+        },
+        {
+          "arithmetic": "boost160",
+          "initial": "prepared",
+          "step": "2",
+          "free_flux_error": "1.77936e-22",
+          "max_free_normal_error": "8.20581e-14",
+          "gradient_and_correction_ms": "47.7014"
+        },
+        {
+          "arithmetic": "paired-binary64",
+          "initial": "original",
+          "step": "1",
+          "free_flux_error": "1.05378e-16",
+          "max_free_normal_error": "2.22536e-10",
+          "gradient_and_correction_ms": "1.67215"
+        },
+        {
+          "arithmetic": "paired-binary64",
+          "initial": "original",
+          "step": "2",
+          "free_flux_error": "5.32357e-22",
+          "max_free_normal_error": "1.99513e-13",
+          "gradient_and_correction_ms": "1.63712"
+        },
+        {
+          "arithmetic": "paired-binary64",
+          "initial": "prepared",
+          "step": "1",
+          "free_flux_error": "1.05383e-16",
+          "max_free_normal_error": "2.6178e-10",
+          "gradient_and_correction_ms": "1.63486"
+        },
+        {
+          "arithmetic": "paired-binary64",
+          "initial": "prepared",
+          "step": "2",
+          "free_flux_error": "8.17829e-22",
+          "max_free_normal_error": "1.99493e-13",
+          "gradient_and_correction_ms": "1.63586"
+        }
+      ],
+      "unchangedLegacyComparisons": [
+        {
+          "initial": "original",
+          "maximum_free_flux_difference": "2.825e-08",
+          "unchanged_bound": "1e-12",
+          "pass": "0"
+        },
+        {
+          "initial": "prepared",
+          "maximum_free_flux_difference": "2.825e-08",
+          "unchanged_bound": "1e-12",
+          "pass": "0"
+        },
+        {
+          "initial": "original",
+          "maximum_free_flux_difference": "2.825e-08",
+          "unchanged_bound": "1e-12",
+          "pass": "0"
+        },
+        {
+          "initial": "prepared",
+          "maximum_free_flux_difference": "2.825e-08",
+          "unchanged_bound": "1e-12",
+          "pass": "0"
+        }
+      ],
+      "processPassed": true,
+      "fixtureSha256": "507c6fba39832225105738da289a2b2729744b5d778fb9c84bd64c82208ac1ef"
+    },
+    "axis": {
+      "comparison": {
+        "local": "2",
+        "original_free_flux_error": "4.8192388963222061e-21",
+        "prepared_free_flux_error": "2.7087589591896744e-20",
+        "precision_agreement": "5.5629825322203516e-50",
+        "oracle_ms": "72.418"
+      },
+      "physical": {
+        "frozen_coefficients": "1",
+        "original_max_free_normal_error": "3.21283e-20",
+        "prepared_max_free_normal_error": "3.00973e-19",
+        "original_mass_root_field_error": "1.32758e-19",
+        "prepared_mass_root_field_error": "7.69713e-19",
+        "original_objective_excess": "1.76247e-38",
+        "prepared_objective_excess": "5.92457e-37"
+      },
+      "condition": {
+        "frozen_operator_2norm_condition_lower_bound": "2.30317"
+      },
+      "refinements": [
+        {
+          "arithmetic": "boost160",
+          "initial": "original",
+          "step": "1",
+          "free_flux_error": "1.75978e-22",
+          "max_free_normal_error": "9.16105e-22",
+          "gradient_and_correction_ms": "6.98429"
+        },
+        {
+          "arithmetic": "boost160",
+          "initial": "original",
+          "step": "2",
+          "free_flux_error": "1.75978e-22",
+          "max_free_normal_error": "9.16105e-22",
+          "gradient_and_correction_ms": "6.96959"
+        },
+        {
+          "arithmetic": "boost160",
+          "initial": "prepared",
+          "step": "1",
+          "free_flux_error": "1.75978e-22",
+          "max_free_normal_error": "9.16105e-22",
+          "gradient_and_correction_ms": "7.65317"
+        },
+        {
+          "arithmetic": "boost160",
+          "initial": "prepared",
+          "step": "2",
+          "free_flux_error": "1.75978e-22",
+          "max_free_normal_error": "9.16105e-22",
+          "gradient_and_correction_ms": "6.96936"
+        },
+        {
+          "arithmetic": "paired-binary64",
+          "initial": "original",
+          "step": "1",
+          "free_flux_error": "1.75978e-22",
+          "max_free_normal_error": "9.16105e-22",
+          "gradient_and_correction_ms": "0.420353"
+        },
+        {
+          "arithmetic": "paired-binary64",
+          "initial": "original",
+          "step": "2",
+          "free_flux_error": "1.75978e-22",
+          "max_free_normal_error": "9.16105e-22",
+          "gradient_and_correction_ms": "0.422858"
+        },
+        {
+          "arithmetic": "paired-binary64",
+          "initial": "prepared",
+          "step": "1",
+          "free_flux_error": "1.75978e-22",
+          "max_free_normal_error": "9.16105e-22",
+          "gradient_and_correction_ms": "0.421695"
+        },
+        {
+          "arithmetic": "paired-binary64",
+          "initial": "prepared",
+          "step": "2",
+          "free_flux_error": "1.75978e-22",
+          "max_free_normal_error": "9.16105e-22",
+          "gradient_and_correction_ms": "0.417157"
+        }
+      ],
+      "unchangedLegacyComparisons": [
+        {
+          "initial": "original",
+          "maximum_free_flux_difference": "4.72398e-21",
+          "unchanged_bound": "1e-12",
+          "pass": "1"
+        },
+        {
+          "initial": "prepared",
+          "maximum_free_flux_difference": "4.72398e-21",
+          "unchanged_bound": "1e-12",
+          "pass": "1"
+        },
+        {
+          "initial": "original",
+          "maximum_free_flux_difference": "4.72398e-21",
+          "unchanged_bound": "1e-12",
+          "pass": "1"
+        },
+        {
+          "initial": "prepared",
+          "maximum_free_flux_difference": "4.72398e-21",
+          "unchanged_bound": "1e-12",
+          "pass": "1"
+        }
+      ],
+      "processPassed": true,
+      "fixtureSha256": "b04c5993485e512924f06575acd9f824203c7c3598f9ed1094f2511484ab476f"
+    },
+    "oblique": {
+      "comparison": {
+        "local": "1",
+        "original_free_flux_error": "9.8395386466687635e-21",
+        "prepared_free_flux_error": "1.0364495841077146e-19",
+        "precision_agreement": "4.204899822672513e-49",
+        "oracle_ms": "1667.68"
+      },
+      "physical": {
+        "frozen_coefficients": "1",
+        "original_max_free_normal_error": "6.62889e-19",
+        "prepared_max_free_normal_error": "8.8352e-19",
+        "original_mass_root_field_error": "3.61181e-19",
+        "prepared_mass_root_field_error": "2.00081e-18",
+        "original_objective_excess": "1.30452e-37",
+        "prepared_objective_excess": "4.00325e-36"
+      },
+      "condition": {
+        "frozen_operator_2norm_condition_lower_bound": "6.0511"
+      },
+      "refinements": [
+        {
+          "arithmetic": "boost160",
+          "initial": "original",
+          "step": "1",
+          "free_flux_error": "1.4445e-22",
+          "max_free_normal_error": "1.90639e-21",
+          "gradient_and_correction_ms": "45.9272"
+        },
+        {
+          "arithmetic": "boost160",
+          "initial": "original",
+          "step": "2",
+          "free_flux_error": "1.4445e-22",
+          "max_free_normal_error": "1.90639e-21",
+          "gradient_and_correction_ms": "45.5556"
+        },
+        {
+          "arithmetic": "boost160",
+          "initial": "prepared",
+          "step": "1",
+          "free_flux_error": "1.4445e-22",
+          "max_free_normal_error": "1.90639e-21",
+          "gradient_and_correction_ms": "45.3126"
+        },
+        {
+          "arithmetic": "boost160",
+          "initial": "prepared",
+          "step": "2",
+          "free_flux_error": "1.4445e-22",
+          "max_free_normal_error": "1.90639e-21",
+          "gradient_and_correction_ms": "46.5031"
+        },
+        {
+          "arithmetic": "paired-binary64",
+          "initial": "original",
+          "step": "1",
+          "free_flux_error": "1.4445e-22",
+          "max_free_normal_error": "1.90639e-21",
+          "gradient_and_correction_ms": "1.95056"
+        },
+        {
+          "arithmetic": "paired-binary64",
+          "initial": "original",
+          "step": "2",
+          "free_flux_error": "1.4445e-22",
+          "max_free_normal_error": "1.90639e-21",
+          "gradient_and_correction_ms": "2.11979"
+        },
+        {
+          "arithmetic": "paired-binary64",
+          "initial": "prepared",
+          "step": "1",
+          "free_flux_error": "1.4445e-22",
+          "max_free_normal_error": "1.90639e-21",
+          "gradient_and_correction_ms": "1.62353"
+        },
+        {
+          "arithmetic": "paired-binary64",
+          "initial": "prepared",
+          "step": "2",
+          "free_flux_error": "1.4445e-22",
+          "max_free_normal_error": "1.90639e-21",
+          "gradient_and_correction_ms": "1.6165"
+        }
+      ],
+      "unchangedLegacyComparisons": [
+        {
+          "initial": "original",
+          "maximum_free_flux_difference": "9.98312e-21",
+          "unchanged_bound": "1e-12",
+          "pass": "1"
+        },
+        {
+          "initial": "prepared",
+          "maximum_free_flux_difference": "9.98312e-21",
+          "unchanged_bound": "1e-12",
+          "pass": "1"
+        },
+        {
+          "initial": "original",
+          "maximum_free_flux_difference": "9.98312e-21",
+          "unchanged_bound": "1e-12",
+          "pass": "1"
+        },
+        {
+          "initial": "prepared",
+          "maximum_free_flux_difference": "9.98312e-21",
+          "unchanged_bound": "1e-12",
+          "pass": "1"
+        }
+      ],
+      "processPassed": true,
+      "fixtureSha256": "1e0092ec65c626ffdee989e77a0f64c5aa35ff758c65e90484f4f29376fdc8f0"
+    }
+  },
+  "independentDecimalQR": {
+    "algorithm": "independent Decimal Householder QR, no normal matrix",
+    "decimalDigits": 100,
+    "rows": 816,
+    "columns": 294,
+    "weightedFluxDifferenceFromCpp256": "1.248583484697721216009000053681401332000188334077560945274175122030530476943879349142369091212739773E-59",
+    "actualStationarity": "7.219431337777633984530E-92",
+    "seconds": 19.061078902999725,
+    "passed": true
+  },
+  "legacyThinComparisonRemainsFailed": true,
+  "advancedFluidsUnlocked": false,
+  "historicalStage5Through10EvidenceUnchanged": true,
+  "historicalActiveFileExceptions": [
+    {
+      "stage": 6,
+      "path": "tools/verification/current-docs.json",
+      "recordedSha256": "7f0747a0d158b44a619b38aebeb20ac7c906a073a938e7dc2bf8507cc5333629",
+      "currentSha256": "9d4fc4632ee434d240b28818b93755ed36607803e9e48f45cbc0d18e4399af79",
+      "reason": "Active current-document inventory legitimately advanced since Stage6, including published patch notes; not historical evidence corruption."
+    }
+  ]
+}

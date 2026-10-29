@@ -1,0 +1,135 @@
+ADVANCED FLUID FOLLOW-UP — INDEPENDENT THIN-CUT ORACLE
+29 October 2026 | Experimental only | Private numerical research, not an unlock
+
+SUMMARY
+The Stage10 nonlinear thin-cut disagreement was not simply a defective fast
+response cache. The original local QR solve is itself inaccurate for the frozen
+least-squares operator. Its 2-norm condition number is at least 3.38528e10.
+Independent arithmetic and decomposition establish this for the selected local
+patch; it is not a conclusion about all fluid geometries or continuum accuracy.
+
+Production fluid code, Basic Water, M54/M55 and FLU-001 are unchanged. Alpha's
+advanced-fluid compile lock remains in force. Solbert's independent research
+has not been modified, imported or restarted. No new editor/runtime API exists.
+
+FROZEN REPRODUCTION AND AUTHORITY
+Use the unchanged Stage10 tiny-angle case: unit background grid, box centre
+(.5,.5,.5), half-extents(.2,.2,.2), rotation angle
+3.2137858346770188e-11 about normalize(1,2,-.3), density1, predictor
+(.03*sin(5*y), -.04+.01*cos(3*z), .02*sin(4*x)).
+Hold the original coarse boundary solution fixed. Select the patch with largest
+original-versus-prepared internal free-face flux disagreement. The chosen patch
+has816 mass-root rows and294 free coordinates. Rebuild its original operator
+J=A_free-A_pivot*C_free and r=predicted-Y*q. A fresh extended-precision QR of
+this frozen matrix reproduces the original QR solution bit for bit.
+
+Two independent high-precision normal solves (160 and256 binary bits) use the
+EXACT stored finite coefficients, with no regularization, pivot threshold or
+mode removal. Their physical free-flux results agree within4.094e-31. The
+relative normal residuals are2.083e-44 and6.876e-73. A separate Python standard-
+library Decimal100-digit Householder QR, forming no normal matrix and using
+neither Boost nor Eigen, agrees with the256-bit result within1.249e-59 and has
+stationarity7.220e-92. Frozen hexadecimal inputs and the independent replay are
+archived. This is a finite-coefficient local oracle, not an exact continuum or
+exact-geometry/global-fluid oracle.
+
+MECHANISM AND ERROR
+                       original QR         prepared response
+maximum free-flux error 2.8249956066e-8     2.8231635068e-8
+maximum free-face
+normal velocity error   .206404m/s          .206406m/s
+mass-root field error   4.34776e-11         1.54564e-10
+least-squares objective
+excess above oracle     1.8903e-21          2.38901e-20
+
+A tiny mass-root residual/objective error does not bound pointwise velocity in
+tiny cut faces. Near-null directions amplify local solve roundoff. The condition
+lower bound is max_column_norm(J)*norm(dx)/norm(J*dx), measured against the
+independent solution; it is not a full singular-value condition estimate.
+Recomputing r in high precision changes free flux by9.12723e-13; additionally
+recomputing J from its stored operands changes it by5.187e-22. Neither explains
+the dominant2.825e-8 solve discrepancy. Source refresh is not responsible for
+this frozen case. Geometry/continuum modelling accuracy remains a separate issue.
+
+CONTROLS
+- Axis-aligned case:312 rows/99 free variables, condition lower bound2.30317;
+  original flux error4.819e-21, prepared2.709e-20.
+- Ordinary oblique(.37rad) case:816 rows/294 free variables, SAME dimensions as
+  the failure, condition lower bound6.0511; original9.840e-21, prepared1.036e-19.
+- Deliberately omit off-diagonal kinetic couplings: original full-system normal
+  residual becomes .816500 in the thin case and is rejected. Axis and ordinary
+  oblique controls also reject this broken mechanism.
+- Scalar cancellation recovers1 from1e16+1-1e16. Nonfinite input, unsupported
+  exponent range, product overflow and product underflow are explicitly refused.
+  Unsupported tiny products are never silently dropped as physical loads.
+
+JUSTIFIED PRIVATE CORRECTION
+Retain the original local QR and physical constraints. For x from either the
+original QR or fast prepared response, compute an accurate gradient
+ g = J^T*(r-J*x), then solve
+ delta = P*R^-1*R^-T*P^T*g; x <- x+delta,
+where J*P=Q*R is the existing QR. This is numerical iterative refinement of the
+same constrained least-squares problem, not damping, an energy clamp, additional
+physical iterations, a different pressure model or a tiny-cell cutoff.
+
+Two predefined refinement steps were tested. In the thin case the FIRST step
+already reduces free-flux error to1.054e-16 from both starting values. After the
+second, the160-bit gradient gives flux error below1.952e-22; a paired-binary64
+(TwoSum/FMA) gradient gives below8.179e-22 and maximum free-face normal error
+below2.0e-13. Axis-aligned and ordinary oblique controls also pass the unchanged
+1e-12 ACCURACY bound against the independent oracle.
+
+The separate old-reference EQUIVALENCE comparison remains explicitly FAILED in
+the thin case:2.825e-8 versus its unchanged1e-12 bound. Stage10's2131 assertions
+established equivalence to the original arithmetic; they did not establish this
+new independent local accuracy. No historical threshold or result was changed.
+
+COST AND REJECTED APPROACHES
+The160-bit gradient prototype costs47.6–48.0ms per instrumented refinement step
+on the selected816x294 thin patch. That is unsuitable as a runtime replacement.
+An immutable exact-zero sparse coefficient cache with paired-binary64 arithmetic
+reduces those individual instrumented samples to1.63–1.67ms. These times include
+correction construction and independent error measurement; they exclude cache
+preparation, geometry, global pressure solve and all other patches. They are not
+a whole-fluid frame benchmark or a multi-run p95 claim. The axis case samples
+.42ms; ordinary oblique samples1.62–2.12ms. No end-to-end speedup is claimed.
+
+Paired arithmetic is a qualified private experiment only: IEEE binary64,
+round-to-nearest, std::fma, bounded finite exponent range, Linux64-bit-significand
+long double for the existing local QR. Windows/binary64 native QR portability,
+other ranks/conditioning regimes and general arithmetic coverage are unproven.
+No fast-math changes or native physics scalar changes were made.
+
+Two genuine compile failures are preserved: mixed160/256-bit auto declarations,
+and an unsupported Eigen permutation-product addTo expression. Both were fixed
+by explicit independent temporaries. Earlier failed and diagnostic variants are
+archived, not replaced by the final positive log.
+
+FINAL VALIDATION / SCOPE
+One final compiled probe ran all three orientations. Each replayed the original
+matrix exactly, checked both high-precision oracles, both refinement initial
+states and arithmetic variants, and rejected omitted kinetic couplings. The
+final frozen thin fixture was independently replayed with Decimal QR again.
+The numerical source and native-linked binary fingerprints, exact fixtures,
+raw logs, reproduction commands and archived source manifest are under:
+ docs/evidence/advanced-fluid-pressure-followup-20261029/stage11/
+All frozen Stage5-10 evidence fingerprints were verified unchanged. The active
+current-document inventory differs from its Stage6 historical hash because later
+release notes were added; that expected evolution is recorded, not hidden.
+
+The numerical harness links an existing local Release engine archive; its actual
+hash and embedded build provenance are recorded, not misrepresented as the fresh
+published Alpha SDK. No full-suite/editor/export/platform rerun is justified by
+private-reference-only changes. Rain patch packages were qualified separately.
+
+NEXT PRACTICAL STEP
+Apply this independently checked reconstruction to ALL local patches and
+changing-source/moving-rigid inputs, verify dependent as well as free-face flux,
+continuity, kinetic work and actual native endpoints, and measure the complete
+pressure/transport path. If refinement cannot certify a patch, reject it rather
+than publishing an inaccurate result. Prefer improving local basis conditioning
+where the full cost warrants it; do not assume these three cases prove universal
+robustness. Then continue moving-solid geometric conservation/invalidation,
+conservative momentum transport, free surfaces/wet-dry evolution, M54 ownership
+integration and cold-save/stream/export tests. The original Terrain planet
+contact explosion still requires real application proof before any Alpha unlock.
