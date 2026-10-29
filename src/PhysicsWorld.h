@@ -11,6 +11,7 @@
 #include "JointTypes.h"
 
 class JobSystem;
+struct PhysicsConstraintParticipant;
 
 // Opaque handle to a body inside PhysicsWorld. Deliberately not tied to
 // any concrete physics-engine body-ID representation — no file outside
@@ -526,6 +527,9 @@ public:
         static VelocityCoupling ForEachSubstep(unsigned iterationsPerSubstep,
             std::function<void(const Substep&)> solve,
             std::function<void(const Substep&)> completed = {});
+        // Appended to preserve existing aggregate-initializer member order.
+        // Include PhysicsConstraintBatch.h only when using this opt-in feature.
+        const PhysicsConstraintParticipant* physicalBatch = nullptr;
     };
     void Step(float fixedDeltaTime,const VelocityCoupling*);
     // Optional coupled material integration. Scripts and event publication stay

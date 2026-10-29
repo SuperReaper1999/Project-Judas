@@ -1,0 +1,31 @@
+{
+  "schema": 1,
+  "parentRevision": "61a1a94aa6f40392fc54b6e8d50eeeaed46358be",
+  "selfHashExcluded": true,
+  "files": {
+    "CMakeLists.txt": "af278fe8f22b9e74b88f42645329c3e09379cc8e9739fc052e48e3243d360865",
+    "cmake/PhysicsWorldSources.cmake": "225891bc0d5432811e3e66d440cbdae54942d2ce0f212b49c64612e57c218854",
+    "docs/ADVANCED_FLUID_NATIVE_INTERFACE.txt": "088b9140c88e1b3fb268a90a2a17e51c3699aea79b203e9bac2c7dcd9769b453",
+    "docs/MK2_PHYSICS_ARCHITECTURE.md": "49ccd8c32c9e01bb4faf315c8d876245495cba6e4aa73c3c0a23917ef0934387",
+    "docs/PHYSICAL_CONSTRAINT_BATCH.md": "e6ae57127126725ed14615b435beecd6d96c42f186deb11b1ae154d427b30973",
+    "docs/evidence/advanced-fluid-pressure-followup-20261029/stage6/CHANGED_FILES.txt": "99bee9b1da4714fbfb91edc5e0f593a78c20b6d53c3e0d17409130cdb2060434",
+    "docs/evidence/advanced-fluid-pressure-followup-20261029/stage6/REPRODUCE.txt": "21cdb9b610ed6ba6d32b7617669ef75250a3e89299b6e86f2f683a5f5767f44f",
+    "docs/evidence/advanced-fluid-pressure-followup-20261029/stage6/RESULTS.json": "71437ec71d7cd8a89be91c189a8972ab4eeac09e711196cb0b9a78519d772543",
+    "docs/evidence/advanced-fluid-pressure-followup-20261029/stage6/SOURCE_MANIFEST.json": "bec82f164f15ada087e1784c091f863d6eda4c34772c23774cd4df479295a818",
+    "docs/evidence/advanced-fluid-pressure-followup-20261029/stage6/stage6-sources-and-evidence.tar.gz": "2d8080d691f43ad6bbde1684c5facf78c721816bd702b82251e26521b4bb31d1",
+    "docs/evidence/advanced-fluid-pressure-followup-20261029/stage6/verify_evidence.py": "7d57275872ba82c174fcbed49d5969e1ec9ba05473572c826fcb2016896d7203",
+    "src/JointSolver.cpp": "e2791c799d49f66165d886fe2f59a9906e22fab2f7611032543d098d77ea17e4",
+    "src/JointSolver.h": "d3d2aacf0a9a2d89147e0bde48ca21feb83098b75356b35128f062a29111d290",
+    "src/PhysicsConstraintBatch.h": "3fc4ae23493d120414ef5a288fecda48f1411e6bb127e37f18337e63f0867cae",
+    "src/PhysicsWorld.cpp": "2aca722d9450695cbafe3aa3912387850e750f088182885b0c02e3017de04ed4",
+    "src/PhysicsWorld.h": "fed5104a4c62d5f656952c9e39b2e7cbc66b5591cf6167ec406169ce9f102fcb",
+    "src/physics/WorldConstraintBatch.cpp": "f985495b449ba2910251371e3bdc25a1a06c89e3476488572ac9e41a3e4fdb0d",
+    "src/physics/WorldConstraintBatch.h": "151c7f39f2c7279753e9fe5d7600f7f463f6c43bde03018462a9137d45b834ae",
+    "src/physics/WorldInternal.h": "19adc346d0af6d6d083e1d5753e765f16394ce851f5386ea9ff1e9cdbb494e0f",
+    "src/physics/WorldMk2Solver.cpp": "58911ff187ffcd1541381e8907ffde8f0e03893cd7fa31a180893cc36b391713",
+    "src/physics/WorldModules.md": "6a68109f7154b19d63466328e672ac8dfe27e18d67a8b85d65670fca79e2692b",
+    "tests/PhysicalConstraintBatchTests.cpp": "70858802ce17f5546a0f1a42e82f15e183720a953f36d6a10aebf9eb5101f11f",
+    "tools/validation/suites.json": "8875adacf7e37bff63682fad5f5112a4b188cc7c2679740244ec91c86ce9d8e3",
+    "tools/verification/current-docs.json": "7f0747a0d158b44a619b38aebeb20ac7c906a073a938e7dc2bf8507cc5333629"
+  }
+}

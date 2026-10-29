@@ -131,3 +131,14 @@ entries. The rotation and process-separated rotation-cold suites cover the new
 trajectory and continuation contracts. Synthetic and automated passes do not establish human acceptance.
 See [Pre-Alpha status](PREALPHA.md) and
 [the final correction work](PREALPHA_FINAL_CORRECTIONS.md).
+
+## Optional native material impulse transactions (Experimental)
+
+[Physical constraint participants](PHYSICAL_CONSTRAINT_BATCH.md) provide copied,
+handle-owned physical predictor/constraint snapshots before warm starts. A
+participant proposes material impulses and matching native reactions; the world
+validates and publishes the complete impulse sum, then continues its ordinary
+solve without warming those reactions twice. `WorldConstraintBatch.cpp` owns the
+bounded connectivity, snapshot and validation work; it does not own integration.
+The native contact/joint cadence is unchanged. Unsupported combinations fail
+explicitly. Advanced Fluids remains release-locked while its backend is developed.

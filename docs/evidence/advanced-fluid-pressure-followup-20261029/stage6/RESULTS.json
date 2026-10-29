@@ -1,0 +1,31 @@
+{
+  "schema": 1,
+  "nativeQualification": "11 gates pass; final new-interface gate superseded only by corrected COM fixture (1763 checks). Raw initial failure retained.",
+  "testFixtureCorrection": "Manually assigned primitive pivotOffset is recomputed by real mass construction. Use actual offset compound, assert nonzero COM displacement; production implementation unchanged. Missing include compile failure also retained.",
+  "joints": "29 checks, 0 failures",
+  "referenceRuns": 9,
+  "referenceSuccessfulExits": 5,
+  "referenceFailingExits": 4,
+  "unresolved": [
+    "oblique side-force oracle: miss 5.88e-5 Ns, original 1e-5 threshold unchanged",
+    "moving piston loses owned solid rows at boundary 1; two variants fail closed",
+    "production fluid runtime, moving cut geometry, persistence and scalable pressure performance remain unqualified"
+  ],
+  "ordinaryTrajectoryByteIdentical": true,
+  "engineSha256": "5722108b94f15414584979689eac3aafe5faac3004722d17929bc58ade44244d",
+  "binaries": {
+    "physics-continuation": "fd9c038d9dc9e5022c4d194648ac4267eb5c80148cdf46e0d92478ad32d2d6ff",
+    "contacts": "2a7605f9b14d1816281ef78f46430552a3ed67c7b2a07c9693bcdce5fc9562ba",
+    "velocity-coupling-substeps": "199a376a3bbee0fb4688557f8c1c3a4fb7329ab87f35efb0b7e94c12f8147fcc",
+    "mk2-physics": "8a769492f1cc22e8ba584e3ff7778d7d50becdda459e90e4a2bdf05b1cb4e47c",
+    "mk2-rotation": "0446f957d5165e7507d877bd540aa5808536744913182e8c93c4da842d65ca18",
+    "mk2-rotation-cold": "cf5c2c5e0274c749d2e5f3c9961386e3f3d871fc9b73303a01fca0270aa245aa",
+    "basic-water-preview": "8e2012f51a08f5e149c2ab2646e66b863b9c2d8005f6857b9e413ae1e965fb84",
+    "project-water-policy": "5002d1ebc2bfa4c7ebbdc5df3c7a5413f1063eb5dcf2d45897ea71e7fbe9f90f",
+    "project-fluid-policy": "119bf2fb1e7d961136e980c86a5dd03c3b8a3bc553714f9b732935e260af8885",
+    "basic-water-application": "8b8ecc04a449450280ae412a05e6ca9257e7d4d38ae52245d78db1816934b048",
+    "basic-water-cold": "8b8ecc04a449450280ae412a05e6ca9257e7d4d38ae52245d78db1816934b048",
+    "physical-constraint-batch": "71a9f5de9b945469b21a732b3513f177bfaed4ef5dfb8e76650eba07b201ce3c"
+  },
+  "platform": "Linux Release native + offscreen software GL; no Windows/Android or GPU visual acceptance"
+}

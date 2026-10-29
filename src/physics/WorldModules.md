@@ -16,6 +16,7 @@ These headers are implementation details, not an SDK interface.
 |---|---|
 | `WorldBodies.cpp` | Body creation/destruction, motion commands, impulses, physical properties and public body observations |
 | `WorldBounds.cpp` | Prepared bounds, broadphase proxies, ordered candidate discovery and cache accounting |
+| `WorldConstraintBatch.cpp` | Optional material participants: bounded dynamic connectivity, copied native constraint snapshots, proposal validation and matched impulse publication |
 | `WorldMk2Solver.cpp` | The substepped simultaneous solve: contact blocks, joints, arrival-instant impacts, fast-body continuous pass and contact history publication |
 | `WorldCCDSearch.cpp` / `WorldCCDQuery.h` | Conservative impact search and finite drift bounds, behind a private read-only CCD view (the fast-body pass's exact query) |
 | `WorldContacts.cpp` | Contact observations, touch phases and optional joined initial-geometry preparation |

@@ -50,6 +50,7 @@
     {"name":"origin-admission","target":"judas_origin_admission_tests","groups":["core","lifecycle"],"args":[]},
     {"name":"liquid-origin-query-controls","target":"judas_origin_environment_tests","groups":["liquid"],"args":["--query-controls","knots","{output}/query-controls"]},
     {"name":"mk2-diagnostics","target":"judas_mk2_diagnostics_tests","groups":["core","mk2","collision"]},
+    {"name":"physical-constraint-batch","target":"judas_physical_constraint_batch_tests","groups":["core","mk2","lifecycle"]},
     {"name":"velocity-coupling-substeps","target":"judas_velocity_coupling_substep_tests","groups":["core","mk2","lifecycle"]},
     {"name":"mk2-physics","target":"judas_mk2_physics_tests","groups":["core","collision","mk2"]},
     {"name":"mk2-rotation","target":"judas_mk2_rotation_tests","groups":["core","collision","mk2"]},

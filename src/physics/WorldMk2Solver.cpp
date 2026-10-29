@@ -1112,12 +1112,30 @@ void PhysicsWorld::Impl::Mk2Solve(float dt, const PhysicsWorld::VelocityCoupling
                 rows[i].tangent2 = warmT2[i];
             });
         }
+        ConstraintPublication projected;
+        if (coupling && coupling->physicalBatch) {
+            std::vector<ConstraintBodyBinding> batchBodies;
+            std::vector<ConstraintContactBinding> batchContacts;
+            batchBodies.reserve(state.size()); batchContacts.reserve(rows.size());
+            for (const auto& body : state)
+                batchBodies.push_back({MakeHandle(body.slot), body.rb, body.invMass, body.invI});
+            for (auto& row : rows) {
+                const float gap = glm::dot(AnchorGap(state[row.a], state[row.b], row), row.n) + row.separation;
+                batchContacts.push_back({row.a, row.b, row.n, row.rA, row.rB, gap, row.friction,
+                    RowTarget(state, row, 1.0f / h, false, false),
+                    row.arriving || row.arrivesNext || row.deferredImpact, &row.normalImpulse, &row.tangent1, &row.tangent2});
+            }
+            projected = ProjectConstraintBatch(*coupling->physicalBatch,
+                {dt, h, unsigned(step), unsigned(substeps)}, batchBodies, batchContacts);
+        }
         // Warm start with at most the steady support load. Re-applying an
         // impact substep's spike would have to be removed again by the next
         // sweep; down a chain one sweep cannot, and the stack would pop. A
         // patch is scaled as a whole: its rows' split is free within the
         // patch null space, so clipping rows independently would create torque.
         for (auto &block : blocks) {
+            if (!projected.contacts.empty() && projected.contacts[block.first])
+                continue; // the complete block impulse is already in physical velocity
             if (step > 0) {
                 float current = 0, steady = 0;
                 for (std::size_t i = 0; i < block.count; ++i) {
@@ -1157,6 +1175,7 @@ void PhysicsWorld::Impl::Mk2Solve(float dt, const PhysicsWorld::VelocityCoupling
                 if (mk2JointWarmH > 0 && mk2JointWarmH != h) {
                     const float scale = h / mk2JointWarmH;
                     for (auto &joint : joints) {
+                        if (projected.Includes(joint.handle)) continue;
                         for (auto &value : joint.warm)
                             value *= scale;
                         joint.state.angularDrive.impulses *= scale;
@@ -1171,6 +1190,10 @@ void PhysicsWorld::Impl::Mk2Solve(float dt, const PhysicsWorld::VelocityCoupling
             // rebounded off its own knee and hip stops) and let drives carry
             // in-step history MK1 never had.
             // No positional bias: joint error is the projection's (below).
+            if (!projected.joints.empty()) for (auto& input : inputs)
+                for (const auto& joint : joints)
+                    if (&joint.state == input.state && projected.Includes(joint.handle))
+                        input.impulsesApplied = true;
             PrepareJoints(jointSolver, inputs, h, true, false, false, 0.0f, step > 0, false,
                           kMk2JointLimitApproachRate);
         }

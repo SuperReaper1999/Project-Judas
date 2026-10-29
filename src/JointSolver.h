@@ -4,7 +4,7 @@
 #include <array>
 #include <cstddef>
 #include <vector>
-struct JointInput {RigidBody* a;RigidBody* b;JointState* state;std::array<float,12>* warm;glm::vec3 pivotOffsetA{0},pivotOffsetB{0};};
+struct JointInput {RigidBody* a;RigidBody* b;JointState* state;std::array<float,12>* warm;glm::vec3 pivotOffsetA{0},pivotOffsetB{0};bool impulsesApplied=false;};
 // Rows use the same sequential accumulated-impulse method as contacts. No pose
 // teleportation: velocity bias stabilizes drift; soft rows are implicit springs.
 class JointSolver {
@@ -22,6 +22,16 @@ public:
  // useBias=false (substep relax) drops only the rigid rows' positional
  // correction; springs, resistance and motors keep their targets.
  void SolveIteration(std::size_t first=0,bool useBias=true);
+ // Engine-internal prepared-row inspection/publication for a coupled batch.
+ // Publication records impulses already included in physical velocities.
+ struct VelocityRow {
+  RigidBody* a;RigidBody* b;
+  glm::vec3 linearA,linearB,angularA,angularB;
+  float bias,gamma,low,high;
+  const JointState* owner;
+ };
+ std::vector<VelocityRow> ReadVelocityRows() const;
+ void RecordProjectedImpulses(const std::vector<float>&);
  void ResetImpulses();
  const std::vector<RigidBody*>& Bodies()const{return m_bodies;}
  bool Empty()const{return m_rows.empty();}

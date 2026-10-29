@@ -1,0 +1,51 @@
+Use an isolated checkout of this Experimental checkpoint and Linux prerequisites.
+Do not extract over another investigator's ignored working experiments.
+
+1. Verify archives before extracting:
+ python3 docs/evidence/advanced-fluid-pressure-followup-20261029/stage5/verify_evidence.py
+ python3 docs/evidence/advanced-fluid-pressure-followup-20261029/stage6/verify_evidence.py
+ tar -xzf docs/evidence/advanced-fluid-pressure-followup-20261029/stage5/stage5-sources-and-evidence.tar.gz
+ tar -xzf docs/evidence/advanced-fluid-pressure-followup-20261029/stage6/stage6-sources-and-evidence.tar.gz
+
+2. Build native Release, at most two compiler jobs on the recorded 8GB host:
+ cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DJUDAS_BUILD_CHANNEL=Experimental
+ cmake --build build --target judas_script_tests judas_physical_constraint_batch_tests -j2
+ build/judas_physical_constraint_batch_tests
+ Expected 1763 checks, zero failures. The archive retains the initial erroneous
+ primitive-offset fixture failure separately; do not substitute its old binary.
+
+3. Native companion gates are listed with exact commands and hashes in
+ .cache/fluid-runtime-slice-stage6-20261029/qualification-final/RESULTS.json.
+ Build their targets before rerunning the validator. Use SDL_VIDEODRIVER=offscreen,
+ SDL_AUDIODRIVER=dummy, LIBGL_ALWAYS_SOFTWARE=1 for rendering tests without Xvfb.
+ The archived raw final run contains eleven passes and the original fixture fail;
+ offset-fixture-corrected.log records the final corrected test. No log was edited
+ into a fictional all-green combined run.
+
+4. Rebuild the unchanged quantity-kernel object needed by numerical references:
+ python3 - <<'PY'
+import sys
+from pathlib import Path
+sys.path.insert(0,'.cache/fluid-contact-repair')
+import setup_probes as b
+b.compile(Path('.cache/fluid-coupling-stage5-kernel/VolumeDomain.cpp').resolve(),'stage5-exact-volume-domain')
+PY
+ python3 .cache/fluid-runtime-slice-stage6-20261029/run_references.py
+ Expected nine executions: five successful exits and FOUR preserved failures.
+ Those failures cover rejected all-corner equalities, oblique force mismatch,
+ moving geometry at 120 ticks and at 240 ticks with incoming current.
+ The runner verifies outcomes and exact ordinary trajectory output. It does not
+ transform these failures into qualified fluid functionality.
+ Probe helpers currently derive actual flags/link commands from Makefiles in
+ build/CMakeFiles/judas_script_tests.dir; this reproduction is Linux Makefile
+ specific. Other generators require adapting that helper, not changing maths.
+
+5. Optional baseline first-boundary comparison (extra physics-only compilation):
+ python3 .cache/fluid-runtime-slice-stage6-20261029/build_baseline.py
+ python3 .cache/fluid-runtime-slice-stage6-20261029/build_traces.py
+ Exact old physics/header files are archived under baseline-src, originally from
+ 61a1a94; Stage5 private Mk2 instrumentation replaces just that translation unit.
+ This is a controlled physics overlay, not an old complete SDK qualification.
+
+Do not run experimental captures into preserved original paths or import/mutate
+Solbert's independent research. No production fluid enable switch is provided.

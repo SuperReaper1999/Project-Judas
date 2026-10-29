@@ -63,6 +63,27 @@ void PhysicsWorld::Step(float fixedDeltaTime, const VelocityCoupling *coupling) 
     Impl &w = *m_impl;
     if (w.stepping)
         throw std::logic_error("recursive physics step");
+    if (coupling && coupling->physicalBatch) {
+        const auto& batch = *coupling->physicalBatch;
+        if (coupling->begin || coupling->solve || coupling->finish)
+            throw std::invalid_argument("physical batch cannot compose with legacy velocity-changing callbacks");
+        if (!std::isfinite(fixedDeltaTime) || fixedDeltaTime <= 0 ||
+            !batch.propose || !batch.maximumBodies || batch.maximumBodies > 4096 ||
+            !batch.maximumContacts || batch.maximumContacts > 16384 ||
+            !batch.maximumJointRows || batch.maximumJointRows > 16384 ||
+            batch.bodies.size() > batch.maximumBodies)
+            throw std::invalid_argument("invalid physical constraint participant/bounds");
+        std::set<unsigned> unique;
+        for (const auto handle : batch.bodies) {
+            const auto* body = w.Get(handle);
+            if (!body || !body->enabled || !body->isDynamic || body->sensor || body->queryOnly ||
+                body->simulationSuspended || !unique.insert(handle.id).second)
+                throw std::invalid_argument("invalid, duplicate or inactive physical batch body");
+        }
+        // Declare material participation BEFORE predictor/contact construction;
+        // never infer it by position or wait for a late impulse to wake a body.
+        for (const auto handle : batch.bodies) w.Wake(handle.id & Impl::kSlotMask);
+    }
     struct StepGuard {
         bool &flag;
         explicit StepGuard(bool &f) : flag(f) {

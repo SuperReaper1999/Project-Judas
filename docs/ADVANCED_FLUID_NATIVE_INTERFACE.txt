@@ -1,0 +1,93 @@
+ADVANCED FLUID PRESSURE — NATIVE INTERFACE CHECKPOINT, 2026-10-29
+
+Parent: 61a1a94aa6f40392fc54b6e8d50eeeaed46358be (Experimental).
+This supersedes broad interpretations of the Stage5 private bridge results.
+It does NOT replace FluidWorld or unlock Advanced Fluids in Alpha. Basic Water,
+M54/M55, FLU-001 and independent research are unchanged. Main stays unchanged.
+
+IMPLEMENTED NATIVE BOUNDARY
+--------------------------
+PhysicsConstraintBatch.h exposes bounded copied native bodies, actual contact
+Jacobians/normal-speed targets, and identified bilateral joint rows. A native
+participant submits material wrenches and matching native reactions. The engine
+computes physical velocities, validates finite values, complementarity, joint
+constraints, identities and lifetimes, then acknowledges staged material state.
+No internal native dispatch or foreign authoritative pose assignment is needed.
+See docs/PHYSICAL_CONSTRAINT_BATCH.md for exact restrictions and failure semantics.
+
+WorldConstraintBatch.cpp owns snapshot/validation/publication. MK2 remains owner
+of contact history, native integration, CCD and ordering. JointSolver can record
+already-applied reactions without applying warm impulses twice. The optional
+interface has no JS binding and is absent from ordinary project configuration.
+The default no-participant route retains eight byte-identical native trajectory
+workloads (960 outer steps) against the committed Stage5 reference.
+
+QUALIFICATION AND HONEST FAILURES
+--------------------------------
+Final focused interface: 1763 checks pass. Eleven companion gates pass: native
+MK2, rotation (31404), rotation cold saves, continuation, contacts, existing
+coupling cadence (477), Basic Water rendering/application/cold saves, water
+policy and advanced-fluid lock policy. Joint regression: 29 checks pass.
+The initial final interface run failed its newly added COM-offset fixture: a
+primitive's manually assigned pivotOffset is replaced by computed mass properties.
+The corrected fixture uses a real offset compound and asserts nonzero displacement;
+no production correction or threshold change was made for that test error. Both
+failure and corrected logs are retained, including one missing-include build error.
+Release builds were incremental; this is not clean SDK/platform certification.
+
+Nine numerical executions: five exit successfully, four fail as preserved cases.
+Expected failures are NOT counted as successful fluid qualification.
+
+- Actual native fixed-joint / 156-tetra pressure: 6429 checks pass, two gravity
+  frames, light/heavy solids, 480 intervals per case. Hydrostatic impulse is
+  306.562516 Ns; representative pressure residual 1.72e-12. Deliberately omitted
+  joint reactions are rejected by the engine before material publication.
+- Treating all four side-wall corners as bilateral equalities fails after 702
+  checks. Real microscopic motion changes speculative allowances independently.
+  The corrected bounded reference instead solves unilateral native normals and
+  fluid pressure in a complete mass-metric Gram operator. No regularization,
+  false wall particles or higher iteration budget was added. This dense body
+  clique is reference mathematics, not a scalable production pressure operator.
+- Aligned and exact-axis rotated walls pass. The oblique wall still fails its
+  unchanged 1e-5 Ns force oracle: side impulse 153.281199179707 versus expected
+  153.281257994240. Upward impulse is 7.81e-14 Ns, speed 6.17e-6 m/s. No upward
+  launch occurs, but this force mismatch is unresolved; do not dismiss as noise.
+- Moving piston: the earlier private bridge's endpoint is reproduced exactly
+  (.64231988042593). Actual public impulse publication gives a different endpoint.
+  At the first divergent boundary, native residual rotation (~1.61e-11 quaternion
+  z, omega z ~7.71e-9 rad/s) causes the axis-aligned ALE mesh to lose ALL solid
+  rows. Its rounded axis vertices are no longer exactly on the actual native
+  planes. The private ideal guide/direct velocity write hid this geometry defect.
+  A shadow axis-aligned geometry control restores 12 rows, without publishing
+  shadow poses or changing actual native motion. This establishes the mechanism.
+  The reference now rejects missing ownership at interval 1 in both 120-tick
+  and incoming-current 240-tick variants. Only one accepted interval/material
+  publication occurs. Quantity remains 1.5000000447034836, ledger/pose error zero.
+  There is no claim of whole-world rollback or completion of either long run.
+
+TIMING SCOPE
+------------
+Small aligned side-contact reference approximately .12 ms per projection; the
+156-tetra joint example roughly .39 ms median/.40 ms p95, worst20.33 ms in the
+recorded example. These include tiny reference workloads and cold preparation;
+not game-frame, GPU, scalable-pressure or release performance claims. Raw timing
+lines and exact binary hashes are preserved, including slower unsuccessful runs.
+
+NEXT ENGINEERING BOUNDARY
+-------------------------
+Complete owned moving cut geometry from ACTUAL solid planes, retaining face and
+vertex ancestry through clipping and conservative material remap. Do not use
+quaternion snapping, plane-match epsilon inflation or scalar level reconstruction
+to hide missing boundaries. Prove translating+rotating thin faces, separating and
+reconnecting material, conservation, actual endpoints and failure publication.
+Then resolve the unchanged oblique force oracle and build a real application slice.
+Production M54 integration, persistence, general friction/arrivals/joint types,
+resource scaling and export qualification remain future work. Advanced Fluids
+stay locked until these pass; no promised next-patch enablement.
+
+EVIDENCE
+--------
+docs/evidence/advanced-fluid-pressure-followup-20261029/stage6/
+contains exact source/log archive (including failed experiments), manifest,
+verification tool, native binary fingerprints, results and reproduction commands.
+Stage5 evidence remains unchanged. No new human acceptance is claimed.

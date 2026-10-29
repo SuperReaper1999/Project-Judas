@@ -3,6 +3,7 @@
 #include <cmath>
 #include <cstdint>
 #include <limits>
+#include <stdexcept>
 std::size_t JointSolver::PointerMembership::Hash(const void* pointer){
  // Allocation alignment leaves low address bits empty; mix all pointer bits
  // before selecting a power-of-two bucket. Hash order has no physical meaning.
@@ -54,7 +55,7 @@ void JointSolver::Prepare(const std::vector<JointInput>& inputs,float dt,bool wa
    const bool equality=!soft&&!motor&&!resistance&&std::isinf(low)&&std::isinf(high);
    float* cache=impact||projection?nullptr:&(*input.warm)[index];float lambda=warm&&(!warmEqualityOnly||equality)&&cache?std::clamp(*cache,low,high):0;
    m_rows.push_back({&a,&b,la,lb,aa,ab,ia,ib,1/(k+gamma),bias,gamma,low,high,lambda,cache,motor&&!projection?&input.state->motorImpulse:nullptr,projection?nullptr:input.state,!soft&&!motor&&!resistance});++index;
-   if(lambda!=0){Apply(m_rows.back(),lambda);input.state->reactionImpulse+=la*lambda;input.state->reactionAngularImpulse+=aa*lambda;}
+   if(lambda!=0){if(!input.impulsesApplied)Apply(m_rows.back(),lambda);input.state->reactionImpulse+=la*lambda;input.state->reactionAngularImpulse+=aa*lambda;}
   };
   auto linear=[&](glm::vec3 n,float error,float low=-std::numeric_limits<float>::infinity(),float high=std::numeric_limits<float>::infinity(),bool soft=false,bool motor=false){row(-n,n,-glm::cross(ra,n)+glm::cross(n,delta),glm::cross(rb,n),error,low,high,soft,motor);};
   auto angular=[&](glm::vec3 n,float error,float low=-std::numeric_limits<float>::infinity(),float high=std::numeric_limits<float>::infinity(),bool soft=false,bool motor=false){row({0,0,0},{0,0,0},-n,n,error,low,high,soft,motor);};
@@ -85,7 +86,7 @@ void JointSolver::Prepare(const std::vector<JointInput>& inputs,float dt,bool wa
     float effective=a.inverseMass*glm::dot(la,la)+b.inverseMass*glm::dot(lb,lb)+glm::dot(aa,ia*aa)+glm::dot(ab,ib*ab);
     auto* cache=&(*input.warm)[index++];float lambda=warm&&!warmEqualityOnly?*cache:0;
     m_rows.push_back({&a,&b,la,lb,aa,ab,ia,ib,1/(effective+gamma),bias,gamma,-inf,inf,lambda,cache,nullptr,input.state});
-    if(lambda!=0){Apply(m_rows.back(),lambda);input.state->reactionImpulse+=la*lambda;input.state->reactionAngularImpulse+=aa*lambda;}
+    if(lambda!=0){if(!input.impulsesApplied)Apply(m_rows.back(),lambda);input.state->reactionImpulse+=la*lambda;input.state->reactionAngularImpulse+=aa*lambda;}
    };
    for(int k=0;k<3;++k)materialRow(basis[k],local[k]-constitutive.translation[k],m.stiffness,m.damping,false);
    for(int k=0;k<3;++k)materialRow(basis[k],angle[k]-constitutive.rotation[k],m.angularStiffness,m.angularDamping,true);
@@ -142,7 +143,7 @@ void JointSolver::Prepare(const std::vector<JointInput>& inputs,float dt,bool wa
     float effective=glm::dot(n,(ia+ib)*n);if(effective+gamma<=0)continue;
     auto* cache=&input.state->angularDrive.impulses[k];float lambda=warm&&!warmEqualityOnly?std::clamp(*cache,-cap,cap):0;
     m_rows.push_back({&a,&b,{0,0,0},{0,0,0},-n,n,ia,ib,1/(effective+gamma),stiffnessBias,gamma,-cap,cap,lambda,cache,nullptr,input.state});
-    if(lambda!=0){Apply(m_rows.back(),lambda);input.state->reactionAngularImpulse-=n*lambda;}
+    if(lambda!=0){if(!input.impulsesApplied)Apply(m_rows.back(),lambda);input.state->reactionAngularImpulse-=n*lambda;}
    }
   }
   // Passive viscous joint resistance is solved implicitly with contacts and
@@ -156,3 +157,21 @@ void JointSolver::Prepare(const std::vector<JointInput>& inputs,float dt,bool wa
 void JointSolver::SolveIteration(std::size_t first,bool useBias){for(std::size_t i=first;i<m_rows.size();++i){auto& r=m_rows[i];const float bias=useBias||!r.positional?r.bias:0;float velocity=glm::dot(r.linearA,r.a->linearVelocity)+glm::dot(r.linearB,r.b->linearVelocity)+glm::dot(r.angularA,r.a->angularVelocity)+glm::dot(r.angularB,r.b->angularVelocity);
  float total=std::clamp(r.impulse-(velocity+bias+r.gamma*r.impulse)*r.mass,r.low,r.high),change=total-r.impulse;r.impulse=total;Apply(r,change);if(r.observation){r.observation->reactionImpulse+=r.linearA*change;r.observation->reactionAngularImpulse+=r.angularA*change;}if(r.cache)*r.cache=total;if(r.motor)*r.motor=total;}}
 void JointSolver::ResetImpulses(){for(auto& r:m_rows)r.impulse=0;}
+
+std::vector<JointSolver::VelocityRow> JointSolver::ReadVelocityRows() const {
+ std::vector<VelocityRow> result;result.reserve(m_rows.size());
+ for(const auto& r:m_rows)result.push_back({r.a,r.b,r.linearA,r.linearB,r.angularA,r.angularB,r.bias,r.gamma,r.low,r.high,r.observation});
+ return result;
+}
+void JointSolver::RecordProjectedImpulses(const std::vector<float>& values) {
+ if(values.size()!=m_rows.size())throw std::invalid_argument("joint batch impulse count mismatch");
+ for(std::size_t i=0;i<values.size();++i)
+  if(!std::isfinite(values[i])||values[i]<m_rows[i].low||values[i]>m_rows[i].high)
+   throw std::invalid_argument("invalid joint batch impulse");
+ for(std::size_t i=0;i<values.size();++i){
+  auto& r=m_rows[i];const float change=values[i]-r.impulse;r.impulse=values[i];
+  if(r.cache)*r.cache=r.impulse;
+  if(r.motor)*r.motor=r.impulse;
+  if(r.observation){r.observation->reactionImpulse+=r.linearA*change;r.observation->reactionAngularImpulse+=r.angularA*change;}
+ }
+}

@@ -1,4 +1,5 @@
 #pragma once
+#include "WorldConstraintBatch.h"
 
 // Private, single-owner implementation state. Never an engine or SDK API.
 // See WorldModules.md for module responsibilities and publication order.
@@ -233,6 +234,11 @@ struct PhysicsWorld::Impl {
     JointSolver jointSolver, mk2JointProjection;
     RigidBody worldAnchor;
     bool JointActive(const JointRecord &joint) const;
+    JudasPhysicsDetail::ConstraintPublication ProjectConstraintBatch(
+        const PhysicsConstraintParticipant&, const PhysicsConstraintBatch::Context&,
+        const std::vector<JudasPhysicsDetail::ConstraintBodyBinding>&,
+        const std::vector<JudasPhysicsDetail::ConstraintContactBinding>&);
+
     std::vector<JointInput> JointInputs(const std::vector<unsigned char> *included = nullptr);
     bool sleepingEnabled = true;
     void Wake(unsigned slot);
