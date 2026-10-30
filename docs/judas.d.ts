@@ -803,7 +803,7 @@ declare module "judas" {
   }
   export type Shape2D = {kind:"circle";radius:number}|{kind:"box";halfExtents:{x:number;y:number}}|
     {kind:"capsule";radius:number;halfHeight:number}|{kind:"convex";vertices:{x:number;y:number}[]};
-  export interface Body2DInfo {kind:"circle"|"box"|"capsule"|"convex"|"chain";radius:number;vertices:{x:number;y:number}[];lockRotation:boolean;normal:Vec3}
+  export interface Body2DInfo {kind:"circle"|"box"|"capsule"|"convex"|"chain";radius:number;vertices:{x:number;y:number}[];lockRotation:boolean;oneWay:boolean;normal:Vec3}
   export const physics: {
     /** Native fixed-orientation planar cast. A zero-radius circle is a point ray. Never queries spatial bodies. */
     cast2D(shape:Shape2D,pose:CastPose,direction:Vec3,maximum:number,filter?:QueryFilter):CastHit|null;

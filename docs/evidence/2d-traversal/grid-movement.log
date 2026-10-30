@@ -1,0 +1,42 @@
+PASS fresh grid project
+PASS same grid project preset as New Project
+PASS save editable grid fixture
+PASS ordinary project bindings
+PASS build editable grid game
+PASS begin normal played session
+PASS begin normal played session
+PASS single input edge finishes exactly one cell through native motion
+PASS begin normal played session
+PASS begin normal played session
+PASS blocked cell cannot be crossed or snapped into
+PASS begin normal played session
+PASS save fixture is genuinely partway through a cell
+PASS publish real partial-step cold save
+PASS reconstruct independent queued-turn fixture
+PASS restore separate world before queuing a turn
+PASS isolated queued-turn input map
+PASS begin normal played session
+PASS short turn is actually pending in saved script state
+PASS save pending step and buffered turn together
+PASS begin normal played session
+PASS uninterrupted buffered turn completes both actual cells
+PASS begin normal played session
+PASS uninterrupted continuation completes pending step
+PASS begin normal played session
+PASS begin normal played session
+PASS diagonal input resolves one cardinal cell without cutting corner
+PASS begin normal played session
+PASS begin normal played session
+PASS obstacle entering an accepted step stops real motion without snapping into it
+PASS begin normal played session
+PASS begin normal played session
+PASS escaping an overlap still detects a second blocker behind it
+PASS begin normal played session
+BACKOUT {"blocked":false,"cell":{"x":2,"y":1},"facing":{"x":0,"y":-1},"moves":3,"next":{"x":2,"y":1},"origin":{"x":0,"y":0,"z":0},"queued":null,"target":null} y=1
+PASS reverse input backs out physically without inventing another cell transition
+PASS begin normal played session
+PASS tap released before a fixed step still starts one cell
+PASS begin normal played session
+PASS begin normal played session
+PASS one buffered short turn survives release while the preceding cell finishes
+GRID checks=40 failures=0

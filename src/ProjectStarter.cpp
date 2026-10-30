@@ -112,3 +112,30 @@ bool PopulatePlanarProjectStarter(Project& project,Scene& scene,bool sideView,st
     for(auto& element:hud.elements)if(element.id=="help")element.text=sideView?"PLATFORMER | A/D or arrows: move | Space: jump | Edit Assets/game.js":"TOP-DOWN | WASD / arrows: move | Native 2D collision | Edit Assets/game.js";
     return SaveUIDocument(path,hud,error);
 }
+
+bool ConfigureGridPlayerInput(Project& project,std::string& error) {
+    auto map=project.Settings().input;
+    struct Direction{const char* action;const char* key;const char* arrow;const char* pad;};
+    for(auto d:{Direction{"grid_left","key:A","key:Left","pad:DpadLeft"},Direction{"grid_right","key:D","key:Right","pad:DpadRight"},Direction{"grid_up","key:W","key:Up","pad:DpadUp"},Direction{"grid_down","key:S","key:Down","pad:DpadDown"}}){
+        if(const auto* entry=map.Find(d.action)){if(entry->axis||entry->vector){error=std::string(d.action)+" must be a digital grid action";return false;}continue;}
+        if(!map.Add(d.action,false)||!map.AddBinding(d.action,{d.key})||!map.AddBinding(d.action,{d.arrow})||!map.AddBinding(d.action,{d.pad})){error="Cannot add grid movement bindings";return false;}
+    }
+    project.Settings().input=std::move(map);error.clear();return true;
+}
+
+bool PopulateGridProjectStarter(Project& project,Scene& scene,std::string& error) {
+    if(!PopulatePlanarProjectStarter(project,scene,false,error)||!ConfigureGridPlayerInput(project,error))return false;
+    std::ifstream source(ResolveEngineDataPath("docs/judasjs/examples/grid-player-2d.js"),std::ios::binary);
+    if(!source){error="Missing grid 2D player template in SDK docs";return false;}
+    std::ofstream script(std::filesystem::u8path(project.AssetsDir())/"game.js",std::ios::binary|std::ios::trunc);
+    script<<source.rdbuf();script.close();if(!script){error="Cannot write grid controller";return false;}
+    for(auto& object:scene.Objects())if(!object.scripts.empty()&&object.body){
+        object.name="Grid RPG player - editable game.js";object.render->sprite.pivot={.5f,1};object.render->sprite.ySort=true;
+        object.body->motion=SceneBodyMotion::Kinematic;object.body->planar=PlanarBox({.32,.32},true);
+        object.scripts.front().properties="{}";
+    }
+    UIDocument hud;const auto path=(std::filesystem::u8path(project.AssetsDir())/"hud.judasui").u8string();
+    if(!LoadUIDocument(path,hud,error))return false;
+    for(auto& e:hud.elements)if(e.id=="help")e.text="GRID RPG | WASD / arrows: step one cell | Cast-checked native motion | Edit Assets/game.js";
+    return SaveUIDocument(path,hud,error);
+}

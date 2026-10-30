@@ -17,6 +17,7 @@ bool ValidatePlanar(const PlanarCollider& c,std::string& error,bool query){
     auto fail=[&](const char* message){error=message;return false;};
     if(int(c.kind)<0||int(c.kind)>4||!std::isfinite(c.radius)||c.radius<0||c.radius>1e6)return fail("invalid 2D shape kind/radius");
     const auto count=c.vertices.size();
+    if(c.oneWay&&(c.kind!=PlanarKind::Chain||count!=2))return fail("one-way collision requires a straight static chain with two vertices");
     if(count==0||count>(c.kind==PlanarKind::Chain?1024u:64u))return fail("2D shape vertex limit exceeded");
     for(auto p:c.vertices)if(!Finite(p))return fail("2D vertices must be finite and bounded");
     if(c.kind==PlanarKind::Circle){if(count!=1||c.vertices[0]!=glm::dvec2(0)||(!query&&c.radius<=0))return fail("2D circle requires positive radius");}
@@ -49,7 +50,7 @@ std::shared_ptr<const PlanarCollider> PlanarCircle(double radius,bool lock){retu
 std::shared_ptr<const PlanarCollider> PlanarBox(glm::dvec2 h,bool lock){if(!Finite(h)||h.x<=0||h.y<=0)throw std::invalid_argument("2D box half extents must be positive");return Checked({PlanarKind::Box,{{-h.x,-h.y},{h.x,-h.y},{h.x,h.y},{-h.x,h.y}},0,lock});}
 std::shared_ptr<const PlanarCollider> PlanarCapsule(double r,double h,bool lock){if(!std::isfinite(h)||h<0||h>1e6)throw std::invalid_argument("invalid 2D capsule half height");return Checked({PlanarKind::Capsule,{{0,-h},{0,h}},r,lock});}
 std::shared_ptr<const PlanarCollider> PlanarConvex(std::vector<glm::dvec2> points,bool lock){return Checked({PlanarKind::Convex,std::move(points),0,lock});}
-std::shared_ptr<const PlanarCollider> PlanarChain(std::vector<glm::dvec2> points){return Checked({PlanarKind::Chain,std::move(points),0,true});}
+std::shared_ptr<const PlanarCollider> PlanarChain(std::vector<glm::dvec2> points,bool oneWay){return Checked({PlanarKind::Chain,std::move(points),0,true,oneWay});}
 PlanarMass PlanarMassProperties(const PlanarCollider& c){
     std::string error;if(!ValidatePlanar(c,error))throw std::invalid_argument(error);
     PlanarMass result;
@@ -71,12 +72,13 @@ PlanarMass PlanarMassProperties(const PlanarCollider& c){
     if(!(result.area>1e-12&&result.inertia.x>0&&result.inertia.y>0))throw std::invalid_argument("degenerate 2D lamina mass");
     return result;
 }
-std::string EncodePlanar(const PlanarCollider& c){std::string error;if(!ValidatePlanar(c,error))throw std::invalid_argument(error);nlohmann::ordered_json j={{"version",1},{"kind",int(c.kind)},{"radius",c.radius},{"lockRotation",c.lockRotation},{"vertices",nlohmann::ordered_json::array()}};for(auto p:c.vertices)j["vertices"].push_back({p.x,p.y});return j.dump();}
+std::string EncodePlanar(const PlanarCollider& c){std::string error;if(!ValidatePlanar(c,error))throw std::invalid_argument(error);nlohmann::ordered_json j={{"version",1},{"kind",int(c.kind)},{"radius",c.radius},{"lockRotation",c.lockRotation},{"vertices",nlohmann::ordered_json::array()}};for(auto p:c.vertices)j["vertices"].push_back({p.x,p.y});if(c.oneWay){j["version"]=2;j["oneWay"]=true;}return j.dump();}
 bool DecodePlanar(const std::string& text,std::shared_ptr<const PlanarCollider>& out,std::string& error){try{
     if(text.size()>128*1024)throw std::invalid_argument("2D descriptor exceeds 128 KiB");
     auto j=nlohmann::json::parse(text);
-    if(!j.is_object()||j.size()!=5||j.at("version")!=1||!j.at("kind").is_number_integer()||!j.at("radius").is_number()||!j.at("lockRotation").is_boolean()||!j.at("vertices").is_array())throw std::invalid_argument("invalid 2D descriptor/version");
-    PlanarCollider c;c.kind=PlanarKind(j.at("kind").get<int>());c.radius=j.at("radius").get<double>();c.lockRotation=j.at("lockRotation").get<bool>();
+    const bool version2=j.is_object()&&j.value("version",0)==2;
+    if(!j.is_object()||j.size()!=(version2?6u:5u)||(j.at("version")!=1&&!version2)||!j.at("kind").is_number_integer()||!j.at("radius").is_number()||!j.at("lockRotation").is_boolean()||!j.at("vertices").is_array())throw std::invalid_argument("invalid 2D descriptor/version");
+    PlanarCollider c;if(version2){if(!j.at("oneWay").is_boolean())throw std::invalid_argument("oneWay must be boolean");c.oneWay=j.at("oneWay").get<bool>();}c.kind=PlanarKind(j.at("kind").get<int>());c.radius=j.at("radius").get<double>();c.lockRotation=j.at("lockRotation").get<bool>();
     if(j["vertices"].size()>1024)throw std::invalid_argument("2D vertex limit");
     for(const auto& p:j["vertices"]){if(!p.is_array()||p.size()!=2||!p[0].is_number()||!p[1].is_number())throw std::invalid_argument("invalid 2D vertex");c.vertices.push_back({p[0].get<double>(),p[1].get<double>()});}
     auto value=Checked(std::move(c));out=std::move(value);error.clear();return true;
@@ -204,11 +206,24 @@ ContactManifold PlanarContacts(const Shape& a,const ContactPose& pa,const Shape&
     return result;
 }
 
+bool PlanarOneWayAllows(const Shape& platform,const ContactPose& pp,const Shape& other,const ContactPose& op,double tolerance){
+    if(platform.type!=ShapeType::Planar||!platform.planar||!platform.planar->oneWay)return true;
+    if(other.type!=ShapeType::Planar||!other.planar)return false;
+    const auto pr=ContactRotation(pp.orientation),orr=ContactRotation(op.orientation);
+    const auto edge=platform.planar->vertices[1]-platform.planar->vertices[0];
+    const auto n=pr*glm::dvec3(glm::normalize(glm::dvec2(-edge.y,edge.x)),0);
+    const auto origin=glm::dvec3(pp.position)+pr*(glm::dvec3(platform.planar->vertices[0],0)+glm::dvec3(pp.localCenter));
+    double support=INFINITY;
+    for(auto p:other.planar->vertices){const auto v=glm::dvec3(op.position)+orr*(glm::dvec3(p,0)+glm::dvec3(op.localCenter));support=std::min(support,glm::dot(v-origin,n));}
+    return support-other.planar->radius>=-tolerance;
+}
+
 PrimitiveCastHit CastPlanarPrimitive(const Shape& query,const BodyTransform& pose,glm::vec3 direction,double maximum,const PrimitivePose& target){
     if(query.type!=ShapeType::Planar||target.shape.type!=ShapeType::Planar)return {};
     double time=0;
     const ContactPose a{pose.position,pose.rotation,{0,0,0}};
     const ContactPose b{target.parentPosition,target.parentOrientation,target.parentLocalCenter};
+    if(!PlanarOneWayAllows(target.shape,b,query,a,0.002))return {};
     for(int iteration=0;iteration<256;++iteration){
         const auto manifold=PlanarContacts(query,a,target.shape,b,INFINITY,glm::dvec3(direction)*time);
         if(!manifold.count)return {};

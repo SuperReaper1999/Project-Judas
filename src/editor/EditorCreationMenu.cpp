@@ -16,6 +16,8 @@ void DrawEditorCreationItems(const EditorPanelState& state, EditorRequests& requ
         {"2D box (dynamic)","planar-dynamic-box","Native lamina mass, gravity, contacts and CCD."},
         {"2D circle (dynamic)","planar-circle","Exact circular contact, not a polygonal thin sphere."},
         {"2D capsule (dynamic)","planar-capsule","Native rounded 2D contact; set rotation lock in Body."},
+        {"2D one-way platform","planar-one-way","Static straight segment; jump through from below and land on its upper side."},
+        {"2D grid RPG player","planar-grid-player","Editable cardinal grid-step controller with native kinematic collision."},
         {"2D terrain chain","planar-chain","Static open, two-sided edges. Edit vertices in Body."},
         {"2D platformer player","planar-player","Editable project script, native capsule collision and jumping. Requires scene gravity."},
         {"2D top-down player","planar-topdown-player","Editable project script with native 2D collision. Use a scene without gravity."},
@@ -114,13 +116,14 @@ SceneObjectId CreateObjectOfKind(EditorDocument& doc, const std::string& kind, c
     } else if(kind.rfind("planar-",0)==0) {
         o.name=kind=="planar-chain"?"2D terrain chain":"2D physical object";
         o.body=SceneBodyComponent{};o.body->shape=SceneShape::Planar;
-        o.body->motion=(kind=="planar-box"||kind=="planar-chain")?SceneBodyMotion::Static:SceneBodyMotion::Dynamic;
+        o.body->motion=(kind=="planar-box"||kind=="planar-chain"||kind=="planar-one-way")?SceneBodyMotion::Static:SceneBodyMotion::Dynamic;
         o.body->managed=false;
         o.body->planar=kind=="planar-circle"?PlanarCircle(.5):kind=="planar-capsule"?PlanarCapsule(.3,.4):
-            kind=="planar-chain"?PlanarChain({{-2,0},{0,0},{2,1}}):PlanarBox({.5,.5});
+            kind=="planar-chain"?PlanarChain({{-2,0},{0,0},{2,1}}):kind=="planar-one-way"?PlanarChain({{-2,0},{2,0}},true):PlanarBox({.5,.5});
         if(kind!="planar-chain") {
             o.render=SceneRenderComponent{};o.render->shape=SceneShape::Sprite;
             o.render->color={.3f,.7f,.8f};
+            if(kind=="planar-one-way"){o.name="2D one-way platform";o.render->sprite.size={4,.12f};o.render->sprite.pivot={.5f,0};}
             if(kind=="planar-circle"||kind=="planar-capsule")o.render->textureAsset=meshAssetId;
             if(kind=="planar-capsule")o.render->sprite.size={.6f,1.4f};
         }

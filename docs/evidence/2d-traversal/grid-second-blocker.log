@@ -1,0 +1,29 @@
+PASS fresh grid project
+PASS same grid project preset as New Project
+PASS save editable grid fixture
+PASS ordinary project bindings
+PASS build editable grid game
+PASS begin normal played session
+PASS begin normal played session
+PASS single input edge finishes exactly one cell through native motion
+PASS begin normal played session
+PASS begin normal played session
+PASS blocked cell cannot be crossed or snapped into
+PASS begin normal played session
+PASS save fixture is genuinely partway through a cell
+PASS publish real partial-step cold save
+PASS begin normal played session
+PASS uninterrupted continuation completes pending step
+PASS begin normal played session
+PASS begin normal played session
+PASS diagonal input resolves one cardinal cell without cutting corner
+PASS begin normal played session
+PASS begin normal played session
+PASS obstacle entering an accepted step stops real motion without snapping into it
+PASS begin normal played session
+PASS begin normal played session
+PASS escaping an overlap still detects a second blocker behind it
+PASS begin normal played session
+BACKOUT {"blocked":false,"cell":{"x":2,"y":1},"facing":{"x":0,"y":-1},"moves":3,"next":{"x":2,"y":1},"origin":{"x":0,"y":0,"z":0},"target":null} y=1
+PASS reverse input backs out physically without inventing another cell transition
+GRID checks=27 failures=0

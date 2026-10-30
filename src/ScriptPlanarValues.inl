@@ -40,6 +40,7 @@ JSValue PlanarValue(JSContext* c,const PlanarCollider& shape) {
     JS_SetPropertyStr(c,out,"kind",JS_NewString(c,kinds[int(shape.kind)]));
     JS_SetPropertyStr(c,out,"radius",JS_NewFloat64(c,shape.radius));
     JS_SetPropertyStr(c,out,"lockRotation",JS_NewBool(c,shape.lockRotation));
+    JS_SetPropertyStr(c,out,"oneWay",JS_NewBool(c,shape.oneWay));
     auto vertices=JS_NewArray(c);uint32_t index=0;
     for(auto p:shape.vertices){auto v=JS_NewObject(c);JS_SetPropertyStr(c,v,"x",JS_NewFloat64(c,p.x));JS_SetPropertyStr(c,v,"y",JS_NewFloat64(c,p.y));JS_SetPropertyUint32(c,vertices,index++,v);}
     JS_SetPropertyStr(c,out,"vertices",vertices);

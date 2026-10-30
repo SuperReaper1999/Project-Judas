@@ -646,6 +646,7 @@ void DrawPlanarCollider(EditorDocument& doc,SceneObject& o,EditorPanelState& sta
             kind==3?*PlanarConvex({{-.5,-.5},{.5,-.5},{0,.5}}):*PlanarChain({{-2,0},{0,0},{2,1}});changed=true;
     }
     changed|=ImGui::Checkbox("Lock 2D rotation",&shape.lockRotation);
+    if(shape.kind==PlanarKind::Chain&&shape.vertices.size()==2){changed|=ImGui::Checkbox("One-way platform (left side of edge)",&shape.oneWay);ImGui::TextWrapped("Vertex 0 to 1: left is solid. Left-to-right blocks from above. Static straight segments only.");}
     if(shape.kind==PlanarKind::Circle||shape.kind==PlanarKind::Capsule){float r=float(shape.radius);if(ImGui::DragFloat("Radius (m)",&r,.01f,.001f,10000)){shape.radius=r;changed=true;}}
     if(shape.kind==PlanarKind::Box){glm::vec2 half=-glm::vec2(shape.vertices[0]);if(ImGui::DragFloat2("Half size (m)",&half.x,.01f,.001f,10000)){shape.vertices={{-half.x,-half.y},{half.x,-half.y},{half.x,half.y},{-half.x,half.y}};changed=true;}}
     if(shape.kind==PlanarKind::Capsule){float h=float(shape.vertices[1].y);if(ImGui::DragFloat("Core half height (m)",&h,.01f,0,10000)){shape.vertices={{0,-h},{0,h}};changed=true;}}
@@ -671,11 +672,12 @@ void DrawPlanarCollider(EditorDocument& doc,SceneObject& o,EditorPanelState& sta
     std::string error;
     if(changed&&ValidatePlanar(shape,error)){doc.BeginEdit();body.planar=std::make_shared<const PlanarCollider>(shape);if(shape.kind==PlanarKind::Chain)body.motion=SceneBodyMotion::Static;doc.CommitEdit();}
     else if(!error.empty())ImGui::TextColored(ImVec4(1,.4f,.2f,1),"%s (last valid shape retained)",error.c_str());
-    ImGui::TextWrapped("Real collision in local XY, spin about local Z. Keep transform scale 1. Sprite size, sorting and flips do not change collision. Chains are static, two-sided and open. 3D physics cannot share this runtime world.");
+    ImGui::TextWrapped("Real collision in local XY, spin about local Z. Keep transform scale 1. Sprite size, sorting and flips do not change collision. Chains are static and open; straight two-vertex chains can opt into one-way response. 3D physics cannot share this runtime world.");
     if(ImGui::Button("Preview 2D collision")) {
         state.collisionPreview.Clear();const auto q=o.transform.rotation;const auto p=o.transform.position;
         auto line=[&](glm::dvec2 a,glm::dvec2 b){state.collisionPreview.Line(p+q*glm::vec3(a,0),p+q*glm::vec3(b,0),{.3f,1,.5f});};
         const auto& c=*body.planar;
+        if(c.oneWay){const auto e=glm::normalize(c.vertices[1]-c.vertices[0]),n=glm::dvec2(-e.y,e.x),mid=(c.vertices[0]+c.vertices[1])*.5,tip=mid+n*.5;line(mid,tip);line(tip,tip-n*.15+e*.1);line(tip,tip-n*.15-e*.1);}
         const double pi=3.141592653589793;
         if(c.kind==PlanarKind::Circle)for(int k=0;k<32;++k){double a=k*2*pi/32,b=(k+1)*2*pi/32;line(c.radius*glm::dvec2(cos(a),sin(a)),c.radius*glm::dvec2(cos(b),sin(b)));}
         else if(c.kind==PlanarKind::Capsule){const double h=c.vertices[1].y;

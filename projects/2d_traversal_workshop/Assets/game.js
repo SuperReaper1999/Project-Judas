@@ -1,0 +1,83 @@
+// Editable project controller. MK2 integrates every step; there are no position
+// assignments or post-collision snaps. Targets remain pending behind new obstacles.
+import {input,physics,world} from 'judas';
+export const properties={cellSize:{type:'number',default:1},speed:{type:'number',default:3},
+ followCamera:{type:'boolean',default:true},viewHeight:{type:'number',default:10}};
+/** @param {import('judas').Quat} q @param {import('judas').Vec3} v */
+function rotate(q,v){const x=2*(q.y*v.z-q.z*v.y),y=2*(q.z*v.x-q.x*v.z),z=2*(q.x*v.y-q.y*v.x);return {x:v.x+q.w*x+q.y*z-q.z*y,y:v.y+q.w*y+q.z*x-q.x*z,z:v.z+q.w*z+q.x*y-q.y*x};}
+/** @param {import('judas').Entity} owner @param {import('judas').Shape2D} shape
+ * @param {import('judas').Transform} pose @param {import('judas').Vec3} direction @param {number} distance */
+function clearPath(owner,shape,pose,direction,distance){
+ const ignored=[owner];
+ for(let i=0;i<8;i++){
+  const hit=physics.cast2D(shape,pose,direction,distance,{ignored,includeSensors:false});
+  if(!hit||hit.distance>=distance-1e-5)return true;
+  // A newly arrived obstacle can overlap the actor. Permit separating motion,
+  // but recast so ignoring that overlap cannot hide another blocker behind it.
+  const separating=hit.normal.x*direction.x+hit.normal.y*direction.y+hit.normal.z*direction.z>1e-6;
+  if(!hit.initialOverlap||!separating||!hit.entity?.valid)return false;
+  if(ignored.some(e=>e.id===hit.entity?.id))return false;
+  ignored.push(hit.entity);
+ }
+ return false; // Too many overlaps: bounded conservative stop, never a clear path.
+}
+export default class {
+ /** @param {import('judas').ScriptContext<{cellSize:number;speed:number;followCamera:boolean;viewHeight:number}>} context */
+ constructor({entity,properties}){this.entity=entity;this.properties=properties;
+  /** @type {{origin:import('judas').Vec3|null,cell:{x:number;y:number},target:import('judas').Vec3|null,next:{x:number;y:number},facing:{x:number;y:number},moves:number,blocked:boolean,queued:{x:number;y:number}|null}} */
+  this.state={origin:null,cell:{x:0,y:0},target:null,next:{x:0,y:0},facing:{x:0,y:-1},moves:0,blocked:false,queued:null};
+ }
+ start(){
+  const body=this.entity.body2D,p=this.properties;
+  if(!body||body.kind!=='box'||!body.lockRotation||this.entity.motionType!=='kinematic')throw Error('Grid player requires a rotation-locked kinematic native 2D box');
+  if(!Number.isFinite(p.cellSize)||p.cellSize<.1||p.cellSize>100||!Number.isFinite(p.speed)||p.speed<=0||p.speed>100||!Number.isFinite(p.viewHeight)||p.viewHeight<.1||p.viewHeight>10000)throw Error('Invalid grid controller dimensions/speed');
+  if(!this.state.origin)this.state.origin=this.entity.transform.position;
+ }
+ restore(){this.start();}
+ /** @param {number} dt */
+ fixedUpdate(dt){
+  const body=this.entity.body2D;if(!body)return;
+  const pose=this.entity.transform,p=pose.position,half=body.vertices[2];
+  const press={x:Number(input.pressed('grid_right'))-Number(input.pressed('grid_left')),
+   y:Number(input.pressed('grid_up'))-Number(input.pressed('grid_down'))};
+  let x=input.axis('move_x'),y=input.axis('move_y');
+  if(Math.abs(x)<.5)x=press.x;if(Math.abs(y)<.5)y=press.y;
+  if(this.state.target&&(press.x||press.y))this.state.queued={...press};
+
+  /** @type {import('judas').Shape2D} */
+  const shape={kind:'box',halfExtents:{x:half.x,y:half.y}};
+  const stop=()=>this.entity.setKinematicVelocity({x:0,y:0,z:0},{x:0,y:0,z:0});
+  const target=this.state.target;
+  if(target&&Math.hypot(target.x-p.x,target.y-p.y,target.z-p.z)<1e-5){if(this.state.cell.x!==this.state.next.x||this.state.cell.y!==this.state.next.y)this.state.moves++;this.state.cell={...this.state.next};this.state.target=null;}
+  // If something enters an accepted path, wait or let the player back out to
+  // the last committed cell. Returning uses real motion, never a grid snap.
+  if(this.state.target&&this.state.blocked){
+   const dx=this.state.next.x-this.state.cell.x,dy=this.state.next.y-this.state.cell.y;
+   if(x*dx+y*dy<-.5){const o=this.state.origin;if(!o)throw Error('Grid origin not initialized');
+    const v=rotate(pose.rotation,{x:this.state.cell.x*this.properties.cellSize,y:this.state.cell.y*this.properties.cellSize,z:0});
+    this.state.target={x:o.x+v.x,y:o.y+v.y,z:o.z+v.z};this.state.next={...this.state.cell};this.state.facing={x:-dx,y:-dy};this.state.queued=null;}
+  }
+  if(!this.state.target){
+   if(this.state.queued){x=this.state.queued.x;y=this.state.queued.y;this.state.queued=null;}
+   if(Math.max(Math.abs(x),Math.abs(y))<.5){stop();return;}
+   const direction=Math.abs(x)>=Math.abs(y)?{x:Math.sign(x),y:0}:{x:0,y:Math.sign(y)};
+   this.state.facing=direction;
+   const next={x:this.state.cell.x+direction.x,y:this.state.cell.y+direction.y},o=this.state.origin;
+   if(!o)throw Error('Grid origin not initialized');
+   const delta=rotate(pose.rotation,{x:next.x*this.properties.cellSize,y:next.y*this.properties.cellSize,z:0});
+   const desired={x:o.x+delta.x,y:o.y+delta.y,z:o.z+delta.z};
+   const distance=Math.hypot(desired.x-p.x,desired.y-p.y,desired.z-p.z),d={x:(desired.x-p.x)/distance,y:(desired.y-p.y)/distance,z:(desired.z-p.z)/distance};
+   if(!clearPath(this.entity,shape,pose,d,distance)){this.state.blocked=true;stop();return;}
+   this.state.next=next;this.state.target=desired;
+  }
+  const t=this.state.target,distance=Math.hypot(t.x-p.x,t.y-p.y,t.z-p.z);
+  if(distance<1e-5){stop();return;}
+  const d={x:(t.x-p.x)/distance,y:(t.y-p.y)/distance,z:(t.z-p.z)/distance};
+  const travel=Math.min(distance,this.properties.speed*dt);
+  if(!clearPath(this.entity,shape,pose,d,travel)){this.state.blocked=true;stop();return;}
+  this.state.blocked=false;
+  this.entity.setKinematicVelocity({x:d.x*travel/dt,y:d.y*travel/dt,z:d.z*travel/dt},{x:0,y:0,z:0});
+ }
+ presentationUpdate(){if(this.properties.followCamera){const p=this.entity.presentedTransform,f=rotate(p.rotation,{x:0,y:0,z:15});world.setView({position:{x:p.position.x+f.x,y:p.position.y+f.y,z:p.position.z+f.z},rotation:p.rotation},60,{projection:'orthographic',height:this.properties.viewHeight,near:.01,far:100});}}
+ destroy(){if(this.properties.followCamera)world.clearView();}
+}

@@ -1,0 +1,5 @@
+import {input,scenes,saves,ui} from 'judas';
+export default class {constructor(){this.state={request:null};}
+ uiUpdate(){if(!saves.busy){if(input.pressed('side_view'))scenes.load('Scenes/main.judas');else if(input.pressed('grid_view'))scenes.load('Scenes/grid.judas');else if(input.pressed('restart'))scenes.reload();else if(input.pressed('save_game'))this.state.request=saves.save('traversal');else if(input.pressed('load_game'))this.state.request=saves.load('traversal');}
+ const doc=ui.get('sprite_help'),s=this.state.request?saves.status(this.state.request):null;if(doc)doc.get('help').text='2D TRAVERSAL | 1: one-way platforms | 2: grid RPG | R: reset\nWASD / arrows: move | Space: jump in platform scene | F6/F7: save/load\nOne-way: walk underneath, jump through and land above. Grid: tap a direction; walls block full cells.'+(s?'\nSave: '+s.state+' '+s.error:'');}
+}

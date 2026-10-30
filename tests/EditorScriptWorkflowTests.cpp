@@ -111,6 +111,16 @@ int main() {
             check(!CreateEditorPrimitive(playerDoc,project,assets,kind,{},0,error)&&error.find("refusing to overwrite")!=std::string::npos,
                   "edited primitive mesh is preserved and reuse fails with an actionable error");
         }
+        EditorDocument gridDoc;
+        const auto gridPlayer=CreateEditorPlanarPlayer(gridDoc,project,assets,{2,3,0},0,error,false,true);
+        check(gridPlayer&&gridDoc.Selected()==gridPlayer&&gridDoc.SelectedObject()->body&&
+              gridDoc.SelectedObject()->body->motion==SceneBodyMotion::Kinematic&&
+              gridDoc.SelectedObject()->body->planar->kind==PlanarKind::Box&&
+              gridDoc.SelectedObject()->body->planar->lockRotation,"hierarchy grid preset creates selected native kinematic footprint");
+        check(gridDoc.SelectedObject()->scripts.size()==1&&ScriptSystem::CheckProjectSources(assets).empty(),"hierarchy grid preset attaches valid editable project source");
+        check(world.Build(gridDoc.GetScene(),&resources,error),"hierarchy grid preset builds through normal runtime");
+        InputSystem gridInput;world.UpdateScripts(&gridInput,.016f);world.FixedScripts(&gridInput,1.f/60);
+        check(world.Scripts()->Diagnostics().empty(),"hierarchy grid controller starts without authority or property errors");world.Destroy();
         ImGui::CreateContext();auto& io=ImGui::GetIO();io.IniFilename=nullptr;io.LogFilename=nullptr;io.DisplaySize={1000,800};io.DeltaTime=1.f/60;
         unsigned char* pixels;int width,height;io.Fonts->GetTexDataAsRGBA32(&pixels,&width,&height);
         EditorPanelState state;state.project=&project;state.assets=&assets;state.newScriptName="FromInspector.js";doc.Select(owner);

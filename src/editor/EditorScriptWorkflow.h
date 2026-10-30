@@ -15,4 +15,4 @@ SceneObjectId CreateEditorFirstPersonPlayer(EditorDocument&, Project&, AssetData
                                           glm::vec3 position, SceneObjectId parent, std::string& error,
                                           bool thirdPerson = false);
 SceneObjectId CreateEditorPlanarPlayer(EditorDocument&,Project&,AssetDatabase&,glm::vec3,
-                                      SceneObjectId,std::string& error,bool sideView);
+                                      SceneObjectId,std::string& error,bool sideView,bool grid=false);

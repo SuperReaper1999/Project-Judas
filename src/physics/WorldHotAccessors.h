@@ -43,8 +43,22 @@ inline auto PhysicsWorld::Impl::CanCollide(unsigned a, unsigned b) const -> bool
                               bodies[b].collisionLayer, bodies[b].collisionMask);
 }
 
+inline auto PhysicsWorld::Impl::OneWayAllows(unsigned a,unsigned b) const -> bool {
+    const auto pose=[&](const Body& body){
+        const bool start=stepping&&(body.isDynamic||body.isKinematic);
+        return ContactPose{start?body.previousPosition:body.rigidBody.position,
+                           start?body.previousOrientation:body.rigidBody.orientation,-body.shape.pivotOffset};
+    };
+    const auto& aa=bodies[a];const auto& bb=bodies[b];
+    // Default shapes avoid all pose/support work. This policy is intentionally
+    // separate from broadphase pair admission, whose cache outlives a step.
+    const bool wa=aa.shape.planar&&aa.shape.planar->oneWay,wb=bb.shape.planar&&bb.shape.planar->oneWay;
+    return (!wa||PlanarOneWayAllows(aa.shape,pose(aa),bb.shape,pose(bb),kMk2MinimumMargin))&&
+           (!wb||PlanarOneWayAllows(bb.shape,pose(bb),aa.shape,pose(aa),kMk2MinimumMargin));
+}
+
 inline auto PhysicsWorld::Impl::CanRespond(unsigned a, unsigned b) const -> bool {
-    return CanCollide(a, b) && !bodies[a].sensor && !bodies[b].sensor && !bodies[a].queryOnly &&
+    return CanCollide(a, b) && OneWayAllows(a,b) && !bodies[a].sensor && !bodies[b].sensor && !bodies[a].queryOnly &&
            !bodies[b].queryOnly &&
            !((bodies[a].sleeping || bodies[a].rigidBody.IsStatic()) &&
              (bodies[b].sleeping || bodies[b].rigidBody.IsStatic()));

@@ -1,0 +1,3407 @@
+JudasScene 3
+settings
+  name "One-way platform workshop"
+  world-origin 0 0 0
+  sun-direction 0.4 0.7 0.35
+  sun-color 1 0.98 0.92
+  ambient 0.16 0.17 0.19
+  sun-enabled false
+  background-color 0.055 0.085 0.11
+  fluid-scale 1
+  fluid-update-rate-hz 30
+  fluid-hydrostatic-drag-rate 2
+  fidelity-policy none
+  next-id 199
+end
+
+object 1 "Grid RPG player - editable game.js"
+  scripts 1
+  script.0.id 1
+  script.0.asset "d1d47141afbdd270c7e0fee64a9f08ae"
+  script.0.enabled true
+  script.0.properties "{\"sideView\":true}"
+  position 0 0.4 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset "7a4da396c770fa7b5eba64d7d3b21df8"
+  render.sprite-v1 "{\"version\":1,\"size\":[0.699999988079071,1.2999999523162842],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":true,\"sortingLayer\":1,\"order\":0}"
+  body dynamic planar
+  body.planar-v1 "{\"version\":1,\"kind\":2,\"radius\":0.3,\"lockRotation\":true,\"vertices\":[[0.0,-0.3],[0.0,0.3]]}"
+  body.half-extents 0.5 0.5 0.5
+  body.radius 0.5
+  body.terrain ""
+  body.mass 5
+  body.friction 0
+  body.restitution 0.1
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 2 "Backdrop - editable sprite tiles"
+  position 0 0 0
+  rotation 1 0 0 0
+  scale 1 1 1
+end
+
+object 3 "Ground tile"
+  parent 2
+  position -8 -5 -0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.13 0.25 0.23
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 4 "Ground tile"
+  parent 2
+  position -7 -5 -0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.15 0.28 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 5 "Ground tile"
+  parent 2
+  position -6 -5 -0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.13 0.25 0.23
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 6 "Ground tile"
+  parent 2
+  position -5 -5 -0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.15 0.28 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 7 "Ground tile"
+  parent 2
+  position -4 -5 -0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.13 0.25 0.23
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 8 "Ground tile"
+  parent 2
+  position -3 -5 -0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.15 0.28 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 9 "Ground tile"
+  parent 2
+  position -2 -5 -0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.13 0.25 0.23
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 10 "Ground tile"
+  parent 2
+  position -1 -5 -0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.15 0.28 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 11 "Ground tile"
+  parent 2
+  position 0 -5 -0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.13 0.25 0.23
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 12 "Ground tile"
+  parent 2
+  position 1 -5 -0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.15 0.28 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 13 "Ground tile"
+  parent 2
+  position 2 -5 -0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.13 0.25 0.23
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 14 "Ground tile"
+  parent 2
+  position 3 -5 -0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.15 0.28 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 15 "Ground tile"
+  parent 2
+  position 4 -5 -0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.13 0.25 0.23
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 16 "Ground tile"
+  parent 2
+  position 5 -5 -0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.15 0.28 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 17 "Ground tile"
+  parent 2
+  position 6 -5 -0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.13 0.25 0.23
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 18 "Ground tile"
+  parent 2
+  position 7 -5 -0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.15 0.28 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 19 "Ground tile"
+  parent 2
+  position 8 -5 -0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.13 0.25 0.23
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 20 "Ground tile"
+  parent 2
+  position -8 -4 -0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.15 0.28 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 21 "Ground tile"
+  parent 2
+  position -7 -4 -0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.13 0.25 0.23
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 22 "Ground tile"
+  parent 2
+  position -6 -4 -0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.15 0.28 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 23 "Ground tile"
+  parent 2
+  position -5 -4 -0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.13 0.25 0.23
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 24 "Ground tile"
+  parent 2
+  position -4 -4 -0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.15 0.28 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 25 "Ground tile"
+  parent 2
+  position -3 -4 -0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.13 0.25 0.23
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 26 "Ground tile"
+  parent 2
+  position -2 -4 -0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.15 0.28 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 27 "Ground tile"
+  parent 2
+  position -1 -4 -0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.13 0.25 0.23
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 28 "Ground tile"
+  parent 2
+  position 0 -4 -0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.15 0.28 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 29 "Ground tile"
+  parent 2
+  position 1 -4 -0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.13 0.25 0.23
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 30 "Ground tile"
+  parent 2
+  position 2 -4 -0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.15 0.28 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 31 "Ground tile"
+  parent 2
+  position 3 -4 -0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.13 0.25 0.23
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 32 "Ground tile"
+  parent 2
+  position 4 -4 -0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.15 0.28 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 33 "Ground tile"
+  parent 2
+  position 5 -4 -0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.13 0.25 0.23
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 34 "Ground tile"
+  parent 2
+  position 6 -4 -0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.15 0.28 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 35 "Ground tile"
+  parent 2
+  position 7 -4 -0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.13 0.25 0.23
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 36 "Ground tile"
+  parent 2
+  position 8 -4 -0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.15 0.28 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 37 "Ground tile"
+  parent 2
+  position -8 -3 -0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.13 0.25 0.23
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 38 "Ground tile"
+  parent 2
+  position -7 -3 -0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.15 0.28 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 39 "Ground tile"
+  parent 2
+  position -6 -3 -0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.13 0.25 0.23
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 40 "Ground tile"
+  parent 2
+  position -5 -3 -0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.15 0.28 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 41 "Ground tile"
+  parent 2
+  position -4 -3 -0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.13 0.25 0.23
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 42 "Ground tile"
+  parent 2
+  position -3 -3 -0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.15 0.28 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 43 "Ground tile"
+  parent 2
+  position -2 -3 -0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.13 0.25 0.23
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 44 "Ground tile"
+  parent 2
+  position -1 -3 -0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.15 0.28 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 45 "Ground tile"
+  parent 2
+  position 0 -3 -0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.13 0.25 0.23
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 46 "Ground tile"
+  parent 2
+  position 1 -3 -0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.15 0.28 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 47 "Ground tile"
+  parent 2
+  position 2 -3 -0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.13 0.25 0.23
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 48 "Ground tile"
+  parent 2
+  position 3 -3 -0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.15 0.28 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 49 "Ground tile"
+  parent 2
+  position 4 -3 -0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.13 0.25 0.23
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 50 "Ground tile"
+  parent 2
+  position 5 -3 -0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.15 0.28 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 51 "Ground tile"
+  parent 2
+  position 6 -3 -0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.13 0.25 0.23
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 52 "Ground tile"
+  parent 2
+  position 7 -3 -0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.15 0.28 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 53 "Ground tile"
+  parent 2
+  position 8 -3 -0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.13 0.25 0.23
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 54 "Ground tile"
+  parent 2
+  position -8 -2 -0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.15 0.28 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 55 "Ground tile"
+  parent 2
+  position -7 -2 -0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.13 0.25 0.23
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 56 "Ground tile"
+  parent 2
+  position -6 -2 -0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.15 0.28 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 57 "Ground tile"
+  parent 2
+  position -5 -2 -0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.13 0.25 0.23
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 58 "Ground tile"
+  parent 2
+  position -4 -2 -0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.15 0.28 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 59 "Ground tile"
+  parent 2
+  position -3 -2 -0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.13 0.25 0.23
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 60 "Ground tile"
+  parent 2
+  position -2 -2 -0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.15 0.28 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 61 "Ground tile"
+  parent 2
+  position -1 -2 -0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.13 0.25 0.23
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 62 "Ground tile"
+  parent 2
+  position 0 -2 -0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.15 0.28 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 63 "Ground tile"
+  parent 2
+  position 1 -2 -0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.13 0.25 0.23
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 64 "Ground tile"
+  parent 2
+  position 2 -2 -0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.15 0.28 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 65 "Ground tile"
+  parent 2
+  position 3 -2 -0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.13 0.25 0.23
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 66 "Ground tile"
+  parent 2
+  position 4 -2 -0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.15 0.28 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 67 "Ground tile"
+  parent 2
+  position 5 -2 -0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.13 0.25 0.23
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 68 "Ground tile"
+  parent 2
+  position 6 -2 -0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.15 0.28 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 69 "Ground tile"
+  parent 2
+  position 7 -2 -0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.13 0.25 0.23
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 70 "Ground tile"
+  parent 2
+  position 8 -2 -0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.15 0.28 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 71 "Ground tile"
+  parent 2
+  position -8 -1 -0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.13 0.25 0.23
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 72 "Ground tile"
+  parent 2
+  position -7 -1 -0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.15 0.28 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 73 "Ground tile"
+  parent 2
+  position -6 -1 -0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.13 0.25 0.23
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 74 "Ground tile"
+  parent 2
+  position -5 -1 -0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.15 0.28 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 75 "Ground tile"
+  parent 2
+  position -4 -1 -0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.13 0.25 0.23
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 76 "Ground tile"
+  parent 2
+  position -3 -1 -0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.15 0.28 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 77 "Ground tile"
+  parent 2
+  position -2 -1 -0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.13 0.25 0.23
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 78 "Ground tile"
+  parent 2
+  position -1 -1 -0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.15 0.28 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 79 "Ground tile"
+  parent 2
+  position 0 -1 -0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.13 0.25 0.23
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 80 "Ground tile"
+  parent 2
+  position 1 -1 -0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.15 0.28 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 81 "Ground tile"
+  parent 2
+  position 2 -1 -0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.13 0.25 0.23
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 82 "Ground tile"
+  parent 2
+  position 3 -1 -0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.15 0.28 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 83 "Ground tile"
+  parent 2
+  position 4 -1 -0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.13 0.25 0.23
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 84 "Ground tile"
+  parent 2
+  position 5 -1 -0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.15 0.28 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 85 "Ground tile"
+  parent 2
+  position 6 -1 -0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.13 0.25 0.23
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 86 "Ground tile"
+  parent 2
+  position 7 -1 -0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.15 0.28 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 87 "Ground tile"
+  parent 2
+  position 8 -1 -0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.13 0.25 0.23
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 88 "Ground tile"
+  parent 2
+  position -8 0 -0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.15 0.28 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 89 "Ground tile"
+  parent 2
+  position -7 0 -0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.13 0.25 0.23
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 90 "Ground tile"
+  parent 2
+  position -6 0 -0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.15 0.28 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 91 "Ground tile"
+  parent 2
+  position -5 0 -0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.13 0.25 0.23
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 92 "Ground tile"
+  parent 2
+  position -4 0 -0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.15 0.28 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 93 "Ground tile"
+  parent 2
+  position -3 0 -0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.13 0.25 0.23
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 94 "Ground tile"
+  parent 2
+  position -2 0 -0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.15 0.28 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 95 "Ground tile"
+  parent 2
+  position -1 0 -0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.13 0.25 0.23
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 96 "Ground tile"
+  parent 2
+  position 0 0 -0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.15 0.28 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 97 "Ground tile"
+  parent 2
+  position 1 0 -0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.13 0.25 0.23
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 98 "Ground tile"
+  parent 2
+  position 2 0 -0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.15 0.28 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 99 "Ground tile"
+  parent 2
+  position 3 0 -0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.13 0.25 0.23
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 100 "Ground tile"
+  parent 2
+  position 4 0 -0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.15 0.28 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 101 "Ground tile"
+  parent 2
+  position 5 0 -0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.13 0.25 0.23
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 102 "Ground tile"
+  parent 2
+  position 6 0 -0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.15 0.28 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 103 "Ground tile"
+  parent 2
+  position 7 0 -0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.13 0.25 0.23
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 104 "Ground tile"
+  parent 2
+  position 8 0 -0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.15 0.28 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 105 "Ground tile"
+  parent 2
+  position -8 1 -0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.13 0.25 0.23
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 106 "Ground tile"
+  parent 2
+  position -7 1 -0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.15 0.28 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 107 "Ground tile"
+  parent 2
+  position -6 1 -0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.13 0.25 0.23
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 108 "Ground tile"
+  parent 2
+  position -5 1 -0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.15 0.28 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 109 "Ground tile"
+  parent 2
+  position -4 1 -0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.13 0.25 0.23
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 110 "Ground tile"
+  parent 2
+  position -3 1 -0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.15 0.28 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 111 "Ground tile"
+  parent 2
+  position -2 1 -0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.13 0.25 0.23
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 112 "Ground tile"
+  parent 2
+  position -1 1 -0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.15 0.28 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 113 "Ground tile"
+  parent 2
+  position 0 1 -0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.13 0.25 0.23
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 114 "Ground tile"
+  parent 2
+  position 1 1 -0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.15 0.28 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 115 "Ground tile"
+  parent 2
+  position 2 1 -0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.13 0.25 0.23
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 116 "Ground tile"
+  parent 2
+  position 3 1 -0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.15 0.28 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 117 "Ground tile"
+  parent 2
+  position 4 1 -0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.13 0.25 0.23
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 118 "Ground tile"
+  parent 2
+  position 5 1 -0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.15 0.28 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 119 "Ground tile"
+  parent 2
+  position 6 1 -0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.13 0.25 0.23
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 120 "Ground tile"
+  parent 2
+  position 7 1 -0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.15 0.28 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 121 "Ground tile"
+  parent 2
+  position 8 1 -0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.13 0.25 0.23
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 122 "Ground tile"
+  parent 2
+  position -8 2 -0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.15 0.28 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 123 "Ground tile"
+  parent 2
+  position -7 2 -0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.13 0.25 0.23
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 124 "Ground tile"
+  parent 2
+  position -6 2 -0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.15 0.28 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 125 "Ground tile"
+  parent 2
+  position -5 2 -0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.13 0.25 0.23
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 126 "Ground tile"
+  parent 2
+  position -4 2 -0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.15 0.28 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 127 "Ground tile"
+  parent 2
+  position -3 2 -0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.13 0.25 0.23
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 128 "Ground tile"
+  parent 2
+  position -2 2 -0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.15 0.28 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 129 "Ground tile"
+  parent 2
+  position -1 2 -0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.13 0.25 0.23
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 130 "Ground tile"
+  parent 2
+  position 0 2 -0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.15 0.28 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 131 "Ground tile"
+  parent 2
+  position 1 2 -0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.13 0.25 0.23
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 132 "Ground tile"
+  parent 2
+  position 2 2 -0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.15 0.28 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 133 "Ground tile"
+  parent 2
+  position 3 2 -0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.13 0.25 0.23
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 134 "Ground tile"
+  parent 2
+  position 4 2 -0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.15 0.28 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 135 "Ground tile"
+  parent 2
+  position 5 2 -0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.13 0.25 0.23
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 136 "Ground tile"
+  parent 2
+  position 6 2 -0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.15 0.28 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 137 "Ground tile"
+  parent 2
+  position 7 2 -0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.13 0.25 0.23
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 138 "Ground tile"
+  parent 2
+  position 8 2 -0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.15 0.28 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 139 "Ground tile"
+  parent 2
+  position -8 3 -0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.13 0.25 0.23
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 140 "Ground tile"
+  parent 2
+  position -7 3 -0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.15 0.28 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 141 "Ground tile"
+  parent 2
+  position -6 3 -0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.13 0.25 0.23
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 142 "Ground tile"
+  parent 2
+  position -5 3 -0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.15 0.28 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 143 "Ground tile"
+  parent 2
+  position -4 3 -0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.13 0.25 0.23
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 144 "Ground tile"
+  parent 2
+  position -3 3 -0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.15 0.28 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 145 "Ground tile"
+  parent 2
+  position -2 3 -0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.13 0.25 0.23
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 146 "Ground tile"
+  parent 2
+  position -1 3 -0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.15 0.28 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 147 "Ground tile"
+  parent 2
+  position 0 3 -0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.13 0.25 0.23
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 148 "Ground tile"
+  parent 2
+  position 1 3 -0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.15 0.28 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 149 "Ground tile"
+  parent 2
+  position 2 3 -0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.13 0.25 0.23
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 150 "Ground tile"
+  parent 2
+  position 3 3 -0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.15 0.28 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 151 "Ground tile"
+  parent 2
+  position 4 3 -0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.13 0.25 0.23
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 152 "Ground tile"
+  parent 2
+  position 5 3 -0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.15 0.28 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 153 "Ground tile"
+  parent 2
+  position 6 3 -0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.13 0.25 0.23
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 154 "Ground tile"
+  parent 2
+  position 7 3 -0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.15 0.28 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 155 "Ground tile"
+  parent 2
+  position 8 3 -0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.13 0.25 0.23
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 156 "Ground tile"
+  parent 2
+  position -8 4 -0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.15 0.28 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 157 "Ground tile"
+  parent 2
+  position -7 4 -0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.13 0.25 0.23
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 158 "Ground tile"
+  parent 2
+  position -6 4 -0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.15 0.28 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 159 "Ground tile"
+  parent 2
+  position -5 4 -0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.13 0.25 0.23
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 160 "Ground tile"
+  parent 2
+  position -4 4 -0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.15 0.28 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 161 "Ground tile"
+  parent 2
+  position -3 4 -0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.13 0.25 0.23
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 162 "Ground tile"
+  parent 2
+  position -2 4 -0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.15 0.28 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 163 "Ground tile"
+  parent 2
+  position -1 4 -0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.13 0.25 0.23
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 164 "Ground tile"
+  parent 2
+  position 0 4 -0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.15 0.28 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 165 "Ground tile"
+  parent 2
+  position 1 4 -0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.13 0.25 0.23
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 166 "Ground tile"
+  parent 2
+  position 2 4 -0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.15 0.28 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 167 "Ground tile"
+  parent 2
+  position 3 4 -0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.13 0.25 0.23
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 168 "Ground tile"
+  parent 2
+  position 4 4 -0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.15 0.28 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 169 "Ground tile"
+  parent 2
+  position 5 4 -0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.13 0.25 0.23
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 170 "Ground tile"
+  parent 2
+  position 6 4 -0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.15 0.28 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 171 "Ground tile"
+  parent 2
+  position 7 4 -0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.13 0.25 0.23
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 172 "Ground tile"
+  parent 2
+  position 8 4 -0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.15 0.28 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 173 "Ground tile"
+  parent 2
+  position -8 5 -0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.13 0.25 0.23
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 174 "Ground tile"
+  parent 2
+  position -7 5 -0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.15 0.28 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 175 "Ground tile"
+  parent 2
+  position -6 5 -0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.13 0.25 0.23
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 176 "Ground tile"
+  parent 2
+  position -5 5 -0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.15 0.28 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 177 "Ground tile"
+  parent 2
+  position -4 5 -0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.13 0.25 0.23
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 178 "Ground tile"
+  parent 2
+  position -3 5 -0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.15 0.28 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 179 "Ground tile"
+  parent 2
+  position -2 5 -0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.13 0.25 0.23
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 180 "Ground tile"
+  parent 2
+  position -1 5 -0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.15 0.28 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 181 "Ground tile"
+  parent 2
+  position 0 5 -0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.13 0.25 0.23
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 182 "Ground tile"
+  parent 2
+  position 1 5 -0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.15 0.28 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 183 "Ground tile"
+  parent 2
+  position 2 5 -0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.13 0.25 0.23
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 184 "Ground tile"
+  parent 2
+  position 3 5 -0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.15 0.28 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 185 "Ground tile"
+  parent 2
+  position 4 5 -0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.13 0.25 0.23
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 186 "Ground tile"
+  parent 2
+  position 5 5 -0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.15 0.28 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 187 "Ground tile"
+  parent 2
+  position 6 5 -0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.13 0.25 0.23
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 188 "Ground tile"
+  parent 2
+  position 7 5 -0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.15 0.28 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 189 "Ground tile"
+  parent 2
+  position 8 5 -0.2
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.13 0.25 0.23
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 190 "Controls HUD"
+  ui.asset "44e6ab66e42d1e294f8b98d858ffb156"
+  ui.name "sprite_help"
+  ui.enabled true
+  position 0 0 0
+  rotation 1 0 0 0
+  scale 1 1 1
+end
+
+object 191 "Floor"
+  position 0 -1 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.3 0.5 0.52
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[24.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":0,\"order\":0}"
+  body static planar
+  body.planar-v1 "{\"version\":1,\"kind\":1,\"radius\":0.0,\"lockRotation\":false,\"vertices\":[[-12.0,-0.5],[12.0,-0.5],[12.0,0.5],[-12.0,0.5]]}"
+  body.half-extents 0.5 0.5 0.5
+  body.radius 0.5
+  body.terrain ""
+  body.mass 1
+  body.friction 0.6
+  body.restitution 0.1
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 192 "Left wall"
+  position -12 3 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.3 0.5 0.52
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,8.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":0,\"order\":0}"
+  body static planar
+  body.planar-v1 "{\"version\":1,\"kind\":1,\"radius\":0.0,\"lockRotation\":false,\"vertices\":[[-0.5,-4.0],[0.5,-4.0],[0.5,4.0],[-0.5,4.0]]}"
+  body.half-extents 0.5 0.5 0.5
+  body.radius 0.5
+  body.terrain ""
+  body.mass 1
+  body.friction 0.6
+  body.restitution 0.1
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 193 "Right wall"
+  position 12 3 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.3 0.5 0.52
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,8.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":0,\"order\":0}"
+  body static planar
+  body.planar-v1 "{\"version\":1,\"kind\":1,\"radius\":0.0,\"lockRotation\":false,\"vertices\":[[-0.5,-4.0],[0.5,-4.0],[0.5,4.0],[-0.5,4.0]]}"
+  body.half-extents 0.5 0.5 0.5
+  body.radius 0.5
+  body.terrain ""
+  body.mass 1
+  body.friction 0.6
+  body.restitution 0.1
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 195 "One-way platform - preview arrow in Body"
+  position 3 0.7 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.9 0.65 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[2.799999952316284,0.11999999731779099],\"pivot\":[0.5,0.0],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":0,\"order\":0}"
+  body static planar
+  body.planar-v1 "{\"version\":2,\"kind\":4,\"radius\":0.0,\"lockRotation\":true,\"vertices\":[[-1.4,0.0],[1.4,0.0]],\"oneWay\":true}"
+  body.half-extents 0.5 0.5 0.5
+  body.radius 0.5
+  body.terrain ""
+  body.mass 1
+  body.friction 0.6
+  body.restitution 0.1
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 196 "One-way platform - preview arrow in Body"
+  position 7 2.1 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.9 0.65 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[2.799999952316284,0.11999999731779099],\"pivot\":[0.5,0.0],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":0,\"order\":0}"
+  body static planar
+  body.planar-v1 "{\"version\":2,\"kind\":4,\"radius\":0.0,\"lockRotation\":true,\"vertices\":[[-1.4,0.0],[1.4,0.0]],\"oneWay\":true}"
+  body.half-extents 0.5 0.5 0.5
+  body.radius 0.5
+  body.terrain ""
+  body.mass 1
+  body.friction 0.6
+  body.restitution 0.1
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 197 "2D gravity"
+  position 0 0 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  gravity uniform 9.81
+  gravity.region box 100 100 10
+end
+
+object 198 "Scene and save controls - project JavaScript"
+  scripts 1
+  script.0.id 1
+  script.0.asset "823616ac3fbf8597e420788b0a9dbff8"
+  script.0.enabled true
+  script.0.properties "{}"
+  position 0 0 0
+  rotation 1 0 0 0
+  scale 1 1 1
+end

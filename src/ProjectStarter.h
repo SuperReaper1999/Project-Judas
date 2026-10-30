@@ -8,3 +8,9 @@ bool PopulateVisibleProjectStarter(Project&,Scene&,std::string& error);
 bool Populate2DProjectStarter(Project&,Scene&,bool sideView,std::string& error);
 
 bool PopulatePlanarProjectStarter(Project&,Scene&,bool sideView,std::string& error);
+
+// Kinematic, cast-checked cardinal movement; game policy remains editable JS.
+bool PopulateGridProjectStarter(Project&,Scene&,std::string& error);
+
+// Preserve existing bindings; add edge-latched cardinal actions for grid taps.
+bool ConfigureGridPlayerInput(Project&,std::string& error);

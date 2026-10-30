@@ -1,0 +1,8 @@
+PASS cold process opens grid project
+PASS ordinary project bindings
+PASS fresh process reads mid-step snapshot
+PASS cold restores pending cell and native kinematic state
+PASS begin normal played session
+PASS cold resumes remaining cell without snap or replaying input
+PASS cold commits each traversed cell exactly once
+GRID_COLD checks=7 failures=0

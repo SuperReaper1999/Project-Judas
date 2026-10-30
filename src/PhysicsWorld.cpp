@@ -225,7 +225,7 @@ void PhysicsWorld::Step(float fixedDeltaTime, const VelocityCoupling *coupling) 
     for (const auto &[slotA, slotB] : w.candidatePairs) {
         Impl::Body &a = w.bodies[slotA];
         Impl::Body &b = w.bodies[slotB];
-        if (a.sensor || b.sensor || a.queryOnly || b.queryOnly)
+        if (a.sensor || b.sensor || a.queryOnly || b.queryOnly || !w.OneWayAllows(slotA,slotB))
             continue;
         if ((a.sleeping || a.rigidBody.IsStatic()) && (b.sleeping || b.rigidBody.IsStatic())) {
             const auto ha = w.MakeHandle(slotA).id, hb = w.MakeHandle(slotB).id;

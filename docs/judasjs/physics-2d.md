@@ -28,7 +28,7 @@ preflight with an actionable error. There is no hidden fallback to 3D collision.
 ## `Entity.body2D`
 
 Detached metadata or `null`: `kind`, `radius`, local XY `vertices`, `lockRotation`
-and fixed world `normal`. A capsule has two core endpoints; total height is
+and fixed world `normal`, plus `oneWay` for authored one-way chains. A capsule has two core endpoints; total height is
 `2*(radius+halfHeight)`. Existing `velocity`, `angularVelocity`, `applyForce`,
 `applyTorque`, `applyImpulse`, `applyImpulseAtPoint`, `pointVelocity`,
 `setMotionType` and kinematic commands operate on actual native bodies.
@@ -76,3 +76,60 @@ support detection uses native capsule casts and point velocities. It does not
 teleport, clamp height or simulate a separate physics engine. Gameplay-specific
 coyote time, wall jumps, one-way platforms and character animation are project
 policy and are not provided by this initial preset.
+
+## One-way platforms
+
+Hierarchy → Create → **2D one-way platform** authors a visible static segment.
+Alternatively choose a two-vertex static chain in Body → Native 2D and enable
+**One-way platform**. The blocking side is left of vertex 0 → vertex 1; a
+left-to-right segment blocks from above. Preview collision draws an arrow toward
+that side. Rotate the fixed frame for a different gravity orientation.
+
+Admission uses the other body's lowest support at the beginning of the step,
+with the existing 2 mm native contact margin. Broadphase pairs remain geometric;
+only contact response/CCD admission is directional. A jump from below is not
+blocked halfway through, and a separate descending body can land simultaneously.
+Core distance geometry remains continuous for the chronological CCD solver.
+Queries use their current start pose and the same side rule. Sensors continue to
+report ordinary geometric overlap; one-way is response policy, not trigger hiding.
+
+This initial representation is **straight, two-vertex, static segments**. Moving
+platforms, curved one-way chains and a built-in drop-through command are not
+provided. Spawn on the intended side; deeply intersecting starts are not repaired
+or teleported above the platform. Standard two-sided descriptors retain their
+version-1 bytes; opted-in geometry uses descriptor version 2. Normal scenes,
+prefabs, modern saves and exports carry that descriptor. No private crossing timer
+or disposable unpersisted solver flag is needed for cold continuation.
+
+## Grid RPG preset
+
+New Project → **New 2D game - grid RPG**, or hierarchy → Create → **2D grid RPG
+player**. The generated script is an ordinary editable copy of
+[grid-player-2d.js](examples/grid-player-2d.js). Use one camera owner; when adding
+this to an existing game, disable the prior player/camera script or turn off this
+controller's `followCamera` property deliberately.
+
+The preset uses a rotation-locked **kinematic box** with cardinal movement.
+Configure cellSize, speed and camera properties in the Inspector. Each input
+starts a full, cast-checked cell step; releasing it does not leave half a step.
+Held input repeats steps; diagonal input resolves one axis, never corner cutting.
+The preset adds rebindable grid_left/right/up/down button actions alongside the
+movement axes, so even a key press/release between physics steps is retained.
+One upcoming short turn can be buffered while a cell finishes; it is saved state.
+Existing configured bindings are preserved. The hierarchy preset persists newly
+added logical actions in the project; New Project saves them normally.
+Facing, committed cell, pending target, blocked status and completed-move count
+are saved project state. Native velocity integration moves the body; there are no
+position snaps, teleports, extra physics clock or fake collision boundaries.
+
+If a new obstacle enters a step, the actor stops. It resumes when clear; reverse
+input can back out to the last committed cell. Separating initial overlaps are
+skipped only after another cast checks for blockers behind them. Eight overlapping
+blockers exhaust the bounded query and conservatively stop rather than declaring
+clear passage. A returned partial step does not invent a cell completion.
+
+This is a bounded flat/fixed-frame RPG movement policy, not a pathfinder, NPC
+schedule, battle framework, live-origin-shift controller or interpolated animation
+system. Kinematic authority is deliberate: it does not make a dynamically pushed
+ragdoll/controller. World updates and save compatibility remain normal project
+policy. Foot-pivot visuals/Y sorting are authored separately from collision.

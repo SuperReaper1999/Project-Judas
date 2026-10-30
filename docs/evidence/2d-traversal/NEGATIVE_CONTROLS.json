@@ -1,0 +1,16 @@
+{
+  "axisPrototype": {
+    "argv": [
+      ".cache/2d-stage1-build/judas_grid_movement_tests",
+      ".cache/2d-oneway-grid/negative-final-source",
+      "--controller",
+      ".cache/2d-oneway-grid/grid-axis-only.js"
+    ],
+    "exit": 1,
+    "expectedFailure": true
+  },
+  "oldEntityTelemetry": {
+    "exit": 1,
+    "expectedFailure": true
+  }
+}

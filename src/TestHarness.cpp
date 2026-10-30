@@ -140,7 +140,7 @@ int RunTestHarness(Window& window,Renderer& renderer,InteractivePlay& play,const
    }
    if(quit(frame))break;
    if(script.logEvery&&frame%script.logEvery==0){auto& world=play.Session().World();glm::vec3 p=play.Session().Player().GetPosition(),v=play.Session().Player().GetVelocity();bool supported=play.Session().Player().IsGrounded();glm::vec3 up=play.Session().Player().GetOrientation()*glm::vec3(0,1,0);
-    if(!script.entity.empty()){EntityId id=std::stoull(script.entity);auto* d=world.RuntimeDefinition(id);Require(d,"selected entity is unavailable");p=d->transform.position;up=d->transform.rotation*glm::vec3(0,1,0);if(auto* m=world.RuntimeCharacter(id)){v=m->result.velocity;supported=m->result.supported;}else v=world.Physics().GetLinearVelocity(world.RuntimeBody(id));}
+    if(!script.entity.empty()){EntityId id=std::stoull(script.entity);auto* d=world.RuntimeDefinition(id);Require(d,"selected entity is unavailable");const auto pose=world.PresentedTransform(id,d->transform,1);p=pose.position;up=pose.rotation*glm::vec3(0,1,0);if(auto* m=world.RuntimeCharacter(id)){v=m->result.velocity;supported=m->result.supported;}else v=world.Physics().GetLinearVelocity(world.RuntimeBody(id));}
     const auto g=world.Gravity().Sample(p);
     std::printf("%d,%.5f,%.6f,%.6f,%.6f,%.6f,%.6f,%.6f,%d,%.6f,%.6f,%.6f,%.6f,%.6f,%.6f,%d,%d,%d,%d",frame,frame*script.seconds,p.x,p.y,p.z,up.x,up.y,up.z,supported,v.x,v.y,v.z,g.x,g.y,g.z,play.Session().VehicleControl().controlled,frame,play.LastFixedStepsThisFrame(),play.IsPaused());
     for(auto& b:world.DynamicBodies()){auto pos=b.GetPosition(),vel=world.Physics().GetLinearVelocity(b.Handle());std::printf(",%.6f,%.6f,%.6f,%.6f,%.6f,%.6f",pos.x,pos.y,pos.z,vel.x,vel.y,vel.z);}std::printf("\n");

@@ -1,0 +1,40 @@
+PASS author independent atlas
+PASS track atlas
+PASS ordinary tracked sprite-sheet palette
+PASS paint inclusive negative-coordinate rectangle
+PASS compile ordinary scene objects: 
+PASS 16 tiles produce four exact chunk-local rectangles across negative chunk boundaries
+PASS recipe and generated geometry survive scene serialization exactly
+PASS canonical recipe roundtrip
+PASS unchanged rebuild retains IDs and complete source
+PASS out-of-bounds paint rejects atomically
+PASS oversized fill rejects before mutation
+PASS unknown recipe fields reject
+PASS duplicate cell negative control
+PASS overlapping solid layers cannot duplicate physical contacts
+PASS missing frame fails without deleting the previous map
+PASS manual generated-object changes are not overwritten
+PASS user children cannot be removed by repainting
+PASS erase a real two-by-two opening
+PASS collision topology rebuild follows erasure
+PASS merged collision rectangles do not bridge the excavated hole
+PASS compiled map builds in ordinary runtime: 
+PASS falling body rests on actual painted floor
+PASS erased opening builds independent physical negative control
+PASS erasing tiles removes real collision; body falls through actual hole
+PASS rotated grid and body share native plane
+PASS rotated gravity preserves local landing and actual planar mobility
+PASS capture real tilemap physics participants
+PASS publish durable cold-process fixture
+PASS create stream fixture project
+PASS write ordinary region with generated tile geometry
+PASS streaming root has no hidden tile system
+PASS actual streaming publishes tilemap region
+PASS streamed map has real merged collision and dynamic object
+PASS suspended map removes all actual region bodies
+PASS region revisit rebuilds real collision
+PASS regional suspension preserves physical endpoint and momentum
+PASS compiled tilemap is an ordinary valid prefab subtree
+PASS compiled prefab instantiates through existing stable-ID path
+PASS physical grid resize requires cell dimensions, not silent scaled colliders
+TILEMAP checks=39 failures=0

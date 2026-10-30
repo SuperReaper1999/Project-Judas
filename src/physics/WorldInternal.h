@@ -483,6 +483,7 @@ struct PhysicsWorld::Impl {
     // pre-M32 all-pairs loop visited them in, restricted to candidates.
     bool CanCollide(unsigned a, unsigned b) const;
     bool CanRespond(unsigned a, unsigned b) const;
+    bool OneWayAllows(unsigned a,unsigned b) const;
     bool MatchesQuery(unsigned slot, const PhysicsQueryFilter &filter) const;
     void GenerateCandidatePairs();
     const std::vector<unsigned>& ImpactCandidates(unsigned slot, const Aabb& query);

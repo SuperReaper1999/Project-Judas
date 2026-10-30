@@ -1765,6 +1765,14 @@ judas_warnings(judas_sprite_animation_benchmark)
 judas_add_engine_test(judas_consumer_lifecycle_tests tests/ConsumerLifecycleTests.cpp APPLICATION)
 judas_add_engine_test(judas_save_latency_benchmark tools/benchmarks/SaveLatencyBenchmark.cpp APPLICATION)
 
+add_executable(judas_2d_traversal_workshop tools/demos/TwoDTraversalWorkshop.cpp)
+target_link_libraries(judas_2d_traversal_workshop PRIVATE judas_engine)
+judas_warnings(judas_2d_traversal_workshop)
+
+judas_add_engine_test(judas_grid_movement_tests tests/GridMovementTests.cpp)
+
+judas_add_engine_test(judas_one_way_platform_tests tests/OneWayPlatformTests.cpp)
+
 judas_add_engine_test(judas_2d_helpers_tests tests/TwoDHelpersTests.cpp)
 
 judas_add_engine_test(judas_planar_gameplay_tests tests/PlanarGameplayTests.cpp)

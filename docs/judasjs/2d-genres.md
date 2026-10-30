@@ -18,8 +18,9 @@ redefine the entity origin used for Y sorting. Roofs/bridges can use explicit
 sorting layers and project-owned reveal logic. This does not create multiple
 physical elevation floors automatically.
 
-Current limits matter: no built-in one-way/drop-through platform, custom tile
-slope, ladder/ledge/bridge-height controller or gameplay tile-edit API. Solid
+Current limits matter: static straight [one-way platforms](physics-2d.md#one-way-platforms)
+are now available, but no built-in drop-through command, custom tile slope,
+ladder/ledge/bridge-height controller or gameplay tile-edit API is supplied. Solid
 platforms and native chains/convex shapes exist; specialised movement and
 collision filtering need explicit project implementation. Don't call this a full
 Mario movement package or fake height by changing a physical body's Z.
@@ -84,9 +85,9 @@ project UI text, lists, focus and menus; script properties/signals; session stat
 and modern cold saves. Beacon Grove composes triggers, objective state, menus and
 physical movement. The tilemap workshop composes map changes and saves.
 
-A strict grid-step controller, NPC schedules, encounters, dialogue branching,
-party/storage/inventory rules and turn-based battles must be authored in project
-scripts/data. There is no advertised Pokémon-style authoring/battle framework.
+An editable [grid-step preset](physics-2d.md#grid-rpg-preset) is now available.
+NPC schedules, encounters, dialogue branching, party/storage/inventory rules and
+turn-based battles remain project scripts/data. There is no advertised Pokémon-style authoring/battle framework.
 Do not assume native 3D navigation bakes a 2D tile path: use a project-owned grid
 pathfinder for a bounded tile RPG. Saves support authored script state, but content
 updates still require deliberate compatibility/migration policy.

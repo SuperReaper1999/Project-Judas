@@ -1,0 +1,20 @@
+PASS fresh grid project
+PASS same grid project preset as New Project
+PASS explicit negative-control source selection
+PASS save editable grid fixture
+PASS ordinary project bindings
+PASS build editable grid game
+PASS begin normal played session
+PASS begin normal played session
+PASS single input edge finishes exactly one cell through native motion
+PASS begin normal played session
+PASS begin normal played session
+PASS blocked cell cannot be crossed or snapped into
+PASS begin normal played session
+PASS save fixture is genuinely partway through a cell
+PASS publish real partial-step cold save
+PASS reconstruct independent queued-turn fixture
+PASS restore separate world before queuing a turn
+PASS isolated queued-turn input map
+PASS begin normal played session
+FAIL short turn is actually pending in saved script state

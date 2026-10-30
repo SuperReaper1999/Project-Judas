@@ -1,0 +1,5 @@
+PASS fresh process reads one-way crossing snapshot
+PASS build real persistent one-way world
+PASS cold restores exact physical state without a one-way cache
+PASS cold crossing resumes and lands on the blocking side
+ONE_WAY_COLD checks=4 failures=0

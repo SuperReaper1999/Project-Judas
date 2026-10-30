@@ -37,6 +37,7 @@ auto PhysicsWorld::Impl::FinishTouches() -> void {
             if (bodies[a].sensor || bodies[b].sensor ||
                 ((bodies[a].isKinematic || bodies[b].isKinematic) &&
                  bodies[a].rigidBody.IsStatic() && bodies[b].rigidBody.IsStatic())) {
+                if(!bodies[a].sensor&&!bodies[b].sensor&&!OneWayAllows(a,b))continue;
                 const auto &oa = Orientation(bodies[a]);
                 const auto &ob = Orientation(bodies[b]);
                 for (int pa = 0; pa < PrimitiveCount(bodies[a].shape); ++pa)

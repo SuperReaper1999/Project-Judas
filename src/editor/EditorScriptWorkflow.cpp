@@ -2,6 +2,7 @@
 #include "EditorPanels.h"
 #include "EditorPrimitiveAssets.h"
 #include "Project.h"
+#include "ProjectStarter.h"
 #include "PlatformServices.h"
 #include "EnginePaths.h"
 #include "imgui.h"
@@ -190,20 +191,24 @@ SceneObjectId CreateEditorFirstPersonPlayer(EditorDocument& doc, Project& projec
 }
 
 SceneObjectId CreateEditorPlanarPlayer(EditorDocument& doc,Project& project,AssetDatabase& assets,
-                                      glm::vec3 position,SceneObjectId parent,std::string& error,bool sideView) {
+                                      glm::vec3 position,SceneObjectId parent,std::string& error,bool sideView,bool grid) {
     if(!project.IsLoaded()){error="Open a project before creating a 2D player";return 0;}
-    std::ifstream source(ResolveEngineDataPath("docs/judasjs/examples/planar-player.js"),std::ios::binary);
+    if(grid){const auto prior=project.Settings().input;if(!ConfigureGridPlayerInput(project,error))return 0;
+        if(!project.Save(error)){project.Settings().input=prior;return 0;}}
+
+    std::ifstream source(ResolveEngineDataPath(grid?"docs/judasjs/examples/grid-player-2d.js":"docs/judasjs/examples/planar-player.js"),std::ios::binary);
     if(!source){error="Missing 2D player script in SDK docs";return 0;}
     const std::string text{std::istreambuf_iterator<char>(source),{}};
-    doc.BeginEdit();auto& object=doc.GetScene().CreateObject(sideView?"2D platformer player":"2D top-down player");
+    doc.BeginEdit();auto& object=doc.GetScene().CreateObject(grid?"2D grid RPG player":sideView?"2D platformer player":"2D top-down player");
     const auto id=object.id;object.parent=parent;object.transform.position=parent?glm::vec3(0):position;
     object.render=SceneRenderComponent{};object.render->shape=SceneShape::Sprite;
     object.render->sprite.size={.6f,1.2f};object.render->color={.4f,.8f,1};
     object.body=SceneBodyComponent{};object.body->shape=SceneShape::Planar;object.body->planar=PlanarCapsule(.3,.3,true);
     object.body->motion=SceneBodyMotion::Dynamic;object.body->mass=5;object.body->friction=0;object.body->managed=false;
+    if(grid){object.render->sprite.pivot={.5f,1};object.render->sprite.ySort=true;object.body->motion=SceneBodyMotion::Kinematic;object.body->planar=PlanarBox({.32,.32},true);}
     doc.CommitEdit();doc.Select(id);
     AssetRecord record;
     if(!CreateAndAttachEditorScript(doc,id,project,assets,"Player2D_"+std::to_string(id)+".js",record,error,text,
-          sideView?"{\"sideView\":true}":"{\"sideView\":false}"))return id;
+          grid?"{}":sideView?"{\"sideView\":true}":"{\"sideView\":false}"))return id;
     error.clear();return id;
 }
