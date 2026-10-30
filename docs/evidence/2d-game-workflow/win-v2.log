@@ -1,0 +1,23 @@
+Shadow maps: on
+Graphics: 4.5 (Core Profile) Mesa 26.0.8-1ubuntu0.3 / llvmpipe (LLVM 21.1.8, 256 bits)
+Renderer fragment texture units: 32 (material path uses 12)
+World state: /home/conner/Documents/GitHub/Project-Judas/.cache/2d-game-evidence/win-v2/project/Saves/main.judasstate (none saved)
+Project: Beacon Grove (/home/conner/Documents/GitHub/Project-Judas/.cache/2d-game-evidence/win-v2/project/Beacon_Grove.judasproj)
+Scene:  (/home/conner/Documents/GitHub/Project-Judas/.cache/2d-game-evidence/win-v2/project/Scenes/main.judas)
+World origin (m): 0.000, 0.000, 0.000
+script asset=604259b2581c3c575680f6e24d02f2da entity=1 slot=1 onTriggerExit: ReferenceError: stale or invalid entity 667
+    at __judas (native)
+    at call (judas:2:51)
+    at hasTag (judas:96:43)
+    at onTriggerExit (Assets/game.js:58:19)
+
+PASS open fresh editable game
+PASS animation marker without cells/proximity cannot open the gate
+FAIL ReferenceError: stale or invalid entity 667
+    at __judas (native)
+    at call (judas:2:51)
+    at hasTag (judas:96:43)
+    at onTriggerExit (Assets/game.js:58:19)
+
+FAIL real rendered application completes and shuts down
+BEACON_GROVE mode=win checks=4 failures=2

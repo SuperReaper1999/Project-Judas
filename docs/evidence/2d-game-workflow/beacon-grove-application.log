@@ -1,0 +1,30 @@
+Shadow maps: on
+Graphics: 4.5 (Core Profile) Mesa 26.0.8-1ubuntu0.3 / llvmpipe (LLVM 21.1.8, 256 bits)
+Renderer fragment texture units: 32 (material path uses 12)
+Project: Beacon Grove (/home/conner/Documents/GitHub/Project-Judas/.cache/2d-game-evidence/final-source/beacon-grove-application/project/Beacon_Grove.judasproj)
+Scene: Beacon Grove (/home/conner/Documents/GitHub/Project-Judas/.cache/2d-game-evidence/final-source/beacon-grove-application/project/Scenes/main.judas)
+World origin (m): 0.000, 0.000, 0.000
+PASS open fresh editable game
+PASS authored pause menu freezes native motion/game time and consumes held input
+PASS capture actual rendered game
+PASS capture actual rendered game
+PASS animation marker without cells/proximity cannot open the gate
+PASS actual movement and native triggers collect exactly two cells
+PASS save played progress through production service
+PASS read committed snapshot independently
+PASS real load restores exact native physical endpoint before stepping
+PASS partial objective and unconsumed gate survive first restored script boundary
+PASS all resources and a real animation marker still cannot activate from outside beacon proximity
+PASS all three actual collectibles required for activation
+PASS timed activation removes actual gate collider
+PASS native player crosses former physical gate to exit
+PASS complete playable objective loop
+PASS capture actual rendered game
+PASS save completed objective and destroyed gate
+PASS read independently committed completed-game save
+PASS completed-save physical endpoint matches before stepping
+PASS completed-save gate collider stays removed
+PASS completed objectives and removed collider survive real save restoration
+PASS real rendered application completes and shuts down
+SOFTWARE_RENDERED_FRAME n=254 median_ms=2.972786 p95_ms=5.471408 worst_ms=261.679376
+BEACON_GROVE mode=win checks=22 failures=0

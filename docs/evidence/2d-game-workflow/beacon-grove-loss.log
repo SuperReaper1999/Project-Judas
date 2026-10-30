@@ -1,0 +1,14 @@
+Shadow maps: on
+Graphics: 4.5 (Core Profile) Mesa 26.0.8-1ubuntu0.3 / llvmpipe (LLVM 21.1.8, 256 bits)
+Renderer fragment texture units: 32 (material path uses 12)
+Project: Beacon Grove (/home/conner/Documents/GitHub/Project-Judas/.cache/2d-game-evidence/final-source/beacon-grove-loss/project/Beacon_Grove.judasproj)
+Scene: Beacon Grove (/home/conner/Documents/GitHub/Project-Judas/.cache/2d-game-evidence/final-source/beacon-grove-loss/project/Scenes/main.judas)
+World origin (m): 0.000, 0.000, 0.000
+PASS open fresh editable game
+PASS capture actual rendered game
+PASS real hazard overlap causes loss without fabricated damage
+PASS R reload really resets failed game state
+PASS capture actual rendered game
+PASS real rendered application completes and shuts down
+SOFTWARE_RENDERED_FRAME n=44 median_ms=2.703078 p95_ms=3.473009 worst_ms=62.358456
+BEACON_GROVE mode=loss checks=6 failures=0

@@ -170,7 +170,13 @@ void TilemapEditor::Autotest(int frameNumber,EditorDocument& doc,EditorPanelStat
         check(recipe.root!=0,"existing authored grid is discoverable");
     }
     if(frameNumber==11){state.showProfiler=false;state.debug={};state.showWorldBuilding=false;
-        camera.Set2D(true);camera.LookAt({-8,3,0},10);painting=true;tool=0;frame=0;
+        // Aim at a known empty cell in the active layer, independent of demo layout.
+        glm::ivec2 empty{0};
+        for(int x=0;x<128;++x){empty={x,0};if(std::none_of(recipe.cells.begin(),recipe.cells.end(),[&](const auto& c){return c.layer==recipe.layers[layer].id&&c.x==empty.x&&c.y==empty.y;}))break;}
+        Scene flat;std::string error;FlattenHierarchy(doc.GetScene(),flat,error);
+        const auto& root=flat.Find(recipe.root)->transform;
+        const auto target=root.position+root.rotation*(root.scale*glm::vec3(recipe.cellSize*(glm::vec2(empty)+.5f),0));
+        camera.Set2D(true);camera.LookAt(target,10);painting=true;tool=0;frame=0;
         testCells=recipe.cells.size();SaveSceneToString(doc.GetScene(),testSource);
     }
     if(frameNumber==12){const auto& v=state.workspace.viewport;ImGui::SetWindowFocus(nullptr);

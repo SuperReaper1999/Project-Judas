@@ -1,0 +1,230 @@
+{
+  "format": 1,
+  "startedUtc": "2026-10-30T22:51:46.692422+00:00",
+  "sourceRevision": "54db79cdf9b93dade83ed9d4c6d6bdde10f3ad6e",
+  "trackedWorktreeStatus": "M CMakeLists.txt\n M src/editor/TilemapEditor.cpp\n M tools/validation/suites.json",
+  "manifestSha256": "ff876534ba017d3e1016f4a9de72643a3ac2afef49522a9e600579fe1cce0ae5",
+  "trackedDiffSha256": "62eea00257d04cb078a7f8a415ff1f5a67f5a283c1c20b74c1e56a0492034ce9",
+  "platform": "Linux-7.0.0-42-generic-x86_64-with-glibc2.43",
+  "machine": "x86_64",
+  "cpuCount": 12,
+  "groups": [],
+  "tests": [
+    {
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/2d-stage1-build/judas_beacon_grove_application_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/projects/beacon_grove/Beacon_Grove.judasproj",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/2d-game-evidence/final-gates/beacon-grove-loss",
+        "loss"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/2d-game-evidence/final-gates",
+      "timeoutSeconds": 120,
+      "binarySha256": "f1f5561d1897e037ecb5c68d21ce7ec1bf84b5ba6cf591e28fc258f5131ddaed",
+      "exit": 0,
+      "status": "passed",
+      "binarySha256After": "f1f5561d1897e037ecb5c68d21ce7ec1bf84b5ba6cf591e28fc258f5131ddaed",
+      "seconds": 4.424791868994362,
+      "buildIdentity": {
+        "architecture": "x86_64",
+        "build_id": "1.0.4-alpha.1-Experimental-54db79c-dirty-bb2d6a69a061-ua47408cc382f",
+        "channel": "Experimental",
+        "compiler": "GNU",
+        "compiler_version": "15.2.0",
+        "configuration": "Release",
+        "maturity": "alpha",
+        "platform": "Linux",
+        "release_name": "Judas Engine Alpha v1.0.4",
+        "schema": 1,
+        "source_dirty": true,
+        "source_fingerprint": "bb2d6a69a061be1023734444e04c1d96cd434d1386e83eeca7e96d19320aa951",
+        "source_origin": "git",
+        "source_revision": "54db79cdf9b93dade83ed9d4c6d6bdde10f3ad6e",
+        "source_tree": "df7ce8ac4d3d3edc375ff1a703248ebbd293c9a2",
+        "source_untracked_count": 24,
+        "source_untracked_fingerprint": "a47408cc382f427267502456c8b66ed15fe5327c0add63c882a5a5ce4cb4c7d5",
+        "version": "1.0.4-alpha.1"
+      },
+      "name": "beacon-grove-loss"
+    },
+    {
+      "status": "unavailable",
+      "exit": null,
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/2d-stage1-build/judas_2d_game_workflow_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/projects/tilemap_workshop/Assets/tiles.png",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/2d-game-evidence/final-gates/2d-game-workflow"
+      ],
+      "error": "stale test binary: source_fingerprint differs; reconfigure and rebuild focused targets",
+      "name": "2d-game-workflow"
+    },
+    {
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/2d-stage1-build/judas_beacon_grove_application_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/projects/beacon_grove/Beacon_Grove.judasproj",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/2d-game-evidence/final-gates/beacon-grove-application"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/2d-game-evidence/final-gates",
+      "timeoutSeconds": 120,
+      "binarySha256": "f1f5561d1897e037ecb5c68d21ce7ec1bf84b5ba6cf591e28fc258f5131ddaed",
+      "exit": 0,
+      "status": "passed",
+      "binarySha256After": "f1f5561d1897e037ecb5c68d21ce7ec1bf84b5ba6cf591e28fc258f5131ddaed",
+      "seconds": 4.955681051003921,
+      "buildIdentity": {
+        "architecture": "x86_64",
+        "build_id": "1.0.4-alpha.1-Experimental-54db79c-dirty-bb2d6a69a061-ua47408cc382f",
+        "channel": "Experimental",
+        "compiler": "GNU",
+        "compiler_version": "15.2.0",
+        "configuration": "Release",
+        "maturity": "alpha",
+        "platform": "Linux",
+        "release_name": "Judas Engine Alpha v1.0.4",
+        "schema": 1,
+        "source_dirty": true,
+        "source_fingerprint": "bb2d6a69a061be1023734444e04c1d96cd434d1386e83eeca7e96d19320aa951",
+        "source_origin": "git",
+        "source_revision": "54db79cdf9b93dade83ed9d4c6d6bdde10f3ad6e",
+        "source_tree": "df7ce8ac4d3d3edc375ff1a703248ebbd293c9a2",
+        "source_untracked_count": 24,
+        "source_untracked_fingerprint": "a47408cc382f427267502456c8b66ed15fe5327c0add63c882a5a5ce4cb4c7d5",
+        "version": "1.0.4-alpha.1"
+      },
+      "name": "beacon-grove-application"
+    },
+    {
+      "status": "unavailable",
+      "exit": null,
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/2d-stage1-build/judas_tilemap_application_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/projects/tilemap_workshop/Tilemap_Workshop.judasproj",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/2d-game-evidence/final-gates/tilemap-application"
+      ],
+      "error": "stale test binary: source_revision differs; reconfigure and rebuild focused targets",
+      "name": "tilemap-application"
+    },
+    {
+      "status": "unavailable",
+      "exit": null,
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/2d-stage1-build/judas_tilemap_editor_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/2d-game-evidence/final-gates/tilemap-editor"
+      ],
+      "error": "stale test binary: source_revision differs; reconfigure and rebuild focused targets",
+      "name": "tilemap-editor"
+    },
+    {
+      "status": "unavailable",
+      "exit": null,
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/2d-stage1-build/judas_sprite_animation_integration_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/projects/sprite_animation_workshop",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/2d-game-evidence/final-gates/sprite-animation-project"
+      ],
+      "error": "stale test binary: source_revision differs; reconfigure and rebuild focused targets",
+      "name": "sprite-animation-integration"
+    },
+    {
+      "status": "unavailable",
+      "exit": null,
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/2d-stage1-build/judas_planar_physics_tests"
+      ],
+      "error": "stale test binary: source_revision differs; reconfigure and rebuild focused targets",
+      "name": "planar-physics"
+    },
+    {
+      "status": "unavailable",
+      "exit": null,
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/2d-stage1-build/judas_mk2_physics_tests"
+      ],
+      "error": "stale test binary: source_revision differs; reconfigure and rebuild focused targets",
+      "name": "mk2-physics"
+    }
+  ],
+  "knownFindings": [
+    {
+      "id": "CCD-MESH-ARRIVAL",
+      "status": "resolved-first-arrival",
+      "scheduled": true,
+      "reason": "Pass2 finite swept-SAT bounds correct the validated first-arrival contract; it now runs in the ordinary collision group. This does not close later curved-sheet continuation.",
+      "evidence": "docs/evidence/prealpha-pass2/physics"
+    },
+    {
+      "id": "CCD-MESH-CONTINUATION",
+      "status": "resolved-original-fixtures-bounded-ccd",
+      "scheduled": true,
+      "reason": "Original unchanged mesh arrival/continuation fixtures pass with authoritative MK2. Bounded CCD, sidedness and deep initial-overlap limits remain; MK1 event scheduling has been removed.",
+      "evidence": "docs/evidence/prealpha-ccd-continuation-20261019"
+    },
+    {
+      "id": "FLU-001",
+      "status": "deferred-failing",
+      "scheduled": false,
+      "reason": "Legacy PBF settling contract retained unchanged; separate fluid review required.",
+      "evidence": "docs/evidence/m78-completion/FINDINGS_FINAL.json"
+    },
+    {
+      "id": "LEGACY-CONTINUATION",
+      "status": "documented-incompatible-history",
+      "scheduled": false,
+      "reason": "Original a106 snapshot lacks historical continuation data. New-format passes do not certify that snapshot.",
+      "evidence": "docs/evidence/m78-cold-boundary"
+    },
+    {
+      "id": "DENSE-CCD-TAIL",
+      "status": "open-performance-limit",
+      "scheduled": false,
+      "reason": "Original MK1 global event cascade is retired. Current MK2 measurements have their own workload scope; focused correctness gates do not certify universal dense-pile latency.",
+      "evidence": "docs/MK2_PHYSICS_ARCHITECTURE.md"
+    },
+    {
+      "id": "LIQUID-BAKE-ROTATION",
+      "status": "resolved-baking",
+      "scheduled": true,
+      "reason": "Baker and runtime use the same normalized owner/field frames and oriented gravity volumes; both original bake-only runtime-publication cases pass unchanged equivalence tolerances. Original full integration exposes separate retained exact-total comparison failure.",
+      "evidence": "docs/evidence/prealpha-liquid-rotation/REPORT.md"
+    },
+    {
+      "id": "LIQUID-BAKE-KNOTS",
+      "status": "resolved-baking",
+      "scheduled": true,
+      "reason": "Positive tetrahedral density is integrated into one monotone cumulative curve, including shared endpoints; unchanged strict Surface1 decoder accepts both original rotated bakes. A later origin sampling limitation remains separately failed.",
+      "evidence": "docs/evidence/prealpha-liquid-rotation/REPORT.md"
+    },
+    {
+      "id": "LIQUID-ORIGIN-GRID-QUERY",
+      "status": "open-query-continuity-failing",
+      "scheduled": false,
+      "reason": "The original half-turn fixture now bakes and publishes, then fails its unchanged post-512m-origin query comparison: float translation crosses a discontinuous disturbed-surface cell boundary. Conserved quantities and wave bytes remain unchanged. This full integration failure is preserved, not counted as a baking pass.",
+      "evidence": "docs/evidence/prealpha-liquid-rotation/REPORT.md"
+    },
+    {
+      "id": "LIQUID-ORIGIN-TOTAL-IDENTITY",
+      "status": "resolved-oracle-causal-baseline",
+      "scheduled": true,
+      "reason": "Pass3 preserves the original failed test and demonstrates its causal-baseline error. Current atomicity compares the immediate pre-request total with the same exact equality and every physical participant byte; earlier legitimate paired-flow conservation tolerance and liquid runtime are unchanged.",
+      "evidence": "docs/evidence/prealpha-pass3/integration/REPORT.md"
+    }
+  ],
+  "humanAcceptance": "not-established",
+  "scope": "explicit manifest subset",
+  "expectedSourceIdentity": {
+    "source_revision": "54db79cdf9b93dade83ed9d4c6d6bdde10f3ad6e",
+    "source_fingerprint": "bb2d6a69a061be1023734444e04c1d96cd434d1386e83eeca7e96d19320aa951",
+    "source_dirty": true,
+    "source_untracked_fingerprint": "a47408cc382f427267502456c8b66ed15fe5327c0add63c882a5a5ce4cb4c7d5"
+  },
+  "passed": false,
+  "finishedUtc": "2026-10-30T22:51:57.086605+00:00",
+  "sourceRevisionAfter": "54db79cdf9b93dade83ed9d4c6d6bdde10f3ad6e",
+  "trackedWorktreeStatusAfter": "M CMakeLists.txt\n M src/editor/TilemapEditor.cpp\n M tools/validation/suites.json",
+  "trackedDiffSha256After": "62eea00257d04cb078a7f8a415ff1f5a67f5a283c1c20b74c1e56a0492034ce9",
+  "expectedSourceIdentityAfter": {
+    "source_revision": "54db79cdf9b93dade83ed9d4c6d6bdde10f3ad6e",
+    "source_fingerprint": "bb2d6a69a061be1023734444e04c1d96cd434d1386e83eeca7e96d19320aa951",
+    "source_dirty": true,
+    "source_untracked_fingerprint": "a47408cc382f427267502456c8b66ed15fe5327c0add63c882a5a5ce4cb4c7d5"
+  }
+}

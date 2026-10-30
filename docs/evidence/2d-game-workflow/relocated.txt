@@ -1,0 +1,13 @@
+FRAMES 480
+FRAME_SECONDS 0.016666667
+LOG_EVERY 60
+CONTROL key:D 1 10 120
+SCREENSHOT 100 /home/conner/Documents/GitHub/Project-Judas/.cache/2d-game-evidence/relocated-play.png
+ACTION save_game 1 140 141
+WAIT_SERVICES save 10000 142
+ACTION load_game 1 160 161
+WAIT_SERVICES save 10000 162
+CONTROL key:D 1 180 225
+TAP E 245
+CONTROL key:D 1 280 360
+SCREENSHOT 380 /home/conner/Documents/GitHub/Project-Judas/.cache/2d-game-evidence/relocated-end.png

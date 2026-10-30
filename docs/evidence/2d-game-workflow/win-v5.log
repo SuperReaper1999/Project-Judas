@@ -1,0 +1,15 @@
+Shadow maps: on
+Graphics: 4.5 (Core Profile) Mesa 26.0.8-1ubuntu0.3 / llvmpipe (LLVM 21.1.8, 256 bits)
+Renderer fragment texture units: 32 (material path uses 12)
+World state: /home/conner/Documents/GitHub/Project-Judas/.cache/2d-game-evidence/win-v5/project/Saves/main.judasstate (none saved)
+Project: Beacon Grove (/home/conner/Documents/GitHub/Project-Judas/.cache/2d-game-evidence/win-v5/project/Beacon_Grove.judasproj)
+Scene:  (/home/conner/Documents/GitHub/Project-Judas/.cache/2d-game-evidence/win-v5/project/Scenes/main.judas)
+World origin (m): 0.000, 0.000, 0.000
+PASS open fresh editable game
+PASS capture actual rendered game
+PASS animation marker without cells/proximity cannot open the gate
+PASS actual movement and native triggers collect exactly two cells
+PASS save played progress through production service
+PASS read committed snapshot independently
+PASS real load restores exact native physical endpoint before stepping
+FAIL missing player state

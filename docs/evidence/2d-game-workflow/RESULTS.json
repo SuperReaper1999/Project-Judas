@@ -1,0 +1,374 @@
+{
+  "format": 1,
+  "startedUtc": "2026-10-30T22:55:27.098223+00:00",
+  "sourceRevision": "54db79cdf9b93dade83ed9d4c6d6bdde10f3ad6e",
+  "trackedWorktreeStatus": "M CMakeLists.txt\n M docs/JUDASJS.md\n M src/editor/TilemapEditor.cpp\n M tools/validation/suites.json",
+  "manifestSha256": "ff876534ba017d3e1016f4a9de72643a3ac2afef49522a9e600579fe1cce0ae5",
+  "trackedDiffSha256": "ee75259db0ede59de10c25dd131f5d0c6de2e9366c24f35b41504962bb8b7c86",
+  "platform": "Linux-7.0.0-42-generic-x86_64-with-glibc2.43",
+  "machine": "x86_64",
+  "cpuCount": 12,
+  "groups": [],
+  "tests": [
+    {
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/2d-stage1-build/judas_beacon_grove_application_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/projects/beacon_grove/Beacon_Grove.judasproj",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/2d-game-evidence/final-source/beacon-grove-loss",
+        "loss"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/2d-game-evidence/final-source",
+      "timeoutSeconds": 120,
+      "binarySha256": "f03220418cd07c035b45d348b4540c9da0ffca9ba9ef798aee4e7c46ac2fa26a",
+      "exit": 0,
+      "status": "passed",
+      "binarySha256After": "f03220418cd07c035b45d348b4540c9da0ffca9ba9ef798aee4e7c46ac2fa26a",
+      "seconds": 4.293448582000565,
+      "buildIdentity": {
+        "architecture": "x86_64",
+        "build_id": "1.0.4-alpha.1-Experimental-54db79c-dirty-b6a28711325e-u4e6795b508dd",
+        "channel": "Experimental",
+        "compiler": "GNU",
+        "compiler_version": "15.2.0",
+        "configuration": "Release",
+        "maturity": "alpha",
+        "platform": "Linux",
+        "release_name": "Judas Engine Alpha v1.0.4",
+        "schema": 1,
+        "source_dirty": true,
+        "source_fingerprint": "b6a28711325e402ee0912aa373a1fafb1f11d028eec487e6a1464b5d20370516",
+        "source_origin": "git",
+        "source_revision": "54db79cdf9b93dade83ed9d4c6d6bdde10f3ad6e",
+        "source_tree": "df7ce8ac4d3d3edc375ff1a703248ebbd293c9a2",
+        "source_untracked_count": 24,
+        "source_untracked_fingerprint": "4e6795b508dd61ce46c2a9c92bd57693dbd1ddfffe41b8d8e0fef23068b55c8d",
+        "version": "1.0.4-alpha.1"
+      },
+      "name": "beacon-grove-loss"
+    },
+    {
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/2d-stage1-build/judas_2d_game_workflow_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/projects/tilemap_workshop/Assets/tiles.png",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/2d-game-evidence/final-source/2d-game-workflow"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/2d-game-evidence/final-source",
+      "timeoutSeconds": 120,
+      "binarySha256": "80e512b3391b70306efcb4897f0ae10958a8e132888bbf93f9e6c7bef699511b",
+      "exit": 0,
+      "status": "passed",
+      "binarySha256After": "80e512b3391b70306efcb4897f0ae10958a8e132888bbf93f9e6c7bef699511b",
+      "seconds": 0.18437841100239893,
+      "buildIdentity": {
+        "architecture": "x86_64",
+        "build_id": "1.0.4-alpha.1-Experimental-54db79c-dirty-b6a28711325e-u4e6795b508dd",
+        "channel": "Experimental",
+        "compiler": "GNU",
+        "compiler_version": "15.2.0",
+        "configuration": "Release",
+        "maturity": "alpha",
+        "platform": "Linux",
+        "release_name": "Judas Engine Alpha v1.0.4",
+        "schema": 1,
+        "source_dirty": true,
+        "source_fingerprint": "b6a28711325e402ee0912aa373a1fafb1f11d028eec487e6a1464b5d20370516",
+        "source_origin": "git",
+        "source_revision": "54db79cdf9b93dade83ed9d4c6d6bdde10f3ad6e",
+        "source_tree": "df7ce8ac4d3d3edc375ff1a703248ebbd293c9a2",
+        "source_untracked_count": 24,
+        "source_untracked_fingerprint": "4e6795b508dd61ce46c2a9c92bd57693dbd1ddfffe41b8d8e0fef23068b55c8d",
+        "version": "1.0.4-alpha.1"
+      },
+      "name": "2d-game-workflow"
+    },
+    {
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/2d-stage1-build/judas_beacon_grove_application_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/projects/beacon_grove/Beacon_Grove.judasproj",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/2d-game-evidence/final-source/beacon-grove-application"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/2d-game-evidence/final-source",
+      "timeoutSeconds": 120,
+      "binarySha256": "f03220418cd07c035b45d348b4540c9da0ffca9ba9ef798aee4e7c46ac2fa26a",
+      "exit": 0,
+      "status": "passed",
+      "binarySha256After": "f03220418cd07c035b45d348b4540c9da0ffca9ba9ef798aee4e7c46ac2fa26a",
+      "seconds": 5.157337465003366,
+      "buildIdentity": {
+        "architecture": "x86_64",
+        "build_id": "1.0.4-alpha.1-Experimental-54db79c-dirty-b6a28711325e-u4e6795b508dd",
+        "channel": "Experimental",
+        "compiler": "GNU",
+        "compiler_version": "15.2.0",
+        "configuration": "Release",
+        "maturity": "alpha",
+        "platform": "Linux",
+        "release_name": "Judas Engine Alpha v1.0.4",
+        "schema": 1,
+        "source_dirty": true,
+        "source_fingerprint": "b6a28711325e402ee0912aa373a1fafb1f11d028eec487e6a1464b5d20370516",
+        "source_origin": "git",
+        "source_revision": "54db79cdf9b93dade83ed9d4c6d6bdde10f3ad6e",
+        "source_tree": "df7ce8ac4d3d3edc375ff1a703248ebbd293c9a2",
+        "source_untracked_count": 24,
+        "source_untracked_fingerprint": "4e6795b508dd61ce46c2a9c92bd57693dbd1ddfffe41b8d8e0fef23068b55c8d",
+        "version": "1.0.4-alpha.1"
+      },
+      "name": "beacon-grove-application"
+    },
+    {
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/2d-stage1-build/judas_tilemap_application_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/projects/tilemap_workshop/Tilemap_Workshop.judasproj",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/2d-game-evidence/final-source/tilemap-application"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/2d-game-evidence/final-source",
+      "timeoutSeconds": 120,
+      "binarySha256": "f05881a2451b2ba3c094e115edcaa3a54f713f265053f1d0b21d854976e45531",
+      "exit": 0,
+      "status": "passed",
+      "binarySha256After": "f05881a2451b2ba3c094e115edcaa3a54f713f265053f1d0b21d854976e45531",
+      "seconds": 2.491266082994116,
+      "buildIdentity": {
+        "architecture": "x86_64",
+        "build_id": "1.0.4-alpha.1-Experimental-54db79c-dirty-b6a28711325e-u4e6795b508dd",
+        "channel": "Experimental",
+        "compiler": "GNU",
+        "compiler_version": "15.2.0",
+        "configuration": "Release",
+        "maturity": "alpha",
+        "platform": "Linux",
+        "release_name": "Judas Engine Alpha v1.0.4",
+        "schema": 1,
+        "source_dirty": true,
+        "source_fingerprint": "b6a28711325e402ee0912aa373a1fafb1f11d028eec487e6a1464b5d20370516",
+        "source_origin": "git",
+        "source_revision": "54db79cdf9b93dade83ed9d4c6d6bdde10f3ad6e",
+        "source_tree": "df7ce8ac4d3d3edc375ff1a703248ebbd293c9a2",
+        "source_untracked_count": 24,
+        "source_untracked_fingerprint": "4e6795b508dd61ce46c2a9c92bd57693dbd1ddfffe41b8d8e0fef23068b55c8d",
+        "version": "1.0.4-alpha.1"
+      },
+      "name": "tilemap-application"
+    },
+    {
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/2d-stage1-build/judas_tilemap_editor_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/2d-game-evidence/final-source/tilemap-editor"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/2d-game-evidence/final-source",
+      "timeoutSeconds": 120,
+      "binarySha256": "c81db46a553d597c6075965124932f27e7ceb1df7b1278572ed6df22b7162652",
+      "exit": 0,
+      "status": "passed",
+      "binarySha256After": "c81db46a553d597c6075965124932f27e7ceb1df7b1278572ed6df22b7162652",
+      "seconds": 0.09913588099880144,
+      "buildIdentity": {
+        "architecture": "x86_64",
+        "build_id": "1.0.4-alpha.1-Experimental-54db79c-dirty-b6a28711325e-u4e6795b508dd",
+        "channel": "Experimental",
+        "compiler": "GNU",
+        "compiler_version": "15.2.0",
+        "configuration": "Release",
+        "maturity": "alpha",
+        "platform": "Linux",
+        "release_name": "Judas Engine Alpha v1.0.4",
+        "schema": 1,
+        "source_dirty": true,
+        "source_fingerprint": "b6a28711325e402ee0912aa373a1fafb1f11d028eec487e6a1464b5d20370516",
+        "source_origin": "git",
+        "source_revision": "54db79cdf9b93dade83ed9d4c6d6bdde10f3ad6e",
+        "source_tree": "df7ce8ac4d3d3edc375ff1a703248ebbd293c9a2",
+        "source_untracked_count": 24,
+        "source_untracked_fingerprint": "4e6795b508dd61ce46c2a9c92bd57693dbd1ddfffe41b8d8e0fef23068b55c8d",
+        "version": "1.0.4-alpha.1"
+      },
+      "name": "tilemap-editor"
+    },
+    {
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/2d-stage1-build/judas_sprite_animation_integration_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/projects/sprite_animation_workshop",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/2d-game-evidence/final-source/sprite-animation-project"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/2d-game-evidence/final-source",
+      "timeoutSeconds": 120,
+      "binarySha256": "ef766751777282316935a03bfc76fc4edfdf879ca31059d1a26cb7d85028c793",
+      "exit": 0,
+      "status": "passed",
+      "binarySha256After": "ef766751777282316935a03bfc76fc4edfdf879ca31059d1a26cb7d85028c793",
+      "seconds": 0.2791512839976349,
+      "buildIdentity": {
+        "architecture": "x86_64",
+        "build_id": "1.0.4-alpha.1-Experimental-54db79c-dirty-b6a28711325e-u4e6795b508dd",
+        "channel": "Experimental",
+        "compiler": "GNU",
+        "compiler_version": "15.2.0",
+        "configuration": "Release",
+        "maturity": "alpha",
+        "platform": "Linux",
+        "release_name": "Judas Engine Alpha v1.0.4",
+        "schema": 1,
+        "source_dirty": true,
+        "source_fingerprint": "b6a28711325e402ee0912aa373a1fafb1f11d028eec487e6a1464b5d20370516",
+        "source_origin": "git",
+        "source_revision": "54db79cdf9b93dade83ed9d4c6d6bdde10f3ad6e",
+        "source_tree": "df7ce8ac4d3d3edc375ff1a703248ebbd293c9a2",
+        "source_untracked_count": 24,
+        "source_untracked_fingerprint": "4e6795b508dd61ce46c2a9c92bd57693dbd1ddfffe41b8d8e0fef23068b55c8d",
+        "version": "1.0.4-alpha.1"
+      },
+      "name": "sprite-animation-integration"
+    },
+    {
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/2d-stage1-build/judas_planar_physics_tests"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/2d-game-evidence/final-source",
+      "timeoutSeconds": 120,
+      "binarySha256": "9bcfa837912f1adf299b69dacbc8953aa6e8c272d93a388c635bc599a6e449d3",
+      "exit": 0,
+      "status": "passed",
+      "binarySha256After": "9bcfa837912f1adf299b69dacbc8953aa6e8c272d93a388c635bc599a6e449d3",
+      "seconds": 0.06843568599288119,
+      "buildIdentity": {
+        "architecture": "x86_64",
+        "build_id": "1.0.4-alpha.1-Experimental-54db79c-dirty-b6a28711325e-u4e6795b508dd",
+        "channel": "Experimental",
+        "compiler": "GNU",
+        "compiler_version": "15.2.0",
+        "configuration": "Release",
+        "maturity": "alpha",
+        "platform": "Linux",
+        "release_name": "Judas Engine Alpha v1.0.4",
+        "schema": 1,
+        "source_dirty": true,
+        "source_fingerprint": "b6a28711325e402ee0912aa373a1fafb1f11d028eec487e6a1464b5d20370516",
+        "source_origin": "git",
+        "source_revision": "54db79cdf9b93dade83ed9d4c6d6bdde10f3ad6e",
+        "source_tree": "df7ce8ac4d3d3edc375ff1a703248ebbd293c9a2",
+        "source_untracked_count": 24,
+        "source_untracked_fingerprint": "4e6795b508dd61ce46c2a9c92bd57693dbd1ddfffe41b8d8e0fef23068b55c8d",
+        "version": "1.0.4-alpha.1"
+      },
+      "name": "planar-physics"
+    },
+    {
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/2d-stage1-build/judas_mk2_physics_tests"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/2d-game-evidence/final-source",
+      "timeoutSeconds": 120,
+      "binarySha256": "db5162c3adf8caf9c493b3cb8505bf70bee573aa23489756972bc7c5e1e893ff",
+      "exit": 0,
+      "status": "passed",
+      "binarySha256After": "db5162c3adf8caf9c493b3cb8505bf70bee573aa23489756972bc7c5e1e893ff",
+      "seconds": 4.026277891003701,
+      "buildIdentity": {
+        "architecture": "x86_64",
+        "build_id": "1.0.4-alpha.1-Experimental-54db79c-dirty-b6a28711325e-u4e6795b508dd",
+        "channel": "Experimental",
+        "compiler": "GNU",
+        "compiler_version": "15.2.0",
+        "configuration": "Release",
+        "maturity": "alpha",
+        "platform": "Linux",
+        "release_name": "Judas Engine Alpha v1.0.4",
+        "schema": 1,
+        "source_dirty": true,
+        "source_fingerprint": "b6a28711325e402ee0912aa373a1fafb1f11d028eec487e6a1464b5d20370516",
+        "source_origin": "git",
+        "source_revision": "54db79cdf9b93dade83ed9d4c6d6bdde10f3ad6e",
+        "source_tree": "df7ce8ac4d3d3edc375ff1a703248ebbd293c9a2",
+        "source_untracked_count": 24,
+        "source_untracked_fingerprint": "4e6795b508dd61ce46c2a9c92bd57693dbd1ddfffe41b8d8e0fef23068b55c8d",
+        "version": "1.0.4-alpha.1"
+      },
+      "name": "mk2-physics"
+    }
+  ],
+  "knownFindings": [
+    {
+      "id": "CCD-MESH-ARRIVAL",
+      "status": "resolved-first-arrival",
+      "scheduled": true,
+      "reason": "Pass2 finite swept-SAT bounds correct the validated first-arrival contract; it now runs in the ordinary collision group. This does not close later curved-sheet continuation.",
+      "evidence": "docs/evidence/prealpha-pass2/physics"
+    },
+    {
+      "id": "CCD-MESH-CONTINUATION",
+      "status": "resolved-original-fixtures-bounded-ccd",
+      "scheduled": true,
+      "reason": "Original unchanged mesh arrival/continuation fixtures pass with authoritative MK2. Bounded CCD, sidedness and deep initial-overlap limits remain; MK1 event scheduling has been removed.",
+      "evidence": "docs/evidence/prealpha-ccd-continuation-20261019"
+    },
+    {
+      "id": "FLU-001",
+      "status": "deferred-failing",
+      "scheduled": false,
+      "reason": "Legacy PBF settling contract retained unchanged; separate fluid review required.",
+      "evidence": "docs/evidence/m78-completion/FINDINGS_FINAL.json"
+    },
+    {
+      "id": "LEGACY-CONTINUATION",
+      "status": "documented-incompatible-history",
+      "scheduled": false,
+      "reason": "Original a106 snapshot lacks historical continuation data. New-format passes do not certify that snapshot.",
+      "evidence": "docs/evidence/m78-cold-boundary"
+    },
+    {
+      "id": "DENSE-CCD-TAIL",
+      "status": "open-performance-limit",
+      "scheduled": false,
+      "reason": "Original MK1 global event cascade is retired. Current MK2 measurements have their own workload scope; focused correctness gates do not certify universal dense-pile latency.",
+      "evidence": "docs/MK2_PHYSICS_ARCHITECTURE.md"
+    },
+    {
+      "id": "LIQUID-BAKE-ROTATION",
+      "status": "resolved-baking",
+      "scheduled": true,
+      "reason": "Baker and runtime use the same normalized owner/field frames and oriented gravity volumes; both original bake-only runtime-publication cases pass unchanged equivalence tolerances. Original full integration exposes separate retained exact-total comparison failure.",
+      "evidence": "docs/evidence/prealpha-liquid-rotation/REPORT.md"
+    },
+    {
+      "id": "LIQUID-BAKE-KNOTS",
+      "status": "resolved-baking",
+      "scheduled": true,
+      "reason": "Positive tetrahedral density is integrated into one monotone cumulative curve, including shared endpoints; unchanged strict Surface1 decoder accepts both original rotated bakes. A later origin sampling limitation remains separately failed.",
+      "evidence": "docs/evidence/prealpha-liquid-rotation/REPORT.md"
+    },
+    {
+      "id": "LIQUID-ORIGIN-GRID-QUERY",
+      "status": "open-query-continuity-failing",
+      "scheduled": false,
+      "reason": "The original half-turn fixture now bakes and publishes, then fails its unchanged post-512m-origin query comparison: float translation crosses a discontinuous disturbed-surface cell boundary. Conserved quantities and wave bytes remain unchanged. This full integration failure is preserved, not counted as a baking pass.",
+      "evidence": "docs/evidence/prealpha-liquid-rotation/REPORT.md"
+    },
+    {
+      "id": "LIQUID-ORIGIN-TOTAL-IDENTITY",
+      "status": "resolved-oracle-causal-baseline",
+      "scheduled": true,
+      "reason": "Pass3 preserves the original failed test and demonstrates its causal-baseline error. Current atomicity compares the immediate pre-request total with the same exact equality and every physical participant byte; earlier legitimate paired-flow conservation tolerance and liquid runtime are unchanged.",
+      "evidence": "docs/evidence/prealpha-pass3/integration/REPORT.md"
+    }
+  ],
+  "humanAcceptance": "not-established",
+  "scope": "explicit manifest subset",
+  "expectedSourceIdentity": {
+    "source_revision": "54db79cdf9b93dade83ed9d4c6d6bdde10f3ad6e",
+    "source_fingerprint": "b6a28711325e402ee0912aa373a1fafb1f11d028eec487e6a1464b5d20370516",
+    "source_dirty": true,
+    "source_untracked_fingerprint": "4e6795b508dd61ce46c2a9c92bd57693dbd1ddfffe41b8d8e0fef23068b55c8d"
+  },
+  "passed": true,
+  "finishedUtc": "2026-10-30T22:55:44.420393+00:00",
+  "sourceRevisionAfter": "54db79cdf9b93dade83ed9d4c6d6bdde10f3ad6e",
+  "trackedWorktreeStatusAfter": "M CMakeLists.txt\n M docs/JUDASJS.md\n M src/editor/TilemapEditor.cpp\n M tools/validation/suites.json",
+  "trackedDiffSha256After": "ee75259db0ede59de10c25dd131f5d0c6de2e9366c24f35b41504962bb8b7c86",
+  "expectedSourceIdentityAfter": {
+    "source_revision": "54db79cdf9b93dade83ed9d4c6d6bdde10f3ad6e",
+    "source_fingerprint": "b6a28711325e402ee0912aa373a1fafb1f11d028eec487e6a1464b5d20370516",
+    "source_dirty": true,
+    "source_untracked_fingerprint": "4e6795b508dd61ce46c2a9c92bd57693dbd1ddfffe41b8d8e0fef23068b55c8d"
+  }
+}

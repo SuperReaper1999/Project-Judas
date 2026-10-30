@@ -1,0 +1,16 @@
+Shadow maps: on
+Graphics: 4.5 (Core Profile) Mesa 26.0.8-1ubuntu0.3 / llvmpipe (LLVM 21.1.8, 256 bits)
+Renderer fragment texture units: 32 (material path uses 12)
+World state: /home/conner/Documents/GitHub/Project-Judas/.cache/2d-game-evidence/win-v4/project/Saves/main.judasstate (none saved)
+Project: Beacon Grove (/home/conner/Documents/GitHub/Project-Judas/.cache/2d-game-evidence/win-v4/project/Beacon_Grove.judasproj)
+Scene:  (/home/conner/Documents/GitHub/Project-Judas/.cache/2d-game-evidence/win-v4/project/Scenes/main.judas)
+World origin (m): 0.000, 0.000, 0.000
+PASS open fresh editable game
+PASS animation marker without cells/proximity cannot open the gate
+PASS actual movement and native triggers collect exactly two cells
+PASS save played progress through production service
+PASS read committed snapshot independently
+TIMEOUT phase=3 state={"cells":["667","668"],"charged":false,"cooldown":0,"danger":0,"health":3,"lost":false,"message":"Lantern cell recovered.","nearBeacon":false,"pulses":1,"request":null,"time":16.53333419561386,"won":false}
+FAIL bounded game workflow completes
+FAIL real rendered application completes and shuts down
+BEACON_GROVE mode=win checks=7 failures=2

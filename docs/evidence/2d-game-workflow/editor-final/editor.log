@@ -1,0 +1,17 @@
+Shadow maps: on
+Graphics: 3.3.0 NVIDIA 580.178.04 / NVIDIA GeForce GTX 970/PCIe/SSE2
+Renderer fragment texture units: 32 (material path uses 12)
+[Tilemap editor] PASS: existing authored grid is discoverable
+[editor autotest] duplicate created id 676: scene CHANGED; undo restores: IDENTICAL
+[Tilemap editor] PASS: native viewport ray reaches the intended cell
+[Tilemap editor] PASS: real SDL/ImGui pointer paints the intended snapped viewport cell
+[editor autotest] wrote: /home/conner/Documents/GitHub/Project-Judas/.cache/2d-game-evidence/editor-final/result.tilemap.png
+[Tilemap editor] PASS: viewport stroke Undo restores exact authored source before Play
+[editor autotest] wrote: /home/conner/Documents/GitHub/Project-Judas/.cache/2d-game-evidence/editor-final/result.edit.png
+[editor autotest] edit frame: 471 draw calls, 938 triangles, 66 debug lines
+[editor autotest] wrote: /home/conner/Documents/GitHub/Project-Judas/.cache/2d-game-evidence/editor-final/result.play.png
+[editor autotest] play frame: 1 steps, step 0.132 ms, 21 bodies, 0 contacts, 290 draw calls, 580 triangles, 0 shadow passes, 0 lights, 0 debug lines, 0 particles
+[editor autotest] resources: 0 meshes, 3 textures, 0 terrain meshes, hits 131205, misses 5, failed 0, uploads 5, resident 311099 bytes
+[editor autotest] jobs: 11 workers, 5 completed, 0 failed, 0 cancelled
+[editor autotest] authored scene after play/stop is IDENTICAL
+[editor autotest] save ok

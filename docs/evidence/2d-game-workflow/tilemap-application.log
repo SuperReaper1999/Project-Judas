@@ -1,0 +1,16 @@
+Shadow maps: on
+Graphics: 4.5 (Core Profile) Mesa 26.0.8-1ubuntu0.3 / llvmpipe (LLVM 21.1.8, 256 bits)
+Renderer fragment texture units: 32 (material path uses 12)
+Project: Tilemap Workshop (/home/conner/Documents/GitHub/Project-Judas/projects/tilemap_workshop/Tilemap_Workshop.judasproj)
+Scene: Tilemap Trail (/home/conner/Documents/GitHub/Project-Judas/projects/tilemap_workshop/Scenes/main.judas)
+World origin (m): 0.000, 0.000, 0.000
+PASS actual native trigger collected a star through project JavaScript
+PASS save actual played tilemap world
+PASS read independently committed save scene
+PASS restore through real outer-boundary save service
+PASS restored physical endpoint equals captured native snapshot
+PASS restored character retains actual planar mobility
+PASS game progression survives real load
+PASS production application renders, switches, saves, restores and shuts down
+ORDINARY_RENDERED_FRAME n=122 median_ms=1.644822 p95_ms=3.897770 worst_ms=4.962729
+TILEMAP_APPLICATION checks=8 failures=0
