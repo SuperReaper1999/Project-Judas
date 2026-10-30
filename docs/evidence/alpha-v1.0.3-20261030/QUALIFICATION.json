@@ -1,0 +1,7 @@
+{
+  "source_revision": "f2813324155166c6942fd68dde843d9775eb532d",
+  "passed": true,
+  "Linux": "CI native gates and actual SDK/editor/export workflows",
+  "Windows": "CI MSVC SDK/tool/selected native contracts; desktop/GPU qualification is a separate final operator requirement",
+  "humanAcceptance": "Required separately by protected publication environment and exact main source approval"
+}

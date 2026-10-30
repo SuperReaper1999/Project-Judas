@@ -1,9 +1,15 @@
 # Prepare, qualify and publish Judas
 
-[Identity/channels](VERSIONING.md) · [Patch notes](ALPHA_V1_0_2_NOTES.md) ·
+[Identity/channels](VERSIONING.md) · [Patch notes](ALPHA_V1_0_3_NOTES.md) ·
 [Support matrix](ALPHA_SUPPORT_MATRIX.md) · [Linux baseline](LINUX_BASELINE_BUILD.md)
 
 ## Current boundary
+
+**[Alpha v1.0.3 is published](https://github.com/SuperReaper1999/Project-Judas/releases/tag/v1.0.3-alpha.1)**
+on 30 October 2026 from `f2813324155166c6942fd68dde843d9775eb532d`. Linux and
+Windows preparation and protected publication passed. Package digests and the
+live Alpha feed were verified; see [the release record](ALPHA_V1_0_3_NOTES.md#release-record).
+Advanced Fluids remains locked. Previous tags and packages remain immutable.
 
 **[Alpha v1.0.2 is published](https://github.com/SuperReaper1999/Project-Judas/releases/tag/v1.0.2-alpha.1)**
 on 29 October 2026 from `24ae686f5918105dd84c2b00f98f5354bad13ef8`.

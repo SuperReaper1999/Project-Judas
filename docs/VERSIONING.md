@@ -9,9 +9,12 @@ The accepted weather/input patch advances the source identity to
 `1.0.1-alpha.1`, [published on 29 October 2026](https://github.com/SuperReaper1999/Project-Judas/releases/tag/v1.0.1-alpha.1)
 from `13b032080c6300c50af8bf44536c2dd8da5814d2`. The original Alpha remains immutable. Patch numbers and
 prerelease sequence numbers are separate SemVer components.
-The current published rain patch is `1.0.2-alpha.1`, released on 29 October 2026
+The rain patch is `1.0.2-alpha.1`, released on 29 October 2026
 from `24ae686f5918105dd84c2b00f98f5354bad13ef8`. Publication evidence is in the
 [release procedure](RELEASING.md) and [patch notes](ALPHA_V1_0_2_NOTES.md).
+The current published patch is `1.0.3-alpha.1`, released on 30 October 2026 from
+`f2813324155166c6942fd68dde843d9775eb532d`; see
+[its authoring/Android diagnostic corrections and release record](ALPHA_V1_0_3_NOTES.md).
 
 Judas follows semantic version precedence: `1.0.0-alpha.1` < `1.0.0-alpha.2` <
 `1.0.0-beta.1` < `1.0.0-rc.1` < `1.0.0`. Numeric prerelease components sort

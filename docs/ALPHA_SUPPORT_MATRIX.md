@@ -1,7 +1,7 @@
 # Alpha scope and qualification matrix
 
-This is the support boundary for [published Alpha v1.0.2](https://github.com/SuperReaper1999/Project-Judas/releases/tag/v1.0.2-alpha.1),
-published on 29 October 2026 at `24ae686f5918105dd84c2b00f98f5354bad13ef8`.
+This is the support boundary for [published Alpha v1.0.3](https://github.com/SuperReaper1999/Project-Judas/releases/tag/v1.0.3-alpha.1),
+published on 30 October 2026 at `f2813324155166c6942fd68dde843d9775eb532d`.
 The original Alpha v1.0.0 was human accepted on 27 October at `636eec47`.
 The patch adds fresh Ubuntu 24.04 SDK/editor/export qualification and hosted
 native Windows SDK/tool/selected-contract checks. It does not create new Windows

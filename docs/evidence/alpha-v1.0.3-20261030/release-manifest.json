@@ -1,0 +1,39 @@
+{
+  "schema": 1,
+  "channel": "Alpha",
+  "version": "1.0.3-alpha.1",
+  "tag": "v1.0.3-alpha.1",
+  "source_revision": "f2813324155166c6942fd68dde843d9775eb532d",
+  "compatibility": {
+    "update_protocol": 1,
+    "engine_major": 1
+  },
+  "notes": "# Judas Engine Alpha v1.0.3\n\nMachine version: **`1.0.3-alpha.1`**. Alpha, not Stable/GA.\nThe operator authorized this patch on 30 October 2026. Publication remains pending\nuntil exact-source Linux and Windows release preparation and integrity verification\nsucceed. Source and artifact identities belong in the release manifest and checksums.\n\n## Corrections\n\n- Point lights can omit the irrelevant `light.cone` authoring field. Ordinary\n  component defaults remain available for canonical round-trips. Spot lights still\n  require their meaningful cone; explicitly supplied values on either kind retain\n  finite/range validation. Named and line-oriented scenes use the same loader.\n- Android build identity errors now name mismatched fields and their values.\n  Channel-only differences suggest the matching flag, such as `--channel Alpha`,\n  rather than only recommending a rebuild that would reproduce the same mismatch.\n  The default remains deliberately Experimental; no channel is silently changed.\n  Exact source/version/provenance validation is unchanged. Android documentation\n  lists the current channels and explains Alpha-tool use.\n\nThe original point-light loader fails the new regression, the correction passes\nboth formats, and the full Linux scene suite passes 89 assertions. Seven Python\nchecks cover Android identities, including an actual builder entry path with\nmocked SDK tools that rejects before native compilation or APK publication.\nSee [the detailed evidence](ISSUES_21_22_FOLLOWUP.txt). Hosted release preparation\nqualifies the actual desktop distributions separately; the mocked test is not\nnew Android hardware or native-device qualification.\n\n**Advanced Fluid Dynamics remains compiled-locked and unavailable in Alpha.**\nBasic Water and swimming remain independent and available. Private pressure,\ngeometry and transport research is not a released backend or an enable switch.\nThin-cell conditioning, complete momentum evolution and moving/free-surface\nintegration remain unqualified. No fluid implementation is unlocked by this patch.\n\nExisting platform/support limitations remain in the\n[Alpha support matrix](ALPHA_SUPPORT_MATRIX.md). No new controller, physical GPU,\nclean-machine or Android-device claim is made. Previous published tags and\npackages remain unchanged. Updates notify only; nothing installs automatically.\n",
+  "notes_url": "https://github.com/SuperReaper1999/Project-Judas/releases/tag/v1.0.3-alpha.1",
+  "artifacts": [
+    {
+      "name": "JudasEngine-1.0.3-alpha.1-Alpha-Linux-x86_64.tar.gz",
+      "platform": "Linux",
+      "architecture": "x86_64",
+      "bytes": 386177420,
+      "sha256": "c20d4039a624b3d27e9043b483715fccf2fc39758e884596146c5fdfa0b89a86",
+      "url": "https://github.com/SuperReaper1999/Project-Judas/releases/download/v1.0.3-alpha.1/JudasEngine-1.0.3-alpha.1-Alpha-Linux-x86_64.tar.gz"
+    },
+    {
+      "name": "JudasEngine-1.0.3-alpha.1-Alpha-Windows-x86_64.zip",
+      "platform": "Windows",
+      "architecture": "x86_64",
+      "bytes": 104075100,
+      "sha256": "7d5676ad1788a10968df377d387b363c794759ee85fb6956365e0d5f233fdb23",
+      "url": "https://github.com/SuperReaper1999/Project-Judas/releases/download/v1.0.3-alpha.1/JudasEngine-1.0.3-alpha.1-Alpha-Windows-x86_64.zip"
+    },
+    {
+      "name": "JudasEngine-1.0.3-alpha.1-Source.tar.gz",
+      "platform": "Source",
+      "architecture": "any",
+      "bytes": 70621986,
+      "sha256": "afa43c00888563d29316d5510d350b8827912ef378c4a9a3d82aab44b227378e",
+      "url": "https://github.com/SuperReaper1999/Project-Judas/releases/download/v1.0.3-alpha.1/JudasEngine-1.0.3-alpha.1-Source.tar.gz"
+    }
+  ]
+}

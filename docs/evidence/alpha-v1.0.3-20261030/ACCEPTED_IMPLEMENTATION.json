@@ -1,0 +1,11 @@
+{
+  "acceptedCommit": "f2813324155166c6942fd68dde843d9775eb532d",
+  "version": "1.0.3-alpha.1",
+  "acceptance": "Operator explicitly accepted this exact qualified commit for main and publication on 30 October 2026. No new visual or hardware trial is asserted.",
+  "preparationRun": 40977408836,
+  "publicationRun": 40981128911,
+  "linux": "Ubuntu24.04 native gates, SDK editor/project/tools/relocated exports passed",
+  "windows": "Hosted MSVC SDK18tools and selected native contracts passed; no new interactive desktop/hardware claim",
+  "integrity": "Live SDK/source asset digests match manifest; local downloaded receipts match SHA256SUMS; live Alpha feed byte-identical to published manifest. Publisher additionally downloaded and verified complete payloads.",
+  "advancedFluidsUnlocked": false
+}
