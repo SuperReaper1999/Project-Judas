@@ -1,0 +1,12 @@
+Shadow maps: on
+Graphics: 4.5 (Core Profile) Mesa 26.0.8-1ubuntu0.3 / llvmpipe (LLVM 21.1.8, 256 bits)
+Renderer fragment texture units: 32 (material path uses 12)
+World state: /home/conner/Documents/GitHub/Project-Judas/.cache/save-latency-latest/original/hinge/Saves/map.judasstate (none saved)
+Project: Hinge (/home/conner/Documents/GitHub/Project-Judas/.cache/save-latency-latest/original/hinge/hinge.judasproj)
+Scene: Hinge - World map (/home/conner/Documents/GitHub/Project-Judas/.cache/save-latency-latest/original/hinge/Scenes/map.judas)
+World origin (m): 0.000, 0.000, 0.000
+script asset=c6e9092f74d8b449cdcdaed0d60dc1a9 entity=1 slot=1 uiUpdate: TypeError: cannot read property 'get' of undefined
+    at uiUpdate (Assets/scripts/map.js:162:21)
+
+IDLE service_ns=5.67100 entities=181 bodies=0 owners=0
+SAMPLE save capture=2.770586 worker=8.634827 restore=0.000000 frame=11.444596 bytes=84351 entities=181 bodies=0 owners=0 rss=0

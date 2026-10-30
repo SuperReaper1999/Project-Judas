@@ -1,0 +1,35 @@
+{
+  "baseline": "01af9b928b91e9b4bcdc92cfdccf9e1039dc5117",
+  "branch": "Experimental",
+  "humanAcceptance": false,
+  "linux": "focused checks passed",
+  "initialMapRoundtrip": "fails both before and after: game map has no restore callback",
+  "levelRoundtrip": "seven cycles passed",
+  "checks": [
+    {
+      "test": "storage",
+      "exit": 0,
+      "wallSeconds": 0.113857686999836
+    },
+    {
+      "test": "lifecycle",
+      "exit": 0,
+      "wallSeconds": 0.41480983800283866
+    },
+    {
+      "test": "evolution",
+      "exit": 0,
+      "wallSeconds": 0.16455014199891593
+    },
+    {
+      "test": "cycles",
+      "exit": 1,
+      "wallSeconds": 2.424304140993627
+    }
+  ],
+  "relocatedExport": "passed",
+  "Windows": "source updated, native checks not run",
+  "Android": "not run",
+  "performanceClaim": "one duplicate encoding pass removed; no robust overall small-Hinge latency/tail speedup",
+  "issue27": "frame-count disparity reproduced; nine-second wall delay not established"
+}

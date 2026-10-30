@@ -1,0 +1,22 @@
+[
+  {
+    "test": "storage",
+    "exit": 0,
+    "wallSeconds": 0.113857686999836
+  },
+  {
+    "test": "lifecycle",
+    "exit": 0,
+    "wallSeconds": 0.41480983800283866
+  },
+  {
+    "test": "evolution",
+    "exit": 0,
+    "wallSeconds": 0.16455014199891593
+  },
+  {
+    "test": "cycles",
+    "exit": 1,
+    "wallSeconds": 2.424304140993627
+  }
+]

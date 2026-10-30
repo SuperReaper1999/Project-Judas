@@ -4,12 +4,24 @@
 #include "InteractivePlay.h"
 #include "SceneSession.h"
 #include "SaveService.h"
+#include "SaveStorage.h"
+#include "SceneFingerprint.h"
+#include <algorithm>
+#include <vector>
 #include "ScriptSystem.h"
 #include <SDL2/SDL.h>
 #include <chrono>
 #include <cstdio>
 using Clock=std::chrono::steady_clock;
 int main(int argc,char** argv){
+ if(argc==2&&std::string(argv[1])=="--encode"){
+  for(size_t count:{size_t(64*1024),size_t(1024*1024),size_t(7*1024*1024)}){
+   GameSnapshot snapshot;snapshot.project="encoding benchmark";snapshot.scene="Scenes/main.judas";snapshot.content=SceneFingerprintSha256("content");snapshot.participants["fixture"]={1,std::string(count,'x')};
+   std::vector<double> timings;size_t bytes=0;
+   for(int i=0;i<21;++i){auto start=Clock::now();auto encoded=EncodeGameSnapshot(snapshot);auto elapsed=std::chrono::duration<double,std::milli>(Clock::now()-start).count();bytes=encoded.size();if(i)timings.push_back(elapsed);}
+   std::sort(timings.begin(),timings.end());std::printf("EXTRA_ENCODING payload_bytes=%zu encoded_bytes=%zu median_ms=%.6f p95_ms=%.6f worst_ms=%.6f\n",count,bytes,(timings[9]+timings[10])*.5,timings[18],timings.back());
+  }return 0;
+ }
  if(argc!=2)return 2;
  unsigned frame=0,sample=0,requestFrame=0;uint64_t request=0;std::string state;bool failed=false;Clock::time_point requested;
  ApplicationControl c;c.hidden=true;c.frameSeconds=[](float){return 1.f/60;};

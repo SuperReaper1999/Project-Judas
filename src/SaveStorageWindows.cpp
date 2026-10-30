@@ -101,12 +101,12 @@ bool SaveStorage::Publish(const std::string& file,const std::string& bytes,std::
   if(boundary)boundary("directory-synced");return true;
  }catch(const std::exception& e){error=published?"published; durability uncertain: "+std::string(e.what()):e.what();if(!published&&ownsTemporary)DeleteFileW(tmp.c_str());return false;}
 }
-bool SaveStorage::Write(const std::string& id,const GameSnapshot& value,std::string& error,bool onlyNew){
+bool SaveStorage::Write(const std::string& id,const GameSnapshot& value,std::string& error,bool onlyNew,size_t* encodedBytes){
  error.clear();if(!ValidSlot(id)){error="invalid slot ID";return false;}if(!Open(error))return false;
  try {
   const auto root=fs::u8path(m_root);Lock lock(root);CheckDestination(root/(id+".save"));CheckDestination(root/(id+".previous"));
   const auto names=SlotNames(root);if(onlyNew&&names.count(id))throw std::runtime_error("destination exists; choose a new slot");if(!names.count(id)&&names.size()>=128)throw std::runtime_error("save slot limit (128); delete an existing slot first");
-  auto bytes=EncodeGameSnapshot(value);GameSnapshot previous;std::string oldError,exactPrevious;
+  auto bytes=EncodeGameSnapshot(value);if(encodedBytes)*encodedBytes=bytes.size();GameSnapshot previous;std::string oldError,exactPrevious;
   bool good=ReadFile(id+".save",previous,oldError,false,&exactPrevious);
   if(!good&&oldError.find("unsupported newer save container version")!=std::string::npos){error="refusing to overwrite a newer save container; choose a new slot";return false;}
   if(!good&&(oldError.rfind("read slot:",0)==0||oldError.rfind("stat slot:",0)==0||oldError=="truncated/failed slot read")){error=oldError;return false;}

@@ -1,0 +1,48 @@
+PASS an unrecorded build diagnostic defaults to unknown rather than inventing a milestone
+PASS independent old header without build diagnostic restores unknown and preserves participant bytes
+PASS an explicitly recorded build diagnostic round-trips without becoming a compatibility gate
+PASS first slot durably commits
+PASS write reports exact encoded bytes without a second encoding by caller
+PASS early validation failure does not invent an encoded size
+PASS Unicode metadata round trip
+PASS independent second slot
+PASS bounded metadata listing
+PASS slot path traversal rejected
+PASS overwrite publishes previous-good first
+PASS corruption recovers previous committed generation explicitly
+PASS corrupt current repaired without destroying previous good
+PASS controlled prepublication failure reported
+PASS failed overwrite leaves current valid
+PASS payload checksum detects corruption
+PASS truncation rejected
+PASS oversized string rejected before allocation
+PASS concurrent process lock conflict explicit
+PASS controlled child termination retains recoverable committed generation
+PASS controlled child termination retains recoverable committed generation
+PASS controlled child termination retains recoverable committed generation
+PASS controlled child termination retains recoverable committed generation
+PASS controlled child termination retains recoverable committed generation
+PASS delete selected slot includes recovery generation
+PASS delete preserves other slot
+PASS abandoned temporary not advertised as slot
+PASS unknown/newer container rejects
+PASS explicit seconds-to-milliseconds envelope migration retains semantic records
+PASS intermediate directory symlink rejected
+PASS slot symlink rejected for write/delete
+PASS post-rename uncertainty reported honestly
+PASS late publication remains validated readable state
+PARTICIPANTS count=19 write=accepted diagnostic=
+PASS supported 19-participant envelope durably encodes
+PASS independent 19-participant envelope decodes and round-trips exactly
+PARTICIPANTS count=20 write=accepted diagnostic=
+PASS supported 20-participant envelope durably encodes
+PASS independent 20-participant envelope decodes and round-trips exactly
+PARTICIPANTS count=21 write=accepted diagnostic=
+PASS supported 21-participant envelope durably encodes
+PASS independent 21-participant envelope decodes and round-trips exactly
+PARTICIPANTS count=22 write=accepted diagnostic=
+PASS supported 22-participant envelope durably encodes
+PASS independent 22-participant envelope decodes and round-trips exactly
+PASS 23-participant envelope remains outside the bounded supported schema
+PASS oversized checksum-valid decoder input rejects atomically without mutating output
+SUMMARY checks=43 failures=0

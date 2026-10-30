@@ -1,0 +1,290 @@
+[
+  {
+    "scene": "map",
+    "paused": false,
+    "variant": "before",
+    "count": 15,
+    "frames": {
+      "median": 370,
+      "p95": 432,
+      "worst": 432
+    },
+    "wallMs": {
+      "median": 45,
+      "p95": 53,
+      "worst": 53
+    },
+    "queuedMs": {
+      "median": 32.500943,
+      "p95": 35.117158,
+      "worst": 35.117158
+    },
+    "identityMs": {
+      "median": 32.383601,
+      "p95": 35.00175,
+      "worst": 35.00175
+    },
+    "captureMs": {
+      "median": 2.215238,
+      "p95": 3.379494,
+      "worst": 3.379494
+    },
+    "workerMs": {
+      "median": 10.103107,
+      "p95": 18.477021,
+      "worst": 18.477021
+    }
+  },
+  {
+    "scene": "map",
+    "paused": false,
+    "variant": "after",
+    "count": 15,
+    "frames": {
+      "median": 363,
+      "p95": 387,
+      "worst": 387
+    },
+    "wallMs": {
+      "median": 44,
+      "p95": 51,
+      "worst": 51
+    },
+    "queuedMs": {
+      "median": 33.6549,
+      "p95": 37.230393,
+      "worst": 37.230393
+    },
+    "identityMs": {
+      "median": 33.507661,
+      "p95": 37.028142,
+      "worst": 37.028142
+    },
+    "captureMs": {
+      "median": 2.294308,
+      "p95": 3.978634,
+      "worst": 3.978634
+    },
+    "workerMs": {
+      "median": 9.377217,
+      "p95": 10.401099,
+      "worst": 10.401099
+    }
+  },
+  {
+    "scene": "map",
+    "paused": true,
+    "variant": "before",
+    "count": 15,
+    "frames": {
+      "median": 273,
+      "p95": 328,
+      "worst": 328
+    },
+    "wallMs": {
+      "median": 46,
+      "p95": 55,
+      "worst": 55
+    },
+    "queuedMs": {
+      "median": 32.435289,
+      "p95": 34.046629,
+      "worst": 34.046629
+    },
+    "identityMs": {
+      "median": 32.328488,
+      "p95": 33.829379,
+      "worst": 33.829379
+    },
+    "captureMs": {
+      "median": 2.211582,
+      "p95": 2.437718,
+      "worst": 2.437718
+    },
+    "workerMs": {
+      "median": 10.347647,
+      "p95": 21.235735,
+      "worst": 21.235735
+    }
+  },
+  {
+    "scene": "map",
+    "paused": true,
+    "variant": "after",
+    "count": 15,
+    "frames": {
+      "median": 262,
+      "p95": 279,
+      "worst": 279
+    },
+    "wallMs": {
+      "median": 44,
+      "p95": 64,
+      "worst": 64
+    },
+    "queuedMs": {
+      "median": 32.00658,
+      "p95": 51.313377,
+      "worst": 51.313377
+    },
+    "identityMs": {
+      "median": 31.803097,
+      "p95": 51.109092,
+      "worst": 51.109092
+    },
+    "captureMs": {
+      "median": 2.338962,
+      "p95": 2.882467,
+      "worst": 2.882467
+    },
+    "workerMs": {
+      "median": 9.556305,
+      "p95": 10.984899,
+      "worst": 10.984899
+    }
+  },
+  {
+    "scene": "level",
+    "paused": false,
+    "variant": "before",
+    "count": 15,
+    "frames": {
+      "median": 68,
+      "p95": 74,
+      "worst": 74
+    },
+    "wallMs": {
+      "median": 46,
+      "p95": 49,
+      "worst": 49
+    },
+    "queuedMs": {
+      "median": 32.845663,
+      "p95": 34.490706,
+      "worst": 34.490706
+    },
+    "identityMs": {
+      "median": 32.535258,
+      "p95": 34.15845,
+      "worst": 34.15845
+    },
+    "captureMs": {
+      "median": 2.034056,
+      "p95": 2.568735,
+      "worst": 2.568735
+    },
+    "workerMs": {
+      "median": 10.553496,
+      "p95": 13.830046,
+      "worst": 13.830046
+    }
+  },
+  {
+    "scene": "level",
+    "paused": false,
+    "variant": "after",
+    "count": 15,
+    "frames": {
+      "median": 65,
+      "p95": 75,
+      "worst": 75
+    },
+    "wallMs": {
+      "median": 44,
+      "p95": 59,
+      "worst": 59
+    },
+    "queuedMs": {
+      "median": 32.712692,
+      "p95": 40.854479,
+      "worst": 40.854479
+    },
+    "identityMs": {
+      "median": 32.477339,
+      "p95": 39.853161,
+      "worst": 39.853161
+    },
+    "captureMs": {
+      "median": 2.161307,
+      "p95": 3.846205,
+      "worst": 3.846205
+    },
+    "workerMs": {
+      "median": 10.161296,
+      "p95": 20.442839,
+      "worst": 20.442839
+    }
+  },
+  {
+    "scene": "level",
+    "paused": true,
+    "variant": "before",
+    "count": 15,
+    "frames": {
+      "median": 76,
+      "p95": 84,
+      "worst": 84
+    },
+    "wallMs": {
+      "median": 45,
+      "p95": 49,
+      "worst": 49
+    },
+    "queuedMs": {
+      "median": 31.763903,
+      "p95": 35.276749,
+      "worst": 35.276749
+    },
+    "identityMs": {
+      "median": 31.464919,
+      "p95": 34.733033,
+      "worst": 34.733033
+    },
+    "captureMs": {
+      "median": 2.04614,
+      "p95": 3.005409,
+      "worst": 3.005409
+    },
+    "workerMs": {
+      "median": 10.633808,
+      "p95": 11.434096,
+      "worst": 11.434096
+    }
+  },
+  {
+    "scene": "level",
+    "paused": true,
+    "variant": "after",
+    "count": 15,
+    "frames": {
+      "median": 75,
+      "p95": 92,
+      "worst": 92
+    },
+    "wallMs": {
+      "median": 45,
+      "p95": 55,
+      "worst": 55
+    },
+    "queuedMs": {
+      "median": 31.504754,
+      "p95": 33.505097,
+      "worst": 33.505097
+    },
+    "identityMs": {
+      "median": 31.320446,
+      "p95": 33.012748,
+      "worst": 33.012748
+    },
+    "captureMs": {
+      "median": 2.169492,
+      "p95": 2.385419,
+      "worst": 2.385419
+    },
+    "workerMs": {
+      "median": 10.535182,
+      "p95": 19.922167,
+      "worst": 19.922167
+    }
+  }
+]

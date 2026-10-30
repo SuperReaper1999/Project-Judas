@@ -21,7 +21,9 @@ public:
  explicit SaveStorage(std::string root);~SaveStorage();
  SaveStorage(const SaveStorage&)=delete;
  static bool ValidSlot(const std::string&);
- bool Write(const std::string&,const GameSnapshot&,std::string&,bool onlyNew=false);
+ // Optional encoded-size observation avoids serializing a second time for telemetry.
+ // Set after successful encoding; I/O may still fail and must be checked separately.
+ bool Write(const std::string&,const GameSnapshot&,std::string&,bool onlyNew=false,size_t* encodedBytes=nullptr);
  bool Read(const std::string&,GameSnapshot&,bool& recovered,std::string&);
  bool ReadPrevious(const std::string&,GameSnapshot&,std::string&);
  bool Delete(const std::string&,std::string&);

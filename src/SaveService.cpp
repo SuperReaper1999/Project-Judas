@@ -109,7 +109,7 @@ void SaveService::Advance(std::unique_ptr<RuntimeWorld>& world,InteractivePlay& 
   auto product=m_product=std::make_shared<Product>();product->snapshot=std::move(snapshot);auto root=m_root,id=s.slot,operation=s.operation,identity=m_identity,content=m_content;auto policy=m_session.m_project.Settings().saveEvolution,mods=ModSaveContext(m_session.m_project);const bool allowMigration=m_allowMigration;
   s.state=operation=="load"?"reading":operation=="save"?"writing":"working";s.waitingFor="worker";const auto submitted=Clock::now();
   m_job=jobs->Submit([product,root,id,operation,identity,content,policy,mods,allowMigration,submitted](JobContext&){auto start=Clock::now();product->queueMs=ms(submitted);SaveStorage storage(root);bool ok=true;
-   if(operation=="save"){product->bytes=EncodeGameSnapshot(product->snapshot).size();ok=storage.Write(id,product->snapshot,product->error);}
+   if(operation=="save"){ok=storage.Write(id,product->snapshot,product->error,false,&product->bytes);}
    else if(operation=="load"){
     ok=storage.Read(id,product->snapshot,product->recovered,product->error);
     if(ok){product->bytes=EncodeGameSnapshot(product->snapshot).size();

@@ -280,3 +280,9 @@ The uncapped test harness advances synthetic time much faster than wall time.
 A queued save spanning 90 harness frames does not establish a 1.5-second real
 save latency. Measure these fields or a wall clock. Content identity continues
 to re-read project dependencies; same-size asset edits must still be detected.
+
+Save byte telemetry is obtained from the envelope already encoded by storage;
+it does not trigger a second encoding. `bytes` describes encoded data when
+available, not a durability guarantee. Check the terminal state/error. For the
+latest consumer timing investigation and limits, see
+[Hinge save latency](../SAVE_LATENCY_FOLLOWUP.md).

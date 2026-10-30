@@ -1,0 +1,10 @@
+import Core from './map-core.js';
+import {saves,console} from 'judas';
+export default class extends Core {
+ start(){super.start();this.testFrames=0;}
+ uiUpdate(dt){super.uiUpdate(dt);this.testFrames++;
+ if(this.testFrames>60&&!saves.busy&&!this.token&&!this.loaded){this.token=saves.save('map-roundtrip');console.log('MAP_ROUNDTRIP_SAVE');}
+ if(this.token){const s=saves.status(this.token);if(s.state==='failed')throw Error(s.error);
+ if(s.state==='completed'&&!saves.busy){this.loaded=true;this.token=0;saves.load('map-roundtrip');console.log('MAP_ROUNDTRIP_LOAD');}}
+ }
+}

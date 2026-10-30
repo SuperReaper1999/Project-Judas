@@ -1,0 +1,21 @@
+import Core from './map-core.js';
+import {saves,ui,console} from 'judas';
+export default class extends Core {
+ start(){super.start();this.enterWorld(0,0,true);this.benchFrame=0;this.benchSamples=0;this.watch=new Map();}
+ uiUpdate(dt){super.uiUpdate(dt);this.benchFrame++;
+  if(this.store.listing&&!this.watch.has(this.store.listing))this.watch.set(this.store.listing,{kind:'startup-list',at:Date.now(),frame:this.benchFrame,last:''});
+  if(this.benchFrame>60&&!saves.busy&&!this.benchToken&&this.benchSamples<10){
+   if(this.benchSamples===5){this.openMenu('title');}
+   this.benchToken=saves.save('bench-profile',{name:'Hinge profile benchmark',metadata:{progress:this.store.progress}});
+   this.watch.set(this.benchToken,{kind:'save-'+this.benchSamples,at:Date.now(),frame:this.benchFrame,last:''});
+  }
+  for(const [token,entry] of this.watch){const s=saves.status(token);if(!s)throw Error('lost token');
+   if(s.state!==entry.last){entry.last=s.state;console.log('PROBE_PHASE '+JSON.stringify({kind:entry.kind,frames:this.benchFrame-entry.frame,wallMs:Date.now()-entry.at,...s}));}
+   if(s.state==='failed')throw Error(s.error);
+   if(s.state==='completed'){
+    console.log('PROBE_DONE '+JSON.stringify({kind:entry.kind,paused:this.benchSamples>=5,frames:this.benchFrame-entry.frame,wallMs:Date.now()-entry.at,...s}));
+    this.watch.delete(token);if(token===this.benchToken){this.benchToken=0;if(++this.benchSamples===10)ui.quit();}
+   }
+  }
+ }
+}
