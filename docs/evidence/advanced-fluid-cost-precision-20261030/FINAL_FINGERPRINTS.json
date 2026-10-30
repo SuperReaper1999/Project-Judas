@@ -1,0 +1,15 @@
+{
+  "schema": 1,
+  "parent": "145d730dd75511aaf8908fe18dd5eb38be56bf96",
+  "scope": "This file excludes itself; source manifest hashes private source/dependency/log closure",
+  "files": {
+    "docs/ADVANCED_FLUID_COST_AND_PRECISION.txt": "a4b2268976c00d9f512b8f72d4fe700e16e75ebcb870b39f8aa13cf055f9b387",
+    "docs/evidence/advanced-fluid-cost-precision-20261030/CHANGED_FILES.txt": "39a870d0e83adebc2cdadcd8f513b573a7d1a10aa6b78859fab20a6668c07e21",
+    "docs/evidence/advanced-fluid-cost-precision-20261030/PROVENANCE.json": "1c0c02051b7538bc1020093c6aac40fe6570936ac956415c5b91a1b6849cf244",
+    "docs/evidence/advanced-fluid-cost-precision-20261030/REPRODUCE.txt": "f884e14e4bfa3f531080154a3199e1b01166fdbbf181b64b15d58c387cc76ec7",
+    "docs/evidence/advanced-fluid-cost-precision-20261030/RESULTS.json": "5a9f88f0cc02128d99cac8656a49e436ca4549fd6e80320afd383c24bad3e58a",
+    "docs/evidence/advanced-fluid-cost-precision-20261030/SOURCE_MANIFEST.json": "c52377cc3e66293be38ac28d1677b9bc1429b7e0c713702e0620f5d0bbf897fd",
+    "docs/evidence/advanced-fluid-cost-precision-20261030/cost-precision-reference.tar.gz": "51b9889ed0718d8b76e072b4031fb8f2ae3ba02d1f62c90773b53e4a696351d4",
+    "docs/evidence/advanced-fluid-cost-precision-20261030/verify_evidence.py": "0dce4a72ed841ad402ffa7d1d7a7cb1720701de7dd99485c0098ef9757e32602"
+  }
+}

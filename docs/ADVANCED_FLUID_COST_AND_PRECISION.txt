@@ -1,0 +1,108 @@
+ADVANCED FLUID FOLLOW-UP — CHEAPER, CONSISTENT WEAK TRANSPORT
+2026-10-30 | Experimental private reference, not production enablement
+Parent:145d730dd75511aaf8908fe18dd5eb38be56bf96
+Main/Alpha1.0.3 unchanged:f2813324155166c6942fd68dde843d9775eb532d
+
+RESULT
+Both immediate tasks now have validated corrections within the fixed-geometry
+reference: the original strict work-identity failures pass unchanged, and matched
+steady-step cost improves on both ordinary and rotated geometry. Advanced Fluids
+remains locked. This is not a finished or game-ready fluid runtime.
+
+PRECISION ROOT CAUSE
+The interpolation shortcut delta=N*G^-1*b assumes exact polynomial reproduction
+and kinetic compatibility. Rounded stored operators do not satisfy those
+identities exactly. A100-digit reconstruction gives original true residual
+1.5804757634e-10, above unchanged1e-10; improving scalar summation alone is not a
+solution. The old source, exact input formula, thresholds and failure are kept.
+
+Prepare the twelve-column weak-load Riesz map from the EXISTING positive root:
+ F^T F delta = rho L^T b.
+Use column-scaled113-bit QR of F, never a rounded normal-matrix inverse. Evaluate
+the small affine projection/flux/stress calculations consistently in that
+precision, then publish the physical rate in the existing Real representation.
+No changed geometry, kinetic model, damping, energy constraint, impulse repair,
+rank deletion, donor clamp, timestep or nonlinear iteration budget.
+
+Original rotated trial6: residual1.56433e-10 ->9.53269487885e-12.
+Next rotated trial7: residual1.41881e-10 in partial correction ->1.27290520418e-11.
+All544 spatial contract assertions now pass, including the complete original
+axis/rotated arbitrary-field cases and actual momenta, kernel/energy/negative
+controls. Independent100-digit root-work and exact clipped-face oracles confirm
+both corrected residuals; final implementation differs from that oracle by less
+than6e-26. The gate is still absolute1e-10, not a replacement relative tolerance.
+
+PERFORMANCE MECHANISM
+Measured rotated Stage22 rate68.5–69.0ms versus pressure2.8–2.9ms. Face coefficient
+reconstruction16.6–16.9ms and face integration47.4–48.0ms dominate. Prepare exact
+face maps, vertex-from-moment maps, anchored triangle coordinates, projected areas
+and cell offsets once per immutable geometry epoch. Exact rational topology and
+quantity integration remain unchanged; stale epochs explicitly reject.
+
+Blanket higher precision initially slowed the easy case despite fixing the
+failure. Retained that result. Final work verification uses the prepared Riesz
+equation and explicitly accounts for publication rounding, avoiding repeated
+large high-precision root products. A numerical error bound selects the full-root
+calculation when needed. This NEVER changes a physical rate. Range controls
+exercise the fallback and compare every published rate component to the full
+map. DERIVATION.txt in the archive gives the equations and numerical boundaries.
+
+MATCHED FINAL MEASUREMENTS (milliseconds per physical-reference step)
+Same1/240s timestep, same inputs/geometry/cadence, alternating old/new calls in
+one process for60 sequential steps per geometry, same5/16 nonlinear iterations:
+                         mean      median      p95       worst
+ axis Stage22            88.2539   88.3374     90.3432    91.6841
+ axis final              76.3015   76.4665     77.5977    79.7546
+ rotated Stage22        427.785   427.055     431.808    435.532
+ rotated final          184.351   183.491     186.977    215.640
+Mean time decreases13.5% /56.9%; rotated throughput about2.32x. These are one
+matched60-step sequence per geometry, not a distribution across many host runs.
+Additional preparation157.085ms axis /265.997ms rotated, excluded from warm steps.
+Ryzen5 5600,8GB RAM, g++15.2 Release-style -O3; shared desktop, no CPU affinity.
+
+Actual60-step endpoints differ by only2.5411e-20 /2.4564e-20 from Stage22, well
+within unchanged1e-10 endpoint gate. Advective angular error remains below4e-18,
+energy-balance defect below6e-18, kinetic residual below2.3e-16. Pressure-stage
+angular changes remain separate; independent boundary-traction attribution is
+still unqualified. No claim is made that pressure must conserve total fluid
+angular momentum against fixed walls.
+
+FINAL QUALIFICATION
+-OptimizedQualification:1196 checks, zero failures. Includes544 complete spatial
+ contracts, both60-step(.25simulated-second) implicit runs, component-identical
+work-acceleration controls and high-work full-root fallback coverage.
+-OptimizedOracle: both original failed states pass an independent100-digit
+ actual-root/exact-clipping work oracle at the original1e-10 gate.
+-FinalControls:79 checks, zero failures. Exact per-cell quantity agreement with
+ Stage22; normal rate difference1.10114e-20; deterministic repeat; one-iteration
+and excessive-donor-step rejections leave accepted state unchanged; malformed
+source/stale epoch reject; unrepresentable positive apertures reject, not vanish.
+No full production suite or editor/export/platform requalification: no production
+implementation, API, build wiring or released artifact changes in this batch.
+
+PRESERVED UNSUCCESSFUL ATTEMPTS
+Ordinary-precision Riesz solve worsened the original work residual and actual
+linear-momentum error. A partial higher-precision map fixed trial6 but failed
+trial7. Full precision without work acceleration passed physics but regressed
+easy-case cost87.4->108.0ms. Original logs/source remain. Initial cache missing
+one barycentric coordinate and a precision-type compile error were corrected;
+the actual failures remain, clearly separated from physics baseline findings.
+A launch attempted before a compiler finished is logged as a development error,
+not a numerical result. No experiment has been retrospectively relabelled PASS.
+
+REMAINING LIMITATIONS / NEXT ENGINEERING
+This tiny24-convex-cell/121-coordinate reference STILL costs76–184ms per step,
+far too expensive for a game. Further costs include exact incidence/flux work,
+small-field higher-precision evaluation and repeated nonlinear solves. Preparation
+is not yet a local moving-geometry runtime path. No FPS or production speedup is
+claimed. The partial precision blanket regression is not the final candidate.
+
+Moving geometry/material remap, rotating-wall GCL, free surfaces/wet-dry,
+chronological native contacts/friction, M54 owner frontend, persistence/export
+and complete complementary-mode advection remain unfinished. Earlier forced
+narrow-gap divergence/work failure is unchanged and not rerun here. Do not treat
+the angular precision correction as qualification of these separate contracts.
+Basic Water, M54/M55, engine/JS APIs, accepted main, published Alpha and Solbert's
+research remain unchanged. No tags or release publication. Exact current sources,
+failures, commands, measurements and hashes:
+ docs/evidence/advanced-fluid-cost-precision-20261030/

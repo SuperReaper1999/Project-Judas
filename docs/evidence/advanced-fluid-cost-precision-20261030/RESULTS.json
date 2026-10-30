@@ -1,0 +1,105 @@
+{
+  "schema": 1,
+  "scope": "Private closed fixed-geometry weak transport; no production adoption",
+  "finalQualification": {
+    "checks": 1196,
+    "failures": 0,
+    "timesteps": "1/240",
+    "stepsPerGeometry": 60,
+    "nonlinearIterationBudget": 16,
+    "observedMaxIterations": 5,
+    "spatialContracts": 544,
+    "spatialWorkGateUnchanged": 1e-10,
+    "maximumSpatialWorkResidual": 2.78716e-11,
+    "maximumSpatialAngularRateError": 2.12509e-13
+  },
+  "independentOracle": {
+    "cases": [
+      6,
+      7
+    ],
+    "decimalDigits": 100,
+    "failures": 0,
+    "originalTrueResidual": 1.5804757634481115e-10,
+    "correctedResiduals": [
+      9.53269487885185e-12,
+      1.2729052041766729e-11
+    ],
+    "maximumOracleDifference": 5.947981906571349e-26
+  },
+  "finalControls": {
+    "checks": 79,
+    "failures": 0,
+    "normalRateDifference": 1.10114e-20,
+    "exactQuantityAgreement": true,
+    "deterministic": true,
+    "rejectionPreservesInput": true,
+    "staleEpochRejected": true,
+    "unrepresentablePositiveApertureRejected": true
+  },
+  "matchedTimingsMs": [
+    {
+      "angle": 0.0,
+      "method": "stage22",
+      "samples": 60.0,
+      "mean": 88.2539,
+      "median": 88.3374,
+      "p95": 90.3432,
+      "worst": 91.6841
+    },
+    {
+      "angle": 0.0,
+      "method": "prepared_precise",
+      "samples": 60.0,
+      "mean": 76.3015,
+      "median": 76.4665,
+      "p95": 77.5977,
+      "worst": 79.7546
+    },
+    {
+      "angle": 0.37,
+      "method": "stage22",
+      "samples": 60.0,
+      "mean": 427.785,
+      "median": 427.055,
+      "p95": 431.808,
+      "worst": 435.532
+    },
+    {
+      "angle": 0.37,
+      "method": "prepared_precise",
+      "samples": 60.0,
+      "mean": 184.351,
+      "median": 183.491,
+      "p95": 186.977,
+      "worst": 215.64
+    }
+  ],
+  "timingQualification": "One alternating60-step sequence per geometry; shared desktop/no affinity, not whole-engine FPS",
+  "preparedWorkFallback": {
+    "casesPerGeometry": 24,
+    "physicalRateComponentsUnchanged": true,
+    "numericalWorkEvaluationBudget": 1e-20,
+    "changesPhysicalState": false
+  },
+  "endpointDifferences": [
+    2.5411e-20,
+    2.4564e-20
+  ],
+  "productionFilesChanged": false,
+  "alphaFluidsLocked": true,
+  "nativeEngineOrPlatformQualificationClaimed": false,
+  "remaining": [
+    "forced narrow-gap failure retained/not rerun",
+    "runtime cost still too high",
+    "moving geometry/native contacts/free surface/owner persistence integration unfinished"
+  ],
+  "preservedUnsuccessfulAttempts": [
+    "ordinary-precision Riesz",
+    "partial high-precision Riesz map",
+    "blanket high-precision easy-case performance regression",
+    "initial missing barycentric coordinate",
+    "precision type compile error",
+    "attempted launch before compile completed"
+  ]
+}

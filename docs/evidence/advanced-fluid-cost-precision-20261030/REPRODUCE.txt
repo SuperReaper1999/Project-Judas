@@ -1,0 +1,43 @@
+PRIVATE NUMERICAL REFERENCE — not enabled fluid runtime or application acceptance.
+Extract archive in a disposable checkout, preserving its .cache/src paths.
+Do not overwrite frozen evidence, research or unrelated source. External headers
+not included: Boost1.90, Eigen3.4 and systemGLM1.0.1. Set BOOST_INCLUDE_DIR and
+EIGEN_INCLUDE_DIR if the recorded header cache locations differ.
+
+Final qualification from repository root, one heavy job at a time:
+ python3 .cache/fluid-cost-precision-stage23-20261030/run_final.py
+Compiles/runs OptimizedQualification, OptimizedOracle, FinalControls sequentially.
+Individual reproduction:
+ python3 .cache/fluid-cost-precision-stage23-20261030/run_reference.py OptimizedQualification.cpp
+ python3 .cache/fluid-cost-precision-stage23-20261030/run_reference.py OptimizedOracle.cpp
+ python3 .cache/fluid-cost-precision-stage23-20261030/run_reference.py FinalControls.cpp
+The actual recorded runs were compiled/invoked individually with identical flags;
+reproduction driver is provided, not falsely claimed as another completed batch.
+Final binary hashes and compiler/build/header inputs are in PROVENANCE.json.
+
+Preserved original/partial failures EXPECT NONZERO at unchanged physical gates:
+ python3 .cache/fluid-cost-precision-stage23-20261030/run_reference.py PrecisionBreakdown.cpp targeted
+ python3 .cache/fluid-cost-precision-stage23-20261030/run_reference.py HighPrecisionOracle.cpp targeted
+ python3 .cache/fluid-cost-precision-stage23-20261030/run_reference.py RieszContractsTests.cpp targeted
+ python3 .cache/fluid-cost-precision-stage23-20261030/run_reference.py AccurateContractsTests.cpp targeted
+PreciseContractsTests /CombinedQualification are passing pre-work-optimization
+variants; blanket precision regressed easy-case cost. Do not select them as the
+final candidate. CacheEquivalenceTests' initial missing-coordinate version failed;
+its post-fix standalone program was not separately rerun. Final cached geometry
+and exact quantity invariants are exercised by final qualification/controls.
+
+Stage22 cost profiling:
+ python3 .cache/fluid-cost-precision-stage23-20261030/run_reference.py ProfileStep.cpp
+Six first-step iterations expose actual rate subphases and pressure cost. This
+is the pre-optimization trace, not a claim of new engine-profiler integration.
+
+Final physical benchmark workload:8voxels/24convex cells,121free coordinates,
+1m closed cavity minus submerged.4m box, density1000, fixed geometry; same original
+predictors/input formulas. Fixed1/240s, max16iterations,60steps(.25simulated sec)
+per geometry. Baseline and final alternate within one process. No game FPS,
+multiple-body coupling, longer stability envelope or platform acceptance claimed.
+Root-work controls at large scale test numerical fallback only, not fluids at
+those huge physical speeds. They preserve actual physical-rate components.
+
+Keep original logs, strict gates and protected historical artifacts. No full
+production suite/editor/export rerun is warranted for archived private code alone.
