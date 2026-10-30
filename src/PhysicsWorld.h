@@ -22,6 +22,7 @@ struct PhysicsQueryFilter {
     CategoryMask requiredTags=0, excludedTags=0;
     bool includeSensors=false;
     std::vector<BodyHandle> ignoredBodies;
+    bool planar=false; // Query domain; ordinary spatial queries never hit planar geometry.
 };
 
 // A snapshot query result. No hit leaves hit=false; point/normal then have no
@@ -297,6 +298,11 @@ public:
     // masks. Direction is normalized internally; zero direction/invalid dimensions
     // throw invalid_argument. Zero distance asks for initial overlap. Orientation
     // stays fixed (no angular trajectory). Optional stats belong to the caller.
+    // Read-only planar translation queries; shape and target share a fixed plane.
+    // Ray queries use a radius-zero circle accepted only by this query path.
+    PhysicsCastHit CastPlanar(const Shape&,const BodyTransform&,const glm::vec3& direction,float maximum,
+        const PhysicsQueryFilter& filter={},PhysicsCastStats* stats=nullptr) const;
+    glm::vec3 GetPlanarNormal(BodyHandle) const;
     PhysicsCastHit Raycast(const glm::vec3& origin,const glm::vec3& direction,float maximum,
         const PhysicsQueryFilter& filter={},PhysicsCastStats* stats=nullptr) const;
     PhysicsCastHit SphereCast(const glm::vec3& origin,float radius,const glm::vec3& direction,float maximum,

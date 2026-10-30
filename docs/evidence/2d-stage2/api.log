@@ -1,0 +1,14 @@
+{
+  "publicSymbols": 482,
+  "topLevelExports": 41,
+  "nativeOperations": 319,
+  "callbacks": 17,
+  "typeChecker": "5.9.3",
+  "examples": 55,
+  "negativeDriftChecks": 7,
+  "structuredResultShapes": 18,
+  "callableSignatures": 249,
+  "typeContractFixture": true,
+  "runtimeEnumeration": false,
+  "pass": true
+}

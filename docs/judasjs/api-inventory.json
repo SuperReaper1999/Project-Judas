@@ -1,5 +1,5 @@
 {
-  "checkpoint": "Current public module including Experimental 2D Stage 1; source version in engine-version.json",
+  "checkpoint": "Current public module including Experimental 2D Stage 2; source version in engine-version.json",
   "authority": "src/ScriptSystem.cpp::library + Impl::Native + ScriptBindingsUI.cpp + ScriptBindingsJoint.cpp + ScriptInputBindings.inl + ScriptLocalMultiplayer.inl + ScriptNetwork.inl",
   "resultShapes": [
     {
@@ -1331,6 +1331,11 @@
       "maximum": 2
     },
     {
+      "symbol": "physics.cast2D",
+      "minimum": 4,
+      "maximum": 5
+    },
+    {
       "symbol": "physics.closestPoint",
       "minimum": 2,
       "maximum": 3
@@ -2351,6 +2356,17 @@
       ],
       "type": "docs/judas.d.ts:Entity.audio",
       "reference": "docs/judasjs/audio.md"
+    },
+    {
+      "symbol": "Entity.body2D",
+      "kinds": [
+        "get"
+      ],
+      "native": [
+        "body2DInfo"
+      ],
+      "type": "docs/judas.d.ts:Entity.body2D",
+      "reference": "docs/judasjs/physics-2d.md"
     },
     {
       "symbol": "Entity.burst",
@@ -5811,6 +5827,17 @@
       "reference": "docs/judasjs/physics.md"
     },
     {
+      "symbol": "physics.cast2D",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "cast2D"
+      ],
+      "type": "docs/judas.d.ts:physics.cast2D",
+      "reference": "docs/judasjs/physics-2d.md"
+    },
+    {
       "symbol": "physics.closestPoint",
       "kinds": [
         "call"
@@ -6805,11 +6832,13 @@
     "audioSettings",
     "audioVelocity",
     "axis",
+    "body2DInfo",
     "burst",
     "camera",
     "cameraInfo",
     "cameraProjection",
     "cast",
+    "cast2D",
     "castMany",
     "characterAcceleration",
     "characterConfigure",

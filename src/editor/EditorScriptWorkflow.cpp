@@ -188,3 +188,22 @@ SceneObjectId CreateEditorFirstPersonPlayer(EditorDocument& doc, Project& projec
     doc.Select(id);return id;
     }catch(const std::exception& e){if(transaction)doc.CancelEdit();error=e.what();return 0;}
 }
+
+SceneObjectId CreateEditorPlanarPlayer(EditorDocument& doc,Project& project,AssetDatabase& assets,
+                                      glm::vec3 position,SceneObjectId parent,std::string& error,bool sideView) {
+    if(!project.IsLoaded()){error="Open a project before creating a 2D player";return 0;}
+    std::ifstream source(ResolveEngineDataPath("docs/judasjs/examples/planar-player.js"),std::ios::binary);
+    if(!source){error="Missing 2D player script in SDK docs";return 0;}
+    const std::string text{std::istreambuf_iterator<char>(source),{}};
+    doc.BeginEdit();auto& object=doc.GetScene().CreateObject(sideView?"2D platformer player":"2D top-down player");
+    const auto id=object.id;object.parent=parent;object.transform.position=parent?glm::vec3(0):position;
+    object.render=SceneRenderComponent{};object.render->shape=SceneShape::Sprite;
+    object.render->sprite.size={.6f,1.2f};object.render->color={.4f,.8f,1};
+    object.body=SceneBodyComponent{};object.body->shape=SceneShape::Planar;object.body->planar=PlanarCapsule(.3,.3,true);
+    object.body->motion=SceneBodyMotion::Dynamic;object.body->mass=5;object.body->friction=0;object.body->managed=false;
+    doc.CommitEdit();doc.Select(id);
+    AssetRecord record;
+    if(!CreateAndAttachEditorScript(doc,id,project,assets,"Player2D_"+std::to_string(id)+".js",record,error,text,
+          sideView?"{\"sideView\":true}":"{\"sideView\":false}"))return id;
+    error.clear();return id;
+}

@@ -1,0 +1,64 @@
+PASS accepted 3D physical trajectory remains bit-identical to Stage 0 control
+PASS legacy native RigidBody aggregate fields retain their order
+PASS legacy native query-filter aggregate keeps spatial defaults
+PASS rectangle uses lamina rather than thin-box inertia
+PASS circle has exact disk inertia
+PASS zero core-length capsule has disk mass limit
+PASS native rounded-core geometry reports circle-box penetration and witnesses
+PASS separated circle-box negative control
+PASS parallel 2D faces produce two physical anchors
+PASS different planes do not invent extrusion collision
+PASS native descriptor roundtrip retains exact shape and rotation policy
+PASS malformed descriptor fails without replacing published immutable geometry
+PASS concave geometry rejects instead of pretending convex
+PASS actual point impulse uses reduced linear and angular mobility
+PASS forbidden velocity command rejects atomically
+CONTACT gap=-0.000311266024709 normal=(3.25260652e-19,1) point=(0.643516362,-0.00015563301)
+CONTACT gap=-4.55499008345e-06 normal=(3.25260652e-19,1) point=(2.0435164,-2.27749501e-06)
+DETAIL minY=-0.000311285257 spin=0 vy=0 q=(0.707029343,0.707184255)
+MEASURE resting=(1.3434068,0.499842077,0)
+PASS off-centre landing collides with real 2D floor and remains in plane
+PASS independent transformed-corner oracle bounds floor penetration below 2 mm
+PASS native custom physical inertia is accepted before reduction
+PASS constrained spin uses reciprocal physical Iz, not the spatial inverse tensor's zz entry
+PASS authored rotation lock absorbs torque through mobility, not damping
+PASS 3D hinge coupling rejects for planar body
+MEASURE fast x=-0.149999991 vx=0
+PASS native MK2 CCD stops a 150 m/s planar box at a thin wall
+PASS capsule cast uses actual planar chain geometry and distance
+PASS ordinary spatial queries do not silently treat 2D lines as 3D boxes
+PASS 2D casts preserve ignored-body filtering
+PASS off-plane query direction rejects clearly
+MEASURE seam x=3.99018002 lowY=0.299999982
+PASS circle traverses a shared collinear chain vertex without snagging or sinking
+PASS elastic 2D contacts conserve momentum and kinetic energy independently
+PASS elastic bodies actually collide and separate; free-flight is not a passing oracle
+PASS rotated planar mobility rejects a purely normal impulse without gameplay repair
+MEASURE rotated local=(-1.40070915e-06,0.499999642,-2.07126141e-06)
+PASS rotated frame has equivalent floor support and bounded normal drift
+PASS native planar pin is a two-row physical joint
+PASS planar pin preserves its free spin and anchor
+PASS runtime joint reconfiguration cannot bypass the planar coupling guard
+PASS unscripted planar sensor publishes enter without response
+PASS sensor stay is pair-bounded rather than manifold-point callbacks
+PASS collision filter suppresses planar contact and publishes exit
+PASS planar body supports kinematic authority
+MEASURE moving-support rider=(1.45009303,0.5) platform=1.49999928
+PASS actual friction carries a body on a translating kinematic platform
+PASS off-plane kinematic prescription rejects atomically
+PASS finite chains leave real gaps rather than becoming infinite planes
+PASS chain casts report stable segment child identity
+MEASURE pin motor w=-2 coordinate=1.92644274
+PASS planar pin motor controls B-minus-A angular speed physically
+PASS planar pin limits stop real rotation at authored bounds
+PASS unsupported spatial constitutive joint law rejects for native pin
+PASS native weld creates three independent planar rows
+PASS weld resists translation and rotation without extra spatial alignment rows
+MEASURE planar-spin initial=66.6666666667 peak=66.6666717715 final=66.6666482102 max-wall-extent=0.949734807
+PASS fast rotating planar box has no artificial elastic energy gain
+PASS rotation-aware CCD preserves the actual finite wall boundary
+PASS native mass participant retains fixed planar frame
+PASS corrupt native plane record rejects before mass publication
+MEASURE friction aligned=(1.88176835,2.54749703) rotated=(1.88177299,2.54751706)
+PASS native sliding friction is covariant under arbitrary fixed-frame rotation
+SUMMARY 52 checks 0 failures

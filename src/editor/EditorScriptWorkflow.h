@@ -14,3 +14,5 @@ void DrawEditorScriptWorkflow(EditorDocument&, SceneObject&, EditorPanelState&);
 SceneObjectId CreateEditorFirstPersonPlayer(EditorDocument&, Project&, AssetDatabase&,
                                           glm::vec3 position, SceneObjectId parent, std::string& error,
                                           bool thirdPerson = false);
+SceneObjectId CreateEditorPlanarPlayer(EditorDocument&,Project&,AssetDatabase&,glm::vec3,
+                                      SceneObjectId,std::string& error,bool sideView);

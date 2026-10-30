@@ -291,20 +291,35 @@ glm::vec3 Orthogonal(const glm::vec3 &n) {
     return glm::normalize(glm::cross(n, a));
 }
 
+void ContactTangents(const RigidBody& a,const RigidBody& b,Row& row) {
+    if(a.IsPlanar()||b.IsPlanar()) {
+        // The intersection of a contact tangent plane and the body's motion
+        // plane is one-dimensional. Two arbitrary spatial tangents project to
+        // redundant rows and distort the Coulomb limit in oblique frames.
+        const auto normal=a.IsPlanar()?a.planeNormal:b.planeNormal;
+        row.t1=glm::normalize(glm::cross(normal,row.n));
+        row.t2=glm::vec3(0); // absent degree of freedom: exact zero Jacobian
+    } else {
+        row.t1=Orthogonal(row.n);
+        row.t2=glm::cross(row.n,row.t1);
+    }
+}
+
 float InverseMassAlong(const SolverBody &a, const SolverBody &b, const glm::vec3 &rA,
                        const glm::vec3 &rB, const glm::vec3 &d) {
     const glm::vec3 ra = glm::cross(rA, d), rb = glm::cross(rB, d);
-    return a.invMass + b.invMass + glm::dot(ra, a.invI * ra) + glm::dot(rb, b.invI * rb);
+    const float translation=(a.rb->IsPlanar()||b.rb->IsPlanar())?glm::dot(d,(a.dynamic?a.rb->LinearResponse(d):glm::vec3(0))+(b.dynamic?b.rb->LinearResponse(d):glm::vec3(0))):a.invMass+b.invMass;
+    return translation + glm::dot(ra, a.invI * ra) + glm::dot(rb, b.invI * rb);
 }
 
 void Apply(SolverBody &a, SolverBody &b, const glm::vec3 &rA, const glm::vec3 &rB,
            const glm::vec3 &impulse) {
     if (a.dynamic) {
-        a.rb->linearVelocity += impulse * a.invMass;
+        a.rb->linearVelocity += a.rb->LinearResponse(impulse);
         a.rb->angularVelocity += a.invI * glm::cross(rA, impulse);
     }
     if (b.dynamic) {
-        b.rb->linearVelocity -= impulse * b.invMass;
+        b.rb->linearVelocity -= b.rb->LinearResponse(impulse);
         b.rb->angularVelocity -= b.invI * glm::cross(rB, impulse);
     }
 }
@@ -320,11 +335,11 @@ float RowNormalSpeed(const std::vector<SolverBody> &bodies, const Row &row) {
 void ApplyAxis(SolverBody &a, SolverBody &b, const glm::vec3 &d, const glm::vec3 &responseA,
                const glm::vec3 &responseB, float impulse) {
     if (a.dynamic) {
-        a.rb->linearVelocity += d * (a.invMass * impulse);
+        a.rb->linearVelocity += (a.rb->IsPlanar()?a.rb->LinearResponse(d * impulse):d*(a.invMass*impulse));
         a.rb->angularVelocity += responseA * impulse;
     }
     if (b.dynamic) {
-        b.rb->linearVelocity -= d * (b.invMass * impulse);
+        b.rb->linearVelocity -= (b.rb->IsPlanar()?b.rb->LinearResponse(d * impulse):d*(b.invMass*impulse));
         b.rb->angularVelocity -= responseB * impulse;
     }
 }
@@ -368,7 +383,7 @@ void PrepareBlock(const std::vector<SolverBody> &state, const std::vector<Row> &
             const auto &rx = rows[block.first + x], &ry = rows[block.first + y];
             const auto &A = state[rx.a], &B = state[rx.b];
             // Exact mirror symmetry is required by the LCP factorization.
-            k[x][y] = k[y][x] = double(A.invMass + B.invMass) + double(glm::dot(rx.rnA, ry.wnA)) +
+            k[x][y] = k[y][x] = double((A.rb->IsPlanar()||B.rb->IsPlanar())?glm::dot(rx.n,(A.dynamic?A.rb->LinearResponse(ry.n):glm::vec3(0))+(B.dynamic?B.rb->LinearResponse(ry.n):glm::vec3(0))):A.invMass+B.invMass) + double(glm::dot(rx.rnA, ry.wnA)) +
                                 double(glm::dot(rx.rnB, ry.wnB));
         }
     FindNullSpace(block);
@@ -579,7 +594,7 @@ void PhysicsWorld::Impl::Mk2Solve(float dt, const PhysicsWorld::VelocityCoupling
             body.deferredAcceleration = false;
         }
         s.invMass = body.rigidBody.inverseMass;
-        s.invI = body.rigidBody.InverseInertiaWorld();
+        s.invI = body.rigidBody.ResponseInertiaWorld();
         const glm::dmat3 inverse(body.rigidBody.inverseInertiaLocal);
         if (glm::determinant(inverse)>0) {
             const auto norm=[](const glm::dmat3& matrix) {
@@ -650,8 +665,7 @@ void PhysicsWorld::Impl::Mk2Solve(float dt, const PhysicsWorld::VelocityCoupling
         row.rA = row.rA0;
         row.rB = row.rB0;
         row.n = c.normal;
-        row.t1 = Orthogonal(row.n);
-        row.t2 = glm::cross(row.n, row.t1);
+        ContactTangents(*A.rb,*B.rb,row);
         row.separation = float(c.hasLocalAnchors ? c.signedSeparation : -double(c.penetration));
         PrepareRow(A, B, row);
         row.friction = p.friction;
@@ -719,7 +733,7 @@ void PhysicsWorld::Impl::Mk2Solve(float dt, const PhysicsWorld::VelocityCoupling
     const auto refreshGeometry = [&] {
         for (auto &s : state)
             if (s.dynamic && s.constrained)
-                s.invI = s.rb->InverseInertiaWorld();
+                s.invI = s.rb->ResponseInertiaWorld();
         for (auto &row : rows) {
             const auto &A = state[row.a];
             const auto &B = state[row.b];
@@ -738,7 +752,7 @@ void PhysicsWorld::Impl::Mk2Solve(float dt, const PhysicsWorld::VelocityCoupling
                                     const std::vector<char> &dirtyBlock) {
         for (std::size_t i = 0; i < state.size(); ++i)
             if (moved[i] && state[i].dynamic && state[i].constrained)
-                state[i].invI = state[i].rb->InverseInertiaWorld();
+                state[i].invI = state[i].rb->ResponseInertiaWorld();
         for (std::size_t k = 0; k < blocks.size(); ++k) {
             auto &block = blocks[k];
             bool changed = false;
@@ -779,7 +793,10 @@ void PhysicsWorld::Impl::Mk2Solve(float dt, const PhysicsWorld::VelocityCoupling
         while (j < rows.size() && j < pendingCache.size() && pendingCache[j].key.SameBodies(key))
             ++j;
         const auto &a = bodies[key.slotA], &b = bodies[key.slotB];
-        if (ConcaveShape(a) || ConcaveShape(b))
+        // Native 2D contacts use the current rounded/finite edge geometry.
+        // A rotating circle's material anchor is not its next support point;
+        // rebuilding the small planar manifold keeps that distinction explicit.
+        if (ConcaveShape(a) || ConcaveShape(b) || a.shape.type==ShapeType::Planar || b.shape.type==ShapeType::Planar)
             recollisions.push_back(
                 {i, j - i, key.slotA, key.slotB, key.partA, key.partB,
                  ContactMargin((glm::length(a.rigidBody.linearVelocity - b.rigidBody.linearVelocity) +
@@ -836,8 +853,7 @@ void PhysicsWorld::Impl::Mk2Solve(float dt, const PhysicsWorld::VelocityCoupling
                 row.rA0 = glm::transpose(A.dq) * relA[best];
                 row.rB0 = glm::transpose(B.dq) * relB[best];
                 row.n = c.normal;
-                row.t1 = Orthogonal(row.n);
-                row.t2 = glm::cross(row.n, row.t1);
+                ContactTangents(*A.rb,*B.rb,row);
                 const glm::vec3 planar = tangent - row.n * glm::dot(tangent, row.n);
                 row.tangent1 = glm::dot(planar, row.t1);
                 row.tangent2 = glm::dot(planar, row.t2);
@@ -988,6 +1004,7 @@ void PhysicsWorld::Impl::Mk2Solve(float dt, const PhysicsWorld::VelocityCoupling
                     const auto &sb = state[body];
                     if (!sb.dynamic)
                         continue;
+                    if(sb.rb->IsPlanar()){k+=sb.rb->PlanarEnergy();continue;}
                     const glm::dvec3 v(sb.rb->linearVelocity), w(sb.rb->angularVelocity);
                     k += 0.5 * glm::dot(v, v) / double(sb.invMass) +
                          0.5 * glm::dot(w, glm::dvec3(glm::inverse(sb.invI) * glm::vec3(w)));
@@ -1384,13 +1401,13 @@ void PhysicsWorld::Impl::Mk2Solve(float dt, const PhysicsWorld::VelocityCoupling
                     leaf.angularProjection = pseudoAngular[i] + contactProjectionAngular[i];
                     leaf.hasPhysicalLinearVelocity = true;
                     leaf.physicalLinearVelocity = body.rigidBody.linearVelocity;
-                    leaf.angularVelocity = TransportAngularVelocity(body.rigidBody.inverseInertiaLocal,
+                    leaf.angularVelocity = body.rigidBody.IsPlanar()?realSpin:TransportAngularVelocity(body.rigidBody.inverseInertiaLocal,
                         oldOrientation, leaf.orientation, realSpin);
                 }
                 const auto next = interval[i].back().Evaluate(h);
                 body.rigidBody.position = next.position;
                 body.rigidBody.orientation = next.orientation;
-                body.rigidBody.angularVelocity = TransportAngularVelocity(body.rigidBody.inverseInertiaLocal,
+                body.rigidBody.angularVelocity = body.rigidBody.IsPlanar()?realSpin:TransportAngularVelocity(body.rigidBody.inverseInertiaLocal,
                     oldOrientation, next.orientation, realSpin);
                 body.motion.SetRecorded(interval[i]);
             } else if (s.kinematic && !kinematicPaths[s.slot].Segments().empty()) {
@@ -1439,6 +1456,7 @@ void PhysicsWorld::Impl::Mk2Solve(float dt, const PhysicsWorld::VelocityCoupling
                 if (segments[i].empty() && begin>0) {
                     RigidMotionSegment rest;
                     rest.owner=MakeHandle(s.slot).id;rest.begin=0;rest.end=begin;
+                    rest.planarInverseIz=body.rigidBody.planarInverseIz;rest.planeNormal=body.rigidBody.planeNormal;
                     rest.inverseMass=body.rigidBody.inverseMass;
                     rest.inverseInertiaLocal=body.rigidBody.inverseInertiaLocal;
                     rest.position=rest.endPosition=body.previousPosition;
@@ -1687,6 +1705,7 @@ void PhysicsWorld::Impl::Mk2Continuous(float dt, const std::vector<char>* requir
             rest.end = at;
             rest.position = rest.endPosition = body.rigidBody.position;
             rest.orientation = rest.endOrientation = body.rigidBody.orientation;
+            rest.planarInverseIz=body.rigidBody.planarInverseIz;rest.planeNormal=body.rigidBody.planeNormal;
             rest.inverseMass = body.rigidBody.inverseMass;
             rest.inverseInertiaLocal = body.rigidBody.inverseInertiaLocal;
             kept.push_back(rest);
@@ -1726,7 +1745,7 @@ void PhysicsWorld::Impl::Mk2Continuous(float dt, const std::vector<char>* requir
                 leaf.angularProjection = angularProjection;
                 leaf.hasPhysicalLinearVelocity = true;
                 leaf.physicalLinearVelocity = physical.linearVelocity;
-                leaf.angularVelocity = TransportAngularVelocity(physical.inverseInertiaLocal,
+                leaf.angularVelocity = physical.IsPlanar()?physical.angularVelocity:TransportAngularVelocity(physical.inverseInertiaLocal,
                     physical.orientation, leaf.orientation, physical.angularVelocity);
             }
             const auto endpoint = tail.back().Evaluate(dt);
@@ -2085,7 +2104,7 @@ bool PhysicsWorld::Impl::Mk2ResolveArrival(unsigned fast, unsigned other, int pa
         solver.rb = i == 0 ? &bodyA : &bodyB;
         solver.dynamic = movable(i == 0 ? a : b);
         solver.invMass = solver.rb->inverseMass;
-        solver.invI = solver.rb->InverseInertiaWorld();
+        solver.invI = solver.rb->ResponseInertiaWorld();
     }
     std::vector<Row> response;
     float approach = 0;
@@ -2098,7 +2117,7 @@ bool PhysicsWorld::Impl::Mk2ResolveArrival(unsigned fast, unsigned other, int pa
             return glm::vec3((first?c.anchorAInWorldFrame:c.anchorBInWorldFrame)?local:ContactRotation(rb.orientation)*local);
         };
         row.rA=row.rA0=arm(bodyA,true); row.rB=row.rB0=arm(bodyB,false);
-        row.n=c.normal;row.t1=Orthogonal(row.n);row.t2=glm::cross(row.n,row.t1);
+        row.n=c.normal;ContactTangents(bodyA,bodyB,row);
         row.friction=friction;row.restitution=contact.restitution;
         PrepareRow(participants[0],participants[1],row);
         approach=std::min(approach,RowNormalSpeed(participants,row));
@@ -2109,6 +2128,7 @@ bool PhysicsWorld::Impl::Mk2ResolveArrival(unsigned fast, unsigned other, int pa
     for(const auto& row:response)patch.usable=patch.usable && glm::dot(row.n,response.front().n)>.99999f;
     PrepareBlock(participants,response,patch);
     const auto kinetic=[&]{double result=0;for(const auto& part:participants)if(part.dynamic){
+        if(part.rb->IsPlanar()){result+=part.rb->PlanarEnergy();continue;}
         const glm::dvec3 v(part.rb->linearVelocity),w(part.rb->angularVelocity);
         result += .5*glm::dot(v,v)/part.invMass + .5*glm::dot(w,glm::inverse(glm::dmat3(part.invI))*w);
     }return result;};

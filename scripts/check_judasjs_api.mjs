@@ -85,7 +85,7 @@ const referenceOverrides = {
  'Entity.navigationObstacle': 'navigation.md', 'Entity.setNavigationEnabled': 'navigation.md',
  'Entity.powertrain': 'powertrains.md', 'Entity.terrain': 'terrain.md',
  'Entity.weather': 'weather.md', 'Entity.wheel': 'wheels.md',
- 'Entity.sprite':'sprites-2d.md', 'Entity.setSprite':'sprites-2d.md', 'world.unproject':'sprites-2d.md',
+ 'Entity.body2D':'physics-2d.md', 'physics.cast2D':'physics-2d.md', 'Entity.sprite':'sprites-2d.md', 'Entity.setSprite':'sprites-2d.md', 'world.unproject':'sprites-2d.md',
  'Entity.camera': 'effects-camera.md', 'Entity.setCameraProjection': 'effects-camera.md',
  'world.appearance': 'materials.md', 'world.setAppearance': 'materials.md',
  'world.resetAppearance': 'materials.md', 'world.setView': 'effects-camera.md',
@@ -156,9 +156,10 @@ function checkCallables(declarations) {
  }
 }
 checkCallables(types);
-const schema={checkpoint:'Current public module including Experimental 2D Stage 1; source version in engine-version.json',authority:'src/ScriptSystem.cpp::library + Impl::Native + ScriptBindingsUI.cpp + ScriptBindingsJoint.cpp + ScriptInputBindings.inl + ScriptLocalMultiplayer.inl + ScriptNetwork.inl',resultShapes,callables,symbols:symbols.map(k=>{
+const schema={checkpoint:'Current public module including Experimental 2D Stage 2; source version in engine-version.json',authority:'src/ScriptSystem.cpp::library + Impl::Native + ScriptBindingsUI.cpp + ScriptBindingsJoint.cpp + ScriptInputBindings.inl + ScriptLocalMultiplayer.inl + ScriptNetwork.inl',resultShapes,callables,symbols:symbols.map(k=>{
  const v=runtime.get(k);let native=v.native;
  if(['physics.raycastMany','physics.sphereCastMany','physics.capsuleCastMany'].includes(k))native=['castMany'];
+ else if(k==='physics.cast2D')native=['cast2D'];
  else if(k.startsWith('physics.')&&!['physics.joint','physics.closestPoint','physics.gravity','physics.createJoint'].includes(k))native=['cast'];
  const page=referencePage(k);
  return {symbol:k,kinds:v.kinds.slice().sort(),native,type:'docs/judas.d.ts:'+k,reference:'docs/judasjs/'+page};}),nativeOperations:nativeOps,

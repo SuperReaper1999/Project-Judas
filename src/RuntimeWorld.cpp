@@ -5,6 +5,7 @@
 #include "SceneSession.h"
 #include "PerformanceProfiler.h"
 #include "RuntimeWorld.h"
+#include "PlanarAuthoring.h"
 #include <glm/gtc/matrix_transform.hpp>
 #include "CollisionAuthoring.h"
 #include <fstream>
@@ -56,12 +57,23 @@ RuntimeWorld::~RuntimeWorld() {
 
 bool RuntimeWorld::EntityRequiresFull(const SceneObject& o) {
     if (o.vehicle || o.combustible || o.characterMotor || o.wheel || o.powertrain || o.deformable || o.liquidContainer || o.liquidInteraction || !o.scripts.empty()) return true;
-    if (o.body && o.body->shape == SceneShape::Compound) return true;
+    if (o.body && (o.body->shape == SceneShape::Compound||o.body->shape==SceneShape::Planar)) return true;
     if (o.body && o.body->motion != SceneBodyMotion::Dynamic) return true;
     return false;
 }
 
 bool RuntimeWorld::ValidateVisualAssets(const SceneObject& o, std::string& error) const {
+    if(!ValidatePlanarDefinition(o,error))return false;
+    const bool planar=o.body&&o.body->shape==SceneShape::Planar;
+    if(planar&&legacyGameplay){error="Native 2D bodies require project-owned controls; disable legacy-gameplay in the project settings";return false;}
+    if(planar||m_hasPlanarPhysics){
+        for(const auto& [id,existing]:m_scriptDefinitions){if(id==o.id||!RuntimeBody(id).IsValid())continue;
+            if((planar&&HasSpatialMotionProducer(existing))||
+               (HasSpatialMotionProducer(o)&&existing.body&&existing.body->shape==SceneShape::Planar)){
+                error="Mixed 2D/3D physical coupling is unsupported in one runtime world";return false;
+            }
+        }
+    }
     if(o.render&&o.render->shape==SceneShape::Sprite) {
         if(!ValidSprite(o.render->sprite)){error="invalid sprite dimensions, pivot, image rectangle or sorting";return false;}
         if(m_assets&&!o.render->textureAsset.empty()) {
@@ -125,6 +137,11 @@ bool RuntimeWorld::InstantiateEntityBody(EntityRecord& record, const EntityPhysi
                                          std::string* outError) {
     const SceneObject& o = record.definition;
     const SceneBodyComponent& b = *o.body;
+    if(b.shape==SceneShape::Planar){
+        auto initial=record.definition;initial.transform.position=state.position;initial.transform.rotation=state.rotation;
+        initial.body->initialLinearVelocity=state.linearVelocity;initial.body->initialAngularVelocity=state.angularVelocity;
+        std::string error;if(!ValidatePlanarDefinition(initial,error)){if(outError)*outError=error;return false;}
+    }
     BodyHandle handle;
     try {
     switch (b.shape) {
@@ -134,6 +151,7 @@ bool RuntimeWorld::InstantiateEntityBody(EntityRecord& record, const EntityPhysi
         case SceneShape::Sphere:
             handle = m_physics.CreateDynamicSphere(state.position, b.radius, b.mass, b.friction, b.restitution);
             break;
+        case SceneShape::Planar:
         case SceneShape::ConvexHull: {
             Shape shape;std::string error;if(!ResolveBodyCollision(b,m_assets,shape,error)){if(outError)*outError=error;return false;}
             handle=m_physics.CreateShape(shape,{state.position,state.rotation},true,b.mass,b.friction,b.restitution);break;
@@ -154,6 +172,7 @@ bool RuntimeWorld::InstantiateEntityBody(EntityRecord& record, const EntityPhysi
         if (outError) *outError = "the body could not be created";
         return false;
     }
+    if(b.shape==SceneShape::Planar)m_hasPlanarPhysics=true;
     // Reconstruction hands the body its retained pose AND velocities: no
     // reset to rest, no impulse.
     if(!b.physicalMaterial.empty()){if(!m_assets){m_physics.DestroyBody(handle);if(outError)*outError="physical material requires project resources";return false;}std::string error;auto mat=m_assets->RequirePhysicalMaterial(b.physicalMaterial,error);if(!mat){m_physics.DestroyBody(handle);if(outError)*outError=error;return false;}m_physics.SetPhysicalMaterial(handle,b.physicalMaterial,b.physicalMaterialOverride?b.friction:mat->friction,b.physicalMaterialOverride?b.restitution:mat->restitution);}
@@ -252,6 +271,8 @@ bool RuntimeWorld::Build(const Scene& authored, ResourceManager* resources, std:
     if(runtimeSnapshot){resolved=scene=authored;} // already resolved world-space definitions, source content validated by save service
     else if (!ResolvePrefabs(authored, resources ? resources->Assets() : nullptr, resolved, outError) ||
         !FlattenHierarchy(resolved, scene, outError)) return false;
+    bool hasPlanar=false;if(!ValidatePlanarScene(scene,hasPlanar,outError))return false;
+    if(hasPlanar&&legacyGameplay){outError="Native 2D bodies require project-owned controls; disable legacy-gameplay in the project settings";return false;}
     const ProjectClassification selected=categories?*categories:ProjectClassification{};
     if(!ValidateSceneClassification(scene,selected,outError))return false;
     const auto navConfig=navigation?*navigation:ProjectNavigation{};if(!navConfig.Validate(outError))return false;
@@ -327,6 +348,7 @@ bool RuntimeWorld::Build(const Scene& authored, ResourceManager* resources, std:
     m_assets = resources;
     m_audioSystem=resources?resources->GetAudioSystem():nullptr;
     m_settings = scene.Settings();
+    m_hasPlanarPhysics=hasPlanar;
     // Fresh save restoration retains the authored reset dependency as well as the selected environment.
     if(m_assets&&!m_settings.appearanceResetState.empty()){
         SceneSettings baseline;std::string error;
@@ -484,6 +506,7 @@ bool RuntimeWorld::AppendSceneObjects(const Scene& scene, bool authored,
                         m_terrains.push_back(terrain);
                         break;
                     }
+                    case SceneShape::Planar:
                     case SceneShape::Compound:
                     case SceneShape::ConvexHull:
                     case SceneShape::TriangleMesh:{
@@ -982,6 +1005,7 @@ bool RuntimeWorld::GetEntityState(EntityId id, EntityPhysicalState& outState) co
 }
 
 bool RuntimeWorld::SetEntityState(EntityId id, const EntityPhysicalState& state) {
+    if(!PlanarCommandAllowed(m_physics,RuntimeBody(id),{state.position,state.rotation},&state.linearVelocity,&state.angularVelocity))return false;
     EntityRecord* e = FindEntity(id);
     if (!e || e->lifecycle == EntityLifecycle::Destroyed) return false;
     e->state = state;
@@ -1430,7 +1454,7 @@ void RuntimeWorld::Destroy() {
     ClearCharacters();
     m_animationInstances.clear();m_physicalAnimations.clear();m_balances.clear();m_animationOwners.clear();
     m_jointOwners.clear();m_jointParticipants.clear();m_runtimeJoints.clear();m_wheels.clear();m_wheelOwners.clear();m_wheelParticipants.clear();m_powertrains.clear();m_powertrainOwners.clear();m_powertrainParticipants.clear();
-    m_runtimeTerrain.reset();m_liquid=std::make_unique<LiquidSystem>(false);m_hasLiquid=false;m_basicWaterOwners.clear();m_navigation.reset();m_ui.reset();m_localization.reset();pointerCapture=false;m_scriptDefinitions.clear();m_scriptOwners.clear();m_characterOwners.clear();m_touchEntityHistory.clear();m_touchArticulationHistory.clear();m_hasScripts=false;m_hasNavigation=false;
+    m_runtimeTerrain.reset();m_liquid=std::make_unique<LiquidSystem>(false);m_hasLiquid=false;m_basicWaterOwners.clear();m_navigation.reset();m_ui.reset();m_localization.reset();pointerCapture=false;m_scriptDefinitions.clear();m_scriptOwners.clear();m_characterOwners.clear();m_touchEntityHistory.clear();m_touchArticulationHistory.clear();m_hasScripts=false;m_hasNavigation=false;m_hasPlanarPhysics=false;
     EndAudio();
     m_particleEmitters.clear();
     m_audioEmitters.clear();m_audioZones.clear();m_audioIdentities.clear();m_audioListener.reset();m_audioSystem=nullptr;

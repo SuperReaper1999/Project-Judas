@@ -358,7 +358,7 @@ void DrawRender(EditorDocument& doc, SceneObject& o, EditorPanelState& state) {
             TrackEdit(doc);
             ImGui::TextWrapped("Normalized top-left image rectangle; width/height must stay positive and inside the image.");
         }
-        ImGui::TextWrapped("Drag an image here or into the scene. Sorting changes drawing only; sprite visuals add no collision. Native planar physics follows in Stage 2.");
+        ImGui::TextWrapped("Drag an image here or into the scene. Sorting changes drawing only; sprite visuals add no collision. Add a Body component and choose Native 2D for real collision.");
         return;
     }
     auto publish=[&](MaterialOverride& destination,const MaterialDefinition& source){
@@ -581,8 +581,13 @@ void DrawGravitySelection(EditorDocument& doc,SceneObject& object,EditorPanelSta
 }
 void DrawJoint(EditorDocument& doc, SceneObject& object, EditorPanelState&) {
     auto& joint=*object.joint;auto& settings=joint.settings;
-    const char* names[]={"Fixed","Hinge","Ball/socket","Slider"};
-    Combo(doc,"Joint type",settings.type,names,4);
+    const char* names[]={"Fixed","Hinge","Ball/socket","Slider","2D pin","2D weld"};
+    int jointType=int(settings.type);
+    if(ImGui::Combo("Joint type",&jointType,names,6)) {
+        doc.BeginEdit();settings.type=JointType(jointType);
+        if(settings.type==JointType::PlanarWeld){settings.motor=settings.spring=settings.limits=false;settings.rotationalResistance=0;}
+        doc.CommitEdit();
+    }
     auto bodyField=[&](const char* label,SceneObjectId& id,bool world){
         const auto* body=doc.GetScene().Find(id);const std::string preview=body?body->name:world&&id==0?"World anchor":"Select body";
         if(ImGui::BeginCombo(label,preview.c_str())){
@@ -597,16 +602,68 @@ void DrawJoint(EditorDocument& doc, SceneObject& object, EditorPanelState&) {
     auto frame=[&](const char* label,glm::quat& q){auto degrees=glm::degrees(glm::eulerAngles(glm::normalize(q)));if(ImGui::DragFloat3(label,&degrees.x,.5f))q=glm::normalize(glm::quat(glm::radians(degrees)));TrackEdit(doc);};
     frame("Frame A (degrees)",settings.frameA);frame(joint.bodyB?"Frame B (degrees)":"World frame (owner local)",settings.frameB);
     Checkbox(doc,"Joint enabled",settings.enabled);
-    ImGui::TextDisabled("Local frame X is the hinge/slider axis. Hinge values are radians.");
-    if(settings.type==JointType::Hinge||settings.type==JointType::Slider){
+    if(settings.type==JointType::PlanarPin||settings.type==JointType::PlanarWeld)
+        ImGui::TextWrapped("Native 2D: anchors use local XY and frame Z is the plane normal. Pin angle/speed are B minus A in radians/radians per second.");
+    else ImGui::TextDisabled("Local frame X is the hinge/slider axis. Hinge values are radians.");
+    if(settings.type==JointType::Hinge||settings.type==JointType::Slider||settings.type==JointType::PlanarPin){
         Checkbox(doc,"Limits",settings.limits);DragScalar(doc,"Lower",settings.lower);DragScalar(doc,"Upper",settings.upper);
         Checkbox(doc,"Motor",settings.motor);DragScalar(doc,"Target speed",settings.speed);
         DragScalar(doc,"Maximum force / torque",settings.maxForce,.1f,0,100000);
         Checkbox(doc,"Spring",settings.spring);DragScalar(doc,"Rest coordinate",settings.rest);
         DragScalar(doc,"Stiffness",settings.stiffness,.1f,0,100000);DragScalar(doc,"Damping",settings.damping,.1f,0,100000);
     }
-    DragScalar(doc,"Rotational resistance (N m s/rad)",settings.rotationalResistance,.01f,0,100000);
+    if(settings.type!=JointType::PlanarWeld)DragScalar(doc,"Rotational resistance (N m s/rad)",settings.rotationalResistance,.01f,0,100000);
     if(!ValidJointSettings(settings)||joint.bodyA==0||joint.bodyA==joint.bodyB)ImGui::TextColored(ImVec4(1,.3f,.2f,1),"Invalid joint settings or body references");
+}
+
+// Copy-on-edit keeps the immutable native collider valid throughout undo/redo.
+void DrawPlanarCollider(EditorDocument& doc,SceneObject& o,EditorPanelState& state) {
+    auto& body=*o.body;auto shape=body.planar?*body.planar:*PlanarBox({.5,.5});
+    int kind=int(shape.kind);bool changed=false;
+    if(ImGui::Combo("2D geometry",&kind,"Circle\0Box\0Capsule\0Convex polygon\0Static chain\0")){
+        shape=kind==0?*PlanarCircle(.5):kind==1?*PlanarBox({.5,.5}):kind==2?*PlanarCapsule(.3,.4):
+            kind==3?*PlanarConvex({{-.5,-.5},{.5,-.5},{0,.5}}):*PlanarChain({{-2,0},{0,0},{2,1}});changed=true;
+    }
+    changed|=ImGui::Checkbox("Lock 2D rotation",&shape.lockRotation);
+    if(shape.kind==PlanarKind::Circle||shape.kind==PlanarKind::Capsule){float r=float(shape.radius);if(ImGui::DragFloat("Radius (m)",&r,.01f,.001f,10000)){shape.radius=r;changed=true;}}
+    if(shape.kind==PlanarKind::Box){glm::vec2 half=-glm::vec2(shape.vertices[0]);if(ImGui::DragFloat2("Half size (m)",&half.x,.01f,.001f,10000)){shape.vertices={{-half.x,-half.y},{half.x,-half.y},{half.x,half.y},{-half.x,half.y}};changed=true;}}
+    if(shape.kind==PlanarKind::Capsule){float h=float(shape.vertices[1].y);if(ImGui::DragFloat("Core half height (m)",&h,.01f,0,10000)){shape.vertices={{0,-h},{0,h}};changed=true;}}
+    if(shape.kind==PlanarKind::Convex||shape.kind==PlanarKind::Chain){
+        for(size_t i=0;i<shape.vertices.size();++i){ImGui::PushID(int(i));glm::vec2 v(shape.vertices[i]);if(ImGui::DragFloat2("Vertex XY",&v.x,.01f)){shape.vertices[i]=v;changed=true;}ImGui::PopID();}
+        if(shape.vertices.size()<(shape.kind==PlanarKind::Chain?1024u:64u)&&ImGui::Button("Add vertex")) {
+            if(shape.kind==PlanarKind::Chain) {
+                shape.vertices.push_back(2.*shape.vertices.back()-shape.vertices[shape.vertices.size()-2]);changed=true;
+            } else {
+                // Split the closing edge slightly outward. Appending an
+                // arbitrary +X point usually creates a concave polygon which
+                // the validator correctly rejects, making Add unusable.
+                const auto a=shape.vertices.back(),b=shape.vertices.front(),edge=b-a;
+                double winding=0;for(size_t i=0;i<shape.vertices.size();++i){const auto p=shape.vertices[i],q=shape.vertices[(i+1)%shape.vertices.size()];winding+=p.x*q.y-p.y*q.x;}
+                const auto outward=glm::dvec2(edge.y,-edge.x)*(winding>0?1.:-1.);
+                for(int attempt=0;attempt<16;++attempt){auto candidate=shape;
+                    candidate.vertices.push_back((a+b)*.5+outward*(.1/std::pow(2.,attempt)));std::string error;
+                    if(ValidatePlanar(candidate,error)){shape=std::move(candidate);changed=true;break;}}
+            }
+        }
+        ImGui::SameLine();if(shape.vertices.size()>(shape.kind==PlanarKind::Chain?2u:3u)&&ImGui::Button("Remove last vertex")){shape.vertices.pop_back();changed=true;}
+    }
+    std::string error;
+    if(changed&&ValidatePlanar(shape,error)){doc.BeginEdit();body.planar=std::make_shared<const PlanarCollider>(shape);if(shape.kind==PlanarKind::Chain)body.motion=SceneBodyMotion::Static;doc.CommitEdit();}
+    else if(!error.empty())ImGui::TextColored(ImVec4(1,.4f,.2f,1),"%s (last valid shape retained)",error.c_str());
+    ImGui::TextWrapped("Real collision in local XY, spin about local Z. Keep transform scale 1. Sprite size, sorting and flips do not change collision. Chains are static, two-sided and open. 3D physics cannot share this runtime world.");
+    if(ImGui::Button("Preview 2D collision")) {
+        state.collisionPreview.Clear();const auto q=o.transform.rotation;const auto p=o.transform.position;
+        auto line=[&](glm::dvec2 a,glm::dvec2 b){state.collisionPreview.Line(p+q*glm::vec3(a,0),p+q*glm::vec3(b,0),{.3f,1,.5f});};
+        const auto& c=*body.planar;
+        const double pi=3.141592653589793;
+        if(c.kind==PlanarKind::Circle)for(int k=0;k<32;++k){double a=k*2*pi/32,b=(k+1)*2*pi/32;line(c.radius*glm::dvec2(cos(a),sin(a)),c.radius*glm::dvec2(cos(b),sin(b)));}
+        else if(c.kind==PlanarKind::Capsule){const double h=c.vertices[1].y;
+            line({-c.radius,-h},{-c.radius,h});line({c.radius,-h},{c.radius,h});
+            for(int side:{-1,1})for(int k=0;k<16;++k){double a=k*pi/16,b=(k+1)*pi/16;
+                line({c.radius*cos(a),side*(h+c.radius*sin(a))},{c.radius*cos(b),side*(h+c.radius*sin(b))});}}
+        else for(size_t i=0;i+1<c.vertices.size();++i)line(c.vertices[i],c.vertices[i+1]);
+        if(c.kind==PlanarKind::Box||c.kind==PlanarKind::Convex)line(c.vertices.back(),c.vertices.front());
+    }
 }
 
 void DrawBody(EditorDocument& doc, SceneObject& o, EditorPanelState& state) {
@@ -618,7 +675,14 @@ void DrawBody(EditorDocument& doc, SceneObject& o, EditorPanelState& state) {
     Combo(doc, "Motion", b.motion, kMotionNames, 3);
     ImGui::SetItemTooltip("Static holds its pose. Dynamic responds to forces and contacts. Kinematic follows explicit script targets or velocities.");
     ImGui::SeparatorText("Collider shape");
-    Combo(doc, "Collider", b.shape, kBodyShapeNames, 7);
+    const char* shapes[]={kBodyShapeNames[0],kBodyShapeNames[1],kBodyShapeNames[2],kBodyShapeNames[3],kBodyShapeNames[4],kBodyShapeNames[5],kBodyShapeNames[6],"Native 2D"};
+    int shape=b.shape==SceneShape::Planar?7:int(b.shape);
+    if(ImGui::Combo("Collider",&shape,shapes,8)) {
+        doc.BeginEdit();b.shape=shape==7?SceneShape::Planar:SceneShape(shape);
+        b.planar=shape==7?PlanarBox({.5,.5}):nullptr;doc.CommitEdit();
+    }
+    if(b.shape==SceneShape::Planar)DrawPlanarCollider(doc,o,state);
+
     if(b.shape==SceneShape::ConvexHull||b.shape==SceneShape::TriangleMesh){
         AssetField(doc,"Cooked geometry",b.collisionAsset,AssetType::Collision,false,state);
         ImGui::TextWrapped("Cook physical geometry in Assets. Rigid instances require unit scale. Triangle meshes are static surfaces and cannot be sensors.");
@@ -656,7 +720,7 @@ void DrawBody(EditorDocument& doc, SceneObject& o, EditorPanelState& state) {
             doc.CommitEdit();
         }
     }
-    const bool cavitiesOpen=ImGui::TreeNodeEx("Fluid cavities",ImGuiTreeNodeFlags_NoTreePushOnOpen,"Fluid cavities (%zu)",b.fluidCavities.size());
+    const bool cavitiesOpen=b.shape!=SceneShape::Planar&&ImGui::TreeNodeEx("Fluid cavities",ImGuiTreeNodeFlags_NoTreePushOnOpen,"Fluid cavities (%zu)",b.fluidCavities.size());
     if(cavitiesOpen){
         ImGui::PushID("fluid-cavities");
         for (std::size_t i = 0; i < b.fluidCavities.size(); ++i) {

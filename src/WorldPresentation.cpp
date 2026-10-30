@@ -115,6 +115,7 @@ void DrawRenderable(Renderer& r, ResourceManager* resources, const SceneRenderCo
     if(!render.visible)return;
     if(render.shape!=SceneShape::Mesh)r.SetMaterialBindings(BuildRenderMaterialBindings(resources,render));
     switch (render.shape) {
+        case SceneShape::Planar: return; // collider-only, never a renderer
         case SceneShape::Sprite: {
             TextureHandle texture;
             auto color=glm::vec4(render.color,alpha*render.alpha)*render.sprite.tint;

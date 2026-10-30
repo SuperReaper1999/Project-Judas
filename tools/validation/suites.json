@@ -1,6 +1,8 @@
 {
   "format": 1,
   "tests": [
+    {"name":"planar-physics","target":"judas_planar_physics_tests","groups":["2d"]},
+    {"name":"planar-integration","target":"judas_planar_integration_tests","groups":["2d"],"args":["{output}/planar-project"]},
     {"name":"sprite-math","target":"judas_sprite_math_tests","groups":["2d"]},
     {"name":"sprite-integration","target":"judas_sprite_integration_tests","groups":["2d"],"args":["{output}/sprite-project"]},
     {"name":"sprite-render","target":"judas_sprite_render_tests","groups":["2d"],"args":["{output}/sprite-render"]},

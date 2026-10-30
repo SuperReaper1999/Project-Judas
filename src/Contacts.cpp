@@ -1,4 +1,5 @@
 #include "Contacts.h"
+#include "PlanarGeometry.h"
 #include <algorithm>
 #include <array>
 #include <cmath>
@@ -621,6 +622,7 @@ ContactManifold PrimitiveContacts(const Shape& a,const ContactPose& pa,const Sha
                                   const ContactPreparedOrientation* preparedA,
                                   const ContactPreparedOrientation* preparedB,
                                   bool facePreference){
+    if(a.type==ShapeType::Planar||b.type==ShapeType::Planar)return PlanarContacts(a,pa,b,pb,margin);
     ContactManifold result;
     if (!Valid(pa)||!Valid(pb)){
         ++diagnostics.invalidInputs;

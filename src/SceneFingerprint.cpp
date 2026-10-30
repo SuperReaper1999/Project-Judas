@@ -140,7 +140,11 @@ void WriteObject(CanonicalWriter& w, const SceneObject& o) {
     if (o.body) {
         w.Context(object + " body");
         const auto& b = *o.body;
-        w.Enum(b.motion, 2, "body motion"); w.Enum(b.shape, 6, "body shape");
+        w.Enum(b.motion, 2, "body motion");
+        if(b.shape==SceneShape::Sprite)w.Fail("sprite is not a physical collider");
+        w.Enum(b.shape,8,"body shape");
+        if(b.shape==SceneShape::Planar){if(!b.planar)w.Fail("missing planar geometry");else w.Text(EncodePlanar(*b.planar));}
+        else if(b.planar)w.Fail("planar descriptor on spatial body");
         if(b.motion!=SceneBodyMotion::Static&&(b.shape==SceneShape::Terrain||b.shape==SceneShape::TriangleMesh))w.Fail("terrain and concave triangle surfaces must remain static");
         w.Vector(b.halfExtents); w.Number(b.radius); w.Text(b.terrainSurface);
         w.Number(b.mass); w.Number(b.friction); w.Number(b.restitution); w.Vector(b.initialLinearVelocity);

@@ -8,6 +8,7 @@ constexpr double kAngleError = 1e-6;
 constexpr unsigned kMaximumLeaves = 512;
 
 bool Principal(const RigidBody& body) {
+    if(body.IsPlanar())return true;
     const glm::dmat3 inverse(body.inverseInertiaLocal);
     if (!(glm::determinant(inverse) > 0)) return true;
     if (inverse[0][0] == inverse[1][1] && inverse[1][1] == inverse[2][2] &&
@@ -24,6 +25,7 @@ bool MakeLeaf(RigidMotionSegment& segment, unsigned owner, const RigidBody& body
     segment.owner = owner;
     segment.begin = begin;
     segment.end = end;
+    segment.planarInverseIz=body.planarInverseIz;segment.planeNormal=body.planeNormal;
     segment.inverseMass = body.inverseMass;
     segment.inverseInertiaLocal = body.inverseInertiaLocal;
     segment.position = body.position;

@@ -36,6 +36,7 @@ struct RigidMotionSegment {
     // This leaf is an analytic principal-axis rotation. General dynamic
     // leaves use the Cayley map matching their implicit midpoint predictor.
     bool exactRotation=false;
+    float planarInverseIz=0; glm::vec3 planeNormal{0};
     RigidMotionGeometry EvaluateGeometry(double time) const {
         if (time < begin || time > end) throw std::out_of_range("motion segment time");
         RigidMotionGeometry result;
@@ -69,11 +70,12 @@ struct RigidMotionSegment {
     RigidBody Evaluate(double time) const {
         const auto geometry=EvaluateGeometry(time);
         RigidBody result;
+        result.planarInverseIz=planarInverseIz;result.planeNormal=planeNormal;
         result.inverseMass=inverseMass;result.inverseInertiaLocal=inverseInertiaLocal;
         result.position=geometry.position;result.orientation=geometry.orientation;
         result.linearVelocity=hasPhysicalLinearVelocity ? physicalLinearVelocity : geometry.linearVelocity;
         result.angularVelocity=angularVelocity;
-        if(!prescribed&&!result.IsStatic())
+        if(!prescribed&&!result.IsStatic()&&!result.IsPlanar())
             result.angularVelocity=TransportAngularVelocity(inverseInertiaLocal,orientation,result.orientation,angularVelocity);
         return result;
     }
@@ -150,9 +152,10 @@ private:
             return;
         }
         RigidMotionSegment s;
+        s.planarInverseIz=body.planarInverseIz;s.planeNormal=body.planeNormal;
         s.inverseMass=body.inverseMass;s.inverseInertiaLocal=body.inverseInertiaLocal; s.prescribed=prescribed; s.exactRotation=exactRotation; s.owner=owner; s.begin=begin; s.end=end; s.position=body.position;
         s.orientation=body.orientation; s.linearVelocity=body.linearVelocity; s.angularVelocity=body.angularVelocity;
-        s.driftAngularVelocity=prescribed?body.angularVelocity:AngularDriftGenerator(body.inverseInertiaLocal,body.orientation,body.angularVelocity,static_cast<float>(end-begin));
+        s.driftAngularVelocity=prescribed||body.IsPlanar()?body.angularVelocity:AngularDriftGenerator(body.inverseInertiaLocal,body.orientation,body.angularVelocity,static_cast<float>(end-begin));
         const auto pose=s.EvaluateGeometry(end); s.endPosition=pose.position; s.endOrientation=pose.orientation;
         segments.push_back(s);
     }

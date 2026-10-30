@@ -399,6 +399,15 @@ bool PhysicsWorld::ReadBodyContactSample(BodyHandle handle, std::vector<BodyCont
     return true;
 }
 
+PhysicsCastHit PhysicsWorld::CastPlanar(const Shape& shape,const BodyTransform& pose,const glm::vec3& direction,float maximum,const PhysicsQueryFilter& filter,PhysicsCastStats* stats) const {
+    std::string error;
+    if(shape.type!=ShapeType::Planar||!shape.planar||shape.planar->kind==PlanarKind::Chain||!ValidatePlanar(*shape.planar,error,true))throw std::invalid_argument("invalid convex 2D query: "+error);
+    const auto n=glm::vec3(ContactRotation(pose.rotation)[2]);
+    if(!FiniteVector(direction)||std::abs(glm::dot(n,direction))>1e-5f)throw std::invalid_argument("2D query direction must lie in its motion plane");
+    auto domain=filter;domain.planar=true;
+    return Cast(shape,pose,direction,maximum,domain,stats);
+}
+
 PhysicsCastHit PhysicsWorld::Cast(const Shape &shape, const BodyTransform &pose,
                                   const glm::vec3 &direction, float maximum,
                                   const PhysicsQueryFilter &filter, PhysicsCastStats *stats) const {
@@ -442,7 +451,7 @@ PhysicsCastHit PhysicsWorld::Cast(const Shape &shape, const BodyTransform &pose,
             if (stats)
                 ++stats->primitivesTested;
             const auto primitive = PrimitiveAt(body.shape, body.rigidBody, part);
-            const auto hit = CastAgainstPrimitive(shape, pose, unit, nearest, primitive);
+            const auto hit = shape.type==ShapeType::Planar?CastPlanarPrimitive(shape,pose,unit,nearest,primitive):CastAgainstPrimitive(shape, pose, unit, nearest, primitive);
             const auto handle = m_impl->MakeHandle(slot);
             if (hit.hit && (!result.hit || hit.distance < nearest ||
                             (hit.distance == nearest && handle.id < result.body.id))) {

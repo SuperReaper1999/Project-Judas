@@ -26,6 +26,8 @@ authoritative in [engine-version.json](engine-version.json).
 
 ## Current status
 
+Experimental v1.1.0 work now includes [native sprites, planar physics and editable 2D player presets](docs/2D_STAGE2.md). This development is separate from published Alpha v1.0.4; tilemaps and later 2D stages are still pending.
+
 `main` contains operator-accepted source; `Experimental` is ongoing development.
 Published Alpha versions, future Beta and eventual Stable/GA are separate
 [distribution channels](docs/VERSIONING.md), not extra development branches.

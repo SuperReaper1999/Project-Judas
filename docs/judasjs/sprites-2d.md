@@ -9,7 +9,7 @@ tracks are later stages. Existing perspective projects keep their defaults.
 
 File → New project → **New 2D game – top-down** or **side-view**. Both create an
 ordinary `Assets/game.js`, original `explorer.png`, authored HUD and editable
-scene. WASD/arrows move in XY; the side-view starter deliberately has no jumping
+scene. Current Stage 2 templates use [native planar physics](physics-2d.md); the side-view starter supports jumping. The preserved Stage 1 sprite-only example has no jumping
 or collision yet. The toolbar **2D view** switches to XY orthographic editing;
 middle-drag pans, wheel zooms, F frames selection. Switch back to 3D at any time.
 Project Settings → General stores the default editor view. This never enables

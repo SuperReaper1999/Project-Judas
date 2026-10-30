@@ -1,3 +1,4 @@
+#include "PlanarAuthoring.h"
 #include "CollisionAuthoring.h"
 #include "SceneSession.h"
 #include "RuntimeWorld.h"
@@ -47,6 +48,7 @@ std::vector<EntityId> RuntimeWorld::DefinitionIds() const {
 }
 bool RuntimeWorld::SetRuntimeTransform(EntityId id,const SceneTransform& t){
     const auto* authored=RuntimeDefinition(id);if(!authored)return false;
+    if(!PlanarCommandAllowed(m_physics,RuntimeBody(id),{t.position,t.rotation}))return false;
     SceneObject placement;placement.body=authored->body;placement.transform=t;std::string placementError;if(!ValidateCollisionPlacement(placement,placementError))return false;
     // Baked static capacity data cannot silently follow a runtime teleport.
     if(authored->liquidBasin&&(t.position!=authored->transform.position||t.rotation!=authored->transform.rotation||t.scale!=authored->transform.scale))return false;

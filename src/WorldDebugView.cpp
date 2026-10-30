@@ -47,6 +47,23 @@ glm::vec3 FidelityColor(const EntityRecord& e) {
 void DrawBodyShape(DebugLineList& out, const SceneBodyComponent& body, const glm::vec3& position,
                    const glm::quat& rotation, const glm::vec3& color) {
     switch (body.shape) {
+        case SceneShape::Planar: {
+            if(!body.planar)break;
+            const auto& c=*body.planar;
+            auto line=[&](glm::dvec2 a,glm::dvec2 b){out.Line(position+rotation*glm::vec3(a,0),position+rotation*glm::vec3(b,0),color);};
+            if(c.radius>0) {
+                const double pi=3.141592653589793;
+                if(c.kind==PlanarKind::Circle)for(int k=0;k<32;++k){double a=k*2*pi/32,b=(k+1)*2*pi/32;line(c.radius*glm::dvec2(cos(a),sin(a)),c.radius*glm::dvec2(cos(b),sin(b)));}
+                else {const double h=c.vertices[1].y;
+                    line({-c.radius,-h},{-c.radius,h});line({c.radius,-h},{c.radius,h});
+                    for(int side:{-1,1})for(int k=0;k<16;++k){double a=k*pi/16,b=(k+1)*pi/16;
+                        line({c.radius*cos(a),side*(h+c.radius*sin(a))},{c.radius*cos(b),side*(h+c.radius*sin(b))});}}
+            } else {for(size_t i=0;i+1<c.vertices.size();++i)line(c.vertices[i],c.vertices[i+1]);
+                if(c.kind!=PlanarKind::Chain)line(c.vertices.back(),c.vertices.front());}
+            break;
+        }
+        case SceneShape::Sprite: break; // visual-only, rejected as a body
+
         case SceneShape::Box:
             out.Box(position, rotation, body.halfExtents, color);
             break;

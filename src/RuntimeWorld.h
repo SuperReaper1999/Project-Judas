@@ -655,6 +655,7 @@ private:
     PhysicsWorld m_physics;
     bool AppendSceneObjects(const Scene& scene, bool authored, const FidelityPolicyContext& context, std::string& error);
     Scene m_hierarchy; // local authored transforms, allocated only for parented scenes/spawns
+    bool m_hasPlanarPhysics=false;
     bool m_hasScripts=false,m_hasNavigation=false;
     std::set<EntityId> m_animationOwners,m_deformableOwners;
     std::map<EntityId,DeformableRecord> m_deformables;

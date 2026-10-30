@@ -419,7 +419,7 @@ bool EditorApplication::CreateProject(const std::string& directory, const std::s
     // A starter scene so the new project runs immediately.
     const std::string sceneRelative = project.Settings().scenesDir + "/main.judas";
     Scene starter=twoDTemplate ? Scene{} : MakeStarterScene();
-    if(twoDTemplate&&!Populate2DProjectStarter(project,starter,twoDTemplate==2,outError))return false;
+    if(twoDTemplate&&!PopulatePlanarProjectStarter(project,starter,twoDTemplate==2,outError))return false;
     if(visibleStarter&&!twoDTemplate&&!PopulateVisibleProjectStarter(project,starter,outError))return false;
     if (!SaveSceneToFile(starter, project.Resolve(sceneRelative), outError)) return false;
     project.Settings().startupScene = sceneRelative;
@@ -749,7 +749,11 @@ void EditorApplication::HandleRequests(EditorRequests& r) {
         for (const auto& [id, record] : m_host->Assets().Records()) {
             if (record.type == AssetType::Mesh && !record.missing) { defaultMesh = id; break; }
         }
-        if(r.createKind=="first-person-player"||r.createKind=="third-person-player"){
+        if(r.createKind=="planar-player"||r.createKind=="planar-topdown-player"){
+            std::string error;
+            CreateEditorPlanarPlayer(m_document,m_project,m_host->Assets(),r.createPosition,r.createParent,error,r.createKind=="planar-player");
+            m_panels.status=error.empty()?"Created 2D player. Set scene gravity for platformers; edit its project script in Assets.":error;
+        } else if(r.createKind=="first-person-player"||r.createKind=="third-person-player"){
             std::string error;
             const auto id=CreateEditorFirstPersonPlayer(m_document,m_project,m_host->Assets(),r.createPosition,r.createParent,error,r.createKind=="third-person-player");
             m_panels.status=id?"Player created. Save scene, then Play: WASD / mouse / Space; V switches camera. Escape releases mouse. Unedited starter camera disabled.":error;
@@ -759,6 +763,10 @@ void EditorApplication::HandleRequests(EditorRequests& r) {
             const auto id=CreateEditorPauseExample(m_document,m_project,m_host->Assets(),error,r.createParent);
             m_panels.status=id?"Optional pause menu created. Save scene; Escape opens Pause / Settings / Controls during Play.":error;
             if(id)m_panels.revealComponent="Scripts";
+        }else if(r.createKind=="planar-circle"||r.createKind=="planar-capsule"){
+            std::string error;
+            const auto id=CreateEditorPlanarPrimitive(m_document,m_project,m_host->Assets(),r.createKind,r.createPosition,r.createParent,error);
+            m_panels.status=id?"Created native 2D collision with a matching editable sprite image":error;
         }else if(r.createKind=="capsule"||r.createKind=="cylinder"){
             std::string error;
             const auto id=CreateEditorPrimitive(m_document,m_project,m_host->Assets(),r.createKind,r.createPosition,r.createParent,error);
@@ -862,7 +870,7 @@ void EditorApplication::HandleRequests(EditorRequests& r) {
         ImGui::SameLine();if(ImGui::Button("Browse...")){m_fileBrowserParent="New project";m_fileBrowser.Open(EditorFileBrowser::Target::NewProject,EditorFileBrowser::Mode::Directory,m_newProjectDirectory);}
         if(ImGui::InputTextWithHint("Name","My Game",name,sizeof(name)))m_newProjectName=name;
         ImGui::Combo("Template",&m_newProjectTemplate,"3D script starter\0Empty 3D scene\0New 2D game - top-down\0New 2D game - side-view\0");
-        ImGui::TextWrapped(m_newProjectTemplate>=2?"A native sprite, orthographic camera and editable movement script. No 2D collision/controller yet; those follow in Stage 2.":m_newProjectTemplate==0?"A rotating object, an ordinary JavaScript camera and an editable script. No hidden gameplay controller.":"A floor, light and gravity. Add your own scripts, player and camera.");
+        ImGui::TextWrapped(m_newProjectTemplate>=2?"Native 2D collision, an orthographic camera and editable project controller. Side-view adds gravity and jumping; top-down uses planar movement.":m_newProjectTemplate==0?"A rotating object, an ordinary JavaScript camera and an editable script. No hidden gameplay controller.":"A floor, light and gravity. Add your own scripts, player and camera.");
         if (ImGui::Button("Create") && !m_newProjectDirectory.empty() && !m_newProjectName.empty()) {
             std::string e;
             if(CreateProject(m_newProjectDirectory,m_newProjectName,e,m_newProjectTemplate==0,m_newProjectTemplate>=2?m_newProjectTemplate-1:0)){

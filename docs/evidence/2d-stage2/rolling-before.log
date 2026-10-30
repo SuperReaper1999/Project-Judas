@@ -1,0 +1,27 @@
+FAIL circle traverses a shared collinear chain vertex without snagging or sinking
+PASS rectangle uses lamina rather than thin-box inertia
+PASS circle has exact disk inertia
+PASS zero core-length capsule has disk mass limit
+PASS native rounded-core geometry reports circle-box penetration and witnesses
+PASS separated circle-box negative control
+PASS parallel 2D faces produce two physical anchors
+PASS different planes do not invent extrusion collision
+PASS concave geometry rejects instead of pretending convex
+PASS actual point impulse uses reduced linear and angular mobility
+PASS forbidden velocity command rejects atomically
+CONTACT gap=-0.000313371641583 normal=(-1.35525272e-19,1) point=(0.643506587,-0.000156685826)
+CONTACT gap=-4.65443010254e-06 normal=(-1.35525272e-19,1) point=(2.04350662,-2.32721504e-06)
+DETAIL minY=-0.000313580036 spin=0 vy=0 q=(0.707028866,0.707184792)
+MEASURE resting=(1.34339631,0.499840975,0)
+PASS off-centre landing collides with real 2D floor and remains in plane
+PASS independent transformed-corner oracle bounds floor penetration below 2 mm
+PASS authored rotation lock absorbs torque through mobility, not damping
+PASS 3D hinge coupling rejects for planar body
+MEASURE fast x=-0.149999991 vx=0
+PASS native MK2 CCD stops a 150 m/s planar box at a thin wall
+PASS capsule cast uses actual planar chain geometry and distance
+PASS ordinary spatial queries do not silently treat 2D lines as 3D boxes
+PASS 2D casts preserve ignored-body filtering
+PASS off-plane query direction rejects clearly
+MEASURE seam x=3.98565388 lowY=0.280816346
+FAIL circle traverses a shared collinear chain vertex without snagging or sinking

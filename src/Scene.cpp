@@ -156,7 +156,8 @@ bool SceneObjectsEqual(const SceneObject& a, const SceneObject& b) {
                 if (!Eq(x.fluidCavities[i].localCenter, y.fluidCavities[i].localCenter) ||
                     !Eq(x.fluidCavities[i].halfExtents, y.fluidCavities[i].halfExtents)) return false;
             }
-            return x.motion == y.motion && x.shape == y.shape && Eq(x.halfExtents, y.halfExtents) &&
+            const bool planarEqual=(!x.planar&&!y.planar)||(x.planar&&y.planar&&EncodePlanar(*x.planar)==EncodePlanar(*y.planar));
+            return planarEqual && x.motion == y.motion && x.shape == y.shape && Eq(x.halfExtents, y.halfExtents) &&
                    x.radius == y.radius && x.terrainSurface == y.terrainSurface &&
                    x.mass == y.mass && x.friction == y.friction &&
                    x.restitution == y.restitution &&

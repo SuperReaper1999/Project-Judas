@@ -193,6 +193,7 @@ bool CanCaptureLegacyWorldState(const RuntimeWorld& world,std::string& error){
     if(world.NetworkIfLoaded()&&world.NetworkIfLoaded()->Active()){error="Close the network session before saving";return false;}
     if(world.Scripts()&&world.Scripts()->HasReloaded()){error="script session was reloaded; Stop and Play before saving a compatible baseline";return false;}
     for(const auto& definition:world.ScriptObjects()){
+        if(definition.body&&definition.body->shape==SceneShape::Planar){error="Native 2D bodies require modern save slots to preserve physical continuation; legacy world deltas are unsupported";return false;}
         if(!definition.body||world.IsTransientEntity(definition.id))continue;
         const auto handle=world.RuntimeBody(definition.id);if(!handle.IsValid())continue;
         const auto current=world.Physics().GetMotionType(handle);const auto* record=world.FindEntity(definition.id);
@@ -206,6 +207,7 @@ bool CanCaptureLegacyWorldState(const RuntimeWorld& world,std::string& error){
 }
 
 WorldState CaptureWorldState(const RuntimeWorld& world) {
+    for(const auto& o:world.ScriptObjects())if(o.body&&o.body->shape==SceneShape::Planar){throw std::logic_error("Native 2D requires modern save slots");}
     if(world.NetworkIfLoaded()&&world.NetworkIfLoaded()->Active())throw std::logic_error("Close the network session before saving");
     if(world.Scripts()&&world.Scripts()->HasReloaded())throw std::logic_error("script session was reloaded; Stop and Play before saving a compatible baseline");
     WorldState out;
@@ -262,6 +264,7 @@ WorldState CaptureWorldState(const RuntimeWorld& world) {
 }
 
 bool ApplyWorldState(RuntimeWorld& world, const WorldState& state, std::string& outError) {
+    for(const auto& o:world.ScriptObjects())if(o.body&&o.body->shape==SceneShape::Planar){outError="Native 2D requires modern save slots";return false;}
     if(world.NetworkIfLoaded()&&world.NetworkIfLoaded()->Active()){outError="Close the network session before loading";return false;}
     if(world.IsComposed()){outError="Disk saves are unsupported for composed worlds (M59)";return false;}
     outError.clear();

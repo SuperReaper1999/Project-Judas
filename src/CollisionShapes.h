@@ -11,8 +11,9 @@
 // Immutable asset geometry is shared; instance pose and motion belong to PhysicsWorld.
 class RadialTerrain;
 struct CollisionAsset;
+struct PlanarCollider;
 
-enum class ShapeType { Sphere, Box, Capsule, CompoundBoxes, Terrain, ConvexHull, TriangleMesh };
+enum class ShapeType { Sphere, Box, Capsule, CompoundBoxes, Terrain, ConvexHull, TriangleMesh, Planar };
 
 // A box fixed in a rigid body's own frame. Several of these can make one
 // non-convex solid (for example, an open container) while retaining one
@@ -47,6 +48,9 @@ struct Shape {
     std::shared_ptr<const CollisionAsset> asset;
     std::string assetId;
     glm::vec3 pivotOffset{0}; // authored pivot -> COM, only new generic dynamic shapes
+    std::shared_ptr<const PlanarCollider> planar;
+    int planarSegment=-1; // primitive view of a static chain, never a second owner
+    static Shape Planar(std::shared_ptr<const PlanarCollider> geometry){Shape s;s.type=ShapeType::Planar;s.planar=std::move(geometry);return s;}
     static Shape Cooked(std::shared_ptr<const CollisionAsset> asset, std::string id);
 
     static Shape Sphere(float r) {

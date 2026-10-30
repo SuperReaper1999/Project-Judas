@@ -2,6 +2,21 @@
 
 using namespace JudasPhysicsDetail;
 
+void JudasPhysicsDetail::RefreshPlanarMobility(RigidBody& body,const Shape& shape) {
+    if(shape.type!=ShapeType::Planar){body.planeNormal={0,0,0};body.planarInverseIz=0;return;}
+    if(!body.IsPlanar())body.planeNormal=glm::vec3(ContactRotation(body.orientation)[2]);
+    const auto& inverse=body.inverseInertiaLocal;
+    if(shape.planar->lockRotation)body.planarInverseIz=0;
+    else if(inverse[0][2]==0&&inverse[1][2]==0&&inverse[2][0]==0&&inverse[2][1]==0)
+        body.planarInverseIz=inverse[2][2]; // ordinary lamina tensor, including static zero
+    else {
+        // Restrict the physical quadratic form first, then invert its scalar.
+        // (I^-1)zz is not 1/Izz for a custom tensor with cross-axis products.
+        const auto physical=glm::inverse(glm::dmat3(inverse));
+        body.planarInverseIz=float(1/physical[2][2]);
+    }
+}
+
 glm::mat3 JudasPhysicsDetail::CompoundInverseInertia(float mass,
                                                      const std::vector<CompoundBox> &boxes) {
     float totalVolume = 0.0f;
@@ -231,6 +246,10 @@ BodyHandle PhysicsWorld::CreateShape(const Shape &input, const BodyTransform &po
             (!s.asset || s.asset->convex != (s.type == ShapeType::ConvexHull)))
             throw std::invalid_argument("cooked shape kind/asset mismatch");
     };
+    if(shape.type==ShapeType::Planar){std::string error;
+        if(!shape.planar||!ValidatePlanar(*shape.planar,error))throw std::invalid_argument("invalid 2D geometry: "+error);
+        if(dynamic&&shape.planar->kind==PlanarKind::Chain)throw std::invalid_argument("2D chains are static-only");
+    }
     valid(shape);
     if (!std::isfinite(pose.position.x) || !std::isfinite(pose.position.y) ||
         !std::isfinite(pose.position.z) || !std::isfinite(friction) || friction < 0 ||
@@ -276,6 +295,7 @@ BodyHandle PhysicsWorld::CreateShape(const Shape &input, const BodyTransform &po
     if (dynamic)
         m_impl->Get(handle)->rigidBody.inverseInertiaLocal =
             glm::mat3(glm::inverse(properties.inertia * (double(mass) / properties.volume)));
+    RefreshPlanarMobility(m_impl->Get(handle)->rigidBody,shape);
     return handle;
 }
 
@@ -379,16 +399,18 @@ void PhysicsWorld::ApplyLinearAcceleration(BodyHandle handle, const glm::vec3 &a
     Impl::Body *body = m_impl->Get(handle);
     if (!body || body->simulationSuspended || body->rigidBody.IsStatic())
         return;
-    if (body->sleeping && glm::length(acceleration - body->lastAcceleration) > 1e-5f)
+    const auto applied=body->rigidBody.IsPlanar()?body->rigidBody.LinearResponse(acceleration)/body->rigidBody.inverseMass:acceleration;
+    if (body->sleeping && glm::length(applied - body->lastAcceleration) > 1e-5f)
         m_impl->Wake(handle.id & Impl::kSlotMask);
-    body->lastAcceleration = acceleration;
+    body->lastAcceleration = applied;
     if (body->sleeping) {
         body->deferredAcceleration = true;
         return;
     }
     body->deferredAcceleration = false;
-    body->rigidBody.linearVelocity += acceleration * fixedDeltaTime;
-    body->stepVelocityDelta += acceleration * fixedDeltaTime;
+    const auto change=applied*fixedDeltaTime;
+    body->rigidBody.linearVelocity += change;
+    body->stepVelocityDelta += change;
 }
 
 void PhysicsWorld::ApplyForce(BodyHandle handle, const glm::vec3 &force) {
@@ -435,6 +457,7 @@ bool PhysicsWorld::SetMotionType(BodyHandle handle, BodyMotionType mode, float m
         (mode != BodyMotionType::Static && mode != BodyMotionType::Dynamic &&
          mode != BodyMotionType::Kinematic))
         return false;
+    if(body->shape.type==ShapeType::Planar&&body->shape.planar->kind==PlanarKind::Chain&&mode!=BodyMotionType::Static)return false;
     if (GetMotionType(handle) == mode)
         return true;
     if (mode != BodyMotionType::Static &&
@@ -482,6 +505,7 @@ bool PhysicsWorld::SetMotionType(BodyHandle handle, BodyMotionType mode, float m
     body->isKinematic = mode == BodyMotionType::Kinematic;
     body->rigidBody.inverseMass = inverseMass;
     body->rigidBody.inverseInertiaLocal = inverseInertia;
+    RefreshPlanarMobility(body->rigidBody,body->shape);
     body->rigidBody.position = pivot.position + pivot.rotation * body->shape.pivotOffset;
     body->rigidBody.linearVelocity =
         preserveVelocity && mode != BodyMotionType::Static ? oldLinear : glm::vec3(0);
@@ -530,6 +554,10 @@ bool PhysicsWorld::MoveKinematic(BodyHandle handle, const BodyTransform &target,
         Impl::SameRotation(target.rotation, anchor) || Impl::SameRotation(-target.rotation, anchor)
             ? anchor
             : glm::normalize(target.rotation);
+    if(body->rigidBody.IsPlanar()&&
+       (std::abs(glm::dot(body->rigidBody.planeNormal,normalized.position-GetTransform(handle).position))>1e-5f||
+        glm::dot(glm::vec3(ContactRotation(normalized.rotation)[2]),body->rigidBody.planeNormal)<1-1e-6f||
+        (body->shape.planar->lockRotation&&std::abs(glm::dot(normalized.rotation,body->rigidBody.orientation))<1-1e-7f)))return false;
     const auto center = normalized.position + normalized.rotation * body->shape.pivotOffset;
     if (!FiniteVector(center) || !FiniteVector(center - body->rigidBody.position) ||
         !std::isfinite(glm::length(center - body->rigidBody.position)) ||
@@ -551,6 +579,10 @@ bool PhysicsWorld::SetKinematicVelocity(BodyHandle handle, const glm::vec3 &line
     if (!body || !body->enabled || !body->isKinematic || !KinematicShape(body->shape) ||
         !UsableVelocity(linear) || !UsableVelocity(angular))
         return false;
+    if(body->rigidBody.IsPlanar()&&
+       (std::abs(glm::dot(body->rigidBody.planeNormal,linear))>1e-5f||
+        glm::length(glm::cross(body->rigidBody.planeNormal,angular))>1e-5f||
+        (body->shape.planar->lockRotation&&glm::length(angular)>1e-5f)))return false;
     KinematicMotionState command;
     command.control = KinematicControl::Velocity;
     command.linearVelocity = linear;
@@ -656,6 +688,7 @@ glm::vec3 PhysicsWorld::GetLinearVelocity(BodyHandle handle) const {
 void PhysicsWorld::SetLinearVelocity(BodyHandle handle, const glm::vec3 &velocity) {
     Impl::Body *body = m_impl->Get(handle);
     if (body) {
+        if(body->rigidBody.IsPlanar()&&std::abs(glm::dot(body->rigidBody.planeNormal,velocity))>1e-5f)throw std::invalid_argument("2D velocity outside authored motion space");
         if (velocity != body->rigidBody.linearVelocity)
             m_impl->Wake(handle.id & Impl::kSlotMask);
         body->rigidBody.linearVelocity = velocity;
@@ -726,6 +759,7 @@ float PhysicsWorld::GetPlayerShapeMaxSupportDistance() const {
 void PhysicsWorld::SetAngularVelocity(BodyHandle handle, const glm::vec3 &angularVelocity) {
     Impl::Body *body = m_impl->Get(handle);
     if (body) {
+        if(body->rigidBody.IsPlanar()&&(glm::length(glm::cross(body->rigidBody.planeNormal,angularVelocity))>1e-5f||(body->shape.planar->lockRotation&&glm::length(angularVelocity)>1e-5f)))throw std::invalid_argument("2D angular velocity outside authored motion space");
         if (angularVelocity != body->rigidBody.angularVelocity)
             m_impl->Wake(handle.id & Impl::kSlotMask);
         body->rigidBody.angularVelocity = angularVelocity;
@@ -854,6 +888,10 @@ void PhysicsWorld::ResetBody(BodyHandle handle, const glm::vec3 &position,
     Impl::Body *body = m_impl->Get(handle);
     if (!body)
         return;
+    if(body->rigidBody.IsPlanar()&&
+       (std::abs(glm::dot(body->rigidBody.planeNormal,position-GetTransform(handle).position))>1e-5f||
+        glm::dot(glm::vec3(ContactRotation(rotation)[2]),body->rigidBody.planeNormal)<1-1e-6f))
+        throw std::invalid_argument("2D transform must preserve its motion plane");
     if (body->rigidBody.position != position + rotation * body->shape.pivotOffset ||
         body->rigidBody.orientation != rotation) {
         m_impl->Wake(handle.id & Impl::kSlotMask);
@@ -1007,6 +1045,7 @@ bool PhysicsWorld::SetMassDistribution(BodyHandle h, float mass, const glm::mat3
     Wake(h);
     b->rigidBody.inverseMass = 1 / mass;
     b->rigidBody.inverseInertiaLocal = glm::inverse(inertia);
+    RefreshPlanarMobility(b->rigidBody,b->shape);
     return true;
 }
 
@@ -1045,4 +1084,9 @@ bool PhysicsWorld::SetPhysicalMaterial(BodyHandle h, const std::string &id, floa
     remove(m_impl->pendingCache);
     remove(m_impl->completedContactObservations);
     return true;
+}
+
+glm::vec3 PhysicsWorld::GetPlanarNormal(BodyHandle handle) const {
+    const auto* body=m_impl?m_impl->Get(handle):nullptr;
+    return body?body->rigidBody.planeNormal:glm::vec3(0);
 }

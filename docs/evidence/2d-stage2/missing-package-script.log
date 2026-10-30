@@ -1,0 +1,13 @@
+Shadow maps: on
+Graphics: 4.5 (Core Profile) Mesa 26.0.8-1ubuntu0.3 / llvmpipe (LLVM 21.1.8, 256 bits)
+Renderer fragment texture units: 32 (material path uses 12)
+Asset problem: /tmp/judas-stage2-missing-script-20261030/Assets/game.js.judasmeta: asset file is missing: /tmp/judas-stage2-missing-script-20261030/Assets/game.js
+World state: /home/conner/Documents/GitHub/Project-Judas/.cache/2d-stage2-evidence/negative-package-user/judas/games/5cc913378464386e7cde4a9a56f393b473f7d49ece01e277ac02a20cbceda809/Saves/main.judasstate (none saved)
+Project: Planar Playground (/tmp/judas-stage2-missing-script-20261030/game.judasproj)
+Scene:  (/tmp/judas-stage2-missing-script-20261030/Scenes/main.judas)
+World origin (m): 0.000, 0.000, 0.000
+script asset=1b862c5b6897726904d9213811c80552 entity=1 slot=1 module: ReferenceError: missing script Assets/game.js
+
+[TestHarness] script callback failed: ReferenceError: missing script Assets/game.js
+
+step,time,posX,posY,posZ,upX,upY,upZ,grounded,velX,velY,velZ,gravX,gravY,gravZ,controlled,frame,steps,paused,obj0PosX,obj0PosY,obj0PosZ,obj0VelX,obj0VelY,obj0VelZ,obj1PosX,obj1PosY,obj1PosZ,obj1VelX,obj1VelY,obj1VelZ,obj2PosX,obj2PosY,obj2PosZ,obj2VelX,obj2VelY,obj2VelZ,obj3PosX,obj3PosY,obj3PosZ,obj3VelX,obj3VelY,obj3VelZ,obj4PosX,obj4PosY,obj4PosZ,obj4VelX,obj4VelY,obj4VelZ,obj5PosX,obj5PosY,obj5PosZ,obj5VelX,obj5VelY,obj5VelZ,obj6PosX,obj6PosY,obj6PosZ,obj6VelX,obj6VelY,obj6VelZ

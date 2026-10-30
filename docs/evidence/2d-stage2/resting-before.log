@@ -1,0 +1,16 @@
+FAIL independent transformed-corner oracle bounds floor penetration below 2 mm
+PASS rectangle uses lamina rather than thin-box inertia
+PASS circle has exact disk inertia
+PASS zero core-length capsule has disk mass limit
+PASS native rounded-core geometry reports circle-box penetration and witnesses
+PASS separated circle-box negative control
+PASS parallel 2D faces produce two physical anchors
+PASS different planes do not invent extrusion collision
+PASS concave geometry rejects instead of pretending convex
+PASS actual point impulse uses reduced linear and angular mobility
+PASS forbidden velocity command rejects atomically
+CONTACT gap=-0.028914393126 normal=(6.50521303e-19,1) point=(2.11725378,-0.0144571969)
+DETAIL minY=-0.028914392 spin=-0.151172981 vy=-0.0773728639 q=(0.7076388,0.70657444)
+MEASURE resting=(1.41800725,0.472138703,0)
+PASS off-centre landing collides with real 2D floor and remains in plane
+FAIL independent transformed-corner oracle bounds floor penetration below 2 mm

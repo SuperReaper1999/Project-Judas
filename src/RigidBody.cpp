@@ -122,10 +122,10 @@ void IntegrateRigidBodyVelocity(RigidBody& body, float fixedDeltaTime) {
         body.ClearAccumulators();
         return;
     }
-    const glm::vec3 linearAcceleration = body.forceAccumulator * body.inverseMass;
+    const glm::vec3 linearAcceleration = body.LinearResponse(body.forceAccumulator);
     body.linearVelocity += linearAcceleration * fixedDeltaTime;
     // The world inertia uses the start-of-step orientation, as it always has.
-    const glm::mat3 inverseInertiaWorld = body.InverseInertiaWorld();
+    const glm::mat3 inverseInertiaWorld = body.ResponseInertiaWorld();
     const glm::vec3 angularAcceleration = inverseInertiaWorld * body.torqueAccumulator;
     body.angularVelocity += angularAcceleration * fixedDeltaTime;
     body.ClearAccumulators();
@@ -134,11 +134,11 @@ void IntegrateRigidBodyVelocity(RigidBody& body, float fixedDeltaTime) {
 void IntegrateRigidBodyPosition(RigidBody& body, float fixedDeltaTime) {
     if (body.IsStatic()) return;
     body.position += body.linearVelocity * fixedDeltaTime;
-    const auto generator=AngularDriftGenerator(body.inverseInertiaLocal,body.orientation,body.angularVelocity,fixedDeltaTime);
+    const auto generator=body.IsPlanar()?body.angularVelocity:AngularDriftGenerator(body.inverseInertiaLocal,body.orientation,body.angularVelocity,fixedDeltaTime);
     const glm::quat angularVelocityQuat(0.0f,generator.x,generator.y,generator.z);
     const glm::quat orientationDelta = angularVelocityQuat * body.orientation;
     const auto previous=body.orientation;
     const auto advanced=body.orientation + orientationDelta * (0.5f * fixedDeltaTime);
     if(advanced!=previous)body.orientation=glm::normalize(advanced);
-    body.angularVelocity=TransportAngularVelocity(body.inverseInertiaLocal,previous,body.orientation,body.angularVelocity);
+    if(!body.IsPlanar())body.angularVelocity=TransportAngularVelocity(body.inverseInertiaLocal,previous,body.orientation,body.angularVelocity);
 }

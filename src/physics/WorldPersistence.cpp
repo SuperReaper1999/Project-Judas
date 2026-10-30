@@ -58,6 +58,7 @@ auto PhysicsWorld::Impl::ContinuationBodyContext(const Body &body, SaveArchive *
     field(body.rigidBody.angularVelocity);
     field(body.rigidBody.inverseMass);
     field(body.rigidBody.inverseInertiaLocal);
+    if(body.shape.type==ShapeType::Planar){field(body.rigidBody.planeNormal);field(body.rigidBody.planarInverseIz);field(EncodePlanar(*body.shape.planar));}
     field(body.isDynamic);
     field(body.isKinematic);
     field(body.enabled);
@@ -188,6 +189,12 @@ void PhysicsWorld::PersistBodyMass(SaveArchive &archive, BodyHandle handle) {
     auto inverseMass = body->rigidBody.inverseMass;
     auto inverseInertia = body->rigidBody.inverseInertiaLocal;
     archive(inverseMass, inverseInertia);
+    auto normal=body->rigidBody.planeNormal;
+    if(body->shape.type==ShapeType::Planar){
+        uint32_t version=1;archive(version,normal);
+        archive.Require(version==1&&std::abs(glm::dot(normal,normal)-1)<1e-5f&&
+            glm::dot(normal,glm::vec3(ContactRotation(body->rigidBody.orientation)[2]))>1-1e-5f,"invalid saved 2D mobility/frame version");
+    }
     bool valid = false;
     if (body->isDynamic) {
         const glm::dmat3 tensor(inverseInertia);
@@ -206,6 +213,8 @@ void PhysicsWorld::PersistBodyMass(SaveArchive &archive, BodyHandle handle) {
         m_impl->InvalidateRestoredContinuation(handle.id & Impl::kSlotMask);
         body->rigidBody.inverseMass = inverseMass;
         body->rigidBody.inverseInertiaLocal = inverseInertia;
+        body->rigidBody.planeNormal=normal;
+        RefreshPlanarMobility(body->rigidBody,body->shape);
     }
 }
 

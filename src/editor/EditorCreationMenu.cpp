@@ -1,3 +1,7 @@
+#include "Project.h"
+#include "EnginePaths.h"
+#include <stdexcept>
+#include <filesystem>
 #include "EditorCreationMenu.h"
 #include "EditorPanels.h"
 #include "imgui.h"
@@ -8,6 +12,13 @@ void DrawEditorCreationItems(const EditorPanelState& state, EditorRequests& requ
     struct CreationItem { const char* label; const char* kind; const char* description; };
     static constexpr CreationItem items[] = {
         {"Empty object", "empty", "A transform to organize children or attach your own components."},
+        {"2D box (static)","planar-box","Native XY-plane collision and an editable sprite."},
+        {"2D box (dynamic)","planar-dynamic-box","Native lamina mass, gravity, contacts and CCD."},
+        {"2D circle (dynamic)","planar-circle","Exact circular contact, not a polygonal thin sphere."},
+        {"2D capsule (dynamic)","planar-capsule","Native rounded 2D contact; set rotation lock in Body."},
+        {"2D terrain chain","planar-chain","Static open, two-sided edges. Edit vertices in Body."},
+        {"2D platformer player","planar-player","Editable project script, native capsule collision and jumping. Requires scene gravity."},
+        {"2D top-down player","planar-topdown-player","Editable project script with native 2D collision. Use a scene without gravity."},
         {"Sprite (2D image)","sprite","A world-space image with pivot, flips and sorting; no hidden collision."},
         {"First-person player (JS + motor)", "first-person-player", "Controllable capsule with CharacterMotor, editable movement/camera script and V view toggle."},
         {"Third-person player (JS + motor)", "third-person-player", "The same script-owned player starting with a camera behind it."},
@@ -100,6 +111,19 @@ SceneObjectId CreateObjectOfKind(EditorDocument& doc, const std::string& kind, c
         o.render->shape = SceneShape::Mesh;
         o.render->meshAsset = meshAssetId;
         o.render->color = glm::vec3(1.0f);
+    } else if(kind.rfind("planar-",0)==0) {
+        o.name=kind=="planar-chain"?"2D terrain chain":"2D physical object";
+        o.body=SceneBodyComponent{};o.body->shape=SceneShape::Planar;
+        o.body->motion=(kind=="planar-box"||kind=="planar-chain")?SceneBodyMotion::Static:SceneBodyMotion::Dynamic;
+        o.body->managed=false;
+        o.body->planar=kind=="planar-circle"?PlanarCircle(.5):kind=="planar-capsule"?PlanarCapsule(.3,.4):
+            kind=="planar-chain"?PlanarChain({{-2,0},{0,0},{2,1}}):PlanarBox({.5,.5});
+        if(kind!="planar-chain") {
+            o.render=SceneRenderComponent{};o.render->shape=SceneShape::Sprite;
+            o.render->color={.3f,.7f,.8f};
+            if(kind=="planar-circle"||kind=="planar-capsule")o.render->textureAsset=meshAssetId;
+            if(kind=="planar-capsule")o.render->sprite.size={.6f,1.4f};
+        }
     } else if(kind=="sprite") {
         o.name="Sprite";o.render=SceneRenderComponent{};
         o.render->shape=SceneShape::Sprite;o.render->textureAsset=meshAssetId;o.render->color=glm::vec3(1);
@@ -145,4 +169,33 @@ SceneObjectId CreateEditorSpriteFromImage(EditorDocument& doc,const AssetDatabas
     const glm::vec2 size(float(pixels.width)/32,float(pixels.height)/32);
     const auto id=CreateObjectOfKind(doc,"sprite",position,image,nullptr,parent,&size);
     error=id?"":"Sprite parent no longer exists";return id;
+}
+
+// Matching visuals are ordinary project-owned assets, independent of the native
+// collider. Reuse the image after its first import; never replace user artwork.
+SceneObjectId CreateEditorPlanarPrimitive(EditorDocument& doc,const Project& project,AssetDatabase& assets,
+    const std::string& kind,glm::vec3 position,SceneObjectId parent,std::string& error) {
+    try {
+        if(kind!="planar-circle"&&kind!="planar-capsule")throw std::runtime_error("Unknown rounded 2D primitive");
+        if(!project.IsLoaded())throw std::runtime_error("Open a project before creating 2D image assets");
+        if(parent&&!doc.GetScene().Find(parent))throw std::runtime_error("The chosen parent no longer exists");
+        const auto root=std::filesystem::canonical(std::filesystem::u8path(project.AssetsDir()));
+        if(root!=std::filesystem::canonical(std::filesystem::u8path(assets.AssetsDir())))throw std::runtime_error("Asset database belongs to another project");
+        auto directory=root;
+        for(const auto* part:{"Generated","Planar"}){directory/=part;
+            if(std::filesystem::is_symlink(std::filesystem::symlink_status(directory)))throw std::runtime_error("Generated asset folders must not be symbolic links");
+            std::filesystem::create_directories(directory);}
+        const std::string file=kind=="planar-circle"?"circle.png":"capsule.png";
+        const auto destination=directory/file;
+        if(!std::filesystem::exists(destination))std::filesystem::copy_file(ResolveEngineDataPath("docs/judasjs/examples/2d/"+file),destination,std::filesystem::copy_options::none);
+        AssetRecord image;
+        const auto relative=destination.lexically_relative(std::filesystem::u8path(project.RootDir())).generic_u8string();
+        if(const auto* existing=assets.FindByRelativePath(relative)) {
+            if(existing->missing||existing->type!=AssetType::Texture)throw std::runtime_error("The generated sprite asset is missing or has the wrong type");
+            image=*existing;
+        } else if(!assets.Track(destination.u8string(),image,error))return 0;
+        const auto id=CreateObjectOfKind(doc,kind,position,image.id,nullptr,parent);
+        if(!id){error="Creation failed: parent no longer exists";return 0;}
+        error.clear();return id;
+    }catch(const std::exception& e){error=e.what();return 0;}
 }

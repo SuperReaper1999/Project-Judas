@@ -1,0 +1,22 @@
+FAIL constrained spin uses reciprocal physical Iz, not the spatial inverse tensor's zz entry
+PASS accepted 3D physical trajectory remains bit-identical to Stage 0 control
+PASS rectangle uses lamina rather than thin-box inertia
+PASS circle has exact disk inertia
+PASS zero core-length capsule has disk mass limit
+PASS native rounded-core geometry reports circle-box penetration and witnesses
+PASS separated circle-box negative control
+PASS parallel 2D faces produce two physical anchors
+PASS different planes do not invent extrusion collision
+PASS native descriptor roundtrip retains exact shape and rotation policy
+PASS malformed descriptor fails without replacing published immutable geometry
+PASS concave geometry rejects instead of pretending convex
+PASS actual point impulse uses reduced linear and angular mobility
+PASS forbidden velocity command rejects atomically
+CONTACT gap=-0.000311266024709 normal=(3.25260652e-19,1) point=(0.643516362,-0.00015563301)
+CONTACT gap=-4.55499008345e-06 normal=(3.25260652e-19,1) point=(2.0435164,-2.27749501e-06)
+DETAIL minY=-0.000311285257 spin=0 vy=0 q=(0.707029343,0.707184255)
+MEASURE resting=(1.3434068,0.499842077,0)
+PASS off-centre landing collides with real 2D floor and remains in plane
+PASS independent transformed-corner oracle bounds floor penetration below 2 mm
+PASS native custom physical inertia is accepted before reduction
+FAIL constrained spin uses reciprocal physical Iz, not the spatial inverse tensor's zz entry

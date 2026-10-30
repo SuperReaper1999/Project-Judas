@@ -1,0 +1,8 @@
+PASS cold process opens exact saved project
+PASS cold process reads checksum-protected modern slot: 
+PASS cold process reconstructs planar authored geometry: 
+PASS cold process restores actual planar physical participants: 
+PASS restored endpoint is actual body position/velocity/plane, not cached script status
+PASS fixed-step execution has no VM diagnostics
+PASS cold restored player still has real floor collision
+SUMMARY 7 checks 0 failures

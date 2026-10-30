@@ -13,3 +13,6 @@ void DrawEditorCreationItems(const EditorPanelState&, EditorRequests&,
                              SceneObjectId parent = kInvalidSceneObjectId);
 // Call inside the hierarchy/list window; existing row context menus take priority.
 void DrawHierarchyCreationPopup(const EditorPanelState&, EditorRequests&);
+class Project;
+SceneObjectId CreateEditorPlanarPrimitive(EditorDocument&,const Project&,AssetDatabase&,
+    const std::string& kind,glm::vec3 position,SceneObjectId parent,std::string& error);

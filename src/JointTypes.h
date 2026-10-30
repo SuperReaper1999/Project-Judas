@@ -4,7 +4,7 @@
 #include <glm/gtc/quaternion.hpp>
 #include <cmath>
 #include <initializer_list>
-enum class JointType {Fixed,Hinge,Ball,Slider};
+enum class JointType {Fixed,Hinge,Ball,Slider,PlanarPin,PlanarWeld};
 struct JointSettings {
     JointType type=JointType::Fixed;
     BodyHandle bodyA,bodyB; // invalid B means a world anchor, never invalid A
@@ -46,10 +46,10 @@ struct JointState {JointSettings settings;bool active=false;float coordinate=0,m
 inline bool ValidJointSettings(const JointSettings& s){
  auto finite=[](glm::vec3 v){return std::isfinite(v.x)&&std::isfinite(v.y)&&std::isfinite(v.z);};
  auto quat=[&](glm::quat q){return finite({q.x,q.y,q.z})&&std::isfinite(q.w)&&glm::dot(q,q)>1e-12f&&std::isfinite(glm::dot(q,q));};
- return int(s.type)>=0&&int(s.type)<=3&&finite(s.anchorA)&&finite(s.anchorB)&&quat(s.frameA)&&quat(s.frameB)&&
+ return int(s.type)>=0&&int(s.type)<=5&&finite(s.anchorA)&&finite(s.anchorB)&&quat(s.frameA)&&quat(s.frameB)&&
  std::isfinite(s.lower)&&std::isfinite(s.upper)&&s.lower<=s.upper&&std::isfinite(s.speed)&&std::isfinite(s.maxForce)&&s.maxForce>=0&&
  std::isfinite(s.rest)&&std::isfinite(s.stiffness)&&s.stiffness>=0&&std::isfinite(s.damping)&&s.damping>=0&&std::isfinite(s.rotationalResistance)&&s.rotationalResistance>=0&&
- (s.type!=JointType::Hinge||!s.limits||(s.lower>=-3.1415927f&&s.upper<=3.1415927f));
+ ((s.type!=JointType::Hinge&&s.type!=JointType::PlanarPin)||!s.limits||(s.lower>=-3.1415927f&&s.upper<=3.1415927f));
 }
 
 inline bool JointSettingsEqual(const JointSettings& a,const JointSettings& b){return a.type==b.type&&a.bodyA.id==b.bodyA.id&&a.bodyB.id==b.bodyB.id&&a.anchorA==b.anchorA&&a.anchorB==b.anchorB&&a.frameA==b.frameA&&a.frameB==b.frameB&&a.enabled==b.enabled&&a.limits==b.limits&&a.motor==b.motor&&a.spring==b.spring&&a.lower==b.lower&&a.upper==b.upper&&a.speed==b.speed&&a.maxForce==b.maxForce&&a.rest==b.rest&&a.stiffness==b.stiffness&&a.damping==b.damping&&a.rotationalResistance==b.rotationalResistance;}

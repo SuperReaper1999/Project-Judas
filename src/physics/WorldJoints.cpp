@@ -35,6 +35,22 @@ auto PhysicsWorld::Impl::PrepareJoints(JointSolver &target, const std::vector<Jo
                    speculativeRate);
 }
 
+namespace {
+bool PlanarJointCompatible(const JointSettings& s,const RigidBody& a,const RigidBody* b){
+    const bool planar=s.type==JointType::PlanarPin||s.type==JointType::PlanarWeld;
+    if(!a.IsPlanar()&&(!b||!b->IsPlanar()))return !planar;
+    if(!planar||!a.IsPlanar()||(b&&!b->IsPlanar()))return false;
+    const auto n=a.planeNormal;
+    if(b&&(glm::dot(n,b->planeNormal)<1-1e-6f||std::abs(glm::dot(n,b->position-a.position))>1e-4f))return false;
+    if(std::abs(s.anchorA.z)>1e-5f||(b&&std::abs(s.anchorB.z)>1e-5f))return false;
+    const auto fa=a.orientation*s.frameA,fb=b?b->orientation*s.frameB:s.frameB;
+    if(glm::dot(n,glm::vec3(ContactRotation(fa)[2]))<1-1e-6f||glm::dot(n,glm::vec3(ContactRotation(fb)[2]))<1-1e-6f)return false;
+    if(!b&&std::abs(glm::dot(n,s.anchorB-a.position))>1e-4f)return false;
+    if(s.type==JointType::PlanarWeld&&(s.motor||s.spring||s.limits||s.rotationalResistance>0))return false;
+    return true;
+}
+}
+
 JointHandle PhysicsWorld::CreateJoint(const JointSettings &settings) {
     if (!m_impl || !ValidJointSettings(settings))
         return {};
@@ -43,6 +59,7 @@ JointHandle PhysicsWorld::CreateJoint(const JointSettings &settings) {
     if (!a || (settings.bodyB.IsValid() && !b) || (b && a == b) ||
         (a->rigidBody.IsStatic() && (!b || b->rigidBody.IsStatic())))
         return {};
+    if(!PlanarJointCompatible(settings,a->rigidBody,b?&b->rigidBody:nullptr))return {};
     static std::atomic<std::uint64_t> next{1};
     JointHandle handle{next.fetch_add(1)};
     Wake(settings.bodyA);
@@ -135,6 +152,8 @@ bool PhysicsWorld::SetJoint(JointHandle handle, const JointSettings &settings) {
         settings.bodyA.id != previous.settings.bodyA.id ||
         settings.bodyB.id != previous.settings.bodyB.id)
         return false;
+    const auto* a=m_impl->Get(settings.bodyA);const auto* b=m_impl->Get(settings.bodyB);
+    if(!a||!PlanarJointCompatible(settings,a->rigidBody,b?&b->rigidBody:nullptr))return false;
     for (auto &joint : m_impl->joints)
         if (joint.handle.id == handle.id) {
             if (JointSettingsEqual(joint.state.settings, settings))

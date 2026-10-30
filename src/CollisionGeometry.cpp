@@ -1,4 +1,5 @@
 #include "CollisionGeometry.h"
+#include "PlanarGeometry.h"
 #include "ClipPolygon.h"
 #include "CollisionAsset.h"
 #include "RadialTerrain.h"
@@ -477,6 +478,14 @@ bool MeshFeatureBudgetExceeded(const PrimitivePose& query, const PrimitivePose& 
 }
 
 CollisionMassProperties ShapeMassProperties(const Shape& shape) {
+    if(shape.type==ShapeType::Planar){
+        const auto mass=PlanarMassProperties(*shape.planar);CollisionMassProperties result;
+        result.volume=mass.area;result.center=glm::dvec3(mass.center,0);
+        result.inertia=glm::dmat3(0);for(int k=0;k<3;++k)result.inertia[k][k]=mass.inertia[k];
+        result.inertia[0][1]=result.inertia[1][0]=-mass.product;
+        return result;
+    }
+
  CollisionMassProperties out;
  if(shape.type==ShapeType::ConvexHull){if(!shape.asset||!shape.asset->convex)throw std::invalid_argument("invalid convex mass geometry");return {shape.asset->volume,shape.asset->centerOfMass,shape.asset->unitInertia};}
  if(shape.type==ShapeType::Sphere){double r=shape.radius;out.volume=4*3.141592653589793*r*r*r/3;out.inertia=M(out.volume*2*r*r/5);}

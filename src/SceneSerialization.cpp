@@ -72,6 +72,7 @@ const char* ShapeName(SceneShape s) {
         case SceneShape::ConvexHull: return "hull";
         case SceneShape::TriangleMesh: return "triangle-mesh";
         case SceneShape::Sprite: return "sprite";
+        case SceneShape::Planar: return "planar";
     }
     return "box";
 }
@@ -315,6 +316,7 @@ void WriteObject(Writer& w, const SceneObject& o) {
         if(!b.enabled) w.Line("body.enabled","false");
         if(b.collisionLayer) w.Line("body.collision-layer",std::to_string(b.collisionLayer));
         if(b.collisionMask!=kAllCategories) w.Line("body.collision-mask",std::to_string(b.collisionMask));
+        if(b.shape==SceneShape::Planar&&b.planar)w.Line("body.planar-v1",Quote(EncodePlanar(*b.planar)));
         w.Line("body.half-extents", V(b.halfExtents));
         w.Line("body.radius", F(b.radius));
         w.Line("body.terrain", Quote(b.terrainSurface));
@@ -543,6 +545,7 @@ bool ParseShape(const Token& t, SceneShape& out) {
     else if(t.text=="hull")out=SceneShape::ConvexHull;
     else if(t.text=="triangle-mesh")out=SceneShape::TriangleMesh;
     else if(t.text=="sprite")out=SceneShape::Sprite;
+    else if(t.text=="planar")out=SceneShape::Planar;
     else return false;
     return true;
 }
@@ -849,7 +852,7 @@ bool ParseObject(Reader& reader, const std::vector<Token>& header, const Block& 
         std::string why;if(!ValidRagdollDefinition(r,why))return reader.Fail(why);o.ragdoll=std::move(r);
     }
     if(p.Has("joint")){SceneJointComponent j;auto& s=j.settings;int type=0;
-        if(!p.Int("joint",type)||type<0||type>3||!p.Id("joint.body-a",j.bodyA)||!p.Id("joint.body-b",j.bodyB)||
+        if(!p.Int("joint",type)||type<0||type>5||!p.Id("joint.body-a",j.bodyA)||!p.Id("joint.body-b",j.bodyB)||
            !p.Vec3("joint.anchor-a",s.anchorA)||!p.Vec3("joint.anchor-b",s.anchorB)||!p.Quat("joint.frame-a",s.frameA)||!p.Quat("joint.frame-b",s.frameB)||
            !p.Bool("joint.enabled",s.enabled)||!p.Bool("joint.limits",s.limits)||!p.Bool("joint.motor",s.motor)||!p.Bool("joint.spring",s.spring)||
            !p.Float("joint.lower",s.lower)||!p.Float("joint.upper",s.upper)||!p.Float("joint.speed",s.speed)||!p.Float("joint.max-force",s.maxForce)||
@@ -998,6 +1001,10 @@ bool ParseObject(Reader& reader, const std::vector<Token>& header, const Block& 
         if (!ParseShape((*h)[1], b.shape) || b.shape == SceneShape::Mesh || b.shape == SceneShape::Sprite) {
             return reader.Fail("body shape must be box, sphere, compound or terrain");
         }
+        if(b.shape==SceneShape::Planar){std::string encoded,error;
+            if(!p.String("body.planar-v1",encoded)||!DecodePlanar(encoded,b.planar,error))return reader.Fail("invalid 2D collider: "+error);
+            if(b.motion!=SceneBodyMotion::Static&&b.planar->kind==PlanarKind::Chain)return reader.Fail("2D chains are static-only");
+        }else if(p.Has("body.planar-v1"))return reader.Fail("2D descriptor requires a planar body");
         if (!p.Vec3("body.half-extents", b.halfExtents)) return false;
         if (!p.Float("body.radius", b.radius)) return false;
         if (!p.String("body.terrain", b.terrainSurface)) return false;

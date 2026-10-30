@@ -1,0 +1,60 @@
+PASS fresh project output
+PASS create normal project: 
+PASS new 2D platformer has native collision, controller and gravity: 
+PASS project/scene serialization
+PASS reload full planar descriptor
+PASS lossless native collider serialization
+PASS build native planar runtime: 
+PASS project owns controls
+PASS fixed-step execution has no VM diagnostics
+MEASURE resting=0,0.1
+PASS capsule lands at actual floor height
+BEFOREJUMP {"grounded":true,"landings":1}
+PASS fixed-step execution has no VM diagnostics
+PASS fixed-step execution has no VM diagnostics
+JUMP y=1.15305 vy=3.8745
+PASS ordinary JS jump produces physical upward displacement
+PASS fixed-step execution has no VM diagnostics
+PASS fixed-step execution has no VM diagnostics
+PASS ordinary JS tangential acceleration moves actual body
+PASS sprite flips/sorting cannot move physical geometry
+PASS off-plane runtime pose rejects before definition publication
+PASS forbidden physical restore rejects before publishing partial endpoint
+PASS legacy delta saves explicitly reject unsupported planar continuation
+PASS modern capture preserves planar state: 
+PASS write modern save
+PASS mixed spatial/planar producer rejects with actionable diagnostic
+PASS dynamic chain rejects instead of manufacturing mass
+PASS no-floor negative control builds
+PASS fixed-step execution has no VM diagnostics
+PASS no-floor negative control actually falls; player script does not clamp height
+PASS create separate top-down project
+PASS top-down native world builds
+PASS fixed-step execution has no VM diagnostics
+PASS top-down movement follows project up input with no gravity
+PASS save editable top-down project
+PASS track ordinary native 2D API probe
+PASS build public 2D API probe
+PASS fixed-step execution has no VM diagnostics
+PASS actual public JS contract: detached
+PASS actual public JS contract: query
+PASS actual public JS contract: directionRejected
+PASS actual public JS contract: chainRejected
+PASS actual public JS contract: poseRejected
+PASS actual public JS contract: atomic
+PASS actual public JS contract: velocityRejected
+PASS write ordinary planar prefab
+PASS register ordinary prefab asset
+PREFAB id=4611686018427387904 error= shape=1 pose=8,3.9
+PASS prefab spawns actual convex planar geometry at requested endpoint
+PASS build real player/support scene
+PASS fixed-step execution has no VM diagnostics
+RIDE rotating=0 player=1.47639,1.8 support=1.5
+PASS actual JS player rides translating support without pose parenting
+PASS build real player/support scene
+PASS fixed-step execution has no VM diagnostics
+RIDE rotating=1 player=0.749941,1.91902 support=0
+PASS actual JS player is lifted by a rotating physical support
+PASS editor creates selected native circle with ordinary matching image asset
+PASS editor rounded 2D creation preserves child/selection workflow
+FAIL repeated creation reuses project image without overwriting artwork

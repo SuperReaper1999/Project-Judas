@@ -1,0 +1,3519 @@
+JudasScene 3
+settings
+  name ""
+  world-origin 0 0 0
+  sun-direction 0.4 0.7 0.35
+  sun-color 1 0.98 0.92
+  ambient 0.16 0.17 0.19
+  sun-enabled false
+  background-color 0.055 0.085 0.11
+  fluid-scale 1
+  fluid-update-rate-hz 30
+  fluid-hydrostatic-drag-rate 2
+  fidelity-policy none
+  next-id 209
+end
+
+object 1 "Platformer player - editable game.js"
+  scripts 1
+  script.0.id 1
+  script.0.asset "1b862c5b6897726904d9213811c80552"
+  script.0.enabled true
+  script.0.properties "{\"sideView\":true}"
+  position -0.88988405 1.7257535 0.479459
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset "cb1e3396f2c5402a3c4bc68724495b4e"
+  render.sprite-v1 "{\"version\":1,\"size\":[0.699999988079071,1.2999999523162842],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":true,\"sortingLayer\":1,\"order\":0}"
+  body dynamic planar
+  body.planar-v1 "{\"version\":1,\"kind\":2,\"radius\":0.3,\"lockRotation\":true,\"vertices\":[[0.0,-0.3],[0.0,0.3]]}"
+  body.half-extents 0.5 0.5 0.5
+  body.radius 0.5
+  body.terrain ""
+  body.mass 5
+  body.friction 0
+  body.restitution 0.1
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 2 "Backdrop - editable sprite tiles"
+  position 0 0 0
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+end
+
+object 3 "Ground tile"
+  position -4.4204183 -8.297678 0.8052582
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.13 0.25 0.23
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 4 "Ground tile"
+  position -3.5986786 -7.797887 0.53148407
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.15 0.28 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 5 "Ground tile"
+  position -2.7769387 -7.298095 0.25770986
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.13 0.25 0.23
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 6 "Ground tile"
+  position -1.9551988 -6.798304 -0.016064301
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.15 0.28 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 7 "Ground tile"
+  position -1.1334589 -6.298513 -0.2898385
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.13 0.25 0.23
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 8 "Ground tile"
+  position -0.31171918 -5.798722 -0.56361264
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.15 0.28 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 9 "Ground tile"
+  position 0.51002073 -5.29893 -0.8373868
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.13 0.25 0.23
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 10 "Ground tile"
+  position 1.3317606 -4.799139 -1.111161
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.15 0.28 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 11 "Ground tile"
+  position 2.1535003 -4.299348 -1.3849351
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.13 0.25 0.23
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 12 "Ground tile"
+  position 2.9752402 -3.7995563 -1.6587093
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.15 0.28 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 13 "Ground tile"
+  position 3.79698 -3.299765 -1.9324834
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.13 0.25 0.23
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 14 "Ground tile"
+  position 4.61872 -2.799974 -2.2062576
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.15 0.28 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 15 "Ground tile"
+  position 5.4404597 -2.3001826 -2.480032
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.13 0.25 0.23
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 16 "Ground tile"
+  position 6.2621994 -1.8003912 -2.753806
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.15 0.28 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 17 "Ground tile"
+  position 7.0839396 -1.3005998 -3.0275803
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.13 0.25 0.23
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 18 "Ground tile"
+  position 7.905679 -0.8008084 -3.3013544
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.15 0.28 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 19 "Ground tile"
+  position 8.727419 -0.3010168 -3.5751286
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.13 0.25 0.23
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 20 "Ground tile"
+  position -4.8653603 -7.434801 1.0449877
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.15 0.28 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 21 "Ground tile"
+  position -4.04362 -6.93501 0.77121353
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.13 0.25 0.23
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 22 "Ground tile"
+  position -3.2218804 -6.4352183 0.49743938
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.15 0.28 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 23 "Ground tile"
+  position -2.4001408 -5.935427 0.22366516
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.13 0.25 0.23
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 24 "Ground tile"
+  position -1.5784009 -5.435636 -0.050108984
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.15 0.28 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 25 "Ground tile"
+  position -0.75666094 -4.935845 -0.32388312
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.13 0.25 0.23
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 26 "Ground tile"
+  position 0.065078735 -4.4360533 -0.5976573
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.15 0.28 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 27 "Ground tile"
+  position 0.88681865 -3.9362621 -0.87143147
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.13 0.25 0.23
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 28 "Ground tile"
+  position 1.7085584 -3.436471 -1.1452056
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.15 0.28 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 29 "Ground tile"
+  position 2.5302982 -2.9366796 -1.4189799
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.13 0.25 0.23
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 30 "Ground tile"
+  position 3.3520381 -2.4368882 -1.692754
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.15 0.28 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 31 "Ground tile"
+  position 4.173778 -1.9370971 -1.9665282
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.13 0.25 0.23
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 32 "Ground tile"
+  position 4.9955177 -1.4373057 -2.2403023
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.15 0.28 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 33 "Ground tile"
+  position 5.817258 -0.9375143 -2.5140765
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.13 0.25 0.23
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 34 "Ground tile"
+  position 6.6389976 -0.43772292 -2.7878506
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.15 0.28 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 35 "Ground tile"
+  position 7.460737 0.062068462 -3.0616248
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.13 0.25 0.23
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 36 "Ground tile"
+  position 8.282477 0.5618596 -3.335399
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.15 0.28 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 37 "Ground tile"
+  position -5.3103023 -6.571924 1.2847173
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.13 0.25 0.23
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 38 "Ground tile"
+  position -4.4885626 -6.072133 1.0109429
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.15 0.28 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 39 "Ground tile"
+  position -3.6668224 -5.572342 0.73716885
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.13 0.25 0.23
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 40 "Ground tile"
+  position -2.8450828 -5.072551 0.4633947
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.15 0.28 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 41 "Ground tile"
+  position -2.0233428 -4.5727596 0.18962048
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.13 0.25 0.23
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 42 "Ground tile"
+  position -1.201603 -4.072968 -0.08415367
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.15 0.28 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 43 "Ground tile"
+  position -0.37986326 -3.5731766 -0.3579278
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.13 0.25 0.23
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 44 "Ground tile"
+  position 0.44187665 -3.0733852 -0.631702
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.15 0.28 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 45 "Ground tile"
+  position 1.2636164 -2.573594 -0.90547615
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.13 0.25 0.23
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 46 "Ground tile"
+  position 2.0853562 -2.0738027 -1.1792504
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.15 0.28 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 47 "Ground tile"
+  position 2.9070961 -1.5740114 -1.4530245
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.13 0.25 0.23
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 48 "Ground tile"
+  position 3.728836 -1.0742202 -1.7267987
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.15 0.28 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 49 "Ground tile"
+  position 4.5505757 -0.57442904 -2.000573
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.13 0.25 0.23
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 50 "Ground tile"
+  position 5.3723154 -0.07463765 -2.274347
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.15 0.28 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 51 "Ground tile"
+  position 6.1940556 0.42515373 -2.5481212
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.13 0.25 0.23
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 52 "Ground tile"
+  position 7.015795 0.9249451 -2.8218954
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.15 0.28 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 53 "Ground tile"
+  position 7.837535 1.4247365 -3.0956695
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.13 0.25 0.23
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 54 "Ground tile"
+  position -5.7552443 -5.7090473 1.5244466
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.15 0.28 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 55 "Ground tile"
+  position -4.9335046 -5.209256 1.2506725
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.13 0.25 0.23
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 56 "Ground tile"
+  position -4.111765 -4.709465 0.9768984
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.15 0.28 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 57 "Ground tile"
+  position -3.2900248 -4.209674 0.70312417
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.13 0.25 0.23
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 58 "Ground tile"
+  position -2.468285 -3.7098825 0.42935002
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.15 0.28 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 59 "Ground tile"
+  position -1.6465452 -3.210091 0.15557583
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.13 0.25 0.23
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 60 "Ground tile"
+  position -0.82480526 -2.7103 -0.118198335
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.15 0.28 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 61 "Ground tile"
+  position -0.0030654669 -2.2105086 -0.39197248
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.13 0.25 0.23
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 62 "Ground tile"
+  position 0.8186744 -1.7107172 -0.6657466
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.15 0.28 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 63 "Ground tile"
+  position 1.6404142 -1.2109259 -0.93952084
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.13 0.25 0.23
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 64 "Ground tile"
+  position 2.462154 -0.7111347 -1.213295
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.15 0.28 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 65 "Ground tile"
+  position 3.2838938 -0.21134353 -1.4870692
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.13 0.25 0.23
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 66 "Ground tile"
+  position 4.1056337 0.28844786 -1.7608434
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.15 0.28 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 67 "Ground tile"
+  position 4.9273734 0.78823924 -2.0346174
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.13 0.25 0.23
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 68 "Ground tile"
+  position 5.749113 1.2880306 -2.3083918
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.15 0.28 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 69 "Ground tile"
+  position 6.570853 1.7878218 -2.582166
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.13 0.25 0.23
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 70 "Ground tile"
+  position 7.392593 2.2876134 -2.85594
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.15 0.28 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 71 "Ground tile"
+  position -6.2001863 -4.8461704 1.7641762
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.13 0.25 0.23
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 72 "Ground tile"
+  position -5.3784466 -4.3463793 1.490402
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.15 0.28 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 73 "Ground tile"
+  position -4.5567064 -3.8465881 1.2166278
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.13 0.25 0.23
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 74 "Ground tile"
+  position -3.7349668 -3.3467968 0.94285375
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.15 0.28 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 75 "Ground tile"
+  position -2.9132268 -2.8470058 0.6690795
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.13 0.25 0.23
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 76 "Ground tile"
+  position -2.0914872 -2.3472145 0.39530534
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.15 0.28 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 77 "Ground tile"
+  position -1.2697473 -1.8474231 0.12153117
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.13 0.25 0.23
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 78 "Ground tile"
+  position -0.44800746 -1.3476317 -0.152243
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.15 0.28 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 79 "Ground tile"
+  position 0.3737324 -0.8478404 -0.42601717
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.13 0.25 0.23
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 80 "Ground tile"
+  position 1.1954722 -0.34804916 -0.6997913
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.15 0.28 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 81 "Ground tile"
+  position 2.017212 0.15174222 -0.97356546
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.13 0.25 0.23
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 82 "Ground tile"
+  position 2.8389518 0.65153337 -1.2473397
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.15 0.28 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 83 "Ground tile"
+  position 3.6606917 1.1513247 -1.5211139
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.13 0.25 0.23
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 84 "Ground tile"
+  position 4.4824314 1.6511159 -1.794888
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.15 0.28 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 85 "Ground tile"
+  position 5.3041716 2.1509075 -2.0686622
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.13 0.25 0.23
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 86 "Ground tile"
+  position 6.125911 2.6506987 -2.3424366
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.15 0.28 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 87 "Ground tile"
+  position 6.947651 3.1504903 -2.6162107
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.13 0.25 0.23
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 88 "Ground tile"
+  position -6.6451283 -3.983294 2.0039055
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.15 0.28 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 89 "Ground tile"
+  position -5.8233886 -3.4835026 1.7301314
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.13 0.25 0.23
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 90 "Ground tile"
+  position -5.0016484 -2.9837112 1.4563572
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.15 0.28 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 91 "Ground tile"
+  position -4.1799088 -2.48392 1.1825831
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.13 0.25 0.23
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 92 "Ground tile"
+  position -3.358169 -1.984129 0.908809
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.15 0.28 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 93 "Ground tile"
+  position -2.5364292 -1.4843376 0.63503486
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.13 0.25 0.23
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 94 "Ground tile"
+  position -1.7146893 -0.9845463 0.36126065
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.15 0.28 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 95 "Ground tile"
+  position -0.89294946 -0.48475495 0.08748649
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.13 0.25 0.23
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 96 "Ground tile"
+  position -0.071209624 0.01503633 -0.18628769
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.15 0.28 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 97 "Ground tile"
+  position 0.75053024 0.51482767 -0.46006185
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.13 0.25 0.23
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 98 "Ground tile"
+  position 1.57227 1.014619 -0.733836
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.15 0.28 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 99 "Ground tile"
+  position 2.39401 1.5144101 -1.0076102
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.13 0.25 0.23
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 100 "Ground tile"
+  position 3.2157497 2.0142014 -1.2813843
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.15 0.28 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 101 "Ground tile"
+  position 4.0374894 2.5139928 -1.5551585
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.13 0.25 0.23
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 102 "Ground tile"
+  position 4.8592296 3.0137842 -1.8289328
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.15 0.28 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 103 "Ground tile"
+  position 5.680969 3.5135756 -2.102707
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.13 0.25 0.23
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 104 "Ground tile"
+  position 6.502709 4.0133667 -2.376481
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.15 0.28 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 105 "Ground tile"
+  position -7.0900702 -3.120417 2.2436352
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.13 0.25 0.23
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 106 "Ground tile"
+  position -6.2683306 -2.620626 1.969861
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.15 0.28 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 107 "Ground tile"
+  position -5.4465904 -2.1208344 1.6960869
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.13 0.25 0.23
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 108 "Ground tile"
+  position -4.6248507 -1.6210432 1.4223126
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.15 0.28 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 109 "Ground tile"
+  position -3.803111 -1.1212521 1.1485384
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.13 0.25 0.23
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 110 "Ground tile"
+  position -2.9813712 -0.6214608 0.87476426
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.15 0.28 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 111 "Ground tile"
+  position -2.1596313 -0.12166953 0.6009901
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.13 0.25 0.23
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 112 "Ground tile"
+  position -1.3378915 0.37812185 0.32721597
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.15 0.28 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 113 "Ground tile"
+  position -0.51615167 0.8779131 0.053441808
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.13 0.25 0.23
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 114 "Ground tile"
+  position 0.3055882 1.3777044 -0.22033237
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.15 0.28 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 115 "Ground tile"
+  position 1.127328 1.8774958 -0.49410653
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.13 0.25 0.23
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 116 "Ground tile"
+  position 1.9490678 2.377287 -0.7678807
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.15 0.28 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 117 "Ground tile"
+  position 2.7708077 2.8770783 -1.0416548
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.13 0.25 0.23
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 118 "Ground tile"
+  position 3.5925474 3.3768697 -1.3154291
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.15 0.28 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 119 "Ground tile"
+  position 4.4142876 3.876661 -1.5892032
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.13 0.25 0.23
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 120 "Ground tile"
+  position 5.2360272 4.3764524 -1.8629775
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.15 0.28 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 121 "Ground tile"
+  position 6.057767 4.8762436 -2.1367517
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.13 0.25 0.23
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 122 "Ground tile"
+  position -7.5350122 -2.2575402 2.4833646
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.15 0.28 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 123 "Ground tile"
+  position -6.7132726 -1.7577491 2.2095904
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.13 0.25 0.23
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 124 "Ground tile"
+  position -5.891533 -1.2579577 1.9358163
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.15 0.28 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 125 "Ground tile"
+  position -5.0697927 -0.75816655 1.6620421
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.13 0.25 0.23
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 126 "Ground tile"
+  position -4.248053 -0.2583754 1.3882679
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.15 0.28 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 127 "Ground tile"
+  position -3.4263132 0.24141598 1.1144937
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.13 0.25 0.23
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 128 "Ground tile"
+  position -2.6045732 0.74120736 0.84071964
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.15 0.28 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 129 "Ground tile"
+  position -1.7828336 1.2409986 0.5669455
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.13 0.25 0.23
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 130 "Ground tile"
+  position -0.96109366 1.7407899 0.2931713
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.15 0.28 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 131 "Ground tile"
+  position -0.13935387 2.2405813 0.019397125
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.13 0.25 0.23
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 132 "Ground tile"
+  position 0.6823859 2.7403727 -0.254377
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.15 0.28 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 133 "Ground tile"
+  position 1.5041258 3.2401638 -0.5281512
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.13 0.25 0.23
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 134 "Ground tile"
+  position 2.3258657 3.739955 -0.80192536
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.15 0.28 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 135 "Ground tile"
+  position 3.1476054 4.239746 -1.0756996
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.13 0.25 0.23
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 136 "Ground tile"
+  position 3.9693453 4.739538 -1.3494737
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.15 0.28 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 137 "Ground tile"
+  position 4.7910852 5.2393293 -1.6232479
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.13 0.25 0.23
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 138 "Ground tile"
+  position 5.612825 5.7391205 -1.897022
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.15 0.28 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 139 "Ground tile"
+  position -7.9799542 -1.3946633 2.7230942
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.13 0.25 0.23
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 140 "Ground tile"
+  position -7.1582146 -0.8948722 2.44932
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.15 0.28 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 141 "Ground tile"
+  position -6.3364744 -0.3950808 2.175546
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.13 0.25 0.23
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 142 "Ground tile"
+  position -5.5147347 0.10471034 1.9017718
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.15 0.28 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 143 "Ground tile"
+  position -4.692995 0.6045015 1.6279974
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.13 0.25 0.23
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 144 "Ground tile"
+  position -3.8712552 1.1042929 1.3542233
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.15 0.28 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 145 "Ground tile"
+  position -3.0495152 1.6040841 1.0804491
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.13 0.25 0.23
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 146 "Ground tile"
+  position -2.2277756 2.1038754 0.806675
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.15 0.28 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 147 "Ground tile"
+  position -1.4060357 2.6036668 0.5329008
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.13 0.25 0.23
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 148 "Ground tile"
+  position -0.58429575 3.1034582 0.2591266
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.15 0.28 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 149 "Ground tile"
+  position 0.23744404 3.6032495 -0.0146475285
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.13 0.25 0.23
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 150 "Ground tile"
+  position 1.0591838 4.1030407 -0.2884217
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.15 0.28 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 151 "Ground tile"
+  position 1.8809237 4.602832 -0.56219584
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.13 0.25 0.23
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 152 "Ground tile"
+  position 2.7026634 5.102623 -0.83597
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.15 0.28 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 153 "Ground tile"
+  position 3.5244033 5.6024146 -1.1097442
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.13 0.25 0.23
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 154 "Ground tile"
+  position 4.3461432 6.102206 -1.3835185
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.15 0.28 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 155 "Ground tile"
+  position 5.167883 6.6019974 -1.6572926
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.13 0.25 0.23
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 156 "Ground tile"
+  position -8.424896 -0.5317869 2.9628236
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.15 0.28 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 157 "Ground tile"
+  position -7.6031566 -0.031995773 2.6890495
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.13 0.25 0.23
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 158 "Ground tile"
+  position -6.781417 0.46779585 2.4152753
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.15 0.28 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 159 "Ground tile"
+  position -5.9596767 0.967587 2.1415012
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.13 0.25 0.23
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 160 "Ground tile"
+  position -5.137937 1.4673781 1.8677268
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.15 0.28 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 161 "Ground tile"
+  position -4.3161974 1.9671695 1.5939528
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.13 0.25 0.23
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 162 "Ground tile"
+  position -3.4944575 2.466961 1.3201785
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.15 0.28 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 163 "Ground tile"
+  position -2.6727176 2.966752 1.0464044
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.13 0.25 0.23
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 164 "Ground tile"
+  position -1.8509778 3.4665434 0.7726303
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.15 0.28 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 165 "Ground tile"
+  position -1.029238 3.9663348 0.49885613
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.13 0.25 0.23
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 166 "Ground tile"
+  position -0.20749807 4.466126 0.22508197
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.15 0.28 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 167 "Ground tile"
+  position 0.6142416 4.965917 -0.04869221
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.13 0.25 0.23
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 168 "Ground tile"
+  position 1.4359815 5.4657087 -0.32246637
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.15 0.28 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 169 "Ground tile"
+  position 2.2577214 5.9655 -0.5962405
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.13 0.25 0.23
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 170 "Ground tile"
+  position 3.079461 6.4652915 -0.87001467
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.15 0.28 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 171 "Ground tile"
+  position 3.901201 6.9650826 -1.1437889
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.13 0.25 0.23
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 172 "Ground tile"
+  position 4.722941 7.4648743 -1.4175631
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.15 0.28 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 173 "Ground tile"
+  position -8.869839 0.33108997 3.202553
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.13 0.25 0.23
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 174 "Ground tile"
+  position -8.048099 0.8308811 2.928779
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.15 0.28 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 175 "Ground tile"
+  position -7.2263584 1.3306727 2.6550047
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.13 0.25 0.23
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 176 "Ground tile"
+  position -6.4046187 1.8304639 2.3812306
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.15 0.28 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 177 "Ground tile"
+  position -5.582879 2.330255 2.1074564
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.13 0.25 0.23
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 178 "Ground tile"
+  position -4.761139 2.8300464 1.8336823
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.15 0.28 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 179 "Ground tile"
+  position -3.9393992 3.3298378 1.559908
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.13 0.25 0.23
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 180 "Ground tile"
+  position -3.1176593 3.829629 1.2861339
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.15 0.28 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 181 "Ground tile"
+  position -2.2959197 4.32942 1.0123597
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.13 0.25 0.23
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 182 "Ground tile"
+  position -1.4741797 4.8292117 0.7385856
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.15 0.28 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 183 "Ground tile"
+  position -0.65243983 5.329003 0.46481144
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.13 0.25 0.23
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 184 "Ground tile"
+  position 0.16929984 5.828794 0.19103722
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.15 0.28 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 185 "Ground tile"
+  position 0.99103975 6.3285856 -0.082736924
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.13 0.25 0.23
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 186 "Ground tile"
+  position 1.8127794 6.828377 -0.35651106
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.15 0.28 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 187 "Ground tile"
+  position 2.6345193 7.3281684 -0.6302852
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.13 0.25 0.23
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 188 "Ground tile"
+  position 3.4562593 7.8279595 -0.90405935
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.15 0.28 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 189 "Ground tile"
+  position 4.277999 8.327751 -1.1778336
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.13 0.25 0.23
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-10,\"order\":0}"
+end
+
+object 190 "Controls HUD"
+  ui.asset "a41a83fabec2b8cfe297d15062eff13d"
+  ui.name "sprite_help"
+  ui.enabled true
+  position 0 0 0
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+end
+
+object 191 "Floor"
+  position 7.8406005 3.6352448 -2.7036972
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.3 0.5 0.52
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[48.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":0,\"order\":0}"
+  body static planar
+  body.planar-v1 "{\"version\":1,\"kind\":1,\"radius\":0.0,\"lockRotation\":false,\"vertices\":[[-24.0,-0.5],[24.0,-0.5],[24.0,0.5],[-24.0,0.5]]}"
+  body.half-extents 0.5 0.5 0.5
+  body.radius 0.5
+  body.terrain ""
+  body.mass 1
+  body.friction 0.6
+  body.restitution 0.1
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 192 "Left wall"
+  position -11.1957035 -3.408865 4.0044785
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.3 0.5 0.52
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,8.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":0,\"order\":0}"
+  body static planar
+  body.planar-v1 "{\"version\":1,\"kind\":1,\"radius\":0.0,\"lockRotation\":false,\"vertices\":[[-0.5,-4.0],[0.5,-4.0],[0.5,4.0],[-0.5,4.0]]}"
+  body.half-extents 0.5 0.5 0.5
+  body.radius 0.5
+  body.terrain ""
+  body.mass 1
+  body.friction 0.6
+  body.restitution 0.1
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 193 "Right wall"
+  position 25.782589 19.081743 -8.315358
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.3 0.5 0.52
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,8.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":0,\"order\":0}"
+  body static planar
+  body.planar-v1 "{\"version\":1,\"kind\":1,\"radius\":0.0,\"lockRotation\":false,\"vertices\":[[-0.5,-4.0],[0.5,-4.0],[0.5,4.0],[-0.5,4.0]]}"
+  body.half-extents 0.5 0.5 0.5
+  body.radius 0.5
+  body.terrain ""
+  body.mass 1
+  body.friction 0.6
+  body.restitution 0.1
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 194 "Jump platform"
+  position 2.15376 2.1033876 -0.6535119
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.3 0.5 0.52
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[2.799999952316284,0.5],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":0,\"order\":0}"
+  body static planar
+  body.planar-v1 "{\"version\":1,\"kind\":1,\"radius\":0.0,\"lockRotation\":false,\"vertices\":[[-1.399999976158142,-0.25],[1.399999976158142,-0.25],[1.399999976158142,0.25],[-1.399999976158142,0.25]]}"
+  body.half-extents 0.5 0.5 0.5
+  body.radius 0.5
+  body.terrain ""
+  body.mass 1
+  body.friction 0.6
+  body.restitution 0.1
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 195 "Upper platform"
+  position 4.639824 5.655731 -1.3170955
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.3 0.5 0.52
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[2.799999952316284,0.5],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":0,\"order\":0}"
+  body static planar
+  body.planar-v1 "{\"version\":1,\"kind\":1,\"radius\":0.0,\"lockRotation\":false,\"vertices\":[[-1.399999976158142,-0.25],[1.399999976158142,-0.25],[1.399999976158142,0.25],[-1.399999976158142,0.25]]}"
+  body.half-extents 0.5 0.5 0.5
+  body.radius 0.5
+  body.terrain ""
+  body.mass 1
+  body.friction 0.6
+  body.restitution 0.1
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 196 "2D world gravity"
+  position 0 0 0
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  gravity uniform 9.81
+  gravity.region box 100 100 10
+end
+
+object 197 "Pushable crate"
+  position -2.5542078 -1.3267984 0.86926836
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.9 0.65 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[0.699999988079071,0.699999988079071],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":0,\"order\":0}"
+  body dynamic planar
+  body.planar-v1 "{\"version\":1,\"kind\":1,\"radius\":0.0,\"lockRotation\":false,\"vertices\":[[-0.35,-0.35],[0.35,-0.35],[0.35,0.35],[-0.35,0.35]]}"
+  body.half-extents 0.5 0.5 0.5
+  body.radius 0.5
+  body.terrain ""
+  body.mass 2
+  body.friction 0.6
+  body.restitution 0.1
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 198 "Pushable crate"
+  position -1.7324681 -0.82700723 0.5954942
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.9 0.65 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[0.699999988079071,0.699999988079071],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":0,\"order\":0}"
+  body dynamic planar
+  body.planar-v1 "{\"version\":1,\"kind\":1,\"radius\":0.0,\"lockRotation\":false,\"vertices\":[[-0.35,-0.35],[0.35,-0.35],[0.35,0.35],[-0.35,0.35]]}"
+  body.half-extents 0.5 0.5 0.5
+  body.radius 0.5
+  body.terrain ""
+  body.mass 2
+  body.friction 0.6
+  body.restitution 0.1
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 199 "Pushable crate"
+  position -0.9107282 -0.32721597 0.3217201
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.9 0.65 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[0.699999988079071,0.699999988079071],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":0,\"order\":0}"
+  body dynamic planar
+  body.planar-v1 "{\"version\":1,\"kind\":1,\"radius\":0.0,\"lockRotation\":false,\"vertices\":[[-0.35,-0.35],[0.35,-0.35],[0.35,0.35],[-0.35,0.35]]}"
+  body.half-extents 0.5 0.5 0.5
+  body.radius 0.5
+  body.terrain ""
+  body.mass 2
+  body.friction 0.6
+  body.restitution 0.1
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 200 "Moving platform - physical support"
+  scripts 1
+  script.0.id 1
+  script.0.asset "0a237a2934fa3be2e6959e53e529f15b"
+  script.0.enabled true
+  script.0.properties "{}"
+  position 8.594196 6.3605814 -2.7717865
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.25 0.65 0.85
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[2.799999952316284,0.4000000059604645],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":0,\"order\":0}"
+  body kinematic planar
+  body.planar-v1 "{\"version\":1,\"kind\":1,\"radius\":0.0,\"lockRotation\":false,\"vertices\":[[-1.4,-0.2],[1.4,-0.2],[1.4,0.2],[-1.4,0.2]]}"
+  body.half-extents 0.5 0.5 0.5
+  body.radius 0.5
+  body.terrain ""
+  body.mass 2
+  body.friction 0.6
+  body.restitution 0.1
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 201 "Rotating support"
+  scripts 1
+  script.0.id 1
+  script.0.asset "0a237a2934fa3be2e6959e53e529f15b"
+  script.0.enabled true
+  script.0.properties "{\"spin\":true}"
+  position 13.257669 9.877055 -4.270594
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.25 0.65 0.85
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[4.0,0.4000000059604645],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":0,\"order\":0}"
+  body kinematic planar
+  body.planar-v1 "{\"version\":1,\"kind\":1,\"radius\":0.0,\"lockRotation\":false,\"vertices\":[[-2.0,-0.2],[2.0,-0.2],[2.0,0.2],[-2.0,0.2]]}"
+  body.half-extents 0.5 0.5 0.5
+  body.radius 0.5
+  body.terrain ""
+  body.mass 2
+  body.friction 0.6
+  body.restitution 0.1
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 202 "Sloped physical ramp"
+  position 18.078276 10.995409 -6.0230317
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  body static planar
+  body.planar-v1 "{\"version\":1,\"kind\":3,\"radius\":0.0,\"lockRotation\":false,\"vertices\":[[-2.0,-0.5],[2.0,-0.5],[2.0,1.5]]}"
+  body.half-extents 0.5 0.5 0.5
+  body.radius 0.5
+  body.terrain ""
+  body.mass 2
+  body.friction 0.6
+  body.restitution 0.1
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 203 "Ramp outline (visual)"
+  position 18.300747 10.563971 -6.142896
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.25 0.65 0.85
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[4.0,0.05999999865889549],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":0,\"order\":0}"
+end
+
+object 204 "Ramp outline (visual)"
+  position 19.499285 12.42643 -6.450715
+  rotation 0.49666515 0.17564945 0.058549818 0.84796405
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.25 0.65 0.85
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[2.0,0.05999999865889549],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":0,\"order\":0}"
+end
+
+object 205 "Ramp outline (visual)"
+  position 17.855804 11.426847 -5.903167
+  rotation 0.4602089 -0.14214982 0.11863487 -0.8682897
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.25 0.65 0.85
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[4.4721360206604,0.05999999865889549],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":0,\"order\":0}"
+end
+
+object 206 "Pinned physical rotor"
+  position 21.38608 15.047544 -6.96039
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.9 0.65 0.25
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[3.0,0.23999999463558197],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":0,\"order\":0}"
+  body dynamic planar
+  body.planar-v1 "{\"version\":1,\"kind\":1,\"radius\":0.0,\"lockRotation\":false,\"vertices\":[[-1.5,-0.12],[1.5,-0.12],[1.5,0.12],[-1.5,0.12]]}"
+  body.half-extents 0.5 0.5 0.5
+  body.radius 0.5
+  body.terrain ""
+  body.mass 2
+  body.friction 0.6
+  body.restitution 0.1
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 207 "2D pin joint (world anchor)"
+  joint 4
+  joint.body-a 206
+  joint.body-b 0
+  joint.anchor-a 0 0 0
+  joint.anchor-b 0 0 0
+  joint.frame-a 1 0 0 0
+  joint.frame-b 1 0 0 0
+  joint.enabled true
+  joint.limits false
+  joint.motor false
+  joint.spring false
+  joint.lower -1
+  joint.upper 1
+  joint.speed 0
+  joint.max-force 10
+  joint.rest 0
+  joint.stiffness 10
+  joint.damping 1
+  position 21.38608 15.047544 -6.96039
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+end
+
+object 208 "Goal sensor"
+  scripts 1
+  script.0.id 1
+  script.0.asset "b8e68895e093a44ee375775dd5761b26"
+  script.0.enabled true
+  script.0.properties "{}"
+  position 24.207253 15.856617 -7.973496
+  rotation 0.95079637 0.08280194 0.16560388 0.2484058
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 0.2 0.95 0.5
+  render.alpha 0.35
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  render.sprite-v1 "{\"version\":1,\"size\":[1.2000000476837158,3.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":0,\"order\":0}"
+  body static planar
+  body.sensor true
+  body.planar-v1 "{\"version\":1,\"kind\":1,\"radius\":0.0,\"lockRotation\":false,\"vertices\":[[-0.6,-1.5],[0.6,-1.5],[0.6,1.5],[-0.6,1.5]]}"
+  body.half-extents 0.5 0.5 0.5
+  body.radius 0.5
+  body.terrain ""
+  body.mass 2
+  body.friction 0.6
+  body.restitution 0.1
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end

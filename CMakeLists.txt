@@ -133,6 +133,7 @@ judas_warnings(judas_sprite_math_tests)
 include(cmake/PhysicsWorldSources.cmake)
 
 set(JUDAS_PHYSICS_SOURCES
+    src/PlanarGeometry.cpp
     src/CollisionAsset.cpp
     src/CollisionGeometry.cpp
     third_party/quickhull/QuickHull.cpp
@@ -310,6 +311,7 @@ add_library(judas_engine STATIC
     src/Prefab.cpp
     src/Scene.cpp
     src/Sprite.cpp
+    src/PlanarAuthoring.cpp
     src/Ragdoll.cpp
     src/SceneSerialization.cpp
     src/NamedAuthoring.cpp
@@ -1619,7 +1621,7 @@ judas_warnings(judas_physics_scaling_diagnostics)
 judas_add_engine_test(judas_physics_scaling_tests tests/PhysicsScalingTests.cpp)
 judas_add_engine_test(judas_joint_scaling_tests tests/JointScalingTests.cpp)
 judas_add_engine_test(judas_parallel_narrowphase_tests tests/ParallelNarrowphaseTests.cpp)
-add_executable(judas_primitive_contact_boolean_tests tests/PrimitiveContactBooleanTests.cpp src/Contacts.cpp)
+add_executable(judas_primitive_contact_boolean_tests tests/PrimitiveContactBooleanTests.cpp src/Contacts.cpp src/PlanarGeometry.cpp)
 target_include_directories(judas_primitive_contact_boolean_tests PRIVATE src)
 target_link_libraries(judas_primitive_contact_boolean_tests PRIVATE ${JUDAS_GLM})
 judas_warnings(judas_primitive_contact_boolean_tests)
@@ -1633,7 +1635,7 @@ add_executable(judas_contact_sat_workspace_tests tests/ContactSatWorkspaceTests.
 target_include_directories(judas_contact_sat_workspace_tests PRIVATE src)
 target_link_libraries(judas_contact_sat_workspace_tests PRIVATE ${JUDAS_GLM})
 judas_warnings(judas_contact_sat_workspace_tests)
-add_executable(judas_contact_sat_filter_tests tests/ContactSatFilterTests.cpp src/Contacts.cpp)
+add_executable(judas_contact_sat_filter_tests tests/ContactSatFilterTests.cpp src/Contacts.cpp src/PlanarGeometry.cpp)
 target_include_directories(judas_contact_sat_filter_tests PRIVATE src)
 target_link_libraries(judas_contact_sat_filter_tests PRIVATE ${JUDAS_GLM})
 judas_warnings(judas_contact_sat_filter_tests)
@@ -1730,6 +1732,18 @@ judas_add_engine_test(judas_workflow_application_tests tests/DeveloperWorkflowAp
 judas_add_engine_test(judas_sprite_integration_tests tests/SpriteIntegrationTests.cpp
     SOURCES src/editor/EditorPicking.cpp src/editor/EditorCreationMenu.cpp src/editor/EditorHistory.cpp src/editor/EditorCamera.cpp LIBRARIES judas_imgui)
 judas_add_engine_test(judas_sprite_render_tests tests/SpriteRenderTests.cpp)
+
+add_executable(judas_planar_benchmark tools/benchmarks/PlanarPhysicsBenchmark.cpp)
+target_link_libraries(judas_planar_benchmark PRIVATE judas_engine)
+judas_warnings(judas_planar_benchmark)
+
+add_executable(judas_planar_playground tools/demos/PlanarPlayground.cpp)
+target_link_libraries(judas_planar_playground PRIVATE judas_engine)
+judas_warnings(judas_planar_playground)
+
+judas_add_engine_test(judas_planar_physics_tests tests/PlanarPhysicsTests.cpp)
+judas_add_engine_test(judas_planar_integration_tests tests/PlanarIntegrationTests.cpp
+    SOURCES src/editor/EditorPicking.cpp src/editor/EditorCreationMenu.cpp src/editor/EditorHistory.cpp src/editor/EditorCamera.cpp LIBRARIES judas_imgui)
 
 # Finalize after every native test has declared its authoritative entry point.
 include(cmake/JudasValidation.cmake)

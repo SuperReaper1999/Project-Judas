@@ -1,6 +1,6 @@
 # Current public JudasJS inventory
 
-Current public surface identity: `Current public module including Experimental 2D Stage 1; source version in engine-version.json`. Includes optional network sessions and NetworkEntity handles; see [networking](network.md). Human/platform acceptance is recorded separately in [the current documentation](../JUDASJS.md), not inferred from API coverage.
+Current public surface identity: `Current public module including Experimental 2D Stage 2; source version in engine-version.json`. Includes optional network sessions and NetworkEntity handles; see [networking](network.md). Human/platform acceptance is recorded separately in [the current documentation](../JUDASJS.md), not inferred from API coverage.
 Each row is a runtime export/member (constructors and plain handle fields included).
 Native dispatcher operations are implementation details, not additional JS APIs.
 
@@ -74,6 +74,7 @@ Native dispatcher operations are implementation details, not additional JS APIs.
 | `Entity.applyImpulseAtPoint` | `impulseAtPoint` | [declaration](../judas.d.ts) | [reference](entities.md) |
 | `Entity.applyTorque` | `torque` | [declaration](../judas.d.ts) | [reference](entities.md) |
 | `Entity.audio` | `audioInfo` | [declaration](../judas.d.ts) | [reference](audio.md) |
+| `Entity.body2D` | `body2DInfo` | [declaration](../judas.d.ts) | [reference](physics-2d.md) |
 | `Entity.burst` | `burst` | [declaration](../judas.d.ts) | [reference](entities.md) |
 | `Entity.camera` | `cameraInfo` | [declaration](../judas.d.ts) | [reference](effects-camera.md) |
 | `Entity.character` | `characterExists` | [declaration](../judas.d.ts) | [reference](character.md) |
@@ -397,6 +398,7 @@ Native dispatcher operations are implementation details, not additional JS APIs.
 | `physics.boxCast` | `cast` | [declaration](../judas.d.ts) | [reference](physics.md) |
 | `physics.capsuleCast` | `cast` | [declaration](../judas.d.ts) | [reference](physics.md) |
 | `physics.capsuleCastMany` | `castMany` | [declaration](../judas.d.ts) | [reference](physics.md) |
+| `physics.cast2D` | `cast2D` | [declaration](../judas.d.ts) | [reference](physics-2d.md) |
 | `physics.closestPoint` | `closestPoint` | [declaration](../judas.d.ts) | [reference](physics.md) |
 | `physics.createJoint` | `jointCreate` | [declaration](../judas.d.ts) | [reference](physics.md) |
 | `physics.gravity` | `gravitySample` | [declaration](../judas.d.ts) | [reference](physics.md) |

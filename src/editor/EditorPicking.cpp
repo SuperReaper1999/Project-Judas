@@ -1,3 +1,4 @@
+#include "Contacts.h"
 #include "EditorPicking.h"
 
 #include <algorithm>
@@ -302,6 +303,21 @@ EditorPickHit EditorScenePicker::Pick(const Scene& authored, glm::vec3 origin, g
                 distance=-local.origin.y/local.direction.y;
                 const auto p=local.origin+local.direction*distance;const auto h=object.basicWater->halfExtents;
                 if(distance>=0&&std::abs(p.x)<=h.x&&std::abs(p.z)<=h.z)accept(object.id,distance);
+            }
+        }
+        if(!object.render&&object.body&&object.body->shape==SceneShape::Planar&&object.body->planar) {
+            Ray local;
+            if(LocalRay(world,transform.position,transform.rotation,glm::vec3(1),local)&&std::abs(local.direction.z)>1e-12) {
+                const double distance=-local.origin.z/local.direction.z;
+                if(distance>=0) {
+                    const auto point=local.origin+local.direction*distance;
+                    PlanarCollider cursor{PlanarKind::Circle,{{0,0}},0,false};
+                    const auto query=Shape::Planar(std::make_shared<const PlanarCollider>(cursor));
+                    auto target=Shape::Planar(object.body->planar);
+                    const auto count=target.planar->kind==PlanarKind::Chain?target.planar->vertices.size()-1:1;
+                    for(size_t i=0;i<count;++i){target.planarSegment=int(i);
+                        if(PlanarContacts(query,{{glm::vec3(point)},{1,0,0,0},{0,0,0}},target,{{0,0,0},{1,0,0,0},{0,0,0}},.06).count){accept(object.id,distance);break;}}
+                }
             }
         }
         if (object.fluidVolume) {

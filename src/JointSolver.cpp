@@ -28,7 +28,7 @@ bool JointSolver::PointerMembership::Insert(const void* pointer){
  }
  slots[bucket]=pointer;++used;return true;
 }
-void JointSolver::Apply(Row& r,float p){r.a->linearVelocity+=r.linearA*(p*r.a->inverseMass);r.b->linearVelocity+=r.linearB*(p*r.b->inverseMass);
+void JointSolver::Apply(Row& r,float p){r.a->linearVelocity+=(r.a->IsPlanar()?r.a->LinearResponse(r.linearA*p):r.linearA*(p*r.a->inverseMass));r.b->linearVelocity+=(r.b->IsPlanar()?r.b->LinearResponse(r.linearB*p):r.linearB*(p*r.b->inverseMass));
  r.a->angularVelocity+=r.inertiaA*r.angularA*p;r.b->angularVelocity+=r.inertiaB*r.angularB*p;}
 void JointSolver::Prepare(const std::vector<JointInput>& inputs,float dt,bool warm,bool impact,bool append,float positionalRate,bool warmEqualityOnly,bool projection,float speculativeRate){
  if(projection)warm=false;
@@ -43,14 +43,14 @@ void JointSolver::Prepare(const std::vector<JointInput>& inputs,float dt,bool wa
   for(auto* body:{&a,&b})if(m_bodyMembership.Insert(body))m_bodies.push_back(body);
   glm::quat qa=glm::normalize(a.orientation),qb=glm::normalize(b.orientation),fa=qa*glm::normalize(s.frameA),fb=qb*glm::normalize(s.frameB);
   auto basis=glm::mat3_cast(fa);auto ra=qa*(s.anchorA-input.pivotOffsetA),rb=qb*(s.anchorB-input.pivotOffsetB),delta=(b.position-a.position)+rb-ra;
-  auto ia=a.InverseInertiaWorld(),ib=b.InverseInertiaWorld();int index=0;float rowRate=positionalRate;
+  auto ia=a.ResponseInertiaWorld(),ib=b.ResponseInertiaWorld();int index=0;float rowRate=positionalRate;
   auto row=[&](glm::vec3 la,glm::vec3 lb,glm::vec3 aa,glm::vec3 ab,float error,float low=-std::numeric_limits<float>::infinity(),float high=std::numeric_limits<float>::infinity(),bool soft=false,bool motor=false,bool resistance=false){
    if(projection&&(soft||motor||resistance))return;
    float gamma=0,bias=impact?0:rowRate*error/dt;
    if(soft){float denominator=dt*(s.damping+dt*s.stiffness);if(denominator<=0)return;gamma=1/denominator;bias=error*dt*s.stiffness*gamma;}
    if(resistance){gamma=1/(dt*s.rotationalResistance);bias=0;}
    if(motor)bias=-s.speed;
-   float k=a.inverseMass*glm::dot(la,la)+b.inverseMass*glm::dot(lb,lb)+glm::dot(aa,ia*aa)+glm::dot(ab,ib*ab);
+   float k=(a.IsPlanar()||b.IsPlanar()?glm::dot(la,a.LinearResponse(la))+glm::dot(lb,b.LinearResponse(lb)):a.inverseMass*glm::dot(la,la)+b.inverseMass*glm::dot(lb,lb))+glm::dot(aa,ia*aa)+glm::dot(ab,ib*ab);
    if(k+gamma<=0)return;
    const bool equality=!soft&&!motor&&!resistance&&std::isinf(low)&&std::isinf(high);
    float* cache=impact||projection?nullptr:&(*input.warm)[index];float lambda=warm&&(!warmEqualityOnly||equality)&&cache?std::clamp(*cache,low,high):0;
@@ -83,13 +83,29 @@ void JointSolver::Prepare(const std::vector<JointInput>& inputs,float dt,bool wa
     auto la=angularAxis?glm::vec3(0):-n,lb=angularAxis?glm::vec3(0):n;
     auto aa=angularAxis?-n:-glm::cross(ra,n)+glm::cross(n,delta),ab=angularAxis?n:glm::cross(rb,n);
     float gamma=1/(dt*(damping+dt*k)),bias=error*dt*k*gamma;
-    float effective=a.inverseMass*glm::dot(la,la)+b.inverseMass*glm::dot(lb,lb)+glm::dot(aa,ia*aa)+glm::dot(ab,ib*ab);
+    float effective=(a.IsPlanar()||b.IsPlanar()?glm::dot(la,a.LinearResponse(la))+glm::dot(lb,b.LinearResponse(lb)):a.inverseMass*glm::dot(la,la)+b.inverseMass*glm::dot(lb,lb))+glm::dot(aa,ia*aa)+glm::dot(ab,ib*ab);
     auto* cache=&(*input.warm)[index++];float lambda=warm&&!warmEqualityOnly?*cache:0;
     m_rows.push_back({&a,&b,la,lb,aa,ab,ia,ib,1/(effective+gamma),bias,gamma,-inf,inf,lambda,cache,nullptr,input.state});
     if(lambda!=0){if(!input.impulsesApplied)Apply(m_rows.back(),lambda);input.state->reactionImpulse+=la*lambda;input.state->reactionAngularImpulse+=aa*lambda;}
    };
    for(int k=0;k<3;++k)materialRow(basis[k],local[k]-constitutive.translation[k],m.stiffness,m.damping,false);
    for(int k=0;k<3;++k)materialRow(basis[k],angle[k]-constitutive.rotation[k],m.angularStiffness,m.angularDamping,true);
+   continue;
+  }
+  if(s.type==JointType::PlanarPin||s.type==JointType::PlanarWeld){
+   for(int k=0;k<2;++k)linear(basis[k],glm::dot(delta,basis[k]));
+   const auto axis=a.planeNormal;
+   const auto x=fa*glm::vec3(1,0,0),y=fb*glm::vec3(1,0,0);
+   const float angle=std::atan2(glm::dot(axis,glm::cross(x,y)),glm::dot(x,y));
+   input.state->coordinate=angle;
+   if(s.type==JointType::PlanarWeld)angular(axis,angle);
+   else {
+    index=6;
+    if(s.limits){if(angle<s.lower)angular(axis,angle-s.lower,0,inf);else if(angle>s.upper)angular(axis,angle-s.upper,-inf,0);}
+    index=7;if(!impact&&s.spring)angular(axis,angle-s.rest,-inf,inf,true);
+    index=8;if(!impact&&s.motor)angular(axis,0,-s.maxForce*dt,s.maxForce*dt,false,true);
+    index=9;if(!impact&&s.rotationalResistance>0)row({0,0,0},{0,0,0},-axis,axis,0,-inf,inf,false,false,true);
+   }
    continue;
   }
   if(s.type==JointType::Slider){

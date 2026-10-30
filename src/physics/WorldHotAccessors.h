@@ -33,6 +33,8 @@ inline auto PhysicsWorld::Impl::Matches(const PoseBound &bound, const glm::vec3 
 }
 
 inline auto PhysicsWorld::Impl::CanCollide(unsigned a, unsigned b) const -> bool {
+    const bool planarA=bodies[a].shape.type==ShapeType::Planar,planarB=bodies[b].shape.type==ShapeType::Planar;
+    if(planarA!=planarB)return false; // Runtime preflight diagnoses shared 2D/3D collision masks.
     auto ha = MakeHandle(a).id, hb = MakeHandle(b).id;
     if (!suppressedPairs.empty() && suppressedPairs.count(std::minmax(ha, hb)))
         return false;
@@ -51,6 +53,7 @@ inline auto PhysicsWorld::Impl::CanRespond(unsigned a, unsigned b) const -> bool
 inline auto PhysicsWorld::Impl::MatchesQuery(unsigned slot, const PhysicsQueryFilter &filter) const
     -> bool {
     const auto &b = bodies[slot];
+    if((b.shape.type==ShapeType::Planar)!=filter.planar)return false;
     if (!b.enabled || !b.queriesEnabled || (b.sensor && !filter.includeSensors))
         return false;
     const auto bit = CategoryBit(b.collisionLayer);

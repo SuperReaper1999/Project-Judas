@@ -8,6 +8,7 @@
 #include <exception>
 #include "PhysicsWorld.h"
 #include "CollisionAsset.h"
+#include "PlanarGeometry.h"
 #include "CollisionGeometry.h"
 #include "SaveArchive.h"
 #include "PhysicsCastGeometry.h"
@@ -61,7 +62,7 @@ inline bool UsableKinematicPose(const BodyTransform &pose) {
 }
 inline bool KinematicShape(const Shape &shape) {
     if (shape.type == ShapeType::Box || shape.type == ShapeType::Sphere ||
-        shape.type == ShapeType::ConvexHull)
+        shape.type == ShapeType::ConvexHull || shape.type == ShapeType::Planar)
         return true;
     if (shape.type != ShapeType::CompoundBoxes || shape.boxes.empty())
         return false;
@@ -70,6 +71,10 @@ inline bool KinematicShape(const Shape &shape) {
                c.type == ShapeType::ConvexHull;
     });
 }
+
+// Reconstruct optional response from the authoritative shape and physical
+// inertia. Saves already carry both; no solver cache is serialized as truth.
+void RefreshPlanarMobility(RigidBody& body,const Shape& shape);
 
 // Milestone 32: how far a proxy's fat bound extends past its tight bound.
 // A body that moves less than this within its fat box costs the tree

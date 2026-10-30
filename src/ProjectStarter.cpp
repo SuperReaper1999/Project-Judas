@@ -73,3 +73,42 @@ bool Populate2DProjectStarter(Project& project,Scene& scene,bool sideView,std::s
     project.Settings().editor2D=true;
     error.clear();return true;
 }
+
+// Stage 2 templates keep gameplay policy in a normal, editable project script.
+// The Stage 1 sprite-only helper remains available for visual-only workflows.
+bool PopulatePlanarProjectStarter(Project& project,Scene& scene,bool sideView,std::string& error) {
+    if(!Populate2DProjectStarter(project,scene,sideView,error))return false;
+    std::ifstream source(ResolveEngineDataPath("docs/judasjs/examples/planar-player.js"),std::ios::binary);
+    if(!source){error="Missing native 2D player template in SDK docs";return false;}
+    std::ofstream script(std::filesystem::u8path(project.AssetsDir())/"game.js",std::ios::binary|std::ios::trunc);
+    script<<source.rdbuf();script.close();if(!script){error="Cannot write 2D player script";return false;}
+    for(auto& object:scene.Objects())if(!object.scripts.empty()) {
+        object.name=sideView?"Platformer player - editable game.js":"Top-down player - editable game.js";
+        object.transform.position={0,2,0};
+        object.render->sprite.pivot={.5f,.5f};object.render->sprite.size={.7f,1.3f};
+        object.body=SceneBodyComponent{};object.body->shape=SceneShape::Planar;
+        object.body->motion=SceneBodyMotion::Dynamic;object.body->mass=5;
+        object.body->planar=PlanarCapsule(.3,.3,true);object.body->managed=false;
+        object.body->friction=0;object.scripts.front().properties=sideView?"{\"sideView\":true}":"{\"sideView\":false}";
+    }
+    // Matching real collision, not a screen boundary or a scripted clamp.
+    auto solid=[&](const char* name,glm::vec2 center,glm::vec2 half){
+        auto& o=scene.CreateObject(name);o.transform.position={center,0};
+        o.render=SceneRenderComponent{};o.render->shape=SceneShape::Sprite;
+        o.render->sprite.size=half*2.f;o.render->color={.3f,.5f,.52f};
+        o.body=SceneBodyComponent{};o.body->shape=SceneShape::Planar;o.body->planar=PlanarBox(half);
+    };
+    solid("Floor",{0,-1},{12,.5});solid("Left wall",{-12,3},{.5,4});solid("Right wall",{12,3},{.5,4});
+    if(sideView){solid("Jump platform",{3,.7f},{1.4f,.25f});solid("Upper platform",{7,2.5f},{1.4f,.25f});
+        auto& gravity=scene.CreateObject("2D world gravity");gravity.gravity=SceneGravityComponent{};
+        gravity.gravity->kind=SceneGravityKind::Uniform;gravity.gravity->regionShape=SceneRegionShape::Box;
+        gravity.gravity->regionHalfExtents={100,100,10};}
+    else solid("Interior obstacle",{3,2},{.7f,1.5f});
+    auto& bindings=project.Settings().input;
+    if(sideView&&!bindings.Find("jump")){bindings.Add("jump",false);bindings.AddBinding("jump",{"key:Space"});bindings.AddBinding("jump",{"pad:South"});}
+    // Update only the just-created help asset, before it is ever user-authored.
+    UIDocument hud;const auto path=(std::filesystem::u8path(project.AssetsDir())/"hud.judasui").u8string();
+    if(!LoadUIDocument(path,hud,error))return false;
+    for(auto& element:hud.elements)if(element.id=="help")element.text=sideView?"PLATFORMER | A/D or arrows: move | Space: jump | Edit Assets/game.js":"TOP-DOWN | WASD / arrows: move | Native 2D collision | Edit Assets/game.js";
+    return SaveUIDocument(path,hud,error);
+}

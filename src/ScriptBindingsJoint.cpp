@@ -73,6 +73,10 @@ JSValue ScriptBindings::Joint(JSContext *c, const std::string &op, int argc, JSV
                         settings.type = JointType::Hinge;
                     else if (name == "ball")
                         settings.type = JointType::Ball;
+                    else if (name == "pin2d")
+                        settings.type = JointType::PlanarPin;
+                    else if (name == "weld2d")
+                        settings.type = JointType::PlanarWeld;
                     else if (name == "slider")
                         settings.type = JointType::Slider;
                     else {

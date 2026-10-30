@@ -6,3 +6,5 @@ class Scene;
 bool PopulateVisibleProjectStarter(Project&,Scene&,std::string& error);
 
 bool Populate2DProjectStarter(Project&,Scene&,bool sideView,std::string& error);
+
+bool PopulatePlanarProjectStarter(Project&,Scene&,bool sideView,std::string& error);

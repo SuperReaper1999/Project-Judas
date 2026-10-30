@@ -34,6 +34,23 @@ struct RigidBody {
     glm::vec3 forceAccumulator{0.0f};
     glm::vec3 torqueAccumulator{0.0f};
 
+    // Optional condensed bilateral mobility. Physical inertia remains invertible;
+    // contact/joint response and free integration use this same reduced space.
+    float planarInverseIz = 0;
+    glm::vec3 planeNormal{0};
+    bool IsPlanar() const { return glm::dot(planeNormal,planeNormal)>0; }
+    glm::vec3 LinearResponse(glm::vec3 impulse) const {
+        if (!IsPlanar()) return impulse * inverseMass;
+        return (impulse-planeNormal*glm::dot(planeNormal,impulse))*inverseMass;
+    }
+    glm::mat3 ResponseInertiaWorld() const {
+        return IsPlanar() ? glm::outerProduct(planeNormal,planeNormal)*planarInverseIz : InverseInertiaWorld();
+    }
+    double PlanarEnergy() const {
+        const double spin=glm::dot(glm::dvec3(planeNormal),glm::dvec3(angularVelocity));
+        return .5*glm::dot(glm::dvec3(linearVelocity),glm::dvec3(linearVelocity))/inverseMass + (planarInverseIz>0?.5*spin*spin/planarInverseIz:0);
+    }
+
     bool IsStatic() const { return inverseMass <= 0.0f; }
 
     void ApplyForce(const glm::vec3& force) { forceAccumulator += force; }
@@ -53,11 +70,11 @@ struct RigidBody {
     // resolution, which this engine's contact solver will use.
     void ApplyLinearImpulse(const glm::vec3& impulse) {
         if (IsStatic()) return;
-        linearVelocity += impulse * inverseMass;
+        linearVelocity += LinearResponse(impulse);
     }
     void ApplyAngularImpulse(const glm::vec3& angularImpulse) {
         if (IsStatic()) return;
-        angularVelocity += InverseInertiaWorld() * angularImpulse;
+        angularVelocity += ResponseInertiaWorld() * angularImpulse;
     }
     void ApplyImpulseAtPoint(const glm::vec3& impulse, const glm::vec3& worldPoint) {
         ApplyLinearImpulse(impulse);

@@ -79,7 +79,7 @@ auto PhysicsWorld::Impl::CCDQuery::PlaneDrift(unsigned a, unsigned b, int pa, in
         const auto child = PrimitiveAt(body.shape, pose, part, &*sample.orientation);
         if (child.shape.type != ShapeType::Box && child.shape.type != ShapeType::Sphere &&
             child.shape.type != ShapeType::ConvexHull &&
-            child.shape.type != ShapeType::TriangleMesh)
+            child.shape.type != ShapeType::TriangleMesh && child.shape.type != ShapeType::Planar)
             return result;
         const auto &rotation = sample.orientation->rotation;
         const glm::dvec3 omega(DriftGenerator(slot, time));
@@ -101,7 +101,11 @@ auto PhysicsWorld::Impl::CCDQuery::PlaneDrift(unsigned a, unsigned b, int pa, in
                     glm::cross(instantaneous, r),
                 w2 * glm::length(perpendicular)};
         };
-        if (child.shape.type == ShapeType::Sphere) {
+        if(child.shape.type==ShapeType::Planar){
+            const auto r=ContactRotation(child.childRotation);
+            for(auto p:PlanarCore(child.shape))vertex(glm::dvec3(child.parentLocalCenter)+r*glm::dvec3(p,0));
+            result.radius=child.shape.planar->radius;
+        }else if (child.shape.type == ShapeType::Sphere) {
             vertex(glm::dvec3(child.parentLocalCenter));
             result.radius = child.shape.radius;
         } else if (child.shape.type == ShapeType::ConvexHull) {
@@ -342,6 +346,15 @@ auto PhysicsWorld::Impl::PrimitiveFeature(unsigned slot, int part) const -> doub
     const Shape &shape = bodies[slot].shape;
     // Primitive metadata has no dependency on a body pose. Borrow the
     // simple shape rather than constructing an owning posed primitive.
+    if(shape.type==ShapeType::Planar){
+        if(shape.planar->radius>0)return shape.planar->radius;
+        auto primitive=shape;primitive.planarSegment=part;const auto points=PlanarCore(primitive);
+        if(points.size()==2)return glm::length(points[1]-points[0])*.5;
+        double width=INFINITY;
+        for(size_t i=0;i<points.size();++i){auto edge=points[(i+1)%points.size()]-points[i];auto axis=glm::normalize(glm::dvec2(-edge.y,edge.x));double low=INFINITY,high=-INFINITY;
+            for(auto p:points){const double d=glm::dot(p,axis);low=std::min(low,d);high=std::max(high,d);}width=std::min(width,(high-low)*.5);}
+        return width;
+    }
     if (shape.type == ShapeType::Sphere) return double(shape.radius);
     if (shape.type == ShapeType::ConvexHull) {
         const auto extent = shape.asset->maximum - shape.asset->minimum;

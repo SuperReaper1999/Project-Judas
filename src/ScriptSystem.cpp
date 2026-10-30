@@ -53,6 +53,7 @@ bool KnownOptions(JSContext* c,JSValueConst value,std::initializer_list<const ch
 }
 #include "ScriptCameraValues.inl"
 #include "ScriptSpriteValues.inl"
+#include "ScriptPlanarValues.inl"
 const char* library=R"JS(
 const call=(op,...args)=>globalThis.__judas(op,...args);
 export class NetworkEntity {
@@ -152,6 +153,7 @@ export class Entity {
  addTag(tag){return call('addTag',this.id,tag)}
  removeTag(tag){return call('removeTag',this.id,tag)}
  get collider(){return call('colliderInfo',this.id)}
+ get body2D(){return call('body2DInfo',this.id)}
  get sleeping(){return call('sleeping',this.id)}
  get physicalMaterial(){return call('physicalMaterialInfo',this.id)}
  setPhysicalMaterial(asset=null,parameters={}){return call('physicalMaterialSet',this.id,asset,parameters)}
@@ -412,6 +414,7 @@ export class Joint {
  setSpring(rest,stiffness,damping,spring=true){return call('jointSet',this.id,{rest,stiffness,damping,spring})}
 }
 export const physics={
+ cast2D:(shape,pose,direction,maximum,filter={})=>castResult(call('cast2D',shape,pose,direction,maximum,filter)),
  gravity:point=>call('gravitySample',point),
  createJoint:(owner,settings)=>new Joint(call('jointCreate',owner.id,{...settings,bodyAId:settings.bodyA?.id,bodyBId:settings.bodyB?.id??'0'})),
  closestPoint:(point,maximum,filter={})=>{const hit=call('closestPoint',point,{x:0,y:0,z:0},filter,{maximum});return hit?{...hit,entity:entity(hit.entityId)}:null},
@@ -1294,9 +1297,19 @@ JSValue ScriptSystem::Impl::Native(JSContext* c,JSValueConst,int argc,JSValueCon
         JS_SetPropertyStr(c,o,"primitiveIndex",JS_NewInt32(c,hit.primitiveIndex));
         JS_SetPropertyStr(c,o,"childKey",JS_NewUint32(c,hit.childKey));JS_SetPropertyStr(c,o,"feature",hit.feature==UINT32_MAX?JS_NULL:JS_NewUint32(c,hit.feature));
         JS_SetPropertyStr(c,o,"initialOverlap",JS_NewBool(c,hit.initialOverlap));
-        JS_SetPropertyStr(c,o,"shape",JS_NewString(c,hit.shape==ShapeType::Capsule?"capsule":hit.shape==ShapeType::Sphere?"sphere":hit.shape==ShapeType::Terrain?"terrain":hit.shape==ShapeType::ConvexHull?"hull":hit.shape==ShapeType::TriangleMesh?"triangle-mesh":"box"));
+        JS_SetPropertyStr(c,o,"shape",JS_NewString(c,hit.shape==ShapeType::Planar?"planar":hit.shape==ShapeType::Capsule?"capsule":hit.shape==ShapeType::Sphere?"sphere":hit.shape==ShapeType::Terrain?"terrain":hit.shape==ShapeType::ConvexHull?"hull":hit.shape==ShapeType::TriangleMesh?"triangle-mesh":"box"));
         return o;
     };
+    if(op=="cast2D") {
+        std::shared_ptr<const PlanarCollider> shape;
+        SceneTransform pose;glm::vec3 direction;double maximum=0;
+        PhysicsQueryFilter filter;std::string error;
+        if(!ReadPlanarValues(c,arg(1),shape)||!readTransform(arg(2),pose)||pose.scale!=glm::vec3(1)||
+           !ReadVec(c,arg(3),direction)||JS_ToFloat64(c,&maximum,arg(4))||!std::isfinite(maximum)||maximum<0||maximum>1e6||
+           !queryFilter(arg(5),filter,error))return JS_ThrowTypeError(c,"cast2D: convex native 2D shape, unit-scale pose, finite direction/distance and valid filter required");
+        try{return castHit(world.Physics().CastPlanar(Shape::Planar(shape),{pose.position,pose.rotation},direction,float(maximum),filter));}
+        catch(const std::exception& e){return JS_ThrowTypeError(c,"cast2D: %s",e.what());}
+    }
     if(op=="castMany"){
         JUDAS_PROFILE_COUNTER("Physics query bridge calls",1,ProfileCounterMode::Sum);
         auto kind=String(c,arg(1));auto requests=arg(2);
@@ -1628,9 +1641,16 @@ JSValue ScriptSystem::Impl::Native(JSContext* c,JSValueConst,int argc,JSValueCon
         if(op=="socketSet"){try{socket.target=std::stoull(String(c,arg(2)));}catch(...){return JS_ThrowTypeError(c,"socket target required");}socket.joint=String(c,arg(3));if(!readTransform(arg(4),socket.offset))return JS_ThrowTypeError(c,"invalid socket offset");}
         return world.SetSocket(id,socket,op=="socketClear",error)?JS_TRUE:JS_ThrowTypeError(c,"%s",error.c_str());
     }
+    if(op=="body2DInfo") {
+        Shape shape;BodyTransform pose;const auto body=world.RuntimeBody(id);
+        if(!world.Physics().GetBodyShape(body,shape,pose)||shape.type!=ShapeType::Planar)return JS_NULL;
+        auto value=PlanarValue(c,*shape.planar);
+        JS_SetPropertyStr(c,value,"normal",Vec(c,world.Physics().GetPlanarNormal(body)));
+        return value;
+    }
     if(op=="colliderInfo"){
         const auto handle=world.RuntimeBody(id);Shape shape;BodyTransform pose;if(!world.Physics().GetBodyShape(handle,shape,pose))return JS_NULL;
-        auto metadata=[&](const Shape& value,glm::vec3 center,glm::quat rotation,uint32_t key){auto o=JS_NewObject(c);const char* type=value.type==ShapeType::Sphere?"sphere":value.type==ShapeType::Box?"box":value.type==ShapeType::ConvexHull?"hull":value.type==ShapeType::TriangleMesh?"triangle-mesh":value.type==ShapeType::CompoundBoxes?"compound":value.type==ShapeType::Capsule?"capsule":"terrain";
+        auto metadata=[&](const Shape& value,glm::vec3 center,glm::quat rotation,uint32_t key){auto o=JS_NewObject(c);const char* type=value.type==ShapeType::Planar?"planar":value.type==ShapeType::Sphere?"sphere":value.type==ShapeType::Box?"box":value.type==ShapeType::ConvexHull?"hull":value.type==ShapeType::TriangleMesh?"triangle-mesh":value.type==ShapeType::CompoundBoxes?"compound":value.type==ShapeType::Capsule?"capsule":"terrain";
             JS_SetPropertyStr(c,o,"type",JS_NewString(c,type));JS_SetPropertyStr(c,o,"key",JS_NewUint32(c,key));JS_SetPropertyStr(c,o,"position",Vec(c,center));auto q=Vec(c,{rotation.x,rotation.y,rotation.z});JS_SetPropertyStr(c,q,"w",JS_NewFloat64(c,rotation.w));JS_SetPropertyStr(c,o,"rotation",q);
             JS_SetPropertyStr(c,o,"halfExtents",value.type==ShapeType::Box?Vec(c,value.halfExtents):JS_NULL);JS_SetPropertyStr(c,o,"radius",(value.type==ShapeType::Sphere||value.type==ShapeType::Capsule)?JS_NewFloat64(c,value.radius):JS_NULL);JS_SetPropertyStr(c,o,"halfHeight",value.type==ShapeType::Capsule?JS_NewFloat64(c,value.halfHeight):JS_NULL);JS_SetPropertyStr(c,o,"asset",value.asset?JS_NewString(c,value.assetId.c_str()):JS_NULL);
             JS_SetPropertyStr(c,o,"vertexCount",JS_NewUint32(c,value.asset?value.asset->vertices.size():0));JS_SetPropertyStr(c,o,"triangleCount",JS_NewUint32(c,value.asset?value.asset->faces.size():0));JS_SetPropertyStr(c,o,"twoSided",JS_NewBool(c,value.asset&&value.asset->twoSided));return o;};
@@ -1777,8 +1797,10 @@ JSValue ScriptSystem::Impl::Native(JSContext* c,JSValueConst,int argc,JSValueCon
     else if(op=="impulse")world.Physics().ApplyLinearImpulse(body,v);
     else if(op=="impulseAtPoint"){glm::vec3 point;if(!ReadVec(c,arg(3),point))return JS_ThrowTypeError(c,"invalid impulse point");world.Physics().ApplyImpulseAtPoint(body,v,point);}
     else if(op=="torque")world.Physics().ApplyTorque(body,v);
-    else if(op=="setVelocity")world.Physics().SetLinearVelocity(body,v);
-    else if(op=="setAngularVelocity")world.Physics().SetAngularVelocity(body,v);
+    else if(op=="setVelocity"||op=="setAngularVelocity") {
+        try{if(op=="setVelocity")world.Physics().SetLinearVelocity(body,v);else world.Physics().SetAngularVelocity(body,v);}
+        catch(const std::invalid_argument& error){return JS_ThrowTypeError(c,"%s",error.what());}
+    }
     else return JS_ThrowTypeError(c,"unknown engine operation");
     return JS_UNDEFINED;
 }

@@ -1,4 +1,5 @@
 #include "Narrowphase.h"
+#include "PlanarGeometry.h"
 #include "CollisionAsset.h"
 #include "CollisionGeometry.h"
 #include <algorithm>
@@ -8,11 +9,13 @@
 #include "ContactGeometryInternal.h"
 
 int PrimitiveCount(const Shape& shape) {
+    if(shape.type==ShapeType::Planar&&shape.planar&&shape.planar->kind==PlanarKind::Chain)return int(shape.planar->vertices.size())-1;
     return shape.type == ShapeType::CompoundBoxes ? static_cast<int>(shape.boxes.size()) : 1;
 }
 
 PrimitivePose PrimitiveAt(const Shape& shape, const RigidBody& parent, int index,
                           const ContactPreparedOrientation* prepared) {
+    if(shape.type==ShapeType::Planar&&shape.planar&&shape.planar->kind==PlanarKind::Chain){auto view=shape;view.planarSegment=index;return {view,parent,parent.position,parent.orientation,-shape.pivotOffset,{1,0,0,0},uint32_t(index+1)};}
     if (shape.type != ShapeType::CompoundBoxes) return {shape, parent, parent.position, parent.orientation, -shape.pivotOffset};
     const CompoundBox& child = shape.boxes[static_cast<std::size_t>(index)];
     RigidBody childPose = parent;
@@ -217,6 +220,13 @@ namespace {
 // namespace
 Aabb ShapeAabb(const Shape& shape, const glm::vec3& position, const glm::quat& orientation) {
     switch (shape.type){
+        case ShapeType::Planar:{
+            if(!shape.planar)throw std::invalid_argument("missing 2D geometry");
+            glm::dvec2 lo(INFINITY),hi(-INFINITY);
+            for(auto p:shape.planar->vertices){lo=glm::min(lo,p);hi=glm::max(hi,p);}
+            lo-=shape.planar->radius;hi+=shape.planar->radius;
+            return BoxAabb(position,orientation,glm::dvec3((lo+hi)*.5,0)-glm::dvec3(shape.pivotOffset),glm::dvec3((hi-lo)*.5,0));
+        }
         case ShapeType::Sphere:return SphereAabb(position,shape.radius);
         case ShapeType::Box:return BoxAabb(position,orientation,glm::vec3(0),shape.halfExtents);
         case ShapeType::CompoundBoxes:{
@@ -269,6 +279,13 @@ void PrepareShapeBounds(const Shape& shape, const ContactPreparedOrientation& or
         return box;
     };
     switch (shape.type) {
+        case ShapeType::Planar: {
+            if(!shape.planar)throw std::invalid_argument("missing 2D shape");
+            glm::dvec2 lo(INFINITY),hi(-INFINITY);
+            for(auto p:shape.planar->vertices){lo=glm::min(lo,p);hi=glm::max(hi,p);}
+            lo-=shape.planar->radius;hi+=shape.planar->radius;
+            prepared.box=prepareBox(glm::dvec3((lo+hi)*.5,0)-glm::dvec3(shape.pivotOffset),glm::dvec3((hi-lo)*.5,0));break;
+        }
         case ShapeType::Box:
             prepared.box=prepareBox(glm::vec3(0),shape.halfExtents);
             break;
@@ -298,6 +315,7 @@ Aabb ShapeAabb(const PreparedShapeBounds& prepared,const glm::vec3& position) {
     switch (prepared.type) {
         case ShapeType::ConvexHull:
         case ShapeType::TriangleMesh:
+        case ShapeType::Planar:
         case ShapeType::Box: return translatedBox(prepared.box);
         case ShapeType::CompoundBoxes: {
             Aabb bound{position,position};
@@ -323,6 +341,9 @@ float ShapeBoundingRadius(const Shape& shape) {
     };
 
     switch (shape.type) {
+        case ShapeType::Planar: {double bound=0;if(!shape.planar)return 0;
+            for(auto p:shape.planar->vertices)bound=std::max(bound,glm::length(glm::dvec3(p,0)-glm::dvec3(shape.pivotOffset))+shape.planar->radius);
+            return UpperFloat(bound);}
         case ShapeType::Sphere: return shape.radius;
         case ShapeType::Box: return UpperFloat(length(shape.halfExtents).hi);
         case ShapeType::CompoundBoxes: {

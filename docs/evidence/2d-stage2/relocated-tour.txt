@@ -1,0 +1,20 @@
+FRAMES 360
+FRAME_SECONDS 0.016666667
+AXIS move_x 1 50 100
+ACTION jump 1 70 71
+SCREENSHOT 105 /home/conner/Documents/GitHub/Project-Judas/.cache/2d-stage2-evidence/relocated/platformer.png
+ACTION topdown 1 130 131
+WAIT_SERVICES scene 10000 140
+EXPECT_SCENE Scenes/topdown.judas 145
+AXIS move_y 1 160 200
+SCREENSHOT 205 /home/conner/Documents/GitHub/Project-Judas/.cache/2d-stage2-evidence/relocated/topdown.png
+ACTION save_game 1 215 216
+WAIT_SERVICES save 10000 220
+ACTION load_game 1 245 246
+WAIT_SERVICES save 10000 250
+SCREENSHOT 265 /home/conner/Documents/GitHub/Project-Judas/.cache/2d-stage2-evidence/relocated/restored.png
+ACTION rotated 1 280 281
+WAIT_SERVICES scene 10000 290
+EXPECT_SCENE Scenes/rotated.judas 295
+ACTION jump 1 315 316
+SCREENSHOT 345 /home/conner/Documents/GitHub/Project-Judas/.cache/2d-stage2-evidence/relocated/rotated.png

@@ -238,3 +238,16 @@ is deliberately not a new JudasJS readiness promise. `SaveEvolution` supplies th
 same identity mismatch description to rejected loads and save listings; migration
 policy and native participant validation remain unchanged. Current operating
 instructions and the shipped small SDK example are in `docs/DEVELOPER_WORKFLOWS.md`.
+
+### Experimental native 2D (v1.1.0 work in progress)
+
+Sprites and orthographic cameras share the existing renderer/scene path. Native
+planar bodies share MK2's world, clock, handles, CCD, contact and joint ownership;
+`PlanarGeometry` owns lamina shapes, contact witnesses and snapshot casts. Reduced
+linear/angular mobility restricts physical response to the fixed authored plane
+without post-step clamps or three extra bilateral constraints per body.
+`PlanarAuthoring` centralizes runtime/preflight boundaries. Planar pin/weld rows
+use the existing joint solver. Scene descriptors and modern physical save
+participants retain geometry, mass, inertia and fixed plane; legacy world deltas
+reject them. Player movement/cameras remain ordinary editable project JavaScript.
+See [Stage 2](2D_STAGE2.md) and [2D API/boundaries](judasjs/physics-2d.md).

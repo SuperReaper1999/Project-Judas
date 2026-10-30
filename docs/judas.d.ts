@@ -121,7 +121,7 @@ declare module "judas" {
     physicalMaterial:AssetId|null;
     entity: Entity | null; entityId: EntityId; bodyId: number;
     point: Vec3; normal: Vec3; distance: number; fraction: number;
-    primitiveIndex: number; initialOverlap: boolean; shape: "capsule" | "sphere" | "box" | "terrain" | "hull" | "triangle-mesh";
+    primitiveIndex: number; initialOverlap: boolean; shape: "capsule" | "sphere" | "box" | "terrain" | "hull" | "triangle-mesh" | "planar";
     childKey:number;feature:number|null;
   }
   export interface LegacySweepHit { hit: boolean; distance: number; normal: Vec3; entityId: EntityId }
@@ -161,7 +161,7 @@ declare module "judas" {
     clearOverrides():boolean;
   }
   export interface ColliderShapeInfo {
-    type:"box"|"sphere"|"compound"|"hull"|"triangle-mesh"|"terrain"|"capsule";
+    type:"box"|"sphere"|"compound"|"hull"|"triangle-mesh"|"terrain"|"capsule"|"planar";
     key:number;position:Vec3;rotation:Quat;halfExtents:Vec3|null;radius:number|null;halfHeight:number|null;
     asset:AssetId|null;vertexCount:number;triangleCount:number;twoSided:boolean;
   }
@@ -236,6 +236,7 @@ declare module "judas" {
     innerConeDegrees:number; outerConeDegrees:number; castsShadow:boolean; shadowPriority:number;
   }
   export class Entity {
+    readonly body2D:Body2DInfo|null;
     readonly light: LightSettings|null;
     /** Atomic patch. Invalid values/unknown keys throw; never creates a component. */
     setLight(settings:Partial<LightSettings>):boolean;
@@ -775,8 +776,8 @@ declare module "judas" {
     ikTargets(targets: FullBodyIKTarget[]): boolean;
     readonly ikStatus: FullBodyIKStatus;
   }
-  export interface JointState { active: boolean; enabled: boolean; coordinate: number; motorImpulse: number; type: 0 | 1 | 2 | 3 }
-  export interface JointConfiguration {type?:"fixed"|"hinge"|"ball"|"slider";anchorA?:Vec3;anchorB?:Vec3;frameA?:Quat;frameB?:Quat;enabled?:boolean;limits?:boolean;motor?:boolean;spring?:boolean;lower?:number;upper?:number;speed?:number;maxForce?:number;rest?:number;stiffness?:number;damping?:number;rotationalResistance?:number}
+  export interface JointState { active: boolean; enabled: boolean; coordinate: number; motorImpulse: number; type: 0 | 1 | 2 | 3 | 4 | 5 }
+  export interface JointConfiguration {type?:"fixed"|"hinge"|"ball"|"slider"|"pin2d"|"weld2d";anchorA?:Vec3;anchorB?:Vec3;frameA?:Quat;frameB?:Quat;enabled?:boolean;limits?:boolean;motor?:boolean;spring?:boolean;lower?:number;upper?:number;speed?:number;maxForce?:number;rest?:number;stiffness?:number;damping?:number;rotationalResistance?:number}
   export class Joint {
     constructor(id: string | number | bigint);
     id: string;
@@ -789,7 +790,12 @@ declare module "judas" {
     setMotor(speed: number, maxForce: number, motor?: boolean): boolean;
     setSpring(rest: number, stiffness: number, damping: number, spring?: boolean): boolean;
   }
+  export type Shape2D = {kind:"circle";radius:number}|{kind:"box";halfExtents:{x:number;y:number}}|
+    {kind:"capsule";radius:number;halfHeight:number}|{kind:"convex";vertices:{x:number;y:number}[]};
+  export interface Body2DInfo {kind:"circle"|"box"|"capsule"|"convex"|"chain";radius:number;vertices:{x:number;y:number}[];lockRotation:boolean;normal:Vec3}
   export const physics: {
+    /** Native fixed-orientation planar cast. A zero-radius circle is a point ray. Never queries spatial bodies. */
+    cast2D(shape:Shape2D,pose:CastPose,direction:Vec3,maximum:number,filter?:QueryFilter):CastHit|null;
     gravity(point:Vec3):Vec3;
     createJoint(owner:Entity,settings:JointConfiguration & {bodyA:Entity;bodyB?:Entity|null}):Joint;
     closestPoint(point:Vec3,maximum:number,filter?:QueryFilter):ClosestPointHit|null;

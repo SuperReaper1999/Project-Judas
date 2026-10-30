@@ -6,6 +6,7 @@
 #include "Classification.h"
 #include "Material.h"
 #include "Sprite.h"
+#include "PlanarGeometry.h"
 #include "CameraLens.h"
 #include "GravitySelection.h"
 #include "NavigationTypes.h"
@@ -63,7 +64,7 @@ struct SceneTransform {
     glm::vec3 scale{1.0f};
 };
 
-enum class SceneShape { Box, Sphere, Compound, Mesh, Terrain, ConvexHull, TriangleMesh, Sprite };
+enum class SceneShape { Box, Sphere, Compound, Mesh, Terrain, ConvexHull, TriangleMesh, Sprite, Planar };
 
 // What Renderer draws for the object. Compound and Terrain reuse the body
 // component's geometry (there is nothing sensible to draw otherwise);
@@ -139,6 +140,7 @@ struct SceneBodyComponent {
     // Explicit commands (editor debug, tests) can still transition an
     // unmanaged entity; `managed` only gates the automatic policy.
     bool managed = false;
+    std::shared_ptr<const PlanarCollider> planar;
 };
 
 enum class SceneGravityKind { Radial, Uniform };
