@@ -1,0 +1,77 @@
+{
+  "schema": 1,
+  "scope": "Private numerical geometry/kinetic/transport proof, no fluid runtime adoption",
+  "results": {
+    "stage18_corner": {
+      "checks": 9639,
+      "passed": true
+    },
+    "stage18_ordinary": {
+      "checks": 377,
+      "passed": true
+    },
+    "stage18_linear_transport": {
+      "checks": 995,
+      "passed": true,
+      "angularConserved": false
+    },
+    "stage18_native_analytic": {
+      "checks": 545,
+      "passed": true
+    },
+    "stage19_topology_field": {
+      "checks": 757,
+      "passed": true
+    },
+    "stage19_transport": {
+      "checks": 1049,
+      "passed": true
+    },
+    "stage20_exact_tree": {
+      "checks": 97,
+      "passed": true
+    },
+    "stage20_topology_field": {
+      "checks": 757,
+      "passed": true
+    },
+    "stage20_transport": {
+      "checks": 1049,
+      "passed": true
+    },
+    "stage20_native": {
+      "checks": 545,
+      "passed": true
+    }
+  },
+  "preservedFailures": [
+    "Forced2^-40 wall-gap absolute divergence/work gates",
+    "Stage19 local-only exact per-cell capacity",
+    "Mean-only angular advection is not conservative",
+    "Earlier root/source attempts and erroneous new native-density test oracle preserved"
+  ],
+  "matchedTiming": {
+    "dense": {
+      "milliseconds": [
+        4854.51,
+        4880.34,
+        4843.07
+      ],
+      "median": 4854.51
+    },
+    "tree": {
+      "milliseconds": [
+        4091.09,
+        4068.09,
+        4140.94
+      ],
+      "median": 4091.09
+    },
+    "sameLoggedPhysicalTrajectories": true,
+    "medianRatio": 1.1866055256667538
+  },
+  "alphaAdvancedFluidsLocked": true,
+  "productionFilesChanged": false,
+  "nativeReusedArchive": true,
+  "newPlatformAcceptanceClaimed": false
+}

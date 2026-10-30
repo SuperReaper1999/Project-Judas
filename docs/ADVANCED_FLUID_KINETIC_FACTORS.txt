@@ -1,0 +1,98 @@
+ADVANCED FLUID PRESSURE FOLLOW-UP — FACTORS AND CONSERVATION
+2026-10-30 | PRIVATE REFERENCES, NOT PRODUCTION FLUID ENABLEMENT
+
+Published Alpha1.0.3 remains locked against Advanced Fluids. Basic Water and
+M54/M55 are unchanged. This numerical checkpoint is on Experimental only.
+Solbert's independent research and earlier frozen evidence are untouched.
+
+WHAT WAS ESTABLISHED
+
+1. Positive local kinetic metrics can become singular after forming a rounded
+   global Gram matrix. In the true voxel-corner fixture, independent cycle-flow
+   coordinates shared a tiny tree aperture. A saved rounded2x2 principal minor
+   is exactly zero even at90-digit analysis. This is loss during assembly, not
+   proof that the physical kinetic functional is indefinite.
+
+2. Preserve the defining root instead:
+       M = rho L^T G L + (I-NL)^T S (I-NL) = F^T F,
+       F = [sqrt(rho) R_G L ; R_S (I-NL)],
+   with R_G^T R_G=G and R_S^T R_S=S. QR eliminates angular and free coordinates
+   without first forming their rounded normal equations. Loads, body derivatives
+   and reconstruction use the same root. A maximum-exact-aperture spanning tree
+   improves coordinates while retaining every face and the same admissible space.
+   No damping, rank removal, geometric pruning or artificial mass is added.
+
+3. Exact per-cell continuity must survive material transport, not only a rounded
+   pressure residual. Whole-connected-cavity incidence parameterization removes
+   the n2 local-interface balance failure before minimization. Every original
+   physical cell, aperture, integration simplex and owner is retained. This is
+   algebraic condensation, not moving water through disconnected regions.
+
+4. Evaluate the same exact incidence equations by a tree recurrence instead of
+   a dense symbolic expansion.32 arbitrary primary-coordinate trials produce
+   exactly equal internal flows, physical face means and cell/region balances.
+   The kinetic solve itself is unchanged.
+
+5. Native added mass can be derived from the same prepared Schur operator rather
+   than six artificially imposed unit-flow reconstructions. Final545 checks
+   validate actual native fixed/hinged/free-body endpoints and reject omitted
+   native reaction before publication. This is one accepted solver boundary,
+   not continuous CCD/friction/contact/material coupling.
+
+MEASURED CHECKS AND LIMITS
+
+Stage18 defining-factor reference:
+- True tiny-angle corner:9639 checks pass; calm RMS2.56e-20, force error5.26e-19,
+  point divergence7.65e-20 during motion. Original absolute gates retained.
+- Ordinary field/energy/wrench comparisons:377 checks pass.
+- Original fixed-geometry linear transport:995 checks pass.
+- Native coupled endpoints:545 checks pass; analytic response preserves logged
+  impulses. Coupling phase about4.8–99.8ms ->1.3–28.9ms; geometry excluded.
+- Genuine2^-40m wall gap: calm now passes, forced squeeze STILL FAILS unchanged
+  point-divergence1e-8 and work1e-10 gates (observed1.70571e-8/1.39698e-9).
+  That exact axis-aligned offset is not representable in native float positions;
+  do not extrapolate a synthetic imposed velocity to an accepted coupled body.
+
+Stage19 regional reference:
+- Local-only original negative reproduction fails after55 assertions at exact
+  per-cell capacity. Regional version completes1049 assertions,240steps at1/240s
+  and15650 directed exchanges. Linear impulse error3.90539e-18; divergence
+  7.25106e-19. Energy3.07291 ->2.75711 without a global reset.
+-757 independent geometry/topology/field checks pass. Same-cell velocity field
+  differs by at most9.31736e-21 and energy6.50521e-19. A genuine separating solid
+  slab leaves the unforced cavity exactly still. Missing/third owners reject.
+- Angular momentum is NOT conserved by mean-only transport: independently
+  measured one-step angular change.00690283. Retaining higher local fluctuations
+  is not equivalent to advecting their angular momentum.
+
+Stage20 exact tree evaluation:
+-97 exact-oracle assertions pass.100 repeated24cell/121free-coordinate evaluations
+  take238.863ms dense versus22.8461ms tree. This is a kernel measurement, not FPS.
+-757 geometry/topology checks and1049 full transport checks pass unchanged;
+  all logged physical results match the prior regional run. One warm full-cycle
+  measurement was4143.79ms versus earlier4822.95ms. Three later alternating
+  matched runs give medians4854.51ms dense /4091.09ms tree (15.7% less time),
+  with identical logged physical traces. Native545 checks pass on the tree
+  version too. These remain tiny private references, not production performance.
+
+NOT YET SOLVED / NEXT ENGINEERING BOUNDARY
+
+The private closed-cavity reference still has expensive exact geometry, dense
+preparation, an unresolved forced-gap residual, and deficient angular advection.
+It has no general moving-geometry material remap, rotating-wall GCL, wet/dry/free
+surface, multiple-solid contact chronology, M54 quantity frontend or application
+persistence/export. Source inspection confirms the current native batch boundary
+explicitly rejects friction and arriving contacts. Following actual native motion
+segments, including split geometric corrections, is necessary; dt times physical
+velocity is not an exact substitute for the represented body path.
+
+Next work should establish conservative full-field/angular material transport and
+moving-boundary ownership on bounded fixtures, then a local geometry/runtime
+representation. Do not enable Alpha fluids based on these private successes.
+No claim is made that the original Terrain planet explosion is fixed end-to-end.
+
+EVIDENCE
+
+See docs/evidence/advanced-fluid-pressure-followup-20261030/ for exact source and
+dependency archive, raw failures/successes, commands, hashes and provenance.
+Earlier Stage17 evidence remains frozen at its original path and hashes.

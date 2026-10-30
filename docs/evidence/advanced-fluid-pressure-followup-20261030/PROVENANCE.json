@@ -1,0 +1,90 @@
+{
+  "schema": 1,
+  "recordedUtc": "2026-10-30T01:14:23.760398+00:00",
+  "parent": "3abff71d7107c6c4bc041566a1ddd18433ad25c2",
+  "acceptedMain": "f2813324155166c6942fd68dde843d9775eb532d",
+  "compiler": "g++ (Ubuntu 15.2.0-16ubuntu1) 15.2.0",
+  "scope": "Private fixed-geometry numerical prototypes only; no production adoption or new release payload",
+  "cpu": "AMD Ryzen 5 5600, 6 cores / 12 logical CPUs",
+  "ramKiB": "MemTotal:        8045200 kB",
+  "plainFlags": [
+    "-std=c++17",
+    "-O3",
+    "-g0",
+    "-DNDEBUG"
+  ],
+  "externalHeaders": [
+    "Boost 1.90",
+    "Eigen 3.4",
+    "system GLM"
+  ],
+  "nativeArchiveIdentity": "Reused historical Experimental9be9e7a-dirty archive; physics sources unchanged, later renderer/scene-parser source differs; not a fresh SDK",
+  "nativeInputs": {
+    "build/libjudas_engine.a": {
+      "bytes": 31267348,
+      "sha256": "427bc3b2d34b765861d98756a8c700d1b9cd529a40eeee89dff962e51d301821"
+    },
+    ".cache/fluid-contact-repair/stage5-exact-volume-domain.o": {
+      "bytes": 138136,
+      "sha256": "d1b929fbb971b05b44c7fef07a08fcedcffdbc6069eb99aa0dc1b030bbc106a5"
+    },
+    "build/CMakeFiles/judas_script_tests.dir/flags.make": {
+      "bytes": 1444,
+      "sha256": "c75ed1380bb87c1e538c43741ea0d873f9e62309613f1ce2ebabe78198d43a70"
+    },
+    "build/CMakeFiles/judas_script_tests.dir/link.txt": {
+      "bytes": 666,
+      "sha256": "b5c82df30277db633e329ea563040d629a7f85da5994c474ddf392feb8cf25f8"
+    }
+  },
+  "binaries": {
+    ".cache/fluid-kinetic-root-stage18-20261030/kinetic-trace.exe": {
+      "bytes": 932848,
+      "sha256": "514def2dc6b7bdddc90bd04e2357fac9a5110f2618ea3f7791af9418a044fb5c"
+    },
+    ".cache/fluid-kinetic-root-stage18-20261030/kinetic-root-v2.exe": {
+      "bytes": 937888,
+      "sha256": "1ed2246bee7ea6be93d3d2222503472d2f2e2584ab87d5270eb597c63cbefb66"
+    },
+    ".cache/fluid-kinetic-root-stage18-20261030/final-advection": {
+      "bytes": 997488,
+      "sha256": "f12906f7578bd8b2cb6b2f0ca2b18ab11d0cb44246175566ebddc2b4868089b5"
+    },
+    ".cache/fluid-kinetic-root-stage18-20261030/kinetic-root.exe": {
+      "bytes": 923072,
+      "sha256": "4cb8e9266f88af57991ced81cd1c3b6aebe1b54dc1c072168f5c1e0f22d28c2f"
+    },
+    ".cache/fluid-kinetic-root-stage18-20261030/final-ordinary": {
+      "bytes": 939408,
+      "sha256": "59aa3ebea6011d3d04c0a7529f4956e7f3195898c1e35f0215283d3ff7078022"
+    },
+    ".cache/fluid-kinetic-root-stage18-20261030/root-native-final": {
+      "bytes": 2845616,
+      "sha256": "c7076f8dace378ff04114f22f913b6d6665bdebd6c84d449c8cc7fc4a777b2d5"
+    },
+    ".cache/fluid-regional-cochains-stage19-20261030/regional-momentum": {
+      "bytes": 1030688,
+      "sha256": "1042ebaca44e186e506739e90e083e8bf1a416bd3bdf7f2696c3662546d3a950"
+    },
+    ".cache/fluid-regional-cochains-stage19-20261030/regional-contracts": {
+      "bytes": 920576,
+      "sha256": "944ee462c1abfebba4576dd157e358b7af401680a5e8142261d8e85d901cc895"
+    },
+    ".cache/fluid-tree-reconstruction-stage20-20261030/RegionalMomentumTests.exe": {
+      "bytes": 1030992,
+      "sha256": "31e50f7acdfcb1474f7e6a12fe99f61a5d5bb6ee389f7c6e1ee091421056792a"
+    },
+    ".cache/fluid-tree-reconstruction-stage20-20261030/RegionalContractsTests.exe": {
+      "bytes": 924728,
+      "sha256": "120d9eaa3831ca9c2cd0a194574b9c4a36d3538e561071fea1a5d994948ae72b"
+    },
+    ".cache/fluid-tree-reconstruction-stage20-20261030/tree-reconstruction": {
+      "bytes": 842600,
+      "sha256": "51deac4fc3386ee3e5ff759010b9962580f0beb8108ae2dbdab81dc05c4df00e"
+    },
+    ".cache/fluid-contact-repair/AnalyticNativePressureTests.reproduced": {
+      "bytes": 2885976,
+      "sha256": "5471e8066dd215f0e04317b7bc50d6e80fa028da5151f619b7f7f99fe07e5292"
+    }
+  }
+}

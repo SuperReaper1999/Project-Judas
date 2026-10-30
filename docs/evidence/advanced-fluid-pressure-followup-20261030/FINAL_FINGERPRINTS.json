@@ -1,0 +1,15 @@
+{
+  "schema": 1,
+  "parent": "3abff71d7107c6c4bc041566a1ddd18433ad25c2",
+  "scope": "This fingerprint file excludes itself; archive manifest fingerprints all private numerical sources, dependencies and logs",
+  "files": {
+    "docs/ADVANCED_FLUID_KINETIC_FACTORS.txt": "8068a4a40bd8f0aee3c872259d94260b7acb5f97fd1c86aaee8d9c9e9af9189c",
+    "docs/evidence/advanced-fluid-pressure-followup-20261030/CHANGED_FILES.txt": "15d47bb9fc9246d1518790e60736984f578dbf3701793eedae9e599557615c45",
+    "docs/evidence/advanced-fluid-pressure-followup-20261030/PROVENANCE.json": "45389120a64b7d1d86bee3b8de454a84dd384dc46b9fc445a15200e174efb46b",
+    "docs/evidence/advanced-fluid-pressure-followup-20261030/REPRODUCE.txt": "f56b3e011fee6e3cec62b48af4b804f13c3bf60d128d02da3049ba1d2ef38848",
+    "docs/evidence/advanced-fluid-pressure-followup-20261030/RESULTS.json": "6883665075affb14036c5672f827b526e02ad28084adf5db907fbbb8361455a2",
+    "docs/evidence/advanced-fluid-pressure-followup-20261030/SOURCE_MANIFEST.json": "bfbfd6843140a559dab819f32221d33935f47603f71de2bf90b51d97af7895e8",
+    "docs/evidence/advanced-fluid-pressure-followup-20261030/pressure-factors-conservation-reference.tar.gz": "7fc74d8e94a70a3d73adebd12141937a1fba82c1b11bc13a8dacd099b5ae9d4c",
+    "docs/evidence/advanced-fluid-pressure-followup-20261030/verify_evidence.py": "0d56f8adca6b3ada9c761845c33b8c6533f5aff9f28f7d91ec3db97f56da5823"
+  }
+}

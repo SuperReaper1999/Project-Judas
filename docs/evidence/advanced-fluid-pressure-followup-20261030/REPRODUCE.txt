@@ -1,0 +1,47 @@
+PRIVATE NUMERICAL REFERENCES — no application/Alpha enablement implied.
+Archive contains exact .cache relative paths and source dependency closure.
+Extract only in a disposable checkout/copy, never over frozen evidence/research.
+No executables, objects, build directory, assets or third-party install included.
+
+Build requirements: Linux g++15.2 (recorded), GLM, Boost1.90 and Eigen3.4 headers.
+Set BOOST_INCLUDE_DIR and EIGEN_INCLUDE_DIR if the recorded /tmp header locations
+are absent. Example plain command, substituting any non-native test source:
+ g++ -std=c++17 -O3 -g0 -DNDEBUG -Isrc -I$BOOST_INCLUDE_DIR -I$EIGEN_INCLUDE_DIR \
+ .cache/fluid-tree-reconstruction-stage20-20261030/TreeReconstructionTests.cpp \
+ -o /tmp/fluid-tree-reconstruction
+ /tmp/fluid-tree-reconstruction
+
+Stage18 defining-root programs:
+ python3 .cache/fluid-kinetic-definition-stage18-20261030/run_reference.py SymmetricAgglomerationTests.cpp
+ python3 .cache/fluid-kinetic-definition-stage18-20261030/run_reference.py VoxelCondensationTests.cpp
+ python3 .cache/fluid-kinetic-definition-stage18-20261030/run_reference.py PortMomentumTransportTests.cpp
+Expected remaining failure, unchanged gates:
+ python3 .cache/fluid-kinetic-definition-stage18-20261030/run_reference.py TrueWallGapTests.cpp
+Native one-boundary endpoint tests (requires prepared native Release build):
+ python3 .cache/fluid-tree-reconstruction-stage20-20261030/run_reference.py AnalyticNativePressureTests.cpp
+Helper reuses Makefile test compiler/link interfaces and Stage5 exact-volume
+object. Rebuild archived .cache/fluid-coupling-stage5-kernel/VolumeDomain.cpp with
+setup_probes.compile first if override object absent. Original reused library/
+object hashes and embedded older identity recorded in PROVENANCE.json. This is
+not a fresh released SDK; no hardware or whole-application acceptance implied.
+
+Stage19 original failure / corrected transport:
+Compile RegionalMomentumTests.cpp with the plain flags above, then:
+ regional-momentum local-only   # expected exact-capacity rejection
+ regional-momentum              # corrected fixed-cavity1049 assertions
+ RegionalContractsTests.cpp supplies757 positive/negative topology/field checks.
+
+Stage20 final combined numerical and geometry tests:
+ python3 .cache/fluid-tree-reconstruction-stage20-20261030/run_qualification.py
+Separately compile/run TreeReconstructionTests.cpp for97 exact equivalence checks.
+Original dense function remains an independent reference. Native test listed
+above includes actual accepted endpoints and omitted-reaction rejection.
+Raw matched0..2 dense/tree logs preserve three alternating same-workload timings;
+all reported oracle/60-step physical trace lines match verbatim per pair.
+
+All prior attempts, original failed tests and faulty new-density oracle remain
+archived explicitly. Failed programs must return nonzero. No threshold weakening
+or synthetic angular-momentum-conservation claim is authorized by this evidence.
+Dormant ExactKernelBasis.h copies need their original acceptance dependency;
+that header is included verbatim alongside each copy for portable source closure.
+Earlier Stage16/17 archive fingerprints reverified unchanged.
