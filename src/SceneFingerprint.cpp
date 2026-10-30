@@ -113,6 +113,7 @@ void WriteObject(CanonicalWriter& w, const SceneObject& o) {
         w.Enum(r.shape, 7, "render shape"); w.Vector(r.halfExtents); w.Number(r.radius);
         w.Vector(r.color); w.Number(r.alpha); w.Vector(r.secondaryColor); w.Number(r.secondaryAlpha);
         w.Text(r.meshAsset); w.Text(r.textureAsset); w.U64(r.textureCamera);
+        if(r.spritePlayback){if(r.shape!=SceneShape::Sprite||!ValidSpritePlayback(*r.spritePlayback)||!IsValidAssetId(r.spritePlayback->sheet))w.Fail("invalid sprite playback");w.Text("SpritePlayback.1");w.Text(EncodeSpritePlayback(*r.spritePlayback));}
         if(r.lodMultiplier!=1){w.Text("M93-render-lod");w.Number(r.lodMultiplier);}
         if(r.shape==SceneShape::Sprite){if(!ValidSprite(r.sprite))w.Fail("invalid sprite");w.Text("Sprite.1");w.Text(EncodeSprite(r.sprite));}
     }

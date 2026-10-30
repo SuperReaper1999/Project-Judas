@@ -58,7 +58,7 @@ bool VersionMatches(const std::string& actual,const std::string& required){std::
  // Exactly one bounded range syntax. No wildcard, caret, prerelease or resolver.
  auto split=required.find(" <");return required.rfind(">=",0)==0&&split!=std::string::npos&&ParseVersion(required.substr(2,split-2),lo)&&ParseVersion(required.substr(split+2),hi)&&lo<hi&&a>=lo&&a<hi;
 }
-bool AssetKind(const std::string& s,AssetType& out){for(int i=0;i<=int(AssetType::PhysicalMaterial);++i)if(s==AssetTypeName(AssetType(i))){out=AssetType(i);return true;}return false;}
+bool AssetKind(const std::string& s,AssetType& out){for(int i=0;i<=int(AssetType::SpriteSheet);++i)if(s==AssetTypeName(AssetType(i))){out=AssetType(i);return true;}return false;}
 bool PortablePath(const std::string& s,std::string& collisionKey,std::string& error){try{
  require(!s.empty()&&s.size()<=Limits::Path&&s.front()!='/'&&s.find_first_of("\\:\0",0,3)==std::string::npos,"absolute, Windows or NUL path");
  require(ValidTextUTF8(s,error),"invalid UTF-8");auto u=icu::UnicodeString::fromUTF8(s);UErrorCode status=U_ZERO_ERROR;auto* normal=icu::Normalizer2::getNFCInstance(status);require(U_SUCCESS(status),"Unicode normalization unavailable");icu::UnicodeString n;normal->normalize(u,n,status);require(U_SUCCESS(status),"Unicode normalization failed");n.foldCase();icu::UnicodeString folded;normal->normalize(n,folded,status);require(U_SUCCESS(status),"Unicode normalization failed");std::string key;folded.toUTF8String(key);
@@ -138,7 +138,7 @@ bool ValidateReferences(const Contract& c,const Resolution& resolved,const Asset
     if(!m.executable){auto behavior=c.behaviors.find(script.asset);require(behavior!=c.behaviors.end(),"data content may only instantiate explicitly published base behaviours: "+m.id);std::vector<ScriptProperty> properties;require(ScriptSystem::ReadProperties(behavior->second.dump(),script.properties,properties,error),"published behavior properties: "+m.id+": "+error);}
    }} };
   std::set<std::string> regular;for(auto& n:m.notices)regular.insert(n);
-  for(auto& a:m.assets){regular.insert(a.path);AssetType type{};AssetKind(a.type,type);require(type!=AssetType::World&&type!=AssetType::Liquid&&type!=AssetType::Deformable&&type!=AssetType::Environment&&type!=AssetType::AudioEffect&&type!=AssetType::Catalog,"mandatory mod type not supported in v1: "+m.id+"/"+a.type);
+  for(auto& a:m.assets){regular.insert(a.path);AssetType type{};AssetKind(a.type,type);require(type!=AssetType::SpriteSheet&&type!=AssetType::World&&type!=AssetType::Liquid&&type!=AssetType::Deformable&&type!=AssetType::Environment&&type!=AssetType::AudioEffect&&type!=AssetType::Catalog,"mandatory mod type not supported in v1: "+m.id+"/"+a.type);
    if(type==AssetType::Script)require(m.executable,"script payload requires executable declaration: "+m.id);
    if(type==AssetType::Mesh)require(std::filesystem::u8path(a.path).extension()==".judasmodel","mod meshes must use normal cooked .judasmodel assets");
    AssetRecord record{a.id,type,physicalPath(m.id,a.path),"Mods/"+m.id+"/"+a.path,"",false};std::set<AssetId> refs;std::set<std::string> extra;require(CollectAssetDependencies(record,refs,extra,error),m.id+"/"+a.path+": "+error);require(extra.empty(),"external model files must be cooked before packaging");references(refs);

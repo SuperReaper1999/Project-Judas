@@ -118,13 +118,20 @@ void DrawRenderable(Renderer& r, ResourceManager* resources, const SceneRenderCo
         case SceneShape::Planar: return; // collider-only, never a renderer
         case SceneShape::Sprite: {
             TextureHandle texture;
-            auto color=glm::vec4(render.color,alpha*render.alpha)*render.sprite.tint;
-            if(resources&&!render.textureAsset.empty()) {
-                resources->RequestTexture(render.textureAsset);
-                texture=resources->TryGetTexture(render.textureAsset);
-                if(!texture.IsValid())color=glm::vec4(resources->StateOf(render.textureAsset)==ResourceState::Failed?kFailedPlaceholderColor:kLoadingPlaceholderColor,color.a);
+            auto sprite=render.sprite;auto image=render.textureAsset;std::string error;
+            if(render.spritePlayback&&resources){
+                if(auto sheet=resources->GetSpriteSheet(render.spritePlayback->sheet,error)){
+                    if(SampleSpriteFrame(*sheet,*render.spritePlayback,sprite,error))image=sheet->texture;
+                }
             }
-            r.QueueSprite(render.sprite,position,rotation,scale,texture,color,identity);
+            auto color=glm::vec4(render.color,alpha*render.alpha)*sprite.tint;
+            if(!error.empty()&&error!="loading")color=glm::vec4(kFailedPlaceholderColor,color.a);
+            if(resources&&!image.empty()) {
+                resources->RequestTexture(image);
+                texture=resources->TryGetTexture(image);
+                if(!texture.IsValid())color=glm::vec4(resources->StateOf(image)==ResourceState::Failed?kFailedPlaceholderColor:kLoadingPlaceholderColor,color.a);
+            }
+            r.QueueSprite(sprite,position,rotation,scale,texture,color,identity);
             break;
         }
         case SceneShape::Box:

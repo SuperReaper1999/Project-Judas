@@ -1,0 +1,5 @@
+Shadow maps: on
+Graphics: 4.5 (Core Profile) Mesa 26.0.8-1ubuntu0.3 / llvmpipe (LLVM 21.1.8, 256 bits)
+Renderer fragment texture units: 32 (material path uses 12)
+Asset problem: /tmp/judas-sprite-stage3-missing-sheet-v2-20261030/Assets/traveller.judassprite.judasmeta: asset file is missing: /tmp/judas-sprite-stage3-missing-sheet-v2-20261030/Assets/traveller.judassprite
+Scene '/tmp/judas-sprite-stage3-missing-sheet-v2-20261030/Scenes/main.judas' could not be instantiated: object 1 "Platformer player - editable game.js": missing/wrong-type sprite sheet

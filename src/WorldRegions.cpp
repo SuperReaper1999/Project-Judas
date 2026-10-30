@@ -134,7 +134,7 @@ void RuntimeWorld::RemoveRegionObject(EntityId id) {
     if(auto character=m_characters.find(id);character!=m_characters.end())m_physics.DestroyBody(character->second.motor.observationBody);
     m_wheels.erase(id);m_wheelOwners.erase(id);RefreshWheelParticipants();
     m_powertrains.erase(id);m_powertrainOwners.erase(id);RefreshPowertrainParticipants();
-    RemoveDeformable(id);m_deformableOwners.erase(id);m_characters.erase(id);m_animationInstances.erase(id);m_physicalAnimations.erase(id);CancelPhysicalBalance(id);m_balances.erase(id);m_animationOwners.erase(id);m_jointOwners.erase(id);m_jointParticipants.erase(id);
+    RemoveDeformable(id);m_deformableOwners.erase(id);m_characters.erase(id);m_animationInstances.erase(id);m_physicalAnimations.erase(id);CancelPhysicalBalance(id);m_balances.erase(id);m_spriteAnimationOwners.erase(id);m_spriteSteps.erase(id);m_animationOwners.erase(id);m_jointOwners.erase(id);m_jointParticipants.erase(id);
     m_basicWaterOwners.erase(id);
     m_scriptDefinitions.erase(id);m_scriptOwners.erase(id);m_characterOwners.erase(id);m_entityCategories.erase(id);m_hierarchy.DestroyObject(id);
     if(auto it=m_regionAssets.find(id);it!=m_regionAssets.end()){

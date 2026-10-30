@@ -13,6 +13,7 @@
 #include "Deformable.h"
 #include "CollisionAsset.h"
 #include "PhysicalMaterial.h"
+#include "SpriteAnimation.h"
 #include "AudioSystem.h"
 #include "NavigationAsset.h"
 #include "LiquidTypes.h"
@@ -124,6 +125,7 @@ public:
     std::shared_ptr<const TextFont> TryGetFont(const AssetId&);
     ResourceState RequestCatalog(const AssetId&,JobPriority priority=JobPriority::Normal);
     std::shared_ptr<const Catalog> TryGetCatalog(const AssetId&);
+    std::shared_ptr<const SpriteSheet> GetSpriteSheet(const AssetId&,std::string& error);
     ResourceState RequestPhysicalMaterial(const AssetId&,JobPriority priority=JobPriority::Normal);
     std::shared_ptr<const PhysicalMaterial> RequirePhysicalMaterial(const AssetId&,std::string& error);
     ResourceState RequestCollision(const AssetId&,JobPriority priority=JobPriority::Normal);
@@ -252,6 +254,7 @@ private:
         std::shared_ptr<NavigationData> navigation;
         std::shared_ptr<LiquidResource> liquid;
         std::shared_ptr<DeformableAsset> deformable;
+        std::shared_ptr<SpriteSheet> spriteSheet;
         std::shared_ptr<PhysicalMaterial> physicalMaterial;
         std::shared_ptr<CollisionAsset> collision;
         std::shared_ptr<MaterialDefinition> material;EnvironmentData environment;
@@ -273,6 +276,7 @@ private:
         std::shared_ptr<const NavigationData> navigation;
         std::shared_ptr<const LiquidResource> liquid;
         std::shared_ptr<const DeformableAsset> deformable;
+        std::shared_ptr<const SpriteSheet> spriteSheet;
         std::shared_ptr<const PhysicalMaterial> physicalMaterial;
         std::shared_ptr<const CollisionAsset> collision;
         std::vector<MaterialDefinition> meshMaterials;std::vector<MeshPrimitive> meshPrimitives;

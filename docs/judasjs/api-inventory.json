@@ -1,7 +1,73 @@
 {
-  "checkpoint": "Current public module including Experimental 2D Stage 2; source version in engine-version.json",
+  "checkpoint": "Current public module including Experimental 2D Stage 3; source version in engine-version.json",
   "authority": "src/ScriptSystem.cpp::library + Impl::Native + ScriptBindingsUI.cpp + ScriptBindingsJoint.cpp + ScriptInputBindings.inl + ScriptLocalMultiplayer.inl + ScriptNetwork.inl",
   "resultShapes": [
+    {
+      "binding": "Entity.spriteAnimation",
+      "declaration": "SpriteAnimationInfo",
+      "fields": [
+        "ready",
+        "sampledFrame",
+        "events",
+        "finished",
+        "overflow",
+        "error"
+      ],
+      "nativeFile": "src/ScriptSystem.cpp",
+      "needles": [
+        "JS_SetPropertyStr(c,out,\"ready\"",
+        "JS_SetPropertyStr(c,out,\"sampledFrame\"",
+        "JS_SetPropertyStr(c,out,\"events\"",
+        "JS_SetPropertyStr(c,out,\"finished\"",
+        "JS_SetPropertyStr(c,out,\"overflow\"",
+        "JS_SetPropertyStr(c,out,\"error\""
+      ],
+      "reference": "docs/judasjs/sprite-animation.md"
+    },
+    {
+      "binding": "Entity.spriteAnimation.playback",
+      "declaration": "SpritePlaybackSettings",
+      "fields": [
+        "sheet",
+        "clip",
+        "frame",
+        "time",
+        "speed",
+        "playing",
+        "loop"
+      ],
+      "nativeFile": "src/ScriptSystem.cpp",
+      "needles": [
+        "{\"sheet\",p.sheet}",
+        "{\"clip\",p.clip}",
+        "{\"frame\",p.frame}",
+        "JS_SetPropertyStr(c,out,\"time\"",
+        "JS_SetPropertyStr(c,out,\"speed\"",
+        "JS_SetPropertyStr(c,out,\"playing\"",
+        "JS_SetPropertyStr(c,out,\"loop\""
+      ],
+      "reference": "docs/judasjs/sprite-animation.md"
+    },
+    {
+      "binding": "Entity.spriteAnimation.events",
+      "declaration": "SpriteFrameEvent",
+      "fields": [
+        "id",
+        "name",
+        "data",
+        "time",
+        "reverse"
+      ],
+      "nativeFile": "src/ScriptSystem.cpp",
+      "needles": [
+        "JS_SetPropertyStr(c,e,\"id\"",
+        "JS_SetPropertyStr(c,e,\"name\"",
+        "JS_SetPropertyStr(c,e,\"data\"",
+        "JS_SetPropertyStr(c,e,\"time\"",
+        "JS_SetPropertyStr(c,e,\"reverse\""
+      ],
+      "reference": "docs/judasjs/sprite-animation.md"
+    },
     {
       "binding": "Entity.sprite",
       "declaration": "SpriteSettings",
@@ -738,6 +804,11 @@
     },
     {
       "symbol": "Entity.setSprite",
+      "minimum": 1,
+      "maximum": 1
+    },
+    {
+      "symbol": "Entity.setSpriteAnimation",
       "minimum": 1,
       "maximum": 1
     },
@@ -3024,6 +3095,17 @@
       "reference": "docs/judasjs/sprites-2d.md"
     },
     {
+      "symbol": "Entity.setSpriteAnimation",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "spriteAnimationSet"
+      ],
+      "type": "docs/judas.d.ts:Entity.setSpriteAnimation",
+      "reference": "docs/judasjs/sprite-animation.md"
+    },
+    {
       "symbol": "Entity.sleeping",
       "kinds": [
         "get"
@@ -3044,6 +3126,17 @@
       ],
       "type": "docs/judas.d.ts:Entity.sprite",
       "reference": "docs/judasjs/sprites-2d.md"
+    },
+    {
+      "symbol": "Entity.spriteAnimation",
+      "kinds": [
+        "get"
+      ],
+      "native": [
+        "spriteAnimationInfo"
+      ],
+      "type": "docs/judas.d.ts:Entity.spriteAnimation",
+      "reference": "docs/judasjs/sprite-animation.md"
     },
     {
       "symbol": "Entity.stopAudio",
@@ -7069,6 +7162,8 @@
     "socketClear",
     "socketSet",
     "spawn",
+    "spriteAnimationInfo",
+    "spriteAnimationSet",
     "spriteInfo",
     "spriteSet",
     "stick",

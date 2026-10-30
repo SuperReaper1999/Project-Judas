@@ -311,6 +311,8 @@ add_library(judas_engine STATIC
     src/Prefab.cpp
     src/Scene.cpp
     src/Sprite.cpp
+    src/SpriteAnimation.cpp
+    src/WorldSpriteAnimation.cpp
     src/PlanarAuthoring.cpp
     src/Ragdoll.cpp
     src/SceneSerialization.cpp
@@ -434,6 +436,7 @@ add_executable(judas_editor
     src/editor/FileBrowser.cpp
     src/editor/RenderPreview.cpp
     src/editor/RetargetPanel.cpp
+    src/editor/SpriteSheetEditor.cpp
     src/editor/AnimationTimeline.cpp
     src/editor/WorldTools.cpp
     src/editor/TerrainTools.cpp
@@ -1744,6 +1747,17 @@ judas_warnings(judas_planar_playground)
 judas_add_engine_test(judas_planar_physics_tests tests/PlanarPhysicsTests.cpp)
 judas_add_engine_test(judas_planar_integration_tests tests/PlanarIntegrationTests.cpp
     SOURCES src/editor/EditorPicking.cpp src/editor/EditorCreationMenu.cpp src/editor/EditorHistory.cpp src/editor/EditorCamera.cpp LIBRARIES judas_imgui)
+
+judas_add_engine_test(judas_sprite_animation_tests tests/SpriteAnimationTests.cpp
+    SOURCES src/editor/SpriteSheetEditor.cpp LIBRARIES judas_imgui)
+
+judas_add_engine_test(judas_sprite_animation_integration_tests tests/SpriteAnimationIntegrationTests.cpp)
+
+judas_add_engine_test(judas_sprite_animation_render_tests tests/SpriteAnimationRenderTests.cpp)
+
+add_executable(judas_sprite_animation_benchmark tools/benchmarks/SpriteAnimationBenchmark.cpp)
+target_link_libraries(judas_sprite_animation_benchmark PRIVATE judas_engine)
+judas_warnings(judas_sprite_animation_benchmark)
 
 # Finalize after every native test has declared its authoritative entry point.
 include(cmake/JudasValidation.cmake)

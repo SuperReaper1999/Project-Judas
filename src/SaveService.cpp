@@ -46,7 +46,7 @@ bool ComputeSaveContentFingerprint(const Project& project,const AssetDatabase& a
    if(data.at("version")!=1||!data.at("excluded").is_array()||data.at("excluded").size()>65536)throw std::runtime_error("invalid package exclusion report");
    for(const auto& entry:data.at("excluded")){
     auto id=entry.at("id").get<std::string>(),type=entry.at("type").get<std::string>(),hash=entry.at("sha256").get<std::string>();bool known=false;
-    for(int i=0;i<=int(AssetType::PhysicalMaterial);++i)known|=type==AssetTypeName(AssetType(i));
+    for(int i=0;i<=int(AssetType::SpriteSheet);++i)known|=type==AssetTypeName(AssetType(i));
     if(!IsValidAssetId(id)||!known||hash.size()!=64||hash.find_first_not_of("0123456789abcdef")!=std::string::npos||!records.emplace(id,std::make_pair(type,hash)).second)throw std::runtime_error("invalid/duplicate package excluded asset identity");
    }
   }
@@ -139,12 +139,14 @@ void SaveService::Advance(std::unique_ptr<RuntimeWorld>& world,InteractivePlay& 
   if(s.operation!="load"){Finish("");return;}
   auto& saved=m_product->snapshot;
   if(std::find(m_session.Scenes().begin(),m_session.Scenes().end(),saved.scene)==m_session.Scenes().end()){error="saved/migrated scene is not registered";Finish(error);return;}
-  if(saved.gameVersion!=1||(saved.participants.size()<11||saved.participants.size()>23)){error="unsupported save game/participant schema";Finish(error);return;}
+  if(saved.gameVersion!=1||(saved.participants.size()<11||saved.participants.size()>24)){error="unsupported save game/participant schema";Finish(error);return;}
   Scene scene;if(!WorldPersistence::SceneFrom(saved.participants,scene,error)){Finish(error);return;}
   const bool hasWeather=std::any_of(scene.Objects().begin(),scene.Objects().end(),[](const auto& o){return bool(o.weather);});
   if(bool(saved.participants.count("weather"))!=hasWeather){error="weather participant does not match snapshot components";Finish(error);return;}
   const bool hasPlanet=std::any_of(scene.Objects().begin(),scene.Objects().end(),[](const auto& o){return bool(o.planet);});
   if(bool(saved.participants.count("planets"))!=hasPlanet){error="planet participant does not match snapshot components";Finish(error);return;}
+  const bool hasSpriteAnimation=std::any_of(scene.Objects().begin(),scene.Objects().end(),[](const auto& o){return o.render&&o.render->spritePlayback.has_value();});
+  if(bool(saved.participants.count("sprite-content"))!=hasSpriteAnimation){error="sprite animation content participant does not match snapshot components";Finish(error);return;}
   const bool hasDeformable=std::any_of(scene.Objects().begin(),scene.Objects().end(),[](const auto& o){return bool(o.deformable);});
   const bool hasKinematic=std::any_of(scene.Objects().begin(),scene.Objects().end(),[](const auto& o){return o.body&&o.body->motion==SceneBodyMotion::Kinematic;});
   const bool hasWheel=std::any_of(scene.Objects().begin(),scene.Objects().end(),[](const auto& o){return bool(o.wheel);});
@@ -152,7 +154,7 @@ void SaveService::Advance(std::unique_ptr<RuntimeWorld>& world,InteractivePlay& 
   if(bool(saved.participants.count("powertrains"))!=hasPowertrain){error="powertrain participant does not match snapshot components";Finish(error);return;}
   if(bool(saved.participants.count("wheels"))!=hasWheel){error="wheel participant does not match snapshot components";Finish(error);return;}
   if(bool(saved.participants.count("kinematic-motion"))!=hasKinematic){error="kinematic motion participant does not match snapshot components";Finish(error);return;}
-  if(saved.participants.size()!=size_t(11+hasWeather+hasPlanet+hasDeformable+hasKinematic+hasWheel+hasPowertrain+saved.participants.count("sleep")+saved.participants.count("view-projection")+saved.participants.count("physical-animation")+saved.participants.count("physical-balance")+saved.participants.count("animation-observations")+saved.participants.count("runtime-terrain"))||bool(saved.participants.count("deformables"))!=hasDeformable){error="deformable participant does not match snapshot components";Finish(error);return;}
+  if(saved.participants.size()!=size_t(11+hasSpriteAnimation+hasWeather+hasPlanet+hasDeformable+hasKinematic+hasWheel+hasPowertrain+saved.participants.count("sleep")+saved.participants.count("view-projection")+saved.participants.count("physical-animation")+saved.participants.count("physical-balance")+saved.participants.count("animation-observations")+saved.participants.count("runtime-terrain"))||bool(saved.participants.count("deformables"))!=hasDeformable){error="deformable participant does not match snapshot components";Finish(error);return;}
   m_restoreStart=Clock::now();m_stagedSession=std::make_shared<SceneSession>(m_session.m_project,saved.scene);m_staged=std::make_unique<RuntimeWorld>();m_staged->SetSceneControl(m_stagedSession);m_staged->audioGroups=m_session.m_project.Settings().audio;m_staged->legacyGameplay=m_session.m_project.Settings().legacyGameplay;
   m_staged->ConfigureProject(m_session.m_project.Settings());
   if(!m_staged->Build(scene,&m_resources,error,&m_session.m_project.Settings().classification,&m_session.m_project.Settings().navigation,true)){Finish(error);return;}s.state="preparing";

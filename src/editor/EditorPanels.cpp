@@ -1,3 +1,4 @@
+#include "SpriteSheetEditor.h"
 #include "../PowertrainAuthoring.h"
 #include "../SaveEvolution.h"
 #include "../AssetCook.h"
@@ -343,6 +344,7 @@ void DrawEditorMainMenu(EditorDocument& doc, EditorPanelState& state, EditorRequ
         }
         if (ImGui::BeginMenu("Animation tools")) {
             ImGui::MenuItem("Animation timeline", nullptr, &state.showAnimationTimeline);
+            ImGui::MenuItem("Sprite sheets and frame animation",nullptr,&state.showSpriteSheetEditor);
             ImGui::MenuItem("Animation retargeting", nullptr, &state.showRetarget);
             ImGui::EndMenu();
         }
@@ -974,6 +976,7 @@ void DrawAssetBrowserPanel(EditorDocument& doc, EditorPanelState& state, EditorR
             if (ImGui::Selectable(name.c_str(), selected, ImGuiSelectableFlags_SpanAllColumns | ImGuiSelectableFlags_AllowDoubleClick)) {
                 selectAsset();
                 if (ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left)) {
+                    if(record.type==AssetType::SpriteSheet){state.spriteSheetEdit=id;state.showSpriteSheetEditor=true;}
                     if (!RequestEditorScriptEdit(record, state)) state.selectAssetDetails = true;
                 }
             }
@@ -987,6 +990,11 @@ void DrawAssetBrowserPanel(EditorDocument& doc, EditorPanelState& state, EditorR
             if (ImGui::IsItemHovered()) ImGui::SetTooltip("%s\nID %s\nSource %s\n%s", record.path.c_str(), id.c_str(), record.source.c_str(),
                 record.type == AssetType::Script ? "Double-click to edit script; right-click for details." : "Double-click to inspect; drag to a matching field.");
             if (ImGui::BeginPopupContextItem("##assetActions")) {
+                if(record.type==AssetType::Texture&&ImGui::MenuItem("Create/edit sprite sheet",nullptr,false,state.mode==EditorMode::Edit&&!record.missing&&!record.readOnly)){
+                    AssetRecord sheet;std::string error;if(CreateSpriteSheetAsset(*state.assets,id,sheet,error)){state.spriteSheetEdit=sheet.id;state.showSpriteSheetEditor=true;}else state.status=error;
+                }
+                if(record.type==AssetType::SpriteSheet&&ImGui::MenuItem("Edit frames and animation")){state.spriteSheetEdit=id;state.showSpriteSheetEditor=true;}
+
                 if(record.type==AssetType::Texture&&ImGui::MenuItem("Create sprite in scene",nullptr,false,state.mode==EditorMode::Edit&&!record.missing)){
                     std::string error;const auto id=CreateEditorSpriteFromImage(doc,db,record.id,state.cameraFocus,0,error);
                     state.status=id?"Sprite created at 32 pixels per world unit; edit size, pivot and sorting in Sprite.":error;

@@ -237,6 +237,7 @@ void StepWorld(GameSession& session, const InputSystem& input, const Window* win
     world.PublishWheels();
     world.PublishPowertrains(fixedDeltaTime);
     world.UpdateAnimations(fixedDeltaTime);
+    world.UpdateSpriteAnimations(fixedDeltaTime);
     world.UpdateRagdolls(fixedDeltaTime);
     world.UpdateSockets();
     world.UpdateDeformables(fixedDeltaTime);

@@ -129,7 +129,7 @@ bool SceneObjectsEqual(const SceneObject& a, const SceneObject& b) {
         return false;
     }
     if (!OptEq(a.render, b.render, [](const SceneRenderComponent& x, const SceneRenderComponent& y) {
-            return x.shape == y.shape && (x.shape!=SceneShape::Sprite || x.sprite==y.sprite) && Eq(x.halfExtents, y.halfExtents) && x.radius == y.radius &&
+            return x.shape == y.shape && x.spritePlayback.has_value()==y.spritePlayback.has_value() && (!x.spritePlayback||EncodeSpritePlayback(*x.spritePlayback)==EncodeSpritePlayback(*y.spritePlayback)) && (x.shape!=SceneShape::Sprite || x.sprite==y.sprite) && Eq(x.halfExtents, y.halfExtents) && x.radius == y.radius &&
                    Eq(x.color, y.color) && x.alpha == y.alpha && x.lodMultiplier==y.lodMultiplier &&
                    Eq(x.secondaryColor, y.secondaryColor) && x.secondaryAlpha == y.secondaryAlpha &&
                    x.meshAsset == y.meshAsset && x.textureAsset == y.textureAsset && x.textureCamera == y.textureCamera &&

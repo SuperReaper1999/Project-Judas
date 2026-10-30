@@ -31,7 +31,7 @@
 // short of an asset pipeline: no cooking, no dependency graph, no
 // streaming. Formats are exactly the ones the engine can consume
 // (ModelLoader: .obj; TextureLoader: .png/.jpg/.bmp/.tga; fonts: .ttf).
-enum class AssetType { Mesh, Texture, Font, Audio, Prefab, Script, UI, Navigation, Liquid, Material, Environment, Catalog, World, AudioEffect, Deformable, Collision, PhysicalMaterial };
+enum class AssetType { Mesh, Texture, Font, Audio, Prefab, Script, UI, Navigation, Liquid, Material, Environment, Catalog, World, AudioEffect, Deformable, Collision, PhysicalMaterial, SpriteSheet };
 
 using AssetId = std::string;
 

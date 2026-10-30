@@ -335,6 +335,27 @@ void DrawRender(EditorDocument& doc, SceneObject& o, EditorPanelState& state) {
     if(ImGui::Combo("Shape",&shape,"Box\0Sphere\0Compound\0Mesh\0Terrain\0Sprite (2D)\0")){doc.BeginEdit();r.shape=shape==5?SceneShape::Sprite:SceneShape(shape);doc.CommitEdit();}
     if(r.shape==SceneShape::Sprite) {
         AssetField(doc,"Sprite image",r.textureAsset,AssetType::Texture,true,state);
+        if(ImGui::CollapsingHeader("Sprite sheet / animation")){
+            if(!r.spritePlayback){if(ImGui::Button("Use a sprite sheet")){doc.BeginEdit();r.spritePlayback=SpritePlayback{};doc.CommitEdit();}}
+            if(r.spritePlayback){
+                auto& p=*r.spritePlayback;AssetField(doc,"Sheet asset",p.sheet,AssetType::SpriteSheet,true,state);
+                if(state.resources&&!p.sheet.empty()){
+                    std::string error;if(auto sheet=state.resources->GetSpriteSheet(p.sheet,error)){
+                        if(ImGui::BeginCombo("Clip (or still frame)",p.clip.empty()?"Still frame":p.clip.c_str())){
+                            if(ImGui::Selectable("Still frame",p.clip.empty())){doc.BeginEdit();p.clip.clear();p.time=0;doc.CommitEdit();}
+                            for(const auto& c:sheet->clips)if(ImGui::Selectable(c.name.c_str(),p.clip==c.name)){doc.BeginEdit();p.clip=c.name;p.time=0;doc.CommitEdit();}
+                            ImGui::EndCombo();
+                        }
+                        if(p.clip.empty()&&ImGui::BeginCombo("Named frame",p.frame.c_str())){for(const auto& f:sheet->frames)if(ImGui::Selectable((f.name+"##"+f.id).c_str(),p.frame==f.id)){doc.BeginEdit();p.frame=f.id;doc.CommitEdit();}ImGui::EndCombo();}
+                        SpriteSettings sampled=r.sprite;if(SampleSpriteFrame(*sheet,p,sampled,error)&&!(sampled==r.sprite)){doc.BeginEdit();r.sprite=sampled;doc.CommitEdit();}
+                    }
+                    if(!error.empty())ImGui::TextWrapped("%s",error.c_str());
+                }
+                Checkbox(doc,"Play on start",p.playing);Checkbox(doc,"Loop clip",p.loop);{float speed=p.speed;if(ImGui::DragFloat("Playback speed",&speed,.05f,-100,100)){doc.BeginEdit();p.speed=speed;doc.CommitEdit();}}
+                if(ImGui::Button("Edit sheet / clips")){state.spriteSheetEdit=p.sheet;state.showSpriteSheetEditor=true;}
+                ImGui::SameLine();if(ImGui::Button("Remove animation")){doc.BeginEdit();r.spritePlayback.reset();doc.CommitEdit();}
+            }
+        }
         auto& sprite=r.sprite;
         DragVec2(doc,"Size (world units)",sprite.size,.02f,.001f,1e6f);
         DragVec2(doc,"Pivot (image top-left 0..1)",sprite.pivot,.01f,0,1);

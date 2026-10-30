@@ -1,0 +1,16 @@
+Shadow maps: on
+Graphics: 4.5 (Core Profile) Mesa 26.0.8-1ubuntu0.3 / llvmpipe (LLVM 21.1.8, 256 bits)
+Renderer fragment texture units: 32 (material path uses 12)
+[editor autotest] shared authoring batch + undo PASS: 
+[Sprite animation editor] PASS: unsaved sheet prevents desktop quit
+[editor autotest] duplicate created id 209: scene CHANGED; undo restores: IDENTICAL
+[editor autotest] wrote: /home/conner/Documents/GitHub/Project-Judas/.cache/2d-stage3-evidence/editor-verified-light/editor.sprite-sheet.png
+[Sprite animation editor] PASS: saved sheet loads and preview clock advances without scene mutation
+[editor autotest] wrote: /home/conner/Documents/GitHub/Project-Judas/.cache/2d-stage3-evidence/editor-verified-light/editor.edit.png
+[editor autotest] edit frame: 144 draw calls, 284 triangles, 783 debug lines
+[editor autotest] wrote: /home/conner/Documents/GitHub/Project-Judas/.cache/2d-stage3-evidence/editor-verified-light/editor.play.png
+[editor autotest] play frame: 0 steps, step 0.214 ms, 14 bodies, 6 contacts, 195 draw calls, 388 triangles, 0 shadow passes, 0 lights, 359 debug lines, 0 particles
+[editor autotest] resources: 0 meshes, 2 textures, 0 terrain meshes, hits 1039, misses 3, failed 0, uploads 3, resident 133196 bytes
+[editor autotest] jobs: 11 workers, 3 completed, 0 failed, 0 cancelled
+[editor autotest] authored scene after play/stop is IDENTICAL
+[editor autotest] save ok

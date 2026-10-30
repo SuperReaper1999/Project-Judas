@@ -378,6 +378,10 @@ public:
     bool SetAppearance(const SceneSettings&);
     bool ResetAppearance();
     bool SetRenderVisible(EntityId,bool entityScope,bool visible);
+    bool SetSpritePlayback(EntityId,const SpritePlayback&,std::string& error);
+    const SpriteAnimationStep* SpriteAnimationObservation(EntityId) const;
+    void UpdateSpriteAnimations(double dt);
+    void PublishSpriteRender(EntityId);
     bool SetSprite(EntityId,const SpriteSettings&);
     bool RenderVisible(EntityId) const;
     bool SetRuntimeMaterial(EntityId,const std::string&,const MaterialSlot&);
@@ -722,6 +726,8 @@ private:
     GravityContextMap m_gravityMap;
     std::vector<GravityRegion> m_gravityRegions;
 
+    std::set<EntityId> m_spriteAnimationOwners;
+    std::map<EntityId,SpriteAnimationStep> m_spriteSteps;
     std::vector<StaticBody> m_staticBodies;
     std::vector<Terrain> m_terrains;
     std::vector<StaticRenderable> m_staticRenderables;

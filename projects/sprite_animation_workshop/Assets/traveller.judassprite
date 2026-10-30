@@ -1,0 +1,235 @@
+{
+  "version": 1,
+  "texture": "33333333333333333333333333333331",
+  "width": 240,
+  "height": 48,
+  "pixelsPerUnit": 32,
+  "frames": [
+    {
+      "id": "cell-0-0",
+      "name": "Idle A",
+      "pixels": [
+        0,
+        0,
+        24,
+        48
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ]
+    },
+    {
+      "id": "cell-0-1",
+      "name": "Idle B",
+      "pixels": [
+        24,
+        0,
+        24,
+        48
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ]
+    },
+    {
+      "id": "cell-0-2",
+      "name": "Run left",
+      "pixels": [
+        48,
+        0,
+        24,
+        48
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ]
+    },
+    {
+      "id": "cell-0-3",
+      "name": "Run centre A",
+      "pixels": [
+        72,
+        0,
+        24,
+        48
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ]
+    },
+    {
+      "id": "cell-0-4",
+      "name": "Run right",
+      "pixels": [
+        96,
+        0,
+        24,
+        48
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ]
+    },
+    {
+      "id": "cell-0-5",
+      "name": "Run centre B",
+      "pixels": [
+        120,
+        0,
+        24,
+        48
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ]
+    },
+    {
+      "id": "cell-0-6",
+      "name": "Jump",
+      "pixels": [
+        144,
+        0,
+        24,
+        48
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ]
+    },
+    {
+      "id": "cell-0-7",
+      "name": "Wind-up",
+      "pixels": [
+        168,
+        0,
+        24,
+        48
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ]
+    },
+    {
+      "id": "cell-0-8",
+      "name": "Strike",
+      "pixels": [
+        192,
+        0,
+        24,
+        48
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ]
+    },
+    {
+      "id": "cell-0-9",
+      "name": "Recover",
+      "pixels": [
+        216,
+        0,
+        24,
+        48
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ]
+    }
+  ],
+  "clips": [
+    {
+      "name": "idle",
+      "frames": [
+        {
+          "frame": "cell-0-0",
+          "seconds": 0.4
+        },
+        {
+          "frame": "cell-0-1",
+          "seconds": 0.6
+        }
+      ],
+      "events": []
+    },
+    {
+      "name": "run",
+      "frames": [
+        {
+          "frame": "cell-0-2",
+          "seconds": 0.12
+        },
+        {
+          "frame": "cell-0-3",
+          "seconds": 0.08
+        },
+        {
+          "frame": "cell-0-4",
+          "seconds": 0.12
+        },
+        {
+          "frame": "cell-0-5",
+          "seconds": 0.08
+        }
+      ],
+      "events": [
+        {
+          "id": "left-step",
+          "name": "footstep",
+          "time": 0.08,
+          "data": "left"
+        },
+        {
+          "id": "right-step",
+          "name": "footstep",
+          "time": 0.28,
+          "data": "right"
+        }
+      ]
+    },
+    {
+      "name": "jump",
+      "frames": [
+        {
+          "frame": "cell-0-6",
+          "seconds": 0.5
+        }
+      ],
+      "events": []
+    },
+    {
+      "name": "interact",
+      "frames": [
+        {
+          "frame": "cell-0-7",
+          "seconds": 0.15
+        },
+        {
+          "frame": "cell-0-8",
+          "seconds": 0.12
+        },
+        {
+          "frame": "cell-0-9",
+          "seconds": 0.23
+        }
+      ],
+      "events": [
+        {
+          "id": "strike",
+          "name": "strike",
+          "time": 0.18,
+          "data": "forward-impulse"
+        }
+      ]
+    }
+  ]
+}

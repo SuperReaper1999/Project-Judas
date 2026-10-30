@@ -189,6 +189,8 @@ export class Entity {
  clearPlanetCollision(){return call("planetClear",this.id)}
  get camera(){return call('cameraInfo',this.id)}
  get sprite(){return call('spriteInfo',this.id)}
+ get spriteAnimation(){return call('spriteAnimationInfo',this.id)}
+ setSpriteAnimation(settings){return call('spriteAnimationSet',this.id,settings)}
  setSprite(settings){return call('spriteSet',this.id,settings)}
  get renderVisible(){return call('renderVisible',this.id)}
  set renderVisible(value){call('renderVisible',this.id,value)}
@@ -1663,6 +1665,29 @@ JSValue ScriptSystem::Impl::Native(JSContext* c,JSValueConst,int argc,JSValueCon
         auto value=JS_GetPropertyStr(c,it->second.value,"state");std::string text,error;bool ok=s->Json(value,text,error);JS_FreeValue(c,value);
         if(!ok)return JS_ThrowTypeError(c,"state: %s",error.c_str());
         return JS_ParseJSON(c,text.data(),text.size(),"state snapshot");}
+    if(op=="spriteAnimationInfo"||op=="spriteAnimationSet"){
+        const auto* d=world.RuntimeDefinition(id);if(!d||!d->render||d->render->shape!=SceneShape::Sprite)return op=="spriteAnimationInfo"?JS_NULL:JS_FALSE;
+        if(op=="spriteAnimationInfo"){
+            if(!d->render->spritePlayback)return JS_NULL;
+            const auto& p=*d->render->spritePlayback;auto out=JS_NewObject(c);
+            for(const auto& field:std::vector<std::pair<const char*,std::string>>{{"sheet",p.sheet},{"clip",p.clip},{"frame",p.frame}})JS_SetPropertyStr(c,out,field.first,JS_NewString(c,field.second.c_str()));
+            JS_SetPropertyStr(c,out,"time",JS_NewFloat64(c,p.time));JS_SetPropertyStr(c,out,"speed",JS_NewFloat64(c,p.speed));JS_SetPropertyStr(c,out,"playing",JS_NewBool(c,p.playing));JS_SetPropertyStr(c,out,"loop",JS_NewBool(c,p.loop));
+            std::string resourceError,frameKey;auto* resources=world.Resources();auto sheet=resources?resources->GetSpriteSheet(p.sheet,resourceError):nullptr;
+            SpriteSettings sample=d->render->sprite;const bool ready=sheet&&SampleSpriteFrame(*sheet,p,sample,resourceError,&frameKey);
+            JS_SetPropertyStr(c,out,"ready",JS_NewBool(c,ready));JS_SetPropertyStr(c,out,"sampledFrame",JS_NewString(c,frameKey.c_str()));
+            const auto* step=world.SpriteAnimationObservation(id);auto events=JS_NewArray(c);unsigned i=0;
+            if(step)for(const auto& hit:step->events){auto e=JS_NewObject(c);JS_SetPropertyStr(c,e,"id",JS_NewString(c,hit.event.id.c_str()));JS_SetPropertyStr(c,e,"name",JS_NewString(c,hit.event.name.c_str()));JS_SetPropertyStr(c,e,"data",JS_NewString(c,hit.event.data.c_str()));JS_SetPropertyStr(c,e,"time",JS_NewFloat64(c,hit.event.time));JS_SetPropertyStr(c,e,"reverse",JS_NewBool(c,hit.reverse));JS_SetPropertyUint32(c,events,i++,e);}
+            JS_SetPropertyStr(c,out,"events",events);JS_SetPropertyStr(c,out,"finished",JS_NewBool(c,step&&step->finished));JS_SetPropertyStr(c,out,"overflow",JS_NewBool(c,step&&step->overflow));const auto error=step&&!step->error.empty()?step->error:resourceError;JS_SetPropertyStr(c,out,"error",JS_NewString(c,error=="loading"?"":error.c_str()));return out;
+        }
+        auto p=d->render->spritePlayback.value_or(SpritePlayback{});auto value=arg(2);
+        if(!KnownOptions(c,value,{"sheet","clip","frame","time","speed","playing","loop"}))return JS_ThrowTypeError(c,"unknown sprite animation setting");
+        for(auto field:std::vector<std::pair<const char*,std::string*>>{{"sheet",&p.sheet},{"clip",&p.clip},{"frame",&p.frame}}){auto v=JS_GetPropertyStr(c,value,field.first);if(!JS_IsUndefined(v)){if(!JS_IsString(v)){JS_FreeValue(c,v);return JS_ThrowTypeError(c,"sprite sheet/clip/frame must be strings");}const char* text=JS_ToCString(c,v);if(!text){JS_FreeValue(c,v);return JS_EXCEPTION;}*field.second=text;JS_FreeCString(c,text);}JS_FreeValue(c,v);}
+        for(auto field:std::vector<std::pair<const char*,bool*>>{{"playing",&p.playing},{"loop",&p.loop}}){auto v=JS_GetPropertyStr(c,value,field.first);if(!JS_IsUndefined(v)){if(!JS_IsBool(v)){JS_FreeValue(c,v);return JS_ThrowTypeError(c,"playing/loop must be Boolean");}*field.second=JS_ToBool(c,v);}JS_FreeValue(c,v);}
+        auto time=JS_GetPropertyStr(c,value,"time");if(!JS_IsUndefined(time)){if(!JS_IsNumber(time)||JS_ToFloat64(c,&p.time,time)<0){JS_FreeValue(c,time);return JS_ThrowTypeError(c,"time must be finite");}}JS_FreeValue(c,time);
+        auto speed=JS_GetPropertyStr(c,value,"speed");if(!JS_IsUndefined(speed)){double n=0;if(!JS_IsNumber(speed)||JS_ToFloat64(c,&n,speed)<0||!std::isfinite(n)){JS_FreeValue(c,speed);return JS_ThrowTypeError(c,"speed must be finite");}p.speed=float(n);}JS_FreeValue(c,speed);
+        if(!ValidSpritePlayback(p))return JS_ThrowTypeError(c,"invalid sprite animation time/speed/identity");
+        std::string error;if(!world.SetSpritePlayback(id,p,error))return JS_ThrowTypeError(c,"sprite animation: %s",error.c_str());return JS_TRUE;
+    }
     if(op=="spriteInfo"||op=="spriteSet") {
         const auto* definition=world.RuntimeDefinition(id);
         if(!definition||!definition->render||definition->render->shape!=SceneShape::Sprite)return op=="spriteInfo"?JS_NULL:JS_FALSE;

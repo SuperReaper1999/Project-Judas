@@ -98,3 +98,5 @@ own projections and LOD/resource interests. Lens settings survive authored
 serialization and new cold saves; existing default-camera saves remain unchanged.
 
 See [Stage 1 report](../2D_STAGE1.md) and [camera APIs](effects-camera.md).
+
+[Stage 3: sprite sheets, clip authoring and frame events](sprite-animation.md) extends these sprites through an optional typed content resource.

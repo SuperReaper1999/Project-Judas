@@ -1,0 +1,16 @@
+Shadow maps: on
+Graphics: 4.5 (Core Profile) Mesa 26.0.8-1ubuntu0.3 / llvmpipe (LLVM 21.1.8, 256 bits)
+Renderer fragment texture units: 32 (material path uses 12)
+PASS create independently coloured atlas fixture
+PASS track actual PNG
+PASS slice two adjacent cells without gutters
+PASS write typed sheet
+PASS track sheet resource
+PASS start actual GL runtime
+PASS normal scene requests sheet and image
+PASS first frame is red over its entire physical visual extent, not whole-sheet red/green
+PASS exact frame boundary changes actual runtime pixels to green
+PASS seek/pause smooth sprite without gameplay events
+PASS linear sampling cannot bleed adjacent green cell at either sprite edge
+PASS multiple render views never advance animation or emit events
+SUMMARY 12 checks 0 failures

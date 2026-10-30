@@ -6,6 +6,7 @@
 #include "AssetDatabase.h"
 #include "CollisionAsset.h"
 #include "PhysicalMaterial.h"
+#include "SpriteAnimation.h"
 #include "Material.h"
 #include "Environment.h"
 #include "Prefab.h"
@@ -94,6 +95,7 @@ bool CanCreateMetadata(const std::string& metaPath, std::string& outError) {
 const char* AssetTypeName(AssetType type) {
     switch (type) {
         case AssetType::Collision:return "collision";
+        case AssetType::SpriteSheet:return "spriteSheet";
         case AssetType::PhysicalMaterial:return "physicalMaterial";
         case AssetType::Deformable:return "deformable";
         case AssetType::AudioEffect:return "audio-effect";
@@ -116,6 +118,7 @@ const char* AssetTypeName(AssetType type) {
 
 bool AssetTypeForExtension(const std::string& extension, AssetType& outType) {
     const std::string e = Lower(extension);
+    if(e==".judassprite"){outType=AssetType::SpriteSheet;return true;}
     if(e==".judasphysmat"){outType=AssetType::PhysicalMaterial;return true;}
     if(e==".judascollision"){outType=AssetType::Collision;return true;}
     if(e==".judasdeform"){outType=AssetType::Deformable;return true;}
@@ -173,6 +176,7 @@ bool AssetDatabase::ValidateAssetFile(const std::string& path, AssetType type, s
             TextureData data;
             return LoadTextureFromFile(path, data, outError);
         }
+        case AssetType::SpriteSheet:{SpriteSheet sheet;return LoadSpriteSheet(path,sheet,outError);}
         case AssetType::PhysicalMaterial:{PhysicalMaterial m;return LoadPhysicalMaterial(path,m,outError);}
         case AssetType::Collision: {CollisionAsset a;return LoadCollisionAsset(path,a,outError);}
         case AssetType::Deformable: {std::ifstream s(path,std::ios::binary);std::vector<unsigned char> bytes{std::istreambuf_iterator<char>(s),{}};DeformableAsset a;return DecodeDeformableAsset(bytes,a,outError);}
@@ -238,6 +242,7 @@ bool AssetDatabase::ReadMeta(const std::string& metaPath, AssetId& outId, AssetT
             else if (tokens[1].first == "font") outType = AssetType::Font;
             else if (tokens[1].first == "audio") outType = AssetType::Audio;
             else if (tokens[1].first == "script") outType = AssetType::Script;
+            else if(tokens[1].first=="spriteSheet")outType=AssetType::SpriteSheet;
             else if(tokens[1].first=="physicalMaterial")outType=AssetType::PhysicalMaterial;
             else if(tokens[1].first=="collision")outType=AssetType::Collision;
             else if(tokens[1].first=="deformable")outType=AssetType::Deformable;

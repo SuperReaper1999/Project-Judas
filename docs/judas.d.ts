@@ -84,6 +84,13 @@ declare module "judas" {
     flipX:boolean;flipY:boolean;nearest:boolean;pixelSnap:boolean;alphaPick:boolean;ySort:boolean;
     sortingLayer:number;order:number;
   }
+  export interface SpritePlaybackSettings {
+    sheet:AssetId;clip:string;frame:string;time:number;speed:number;playing:boolean;loop:boolean;
+  }
+  export interface SpriteFrameEvent {id:string;name:string;data:string;time:number;reverse:boolean}
+  export interface SpriteAnimationInfo extends SpritePlaybackSettings {
+    ready:boolean;sampledFrame:string;events:readonly SpriteFrameEvent[];finished:boolean;overflow:boolean;error:string;
+  }
   /** Presentation lens; perspective remains the default. Pixel mode requires orthographic. */
   export interface CameraLens {
     projection:'perspective'|'orthographic';height:number;pixelPerfect:boolean;
@@ -253,6 +260,10 @@ declare module "judas" {
     readonly sprite:SpriteSettings|null;
     /** Atomic patch. Invalid values throw; non-sprites return false. Does not add collision. */
     setSprite(settings:Partial<SpriteSettings>):boolean;
+    /** Last fixed sample. Read once per fixed callback for gameplay; snapshots are detached. */
+    readonly spriteAnimation:SpriteAnimationInfo|null;
+    /** Atomic playback patch. Explicit time seeks emit no markers. Unknown/missing content throws. */
+    setSpriteAnimation(settings:Partial<SpritePlaybackSettings>):boolean;
     /** Independent Render component gate; throws when that component is absent. */
     rendererVisible:boolean;
     readonly modelParts: readonly ModelPart[] | null;

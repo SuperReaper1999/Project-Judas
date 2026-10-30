@@ -1,0 +1,10 @@
+PASS open real animation workshop: 
+PASS project input map includes interaction
+PASS fresh process reads real checksum-protected slot: 
+PASS fresh process reconstructs authored snapshot
+PASS fresh process restores physical world and sprite phase: 
+PASS restored named clip/double phase/pause match exact saved endpoint
+PASS restoration does not invent or replay a marker
+PASS cold continuation equals uninterrupted actual playback endpoint
+PASS cold continuation does not duplicate attack marker
+SUMMARY 9 checks 0 failures

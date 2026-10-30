@@ -1,0 +1,47 @@
+PASS grid slicing creates stable coordinate frame keys
+PASS variable frame times and zero/end markers valid
+PASS sample starts on first frame with physical art scale
+PASS exact frame boundary belongs to following frame
+PASS exact loop endpoint samples first frame
+PASS nonloop endpoint holds last frame
+PASS forward half-open interval emits marker exactly once
+PASS zero delta emits no markers
+PASS loop boundary preserves distinct authored end and start events
+PASS next step does not duplicate boundary events
+PASS reverse interval delivers reverse marker
+PASS large delta enumerates crossed markers over multiple loops
+PASS event overflow rejects atomically, no partial publication
+PASS pause freezes clock and event observations
+PASS speed and nonloop completion clamp only animation clock
+PASS completion is one boundary observation, never repeated while stopped
+PASS reverse completion reaches start
+PASS missing clip leaves time unchanged with diagnostic
+PASS NaN playback speed rejected
+PASS negative step rejected; reverse uses signed speed
+PASS re-slice preserves stable references and renamed labels
+PASS removed referenced frame rejects re-slice atomically
+PASS sheet roundtrip is deterministic
+PASS newer/malformed sheet leaves previous data intact
+PASS out-of-image rectangle rejected
+PASS duplicate stable keys rejected
+PASS zero duration rejected
+PASS out-of-clip event rejected
+PASS double phase/speed/pause serialization exact
+PASS scene/prefab descriptor carries named clip and exact phase
+PASS scene dependency closure includes sprite sheet
+PASS animated scene fingerprint valid
+PASS playback semantics affect scene fingerprint
+PASS author image for actual editor sheet-creation workflow
+PASS image context action creates and tracks a real typed sprite sheet
+PASS repeating image action reuses existing stable sheet identity
+PASS validated asset writes
+PASS editor opens clean reusable draft
+PASS editor draft detects edits
+PASS unsaved editor draft cannot silently disappear on switch
+PASS editor explicit save clears dirty state
+PASS independent reimport changes asset
+PASS concurrent source changes cannot be overwritten by stale draft
+PASS export dependency closure includes underlying texture
+PASS decimal endpoint marker is not rounded beyond its nonloop clip boundary
+PASS unvalidated empty native clip rejects without dereferencing an absent frame
+SUMMARY 46 checks 0 failures

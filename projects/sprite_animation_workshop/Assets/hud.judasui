@@ -1,0 +1,4 @@
+JudasUI 1
+1280 720 1 1 0 2
+"canvas" "" 0 0 1 1 0 0 1 0 0 1 1 0 0 180 40 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 8 22 0 0 1 "" "" ""
+"help" "canvas" 2 0 1 1 0 1 1 0 0 0 0 24 20 1100 58 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 8 20 0 0 1 "PLATFORMER | A/D or arrows: move | Space: jump | Edit Assets/game.js" "" ""

@@ -1,0 +1,17 @@
+
+This GDB supports auto-downloading debuginfo from the following URLs:
+  <https://debuginfod.ubuntu.com>
+Enable debuginfod for this session? (y or [n]) [answered N; input not from terminal]
+Debuginfod has been disabled.
+To make this setting permanent, add 'set debuginfod enabled off' to .gdbinit.
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/usr/lib/x86_64-linux-gnu/libthread_db.so.1".
+
+Program received signal SIGSEGV, Segmentation fault.
+0x000055555655f5d3 in JobSystem::Submit(std::function<void (JobContext&)>, JobPriority, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) ()
+#0  0x000055555655f5d3 in JobSystem::Submit(std::function<void (JobContext&)>, JobPriority, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) ()
+#1  0x0000555555700af8 in WorldStreaming::WorldStreaming(RuntimeWorld&, ResourceManager&, Project, WorldManifest) ()
+#2  0x00005555556c4429 in JudasValidationMain(int, char**) ()
+#3  0x00007ffff762a601 in __libc_start_call_main (main=main@entry=0x5555556ba1f0 <main>, argc=argc@entry=3, argv=argv@entry=0x7fffffffd218) at ../sysdeps/nptl/libc_start_call_main.h:59
+#4  0x00007ffff762a718 in __libc_start_main_impl (main=0x5555556ba1f0 <main>, argc=3, argv=0x7fffffffd218, init=<optimized out>, fini=<optimized out>, rtld_fini=<optimized out>, stack_end=0x7fffffffd208) at ../csu/libc-start.c:360
+#5  0x00005555556ba5f5 in _start ()

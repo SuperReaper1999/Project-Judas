@@ -52,6 +52,7 @@ extern char** environ;
 #include "InteractivePlay.h"
 #include "RuntimeWorld.h"
 #include "AnimationTimeline.h"
+#include "SpriteSheetEditor.h"
 #include "SceneSession.h"
 #include "Scene.h"
 #include "SceneSerialization.h"
@@ -600,6 +601,11 @@ void EditorApplication::HandleRequests(EditorRequests& r) {
     }
     if (r.quit && (m_document.IsDirty()||m_project.IsDirty()) && m_panels.mode == EditorMode::Play) StopPlay();
     const bool terrainReplaces = r.quit || r.newScene || r.open || r.newProject || r.openProject || r.play || r.runProject || r.exportProject || !r.openSceneRelative.empty();
+    if(terrainReplaces&&m_spriteSheetEditor&&m_spriteSheetEditor->Dirty()){
+        m_panels.showSpriteSheetEditor=true;
+        m_panels.status="Save or discard the sprite-sheet draft before leaving, playing or exporting";
+        return;
+    }
     if(terrainReplaces&&m_terrain&&!m_terrain->Guard(m_panels))return;
     if(terrainReplaces&&m_volumeTerrain&&!m_volumeTerrain->Guard(m_panels))return;
     const bool replacesDocument = r.quit || r.newScene || r.open || r.newProject || r.openProject ||
@@ -1690,6 +1696,8 @@ int EditorApplication::Run(int argc, char** argv) {
         m_animationTimeline->visible=m_panels.showAnimationTimeline;
         m_animationTimeline->Panel(m_panels,m_document.Selected());
         m_panels.showAnimationTimeline=m_animationTimeline->visible;
+        if(!m_spriteSheetEditor)m_spriteSheetEditor=std::make_unique<SpriteSheetEditor>();
+        m_spriteSheetEditor->Panel(m_panels);
         DrawEditorWorkspaceChrome(m_document, m_panels, requests);
         // While playing, the engine's own HUD occupies the top-left corner
         // and the authored panels are read-only anyway; only the menu bar
@@ -1925,6 +1933,18 @@ int EditorApplication::Run(int argc, char** argv) {
             if(importRecipe&&autotestFrame==6){m_panels.modelPreviewPlaying=true;m_panels.modelPreviewTime=.5f;}
             if(importRecipe&&autotestFrame==12){auto& parts=m_panels.importAccepted->preview->primitives;if(!parts.empty())m_panels.modelPreviewHidden={parts.front().part};}
 
+            if(std::getenv("JUDAS_EDITOR_AUTOTEST_SPRITE_ANIMATION")){
+                if(autotestFrame==3){for(const auto& [id,record]:host.Assets().Records())if(record.type==AssetType::SpriteSheet){m_panels.spriteSheetEdit=id;m_panels.showSpriteSheetEditor=true;break;}m_panels.showProfiler=false;m_panels.showWorldBuilding=false;}
+                if(autotestFrame==8&&m_spriteSheetEditor){m_spriteSheetEditor->cell={24,48};m_spriteSheetEditor->clip=1;m_spriteSheetEditor->previewPlaying=true;}
+                if(autotestFrame==10&&m_spriteSheetEditor){
+                    auto& tool=*m_spriteSheetEditor;tool.Remember();tool.draft.frames[0].name+=" unsaved guard probe";
+                    EditorRequests probe;probe.quit=true;HandleRequests(probe);
+                    std::fprintf(stderr,"[Sprite animation editor] %s: unsaved sheet prevents desktop quit\n",!m_quit&&tool.Dirty()?"PASS":"FAIL");
+                    tool.draft=tool.undo.back();tool.undo.pop_back();m_panels.status="Sprite sheet preview; gameplay events are disabled";
+                }
+                if(autotestFrame==13){m_panels.showProfiler=false;m_panels.showWorldBuilding=false;m_panels.showUIDocument=false;ImGui::SetWindowFocus("Sprite sheets and frame animation");}
+                if(autotestFrame==14){ImGui::SetWindowFocus("Sprite sheets and frame animation");screenshot(std::string(autotest)+".sprite-sheet.png");std::fprintf(stderr,"[Sprite animation editor] %s: saved sheet loads and preview clock advances without scene mutation\n",m_spriteSheetEditor&&!m_spriteSheetEditor->path.empty()&&m_spriteSheetEditor->previewTime>0&&!m_spriteSheetEditor->Dirty()?"PASS":"FAIL");}
+            }
             const std::string prefix = autotest;
             if (pickingAutotest) {
                 // A private authored fixture supplies two tiny children under

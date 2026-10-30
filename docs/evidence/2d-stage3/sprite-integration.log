@@ -1,0 +1,52 @@
+PASS fresh test output
+PASS create normal project: 
+PASS create native 2D starter: 
+PASS save 2D project and scene
+PASS starter refuses overwriting authored assets
+PASS reopen project default 2D view and native sprite scene
+PASS runtime builds ordinary sprites: 
+PASS public starter script runs without faults
+PASS project JS owns actual orthographic pixel-perfect view
+PASS sprite player is explicitly visual, no hidden physics
+PASS runtime sprite mutation updates actual visual definition
+PASS invalid mutation atomically rejected
+PASS capture modern complete sprite/lens participants: 
+PASS write checked production slot to disk: 
+PASS restore modern scene definitions
+PASS fresh runtime restores complete participants: 
+PASS actual modern restored sprite settings and camera lens match saved state
+PASS sprite visual cannot silently become an unsupported collision shape
+PASS track ordinary API probe
+PASS API probe world builds
+PASS sprite/projection/multiplayer API probe has no VM faults
+PASS public JS contract: ray
+PASS public JS contract: detached
+PASS public JS contract: patched
+PASS public JS contract: invalid
+PASS public JS contract: atomic
+PASS public JS contract: independent
+PASS public JS contract: parallel
+PASS visible image pixels select front sorted sprite
+PASS transparent PNG border selects sprite underneath
+PASS explicit bounds picking includes transparent border
+PASS overlap cycling exposes actual sorted hits
+PASS child sprite selection follows its actual parented offset outside the parent bounds
+PASS off-centre flipped pivot moves pick bounds to the same side as rendered geometry
+PASS missing image placeholder remains selectable by bounds
+PASS image placement immediately selects new sprite
+PASS PNG dimensions determine aspect/32px per unit without collision
+PASS image placement is one undo transaction
+PASS redo restores sprite asset, transform and selection state
+PASS create sprite prefab through existing scene boundary
+PASS prefab properties retain native sprite data
+PASS generic prefab property override updates actual sprite settings
+PASS malformed sprite prefab overrides reject
+PASS 2D editor picks with parallel rays and distinct world origins
+PASS wheel zoom changes orthographic scale, not camera position
+PASS switching back restores the previous 3D editor camera
+PASS orthographic planetary LOD is independent of unused perspective FOV
+PASS orthographic height changes actual terrain refinement rather than using eye distance
+PASS invalid orthographic terrain projection rejects before publication
+PASS save authored orthographic render camera
+PASS render camera lens roundtrips exactly
+SUMMARY checks=51 failures=0

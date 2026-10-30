@@ -75,6 +75,15 @@ bool RuntimeWorld::ValidateVisualAssets(const SceneObject& o, std::string& error
         }
     }
     if(o.render&&o.render->shape==SceneShape::Sprite) {
+        if(o.render->spritePlayback){
+            if(!ValidSpritePlayback(*o.render->spritePlayback)||!m_assets){error="invalid sprite animation or unavailable resources";return false;}
+            const auto* record=m_assets->Assets()->Find(o.render->spritePlayback->sheet);
+            SpriteSheet sheet;auto sample=o.render->sprite;
+            if(!record||record->missing||record->type!=AssetType::SpriteSheet){error="missing/wrong-type sprite sheet";return false;}
+            if(!LoadSpriteSheet(record->path,sheet,error)||!SampleSpriteFrame(sheet,*o.render->spritePlayback,sample,error))return false;
+            const auto* image=m_assets->Assets()->Find(sheet.texture);
+            if(!image||image->missing||image->type!=AssetType::Texture){error="missing/wrong-type sprite sheet texture";return false;}
+        }
         if(!ValidSprite(o.render->sprite)){error="invalid sprite dimensions, pivot, image rectangle or sorting";return false;}
         if(m_assets&&!o.render->textureAsset.empty()) {
             const auto* db=m_assets->Assets();const auto* record=db?db->Find(o.render->textureAsset):nullptr;
@@ -115,6 +124,12 @@ bool RuntimeWorld::RequestVisualAssets(const SceneObject& o, std::string* outErr
     if(o.render&&o.render->shape==SceneShape::Sprite&&m_assets&&!o.render->textureAsset.empty()) {
         m_assets->AddRef(o.render->textureAsset);m_referencedAssets.push_back(o.render->textureAsset);
         m_assets->RequestTexture(o.render->textureAsset,JobPriority::High);
+    }
+    if(o.render&&o.render->spritePlayback&&m_assets){
+        const auto& id=o.render->spritePlayback->sheet;const auto* record=m_assets->Assets()->Find(id);SpriteSheet sheet;
+        if(!record||!LoadSpriteSheet(record->path,sheet,error)){if(outError)*outError=error;return false;}
+        for(const auto& ref:{id,sheet.texture}){m_assets->AddRef(ref);m_referencedAssets.push_back(ref);}
+        m_assets->GetSpriteSheet(id,error);m_assets->RequestTexture(sheet.texture,JobPriority::High);
     }
     if(o.render&&m_assets)for(const auto& slot:o.render->materials)if(!slot.asset.empty()){m_assets->AddRef(slot.asset);m_referencedAssets.push_back(slot.asset);m_assets->RequestMaterial(slot.asset,JobPriority::High);}
     if (!o.render || o.render->shape != SceneShape::Mesh || !m_assets) return true;
@@ -439,7 +454,7 @@ bool RuntimeWorld::AppendSceneObjects(const Scene& scene, bool authored,
     for(const auto& o:scene.Objects())if(o.wheel){m_wheelOwners.insert(o.id);m_wheelParticipants.insert(o.wheel->chassis);}
     for(const auto& o:scene.Objects())if(o.powertrain){m_powertrainOwners.insert(o.id);for(auto id:PowertrainReferences(*o.powertrain))m_powertrainParticipants.insert(id);}
     for(const auto& o:scene.Objects())if(o.deformable)m_deformableOwners.insert(o.id);
-    for(const auto& o:scene.Objects())if(o.animation)m_animationOwners.insert(o.id);
+    for(const auto& o:scene.Objects()){if(o.animation)m_animationOwners.insert(o.id);if(o.render&&o.render->spritePlayback)m_spriteAnimationOwners.insert(o.id);}
     for(const auto& o:scene.Objects())if(o.joint){m_jointOwners.insert(o.id);m_jointParticipants.insert(o.joint->bodyA);if(o.joint->bodyB)m_jointParticipants.insert(o.joint->bodyB);}
     const auto fail = [&](const SceneObject& o, const std::string& what) {
         outError = "object " + std::to_string(o.id) + " \"" + o.name + "\": " + what;
@@ -874,7 +889,7 @@ void RuntimeWorld::RestoreAuthoredState() {
     // scripts before clearing them so callbacks cannot recreate reset state.
     m_scripts.reset();m_network.reset();m_players.reset();spawnStates.clear();
     EndWeatherAudio();m_weather.clear();m_weatherResponses.clear();m_weatherShelter={};
-    m_ragdollReturns.clear();m_ragdollAutostarted.clear();ClearDeformables();ClearCharacters();m_wheels.clear();m_powertrains.clear();m_animationInstances.clear();m_physicalAnimations.clear();m_balances.clear();
+    m_ragdollReturns.clear();m_ragdollAutostarted.clear();ClearDeformables();ClearCharacters();m_wheels.clear();m_powertrains.clear();m_spriteAnimationOwners.clear();m_spriteSteps.clear();m_animationInstances.clear();m_physicalAnimations.clear();m_balances.clear();
     m_ui.reset();m_localization.reset();pointerCapture=false;m_touchEntityHistory.clear();m_touchArticulationHistory.clear();m_physics.ClearTouchHistory();
     if (!m_built) return;
     for(const auto& o:ScriptObjects())if(o.ui&&o.ui->enabled){std::string error;UI().Load(o.ui->asset,o.ui->name,o.id,error);}
@@ -1127,6 +1142,7 @@ bool RuntimeWorld::DestroyEntity(EntityId id, std::string* outError) {
     m_particleEmitters.erase(std::remove_if(m_particleEmitters.begin(),m_particleEmitters.end(),[&](const auto& e){return e.id==id;}),m_particleEmitters.end());
     ReleaseEntityAudio(id);
     if(m_ui)m_ui->RemoveOwner(id);
+    m_spriteAnimationOwners.erase(id);m_spriteSteps.erase(id);
     ReleaseRenderResources(id);
     m_basicWaterOwners.erase(id);
     e->lifecycle = EntityLifecycle::Destroyed;
@@ -1452,7 +1468,7 @@ void RuntimeWorld::Destroy() {
     m_ragdolls.clear();m_ragdollReturns.clear();m_ragdollAutostarted.clear();
     ClearDeformables();m_deformableOwners.clear();
     ClearCharacters();
-    m_animationInstances.clear();m_physicalAnimations.clear();m_balances.clear();m_animationOwners.clear();
+    m_spriteAnimationOwners.clear();m_spriteSteps.clear();m_animationInstances.clear();m_physicalAnimations.clear();m_balances.clear();m_animationOwners.clear();
     m_jointOwners.clear();m_jointParticipants.clear();m_runtimeJoints.clear();m_wheels.clear();m_wheelOwners.clear();m_wheelParticipants.clear();m_powertrains.clear();m_powertrainOwners.clear();m_powertrainParticipants.clear();
     m_runtimeTerrain.reset();m_liquid=std::make_unique<LiquidSystem>(false);m_hasLiquid=false;m_basicWaterOwners.clear();m_navigation.reset();m_ui.reset();m_localization.reset();pointerCapture=false;m_scriptDefinitions.clear();m_scriptOwners.clear();m_characterOwners.clear();m_touchEntityHistory.clear();m_touchArticulationHistory.clear();m_hasScripts=false;m_hasNavigation=false;m_hasPlanarPhysics=false;
     EndAudio();
@@ -1607,6 +1623,10 @@ void RuntimeWorld::ReconcileRenderResources(EntityId id){
  auto* e=FindEntity(id);
  const auto* d=it==m_scriptDefinitions.end()||(e&&e->lifecycle==EntityLifecycle::Destroyed)?nullptr:&it->second;
  if(d&&d->render){
+ if(d->render->spritePlayback){
+   demand.insert(d->render->spritePlayback->sheet);std::string error;
+   if(auto sheet=m_assets?m_assets->GetSpriteSheet(d->render->spritePlayback->sheet,error):nullptr)demand.insert(sheet->texture);
+ }
  auto textures=[&](const MaterialOverride& o){for(const auto& t:o.textures)if(t&&!t->empty())demand.insert(*t);};
  textures(d->render->instanceOverrides);
  for(const auto& v:d->render->materials){if(!v.asset.empty())demand.insert(v.asset);textures(v.overrides);}
@@ -1616,7 +1636,7 @@ void RuntimeWorld::ReconcileRenderResources(EntityId id){
  auto& previous=m_renderAssetDemand[id];
  for(const auto& a:demand)if(!previous.count(a)){m_assets->AddRef(a);
  auto* record=m_assets->Assets()->Find(a);
- if(record&&record->type==AssetType::Material)m_assets->RequestMaterial(a);else m_assets->RequestTexture(a);}
+ if(record&&record->type==AssetType::SpriteSheet){std::string error;m_assets->GetSpriteSheet(a,error);}else if(record&&record->type==AssetType::Material)m_assets->RequestMaterial(a);else m_assets->RequestTexture(a);}
  for(const auto& a:previous)if(!demand.count(a))m_assets->ReleaseRef(a);
  previous=std::move(demand);
  if(previous.empty())m_renderAssetDemand.erase(id);

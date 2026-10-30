@@ -236,6 +236,7 @@ void WriteObject(Writer& w, const SceneObject& o) {
         w.Line("render.mesh-asset", Quote(r.meshAsset));
         w.Line("render.texture-asset", Quote(r.textureAsset));
         if(r.shape==SceneShape::Sprite)w.Line("render.sprite-v1",Quote(EncodeSprite(r.sprite)));
+        if(r.spritePlayback)w.Line("render.sprite-playback-v1",Quote(EncodeSpritePlayback(*r.spritePlayback)));
         if(!r.hiddenParts.empty()){w.Line("render.hidden-part-count",std::to_string(r.hiddenParts.size()));for(size_t i=0;i<r.hiddenParts.size();++i)w.Line("render.hidden-part-"+std::to_string(i),Quote(r.hiddenParts[i]));}
         if(!r.materials.empty())w.Line("render.materials",Quote(EncodeMaterialSlots(r.materials)));
         if(!r.visible)w.Line("render.visible","false");
@@ -883,6 +884,7 @@ bool ParseObject(Reader& reader, const std::vector<Token>& header, const Block& 
         if (!p.Float("render.secondary-alpha", r.secondaryAlpha)) return false;
         if (!p.String("render.mesh-asset", r.meshAsset)) return false;
         if (!p.String("render.texture-asset", r.textureAsset)) return false;
+        if(p.Has("render.sprite-playback-v1")){std::string text,error;SpritePlayback playback;if(!p.String("render.sprite-playback-v1",text)||r.shape!=SceneShape::Sprite||!DecodeSpritePlayback(text,playback,error))return reader.Fail("sprite playback: "+error);r.spritePlayback=playback;}
         if(p.Has("render.sprite-v1")) {
             std::string text,error;
             if(!p.String("render.sprite-v1",text))return false;

@@ -251,3 +251,11 @@ use the existing joint solver. Scene descriptors and modern physical save
 participants retain geometry, mass, inertia and fixed plane; legacy world deltas
 reject them. Player movement/cameras remain ordinary editable project JavaScript.
 See [Stage 2](2D_STAGE2.md) and [2D API/boundaries](judasjs/physics-2d.md).
+
+Sprite sheets and frame clips are optional typed CPU resources. `SpriteAnimation`
+owns content validation/sampling; `WorldSpriteAnimation` owns fixed-boundary
+instance clocks and observations. Skeletal and sprite markers share interval
+traversal, while preview/render passes never advance gameplay. Existing scene
+definitions, prefab/stream snapshots, resource generations and modern saves own
+their normal lifetime; conditional content hashes prevent silent clip reinterpretation.
+See [Stage 3](2D_STAGE3.md) and [the sprite animation API](judasjs/sprite-animation.md).

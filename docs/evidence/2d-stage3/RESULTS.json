@@ -1,0 +1,402 @@
+{
+  "format": 1,
+  "startedUtc": "2026-10-30T20:36:45.520293+00:00",
+  "sourceRevision": "9e3d528632bfd692539f7e4d613b1bd55d3b7700",
+  "trackedWorktreeStatus": "M CMakeLists.txt\n M README.md\n M docs/ARCHITECTURE.md\n M docs/JUDASJS.md\n M docs/judas.d.ts\n M docs/judasjs/API_INVENTORY.md\n M docs/judasjs/api-inventory.json\n M docs/judasjs/sprites-2d.md\n M scripts/check_judasjs_api.mjs\n M src/AssetDatabase.cpp\n M src/AssetDatabase.h\n M src/AssetDependencies.cpp\n M src/ResourceManager.cpp\n M src/ResourceManager.h\n M src/RuntimeWorld.cpp\n M src/RuntimeWorld.h\n M src/SaveService.cpp\n M src/Scene.cpp\n M src/Scene.h\n M src/SceneFingerprint.cpp\n M src/SceneSerialization.cpp\n M src/ScriptSystem.cpp\n M src/Simulation.cpp\n M src/SkeletalAnimation.cpp\n M src/WorldPersistence.cpp\n M src/WorldPresentation.cpp\n M src/WorldRegions.cpp\n M src/editor/ComponentEditors.cpp\n M src/editor/EditorApplication.cpp\n M src/editor/EditorApplication.h\n M src/editor/EditorPanels.cpp\n M src/editor/EditorPanels.h\n M src/editor/EditorPreferences.cpp\n M src/modding/ModContent.cpp\n M tools/validation/suites.json",
+  "manifestSha256": "d7da948da587ce97085633dcdc9797b9d5a118ca220ace0f7aedaeb4611a7c67",
+  "trackedDiffSha256": "9dfcb4265f50f43bbfa9a6be858025e33b7c5e1bf5fc7a4e8f6ab3a9f13c3b6d",
+  "platform": "Linux-7.0.0-42-generic-x86_64-with-glibc2.43",
+  "machine": "x86_64",
+  "cpuCount": 12,
+  "groups": [],
+  "tests": [
+    {
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/2d-stage1-build/judas_sprite_animation_render_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/2d-stage3-evidence/checkpoint-gates/sprite-animation-render"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/2d-stage3-evidence/checkpoint-gates",
+      "timeoutSeconds": 180.0,
+      "binarySha256": "d8808dd22aacf3f47b7988e5718fd29600ea7bd4d75a135ef60008d321737d27",
+      "exit": 0,
+      "status": "passed",
+      "binarySha256After": "d8808dd22aacf3f47b7988e5718fd29600ea7bd4d75a135ef60008d321737d27",
+      "seconds": 1.0270386799966218,
+      "buildIdentity": {
+        "architecture": "x86_64",
+        "build_id": "1.0.4-alpha.1-Experimental-9e3d528-dirty-eb4684c41ef7-u2b37492afe83",
+        "channel": "Experimental",
+        "compiler": "GNU",
+        "compiler_version": "15.2.0",
+        "configuration": "Release",
+        "maturity": "alpha",
+        "platform": "Linux",
+        "release_name": "Judas Engine Alpha v1.0.4",
+        "schema": 1,
+        "source_dirty": true,
+        "source_fingerprint": "eb4684c41ef79b3a0bfa80d7912463fbe1154355b7e1bc69b2ee52cf0dab40aa",
+        "source_origin": "git",
+        "source_revision": "9e3d528632bfd692539f7e4d613b1bd55d3b7700",
+        "source_tree": "bf592c3a5274d75901e770d8f7bb44604dfafc25",
+        "source_untracked_count": 29,
+        "source_untracked_fingerprint": "2b37492afe833d346ade5e0e3428bf6d31136382250d6f72568d25d3a41417ec",
+        "version": "1.0.4-alpha.1"
+      },
+      "name": "sprite-animation-render"
+    },
+    {
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/2d-stage1-build/judas_sprite_animation_integration_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/projects/sprite_animation_workshop",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/2d-stage3-evidence/checkpoint-gates/sprite-animation-project"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/2d-stage3-evidence/checkpoint-gates",
+      "timeoutSeconds": 180.0,
+      "binarySha256": "e57cda22ba1c506e34b2c8c651af2e7ab4ae8b880d6dff60b8636787c3551479",
+      "exit": 0,
+      "status": "passed",
+      "binarySha256After": "e57cda22ba1c506e34b2c8c651af2e7ab4ae8b880d6dff60b8636787c3551479",
+      "seconds": 0.2257335399990552,
+      "buildIdentity": {
+        "architecture": "x86_64",
+        "build_id": "1.0.4-alpha.1-Experimental-9e3d528-dirty-eb4684c41ef7-u2b37492afe83",
+        "channel": "Experimental",
+        "compiler": "GNU",
+        "compiler_version": "15.2.0",
+        "configuration": "Release",
+        "maturity": "alpha",
+        "platform": "Linux",
+        "release_name": "Judas Engine Alpha v1.0.4",
+        "schema": 1,
+        "source_dirty": true,
+        "source_fingerprint": "eb4684c41ef79b3a0bfa80d7912463fbe1154355b7e1bc69b2ee52cf0dab40aa",
+        "source_origin": "git",
+        "source_revision": "9e3d528632bfd692539f7e4d613b1bd55d3b7700",
+        "source_tree": "bf592c3a5274d75901e770d8f7bb44604dfafc25",
+        "source_untracked_count": 29,
+        "source_untracked_fingerprint": "2b37492afe833d346ade5e0e3428bf6d31136382250d6f72568d25d3a41417ec",
+        "version": "1.0.4-alpha.1"
+      },
+      "name": "sprite-animation-integration"
+    },
+    {
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/2d-stage1-build/judas_sprite_animation_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/2d-stage3-evidence/checkpoint-gates/sprite-animation"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/2d-stage3-evidence/checkpoint-gates",
+      "timeoutSeconds": 180.0,
+      "binarySha256": "9ca9408f386fcf10856e20424e5fc1531fb02e4157cf08650a78b399ed11eb10",
+      "exit": 0,
+      "status": "passed",
+      "binarySha256After": "9ca9408f386fcf10856e20424e5fc1531fb02e4157cf08650a78b399ed11eb10",
+      "seconds": 0.06976746999862371,
+      "buildIdentity": {
+        "architecture": "x86_64",
+        "build_id": "1.0.4-alpha.1-Experimental-9e3d528-dirty-eb4684c41ef7-u2b37492afe83",
+        "channel": "Experimental",
+        "compiler": "GNU",
+        "compiler_version": "15.2.0",
+        "configuration": "Release",
+        "maturity": "alpha",
+        "platform": "Linux",
+        "release_name": "Judas Engine Alpha v1.0.4",
+        "schema": 1,
+        "source_dirty": true,
+        "source_fingerprint": "eb4684c41ef79b3a0bfa80d7912463fbe1154355b7e1bc69b2ee52cf0dab40aa",
+        "source_origin": "git",
+        "source_revision": "9e3d528632bfd692539f7e4d613b1bd55d3b7700",
+        "source_tree": "bf592c3a5274d75901e770d8f7bb44604dfafc25",
+        "source_untracked_count": 29,
+        "source_untracked_fingerprint": "2b37492afe833d346ade5e0e3428bf6d31136382250d6f72568d25d3a41417ec",
+        "version": "1.0.4-alpha.1"
+      },
+      "name": "sprite-animation"
+    },
+    {
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/2d-stage1-build/judas_planar_physics_tests"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/2d-stage3-evidence/checkpoint-gates",
+      "timeoutSeconds": 180.0,
+      "binarySha256": "7570b1257218983d106fae6d4a5216ecee7e116f0b42774fdf9bd67db741fe6f",
+      "exit": 0,
+      "status": "passed",
+      "binarySha256After": "7570b1257218983d106fae6d4a5216ecee7e116f0b42774fdf9bd67db741fe6f",
+      "seconds": 0.06791519599937601,
+      "buildIdentity": {
+        "architecture": "x86_64",
+        "build_id": "1.0.4-alpha.1-Experimental-9e3d528-dirty-eb4684c41ef7-u2b37492afe83",
+        "channel": "Experimental",
+        "compiler": "GNU",
+        "compiler_version": "15.2.0",
+        "configuration": "Release",
+        "maturity": "alpha",
+        "platform": "Linux",
+        "release_name": "Judas Engine Alpha v1.0.4",
+        "schema": 1,
+        "source_dirty": true,
+        "source_fingerprint": "eb4684c41ef79b3a0bfa80d7912463fbe1154355b7e1bc69b2ee52cf0dab40aa",
+        "source_origin": "git",
+        "source_revision": "9e3d528632bfd692539f7e4d613b1bd55d3b7700",
+        "source_tree": "bf592c3a5274d75901e770d8f7bb44604dfafc25",
+        "source_untracked_count": 29,
+        "source_untracked_fingerprint": "2b37492afe833d346ade5e0e3428bf6d31136382250d6f72568d25d3a41417ec",
+        "version": "1.0.4-alpha.1"
+      },
+      "name": "planar-physics"
+    },
+    {
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/2d-stage1-build/judas_planar_integration_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/2d-stage3-evidence/checkpoint-gates/planar-project"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/2d-stage3-evidence/checkpoint-gates",
+      "timeoutSeconds": 180.0,
+      "binarySha256": "7bd742667cc5fd1f7c7eda22dd02b8d5acc505b3e8060e642b68593c6c6541e0",
+      "exit": 0,
+      "status": "passed",
+      "binarySha256After": "7bd742667cc5fd1f7c7eda22dd02b8d5acc505b3e8060e642b68593c6c6541e0",
+      "seconds": 0.27718299999833107,
+      "buildIdentity": {
+        "architecture": "x86_64",
+        "build_id": "1.0.4-alpha.1-Experimental-9e3d528-dirty-eb4684c41ef7-u2b37492afe83",
+        "channel": "Experimental",
+        "compiler": "GNU",
+        "compiler_version": "15.2.0",
+        "configuration": "Release",
+        "maturity": "alpha",
+        "platform": "Linux",
+        "release_name": "Judas Engine Alpha v1.0.4",
+        "schema": 1,
+        "source_dirty": true,
+        "source_fingerprint": "eb4684c41ef79b3a0bfa80d7912463fbe1154355b7e1bc69b2ee52cf0dab40aa",
+        "source_origin": "git",
+        "source_revision": "9e3d528632bfd692539f7e4d613b1bd55d3b7700",
+        "source_tree": "bf592c3a5274d75901e770d8f7bb44604dfafc25",
+        "source_untracked_count": 29,
+        "source_untracked_fingerprint": "2b37492afe833d346ade5e0e3428bf6d31136382250d6f72568d25d3a41417ec",
+        "version": "1.0.4-alpha.1"
+      },
+      "name": "planar-integration"
+    },
+    {
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/2d-stage1-build/judas_sprite_math_tests"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/2d-stage3-evidence/checkpoint-gates",
+      "timeoutSeconds": 180.0,
+      "binarySha256": "deb47af1d1173a037699f54c43b80e66761effdb7e9ead1150cc2c6bb77dee57",
+      "exit": 0,
+      "status": "passed",
+      "binarySha256After": "deb47af1d1173a037699f54c43b80e66761effdb7e9ead1150cc2c6bb77dee57",
+      "seconds": 0.0018646080061444081,
+      "buildIdentity": {
+        "architecture": "x86_64",
+        "build_id": "1.0.4-alpha.1-Experimental-9e3d528-dirty-eb4684c41ef7-u2b37492afe83",
+        "channel": "Experimental",
+        "compiler": "GNU",
+        "compiler_version": "15.2.0",
+        "configuration": "Release",
+        "maturity": "alpha",
+        "platform": "Linux",
+        "release_name": "Judas Engine Alpha v1.0.4",
+        "schema": 1,
+        "source_dirty": true,
+        "source_fingerprint": "eb4684c41ef79b3a0bfa80d7912463fbe1154355b7e1bc69b2ee52cf0dab40aa",
+        "source_origin": "git",
+        "source_revision": "9e3d528632bfd692539f7e4d613b1bd55d3b7700",
+        "source_tree": "bf592c3a5274d75901e770d8f7bb44604dfafc25",
+        "source_untracked_count": 29,
+        "source_untracked_fingerprint": "2b37492afe833d346ade5e0e3428bf6d31136382250d6f72568d25d3a41417ec",
+        "version": "1.0.4-alpha.1"
+      },
+      "name": "sprite-math"
+    },
+    {
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/2d-stage1-build/judas_sprite_integration_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/2d-stage3-evidence/checkpoint-gates/sprite-project"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/2d-stage3-evidence/checkpoint-gates",
+      "timeoutSeconds": 180.0,
+      "binarySha256": "99ee495a573193be08db2bd2fda3938a15e320de1547cf6b8bcd55806f057039",
+      "exit": 0,
+      "status": "passed",
+      "binarySha256After": "99ee495a573193be08db2bd2fda3938a15e320de1547cf6b8bcd55806f057039",
+      "seconds": 0.17585809099546168,
+      "buildIdentity": {
+        "architecture": "x86_64",
+        "build_id": "1.0.4-alpha.1-Experimental-9e3d528-dirty-eb4684c41ef7-u2b37492afe83",
+        "channel": "Experimental",
+        "compiler": "GNU",
+        "compiler_version": "15.2.0",
+        "configuration": "Release",
+        "maturity": "alpha",
+        "platform": "Linux",
+        "release_name": "Judas Engine Alpha v1.0.4",
+        "schema": 1,
+        "source_dirty": true,
+        "source_fingerprint": "eb4684c41ef79b3a0bfa80d7912463fbe1154355b7e1bc69b2ee52cf0dab40aa",
+        "source_origin": "git",
+        "source_revision": "9e3d528632bfd692539f7e4d613b1bd55d3b7700",
+        "source_tree": "bf592c3a5274d75901e770d8f7bb44604dfafc25",
+        "source_untracked_count": 29,
+        "source_untracked_fingerprint": "2b37492afe833d346ade5e0e3428bf6d31136382250d6f72568d25d3a41417ec",
+        "version": "1.0.4-alpha.1"
+      },
+      "name": "sprite-integration"
+    },
+    {
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/2d-stage1-build/judas_sprite_render_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/2d-stage3-evidence/checkpoint-gates/sprite-render"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/2d-stage3-evidence/checkpoint-gates",
+      "timeoutSeconds": 180.0,
+      "binarySha256": "9d28e741c3370e2a31ea53cb7a0b5881ee33f11d77449a93ec561365126017cd",
+      "exit": 0,
+      "status": "passed",
+      "binarySha256After": "9d28e741c3370e2a31ea53cb7a0b5881ee33f11d77449a93ec561365126017cd",
+      "seconds": 1.427305561999674,
+      "buildIdentity": {
+        "architecture": "x86_64",
+        "build_id": "1.0.4-alpha.1-Experimental-9e3d528-dirty-eb4684c41ef7-u2b37492afe83",
+        "channel": "Experimental",
+        "compiler": "GNU",
+        "compiler_version": "15.2.0",
+        "configuration": "Release",
+        "maturity": "alpha",
+        "platform": "Linux",
+        "release_name": "Judas Engine Alpha v1.0.4",
+        "schema": 1,
+        "source_dirty": true,
+        "source_fingerprint": "eb4684c41ef79b3a0bfa80d7912463fbe1154355b7e1bc69b2ee52cf0dab40aa",
+        "source_origin": "git",
+        "source_revision": "9e3d528632bfd692539f7e4d613b1bd55d3b7700",
+        "source_tree": "bf592c3a5274d75901e770d8f7bb44604dfafc25",
+        "source_untracked_count": 29,
+        "source_untracked_fingerprint": "2b37492afe833d346ade5e0e3428bf6d31136382250d6f72568d25d3a41417ec",
+        "version": "1.0.4-alpha.1"
+      },
+      "name": "sprite-render"
+    },
+    {
+      "argv": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/2d-stage1-build/judas_mk2_rotation_tests"
+      ],
+      "cwd": "/home/conner/Documents/GitHub/Project-Judas/.cache/2d-stage3-evidence/checkpoint-gates",
+      "timeoutSeconds": 180.0,
+      "binarySha256": "ef4eb4b693a37db98f317c5344c02137ef151e8dc1bceb8cd4a9e3f1706fff02",
+      "exit": 0,
+      "status": "passed",
+      "binarySha256After": "ef4eb4b693a37db98f317c5344c02137ef151e8dc1bceb8cd4a9e3f1706fff02",
+      "seconds": 7.879429590000655,
+      "buildIdentity": {
+        "architecture": "x86_64",
+        "build_id": "1.0.4-alpha.1-Experimental-9e3d528-dirty-eb4684c41ef7-u2b37492afe83",
+        "channel": "Experimental",
+        "compiler": "GNU",
+        "compiler_version": "15.2.0",
+        "configuration": "Release",
+        "maturity": "alpha",
+        "platform": "Linux",
+        "release_name": "Judas Engine Alpha v1.0.4",
+        "schema": 1,
+        "source_dirty": true,
+        "source_fingerprint": "eb4684c41ef79b3a0bfa80d7912463fbe1154355b7e1bc69b2ee52cf0dab40aa",
+        "source_origin": "git",
+        "source_revision": "9e3d528632bfd692539f7e4d613b1bd55d3b7700",
+        "source_tree": "bf592c3a5274d75901e770d8f7bb44604dfafc25",
+        "source_untracked_count": 29,
+        "source_untracked_fingerprint": "2b37492afe833d346ade5e0e3428bf6d31136382250d6f72568d25d3a41417ec",
+        "version": "1.0.4-alpha.1"
+      },
+      "name": "mk2-rotation"
+    }
+  ],
+  "knownFindings": [
+    {
+      "id": "CCD-MESH-ARRIVAL",
+      "status": "resolved-first-arrival",
+      "scheduled": true,
+      "reason": "Pass2 finite swept-SAT bounds correct the validated first-arrival contract; it now runs in the ordinary collision group. This does not close later curved-sheet continuation.",
+      "evidence": "docs/evidence/prealpha-pass2/physics"
+    },
+    {
+      "id": "CCD-MESH-CONTINUATION",
+      "status": "resolved-original-fixtures-bounded-ccd",
+      "scheduled": true,
+      "reason": "Original unchanged mesh arrival/continuation fixtures pass with authoritative MK2. Bounded CCD, sidedness and deep initial-overlap limits remain; MK1 event scheduling has been removed.",
+      "evidence": "docs/evidence/prealpha-ccd-continuation-20261019"
+    },
+    {
+      "id": "FLU-001",
+      "status": "deferred-failing",
+      "scheduled": false,
+      "reason": "Legacy PBF settling contract retained unchanged; separate fluid review required.",
+      "evidence": "docs/evidence/m78-completion/FINDINGS_FINAL.json"
+    },
+    {
+      "id": "LEGACY-CONTINUATION",
+      "status": "documented-incompatible-history",
+      "scheduled": false,
+      "reason": "Original a106 snapshot lacks historical continuation data. New-format passes do not certify that snapshot.",
+      "evidence": "docs/evidence/m78-cold-boundary"
+    },
+    {
+      "id": "DENSE-CCD-TAIL",
+      "status": "open-performance-limit",
+      "scheduled": false,
+      "reason": "Original MK1 global event cascade is retired. Current MK2 measurements have their own workload scope; focused correctness gates do not certify universal dense-pile latency.",
+      "evidence": "docs/MK2_PHYSICS_ARCHITECTURE.md"
+    },
+    {
+      "id": "LIQUID-BAKE-ROTATION",
+      "status": "resolved-baking",
+      "scheduled": true,
+      "reason": "Baker and runtime use the same normalized owner/field frames and oriented gravity volumes; both original bake-only runtime-publication cases pass unchanged equivalence tolerances. Original full integration exposes separate retained exact-total comparison failure.",
+      "evidence": "docs/evidence/prealpha-liquid-rotation/REPORT.md"
+    },
+    {
+      "id": "LIQUID-BAKE-KNOTS",
+      "status": "resolved-baking",
+      "scheduled": true,
+      "reason": "Positive tetrahedral density is integrated into one monotone cumulative curve, including shared endpoints; unchanged strict Surface1 decoder accepts both original rotated bakes. A later origin sampling limitation remains separately failed.",
+      "evidence": "docs/evidence/prealpha-liquid-rotation/REPORT.md"
+    },
+    {
+      "id": "LIQUID-ORIGIN-GRID-QUERY",
+      "status": "open-query-continuity-failing",
+      "scheduled": false,
+      "reason": "The original half-turn fixture now bakes and publishes, then fails its unchanged post-512m-origin query comparison: float translation crosses a discontinuous disturbed-surface cell boundary. Conserved quantities and wave bytes remain unchanged. This full integration failure is preserved, not counted as a baking pass.",
+      "evidence": "docs/evidence/prealpha-liquid-rotation/REPORT.md"
+    },
+    {
+      "id": "LIQUID-ORIGIN-TOTAL-IDENTITY",
+      "status": "resolved-oracle-causal-baseline",
+      "scheduled": true,
+      "reason": "Pass3 preserves the original failed test and demonstrates its causal-baseline error. Current atomicity compares the immediate pre-request total with the same exact equality and every physical participant byte; earlier legitimate paired-flow conservation tolerance and liquid runtime are unchanged.",
+      "evidence": "docs/evidence/prealpha-pass3/integration/REPORT.md"
+    }
+  ],
+  "humanAcceptance": "not-established",
+  "scope": "explicit manifest subset",
+  "expectedSourceIdentity": {
+    "source_revision": "9e3d528632bfd692539f7e4d613b1bd55d3b7700",
+    "source_fingerprint": "eb4684c41ef79b3a0bfa80d7912463fbe1154355b7e1bc69b2ee52cf0dab40aa",
+    "source_dirty": true,
+    "source_untracked_fingerprint": "2b37492afe833d346ade5e0e3428bf6d31136382250d6f72568d25d3a41417ec"
+  },
+  "passed": true,
+  "finishedUtc": "2026-10-30T20:36:57.347642+00:00",
+  "sourceRevisionAfter": "9e3d528632bfd692539f7e4d613b1bd55d3b7700",
+  "trackedWorktreeStatusAfter": "M CMakeLists.txt\n M README.md\n M docs/ARCHITECTURE.md\n M docs/JUDASJS.md\n M docs/judas.d.ts\n M docs/judasjs/API_INVENTORY.md\n M docs/judasjs/api-inventory.json\n M docs/judasjs/sprites-2d.md\n M scripts/check_judasjs_api.mjs\n M src/AssetDatabase.cpp\n M src/AssetDatabase.h\n M src/AssetDependencies.cpp\n M src/ResourceManager.cpp\n M src/ResourceManager.h\n M src/RuntimeWorld.cpp\n M src/RuntimeWorld.h\n M src/SaveService.cpp\n M src/Scene.cpp\n M src/Scene.h\n M src/SceneFingerprint.cpp\n M src/SceneSerialization.cpp\n M src/ScriptSystem.cpp\n M src/Simulation.cpp\n M src/SkeletalAnimation.cpp\n M src/WorldPersistence.cpp\n M src/WorldPresentation.cpp\n M src/WorldRegions.cpp\n M src/editor/ComponentEditors.cpp\n M src/editor/EditorApplication.cpp\n M src/editor/EditorApplication.h\n M src/editor/EditorPanels.cpp\n M src/editor/EditorPanels.h\n M src/editor/EditorPreferences.cpp\n M src/modding/ModContent.cpp\n M tools/validation/suites.json",
+  "trackedDiffSha256After": "9dfcb4265f50f43bbfa9a6be858025e33b7c5e1bf5fc7a4e8f6ab3a9f13c3b6d",
+  "expectedSourceIdentityAfter": {
+    "source_revision": "9e3d528632bfd692539f7e4d613b1bd55d3b7700",
+    "source_fingerprint": "eb4684c41ef79b3a0bfa80d7912463fbe1154355b7e1bc69b2ee52cf0dab40aa",
+    "source_dirty": true,
+    "source_untracked_fingerprint": "2b37492afe833d346ade5e0e3428bf6d31136382250d6f72568d25d3a41417ec"
+  }
+}

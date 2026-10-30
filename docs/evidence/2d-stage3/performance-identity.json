@@ -1,0 +1,13 @@
+{
+  "utc": "2026-10-30T20:38:50.432031+00:00",
+  "command": [
+    "/usr/bin/time",
+    "-v",
+    ".cache/2d-stage1-build/judas_sprite_animation_benchmark",
+    "projects/sprite_animation_workshop/Sprite_Animation_Workshop.judasproj"
+  ],
+  "binarySha256": "22a3b203dfc0e2a80c1a1f08d37edf65212b5f1eba6a69785c6ad246b45cd114",
+  "buildsConcurrent": false,
+  "desktopHostShared": true,
+  "exit": 0
+}

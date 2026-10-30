@@ -1,0 +1,22 @@
+FRAMES 420
+FRAME_SECONDS 0.016666667
+ACTION interact 1 90 91
+SCREENSHOT 100 .cache/2d-stage3-evidence/application/strike.png
+AXIS move_x 1 130 170
+SCREENSHOT 145 .cache/2d-stage3-evidence/application/run.png
+ACTION jump 1 180 181
+SCREENSHOT 190 .cache/2d-stage3-evidence/application/jump.png
+ACTION topdown 1 230 231
+WAIT_SERVICES scene 10000 240
+EXPECT_SCENE Scenes/topdown.judas 245
+AXIS move_y 1 250 280
+SCREENSHOT 275 .cache/2d-stage3-evidence/application/topdown.png
+ACTION save_game 1 290 291
+WAIT_SERVICES save 10000 300
+ACTION load_game 1 315 316
+WAIT_SERVICES save 10000 325
+SCREENSHOT 335 .cache/2d-stage3-evidence/application/restored.png
+ACTION rotated 1 350 351
+WAIT_SERVICES scene 10000 360
+EXPECT_SCENE Scenes/rotated.judas 365
+SCREENSHOT 395 .cache/2d-stage3-evidence/application/rotated.png

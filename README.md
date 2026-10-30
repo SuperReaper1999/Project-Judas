@@ -201,3 +201,5 @@ features should remain clearly scoped.
 
 Project Judas is licensed under the [MIT License](LICENSE). Vendored
 dependencies retain their own notices and licence terms.
+
+Experimental native 2D: [Stage 3 sprite sheets, animation and events](docs/2D_STAGE3.md), with an editable Sprite Animation Workshop. Main and published Alpha releases are unchanged by this development.

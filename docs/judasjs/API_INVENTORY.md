@@ -1,6 +1,6 @@
 # Current public JudasJS inventory
 
-Current public surface identity: `Current public module including Experimental 2D Stage 2; source version in engine-version.json`. Includes optional network sessions and NetworkEntity handles; see [networking](network.md). Human/platform acceptance is recorded separately in [the current documentation](../JUDASJS.md), not inferred from API coverage.
+Current public surface identity: `Current public module including Experimental 2D Stage 3; source version in engine-version.json`. Includes optional network sessions and NetworkEntity handles; see [networking](network.md). Human/platform acceptance is recorded separately in [the current documentation](../JUDASJS.md), not inferred from API coverage.
 Each row is a runtime export/member (constructors and plain handle fields included).
 Native dispatcher operations are implementation details, not additional JS APIs.
 
@@ -135,8 +135,10 @@ Native dispatcher operations are implementation details, not additional JS APIs.
 | `Entity.setPhysicalMaterial` | `physicalMaterialSet` | [declaration](../judas.d.ts) | [reference](entities.md) |
 | `Entity.setSocket` | `socketClear`, `socketSet` | [declaration](../judas.d.ts) | [reference](entities.md) |
 | `Entity.setSprite` | `spriteSet` | [declaration](../judas.d.ts) | [reference](sprites-2d.md) |
+| `Entity.setSpriteAnimation` | `spriteAnimationSet` | [declaration](../judas.d.ts) | [reference](sprite-animation.md) |
 | `Entity.sleeping` | `sleeping` | [declaration](../judas.d.ts) | [reference](entities.md) |
 | `Entity.sprite` | `spriteInfo` | [declaration](../judas.d.ts) | [reference](sprites-2d.md) |
+| `Entity.spriteAnimation` | `spriteAnimationInfo` | [declaration](../judas.d.ts) | [reference](sprite-animation.md) |
 | `Entity.stopAudio` | `stopAudio` | [declaration](../judas.d.ts) | [reference](audio.md) |
 | `Entity.stopKinematic` | `kinematicStop` | [declaration](../judas.d.ts) | [reference](entities.md) |
 | `Entity.terrain` | JS wrapper/data | [declaration](../judas.d.ts) | [reference](terrain.md) |

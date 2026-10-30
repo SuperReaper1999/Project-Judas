@@ -120,6 +120,12 @@ void ResourceManager::RunLoadTask(LoadTask& task, const JobContext* context) {
         task.material=std::make_shared<MaterialDefinition>();task.succeeded=ParseMaterial(std::string(bytes.begin(),bytes.end()),*task.material,task.error);
         if(task.succeeded)for(auto& map:task.material->maps)if(!map.asset.empty()){auto path=task.texturePaths.find(map.asset);if(path==task.texturePaths.end()){task.succeeded=false;task.error="missing/wrong-type material texture "+map.asset;break;}std::vector<uint8_t> imageBytes;if(!ReadWholeFile(path->second,imageBytes,task.error,context,&cancelled)||!DecodeTextureFromMemory(imageBytes.data(),imageBytes.size(),path->second,map.embedded,task.error)){task.cancelled=cancelled;task.succeeded=false;break;}}
     } else if(task.type==AssetType::Environment){task.succeeded=DecodeEnvironment(bytes,task.environment,task.error);
+    } else if(task.type==AssetType::SpriteSheet){task.spriteSheet=std::make_shared<SpriteSheet>();task.succeeded=ParseSpriteSheet(std::string(bytes.begin(),bytes.end()),*task.spriteSheet,task.error);
+        if(task.succeeded){auto image=task.texturePaths.find(task.spriteSheet->texture);TextureData decoded;std::vector<uint8_t> imageBytes;
+            if(image==task.texturePaths.end()){task.succeeded=false;task.error="sprite sheet references missing/wrong-type texture";}
+            else if(!ReadWholeFile(image->second,imageBytes,task.error,context,&cancelled)||!DecodeTextureFromMemory(imageBytes.data(),imageBytes.size(),image->second,decoded,task.error)){task.cancelled=cancelled;task.succeeded=false;}
+            else if(decoded.width!=task.spriteSheet->width||decoded.height!=task.spriteSheet->height){task.succeeded=false;task.error="sprite sheet dimensions no longer match source image; re-slice explicitly";}
+        }
     } else if(task.type==AssetType::PhysicalMaterial){task.physicalMaterial=std::make_shared<PhysicalMaterial>();task.succeeded=ParsePhysicalMaterial(std::string(bytes.begin(),bytes.end()),*task.physicalMaterial,task.error);
     } else if(task.type==AssetType::Collision){task.collision=std::make_shared<CollisionAsset>();task.succeeded=DecodeCollisionAsset(bytes,*task.collision,task.error);
         if(task.succeeded&&!task.collision->sourceAsset.empty()){auto found=task.texturePaths.find(task.collision->sourceAsset);if(found==task.texturePaths.end()||CollisionAssetStale(*task.collision,found->second,task.error)){task.succeeded=false;task.error="stale/missing collision source; recook "+task.collision->sourceAsset;}}
@@ -156,7 +162,7 @@ ResourceManager::Entry& ResourceManager::Begin(const AssetId& id, AssetType expe
     ++m_stats.misses;
     entry.error.clear();
     if (m_shutDown) { Fail(entry, "resource manager is shut down"); return entry; }
-    if (expected != AssetType::PhysicalMaterial && expected != AssetType::Collision && expected != AssetType::Deformable && expected != AssetType::AudioEffect && expected != AssetType::Font && expected != AssetType::Catalog && expected != AssetType::Navigation && expected != AssetType::Liquid && (expected == AssetType::Audio ? !m_audio : (!m_renderer && !m_headlessResidency))) { Fail(entry, expected == AssetType::Audio ? "no audio system" : "no renderer (headless)"); return entry; }
+    if (expected != AssetType::SpriteSheet && expected != AssetType::PhysicalMaterial && expected != AssetType::Collision && expected != AssetType::Deformable && expected != AssetType::AudioEffect && expected != AssetType::Font && expected != AssetType::Catalog && expected != AssetType::Navigation && expected != AssetType::Liquid && (expected == AssetType::Audio ? !m_audio : (!m_renderer && !m_headlessResidency))) { Fail(entry, expected == AssetType::Audio ? "no audio system" : "no renderer (headless)"); return entry; }
     std::string path;
     if (!Resolve(id, expected, entry, path)) return entry;
 
@@ -172,7 +178,7 @@ ResourceManager::Entry& ResourceManager::Begin(const AssetId& id, AssetType expe
         std::ifstream f(path,std::ios::binary);unsigned char header[40];if(f.read(reinterpret_cast<char*>(header),40)&&!std::memcmp(header,"JMS1",4)){auto u=[&](unsigned p){uint32_t v=0;for(unsigned k=0;k<4;++k)v|=uint32_t(header[p+k])<<(k*8);return v;};auto vertices=u(32),indices=u(36);if(vertices<=2000000&&indices<=12000000)task->admissionBytes=std::max(task->admissionBytes,uint64_t(vertices)*56+uint64_t(indices)*4);}
     }
     if(expected==AssetType::Collision&&m_assets)for(const auto& [key,record]:m_assets->Records())if(record.type==AssetType::Mesh&&!record.missing)task->texturePaths.emplace(key,record.path);
-    if(expected==AssetType::Material&&m_assets)for(const auto& [key,record]:m_assets->Records())if(record.type==AssetType::Texture&&!record.missing)task->texturePaths.emplace(key,record.path);
+    if((expected==AssetType::Material||expected==AssetType::SpriteSheet)&&m_assets)for(const auto& [key,record]:m_assets->Records())if(record.type==AssetType::Texture&&!record.missing)task->texturePaths.emplace(key,record.path);
     task->requested = std::chrono::steady_clock::now();
     task->trace = m_trace;
     entry.task = task;
@@ -230,7 +236,7 @@ void ResourceManager::CompleteTask(Entry& entry, const std::shared_ptr<LoadTask>
         Fail(entry, task->error.empty() ? std::string("load failed") : task->error);
         return;
     }
-    if (task->type != AssetType::PhysicalMaterial && task->type != AssetType::Collision && task->type != AssetType::Deformable && task->type != AssetType::AudioEffect && task->type != AssetType::Font && task->type != AssetType::Catalog && task->type != AssetType::Navigation && task->type != AssetType::Liquid && (task->type == AssetType::Audio ? !m_audio : (!m_renderer && !m_headlessResidency))) { Fail(entry, task->type == AssetType::Audio ? "no audio system" : "no renderer (headless)"); return; }
+    if (task->type != AssetType::SpriteSheet && task->type != AssetType::PhysicalMaterial && task->type != AssetType::Collision && task->type != AssetType::Deformable && task->type != AssetType::AudioEffect && task->type != AssetType::Font && task->type != AssetType::Catalog && task->type != AssetType::Navigation && task->type != AssetType::Liquid && (task->type == AssetType::Audio ? !m_audio : (!m_renderer && !m_headlessResidency))) { Fail(entry, task->type == AssetType::Audio ? "no audio system" : "no renderer (headless)"); return; }
     if(task->type==AssetType::Font){entry.font=task->font;entry.bytes=entry.font->bytes.size();
     } else if(task->type==AssetType::Catalog){entry.catalog=task->catalog;entry.bytes=0;for(auto& p:entry.catalog->messages)entry.bytes+=p.first.size()+p.second.size();
     } else if (task->type == AssetType::Mesh) {
@@ -243,6 +249,7 @@ void ResourceManager::CompleteTask(Entry& entry, const std::shared_ptr<LoadTask>
         if(m_renderer)entry.material=m_renderer->CreateMaterial(*task->material);
         entry.bytes=sizeof(MaterialDefinition);for(auto& map:task->material->maps){entry.bytes+=EstimateTextureBytes(map.embedded)+map.encodedImage.size();map.embedded=TextureData{};std::vector<uint8_t>().swap(map.encodedImage);}entry.materialDefinition=task->material;
     } else if(task->type==AssetType::Environment){if(m_renderer)entry.environment=m_renderer->CreateEnvironment(task->environment);entry.bytes=0;for(auto& level:task->environment.specular)entry.bytes+=level.pixels.size()*6;entry.bytes+=task->environment.diffuse.pixels.size()*6+task->environment.brdf.size()*4;
+    } else if(task->type==AssetType::SpriteSheet){entry.spriteSheet=task->spriteSheet;entry.bytes=EncodeSpriteSheet(*entry.spriteSheet).size();
     } else if(task->type==AssetType::PhysicalMaterial){entry.physicalMaterial=task->physicalMaterial;entry.bytes=sizeof(PhysicalMaterial);
     } else if(task->type==AssetType::Collision){entry.collision=task->collision;const auto& a=*entry.collision;entry.bytes=a.vertices.size()*sizeof(glm::dvec3)+a.faces.size()*sizeof(CollisionFace)+a.nodes.size()*sizeof(CollisionNode)+a.order.size()*sizeof(uint32_t);
     } else if(task->type==AssetType::Deformable){
@@ -541,7 +548,7 @@ void ResourceManager::DestroyGpu(Entry& entry) {
     entry.material={};entry.environment={};entry.materialDefinition.reset();
     std::vector<MaterialDefinition>().swap(entry.meshMaterials);std::vector<MeshPrimitive>().swap(entry.meshPrimitives);
     entry.mesh = MeshHandle{};
-    entry.skeletal.reset();entry.deformable.reset();entry.collision.reset();entry.navigation.reset();entry.liquid.reset();entry.font.reset();entry.catalog.reset();
+    entry.spriteSheet.reset();entry.skeletal.reset();entry.deformable.reset();entry.collision.reset();entry.navigation.reset();entry.liquid.reset();entry.font.reset();entry.catalog.reset();
     entry.texture = TextureHandle{};
     entry.audio = AudioClipHandle{};entry.audioEnvironment.reset();
     entry.bytes = 0;
@@ -807,4 +814,8 @@ void ResourceManager::RefreshResidentBytes() {
                                          : 0;
     m_stats.peakBytesResident =
         std::max(m_stats.peakBytesResident, m_stats.bytesResident);
+}
+
+std::shared_ptr<const SpriteSheet> ResourceManager::GetSpriteSheet(const AssetId& id,std::string& error){
+ auto& e=Begin(id,AssetType::SpriteSheet,JobPriority::Normal);if(e.type!=AssetType::SpriteSheet){error="asset is not a sprite sheet";return nullptr;}error=e.state==ResourceState::Ready?"":e.state==ResourceState::Failed?e.error:"loading";return e.state==ResourceState::Ready?e.spriteSheet:nullptr;
 }

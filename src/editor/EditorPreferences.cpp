@@ -29,6 +29,7 @@ constexpr Panel panels[] = {
     {"profiler", "Profiler", &EditorPanelState::showProfiler}, {"scene", "Scene settings", &EditorPanelState::showSceneSettings},
     {"project", "Project settings", &EditorPanelState::showProjectSettings}, {"terrain", "Terrain tools", &EditorPanelState::showTerrain},
     {"volume", "Volumetric terrain", &EditorPanelState::showVolumeTerrain}, {"animation", "Animation timeline", &EditorPanelState::showAnimationTimeline},
+    {"sprite-animation", "Sprite sheets and frame animation", &EditorPanelState::showSpriteSheetEditor},
     {"retarget", "Animation retargeting", &EditorPanelState::showRetarget}, {"world", "World building", &EditorPanelState::showWorldBuilding},
     {"mods", "Local mods", &EditorPanelState::showMods}, {"help", "Navigation help", &EditorPanelState::showNavigationHelp}
 };

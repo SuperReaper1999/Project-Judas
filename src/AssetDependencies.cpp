@@ -3,6 +3,7 @@
 #include "CollisionAsset.h"
 #include "Deformable.h"
 #include "Material.h"
+#include "SpriteAnimation.h"
 #include "ModelLoader.h"
 #include "ModelArchive.h"
 #include "AsyncFile.h"
@@ -18,6 +19,7 @@ void CollectSceneAssetReferences(const Scene& scene,std::set<AssetId>& ids,bool 
  for(const auto& o:scene.Objects()){
   add(ids,o.prefabAsset);
  if(o.render){
+   if(o.render->spritePlayback)add(ids,o.render->spritePlayback->sheet);
    add(ids,o.render->meshAsset);add(ids,o.render->textureAsset);
    auto overrides=[&](const MaterialOverride& value){for(const auto& texture:value.textures)if(texture)add(ids,*texture);};
    overrides(o.render->instanceOverrides);
@@ -39,6 +41,7 @@ void CollectSceneAssetReferences(const Scene& scene,std::set<AssetId>& ids,bool 
 bool CollectAssetDependencies(const AssetRecord& record,std::set<AssetId>& out,std::set<std::string>& auxiliary,std::string& error,bool advancedFluids){
  std::set<AssetId> ids;
  if(record.type==AssetType::Prefab){Scene s;if(!LoadSceneFromFile(record.path,s,error))return false;CollectSceneAssetReferences(s,ids,advancedFluids);}
+ else if(record.type==AssetType::SpriteSheet){SpriteSheet sheet;if(!LoadSpriteSheet(record.path,sheet,error))return false;add(ids,sheet.texture);}
  else if(record.type==AssetType::UI){UIDocument d;if(!LoadUIDocument(record.path,d,error))return false;for(auto& e:d.elements){add(ids,e.texture);add(ids,e.font);}}
  else if(record.type==AssetType::Material){MaterialDefinition m;if(!LoadMaterial(record.path,m,error))return false;for(auto& map:m.maps)add(ids,map.asset);}
  else if(record.type==AssetType::Mesh){std::vector<MaterialDefinition> materials;

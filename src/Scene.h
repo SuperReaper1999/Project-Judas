@@ -6,6 +6,7 @@
 #include "Classification.h"
 #include "Material.h"
 #include "Sprite.h"
+#include "SpriteAnimation.h"
 #include "PlanarGeometry.h"
 #include "CameraLens.h"
 #include "GravitySelection.h"
@@ -97,6 +98,7 @@ struct SceneRenderComponent {
     std::string textureAsset;
     // Generated runtime texture; stable camera object ID, never an AssetDatabase ID.
     SceneObjectId textureCamera = kInvalidSceneObjectId;
+    std::optional<SpritePlayback> spritePlayback;
 };
 
 enum class SceneBodyMotion { Static, Dynamic, Kinematic };
