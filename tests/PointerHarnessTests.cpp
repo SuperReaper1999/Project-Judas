@@ -58,13 +58,19 @@ EXPECT_VIEWPORT 320 240 2
  Check(run("huge-size.txt","FRAMES 1\nRESIZE 9000 800 0\n")!=0,"oversized resize rejects before allocation");
  Check(run("bad-resize-frame.txt","FRAMES 1\nRESIZE 360 800 1\n")!=0,"out-of-range resize frame rejects");
  Check(run("wrong-size.txt","FRAMES 1\nEXPECT_VIEWPORT 123 456 0\n")!=0,"negative control catches an incorrect native/gameplay viewport");
- Check(window.Resize(321,241,error),"odd-sized native surface resizes");
- glDisable(GL_SCISSOR_TEST);glClearColor(.25f,.5f,.75f,1);glClear(GL_COLOR_BUFFER_BIT);
- glPixelStorei(GL_PACK_ALIGNMENT,8);std::vector<unsigned char> pixels;
- host.GetRenderer().CaptureFrame(321,241,pixels);GLint packing=0;glGetIntegerv(GL_PACK_ALIGNMENT,&packing);
- bool complete=pixels.size()==321u*241u*3u;
- for(std::size_t i=0;complete&&i<pixels.size();i+=3)complete=pixels[i]>=63&&pixels[i]<=65&&pixels[i+1]>=127&&pixels[i+1]<=129&&pixels[i+2]>=190&&pixels[i+2]<=192;
- Check(complete&&packing==8,"actual resized drawable fills all odd-width capture rows and preserves GL pack alignment");
- glPixelStorei(GL_PACK_ALIGNMENT,4);
+ // Logical window sizes alone are not evidence that GL storage was resized.
+ // Cover both axes growing/shrinking, repeated calls and odd RGB row lengths.
+ for(const auto size:{std::pair<int,int>{800,360},{360,800},{1200,540},{540,1200},{321,241},{321,241},{320,240}}){
+  Check(window.Resize(size.first,size.second,error),"native presentation surface resizes");
+  glDisable(GL_SCISSOR_TEST);glClearColor(.25f,.5f,.75f,1);glClear(GL_COLOR_BUFFER_BIT);
+  glPixelStorei(GL_PACK_ALIGNMENT,8);std::vector<unsigned char> pixels;
+  host.GetRenderer().CaptureFrame(size.first,size.second,pixels);GLint packing=0;glGetIntegerv(GL_PACK_ALIGNMENT,&packing);
+  bool complete=pixels.size()==std::size_t(size.first)*std::size_t(size.second)*3u;
+  std::size_t bad=0;
+  for(std::size_t i=0;i<pixels.size();i+=3)if(pixels[i]<63||pixels[i]>65||pixels[i+1]<127||pixels[i+1]>129||pixels[i+2]<190||pixels[i+2]>192)++bad;
+  std::printf("RESIZE_PIXELS size=%dx%d bad=%zu pack=%d\n",size.first,size.second,bad,int(packing));
+  Check(complete&&bad==0&&packing==8,"entire resized drawable is captured and odd-width pack alignment is preserved");
+  glPixelStorei(GL_PACK_ALIGNMENT,4);
+ }
  play.End();std::printf("POINTER_HARNESS checks=%u failures=%u\n",checks,failures);return failures?1:0;
 }

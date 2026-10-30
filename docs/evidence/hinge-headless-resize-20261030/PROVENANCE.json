@@ -1,0 +1,263 @@
+{
+  "parent": "824f56616d02f9dde388fb82ba78785c08c48e95",
+  "mainUnchanged": "f2813324155166c6942fd68dde843d9775eb532d",
+  "sourceFiles": {
+    "src/Window.cpp": "45f0448bfc39e769e225ccf1082dfd8b08696403510371a97c3283dc27983516",
+    "tests/PointerHarnessTests.cpp": "767c559a6aadbe6bd6cf1f21d95464040689230e004cb66587fa86a0042a339f",
+    "docs/TEST_HARNESS.md": "495ea8b20cfb5dab7806d1adf06ec09bc4c641acdbbf364a825277dcaca8e553",
+    "docs/HINGE_HEADLESS_RESIZE_CORRECTION.txt": "229b11b90975c923fd81c91a58e02a9ee2db975ea3667b4423e4589ecd588e91"
+  },
+  "binaries": {
+    "build/judas": "c43376021a5e592ffbe65a8fb8d75c94118f3be47a3c91841b8462973ca05c07",
+    "build/judas_export": "0b1ba687f9da729d380f5c0b668982710f3bb9dfc38b00830d49ee77121722d3",
+    "build/judas_pointer_harness_tests": "9b7c886731cac1d7c79f6c82c2d76b7bc5e88adbe129dc8dbd112650a4e4788a",
+    "build/judas_project_application_tests": "f1e31f77a47504fd986bf8214468bce6cc7b929363b7f9a26e6a2a4914d86554",
+    ".cache/hinge-resize-correction-20261030/before-judas": "08483772d3f9c76e95ad8e37b816ea7cdc3f968dac54b2d55c5376411877854b",
+    ".cache/hinge-resize-correction-20261030/before-pointer": "d575f62157952712e321aee7b384d9f637a69756bba63cae0e7c2429a5c2bb7b",
+    ".cache/hinge-resize-correction-20261030/extended-before-pointer": "e0aa07362bb934a0c7d5110e391a82d4d76715acbec1d458286bd0b545979b34"
+  },
+  "host": "Ryzen5 5600 / 8GB / Linux; native NVIDIA GTX970 and isolated Xvfb Mesa26 llvmpipe",
+  "xvfbBinarySha256": "0081b27338b510ec5e2068a93c6db31480872de9bb082f347f3747ef1648e794",
+  "originalHingeZipSha256": "46cb452ac6dd1bca5724be37b4582d5251db862cf2b00e1dce20c41b7e0a0c22",
+  "headless": [
+    {
+      "name": "headless-pointer",
+      "command": [
+        "python3",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/hinge-resize-correction-20261030/with_xvfb.py",
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_pointer_harness_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/hinge-resize-correction-20261030/headless-pointer-output"
+      ],
+      "exit": 0,
+      "expected": 0
+    },
+    {
+      "name": "headless-application",
+      "command": [
+        "python3",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/hinge-resize-correction-20261030/with_xvfb.py",
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_project_application_tests"
+      ],
+      "exit": 0,
+      "expected": 0
+    },
+    {
+      "name": "headless-hinge",
+      "command": [
+        "python3",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/hinge-resize-correction-20261030/with_xvfb.py",
+        "python3",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/hinge-resize-correction-20261030/run_hinge.py",
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas",
+        "headless"
+      ],
+      "exit": 0,
+      "expected": 0
+    },
+    {
+      "name": "extended-original-negative",
+      "command": [
+        "python3",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/hinge-resize-correction-20261030/with_xvfb.py",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/hinge-resize-correction-20261030/extended-before-pointer",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/hinge-resize-correction-20261030/extended-original-output"
+      ],
+      "exit": 1,
+      "expected": 1
+    }
+  ],
+  "desktop": [
+    {
+      "name": "desktop-pointer",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_pointer_harness_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/hinge-resize-correction-20261030/desktop-pointer-output"
+      ],
+      "exit": 0,
+      "expected": 0
+    },
+    {
+      "name": "desktop-application",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_project_application_tests"
+      ],
+      "exit": 0,
+      "expected": 0
+    },
+    {
+      "name": "desktop-hinge",
+      "command": [
+        "python3",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/hinge-resize-correction-20261030/run_hinge.py",
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas",
+        "desktop"
+      ],
+      "exit": 0,
+      "expected": 0
+    }
+  ],
+  "relocated": {
+    "command": [
+      "/tmp/judas-headless-resize-3z88yndj/game/judas"
+    ],
+    "cwd": "/tmp",
+    "exit": 0
+  },
+  "images": {
+    "images": [
+      {
+        "file": "after-landscape.png",
+        "width": 800,
+        "height": 360,
+        "allBlackRows": 0,
+        "allBlackColumns": 0,
+        "sha256": "015fcc3f55882558e67032a466cfd89859d79cfe5e8fb9fdc137c12f9e43ad51"
+      },
+      {
+        "file": "after-portrait.png",
+        "width": 360,
+        "height": 800,
+        "allBlackRows": 0,
+        "allBlackColumns": 0,
+        "sha256": "92354dc2335b0546561d10fcecd7e27a5bf965330c750b32c9036c525ba9ae46"
+      },
+      {
+        "file": "after-tall.png",
+        "width": 540,
+        "height": 1200,
+        "allBlackRows": 0,
+        "allBlackColumns": 0,
+        "sha256": "a583e4c36f53482ec5d24a0c80dfb81945cb2e0c57bd78dbcfc865a1b0203df7"
+      },
+      {
+        "file": "after-wide.png",
+        "width": 1200,
+        "height": 540,
+        "allBlackRows": 0,
+        "allBlackColumns": 0,
+        "sha256": "d0e8cf6bfe3bdd2559c12844b5bbfe55d6a02f957f8d2d34f166c8ee1768797c"
+      },
+      {
+        "file": "before-landscape.png",
+        "width": 800,
+        "height": 360,
+        "allBlackRows": 0,
+        "allBlackColumns": 0,
+        "sha256": "015fcc3f55882558e67032a466cfd89859d79cfe5e8fb9fdc137c12f9e43ad51"
+      },
+      {
+        "file": "before-portrait.png",
+        "width": 360,
+        "height": 800,
+        "allBlackRows": 440,
+        "allBlackColumns": 0,
+        "sha256": "566d4fa8e734068d364ea0435fe3fde303a3e7dcaa9aa4a94c36ed165838a3f7"
+      },
+      {
+        "file": "before-tall.png",
+        "width": 540,
+        "height": 1200,
+        "allBlackRows": 840,
+        "allBlackColumns": 0,
+        "sha256": "2e6ded1dfb0bcdce728e7422aca8f208e4848b4fe512ef9a8f77127a3bf7ba52"
+      },
+      {
+        "file": "before-wide.png",
+        "width": 1200,
+        "height": 540,
+        "allBlackRows": 180,
+        "allBlackColumns": 400,
+        "sha256": "59393a2f295f7a74283bf51c273065cab35259c03468c6a8f39f0f41a5517897"
+      },
+      {
+        "file": "desktop-landscape.png",
+        "width": 800,
+        "height": 360,
+        "allBlackRows": 0,
+        "allBlackColumns": 0,
+        "sha256": "2094820575437607cb31b42200f68b7d41eec23b677760a4bb45b8775527ac02"
+      },
+      {
+        "file": "desktop-portrait.png",
+        "width": 360,
+        "height": 800,
+        "allBlackRows": 0,
+        "allBlackColumns": 0,
+        "sha256": "45f3ff1908631fb47bbae832182df98ca0c34a074358df8e7b6248c4ee3f3b55"
+      },
+      {
+        "file": "desktop-tall.png",
+        "width": 540,
+        "height": 1200,
+        "allBlackRows": 0,
+        "allBlackColumns": 0,
+        "sha256": "b47fcc317df8fc1d2092d28e9b7d29e402a30b11ccd45e5a622ab10fa5f5c231"
+      },
+      {
+        "file": "desktop-wide.png",
+        "width": 1200,
+        "height": 540,
+        "allBlackRows": 0,
+        "allBlackColumns": 0,
+        "sha256": "c77019ca6ccf618590c8449c6ee94130d8939d81dc608a58eac88e0c3f14d126"
+      },
+      {
+        "file": "headless-landscape.png",
+        "width": 800,
+        "height": 360,
+        "allBlackRows": 0,
+        "allBlackColumns": 0,
+        "sha256": "015fcc3f55882558e67032a466cfd89859d79cfe5e8fb9fdc137c12f9e43ad51"
+      },
+      {
+        "file": "headless-portrait.png",
+        "width": 360,
+        "height": 800,
+        "allBlackRows": 0,
+        "allBlackColumns": 0,
+        "sha256": "92354dc2335b0546561d10fcecd7e27a5bf965330c750b32c9036c525ba9ae46"
+      },
+      {
+        "file": "headless-tall.png",
+        "width": 540,
+        "height": 1200,
+        "allBlackRows": 0,
+        "allBlackColumns": 0,
+        "sha256": "a583e4c36f53482ec5d24a0c80dfb81945cb2e0c57bd78dbcfc865a1b0203df7"
+      },
+      {
+        "file": "headless-wide.png",
+        "width": 1200,
+        "height": 540,
+        "allBlackRows": 0,
+        "allBlackColumns": 0,
+        "sha256": "d0e8cf6bfe3bdd2559c12844b5bbfe55d6a02f957f8d2d34f166c8ee1768797c"
+      },
+      {
+        "file": "relocated-portrait.png",
+        "width": 360,
+        "height": 800,
+        "allBlackRows": 0,
+        "allBlackColumns": 0,
+        "sha256": "92354dc2335b0546561d10fcecd7e27a5bf965330c750b32c9036c525ba9ae46"
+      },
+      {
+        "file": "relocated-wide.png",
+        "width": 1200,
+        "height": 540,
+        "allBlackRows": 0,
+        "allBlackColumns": 0,
+        "sha256": "58216df53ddf23a592fa5d71a4b461297d2c814fedb729993710b35665ee05ae"
+      }
+    ],
+    "unchangedStartupPNGByteIdentical": true,
+    "oracleScope": "Hinge-specific all-black-strip oracle; general mechanism covered by complete uniform-colour capture regression"
+  },
+  "notClaimed": [
+    "Mesa25.2.8 exact-driver replay",
+    "Windows qualification",
+    "new Android device validation",
+    "release/publication",
+    "universal GL-driver support"
+  ]
+}

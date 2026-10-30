@@ -1,0 +1,17 @@
+From the repository with documented Linux prerequisites:
+cmake --build build --target judas judas_export judas_pointer_harness_tests judas_project_application_tests -j2
+Xvfb :93 -screen 0 1600x1600x24 -nolisten tcp -ac
+# Start only a fresh display you own; substitute a free number. No window manager.
+DISPLAY=:93 SDL_VIDEODRIVER=x11 LIBGL_ALWAYS_SOFTWARE=1 GALLIUM_DRIVER=llvmpipe build/judas_pointer_harness_tests /tmp/fresh-resize-output
+# Stop only that owned Xvfb process afterward.
+Run the same pointer/application executables on the real desktop for comparison.
+Use XDG_DATA_HOME in a fresh writable directory to isolate saves.
+The archive's with_xvfb.py starts/selects/stops its own display; adapt its existing
+reference-root Xvfb path to your installed executable. Other scripts retain actual
+original reproduction paths and require the original Hinge.zip (hash recorded);
+source game assets and build binaries are deliberately not bundled.
+
+Exact commands/exit receipts and original/corrected full captures are archived.
+negative-build.json records linking unchanged original Window.cpp against the
+expanded final test, detecting an absent correction without modifying the engine.
+Do not extract over existing evidence or independent research.

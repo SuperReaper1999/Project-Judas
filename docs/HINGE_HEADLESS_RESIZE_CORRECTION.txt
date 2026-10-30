@@ -1,0 +1,100 @@
+HINGE / #24 — HEADLESS RESIZE CORRECTION
+2026-10-30 | Experimental follow-up to 824f56616d02f9dde388fb82ba78785c08c48e95
+Main remains f2813324155166c6942fd68dde843d9775eb532d. No publication authorized.
+
+REPRODUCTION
+Claude's supplied verification was treated as a handoff, then independently
+reproduced. The preserved original pointer harness returns 20/21 on Xvfb with no
+window manager. Hinge's unchanged script returns success and EXPECT_VIEWPORT
+passes while its 360x800 capture contains 440 all-black rows. A1200x540 capture
+has180 black rows and400 black columns;540x1200 has840 black rows.
+
+Local reproduction uses an existing Xvfb binary from the Ubuntu24 reference
+root, host SDL2.32.10, Mesa26.0.8-1ubuntu0.3 llvmpipe/LLVM21.1.8, 1600x1600x24
+virtual screen, no window manager, LIBGL_ALWAYS_SOFTWARE=1, SDL_VIDEODRIVER=x11.
+Claude reported Mesa25.2.8; that exact driver version was not run here. The same
+failure mechanism and observed black-row count reproduce on local Mesa26.
+All displays are isolated test subprocesses and are shut down afterward.
+
+ESTABLISHED CAUSE
+SDL_GetWindowSize, SDL_GL_GetDrawableSize and a direct XGetWindowAttributes
+query ALL report the correct new360x800 size. The X window has already resized;
+absence of a window manager does not explain an incorrectly sized native window.
+The actual GL backing storage retains the old dimensions until a presentation
+boundary. A small independent SDL/GL pixel probe allocates the original buffer,
+resizes, clears and reads a far pixel. Pumping events, making the same context
+current, unbinding/rebinding it, show/hide and glXWaitX do not refresh the buffer.
+SDL_GL_SwapWindow does: the far pixel changes from black to the cleared green.
+
+The ordinary runtime swaps frames; a non-realtime capture-only harness can omit
+all swaps. The previous resize implementation updated window/input state without
+completing the presentation boundary needed by this driver. NVIDIA real-X11
+passed the original tests; that did not establish Mesa/Xvfb support. Earlier
+restricted-environment failures used SDL offscreen, which is a separate retained
+unsupported backend. The earlier claim that Xvfb could simply be substituted
+was insufficiently verified. Original reports and failures remain untouched.
+
+CORRECTION
+Window::Resize now completes one SDL_GL_SwapWindow after native event pumping
+and before successful return. The next draw/readback therefore uses refreshed
+backing storage. No sleep, polling-until-pass loop, window/context recreation,
+fake framebuffer, image padding/cropping or gameplay/render-quality change.
+Queued hardware events are still not routed into deterministic harness input.
+The existing explicit offscreen and Android resize rejections are unchanged.
+This is a bounded operation per requested resize, not per physics step/frame.
+Ordinary runtime presentation cadence and the fixed simulation clock are unchanged.
+
+REGRESSION STRENGTHENING
+The previous full-image odd-width assertion is retained and expanded over seven
+size requests:800x360,360x800,1200x540,540x1200,321x241,repeat321x241,320x240.
+Each controlled frame is cleared to a known colour; every pixel must agree, and
+CaptureFrame must restore the prior GL pack alignment8. Dimensions alone cannot
+satisfy this test. EXPECT_VIEWPORT retains its documented dimension checks; the
+guide now explicitly distinguishes those from image-content verification.
+
+VALIDATION ACTUALLY RUN
+- Linux Release runtime, exporter, pointer harness and application targets built;
+  no compiler warnings/errors in the retained build log.
+- Original implementation/original test on Xvfb:21 checks,1 failure (preserved).
+- Original implementation/expanded final test on Xvfb:33 checks,6 failures.
+  The original Window.cpp object is linked in front of the current engine archive;
+  all other code/test objects are unchanged. This is an absent-fix negative control.
+- Corrected expanded test on Xvfb:33 checks,0 failures; all seven images have zero
+  incorrect pixels and pack alignment is preserved.
+- Corrected expanded test on real X11/NVIDIA:33 checks,0 failures.
+- Ordinary application regression on BOTH Xvfb and real desktop:42 checks,0
+  failures each, including async assets, menus/resume and startup-size validation.
+- Unmodified Hinge runs the same four-size/capture sequence on each backend.
+  Headless before/after initial landscape PNGs are byte-identical. Every corrected
+  capture has zero all-black rows/columns; original strips are preserved.
+  This black-strip oracle is Hinge-specific, while the controlled full-colour
+  regression is independent of Hinge assets/UI policy.
+- Export98 assets/3 scenes,60,367,774 bytes,0.345s (one smoke, not a benchmark).
+  Package moved into a fresh /tmp directory, launched from unrelated /tmp without
+  a source-project argument, then resized/captured on Xvfb:success; both full
+  portrait/wide captures have zero black strips.
+- Existing Android identity/orientation regression12/12, JDK available/no skips;
+  actual corrected Android code is unchanged from824f5661. No new device result.
+- Current documentation link/heading checks and whitespace checks pass.
+
+LIMITS / HANDOFF
+This confirms the observed Mesa26 Xvfb and current NVIDIA X11 backends, not every
+GL driver/window system or a new Windows/Android hardware acceptance. SDL's
+fixed-backing offscreen backend remains explicitly unsupported for mid-run resize;
+startup sizes still work. Xvfb is a software correctness environment, not GPU
+performance acceptance. Hinge's title-menu/portrait-card stacking is game-owned
+and unchanged; Claude is handling that independently.
+
+Source changes: src/Window.cpp; tests/PointerHarnessTests.cpp;
+docs/TEST_HARNESS.md. This report and its evidence are additional files.
+Evidence: docs/evidence/hinge-headless-resize-20261030/
+Includes exact original/corrected source and binary fingerprints, probe code,
+commands/receipts, raw failed/passing logs and captures. No game assets or build
+binaries are committed. No physics, fluid, Java, gameplay, API, build-channel or
+release changes. Main, existing projects, research and unrelated local work are
+preserved. Candidate remains subject to operator acceptance and patch qualification.
+
+HUMAN CHECK
+Use the documented800x360 ->360x800 ->1200x540 sequence, inspecting the whole
+capture and anchored UI, then repeat ordinary desktop play. Android orientation
+still needs its separate physical-phone check before patch acceptance/publication.

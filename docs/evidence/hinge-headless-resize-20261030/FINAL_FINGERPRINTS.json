@@ -1,0 +1,11 @@
+{
+  "docs/HINGE_HEADLESS_RESIZE_CORRECTION.txt": "229b11b90975c923fd81c91a58e02a9ee2db975ea3667b4423e4589ecd588e91",
+  "docs/TEST_HARNESS.md": "495ea8b20cfb5dab7806d1adf06ec09bc4c641acdbbf364a825277dcaca8e553",
+  "docs/evidence/hinge-headless-resize-20261030/ARCHIVE_MANIFEST.json": "08d562ee8edcf371a87b6dfb90250e3676111471f3d167277cb454044771fe52",
+  "docs/evidence/hinge-headless-resize-20261030/CHANGED_FILES.txt": "59eef18e0879d5e6c80f83f93b572921515886456087f8f316256f9f5c806efc",
+  "docs/evidence/hinge-headless-resize-20261030/PROVENANCE.json": "a6b04c4dd2e862c59d7152d6af2b33e93c988f6f0967feb2370bf579241ec625",
+  "docs/evidence/hinge-headless-resize-20261030/REPRODUCE.txt": "c6594f5c8a97770b2fb276c46844e19f463c4ee6effba2535cb25bf59a33f04a",
+  "docs/evidence/hinge-headless-resize-20261030/verification.tar.gz": "7ad80a7dbaf5bbaeb245ea33bdd8f26725e313824dbbccfd5f0567e46481e13c",
+  "src/Window.cpp": "45f0448bfc39e769e225ccf1082dfd8b08696403510371a97c3283dc27983516",
+  "tests/PointerHarnessTests.cpp": "767c559a6aadbe6bd6cf1f21d95464040689230e004cb66587fa86a0042a339f"
+}

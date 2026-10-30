@@ -150,6 +150,11 @@ editor's saved workspace or Android's native surface size.
 `RESIZE width height frame` changes the real desktop window before that frame's
 input injection and gameplay callbacks. `EXPECT_VIEWPORT width height frame`
 checks both the actual window and published gameplay viewport after the frame.
+Resize completes the native buffer presentation boundary before another draw
+or capture; this is necessary on Mesa/Xvfb as well as ordinary desktop drivers.
+`EXPECT_VIEWPORT` checks published dimensions, not image contents. The
+`judas_pointer_harness_tests` regression separately verifies all captured pixels
+after repeated landscape/portrait and odd-width changes.
 No real input devices are polled. Pointer coordinates remain window pixels;
 touch coordinates remain normalized. Resize commands execute before the frame's
 pointer commands, independently of their order in the file.

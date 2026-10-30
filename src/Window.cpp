@@ -87,6 +87,11 @@ bool Window::Resize(int width, int height, std::string& error) {
     // logical size. Pumping queues device events but does not route them into
     // gameplay; deterministic harness input still bypasses PollEvents.
     SDL_PumpEvents();
+    // Complete the surface's presentation boundary before another draw/readback.
+    // Mesa GLX can report the resized X window while retaining the previous
+    // backbuffer until a swap. This also matters for hidden, capture-only runs
+    // which deliberately do not present every harness frame.
+    SDL_GL_SwapWindow(m_window);
     SDL_GetWindowSize(m_window, &m_width, &m_height);
     if (m_width != width || m_height != height) {
         error = "Window manager did not grant the requested size";

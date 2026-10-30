@@ -1,0 +1,10 @@
+docs/HINGE_HEADLESS_RESIZE_CORRECTION.txt
+docs/TEST_HARNESS.md
+docs/evidence/hinge-headless-resize-20261030/ARCHIVE_MANIFEST.json
+docs/evidence/hinge-headless-resize-20261030/CHANGED_FILES.txt
+docs/evidence/hinge-headless-resize-20261030/FINAL_FINGERPRINTS.json
+docs/evidence/hinge-headless-resize-20261030/PROVENANCE.json
+docs/evidence/hinge-headless-resize-20261030/REPRODUCE.txt
+docs/evidence/hinge-headless-resize-20261030/verification.tar.gz
+src/Window.cpp
+tests/PointerHarnessTests.cpp
