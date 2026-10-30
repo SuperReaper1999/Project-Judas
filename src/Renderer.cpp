@@ -1442,11 +1442,13 @@ void Renderer::CaptureFrame(int width, int height, std::vector<unsigned char>& o
     const size_t rowBytes = static_cast<size_t>(width) * 3;
     outRgbPixels.assign(rowBytes * static_cast<size_t>(height), 0);
 
-    // glReadPixels has no alignment padding to worry about here since 3
-    // bytes/pixel with typical widths doesn't need a custom GL_PACK_ALIGNMENT
-    // for this tool's purposes (rows are read directly into the output
-    // buffer, then flipped below).
+    // RGB rows need not be four-byte aligned at arbitrary test/window sizes.
+    // Preserve the caller's pack state and read tightly into this exact buffer.
+    GLint packAlignment = 4;
+    glGetIntegerv(GL_PACK_ALIGNMENT, &packAlignment);
+    glPixelStorei(GL_PACK_ALIGNMENT, 1);
     glReadPixels(0, 0, width, height, GL_RGB, GL_UNSIGNED_BYTE, outRgbPixels.data());
+    glPixelStorei(GL_PACK_ALIGNMENT, packAlignment);
 
     // OpenGL's framebuffer origin is bottom-left; flip rows so row 0 of the
     // output is the top of the image, matching ordinary image conventions.

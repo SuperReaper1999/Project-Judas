@@ -67,6 +67,35 @@ bool Window::Init(const char* title, int width, int height, bool visible) {
     return true;
 }
 
+bool Window::Resize(int width, int height, std::string& error) {
+#ifdef __ANDROID__
+    (void)width; (void)height;
+    error = "Desktop window resize is unavailable on Android; the native surface owns its size";
+    return false;
+#else
+    if (!m_window || width < 1 || height < 1 || width > 8192 || height > 8192) {
+        error = "Window resize requires an initialized window and dimensions 1..8192";
+        return false;
+    }
+    const char* driver = SDL_GetCurrentVideoDriver();
+    if (driver && std::string(driver) == "offscreen") {
+        error = "SDL offscreen cannot resize its GL backing surface; use a desktop video driver or Xvfb, or set the startup window size";
+        return false;
+    }
+    SDL_SetWindowSize(m_window, width, height);
+    // Publish native configure events to the GL drawable as well as SDL's
+    // logical size. Pumping queues device events but does not route them into
+    // gameplay; deterministic harness input still bypasses PollEvents.
+    SDL_PumpEvents();
+    SDL_GetWindowSize(m_window, &m_width, &m_height);
+    if (m_width != width || m_height != height) {
+        error = "Window manager did not grant the requested size";
+        return false;
+    }
+    return true;
+#endif
+}
+
 Window::~Window() {
     Shutdown();
 }

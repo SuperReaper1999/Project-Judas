@@ -138,3 +138,42 @@ than assuming an arbitrary synthetic step count gives workers enough wall time.
 `EXPECT_SCENE Scenes/example.judas frame` verifies the current registered scene after an earlier bounded scene-service wait.
 
 Frames that skip drawing still publish/update ordinary audio voices so save prefill can complete. Bounded service waits use zero-clock frames and do not invent fixed steps.
+
+## Window size and rotation-layout tests
+
+The desktop runtime accepts `JUDAS_WINDOW_SIZE=WIDTHxHEIGHT` at startup. Without
+it, the default remains 1024×768. Dimensions must be integers from 1 to 8192;
+malformed values fail before window creation. This development/test override
+also works for ordinary standalone desktop launches; it does not affect the
+editor's saved workspace or Android's native surface size.
+
+`RESIZE width height frame` changes the real desktop window before that frame's
+input injection and gameplay callbacks. `EXPECT_VIEWPORT width height frame`
+checks both the actual window and published gameplay viewport after the frame.
+No real input devices are polled. Pointer coordinates remain window pixels;
+touch coordinates remain normalized. Resize commands execute before the frame's
+pointer commands, independently of their order in the file.
+
+```text
+FRAMES 6
+LOG_EVERY 0
+EXPECT_VIEWPORT 800 360 0
+SCREENSHOT 1 /tmp/hinge-landscape.png
+RESIZE 360 800 2
+EXPECT_VIEWPORT 360 800 2
+SCREENSHOT 3 /tmp/hinge-portrait.png
+RESIZE 800 360 4
+SCREENSHOT 5 /tmp/hinge-return.png
+```
+
+```sh
+JUDAS_WINDOW_SIZE=800x360 JUDAS_TEST_SCRIPT=/tmp/aspects.txt \
+  build/judas path/to/hinge.judasproj
+```
+
+These exercise desktop UI/camera layout changes, not Android sensors, density,
+IME, cutouts or physical-device acceptance. A window manager may refuse a size;
+the harness reports that as a failure instead of silently substituting dimensions.
+Android rejects `RESIZE`; its activity owns surface dimensions. SDL's offscreen
+backend also rejects mid-run resize because its GL buffer retains the startup
+size; use a desktop backend or Xvfb for resize tests, or separate startup-size runs.

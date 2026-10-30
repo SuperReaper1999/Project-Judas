@@ -28,11 +28,6 @@
 #include "WorldPresentation.h"
 #include "ScreenshotWriter.h"
 
-namespace {
-constexpr int kWindowWidth = 1024;
-constexpr int kWindowHeight = 768;
-}  // namespace
-
 int Application::Run(int argc, char** argv, ApplicationControl* control) {
     ProfileRun profileRun("standalone");
     ProfileFrame startupProfile("standalone startup",true);
@@ -63,7 +58,7 @@ int Application::Run(int argc, char** argv, ApplicationControl* control) {
         options.worldOriginOverride ? *options.worldOriginOverride : scene.Settings().worldOrigin);
 
     EngineHost host;
-    if (!host.Init(options.project.IsLoaded() ? options.project.Settings().name.c_str() : "Project Judas", kWindowWidth, kWindowHeight, !options.IsTestRun() && !(control && control->hidden), error,
+    if (!host.Init(options.project.IsLoaded() ? options.project.Settings().name.c_str() : "Project Judas", options.windowWidth, options.windowHeight, !options.IsTestRun() && !(control && control->hidden), error,
                    control ? control->resourceTrace : ResourceTrace{})) {
         std::fprintf(stderr, "%s\n", error.c_str());
         return 1;

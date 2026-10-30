@@ -40,5 +40,31 @@ TOUCH_UP 8 .1 .2 7
 EXPECT_TOUCHES 0 7
 )TXT",[&](){if(observations==3){auto a=window.Input().Action("ui_click");Check(a.pressed&&a.released&&!a.held,"actual harness preserves same-frame press/release");}if(observations==5){const auto& t=window.Input().Touches();Check(t.size()==2&&t[0].x==.4f&&t[0].y==.5f&&t[0].pressure==.6f,"actual harness retains independent touch motion/pressure");}++observations;});Check(result==0&&observations==8,"new directives traverse real play frames with public pointer/touch assertions");
  Check(run("bad-pressure.txt","FRAMES 1\nTOUCH_DOWN 1 .5 .5 2 0\n")!=0,"out-of-range pressure rejects");Check(run("bad-contact.txt","FRAMES 1\nTOUCH_MOVE 99 .5 .5 .5 0\n")!=0,"move cannot silently invent a missing contact");Check(run("bad-expectation.txt","FRAMES 1\nEXPECT_POINTER .5 .5 2 0\n")!=0,"invalid boolean pointer expectation rejects");Check(run("wrong-oracle.txt","FRAMES 1\nPOINTER_DOWN 80 60 0\nEXPECT_POINTER .75 .75 1 0\n")!=0,"negative control detects an incorrect public pointer position");
+ unsigned resizeFrames=0;
+ Check(run("resize.txt",R"TXT(FRAMES 4
+LOG_EVERY 0
+RESIZE 800 360 0
+EXPECT_VIEWPORT 800 360 0
+POINTER_DOWN 400 180 0
+EXPECT_POINTER .5 .5 1 0
+RESIZE 360 800 1
+EXPECT_VIEWPORT 360 800 1
+POINTER_UP 180 400 1
+EXPECT_POINTER .5 .5 0 1
+RESIZE 320 240 2
+EXPECT_VIEWPORT 320 240 2
+)TXT",[&](){++resizeFrames;})==0&&resizeFrames==4,"native landscape/portrait resize reaches gameplay viewport and pointer without polling devices");
+ Check(run("bad-size.txt","FRAMES 1\nRESIZE 0 800 0\n")!=0,"zero resize rejects before execution");
+ Check(run("huge-size.txt","FRAMES 1\nRESIZE 9000 800 0\n")!=0,"oversized resize rejects before allocation");
+ Check(run("bad-resize-frame.txt","FRAMES 1\nRESIZE 360 800 1\n")!=0,"out-of-range resize frame rejects");
+ Check(run("wrong-size.txt","FRAMES 1\nEXPECT_VIEWPORT 123 456 0\n")!=0,"negative control catches an incorrect native/gameplay viewport");
+ Check(window.Resize(321,241,error),"odd-sized native surface resizes");
+ glDisable(GL_SCISSOR_TEST);glClearColor(.25f,.5f,.75f,1);glClear(GL_COLOR_BUFFER_BIT);
+ glPixelStorei(GL_PACK_ALIGNMENT,8);std::vector<unsigned char> pixels;
+ host.GetRenderer().CaptureFrame(321,241,pixels);GLint packing=0;glGetIntegerv(GL_PACK_ALIGNMENT,&packing);
+ bool complete=pixels.size()==321u*241u*3u;
+ for(std::size_t i=0;complete&&i<pixels.size();i+=3)complete=pixels[i]>=63&&pixels[i]<=65&&pixels[i+1]>=127&&pixels[i+1]<=129&&pixels[i+2]>=190&&pixels[i+2]<=192;
+ Check(complete&&packing==8,"actual resized drawable fills all odd-width capture rows and preserves GL pack alignment");
+ glPixelStorei(GL_PACK_ALIGNMENT,4);
  play.End();std::printf("POINTER_HARNESS checks=%u failures=%u\n",checks,failures);return failures?1:0;
 }

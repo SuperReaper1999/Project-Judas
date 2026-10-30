@@ -1,0 +1,115 @@
+HINGE CONSUMER REQUESTS #23 / #24 — 2026-10-30
+Development parent: 76d509e794220706c1a468e3163eb3a4a4fc9930 (Experimental)
+Main remains f2813324155166c6942fd68dde843d9775eb532d (Alpha 1.0.3).
+
+INDEPENDENT FINDINGS
+Both requested gaps are confirmed. Desktop windows were already manually
+resizable, but startup always requested 1024x768 and the deterministic harness
+had no resize command. The Android packager omitted an orientation policy.
+Hinge genuinely adapts its UI reference size from world.viewport and toggles a
+portrait warning; its original zip and game source have not been changed.
+Hinge.zip SHA256: 46cb452ac6dd1bca5724be37b4582d5251db862cf2b00e1dce20c41b7e0a0c22
+
+A further dependency was verified in pinned SDL 2.32.10: native window creation
+calls SDLActivity.setOrientationBis, which sets FULL_USER for our resizable
+window with no orientation hint. Merely adding a manifest attribute would be
+incomplete: SDL would overwrite it. The new JudasActivity override preserves an
+explicit manifest policy; an omitted policy delegates to SDL as before. Metadata
+lookup failure is explicit, not a silently unrestricted orientation fallback.
+
+IMPLEMENTATION
+#23: tools/build_android.py --orientation accepts any (default), landscape,
+portrait, sensorLandscape and sensorPortrait. The actual manifest generator sets
+screenOrientation, and the APK .build.json receipt records the selected policy.
+This is a build option, not a new .judasproj setting. Keep it in the project's
+repeatable build command. No native Android physics/gameplay change is needed.
+
+#24: JUDAS_WINDOW_SIZE=WIDTHxHEIGHT selects desktop startup size. Default1024x768
+is unchanged; malformed values fail before window initialization. RESIZE w h
+frame runs before that frame's input/UI/gameplay; EXPECT_VIEWPORT checks both
+window and published gameplay dimensions. Bounds are 1..8192 per dimension.
+Android surface dimensions remain platform-owned and reject desktop RESIZE.
+Window::Resize pumps native window updates without routing real devices into
+the deterministic input snapshots.
+
+A related genuine capture defect was corrected: CaptureFrame previously read
+RGB rows with the caller's pack alignment into a tightly sized buffer. Odd
+widths could produce incorrect rows and overwrite the buffer. It now uses
+alignment1 for readback and restores the prior GL packing state. Regression
+coverage checks the whole odd-width image and preservation of alignment8.
+No public JudasJS bindings, physics semantics or gameplay rules were changed.
+
+TEST-ENVIRONMENT FINDING / PRESERVED FAILURES
+The first restricted desktop runs silently selected SDL's offscreen video
+backend. That backend reports resized logical/drawable dimensions while its
+EGL backing buffer retains the startup size. Dimension assertions passed but
+Hinge screenshots were cropped. Pumping events, making the context current and
+swapping did not fix that backend. A small native GL pixel probe established the
+cause: offscreen reads black outside the old buffer; real X11 reads the cleared
+colour throughout the resized buffer. The discarded make-current/swap changes
+are not in the final implementation. Window::Resize now explicitly rejects
+'offscreen' with instructions to use a desktop backend/Xvfb or startup-size runs.
+This is a declared backend limitation, not a hidden headless pass.
+
+An initial baseline run also lacked a writable sandbox save directory. Retried
+with an isolated XDG_DATA_HOME, without changing Hinge or engine save policy.
+An initial AAPT assertion expected hexadecimal XML dump values; actual SDK output
+uses decimal enum values. Only that diagnostic assertion was corrected.
+Exporter initially rejected mismatched runtime/exporter source fingerprints after
+Android integration edits. Matching tools were rebuilt; the successful export
+followed that rebuild. The rejection is preserved as a useful negative control.
+
+VERIFICATION ACTUALLY RUN
+- Release Linux runtime, exporter, pointer harness and application targets built;
+  no warnings/errors in the final capture build log.
+- Native X11 pointer/input/harness: 21 checks, zero failures. Includes existing
+  pointer/touch edges, landscape/portrait/return, normalized pointer coordinates,
+  invalid dimensions/frame, wrong viewport negative control and odd-width GPU
+  readback. No external device input is polled into gameplay.
+- Ordinary application regression: 42 checks, zero failures, including strict
+  startup-size parser controls, async assets, scene fidelity and menu/resume.
+- Hinge, unmodified: startup800x360 ->360x800 ->800x360, Return starts gameplay,
+  movement/jump inputs, then600x800 ->1200x540. All viewport assertions and five
+  screenshots pass. Separate360x800 startup capture passes. These are layout and
+  runtime smoke checks, not complete Hinge gameplay certification.
+- Invalid startup dimensions fail before GL initialization; offscreen resize
+  explicitly rejects. Native command/exit receipts are archived.
+- Python Android identity/orientation: 12 tests, zero failures/no skips. Includes
+  all policies, default omission, invalid choices, escaping and execution of the
+  actual production SDL callback body with controlled Activity/SDL boundary
+  doubles (explicit policy, repeated callbacks, default delegation, lookup failure).
+- Android SDK36 AAPT2 actually compiles/links/decodes all five manifests to the
+  expected activity enum values. These tiny manifest packages are not game APKs.
+- Actual JudasActivity plus pinned SDL Java sources compile using JDK17 against
+  Android API36 with --release8. Only existing deprecated-API notes; no errors.
+- CI workflow controls7/7; packaging29/29; distribution21/21; current-reference
+  documentation checks and ten documentation control tests pass. Android tests
+  and relevant path triggers are included in the lightweight tooling workflow.
+- Export: 98 assets, three scenes, 60,367,774 bytes;0.348 seconds (one smoke run,
+  not a loading/performance comparison). Package moved into a fresh /tmp directory
+  and launched from unrelated /tmp without a project argument. Startup size,
+  portrait/wide resize, viewport assertions and both screenshots pass.
+
+LIMITATIONS / HUMAN CHECKLIST
+No new physical-phone, emulator or Windows validation was performed. Android
+orientation policy is compile/manifest/callback qualified, not human accepted.
+Android may override requests in multi-window/device compatibility modes. Android
+16's large-screen default has a game-category exception; Judas remains categorized
+as a game. See the current ANDROID.md link to official Android restrictions.
+Desktop tests do not reproduce density, cutouts, sensors or touch hardware.
+Hinge's portrait warning is visible behind its existing title-menu stack; that
+project-specific UI stacking has been observed and left unchanged.
+
+1. Build Hinge using --orientation sensorLandscape; launch upright and rotate
+   through both landscape orientations on a phone. Check pause/resume and input.
+2. Repeat a portrait build if desired; confirm either portrait direction with
+   sensorPortrait. Confirm default any retains existing rotation behaviour.
+3. Use JUDAS_WINDOW_SIZE=800x360 and the documented RESIZE script on desktop;
+   inspect portrait warning, anchored HUD, camera framing and return to gameplay.
+4. Confirm an odd-width screenshot has no shifted/corrupted rows.
+
+Evidence: docs/evidence/hinge-display-features-20261030/
+Reproduction scripts, actual raw logs, source/binary hashes, failed captures and
+final captures are retained. No source game assets or build binaries are committed.
+Main, published tags/packages, Advanced Fluid lock, fluid research, games and
+unrelated untracked work remain untouched. No release or human acceptance claimed.

@@ -299,3 +299,29 @@ switch release channels from an executable. A channel-only mismatch now shows
 both values and suggests the matching flag, rather than advising an ineffective
 rebuild. Other provenance differences remain strict errors and list the fields
 that differ. `Stable` is reserved for GA, not an Alpha release.
+
+## Game orientation
+
+Android exports accept `--orientation any|landscape|portrait|sensorLandscape|sensorPortrait`.
+The default `any` omits an activity orientation restriction, preserving normal
+device rotation. Use `--orientation sensorLandscape` for Hinge-style landscape
+games that should support either landscape direction, or `sensorPortrait` for
+either portrait direction. `landscape`/`portrait` request the corresponding fixed
+orientation. This is an APK build option, not a `.judasproj` field. Record it in
+your project's build command; the `.build.json` receipt records the selected policy.
+
+```sh
+python3 tools/build_android.py path/to/hinge.judasproj \
+  --orientation sensorLandscape --output /outside/Hinge.apk
+```
+
+The exporter sets `android:screenOrientation` on the native activity, which
+preserves it when SDL initializes its resizable window. With `any`, SDL retains
+its existing user-rotation behavior. Android
+may override requests in multi-window or device-specific compatibility modes.
+The API-36 large-screen default has an exception for apps categorized as games,
+as Judas packages are; see [Android's documented exceptions](https://developer.android.com/about/versions/16/behavior-changes-16#exceptions).
+Keep layouts responsive through UI anchors and
+`world.viewport`; an orientation policy is not a guarantee of a fixed surface
+size on every device. Desktop aspect tests are described in
+[the application harness guide](TEST_HARNESS.md#window-size-and-rotation-layout-tests).

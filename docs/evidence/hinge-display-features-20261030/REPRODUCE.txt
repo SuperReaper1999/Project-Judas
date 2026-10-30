@@ -1,0 +1,20 @@
+Build on Linux with the existing documented prerequisites:
+cmake --build build --target judas judas_export judas_pointer_harness_tests judas_project_application_tests -j2
+Use a desktop GL backend (or Xvfb), not SDL offscreen, for mid-run resize.
+Run build/judas_pointer_harness_tests /tmp/fresh-pointer-output and
+build/judas_project_application_tests from the repository root. Set an absolute
+XDG_DATA_HOME under a fresh output directory to isolate saves.
+python3 -m unittest discover -s tests -p 'test_android_*.py' -v
+Set JAVA_HOME to an available JDK17+ for callback execution (otherwise skipped).
+python3 scripts/prealpha_packaging_checks.py --output /tmp/fresh-packaging.json
+python3 scripts/prealpha_distribution_checks.py --output /tmp/fresh-distribution.json
+python3 -m unittest discover -s tests -p test_ci_workflows.py
+python3 scripts/check_current_docs.py
+
+Archive contains original command/exit receipts, Hinge aspect scripts, native
+driver, Java compile and Android manifest verification helpers. Hinge assets are
+not bundled; use the original zip with the hash in PROVENANCE.json. Extract it
+safely to .cache/hinge-feature-review-20261030/hinge for archived helpers. These
+helpers assume the original repository/SDK/JDK paths; adapt paths on another host.
+Do not overwrite protected research or evidence while reproducing.
+No build binaries or private signing data are included.

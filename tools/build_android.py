@@ -114,6 +114,25 @@ def publish_apk(signed,output,report):
             raise
     return report
 
+def android_manifest(a, engine_version):
+    # Native activity policy is authoritative; no per-frame orientation workaround.
+    if a.orientation not in ('any', 'landscape', 'portrait', 'sensorLandscape', 'sensorPortrait'):
+        raise ValueError('Unsupported Android orientation')
+    orientation = '' if a.orientation == 'any' else f' android:screenOrientation="{a.orientation}"'
+    return f'''<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="{a.id}" android:versionCode="{a.version_code}" android:versionName="{escape(a.version_name,{chr(34):"&quot;"})}">
+<uses-permission android:name="android.permission.INTERNET"/>
+<uses-sdk android:minSdkVersion="26" android:targetSdkVersion="36"/>
+<uses-feature android:glEsVersion="0x00030000" android:required="true"/>
+<uses-feature android:name="android.hardware.touchscreen" android:required="false"/>
+<uses-feature android:name="android.hardware.gamepad" android:required="false"/>
+<application android:appCategory="game" android:label="{escape(a.name,{'"':'&quot;'})}" android:icon="@drawable/judas_icon" android:theme="@android:style/Theme.Material.NoActionBar.Fullscreen" android:allowBackup="false" android:debuggable="{'false' if a.keystore else 'true'}" android:extractNativeLibs="false" android:hasCode="true">
+<meta-data android:name="judas.shadows" android:value="{str(a.shadows=='on').lower()}"/>
+<meta-data android:name="judas.engineVersion" android:value="{escape(engine_version,{chr(34):'&quot;'})}"/>
+<meta-data android:name="judas.buildChannel" android:value="{a.channel}"/>
+<activity{orientation} android:name="org.projectjudas.runtime.JudasActivity" android:exported="true" android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|screenSize|smallestScreenSize|uiMode|layoutDirection|density|navigation" android:resizeableActivity="true">
+<intent-filter><action android:name="android.intent.action.MAIN"/><category android:name="android.intent.category.LAUNCHER"/></intent-filter>
+</activity></application></manifest>'''
+
 def parse_args(argv=None):
     p=argparse.ArgumentParser(description=__doc__)
     p.add_argument('project', type=Path)
@@ -124,6 +143,7 @@ def parse_args(argv=None):
     p.add_argument('--channel',choices=['Alpha','Beta','Experimental','Stable','Local'],default='Experimental',help='Engine build channel, independent of Android app version/signing')
     p.add_argument('--engine-version',help='Override checked-in engine version; does not change the game save/content identity')
     p.add_argument('--abis',default='arm64-v8a,x86_64')
+    p.add_argument('--orientation', choices=['any','landscape','portrait','sensorLandscape','sensorPortrait'], default='any', help='Android activity orientation; any preserves device rotation. Android may override restrictions in large-screen or multi-window modes.')
     p.add_argument('--shadows',choices=['off','on'],default='off',help='Mobile graphics profile; physics is unchanged')
     p.add_argument('--jobs',type=int,default=4)
     p.add_argument('--icu-host-tools',type=Path,help='Reuse a matching ICU 76.1 host build without rebuilding its tools')
@@ -230,19 +250,7 @@ def build_apk(a,p,jdk,jdk_version,sdk,cache):
     res=stage/'res/drawable';res.mkdir(parents=True)
     shutil.copyfile(ROOT/'assets/branding/judas-icon.png',res/'judas_icon.png')
     manifest=stage/'AndroidManifest.xml'
-    manifest.write_text(f'''<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="{a.id}" android:versionCode="{a.version_code}" android:versionName="{escape(a.version_name,{chr(34):"&quot;"})}">
-<uses-permission android:name="android.permission.INTERNET"/>
-<uses-sdk android:minSdkVersion="26" android:targetSdkVersion="36"/>
-<uses-feature android:glEsVersion="0x00030000" android:required="true"/>
-<uses-feature android:name="android.hardware.touchscreen" android:required="false"/>
-<uses-feature android:name="android.hardware.gamepad" android:required="false"/>
-<application android:appCategory="game" android:label="{escape(a.name,{'"':'&quot;'})}" android:icon="@drawable/judas_icon" android:theme="@android:style/Theme.Material.NoActionBar.Fullscreen" android:allowBackup="false" android:debuggable="{'false' if a.keystore else 'true'}" android:extractNativeLibs="false" android:hasCode="true">
-<meta-data android:name="judas.shadows" android:value="{str(a.shadows=='on').lower()}"/>
-<meta-data android:name="judas.engineVersion" android:value="{escape(identities[0]['version'],{chr(34):'&quot;'})}"/>
-<meta-data android:name="judas.buildChannel" android:value="{a.channel}"/>
-<activity android:name="org.projectjudas.runtime.JudasActivity" android:exported="true" android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|screenSize|smallestScreenSize|uiMode|layoutDirection|density|navigation" android:resizeableActivity="true">
-<intent-filter><action android:name="android.intent.action.MAIN"/><category android:name="android.intent.category.LAUNCHER"/></intent-filter>
-</activity></application></manifest>''')
+    manifest.write_text(android_manifest(a, identities[0]['version']), encoding='utf-8')
     java=stage/'java';java.mkdir();classes=stage/'classes';classes.mkdir()
     first=next(iter(native.values()))
     # SDL 2.32's receivers predate target-36 export flags. Patch only the
@@ -304,7 +312,7 @@ def build_apk(a,p,jdk,jdk_version,sdk,cache):
         for library in set(binary['needed']) & ANDROID_SYSTEM_LIBRARIES:
             stub=ndk/f'toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/lib/{triple}/26/{library}'
             if not stub.is_file():raise ValueError(f'Android system dependency has no API-26 NDK stub: {stub}')
-    report={'schema':1,'kind':'judas-android-apk','application':{'id':a.id,'name':a.name,'versionCode':a.version_code,'versionName':a.version_name},'preset':a.preset,'engine':build_identities,'desktopTools':desktop_info,'abis':abis,'targetSdk':36,'minSdk':26,'ndk':NDK,'buildTools':BUILD_TOOLS,'jdk':jdk_version,'developmentSigning':a.keystore is None,'shadows':a.shadows,'contentFiles':len(records),'contentBytes':sum(r['bytes'] for r in records),'native':{abi:{str(f.relative_to(b)):digest(f) for f in [b/'libmain.so',b/'_deps/judas_sdl-build/libSDL2.so']} for abi,b in native.items()},'shippedNative':verified['shippedNative']}
+    report={'schema':1,'kind':'judas-android-apk','application':{'id':a.id,'name':a.name,'versionCode':a.version_code,'versionName':a.version_name},'preset':a.preset,'engine':build_identities,'desktopTools':desktop_info,'abis':abis,'targetSdk':36,'minSdk':26,'ndk':NDK,'buildTools':BUILD_TOOLS,'jdk':jdk_version,'developmentSigning':a.keystore is None,'shadows':a.shadows,'orientation':a.orientation,'contentFiles':len(records),'contentBytes':sum(r['bytes'] for r in records),'native':{abi:{str(f.relative_to(b)):digest(f) for f in [b/'libmain.so',b/'_deps/judas_sdl-build/libSDL2.so']} for abi,b in native.items()},'shippedNative':verified['shippedNative']}
     report=publish_apk(signed,output,report)
     print(f'APK: {output}\nSHA256: {report["sha256"]}')
 if __name__=='__main__':main()

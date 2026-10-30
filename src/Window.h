@@ -42,6 +42,8 @@ public:
     void SetHostTextInput(bool enabled);
     bool Init(const char* title, int width, int height, bool visible = true);
     void Shutdown();
+    // Desktop resize without polling/injecting input; reads back the actual native size.
+    bool Resize(int width, int height, std::string& error);
 
     void PollEvents();
     InputSystem& Input() { return m_input; }

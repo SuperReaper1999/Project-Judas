@@ -21,7 +21,7 @@
 #include <stdexcept>
 #include <vector>
 namespace {
-struct Command {std::string kind,name,path;int begin=0,end=0;float value=0,other=0,pressure=0;std::int64_t finger=0;int down=0;};
+struct Command {std::string kind,name,path;int begin=0,end=0,width=0,height=0;float value=0,other=0,pressure=0;std::int64_t finger=0;int down=0;};
 struct Script {int frames=600,logEvery=1;float seconds=SimulationTiming::kFixedTimestep;bool realtime=false;std::string entity;std::vector<Command> commands;};
 void Require(bool ok,const std::string& error){if(!ok)throw std::runtime_error(error);}
 Script Load(const std::string& path,const InputMap& map){
@@ -32,6 +32,7 @@ Script Load(const std::string& path,const InputMap& map){
   else if(op=="REALTIME"){in>>s.frames;s.realtime=true;}
   else if(op=="FRAME_SECONDS")in>>s.seconds;
   else if(op=="ENTITY")in>>s.entity;
+  else if(op=="RESIZE"||op=="EXPECT_VIEWPORT")in>>c.width>>c.height>>c.begin;
   else if(op=="SCREENSHOT")in>>c.begin>>c.path;
   else if(op=="HOLD"){in>>c.name>>c.begin>>c.end;c.value=1;c.name="key:"+c.name;}
   else if(op=="TAP"){in>>c.name>>c.begin;c.end=c.begin+1;c.value=1;c.name="key:"+(c.name=="SPACE"?std::string("Space"):c.name);}
@@ -59,9 +60,10 @@ Script Load(const std::string& path,const InputMap& map){
   s.commands.push_back(c);
  }
  Require(s.frames>0&&s.frames<=1000000&&s.logEvery>=0&&std::isfinite(s.seconds)&&s.seconds>=0&&s.seconds<=.25f,"invalid frame count/clock");
- for(const auto& c:s.commands)if(c.kind=="SCREENSHOT"||c.kind=="LOOK"||(c.kind.rfind("POINTER",0)==0)||(c.kind.rfind("TOUCH_",0)==0)||c.kind.rfind("EXPECT_",0)==0||c.kind=="WAIT_SERVICES")Require(c.begin>=0&&c.begin<s.frames&&std::isfinite(c.value)&&std::isfinite(c.other),"invalid command frame/value");
+ for(const auto& c:s.commands)if(c.kind=="RESIZE"||c.kind=="SCREENSHOT"||c.kind=="LOOK"||(c.kind.rfind("POINTER",0)==0)||(c.kind.rfind("TOUCH_",0)==0)||c.kind.rfind("EXPECT_",0)==0||c.kind=="WAIT_SERVICES")Require(c.begin>=0&&c.begin<s.frames&&std::isfinite(c.value)&&std::isfinite(c.other),"invalid command frame/value");
  for(const auto& c:s.commands)if(c.kind=="ACTION"||c.kind=="AXIS"||c.kind=="HOLD"||c.kind=="TAP"||c.kind=="CONTROL")Require(c.begin>=0&&c.end>c.begin&&c.end<=s.frames&&std::isfinite(c.value),"invalid input interval");
  for(const auto& c:s.commands){
+  if(c.kind=="RESIZE"||c.kind=="EXPECT_VIEWPORT")Require(c.width>=1&&c.height>=1&&c.width<=8192&&c.height<=8192,"window dimensions must be 1..8192");
   if(c.kind.rfind("POINTER",0)==0)Require(double(c.value)>=std::numeric_limits<int>::min()&&double(c.value)<=std::numeric_limits<int>::max()&&double(c.other)>=std::numeric_limits<int>::min()&&double(c.other)<=std::numeric_limits<int>::max(),"pointer pixels exceed integer range");
   if(c.kind=="EXPECT_POINTER")Require((c.down==0||c.down==1)&&c.value>=0&&c.value<=1&&c.other>=0&&c.other<=1,"invalid pointer expectation");
   if(c.kind=="EXPECT_TOUCHES")Require(c.value>=0&&c.value<=10&&std::floor(c.value)==c.value,"invalid touch count expectation");
@@ -81,6 +83,7 @@ int RunTestHarness(Window& window,Renderer& renderer,InteractivePlay& play,const
   for(int frame=0;frame<script.frames;++frame){
    ProfileFrame frameProfile("scripted application frame");
    if(beforeFrame)beforeFrame();
+   for(const auto& c:script.commands)if(c.kind=="RESIZE"&&frame==c.begin){std::string error;Require(window.Resize(c.width,c.height,error),error);}
    // No PollEvents: real desktop devices cannot contaminate deterministic input.
    window.BeginTestFrame();
    for(const auto& c:script.commands){
@@ -100,6 +103,7 @@ int RunTestHarness(Window& window,Renderer& renderer,InteractivePlay& play,const
    if(auto* scripts=play.Session().World().Scripts();scripts&&!scripts->Diagnostics().empty())throw std::runtime_error("script callback failed: "+scripts->Diagnostics().front().message);
    for(const auto& c:script.commands)if(c.begin==frame){
     if(c.kind=="SCREENSHOT"){std::filesystem::path output(c.path);if(output.has_parent_path())std::filesystem::create_directories(output.parent_path());std::vector<unsigned char> pixels;renderer.CaptureFrame(window.Width(),window.Height(),pixels);Require(WriteRgbPng(c.path,window.Width(),window.Height(),pixels),"capture failed "+c.path);std::printf("[TestHarness] Wrote screenshot: %s\n",c.path.c_str());}
+    if(c.kind=="EXPECT_VIEWPORT"){const auto& world=play.Session().World();Require(window.Width()==c.width&&window.Height()==c.height&&world.viewportWidth==c.width&&world.viewportHeight==c.height,"window/gameplay viewport expectation failed");}
     if(c.kind=="EXPECT_POINTER"){const auto p=window.Input().Pointer();Require(std::abs(p.x-c.value)<1e-5f&&std::abs(p.y-c.other)<1e-5f&&p.down==(c.down!=0),"gameplay pointer expectation failed");}
     if(c.kind=="EXPECT_TOUCHES")Require(window.Input().Touches().size()==std::size_t(c.value),"gameplay touch count expectation failed");
     if(c.kind=="EXPECT_AXIS")Require(std::abs(window.Input().Axis(c.name)-c.value)<1e-5f,"axis expectation failed "+c.name);

@@ -11,6 +11,7 @@
 #include <string>
 #include <vector>
 #include "Application.h"
+#include "RuntimeOptions.h"
 #include "EngineHost.h"
 #include "InteractivePlay.h"
 #include "Project.h"
@@ -25,6 +26,13 @@ std::string Read(const std::string& path){std::ifstream s(path,std::ios::binary)
 void Quit(){SDL_Event e{};e.type=SDL_QUIT;Check(SDL_PushEvent(&e)==1,"runtime_quit_event");}
 }
 int main(int argc,char**argv){
+ int width=1024,height=768;std::string sizeError;
+ Check(ParseWindowSize(nullptr,width,height,sizeError)&&width==1024&&height==768,"absent window override preserves default");
+ Check(ParseWindowSize("2400x1080",width,height,sizeError)&&width==2400&&height==1080,"landscape startup size parses");
+ Check(ParseWindowSize("1080x2400",width,height,sizeError)&&width==1080&&height==2400,"portrait startup size parses");
+ for(const char* invalid:{"","0x1080","1080x0","8193x800","800x8193","-1x800","800x600x2","800X600","800x600junk","800.5x600","999999999999999999999999x1"}){
+  const auto w=width,h=height;Check(!ParseWindowSize(invalid,width,height,sizeError)&&width==w&&height==h,"malformed startup size rejects without mutation");
+ }
  const std::string projectPath=argc>1?argv[1]:"projects/tiny_game/tiny_game.judasproj";
  Project project;Scene authored;std::string error,fingerprint;
  Check(project.Load(projectPath,error),"project_parse");

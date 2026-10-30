@@ -1,0 +1,130 @@
+{
+  "parent": "76d509e794220706c1a468e3163eb3a4a4fc9930",
+  "mainUnchanged": "f2813324155166c6942fd68dde843d9775eb532d",
+  "originalGameArchive": {
+    "path": "/home/conner/Documents/Hinge.zip",
+    "sha256": "46cb452ac6dd1bca5724be37b4582d5251db862cf2b00e1dce20c41b7e0a0c22"
+  },
+  "sourceFiles": {
+    ".github/workflows/ci-tooling.yml": "dfb766b2c399575cf781b2cb80a219b76e78d1a27fa1ea73b137e492599c41b2",
+    "docs/ANDROID.md": "85463db1fe56260d2f41e2091ff9795216f33a53834a2b89399dcac41a077fa6",
+    "docs/HINGE_DISPLAY_FEATURES.txt": "dae53603f0c5bccf54d4907271117254db4bd8d2700af48db8f415a09ac05d7a",
+    "docs/TEST_HARNESS.md": "3e2e32e9942e745fb990a26c757b581819f2e03185af936c85f1c358eab88caa",
+    "platform/android/java/org/projectjudas/runtime/JudasActivity.java": "2b45006957d16f8a479751ea9aff15668c9bc37a0c1d0aef4e293ed9b51ff95c",
+    "src/Application.cpp": "ec6cef4f987716f28b40f1c7b1e6959e1913584642ef57b78a74347bf8895b34",
+    "src/Renderer.cpp": "f1a22d3e26b30ff083663e67c1b41eb9387893b228bd41c44c1d4f2dc3afd0ca",
+    "src/RuntimeOptions.cpp": "203ffff323ceca34ffaf2b770d6f183e9e2e29bb9e32d45c0bc8e30328d686cb",
+    "src/RuntimeOptions.h": "79bf81c9d2e0d6624ed39412f908f6bc46f0d8bfcf7e6d5aaaef5555039e9a4c",
+    "src/TestHarness.cpp": "0882f4f93c0730f97bcb2b173c6e2e81c56a4e018e250ee08c779b061a03424e",
+    "src/Window.cpp": "ceac0801b9c474607f38872605bd3f9b907193d426df9cdd0fcd3193aeb6502c",
+    "src/Window.h": "d8b11256f3dd0a67a4afa27cb2c07f273a19bbeeb1f2b929aaa90b392e84d9fc",
+    "tests/PointerHarnessTests.cpp": "f6a817684889040f723d7a223237c27e19cb204b249ea5623309c87af4d851ba",
+    "tests/ProjectApplicationTests.cpp": "be553bb56d151c980a003f7048c23eacc5d8f67fcdfbc5d76524003de0777b33",
+    "tests/test_android_orientation.py": "368c65e62d5eb8326a38a8c5ebe8641d56c1c4fa784c94fdac94df47eaf4557b",
+    "tools/build_android.py": "54c56c855ccd18a57188f4ce3a0751deba6b7b190e082ad902b7b1cfdd272676"
+  },
+  "binaries": {
+    "build/judas": "08483772d3f9c76e95ad8e37b816ea7cdc3f968dac54b2d55c5376411877854b",
+    "build/judas_export": "685c60aa224d9a88afa1fab21c67feea2c0fea9e7e0678aae41024ac977a84b2",
+    "build/judas_pointer_harness_tests": "d575f62157952712e321aee7b384d9f637a69756bba63cae0e7c2429a5c2bb7b",
+    "build/judas_project_application_tests": "1e71f496629caef310fb1f50af2e03b8383d6ecacda25f4c1bba8b6b3fb7d2fc"
+  },
+  "nativeResults": [
+    {
+      "name": "native-surface-probe",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/hinge-feature-review-20261030/surface_probe"
+      ],
+      "overrides": {},
+      "exit": 0,
+      "expected": 0,
+      "requiredDiagnostic": ""
+    },
+    {
+      "name": "pointer-final",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_pointer_harness_tests",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/hinge-feature-review-20261030/pointer-final"
+      ],
+      "overrides": {},
+      "exit": 0,
+      "expected": 0,
+      "requiredDiagnostic": ""
+    },
+    {
+      "name": "application-final",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas_project_application_tests"
+      ],
+      "overrides": {},
+      "exit": 0,
+      "expected": 0,
+      "requiredDiagnostic": ""
+    },
+    {
+      "name": "hinge-aspects-final",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/hinge-feature-review-20261030/hinge/hinge.judasproj"
+      ],
+      "overrides": {
+        "JUDAS_WINDOW_SIZE": "800x360",
+        "JUDAS_TEST_SCRIPT": "/home/conner/Documents/GitHub/Project-Judas/.cache/hinge-feature-review-20261030/aspects.txt"
+      },
+      "exit": 0,
+      "expected": 0,
+      "requiredDiagnostic": ""
+    },
+    {
+      "name": "hinge-portrait-startup",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/hinge-feature-review-20261030/hinge/hinge.judasproj"
+      ],
+      "overrides": {
+        "JUDAS_WINDOW_SIZE": "360x800",
+        "JUDAS_TEST_SCRIPT": "/home/conner/Documents/GitHub/Project-Judas/.cache/hinge-feature-review-20261030/portrait-startup.txt"
+      },
+      "exit": 0,
+      "expected": 0,
+      "requiredDiagnostic": ""
+    },
+    {
+      "name": "invalid-startup",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/hinge-feature-review-20261030/hinge/hinge.judasproj"
+      ],
+      "overrides": {
+        "JUDAS_WINDOW_SIZE": "9000x300"
+      },
+      "exit": 1,
+      "expected": 1,
+      "requiredDiagnostic": "JUDAS_WINDOW_SIZE must be WIDTHxHEIGHT"
+    },
+    {
+      "name": "offscreen-resize-rejection",
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/build/judas",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/hinge-feature-review-20261030/hinge/hinge.judasproj"
+      ],
+      "overrides": {
+        "SDL_VIDEODRIVER": "offscreen",
+        "JUDAS_TEST_SCRIPT": "/home/conner/Documents/GitHub/Project-Judas/.cache/hinge-feature-review-20261030/baseline/resize.txt"
+      },
+      "exit": 1,
+      "expected": 1,
+      "requiredDiagnostic": "SDL offscreen cannot resize"
+    }
+  ],
+  "relocatedExport": {
+    "command": [
+      "/tmp/judas-hinge-display-nc7_x11_/package/judas"
+    ],
+    "cwd": "/tmp",
+    "exit": 0,
+    "package": "/tmp/judas-hinge-display-nc7_x11_/package",
+    "script": "/home/conner/Documents/GitHub/Project-Judas/.cache/hinge-feature-review-20261030/relocated.txt"
+  },
+  "androidScope": "API36 manifest compile/link/decode; full production Java compilation; callback boundary execution; no physical device/emulator/new game APK acceptance"
+}

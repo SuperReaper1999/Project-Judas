@@ -7,6 +7,22 @@ import java.security.MessageDigest;
 
 /** Native SDL Activity; gameplay, physics, rendering and JS run in libmain. */
 public final class JudasActivity extends SDLActivity {
+    @Override public void setOrientationBis(int width, int height, boolean resizable, String hint) {
+        final int policy;
+        try {
+            policy = getPackageManager().getActivityInfo(getComponentName(), 0).screenOrientation;
+        } catch (android.content.pm.PackageManager.NameNotFoundException error) {
+            throw new IllegalStateException("Cannot read Judas activity orientation", error);
+        }
+        // SDL otherwise replaces even an explicit manifest policy with FULL_USER
+        // when creating our resizable window. An omitted policy keeps SDL defaults.
+        if (policy == android.content.pm.ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED) {
+            super.setOrientationBis(width, height, resizable, hint);
+        } else {
+            setRequestedOrientation(policy);
+        }
+    }
+
     private android.media.AudioFocusRequest audioFocus;
     private static native void nativeAudioFocus(boolean focused);
     @Override protected void onResume() {

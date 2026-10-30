@@ -6,6 +6,8 @@ on:
       '.github/workflows/**', '.gitignore',
       'scripts/check_ci_promotion.py', 'scripts/check_current_docs.py',
       'scripts/qualify_m100.py', 'scripts/qualify_sdk.py', 'scripts/qualify_sdk_workflows.py',
+      'tests/test_android_*.py', 'tools/build_android.py',
+      'platform/android/java/**',
       'tests/test_ci_workflows.py', 'tests/test_release_packaging.py', 'tests/test_release_manifest.py',
       'tools/assemble_release_run.py', 'tools/prepare_release.py', 'tools/publish_release.py',
       'tools/release_manifest.py', 'tools/package_source.py', 'tools/generate_changelog.py', 'tools/verification/current-docs.json'
@@ -42,6 +44,7 @@ jobs:
         run: |
           python3 tests/test_release_packaging.py
           python3 tests/test_release_manifest.py
+          python3 -m unittest discover -s tests -p 'test_android_*.py' -v
           python3 scripts/prealpha_packaging_checks.py --output .cache/ci-tooling/packaging.json
       - name: Current documentation controls
         run: python3 -m unittest discover -s tests -p test_current_docs.py -v

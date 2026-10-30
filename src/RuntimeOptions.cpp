@@ -18,6 +18,28 @@ bool EnvSet(const char* name) {
 }
 }  // namespace
 
+bool ParseWindowSize(const char* value, int& width, int& height, std::string& outError) {
+    if (!value) return true;
+    const std::string size(value);
+    const auto separator = size.find('x');
+    if (separator == std::string::npos || separator == 0 || separator + 1 == size.size() ||
+        size.find_first_not_of("0123456789x") != std::string::npos ||
+        size.find('x', separator + 1) != std::string::npos) {
+        outError = "JUDAS_WINDOW_SIZE must be WIDTHxHEIGHT (each 1..8192)";
+        return false;
+    }
+    try {
+        const auto w = std::stoul(size.substr(0, separator));
+        const auto h = std::stoul(size.substr(separator + 1));
+        if (w < 1 || h < 1 || w > 8192 || h > 8192) throw std::out_of_range("size");
+        width = int(w); height = int(h);
+        return true;
+    } catch (...) {
+        outError = "JUDAS_WINDOW_SIZE must be WIDTHxHEIGHT (each 1..8192)";
+        return false;
+    }
+}
+
 bool ParseWorldOffset(const char* value, glm::dvec3& outOffset, std::string& outError) {
     if (value == nullptr || *value == '\0') {
         outOffset = glm::dvec3(0.0);
@@ -46,6 +68,9 @@ bool EndsWith(const std::string& s, const std::string& suffix) {
 
 bool ParseRuntimeOptions(int argc, char** argv, RuntimeOptions& out, std::string& outError) {
     out = RuntimeOptions{};
+#ifndef __ANDROID__
+    if (!ParseWindowSize(std::getenv("JUDAS_WINDOW_SIZE"), out.windowWidth, out.windowHeight, outError)) return false;
+#endif
     std::vector<char*> filtered{argv[0]};
     for(int i=1;i<argc;++i){
         const std::string option=argv[i];
