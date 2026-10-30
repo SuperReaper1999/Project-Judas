@@ -51,8 +51,8 @@ No physics, game logic, Android touch/input policy or save compatibility was cha
   workflow and release artifacts; it must succeed before publication. Current
   claims do not relabel the earlier focused binaries as release SDKs.
 
-Detailed source/failure evidence: [orientation/aspect work](HINGE_DISPLAY_FEATURES.txt),
-[headless correction](HINGE_HEADLESS_RESIZE_CORRECTION.txt).
+Detailed source/failure evidence: [orientation/aspect work](https://github.com/SuperReaper1999/Project-Judas/blob/824f56616d02f9dde388fb82ba78785c08c48e95/docs/HINGE_DISPLAY_FEATURES.txt),
+[headless correction](https://github.com/SuperReaper1999/Project-Judas/blob/d5f02448bf132a327d5ebf6b054b50bce03b1788/docs/HINGE_HEADLESS_RESIZE_CORRECTION.txt).
 [Controls](TEST_HARNESS.md#window-size-and-rotation-layout-tests) ·
 [Android orientation](ANDROID.md#game-orientation) ·
 [Support matrix](ALPHA_SUPPORT_MATRIX.md) · [Publication process](RELEASING.md).
