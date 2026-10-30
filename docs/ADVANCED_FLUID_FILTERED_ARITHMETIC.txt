@@ -1,0 +1,122 @@
+ADVANCED FLUID FOLLOW-UP — ORDINARY ARITHMETIC FIRST
+2026-10-30 | Experimental private reference, no production fluid enablement
+Parent:746d8a035a6390aeda1412e35b313cef35991bbf
+Main/Alpha1.0.3 remains f2813324155166c6942fd68dde843d9775eb532d.
+
+RESULT / SCOPE
+Ordinary hardware floating point is now the DEFAULT TRANSPORT EVALUATION in the
+private pressure-backend reference. Binary64 is tried first, native extended
+precision next, and the preserved113-bit implementation only when ordinary
+bounds cannot establish the existing accuracy conditions. These are DATA-driven
+choices, not scene/game/quality-setting branches. Not a released engine feature.
+
+A constant113-bit/ rational preparation still builds accurate immutable geometry
+and weak-load maps once per epoch. Runtime ordinary attempts do not evaluate
+113-bit polynomial arithmetic or nonlinear rational directed-flux integrals.
+Small exact primary-cochain checks/source conversion comparisons remain, as does
+the unchanged pressure reference's exact mean-flux reconstruction. This is NOT a
+claim that all fractions have disappeared from the whole backend.
+
+NUMERICAL METHOD
+Outward-rounded intervals enclose the intended polynomial projection, volume
+stress, clipped-face integration, weak-load map and directed outflow. The actual
+published ordinary rate must pass certified kinetic-rate error<=1e-12, actual
+linear/angular momentum<=1e-12, work identity<=1e-10 and energy-rate sign checks.
+These do not replace the original gates with looser relative tolerances. If a
+certificate is inconclusive, recompute at the next precision from the SAME
+input, not a corrected/damped state. Nonlinear budget16, observed5 iterations,
+timestep1/240s and physical parameters are unchanged.
+
+Geometry signs normally resolve in ordinary arithmetic. An interval containing
+zero invokes the existing exact rational predicate locally; an exact-zero vertex
+control exercises that route without invoking software multiprecision transport.
+Unrepresentable/inconclusive calculations select higher precision, not deleted
+apertures. Constructor data and generation checks preserve cache ownership.
+
+CONSERVATION / AVOIDED FRACTION WORK
+Each cell's primary integrated normal fluxes are still summed EXACTLY to check
+zero net quantity; opposite face owners must agree. This validates the actual
+input, not a cached 'conserved' flag. No quantity is clamped/repaired afterward.
+The ordinary path returns CERTIFIED OUTFLOW BOUNDS for donor checks, not pretend
+exact directed packets. If donor capacity cannot be decided from those bounds,
+or a consumer explicitly needs exact directed quantities, materialize the
+original rational integrals lazily. The exact totals match the previous reference.
+This remains fixed-capacity closed-cell transport, not a new M54 ledger frontend,
+tracer inventory, wet/dry or free-surface integration.
+
+FINAL MATCHED MEASUREMENTS — ms per1/240s reference fixed step
+60 steps per geometry, alternating old/new in one process, same5/16 iterations:
+                         mean       median      p95       worst
+ axis Stage23            74.8955    75.4990     75.6607    75.9138
+ axis filtered           28.8589    28.9173     28.9875    29.0098
+ rotated Stage23        181.942    181.969     183.529    185.058
+ rotated filtered        76.2090    76.1616     76.5876    77.7717
+About2.60x /2.39x throughput; time decreases61.5% /58.1%. One final matched
+sequence per geometry plus an earlier retained preliminary sequence. Shared
+Ryzen5 5600 desktop,8GB RAM, no CPU affinity, g++15.2 -O3/no-fast-math.
+Preparation168.495ms /269.575ms, excluded from warm-step timings.
+
+Precision/quantity counters over each60-step implicit sequence:
+ axis:360 calls,360 binary64,0 native,0 software113,0 exact geometry predicates,
+      0 exact directed-outflow materializations.
+ rotated:360 calls,0 binary64 accepted,360 native extended,0 software113,
+      0 exact geometry predicates,0 exact directed-outflow materializations.
+Binary64 is still attempted first in the rotated case; its error enclosure is
+inconclusive, so native precision is used. Linux native extended has64 mantissa
+bits(x87), distinct from113-bit software arithmetic. It is ordinary hardware.
+
+Retained exact bookkeeping is explicit:60480 primary rational additions per
+sequence(168 per evaluation),17280/34560 source-conversion certifications. These
+small linear operations are not the removed nonlinear fraction integrations.
+No claim of 'zero exact math' is made. The pressure reference remains unchanged.
+
+Actual endpoints differ from Stage23 by8.63974e-20 /3.04932e-20. Advective angular
+error4.33681e-18 /4.67089e-18, discrete energy defect4.41587e-18 /3.24422e-18,
+solver residual5.84266e-17 /2.29787e-16. Pressure-stage angular changes remain
+separate; independent boundary-traction qualification is still outstanding.
+
+VALIDATION
+-910 combined checks pass: full original544 spatial contracts, both60-step
+ implicit sequences, original physical gates and donor-bound behavior.
+-330 controls pass: deterministic repeat, exact on-demand quantity agreement and
+ ordinary bounds enclosing exact totals, rejected-step input preservation,
+ one-iteration/oversized-step rejection, malformed net quantity, mismatched face
+ owners, stale epoch, unsupported rounding and flush-to-zero rejection.
+ Original high-work cases6/7 on both geometries reject ordinary certificates,
+ select113-bit and reproduce the reference rates at unchanged absolute gates.
+-29914 interval-arithmetic checks pass against100-decimal-digit arithmetic,
+ including cancellation, division, wide exponents, underflow/overflow and a
+ negative fake zero-width1/3 enclosure. These are arithmetic checks, not29914
+ new engine gameplay tests.
+-Six independent100-digit actual-root/exact-clipped-face oracles pass: ordinary
+ axis/rotated results lie inside their reported work bounds; the four difficult
+ results retain the original1e-10 work gate and prior high-precision oracle.
+-Nonzero tiny-flow control:scale2^-2000, rate3.72178e-1207, native tier80,
+ relative error1.30027e-18,0 software113/0 exact outflow queries. The ordinary
+ binary64 range limit triggers refinement; the flow is not silently erased.
+-GCC ordinary compilation accepts; -ffast-math explicitly rejects at preprocessing.
+ This guard was a final build-precondition check with no normal runtime change.
+ IEEE semantics, round-to-nearest and gradual underflow are required. Windows,
+ Android, other compiler modes/hardware are not newly qualified here.
+
+SOURCE / EVIDENCE
+ .cache/fluid-filtered-arithmetic-stage24-20261030/
+ Main modules:Interval.h, PreparedBank.h, AdaptiveTransport.h,
+ AdaptiveImplicitStep.h. All source/dependencies, actual logs, failed test-only
+ cast compilation, preliminary/final runs, commands, binary and file hashes:
+ docs/evidence/advanced-fluid-filtered-arithmetic-20261030/
+No production C++/JS/API/build wiring changed, so no ceremonial engine-wide suite,
+SDK/editor/export or platform rebuild. Earlier reference/evidence hashes verified
+unchanged; independent research and existing projects untouched.
+
+REMAINING WORK
+Still far too expensive for a game:29/76ms is per FIXED STEP at240Hz, not render
+FPS; the budget is4.17ms. These tiny24-convex-cell/121-coordinate cases are not
+production scalability certification. Repeated pressure/conservation work and
+ordinary interval/iteration costs remain. Software113 is no longer their routine
+transport bottleneck. Preparation is not a local moving-geometry runtime design.
+Moving solids/GCL, free surfaces/wet-dry, native contact chronology/friction,
+complete complementary-mode advection, M54 integration and persistence/export
+remain unfinished. Earlier forced narrow-gap failure is unchanged/not rerun.
+Main, Alpha packages, Advanced Fluid lock, Basic Water, M54/M55 and Solbert's
+research remain unchanged. No release/tag/human acceptance is claimed.

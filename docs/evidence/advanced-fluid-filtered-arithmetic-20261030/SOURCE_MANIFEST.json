@@ -1,0 +1,315 @@
+{
+  "schema": 1,
+  "archiveSha256": "1a741ab4cb9ca4fa677e174c5039b84837b1dd6902e17840db34c3151936da3a",
+  "files": {
+    ".cache/fluid-angular-transport-stage21-20261030/ConservativeCondensedNetwork.h": {
+      "bytes": 11580,
+      "sha256": "6257f941c355e12db5fb69b118a888ef8e03f63ad59c251a78e735aaf682d292"
+    },
+    ".cache/fluid-angular-transport-stage21-20261030/ConservativeInternalCoordinates.h": {
+      "bytes": 23972,
+      "sha256": "e99052fd1321b0da751e0712e1197b3a9763e54016d865f006af0dfbdf384219"
+    },
+    ".cache/fluid-angular-transport-stage21-20261030/ConvexPorts.h": {
+      "bytes": 12804,
+      "sha256": "35b32e7821303709e729f37637e8be8c6455279965b623ad361f25e38126bf23"
+    },
+    ".cache/fluid-angular-transport-stage21-20261030/ExactConvexClip.h": {
+      "bytes": 5592,
+      "sha256": "c7079d49f0a6d97806e632b4440d14c4f4908df832b71b11ca1f976b3035c8b7"
+    },
+    ".cache/fluid-angular-transport-stage21-20261030/LocalCondensedNetwork.h": {
+      "bytes": 28205,
+      "sha256": "8d13db471e702e48c03c5346fdbc0b413dc679c63427c5cb1684761d3d01db95"
+    },
+    ".cache/fluid-angular-transport-stage21-20261030/Network.h": {
+      "bytes": 25888,
+      "sha256": "588a9bccd5b3c9d307f04e724032b01de26b97de1fb2d05bbbecda7779f6ccd2"
+    },
+    ".cache/fluid-angular-transport-stage21-20261030/PortMomentumTransport.h": {
+      "bytes": 8307,
+      "sha256": "ed098e4315b071b04f5318709345ad11be47c23ee0a46fdee5139ed2531a3cd1"
+    },
+    ".cache/fluid-angular-transport-stage21-20261030/RegionalCochains.h": {
+      "bytes": 2734,
+      "sha256": "30df5aaf871004b1f6f440773ccf8324f8b342850a35d24c45f225cc71626575"
+    },
+    ".cache/fluid-angular-transport-stage21-20261030/VoxelConservativeNetwork.h": {
+      "bytes": 1345,
+      "sha256": "f3d36e1a36cabec4a4ab3fe805f726891950eb5dbd5247d83a2f002f4ab7b775"
+    },
+    ".cache/fluid-angular-transport-stage21-20261030/VoxelNetwork.h": {
+      "bytes": 638,
+      "sha256": "01f1a60805ed090ffb4812f5b36c1fabb7f8c7bbe7110c5e609d8248927a9360"
+    },
+    ".cache/fluid-angular-transport-stage21-20261030/VoxelPorts.h": {
+      "bytes": 6056,
+      "sha256": "241c7d854a3a731b4483e847a2878b3e38df9343e7f02581e8cfb32e3ec59e7a"
+    },
+    ".cache/fluid-angular-transport-stage21-20261030/WeakAffineTransport.h": {
+      "bytes": 7564,
+      "sha256": "4acfb4c5f0570e098faa4462e2a8895769a307d3b9ef09ca897050d9d8b0a6ae"
+    },
+    ".cache/fluid-angular-transport-stage22-20261030/FastWeakAffineTransport.h": {
+      "bytes": 10767,
+      "sha256": "d16987479c54f7fa290baa78136f2488c0fa36fc674ff45db483568e4b0d0020"
+    },
+    ".cache/fluid-compatible-flux-stage9-20261029/OwnedCutGeometry.h": {
+      "bytes": 4119,
+      "sha256": "983920a49efeba46bf5e6a33a2fcfca226f70fce266bf76894e23f4dbed47d2f"
+    },
+    ".cache/fluid-compatible-flux-stage9-kernel/ConformingCutMesh.h": {
+      "bytes": 15930,
+      "sha256": "6378785e6bcb39d64a005c30965d89d93ce578041e3b70a650df1332e35cf4d2"
+    },
+    ".cache/fluid-compatible-flux-stage9-kernel/ExactPlanePredicates.h": {
+      "bytes": 3837,
+      "sha256": "1ff1db56d26a8ece23f7d5a59460c2064775eb30ad12fa549ad84a214d369882"
+    },
+    ".cache/fluid-compatible-flux-stage9-kernel/OwnedMetrics.h": {
+      "bytes": 2298,
+      "sha256": "4aa00fe6decb3ca70fadeae5611dd129d48c989c1ee3385a060cb9957d9157cb"
+    },
+    ".cache/fluid-cost-precision-stage23-20261030/KineticRiesz.h": {
+      "bytes": 1576,
+      "sha256": "8e0a7a3b53c619c4a320217455eb9704e642dd515c7f257b8903af56b2ad16d9"
+    },
+    ".cache/fluid-cost-precision-stage23-20261030/OptimizedImplicitStep.h": {
+      "bytes": 2838,
+      "sha256": "9593a0359e6261035aeb53cec6833076e4666baaa13c3b147020275c6bce0812"
+    },
+    ".cache/fluid-cost-precision-stage23-20261030/OptimizedTransport.h": {
+      "bytes": 10807,
+      "sha256": "9d97af66420abc2512484390d7cddd7b1313aca5c2bbcce4c4ae4e9ee2f505a2"
+    },
+    ".cache/fluid-cost-precision-stage23-20261030/PreciseFaces.h": {
+      "bytes": 3678,
+      "sha256": "d07378976bfd2a4eb9f0f2c2dfd72cbe958f0945f9573ed06bc7305357ff3613"
+    },
+    ".cache/fluid-cost-precision-stage23-20261030/PreparedRieszPrecise.h": {
+      "bytes": 2264,
+      "sha256": "03927d78180e9131954f0cf4251726fbd3bc2e013abed6bb54ea5b673d179a2a"
+    },
+    ".cache/fluid-cost-precision-stage23-20261030/PreparedWork.h": {
+      "bytes": 2423,
+      "sha256": "c9aac00a91a56cb80dd8d3993866adb23f1325f0ae977860995c9a95febd6320"
+    },
+    ".cache/fluid-filtered-arithmetic-stage24-20261030/AdaptiveContracts.cpp": {
+      "bytes": 5836,
+      "sha256": "96f2a1f8676771e47d8e2aeb0cad9740980fbe44c843588cf7d234c876a686cb"
+    },
+    ".cache/fluid-filtered-arithmetic-stage24-20261030/AdaptiveImplicitStep.h": {
+      "bytes": 2821,
+      "sha256": "e6702e2450a874e99ae88509eee93c8df25ba076bd341a48671867fb1bc90320"
+    },
+    ".cache/fluid-filtered-arithmetic-stage24-20261030/AdaptiveTransport.h": {
+      "bytes": 12273,
+      "sha256": "442ab74f195621f461d2cb198bc7bd77150b84defd34afa77233ae17f2141045"
+    },
+    ".cache/fluid-filtered-arithmetic-stage24-20261030/ArithmeticTests-final-compile.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    ".cache/fluid-filtered-arithmetic-stage24-20261030/ArithmeticTests-final.log": {
+      "bytes": 221,
+      "sha256": "800700243bd97e7be9680735d9840dc90053afa8056bcad07f425146e8ddb1bd"
+    },
+    ".cache/fluid-filtered-arithmetic-stage24-20261030/ArithmeticTests.cpp": {
+      "bytes": 1925,
+      "sha256": "6d2fdc001aabc85db7c6932eb949cc0f084c2c14db913037552e0b14c985e46c"
+    },
+    ".cache/fluid-filtered-arithmetic-stage24-20261030/BuildPolicy.cpp": {
+      "bytes": 35,
+      "sha256": "3ab7b8c287e1f3b9066e614b22ec6ddf39c135e9abd35244863e3b0d35bedc1a"
+    },
+    ".cache/fluid-filtered-arithmetic-stage24-20261030/Controls-final-compile.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    ".cache/fluid-filtered-arithmetic-stage24-20261030/Controls-final.log": {
+      "bytes": 429,
+      "sha256": "83f7c13999f1d8864f89e60e2fbb1ffd1180400ff81bdab1e64f14cfdf1e8f28"
+    },
+    ".cache/fluid-filtered-arithmetic-stage24-20261030/Controls.cpp": {
+      "bytes": 7372,
+      "sha256": "44e74e5c8ea66e1458b4a3140e587fad3f5bb5b105178345c4209cfd0b825fad"
+    },
+    ".cache/fluid-filtered-arithmetic-stage24-20261030/DERIVATION.txt": {
+      "bytes": 1383,
+      "sha256": "295a5d669ea2aae703da1c55d6b0973a28384b4acef8c13b89ad38f99c53f722"
+    },
+    ".cache/fluid-filtered-arithmetic-stage24-20261030/Interval.h": {
+      "bytes": 3111,
+      "sha256": "9da1307092752e9d744055a76d284029165c61473af617195ffeb398e41b6cf3"
+    },
+    ".cache/fluid-filtered-arithmetic-stage24-20261030/Oracle-final-compile.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    ".cache/fluid-filtered-arithmetic-stage24-20261030/Oracle-final.log": {
+      "bytes": 1491,
+      "sha256": "b9b92d0550e2db70c75f4cadf30ecacb5cdcca7f66a58a03f12f9227097c0abd"
+    },
+    ".cache/fluid-filtered-arithmetic-stage24-20261030/Oracle.cpp": {
+      "bytes": 3741,
+      "sha256": "6fb48007fcc77941560c4f1d5f91139b9f754ce59469a64cbd4c2fa235dcb401"
+    },
+    ".cache/fluid-filtered-arithmetic-stage24-20261030/PreparedBank.h": {
+      "bytes": 2394,
+      "sha256": "ccbff9007e5611d6d83d5db58a41c1806a11f9df9545664a2d2ebd734b45f061"
+    },
+    ".cache/fluid-filtered-arithmetic-stage24-20261030/Probe.cpp": {
+      "bytes": 1853,
+      "sha256": "9a70e3ec50b20de00f2563fdd5d33f166c5401ba1bc2d2039d2d4ae5097a0355"
+    },
+    ".cache/fluid-filtered-arithmetic-stage24-20261030/Qualification-final-compile.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    ".cache/fluid-filtered-arithmetic-stage24-20261030/Qualification-final.log": {
+      "bytes": 3555,
+      "sha256": "35f941256b1bab152156fe5f64e7c34a34605391541a54d72b5e9bbf06a77d83"
+    },
+    ".cache/fluid-filtered-arithmetic-stage24-20261030/Qualification.cpp": {
+      "bytes": 3745,
+      "sha256": "1c3d9ba80057ac8ad486ca48a375269fc37ca12851e6a7e36c132a60b570fcdc"
+    },
+    ".cache/fluid-filtered-arithmetic-stage24-20261030/RangeControl.cpp": {
+      "bytes": 1986,
+      "sha256": "643ce68e26d678b16b28d879a28e7d43f4aa790b6b47aa80c58631b012fcef49"
+    },
+    ".cache/fluid-filtered-arithmetic-stage24-20261030/RangeControl.receipt.json": {
+      "bytes": 854,
+      "sha256": "bd18272800450a5fc7050d9d4548395273a1ac24f922f27f36ca85d363264471"
+    },
+    ".cache/fluid-filtered-arithmetic-stage24-20261030/STATUS.txt": {
+      "bytes": 728,
+      "sha256": "304411326712bfcda103442a2345d2fbb81790d30f312317f5b57e8898ad336c"
+    },
+    ".cache/fluid-filtered-arithmetic-stage24-20261030/arithmetic-compile.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    ".cache/fluid-filtered-arithmetic-stage24-20261030/arithmetic-first-cast-error.log": {
+      "bytes": 4083,
+      "sha256": "f118153de8e1bc4082990ee123dc27f8a92181f96e860b95fc3f5cb1bd50694e"
+    },
+    ".cache/fluid-filtered-arithmetic-stage24-20261030/arithmetic.log": {
+      "bytes": 221,
+      "sha256": "800700243bd97e7be9680735d9840dc90053afa8056bcad07f425146e8ddb1bd"
+    },
+    ".cache/fluid-filtered-arithmetic-stage24-20261030/build-policy-ordinary.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    ".cache/fluid-filtered-arithmetic-stage24-20261030/build-policy-rejected-fastmath.log": {
+      "bytes": 355,
+      "sha256": "e1b06f721d902f4722b036e2888a425e42fd14f26373a9380ce6a6c0174ed74f"
+    },
+    ".cache/fluid-filtered-arithmetic-stage24-20261030/build-policy.json": {
+      "bytes": 479,
+      "sha256": "70bdc57f7633ccee146a9b3a90b3e26b36582f5e80e283ddd1864d04ff2aae59"
+    },
+    ".cache/fluid-filtered-arithmetic-stage24-20261030/compile.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    ".cache/fluid-filtered-arithmetic-stage24-20261030/controls-compile.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    ".cache/fluid-filtered-arithmetic-stage24-20261030/controls.log": {
+      "bytes": 429,
+      "sha256": "7c5da88593ad5cc4a929f9f106f74dcd8d3798020b4722a0bea2662774c60609"
+    },
+    ".cache/fluid-filtered-arithmetic-stage24-20261030/final-receipts.json": {
+      "bytes": 3178,
+      "sha256": "84199206ff373ea9ea70ec4f1cd2b4b91988f3fef537221b33b7fef1f3a816e5"
+    },
+    ".cache/fluid-filtered-arithmetic-stage24-20261030/oracle-compile.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    ".cache/fluid-filtered-arithmetic-stage24-20261030/oracle.log": {
+      "bytes": 1491,
+      "sha256": "b9b92d0550e2db70c75f4cadf30ecacb5cdcca7f66a58a03f12f9227097c0abd"
+    },
+    ".cache/fluid-filtered-arithmetic-stage24-20261030/package_evidence.py": {
+      "bytes": 3312,
+      "sha256": "a302c691872aa5dfefa5bb53640198f8b38e26c34f73040800548a6594b2343c"
+    },
+    ".cache/fluid-filtered-arithmetic-stage24-20261030/probe.log": {
+      "bytes": 572,
+      "sha256": "2e438d53e959b637a8ee0e99cda36ae191f41972c036aaf6a868bd4bd1b11be2"
+    },
+    ".cache/fluid-filtered-arithmetic-stage24-20261030/qualification-compile.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    ".cache/fluid-filtered-arithmetic-stage24-20261030/qualification.log": {
+      "bytes": 3555,
+      "sha256": "72a8725df85b0c8a96c48b07fbfa906c265e1746b172004c32fe01feb4a23edd"
+    },
+    ".cache/fluid-filtered-arithmetic-stage24-20261030/range.log": {
+      "bytes": 196,
+      "sha256": "45ead318ceb954a6d461ea6740a02b35b9d0f166c37f5d109255c2a8de9cb084"
+    },
+    ".cache/fluid-filtered-arithmetic-stage24-20261030/run_final.py": {
+      "bytes": 1215,
+      "sha256": "c51d040a33c1955dc9e8d24206cdfec8b870cef1885a9b797a64655d6de86b9a"
+    },
+    ".cache/fluid-filtered-arithmetic-stage24-20261030/run_reference.py": {
+      "bytes": 1095,
+      "sha256": "c3be9d6d0c550ac1edee1449a5bba87b2fecfc001ad2890f6a6f27533dfd96d2"
+    },
+    ".cache/fluid-moving-geometry-stage13-20261029/MotionCompiler.h": {
+      "bytes": 19461,
+      "sha256": "5413de236dc3c80079e3819a3181a1ddd7485cea1ed8198af0082d011a21d09a"
+    },
+    ".cache/fluid-runtime-candidates-stage16-20261029/geometry/BoundaryCompiler.h": {
+      "bytes": 13209,
+      "sha256": "ef788fabf9eb44605515b6b6ef1cd18bf06252bb4bd5a30310fcd5557d7582b8"
+    },
+    ".cache/fluid-runtime-candidates-stage16-20261029/geometry/FactoredFaceMetrics.h": {
+      "bytes": 10477,
+      "sha256": "4deebc473f9e927df3180b2982ceefa6b7a37fa34217809ae13a6c0b40200bc5"
+    },
+    ".cache/fluid-runtime-candidates-stage16-20261029/geometry/FastPolyhedralMoments.h": {
+      "bytes": 13962,
+      "sha256": "60248b8fbcbacda210efee8390b6a245e46215ac07a8f655024657537416a22d"
+    },
+    ".cache/fluid-runtime-candidates-stage16-20261029/geometry/PolyhedralMoments.h": {
+      "bytes": 8683,
+      "sha256": "43ac18fe0aff50418fe26dc0684c1b15df830d780a583bd38662923d9148760f"
+    },
+    ".cache/fluid-runtime-candidates-stage16-20261029/vem/CondensedCell.h": {
+      "bytes": 4761,
+      "sha256": "391d6e12ea5a6da8b055ecc05cf3320a8130ff246e6d33170b9279ca25509b59"
+    },
+    ".cache/fluid-runtime-candidates-stage16-20261029/vem/VemLocal.h": {
+      "bytes": 13478,
+      "sha256": "fd94cbc565e3ec4958f180ebfd4185bf4346bef1ffac116d4d63e315177667bc"
+    },
+    "src/GravityField.h": {
+      "bytes": 2205,
+      "sha256": "40cdb1655c59509dba047ead9f53c797d5cb461075eaa0beb7c79f1768c17ff6"
+    },
+    "src/LiquidGeometry.h": {
+      "bytes": 4580,
+      "sha256": "9f889a91e79adf93d35b7946024e1159675593adf5519dbf9ff5cb5094d8cee5"
+    },
+    "src/Material.h": {
+      "bytes": 2920,
+      "sha256": "792972f72366e267f20e1265ce06b87997d30bcbfad86d1312a4d7eadd03a2cd"
+    },
+    "src/MeshData.h": {
+      "bytes": 2983,
+      "sha256": "9e597eed6ac3abb67d7c8d3f0645a700c6716a6f43972b7e6b0dc9ba244eee0e"
+    },
+    "src/TextureData.h": {
+      "bytes": 1089,
+      "sha256": "6645f4d1e3543a5127994a99ac4ceed326f1c23bae111e991d015208b0db2efe"
+    }
+  },
+  "unresolvedQuotedIncludes": []
+}

@@ -1,0 +1,51 @@
+{
+  "schema": 1,
+  "recordedUtc": "2026-10-30T13:19:23.643398+00:00",
+  "parent": "746d8a035a6390aeda1412e35b313cef35991bbf",
+  "mainUnchanged": "f2813324155166c6942fd68dde843d9775eb532d",
+  "scope": "Private numerical reference only; no native engine link or runtime adoption",
+  "compiler": "g++ (Ubuntu 15.2.0-16ubuntu1) 15.2.0",
+  "flags": [
+    "-std=c++17",
+    "-O3",
+    "-g0",
+    "-DNDEBUG"
+  ],
+  "cpu": "AMD Ryzen 5 5600",
+  "ramKiB": "MemTotal:        8045176 kB",
+  "systemGLM": "1.0.1+ds-3",
+  "externalHeaderArchives": {
+    ".cache/fluid-reference-headers/libeigen3-dev_3.4.0-5_all.deb": {
+      "bytes": 1056038,
+      "sha256": "22060e67427b1acf85465fd5784caf7eecc8c967c662fb2ec774b84ba6174ad9"
+    },
+    ".cache/fluid-reference-headers/libboost1.90-dev_1.90.0-6ubuntu1_amd64.deb": {
+      "bytes": 11452296,
+      "sha256": "7b89698c907fd5d33ccd439674fa53803139923822181c87b910579827aca379"
+    }
+  },
+  "finalBinaries": {
+    ".cache/fluid-filtered-arithmetic-stage24-20261030/Qualification.final": {
+      "bytes": 1739440,
+      "sha256": "a160035bdbf15794a6f4b04271d8ecdcef2ddd2a6c8fd94de206b37398bc500b"
+    },
+    ".cache/fluid-filtered-arithmetic-stage24-20261030/Controls.final": {
+      "bytes": 1692072,
+      "sha256": "04f3661843a12b09fab0bf1f1220ecb7f129836c0fc6c490283a3309ed2ff10f"
+    },
+    ".cache/fluid-filtered-arithmetic-stage24-20261030/ArithmeticTests.final": {
+      "bytes": 139160,
+      "sha256": "937552301963d28729c003647bd5b8fb82343fefecc37d717a0762d6a0674893"
+    },
+    ".cache/fluid-filtered-arithmetic-stage24-20261030/Oracle.final": {
+      "bytes": 1758160,
+      "sha256": "441ae515c4835e089282ae083fe569722c9f7d2fff05e710ba480ed7ba86b67f"
+    },
+    ".cache/fluid-filtered-arithmetic-stage24-20261030/RangeControl.reproduced": {
+      "bytes": 1655760,
+      "sha256": "30cf09ee2bf9575271fefbd66687f93e01185ad6b3d9658d85778efb9e14270d"
+    }
+  },
+  "nativeArchiveUsed": false,
+  "newPlatformOrHumanAcceptanceClaimed": false
+}

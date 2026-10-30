@@ -1,0 +1,187 @@
+{
+  "scope": "private fixed-geometry transport reference",
+  "timingsMilliseconds": [
+    {
+      "angle": "0",
+      "method": "stage23",
+      "samples": "60",
+      "mean": "74.8955",
+      "median": "75.499",
+      "p95": "75.6607",
+      "worst": "75.9138"
+    },
+    {
+      "angle": "0",
+      "method": "adaptive",
+      "samples": "60",
+      "mean": "28.8589",
+      "median": "28.9173",
+      "p95": "28.9875",
+      "worst": "29.0098"
+    },
+    {
+      "angle": "0.37",
+      "method": "stage23",
+      "samples": "60",
+      "mean": "181.942",
+      "median": "181.969",
+      "p95": "183.529",
+      "worst": "185.058"
+    },
+    {
+      "angle": "0.37",
+      "method": "adaptive",
+      "samples": "60",
+      "mean": "76.209",
+      "median": "76.1616",
+      "p95": "76.5876",
+      "worst": "77.7717"
+    }
+  ],
+  "checks": {
+    "qualification": 910,
+    "controls": 330,
+    "intervalArithmeticAssertions": 29914,
+    "independentOracleCases": 6,
+    "rangeFailures": 0
+  },
+  "normalEvaluations": 720,
+  "normalSoftware113": 0,
+  "normalExactDirectedOutflows": 0,
+  "runtimeBatch": [
+    {
+      "name": "Qualification",
+      "command": [
+        "g++",
+        "-std=c++17",
+        "-O3",
+        "-g0",
+        "-DNDEBUG",
+        "-Isrc",
+        "-I.cache/fluid-reference-headers/boost/usr/include",
+        "-I.cache/fluid-reference-headers/eigen/usr/include/eigen3",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/fluid-filtered-arithmetic-stage24-20261030/Qualification.cpp",
+        "-o",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/fluid-filtered-arithmetic-stage24-20261030/Qualification.final"
+      ],
+      "compileReturncode": 0,
+      "sourceSha256": "1c3d9ba80057ac8ad486ca48a375269fc37ca12851e6a7e36c132a60b570fcdc",
+      "returncode": 0,
+      "binarySha256": "a160035bdbf15794a6f4b04271d8ecdcef2ddd2a6c8fd94de206b37398bc500b",
+      "elapsedSeconds": 70.97916078567505
+    },
+    {
+      "name": "Controls",
+      "command": [
+        "g++",
+        "-std=c++17",
+        "-O3",
+        "-g0",
+        "-DNDEBUG",
+        "-Isrc",
+        "-I.cache/fluid-reference-headers/boost/usr/include",
+        "-I.cache/fluid-reference-headers/eigen/usr/include/eigen3",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/fluid-filtered-arithmetic-stage24-20261030/Controls.cpp",
+        "-o",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/fluid-filtered-arithmetic-stage24-20261030/Controls.final"
+      ],
+      "compileReturncode": 0,
+      "sourceSha256": "44e74e5c8ea66e1458b4a3140e587fad3f5bb5b105178345c4209cfd0b825fad",
+      "returncode": 0,
+      "binarySha256": "04f3661843a12b09fab0bf1f1220ecb7f129836c0fc6c490283a3309ed2ff10f",
+      "elapsedSeconds": 47.38136601448059
+    },
+    {
+      "name": "ArithmeticTests",
+      "command": [
+        "g++",
+        "-std=c++17",
+        "-O3",
+        "-g0",
+        "-DNDEBUG",
+        "-Isrc",
+        "-I.cache/fluid-reference-headers/boost/usr/include",
+        "-I.cache/fluid-reference-headers/eigen/usr/include/eigen3",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/fluid-filtered-arithmetic-stage24-20261030/ArithmeticTests.cpp",
+        "-o",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/fluid-filtered-arithmetic-stage24-20261030/ArithmeticTests.final"
+      ],
+      "compileReturncode": 0,
+      "sourceSha256": "6d2fdc001aabc85db7c6932eb949cc0f084c2c14db913037552e0b14c985e46c",
+      "returncode": 0,
+      "binarySha256": "937552301963d28729c003647bd5b8fb82343fefecc37d717a0762d6a0674893",
+      "elapsedSeconds": 3.3599283695220947
+    },
+    {
+      "name": "Oracle",
+      "command": [
+        "g++",
+        "-std=c++17",
+        "-O3",
+        "-g0",
+        "-DNDEBUG",
+        "-Isrc",
+        "-I.cache/fluid-reference-headers/boost/usr/include",
+        "-I.cache/fluid-reference-headers/eigen/usr/include/eigen3",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/fluid-filtered-arithmetic-stage24-20261030/Oracle.cpp",
+        "-o",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/fluid-filtered-arithmetic-stage24-20261030/Oracle.final"
+      ],
+      "compileReturncode": 0,
+      "sourceSha256": "6fb48007fcc77941560c4f1d5f91139b9f754ce59469a64cbd4c2fa235dcb401",
+      "returncode": 0,
+      "binarySha256": "441ae515c4835e089282ae083fe569722c9f7d2fff05e710ba480ed7ba86b67f",
+      "elapsedSeconds": 52.17859959602356
+    }
+  ],
+  "rangeReceipt": {
+    "source": "/home/conner/Documents/GitHub/Project-Judas/.cache/fluid-filtered-arithmetic-stage24-20261030/RangeControl.cpp",
+    "sourceSha256": "643ce68e26d678b16b28d879a28e7d43f4aa790b6b47aa80c58631b012fcef49",
+    "command": [
+      "g++",
+      "-std=c++17",
+      "-O3",
+      "-g0",
+      "-DNDEBUG",
+      "-Isrc",
+      "-I.cache/fluid-reference-headers/boost/usr/include",
+      "-I.cache/fluid-reference-headers/eigen/usr/include/eigen3",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/fluid-filtered-arithmetic-stage24-20261030/RangeControl.cpp",
+      "-o",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/fluid-filtered-arithmetic-stage24-20261030/RangeControl.reproduced"
+    ],
+    "arguments": [],
+    "returncode": 0,
+    "elapsedSeconds": 45.719581604003906,
+    "binarySha256": "30cf09ee2bf9575271fefbd66687f93e01185ad6b3d9658d85778efb9e14270d"
+  },
+  "compilePolicy": [
+    {
+      "command": [
+        "g++",
+        "-std=c++17",
+        "-fsyntax-only",
+        ".cache/fluid-filtered-arithmetic-stage24-20261030/BuildPolicy.cpp"
+      ],
+      "returncode": 0,
+      "log": "build-policy-ordinary.log"
+    },
+    {
+      "command": [
+        "g++",
+        "-std=c++17",
+        "-fsyntax-only",
+        "-ffast-math",
+        ".cache/fluid-filtered-arithmetic-stage24-20261030/BuildPolicy.cpp"
+      ],
+      "returncode": 1,
+      "log": "build-policy-rejected-fastmath.log"
+    }
+  ],
+  "limitations": [
+    "Not production integrated",
+    "240Hz step budget unmet",
+    "Moving geometry and free-surface integration unfinished",
+    "Preparation and primary conservation retain exact arithmetic"
+  ]
+}

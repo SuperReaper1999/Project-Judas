@@ -1,0 +1,14 @@
+Verify without extraction: python3 verify_evidence.py from this directory.
+Extract filtered-arithmetic-reference.tar.gz into a disposable directory, never
+over independent research or existing evidence. Paths are .cache/... and src/.
+Requirements: g++15.2, GLM1.0.1, Boost1.90 and Eigen3.4 headers. Header archive
+hashes and compiler provenance are in PROVENANCE.json; external headers/binaries
+are not bundled. Set BOOST_INCLUDE_DIR and EIGEN_INCLUDE_DIR or install under
+.cache/fluid-reference-headers/boost/usr/include and
+.cache/fluid-reference-headers/eigen/usr/include/eigen3.
+From extraction root: python3 .cache/fluid-filtered-arithmetic-stage24-20261030/run_final.py
+This runs five programs sequentially. Recorded execution was the first four
+through this driver and RangeControl separately (receipts archived).
+IEEE nearest rounding and gradual underflow are required. Fast-math rejected.
+Compile-policy receipts record ordinary syntax success and fast-math rejection.
+No engine library, editor, export, Windows or Android qualification is claimed.
