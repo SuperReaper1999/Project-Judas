@@ -12,9 +12,14 @@ prerelease sequence numbers are separate SemVer components.
 The rain patch is `1.0.2-alpha.1`, released on 29 October 2026
 from `24ae686f5918105dd84c2b00f98f5354bad13ef8`. Publication evidence is in the
 [release procedure](RELEASING.md) and [patch notes](ALPHA_V1_0_2_NOTES.md).
-The current published patch is `1.0.3-alpha.1`, released on 30 October 2026 from
+The authoring/diagnostics patch is `1.0.3-alpha.1`, released on 30 October 2026 from
 `f2813324155166c6942fd68dde843d9775eb532d`; see
 [its authoring/Android diagnostic corrections and release record](ALPHA_V1_0_3_NOTES.md).
+
+The current source identity is **`1.0.4-alpha.1`**, titled **Judas Engine Alpha
+v1.0.4**, with [orientation/resize patch notes](ALPHA_V1_0_4_NOTES.md).
+Publication is a separate, protected operation; see the release page and its
+immutable manifest for published source/artifact identities.
 
 Judas follows semantic version precedence: `1.0.0-alpha.1` < `1.0.0-alpha.2` <
 `1.0.0-beta.1` < `1.0.0-rc.1` < `1.0.0`. Numeric prerelease components sort

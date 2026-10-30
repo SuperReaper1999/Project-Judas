@@ -1,15 +1,14 @@
 # Alpha scope and qualification matrix
 
-This is the support boundary for [published Alpha v1.0.3](https://github.com/SuperReaper1999/Project-Judas/releases/tag/v1.0.3-alpha.1),
-published on 30 October 2026 at `f2813324155166c6942fd68dde843d9775eb532d`.
-The original Alpha v1.0.0 was human accepted on 27 October at `636eec47`.
-The patch adds fresh Ubuntu 24.04 SDK/editor/export qualification and hosted
-native Windows SDK/tool/selected-contract checks. It does not create new Windows
-GPU, audio, controller, clean-machine or Android hardware acceptance.
-Exact M100 artifact receipts distinguish release qualification from the accepted
-Pre-Alpha baseline and historical platform evidence. See
-[patch notes](ALPHA_V1_0_2_NOTES.md) and [release process](RELEASING.md).
-No claim of universal component composition or clean-machine certification is made.
+This is the source support boundary for **Alpha v1.0.4 / `1.0.4-alpha.1`**.
+[Published release manifests](https://github.com/SuperReaper1999/Project-Judas/releases)
+identify exact accepted source/artifacts; source-version changes do not publish a
+release. The original Alpha was human accepted on 27 October at `636eec47`.
+The [current patch notes](ALPHA_V1_0_4_NOTES.md) separate Hinge's operator phone
+acceptance, independent Xvfb/desktop verification and SDK/package qualification.
+Previous Windows hardware acceptance is retained; no new Windows GPU/audio,
+controller or clean-machine certification is implied. Advanced Fluids remains
+locked. No universal component-composition claim is made.
 
 ## Platforms and distribution
 
@@ -20,7 +19,7 @@ No claim of universal component composition or clean-machine certification is ma
 | Other Linux distributions / Ubuntu 22.04 / non-x86-64 desktop | Unqualified | No inference from a glibc symbol check alone. |
 | Windows x64 MSVC / tested Windows 11 hardware | Human accepted at `6941b381` | Effective 59/59 native gate plus 33/33 extras; operator project creation, save/reopen, small game, audio and editor/gameplay trial. Controller hardware and clean-machine certification remain unqualified. [Evidence](WINDOWS.md). |
 | Linux-to-Windows MinGW cross-build | Existing separately qualified workflow | Native MSVC acceptance does not supply a new MinGW qualification; historical cross-build receipts keep their own scope. |
-| Android runtime, touch, APK workflow | Human-verified working through real games | Operator confirms making and playing multiple Judas Android games, alongside earlier scoped phone acceptance. Exact revisions/devices were not supplied for the additional report; no fresh APK/device/emulator qualification accompanied the desktop Alpha refresh. |
+| Android runtime, touch, APK workflow | Human-verified working through real games | Operator confirms making and playing multiple Judas Android games, alongside earlier scoped phone acceptance. Exact revisions/devices were not supplied for the additional report; the operator additionally reports the d5f02448-based Hinge APK working on the phone after the orientation correction. APK bytes/device identity were not independently captured for this report; no general controller/emulator or every-device qualification is implied. |
 | macOS, iOS, consoles, browser runtime | Unsupported | No supported distribution pipeline promised. |
 | Docker/Podman Ubuntu baseline builder | Available, execution-unqualified here | Rootless bubblewrap is the exercised baseline backend. |
 

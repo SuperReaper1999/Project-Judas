@@ -1,5 +1,5 @@
 {
-  "checkpoint": "Alpha v1.0.0 candidate; public module through M100",
+  "checkpoint": "Alpha public module through M100; source version in engine-version.json",
   "authority": "src/ScriptSystem.cpp::library + Impl::Native + ScriptBindingsUI.cpp + ScriptBindingsJoint.cpp + ScriptInputBindings.inl + ScriptLocalMultiplayer.inl + ScriptNetwork.inl",
   "resultShapes": [
     {

@@ -1,7 +1,8 @@
 # Judas architecture
 
-Implementation map for published Alpha v1.0.0 at
-`636eec475b9955dcfd7d6d943d00c05d911135ad`.
+Implementation map for the current Alpha source.
+[Engine version](../engine-version.json) and [release manifests](https://github.com/SuperReaper1999/Project-Judas/releases)
+identify source and published packages separately.
 This describes ownership and integration boundaries, not universal certification.
 See [current status](PREALPHA.md), [documentation index](README.md), and
 [JudasJS](JUDASJS.md). The former 10,248-line milestone chronology is preserved

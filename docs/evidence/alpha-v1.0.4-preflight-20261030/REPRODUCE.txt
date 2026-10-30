@@ -1,0 +1,15 @@
+node scripts/check_judasjs_api.mjs
+cmake --build build --target judas_pointer_harness_tests judasjs_examples_tests -j2
+# With a real desktop backend or Xvfb (not SDL offscreen):
+build/judasjs_examples_tests /tmp/fresh-api-surface surface
+node scripts/check_judasjs_api.mjs --runtime /tmp/fresh-api-surface/surface.json
+build/judas_pointer_harness_tests /tmp/fresh-resize-controls
+python3 -m unittest discover -s tests -p test_ci_workflows.py -v
+python3 -m unittest discover -s tests -p 'test_android_*.py' -v
+# JDK17+ enables the callback test; the recorded run had no skips.
+python3 -m unittest discover -s tests -p test_current_docs.py
+python3 tests/test_release_packaging.py
+python3 tests/test_release_manifest.py
+python3 scripts/check_current_docs.py
+Exact source/SDK qualification then uses the protected-candidate preparation
+workflow described in docs/RELEASING.md. Preflight does not authorize publication.

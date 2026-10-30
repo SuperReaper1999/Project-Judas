@@ -1,9 +1,16 @@
 # Prepare, qualify and publish Judas
 
-[Identity/channels](VERSIONING.md) · [Patch notes](ALPHA_V1_0_3_NOTES.md) ·
+[Identity/channels](VERSIONING.md) · [Patch notes](ALPHA_V1_0_4_NOTES.md) ·
 [Support matrix](ALPHA_SUPPORT_MATRIX.md) · [Linux baseline](LINUX_BASELINE_BUILD.md)
 
 ## Current boundary
+
+Source version **Alpha v1.0.4 / `1.0.4-alpha.1`** adds the accepted Android
+orientation and desktop resize/capture corrections. The operator reports the
+rebuilt Hinge phone test working; independent desktop/Xvfb verification is
+recorded separately. [Patch notes](ALPHA_V1_0_4_NOTES.md) distinguish that evidence
+from fresh exact-source Linux/Windows package qualification. Preparation does
+not publish or replace previous artifacts; protected publication remains separate.
 
 **[Alpha v1.0.3 is published](https://github.com/SuperReaper1999/Project-Judas/releases/tag/v1.0.3-alpha.1)**
 on 30 October 2026 from `f2813324155166c6942fd68dde843d9775eb532d`. Linux and

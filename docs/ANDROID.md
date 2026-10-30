@@ -325,3 +325,14 @@ Keep layouts responsive through UI anchors and
 `world.viewport`; an orientation policy is not a guarantee of a fixed surface
 size on every device. Desktop aspect tests are described in
 [the application harness guide](TEST_HARNESS.md#window-size-and-rotation-layout-tests).
+
+### Orientation acceptance for the Alpha v1.0.4 patch
+
+The operator confirms the rebuilt Hinge APK works on the phone following the
+`sensorLandscape` correction, in response to the both-landscape-directions and
+pause/resume checklist. Claude reports that APK was built from `d5f02448` with
+matching receipt/DEX/manifest. This is genuine operator acceptance; APK bytes
+and device identity were not independently collected in this follow-up.
+Automated evidence separately covers SDK manifest compilation, the actual SDL
+orientation callback, and Java compilation. Desktop aspect tests do not certify
+Android sensors or touch hardware. See [patch notes](ALPHA_V1_0_4_NOTES.md).

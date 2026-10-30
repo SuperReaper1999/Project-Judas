@@ -5,6 +5,8 @@ import importlib.util
 from pathlib import Path
 import re
 import unittest
+import tempfile
+from unittest.mock import patch
 
 ROOT = Path(__file__).resolve().parents[1]
 spec = importlib.util.spec_from_file_location('promotion', ROOT/'scripts/check_ci_promotion.py')
@@ -76,18 +78,53 @@ class Routing(unittest.TestCase):
         for name in ('src/PhysicsWorld.h', 'src/RendererWeather.inl', 'CMakeLists.txt',
                      'cmake/Physics.cmake', 'tools/package_sdk.py', 'tools/validation/suites.json',
                      'docs/judas.d.ts', 'tests/NativeTests.cpp', 'tests/fixtures/input.json',
-                     'projects/game/Assets/player.js', 'unknown/future-file'):
+                     'projects/game/Assets/player.js', 'tools/build_android.py',
+                     'tests/test_android_orientation.py',
+                     'platform/android/java/org/projectjudas/runtime/JudasActivity.java',
+                     'unknown/future-file'):
             self.assertFalse(any(fnmatch.fnmatchcase(name, p) for p in ignored), name)
 
     def test_tooling_exclusions_have_a_lightweight_validation_route(self):
         ignored = path_patterns('prealpha.yml', 'paths-ignore')
         tooling = path_patterns('ci-tooling.yml', 'paths')
         docs = {'docs/evidence/**', 'docs/**/*.md', 'docs/*.txt', '*.md'}
-        self.assertEqual(set(ignored)-docs, set(tooling))
+        # Every native-gate exclusion needs a lightweight route. Tooling may
+        # additionally cover native inputs; that overlap must not disable gates.
+        self.assertLessEqual(set(ignored)-docs, set(tooling))
         for name in ('scripts/qualify_m100.py', 'tools/package_source.py', 'tests/test_release_packaging.py',
                      '.github/workflows/release-candidate.yml', '.gitignore'):
             self.assertTrue(any(fnmatch.fnmatchcase(name, p) for p in ignored))
             self.assertTrue(any(fnmatch.fnmatchcase(name, p) for p in tooling))
+
+    def test_android_inputs_receive_both_tooling_and_native_validation(self):
+        ignored = path_patterns('prealpha.yml', 'paths-ignore')
+        tooling = path_patterns('ci-tooling.yml', 'paths')
+        for name in ('tools/build_android.py', 'tests/test_android_orientation.py',
+                     'platform/android/java/org/projectjudas/runtime/JudasActivity.java'):
+            self.assertTrue(any(fnmatch.fnmatchcase(name, p) for p in tooling), name)
+            self.assertFalse(any(fnmatch.fnmatchcase(name, p) for p in ignored), name)
+
+    def assert_mutated_route_rejected(self, workflow, old, new, validator):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory); destination = root/'.github/workflows'
+            destination.mkdir(parents=True)
+            for name in ('prealpha.yml', 'ci-tooling.yml'):
+                text = (ROOT/'.github/workflows'/name).read_text(encoding='utf-8')
+                if name == workflow:
+                    self.assertIn(old, text)
+                    text = text.replace(old, new, 1)
+                (destination/name).write_text(text, encoding='utf-8')
+            with patch.dict(globals(), ROOT=root), self.assertRaises(AssertionError):
+                validator()
+
+    def test_missing_lightweight_route_is_rejected(self):
+        self.assert_mutated_route_rejected('ci-tooling.yml', "'tools/package_source.py',", '',
+            self.test_tooling_exclusions_have_a_lightweight_validation_route)
+
+    def test_excluding_android_native_validation_is_rejected(self):
+        self.assert_mutated_route_rejected('prealpha.yml', "'scripts/check_ci_promotion.py',",
+            "'tools/build_android.py', 'scripts/check_ci_promotion.py',",
+            self.test_android_inputs_receive_both_tooling_and_native_validation)
 
 
 if __name__ == '__main__':

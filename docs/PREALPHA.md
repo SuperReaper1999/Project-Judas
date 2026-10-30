@@ -8,10 +8,13 @@ longer a statement that M100 has not begun. Start with the
 
 ## Accepted release baseline
 
-The latest published patch is Alpha v1.0.1 at
-`13b032080c6300c50af8bf44536c2dd8da5814d2`, published 29 October 2026.
-See [its release record](ALPHA_V1_0_1_NOTES.md#release-record). The original
-Alpha v1.0.0 checkpoint remains `636eec475b9955dcfd7d6d943d00c05d911135ad`.
+The authoring/Android diagnostics patch Alpha v1.0.3 was published at
+`f2813324155166c6942fd68dde843d9775eb532d` on 30 October 2026.
+See [its release record](ALPHA_V1_0_3_NOTES.md#release-record). Current source
+prepares **Alpha v1.0.4** with [orientation/resize patch notes](ALPHA_V1_0_4_NOTES.md);
+[release manifests](https://github.com/SuperReaper1999/Project-Judas/releases)
+identify the latest published artifacts. Preparation alone is not publication.
+The original Alpha v1.0.0 checkpoint remains `636eec475b9955dcfd7d6d943d00c05d911135ad`.
 `main` contains human-accepted source; subsequent Experimental work requires its
 own acceptance before promotion. The older Windows 11 native/hardware acceptance
 at `6941b381` retains its own scope in [Windows qualification](WINDOWS.md).

@@ -127,3 +127,13 @@ export default class Menu {
   }
 }
 ```
+
+### Desktop testing at phone aspects
+
+UI layout remains driven by `world.viewport`, anchors and `UIDocument.referenceSize`;
+no Android-only layout API is required. The [application harness](../TEST_HARNESS.md#window-size-and-rotation-layout-tests)
+can set a startup size and resize a desktop window during play. Dimension
+assertions are distinct from pixel correctness; the native regression verifies
+complete captures after growth, shrinkage and odd-width changes on Xvfb/Mesa
+and the real desktop. Android orientation policy is an [APK export option](../ANDROID.md#game-orientation),
+not a new JudasJS binding or a fixed-size UI guarantee.

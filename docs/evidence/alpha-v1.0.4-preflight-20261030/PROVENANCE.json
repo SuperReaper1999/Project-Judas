@@ -1,0 +1,30 @@
+{
+  "parent": "d5f02448bf132a327d5ebf6b054b50bce03b1788",
+  "mainUnchanged": "f2813324155166c6942fd68dde843d9775eb532d",
+  "files": {
+    "README.md": "19ea460e5c1c2b7be65e08c7af60931f498aa2e90c83ada1e172c6b50aa80262",
+    "docs/ALPHA_SUPPORT_MATRIX.md": "824daecc710c363fd6228ab6dddb249c7352792623104623dbc868a2f940c45d",
+    "docs/ANDROID.md": "7d66a7be0103419f7fac9917acc53f9bc38e1db895f9aeb5326cfbc11bf7cae9",
+    "docs/ARCHITECTURE.md": "e9fa3ad818e1dae59e16b86146c5054156da304e4712af657d0538dc9dd4faaf",
+    "docs/JUDASJS.md": "f1fe9e65947708f30c022e51762d9731d242856f22ef49e889355634795e8aa0",
+    "docs/PREALPHA.md": "83a966a4fcf3f50c816bfb84edae9d55760bea4e01d82a75cec514456f8fd2bc",
+    "docs/README.md": "b0c0aaab4ea2cc73387b73327e18b7b344d2eaa575871963b0b096446e6446ae",
+    "docs/RELEASING.md": "6d32d18c121f240615ccd37916a86cfd422f931cc3afc3c2fc00573b395529a0",
+    "docs/VERSIONING.md": "65530bb030f58336685fdce4ed1c8f98b8e7420bfa47037f609171ac3539507a",
+    "docs/judas.d.ts": "ddca6689de6134884305379cec98bb94c92b71d00888d903b35a41f45c9ce65e",
+    "docs/judasjs/API_INVENTORY.md": "d34f8624d655e4d4423070f0fe91f1074a990deac3f072f85c503ccffca692e1",
+    "docs/judasjs/api-inventory.json": "3e79c62017351d1ee97ae02717a815b9fd0a6613667042386051110a1e60e727",
+    "docs/judasjs/effects-camera.md": "125cd13cc2fab06c7d341d423b47db7cbfb4de5cc94c4e53b1c23b65b51a5bb5",
+    "docs/judasjs/getting-started.md": "ccee321c72d8b26666e91cb031f3f6506e50a9b10594599ee3c72a026e6330a0",
+    "docs/judasjs/ui.md": "b67ddcc6ee5197e2d31701a39fadb5021ae9a6eda5dc5a9ffccef783bcc094d5",
+    "engine-version.json": "dff394c477373292a400edb02f20846b1ad9081ba57a96e23dbff721779977b4",
+    "scripts/check_judasjs_api.mjs": "8686bc05f4eb1496631bd4fccf75a2046a0ed7d90dddacd0f27fe67484da57fe",
+    "tests/PointerHarnessTests.cpp": "992cda212bdef9278ff63c8e11e56095cc8d2f84decc8aa7471c68cbc8df3f42",
+    "tests/test_ci_workflows.py": "feaf1a613abd88ed42a87145cdb79259cfc3a11f7cf4b0e5b0f9093d7de6ae53",
+    "tools/verification/current-docs.json": "9cfe6cf82ca39142323e542785a5c49d8d71cbf4ca17aa8e01f1ccb8769ee48e",
+    "docs/ALPHA_V1_0_4_NOTES.md": "10415a7762986c63f253a661c31be9b316a6b1a40e1872b52569dece465abede",
+    "docs/ALPHA_V1_0_4_PREFLIGHT.txt": "6e04b681956d261471810f4fe1657f52cdd6c7e3f0dcfc5cf62776eb88ce9ab9"
+  },
+  "humanAcceptance": "Operator reports rebuilt Hinge APK working after orientation/pause-resume checklist; not invented from automated checks",
+  "releaseQualification": "Pending exact-source hosted preparation; no publication performed"
+}

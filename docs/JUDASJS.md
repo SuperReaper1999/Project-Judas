@@ -1,8 +1,10 @@
-# JudasJS — Alpha v1.0.0 API reference
+# JudasJS — Alpha API reference
 
 [Practical ownership, readiness, presentation and save lessons](DEVELOPER_WORKFLOWS.md)
 
 Judas provides engine primitives. Project JavaScript supplies game behaviour.
+[Source version](../engine-version.json) · [Current patch notes](ALPHA_V1_0_4_NOTES.md)
+
 This reference describes the current repository implementation, including the public
 module developed through M100 and the preceding accepted Pre-Alpha corrections. It is not an
 eternal compatibility promise or an Alpha release announcement.

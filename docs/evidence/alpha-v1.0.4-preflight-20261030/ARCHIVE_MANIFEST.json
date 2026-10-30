@@ -1,0 +1,101 @@
+{
+  "archiveSha256": "52ab25935e3c628e78eedfa08e5a730e0b6bca65d94e9b259512894675913d47",
+  "files": {
+    "android.log": {
+      "bytes": 1721,
+      "sha256": "cfc7bbd6feb78c47dbac6363f6e58e2f67de4fa1856ca22c07922a433f715172"
+    },
+    "api-drift.log": {
+      "bytes": 309,
+      "sha256": "83a5b0a4b21c2de9821e6228a72e5df8ec5450dd7011fb77e008c7046a5e8541"
+    },
+    "api-live-drift-final.log": {
+      "bytes": 308,
+      "sha256": "8a507e4492d41d86e6ea4a984f763e00c418046f6889d37f1d101fad6ac94851"
+    },
+    "api-live-drift.log": {
+      "bytes": 308,
+      "sha256": "8a507e4492d41d86e6ea4a984f763e00c418046f6889d37f1d101fad6ac94851"
+    },
+    "ci-routing-after.log": {
+      "bytes": 1607,
+      "sha256": "bd218f9ed76e17ccf0d898ba93d41cf6491bea515aeb6c54113edd15011a8a2e"
+    },
+    "ci-routing-before.log": {
+      "bytes": 1932,
+      "sha256": "a105bbd770dc61ac3fa29725380781fddb376e2b040b2e3169e43067982d9fc7"
+    },
+    "ci-routing-final.log": {
+      "bytes": 1607,
+      "sha256": "e58a0e0fe3135f0f4cbe2256a3786630266e2b45c6e3c9ae4934e4bfc6f19a82"
+    },
+    "docs-final.log": {
+      "bytes": 120,
+      "sha256": "add8be2ce92c880d7f3151d6fef2037f05c8b0f6b2a87877aa0635b5740e2cdc"
+    },
+    "docs-tests-final.log": {
+      "bytes": 109,
+      "sha256": "69d3092e799b33eb7dca64bf94a3536ab4fa9fc5969f0629675edb863629b707"
+    },
+    "docs-tests.log": {
+      "bytes": 1373,
+      "sha256": "a9c9cf98312ea266c18b3d1f48dc33e27070c7ccc48566d4b4d0966dbdf1db48"
+    },
+    "docs.log": {
+      "bytes": 120,
+      "sha256": "b6974474352ca0da767b8e7931d26d21fd244fc8d8ae9b06f4211fc1cf8a02b0"
+    },
+    "hosted-ci-routing-failure.log": {
+      "bytes": 5007,
+      "sha256": "c4acfba1c1ffea2278af6e30233e1c88c3d37a68edbacb0797a494215ff83e1c"
+    },
+    "inventory-metadata.json": {
+      "bytes": 224,
+      "sha256": "63bbe5140a3ae287e2b6ed99fc15f46412ce38e4640fd9a5a1175296add5841e"
+    },
+    "live-api/surface.json": {
+      "bytes": 9179,
+      "sha256": "0b88cde3ebb918c2945a8326160ba536bde470b971bedd75cded273957e8c8b1"
+    },
+    "live-api.log": {
+      "bytes": 9671,
+      "sha256": "4164a632cde00cb9c2eb35f6cf3dca5bd833077b7703c76d1b02b89f52fffbe9"
+    },
+    "local-build.log": {
+      "bytes": 2534,
+      "sha256": "e33667d8f84348c2e8c77a57832e2d3f3e0deb7e48884b7ff18c8922803ae519"
+    },
+    "pointer.log": {
+      "bytes": 3340,
+      "sha256": "63cf096fd107f9108dece0b62e1147ab20f05997465c4b7d0338ebb053664746"
+    },
+    "release-manifest.log": {
+      "bytes": 150,
+      "sha256": "85ffe7daf3a632f4bc60338fd078ee2c25f5b8679f8599427b057d8a5b3b408b"
+    },
+    "release-packaging-final.log": {
+      "bytes": 385,
+      "sha256": "105963890080c23cd6e805f8e5fbd909c21ffa8c5af5ee1fd3ab9ccf50bbd330"
+    },
+    "release-packaging.log": {
+      "bytes": 385,
+      "sha256": "4a3118cc4ff3fc3ff242e2b91fa0bf350807597e021179896b1834dfc3f1e4c1"
+    },
+    "warning-control.json": {
+      "bytes": 1669,
+      "sha256": "54f275395dee209a4c3405720bf135f9f7d7abf8a0101d7d45ab92e0c14b867a"
+    },
+    "warning-control.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "with_xvfb.py": {
+      "bytes": 1076,
+      "sha256": "8872bc0faebdc1c2eac736d6edfaf65fd07042c808290c0b202747dc513025b3"
+    },
+    "xvfb.log": {
+      "bytes": 264,
+      "sha256": "18b994563c61904f959cb44346126933ebd488bf232ed5ab5e7f9fab0cd38b2c"
+    }
+  }
+}

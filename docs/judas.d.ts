@@ -1,9 +1,8 @@
-/** Current Pre-Alpha JudasJS (public module through M99). See JUDASJS.md.
+/** Current Alpha JudasJS public module. See JUDASJS.md and engine-version.json.
  * M98/M99 operator acceptance recorded 2026-10-17; later checks do not imply human acceptance.
  * M99 physical-phone testing used Android-to-Linux USB forwarding; Wi-Fi remains unvalidated.
- * Windows VM checks are bounded evidence; hardware acceptance remains outstanding.
- * Tooling only, no TS runtime. See JUDASJS.md.
- * Ordinary returned objects are detached snapshots.
+ * Platform and hardware qualification are recorded separately in ALPHA_SUPPORT_MATRIX.md / WINDOWS.md.
+ * Tooling only, no TS runtime. Ordinary returned objects are detached snapshots.
  */
 declare module "judas" {
   /** Embedded executable provenance; not game-save/content compatibility. */

@@ -106,3 +106,8 @@ Use `presentationUpdate` for view/marker placement, not authoritative movement. 
 provide independent cameras in the same world. With no dedicated player views,
 the existing primary world view remains unchanged. Cameras do not create another
 physics tick or private audio listener.
+
+For phone-aspect layout/camera checks on desktop, use the startup size and
+mid-run resize commands in the [application harness](../TEST_HARNESS.md#window-size-and-rotation-layout-tests).
+The existing `world.viewport` values update before UI/gameplay callbacks;
+no new camera or viewport scripting setter is introduced by that workflow.

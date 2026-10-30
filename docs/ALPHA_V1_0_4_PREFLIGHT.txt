@@ -1,0 +1,47 @@
+ALPHA v1.0.4 — DOCUMENTATION / API / WARNING PREFLIGHT
+30 October 2026 | Parent Experimental d5f02448bf132a327d5ebf6b054b50bce03b1788
+Main remains f2813324155166c6942fd68dde843d9775eb532d until exact acceptance.
+
+Implemented before freezing the next release candidate:
+- PointerHarnessTests.cpp range loop uses const auto&; runtime mechanism unchanged.
+- Current README, documentation index, architecture/status headers, versioning,
+  release process and platform matrix distinguish current source from publication.
+- Android orientation acceptance records the operator's actual phone report.
+  Exact quote: "Oh I've tested it on my phone already as well it works".
+  This followed the question about both landscape directions and pause/resume;
+  the report identifies Claude's rebuilt d5f02448 Hinge APK. No device identifier
+  or APK hash was independently collected here; no additional hardware invented.
+- UI/camera references link startup-size and mid-run harness testing. Android
+  docs explain build-option ownership, SDL override prevention and limitations.
+- judas.d.ts header no longer incorrectly calls the API Pre-Alpha or declares all
+  Windows hardware acceptance outstanding. API inventory metadata no longer says
+  Alpha1.0.0 candidate. All inventory fields except that label are byte-equivalent
+  as parsed JSON: public symbols, signatures, shapes and bridge operations unchanged.
+  No runtime binding or type signature was added, removed or renamed.
+- The original hosted tooling job41065124294 failed because its routing assertion
+  required the ignored/native and tooling-trigger sets to be identical. Additional
+  Android tooling coverage is legitimate overlap, not a reason to skip native
+  validation. The corrected oracle still requires ALL native exclusions to have
+  a tooling route and explicitly preserves native Android/unknown-file gates.
+  Mutation controls remove a required tooling route and wrongly exclude Android
+  native validation; both must be rejected. No release gate was disabled.
+
+Completed local preflight:
+- Real VM public API enumeration:9 checks,0 failures.
+- Declaration/source/inventory/live drift check:477 symbols,41 module exports,
+  314 native bridge operations,17 callbacks,53 typed examples,246 callable
+  signatures,17 structured shapes and7 negative drift controls:pass.
+- Warning-corrected resize test on Xvfb/Mesa:33 checks,0 failures.
+- Range-loop warning-as-error syntax check:pass; no warnings in local target build.
+- Android tooling12/12 (JDK available/no skips); CI routing10/10 including mutation
+  negatives; documentation controls10/10; release packaging10/10; manifest5/5.
+- Current-reference links/anchors and whitespace checks pass.
+
+This is preflight evidence, NOT a substituted Linux/Windows release SDK gate.
+Fresh exact-commit candidate preparation must build/qualify both desktop SDKs,
+source archive, editor/tool/export workflows and integrity metadata. The source
+identity is1.0.4-alpha.1; protected publication is a separate final step.
+Previous patch tags/assets and protected historical evidence remain unchanged.
+Advanced Fluids remains locked; private fluid research is not integrated/enabled.
+Current full release notes:docs/ALPHA_V1_0_4_NOTES.md.
+Evidence:docs/evidence/alpha-v1.0.4-preflight-20261030/.

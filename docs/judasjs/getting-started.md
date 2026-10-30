@@ -10,9 +10,10 @@ complete authoring and subsystem workflow.
 
 Judas runs ordinary project JavaScript. You author entities/components/assets and
 use scripts to supply game rules. No C++ recompilation is needed to change those
-rules. This guide describes the current API through the accepted M99 baseline;
-Pre-Alpha tooling changes and platform coverage are recorded on the
-[landing page](../JUDASJS.md) and [Pre-Alpha guide](../PREALPHA.md).
+rules. This guide describes the current Alpha API; the source version is recorded
+in [engine-version.json](../../engine-version.json). Tooling changes and platform
+coverage are recorded on the [landing page](../JUDASJS.md),
+[support matrix](../ALPHA_SUPPORT_MATRIX.md) and [qualification history](../PREALPHA.md).
 
 ## 1. Create an ordinary project
 

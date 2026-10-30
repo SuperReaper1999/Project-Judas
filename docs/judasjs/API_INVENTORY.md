@@ -1,6 +1,6 @@
 # Current public JudasJS inventory
 
-Current public surface identity: `Alpha v1.0.0 candidate; public module through M100`. Includes optional network sessions and NetworkEntity handles; see [networking](network.md). Human/platform acceptance is recorded separately in [the current documentation](../JUDASJS.md), not inferred from API coverage.
+Current public surface identity: `Alpha public module through M100; source version in engine-version.json`. Includes optional network sessions and NetworkEntity handles; see [networking](network.md). Human/platform acceptance is recorded separately in [the current documentation](../JUDASJS.md), not inferred from API coverage.
 Each row is a runtime export/member (constructors and plain handle fields included).
 Native dispatcher operations are implementation details, not additional JS APIs.
 

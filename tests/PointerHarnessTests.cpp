@@ -60,7 +60,7 @@ EXPECT_VIEWPORT 320 240 2
  Check(run("wrong-size.txt","FRAMES 1\nEXPECT_VIEWPORT 123 456 0\n")!=0,"negative control catches an incorrect native/gameplay viewport");
  // Logical window sizes alone are not evidence that GL storage was resized.
  // Cover both axes growing/shrinking, repeated calls and odd RGB row lengths.
- for(const auto size:{std::pair<int,int>{800,360},{360,800},{1200,540},{540,1200},{321,241},{321,241},{320,240}}){
+ for(const auto& size:{std::pair<int,int>{800,360},{360,800},{1200,540},{540,1200},{321,241},{321,241},{320,240}}){
   Check(window.Resize(size.first,size.second,error),"native presentation surface resizes");
   glDisable(GL_SCISSOR_TEST);glClearColor(.25f,.5f,.75f,1);glClear(GL_COLOR_BUFFER_BIT);
   glPixelStorei(GL_PACK_ALIGNMENT,8);std::vector<unsigned char> pixels;
