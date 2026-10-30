@@ -1,6 +1,7 @@
 #pragma once
 
 #include <functional>
+#include <optional>
 #include <string>
 
 #include "AerodynamicDrag.h"
@@ -43,6 +44,11 @@ public:
     bool IsActive() const { return m_session.IsActive(); }
 
     void SetFixedStepMeasurementFlags(bool atmosphere, bool fire, bool fluid);
+    // Presentation policy persists through scene/save replacement. No callback recovery.
+    void SetScriptFaultNoticeEnabled(bool enabled) {
+        m_scriptFaultNoticeOverride = enabled;
+        m_scriptFaultNotice = enabled;
+    }
     // Diagnostic/editor cursor routing only; does not change project intent or pause simulation.
     void SetPointerCaptureAllowed(bool allowed) { m_pointerCaptureAllowed = allowed; }
     void SetFixedStepObserver(FixedStepObserver observer) { m_observer = std::move(observer); }
@@ -76,6 +82,8 @@ public:
     double LastSceneMilliseconds() const { return m_lastSceneMilliseconds; }
 
 private:
+    bool m_scriptFaultNotice = false;
+    std::optional<bool> m_scriptFaultNoticeOverride;
     GameSession m_session;
     PauseMenu m_pauseMenu;
     HUD m_hud;

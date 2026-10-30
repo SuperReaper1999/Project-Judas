@@ -1,0 +1,58 @@
+Shadow maps: on
+Graphics: 4.5 (Core Profile) Mesa 26.0.8-1ubuntu0.3 / llvmpipe (LLVM 21.1.8, 256 bits)
+Renderer fragment texture units: 32 (material path uses 12)
+[TestHarness] invalid normalized touch contact
+[TestHarness] touch transition requires matching contact lifetime
+[TestHarness] invalid pointer expectation
+[TestHarness] gameplay pointer expectation failed
+[TestHarness] SDL offscreen cannot resize its GL backing surface; use a desktop video driver or Xvfb, or set the startup window size
+[TestHarness] window dimensions must be 1..8192
+[TestHarness] window dimensions must be 1..8192
+[TestHarness] invalid command frame/value
+[TestHarness] window/gameplay viewport expectation failed
+PASS native window starts
+PASS queued primary press synchronizes gameplay pointer
+PASS queued release synchronizes pointer and logical edge
+PASS short click retains edges without latching the held snapshot
+PASS editor/UI physical ownership clears injected held pointer
+PASS ordinary empty scripted world builds
+PASS ordinary play session begins
+step,time,posX,posY,posZ,upX,upY,upZ,grounded,velX,velY,velZ,gravX,gravY,gravZ,controlled,frame,steps,paused
+PASS actual harness preserves same-frame press/release
+PASS actual harness retains independent touch motion/pressure
+PASS new directives traverse real play frames with public pointer/touch assertions
+PASS out-of-range pressure rejects
+step,time,posX,posY,posZ,upX,upY,upZ,grounded,velX,velY,velZ,gravX,gravY,gravZ,controlled,frame,steps,paused
+PASS move cannot silently invent a missing contact
+PASS invalid boolean pointer expectation rejects
+step,time,posX,posY,posZ,upX,upY,upZ,grounded,velX,velY,velZ,gravX,gravY,gravZ,controlled,frame,steps,paused
+PASS negative control detects an incorrect public pointer position
+step,time,posX,posY,posZ,upX,upY,upZ,grounded,velX,velY,velZ,gravX,gravY,gravZ,controlled,frame,steps,paused
+FAIL native landscape/portrait resize reaches gameplay viewport and pointer without polling devices
+PASS zero resize rejects before execution
+PASS oversized resize rejects before allocation
+PASS out-of-range resize frame rejects
+step,time,posX,posY,posZ,upX,upY,upZ,grounded,velX,velY,velZ,gravX,gravY,gravZ,controlled,frame,steps,paused
+PASS negative control catches an incorrect native/gameplay viewport
+FAIL native presentation surface resizes
+RESIZE_PIXELS size=800x360 bad=211200 pack=8
+FAIL entire resized drawable is captured and odd-width pack alignment is preserved
+FAIL native presentation surface resizes
+RESIZE_PIXELS size=360x800 bad=211200 pack=8
+FAIL entire resized drawable is captured and odd-width pack alignment is preserved
+FAIL native presentation surface resizes
+RESIZE_PIXELS size=1200x540 bad=571200 pack=8
+FAIL entire resized drawable is captured and odd-width pack alignment is preserved
+FAIL native presentation surface resizes
+RESIZE_PIXELS size=540x1200 bad=571200 pack=8
+FAIL entire resized drawable is captured and odd-width pack alignment is preserved
+FAIL native presentation surface resizes
+RESIZE_PIXELS size=321x241 bad=561 pack=8
+FAIL entire resized drawable is captured and odd-width pack alignment is preserved
+FAIL native presentation surface resizes
+RESIZE_PIXELS size=321x241 bad=561 pack=8
+FAIL entire resized drawable is captured and odd-width pack alignment is preserved
+FAIL native presentation surface resizes
+RESIZE_PIXELS size=320x240 bad=0 pack=8
+PASS entire resized drawable is captured and odd-width pack alignment is preserved
+POINTER_HARNESS checks=33 failures=14

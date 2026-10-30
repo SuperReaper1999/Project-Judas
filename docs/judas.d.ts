@@ -1053,9 +1053,18 @@ declare module "judas" {
     readonly state: "queued" | "writing" | "reading" | "working" | "preparing" | "restoring" | "completed" | "failed" | "cancelled";
     readonly error: string; readonly recovered: boolean; readonly captureMs: number; readonly workerMs: number;
     readonly restoreMs: number; readonly bytes: number;
+    readonly waitingFor: string;
+    readonly queuedMs: number; readonly identityMs: number; readonly workerQueueMs: number; readonly elapsedMs: number;
     readonly migrated:boolean; readonly migrationMs:number; readonly migrationReport:string;
   }
+  export interface ScriptFault {
+    readonly entity: EntityId; readonly slot: string; readonly asset: string;
+    readonly callback: string; readonly message: string; readonly truncated: boolean;
+  }
+  export const scripts: { faults(): ScriptFault[] };
   export const saves: {
+    /** A save operation or scene replacement is in progress; does not allocate a save service. */
+    readonly busy: boolean;
     save(slot: string, options?: SaveOptions): number;
     load(slot: string, options?: SaveLoadOptions): number;
     delete(slot: string): number;

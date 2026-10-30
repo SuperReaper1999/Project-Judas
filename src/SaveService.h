@@ -10,7 +10,18 @@ class Project;class AssetDatabase;
 bool ComputeSaveContentFingerprint(const Project&,const AssetDatabase&,
  const std::vector<std::string>& scenes,std::string& digest,std::string& error,
  const JobContext* cancel=nullptr);
-struct SaveRequestStatus {uint64_t id=0;std::string operation,slot,state="queued",error;bool recovered=false,migrated=false;std::string migrationReport;double migrationMs=0,captureMs=0,workerMs=0,restoreMs=0;size_t bytes=0;};
+struct SaveRequestStatus {
+ uint64_t id=0;
+ std::string operation,slot,state="queued",error;
+ bool recovered=false,migrated=false;
+ std::string migrationReport;
+ double migrationMs=0,captureMs=0,workerMs=0,restoreMs=0;
+ size_t bytes=0;
+ // Owner-boundary observations. Times may overlap and are not additive.
+ std::string waitingFor;
+ double queuedMs=0,identityMs=0,workerQueueMs=0,elapsedMs=0;
+ std::chrono::steady_clock::time_point requestedAt;
+};
 // Project/session owner-thread service. Worker products contain immutable data;
 // they never retain world, VM, scene-session or native-resource pointers.
 class SaveService {

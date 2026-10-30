@@ -1,7 +1,29 @@
 {
-  "checkpoint": "Current public module including Experimental 2D Stage 3; source version in engine-version.json",
+  "checkpoint": "Current public module including Experimental 2D Stage 3 and consumer lifecycle diagnostics; source version in engine-version.json",
   "authority": "src/ScriptSystem.cpp::library + Impl::Native + ScriptBindingsUI.cpp + ScriptBindingsJoint.cpp + ScriptInputBindings.inl + ScriptLocalMultiplayer.inl + ScriptNetwork.inl",
   "resultShapes": [
+    {
+      "binding": "scripts.faults",
+      "declaration": "ScriptFault",
+      "fields": [
+        "entity",
+        "slot",
+        "asset",
+        "callback",
+        "message",
+        "truncated"
+      ],
+      "nativeFile": "src/ScriptSystem.cpp",
+      "needles": [
+        "JS_SetPropertyStr(c,v,\"entity\"",
+        "JS_SetPropertyStr(c,v,\"slot\"",
+        "{\"asset\",d.asset}",
+        "{\"callback\",d.callback}",
+        "{\"message\",d.message}",
+        "JS_SetPropertyStr(c,v,\"truncated\""
+      ],
+      "reference": "docs/judasjs/scripting-diagnostics.md"
+    },
     {
       "binding": "Entity.spriteAnimation",
       "declaration": "SpriteAnimationInfo",
@@ -202,13 +224,23 @@
         "bytes",
         "migrated",
         "migrationMs",
-        "migrationReport"
+        "migrationReport",
+        "waitingFor",
+        "queuedMs",
+        "identityMs",
+        "workerQueueMs",
+        "elapsedMs"
       ],
       "nativeFile": "src/ScriptSystem.cpp",
       "needles": [
         "JS_SetPropertyStr(c,o,\"migrated\",JS_NewBool(c,status->migrated))",
         "{\"migrationMs\",status->migrationMs}",
-        "{\"migrationReport\",&status->migrationReport}"
+        "{\"migrationReport\",&status->migrationReport}",
+        "{\"waitingFor\",&status->waitingFor}",
+        "{\"elapsedMs\",status->elapsedMs}",
+        "{\"queuedMs\",status->queuedMs}",
+        "{\"identityMs\",status->identityMs}",
+        "{\"workerQueueMs\",status->workerQueueMs}"
       ],
       "reference": "docs/judasjs/saves.md"
     },
@@ -1585,6 +1617,11 @@
       "symbol": "scenes.unloadRegion",
       "minimum": 1,
       "maximum": 1
+    },
+    {
+      "symbol": "scripts.faults",
+      "minimum": 0,
+      "maximum": 0
     },
     {
       "symbol": "session.delete",
@@ -6112,6 +6149,17 @@
       "reference": "docs/judasjs/saves.md"
     },
     {
+      "symbol": "saves.busy",
+      "kinds": [
+        "get"
+      ],
+      "native": [
+        "lifecycleBusy"
+      ],
+      "type": "docs/judas.d.ts:saves.busy",
+      "reference": "docs/judasjs/saves.md"
+    },
+    {
       "symbol": "saves.cancel",
       "kinds": [
         "call"
@@ -6427,6 +6475,26 @@
       ],
       "type": "docs/judas.d.ts:scenes.unloadRegion",
       "reference": "docs/judasjs/streaming.md"
+    },
+    {
+      "symbol": "scripts",
+      "kinds": [
+        "namespace"
+      ],
+      "native": [],
+      "type": "docs/judas.d.ts:scripts",
+      "reference": "docs/judasjs/scripting-diagnostics.md"
+    },
+    {
+      "symbol": "scripts.faults",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "scriptFaults"
+      ],
+      "type": "docs/judas.d.ts:scripts.faults",
+      "reference": "docs/judasjs/scripting-diagnostics.md"
     },
     {
       "symbol": "session",
@@ -6997,6 +7065,7 @@
     "kinematicStop",
     "kinematicTarget",
     "kinematicVelocity",
+    "lifecycleBusy",
     "lightInfo",
     "lightSettings",
     "liquidAccounting",
@@ -7144,6 +7213,7 @@
     "sceneList",
     "sceneLoad",
     "sceneReload",
+    "scriptFaults",
     "scriptState",
     "sessionDelete",
     "sessionGet",

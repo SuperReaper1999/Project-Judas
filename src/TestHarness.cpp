@@ -50,6 +50,7 @@ Script Load(const std::string& path,const InputMap& map){
    Require(entry&&!entry->bindings.empty(),"unknown/unbound expectation input "+c.name);
    Require(entry->axis==(op=="EXPECT_AXIS"),"expectation input kind mismatch "+c.name);
   }
+  else if(op=="EXPECT_QUIT"||op=="EXPECT_NO_QUIT")in>>c.begin;
   else if(op=="EXPECT_SCENE")in>>c.name>>c.begin;
   else if(op=="WAIT_SERVICES")in>>c.name>>c.value>>c.begin;
   else if(op=="EXPECT_PAUSED")in>>c.value>>c.begin;
@@ -80,6 +81,14 @@ int RunTestHarness(Window& window,Renderer& renderer,InteractivePlay& play,const
   std::printf("step,time,posX,posY,posZ,upX,upY,upZ,grounded,velX,velY,velZ,gravX,gravY,gravZ,controlled,frame,steps,paused");
   for(size_t i=0;i<play.Session().World().DynamicBodies().size();++i){std::printf(",obj%zuPosX,obj%zuPosY,obj%zuPosZ,obj%zuVelX,obj%zuVelY,obj%zuVelZ",i,i,i,i,i,i);}
   std::printf("\n");
+  const auto quit=[&](int frame){
+   if(!play.QuitRequested())return false;
+   // A successful early quit must not silently discard later required proof.
+   for(const auto& c:script.commands)if(c.begin>frame&&c.kind!="EXPECT_QUIT"&&
+      (c.kind.rfind("EXPECT_",0)==0||c.kind=="SCREENSHOT"||c.kind=="WAIT_SERVICES"))
+       throw std::runtime_error("quit requested before pending "+c.kind+" at frame "+std::to_string(c.begin));
+   std::printf("[TestHarness] quit requested at frame %d\n",frame);return true;
+  };
   for(int frame=0;frame<script.frames;++frame){
    ProfileFrame frameProfile("scripted application frame");
    if(beforeFrame)beforeFrame();
@@ -109,6 +118,8 @@ int RunTestHarness(Window& window,Renderer& renderer,InteractivePlay& play,const
     if(c.kind=="EXPECT_AXIS")Require(std::abs(window.Input().Axis(c.name)-c.value)<1e-5f,"axis expectation failed "+c.name);
     if(c.kind=="EXPECT_HELD")Require(window.Input().Action(c.name).held==(c.value!=0),"held expectation failed "+c.name);
     if(c.kind=="EXPECT_SCENE")Require(play.Session().World().SceneControl()&&play.Session().World().SceneControl()->Current()==c.name,"scene expectation failed "+c.name);
+    if(c.kind=="EXPECT_QUIT")Require(play.QuitRequested(),"expected quit was not requested by frame "+std::to_string(frame));
+    if(c.kind=="EXPECT_NO_QUIT")Require(!play.QuitRequested(),"unexpected quit at frame "+std::to_string(frame));
     if(c.kind=="EXPECT_PAUSED")Require(play.IsPaused()==(c.value!=0),"pause expectation failed");
    }
    if(script.realtime)window.SwapBuffers();
@@ -120,12 +131,14 @@ int RunTestHarness(Window& window,Renderer& renderer,InteractivePlay& play,const
     const auto deadline=std::chrono::steady_clock::now()+std::chrono::milliseconds(int(c.value));unsigned waits=0;
     frameProfile.End();
     while(!servicesReady(c.name)){
+     Require(!play.QuitRequested(),"quit requested before service completed: "+c.name);
      Require(std::chrono::steady_clock::now()<deadline,"service wait timed out: "+c.name+" at scripted frame "+std::to_string(frame));
      ProfileFrame waitProfile("scripted service wait");if(beforeFrame)beforeFrame();window.BeginTestFrame();
-     play.Frame(window,renderer,0,true,false);if(afterFrame)afterFrame();++waits;SDL_Delay(1);
+     play.Frame(window,renderer,0,true,false);if(auto* scripts=play.Session().World().Scripts();scripts&&!scripts->Diagnostics().empty())throw std::runtime_error("script callback failed during service wait: "+scripts->Diagnostics().front().message);if(afterFrame)afterFrame();++waits;SDL_Delay(1);
     }
     std::printf("[TestHarness] service %s ready after %u wait frames at frame %d\n",c.name.c_str(),waits,frame);
    }
+   if(quit(frame))break;
    if(script.logEvery&&frame%script.logEvery==0){auto& world=play.Session().World();glm::vec3 p=play.Session().Player().GetPosition(),v=play.Session().Player().GetVelocity();bool supported=play.Session().Player().IsGrounded();glm::vec3 up=play.Session().Player().GetOrientation()*glm::vec3(0,1,0);
     if(!script.entity.empty()){EntityId id=std::stoull(script.entity);auto* d=world.RuntimeDefinition(id);Require(d,"selected entity is unavailable");p=d->transform.position;up=d->transform.rotation*glm::vec3(0,1,0);if(auto* m=world.RuntimeCharacter(id)){v=m->result.velocity;supported=m->result.supported;}else v=world.Physics().GetLinearVelocity(world.RuntimeBody(id));}
     const auto g=world.Gravity().Sample(p);

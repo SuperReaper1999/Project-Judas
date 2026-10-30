@@ -341,6 +341,7 @@ add_library(judas_engine STATIC
     src/WorldPresentation.cpp
     src/GameplayHud.cpp
     src/EngineHost.cpp
+    src/ScriptFaultNotice.cpp
     src/InteractivePlay.cpp
     src/ScreenshotWriter.cpp
     src/FidelityPolicy.cpp
@@ -1758,6 +1759,9 @@ judas_add_engine_test(judas_sprite_animation_render_tests tests/SpriteAnimationR
 add_executable(judas_sprite_animation_benchmark tools/benchmarks/SpriteAnimationBenchmark.cpp)
 target_link_libraries(judas_sprite_animation_benchmark PRIVATE judas_engine)
 judas_warnings(judas_sprite_animation_benchmark)
+
+judas_add_engine_test(judas_consumer_lifecycle_tests tests/ConsumerLifecycleTests.cpp APPLICATION)
+judas_add_engine_test(judas_save_latency_benchmark tools/benchmarks/SaveLatencyBenchmark.cpp APPLICATION)
 
 # Finalize after every native test has declared its authoritative entry point.
 include(cmake/JudasValidation.cmake)

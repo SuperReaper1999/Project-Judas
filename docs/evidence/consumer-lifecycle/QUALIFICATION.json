@@ -1,0 +1,87 @@
+{
+  "baseline": "3a022594b95968185edb9e58fdeb0e086f4fe330",
+  "branch": "Experimental",
+  "humanAcceptance": false,
+  "mainModified": false,
+  "nativeWindows": "not run",
+  "Android": "not run",
+  "runs": [
+    {
+      "test": "consumer-lifecycle",
+      "exit": 0,
+      "wallSeconds": 0.3643185149994679
+    },
+    {
+      "test": "pointer-harness",
+      "exit": 1,
+      "wallSeconds": 0.16416704100265633
+    },
+    {
+      "test": "scripts",
+      "exit": 0,
+      "wallSeconds": 0.4644117100033327
+    },
+    {
+      "test": "save-storage",
+      "exit": 0,
+      "wallSeconds": 0.11403030300425598
+    },
+    {
+      "test": "save-exclusion",
+      "exit": 0,
+      "wallSeconds": 0.031905730997095816
+    },
+    {
+      "test": "scene-transition",
+      "exit": 0,
+      "wallSeconds": 0.8153399489965523
+    },
+    {
+      "test": "save-cycles",
+      "exit": 0,
+      "wallSeconds": 2.3257010219967924
+    },
+    {
+      "test": "save-latency",
+      "exit": 0,
+      "wallSeconds": 1.8805197039982886
+    }
+  ],
+  "retests": [
+    {
+      "test": "pointer-harness",
+      "backend": "X11 NVIDIA GTX970",
+      "exit": 0,
+      "checks": 33,
+      "supersedesEnvironment": "SDL offscreen rejects resize",
+      "log": "pointer-harness-desktop.log"
+    },
+    {
+      "test": "consumer-lifecycle",
+      "backend": "X11 NVIDIA GTX970",
+      "exit": 0,
+      "log": "consumer-lifecycle-desktop.log"
+    }
+  ],
+  "editor": {
+    "exit": 0,
+    "playStopAuthoredScene": "IDENTICAL",
+    "log": "editor.log"
+  },
+  "relocatedExport": {
+    "exit": 0,
+    "quitFrame": 2,
+    "log": "relocated.log"
+  },
+  "apiTypesInventory": {
+    "exit": 0,
+    "log": "api-verify.log"
+  },
+  "status": "focused Linux qualification passed; original offscreen resize failure retained",
+  "limitations": [
+    "Exact newer Hinge 300-entity fixture unavailable",
+    "No native one-second save delay established",
+    "No automatic lifecycle queue or fault recovery",
+    "No Windows/Android qualification"
+  ]
+}

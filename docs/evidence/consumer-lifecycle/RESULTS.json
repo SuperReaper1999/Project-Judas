@@ -1,0 +1,42 @@
+[
+  {
+    "test": "consumer-lifecycle",
+    "exit": 0,
+    "wallSeconds": 0.3643185149994679
+  },
+  {
+    "test": "pointer-harness",
+    "exit": 1,
+    "wallSeconds": 0.16416704100265633
+  },
+  {
+    "test": "scripts",
+    "exit": 0,
+    "wallSeconds": 0.4644117100033327
+  },
+  {
+    "test": "save-storage",
+    "exit": 0,
+    "wallSeconds": 0.11403030300425598
+  },
+  {
+    "test": "save-exclusion",
+    "exit": 0,
+    "wallSeconds": 0.031905730997095816
+  },
+  {
+    "test": "scene-transition",
+    "exit": 0,
+    "wallSeconds": 0.8153399489965523
+  },
+  {
+    "test": "save-cycles",
+    "exit": 0,
+    "wallSeconds": 2.3257010219967924
+  },
+  {
+    "test": "save-latency",
+    "exit": 0,
+    "wallSeconds": 1.8805197039982886
+  }
+]

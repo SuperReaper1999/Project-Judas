@@ -182,3 +182,23 @@ the harness reports that as a failure instead of silently substituting dimension
 Android rejects `RESIZE`; its activity owns surface dimensions. SDL's offscreen
 backend also rejects mid-run resize because its GL buffer retains the startup
 size; use a desktop backend or Xvfb for resize tests, or separate startup-size runs.
+
+### Quit assertions and asynchronous time
+
+`ui.quit()` ends a harness run at the end of its current outer frame, as in the
+ordinary application. `EXPECT_QUIT <frame>` asserts a deadline (an earlier quit
+satisfies it). `EXPECT_NO_QUIT <frame>` asserts no quit on that frame. Missing
+quit, unexpected quit, and quitting before a later required assertion,
+`SCREENSHOT` or `WAIT_SERVICES` fail the run. Future quit deadlines are the only
+assertions allowed to remain after early termination. Quitting while a requested
+service wait is incomplete also fails rather than silently skipping it.
+
+The harness does not automatically save or wait for disk work on quit. For a
+save-and-exit test, the project must observe its required save token completing
+before calling `ui.quit()`. Use `WAIT_SERVICES` for independently required service
+completion; do not infer persistence from a zero process exit code alone.
+
+`FRAME_SECONDS` controls synthetic game time, not worker or disk time. Uncapped
+frames may take microseconds; asynchronous saves can span many frames while
+finishing in tens of real milliseconds. Use monotonic elapsed timings from save
+status and wall-clock measurements when diagnosing latency.

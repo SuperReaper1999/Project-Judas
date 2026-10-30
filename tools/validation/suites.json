@@ -1,6 +1,7 @@
 {
   "format": 1,
   "tests": [
+    {"name":"consumer-lifecycle","target":"judas_consumer_lifecycle_tests","groups":["scripting","lifecycle","input"],"args":["{output}/consumer-lifecycle"]},
     {"name":"sprite-animation-render","target":"judas_sprite_animation_render_tests","groups":["2d","animation"],"args":["{output}/sprite-animation-render"]},
     {"name":"sprite-animation-integration","target":"judas_sprite_animation_integration_tests","groups":["2d","animation"],"args":["{root}/projects/sprite_animation_workshop","{output}/sprite-animation-project"]},
     {"name":"sprite-animation","target":"judas_sprite_animation_tests","groups":["2d","animation"],"args":["{output}/sprite-animation"]},

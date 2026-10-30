@@ -1,6 +1,6 @@
 # Current public JudasJS inventory
 
-Current public surface identity: `Current public module including Experimental 2D Stage 3; source version in engine-version.json`. Includes optional network sessions and NetworkEntity handles; see [networking](network.md). Human/platform acceptance is recorded separately in [the current documentation](../JUDASJS.md), not inferred from API coverage.
+Current public surface identity: `Current public module including Experimental 2D Stage 3 and consumer lifecycle diagnostics; source version in engine-version.json`. Includes optional network sessions and NetworkEntity handles; see [networking](network.md). Human/platform acceptance is recorded separately in [the current documentation](../JUDASJS.md), not inferred from API coverage.
 Each row is a runtime export/member (constructors and plain handle fields included).
 Native dispatcher operations are implementation details, not additional JS APIs.
 
@@ -418,6 +418,7 @@ Native dispatcher operations are implementation details, not additional JS APIs.
 | `profiler.counter` | `profileCounter` | [declaration](../judas.d.ts) | [reference](profiling.md) |
 | `profiler.scope` | `profileScope` | [declaration](../judas.d.ts) | [reference](profiling.md) |
 | `saves` | JS wrapper/data | [declaration](../judas.d.ts) | [reference](saves.md) |
+| `saves.busy` | `lifecycleBusy` | [declaration](../judas.d.ts) | [reference](saves.md) |
 | `saves.cancel` | `saveCancel` | [declaration](../judas.d.ts) | [reference](saves.md) |
 | `saves.delete` | `saveRequest` | [declaration](../judas.d.ts) | [reference](saves.md) |
 | `saves.exclude` | `saveExclude` | [declaration](../judas.d.ts) | [reference](saves.md) |
@@ -447,6 +448,8 @@ Native dispatcher operations are implementation details, not additional JS APIs.
 | `scenes.setInterest` | `regionInterest` | [declaration](../judas.d.ts) | [reference](streaming.md) |
 | `scenes.streamingStats` | `regionStats` | [declaration](../judas.d.ts) | [reference](streaming.md) |
 | `scenes.unloadRegion` | `regionUnload` | [declaration](../judas.d.ts) | [reference](streaming.md) |
+| `scripts` | JS wrapper/data | [declaration](../judas.d.ts) | [reference](scripting-diagnostics.md) |
+| `scripts.faults` | `scriptFaults` | [declaration](../judas.d.ts) | [reference](scripting-diagnostics.md) |
 | `session` | JS wrapper/data | [declaration](../judas.d.ts) | [reference](scenes-state.md) |
 | `session.delete` | `sessionDelete` | [declaration](../judas.d.ts) | [reference](scenes-state.md) |
 | `session.get` | `sessionGet` | [declaration](../judas.d.ts) | [reference](scenes-state.md) |

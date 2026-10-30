@@ -544,6 +544,7 @@ bool EditorApplication::StartPlay(std::string& outError) {
         StopPlay();
         return false;
     }
+    m_play->SetScriptFaultNoticeEnabled(true);
     m_play->SetWorldStatePath(m_panels.worldStatePath, stateApplied);
     // The debug view over the played world, inside the 3D frame.
     m_play->SetWorldOverlay([this](Renderer& renderer, float alpha) {

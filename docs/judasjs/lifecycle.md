@@ -179,3 +179,7 @@ start and restore, remove them in destroy, and keep only durable data in state.
 UI/presentation can invoke initialization while the physical simulation is paused.
 The editor Runtime Inspector observes native script phases without capturing JSON
 or calling gameplay methods; callbacks-started is not a universal resource-ready flag.
+
+For active fault snapshots and the development/editor fault banner, see
+[script diagnostics](scripting-diagnostics.md). Callback exceptions still stop
+the owning slot; these tools improve visibility without resuming faulty code.

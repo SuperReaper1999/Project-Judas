@@ -1,0 +1,30 @@
+Shadow maps: on
+Graphics: 4.5 (Core Profile) Mesa 26.0.8-1ubuntu0.3 / llvmpipe (LLVM 21.1.8, 256 bits)
+Renderer fragment texture units: 32 (material path uses 12)
+World state: /home/conner/Documents/GitHub/Project-Judas/.cache/consumer-lifecycle-evidence/hinge-original/hinge/Saves/level1.judasstate (none saved)
+Project: Hinge (/home/conner/Documents/GitHub/Project-Judas/.cache/consumer-lifecycle-evidence/hinge-original/hinge/hinge.judasproj)
+Scene: Hinge - Meadow Turn (/home/conner/Documents/GitHub/Project-Judas/.cache/consumer-lifecycle-evidence/hinge-original/hinge/Scenes/level1.judas)
+World origin (m): 0.000, 0.000, 0.000
+IDLE service_ns=4.19800 entities=76 bodies=14 owners=0
+SAMPLE save capture=1.180076 worker=16.205186 restore=0.000000 frame=8.509671 bytes=40885 entities=76 bodies=14 owners=0 rss=0
+SAMPLE load capture=0.000000 worker=1.052625 restore=18.167968 frame=13.046088 bytes=40885 entities=76 bodies=14 owners=0 rss=0
+FIRST_RESUME frame_ms=9.408697 entities=76 bodies=14 owners=0 voices=7 jobs=0
+SAMPLE save capture=0.981361 worker=9.083343 restore=0.000000 frame=8.505594 bytes=41001 entities=76 bodies=14 owners=0 rss=0
+SAMPLE load capture=0.000000 worker=0.842129 restore=18.629669 frame=11.241163 bytes=41001 entities=76 bodies=14 owners=0 rss=0
+FIRST_RESUME frame_ms=8.556759 entities=76 bodies=14 owners=0 voices=7 jobs=0
+SAMPLE save capture=1.034020 worker=17.531898 restore=0.000000 frame=8.054552 bytes=41002 entities=76 bodies=14 owners=0 rss=0
+SAMPLE load capture=0.000000 worker=0.763159 restore=19.629585 frame=11.408038 bytes=41002 entities=76 bodies=14 owners=0 rss=0
+FIRST_RESUME frame_ms=8.705019 entities=76 bodies=14 owners=0 voices=7 jobs=0
+SAMPLE save capture=1.281297 worker=9.960618 restore=0.000000 frame=8.576888 bytes=41001 entities=76 bodies=14 owners=0 rss=0
+SAMPLE load capture=0.000000 worker=0.811100 restore=18.111782 frame=11.475294 bytes=41001 entities=76 bodies=14 owners=0 rss=0
+FIRST_RESUME frame_ms=8.645136 entities=76 bodies=14 owners=0 voices=7 jobs=0
+SAMPLE save capture=0.986922 worker=13.540640 restore=0.000000 frame=8.638474 bytes=41002 entities=76 bodies=14 owners=0 rss=0
+SAMPLE load capture=0.000000 worker=0.837640 restore=18.490947 frame=11.402958 bytes=41002 entities=76 bodies=14 owners=0 rss=0
+FIRST_RESUME frame_ms=8.633354 entities=76 bodies=14 owners=0 voices=7 jobs=0
+SAMPLE save capture=0.975790 worker=11.127068 restore=0.000000 frame=7.900231 bytes=41001 entities=76 bodies=14 owners=0 rss=0
+SAMPLE load capture=0.000000 worker=0.817872 restore=18.831129 frame=12.190234 bytes=41001 entities=76 bodies=14 owners=0 rss=0
+FIRST_RESUME frame_ms=9.006167 entities=76 bodies=14 owners=0 voices=7 jobs=0
+SAMPLE save capture=1.238997 worker=12.891075 restore=0.000000 frame=8.372533 bytes=41002 entities=76 bodies=14 owners=0 rss=0
+SAMPLE load capture=0.000000 worker=0.607015 restore=18.353419 frame=11.351501 bytes=41002 entities=76 bodies=14 owners=0 rss=0
+FIRST_RESUME frame_ms=8.822651 entities=76 bodies=14 owners=0 voices=7 jobs=0
+PASS seven save/load cycles complete with bounded native counts

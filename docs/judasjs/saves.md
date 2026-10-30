@@ -245,3 +245,38 @@ Close the [network session](network.md) before saving/loading or replacing a sce
 Requests are rejected before mutation while a session is active; list/delete slot
 management remains available. Sockets, peers, input and presentation buffers are
 transient. Pending save/scene operations likewise prevent hosting or joining.
+
+## Coordinating lifecycle operations
+
+`saves.busy` is a read-only, allocation-free observation of the project session's
+lifecycle gate. It is true during save/load/list/delete work **or scene
+replacement**. It does not create a save service merely to query it. This is an
+observation, not a reservation: another callback may start an operation afterward.
+Concurrent requests still throw the existing busy error. There is no implicit
+queue and `ui.quit()` does not flush a save automatically.
+
+When implementing Save & Quit, keep ticking `uiUpdate` while paused, wait for
+your particular token to reach `completed`, and show `failed`/`cancelled` to the
+player rather than quitting. `!saves.busy` alone does not prove that token succeeded.
+
+`SaveRequest` includes real monotonic-clock diagnostics in milliseconds:
+
+- `elapsedMs`: elapsed since request acceptance, updated at outer boundaries and
+  frozen at completion, failure or cancellation.
+- `queuedMs`: time awaiting capture/read submission, including identity,
+  streaming or resource preparation.
+- `identityMs`: duration of the content-hash job consumed by this request.
+- `workerQueueMs`: delay between job submission and worker start.
+- `waitingFor`: `identity`, `boundary`, `streaming`, `resources`, `worker` or
+  `restoration` while pending; empty at a terminal state.
+
+Existing `captureMs`, `workerMs` and `restoreMs` retain their meanings. Timings
+can overlap and are not additive. Initial identity work may predate the request;
+the job duration is not the same as the request's wait for it. Status polling
+does not itself advance these values. Request capture and restoration still
+occur only at safe owner-thread boundaries.
+
+The uncapped test harness advances synthetic time much faster than wall time.
+A queued save spanning 90 harness frames does not establish a 1.5-second real
+save latency. Measure these fields or a wall clock. Content identity continues
+to re-read project dependencies; same-size asset edits must still be detected.

@@ -1,0 +1,17 @@
+import Hinge from './hinge-core.js';
+import {saves,ui,console} from 'judas';
+export {properties} from './hinge-core.js';
+export default class extends Hinge {
+ start(){super.start();this.beginLevel();this.benchFrame=0;this.benchCount=0;}
+ uiUpdate(dt){super.uiUpdate(dt);this.benchFrame++;
+  if(this.benchCount>=10)return;
+  if(!this.benchToken&&this.benchFrame>60){
+   try{if(this.benchCount===5)this.openMenu('pause');this.benchToken=saves.save('latency-harness');this.benchStart=Date.now();this.benchStartFrame=this.benchFrame;this.benchPhase='';}catch(e){return;}
+  }
+  if(this.benchToken){const status=saves.status(this.benchToken);
+   if(status.state!==this.benchPhase){this.benchPhase=status.state;console.log('BENCH_PHASE '+JSON.stringify({sample:this.benchCount,state:status.state,frames:this.benchFrame-this.benchStartFrame,wallMs:Date.now()-this.benchStart}));}
+   if(status.state==='failed')throw Error(status.error);
+   if(status.state==='completed'){console.log('BENCH_SAMPLE '+JSON.stringify({sample:this.benchCount,paused:this.benchCount>=5,frames:this.benchFrame-this.benchStartFrame,wallMs:Date.now()-this.benchStart,captureMs:status.captureMs,workerMs:status.workerMs,bytes:status.bytes}));this.benchToken=0;this.benchCount++;if(this.benchCount===10){console.log('BENCH_DONE_REQUEST_QUIT');ui.quit();}}
+  }
+ }
+}

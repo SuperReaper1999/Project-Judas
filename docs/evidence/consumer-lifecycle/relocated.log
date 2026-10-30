@@ -1,0 +1,11 @@
+Shadow maps: on
+Graphics: 4.5 (Core Profile) Mesa 26.0.8-1ubuntu0.3 / llvmpipe (LLVM 21.1.8, 256 bits)
+Renderer fragment texture units: 32 (material path uses 12)
+World state: /home/conner/.local/share/judas/games/53b3ec8ea2c909b2d2e5f1e553a4ff6ee9332c41555ec09fbd24ed3eebd2c7e7/Saves/main.judasstate (none saved)
+Project: Lifecycle (/tmp/judas-consumer-lifecycle-relocated/game.judasproj)
+Scene:  (/tmp/judas-consumer-lifecycle-relocated/Scenes/main.judas)
+World origin (m): 0.000, 0.000, 0.000
+step,time,posX,posY,posZ,upX,upY,upZ,grounded,velX,velY,velZ,gravX,gravY,gravZ,controlled,frame,steps,paused
+0,0.00000,0.000000,0.000000,0.000000,0.000000,1.000000,0.000000,0,0.000000,0.000000,0.000000,0.000000,0.000000,0.000000,0,0,1,0
+1,0.01667,0.000000,0.000000,0.000000,0.000000,1.000000,0.000000,0,0.000000,0.000000,0.000000,0.000000,0.000000,0.000000,0,1,1,0
+[TestHarness] quit requested at frame 2

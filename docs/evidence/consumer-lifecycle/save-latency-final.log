@@ -1,0 +1,57 @@
+Shadow maps: on
+Graphics: 4.5 (Core Profile) Mesa 26.0.8-1ubuntu0.3 / llvmpipe (LLVM 21.1.8, 256 bits)
+Renderer fragment texture units: 32 (material path uses 12)
+World state: /home/conner/Documents/GitHub/Project-Judas/.cache/consumer-lifecycle-evidence/hinge-original/hinge/Saves/level1.judasstate (none saved)
+Project: Hinge (/home/conner/Documents/GitHub/Project-Judas/.cache/consumer-lifecycle-evidence/hinge-original/hinge/hinge.judasproj)
+Scene: Hinge - Meadow Turn (/home/conner/Documents/GitHub/Project-Judas/.cache/consumer-lifecycle-evidence/hinge-original/hinge/Scenes/level1.judas)
+World origin (m): 0.000, 0.000, 0.000
+PHASE sample=0 paused=1 state=queued frames=0 wall_ms=0.160393
+PHASE sample=0 paused=1 state=writing frames=3 wall_ms=27.925704
+PHASE sample=0 paused=1 state=completed frames=5 wall_ms=44.197786
+SAMPLE 0 paused=1 frames=5 simulation_ms=83.333 wall_ms=44.244234 capture_ms=1.488918 worker_ms=10.452576 bytes=40881 entities=76 error=
+TIMINGS sample=0 elapsed_ms=35.887481 queued_ms=17.469050 identity_ms=16.354788 worker_queue_ms=0.010650 waiting_for=
+PHASE sample=1 paused=1 state=queued frames=0 wall_ms=0.151145
+PHASE sample=1 paused=1 state=writing frames=3 wall_ms=30.691620
+PHASE sample=1 paused=1 state=completed frames=5 wall_ms=47.496678
+SAMPLE 1 paused=1 frames=5 simulation_ms=83.333 wall_ms=47.552353 capture_ms=1.105015 worker_ms=9.737868 bytes=40880 entities=76 error=
+TIMINGS sample=1 elapsed_ms=38.870878 queued_ms=19.812180 identity_ms=15.768392 worker_queue_ms=0.009728 waiting_for=
+PHASE sample=2 paused=1 state=queued frames=0 wall_ms=0.150705
+PHASE sample=2 paused=1 state=writing frames=3 wall_ms=27.285576
+PHASE sample=2 paused=1 state=completed frames=5 wall_ms=45.004708
+SAMPLE 2 paused=1 frames=5 simulation_ms=83.333 wall_ms=45.074520 capture_ms=1.073024 worker_ms=10.542866 bytes=40852 entities=76 error=
+TIMINGS sample=2 elapsed_ms=35.754530 queued_ms=17.175266 identity_ms=16.607655 worker_queue_ms=0.029435 waiting_for=
+PHASE sample=3 paused=1 state=queued frames=0 wall_ms=0.167045
+PHASE sample=3 paused=1 state=writing frames=3 wall_ms=29.218462
+PHASE sample=3 paused=1 state=completed frames=5 wall_ms=46.012789
+SAMPLE 3 paused=1 frames=5 simulation_ms=83.333 wall_ms=46.061882 capture_ms=1.290704 worker_ms=10.554819 bytes=40868 entities=76 error=
+TIMINGS sample=3 elapsed_ms=37.350981 queued_ms=18.695043 identity_ms=17.313006 worker_queue_ms=0.009878 waiting_for=
+PHASE sample=4 paused=1 state=queued frames=0 wall_ms=0.138992
+PHASE sample=4 paused=1 state=writing frames=3 wall_ms=27.571345
+PHASE sample=4 paused=1 state=completed frames=5 wall_ms=45.902351
+SAMPLE 4 paused=1 frames=5 simulation_ms=83.333 wall_ms=45.957866 capture_ms=1.125152 worker_ms=11.217418 bytes=40867 entities=76 error=
+TIMINGS sample=4 elapsed_ms=36.504044 queued_ms=17.992998 identity_ms=17.758647 worker_queue_ms=0.008416 waiting_for=
+PHASE sample=5 paused=1 state=queued frames=0 wall_ms=0.147639
+PHASE sample=5 paused=1 state=writing frames=3 wall_ms=27.159478
+PHASE sample=5 paused=1 state=completed frames=5 wall_ms=44.393014
+SAMPLE 5 paused=1 frames=5 simulation_ms=83.333 wall_ms=44.435344 capture_ms=1.148667 worker_ms=11.437544 bytes=40897 entities=76 error=
+TIMINGS sample=5 elapsed_ms=35.710046 queued_ms=17.246210 identity_ms=16.753130 worker_queue_ms=0.009197 waiting_for=
+PHASE sample=6 paused=1 state=queued frames=0 wall_ms=0.146747
+PHASE sample=6 paused=1 state=writing frames=3 wall_ms=29.861335
+PHASE sample=6 paused=1 state=completed frames=5 wall_ms=46.415038
+SAMPLE 6 paused=1 frames=5 simulation_ms=83.333 wall_ms=46.467858 capture_ms=1.293510 worker_ms=16.366540 bytes=40894 entities=76 error=
+TIMINGS sample=6 elapsed_ms=37.982302 queued_ms=19.600751 identity_ms=15.110852 worker_queue_ms=0.012934 waiting_for=
+PHASE sample=7 paused=1 state=queued frames=0 wall_ms=0.159511
+PHASE sample=7 paused=1 state=writing frames=3 wall_ms=27.140823
+PHASE sample=7 paused=1 state=completed frames=5 wall_ms=43.555855
+SAMPLE 7 paused=1 frames=5 simulation_ms=83.333 wall_ms=43.605679 capture_ms=1.197398 worker_ms=10.776858 bytes=40866 entities=76 error=
+TIMINGS sample=7 elapsed_ms=35.061373 queued_ms=17.183942 identity_ms=16.350861 worker_queue_ms=0.012143 waiting_for=
+PHASE sample=8 paused=1 state=queued frames=0 wall_ms=0.148771
+PHASE sample=8 paused=1 state=writing frames=3 wall_ms=26.963248
+PHASE sample=8 paused=1 state=completed frames=5 wall_ms=43.521330
+SAMPLE 8 paused=1 frames=5 simulation_ms=83.333 wall_ms=43.566695 capture_ms=1.192038 worker_ms=10.633157 bytes=40883 entities=76 error=
+TIMINGS sample=8 elapsed_ms=35.192621 queued_ms=17.245038 identity_ms=16.453264 worker_queue_ms=0.010290 waiting_for=
+PHASE sample=9 paused=1 state=queued frames=0 wall_ms=0.162908
+PHASE sample=9 paused=1 state=writing frames=3 wall_ms=27.508637
+PHASE sample=9 paused=1 state=completed frames=5 wall_ms=43.722219
+SAMPLE 9 paused=1 frames=5 simulation_ms=83.333 wall_ms=43.776672 capture_ms=1.246281 worker_ms=10.006374 bytes=40901 entities=76 error=
+TIMINGS sample=9 elapsed_ms=35.411182 queued_ms=17.789104 identity_ms=17.741995 worker_queue_ms=0.010900 waiting_for=

@@ -1,5 +1,7 @@
 #include "PerformanceProfiler.h"
 #include "ScriptSystem.h"
+#include "ScriptFaultNotice.h"
+#include "ResourceManager.h"
 #include "InteractivePlay.h"
 
 #include <algorithm>
@@ -23,6 +25,7 @@ double MillisecondsSince(Clock::time_point start) {
 }  // namespace
 
 bool InteractivePlay::Begin(RuntimeWorld& world, const WorldCoordinates& worldCoordinates, std::string& outError) {
+    m_scriptFaultNotice=m_scriptFaultNoticeOverride.value_or(DefaultScriptFaultNoticeEnabled());
     PerformanceProfiler::Get().Boundary("Play begin");
     End();
     m_worldCoordinates = worldCoordinates;
@@ -249,6 +252,7 @@ float InteractivePlay::Frame(Window& window, Renderer& renderer, float frameDelt
     }
     if(world.legacyGameplay&&!authoredUI)m_pauseMenu.Draw(renderer, window.Width(), window.Height());
     if(authoredUI)world.UI().Draw(renderer,window.Width(),window.Height());
+    if(m_scriptFaultNotice)DrawScriptFaultNotice(renderer,window.Width(),window.Height(),world.Scripts(),world.Resources()?world.Resources()->Assets():nullptr);
     renderer.EndUIFrame();
     return presentationAlpha;
 }

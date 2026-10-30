@@ -1,0 +1,82 @@
+Shadow maps: on
+Graphics: 4.5 (Core Profile) Mesa 26.0.8-1ubuntu0.3 / llvmpipe (LLVM 21.1.8, 256 bits)
+Renderer fragment texture units: 32 (material path uses 12)
+World state: /home/conner/Documents/GitHub/Project-Judas/.cache/consumer-lifecycle-evidence/hinge-harness/Saves/level1.judasstate (none saved)
+Project: Hinge (/home/conner/Documents/GitHub/Project-Judas/.cache/consumer-lifecycle-evidence/hinge-harness/hinge.judasproj)
+Scene: Hinge - Meadow Turn (/home/conner/Documents/GitHub/Project-Judas/.cache/consumer-lifecycle-evidence/hinge-harness/Scenes/level1.judas)
+World origin (m): 0.000, 0.000, 0.000
+ALSA lib confmisc.c:855:(parse_card) [error.core] cannot find card '0'
+ALSA lib conf.c:5211:(_snd_config_evaluate) [error.core] function snd_func_card_id returned error: No such file or directory
+ALSA lib confmisc.c:422:(snd_func_concat) [error.core] error evaluating strings
+ALSA lib conf.c:5211:(_snd_config_evaluate) [error.core] function snd_func_concat returned error: No such file or directory
+ALSA lib confmisc.c:1342:(snd_func_refer) [error.core] error evaluating name
+ALSA lib conf.c:5211:(_snd_config_evaluate) [error.core] function snd_func_refer returned error: No such file or directory
+ALSA lib conf.c:5734:(snd_config_expand) [error.core] Evaluate error: No such file or directory
+ALSA lib pcm.c:2722:(snd_pcm_open_noupdate) [error.pcm] Unknown PCM dmix
+ALSA lib confmisc.c:855:(parse_card) [error.core] cannot find card '0'
+ALSA lib conf.c:5211:(_snd_config_evaluate) [error.core] function snd_func_card_id returned error: No such file or directory
+ALSA lib confmisc.c:422:(snd_func_concat) [error.core] error evaluating strings
+ALSA lib conf.c:5211:(_snd_config_evaluate) [error.core] function snd_func_concat returned error: No such file or directory
+ALSA lib confmisc.c:1342:(snd_func_refer) [error.core] error evaluating name
+ALSA lib conf.c:5211:(_snd_config_evaluate) [error.core] function snd_func_refer returned error: No such file or directory
+ALSA lib conf.c:5734:(snd_config_expand) [error.core] Evaluate error: No such file or directory
+ALSA lib pcm.c:2722:(snd_pcm_open_noupdate) [error.pcm] Unknown PCM dmix:0
+ALSA lib confmisc.c:855:(parse_card) [error.core] cannot find card '0'
+ALSA lib conf.c:5211:(_snd_config_evaluate) [error.core] function snd_func_card_id returned error: No such file or directory
+ALSA lib confmisc.c:422:(snd_func_concat) [error.core] error evaluating strings
+ALSA lib conf.c:5211:(_snd_config_evaluate) [error.core] function snd_func_concat returned error: No such file or directory
+ALSA lib confmisc.c:1342:(snd_func_refer) [error.core] error evaluating name
+ALSA lib conf.c:5211:(_snd_config_evaluate) [error.core] function snd_func_refer returned error: No such file or directory
+ALSA lib conf.c:5734:(snd_config_expand) [error.core] Evaluate error: No such file or directory
+ALSA lib pcm.c:2722:(snd_pcm_open_noupdate) [error.pcm] Unknown PCM dmix:0,0
+ALSA lib confmisc.c:165:(snd_config_get_card) [error.core] Cannot get card index for 0
+ALSA lib confmisc.c:165:(snd_config_get_card) [error.core] Cannot get card index for 0
+ALSA lib confmisc.c:165:(snd_config_get_card) [error.core] Cannot get card index for 0
+Cannot connect to server socket err = Operation not permitted
+Cannot connect to server request channel
+jack server is not running or cannot be started
+JackShmReadWritePtr::~JackShmReadWritePtr - Init not done for -1, skipping unlock
+JackShmReadWritePtr::~JackShmReadWritePtr - Init not done for -1, skipping unlock
+step,time,posX,posY,posZ,upX,upY,upZ,grounded,velX,velY,velZ,gravX,gravY,gravZ,controlled,frame,steps,paused,obj0PosX,obj0PosY,obj0PosZ,obj0VelX,obj0VelY,obj0VelZ,obj1PosX,obj1PosY,obj1PosZ,obj1VelX,obj1VelY,obj1VelZ
+JS: BENCH_PHASE {"sample":0,"state":"queued","frames":0,"wallMs":0}
+JS: BENCH_PHASE {"sample":0,"state":"writing","frames":48,"wallMs":14}
+JS: BENCH_PHASE {"sample":0,"state":"completed","frames":60,"wallMs":18}
+JS: BENCH_SAMPLE {"sample":0,"paused":false,"frames":60,"wallMs":18,"captureMs":0.92771,"workerMs":3.433166,"bytes":41053}
+JS: BENCH_PHASE {"sample":1,"state":"queued","frames":0,"wallMs":0}
+JS: BENCH_PHASE {"sample":1,"state":"writing","frames":51,"wallMs":15}
+JS: BENCH_PHASE {"sample":1,"state":"completed","frames":71,"wallMs":21}
+JS: BENCH_SAMPLE {"sample":1,"paused":false,"frames":71,"wallMs":21,"captureMs":0.914074,"workerMs":5.60364,"bytes":41086}
+JS: BENCH_PHASE {"sample":2,"state":"queued","frames":0,"wallMs":0}
+JS: BENCH_PHASE {"sample":2,"state":"writing","frames":47,"wallMs":15}
+JS: BENCH_PHASE {"sample":2,"state":"completed","frames":79,"wallMs":24}
+JS: BENCH_SAMPLE {"sample":2,"paused":false,"frames":79,"wallMs":24,"captureMs":0.927549,"workerMs":9.196927,"bytes":41099}
+JS: BENCH_PHASE {"sample":3,"state":"queued","frames":0,"wallMs":0}
+JS: BENCH_PHASE {"sample":3,"state":"writing","frames":50,"wallMs":15}
+JS: BENCH_PHASE {"sample":3,"state":"completed","frames":80,"wallMs":24}
+JS: BENCH_SAMPLE {"sample":3,"paused":false,"frames":80,"wallMs":24,"captureMs":0.902061,"workerMs":9.013752,"bytes":41067}
+JS: BENCH_PHASE {"sample":4,"state":"queued","frames":0,"wallMs":0}
+JS: BENCH_PHASE {"sample":4,"state":"writing","frames":48,"wallMs":14}
+JS: BENCH_PHASE {"sample":4,"state":"completed","frames":80,"wallMs":24}
+JS: BENCH_SAMPLE {"sample":4,"paused":false,"frames":80,"wallMs":24,"captureMs":0.914104,"workerMs":9.205433,"bytes":41058}
+JS: BENCH_PHASE {"sample":5,"state":"queued","frames":0,"wallMs":0}
+JS: BENCH_PHASE {"sample":5,"state":"writing","frames":72,"wallMs":14}
+JS: BENCH_PHASE {"sample":5,"state":"completed","frames":124,"wallMs":24}
+JS: BENCH_SAMPLE {"sample":5,"paused":true,"frames":124,"wallMs":24,"captureMs":0.899086,"workerMs":9.340548,"bytes":41062}
+JS: BENCH_PHASE {"sample":6,"state":"queued","frames":0,"wallMs":0}
+JS: BENCH_PHASE {"sample":6,"state":"writing","frames":74,"wallMs":14}
+JS: BENCH_PHASE {"sample":6,"state":"completed","frames":125,"wallMs":23}
+JS: BENCH_SAMPLE {"sample":6,"paused":true,"frames":125,"wallMs":23,"captureMs":1.038378,"workerMs":9.186788,"bytes":41094}
+JS: BENCH_PHASE {"sample":7,"state":"queued","frames":0,"wallMs":0}
+JS: BENCH_PHASE {"sample":7,"state":"writing","frames":74,"wallMs":14}
+JS: BENCH_PHASE {"sample":7,"state":"completed","frames":122,"wallMs":23}
+JS: BENCH_SAMPLE {"sample":7,"paused":true,"frames":122,"wallMs":23,"captureMs":0.903525,"workerMs":8.998543,"bytes":41029}
+JS: BENCH_PHASE {"sample":8,"state":"queued","frames":0,"wallMs":0}
+JS: BENCH_PHASE {"sample":8,"state":"writing","frames":74,"wallMs":14}
+JS: BENCH_PHASE {"sample":8,"state":"completed","frames":124,"wallMs":23}
+JS: BENCH_SAMPLE {"sample":8,"paused":true,"frames":124,"wallMs":23,"captureMs":0.903815,"workerMs":8.939051,"bytes":41061}
+JS: BENCH_PHASE {"sample":9,"state":"queued","frames":0,"wallMs":0}
+JS: BENCH_PHASE {"sample":9,"state":"writing","frames":75,"wallMs":15}
+JS: BENCH_PHASE {"sample":9,"state":"completed","frames":122,"wallMs":24}
+JS: BENCH_SAMPLE {"sample":9,"paused":true,"frames":122,"wallMs":24,"captureMs":1.145861,"workerMs":8.913964,"bytes":41091}
+JS: BENCH_DONE_REQUEST_QUIT
+[TestHarness] quit requested at frame 1090

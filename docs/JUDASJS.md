@@ -23,6 +23,7 @@ Experimental native 2D Stages 1–3: [sprites, orthographic cameras and editor t
 
 | Topic / searchable names | Current reference |
 |---|---|
+| scripts.faults, script exceptions, development fault banner | [Script diagnostics](judasjs/scripting-diagnostics.md) |
 | Module imports, properties, start, restore, update, fixedUpdate, presentationUpdate, uiUpdate, destroy | [Lifecycle](judasjs/lifecycle.md) |
 | Entity, transform, tags, spawnPrefab, scriptState, physical materials | [Entities and prefabs](judasjs/entities.md) |
 | Entity.renderVisible, rendererVisible, imported-part visibility | [Render visibility](judasjs/entities.md#render-visibility-m72) |
