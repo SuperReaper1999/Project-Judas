@@ -1,0 +1,27 @@
+PASS fresh owned output required
+PASS ordinary new project creates project/assets/scenes/save directories: 
+PASS modern project has explicit identity and no implicit gameplay controller
+PASS visible template creates ordinary tracked game.js and scene owner: 
+PASS visible starter has a render-only script owner, no hidden controller
+PASS template uses the documented public-API script exactly
+PASS template refuses overwriting an existing game script
+PASS actual documented script receives ordinary stable asset identity
+PASS first project compiles and links without executing game code
+PASS authored script attachment and startup scene save through production serializers
+PASS saved first project reopens without private fixtures
+PASS normal runtime world builds headlessly: 
+JS: My first Judas project is running.
+PASS documented lifecycle runs without VM faults
+PASS one independent script instance owns its state
+PASS actual entity rotation follows ordinary project script rather than cached status
+PASS presentation phase publishes the explicit project camera without a player controller
+PASS invalid source independently fails project preflight
+PASS failed deliberate reload returns actionable script location
+PASS rejected reload preserves actual live instance and visual endpoint
+PASS the documented authored speed value is present
+PASS fixed project source deliberately reloads without a native build
+JS: My first Judas project is running.
+PASS state survives reload and edited gameplay value changes subsequent execution
+PASS runtime changes and reload never overwrite the authored scene
+PASS ordinary destroy callback releases project camera on Stop
+SUMMARY 24 checks

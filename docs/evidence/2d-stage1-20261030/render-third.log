@@ -1,0 +1,16 @@
+Shadow maps: on
+Graphics: 4.5 (Core Profile) Mesa 26.0.8-1ubuntu0.3 / llvmpipe (LLVM 21.1.8, 256 bits)
+Renderer fragment texture units: 32 (material path uses 12)
+PASS GL engine host starts
+PASS capture real GL framebuffer
+PASS sorted front sprite actually covers red sprite
+PASS capture real GL framebuffer
+PASS negative sorting control reverses actual visible output
+PASS capture real GL framebuffer
+PASS sprite opacity blends actual pixels
+PASS outside sprite remains clear
+PASS loose RGBA texture preserves top-left image orientation
+PASS transparent texture texel reveals clear background
+PASS flip mirrors real image around pivot
+PASS normalized top-left source rect selects atlas cell without UV inversion
+FAIL pivot changes physical visual extent without moving entity origin

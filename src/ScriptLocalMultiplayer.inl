@@ -28,16 +28,22 @@
             return JS_TRUE;
         }
         if(op=="playerView"){
-            if(JS_IsNull(arg(2))){p->view.reset();p->renderError.clear();p->attemptedSize={0,0};return JS_TRUE;}SceneTransform pose;double fov=70;float nearPlane=.1f,farPlane=500;bool valid=JS_IsObject(arg(2))&&readTransform(arg(2),pose)&&JS_ToFloat64(c,&fov,arg(3))==0&&KnownOptions(c,arg(4),{"near","far"});
+            if(JS_IsNull(arg(2))){p->view.reset();p->renderError.clear();p->attemptedSize={0,0};return JS_TRUE;}SceneTransform pose;double fov=70;float nearPlane=.1f,farPlane=500;bool valid=JS_IsObject(arg(2))&&readTransform(arg(2),pose)&&JS_ToFloat64(c,&fov,arg(3))==0&&KnownOptions(c,arg(4),{"near","far","projection","height","pixelPerfect","referenceWidth","referenceHeight","pixelsPerUnit"});CameraLens lens;valid&=ReadCameraLens(c,arg(4),lens);
             for(auto field:{std::pair<const char*,float*>{"near",&nearPlane},{"far",&farPlane}}){auto value=JS_GetPropertyStr(c,arg(4),field.first);if(!JS_IsUndefined(value))valid&=Number(c,arg(4),field.first,*field.second);JS_FreeValue(c,value);}
-            if(!valid||!service->SetView(p->id,pose,float(fov),nearPlane,farPlane,error))return JS_ThrowTypeError(c,"invalid player view/range");
+            if(!valid||!service->SetView(p->id,pose,float(fov),nearPlane,farPlane,error,lens))return JS_ThrowTypeError(c,"invalid player view/range");
             return JS_TRUE;
         }
         if(op=="playerProject"||op=="playerRay"){
             if(!p->view||world.viewportWidth<=0||world.viewportHeight<=0)return JS_NULL;
-            const auto& pose=*p->view;const auto size=LocalPlayers::ViewSize(p->viewport,world.viewportWidth,world.viewportHeight);const float aspect=float(size.x)/size.y;
-            if(op=="playerRay"){glm::vec2 point;if(!Number(c,arg(2),"x",point.x)||!Number(c,arg(2),"y",point.y)||point.x<0||point.x>1||point.y<0||point.y>1)return JS_ThrowTypeError(c,"normalized viewport-local point required");const float tangent=std::tan(glm::radians(p->fov*.5f));auto out=JS_NewObject(c);JS_SetPropertyStr(c,out,"origin",Vec(c,pose.position));JS_SetPropertyStr(c,out,"direction",Vec(c,pose.rotation*glm::normalize(glm::vec3((2*point.x-1)*aspect*tangent,(1-2*point.y)*tangent,-1))));return out;}
-            glm::vec3 point;if(!ReadVec(c,arg(2),point))return JS_ThrowTypeError(c,"finite world point required");const auto projected=ProjectViewport(glm::lookAt(pose.position,pose.position+pose.rotation*glm::vec3(0,0,-1),pose.rotation*glm::vec3(0,1,0)),glm::perspective(glm::radians(p->fov),aspect,p->nearPlane,p->farPlane),point);auto out=JS_NewObject(c);
+            const auto& pose=*p->view;const auto size=LocalPlayers::ViewSize(p->viewport,world.viewportWidth,world.viewportHeight);
+            const auto frame=BuildCameraFrame(pose.position,pose.rotation,p->fov,p->nearPlane,p->farPlane,p->lens,size.x,size.y);
+            if(op=="playerRay") {
+                glm::vec2 point;glm::vec3 origin,direction;
+                if(!Number(c,arg(2),"x",point.x)||!Number(c,arg(2),"y",point.y)||point.x<0||point.x>1||point.y<0||point.y>1)return JS_ThrowTypeError(c,"normalized viewport-local point required");
+                if(!frame.Ray(point,origin,direction))return JS_NULL;
+                auto out=JS_NewObject(c);JS_SetPropertyStr(c,out,"origin",Vec(c,origin));JS_SetPropertyStr(c,out,"direction",Vec(c,direction));return out;
+            }
+            glm::vec3 point;if(!ReadVec(c,arg(2),point))return JS_ThrowTypeError(c,"finite world point required");const auto projected=frame.Project(point);auto out=JS_NewObject(c);
             for(auto field:{std::pair<const char*,double>{"x",p->viewport.x+projected.position.x*p->viewport.z},{"y",p->viewport.y+projected.position.y*p->viewport.w},{"depth",projected.depth},{"distance",projected.distance}})JS_SetPropertyStr(c,out,field.first,JS_NewFloat64(c,field.second));
             JS_SetPropertyStr(c,out,"behind",JS_NewBool(c,projected.behind));JS_SetPropertyStr(c,out,"inside",JS_NewBool(c,projected.inside));return out;
         }

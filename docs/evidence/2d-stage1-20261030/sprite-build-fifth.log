@@ -1,0 +1,53 @@
+WARNHarfBuzz has a Meson port and tries to migrate all the other build systems to it, please consider using it as we might remove our cmake port soon.
+CMake Deprecation Warning at .cache/2d-stage1-build/_deps/judas_freetype-src/CMakeLists.txt:113 (cmake_minimum_required):
+  Compatibility with CMake < 3.10 will be removed from a future version of
+  CMake.
+
+  Update the VERSION argument <min> value.  Or, use the <min>...<max> syntax
+  to tell CMake that the project requires at least <min> but has been updated
+  to work with policies introduced by <max> or earlier.
+
+
+-- Configuring done (0.9s)
+-- Generating done (0.8s)
+-- Build files have been written to: /home/conner/Documents/GitHub/Project-Judas/.cache/2d-stage1-build
+[  6%] Built target judas_imgui
+[ 18%] Built target freetype
+[ 25%] Built target judas_meshoptimizer
+[ 25%] Built target judas_icu_build
+[ 25%] Built target judas_quickjs
+[ 25%] Building CXX object CMakeFiles/judas_build_identity.dir/src/BuildIdentity.cpp.o
+[ 25%] Built target judas_app_icon
+[ 25%] Built target judas_profiler
+[ 25%] Built target judas_jobs
+[ 31%] Built target judas_audio_backend
+[ 37%] Built target judas_navigation_backend
+[ 37%] Built target judas_glad
+[ 37%] Built target harfbuzz
+[ 37%] Built target judas_materials
+[ 43%] Built target judas_navigation_cook
+[ 43%] Linking CXX static library libjudas_build_identity.a
+[ 43%] Built target judas_build_identity
+[ 43%] Building CXX object CMakeFiles/judas_engine.dir/src/Renderer.cpp.o
+[ 43%] Linking CXX static library libjudas_engine.a
+[ 93%] Built target judas_engine
+[ 93%] Building CXX object CMakeFiles/judas_sprite_integration_tests.dir/tests/SpriteIntegrationTests.cpp.o
+[ 93%] Linking CXX executable judas_sprite_integration_tests
+[100%] Built target judas_sprite_integration_tests
+[  7%] Built target judas_meshoptimizer
+[ 21%] Built target freetype
+[ 21%] Built target judas_icu_build
+[ 21%] Built target judas_quickjs
+[ 21%] Built target judas_build_identity
+[ 21%] Built target judas_app_icon
+[ 21%] Built target judas_profiler
+[ 21%] Built target judas_jobs
+[ 28%] Built target judas_audio_backend
+[ 35%] Built target judas_navigation_backend
+[ 35%] Built target judas_glad
+[ 35%] Built target harfbuzz
+[ 35%] Built target judas_materials
+[ 42%] Built target judas_navigation_cook
+[100%] Built target judas_engine
+[100%] Linking CXX executable judas_sprite_render_tests
+[100%] Built target judas_sprite_render_tests

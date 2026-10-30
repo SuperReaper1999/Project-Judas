@@ -63,7 +63,7 @@ private:
     void PickAtPixel(int x, int y);
     void RefreshProjectLists();
     bool OpenProject(const std::string& projectFile, std::string& outError);
-    bool CreateProject(const std::string& directory, const std::string& name, std::string& outError, bool visibleStarter=true);
+    bool CreateProject(const std::string& directory, const std::string& name, std::string& outError, bool visibleStarter=true, int twoDTemplate=0);
     bool OpenScene(const std::string& path, std::string& outError);
     bool RunProject(std::string& outMessage);
     std::string ResolveScenePath(const std::string& input) const;

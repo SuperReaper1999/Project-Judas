@@ -1,0 +1,47 @@
+[
+  {
+    "path": "projects/sprite_workshop/Assets/explorer.png",
+    "bytes": 204,
+    "sha256": "6562573acbdfb93ef1a16b7932c90a83fa7733e0ad438bce01577da357bf3975"
+  },
+  {
+    "path": "projects/sprite_workshop/Assets/explorer.png.judasmeta",
+    "bytes": 203,
+    "sha256": "3aa74c24715d1edfa9745c50b1ddb0aeb2d4e9d3a8e39a08e1d48872e23f6e59"
+  },
+  {
+    "path": "projects/sprite_workshop/Assets/game.js",
+    "bytes": 1406,
+    "sha256": "5069ba255f98160893efc9a45a6386ae7469b5339e45e28aa57573d032dab987"
+  },
+  {
+    "path": "projects/sprite_workshop/Assets/game.js.judasmeta",
+    "bytes": 197,
+    "sha256": "1c618f29f98be10aaf6aa4dbe3f54371119efa11addb21611b88df82239ef815"
+  },
+  {
+    "path": "projects/sprite_workshop/Assets/hud.judasui",
+    "bytes": 310,
+    "sha256": "ab2e829d4e912d1add8e665fda203fc455de3cb0d8e4664481bff2b7dbffc420"
+  },
+  {
+    "path": "projects/sprite_workshop/Assets/hud.judasui.judasmeta",
+    "bytes": 197,
+    "sha256": "1e9d1c64c3e0304fb30a75459c591f1e61998c192ae361de3ce56b2d1918b52a"
+  },
+  {
+    "path": "projects/sprite_workshop/README.md",
+    "bytes": 1404,
+    "sha256": "c4836db8b7f630e9323585d062ee563bbf1ecf59a505e2c698b8318c5dc2d0cb"
+  },
+  {
+    "path": "projects/sprite_workshop/Scenes/main.judas",
+    "bytes": 111729,
+    "sha256": "8c97184879b16cc4b5687bac82c77c5f1de61c32ea5b1325b4b10d71d68dc4ad"
+  },
+  {
+    "path": "projects/sprite_workshop/Sprite_Workshop.judasproj",
+    "bytes": 1126,
+    "sha256": "e5a9a5a9debb1bc9f271296b2b5c8de78a8462a1475558b3a544c483932acfd8"
+  }
+]

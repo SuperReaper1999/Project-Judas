@@ -60,6 +60,7 @@ void DrawProjectSettingsPanel(EditorDocument& doc,EditorPanelState& state,Editor
         ImGui::EndCombo();
     }
     ImGui::TextWrapped("Startup scene, identity and fallback icon are included in standalone packages.");
+    ImGui::Checkbox("Open editor in 2D view by default",&s.editor2D);
     }
     if(page==1){
         int budget=int(s.visualBudgetMiB);

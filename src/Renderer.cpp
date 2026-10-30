@@ -876,6 +876,7 @@ void Renderer::Shutdown() {
     TraceResourceOperation(ResourceTracePoint::RendererShutdownBegin);
     EndRenderTarget();
     ShutdownAppearance();
+    m_spriteDraws.clear();m_spriteQuad={};m_spriteMaterials={};m_spritePixelGrid=0;
     if(m_particleProgram)glDeleteProgram(m_particleProgram);
     if(m_particleVbo)glDeleteBuffers(1,&m_particleVbo);
     if(m_particleVao)glDeleteVertexArrays(1,&m_particleVao);
@@ -966,6 +967,7 @@ void Renderer::BeginFrame(int windowWidth, int windowHeight) {
 }
 
 void Renderer::SetCamera(const glm::mat4& view, const glm::mat4& projection) {
+    m_spritePixelGrid=0;
     m_view = view;
     m_projection = projection;
     m_frustum=Frustum(projection*view);
@@ -1476,6 +1478,8 @@ bool Renderer::LoadFont(const char* path,float pixels,std::string& error){
 }
 
 void Renderer::BeginUIFrame(int windowWidth, int windowHeight) {
+    // UI coordinates cover the output, independently of a letterboxed world view.
+    glViewport(0,0,std::max(1,windowWidth),std::max(1,windowHeight));
     glActiveTexture(GL_TEXTURE0);glBindSampler(0,0);glDisable(GL_CULL_FACE);
     m_profileUI=BeginProfilePass("Runtime UI");
     m_uiDrawCalls=0;
@@ -1587,7 +1591,7 @@ bool Renderer::BeginRenderTarget(RenderTargetHandle target) {
     glGetIntegerv(GL_READ_FRAMEBUFFER_BINDING, &m_savedReadFramebuffer);
     glGetIntegerv(GL_VIEWPORT, m_savedViewport);
     m_savedRenderMask=m_renderMask;m_savedRenderLayer=m_renderLayer;
-    m_savedView = m_view; m_savedProjection = m_projection; m_activeTarget = target;
+    m_savedView = m_view; m_savedProjection = m_projection;m_savedPixelGrid=m_spritePixelGrid; m_activeTarget = target;
     const auto& gpu = m_targets[target.id];
     glBindFramebuffer(GL_FRAMEBUFFER, gpu.framebuffer);
     BeginFrame(gpu.width, gpu.height); ++m_stats.offscreenPasses; return true;
@@ -1601,7 +1605,7 @@ void Renderer::EndRenderTarget() {
     glBindFramebuffer(GL_DRAW_FRAMEBUFFER, static_cast<GLuint>(m_savedDrawFramebuffer));
     glBindFramebuffer(GL_READ_FRAMEBUFFER, static_cast<GLuint>(m_savedReadFramebuffer));
     glViewport(m_savedViewport[0], m_savedViewport[1], m_savedViewport[2], m_savedViewport[3]);
-    SetCamera(m_savedView,m_savedProjection);m_renderMask=m_savedRenderMask;m_renderLayer=m_savedRenderLayer; m_activeTarget = {};
+    SetCamera(m_savedView,m_savedProjection);m_spritePixelGrid=m_savedPixelGrid;m_renderMask=m_savedRenderMask;m_renderLayer=m_savedRenderLayer; m_activeTarget = {};
 }
 
 Renderer::TargetDiagnostics Renderer::RenderTargetDiagnostics() const {
@@ -1769,3 +1773,5 @@ void Renderer::PollProfileGPU(){
 #include "RendererText.inl"
 
 #include "RendererWeather.inl"
+
+#include "RendererSprites.inl"

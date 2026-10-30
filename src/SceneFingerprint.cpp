@@ -109,10 +109,12 @@ void WriteObject(CanonicalWriter& w, const SceneObject& o) {
     if (o.render) {
         w.Context(object + " render");
         const auto& r = *o.render;
-        w.Enum(r.shape, 4, "render shape"); w.Vector(r.halfExtents); w.Number(r.radius);
+        if(r.shape!=SceneShape::Sprite&&int(r.shape)>4)w.Fail("invalid render shape");
+        w.Enum(r.shape, 7, "render shape"); w.Vector(r.halfExtents); w.Number(r.radius);
         w.Vector(r.color); w.Number(r.alpha); w.Vector(r.secondaryColor); w.Number(r.secondaryAlpha);
         w.Text(r.meshAsset); w.Text(r.textureAsset); w.U64(r.textureCamera);
         if(r.lodMultiplier!=1){w.Text("M93-render-lod");w.Number(r.lodMultiplier);}
+        if(r.shape==SceneShape::Sprite){if(!ValidSprite(r.sprite))w.Fail("invalid sprite");w.Text("Sprite.1");w.Text(EncodeSprite(r.sprite));}
     }
     w.Boolean(o.audioEmitter.has_value());
     if(o.audioEmitter){const auto& a=*o.audioEmitter;w.Context(object+" audio emitter");w.Text(a.asset);w.Boolean(a.enabled);w.Boolean(a.playOnStart);w.Boolean(a.loop);w.Boolean(a.spatial);
@@ -128,6 +130,8 @@ void WriteObject(CanonicalWriter& w, const SceneObject& o) {
         const auto& c = *o.renderCamera;
         w.Boolean(c.enabled); w.U64(c.width); w.U64(c.height); w.U64(c.updateEveryFrames);
         w.Number(c.verticalFovDegrees); w.Number(c.nearPlane); w.Number(c.farPlane);
+        if(!ValidCameraLens(c.lens))w.Fail("invalid camera projection");
+        if(c.lens!=CameraLens{}){w.Text("CameraLens.1");w.Enum(c.lens.projection,1,"camera projection");w.Number(c.lens.height);w.Boolean(c.lens.pixelPerfect);w.U64(c.lens.referenceWidth);w.U64(c.lens.referenceHeight);w.Number(c.lens.pixelsPerUnit);}
         if (c.width < 1 || c.width > 4096 || c.height < 1 || c.height > 4096 ||
             c.updateEveryFrames < 1 || !(c.verticalFovDegrees > 0 && c.verticalFovDegrees < 179) ||
             !(c.nearPlane > 0 && c.farPlane > c.nearPlane)) w.Fail("invalid render camera");

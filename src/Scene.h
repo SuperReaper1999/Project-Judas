@@ -5,6 +5,8 @@
 #include "BasicWater.h"
 #include "Classification.h"
 #include "Material.h"
+#include "Sprite.h"
+#include "CameraLens.h"
 #include "GravitySelection.h"
 #include "NavigationTypes.h"
 #include "LiquidTypes.h"
@@ -61,12 +63,13 @@ struct SceneTransform {
     glm::vec3 scale{1.0f};
 };
 
-enum class SceneShape { Box, Sphere, Compound, Mesh, Terrain, ConvexHull, TriangleMesh };
+enum class SceneShape { Box, Sphere, Compound, Mesh, Terrain, ConvexHull, TriangleMesh, Sprite };
 
 // What Renderer draws for the object. Compound and Terrain reuse the body
 // component's geometry (there is nothing sensible to draw otherwise);
 // Box/Sphere/Mesh are self-contained and need no body at all.
 struct SceneRenderComponent {
+    SpriteSettings sprite;
     bool visible=true;
     MaterialOverride instanceOverrides; // authored whole-renderable factors
     std::map<std::string,MaterialSlot> partMaterials; // stable imported part identity
@@ -264,6 +267,7 @@ struct ScenePlayerStartComponent {
 
 // Perspective camera, local -Z forward and +Y up, matching existing views.
 struct SceneRenderCameraComponent {
+    CameraLens lens;
     CategoryMask renderMask = kAllCategories;
     bool enabled = true;
     int width = 256;

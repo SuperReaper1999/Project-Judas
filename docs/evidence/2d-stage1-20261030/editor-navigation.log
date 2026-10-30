@@ -1,0 +1,60 @@
+PASS frame selection retains target as focus anchor
+PASS frame selection preserves the established camera orientation
+PASS pan leaves camera orientation unchanged
+PASS pitched and yawed pan stays in the camera view plane
+PASS pan translates camera and focus anchor equally
+PASS perspective projection moves the scene by the requested horizontal and vertical pixels
+PASS reverse pan restores camera position without frame-time dependence
+PASS zero-height viewport does not move or divide by zero
+PASS unchanged pointer does not manufacture camera motion
+PASS pan scale follows framed depth
+PASS pan scale follows actual viewport pixel height
+PASS existing right-drag camera look still rotates
+PASS existing fly input still translates the camera
+PASS fractional wheel steps scale focus distance without integer rounding
+PASS forward wheel dollies toward focus along the pitched and yawed view direction
+PASS wheel dolly retains the framed focus anchor
+PASS wheel dolly preserves camera orientation
+PASS wheel dolly preserves perspective lens and field of view
+PASS inverse fractional wheel restores position and distance away from bounds
+PASS fractional wheel accumulation agrees with a whole step
+PASS dolly movement scales with focus distance
+PASS repeated inward wheel continues approaching close objects with smaller steps
+PASS extreme inward wheel saturates at the near distance without crossing focus
+PASS additional inward wheel stays at the lower distance bound
+PASS extreme outward wheel saturates at a finite maximum distance
+PASS additional outward wheel stays at the upper distance bound
+PASS zero and nonfinite wheel values leave the camera unchanged
+PASS outward wheel does not reverse direction when an existing frame exceeds the normal limit
+PASS inward wheel smoothly approaches an existing frame beyond the normal limit
+PASS pan after dolly translates the updated focus and camera equally
+PASS pan after dolly uses the new focus depth for the requested screen-space movement
+PASS inverse pan after dolly restores the dolly position
+PASS focused editable viewport accepts unclaimed wheel input
+PASS panel, capture or gizmo eligibility denies wheel dolly
+PASS unfocused window denies wheel dolly
+PASS text input or cancellation denies wheel dolly
+PASS Play mode leaves wheel input with the game
+PASS captured look and pan gestures exclude wheel dolly
+PASS held selection button excludes wheel dolly
+PASS held look button excludes wheel dolly
+PASS held pan button excludes wheel dolly
+PASS fresh middle press in viewport owns pan
+PASS captured pan remains owned when pointer crosses a panel
+PASS middle release ends pan capture
+PASS middle press begun over a panel cannot start pan
+PASS drag out of panel does not steal held middle press
+PASS window focus loss cancels an active pan
+PASS focus regain with middle held cannot reacquire capture
+PASS new press after focus loss restores pan normally
+PASS text-input claim or Escape cancellation releases pan
+PASS cancelled held press cannot restart after text input ends
+PASS left-button selection or gizmo drag excludes camera pan
+PASS active gizmo or text field denies a fresh camera press
+PASS fresh right press retains existing look binding
+PASS second button does not replace an active right-drag gesture
+PASS right release ends look without switching to already-held middle
+PASS already-held middle does not start on the following frame
+PASS Play or Stop cancellation retires viewport ownership
+PASS held press after Play or Stop cannot resume old navigation
+M71 editor navigation: 59 checks, 0 failures

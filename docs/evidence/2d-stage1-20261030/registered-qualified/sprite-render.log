@@ -1,0 +1,28 @@
+Shadow maps: on
+Graphics: 4.5 (Core Profile) Mesa 26.0.8-1ubuntu0.3 / llvmpipe (LLVM 21.1.8, 256 bits)
+Renderer fragment texture units: 32 (material path uses 12)
+PASS GL engine host starts
+PASS capture real GL framebuffer
+PASS sorted front sprite actually covers red sprite
+PASS capture real GL framebuffer
+PASS negative sorting control reverses actual visible output
+PASS capture real GL framebuffer
+PASS sprite opacity blends actual pixels
+PASS outside sprite remains clear
+PASS top-down Y sort changes actual overlap consistently when actors cross
+PASS loose RGBA texture preserves top-left image orientation
+PASS transparent texture texel reveals clear background
+PASS flip mirrors real image around pivot
+PASS normalized top-left source rect selects atlas cell without UV inversion
+PASS pivot changes physical visual extent without moving entity origin
+PASS native sprite world builds without hidden resources or physics
+PASS world accepts orthographic lens
+PASS ordinary runtime WorldPresentation draws actual native sprite
+PASS independent orthographic secondary camera renders native sprite to real target
+PASS two independently positioned orthographic player views show distinct actual world contents
+PERF sprites=200 frames=60 mean_ms=1.6072 median_ms=1.53301 p95_ms=1.90493 worst_ms=2.21093 (submission+GPU completion, not separate CPU/GPU)
+PASS subpixel sprite motion leaves pixel-perfect frame byte identical
+PASS integer content viewport has empty letterbox and visible center
+PASS full-output UI is not squeezed into the world's letterbox viewport
+PASS save rendered evidence
+SUMMARY checks=23 failures=0

@@ -8,6 +8,8 @@
 
 #include "MeshData.h"
 #include "Scene.h"
+#include "TextureData.h"
+#include <set>
 
 class AssetDatabase;
 class ResourceManager;
@@ -26,7 +28,9 @@ public:
     EditorPickHit Pick(const Scene& authored, glm::vec3 origin, glm::vec3 direction,
                        const AssetDatabase* assets = nullptr,
                        const ResourceManager* resources = nullptr,
-                       std::string* error = nullptr);
+                       std::string* error = nullptr,const std::set<SceneObjectId>* excluded=nullptr);
+    std::vector<EditorPickHit> PickAll(const Scene&,glm::vec3 origin,glm::vec3 direction,
+                                     const AssetDatabase*,const ResourceManager*,std::string* error=nullptr);
     void Clear();
     void SetDraftMesh(const std::string& id,std::shared_ptr<const MeshData> mesh){m_draftId=id;m_draft=std::move(mesh); }
 
@@ -43,4 +47,7 @@ private:
     const MeshData* TerrainMesh(const std::string& identifier);
     std::map<std::string, CachedMesh> m_meshes;
     std::map<std::string, MeshData> m_terrains;
+    struct CachedImage {std::string path;std::filesystem::file_time_type modified{};std::uintmax_t bytes=0;TextureData data;};
+    std::map<std::string,CachedImage> m_images;
+    const TextureData* AssetImage(const std::string&,const AssetDatabase*,std::string* error);
 };

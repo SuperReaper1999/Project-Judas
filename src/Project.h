@@ -32,6 +32,7 @@ namespace JudasMods {struct Session;}
 // the existing assets/ tree); a new game gets Assets/ Scenes/ Saves/ from
 // the editor's New Project. Neither layout is assumed by engine code.
 struct ProjectSettings {
+    bool editor2D = false; // default editing view only; never a runtime capability gate
     // Applied at world construction. Changing them in the editor requires restarting Play.
     bool basicWater = true;
     bool waterSwimming = true;

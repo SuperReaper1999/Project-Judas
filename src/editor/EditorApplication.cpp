@@ -14,6 +14,7 @@
 #include "PerformanceProfiler.h"
 #include "ComponentEditors.h"
 #include "EditorApplication.h"
+#include "EditorCreationMenu.h"
 #include "EditorAssetActions.h"
 #include "TerrainTools.h"
 #include "VolumeTerrainTools.h"
@@ -80,6 +81,7 @@ float PickRadius(const SceneObject& o) {
     float radius = 0.75f;
     if (o.render) {
         if (o.render->shape == SceneShape::Sphere) radius = std::max(radius, o.render->radius);
+        else if(o.render->shape==SceneShape::Sprite) radius=glm::length(o.render->sprite.size*glm::vec2(o.transform.scale));
         else if (o.render->shape == SceneShape::Box) radius = std::max(radius, glm::length(o.render->halfExtents));
         else if (o.render->shape == SceneShape::Mesh) radius = std::max(radius, 2.0f * std::max(o.transform.scale.x, std::max(o.transform.scale.y, o.transform.scale.z)));
     }
@@ -397,6 +399,8 @@ bool EditorApplication::OpenProject(const std::string& projectFile, std::string&
     RetireRetargetProject(m_panels);
     auto retiringContent=m_project.ModSession(); // retain leases until old jobs are joined
     m_project = project;
+    m_panels.view2D = m_project.Settings().editor2D;
+    m_camera.Set2D(m_panels.view2D);
     m_scenePicker.Clear();
     m_host->OpenProjectAssets(m_project.RootDir(), m_project.AssetsDir());
     m_panels.projectHistory.reset();
@@ -409,13 +413,14 @@ bool EditorApplication::OpenProject(const std::string& projectFile, std::string&
     return true;
 }
 
-bool EditorApplication::CreateProject(const std::string& directory, const std::string& name, std::string& outError, bool visibleStarter) {
+bool EditorApplication::CreateProject(const std::string& directory, const std::string& name, std::string& outError, bool visibleStarter, int twoDTemplate) {
     Project project;
     if (!Project::CreateNew(directory, name, project, outError)) return false;
     // A starter scene so the new project runs immediately.
     const std::string sceneRelative = project.Settings().scenesDir + "/main.judas";
-    Scene starter=MakeStarterScene();
-    if(visibleStarter&&!PopulateVisibleProjectStarter(project,starter,outError))return false;
+    Scene starter=twoDTemplate ? Scene{} : MakeStarterScene();
+    if(twoDTemplate&&!Populate2DProjectStarter(project,starter,twoDTemplate==2,outError))return false;
+    if(visibleStarter&&!twoDTemplate&&!PopulateVisibleProjectStarter(project,starter,outError))return false;
     if (!SaveSceneToFile(starter, project.Resolve(sceneRelative), outError)) return false;
     project.Settings().startupScene = sceneRelative;
     if (!project.Save(outError)) return false;
@@ -445,7 +450,7 @@ bool EditorApplication::OpenScene(const std::string& path, std::string& outError
     m_document.GetScene()=std::move(resolvedPrefabs);
     m_panels.pathInput = m_project.IsLoaded() ? m_project.MakeRelative(resolved) : resolved;
     if (const SceneObject* first = m_document.GetScene().Objects().empty() ? nullptr : &m_document.GetScene().Objects().front()) {
-        m_camera.LookAt(first->transform.position, 40.0f);
+        m_camera.LookAt(first->transform.position, m_camera.Is2D()?5.0f:40.0f);
     }
     return true;
 }
@@ -759,7 +764,7 @@ void EditorApplication::HandleRequests(EditorRequests& r) {
             const auto id=CreateEditorPrimitive(m_document,m_project,m_host->Assets(),r.createKind,r.createPosition,r.createParent,error);
             m_panels.status=id?"Created "+r.createKind+" with editable mesh and convex collision. Body > Motion selects static/dynamic.":error;
         }else{
-            const auto created = CreateObjectOfKind(m_document, r.createKind, r.createPosition, defaultMesh, nullptr, r.createParent);
+            const auto created = CreateObjectOfKind(m_document, r.createKind, r.createPosition, r.createKind=="sprite"?std::string{}:defaultMesh, nullptr, r.createParent);
             m_panels.status = created ? "Created " + r.createKind : "Creation failed: parent no longer exists";
         }
     }
@@ -856,11 +861,11 @@ void EditorApplication::HandleRequests(EditorRequests& r) {
         if(ImGui::InputTextWithHint("Directory","Choose a new project folder",directory,sizeof(directory)))m_newProjectDirectory=directory;
         ImGui::SameLine();if(ImGui::Button("Browse...")){m_fileBrowserParent="New project";m_fileBrowser.Open(EditorFileBrowser::Target::NewProject,EditorFileBrowser::Mode::Directory,m_newProjectDirectory);}
         if(ImGui::InputTextWithHint("Name","My Game",name,sizeof(name)))m_newProjectName=name;
-        ImGui::Combo("Template",&m_newProjectTemplate,"Visible script starter\0Empty scene\0");
-        ImGui::TextWrapped(m_newProjectTemplate==0?"A rotating object, an ordinary JavaScript camera and an editable script. No hidden gameplay controller.":"A floor, light and gravity. Add your own scripts, player and camera.");
+        ImGui::Combo("Template",&m_newProjectTemplate,"3D script starter\0Empty 3D scene\0New 2D game - top-down\0New 2D game - side-view\0");
+        ImGui::TextWrapped(m_newProjectTemplate>=2?"A native sprite, orthographic camera and editable movement script. No 2D collision/controller yet; those follow in Stage 2.":m_newProjectTemplate==0?"A rotating object, an ordinary JavaScript camera and an editable script. No hidden gameplay controller.":"A floor, light and gravity. Add your own scripts, player and camera.");
         if (ImGui::Button("Create") && !m_newProjectDirectory.empty() && !m_newProjectName.empty()) {
             std::string e;
-            if(CreateProject(m_newProjectDirectory,m_newProjectName,e,m_newProjectTemplate==0)){
+            if(CreateProject(m_newProjectDirectory,m_newProjectName,e,m_newProjectTemplate==0,m_newProjectTemplate>=2?m_newProjectTemplate-1:0)){
                 m_panels.status="Created project "+m_project.ProjectFile();ImGui::CloseCurrentPopup();
             }else m_panels.status="New project failed: "+e;
         }
@@ -913,8 +918,14 @@ void EditorApplication::PickAtPixel(int x, int y) {
     glm::vec3 origin, direction;
     ViewportRay(x, y, origin, direction);
     std::string error;
-    const auto hit = m_scenePicker.Pick(m_document.GetScene(), origin, direction,
-                                      &m_host->Assets(), &m_host->Resources(), &error);
+    auto hit = m_scenePicker.Pick(m_document.GetScene(), origin, direction,
+                                  &m_host->Assets(), &m_host->Resources(), &error);
+    if (ImGui::GetIO().KeyAlt && error.empty()) {
+        const auto hits=m_scenePicker.PickAll(m_document.GetScene(),origin,direction,&m_host->Assets(),&m_host->Resources(),&error);
+        for(std::size_t i=0;i<hits.size();++i)if(hits[i].id==m_document.Selected()){
+            hit=hits[(i+1)%hits.size()];break;
+        }
+    }
     if (!error.empty()) { m_panels.status = "Selection failed: " + error; return; }
     m_document.Select(hit.id, ImGui::GetIO().KeyCtrl);
 }
@@ -937,7 +948,7 @@ void EditorApplication::UpdateGizmo(bool allowInteraction) {
     if(m_document.Selection().size()>1){presented.position={0,0,0};auto roots=m_document.SelectionRoots();for(auto id:roots)presented.position+=flattened.Find(id)->transform.position;presented.position/=float(roots.size());}
     const glm::vec3 origin = presented.position;
     // Handles keep a roughly constant on-screen size.
-    m_gizmoHandleLength = std::max(0.2f, glm::length(origin - m_camera.Position()) * 0.14f);
+    m_gizmoHandleLength = m_camera.Is2D()?m_camera.OrthographicHeight()*0.14f:std::max(0.2f, glm::length(origin - m_camera.Position()) * 0.14f);
     const bool snap = m_panels.gizmoSnap || ImGui::GetIO().KeyCtrl;
 
     if (m_drag.Active()) {
@@ -1053,7 +1064,7 @@ void EditorApplication::UpdateCameraNavigation(const EditorCameraGestureInput& i
                     mouseDeltaX, mouseDeltaY, fast);
     // Keep the existing 8 m object-placement plane; the camera's separate
     // focus depth only determines the pan scale after framing a selection.
-    m_panels.cameraFocus = m_camera.Position() + m_camera.Forward() * 8.0f;
+    m_panels.cameraFocus = m_camera.Is2D()?m_camera.Focus():m_camera.Position() + m_camera.Forward() * 8.0f;
 }
 
 void EditorApplication::FrameEditMode(float deltaSeconds) {
@@ -1063,11 +1074,12 @@ void EditorApplication::FrameEditMode(float deltaSeconds) {
     const ImGuiIO& io = ImGui::GetIO();
     const bool insideViewport = m_panels.workspace.viewport.Contains({io.MousePos.x, io.MousePos.y});
 
+    if(m_camera.Is2D()!=m_panels.view2D){CancelCameraNavigation();m_camera.Set2D(m_panels.view2D);}
     EditorCameraGestureInput navigation;
     navigation.focused = m_viewportFocused;
     navigation.canStart = insideViewport && !io.WantCaptureMouse && !io.WantCaptureKeyboard && !m_drag.Active();
     navigation.cancel = io.WantCaptureKeyboard || io.WantTextInput || ImGui::IsKeyPressed(ImGuiKey_Escape);
-    navigation.rightDown = io.MouseDown[ImGuiMouseButton_Right];
+    navigation.rightDown = !m_camera.Is2D() && io.MouseDown[ImGuiMouseButton_Right];
     navigation.middleDown = io.MouseDown[ImGuiMouseButton_Middle];
     navigation.leftDown = io.MouseDown[ImGuiMouseButton_Left];
     int dx = 0, dy = 0;
@@ -1082,7 +1094,7 @@ void EditorApplication::FrameEditMode(float deltaSeconds) {
     UpdateCameraNavigation(navigation, dx, dy, deltaSeconds, fast);
     if (EditorCameraCanDolly(navigation, m_cameraGesture.Active(), true)) {
         m_camera.Dolly(io.MouseWheel);
-        m_panels.cameraFocus = m_camera.Position() + m_camera.Forward() * 8.0f;
+        m_panels.cameraFocus = m_camera.Is2D()?m_camera.Focus():m_camera.Position() + m_camera.Forward() * 8.0f;
     }
 
     // Gizmo first: a click on a handle is a drag, not a pick. The viewport
@@ -1110,16 +1122,20 @@ void EditorApplication::FrameEditMode(float deltaSeconds) {
     } else if (!m_pendingDropAsset.empty()) {
         if (insideViewport && ImGui::IsMouseReleased(ImGuiMouseButton_Left) && !ImGui::IsWindowHovered(ImGuiHoveredFlags_AnyWindow)) {
             const AssetRecord* record = m_host->Assets().Find(m_pendingDropAsset);
-            if (record && record->type == AssetType::Mesh) {
+            if (record && (record->type == AssetType::Mesh || record->type == AssetType::Texture)) {
                 const int mx = static_cast<int>(io.MousePos.x), my = static_cast<int>(io.MousePos.y);
                 glm::vec3 rayOrigin, rayDirection;
                 ViewportRay(mx, my, rayOrigin, rayDirection);
                 glm::vec3 hit = m_panels.cameraFocus;
                 RayPlaneIntersection(rayOrigin, rayDirection, m_panels.cameraFocus, -m_camera.Forward(), hit);
-                CreateObjectOfKind(m_document, "mesh", hit, m_pendingDropAsset);
-                m_panels.status = "Placed " + record->relativePath;
+                std::string error;
+                if(record->type==AssetType::Texture){
+                    if(!CreateEditorSpriteFromImage(m_document,m_host->Assets(),m_pendingDropAsset,hit,kInvalidSceneObjectId,error)){
+                        m_panels.status=error;
+                    }else m_panels.status="Placed sprite: "+record->relativePath;
+                }else{CreateObjectOfKind(m_document,"mesh",hit,m_pendingDropAsset);m_panels.status="Placed "+record->relativePath;}
             } else {
-                m_panels.status = "Only mesh assets can be dropped into the viewport";
+                m_panels.status = "Drop an image to create a sprite, or a mesh to create a model";
             }
         }
         m_pendingDropAsset.clear();
@@ -1470,8 +1486,10 @@ int EditorApplication::Run(int argc, char** argv) {
     if (autotest) {
         if (const char* directory = std::getenv("JUDAS_EDITOR_AUTOTEST_NEW_PROJECT")) {
             std::string error;
+            const char* twoD=std::getenv("JUDAS_EDITOR_AUTOTEST_NEW_2D");
+            const int template2D=twoD?(std::string(twoD)=="side-view"?2:1):0;
             const bool created = !fs::exists(fs::u8path(directory)) &&
-                CreateProject(directory, "SDK First Game", error, true);
+                CreateProject(directory,template2D?"SDK 2D Game":"SDK First Game",error,!template2D,template2D);
             std::fprintf(stderr, "[editor onboarding] packaged visible starter: %s %s\n",
                          created ? "PASS" : "FAIL", error.c_str());
             if (!created) return 1;

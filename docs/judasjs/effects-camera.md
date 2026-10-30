@@ -111,3 +111,8 @@ For phone-aspect layout/camera checks on desktop, use the startup size and
 mid-run resize commands in the [application harness](../TEST_HARNESS.md#window-size-and-rotation-layout-tests).
 The existing `world.viewport` values update before UI/gameplay callbacks;
 no new camera or viewport scripting setter is introduced by that workflow.
+
+## Optional orthographic and pixel-perfect lens
+
+Main, local-player and render-target cameras now accept an optional lens.
+Perspective remains the default. See [native 2D cameras](sprites-2d.md#orthographic-and-pixel-perfect-views) for fields, content rectangles, project/unproject semantics and portal restrictions.

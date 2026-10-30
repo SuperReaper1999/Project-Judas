@@ -17,6 +17,8 @@ For editor completion, copy [judas.d.ts](judas.d.ts) into your project and follo
 [IDE setup](judasjs/practices.md). Judas remains JavaScript; TypeScript, npm and
 Node are optional developer tools and are not part of the game runtime.
 
+Experimental native 2D Stage 1: [sprites, orthographic cameras and editor templates](judasjs/sprites-2d.md). This is development toward v1.1.0, not a published release.
+
 ## Find an API
 
 | Topic / searchable names | Current reference |

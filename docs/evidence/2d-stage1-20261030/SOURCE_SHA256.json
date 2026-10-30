@@ -1,0 +1,342 @@
+[
+  {
+    "path": "CMakeLists.txt",
+    "bytes": 86617,
+    "sha256": "aa7de96ef1f131fb05553f0bfd754aef98432e1b01517646e6781fbb0a28915d"
+  },
+  {
+    "path": "docs/2D_STAGE1.md",
+    "bytes": 11367,
+    "sha256": "63f63980bc530786a3484dd4e0d218a1454e42ae4eb3725e907bba93205f5862"
+  },
+  {
+    "path": "docs/JUDASJS.md",
+    "bytes": 9593,
+    "sha256": "f1e549ac5a87d1d97001fc4b4d146ff4ad6b391f8a8f6841fc376f11a0f5e61d"
+  },
+  {
+    "path": "docs/judas.d.ts",
+    "bytes": 64768,
+    "sha256": "99bbdb49958ccb313a92e0f10b41380c2c7d10b32e301375a52c73366b0c4619"
+  },
+  {
+    "path": "docs/judasjs/API_INVENTORY.md",
+    "bytes": 50475,
+    "sha256": "fa5d4b4eee4215773e9575d6c014ad5919a5ed5f9f46c05d52ad0fd5f61e8041"
+  },
+  {
+    "path": "docs/judasjs/api-inventory.json",
+    "bytes": 154216,
+    "sha256": "b908ce3f747aeed7758f8cf4f1460cc884179525d0d8394e299d85d6c7a08e3a"
+  },
+  {
+    "path": "docs/judasjs/cookbook.md",
+    "bytes": 15855,
+    "sha256": "6503511d5c8393296729dc244cd9f71981e5dffd34394666e471cc3a15ae1065"
+  },
+  {
+    "path": "docs/judasjs/effects-camera.md",
+    "bytes": 8605,
+    "sha256": "f2d811d7ce42407a42ee70e2c82983e5ce7cc464f680918558e8522ab8fc13c6"
+  },
+  {
+    "path": "docs/judasjs/examples/2d/explorer.png",
+    "bytes": 204,
+    "sha256": "6562573acbdfb93ef1a16b7932c90a83fa7733e0ad438bce01577da357bf3975"
+  },
+  {
+    "path": "docs/judasjs/examples/sprite-starter.js",
+    "bytes": 1406,
+    "sha256": "5069ba255f98160893efc9a45a6386ae7469b5339e45e28aa57573d032dab987"
+  },
+  {
+    "path": "docs/judasjs/sprites-2d.md",
+    "bytes": 5842,
+    "sha256": "f43ee747893ee09fbf6d3914224339e73cca65750e17eaec9540cb47f8e05e2d"
+  },
+  {
+    "path": "docs/judasjs/type-contracts.ts",
+    "bytes": 2772,
+    "sha256": "1685e849a71d7f2abc699276b73a0f4dec9fcf805a2bf00d8cceebe621832ea1"
+  },
+  {
+    "path": "projects/sprite_workshop/Assets/explorer.png",
+    "bytes": 204,
+    "sha256": "6562573acbdfb93ef1a16b7932c90a83fa7733e0ad438bce01577da357bf3975"
+  },
+  {
+    "path": "projects/sprite_workshop/Assets/explorer.png.judasmeta",
+    "bytes": 203,
+    "sha256": "3aa74c24715d1edfa9745c50b1ddb0aeb2d4e9d3a8e39a08e1d48872e23f6e59"
+  },
+  {
+    "path": "projects/sprite_workshop/Assets/game.js",
+    "bytes": 1406,
+    "sha256": "5069ba255f98160893efc9a45a6386ae7469b5339e45e28aa57573d032dab987"
+  },
+  {
+    "path": "projects/sprite_workshop/Assets/game.js.judasmeta",
+    "bytes": 197,
+    "sha256": "1c618f29f98be10aaf6aa4dbe3f54371119efa11addb21611b88df82239ef815"
+  },
+  {
+    "path": "projects/sprite_workshop/Assets/hud.judasui",
+    "bytes": 310,
+    "sha256": "ab2e829d4e912d1add8e665fda203fc455de3cb0d8e4664481bff2b7dbffc420"
+  },
+  {
+    "path": "projects/sprite_workshop/Assets/hud.judasui.judasmeta",
+    "bytes": 197,
+    "sha256": "1e9d1c64c3e0304fb30a75459c591f1e61998c192ae361de3ce56b2d1918b52a"
+  },
+  {
+    "path": "projects/sprite_workshop/README.md",
+    "bytes": 1404,
+    "sha256": "c4836db8b7f630e9323585d062ee563bbf1ecf59a505e2c698b8318c5dc2d0cb"
+  },
+  {
+    "path": "projects/sprite_workshop/Scenes/main.judas",
+    "bytes": 111729,
+    "sha256": "8c97184879b16cc4b5687bac82c77c5f1de61c32ea5b1325b4b10d71d68dc4ad"
+  },
+  {
+    "path": "projects/sprite_workshop/Sprite_Workshop.judasproj",
+    "bytes": 1126,
+    "sha256": "e5a9a5a9debb1bc9f271296b2b5c8de78a8462a1475558b3a544c483932acfd8"
+  },
+  {
+    "path": "scripts/check_judasjs_api.mjs",
+    "bytes": 26881,
+    "sha256": "7abd4003499c456c5f652550361eb0a99d3babc86e4225a47188dc554b87a0eb"
+  },
+  {
+    "path": "src/CameraLens.h",
+    "bytes": 5194,
+    "sha256": "9ca3e860e4eda8c9c52c6ce3ac0e9826aab3cd1cdfe985e4c2161a513787e00a"
+  },
+  {
+    "path": "src/LocalMultiplayer.cpp",
+    "bytes": 10084,
+    "sha256": "eb495fffb045241183712c9322c7ffea93e18aac23ea19df26dd2f28c06d9ac9"
+  },
+  {
+    "path": "src/LocalMultiplayer.h",
+    "bytes": 2335,
+    "sha256": "45418779f88fb97a905b3f13860aed72245415d41e21c083c781ff352f211761"
+  },
+  {
+    "path": "src/PlanetTerrain.cpp",
+    "bytes": 18527,
+    "sha256": "30f61054cf787f486d318d3c2fac06a9bbbc3ecdc880522b24acd7afadff1a5b"
+  },
+  {
+    "path": "src/PlanetTerrain.h",
+    "bytes": 3485,
+    "sha256": "3b787c292149f9d659c5df60edbab11a709a08ecca71642f9059df1ca3d1d54f"
+  },
+  {
+    "path": "src/Project.cpp",
+    "bytes": 18473,
+    "sha256": "074f4e812feeffc5d5eb6230049223d61f527e5abbae53e41633c0a2569a0927"
+  },
+  {
+    "path": "src/Project.h",
+    "bytes": 6027,
+    "sha256": "14fdc0e26764ead2bff52d8aee8ec76d63a2404285dac63dc15e5b82682cd7e5"
+  },
+  {
+    "path": "src/ProjectStarter.cpp",
+    "bytes": 4928,
+    "sha256": "c363330584e2d94d9de04d05aa94b2f55a14d556d61506dd1497a805e8708996"
+  },
+  {
+    "path": "src/ProjectStarter.h",
+    "bytes": 293,
+    "sha256": "e4bc9bf2bf4b9456eb6818e2cc7912c8111f174fcfaad58778cc186cd52a4bab"
+  },
+  {
+    "path": "src/Renderer.cpp",
+    "bytes": 101641,
+    "sha256": "1aff3b78befa956d1229515974019628b103e00829f1b708066fa84cd217e9f2"
+  },
+  {
+    "path": "src/Renderer.h",
+    "bytes": 33809,
+    "sha256": "3a140928237dd5e90ef93409a3bd54c1c870a945cd215661f600c4246c03fde1"
+  },
+  {
+    "path": "src/RendererSprites.inl",
+    "bytes": 3683,
+    "sha256": "317792b983d49e9b8b4d4d174be33540e58f4007bbe030f21d27a39edd762a04"
+  },
+  {
+    "path": "src/RuntimeWorld.cpp",
+    "bytes": 109277,
+    "sha256": "e22f6dff2e767148e784509719792d895b977e60811c35a2fa633ce421640a28"
+  },
+  {
+    "path": "src/RuntimeWorld.h",
+    "bytes": 44984,
+    "sha256": "3dc24224bad60964602e79a0c89f705a3bd27ce41ddd2f47f666a9d816401007"
+  },
+  {
+    "path": "src/Scene.cpp",
+    "bytes": 17766,
+    "sha256": "b2c59d33c72542da31aa9b7813f473e9b01b36d2930d88179d9d7ca95fa09d5e"
+  },
+  {
+    "path": "src/Scene.h",
+    "bytes": 19376,
+    "sha256": "e679b96b35cc0f7661ee30deb80e8d5f0338bb1a60fa1a780e81d905e44effc3"
+  },
+  {
+    "path": "src/SceneFingerprint.cpp",
+    "bytes": 37962,
+    "sha256": "b46fee2dd04d38ac8144e7a40c2794d3c5da1253ce29ca2bccce229fd889b76b"
+  },
+  {
+    "path": "src/SceneSerialization.cpp",
+    "bytes": 94671,
+    "sha256": "5465b7e6080390649a1550762cf99ed6e9cf3acf33a0c4d6833b255e56e5d60e"
+  },
+  {
+    "path": "src/ScriptCameraValues.inl",
+    "bytes": 2542,
+    "sha256": "935735f89e811918115db1afd2e05a6856e3de5252cc42b8eb29b6b3995394eb"
+  },
+  {
+    "path": "src/ScriptLocalMultiplayer.inl",
+    "bytes": 10161,
+    "sha256": "69b2a72c6d437415aa1d6cbd58aff13368c98f4199921ad13e02968285877fc5"
+  },
+  {
+    "path": "src/ScriptSpriteValues.inl",
+    "bytes": 2747,
+    "sha256": "35ecfbcaf5843ac2344e77817616f048efe6e75bcea8a2cea15d6a84d8fea4c8"
+  },
+  {
+    "path": "src/ScriptSystem.cpp",
+    "bytes": 256802,
+    "sha256": "3202bbda8ad65699bfc9428069345aa5ec0323aae50bba6c3d589ec2c8e7cb0f"
+  },
+  {
+    "path": "src/Sprite.cpp",
+    "bytes": 2840,
+    "sha256": "1131cf0e8cd5c5285255467007f73b3a21333ac7034719c4d926c14b7eb1da73"
+  },
+  {
+    "path": "src/Sprite.h",
+    "bytes": 1797,
+    "sha256": "fdee7f94ab9e890b68393335bb906c44fc87b778b758c5491066e187f78f9faf"
+  },
+  {
+    "path": "src/WorldCharacter.cpp",
+    "bytes": 5600,
+    "sha256": "d0067515d7853e3f7a3ea5d07e308addbe275ecb867abb7a11413860577774f6"
+  },
+  {
+    "path": "src/WorldPersistence.cpp",
+    "bytes": 61402,
+    "sha256": "c777d59cdaeaa8caf62e75fa1b288f963eaaba557306efc2a1ea376e4a92b17e"
+  },
+  {
+    "path": "src/WorldPresentation.cpp",
+    "bytes": 50366,
+    "sha256": "7e44d5d5a0a4e7184c257757109fab9e765a2bd15915afc2beddfedfc71267d2"
+  },
+  {
+    "path": "src/editor/ComponentEditors.cpp",
+    "bytes": 130416,
+    "sha256": "301e0637aee927e071b5c7f9f1f334e89c560c063b6ac67285dad67428bfc17b"
+  },
+  {
+    "path": "src/editor/EditorApplication.cpp",
+    "bytes": 161588,
+    "sha256": "8dc73318199b4f802d29fc6dcb2d04965625903fff0394582edd82391cffc1be"
+  },
+  {
+    "path": "src/editor/EditorApplication.h",
+    "bytes": 5530,
+    "sha256": "d74145dcdbd17b400f0d1bdb6f1b1180a387a0d128506cbf58385b1428a6124c"
+  },
+  {
+    "path": "src/editor/EditorCamera.cpp",
+    "bytes": 7682,
+    "sha256": "e7a3598ae6abd823a1a06fa55cd18b892b39e967d8d986bc2d1aec750f5a1e7f"
+  },
+  {
+    "path": "src/editor/EditorCamera.h",
+    "bytes": 3987,
+    "sha256": "31783bd8da3ec318dceb6f1d3b7b149ec32f295338baef988b9857c98aab64bc"
+  },
+  {
+    "path": "src/editor/EditorCreationMenu.cpp",
+    "bytes": 9179,
+    "sha256": "4ee49a1fb20a33b622535f9dd7f80493c733f6ddcfeb53ac205011676ff76d43"
+  },
+  {
+    "path": "src/editor/EditorCreationMenu.h",
+    "bytes": 701,
+    "sha256": "18dd53333cdd2de2646908d0d9429845d7d019ee55f852de16cd3b3a5e3e82c7"
+  },
+  {
+    "path": "src/editor/EditorPanels.cpp",
+    "bytes": 118886,
+    "sha256": "85f31318b7890ad8899a2a659f5aa4cb3475da38ea3a79ec40f643b49e6cf634"
+  },
+  {
+    "path": "src/editor/EditorPanels.h",
+    "bytes": 11343,
+    "sha256": "194a34eeb2d1135a4114f6767038100b4d1ea75af40aac2320c1c59a072927dc"
+  },
+  {
+    "path": "src/editor/EditorPicking.cpp",
+    "bytes": 21122,
+    "sha256": "4931311047a2d2af0bf79b938286131fbbb3273c533c605b84f592a1f6538814"
+  },
+  {
+    "path": "src/editor/EditorPicking.h",
+    "bytes": 2138,
+    "sha256": "ccc29c950f9299d61b12e2e1a2742afc65e148fb9d00fcdf03bb80be4a74bb69"
+  },
+  {
+    "path": "src/editor/EditorWidgets.cpp",
+    "bytes": 6149,
+    "sha256": "10f540c18b05b1b7e5d37fcecc3b2cd3c9899c73e9a9cc62f97fb43c66d60220"
+  },
+  {
+    "path": "src/editor/EditorWidgets.h",
+    "bytes": 2566,
+    "sha256": "e8661a0ebf8ee9ab5227b9d9b9c1f5659eeae0f846822c32e2b6f95fa733b8cc"
+  },
+  {
+    "path": "src/editor/ProjectSettingsPanel.cpp",
+    "bytes": 25039,
+    "sha256": "ff5df74a7dfe7d058ee7e6c02b5dde888daafebc44df52b4ba0dcd5a483c2fd5"
+  },
+  {
+    "path": "tests/SpriteIntegrationTests.cpp",
+    "bytes": 14519,
+    "sha256": "28a28ae4b00be713a189654819c7d9c1f5ac58a41a06268ea3d742c660c049a1"
+  },
+  {
+    "path": "tests/SpriteMathTests.cpp",
+    "bytes": 2801,
+    "sha256": "f307734455cb22ede165566670a5ce1816f29271f9035d12298038f5c114548e"
+  },
+  {
+    "path": "tests/SpriteRenderTests.cpp",
+    "bytes": 8784,
+    "sha256": "fee5f51d1a7553999a7e3ba796172d131d708791b73335ae51eeb2d2e31b86f8"
+  },
+  {
+    "path": "tools/CreateSpriteStarterArt.py",
+    "bytes": 1216,
+    "sha256": "89ddfc512b4533715b59f5765654eb513e5037cd14c65dbe0e504497d98a3683"
+  },
+  {
+    "path": "tools/validation/suites.json",
+    "bytes": 11627,
+    "sha256": "5c3fa41b910d8437f66204bd224d9d235c9cb6c7cdffa0989dd5b8f3b5ede90e"
+  }
+]

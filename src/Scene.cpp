@@ -129,7 +129,7 @@ bool SceneObjectsEqual(const SceneObject& a, const SceneObject& b) {
         return false;
     }
     if (!OptEq(a.render, b.render, [](const SceneRenderComponent& x, const SceneRenderComponent& y) {
-            return x.shape == y.shape && Eq(x.halfExtents, y.halfExtents) && x.radius == y.radius &&
+            return x.shape == y.shape && (x.shape!=SceneShape::Sprite || x.sprite==y.sprite) && Eq(x.halfExtents, y.halfExtents) && x.radius == y.radius &&
                    Eq(x.color, y.color) && x.alpha == y.alpha && x.lodMultiplier==y.lodMultiplier &&
                    Eq(x.secondaryColor, y.secondaryColor) && x.secondaryAlpha == y.secondaryAlpha &&
                    x.meshAsset == y.meshAsset && x.textureAsset == y.textureAsset && x.textureCamera == y.textureCamera &&
@@ -252,7 +252,7 @@ bool SceneObjectsEqual(const SceneObject& a, const SceneObject& b) {
     if (!OptEq(a.renderCamera, b.renderCamera, [](const SceneRenderCameraComponent& x, const SceneRenderCameraComponent& y) {
         return x.enabled == y.enabled && x.width == y.width && x.height == y.height &&
             x.updateEveryFrames == y.updateEveryFrames && x.verticalFovDegrees == y.verticalFovDegrees &&
-            x.nearPlane == y.nearPlane && x.farPlane == y.farPlane && x.renderMask == y.renderMask;
+            x.nearPlane == y.nearPlane && x.farPlane == y.farPlane && x.renderMask == y.renderMask && x.lens==y.lens;
     })) return false;
     return true;
 }

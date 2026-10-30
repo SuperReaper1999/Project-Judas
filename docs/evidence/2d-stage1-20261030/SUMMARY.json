@@ -1,0 +1,36 @@
+{
+  "startingCommit": "4aca1c3ff70e385dd5cc81dc36983167faa0b36c",
+  "cpu": "AMD Ryzen 5 5600, 12 logical CPUs",
+  "ramMiB": 7856,
+  "compiler": "GCC 15.2.0 Release",
+  "graphics": "Mesa 26.0.8 llvmpipe LLVM 21.1.8 OpenGL 4.5",
+  "mainUnchanged": "e2008d1e6f4ac3229b292724e5718f37e8d2e1ed",
+  "timestampUtc": "2026-10-30T17:38:08Z",
+  "counts": {
+    "math": 20,
+    "integration": 51,
+    "separateProcessRestore": 5,
+    "rendered": 23,
+    "editorNavigation": 59,
+    "editorPicking": 36,
+    "hierarchyCreation": 113,
+    "firstProject": 24,
+    "localPlayers": 37,
+    "prefabs": 37,
+    "presentation": 44,
+    "rendering3D": 54,
+    "planetTerrain": 10074,
+    "buildOrganization": 18,
+    "gateRegistration": {
+      "cases": 8,
+      "skipped": 2
+    }
+  },
+  "limitations": [
+    "No Stage 2 planar physics or controllers",
+    "No named sheets, tilemaps or sprite animation",
+    "No Windows or Android Stage 1 validation",
+    "No human Stage 1 acceptance",
+    "Software-GL timing is not a hardware-GPU benchmark"
+  ]
+}

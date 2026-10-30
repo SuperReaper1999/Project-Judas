@@ -51,6 +51,8 @@ bool KnownOptions(JSContext* c,JSValueConst value,std::initializer_list<const ch
  if(JS_GetOwnPropertyNames(c,&properties,&count,value,JS_GPN_STRING_MASK|JS_GPN_ENUM_ONLY))return false;
  bool valid=true;for(uint32_t i=0;i<count;++i){const char* key=JS_AtomToCString(c,properties[i].atom);bool known=false;for(auto name:allowed)known|=key&&std::strcmp(key,name)==0;valid&=known;JS_FreeCString(c,key);JS_FreeAtom(c,properties[i].atom);}js_free(c,properties);return valid;
 }
+#include "ScriptCameraValues.inl"
+#include "ScriptSpriteValues.inl"
 const char* library=R"JS(
 const call=(op,...args)=>globalThis.__judas(op,...args);
 export class NetworkEntity {
@@ -184,6 +186,8 @@ export class Entity {
  preparePlanetCollision(absolute){return call("planetCollision",this.id,absolute)}
  clearPlanetCollision(){return call("planetClear",this.id)}
  get camera(){return call('cameraInfo',this.id)}
+ get sprite(){return call('spriteInfo',this.id)}
+ setSprite(settings){return call('spriteSet',this.id,settings)}
  get renderVisible(){return call('renderVisible',this.id)}
  set renderVisible(value){call('renderVisible',this.id,value)}
  get rendererVisible(){return call('rendererVisible',this.id)}
@@ -221,7 +225,7 @@ export class Entity {
 export const engine={get buildInfo(){return Object.freeze(call('engineBuildInfo'))}};
 export const audio={group:name=>call('audioGroup',name),setGroup:(name,settings,fadeSeconds=0)=>call('audioGroupSet',name,settings,fadeSeconds),get diagnostics(){return call('audioDiagnostics')}};
 export const entity=id=>id&&id!=='0'?new Entity(id):null;
-export const world={entity,get origin(){return call("worldOrigin")},get originState(){return call("worldOriginState")},toAbsolute:point=>call("worldAbsolute",point),toLocal:point=>call("worldLocal",point),requestOrigin:point=>call("worldOriginRequest",point),get appearance(){return call('appearanceInfo')},setAppearance:settings=>call('appearanceSet',settings),resetAppearance:()=>call('appearanceReset'),setView:(pose,fov=70,range={})=>call("setView",pose,fov,range),project:point=>call("projectViewport",point),get viewport(){return call("viewportSize")},clearView:()=>call("clearView"),fluidSample:(point,up,halfHeight,radius,tangent)=>call("fluidSample",point,up,halfHeight,radius,tangent),get viewRay(){return call('viewRay')},queryTags:(required=[],excluded=[])=>call('queryTags',required,excluded).map(entity),
+export const world={entity,get origin(){return call("worldOrigin")},get originState(){return call("worldOriginState")},toAbsolute:point=>call("worldAbsolute",point),toLocal:point=>call("worldLocal",point),requestOrigin:point=>call("worldOriginRequest",point),get appearance(){return call('appearanceInfo')},setAppearance:settings=>call('appearanceSet',settings),resetAppearance:()=>call('appearanceReset'),setView:(pose,fov=70,range={})=>call("setView",pose,fov,range),project:point=>call("projectViewport",point),unproject:point=>call("viewportRay",point),get viewport(){return call("viewportSize")},clearView:()=>call("clearView"),fluidSample:(point,up,halfHeight,radius,tangent)=>call("fluidSample",point,up,halfHeight,radius,tangent),get viewRay(){return call('viewRay')},queryTags:(required=[],excluded=[])=>call('queryTags',required,excluded).map(entity),
  spawnPrefab:(asset,transform={},options={})=>entity(call('spawn',asset,transform,options)),
  overlap:(min,max,filter={})=>call('overlap',min,max,filter).map(entity),
  sweepCapsule:(from,displacement,rotation={w:1,x:0,y:0,z:0},filter={})=>call('sweep',from,displacement,filter,rotation)};
@@ -942,10 +946,24 @@ JSValue ScriptSystem::Impl::Native(JSContext* c,JSValueConst,int argc,JSValueCon
     #include "ScriptLocalMultiplayer.inl"
     #include "ScriptNetwork.inl"
     if(op=="setView"){
-        const bool initialView=!world.view;SceneTransform t;double fov=70;float nearPlane=.1f,farPlane=500;auto range=arg(3);if(!KnownOptions(c,range,{"near","far"}))return JS_ThrowTypeError(c,"camera range accepts near/far only");for(auto [key,value]:{std::pair<const char*,float*>{"near",&nearPlane},{"far",&farPlane}}){auto v=JS_GetPropertyStr(c,range,key);bool has=!JS_IsUndefined(v);JS_FreeValue(c,v);if(has&&!Number(c,range,key,*value))return JS_ThrowTypeError(c,"finite camera range required");}if(!readTransform(arg(1),t)||JS_ToFloat64(c,&fov,arg(2))||!world.SetRuntimeView(t,float(fov),nearPlane,farPlane))return JS_ThrowTypeError(c,"invalid runtime view");if(initialView)world.ResetAudioMotion();return JS_TRUE;
+        const bool initialView=!world.view;SceneTransform t;double fov=70;float nearPlane=.1f,farPlane=500;auto range=arg(3);CameraLens lens;if(!KnownOptions(c,range,{"near","far","projection","height","pixelPerfect","referenceWidth","referenceHeight","pixelsPerUnit"})||!ReadCameraLens(c,range,lens))return JS_ThrowTypeError(c,"invalid camera projection, pixel settings or unknown option");for(auto [key,value]:{std::pair<const char*,float*>{"near",&nearPlane},{"far",&farPlane}}){auto v=JS_GetPropertyStr(c,range,key);bool has=!JS_IsUndefined(v);JS_FreeValue(c,v);if(has&&!Number(c,range,key,*value))return JS_ThrowTypeError(c,"finite camera range required");}if(!readTransform(arg(1),t)||JS_ToFloat64(c,&fov,arg(2))||!world.SetRuntimeView(t,float(fov),nearPlane,farPlane,lens))return JS_ThrowTypeError(c,"invalid runtime view");if(initialView)world.ResetAudioMotion();return JS_TRUE;
     }
     if(op=="viewportSize"){auto o=JS_NewObject(c);JS_SetPropertyStr(c,o,"width",JS_NewInt32(c,world.viewportWidth));JS_SetPropertyStr(c,o,"height",JS_NewInt32(c,world.viewportHeight));return o;}
-    if(op=="projectViewport"){glm::vec3 point;if(!ReadVec(c,arg(1),point))return JS_ThrowTypeError(c,"finite world point required");if(!world.view||world.viewportWidth<=0||world.viewportHeight<=0)return JS_NULL;const auto& v=*world.view;auto q=v.pose.rotation;auto p=ProjectViewport(glm::lookAt(v.pose.position,v.pose.position+q*glm::vec3(0,0,-1),q*glm::vec3(0,1,0)),glm::perspective(glm::radians(v.fov),float(world.viewportWidth)/world.viewportHeight,v.nearPlane,v.farPlane),point);auto o=JS_NewObject(c);JS_SetPropertyStr(c,o,"x",JS_NewFloat64(c,p.position.x));JS_SetPropertyStr(c,o,"y",JS_NewFloat64(c,p.position.y));JS_SetPropertyStr(c,o,"depth",JS_NewFloat64(c,p.depth));JS_SetPropertyStr(c,o,"distance",JS_NewFloat64(c,p.distance));JS_SetPropertyStr(c,o,"behind",JS_NewBool(c,p.behind));JS_SetPropertyStr(c,o,"inside",JS_NewBool(c,p.inside));return o;}
+    if(op=="projectViewport"||op=="viewportRay") {
+        if(!world.view||world.viewportWidth<=0||world.viewportHeight<=0)return JS_NULL;
+        const auto& v=*world.view;
+        const auto frame=BuildCameraFrame(v.pose.position,v.pose.rotation,v.fov,v.nearPlane,v.farPlane,v.lens,world.viewportWidth,world.viewportHeight);
+        if(op=="viewportRay") {
+            glm::vec2 point;glm::vec3 origin,direction;
+            if(!Number(c,arg(1),"x",point.x)||!Number(c,arg(1),"y",point.y))return JS_ThrowTypeError(c,"finite normalized viewport point required");
+            if(!frame.Ray(point,origin,direction))return JS_NULL;
+            auto out=JS_NewObject(c);JS_SetPropertyStr(c,out,"origin",Vec(c,origin));JS_SetPropertyStr(c,out,"direction",Vec(c,direction));return out;
+        }
+        glm::vec3 point;if(!ReadVec(c,arg(1),point))return JS_ThrowTypeError(c,"finite world point required");
+        const auto projected=frame.Project(point);auto out=JS_NewObject(c);
+        for(auto field:{std::pair<const char*,double>{"x",projected.position.x},{"y",projected.position.y},{"depth",projected.depth},{"distance",projected.distance}})JS_SetPropertyStr(c,out,field.first,JS_NewFloat64(c,field.second));
+        JS_SetPropertyStr(c,out,"behind",JS_NewBool(c,projected.behind));JS_SetPropertyStr(c,out,"inside",JS_NewBool(c,projected.inside));return out;
+    }
     if(op=="clearView"){world.view.reset();world.ResetAudioMotion();return JS_TRUE;}
     if(op=="fluidSample"){
         glm::vec3 p,up,tangent;double height,radius;
@@ -1222,7 +1240,7 @@ JSValue ScriptSystem::Impl::Native(JSContext* c,JSValueConst,int argc,JSValueCon
     }
     if(op=="queryTags"){CategoryMask required,excluded;if(!tagMask(arg(1),required)||!tagMask(arg(2),excluded))return JS_ThrowTypeError(c,"unknown tag");return ids(world.QueryEntities(required,excluded));}
     if(op=="spawn"){SceneTransform t;if(!readTransform(arg(2),t))return JS_ThrowTypeError(c,"invalid transform");RuntimeWorld::PrefabSpawnOptions options;auto config=arg(3);if(!KnownOptions(c,config,{"velocity","angularVelocity","scripts"}))return JS_ThrowTypeError(c,"spawn options accept velocity/angularVelocity/scripts only");for(auto [key,destination]:{std::pair<const char*,std::optional<glm::vec3>*>{"velocity",&options.velocity},{"angularVelocity",&options.angularVelocity}}){auto v=JS_GetPropertyStr(c,config,key);if(!JS_IsUndefined(v)){glm::vec3 motion;if(!ReadVec(c,v,motion)){JS_FreeValue(c,v);return JS_ThrowTypeError(c,"finite prefab motion required");}*destination=motion;}JS_FreeValue(c,v);}auto list=JS_GetPropertyStr(c,config,"scripts");std::string error;if(!JS_IsUndefined(list)){if(!JS_IsArray(list)){JS_FreeValue(c,list);return JS_ThrowTypeError(c,"scripts array required");}auto len=JS_GetPropertyStr(c,list,"length");uint32_t n=0;JS_ToUint32(c,&n,len);JS_FreeValue(c,len);if(n>256){JS_FreeValue(c,list);return JS_ThrowRangeError(c,"script init limit");}for(uint32_t i=0;i<n;++i){auto value=JS_GetPropertyUint32(c,list,i);RuntimeWorld::PrefabScriptInit init;auto src=JS_GetPropertyStr(c,value,"source"),slot=JS_GetPropertyStr(c,value,"slot"),props=JS_GetPropertyStr(c,value,"properties"),state=JS_GetPropertyStr(c,value,"state");bool valid=KnownOptions(c,value,{"source","slot","properties","state"});try{auto decimal=[&](JSValueConst v){auto text=String(c,v);if(text.empty()||text.find_first_not_of("0123456789")!=std::string::npos)throw std::runtime_error("decimal ID required");return std::stoull(text);};if(!JS_IsUndefined(src))init.source=decimal(src);init.slot=decimal(slot);}catch(...){valid=false;}if(!JS_IsUndefined(props))valid&=s->Json(props,init.properties,error);if(!JS_IsUndefined(state))valid&=s->Json(state,init.state,error);JS_FreeValue(c,src);JS_FreeValue(c,slot);JS_FreeValue(c,props);JS_FreeValue(c,state);JS_FreeValue(c,value);if(!valid){JS_FreeValue(c,list);return JS_ThrowTypeError(c,"invalid prefab script initialization: %s",error.c_str());}options.scripts.push_back(init);}}JS_FreeValue(c,list);auto id=world.SpawnPrefab(String(c,arg(1)),t,error,options);if(!id)return JS_ThrowTypeError(c,"spawn: %s",error.c_str());return JS_NewString(c,std::to_string(id).c_str());}
-    if(op=="viewRay"){if(world.view){auto o=JS_NewObject(c);JS_SetPropertyStr(c,o,"origin",Vec(c,world.view->pose.position));JS_SetPropertyStr(c,o,"direction",Vec(c,world.view->pose.rotation*glm::vec3(0,0,-1)));return o;}if(!s->hasView)return JS_NULL;auto o=JS_NewObject(c);JS_SetPropertyStr(c,o,"origin",Vec(c,s->viewOrigin));JS_SetPropertyStr(c,o,"direction",Vec(c,s->viewDirection));return o;}
+    if(op=="viewRay"){if(world.view){const auto& v=*world.view;auto origin=v.pose.position,direction=v.pose.rotation*glm::vec3(0,0,-1);if(v.lens.projection==CameraProjectionKind::Orthographic){auto frame=BuildCameraFrame(v.pose.position,v.pose.rotation,v.fov,v.nearPlane,v.farPlane,v.lens,world.viewportWidth,world.viewportHeight);frame.Ray({.5f,.5f},origin,direction);}auto o=JS_NewObject(c);JS_SetPropertyStr(c,o,"origin",Vec(c,origin));JS_SetPropertyStr(c,o,"direction",Vec(c,direction));return o;}if(!s->hasView)return JS_NULL;auto o=JS_NewObject(c);JS_SetPropertyStr(c,o,"origin",Vec(c,s->viewOrigin));JS_SetPropertyStr(c,o,"direction",Vec(c,s->viewDirection));return o;}
     // Scalar and batch operations share filter preparation and hit snapshots.
     // A batch prepares immutable request values before entering any geometry query.
     auto queryFilter=[&](JSValueConst options,PhysicsQueryFilter& filter,std::string& error){
@@ -1625,7 +1643,16 @@ JSValue ScriptSystem::Impl::Native(JSContext* c,JSValueConst,int argc,JSValueCon
         auto value=JS_GetPropertyStr(c,it->second.value,"state");std::string text,error;bool ok=s->Json(value,text,error);JS_FreeValue(c,value);
         if(!ok)return JS_ThrowTypeError(c,"state: %s",error.c_str());
         return JS_ParseJSON(c,text.data(),text.size(),"state snapshot");}
+    if(op=="spriteInfo"||op=="spriteSet") {
+        const auto* definition=world.RuntimeDefinition(id);
+        if(!definition||!definition->render||definition->render->shape!=SceneShape::Sprite)return op=="spriteInfo"?JS_NULL:JS_FALSE;
+        if(op=="spriteInfo")return SpriteValue(c,definition->render->sprite);
+        auto sprite=definition->render->sprite;
+        if(!ReadSpriteValues(c,arg(2),sprite))return JS_ThrowTypeError(c,"invalid sprite options, dimensions, pivot, image rectangle or sort keys");
+        return JS_NewBool(c,world.SetSprite(id,sprite));
+    }
     if(op=="cameraProjection"){
+        // Lens parsing is shared with script-owned main and local-player views.
         float nearPlane=0,farPlane=0;auto range=arg(2);
         if(!Number(c,range,"near",nearPlane)||!Number(c,range,"far",farPlane)||!ValidCameraRange(nearPlane,farPlane))return JS_ThrowTypeError(c,"valid near/far range required");
         // Portal views: optional off-axis frustum and oblique clip plane. Omitted keeps the current value, null clears.
@@ -1639,12 +1666,18 @@ JSValue ScriptSystem::Impl::Native(JSContext* c,JSValueConst,int argc,JSValueCon
          else if(!JS_IsUndefined(v)){planeMode=2;auto n=JS_GetPropertyStr(c,v,"normal"),q=JS_GetPropertyStr(c,v,"point");ok=KnownOptions(c,v,{"normal","point"})&&ReadVec(c,n,normal)&&ReadVec(c,q,point)&&ValidCameraPlane(glm::vec4(normal,0));JS_FreeValue(c,n);JS_FreeValue(c,q);}
          JS_FreeValue(c,v);if(!ok)return JS_ThrowTypeError(c,"clipPlane requires finite {normal,point} with a non-zero normal");}
         for(auto& camera:world.PresentationCameras())if(camera.id==id){
+            auto lens=camera.settings.lens;
+            if(!ReadCameraLens(c,range,lens))return JS_ThrowTypeError(c,"invalid camera projection/pixel settings");
+            if(lens.projection==CameraProjectionKind::Orthographic&&
+               ((frustumMode!=1&&(camera.hasFrustum||frustumMode==2))||(planeMode!=1&&(camera.hasClipPlane||planeMode==2))))
+                return JS_ThrowTypeError(c,"orthographic cameras do not support portal frustums or oblique clipping; clear them explicitly");
+            camera.settings.lens=lens;
             camera.settings.nearPlane=nearPlane;camera.settings.farPlane=farPlane;
             if(frustumMode==1)camera.hasFrustum=false;else if(frustumMode==2){camera.hasFrustum=true;camera.frustum=frustum;}
             if(planeMode==1)camera.hasClipPlane=false;else if(planeMode==2){camera.hasClipPlane=true;camera.clipNormal=glm::normalize(normal);camera.clipPoint=point;}
             return JS_TRUE;}
         return JS_FALSE;}
-    if(op=="cameraInfo"){for(const auto& camera:world.PresentationCameras())if(camera.id==id){auto o=JS_NewObject(c);JS_SetPropertyStr(c,o,"enabled",JS_NewBool(c,camera.settings.enabled));JS_SetPropertyStr(c,o,"width",JS_NewInt32(c,camera.settings.width));JS_SetPropertyStr(c,o,"height",JS_NewInt32(c,camera.settings.height));JS_SetPropertyStr(c,o,"near",JS_NewFloat64(c,camera.settings.nearPlane));JS_SetPropertyStr(c,o,"far",JS_NewFloat64(c,camera.settings.farPlane));
+    if(op=="cameraInfo"){for(const auto& camera:world.PresentationCameras())if(camera.id==id){auto o=JS_NewObject(c);JS_SetPropertyStr(c,o,"lens",CameraLensValue(c,camera.settings.lens));JS_SetPropertyStr(c,o,"enabled",JS_NewBool(c,camera.settings.enabled));JS_SetPropertyStr(c,o,"width",JS_NewInt32(c,camera.settings.width));JS_SetPropertyStr(c,o,"height",JS_NewInt32(c,camera.settings.height));JS_SetPropertyStr(c,o,"near",JS_NewFloat64(c,camera.settings.nearPlane));JS_SetPropertyStr(c,o,"far",JS_NewFloat64(c,camera.settings.farPlane));
         if(camera.hasFrustum){auto f=JS_NewObject(c);JS_SetPropertyStr(c,f,"left",JS_NewFloat64(c,camera.frustum.x));JS_SetPropertyStr(c,f,"right",JS_NewFloat64(c,camera.frustum.y));JS_SetPropertyStr(c,f,"bottom",JS_NewFloat64(c,camera.frustum.z));JS_SetPropertyStr(c,f,"top",JS_NewFloat64(c,camera.frustum.w));JS_SetPropertyStr(c,o,"frustum",f);}else JS_SetPropertyStr(c,o,"frustum",JS_NULL);
         if(camera.hasClipPlane){auto f=JS_NewObject(c);JS_SetPropertyStr(c,f,"normal",Vec(c,camera.clipNormal));JS_SetPropertyStr(c,f,"point",Vec(c,camera.clipPoint));JS_SetPropertyStr(c,o,"clipPlane",f);}else JS_SetPropertyStr(c,o,"clipPlane",JS_NULL);
         return o;}return JS_NULL;}

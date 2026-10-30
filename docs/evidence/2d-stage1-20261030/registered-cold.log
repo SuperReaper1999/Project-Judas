@@ -1,0 +1,6 @@
+PASS cold process opens saved project
+PASS cold process reads original slot with checksum
+PASS cold process reconstructs exact sprite scene
+PASS cold process restores full participants: 
+PASS cold process actual sprite and lens endpoint matches saved state
+SUMMARY checks=5 failures=0

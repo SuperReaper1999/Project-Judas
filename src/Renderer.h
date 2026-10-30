@@ -16,6 +16,8 @@
 #include "DebugDraw.h"
 #include "TextureData.h"
 #include "Material.h"
+#include "Sprite.h"
+#include "CameraLens.h"
 #include "Environment.h"
 #include <map>
 #include "ResourceTrace.h"
@@ -130,6 +132,10 @@ public:
     // reacting to a resize event) is what keeps the projection's aspect
     // ratio correct across window resizes.
     void SetCamera(const glm::mat4& view, const glm::mat4& projection);
+    void SetCameraFrame(const CameraFrame&);
+    void QueueSprite(const SpriteSettings&,glm::vec3 position,glm::quat rotation,glm::vec3 scale,
+                     TextureHandle,glm::vec4 tint,std::uint64_t identity);
+    void FlushSprites();
     // M86 presentation only. Absolute binary64 input is reduced to a camera
     // chart before GPU upload. Quality never participates in weather forces.
     // 0 disables visuals, 1 uses quarter-resolution clouds, 2 half resolution.
@@ -460,6 +466,12 @@ private:
     GLuint ResolveTexture(TextureHandle handle) const;
 
     std::vector<unsigned> m_freeMeshes,m_freeTextures,m_freeMaterials;
+    struct SpriteDraw {SpriteSettings settings;glm::vec3 position,scale;glm::quat rotation;TextureHandle texture;glm::vec4 tint;std::uint64_t identity;unsigned layer;};
+    std::vector<SpriteDraw> m_spriteDraws;
+    MeshHandle m_spriteQuad;
+    std::array<MaterialHandle,2> m_spriteMaterials{};
+    float m_spritePixelGrid=0;
+    float m_savedPixelGrid=0;
     bool ValidTexture(TextureHandle h)const{return h.IsValid()&&h.id<m_textures.size()&&m_textures[h.id].alive&&h.generation==m_textures[h.id].generation;}
     bool ValidMaterial(MaterialHandle h)const{return h.IsValid()&&h.id<m_materials.size()&&m_materials[h.id].alive&&h.generation==m_materials[h.id].generation;}
     TextureHandle InstallTexture(GpuTexture);

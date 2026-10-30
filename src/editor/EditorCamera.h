@@ -44,6 +44,9 @@ bool EditorCameraCanDolly(const EditorCameraGestureInput& input, EditorCameraGes
 // (see EditorApplication).
 class EditorCamera {
 public:
+    void Set2D(bool enabled);
+    bool Is2D() const {return m_2d;}
+    float OrthographicHeight() const {return m_orthoHeight;}
     void Update(const Window& window, float deltaSeconds, bool lookActive, int mouseDeltaX, int mouseDeltaY,
                 bool fast);
 
@@ -82,6 +85,10 @@ public:
     void SetMoveSpeed(float metresPerSecond) { m_moveSpeed = metresPerSecond; }
 
 private:
+    bool m_2d=false;
+    float m_orthoHeight=10;
+    glm::vec3 m_savedPosition{0};
+    float m_savedYaw=0,m_savedPitch=0,m_savedFocus=8;
     glm::vec3 m_position{0.0f, 30.0f, -20.0f};
     float m_yawDegrees = 0.0f;
     float m_pitchDegrees = -30.0f;

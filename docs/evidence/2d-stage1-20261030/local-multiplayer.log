@@ -1,0 +1,38 @@
+PASS identities separate from devices/entities
+PASS unassigned player starts neutral
+PASS one aggregate keyboard partitions disjoint keys
+PASS conflict rejects transaction without losing prior assignment
+PASS tap edges stay independent and survive same-frame release
+PASS catch-up fixed step cannot repeat edge
+PASS two identical controller names have distinct tokens
+PASS controller input cannot leak to another player
+PASS controller exclusive ownership
+PASS disconnect cancels held controller state
+PASS reconnect cannot alias stale controller token
+PASS reassignment baselines held input without phantom press
+PASS touch device partitions regions
+PASS overlapping touch ownership rejects
+PASS two simultaneous fingers route independently
+PASS captured touch crosses viewports without reassignment or ID churn
+PASS release clears actual per-player contact
+PASS sub-frame touch click retains both edges
+PASS background/reset clears devices and player observations
+PASS invalid viewports reject without partial publication
+PASS independent view is optional
+PASS invalid view range rejects
+PASS local modal does not pause the shared world
+PASS HUD layout clips to independent viewport
+PASS only owning player navigates/activates its UI
+PASS leaving removes identity/HUD without deleting other player
+PASS new player cannot revive a stale identity
+PASS first assigned source supplies held button
+PASS releasing second controller cannot cancel first controller's held action
+PASS last held source release publishes actual release
+PASS touch tap cannot cancel same player's held physical mouse
+PASS touch release retains its actual position before UI dispatch
+PASS touch release uses its actual UI position even with an assigned idle physical mouse
+PASS view resolution cap preserves actual projection aspect
+PASS player capacity rejects without replacing identities
+PASS oversized identity name rejects before publication
+PASS bounded raw overflow cancels instead of inventing actions
+37 checks 0 failures

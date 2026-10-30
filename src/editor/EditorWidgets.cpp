@@ -31,6 +31,14 @@ void TrackEdit(EditorDocument& doc) {
     else if (ImGui::IsItemDeactivated()) doc.CancelEdit();
 }
 
+bool DragVec2(EditorDocument& doc,const char* label,glm::vec2& value,float speed,float min,float max) {
+    const StackedField field(label);auto candidate=value;
+    const bool changed=ImGui::DragFloat2("",&candidate.x,speed,min,max,"%.4g",ImGuiSliderFlags_AlwaysClamp);
+    if(ImGui::IsItemActivated())doc.BeginEdit();
+    if(changed)value=candidate;
+    TrackEdit(doc);return changed;
+}
+
 bool DragVec3(EditorDocument& doc, const char* label, glm::vec3& value, float speed) {
     const StackedField field(label);
     auto candidate=value;

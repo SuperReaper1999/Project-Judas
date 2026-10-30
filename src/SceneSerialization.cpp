@@ -71,6 +71,7 @@ const char* ShapeName(SceneShape s) {
         case SceneShape::Terrain: return "terrain";
         case SceneShape::ConvexHull: return "hull";
         case SceneShape::TriangleMesh: return "triangle-mesh";
+        case SceneShape::Sprite: return "sprite";
     }
     return "box";
 }
@@ -233,6 +234,7 @@ void WriteObject(Writer& w, const SceneObject& o) {
         w.Line("render.secondary-alpha", F(r.secondaryAlpha));
         w.Line("render.mesh-asset", Quote(r.meshAsset));
         w.Line("render.texture-asset", Quote(r.textureAsset));
+        if(r.shape==SceneShape::Sprite)w.Line("render.sprite-v1",Quote(EncodeSprite(r.sprite)));
         if(!r.hiddenParts.empty()){w.Line("render.hidden-part-count",std::to_string(r.hiddenParts.size()));for(size_t i=0;i<r.hiddenParts.size();++i)w.Line("render.hidden-part-"+std::to_string(i),Quote(r.hiddenParts[i]));}
         if(!r.materials.empty())w.Line("render.materials",Quote(EncodeMaterialSlots(r.materials)));
         if(!r.visible)w.Line("render.visible","false");
@@ -294,6 +296,14 @@ void WriteObject(Writer& w, const SceneObject& o) {
         w.Line("camera.height", std::to_string(c.height));
         w.Line("camera.cadence", std::to_string(c.updateEveryFrames));
         w.Line("camera.fov", F(c.verticalFovDegrees));
+        if(c.lens!=CameraLens{}) {
+            w.Line("camera.projection",Quote(c.lens.projection==CameraProjectionKind::Orthographic?"orthographic":"perspective"));
+            w.Line("camera.ortho-height",F(c.lens.height));
+            w.Line("camera.pixel-perfect",B(c.lens.pixelPerfect));
+            w.Line("camera.reference-width",std::to_string(c.lens.referenceWidth));
+            w.Line("camera.reference-height",std::to_string(c.lens.referenceHeight));
+            w.Line("camera.pixels-per-unit",F(c.lens.pixelsPerUnit));
+        }
         w.Line("camera.near", F(c.nearPlane));
         w.Line("camera.far", F(c.farPlane));
     }
@@ -532,6 +542,7 @@ bool ParseShape(const Token& t, SceneShape& out) {
     else if (t.text == "terrain") out = SceneShape::Terrain;
     else if(t.text=="hull")out=SceneShape::ConvexHull;
     else if(t.text=="triangle-mesh")out=SceneShape::TriangleMesh;
+    else if(t.text=="sprite")out=SceneShape::Sprite;
     else return false;
     return true;
 }
@@ -869,6 +880,11 @@ bool ParseObject(Reader& reader, const std::vector<Token>& header, const Block& 
         if (!p.Float("render.secondary-alpha", r.secondaryAlpha)) return false;
         if (!p.String("render.mesh-asset", r.meshAsset)) return false;
         if (!p.String("render.texture-asset", r.textureAsset)) return false;
+        if(p.Has("render.sprite-v1")) {
+            std::string text,error;
+            if(!p.String("render.sprite-v1",text))return false;
+            if(r.shape!=SceneShape::Sprite||!DecodeSprite(text,r.sprite,error))return reader.Fail(error.empty()?"sprite settings require sprite render shape":error);
+        }
         if(p.Has("render.hidden-part-count")){int count=0;if(!p.Int("render.hidden-part-count",count)||count<0||count>16384)return false;for(int i=0;i<count;++i){std::string key;if(!p.String("render.hidden-part-"+std::to_string(i),key)||key.empty())return false;r.hiddenParts.push_back(key);}}
         if(p.Has("render.materials")){std::string text;if(!p.String("render.materials",text))return false;std::string error;if(!DecodeMaterialSlots(text,r.materials,error))return reader.Fail(error);}
         if(p.Has("render.visible")&&!p.Bool("render.visible",r.visible))return false;
@@ -948,6 +964,15 @@ bool ParseObject(Reader& reader, const std::vector<Token>& header, const Block& 
     }
     if (p.Has("render-camera")) {
         SceneRenderCameraComponent c;
+        if(p.Has("camera.projection")) {
+            std::string kind;
+            if(!p.String("camera.projection",kind))return false;
+            if(kind=="orthographic")c.lens.projection=CameraProjectionKind::Orthographic;
+            else if(kind!="perspective")return reader.Fail("camera projection must be perspective or orthographic");
+        }
+        if(!p.Float("camera.ortho-height",c.lens.height)||!p.Bool("camera.pixel-perfect",c.lens.pixelPerfect)||
+           !p.Int("camera.reference-width",c.lens.referenceWidth)||!p.Int("camera.reference-height",c.lens.referenceHeight)||
+           !p.Float("camera.pixels-per-unit",c.lens.pixelsPerUnit)||!ValidCameraLens(c.lens))return reader.Fail("invalid camera projection/pixel settings");
         if(p.Has("camera.render-mask")&&!p.Mask("camera.render-mask",c.renderMask))return false;
         if (!p.Header("render-camera", 0, 0) || !p.Bool("camera.enabled", c.enabled) ||
             !p.Int("camera.width", c.width) || !p.Int("camera.height", c.height) ||
@@ -970,7 +995,7 @@ bool ParseObject(Reader& reader, const std::vector<Token>& header, const Block& 
         else if ((*h)[0].text == "dynamic") b.motion = SceneBodyMotion::Dynamic;
         else if ((*h)[0].text == "kinematic") b.motion = SceneBodyMotion::Kinematic;
         else return reader.Fail("body motion must be static, dynamic or kinematic");
-        if (!ParseShape((*h)[1], b.shape) || b.shape == SceneShape::Mesh) {
+        if (!ParseShape((*h)[1], b.shape) || b.shape == SceneShape::Mesh || b.shape == SceneShape::Sprite) {
             return reader.Fail("body shape must be box, sphere, compound or terrain");
         }
         if (!p.Vec3("body.half-extents", b.halfExtents)) return false;

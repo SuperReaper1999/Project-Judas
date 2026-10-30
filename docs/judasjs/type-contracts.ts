@@ -50,3 +50,12 @@ void uncheckedFriction;
 const installedVersion: string = engine.buildInfo.version;
 // @ts-expect-error build identity is immutable
 engine.buildInfo.version = "invented";
+
+// Stage 1 native sprite/projection calls preserve named-vector conventions.
+owner.setSprite({size:{x:1,y:2},flipX:true,tint:{x:1,y:1,z:1,w:.8}});
+world.setView({position:origin},60,{projection:'orthographic',height:8,pixelPerfect:true,referenceWidth:320,referenceHeight:180,pixelsPerUnit:32});
+world.unproject({x:.5,y:.5});
+// @ts-expect-error Sprite size is a named vector, not an array.
+owner.setSprite({size:[1,2]});
+// @ts-expect-error Unknown projection must not compile.
+world.setView({position:origin},60,{projection:'ortho-ish'});

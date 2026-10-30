@@ -1,6 +1,9 @@
 {
   "format": 1,
   "tests": [
+    {"name":"sprite-math","target":"judas_sprite_math_tests","groups":["2d"]},
+    {"name":"sprite-integration","target":"judas_sprite_integration_tests","groups":["2d"],"args":["{output}/sprite-project"]},
+    {"name":"sprite-render","target":"judas_sprite_render_tests","groups":["2d"],"args":["{output}/sprite-render"]},
     {"name":"consumer-pointer","target":"judas_consumer_pointer_tests","groups":["input"],"args":["{output}/consumer-pointer","{root}/tests/fixtures/pointer-taps"]},
     {"name":"weather-lighting","target":"judas_weather_lighting_tests","groups":["rendering"],"args":["{output}/weather-lighting"]},
     {"name":"pointer-harness","target":"judas_pointer_harness_tests","groups":["input"],"args":["{output}/pointer-harness"]},

@@ -1,0 +1,42 @@
+{
+  "baselineCommit": "4aca1c3ff70e385dd5cc81dc36983167faa0b36c",
+  "scope": "Baseline Renderer.cpp and WorldPresentation.cpp compiled against shared current headers and other engine modules; not a complete baseline engine rebuild.",
+  "images": [
+    {
+      "image": "live-material-screen.png",
+      "before": "dc14394a5962c9b28f82f82a574c71e67b4ee2ee699fff0d0589a57dcfdbb639",
+      "after": "dc14394a5962c9b28f82f82a574c71e67b4ee2ee699fff0d0589a57dcfdbb639",
+      "identical": true
+    },
+    {
+      "image": "multipart-restored.png",
+      "before": "13b364203f58d42aa3db7c3f4a806ba1bbfaab62bdc3f0674a80cf5c0f2a5491",
+      "after": "13b364203f58d42aa3db7c3f4a806ba1bbfaab62bdc3f0674a80cf5c0f2a5491",
+      "identical": true
+    },
+    {
+      "image": "multipart-targeted.png",
+      "before": "c37a9aacb00e5c6501a4ade056df6dedbbec71f359ff82a69d9958280d23172a",
+      "after": "c37a9aacb00e5c6501a4ade056df6dedbbec71f359ff82a69d9958280d23172a",
+      "identical": true
+    },
+    {
+      "image": "overlapping-blend.png",
+      "before": "ff9ff0dff362fb3f5312c0e5426bb9d698ae3d190b01255b3f6f41845933e497",
+      "after": "ff9ff0dff362fb3f5312c0e5426bb9d698ae3d190b01255b3f6f41845933e497",
+      "identical": true
+    },
+    {
+      "image": "sun-east.png",
+      "before": "fc1628297d0c1279966bcc92536030ddf07e61ddb5833dc20542f39c6f2143e0",
+      "after": "fc1628297d0c1279966bcc92536030ddf07e61ddb5833dc20542f39c6f2143e0",
+      "identical": true
+    },
+    {
+      "image": "sun-west.png",
+      "before": "ed8f4f49b3f2408e1a478abf96bc33ab0b6bea43df1398f9c31a49a91762226b",
+      "after": "ed8f4f49b3f2408e1a478abf96bc33ab0b6bea43df1398f9c31a49a91762226b",
+      "identical": true
+    }
+  ]
+}

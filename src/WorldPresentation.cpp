@@ -111,10 +111,21 @@ void DrawCompoundChild(Renderer& renderer,ResourceManager* resources,const Compo
 }
 
 void DrawRenderable(Renderer& r, ResourceManager* resources, const SceneRenderComponent& render,
-                    const glm::vec3& position, const glm::quat& rotation, const glm::vec3& scale, float alpha, TextureHandle generated = {},const std::vector<glm::mat4>* skin = nullptr) {
+                    const glm::vec3& position, const glm::quat& rotation, const glm::vec3& scale, float alpha, TextureHandle generated = {},const std::vector<glm::mat4>* skin = nullptr,SceneObjectId identity=0) {
     if(!render.visible)return;
     if(render.shape!=SceneShape::Mesh)r.SetMaterialBindings(BuildRenderMaterialBindings(resources,render));
     switch (render.shape) {
+        case SceneShape::Sprite: {
+            TextureHandle texture;
+            auto color=glm::vec4(render.color,alpha*render.alpha)*render.sprite.tint;
+            if(resources&&!render.textureAsset.empty()) {
+                resources->RequestTexture(render.textureAsset);
+                texture=resources->TryGetTexture(render.textureAsset);
+                if(!texture.IsValid())color=glm::vec4(resources->StateOf(render.textureAsset)==ResourceState::Failed?kFailedPlaceholderColor:kLoadingPlaceholderColor,color.a);
+            }
+            r.QueueSprite(render.sprite,position,rotation,scale,texture,color,identity);
+            break;
+        }
         case SceneShape::Box:
             r.DrawBox(position, rotation, render.halfExtents*scale, render.color, alpha*render.alpha, generated);
             break;
@@ -151,7 +162,7 @@ void DrawWorldGeometry(Renderer& r, const RuntimeWorld& world, const GameSession
         if(!world.IsPublished(s.id)||!world.RenderVisible(s.id)||world.RuntimeDefinition(s.id)->deformable||world.HasRuntimeTerrain(s.id))continue;
         r.SetRenderLayer(world.RenderLayerOf(s.id));
         const auto t=world.PresentedTransform(s.id,SceneTransform{s.position,s.rotation,s.scale},alpha);
-        DrawRenderable(r, world.Resources(), s.render, t.position, t.rotation, t.scale, 1.0f, world.CameraTexture(s.render.textureCamera),world.AnimationSkin(s.id,alpha));
+        DrawRenderable(r, world.Resources(), s.render, t.position, t.rotation, t.scale, 1.0f, world.CameraTexture(s.render.textureCamera),world.AnimationSkin(s.id,alpha),s.id);
     }
     if(options.includeTerrain)world.DrawPlanets(r);
     world.DrawDeformables(r,alpha);
@@ -215,7 +226,7 @@ void DrawWorldGeometry(Renderer& r, const RuntimeWorld& world, const GameSession
             }
             continue;
         }
-        DrawRenderable(r, world.Resources(), v.render, position, rotation, v.scale, 1.0f, world.CameraTexture(v.render.textureCamera),world.AnimationSkin(v.id,alpha));
+        DrawRenderable(r, world.Resources(), v.render, position, rotation, v.scale, 1.0f, world.CameraTexture(v.render.textureCamera),world.AnimationSkin(v.id,alpha),v.id);
     }
 
     r.SetMaterialBindings({});
@@ -232,7 +243,7 @@ void DrawWorldGeometry(Renderer& r, const RuntimeWorld& world, const GameSession
 
 void DrawWorldTransparents(Renderer& r, const RuntimeWorld& world, const GameSession* session, float alpha) {
     JUDAS_PROFILE_SCOPE("Particles and water presentation");
-    r.FlushMaterialBlends();r.SetMaterialBindings({});
+    r.FlushMaterialBlends();r.FlushSprites();r.SetMaterialBindings({});
     const std::vector<DynamicBody>& bodies = world.DynamicBodies();
     const std::vector<RuntimeWorld::DynamicVisual>& visuals = world.DynamicVisuals();
     if(world.BasicWaterEnabled()){
@@ -456,22 +467,22 @@ void RenderWorldFrame(Renderer& renderer, int width, int height, const RuntimeWo
     std::vector<PlanetView> planetViews;
     const auto origin=world.Settings().worldOrigin;
     if(auto* players=world.PlayersIfLoaded();players&&players->HasViews()){
-        for(const auto& [_,p]:players->All())if(p.view){auto size=LocalPlayers::ViewSize(p.viewport,width,height);planetViews.push_back({origin+glm::dvec3(p.view->position),glm::radians(double(p.fov)),unsigned(std::max(1,size.y))});}
-    }else planetViews.push_back({origin+glm::dvec3(planetEye),planetFov,unsigned(std::max(1,height))});
+        for(const auto& [_,p]:players->All())if(p.view){auto size=LocalPlayers::ViewSize(p.viewport,width,height);planetViews.push_back({origin+glm::dvec3(p.view->position),glm::radians(double(p.fov)),unsigned(std::max(1,size.y)),p.lens.projection==CameraProjectionKind::Orthographic?CameraVisibleHeight(p.lens):0});}
+    }else planetViews.push_back({origin+glm::dvec3(planetEye),planetFov,unsigned(std::max(1,height)),world.view&&world.view->lens.projection==CameraProjectionKind::Orthographic?CameraVisibleHeight(world.view->lens):0});
     for(const auto& camera:world.PresentationCameras())if(camera.settings.enabled&&world.IsPublished(camera.id)){
         auto pose=world.PresentedTransform(camera.id,camera.transform,alpha);double fov=glm::radians(double(camera.settings.verticalFovDegrees));
         if(camera.hasFrustum)fov=2*std::atan(double(camera.frustum.w-camera.frustum.z)/(2*camera.settings.nearPlane));
-        planetViews.push_back({origin+glm::dvec3(pose.position),std::clamp(fov,.011,3.12),unsigned(camera.settings.height)});
+        planetViews.push_back({origin+glm::dvec3(pose.position),std::clamp(fov,.011,3.12),unsigned(camera.settings.height),camera.settings.lens.projection==CameraProjectionKind::Orthographic?CameraVisibleHeight(camera.settings.lens):0});
     }
     world.PreparePlanets(renderer,planetViews,frameSeconds);
     }
     if(auto* assets=world.Resources();assets&&assets->VisualStreaming()){
         struct Interest {Frustum frustum;CategoryMask mask;};std::vector<Interest> interests;
-        auto addView=[&](glm::vec3 position,glm::quat rotation,float fov,float aspect,float nearPlane,float farPlane,CategoryMask mask){auto v=glm::lookAt(position,position+rotation*glm::vec3(0,0,-1),rotation*glm::vec3(0,1,0));interests.push_back({Frustum(glm::perspective(glm::radians(fov),aspect,nearPlane,farPlane)*v),mask});};
-        if(auto* players=world.PlayersIfLoaded();players&&players->HasViews()){for(const auto& [_,p]:players->All())if(p.view){auto size=LocalPlayers::ViewSize(p.viewport,width,height);addView(p.view->position,p.view->rotation,p.fov,float(std::max(1,size.x))/std::max(1,size.y),p.nearPlane,p.farPlane,p.renderMask);}}
-        else if(world.view){auto& v=*world.view;addView(v.pose.position,v.pose.rotation,v.fov,float(width)/height,v.nearPlane,v.farPlane,world.Settings().mainCameraRenderMask);}
+        auto addView=[&](glm::vec3 position,glm::quat rotation,float fov,int vw,int vh,float nearPlane,float farPlane,CategoryMask mask,const CameraLens& lens){auto frame=BuildCameraFrame(position,rotation,fov,nearPlane,farPlane,lens,vw,vh);interests.push_back({Frustum(frame.projection*frame.view),mask});};
+        if(auto* players=world.PlayersIfLoaded();players&&players->HasViews()){for(const auto& [_,p]:players->All())if(p.view){auto size=LocalPlayers::ViewSize(p.viewport,width,height);addView(p.view->position,p.view->rotation,p.fov,size.x,size.y,p.nearPlane,p.farPlane,p.renderMask,p.lens);}}
+        else if(world.view){auto& v=*world.view;addView(v.pose.position,v.pose.rotation,v.fov,width,height,v.nearPlane,v.farPlane,world.Settings().mainCameraRenderMask,v.lens);}
         else interests.push_back({Frustum(projection*view),world.Settings().mainCameraRenderMask});
-        for(const auto& c:world.PresentationCameras())if(c.settings.enabled&&world.IsPublished(c.id)){auto pose=world.PresentedTransform(c.id,c.transform,alpha);auto v=glm::lookAt(pose.position,pose.position+pose.rotation*glm::vec3(0,0,-1),pose.rotation*glm::vec3(0,1,0));auto plane=c.hasClipPlane?ViewSpacePlane(v,c.clipNormal,c.clipPoint):glm::vec4(0);interests.push_back({Frustum(SecondaryCameraProjection(c.settings.verticalFovDegrees,float(c.settings.width)/c.settings.height,c.settings.nearPlane,c.settings.farPlane,c.hasFrustum?&c.frustum:nullptr,c.hasClipPlane?&plane:nullptr)*v),c.settings.renderMask});}
+        for(const auto& c:world.PresentationCameras())if(c.settings.enabled&&world.IsPublished(c.id)){auto pose=world.PresentedTransform(c.id,c.transform,alpha);auto v=glm::lookAt(pose.position,pose.position+pose.rotation*glm::vec3(0,0,-1),pose.rotation*glm::vec3(0,1,0));auto plane=c.hasClipPlane?ViewSpacePlane(v,c.clipNormal,c.clipPoint):glm::vec4(0);auto frame=BuildCameraFrame(pose.position,pose.rotation,c.settings.verticalFovDegrees,c.settings.nearPlane,c.settings.farPlane,c.settings.lens,c.settings.width,c.settings.height);if(c.hasFrustum||c.hasClipPlane)frame.projection=SecondaryCameraProjection(c.settings.verticalFovDegrees,float(frame.content.z)/frame.content.w,c.settings.nearPlane,c.settings.farPlane,c.hasFrustum?&c.frustum:nullptr,c.hasClipPlane?&plane:nullptr);interests.push_back({Frustum(frame.projection*frame.view),c.settings.renderMask});}
         // Use the same presentation owners as DrawWorldGeometry. Entities()
         // contains managed rigid bodies, not ordinary static renderables. Demand
         // all enabled views even on frames where a cached camera is not redrawn.
@@ -561,8 +572,9 @@ void RenderWorldFrame(Renderer& renderer, int width, int height, const RuntimeWo
             RendererProfileScope cameraGPU(renderer,"Secondary camera",camera.id);
             const glm::mat4 cameraView=glm::lookAt(position, position + rotation * glm::vec3(0,0,-1), rotation * glm::vec3(0,1,0));
             const glm::vec4 viewPlane=camera.hasClipPlane?ViewSpacePlane(cameraView,camera.clipNormal,camera.clipPoint):glm::vec4(0);
-            renderer.SetCamera(cameraView,SecondaryCameraProjection(c.verticalFovDegrees,static_cast<float>(c.width)/c.height,c.nearPlane,c.farPlane,
-                camera.hasFrustum?&camera.frustum:nullptr,camera.hasClipPlane?&viewPlane:nullptr));
+            auto frame=BuildCameraFrame(position,rotation,c.verticalFovDegrees,c.nearPlane,c.farPlane,c.lens,c.width,c.height);
+            if(camera.hasFrustum||camera.hasClipPlane)frame.projection=SecondaryCameraProjection(c.verticalFovDegrees,float(frame.content.z)/frame.content.w,c.nearPlane,c.farPlane,camera.hasFrustum?&camera.frustum:nullptr,camera.hasClipPlane?&viewPlane:nullptr);
+            renderer.SetCameraFrame(frame);
             world.PrepareWeather(renderer,world.Settings().worldOrigin+glm::dvec3(position),camera.id);
             renderer.SetRenderMask(c.renderMask);
             lightPass();
@@ -583,7 +595,7 @@ void RenderWorldFrame(Renderer& renderer, int width, int height, const RuntimeWo
             if(!p.renderError.empty()||!renderer.BeginRenderTarget(p.target))continue;
             JUDAS_PROFILE_SCOPE("Local player view");RendererProfileScope playerGPU(renderer,"Local player view",p.id);
             const auto& pose=*p.view;const auto q=pose.rotation;
-            renderer.SetCamera(glm::lookAt(pose.position,pose.position+q*glm::vec3(0,0,-1),q*glm::vec3(0,1,0)),glm::perspective(glm::radians(p.fov),float(vw)/vh,p.nearPlane,p.farPlane));
+            renderer.SetCameraFrame(BuildCameraFrame(pose.position,q,p.fov,p.nearPlane,p.farPlane,p.lens,vw,vh));
             world.PrepareWeather(renderer,world.Settings().worldOrigin+glm::dvec3(pose.position),p.id|(uint64_t(1)<<63));
             renderer.SetRenderMask(p.renderMask);lightPass();
             renderer.SetWaterPaths(32,18,world.WaterOpticalPaths(renderer.ViewMatrix(),renderer.ProjectionMatrix(),32,18,alpha));
@@ -597,7 +609,7 @@ void RenderWorldFrame(Renderer& renderer, int width, int height, const RuntimeWo
     JUDAS_PROFILE_SCOPE("Main camera");
     RendererProfileScope mainGPU(renderer,"Main camera");
     if(world.view){const auto& v=*world.view;auto q=v.pose.rotation;
-        renderer.SetCamera(glm::lookAt(v.pose.position,v.pose.position+q*glm::vec3(0,0,-1),q*glm::vec3(0,1,0)),glm::perspective(glm::radians(v.fov),float(width)/height,v.nearPlane,v.farPlane));
+        renderer.SetCameraFrame(BuildCameraFrame(v.pose.position,q,v.fov,v.nearPlane,v.farPlane,v.lens,width,height));
     }else renderer.SetCamera(view, projection);
     world.PrepareWeather(renderer,world.Settings().worldOrigin+glm::dvec3(glm::inverse(renderer.ViewMatrix())[3]));
     renderer.SetRenderMask(settings.mainCameraRenderMask);
@@ -704,7 +716,7 @@ void DrawAuthoredScene(Renderer& r, const Scene& scene, ResourceManager& assets,
                 r.DrawBox(position + rotation * glm::vec3(render.halfExtents.x, 0.0f, 0.0f), rotation,
                           render.halfExtents, render.color);
             } else {
-                DrawRenderable(r, &assets, render, position, rotation, o.transform.scale, 1.0f);
+                DrawRenderable(r, &assets, render, position, rotation, o.transform.scale, 1.0f,{},nullptr,o.id);
             }
         }
         // Authored liquid is shown as its particle lattice bounds.
@@ -721,6 +733,7 @@ void DrawAuthoredScene(Renderer& r, const Scene& scene, ResourceManager& assets,
     r.SetRenderLayer(0);
     r.SetMaterialBindings({});
     r.EndMeshBatch();
+    r.FlushSprites();
     if (basicWater) DrawAuthoredWaterSurfaces(r, scene, assets);
 }
 

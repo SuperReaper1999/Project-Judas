@@ -46,9 +46,10 @@ void RuntimeWorld::UpdateCharacters(float dt,bool onlyM70,bool skipM70){
     }
     m_physics.FinishQueryTouches();
 }
-bool RuntimeWorld::SetRuntimeView(const SceneTransform& pose,float fov,float nearPlane,float farPlane){
+bool RuntimeWorld::SetRuntimeView(const SceneTransform& pose,float fov,float nearPlane,float farPlane,const CameraLens& lens){
+    if(!ValidCameraLens(lens))return false;
     if(!ValidCameraRange(nearPlane,farPlane)||!std::isfinite(glm::dot(pose.position,pose.position))||!std::isfinite(glm::dot(pose.rotation,pose.rotation))||glm::dot(pose.rotation,pose.rotation)<1e-12f||!std::isfinite(fov)||fov<=1||fov>=179)return false;
-    view=RuntimeView{pose,fov,nearPlane,farPlane};view->pose.rotation=glm::normalize(pose.rotation);return true;
+    view=RuntimeView{pose,fov,nearPlane,farPlane,lens};view->pose.rotation=glm::normalize(pose.rotation);return true;
 }
 
 bool RuntimeWorld::SetCharacterSettings(EntityId id,const CharacterMotorSettings& settings){

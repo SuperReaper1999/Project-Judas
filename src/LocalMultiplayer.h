@@ -19,6 +19,7 @@ public:
   // cancel a different held source by publishing its own release.
   std::map<std::string,std::map<std::string,float>> sourceValues;
   float fov=70,nearPlane=.1f,farPlane=500;CategoryMask renderMask=~CategoryMask(0);
+  CameraLens lens;
   RenderTargetHandle target;glm::ivec2 attemptedSize{0};bool attemptedLinear=false;std::string renderError;bool baseline=true;std::set<std::uint64_t> touchSources;std::set<std::string> connectedDevices;
  };
  std::shared_ptr<InputDeviceHub> devices;
@@ -29,7 +30,7 @@ public:
  bool Unassign(std::uint64_t id,const std::string& device);
  void Route(const InputDeviceHub& hub);void BeginFixedStep();void DiscardPending();
  bool SetViewport(std::uint64_t id,glm::vec4 rect,std::string& error);
- bool SetView(std::uint64_t id,const SceneTransform& pose,float fov,float nearPlane,float farPlane,std::string& error);
+ bool SetView(std::uint64_t id,const SceneTransform& pose,float fov,float nearPlane,float farPlane,std::string& error,const CameraLens& lens={});
  const std::map<std::uint64_t,Player>& All()const{return players;}
  std::map<std::uint64_t,Player>& All(){return players;}
  bool HasViews()const;

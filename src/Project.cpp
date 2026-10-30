@@ -81,6 +81,7 @@ std::string Generic(const fs::path& p) { return p.generic_string(); }
 std::string Project::SerializeToString(const ProjectSettings& s) {
     std::string out = "JudasProject " + std::to_string(kProjectFormatVersion) + "\n";
     out += "name " + Quote(s.name) + "\n";
+    if(s.editor2D)out += "editor-2d \"true\"\n";
     out += "basic-water " + Quote(s.basicWater ? "true" : "false") + "\n";
     out += "water-swimming " + Quote(s.waterSwimming ? "true" : "false") + "\n";
     out += "advanced-fluid-dynamics " + Quote(s.advancedFluidDynamics ? "true" : "false") + "\n";
@@ -165,6 +166,10 @@ bool Project::ParseFromString(const std::string& text, ProjectSettings& outSetti
             setting=value=="true";
         }
         else if (key == "name") s.name = value;
+        else if(key=="editor-2d") {
+            if(value!="true"&&value!="false"){outError="editor-2d must be true or false";return false;}
+            s.editor2D=value=="true";
+        }
         else if (key == "audio-groups") {if(!ProjectAudioSettings::Parse(value,s.audio,outError))return false;}
         else if (key == "icon-asset") s.iconAsset = value;
         else if(key=="visual-budget-mib"){try{size_t n=0;auto x=std::stoul(value,&n);if(n!=value.size()||x>65536)throw std::runtime_error("range");s.visualBudgetMiB=unsigned(x);}catch(...){outError="visual-budget-mib requires 0..65536";return false;}}

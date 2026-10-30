@@ -62,6 +62,14 @@ bool RuntimeWorld::EntityRequiresFull(const SceneObject& o) {
 }
 
 bool RuntimeWorld::ValidateVisualAssets(const SceneObject& o, std::string& error) const {
+    if(o.render&&o.render->shape==SceneShape::Sprite) {
+        if(!ValidSprite(o.render->sprite)){error="invalid sprite dimensions, pivot, image rectangle or sorting";return false;}
+        if(m_assets&&!o.render->textureAsset.empty()) {
+            const auto* db=m_assets->Assets();const auto* record=db?db->Find(o.render->textureAsset):nullptr;
+            if(!record||record->type!=AssetType::Texture){error="sprite image requires a tracked texture asset";return false;}
+        }
+        return true;
+    }
     if(o.deformable){const auto* db=m_assets?m_assets->Assets():nullptr;auto* record=db?db->Find(o.deformable->asset):nullptr;if(!record||record->missing||record->type!=AssetType::Deformable){error="missing/wrong-type deformable asset";return false;}}
     if(m_advancedFluids&&(o.liquidBasin||o.liquidContainer)){const auto* db=m_assets?m_assets->Assets():nullptr;for(auto id:o.liquidBasin?std::vector<std::string>{o.liquidBasin->geometry,o.liquidBasin->asset}:std::vector<std::string>{o.liquidContainer->geometry}){const auto* a=db?db->Find(id):nullptr;LiquidResource resource;if(!a||a->missing||a->type!=AssetType::Liquid){error="missing/wrong-type liquid asset";return false;}std::ifstream file(a->path,std::ios::binary);std::vector<unsigned char> bytes{std::istreambuf_iterator<char>(file),{}};if(!DecodeLiquidResource(bytes,resource,error))return false;}}
 
@@ -92,6 +100,10 @@ bool RuntimeWorld::ValidateVisualAssets(const SceneObject& o, std::string& error
 bool RuntimeWorld::RequestVisualAssets(const SceneObject& o, std::string* outError) {
     std::string error;
     if (!ValidateVisualAssets(o, error)) { if (outError) *outError = error; return false; }
+    if(o.render&&o.render->shape==SceneShape::Sprite&&m_assets&&!o.render->textureAsset.empty()) {
+        m_assets->AddRef(o.render->textureAsset);m_referencedAssets.push_back(o.render->textureAsset);
+        m_assets->RequestTexture(o.render->textureAsset,JobPriority::High);
+    }
     if(o.render&&m_assets)for(const auto& slot:o.render->materials)if(!slot.asset.empty()){m_assets->AddRef(slot.asset);m_referencedAssets.push_back(slot.asset);m_assets->RequestMaterial(slot.asset,JobPriority::High);}
     if (!o.render || o.render->shape != SceneShape::Mesh || !m_assets) return true;
     // Demand: referenced for the life of this world; the load runs in the
@@ -134,6 +146,7 @@ bool RuntimeWorld::InstantiateEntityBody(EntityRecord& record, const EntityPhysi
             break;
         case SceneShape::Terrain:
         case SceneShape::Mesh:
+        case SceneShape::Sprite:
             break;
     }
     }catch(const std::exception& e){if(outError)*outError=e.what();return false;}
@@ -249,7 +262,7 @@ bool RuntimeWorld::Build(const Scene& authored, ResourceManager* resources, std:
     for (const auto& o : scene.Objects()) {
         if (o.renderCamera) {
             const auto& c = *o.renderCamera;
-            if (c.width < 1 || c.width > 4096 || c.height < 1 || c.height > 4096 ||
+            if (!ValidCameraLens(c.lens) || c.width < 1 || c.width > 4096 || c.height < 1 || c.height > 4096 ||
                 c.updateEveryFrames < 1 || !(c.verticalFovDegrees > 0 && c.verticalFovDegrees < 179) ||
                 !(c.nearPlane > 0 && c.farPlane > c.nearPlane) || o.door || o.lightSwitch) {
                 outError = "invalid render-camera configuration"; return false;
@@ -478,6 +491,7 @@ bool RuntimeWorld::AppendSceneObjects(const Scene& scene, bool authored,
                         try{bodyHandle=m_physics.CreateShape(shape,{position,rotation},false,0,b.friction,b.restitution);}catch(const std::exception& e){return fail(o,e.what());}break;
                     }
                     case SceneShape::Mesh:
+                    case SceneShape::Sprite:
                         return fail(o, "a body cannot use the mesh shape");
                 }
                 if (b.shape != SceneShape::Terrain) {
@@ -1595,6 +1609,15 @@ bool RuntimeWorld::SetRenderVisible(EntityId id,bool entityScope,bool visible){
  for(auto& r:m_staticRenderables)if(r.id==id&&d.render)r.render=*d.render;
  for(auto& r:m_dynamicVisuals)if(r.id==id&&d.render)r.render=*d.render;
  return true;
+}
+bool RuntimeWorld::SetSprite(EntityId id,const SpriteSettings& value) {
+    const auto* definition=RuntimeDefinition(id);
+    if(!definition||!definition->render||definition->render->shape!=SceneShape::Sprite||!ValidSprite(value))return false;
+    auto& render=*m_scriptDefinitions.at(id).render;render.sprite=value;
+    if(auto* entity=FindEntity(id))entity->definition.render=render;
+    for(auto& visual:m_staticRenderables)if(visual.id==id)visual.render=render;
+    for(auto& visual:m_dynamicVisuals)if(visual.id==id)visual.render=render;
+    return true;
 }
 bool RuntimeWorld::SetMaterialSlot(EntityId id,unsigned slot,const MaterialSlot& value){
  if(!RuntimeDefinition(id)||!m_scriptDefinitions.at(id).render||slot>=64||!ValidRenderSlot(m_assets,value))return false;

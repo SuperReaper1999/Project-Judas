@@ -16,6 +16,7 @@
 // Value fields place wrapped labels above full-width controls, retaining
 // the IDs of their original labelled ImGui widgets.
 void TrackEdit(EditorDocument& doc);
+bool DragVec2(EditorDocument& doc,const char* label,glm::vec2& value,float speed=.05f,float min=0,float max=0);
 bool DragVec3(EditorDocument& doc, const char* label, glm::vec3& value, float speed = 0.05f);
 // Euler degrees in the inspector, quaternion in the authored scene.
 bool DragRotation(EditorDocument& doc, const char* label, glm::quat& value);

@@ -1,0 +1,13 @@
+[96mdocs/judasjs/examples/sprite-starter.js[0m:[93m10[0m:[93m16[0m - [91merror[0m[90m TS7031: [0mBinding element 'entity' implicitly has an 'any' type.
+
+[7m10[0m   constructor({entity,properties}) {this.entity=entity;this.properties=properties;this.state={distance:0};}
+[7m  [0m [91m               ~~~~~~[0m
+[96mdocs/judasjs/examples/sprite-starter.js[0m:[93m10[0m:[93m23[0m - [91merror[0m[90m TS7031: [0mBinding element 'properties' implicitly has an 'any' type.
+
+[7m10[0m   constructor({entity,properties}) {this.entity=entity;this.properties=properties;this.state={distance:0};}
+[7m  [0m [91m                      ~~~~~~~~~~[0m
+[96mdocs/judasjs/examples/sprite-starter.js[0m:[93m11[0m:[93m10[0m - [91merror[0m[90m TS7006: [0mParameter 'dt' implicitly has an 'any' type.
+
+[7m11[0m   update(dt) {
+[7m  [0m [91m         ~~[0m
+

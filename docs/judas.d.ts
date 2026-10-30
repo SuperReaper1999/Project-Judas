@@ -78,7 +78,18 @@ declare module "judas" {
     ignored?: Entity[]; includeSensors?: boolean;
   }
   export interface Classification { renderLayer: number; collisionLayer: number; collisionMask: string }
-  export interface CameraRange {near:number;far:number}
+  export interface Vec2 {x:number;y:number}
+  export interface SpriteSettings {
+    size:Vec2; pivot:Vec2; rect:{x:number;y:number;width:number;height:number}; tint:Quat;
+    flipX:boolean;flipY:boolean;nearest:boolean;pixelSnap:boolean;alphaPick:boolean;ySort:boolean;
+    sortingLayer:number;order:number;
+  }
+  /** Presentation lens; perspective remains the default. Pixel mode requires orthographic. */
+  export interface CameraLens {
+    projection:'perspective'|'orthographic';height:number;pixelPerfect:boolean;
+    referenceWidth:number;referenceHeight:number;pixelsPerUnit:number;
+  }
+  export interface CameraRange extends Partial<CameraLens> {near:number;far:number}
   export interface ViewportPoint {x:number;y:number;depth:number;distance:number;behind:boolean;inside:boolean}
   export interface UIElementLayout {offset:{x:number;y:number};size:{x:number;y:number};anchorMin:{x:number;y:number};anchorMax:{x:number;y:number};relativeSize:{x:number;y:number};align:{x:number;y:number}}
   export interface PrefabScriptInit {source?:EntityId;slot:string|number;properties?:Record<string,number|boolean|string|{entity:EntityId}|null>;state?:JSONValue}
@@ -89,7 +100,7 @@ declare module "judas" {
   export interface CameraClipPlane {normal:Vec3;point:Vec3}
   /** Render-target camera projection: near/far plus optional frustum/clipPlane (omitted keeps, null clears). */
   export interface CameraProjection extends CameraRange {frustum?:CameraFrustum|null;clipPlane?:CameraClipPlane|null}
-  export interface CameraInfo { near:number;far:number; enabled: boolean; width: number; height: number; frustum: CameraFrustum|null; clipPlane: CameraClipPlane|null }
+  export interface CameraInfo { lens:CameraLens; near:number;far:number; enabled: boolean; width: number; height: number; frustum: CameraFrustum|null; clipPlane: CameraClipPlane|null }
   export interface AudioInfo {
     enabled:boolean;playing:boolean;requested:boolean;ready:boolean;streamed:boolean;loop:boolean;starved:boolean;
     state:"loading"|"seeking"|"ready"|"playing"|"paused"|"ended"|"starved"|"failed";
@@ -237,6 +248,10 @@ declare module "judas" {
 
     /** Local entity render gate; does not hide children or change simulation. */
     renderVisible:boolean;
+    /** Detached settings for a native sprite, or null for other shapes. */
+    readonly sprite:SpriteSettings|null;
+    /** Atomic patch. Invalid values throw; non-sprites return false. Does not add collision. */
+    setSprite(settings:Partial<SpriteSettings>):boolean;
     /** Independent Render component gate; throws when that component is absent. */
     rendererVisible:boolean;
     readonly modelParts: readonly ModelPart[] | null;
@@ -334,6 +349,8 @@ declare module "judas" {
     /** Omitted near/far members use 0.1/500 on each call, not the previous view. */
     setView(pose: TransformPatch, fov?: number, range?: Partial<CameraRange>): boolean;
     project(point:Vec3):ViewportPoint|null;
+    /** Normalized viewport coordinates; null in letterbox or without a view. */
+    unproject(point:Vec2):{origin:Vec3;direction:Vec3}|null;
     readonly viewport:{width:number;height:number};
     clearView(): boolean;
     /** Basic prescribed-water swimming (default), or opted-in PBF. Greatest immersion wins; visual waves do not alter occupancy. */

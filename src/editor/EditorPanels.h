@@ -108,6 +108,7 @@ struct EditorPanelState {
     float inspectorWidth = 340.0f;
     float assetBrowserHeight = 200.0f;
     bool showSceneSettings = false;
+    bool view2D = false;
     bool showEditorPreferences = false;
     bool showRetarget = false;
     bool showAnimationTimeline=false;
@@ -223,7 +224,7 @@ void DrawStatusBar(EditorDocument& doc, EditorPanelState& state);
 // origin. `meshAssetId` is used by "mesh"; creation selects the new object.
 SceneObjectId CreateObjectOfKind(EditorDocument& doc, const std::string& kind, const glm::vec3& position,
                                  const std::string& meshAssetId, const SceneAnimationComponent* animation = nullptr,
-                                 SceneObjectId parent = kInvalidSceneObjectId);
+                                 SceneObjectId parent = kInvalidSceneObjectId,const glm::vec2* spriteSize=nullptr);
 
 // Duplicates an object under a new id (name suffixed " copy"), inserted
 // right after the original, recording one undo step. Returns the new id.

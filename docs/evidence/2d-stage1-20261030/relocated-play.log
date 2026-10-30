@@ -1,0 +1,15 @@
+Shadow maps: on
+Graphics: 4.5 (Core Profile) Mesa 26.0.8-1ubuntu0.3 / llvmpipe (LLVM 21.1.8, 256 bits)
+Renderer fragment texture units: 32 (material path uses 12)
+World state: /home/conner/.local/share/judas/games/5ab0bbef780332c895a1250236bad2a0fa577004e5ee0323c6f95476da9fd786/Saves/main.judasstate (none saved)
+Project: Sprite Workshop (/tmp/judas-2d-stage1-relocated/SpriteWorkshop/game.judasproj)
+Scene:  (/tmp/judas-2d-stage1-relocated/SpriteWorkshop/Scenes/main.judas)
+World origin (m): 0.000, 0.000, 0.000
+step,time,posX,posY,posZ,upX,upY,upZ,grounded,velX,velY,velZ,gravX,gravY,gravZ,controlled,frame,steps,paused
+0,0.00000,0.000000,0.000000,0.000000,0.000000,1.000000,0.000000,0,0.000000,0.000000,0.000000,0.000000,0.000000,0.000000,0,0,1,0
+20,0.33333,0.800000,0.000000,0.000000,0.000000,1.000000,0.000000,0,0.000000,0.000000,0.000000,0.000000,0.000000,0.000000,0,20,1,0
+40,0.66667,1.500000,0.050000,0.000000,0.000000,1.000000,0.000000,0,0.000000,0.000000,0.000000,0.000000,0.000000,0.000000,0,40,1,0
+60,1.00000,1.500000,1.050000,0.000000,0.000000,1.000000,0.000000,0,0.000000,0.000000,0.000000,0.000000,0.000000,0.000000,0,60,1,0
+[TestHarness] Wrote screenshot: /home/conner/Documents/GitHub/Project-Judas/.cache/2d-stage1-evidence/standalone-game.png
+80,1.33333,1.500000,1.500000,0.000000,0.000000,1.000000,0.000000,0,0.000000,0.000000,0.000000,0.000000,0.000000,0.000000,0,80,1,0
+100,1.66667,1.500000,1.500000,0.000000,0.000000,1.000000,0.000000,0,0.000000,0.000000,0.000000,0.000000,0.000000,0.000000,0,100,1,0

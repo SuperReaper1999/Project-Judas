@@ -1,7 +1,41 @@
 {
-  "checkpoint": "Alpha public module through M100; source version in engine-version.json",
+  "checkpoint": "Current public module including Experimental 2D Stage 1; source version in engine-version.json",
   "authority": "src/ScriptSystem.cpp::library + Impl::Native + ScriptBindingsUI.cpp + ScriptBindingsJoint.cpp + ScriptInputBindings.inl + ScriptLocalMultiplayer.inl + ScriptNetwork.inl",
   "resultShapes": [
+    {
+      "binding": "Entity.sprite",
+      "declaration": "SpriteSettings",
+      "fields": [
+        "size",
+        "pivot",
+        "rect",
+        "tint",
+        "flipX",
+        "flipY",
+        "nearest",
+        "pixelSnap",
+        "alphaPick",
+        "ySort",
+        "sortingLayer",
+        "order"
+      ],
+      "nativeFile": "src/ScriptSpriteValues.inl",
+      "needles": [
+        "vector(\"size\"",
+        "vector(\"pivot\"",
+        "vector(\"rect\"",
+        "vector(\"tint\"",
+        "{\"flipX\",sprite.flipX}",
+        "{\"flipY\",sprite.flipY}",
+        "{\"nearest\",sprite.nearest}",
+        "{\"pixelSnap\",sprite.pixelSnap}",
+        "{\"alphaPick\",sprite.alphaPick}",
+        "{\"ySort\",sprite.ySort}",
+        "JS_SetPropertyStr(c,out,\"sortingLayer\"",
+        "JS_SetPropertyStr(c,out,\"order\""
+      ],
+      "reference": "docs/judasjs/sprites-2d.md"
+    },
     {
       "binding": "Entity.physicalMaterial",
       "declaration": "PhysicalMaterialInfo",
@@ -701,6 +735,11 @@
         "minimum": 1,
         "reason": "A null/undefined target clears the socket before the joint argument is read."
       }
+    },
+    {
+      "symbol": "Entity.setSprite",
+      "minimum": 1,
+      "maximum": 1
     },
     {
       "symbol": "Entity.stopAudio",
@@ -1593,6 +1632,11 @@
     },
     {
       "symbol": "world.toLocal",
+      "minimum": 1,
+      "maximum": 1
+    },
+    {
+      "symbol": "world.unproject",
       "minimum": 1,
       "maximum": 1
     }
@@ -2953,6 +2997,17 @@
       "reference": "docs/judasjs/entities.md"
     },
     {
+      "symbol": "Entity.setSprite",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "spriteSet"
+      ],
+      "type": "docs/judas.d.ts:Entity.setSprite",
+      "reference": "docs/judasjs/sprites-2d.md"
+    },
+    {
       "symbol": "Entity.sleeping",
       "kinds": [
         "get"
@@ -2962,6 +3017,17 @@
       ],
       "type": "docs/judas.d.ts:Entity.sleeping",
       "reference": "docs/judasjs/entities.md"
+    },
+    {
+      "symbol": "Entity.sprite",
+      "kinds": [
+        "get"
+      ],
+      "native": [
+        "spriteInfo"
+      ],
+      "type": "docs/judas.d.ts:Entity.sprite",
+      "reference": "docs/judasjs/sprites-2d.md"
     },
     {
       "symbol": "Entity.stopAudio",
@@ -6671,6 +6737,17 @@
       "reference": "docs/judasjs/planetary-terrain.md"
     },
     {
+      "symbol": "world.unproject",
+      "kinds": [
+        "call"
+      ],
+      "native": [
+        "viewportRay"
+      ],
+      "type": "docs/judas.d.ts:world.unproject",
+      "reference": "docs/judasjs/sprites-2d.md"
+    },
+    {
       "symbol": "world.viewRay",
       "kinds": [
         "get"
@@ -6963,6 +7040,8 @@
     "socketClear",
     "socketSet",
     "spawn",
+    "spriteInfo",
+    "spriteSet",
     "stick",
     "stickDelta",
     "stickSamples",
@@ -6988,6 +7067,7 @@
     "vector",
     "velocity",
     "viewRay",
+    "viewportRay",
     "viewportSize",
     "weatherEnabled",
     "weatherExists",

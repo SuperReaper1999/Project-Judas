@@ -11,6 +11,8 @@
 #include "ResourceManager.h"
 #include "SkeletalAnimation.h"
 #include "TerrainLibrary.h"
+#include "TextureLoader.h"
+#include "CookedTexture.h"
 
 namespace {
 struct Ray { glm::dvec3 origin, direction; };
@@ -211,9 +213,11 @@ const MeshData* EditorScenePicker::TerrainMesh(const std::string& identifier) {
 
 EditorPickHit EditorScenePicker::Pick(const Scene& authored, glm::vec3 origin, glm::vec3 direction,
                                      const AssetDatabase* assets, const ResourceManager* resources,
-                                     std::string* error) {
+                                     std::string* error,const std::set<SceneObjectId>* excluded) {
     if (error) error->clear();
     EditorPickHit best;
+    struct SpriteHit {const SceneObject* object;float distance;};
+    std::vector<SpriteHit> spriteHits;
     const double length = glm::length(glm::dvec3(direction));
     if (!Finite(origin) || !Finite(direction) || !(length > 1e-12)) return best;
     const Ray world{origin, glm::dvec3(direction) / length};
@@ -227,6 +231,7 @@ EditorPickHit EditorScenePicker::Pick(const Scene& authored, glm::vec3 origin, g
         if (distance < best.distance) best = {id, float(distance), true};
     };
     for (const auto& object : flat.Objects()) {
+        if(excluded&&excluded->count(object.id))continue;
         if (!(flat.Settings().mainCameraRenderMask & CategoryBit(object.renderLayer))) continue;
         const auto& transform = object.transform;
         const auto primitive = [&](glm::vec3 position, glm::quat rotation, glm::vec3 scale,
@@ -238,7 +243,23 @@ EditorPickHit EditorScenePicker::Pick(const Scene& authored, glm::vec3 origin, g
         };
         if (object.render) {
             const auto& render = *object.render;
-            if (render.shape == SceneShape::Mesh) {
+            if(render.shape==SceneShape::Sprite) {
+                if(!object.renderVisible||!render.visible||render.alpha*render.sprite.tint.a<=0||!ValidSprite(render.sprite))continue;
+                Ray local;
+                if(!LocalRay(world,transform.position,transform.rotation,transform.scale,local)||std::abs(local.direction.z)<1e-12)continue;
+                const double distance=-local.origin.z/local.direction.z;
+                const glm::vec2 point(local.origin+local.direction*distance);
+                const auto centre=SpriteCentre(render.sprite),half=render.sprite.size*.5f;
+                if(distance<0||glm::any(glm::greaterThan(glm::abs(point-centre),half)))continue;
+                if(render.sprite.alphaPick&&!render.textureAsset.empty()) {
+                    if(const auto* image=AssetImage(render.textureAsset,assets,error)) {
+                        const auto uv=SpriteUV(render.sprite,point);
+                        const auto x=std::clamp(int(uv.x*image->width),0,image->width-1),y=std::clamp(int(uv.y*image->height),0,image->height-1);
+                        if(image->pixels[(size_t(y)*image->width+x)*4+3]==0)continue;
+                    }
+                }
+                spriteHits.push_back({&object,float(distance)});
+            } else if (render.shape == SceneShape::Mesh) {
                 const bool placeholder = resources && resources->StateOf(render.meshAsset) != ResourceState::Ready;
                 if (placeholder || (!assets && !resources))
                     primitive(transform.position, transform.rotation, transform.scale, glm::vec3(0.5f), 0, false);
@@ -290,10 +311,19 @@ EditorPickHit EditorScenePicker::Pick(const Scene& authored, glm::vec3 origin, g
                       transform.rotation, glm::vec3(1), half, 0, false);
         }
     }
+    const float opaqueDistance=best.distance;
+    const SpriteHit* front=nullptr;
+    const auto less=[](const SpriteHit& a,const SpriteHit& b){
+        const auto& x=a.object->render->sprite;const auto& y=b.object->render->sprite;
+        return SpriteSortKey(x,a.object->transform.position.y,a.object->id)<SpriteSortKey(y,b.object->transform.position.y,b.object->id);
+    };
+    for(const auto& hit:spriteHits)if(hit.distance<=opaqueDistance&&(!front||less(*front,hit)))front=&hit;
+    if(front)best={front->object->id,front->distance,true};
     // Empty/light/body-only objects remain accessible through a small pivot
     // proxy, but cannot steal any actual rendered surface on this ray.
     if (best.id != kInvalidSceneObjectId) return best;
     for (const auto& object : flat.Objects()) {
+        if(excluded&&excluded->count(object.id))continue;
         if (object.render || object.fluidVolume) continue;
         const Ray local{world.origin - glm::dvec3(object.transform.position), world.direction};
         double distance = 0;
@@ -303,4 +333,29 @@ EditorPickHit EditorScenePicker::Pick(const Scene& authored, glm::vec3 origin, g
     return best;
 }
 
-void EditorScenePicker::Clear() { m_meshes.clear(); m_terrains.clear();m_draft.reset();m_draftId.clear(); }
+void EditorScenePicker::Clear() { m_meshes.clear();m_images.clear(); m_terrains.clear();m_draft.reset();m_draftId.clear(); }
+
+const TextureData* EditorScenePicker::AssetImage(const std::string& id,const AssetDatabase* assets,std::string* error) {
+    const auto* record=assets?assets->Find(id):nullptr;
+    if(!record||record->missing)return nullptr; // placeholder remains selectable
+    std::error_code ec;const auto modified=std::filesystem::last_write_time(record->path,ec);
+    if(ec)return nullptr;
+    const auto bytes=std::filesystem::file_size(record->path,ec);if(ec)return nullptr;
+    if(auto it=m_images.find(id);it!=m_images.end()&&it->second.path==record->path&&it->second.modified==modified&&it->second.bytes==bytes)return &it->second.data;
+    TextureData image;std::string message;
+    if(!LoadTextureFromFile(record->path,image,message))return nullptr;
+    if(!image.levels.empty()){image.pixels=ExpandTextureMip(image.levels.front(),image.storage).bytes;image.levels.clear();image.storage=TextureStorage::Rgba8;}
+    constexpr size_t budget=64*1024*1024;
+    if(image.pixels.size()>budget){if(error)*error="Image exceeds the 64 MiB pixel-picking budget; choose bounds picking.";return nullptr;}
+    size_t used=0;for(const auto& [_,cached]:m_images)used+=cached.data.pixels.size();
+    if(used+image.pixels.size()>budget)m_images.clear();
+    auto& cached=m_images[id];cached={record->path,modified,bytes,std::move(image)};
+    return &cached.data;
+}
+
+std::vector<EditorPickHit> EditorScenePicker::PickAll(const Scene& scene,glm::vec3 origin,glm::vec3 direction,
+                                                   const AssetDatabase* assets,const ResourceManager* resources,std::string* error) {
+    std::vector<EditorPickHit> hits;std::set<SceneObjectId> excluded;
+    for(unsigned i=0;i<64;++i){auto hit=Pick(scene,origin,direction,assets,resources,error,&excluded);if(!hit.id)break;hits.push_back(hit);excluded.insert(hit.id);}
+    return hits;
+}

@@ -132,7 +132,8 @@ bool ComponentHeader(EditorDocument& doc, const ComponentEditor& editor, SceneOb
     ImGui::PushID(editor.name);
     if(state.revealComponent==editor.name){ImGui::SetNextItemOpen(true);state.revealComponent.clear();}
     const bool common = std::string(editor.name)=="Scripts";
-    bool open = ImGui::CollapsingHeader(editor.name, common?ImGuiTreeNodeFlags_DefaultOpen:ImGuiTreeNodeFlags_None);
+    const char* title=std::string(editor.name)=="Render"&&o.render&&o.render->shape==SceneShape::Sprite?"Sprite":editor.name;
+    bool open = ImGui::CollapsingHeader(title, common?ImGuiTreeNodeFlags_DefaultOpen:ImGuiTreeNodeFlags_None);
     ImGui::SetItemTooltip("Expand to edit. Right-click for component actions.");
     if(ImGui::BeginPopupContextItem("Component actions")){
         if(ImGui::MenuItem("Remove component")){
@@ -232,6 +233,11 @@ void DrawEditorWorkspaceChrome(EditorDocument& doc, EditorPanelState& state, Edi
     ImGui::EndDisabled();
     ImGui::SameLine();
     if (ImGui::Button("View...")) ImGui::OpenPopup("toolbarView");
+    ImGui::SameLine();
+    ImGui::BeginDisabled(!editing);
+    if(ImGui::Button(state.view2D?"2D view":"3D view"))state.view2D=!state.view2D;
+    ToolbarHint("Switch the editing view: 2D uses XY, middle-drag pan and wheel zoom. Gameplay cameras are unchanged.");
+    ImGui::EndDisabled();
     if (ImGui::BeginPopup("toolbarView")) {
         ImGui::MenuItem("Scene settings", nullptr, &state.showSceneSettings, editing);
         ImGui::MenuItem("Asset Browser", nullptr, &state.showAssetBrowser);
@@ -981,6 +987,10 @@ void DrawAssetBrowserPanel(EditorDocument& doc, EditorPanelState& state, EditorR
             if (ImGui::IsItemHovered()) ImGui::SetTooltip("%s\nID %s\nSource %s\n%s", record.path.c_str(), id.c_str(), record.source.c_str(),
                 record.type == AssetType::Script ? "Double-click to edit script; right-click for details." : "Double-click to inspect; drag to a matching field.");
             if (ImGui::BeginPopupContextItem("##assetActions")) {
+                if(record.type==AssetType::Texture&&ImGui::MenuItem("Create sprite in scene",nullptr,false,state.mode==EditorMode::Edit&&!record.missing)){
+                    std::string error;const auto id=CreateEditorSpriteFromImage(doc,db,record.id,state.cameraFocus,0,error);
+                    state.status=id?"Sprite created at 32 pixels per world unit; edit size, pivot and sorting in Sprite.":error;
+                }
                 if (record.type == AssetType::Script && ImGui::MenuItem("Edit script", nullptr, false,
                     !record.missing && !record.readOnly)) RequestEditorScriptEdit(record, state);
                 if (record.type == AssetType::Script && ImGui::MenuItem("Attach to selected object", nullptr, false,

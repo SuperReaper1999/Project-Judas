@@ -378,6 +378,7 @@ public:
     bool SetAppearance(const SceneSettings&);
     bool ResetAppearance();
     bool SetRenderVisible(EntityId,bool entityScope,bool visible);
+    bool SetSprite(EntityId,const SpriteSettings&);
     bool RenderVisible(EntityId) const;
     bool SetRuntimeMaterial(EntityId,const std::string&,const MaterialSlot&);
     bool ClearRuntimeMaterial(EntityId,const std::string&);
@@ -420,11 +421,11 @@ public:
     bool SetCharacterSettings(EntityId,const CharacterMotorSettings&);
     void ClearCharacters();
     struct CharacterInstance {CharacterMotor motor;SceneTransform previous;};
-    struct RuntimeView {SceneTransform pose;float fov=70,nearPlane=.1f,farPlane=500;};
+    struct RuntimeView {SceneTransform pose;float fov=70,nearPlane=.1f,farPlane=500;CameraLens lens;};
     int viewportWidth=0,viewportHeight=0;
     std::optional<RuntimeView> view;
     std::map<std::pair<EntityId,uint64_t>,std::string> spawnStates; // consumed once by script construction; never restore defaults
-    bool SetRuntimeView(const SceneTransform& pose,float fov,float nearPlane=.1f,float farPlane=500);
+    bool SetRuntimeView(const SceneTransform& pose,float fov,float nearPlane=.1f,float farPlane=500,const CameraLens& lens={});
     struct AnimationLayer {AnimationLayerSettings settings;AnimationPlayback playback;std::vector<int> mask;SkeletalPose reference;};
     struct AnimationStep {JointTransform motion;std::vector<AnimationEventHit> events;bool overflow=false;};
     struct AnimationInstance {AnimationStep step;bool scriptAdvanced=false;EntityId owner=0;std::shared_ptr<const SkeletalAsset> asset;AnimationPlayback playback;PoseMixer mixer;SkeletalPose sourcePose,referencePose,solvedReferencePose,finalPose,previousFinalPose;std::optional<FullBodyIKRuntime> fullBodyIK;bool preparedM70=false;mutable std::vector<glm::mat4> presentedSkin;std::vector<glm::mat4> skin;std::vector<AnimationLayer> layers;std::map<std::string,PoseContribution> external;std::string error;std::vector<glm::mat4> previousWorld,recentWorld;float motionDt=0;};

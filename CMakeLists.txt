@@ -115,6 +115,12 @@ else()
     message(FATAL_ERROR "GLM was found but exports no known imported target")
 endif()
 
+# Optional native 2D value/projection checks need no physics or GL host.
+add_executable(judas_sprite_math_tests tests/SpriteMathTests.cpp src/Sprite.cpp)
+target_include_directories(judas_sprite_math_tests PRIVATE src)
+target_link_libraries(judas_sprite_math_tests PRIVATE ${JUDAS_GLM})
+judas_warnings(judas_sprite_math_tests)
+
 # No physics middleware. Judas owns rigid-body state, integration,
 # collision detection, contact generation, and contact resolution itself
 # (src/RigidBody.*, src/Contacts.*, src/ContactSolver.*, src/PhysicsWorld.cpp)
@@ -303,6 +309,7 @@ add_library(judas_engine STATIC
     src/VisualParticles.cpp
     src/Prefab.cpp
     src/Scene.cpp
+    src/Sprite.cpp
     src/Ragdoll.cpp
     src/SceneSerialization.cpp
     src/NamedAuthoring.cpp
@@ -1718,6 +1725,11 @@ judas_add_engine_test(judas_mk2_rotation_cold_tests tests/Mk2RotationColdTests.c
 
 # Read-only runtime diagnostics and the shipped public-API learning project.
 judas_add_engine_test(judas_workflow_application_tests tests/DeveloperWorkflowApplicationTests.cpp APPLICATION)
+
+# Native 2D Stage 1: real authoring/runtime paths, not a private prototype.
+judas_add_engine_test(judas_sprite_integration_tests tests/SpriteIntegrationTests.cpp
+    SOURCES src/editor/EditorPicking.cpp src/editor/EditorCreationMenu.cpp src/editor/EditorHistory.cpp src/editor/EditorCamera.cpp LIBRARIES judas_imgui)
+judas_add_engine_test(judas_sprite_render_tests tests/SpriteRenderTests.cpp)
 
 # Finalize after every native test has declared its authoritative entry point.
 include(cmake/JudasValidation.cmake)

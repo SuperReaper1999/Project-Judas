@@ -315,7 +315,14 @@ void DrawRenderCamera(EditorDocument& doc, SceneObject& o, EditorPanelState& sta
     DragInt(doc, "Target width", c.width, 1, 4096);
     DragInt(doc, "Target height", c.height, 1, 4096);
     DragInt(doc, "Every N rendered frames", c.updateEveryFrames, 1, 100000);
-    DragScalar(doc, "Vertical FOV (deg)", c.verticalFovDegrees, 0.1f, 1.0f, 178.0f);
+    int projection=int(c.lens.projection);
+    if(ImGui::Combo("Projection",&projection,"Perspective\0Orthographic (2D)\0")){doc.BeginEdit();c.lens.projection=CameraProjectionKind(projection);if(projection==0)c.lens.pixelPerfect=false;doc.CommitEdit();}
+    if(projection==0)DragScalar(doc, "Vertical FOV (deg)", c.verticalFovDegrees, 0.1f, 1.0f, 178.0f);
+    else {
+        DragScalar(doc,"Visible height (world units)",c.lens.height,.1f,.01f,1e8f);
+        Checkbox(doc,"Pixel-perfect canvas",c.lens.pixelPerfect);
+        if(c.lens.pixelPerfect){DragInt(doc,"Canvas width",c.lens.referenceWidth,1,4096);DragInt(doc,"Canvas height",c.lens.referenceHeight,1,4096);DragScalar(doc,"Pixels per world unit",c.lens.pixelsPerUnit,.1f,.01f,65536);ImGui::TextWrapped("Canvas / pixels per unit sets the visible size. Integer scaling adds letterboxing; smaller windows downscale.");}
+    }
     DragScalar(doc, "Near plane", c.nearPlane, 0.01f, 0.001f, 100000.0f);
     DragScalar(doc, "Far plane", c.farPlane, 1.0f, 0.002f, 1000000.0f);
     ImGui::TextDisabled("Local -Z forward / +Y up. Live output in Play.");
@@ -324,7 +331,36 @@ void DrawRenderCamera(EditorDocument& doc, SceneObject& o, EditorPanelState& sta
 void DrawRender(EditorDocument& doc, SceneObject& o, EditorPanelState& state) {
     SceneRenderComponent& r = *o.render;
     Checkbox(doc,"Render component visible",r.visible);
-    Combo(doc, "Shape", r.shape, kShapeNames, 5);
+    int shape=r.shape==SceneShape::Sprite?5:int(r.shape);
+    if(ImGui::Combo("Shape",&shape,"Box\0Sphere\0Compound\0Mesh\0Terrain\0Sprite (2D)\0")){doc.BeginEdit();r.shape=shape==5?SceneShape::Sprite:SceneShape(shape);doc.CommitEdit();}
+    if(r.shape==SceneShape::Sprite) {
+        AssetField(doc,"Sprite image",r.textureAsset,AssetType::Texture,true,state);
+        auto& sprite=r.sprite;
+        DragVec2(doc,"Size (world units)",sprite.size,.02f,.001f,1e6f);
+        DragVec2(doc,"Pivot (image top-left 0..1)",sprite.pivot,.01f,0,1);
+        Checkbox(doc,"Flip horizontally",sprite.flipX);Checkbox(doc,"Flip vertically",sprite.flipY);
+        auto tint=sprite.tint;
+        const bool tintChanged=ImGui::ColorEdit4("Tint / opacity",&tint.x);
+        if(ImGui::IsItemActivated())doc.BeginEdit();
+        if(tintChanged)sprite.tint=glm::clamp(tint,glm::vec4(0),glm::vec4(1));
+        TrackEdit(doc);
+        DragInt(doc,"Sorting layer",sprite.sortingLayer,-32768,32767);
+        DragInt(doc,"Order in layer",sprite.order,-32768,32767);
+        Checkbox(doc,"Top-down Y sorting",sprite.ySort);
+        Checkbox(doc,"Nearest / pixel-art sampling",sprite.nearest);
+        if(ImGui::CollapsingHeader("Sprite picking and image rectangle")) {
+            Checkbox(doc,"Select visible pixels (off = bounds)",sprite.alphaPick);
+            Checkbox(doc,"Snap presentation in pixel-perfect cameras",sprite.pixelSnap);
+            auto rect=sprite.rect;
+            const bool changed=ImGui::DragFloat4("Source x / y / width / height",&rect.x,.005f,0,1,"%.4g",ImGuiSliderFlags_AlwaysClamp);
+            if(ImGui::IsItemActivated())doc.BeginEdit();
+            if(changed){auto candidate=sprite;candidate.rect=rect;if(ValidSprite(candidate))sprite=candidate;}
+            TrackEdit(doc);
+            ImGui::TextWrapped("Normalized top-left image rectangle; width/height must stay positive and inside the image.");
+        }
+        ImGui::TextWrapped("Drag an image here or into the scene. Sorting changes drawing only; sprite visuals add no collision. Native planar physics follows in Stage 2.");
+        return;
+    }
     auto publish=[&](MaterialOverride& destination,const MaterialDefinition& source){
         auto candidate=destination;
         if(DrawMaterialOverrideControls(candidate,source,state)){

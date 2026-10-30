@@ -1,11 +1,14 @@
 #include "EditorCreationMenu.h"
 #include "EditorPanels.h"
 #include "imgui.h"
+#include "AssetDatabase.h"
+#include "TextureLoader.h"
 
 void DrawEditorCreationItems(const EditorPanelState& state, EditorRequests& requests, SceneObjectId parent) {
     struct CreationItem { const char* label; const char* kind; const char* description; };
     static constexpr CreationItem items[] = {
         {"Empty object", "empty", "A transform to organize children or attach your own components."},
+        {"Sprite (2D image)","sprite","A world-space image with pivot, flips and sorting; no hidden collision."},
         {"First-person player (JS + motor)", "first-person-player", "Controllable capsule with CharacterMotor, editable movement/camera script and V view toggle."},
         {"Third-person player (JS + motor)", "third-person-player", "The same script-owned player starting with a camera behind it."},
         {"Pause menu + controls (JS + UI)", "pause-menu-example", "Optional editable pause and settings UI, including project control rebinding."},
@@ -64,7 +67,7 @@ void DrawHierarchyCreationPopup(const EditorPanelState& state, EditorRequests& r
 
 SceneObjectId CreateObjectOfKind(EditorDocument& doc, const std::string& kind, const glm::vec3& position,
                                  const std::string& meshAssetId, const SceneAnimationComponent* animation,
-                                 SceneObjectId parent) {
+                                 SceneObjectId parent,const glm::vec2* spriteSize) {
     if (parent != kInvalidSceneObjectId && !doc.GetScene().Find(parent)) return kInvalidSceneObjectId;
     doc.BeginEdit();
     Scene& scene = doc.GetScene();
@@ -97,6 +100,10 @@ SceneObjectId CreateObjectOfKind(EditorDocument& doc, const std::string& kind, c
         o.render->shape = SceneShape::Mesh;
         o.render->meshAsset = meshAssetId;
         o.render->color = glm::vec3(1.0f);
+    } else if(kind=="sprite") {
+        o.name="Sprite";o.render=SceneRenderComponent{};
+        o.render->shape=SceneShape::Sprite;o.render->textureAsset=meshAssetId;o.render->color=glm::vec3(1);
+        if(spriteSize)o.render->sprite.size=*spriteSize;
     } else if (kind == "point-light" || kind == "spot-light") {
         o.light = SceneLightComponent{};
         o.light->kind = kind == "point-light" ? SceneLightKind::Point : SceneLightKind::Spot;
@@ -128,4 +135,14 @@ SceneObjectId CreateObjectOfKind(EditorDocument& doc, const std::string& kind, c
     doc.CommitEdit();
     doc.Select(id);
     return id;
+}
+
+SceneObjectId CreateEditorSpriteFromImage(EditorDocument& doc,const AssetDatabase& assets,const std::string& image,
+                                         glm::vec3 position,SceneObjectId parent,std::string& error) {
+    const auto* record=assets.Find(image);TextureData pixels;
+    if(!record||record->missing||record->type!=AssetType::Texture){error="Choose a tracked image asset";return 0;}
+    if(!LoadTextureFromFile(record->path,pixels,error))return 0;
+    const glm::vec2 size(float(pixels.width)/32,float(pixels.height)/32);
+    const auto id=CreateObjectOfKind(doc,"sprite",position,image,nullptr,parent,&size);
+    error=id?"":"Sprite parent no longer exists";return id;
 }

@@ -1,0 +1,14 @@
+PASS fresh test output
+PASS create normal project: 
+PASS create native 2D starter: 
+PASS save 2D project and scene
+PASS starter refuses overwriting authored assets
+PASS reopen project default 2D view and native sprite scene
+PASS runtime builds ordinary sprites: 
+PASS public starter script runs without faults
+PASS project JS owns actual orthographic pixel-perfect view
+PASS sprite player is explicitly visual, no hidden physics
+PASS runtime sprite mutation updates actual visual definition
+PASS invalid mutation atomically rejected
+PASS capture modern complete sprite/lens participants: 
+FAIL write checked production slot to disk: 
