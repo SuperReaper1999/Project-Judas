@@ -1,0 +1,59 @@
+{
+  "positive": {
+    "checks": 58,
+    "failures": 0,
+    "bodies": 1024,
+    "scope": "impulse response only; not MK2 steps",
+    "reduced_median_ms": 0.00390026,
+    "rows_median_ms": 0.02128244,
+    "reduced_worst_ms": 0.00409663,
+    "rows_worst_ms": 0.02256225
+  },
+  "negative": {
+    "exit_code": 1,
+    "diagnostic": "FAIL after 3 checks: rows/reduced linear equivalence"
+  },
+  "utc": "2026-10-30T16:01:16.119272+00:00",
+  "base_commit": "e2008d1e6f4ac3229b292724e5718f37e8d2e1ed",
+  "compiler": "g++ (Ubuntu 15.2.0-16ubuntu1) 15.2.0",
+  "host": "Linux-7.0.0-42-generic-x86_64-with-glibc2.43",
+  "commands": [
+    [
+      "g++",
+      "-std=c++17",
+      "-O3",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-pedantic",
+      "-Isrc",
+      "/home/conner/Documents/GitHub/Project-Judas/tools/prototypes/planar2d_stage0.cpp",
+      "-o",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/planar2d-stage0-20261030/mobility-probe"
+    ],
+    [
+      "g++",
+      "-std=c++17",
+      "-O3",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-pedantic",
+      "-Isrc",
+      "/home/conner/Documents/GitHub/Project-Judas/tools/prototypes/planar2d_stage0.cpp",
+      "-DJUDAS_PLANAR_PROBE_DISABLE_ROWS",
+      "-o",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/planar2d-stage0-20261030/missing-rows-control"
+    ]
+  ],
+  "sources": {
+    "tools/prototypes/planar2d_stage0.cpp": "d0b17ee26c9aca488010b12ba9878c5d6e4215b9ed45c42e89d6605855dfcdf2",
+    "tools/run_planar2d_stage0.py": "a50e6da112f5a0e0c280911e27a8f67c66c93cc5218ddb42c19e9b22d6c56b00",
+    "src/CameraProjection.h": "647ead7296e1da71719318601ffcc5938c31ea1ef8bec3dfefa59f14809e8804"
+  },
+  "binaries": {
+    "mobility-probe": "b8a86186f9daa0078b0b5ee7d98e78a9a0d41347990afd51032598c469e9117f",
+    "missing-rows-control": "418e87c4d9221723af24ab3a4dfcb09a9f3c2013caee38c503a0cf9dd6229589"
+  },
+  "scope": "Standalone response algebra and existing projection helper; no MK2/world/render integration"
+}

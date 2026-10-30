@@ -1,0 +1,13 @@
+direct_impulse_before_step forbidden_vz=0 forbidden_spin=0
+after_120_steps z=0 vz=0 spin_xy=0 x=1.99999881 y=3.99999762
+wall_corner speed=5 max_xy=1.74999976 plane=0 forbidden=0 energy_ratio=1 CCD_responses=2
+wall_corner speed=150 max_xy=0.999999821 plane=0 forbidden=0 energy_ratio=1 CCD_responses=2
+support rotated=0 plane=0 tilt=0 height=0.300000012 asleep=1
+support rotated=1 plane=5.96046448e-08 tilt=0 height=0.300000012 asleep=1
+offcentre_floor plane=0 tilt=0 speed=0
+force_velocity=(0.0166666675,0.0333333351,0) spin=(0,0,0.441176504)
+free_pair linear_error=9.83024984745e-07 angular_z_error=4.11769951647e-06 relative_energy_error=4.88258389275e-09
+native_row_scaling count=32 median_ms=0.03176 p95_ms=0.03741 worst_ms=0.039174
+native_row_scaling count=256 median_ms=0.262696 p95_ms=0.295147 worst_ms=0.347415
+native_row_scaling count=1024 median_ms=1.091819 p95_ms=1.153435 worst_ms=1.461616
+checks=56 failures=0

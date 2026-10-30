@@ -1,0 +1,79 @@
+--- a/src/JointSolver.cpp
++++ b/src/JointSolver.cpp
+@@ -92,6 +92,22 @@
+    for(int k=0;k<3;++k)materialRow(basis[k],angle[k]-constitutive.rotation[k],m.angularStiffness,m.angularDamping,true);
+    continue;
+   }
++  if(s.type==JointType::Stage0Planar){
++   // Experimental native rows: a fixed world plane through the COM. No
++   // tangential restriction, no hidden carrier/anchor body and no pose clamps.
++   const auto fixed=glm::mat3_cast(fb);
++   const auto normal=fixed[2];
++   row(-normal,normal,{0,0,0},{0,0,0},glm::dot(delta,normal));
++   const auto error=glm::cross(basis[2],normal);
++   for(int k=0;k<2;++k)angular(fixed[k],glm::dot(error,fixed[k]));
++   continue;
++  }
++  if(s.type==JointType::Stage0Pin){
++   // A real planar point constraint has TWO translational rows and no
++   // approximate 3D angular alignment rows. Reuses the same native solve.
++   for(int k=0;k<2;++k)linear(basis[k],glm::dot(delta,basis[k]));
++   continue;
++  }
+   if(s.type==JointType::Slider){
+    // Perpendicular rows measured at B's anchor give body A a lever arm |delta| that
+    // grows with travel; Gauss-Seidel against the orientation rows then converges too
+--- a/src/JointTypes.h
++++ b/src/JointTypes.h
+@@ -4,7 +4,7 @@
+ #include <glm/gtc/quaternion.hpp>
+ #include <cmath>
+ #include <initializer_list>
+-enum class JointType {Fixed,Hinge,Ball,Slider};
++enum class JointType {Fixed,Hinge,Ball,Slider,Stage0Planar,Stage0Pin};
+ struct JointSettings {
+     JointType type=JointType::Fixed;
+     BodyHandle bodyA,bodyB; // invalid B means a world anchor, never invalid A
+@@ -46,7 +46,7 @@
+ inline bool ValidJointSettings(const JointSettings& s){
+  auto finite=[](glm::vec3 v){return std::isfinite(v.x)&&std::isfinite(v.y)&&std::isfinite(v.z);};
+  auto quat=[&](glm::quat q){return finite({q.x,q.y,q.z})&&std::isfinite(q.w)&&glm::dot(q,q)>1e-12f&&std::isfinite(glm::dot(q,q));};
+- return int(s.type)>=0&&int(s.type)<=3&&finite(s.anchorA)&&finite(s.anchorB)&&quat(s.frameA)&&quat(s.frameB)&&
++ return int(s.type)>=0&&int(s.type)<=5&&finite(s.anchorA)&&finite(s.anchorB)&&quat(s.frameA)&&quat(s.frameB)&&
+  std::isfinite(s.lower)&&std::isfinite(s.upper)&&s.lower<=s.upper&&std::isfinite(s.speed)&&std::isfinite(s.maxForce)&&s.maxForce>=0&&
+  std::isfinite(s.rest)&&std::isfinite(s.stiffness)&&s.stiffness>=0&&std::isfinite(s.damping)&&s.damping>=0&&std::isfinite(s.rotationalResistance)&&s.rotationalResistance>=0&&
+  (s.type!=JointType::Hinge||!s.limits||(s.lower>=-3.1415927f&&s.upper<=3.1415927f));
+--- a/src/PhysicsWorld.h
++++ b/src/PhysicsWorld.h
+@@ -613,6 +613,7 @@
+                                     float bodyMotionEnd = 1.0f,
+                                     const PhysicsQueryFilter* filter = nullptr) const;
+ 
++    void Stage0DropContactWarmCache();
+ private:
+     PhysicsCastHit Cast(const Shape& shape,const BodyTransform& pose,const glm::vec3& direction,float maximum,
+         const PhysicsQueryFilter& filter,PhysicsCastStats* stats) const;
+--- a/src/physics/WorldPersistence.cpp
++++ b/src/physics/WorldPersistence.cpp
+@@ -476,3 +476,6 @@
+         }
+     throw std::runtime_error("stale fracture solver history");
+ }
++
++// Diagnostic ablation only; never used by the candidate path.
++void PhysicsWorld::Stage0DropContactWarmCache(){m_impl->contactCache.clear();}
+--- a/src/physics/WorldSleep.cpp
++++ b/src/physics/WorldSleep.cpp
+@@ -144,6 +144,12 @@
+                               b->rigidBody.orientation * (s.anchorB - b->shape.pivotOffset)
+                         : s.anchorB;
+             auto error = pb - pa;
++            if (s.type == JointType::Stage0Planar) {
++                const auto normal = s.frameB * glm::vec3(0,0,1);
++                error = normal * glm::dot(error,normal);
++                const auto movingNormal = a->rigidBody.orientation * s.frameA * glm::vec3(0,0,1);
++                island.quiet &= glm::length(glm::cross(normal,movingNormal)) < .01f;
++            }
+             if (s.type == JointType::Slider) {
+                 auto axis = a->rigidBody.orientation * s.frameA * glm::vec3(1, 0, 0);
+                 error -= axis * glm::dot(error, axis);

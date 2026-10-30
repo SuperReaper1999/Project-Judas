@@ -1,0 +1,1 @@
+{"checks":74,"failures":0,"bodies":1024,"scope":"impulse response only; not MK2 steps","reduced_median_ms":0.00317349,"rows_median_ms":0.01794866,"reduced_worst_ms":0.0040811,"rows_worst_ms":0.02324133}

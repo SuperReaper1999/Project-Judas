@@ -1,0 +1,5 @@
+PASS exact anchor replacement
+PASS absent anchor rejects
+PASS duplicate anchor rejects
+PASS final driver generates byte-identical native sources
+PASS generated fixture copies match repository prototype bytes

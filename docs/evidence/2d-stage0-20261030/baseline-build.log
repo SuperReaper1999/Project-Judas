@@ -1,0 +1,65 @@
+-- The CXX compiler identification is GNU 15.2.0
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /usr/bin/c++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Performing Test CMAKE_HAVE_LIBC_PTHREAD
+-- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Success
+-- Found Threads: TRUE
+-- Configuring done (0.2s)
+-- Generating done (0.0s)
+-- Build files have been written to: /home/conner/Documents/GitHub/Project-Judas/.cache/planar2d-baseline-stage0/build-make
+[  2%] Building CXX object CMakeFiles/native_physics.dir/src/CollisionAsset.cpp.o
+[  5%] Building CXX object CMakeFiles/native_physics.dir/src/CollisionGeometry.cpp.o
+[  8%] Building CXX object CMakeFiles/native_physics.dir/third_party/quickhull/QuickHull.cpp.o
+[ 11%] Building CXX object CMakeFiles/native_physics.dir/src/JointSolver.cpp.o
+/home/conner/Documents/GitHub/Project-Judas/.cache/planar2d-baseline-stage0/source/third_party/quickhull/QuickHull.cpp: In instantiation of ‘quickhull::HalfEdgeMesh<FloatType, long unsigned int> quickhull::QuickHull<FloatType>::getConvexHullAsMesh(const FloatType*, size_t, bool, FloatType) [with FloatType = float; size_t = long unsigned int]’:
+/home/conner/Documents/GitHub/Project-Judas/.cache/planar2d-baseline-stage0/source/third_party/quickhull/QuickHull.cpp:511:17:   required from here
+  511 |         template class QuickHull<float>;
+      |                        ^~~~~~~~~~~~~~~~
+/home/conner/Documents/GitHub/Project-Judas/.cache/planar2d-baseline-stage0/source/third_party/quickhull/QuickHull.cpp:45:137: warning: unused parameter ‘CCW’ [-Wunused-parameter]
+   45 |         HalfEdgeMesh<FloatType, size_t> QuickHull<FloatType>::getConvexHullAsMesh(const FloatType* vertexData, size_t vertexCount, bool CCW, FloatType epsilon) {
+      |                                                                                                                                    ~~~~~^~~
+/home/conner/Documents/GitHub/Project-Judas/.cache/planar2d-baseline-stage0/source/third_party/quickhull/QuickHull.cpp: In instantiation of ‘quickhull::HalfEdgeMesh<FloatType, long unsigned int> quickhull::QuickHull<FloatType>::getConvexHullAsMesh(const FloatType*, size_t, bool, FloatType) [with FloatType = double; size_t = long unsigned int]’:
+/home/conner/Documents/GitHub/Project-Judas/.cache/planar2d-baseline-stage0/source/third_party/quickhull/QuickHull.cpp:512:17:   required from here
+  512 |         template class QuickHull<double>;
+      |                        ^~~~~~~~~~~~~~~~~
+/home/conner/Documents/GitHub/Project-Judas/.cache/planar2d-baseline-stage0/source/third_party/quickhull/QuickHull.cpp:45:137: warning: unused parameter ‘CCW’ [-Wunused-parameter]
+   45 |         HalfEdgeMesh<FloatType, size_t> QuickHull<FloatType>::getConvexHullAsMesh(const FloatType* vertexData, size_t vertexCount, bool CCW, FloatType epsilon) {
+      |                                                                                                                                    ~~~~~^~~
+[ 14%] Building CXX object CMakeFiles/native_physics.dir/src/PhysicsCastGeometry.cpp.o
+[ 17%] Building CXX object CMakeFiles/native_physics.dir/src/ImpactSolver.cpp.o
+[ 20%] Building CXX object CMakeFiles/native_physics.dir/src/RigidBody.cpp.o
+[ 22%] Building CXX object CMakeFiles/native_physics.dir/src/RigidRotation.cpp.o
+[ 25%] Building CXX object CMakeFiles/native_physics.dir/src/RigidBodyGravity.cpp.o
+[ 28%] Building CXX object CMakeFiles/native_physics.dir/src/Contacts.cpp.o
+[ 31%] Building CXX object CMakeFiles/native_physics.dir/src/ContactSolver.cpp.o
+[ 34%] Building CXX object CMakeFiles/native_physics.dir/src/RadialTerrain.cpp.o
+[ 37%] Building CXX object CMakeFiles/native_physics.dir/src/Broadphase.cpp.o
+[ 40%] Building CXX object CMakeFiles/native_physics.dir/src/Narrowphase.cpp.o
+[ 42%] Building CXX object CMakeFiles/native_physics.dir/src/JobSystem.cpp.o
+[ 45%] Building CXX object CMakeFiles/native_physics.dir/src/PerformanceProfiler.cpp.o
+[ 48%] Building CXX object CMakeFiles/native_physics.dir/src/PhysicsWorld.cpp.o
+[ 51%] Building CXX object CMakeFiles/native_physics.dir/src/physics/WorldBodies.cpp.o
+[ 54%] Building CXX object CMakeFiles/native_physics.dir/src/physics/WorldBounds.cpp.o
+[ 57%] Building CXX object CMakeFiles/native_physics.dir/src/physics/WorldCCDSearch.cpp.o
+[ 60%] Building CXX object CMakeFiles/native_physics.dir/src/physics/WorldConstraintBatch.cpp.o
+[ 62%] Building CXX object CMakeFiles/native_physics.dir/src/physics/WorldContacts.cpp.o
+[ 65%] Building CXX object CMakeFiles/native_physics.dir/src/physics/WorldMk2Solver.cpp.o
+[ 68%] Building CXX object CMakeFiles/native_physics.dir/src/physics/WorldJoints.cpp.o
+[ 71%] Building CXX object CMakeFiles/native_physics.dir/src/physics/WorldParticles.cpp.o
+[ 74%] Building CXX object CMakeFiles/native_physics.dir/src/physics/WorldPersistence.cpp.o
+[ 77%] Building CXX object CMakeFiles/native_physics.dir/src/physics/WorldQueries.cpp.o
+[ 80%] Building CXX object CMakeFiles/native_physics.dir/src/physics/WorldSleep.cpp.o
+[ 82%] Linking CXX static library libnative_physics.a
+[ 82%] Built target native_physics
+[ 85%] Building CXX object CMakeFiles/trajectory_3d.dir/Control3D.cpp.o
+[ 88%] Building CXX object CMakeFiles/existing_mk2.dir/tests/Mk2PhysicsTests.cpp.o
+[ 91%] Linking CXX executable trajectory_3d
+[ 91%] Built target trajectory_3d
+[ 94%] Building CXX object CMakeFiles/existing_rotation.dir/tests/Mk2RotationTests.cpp.o
+[ 97%] Linking CXX executable existing_mk2
+[ 97%] Built target existing_mk2
+[100%] Linking CXX executable existing_rotation
+[100%] Built target existing_rotation

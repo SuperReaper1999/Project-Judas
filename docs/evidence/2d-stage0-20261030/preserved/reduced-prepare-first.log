@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "/home/conner/Documents/GitHub/Project-Judas/tools/prototypes/planar2d_native_rows.py", line 103, in <module>
+    main()
+    ~~~~^^
+  File "/home/conner/Documents/GitHub/Project-Judas/tools/prototypes/planar2d_native_rows.py", line 62, in main
+    patch_reduced(source, change)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "/home/conner/Documents/GitHub/Project-Judas/tools/prototypes/planar2d_reduced_copy.py", line 83, in patch
+    raise RuntimeError("MK2 angular publication patch sites drifted")
+RuntimeError: MK2 angular publication patch sites drifted

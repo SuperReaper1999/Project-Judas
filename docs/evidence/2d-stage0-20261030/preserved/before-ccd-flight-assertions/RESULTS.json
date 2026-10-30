@@ -1,0 +1,272 @@
+{
+  "utc": "2026-10-30T16:26:07.354036+00:00",
+  "source_commit": "e2008d1e6f4ac3229b292724e5718f37e8d2e1ed",
+  "platform": "Linux-7.0.0-42-generic-x86_64-with-glibc2.43",
+  "runs": {
+    "baseline-trajectory": {
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/planar2d-baseline-stage0/build-make/trajectory_3d"
+      ],
+      "exit_code": 0,
+      "classification": "passing",
+      "log_sha256": "b1c4ef3d93e55c75a93a9acc76ad66d7f33168138d1c3ca46b12e5a34a434cab"
+    },
+    "rows-trajectory": {
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/planar2d-native-stage0/build-make/trajectory_3d"
+      ],
+      "exit_code": 0,
+      "classification": "passing",
+      "log_sha256": "b1c4ef3d93e55c75a93a9acc76ad66d7f33168138d1c3ca46b12e5a34a434cab"
+    },
+    "reduced-trajectory": {
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/planar2d-reduced-native-stage0/build-make/trajectory_3d"
+      ],
+      "exit_code": 0,
+      "classification": "passing",
+      "log_sha256": "b1c4ef3d93e55c75a93a9acc76ad66d7f33168138d1c3ca46b12e5a34a434cab"
+    },
+    "reduced-native-contracts": {
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/planar2d-reduced-native-stage0/build-make/native_rows"
+      ],
+      "exit_code": 0,
+      "classification": "passing",
+      "log_sha256": "c246992b7544be116fe0eacb87c336b85bf79ad3a4557a3efdf3bfb9f83ab9fd"
+    },
+    "rejected-native-rows": {
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/planar2d-native-stage0/build-make/native_rows"
+      ],
+      "exit_code": 1,
+      "classification": "preserved failing control",
+      "log_sha256": "278a32f344a7eabb43513dddb9b9e9f44ef1652ec5e96de476fc0e92462c9bbc"
+    },
+    "rows-impulse": {
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/planar2d-native-stage0/build-make/native_rows",
+        "impulse"
+      ],
+      "exit_code": 0,
+      "classification": "passing",
+      "log_sha256": "d39963065afe7e7b71c88831e9831050b807436c0e4046d655030aad451977e0"
+    },
+    "rows-ccd": {
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/planar2d-native-stage0/build-make/native_rows",
+        "ccd"
+      ],
+      "exit_code": 0,
+      "classification": "passing",
+      "log_sha256": "20dbc5d9594c4a2d6d2d2bce1bfc0adee89f5d829b46b5f708e213285df7dbf8"
+    },
+    "rows-sleep": {
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/planar2d-native-stage0/build-make/native_rows",
+        "sleep"
+      ],
+      "exit_code": 0,
+      "classification": "passing",
+      "log_sha256": "41ea5c76db7d1ba4ec67f213258e0f547b792dbdeb2df0cef5cfda8ad83402ab"
+    },
+    "rows-pair": {
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/planar2d-native-stage0/build-make/native_rows",
+        "pair"
+      ],
+      "exit_code": 0,
+      "classification": "passing",
+      "log_sha256": "cad88f4f2d0a918fbb61764d7352135e56c2630f847654d7f12d2d47fdded0de"
+    },
+    "rows-scaling": {
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/planar2d-native-stage0/build-make/native_rows",
+        "scaling"
+      ],
+      "exit_code": 0,
+      "classification": "passing",
+      "log_sha256": "004958785379c492d6ffa5f661b090fafe68b13a115c85be348cfda2bddbf7e4"
+    },
+    "legacy-hinge-counterexample": {
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/planar2d-reduced-native-stage0/build-make/legacy_hinge",
+        "legacy-hinge"
+      ],
+      "exit_code": 1,
+      "classification": "preserved failing control",
+      "log_sha256": "b675739c27b7147fec0c8e868d19e2d7fb60c89993beeac7b76b6860343d4d24"
+    },
+    "baseline-existing_mk2": {
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/planar2d-baseline-stage0/build-make/existing_mk2"
+      ],
+      "exit_code": 0,
+      "classification": "passing",
+      "log_sha256": "19e6749c442f6901f0f1c38bd77ed6a51b6f5be66bec1caff0c5ec279844452f"
+    },
+    "baseline-existing_rotation": {
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/planar2d-baseline-stage0/build-make/existing_rotation"
+      ],
+      "exit_code": 0,
+      "classification": "passing",
+      "log_sha256": "35f8b8da664abde00ae6e2a7519c5af8a1b3ddad443dc60c895cc3fbcf70baf5"
+    },
+    "reduced-existing_mk2": {
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/planar2d-reduced-native-stage0/build-make/existing_mk2"
+      ],
+      "exit_code": 0,
+      "classification": "passing",
+      "log_sha256": "19e6749c442f6901f0f1c38bd77ed6a51b6f5be66bec1caff0c5ec279844452f"
+    },
+    "reduced-existing_rotation": {
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/planar2d-reduced-native-stage0/build-make/existing_rotation"
+      ],
+      "exit_code": 0,
+      "classification": "passing",
+      "log_sha256": "35f8b8da664abde00ae6e2a7519c5af8a1b3ddad443dc60c895cc3fbcf70baf5"
+    },
+    "rows-cold-write": {
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/planar2d-native-stage0/build-make/native_rows",
+        "cold-write",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/planar2d-stage0-20261030/qualification-final/rows-cold"
+      ],
+      "exit_code": 0,
+      "classification": "passing",
+      "log_sha256": "278df58fffadc903c36487fa9635b8cf44ea717501b4653998fcc59159811e45"
+    },
+    "rows-cold-physical": {
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/planar2d-native-stage0/build-make/native_rows",
+        "cold-physical",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/planar2d-stage0-20261030/qualification-final/rows-cold"
+      ],
+      "exit_code": 0,
+      "classification": "passing",
+      "log_sha256": "9646577054b6d8f6489c458c42933869760a98f670d9d14a39350ea6f5da11fd"
+    },
+    "rows-cold-strict": {
+      "exit_code": 1,
+      "classification": "preserved strict identity limitation",
+      "first_divergent_completed_step": 1
+    },
+    "reduced-cold-write": {
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/planar2d-reduced-native-stage0/build-make/native_rows",
+        "cold-write",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/planar2d-stage0-20261030/qualification-final/reduced-cold"
+      ],
+      "exit_code": 0,
+      "classification": "passing",
+      "log_sha256": "037604a5f97fe2896e8d28fae7414a675ec9ba21020ebb1ce8231f36df29eef1"
+    },
+    "reduced-cold-physical": {
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/planar2d-reduced-native-stage0/build-make/native_rows",
+        "cold-physical",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/planar2d-stage0-20261030/qualification-final/reduced-cold"
+      ],
+      "exit_code": 0,
+      "classification": "passing",
+      "log_sha256": "2373698dfbd3f5be3a39a1724fb9c1f7588d84a58767c052984aed81d8517953"
+    },
+    "reduced-cold-strict": {
+      "exit_code": 1,
+      "classification": "preserved strict identity limitation",
+      "first_divergent_completed_step": 1
+    },
+    "rows-cold3d-write": {
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/planar2d-native-stage0/build-make/native_rows",
+        "cold3d-write",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/planar2d-stage0-20261030/qualification-final/rows-cold3d"
+      ],
+      "exit_code": 0,
+      "classification": "passing",
+      "log_sha256": "6b34d1fb77ee592f0ba55f1e06b50a843297f61a504169c48f4a98d9f5a5d381"
+    },
+    "rows-cold3d-physical": {
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/planar2d-native-stage0/build-make/native_rows",
+        "cold3d-physical",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/planar2d-stage0-20261030/qualification-final/rows-cold3d"
+      ],
+      "exit_code": 0,
+      "classification": "passing",
+      "log_sha256": "229464d5d244e0823ea756a4911c80c90d49a6bdafc4f77a5e98cbf39f232968"
+    },
+    "rows-cold3d-strict": {
+      "exit_code": 1,
+      "classification": "preserved strict identity limitation",
+      "first_divergent_completed_step": 1
+    },
+    "rows-ablation-write": {
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/planar2d-native-stage0/build-make/native_rows",
+        "cold3d-write",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/planar2d-stage0-20261030/qualification-final/rows-ablation",
+        "--ablate-warm"
+      ],
+      "exit_code": 0,
+      "classification": "passing",
+      "log_sha256": "6b34d1fb77ee592f0ba55f1e06b50a843297f61a504169c48f4a98d9f5a5d381"
+    },
+    "rows-ablation-read": {
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/planar2d-native-stage0/build-make/native_rows",
+        "cold3d-read",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/planar2d-stage0-20261030/qualification-final/rows-ablation",
+        "--ablate-warm"
+      ],
+      "exit_code": 0,
+      "classification": "passing",
+      "log_sha256": "fb20222ef31e056f22481e0c014e1e30c160719682445ed3b3840c990020ca18"
+    },
+    "reduced-ablation-write": {
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/planar2d-reduced-native-stage0/build-make/native_rows",
+        "cold-write",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/planar2d-stage0-20261030/qualification-final/reduced-ablation",
+        "--ablate-warm"
+      ],
+      "exit_code": 0,
+      "classification": "passing",
+      "log_sha256": "e2688a48c439ef9b2627f163146c1ededa5c65727a6bdb8224727fadfaaf9980"
+    },
+    "reduced-ablation-read": {
+      "command": [
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/planar2d-reduced-native-stage0/build-make/native_rows",
+        "cold-read",
+        "/home/conner/Documents/GitHub/Project-Judas/.cache/planar2d-stage0-20261030/qualification-final/reduced-ablation",
+        "--ablate-warm"
+      ],
+      "exit_code": 0,
+      "classification": "passing",
+      "log_sha256": "375e68254ef63cad6dae9a87060d5b307f83c2f16051d3861dcf8197c06a7f9f"
+    }
+  },
+  "scope": "Private prototype, not shipped 2D components or gameplay",
+  "three_dimensional_trajectory_digests": {
+    "baseline": "f67106f8392d2826",
+    "rows": "f67106f8392d2826",
+    "reduced": "f67106f8392d2826"
+  },
+  "binary_sha256": {
+    "baseline/existing_rotation": "4102c611a55f775b5da57c9d06c0bae38d91123efe533506b9ff4b58261bc017",
+    "baseline/trajectory_3d": "c4836f62e4eb70150351ecbc1be64f52a9befa13add4fd46a059a7709e05e0cd",
+    "baseline/existing_mk2": "3c730232cfd4b6c7081c18b8a4710ccd7598766cf72d90cd50c0cffb3ba7f441",
+    "rows/native_rows": "abe66f07da696f791eb97d73fa0de85ccef1335c997aeb9dfd6d09cad5d44f12",
+    "rows/existing_rotation": "670c1fe9f83737b1e1be93cb4b073b83a2178b7d0d00c94f3fd4b712f7ce0355",
+    "rows/trajectory_3d": "9f507f9bdea924f74afadc300df45518378e1fd91dd39d17182b8385bb576c9e",
+    "rows/existing_mk2": "992826a92b1cbee184862f04d42744440ca91b59dadb32ac7fb8a28972b01e57",
+    "reduced/native_rows": "1af867c1aebc0e88c9c14853e1e05160bc17b8e0fd1fdbf5fb1dabf7ff52da9e",
+    "reduced/legacy_hinge": "20e474663e8040bdb60512a516a0e466e9031328b21593d9e41dccee732d9da4",
+    "reduced/existing_rotation": "df1aa7d4316dae53ada3a75fa4d3767f9bf651d1a80aa3d543da8ffa9e087689",
+    "reduced/trajectory_3d": "3769327ea7476d97f9d5ee3a8d2e9cbff5489bab29b8fb748fdc414423e276b2",
+    "reduced/existing_mk2": "c634a16ab47bd87fc5b7575a8a86af979039cfe72d710847bf5be906eeb10aee"
+  }
+}

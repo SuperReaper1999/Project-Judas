@@ -1,0 +1,3 @@
+direct_impulse_before_step forbidden_vz=3 forbidden_spin=7.94805622
+after_120_steps z=0 vz=0 spin_xy=0 x=1.99999881 y=3.99999762
+checks=4 failures=0

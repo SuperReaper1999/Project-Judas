@@ -1,0 +1,16 @@
+CMake Error: Error: generator : Unix Makefiles
+Does not match the generator used previously: Ninja
+Either remove the CMakeCache.txt file and CMakeFiles directory or choose a different binary directory.
+Traceback (most recent call last):
+  File "/home/conner/Documents/GitHub/Project-Judas/tools/prototypes/planar2d_native_rows.py", line 88, in <module>
+    main()
+    ~~~~^^
+  File "/home/conner/Documents/GitHub/Project-Judas/tools/prototypes/planar2d_native_rows.py", line 81, in main
+    subprocess.run(["cmake", "-S", str(source), "-B", str(output / "build"), "-G", "Unix Makefiles",
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                    "-DCMAKE_BUILD_TYPE=Release"], check=True)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.14/subprocess.py", line 578, in run
+    raise CalledProcessError(retcode, process.args,
+                             output=stdout, stderr=stderr)
+subprocess.CalledProcessError: Command '['cmake', '-S', '/home/conner/Documents/GitHub/Project-Judas/.cache/planar2d-native-stage0/source', '-B', '/home/conner/Documents/GitHub/Project-Judas/.cache/planar2d-native-stage0/build', '-G', 'Unix Makefiles', '-DCMAKE_BUILD_TYPE=Release']' returned non-zero exit status 1.

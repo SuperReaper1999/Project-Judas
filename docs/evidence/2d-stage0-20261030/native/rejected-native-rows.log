@@ -1,0 +1,8 @@
+direct_impulse_before_step forbidden_vz=3 forbidden_spin=7.94805622
+after_120_steps z=0 vz=0 spin_xy=0 x=1.99999881 y=3.99999762
+wall_corner speed=5 max_xy=1.74999976 plane=0 forbidden=0 energy_ratio=1 CCD_responses=2
+wall_corner speed=150 max_xy=0.999999821 plane=0 forbidden=0 energy_ratio=1 CCD_responses=2
+support rotated=0 plane=0 tilt=0 height=0.300000012 asleep=1
+support rotated=1 plane=5.96046448e-08 tilt=0 height=0.300000012 asleep=1
+offcentre_floor plane=0.000169847815 tilt=0.00102628209 speed=0
+FAIL after 28 checks: off-centre floor response stays planar

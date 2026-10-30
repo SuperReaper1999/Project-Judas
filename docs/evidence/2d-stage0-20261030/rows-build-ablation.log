@@ -1,0 +1,30 @@
+-- Configuring done (0.0s)
+-- Generating done (0.0s)
+-- Build files have been written to: /home/conner/Documents/GitHub/Project-Judas/.cache/planar2d-native-stage0/build-make
+[  2%] Building CXX object CMakeFiles/native_physics.dir/src/PhysicsCastGeometry.cpp.o
+[  5%] Building CXX object CMakeFiles/native_physics.dir/src/PhysicsWorld.cpp.o
+[  8%] Building CXX object CMakeFiles/native_physics.dir/src/physics/WorldBodies.cpp.o
+[ 10%] Building CXX object CMakeFiles/native_physics.dir/src/physics/WorldBounds.cpp.o
+[ 13%] Building CXX object CMakeFiles/native_physics.dir/src/physics/WorldCCDSearch.cpp.o
+[ 16%] Building CXX object CMakeFiles/native_physics.dir/src/physics/WorldConstraintBatch.cpp.o
+[ 18%] Building CXX object CMakeFiles/native_physics.dir/src/physics/WorldContacts.cpp.o
+[ 21%] Building CXX object CMakeFiles/native_physics.dir/src/physics/WorldMk2Solver.cpp.o
+[ 24%] Building CXX object CMakeFiles/native_physics.dir/src/physics/WorldJoints.cpp.o
+[ 27%] Building CXX object CMakeFiles/native_physics.dir/src/physics/WorldParticles.cpp.o
+[ 29%] Building CXX object CMakeFiles/native_physics.dir/src/physics/WorldPersistence.cpp.o
+[ 32%] Building CXX object CMakeFiles/native_physics.dir/src/physics/WorldQueries.cpp.o
+[ 35%] Building CXX object CMakeFiles/native_physics.dir/src/physics/WorldSleep.cpp.o
+[ 37%] Linking CXX static library libnative_physics.a
+[ 78%] Built target native_physics
+[ 81%] Building CXX object CMakeFiles/native_rows.dir/NativeRows.cpp.o
+[ 83%] Building CXX object CMakeFiles/trajectory_3d.dir/Control3D.cpp.o
+[ 86%] Linking CXX executable trajectory_3d
+[ 86%] Built target trajectory_3d
+[ 89%] Building CXX object CMakeFiles/existing_mk2.dir/tests/Mk2PhysicsTests.cpp.o
+[ 91%] Linking CXX executable native_rows
+[ 91%] Built target native_rows
+[ 94%] Building CXX object CMakeFiles/existing_rotation.dir/tests/Mk2RotationTests.cpp.o
+[ 97%] Linking CXX executable existing_mk2
+[ 97%] Built target existing_mk2
+[100%] Linking CXX executable existing_rotation
+[100%] Built target existing_rotation

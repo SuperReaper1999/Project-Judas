@@ -1,0 +1,3 @@
+wall_corner speed=5 max_xy=1.74999976 plane=0 forbidden=0 energy_ratio=1 CCD_responses=2
+wall_corner speed=150 max_xy=0.999999821 plane=0 forbidden=0 energy_ratio=1 CCD_responses=2
+checks=9 failures=0

@@ -1,0 +1,477 @@
+--- a/src/JointSolver.cpp
++++ b/src/JointSolver.cpp
+@@ -28,7 +28,7 @@
+  }
+  slots[bucket]=pointer;++used;return true;
+ }
+-void JointSolver::Apply(Row& r,float p){r.a->linearVelocity+=r.linearA*(p*r.a->inverseMass);r.b->linearVelocity+=r.linearB*(p*r.b->inverseMass);
++void JointSolver::Apply(Row& r,float p){r.a->linearVelocity+=(r.a->Stage0Planar()?r.a->LinearResponse(r.linearA*p):r.linearA*(p*r.a->inverseMass));r.b->linearVelocity+=(r.b->Stage0Planar()?r.b->LinearResponse(r.linearB*p):r.linearB*(p*r.b->inverseMass));
+  r.a->angularVelocity+=r.inertiaA*r.angularA*p;r.b->angularVelocity+=r.inertiaB*r.angularB*p;}
+ void JointSolver::Prepare(const std::vector<JointInput>& inputs,float dt,bool warm,bool impact,bool append,float positionalRate,bool warmEqualityOnly,bool projection,float speculativeRate){
+  if(projection)warm=false;
+@@ -43,14 +43,14 @@
+   for(auto* body:{&a,&b})if(m_bodyMembership.Insert(body))m_bodies.push_back(body);
+   glm::quat qa=glm::normalize(a.orientation),qb=glm::normalize(b.orientation),fa=qa*glm::normalize(s.frameA),fb=qb*glm::normalize(s.frameB);
+   auto basis=glm::mat3_cast(fa);auto ra=qa*(s.anchorA-input.pivotOffsetA),rb=qb*(s.anchorB-input.pivotOffsetB),delta=(b.position-a.position)+rb-ra;
+-  auto ia=a.InverseInertiaWorld(),ib=b.InverseInertiaWorld();int index=0;float rowRate=positionalRate;
++  auto ia=a.ResponseInertiaWorld(),ib=b.ResponseInertiaWorld();int index=0;float rowRate=positionalRate;
+   auto row=[&](glm::vec3 la,glm::vec3 lb,glm::vec3 aa,glm::vec3 ab,float error,float low=-std::numeric_limits<float>::infinity(),float high=std::numeric_limits<float>::infinity(),bool soft=false,bool motor=false,bool resistance=false){
+    if(projection&&(soft||motor||resistance))return;
+    float gamma=0,bias=impact?0:rowRate*error/dt;
+    if(soft){float denominator=dt*(s.damping+dt*s.stiffness);if(denominator<=0)return;gamma=1/denominator;bias=error*dt*s.stiffness*gamma;}
+    if(resistance){gamma=1/(dt*s.rotationalResistance);bias=0;}
+    if(motor)bias=-s.speed;
+-   float k=a.inverseMass*glm::dot(la,la)+b.inverseMass*glm::dot(lb,lb)+glm::dot(aa,ia*aa)+glm::dot(ab,ib*ab);
++   float k=(a.Stage0Planar()||b.Stage0Planar()?glm::dot(la,a.LinearResponse(la))+glm::dot(lb,b.LinearResponse(lb)):a.inverseMass*glm::dot(la,la)+b.inverseMass*glm::dot(lb,lb))+glm::dot(aa,ia*aa)+glm::dot(ab,ib*ab);
+    if(k+gamma<=0)return;
+    const bool equality=!soft&&!motor&&!resistance&&std::isinf(low)&&std::isinf(high);
+    float* cache=impact||projection?nullptr:&(*input.warm)[index];float lambda=warm&&(!warmEqualityOnly||equality)&&cache?std::clamp(*cache,low,high):0;
+@@ -83,13 +83,29 @@
+     auto la=angularAxis?glm::vec3(0):-n,lb=angularAxis?glm::vec3(0):n;
+     auto aa=angularAxis?-n:-glm::cross(ra,n)+glm::cross(n,delta),ab=angularAxis?n:glm::cross(rb,n);
+     float gamma=1/(dt*(damping+dt*k)),bias=error*dt*k*gamma;
+-    float effective=a.inverseMass*glm::dot(la,la)+b.inverseMass*glm::dot(lb,lb)+glm::dot(aa,ia*aa)+glm::dot(ab,ib*ab);
++    float effective=(a.Stage0Planar()||b.Stage0Planar()?glm::dot(la,a.LinearResponse(la))+glm::dot(lb,b.LinearResponse(lb)):a.inverseMass*glm::dot(la,la)+b.inverseMass*glm::dot(lb,lb))+glm::dot(aa,ia*aa)+glm::dot(ab,ib*ab);
+     auto* cache=&(*input.warm)[index++];float lambda=warm&&!warmEqualityOnly?*cache:0;
+     m_rows.push_back({&a,&b,la,lb,aa,ab,ia,ib,1/(effective+gamma),bias,gamma,-inf,inf,lambda,cache,nullptr,input.state});
+     if(lambda!=0){if(!input.impulsesApplied)Apply(m_rows.back(),lambda);input.state->reactionImpulse+=la*lambda;input.state->reactionAngularImpulse+=aa*lambda;}
+    };
+    for(int k=0;k<3;++k)materialRow(basis[k],local[k]-constitutive.translation[k],m.stiffness,m.damping,false);
+    for(int k=0;k<3;++k)materialRow(basis[k],angle[k]-constitutive.rotation[k],m.angularStiffness,m.angularDamping,true);
++   continue;
++  }
++  if(s.type==JointType::Stage0Planar){
++   // Experimental native rows: a fixed world plane through the COM. No
++   // tangential restriction, no hidden carrier/anchor body and no pose clamps.
++   const auto fixed=glm::mat3_cast(fb);
++   const auto normal=fixed[2];
++   row(-normal,normal,{0,0,0},{0,0,0},glm::dot(delta,normal));
++   const auto error=glm::cross(basis[2],normal);
++   for(int k=0;k<2;++k)angular(fixed[k],glm::dot(error,fixed[k]));
++   continue;
++  }
++  if(s.type==JointType::Stage0Pin){
++   // A real planar point constraint has TWO translational rows and no
++   // approximate 3D angular alignment rows. Reuses the same native solve.
++   for(int k=0;k<2;++k)linear(basis[k],glm::dot(delta,basis[k]));
+    continue;
+   }
+   if(s.type==JointType::Slider){
+--- a/src/JointTypes.h
++++ b/src/JointTypes.h
+@@ -4,7 +4,7 @@
+ #include <glm/gtc/quaternion.hpp>
+ #include <cmath>
+ #include <initializer_list>
+-enum class JointType {Fixed,Hinge,Ball,Slider};
++enum class JointType {Fixed,Hinge,Ball,Slider,Stage0Planar,Stage0Pin};
+ struct JointSettings {
+     JointType type=JointType::Fixed;
+     BodyHandle bodyA,bodyB; // invalid B means a world anchor, never invalid A
+@@ -46,7 +46,7 @@
+ inline bool ValidJointSettings(const JointSettings& s){
+  auto finite=[](glm::vec3 v){return std::isfinite(v.x)&&std::isfinite(v.y)&&std::isfinite(v.z);};
+  auto quat=[&](glm::quat q){return finite({q.x,q.y,q.z})&&std::isfinite(q.w)&&glm::dot(q,q)>1e-12f&&std::isfinite(glm::dot(q,q));};
+- return int(s.type)>=0&&int(s.type)<=3&&finite(s.anchorA)&&finite(s.anchorB)&&quat(s.frameA)&&quat(s.frameB)&&
++ return int(s.type)>=0&&int(s.type)<=5&&finite(s.anchorA)&&finite(s.anchorB)&&quat(s.frameA)&&quat(s.frameB)&&
+  std::isfinite(s.lower)&&std::isfinite(s.upper)&&s.lower<=s.upper&&std::isfinite(s.speed)&&std::isfinite(s.maxForce)&&s.maxForce>=0&&
+  std::isfinite(s.rest)&&std::isfinite(s.stiffness)&&s.stiffness>=0&&std::isfinite(s.damping)&&s.damping>=0&&std::isfinite(s.rotationalResistance)&&s.rotationalResistance>=0&&
+  (s.type!=JointType::Hinge||!s.limits||(s.lower>=-3.1415927f&&s.upper<=3.1415927f));
+--- a/src/PhysicsWorld.h
++++ b/src/PhysicsWorld.h
+@@ -613,6 +613,8 @@
+                                     float bodyMotionEnd = 1.0f,
+                                     const PhysicsQueryFilter* filter = nullptr) const;
+ 
++    bool Stage0ConfigurePlane(BodyHandle,glm::vec3 normal);
++    void Stage0DropContactWarmCache();
+ private:
+     PhysicsCastHit Cast(const Shape& shape,const BodyTransform& pose,const glm::vec3& direction,float maximum,
+         const PhysicsQueryFilter& filter,PhysicsCastStats* stats) const;
+--- a/src/RigidBody.cpp
++++ b/src/RigidBody.cpp
+@@ -122,10 +122,10 @@
+         body.ClearAccumulators();
+         return;
+     }
+-    const glm::vec3 linearAcceleration = body.forceAccumulator * body.inverseMass;
++    const glm::vec3 linearAcceleration = body.LinearResponse(body.forceAccumulator);
+     body.linearVelocity += linearAcceleration * fixedDeltaTime;
+     // The world inertia uses the start-of-step orientation, as it always has.
+-    const glm::mat3 inverseInertiaWorld = body.InverseInertiaWorld();
++    const glm::mat3 inverseInertiaWorld = body.ResponseInertiaWorld();
+     const glm::vec3 angularAcceleration = inverseInertiaWorld * body.torqueAccumulator;
+     body.angularVelocity += angularAcceleration * fixedDeltaTime;
+     body.ClearAccumulators();
+@@ -134,11 +134,11 @@
+ void IntegrateRigidBodyPosition(RigidBody& body, float fixedDeltaTime) {
+     if (body.IsStatic()) return;
+     body.position += body.linearVelocity * fixedDeltaTime;
+-    const auto generator=AngularDriftGenerator(body.inverseInertiaLocal,body.orientation,body.angularVelocity,fixedDeltaTime);
++    const auto generator=body.Stage0Planar()?body.angularVelocity:AngularDriftGenerator(body.inverseInertiaLocal,body.orientation,body.angularVelocity,fixedDeltaTime);
+     const glm::quat angularVelocityQuat(0.0f,generator.x,generator.y,generator.z);
+     const glm::quat orientationDelta = angularVelocityQuat * body.orientation;
+     const auto previous=body.orientation;
+     const auto advanced=body.orientation + orientationDelta * (0.5f * fixedDeltaTime);
+     if(advanced!=previous)body.orientation=glm::normalize(advanced);
+-    body.angularVelocity=TransportAngularVelocity(body.inverseInertiaLocal,previous,body.orientation,body.angularVelocity);
++    if(!body.Stage0Planar())body.angularVelocity=TransportAngularVelocity(body.inverseInertiaLocal,previous,body.orientation,body.angularVelocity);
+ }
+--- a/src/RigidBody.h
++++ b/src/RigidBody.h
+@@ -28,6 +28,21 @@
+     glm::vec3 linearVelocity{0.0f};
+     glm::vec3 angularVelocity{0.0f};
+ 
++    // Disposable reduced-motion experiment; absent from production RigidBody.
++    float stage0InverseIz = 0;
++    glm::vec3 stage0Normal{0,0,1};
++    bool Stage0Planar() const { return stage0InverseIz > 0; }
++    glm::vec3 LinearResponse(glm::vec3 impulse) const {
++        if (!Stage0Planar()) return impulse * inverseMass;
++        return (impulse-stage0Normal*glm::dot(stage0Normal,impulse))*inverseMass;
++    }
++    glm::mat3 ResponseInertiaWorld() const {
++        return Stage0Planar() ? glm::outerProduct(stage0Normal,stage0Normal)*stage0InverseIz : InverseInertiaWorld();
++    }
++    double Stage0Energy() const {
++        const double spin=glm::dot(glm::dvec3(stage0Normal),glm::dvec3(angularVelocity));
++        return .5*glm::dot(glm::dvec3(linearVelocity),glm::dvec3(linearVelocity))/inverseMass + .5*spin*spin/stage0InverseIz;
++    }
+     float inverseMass = 0.0f;
+     glm::mat3 inverseInertiaLocal{0.0f};  // body-space; rotated into world space per use.
+ 
+@@ -53,11 +68,11 @@
+     // resolution, which this engine's contact solver will use.
+     void ApplyLinearImpulse(const glm::vec3& impulse) {
+         if (IsStatic()) return;
+-        linearVelocity += impulse * inverseMass;
++        linearVelocity += LinearResponse(impulse);
+     }
+     void ApplyAngularImpulse(const glm::vec3& angularImpulse) {
+         if (IsStatic()) return;
+-        angularVelocity += InverseInertiaWorld() * angularImpulse;
++        angularVelocity += ResponseInertiaWorld() * angularImpulse;
+     }
+     void ApplyImpulseAtPoint(const glm::vec3& impulse, const glm::vec3& worldPoint) {
+         ApplyLinearImpulse(impulse);
+--- a/src/RigidMotion.h
++++ b/src/RigidMotion.h
+@@ -18,6 +18,7 @@
+ struct RigidMotionSegment {
+     unsigned int owner = 0;
+     double begin = 0, end = 0;
++    float stage0InverseIz=0; glm::vec3 stage0Normal{0,0,1};
+     float inverseMass = 0;
+     glm::mat3 inverseInertiaLocal{0};
+     glm::vec3 position{0}, linearVelocity{0}, angularVelocity{0},driftAngularVelocity{0};
+@@ -69,11 +70,12 @@
+     RigidBody Evaluate(double time) const {
+         const auto geometry=EvaluateGeometry(time);
+         RigidBody result;
++        result.stage0InverseIz=stage0InverseIz;result.stage0Normal=stage0Normal;
+         result.inverseMass=inverseMass;result.inverseInertiaLocal=inverseInertiaLocal;
+         result.position=geometry.position;result.orientation=geometry.orientation;
+         result.linearVelocity=hasPhysicalLinearVelocity ? physicalLinearVelocity : geometry.linearVelocity;
+         result.angularVelocity=angularVelocity;
+-        if(!prescribed&&!result.IsStatic())
++        if(!prescribed&&!result.IsStatic()&&!result.Stage0Planar())
+             result.angularVelocity=TransportAngularVelocity(inverseInertiaLocal,orientation,result.orientation,angularVelocity);
+         return result;
+     }
+@@ -150,9 +152,10 @@
+             return;
+         }
+         RigidMotionSegment s;
++        s.stage0InverseIz=body.stage0InverseIz;s.stage0Normal=body.stage0Normal;
+         s.inverseMass=body.inverseMass;s.inverseInertiaLocal=body.inverseInertiaLocal; s.prescribed=prescribed; s.exactRotation=exactRotation; s.owner=owner; s.begin=begin; s.end=end; s.position=body.position;
+         s.orientation=body.orientation; s.linearVelocity=body.linearVelocity; s.angularVelocity=body.angularVelocity;
+-        s.driftAngularVelocity=prescribed?body.angularVelocity:AngularDriftGenerator(body.inverseInertiaLocal,body.orientation,body.angularVelocity,static_cast<float>(end-begin));
++        s.driftAngularVelocity=prescribed||body.Stage0Planar()?body.angularVelocity:AngularDriftGenerator(body.inverseInertiaLocal,body.orientation,body.angularVelocity,static_cast<float>(end-begin));
+         const auto pose=s.EvaluateGeometry(end); s.endPosition=pose.position; s.endOrientation=pose.orientation;
+         segments.push_back(s);
+     }
+--- a/src/RigidRotation.cpp
++++ b/src/RigidRotation.cpp
+@@ -8,6 +8,7 @@
+ constexpr unsigned kMaximumLeaves = 512;
+ 
+ bool Principal(const RigidBody& body) {
++    if(body.Stage0Planar())return true;
+     const glm::dmat3 inverse(body.inverseInertiaLocal);
+     if (!(glm::determinant(inverse) > 0)) return true;
+     if (inverse[0][0] == inverse[1][1] && inverse[1][1] == inverse[2][2] &&
+@@ -24,6 +25,7 @@
+     segment.owner = owner;
+     segment.begin = begin;
+     segment.end = end;
++    segment.stage0InverseIz=body.stage0InverseIz;segment.stage0Normal=body.stage0Normal;
+     segment.inverseMass = body.inverseMass;
+     segment.inverseInertiaLocal = body.inverseInertiaLocal;
+     segment.position = body.position;
+--- a/src/physics/WorldBodies.cpp
++++ b/src/physics/WorldBodies.cpp
+@@ -381,14 +381,15 @@
+         return;
+     if (body->sleeping && glm::length(acceleration - body->lastAcceleration) > 1e-5f)
+         m_impl->Wake(handle.id & Impl::kSlotMask);
+-    body->lastAcceleration = acceleration;
++    body->lastAcceleration = body->rigidBody.Stage0Planar()?body->rigidBody.LinearResponse(acceleration)/body->rigidBody.inverseMass:acceleration;
+     if (body->sleeping) {
+         body->deferredAcceleration = true;
+         return;
+     }
+     body->deferredAcceleration = false;
+-    body->rigidBody.linearVelocity += acceleration * fixedDeltaTime;
+-    body->stepVelocityDelta += acceleration * fixedDeltaTime;
++    const auto change=body->rigidBody.Stage0Planar()?body->rigidBody.LinearResponse(acceleration)/body->rigidBody.inverseMass*fixedDeltaTime:acceleration*fixedDeltaTime;
++    body->rigidBody.linearVelocity += change;
++    body->stepVelocityDelta += change;
+ }
+ 
+ void PhysicsWorld::ApplyForce(BodyHandle handle, const glm::vec3 &force) {
+@@ -656,6 +657,7 @@
+ void PhysicsWorld::SetLinearVelocity(BodyHandle handle, const glm::vec3 &velocity) {
+     Impl::Body *body = m_impl->Get(handle);
+     if (body) {
++        if(body->rigidBody.Stage0Planar()&&std::abs(glm::dot(body->rigidBody.stage0Normal,velocity))>1e-5f)throw std::invalid_argument("Stage0 planar velocity outside authored motion space");
+         if (velocity != body->rigidBody.linearVelocity)
+             m_impl->Wake(handle.id & Impl::kSlotMask);
+         body->rigidBody.linearVelocity = velocity;
+@@ -726,6 +728,7 @@
+ void PhysicsWorld::SetAngularVelocity(BodyHandle handle, const glm::vec3 &angularVelocity) {
+     Impl::Body *body = m_impl->Get(handle);
+     if (body) {
++        if(body->rigidBody.Stage0Planar()&&glm::length(glm::cross(body->rigidBody.stage0Normal,angularVelocity))>1e-5f)throw std::invalid_argument("Stage0 planar angular velocity outside authored motion space");
+         if (angularVelocity != body->rigidBody.angularVelocity)
+             m_impl->Wake(handle.id & Impl::kSlotMask);
+         body->rigidBody.angularVelocity = angularVelocity;
+@@ -1046,3 +1049,18 @@
+     remove(m_impl->completedContactObservations);
+     return true;
+ }
++
++bool PhysicsWorld::Stage0ConfigurePlane(BodyHandle handle,glm::vec3 normal) {
++    auto* body=m_impl->Get(handle);
++    if(!body||!body->isDynamic||!FiniteVector(normal)||glm::length(normal)<.99f)return false;
++    normal=glm::normalize(normal);
++    if(glm::length(glm::cross(normal,body->rigidBody.orientation*glm::vec3(0,0,1)))>1e-5f)return false;
++    if(std::abs(glm::dot(normal,body->rigidBody.linearVelocity))>1e-5f||
++       glm::length(glm::cross(normal,body->rigidBody.angularVelocity))>1e-5f)return false;
++    const auto physicalInertia=glm::inverse(body->rigidBody.InverseInertiaWorld());
++    const float iz=glm::dot(normal,physicalInertia*normal);
++    if(!(iz>0)||!std::isfinite(iz))return false;
++    body->rigidBody.stage0Normal=normal;
++    body->rigidBody.stage0InverseIz=1/iz;
++    return true;
++}
+--- a/src/physics/WorldJoints.cpp
++++ b/src/physics/WorldJoints.cpp
+@@ -43,6 +43,11 @@
+     if (!a || (settings.bodyB.IsValid() && !b) || (b && a == b) ||
+         (a->rigidBody.IsStatic() && (!b || b->rigidBody.IsStatic())))
+         return {};
++    if(a->rigidBody.Stage0Planar()||(b&&b->rigidBody.Stage0Planar())) {
++        if(settings.type!=JointType::Stage0Pin)return {};
++        if(b&&(!a->rigidBody.Stage0Planar()||!b->rigidBody.Stage0Planar()||
++           glm::dot(a->rigidBody.stage0Normal,b->rigidBody.stage0Normal)<.99999f))return {};
++    }
+     static std::atomic<std::uint64_t> next{1};
+     JointHandle handle{next.fetch_add(1)};
+     Wake(settings.bodyA);
+--- a/src/physics/WorldMk2Solver.cpp
++++ b/src/physics/WorldMk2Solver.cpp
+@@ -294,17 +294,18 @@
+ float InverseMassAlong(const SolverBody &a, const SolverBody &b, const glm::vec3 &rA,
+                        const glm::vec3 &rB, const glm::vec3 &d) {
+     const glm::vec3 ra = glm::cross(rA, d), rb = glm::cross(rB, d);
+-    return a.invMass + b.invMass + glm::dot(ra, a.invI * ra) + glm::dot(rb, b.invI * rb);
++    const float translation=(a.rb->Stage0Planar()||b.rb->Stage0Planar())?glm::dot(d,(a.dynamic?a.rb->LinearResponse(d):glm::vec3(0))+(b.dynamic?b.rb->LinearResponse(d):glm::vec3(0))):a.invMass+b.invMass;
++    return translation + glm::dot(ra, a.invI * ra) + glm::dot(rb, b.invI * rb);
+ }
+ 
+ void Apply(SolverBody &a, SolverBody &b, const glm::vec3 &rA, const glm::vec3 &rB,
+            const glm::vec3 &impulse) {
+     if (a.dynamic) {
+-        a.rb->linearVelocity += impulse * a.invMass;
++        a.rb->linearVelocity += a.rb->LinearResponse(impulse);
+         a.rb->angularVelocity += a.invI * glm::cross(rA, impulse);
+     }
+     if (b.dynamic) {
+-        b.rb->linearVelocity -= impulse * b.invMass;
++        b.rb->linearVelocity -= b.rb->LinearResponse(impulse);
+         b.rb->angularVelocity -= b.invI * glm::cross(rB, impulse);
+     }
+ }
+@@ -320,11 +321,11 @@
+ void ApplyAxis(SolverBody &a, SolverBody &b, const glm::vec3 &d, const glm::vec3 &responseA,
+                const glm::vec3 &responseB, float impulse) {
+     if (a.dynamic) {
+-        a.rb->linearVelocity += d * (a.invMass * impulse);
++        a.rb->linearVelocity += (a.rb->Stage0Planar()?a.rb->LinearResponse(d * impulse):d*(a.invMass*impulse));
+         a.rb->angularVelocity += responseA * impulse;
+     }
+     if (b.dynamic) {
+-        b.rb->linearVelocity -= d * (b.invMass * impulse);
++        b.rb->linearVelocity -= (b.rb->Stage0Planar()?b.rb->LinearResponse(d * impulse):d*(b.invMass*impulse));
+         b.rb->angularVelocity -= responseB * impulse;
+     }
+ }
+@@ -368,7 +369,7 @@
+             const auto &rx = rows[block.first + x], &ry = rows[block.first + y];
+             const auto &A = state[rx.a], &B = state[rx.b];
+             // Exact mirror symmetry is required by the LCP factorization.
+-            k[x][y] = k[y][x] = double(A.invMass + B.invMass) + double(glm::dot(rx.rnA, ry.wnA)) +
++            k[x][y] = k[y][x] = double((A.rb->Stage0Planar()||B.rb->Stage0Planar())?glm::dot(rx.n,(A.dynamic?A.rb->LinearResponse(ry.n):glm::vec3(0))+(B.dynamic?B.rb->LinearResponse(ry.n):glm::vec3(0))):A.invMass+B.invMass) + double(glm::dot(rx.rnA, ry.wnA)) +
+                                 double(glm::dot(rx.rnB, ry.wnB));
+         }
+     FindNullSpace(block);
+@@ -579,7 +580,7 @@
+             body.deferredAcceleration = false;
+         }
+         s.invMass = body.rigidBody.inverseMass;
+-        s.invI = body.rigidBody.InverseInertiaWorld();
++        s.invI = body.rigidBody.ResponseInertiaWorld();
+         const glm::dmat3 inverse(body.rigidBody.inverseInertiaLocal);
+         if (glm::determinant(inverse)>0) {
+             const auto norm=[](const glm::dmat3& matrix) {
+@@ -719,7 +720,7 @@
+     const auto refreshGeometry = [&] {
+         for (auto &s : state)
+             if (s.dynamic && s.constrained)
+-                s.invI = s.rb->InverseInertiaWorld();
++                s.invI = s.rb->ResponseInertiaWorld();
+         for (auto &row : rows) {
+             const auto &A = state[row.a];
+             const auto &B = state[row.b];
+@@ -738,7 +739,7 @@
+                                     const std::vector<char> &dirtyBlock) {
+         for (std::size_t i = 0; i < state.size(); ++i)
+             if (moved[i] && state[i].dynamic && state[i].constrained)
+-                state[i].invI = state[i].rb->InverseInertiaWorld();
++                state[i].invI = state[i].rb->ResponseInertiaWorld();
+         for (std::size_t k = 0; k < blocks.size(); ++k) {
+             auto &block = blocks[k];
+             bool changed = false;
+@@ -988,6 +989,7 @@
+                     const auto &sb = state[body];
+                     if (!sb.dynamic)
+                         continue;
++                    if(sb.rb->Stage0Planar()){k+=sb.rb->Stage0Energy();continue;}
+                     const glm::dvec3 v(sb.rb->linearVelocity), w(sb.rb->angularVelocity);
+                     k += 0.5 * glm::dot(v, v) / double(sb.invMass) +
+                          0.5 * glm::dot(w, glm::dvec3(glm::inverse(sb.invI) * glm::vec3(w)));
+@@ -1384,13 +1386,13 @@
+                     leaf.angularProjection = pseudoAngular[i] + contactProjectionAngular[i];
+                     leaf.hasPhysicalLinearVelocity = true;
+                     leaf.physicalLinearVelocity = body.rigidBody.linearVelocity;
+-                    leaf.angularVelocity = TransportAngularVelocity(body.rigidBody.inverseInertiaLocal,
++                    leaf.angularVelocity = body.rigidBody.Stage0Planar()?realSpin:TransportAngularVelocity(body.rigidBody.inverseInertiaLocal,
+                         oldOrientation, leaf.orientation, realSpin);
+                 }
+                 const auto next = interval[i].back().Evaluate(h);
+                 body.rigidBody.position = next.position;
+                 body.rigidBody.orientation = next.orientation;
+-                body.rigidBody.angularVelocity = TransportAngularVelocity(body.rigidBody.inverseInertiaLocal,
++                body.rigidBody.angularVelocity = body.rigidBody.Stage0Planar()?realSpin:TransportAngularVelocity(body.rigidBody.inverseInertiaLocal,
+                     oldOrientation, next.orientation, realSpin);
+                 body.motion.SetRecorded(interval[i]);
+             } else if (s.kinematic && !kinematicPaths[s.slot].Segments().empty()) {
+@@ -1439,6 +1441,7 @@
+                 if (segments[i].empty() && begin>0) {
+                     RigidMotionSegment rest;
+                     rest.owner=MakeHandle(s.slot).id;rest.begin=0;rest.end=begin;
++                    rest.stage0InverseIz=body.rigidBody.stage0InverseIz;rest.stage0Normal=body.rigidBody.stage0Normal;
+                     rest.inverseMass=body.rigidBody.inverseMass;
+                     rest.inverseInertiaLocal=body.rigidBody.inverseInertiaLocal;
+                     rest.position=rest.endPosition=body.previousPosition;
+@@ -1687,6 +1690,7 @@
+             rest.end = at;
+             rest.position = rest.endPosition = body.rigidBody.position;
+             rest.orientation = rest.endOrientation = body.rigidBody.orientation;
++            rest.stage0InverseIz=body.rigidBody.stage0InverseIz;rest.stage0Normal=body.rigidBody.stage0Normal;
+             rest.inverseMass = body.rigidBody.inverseMass;
+             rest.inverseInertiaLocal = body.rigidBody.inverseInertiaLocal;
+             kept.push_back(rest);
+@@ -1726,7 +1730,7 @@
+                 leaf.angularProjection = angularProjection;
+                 leaf.hasPhysicalLinearVelocity = true;
+                 leaf.physicalLinearVelocity = physical.linearVelocity;
+-                leaf.angularVelocity = TransportAngularVelocity(physical.inverseInertiaLocal,
++                leaf.angularVelocity = physical.Stage0Planar()?physical.angularVelocity:TransportAngularVelocity(physical.inverseInertiaLocal,
+                     physical.orientation, leaf.orientation, physical.angularVelocity);
+             }
+             const auto endpoint = tail.back().Evaluate(dt);
+@@ -2085,7 +2089,7 @@
+         solver.rb = i == 0 ? &bodyA : &bodyB;
+         solver.dynamic = movable(i == 0 ? a : b);
+         solver.invMass = solver.rb->inverseMass;
+-        solver.invI = solver.rb->InverseInertiaWorld();
++        solver.invI = solver.rb->ResponseInertiaWorld();
+     }
+     std::vector<Row> response;
+     float approach = 0;
+@@ -2109,6 +2113,7 @@
+     for(const auto& row:response)patch.usable=patch.usable && glm::dot(row.n,response.front().n)>.99999f;
+     PrepareBlock(participants,response,patch);
+     const auto kinetic=[&]{double result=0;for(const auto& part:participants)if(part.dynamic){
++        if(part.rb->Stage0Planar()){result+=part.rb->Stage0Energy();continue;}
+         const glm::dvec3 v(part.rb->linearVelocity),w(part.rb->angularVelocity);
+         result += .5*glm::dot(v,v)/part.invMass + .5*glm::dot(w,glm::inverse(glm::dmat3(part.invI))*w);
+     }return result;};
+--- a/src/physics/WorldPersistence.cpp
++++ b/src/physics/WorldPersistence.cpp
+@@ -58,6 +58,7 @@
+     field(body.rigidBody.angularVelocity);
+     field(body.rigidBody.inverseMass);
+     field(body.rigidBody.inverseInertiaLocal);
++    field(body.rigidBody.stage0InverseIz);field(body.rigidBody.stage0Normal);
+     field(body.isDynamic);
+     field(body.isKinematic);
+     field(body.enabled);
+@@ -188,6 +189,15 @@
+     auto inverseMass = body->rigidBody.inverseMass;
+     auto inverseInertia = body->rigidBody.inverseInertiaLocal;
+     archive(inverseMass, inverseInertia);
++    uint32_t motionVersion=1;
++    auto planeIz=body->rigidBody.stage0InverseIz;
++    auto planeNormal=body->rigidBody.stage0Normal;
++    archive(motionVersion,planeIz,planeNormal);
++    archive.Require(motionVersion==1,"Stage0 newer body motion-space version");
++    archive.Require(planeIz>=0&&(!planeIz||(body->isDynamic&&
++        std::abs(glm::dot(planeNormal,planeNormal)-1)<1e-5f&&
++        glm::length(glm::cross(planeNormal,body->rigidBody.orientation*glm::vec3(0,0,1)))<1e-5f)),
++        "Stage0 invalid saved planar mobility");
+     bool valid = false;
+     if (body->isDynamic) {
+         const glm::dmat3 tensor(inverseInertia);
+@@ -204,6 +214,7 @@
+     archive.Require(valid, "invalid saved mass/inertia for body authority");
+     if (archive.reading) {
+         m_impl->InvalidateRestoredContinuation(handle.id & Impl::kSlotMask);
++        body->rigidBody.stage0InverseIz=planeIz;body->rigidBody.stage0Normal=planeNormal;
+         body->rigidBody.inverseMass = inverseMass;
+         body->rigidBody.inverseInertiaLocal = inverseInertia;
+     }
+@@ -476,3 +487,6 @@
+         }
+     throw std::runtime_error("stale fracture solver history");
+ }
++
++// Diagnostic ablation only; never used by the candidate path.
++void PhysicsWorld::Stage0DropContactWarmCache(){m_impl->contactCache.clear();}
+--- a/src/physics/WorldSleep.cpp
++++ b/src/physics/WorldSleep.cpp
+@@ -144,6 +144,12 @@
+                               b->rigidBody.orientation * (s.anchorB - b->shape.pivotOffset)
+                         : s.anchorB;
+             auto error = pb - pa;
++            if (s.type == JointType::Stage0Planar) {
++                const auto normal = s.frameB * glm::vec3(0,0,1);
++                error = normal * glm::dot(error,normal);
++                const auto movingNormal = a->rigidBody.orientation * s.frameA * glm::vec3(0,0,1);
++                island.quiet &= glm::length(glm::cross(normal,movingNormal)) < .01f;
++            }
+             if (s.type == JointType::Slider) {
+                 auto axis = a->rigidBody.orientation * s.frameA * glm::vec3(1, 0, 0);
+                 error -= axis * glm::dot(error, axis);

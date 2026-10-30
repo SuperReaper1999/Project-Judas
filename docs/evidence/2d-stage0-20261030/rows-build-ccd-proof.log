@@ -1,0 +1,10 @@
+-- Configuring done (0.0s)
+-- Generating done (0.0s)
+-- Build files have been written to: /home/conner/Documents/GitHub/Project-Judas/.cache/planar2d-native-stage0/build-make
+[ 78%] Built target native_physics
+[ 81%] Building CXX object CMakeFiles/native_rows.dir/NativeRows.cpp.o
+[ 86%] Built target trajectory_3d
+[ 91%] Built target existing_mk2
+[ 97%] Built target existing_rotation
+[100%] Linking CXX executable native_rows
+[100%] Built target native_rows

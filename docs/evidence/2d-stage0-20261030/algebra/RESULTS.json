@@ -1,0 +1,60 @@
+{
+  "positive": {
+    "checks": 74,
+    "failures": 0,
+    "bodies": 1024,
+    "scope": "impulse response only; not MK2 steps",
+    "reduced_median_ms": 0.00317349,
+    "rows_median_ms": 0.01794866,
+    "reduced_worst_ms": 0.0040811,
+    "rows_worst_ms": 0.02324133
+  },
+  "negative": {
+    "exit_code": 1,
+    "diagnostic": "FAIL after 3 checks: rows/reduced linear equivalence"
+  },
+  "utc": "2026-10-30T16:18:49.468160+00:00",
+  "base_commit": "e2008d1e6f4ac3229b292724e5718f37e8d2e1ed",
+  "compiler": "g++ (Ubuntu 15.2.0-16ubuntu1) 15.2.0",
+  "host": "Linux-7.0.0-42-generic-x86_64-with-glibc2.43",
+  "commands": [
+    [
+      "g++",
+      "-std=c++17",
+      "-O3",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-pedantic",
+      "-Isrc",
+      "/home/conner/Documents/GitHub/Project-Judas/tools/prototypes/planar2d_stage0.cpp",
+      "-o",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/planar2d-stage0-20261030/mobility-probe"
+    ],
+    [
+      "g++",
+      "-std=c++17",
+      "-O3",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-pedantic",
+      "-Isrc",
+      "/home/conner/Documents/GitHub/Project-Judas/tools/prototypes/planar2d_stage0.cpp",
+      "-DJUDAS_PLANAR_PROBE_DISABLE_ROWS",
+      "-o",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/planar2d-stage0-20261030/missing-rows-control"
+    ]
+  ],
+  "sources": {
+    "tools/prototypes/planar2d_stage0.cpp": "586f74ee6237217bd384fcdb6c4773cdda0694a5011d76c62abbc0f91bd24ab6",
+    "tools/prototypes/orthographic_stage0.h": "5f6dbe6c2113dcf967bb673a46dc74cf9d270a4c8245c36ca551d695eba0ada4",
+    "tools/run_planar2d_stage0.py": "00c5dc2c0881e356215247562c1b6c0554ae5f067ed4e3f4d32aefbdc6946368",
+    "src/CameraProjection.h": "647ead7296e1da71719318601ffcc5938c31ea1ef8bec3dfefa59f14809e8804"
+  },
+  "binaries": {
+    "mobility-probe": "1a31dbff3f01c4dca6a87aa0fae4e6575b11db6b7f9735ffc3a2db138a05e8c8",
+    "missing-rows-control": "9680df1e40802ce5015d27fcaae0439311e7a9e77c9918dd4ef9b7f824357b01"
+  },
+  "scope": "Standalone response algebra and existing projection helper; no MK2/world/render integration"
+}

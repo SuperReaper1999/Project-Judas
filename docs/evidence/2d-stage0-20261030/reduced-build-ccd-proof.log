@@ -1,0 +1,13 @@
+-- Configuring done (0.0s)
+-- Generating done (0.0s)
+-- Build files have been written to: /home/conner/Documents/GitHub/Project-Judas/.cache/planar2d-reduced-native-stage0/build-make
+[ 72%] Built target native_physics
+[ 77%] Built target trajectory_3d
+[ 80%] Building CXX object CMakeFiles/native_rows.dir/NativeRows.cpp.o
+[ 85%] Built target existing_mk2
+[ 90%] Built target existing_rotation
+[ 92%] Building CXX object CMakeFiles/legacy_hinge.dir/NativeRows.cpp.o
+[ 95%] Linking CXX executable native_rows
+[ 97%] Linking CXX executable legacy_hinge
+[ 97%] Built target native_rows
+[100%] Built target legacy_hinge

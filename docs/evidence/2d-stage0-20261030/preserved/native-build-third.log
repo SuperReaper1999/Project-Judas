@@ -1,0 +1,33 @@
+-- The CXX compiler identification is GNU 15.2.0
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /usr/bin/c++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Performing Test CMAKE_HAVE_LIBC_PTHREAD
+-- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Success
+-- Found Threads: TRUE
+-- Configuring done (0.4s)
+-- Generating done (0.0s)
+-- Build files have been written to: /home/conner/Documents/GitHub/Project-Judas/.cache/planar2d-native-stage0/build-make
+[  6%] Building CXX object CMakeFiles/native_physics.dir/src/CollisionGeometry.cpp.o
+[  6%] Building CXX object CMakeFiles/native_physics.dir/src/CollisionAsset.cpp.o
+/home/conner/Documents/GitHub/Project-Judas/.cache/planar2d-native-stage0/source/src/CollisionAsset.cpp:3:10: fatal error: QuickHull.hpp: No such file or directory
+    3 | #include "QuickHull.hpp"
+      |          ^~~~~~~~~~~~~~~
+compilation terminated.
+gmake[2]: *** [CMakeFiles/native_physics.dir/build.make:79: CMakeFiles/native_physics.dir/src/CollisionAsset.cpp.o] Error 1
+gmake[2]: *** Waiting for unfinished jobs....
+gmake[1]: *** [CMakeFiles/Makefile2:96: CMakeFiles/native_physics.dir/all] Error 2
+gmake: *** [Makefile:91: all] Error 2
+Traceback (most recent call last):
+  File "/home/conner/Documents/GitHub/Project-Judas/tools/prototypes/planar2d_native_rows.py", line 89, in <module>
+    main()
+    ~~~~^^
+  File "/home/conner/Documents/GitHub/Project-Judas/tools/prototypes/planar2d_native_rows.py", line 84, in main
+    subprocess.run(["cmake", "--build", str(build), "--parallel", str(args.jobs)], check=True)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.14/subprocess.py", line 578, in run
+    raise CalledProcessError(retcode, process.args,
+                             output=stdout, stderr=stderr)
+subprocess.CalledProcessError: Command '['cmake', '--build', '/home/conner/Documents/GitHub/Project-Judas/.cache/planar2d-native-stage0/build-make', '--parallel', '2']' returned non-zero exit status 2.
