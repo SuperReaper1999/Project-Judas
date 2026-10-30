@@ -1,0 +1,18 @@
+Shadow maps: on
+Graphics: 4.5 (Core Profile) Mesa 26.0.8-1ubuntu0.3 / llvmpipe (LLVM 21.1.8, 256 bits)
+Renderer fragment texture units: 32 (material path uses 12)
+PASS independent atlas pixels
+PASS track known image
+PASS track typed frame palette
+PASS compile tested native render recipe
+PASS real GL window
+PASS normal compiled world builds
+PASS painted neighbouring cells sample distinct frames without atlas bleed or unintended tint
+PASS decorative layer overlaps without adding physical collision
+PASS normal compiled world builds
+PASS layer sort order changes actual framebuffer result
+PASS erase foreground
+PASS rebuild erased layer
+PASS normal compiled world builds
+PASS erasing foreground reveals original lower layer
+TILEMAP_PIXELS checks=14 failures=0

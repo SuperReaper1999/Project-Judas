@@ -187,6 +187,8 @@ struct EditorPanelState {
     bool gizmoSnap = false;
     bool gizmoIndividualOrigins = false;
     DebugViewOptions debug;
+    bool showTilemapEditor = false;
+    std::string tilemapPalette;
     bool showSpriteSheetEditor = false;
     std::string spriteSheetEdit;
     bool showScriptTools = false;

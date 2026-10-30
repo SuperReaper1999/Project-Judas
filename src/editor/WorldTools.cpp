@@ -52,7 +52,7 @@ void DrawWorldBuildingPanel(EditorDocument& doc,EditorPanelState& state){
     if(ImGui::CollapsingHeader("Recipes: arrays, paths and profiles",ImGuiTreeNodeFlags_DefaultOpen)){
         if(ImGui::BeginCombo("Scene-owned recipe",tools.selectedRecipe.empty()?"New recipe":tools.selectedRecipe.c_str())){
             if(ImGui::Selectable("New recipe",tools.selectedRecipe.empty())){Cancel(state);tools.recipe=WorldRecipe{};tools.selectedRecipe.clear();}
-            for(auto& [id,source]:doc.GetScene().Settings().authoringRecipes)if(ImGui::Selectable(id.c_str(),tools.selectedRecipe==id)){
+            for(auto& [id,source]:doc.GetScene().Settings().authoringRecipes)if((source.find("\"kind\":\"tilemap\"")==std::string::npos)&&ImGui::Selectable(id.c_str(),tools.selectedRecipe==id)){
                 WorldRecipe recipe;if(ParseWorldRecipe(source,recipe,tools.error)){Cancel(state);tools.recipe=recipe;tools.selectedRecipe=id;tools.acceptRemoval=false;}
             }
             ImGui::EndCombo();

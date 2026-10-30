@@ -1,0 +1,20 @@
+FRAMES 360
+FRAME_SECONDS 0.016666667
+LOG_EVERY 30
+ENTITY 1
+CONTROL key:D 1 10 70
+TAP SPACE 35
+SCREENSHOT 90 /home/conner/Documents/GitHub/Project-Judas/.cache/2d-stage4-evidence/final-trail.png
+ACTION top_view 1 110 111
+EXPECT_SCENE Scenes/village.judas 115
+CONTROL key:W 1 120 155
+CONTROL key:D 1 155 180
+SCREENSHOT 190 /home/conner/Documents/GitHub/Project-Judas/.cache/2d-stage4-evidence/final-village.png
+ACTION save_game 1 200 201
+WAIT_SERVICES save 10000 202
+ACTION load_game 1 220 221
+WAIT_SERVICES save 10000 222
+EXPECT_SCENE Scenes/village.judas 224
+ACTION side_view 1 250 251
+EXPECT_SCENE Scenes/main.judas 255
+SCREENSHOT 300 /home/conner/Documents/GitHub/Project-Judas/.cache/2d-stage4-evidence/final-returned.png

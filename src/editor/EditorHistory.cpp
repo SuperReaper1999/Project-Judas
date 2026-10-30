@@ -12,6 +12,7 @@
 #include "NamedAuthoring.h"
 #include <glm/gtc/matrix_transform.hpp>
 #include "EditorDocument.h"
+#include "authoring/Tilemap.h"
 
 #include "SceneSerialization.h"
 #include "Prefab.h"
@@ -157,6 +158,7 @@ bool EditorDocument::DuplicateSelection(std::string& error){
  PruneSelection();if(m_selection.empty())return false;std::set<SceneObjectId> members(m_selection.begin(),m_selection.end());bool changed=true;while(changed){changed=false;for(auto& o:m_scene.Objects())if(members.count(o.parent))changed|=members.insert(o.id).second;}
  auto candidate=m_scene;std::map<SceneObjectId,SceneObjectId> ids;for(auto id:members)ids[id]=candidate.CreateObject("copy").id;
  for(auto& o:m_scene.Objects())if(members.count(o.id)){auto copy=o;copy.id=ids.at(o.id);copy.name+=" copy";auto remap=[&](SceneObjectId& id){if(ids.count(id))id=ids.at(id);};remap(copy.parent);remap(copy.prefabRoot);if(copy.gravitySelection)remap(copy.gravitySelection->source);if(copy.socket)remap(copy.socket->target);if(copy.wheel)remap(copy.wheel->chassis);if(copy.powertrain)RemapPowertrainReferences(*copy.powertrain,[&](uint64_t id){return ids.count(id)?ids.at(id):id;});if(copy.render)remap(copy.render->textureCamera);if(copy.joint){remap(copy.joint->bodyA);remap(copy.joint->bodyB);}if(copy.liquidConnection){remap(copy.liquidConnection->source);remap(copy.liquidConnection->destination);}if(copy.deformable)for(auto& a:copy.deformable->attachments)remap(a.target);for(auto& slot:copy.scripts)slot.properties=ScriptSystem::RemapPropertyEntities(slot.properties,ids);for(auto& [_,id]:copy.prefabIds)remap(id);*candidate.Find(copy.id)=std::move(copy);}
+ if(!DuplicateTilemapRecipes(m_scene,candidate,ids,error))return false;
  if(!CommitCandidate(std::move(candidate),error,false))return false;
  std::vector<SceneObjectId> selection;for(auto id:m_selection)selection.push_back(ids.at(id));m_selection=selection;m_selected=m_selection.back();return true;
 }
@@ -164,7 +166,7 @@ bool EditorDocument::DuplicateSelection(std::string& error){
 std::vector<SceneObjectId> EditorDocument::SelectionRoots()const{std::vector<SceneObjectId> roots;for(auto id:m_selection){bool inherited=false;auto* o=m_scene.Find(id);for(auto p=o?o->parent:0;p;){if(IsSelected(p)){inherited=true;break;}auto* parent=m_scene.Find(p);p=parent?parent->parent:0;}if(o&&!inherited)roots.push_back(id);}return roots;}
 std::vector<SceneObjectId> EditorDocument::Search(const std::string& query)const{if(m_searchGeneration==m_generation&&m_searchQuery==query)return m_searchResults;JUDAS_PROFILE_SCOPE("Hierarchy filter");std::set<SceneObjectId> keep;for(auto& o:m_scene.Objects()){bool match=query.empty()||o.name.find(query)!=std::string::npos||o.authoringFolder.find(query)!=std::string::npos;auto properties=ObjectProperties(o);for(auto& [k,v]:properties)match|=k.find(query)!=std::string::npos||v.find(query)!=std::string::npos;if(match){keep.insert(o.id);for(auto p=o.parent;p;){keep.insert(p);auto* ancestor=m_scene.Find(p);p=ancestor?ancestor->parent:0;}}}std::vector<SceneObjectId> ids;for(auto& o:m_scene.Objects())if(keep.count(o.id))ids.push_back(o.id);m_searchGeneration=m_generation;m_searchQuery=query;m_searchResults=ids;return ids;}
 void EditorDocument::SelectRange(SceneObjectId id,const std::vector<SceneObjectId>& visible,bool additive){auto a=std::find(visible.begin(),visible.end(),m_selected),b=std::find(visible.begin(),visible.end(),id);if(a==visible.end()||b==visible.end()){Select(id,additive);return;}if(!additive)m_selection.clear();if(a>b)std::swap(a,b);for(auto i=a;i<=b;++i)if(!IsSelected(*i))m_selection.push_back(*i);m_selected=id;}
-bool EditorDocument::DeleteSelection(std::string& error){auto candidate=m_scene;auto roots=SelectionRoots();if(roots.empty()){error="select objects first";return false;}for(auto id:roots)candidate.DestroyObject(id);std::string text;SaveSceneToString(candidate,text);Scene validated;if(!LoadSceneFromString(text,validated,error))return false;if(!CommitCandidate(std::move(validated),error,true,true))return false;PruneSelection();return true;}
+bool EditorDocument::DeleteSelection(std::string& error){auto candidate=m_scene;auto roots=SelectionRoots();if(roots.empty()){error="select objects first";return false;}for(auto id:roots)candidate.DestroyObject(id);PruneTilemapRecipes(candidate);std::string text;SaveSceneToString(candidate,text);Scene validated;if(!LoadSceneFromString(text,validated,error))return false;if(!CommitCandidate(std::move(validated),error,true,true))return false;PruneSelection();return true;}
 bool EditorDocument::ApplySource(const std::string& text,std::string& error){Scene candidate;if(!LoadSceneFromString(text,candidate,error))return false;if(!CommitCandidate(std::move(candidate),error,true,true))return false;PruneSelection();return true;}
 bool EditorDocument::ExternalChanged()const{return !m_path.empty()&&Source(m_path)!=m_loadedSource;}
 

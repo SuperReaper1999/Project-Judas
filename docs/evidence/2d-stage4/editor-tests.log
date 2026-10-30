@@ -1,0 +1,7 @@
+FAIL fast drag paints every crossed negative/positive cell in one undoable edit
+PASS real palette image
+PASS track image
+PASS ordinary tracked palette
+PASS create via real document transaction: 
+PASS viewport ray brush drag commits
+FAIL fast drag paints every crossed negative/positive cell in one undoable edit

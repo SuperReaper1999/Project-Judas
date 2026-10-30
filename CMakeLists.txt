@@ -311,6 +311,7 @@ add_library(judas_engine STATIC
     src/Prefab.cpp
     src/Scene.cpp
     src/Sprite.cpp
+    src/authoring/Tilemap.cpp
     src/SpriteAnimation.cpp
     src/WorldSpriteAnimation.cpp
     src/PlanarAuthoring.cpp
@@ -437,6 +438,7 @@ add_executable(judas_editor
     src/editor/FileBrowser.cpp
     src/editor/RenderPreview.cpp
     src/editor/RetargetPanel.cpp
+    src/editor/TilemapEditor.cpp
     src/editor/SpriteSheetEditor.cpp
     src/editor/AnimationTimeline.cpp
     src/editor/WorldTools.cpp
@@ -1762,6 +1764,20 @@ judas_warnings(judas_sprite_animation_benchmark)
 
 judas_add_engine_test(judas_consumer_lifecycle_tests tests/ConsumerLifecycleTests.cpp APPLICATION)
 judas_add_engine_test(judas_save_latency_benchmark tools/benchmarks/SaveLatencyBenchmark.cpp APPLICATION)
+
+add_executable(judas_tilemap_benchmark tools/benchmarks/TilemapBenchmark.cpp)
+target_link_libraries(judas_tilemap_benchmark PRIVATE judas_engine)
+judas_warnings(judas_tilemap_benchmark)
+
+add_executable(judas_tilemap_workshop tools/demos/TilemapWorkshop.cpp)
+target_link_libraries(judas_tilemap_workshop PRIVATE judas_engine)
+judas_warnings(judas_tilemap_workshop)
+
+judas_add_engine_test(judas_tilemap_tests tests/TilemapTests.cpp)
+judas_add_engine_test(judas_tilemap_render_tests tests/TilemapRenderTests.cpp)
+judas_add_engine_test(judas_tilemap_application_tests tests/TilemapApplicationTests.cpp APPLICATION)
+judas_add_engine_test(judas_tilemap_editor_tests tests/TilemapEditorTests.cpp
+    SOURCES src/editor/TilemapEditor.cpp src/editor/EditorHistory.cpp src/editor/EditorCamera.cpp LIBRARIES judas_imgui)
 
 # Finalize after every native test has declared its authoritative entry point.
 include(cmake/JudasValidation.cmake)

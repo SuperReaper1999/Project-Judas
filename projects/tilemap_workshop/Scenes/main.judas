@@ -1,0 +1,3736 @@
+JudasScene 3
+settings
+  authoring-recipes "{\"tilemap.197\":{\"kind\":\"tilemap\",\"schema\":1,\"data\":{\"root\":197,\"sheet\":\"2e2b4b7fd66c20d598a71e45592784df\",\"cellSize\":[1.0,1.0],\"layers\":[{\"id\":\"ground\",\"name\":\"Ground\",\"sortingLayer\":0,\"order\":-5,\"collision\":true},{\"id\":\"scenery\",\"name\":\"Scenery\",\"sortingLayer\":-1,\"order\":-10,\"collision\":false},{\"id\":\"props\",\"name\":\"Props\",\"sortingLayer\":0,\"order\":1,\"collision\":false}],\"cells\":[{\"layer\":\"ground\",\"frame\":\"tile-1\",\"x\":-14,\"y\":-2,\"flipX\":false,\"flipY\":false},{\"layer\":\"ground\",\"frame\":\"tile-1\",\"x\":-13,\"y\":-2,\"flipX\":false,\"flipY\":false},{\"layer\":\"ground\",\"frame\":\"tile-1\",\"x\":-12,\"y\":-2,\"flipX\":false,\"flipY\":false},{\"layer\":\"ground\",\"frame\":\"tile-1\",\"x\":-11,\"y\":-2,\"flipX\":false,\"flipY\":false},{\"layer\":\"ground\",\"frame\":\"tile-1\",\"x\":-10,\"y\":-2,\"flipX\":false,\"flipY\":false},{\"layer\":\"ground\",\"frame\":\"tile-1\",\"x\":-9,\"y\":-2,\"flipX\":false,\"flipY\":false},{\"layer\":\"ground\",\"frame\":\"tile-1\",\"x\":-8,\"y\":-2,\"flipX\":false,\"flipY\":false},{\"layer\":\"ground\",\"frame\":\"tile-1\",\"x\":-7,\"y\":-2,\"flipX\":false,\"flipY\":false},{\"layer\":\"ground\",\"frame\":\"tile-1\",\"x\":-6,\"y\":-2,\"flipX\":false,\"flipY\":false},{\"layer\":\"ground\",\"frame\":\"tile-1\",\"x\":-5,\"y\":-2,\"flipX\":false,\"flipY\":false},{\"layer\":\"ground\",\"frame\":\"tile-1\",\"x\":-4,\"y\":-2,\"flipX\":false,\"flipY\":false},{\"layer\":\"ground\",\"frame\":\"tile-1\",\"x\":-3,\"y\":-2,\"flipX\":false,\"flipY\":false},{\"layer\":\"ground\",\"frame\":\"tile-1\",\"x\":-2,\"y\":-2,\"flipX\":false,\"flipY\":false},{\"layer\":\"ground\",\"frame\":\"tile-1\",\"x\":-1,\"y\":-2,\"flipX\":false,\"flipY\":false},{\"layer\":\"ground\",\"frame\":\"tile-1\",\"x\":0,\"y\":-2,\"flipX\":false,\"flipY\":false},{\"layer\":\"ground\",\"frame\":\"tile-1\",\"x\":1,\"y\":-2,\"flipX\":false,\"flipY\":false},{\"layer\":\"ground\",\"frame\":\"tile-1\",\"x\":2,\"y\":-2,\"flipX\":false,\"flipY\":false},{\"layer\":\"ground\",\"frame\":\"tile-1\",\"x\":3,\"y\":-2,\"flipX\":false,\"flipY\":false},{\"layer\":\"ground\",\"frame\":\"tile-1\",\"x\":4,\"y\":-2,\"flipX\":false,\"flipY\":false},{\"layer\":\"ground\",\"frame\":\"tile-1\",\"x\":5,\"y\":-2,\"flipX\":false,\"flipY\":false},{\"layer\":\"ground\",\"frame\":\"tile-1\",\"x\":6,\"y\":-2,\"flipX\":false,\"flipY\":false},{\"layer\":\"ground\",\"frame\":\"tile-1\",\"x\":7,\"y\":-2,\"flipX\":false,\"flipY\":false},{\"layer\":\"ground\",\"frame\":\"tile-1\",\"x\":8,\"y\":-2,\"flipX\":false,\"flipY\":false},{\"layer\":\"ground\",\"frame\":\"tile-1\",\"x\":9,\"y\":-2,\"flipX\":false,\"flipY\":false},{\"layer\":\"ground\",\"frame\":\"tile-1\",\"x\":10,\"y\":-2,\"flipX\":false,\"flipY\":false},{\"layer\":\"ground\",\"frame\":\"tile-1\",\"x\":11,\"y\":-2,\"flipX\":false,\"flipY\":false},{\"layer\":\"ground\",\"frame\":\"tile-1\",\"x\":12,\"y\":-2,\"flipX\":false,\"flipY\":false},{\"layer\":\"ground\",\"frame\":\"tile-1\",\"x\":13,\"y\":-2,\"flipX\":false,\"flipY\":false},{\"layer\":\"ground\",\"frame\":\"tile-1\",\"x\":14,\"y\":-2,\"flipX\":false,\"flipY\":false},{\"layer\":\"ground\",\"frame\":\"tile-1\",\"x\":15,\"y\":-2,\"flipX\":false,\"flipY\":false},{\"layer\":\"ground\",\"frame\":\"tile-1\",\"x\":16,\"y\":-2,\"flipX\":false,\"flipY\":false},{\"layer\":\"ground\",\"frame\":\"tile-1\",\"x\":17,\"y\":-2,\"flipX\":false,\"flipY\":false},{\"layer\":\"ground\",\"frame\":\"tile-1\",\"x\":18,\"y\":-2,\"flipX\":false,\"flipY\":false},{\"layer\":\"ground\",\"frame\":\"tile-1\",\"x\":19,\"y\":-2,\"flipX\":false,\"flipY\":false},{\"layer\":\"ground\",\"frame\":\"tile-1\",\"x\":20,\"y\":-2,\"flipX\":false,\"flipY\":false},{\"layer\":\"ground\",\"frame\":\"tile-1\",\"x\":21,\"y\":-2,\"flipX\":false,\"flipY\":false},{\"layer\":\"ground\",\"frame\":\"tile-1\",\"x\":22,\"y\":-2,\"flipX\":false,\"flipY\":false},{\"layer\":\"ground\",\"frame\":\"tile-1\",\"x\":23,\"y\":-2,\"flipX\":false,\"flipY\":false},{\"layer\":\"ground\",\"frame\":\"tile-1\",\"x\":24,\"y\":-2,\"flipX\":false,\"flipY\":false},{\"layer\":\"ground\",\"frame\":\"tile-1\",\"x\":25,\"y\":-2,\"flipX\":false,\"flipY\":false},{\"layer\":\"ground\",\"frame\":\"tile-1\",\"x\":26,\"y\":-2,\"flipX\":false,\"flipY\":false},{\"layer\":\"ground\",\"frame\":\"tile-1\",\"x\":27,\"y\":-2,\"flipX\":false,\"flipY\":false},{\"layer\":\"ground\",\"frame\":\"tile-1\",\"x\":28,\"y\":-2,\"flipX\":false,\"flipY\":false},{\"layer\":\"ground\",\"frame\":\"tile-1\",\"x\":29,\"y\":-2,\"flipX\":false,\"flipY\":false},{\"layer\":\"ground\",\"frame\":\"tile-1\",\"x\":30,\"y\":-2,\"flipX\":false,\"flipY\":false},{\"layer\":\"ground\",\"frame\":\"tile-1\",\"x\":31,\"y\":-2,\"flipX\":false,\"flipY\":false},{\"layer\":\"ground\",\"frame\":\"tile-1\",\"x\":32,\"y\":-2,\"flipX\":false,\"flipY\":false},{\"layer\":\"ground\",\"frame\":\"tile-1\",\"x\":33,\"y\":-2,\"flipX\":false,\"flipY\":false},{\"layer\":\"ground\",\"frame\":\"tile-1\",\"x\":34,\"y\":-2,\"flipX\":false,\"flipY\":false},{\"layer\":\"ground\",\"frame\":\"tile-1\",\"x\":35,\"y\":-2,\"flipX\":false,\"flipY\":false},{\"layer\":\"ground\",\"frame\":\"tile-1\",\"x\":36,\"y\":-2,\"flipX\":false,\"flipY\":false},{\"layer\":\"ground\",\"frame\":\"tile-0\",\"x\":-14,\"y\":-1,\"flipX\":false,\"flipY\":false},{\"layer\":\"ground\",\"frame\":\"tile-0\",\"x\":-13,\"y\":-1,\"flipX\":false,\"flipY\":false},{\"layer\":\"ground\",\"frame\":\"tile-0\",\"x\":-12,\"y\":-1,\"flipX\":false,\"flipY\":false},{\"layer\":\"ground\",\"frame\":\"tile-0\",\"x\":-11,\"y\":-1,\"flipX\":false,\"flipY\":false},{\"layer\":\"ground\",\"frame\":\"tile-0\",\"x\":-10,\"y\":-1,\"flipX\":false,\"flipY\":false},{\"layer\":\"ground\",\"frame\":\"tile-0\",\"x\":-9,\"y\":-1,\"flipX\":false,\"flipY\":false},{\"layer\":\"ground\",\"frame\":\"tile-0\",\"x\":-8,\"y\":-1,\"flipX\":false,\"flipY\":false},{\"layer\":\"ground\",\"frame\":\"tile-0\",\"x\":-7,\"y\":-1,\"flipX\":false,\"flipY\":false},{\"layer\":\"ground\",\"frame\":\"tile-0\",\"x\":-6,\"y\":-1,\"flipX\":false,\"flipY\":false},{\"layer\":\"ground\",\"frame\":\"tile-0\",\"x\":-5,\"y\":-1,\"flipX\":false,\"flipY\":false},{\"layer\":\"ground\",\"frame\":\"tile-0\",\"x\":-4,\"y\":-1,\"flipX\":false,\"flipY\":false},{\"layer\":\"ground\",\"frame\":\"tile-0\",\"x\":-3,\"y\":-1,\"flipX\":false,\"flipY\":false},{\"layer\":\"ground\",\"frame\":\"tile-0\",\"x\":-2,\"y\":-1,\"flipX\":false,\"flipY\":false},{\"layer\":\"ground\",\"frame\":\"tile-0\",\"x\":-1,\"y\":-1,\"flipX\":false,\"flipY\":false},{\"layer\":\"ground\",\"frame\":\"tile-0\",\"x\":0,\"y\":-1,\"flipX\":false,\"flipY\":false},{\"layer\":\"ground\",\"frame\":\"tile-0\",\"x\":1,\"y\":-1,\"flipX\":false,\"flipY\":false},{\"layer\":\"ground\",\"frame\":\"tile-0\",\"x\":2,\"y\":-1,\"flipX\":false,\"flipY\":false},{\"layer\":\"ground\",\"frame\":\"tile-0\",\"x\":3,\"y\":-1,\"flipX\":false,\"flipY\":false},{\"layer\":\"ground\",\"frame\":\"tile-0\",\"x\":4,\"y\":-1,\"flipX\":false,\"flipY\":false},{\"layer\":\"ground\",\"frame\":\"tile-0\",\"x\":5,\"y\":-1,\"flipX\":false,\"flipY\":false},{\"layer\":\"ground\",\"frame\":\"tile-0\",\"x\":6,\"y\":-1,\"flipX\":false,\"flipY\":false},{\"layer\":\"ground\",\"frame\":\"tile-0\",\"x\":7,\"y\":-1,\"flipX\":false,\"flipY\":false},{\"layer\":\"ground\",\"frame\":\"tile-0\",\"x\":8,\"y\":-1,\"flipX\":false,\"flipY\":false},{\"layer\":\"ground\",\"frame\":\"tile-0\",\"x\":9,\"y\":-1,\"flipX\":false,\"flipY\":false},{\"layer\":\"ground\",\"frame\":\"tile-0\",\"x\":10,\"y\":-1,\"flipX\":false,\"flipY\":false},{\"layer\":\"ground\",\"frame\":\"tile-0\",\"x\":11,\"y\":-1,\"flipX\":false,\"flipY\":false},{\"layer\":\"ground\",\"frame\":\"tile-0\",\"x\":12,\"y\":-1,\"flipX\":false,\"flipY\":false},{\"layer\":\"ground\",\"frame\":\"tile-0\",\"x\":13,\"y\":-1,\"flipX\":false,\"flipY\":false},{\"layer\":\"ground\",\"frame\":\"tile-0\",\"x\":14,\"y\":-1,\"flipX\":false,\"flipY\":false},{\"layer\":\"ground\",\"frame\":\"tile-0\",\"x\":15,\"y\":-1,\"flipX\":false,\"flipY\":false},{\"layer\":\"ground\",\"frame\":\"tile-0\",\"x\":16,\"y\":-1,\"flipX\":false,\"flipY\":false},{\"layer\":\"ground\",\"frame\":\"tile-0\",\"x\":17,\"y\":-1,\"flipX\":false,\"flipY\":false},{\"layer\":\"ground\",\"frame\":\"tile-0\",\"x\":18,\"y\":-1,\"flipX\":false,\"flipY\":false},{\"layer\":\"ground\",\"frame\":\"tile-0\",\"x\":19,\"y\":-1,\"flipX\":false,\"flipY\":false},{\"layer\":\"ground\",\"frame\":\"tile-0\",\"x\":20,\"y\":-1,\"flipX\":false,\"flipY\":false},{\"layer\":\"ground\",\"frame\":\"tile-0\",\"x\":21,\"y\":-1,\"flipX\":false,\"flipY\":false},{\"layer\":\"ground\",\"frame\":\"tile-0\",\"x\":22,\"y\":-1,\"flipX\":false,\"flipY\":false},{\"layer\":\"ground\",\"frame\":\"tile-0\",\"x\":23,\"y\":-1,\"flipX\":false,\"flipY\":false},{\"layer\":\"ground\",\"frame\":\"tile-0\",\"x\":24,\"y\":-1,\"flipX\":false,\"flipY\":false},{\"layer\":\"ground\",\"frame\":\"tile-0\",\"x\":25,\"y\":-1,\"flipX\":false,\"flipY\":false},{\"layer\":\"ground\",\"frame\":\"tile-0\",\"x\":26,\"y\":-1,\"flipX\":false,\"flipY\":false},{\"layer\":\"ground\",\"frame\":\"tile-0\",\"x\":27,\"y\":-1,\"flipX\":false,\"flipY\":false},{\"layer\":\"ground\",\"frame\":\"tile-0\",\"x\":28,\"y\":-1,\"flipX\":false,\"flipY\":false},{\"layer\":\"ground\",\"frame\":\"tile-0\",\"x\":29,\"y\":-1,\"flipX\":false,\"flipY\":false},{\"layer\":\"ground\",\"frame\":\"tile-0\",\"x\":30,\"y\":-1,\"flipX\":false,\"flipY\":false},{\"layer\":\"ground\",\"frame\":\"tile-0\",\"x\":31,\"y\":-1,\"flipX\":false,\"flipY\":false},{\"layer\":\"ground\",\"frame\":\"tile-0\",\"x\":32,\"y\":-1,\"flipX\":false,\"flipY\":false},{\"layer\":\"ground\",\"frame\":\"tile-0\",\"x\":33,\"y\":-1,\"flipX\":false,\"flipY\":false},{\"layer\":\"ground\",\"frame\":\"tile-0\",\"x\":34,\"y\":-1,\"flipX\":false,\"flipY\":false},{\"layer\":\"ground\",\"frame\":\"tile-0\",\"x\":35,\"y\":-1,\"flipX\":false,\"flipY\":false},{\"layer\":\"ground\",\"frame\":\"tile-0\",\"x\":36,\"y\":-1,\"flipX\":false,\"flipY\":false},{\"layer\":\"ground\",\"frame\":\"tile-3\",\"x\":-14,\"y\":0,\"flipX\":false,\"flipY\":false},{\"layer\":\"ground\",\"frame\":\"tile-3\",\"x\":1,\"y\":0,\"flipX\":false,\"flipY\":false},{\"layer\":\"ground\",\"frame\":\"tile-3\",\"x\":2,\"y\":0,\"flipX\":false,\"flipY\":false},{\"layer\":\"ground\",\"frame\":\"tile-3\",\"x\":3,\"y\":0,\"flipX\":false,\"flipY\":false},{\"layer\":\"ground\",\"frame\":\"tile-3\",\"x\":4,\"y\":0,\"flipX\":false,\"flipY\":false},{\"layer\":\"ground\",\"frame\":\"tile-3\",\"x\":36,\"y\":0,\"flipX\":false,\"flipY\":false},{\"layer\":\"ground\",\"frame\":\"tile-3\",\"x\":-14,\"y\":1,\"flipX\":false,\"flipY\":false},{\"layer\":\"ground\",\"frame\":\"tile-3\",\"x\":2,\"y\":1,\"flipX\":false,\"flipY\":false},{\"layer\":\"ground\",\"frame\":\"tile-3\",\"x\":3,\"y\":1,\"flipX\":false,\"flipY\":false},{\"layer\":\"ground\",\"frame\":\"tile-3\",\"x\":4,\"y\":1,\"flipX\":false,\"flipY\":false},{\"layer\":\"ground\",\"frame\":\"tile-2\",\"x\":11,\"y\":1,\"flipX\":false,\"flipY\":false},{\"layer\":\"ground\",\"frame\":\"tile-2\",\"x\":12,\"y\":1,\"flipX\":false,\"flipY\":false},{\"layer\":\"ground\",\"frame\":\"tile-2\",\"x\":13,\"y\":1,\"flipX\":false,\"flipY\":false},{\"layer\":\"ground\",\"frame\":\"tile-2\",\"x\":14,\"y\":1,\"flipX\":false,\"flipY\":false},{\"layer\":\"ground\",\"frame\":\"tile-2\",\"x\":15,\"y\":1,\"flipX\":false,\"flipY\":false},{\"layer\":\"ground\",\"frame\":\"tile-3\",\"x\":36,\"y\":1,\"flipX\":false,\"flipY\":false},{\"layer\":\"ground\",\"frame\":\"tile-3\",\"x\":-14,\"y\":2,\"flipX\":false,\"flipY\":false},{\"layer\":\"ground\",\"frame\":\"tile-3\",\"x\":4,\"y\":2,\"flipX\":false,\"flipY\":false},{\"layer\":\"ground\",\"frame\":\"tile-3\",\"x\":36,\"y\":2,\"flipX\":false,\"flipY\":false},{\"layer\":\"ground\",\"frame\":\"tile-3\",\"x\":-14,\"y\":3,\"flipX\":false,\"flipY\":false},{\"layer\":\"ground\",\"frame\":\"tile-14\",\"x\":22,\"y\":3,\"flipX\":false,\"flipY\":false},{\"layer\":\"ground\",\"frame\":\"tile-14\",\"x\":23,\"y\":3,\"flipX\":false,\"flipY\":false},{\"layer\":\"ground\",\"frame\":\"tile-14\",\"x\":24,\"y\":3,\"flipX\":false,\"flipY\":false},{\"layer\":\"ground\",\"frame\":\"tile-14\",\"x\":25,\"y\":3,\"flipX\":false,\"flipY\":false},{\"layer\":\"ground\",\"frame\":\"tile-14\",\"x\":26,\"y\":3,\"flipX\":false,\"flipY\":false},{\"layer\":\"ground\",\"frame\":\"tile-14\",\"x\":27,\"y\":3,\"flipX\":false,\"flipY\":false},{\"layer\":\"ground\",\"frame\":\"tile-3\",\"x\":36,\"y\":3,\"flipX\":false,\"flipY\":false},{\"layer\":\"ground\",\"frame\":\"tile-3\",\"x\":-14,\"y\":4,\"flipX\":false,\"flipY\":false},{\"layer\":\"ground\",\"frame\":\"tile-3\",\"x\":36,\"y\":4,\"flipX\":false,\"flipY\":false},{\"layer\":\"ground\",\"frame\":\"tile-3\",\"x\":36,\"y\":5,\"flipX\":false,\"flipY\":false},{\"layer\":\"ground\",\"frame\":\"tile-3\",\"x\":36,\"y\":6,\"flipX\":false,\"flipY\":false},{\"layer\":\"props\",\"frame\":\"tile-13\",\"x\":20,\"y\":0,\"flipX\":false,\"flipY\":false},{\"layer\":\"props\",\"frame\":\"tile-13\",\"x\":20,\"y\":1,\"flipX\":false,\"flipY\":false},{\"layer\":\"scenery\",\"frame\":\"tile-9\",\"x\":-11,\"y\":0,\"flipX\":false,\"flipY\":false},{\"layer\":\"scenery\",\"frame\":\"tile-9\",\"x\":-5,\"y\":0,\"flipX\":false,\"flipY\":false},{\"layer\":\"scenery\",\"frame\":\"tile-9\",\"x\":17,\"y\":0,\"flipX\":false,\"flipY\":false},{\"layer\":\"scenery\",\"frame\":\"tile-12\",\"x\":20,\"y\":0,\"flipX\":false,\"flipY\":false},{\"layer\":\"scenery\",\"frame\":\"tile-12\",\"x\":21,\"y\":0,\"flipX\":false,\"flipY\":false},{\"layer\":\"scenery\",\"frame\":\"tile-12\",\"x\":22,\"y\":0,\"flipX\":false,\"flipY\":false},{\"layer\":\"scenery\",\"frame\":\"tile-12\",\"x\":23,\"y\":0,\"flipX\":false,\"flipY\":false},{\"layer\":\"scenery\",\"frame\":\"tile-12\",\"x\":24,\"y\":0,\"flipX\":false,\"flipY\":false},{\"layer\":\"scenery\",\"frame\":\"tile-12\",\"x\":25,\"y\":0,\"flipX\":false,\"flipY\":false},{\"layer\":\"scenery\",\"frame\":\"tile-9\",\"x\":31,\"y\":0,\"flipX\":false,\"flipY\":false},{\"layer\":\"scenery\",\"frame\":\"tile-9\",\"x\":-11,\"y\":1,\"flipX\":false,\"flipY\":false},{\"layer\":\"scenery\",\"frame\":\"tile-9\",\"x\":-5,\"y\":1,\"flipX\":false,\"flipY\":false},{\"layer\":\"scenery\",\"frame\":\"tile-9\",\"x\":17,\"y\":1,\"flipX\":false,\"flipY\":false},{\"layer\":\"scenery\",\"frame\":\"tile-12\",\"x\":20,\"y\":1,\"flipX\":false,\"flipY\":false},{\"layer\":\"scenery\",\"frame\":\"tile-12\",\"x\":21,\"y\":1,\"flipX\":false,\"flipY\":false},{\"layer\":\"scenery\",\"frame\":\"tile-12\",\"x\":22,\"y\":1,\"flipX\":false,\"flipY\":false},{\"layer\":\"scenery\",\"frame\":\"tile-12\",\"x\":23,\"y\":1,\"flipX\":false,\"flipY\":false},{\"layer\":\"scenery\",\"frame\":\"tile-12\",\"x\":24,\"y\":1,\"flipX\":false,\"flipY\":false},{\"layer\":\"scenery\",\"frame\":\"tile-12\",\"x\":25,\"y\":1,\"flipX\":false,\"flipY\":false},{\"layer\":\"scenery\",\"frame\":\"tile-9\",\"x\":31,\"y\":1,\"flipX\":false,\"flipY\":false},{\"layer\":\"scenery\",\"frame\":\"tile-6\",\"x\":-12,\"y\":2,\"flipX\":false,\"flipY\":false},{\"layer\":\"scenery\",\"frame\":\"tile-6\",\"x\":-11,\"y\":2,\"flipX\":false,\"flipY\":false},{\"layer\":\"scenery\",\"frame\":\"tile-6\",\"x\":-10,\"y\":2,\"flipX\":false,\"flipY\":false},{\"layer\":\"scenery\",\"frame\":\"tile-6\",\"x\":-6,\"y\":2,\"flipX\":false,\"flipY\":false},{\"layer\":\"scenery\",\"frame\":\"tile-6\",\"x\":-5,\"y\":2,\"flipX\":false,\"flipY\":false},{\"layer\":\"scenery\",\"frame\":\"tile-6\",\"x\":-4,\"y\":2,\"flipX\":false,\"flipY\":false},{\"layer\":\"scenery\",\"frame\":\"tile-6\",\"x\":16,\"y\":2,\"flipX\":false,\"flipY\":false},{\"layer\":\"scenery\",\"frame\":\"tile-6\",\"x\":17,\"y\":2,\"flipX\":false,\"flipY\":false},{\"layer\":\"scenery\",\"frame\":\"tile-6\",\"x\":18,\"y\":2,\"flipX\":false,\"flipY\":false},{\"layer\":\"scenery\",\"frame\":\"tile-12\",\"x\":20,\"y\":2,\"flipX\":false,\"flipY\":false},{\"layer\":\"scenery\",\"frame\":\"tile-12\",\"x\":21,\"y\":2,\"flipX\":false,\"flipY\":false},{\"layer\":\"scenery\",\"frame\":\"tile-12\",\"x\":22,\"y\":2,\"flipX\":false,\"flipY\":false},{\"layer\":\"scenery\",\"frame\":\"tile-12\",\"x\":23,\"y\":2,\"flipX\":false,\"flipY\":false},{\"layer\":\"scenery\",\"frame\":\"tile-12\",\"x\":24,\"y\":2,\"flipX\":false,\"flipY\":false},{\"layer\":\"scenery\",\"frame\":\"tile-12\",\"x\":25,\"y\":2,\"flipX\":false,\"flipY\":false},{\"layer\":\"scenery\",\"frame\":\"tile-6\",\"x\":30,\"y\":2,\"flipX\":false,\"flipY\":false},{\"layer\":\"scenery\",\"frame\":\"tile-6\",\"x\":31,\"y\":2,\"flipX\":false,\"flipY\":false},{\"layer\":\"scenery\",\"frame\":\"tile-6\",\"x\":32,\"y\":2,\"flipX\":false,\"flipY\":false},{\"layer\":\"scenery\",\"frame\":\"tile-5\",\"x\":19,\"y\":3,\"flipX\":false,\"flipY\":false},{\"layer\":\"scenery\",\"frame\":\"tile-5\",\"x\":20,\"y\":3,\"flipX\":false,\"flipY\":false},{\"layer\":\"scenery\",\"frame\":\"tile-5\",\"x\":21,\"y\":3,\"flipX\":false,\"flipY\":false},{\"layer\":\"scenery\",\"frame\":\"tile-5\",\"x\":22,\"y\":3,\"flipX\":false,\"flipY\":false},{\"layer\":\"scenery\",\"frame\":\"tile-5\",\"x\":23,\"y\":3,\"flipX\":false,\"flipY\":false},{\"layer\":\"scenery\",\"frame\":\"tile-5\",\"x\":24,\"y\":3,\"flipX\":false,\"flipY\":false},{\"layer\":\"scenery\",\"frame\":\"tile-5\",\"x\":25,\"y\":3,\"flipX\":false,\"flipY\":false},{\"layer\":\"scenery\",\"frame\":\"tile-5\",\"x\":26,\"y\":3,\"flipX\":false,\"flipY\":false}],\"generated\":[{\"key\":\"collision/ground/-14/-2/14/2\",\"entity\":331,\"hash\":\"ab59462835fc2f6cad867b356230c67df69fa8a16f1f9534a89d8c34e46cfb3f\"},{\"key\":\"collision/ground/-14/0/1/5\",\"entity\":332,\"hash\":\"87fb2a11ea80d1dfdaf353dbf68f36cd904a4a1fe73a838b45e89ca06728a81d\"},{\"key\":\"collision/ground/0/-2/16/2\",\"entity\":333,\"hash\":\"71b938b832a7fff538f10f58d1d1328ea834146880c94c81974b5aa325a12744\"},{\"key\":\"collision/ground/1/0/4/1\",\"entity\":334,\"hash\":\"663d0095776fdc2636158c52c7248b4bd8986a4d33f59fc9fb5d7b31d56879ba\"},{\"key\":\"collision/ground/11/1/5/1\",\"entity\":336,\"hash\":\"4aec2f2dda782e77de05a20af2473db8addd90726e82b83166f169d66b2755eb\"},{\"key\":\"collision/ground/16/-2/16/2\",\"entity\":338,\"hash\":\"8adaa5039b56f7f60db8508fb40ce595137de2721762d478484b95d6b720ecd3\"},{\"key\":\"collision/ground/2/1/3/1\",\"entity\":335,\"hash\":\"60f511e80ce13ab0d22abc4ba56bcc5c170501cbb9d27af7e0fa8a161c784f73\"},{\"key\":\"collision/ground/22/3/6/1\",\"entity\":339,\"hash\":\"f5bef83bac9c9c6c6ee12a54271babe71eb1550c27cf6b3b651a7e60127905d4\"},{\"key\":\"collision/ground/32/-2/5/2\",\"entity\":340,\"hash\":\"d2785eda9c973aa6d16a19d47b3ab70400dcb4d947d5928e2cbaa0be3cc5ca7c\"},{\"key\":\"collision/ground/36/0/1/7\",\"entity\":341,\"hash\":\"8dd0edb8d52be4040e43ae24dd47156bca8d09ce30319903e0d7a5ee08eee2c6\"},{\"key\":\"collision/ground/4/2/1/1\",\"entity\":337,\"hash\":\"8dfc774082b5b26e0c3ff60715ef95d7718861e82edd636daf9ee2df64683403\"},{\"key\":\"tile/ground/-1/-1\",\"entity\":262,\"hash\":\"6f7cebee2b12aa29d0474897caa1d2aaae6c3d3067bdae2065e007cde012635f\"},{\"key\":\"tile/ground/-1/-2\",\"entity\":211,\"hash\":\"a863cb8409c9f1b411b2716424ce663e246d7ccf228320a1cfb24d4f01e8461c\"},{\"key\":\"tile/ground/-10/-1\",\"entity\":253,\"hash\":\"a002f3280167851e7175072cbf138ec1f25543f05ccc58cc722d7d6f8a0677d6\"},{\"key\":\"tile/ground/-10/-2\",\"entity\":202,\"hash\":\"675c9cba7232e6ca25d60994f975a61c712120910c42060c4817bc224efea4a5\"},{\"key\":\"tile/ground/-11/-1\",\"entity\":252,\"hash\":\"4eab21ed4184c36dd6befda2b91963bd29978bb7c738abe77c948c200cd06bb0\"},{\"key\":\"tile/ground/-11/-2\",\"entity\":201,\"hash\":\"53b1c58a2405a0774ade37f0fd4e7b529292a6c9e3d50d374b519fc9147d0925\"},{\"key\":\"tile/ground/-12/-1\",\"entity\":251,\"hash\":\"409405d351ca52be71de9eb444a36f50720f5993d0cbcfe0bc2df88c56eeecd6\"},{\"key\":\"tile/ground/-12/-2\",\"entity\":200,\"hash\":\"9aede62269f141b2e414a5521b0357c969833093384fab8468bbcf303d6ef1a9\"},{\"key\":\"tile/ground/-13/-1\",\"entity\":250,\"hash\":\"99dddc37239a361848582738871e0da0a812e29302a160e1cc01ed6a9a6347fc\"},{\"key\":\"tile/ground/-13/-2\",\"entity\":199,\"hash\":\"45e2741e99782eff10e1a3234152428a2db924d3e5f45c90a21f0bfbd27c9e82\"},{\"key\":\"tile/ground/-14/-1\",\"entity\":249,\"hash\":\"d5c2293118fc2cd371057ee5884f7af0e3316e3c00d9749433dce8f88cde2cb0\"},{\"key\":\"tile/ground/-14/-2\",\"entity\":198,\"hash\":\"b3d83ae1c27130c0e7896372322435128871e50139e01ab1ab1746798fef77f1\"},{\"key\":\"tile/ground/-14/0\",\"entity\":319,\"hash\":\"980c1c34a809ac9e5d9a0f0bdec347ab5c52bd0866e5980e2b970d07f55e51e4\"},{\"key\":\"tile/ground/-14/1\",\"entity\":320,\"hash\":\"c9bb7aea04c28b58f93da8c5e1740e1f932ed0d30e9c4bb0ce0806b379706c86\"},{\"key\":\"tile/ground/-14/2\",\"entity\":321,\"hash\":\"1b937a84313baa5e29f3ce6ec57f6889226ce9916ba2785d9509787cca6bfb5a\"},{\"key\":\"tile/ground/-14/3\",\"entity\":322,\"hash\":\"8edf68486b860954cd6f0a4ef064382cb11cf5e6a3a57a05a494d061af9d22d9\"},{\"key\":\"tile/ground/-14/4\",\"entity\":323,\"hash\":\"e9dac01f793f02b06ca7abe73bda1057ca32660e9bc0b6fcffd7b9bfc810cdee\"},{\"key\":\"tile/ground/-2/-1\",\"entity\":261,\"hash\":\"6a0321de09b2d19740980f5c5a529084338c15051b1c7dd1df2b22394bf20463\"},{\"key\":\"tile/ground/-2/-2\",\"entity\":210,\"hash\":\"0d5b167294f481df7ddadea7f9e32a0f3e57a85649d54b9c9951a05d2a4565f7\"},{\"key\":\"tile/ground/-3/-1\",\"entity\":260,\"hash\":\"9d3c4034869a7103fd98bf9228b1829fce8828ef6f21f7d3378d2bb6cc8178da\"},{\"key\":\"tile/ground/-3/-2\",\"entity\":209,\"hash\":\"12ab120d39826b867824a8bb39d75f35bfc7b9ae073f8233c05d91cc8652d420\"},{\"key\":\"tile/ground/-4/-1\",\"entity\":259,\"hash\":\"048b70f785540e9a70362aea213ae2b44c2d5b0322c78c123f4b38e520f531a5\"},{\"key\":\"tile/ground/-4/-2\",\"entity\":208,\"hash\":\"2284b9e338c72fc22eae09654df63be9934e216173546068e6fce6a67346ce8f\"},{\"key\":\"tile/ground/-5/-1\",\"entity\":258,\"hash\":\"7ed2069f456ff2a57cb0a47e44bba96b6e0493f5db7a43ddd6045f09012c5002\"},{\"key\":\"tile/ground/-5/-2\",\"entity\":207,\"hash\":\"e8b9766da8a797ca8056fbd10fb97da9957592e0fd6979157325208eca4977c8\"},{\"key\":\"tile/ground/-6/-1\",\"entity\":257,\"hash\":\"dba8134bb3b3f872d20628313c2c1b7ce00db64b182d0fe080b055cb9ca80186\"},{\"key\":\"tile/ground/-6/-2\",\"entity\":206,\"hash\":\"80286c0b7f4203a9e0b09437faea9a569585c2695c52235b34c239051fd84693\"},{\"key\":\"tile/ground/-7/-1\",\"entity\":256,\"hash\":\"23a69337cfbe918732aebc093e8d9aeb19f5f5e11e933d451b58a7e9606b0769\"},{\"key\":\"tile/ground/-7/-2\",\"entity\":205,\"hash\":\"6ef43a8200a0114e154e51bb44ac6d27a4bf76a2e4209c10eae5757b4e0583e7\"},{\"key\":\"tile/ground/-8/-1\",\"entity\":255,\"hash\":\"dacf077c157bf654cfe789463d8ff13f9090e3a2b6dbc2bc20915f93b425bf1d\"},{\"key\":\"tile/ground/-8/-2\",\"entity\":204,\"hash\":\"2f21b3dc7f3b211ef6fa75d96355a289c56d2e87b834f1a6c3bd143f4ecf0a64\"},{\"key\":\"tile/ground/-9/-1\",\"entity\":254,\"hash\":\"5c3efd2bd49d52efc1babc1c7b3ddff7738f0f97488741547d0602cdc3fcfe21\"},{\"key\":\"tile/ground/-9/-2\",\"entity\":203,\"hash\":\"5e26834980235a9edd96190274161753409c685d266b0a84519018bae5c1c098\"},{\"key\":\"tile/ground/0/-1\",\"entity\":263,\"hash\":\"d59bb366c480777d495d970779be923c1b34937ea52352a5e440889494b43e43\"},{\"key\":\"tile/ground/0/-2\",\"entity\":212,\"hash\":\"606e666dff13511a890da3816e87b39b428003d508be37fe7b3d2d6ade18117c\"},{\"key\":\"tile/ground/1/-1\",\"entity\":264,\"hash\":\"cd3d329c1ffd5fc40db02709d6c6579ff82948e26ffbea2c117a901ff2f8bc0e\"},{\"key\":\"tile/ground/1/-2\",\"entity\":213,\"hash\":\"695738f3bdea923ecc503f88e1f8f221b7d93ef0579fc1b1694c186c23780285\"},{\"key\":\"tile/ground/1/0\",\"entity\":300,\"hash\":\"df2c7c09505ae9bd0e4b0244c527dbd0f0b404c33b50cfc2002ca60a70084cd3\"},{\"key\":\"tile/ground/10/-1\",\"entity\":273,\"hash\":\"2c228940092e111788f10ea0a130d986c685f806eb0267330373e0a0d1bf2c9a\"},{\"key\":\"tile/ground/10/-2\",\"entity\":222,\"hash\":\"34112e6a0e9c0f908d26620d33f2071c16e1f98fde9f5eeec9b8f26a1bb31e19\"},{\"key\":\"tile/ground/11/-1\",\"entity\":274,\"hash\":\"3d688caa6376f94fbd27f88c0dbcca1b674254474096446e3d678bf66a6c5179\"},{\"key\":\"tile/ground/11/-2\",\"entity\":223,\"hash\":\"438711a8531881dcd28560ae9a9477ddbce0b312dc299912a68c1333f55ab50e\"},{\"key\":\"tile/ground/11/1\",\"entity\":308,\"hash\":\"1c482aef8a1d01ab778f845bdc764b1c76c4085db29bc052d65efa876de627e5\"},{\"key\":\"tile/ground/12/-1\",\"entity\":275,\"hash\":\"5619a39b0a59ca29e21f512c5bd01848f9a4e5c4461da464246c0d7ff9ddc81c\"},{\"key\":\"tile/ground/12/-2\",\"entity\":224,\"hash\":\"5e21d124cb87f24098f7608c272cc2e8fe8417a8ed83ef744fe4919465fa080f\"},{\"key\":\"tile/ground/12/1\",\"entity\":309,\"hash\":\"1559d3d74af6ea0a7ebdc5731478cf138998b95528ed433872554eccb49dbb81\"},{\"key\":\"tile/ground/13/-1\",\"entity\":276,\"hash\":\"df199256b521ca0aaca39db2cd382a73f148201cbdfcae69110a9826e819351b\"},{\"key\":\"tile/ground/13/-2\",\"entity\":225,\"hash\":\"1baeb977802a419bada2e097b132a479848111de1b0aad36163a0645c4d76394\"},{\"key\":\"tile/ground/13/1\",\"entity\":310,\"hash\":\"e1286fbcf7705ea34be96758531caf53c3df250f0505d812048525c0d902d9c5\"},{\"key\":\"tile/ground/14/-1\",\"entity\":277,\"hash\":\"ee815a1bdc5030041bae294b377be802be08f274eadf164e616fa95e0ecb598d\"},{\"key\":\"tile/ground/14/-2\",\"entity\":226,\"hash\":\"0f5b7347c68ce0e456a04991eaefdfdeebc39eda49fa6cd04c1fb142aba5a316\"},{\"key\":\"tile/ground/14/1\",\"entity\":311,\"hash\":\"c3200f022932e873013d2bec40bd1d78a95db92723aed600a41ccc9b967c25de\"},{\"key\":\"tile/ground/15/-1\",\"entity\":278,\"hash\":\"73a4789ad61e304150846662e1ee7e0b059f4a5e1834cb71964fdd957fea0e1b\"},{\"key\":\"tile/ground/15/-2\",\"entity\":227,\"hash\":\"645e2e51c1d46535e323b496f28a14100d18ac6347c8494fa88095e18e6b2279\"},{\"key\":\"tile/ground/15/1\",\"entity\":312,\"hash\":\"82f26178d1b1b5981a8e142f207e424cc9531462c2b2e185daad14d50a235f04\"},{\"key\":\"tile/ground/16/-1\",\"entity\":279,\"hash\":\"7ec75e32d5dc04402ba0a03f05151ee54c8378a615450ead3be78cb14c5223e1\"},{\"key\":\"tile/ground/16/-2\",\"entity\":228,\"hash\":\"4068a43cd69820fa77a1887dd55607a2da8916f41dc0a9c058758d60c27a9ead\"},{\"key\":\"tile/ground/17/-1\",\"entity\":280,\"hash\":\"fe9530e7e24d3fd45cedf33abbeaf34917857bf758f8b97fa7c1c4c35ca31bd1\"},{\"key\":\"tile/ground/17/-2\",\"entity\":229,\"hash\":\"d5e72a1221e874c3a7a3df797c99bed1bfcd2b7e3a9bd932b821477f43501070\"},{\"key\":\"tile/ground/18/-1\",\"entity\":281,\"hash\":\"548af8fcda677eddd8b946a7001c1a4d07d1c7e62c5567c6d9c223f7cd4ca43c\"},{\"key\":\"tile/ground/18/-2\",\"entity\":230,\"hash\":\"cbf70f36c06459e92cff320af4b37b51eb7f48641591242090e6ca7f73627815\"},{\"key\":\"tile/ground/19/-1\",\"entity\":282,\"hash\":\"75dbcce5609a898446bff0a95dbb39ed4114bf2282d3383c63e8558aa26212b9\"},{\"key\":\"tile/ground/19/-2\",\"entity\":231,\"hash\":\"7bf6d2277868d0814afeb0a711701b7c9098d850049e4315a1346dc076ba9d47\"},{\"key\":\"tile/ground/2/-1\",\"entity\":265,\"hash\":\"f29394508d8be4d76cc0b31224cae5fc14d3ab4b7f34c7b035dde67f3210a425\"},{\"key\":\"tile/ground/2/-2\",\"entity\":214,\"hash\":\"7c9be66bdabf4a4d019f794a5d4921addf57799e6af2ab802bbd535d27ab9012\"},{\"key\":\"tile/ground/2/0\",\"entity\":301,\"hash\":\"fd6b509a2a0361b54bd01be56e4603e6a4524d15533d11bb4be6e0edd59139de\"},{\"key\":\"tile/ground/2/1\",\"entity\":302,\"hash\":\"2204d79c4b2e3a039194e59b3fc011bf7d2188e72301e50f7ffac4ea50da4fb2\"},{\"key\":\"tile/ground/20/-1\",\"entity\":283,\"hash\":\"0a815394a4db6d2d797aadd1abc5155dd8d5cd10cf896862c03469f2de8d62f9\"},{\"key\":\"tile/ground/20/-2\",\"entity\":232,\"hash\":\"c87a955445d430614943e79610d8fbbcde85567c76a9bb25edcaa0aa6bc79761\"},{\"key\":\"tile/ground/21/-1\",\"entity\":284,\"hash\":\"b4672899f2bd1d78f0c87213294b065c679b8960e00a03f4a19eb1e336789ed1\"},{\"key\":\"tile/ground/21/-2\",\"entity\":233,\"hash\":\"71cd910d061a12e93028dde67f9d278ccf866d3dd23083dd7c61145623dd45b9\"},{\"key\":\"tile/ground/22/-1\",\"entity\":285,\"hash\":\"a261766022bfe5bc4bd9ef20cf6e4218dfad7fcd938afca7ddc903e7b1a18986\"},{\"key\":\"tile/ground/22/-2\",\"entity\":234,\"hash\":\"2b5785270cf0163b3ca177667f5aef9f23449d804257dedb38c02040bdcc2f89\"},{\"key\":\"tile/ground/22/3\",\"entity\":313,\"hash\":\"efc2a3b1887d2afa259606dce69f831c0972f03198e61255ab7845d42678ca1f\"},{\"key\":\"tile/ground/23/-1\",\"entity\":286,\"hash\":\"7fbe9b8956c9531862f3b2b44049b06e63cd21651c75224ac6e79cbcccd1ef98\"},{\"key\":\"tile/ground/23/-2\",\"entity\":235,\"hash\":\"d3ae83b1dcbeac8e1294236fff37be0fe54ddb42d301086840e05f9b91e78121\"},{\"key\":\"tile/ground/23/3\",\"entity\":314,\"hash\":\"417cb539fc8a47aa644de3d48fd30d7816fdf1351d7d6691b77da10924af57f3\"},{\"key\":\"tile/ground/24/-1\",\"entity\":287,\"hash\":\"f3e7bac99ac6fbebcbaa4b71f11316a16630f69cdeb47b64a5923a5807d6fdfa\"},{\"key\":\"tile/ground/24/-2\",\"entity\":236,\"hash\":\"23029ed4b39f17dfc3820ab713341424baf7f05163c6ee348b7dcc19b899b7f2\"},{\"key\":\"tile/ground/24/3\",\"entity\":315,\"hash\":\"21ead38519224e20079ed17674c640269825ada27cd61ac01931042074b599a3\"},{\"key\":\"tile/ground/25/-1\",\"entity\":288,\"hash\":\"64ea88519d05fad859dbe89f897a4451372f3149cd833743748a00309c36c9df\"},{\"key\":\"tile/ground/25/-2\",\"entity\":237,\"hash\":\"943fa4423135debb714b72b826a3f71970780771c24101aedc4a06dc84ee37de\"},{\"key\":\"tile/ground/25/3\",\"entity\":316,\"hash\":\"8e80c1d3de7266b3c56f8a388e28428c437fb45827100d24ea113280760fce63\"},{\"key\":\"tile/ground/26/-1\",\"entity\":289,\"hash\":\"97ab741ea00cff0f815da53d5b190556704f73b7f6528a2356e3f43eba41b804\"},{\"key\":\"tile/ground/26/-2\",\"entity\":238,\"hash\":\"9391ec69cea10fff2f701a83d4223b85ebee4b20421eec2f9c925bb855e40a59\"},{\"key\":\"tile/ground/26/3\",\"entity\":317,\"hash\":\"42aa3aedad68331604b57cd564a317a87d38a83e4037218635c7a421ccd9b723\"},{\"key\":\"tile/ground/27/-1\",\"entity\":290,\"hash\":\"75e7c388cba805b3ace132d7fa5285712bb6650f5778b1fd0a2205a80115024a\"},{\"key\":\"tile/ground/27/-2\",\"entity\":239,\"hash\":\"008a0ddf1aebc25ca24355466e7895d26b1c347702a7bb33cb2594ee2d2e1eb5\"},{\"key\":\"tile/ground/27/3\",\"entity\":318,\"hash\":\"8444338a40d65ae683f38bb901ce3bad50c1473bb7a7359d482466b8cdd6d722\"},{\"key\":\"tile/ground/28/-1\",\"entity\":291,\"hash\":\"a63e741e65f589e5c61c74c594f0ee2473b6ea0cde7543d7ba1e024cbe0e9563\"},{\"key\":\"tile/ground/28/-2\",\"entity\":240,\"hash\":\"af708e754878dd9fe9e3e4e1c39a08a2513434ebec4c44989faa80d6ba2e7c1a\"},{\"key\":\"tile/ground/29/-1\",\"entity\":292,\"hash\":\"08a3714ed2922e366fa87a194e3d84abc9cf7d364e95dae790920626c070a939\"},{\"key\":\"tile/ground/29/-2\",\"entity\":241,\"hash\":\"1147b3251078b45924d3d3f26f21455072cc0a953526612ed84388f7d1cbaf0f\"},{\"key\":\"tile/ground/3/-1\",\"entity\":266,\"hash\":\"51c0641625f70316e9925d9642c62ecb911054692691768a75afc941a35d1d09\"},{\"key\":\"tile/ground/3/-2\",\"entity\":215,\"hash\":\"af963b3402b4eb39762a78a6867db23482f40724deb96faabecbe7dc4d1f82f0\"},{\"key\":\"tile/ground/3/0\",\"entity\":303,\"hash\":\"ea8884802bebd6b98c03e53a4071cae3feb2c0f74d3c411d2bdb222bfd225350\"},{\"key\":\"tile/ground/3/1\",\"entity\":304,\"hash\":\"b91a908797aaa8774da9248d5ba47d68286ef775b6f7f554bd7d940cc75d8c4b\"},{\"key\":\"tile/ground/30/-1\",\"entity\":293,\"hash\":\"97e426279e9e8ab5161e16d4e541919e1228c1e458881fd9909176bdb3d504f8\"},{\"key\":\"tile/ground/30/-2\",\"entity\":242,\"hash\":\"775a4e71492ef7d626765337c86ed05518539a9bd8f32202be6ec2bdf37072a1\"},{\"key\":\"tile/ground/31/-1\",\"entity\":294,\"hash\":\"52378bba6be68d4357bb577436bdd7f0a1be92221bc7a64e9351d50e0c773799\"},{\"key\":\"tile/ground/31/-2\",\"entity\":243,\"hash\":\"d7277fb35606f99075b1fd6e67d4b6d3dfa73f34f419194f808900d6a9f20780\"},{\"key\":\"tile/ground/32/-1\",\"entity\":295,\"hash\":\"0d0a534ec1052d8c0d137f70ba5acadec003d11cc0f53652d3f9112f654b7bf7\"},{\"key\":\"tile/ground/32/-2\",\"entity\":244,\"hash\":\"deac0a9ccb6c0df60b8899fae6282188700099f78bc386f2e206c4ee7bb8020b\"},{\"key\":\"tile/ground/33/-1\",\"entity\":296,\"hash\":\"d0e7a284566b71f7700bd1abc9c06eecaf473f520c58226e33ce591e0e81732a\"},{\"key\":\"tile/ground/33/-2\",\"entity\":245,\"hash\":\"24ba4cc90fab3ae6bb0ffc2c0c2fc85eb86ad4c6f11f93ca9648081df69f3647\"},{\"key\":\"tile/ground/34/-1\",\"entity\":297,\"hash\":\"7eac94f38c67e5cadac4bd4dbb91d2cda8d82e274af675078563bb03f75ca7a6\"},{\"key\":\"tile/ground/34/-2\",\"entity\":246,\"hash\":\"4f087ce4c592c42db6375d6d68acafbf61ad6b06fc382c9ee502d8826e7104f1\"},{\"key\":\"tile/ground/35/-1\",\"entity\":298,\"hash\":\"58783d0bf4daea14a189bb4239bbc6bf379fea1d58fead068ac874998ddce429\"},{\"key\":\"tile/ground/35/-2\",\"entity\":247,\"hash\":\"716416989c9906ac2b0ae31febf29a20311ced0bf6a02b9d0aaf131cdc629bfa\"},{\"key\":\"tile/ground/36/-1\",\"entity\":299,\"hash\":\"c66a242377c47d875eafdbf917fa122c94aa5edba060e805fbbb976562b8a782\"},{\"key\":\"tile/ground/36/-2\",\"entity\":248,\"hash\":\"794710efff1c0e84f17c1fc3b4d7c4028a5041671bd9d2965dcd556f9a419441\"},{\"key\":\"tile/ground/36/0\",\"entity\":324,\"hash\":\"b2bbfef339411cb8abc20e3513e4e76723124d88a7b85f2473150657c3cbe963\"},{\"key\":\"tile/ground/36/1\",\"entity\":325,\"hash\":\"56cc6df443b2f6a30e60a5eff284daccd2ca607bd9ca2eb09766d53e1207f028\"},{\"key\":\"tile/ground/36/2\",\"entity\":326,\"hash\":\"5f0069147d854ae06ad247ba5c832f438b8ff745bf34c92c5ecb7e0af2431f7b\"},{\"key\":\"tile/ground/36/3\",\"entity\":327,\"hash\":\"14588a15926538d1a582d4acfe192297a41640e8b51a9896bdfa74ea271caab2\"},{\"key\":\"tile/ground/36/4\",\"entity\":328,\"hash\":\"8e84f872bcf67b15a667797ce47d34220591492d14aa7026b2cbbef5e8c9987f\"},{\"key\":\"tile/ground/36/5\",\"entity\":329,\"hash\":\"c6bfcd2e384048f79875e834bb620c1f6cd48b6dc9e3c1f19901426877b477fa\"},{\"key\":\"tile/ground/36/6\",\"entity\":330,\"hash\":\"f65f91e314c3825a9a4fd83acbbc94cc88c1463f1113295eb2dac28a15647279\"},{\"key\":\"tile/ground/4/-1\",\"entity\":267,\"hash\":\"6284f819f77f183e204e916fde89ff4c5b80876ab958e4fad2b2b8d972e4f875\"},{\"key\":\"tile/ground/4/-2\",\"entity\":216,\"hash\":\"b788e96dc16637d96da8ef0261b0801ebc04a4899a2606bc521d138d6e47b68c\"},{\"key\":\"tile/ground/4/0\",\"entity\":305,\"hash\":\"cb8acedde6587e093ca62d9392509d3782b8179a22801562a8988b979dd0e31e\"},{\"key\":\"tile/ground/4/1\",\"entity\":306,\"hash\":\"d7d7320079a8bcac3a41a54d8d7c438535949ab413bed60a061cf7647b3991ef\"},{\"key\":\"tile/ground/4/2\",\"entity\":307,\"hash\":\"5e33af039b6b0f0fe9e55e86b53cb4619ed34f66e89e2d0d1d25b4145b9ad2ee\"},{\"key\":\"tile/ground/5/-1\",\"entity\":268,\"hash\":\"9b8f5043cb74ff203786237b70ae2179db3dbe3f4f9ecf315f48cc688086d3ea\"},{\"key\":\"tile/ground/5/-2\",\"entity\":217,\"hash\":\"beb8f9ed1760ad3529fed1b5201f85e20516a1fffd06bea55a63a7a78114bfaa\"},{\"key\":\"tile/ground/6/-1\",\"entity\":269,\"hash\":\"eeb3e4ade7b190fe8c5382a31cee195b661d25f23e95b39cb9774aab2f436a38\"},{\"key\":\"tile/ground/6/-2\",\"entity\":218,\"hash\":\"c941bfe1ae094b02b07dea9d89d5a94c99df3c35eafae53f760953a21f75a248\"},{\"key\":\"tile/ground/7/-1\",\"entity\":270,\"hash\":\"552bf77567594400c9d2e5d2ea424c8935a375afe73a6e4325297ad4e9d0aa79\"},{\"key\":\"tile/ground/7/-2\",\"entity\":219,\"hash\":\"047583cf62f96bacd8b713420748b947127f1dcbed0dd65bf76f9be1ba6862b6\"},{\"key\":\"tile/ground/8/-1\",\"entity\":271,\"hash\":\"4a810afa203257c4ed3c25253a342528132b686fed46c3b64b8d19cfc015e667\"},{\"key\":\"tile/ground/8/-2\",\"entity\":220,\"hash\":\"cc9577a96d1a6071e78db227c0a6775ec598feb5beeabe7e98f88a42007442c0\"},{\"key\":\"tile/ground/9/-1\",\"entity\":272,\"hash\":\"e5209af77f8ade94c7dfaaa147c1a020efa0776ae05179c118902b3c29b81c9c\"},{\"key\":\"tile/ground/9/-2\",\"entity\":221,\"hash\":\"5bcbb5e7bca2e56523fd72cfa9b9a04c7fb5971f19cd8ce2bd69dd45d05548a7\"},{\"key\":\"tile/props/20/0\",\"entity\":388,\"hash\":\"080e14b0775c32eca1d1c75370d26623aae8411df10a152a9d71cbb96d6856aa\"},{\"key\":\"tile/props/20/1\",\"entity\":389,\"hash\":\"61b25177e34ce11583bb806d6bff8512f9e9cc8ef343d2f9b4b38bef6cb156f9\"},{\"key\":\"tile/scenery/-10/2\",\"entity\":346,\"hash\":\"e174a98c888b0a4f6a02d33ebe5a9ba9586583077f1e1f536ca5638342267464\"},{\"key\":\"tile/scenery/-11/0\",\"entity\":342,\"hash\":\"081d578efa3adde47e330f90d87a811ff7b69156a310dd4ec585b2a90e75f60d\"},{\"key\":\"tile/scenery/-11/1\",\"entity\":343,\"hash\":\"a6dc3523a0e085e48fa41c221150084a01b905eaad400b83ec9cba22e27e365f\"},{\"key\":\"tile/scenery/-11/2\",\"entity\":345,\"hash\":\"516d86bc0c0a5a3a67c255b3409895297b2a5137ac418054b2c94d033453d0da\"},{\"key\":\"tile/scenery/-12/2\",\"entity\":344,\"hash\":\"74cd2da440343d058adf7fed815875aa1724d9675659932be44a0a4b36c4c9be\"},{\"key\":\"tile/scenery/-4/2\",\"entity\":351,\"hash\":\"a882689b01557a3e9f2c0b37f2c3b792ee0a8ce584aa150df26b89b6e73e44fc\"},{\"key\":\"tile/scenery/-5/0\",\"entity\":347,\"hash\":\"31e3036baebdfa78cdc248b8a66f27c67ba1bf06126ce9e314baa3d90fb3006c\"},{\"key\":\"tile/scenery/-5/1\",\"entity\":348,\"hash\":\"dc799d6799d041db38f36be7687c68d0c1fd8c6ef97e994efd15cf2be26c13e8\"},{\"key\":\"tile/scenery/-5/2\",\"entity\":350,\"hash\":\"1c7e5f400dbb1249a0ec09531bfec1e23a63270b14a7b09694d8bed7402d7c45\"},{\"key\":\"tile/scenery/-6/2\",\"entity\":349,\"hash\":\"d3a23bbaa75a63223e39c40b066f7e5697f628525f1adffb6abba2995dea0422\"},{\"key\":\"tile/scenery/16/2\",\"entity\":354,\"hash\":\"61436be78ec7e2fd0f29c99bea18b21260383cb8c6c652e5fa7a151e29c61821\"},{\"key\":\"tile/scenery/17/0\",\"entity\":352,\"hash\":\"17b517bea1d13130bc167ca541dfa73035c699a785dbf3d4f453d3be13730340\"},{\"key\":\"tile/scenery/17/1\",\"entity\":353,\"hash\":\"cb14b4f9172cdb25c9f95ad25fbc2f92dbda88120dc30af13898b8934ff50494\"},{\"key\":\"tile/scenery/17/2\",\"entity\":355,\"hash\":\"ff2f6a8d222d3d83b6ab07fcf1083122e84c09e672249db0e2a37abd8da7f30d\"},{\"key\":\"tile/scenery/18/2\",\"entity\":356,\"hash\":\"b859acb88586fd706f171410f7d161c3f8a1d932f5f66d79b76b85b82711a59b\"},{\"key\":\"tile/scenery/19/3\",\"entity\":380,\"hash\":\"ee7c58bb58a679178a30828ea8b61bc5e98b409178f540597a7a8afda875c5c4\"},{\"key\":\"tile/scenery/20/0\",\"entity\":362,\"hash\":\"d7e58567eab7477a5fc7010c1ff75578f365a319cb07923f1f03db0f98b593e8\"},{\"key\":\"tile/scenery/20/1\",\"entity\":368,\"hash\":\"7013fb706aafca3b660cbe2a5ccaff3977c6b82ff3ed2e34c3a06230bfd095b7\"},{\"key\":\"tile/scenery/20/2\",\"entity\":374,\"hash\":\"5174c8b3a541dd0325d7c5789ca7221bc06f2de5580b9300dc9551455f0a375f\"},{\"key\":\"tile/scenery/20/3\",\"entity\":381,\"hash\":\"b93b0d3e81f6272494feef6ff2cfee1b2f6b22eb2093333e06d44452165fdcf9\"},{\"key\":\"tile/scenery/21/0\",\"entity\":363,\"hash\":\"fda42e35450f6a084a25dcbd8fc5fae4688cb9a3f7d683b88763b38f4768ebf4\"},{\"key\":\"tile/scenery/21/1\",\"entity\":369,\"hash\":\"87ceda9ad225705125eb920b6823ebe03f889aeec8f45661ccb6abb1f8c298f4\"},{\"key\":\"tile/scenery/21/2\",\"entity\":375,\"hash\":\"d53ff9e361ba2cfcc9aeb4aa6227b0a5c9fbadf3040325d7b783e8b2a0f32e91\"},{\"key\":\"tile/scenery/21/3\",\"entity\":382,\"hash\":\"f2eea16d0a38c11f382a9e5569f8d37dd2a223a88f90d83c575ea4fb8f9634c8\"},{\"key\":\"tile/scenery/22/0\",\"entity\":364,\"hash\":\"f7c1ef017669d2f0aede111600c5a215179ad5ed51211f674ff72b1a2d90c8f8\"},{\"key\":\"tile/scenery/22/1\",\"entity\":370,\"hash\":\"61f163cccca5c9cf5e8c1b740034cfbac594303c92ef015764e9d2da2b5bc5d8\"},{\"key\":\"tile/scenery/22/2\",\"entity\":376,\"hash\":\"0ed674677c27baf254c7e73cef611aea4edd87d4c5c39b528b491aaa427de25f\"},{\"key\":\"tile/scenery/22/3\",\"entity\":383,\"hash\":\"5189902ac455aa3a491e891a5feed08fe7fa92c6fc4c3dc66adc8d5119a0159f\"},{\"key\":\"tile/scenery/23/0\",\"entity\":365,\"hash\":\"012536d168a773cc8dd2eb70ff96cdc3644658fc65667e723b3762dcab771650\"},{\"key\":\"tile/scenery/23/1\",\"entity\":371,\"hash\":\"c1617ca50750c3ba8c9f4e890515dc9cd17b7ca5c6c7409325be13fd8b2698d2\"},{\"key\":\"tile/scenery/23/2\",\"entity\":377,\"hash\":\"8bd24c8c4601f6051aad6195fa8ceff0aa8b7d0d9dc3a6ad923f1345b11c4467\"},{\"key\":\"tile/scenery/23/3\",\"entity\":384,\"hash\":\"8affa450061d97699ebfaa4f34dfc576477d087d90f923ae246fce765ec81439\"},{\"key\":\"tile/scenery/24/0\",\"entity\":366,\"hash\":\"3162ce0b7e381e5c4b697d03ab6610ef2510d0c61a53aed03dde878342829e70\"},{\"key\":\"tile/scenery/24/1\",\"entity\":372,\"hash\":\"70483a89866df5807359fde125698fe4cffc9326553949b5e620ba50f27dae79\"},{\"key\":\"tile/scenery/24/2\",\"entity\":378,\"hash\":\"a7e71d1b95c4ee5c302799fdddb49488365a573b6cd164f17b625c4bf6350018\"},{\"key\":\"tile/scenery/24/3\",\"entity\":385,\"hash\":\"f39308c12265b68692f8c3daf6ac8fd87b0d5b85813921c7b77db6e8775fbf6d\"},{\"key\":\"tile/scenery/25/0\",\"entity\":367,\"hash\":\"e14506d6743506f4939663904c24afc6769bd6a358de034ff44983d1959fb6e7\"},{\"key\":\"tile/scenery/25/1\",\"entity\":373,\"hash\":\"273136a6dfe387fc10996caf198fd377f44097fd1a43c46d38d3cee32964ff70\"},{\"key\":\"tile/scenery/25/2\",\"entity\":379,\"hash\":\"ade88c30fd7fde238e966577c9a99511b4bf008ed5a4b89bbfcc58be7de897c7\"},{\"key\":\"tile/scenery/25/3\",\"entity\":386,\"hash\":\"c05c18fb32d7e70a411b7f08f55a3eb6bda90058929792f7b2acd9cf9a15669e\"},{\"key\":\"tile/scenery/26/3\",\"entity\":387,\"hash\":\"f97ae4ff778fb708ff5cc2341bdd9be29ba8bd863ae08f9f407904df5bb7d52c\"},{\"key\":\"tile/scenery/30/2\",\"entity\":359,\"hash\":\"ba25b2e79579f96b605ae0e4a5975a9ced8fea64ae19ee1b0d447026e072c28b\"},{\"key\":\"tile/scenery/31/0\",\"entity\":357,\"hash\":\"bdb002507d252bb2cc8e62ae01fe601822c98da0f9d06c1dec6dc3ff9ef9df1e\"},{\"key\":\"tile/scenery/31/1\",\"entity\":358,\"hash\":\"a3589eae81465f4910b0158ffd2de55113e13b9e8b871ed50bae813911aa34dd\"},{\"key\":\"tile/scenery/31/2\",\"entity\":360,\"hash\":\"d1c45d1927a2e5eee2f0a73ec664539bfe1979e6c1d817b1d8f3ba78fb7048c3\"},{\"key\":\"tile/scenery/32/2\",\"entity\":361,\"hash\":\"790947b935c16faf286dfc33b77185cbf4a1954a2ac2619600188d26930d57ea\"}]}}}"
+  name "Tilemap Trail"
+  world-origin 0 0 0
+  sun-direction 0.4 0.7 0.35
+  sun-color 1 0.98 0.92
+  ambient 0.16 0.17 0.19
+  sun-enabled false
+  background-color 0.055 0.085 0.11
+  fluid-scale 1
+  fluid-update-rate-hz 30
+  fluid-hydrostatic-drag-rate 2
+  fidelity-policy none
+  next-id 396
+end
+
+object 1 "Platformer player - editable game.js"
+  scripts 1
+  script.0.id 1
+  script.0.asset "02734a3b5560006aee55e80066ef6101"
+  script.0.enabled true
+  script.0.properties "{\"sideView\":true}"
+  position -8 2 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset "35a321773bd4796410a4c21c37d2ee44"
+  render.sprite-v1 "{\"version\":1,\"size\":[0.699999988079071,1.2999999523162842],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,1.0,1.0],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":true,\"sortingLayer\":1,\"order\":0}"
+  body dynamic planar
+  body.planar-v1 "{\"version\":1,\"kind\":2,\"radius\":0.3,\"lockRotation\":true,\"vertices\":[[0.0,-0.3],[0.0,0.3]]}"
+  body.half-extents 0.5 0.5 0.5
+  body.radius 0.5
+  body.terrain ""
+  body.mass 5
+  body.friction 0
+  body.restitution 0.1
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 190 "Controls HUD"
+  ui.asset "0ffb1a5d53414ae830495a6e904409db"
+  ui.name "sprite_help"
+  ui.enabled true
+  position 0 0 0
+  rotation 1 0 0 0
+  scale 1 1 1
+end
+
+object 196 "2D world gravity"
+  position 0 0 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  gravity uniform 9.81
+  gravity.region box 100 100 10
+end
+
+object 197 "Trail grid - select and open Tilemap painter"
+  position 0 0 0
+  rotation 1 0 0 0
+  scale 1 1 1
+end
+
+object 198 "Tile Ground (-14,-2)"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position -13.5 -1.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset "b21abbfef63faf394964b07bd48d84f7"
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.25,0.0,0.25,0.25],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":0,\"order\":-5}"
+end
+
+object 199 "Tile Ground (-13,-2)"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position -12.5 -1.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset "b21abbfef63faf394964b07bd48d84f7"
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.25,0.0,0.25,0.25],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":0,\"order\":-5}"
+end
+
+object 200 "Tile Ground (-12,-2)"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position -11.5 -1.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset "b21abbfef63faf394964b07bd48d84f7"
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.25,0.0,0.25,0.25],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":0,\"order\":-5}"
+end
+
+object 201 "Tile Ground (-11,-2)"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position -10.5 -1.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset "b21abbfef63faf394964b07bd48d84f7"
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.25,0.0,0.25,0.25],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":0,\"order\":-5}"
+end
+
+object 202 "Tile Ground (-10,-2)"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position -9.5 -1.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset "b21abbfef63faf394964b07bd48d84f7"
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.25,0.0,0.25,0.25],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":0,\"order\":-5}"
+end
+
+object 203 "Tile Ground (-9,-2)"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position -8.5 -1.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset "b21abbfef63faf394964b07bd48d84f7"
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.25,0.0,0.25,0.25],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":0,\"order\":-5}"
+end
+
+object 204 "Tile Ground (-8,-2)"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position -7.5 -1.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset "b21abbfef63faf394964b07bd48d84f7"
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.25,0.0,0.25,0.25],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":0,\"order\":-5}"
+end
+
+object 205 "Tile Ground (-7,-2)"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position -6.5 -1.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset "b21abbfef63faf394964b07bd48d84f7"
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.25,0.0,0.25,0.25],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":0,\"order\":-5}"
+end
+
+object 206 "Tile Ground (-6,-2)"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position -5.5 -1.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset "b21abbfef63faf394964b07bd48d84f7"
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.25,0.0,0.25,0.25],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":0,\"order\":-5}"
+end
+
+object 207 "Tile Ground (-5,-2)"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position -4.5 -1.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset "b21abbfef63faf394964b07bd48d84f7"
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.25,0.0,0.25,0.25],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":0,\"order\":-5}"
+end
+
+object 208 "Tile Ground (-4,-2)"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position -3.5 -1.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset "b21abbfef63faf394964b07bd48d84f7"
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.25,0.0,0.25,0.25],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":0,\"order\":-5}"
+end
+
+object 209 "Tile Ground (-3,-2)"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position -2.5 -1.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset "b21abbfef63faf394964b07bd48d84f7"
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.25,0.0,0.25,0.25],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":0,\"order\":-5}"
+end
+
+object 210 "Tile Ground (-2,-2)"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position -1.5 -1.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset "b21abbfef63faf394964b07bd48d84f7"
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.25,0.0,0.25,0.25],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":0,\"order\":-5}"
+end
+
+object 211 "Tile Ground (-1,-2)"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position -0.5 -1.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset "b21abbfef63faf394964b07bd48d84f7"
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.25,0.0,0.25,0.25],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":0,\"order\":-5}"
+end
+
+object 212 "Tile Ground (0,-2)"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position 0.5 -1.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset "b21abbfef63faf394964b07bd48d84f7"
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.25,0.0,0.25,0.25],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":0,\"order\":-5}"
+end
+
+object 213 "Tile Ground (1,-2)"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position 1.5 -1.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset "b21abbfef63faf394964b07bd48d84f7"
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.25,0.0,0.25,0.25],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":0,\"order\":-5}"
+end
+
+object 214 "Tile Ground (2,-2)"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position 2.5 -1.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset "b21abbfef63faf394964b07bd48d84f7"
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.25,0.0,0.25,0.25],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":0,\"order\":-5}"
+end
+
+object 215 "Tile Ground (3,-2)"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position 3.5 -1.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset "b21abbfef63faf394964b07bd48d84f7"
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.25,0.0,0.25,0.25],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":0,\"order\":-5}"
+end
+
+object 216 "Tile Ground (4,-2)"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position 4.5 -1.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset "b21abbfef63faf394964b07bd48d84f7"
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.25,0.0,0.25,0.25],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":0,\"order\":-5}"
+end
+
+object 217 "Tile Ground (5,-2)"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position 5.5 -1.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset "b21abbfef63faf394964b07bd48d84f7"
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.25,0.0,0.25,0.25],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":0,\"order\":-5}"
+end
+
+object 218 "Tile Ground (6,-2)"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position 6.5 -1.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset "b21abbfef63faf394964b07bd48d84f7"
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.25,0.0,0.25,0.25],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":0,\"order\":-5}"
+end
+
+object 219 "Tile Ground (7,-2)"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position 7.5 -1.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset "b21abbfef63faf394964b07bd48d84f7"
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.25,0.0,0.25,0.25],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":0,\"order\":-5}"
+end
+
+object 220 "Tile Ground (8,-2)"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position 8.5 -1.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset "b21abbfef63faf394964b07bd48d84f7"
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.25,0.0,0.25,0.25],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":0,\"order\":-5}"
+end
+
+object 221 "Tile Ground (9,-2)"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position 9.5 -1.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset "b21abbfef63faf394964b07bd48d84f7"
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.25,0.0,0.25,0.25],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":0,\"order\":-5}"
+end
+
+object 222 "Tile Ground (10,-2)"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position 10.5 -1.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset "b21abbfef63faf394964b07bd48d84f7"
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.25,0.0,0.25,0.25],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":0,\"order\":-5}"
+end
+
+object 223 "Tile Ground (11,-2)"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position 11.5 -1.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset "b21abbfef63faf394964b07bd48d84f7"
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.25,0.0,0.25,0.25],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":0,\"order\":-5}"
+end
+
+object 224 "Tile Ground (12,-2)"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position 12.5 -1.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset "b21abbfef63faf394964b07bd48d84f7"
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.25,0.0,0.25,0.25],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":0,\"order\":-5}"
+end
+
+object 225 "Tile Ground (13,-2)"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position 13.5 -1.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset "b21abbfef63faf394964b07bd48d84f7"
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.25,0.0,0.25,0.25],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":0,\"order\":-5}"
+end
+
+object 226 "Tile Ground (14,-2)"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position 14.5 -1.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset "b21abbfef63faf394964b07bd48d84f7"
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.25,0.0,0.25,0.25],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":0,\"order\":-5}"
+end
+
+object 227 "Tile Ground (15,-2)"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position 15.5 -1.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset "b21abbfef63faf394964b07bd48d84f7"
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.25,0.0,0.25,0.25],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":0,\"order\":-5}"
+end
+
+object 228 "Tile Ground (16,-2)"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position 16.5 -1.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset "b21abbfef63faf394964b07bd48d84f7"
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.25,0.0,0.25,0.25],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":0,\"order\":-5}"
+end
+
+object 229 "Tile Ground (17,-2)"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position 17.5 -1.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset "b21abbfef63faf394964b07bd48d84f7"
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.25,0.0,0.25,0.25],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":0,\"order\":-5}"
+end
+
+object 230 "Tile Ground (18,-2)"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position 18.5 -1.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset "b21abbfef63faf394964b07bd48d84f7"
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.25,0.0,0.25,0.25],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":0,\"order\":-5}"
+end
+
+object 231 "Tile Ground (19,-2)"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position 19.5 -1.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset "b21abbfef63faf394964b07bd48d84f7"
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.25,0.0,0.25,0.25],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":0,\"order\":-5}"
+end
+
+object 232 "Tile Ground (20,-2)"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position 20.5 -1.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset "b21abbfef63faf394964b07bd48d84f7"
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.25,0.0,0.25,0.25],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":0,\"order\":-5}"
+end
+
+object 233 "Tile Ground (21,-2)"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position 21.5 -1.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset "b21abbfef63faf394964b07bd48d84f7"
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.25,0.0,0.25,0.25],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":0,\"order\":-5}"
+end
+
+object 234 "Tile Ground (22,-2)"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position 22.5 -1.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset "b21abbfef63faf394964b07bd48d84f7"
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.25,0.0,0.25,0.25],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":0,\"order\":-5}"
+end
+
+object 235 "Tile Ground (23,-2)"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position 23.5 -1.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset "b21abbfef63faf394964b07bd48d84f7"
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.25,0.0,0.25,0.25],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":0,\"order\":-5}"
+end
+
+object 236 "Tile Ground (24,-2)"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position 24.5 -1.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset "b21abbfef63faf394964b07bd48d84f7"
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.25,0.0,0.25,0.25],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":0,\"order\":-5}"
+end
+
+object 237 "Tile Ground (25,-2)"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position 25.5 -1.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset "b21abbfef63faf394964b07bd48d84f7"
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.25,0.0,0.25,0.25],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":0,\"order\":-5}"
+end
+
+object 238 "Tile Ground (26,-2)"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position 26.5 -1.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset "b21abbfef63faf394964b07bd48d84f7"
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.25,0.0,0.25,0.25],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":0,\"order\":-5}"
+end
+
+object 239 "Tile Ground (27,-2)"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position 27.5 -1.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset "b21abbfef63faf394964b07bd48d84f7"
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.25,0.0,0.25,0.25],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":0,\"order\":-5}"
+end
+
+object 240 "Tile Ground (28,-2)"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position 28.5 -1.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset "b21abbfef63faf394964b07bd48d84f7"
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.25,0.0,0.25,0.25],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":0,\"order\":-5}"
+end
+
+object 241 "Tile Ground (29,-2)"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position 29.5 -1.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset "b21abbfef63faf394964b07bd48d84f7"
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.25,0.0,0.25,0.25],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":0,\"order\":-5}"
+end
+
+object 242 "Tile Ground (30,-2)"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position 30.5 -1.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset "b21abbfef63faf394964b07bd48d84f7"
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.25,0.0,0.25,0.25],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":0,\"order\":-5}"
+end
+
+object 243 "Tile Ground (31,-2)"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position 31.5 -1.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset "b21abbfef63faf394964b07bd48d84f7"
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.25,0.0,0.25,0.25],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":0,\"order\":-5}"
+end
+
+object 244 "Tile Ground (32,-2)"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position 32.5 -1.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset "b21abbfef63faf394964b07bd48d84f7"
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.25,0.0,0.25,0.25],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":0,\"order\":-5}"
+end
+
+object 245 "Tile Ground (33,-2)"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position 33.5 -1.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset "b21abbfef63faf394964b07bd48d84f7"
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.25,0.0,0.25,0.25],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":0,\"order\":-5}"
+end
+
+object 246 "Tile Ground (34,-2)"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position 34.5 -1.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset "b21abbfef63faf394964b07bd48d84f7"
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.25,0.0,0.25,0.25],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":0,\"order\":-5}"
+end
+
+object 247 "Tile Ground (35,-2)"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position 35.5 -1.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset "b21abbfef63faf394964b07bd48d84f7"
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.25,0.0,0.25,0.25],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":0,\"order\":-5}"
+end
+
+object 248 "Tile Ground (36,-2)"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position 36.5 -1.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset "b21abbfef63faf394964b07bd48d84f7"
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.25,0.0,0.25,0.25],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":0,\"order\":-5}"
+end
+
+object 249 "Tile Ground (-14,-1)"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position -13.5 -0.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset "b21abbfef63faf394964b07bd48d84f7"
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,0.25,0.25],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":0,\"order\":-5}"
+end
+
+object 250 "Tile Ground (-13,-1)"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position -12.5 -0.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset "b21abbfef63faf394964b07bd48d84f7"
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,0.25,0.25],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":0,\"order\":-5}"
+end
+
+object 251 "Tile Ground (-12,-1)"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position -11.5 -0.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset "b21abbfef63faf394964b07bd48d84f7"
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,0.25,0.25],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":0,\"order\":-5}"
+end
+
+object 252 "Tile Ground (-11,-1)"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position -10.5 -0.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset "b21abbfef63faf394964b07bd48d84f7"
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,0.25,0.25],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":0,\"order\":-5}"
+end
+
+object 253 "Tile Ground (-10,-1)"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position -9.5 -0.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset "b21abbfef63faf394964b07bd48d84f7"
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,0.25,0.25],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":0,\"order\":-5}"
+end
+
+object 254 "Tile Ground (-9,-1)"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position -8.5 -0.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset "b21abbfef63faf394964b07bd48d84f7"
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,0.25,0.25],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":0,\"order\":-5}"
+end
+
+object 255 "Tile Ground (-8,-1)"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position -7.5 -0.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset "b21abbfef63faf394964b07bd48d84f7"
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,0.25,0.25],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":0,\"order\":-5}"
+end
+
+object 256 "Tile Ground (-7,-1)"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position -6.5 -0.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset "b21abbfef63faf394964b07bd48d84f7"
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,0.25,0.25],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":0,\"order\":-5}"
+end
+
+object 257 "Tile Ground (-6,-1)"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position -5.5 -0.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset "b21abbfef63faf394964b07bd48d84f7"
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,0.25,0.25],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":0,\"order\":-5}"
+end
+
+object 258 "Tile Ground (-5,-1)"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position -4.5 -0.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset "b21abbfef63faf394964b07bd48d84f7"
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,0.25,0.25],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":0,\"order\":-5}"
+end
+
+object 259 "Tile Ground (-4,-1)"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position -3.5 -0.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset "b21abbfef63faf394964b07bd48d84f7"
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,0.25,0.25],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":0,\"order\":-5}"
+end
+
+object 260 "Tile Ground (-3,-1)"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position -2.5 -0.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset "b21abbfef63faf394964b07bd48d84f7"
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,0.25,0.25],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":0,\"order\":-5}"
+end
+
+object 261 "Tile Ground (-2,-1)"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position -1.5 -0.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset "b21abbfef63faf394964b07bd48d84f7"
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,0.25,0.25],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":0,\"order\":-5}"
+end
+
+object 262 "Tile Ground (-1,-1)"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position -0.5 -0.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset "b21abbfef63faf394964b07bd48d84f7"
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,0.25,0.25],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":0,\"order\":-5}"
+end
+
+object 263 "Tile Ground (0,-1)"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position 0.5 -0.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset "b21abbfef63faf394964b07bd48d84f7"
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,0.25,0.25],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":0,\"order\":-5}"
+end
+
+object 264 "Tile Ground (1,-1)"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position 1.5 -0.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset "b21abbfef63faf394964b07bd48d84f7"
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,0.25,0.25],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":0,\"order\":-5}"
+end
+
+object 265 "Tile Ground (2,-1)"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position 2.5 -0.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset "b21abbfef63faf394964b07bd48d84f7"
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,0.25,0.25],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":0,\"order\":-5}"
+end
+
+object 266 "Tile Ground (3,-1)"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position 3.5 -0.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset "b21abbfef63faf394964b07bd48d84f7"
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,0.25,0.25],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":0,\"order\":-5}"
+end
+
+object 267 "Tile Ground (4,-1)"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position 4.5 -0.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset "b21abbfef63faf394964b07bd48d84f7"
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,0.25,0.25],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":0,\"order\":-5}"
+end
+
+object 268 "Tile Ground (5,-1)"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position 5.5 -0.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset "b21abbfef63faf394964b07bd48d84f7"
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,0.25,0.25],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":0,\"order\":-5}"
+end
+
+object 269 "Tile Ground (6,-1)"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position 6.5 -0.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset "b21abbfef63faf394964b07bd48d84f7"
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,0.25,0.25],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":0,\"order\":-5}"
+end
+
+object 270 "Tile Ground (7,-1)"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position 7.5 -0.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset "b21abbfef63faf394964b07bd48d84f7"
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,0.25,0.25],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":0,\"order\":-5}"
+end
+
+object 271 "Tile Ground (8,-1)"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position 8.5 -0.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset "b21abbfef63faf394964b07bd48d84f7"
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,0.25,0.25],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":0,\"order\":-5}"
+end
+
+object 272 "Tile Ground (9,-1)"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position 9.5 -0.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset "b21abbfef63faf394964b07bd48d84f7"
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,0.25,0.25],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":0,\"order\":-5}"
+end
+
+object 273 "Tile Ground (10,-1)"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position 10.5 -0.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset "b21abbfef63faf394964b07bd48d84f7"
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,0.25,0.25],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":0,\"order\":-5}"
+end
+
+object 274 "Tile Ground (11,-1)"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position 11.5 -0.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset "b21abbfef63faf394964b07bd48d84f7"
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,0.25,0.25],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":0,\"order\":-5}"
+end
+
+object 275 "Tile Ground (12,-1)"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position 12.5 -0.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset "b21abbfef63faf394964b07bd48d84f7"
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,0.25,0.25],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":0,\"order\":-5}"
+end
+
+object 276 "Tile Ground (13,-1)"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position 13.5 -0.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset "b21abbfef63faf394964b07bd48d84f7"
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,0.25,0.25],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":0,\"order\":-5}"
+end
+
+object 277 "Tile Ground (14,-1)"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position 14.5 -0.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset "b21abbfef63faf394964b07bd48d84f7"
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,0.25,0.25],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":0,\"order\":-5}"
+end
+
+object 278 "Tile Ground (15,-1)"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position 15.5 -0.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset "b21abbfef63faf394964b07bd48d84f7"
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,0.25,0.25],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":0,\"order\":-5}"
+end
+
+object 279 "Tile Ground (16,-1)"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position 16.5 -0.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset "b21abbfef63faf394964b07bd48d84f7"
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,0.25,0.25],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":0,\"order\":-5}"
+end
+
+object 280 "Tile Ground (17,-1)"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position 17.5 -0.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset "b21abbfef63faf394964b07bd48d84f7"
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,0.25,0.25],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":0,\"order\":-5}"
+end
+
+object 281 "Tile Ground (18,-1)"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position 18.5 -0.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset "b21abbfef63faf394964b07bd48d84f7"
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,0.25,0.25],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":0,\"order\":-5}"
+end
+
+object 282 "Tile Ground (19,-1)"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position 19.5 -0.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset "b21abbfef63faf394964b07bd48d84f7"
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,0.25,0.25],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":0,\"order\":-5}"
+end
+
+object 283 "Tile Ground (20,-1)"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position 20.5 -0.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset "b21abbfef63faf394964b07bd48d84f7"
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,0.25,0.25],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":0,\"order\":-5}"
+end
+
+object 284 "Tile Ground (21,-1)"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position 21.5 -0.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset "b21abbfef63faf394964b07bd48d84f7"
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,0.25,0.25],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":0,\"order\":-5}"
+end
+
+object 285 "Tile Ground (22,-1)"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position 22.5 -0.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset "b21abbfef63faf394964b07bd48d84f7"
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,0.25,0.25],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":0,\"order\":-5}"
+end
+
+object 286 "Tile Ground (23,-1)"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position 23.5 -0.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset "b21abbfef63faf394964b07bd48d84f7"
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,0.25,0.25],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":0,\"order\":-5}"
+end
+
+object 287 "Tile Ground (24,-1)"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position 24.5 -0.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset "b21abbfef63faf394964b07bd48d84f7"
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,0.25,0.25],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":0,\"order\":-5}"
+end
+
+object 288 "Tile Ground (25,-1)"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position 25.5 -0.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset "b21abbfef63faf394964b07bd48d84f7"
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,0.25,0.25],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":0,\"order\":-5}"
+end
+
+object 289 "Tile Ground (26,-1)"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position 26.5 -0.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset "b21abbfef63faf394964b07bd48d84f7"
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,0.25,0.25],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":0,\"order\":-5}"
+end
+
+object 290 "Tile Ground (27,-1)"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position 27.5 -0.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset "b21abbfef63faf394964b07bd48d84f7"
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,0.25,0.25],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":0,\"order\":-5}"
+end
+
+object 291 "Tile Ground (28,-1)"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position 28.5 -0.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset "b21abbfef63faf394964b07bd48d84f7"
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,0.25,0.25],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":0,\"order\":-5}"
+end
+
+object 292 "Tile Ground (29,-1)"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position 29.5 -0.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset "b21abbfef63faf394964b07bd48d84f7"
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,0.25,0.25],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":0,\"order\":-5}"
+end
+
+object 293 "Tile Ground (30,-1)"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position 30.5 -0.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset "b21abbfef63faf394964b07bd48d84f7"
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,0.25,0.25],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":0,\"order\":-5}"
+end
+
+object 294 "Tile Ground (31,-1)"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position 31.5 -0.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset "b21abbfef63faf394964b07bd48d84f7"
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,0.25,0.25],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":0,\"order\":-5}"
+end
+
+object 295 "Tile Ground (32,-1)"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position 32.5 -0.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset "b21abbfef63faf394964b07bd48d84f7"
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,0.25,0.25],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":0,\"order\":-5}"
+end
+
+object 296 "Tile Ground (33,-1)"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position 33.5 -0.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset "b21abbfef63faf394964b07bd48d84f7"
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,0.25,0.25],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":0,\"order\":-5}"
+end
+
+object 297 "Tile Ground (34,-1)"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position 34.5 -0.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset "b21abbfef63faf394964b07bd48d84f7"
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,0.25,0.25],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":0,\"order\":-5}"
+end
+
+object 298 "Tile Ground (35,-1)"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position 35.5 -0.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset "b21abbfef63faf394964b07bd48d84f7"
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,0.25,0.25],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":0,\"order\":-5}"
+end
+
+object 299 "Tile Ground (36,-1)"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position 36.5 -0.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset "b21abbfef63faf394964b07bd48d84f7"
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.0,0.25,0.25],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":0,\"order\":-5}"
+end
+
+object 300 "Tile Ground (1,0)"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position 1.5 0.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset "b21abbfef63faf394964b07bd48d84f7"
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.75,0.0,0.25,0.25],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":0,\"order\":-5}"
+end
+
+object 301 "Tile Ground (2,0)"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position 2.5 0.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset "b21abbfef63faf394964b07bd48d84f7"
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.75,0.0,0.25,0.25],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":0,\"order\":-5}"
+end
+
+object 302 "Tile Ground (2,1)"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position 2.5 1.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset "b21abbfef63faf394964b07bd48d84f7"
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.75,0.0,0.25,0.25],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":0,\"order\":-5}"
+end
+
+object 303 "Tile Ground (3,0)"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position 3.5 0.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset "b21abbfef63faf394964b07bd48d84f7"
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.75,0.0,0.25,0.25],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":0,\"order\":-5}"
+end
+
+object 304 "Tile Ground (3,1)"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position 3.5 1.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset "b21abbfef63faf394964b07bd48d84f7"
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.75,0.0,0.25,0.25],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":0,\"order\":-5}"
+end
+
+object 305 "Tile Ground (4,0)"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position 4.5 0.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset "b21abbfef63faf394964b07bd48d84f7"
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.75,0.0,0.25,0.25],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":0,\"order\":-5}"
+end
+
+object 306 "Tile Ground (4,1)"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position 4.5 1.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset "b21abbfef63faf394964b07bd48d84f7"
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.75,0.0,0.25,0.25],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":0,\"order\":-5}"
+end
+
+object 307 "Tile Ground (4,2)"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position 4.5 2.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset "b21abbfef63faf394964b07bd48d84f7"
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.75,0.0,0.25,0.25],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":0,\"order\":-5}"
+end
+
+object 308 "Tile Ground (11,1)"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position 11.5 1.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset "b21abbfef63faf394964b07bd48d84f7"
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.5,0.0,0.25,0.25],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":0,\"order\":-5}"
+end
+
+object 309 "Tile Ground (12,1)"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position 12.5 1.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset "b21abbfef63faf394964b07bd48d84f7"
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.5,0.0,0.25,0.25],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":0,\"order\":-5}"
+end
+
+object 310 "Tile Ground (13,1)"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position 13.5 1.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset "b21abbfef63faf394964b07bd48d84f7"
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.5,0.0,0.25,0.25],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":0,\"order\":-5}"
+end
+
+object 311 "Tile Ground (14,1)"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position 14.5 1.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset "b21abbfef63faf394964b07bd48d84f7"
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.5,0.0,0.25,0.25],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":0,\"order\":-5}"
+end
+
+object 312 "Tile Ground (15,1)"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position 15.5 1.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset "b21abbfef63faf394964b07bd48d84f7"
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.5,0.0,0.25,0.25],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":0,\"order\":-5}"
+end
+
+object 313 "Tile Ground (22,3)"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position 22.5 3.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset "b21abbfef63faf394964b07bd48d84f7"
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.5,0.75,0.25,0.25],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":0,\"order\":-5}"
+end
+
+object 314 "Tile Ground (23,3)"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position 23.5 3.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset "b21abbfef63faf394964b07bd48d84f7"
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.5,0.75,0.25,0.25],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":0,\"order\":-5}"
+end
+
+object 315 "Tile Ground (24,3)"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position 24.5 3.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset "b21abbfef63faf394964b07bd48d84f7"
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.5,0.75,0.25,0.25],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":0,\"order\":-5}"
+end
+
+object 316 "Tile Ground (25,3)"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position 25.5 3.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset "b21abbfef63faf394964b07bd48d84f7"
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.5,0.75,0.25,0.25],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":0,\"order\":-5}"
+end
+
+object 317 "Tile Ground (26,3)"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position 26.5 3.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset "b21abbfef63faf394964b07bd48d84f7"
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.5,0.75,0.25,0.25],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":0,\"order\":-5}"
+end
+
+object 318 "Tile Ground (27,3)"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position 27.5 3.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset "b21abbfef63faf394964b07bd48d84f7"
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.5,0.75,0.25,0.25],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":0,\"order\":-5}"
+end
+
+object 319 "Tile Ground (-14,0)"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position -13.5 0.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset "b21abbfef63faf394964b07bd48d84f7"
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.75,0.0,0.25,0.25],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":0,\"order\":-5}"
+end
+
+object 320 "Tile Ground (-14,1)"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position -13.5 1.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset "b21abbfef63faf394964b07bd48d84f7"
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.75,0.0,0.25,0.25],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":0,\"order\":-5}"
+end
+
+object 321 "Tile Ground (-14,2)"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position -13.5 2.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset "b21abbfef63faf394964b07bd48d84f7"
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.75,0.0,0.25,0.25],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":0,\"order\":-5}"
+end
+
+object 322 "Tile Ground (-14,3)"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position -13.5 3.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset "b21abbfef63faf394964b07bd48d84f7"
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.75,0.0,0.25,0.25],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":0,\"order\":-5}"
+end
+
+object 323 "Tile Ground (-14,4)"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position -13.5 4.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset "b21abbfef63faf394964b07bd48d84f7"
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.75,0.0,0.25,0.25],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":0,\"order\":-5}"
+end
+
+object 324 "Tile Ground (36,0)"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position 36.5 0.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset "b21abbfef63faf394964b07bd48d84f7"
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.75,0.0,0.25,0.25],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":0,\"order\":-5}"
+end
+
+object 325 "Tile Ground (36,1)"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position 36.5 1.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset "b21abbfef63faf394964b07bd48d84f7"
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.75,0.0,0.25,0.25],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":0,\"order\":-5}"
+end
+
+object 326 "Tile Ground (36,2)"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position 36.5 2.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset "b21abbfef63faf394964b07bd48d84f7"
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.75,0.0,0.25,0.25],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":0,\"order\":-5}"
+end
+
+object 327 "Tile Ground (36,3)"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position 36.5 3.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset "b21abbfef63faf394964b07bd48d84f7"
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.75,0.0,0.25,0.25],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":0,\"order\":-5}"
+end
+
+object 328 "Tile Ground (36,4)"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position 36.5 4.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset "b21abbfef63faf394964b07bd48d84f7"
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.75,0.0,0.25,0.25],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":0,\"order\":-5}"
+end
+
+object 329 "Tile Ground (36,5)"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position 36.5 5.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset "b21abbfef63faf394964b07bd48d84f7"
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.75,0.0,0.25,0.25],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":0,\"order\":-5}"
+end
+
+object 330 "Tile Ground (36,6)"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position 36.5 6.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset "b21abbfef63faf394964b07bd48d84f7"
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.75,0.0,0.25,0.25],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":0,\"order\":-5}"
+end
+
+object 331 "Tile collision Ground"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position -7 -1 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  body static planar
+  body.planar-v1 "{\"version\":1,\"kind\":1,\"radius\":0.0,\"lockRotation\":false,\"vertices\":[[-7.0,-1.0],[7.0,-1.0],[7.0,1.0],[-7.0,1.0]]}"
+  body.half-extents 0.5 0.5 0.5
+  body.radius 0.5
+  body.terrain ""
+  body.mass 1
+  body.friction 0.7
+  body.restitution 0.1
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 332 "Tile collision Ground"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position -13.5 2.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  body static planar
+  body.planar-v1 "{\"version\":1,\"kind\":1,\"radius\":0.0,\"lockRotation\":false,\"vertices\":[[-0.5,-2.5],[0.5,-2.5],[0.5,2.5],[-0.5,2.5]]}"
+  body.half-extents 0.5 0.5 0.5
+  body.radius 0.5
+  body.terrain ""
+  body.mass 1
+  body.friction 0.7
+  body.restitution 0.1
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 333 "Tile collision Ground"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position 8 -1 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  body static planar
+  body.planar-v1 "{\"version\":1,\"kind\":1,\"radius\":0.0,\"lockRotation\":false,\"vertices\":[[-8.0,-1.0],[8.0,-1.0],[8.0,1.0],[-8.0,1.0]]}"
+  body.half-extents 0.5 0.5 0.5
+  body.radius 0.5
+  body.terrain ""
+  body.mass 1
+  body.friction 0.7
+  body.restitution 0.1
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 334 "Tile collision Ground"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position 3 0.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  body static planar
+  body.planar-v1 "{\"version\":1,\"kind\":1,\"radius\":0.0,\"lockRotation\":false,\"vertices\":[[-2.0,-0.5],[2.0,-0.5],[2.0,0.5],[-2.0,0.5]]}"
+  body.half-extents 0.5 0.5 0.5
+  body.radius 0.5
+  body.terrain ""
+  body.mass 1
+  body.friction 0.7
+  body.restitution 0.1
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 335 "Tile collision Ground"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position 3.5 1.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  body static planar
+  body.planar-v1 "{\"version\":1,\"kind\":1,\"radius\":0.0,\"lockRotation\":false,\"vertices\":[[-1.5,-0.5],[1.5,-0.5],[1.5,0.5],[-1.5,0.5]]}"
+  body.half-extents 0.5 0.5 0.5
+  body.radius 0.5
+  body.terrain ""
+  body.mass 1
+  body.friction 0.7
+  body.restitution 0.1
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 336 "Tile collision Ground"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position 13.5 1.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  body static planar
+  body.planar-v1 "{\"version\":1,\"kind\":1,\"radius\":0.0,\"lockRotation\":false,\"vertices\":[[-2.5,-0.5],[2.5,-0.5],[2.5,0.5],[-2.5,0.5]]}"
+  body.half-extents 0.5 0.5 0.5
+  body.radius 0.5
+  body.terrain ""
+  body.mass 1
+  body.friction 0.7
+  body.restitution 0.1
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 337 "Tile collision Ground"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position 4.5 2.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  body static planar
+  body.planar-v1 "{\"version\":1,\"kind\":1,\"radius\":0.0,\"lockRotation\":false,\"vertices\":[[-0.5,-0.5],[0.5,-0.5],[0.5,0.5],[-0.5,0.5]]}"
+  body.half-extents 0.5 0.5 0.5
+  body.radius 0.5
+  body.terrain ""
+  body.mass 1
+  body.friction 0.7
+  body.restitution 0.1
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 338 "Tile collision Ground"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position 24 -1 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  body static planar
+  body.planar-v1 "{\"version\":1,\"kind\":1,\"radius\":0.0,\"lockRotation\":false,\"vertices\":[[-8.0,-1.0],[8.0,-1.0],[8.0,1.0],[-8.0,1.0]]}"
+  body.half-extents 0.5 0.5 0.5
+  body.radius 0.5
+  body.terrain ""
+  body.mass 1
+  body.friction 0.7
+  body.restitution 0.1
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 339 "Tile collision Ground"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position 25 3.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  body static planar
+  body.planar-v1 "{\"version\":1,\"kind\":1,\"radius\":0.0,\"lockRotation\":false,\"vertices\":[[-3.0,-0.5],[3.0,-0.5],[3.0,0.5],[-3.0,0.5]]}"
+  body.half-extents 0.5 0.5 0.5
+  body.radius 0.5
+  body.terrain ""
+  body.mass 1
+  body.friction 0.7
+  body.restitution 0.1
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 340 "Tile collision Ground"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position 34.5 -1 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  body static planar
+  body.planar-v1 "{\"version\":1,\"kind\":1,\"radius\":0.0,\"lockRotation\":false,\"vertices\":[[-2.5,-1.0],[2.5,-1.0],[2.5,1.0],[-2.5,1.0]]}"
+  body.half-extents 0.5 0.5 0.5
+  body.radius 0.5
+  body.terrain ""
+  body.mass 1
+  body.friction 0.7
+  body.restitution 0.1
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 341 "Tile collision Ground"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position 36.5 3.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  body static planar
+  body.planar-v1 "{\"version\":1,\"kind\":1,\"radius\":0.0,\"lockRotation\":false,\"vertices\":[[-0.5,-3.5],[0.5,-3.5],[0.5,3.5],[-0.5,3.5]]}"
+  body.half-extents 0.5 0.5 0.5
+  body.radius 0.5
+  body.terrain ""
+  body.mass 1
+  body.friction 0.7
+  body.restitution 0.1
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 342 "Tile Scenery (-11,0)"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position -10.5 0.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset "b21abbfef63faf394964b07bd48d84f7"
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.25,0.5,0.25,0.25],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-1,\"order\":-10}"
+end
+
+object 343 "Tile Scenery (-11,1)"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position -10.5 1.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset "b21abbfef63faf394964b07bd48d84f7"
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.25,0.5,0.25,0.25],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-1,\"order\":-10}"
+end
+
+object 344 "Tile Scenery (-12,2)"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position -11.5 2.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset "b21abbfef63faf394964b07bd48d84f7"
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.5,0.25,0.25,0.25],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-1,\"order\":-10}"
+end
+
+object 345 "Tile Scenery (-11,2)"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position -10.5 2.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset "b21abbfef63faf394964b07bd48d84f7"
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.5,0.25,0.25,0.25],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-1,\"order\":-10}"
+end
+
+object 346 "Tile Scenery (-10,2)"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position -9.5 2.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset "b21abbfef63faf394964b07bd48d84f7"
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.5,0.25,0.25,0.25],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-1,\"order\":-10}"
+end
+
+object 347 "Tile Scenery (-5,0)"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position -4.5 0.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset "b21abbfef63faf394964b07bd48d84f7"
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.25,0.5,0.25,0.25],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-1,\"order\":-10}"
+end
+
+object 348 "Tile Scenery (-5,1)"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position -4.5 1.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset "b21abbfef63faf394964b07bd48d84f7"
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.25,0.5,0.25,0.25],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-1,\"order\":-10}"
+end
+
+object 349 "Tile Scenery (-6,2)"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position -5.5 2.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset "b21abbfef63faf394964b07bd48d84f7"
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.5,0.25,0.25,0.25],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-1,\"order\":-10}"
+end
+
+object 350 "Tile Scenery (-5,2)"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position -4.5 2.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset "b21abbfef63faf394964b07bd48d84f7"
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.5,0.25,0.25,0.25],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-1,\"order\":-10}"
+end
+
+object 351 "Tile Scenery (-4,2)"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position -3.5 2.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset "b21abbfef63faf394964b07bd48d84f7"
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.5,0.25,0.25,0.25],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-1,\"order\":-10}"
+end
+
+object 352 "Tile Scenery (17,0)"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position 17.5 0.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset "b21abbfef63faf394964b07bd48d84f7"
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.25,0.5,0.25,0.25],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-1,\"order\":-10}"
+end
+
+object 353 "Tile Scenery (17,1)"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position 17.5 1.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset "b21abbfef63faf394964b07bd48d84f7"
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.25,0.5,0.25,0.25],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-1,\"order\":-10}"
+end
+
+object 354 "Tile Scenery (16,2)"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position 16.5 2.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset "b21abbfef63faf394964b07bd48d84f7"
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.5,0.25,0.25,0.25],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-1,\"order\":-10}"
+end
+
+object 355 "Tile Scenery (17,2)"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position 17.5 2.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset "b21abbfef63faf394964b07bd48d84f7"
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.5,0.25,0.25,0.25],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-1,\"order\":-10}"
+end
+
+object 356 "Tile Scenery (18,2)"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position 18.5 2.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset "b21abbfef63faf394964b07bd48d84f7"
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.5,0.25,0.25,0.25],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-1,\"order\":-10}"
+end
+
+object 357 "Tile Scenery (31,0)"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position 31.5 0.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset "b21abbfef63faf394964b07bd48d84f7"
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.25,0.5,0.25,0.25],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-1,\"order\":-10}"
+end
+
+object 358 "Tile Scenery (31,1)"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position 31.5 1.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset "b21abbfef63faf394964b07bd48d84f7"
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.25,0.5,0.25,0.25],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-1,\"order\":-10}"
+end
+
+object 359 "Tile Scenery (30,2)"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position 30.5 2.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset "b21abbfef63faf394964b07bd48d84f7"
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.5,0.25,0.25,0.25],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-1,\"order\":-10}"
+end
+
+object 360 "Tile Scenery (31,2)"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position 31.5 2.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset "b21abbfef63faf394964b07bd48d84f7"
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.5,0.25,0.25,0.25],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-1,\"order\":-10}"
+end
+
+object 361 "Tile Scenery (32,2)"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position 32.5 2.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset "b21abbfef63faf394964b07bd48d84f7"
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.5,0.25,0.25,0.25],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-1,\"order\":-10}"
+end
+
+object 362 "Tile Scenery (20,0)"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position 20.5 0.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset "b21abbfef63faf394964b07bd48d84f7"
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.75,0.25,0.25],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-1,\"order\":-10}"
+end
+
+object 363 "Tile Scenery (21,0)"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position 21.5 0.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset "b21abbfef63faf394964b07bd48d84f7"
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.75,0.25,0.25],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-1,\"order\":-10}"
+end
+
+object 364 "Tile Scenery (22,0)"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position 22.5 0.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset "b21abbfef63faf394964b07bd48d84f7"
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.75,0.25,0.25],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-1,\"order\":-10}"
+end
+
+object 365 "Tile Scenery (23,0)"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position 23.5 0.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset "b21abbfef63faf394964b07bd48d84f7"
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.75,0.25,0.25],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-1,\"order\":-10}"
+end
+
+object 366 "Tile Scenery (24,0)"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position 24.5 0.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset "b21abbfef63faf394964b07bd48d84f7"
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.75,0.25,0.25],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-1,\"order\":-10}"
+end
+
+object 367 "Tile Scenery (25,0)"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position 25.5 0.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset "b21abbfef63faf394964b07bd48d84f7"
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.75,0.25,0.25],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-1,\"order\":-10}"
+end
+
+object 368 "Tile Scenery (20,1)"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position 20.5 1.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset "b21abbfef63faf394964b07bd48d84f7"
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.75,0.25,0.25],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-1,\"order\":-10}"
+end
+
+object 369 "Tile Scenery (21,1)"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position 21.5 1.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset "b21abbfef63faf394964b07bd48d84f7"
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.75,0.25,0.25],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-1,\"order\":-10}"
+end
+
+object 370 "Tile Scenery (22,1)"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position 22.5 1.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset "b21abbfef63faf394964b07bd48d84f7"
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.75,0.25,0.25],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-1,\"order\":-10}"
+end
+
+object 371 "Tile Scenery (23,1)"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position 23.5 1.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset "b21abbfef63faf394964b07bd48d84f7"
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.75,0.25,0.25],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-1,\"order\":-10}"
+end
+
+object 372 "Tile Scenery (24,1)"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position 24.5 1.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset "b21abbfef63faf394964b07bd48d84f7"
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.75,0.25,0.25],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-1,\"order\":-10}"
+end
+
+object 373 "Tile Scenery (25,1)"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position 25.5 1.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset "b21abbfef63faf394964b07bd48d84f7"
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.75,0.25,0.25],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-1,\"order\":-10}"
+end
+
+object 374 "Tile Scenery (20,2)"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position 20.5 2.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset "b21abbfef63faf394964b07bd48d84f7"
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.75,0.25,0.25],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-1,\"order\":-10}"
+end
+
+object 375 "Tile Scenery (21,2)"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position 21.5 2.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset "b21abbfef63faf394964b07bd48d84f7"
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.75,0.25,0.25],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-1,\"order\":-10}"
+end
+
+object 376 "Tile Scenery (22,2)"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position 22.5 2.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset "b21abbfef63faf394964b07bd48d84f7"
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.75,0.25,0.25],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-1,\"order\":-10}"
+end
+
+object 377 "Tile Scenery (23,2)"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position 23.5 2.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset "b21abbfef63faf394964b07bd48d84f7"
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.75,0.25,0.25],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-1,\"order\":-10}"
+end
+
+object 378 "Tile Scenery (24,2)"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position 24.5 2.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset "b21abbfef63faf394964b07bd48d84f7"
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.75,0.25,0.25],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-1,\"order\":-10}"
+end
+
+object 379 "Tile Scenery (25,2)"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position 25.5 2.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset "b21abbfef63faf394964b07bd48d84f7"
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.75,0.25,0.25],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-1,\"order\":-10}"
+end
+
+object 380 "Tile Scenery (19,3)"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position 19.5 3.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset "b21abbfef63faf394964b07bd48d84f7"
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.25,0.25,0.25,0.25],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-1,\"order\":-10}"
+end
+
+object 381 "Tile Scenery (20,3)"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position 20.5 3.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset "b21abbfef63faf394964b07bd48d84f7"
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.25,0.25,0.25,0.25],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-1,\"order\":-10}"
+end
+
+object 382 "Tile Scenery (21,3)"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position 21.5 3.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset "b21abbfef63faf394964b07bd48d84f7"
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.25,0.25,0.25,0.25],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-1,\"order\":-10}"
+end
+
+object 383 "Tile Scenery (22,3)"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position 22.5 3.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset "b21abbfef63faf394964b07bd48d84f7"
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.25,0.25,0.25,0.25],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-1,\"order\":-10}"
+end
+
+object 384 "Tile Scenery (23,3)"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position 23.5 3.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset "b21abbfef63faf394964b07bd48d84f7"
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.25,0.25,0.25,0.25],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-1,\"order\":-10}"
+end
+
+object 385 "Tile Scenery (24,3)"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position 24.5 3.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset "b21abbfef63faf394964b07bd48d84f7"
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.25,0.25,0.25,0.25],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-1,\"order\":-10}"
+end
+
+object 386 "Tile Scenery (25,3)"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position 25.5 3.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset "b21abbfef63faf394964b07bd48d84f7"
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.25,0.25,0.25,0.25],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-1,\"order\":-10}"
+end
+
+object 387 "Tile Scenery (26,3)"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position 26.5 3.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset "b21abbfef63faf394964b07bd48d84f7"
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.25,0.25,0.25,0.25],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":-1,\"order\":-10}"
+end
+
+object 388 "Tile Props (20,0)"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position 20.5 0.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset "b21abbfef63faf394964b07bd48d84f7"
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.25,0.75,0.25,0.25],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":0,\"order\":1}"
+end
+
+object 389 "Tile Props (20,1)"
+  authoring-folder "Trail grid - select and open Tilemap painter"
+  parent 197
+  position 20.5 1.5 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset "b21abbfef63faf394964b07bd48d84f7"
+  render.sprite-v1 "{\"version\":1,\"size\":[1.0,1.0],\"pivot\":[0.5,0.5],\"rect\":[0.25,0.75,0.25,0.25],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":0,\"order\":1}"
+end
+
+object 390 "Collectible star"
+  scripts 1
+  script.0.id 1
+  script.0.asset "67cf1d9d075ac83ad1c3c5bdc7601918"
+  script.0.enabled true
+  script.0.properties "{}"
+  position -3 2 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset "b21abbfef63faf394964b07bd48d84f7"
+  render.sprite-v1 "{\"version\":1,\"size\":[0.6000000238418579,0.6000000238418579],\"pivot\":[0.5,0.5],\"rect\":[0.5,0.5,0.25,0.25],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":2,\"order\":0}"
+  body static planar
+  body.sensor true
+  body.planar-v1 "{\"version\":1,\"kind\":0,\"radius\":0.3,\"lockRotation\":false,\"vertices\":[[0.0,0.0]]}"
+  body.half-extents 0.5 0.5 0.5
+  body.radius 0.5
+  body.terrain ""
+  body.mass 1
+  body.friction 0.6
+  body.restitution 0.1
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 391 "Collectible star"
+  scripts 1
+  script.0.id 1
+  script.0.asset "67cf1d9d075ac83ad1c3c5bdc7601918"
+  script.0.enabled true
+  script.0.properties "{}"
+  position 9 3 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset "b21abbfef63faf394964b07bd48d84f7"
+  render.sprite-v1 "{\"version\":1,\"size\":[0.6000000238418579,0.6000000238418579],\"pivot\":[0.5,0.5],\"rect\":[0.5,0.5,0.25,0.25],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":2,\"order\":0}"
+  body static planar
+  body.sensor true
+  body.planar-v1 "{\"version\":1,\"kind\":0,\"radius\":0.3,\"lockRotation\":false,\"vertices\":[[0.0,0.0]]}"
+  body.half-extents 0.5 0.5 0.5
+  body.radius 0.5
+  body.terrain ""
+  body.mass 1
+  body.friction 0.6
+  body.restitution 0.1
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 392 "Collectible star"
+  scripts 1
+  script.0.id 1
+  script.0.asset "67cf1d9d075ac83ad1c3c5bdc7601918"
+  script.0.enabled true
+  script.0.properties "{}"
+  position 21 2 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset "b21abbfef63faf394964b07bd48d84f7"
+  render.sprite-v1 "{\"version\":1,\"size\":[0.6000000238418579,0.6000000238418579],\"pivot\":[0.5,0.5],\"rect\":[0.5,0.5,0.25,0.25],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":2,\"order\":0}"
+  body static planar
+  body.sensor true
+  body.planar-v1 "{\"version\":1,\"kind\":0,\"radius\":0.3,\"lockRotation\":false,\"vertices\":[[0.0,0.0]]}"
+  body.half-extents 0.5 0.5 0.5
+  body.radius 0.5
+  body.terrain ""
+  body.mass 1
+  body.friction 0.6
+  body.restitution 0.1
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 393 "Pushable crate"
+  position -4 1 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset "b21abbfef63faf394964b07bd48d84f7"
+  render.sprite-v1 "{\"version\":1,\"size\":[0.800000011920929,0.800000011920929],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.5,0.25,0.25],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":1,\"order\":0}"
+  body dynamic planar
+  body.planar-v1 "{\"version\":1,\"kind\":1,\"radius\":0.0,\"lockRotation\":false,\"vertices\":[[-0.4,-0.4],[0.4,-0.4],[0.4,0.4],[-0.4,0.4]]}"
+  body.half-extents 0.5 0.5 0.5
+  body.radius 0.5
+  body.terrain ""
+  body.mass 2
+  body.friction 0.6
+  body.restitution 0.1
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 394 "Pushable crate"
+  position -2 1 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render sprite
+  render.half-extents 0.5 0.5 0.5
+  render.radius 0.5
+  render.color 1 1 1
+  render.alpha 1
+  render.secondary-color 0.8 0.8 0.8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset "b21abbfef63faf394964b07bd48d84f7"
+  render.sprite-v1 "{\"version\":1,\"size\":[0.800000011920929,0.800000011920929],\"pivot\":[0.5,0.5],\"rect\":[0.0,0.5,0.25,0.25],\"tint\":[1.0,1.0,1.0,1.0],\"flipX\":false,\"flipY\":false,\"nearest\":true,\"pixelSnap\":true,\"alphaPick\":true,\"ySort\":false,\"sortingLayer\":1,\"order\":0}"
+  body dynamic planar
+  body.planar-v1 "{\"version\":1,\"kind\":1,\"radius\":0.0,\"lockRotation\":false,\"vertices\":[[-0.4,-0.4],[0.4,-0.4],[0.4,0.4],[-0.4,0.4]]}"
+  body.half-extents 0.5 0.5 0.5
+  body.radius 0.5
+  body.terrain ""
+  body.mass 2
+  body.friction 0.6
+  body.restitution 0.1
+  body.initial-velocity 0 0 0
+  body.pickable false
+  body.managed false
+  body.compound-count 0
+  body.fluid-cavity-count 0
+end
+
+object 395 "Workshop controls - ordinary project JavaScript"
+  scripts 1
+  script.0.id 1
+  script.0.asset "32243fca6d30952f38e1b3ad48ce2e54"
+  script.0.enabled true
+  script.0.properties "{}"
+  position 0 0 0
+  rotation 1 0 0 0
+  scale 1 1 1
+end

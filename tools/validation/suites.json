@@ -1,6 +1,10 @@
 {
   "format": 1,
   "tests": [
+    {"name":"tilemap-application","target":"judas_tilemap_application_tests","groups":["2d","lifecycle"],"args":["{root}/projects/tilemap_workshop/Tilemap_Workshop.judasproj","{output}/tilemap-application"]},
+    {"name":"tilemap-render","target":"judas_tilemap_render_tests","groups":["2d","rendering"],"args":["{output}/tilemap-render"]},
+    {"name":"tilemap-editor","target":"judas_tilemap_editor_tests","groups":["2d","editor"],"args":["{output}/tilemap-editor"]},
+    {"name":"tilemap","target":"judas_tilemap_tests","groups":["2d"],"args":["{output}/tilemap"]},
     {"name":"consumer-lifecycle","target":"judas_consumer_lifecycle_tests","groups":["scripting","lifecycle","input"],"args":["{output}/consumer-lifecycle"]},
     {"name":"sprite-animation-render","target":"judas_sprite_animation_render_tests","groups":["2d","animation"],"args":["{output}/sprite-animation-render"]},
     {"name":"sprite-animation-integration","target":"judas_sprite_animation_integration_tests","groups":["2d","animation"],"args":["{root}/projects/sprite_animation_workshop","{output}/sprite-animation-project"]},

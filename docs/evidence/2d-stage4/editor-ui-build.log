@@ -1,0 +1,43 @@
+[  0%] Building CXX object CMakeFiles/judas_build_identity.dir/src/BuildIdentity.cpp.o
+[  6%] Built target freetype
+[  6%] Built target judas_app_icon
+[ 12%] Built target judas_meshoptimizer
+[ 18%] Built target judas_icu_build
+[ 18%] Built target judas_quickjs
+[ 18%] Built target judas_ufbx
+[ 25%] Built target judas_navigation_backend
+[ 25%] Built target judas_glad
+[ 25%] Built target judas_profiler
+[ 25%] Built target judas_jobs
+[ 25%] Built target judas_audio_backend
+[ 25%] Built target harfbuzz
+[ 25%] Built target judas_imgui
+[ 31%] Built target judas_navigation_cook
+[ 31%] Built target judas_materials
+[ 31%] Linking CXX static library libjudas_build_identity.a
+[ 37%] Built target judas_build_identity
+[ 87%] Built target judas_engine
+[ 87%] Built target judas_navigation_baker
+[ 93%] Built target judas_model_import
+[ 93%] Built target judas_world_authoring
+[ 93%] Linking CXX executable judas_editor
+[100%] Built target judas_editor
+[  7%] Built target judas_build_identity
+[ 14%] Built target freetype
+[ 14%] Built target judas_app_icon
+[ 21%] Built target judas_meshoptimizer
+[ 28%] Built target judas_icu_build
+[ 28%] Built target judas_quickjs
+[ 35%] Built target judas_navigation_backend
+[ 35%] Built target judas_glad
+[ 35%] Built target judas_profiler
+[ 35%] Built target judas_jobs
+[ 35%] Built target judas_audio_backend
+[ 35%] Built target harfbuzz
+[ 35%] Built target judas_imgui
+[ 42%] Built target judas_navigation_cook
+[ 42%] Built target judas_materials
+[100%] Built target judas_engine
+[100%] Building CXX object CMakeFiles/judas_tilemap_editor_tests.dir/src/editor/EditorCamera.cpp.o
+[100%] Linking CXX executable judas_tilemap_editor_tests
+[100%] Built target judas_tilemap_editor_tests

@@ -259,3 +259,11 @@ traversal, while preview/render passes never advance gameplay. Existing scene
 definitions, prefab/stream snapshots, resource generations and modern saves own
 their normal lifetime; conditional content hashes prevent silent clip reinterpretation.
 See [Stage 3](2D_STAGE3.md) and [the sprite animation API](judasjs/sprite-animation.md).
+
+`authoring/Tilemap` compiles bounded editor-owned sparse grid recipes to ordinary
+sprites and chunk-merged static planar boxes. `editor/TilemapEditor` owns palette
+selection, ray/grid painting and draft strokes; `EditorDocument` owns publication
+and Undo. Existing scene recipes retain source metadata; runtime physics, saves,
+streaming and exports use the compiled ordinary entities. There is no additional
+tile simulation or runtime clock. See [Stage 4](2D_STAGE4.md) and the
+[tile authoring guide](judasjs/tilemaps-2d.md) for limits and ownership.

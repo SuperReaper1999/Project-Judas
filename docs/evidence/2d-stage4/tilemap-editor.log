@@ -1,0 +1,22 @@
+PASS real palette image
+PASS track image
+PASS ordinary tracked palette
+PASS create via real document transaction: 
+PASS viewport ray brush drag commits
+PASS fast drag paints every crossed negative/positive cell in one undoable edit
+PASS one Undo restores grid and collision together
+PASS Redo restores exact stable identities
+PASS Escape cancels draft without publishing partial tiles or dirty history
+PASS rectangle fill uses inclusive snapped cells
+PASS right-drag rectangle erases real generated geometry
+PASS intervening document edit invalidates stale paint transaction
+PASS parallel ray refuses to paint an invented surface
+PASS save ordinary scene
+PASS Save As retains the current grid editing context
+PASS new document reopens the grid
+PASS duplicate whole grid with normal hierarchy command: 
+PASS duplicate retains independently editable recipe and remapped children
+PASS copied map passes managed ownership checks
+PASS deleting a grid retires metadata without orphaned recipes
+PASS Undo deletion restores grid and authoring identity
+TILEMAP_EDITOR checks=21 failures=0

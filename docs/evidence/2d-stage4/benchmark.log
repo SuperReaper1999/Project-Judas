@@ -1,0 +1,15 @@
+fresh_bake_ms,128,5,6.817658,6.987908,6.987908
+existing_rebuild_ms,128,5,8.601972,9.698840,9.698840
+geometry,128,tiles=128,merged_static_boxes=4
+merged_physics_ms,128,120,0.041950,0.068369,0.609078
+per_tile_physics_ms,128,120,0.082505,0.088096,0.089338
+fresh_bake_ms,512,5,28.666030,33.578003,33.578003
+existing_rebuild_ms,512,5,38.106533,41.039364,41.039364
+geometry,512,tiles=512,merged_static_boxes=4
+merged_physics_ms,512,120,0.045255,0.062237,0.068098
+per_tile_physics_ms,512,120,0.061266,0.066796,0.069491
+fresh_bake_ms,2048,5,130.954391,137.803978,137.803978
+existing_rebuild_ms,2048,5,165.529364,200.372794,200.372794
+geometry,2048,tiles=2048,merged_static_boxes=8
+merged_physics_ms,2048,120,0.038833,0.043021,0.067968
+per_tile_physics_ms,2048,120,0.134774,0.139613,0.145865

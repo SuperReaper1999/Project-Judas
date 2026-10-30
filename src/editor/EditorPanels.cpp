@@ -342,9 +342,15 @@ void DrawEditorMainMenu(EditorDocument& doc, EditorPanelState& state, EditorRequ
             ImGui::MenuItem("World building / named source", nullptr, &state.showWorldBuilding);
             ImGui::EndMenu();
         }
+        if (ImGui::BeginMenu("2D authoring")) {
+            ImGui::MenuItem("Tilemap painter",nullptr,&state.showTilemapEditor);
+            ImGui::MenuItem("Sprite sheets and frame animation",nullptr,&state.showSpriteSheetEditor);
+            ImGui::EndMenu();
+        }
         if (ImGui::BeginMenu("Animation tools")) {
             ImGui::MenuItem("Animation timeline", nullptr, &state.showAnimationTimeline);
             ImGui::MenuItem("Sprite sheets and frame animation",nullptr,&state.showSpriteSheetEditor);
+
             ImGui::MenuItem("Animation retargeting", nullptr, &state.showRetarget);
             ImGui::EndMenu();
         }
@@ -993,6 +999,7 @@ void DrawAssetBrowserPanel(EditorDocument& doc, EditorPanelState& state, EditorR
                 if(record.type==AssetType::Texture&&ImGui::MenuItem("Create/edit sprite sheet",nullptr,false,state.mode==EditorMode::Edit&&!record.missing&&!record.readOnly)){
                     AssetRecord sheet;std::string error;if(CreateSpriteSheetAsset(*state.assets,id,sheet,error)){state.spriteSheetEdit=sheet.id;state.showSpriteSheetEditor=true;}else state.status=error;
                 }
+                if(record.type==AssetType::SpriteSheet&&ImGui::MenuItem("Paint tilemap from this sheet",nullptr,false,state.mode==EditorMode::Edit&&!record.missing)){state.tilemapPalette=id;state.showTilemapEditor=true;}
                 if(record.type==AssetType::SpriteSheet&&ImGui::MenuItem("Edit frames and animation")){state.spriteSheetEdit=id;state.showSpriteSheetEditor=true;}
 
                 if(record.type==AssetType::Texture&&ImGui::MenuItem("Create sprite in scene",nullptr,false,state.mode==EditorMode::Edit&&!record.missing)){

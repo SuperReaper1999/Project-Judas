@@ -53,6 +53,7 @@ extern char** environ;
 #include "RuntimeWorld.h"
 #include "AnimationTimeline.h"
 #include "SpriteSheetEditor.h"
+#include "TilemapEditor.h"
 #include "SceneSession.h"
 #include "Scene.h"
 #include "SceneSerialization.h"
@@ -1122,7 +1123,12 @@ void EditorApplication::FrameEditMode(float deltaSeconds) {
     if(m_volumeTerrain&&m_volumeTerrain->loaded){m_volumeTerrain->Prepare(renderer,m_panels);
         if(m_volumeTerrain->editing){if(m_terrain)m_terrain->editing=false;m_scenePicker.SetDraftMesh(m_volumeTerrain->draft.source.meshId,m_volumeTerrain->preview);}
         Scene flat;std::string error;if(FlattenHierarchy(m_document.GetScene(),flat,error)){glm::vec3 ro,rd;ViewportRay(int(io.MousePos.x),int(io.MousePos.y),ro,rd);brushOwns|=m_volumeTerrain->Stroke(flat,m_document.Selected(),ro,rd,viewportOwnsMouse&&ImGui::IsMouseClicked(ImGuiMouseButton_Left),viewportOwnsMouse&&io.MouseDown[ImGuiMouseButton_Left],ImGui::IsKeyPressed(ImGuiKey_Escape),m_viewportFocused&&!m_volumeTerrain->Busy(m_panels),m_panels.status);}}
-    UpdateGizmo(viewportOwnsMouse&&!brushOwns);
+    if(m_tilemapEditor&&(m_tilemapEditor->painting||m_tilemapEditor->StrokeActive())){glm::vec3 origin,direction;ViewportRay(int(io.MousePos.x),int(io.MousePos.y),origin,direction);
+        brushOwns|=m_tilemapEditor->Stroke(m_document,m_host->Assets(),origin,direction,viewportOwnsMouse,
+            ImGui::IsMouseClicked(ImGuiMouseButton_Left),ImGui::IsMouseClicked(ImGuiMouseButton_Right),
+            io.MouseDown[ImGuiMouseButton_Left],io.MouseDown[ImGuiMouseButton_Right],ImGui::IsKeyPressed(ImGuiKey_Escape),m_panels.status);}
+    if(m_tilemapEditor&&m_tilemapEditor->painting){m_gizmoLines.Clear();m_hoverAxis=GizmoAxis::None;}
+    else UpdateGizmo(viewportOwnsMouse&&!brushOwns);
     if (viewportOwnsMouse && !brushOwns && !m_drag.Active() && m_hoverAxis == GizmoAxis::None &&
         ImGui::IsMouseClicked(ImGuiMouseButton_Left)) {
         PickAtPixel(static_cast<int>(io.MousePos.x), static_cast<int>(io.MousePos.y));
@@ -1225,6 +1231,7 @@ void EditorApplication::FrameEditMode(float deltaSeconds) {
     DrawEditOverlay(renderer, scene);
     if(m_terrain)renderer.DrawDebugLines(m_terrain->footprint.Lines(),true);
     if(m_volumeTerrain)renderer.DrawDebugLines(m_volumeTerrain->footprint.Lines(),true);
+    if(m_tilemapEditor&&m_tilemapEditor->painting)renderer.DrawDebugLines(m_tilemapEditor->overlay.Lines(),false);
     renderer.EndFrame();
     renderer.EndRenderTarget();
     renderer.ClearWeather();
@@ -1699,6 +1706,8 @@ int EditorApplication::Run(int argc, char** argv) {
         m_panels.showAnimationTimeline=m_animationTimeline->visible;
         if(!m_spriteSheetEditor)m_spriteSheetEditor=std::make_unique<SpriteSheetEditor>();
         m_spriteSheetEditor->Panel(m_panels);
+        if(!m_tilemapEditor)m_tilemapEditor=std::make_unique<TilemapEditor>();
+        m_tilemapEditor->Panel(m_document,m_panels);
         DrawEditorWorkspaceChrome(m_document, m_panels, requests);
         // While playing, the engine's own HUD occupies the top-left corner
         // and the authored panels are read-only anyway; only the menu bar
@@ -1934,6 +1943,8 @@ int EditorApplication::Run(int argc, char** argv) {
             if(importRecipe&&autotestFrame==6){m_panels.modelPreviewPlaying=true;m_panels.modelPreviewTime=.5f;}
             if(importRecipe&&autotestFrame==12){auto& parts=m_panels.importAccepted->preview->primitives;if(!parts.empty())m_panels.modelPreviewHidden={parts.front().part};}
 
+            if(std::getenv("JUDAS_EDITOR_AUTOTEST_TILEMAP")&&m_tilemapEditor)
+                m_tilemapEditor->Autotest(autotestFrame,m_document,m_panels,m_camera,window,[&](){screenshot(std::string(autotest)+".tilemap.png");});
             if(std::getenv("JUDAS_EDITOR_AUTOTEST_SPRITE_ANIMATION")){
                 if(autotestFrame==3){for(const auto& [id,record]:host.Assets().Records())if(record.type==AssetType::SpriteSheet){m_panels.spriteSheetEdit=id;m_panels.showSpriteSheetEditor=true;break;}m_panels.showProfiler=false;m_panels.showWorldBuilding=false;}
                 if(autotestFrame==8&&m_spriteSheetEditor){m_spriteSheetEditor->cell={24,48};m_spriteSheetEditor->clip=1;m_spriteSheetEditor->previewPlaying=true;}
@@ -2223,7 +2234,7 @@ int EditorApplication::Run(int argc, char** argv) {
     ImGui::DestroyContext();
     m_previewLocalization.reset();
     m_host = nullptr;
-    return terrainFailures || navigationFailures || (m_stabilization && m_stabilization->failures) ? 1 : 0;
+    return terrainFailures || navigationFailures || (m_tilemapEditor&&m_tilemapEditor->TestFailures()) || (m_stabilization && m_stabilization->failures) ? 1 : 0;
 }
 
 void EditorApplication::DrawUIAuthoringPreview(){

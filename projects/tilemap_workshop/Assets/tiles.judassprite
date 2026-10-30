@@ -1,0 +1,234 @@
+{
+  "clips": [],
+  "frames": [
+    {
+      "id": "tile-0",
+      "name": "Grass edge",
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "pixels": [
+        0,
+        0,
+        32,
+        32
+      ]
+    },
+    {
+      "id": "tile-1",
+      "name": "Earth",
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "pixels": [
+        32,
+        0,
+        32,
+        32
+      ]
+    },
+    {
+      "id": "tile-2",
+      "name": "Planks",
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "pixels": [
+        64,
+        0,
+        32,
+        32
+      ]
+    },
+    {
+      "id": "tile-3",
+      "name": "Stone",
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "pixels": [
+        96,
+        0,
+        32,
+        32
+      ]
+    },
+    {
+      "id": "tile-4",
+      "name": "Water",
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "pixels": [
+        0,
+        32,
+        32,
+        32
+      ]
+    },
+    {
+      "id": "tile-5",
+      "name": "Roof",
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "pixels": [
+        32,
+        32,
+        32,
+        32
+      ]
+    },
+    {
+      "id": "tile-6",
+      "name": "Shrub",
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "pixels": [
+        64,
+        32,
+        32,
+        32
+      ]
+    },
+    {
+      "id": "tile-7",
+      "name": "Path",
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "pixels": [
+        96,
+        32,
+        32,
+        32
+      ]
+    },
+    {
+      "id": "tile-8",
+      "name": "Crate",
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "pixels": [
+        0,
+        64,
+        32,
+        32
+      ]
+    },
+    {
+      "id": "tile-9",
+      "name": "Tree",
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "pixels": [
+        32,
+        64,
+        32,
+        32
+      ]
+    },
+    {
+      "id": "tile-10",
+      "name": "Star",
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "pixels": [
+        64,
+        64,
+        32,
+        32
+      ]
+    },
+    {
+      "id": "tile-11",
+      "name": "Meadow",
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "pixels": [
+        96,
+        64,
+        32,
+        32
+      ]
+    },
+    {
+      "id": "tile-12",
+      "name": "Brick",
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "pixels": [
+        0,
+        96,
+        32,
+        32
+      ]
+    },
+    {
+      "id": "tile-13",
+      "name": "Door",
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "pixels": [
+        32,
+        96,
+        32,
+        32
+      ]
+    },
+    {
+      "id": "tile-14",
+      "name": "Steel",
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "pixels": [
+        64,
+        96,
+        32,
+        32
+      ]
+    },
+    {
+      "id": "tile-15",
+      "name": "Night stone",
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "pixels": [
+        96,
+        96,
+        32,
+        32
+      ]
+    }
+  ],
+  "height": 128,
+  "pixelsPerUnit": 32.0,
+  "texture": "b21abbfef63faf394964b07bd48d84f7",
+  "version": 1,
+  "width": 128
+}

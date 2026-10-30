@@ -1,0 +1,10 @@
+PASS author independent atlas
+PASS track atlas
+PASS ordinary tracked sprite-sheet palette
+PASS new process reads durable modern tilemap save
+PASS new process reconstructs actual generated scene
+PASS native participants restore before continuation: 
+PASS saved moving object retained stable identity
+PASS cold actual physical endpoint matches saved boundary exactly
+PASS cold restored object really moves and collides with painted floor
+TILEMAP_COLD checks=9 failures=0
