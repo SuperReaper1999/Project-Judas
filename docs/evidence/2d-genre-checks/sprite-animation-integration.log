@@ -1,0 +1,48 @@
+PASS integration output is isolated/fresh
+PASS open real animation workshop: 
+PASS project input map includes interaction
+PASS load editable animation/physics scene
+PASS build real gameplay and sheet dependency
+PASS real controller is grounded before interaction
+PASS ordinary JS starts nonloop interaction clip
+PASS wind-up does not apply premature strike
+PASS timed animation event applies actual native-body impulse
+PASS event-driven physical action moves the target
+PASS one strike, then ordinary JS transition back to idle
+PASS real run playback emits script-observable footstep markers
+PASS native physical jump selects jump sprite clip
+PASS explicit phase seek emits no gameplay event
+PASS seek clears preceding observations rather than dispatching markers
+PASS capture real sprite and physical continuation: 
+PASS write checksum-protected cold fixture
+PASS snapshot scene includes real playback configuration
+PASS restore into independent world before next fixed step: 
+PASS independent continuation matches uninterrupted phase and events
+PASS inspect real versioned sheet
+PASS author changed clip timing
+PASS changed-content save rejects instead of silently reinterpreting time
+PASS restore exact original fixture content
+PASS removed referenced frame fails resource publication with useful diagnostic
+PASS repair fixture for repeated lifecycle checks
+PASS repeated scene construction
+PASS world clear retires sprite event ownership
+PASS repeated scene construction
+PASS world clear retires sprite event ownership
+PASS repeated scene construction
+PASS world clear retires sprite event ownership
+PASS write ordinary animated prefab
+PASS track reusable animated prefab
+PASS two ordinary animated prefab instances instantiate
+PASS pause and seek one prefab instance
+PASS prefab clocks are independent; no shared asset mutation
+PASS prepare transient-only animated fixture
+PASS exclude optional animated actor from modern saves
+PASS excluded sprites do not manufacture required save participants
+PASS author genuine streamed animation region
+PASS build empty streaming root
+PASS region coordinator publishes animated sprite
+PASS inactive region really unloads animated owner
+PASS revisit reconstructs native animation owner
+PASS streamed phase was suspended, not advanced while absent or reset on return
+PASS restored sprite really resumes at next fixed boundary
+SUMMARY 47 checks 0 failures

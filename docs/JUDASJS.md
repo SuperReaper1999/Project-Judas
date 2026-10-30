@@ -17,7 +17,7 @@ For editor completion, copy [judas.d.ts](judas.d.ts) into your project and follo
 [IDE setup](judasjs/practices.md). Judas remains JavaScript; TypeScript, npm and
 Node are optional developer tools and are not part of the game runtime.
 
-Experimental native 2D Stages 1–4: [sprites, orthographic cameras and editor templates](judasjs/sprites-2d.md). [Native planar physics and editable player presets](judasjs/physics-2d.md) are also available, with [sprite sheets, frame animation and events](judasjs/sprite-animation.md). The [tilemap painter](judasjs/tilemaps-2d.md) adds layered grid authoring with real collision. A [complete fresh-project workflow](2D_GAME_WORKFLOW.md) is exercised by the editable Beacon Grove game. This is development toward v1.1.0, not a published release.
+Experimental native 2D Stages 1–4: [sprites, orthographic cameras and editor templates](judasjs/sprites-2d.md). [Native planar physics and editable player presets](judasjs/physics-2d.md) are also available, with [sprite sheets, frame animation and events](judasjs/sprite-animation.md). The [tilemap painter](judasjs/tilemaps-2d.md) adds layered grid authoring with real collision. A [complete fresh-project workflow](2D_GAME_WORKFLOW.md) is exercised by the editable Beacon Grove game. See the [platformer/action-adventure/tile-RPG guide](judasjs/2d-genres.md) for parallax, sword queries, height/sorting and explicit feature limits. This is development toward v1.1.0, not a published release.
 
 ## Find an API
 

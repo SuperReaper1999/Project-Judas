@@ -1,0 +1,20 @@
+STACK 0 y=0.499328613 expected=0.5
+PASS eight-body stack retains correct height, ordering and plane
+STACK 1 y=1.49866343 expected=1.5
+PASS eight-body stack retains correct height, ordering and plane
+STACK 2 y=2.49800396 expected=2.5
+PASS eight-body stack retains correct height, ordering and plane
+STACK 3 y=3.49737048 expected=3.5
+PASS eight-body stack retains correct height, ordering and plane
+STACK 4 y=4.49676466 expected=4.5
+PASS eight-body stack retains correct height, ordering and plane
+STACK 5 y=5.49620485 expected=5.5
+PASS eight-body stack retains correct height, ordering and plane
+STACK 6 y=6.49568033 expected=6.5
+PASS eight-body stack retains correct height, ordering and plane
+STACK 7 y=7.49568033 expected=7.5
+PASS eight-body stack retains correct height, ordering and plane
+PASS falling object rests on the upper solid platform, not the lower floor
+PASS top-down foot-origin sorting puts lower actor in front
+PASS explicit draw order overrides Y sort for roofs/bridges
+PLANAR_GAMEPLAY checks=11 failures=0

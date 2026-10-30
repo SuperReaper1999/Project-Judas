@@ -1,0 +1,37 @@
+[96mdocs/judasjs/examples/melee-2d.js[0m:[93m5[0m:[93m27[0m - [91merror[0m[90m TS7006: [0mParameter 'owner' implicitly has an 'any' type.
+
+[7m5[0m export function swordHits(owner,direction,{reach=1.4,radius=.12,arc=0,samples=9}={}){
+[7m [0m [91m                          ~~~~~[0m
+[96mdocs/judasjs/examples/melee-2d.js[0m:[93m5[0m:[93m33[0m - [91merror[0m[90m TS7006: [0mParameter 'direction' implicitly has an 'any' type.
+
+[7m5[0m export function swordHits(owner,direction,{reach=1.4,radius=.12,arc=0,samples=9}={}){
+[7m [0m [91m                                ~~~~~~~~~[0m
+[96mdocs/judasjs/examples/parallax-2d.js[0m:[93m5[0m:[93m15[0m - [91merror[0m[90m TS7031: [0mBinding element 'entity' implicitly has an 'any' type.
+
+[7m5[0m  constructor({entity,properties}){this.entity=entity;this.properties=properties;this.state={origin:null,reference:null};}
+[7m [0m [91m              ~~~~~~[0m
+[96mdocs/judasjs/examples/parallax-2d.js[0m:[93m5[0m:[93m22[0m - [91merror[0m[90m TS7031: [0mBinding element 'properties' implicitly has an 'any' type.
+
+[7m5[0m  constructor({entity,properties}){this.entity=entity;this.properties=properties;this.state={origin:null,reference:null};}
+[7m [0m [91m                     ~~~~~~~~~~[0m
+[96mdocs/judasjs/examples/parallax-2d.js[0m:[93m15[0m:[93m38[0m - [91merror[0m[90m TS18047: [0m'o' is possibly 'null'.
+
+[7m15[0m   this.entity.transform={position:{x:o.x+(p.x-r.x)*(1-this.properties.factorX),y:o.y+(p.y-r.y)*(1-this.properties.factorY),z:o.z}};
+[7m  [0m [91m                                     ~[0m
+[96mdocs/judasjs/examples/parallax-2d.js[0m:[93m15[0m:[93m47[0m - [91merror[0m[90m TS18047: [0m'r' is possibly 'null'.
+
+[7m15[0m   this.entity.transform={position:{x:o.x+(p.x-r.x)*(1-this.properties.factorX),y:o.y+(p.y-r.y)*(1-this.properties.factorY),z:o.z}};
+[7m  [0m [91m                                              ~[0m
+[96mdocs/judasjs/examples/parallax-2d.js[0m:[93m15[0m:[93m82[0m - [91merror[0m[90m TS18047: [0m'o' is possibly 'null'.
+
+[7m15[0m   this.entity.transform={position:{x:o.x+(p.x-r.x)*(1-this.properties.factorX),y:o.y+(p.y-r.y)*(1-this.properties.factorY),z:o.z}};
+[7m  [0m [91m                                                                                 ~[0m
+[96mdocs/judasjs/examples/parallax-2d.js[0m:[93m15[0m:[93m91[0m - [91merror[0m[90m TS18047: [0m'r' is possibly 'null'.
+
+[7m15[0m   this.entity.transform={position:{x:o.x+(p.x-r.x)*(1-this.properties.factorX),y:o.y+(p.y-r.y)*(1-this.properties.factorY),z:o.z}};
+[7m  [0m [91m                                                                                          ~[0m
+[96mdocs/judasjs/examples/parallax-2d.js[0m:[93m15[0m:[93m126[0m - [91merror[0m[90m TS18047: [0m'o' is possibly 'null'.
+
+[7m15[0m   this.entity.transform={position:{x:o.x+(p.x-r.x)*(1-this.properties.factorX),y:o.y+(p.y-r.y)*(1-this.properties.factorY),z:o.z}};
+[7m  [0m [91m                                                                                                                             ~[0m
+

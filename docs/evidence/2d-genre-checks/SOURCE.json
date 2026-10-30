@@ -1,0 +1,14 @@
+{
+  "baseCommit": "3e49c7ae25b5d6bc86dc619e1a562e205a56b0c4",
+  "source": {
+    "CMakeLists.txt": "63ae92c573ea7399411d57a284b0e9bbfb75a69c1807980a152cdc08d07cf403",
+    "docs/JUDASJS.md": "c2095044a1adf1669881ff686a9824cdb887129c4d1293c010581b45c6ae3f21",
+    "tools/validation/suites.json": "1fe7d7a1427538893d46fcca8d255c6a005da0e13205a8dd321b1ca727e86d10",
+    "docs/judasjs/2d-genres.md": "d5321e60f1749700317262892b6dbf8e1893a2985da362375aa51d4675f94a31",
+    "docs/judasjs/examples/parallax-2d.js": "c8761bdadb2192f30ba8d2554bb84add59db4ea11ec626e8e6a0f6f98f388877",
+    "docs/judasjs/examples/melee-2d.js": "ca7c8cc426412b9eea8916d25d29e9a45eaa6206f70c5121725a89b81bbafef5",
+    "tests/PlanarGameplayTests.cpp": "4d66e5123716383b576640376f18a924f6d204f78ba9242598e81ae7a7d6bcd6",
+    "tests/TwoDHelpersTests.cpp": "c3a13e5e8e2679226730c963ac196c45438bc65c4dcd29933c3f4ef498f173a0"
+  },
+  "scope": "Exact pre-checkpoint source; as-built identities in RESULTS.json. Linux automation only."
+}

@@ -1765,6 +1765,10 @@ judas_warnings(judas_sprite_animation_benchmark)
 judas_add_engine_test(judas_consumer_lifecycle_tests tests/ConsumerLifecycleTests.cpp APPLICATION)
 judas_add_engine_test(judas_save_latency_benchmark tools/benchmarks/SaveLatencyBenchmark.cpp APPLICATION)
 
+judas_add_engine_test(judas_2d_helpers_tests tests/TwoDHelpersTests.cpp)
+
+judas_add_engine_test(judas_planar_gameplay_tests tests/PlanarGameplayTests.cpp)
+
 judas_add_engine_test(judas_2d_game_workflow_tests tests/TwoDGameWorkflowTests.cpp
     SOURCES src/editor/EditorScriptWorkflow.cpp src/editor/EditorPrimitiveAssets.cpp src/editor/EditorHistory.cpp
     src/editor/SpriteSheetEditor.cpp src/editor/TilemapEditor.cpp src/editor/EditorCamera.cpp LIBRARIES judas_imgui)

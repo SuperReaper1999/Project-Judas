@@ -1,0 +1,14 @@
+PASS fresh isolated helper fixture
+PASS register real relative-import scripts
+PASS assign ordinary inspector-style target reference
+PASS build actual planar targets and visual parallax
+PASS thrust really hits front body without hitting side body
+PASS bounded swipe reaches both physical targets once; invalid plane rejects
+PASS move authoritative follow target
+PARALLAX 3.000000 1.000000
+PASS parallax uses interpolated target and declared independent axis factors
+PASS repeated presentation does not accumulate drift
+PASS build independent wall-occlusion control
+PASS thrust hits intervening wall rather than target behind it
+PASS swipe rays respect occlusion and deduplicate the wall
+TWO_D_HELPERS checks=12 failures=0

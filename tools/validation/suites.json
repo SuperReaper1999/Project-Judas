@@ -1,6 +1,8 @@
 {
   "format": 1,
   "tests": [
+    {"name":"2d-helpers","target":"judas_2d_helpers_tests","groups":["2d"],"args":["{root}/docs/judasjs/examples","{output}/2d-helpers"]},
+    {"name":"planar-gameplay","target":"judas_planar_gameplay_tests","groups":["2d","collision"]},
     {"name":"beacon-grove-loss","target":"judas_beacon_grove_application_tests","groups":["2d","lifecycle"],"args":["{root}/projects/beacon_grove/Beacon_Grove.judasproj","{output}/beacon-grove-loss","loss"]},
     {"name":"2d-game-workflow","target":"judas_2d_game_workflow_tests","groups":["2d","editor"],"args":["{root}/projects/tilemap_workshop/Assets/tiles.png","{output}/2d-game-workflow"]},
     {"name":"beacon-grove-application","target":"judas_beacon_grove_application_tests","groups":["2d","lifecycle"],"args":["{root}/projects/beacon_grove/Beacon_Grove.judasproj","{output}/beacon-grove-application"]},
