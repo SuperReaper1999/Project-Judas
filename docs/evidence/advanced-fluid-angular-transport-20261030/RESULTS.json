@@ -1,0 +1,90 @@
+{
+  "schema": 1,
+  "scope": "Fixed closed-geometry private affine-moment transport reference, not production adoption",
+  "spatialReference": {
+    "checks": 138,
+    "passed": true,
+    "angles": [
+      0,
+      0.37
+    ],
+    "exactQuantityAgreement": true,
+    "maximumRawRateDifference": 3.97047e-21,
+    "maximumMetricRateDifference": 2.9004e-19,
+    "kernelSamplesMs": {
+      "axis": {
+        "rational": 179.918,
+        "bounded": 12.2853
+      },
+      "rotated": {
+        "rational": 2526.5,
+        "bounded": 67.5908
+      }
+    },
+    "timingSamplesPerGeometry": 1
+  },
+  "implicitAxis": {
+    "checks": 212,
+    "passed": true,
+    "steps": 60,
+    "dt": "1/240",
+    "maxIterations": 5,
+    "iterationBudget": 16,
+    "energyDefect": 5.65368e-18,
+    "advectiveAngularError": 3.97475e-18,
+    "residual": 5.85906e-17,
+    "elapsedMs": 5303.23
+  },
+  "implicitRotated": {
+    "checks": 212,
+    "passed": true,
+    "steps": 60,
+    "dt": "1/240",
+    "maxIterations": 5,
+    "iterationBudget": 16,
+    "energyDefect": 3.67795e-18,
+    "advectiveAngularError": 3.87896e-18,
+    "residual": 2.29785e-16,
+    "elapsedMs": 25730
+  },
+  "explicitCycle": {
+    "checks": 487,
+    "passed": true,
+    "steps": 240,
+    "dt": "1/240",
+    "unconditionalEnergyTheoremClaimed": false
+  },
+  "apertureRange": {
+    "checks": 16,
+    "passed": true,
+    "unrepresentablePositiveCapRejected": true
+  },
+  "retainedPrecisionFailure": {
+    "passed": false,
+    "case": "arbitrary raw-DOF rotated trial6",
+    "absoluteWorkTolerance": 1e-10,
+    "absoluteResidual": 1.56433e-10,
+    "workMagnitude": 37338500.0,
+    "derivativeSign": "negative",
+    "independentPolynomialResidual": 1.09139e-11,
+    "actualLinearError": 1.38799e-13,
+    "actualAngularError": 7.94451e-14
+  },
+  "interruptedReference": {
+    "case": "fully rational rotated60 implicit steps",
+    "returncode": 130,
+    "reason": "bounded investigation of exact-arithmetic cost",
+    "passingLongRunClaimed": false
+  },
+  "testOnlyBuildCorrection": {
+    "case": "ApertureRangeTests missing explicit physical scale argument",
+    "correctedNarrowRerunPassed": true,
+    "originalFailedReceiptPreserved": true
+  },
+  "olderForcedGapFailure": "unchanged, not rerun",
+  "productionFilesChanged": false,
+  "alphaAdvancedFluidsLocked": true,
+  "pressureStageAngularChangeMeasured": true,
+  "independentBoundaryTractionAttribution": "not yet qualified",
+  "nativeBodyCouplingOrPlatformAcceptanceClaimed": false
+}

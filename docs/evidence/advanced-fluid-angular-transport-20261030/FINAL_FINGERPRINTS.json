@@ -1,0 +1,15 @@
+{
+  "schema": 1,
+  "parent": "e70ff28ac3257427e36c1e02003319e9ad6b302a",
+  "scope": "This file excluded from its own hashes; source manifest hashes exact private source/dependency/log closure",
+  "files": {
+    "docs/ADVANCED_FLUID_ANGULAR_TRANSPORT.txt": "d2dd41349dcb2127333dd97db296f006aa1f94963a457da4dca712a2914683b9",
+    "docs/evidence/advanced-fluid-angular-transport-20261030/CHANGED_FILES.txt": "a7e55e112b5b640148bf6cc0f9dcad897da1186dadf9569e37755d30301c5cc4",
+    "docs/evidence/advanced-fluid-angular-transport-20261030/PROVENANCE.json": "a32ae7d9eb6c1ce1450db05239c2480eaa20b060778ede7165f4446d9cc89cdb",
+    "docs/evidence/advanced-fluid-angular-transport-20261030/REPRODUCE.txt": "76f0b97d5f3d5cdb000b31c81a9ea86908043fcf59bd09cf77c756d731fca021",
+    "docs/evidence/advanced-fluid-angular-transport-20261030/RESULTS.json": "140a6bd40e8c233bbce070dc3dff54127938ce9c1cd632733565fbb841c1c04f",
+    "docs/evidence/advanced-fluid-angular-transport-20261030/SOURCE_MANIFEST.json": "53c1df27aec45053a1f5e63be1e64c309eeb7cfccb5990ead77cbf90a840f3d6",
+    "docs/evidence/advanced-fluid-angular-transport-20261030/angular-momentum-reference.tar.gz": "37e6863680b1b6ad7156d938949e034818f44ba66653e12390dde56269dec9fe",
+    "docs/evidence/advanced-fluid-angular-transport-20261030/verify_evidence.py": "4ffa5dcf5f2a6dab5902ffa4805a31d7e19718f8055a21fcf927ad3fffd4a636"
+  }
+}

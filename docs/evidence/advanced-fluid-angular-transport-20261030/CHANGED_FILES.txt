@@ -1,0 +1,9 @@
+docs/ADVANCED_FLUID_ANGULAR_TRANSPORT.txt
+docs/evidence/advanced-fluid-angular-transport-20261030/CHANGED_FILES.txt
+docs/evidence/advanced-fluid-angular-transport-20261030/FINAL_FINGERPRINTS.json
+docs/evidence/advanced-fluid-angular-transport-20261030/PROVENANCE.json
+docs/evidence/advanced-fluid-angular-transport-20261030/REPRODUCE.txt
+docs/evidence/advanced-fluid-angular-transport-20261030/RESULTS.json
+docs/evidence/advanced-fluid-angular-transport-20261030/SOURCE_MANIFEST.json
+docs/evidence/advanced-fluid-angular-transport-20261030/angular-momentum-reference.tar.gz
+docs/evidence/advanced-fluid-angular-transport-20261030/verify_evidence.py

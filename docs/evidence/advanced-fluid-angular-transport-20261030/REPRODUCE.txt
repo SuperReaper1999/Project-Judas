@@ -1,0 +1,46 @@
+PRIVATE REFERENCES ONLY — no production fluid/API or game acceptance implied.
+Archive preserves original repository-relative paths under .cache and src.
+Extract into a disposable checkout/copy, not over protected research/evidence.
+No executables, build directories, assets, external headers or packages included.
+
+Prerequisites: g++15.2, system GLM1.0.1, Boost1.90, Eigen3.4 headers.
+After reboot, the old /tmp header-only dependencies were missing. Recovered with
+apt-get download (no system installation), extracting the two development .debs
+under .cache/fluid-reference-headers. Package hashes are in PROVENANCE.json.
+Set BOOST_INCLUDE_DIR / EIGEN_INCLUDE_DIR to your actual include directories if
+those recorded cache paths do not exist. Work from the repository root.
+
+Final Stage22 reproducible qualification (one heavy job at a time):
+ python3 .cache/fluid-angular-transport-stage22-20261030/run_reference.py FastReferenceTests.cpp
+ python3 .cache/fluid-angular-transport-stage22-20261030/run_final.py
+The combined runner compiles once for axis60/rotated60/explicit240 step modes,
+then compiles/runs the aperture-range negative control. Current source includes
+the corrected explicit scale argument in the aperture test's Epoch constructor.
+Original first compile failure remains archived; only that narrow test was rerun
+through run_reference.py after correction. Completed physical loops were not
+ceremonially repeated for a test-only constructor typo.
+
+Preserved strict-work failure, EXPECTED NONZERO; do not weaken its gate:
+ python3 .cache/fluid-angular-transport-stage21-20261030/run_reference.py WeakAffineContractsDiagnostics.cpp targeted
+Full axis/rotated arbitrary-field source is WeakAffineContracts.cpp. Before-
+diagnostic source, first failure and targeted logs are retained. The observed
+failure is an absolute work identity residual, not a positive energy derivative.
+WeakAffinePrecisionTests.cpp is unexecuted instrumentation, not measured evidence.
+
+Stage21 rational spatial reference can be run directly, but rotated repeated
+implicit integration is costly. Its interrupted60-step run returned130 and is
+NOT claimed passed. Final FastReferenceTests compares actual final Stage21 rate
+against Stage22 over BOTH physical geometries. Exact quantities must agree, and
+actual kinetic moment rates/work/momenta are checked independently.
+
+Sources with '-before-'/'-original' names are historical variants, not separate
+current tests. To reproduce an older variant, restore its corresponding helper
+headers in another disposable copy. Do not overwrite current/frozen originals.
+The max(0,energy) norm fallback in an early helper was not triggered by positive
+runs; it was removed. Final convergence/energy checks use the existing positive
+kinetic factors and have no such fallback.
+
+No full production suite, new native rigid-body coupling, editor/standalone,
+Windows or Android fluid acceptance is claimed. Production implementation and
+Alpha lock are unchanged. Earlier native one-boundary tests remain earlier
+scoped evidence, not proof of continuous new fluid/body integration.

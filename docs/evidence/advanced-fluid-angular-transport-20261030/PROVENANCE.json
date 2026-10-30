@@ -1,0 +1,43 @@
+{
+  "schema": 1,
+  "recordedUtc": "2026-10-30T11:17:00.640860+00:00",
+  "parent": "e70ff28ac3257427e36c1e02003319e9ad6b302a",
+  "mainUnchanged": "f2813324155166c6942fd68dde843d9775eb532d",
+  "scope": "Private numerical reference only; no native engine link or runtime adoption",
+  "compiler": "g++ (Ubuntu 15.2.0-16ubuntu1) 15.2.0",
+  "flags": [
+    "-std=c++17",
+    "-O3",
+    "-g0",
+    "-DNDEBUG"
+  ],
+  "cpu": "AMD Ryzen 5 5600",
+  "ramKiB": "MemTotal:        8045176 kB",
+  "systemGLM": "1.0.1+ds-3",
+  "externalHeaderArchives": {
+    ".cache/fluid-reference-headers/libeigen3-dev_3.4.0-5_all.deb": {
+      "bytes": 1056038,
+      "sha256": "22060e67427b1acf85465fd5784caf7eecc8c967c662fb2ec774b84ba6174ad9"
+    },
+    ".cache/fluid-reference-headers/libboost1.90-dev_1.90.0-6ubuntu1_amd64.deb": {
+      "bytes": 11452296,
+      "sha256": "7b89698c907fd5d33ccd439674fa53803139923822181c87b910579827aca379"
+    }
+  },
+  "finalBinaries": {
+    ".cache/fluid-angular-transport-stage22-20261030/fast-reference": {
+      "bytes": 1052296,
+      "sha256": "ac7463a6189f375e05a1152a0f20c46a1356eb3c0a5b446b6be9b3c1f6e832f9"
+    },
+    ".cache/fluid-angular-transport-stage22-20261030/FastImplicitWeakTests.final": {
+      "bytes": 1038232,
+      "sha256": "b471f45909b7632921494ebfeb147037ecb56ca7ca42c7fe80cff1f5d7cd6a01"
+    },
+    ".cache/fluid-angular-transport-stage22-20261030/ApertureRangeTests.reproduced": {
+      "bytes": 914152,
+      "sha256": "b4313fc263213272205f23588de91dd5689024c1cfb8724bc6fa991e2b2c0b9c"
+    }
+  },
+  "nativeArchiveUsed": false,
+  "newPlatformOrHumanAcceptanceClaimed": false
+}

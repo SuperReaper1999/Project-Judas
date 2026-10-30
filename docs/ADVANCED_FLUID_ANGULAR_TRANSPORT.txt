@@ -1,0 +1,112 @@
+ADVANCED FLUID FOLLOW-UP — ANGULAR MOMENTUM TRANSPORT
+2026-10-30 | Experimental private reference, not enabled production fluids
+Parent: e70ff28ac3257427e36c1e02003319e9ad6b302a
+Accepted main/Alpha1.0.3 remains f2813324155166c6942fd68dde843d9775eb532d.
+
+RESULT
+The mean-only update's angular defect has a demonstrated generic mechanism and
+a conservative replacement on fixed closed cut-cell geometry. The replacement
+also satisfies an independently checked spatial energy identity and bounded
+implicit pressure/advection time-step checks. This is a numerical prototype,
+not a complete fluid simulation, native coupling release or human acceptance.
+
+ROOT CAUSE AND CORRECTION
+Old transport deposits equal/opposite linear momentum into cell means at
+different centroids, but does not evolve their local angular moments. Orbital
+angular momentum changes by the centroid displacement cross transported impulse.
+That is missing state evolution, not insufficient pressure iterations.
+
+Evolve affine velocity moments with the weak conservative flux:
+ b_i(v) = integral_K grad(v):(u tensor u) dV
+          - integral_boundaryK v dot u_upwind q dA.
+u is the existing affine L2 velocity projection; q remains the actual shared
+primary P1 normal flux, not the potentially different normal projection of u.
+The symmetric interior stress has zero contraction against rigid-rotation tests.
+A shared face transfers momentum at the same actual point for both owners, with
+both local angular and orbital first moments. No corrective spin is added later.
+
+For divergence-free states, the existing Green identity and polynomial projection
+imply dE/dt = -sum_faces integral |q|*|jump(u)|^2/2 <=0. A backward-Euler prototype
+solves pressure INSIDE each nonlinear iterate at fixed1/240s. It verifies
+ E_new-E_old + ||d_new-d_old||_M^2/2 + dt*D_upwind =0,
+using the existing positive kinetic factors for energy and convergence norms.
+The maximum16-iteration policy is fixed; failed iteration rejects without
+publication. Tests actually fail with a one-iteration budget. No substeps,
+damping, artificial inertia, energy clamp, quantity repair or threshold changes.
+
+SOURCE AND QUALIFICATION
+Stage21 is the fully rational spatial integration reference. Stage22 evaluates
+the SAME cubic polynomial integrals in bounded precision, keeping exact signs,
+exact directed volume integrals and exact pairwise momentum incidence. One shared
+anchored momentum/first-moment flux is used for both physical owners. Positive
+apertures that cannot be represented reject explicitly rather than disappear.
+Full derivations, source variants and commands are in the evidence archive.
+
+Same n2 original fixture, one1/240s transport step:
+                           old mean-only       weak affine
+ axis-aligned angular      .00690283            1.73472e-18
+ rotated(.37rad) angular   .00633192            1.22663e-18
+The unchanged old method remains a negative control. Actual DOFs and momenta are
+measured, not just a bookkeeping counter. Origin independence is checked too.
+
+Final-source Stage22 checks:
+-138 exact-reference/quantity/field assertions pass over both actual geometries.
+  Largest raw moment-rate difference3.97047e-21; physical metric difference
+  2.9004e-19. Every directed per-cell volume exchange agrees EXACTLY.
+-212 assertions pass for60 implicit axis-aligned steps(.25 simulated seconds): maximum5/16 iterations,
+  actual advective angular error3.97475e-18, residual5.85906e-17, energy defect
+  5.65368e-18. Pressure-stage angular change is recorded separately and is NOT removed;
+  independent boundary-traction attribution is not yet qualified.
+-212 assertions pass for60 implicit rotated steps(.25 simulated seconds): maximum5/16 iterations,
+  actual advective angular error3.87896e-18, residual2.29785e-16, energy defect
+  3.67795e-18.
+-487 assertions pass for240 explicit reference steps at unchanged1/240s,
+  checking actual momenta and energy each step. This observed pass is NOT an
+  unconditional forward-Euler energy theorem; the implicit test has its own
+  discrete energy identity.
+-Aperture range test checks analytic quantity versus momentum quadrature and
+  explicitly rejects a positive cap smaller than the supported scalar range.
+  Final result and the corrected test-only constructor typo are preserved.
+
+PERFORMANCE — STILL NOT GAME READY
+Same source/geometry/input, matched SINGLE spatial-rate evaluations:
+ axis: rational179.918ms / bounded12.2853ms
+ rotated: rational2526.5ms / bounded67.5908ms
+These are scoped kernel measurements, not application FPS or robust distributions.
+The rational rotated60-step attempt was interrupted and remains marked incomplete.
+It is not claimed as a passing long run or a measured complete before baseline.
+Final bounded60-step loops: axis5303.23ms, rotated25730ms. Thus even this small
+24-cell/121-coordinate reference is still too expensive for production. Dense
+preparation, repeated pressure/reconstruction, exact incidence and nonlinear
+iteration must become practical before adoption. No engine speedup is claimed.
+
+PRESERVED FAILURE / PRECISION LIMIT
+An additional arbitrary raw-DOF rotated stress probe FAILS its unchanged absolute
+1e-10 energy-identity gate: residual1.56433e-10 on opposing work terms3.73385e7
+(relative about4.2e-18). Actual linear/angular rate errors1.38799e-13/7.94451e-14
+pass their1e-12 gates, and the energy rate remains negative. Independent work
+calculations localize the difference: direct polynomial residual1.09139e-11,
+raw-root/matrix kinetic composition1.56433e-10. This is a finite-precision
+lifting/metric-work discrepancy, not demonstrated energy growth. Do NOT claim
+the absolute test passed, silently loosen it or assert arbitrary-scale accuracy.
+The unscaled original source/log and targeted reproduction remain archived.
+
+BOUNDARIES / NEXT WORK
+Fixed geometry, one density and homogeneous fixed normal boundaries only.
+Complementary VEM modes are retained locally, not claimed fully advected.
+Moving geometry/material remap, rotating-wall GCL, free surfaces/wet-dry,
+chronological native contacts/friction, M54 owner integration, persistence/export
+and runtime performance remain unfinished. Earlier forced narrow-gap failure is
+unchanged. Native one-boundary Stage20 checks remain historical evidence, not
+new proof of continuous Stage22 material/rigid-body coupling.
+
+Next: carry these actual moments through a moving-geometry/native coupling proof,
+while replacing the expensive reference-only preparation/iteration path with a
+bounded runtime formulation. Do not enable or publish Advanced Fluids based on
+these successes. Basic Water, M54/M55, production engine/API, main and published
+packages are unchanged. Solbert's research and earlier frozen evidence untouched.
+
+EVIDENCE
+ docs/evidence/advanced-fluid-angular-transport-20261030/
+ Includes exact source/dependency closure, failures/interruption, raw successful
+ logs, binary/command receipts, mathematical derivation and final fingerprints.
