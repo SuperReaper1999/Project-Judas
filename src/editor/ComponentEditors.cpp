@@ -646,7 +646,7 @@ void DrawPlanarCollider(EditorDocument& doc,SceneObject& o,EditorPanelState& sta
             kind==3?*PlanarConvex({{-.5,-.5},{.5,-.5},{0,.5}}):*PlanarChain({{-2,0},{0,0},{2,1}});changed=true;
     }
     changed|=ImGui::Checkbox("Lock 2D rotation",&shape.lockRotation);
-    if(shape.kind==PlanarKind::Chain&&shape.vertices.size()==2){changed|=ImGui::Checkbox("One-way platform (left side of edge)",&shape.oneWay);ImGui::TextWrapped("Vertex 0 to 1: left is solid. Left-to-right blocks from above. Static straight segments only.");}
+    if(shape.kind==PlanarKind::Chain&&shape.vertices.size()==2){changed|=ImGui::Checkbox("One-way platform (jump through)",&shape.oneWay);ImGui::TextWrapped("Jump through the non-blocking side; land on the blocking side. Enable Preview collision to see its arrow. A left-to-right edge blocks from above. Static straight segments only.");}
     if(shape.kind==PlanarKind::Circle||shape.kind==PlanarKind::Capsule){float r=float(shape.radius);if(ImGui::DragFloat("Radius (m)",&r,.01f,.001f,10000)){shape.radius=r;changed=true;}}
     if(shape.kind==PlanarKind::Box){glm::vec2 half=-glm::vec2(shape.vertices[0]);if(ImGui::DragFloat2("Half size (m)",&half.x,.01f,.001f,10000)){shape.vertices={{-half.x,-half.y},{half.x,-half.y},{half.x,half.y},{-half.x,half.y}};changed=true;}}
     if(shape.kind==PlanarKind::Capsule){float h=float(shape.vertices[1].y);if(ImGui::DragFloat("Core half height (m)",&h,.01f,0,10000)){shape.vertices={{0,-h},{0,h}};changed=true;}}

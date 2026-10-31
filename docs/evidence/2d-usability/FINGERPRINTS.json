@@ -1,0 +1,22 @@
+{
+  "base": "70fe8ff461059f8ed2007cc434c4c8914cf0c553",
+  "source": {
+    "README.md": "71a4e5baaf49d6078dce3242e466aacc889910c599247863691a41040c05e935",
+    "docs/EDITOR_GUIDE.md": "922baf0546c3b3ef52363931fb7a97febab188ecd1a697ae7f6e4a5a5c403413",
+    "docs/README.md": "f9b4c2c746837c5027289cf16ec32b3ba51047180e95b7869995e0f19eaf83b6",
+    "src/editor/ComponentEditors.cpp": "107ccc8ff24cc2a9edfc400f973fdac1426f9d940410200605610af34b9ae531",
+    "src/editor/EditorApplication.cpp": "88d85ad945a4992c0762bbcb6a1be7140e7fc21608dc450770ae8582931cb05e",
+    "tests/EditorPreferencesTests.cpp": "93ad3b0d3abac365b9e280cd8171aa0b131e18e2fb6c7f5cd092341abafc235f",
+    "tests/TwoDGameWorkflowTests.cpp": "2ec7f319bbd12732816e90fdb2a58a1b08634de6404b8cd6928cd20db3f6da98",
+    "docs/2D_QUICKSTART.md": "2100bb3e88df72d87b0da7934f51d4de03302e4b63712e3305910e20f2c83fb0",
+    "docs/BROWSER_EXPORT_REVIEW.md": "f7072cf68245a1b83659f53b085a401abe51da8ce722becedad017345c6fca9a",
+    "docs/2D_USABILITY_REVIEW.md": "066c14a518c88065a2a87751a69ac9fcbdcc8522f8457b0afad36d6906c65acb"
+  },
+  "binaries": {
+    "judas_editor": "f34a2c948b6b9600a37ecf98bc856deef792275c475a7f1eff4c47a70e5b9164",
+    "judas_editor_preferences_tests": "bc03d8ea24396219a0afd518545db6055880a1fb040e53f5440a56aa7e66e8eb",
+    "judas_2d_game_workflow_tests": "8d1194cdcc72ba5c9fb1e82607bc8e081cb9bc934ea048bd36777f644388440f",
+    "judas_editor_script_workflow_tests": "bd5478a4a2c9f5609f4e50e081ae0aae09fe9c2c135992bea488027336516086"
+  },
+  "buildProvenance": "Actual dirty source builds at base checkpoint; no claim of rebuilding binaries from the later commit."
+}

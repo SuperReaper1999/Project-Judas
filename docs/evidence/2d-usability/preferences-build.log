@@ -1,0 +1,37 @@
+gmake: jobserver mkfifo: /tmp/GMfifo5: File exists
+WARNHarfBuzz has a Meson port and tries to migrate all the other build systems to it, please consider using it as we might remove our cmake port soon.
+-- Found Python3: /usr/bin/python3 (found version "3.14.4") found components: Interpreter
+CMake Deprecation Warning at .cache/2d-stage1-build/_deps/judas_freetype-src/CMakeLists.txt:113 (cmake_minimum_required):
+  Compatibility with CMake < 3.10 will be removed from a future version of
+  CMake.
+
+  Update the VERSION argument <min> value.  Or, use the <min>...<max> syntax
+  to tell CMake that the project requires at least <min> but has been updated
+  to work with policies introduced by <max> or earlier.
+
+
+-- Found Python3: /usr/bin/python3 (found suitable version "3.14.4", minimum required is "3.11") found components: Interpreter
+-- Configuring done (1.4s)
+-- Generating done (0.9s)
+-- Build files have been written to: /home/conner/Documents/GitHub/Project-Judas/.cache/2d-stage1-build
+[  0%] Built target judas_app_icon
+[  7%] Built target freetype
+[  7%] Built target judas_meshoptimizer
+[  7%] Built target judas_icu_build
+[  7%] Built target judas_quickjs
+[  7%] Built target judas_navigation_backend
+[  7%] Built target judas_glad
+[ 15%] Built target judas_profiler
+[ 23%] Built target judas_imgui
+[ 23%] Built target judas_jobs
+[ 30%] Built target judas_audio_backend
+[ 30%] Building CXX object CMakeFiles/judas_build_identity.dir/src/BuildIdentity.cpp.o
+[ 30%] Built target harfbuzz
+[ 38%] Built target judas_navigation_cook
+[ 38%] Built target judas_materials
+[ 38%] Linking CXX static library libjudas_build_identity.a
+[ 38%] Built target judas_build_identity
+[100%] Built target judas_engine
+[100%] Building CXX object CMakeFiles/judas_editor_preferences_tests.dir/tests/EditorPreferencesTests.cpp.o
+Linking CXX executable judas_editor_preferences_tests
+Built target judas_editor_preferences_tests

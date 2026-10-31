@@ -1,0 +1,9 @@
+PASS fresh output protects existing projects
+PASS create brand-new project
+PASS same New 2D Game starter as editor
+PASS import external PNG with ordinary asset metadata
+PASS duplicate destination never overwrites source art
+PASS same right-click Create sprite sheet handler
+PASS open actual editable sheet draft
+PASS slice native palette using actual image dimensions
+FAIL after 8 checks: std::bad_alloc

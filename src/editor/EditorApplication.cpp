@@ -879,12 +879,17 @@ void EditorApplication::HandleRequests(EditorRequests& r) {
         if(ImGui::InputTextWithHint("Name","My Game",name,sizeof(name)))m_newProjectName=name;
         ImGui::Combo("Template",&m_newProjectTemplate,"3D script starter\0Empty 3D scene\0New 2D game - top-down\0New 2D game - side-view\0New 2D game - grid RPG\0");
         ImGui::TextWrapped(m_newProjectTemplate==4?"Cardinal cell-by-cell movement, native collision queries and an editable kinematic controller for tile RPGs.":m_newProjectTemplate>=2?"Native 2D collision, an orthographic camera and editable project controller. Side-view adds gravity and jumping; top-down uses planar movement.":m_newProjectTemplate==0?"A rotating object, an ordinary JavaScript camera and an editable script. No hidden gameplay controller.":"A floor, light and gravity. Add your own scripts, player and camera.");
-        if (ImGui::Button("Create") && !m_newProjectDirectory.empty() && !m_newProjectName.empty()) {
+        if(m_newProjectTemplate>=2)ImGui::TextWrapped("Next: press Play to try movement, then Stop to edit. Select the player in Hierarchy and open its attached Assets/game.js script. 2D collision size is edited in Body, independently of the sprite.");
+        const bool missingProjectFields=m_newProjectDirectory.empty()||m_newProjectName.empty();
+        if(missingProjectFields)ImGui::TextDisabled("Choose a project directory and enter a name to continue.");
+        ImGui::BeginDisabled(missingProjectFields);
+        if (ImGui::Button("Create")) {
             std::string e;
             if(CreateProject(m_newProjectDirectory,m_newProjectName,e,m_newProjectTemplate==0,m_newProjectTemplate>=2?m_newProjectTemplate-1:0)){
                 m_panels.status="Created project "+m_project.ProjectFile();ImGui::CloseCurrentPopup();
             }else m_panels.status="New project failed: "+e;
         }
+        ImGui::EndDisabled();
         ImGui::SameLine();if(ImGui::Button("Cancel"))ImGui::CloseCurrentPopup();
         ImGui::TextWrapped("%s",m_panels.status.c_str());
         ImGui::EndPopup();
@@ -2156,7 +2161,7 @@ int EditorApplication::Run(int argc, char** argv) {
                 all.collisionShapes = all.playerCapsule = all.contacts = all.gravity = all.frameAxes = all.lights =
                     all.interactionRanges = all.lifecycle = all.terrainNormals = all.fluidParticles = all.atmosphere = true;
                 m_panels.debug = terrainAutotest || volumeAutotest || polishAutotest || pickingAutotest || workspaceAutotest ? DebugViewOptions{} : all;
-                m_panels.showProfiler = !std::getenv("JUDAS_EDITOR_AUTOTEST_AUTHORING") && !terrainAutotest && !volumeAutotest && !retargetAutotest && !polishAutotest && !pickingAutotest && !workspaceAutotest;
+                m_panels.showProfiler = !std::getenv("JUDAS_EDITOR_AUTOTEST_NEW_2D") && !std::getenv("JUDAS_EDITOR_AUTOTEST_AUTHORING") && !terrainAutotest && !volumeAutotest && !retargetAutotest && !polishAutotest && !pickingAutotest && !workspaceAutotest;
             } else if (autotestFrame == 10) {
                 // Duplicate + undo must leave the scene exactly as authored.
                 const SceneObjectId selected = m_document.Selected();

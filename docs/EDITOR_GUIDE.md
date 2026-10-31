@@ -7,6 +7,13 @@ acceptance remains separate; see [platform qualification](WINDOWS.md).
 [M74 retargeting](M74.md) retains its recorded pending human-validation status.
 [JudasJS reference](JUDASJS.md) · [Make a game by hand](judasjs/getting-started.md) · [Named authoring](NAMED_AUTHORING.md)
 
+## Making a 2D game
+
+Start with [the short 2D walkthrough](2D_QUICKSTART.md): choose a template, Play,
+edit collision, attach scripts, paint a level and export. Free top-down movement,
+side-view jumping and cardinal grid movement are separate templates. Choose the
+one that matches your game; they do not require a hidden engine controller.
+
 ## Workspace
 
 Open `judas_editor` with a `.judasproj` or a scene inside a project. Edit mode has

@@ -170,10 +170,19 @@ int main(int argc, char** argv) {
             check(WriteRgbPng((output / "layouts.png").string(), window.Width(), window.Height(), layoutPixels),
                   "layout controls render after actual mouse tab selection");
             prefs.ConsumeSaveRequest();
-            // The additional Runtime Inspector panel adds one visible table row.
-            click({140, 609});
+            // Activate the actual button through ImGui navigation. Its vertical
+            // position changes as panels are added; fixed screen coordinates
+            // previously clicked the name field and misreported a save failure.
+            auto* preferencesWindow=ImGui::FindWindowByName("Editor preferences");
+            check(preferencesWindow!=nullptr,"layout preferences window exists");
+            for(int frame=0;frame<3;++frame) {
+                host.GetRenderer().BeginFrame(window.Width(),window.Height());host.GetRenderer().EndFrame();
+                ImGui_ImplOpenGL3_NewFrame();ImGui_ImplSDL2_NewFrame();ImGui::NewFrame();
+                if(frame==0)ImGui::ActivateItemByID(ImHashStr("Save as new layout",0,selectedTab->ID));
+                prefs.Draw(state);ImGui::Render();ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+            }
             check(prefs.layouts.size() == 1 && prefs.layouts[0].name == "My layout",
-                  "actual Save as new layout button captures the current workspace");
+                  "actual layout button navigation activation captures the current workspace");
             check(prefs.ConsumeSaveRequest(), "UI layout save requests persistent storage");
             ImGui_ImplOpenGL3_Shutdown(); ImGui_ImplSDL2_Shutdown();
         }

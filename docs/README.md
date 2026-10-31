@@ -92,3 +92,5 @@ reject links to untracked files. The small parser covers inline links and refere
 definitions; undefined reference usages and arbitrary Markdown extensions are
 outside its scope. It does not prove prose, temporal ordering, platform acceptance
 or every project asset; those still need review.
+
+- [2D quick start](2D_QUICKSTART.md): presets, collision, scripts, tiles, animation and export.

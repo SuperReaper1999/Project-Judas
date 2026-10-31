@@ -24,6 +24,7 @@ int main(int argc,char** argv){unsigned checks=0;try{
  check(CreateSpriteSheetAsset(assets,image.id,sheet,error),"same right-click Create sprite sheet handler");SpriteSheetEditor editor;
  check(editor.Open(sheet,error),"open actual editable sheet draft");
  check(SliceSpriteSheet(editor.draft,{32,32},{0,0},{0,0},error),"slice native palette using actual image dimensions");
+ check(editor.draft.frames.size()>=2,"workflow input image must provide at least two 32x32 frames");
  SpriteClip clip;clip.name="test-loop";clip.frames={{editor.draft.frames[0].id,.1},{editor.draft.frames[1].id,.1}};clip.events={{"pulse","pulse","",.1}};editor.draft.clips.push_back(clip);
  check(editor.Save(error),"save authored frame animation and event content");
  TilemapEditor painter;check(painter.Create(doc,assets,sheet.id,{0,0,0},error),"create selected editable tile grid");painter.layer=0;painter.frame=0;painter.painting=true;
