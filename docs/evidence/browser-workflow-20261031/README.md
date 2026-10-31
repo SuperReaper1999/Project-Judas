@@ -84,7 +84,9 @@ provenance; no binary was relabelled with a later checkpoint. The Python qualifi
 discovery was strengthened, Linux compiler contracts explicitly mock their host,
 and preview readiness uses a portable reader thread instead of POSIX pipe select.
 They were rerun; these test-only changes do not alter compiled product/package code. All tested product hashes match this checkpoint.
-Logs/receipts and their SHA256SUMS are retained; large SDKs, binaries, profiles and
+The raw integration log is losslessly compressed to preserve CMake whitespace
+without introducing whitespace-only diff warnings. Its decompressed SHA-256 is
+`1ed31decb85e5af12aa083a889fe18510877bb9a29b26bf216817b8b745f8358`. Logs/receipts and their SHA256SUMS are retained; large SDKs, binaries, profiles and
 unrelated research are not committed.
 
 [Workflow and CLI instructions](../../BROWSER_SUPPORT.md#editor-export-and-local-preview)
