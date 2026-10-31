@@ -3,11 +3,14 @@
 #include "PlatformServices.h"
 #include <cstdio>
 #include <string>
+#ifdef __EMSCRIPTEN__
+int RunBrowserApplication(int argc,char** argv);
+#endif
 #ifdef __ANDROID__
 #include <SDL2/SDL_main.h>
 #include "../platform/android/AndroidLog.h"
 #include <cstdlib>
-#include <unistd.h>
+int RunBrowserApplication(int argc,char** argv);
 #endif
 
 int main(int argc, char** argv) {
@@ -19,6 +22,10 @@ int main(int argc, char** argv) {
     }
     setenv("JUDAS_ANDROID_CONTENT",argv[2],1);argc=1;
 #endif
+#ifdef __EMSCRIPTEN__
+    return RunBrowserApplication(argc,argv);
+#else
     Application app;
     return app.Run(argc, argv);
+#endif
 }

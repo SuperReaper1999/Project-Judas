@@ -23,7 +23,9 @@ const char* RuntimeExecutableName() {
 #endif
 }
 const char* RuntimePlatformName() {
-#ifdef __ANDROID__
+#ifdef __EMSCRIPTEN__
+    return "Web";
+#elif defined(__ANDROID__)
     return "Android";
 #elif defined(_WIN32)
     return "Windows";
@@ -32,7 +34,9 @@ const char* RuntimePlatformName() {
 #endif
 }
 std::string PlatformUserDataDirectory(std::string& error) {
-#ifdef __ANDROID__
+#ifdef __EMSCRIPTEN__
+    return "/persistent";
+#elif defined(__ANDROID__)
     const char* root=SDL_AndroidGetInternalStoragePath();
     if(!root||!*root){error="Android private storage unavailable";return {};}
     return root;

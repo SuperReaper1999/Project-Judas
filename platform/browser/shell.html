@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Judas — Experimental Browser Game</title>
+<style>
+body{margin:0;background:#111b25;color:#edf5fc;font:16px system-ui,sans-serif}main{max-width:1280px;margin:auto;padding:12px}header{display:flex;gap:16px;align-items:center;flex-wrap:wrap}button{font:inherit;padding:10px 24px;background:#80d9c5;color:#101c24;border:0;border-radius:6px}button:disabled{opacity:.5}canvas{display:block;width:min(100%,1024px);height:auto;background:#080c12;margin:12px auto;outline:2px solid #658b9c}a{color:#9edbd6}p{margin:8px 0}#status{white-space:pre-wrap}small{color:#bdd2e0}
+</style></head><body><main>
+<header><strong>Judas · Experimental browser support</strong><button id="play" disabled>Loading…</button></header>
+<p id="status" role="status">Preparing engine and game…</p>
+<canvas id="canvas" width="1024" height="768" tabindex="0" aria-label="Game viewport"></canvas>
+<small>Keyboard/mouse focus belongs to the canvas. Click it to restore focus or unlock audio. Saves use this browser's local storage; clearing site data removes them. This experimental port is not universal browser certification. <a href="licenses/ENGINE_NOTICES.txt">Engine notices</a> · <a href="licenses/emscripten-LICENSE.txt">Web runtime notices</a>.</small>
+</main>
+<script src="game-config.js"></script>
+<script>
+const statusText=document.querySelector('#status'),playButton=document.querySelector('#play'),canvas=document.querySelector('#canvas');
+let failed=false,runtimeReady=false;
+function fail(message){if(failed)return;failed=true;statusText.textContent=String(message);playButton.disabled=true;playButton.textContent='Unavailable';}
+var Module={canvas,noInitialRun:true,
+ print:line=>console.log(line),printErr:line=>console.error(line),setStatus:message=>{if(message&&!failed&&!runtimeReady)statusText.textContent=message;},
+ onAbort:message=>fail('Game stopped: '+message),onExit:code=>{statusText.textContent='Game exited ('+code+'). Reload to restart.';if(Module.judasReleaseStorageLock)Module.judasReleaseStorageLock();},
+ preRun:[function(){
+  Module.addRunDependency('judas-storage');
+  if(!crossOriginIsolated||!window.SharedArrayBuffer){fail('This build requires HTTPS/local hosting with COOP/COEP isolation headers.');return;}
+  if(!navigator.locks){fail('This browser cannot provide the required persistent-save ownership lock.');return;}
+  navigator.locks.request('judas-save-'+JUDAS_GAME.saveIdentity,{mode:'exclusive',ifAvailable:true},async lock=>{
+   if(!lock){fail('This game is already open in another tab. Close that tab and reload.');return;}
+   try{
+    if(!/^[a-f0-9]{64}$/.test(JUDAS_GAME.saveIdentity))throw Error('Invalid game save identity');
+    const saveRoot='/persistent/judas/games/'+JUDAS_GAME.saveIdentity;
+    Module.FS.mkdirTree(saveRoot);Module.FS.mount(Module.IDBFS,{},saveRoot);
+    await new Promise((resolve,reject)=>Module.FS.syncfs(true,error=>error?reject(error):resolve()));
+    Module.judasStorageReady=true;Module.judasSaveFlushes=0;
+    Module.removeRunDependency('judas-storage');
+    await new Promise(resolve=>{Module.judasReleaseStorageLock=resolve;});
+   }catch(error){fail('Persistent storage unavailable: '+error);}
+  }).catch(error=>fail('Save ownership unavailable: '+error));
+ }],
+ onRuntimeInitialized:()=>{if(failed)return;runtimeReady=true;statusText.textContent='Ready. Click Play, then use the game controls.';playButton.disabled=false;playButton.textContent='Play';}
+};
+playButton.onclick=()=>{if(failed||!runtimeReady)return;playButton.disabled=true;playButton.textContent='Playing';statusText.textContent=JUDAS_GAME.controls||'Click the canvas for keyboard and mouse input.';canvas.focus();Module.callMain([]);};
+canvas.addEventListener('webglcontextlost',()=>fail('Graphics context lost. Reload the game; your last completed save is retained.'));
+window.addEventListener('error',event=>fail(event.message));
+window.addEventListener('unhandledrejection',event=>fail(event.reason));
+</script>
+<template id="runtime-assets">
+<script src="game.data.js"></script>
+{{{ SCRIPT }}}
+</template>
+<script>
+// Check hosting before instantiating pthread workers, so a missing isolation
+// header produces useful guidance rather than a SharedArrayBuffer clone error.
+if(!globalThis.crossOriginIsolated||!globalThis.SharedArrayBuffer)
+ fail('This build requires HTTPS/local hosting with COOP same-origin and COEP require-corp headers.');
+else if(!navigator.locks)
+ fail('This browser cannot provide the required persistent-save ownership lock.');
+if(!failed)for(const original of document.querySelector('#runtime-assets').content.querySelectorAll('script')){
+ const script=document.createElement('script');script.src=original.src;script.async=false;
+ script.onerror=()=>fail('Could not load engine/game files. Keep the complete export together and check the host.');
+ document.body.appendChild(script);
+}
+</script>
+</body></html>

@@ -4,6 +4,14 @@ string(JSON judas_project_version GET "${judas_version_document}" version)
 string(REGEX REPLACE "[-+].*$" "" judas_project_version "${judas_project_version}")
 project(ProjectJudas VERSION "${judas_project_version}" LANGUAGES C CXX)
 
+if(EMSCRIPTEN)
+    # Apply to every target, including provenance libraries declared before the
+    # platform dependencies. Mixed non-atomic objects cannot enter shared WASM.
+    set(CMAKE_SYSTEM_PROCESSOR wasm32)
+    add_compile_options(-pthread "$<$<COMPILE_LANGUAGE:CXX>:-fexceptions>")
+    add_link_options(-pthread -fexceptions)
+endif()
+
 if(WIN32)
     if((NOT MSVC AND NOT MINGW) OR NOT CMAKE_SIZEOF_VOID_P EQUAL 8)
         message(FATAL_ERROR "Windows requires MSVC x64 or the optional MinGW-w64 x64 toolchain")
@@ -49,6 +57,8 @@ target_compile_definitions(judas_build_identity PRIVATE JUDAS_BUILD_CONFIGURATIO
 judas_warnings(judas_build_identity)
 add_executable(judas_build_identity_tests tests/BuildIdentityTests.cpp)
 target_link_libraries(judas_build_identity_tests PRIVATE judas_build_identity)
+add_executable(judas_browser_option_tests tests/BrowserOptionTests.cpp src/ExperimentalBrowser.cpp)
+target_include_directories(judas_browser_option_tests PRIVATE src)
 add_executable(judas_release_update_tests tests/ReleaseUpdateTests.cpp)
 target_link_libraries(judas_release_update_tests PRIVATE judas_build_identity)
 judas_warnings(judas_release_update_tests)
@@ -66,7 +76,9 @@ if(NOT CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE Debug)
 endif()
 
-if(ANDROID)
+if(EMSCRIPTEN)
+    include(cmake/JudasBrowserDependencies.cmake)
+elseif(ANDROID)
     set(CMAKE_POSITION_INDEPENDENT_CODE ON)
     include(cmake/JudasAndroidDependencies.cmake)
 elseif(MINGW)
@@ -74,7 +86,7 @@ elseif(MINGW)
 else()
     find_package(SDL2 REQUIRED)
 endif()
-if(WIN32 AND TARGET SDL2::SDL2-static)
+if((WIN32 OR EMSCRIPTEN) AND TARGET SDL2::SDL2-static)
     # Keep the existing consumer target while using the static Windows port.
     if(NOT TARGET SDL2::SDL2)
         add_library(SDL2::SDL2 ALIAS SDL2::SDL2-static)
@@ -96,7 +108,7 @@ add_library(judas_meshoptimizer STATIC ${JUDAS_MESHOPT_SOURCES})
 target_include_directories(judas_meshoptimizer PUBLIC third_party/meshoptimizer/src)
 include_directories(SYSTEM third_party/quickhull)
 set_source_files_properties(third_party/quickhull/QuickHull.cpp PROPERTIES COMPILE_OPTIONS "$<$<NOT:$<CXX_COMPILER_ID:MSVC>>:-Wno-unused-parameter>")
-if(NOT ANDROID AND NOT MINGW)
+if(NOT ANDROID AND NOT MINGW AND NOT EMSCRIPTEN)
     find_package(glm REQUIRED)
 endif()
 include(cmake/JudasTextDependencies.cmake)
@@ -177,9 +189,11 @@ target_include_directories(judas_navigation_baker PUBLIC src)
 target_link_libraries(judas_navigation_baker PUBLIC judas_engine judas_navigation_backend)
 
 # GLAD 2 loader generated for precisely OpenGL 3.3 Core, no extensions.
-if(ANDROID)
+if(ANDROID OR EMSCRIPTEN)
     add_library(judas_glad INTERFACE)
-    target_link_libraries(judas_glad INTERFACE GLESv3)
+    if(ANDROID)
+        target_link_libraries(judas_glad INTERFACE GLESv3)
+    endif()
 else()
     add_library(judas_glad STATIC third_party/glad/src/gl.c)
     target_include_directories(judas_glad PUBLIC third_party/glad/include)
@@ -378,6 +392,13 @@ if(WIN32)
     target_link_libraries(judas_engine PUBLIC ws2_32)
 endif()
 
+# The optional browser runtime reuses engine ownership; no desktop editor/tools
+# are cross-built. Host tools cook/export the content separately.
+if(EMSCRIPTEN)
+    include(cmake/JudasBrowserRuntime.cmake)
+    return()
+endif()
+
 # Android builds the same engine and application, loaded by SDL's native Activity.
 # Host editor, import/bake tools and test executables remain desktop-only.
 if(ANDROID)
@@ -421,6 +442,7 @@ target_link_libraries(judas_imgui PUBLIC SDL2::SDL2)
 add_executable(judas_editor
     src/editor/EditorMain.cpp
     src/editor/EditorMilestoneNotice.cpp
+    src/ExperimentalBrowser.cpp
     src/editor/EditorApplication.cpp
     src/editor/ScriptTools.cpp
     src/editor/EditorCamera.cpp

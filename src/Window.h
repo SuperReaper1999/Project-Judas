@@ -142,6 +142,9 @@ private:
     std::weak_ptr<InputDeviceHub> m_localHub;
     SDL_Window* m_window = nullptr;
     SDL_GLContext m_glContext = nullptr;
+#ifdef __EMSCRIPTEN__
+    int m_browserGLContext=0; // owned WebGL context on the game worker
+#endif
     bool m_sdlInitialized = false;
     bool m_shouldClose = false;
     std::function<void(const SDL_Event&)> m_eventHook;

@@ -87,6 +87,10 @@ if(JUDAS_ENABLE_VALIDATION)
         COMMAND ${Python3_EXECUTABLE} -m unittest discover -s "${CMAKE_SOURCE_DIR}/tests"
             -p test_prealpha_validation.py -v)
     set_tests_properties(prealpha.gate-negative-controls PROPERTIES LABELS "prealpha;tooling")
+    add_test(NAME prealpha.browser-export-boundaries
+        COMMAND ${Python3_EXECUTABLE} -m unittest discover -s "${CMAKE_SOURCE_DIR}/tests"
+            -p test_browser_export.py -v)
+    set_tests_properties(prealpha.browser-export-boundaries PROPERTIES LABELS "prealpha;tooling;browser")
     add_test(NAME prealpha.build-organization
         COMMAND ${Python3_EXECUTABLE} -m unittest discover -s "${CMAKE_SOURCE_DIR}/tests"
             -p test_cmake_test_targets.py -v)

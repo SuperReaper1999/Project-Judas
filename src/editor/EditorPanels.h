@@ -103,6 +103,7 @@ struct ModelCookTask;
 struct RuntimeRenderHistory;
 struct RetargetPanelState;
 struct EditorPanelState {
+    bool experimentalBrowserSupport=false; // explicit per-launch opt-in, not a project setting
     EditorWorkspaceLayout workspace;
     float hierarchyWidth = 250.0f;
     float inspectorWidth = 340.0f;

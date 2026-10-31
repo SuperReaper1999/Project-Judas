@@ -1,0 +1,7 @@
+PAGEERROR: TypeError: Module.FS_createPath is not a function
+    at runWithFS (http://127.0.0.1:8791/game.data.js:90:24)
+    at callRuntimeCallbacks (http://127.0.0.1:8791/judas_browser.js:1:8458)
+    at preRun (http://127.0.0.1:8791/judas_browser.js:1:5320)
+    at run (http://127.0.0.1:8791/judas_browser.js:1:345338)
+    at http://127.0.0.1:8791/judas_browser.js:1:345765
+error: Missing browser game content

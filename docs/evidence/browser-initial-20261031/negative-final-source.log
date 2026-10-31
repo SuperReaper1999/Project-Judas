@@ -1,0 +1,2 @@
+PASS storage-denied Persistent storage unavailable: Error: deliberate IndexedDB denial
+PASS missing-isolation This build requires HTTPS/local hosting with COOP same-origin and COEP require-corp headers.

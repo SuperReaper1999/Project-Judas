@@ -1,6 +1,13 @@
 #include "Window.h"
 #include "InputDeviceHub.h"
 #include "AppIcon.h"
+#ifdef __EMSCRIPTEN__
+#include <emscripten.h>
+#include <emscripten/html5_webgl.h>
+EM_ASYNC_JS(void, AwaitBrowserFrame, (), {
+    await new Promise(resolve => requestAnimationFrame(resolve));
+});
+#endif
 
 #include <cstdio>
 #include <cmath>
@@ -20,13 +27,13 @@ bool Window::Init(const char* title, int width, int height, bool visible) {
     }
     m_sdlInitialized = true;
 
-#ifdef __ANDROID__
+#if defined(__ANDROID__) || defined(__EMSCRIPTEN__)
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_ES);
 #else
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
 #endif
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
-#ifdef __ANDROID__
+#if defined(__ANDROID__) || defined(__EMSCRIPTEN__)
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 0);
 #else
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 3);
@@ -51,6 +58,20 @@ bool Window::Init(const char* title, int width, int height, bool visible) {
     if (!ApplyAppIcon(m_window, "", iconError))
         std::fprintf(stderr, "App icon: %s\n", iconError.c_str());
 
+#ifdef __EMSCRIPTEN__
+    // SDL2's EGL functions proxy to the UI thread. That thread no longer owns
+    // the transferred canvas. Create WebGL through the supported worker API;
+    // SDL continues owning window events and input, not a forged SDL GL handle.
+    EmscriptenWebGLContextAttributes attributes;
+    emscripten_webgl_init_context_attributes(&attributes);
+    attributes.majorVersion=2;attributes.minorVersion=0;
+    attributes.alpha=EM_FALSE;attributes.antialias=EM_FALSE;
+    attributes.proxyContextToMainThread=EMSCRIPTEN_WEBGL_CONTEXT_PROXY_DISALLOW;
+    m_browserGLContext=emscripten_webgl_create_context("#canvas",&attributes);
+    if(m_browserGLContext<=0||emscripten_webgl_make_context_current(m_browserGLContext)!=EMSCRIPTEN_RESULT_SUCCESS) {
+        std::fprintf(stderr,"Cannot create a WebGL2 context on the game worker\n");return false;
+    }
+#else
     m_glContext = SDL_GL_CreateContext(m_window);
     if (!m_glContext) {
         std::fprintf(stderr, "SDL_GL_CreateContext failed: %s\n", SDL_GetError());
@@ -58,6 +79,7 @@ bool Window::Init(const char* title, int width, int height, bool visible) {
     }
 
     SDL_GL_SetSwapInterval(1);
+#endif
 
     m_input.textPlatform=std::make_shared<TextInputPlatform>();
     m_input.textPlatform->clipboardRead=[](){char* p=SDL_GetClipboardText();std::string result=p?p:"";SDL_free(p);return result;};
@@ -68,7 +90,11 @@ bool Window::Init(const char* title, int width, int height, bool visible) {
 }
 
 bool Window::Resize(int width, int height, std::string& error) {
-#ifdef __ANDROID__
+#ifdef __EMSCRIPTEN__
+    (void)width; (void)height;
+    error = "Experimental browser RESIZE is unsupported; use the fixed canvas and proportional page layout";
+    return false;
+#elif defined(__ANDROID__)
     (void)width; (void)height;
     error = "Desktop window resize is unavailable on Android; the native surface owns its size";
     return false;
@@ -109,6 +135,13 @@ void Window::Shutdown() {
     if(m_controller){SDL_GameControllerClose(m_controller);m_controller=nullptr;}
     m_controllerId=-1;m_controllerInputReady=false;
     m_input.Reset();
+#ifdef __EMSCRIPTEN__
+    if(m_browserGLContext) {
+        emscripten_webgl_make_context_current(0);
+        emscripten_webgl_destroy_context(m_browserGLContext);
+        m_browserGLContext=0;
+    }
+#endif
     if (m_glContext) {
         SDL_GL_DeleteContext(m_glContext);
         m_glContext = nullptr;
@@ -335,7 +368,14 @@ void Window::PollEvents(){
 bool Window::ConsumeNamedAction(const std::string& name){return m_input.Action(name).pressed&&m_consumed.insert(name).second;}
 
 void Window::SwapBuffers() {
+#ifdef __EMSCRIPTEN__
+    // Presentation is implicit when the worker yields. Wait for its actual
+    // animation-frame callback rather than busy rendering or sleeping at an
+    // arbitrary physics cadence. Simulation retains its fixed-step policy.
+    AwaitBrowserFrame();
+#else
     SDL_GL_SwapWindow(m_window);
+#endif
 }
 
 bool Window::IsActionActive(Action action) const {

@@ -15,7 +15,9 @@
 namespace fs = std::filesystem;
 
 std::string EngineExecutableDir() {
-#if defined(__ANDROID__)
+#if defined(__EMSCRIPTEN__)
+    return "/game";
+#elif defined(__ANDROID__)
     if(const char* root=std::getenv("JUDAS_ANDROID_CONTENT"))return root;
     return {};
 #elif defined(__linux__)

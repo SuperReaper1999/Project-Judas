@@ -38,6 +38,13 @@ int Application::Run(int argc, char** argv, ApplicationControl* control) {
         return 1;
     }
 
+#ifdef __EMSCRIPTEN__
+    if(!options.project.IsLoaded()||options.project.Settings().legacyGameplay||options.project.Settings().advancedFluidDynamics) {
+        std::fprintf(stderr,"Experimental browser games require a project with script-owned gameplay and Advanced Fluid Dynamics disabled\n");
+        return 1;
+    }
+#endif
+
     if (control && options.IsTestRun()) {
         std::fprintf(stderr, "ApplicationControl requires the normal async loop, not JUDAS_TEST_SCRIPT.\n");
         return 1;

@@ -1,0 +1,7 @@
+error: Shadow maps: on
+error: Graphics: OpenGL ES 3.0 (WebGL 2.0 (OpenGL ES 3.0 Chromium)) / WebKit WebGL
+error: Renderer fragment texture units: 32 (material path uses 12)
+error: World state: /persistent/judas/games/f99eac5dbd0c142f2e1f9c22e04edeb833fe2cc752415e37a4a0a88bbb8de346/Saves/main.judasstate (none saved)
+error: Project: 2D Traversal Workshop (/game/game.judasproj)
+error: Scene: One-way platform workshop (/game/Scenes/main.judas)
+error: World origin (m): 0.000, 0.000, 0.000

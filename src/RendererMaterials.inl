@@ -9,7 +9,7 @@ TextureHandle Renderer::ColourTexture(TextureHandle source){
  // GL 3.3 has no texture views: reuse decoded texel bytes once, on the owner
  // thread, then cache a role-correct sRGB upload. No asset decoding here.
  TextureData data;
-#ifndef __ANDROID__
+#if !defined(__ANDROID__) && !defined(__EMSCRIPTEN__)
  if(t.storage!=TextureStorage::Rgba8){data.width=t.width;data.height=t.height;data.storage=t.storage;glBindTexture(GL_TEXTURE_2D,t.textureId);for(unsigned i=0;i<t.mipCount;++i){GLint size=0,w=0,h=0;glGetTexLevelParameteriv(GL_TEXTURE_2D,GLint(i),GL_TEXTURE_COMPRESSED_IMAGE_SIZE,&size);glGetTexLevelParameteriv(GL_TEXTURE_2D,GLint(i),GL_TEXTURE_WIDTH,&w);glGetTexLevelParameteriv(GL_TEXTURE_2D,GLint(i),GL_TEXTURE_HEIGHT,&h);if(size<=0)return source;TextureMip level{w,h,{}};level.bytes.resize(size_t(size));glGetCompressedTexImage(GL_TEXTURE_2D,GLint(i),level.bytes.data());data.levels.push_back(std::move(level));}}
  else
 #endif
@@ -103,7 +103,7 @@ void Renderer::BeginLinearPass(int width,int height){
  }
  m_hdrFbo=existing->fbo;m_hdrColor=existing->color;m_hdrDepth=existing->depth;m_hdrWidth=width;m_hdrHeight=height;
  glBindFramebuffer(GL_FRAMEBUFFER,m_hdrFbo);
-#ifndef __ANDROID__
+#if !defined(__ANDROID__) && !defined(__EMSCRIPTEN__)
  glDisable(GL_FRAMEBUFFER_SRGB);
 #endif
 glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);m_linearPass=true;
@@ -120,7 +120,7 @@ void main(){vec3 colour=texture(image,uv).rgb;if(background&&texture(depthImage,
  GLuint v=0,f=0;if(!CompileShader(GL_VERTEX_SHADER,vs,v)||!CompileShader(GL_FRAGMENT_SHADER,fs,f)||!LinkProgram(v,f,m_outputProgram)){glDeleteShader(v);glDeleteShader(f);m_linearPass=false;return;}glDeleteShader(v);glDeleteShader(f);glGenVertexArrays(1,&m_outputVao);
  }
  glBindFramebuffer(GL_FRAMEBUFFER,GLuint(m_outputFramebuffer));glViewport(0,0,m_hdrWidth,m_hdrHeight);glDisable(GL_DEPTH_TEST);glDisable(GL_BLEND);glDisable(GL_CULL_FACE);
-#ifndef __ANDROID__
+#if !defined(__ANDROID__) && !defined(__EMSCRIPTEN__)
  glDisable(GL_FRAMEBUFFER_SRGB);
 #endif
 glUseProgram(m_outputProgram);

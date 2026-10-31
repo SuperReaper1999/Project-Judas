@@ -65,8 +65,9 @@ class ValidationRegistrationTests(unittest.TestCase):
         entries = [entry for entry in MANIFEST['tests']
                    if include_known or not entry.get('manual', False)]
         tooling = {'prealpha.gate-negative-controls', 'prealpha.build-organization',
-                   'prealpha.gate-registration'}
+                   'prealpha.gate-registration', 'prealpha.browser-export-boundaries'}
         self.assertEqual(set(tests), {'prealpha.' + entry['name'] for entry in entries} | tooling)
+        self.assertIn('test_browser_export.py', tests['prealpha.browser-export-boundaries']['command'])
         for entry in entries:
             case = tests['prealpha.' + entry['name']]
             self.assertEqual(Path(case['command'][1]).resolve(), (ROOT / 'scripts/prealpha_validate.py').resolve())

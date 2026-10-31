@@ -363,7 +363,7 @@ void main() {
 )";
 
 bool CompileShader(GLenum type, const char* source, GLuint& outShader) {
-#ifdef __ANDROID__
+#if defined(__ANDROID__) || defined(__EMSCRIPTEN__)
     // ES 3 has the same shader language facilities used here, with explicit
     // precision and a 2D palette instead of desktop-only texture buffers.
     std::string es(source);
@@ -531,7 +531,7 @@ constexpr int kSphereLongitudeSegments = 24;
 // "Milestone 15," for why 1024x1024 was judged sufficient (and not
 // excessive) for this demo's world scale, for all three shadow slots
 // alike (no separate resolution per light).
-#ifdef __ANDROID__
+#if defined(__ANDROID__) || defined(__EMSCRIPTEN__)
 constexpr int kShadowMapResolution = 512;
 #else
 constexpr int kShadowMapResolution = 1024;
@@ -658,6 +658,13 @@ bool Renderer::Init() {
     // Sampler types must use distinct units even when uSkinned is false.
     // Initialize this before the first ordinary draw; a project need not
     // render a skeleton first to make its boxes and spheres valid GL draws.
+#ifdef __EMSCRIPTEN__
+    // WebGL validates the type of active integer attributes even when the
+    // skinning branch is disabled. Unskinned VAOs use these generic constants;
+    // the GL default is a float and makes their otherwise valid draws fail.
+    glVertexAttribI4ui(3, 0, 0, 0, 0);
+    glVertexAttribI4ui(6, 0, 0, 0, 0);
+#endif
     glUniform1i(m_uBones, 15);
     glUniform1i(glGetUniformLocation(m_shaderProgram,"uWeatherNoise"),13);
     glUniform1i(glGetUniformLocation(m_shaderProgram,"uShadowMaps"),1);
@@ -839,12 +846,12 @@ void Renderer::TraceResourceOperation(ResourceTracePoint point, unsigned int han
     ResourceTraceEvent event{point, {}, {}};
     event.handle = handle;
     event.bytes = bytes;
-    event.contextCurrent = SDL_GL_GetCurrentContext() != nullptr;
+    event.contextCurrent = GraphicsContextCurrent();
     m_resourceTrace(event);
 }
 
 void Renderer::UploadPosePalette(const std::vector<glm::mat4>& pose) {
-#ifdef __ANDROID__
+#if defined(__ANDROID__) || defined(__EMSCRIPTEN__)
     if(!m_poseTexture)glGenTextures(1,&m_poseTexture);
     glActiveTexture(GL_TEXTURE15);glBindTexture(GL_TEXTURE_2D,m_poseTexture);
     glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_NEAREST);
@@ -1054,7 +1061,7 @@ MeshHandle Renderer::BeginMeshUpload(const MeshData& data) {
     if (data.skeletal) {
         const auto count=data.skeletal->skeleton.skinNodes.size();
         GLint texels=0;
-#ifdef __ANDROID__
+#if defined(__ANDROID__) || defined(__EMSCRIPTEN__)
         glGetIntegerv(GL_MAX_TEXTURE_SIZE,&texels);texels*=4;
 #else
         glGetIntegerv(GL_MAX_TEXTURE_BUFFER_SIZE,&texels);
@@ -1211,7 +1218,7 @@ void Renderer::DestroyTexture(TextureHandle handle) {
 }
 
 bool Renderer::ReadMeshForDiagnostics(MeshHandle handle, MeshData& outData) const {
-    if (!SDL_GL_GetCurrentContext() || !handle.IsValid() || handle.id >= m_meshes.size()) return false;
+    if (!GraphicsContextCurrent() || !handle.IsValid() || handle.id >= m_meshes.size()) return false;
     const GpuMesh& mesh = m_meshes[handle.id];
     if (!mesh.alive || mesh.generation!=handle.generation || !glIsBuffer(mesh.vbo) || (mesh.ebo && !glIsBuffer(mesh.ebo))) return false;
     GLint previousBuffer = 0;
@@ -1226,7 +1233,7 @@ bool Renderer::ReadMeshForDiagnostics(MeshHandle handle, MeshData& outData) cons
     }
     data.vertices.resize(static_cast<std::size_t>(vertexBytes) / sizeof(MeshVertex));
     if (vertexBytes) {
-#ifdef __ANDROID__
+#if defined(__ANDROID__) || defined(__EMSCRIPTEN__)
         const void* mapped=glMapBufferRange(GL_COPY_READ_BUFFER,0,GLsizeiptr(vertexBytes),GL_MAP_READ_BIT);
         if(!mapped){glBindBuffer(GL_COPY_READ_BUFFER,GLuint(previousBuffer));return false;}
         std::memcpy(data.vertices.data(),mapped,std::size_t(vertexBytes));glUnmapBuffer(GL_COPY_READ_BUFFER);
@@ -1244,7 +1251,7 @@ bool Renderer::ReadMeshForDiagnostics(MeshHandle handle, MeshData& outData) cons
         }
         data.indices.resize(static_cast<std::size_t>(indexBytes) / sizeof(std::uint32_t));
         if (indexBytes) {
-#ifdef __ANDROID__
+#if defined(__ANDROID__) || defined(__EMSCRIPTEN__)
             const void* mapped=glMapBufferRange(GL_COPY_READ_BUFFER,0,GLsizeiptr(indexBytes),GL_MAP_READ_BIT);
             if(!mapped){glBindBuffer(GL_COPY_READ_BUFFER,GLuint(previousBuffer));return false;}
             std::memcpy(data.indices.data(),mapped,std::size_t(indexBytes));glUnmapBuffer(GL_COPY_READ_BUFFER);
@@ -1260,7 +1267,7 @@ bool Renderer::ReadMeshForDiagnostics(MeshHandle handle, MeshData& outData) cons
 }
 
 bool Renderer::ReadTextureForDiagnostics(TextureHandle handle, TextureData& outData) const {
-    if (!SDL_GL_GetCurrentContext() || !handle.IsValid() || handle.id >= m_textures.size()) return false;
+    if (!GraphicsContextCurrent() || !handle.IsValid() || handle.id >= m_textures.size()) return false;
     const GpuTexture& texture = m_textures[handle.id];
     if (!texture.alive || texture.generation!=handle.generation || !glIsTexture(texture.textureId)) return false;
     GLint previousTexture = 0, previousPackBuffer = 0;
@@ -1284,7 +1291,7 @@ bool Renderer::ReadTextureForDiagnostics(TextureHandle handle, TextureData& outD
     glPixelStorei(GL_PACK_ROW_LENGTH, 0);
     glPixelStorei(GL_PACK_SKIP_ROWS, 0);
     glPixelStorei(GL_PACK_SKIP_PIXELS, 0);
-#ifdef __ANDROID__
+#if defined(__ANDROID__) || defined(__EMSCRIPTEN__)
     GLint previousRead=0;glGetIntegerv(GL_READ_FRAMEBUFFER_BINDING,&previousRead);
     GLuint fbo=0;glGenFramebuffers(1,&fbo);glBindFramebuffer(GL_READ_FRAMEBUFFER,fbo);
     glFramebufferTexture2D(GL_READ_FRAMEBUFFER,GL_COLOR_ATTACHMENT0,GL_TEXTURE_2D,texture.textureId,0);
@@ -1300,7 +1307,7 @@ bool Renderer::ReadTextureForDiagnostics(TextureHandle handle, TextureData& outD
     glPixelStorei(GL_PACK_SKIP_PIXELS, skipPixels);
     glBindBuffer(GL_PIXEL_PACK_BUFFER, static_cast<GLuint>(previousPackBuffer));
     glBindTexture(GL_TEXTURE_2D, static_cast<GLuint>(previousTexture));
-#ifdef __ANDROID__
+#if defined(__ANDROID__) || defined(__EMSCRIPTEN__)
     if(!complete)return false;
 #endif
     outData = std::move(data);
@@ -1737,7 +1744,7 @@ void Renderer::DrawTransientSurface(const MeshData& data,const glm::vec3& tint,f
  if(cull)glEnable(GL_CULL_FACE);
 }
 
-#ifdef __ANDROID__
+#if defined(__ANDROID__) || defined(__EMSCRIPTEN__)
 unsigned Renderer::BeginProfilePass(const char*,std::uint64_t){
     PerformanceProfiler::Get().GPUAvailability(false,"ES 3 timestamp queries not enabled");return 0;
 }

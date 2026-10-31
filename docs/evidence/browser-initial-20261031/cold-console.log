@@ -1,0 +1,24 @@
+Shadow maps: on
+Graphics: OpenGL ES 3.0 (WebGL 2.0 (OpenGL ES 3.0 Chromium)) / WebKit WebGL
+Renderer fragment texture units: 32 (material path uses 12)
+World state: /persistent/judas/games/f99eac5dbd0c142f2e1f9c22e04edeb833fe2cc752415e37a4a0a88bbb8de346/Saves/grid.judasstate (none saved)
+Project: 2D Traversal Workshop (/game/game.judasproj)
+Scene: Grid RPG workshop (/game/Scenes/grid.judas)
+World origin (m): 0.000, 0.000, 0.000
+JS: BROWSER_PROBE {"position":{"x":0,"y":2,"z":0},"requestOne":null,"status":null}
+JS: BROWSER_PROBE {"position":{"x":-1,"y":2,"z":0},"requestOne":null,"status":null}
+JS: BROWSER_PROBE {"position":{"x":-1,"y":2,"z":0},"requestOne":null,"status":null}
+JS: BROWSER_PROBE {"position":{"x":-1,"y":2,"z":0},"requestOne":{"operation":"save","slot":"traversal","state":"completed","error":"","migrationReport":"","waitingFor":"","id":1,"migrationMs":0,"queuedMs":48.865024,"identityMs":19.364864,"workerQueueMs":0.285184,"elapsedMs":219.484928,"captureMs":100.205056,"workerMs":41.885184,"restoreMs":0,"bytes":197655,"migrated":false,"recovered":false},"status":{"operation":"save","slot":"traversal","state":"completed","error":"","migrationReport":"","waitingFor":"","id":1,"migrationMs":0,"queuedMs":48.865024,"identityMs":19.364864,"workerQueueMs":0.285184,"elapsedMs":219.484928,"captureMs":100.205056,"workerMs":41.885184,"restoreMs":0,"bytes":197655,"migrated":false,"recovered":false}}
+JS: BROWSER_PROBE {"position":{"x":-1,"y":2,"z":0},"requestOne":{"operation":"save","slot":"traversal","state":"completed","error":"","migrationReport":"","waitingFor":"","id":1,"migrationMs":0,"queuedMs":48.865024,"identityMs":19.364864,"workerQueueMs":0.285184,"elapsedMs":219.484928,"captureMs":100.205056,"workerMs":41.885184,"restoreMs":0,"bytes":197655,"migrated":false,"recovered":false},"status":{"operation":"save","slot":"traversal","state":"completed","error":"","migrationReport":"","waitingFor":"","id":2,"migrationMs":0,"queuedMs":102.17984,"identityMs":18.734848,"workerQueueMs":0.60544,"elapsedMs":193.154816,"captureMs":51.239936,"workerMs":28.865024,"restoreMs":0,"bytes":197655,"migrated":false,"recovered":false}}
+Shadow maps: on
+Graphics: OpenGL ES 3.0 (WebGL 2.0 (OpenGL ES 3.0 Chromium)) / WebKit WebGL
+Renderer fragment texture units: 32 (material path uses 12)
+World state: /persistent/judas/games/f99eac5dbd0c142f2e1f9c22e04edeb833fe2cc752415e37a4a0a88bbb8de346/Saves/grid.judasstate (none saved)
+Project: 2D Traversal Workshop (/game/game.judasproj)
+Scene: Grid RPG workshop (/game/Scenes/grid.judas)
+World origin (m): 0.000, 0.000, 0.000
+JS: BROWSER_PROBE {"position":{"x":0,"y":2,"z":0},"requestOne":null,"status":null}
+JS: BROWSER_PROBE {"position":{"x":-1,"y":2,"z":0},"requestOne":null,"status":null}
+JS: BROWSER_PROBE {"position":{"x":-1.9999990463256836,"y":2,"z":0},"requestOne":null,"status":null}
+JS: BROWSER_PROBE {"position":{"x":-1,"y":2,"z":0},"requestOne":{"operation":"load","slot":"traversal","state":"completed","error":"","migrationReport":"exact","waitingFor":"","id":1,"migrationMs":3.529984,"queuedMs":199.389952,"identityMs":29.745152,"workerQueueMs":3.525376,"elapsedMs":497.780224,"captureMs":0,"workerMs":25.05472,"restoreMs":103.865088,"bytes":197655,"migrated":false,"recovered":false},"status":null}
+JS: BROWSER_PROBE {"position":{"x":-1,"y":2,"z":0},"requestOne":{"operation":"load","slot":"traversal","state":"completed","error":"","migrationReport":"exact","waitingFor":"","id":1,"migrationMs":3.529984,"queuedMs":199.389952,"identityMs":29.745152,"workerQueueMs":3.525376,"elapsedMs":497.780224,"captureMs":0,"workerMs":25.05472,"restoreMs":103.865088,"bytes":197655,"migrated":false,"recovered":false},"status":null}

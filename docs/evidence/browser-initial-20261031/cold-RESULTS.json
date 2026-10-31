@@ -1,0 +1,34 @@
+{
+  "passed": true,
+  "savedBytes": 197655,
+  "savedSha256": "62781982d046aaeff4ad4b19a665c438eb2a883134a715a28cf9bf093c12fbae",
+  "restored": {
+    "position": {
+      "x": -1,
+      "y": 2,
+      "z": 0
+    },
+    "requestOne": {
+      "operation": "load",
+      "slot": "traversal",
+      "state": "completed",
+      "error": "",
+      "migrationReport": "exact",
+      "waitingFor": "",
+      "id": 1,
+      "migrationMs": 3.529984,
+      "queuedMs": 199.389952,
+      "identityMs": 29.745152,
+      "workerQueueMs": 3.525376,
+      "elapsedMs": 497.780224,
+      "captureMs": 0,
+      "workerMs": 25.05472,
+      "restoreMs": 103.865088,
+      "bytes": 197655,
+      "migrated": false,
+      "recovered": false
+    },
+    "status": null
+  },
+  "renderer": "Chromium ANGLE SwiftShader; software functional validation only"
+}

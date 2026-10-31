@@ -1,0 +1,18 @@
+Shadow maps: on
+Graphics: 3.3.0 NVIDIA 580.178.04 / NVIDIA GeForce GTX 970/PCIe/SSE2
+Renderer fragment texture units: 32 (material path uses 12)
+[editor autotest] duplicate created id 475: scene CHANGED; undo restores: IDENTICAL
+[editor autotest] wrote: .cache/browser-sdk/editor-opt-in.edit.png
+[editor autotest] edit frame: 138 draw calls, 272 triangles, 950 debug lines
+[editor autotest] wrote: .cache/browser-sdk/editor-opt-in.play.png
+[editor autotest] play frame: 0 steps, step 0.062 ms, 8 bodies, 0 contacts, 177 draw calls, 352 triangles, 0 shadow passes, 0 lights, 172 debug lines, 0 particles
+[editor autotest] resources: 0 meshes, 1 textures, 0 terrain meshes, hits 279, misses 1, failed 0, uploads 1, resident 13640 bytes
+[editor autotest] jobs: 11 workers, 2 completed, 0 failed, 0 cancelled
+[editor autotest] authored scene after play/stop is IDENTICAL
+[editor autotest] save ok
+JS: BROWSER_PROBE {"position":{"x":0,"y":2,"z":0},"requestOne":null,"status":null}
+JS: BROWSER_PROBE {"position":{"x":0,"y":2,"z":0},"requestOne":null,"status":null}
+JS: BROWSER_PROBE {"position":{"x":0,"y":2,"z":0},"requestOne":null,"status":null}
+JS: BROWSER_PROBE {"position":{"x":0,"y":2,"z":0},"requestOne":null,"status":null}
+JS: BROWSER_PROBE {"position":{"x":0,"y":2,"z":0},"requestOne":null,"status":null}
+JS: BROWSER_PROBE {"position":{"x":0,"y":2,"z":0},"requestOne":null,"status":null}

@@ -1,0 +1,10 @@
+FRAMES 100
+ENTITY 1
+LOG_EVERY 10
+ACTION grid_view 1 2 3
+WAIT_SERVICES scene 10000 4
+EXPECT_SCENE Scenes/grid.judas 5
+CONTROL key:A 1 10 14
+SCREENSHOT 55 /home/conner/Documents/GitHub/Project-Judas/.cache/browser-sdk/native-grid.png
+ACTION save_game 1 60 61
+WAIT_SERVICES save 10000 62

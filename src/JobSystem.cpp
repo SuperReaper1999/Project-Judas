@@ -8,6 +8,11 @@
 namespace {
 unsigned int DeriveWorkerCount(unsigned int requested) {
     if (requested > 0) return std::min(requested, JobSystem::kMaxWorkers);
+#ifdef __EMSCRIPTEN__
+    // Match a bounded prestarted browser worker pool; do not trust host CPU
+    // count to spawn arbitrary workers while browser main-thread proxies wait.
+    return 2;
+#endif
     const unsigned int hardware = std::thread::hardware_concurrency();
     if (hardware <= 1) return 1;
     return std::min(hardware - 1, JobSystem::kMaxWorkers);

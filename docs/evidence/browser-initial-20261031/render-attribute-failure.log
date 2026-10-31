@@ -1,0 +1,23 @@
+error: Shadow maps: on
+error: Graphics: OpenGL ES 3.0 (WebGL 2.0 (OpenGL ES 3.0 Chromium)) / WebKit WebGL
+error: Renderer fragment texture units: 32 (material path uses 12)
+error: World state: /persistent/judas/games/f99eac5dbd0c142f2e1f9c22e04edeb833fe2cc752415e37a4a0a88bbb8de346/Saves/main.judasstate (none saved)
+error: Project: 2D Traversal Workshop (/game/game.judasproj)
+error: Scene: One-way platform workshop (/game/Scenes/main.judas)
+error: World origin (m): 0.000, 0.000, 0.000
+error: DRAW ERRORS 0 1282 framebuffer 36053
+error: VALIDATE true 
+error: ATTR aLocalPos 0 enabled true buffer true type 5126
+error: ATTR aLocalNormal 1 enabled true buffer true type 5126
+error: ATTR aUV 2 enabled true buffer true type 5126
+error: ATTR aUV1 8 enabled true buffer true type 5126
+error: ATTR aTangent 5 enabled true buffer true type 5126
+error: ATTR aJoints 3 enabled false buffer false type 5126
+error: ATTR aWeights 4 enabled false buffer false type 5126
+error: ATTR aJoints1 6 enabled false buffer false type 5126
+error: ATTR aWeights1 7 enabled false buffer false type 5126
+error: ATTR aInstanceModel 9 enabled false buffer false type 5126
+error: ATTR aInstanceTint 13 enabled false buffer false type 5126
+error: WEB SPRITES draws=281 calls=124 visible=124 culled=157 error=0 quad=2 material=0
+error: WEB SPRITES draws=281 calls=248 visible=248 culled=314 error=0 quad=2 material=0
+error: WEB SPRITES draws=281 calls=372 visible=372 culled=471 error=0 quad=2 material=0

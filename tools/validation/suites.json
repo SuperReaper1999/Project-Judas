@@ -1,6 +1,7 @@
 {
   "format": 1,
   "tests": [
+    {"name":"browser-opt-in","target":"judas_browser_option_tests","groups":["core","browser"]},
     {"name":"editor-script-workflow","target":"judas_editor_script_workflow_tests","groups":["2d","editor"]},
     {"name":"one-way-platform","target":"judas_one_way_platform_tests","groups":["2d","collision"],"args":["{output}/one-way-platform"]},
     {"name":"grid-movement","target":"judas_grid_movement_tests","groups":["2d","lifecycle"],"args":["{output}/grid-movement"]},

@@ -14,6 +14,7 @@
 #include "PerformanceProfiler.h"
 #include "ComponentEditors.h"
 #include "EditorApplication.h"
+#include "../ExperimentalBrowser.h"
 #include "EditorCreationMenu.h"
 #include "EditorAssetActions.h"
 #include "TerrainTools.h"
@@ -1376,8 +1377,14 @@ void EditorApplication::SaveEditorPreferences() {
 int EditorApplication::Run(int argc, char** argv) {
     ProfileRun profileRun("editor");
     ProfileFrame startupProfile("editor startup",true);
+    std::vector<char*> launchArguments;
+    std::string launchError;
+    if(!ParseExperimentalBrowserArguments(argc,argv,m_panels.experimentalBrowserSupport,launchArguments,launchError)) {
+        std::fprintf(stderr,"%s\n",launchError.c_str());return 1;
+    }
+    argc=int(launchArguments.size());argv=launchArguments.data();
     if (argc > 2) {
-        std::fprintf(stderr, "usage: judas_editor [project.judasproj | scene.judas]\n");
+        std::fprintf(stderr, "usage: judas_editor [-ExpBrowserSupport=1] [project.judasproj | scene.judas]\n");
         return 1;
     }
     std::string error;

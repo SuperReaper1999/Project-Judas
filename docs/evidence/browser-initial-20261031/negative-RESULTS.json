@@ -1,0 +1,12 @@
+[
+  {
+    "name": "storage-denied",
+    "passed": true,
+    "message": "Persistent storage unavailable: Error: deliberate IndexedDB denial"
+  },
+  {
+    "name": "missing-isolation",
+    "passed": true,
+    "message": "This build requires HTTPS/local hosting with COOP same-origin and COEP require-corp headers."
+  }
+]

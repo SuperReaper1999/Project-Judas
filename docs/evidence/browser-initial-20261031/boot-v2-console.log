@@ -1,0 +1,11 @@
+PAGEERROR: InvalidStateError: Failed to execute 'getContext' on 'HTMLCanvasElement': Cannot get context from a canvas that has transferred its control to offscreen.
+    at canvas.getContext (http://127.0.0.1:8792/judas_browser.js:1:122144)
+    at Object.createContext (http://127.0.0.1:8792/judas_browser.js:1:122264)
+    at _eglCreateContext (http://127.0.0.1:8792/judas_browser.js:1:124919)
+    at __emscripten_receive_on_main_thread_js (http://127.0.0.1:8792/judas_browser.js:1:104368)
+    at http://127.0.0.1:8792/judas_browser.wasm:wasm-function[12975]:0x11897c2
+    at http://127.0.0.1:8792/judas_browser.wasm:wasm-function[12979]:0x1189c07
+    at http://127.0.0.1:8792/judas_browser.wasm:wasm-function[12982]:0x1189e8b
+    at http://127.0.0.1:8792/judas_browser.wasm:wasm-function[4110]:0x3be90b
+    at http://127.0.0.1:8792/judas_browser.wasm:wasm-function[12985]:0x118a513
+    at http://127.0.0.1:8792/judas_browser.wasm:wasm-function[4110]:0x3be90b

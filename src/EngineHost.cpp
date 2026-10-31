@@ -7,7 +7,7 @@
 #include "EnginePaths.h"
 
 namespace {
-#ifndef __ANDROID__
+#if !defined(__ANDROID__) && !defined(__EMSCRIPTEN__)
 GLADapiproc LoadOpenGLProcAddress(const char* name) {
     return reinterpret_cast<GLADapiproc>(SDL_GL_GetProcAddress(name));
 }
@@ -32,7 +32,7 @@ bool EngineHost::Init(const char* title, int width, int height, bool visible, st
         outError = "Window initialization failed.";
         return false;
     }
-#ifdef __ANDROID__
+#if defined(__ANDROID__) || defined(__EMSCRIPTEN__)
     if (!glGetString(GL_VERSION)) { outError = "OpenGL ES 3 context unavailable"; return false; }
 #else
     if (gladLoadGL(&LoadOpenGLProcAddress) == 0 || !GLAD_GL_VERSION_3_3) {
@@ -85,7 +85,7 @@ void EngineHost::Shutdown() {
         m_jobs->Shutdown();
         if (m_resourceTrace) {
             ResourceTraceEvent event{ResourceTracePoint::WorkersJoined, {}, {}};
-            event.contextCurrent = SDL_GL_GetCurrentContext() != nullptr;
+            event.contextCurrent = GraphicsContextCurrent();
             m_resourceTrace(event);
         }
     }
@@ -94,11 +94,11 @@ void EngineHost::Shutdown() {
         m_renderer.Shutdown();
         m_rendererInitialized = false;
     }
-    const bool hadContext = m_window.NativeGLContext() != nullptr;
+    const bool hadContext = GraphicsContextCurrent();
     m_window.Shutdown();
     if (hadContext && m_resourceTrace) {
         ResourceTraceEvent event{ResourceTracePoint::ContextDestroyed, {}, {}};
-        event.contextCurrent = SDL_GL_GetCurrentContext() != nullptr;
+        event.contextCurrent = GraphicsContextCurrent();
         m_resourceTrace(event);
     }
 }

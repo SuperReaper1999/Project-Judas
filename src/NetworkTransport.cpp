@@ -198,6 +198,11 @@ NetworkTransport::~NetworkTransport() { m_impl->Stop(); }
 
 bool NetworkTransport::Listen(const std::string& numericIPv4, uint16_t port,
                               const Settings& settings, std::string& error) {
+#ifdef __EMSCRIPTEN__
+    error="Online networking is not available in this experimental browser runtime; a WebSocket-capable transport is required";
+    return false;
+#endif
+
     error.clear();
     sockaddr_in address{};
     if (!ValidSettings(settings, error) || !m_impl->Startup(error) ||
@@ -232,6 +237,11 @@ bool NetworkTransport::Listen(const std::string& numericIPv4, uint16_t port,
 
 bool NetworkTransport::Connect(const std::string& numericIPv4, uint16_t port,
                                const Settings& settings, std::string& error) {
+#ifdef __EMSCRIPTEN__
+    error="Online networking is not available in this experimental browser runtime; a WebSocket-capable transport is required";
+    return false;
+#endif
+
     error.clear();
     sockaddr_in address{};
     if (!port) { error = "connect port must be nonzero"; return false; }

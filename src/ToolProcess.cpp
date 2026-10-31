@@ -38,12 +38,16 @@ bool CaptureToolOutput(const std::filesystem::path& executable,
         error = "Tool probe requires a positive time/output bound";
         return false;
     }
-#ifdef __ANDROID__
+#if defined(__ANDROID__) || defined(__EMSCRIPTEN__)
     // Native games do not launch desktop exporters or HTTP helper processes.
     // In particular, posix_spawn is unavailable at the supported API-26 floor.
     (void)executable;
     (void)arguments;
+#ifdef __EMSCRIPTEN__
+    error = "External desktop tool probing is unavailable in the browser runtime";
+#else
     error = "External desktop tool probing is unavailable in the Android runtime";
+#endif
     return false;
 #else
     const auto deadline = std::chrono::steady_clock::now() + timeout;

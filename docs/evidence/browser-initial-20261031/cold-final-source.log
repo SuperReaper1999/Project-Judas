@@ -1,0 +1,12 @@
+PASS game preloads and hydrates persistent storage
+PASS actual script reports native player pose
+PASS save 1 reports actual completed durable publication
+PASS save 2 reports actual completed durable publication
+PASS real binary save exists
+PASS same-game competing tab fails closed
+PASS no browser runtime exceptions
+PASS game preloads and hydrates persistent storage
+PASS fresh Chromium process restores exact saved bytes from IndexedDB
+PASS actual script reports native player pose
+PASS cold load has no browser runtime exceptions
+PASS fresh-process load service reports completed and actual endpoint matches
