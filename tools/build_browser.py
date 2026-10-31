@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Experimental native-WASM game export. Explicit per-invocation opt-in required."""
 import argparse
+import ast
 import hashlib
 import json
 import os
@@ -85,6 +86,36 @@ def copy_browser_licenses(sdk,output):
 
 
 
+
+def resolve_node(emsdk):
+    """Use the activated SDK's Node without depending on a terminal PATH.
+
+    Read only literal NODE_JS configuration; never execute the configuration
+    just to discover a command. Keep optional Node flags as separate arguments.
+    """
+    config=emsdk.resolve()/'.emscripten'
+    if config.is_file():
+        try:document=ast.parse(config.read_text(encoding='utf-8'))
+        except SyntaxError as error:
+            raise ValueError('Invalid Emscripten configuration; reactivate its SDK') from error
+        for statement in document.body:
+            if not isinstance(statement,ast.Assign) or not any(isinstance(target,ast.Name) and target.id=='NODE_JS' for target in statement.targets):
+                continue
+            try:value=ast.literal_eval(statement.value)
+            except (ValueError,TypeError):
+                raise ValueError('Cannot read the SDK Node command; reactivate Emscripten 6.0.13')
+            command=[value] if isinstance(value,str) else value
+            if not isinstance(command,list) or not command or not all(isinstance(word,str) and word for word in command):
+                raise ValueError('Invalid NODE_JS in the Emscripten configuration')
+            executable=command[0].replace('$CFGDIR',str(config.parent))
+            if not Path(executable).is_absolute():executable=shutil.which(executable)
+            if not executable or not Path(executable).is_file() or not os.access(executable,os.X_OK):
+                raise ValueError('Emscripten has a missing/unusable Node executable; reactivate its SDK')
+            return [str(executable),*command[1:]]
+    system=shutil.which('node')
+    if system:return [system]
+    raise ValueError('No Node executable found in the activated Emscripten SDK or PATH')
+
 def validate_native_build(a):
     """Only refresh an existing, same-source native Release cache, never a guess."""
     root=a.exporter.resolve().parent
@@ -149,7 +180,8 @@ def preflight(a):
         need(version=='6.0.13','This experimental pipeline is qualified with Emscripten 6.0.13, not '+str(version))
         return 'Emscripten '+version+' (no SDK installation/download performed)'
     check('Saved project',project);check('Output folder',output);check('Emscripten SDK',toolchain)
-    for name in ['cmake','node','make']:
+    check('Node runtime',lambda:' '.join(resolve_node(a.emsdk)))
+    for name in ['cmake','make']:
         check(name,lambda name=name:shutil.which(name) or (_ for _ in ()).throw(ValueError('Install '+name+' and put it on PATH')))
     if a.prepare_native:
         check('Game build tools',lambda:validate_native_build(a))
@@ -191,7 +223,8 @@ def main(argv=None):
     emcmake=sdk/'emcmake'
     if not emcmake.is_file():raise ValueError('Install/activate the documented Emscripten SDK; --emsdk must name its root')
     environment=dict(os.environ,EM_CONFIG=str(a.emsdk/'.emscripten'))
-    environment['PATH']=str(sdk)+os.pathsep+environment.get('PATH','')
+    node=resolve_node(a.emsdk)
+    environment['PATH']=str(sdk)+os.pathsep+str(Path(node[0]).parent)+os.pathsep+environment.get('PATH','')
     report=preflight(a)
     if not report['ready']:
         raise ValueError('Setup needs attention:\n'+'\n'.join(c['name']+': '+c['detail'] for c in report['checks'] if not c['ok']))
@@ -223,7 +256,7 @@ def main(argv=None):
         run(['cmake','--build',a.build,'--target','judas_browser','--parallel',a.jobs],env=environment)
         # Query the actual compiled WASM, not just its CMake sidecar. This main
         # path exits before any canvas or game initialization, and runs in Node.
-        wasm=json.loads(subprocess.check_output(['node',str(a.build/'judas_browser.js'),'--build-info-json'],text=True,env=environment))
+        wasm=json.loads(subprocess.check_output([*node,str(a.build/'judas_browser.js'),'--build-info-json'],text=True,env=environment))
         run(command,env=environment)
         current=json.loads((a.build/'judas-build-info-Release.json').read_text(encoding='utf-8'))
         if any(wasm.get(f)!=current.get(f) for f in identity_fields):

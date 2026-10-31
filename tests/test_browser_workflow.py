@@ -104,6 +104,46 @@ class PackageTests(unittest.TestCase):
         self.assertFalse((moved/'__pycache__').exists())
         self.assertTrue(package.verify_package(moved))
 
+class NodeDiscoveryTests(unittest.TestCase):
+    def setUp(self):
+        self.temp=tempfile.TemporaryDirectory();self.addCleanup(self.temp.cleanup)
+        self.sdk=Path(self.temp.name)/'SDK with spaces';self.sdk.mkdir()
+        self.node=self.sdk/'node/bin/node';self.node.parent.mkdir(parents=True)
+        self.node.write_text('fixture');self.node.chmod(0o755)
+        self.config=self.sdk/'.emscripten'
+
+    def test_bundled_node_without_terminal_path(self):
+        self.config.write_text("NODE_JS = '$CFGDIR/node/bin/node'\n")
+        with patch.object(compiler.shutil,'which',return_value=None):
+            self.assertEqual(compiler.resolve_node(self.sdk),[str(self.node)])
+
+    def test_sdk_list_preserves_arguments_and_spaces(self):
+        self.config.write_text("NODE_JS = ['$CFGDIR/node/bin/node', '--test-flag']\n")
+        self.assertEqual(compiler.resolve_node(self.sdk),[str(self.node),'--test-flag'])
+
+    def test_config_is_never_executed(self):
+        sentinel=self.sdk/'must-not-exist'
+        self.config.write_text('NODE_JS = __import__("pathlib").Path('+repr(str(sentinel))+').write_text("bad")')
+        with self.assertRaises(ValueError):compiler.resolve_node(self.sdk)
+        self.assertFalse(sentinel.exists())
+
+    def test_broken_sdk_is_not_hidden_by_system_node(self):
+        self.config.write_text("NODE_JS = '$CFGDIR/missing/node'\n")
+        with patch.object(compiler.shutil,'which',return_value='/system/node'):
+            with self.assertRaisesRegex(ValueError,'missing/unusable'):compiler.resolve_node(self.sdk)
+
+    def test_invalid_config_has_actionable_error(self):
+        self.config.write_text('NODE_JS = [')
+        with self.assertRaisesRegex(ValueError,'configuration'):compiler.resolve_node(self.sdk)
+
+    def test_system_fallback_without_configured_node(self):
+        with patch.object(compiler.shutil,'which',return_value='/system/node'):
+            self.assertEqual(compiler.resolve_node(self.sdk),['/system/node'])
+
+    def test_missing_both_fails(self):
+        with patch.object(compiler.shutil,'which',return_value=None):
+            with self.assertRaisesRegex(ValueError,'No Node'):compiler.resolve_node(self.sdk)
+
 class PreflightTests(unittest.TestCase):
     def setUp(self):
         platform=patch.object(compiler.sys,'platform','linux');platform.start();self.addCleanup(platform.stop)

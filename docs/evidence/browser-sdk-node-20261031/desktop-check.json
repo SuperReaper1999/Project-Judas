@@ -1,0 +1,42 @@
+{
+  "schema": 1,
+  "kind": "judas-browser-preflight",
+  "ready": true,
+  "checks": [
+    {
+      "name": "Saved project",
+      "ok": true,
+      "detail": "Saved project policy is browser-compatible; asset closure is validated during export"
+    },
+    {
+      "name": "Output folder",
+      "ok": true,
+      "detail": "/home/conner/Documents/GitHub/Project-Judas/.cache/browser-node-fix/web"
+    },
+    {
+      "name": "Emscripten SDK",
+      "ok": true,
+      "detail": "Emscripten 6.0.13 (no SDK installation/download performed)"
+    },
+    {
+      "name": "Node runtime",
+      "ok": true,
+      "detail": "/home/conner/Documents/GitHub/Project-Judas/.cache/browser-sdk/emsdk/node/24.19.0_64bit/bin/node"
+    },
+    {
+      "name": "cmake",
+      "ok": true,
+      "detail": "/usr/bin/cmake"
+    },
+    {
+      "name": "make",
+      "ok": true,
+      "detail": "/usr/bin/make"
+    },
+    {
+      "name": "Game build tools",
+      "ok": true,
+      "detail": "/home/conner/Documents/GitHub/Project-Judas/.cache/2d-stage1-build"
+    }
+  ]
+}

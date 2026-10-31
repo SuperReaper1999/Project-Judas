@@ -1,0 +1,47 @@
+{
+  "schema": 1,
+  "kind": "judas-browser-preflight",
+  "ready": false,
+  "checks": [
+    {
+      "name": "Saved project",
+      "ok": true,
+      "detail": "Saved project policy is browser-compatible; asset closure is validated during export"
+    },
+    {
+      "name": "Output folder",
+      "ok": true,
+      "detail": "/home/conner/Documents/GitHub/Project-Judas/.cache/browser-simple/Testicle/demo-web"
+    },
+    {
+      "name": "Emscripten SDK",
+      "ok": true,
+      "detail": "Emscripten 6.0.13 (no SDK installation/download performed)"
+    },
+    {
+      "name": "cmake",
+      "ok": true,
+      "detail": "/usr/bin/cmake"
+    },
+    {
+      "name": "node",
+      "ok": false,
+      "detail": "Install node and put it on PATH"
+    },
+    {
+      "name": "make",
+      "ok": true,
+      "detail": "/usr/bin/make"
+    },
+    {
+      "name": "Game build tools",
+      "ok": true,
+      "detail": "/home/conner/Documents/GitHub/Project-Judas/.cache/2d-stage1-build"
+    },
+    {
+      "name": "Native ICU tools",
+      "ok": true,
+      "detail": "Ready"
+    }
+  ]
+}
