@@ -35,7 +35,7 @@ int main(int argc,char** argv){try{
         Check(world.Build(scene,&resources,error,nullptr,nullptr,true)&&WorldPersistence::Prepare(world,error)&&WorldPersistence::Restore(world,snapshot.participants,error),"cold process restores full participants: "+error);
         const SceneObject* player=nullptr;for(const auto& o:scene.Objects())if(!o.scripts.empty())player=&o;
         Check(player&&EncodeSprite(world.RuntimeDefinition(player->id)->render->sprite)==expected&&world.view&&world.view->lens.pixelPerfect&&world.view->lens.projection==CameraProjectionKind::Orthographic,"cold process actual sprite and lens endpoint matches saved state");
-        std::cout<<"SUMMARY checks="<<checks<<" failures=0\n";return 0;
+    std::cout<<"SUMMARY checks="<<checks<<" failures=0\n";return 0;
     }
     if(argc!=2)return 2;
     const auto root=fs::absolute(argv[1]);Check(!fs::exists(root),"fresh test output");
@@ -159,5 +159,15 @@ export default class {
     c.renderCamera->lens=world.view->lens;c.renderCamera->lens.height=7;
     Check(SaveSceneToFile(camera,(root/"camera.judas").string(),error),"save authored orthographic render camera");
     Scene roundtrip;Check(LoadSceneFromFile((root/"camera.judas").string(),roundtrip,error)&&roundtrip.Objects()[0].renderCamera->lens==c.renderCamera->lens,"render camera lens roundtrips exactly");
+    Scene defaults;auto& perspective=defaults.CreateObject("default perspective camera");
+    perspective.renderCamera=SceneRenderCameraComponent{};
+    std::string defaultText;Check(SaveSceneToString(defaults,defaultText),"serialize default perspective camera");
+    Check(defaultText.find("camera.projection")==std::string::npos,"default writer intentionally omits lens extension");
+    Scene defaultRead;Check(LoadSceneFromString(defaultText,defaultRead,error)&&defaultRead.Objects()[0].renderCamera->lens==CameraLens{},"legacy/default perspective camera loads without new 2D fields");
+    auto partial=defaultText;const auto at=partial.find("  render-camera");
+    Check(at!=std::string::npos,"default camera record exists for malformed-extension control");
+    partial.insert(at,"  camera.projection \"orthographic\"\n");
+    Check(!LoadSceneFromString(partial,defaultRead,error),"partial explicit lens extension still rejects");
+    std::string preserved;Check(SaveSceneToString(defaultRead,preserved)&&preserved==defaultText,"failed lens extension preserves the previously loaded scene");
     std::cout<<"SUMMARY checks="<<checks<<" failures=0\n";return 0;
 }catch(const std::exception& e){std::cerr<<"FAIL "<<e.what()<<'\n';return 1;}}

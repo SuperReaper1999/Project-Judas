@@ -29,7 +29,7 @@ Json State(RuntimeWorld& world){if(world.Scripts())for(const auto& value:world.S
 void Healthy(RuntimeWorld& world){if(world.Scripts())for(const auto& diagnostic:world.Scripts()->Diagnostics())throw std::runtime_error(diagnostic.asset+" "+diagnostic.callback+" "+diagnostic.message);}
 struct Content {
  Project project;Scene scene;AssetDatabase assets;JobSystem jobs{2};ResourceManager resources{nullptr,&assets,&jobs};
- explicit Content(const fs::path& file){std::string error;Check(project.Load(file.string(),error),"project loads: "+error);assets.Scan(project.RootDir(),project.AssetsDir());Check(assets.Problems().empty(),"ordinary asset registration has no problems");Check(LoadSceneFromFile(project.StartupScenePath(),scene,error),"scene loads: "+error);}
+ explicit Content(const fs::path& file){std::string error;Check(project.Load(file.string(),error),"project loads: "+error);assets.Scan(project.RootDir(),project.AssetsDir());Check(assets.Problems().empty(),"ordinary asset registration has no problems");const bool loaded=LoadSceneFromFile(project.StartupScenePath(),scene,error);Check(loaded,"scene loads: "+error);}
 };
 struct Instance {
  RuntimeWorld world;GameSession game;InputSystem input;Content& content;

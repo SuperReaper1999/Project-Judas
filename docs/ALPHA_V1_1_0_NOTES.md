@@ -43,6 +43,11 @@ source and artifact hashes; these notes alone are not publication evidence.
 - Tests reject undersized animation fixtures explicitly; layout-save UI testing
   no longer depends on a stale button screen coordinate.
 
+- Release qualification caught and corrected default perspective-camera loading:
+  records without the optional new lens extension retain their normal default.
+  Explicit malformed extensions still reject atomically. Original failures and
+  exact runtime-matrix controls are retained in the camera qualification evidence.
+
 ## Qualification and compatibility
 
 The operator accepted the demonstrated 2D gameplay, corrected workshop and

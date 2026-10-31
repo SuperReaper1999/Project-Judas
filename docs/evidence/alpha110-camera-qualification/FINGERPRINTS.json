@@ -1,0 +1,7 @@
+{
+  "src/SceneSerialization.cpp": "df3c7a9ef8bb47a805203c0bf05f289fa7c393e99e8fbd353e7af39b67ceae5f",
+  "tests/SpriteMathTests.cpp": "9ae6dc83b6c6c8f492f1382c5c60d4c501e74fa40e74f4710c7c75327ef57098",
+  "tests/SpriteIntegrationTests.cpp": "76fc5a6cc2704d94a5f2be7f80e1fb524e7e521ad1224dd2f823afd9b07ea1f3",
+  "tests/NetworkScriptTests.cpp": "21adb9e0a26f6f67688f1ce9b6ca5f603b6308ffeb4f4d72b235b4e6d3e9ab83",
+  "docs/ALPHA_V1_1_0_NOTES.md": "04e1d04986d626e2a12aa8a8da1d3b0babe041cf8a4b582d3c2fa3649ab70f59"
+}

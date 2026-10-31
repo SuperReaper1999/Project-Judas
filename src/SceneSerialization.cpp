@@ -969,15 +969,22 @@ bool ParseObject(Reader& reader, const std::vector<Token>& header, const Block& 
     }
     if (p.Has("render-camera")) {
         SceneRenderCameraComponent c;
-        if(p.Has("camera.projection")) {
-            std::string kind;
-            if(!p.String("camera.projection",kind))return false;
-            if(kind=="orthographic")c.lens.projection=CameraProjectionKind::Orthographic;
-            else if(kind!="perspective")return reader.Fail("camera projection must be perspective or orthographic");
+        const bool explicitLens=p.Has("camera.projection")||p.Has("camera.ortho-height")||
+            p.Has("camera.pixel-perfect")||p.Has("camera.reference-width")||
+            p.Has("camera.reference-height")||p.Has("camera.pixels-per-unit");
+        // Old perspective records and the default-camera writer omit the entire
+        // extension. A present extension must still be complete and valid.
+        if(explicitLens) {
+            if(p.Has("camera.projection")) {
+                std::string kind;
+                if(!p.String("camera.projection",kind))return false;
+                if(kind=="orthographic")c.lens.projection=CameraProjectionKind::Orthographic;
+                else if(kind!="perspective")return reader.Fail("camera projection must be perspective or orthographic");
+            }
+            if(!p.Float("camera.ortho-height",c.lens.height)||!p.Bool("camera.pixel-perfect",c.lens.pixelPerfect)||
+               !p.Int("camera.reference-width",c.lens.referenceWidth)||!p.Int("camera.reference-height",c.lens.referenceHeight)||
+               !p.Float("camera.pixels-per-unit",c.lens.pixelsPerUnit)||!ValidCameraLens(c.lens))return reader.Fail("invalid camera projection/pixel settings");
         }
-        if(!p.Float("camera.ortho-height",c.lens.height)||!p.Bool("camera.pixel-perfect",c.lens.pixelPerfect)||
-           !p.Int("camera.reference-width",c.lens.referenceWidth)||!p.Int("camera.reference-height",c.lens.referenceHeight)||
-           !p.Float("camera.pixels-per-unit",c.lens.pixelsPerUnit)||!ValidCameraLens(c.lens))return reader.Fail("invalid camera projection/pixel settings");
         if(p.Has("camera.render-mask")&&!p.Mask("camera.render-mask",c.renderMask))return false;
         if (!p.Header("render-camera", 0, 0) || !p.Bool("camera.enabled", c.enabled) ||
             !p.Int("camera.width", c.width) || !p.Int("camera.height", c.height) ||

@@ -28,8 +28,13 @@ int main(){
     Check(!p.Ray({.01f,.01f},o1,d1),"letterbox cannot generate gameplay rays");
     auto shifted=BuildCameraFrame({.001f,.002f,10},{1,0,0,0},60,.1f,100,lens,801,601);
     Check(p.view==shifted.view,"subpixel camera motion stays on same presentation grid");
-    lens=CameraLens{};auto legacy=BuildCameraFrame({0,0,10},{1,0,0,0},60,.1f,100,lens,800,400);
-    Check(legacy.projection==glm::perspective(glm::radians(60.f),2.f,.1f,100.f),"legacy perspective matrix identical");
+    // Compare identical runtime operations, not literal-folded GLM expressions
+    // with runtime inputs (GCC13/GLM0.9 evaluates those differently).
+    volatile float runtimeFov=60,runtimeAspect=2,runtimeNear=.1f,runtimeFar=100;
+    lens=CameraLens{};auto legacy=BuildCameraFrame({0,0,10},{1,0,0,0},runtimeFov,runtimeNear,runtimeFar,lens,800,400);
+    const auto expected=glm::perspective(glm::radians(float(runtimeFov)),float(runtimeAspect),float(runtimeNear),float(runtimeFar));
+    Check(legacy.projection==expected,"legacy runtime perspective matrix identical");
+    Check(legacy.projection!=glm::perspective(glm::radians(61.f),2.f,.1f,100.f),"different FOV is detected by the exact matrix oracle");
     lens.pixelPerfect=true;Check(!ValidCameraLens(lens),"pixel-perfect perspective rejects");
     std::printf("Sprite/camera math: %d checks passed\n",checks);return 0;
  }catch(const std::exception& e){std::fprintf(stderr,"FAIL after %d: %s\n",checks,e.what());return 1;}
