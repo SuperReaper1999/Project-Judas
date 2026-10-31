@@ -1,0 +1,28 @@
+TRAJECTORY start=-1.2 speed=9 oneWay=1 peak=2.85453 final=0.5
+PASS body passes upward completely from nonblocking side
+PASS upward crossing then landing and persistent support
+TRAJECTORY start=-1.2 speed=9 oneWay=0 peak=-0.5 final=-75.9011
+PASS unchanged two-sided chain blocks the same upward launch
+TRAJECTORY start=3 speed=-120 oneWay=1 peak=0.997275 final=0.5
+PASS fast downward arrival is caught by normal CCD
+TRAJECTORY start=-1.2 speed=9 oneWay=1 peak=2.85452 final=0.5
+PASS body passes upward completely from nonblocking side
+PASS one-way response follows arbitrary fixed rotated plane/gravity
+PASS one-way policy rejects unsupported solid shapes rather than guessing a side
+PASS versioned geometry roundtrip preserves authored one-way side
+PASS malformed one-way flag rejects without replacing immutable geometry
+PASS ordinary version 1 geometry bytes remain unchanged
+PASS normal scene save/load retains one-way geometry
+PASS ordinary prefab construction retains one-way side at new placement
+PASS ascending and descending bodies make independent decisions on the same platform
+PASS native support queries observe the same blocking side
+PASS create genuine kinematic crossing observer
+PASS nonblocking kinematic overlap does not invent a physical collision event
+PASS explicit sensors retain geometric overlap on the nonblocking side
+PASS build real persistent one-way world
+PASS capture occurs while moving upward through the platform
+PASS durably save in-progress one-way crossing
+PASS restore scene carries versioned side geometry
+PASS restore crossing into independent native world
+PASS restored crossing continues to identical actual pose and velocity
+ONE_WAY checks=23 failures=0

@@ -21,6 +21,31 @@ int main(int argc,char** argv){try{
  Project project;Scene scene;
  if(!cold){Check(!fs::exists(root),"fresh grid project");Check(Project::CreateNew(root.string(),"Grid Movement",project,error)&&PopulateGridProjectStarter(project,scene,error),"same grid project preset as New Project");if(argc==4){Check(std::string(argv[2])=="--controller","explicit negative-control source selection");fs::copy_file(argv[3],fs::path(project.AssetsDir())/"game.js",fs::copy_options::overwrite_existing);}
   project.Settings().startupScene="Scenes/main.judas";
+  // Test the actual untouched starter from the reported approach side. The
+  // motion tests below intentionally replace its layout, so cannot catch this.
+  {
+   AssetDatabase starterAssets;starterAssets.Scan(project.RootDir(),project.AssetsDir());
+   ResourceManager starterResources(nullptr,&starterAssets);starterResources.SetBlockingMode(true);
+   for(bool legacy:{true,false}) {
+    Scene authored=scene;authored.Find(1)->transform.position={5,2,0};
+    SceneObject* obstacle=nullptr;
+    for(auto& o:authored.Objects())if(o.name=="Blocked grid cell")obstacle=&o;
+    Check(obstacle!=nullptr,"grid starter contains an authored blocking cell");
+    Check(obstacle->render->sprite.size==glm::vec2(.9f)&&obstacle->body->planar->vertices[2]==glm::dvec2(.45),"starter visible obstacle and physical footprint occupy the same cell");
+    if(legacy){obstacle->body->planar=PlanarBox({.7,1.5});obstacle->render->sprite.size={1.4f,3};}
+    RuntimeWorld starter;starter.legacyGameplay=false;
+    Check(starter.Build(authored,&starterResources,error),"build unmodified starter with real script and layout");
+    InputSystem keys;Check(keys.SetMap(project.Settings().input,error),"starter uses normal project controls");
+    keys.SetPhysical("key:A",1);Tick(starter,keys,7);keys.SetPhysical("key:A",0);Tick(starter,keys,25);
+    auto position=starter.Physics().GetTransform(starter.RuntimeBody(1)).position;
+    Check(glm::length(position-glm::vec3(legacy?5.f:4.f,2,0))<1e-5f,legacy?"negative control: inherited 1.4 m obstacle rejects the adjacent grid cell":"actual starter approaches within one cell of the visible edge");
+    keys.SetPhysical("key:A",1);Tick(starter,keys,7);keys.SetPhysical("key:A",0);Tick(starter,keys,25);
+    position=starter.Physics().GetTransform(starter.RuntimeBody(1)).position;
+    Check(glm::length(position-glm::vec3(legacy?5.f:4.f,2,0))<1e-5f,"occupied obstacle cell still blocks native movement");
+   }
+   bool covered=false;for(const auto& o:scene.Objects())if(o.name=="Ground tile"&&o.transform.position==glm::vec3(11,6,-.2f))covered=true;
+   Check(covered,"backdrop covers the previously exposed walkable room corner");
+  }
   std::vector<SceneObjectId> remove;for(const auto& o:scene.Objects())if(o.body&&o.id!=1)remove.push_back(o.id);for(auto id:remove)scene.DestroyObject(id);scene.Find(1)->transform.position={0,0,0};
   auto& wall=scene.CreateObject("Blocked east cell");wall.transform.position={2,0,0};wall.body=SceneBodyComponent{};wall.body->shape=SceneShape::Planar;wall.body->planar=PlanarBox({.45,.45});
   Check(SaveSceneToFile(scene,project.StartupScenePath(),error)&&project.Save(error),"save editable grid fixture");

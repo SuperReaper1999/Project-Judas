@@ -118,3 +118,12 @@ rebase adapter. Native kinematic interactions retain their normal authority.
 A blocker can delay a step; reverse returns to the last committed cell.
 Multi-camera/repeating parallax and content-specific RPG/combat systems retain
 their separately documented limits. This is not an Alpha release decision.
+
+## Human-feedback layout correction
+
+The first grid workshop inherited a free-movement obstacle whose 1.4 m width
+blocked an otherwise adjacent grid cell by 2 cm. The grid starter now uses
+cell-sized obstacles, and the workshop no longer overlays them with that larger
+obstacle. Its background covers the whole bounded room. The native solver and
+cast rejection remain unchanged. See [dimensions, negative control and corrected
+runtime evidence](evidence/2d-traversal-layout/README.md).

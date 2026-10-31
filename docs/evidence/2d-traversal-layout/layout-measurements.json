@@ -1,0 +1,20 @@
+{
+  "reportedCase": "Approach inherited Interior obstacle from x=5, y=2; request x=4, y=2",
+  "oldObstacleHalfWidth": 0.7,
+  "playerHalfWidth": 0.32,
+  "destinationDistanceFromObstacleCentre": 1,
+  "overlapAtRejectedAdjacentDestination": 0.02,
+  "correctedStarterHalfWidth": 0.45,
+  "correctedAdjacentPhysicalClearance": 0.23,
+  "nativeOldLayoutEndpoint": [
+    5,
+    2
+  ],
+  "nativeCorrectedLayoutEndpoint": [
+    4,
+    2
+  ],
+  "validation": "GridMovementTests actual native scripted motion and explicit legacy geometry negative control",
+  "correctedWorkshop": "No inherited interior obstacle; three nonoverlapping grid-aligned blocking cells; matching sprite/collider bounds",
+  "assertionsPassed": true
+}

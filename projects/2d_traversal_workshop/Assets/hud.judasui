@@ -1,5 +1,5 @@
 JudasUI 1
 1280 720 1 1 0 3
 "canvas" "" 0 0 1 1 0 0 1 0 0 1 1 0 0 180 40 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 8 22 0 0 1 "" "" ""
-"help-background" "canvas" 1 0 1 1 0 0 1 0 0 1 0 0 0 0 140 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.0149999997 0.0250000004 0.0350000001 0.949999988 1 1 1 1 8 22 0 0 1 "" "" ""
-"help" "canvas" 2 0 1 1 0 1 1 0 0 0 0 24 20 1100 120 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 8 18 0 0 1 "GRID RPG | WASD / arrows: step one cell | Cast-checked native motion | Edit Assets/game.js" "" ""
+"help-background" "canvas" 1 0 1 1 0 0 1 0 0 1 0 0 0 0 100 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.0149999997 0.0250000004 0.0350000001 0.949999988 1 1 1 1 8 22 0 0 1 "" "" ""
+"help" "canvas" 2 0 1 1 0 1 1 0 0 0 0 24 20 1100 82 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 8 16 0 0 1 "GRID RPG | WASD / arrows: step one cell | Cast-checked native motion | Edit Assets/game.js" "" ""

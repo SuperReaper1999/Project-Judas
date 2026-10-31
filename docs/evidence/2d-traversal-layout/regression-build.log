@@ -1,0 +1,35 @@
+[  0%] Built target judas_build_identity
+[  8%] Built target freetype
+[  8%] Built target judas_app_icon
+[  8%] Built target judas_navigation_backend
+[  8%] Built target judas_glad
+[ 16%] Built target judas_profiler
+[ 16%] Built target judas_jobs
+[ 25%] Built target judas_audio_backend
+[ 25%] Built target judas_meshoptimizer
+[ 25%] Built target judas_icu_build
+[ 25%] Built target judas_quickjs
+[ 25%] Built target harfbuzz
+[ 33%] Built target judas_navigation_cook
+[ 33%] Built target judas_materials
+[100%] Built target judas_engine
+[100%] Building CXX object CMakeFiles/judas_sprite_render_tests.dir/tests/SpriteRenderTests.cpp.o
+[100%] Linking CXX executable judas_sprite_render_tests
+[100%] Built target judas_sprite_render_tests
+[  0%] Built target judas_build_identity
+[  8%] Built target freetype
+[  8%] Built target judas_app_icon
+[  8%] Built target judas_navigation_backend
+[  8%] Built target judas_glad
+[ 16%] Built target judas_profiler
+[ 16%] Built target judas_jobs
+[ 25%] Built target judas_audio_backend
+[ 25%] Built target judas_meshoptimizer
+[ 25%] Built target judas_icu_build
+[ 25%] Built target judas_quickjs
+[ 25%] Built target harfbuzz
+[ 33%] Built target judas_navigation_cook
+[ 33%] Built target judas_materials
+[100%] Built target judas_engine
+[100%] Linking CXX executable judas_one_way_platform_tests
+[100%] Built target judas_one_way_platform_tests

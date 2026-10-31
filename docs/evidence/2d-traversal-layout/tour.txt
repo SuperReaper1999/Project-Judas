@@ -1,0 +1,23 @@
+FRAMES 550
+FRAME_SECONDS 0.016666667
+LOG_EVERY 10
+ENTITY 1
+CONTROL key:D 1 10 50
+ACTION jump 1 60 61
+SCREENSHOT 150 /home/conner/Documents/GitHub/Project-Judas/.cache/2d-layout-followup/first-platform.png
+ACTION jump 1 180 181
+CONTROL key:D 1 180 240
+SCREENSHOT 260 /home/conner/Documents/GitHub/Project-Judas/.cache/2d-layout-followup/upper-platform.png
+ACTION grid_view 1 300 301
+EXPECT_SCENE Scenes/grid.judas 305
+CONTROL key:D 1 320 327
+ACTION save_game 1 330 331
+WAIT_SERVICES save 10000 332
+ACTION load_game 1 360 361
+WAIT_SERVICES save 10000 362
+EXPECT_SCENE Scenes/grid.judas 365
+CONTROL key:W 1 400 407
+CONTROL key:D 1 440 447
+SCREENSHOT 470 /home/conner/Documents/GitHub/Project-Judas/.cache/2d-layout-followup/grid-blocked.png
+CONTROL key:A 1 480 481
+SCREENSHOT 530 /home/conner/Documents/GitHub/Project-Judas/.cache/2d-layout-followup/grid-return.png

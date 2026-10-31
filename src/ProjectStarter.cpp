@@ -134,6 +134,35 @@ bool PopulateGridProjectStarter(Project& project,Scene& scene,std::string& error
         object.body->motion=SceneBodyMotion::Kinematic;object.body->planar=PlanarBox({.32,.32},true);
         object.scripts.front().properties="{}";
     }
+    // Free-movement obstacles need not fit cells. Grid obstacles must: the old
+    // 0.7 m half-width plus the player's 0.32 m footprint blocked even the
+    // adjacent 1 m destination. Match its visible and physical cell bounds.
+    for(auto& object:scene.Objects())if(object.name=="Interior obstacle") {
+        object.body->planar=PlanarBox({.45,.45});
+        object.render->sprite.size={.9f,.9f};
+        object.name="Blocked grid cell";
+    }
+    auto& north=scene.CreateObject("North grid boundary");
+    north.transform.position={0,7,0};
+    north.render=SceneRenderComponent{};north.render->shape=SceneShape::Sprite;
+    north.render->sprite.size={24,1};north.render->color={.3f,.5f,.52f};
+    north.body=SceneBodyComponent{};north.body->shape=SceneShape::Planar;
+    north.body->planar=PlanarBox({12,.5});
+    // Cover the complete walkable room. Previously the checkerboard ended at
+    // x=8.5 inside the x=11.5 wall, looking like missing geometry during travel.
+    SceneObjectId backdrop=0;std::vector<SceneObjectId> oldTiles;
+    for(const auto& object:scene.Objects()) {
+        if(object.name=="Backdrop - editable sprite tiles")backdrop=object.id;
+        if(object.name=="Ground tile")oldTiles.push_back(object.id);
+    }
+    for(const auto id:oldTiles)scene.DestroyObject(id);
+    for(int y=-2;y<=8;++y)for(int x=-12;x<=12;++x) {
+        auto& tile=scene.CreateObject("Ground tile");tile.parent=backdrop;
+        tile.transform.position={float(x),float(y),-.2f};
+        tile.render=SceneRenderComponent{};tile.render->shape=SceneShape::Sprite;
+        tile.render->sprite.sortingLayer=-10;
+        tile.render->color=(x+y)%2?glm::vec3(.13f,.25f,.23f):glm::vec3(.15f,.28f,.25f);
+    }
     UIDocument hud;const auto path=(std::filesystem::u8path(project.AssetsDir())/"hud.judasui").u8string();
     if(!LoadUIDocument(path,hud,error))return false;
     for(auto& e:hud.elements)if(e.id=="help")e.text="GRID RPG | WASD / arrows: step one cell | Cast-checked native motion | Edit Assets/game.js";

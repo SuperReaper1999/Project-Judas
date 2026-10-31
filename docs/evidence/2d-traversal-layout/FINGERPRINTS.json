@@ -1,0 +1,21 @@
+{
+  "baseCommit": "dca1237fc151adc41abb393b63d2b4bd1e5c2a31",
+  "source": {
+    "docs/2D_TRAVERSAL.md": "78f26de88dcd77573499d0da031ee71372e325c678c2171eda683449dbf0f2bc",
+    "projects/2d_traversal_workshop/Assets/hud.judasui": "3f43a693cf204376ffe721112a40aec30c0099ce64a6433db40b7180f1385d74",
+    "projects/2d_traversal_workshop/Scenes/grid.judas": "e07fc476b443ee59ef74f0bd498eb51402ece7de18c738548bfeb1d181ba9e05",
+    "projects/2d_traversal_workshop/Scenes/main.judas": "a4970dd6683071d3eabdf435049900c3230414945a8369768972a58a454052a2",
+    "src/ProjectStarter.cpp": "6e44bd69aeec06cc622374a65e4906b6d3ae2a20d6bd46a12e07731581b177ae",
+    "tests/GridMovementTests.cpp": "9e90c5a5709e2e6ce6dc4f365b17212678b2d13ad4b2c6ad785d6f6cbdb3ba7b",
+    "tools/demos/TwoDTraversalWorkshop.cpp": "a04555c2a212f5e0a8c1457cb33f0fa71f7604cf67ac25df9366f6c2356ada4c"
+  },
+  "binaries": {
+    "judas": "e4a8b8b861de23dc7b5a64334389a15037e792d109d0a074b639dacea85e36f4",
+    "judas_export": "836d969bbd760fb8609bac46b321bb9bcaaa7e598aef478b7658f1de3b46e10b",
+    "judas_grid_movement_tests": "331ef63a8e4c3e6dfe508ab3a3b5208930fbe7a0173baf9dc7cef63d0abe6fee",
+    "judas_one_way_platform_tests": "b8591c4a91de11a5370eead15f1f25627d60718e56e1f18c7330a8345c68438b",
+    "judas_sprite_render_tests": "d748afba3d3395fcacd46d447644bb0739548f71b5f6f4a943fe10cc5cf4c8e0",
+    "judas_editor_script_workflow_tests": "3a2957407e5553f1133ed9caa2a971f35ed3f21dae8036aaa9a2ef325af26cbe"
+  },
+  "provenance": "Dirty source build at base commit; hashes identify actual validated sources and executables, not a later commit build."
+}
