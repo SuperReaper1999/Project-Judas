@@ -1,0 +1,38 @@
+[
+  {
+    "name": "radial",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/2d-stage1-build/judas",
+      "/home/conner/Documents/GitHub/Project-Judas/assets/scenes/terrain.judas"
+    ],
+    "exit_code": 0,
+    "seconds": 5.071738981001545
+  },
+  {
+    "name": "flat",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/2d-stage1-build/judas",
+      "/home/conner/Documents/GitHub/Project-Judas/assets/scenes/terrain_flat_comparison.judas"
+    ],
+    "exit_code": 0,
+    "seconds": 1.0152399190010328
+  },
+  {
+    "name": "raised3",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/2d-stage1-build/judas",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/fluid-body-support-integration-20261031/native11/terrain-plus3.judas"
+    ],
+    "exit_code": 0,
+    "seconds": 4.920689531001699
+  },
+  {
+    "name": "raised10",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/2d-stage1-build/judas",
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/fluid-body-support-integration-20261031/native11/terrain-plus10.judas"
+    ],
+    "exit_code": 0,
+    "seconds": 5.275228694001271
+  }
+]

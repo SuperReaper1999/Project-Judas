@@ -1,5 +1,10 @@
 # Advanced-fluid unlock qualification — 2026-10-31
 
+Follow-up: [body-aware wet support](FLUID_BODY_SUPPORT_REPAIR.md) addresses the
+confirmed lateral boundary failures below and records its own final-source tests.
+This page preserves the earlier qualification at `82e324b2`; the Alpha lock and
+the unsupported particle persistence/streaming/origin boundaries remain in place.
+
 **Decision: keep the Alpha lock.** The original launch reproduction is repaired
 and human-tested, but this pass does not qualify a general unlock. Experimental
 project opt-in remains available; the default-off setting and warning are unchanged.

@@ -1,0 +1,40 @@
+{
+  "steps": 240,
+  "physical_and_solver_columns": [
+    "step",
+    "y",
+    "vy",
+    "immersion",
+    "bfx",
+    "bfy",
+    "bfz",
+    "fluid_mass",
+    "fluid_ke",
+    "body_ke",
+    "executed",
+    "contact_caps",
+    "contact_relative_residual",
+    "acceleration_rejections",
+    "acceleration_boundary_declines",
+    "geometry_escapes",
+    "unresolved_geometry",
+    "geometry_candidates",
+    "max_geometry_escape_distance",
+    "pressure_reconstruction_samples",
+    "max_pressure_reconstruction_velocity_error",
+    "rms_pressure_reconstruction_velocity_error"
+  ],
+  "excluded_columns": [
+    "fluid_step_ms",
+    "total_coupling_ms"
+  ],
+  "exact_match": true,
+  "exact_physical_snapshots": {
+    "rotated_half_release_particles.csv": true,
+    "rotated_half_step10_particles.csv": true,
+    "rotated_half_step240_particles.csv": true,
+    "rotated_half_release_body.csv": true,
+    "rotated_half_step10_body.csv": true,
+    "rotated_half_step240_body.csv": true
+  }
+}

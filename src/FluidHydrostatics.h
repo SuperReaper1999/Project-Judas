@@ -54,8 +54,12 @@ struct FluidFieldSample {
 // follows universe rotations/translations; changing particle order can change
 // the finite-resolution approximation. Wetness is restricted to the convex
 // lateral envelope of observed wet column footprints; the donor reach does
-// not make a dry point outside that envelope wet. Sub-resolution shorelines,
-// concavities and air pockets inside this local envelope remain unresolved.
+// not make a dry point outside that envelope wet. Physical queries additionally
+// require a wet local column or a route through the sample's actual connected
+// solid component to represented water touching that solid. An outer convex
+// hull alone cannot fill dry lateral holes or borrow a separate child's support.
+// This remains a column approximation: sub-resolution shorelines, vertical air
+// pockets and exact arbitrary three-dimensional wet topology are unresolved.
 // Resolved bulk motion retains the local spherical Vp*(1-distance²/reach²)²
 // kernel. If that kernel has no donors for a wet envelope, motion is extended
 // from the admitted unoccluded columns using Vp * admitted interval fraction *

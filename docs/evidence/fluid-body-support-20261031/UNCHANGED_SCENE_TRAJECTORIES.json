@@ -1,0 +1,10 @@
+{
+  "radial": {
+    "rows": 1200,
+    "exact_body_player_harness_row_match": true
+  },
+  "flat": {
+    "rows": 1200,
+    "exact_body_player_harness_row_match": true
+  }
+}

@@ -1,5 +1,9 @@
 # Experimental particle-fluid wet classification repair
 
+Subsequent work: [body-aware support qualification](FLUID_BODY_SUPPORT_REPAIR.md)
+extends this repair to the confirmed lateral dry-hole and compound-body cases.
+The original measurements below remain historical evidence for this first repair.
+
 Status: Linux automated candidate; the operator human-tested the original radial
 scene on 2026-10-31 and observed no launching. Wider qualification remains pending.
 See [the subsequent unlock qualification](FLUID_UNLOCK_QUALIFICATION.md) for retained

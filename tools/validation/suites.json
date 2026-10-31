@@ -83,6 +83,8 @@
     {"name":"basic-water-preview","target":"judas_basic_water_preview_tests","groups":["water","onboarding"],"args":["{output}/water-preview"]},
     {"name":"project-water-policy","target":"judas_project_water_tests","groups":["core","water"]},
     {"name":"project-fluid-policy","target":"judas_project_fluid_policy_tests","groups":["water","lifecycle"]},
+    {"name":"fluid-wet-support","target":"judas_fluid_wet_support_tests","groups":["water"]},
+    {"name":"fluid-lifecycle-qualification","target":"judas_fluid_lifecycle_qualification_tests","groups":["water","lifecycle"]},
     {"name":"project-settings-editor","target":"judas_project_settings_editor_tests","groups":["onboarding","water"]},
     {"name":"basic-water-application","target":"judas_basic_water_application_tests","groups":["water","application"],"args":["--profile","{output}/water"]},
     {"name":"basic-water-cold","target":"judas_basic_water_application_tests","groups":["water","lifecycle","application"],"args":["--cold-cycle","{output}/cold"]},

@@ -1,0 +1,407 @@
+JudasScene 3
+settings
+  name "Wet support review - dry coffer, floating and sinking props"
+  world-origin 0 0 0
+  sun-direction .4 .7 .35
+  sun-color 1 .98 .92
+  ambient .22 .23 .25
+  fluid-scale 5
+  fidelity-policy none
+  next-id 19
+end
+
+object 1 "Ground and uniform gravity"
+  position 0 -0.25 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 4.5 0.25 4.5
+  render.radius 0.5
+  render.color .28 .31 .33
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body static box
+  body.half-extents 4.5 0.25 4.5
+  body.radius 0.5
+  body.terrain ""
+  body.initial-velocity 0 0 0
+  body.managed false
+  body.compound-count 0
+  body.mass 1
+  body.friction 0.8
+  body.restitution 0.05
+  body.pickable false
+  gravity uniform 9.81
+  gravity.region box 100 100 100
+end
+
+object 2 "Observation deck"
+  position 0 0.6 -2.8
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 2 0.6 0.7
+  render.radius 0.5
+  render.color .4 .43 .46
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body static box
+  body.half-extents 2 0.6 0.7
+  body.radius 0.5
+  body.terrain ""
+  body.initial-velocity 0 0 0
+  body.managed false
+  body.compound-count 0
+  body.mass 1
+  body.friction 0.8
+  body.restitution 0.05
+  body.pickable false
+end
+
+object 3 "Outer X wall -1"
+  position -1.6 0.6 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.1 0.6 1.7
+  render.radius 0.5
+  render.color .4 .45 .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body static box
+  body.half-extents 0.1 0.6 1.7
+  body.radius 0.5
+  body.terrain ""
+  body.initial-velocity 0 0 0
+  body.managed false
+  body.compound-count 0
+  body.mass 1
+  body.friction 0.8
+  body.restitution 0.05
+  body.pickable false
+end
+
+object 4 "Outer Z wall -1"
+  position 0 0.6 -1.6
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 1.5 0.6 0.1
+  render.radius 0.5
+  render.color .4 .45 .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body static box
+  body.half-extents 1.5 0.6 0.1
+  body.radius 0.5
+  body.terrain ""
+  body.initial-velocity 0 0 0
+  body.managed false
+  body.compound-count 0
+  body.mass 1
+  body.friction 0.8
+  body.restitution 0.05
+  body.pickable false
+end
+
+object 5 "Dry coffer X wall -1"
+  position -0.4 0.6 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.05 0.6 0.45
+  render.radius 0.5
+  render.color .7 .64 .4
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body static box
+  body.half-extents 0.05 0.6 0.45
+  body.radius 0.5
+  body.terrain ""
+  body.initial-velocity 0 0 0
+  body.managed false
+  body.compound-count 0
+  body.mass 1
+  body.friction 0.8
+  body.restitution 0.05
+  body.pickable false
+end
+
+object 6 "Dry coffer Z wall -1"
+  position 0 0.6 -0.4
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.35 0.6 0.05
+  render.radius 0.5
+  render.color .7 .64 .4
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body static box
+  body.half-extents 0.35 0.6 0.05
+  body.radius 0.5
+  body.terrain ""
+  body.initial-velocity 0 0 0
+  body.managed false
+  body.compound-count 0
+  body.mass 1
+  body.friction 0.8
+  body.restitution 0.05
+  body.pickable false
+end
+
+object 7 "Outer X wall 1"
+  position 1.6 0.6 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.1 0.6 1.7
+  render.radius 0.5
+  render.color .4 .45 .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body static box
+  body.half-extents 0.1 0.6 1.7
+  body.radius 0.5
+  body.terrain ""
+  body.initial-velocity 0 0 0
+  body.managed false
+  body.compound-count 0
+  body.mass 1
+  body.friction 0.8
+  body.restitution 0.05
+  body.pickable false
+end
+
+object 8 "Outer Z wall 1"
+  position 0 0.6 1.6
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 1.5 0.6 0.1
+  render.radius 0.5
+  render.color .4 .45 .5
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body static box
+  body.half-extents 1.5 0.6 0.1
+  body.radius 0.5
+  body.terrain ""
+  body.initial-velocity 0 0 0
+  body.managed false
+  body.compound-count 0
+  body.mass 1
+  body.friction 0.8
+  body.restitution 0.05
+  body.pickable false
+end
+
+object 9 "Dry coffer X wall 1"
+  position 0.4 0.6 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.05 0.6 0.45
+  render.radius 0.5
+  render.color .7 .64 .4
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body static box
+  body.half-extents 0.05 0.6 0.45
+  body.radius 0.5
+  body.terrain ""
+  body.initial-velocity 0 0 0
+  body.managed false
+  body.compound-count 0
+  body.mass 1
+  body.friction 0.8
+  body.restitution 0.05
+  body.pickable false
+end
+
+object 10 "Dry coffer Z wall 1"
+  position 0 0.6 0.4
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.35 0.6 0.05
+  render.radius 0.5
+  render.color .7 .64 .4
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body static box
+  body.half-extents 0.35 0.6 0.05
+  body.radius 0.5
+  body.terrain ""
+  body.initial-velocity 0 0 0
+  body.managed false
+  body.compound-count 0
+  body.mass 1
+  body.friction 0.8
+  body.restitution 0.05
+  body.pickable false
+end
+
+object 11 "Dry orange cube inside coffer"
+  position 0 0.14 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.13 0.13 0.13
+  render.radius 0.5
+  render.color .95 .42 .1
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body dynamic box
+  body.half-extents 0.13 0.13 0.13
+  body.radius 0.5
+  body.terrain ""
+  body.initial-velocity 0 0 0
+  body.managed false
+  body.compound-count 0
+  body.mass 8.788
+  body.friction 0.8
+  body.restitution 0.05
+  body.pickable true
+end
+
+object 12 "Floating green cube"
+  position 0.98 0.45 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.3 0.3 0.3
+  render.radius 0.5
+  render.color .2 .8 .4
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body dynamic box
+  body.half-extents 0.3 0.3 0.3
+  body.radius 0.5
+  body.terrain ""
+  body.initial-velocity 0 0 0
+  body.managed false
+  body.compound-count 0
+  body.mass 108
+  body.friction 0.8
+  body.restitution 0.05
+  body.pickable true
+end
+
+object 13 "Sinking gray cube"
+  position -0.98 0.45 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  render box
+  render.half-extents 0.25 0.25 0.25
+  render.radius 0.5
+  render.color .45 .48 .55
+  render.alpha 1
+  render.secondary-color .8 .8 .8
+  render.secondary-alpha 1
+  render.mesh-asset ""
+  render.texture-asset ""
+  body dynamic box
+  body.half-extents 0.25 0.25 0.25
+  body.radius 0.5
+  body.terrain ""
+  body.initial-velocity 0 0 0
+  body.managed false
+  body.compound-count 0
+  body.mass 250
+  body.friction 0.8
+  body.restitution 0.05
+  body.pickable true
+end
+
+object 14 "North water"
+  position 0 0.125 1
+  rotation 1 0 0 0
+  scale 1 1 1
+  fluid-volume
+  fluid-volume.spacing 0.25
+  fluid-volume.count 12 4 4
+  fluid-volume.emitter false
+  fluid-volume.emitter-offset 0 0 0
+  fluid-volume.max-particles 2000
+end
+
+object 15 "South water"
+  position 0 0.125 -1
+  rotation 1 0 0 0
+  scale 1 1 1
+  fluid-volume
+  fluid-volume.spacing 0.25
+  fluid-volume.count 12 4 4
+  fluid-volume.emitter false
+  fluid-volume.emitter-offset 0 0 0
+  fluid-volume.max-particles 2000
+end
+
+object 16 "West water"
+  position -1 0.125 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  fluid-volume
+  fluid-volume.spacing 0.25
+  fluid-volume.count 4 4 4
+  fluid-volume.emitter false
+  fluid-volume.emitter-offset 0 0 0
+  fluid-volume.max-particles 2000
+end
+
+object 17 "East water"
+  position 1 0.125 0
+  rotation 1 0 0 0
+  scale 1 1 1
+  fluid-volume
+  fluid-volume.spacing 0.25
+  fluid-volume.count 4 4 4
+  fluid-volume.emitter false
+  fluid-volume.emitter-offset 0 0 0
+  fluid-volume.max-particles 2000
+end
+
+object 18 "Player observer"
+  position 0 2.1 -2.8
+  rotation 1 0 0 0
+  scale 1 1 1
+  player-start first-person
+  player-start.yaw 180
+end

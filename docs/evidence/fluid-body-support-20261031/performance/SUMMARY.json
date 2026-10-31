@@ -1,0 +1,106 @@
+{
+  "dry": {
+    "baseline": {
+      "n": 300,
+      "mean_ms": 0.15163920666666666,
+      "median_ms": 0.13199349999999999,
+      "p95_ms": 0.194386,
+      "worst_ms": 0.219935,
+      "fractions": [
+        0.0
+      ],
+      "force_y": [
+        0.0
+      ]
+    },
+    "current": {
+      "n": 300,
+      "mean_ms": 0.13949808666666666,
+      "median_ms": 0.1270695,
+      "p95_ms": 0.200268,
+      "worst_ms": 0.261272,
+      "fractions": [
+        0.0
+      ],
+      "force_y": [
+        0.0
+      ]
+    }
+  },
+  "wet": {
+    "baseline": {
+      "n": 300,
+      "mean_ms": 3.20863021,
+      "median_ms": 3.1443735,
+      "p95_ms": 3.622269,
+      "worst_ms": 4.238692,
+      "fractions": [
+        1.0
+      ],
+      "force_y": [
+        2116.07421875
+      ]
+    },
+    "current": {
+      "n": 300,
+      "mean_ms": 3.313222006666667,
+      "median_ms": 3.2145455,
+      "p95_ms": 3.758046,
+      "worst_ms": 4.648885,
+      "fractions": [
+        1.0
+      ],
+      "force_y": [
+        2116.07421875
+      ]
+    }
+  },
+  "classic": {
+    "baseline": {
+      "n": 1080,
+      "mean_ms": 2.078988324074074,
+      "median_ms": 1.457914,
+      "p95_ms": 4.327699,
+      "worst_ms": 5.279705,
+      "particle_counts": [
+        125
+      ]
+    },
+    "current": {
+      "n": 1080,
+      "mean_ms": 2.0220362157407408,
+      "median_ms": 1.574624,
+      "p95_ms": 3.956519,
+      "worst_ms": 11.799126,
+      "particle_counts": [
+        125
+      ]
+    }
+  },
+  "terrain": {
+    "baseline": {
+      "n": 1080,
+      "mean_ms": 3.4870143212962965,
+      "median_ms": 1.5870625,
+      "p95_ms": 7.742808,
+      "worst_ms": 8.765076,
+      "particle_counts": [
+        125
+      ]
+    },
+    "current": {
+      "n": 1080,
+      "mean_ms": 3.4283585083333334,
+      "median_ms": 1.631456,
+      "p95_ms": 7.513686,
+      "worst_ms": 10.224457,
+      "particle_counts": [
+        125
+      ]
+    }
+  },
+  "maximum_rss_kib": {
+    "baseline": 30424,
+    "current": 29512
+  }
+}

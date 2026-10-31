@@ -1,0 +1,20 @@
+{
+  "coffer-baseline": {
+    "steps": 600,
+    "max_dry_fraction": 1.0,
+    "max_dry_force_N": 314.4572448730469,
+    "max_inside_coffer": 0,
+    "max_outside_outer": 2,
+    "dry_y_min": 0.1299314796924591,
+    "dry_y_max": 1.2259058952331543
+  },
+  "coffer-corrected": {
+    "steps": 600,
+    "max_dry_fraction": 0.0,
+    "max_dry_force_N": 0.0,
+    "max_inside_coffer": 0,
+    "max_outside_outer": 2,
+    "dry_y_min": 0.12999999523162842,
+    "dry_y_max": 0.13727499544620514
+  }
+}
