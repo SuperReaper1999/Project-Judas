@@ -190,6 +190,11 @@ bool ValidateStructure(const WorldState& state, std::string& error) {
 }  // namespace
 
 bool CanCaptureLegacyWorldState(const RuntimeWorld& world,std::string& error){
+    if (world.HasFluid()) {
+        error = "Active particle fluids cannot be saved by legacy world-state deltas; "
+                "particle continuation is not recorded";
+        return false;
+    }
     if(world.NetworkIfLoaded()&&world.NetworkIfLoaded()->Active()){error="Close the network session before saving";return false;}
     if(world.Scripts()&&world.Scripts()->HasReloaded()){error="script session was reloaded; Stop and Play before saving a compatible baseline";return false;}
     for(const auto& definition:world.ScriptObjects()){
@@ -207,6 +212,10 @@ bool CanCaptureLegacyWorldState(const RuntimeWorld& world,std::string& error){
 }
 
 WorldState CaptureWorldState(const RuntimeWorld& world) {
+    if (world.HasFluid()) {
+        throw std::logic_error("Active particle fluids cannot be saved by legacy world-state deltas; "
+                               "particle continuation is not recorded");
+    }
     for(const auto& o:world.ScriptObjects())if(o.body&&o.body->shape==SceneShape::Planar){throw std::logic_error("Native 2D requires modern save slots");}
     if(world.NetworkIfLoaded()&&world.NetworkIfLoaded()->Active())throw std::logic_error("Close the network session before saving");
     if(world.Scripts()&&world.Scripts()->HasReloaded())throw std::logic_error("script session was reloaded; Stop and Play before saving a compatible baseline");

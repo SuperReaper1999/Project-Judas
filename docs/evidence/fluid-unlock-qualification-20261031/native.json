@@ -1,0 +1,20 @@
+[
+  {
+    "name": "radial-long",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/2d-stage1-build/judas",
+      "/home/conner/Documents/GitHub/Project-Judas/assets/scenes/terrain.judas"
+    ],
+    "exit_code": 0,
+    "seconds": 4.921382449003431
+  },
+  {
+    "name": "flat-long",
+    "command": [
+      "/home/conner/Documents/GitHub/Project-Judas/.cache/2d-stage1-build/judas",
+      "/home/conner/Documents/GitHub/Project-Judas/assets/scenes/terrain_flat_comparison.judas"
+    ],
+    "exit_code": 0,
+    "seconds": 1.0657172400024137
+  }
+]

@@ -1,6 +1,9 @@
 # Experimental particle-fluid wet classification repair
 
-Status: Linux automated candidate, human validation pending. **Advanced Fluid
+Status: Linux automated candidate; the operator human-tested the original radial
+scene on 2026-10-31 and observed no launching. Wider qualification remains pending.
+See [the subsequent unlock qualification](FLUID_UNLOCK_QUALIFICATION.md) for retained
+boundary failures, lifecycle restrictions and additional gameplay results. **Advanced Fluid
 Dynamics remains locked in Alpha.** Main, release channels, Basic Water,
 conserved-liquid implementations and independent research are unchanged.
 Baseline: `cafe797a2dc661f1d1aeb38cf626e5c6184c0366`. The containing Experimental

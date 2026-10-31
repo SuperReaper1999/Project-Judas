@@ -1,0 +1,21 @@
+CASE solid-pool-wet-control gap_cells=1 rotated=0 particles=1156 expected_fraction=1 actual_fraction=1 force_N=78.480003356933594 pass=1
+CASE solid-pool-wet-control gap_cells=1 rotated=1 particles=1156 expected_fraction=1 actual_fraction=1 force_N=78.480010986328125 pass=1
+CASE connected-ring-dry-hole gap_cells=1 rotated=0 particles=1152 expected_fraction=0 actual_fraction=1 force_N=78.480003356933594 pass=0
+CASE connected-ring-dry-hole gap_cells=1 rotated=1 particles=1152 expected_fraction=0 actual_fraction=1 force_N=78.480010986328125 pass=0
+CASE solid-pool-wet-control gap_cells=2 rotated=0 particles=1156 expected_fraction=1 actual_fraction=1 force_N=78.480003356933594 pass=1
+CASE solid-pool-wet-control gap_cells=2 rotated=1 particles=1156 expected_fraction=1 actual_fraction=1 force_N=78.480010986328125 pass=1
+CASE connected-ring-dry-hole gap_cells=2 rotated=0 particles=1120 expected_fraction=0 actual_fraction=1 force_N=78.480003356933594 pass=0
+CASE connected-ring-dry-hole gap_cells=2 rotated=1 particles=1120 expected_fraction=0 actual_fraction=1 force_N=78.480010986328125 pass=0
+CASE solid-pool-wet-control gap_cells=3 rotated=0 particles=1156 expected_fraction=1 actual_fraction=1 force_N=78.480003356933594 pass=1
+CASE solid-pool-wet-control gap_cells=3 rotated=1 particles=1156 expected_fraction=1 actual_fraction=1 force_N=78.480010986328125 pass=1
+CASE connected-ring-dry-hole gap_cells=3 rotated=0 particles=1056 expected_fraction=0 actual_fraction=0 force_N=0 pass=1
+CASE connected-ring-dry-hole gap_cells=3 rotated=1 particles=1056 expected_fraction=0 actual_fraction=0 force_N=0 pass=1
+CASE solid-pool-wet-control gap_cells=4 rotated=0 particles=1156 expected_fraction=1 actual_fraction=1 force_N=78.480003356933594 pass=1
+CASE solid-pool-wet-control gap_cells=4 rotated=1 particles=1156 expected_fraction=1 actual_fraction=1 force_N=78.480010986328125 pass=1
+CASE connected-ring-dry-hole gap_cells=4 rotated=0 particles=960 expected_fraction=0 actual_fraction=0 force_N=0 pass=1
+CASE connected-ring-dry-hole gap_cells=4 rotated=1 particles=960 expected_fraction=0 actual_fraction=0 force_N=0 pass=1
+CASE solid-pool-wet-control gap_cells=5 rotated=0 particles=1156 expected_fraction=1 actual_fraction=1 force_N=78.480003356933594 pass=1
+CASE solid-pool-wet-control gap_cells=5 rotated=1 particles=1156 expected_fraction=1 actual_fraction=1 force_N=78.480010986328125 pass=1
+CASE connected-ring-dry-hole gap_cells=5 rotated=0 particles=832 expected_fraction=0 actual_fraction=0 force_N=0 pass=1
+CASE connected-ring-dry-hole gap_cells=5 rotated=1 particles=832 expected_fraction=0 actual_fraction=0 force_N=0 pass=1
+failures=4

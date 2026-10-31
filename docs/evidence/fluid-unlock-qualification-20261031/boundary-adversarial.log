@@ -1,0 +1,5 @@
+CASE solid-pool-wet-control rotated=0 particles=1156 expected_fraction=1 actual_fraction=1 force_N=78.480003356933594 pass=1
+CASE solid-pool-wet-control rotated=1 particles=1156 expected_fraction=1 actual_fraction=1 force_N=78.480010986328125 pass=1
+CASE connected-ring-dry-hole rotated=0 particles=832 expected_fraction=0 actual_fraction=0 force_N=0 pass=1
+CASE connected-ring-dry-hole rotated=1 particles=832 expected_fraction=0 actual_fraction=0 force_N=0 pass=1
+failures=0

@@ -1,0 +1,14 @@
+PASS create ordinary project
+PASS write authored particle scene
+PASS default-off particle authoring can prepare as dormant region
+PASS default-off world creates no active particle field
+PASS dormant particle authoring supports modern snapshot
+PASS default-off particle authoring does not block legacy saves
+PASS dormant particle authoring permits live origin shift
+PASS persist explicit experimental opt-in
+PASS new project instance reads explicit opt-in
+PASS Experimental opt-in builds real particles
+PASS authored lattice is actually instantiated
+PASS enabled solver advances actual physical particles
+FAIL legacy save preflight rejects unrecorded active particle state
+Fluid lifecycle qualification failed: legacy save preflight rejects unrecorded active particle state
