@@ -1,0 +1,7 @@
+ActiveState=failed
+Result=oom-kill
+ExecMainStatus=9
+MemoryCurrent=[not set]
+MemoryPeak=3775504384
+MemoryMax=3774873600
+MemorySwapMax=268435456

@@ -1,0 +1,18 @@
+{
+  "scope": "Bounded Android 16/API36 Chrome emulator qualification; not physical hardware, speaker quality or browser-wide certification.",
+  "preservation": "Existing AVD read-only; use temporary overlay. Original consumer project untouched. No fluid work.",
+  "checks": [
+    "Real touch changes physical kinematic paddle; no canvas page panning.",
+    "Rotation changes actual drawable and public viewport while preserving gameplay.",
+    "Durable save bytes survive force-stop/restart; real paddle/ball restore after meaningful divergent initial state.",
+    "Home and lock/resume preserve ownership, no hidden-time physics catch-up.",
+    "Native mixer PCM reaches running Web Audio graph; actual speaker quality remains unqualified."
+  ],
+  "limits": {
+    "hostMemoryGiB": 8,
+    "guestRetryMiB": 1536,
+    "cores": 2,
+    "emulatorCgroupMemoryMaxMiB": 3600
+  },
+  "initialFailure": "2048MiB guest, SwiftShader, 1080x2400 reached cgroup memory limit before game load; retained separately."
+}

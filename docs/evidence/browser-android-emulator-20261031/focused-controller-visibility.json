@@ -1,0 +1,13 @@
+{
+  "now": 1793474896126,
+  "hidden": false,
+  "epoch": 0,
+  "visibility": [],
+  "audio": {
+    "state": "running",
+    "states": []
+  },
+  "devices": [
+    "running"
+  ]
+}

@@ -1,0 +1,161 @@
+{
+  "phase": "resume",
+  "checks": [
+    "actual Android rotation publishes matching native renderer and game viewport",
+    "portrait/landscape/portrait keeps game running"
+  ],
+  "observations": {
+    "portrait": {
+      "viewport": {
+        "width": 672,
+        "height": 572
+      },
+      "dom": {
+        "width": 360,
+        "height": 496,
+        "surface": {
+          "width": 672,
+          "height": 572,
+          "active": true,
+          "focused": true,
+          "generation": 3
+        }
+      }
+    },
+    "landscape": {
+      "viewport": {
+        "width": 1104,
+        "height": 480
+      },
+      "dom": {
+        "width": 576,
+        "height": 256,
+        "surface": {
+          "width": 1104,
+          "height": 480,
+          "active": true,
+          "focused": true,
+          "generation": 4
+        }
+      }
+    },
+    "home": {
+      "before": {
+        "state": {
+          "score": 0,
+          "lives": 3,
+          "hits": 0,
+          "powers": 0,
+          "phase": "playing",
+          "wideUntil": 0,
+          "time": 0.46666669100522995
+        },
+        "message": "Catch gold capsules for power-ups",
+        "viewport": {
+          "width": 672,
+          "height": 572
+        },
+        "menu": false,
+        "request": 0,
+        "paddle": {
+          "x": 0,
+          "y": -9.5,
+          "z": 0
+        },
+        "balls": [
+          {
+            "position": {
+              "x": 0.25333333015441895,
+              "y": -7.933334827423096,
+              "z": 0
+            },
+            "velocity": {
+              "x": 3.799999952316284,
+              "y": 13,
+              "z": 0
+            }
+          }
+        ],
+        "bricks": 42
+      },
+      "first": {
+        "state": {
+          "score": 100,
+          "lives": 2,
+          "hits": 1,
+          "powers": 0,
+          "phase": "ready",
+          "wideUntil": 0,
+          "time": 3.100000161677599
+        },
+        "message": "Tap LAUNCH or press Space",
+        "viewport": {
+          "width": 672,
+          "height": 572
+        },
+        "menu": false,
+        "request": 0,
+        "paddle": {
+          "x": 0,
+          "y": -9.5,
+          "z": 0
+        },
+        "balls": [
+          {
+            "position": {
+              "x": 0,
+              "y": -8.800000190734863,
+              "z": 0
+            },
+            "velocity": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            }
+          }
+        ],
+        "bricks": 41
+      },
+      "simulationDelta": 2.633333470672369
+    },
+    "failure": "Error: four seconds on Home do not produce a physics catch-up burst"
+  },
+  "latest": {
+    "state": {
+      "score": 100,
+      "lives": 2,
+      "hits": 1,
+      "powers": 0,
+      "phase": "ready",
+      "wideUntil": 0,
+      "time": 3.100000161677599
+    },
+    "message": "Tap LAUNCH or press Space",
+    "viewport": {
+      "width": 672,
+      "height": 572
+    },
+    "menu": false,
+    "request": 0,
+    "paddle": {
+      "x": 0,
+      "y": -9.5,
+      "z": 0
+    },
+    "balls": [
+      {
+        "position": {
+          "x": 0,
+          "y": -8.800000190734863,
+          "z": 0
+        },
+        "velocity": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      }
+    ],
+    "bricks": 41
+  }
+}

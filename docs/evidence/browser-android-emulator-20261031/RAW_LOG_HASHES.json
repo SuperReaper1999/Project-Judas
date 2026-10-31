@@ -1,0 +1,42 @@
+{
+  "emulator.log.gz": {
+    "originalSha256": "0c8040a022a2064619bbba6e86376b9984221db10da894c0f064bc1b64aba79d",
+    "originalBytes": 7916
+  },
+  "emulator-small.log.gz": {
+    "originalSha256": "9ce3025517544d6991a82899f80a5f46f2936cbf2fa1105fc89af1de8af960d3",
+    "originalBytes": 7218
+  },
+  "export.log.gz": {
+    "originalSha256": "1e86f22913d6192ca7f4039fc9a957d1860b5f98c07e4632459a75f576c6a1e9",
+    "originalBytes": 29257
+  },
+  "check.log.gz": {
+    "originalSha256": "b92bf1340abbdd2023c606de836239e0e86bbc804ae29b20496d8c6a2e2662d1",
+    "originalBytes": 783
+  },
+  "continuation.log.gz": {
+    "originalSha256": "f4ddc9b9365bc3326c1dbba4f5add9141d46c6eaf2694b86f986b9886fedcbfd",
+    "originalBytes": 476
+  },
+  "lifecycle-qualified.log.gz": {
+    "originalSha256": "b2336860df8d5060190c791fb498522fe91354ca02c034178ffb84f33bca6eb6",
+    "originalBytes": 664
+  },
+  "run-game-console.log.gz": {
+    "originalSha256": "d0ebd499f7bb5a60928d71fe92dea8be09101ce6c81912ce244dc84ac5ee90d1",
+    "originalBytes": 186272
+  },
+  "continuation-console.log.gz": {
+    "originalSha256": "94d4599b551b3140ae8665cf0ad3f08f9206c9acecca080c0bfa1eb1238397d2",
+    "originalBytes": 89822
+  },
+  "lifecycle-qualified-console.log.gz": {
+    "originalSha256": "988f18a3f5acc78459455003c35d16a4da7ae46ba069104afc39509e8c0e8de8",
+    "originalBytes": 97127
+  },
+  "initial-unit-journal.log.gz": {
+    "originalSha256": "d2084594f865b045c960905127b943ed0dd0062d83b2d8accb784d6017fe7da1",
+    "originalBytes": 1138
+  }
+}

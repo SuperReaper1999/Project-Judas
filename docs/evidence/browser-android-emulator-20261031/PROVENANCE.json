@@ -1,0 +1,9 @@
+{
+  "originalScriptSha256": "d460004fa13a61f1c33109081dafe40de60e2e989417c1eff9d55b54bb066ef5",
+  "observedScriptSha256": "3c06695278583305c5a4e023ff24106cd9d44f5bb84579ca0bcff3c0584c5ee0",
+  "difference": "Ordinary consumer clone adds per-frame public state/pose/viewport console snapshots, without changing state schema, physics or game rules. Initial metadata records earlier probe revision; observed-game.js is the executed final probe.",
+  "engineCommit": "fb77396ccd0a5e18f16784d17be46287eb67abc1",
+  "platform": "Android 16/API36 x86_64 Google APIs image; Chrome 133.0.6943.137; KVM; two cores; 1536MiB guest; host GLES with emulator Vulkan disabled; 720x1280 at density320; cgroup3600MiB+256MiBswap",
+  "audioLimit": "Host PulseAudio driver initialization failed. Native PCM and browser context lifecycle are qualified, not audible speaker output.",
+  "scope": "Read-only AVD session, no snapshot or original game changes; not a throughput benchmark or phone-hardware certificate."
+}

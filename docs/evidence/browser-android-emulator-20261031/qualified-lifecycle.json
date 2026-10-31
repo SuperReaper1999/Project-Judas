@@ -1,0 +1,290 @@
+{
+  "phase": "complete",
+  "checks": [
+    "actual Android rotation publishes matching native renderer and game viewport",
+    "portrait/landscape/portrait keeps game running",
+    "genuine Android Home stops fixed gameplay time",
+    "Home/resume after verified hidden interval has no physics catch-up burst",
+    "genuine emulated sleep stops fixed gameplay time",
+    "emulated lock/unlock avoids hidden-time catch-up",
+    "native Web Audio context suspended while app hidden",
+    "native Web Audio resumes on return or documented touch gesture",
+    "no observed browser exceptions during lifecycle checks"
+  ],
+  "observations": {
+    "portrait": {
+      "viewport": {
+        "width": 672,
+        "height": 572
+      },
+      "dom": {
+        "width": 360,
+        "height": 496,
+        "surface": {
+          "width": 672,
+          "height": 572,
+          "active": true,
+          "focused": true,
+          "generation": 5
+        }
+      }
+    },
+    "landscape": {
+      "viewport": {
+        "width": 1104,
+        "height": 480
+      },
+      "dom": {
+        "width": 576,
+        "height": 256,
+        "surface": {
+          "width": 1104,
+          "height": 480,
+          "active": true,
+          "focused": true,
+          "generation": 6
+        }
+      }
+    },
+    "home": {
+      "before": {
+        "state": {
+          "score": 100,
+          "lives": 3,
+          "hits": 1,
+          "powers": 0,
+          "phase": "playing",
+          "wideUntil": 0,
+          "time": 1.666666753590107
+        },
+        "message": "Catch gold capsules for power-ups",
+        "viewport": {
+          "width": 672,
+          "height": 572
+        },
+        "menu": false,
+        "request": 0,
+        "paddle": {
+          "x": 0,
+          "y": -9.5,
+          "z": 0
+        },
+        "balls": [
+          {
+            "position": {
+              "x": 5.213676929473877,
+              "y": -1.4091854095458984,
+              "z": 0
+            },
+            "velocity": {
+              "x": 5.809398174285889,
+              "y": -12.234823226928711,
+              "z": 0
+            }
+          }
+        ],
+        "bricks": 41
+      },
+      "first": {
+        "state": {
+          "score": 100,
+          "lives": 3,
+          "hits": 1,
+          "powers": 0,
+          "phase": "playing",
+          "wideUntil": 0,
+          "time": 1.683333421126008
+        },
+        "message": "Catch gold capsules for power-ups",
+        "viewport": {
+          "width": 672,
+          "height": 572
+        },
+        "menu": false,
+        "request": 0,
+        "paddle": {
+          "x": 0,
+          "y": -9.5,
+          "z": 0
+        },
+        "balls": [
+          {
+            "position": {
+              "x": 5.310500144958496,
+              "y": -1.6130990982055664,
+              "z": 0
+            },
+            "velocity": {
+              "x": 5.809398174285889,
+              "y": -12.234823226928711,
+              "z": 0
+            }
+          }
+        ],
+        "bricks": 41
+      },
+      "simulationDelta": 0.01666666753590107
+    },
+    "lock": {
+      "before": {
+        "state": {
+          "score": 100,
+          "lives": 3,
+          "hits": 1,
+          "powers": 0,
+          "phase": "playing",
+          "wideUntil": 0,
+          "time": 2.2666667848825455
+        },
+        "message": "Catch gold capsules for power-ups",
+        "viewport": {
+          "width": 672,
+          "height": 572
+        },
+        "menu": false,
+        "request": 0,
+        "paddle": {
+          "x": 0,
+          "y": -9.5,
+          "z": 0
+        },
+        "balls": [
+          {
+            "position": {
+              "x": 7.200688362121582,
+              "y": -8.750078201293945,
+              "z": 0
+            },
+            "velocity": {
+              "x": -5.809398174285889,
+              "y": -12.234823226928711,
+              "z": 0
+            }
+          }
+        ],
+        "bricks": 41
+      },
+      "first": {
+        "state": {
+          "score": 100,
+          "lives": 3,
+          "hits": 1,
+          "powers": 0,
+          "phase": "playing",
+          "wideUntil": 0,
+          "time": 2.3166667874902487
+        },
+        "message": "Catch gold capsules for power-ups",
+        "viewport": {
+          "width": 672,
+          "height": 572
+        },
+        "menu": false,
+        "request": 0,
+        "paddle": {
+          "x": 0,
+          "y": -9.5,
+          "z": 0
+        },
+        "balls": [
+          {
+            "position": {
+              "x": 6.910218715667725,
+              "y": -9.36181926727295,
+              "z": 0
+            },
+            "velocity": {
+              "x": -5.809398174285889,
+              "y": -12.234823226928711,
+              "z": 0
+            }
+          }
+        ],
+        "bricks": 41
+      },
+      "simulationDelta": 0.05000000260770321
+    },
+    "audio": {
+      "state": "running",
+      "peak": 0.014163175607625821,
+      "states": [
+        {
+          "state": "suspended",
+          "time": 1793474992819
+        },
+        {
+          "state": "running",
+          "time": 1793474995300
+        },
+        {
+          "state": "suspended",
+          "time": 1793474996180
+        },
+        {
+          "state": "running",
+          "time": 1793474998685
+        }
+      ],
+      "visibility": [
+        {
+          "hidden": true,
+          "epoch": 1,
+          "time": 1793474992584
+        },
+        {
+          "hidden": false,
+          "epoch": 2,
+          "time": 1793474995271
+        },
+        {
+          "hidden": true,
+          "epoch": 3,
+          "time": 1793474995982
+        },
+        {
+          "hidden": false,
+          "epoch": 4,
+          "time": 1793474998657
+        }
+      ]
+    }
+  },
+  "latest": {
+    "state": {
+      "score": 100,
+      "lives": 3,
+      "hits": 1,
+      "powers": 0,
+      "phase": "playing",
+      "wideUntil": 0,
+      "time": 2.3166667874902487
+    },
+    "message": "Catch gold capsules for power-ups",
+    "viewport": {
+      "width": 672,
+      "height": 572
+    },
+    "menu": false,
+    "request": 0,
+    "paddle": {
+      "x": 0,
+      "y": -9.5,
+      "z": 0
+    },
+    "balls": [
+      {
+        "position": {
+          "x": 6.910218715667725,
+          "y": -9.36181926727295,
+          "z": 0
+        },
+        "velocity": {
+          "x": -5.809398174285889,
+          "y": -12.234823226928711,
+          "z": 0
+        }
+      }
+    ],
+    "bricks": 41
+  }
+}

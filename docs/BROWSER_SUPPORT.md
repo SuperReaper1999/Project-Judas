@@ -84,10 +84,12 @@ migration contracts still apply.
 - Native TCP hosting/joining is explicitly unavailable. A future WebSocket
   transport/server endpoint is separate work.
 - Responsive browser-owned canvas, optional fullscreen and bounded high-DPI rendering.
-  Harness RESIZE still rejects: resize the page viewport instead. Mobile
-  touch/controller behaviour and every 3D effect remain unqualified.
+  Harness RESIZE still rejects: resize the page viewport instead. Touch has bounded
+  Android phone/emulator qualification; physical controllers and every 3D effect
+  remain unqualified. See the later qualification records.
 - Loading/errors, keyboard focus and cold saves have actual Chromium tests.
-  Browser audio mixing and Firefox offline-game checks are covered by the next-stage qualification below; physical audio hardware, controllers, touch and other browser families remain unqualified.
+  Browser audio mixing and Firefox offline-game checks are covered by the next-stage qualification below; physical audio hardware, controllers and other browser families remain unqualified;
+  later records cover bounded Android touch tests.
   Reload after graphics-context loss; automatic GPU resource restoration is not
   implemented or qualified by this port.
 - A worker owns the WebGL context and yields to requestAnimationFrame through
@@ -158,8 +160,9 @@ The vendored adjustment is marked at the Web Audio implementation entry.
 
 This first audio path uses miniaudio's existing ScriptProcessorNode backend. It is
 deprecated in browsers and runs mixing callbacks on the UI thread. AudioWorklet,
-capture, mobile audio, background-tab policy and latency guarantees remain
-unqualified. Click the canvas after Play to unlock audio if the browser blocks
+capture, audible physical-device output and latency guarantees remain
+unqualified. Bounded background/lock and mobile audio-graph qualification is
+recorded below; it is not a speaker-quality certificate. Click the canvas after Play to unlock audio if the browser blocks
 autoplay. Quality/speaker output still needs human listening; measured Web Audio
 output is functional evidence, not a hardware listening test.
 
@@ -326,3 +329,13 @@ provide suitable project-owned controls. The existing Breakwater game already
 uses the ordinary touch API and can be exported without a browser-specific game
 implementation. Phone observations and the retained desktop loading experiments
 are recorded in [delivery qualification](BROWSER_DELIVERY_QUALIFICATION.md).
+
+
+## Android emulator follow-up
+
+A bounded Android 16 / Chrome 133 emulator pass verifies rotation, real physical
+paddle restoration after fresh-process save loading, genuine Home/lock suspension
+without hidden-time catch-up, and nonzero native PCM plus Web Audio suspend/resume.
+The emulator host audio driver did not initialize, so audible speaker output remains
+unqualified. The original large emulator exceeded its contained memory budget;
+a smaller read-only session passed. See [exact scope, failures and evidence](BROWSER_ANDROID_EMULATOR_QUALIFICATION.md).

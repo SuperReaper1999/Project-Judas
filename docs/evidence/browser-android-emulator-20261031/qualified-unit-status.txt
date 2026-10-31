@@ -1,0 +1,7 @@
+ActiveState=active
+Result=success
+ExecMainStatus=0
+MemoryCurrent=3723988992
+MemoryPeak=3774873600
+MemoryMax=3774873600
+MemorySwapMax=268435456

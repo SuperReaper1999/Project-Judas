@@ -1,0 +1,6 @@
+{
+  "originalGame": "projects/breakwater",
+  "originalScriptSha256": "d460004fa13a61f1c33109081dafe40de60e2e989417c1eff9d55b54bb066ef5",
+  "probeScriptSha256": "9366f56487630ecdc75c245b99dc4fcdcea8461eec866bc128ca088506b6c95c",
+  "changes": "Add periodic console snapshots from existing public game/physics APIs; no rules, physics settings, controls, assets or save state fields altered."
+}

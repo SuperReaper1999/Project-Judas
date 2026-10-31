@@ -1,0 +1,165 @@
+{
+  "phase": "rotate",
+  "checks": [
+    "emulator browser preloads actual WASM/game/storage",
+    "emulator localhost has required isolation",
+    "touch input changes real kinematic paddle pose",
+    "actual binary save published",
+    "negative control differs physically from saved position",
+    "emulator browser preloads actual WASM/game/storage",
+    "fresh Chrome process hydrates exact IndexedDB save bytes",
+    "fresh gameplay has not falsely restored cached state",
+    "cold load restores actual physical paddle endpoint",
+    "actual native mixer PCM reaches Web Audio graph"
+  ],
+  "observations": {
+    "environment": {
+      "ua": "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Mobile Safari/537.36",
+      "isolated": true,
+      "width": 360,
+      "height": 496,
+      "dpr": 2,
+      "surface": {
+        "width": 672,
+        "height": 572,
+        "active": true,
+        "focused": true,
+        "generation": 1
+      }
+    },
+    "savedEndpoint": {
+      "state": {
+        "score": 0,
+        "lives": 3,
+        "hits": 0,
+        "powers": 0,
+        "phase": "ready",
+        "wideUntil": 0,
+        "time": 0.8666667118668556
+      },
+      "message": "Tap LAUNCH or press Space",
+      "viewport": {
+        "width": 672,
+        "height": 572
+      },
+      "menu": false,
+      "request": 0,
+      "paddle": {
+        "x": 6.449999809265137,
+        "y": -9.5,
+        "z": 0
+      },
+      "balls": [
+        {
+          "position": {
+            "x": 6.449999809265137,
+            "y": -8.800000190734863,
+            "z": 0
+          },
+          "velocity": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          }
+        }
+      ],
+      "bricks": 42
+    },
+    "saveBytes": 39431,
+    "saveSha256": "8467fdd00729c3175e8e0776db037112d6f69a055ae5ff8a9986ff3ddb3bf725",
+    "restored": {
+      "state": {
+        "score": 0,
+        "lives": 3,
+        "hits": 0,
+        "powers": 0,
+        "phase": "ready",
+        "wideUntil": 0,
+        "time": 2.0166667718440294
+      },
+      "message": "Saved game restored",
+      "viewport": {
+        "width": 672,
+        "height": 572
+      },
+      "menu": false,
+      "request": 0,
+      "paddle": {
+        "x": 6.449999809265137,
+        "y": -9.5,
+        "z": 0
+      },
+      "balls": [
+        {
+          "position": {
+            "x": 6.449999809265137,
+            "y": -8.800000190734863,
+            "z": 0
+          },
+          "velocity": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          }
+        }
+      ],
+      "bricks": 42
+    },
+    "audio": {
+      "state": "running",
+      "peak": 0.009286878696783333
+    },
+    "landscape": {
+      "viewport": {
+        "width": 672,
+        "height": 572
+      },
+      "surface": {
+        "width": 672,
+        "height": 572,
+        "active": true,
+        "focused": true,
+        "generation": 1
+      }
+    },
+    "failure": "Error: rotation publishes real renderer/gameplay viewport"
+  },
+  "latest": {
+    "state": {
+      "score": 100,
+      "lives": 3,
+      "hits": 1,
+      "powers": 0,
+      "phase": "playing",
+      "wideUntil": 0,
+      "time": 4.766666915267706
+    },
+    "message": "Catch gold capsules for power-ups",
+    "viewport": {
+      "width": 672,
+      "height": 572
+    },
+    "menu": false,
+    "request": 0,
+    "paddle": {
+      "x": 6.449999809265137,
+      "y": -9.5,
+      "z": 0
+    },
+    "balls": [
+      {
+        "position": {
+          "x": 3.1166539192199707,
+          "y": -7.726667881011963,
+          "z": 0
+        },
+        "velocity": {
+          "x": -3.799999952316284,
+          "y": -13,
+          "z": 0
+        }
+      }
+    ],
+    "bricks": 41
+  }
+}
