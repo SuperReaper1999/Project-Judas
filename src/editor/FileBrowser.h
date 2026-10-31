@@ -8,7 +8,7 @@
 class EditorFileBrowser {
 public:
     enum class Mode { OpenFile, SaveFile, Directory };
-    enum class Target { Document, NewProject, Import, Export };
+    enum class Target { Document, NewProject, Import, Export, BrowserExport };
     struct Entry { std::string name; bool directory=false; };
     struct Selection { Target target; std::string path; };
     void Open(Target, Mode, const std::string& path, std::string extension={});

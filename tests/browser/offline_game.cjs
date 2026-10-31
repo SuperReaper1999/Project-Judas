@@ -8,7 +8,7 @@ fs.mkdirSync(out);const rows=[],results=[];let context,server;
 const wait=ms=>new Promise(r=>setTimeout(r,ms));
 function check(v,m){if(!v)throw Error(m);results.push(m);console.log('PASS',m);}
 (async()=>{
- server=spawn('python3',['tools/serve_browser.py',pkg,'--port',String(port)]);server.stderr.on('data',()=>{});
+ server=spawn('python3',[process.env.JUDAS_PREVIEW_FROM_PACKAGE==='1'?path.resolve(pkg,'serve.py'):path.resolve('tools/serve_browser.py'),path.resolve(pkg),'--port',String(port)],{cwd:path.resolve(out)});server.stderr.on('data',()=>{});
  await new Promise((r,j)=>{server.stdout.once('data',r);server.once('exit',c=>j(Error('server '+c)));});
  const type=name==='chromium'?chromium:firefox;
  async function open(){

@@ -1,0 +1,41 @@
+.FsFsF..
+======================================================================
+FAIL: test_alpha_marks_only_advanced_runtime_unavailable (test_validation_registration.ValidationRegistrationTests.test_alpha_marks_only_advanced_runtime_unavailable)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/conner/Documents/GitHub/Project-Judas/tests/test_validation_registration.py", line 98, in test_alpha_marks_only_advanced_runtime_unavailable
+    self.assert_contract(self.configure(channel='Alpha'), channel='Alpha')
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/conner/Documents/GitHub/Project-Judas/tests/test_validation_registration.py", line 70, in assert_contract
+    self.assertIn('test_browser_export.py', tests['prealpha.browser-export-boundaries']['command'])
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'test_browser_export.py' not found in ['/usr/bin/python3', '-m', 'unittest', 'discover', '-s', '/home/conner/Documents/GitHub/Project-Judas/tests', '-p', 'test_browser*.py', '-v']
+
+======================================================================
+FAIL: test_explicit_failure_registration_preserves_original_case (test_validation_registration.ValidationRegistrationTests.test_explicit_failure_registration_preserves_original_case)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/conner/Documents/GitHub/Project-Judas/tests/test_validation_registration.py", line 118, in test_explicit_failure_registration_preserves_original_case
+    self.assert_contract(self.configure(include_known=True), include_known=True)
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/conner/Documents/GitHub/Project-Judas/tests/test_validation_registration.py", line 70, in assert_contract
+    self.assertIn('test_browser_export.py', tests['prealpha.browser-export-boundaries']['command'])
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'test_browser_export.py' not found in ['/usr/bin/python3', '-m', 'unittest', 'discover', '-s', '/home/conner/Documents/GitHub/Project-Judas/tests', '-p', 'test_browser*.py', '-v']
+
+======================================================================
+FAIL: test_ordinary_registration_omits_only_explicit_manual_failures (test_validation_registration.ValidationRegistrationTests.test_ordinary_registration_omits_only_explicit_manual_failures)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/conner/Documents/GitHub/Project-Judas/tests/test_validation_registration.py", line 95, in test_ordinary_registration_omits_only_explicit_manual_failures
+    self.assert_contract(self.configure())
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "/home/conner/Documents/GitHub/Project-Judas/tests/test_validation_registration.py", line 70, in assert_contract
+    self.assertIn('test_browser_export.py', tests['prealpha.browser-export-boundaries']['command'])
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'test_browser_export.py' not found in ['/usr/bin/python3', '-m', 'unittest', 'discover', '-s', '/home/conner/Documents/GitHub/Project-Judas/tests', '-p', 'test_browser*.py', '-v']
+
+----------------------------------------------------------------------
+Ran 8 tests in 2.274s
+
+FAILED (failures=3, skipped=2)

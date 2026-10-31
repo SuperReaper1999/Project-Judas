@@ -13,6 +13,11 @@ browser = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(browser)
 
 class BrowserExportTests(unittest.TestCase):
+    def setUp(self):
+        # These are Linux-host compiler contracts, even on a Windows CI runner.
+        platform=patch.object(browser.sys,'platform','linux')
+        platform.start();self.addCleanup(platform.stop)
+
     def parse(self, *options):
         return browser.parse_args(['--project', '/tmp/game.judasproj', '--output', '/tmp/web', *options])
 

@@ -457,6 +457,7 @@ add_executable(judas_editor
     src/editor/EditorPrimitiveAssets.cpp
     src/editor/EditorPauseExample.cpp
     src/editor/ProjectSettingsPanel.cpp
+    src/editor/BrowserExportWorkflow.cpp
     src/editor/FileBrowser.cpp
     src/editor/RenderPreview.cpp
     src/editor/RetargetPanel.cpp
@@ -1725,7 +1726,7 @@ include(cmake/JudasSdk.cmake)
 # Project policy and lightweight water share no advanced solver implementation.
 judas_add_engine_test(judas_project_water_tests tests/ProjectWaterTests.cpp)
 judas_add_engine_test(judas_project_settings_editor_tests tests/ProjectSettingsEditorTests.cpp
-    SOURCES src/editor/ProjectSettingsPanel.cpp LIBRARIES judas_imgui)
+    SOURCES src/editor/ProjectSettingsPanel.cpp src/editor/BrowserExportWorkflow.cpp LIBRARIES judas_imgui)
 judas_add_engine_test(judas_basic_water_application_tests tests/BasicWaterApplicationTests.cpp)
 judas_add_engine_test(judas_basic_water_preview_tests tests/BasicWaterPreviewTests.cpp)
 
@@ -1804,6 +1805,13 @@ judas_add_engine_test(judas_2d_game_workflow_tests tests/TwoDGameWorkflowTests.c
     src/editor/SpriteSheetEditor.cpp src/editor/TilemapEditor.cpp src/editor/EditorCamera.cpp LIBRARIES judas_imgui)
 
 judas_add_engine_test(judas_beacon_grove_application_tests tests/BeaconGroveApplicationTests.cpp APPLICATION)
+
+judas_add_engine_test(judas_browser_workflow_tests tests/BrowserWorkflowTests.cpp
+    SOURCES src/editor/BrowserExportWorkflow.cpp LIBRARIES judas_imgui)
+
+add_executable(judas_browser_export_smoke tests/BrowserExportSmoke.cpp src/editor/BrowserExportWorkflow.cpp)
+target_link_libraries(judas_browser_export_smoke PRIVATE judas_engine judas_imgui)
+judas_warnings(judas_browser_export_smoke)
 
 add_executable(judas_beacon_grove tools/demos/BeaconGrove.cpp)
 target_link_libraries(judas_beacon_grove PRIVATE judas_engine)

@@ -297,6 +297,9 @@ void DrawEditorMainMenu(EditorDocument& doc, EditorPanelState& state, EditorRequ
         if (ImGui::MenuItem("Project settings", nullptr, state.showProjectSettings, hasProject)) {
             state.showProjectSettings = !state.showProjectSettings;
         }
+        if (state.experimentalBrowserSupport && ImGui::MenuItem("Export browser game (Experimental)...", nullptr, false, editing && hasProject)) {
+            state.showProjectSettings=true;state.projectSettingsPage=11;
+        }
         ImGui::Separator();
         if (ImGui::MenuItem("New scene", nullptr, false, editing)) requests.newScene = true;
         if (ImGui::MenuItem("Open scene...", nullptr, false, editing)) requests.open = true;

@@ -6,7 +6,7 @@ const [pkg,out,name='chromium']=process.argv.slice(2);fs.mkdirSync(out);
 const rows=[],checks=[];let browser,server;const delay=ms=>new Promise(r=>setTimeout(r,ms));
 const check=(v,m)=>{if(!v)throw Error(m);checks.push(m);console.log('PASS',m);};
 (async()=>{
- server=spawn('python3',['tools/serve_browser.py',pkg,'--port','8797']);server.stderr.on('data',()=>{});
+ server=spawn('python3',[process.env.JUDAS_PREVIEW_FROM_PACKAGE==='1'?path.resolve(pkg,'serve.py'):path.resolve('tools/serve_browser.py'),path.resolve(pkg),'--port','8797'],{cwd:path.resolve(out)});server.stderr.on('data',()=>{});
  await new Promise((r,j)=>{server.stdout.once('data',r);server.once('exit',c=>j(Error('server '+c)));});
  browser=await (name==='firefox'?firefox:chromium).launch({headless:true,args:name==='chromium'?['--no-sandbox','--enable-unsafe-swiftshader','--use-gl=angle','--use-angle=swiftshader','--disable-dev-shm-usage']:[]});
  const p=await browser.newPage({viewport:{width:1280,height:1000}});let latest,errors=[];

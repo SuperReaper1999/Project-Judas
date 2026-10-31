@@ -1,4 +1,5 @@
 #include "../EnginePaths.h"
+#include "BrowserExportWorkflow.h"
 #include "ProjectFeaturePolicy.h"
 #include "EditorPanels.h"
 #include "ProjectSettingsHistory.h"
@@ -29,7 +30,7 @@ void DrawProjectSettingsPanel(EditorDocument& doc,EditorPanelState& state,Editor
     if(!state.projectHistory)state.projectHistory=std::make_shared<ProjectSettingsHistory>();
     auto& history=*state.projectHistory;history.Observe(project);
     auto& s=project.Settings();
-    static int page=0;
+    int& page=state.projectSettingsPage;
     const char* categories[]={"General","Rendering","Physics and gravity","Input","Audio","World and persistence",
                               "Navigation","Localization","Water","Networking","Experimental","Export"};
     ImGui::TextDisabled("%s",project.ProjectFile().c_str());
@@ -237,11 +238,7 @@ void DrawProjectSettingsPanel(EditorDocument& doc,EditorPanelState& state,Editor
         ImGui::SameLine();if(ImGui::Button("Browse package folder..."))requests.browseExport=true;
         ImGui::TextWrapped("Save project and scene edits first. Export copies the project policy, selected content and runtime dependencies. Choose a destination outside the project.");
         if(ImGui::Button("Export project (Release)"))requests.exportProject=true;
-        if(state.experimentalBrowserSupport) {
-            ImGui::SeparatorText("Experimental browser export");
-            ImGui::TextWrapped("Explicit launch opt-in is active. The initial Linux-host workflow uses tools/build_browser.py -ExpBrowserSupport=1 with a matching native exporter/runtime and Emscripten. Browser compatibility is not yet certified; native export above remains independent.");
-            if(ImGui::Button("Browser build instructions"))requests.openExternalPath=ResolveEngineDataPath("docs/BROWSER_SUPPORT.md");
-        }
+        if(state.experimentalBrowserSupport) DrawBrowserExportWorkflow(state,requests);
     }
     ImGui::EndDisabled();
     ImGui::EndChild();ImGui::Separator();

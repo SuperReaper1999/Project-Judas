@@ -1,0 +1,35 @@
+PASS create ordinary project
+PASS actual settings window available
+PASS fresh project leaves advanced fluids disabled
+PASS actual settings window available
+PASS checkbox opens explicit warning without enabling the solver
+PASS actual settings window available
+PASS warning cancel does not opt in
+PASS actual settings window available
+PASS actual settings window available
+PASS warning confirmation explicitly opts in
+PASS project dirty state is independent of clean scene ownership
+PASS actual settings window available
+PASS Save project button emits the real editor command
+PASS ordinary project save resets its own dirty baseline
+PASS fresh editor session retains explicit opt-in in named project data
+PASS actual settings window available
+PASS running world settings cannot be changed through disabled controls
+PASS actual settings window available
+PASS explicit opt-out applies to next world
+PASS actual settings window available
+PASS basic water and swimming remain independent of opt-out
+PASS actual settings window available
+PASS Water page uses ordinary scene create command
+PASS unsaved opt-out is detected
+PASS discard returns exactly to saved project settings
+PASS editor settings edit creates independent undo history
+PASS settings undo returns to saved baseline without dirtying scene
+PASS settings redo reapplies project edit
+PASS actual settings window available
+PASS browser controls are absent without per-launch opt-in
+PASS explicit opt-in exposes browser workflow
+PASS browser build emits its own saved-content editor action
+PASS browser export cannot launch from Play
+PASS failed external-conflict save retains unsaved settings
+ProjectSettingsEditorTests: 34 checks, 0 failures

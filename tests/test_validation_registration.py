@@ -6,6 +6,7 @@ labels, serial execution and known-failure admission, not source-string counts.
 """
 
 import json
+import fnmatch
 from pathlib import Path
 import shutil
 import subprocess
@@ -67,7 +68,10 @@ class ValidationRegistrationTests(unittest.TestCase):
         tooling = {'prealpha.gate-negative-controls', 'prealpha.build-organization',
                    'prealpha.gate-registration', 'prealpha.browser-export-boundaries'}
         self.assertEqual(set(tests), {'prealpha.' + entry['name'] for entry in entries} | tooling)
-        self.assertIn('test_browser_export.py', tests['prealpha.browser-export-boundaries']['command'])
+        browser_command=tests['prealpha.browser-export-boundaries']['command']
+        browser_pattern=browser_command[browser_command.index('-p')+1]
+        for required in ['test_browser_export.py','test_browser_workflow.py']:
+            self.assertTrue(fnmatch.fnmatchcase(required,browser_pattern),required+' is absent from browser gate discovery')
         for entry in entries:
             case = tests['prealpha.' + entry['name']]
             self.assertEqual(Path(case['command'][1]).resolve(), (ROOT / 'scripts/prealpha_validate.py').resolve())
@@ -102,6 +106,13 @@ class ValidationRegistrationTests(unittest.TestCase):
             self.skipTest('Ninja needed for explicit multi-config control')
         self.assert_contract(self.configure(channel='Alpha', generator='Ninja Multi-Config'),
                              channel='Alpha')
+
+    def test_removed_browser_workflow_discovery_is_detected(self):
+        original=MODULE.read_text(encoding='utf-8')
+        changed=original.replace('test_browser*.py','test_browser_export.py',1)
+        self.assertNotEqual(original,changed)
+        with self.assertRaises(AssertionError):
+            self.assert_contract(self.configure(module=changed))
 
     def test_removed_channel_guard_is_detected(self):
         module = MODULE.read_text(encoding='utf-8').replace(

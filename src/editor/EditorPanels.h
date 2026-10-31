@@ -49,6 +49,7 @@ struct EditorRequests {
     bool saveProject = false;
     bool browseImport = false, browseExport = false;
     bool exportProject = false;
+    bool exportBrowser = false, browseBrowserExport = false;
     bool runProject = false;
     bool rescanAssets = false;
     bool openJudasJS = false;
@@ -102,7 +103,9 @@ struct ProfilerData {
 struct ModelCookTask;
 struct RuntimeRenderHistory;
 struct RetargetPanelState;
+struct BrowserExportWorkflow;
 struct EditorPanelState {
+    std::shared_ptr<BrowserExportWorkflow> browserExport;
     bool experimentalBrowserSupport=false; // explicit per-launch opt-in, not a project setting
     EditorWorkspaceLayout workspace;
     float hierarchyWidth = 250.0f;
@@ -196,6 +199,7 @@ struct EditorPanelState {
     bool showProfiler = false;
     bool profilerInspect = false;
     bool showProjectSettings = false;
+    int projectSettingsPage = 0;
     bool showAssetBrowser = true;
     ProfilerData profiler;
     std::string exportDestination;

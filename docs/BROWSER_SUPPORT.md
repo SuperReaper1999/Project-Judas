@@ -151,3 +151,77 @@ capture, mobile audio, background-tab policy and latency guarantees remain
 unqualified. Click the canvas after Play to unlock audio if the browser blocks
 autoplay. Quality/speaker output still needs human listening; measured Web Audio
 output is functional evidence, not a hardware listening test.
+
+## Editor export and local preview
+
+Start the Linux source editor with `-ExpBrowserSupport=1`. **File → Export browser
+ game (Experimental)…** opens Project Settings → Export. The native Release
+export remains separate. This launch option is never saved into the project.
+
+1. Save project, scenes and assets. Choose a **new package folder outside the
+   project**. Browse chooses its parent; edit the appended `web-game` name.
+2. Open **Toolchain and build options** if needed. Select the installed Emscripten
+   6.0.13 root, browser build cache and matching Release exporter/runtime. The
+   compiler-script field must point into the Judas source checkout. No SDK or
+   toolchain is installed automatically. Installed native SDKs do not magically
+   become browser compiler hosts.
+3. **Check prerequisites** reports missing tools, unsupported project policy,
+   output conflicts and mismatched native identities without compiling, creating
+   the build/output folders or downloading anything. The final current-source
+   fingerprint check remains CMake's responsibility during the actual build.
+4. **Build browser game** uses the ordinary saved-content confirmation when the
+   project or scene has unsaved edits. Build output appears in the panel and in
+   its retained log. The editor stays responsive. Avoid modifying saved assets
+   while they are being packaged. The first engine compile can take minutes.
+5. **Preview package locally**, then **Open game in browser**. The preview checks
+   the complete inventory/hashes, binds only to loopback and sends the required
+   isolation headers. Its default port is 8081; choose another if occupied.
+   Keep the same port for the same browser save origin. Port 0 chooses a free,
+   potentially different port, so it is unsuitable for stable save origins.
+6. **Stop local preview** when finished. Closing the editor stops only its own
+   compiler/preview process groups; it does not stop another editor/game/server.
+
+Cancelling a build stops its compiler descendants and preserves logs/staging for
+inspection. A cancelled/crashed build is not a successful export. If the entire
+editor is forcibly killed before cleanup, a cache lock can remain: inspect its
+recorded PID and verify that the compiler is gone before removing that lock.
+Do not remove a live job's lock or share a cache between simultaneous builds.
+Large compiler temporary files use the selected build filesystem, not a small
+RAM-backed `/tmp`. Toolchain/output fields are session choices, not game settings.
+
+### Command-line preflight
+
+Add `--check` to the normal `tools/build_browser.py` invocation. It emits a JSON
+`judas-browser-preflight` report and exits 0 when prerequisites pass, 2 otherwise.
+It needs the same explicit opt-in as building. Missing tools are reported together;
+a successful preflight is not an asset/game/browser certification.
+
+### Relocating and hosting the package
+
+New packages include `serve.py` and `browser_package.py`, in addition to the game,
+notices and provenance. Copy the **whole folder** to another location or machine
+with Python 3.10+; neither source checkout nor Emscripten is needed to preview it:
+
+```sh
+python3 /absolute/copied-package/serve.py --verify-only
+python3 /absolute/copied-package/serve.py --port 8081
+```
+
+The helper verifies every recorded SHA-256 and rejects missing, modified, unlisted
+or symlinked files and unsafe inventory paths before serving. It serves only
+inventoried paths, with no directory listing. Python bytecode caches are disabled
+so preview does not modify its own inventory. Keep served files immutable; rerun
+verification after changing anything. This local receipt detects corruption; it
+is not a signed publisher-authenticity manifest.
+
+For internet hosting, deploy the same immutable files on an HTTPS static host
+that supplies COOP `same-origin`, COEP `require-corp` and suitable resource policy.
+The included server is a localhost development preview, not a production hosting
+service. Hosts/iframes without the required isolation remain unsupported. Do not
+open index.html with file://. No public upload, installation or release happens
+from the editor.
+
+The earlier standalone audio-probe evidence used a deliberately incomplete
+receipt with the old diagnostic server. Reproduce that historical probe using
+the server from `567f03e7`; the current preview intentionally rejects its dummy
+receipt. Ordinary completed stage-1/2 packages still verify normally.

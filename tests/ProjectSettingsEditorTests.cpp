@@ -1,5 +1,6 @@
 #include "ProjectFeaturePolicy.h"
 #include "editor/EditorPanels.h"
+#include "editor/BrowserExportWorkflow.h"
 #include "editor/EditorDocument.h"
 #include "Project.h"
 #include "editor/ProjectSettingsHistory.h"
@@ -62,6 +63,16 @@ int main(){
     Check(history.CanUndo()&&project.IsDirty(),"editor settings edit creates independent undo history");history.Undo(project);
     Check(project.Settings().basicWater&&!project.IsDirty()&&history.CanRedo(),"settings undo returns to saved baseline without dirtying scene");history.Redo(project);
     Check(!project.Settings().basicWater&&project.IsDirty(),"settings redo reapplies project edit");
+    activate(child("Categories"),"Export");
+    Check(!state.browserExport,"browser controls are absent without per-launch opt-in");
+    state.experimentalBrowserSupport=true;frame();frame();
+    Check(state.browserExport!=nullptr,"explicit opt-in exposes browser workflow");
+    ImGui::ActivateItemByID(child("Settings")->GetID("Build browser game"));frame();
+    Check(requests.exportBrowser&&!requests.exportProject,"browser build emits its own saved-content editor action");
+    state.mode=EditorMode::Play;
+    ImGui::ActivateItemByID(child("Settings")->GetID("Build browser game"));frame();
+    Check(!requests.exportBrowser,"browser export cannot launch from Play");
+    state.mode=EditorMode::Edit;
     {std::ofstream external(project.ProjectFile(),std::ios::app);external<<"# external edit\n";}
     Check(!project.Save(error)&&project.IsDirty()&&error.find("externally")!=std::string::npos,"failed external-conflict save retains unsaved settings");
     ImGui::DestroyContext();std::filesystem::remove_all(root);

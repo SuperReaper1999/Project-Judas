@@ -1,0 +1,14 @@
+.....F.......
+======================================================================
+FAIL: test_relocated_helper_and_real_headers (__main__.PackageTests.test_relocated_helper_and_real_headers)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/conner/Documents/GitHub/Project-Judas/tests/test_browser_workflow.py", line 87, in test_relocated_helper_and_real_headers
+    line=server.stdout.readline();self.assertIn('http://127.0.0.1:',line)
+                                  ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'http://127.0.0.1:' not found in ''
+
+----------------------------------------------------------------------
+Ran 13 tests in 0.137s
+
+FAILED (failures=1)

@@ -1,0 +1,18 @@
+PASS start without a shell
+PASS running job cannot be silently replaced
+PASS own child completes and is reaped
+PASS quotes/metacharacters remain literal and stderr is retained
+PASS no command substitution executed
+PASS missing tool reports launch failure without a child
+PASS an existing log is never overwritten
+PASS start compiler-like descendant tree
+PASS start unrelated owned job in a separate group
+PASS real descendant is running before cancellation
+PASS cancellation reaps parent and preserves log
+PASS cancelling one group preserves other processes
+PASS SIGTERM-resistant compiler descendant does not survive cancellation
+PASS start bounded tool
+PASS timeout terminates its owned process group
+PASS start excessive-output control
+PASS excessive logs stop safely with a bounded display tail
+BrowserWorkflowTests: 17 checks, 0 failures

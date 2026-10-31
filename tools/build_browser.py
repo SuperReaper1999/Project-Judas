@@ -6,6 +6,7 @@ import json
 import os
 from pathlib import Path
 import shutil
+import signal
 import subprocess
 import sys
 import uuid
@@ -17,7 +18,7 @@ def run(command,**kwargs):
     subprocess.run(list(map(str,command)),check=True,**kwargs)
 
 def probe(path):
-    return json.loads(subprocess.check_output([str(path),'--build-info-json'],text=True))
+    return json.loads(subprocess.check_output([str(path),'--build-info-json'],text=True,timeout=10))
 
 def parse_args(argv=None):
     p=argparse.ArgumentParser(description=__doc__,allow_abbrev=False)
@@ -29,6 +30,7 @@ def parse_args(argv=None):
     p.add_argument('--exporter',type=Path,default=ROOT/'build/judas_export')
     p.add_argument('--desktop-runtime',type=Path,default=ROOT/'build/judas')
     p.add_argument('--icu-host',type=Path)
+    p.add_argument('--check',action='store_true',help='Report prerequisites as JSON without compiling, downloading or creating output/cache directories')
     p.add_argument('--jobs',type=int,choices=range(1,9),default=2)
     words=list(sys.argv[1:] if argv is None else argv)
     # Match the editor's documented separated spelling, while refusing duplicate
@@ -80,8 +82,63 @@ def copy_browser_licenses(sdk,output):
             raise ValueError('Emscripten runtime redistribution notice missing: '+relative)
         shutil.copy2(sdk/relative,destination/name)
 
+
+def preflight(a):
+    """Read-only checks. CMake remains authoritative for final source fingerprints."""
+    checks=[]
+    def check(name, action):
+        try:
+            detail=action()
+            checks.append({'name':name,'ok':True,'detail':str(detail or 'Ready')})
+        except (OSError,ValueError,subprocess.SubprocessError) as error:
+            checks.append({'name':name,'ok':False,'detail':str(error)})
+    def need(condition, message):
+        if not condition:raise ValueError(message)
+    def project():
+        need(a.project.is_file(),'Choose an existing .judasproj file')
+        require_supported_project(a.project.read_text(encoding='utf-8'))
+        return 'Saved project policy is browser-compatible; asset closure is validated during export'
+    def output():
+        need(not a.output.exists() and not a.output.is_symlink(),'Choose a fresh output directory; existing content is never replaced')
+        destination=a.output.resolve();project_root=a.project.resolve().parent
+        need(destination!=project_root and project_root not in destination.parents,'Output must be outside the project')
+        need(destination!=a.build.resolve() and a.build.resolve() not in destination.parents and destination not in a.build.resolve().parents,'Output and build cache must be separate')
+        return str(destination)
+    sdk=a.emsdk.resolve()/'upstream/emscripten'
+    def toolchain():
+        need((sdk/'emcmake').is_file() and (sdk/'emcc').is_file() and (a.emsdk/'.emscripten').is_file(),'Install and activate Emscripten SDK 6.0.13; select the emsdk root')
+        version=json.loads((sdk/'emscripten-version.txt').read_text(encoding='utf-8'))
+        need(version=='6.0.13','This experimental pipeline is qualified with Emscripten 6.0.13, not '+str(version))
+        return 'Emscripten '+version+' (no SDK installation/download performed)'
+    check('Saved project',project);check('Output folder',output);check('Emscripten SDK',toolchain)
+    for name in ['cmake','node','make']:
+        check(name,lambda name=name:shutil.which(name) or (_ for _ in ()).throw(ValueError('Install '+name+' and put it on PATH')))
+    identities={}
+    for name,path in [('Native exporter',a.exporter),('Native runtime',a.desktop_runtime)]:
+        def identity(name=name,path=path):
+            need(path.is_file(),'Choose the matching Release '+name.lower()+' executable')
+            value=probe(path.resolve())
+            need(isinstance(value,dict) and all(value.get(f) for f in ['version','source_revision','source_fingerprint','source_untracked_fingerprint','channel']),'Tool returned incomplete build provenance')
+            need(value.get('configuration')=='Release','Build the native tools in Release configuration')
+            identities[name]=value
+            return value.get('build_id',value['source_revision'])
+        check(name,identity)
+    if len(identities)==2:
+        def matched():
+            fields=['version','source_revision','source_fingerprint','source_untracked_fingerprint','channel']
+            need(all(identities['Native exporter'][f]==identities['Native runtime'][f] for f in fields),'Exporter/runtime identities differ; rebuild both from this checkout')
+            return 'Native tools agree; exact current-source fingerprints are checked by CMake before compilation'
+        check('Tool identity',matched)
+    if a.icu_host:
+        check('Native ICU tools',lambda:need((a.icu_host/'config/icucross.mk').is_file(),'Choose the native ICU build containing config/icucross.mk'))
+    return {'schema':1,'kind':'judas-browser-preflight','ready':all(c['ok'] for c in checks),'checks':checks}
+
 def main(argv=None):
     a=parse_args(argv)
+    if a.check:
+        report=preflight(a)
+        print(json.dumps(report,indent=2))
+        return 0 if report["ready"] else 2
     if a.output.is_symlink():raise ValueError('Browser output must not be a symlink')
     for name in ['project','output','emsdk','build','exporter','desktop_runtime']:
         setattr(a,name,getattr(a,name).resolve())
@@ -98,14 +155,21 @@ def main(argv=None):
     identity_fields=['version','source_revision','source_fingerprint','source_untracked_fingerprint','channel']
     if any(native['exporter'].get(f)!=native['runtime'].get(f) for f in identity_fields):
         raise ValueError('Native exporter and runtime identities differ; rebuild both from this source')
+    report=preflight(a)
+    if not report['ready']:
+        raise ValueError('Prerequisite checks failed:\n'+'\n'.join(c['name']+': '+c['detail'] for c in report['checks'] if not c['ok']))
     a.build.mkdir(parents=True,exist_ok=True)
     lock=a.build/'.browser-export.lock'
     try:fd=os.open(lock,os.O_CREAT|os.O_EXCL|os.O_WRONLY,0o600)
     except FileExistsError:raise ValueError('Browser build is in use; inspect the recorded PID before removing a stale lock')
     os.write(fd,str(os.getpid()).encode());os.close(fd)
     stage=a.build/('export-'+uuid.uuid4().hex)
-    stage.mkdir()
     try:
+        stage.mkdir()
+        # Keep large compiler temporaries on the selected build filesystem, not
+        # a small RAM-backed /tmp. Each invocation owns its own temporary folder.
+        temporary=stage/'temporary';temporary.mkdir()
+        environment['TMPDIR']=str(temporary)
         project_text=a.project.read_text(encoding='utf-8')
         require_supported_project(project_text)
         command=[emcmake,'cmake','-S',ROOT,'-B',a.build,'-DCMAKE_BUILD_TYPE=Release','-DJUDAS_BUILD_CHANNEL='+native['runtime']['channel']]
@@ -157,15 +221,21 @@ def main(argv=None):
         # readable web directory as well as the virtual game filesystem.
         if (content/'engine/licenses').is_dir():
             shutil.copytree(content/'engine/licenses',output/'engine/licenses')
+        shutil.copy2(ROOT/'tools/serve_browser.py',output/'serve.py')
+        shutil.copy2(ROOT/'tools/browser_package.py',output/'browser_package.py')
         (output/'README.txt').write_text(
             'Judas experimental browser game. Requires WebGL2, SharedArrayBuffer, IndexedDB and Web Locks.\n'
             'Serve on HTTP localhost or HTTPS with COOP same-origin and COEP require-corp.\n'
+            'Preview: python3 serve.py --port 8080 (or --port 0 for a free port). Requires Python 3.\n'
+            'Verify without starting a server: python3 serve.py --verify-only.\n'
             'Do not open index.html via file://. Keep every file/directory together.\n'
             'This is not universal browser/device qualification. Saves belong to this origin/profile.\n'
             'Engine and web runtime redistribution notices: licenses/; exported game/font notices: engine/licenses/.\n'
             'This WASM build statically links pinned SDL2/GLM. Native-platform remarks in ENGINE_NOTICES describe native packages.\n',encoding='utf-8')
         receipt={'schema':1,'kind':'judas-browser-experimental','engine':wasm,'nativeTools':native,'experimentalOptIn':True,'requires':['WebAssembly','WebGL2','cross-origin isolation','SharedArrayBuffer','IndexedDB','Web Locks'],'hosting':'HTTP localhost or HTTPS with COOP same-origin and COEP require-corp','files':{p.relative_to(output).as_posix():hashlib.sha256(p.read_bytes()).hexdigest() for p in sorted(output.rglob('*')) if p.is_file()}}
         (output/'BROWSER_BUILD.json').write_text(json.dumps(receipt,indent=2)+'\n',encoding='utf-8')
+        from browser_package import verify_package
+        verify_package(output)
         a.output.parent.mkdir(parents=True,exist_ok=True)
         if a.output.exists():raise ValueError('Output appeared during build; refusing replacement')
         shutil.copytree(output,a.output)
@@ -175,6 +245,10 @@ def main(argv=None):
         lock.unlink(missing_ok=True)
 
 if __name__=='__main__':
-    try:main()
-    except (OSError,ValueError,subprocess.CalledProcessError) as error:
+    def interrupted(_signal, _frame):raise KeyboardInterrupt
+    signal.signal(signal.SIGTERM, interrupted)
+    try:sys.exit(main() or 0)
+    except KeyboardInterrupt:
+        print("Browser export cancelled; staging and logs retained",file=sys.stderr);sys.exit(130)
+    except (OSError,ValueError,subprocess.SubprocessError) as error:
         print('Browser export failed:',error,file=sys.stderr);sys.exit(1)

@@ -76,3 +76,22 @@ scheduling, context-loss recovery, streamed/modded worlds, networking, advanced
 Next work: practical editor export/hosting UX and explicit preflight diagnostics,
 then broader rendering, lifecycle and device qualification. No web editor or
 unconditional platform enablement is implied by this stage.
+
+## Export-workflow integration
+
+The following explicit command exercises the same editor-owned job runner and
+argument construction through a real prerequisite check, actual compiler
+cancellation/lock cleanup, real build, verified preview and preview shutdown:
+
+```sh
+build/judas_browser_export_smoke PROJECT tools/build_browser.py EMSDK BROWSER_CACHE NATIVE_EXPORTER NATIVE_RUNTIME ICU_BUILD_OR_DASH FRESH_OUTPUT
+```
+
+It is optional, uses an already installed toolchain and is not part of default
+CI compilation. Default gates cover process ownership, literal argument passing,
+time/output bounds, preflight failures and package/hosting integrity instead.
+
+To test a copied package with its own helper and an unrelated server working
+directory, set `JUDAS_PREVIEW_FROM_PACKAGE=1` when running either browser driver.
+The driver still owns and stops only its isolated browser/server. Use a fixed
+port/profile for cold-process saves. Do not run drivers sharing a port together.

@@ -50,6 +50,7 @@ extern char** environ;
 #include "EnginePaths.h"
 #include "PlatformServices.h"
 #include "ProjectExporter.h"
+#include "BrowserExportWorkflow.h"
 #include "InteractivePlay.h"
 #include "RuntimeWorld.h"
 #include "AnimationTimeline.h"
@@ -603,7 +604,7 @@ void EditorApplication::HandleRequests(EditorRequests& r) {
         approvedDocumentAction = true;
     }
     if (r.quit && (m_document.IsDirty()||m_project.IsDirty()) && m_panels.mode == EditorMode::Play) StopPlay();
-    const bool terrainReplaces = r.quit || r.newScene || r.open || r.newProject || r.openProject || r.play || r.runProject || r.exportProject || !r.openSceneRelative.empty();
+    const bool terrainReplaces = r.quit || r.newScene || r.open || r.newProject || r.openProject || r.play || r.runProject || r.exportProject || r.exportBrowser || !r.openSceneRelative.empty();
     if(terrainReplaces&&m_spriteSheetEditor&&m_spriteSheetEditor->Dirty()){
         m_panels.showSpriteSheetEditor=true;
         m_panels.status="Save or discard the sprite-sheet draft before leaving, playing or exporting";
@@ -614,7 +615,7 @@ void EditorApplication::HandleRequests(EditorRequests& r) {
     const bool replacesDocument = r.quit || r.newScene || r.open || r.newProject || r.openProject ||
                                   !r.openSceneRelative.empty();
     const bool replacesProject=r.quit||r.newProject||r.openProject;
-    const bool shipping=r.runProject||r.exportProject;
+    const bool shipping=r.runProject||r.exportProject||r.exportBrowser;
     const bool sceneDirty=m_document.IsDirty()&&(replacesDocument||shipping);
     const bool projectDirty=m_project.IsDirty()&&(replacesProject||shipping);
     if ((sceneDirty||projectDirty) && !approvedDocumentAction) {
@@ -681,6 +682,13 @@ void EditorApplication::HandleRequests(EditorRequests& r) {
     if (r.newProject) ImGui::OpenPopup("New project");
     if (r.openProject) ImGui::OpenPopup("Open project");
     if (r.saveProject) m_panels.status = m_project.Save(error) ? "Saved project " + m_project.ProjectFile() : "Project save failed: " + error;
+    if (r.exportBrowser && m_panels.experimentalBrowserSupport && m_panels.browserExport) {
+        m_panels.browserExport->Start(m_project, false);
+    }
+    if(r.browseBrowserExport && m_panels.experimentalBrowserSupport && m_panels.browserExport) {
+        m_fileBrowserParent.clear();
+        m_fileBrowser.Open(EditorFileBrowser::Target::BrowserExport,EditorFileBrowser::Mode::Directory,m_panels.browserExport->destination);
+    }
     if (r.exportProject) {
         ProjectExportOptions options; options.destination = m_panels.exportDestination;
         ProjectExportResult result;
@@ -897,7 +905,7 @@ void EditorApplication::HandleRequests(EditorRequests& r) {
     }
     ImGui::SetNextWindowSize({460, 0}, ImGuiCond_Appearing);
     if (m_documentActionPending&&!m_confirmationTitle.empty()&&ImGui::BeginPopupModal(m_confirmationTitle.c_str(), nullptr, ImGuiWindowFlags_AlwaysAutoResize)) {
-        const bool shipping=m_pendingDocumentAction.runProject||m_pendingDocumentAction.exportProject;
+        const bool shipping=m_pendingDocumentAction.runProject||m_pendingDocumentAction.exportProject||m_pendingDocumentAction.exportBrowser;
         ImGui::TextUnformatted(shipping?"Run and export use saved project and scene files.":"Save your changes before continuing?");
         if(m_actionNeedsScene)ImGui::BulletText("Scene: %s",m_document.Path().empty()?"Untitled":m_document.Path().c_str());
         if(m_actionNeedsProject)ImGui::BulletText("Project settings: %s",m_project.Settings().name.c_str());
@@ -924,6 +932,7 @@ void EditorApplication::HandleRequests(EditorRequests& r) {
         case EditorFileBrowser::Target::NewProject:m_newProjectDirectory=selected->path;break;
         case EditorFileBrowser::Target::Import:m_panels.importSourceInput=selected->path;m_panels.reviewAssetImport=true;break;
         case EditorFileBrowser::Target::Export:m_panels.exportDestination=selected->path;break;
+        case EditorFileBrowser::Target::BrowserExport:if(m_panels.browserExport)m_panels.browserExport->destination=(fs::path(selected->path)/"web-game").string();break;
         }
         if(!m_fileBrowserParent.empty()){ImGui::OpenPopup(m_fileBrowserParent.c_str());m_fileBrowserParent.clear();}
     }
@@ -1625,6 +1634,7 @@ int EditorApplication::Run(int argc, char** argv) {
         ImGui::NewFrame();
         UpdateEditorWorkspaceLayout(m_panels, {io.DisplaySize.x, io.DisplaySize.y});
 
+        PollBrowserExportWorkflow(m_panels);
         EditorRequests requests;
         requests.quit = closeRequested;
         // Keyboard shortcuts (edit mode, no text field focused, not flying).
