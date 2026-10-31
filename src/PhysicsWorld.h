@@ -122,6 +122,8 @@ public:
     bool SetJoint(JointHandle handle,const JointSettings& settings);
     bool SetJointAngularDrive(JointHandle, const JointAngularDrive&);
 
+    // Repeated initialization preserves the live world. Use Shutdown + Init
+    // for an explicit reset.
     bool Init();
     void Shutdown();
 

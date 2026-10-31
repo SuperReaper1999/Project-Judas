@@ -26,6 +26,50 @@ void Check(bool condition, const std::string& label) {
 }
 constexpr float kDt = 1.0f / 60.0f;
 
+void TestInitializationLifecycle() {
+    std::printf("Lifecycle: repeated Init preserves the live world\n");
+    PhysicsWorld world, control;
+    Check(world.Init() && control.Init(), "fresh worlds initialize");
+    world.CreateStaticBox({0, -0.5f, 0}, {5, 0.5f, 5}, 0.5f, 0);
+    control.CreateStaticBox({0, -0.5f, 0}, {5, 0.5f, 5}, 0.5f, 0);
+    const auto body = world.CreateDynamicBox({0, 0.5f, 0}, {0.5f, 0.5f, 0.5f}, 2, 0.5f, 0);
+    const auto reference = control.CreateDynamicBox({0, 0.5f, 0}, {0.5f, 0.5f, 0.5f}, 2, 0.5f, 0);
+    world.SetLinearVelocity(body, {1, 0, 0});
+    control.SetLinearVelocity(reference, {1, 0, 0});
+    world.ApplyLinearAcceleration(body, {0, -9.81f, 0}, kDt);
+    control.ApplyLinearAcceleration(reference, {0, -9.81f, 0}, kDt);
+    world.Step(kDt);
+    control.Step(kDt);
+    const auto position = world.GetTransform(body).position;
+    const auto velocity = world.GetLinearVelocity(body);
+    bool initialized = true;
+    for (int i = 0; i < 64; ++i) initialized &= world.Init();
+    Check(initialized, "repeated Init succeeds");
+    const bool retained = world.AliveBodyCount() == 2;
+    Check(retained, "repeated Init retains existing bodies");
+    if (retained) {
+        Check(world.GetTransform(body).position == position && world.GetLinearVelocity(body) == velocity,
+              "repeated Init retains transform and velocity");
+        bool identical = true;
+        for (int i = 0; i < 60; ++i) {
+            world.ApplyLinearAcceleration(body, {0, -9.81f, 0}, kDt);
+            control.ApplyLinearAcceleration(reference, {0, -9.81f, 0}, kDt);
+            world.Step(kDt);
+            control.Step(kDt);
+            identical &= world.GetTransform(body).position == control.GetTransform(reference).position &&
+                         world.GetLinearVelocity(body) == control.GetLinearVelocity(reference);
+        }
+        Check(identical, "contact trajectory matches uninterrupted control exactly");
+    }
+    world.Shutdown();
+    world.Shutdown();
+    Check(world.Init() && world.AliveBodyCount() == 0, "explicit repeated Shutdown and reinitialization produce an empty world");
+    const auto fresh = world.CreateDynamicSphere({0, 1, 0}, 0.25f, 1, 0.5f, 0);
+    world.SetLinearVelocity(fresh, {1, 0, 0});
+    world.Step(kDt);
+    Check(world.GetTransform(fresh).position.x > 0, "reinitialized world still simulates");
+}
+
 void StepWithGravity(PhysicsWorld& world, const std::vector<BodyHandle>& bodies,
                      const glm::vec3& gravity) {
     for (const auto h : bodies) world.ApplyLinearAcceleration(h, gravity, kDt);
@@ -590,6 +634,7 @@ void TestSupportAndImpactOwnership() {
 }
 
 int main() {
+    TestInitializationLifecycle();
     TestColumns();
     TestRotatedStack();
     TestMomentum();

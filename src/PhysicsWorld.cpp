@@ -36,6 +36,9 @@ void PublishImpactCounters(const PhysicsWorld::StepStats& stats) {
 
 // Public fixed-step coordinator. Cohesive implementation modules share one Impl.
 bool PhysicsWorld::Init() {
+    // Initialization is idempotent. Replacing a live Impl would leak its
+    // allocations and discard bodies; Shutdown followed by Init resets it.
+    if (m_impl) return true;
     m_impl = new Impl();
     if(std::getenv("JUDAS_VALIDATION_NATIVE_OVERLAPS"))m_impl->overlapPairs.UseNativeQueries();
     const bool blockNormals=std::getenv("JUDAS_VALIDATION_POINT_CONTACTS")==nullptr;

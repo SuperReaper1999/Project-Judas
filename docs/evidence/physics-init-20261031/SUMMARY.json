@@ -1,0 +1,80 @@
+{
+  "base": "9bea040096da2fecb0c719c14698e55faa6d5e1f",
+  "scope": "Only the confirmed repeated PhysicsWorld::Init leak is corrected; exceptional cleanup risks are watchlist-only.",
+  "watchlist": "https://github.com/SuperReaper1999/Project-Judas/issues/29",
+  "sourceHashes": {
+    "src/PhysicsWorld.cpp": "ceb7c724e7230d7e8e60a2663a1d03d4b9d9a2d8163ad35e41edc21f83349ff4",
+    "src/PhysicsWorld.h": "097b80c0f40da757a23ec86c2cf09efb52df0ba51e317c260943121e07670eda",
+    "tests/Mk2PhysicsTests.cpp": "1162b367ee70357e86644475fd48d7517578601a18b3fe68683b12c6d07d0395"
+  },
+  "allocationProbe": {
+    "metric": "Linux mallinfo2().uordblks after warmed-up allocator; retained bytes, not RSS",
+    "iterations": 64,
+    "beforeExplicitShutdownControlBytes": 0,
+    "beforeDoubleInitRetainedBytes": 261120,
+    "afterExplicitShutdownControlBytes": 0,
+    "afterDoubleInitRetainedBytes": 0,
+    "note": "The original probe executable returns success when it observes a leak; use the printed measurements, not its exit code, as the acceptance result.",
+    "beforeBinarySha256": "06826732c64f379c08569f732dccfc81e5016cd9dee54d08832865c2c54684d2",
+    "afterBinarySha256": "e8d6f17e34c25e560349bd7e9c7c913471c8b3074a21a9f28021ed481f800f2a"
+  },
+  "tests": {
+    "mk2Assertions": 65,
+    "mk2Failures": 0,
+    "continuationChecks": 148,
+    "continuationFailures": 0
+  },
+  "rejectedTestSetup": "Two isolated continuation relinks using cached objects exited with signal 11. Their compatibility was not established; both were discarded. The authoritative normal CMake rebuild recompiled the engine and continuation fixture and passed 148/148 checks. The pre-existing baseline executable also passed 148/148.",
+  "branch": "Experimental",
+  "mainUnchanged": true,
+  "behavior": "Init is idempotent and preserves existing bodies/configuration. Shutdown followed by Init explicitly resets the world.",
+  "platform": "Native Linux; no Windows/Android qualification in this narrow correction.",
+  "binaries": {
+    "judas_mk2_physics_tests": {
+      "sha256": "1a570e899c9366e7ce776c0d9d5031741e5d6f8eca6dcf4fc6a4ae23258da09e",
+      "buildIdentity": {
+        "architecture": "x86_64",
+        "build_id": "1.1.0-alpha.1-Experimental-9bea040-dirty-8621f7d9a86e-uc26229f1f472",
+        "channel": "Experimental",
+        "compiler": "GNU",
+        "compiler_version": "15.2.0",
+        "configuration": "Release",
+        "maturity": "alpha",
+        "platform": "Linux",
+        "release_name": "Judas Engine Alpha v1.1.0",
+        "schema": 1,
+        "source_dirty": true,
+        "source_fingerprint": "8621f7d9a86e557a9986ac34266938a2c8015c061fadf8f35c4b6432dc5bb3a1",
+        "source_origin": "git",
+        "source_revision": "9bea040096da2fecb0c719c14698e55faa6d5e1f",
+        "source_tree": "9abf14fb5f5e97d72db0ea5afa2d2519ae743c28",
+        "source_untracked_count": 17,
+        "source_untracked_fingerprint": "c26229f1f4723cedda98eed5c01929b8471b67e0dd0c4959ac068fd8c9472faa",
+        "version": "1.1.0-alpha.1"
+      }
+    },
+    "judas_physics_continuation_tests": {
+      "sha256": "e3434f0ee9d469d632b5f20d3000309cd9c8c1526a7b06012d820f01af000219",
+      "buildIdentity": {
+        "architecture": "x86_64",
+        "build_id": "1.1.0-alpha.1-Experimental-9bea040-dirty-8621f7d9a86e-uc26229f1f472",
+        "channel": "Experimental",
+        "compiler": "GNU",
+        "compiler_version": "15.2.0",
+        "configuration": "Release",
+        "maturity": "alpha",
+        "platform": "Linux",
+        "release_name": "Judas Engine Alpha v1.1.0",
+        "schema": 1,
+        "source_dirty": true,
+        "source_fingerprint": "8621f7d9a86e557a9986ac34266938a2c8015c061fadf8f35c4b6432dc5bb3a1",
+        "source_origin": "git",
+        "source_revision": "9bea040096da2fecb0c719c14698e55faa6d5e1f",
+        "source_tree": "9abf14fb5f5e97d72db0ea5afa2d2519ae743c28",
+        "source_untracked_count": 17,
+        "source_untracked_fingerprint": "c26229f1f4723cedda98eed5c01929b8471b67e0dd0c4959ac068fd8c9472faa",
+        "version": "1.1.0-alpha.1"
+      }
+    }
+  }
+}
