@@ -1,0 +1,4 @@
+PRECONDITION light_80kg warmup_steps=240 mean_particle_speed=0.0364731
+PRECONDITION light_80kg observed_release_surface=1.7985 body_top=0.971442 clearance=0.827062
+CASE light_80kg failures=0 acceptance_failures=0 diagnostic_checks=1 diagnostic_failures=0 observational_scale=0 mass=80 particles=1152 y=1.749592423 vy=0.4937019348 fraction=0.4936849773 observed_fraction=0.5909088135 max_speed=2.817089558 particle_ms=16.541147 executed_ms=19.486903 amortized_ms=11.16317363
+SUMMARY checks=731 failures=0 acceptance_failures=0 diagnostic_checks=1 diagnostic_failures=0 strict_diagnostics=0 steps=480

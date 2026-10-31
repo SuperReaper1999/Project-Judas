@@ -2,6 +2,15 @@
 
 > Advanced fluid projects must explicitly enable **Project Settings → Experimental → Advanced Fluid Dynamics** (default off). The shipped fluid examples opt in. For ordinary visual water and swimming without these solvers, use [basic water](PROJECT_SETTINGS_AND_WATER.md).
 
+**Alpha restriction remains in force.** The Experimental wet-support repair
+separates spatial immersion from the broader motion-donor search. Body and
+swimming queries use connected wet patches, preventing distant water or separate
+pools from providing false support across an external dry gap. Within each
+patch, support is still a local convex-column envelope: enclosed air pockets and
+concave shoreline details are not a resolved multiphase boundary. See the
+[repair and validation report](FLUID_WET_CLASSIFICATION_REPAIR.md). No activation
+delay, force clamp, changed gravity or reduced particle/solver budget is used.
+
 For current conserved reservoirs/containers and dynamic surfaces, see
 [Liquid reservoirs](LIQUID_RESERVOIRS.md) and [Liquid surfaces](LIQUID_SURFACES.md).
 This project preserves the accepted legacy PBF/cavity repair; its 20 Hz cadence
@@ -48,8 +57,9 @@ uniform gravity. Neither implementation knows which demonstration it is running.
 
 ## Scope
 
-The accepted approximate production PBF/hydrostatic/cavity/controller model is
-unchanged. Exterior fluid/body momentum is not exactly conserved. Water surface
+The approximate production PBF/hydrostatic/cavity/controller model is retained,
+with the Experimental spatial wet-support correction described above.
+Exterior fluid/body momentum is not exactly conserved. Water surface
 extraction and transparency are visual approximations. This is a local planetary
 basin, not a planet-wide ocean. No new character controller, fluid research solver
 or M49 capability is included.

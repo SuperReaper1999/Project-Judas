@@ -1,4 +1,5 @@
 #include "FluidHydrostatics.h"
+#include "FluidWetFootprint.h"
 #include "GravityField.h"
 #include "Narrowphase.h"
 
@@ -175,7 +176,7 @@ void FluidHydrostaticField::Build(const std::vector<FluidParticle>& particles,fl
         return a.x<b.x;
     });
 }
-FluidFieldSample FluidHydrostaticField::Query(const glm::vec3& point,const glm::vec3& direction,float halfHeight,float radius,const glm::vec3& tangentAxis,const FluidSolidQuery* solid) const {
+FluidFieldSample FluidHydrostaticField::Query(const glm::vec3& point,const glm::vec3& direction,float halfHeight,float radius,const glm::vec3& tangentAxis,const FluidSolidQuery* solid,bool connectedWetSupport) const {
     FluidFieldSample out; out.density=m_density;
     if (m_particles.empty()) return out;
     if (!Finite(point) || !Finite(direction) || !(glm::length(direction)>0) || !std::isfinite(halfHeight) || halfHeight<0 || !std::isfinite(radius) || radius<0) throw std::invalid_argument("invalid hydrostatic query");
@@ -258,10 +259,15 @@ FluidFieldSample FluidHydrostaticField::Query(const glm::vec3& point,const glm::
     std::optional<PreparedSolidOcclusion> occlusion;
     if(solid && !columns.empty())occlusion.emplace(tangent,up,bitangent,columnWidth,halfHeight,*solid);
     double columnWeight=0, weightedFraction=0;
+    std::vector<FluidWetColumnFootprint> wetFootprint;
     for(std::size_t begin=0,end=0;begin<columns.size();begin=end) {
         const auto x=columns[begin].x,z=columns[begin].z;
         end=begin+1;while(end<columns.size() && columns[end].x==x && columns[end].z==z)++end;
         const glm::dvec3 columnCenter=glm::dvec3(point)+tangent*(originX+x*columnWidth)+bitangent*(originZ+z*columnWidth);
+        // Connectivity belongs to observed water, not the query's occlusion
+        // mask or thin vertical footprint. Water below/around a solid still
+        // connects its pool; it cannot itself contribute a masked wet sample.
+        wetFootprint.push_back({x,z,{originX+x*columnWidth,originZ+z*columnWidth},false});
         if (occlusion && occlusion->Occluded(columnCenter)) continue;
 
         // The exterior field is extended through the SAME unoccluded columns
@@ -307,7 +313,11 @@ FluidFieldSample FluidHydrostaticField::Query(const glm::vec3& point,const glm::
         const double t=1.0-lateral2/reach2, w=columnWidth*columnWidth*t*t;
         columnWeight+=w;
         weightedFraction+=w*(halfHeight>0 ? occupied/(2*halfHeight) : (occupied>0 ? 1.0 : 0.0));
+        if (occupied > 0) {
+            wetFootprint.back().wet = true;
+        }
     }
+    if (!FluidWetColumnsContainOrigin(wetFootprint,columnWidth,connectedWetSupport)) return out;
     if (columnWeight>0) out.fraction=static_cast<float>(weightedFraction/columnWeight);
     if (out.fraction>0) {
         if (bulkWeight>0) { out.velocity=glm::vec3(bulkVelocity/bulkWeight); out.acceleration=glm::vec3(bulkAcceleration/bulkWeight); }
@@ -333,7 +343,7 @@ FluidHydrostaticResult EvaluateFluidHydrostatics(const FluidHydrostaticField& fi
         }
         const FluidSolidQuery solid{volume,pose};
         const auto fluid=field.Query(point,up,height,volume.boundRadius,tangent,
-            geometry==FluidVolumeGeometry::DisplacedSolid ? &solid : nullptr);
+            geometry==FluidVolumeGeometry::DisplacedSolid ? &solid : nullptr,true);
         const double v=static_cast<double>(sample.volume)*fluid.fraction;
         const glm::dvec3 f=-static_cast<double>(fluid.density)*v*(glm::dvec3(g)-glm::dvec3(fluid.acceleration));
         wet+=v; center+=v*glm::dvec3(point); velocity+=v*glm::dvec3(fluid.velocity); acceleration+=v*glm::dvec3(fluid.acceleration);

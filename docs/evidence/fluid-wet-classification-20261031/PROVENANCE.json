@@ -1,0 +1,25 @@
+{
+  "baseline_commit": "cafe797a2dc661f1d1aeb38cf626e5c6184c0366",
+  "platform": "native Linux",
+  "cpu": "AMD Ryzen 5 5600",
+  "gpu_for_application_checks": "NVIDIA GTX 970",
+  "configuration": "Release, GNU 15.2.0, -O3 -DNDEBUG",
+  "advanced_fluid_lock": "Alpha restriction unchanged; Experimental explicit opt-in",
+  "human_validation": "pending",
+  "independent_research": "read only, no code adopted or modified",
+  "sources": {
+    "src/FluidHydrostatics.cpp": "804d5d36764c50ceb37d6ec71d06d46d75108065364ec90e0da48be6a078f2ac",
+    "src/FluidHydrostatics.h": "908b2f5d4143fce0b23666daeb38f31cce60d498c389fe314ab95bdafc5b8b35",
+    "src/FluidWetFootprint.h": "8e3b368656069a10d57ea3b1fb3dca8a6b03c45a6ef87355fcac54380535d5f7",
+    "src/ProductionFluidCoupling.cpp": "219d30bc1664ebc61ad45d4bed3bbbedc94bb4db6a4fc6cc02075eedc5afc035",
+    "tests/FluidHydrostaticsTests.cpp": "6e6f6e204613412fcfc89fcb6075a1b9e1b8063b1921cfc2a9e476a99ba2ce2f",
+    "assets/scenes/terrain.judas": "0176589e5b2b6076bfe3b453d69ffe60bc498a8d5db9f483286843002365bdaa",
+    "assets/scenes/terrain_flat_comparison.judas": "7a26283cbcd1278e90ca1d7e419ad82d8fb93d864cbdf9c448696823533a1921"
+  },
+  "binaries": {
+    "judas": "753d8ec38cbba9ddf4f7ed09d2507b47fe310dcca7b6c830613cc8707e50b232",
+    "judas_fluid_hydrostatics_tests": "75cdd41e8b3d14f5aa60d53e5177e282f2fd40c7a2b6d238f953f1d6ff66cd5c",
+    "judas_production_fluid_tests": "938f9fcf9d84652a91809fa541dd109492e5d507bc9ecc99a545de1d52d6e298",
+    "judas_basic_water_application_tests": "dfc3e1513944d993607e61e733f7027bf02ab4d511f6d9fd208d8586dcd58f71"
+  }
+}

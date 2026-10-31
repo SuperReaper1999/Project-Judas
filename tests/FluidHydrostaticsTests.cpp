@@ -191,6 +191,63 @@ int main() {
     particles={{{0,-.3f,0},{0,-.3f,0},{0,0,0},8,{0,0,0}},{{0,.3f,0},{0,.3f,0},{0,0,0},8,{0,0,0}}};field.Build(particles,1000);
     const auto unresolvedPocket=field.Query({0,0,0},{0,1,0},.05f,.3f,{1,0,0});
     std::cout<<"approximation_limit near_air_pocket_fraction="<<unresolvedPocket.fraction<<" physical_point_occupancy=0 local_envelope_occupancy=1\n";
+    // Regression: a motion-donor radius is not a physical water footprint.
+    // Previously one distant column normalized its own tiny weight to 100%
+    // wetness, and applied buoyancy to any sufficiently nearby dry body.
+    particles={{{0,0,0},{0,0,0},{.4f,-.2f,.1f},125,{0,0,0}}};
+    field.Build(particles,1000);
+    for(float x:{.5f,1.f,2.f,3.f,4.f}) {
+        const auto dry=field.Query({x,0,0},{0,1,0},.0625f,3.6f,{1,0,0});
+        Near(dry.fraction,0,0,"distant donor cannot create lateral wet support");
+        VectorNear(dry.acceleration,{0,0,0},0,"dry spatial query publishes no water acceleration");
+    }
+    for(float half:{.25f,.45f}) {
+        const auto dryBox=MakeBoxFluidVolume(glm::vec3(half));
+        BodyTransform dryPose;dryPose.position={1.1f,0,0};
+        const auto dry=EvaluateFluidHydrostatics(field,dryBox,dryPose,gravity);
+        Near(dry.fraction,0,0,"generic dry box has no false displaced volume");
+        VectorNear(dry.buoyancyForce,{0,0,0},0,"generic dry box has no phantom buoyancy");
+        VectorNear(dry.buoyancyTorque,{0,0,0},0,"generic dry box has no phantom torque");
+        auto turned=particles;
+        const auto turn=glm::angleAxis(.73f,glm::normalize(glm::vec3(1,-2,3)));
+        const glm::vec3 shift(7,-3,9);Rotate(turned,turn,shift);
+        FluidHydrostaticField rotatedField;rotatedField.Build(turned,1000);
+        dryPose.position=turn*dryPose.position+shift;dryPose.rotation=turn;
+        const Uniform turnedGravity(turn*gravity.value);
+        VectorNear(EvaluateFluidHydrostatics(rotatedField,dryBox,dryPose,turnedGravity).buoyancyForce,
+                   {0,0,0},0,"dry gap stays dry under rotated gravity and translation");
+    }
+    // Positive controls at the same coarse spacing: the geometric guard must
+    // retain water that really overlaps a query, including its free surface.
+    Near(field.Query({0,0,0},{0,1,0},.0625f,3.6f,{1,0,0}).fraction,
+         1,2e-6,"coarse particle retains actual local query support");
+    // An immersed solid needs exterior donors: a single particle inside the
+    // solid is excluded by the existing solid-occlusion contract, not water
+    // displaced around a body. Use a real surrounding coarse pool here.
+    field.Build(Pool(.5f),1000);
+    const auto smallBox=MakeBoxFluidVolume(glm::vec3(.05f));
+    BodyTransform smallPose;smallPose.position.y=-1;
+    const auto wet=EvaluateFluidHydrostatics(field,smallBox,smallPose,gravity);
+    Near(wet.fraction,1,2e-6,"coarse particle footprint retains genuine full immersion");
+    Near(wet.buoyancyForce.y,9.81,.0001,"coarse full immersion keeps displaced-water weight");
+    smallPose.position.y=0;
+    const auto surface=EvaluateFluidHydrostatics(field,smallBox,smallPose,gravity);
+    Near(surface.fraction,.5,2e-6,"coarse footprint retains genuine half immersion");
+    Near(surface.buoyancyForce.y,4.905,.0001,"coarse half immersion keeps displaced-water weight");
+    // Two disconnected patches must not join their convex envelopes across a
+    // dry player/body. Keep the lower-level column interpolation checks above.
+    particles={{{-1.1f,0,0},{-1.1f,0,0},{0,0,0},125,{0,0,0}},
+               {{ 1.1f,0,0},{ 1.1f,0,0},{0,0,0},125,{0,0,0}}};
+    field.Build(particles,1000);
+    Near(field.Query({0,0,0},{0,1,0},.1f,3.6f,{1,0,0},nullptr,true).fraction,
+         0,0,"disconnected pools do not immerse a dry point between them");
+    const auto between=EvaluateFluidHydrostatics(field,MakeBoxFluidVolume(glm::vec3(.25f)),{},gravity);
+    VectorNear(between.buoyancyForce,{0,0,0},0,"disconnected pools do not support a dry box");
+    const auto dryPlayer=EvaluateFluidHydrostatics(field,MakeBoxFluidVolume(glm::vec3(.1f)),{},gravity,
+                                                FluidVolumeGeometry::NonDisplacingVolume);
+    Near(dryPlayer.fraction,0,0,"disconnected pools do not trigger false swimming");
+    Near(field.Query({-1.1f,0,0},{0,1,0},.1f,3.6f,{1,0,0},nullptr,true).fraction,
+         1,2e-6,"connected query still recognizes actual water in an isolated patch");
     std::cout<<"SUMMARY checks="<<checks<<" failures="<<failures<<" seconds="<<std::chrono::duration<double>(std::chrono::steady_clock::now()-begin).count()<<'\n';
     return failures?1:0;
 }

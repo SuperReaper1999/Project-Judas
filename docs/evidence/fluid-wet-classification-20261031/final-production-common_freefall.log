@@ -1,0 +1,2 @@
+CASE common_freefall failures=0 acceptance_failures=0 diagnostic_checks=0 diagnostic_failures=0 observational_scale=0 mass=216.0000153 particles=1152 y=-79.0605011 vy=-39.48855209 fraction=0.4525823295 observed_fraction=1 max_speed=39.48855591 particle_ms=6.527221 executed_ms=8.472249 amortized_ms=5.517599575
+SUMMARY checks=723 failures=0 acceptance_failures=0 diagnostic_checks=0 diagnostic_failures=0 strict_diagnostics=0 steps=240

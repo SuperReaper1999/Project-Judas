@@ -52,7 +52,10 @@ struct FluidFieldSample {
 // particles do not masquerade as a lower free surface. There is no SPH reaction.
 // The lattice is anchored at the first retained particle, so its reference
 // follows universe rotations/translations; changing particle order can change
-// the finite-resolution approximation. Shorelines below the reach are smeared.
+// the finite-resolution approximation. Wetness is restricted to the convex
+// lateral envelope of observed wet column footprints; the donor reach does
+// not make a dry point outside that envelope wet. Sub-resolution shorelines,
+// concavities and air pockets inside this local envelope remain unresolved.
 // Resolved bulk motion retains the local spherical Vp*(1-distance²/reach²)²
 // kernel. If that kernel has no donors for a wet envelope, motion is extended
 // from the admitted unoccluded columns using Vp * admitted interval fraction *
@@ -62,6 +65,9 @@ struct FluidFieldSample {
 // There is no velocity classifier or temporal filter.
 // Direction/tangent are supplied by the caller; zero-gravity callers use a
 // body-local reference, never a privileged world-up gravity direction.
+// The low-level default retains interpolation across observed columns for
+// reconstruction controls. Physical loads, swimming and script samples request
+// connectedWetSupport, so separate wet patches do not fill the gap between them.
 class FluidHydrostaticField {
 public:
     void Build(const std::vector<FluidParticle>& particles, float restDensity,
@@ -69,7 +75,8 @@ public:
     FluidFieldSample Query(const glm::vec3& point, const glm::vec3& up,
                            float sampleHalfHeight, float extrapolationRadius,
                            const glm::vec3& tangentAxis,
-                           const FluidSolidQuery* solid = nullptr) const;
+                           const FluidSolidQuery* solid = nullptr,
+                           bool connectedWetSupport = false) const;
     float RestDensity() const { return m_density; }
     float MaximumParticleSpacing() const { return m_maxSpacing; }
     std::size_t ParticleCount() const { return m_particles.size(); }

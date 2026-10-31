@@ -1,0 +1,40 @@
+Fluid gravity and momentum
+    gravity speed 4.904998, transverse 0.000004
+  OK   free liquid accelerates along supplied arbitrary gravity
+  OK   zero gravity creates no world-down velocity or hidden drag
+  OK   a tilted open cup invents no world-down water motion in zero gravity
+Rotated fluid scenario
+    rotated position error 0.000001, velocity error 0.000001
+  OK   rotated gravity and collider produce equivalent local position
+  OK   rotated gravity and collider produce equivalent velocity
+Rotated 3D density-pressure cluster
+  OK   cluster actually exercises density pressure rather than only free flight
+    pressure displacement 0.024886 m, maximum rotation errors 0.000004 m / 0.000007 m/s
+  OK   non-symmetric 3D fluid pressure rotates equivalently over 30 fixed steps
+Fluid/solid contact
+  OK   stationary geometric bottom contains water without penetration
+  OK   water settles rather than bouncing indefinitely on a bottom
+  OK   moving box physically displaces contacting water
+  OK   moving box imparts its point velocity to water in zero gravity
+  OK   fluid reaction identifies the actual rigid-body owner
+  OK   fluid reaction identifies the actual rigid-body owner
+  OK   moving-wall momentum gain has an equal-and-opposite rigid-body reaction
+  OK   rotating box imparts motion at its off-centre contact point
+Sphere geometry and distant origin
+  OK   fluid cannot penetrate an ordinary spherical world surface
+  OK   water settles on a curved solid surface
+  OK   rotating and translating the universe by billions of metres preserves fluid position
+  OK   rotated far-origin fluid velocity remains locally equivalent
+Two geometric cups, pour and pour back
+  OK   water remains inside upright Cup A before tilting
+  OK   water crosses Cup A rim, travels through space and enters Cup B
+  OK   the very same water particles leave Cup B when its geometry tips
+  OK   fluid mass remains constant through both pours
+Density, mass and presentation
+  OK   overdense particles separate under density pressure
+  OK   presentation interpolates authoritative particle positions
+  OK   particle count and total fluid mass remain exact
+  OK   symmetric pressure corrections preserve isolated pair momentum
+  OK   diagnostics remain finite after pressure relaxation
+  OK   reset removes authoritative fluid state cleanly
+FluidWorld: PASS (0 failures)

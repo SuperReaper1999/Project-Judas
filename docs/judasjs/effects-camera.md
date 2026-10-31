@@ -60,6 +60,14 @@ and acceleration is zero. Overlapping water uses greatest immersion, never summe
 buoyancy. If both a basic and particle sample exist, greatest immersion wins.
 Dry worlds and projects with swimming queries disabled return dry/zero data.
 
+The Experimental particle path restricts immersion to a connected patch's
+observed lateral wet footprint. `radius` selects motion donors; increasing it
+does not extend wetness across an external dry gap or join disconnected pools.
+Within a connected patch this remains a local convex-column approximation:
+enclosed air pockets and concave shoreline details can remain unresolved.
+Advanced Fluids are still unavailable in Alpha builds pending qualification;
+this repair does not change that lock or Basic Water.
+
 Use the sample with resolved Judas gravity for project-owned buoyancy, drag and
 propulsion. CharacterMotor remains geometric movement, not a built-in swim mode.
 See [Project Settings and water](../PROJECT_SETTINGS_AND_WATER.md) for authoring,
