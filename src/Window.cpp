@@ -6,15 +6,38 @@
 #include "BrowserSurface.h"
 #include <emscripten/html5_webgl.h>
 EM_ASYNC_JS(void, AwaitBrowserFrame, (), {
-    // Browsers can stop RAF before the game observes the visibility event.
-    // Wake for lifecycle observation even then; the existing inactive branch
-    // suspends simulation/audio and resets its clock. Visible frames prefer RAF.
-    await new Promise(resolve => {
-        let complete=false;let frame=0;let timer=0;
-        const finish=()=>{if(complete)return;complete=true;
-            cancelAnimationFrame(frame);clearTimeout(timer);resolve();};
-        timer=setTimeout(finish,250);frame=requestAnimationFrame(finish);
-    });
+    // RAF paces the compositor, but does not bound work queued to WebGL's
+    // renderer process. Keep only one submitted GPU frame outstanding. Waiting
+    // asynchronously leaves the page and input proxies responsive; it does not
+    // change the fixed-step simulation policy or discard rendered frames.
+    const gl=GLctx;
+    const fence=gl.fenceSync(gl.SYNC_GPU_COMMANDS_COMPLETE,0);
+    if(!fence)throw new Error('Cannot synchronize browser GPU frame');
+    try {
+        gl.flush();
+        await new Promise((resolve,reject) => {
+            let complete=false,frame=0,timer=0;
+            const cancel=()=>{cancelAnimationFrame(frame);clearTimeout(timer);};
+            const schedule=()=>{
+                // A hidden tab can stop RAF before the engine observes it.
+                // Retain the lifecycle wake while waiting for GPU completion.
+                timer=setTimeout(poll,250);frame=requestAnimationFrame(poll);
+            };
+            const poll=()=>{
+                if(complete)return;
+                cancel();
+                const state=gl.clientWaitSync(fence,0,0);
+                if(state===gl.ALREADY_SIGNALED||state===gl.CONDITION_SATISFIED){
+                    complete=true;resolve();
+                }else if(state===gl.WAIT_FAILED||gl.isContextLost()){
+                    complete=true;reject(new Error('Browser GPU frame failed'));
+                }else schedule();
+            };
+            schedule();
+        });
+    } finally {
+        gl.deleteSync(fence);
+    }
 });
 #endif
 

@@ -1,0 +1,131 @@
+{
+  "passed": true,
+  "browser": "firefox",
+  "version": "157.0",
+  "dpr": 2,
+  "checks": [
+    "preload ready",
+    "ungranted pointer capture cannot rotate camera",
+    "bounded drawable 1280x960",
+    "aspect preserved 1280x960",
+    "1280x960 stable CSS rectangle",
+    "1280x960 actual rendered corner markers",
+    "bounded drawable 700x1000",
+    "aspect preserved 700x1000",
+    "700x1000 stable CSS rectangle",
+    "700x1000 actual rendered corner markers",
+    "bounded drawable 1441x761",
+    "aspect preserved 1441x761",
+    "1441x761 stable CSS rectangle",
+    "1441x761 actual rendered corner markers",
+    "bounded drawable 980x700",
+    "aspect preserved 980x700",
+    "980x700 stable CSS rectangle",
+    "980x700 actual rendered corner markers",
+    "actual MK2 motor and gameplay progress",
+    "mouse look uses CSS pixels independent of backing DPI",
+    "page control focus cannot move player",
+    "refocus has no stuck held movement",
+    "resized UI click reaches owning JudasJS script",
+    "fullscreen stable CSS rectangle",
+    "fullscreen actual rendered corner markers",
+    "real Fullscreen API entered",
+    "preload ready",
+    "cold load restores physical endpoint and UI progress",
+    "no runtime exceptions"
+  ],
+  "sizes": [
+    {
+      "width": 1874,
+      "height": 1119,
+      "dom": {
+        "width": 1874,
+        "height": 1119
+      },
+      "css": {
+        "width": 1256,
+        "height": 750
+      },
+      "ratio": 2,
+      "surface": {
+        "width": 1874,
+        "height": 1119,
+        "active": true,
+        "focused": true,
+        "generation": 2
+      }
+    },
+    {
+      "width": 1339,
+      "height": 1565,
+      "dom": {
+        "width": 676,
+        "height": 790
+      },
+      "css": {
+        "width": 676,
+        "height": 790
+      },
+      "ratio": 2,
+      "surface": {
+        "width": 1339,
+        "height": 1565,
+        "active": true,
+        "focused": true,
+        "generation": 3
+      }
+    },
+    {
+      "width": 2322,
+      "height": 903,
+      "dom": {
+        "width": 1339,
+        "height": 1565
+      },
+      "css": {
+        "width": 1417,
+        "height": 551
+      },
+      "ratio": 2,
+      "surface": {
+        "width": 2322,
+        "height": 903,
+        "active": true,
+        "focused": true,
+        "generation": 4
+      }
+    },
+    {
+      "width": 1912,
+      "height": 980,
+      "dom": {
+        "width": 1912,
+        "height": 980
+      },
+      "css": {
+        "width": 956,
+        "height": 490
+      },
+      "ratio": 2,
+      "surface": {
+        "width": 1912,
+        "height": 980,
+        "active": true,
+        "focused": true,
+        "generation": 5
+      }
+    }
+  ],
+  "yawDelta": -0.08400000000000002,
+  "visibility": "separate visibility.cjs normal-browser gate",
+  "saved": {
+    "x": 1.0775693655014038,
+    "y": 0.917275071144104,
+    "z": 5.648878574371338
+  },
+  "loaded": {
+    "x": 1.0775693655014038,
+    "y": 0.917275071144104,
+    "z": 5.648878574371338
+  }
+}

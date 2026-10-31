@@ -98,6 +98,16 @@ migration contracts still apply.
 
 ## Evidence status
 
+Human player-stage testing exposed severe memory growth and close-time desktop
+pressure on Firefox/NVIDIA. Experimental now bounds unfinished GPU submission
+with asynchronous frame fences; RAF alone was insufficient. The fresh-source
+correction passed input, high-DPI, cold-save and background/audio checks and the
+installed-Firefox leave-game reproduction. See the
+[backpressure investigation](BROWSER_FRAME_BACKPRESSURE_REPORT.md) for original
+failures, memory measurements and remaining human checks. The 1 GiB WASM limit
+is **not** a whole-browser memory guarantee. Older browser packages must be
+rebuilt to include this correction.
+
 The original MK2 headless suite passed as actual compiled WASM under Node. The
 launch-option parser passed 28 checks and the exporter boundary suite passed ten.
 Chromium 156 with software ANGLE/SwiftShader rendered the actual Traversal game,

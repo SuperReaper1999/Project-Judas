@@ -1,0 +1,196 @@
+{
+  "passed": true,
+  "browser": "156.0.8078.4",
+  "checks": [
+    "normal browser genuinely hides the game tab",
+    "hidden state reaches native application lifecycle",
+    "game frames and fixed simulation stop while hidden",
+    "real audio device was running before hide",
+    "native audio device suspends",
+    "foreground clock avoids hidden-time catch-up",
+    "key released in another tab cannot stick on return",
+    "UI visibility epochs retain both transitions",
+    "native audio resumes",
+    "no runtime exceptions"
+  ],
+  "beforeAudio": [
+    "running"
+  ],
+  "hiddenAudio": [
+    "suspended"
+  ],
+  "epochHidden": 1,
+  "epochVisible": 2,
+  "stopped": {
+    "sequence": 7,
+    "state": {
+      "health": 3,
+      "cells": [],
+      "danger": 0,
+      "nearBeacon": false,
+      "charged": false,
+      "won": false,
+      "lost": false,
+      "cooldown": 0,
+      "time": 0.6500000339001417,
+      "pulses": 0,
+      "request": null,
+      "message": "Find the three lantern cells."
+    },
+    "position": {
+      "x": 0.33750003576278687,
+      "y": 0,
+      "z": 0
+    },
+    "gateValid": true,
+    "audio": {
+      "state": "playing",
+      "error": null,
+      "enabled": true,
+      "playing": true,
+      "requested": true,
+      "ready": true,
+      "streamed": false,
+      "loop": true,
+      "starved": false,
+      "position": 0.5546666666666666,
+      "duration": 1,
+      "bufferBytes": 0,
+      "underruns": 0,
+      "dopplerRatio": 1,
+      "occlusionGain": 1,
+      "cutoff": 24000,
+      "distanceGain": 1
+    },
+    "status": null
+  },
+  "resumed": {
+    "sequence": 8,
+    "state": {
+      "health": 3,
+      "cells": [],
+      "danger": 0,
+      "nearBeacon": false,
+      "charged": false,
+      "won": false,
+      "lost": false,
+      "cooldown": 0,
+      "time": 0.7833333741873503,
+      "pulses": 0,
+      "request": null,
+      "message": "Find the three lantern cells."
+    },
+    "position": {
+      "x": 0.8708333373069763,
+      "y": 0,
+      "z": 0
+    },
+    "gateValid": true,
+    "audio": {
+      "state": "playing",
+      "error": null,
+      "enabled": true,
+      "playing": true,
+      "requested": true,
+      "ready": true,
+      "streamed": false,
+      "loop": true,
+      "starved": false,
+      "position": 0.6826666666666666,
+      "duration": 1,
+      "bufferBytes": 0,
+      "underruns": 0,
+      "dopplerRatio": 1,
+      "occlusionGain": 1,
+      "cutoff": 24000,
+      "distanceGain": 1
+    },
+    "status": null
+  },
+  "settled": {
+    "sequence": 28,
+    "state": {
+      "health": 3,
+      "cells": [],
+      "danger": 0,
+      "nearBeacon": false,
+      "charged": false,
+      "won": false,
+      "lost": false,
+      "cooldown": 0,
+      "time": 3.150000164285302,
+      "pulses": 0,
+      "request": null,
+      "message": "Find the three lantern cells."
+    },
+    "position": {
+      "x": 1.066666603088379,
+      "y": 0,
+      "z": 0
+    },
+    "gateValid": true,
+    "audio": {
+      "state": "playing",
+      "error": null,
+      "enabled": true,
+      "playing": true,
+      "requested": true,
+      "ready": true,
+      "streamed": false,
+      "loop": true,
+      "starved": false,
+      "position": 0.41333333333333333,
+      "duration": 1,
+      "bufferBytes": 0,
+      "underruns": 0,
+      "dopplerRatio": 1,
+      "occlusionGain": 1,
+      "cutoff": 24000,
+      "distanceGain": 1
+    },
+    "status": null
+  },
+  "later": {
+    "sequence": 48,
+    "state": {
+      "health": 3,
+      "cells": [],
+      "danger": 0,
+      "nearBeacon": false,
+      "charged": false,
+      "won": false,
+      "lost": false,
+      "cooldown": 0,
+      "time": 5.533333621919155,
+      "pulses": 0,
+      "request": null,
+      "message": "Find the three lantern cells."
+    },
+    "position": {
+      "x": 1.066666603088379,
+      "y": 0,
+      "z": 0
+    },
+    "gateValid": true,
+    "audio": {
+      "state": "playing",
+      "error": null,
+      "enabled": true,
+      "playing": true,
+      "requested": true,
+      "ready": true,
+      "streamed": false,
+      "loop": true,
+      "starved": false,
+      "position": 0.8026666666666666,
+      "duration": 1,
+      "bufferBytes": 0,
+      "underruns": 0,
+      "dopplerRatio": 1,
+      "occlusionGain": 1,
+      "cutoff": 24000,
+      "distanceGain": 1
+    },
+    "status": null
+  }
+}

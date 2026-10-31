@@ -25,6 +25,14 @@ def module(name):
 
 compiler, package = module('build_browser'), module('browser_package')
 
+class FramePacingTests(unittest.TestCase):
+    @unittest.skipUnless(shutil.which('node'), 'Node is required for browser frame-pacing checks')
+    def test_gpu_backpressure_and_failure_cleanup(self):
+        result = subprocess.run([shutil.which('node'), str(ROOT/'tests/browser/frame_pacing.cjs')],
+                                capture_output=True, text=True, timeout=15)
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        self.assertIn('25 browser frame-pacing checks passed', result.stdout)
+
 def receipt(root):
     files = {p.relative_to(root).as_posix():hashlib.sha256(p.read_bytes()).hexdigest()
              for p in root.rglob('*') if p.is_file() and p.name != 'BROWSER_BUILD.json'}

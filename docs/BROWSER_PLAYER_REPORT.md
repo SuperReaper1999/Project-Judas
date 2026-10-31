@@ -1,5 +1,9 @@
 # Experimental browser player checkpoint — 31 October 2026
 
+Follow-up: human testing found severe Firefox memory growth that the short
+automated runs below missed. The original evidence is retained; see the
+[subsequent correction and qualification](BROWSER_FRAME_BACKPRESSURE_REPORT.md).
+
 Automated qualification for a bounded presentation/input/lifecycle stage. Human
 acceptance is pending. Development is on Experimental; main, published Alpha
 packages, release channels and Advanced Fluid policy are unchanged.

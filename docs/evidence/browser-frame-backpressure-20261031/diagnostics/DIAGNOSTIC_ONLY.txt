@@ -1,0 +1,2 @@
+finish-web is a disposable modified JS diagnostic, NOT a qualified export. It adds GLctx.finish() to the generated AwaitBrowserFrame callback. Its local receipt file hash was refreshed to serve this deliberately changed diagnostic. It must not be shipped or represented as the committed runtime. Original final-player-web is unchanged.
+fence-web is a second disposable JS diagnostic with one outstanding GPU frame fence, asynchronous 4ms readiness polling, flush and fence deletion. Its receipt is local diagnostic integrity only, not release qualification.
