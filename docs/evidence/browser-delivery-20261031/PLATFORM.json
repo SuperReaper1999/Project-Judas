@@ -1,0 +1,17 @@
+{
+  "cpu": "AMD Ryzen 5 5600, 6 cores / 12 logical CPUs",
+  "ram": "8 GB installed; approximately 7.7 GiB usable",
+  "hostGpu": "NVIDIA GeForce GTX 970, 4096 MiB, driver 580.178.04",
+  "measurementRenderer": "Chromium headless SwiftShader; network/functional measurement, not native GPU throughput",
+  "chromium": "156.0.8078.4",
+  "firefox": "157.0",
+  "node": "20.20.2",
+  "python": "3.14.4",
+  "browserContainment": {
+    "MemoryMaxMiB": 2300,
+    "MemorySwapMax": 0
+  },
+  "sourceParent": "ade5199a2e0645223a3485ba1868e24bbed80ec7",
+  "mainUnchanged": "49c4f3d9e29debe669411f01501e0276dea23231",
+  "zlibRuntime": "1.3.1"
+}

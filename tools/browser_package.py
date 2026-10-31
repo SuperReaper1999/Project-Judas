@@ -1,7 +1,26 @@
 """Strict integrity/inventory check shared by export and the localhost preview."""
 import hashlib
+import gzip
 import json
 from pathlib import Path, PurePosixPath
+
+
+def compress_payloads(root):
+    """Deterministic optional transfer representations; retain original files."""
+    encodings = {}
+    for path in sorted(Path(root).iterdir()):
+        if not path.is_file() or path.suffix not in ('.wasm', '.js', '.data') or path.stat().st_size < 4096:
+            continue
+        target = path.with_name(path.name + '.gz')
+        with path.open('rb') as source, target.open('wb') as output:
+            with gzip.GzipFile(filename='', fileobj=output, mode='wb', compresslevel=9, mtime=0) as encoded:
+                for block in iter(lambda: source.read(1024 * 1024), b''):
+                    encoded.write(block)
+        if target.stat().st_size < path.stat().st_size * .95:
+            encodings[path.name] = {'gzip': target.name}
+        else:
+            target.unlink()
+    return encodings
 
 
 def verify_package(package):
@@ -51,4 +70,29 @@ def verify_package(package):
             raise ValueError('Package integrity mismatch: '+name)
     if actual != set(files):
         raise ValueError('Missing package files: '+', '.join(sorted(set(files)-actual)))
+    encodings = data.get('encodings', {})
+    if not isinstance(encodings, dict) or len(encodings) > len(files):
+        raise ValueError('Invalid encoded representation inventory')
+    for original, variants in encodings.items():
+        if original not in files or not isinstance(variants, dict) or set(variants) != {'gzip'}:
+            raise ValueError('Invalid encoded representation: '+str(original))
+        encoded = variants['gzip']
+        if encoded != original + '.gz' or encoded not in files:
+            raise ValueError('Invalid gzip representation: '+str(original))
+        # Hash validation alone cannot establish that a sidecar decodes to the
+        # named original. Bound decompression by that verified original's size.
+        expected = (root/original).stat().st_size
+        digest = hashlib.sha256()
+        count = 0
+        try:
+            with gzip.open(root/encoded, 'rb') as stream:
+                while block := stream.read(min(1024*1024, expected-count+1)):
+                    count += len(block)
+                    if count > expected:
+                        raise ValueError('Gzip representation exceeds original: '+original)
+                    digest.update(block)
+        except (OSError, EOFError) as error:
+            raise ValueError('Invalid gzip representation: '+original) from error
+        if count != expected or digest.hexdigest() != files[original]:
+            raise ValueError('Gzip representation differs from original: '+original)
     return data

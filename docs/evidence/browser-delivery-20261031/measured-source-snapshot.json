@@ -1,0 +1,13 @@
+{
+  "head": "ade5199a2e0645223a3485ba1868e24bbed80ec7",
+  "files": {
+    "tools/browser_package.py": "875aa061b103d3cca27f8f178b7f8893e6fd445e7b010a6c845fbbb9a72b1969",
+    "tools/build_browser.py": "44a517e8fcbfc64aecf7e0b4e46b29cac927033dff137a0bc4d8282b14442b73",
+    "tools/serve_browser.py": "78b792c559fb95a905d8d5a3e48cc9af5f60bf346a8a007b5636258d37a14266",
+    "platform/browser/shell.html": "eefcc5842da7ef75c096e7f9c629d34e70f21b40373cde0007aa2496b8ea337f",
+    "tests/test_browser_delivery.py": "b73f17a4204b42647ce06ce71ddd10590663b7bc51b54b34116cd2f34ab0e444",
+    "tests/browser/loading.cjs": "0706b1c9879e05a8206b31c66f5745786dd07165cfcf328cd51fd499e414ecad",
+    "tests/browser/delivery.cjs": "10895e913f8c3db28256669e1b0a2eae3ce8b0cea4a42b62212035faefed04b7",
+    "docs/BROWSER_SUPPORT.md": "b41e1992e56f158a8bba9a27ec521c3550cbc86b971422741c1cb49d214de003"
+  }
+}

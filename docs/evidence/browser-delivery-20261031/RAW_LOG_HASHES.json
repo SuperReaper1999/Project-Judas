@@ -1,0 +1,77 @@
+{
+  "firefox-cached-header-assumption-failure.log.gz": {
+    "originalName": "firefox-cached-header-assumption-failure.log",
+    "sha256": "20546c6794f74e3e5ab2b4f30546b9b5519e0877219a6f14510a8ee35e0eb460",
+    "bytes": 242
+  },
+  "firefox-timing-assumption-failure.log.gz": {
+    "originalName": "firefox-timing-assumption-failure.log",
+    "sha256": "f0979ebf4f24f819f26cc83acff57b6e1471be6299c7f19b431b30df6847798e",
+    "bytes": 311
+  },
+  "touch-scroll-original-negative.log.gz": {
+    "originalName": "touch-scroll-original-negative.log",
+    "sha256": "123ee25f734577993c061887e4bc24f58409c11a64199642e1bf66b256e5d383",
+    "bytes": 327
+  },
+  "firefox-compressed-http.log.gz": {
+    "originalName": "firefox-compressed-http.log",
+    "sha256": "7b36e6a30e1770d3e84cf738fbd5b96df95ebb61a742171af7d7a5b971648ea7",
+    "bytes": 2233
+  },
+  "reload-input-observation.log.gz": {
+    "originalName": "reload-input-observation.log",
+    "sha256": "42442158c46f8dd0939f0eecdcd9d37e1552f996094d91a3b13f88806151b997",
+    "bytes": 544
+  },
+  "chromium-identity-http.log.gz": {
+    "originalName": "chromium-identity-http.log",
+    "sha256": "e3b2040461895b2c612d50f33ac56736d58609eec9e00498ea5c60de236e3111",
+    "bytes": 6699
+  },
+  "measured-build.log.gz": {
+    "originalName": "measured-build.log",
+    "sha256": "2dcedd6038a9cd2e4b5d7a1e0babe32abaa10d43c3a195044c6e3b72154e3340",
+    "bytes": 29280
+  },
+  "first-incognito-input-failure.log.gz": {
+    "originalName": "first-incognito-input-failure.log",
+    "sha256": "74f06f76830606b7d8da1c00b73685aa8b57375762567e51d23cbb2558f0ee77",
+    "bytes": 2999
+  },
+  "chromium-compressed-http.log.gz": {
+    "originalName": "chromium-compressed-http.log",
+    "sha256": "43ae47b7103b096321fdeb59f09538048c69ad4e5ef4781e3804c1ba6a1e047d",
+    "bytes": 6699
+  },
+  "final-breakwater-build.log.gz": {
+    "originalName": "final-breakwater-build.log",
+    "sha256": "6c58178a83b1152a9f57a257513489325eb2bb2a1af1c04599522be780e8c42c",
+    "bytes": 29279
+  },
+  "relocated-verification.log.gz": {
+    "originalName": "relocated-verification.log",
+    "sha256": "97e416b9f73bb89d81e7e3a1339bddb058ddd74d52b92c29bb787f85dfed75bb",
+    "bytes": 61
+  },
+  "final-player-build.log.gz": {
+    "originalName": "final-player-build.log",
+    "sha256": "08b5e38b07e2c9abc0091a8545c8e9017cf28ecd576d68bc37288af87ee26e1a",
+    "bytes": 26372
+  },
+  "firefox-timing-failure-http.log.gz": {
+    "originalName": "firefox-timing-failure-http.log",
+    "sha256": "67c0cadb27515f58494d5b02b4d8f4cc222a0ae9ba96d0cb8fd6789c04f31cad",
+    "bytes": 2233
+  },
+  "python-regressions.log.gz": {
+    "originalName": "python-regressions.log",
+    "sha256": "36a71f8e9093bacdbf019688da636006b4060423cb8295029b1c9977e305ad48",
+    "bytes": 3063
+  },
+  "player-regression.log.gz": {
+    "originalName": "player-regression.log",
+    "sha256": "8b4bed3171d574bc5f2e2da59bddb882877d21ad0dfa4111ebc9bf7bcad7bcb1",
+    "bytes": 1094
+  }
+}

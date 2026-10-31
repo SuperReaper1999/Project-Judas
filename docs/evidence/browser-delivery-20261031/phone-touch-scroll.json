@@ -1,0 +1,20 @@
+{
+  "passed": true,
+  "device": "SM-S948B",
+  "android": "17",
+  "browser": "Chrome 156",
+  "initial": {
+    "scroll": 32.71111297607422,
+    "width": 384,
+    "height": 721,
+    "action": "none",
+    "body": 753
+  },
+  "after": {
+    "scroll": 32.71111297607422,
+    "moves": 12
+  },
+  "canvasScrollDelta": 0,
+  "outsideScrollDelta": -30.22222399711609,
+  "method": "Actual phone, synthetic Chrome touch events; user controls Play and gameplay."
+}

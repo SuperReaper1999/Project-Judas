@@ -1,0 +1,671 @@
+{
+  "engine": "firefox",
+  "network": null,
+  "runs": [
+    {
+      "sample": 0,
+      "variant": "compressed",
+      "browser": "157.0",
+      "engine": "firefox",
+      "loads": [
+        {
+          "warm": false,
+          "method": "fresh profile navigation",
+          "readyMs": 721,
+          "network": [
+            {
+              "url": "http://127.0.0.1:37873/",
+              "status": 200,
+              "headers": {
+                "server": "SimpleHTTP/0.6 Python/3.14.4",
+                "date": "Sat, 31 Oct 2026 18:33:59 GMT",
+                "content-type": "text/html",
+                "content-length": "6884",
+                "etag": "\"7708a5184c903135c70d6f780badb40aa781b66b622a912973a91d80b450b050\"",
+                "cross-origin-opener-policy": "same-origin",
+                "cross-origin-embedder-policy": "require-corp",
+                "cross-origin-resource-policy": "same-origin",
+                "cache-control": "no-cache"
+              }
+            },
+            {
+              "url": "http://127.0.0.1:37873/game-config.js",
+              "status": 200,
+              "headers": {
+                "server": "SimpleHTTP/0.6 Python/3.14.4",
+                "date": "Sat, 31 Oct 2026 18:33:59 GMT",
+                "content-type": "application/javascript",
+                "content-length": "198",
+                "etag": "\"3cc0b2cd98d0b658a79f62ed0d95325028b492532f4a8ea0848c04c4891a39f8\"",
+                "cross-origin-opener-policy": "same-origin",
+                "cross-origin-embedder-policy": "require-corp",
+                "cross-origin-resource-policy": "same-origin",
+                "cache-control": "no-cache"
+              }
+            },
+            {
+              "url": "http://127.0.0.1:37873/judas_browser.js",
+              "status": 200,
+              "headers": {
+                "server": "SimpleHTTP/0.6 Python/3.14.4",
+                "date": "Sat, 31 Oct 2026 18:33:59 GMT",
+                "content-type": "application/javascript",
+                "content-length": "71815",
+                "etag": "\"b603f93bf0086f592ad900246f0a75bcba10720444341e7a74ced7bd3265f5e0\"",
+                "content-encoding": "gzip",
+                "cross-origin-opener-policy": "same-origin",
+                "cross-origin-embedder-policy": "require-corp",
+                "cross-origin-resource-policy": "same-origin",
+                "cache-control": "no-cache",
+                "vary": "Accept-Encoding"
+              }
+            },
+            {
+              "url": "http://127.0.0.1:37873/game.data.js",
+              "status": 200,
+              "headers": {
+                "server": "SimpleHTTP/0.6 Python/3.14.4",
+                "date": "Sat, 31 Oct 2026 18:33:59 GMT",
+                "content-type": "application/javascript",
+                "content-length": "2314",
+                "etag": "\"d43e9b10d7e7cbc1dafc023e173d571de0a5888a213b369fcef60160ee4ff983\"",
+                "content-encoding": "gzip",
+                "cross-origin-opener-policy": "same-origin",
+                "cross-origin-embedder-policy": "require-corp",
+                "cross-origin-resource-policy": "same-origin",
+                "cache-control": "no-cache",
+                "vary": "Accept-Encoding"
+              }
+            },
+            {
+              "url": "http://127.0.0.1:37873/game.data",
+              "status": 200,
+              "headers": {
+                "server": "SimpleHTTP/0.6 Python/3.14.4",
+                "date": "Sat, 31 Oct 2026 18:33:59 GMT",
+                "content-type": "application/octet-stream",
+                "content-length": "968847",
+                "etag": "\"9452b9596f4450c5b365cc7fbd7dc08d36efc510e16eef325537f67cea4fad07\"",
+                "content-encoding": "gzip",
+                "cross-origin-opener-policy": "same-origin",
+                "cross-origin-embedder-policy": "require-corp",
+                "cross-origin-resource-policy": "same-origin",
+                "cache-control": "no-cache",
+                "vary": "Accept-Encoding"
+              }
+            },
+            {
+              "url": "http://127.0.0.1:37873/judas_browser.wasm",
+              "status": 200,
+              "headers": {
+                "server": "SimpleHTTP/0.6 Python/3.14.4",
+                "date": "Sat, 31 Oct 2026 18:34:00 GMT",
+                "content-type": "application/wasm",
+                "content-length": "19601895",
+                "etag": "\"dc39ece0b62d0aa9f9684131aeae60721717089324f88bfcf4e89bf0c4ad3732\"",
+                "content-encoding": "gzip",
+                "cross-origin-opener-policy": "same-origin",
+                "cross-origin-embedder-policy": "require-corp",
+                "cross-origin-resource-policy": "same-origin",
+                "cache-control": "no-cache",
+                "vary": "Accept-Encoding"
+              }
+            },
+            {
+              "url": "http://127.0.0.1:37873/judas_browser.js",
+              "status": 304,
+              "headers": {
+                "server": "SimpleHTTP/0.6 Python/3.14.4",
+                "date": "Sat, 31 Oct 2026 18:34:00 GMT",
+                "etag": "\"b603f93bf0086f592ad900246f0a75bcba10720444341e7a74ced7bd3265f5e0\"",
+                "cross-origin-opener-policy": "same-origin",
+                "cross-origin-embedder-policy": "require-corp",
+                "cross-origin-resource-policy": "same-origin",
+                "cache-control": "no-cache",
+                "vary": "Accept-Encoding"
+              }
+            },
+            {
+              "url": "http://127.0.0.1:37873/judas_browser.js",
+              "status": 304,
+              "headers": {
+                "server": "SimpleHTTP/0.6 Python/3.14.4",
+                "date": "Sat, 31 Oct 2026 18:34:00 GMT",
+                "etag": "\"b603f93bf0086f592ad900246f0a75bcba10720444341e7a74ced7bd3265f5e0\"",
+                "cross-origin-opener-policy": "same-origin",
+                "cross-origin-embedder-policy": "require-corp",
+                "cross-origin-resource-policy": "same-origin",
+                "cache-control": "no-cache",
+                "vary": "Accept-Encoding"
+              }
+            },
+            {
+              "url": "http://127.0.0.1:37873/judas_browser.js",
+              "status": 304,
+              "headers": {
+                "server": "SimpleHTTP/0.6 Python/3.14.4",
+                "date": "Sat, 31 Oct 2026 18:34:00 GMT",
+                "etag": "\"b603f93bf0086f592ad900246f0a75bcba10720444341e7a74ced7bd3265f5e0\"",
+                "cross-origin-opener-policy": "same-origin",
+                "cross-origin-embedder-policy": "require-corp",
+                "cross-origin-resource-policy": "same-origin",
+                "cache-control": "no-cache",
+                "vary": "Accept-Encoding"
+              }
+            },
+            {
+              "url": "http://127.0.0.1:37873/judas_browser.js",
+              "status": 304,
+              "headers": {
+                "server": "SimpleHTTP/0.6 Python/3.14.4",
+                "date": "Sat, 31 Oct 2026 18:34:00 GMT",
+                "etag": "\"b603f93bf0086f592ad900246f0a75bcba10720444341e7a74ced7bd3265f5e0\"",
+                "cross-origin-opener-policy": "same-origin",
+                "cross-origin-embedder-policy": "require-corp",
+                "cross-origin-resource-policy": "same-origin",
+                "cache-control": "no-cache",
+                "vary": "Accept-Encoding"
+              }
+            },
+            {
+              "url": "http://127.0.0.1:37873/judas_browser.js",
+              "status": 304,
+              "headers": {
+                "server": "SimpleHTTP/0.6 Python/3.14.4",
+                "date": "Sat, 31 Oct 2026 18:34:00 GMT",
+                "etag": "\"b603f93bf0086f592ad900246f0a75bcba10720444341e7a74ced7bd3265f5e0\"",
+                "cross-origin-opener-policy": "same-origin",
+                "cross-origin-embedder-policy": "require-corp",
+                "cross-origin-resource-policy": "same-origin",
+                "cache-control": "no-cache",
+                "vary": "Accept-Encoding"
+              }
+            },
+            {
+              "url": "http://127.0.0.1:37873/judas_browser.js",
+              "status": 304,
+              "headers": {
+                "server": "SimpleHTTP/0.6 Python/3.14.4",
+                "date": "Sat, 31 Oct 2026 18:34:00 GMT",
+                "etag": "\"b603f93bf0086f592ad900246f0a75bcba10720444341e7a74ced7bd3265f5e0\"",
+                "cross-origin-opener-policy": "same-origin",
+                "cross-origin-embedder-policy": "require-corp",
+                "cross-origin-resource-policy": "same-origin",
+                "cache-control": "no-cache",
+                "vary": "Accept-Encoding"
+              }
+            },
+            {
+              "url": "http://127.0.0.1:37873/judas_browser.js",
+              "status": 304,
+              "headers": {
+                "server": "SimpleHTTP/0.6 Python/3.14.4",
+                "date": "Sat, 31 Oct 2026 18:34:00 GMT",
+                "etag": "\"b603f93bf0086f592ad900246f0a75bcba10720444341e7a74ced7bd3265f5e0\"",
+                "cross-origin-opener-policy": "same-origin",
+                "cross-origin-embedder-policy": "require-corp",
+                "cross-origin-resource-policy": "same-origin",
+                "cache-control": "no-cache",
+                "vary": "Accept-Encoding"
+              }
+            },
+            {
+              "url": "http://127.0.0.1:37873/judas_browser.js",
+              "status": 304,
+              "headers": {
+                "server": "SimpleHTTP/0.6 Python/3.14.4",
+                "date": "Sat, 31 Oct 2026 18:34:00 GMT",
+                "etag": "\"b603f93bf0086f592ad900246f0a75bcba10720444341e7a74ced7bd3265f5e0\"",
+                "cross-origin-opener-policy": "same-origin",
+                "cross-origin-embedder-policy": "require-corp",
+                "cross-origin-resource-policy": "same-origin",
+                "cache-control": "no-cache",
+                "vary": "Accept-Encoding"
+              }
+            }
+          ],
+          "finished": [],
+          "httpStatuses": [],
+          "resources": [
+            {
+              "name": "http://127.0.0.1:37873/game-config.js",
+              "transferSize": 498,
+              "encodedBodySize": 198,
+              "decodedBodySize": 198,
+              "duration": 26.64
+            },
+            {
+              "name": "http://127.0.0.1:37873/favicon.ico",
+              "transferSize": 778,
+              "encodedBodySize": 478,
+              "decodedBodySize": 478,
+              "duration": 73.74000000000001
+            },
+            {
+              "name": "http://127.0.0.1:37873/game.data.js",
+              "transferSize": 2614,
+              "encodedBodySize": 2314,
+              "decodedBodySize": 7209,
+              "duration": 47.959999999999994
+            },
+            {
+              "name": "http://127.0.0.1:37873/judas_browser.js",
+              "transferSize": 72115,
+              "encodedBodySize": 71815,
+              "decodedBodySize": 350833,
+              "duration": 6.180000000000007
+            },
+            {
+              "name": "http://127.0.0.1:37873/game.data",
+              "transferSize": 969147,
+              "encodedBodySize": 968847,
+              "decodedBodySize": 1422220,
+              "duration": 8.740000000000009
+            },
+            {
+              "name": "http://127.0.0.1:37873/judas_browser.wasm",
+              "transferSize": 19602195,
+              "encodedBodySize": 19601895,
+              "decodedBodySize": 53296079,
+              "duration": 257.74
+            },
+            {
+              "name": "http://127.0.0.1:37873/judas_browser.js",
+              "transferSize": 72115,
+              "encodedBodySize": 71815,
+              "decodedBodySize": 350833,
+              "duration": 12.47999999999999
+            },
+            {
+              "name": "http://127.0.0.1:37873/judas_browser.js",
+              "transferSize": 72115,
+              "encodedBodySize": 71815,
+              "decodedBodySize": 350833,
+              "duration": 9.220000000000027
+            },
+            {
+              "name": "http://127.0.0.1:37873/judas_browser.js",
+              "transferSize": 72115,
+              "encodedBodySize": 71815,
+              "decodedBodySize": 350833,
+              "duration": 12.71999999999997
+            },
+            {
+              "name": "http://127.0.0.1:37873/judas_browser.js",
+              "transferSize": 72115,
+              "encodedBodySize": 71815,
+              "decodedBodySize": 350833,
+              "duration": 18.860000000000014
+            },
+            {
+              "name": "http://127.0.0.1:37873/judas_browser.js",
+              "transferSize": 72115,
+              "encodedBodySize": 71815,
+              "decodedBodySize": 350833,
+              "duration": 21.840000000000032
+            },
+            {
+              "name": "http://127.0.0.1:37873/judas_browser.js",
+              "transferSize": 72115,
+              "encodedBodySize": 71815,
+              "decodedBodySize": 350833,
+              "duration": 28.95999999999998
+            },
+            {
+              "name": "http://127.0.0.1:37873/judas_browser.js",
+              "transferSize": 72115,
+              "encodedBodySize": 71815,
+              "decodedBodySize": 350833,
+              "duration": 30.19999999999999
+            },
+            {
+              "name": "http://127.0.0.1:37873/judas_browser.js",
+              "transferSize": 72115,
+              "encodedBodySize": 71815,
+              "decodedBodySize": 350833,
+              "duration": 31.74000000000001
+            }
+          ],
+          "wireResponses": "127.0.0.1 - - [31/Oct/2026 18:33:59] \"GET / HTTP/1.1\" 200 -\n127.0.0.1 - - [31/Oct/2026 18:33:59] \"GET /game-config.js HTTP/1.1\" 200 -\n127.0.0.1 - - [31/Oct/2026 18:33:59] \"GET /game.data.js HTTP/1.1\" 200 -\n127.0.0.1 - - [31/Oct/2026 18:33:59] \"GET /judas_browser.js HTTP/1.1\" 200 -\n127.0.0.1 - - [31/Oct/2026 18:33:59] code 404, message File is not part of this package\n127.0.0.1 - - [31/Oct/2026 18:33:59] \"GET /favicon.ico HTTP/1.1\" 404 -\n127.0.0.1 - - [31/Oct/2026 18:33:59] \"GET /game.data HTTP/1.1\" 200 -\n127.0.0.1 - - [31/Oct/2026 18:34:00] \"GET /judas_browser.wasm HTTP/1.1\" 200 -\n127.0.0.1 - - [31/Oct/2026 18:34:00] \"GET /judas_browser.js HTTP/1.1\" 304 -\n127.0.0.1 - - [31/Oct/2026 18:34:00] \"GET /judas_browser.js HTTP/1.1\" 304 -\n127.0.0.1 - - [31/Oct/2026 18:34:00] \"GET /judas_browser.js HTTP/1.1\" 304 -\n127.0.0.1 - - [31/Oct/2026 18:34:00] \"GET /judas_browser.js HTTP/1.1\" 304 -\n127.0.0.1 - - [31/Oct/2026 18:34:00] \"GET /judas_browser.js HTTP/1.1\" 304 -\n127.0.0.1 - - [31/Oct/2026 18:34:00] \"GET /judas_browser.js HTTP/1.1\" 304 -\n127.0.0.1 - - [31/Oct/2026 18:34:00] \"GET /judas_browser.js HTTP/1.1\" 304 -\n127.0.0.1 - - [31/Oct/2026 18:34:00] \"GET /judas_browser.js HTTP/1.1\" 304 -\n"
+        },
+        {
+          "warm": true,
+          "method": "return visit after blank navigation",
+          "readyMs": 548,
+          "network": [
+            {
+              "url": "http://127.0.0.1:37873/",
+              "status": 304,
+              "headers": {
+                "server": "SimpleHTTP/0.6 Python/3.14.4",
+                "date": "Sat, 31 Oct 2026 18:34:00 GMT",
+                "etag": "\"7708a5184c903135c70d6f780badb40aa781b66b622a912973a91d80b450b050\"",
+                "cross-origin-opener-policy": "same-origin",
+                "cross-origin-embedder-policy": "require-corp",
+                "cross-origin-resource-policy": "same-origin",
+                "cache-control": "no-cache"
+              }
+            },
+            {
+              "url": "http://127.0.0.1:37873/game-config.js",
+              "status": 304,
+              "headers": {
+                "server": "SimpleHTTP/0.6 Python/3.14.4",
+                "date": "Sat, 31 Oct 2026 18:34:00 GMT",
+                "etag": "\"3cc0b2cd98d0b658a79f62ed0d95325028b492532f4a8ea0848c04c4891a39f8\"",
+                "cross-origin-opener-policy": "same-origin",
+                "cross-origin-embedder-policy": "require-corp",
+                "cross-origin-resource-policy": "same-origin",
+                "cache-control": "no-cache"
+              }
+            },
+            {
+              "url": "http://127.0.0.1:37873/game.data.js",
+              "status": 304,
+              "headers": {
+                "server": "SimpleHTTP/0.6 Python/3.14.4",
+                "date": "Sat, 31 Oct 2026 18:34:00 GMT",
+                "etag": "\"d43e9b10d7e7cbc1dafc023e173d571de0a5888a213b369fcef60160ee4ff983\"",
+                "cross-origin-opener-policy": "same-origin",
+                "cross-origin-embedder-policy": "require-corp",
+                "cross-origin-resource-policy": "same-origin",
+                "cache-control": "no-cache",
+                "vary": "Accept-Encoding"
+              }
+            },
+            {
+              "url": "http://127.0.0.1:37873/judas_browser.js",
+              "status": 304,
+              "headers": {
+                "server": "SimpleHTTP/0.6 Python/3.14.4",
+                "date": "Sat, 31 Oct 2026 18:34:00 GMT",
+                "etag": "\"b603f93bf0086f592ad900246f0a75bcba10720444341e7a74ced7bd3265f5e0\"",
+                "cross-origin-opener-policy": "same-origin",
+                "cross-origin-embedder-policy": "require-corp",
+                "cross-origin-resource-policy": "same-origin",
+                "cache-control": "no-cache",
+                "vary": "Accept-Encoding"
+              }
+            },
+            {
+              "url": "http://127.0.0.1:37873/game.data",
+              "status": 304,
+              "headers": {
+                "server": "SimpleHTTP/0.6 Python/3.14.4",
+                "date": "Sat, 31 Oct 2026 18:34:00 GMT",
+                "etag": "\"9452b9596f4450c5b365cc7fbd7dc08d36efc510e16eef325537f67cea4fad07\"",
+                "cross-origin-opener-policy": "same-origin",
+                "cross-origin-embedder-policy": "require-corp",
+                "cross-origin-resource-policy": "same-origin",
+                "cache-control": "no-cache",
+                "vary": "Accept-Encoding"
+              }
+            },
+            {
+              "url": "http://127.0.0.1:37873/judas_browser.wasm",
+              "status": 304,
+              "headers": {
+                "server": "SimpleHTTP/0.6 Python/3.14.4",
+                "date": "Sat, 31 Oct 2026 18:34:00 GMT",
+                "etag": "\"dc39ece0b62d0aa9f9684131aeae60721717089324f88bfcf4e89bf0c4ad3732\"",
+                "cross-origin-opener-policy": "same-origin",
+                "cross-origin-embedder-policy": "require-corp",
+                "cross-origin-resource-policy": "same-origin",
+                "cache-control": "no-cache",
+                "vary": "Accept-Encoding"
+              }
+            },
+            {
+              "url": "http://127.0.0.1:37873/judas_browser.js",
+              "status": 304,
+              "headers": {
+                "server": "SimpleHTTP/0.6 Python/3.14.4",
+                "date": "Sat, 31 Oct 2026 18:34:00 GMT",
+                "etag": "\"b603f93bf0086f592ad900246f0a75bcba10720444341e7a74ced7bd3265f5e0\"",
+                "cross-origin-opener-policy": "same-origin",
+                "cross-origin-embedder-policy": "require-corp",
+                "cross-origin-resource-policy": "same-origin",
+                "cache-control": "no-cache",
+                "vary": "Accept-Encoding"
+              }
+            },
+            {
+              "url": "http://127.0.0.1:37873/judas_browser.js",
+              "status": 304,
+              "headers": {
+                "server": "SimpleHTTP/0.6 Python/3.14.4",
+                "date": "Sat, 31 Oct 2026 18:34:00 GMT",
+                "etag": "\"b603f93bf0086f592ad900246f0a75bcba10720444341e7a74ced7bd3265f5e0\"",
+                "cross-origin-opener-policy": "same-origin",
+                "cross-origin-embedder-policy": "require-corp",
+                "cross-origin-resource-policy": "same-origin",
+                "cache-control": "no-cache",
+                "vary": "Accept-Encoding"
+              }
+            },
+            {
+              "url": "http://127.0.0.1:37873/judas_browser.js",
+              "status": 304,
+              "headers": {
+                "server": "SimpleHTTP/0.6 Python/3.14.4",
+                "date": "Sat, 31 Oct 2026 18:34:00 GMT",
+                "etag": "\"b603f93bf0086f592ad900246f0a75bcba10720444341e7a74ced7bd3265f5e0\"",
+                "cross-origin-opener-policy": "same-origin",
+                "cross-origin-embedder-policy": "require-corp",
+                "cross-origin-resource-policy": "same-origin",
+                "cache-control": "no-cache",
+                "vary": "Accept-Encoding"
+              }
+            },
+            {
+              "url": "http://127.0.0.1:37873/judas_browser.js",
+              "status": 304,
+              "headers": {
+                "server": "SimpleHTTP/0.6 Python/3.14.4",
+                "date": "Sat, 31 Oct 2026 18:34:00 GMT",
+                "etag": "\"b603f93bf0086f592ad900246f0a75bcba10720444341e7a74ced7bd3265f5e0\"",
+                "cross-origin-opener-policy": "same-origin",
+                "cross-origin-embedder-policy": "require-corp",
+                "cross-origin-resource-policy": "same-origin",
+                "cache-control": "no-cache",
+                "vary": "Accept-Encoding"
+              }
+            },
+            {
+              "url": "http://127.0.0.1:37873/judas_browser.js",
+              "status": 304,
+              "headers": {
+                "server": "SimpleHTTP/0.6 Python/3.14.4",
+                "date": "Sat, 31 Oct 2026 18:34:00 GMT",
+                "etag": "\"b603f93bf0086f592ad900246f0a75bcba10720444341e7a74ced7bd3265f5e0\"",
+                "cross-origin-opener-policy": "same-origin",
+                "cross-origin-embedder-policy": "require-corp",
+                "cross-origin-resource-policy": "same-origin",
+                "cache-control": "no-cache",
+                "vary": "Accept-Encoding"
+              }
+            },
+            {
+              "url": "http://127.0.0.1:37873/judas_browser.js",
+              "status": 304,
+              "headers": {
+                "server": "SimpleHTTP/0.6 Python/3.14.4",
+                "date": "Sat, 31 Oct 2026 18:34:00 GMT",
+                "etag": "\"b603f93bf0086f592ad900246f0a75bcba10720444341e7a74ced7bd3265f5e0\"",
+                "cross-origin-opener-policy": "same-origin",
+                "cross-origin-embedder-policy": "require-corp",
+                "cross-origin-resource-policy": "same-origin",
+                "cache-control": "no-cache",
+                "vary": "Accept-Encoding"
+              }
+            },
+            {
+              "url": "http://127.0.0.1:37873/judas_browser.js",
+              "status": 304,
+              "headers": {
+                "server": "SimpleHTTP/0.6 Python/3.14.4",
+                "date": "Sat, 31 Oct 2026 18:34:00 GMT",
+                "etag": "\"b603f93bf0086f592ad900246f0a75bcba10720444341e7a74ced7bd3265f5e0\"",
+                "cross-origin-opener-policy": "same-origin",
+                "cross-origin-embedder-policy": "require-corp",
+                "cross-origin-resource-policy": "same-origin",
+                "cache-control": "no-cache",
+                "vary": "Accept-Encoding"
+              }
+            },
+            {
+              "url": "http://127.0.0.1:37873/judas_browser.js",
+              "status": 304,
+              "headers": {
+                "server": "SimpleHTTP/0.6 Python/3.14.4",
+                "date": "Sat, 31 Oct 2026 18:34:00 GMT",
+                "etag": "\"b603f93bf0086f592ad900246f0a75bcba10720444341e7a74ced7bd3265f5e0\"",
+                "cross-origin-opener-policy": "same-origin",
+                "cross-origin-embedder-policy": "require-corp",
+                "cross-origin-resource-policy": "same-origin",
+                "cache-control": "no-cache",
+                "vary": "Accept-Encoding"
+              }
+            }
+          ],
+          "finished": [],
+          "httpStatuses": [],
+          "resources": [
+            {
+              "name": "http://127.0.0.1:37873/game-config.js",
+              "transferSize": 498,
+              "encodedBodySize": 198,
+              "decodedBodySize": 198,
+              "duration": 8.120000000000005
+            },
+            {
+              "name": "http://127.0.0.1:37873/favicon.ico",
+              "transferSize": 0,
+              "encodedBodySize": 478,
+              "decodedBodySize": 478,
+              "duration": 5.61999999999999
+            },
+            {
+              "name": "http://127.0.0.1:37873/game.data.js",
+              "transferSize": 2614,
+              "encodedBodySize": 2314,
+              "decodedBodySize": 7209,
+              "duration": 1.519999999999996
+            },
+            {
+              "name": "http://127.0.0.1:37873/judas_browser.js",
+              "transferSize": 72115,
+              "encodedBodySize": 71815,
+              "decodedBodySize": 350833,
+              "duration": 1.980000000000004
+            },
+            {
+              "name": "http://127.0.0.1:37873/game.data",
+              "transferSize": 969147,
+              "encodedBodySize": 968847,
+              "decodedBodySize": 1422220,
+              "duration": 5.840000000000003
+            },
+            {
+              "name": "http://127.0.0.1:37873/judas_browser.wasm",
+              "transferSize": 19602195,
+              "encodedBodySize": 19601895,
+              "decodedBodySize": 53296079,
+              "duration": 3.660000000000011
+            },
+            {
+              "name": "http://127.0.0.1:37873/judas_browser.js",
+              "transferSize": 72115,
+              "encodedBodySize": 71815,
+              "decodedBodySize": 350833,
+              "duration": 35.099999999999994
+            },
+            {
+              "name": "http://127.0.0.1:37873/judas_browser.js",
+              "transferSize": 72115,
+              "encodedBodySize": 71815,
+              "decodedBodySize": 350833,
+              "duration": 44.68000000000001
+            },
+            {
+              "name": "http://127.0.0.1:37873/judas_browser.js",
+              "transferSize": 72115,
+              "encodedBodySize": 71815,
+              "decodedBodySize": 350833,
+              "duration": 52.900000000000006
+            },
+            {
+              "name": "http://127.0.0.1:37873/judas_browser.js",
+              "transferSize": 72115,
+              "encodedBodySize": 71815,
+              "decodedBodySize": 350833,
+              "duration": 66.47999999999999
+            },
+            {
+              "name": "http://127.0.0.1:37873/judas_browser.js",
+              "transferSize": 72115,
+              "encodedBodySize": 71815,
+              "decodedBodySize": 350833,
+              "duration": 72.08000000000001
+            },
+            {
+              "name": "http://127.0.0.1:37873/judas_browser.js",
+              "transferSize": 72115,
+              "encodedBodySize": 71815,
+              "decodedBodySize": 350833,
+              "duration": 79.34
+            },
+            {
+              "name": "http://127.0.0.1:37873/judas_browser.js",
+              "transferSize": 72115,
+              "encodedBodySize": 71815,
+              "decodedBodySize": 350833,
+              "duration": 137.6
+            },
+            {
+              "name": "http://127.0.0.1:37873/judas_browser.js",
+              "transferSize": 72115,
+              "encodedBodySize": 71815,
+              "decodedBodySize": 350833,
+              "duration": 133.04
+            }
+          ],
+          "wireResponses": "127.0.0.1 - - [31/Oct/2026 18:34:00] \"GET / HTTP/1.1\" 304 -\n127.0.0.1 - - [31/Oct/2026 18:34:00] \"GET /game-config.js HTTP/1.1\" 304 -\n127.0.0.1 - - [31/Oct/2026 18:34:00] \"GET /game.data.js HTTP/1.1\" 304 -\n127.0.0.1 - - [31/Oct/2026 18:34:00] \"GET /judas_browser.js HTTP/1.1\" 304 -\n127.0.0.1 - - [31/Oct/2026 18:34:00] \"GET /game.data HTTP/1.1\" 304 -\n127.0.0.1 - - [31/Oct/2026 18:34:00] \"GET /judas_browser.wasm HTTP/1.1\" 304 -\n127.0.0.1 - - [31/Oct/2026 18:34:00] \"GET /judas_browser.js HTTP/1.1\" 304 -\n127.0.0.1 - - [31/Oct/2026 18:34:00] \"GET /judas_browser.js HTTP/1.1\" 304 -\n127.0.0.1 - - [31/Oct/2026 18:34:00] \"GET /judas_browser.js HTTP/1.1\" 304 -\n127.0.0.1 - - [31/Oct/2026 18:34:00] \"GET /judas_browser.js HTTP/1.1\" 304 -\n127.0.0.1 - - [31/Oct/2026 18:34:00] \"GET /judas_browser.js HTTP/1.1\" 304 -\n127.0.0.1 - - [31/Oct/2026 18:34:00] \"GET /judas_browser.js HTTP/1.1\" 304 -\n127.0.0.1 - - [31/Oct/2026 18:34:00] \"GET /judas_browser.js HTTP/1.1\" 304 -\n127.0.0.1 - - [31/Oct/2026 18:34:00] \"GET /judas_browser.js HTTP/1.1\" 304 -\n"
+        }
+      ],
+      "gameplay": {
+        "distance": 2.4000003337860107,
+        "latest": {
+          "sequence": 70,
+          "state": {
+            "yaw": 0,
+            "pitch": 0,
+            "captured": true,
+            "thirdPerson": true,
+            "time": 1.1666667275130749,
+            "clicks": 0
+          },
+          "position": {
+            "x": 2.4000003337860107,
+            "y": 0.917275071144104,
+            "z": 6
+          },
+          "velocity": {
+            "x": 0,
+            "y": -0.16350001096725464,
+            "z": 0
+          },
+          "supported": true,
+          "viewport": {
+            "width": 1000,
+            "height": 558
+          },
+          "status": null,
+          "restored": false,
+          "busy": false
+        },
+        "errors": []
+      }
+    }
+  ]
+}

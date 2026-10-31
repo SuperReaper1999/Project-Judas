@@ -1,0 +1,18 @@
+{
+  "recordedUtc": "2026-10-31T18:28:22.783073+00:00",
+  "head": "ade5199a2e0645223a3485ba1868e24bbed80ec7",
+  "method": "Final matched compression comparison; three cold/warm pairs per variant, alternating order, fresh persistent disk-cache profile per pair; one unshaped Firefox pair. Chromium software rendering; no GPU-throughput claim.",
+  "network": {
+    "downloadBytesPerSecond": 4194304,
+    "uploadBytesPerSecond": 1048576,
+    "latencyMs": 40
+  },
+  "gates": [
+    "Package files and decoded payload hashes match between compressed and identity variants.",
+    "Actual WASM reaches Play with loading indicator hidden.",
+    "Warm normal visit transfers at most 1024 bytes per WASM/data resource and retains decoded body size.",
+    "Actual player lands, moves more than 0.1m via keyboard and switches camera; no page errors.",
+    "Browser cgroup hard memory limit 2300MiB, zero swap. No reduction to physics cadence or render quality."
+  ],
+  "scope": "Desktop Chromium/Firefox functional and shaped-network delivery qualification; not hardware/mobile certification or throughput performance."
+}

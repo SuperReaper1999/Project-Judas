@@ -1,0 +1,22 @@
+[
+  {
+    "name": "game.data",
+    "identityBytes": 1422220,
+    "gzipBytes": 968847
+  },
+  {
+    "name": "game.data.js",
+    "identityBytes": 7209,
+    "gzipBytes": 2314
+  },
+  {
+    "name": "judas_browser.js",
+    "identityBytes": 350833,
+    "gzipBytes": 71815
+  },
+  {
+    "name": "judas_browser.wasm",
+    "identityBytes": 53296079,
+    "gzipBytes": 19601895
+  }
+]

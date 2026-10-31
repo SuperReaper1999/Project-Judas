@@ -1,0 +1,38 @@
+{
+  "date": "2026-10-31",
+  "platform": {
+    "model": "SM-S948B",
+    "android": "17",
+    "api": 37,
+    "browser": "Chrome 156.0.8078.75"
+  },
+  "observations": [
+    {
+      "scope": "3D player running/rendering on phone",
+      "operatorQuote": "its running on my phone and it works fine I can see that with my eyes so i think its just the tools not working"
+    },
+    {
+      "scope": "Automation startup-state explanation",
+      "operatorQuote": "that explains it I pressed play xD"
+    },
+    {
+      "scope": "Breakwater touch gameplay; defect reported",
+      "operatorQuote": "Yeah that works sound that other than dragging your finger scrolling the screen if you arent in fullscreen"
+    },
+    {
+      "scope": "Intentional user exit, not crash",
+      "operatorQuote": "I pressed exit in the menu btw so you dont wonder why the game closed xD"
+    },
+    {
+      "scope": "After operator asked to test corrected canvas drag without fullscreen and page scrolling outside it",
+      "operatorQuote": "perfect"
+    }
+  ],
+  "notClaimed": [
+    "Physical gamepad support",
+    "Mobile browser audio acceptance",
+    "All Android browsers",
+    "Android APK requalification",
+    "Main promotion or release approval"
+  ]
+}

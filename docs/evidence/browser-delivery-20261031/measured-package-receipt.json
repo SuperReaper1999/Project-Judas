@@ -1,0 +1,117 @@
+{
+  "schema": 1,
+  "kind": "judas-browser-experimental",
+  "engine": {
+    "architecture": "wasm32",
+    "build_id": "1.1.0-alpha.1-Experimental-ade5199-dirty-c805fda3e524-u7d2ba18e75d4",
+    "channel": "Experimental",
+    "compiler": "Clang",
+    "compiler_version": "24.0.0",
+    "configuration": "Release",
+    "maturity": "alpha",
+    "platform": "Emscripten",
+    "release_name": "Judas Engine Alpha v1.1.0",
+    "schema": 1,
+    "source_dirty": true,
+    "source_fingerprint": "c805fda3e5243c48991616090e4cc34a16dc6eb8af38f7e649a39e36ee937675",
+    "source_origin": "git",
+    "source_revision": "ade5199a2e0645223a3485ba1868e24bbed80ec7",
+    "source_tree": "989f75d35a8e956ba823eb6540088eccad625651",
+    "source_untracked_count": 20,
+    "source_untracked_fingerprint": "7d2ba18e75d486fffab80e2aabffd1fbeb90c45fd335e3e0f5809eb05c693a3f",
+    "version": "1.1.0-alpha.1"
+  },
+  "nativeTools": {
+    "exporter": {
+      "architecture": "x86_64",
+      "build_id": "1.1.0-alpha.1-Experimental-ade5199-dirty-c805fda3e524-u7d2ba18e75d4",
+      "channel": "Experimental",
+      "compiler": "GNU",
+      "compiler_version": "15.2.0",
+      "configuration": "Release",
+      "maturity": "alpha",
+      "platform": "Linux",
+      "release_name": "Judas Engine Alpha v1.1.0",
+      "schema": 1,
+      "source_dirty": true,
+      "source_fingerprint": "c805fda3e5243c48991616090e4cc34a16dc6eb8af38f7e649a39e36ee937675",
+      "source_origin": "git",
+      "source_revision": "ade5199a2e0645223a3485ba1868e24bbed80ec7",
+      "source_tree": "989f75d35a8e956ba823eb6540088eccad625651",
+      "source_untracked_count": 20,
+      "source_untracked_fingerprint": "7d2ba18e75d486fffab80e2aabffd1fbeb90c45fd335e3e0f5809eb05c693a3f",
+      "version": "1.1.0-alpha.1"
+    },
+    "runtime": {
+      "architecture": "x86_64",
+      "build_id": "1.1.0-alpha.1-Experimental-ade5199-dirty-c805fda3e524-u7d2ba18e75d4",
+      "channel": "Experimental",
+      "compiler": "GNU",
+      "compiler_version": "15.2.0",
+      "configuration": "Release",
+      "maturity": "alpha",
+      "platform": "Linux",
+      "release_name": "Judas Engine Alpha v1.1.0",
+      "schema": 1,
+      "source_dirty": true,
+      "source_fingerprint": "c805fda3e5243c48991616090e4cc34a16dc6eb8af38f7e649a39e36ee937675",
+      "source_origin": "git",
+      "source_revision": "ade5199a2e0645223a3485ba1868e24bbed80ec7",
+      "source_tree": "989f75d35a8e956ba823eb6540088eccad625651",
+      "source_untracked_count": 20,
+      "source_untracked_fingerprint": "7d2ba18e75d486fffab80e2aabffd1fbeb90c45fd335e3e0f5809eb05c693a3f",
+      "version": "1.1.0-alpha.1"
+    }
+  },
+  "experimentalOptIn": true,
+  "requires": [
+    "WebAssembly",
+    "WebGL2",
+    "cross-origin isolation",
+    "SharedArrayBuffer",
+    "IndexedDB",
+    "Web Locks"
+  ],
+  "hosting": "HTTP localhost or HTTPS with COOP same-origin and COEP require-corp",
+  "encodings": {
+    "game.data": {
+      "gzip": "game.data.gz"
+    },
+    "game.data.js": {
+      "gzip": "game.data.js.gz"
+    },
+    "judas_browser.js": {
+      "gzip": "judas_browser.js.gz"
+    },
+    "judas_browser.wasm": {
+      "gzip": "judas_browser.wasm.gz"
+    }
+  },
+  "files": {
+    "README.txt": "d207a02768bd80bd106d4908d5e168aacc55b3a63a2aa1c4c730c853c5af9200",
+    "browser_package.py": "875aa061b103d3cca27f8f178b7f8893e6fd445e7b010a6c845fbbb9a72b1969",
+    "engine/licenses/DejaVuSans.txt": "63d3ba759d12804c5b31a9d5940d855c1820d1f5999e6b0872eb1c7ff045fbc9",
+    "engine/licenses/Judas.txt": "0b57ff108ca9cefafc253e848d02e7e6b9ae7c84951961d9712dff6e3aa6533d",
+    "game-config.js": "3cc0b2cd98d0b658a79f62ed0d95325028b492532f4a8ea0848c04c4891a39f8",
+    "game.data": "839c35905b1e1e5cc36979234320b7dc7a1c0459545ec7725b02804926483a62",
+    "game.data.gz": "9452b9596f4450c5b365cc7fbd7dc08d36efc510e16eef325537f67cea4fad07",
+    "game.data.js": "36da15b82822dc98315a063cdab93af3c981731069e7c08621524823ef02d307",
+    "game.data.js.gz": "d43e9b10d7e7cbc1dafc023e173d571de0a5888a213b369fcef60160ee4ff983",
+    "index.html": "7708a5184c903135c70d6f780badb40aa781b66b622a912973a91d80b450b050",
+    "judas_browser.js": "a7d800a1602be44283e3056d42718dcc679bb173f3ac50c2fd64790da47e276f",
+    "judas_browser.js.gz": "b603f93bf0086f592ad900246f0a75bcba10720444341e7a74ced7bd3265f5e0",
+    "judas_browser.wasm": "63ba5179f57c72d226360e963d71bf2540816a91a843868ed21ea9f55a8d4c16",
+    "judas_browser.wasm.gz": "dc39ece0b62d0aa9f9684131aeae60721717089324f88bfcf4e89bf0c4ad3732",
+    "licenses/ENGINE_NOTICES.txt": "10a8a093b8c4fc51ab006466b0013275b524efd66d81f86ff48307b49d2614fc",
+    "licenses/GLM-COPYING.txt": "62d2d642c7d054d4fb4c9b42faad617d6c88fcd91e317f8035aa9f277cc159c3",
+    "licenses/Judas-LICENSE.txt": "0b57ff108ca9cefafc253e848d02e7e6b9ae7c84951961d9712dff6e3aa6533d",
+    "licenses/SDL-LICENSE.txt": "97f35b302b361680ec1e891e95d2d52097bb95abff361434916d99dc1305f127",
+    "licenses/compiler-rt-LICENSE.txt": "1a8f1058753f1ba890de984e48f0242a3a5c29a6a8f2ed9fd813f36985387e8d",
+    "licenses/emscripten-LICENSE.txt": "620a78084fc7ca97c0b5dea9abf891f3ffcadfdbf305276f099c9c4e12fc1d86",
+    "licenses/libcxx-LICENSE.txt": "539dd7aed86e8a4f12cbdd0e6c50c189c7d74847e4fecc64ce2c6ee3a01da38b",
+    "licenses/libcxxabi-LICENSE.txt": "e2b35be49f7284a45b7baca8fc7b3ab7440e7902392b2528a457816b5bb2a15c",
+    "licenses/libunwind-LICENSE.txt": "b5efebcaca80879234098e52d1725e6d9eb8fb96a19fce625d39184b705f7b6d",
+    "licenses/musl-COPYRIGHT.txt": "b870108ec5e7790e9f9919064f1b9421d62d5f9b0e6c230c6adf7ea2da62e97b",
+    "serve.py": "78b792c559fb95a905d8d5a3e48cc9af5f60bf346a8a007b5636258d37a14266"
+  }
+}

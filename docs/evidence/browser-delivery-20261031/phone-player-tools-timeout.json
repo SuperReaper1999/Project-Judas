@@ -1,0 +1,36 @@
+{
+  "error": "TimeoutError: page.waitForFunction: Timeout 90000ms exceeded.",
+  "latest": {
+    "sequence": 16700,
+    "state": {
+      "yaw": -0.12915253643989408,
+      "pitch": -0.07981918151378607,
+      "captured": true,
+      "thirdPerson": false,
+      "time": 250.8333464153111,
+      "clicks": 0
+    },
+    "position": {
+      "x": 0,
+      "y": 0.917275071144104,
+      "z": 6
+    },
+    "velocity": {
+      "x": 0,
+      "y": -0.16350001096725464,
+      "z": 0
+    },
+    "supported": true,
+    "viewport": {
+      "width": 720,
+      "height": 1022
+    },
+    "status": null,
+    "restored": false,
+    "busy": false
+  },
+  "checks": [
+    "connected only to Judas test tab"
+  ],
+  "errors": []
+}

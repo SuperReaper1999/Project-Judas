@@ -1,0 +1,185 @@
+[
+  {
+    "type": "request",
+    "id": "679C10A02C8C59BEBBEB2E7434CC8452",
+    "headers": {
+      "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/jxl,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
+      "Accept-Encoding": "gzip, deflate, br, zstd",
+      "Accept-Language": "en-GB,en-US;q=0.9,en;q=0.8",
+      "Connection": "keep-alive",
+      "Host": "127.0.0.1:39289",
+      "Sec-Fetch-Dest": "document",
+      "Sec-Fetch-Mode": "navigate",
+      "Sec-Fetch-Site": "none",
+      "Sec-Fetch-User": "?1",
+      "Upgrade-Insecure-Requests": "1",
+      "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/156.0.0.0 Safari/537.36",
+      "sec-ch-ua": "\"Not:A-Brand\";v=\"8\", \"Chromium\";v=\"156\"",
+      "sec-ch-ua-mobile": "?0",
+      "sec-ch-ua-platform": "\"Linux\""
+    }
+  },
+  {
+    "type": "response",
+    "id": "679C10A02C8C59BEBBEB2E7434CC8452",
+    "status": 200,
+    "headers": {
+      "Cache-Control": "no-cache",
+      "Content-Length": "709",
+      "Content-Type": "text/plain",
+      "Cross-Origin-Embedder-Policy": "require-corp",
+      "Cross-Origin-Opener-Policy": "same-origin",
+      "Cross-Origin-Resource-Policy": "same-origin",
+      "Date": "Sat, 31 Oct 2026 18:24:07 GMT",
+      "ETag": "\"c2d89a44763a56bece7018f51b4abffe4cc704fa38f3f49c2cf19193200c2a52\"",
+      "Server": "SimpleHTTP/0.6 Python/3.14.4"
+    }
+  },
+  {
+    "type": "request",
+    "id": "557775.2",
+    "headers": {
+      "Accept": "image/jxl,image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8",
+      "Accept-Encoding": "gzip, deflate, br, zstd",
+      "Accept-Language": "en-GB,en-US;q=0.9,en;q=0.8",
+      "Connection": "keep-alive",
+      "Host": "127.0.0.1:39289",
+      "Referer": "http://127.0.0.1:39289/README.txt",
+      "Sec-Fetch-Dest": "image",
+      "Sec-Fetch-Mode": "no-cors",
+      "Sec-Fetch-Site": "same-origin",
+      "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/156.0.0.0 Safari/537.36",
+      "sec-ch-ua": "\"Not:A-Brand\";v=\"8\", \"Chromium\";v=\"156\"",
+      "sec-ch-ua-mobile": "?0",
+      "sec-ch-ua-platform": "\"Linux\""
+    }
+  },
+  {
+    "type": "response",
+    "id": "557775.2",
+    "status": 404,
+    "headers": {
+      "Cache-Control": "no-store",
+      "Connection": "close",
+      "Content-Length": "478",
+      "Content-Type": "text/html;charset=utf-8",
+      "Cross-Origin-Embedder-Policy": "require-corp",
+      "Cross-Origin-Opener-Policy": "same-origin",
+      "Cross-Origin-Resource-Policy": "same-origin",
+      "Date": "Sat, 31 Oct 2026 18:24:07 GMT",
+      "Server": "SimpleHTTP/0.6 Python/3.14.4"
+    }
+  },
+  {
+    "type": "request",
+    "id": "557775.3",
+    "headers": {
+      "Accept": "*/*",
+      "Accept-Encoding": "gzip, deflate, br, zstd",
+      "Accept-Language": "en-GB,en-US;q=0.9,en;q=0.8",
+      "Connection": "keep-alive",
+      "Host": "127.0.0.1:39289",
+      "Referer": "http://127.0.0.1:39289/README.txt",
+      "Sec-Fetch-Dest": "empty",
+      "Sec-Fetch-Mode": "cors",
+      "Sec-Fetch-Site": "same-origin",
+      "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/156.0.0.0 Safari/537.36",
+      "sec-ch-ua": "\"Not:A-Brand\";v=\"8\", \"Chromium\";v=\"156\"",
+      "sec-ch-ua-mobile": "?0",
+      "sec-ch-ua-platform": "\"Linux\""
+    }
+  },
+  {
+    "type": "response",
+    "id": "557775.3",
+    "status": 200,
+    "headers": {
+      "Cache-Control": "no-cache",
+      "Content-Encoding": "gzip",
+      "Content-Length": "968847",
+      "Content-Type": "application/octet-stream",
+      "Cross-Origin-Embedder-Policy": "require-corp",
+      "Cross-Origin-Opener-Policy": "same-origin",
+      "Cross-Origin-Resource-Policy": "same-origin",
+      "Date": "Sat, 31 Oct 2026 18:24:07 GMT",
+      "ETag": "\"9452b9596f4450c5b365cc7fbd7dc08d36efc510e16eef325537f67cea4fad07\"",
+      "Server": "SimpleHTTP/0.6 Python/3.14.4",
+      "Vary": "Accept-Encoding"
+    }
+  },
+  {
+    "type": "request",
+    "id": "557775.4",
+    "headers": {
+      "Accept": "*/*",
+      "Accept-Encoding": "gzip, deflate, br, zstd",
+      "Accept-Language": "en-GB,en-US;q=0.9,en;q=0.8",
+      "Connection": "keep-alive",
+      "Host": "127.0.0.1:39289",
+      "Referer": "http://127.0.0.1:39289/README.txt",
+      "Sec-Fetch-Dest": "empty",
+      "Sec-Fetch-Mode": "cors",
+      "Sec-Fetch-Site": "same-origin",
+      "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/156.0.0.0 Safari/537.36",
+      "sec-ch-ua": "\"Not:A-Brand\";v=\"8\", \"Chromium\";v=\"156\"",
+      "sec-ch-ua-mobile": "?0",
+      "sec-ch-ua-platform": "\"Linux\""
+    }
+  },
+  {
+    "type": "response",
+    "id": "557775.4",
+    "status": 200,
+    "headers": {
+      "Cache-Control": "no-cache",
+      "Content-Encoding": "gzip",
+      "Content-Length": "968847",
+      "Content-Type": "application/octet-stream",
+      "Cross-Origin-Embedder-Policy": "require-corp",
+      "Cross-Origin-Opener-Policy": "same-origin",
+      "Cross-Origin-Resource-Policy": "same-origin",
+      "Date": "Sat, 31 Oct 2026 18:24:07 GMT",
+      "ETag": "\"9452b9596f4450c5b365cc7fbd7dc08d36efc510e16eef325537f67cea4fad07\"",
+      "Server": "SimpleHTTP/0.6 Python/3.14.4",
+      "Vary": "Accept-Encoding"
+    }
+  },
+  {
+    "type": "request",
+    "id": "557775.5",
+    "headers": {
+      "Accept": "*/*",
+      "Accept-Encoding": "gzip, deflate, br, zstd",
+      "Accept-Language": "en-GB,en-US;q=0.9,en;q=0.8",
+      "Cache-Control": "max-age=0",
+      "Connection": "keep-alive",
+      "Host": "127.0.0.1:39289",
+      "Referer": "http://127.0.0.1:39289/README.txt",
+      "Sec-Fetch-Dest": "empty",
+      "Sec-Fetch-Mode": "cors",
+      "Sec-Fetch-Site": "same-origin",
+      "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/156.0.0.0 Safari/537.36",
+      "sec-ch-ua": "\"Not:A-Brand\";v=\"8\", \"Chromium\";v=\"156\"",
+      "sec-ch-ua-mobile": "?0",
+      "sec-ch-ua-platform": "\"Linux\""
+    }
+  },
+  {
+    "type": "response",
+    "id": "557775.5",
+    "status": 200,
+    "headers": {
+      "Cache-Control": "no-cache",
+      "Content-Encoding": "gzip",
+      "Content-Length": "968847",
+      "Content-Type": "application/octet-stream",
+      "Cross-Origin-Embedder-Policy": "require-corp",
+      "Cross-Origin-Opener-Policy": "same-origin",
+      "Cross-Origin-Resource-Policy": "same-origin",
+      "Date": "Sat, 31 Oct 2026 18:24:07 GMT",
+      "ETag": "\"9452b9596f4450c5b365cc7fbd7dc08d36efc510e16eef325537f67cea4fad07\"",
+      "Server": "SimpleHTTP/0.6 Python/3.14.4",
+      "Vary": "Accept-Encoding"
+    }
+  }
+]

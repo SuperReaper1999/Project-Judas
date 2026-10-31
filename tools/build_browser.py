@@ -304,10 +304,15 @@ def main(argv=None):
             'Preview: python3 serve.py --port 8080 (or --port 0 for a free port). Requires Python 3.\n'
             'Verify without starting a server: python3 serve.py --verify-only.\n'
             'Do not open index.html via file://. Keep every file/directory together.\n'
+            'The preview handles optional gzip sidecars and validates cached files on repeat visits.\n'
+            'Other hosts must negotiate Content-Encoding: gzip with the original MIME type and Vary: Accept-Encoding.\n'
+            'Original files remain available when gzip is not supported. Compression does not reduce runtime RAM.\n'
             'This is not universal browser/device qualification. Saves belong to this origin/profile.\n'
             'Engine and web runtime redistribution notices: licenses/; exported game/font notices: engine/licenses/.\n'
             'This WASM build statically links pinned SDL2/GLM. Native-platform remarks in ENGINE_NOTICES describe native packages.\n',encoding='utf-8')
-        receipt={'schema':1,'kind':'judas-browser-experimental','engine':wasm,'nativeTools':native,'experimentalOptIn':True,'requires':['WebAssembly','WebGL2','cross-origin isolation','SharedArrayBuffer','IndexedDB','Web Locks'],'hosting':'HTTP localhost or HTTPS with COOP same-origin and COEP require-corp','files':{p.relative_to(output).as_posix():hashlib.sha256(p.read_bytes()).hexdigest() for p in sorted(output.rglob('*')) if p.is_file()}}
+        from browser_package import compress_payloads
+        encodings = compress_payloads(output)
+        receipt={'schema':1,'kind':'judas-browser-experimental','engine':wasm,'nativeTools':native,'experimentalOptIn':True,'requires':['WebAssembly','WebGL2','cross-origin isolation','SharedArrayBuffer','IndexedDB','Web Locks'],'hosting':'HTTP localhost or HTTPS with COOP same-origin and COEP require-corp','encodings':encodings,'files':{p.relative_to(output).as_posix():hashlib.sha256(p.read_bytes()).hexdigest() for p in sorted(output.rglob('*')) if p.is_file()}}
         (output/'BROWSER_BUILD.json').write_text(json.dumps(receipt,indent=2)+'\n',encoding='utf-8')
         from browser_package import verify_package
         verify_package(output)

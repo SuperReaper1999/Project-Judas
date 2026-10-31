@@ -121,8 +121,9 @@ This is software-browser functional evidence, not browser hardware performance,
 Safari/mobile certification or complete-engine compatibility. The first
 uncompressed universal WASM is roughly 51 MiB, plus project data; initial memory
 is 256 MiB with growth bounded at 1 GiB. Assets are preloaded as one package, not
-HTTP-residency streamed. Compression, download size,
-more 3D effects and browser-specific qualification remain future work. The current
+HTTP-residency streamed. Optional gzip transfer representations and repeat-load
+cache validation now reduce delivery costs; they do not reduce decoded WASM size
+or runtime memory. More 3D effects and browser-specific qualification remain future work. The current
 scope is an early optional foundation, not a production browser distribution.
 
 The failed preload, canvas-ownership and integer-attribute experiments are retained
@@ -280,3 +281,48 @@ driver is `tests/browser/player.cjs`, and actual tab visibility uses
 markers and public gameplay state, separately from surface diagnostics. Desktop
 browser tests do not certify every 3D renderer feature, touch, physical gamepads,
 mobile audio or network transports.
+
+
+## Download delivery and repeat loads
+
+New exports retain the original runtime/data files and add deterministic `.gz`
+representations where compression saves at least 5%. `BROWSER_BUILD.json` records
+both the SHA-256 inventory and optional `encodings` mapping. Older packages without
+this mapping remain valid. Verification checks that each sidecar decompresses to
+the exact original, with decompression bounded by its verified size.
+
+The included HTTP/1.1 preview negotiates gzip with `Accept-Encoding`, preserves the original
+MIME type (including `application/wasm`), and supplies `Content-Encoding: gzip` and
+`Vary: Accept-Encoding`. It falls back to the originals for clients that decline
+gzip. Representation-specific ETags and `Cache-Control: no-cache` allow the browser
+to retain bytes and revalidate with a body-free 304 response on repeat visits.
+This is cache validation, not guaranteed offline play or a service worker.
+Package changes after startup fail closed; restart the preview after replacing a
+package. No update installer or project mutation is involved.
+
+On another static host, configure those same headers for compressed representations;
+simply uploading `.gz` files does not make a host negotiate them automatically.
+Keep the required isolation headers on cached responses too. The localhost preview
+remains a development helper, not an internet-facing production server.
+
+Loading uses an indeterminate indicator until the runtime and persistent-save
+storage are ready. Compressed Content-Length and decoded data progress are not
+presented as a misleading percentage. Errors stop the indicator and keep Play
+disabled. Compression changes transferred bytes, not gameplay cadence, rendering
+quality, Unicode coverage or the in-memory engine representation.
+
+
+The preview explicitly uses HTTP/1.1: Chromium does not use ETag validation from
+HTTP/1.0 responses in its HTTP cache. Sending ETag headers alone was insufficient;
+real repeat-fetch tests caught this after manual conditional requests had passed.
+See the [Chromium cache implementation](https://chromium.googlesource.com/chromium/src/net/+/master/http/http_cache_transaction.cc#3299).
+
+
+The game canvas owns touch drag gestures (`touch-action: none`), preventing page
+scrolling while a touch-controlled game is played outside fullscreen. Touch events
+still reach gameplay, and scrolling outside the canvas remains available. This is
+not a touch controller automatically added to keyboard-only projects: games must
+provide suitable project-owned controls. The existing Breakwater game already
+uses the ordinary touch API and can be exported without a browser-specific game
+implementation. Phone observations and the retained desktop loading experiments
+are recorded in [delivery qualification](BROWSER_DELIVERY_QUALIFICATION.md).
