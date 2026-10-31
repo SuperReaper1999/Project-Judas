@@ -27,7 +27,8 @@ int main() {
         AssetDatabase assets;assets.Scan(project.RootDir(),project.AssetsDir());
         EditorDocument doc;const auto owner=doc.GetScene().CreateObject("Script owner").id;doc.Select(owner);
         AssetRecord record;
-        check(CreateAndAttachEditorScript(doc,owner,project,assets,"MyScript",record,error),"create, register and attach script in one workflow");
+        const bool created = CreateAndAttachEditorScript(doc,owner,project,assets,"MyScript",record,error);
+        check(created,"create, register and attach script in one workflow: " + error);
         check(record.type==AssetType::Script&&record.relativePath=="Assets/Scripts/MyScript.js"&&fs::is_regular_file(record.path+".judasmeta"),"ordinary project asset and metadata exist");
         check(doc.SelectedObject()->scripts.size()==1&&doc.SelectedObject()->scripts[0].asset==record.id,"selected object holds the actual script reference");
         check(ScriptSystem::CheckProjectSources(assets).empty(),"new script compiles and links through public JudasJS API");
