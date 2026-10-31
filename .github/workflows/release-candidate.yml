@@ -126,7 +126,7 @@ jobs:
           ./packaging/windows/Build-Windows.ps1 -Channel $env:CHANNEL -Jobs 2 -ReleasePackage -PkgConfig $pkgconf.FullName -Generator $generator
           if ($LASTEXITCODE) { exit $LASTEXITCODE }
           $build = "build/windows-$env:CHANNEL"
-          cmake --build $build --config Release --target judas_build_identity_tests judas_release_update_tests judas_mk2_rotation_tests judas_network_transport_tests judas_consumer_pointer_tests --parallel 2
+          cmake --build $build --config Release --target judas_build_identity_tests judas_release_update_tests judas_mk2_rotation_tests judas_network_transport_tests judas_consumer_pointer_tests judas_one_way_platform_tests judas_grid_movement_tests judas_planar_physics_tests judas_tilemap_tests judas_sprite_animation_tests judas_editor_script_workflow_tests --parallel 2
           if ($LASTEXITCODE) { exit $LASTEXITCODE }
           & "$build/Release/judas_build_identity_tests.exe"
           if ($LASTEXITCODE) { exit $LASTEXITCODE }
@@ -137,6 +137,24 @@ jobs:
           & "$build/Release/judas_network_transport_tests.exe"
           if ($LASTEXITCODE) { exit $LASTEXITCODE }
           & "$build/Release/judas_consumer_pointer_tests.exe" "$env:RUNNER_TEMP/consumer-pointer" "$env:GITHUB_WORKSPACE/tests/fixtures/pointer-taps"
+          if ($LASTEXITCODE) { exit $LASTEXITCODE }
+          & "$build/Release/judas_planar_physics_tests.exe"
+          if ($LASTEXITCODE) { exit $LASTEXITCODE }
+          & "$build/Release/judas_one_way_platform_tests.exe" "$env:RUNNER_TEMP/one-way-release"
+          if ($LASTEXITCODE) { exit $LASTEXITCODE }
+          & "$build/Release/judas_one_way_platform_tests.exe" "$env:RUNNER_TEMP/one-way-release" --cold
+          if ($LASTEXITCODE) { exit $LASTEXITCODE }
+          & "$build/Release/judas_grid_movement_tests.exe" "$env:RUNNER_TEMP/grid-release"
+          if ($LASTEXITCODE) { exit $LASTEXITCODE }
+          & "$build/Release/judas_grid_movement_tests.exe" "$env:RUNNER_TEMP/grid-release" --cold
+          if ($LASTEXITCODE) { exit $LASTEXITCODE }
+          & "$build/Release/judas_grid_movement_tests.exe" "$env:RUNNER_TEMP/grid-release" --cold-queue
+          if ($LASTEXITCODE) { exit $LASTEXITCODE }
+          & "$build/Release/judas_tilemap_tests.exe" "$env:RUNNER_TEMP/tilemap-release"
+          if ($LASTEXITCODE) { exit $LASTEXITCODE }
+          & "$build/Release/judas_sprite_animation_tests.exe" "$env:RUNNER_TEMP/animation-release"
+          if ($LASTEXITCODE) { exit $LASTEXITCODE }
+          & "$build/Release/judas_editor_script_workflow_tests.exe"
           if ($LASTEXITCODE) { exit $LASTEXITCODE }
           python tools/inspect_sdk.py "$build/windows-sdk" --host-check --system-directory C:/Windows/System32 --output windows-sdk-qualification.json
           if ($LASTEXITCODE) { exit $LASTEXITCODE }

@@ -2,8 +2,8 @@
 """Stage/verify a native Judas SDK without Git, network access or third-party Python packages.
 
 The inventory is shared with CMake. Build artifacts, current developer docs and
-required native DLLs are copied. Full game projects and historical research are not
-SDK payloads; developer docs include a small editable learning project.
+required native DLLs are copied. Unrelated full game projects and historical research are not
+SDK payloads; four small editable 2D learning projects are explicitly inventoried.
 Manifests detect accidental omissions/corruption, not malicious replacement.
 """
 
@@ -204,7 +204,8 @@ def stage(args):
         for name in spec["files"]:
             copy(source / name, name)
         for name in spec["directories"]:
-            shutil.copytree(source / name, prepared / name)
+            shutil.copytree(source / name, prepared / name,
+                            ignore=shutil.ignore_patterns("Saves", ".cache", "__pycache__", "*.lock", "*.judasstate") if name.startswith("projects/") else None)
         for path in sorted((source / spec["current_markdown"]).glob("*.md")):
             name = path.relative_to(source).as_posix()
             if name not in spec.get("excluded_markdown", []):

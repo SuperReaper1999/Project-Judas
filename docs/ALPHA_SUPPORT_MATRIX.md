@@ -1,10 +1,10 @@
 # Alpha scope and qualification matrix
 
-This is the source support boundary for **Alpha v1.0.4 / `1.0.4-alpha.1`**.
+This is the source support boundary for **Alpha v1.1.0 / `1.1.0-alpha.1`**.
 [Published release manifests](https://github.com/SuperReaper1999/Project-Judas/releases)
 identify exact accepted source/artifacts; source-version changes do not publish a
 release. The original Alpha was human accepted on 27 October at `636eec47`.
-The [current patch notes](ALPHA_V1_0_4_NOTES.md) separate Hinge's operator phone
+The [current release notes](ALPHA_V1_1_0_NOTES.md) separate Hinge's operator phone
 acceptance, independent Xvfb/desktop verification and SDK/package qualification.
 Previous Windows hardware acceptance is retained; no new Windows GPU/audio,
 controller or clean-machine certification is implied. Advanced Fluids remains
@@ -67,3 +67,15 @@ The operator's Windows 11 project/save/reopen/small-game/audio trial is accepted
 Broader game-building coverage, controller hardware, clean-machine distribution
 and fresh qualification of a particular Android build remain separate. A usability blocker still
 deserves correction even if automated tests pass.
+
+## Alpha v1.1.0 2D scope
+
+Native sprites, sheets/frame animation/events, orthographic cameras, static layered
+tilemaps, native planar MK2 collision, free top-down/platformer/grid presets,
+script parallax and sampled attack helpers are included. One-way platforms are
+static straight segments. Planar and 3D rigid bodies cannot share a physical
+world. Browser export is not included. The separate port will be experimental
+and explicitly gated behind `-ExpBrowserSupport=1`; this is not current support.
+
+Exact-source release-preparation results identify Linux and Windows checks. Earlier
+Android human acceptance remains real, but is not a new 1.1.0 device qualification.

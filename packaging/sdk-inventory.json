@@ -40,7 +40,11 @@
   ],
   "directories": [
     "assets/fonts",
-    "docs/judasjs"
+    "docs/judasjs",
+    "projects/beacon_grove",
+    "projects/tilemap_workshop",
+    "projects/sprite_animation_workshop",
+    "projects/2d_traversal_workshop"
   ],
   "current_markdown": "docs",
   "excluded_markdown": [

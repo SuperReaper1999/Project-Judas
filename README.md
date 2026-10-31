@@ -9,7 +9,7 @@ arbitrary gravity, terrain, liquids, weather, deformables and seamless world
 transitions. Ordinary game policy lives in project JavaScript; the engine
 provides the reusable systems and runtime.
 
-**Judas Engine Alpha v1.0.4** (`1.0.4-alpha.1`) is this source version.
+**Judas Engine Alpha v1.1.0** (`1.1.0-alpha.1`) is this source version.
 Versioned editor/SDK distributions, source archives and checksums are available
 through [published Alpha releases](https://github.com/SuperReaper1999/Project-Judas/releases).
 A source build or prepared candidate is not automatically a published release.
@@ -19,21 +19,22 @@ Alpha is not Stable/GA; documented limits still apply.
 Basic Water and swimming remain available. See the
 [restriction and investigation](docs/M100_FLUID_CONTACT_STABILITY.md).
 
-This patch adds Android orientation policies and desktop aspect/resize testing,
-including Mesa/Xvfb presentation and odd-width screenshot corrections. See
-[patch notes](docs/ALPHA_V1_0_4_NOTES.md). The versioned source identity is
+This release adds native sprite/tilemap game development, frame animation, planar
+physics and editable 2D presets, alongside save/UI reliability fixes. See
+[release notes](docs/ALPHA_V1_1_0_NOTES.md). The versioned source identity is
 authoritative in [engine-version.json](engine-version.json).
 
 ## Current status
 
-Experimental v1.1.0 work now includes [native sprites, planar physics and editable 2D player presets](docs/2D_STAGE2.md). This development is separate from published Alpha v1.0.4; sprite-sheet animation, tilemap authoring, parallax, one-way platforms and a grid RPG preset are also available on Experimental. See the [2D quick start](docs/2D_QUICKSTART.md).
+The v1.1.0 candidate includes [native sprites, planar physics and editable 2D player presets](docs/2D_STAGE2.md). Alpha v1.0.4 predates this workflow; sprite-sheet animation, tilemap authoring, parallax, one-way platforms and a grid RPG preset are also available on Experimental. See the [2D quick start](docs/2D_QUICKSTART.md).
 
 `main` contains operator-accepted source; `Experimental` is ongoing development.
 Published Alpha versions, future Beta and eventual Stable/GA are separate
 [distribution channels](docs/VERSIONING.md), not extra development branches.
 No update checker silently installs anything or overwrites your projects.
 
-[Alpha v1.0.4 patch notes](docs/ALPHA_V1_0_4_NOTES.md) ·
+[Alpha v1.1.0 release notes](docs/ALPHA_V1_1_0_NOTES.md) ·
+[Previous orientation/resize patch](docs/ALPHA_V1_0_4_NOTES.md) ·
 [Previous authoring patch](docs/ALPHA_V1_0_3_NOTES.md) ·
 [Previous rain patch](docs/ALPHA_V1_0_2_NOTES.md) ·
 [Original Alpha notes](docs/ALPHA_V1_0_0_NOTES.md) ·

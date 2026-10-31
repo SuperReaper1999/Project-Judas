@@ -16,8 +16,8 @@ The authoring/diagnostics patch is `1.0.3-alpha.1`, released on 30 October 2026 
 `f2813324155166c6942fd68dde843d9775eb532d`; see
 [its authoring/Android diagnostic corrections and release record](ALPHA_V1_0_3_NOTES.md).
 
-The current source identity is **`1.0.4-alpha.1`**, titled **Judas Engine Alpha
-v1.0.4**, with [orientation/resize patch notes](ALPHA_V1_0_4_NOTES.md).
+The current source identity is **`1.1.0-alpha.1`**, titled **Judas Engine Alpha
+v1.1.0**, with [native 2D workflow release notes](ALPHA_V1_1_0_NOTES.md).
 Publication is a separate, protected operation; see the release page and its
 immutable manifest for published source/artifact identities.
 

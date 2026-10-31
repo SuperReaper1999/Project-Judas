@@ -52,6 +52,15 @@ class ReleaseNotes(unittest.TestCase):
 
 
 class QualificationScope(unittest.TestCase):
+    def test_2d_release_scope_has_its_own_checks_and_source_fixtures(self):
+        self.assertIn('2d',qualify_m100.GROUPS)
+        spec=package_sdk.inventory(ROOT/'packaging/sdk-inventory.json')
+        for name in package_source.LEARNING_PROJECTS:
+            self.assertIn('projects/'+name,spec['directories'])
+            self.assertTrue(package_source.selected('projects/'+name+'/Scenes/main.judas','engine'))
+        self.assertFalse(package_source.selected('projects/lunar_island/private.js','engine'))
+        self.assertFalse(package_source.selected('projects/beacon_grove/Saves/private.judasstate','engine'))
+
     def test_qualification_imports_do_not_defeat_strict_source_packaging(self):
         with tempfile.TemporaryDirectory() as temporary:
             temporary=Path(temporary);source=temporary/'source';source.mkdir()

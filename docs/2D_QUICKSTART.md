@@ -1,7 +1,7 @@
 # Make your first 2D game
 
-These workflows are currently on **Experimental** for the v1.1.0 candidate.
-Published Alpha v1.0.4 does not contain them. Historical Stage reports describe
+These workflows are included in the **Alpha v1.1.0 candidate**.
+The older published Alpha v1.0.4 does not contain them. Historical Stage reports describe
 what existed at their own checkpoints, not the complete current feature set.
 
 ## 1. Choose how your player moves
@@ -84,6 +84,9 @@ output directory and run it there. A desktop package is not a browser build.
 Browser export is currently unsupported; see [the feasibility review](BROWSER_EXPORT_REVIEW.md).
 
 ## Working examples
+
+Copy SDK examples into your own writable project folder before editing or saving.
+Keep the installed SDK intact so its checksums remain meaningful.
 
 - [Beacon Grove](../projects/beacon_grove/README.md): complete small action/adventure.
 - [Traversal Workshop](../projects/2d_traversal_workshop/README.md): 1 selects jump-through

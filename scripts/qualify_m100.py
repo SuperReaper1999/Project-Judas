@@ -9,7 +9,7 @@ import sys
 from prealpha_validate import partition_channel_tests
 
 ROOT=Path(__file__).resolve().parents[1]
-GROUPS=['core','mk2','water','network','lifecycle','onboarding','application','liquid','input','rendering']
+GROUPS=['2d','core','mk2','water','network','lifecycle','onboarding','application','liquid','input','rendering']
 EXTRA=['judas_joint_tests','judas_wheel_tests','judas_wheel_lifecycle_tests','judas_powertrain_tests','judas_powertrain_lifecycle_tests','judas_gravity_selection_tests','judas_player_swimming_tests']
 
 
@@ -35,6 +35,14 @@ def main():
     native=[sys.executable,ROOT/'scripts/prealpha_validate.py','--build-dir',build,'--output',output/'gates','--timeout','180']
     for test in tests:native+=['--test',test['name']]
     run('native-gates',native)
+    # Independent processes must reconstruct real pending motion, not a cached
+    # same-process controller status. Producer paths are the manifest outputs.
+    names={test['name'] for test in tests}
+    for name,reader in [('one-way-platform','judas_one_way_platform_tests'),('grid-movement','judas_grid_movement_tests')]:
+        if name in names:
+            executable=build/(reader+('.exe' if os.name=='nt' else ''))
+            run(name+'-cold',[executable,output/'gates'/name,'--cold'])
+            if name=='grid-movement':run(name+'-cold-queue',[executable,output/'gates'/name,'--cold-queue'])
     for target in EXTRA:run(target,[build/(target+('.exe' if os.name=='nt' else ''))])
     run('release-python',[sys.executable,ROOT/'tests/test_release_manifest.py'])
     run('release-packaging',[sys.executable,ROOT/'tests/test_release_packaging.py'])

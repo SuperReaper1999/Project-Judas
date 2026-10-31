@@ -21,6 +21,9 @@ ROOT = Path(__file__).resolve().parents[1]
 METADATA = {"JUDAS_SOURCE_INFO.json", "JUDAS_SOURCE_FILES.json"}
 ENGINE_ROOTS = {"cmake", "src", "tests", "tools", "scripts", "platform", "packaging", "third_party", "assets", "releases", ".github"}
 ENGINE_FILES = {"AGENTS.md", "CMakeLists.txt", "CMakePresets.json", "CTestConfig.cmake", "README.md", "LICENSE", "engine-version.json", ".gitignore", ".gitattributes"}
+# Small, redistributable learning projects also supply the 2D qualification
+# fixtures. No other consumer games, saves or untracked experiments are selected.
+LEARNING_PROJECTS = {"beacon_grove", "tilemap_workshop", "sprite_animation_workshop", "2d_traversal_workshop"}
 EXCLUDED_GUIDES = {"docs/DontReadMe_Final.md", "docs/FTFT.md"}
 
 
@@ -40,6 +43,8 @@ def selected(name, profile):
         return True
     path = PurePosixPath(name)
     return (name in ENGINE_FILES or path.parts[0] in ENGINE_ROOTS or
+            len(path.parts)>2 and path.parts[0]=="projects" and path.parts[1] in LEARNING_PROJECTS and
+            not ({"Saves", ".cache", "__pycache__"} & set(path.parts)) and path.suffix not in {".lock", ".judasstate"} or
             name.startswith("docs/judasjs/") or name == "docs/judas.d.ts" or
             len(path.parts) == 2 and path.parts[0] == "docs" and
             path.suffix in (".md", ".json") and name not in EXCLUDED_GUIDES)
