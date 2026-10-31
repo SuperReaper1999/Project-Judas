@@ -1,0 +1,7 @@
+{
+  "run": 41152687392,
+  "candidate": "878a6459da5abab8817cdf14ca1d7796cbc8ce61",
+  "sha256": "81aeeb76895dcaa6a9382a91b5ee0fd65c5d1c474ac36b478f04474eb50bf44c",
+  "bytes": 348534,
+  "scope": "Native MSVC SDK and selected contracts; first script-workflow assertion failed without its detailed error."
+}

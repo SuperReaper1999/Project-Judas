@@ -29,6 +29,24 @@ int main() {
         AssetRecord record;
         const bool created = CreateAndAttachEditorScript(doc,owner,project,assets,"MyScript",record,error);
         check(created,"create, register and attach script in one workflow: " + error);
+#ifndef _WIN32
+        // MSVC runners also exercise their native short temp-directory alias.
+        // Unix symlinks provide an independent control for the same mechanism.
+        const auto alias=root.parent_path()/(root.filename().string()+"-alias");
+        fs::create_directory_symlink(root,alias);
+        Project aliased;
+        check(aliased.Load((alias/"Scripts.judasproj").string(),error),"open project through a directory alias");
+        AssetDatabase aliasAssets;aliasAssets.Scan(aliased.RootDir(),aliased.AssetsDir());
+        EditorDocument aliasDoc;auto aliasOwner=aliasDoc.GetScene().CreateObject("Alias owner").id;aliasDoc.Select(aliasOwner);
+        AssetRecord aliasRecord;
+        const bool aliasCreated=CreateAndAttachEditorScript(aliasDoc,aliasOwner,aliased,aliasAssets,"ViaAlias",aliasRecord,error);
+        check(aliasCreated,"create and attach through a physical directory alias: "+error);
+        check(aliasRecord.relativePath=="Assets/Scripts/ViaAlias.js"&&fs::is_regular_file(aliasRecord.path),"alias registration retains project-relative asset ownership");
+        Project foreign;check(Project::CreateNew((root/"Foreign").string(),"Foreign",foreign,error),"create unrelated project for ownership control");
+        check(!CreateAndAttachEditorScript(aliasDoc,aliasOwner,foreign,aliasAssets,"WrongProject",aliasRecord,error)&&
+              !fs::exists(alias/"Assets/Scripts/WrongProject.js"),"physical ownership check still rejects a different project before writing");
+        fs::remove(alias);
+#endif
         check(record.type==AssetType::Script&&record.relativePath=="Assets/Scripts/MyScript.js"&&fs::is_regular_file(record.path+".judasmeta"),"ordinary project asset and metadata exist");
         check(doc.SelectedObject()->scripts.size()==1&&doc.SelectedObject()->scripts[0].asset==record.id,"selected object holds the actual script reference");
         check(ScriptSystem::CheckProjectSources(assets).empty(),"new script compiles and links through public JudasJS API");

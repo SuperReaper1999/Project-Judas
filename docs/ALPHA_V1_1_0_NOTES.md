@@ -48,6 +48,12 @@ source and artifact hashes; these notes alone are not publication evidence.
   Explicit malformed extensions still reject atomically. Original failures and
   exact runtime-matrix controls are retained in the camera qualification evidence.
 
+- Qualification also found path-alias failures when authoring scripts or generated
+  capsule/cylinder assets. Physical project ownership is still checked, while new
+  assets retain the database's path spelling for registration. Windows short
+  paths and symlink-opened projects no longer mix canonical and lexical roots.
+  Negative controls still reject assets belonging to another project.
+
 ## Qualification and compatibility
 
 The operator accepted the demonstrated 2D gameplay, corrected workshop and

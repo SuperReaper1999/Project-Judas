@@ -70,8 +70,12 @@ bool CreateAndAttachEditorScript(EditorDocument& doc, SceneObjectId owner, const
             throw std::runtime_error("Enter a file name such as MyScript.js, without folders.");
         if (name.extension().empty()) name += ".js";
         if (name.extension() != ".js") throw std::runtime_error("Script names must end in .js.");
-        const auto root = fs::canonical(fs::u8path(project.AssetsDir()));
-        if (root != fs::canonical(fs::u8path(assets.AssetsDir()))) throw std::runtime_error("Asset database belongs to another project.");
+        // Validate physical ownership, but create/register through the database's
+        // own lexical spelling. Windows short paths and symlinked project roots
+        // can name the same directory without comparing lexically equal.
+        const auto root = fs::absolute(fs::u8path(assets.AssetsDir())).lexically_normal();
+        if (fs::canonical(root) != fs::canonical(fs::u8path(project.AssetsDir())))
+            throw std::runtime_error("Asset database belongs to another project.");
         const auto directory = root / "Scripts";
         if (fs::is_symlink(fs::symlink_status(directory))) throw std::runtime_error("Scripts folder must not be a symbolic link.");
         fs::create_directories(directory);

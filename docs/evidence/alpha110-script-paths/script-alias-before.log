@@ -1,0 +1,2 @@
+PASS create ordinary project
+FAIL create, register and attach script in one workflow: Source kept at /home/conner/Documents/GitHub/Project-Judas/.cache/alpha-v1.1.0/script-alias-real/judas-script-workflow-54366288305552/Assets/Scripts/MyScript.js; asset registration failed: asset is not inside the assets directory: /home/conner/Documents/GitHub/Project-Judas/.cache/alpha-v1.1.0/script-alias-real/judas-script-workflow-54366288305552/Assets/Scripts/MyScript.js

@@ -50,8 +50,11 @@ SceneObjectId CreateEditorPrimitive(EditorDocument& doc,const Project& project,A
         if(kind!="capsule"&&kind!="cylinder")throw std::runtime_error("Unknown generated primitive.");
         if(!project.IsLoaded())throw std::runtime_error("Open a project before creating mesh primitives.");
         if(parent&&!doc.GetScene().Find(parent))throw std::runtime_error("The chosen parent no longer exists.");
-        const auto root=fs::canonical(fs::u8path(project.AssetsDir()));
-        if(root!=fs::canonical(fs::u8path(assets.AssetsDir())))throw std::runtime_error("Asset database belongs to another project.");
+        // Retain the registry's path spelling after checking real ownership;
+        // canonicalizing only the new asset breaks short/symlink project roots.
+        const auto root=fs::absolute(fs::u8path(assets.AssetsDir())).lexically_normal();
+        if(fs::canonical(root)!=fs::canonical(fs::u8path(project.AssetsDir())))
+            throw std::runtime_error("Asset database belongs to another project.");
         auto directory=root;
         for(const auto* part:{"Generated","Primitives"}){
             directory/=part;if(fs::is_symlink(fs::symlink_status(directory)))throw std::runtime_error("Generated primitive folders must not be symbolic links.");
