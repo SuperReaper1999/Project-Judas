@@ -30,6 +30,7 @@ def parse_args(argv=None):
     p.add_argument('--exporter',type=Path,default=ROOT/'build/judas_export')
     p.add_argument('--desktop-runtime',type=Path,default=ROOT/'build/judas')
     p.add_argument('--icu-host',type=Path)
+    p.add_argument('--prepare-native',action='store_true',help='Refresh matching tools in their existing native Release build before exporting; --check only validates this setup')
     p.add_argument('--check',action='store_true',help='Report prerequisites as JSON without compiling, downloading or creating output/cache directories')
     p.add_argument('--jobs',type=int,choices=range(1,9),default=2)
     words=list(sys.argv[1:] if argv is None else argv)
@@ -83,6 +84,43 @@ def copy_browser_licenses(sdk,output):
         shutil.copy2(sdk/relative,destination/name)
 
 
+
+def validate_native_build(a):
+    """Only refresh an existing, same-source native Release cache, never a guess."""
+    root=a.exporter.resolve().parent
+    if a.desktop_runtime.resolve()!=root/'judas' or a.exporter.resolve()!=root/'judas_export':
+        raise ValueError('Choose judas and judas_export from the same native build folder')
+    file=root/'CMakeCache.txt'
+    if not file.is_file():
+        raise ValueError('The selected tools need an existing native Release build; see the browser setup guide')
+    fields={}
+    for line in file.read_text(encoding='utf-8').splitlines():
+        if '=' in line and ':' in line and not line.startswith(('//','#')):
+            key,value=line.split('=',1);fields[key.split(':',1)[0]]=value
+    if Path(fields.get('CMAKE_HOME_DIRECTORY','')).resolve()!=ROOT:
+        raise ValueError('Build tools belong to a different source folder; they will not be modified')
+    if (fields.get('CMAKE_BUILD_TYPE')!='Release' or fields.get('CMAKE_TOOLCHAIN_FILE')
+            or fields.get('CMAKE_SYSTEM_NAME','Linux')!='Linux'
+            or fields.get('CMAKE_CROSSCOMPILING','FALSE').upper() in ('TRUE','ON','1')):
+        raise ValueError('Automatic preparation requires a native Release cache, not a Debug or cross-platform build')
+    return str(root)
+
+
+def prepare_native(a,environment):
+    root=Path(validate_native_build(a))
+    lock=root/'.browser-native.lock'
+    try:fd=os.open(lock,os.O_CREAT|os.O_EXCL|os.O_WRONLY,0o600)
+    except FileExistsError:raise ValueError('Game build tools are in use; inspect the recorded PID before removing a stale lock')
+    try:
+        os.write(fd,str(os.getpid()).encode())
+        print('Preparing game build tools...',flush=True)
+        # Preserve the existing cache/channel. Never rebuild or replace the editor.
+        run(['cmake','-S',ROOT,'-B',root],env=environment)
+        run(['cmake','--build',root,'--target','judas','judas_export','--parallel',a.jobs],env=environment)
+    finally:
+        os.close(fd)
+        lock.unlink(missing_ok=True)
+
 def preflight(a):
     """Read-only checks. CMake remains authoritative for final source fingerprints."""
     checks=[]
@@ -113,22 +151,25 @@ def preflight(a):
     check('Saved project',project);check('Output folder',output);check('Emscripten SDK',toolchain)
     for name in ['cmake','node','make']:
         check(name,lambda name=name:shutil.which(name) or (_ for _ in ()).throw(ValueError('Install '+name+' and put it on PATH')))
-    identities={}
-    for name,path in [('Native exporter',a.exporter),('Native runtime',a.desktop_runtime)]:
-        def identity(name=name,path=path):
-            need(path.is_file(),'Choose the matching Release '+name.lower()+' executable')
-            value=probe(path.resolve())
-            need(isinstance(value,dict) and all(value.get(f) for f in ['version','source_revision','source_fingerprint','source_untracked_fingerprint','channel']),'Tool returned incomplete build provenance')
-            need(value.get('configuration')=='Release','Build the native tools in Release configuration')
-            identities[name]=value
-            return value.get('build_id',value['source_revision'])
-        check(name,identity)
-    if len(identities)==2:
-        def matched():
-            fields=['version','source_revision','source_fingerprint','source_untracked_fingerprint','channel']
-            need(all(identities['Native exporter'][f]==identities['Native runtime'][f] for f in fields),'Exporter/runtime identities differ; rebuild both from this checkout')
-            return 'Native tools agree; exact current-source fingerprints are checked by CMake before compilation'
-        check('Tool identity',matched)
+    if a.prepare_native:
+        check('Game build tools',lambda:validate_native_build(a))
+    else:
+        identities={}
+        for name,path in [('Native exporter',a.exporter),('Native runtime',a.desktop_runtime)]:
+            def identity(name=name,path=path):
+                need(path.is_file(),'Choose the matching Release '+name.lower()+' executable')
+                value=probe(path.resolve())
+                need(isinstance(value,dict) and all(value.get(f) for f in ['version','source_revision','source_fingerprint','source_untracked_fingerprint','channel']),'Tool returned incomplete build provenance')
+                need(value.get('configuration')=='Release','Build the native tools in Release configuration')
+                identities[name]=value
+                return value.get('build_id',value['source_revision'])
+            check(name,identity)
+        if len(identities)==2:
+            def matched():
+                fields=['version','source_revision','source_fingerprint','source_untracked_fingerprint','channel']
+                need(all(identities['Native exporter'][f]==identities['Native runtime'][f] for f in fields),'Exporter/runtime identities differ; rebuild both from this checkout')
+                return 'Native tools agree; exact current-source fingerprints are checked by CMake before compilation'
+            check('Tool identity',matched)
     if a.icu_host:
         check('Native ICU tools',lambda:need((a.icu_host/'config/icucross.mk').is_file(),'Choose the native ICU build containing config/icucross.mk'))
     return {'schema':1,'kind':'judas-browser-preflight','ready':all(c['ok'] for c in checks),'checks':checks}
@@ -151,13 +192,14 @@ def main(argv=None):
     if not emcmake.is_file():raise ValueError('Install/activate the documented Emscripten SDK; --emsdk must name its root')
     environment=dict(os.environ,EM_CONFIG=str(a.emsdk/'.emscripten'))
     environment['PATH']=str(sdk)+os.pathsep+environment.get('PATH','')
+    report=preflight(a)
+    if not report['ready']:
+        raise ValueError('Setup needs attention:\n'+'\n'.join(c['name']+': '+c['detail'] for c in report['checks'] if not c['ok']))
+    if a.prepare_native:prepare_native(a,environment)
     native={name:probe(path) for name,path in [('exporter',a.exporter),('runtime',a.desktop_runtime)]}
     identity_fields=['version','source_revision','source_fingerprint','source_untracked_fingerprint','channel']
     if any(native['exporter'].get(f)!=native['runtime'].get(f) for f in identity_fields):
         raise ValueError('Native exporter and runtime identities differ; rebuild both from this source')
-    report=preflight(a)
-    if not report['ready']:
-        raise ValueError('Prerequisite checks failed:\n'+'\n'.join(c['name']+': '+c['detail'] for c in report['checks'] if not c['ok']))
     a.build.mkdir(parents=True,exist_ok=True)
     lock=a.build/'.browser-export.lock'
     try:fd=os.open(lock,os.O_CREAT|os.O_EXCL|os.O_WRONLY,0o600)

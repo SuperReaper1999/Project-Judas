@@ -20,6 +20,7 @@ int main(int argc, char** argv) {
     if (!project.Load(argv[1], error)) { std::cerr << error; return 1; }
     BrowserExportWorkflow flow;
     flow.Initialize(project);
+    flow.playAfterBuild=false; // This automated check must not open the user browser.
     flow.script = std::filesystem::absolute(argv[2]).string();
     flow.sdk = std::filesystem::absolute(argv[3]).string();
     flow.cache = std::filesystem::absolute(argv[4]).string();

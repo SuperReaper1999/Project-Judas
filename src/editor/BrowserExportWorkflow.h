@@ -3,6 +3,7 @@
 #include <filesystem>
 #include <string>
 #include <vector>
+#include <utility>
 
 struct EditorPanelState;
 struct EditorRequests;
@@ -39,16 +40,21 @@ private:
 struct BrowserExportWorkflow {
     BrowserToolJob job, preview;
     std::string python = "python3", script, sdk, cache, exporter, runtime, icu, destination;
-    std::string operation, previewURL, projectFile;
+    std::string operation, previewURL, projectFile, activeDestination, builtPackage;
     std::vector<std::pair<bool, std::string>> checks;
     std::string parsedCheckOutput;
     int jobs = 2, previewPort = 8081;
-    bool initialized = false;
+    bool initialized = false, ready = false, automaticCheck = false;
+    bool playAfterBuild = true, buildHandled = true, openPreviewWhenReady = false;
+    bool prepareNative = true, refreshExistingTab = false;
     void Initialize(const Project&);
     std::vector<std::string> Arguments(const Project&, bool check) const;
     void Start(const Project&, bool check);
     void Poll();
+    std::string NextDestination() const;
+    void StartPreview(bool openWhenReady);
 };
 
 void DrawBrowserExportWorkflow(EditorPanelState&, EditorRequests&);
 void PollBrowserExportWorkflow(EditorPanelState&);
+void DrawBrowserExportWindow(EditorPanelState&, EditorRequests&);

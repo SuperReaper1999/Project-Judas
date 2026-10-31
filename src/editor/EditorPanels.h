@@ -106,6 +106,7 @@ struct RetargetPanelState;
 struct BrowserExportWorkflow;
 struct EditorPanelState {
     std::shared_ptr<BrowserExportWorkflow> browserExport;
+    bool showBrowserExport=false;
     bool experimentalBrowserSupport=false; // explicit per-launch opt-in, not a project setting
     EditorWorkspaceLayout workspace;
     float hierarchyWidth = 250.0f;

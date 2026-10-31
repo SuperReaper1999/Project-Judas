@@ -154,32 +154,38 @@ output is functional evidence, not a hardware listening test.
 
 ## Editor export and local preview
 
-Start the Linux source editor with `-ExpBrowserSupport=1`. **File → Export browser
- game (Experimental)…** opens Project Settings → Export. The native Release
-export remains separate. This launch option is never saved into the project.
+Start the Linux source editor with `-ExpBrowserSupport=1`. Open **File → Export
+browser game (Experimental)…** to reopen it. With this launch flag the focused
+export window also opens at startup. It handles the workflow; there is
+no need to navigate project settings or understand compiler paths.
 
-1. Save project, scenes and assets. Choose a **new package folder outside the
-   project**. Browse chooses its parent; edit the appended `web-game` name.
-2. Open **Toolchain and build options** if needed. Select the installed Emscripten
-   6.0.13 root, browser build cache and matching Release exporter/runtime. The
-   compiler-script field must point into the Judas source checkout. No SDK or
-   toolchain is installed automatically. Installed native SDKs do not magically
-   become browser compiler hosts.
-3. **Check prerequisites** reports missing tools, unsupported project policy,
-   output conflicts and mismatched native identities without compiling, creating
-   the build/output folders or downloading anything. The final current-source
-   fingerprint check remains CMake's responsibility during the actual build.
-4. **Build browser game** uses the ordinary saved-content confirmation when the
-   project or scene has unsaved edits. Build output appears in the panel and in
-   its retained log. The editor stays responsive. Avoid modifying saved assets
-   while they are being packaged. The first engine compile can take minutes.
-5. **Preview package locally**, then **Open game in browser**. The preview checks
-   the complete inventory/hashes, binds only to loopback and sends the required
-   isolation headers. Its default port is 8081; choose another if occupied.
-   Keep the same port for the same browser save origin. Port 0 chooses a free,
-   potentially different port, so it is unsuitable for stable save origins.
-6. **Stop local preview** when finished. Closing the editor stops only its own
-   compiler/preview process groups; it does not stop another editor/game/server.
+1. **Choose where to save it.** The default location is beside the project.
+   Use **Change folder…** to choose another parent folder if you want.
+2. **Build & play.** Setup is checked automatically. Save any edits when asked.
+   The editor prepares matching game tools, builds the web files and opens your
+   browser. The first build can take several minutes. Nothing is uploaded.
+3. Press **Play** on the browser page. Use **Show exported files** to find the
+   complete package, or **Export files only** if you do not want to play it.
+
+Each build gets a fresh folder (`Game-web`, `Game-web-2`, …), so earlier exports
+are preserved. When rebuilding with an existing local preview, the same address
+is reused: refresh that game tab to load the new build. This avoids opening a
+second tab that competes for the same saved-game lock. **Stop local preview**
+stops only this editor's local server. Closing the editor stops it too.
+
+**Setup & troubleshooting** contains installation paths, build workers, local
+port, prerequisite results and logs. They are hidden during the normal workflow.
+Tools are detected from the source checkout, the editor's build folder and an
+installed EMSDK where present. A missing SDK still requires installation; the
+editor never silently downloads or installs one.
+
+Automatic tool preparation updates only `judas` and `judas_export` in their
+existing native Release cache, after verifying it belongs to this exact source
+folder and has no cross-platform toolchain. It does not rebuild the editor,
+change the cache's channel, configure Debug/cross builds, or touch another
+checkout. Disable this option in troubleshooting if you manage the tools yourself.
+The CLI equivalent is `--prepare-native`. Combining it with `--check` remains
+read-only: it validates the cache without configuring or compiling anything.
 
 Cancelling a build stops its compiler descendants and preserves logs/staging for
 inspection. A cancelled/crashed build is not a successful export. If the entire

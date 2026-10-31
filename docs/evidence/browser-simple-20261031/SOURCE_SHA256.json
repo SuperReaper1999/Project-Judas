@@ -1,0 +1,14 @@
+{
+  "docs/BROWSER_SUPPORT.md": "b030f605fda0957080b52cfc45dad0e5a3cf6bc632b4cca36d4b7325ef586175",
+  "src/editor/BrowserExportWorkflow.cpp": "995d543a1711ac3bc2d751354d9d3c8661188412c98f5e319117540482f45630",
+  "src/editor/BrowserExportWorkflow.h": "ac6d7afad9b037221ac0272743ddad2f0d0565b103d9bf90b4d8892789fc6954",
+  "src/editor/EditorApplication.cpp": "beac02f0b68763ff07d974c1e2bbba36af98fcc3d06b09bcb88a31ae31f0dee2",
+  "src/editor/EditorPanels.cpp": "7c18425ea749e09addb26b2c401ecafe66b103e48b930a26173beea2d0c661a9",
+  "src/editor/EditorPanels.h": "880e509a3a3a9536988dd98e1552c39d418e8af2e1480bff237a3cbb90740e92",
+  "src/editor/ProjectSettingsPanel.cpp": "7e5411cd938b1b2ea0faf349239b9a6790ef793d94dfcd7e3e68bb0190241ff1",
+  "tests/BrowserExportSmoke.cpp": "80858b1019a5949de9880b5fca1586f73d4149adbfc538e3d4c828dc78e95eb6",
+  "tests/BrowserWorkflowTests.cpp": "5d3b68aa074967c71c6039876a2cb1f1a950a76a817a7547e9786ddeb6f49259",
+  "tests/ProjectSettingsEditorTests.cpp": "a7d5263526b0522e9698d9066b3078a4100029be45940bd20f60dce46dd9aad6",
+  "tests/test_browser_workflow.py": "4aba8a32a9bdb5209902a44bfe2925065158662a59604d6b63d7c50e948ee08b",
+  "tools/build_browser.py": "23ab75fd5bfef9a357057a3045e22890e534ae80d2f3183c1cb0a12f2f695254"
+}

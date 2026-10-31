@@ -238,7 +238,7 @@ void DrawProjectSettingsPanel(EditorDocument& doc,EditorPanelState& state,Editor
         ImGui::SameLine();if(ImGui::Button("Browse package folder..."))requests.browseExport=true;
         ImGui::TextWrapped("Save project and scene edits first. Export copies the project policy, selected content and runtime dependencies. Choose a destination outside the project.");
         if(ImGui::Button("Export project (Release)"))requests.exportProject=true;
-        if(state.experimentalBrowserSupport) DrawBrowserExportWorkflow(state,requests);
+        if(state.experimentalBrowserSupport && ImGui::Button("Export a browser game...")) state.showBrowserExport=true;
     }
     ImGui::EndDisabled();
     ImGui::EndChild();ImGui::Separator();

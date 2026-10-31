@@ -70,6 +70,16 @@ int main() {
         Check(noisy.Start("python3", {"-c","import sys,time;sys.stdout.write('x'*(17*1024*1024));sys.stdout.flush();time.sleep(5)"}, root/"noisy.log"), "start excessive-output control");
         Check(Finish(noisy) && !noisy.Succeeded() && noisy.Output().size()<=64*1024, "excessive logs stop safely with a bounded display tail");
     }
+    {
+        BrowserExportWorkflow flow;flow.destination=(root/"Game web").string();
+        Check(flow.NextDestination()==flow.destination,"first export uses the chosen game folder");
+        fs::create_directories(flow.destination);std::ofstream(fs::path(flow.destination)/"keep")<<"original";
+        Check(flow.NextDestination()==flow.destination+"-2","repeat exports automatically choose a fresh folder");
+        fs::create_directories(flow.destination+"-2");
+        Check(flow.NextDestination()==flow.destination+"-3"&&fs::exists(fs::path(flow.destination)/"keep"),"multiple builds preserve earlier exports");
+        flow.destination+="/";
+        Check(flow.NextDestination()==(root/"Game web-3").string(),"a trailing slash cannot nest a new build inside the previous package");
+    }
     fs::remove_all(root);
     std::cout << "BrowserWorkflowTests: " << checks << " checks, " << failures << " failures\n";
     return failures ? 1 : 0;

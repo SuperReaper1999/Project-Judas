@@ -932,7 +932,7 @@ void EditorApplication::HandleRequests(EditorRequests& r) {
         case EditorFileBrowser::Target::NewProject:m_newProjectDirectory=selected->path;break;
         case EditorFileBrowser::Target::Import:m_panels.importSourceInput=selected->path;m_panels.reviewAssetImport=true;break;
         case EditorFileBrowser::Target::Export:m_panels.exportDestination=selected->path;break;
-        case EditorFileBrowser::Target::BrowserExport:if(m_panels.browserExport)m_panels.browserExport->destination=(fs::path(selected->path)/"web-game").string();break;
+        case EditorFileBrowser::Target::BrowserExport:if(m_panels.browserExport)m_panels.browserExport->destination=(fs::path(selected->path)/(fs::path(m_project.RootDir()).filename().string()+"-web")).string();break;
         }
         if(!m_fileBrowserParent.empty()){ImGui::OpenPopup(m_fileBrowserParent.c_str());m_fileBrowserParent.clear();}
     }
@@ -1478,6 +1478,7 @@ int EditorApplication::Run(int argc, char** argv) {
     // screenshots both, stops, verifies the authored scene is untouched,
     // saves it, prints profiler and resource lines, and quits.
     const char* autotest = std::getenv("JUDAS_EDITOR_AUTOTEST");
+    m_panels.showBrowserExport=m_panels.experimentalBrowserSupport;
     int autotestFrame = 0;
     const bool navigationAutotest = autotest && std::getenv("JUDAS_EDITOR_AUTOTEST_PAN");
     const bool projectUnsavedAutotest=autotest&&std::getenv("JUDAS_EDITOR_AUTOTEST_PROJECT_UNSAVED");
@@ -1759,6 +1760,7 @@ int EditorApplication::Run(int argc, char** argv) {
         { JUDAS_PROFILE_SCOPE("Profiler UI"); DrawProfilerPanel(m_panels); }
         DrawStatusBar(m_document, m_panels);
         m_milestoneNotice.Draw(m_panels.status, m_preferences.updateChannel);
+        DrawBrowserExportWindow(m_panels, requests);
 
         // Requests raised by the automation hook on the previous frame,
         // after that frame's UI had already been rendered.

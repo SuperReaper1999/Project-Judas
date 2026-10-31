@@ -1,0 +1,12 @@
+Shadow maps: on
+Graphics: 3.3.0 NVIDIA 580.178.04 / NVIDIA GeForce GTX 970/PCIe/SSE2
+Renderer fragment texture units: 32 (material path uses 12)
+[editor autotest] duplicate created id 676: scene CHANGED; undo restores: IDENTICAL
+[editor autotest] wrote: /home/conner/Documents/GitHub/Project-Judas/.cache/browser-simple/final-window.edit.png
+[editor autotest] edit frame: 231 draw calls, 458 triangles, 1623 debug lines
+[editor autotest] wrote: /home/conner/Documents/GitHub/Project-Judas/.cache/browser-simple/final-window.play.png
+[editor autotest] play frame: 1 steps, step 0.079 ms, 21 bodies, 0 contacts, 291 draw calls, 580 triangles, 0 shadow passes, 0 lights, 261 debug lines, 0 particles
+[editor autotest] resources: 0 meshes, 3 textures, 0 terrain meshes, hits 131140, misses 4, failed 0, uploads 4, resident 307956 bytes
+[editor autotest] jobs: 11 workers, 4 completed, 0 failed, 0 cancelled
+[editor autotest] authored scene after play/stop is IDENTICAL
+[editor autotest] save ok

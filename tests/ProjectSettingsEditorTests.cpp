@@ -10,6 +10,7 @@
 #include <filesystem>
 #include <iostream>
 #include <fstream>
+#include <thread>
 namespace {
 int checks=0,failures=0;
 void Check(bool v,const char* what){++checks;failures+=!v;std::cout<<(v?"PASS ":"FAIL ")<<what<<'\n';}
@@ -21,7 +22,7 @@ int main(){
     ImGui::CreateContext();auto& io=ImGui::GetIO();io.IniFilename=nullptr;io.LogFilename=nullptr;io.DisplaySize={1280,800};io.DeltaTime=1.f/60;
     unsigned char* pixels;int width,height;io.Fonts->GetTexDataAsRGBA32(&pixels,&width,&height);
     EditorPanelState state;state.project=&project;state.showProjectSettings=true;state.mode=EditorMode::Edit;EditorRequests requests;EditorDocument doc;
-    auto frame=[&](){requests={};ImGui::NewFrame();ImGui::SetNextWindowPos({20,20},ImGuiCond_Always);DrawProjectSettingsPanel(doc,state,requests);ImGui::Render();};
+    auto frame=[&](){requests={};ImGui::NewFrame();ImGui::SetNextWindowPos({20,20},ImGuiCond_Always);PollBrowserExportWorkflow(state);DrawProjectSettingsPanel(doc,state,requests);DrawBrowserExportWindow(state,requests);ImGui::Render();};
     auto child=[&](const char* component)->ImGuiWindow*{for(auto* w:ImGui::GetCurrentContext()->Windows)if(w->ParentWindow&&std::string(w->ParentWindow->Name)=="Project Settings"&&std::string(w->Name).find(std::string("/")+component+"_")!=std::string::npos)return w;return nullptr;};
     auto activate=[&](ImGuiWindow* w,const char* label){Check(w!=nullptr,"actual settings window available");if(w){ImGui::ActivateItemByID(w->GetID(label));frame();frame();}};
     frame();frame();
@@ -65,14 +66,28 @@ int main(){
     Check(!project.Settings().basicWater&&project.IsDirty(),"settings redo reapplies project edit");
     activate(child("Categories"),"Export");
     Check(!state.browserExport,"browser controls are absent without per-launch opt-in");
-    state.experimentalBrowserSupport=true;frame();frame();
-    Check(state.browserExport!=nullptr,"explicit opt-in exposes browser workflow");
-    ImGui::ActivateItemByID(child("Settings")->GetID("Build browser game"));frame();
-    Check(requests.exportBrowser&&!requests.exportProject,"browser build emits its own saved-content editor action");
+#if defined(__linux__) && !defined(__ANDROID__)
+    state.experimentalBrowserSupport=true;
+    state.browserExport=std::make_shared<BrowserExportWorkflow>();
+    state.browserExport->Initialize(project);
+    state.browserExport->script=(root/"ready.py").string();
+    // UI-only readiness fixture. Actual SDK/compiler integration is tested by
+    // judas_browser_export_smoke; ordinary CI must not install Emscripten.
+    {std::ofstream fixture(root/"ready.py");fixture<<"print('{\"kind\":\"judas-browser-preflight\",\"ready\":true,\"checks\":[{\"ok\":true,\"name\":\"UI fixture\",\"detail\":\"ready\"}]}')\n";}
+    activate(child("Settings"),"Export a browser game...");
+    for(int i=0;i<200&&!state.browserExport->ready;++i){frame();std::this_thread::sleep_for(std::chrono::milliseconds(10));}
+    auto* browserWindow=ImGui::FindWindowByName("Export your game for the web");
+    Check(state.showBrowserExport&&browserWindow,"browser export has its own focused window");
+    Check(state.browserExport->ready,"setup is checked automatically without an extra user step");
+    ImGui::ActivateItemByID(browserWindow->GetID("Build & play"));frame();
+    Check(requests.exportBrowser&&!requests.exportProject&&state.browserExport->playAfterBuild,"one Build & play action requests saved-content export and automatic play");
     state.mode=EditorMode::Play;
-    ImGui::ActivateItemByID(child("Settings")->GetID("Build browser game"));frame();
+    ImGui::ActivateItemByID(browserWindow->GetID("Build & play"));frame();
     Check(!requests.exportBrowser,"browser export cannot launch from Play");
     state.mode=EditorMode::Edit;
+#else
+    std::cout<<"SKIP browser compiler UI: Linux source host required\n";
+#endif
     {std::ofstream external(project.ProjectFile(),std::ios::app);external<<"# external edit\n";}
     Check(!project.Save(error)&&project.IsDirty()&&error.find("externally")!=std::string::npos,"failed external-conflict save retains unsaved settings");
     ImGui::DestroyContext();std::filesystem::remove_all(root);

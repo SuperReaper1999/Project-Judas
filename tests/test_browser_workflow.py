@@ -146,6 +146,39 @@ class PreflightTests(unittest.TestCase):
         self.assertFalse(report['ready']);self.assertFalse(next(c for c in report['checks'] if c['name']=='Saved project')['ok'])
         self.assertFalse(next(c for c in report['checks'] if c['name']=='Emscripten SDK')['ok'])
 
+    def native_cache(self, extra=''):
+        native=self.root/'native';native.mkdir(exist_ok=True)
+        self.args.exporter=native/'judas_export';self.args.desktop_runtime=native/'judas'
+        (native/'CMakeCache.txt').write_text('CMAKE_HOME_DIRECTORY:INTERNAL='+str(ROOT)+'\nCMAKE_BUILD_TYPE:STRING=Release\n'+extra)
+        self.args.prepare_native=True
+        return native
+
+    def test_auto_prepare_check_is_read_only(self):
+        self.tools();native=self.native_cache();before=(native/'CMakeCache.txt').read_bytes()
+        with patch.object(compiler.shutil,'which',return_value='/tool'),patch.object(compiler,'probe',side_effect=AssertionError('must not run stale tools')):
+            self.assertTrue(compiler.preflight(self.args)['ready'])
+        self.assertEqual(before,(native/'CMakeCache.txt').read_bytes())
+        self.assertFalse((native/'.browser-native.lock').exists())
+
+    def test_auto_prepare_refuses_other_source_debug_and_cross_builds(self):
+        native=self.native_cache()
+        for content in ['CMAKE_HOME_DIRECTORY:INTERNAL=/unrelated\nCMAKE_BUILD_TYPE:STRING=Release\n',
+                        'CMAKE_HOME_DIRECTORY:INTERNAL='+str(ROOT)+'\nCMAKE_BUILD_TYPE:STRING=Debug\n',
+                        'CMAKE_HOME_DIRECTORY:INTERNAL='+str(ROOT)+'\nCMAKE_BUILD_TYPE:STRING=Release\nCMAKE_TOOLCHAIN_FILE:FILEPATH=cross.cmake\n',
+                        'CMAKE_HOME_DIRECTORY:INTERNAL='+str(ROOT)+'\nCMAKE_BUILD_TYPE:STRING=Release\nCMAKE_SYSTEM_NAME:STRING=Windows\n']:
+            (native/'CMakeCache.txt').write_text(content)
+            with self.assertRaises(ValueError):compiler.validate_native_build(self.args)
+
+    def test_preparation_failure_cleans_lock_and_never_builds_editor(self):
+        native=self.native_cache();calls=[]
+        def fail(command,**kwargs):
+            calls.append(list(map(str,command)))
+            if len(calls)==2:raise subprocess.CalledProcessError(1,command)
+        with patch.object(compiler,'run',side_effect=fail):
+            with self.assertRaises(subprocess.CalledProcessError):compiler.prepare_native(self.args,dict(os.environ))
+        self.assertFalse((native/'.browser-native.lock').exists())
+        self.assertEqual(calls[1][calls[1].index('--target')+1:calls[1].index('--parallel')],['judas','judas_export'])
+
     def test_shared_output_cache_rejected(self):
         self.args.build=self.args.output
         self.assertFalse(next(c for c in compiler.preflight(self.args)['checks'] if c['name']=='Output folder')['ok'])
