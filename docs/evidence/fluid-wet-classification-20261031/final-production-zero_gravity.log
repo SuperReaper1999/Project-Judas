@@ -1,4 +1,0 @@
-PRECONDITION zero_gravity warmup_steps=240 mean_particle_speed=0.0972153
-DIAGNOSTIC_FAIL zero_gravity reference pool is quiescent before body release
-CASE zero_gravity failures=0 acceptance_failures=0 diagnostic_checks=1 diagnostic_failures=1 observational_scale=0 mass=216.0000153 particles=1152 y=0.6999064088 vy=-1.708429954e-05 fraction=0.9952398539 observed_fraction=1 max_speed=9.56685617e-05 particle_ms=10.664784 executed_ms=14.062743 amortized_ms=8.754951508
-SUMMARY checks=727 failures=0 acceptance_failures=0 diagnostic_checks=1 diagnostic_failures=1 strict_diagnostics=0 steps=480

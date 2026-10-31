@@ -96,7 +96,7 @@ object 4 "Fuel A"
   body.pickable true
   body.managed false
   body.compound-count 0
-  combustible 
+  combustible
   combustible.heat-capacity 150
   combustible.fuel-mass 0.12
   combustible.ignition-temperature 550
@@ -129,7 +129,7 @@ object 5 "Fuel B"
   body.pickable true
   body.managed false
   body.compound-count 0
-  combustible 
+  combustible
   combustible.heat-capacity 150
   combustible.fuel-mass 0.12
   combustible.ignition-temperature 550
@@ -162,7 +162,7 @@ object 6 "Far fuel"
   body.pickable true
   body.managed false
   body.compound-count 0
-  combustible 
+  combustible
   combustible.heat-capacity 150
   combustible.fuel-mass 0.12
   combustible.ignition-temperature 550
@@ -206,7 +206,7 @@ object 8 "Lake"
   position 296.10016 77.997 2.9248877
   rotation 1 0 0 0
   scale 1 1 1
-  fluid-volume 
+  fluid-volume
   fluid-volume.spacing 0.5
   fluid-volume.count 5 5 5
   fluid-volume.emitter true

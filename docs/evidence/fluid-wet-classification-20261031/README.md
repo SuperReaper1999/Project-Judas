@@ -10,7 +10,7 @@ pre-checkpoint dirty build, not a fictitious clean release. A post-checkpoint
 runtime identity rebuild may change its binary hash without changing physics.
 
 FOCUSED_RESULTS.json records final v3 commands, exit codes and elapsed wall time.
-final-*.log are their raw outputs and Basic Water native/cold-process checks.
+final-*.log.gz are their raw outputs and Basic Water native/cold-process checks.
 FLAT/RADIAL_BODY_TRANSFERS are original 120-step direct-load/contact traces.
 *_V3_FINAL are final full-scene traces; each includes an independent run with
 water forces suppressed as a negative control. The production game has no delay
@@ -34,3 +34,8 @@ QUERY_PERFORMANCE.json and query-*.csv contain matched query timings, with exact
 frozen input data and QueryBench.cpp. They are not full fluid/application times.
 LOCK_SOURCE_CHECK.json verifies the existing Alpha policy files are unchanged.
 No independent research directory was modified and no research code was adopted.
+
+Raw text logs were subsequently losslessly compressed to avoid whitespace checks
+misreading their verbatim terminal output as source. The exact qualification scene
+is retained as terrain_flat_comparison-tested.judas.gz; its working copy differs
+only by removed trailing spaces. No authoring tokens or physics changed.
