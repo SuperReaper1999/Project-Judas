@@ -1,0 +1,37 @@
+{
+  "browser": "firefox",
+  "version": "157.0",
+  "source": ".cache/browser-shadow/renderer-before.cpp",
+  "rows": [
+    {
+      "label": "flat plane",
+      "badPixels": 0,
+      "glError": 0
+    },
+    {
+      "label": "oblique plane",
+      "badPixels": 16,
+      "glError": 0
+    },
+    {
+      "label": "opposite slope",
+      "badPixels": 16,
+      "glError": 0
+    },
+    {
+      "label": "perspective light",
+      "badPixels": 16,
+      "glError": 0
+    },
+    {
+      "label": "real occluder",
+      "badPixels": 16,
+      "glError": 0
+    },
+    {
+      "label": "tiled light boundary",
+      "badPixels": 16,
+      "glError": 0
+    }
+  ]
+}

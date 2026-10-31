@@ -1,0 +1,37 @@
+{
+  "browser": "firefox",
+  "version": "157.0",
+  "source": "/home/conner/Documents/GitHub/Project-Judas/src/Renderer.cpp",
+  "rows": [
+    {
+      "label": "flat plane",
+      "badPixels": 0,
+      "glError": 0
+    },
+    {
+      "label": "oblique plane",
+      "badPixels": 0,
+      "glError": 0
+    },
+    {
+      "label": "opposite slope",
+      "badPixels": 0,
+      "glError": 0
+    },
+    {
+      "label": "perspective light",
+      "badPixels": 0,
+      "glError": 0
+    },
+    {
+      "label": "real occluder",
+      "badPixels": 0,
+      "glError": 0
+    },
+    {
+      "label": "tiled light boundary",
+      "badPixels": 0,
+      "glError": 0
+    }
+  ]
+}

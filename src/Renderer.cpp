@@ -146,44 +146,44 @@ uniform bool uHasDynamicLights;
 uniform vec4 uLightViewport;
 vec4 lightTexel(int i){return texelFetch(uLightGrid,ivec2(i%1024,i/1024),0);}
 ivec2 lightTile(){vec4 meta=lightTexel(0);ivec2 n=ivec2(meta.xy);ivec2 tile=clamp(ivec2((gl_FragCoord.xy-uLightViewport.xy)/uLightViewport.zw*meta.xy),ivec2(0),n-1);return ivec2(tile.y*n.x+tile.x,int(meta.z));}
-// Milestone 15: samples `shadowMap` at `lightSpacePos` (already multiplied
-// by that light's own view*projection in the vertex shader) and returns
-// how LIT this fragment is (1.0 = fully lit, 0.0 = fully shadowed) — a
-// simple 3x3 percentage-closer-filter (9 taps) for a soft, non-aliased
-// edge, the minimal sensible technique this milestone's brief allows (see
-// docs/ARCHITECTURE.md, "Milestone 15," for why nothing fancier was
-// built). A slope-scaled bias (steeper-facing surfaces need a larger
-// bias) avoids most shadow-acne self-shadowing while limiting peter-
-// panning; a fragment whose projected position falls outside the shadow
-// map's own [0,1] coverage (or beyond its far plane) is treated as fully
-// lit — there is no occluder DATA there, not evidence of no occluder, but
-// this is the same "no light reaches unclaimed space" honesty this
-// engine already applies elsewhere (see docs/ARCHITECTURE.md's gravity-
-// context law) rather than guessing.
+// Capture geometric derivatives in uniform flow before material/light branches.
+vec3 shadowWorldDx, shadowWorldDy;
+
+// A sloped receiver has a different depth at each shadow texel. Correct that
+// depth across the nine-tap PCF footprint instead of hiding acne with more bias.
 float ComputeShadowFactor(int slot, vec3 worldPosition, float ndotl) {
     if(slot<0||slot>=9)return 1.0;
-    vec4 lightSpacePos=uLightSpaceMatrix[slot]*vec4(worldPosition,1);
-    if(lightSpacePos.w<=0.0)return 1.0;
-    vec3 projCoords = lightSpacePos.xyz / lightSpacePos.w;
-    projCoords = projCoords * 0.5 + 0.5;  // NDC [-1,1] -> texture/depth [0,1]
-
-    if (projCoords.x < 0.0 || projCoords.x > 1.0 || projCoords.y < 0.0 || projCoords.y > 1.0 ||
-        projCoords.z < -1.0 || projCoords.z > 1.0) {
-        return 1.0;
+    vec4 clip=uLightSpaceMatrix[slot]*vec4(worldPosition,1.0);
+    if(clip.w<=0.0)return 1.0;
+    vec3 ndc=clip.xyz/clip.w;
+    vec3 projected=ndc*0.5+0.5;
+    if(any(lessThan(projected,vec3(0.0)))||any(greaterThan(projected,vec3(1.0))))return 1.0;
+    // Project geometric world-plane directions, not derivatives of a selected
+    // light matrix: adjacent tiled-light fragments may select different lights.
+    vec4 clipDx=uLightSpaceMatrix[slot]*vec4(shadowWorldDx,0.0);
+    vec4 clipDy=uLightSpaceMatrix[slot]*vec4(shadowWorldDy,0.0);
+    vec3 dx=0.5*(clipDx.xyz-ndc*clipDx.w)/clip.w;
+    vec3 dy=0.5*(clipDy.xyz-ndc*clipDy.w)/clip.w;
+    float determinant=dx.x*dy.y-dx.y*dy.x;
+    vec2 slope=vec2(0.0);
+    if(determinant!=0.0){
+        slope=vec2(dx.z*dy.y-dy.z*dx.y,dx.x*dy.z-dy.x*dx.z)/determinant;
     }
-
-    float bias = max(0.006 * (1.0 - ndotl), 0.0015);
-    float currentDepth = projCoords.z - bias;
-
-    vec2 texelSize = 1.0 / vec2(textureSize(uShadowMaps, 0).xy);
-    float litSum = 0.0;
-    for (int x = -1; x <= 1; ++x) {
-        for (int y = -1; y <= 1; ++y) {
-            float closestDepth = texture(uShadowMaps, vec3(projCoords.xy + vec2(x, y) * texelSize,float(slot))).r;
-            litSum += currentDepth <= closestDepth ? 1.0 : 0.0;
+    if(any(isnan(slope))||any(isinf(slope)))slope=vec2(0.0);
+    ivec2 size=textureSize(uShadowMaps,0).xy;
+    ivec2 center=ivec2(floor(projected.xy*vec2(size)));
+    float bias=max(0.006*(1.0-ndotl),0.0015); // Existing numerical bias, unchanged.
+    float lit=0.0;
+    for(int x=-1;x<=1;++x){
+        for(int y=-1;y<=1;++y){
+            ivec2 pixel=clamp(center+ivec2(x,y),ivec2(0),size-1);
+            vec2 offset=(vec2(pixel)+0.5)/vec2(size)-projected.xy;
+            float receiver=projected.z+dot(slope,offset);
+            float stored=texelFetch(uShadowMaps,ivec3(pixel,slot),0).r;
+            lit+=receiver-bias<=stored?1.0:0.0;
         }
     }
-    return litSum / 9.0;
+    return lit/9.0;
 }
 
 
@@ -225,6 +225,8 @@ vec3 pbrLight(vec3 base,float metal,float rough,vec3 n,vec3 v,vec2 uv){
 }
 
 void main() {
+    shadowWorldDx=dFdx(vWorldPos);
+    shadowWorldDy=dFdy(vWorldPos);
     vec2 materialUV=mapUV(0);
     vec3 normal = normalize(vWorldNormal);if(uMaterialModel!=0&&!gl_FrontFacing)normal=-normal;
     if(uMaterialModel!=0&&uHasNormal){vec3 t=vWorldTangent.xyz-normal*dot(normal,vWorldTangent.xyz);if(dot(t,t)>0.000001){t=normalize(t);vec3 b=cross(normal,t)*vWorldTangent.w;t*=uUVTransform.x<0.0?-1.0:1.0;b*=uUVTransform.y<0.0?-1.0:1.0;vec3 map=texture(uNormal,mapUV(2)).xyz*2.0-1.0;map.xy*=uNormalStrength;normal=normalize(mat3(t,b,normal)*map);}}

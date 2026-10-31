@@ -1,0 +1,85 @@
+{
+  "scope": "Shadow receiver-plane correction, followed by bounded memory endurance. Experimental only.",
+  "base": "0cddd4a4678203f1660ec5b29acf0b34cef59835",
+  "sourceHashes": {
+    "src/Renderer.cpp": "b8eab07459e9ee29ea6eba9ed69a7082238f066976bcde7e047bf967c9734d58",
+    "src/Window.cpp": "a112b1fb2822dfa598969c114fa9b01b31be63eb1243c58344381b5524b99b96",
+    "src/PhysicsWorld.cpp": "ceb7c724e7230d7e8e60a2663a1d03d4b9d9a2d8163ad35e41edc21f83349ff4",
+    "tests/browser/shadow_plane.cjs": "f7c48ec5d47d83fffe9994f409dd8485b0297716ab4ac1873f37ddd6d90701bf"
+  },
+  "runtimeHashes": {
+    "judas_browser.wasm": "bb64d87f24fa50d2eeaa17df9a76bd13b5b82fe322c60567321f97e62a6eedd6",
+    "judas_browser.js": "a7d800a1602be44283e3056d42718dcc679bb173f3ac50c2fd64790da47e276f"
+  },
+  "tests": {
+    "shaderOracleFirefox": 6,
+    "shaderOracleChromium": 6,
+    "originalShaderFails": 5,
+    "nativeRenderer": 44,
+    "nativeSprites": 22,
+    "browserWorkflowPython": 34
+  },
+  "gatesDeclaredMtimeNs": 1793462079594012410,
+  "prototypes": {
+    "original": {
+      "generatedJsSha256": "c352fe697af788dab562caf3f334ff41f7d75dcf61b8de10ed2b1cfb7b2b2ec7",
+      "runtimeWasmSha256": "28589a47bb8b7a78aa7091749743730b378754f2dbc8c44fcc3ba1ee1fb8ce0c",
+      "diagnosticOnly": true
+    },
+    "no-shadow": {
+      "generatedJsSha256": "024da44f3c54e79c2d2c31c7c0ecbd971bbdc459225159dc185e8a5378f36ec5",
+      "runtimeWasmSha256": "28589a47bb8b7a78aa7091749743730b378754f2dbc8c44fcc3ba1ee1fb8ce0c",
+      "diagnosticOnly": true
+    },
+    "explicit-depth": {
+      "generatedJsSha256": "d0d399cbf658405477d95aaf38825ece0d02b2e47b0c94512c5398bab8477812",
+      "runtimeWasmSha256": "28589a47bb8b7a78aa7091749743730b378754f2dbc8c44fcc3ba1ee1fb8ce0c",
+      "diagnosticOnly": true
+    },
+    "fetch-depth": {
+      "generatedJsSha256": "03c758930dff9a77f42372723605d5efea481ded4049e082dded9f21dc803084",
+      "runtimeWasmSha256": "28589a47bb8b7a78aa7091749743730b378754f2dbc8c44fcc3ba1ee1fb8ce0c",
+      "diagnosticOnly": true
+    },
+    "depth-error": {
+      "generatedJsSha256": "213ba31e72e933aeea4c40a7bb60b4745079598ad882c370aefbaf9900f531fa",
+      "runtimeWasmSha256": "28589a47bb8b7a78aa7091749743730b378754f2dbc8c44fcc3ba1ee1fb8ce0c",
+      "diagnosticOnly": true
+    },
+    "receiver-plane": {
+      "generatedJsSha256": "4ac4b70ddee7ccecb0d5a1355541589c104d13d67836a7f9677a640da58b72f1",
+      "runtimeWasmSha256": "28589a47bb8b7a78aa7091749743730b378754f2dbc8c44fcc3ba1ee1fb8ce0c",
+      "diagnosticOnly": true
+    },
+    "capture-source": {
+      "generatedJsSha256": "1c732b9ba2db3b36a6b15f819a47b239a45b57be3e9c95b4fcf8d0c9bfaa1d00",
+      "runtimeWasmSha256": "28589a47bb8b7a78aa7091749743730b378754f2dbc8c44fcc3ba1ee1fb8ce0c",
+      "diagnosticOnly": true
+    }
+  },
+  "endurance": {
+    "passed": true,
+    "durationSeconds": 766.181,
+    "activeSeconds": 600,
+    "reopens": 3,
+    "peakCgroupBytes": 1396346880,
+    "plateauGrowthBytes": -30371840,
+    "afterBrowserExitPrivateSharedBytes": [
+      56512512,
+      57745408,
+      59056128,
+      60248064
+    ],
+    "inputActionBatches": 529,
+    "sampleCount": 766,
+    "gatesDeclaredBeforeStart": true,
+    "kernelGpuOrOomEvents": [],
+    "kernelQueryExit": 0,
+    "observedDistinctPositions": 67,
+    "observedDistinctYaw": 8,
+    "observedViewModes": [
+      false,
+      true
+    ]
+  }
+}

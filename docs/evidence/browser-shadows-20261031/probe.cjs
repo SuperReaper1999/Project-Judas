@@ -1,0 +1,13 @@
+const {firefox,chromium}=require('../browser-tests/node_modules/playwright');
+const {spawn}=require('child_process');const fs=require('fs'),path=require('path');
+const [mode,name='firefox']=process.argv.slice(2),root=path.resolve('.cache/browser-shadow'),pkg=path.join(root,mode),out=path.join(root,mode+'-'+name);fs.mkdirSync(out,{recursive:true});
+const wait=ms=>new Promise(r=>setTimeout(r,ms));
+(async()=>{let browser,server;try{server=spawn('python3',[path.join(pkg,'serve.py'),pkg,'--port','8802']);server.stderr.on('data',()=>{});await new Promise((r,j)=>{server.stdout.once('data',r);server.once('exit',c=>j(Error('server '+c)))});
+ browser=await ({firefox,chromium}[name]).launch({headless:true,...(name==='chromium'?{channel:'chromium',args:['--no-sandbox','--enable-unsafe-swiftshader','--use-gl=angle','--use-angle=swiftshader']}: {})});
+ const p=await browser.newPage({viewport:{width:1280,height:960}}),rows=[];let latest;
+ p.on('console',m=>{const s=m.text();if(rows.length<100)rows.push(s);if(s.includes('PLAYER_PROBE '))try{latest=JSON.parse(s.split('PLAYER_PROBE ')[1])}catch(e){}});p.on('pageerror',e=>rows.push('ERROR '+e));
+ await p.goto('http://127.0.0.1:8802');await p.waitForFunction(()=>document.querySelector('#play').textContent==='Play',null,{timeout:90000});await p.locator('#play').click();
+ for(let i=0;i<150&&(!latest||latest.state.time<2);i++)await wait(100);
+ if(!latest||latest.state.time<2)throw Error('game did not advance');
+ await p.locator('#canvas').screenshot({path:path.join(out,'view.png')});fs.writeFileSync(path.join(out,'console.log'),rows.join('\n'));fs.writeFileSync(path.join(out,'result.json'),JSON.stringify({mode,name,version:browser.version(),latest},null,2));console.log('PASS',mode,name);
+ }finally{if(browser)await browser.close();if(server)server.kill()}})().catch(e=>{console.error(e);process.exitCode=1});

@@ -1,0 +1,37 @@
+{
+  "browser": "chromium",
+  "version": "156.0.8078.4",
+  "source": "src/Renderer.cpp",
+  "rows": [
+    {
+      "label": "flat plane",
+      "badPixels": 0,
+      "glError": 0
+    },
+    {
+      "label": "oblique plane",
+      "badPixels": 0,
+      "glError": 0
+    },
+    {
+      "label": "opposite slope",
+      "badPixels": 0,
+      "glError": 0
+    },
+    {
+      "label": "perspective light",
+      "badPixels": 0,
+      "glError": 0
+    },
+    {
+      "label": "real occluder",
+      "badPixels": 0,
+      "glError": 0
+    },
+    {
+      "label": "tiled light boundary",
+      "badPixels": 0,
+      "glError": 0
+    }
+  ]
+}

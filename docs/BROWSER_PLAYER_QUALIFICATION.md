@@ -63,10 +63,11 @@ out on some continuous OffscreenCanvas captures; full Chromium is used for the
 pixel gates. The preserved unsuccessful captures are not deleted or called passes.
 
 The lab proves ordinary 3D primitives, a CharacterMotor, script-owned cameras,
-MK2 bodies, UI and saves. It does not certify all 3D effects. Firefox's tested
-WebGL capture showed triangular shadow-like artefacts on the lab walls;
-their cause is not isolated. This is a visible rendering difference, not a
-claimed shadow-quality pass. Reported WebGL device strings can be privacy-masked;
+MK2 bodies, UI and saves. It does not certify all 3D effects. The original tested
+capture showed triangular shadow-like artefacts on the lab walls. That failure
+is retained; the subsequent shared-shader cause, correction and longer memory
+checks are recorded in [the follow-up](BROWSER_SHADOWS_AND_ENDURANCE.md).
+Reported WebGL device strings can be privacy-masked;
 they do not establish exact hardware qualification.
 Mobile browsers, physical touch/gamepads, networking, context restoration and
 complete-engine browser compatibility remain separate work. No physical audio

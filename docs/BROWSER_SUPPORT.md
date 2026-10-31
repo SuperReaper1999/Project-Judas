@@ -244,6 +244,13 @@ receipt. Ordinary completed stage-1/2 packages still verify normally.
 
 ## Browser player stage
 
+The shared shadow filter now compares each PCF texel with the receiver plane at
+that texel's center. This corrects the repeating flat-face shadow pattern without
+disabling shadows or increasing bias/resolution. The follow-up includes native,
+Chromium and Firefox checks, plus ten minutes of active installed-Firefox play
+and three close/reopen cycles. See [the correction and memory evidence](BROWSER_SHADOWS_AND_ENDURANCE.md).
+It remains bounded Experimental qualification, not general browser certification.
+
 The shell offers Fullscreen only after Play, with a separate exit strip that does
 not cover the game HUD. CSS owns the available rectangle;
 SDL resizes the worker-owned WebGL surface. After queued SDL events are consumed,

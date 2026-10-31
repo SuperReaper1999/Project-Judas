@@ -137,9 +137,11 @@ The normal editor opt-in remains `-ExpBrowserSupport=1`.
 
 ## Limitations and next boundaries
 
-Firefox captures show triangular shadow-like artefacts on untextured lab walls.
-Their cause is not isolated. This remains a real visual difference, not a claimed
-shadow-quality pass or a reason to disable the scene's shadows. Reported WebGL
+The original Firefox captures showed triangular shadow-like artefacts on
+untextured lab walls. The preserved stage evidence did not isolate their cause.
+The [subsequent shader correction](BROWSER_SHADOWS_AND_ENDURANCE.md) establishes
+the shared PCF receiver-depth defect in both tested browsers and verifies the
+repair with shadows enabled. Original captures remain unchanged. Reported WebGL
 device strings may be privacy-masked; exact hardware cannot be inferred from them.
 
 This stage does not qualify every 3D effect, mobile browsers, physical touch or

@@ -3,6 +3,11 @@
 Experimental follow-up to the player stage at `357276fc`. Main and published
 Alpha packages remain unchanged. This is not a new browser-support certification.
 
+Follow-up: the previously unresolved triangle-shadow pattern has a shared-shader
+correction, followed by a longer memory/close/reopen qualification. See
+[the subsequent report](BROWSER_SHADOWS_AND_ENDURANCE.md). Historical results and
+failures below remain unchanged.
+
 ## Failure and mechanism
 
 Human testing reported delayed keyboard/mouse input, then severe desktop memory
