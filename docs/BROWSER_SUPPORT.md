@@ -126,3 +126,7 @@ The implementation follows Emscripten's [pthread ownership rules](https://emscri
 and [WebGL guidance](https://emscripten.org/docs/optimizing/Optimizing-WebGL.html).
 These describe the platform boundary; they are not evidence that every Judas
 subsystem has been browser-qualified.
+
+Browser-owned shortcuts such as Firefox F6 may never reach SDL. Bind ordinary
+project controls instead of trapping the browser UI: Traversal uses K to save and
+L to load, with F6/F7 retained as desktop alternatives.

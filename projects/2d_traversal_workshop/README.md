@@ -7,7 +7,7 @@ RPG movement preset. No hidden demo controller or alternate physics world.
   straight static segments: walk underneath, jump through and land above.
 - **2:** grid scene. WASD/arrows step one cell. Tap, hold or buffer a turn. Green
   solid cells block movement. The kinematic controller uses real shape casts.
-- **R:** reset scene. **F6/F7:** modern save/load. Saves retain a pending grid step.
+- **R:** reset scene. **K / L:** save / load. Desktop F6/F7 bindings remain available; use K/L in browsers to avoid reserved shortcuts. Saves retain a pending grid step.
 
 Open `2D_Traversal_Workshop.judasproj` in the editor. `Scenes/main.judas` and
 `Scenes/grid.judas` are ordinary editable scenes. `Assets/platform-player.js` and
